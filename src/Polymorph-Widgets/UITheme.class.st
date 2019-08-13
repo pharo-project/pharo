@@ -2223,6 +2223,11 @@ UITheme >> fadeCheckboxWhenDisabled [
 ]
 
 { #category : #accessing }
+UITheme >> fadedBackgroundWindows [
+	^ self settings fadedBackgroundWindows
+]
+
+{ #category : #accessing }
 UITheme >> flatMenu [
 	^ self settings flatMenu
 ]
@@ -4670,10 +4675,10 @@ UITheme >> overTextCursorFor: aTextMorph [
 { #category : #'fill-styles' }
 UITheme >> paneColorFor: aWindow [
 	"Answer the pane color that should be used."
-	
-	^self settings fadedBackgroundWindows
-		ifTrue: [aWindow fillStyleToUse asColor]
-		ifFalse: [(self windowActiveFillStyleFor: aWindow) asColor]
+
+	^ (self fadedBackgroundWindows
+		ifTrue: [ aWindow fillStyleToUse ]
+		ifFalse: [ self windowActiveFillStyleFor: aWindow ]) asColor
 ]
 
 { #category : #services }
@@ -6173,9 +6178,9 @@ UITheme >> windowInactiveFillStyleFor: aWindow [
 UITheme >> windowInactiveLabelFillStyleFor: aWindow [
 	"Return the window inactive label fillStyle for the given window."
 	
-	^self settings fadedBackgroundWindows
-		ifTrue: [aWindow paneColorToUse alphaMixed: 0.6 with: Color black]
-		ifFalse: [self windowActiveLabelFillStyleFor: aWindow]
+	^ self fadedBackgroundWindows
+		ifTrue: [ aWindow paneColorToUse alphaMixed: 0.6 with: Color black ]
+		ifFalse: [ self windowActiveLabelFillStyleFor: aWindow ]
 ]
 
 { #category : #'fill-styles' }

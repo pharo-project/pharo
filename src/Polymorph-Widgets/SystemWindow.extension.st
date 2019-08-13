@@ -1005,7 +1005,7 @@ SystemWindow >> model: anObject [
 			setProperty: #paneColor toValue: self defaultBackgroundColor;
 			fillStyle: self fillStyleToUse;
 			setStripeColorsFrom: self paneColorToUse.
-		self theme settings fadedBackgroundWindows ifFalse: [ "since not done in stripes"
+		self theme fadedBackgroundWindows ifFalse: [ "since not done in stripes"
 			self adoptPaneColor: self paneColor]].
 	self minimumExtent: (
 		(anObject respondsTo: #minimumExtent)
@@ -1349,7 +1349,7 @@ SystemWindow >> setWindowColor: incomingColor [
 	aColor := incomingColor.
 	self setProperty: #paneColor toValue: aColor.
 	self setStripeColorsFrom: aColor.
-	self theme settings fadedBackgroundWindows 
+	self theme fadedBackgroundWindows 
 		ifFalse: [self adoptPaneColor: aColor]. "reverse optimisation"
 	self changed.
 ]
