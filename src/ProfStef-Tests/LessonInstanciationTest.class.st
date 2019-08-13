@@ -2,13 +2,13 @@
 SUnit tests for lessons
 "
 Class {
-	#name : #LessonTestInstanciation,
+	#name : #LessonInstanciationTest,
 	#superclass : #TestCase,
 	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #tests }
-LessonTestInstanciation >> testNewLessonHaveEmptyStringForTitleLesson [
+LessonInstanciationTest >> testNewLessonHaveEmptyStringForTitleLesson [
 	| newLesson  |
 	newLesson := Lesson new.
 	self assert: newLesson title equals: ''.
@@ -16,7 +16,7 @@ LessonTestInstanciation >> testNewLessonHaveEmptyStringForTitleLesson [
 ]
 
 { #category : #tests }
-LessonTestInstanciation >> testTitleLessonCreation [
+LessonInstanciationTest >> testTitleLessonCreation [
 	| firstLesson secondLesson |
 	firstLesson := Lesson title: 'First lesson' lesson: 'Pharo rules!'.
 	secondLesson := Lesson title: 'Second lesson' lesson: 'PharoTutorial is cool'.

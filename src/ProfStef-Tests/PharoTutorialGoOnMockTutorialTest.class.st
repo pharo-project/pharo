@@ -2,48 +2,48 @@
 SUnit tests for tutorial navigation
 "
 Class {
-	#name : #PharoTutorialTestGoOnMockTutorial,
+	#name : #PharoTutorialGoOnMockTutorialTest,
 	#superclass : #TestCase,
 	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #running }
-PharoTutorialTestGoOnMockTutorial >> setUp [
+PharoTutorialGoOnMockTutorialTest >> setUp [
 	super setUp.
 	ProfStef tutorial: MockTutorial lesson: #firstLesson 
 ]
 
 { #category : #running }
-PharoTutorialTestGoOnMockTutorial >> tearDown [
+PharoTutorialGoOnMockTutorialTest >> tearDown [
 	ProfStef default close.
 	super tearDown
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testFirstLessonShouldBeDisplayed [
+PharoTutorialGoOnMockTutorialTest >> testFirstLessonShouldBeDisplayed [
  	self assert:  'First lesson' equals: ProfStef default lessonView text
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testLastShouldGoToThirdLesson [
+PharoTutorialGoOnMockTutorialTest >> testLastShouldGoToThirdLesson [
 	ProfStef last.
  	self assert:  'Third lesson' equals: ProfStef default lessonView text
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testLastThenFirstShouldGoToFirstLesson [
+PharoTutorialGoOnMockTutorialTest >> testLastThenFirstShouldGoToFirstLesson [
 	ProfStef last; first.
  	self assert:  'First lesson' equals: ProfStef default lessonView text
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testLastThenPreviousShouldGoToSecondLesson [
+PharoTutorialGoOnMockTutorialTest >> testLastThenPreviousShouldGoToSecondLesson [
 	ProfStef last; previous.
  	self assert:  'Second lesson' equals: ProfStef default lessonView text
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testNextShouldGoToSecondLesson [
+PharoTutorialGoOnMockTutorialTest >> testNextShouldGoToSecondLesson [
 	ProfStef next.
  	self assert:  'Second lesson' equals: ProfStef default lessonView text
 ]

@@ -2,13 +2,13 @@
 Unit test for categorization of traits
 "
 Class {
-	#name : #T2TraitWithCategories,
+	#name : #T2TraitWithCategoriesTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitWithCategories >> testPackageOfMethodFromTraits [
+T2TraitWithCategoriesTest >> testPackageOfMethodFromTraits [
 	| t1 t2 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -22,7 +22,7 @@ T2TraitWithCategories >> testPackageOfMethodFromTraits [
 ]
 
 { #category : #tests }
-T2TraitWithCategories >> testPackageOfMethodFromTraitsAfterCreation [
+T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsAfterCreation [
 	| t1 t2 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -35,7 +35,7 @@ T2TraitWithCategories >> testPackageOfMethodFromTraitsAfterCreation [
 ]
 
 { #category : #tests }
-T2TraitWithCategories >> testPackageOfMethodFromTraitsChanged [
+T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChanged [
 	| t1 t2 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -51,7 +51,7 @@ T2TraitWithCategories >> testPackageOfMethodFromTraitsChanged [
 ]
 
 { #category : #tests }
-T2TraitWithCategories >> testPackageOfMethodFromTraitsChangedWithoutCompile [
+T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsChangedWithoutCompile [
 	| t1 t2 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -67,7 +67,7 @@ T2TraitWithCategories >> testPackageOfMethodFromTraitsChangedWithoutCompile [
 ]
 
 { #category : #tests }
-T2TraitWithCategories >> testPackageOfMethodFromTraitsOverriden [
+T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsOverriden [
 	| t1 t2 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -82,7 +82,7 @@ T2TraitWithCategories >> testPackageOfMethodFromTraitsOverriden [
 ]
 
 { #category : #tests }
-T2TraitWithCategories >> testPackageOfMethodFromTraitsRenamedCategory [
+T2TraitWithCategoriesTest >> testPackageOfMethodFromTraitsRenamedCategory [
 	| t1 t2 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.

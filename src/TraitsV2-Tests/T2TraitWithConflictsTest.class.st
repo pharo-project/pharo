@@ -2,13 +2,13 @@
 Unit test for trait conflict scenarios
 "
 Class {
-	#name : #T2TraitWithConflicts,
+	#name : #T2TraitWithConflictsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitWithConflicts >> testAddingSameDependencyIsNotConflict [
+T2TraitWithConflictsTest >> testAddingSameDependencyIsNotConflict [
 	| t1 t2 c1 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -23,7 +23,7 @@ T2TraitWithConflicts >> testAddingSameDependencyIsNotConflict [
 ]
 
 { #category : #tests }
-T2TraitWithConflicts >> testComplexDependencyIsNotConflict [
+T2TraitWithConflictsTest >> testComplexDependencyIsNotConflict [
 	| t1 t2 c1 t3 t4 t5 t6|
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -42,7 +42,7 @@ T2TraitWithConflicts >> testComplexDependencyIsNotConflict [
 ]
 
 { #category : #tests }
-T2TraitWithConflicts >> testDiamonProblemIsNotConflict [
+T2TraitWithConflictsTest >> testDiamonProblemIsNotConflict [
 	| t1 t2 c1 t3 |
 	
 	t1 := self newTrait: #T1 with: #() uses: {}.
@@ -58,7 +58,7 @@ T2TraitWithConflicts >> testDiamonProblemIsNotConflict [
 ]
 
 { #category : #tests }
-T2TraitWithConflicts >> testDifferentMethodsAreConflict [
+T2TraitWithConflictsTest >> testDifferentMethodsAreConflict [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.
@@ -73,7 +73,7 @@ T2TraitWithConflicts >> testDifferentMethodsAreConflict [
 ]
 
 { #category : #tests }
-T2TraitWithConflicts >> testNonConflictingTraitsAreNotConflict [
+T2TraitWithConflictsTest >> testNonConflictingTraitsAreNotConflict [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.
@@ -89,7 +89,7 @@ T2TraitWithConflicts >> testNonConflictingTraitsAreNotConflict [
 ]
 
 { #category : #tests }
-T2TraitWithConflicts >> testSameSourceButDifferentMethodsAreConflict [
+T2TraitWithConflictsTest >> testSameSourceButDifferentMethodsAreConflict [
 	| t1 t2 c1 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.

@@ -1,11 +1,11 @@
 Class {
-	#name : #T2TraitWithAlias,
+	#name : #T2TraitWithAliasTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitWithAlias >> testChangingAnAliasedMethodIsIncludedInClass [
+T2TraitWithAliasTest >> testChangingAnAliasedMethodIsIncludedInClass [
 
 	| t1 c1 |
 	
@@ -19,7 +19,7 @@ T2TraitWithAlias >> testChangingAnAliasedMethodIsIncludedInClass [
 ]
 
 { #category : #tests }
-T2TraitWithAlias >> testChangingAnAliasedMethodIsUpdated [
+T2TraitWithAliasTest >> testChangingAnAliasedMethodIsUpdated [
 
 	| t1 c1 obj |
 	

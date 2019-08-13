@@ -2,13 +2,13 @@
 Unit test for correct handling of MC class definitions
 "
 Class {
-	#name : #T2TraitMCDefinitions,
+	#name : #T2TraitMCDefinitionsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionHasCorrectString [
+T2TraitMCDefinitionsTest >> testDefinitionHasCorrectString [
 	| t2 definition t1 definitionString |
 	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }. 
 	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
@@ -21,7 +21,7 @@ T2TraitMCDefinitions >> testDefinitionHasCorrectString [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionHasCorrectStringWithoutSlots [
+T2TraitMCDefinitionsTest >> testDefinitionHasCorrectStringWithoutSlots [
 	| t2 definition t1 definitionString |
 	t1 := self newTrait: #T1 with: {}. 
 	t2 := self newTrait: #T2 with: {#a. #b } uses: t1.
@@ -34,7 +34,7 @@ T2TraitMCDefinitions >> testDefinitionHasCorrectStringWithoutSlots [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfClassSideTrait [
+T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTrait [
 	
 	| t1 definition |
 	
@@ -48,7 +48,7 @@ T2TraitMCDefinitions >> testDefinitionOfClassSideTrait [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfClassSideTraitHasCorrectString [
+T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitHasCorrectString [
 	
 	| t1 definition |
 	
@@ -62,7 +62,7 @@ T2TraitMCDefinitions >> testDefinitionOfClassSideTraitHasCorrectString [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorrectString [
+T2TraitMCDefinitionsTest >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorrectString [
 	
 	| t1 definition |
 	
@@ -76,7 +76,7 @@ T2TraitMCDefinitions >> testDefinitionOfClassSideTraitWithSpecialSlotHasCorrectS
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfNormalClass [
+T2TraitMCDefinitionsTest >> testDefinitionOfNormalClass [
 	| c1 definition |
 	c1 := self newClass: #C1 with: #(a b c) uses: {}.
 	definition := c1 asClassDefinition.
@@ -88,7 +88,7 @@ T2TraitMCDefinitions >> testDefinitionOfNormalClass [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfNormalClassWithSlots [
+T2TraitMCDefinitionsTest >> testDefinitionOfNormalClassWithSlots [
 	| c1 definition |
 	c1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
 	definition := c1 asClassDefinition.
@@ -100,7 +100,7 @@ T2TraitMCDefinitions >> testDefinitionOfNormalClassWithSlots [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfTrait [
+T2TraitMCDefinitionsTest >> testDefinitionOfTrait [
 	| t1 definition |
 	t1 := self newTrait: #T1 with: #(a b c) uses: {}.
 	definition := t1 asClassDefinition.
@@ -112,7 +112,7 @@ T2TraitMCDefinitions >> testDefinitionOfTrait [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfTraitUsingTrait [
+T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTrait [
 	| t2 definition t1 |
 	t1 := self newTrait: #T1 with: #(x y z). 
 	t2 := self newTrait: #T2 with: #(a b c) uses: t1.
@@ -125,7 +125,7 @@ T2TraitMCDefinitions >> testDefinitionOfTraitUsingTrait [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfTraitUsingTraitWithSlots [
+T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTraitWithSlots [
 	| t2 definition t1 |
 	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }. 
 	t2 := self newTrait: #T2 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
@@ -139,7 +139,7 @@ T2TraitMCDefinitions >> testDefinitionOfTraitUsingTraitWithSlots [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfTraitWithSlots [
+T2TraitMCDefinitionsTest >> testDefinitionOfTraitWithSlots [
 	| t1  definition |
 	t1 := self newClass: #C1 with: { #a => PropertySlot. #b => PropertySlot } uses: {}.
 
@@ -151,7 +151,7 @@ T2TraitMCDefinitions >> testDefinitionOfTraitWithSlots [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfTraitedClass [
+T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClass [
 	| c1 definition t1 |
 	t1 := self newTrait: #T1 with: #(x y z). 
 	c1 := self newClass: #C1 with: #(a b c) uses: t1.
@@ -164,7 +164,7 @@ T2TraitMCDefinitions >> testDefinitionOfTraitedClass [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testDefinitionOfTraitedClassWithSlots [
+T2TraitMCDefinitionsTest >> testDefinitionOfTraitedClassWithSlots [
 	| c1 definition t1 |
 	t1 := self newTrait: #T1 with: {#x => PropertySlot. #y => PropertySlot }. 
 	c1 := self newClass: #C1 with: {#a => PropertySlot. #b => PropertySlot } uses: t1.
@@ -178,7 +178,7 @@ T2TraitMCDefinitions >> testDefinitionOfTraitedClassWithSlots [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testEqualityOfTraitDefinition [
+T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinition [
 	| t1 definition1 definition2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	definition1 := t1 asClassDefinition.
@@ -190,7 +190,7 @@ T2TraitMCDefinitions >> testEqualityOfTraitDefinition [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testEqualityOfTraitDefinitionInUses [
+T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionInUses [
 	| t1 t2 definition1 definition2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.
@@ -204,7 +204,7 @@ T2TraitMCDefinitions >> testEqualityOfTraitDefinitionInUses [
 ]
 
 { #category : #tests }
-T2TraitMCDefinitions >> testEqualityOfTraitDefinitionWithDifferentSlotTypes [
+T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionWithDifferentSlotTypes [
 	| t1 definition1 definition2 |
 	t1 := self newTrait: #T1 with: #(a) uses: {}.
 	definition1 := t1 asClassDefinition.
