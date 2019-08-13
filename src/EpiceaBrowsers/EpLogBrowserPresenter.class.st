@@ -574,7 +574,7 @@ EpLogBrowserPresenter >> initializeItemsPresenter [
 		"		autoDeselect: true; -> not implemented yet?"
 		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
 		whenSelectionChangedDo: [ self refreshEntryContentModelDeferrer schedule ];
-		menu: [ self menuMorphForSelectedItems ]
+		contextMenu: [ self menuMorphForSelectedItems ]
 ]
 
 { #category : #initialization }
@@ -657,14 +657,12 @@ EpLogBrowserPresenter >> menuActionsForSelectedItems [
 
 { #category : #menu }
 EpLogBrowserPresenter >> menuMorphForSelectedItems [
-
 	| aMenu |
-	aMenu := SpMenuPresenter new.
+	aMenu := self newMenu.
 
-	showEntryItemMenu ifTrue: [ self addMenuItemsForSelectedItemsIn:	aMenu ].
+	showEntryItemMenu ifTrue: [ self addMenuItemsForSelectedItemsIn: aMenu ].
 
-	^ aMenu buildWithSpecAsPopup
-
+	^ aMenu
 ]
 
 { #category : #accessing }

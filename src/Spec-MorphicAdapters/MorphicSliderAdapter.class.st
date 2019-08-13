@@ -10,18 +10,18 @@ Class {
 { #category : #'widget API' }
 MorphicSliderAdapter >> absoluteValue [
 
-	^ self presenter absoluteValue
+	^ self model absoluteValue
 ]
 
 { #category : #'widget API' }
 MorphicSliderAdapter >> absoluteValue: aFloat [
-	^ self presenter absoluteValue: aFloat
+
+	^ self model absoluteValue: aFloat
 ]
 
 { #category : #factory }
 MorphicSliderAdapter >> buildWidget [
-	| preWidget |
-	preWidget := PluggableSliderMorph new
+	^ PluggableSliderMorph new
 		model: self;
 		getValueSelector: #value;
 		setValueSelector: #value:;
@@ -33,39 +33,25 @@ MorphicSliderAdapter >> buildWidget [
 		setBalloonText: self help;
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
-		yourself.
-	preWidget := self presenter isHorizontal
-		ifTrue: [ preWidget ]
-		ifFalse: [ preWidget := TransformationMorph new asFlexOf: preWidget.
-			preWidget transform withAngle: 90 degreesToRadians negated.
-			preWidget ].
-	self presenter
-		whenMinChangedDo: [ :newValue | preWidget min: newValue ].
-	self presenter
-		whenMaxChangedDo: [ :newValue | preWidget max: newValue ].
-	self presenter
-		whenQuantumChangedDo: [ :newValue | preWidget quantum: newValue ].
-	self presenter
-		whenValueChangedDo: [ :newValue | preWidget value: newValue ].
-	^ preWidget
+		yourself
 ]
 
 { #category : #'widget API' }
 MorphicSliderAdapter >> label [
 
-	^ self presenter label
+	^ self model label
 ]
 
 { #category : #'widget API' }
 MorphicSliderAdapter >> max [
 
-	^ self presenter max
+	^ self model max
 ]
 
 { #category : #'widget API' }
 MorphicSliderAdapter >> min [
 
-	^ self presenter min
+	^ self model min
 ]
 
 { #category : #'widget API' }
@@ -76,11 +62,12 @@ MorphicSliderAdapter >> quantum [
 
 { #category : #'widget API' }
 MorphicSliderAdapter >> value [
-	^ self presenter value
+
+	^ self model value
 ]
 
 { #category : #'widget API' }
 MorphicSliderAdapter >> value: aValue [
 
-	^ self presenter value: aValue
+	^ self model value: aValue
 ]

@@ -17,15 +17,23 @@ Class {
 
 { #category : #specs }
 SpecDemo class >> defaultSpec [
-	^ SpecBoxLayout newVertical
-		add: #menu withConstraints: [ :constraints | constraints height: self toolbarHeight ];
-		add:
-			(SpecPanedLayout newHorizontal
-				position: 200;
-				add: #list;
-				add: #page;
-				yourself);
+
+	<spec: #default>
+
+	| fontWidth listWidth |
+	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
+	listWidth := fontWidth * 20.
+	
+	^ SpecLayout composed
+		newColumn: [ :c | 
+			c add: #menu height: self toolbarHeight.
+			c newRow: [ :row | 
+				row add: #list right: listWidth.
+				row addSplitter.
+				row add: #page] ];
 		yourself
+	
+	
 ]
 
 { #category : #'user interface' }
@@ -53,8 +61,12 @@ SpecDemo class >> on: aModel [
 
 { #category : #specs }
 SpecDemo class >> open [
+
 	<example>
-	^ self new openWithSpec
+	
+	^ self new
+		openWithSpec.
+
 ]
 
 { #category : #accessing }
@@ -73,7 +85,8 @@ SpecDemo >> addItemTo: aGroup [
 
 { #category : #accessing }
 SpecDemo >> availablePages [
-	^ SpecDemoPage availablePages
+
+	^ SpecDemoPage allSubclasses sort: [ :a :b | a priority <= b priority ]
 ]
 
 { #category : #accessing }
@@ -83,7 +96,7 @@ SpecDemo >> defaultPage [
 ]
 
 { #category : #api }
-SpecDemo >> initialExtent [
+SpecDemo >> extent [
 
 	| fontWidth rowHeight |
 	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
@@ -95,48 +108,43 @@ SpecDemo >> initialExtent [
 
 { #category : #initialization }
 SpecDemo >> initializePresenter [
-	list selectItem: self selectedPage.
-	list
-		whenSelectionChangedDo: [ :selection | 
-			selection selectedItem
-				ifNotNil: [ :newPageClass | 
-					newPageClass = self selectedPage
-						ifFalse: [ self selectedPage: newPageClass.
-							page := self instantiate: newPageClass.
-							self needRebuild: false.
-							self buildWithSpec.
-							list selectItem: self selectedPage ] ]
-				ifNil: [ "Avoid the user to have no page selected at all." list setSelectedItem: self selectedPage ] ]
+
+	list setSelectedItem: self selectedPage.
+	
+	list whenSelectedItemChanged: [ :newPageClass |
+		newPageClass
+			ifNotNil: [
+			newPageClass = self selectedPage
+				ifFalse: [
+					self selectedPage: newPageClass. 
+					page := self instantiate: newPageClass.
+				
+					self needRebuild: false.
+					self buildWithSpec.
+					list setSelectedItem: self selectedPage ] ]
+			ifNil: [ "Avoid the user to have no page selected at all."
+				list setSelectedItem: self selectedPage ] ].
 ]
 
 { #category : #initialization }
 SpecDemo >> initializeWidgets [
+
 	menu := self mainMenu.
-	list := self newList.
-	page := self instantiate: (selectedPage := self availablePages first).
-
 	menu applyTo: self.
-
-	list
+	
+	selectedPage := self availablePages first.
+	
+	list := self newList.
+	list 
 		items: self availablePages;
-		displayBlock: [ :item | item pageName ];
-		contextMenu:
-			(self newMenu
-				addItem: [ :item | 
-					item
-						name: 'Browse';
-						icon: (self iconNamed: #smallHelp);
-						action: [ list selectedItem browse ] ];
-				addItem: [ :item | 
-					item
-						name: 'Browse presenter';
-						icon: (self iconNamed: #smallHelp);
-						action: [ list selectedItem new pageClass browse ] ];
-				yourself).
+		displayBlock: [:item | item pageName].
 
-	self focusOrder
+	page := (self instantiate: selectedPage).
+	
+	self focusOrder 
 		add: list;
-		add: page
+		add: page.
+		
 ]
 
 { #category : #accessing }
@@ -151,8 +159,9 @@ SpecDemo >> list: anObject [
 
 { #category : #initialization }
 SpecDemo >> mainMenu [
+
 	| aMenu |
-	aMenu := self newMenuBar
+	aMenu := MenuPresenter new
 		addGroup: [ :group | 
 			group
 				addItem: [ :item | 
@@ -202,9 +211,10 @@ SpecDemo >> mainMenu [
 					item
 						name: nil;
 						description: 'Add menu item';
-						icon: (self iconNamed: #add);
+						icon: (self iconNamed:  #add);
 						action: [ self addItemTo: group ] ] ].
-	^ aMenu
+	^ aMenu.
+
 ]
 
 { #category : #accessing }
@@ -238,33 +248,34 @@ SpecDemo >> selectedPage: anObject [
 ]
 
 { #category : #initialization }
-SpecDemo >> subMenu [
-	^ self newMenu
-		addItem: [ :item | 
-			item
-				name: 'Open';
-				icon: (self iconNamed: #openIcon);
-				shortcut: $o meta;
-				action: [ self inform: 'Open' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Save';
-				icon: (self iconNamed: #smallSaveIcon);
-				shortcut: $s meta;
-				action: [ self inform: 'Save' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Print';
-				shortcut: $p meta;
-				icon: (self iconNamed: #smallPrintIcon);
-				action: [ self inform: 'Print' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Close';
-				shortcut: $c meta;
-				icon: (self iconNamed: #smallCancelIcon);
-				action: [ self inform: 'Kill' ] ];
-		yourself
+SpecDemo >> subMenu [ 
+
+	^ MenuPresenter new
+		addGroup: [ :group |
+			group addItem: [ :item |
+				item
+					name: 'Open';
+					icon: (self iconNamed: #openIcon);
+					shortcut: $o meta;
+					action: [ self inform: 'Open' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Save';
+					icon: (self iconNamed: #smallSaveIcon);
+					shortcut: $s meta;
+					action: [ self inform: 'Save' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Print';
+					shortcut: $p meta;
+					icon: (self iconNamed: #smallPrintIcon);
+					action: [ self inform: 'Print' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Close';
+					shortcut: $c meta;
+					icon: (self iconNamed: #smallCancelIcon);
+					action: [ self inform: 'Kill' ] ] ]
 ]
 
 { #category : #api }

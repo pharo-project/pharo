@@ -7,17 +7,14 @@ Class {
 	#instVars : [
 		'tabManager'
 	],
-	#category : #'Spec-Examples-Demo'
+	#category : #'Spec-Examples-Demo-Support'
 }
-
-{ #category : #accessing }
-SpecDemoPage class >> availablePages [
-	^ self allSubclasses sort: #priority ascending
-]
 
 { #category : #specs }
 SpecDemoPage class >> defaultSpec [
-	^ SpecBoxLayout newVertical
+	<spec>
+	
+	^ SpecLayout composed
 		add: #tabManager;
 		yourself
 ]
@@ -36,33 +33,47 @@ SpecDemoPage class >> priority [
 ]
 
 { #category : #initialization }
-SpecDemoPage >> codeFor: aClass [
-	^ TonelWriter sourceCodeOf: aClass
+SpecDemoPage >> commentFor: aClass [
+
+	^ String streamContents: [ :s |
+		s nextPutAll: aClass name; cr.
+		s nextPutAll: '--------------------------------------------'; cr.
+		s cr.
+		s nextPutAll: aClass comment ]
+		
 ]
 
 { #category : #initialization }
-SpecDemoPage >> codeTab [
-	^ NotebookPage
-		title: 'Code'
-		icon: (self iconNamed: #changeUpdate)
-		provider: [ self newText
-				text: (self codeFor: self pageClass);
-				yourself ]
+SpecDemoPage >> commentTab [
+	| tab commentInput |
+	tab := self newTab.
+	tab
+		label: 'Comment';
+		icon: (tab iconNamed: #helpIcon);
+		presenter: (commentInput := self newText).
+	commentInput text: (self commentFor: self pageClass).
+	^ tab
 ]
 
 { #category : #initialization }
 SpecDemoPage >> exampleTab [
-	^ NotebookPage title: 'Example' icon: (self iconNamed: #smallPaint) provider: [ self instantiate: self pageClass ]
+	| tab |
+	tab := self newTab.
+	tab
+		label: 'Example';
+		icon: (tab iconNamed: #smallPaint);
+		presenter: (self instantiate: self pageClass).
+	^ tab
 ]
 
 { #category : #initialization }
 SpecDemoPage >> initializeWidgets [
 
-	tabManager := self newNotebook.
+	tabManager := self newTabManager.
 	"tabManager whenTabSelected: [ self updateTitle ]."
 	tabManager
-		addPage: self exampleTab;
-		addPage: self codeTab.
+		addTab: self exampleTab;
+		addTab: self commentTab.
 ]
 
 { #category : #initialization }
