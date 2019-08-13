@@ -32,7 +32,7 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
 	| showResult result |
 	
 	result := aQuery execute.
-	(result isEmpty or: [ ((result items collect: [:each | each origin]) nonIntersect: classes ) isEmpty]) ifTrue: [ ^true ].
+	(result isEmpty or: [ ((result items collect: [:each | each origin]) difference: classes ) isEmpty]) ifTrue: [ ^true ].
 	
 	showResult := UIManager default confirm: 'There are '
 		, result size asString, ' ', aQuery description, '. Show them?'.
@@ -50,14 +50,14 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 	
 	(classes anySatisfy: [ :each | |subclassesOfClass|
 		subclassesOfClass := each subclasses.
-		subclassesOfClass notEmpty and: [ (subclassesOfClass nonIntersect: classes) notEmpty ] ]) ifTrue: [
+		subclassesOfClass notEmpty and: [ (subclassesOfClass difference: classes) notEmpty ] ]) ifTrue: [
 		noUsers := false.
 		answer := UIManager default confirm: 'There are subclasses. Show them?'.
 		subclasses := classes flatCollect: [ :each | each subclasses ].
 		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses) ]].
 	(classes anySatisfy: [ :each | |usersOfClass|
 		usersOfClass := each users.
-		usersOfClass notEmpty and: [ (usersOfClass nonIntersect: classes) notEmpty ]]) ifTrue: [
+		usersOfClass notEmpty and: [ (usersOfClass difference: classes) notEmpty ]]) ifTrue: [
 		noUsers := false.
 		answer := UIManager default confirm: 'There are users of trait. Show them?'.
 		users := classes flatCollect: [ :each | each users ].
