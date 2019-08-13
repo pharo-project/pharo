@@ -14,6 +14,7 @@ BaselineOfPharo >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 		
 		spec baseline: 'IDE' with: [spec repository: repository].
+		spec baseline: 'Ring' with: [spec repository: repository].
 		spec package: 'Deprecated70'.
 		spec package: 'Deprecated80'.
 		spec package: 'Gofer-UI'.

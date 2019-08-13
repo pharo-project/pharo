@@ -396,8 +396,6 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
 
-		spec baseline: 'Ring' with: [ spec repository: repository ].
-
       self groups: spec.
 	].
 
