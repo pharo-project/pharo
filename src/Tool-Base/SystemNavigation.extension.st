@@ -25,7 +25,7 @@ SystemNavigation >> browseAllCallsOnClass: aClass [
 	aClass. For example, SystemNavigation new browseAllCallsOnClass: Object."
 
 	^ self
-		browseMessageList: (aClass allCallsOnIn: self)
+		browseMessageList: aClass allCallsOn
 		name: 'Users of class ' , aClass instanceSide name
 		autoSelect: aClass instanceSide name
 ]
