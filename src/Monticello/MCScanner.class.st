@@ -32,7 +32,7 @@ MCScanner >> next [
 	 The performance is essentially equivalent (<5% difference)."
 
 	| stack |
-	stack := OrderedCollection with: OrderedCollection new.
+	stack := Stack with: Stack new.
 	[
 		| c |
 		stream skipSeparators.
@@ -40,20 +40,19 @@ MCScanner >> next [
 		"We essentially ignore the $# symbol and expect what follows to be a symbol or array"
 		c = $# ifTrue: [ c := stream next; peek ].
 		"Note that #'foo' will be treated as a String, not a Symbol"
-		c = $' ifTrue: [ stack last add: self nextString ] ifFalse: [
+		c = $' ifTrue: [ stack last push: self nextString ] ifFalse: [
 		"Any alphanumeric, including an integer, is treated as a Symbol even if not preceeded by a $#"
-		c isAlphaNumeric ifTrue: [ stack last add: self nextSymbol ] ifFalse: [
+		c isAlphaNumeric ifTrue: [ stack last push: self nextSymbol ] ifFalse: [
 		"For an array, start a new level on the stack"
-		c = $( ifTrue: [ stream next. stack add: OrderedCollection new ] ifFalse: [
+		c = $( ifTrue: [ stream next. stack push: Stack new ] ifFalse: [
 		"At the end of an array, so add it to the previous level"
-		c = $) ifTrue: [ | x | x := stack removeLast. stack last add: x asArray ] ifFalse: [ 
+		c = $) ifTrue: [ | x | x := stack pop. stack last push: x asArray ] ifFalse: [ 
 		"Unexpected token"
 		self error: 'Unknown token type' ]]]].
 		"Keep looping while we are in an array"
 		1 < stack size.
 	] whileTrue: [].
-	^stack first first
-]
+	^stack first first]
 
 { #category : #actions }
 MCScanner >> nextArray [
