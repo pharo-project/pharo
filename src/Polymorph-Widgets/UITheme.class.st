@@ -2627,7 +2627,7 @@ UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
 
 	Display depth <= 2
 		ifTrue: [ ^ Color gray ].
-	preferenced := self settings menuSelectionColor.
+	preferenced := self menuSelectionColor.
 	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
 	self preferGradientFill
 		ifFalse: [ ^ baseColor ].
@@ -2658,6 +2658,11 @@ UITheme >> menuPinForm [
 	"Answer the form to use for the pin button of a menu."
 
 	^ self iconNamed: #menuPinForm
+]
+
+{ #category : #'accessing colors' }
+UITheme >> menuSelectionColor [
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'accessing colors' }
@@ -2713,7 +2718,7 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self settings menuSelectionColor
+	^ self menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }

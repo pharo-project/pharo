@@ -1347,7 +1347,7 @@ PluggableListMorph >> selectionColor: aColor [
 PluggableListMorph >> selectionColorToUse [
 	"Answer the colour to use for selected items."
 
-	^ selectionColorToUse ifNil: [self theme settings selectionColor] 
+	^ selectionColorToUse ifNil: [ self theme selectionColor ]
 ]
 
 { #category : #accessing }
