@@ -57,8 +57,8 @@ RGMonticelloTest >> testConvertingMCMethodDefinition [
 RGMonticelloTest >> testConvertingMCOrganizationDefinition [
 	| mcOrganization ringOrganization mcOrganization2 |
 	
-	mcOrganization := MCOrganizationDefinition categories: {#'Ring-Deprecated-Core-Kernel' . #'Ring-Deprecated-Core-Definitions'}.
-	mcOrganization2 := MCOrganizationDefinition categories: {#'Ring-Deprecated-Core-Kernel' . #'Ring-CDeprecated-ore-Definitions' . #'Ring-Deprecated-Core-Variables'}.
+	mcOrganization := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions'}.
+	mcOrganization2 := MCOrganizationDefinition categories: {#'Ring-Definitions-Core' . #'Ring-Definitions-Core-Definitions' . #'Ring-Definitions-Core-Variables'}.
 	ringOrganization := mcOrganization asRingDefinition.
 	
 	self assert: (ringOrganization isOrganization).

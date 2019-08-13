@@ -27,7 +27,7 @@ BaselineOfMonticello >> baseline: spec [
 		spec 
 			package: 'Ring-Definitions-Core';
 			package: 'Ring-Definitions-Containers';
-			package: 'Ring-Deprecated-ChunkImporter';
+			package: 'Ring-OldChunkImporter';
 			package: 'Zinc-Resource-Meta-Core';
 			package: 'System-Changes';
 			package: 'Compression';
@@ -43,7 +43,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Zinc-FileSystem';
 			package: 'Zodiac-Core'.
 		spec 
-			group: 'Core' with: #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
+			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zinc-FileSystem' 'Zodiac-Core' );
 
 			group: 'default' with: #('Core' 'RemoteRepositories' ). ].		
