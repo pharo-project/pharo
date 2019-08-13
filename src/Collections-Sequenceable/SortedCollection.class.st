@@ -78,7 +78,7 @@ Class {
 SortedCollection class >> sortBlock: aBlock [ 
 	"Answer an instance of me such that its elements are sorted according to the criterion specified in aBlock."
 
-	^ self sortUsing aBlock
+	^ self sortUsing: aBlock
 ]
 
 { #category : #'instance creation' }
