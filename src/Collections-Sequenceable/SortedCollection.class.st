@@ -81,6 +81,13 @@ SortedCollection class >> sortBlock: aBlock [
 	^self new sortBlock: aBlock
 ]
 
+{ #category : #'instance creation' }
+SortedCollection class >> sortUsing: aBlockOrSortFunction [
+	"Answer an instance of me such that its elements are sorted according to the criterion specified by the block or sort function."
+
+	^ self new sortBlock: aBlockOrSortFunction
+]
+
 { #category : #comparing }
 SortedCollection >> = aSortedCollection [
 	"Answer true if my and aSortedCollection's species are the same,
