@@ -19,7 +19,7 @@ BaselineOfRing >> baseline: spec [
 				package: 'Ring-Tests-ChunkImporter';
 				package: 'Ring-TraitsV2Support';
 				package: 'Ring-RuntimeSupport';
-				package: 'Calypso-Ring2' ]
+				package: 'Calypso-Ring' ]
 ]
 
 { #category : #accessing }
