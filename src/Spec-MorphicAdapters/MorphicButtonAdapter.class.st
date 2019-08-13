@@ -7,16 +7,11 @@ SpecInterpreter
 Class {
 	#name : #MorphicButtonAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#instVars : [
-		'subMenuWidget'
-	],
 	#category : #'Spec-MorphicAdapters-Base'
 }
 
 { #category : #'widget API' }
 MorphicButtonAdapter >> action [
-
-	self showSubMenuIfPresent.
 
 	self widget ifNotNil: [:m | m takeKeyboardFocus ].
 	self model performAction.
@@ -43,15 +38,14 @@ MorphicButtonAdapter >> buildLabel: text withIcon: icon [
 
 { #category : #factory }
 MorphicButtonAdapter >> buildWidget [
+	
 	| button | 
-
 	button := PluggableButtonMorph
 				on: self 
 				getState: #state 
 				action:  #action 
 				label: #label 
-				menu: #menu:.
-
+				menu: nil. 	
 	button 
 		getEnabledSelector: #enabled ;
 		getFontSelector: #font ;
@@ -64,45 +58,12 @@ MorphicButtonAdapter >> buildWidget [
 		eventHandler: (MorphicEventHandler new on: #keyStroke send: #keyStroke:fromMorph: to: self).
 	
 	self color ifNotNil: [ self setWidgetColor: button ].
-	
-	button bindKeyCombination: Character space toAction: [ self action ].
-
 	^ button
-]
-
-{ #category : #emulating }
-MorphicButtonAdapter >> clicked [	
-
-	| evt |
-	evt := MouseButtonEvent new setType: nil position: widget center which: MouseButtonEvent redButton buttons: MouseButtonEvent redButton hand: nil stamp: nil.
-
-	(widget handlesMouseDown: evt) ifTrue: [
-		widget mouseDown: evt.
-		widget mouseUp: evt].
-
-]
-
-{ #category : #'menus support' }
-MorphicButtonAdapter >> deleteIfPopUp: evt [
 ]
 
 { #category : #'widget API' }
 MorphicButtonAdapter >> font [
 	^self model font
-]
-
-{ #category : #accessing }
-MorphicButtonAdapter >> helpText [
-	^ self widget helpText
-]
-
-{ #category : #accessing }
-MorphicButtonAdapter >> icon [
-	^ widget label icon
-]
-
-{ #category : #'menus support' }
-MorphicButtonAdapter >> isSelected: aBooolean [
 ]
 
 { #category : #'widget API' }
@@ -117,13 +78,11 @@ MorphicButtonAdapter >> label [
 
 { #category : #'widget API' }
 MorphicButtonAdapter >> menu: aMenu [
-	| menuPresenter |
-
-	menuPresenter := self model contextMenu.
-	menuPresenter ifNil: [ ^ nil ].
-	^ SpecBindings
-		value: self model application adapterBindings
-		during: [ menuPresenter buildWithSpec ]
+	| menuModel |
+	
+	menuModel := self model menu.
+	menuModel isBlock ifTrue: [ menuModel := menuModel value ].
+	^ menuModel buildWithSpec
 ]
 
 { #category : #factory }
@@ -146,37 +105,7 @@ MorphicButtonAdapter >> setWidgetColor: button [
 ]
 
 { #category : #'widget API' }
-MorphicButtonAdapter >> showSubMenuIfPresent [
-	self model contextMenu
-		ifNotNil: [ self model menu menuGroups isEmpty
-				ifFalse: [ subMenuWidget
-						ifNotNil: [ subMenuWidget delete.
-							subMenuWidget := nil ].
-					subMenuWidget := (MorphicMenuAdapter
-						adaptAsPopup: self model menu) widget.
-					subMenuWidget
-						popUpAdjacentTo:
-							{self widget bounds bottomLeft.
-							self widget bounds bottomRight}
-						forHand: ActiveHand
-						from: self widget.
-					subMenuWidget popUpOwner: self ] ]
-]
-
-{ #category : #'widget API' }
 MorphicButtonAdapter >> state [
 
 	^ self model state
-]
-
-{ #category : #accessing }
-MorphicButtonAdapter >> unscaledInitialExtent [
-
-	^ 15@26
-]
-
-{ #category : #updating }
-MorphicButtonAdapter >> updateMenu [
-	
-	"there is no need to updateMenu here because it will be resolved at #menu:"
 ]

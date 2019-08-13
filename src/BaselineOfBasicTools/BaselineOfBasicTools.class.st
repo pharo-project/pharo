@@ -86,7 +86,6 @@ BaselineOfBasicTools >> baseline: spec [
 			spec package: 'IssueTracking'.
 			spec package: 'Monticello-OldDataStreamCompatibility'.
 			spec package: 'MonticelloFileServices'.
-			spec package: 'Spec-Help'.
 			spec package: 'Spec2-Help'.
 			spec package: 'Tool-Diff'.
 			spec package: 'Tool-FileList'.

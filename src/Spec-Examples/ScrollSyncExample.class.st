@@ -74,12 +74,13 @@ ScrollSyncExample >> initialize [
 
 { #category : #initialization }
 ScrollSyncExample >> initializeWidgets [
+
 	text := self newText.
-	text
-		whenBuiltDo: [ :builtAnnouncement | 
-			text
-				whenScrollValueChangedDo: [ :newPosition | self syncMorphPosition ] ].
-	text text: self loremIpsum
+		
+	text whenBuiltDo: [ :builtAnnouncement | 
+		text whenScrollValueChanged: [ :newPosition | self syncMorphPosition ] ].
+	
+	text text: self loremIpsum.
 ]
 
 { #category : #private }

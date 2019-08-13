@@ -1,6 +1,6 @@
 Class {
 	#name : #MethodBrowserTest,
-	#superclass : #SpecSmokeTestCase,
+	#superclass : #SpecTestCase,
 	#category : #'Spec-Tests-Examples'
 }
 

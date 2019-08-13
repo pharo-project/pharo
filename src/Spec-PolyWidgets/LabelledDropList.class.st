@@ -21,6 +21,19 @@ LabelledDropList class >> defaultSpec [
 
 ]
 
+{ #category : #example }
+LabelledDropList class >> example [
+	<sampleInstance>
+	| example |
+	example := self abstractExample.
+example
+		items: {'item 1' . 'item 2'};
+		displayBlock: [ :item | item asString ];
+		extent: 400 @ 50;
+		openWithSpec.
+	^ example
+]
+
 { #category : #'api-shortcuts' }
 LabelledDropList >> displayBlock: aBlock [
 	^self dropList displayBlock: aBlock

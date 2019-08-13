@@ -815,6 +815,11 @@ ClassDescription >> isClassSide [
 	^self == self classSide
 ]
 
+{ #category : #testing }
+ClassDescription >> isDeprecated [
+	^ self package isDeprecated
+]
+
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."

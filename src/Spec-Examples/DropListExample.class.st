@@ -88,8 +88,8 @@ DropListExample >> initializeWidgets [
 			morph2.
 			morph3};
 		displayBlock: [ :m | m color name capitalized , ' morph' ];
-		iconBlock: [ :e | self iconNamed: #testGreenIcon ];
-		whenSelectedItemChangedDo: [ :m | 
+		iconHolder: [ :e | self iconNamed: #testGreenIcon ];
+		whenSelectedItemChanged: [ :m | 
 			container removeAllMorphs.
 			container addMorph: m ].
 	heterogeneousDropList
@@ -104,7 +104,7 @@ DropListExample >> initializeWidgets [
 	heterogeneousDropList setSelectedIndex: 1.
 	same for:
 	heterogeneousDropList setIndex: 1"
-	uniformDropList selectedIndex: 1.
+	uniformDropList setIndex: 1.
 	self setFocus
 ]
 

@@ -9,10 +9,7 @@ Class {
 
 { #category : #factory }
 MorphicRadioButtonAdapter >> buildWidget [
-	
-	| radioButton |
-
-	radioButton := CheckboxMorph new
+	^ CheckboxMorph new
 		on: self selected: #state changeSelected: #state:;
 		getEnabledSelector: #enabled;
 		label: self label;
@@ -23,17 +20,7 @@ MorphicRadioButtonAdapter >> buildWidget [
 		setBalloonText: self help;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
-		yourself.
-		
-	self presenter whenLabelChangedDo: [ :newLabel | radioButton label: newLabel ].
-	self presenter whenChangedDo: [ radioButton updateSelection ].
-	^ radioButton
-]
-
-{ #category : #simulating }
-MorphicRadioButtonAdapter >> clicked [
-	
-	widget toggleSelected
+		yourself
 ]
 
 { #category : #'widget API' }

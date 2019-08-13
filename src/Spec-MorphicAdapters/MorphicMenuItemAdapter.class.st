@@ -46,7 +46,7 @@ MorphicMenuItemAdapter >> balloonText [
 MorphicMenuItemAdapter >> buildWidget [
 	^ self autoRefresh
 		ifTrue: [ self buildWidgetAutoRefresh ]
-		ifFalse: [ self buildWidgetNoRefresh ]
+		ifFalse: [ self buildWidgetNoRefersh ]
 ]
 
 { #category : #factory }
@@ -66,7 +66,7 @@ MorphicMenuItemAdapter >> buildWidgetAutoRefresh [
 ]
 
 { #category : #factory }
-MorphicMenuItemAdapter >> buildWidgetNoRefresh [
+MorphicMenuItemAdapter >> buildWidgetNoRefersh [
 	^ ToggleMenuItemMorph new
 		contents: self name;
 		target: self;
@@ -93,7 +93,7 @@ MorphicMenuItemAdapter >> defaultModifierShortcut [
 MorphicMenuItemAdapter >> enabled [
 	| enabled | 
 	
-	enabled := self model isEnabled.
+	enabled := self model enabled.
 	
 	^ (enabled isBlock or: [ enabled isMessageSend ])
 		ifTrue: [ enabled cull: self model ]
