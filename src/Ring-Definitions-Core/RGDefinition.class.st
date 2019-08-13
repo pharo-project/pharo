@@ -24,11 +24,6 @@ RGDefinition class >> fullNameKey [
 	^#fullName
 ]
 
-{ #category : #deprecation }
-RGDefinition class >> isDeprecated [
-	^true
-]
-
 { #category : #'class initialization' }
 RGDefinition class >> named: aName [
 

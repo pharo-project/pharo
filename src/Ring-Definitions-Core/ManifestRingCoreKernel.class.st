@@ -7,11 +7,6 @@ Class {
 	#category : #'Ring-Definitions-Core-Manifest'
 }
 
-{ #category : #deprecation }
-ManifestRingCoreKernel class >> isDeprecated [
-	^true
-]
-
 { #category : #'meta-data - dependency analyser' }
 ManifestRingCoreKernel class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Abstract' #'Collections-Strings' #'Collections-Streams' #'System-Sources')

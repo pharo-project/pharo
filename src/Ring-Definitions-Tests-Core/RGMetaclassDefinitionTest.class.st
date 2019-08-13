@@ -7,11 +7,6 @@ Class {
 	#category : #'Ring-Definitions-Tests-Core-Base'
 }
 
-{ #category : #deprecation }
-RGMetaclassDefinitionTest class >> isDeprecated [
-	^true
-]
-
 { #category : #testing }
 RGMetaclassDefinitionTest >> testAsMetaclassDefinition [
 	| rgClass class |

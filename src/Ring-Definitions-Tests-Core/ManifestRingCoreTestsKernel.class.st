@@ -6,8 +6,3 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Ring-Definitions-Tests-Core-Manifest'
 }
-
-{ #category : #testing }
-ManifestRingCoreTestsKernel class >> isDeprecated [
-	^true
-]

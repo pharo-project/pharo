@@ -7,11 +7,6 @@ Class {
 	#category : #'Ring-Definitions-Tests-Containers-Base'
 }
 
-{ #category : #deprecation }
-RGSliceTest class >> isDeprecated [
-	^true
-]
-
 { #category : #testing }
 RGSliceTest >> testAddingClasses [
 	| newSlice newClass newTrait  |

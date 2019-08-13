@@ -6,9 +6,3 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Ring-Definitions-Tests-Monticello-Manifest'
 }
-
-{ #category : #testing }
-ManifestRingTestsMonticello class >> isDeprecated [
-
-	^true
-]

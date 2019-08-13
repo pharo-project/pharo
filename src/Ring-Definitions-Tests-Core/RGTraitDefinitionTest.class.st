@@ -7,11 +7,6 @@ Class {
 	#category : #'Ring-Definitions-Tests-Core-Base'
 }
 
-{ #category : #deprecation }
-RGTraitDefinitionTest class >> isDeprecated [
-	^true
-]
-
 { #category : #testing }
 RGTraitDefinitionTest >> testAddingMethods [
 	| newMethod newClass |

@@ -6,9 +6,3 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Ring-Definitions-Tests-Containers-Manifest'
 }
-
-{ #category : #testing }
-ManifestRingTestsContainers class >> isDeprecated [
-
-	^true
-]

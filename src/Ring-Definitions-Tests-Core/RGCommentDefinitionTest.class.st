@@ -7,11 +7,6 @@ Class {
 	#category : #'Ring-Definitions-Tests-Core-Base'
 }
 
-{ #category : #deprecation }
-RGCommentDefinitionTest class >> isDeprecated [
-	^true
-]
-
 { #category : #testing }
 RGCommentDefinitionTest >> testActiveComment [
 

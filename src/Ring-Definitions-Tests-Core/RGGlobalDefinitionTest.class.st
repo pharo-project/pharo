@@ -7,11 +7,6 @@ Class {
 	#category : #'Ring-Definitions-Tests-Core-Base'
 }
 
-{ #category : #deprecation }
-RGGlobalDefinitionTest class >> isDeprecated [
-	^true
-]
-
 { #category : #testing }
 RGGlobalDefinitionTest >> testEquality [
 	| global1 global2 |
