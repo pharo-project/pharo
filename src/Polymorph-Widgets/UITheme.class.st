@@ -92,13 +92,6 @@ UITheme class >> current: aUITheme [
 ]
 
 { #category : #accessing }
-UITheme class >> currentAnimationSettings [
-	"Answer the current ui theme settings."
-
-	^ self currentSettings animationSettings
-]
-
-{ #category : #accessing }
 UITheme class >> currentSettings [
 	"Answer the current ui theme settings."
 
@@ -255,6 +248,11 @@ UITheme >> alertSound [
 	"Answer the alert sound."
 
 	^self soundTheme alertSound
+]
+
+{ #category : #accessing }
+UITheme >> animationSettings [
+	^ self settings animationSettings
 ]
 
 { #category : #accessing }
@@ -4669,6 +4667,11 @@ UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [
 		radial: false
 ]
 
+{ #category : #accessing }
+UITheme >> numberOfStepsForAnimations [
+	^ self animationSettings numberOfSteps
+]
+
 { #category : #cursor }
 UITheme >> overTextCursorFor: aTextMorph [
 	"Answer the pointer cursor when over an active text 
@@ -5359,6 +5362,11 @@ UITheme >> shStyleTableName [
 	^ #blueStyleTable
 ]
 
+{ #category : #testing }
+UITheme >> shouldUseAnimations [
+	^ self animationSettings useAnimation
+]
+
 { #category : #'border-styles' }
 UITheme >> sliderDisabledBorderStyleFor: aSlider [
 	"Return the disabled slider borderStyle for the given text editor."
@@ -5926,6 +5934,11 @@ UITheme >> updateWorldDockingBars [
 { #category : #'accessing colors' }
 UITheme >> urlColor [
 	^ Color fromHexString: '03A9F4'
+]
+
+{ #category : #accessing }
+UITheme >> useAnimation: aBoolean [
+	^ self animationSettings useAnimation: aBoolean
 ]
 
 { #category : #'fill-styles-scrollbars' }
