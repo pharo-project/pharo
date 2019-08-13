@@ -396,6 +396,9 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
 
+                spec baseline: 'Ring' with: [spec repository: repository].
+
+
       self groups: spec.
 	].
 
@@ -872,6 +875,7 @@ spec group: #default with: #(
 	'UndefinedClasses-Group'
 	
 	'Calypso'
+	'Ring'
 ).
 
 ]
