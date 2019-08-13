@@ -54,7 +54,7 @@ RBRemoveClassRefactoring >> environmentWithUsersOf: aTrait [
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
-	^ (RBCondition hasSubclasses: aClass) not
+	^ (RBCondition hasSubclasses: aClass excluding: classNames) not
 		|
 			((RBCondition isEmptyClass: aClass)
 				&
@@ -67,9 +67,8 @@ RBRemoveClassRefactoring >> preconditionEmptyOrHasNoSubclasses: aClass [
 RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
 
 	| env |
-	
 	env := self environmentWithReferencesTo: aClass.
-	^ (RBCondition withBlock: [ env isEmpty ])
+	^ (RBCondition withBlock: [ env isEmpty or: [ (env classNames difference: classNames) isEmpty ] ])
 		errorMacro: aClass , ' is referenced.<n>Browse references?';
 		errorBlock: [ self openBrowserOn: (env) ];
 		yourself
@@ -90,7 +89,6 @@ RBRemoveClassRefactoring >> preconditionIsNotMetaclass: aClass [
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditions [
-
 	^ classNames
 		inject: RBCondition empty
 		into: [ :sum :each | 

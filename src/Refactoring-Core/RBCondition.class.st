@@ -175,7 +175,16 @@ RBCondition class >> empty [
 RBCondition class >> hasSubclasses: aClass [
 	^self new
 		type: (Array with: #hasSubclasses with: aClass)
-		block: [aClass subclasses isEmpty not]
+		block: [aClass subclasses isNotEmpty ]
+		errorString: aClass printString , ' has <1?:no >subclasses'
+]
+
+{ #category : #'instance creation' }
+RBCondition class >> hasSubclasses: aClass excluding: classList [ 
+	^self new
+		type: (Array with: #hasSubclasses with: aClass)
+		block: [ aClass subclasses isNotEmpty and: 
+			[ ((aClass subclasses collect: #name) difference: classList) isNotEmpty ] ]
 		errorString: aClass printString , ' has <1?:no >subclasses'
 ]
 
