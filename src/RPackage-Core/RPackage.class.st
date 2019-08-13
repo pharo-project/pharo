@@ -957,6 +957,13 @@ RPackage >> isDefault [
 ]
 
 { #category : #testing }
+RPackage >> isDeprecated [
+	^ self packageManifestOrNil 
+		ifNil: [ ^ false ]
+		ifNotNil: [ :manifest | manifest isDeprecated ]
+]
+
+{ #category : #testing }
 RPackage >> isEmpty [
 	self name = self class defaultPackageName ifTrue: [ ^false ].
 	^self classes isEmpty and: [ self extensionSelectors isEmpty]
