@@ -11,6 +11,17 @@ Class {
 	#category : #'Refactoring-Core-Refactorings'
 }
 
+{ #category : #'instance creation' }
+RBReplaceCalledMethodByAnotherRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+	^(self new)
+		model: aRBSmalltalk;
+		replaceCallMethod: aSelector
+			in: aClass
+			to: newSelector
+			permutation: aMap;
+		yourself
+]
+
 { #category : #'as yet unclassified' }
 RBReplaceCalledMethodByAnotherRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
 	^self new replaceCallMethod: aSelector
@@ -22,7 +33,7 @@ RBReplaceCalledMethodByAnotherRefactoring class >> replaceCallMethod: aSelector 
 { #category : #transforming }
 RBReplaceCalledMethodByAnotherRefactoring >> haveSameNumberOfArgs [
 	(self numberOfArgs: oldSelector) = (self numberOfArgs: newSelector) 
-		ifFalse: [ self refactoringError: 'The new selector does not have the same number of parameters.']
+		ifFalse: [ self refactoringFailure: 'The new selector does not have the same number of parameters.']
 ]
 
 { #category : #'as yet unclassified' }
