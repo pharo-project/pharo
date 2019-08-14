@@ -147,8 +147,7 @@ Cursor class >> currentCursor: aCursor [
 		^ self
 	].
 
-	CurrentCursor := aCursor.
-	"aCursor beCursor"
+	CurrentCursor := aCursor	
 ]
 
 { #category : #constants }
