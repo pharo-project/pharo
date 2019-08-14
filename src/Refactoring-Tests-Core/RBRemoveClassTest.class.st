@@ -19,7 +19,7 @@ RBRemoveClassTest >> testRaisesRBRefactoringErrorWhenRemovingNonEmptySuperclass 
 RBRemoveClassTest >> testRemoveAClassAndTheirSubclass [
 	|refactoring|
 	
-	refactoring := RBRemoveClassRefactoring classNames: {#RBSharedPoolForTestData1  . #RBSharedPoolForTestData2}.
+	refactoring := RBRemoveClassRefactoring classNames: {#RBSharedPoolForTestData1 . #RBSharedPoolForTestData2}.
 	self executeRefactoring: refactoring.
 	self assert: (refactoring model classNamed: #RBSharedPoolForTestData2) isNil.
 	self assert: (refactoring model classNamed: #RBSharedPoolForTestData1) isNil.
@@ -40,10 +40,10 @@ RBRemoveClassTest >> testRemoveClassWithReferencesRaisesRBRefactoringError [
 RBRemoveClassTest >> testRemoveClassesWithReferencesBetweenThem [
 	|refactoring|
 	
-	refactoring := RBRemoveClassRefactoring classNames: {#RBRenameClassVariableTest  . #RBSharedPoolForTestData}.
+	refactoring := RBRemoveClassRefactoring classNames: {#RBRemoveClassTest  . #RBSharedPoolForTestData2}.
 	self executeRefactoring: refactoring.
-	self assert: (refactoring model classNamed: #RBSharedPoolForTestData) isNil.
-	self assert: (refactoring model classNamed: #RBRenameClassVariableTest) isNil.
+	self assert: (refactoring model classNamed: #RBRemoveClassTest) isNil.
+	self assert: (refactoring model classNamed: #RBSharedPoolForTestData2) isNil.
 ]
 
 { #category : #tests }

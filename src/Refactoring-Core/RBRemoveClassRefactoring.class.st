@@ -68,15 +68,15 @@ RBRemoveClassRefactoring >> preconditionHasNoReferences: aClass [
 
 	| env |
 	env := self environmentWithReferencesTo: aClass.
-	^ (RBCondition withBlock: [ env isEmpty or: [ (env classNames difference: classNames) isEmpty ] ])
-		errorMacro: aClass , ' is referenced.<n>Browse references?';
-		errorBlock: [ self openBrowserOn: (env) ];
-		yourself
+	^ (RBCondition withBlock: [ (env classNames copyWithoutAll: classNames) isEmpty ])
+			errorMacro: aClass , ' is referenced.<n>Browse references?';
+			errorBlock: [ self openBrowserOn: (env) ];
+			yourself
 ]
 
 { #category : #preconditions }
 RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
-	^ (RBCondition withBlock: [ aClassOrTrait realClass users isEmpty ])
+	^ (RBCondition withBlock: [ (aClassOrTrait realClass users copyWithoutAll: classNames) isEmpty ])
 		errorMacro: aClassOrTrait name , ' Trait is used.<n>Browse classes using it?';
 		errorBlock: [ self openBrowserOn: (self environmentWithUsersOf: aClassOrTrait) ];
 		yourself

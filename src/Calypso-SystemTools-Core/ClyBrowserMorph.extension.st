@@ -48,19 +48,16 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
 	noUsers := self confirmEmptySystemQuery: refQuery excluding: classes.
 	
-	(classes anySatisfy: [ :each | |subclassesOfClass|
-		subclassesOfClass := each subclasses.
-		subclassesOfClass notEmpty and: [ (subclassesOfClass difference: classes) notEmpty ] ]) ifTrue: [
+	subclasses := (classes flatCollect: [:each | each subclasses]) copyWithoutAll: classes.
+	subclasses ifNotEmpty: [ 
 		noUsers := false.
 		answer := UIManager default confirm: 'There are subclasses. Show them?'.
-		subclasses := classes flatCollect: [ :each | each subclasses ].
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses) ]].
-	(classes anySatisfy: [ :each | |usersOfClass|
-		usersOfClass := each users.
-		usersOfClass notEmpty and: [ (usersOfClass difference: classes) notEmpty ]]) ifTrue: [
+		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses) ] ].
+	
+	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
+	users ifNotEmpty: [ 
 		noUsers := false.
-		answer := UIManager default confirm: 'There are users of trait. Show them?'.
-		users := classes flatCollect: [ :each | each users ].
+		answer := UIManager default confirm: 'There are users of trait. Show them?'. 
 		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users) ]].
 	
 	^noUsers
