@@ -47,7 +47,7 @@ SycReplaceMessageCallWithOtherCommand >> prepareFullExecutionInContext: aToolCon
 	super prepareFullExecutionInContext: aToolContext.
 	
 	newSelector := UIManager default 
-		request: 'Update senders of', originalMessage selector, 'with:' initialAnswer: originalMessage selector title: 'Replace senders of method'.
+		request: 'Update senders of ', originalMessage selector, ' with:' initialAnswer: originalMessage selector title: 'Replace senders of method'.
 		
 	newSelector isEmptyOrNil | (newSelector = originalMessage selector) ifTrue: [ CmdCommandAborted signal]
 ]

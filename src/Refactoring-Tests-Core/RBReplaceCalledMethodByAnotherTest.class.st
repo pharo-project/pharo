@@ -23,17 +23,22 @@ RBReplaceCalledMethodByAnotherTest >> testNotUnderstandSelector [
 ]
 
 { #category : #tests }
-RBReplaceCalledMethodByAnotherTest >> testReplacePrimitive [
-	"| refactoring count |
-	count := 0.
+RBReplaceCalledMethodByAnotherTest >> testReplaceMethod [
+	| refactoring count |
+	count := (model allReferencesTo: #newResultClass:) size.
 	model allReferencesTo: #anInstVar: do: [:method | count := count + 1].
 	refactoring := RBReplaceCalledMethodByAnotherRefactoring  
 				model: model
 				replaceMethod: #anInstVar:
 				in: RBBasicLintRuleTestData
 				to: #newResultClass:
-				permutation: (1 to: 2).
-	self proceedThroughWarning: [self executeRefactoring: refactoring]."
+				permutation: (1 to: 1).
+	self proceedThroughWarning: [ refactoring primitiveExecute ].
+	model allReferencesTo: #newResultClass:
+		do: 
+			[:method | 
+			count := count - 1].
+	self assert: count equals: (model allReferencesTo: #anInstVar:) size
 ]
 
 { #category : #tests }
