@@ -1,7 +1,7 @@
 Class {
 	#name : #T2OverloadingOfMethodsInTraitedClassTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }

@@ -2,16 +2,16 @@
 Unit test for traits with complex slots
 "
 Class {
-	#name : #T2TraitWithComplexSlots,
+	#name : #T2TraitWithComplexSlotsTest,
 	#superclass : #T2AbstractTest,
 	#instVars : [
 		'slotClass'
 	],
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> createSlotClass [
+T2TraitWithComplexSlotsTest >> createSlotClass [
 	slotClass := self newClass: #TestSlot superclass: IndexedSlot with: #(associatedSlotName) uses: #().
 	slotClass class compile: 'associatedSlotName: aName
 		^ self new
@@ -28,7 +28,7 @@ T2TraitWithComplexSlots >> createSlotClass [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testNormalClassWithComplexSlot [
+T2TraitWithComplexSlotsTest >> testNormalClassWithComplexSlot [
 	| c1 obj |
 	
 	self createSlotClass.
@@ -46,7 +46,7 @@ T2TraitWithComplexSlots >> testNormalClassWithComplexSlot [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlot [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlot [
 	| t1 c1 obj |
 	
 	self createSlotClass.
@@ -66,7 +66,7 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlot [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlotAfter [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAfter [
 	| t1 c1 obj |
 	
 	self createSlotClass.
@@ -89,7 +89,7 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlotAfter [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlotInSuperclass [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotInSuperclass [
 	| t1 c1 c2 obj |
 	
 	self createSlotClass.
@@ -110,7 +110,7 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlotInSuperclass [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlotUpdatedAfter [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUpdatedAfter [
 	| t1 c1 obj |
 	
 	self createSlotClass.
@@ -132,7 +132,7 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlotUpdatedAfter [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlotUsedInOtherSlot [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlot [
 	| t1 t2 c1 obj |
 	
 	self createSlotClass.
@@ -154,7 +154,7 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlotUsedInOtherSlot [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlotUsedInOtherSlotInSuperclass [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotInSuperclass [
 	| t1 t2 c1 c2 obj |
 	
 	self createSlotClass.
@@ -178,7 +178,7 @@ T2TraitWithComplexSlots >> testTraitWithComplexSlotUsedInOtherSlotInSuperclass [
 ]
 
 { #category : #'instance creation' }
-T2TraitWithComplexSlots >> testTraitWithComplexSlotUsedInOtherSlotWithoutTraitComposition [
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotUsedInOtherSlotWithoutTraitComposition [
 	| t1 t2 c1 obj |
 	
 	self createSlotClass.

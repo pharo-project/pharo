@@ -106,7 +106,7 @@ FFIExternalStructure class >> defineFieldOffset: fieldName value: offset [
 	| offsetVarName |
 	offsetVarName := self offsetVariableNameFor: fieldName.
 	"Is this field defined in a superclass?"
-	(superclass bindingOf: offsetVarName)
+	(self superclass bindingOf: offsetVarName)
 		ifNil: [
 			(self hasClassVarNamed: offsetVarName) 
 				ifFalse: [ self addClassVarNamed: offsetVarName ].

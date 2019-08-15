@@ -38,7 +38,7 @@ RBRemoveParameterTest >> testRemoveParameter [
 		removeParameter: 'anArg'
 		in: RBRefactoryTestDataApp
 		selector: ('rename' , 'ThisMethod:') asSymbol.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #renameThisMethod) equals: (self parseMethod: 'renameThisMethod
 								^self').

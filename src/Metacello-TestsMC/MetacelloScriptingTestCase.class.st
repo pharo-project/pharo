@@ -6,7 +6,7 @@
 "
 Class {
 	#name : #MetacelloScriptingTestCase,
-	#superclass : #MetacelloScriptingStdTstHarness,
+	#superclass : #MetacelloScriptingStdTstHarnessTestCase,
 	#instVars : [
 		'externalRepository',
 		'mczConfigurationRepository',

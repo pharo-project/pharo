@@ -2,18 +2,18 @@
 SUnit tests for GlobalIdentifier with FUEL
 "
 Class {
-	#name : #GlobalIdentifierWithFuel,
+	#name : #GlobalIdentifierWithFuelTest,
 	#superclass : #GlobalIdentifierTest,
 	#category : #'System-Identification-Tests'
 }
 
 { #category : #accessing }
-GlobalIdentifierWithFuel >> actualPreferencesFileName [
+GlobalIdentifierWithFuelTest >> actualPreferencesFileName [
 	^ 'preferences.fuel'
 ]
 
 { #category : #running }
-GlobalIdentifierWithFuel >> setUpPersistenceStrategyAndChecker [
+GlobalIdentifierWithFuelTest >> setUpPersistenceStrategyAndChecker [
 	preferences := FileLocator workingDirectory / self folderName / 'pharoX' / self actualPreferencesFileName.
 	preferences ensureDelete.
 	identifier persistenceStrategy: GlobalIdentifierPersistence fuel.

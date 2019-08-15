@@ -1,5 +1,5 @@
 Class {
-	#name : #MetacelloScriptingStdTstHarness,
+	#name : #MetacelloScriptingStdTstHarnessTestCase,
 	#superclass : #TestCase,
 	#instVars : [
 		'registry',
@@ -10,32 +10,32 @@ Class {
 }
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> defaultTimeout [
+MetacelloScriptingStdTstHarnessTestCase >> defaultTimeout [
 	"I don't want no stkinkin' timeouts"
 	^60000
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> disableUndefinedSymbolTracking [
+MetacelloScriptingStdTstHarnessTestCase >> disableUndefinedSymbolTracking [
   "significant perfomance improvement"
 
   ^ true
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> doSilently [
+MetacelloScriptingStdTstHarnessTestCase >> doSilently [
     ^ true
 ]
 
 { #category : #utilities }
-MetacelloScriptingStdTstHarness >> hasPackage: aString [
+MetacelloScriptingStdTstHarnessTestCase >> hasPackage: aString [
 
 	^ MCWorkingCopy allManagers
 		anySatisfy: [ :each | each packageName = aString ]
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> runCase [
+MetacelloScriptingStdTstHarnessTestCase >> runCase [
     | original |
     self doSilently
         ifFalse: [ ^ super runCase ].
@@ -47,7 +47,7 @@ MetacelloScriptingStdTstHarness >> runCase [
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> setUp [
+MetacelloScriptingStdTstHarnessTestCase >> setUp [
   super setUp.
   MetacelloPlatform current clearPackageCache.
   registry := MetacelloProjectRegistration registry.
@@ -61,17 +61,17 @@ MetacelloScriptingStdTstHarness >> setUp [
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> setUpRepositories [
+MetacelloScriptingStdTstHarnessTestCase >> setUpRepositories [
 
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> setUpRepositoryContents [
+MetacelloScriptingStdTstHarnessTestCase >> setUpRepositoryContents [
 
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> tearDown [
+MetacelloScriptingStdTstHarnessTestCase >> tearDown [
   | finalWorkingCopyList diff |  
   self tearDownPackages.
   self tearDownRepositories.
@@ -93,12 +93,12 @@ MetacelloScriptingStdTstHarness >> tearDown [
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> tearDownPackageList [
+MetacelloScriptingStdTstHarnessTestCase >> tearDownPackageList [
     ^ #()
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> tearDownPackages [
+MetacelloScriptingStdTstHarnessTestCase >> tearDownPackages [
     | aGofer |
     aGofer := Gofer new.
     self tearDownPackageList
@@ -110,12 +110,12 @@ MetacelloScriptingStdTstHarness >> tearDownPackages [
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> tearDownRepositories [
+MetacelloScriptingStdTstHarnessTestCase >> tearDownRepositories [
 
 ]
 
 { #category : #running }
-MetacelloScriptingStdTstHarness >> unloadPackage: packageName [
+MetacelloScriptingStdTstHarnessTestCase >> unloadPackage: packageName [
   | aGofer |
   aGofer := Gofer new.
   (self hasPackage: packageName)
@@ -125,7 +125,7 @@ MetacelloScriptingStdTstHarness >> unloadPackage: packageName [
 ]
 
 { #category : #utilities }
-MetacelloScriptingStdTstHarness >> validate: expectedConfigurationClassName expConfigVersion: expectedConfigurationVersion expConfigRepo: expectedConfigurationRepository expBaselineClassName: expectedBaselineClassName expBaselineVersion: expectedBaselineVersion expBaselineRepo: expectedBaselineRepository [
+MetacelloScriptingStdTstHarnessTestCase >> validate: expectedConfigurationClassName expConfigVersion: expectedConfigurationVersion expConfigRepo: expectedConfigurationRepository expBaselineClassName: expectedBaselineClassName expBaselineVersion: expectedBaselineVersion expBaselineRepo: expectedBaselineRepository [
   MetacelloProjectRegistration registry configurationRegistry
     at: expectedConfigurationClassName
     ifPresent: [ :existing | 
@@ -150,7 +150,7 @@ MetacelloScriptingStdTstHarness >> validate: expectedConfigurationClassName expC
 ]
 
 { #category : #utilities }
-MetacelloScriptingStdTstHarness >> validateProjects: specArrays [
+MetacelloScriptingStdTstHarnessTestCase >> validateProjects: specArrays [
   specArrays
     do: [ :array | 
       self
@@ -163,7 +163,7 @@ MetacelloScriptingStdTstHarness >> validateProjects: specArrays [
 ]
 
 { #category : #utilities }
-MetacelloScriptingStdTstHarness >> verify: packageName loadedFrom: repositoryDescription [
+MetacelloScriptingStdTstHarnessTestCase >> verify: packageName loadedFrom: repositoryDescription [
     | externalCoreWorkingCopy |
     externalCoreWorkingCopy := MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ].
     self
@@ -173,13 +173,13 @@ MetacelloScriptingStdTstHarness >> verify: packageName loadedFrom: repositoryDes
 ]
 
 { #category : #utilities }
-MetacelloScriptingStdTstHarness >> verify: packageName version: fileName [
+MetacelloScriptingStdTstHarnessTestCase >> verify: packageName version: fileName [
     | externalCoreWorkingCopy x |
     externalCoreWorkingCopy := MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ].
     self assert: (x := externalCoreWorkingCopy ancestors first name) = fileName
 ]
 
 { #category : #utilities }
-MetacelloScriptingStdTstHarness >> verifyPackageNotLoaded: packageName [
+MetacelloScriptingStdTstHarnessTestCase >> verifyPackageNotLoaded: packageName [
     self assert: (MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ] ifNone: [  ]) == nil
 ]

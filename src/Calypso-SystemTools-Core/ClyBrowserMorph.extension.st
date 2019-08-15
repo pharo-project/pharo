@@ -27,22 +27,37 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
+ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
+	
+	| showResult result |
+	
+	result := aQuery execute.
+	(result isEmpty or: [ ((result items collect: [:each | each origin]) difference: classes ) isEmpty]) ifTrue: [ ^true ].
+	
+	showResult := UIManager default confirm: 'There are '
+		, result size asString, ' ', aQuery description, '. Show them?'.
+	showResult ifTrue: [self spawnQueryBrowserOn: aQuery].
+	^false
+]
+
+{ #category : #'*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedClasses: classes [
 	
 	| refQuery noUsers answer subclasses users |
-	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
-	noUsers := self confirmEmptySystemQuery: refQuery.
 	
-	(classes anySatisfy: [ :each | each hasSubclasses ]) ifTrue: [
+	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
+	noUsers := self confirmEmptySystemQuery: refQuery excluding: classes.
+	
+	subclasses := (classes flatCollect: [:each | each subclasses]) copyWithoutAll: classes.
+	subclasses ifNotEmpty: [ 
 		noUsers := false.
 		answer := UIManager default confirm: 'There are subclasses. Show them?'.
-		subclasses := classes flatCollect: [ :each | each subclasses ].
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses) ]].
-		
-	(classes anySatisfy: [ :each | each users notEmpty]) ifTrue: [
+		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses) ] ].
+	
+	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
+	users ifNotEmpty: [ 
 		noUsers := false.
-		answer := UIManager default confirm: 'There are users of trait. Show them?'.
-		users := classes flatCollect: [ :each | each users ].
+		answer := UIManager default confirm: 'There are users of trait. Show them?'. 
 		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users) ]].
 	
 	^noUsers

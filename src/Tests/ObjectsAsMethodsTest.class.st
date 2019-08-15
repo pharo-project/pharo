@@ -1,11 +1,11 @@
 Class {
-	#name : #TestObjectsAsMethods,
+	#name : #ObjectsAsMethodsTest,
 	#superclass : #TestCase,
 	#category : #'Tests-ObjectsAsMethods'
 }
 
 { #category : #running }
-TestObjectsAsMethods >> setUp [
+ObjectsAsMethodsTest >> setUp [
 	super setUp.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self class addSelector: #add:with: withMethod: ObjectsAsMethodsExample new.
@@ -14,7 +14,7 @@ TestObjectsAsMethods >> setUp [
 ]
 
 { #category : #running }
-TestObjectsAsMethods >> tearDown [
+ObjectsAsMethodsTest >> tearDown [
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self class removeSelector: #add:with:.
 		self class removeSelector: #answer42.
@@ -23,20 +23,20 @@ TestObjectsAsMethods >> tearDown [
 ]
 
 { #category : #testing }
-TestObjectsAsMethods >> testAddNumbers [
+ObjectsAsMethodsTest >> testAddNumbers [
 
 	self assert: (self add: 3 with: 4) = 7.
 	self assert: (self perform: #add:with: withArguments: #(3 4)) = 7.
 ]
 
 { #category : #testing }
-TestObjectsAsMethods >> testAnswer42 [ 
+ObjectsAsMethodsTest >> testAnswer42 [ 
 
 	self assert: self answer42 = 42
 ]
 
 { #category : #testing }
-TestObjectsAsMethods >> testDNU [ 
+ObjectsAsMethodsTest >> testDNU [ 
 
 	self should: [self foo] raise: MessageNotUnderstood
 ]
