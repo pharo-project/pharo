@@ -767,19 +767,19 @@ DockingBarMorph >> updateColor [
 { #category : #'private - layout' }
 DockingBarMorph >> updateExtent [
 	"private - update the receiver's extent"
+
 	| margin usedHeight |
 	self fullBounds.
-	self fillsOwner
-		ifFalse: [^ self].
-	margin := self avoidVisibleBordersAtEdge
-				ifTrue: [self borderWidth * 2]
-				ifFalse: [0].
-	self isHorizontal
-		ifTrue: [self width: self owner width + margin].
-	self isVertical
-		ifTrue: [
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top #bottom ).
-			self height: self owner height + margin - usedHeight]
+	self fillsOwner ifFalse: [ ^ self ].
+	
+	"Nil check because there is probably a race condition here making the CI fail a lot."
+	self owner
+		ifNotNil: [ :anOwner | 
+			margin := self avoidVisibleBordersAtEdge ifTrue: [ self borderWidth * 2 ] ifFalse: [ 0 ].
+			self isHorizontal ifTrue: [ self width: anOwner width + margin ].
+			self isVertical
+				ifTrue: [ usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top #bottom).
+					self height: anOwner height + margin - usedHeight ] ]
 ]
 
 { #category : #'private - layout' }

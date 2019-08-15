@@ -4,7 +4,7 @@ Unit test for trait handling
 Class {
 	#name : #T2TraitTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }

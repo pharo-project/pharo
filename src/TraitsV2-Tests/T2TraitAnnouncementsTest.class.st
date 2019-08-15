@@ -4,7 +4,7 @@ Unit test for announcement handling when dealing with traits
 Class {
 	#name : #T2TraitAnnouncementsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }

@@ -2,7 +2,7 @@
 SUnit tests for GlobalIdentifier with a default configuration
 "
 Class {
-	#name : #GlobalIdentifierWithDefaultConfiguration,
+	#name : #GlobalIdentifierWithDefaultConfigurationTest,
 	#superclass : #GlobalIdentifierTest,
 	#instVars : [
 		'oldPreferences'
@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : #accessing }
-GlobalIdentifierWithDefaultConfiguration >> oldPreferencesFileName [
+GlobalIdentifierWithDefaultConfigurationTest >> oldPreferencesFileName [
 	^ identifier persistenceStrategy previous fileName
 ]
 
 { #category : #running }
-GlobalIdentifierWithDefaultConfiguration >> setUpPersistenceStrategyAndChecker [
+GlobalIdentifierWithDefaultConfigurationTest >> setUpPersistenceStrategyAndChecker [
 	preferences := FileLocator workingDirectory / self folderName / 'pharoX' / self actualPreferencesFileName.
 	preferences ensureDelete.
 	oldPreferences := FileLocator workingDirectory / self folderName / 'pharoX' / self oldPreferencesFileName.
@@ -29,13 +29,13 @@ GlobalIdentifierWithDefaultConfiguration >> setUpPersistenceStrategyAndChecker [
 ]
 
 { #category : #running }
-GlobalIdentifierWithDefaultConfiguration >> tearDown [
+GlobalIdentifierWithDefaultConfigurationTest >> tearDown [
 	oldPreferences ensureDelete.
 	super tearDown
 ]
 
 { #category : #tests }
-GlobalIdentifierWithDefaultConfiguration >> testEnsure [
+GlobalIdentifierWithDefaultConfigurationTest >> testEnsure [
 	| stored |
 	super testEnsure.
 	self assert: oldPreferences exists description: 'The old preferences should be stored now.'.

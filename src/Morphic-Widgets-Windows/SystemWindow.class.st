@@ -858,8 +858,8 @@ SystemWindow >> deleteDiscardingChanges [
 	| thisWorld announcement animateClose |
 	animateClose := self visible
 		and: [ self world notNil
-				and: [ self theme settings animationSettings useAnimation
-						and: [ self theme settings animationSettings animateClosing ] ] ].
+				and: [ self theme shouldUseAnimations
+						and: [ self theme animationSettings animateClosing ] ] ].
 	self removePaneSplitters.	"in case we add some panes and reopen!"
 	thisWorld := self world.
 	self isFlexed
@@ -1270,7 +1270,7 @@ SystemWindow >> minimizeOrRestore [
 	|mc windowEvent |
 	isCollapsed
 		ifTrue: ["Expand -- restore panes to morphics structure"
-			self theme settings animationSettings useAnimation 
+			self theme shouldUseAnimations 
 				ifTrue: [self animateRestoreFromMinimized].
 			isCollapsed := false.
 			"Bring to front first"
@@ -1293,7 +1293,7 @@ SystemWindow >> minimizeOrRestore [
 			self
 				setBoundsWithFlex: (-100 @ -100 extent: 2 @ 2); "place offscreen"
 				hide.
-			self theme settings animationSettings useAnimation  
+			self theme shouldUseAnimations  
 				ifTrue: [self animateMinimize].
 			self isActive ifTrue: [
 				self world navigateVisibleWindowForward]].

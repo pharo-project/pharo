@@ -1,11 +1,11 @@
 Class {
-	#name : #TestClassForTestingDebugger,
+	#name : #TestClassForTestingDebuggerTest,
 	#superclass : #TestCase,
 	#category : #'GT-Tests-Debugger'
 }
 
 { #category : #tests }
-TestClassForTestingDebugger >> testBla [
+TestClassForTestingDebuggerTest >> testBla [
 <expectedFailure>
 	self assert: self bla equals: 1.
 ]

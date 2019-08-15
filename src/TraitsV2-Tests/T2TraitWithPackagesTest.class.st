@@ -2,33 +2,33 @@
 Unit test for trait packaging
 "
 Class {
-	#name : #T2TraitWithPackages,
+	#name : #T2TraitWithPackagesTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitWithPackages >> packageName [
+T2TraitWithPackagesTest >> packageName [
 	^ 'TestPackage'
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> packageName2 [
+T2TraitWithPackagesTest >> packageName2 [
 	^ 'TestPackage2'
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> packageUnderTest [
+T2TraitWithPackagesTest >> packageUnderTest [
 	^ RPackageOrganizer default packageNamed: self packageName
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> packageUnderTest2 [
+T2TraitWithPackagesTest >> packageUnderTest2 [
 	^ RPackageOrganizer default packageNamed: self packageName2
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraits [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraits [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 
@@ -42,7 +42,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraits [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraitsAfterCreation [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreation [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 	t2 := self newTrait: #T2 with: #() uses: t1 category: self packageName2.
@@ -55,7 +55,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraitsAfterCreation [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraitsAfterCreationOverriden [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsAfterCreationOverriden [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 	t2 := self newTrait: #T2 with: #() uses: t1 category: self packageName2.
@@ -73,7 +73,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraitsAfterCreationOverriden [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraitsOverriden [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverriden [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 
@@ -92,7 +92,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraitsOverriden [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraitsOverridenAndRemoved [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenAndRemoved [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 
@@ -116,7 +116,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraitsOverridenAndRemoved [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraitsOverridenModifiedKeepPackage [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsOverridenModifiedKeepPackage [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 
@@ -140,7 +140,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraitsOverridenModifiedKeepPackage
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfMethodFromTraitsRemoved [
+T2TraitWithPackagesTest >> testPackageOfMethodFromTraitsRemoved [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 
@@ -163,7 +163,7 @@ T2TraitWithPackages >> testPackageOfMethodFromTraitsRemoved [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testPackageOfRemovedTrait [
+T2TraitWithPackagesTest >> testPackageOfRemovedTrait [
 	| t1 t2 |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 	t2 := self newTrait: #T2 with: #() uses: t1 category: self packageName2.
@@ -187,7 +187,7 @@ T2TraitWithPackages >> testPackageOfRemovedTrait [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testTraitMethodPackage [
+T2TraitWithPackagesTest >> testTraitMethodPackage [
 	| t1 testPackage |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 	testPackage := self packageUnderTest.
@@ -198,7 +198,7 @@ T2TraitWithPackages >> testTraitMethodPackage [
 ]
 
 { #category : #tests }
-T2TraitWithPackages >> testTraitPackage [
+T2TraitWithPackagesTest >> testTraitPackage [
 	| t1 testPackage |
 	t1 := self newTrait: #T1 with: #() uses: {} category: self packageName.
 	testPackage := self packageUnderTest.

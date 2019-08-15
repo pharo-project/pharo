@@ -2,7 +2,7 @@
 SUnit tests for tutorial player
 "
 Class {
-	#name : #TutorialPlayerTestWithMockTutorial,
+	#name : #TutorialPlayerWithMockTutorialTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'player'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #running }
-TutorialPlayerTestWithMockTutorial >> setUp [
+TutorialPlayerWithMockTutorialTest >> setUp [
 	| tutorial |
 	super setUp.
 	tutorial := MockTutorial new.
@@ -19,12 +19,12 @@ TutorialPlayerTestWithMockTutorial >> setUp [
 ]
 
 { #category : #tests }
-TutorialPlayerTestWithMockTutorial >> testCurrentLessonIsFirstOneAtCreation [
+TutorialPlayerWithMockTutorialTest >> testCurrentLessonIsFirstOneAtCreation [
 	self assert: player currentLesson title equals: 'first'.
 ]
 
 { #category : #tests }
-TutorialPlayerTestWithMockTutorial >> testNavigation [
+TutorialPlayerWithMockTutorialTest >> testNavigation [
 	self assert: player next title equals: 'second'.
 	self assert: player currentLesson title equals: 'second'.
 	
@@ -45,7 +45,7 @@ TutorialPlayerTestWithMockTutorial >> testNavigation [
 ]
 
 { #category : #tests }
-TutorialPlayerTestWithMockTutorial >> testResetTutorialGoBackToFirstLesson [
+TutorialPlayerWithMockTutorialTest >> testResetTutorialGoBackToFirstLesson [
 	player next; next.
 	self assert: player currentLesson title equals: 'third'.
 	
@@ -54,6 +54,6 @@ TutorialPlayerTestWithMockTutorial >> testResetTutorialGoBackToFirstLesson [
 ]
 
 { #category : #tests }
-TutorialPlayerTestWithMockTutorial >> testSizeReturnsThree [
+TutorialPlayerWithMockTutorialTest >> testSizeReturnsThree [
 	self assert: player size equals: 3.
 ]

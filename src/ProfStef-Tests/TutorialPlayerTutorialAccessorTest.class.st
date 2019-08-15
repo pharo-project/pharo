@@ -2,20 +2,20 @@
 SUnit tests for tutorial player
 "
 Class {
-	#name : #TutorialPlayerTestTutorialAccessor,
+	#name : #TutorialPlayerTutorialAccessorTest,
 	#superclass : #TestCase,
 	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #tests }
-TutorialPlayerTestTutorialAccessor >> testDefaultsToSmalltalkSyntaxTutorial [
+TutorialPlayerTutorialAccessorTest >> testDefaultsToSmalltalkSyntaxTutorial [
 	| player |
 	player := TutorialPlayer new.
 	self assert: (player tutorial isKindOf: PharoSyntaxTutorial).
 ]
 
 { #category : #tests }
-TutorialPlayerTestTutorialAccessor >> testWithMockTutorial [
+TutorialPlayerTutorialAccessorTest >> testWithMockTutorial [
 	| mockTutorial player |
 	mockTutorial := MockTutorial new.
 	player := TutorialPlayer new tutorial: mockTutorial; yourself.

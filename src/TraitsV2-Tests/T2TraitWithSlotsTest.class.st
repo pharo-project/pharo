@@ -2,13 +2,13 @@
 Unit test for traits with slots
 "
 Class {
-	#name : #T2TraitWithSlots,
+	#name : #T2TraitWithSlotsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
-T2TraitWithSlots >> createT1 [
+T2TraitWithSlotsTest >> createT1 [
 	| t1 |
 	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
 	t1
@@ -27,7 +27,7 @@ T2TraitWithSlots >> createT1 [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testClassUsingStatefulTraits [
+T2TraitWithSlotsTest >> testClassUsingStatefulTraits [
 
 	| t1 c1 |
 
@@ -38,7 +38,7 @@ T2TraitWithSlots >> testClassUsingStatefulTraits [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testClassUsingStatefulTraitsAndLocalSlots [
+T2TraitWithSlotsTest >> testClassUsingStatefulTraitsAndLocalSlots [
 
 	| t1 c1 |
 
@@ -49,7 +49,7 @@ T2TraitWithSlots >> testClassUsingStatefulTraitsAndLocalSlots [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testDefiningClass [
+T2TraitWithSlotsTest >> testDefiningClass [
 
 	| t1 c1 |
 	
@@ -69,7 +69,7 @@ T2TraitWithSlots >> testDefiningClass [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testDiamonProblemIsNotConflict [
+T2TraitWithSlotsTest >> testDiamonProblemIsNotConflict [
 	| t1 t2 c1 t3 t4 |
 	
 	t1 := self newTrait: #T1 with: #(anSlot) uses: {}.
@@ -87,7 +87,7 @@ T2TraitWithSlots >> testDiamonProblemIsNotConflict [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testHavingASlotAlreadyInTheHierarchy [
+T2TraitWithSlotsTest >> testHavingASlotAlreadyInTheHierarchy [
 	| t1 t2 c1 |
 	
 	t1 := self newTrait: #T1 with: #(anSlot) uses: {}.
@@ -102,7 +102,7 @@ T2TraitWithSlots >> testHavingASlotAlreadyInTheHierarchy [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testOwningClass [
+T2TraitWithSlotsTest >> testOwningClass [
 
 	| t1 c1 |
 	
@@ -124,7 +124,7 @@ T2TraitWithSlots >> testOwningClass [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testRedefiningSuperclass [
+T2TraitWithSlotsTest >> testRedefiningSuperclass [
 
 	| t1 c1 t2 c2 |
 	
@@ -148,7 +148,7 @@ T2TraitWithSlots >> testRedefiningSuperclass [
 ]
 
 { #category : #tests }
-T2TraitWithSlots >> testRedefiningTrait [
+T2TraitWithSlotsTest >> testRedefiningTrait [
 
 | t1 |
 

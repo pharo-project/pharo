@@ -4,7 +4,7 @@ Unit test for correct propogation of slot changes for traits
 Class {
 	#name : #T2TraitPropagatingSlotChangesTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }
