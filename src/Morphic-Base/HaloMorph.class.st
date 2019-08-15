@@ -963,13 +963,10 @@ HaloMorph >> handlerForBlueButtonDown: anEvent [
 
 { #category : #initialization }
 HaloMorph >> initialize [
-	"initialize the state of the receiver"
 	super initialize.
 
 	growingOrRotating := false.
-	self borderStyle: (SimpleBorder
-		width: 2
-		color: self theme settings menuSelectionColor)
+	self borderStyle: (SimpleBorder width: 2 color: self theme menuSelectionColor)
 ]
 
 { #category : #accessing }
