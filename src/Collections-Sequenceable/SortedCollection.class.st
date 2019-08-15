@@ -13,14 +13,14 @@ I should be used only if you really need to keep the elements sorted all the tim
 Public API and Key Messages
 -------------------
 
-- class method: #sortBlock:  aBlock 		is a contructor. 
+- class method: #sortUsing:  aBlockOrSortFunction 		is a contructor. 
 		
 - #sort: aBlock 		is a function to change the way I am sorted. I will also update the index of my elements with the new block.
 
 Example
 -------------------
 
-	sortColl := SortedCollection sortBlock: [ :elem1 :elem2 | elem1 < elem2 ].
+	sortColl := SortedCollection sortUsing: [ :elem1 :elem2 | elem1 < elem2 ].
 	sortColl
 		add: 4;
 		add: 2;
@@ -78,7 +78,14 @@ Class {
 SortedCollection class >> sortBlock: aBlock [ 
 	"Answer an instance of me such that its elements are sorted according to the criterion specified in aBlock."
 
-	^self new sortBlock: aBlock
+	^ self sortUsing: aBlock
+]
+
+{ #category : #'instance creation' }
+SortedCollection class >> sortUsing: aBlockOrSortFunction [
+	"Answer an instance of me such that its elements are sorted according to the criterion specified by the block or sort function."
+
+	^ self new sortBlock: aBlockOrSortFunction
 ]
 
 { #category : #comparing }

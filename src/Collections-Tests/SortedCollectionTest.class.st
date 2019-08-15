@@ -830,6 +830,15 @@ SortedCollectionTest >> testSortBlock [
 ]
 
 { #category : #'tests - basic' }
+SortedCollectionTest >> testSortUsing [
+	| aSortedCollection |
+	aSortedCollection := (SortedCollection sortUsing: #yourself ascending)
+		addAll: #(2 6 3 8 4 3 7 6);
+		yourself.
+	self assert: aSortedCollection asArray equals: #(2 3 3 4 6 6 7 8)
+]
+
+{ #category : #'tests - basic' }
 SortedCollectionTest >> testSpeciesLooseSortBlock [
 	"This is a non regression test for http://bugs.squeak.org/view.php?id=6535"
 
