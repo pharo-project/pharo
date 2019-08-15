@@ -1,11 +1,11 @@
 Class {
-	#name : #RubScrolledTextMorphText,
+	#name : #RubScrolledTextMorphTest,
 	#superclass : #TestCase,
 	#category : #'Rubric-Tests'
 }
 
 { #category : #tests }
-RubScrolledTextMorphText >> testGhostText [
+RubScrolledTextMorphTest >> testGhostText [
 	| scrolledText | 
 	scrolledText := RubScrolledTextMorph new 
 				ghostText: 'This is a cool ghost text';

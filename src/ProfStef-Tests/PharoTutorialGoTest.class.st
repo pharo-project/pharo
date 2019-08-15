@@ -2,19 +2,19 @@
 SUnit tests for tutorial navigation
 "
 Class {
-	#name : #PharoTutorialTestGo,
+	#name : #PharoTutorialGoTest,
 	#superclass : #TestCase,
 	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #running }
-PharoTutorialTestGo >> tearDown [
+PharoTutorialGoTest >> tearDown [
 	ProfStef default close.
 	super tearDown
 ]
 
 { #category : #tests }
-PharoTutorialTestGo >> testGoOnMockTutorial [
+PharoTutorialGoTest >> testGoOnMockTutorial [
 	| displayedText expected |
 	ProfStef goOn: MockTutorial.
 	
@@ -24,7 +24,7 @@ PharoTutorialTestGo >> testGoOnMockTutorial [
 ]
 
 { #category : #tests }
-PharoTutorialTestGo >> testGoOpenSmalltalkSyntaxTutorial [
+PharoTutorialGoTest >> testGoOpenSmalltalkSyntaxTutorial [
 	| displayedText expected |
 	ProfStef go.
 	
@@ -34,7 +34,7 @@ PharoTutorialTestGo >> testGoOpenSmalltalkSyntaxTutorial [
 ]
 
 { #category : #tests }
-PharoTutorialTestGo >> testGoTwiceShowLessonViewIfNotVisible [
+PharoTutorialGoTest >> testGoTwiceShowLessonViewIfNotVisible [
 	| firstLessonView |
 	ProfStef go.
 	firstLessonView := ProfStef default lessonView.
@@ -44,7 +44,7 @@ PharoTutorialTestGo >> testGoTwiceShowLessonViewIfNotVisible [
 ]
 
 { #category : #tests }
-PharoTutorialTestGo >> testGoTwiceUseSameLessonView [
+PharoTutorialGoTest >> testGoTwiceUseSameLessonView [
 	| firstLessonView |
 	ProfStef go.
 	firstLessonView := ProfStef default lessonView.

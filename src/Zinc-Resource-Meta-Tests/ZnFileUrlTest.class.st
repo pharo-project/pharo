@@ -1,11 +1,11 @@
 Class {
-	#name : #ZnFileUrlTests,
+	#name : #ZnFileUrlTest,
 	#superclass : #TestCase,
-	#category : #'Zinc-Resource-Meta-FileSystem'
+	#category : #'Zinc-Resource-Meta-Tests'
 }
 
 { #category : #testing }
-ZnFileUrlTests >> testAsFileReference [
+ZnFileUrlTest >> testAsFileReference [
 	| fileUrl fileReference |
 	fileUrl := 'file:///foo/bar/test.txt' asZnUrl.
 	fileReference := fileUrl asFileReference.
@@ -15,7 +15,7 @@ ZnFileUrlTests >> testAsFileReference [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testAsZnUrl [
+ZnFileUrlTest >> testAsZnUrl [
 	| fileReference fileUrl |
 	fileReference := FileLocator root / 'foo' / 'bar' / 'test.txt'.
 	fileUrl := fileReference asZnUrl.
@@ -32,12 +32,12 @@ ZnFileUrlTests >> testAsZnUrl [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testImage [
+ZnFileUrlTest >> testImage [
 	self assert: ZnUrl image asFileReference exists
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testRelative [
+ZnFileUrlTest >> testRelative [
 	| fileReference fileUrl |
 	fileReference := 'foo/bar/test.txt' asFileReference.
 	self assert: fileReference isRelative.
@@ -48,7 +48,7 @@ ZnFileUrlTests >> testRelative [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testRetrieveContents [
+ZnFileUrlTest >> testRetrieveContents [
 	| fileReference contents url |
 	SystemVersion current major < 3 ifTrue: [ self skip ].
 	fileReference := ('file-{1}.txt' format: {(1000 atRandom)}) asFileReference.
@@ -62,7 +62,7 @@ ZnFileUrlTests >> testRetrieveContents [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testRoot [
+ZnFileUrlTest >> testRoot [
 	| fileUrl fileReference |
 	fileReference := FileLocator root.
 	self assert: fileReference isRoot.
@@ -72,7 +72,7 @@ ZnFileUrlTests >> testRoot [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testSlash [
+ZnFileUrlTest >> testSlash [
 	| fileUrl fileReference |
 	fileUrl := 'file:///' asZnUrl.
 	self assert: fileUrl isSlash.
@@ -82,7 +82,7 @@ ZnFileUrlTests >> testSlash [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testSpaces [
+ZnFileUrlTest >> testSpaces [
 	self 
 		assert: 'file:///foo%20bar/test.st' asZnUrl asFileReference 
 		equals: FileLocator root / 'foo bar' / 'test.st'.
@@ -92,7 +92,7 @@ ZnFileUrlTests >> testSpaces [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testTrailingSlash [
+ZnFileUrlTest >> testTrailingSlash [
 	| fileReference1 fileReference2 fileUrl1 fileUrl2 |
 	
 	fileReference1 := '/foo/bar' asFileReference.
@@ -107,7 +107,7 @@ ZnFileUrlTests >> testTrailingSlash [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testWindowsDriveNamesInFileUrl [
+ZnFileUrlTest >> testWindowsDriveNamesInFileUrl [
 	"Note the 3 slashes: 2 are from the scheme, file://, 1 is from the empty host and starts the absolute path"
 	
 	SystemVersion current major < 3 ifTrue: [ self skip ].
@@ -120,6 +120,6 @@ ZnFileUrlTests >> testWindowsDriveNamesInFileUrl [
 ]
 
 { #category : #testing }
-ZnFileUrlTests >> testWrongScheme [
+ZnFileUrlTest >> testWrongScheme [
 	self should: [ 'http://zn.stfx.eu/zn/small.html' asZnUrl asFileReference ] raise: AssertionFailure
 ]

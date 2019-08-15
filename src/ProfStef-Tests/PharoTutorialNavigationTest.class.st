@@ -2,7 +2,7 @@
 SUnit tests for tutorial navigation
 "
 Class {
-	#name : #PharoTutorialTestNavigation,
+	#name : #PharoTutorialNavigationTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'prof',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #running }
-PharoTutorialTestNavigation >> setUp [
+PharoTutorialNavigationTest >> setUp [
 	super setUp.
 	prof := ProfStef new.
 	prof player: (
@@ -25,28 +25,28 @@ PharoTutorialTestNavigation >> setUp [
 ]
 
 { #category : #tests }
-PharoTutorialTestNavigation >> testNextOpenSecondLesson [
+PharoTutorialNavigationTest >> testNextOpenSecondLesson [
 	prof next.
 	self assert: mockView title equals: 'second (2/3)'.
 	self assert: mockView lesson lesson equals: 'Second lesson'.
 ]
 
 { #category : #tests }
-PharoTutorialTestNavigation >> testSequenceNextNextOpenThirdLesson [
+PharoTutorialNavigationTest >> testSequenceNextNextOpenThirdLesson [
 	prof next; next.
 	self assert: mockView title equals: 'third (3/3)'.
 	self assert: mockView lesson lesson equals: 'Third lesson'.
 ]
 
 { #category : #tests }
-PharoTutorialTestNavigation >> testSequenceNextNextPreviousOpenSecondLesson [
+PharoTutorialNavigationTest >> testSequenceNextNextPreviousOpenSecondLesson [
 	prof next; next; previous.
 	self assert: mockView title equals: 'second (2/3)'.
 	self assert: mockView lesson lesson equals: 'Second lesson'.
 ]
 
 { #category : #tests }
-PharoTutorialTestNavigation >> testShowFirstLessonOnGo [
+PharoTutorialNavigationTest >> testShowFirstLessonOnGo [
 	| lesson |
 	lesson := mockView lesson.
 	self assert: lesson title equals: 'first'.
@@ -54,14 +54,14 @@ PharoTutorialTestNavigation >> testShowFirstLessonOnGo [
 ]
 
 { #category : #tests }
-PharoTutorialTestNavigation >> testShowingLessonByIndex [
+PharoTutorialNavigationTest >> testShowingLessonByIndex [
 	prof tutorial: MockTutorial lessonAt: 2.
 	self assert: mockView title equals: 'second (2/3)'.
 	self assert: mockView lesson lesson equals: 'Second lesson'.
 ]
 
 { #category : #tests }
-PharoTutorialTestNavigation >> testShowingLessonBySelector [
+PharoTutorialNavigationTest >> testShowingLessonBySelector [
 	prof tutorial: MockTutorial lesson: #firstLesson.
 	self assert: mockView title equals: 'first (1/3)'.
 	self assert: mockView lesson lesson equals: 'First lesson'.
