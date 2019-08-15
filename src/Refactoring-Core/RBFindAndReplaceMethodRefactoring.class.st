@@ -15,8 +15,7 @@ Class {
 		'sourceSelector',
 		'matchNodes',
 		'positionIndex',
-		'replaceAll',
-		'isCalledByExtractMethod'
+		'replaceAll'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -34,7 +33,7 @@ RBFindAndReplaceMethodRefactoring class >> find: aMethod andReplaceIn: selectorC
 	^ self new 
 		method: aMethod; 
 		listToFindMatches: selectorCollection;
-		isCalledByExtractMethod: true;
+		initializeMatchNode;
 		yourself 
 ]
 
@@ -103,14 +102,10 @@ RBFindAndReplaceMethodRefactoring >> extractMethodRefactoring [
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> findAndReplaceOcurrencesIn: aMethod [ 
 	|ocurrences|
-	"Agregar una pregunta si quieres buscar ocurrencias en el metodo extraido"
 	ocurrences := self findOcurrencesIn: aMethod selector of: aMethod origin. 
 	ocurrences ifNotEmpty: [ 
-		isCalledByExtractMethod ifTrue: [(self confirm: ('We find <1s> ocurrence(s) of extracted method. Would you like review and replace them?' expandMacrosWith: ocurrences size)) 
-			ifTrue: [ self replaceOcurrences: ocurrences on: aMethod ]]
-		ifFalse: [ self replaceOcurrences: ocurrences on: aMethod ]
+		self replaceOcurrences: ocurrences on: aMethod
 	]
-	
 ]
 
 { #category : #'find-replace' }
@@ -166,11 +161,6 @@ RBFindAndReplaceMethodRefactoring >> initializeMatchNode [
 	ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
 		matchNodes add: (RBPatternParser parseExpression: sourceCode) ] ].
 	
-]
-
-{ #category : #'find-replace' }
-RBFindAndReplaceMethodRefactoring >> isCalledByExtractMethod: aBoolean [
-	isCalledByExtractMethod := aBoolean 
 ]
 
 { #category : #accessing }

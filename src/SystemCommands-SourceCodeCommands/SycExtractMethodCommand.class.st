@@ -48,17 +48,24 @@ SycExtractMethodCommand >> execute [
 SycExtractMethodCommand >> executeRefactoring: refactoring [
 
 	NautilusRefactoring new refactoringOptions: refactoring.
-	[ refactoring execute ] on: RBRefactoringError do: [ :e | UIManager default alert: e messageText ].
-	self findOcurrences: refactoring
+	[ |findAndReplaceRef ocurrences|
+	refactoring execute.
+	findAndReplaceRef := self findOcurrences: refactoring.
+	ocurrences := (findAndReplaceRef findOcurrencesIn: method selector of: method origin).
+	ocurrences ifNotEmpty: [ 
+		(self confirm: ('We find <1s> ocurrence(s) of extracted method.
+Would you like review and replace them?' expandMacrosWith: ocurrences size asString))
+		 	ifTrue: [ findAndReplaceRef transform ]]] 
+	on: RBRefactoringError 
+	do: [ :e | UIManager default alert: e messageText ].
+	
 ]
 
 { #category : #execution }
 SycExtractMethodCommand >> findOcurrences: refactoring [ 	
-	|findAndReplaceRef|
-	findAndReplaceRef := RBFindAndReplaceMethodRefactoring 
+	^ RBFindAndReplaceMethodRefactoring 
 		find: refactoring compiledMethod
-		andReplaceIn: { refactoring method }.
-	findAndReplaceRef transform
+		andReplaceIn: { refactoring method }
 ]
 
 { #category : #execution }
