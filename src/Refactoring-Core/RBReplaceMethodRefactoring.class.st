@@ -6,14 +6,14 @@ The another method name should have the same number of arguments.
 All senders of this method are changed by the other
 "
 Class {
-	#name : #RBReplaceCalledMethodByAnotherRefactoring,
+	#name : #RBReplaceMethodRefactoring,
 	#superclass : #RBChangeMethodNameRefactoring,
 	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
-RBReplaceCalledMethodByAnotherRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
-	^(self new)
+RBReplaceMethodRefactoring class >> model: aRBSmalltalk replaceMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+	^ self new
 		model: aRBSmalltalk;
 		replaceCallMethod: aSelector
 			in: aClass
@@ -23,7 +23,7 @@ RBReplaceCalledMethodByAnotherRefactoring class >> model: aRBSmalltalk replaceMe
 ]
 
 { #category : #'as yet unclassified' }
-RBReplaceCalledMethodByAnotherRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
+RBReplaceMethodRefactoring class >> replaceCallMethod: aSelector in: aClass to: newSelector permutation: aMap [ 
 	^self new replaceCallMethod: aSelector
 		in: aClass
 		to: newSelector
@@ -31,18 +31,18 @@ RBReplaceCalledMethodByAnotherRefactoring class >> replaceCallMethod: aSelector 
 ]
 
 { #category : #transforming }
-RBReplaceCalledMethodByAnotherRefactoring >> haveSameNumberOfArgs [
+RBReplaceMethodRefactoring >> haveSameNumberOfArgs [
 	(self numberOfArgs: oldSelector) = (self numberOfArgs: newSelector) 
 		ifFalse: [ self refactoringFailure: 'The new selector does not have the same number of parameters.']
 ]
 
 { #category : #'as yet unclassified' }
-RBReplaceCalledMethodByAnotherRefactoring >> numberOfArgs: aSymbol [
+RBReplaceMethodRefactoring >> numberOfArgs: aSymbol [
 	^ (aSymbol asString splitOn: ':' ) size
 ]
 
 { #category : #transforming }
-RBReplaceCalledMethodByAnotherRefactoring >> preconditions [ 
+RBReplaceMethodRefactoring >> preconditions [ 
 	|conditions|
 	conditions := (RBCondition withBlock: [ self haveSameNumberOfArgs. true])
 						&(RBCondition definesSelector: oldSelector in: class )
@@ -50,7 +50,7 @@ RBReplaceCalledMethodByAnotherRefactoring >> preconditions [
 	
 	^ conditions & (RBCondition withBlock: 
 		[ |senders|
-		senders := (self model allReferencesTo: oldSelector).
+		senders := self model allReferencesTo: oldSelector.
 		senders size > 1 
 			ifTrue: 
 				[self refactoringWarning: ('This will modify all <1p> senders.' 
@@ -59,7 +59,7 @@ RBReplaceCalledMethodByAnotherRefactoring >> preconditions [
 ]
 
 { #category : #'as yet unclassified' }
-RBReplaceCalledMethodByAnotherRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
+RBReplaceMethodRefactoring >> replaceCallMethod: aSelector in: aClass to: newSel permutation: aMap [
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
@@ -67,6 +67,6 @@ RBReplaceCalledMethodByAnotherRefactoring >> replaceCallMethod: aSelector in: aC
 ]
 
 { #category : #transforming }
-RBReplaceCalledMethodByAnotherRefactoring >> transform [
+RBReplaceMethodRefactoring >> transform [
 	self renameMessageSends
 ]

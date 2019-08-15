@@ -1,12 +1,12 @@
 Class {
-	#name : #RBReplaceCalledMethodByAnotherTest,
+	#name : #RBReplaceMethodTest,
 	#superclass : #RBRefactoringTest,
 	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #tests }
-RBReplaceCalledMethodByAnotherTest >> testNotUnderstandNewSelector [
-	self shouldFail: (RBReplaceCalledMethodByAnotherRefactoring 
+RBReplaceMethodTest >> testNotUnderstandNewSelector [
+	self shouldFail: (RBReplaceMethodRefactoring 
 			replaceCallMethod: #checkClass:
 			in: RBBasicLintRuleTestData
 			to: #checkMethod23:
@@ -14,8 +14,8 @@ RBReplaceCalledMethodByAnotherTest >> testNotUnderstandNewSelector [
 ]
 
 { #category : #tests }
-RBReplaceCalledMethodByAnotherTest >> testNotUnderstandSelector [
-	self shouldFail: (RBReplaceCalledMethodByAnotherRefactoring 
+RBReplaceMethodTest >> testNotUnderstandSelector [
+	self shouldFail: (RBReplaceMethodRefactoring 
 			replaceCallMethod: #checkClass123:
 			in: RBBasicLintRuleTestData
 			to: #checkMethod:
@@ -23,11 +23,11 @@ RBReplaceCalledMethodByAnotherTest >> testNotUnderstandSelector [
 ]
 
 { #category : #tests }
-RBReplaceCalledMethodByAnotherTest >> testReplaceMethod [
+RBReplaceMethodTest >> testReplaceMethod [
 	| refactoring count |
 	count := (model allReferencesTo: #newResultClass:) size.
 	model allReferencesTo: #anInstVar: do: [:method | count := count + 1].
-	refactoring := RBReplaceCalledMethodByAnotherRefactoring  
+	refactoring := RBReplaceMethodRefactoring  
 				model: model
 				replaceMethod: #anInstVar:
 				in: RBBasicLintRuleTestData
@@ -42,8 +42,8 @@ RBReplaceCalledMethodByAnotherTest >> testReplaceMethod [
 ]
 
 { #category : #tests }
-RBReplaceCalledMethodByAnotherTest >> testSelectorsNotHaveSameNumberOfArgs [
-	self shouldFail: (RBReplaceCalledMethodByAnotherRefactoring 
+RBReplaceMethodTest >> testSelectorsNotHaveSameNumberOfArgs [
+	self shouldFail: (RBReplaceMethodRefactoring 
 			replaceCallMethod: #checkClass:
 			in: RBBasicLintRuleTestData
 			to: #checkMethod23

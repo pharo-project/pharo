@@ -1,5 +1,5 @@
 Class {
-	#name : #SycReplaceMessageCallWithOtherCommand,
+	#name : #SycReplaceMessageCommand,
 	#superclass : #SycChangeMessageSignatureCommand,
 	#instVars : [
 		'newSelector'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #activation }
-SycReplaceMessageCallWithOtherCommand class >> methodContextMenuActivation [
+SycReplaceMessageCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
@@ -18,9 +18,9 @@ SycReplaceMessageCallWithOtherCommand class >> methodContextMenuActivation [
 ]
 
 { #category : #execution }
-SycReplaceMessageCallWithOtherCommand >> createRefactoring [
+SycReplaceMessageCommand >> createRefactoring [
 
-	^ RBReplaceCalledMethodByAnotherRefactoring
+	^ RBReplaceMethodRefactoring
 		replaceCallMethod: originalMessage selector 
 		in: originalMessage contextUser origin
 		to: newSelector
@@ -28,22 +28,22 @@ SycReplaceMessageCallWithOtherCommand >> createRefactoring [
 ]
 
 { #category : #accessing }
-SycReplaceMessageCallWithOtherCommand >> defaultMenuIconName [
+SycReplaceMessageCommand >> defaultMenuIconName [
 	^#edit
 ]
 
 { #category : #accessing }
-SycReplaceMessageCallWithOtherCommand >> defaultMenuItemName [
+SycReplaceMessageCommand >> defaultMenuItemName [
 	^ 'Replace senders'
 ]
 
 { #category : #testing }
-SycReplaceMessageCallWithOtherCommand >> isComplexRefactoring [
+SycReplaceMessageCommand >> isComplexRefactoring [
 	^true
 ]
 
 { #category : #execution }
-SycReplaceMessageCallWithOtherCommand >> prepareFullExecutionInContext: aToolContext [
+SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
 	newSelector := UIManager default 
