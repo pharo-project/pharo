@@ -223,7 +223,7 @@ FFICallbackArgumentReader >> initialize [
 	currentStackOffset := 1.
 	extractedArguments := OrderedCollection new.
 	
-	"If the function returns an struct by copy there is a hidden parameter with a pointer storing it".
+	"If the function returns an struct by copy there is a hidden parameter with a pointer storing it"
 	returnType := callback functionSpec returnType.
 	(returnType isExternalStructure and: [ returnType isPointer not ]) ifTrue: [ 
 		returnValueHolder := self stackPointer pointerAt: 1.
