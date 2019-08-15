@@ -24,7 +24,6 @@ Class {
 RBFindAndReplaceMethodRefactoring class >> find: aMethod [ 
 	^ self new 
 		method: aMethod; 
-		initializeMatchNode;
 		yourself 
 ]
 
@@ -33,7 +32,6 @@ RBFindAndReplaceMethodRefactoring class >> find: aMethod andReplaceIn: selectorC
 	^ self new 
 		method: aMethod; 
 		listToFindMatches: selectorCollection;
-		initializeMatchNode;
 		yourself 
 ]
 
@@ -145,24 +143,6 @@ RBFindAndReplaceMethodRefactoring >> findOcurrencesInClasses [
 							ifFalse: [ UIManager default alert: e messageText ] ] ]
 ]
 
-{ #category : #initialization }
-RBFindAndReplaceMethodRefactoring >> initializeMatchNode [
-	|visitor node sourceCode|
-
-	visitor := RBMatchVisitor new.
-	node := method sourceNode copy .
-	node acceptVisitor: visitor.
-	sourceCode := self replaceArgumentsByPattern: node newSource .
-	sourceCode := sourceCode copyFrom: (method sourceNode body statements first start + visitor difference) 
-									to: sourceCode size.
-	matchNodes := OrderedCollection new.
-	matchNodes add: (RBPatternParser parseExpression: sourceCode).
-	node lastIsReturn ifTrue: [  node hasMultipleReturns 
-	ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
-		matchNodes add: (RBPatternParser parseExpression: sourceCode) ] ].
-	
-]
-
 { #category : #accessing }
 RBFindAndReplaceMethodRefactoring >> listToFindMatches: aCollection [
 	listToFindMatches := aCollection 
@@ -170,12 +150,30 @@ RBFindAndReplaceMethodRefactoring >> listToFindMatches: aCollection [
 
 { #category : #'find-replace' }
 RBFindAndReplaceMethodRefactoring >> match: node with: first and: last in: matches [  
-	matchNodes do: [ :matchNode | [ matchNode
+	self matchNodes do: [ :matchNode | [ matchNode
                       match: node
                       onSuccess: [ :map | matches add: (first to: last) -> map ]
                       onFailure: [  ] ]
 						on: Exception 
 						do: [ :e | e ]]
+]
+
+{ #category : #initialization }
+RBFindAndReplaceMethodRefactoring >> matchNodes [
+	^ matchNodes ifNil: [ |visitor node sourceCode|
+	
+		visitor := RBMatchVisitor new.
+		node := method sourceNode copy .
+		node acceptVisitor: visitor.
+		sourceCode := self replaceArgumentsByPattern: node newSource .
+		sourceCode := sourceCode copyFrom: (method sourceNode body statements first start + visitor difference) to: sourceCode size.
+		matchNodes := OrderedCollection new.
+		matchNodes add: (RBPatternParser parseExpression: sourceCode).
+		node lastIsReturn ifTrue: [  node hasMultipleReturns 
+		ifFalse: [ sourceCode := sourceCode copyReplaceAll: '^' with:  ''.
+		matchNodes add: (RBPatternParser parseExpression: sourceCode) ] ].
+		matchNodes]
+	
 ]
 
 { #category : #accessing }
@@ -240,7 +238,6 @@ RBFindAndReplaceMethodRefactoring >> replaceOcurrences: ocurrences on: aMethod [
 { #category : #transforming }
 RBFindAndReplaceMethodRefactoring >> transform [
 	replaceAll := false.
-	self initializeMatchNode.
 	listToFindMatches ifNil: [ (self options at: #listToSearch) value: method value: self  ].
 	listToFindMatches first isClass ifTrue: [ self findOcurrencesInClasses ]
 	ifFalse: [ self findOcurrencesIn: listToFindMatches ]
