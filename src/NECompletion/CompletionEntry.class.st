@@ -2,7 +2,7 @@
 One main Entry class instead of NECEntry functionality
 "
 Class {
-	#name : #TestCompletionEntry,
+	#name : #CompletionEntry,
 	#superclass : #Object,
 	#instVars : [
 		'contents',
@@ -13,38 +13,38 @@ Class {
 }
 
 { #category : #accessing }
-TestCompletionEntry class >> contents: aString [ 
+CompletionEntry class >> contents: aString [ 
 	^ self new setContents: aString
 ]
 
 { #category : #accessing }
-TestCompletionEntry class >> contents: aString node: aNode [
+CompletionEntry class >> contents: aString node: aNode [
 	^ self new setContents: aString node: aNode
 ]
 
 { #category : #accessing }
-TestCompletionEntry >> completion [
+CompletionEntry >> completion [
 	^ self contents asSymbol
 ]
 
 { #category : #accessing }
-TestCompletionEntry >> contents [
+CompletionEntry >> contents [
 	^contents
 ]
 
 { #category : #initialization }
-TestCompletionEntry >> setContents: aString [ 
+CompletionEntry >> setContents: aString [ 
 	contents := aString.
 ]
 
 { #category : #initialization }
-TestCompletionEntry >> setContents: aString node: aNode [
+CompletionEntry >> setContents: aString node: aNode [
 	contents := aString.
 	node := aNode
 ]
 
 { #category : #initialization }
-TestCompletionEntry >> type [
+CompletionEntry >> type [
 	"Here we should later return the symbol (see the other implementors of type in the old system
 	this will be easy to get form the node"
 	^ node isVariable ifTrue:

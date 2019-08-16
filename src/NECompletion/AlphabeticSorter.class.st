@@ -2,19 +2,19 @@
 Aplhabetical sorting
 "
 Class {
-	#name : #TestAlphabeticSorter,
-	#superclass : #TestSorter,
+	#name : #AlphabeticSorter,
+	#superclass : #CompletionSorter,
 	#category : #'NECompletion-New'
 }
 
 { #category : #description }
-TestAlphabeticSorter class >> kind [
+AlphabeticSorter class >> kind [
 
 	^ 'alphabetical'
 ]
 
 { #category : #description }
-TestAlphabeticSorter class >> sortCompletionList: aList [
+AlphabeticSorter class >> sortCompletionList: aList [
 
 	^ aList sorted.
 ]

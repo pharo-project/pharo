@@ -38,7 +38,7 @@ NECPreferences class >> availablePopupShortcuts [
 
 { #category : #private }
 NECPreferences class >> availableSorters [
-	^ TestSorter subclasses
+	^ CompletionSorter subclasses
 ]
 
 { #category : #accessing }
@@ -207,7 +207,7 @@ NECPreferences class >> settingsOn: aBuilder [
 							(aBuilder pickOne: #completionSorter)
 								order: -1;
 								label: 'Sorter';
-								target: TestCompletionModel;
+								target: CompletionModel;
 								getSelector: #sorter;
 								setSelector: #sorter:;
 								domainValues: availableSorters ].
