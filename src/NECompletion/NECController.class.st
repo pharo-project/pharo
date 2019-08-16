@@ -51,7 +51,7 @@ NECController class >> isCompletionEnabled [
 { #category : #'tools registry' }
 NECController class >> register [
 	"just for testing: we register the subclass here to test it"
-	RubSmalltalkEditor completionEngine: TestCompletionController
+	RubSmalltalkEditor completionEngine: CompletionController
 ]
 
 { #category : #accessing }

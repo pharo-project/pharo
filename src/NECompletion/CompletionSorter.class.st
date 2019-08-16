@@ -4,23 +4,23 @@ Strategy pattern that describes the sorting functionality.
 Sorter allSubclasses collect: #kind an OrderedCollection('' 'alphabetical' '' '')
 "
 Class {
-	#name : #TestSorter,
+	#name : #CompletionSorter,
 	#superclass : #Object,
 	#category : #'NECompletion-New'
 }
 
 { #category : #description }
-TestSorter class >> kind [ 
+CompletionSorter class >> kind [ 
 	^ ''
 ]
 
 { #category : #'tools registry' }
-TestSorter class >> register [
-	TestCompletionModel sorter: TestAlphabeticSorter
+CompletionSorter class >> register [
+	CompletionModel sorter: AlphabeticSorter
 ]
 
 { #category : #description }
-TestSorter class >> sortCompletionList: aList [
+CompletionSorter class >> sortCompletionList: aList [
 
 	self shouldBeImplemented.
 ]

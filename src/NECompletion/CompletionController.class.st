@@ -2,12 +2,12 @@
 I am a class that adds the completion to the settings
 "
 Class {
-	#name : #TestCompletionController,
+	#name : #CompletionController,
 	#superclass : #NECController,
 	#category : #'NECompletion-New'
 }
 
 { #category : #private }
-TestCompletionController >> contextClass [
-	^ TestCompletionContext 
+CompletionController >> contextClass [
+	^ CompletionContext 
 ]
