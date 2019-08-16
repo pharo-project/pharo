@@ -2,7 +2,7 @@
 I am a model class which is used instead of the typed, untyped and empty NECModel's.
 "
 Class {
-	#name : #TestCompletionModel,
+	#name : #CompletionModel,
 	#superclass : #Object,
 	#instVars : [
 		'clazz',
@@ -18,35 +18,35 @@ Class {
 }
 
 { #category : #accessing }
-TestCompletionModel class >> sorter [
+CompletionModel class >> sorter [
 	^ Sorter
 ]
 
 { #category : #accessing }
-TestCompletionModel class >> sorter: aSorter [
+CompletionModel class >> sorter: aSorter [
 
 	Sorter := aSorter
 	
 ]
 
 { #category : #accessing }
-TestCompletionModel >> arrowString [
+CompletionModel >> arrowString [
 
  	^ completionToken
 ]
 
 { #category : #accessing }
-TestCompletionModel >> clazz [
+CompletionModel >> clazz [
 	^ clazz
 ]
 
 { #category : #accessing }
-TestCompletionModel >> clazz: anObject [
+CompletionModel >> clazz: anObject [
 	clazz := anObject
 ]
 
 { #category : #accessing }
-TestCompletionModel >> commonPrefix [
+CompletionModel >> commonPrefix [
 	"Longest match among the typed text and all menu entries"
 
  	| seed matchLengths prefixLength |
@@ -62,7 +62,7 @@ TestCompletionModel >> commonPrefix [
 ]
 
 { #category : #accessing }
-TestCompletionModel >> completionAt: aNumber [
+CompletionModel >> completionAt: aNumber [
 	| entry |
 	
 	entry := (self entries at: aNumber) completion separateKeywords.
@@ -74,94 +74,94 @@ TestCompletionModel >> completionAt: aNumber [
 ]
 
 { #category : #accessing }
-TestCompletionModel >> entries [
+CompletionModel >> entries [
 	^entries ifNil: [entries := self initEntries ].
 ]
 
 { #category : #accessing }
-TestCompletionModel >> entryCount [
+CompletionModel >> entryCount [
 	^ self entries size
 ]
 
 { #category : #accessing }
-TestCompletionModel >> hasMessage [
+CompletionModel >> hasMessage [
 	^ self message notNil
 ]
 
 { #category : #accessing }
-TestCompletionModel >> initEntries [
-	| producer temp |
-	producer := TestMatchedNodeProducer new.
-	self sorter: TestCompletionModel sorter.
+CompletionModel >> initEntries [
+	| producer suggestionsList |
+	producer := CompletionProducer new.
+	self sorter: CompletionModel sorter.
 	producer completionContext: clazz.
-	temp := self sortList: (producer completionListForNode: node).	
-	^ temp collect: [ :each | TestCompletionEntry contents: each node: node ]
+	suggestionsList := self sortList: (producer completionListForNode: node).
+	^ suggestionsList collect: [ :each | CompletionEntry contents: each node: node ]
 ]
 
 { #category : #accessing }
-TestCompletionModel >> initialize [ 
+CompletionModel >> initialize [ 
 	completionToken := ''
 ]
 
 { #category : #accessing }
-TestCompletionModel >> isEmpty [ 
+CompletionModel >> isEmpty [ 
 	^ self entries isEmpty
 ]
 
 { #category : #accessing }
-TestCompletionModel >> message [
+CompletionModel >> message [
 	^self isEmpty 
 		ifTrue: ['no completions found'] 
 		ifFalse: [nil]
 ]
 
 { #category : #action }
-TestCompletionModel >> narrowString [
+CompletionModel >> narrowString [
 
  	^ completionToken
 ]
 
 { #category : #action }
-TestCompletionModel >> narrowWith: aString [ 
+CompletionModel >> narrowWith: aString [ 
 	completionToken := aString ifNil: [  '' ].
 	node narrowWith: completionToken.
 	entries := nil
 ]
 
 { #category : #accessing }
-TestCompletionModel >> node [
+CompletionModel >> node [
 	^ node
 ]
 
 { #category : #accessing }
-TestCompletionModel >> node: anObject [
+CompletionModel >> node: anObject [
 	node := anObject
 ]
 
 { #category : #accessing }
-TestCompletionModel >> notEmpty [
+CompletionModel >> notEmpty [
 	^ self entries isNotEmpty
 ]
 
 { #category : #accessing }
-TestCompletionModel >> sortList: aList [
+CompletionModel >> sortList: aList [
 	"this is where the sorting strategy is set"
 	^ sorter sortCompletionList: aList asOrderedCollection
 ]
 
 { #category : #accessing }
-TestCompletionModel >> sorter [
+CompletionModel >> sorter [
 	^ sorter
 ]
 
 { #category : #accessing }
-TestCompletionModel >> sorter: aSorter [
+CompletionModel >> sorter: aSorter [
 	"the functionality allowing to hook up the sorter"
 	sorter := aSorter
 ]
 
 { #category : #accessing }
-TestCompletionModel >> title [
+CompletionModel >> title [
 	| type |
 	[
 	type := node receiver propertyAt: #type ifAbsent: [ ^ '' ].
