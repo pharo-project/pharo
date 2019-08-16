@@ -2,19 +2,19 @@
 Reverse alphabetic sorting
 "
 Class {
-	#name : #TestReverseAlphabeticSorter,
-	#superclass : #TestSorter,
+	#name : #ReverseAlphabeticSorter,
+	#superclass : #CompletionSorter,
 	#category : #'NECompletion-New'
 }
 
 { #category : #description }
-TestReverseAlphabeticSorter class >> kind [
+ReverseAlphabeticSorter class >> kind [
 
 	^ 'reverse'
 ]
 
 { #category : #description }
-TestReverseAlphabeticSorter class >> sortCompletionList: aList [
+ReverseAlphabeticSorter class >> sortCompletionList: aList [
 
 	^ aList sorted reverse.
 ]
