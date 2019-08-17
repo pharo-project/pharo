@@ -95,6 +95,11 @@ ColorTest >> testColorFrom [
 ]
 
 { #category : #tests }
+ColorTest >> testColorIsSelfEvaluating [
+	self assert: Color red isSelfEvaluating
+]
+
+{ #category : #tests }
 ColorTest >> testFromHexString [
 
 	| color |
