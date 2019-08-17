@@ -8,13 +8,8 @@ Class {
 }
 
 { #category : #'meta-data - dependency analyser' }
-ManifestPharoBootstrapInitialization class >> ignoredDependencies [
-	^ #(#'SUnit-Core')
-]
-
-{ #category : #'meta-data - dependency analyser' }
 ManifestPharoBootstrapInitialization class >> manuallyResolvedDependencies [
-	^ #(#'System-Finalization' #'SUnit-Core')
+	^ #(#'System-Finalization')
 ]
 
 { #category : #'meta-data - dependency analyser' }

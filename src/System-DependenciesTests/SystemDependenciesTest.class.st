@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Colors')
 ]
 
 { #category : #'known dependencies' }
@@ -84,7 +84,7 @@ SystemDependenciesTest >> knownFileSystemDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core' #Colors)
 ]
 
 { #category : #'known dependencies' }
@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core')
+	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core' #'Colors')
 ]
 
 { #category : #'known dependencies' }
@@ -109,7 +109,7 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'System-Localization' #'Transcript-Core')
+	^ #(#'System-Localization' #'Transcript-Core' #'Colors')
 ]
 
 { #category : #'known dependencies' }
@@ -117,7 +117,7 @@ SystemDependenciesTest >> knownMetacelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization' #'Transcript-Core' #'Colors')
 ]
 
 { #category : #'known dependencies' }
@@ -125,7 +125,7 @@ SystemDependenciesTest >> knownMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'System-Localization' #'Transcript-Core')
+	^ #(#'System-Localization' #'Transcript-Core' #Colors)
 ]
 
 { #category : #'known dependencies' }
@@ -149,7 +149,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core' #Colors)
 ]
 
 { #category : #'known dependencies' }
@@ -157,7 +157,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport)
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport #Colors)
 ]
 
 { #category : #'known dependencies' }
@@ -174,7 +174,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core' #Colors)
 ]
 
 { #category : #'known dependencies' }

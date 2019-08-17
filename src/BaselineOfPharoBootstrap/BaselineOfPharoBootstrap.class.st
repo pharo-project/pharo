@@ -74,7 +74,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 	spec for: #common do: [
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
-		spec package: 'Colors'.
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
@@ -153,7 +152,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'FFI-Kernel'.
 			'FFI-Pools'.
 			'Announcements-Core'.
-			'Colors'.
 			'Collections-Abstract'.
 			'Collections-Native'.
 			'Collections-Sequenceable'.
@@ -235,7 +233,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'SUnit-Tests'.
 			'Kernel-Tests'.
 			'JenkinsTools-Core'}.
-
 	]
 
 ]

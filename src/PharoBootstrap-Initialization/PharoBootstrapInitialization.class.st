@@ -71,8 +71,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	
 	"Create the ASTCache and add it to the startup list"
 	ASTCache initialize.
-	
-	Color initialize.
+
 	InstructionStream initialize.
 	SmallInteger initialize.
 

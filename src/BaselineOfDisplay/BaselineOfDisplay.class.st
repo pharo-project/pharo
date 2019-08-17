@@ -25,18 +25,16 @@ Class {
 { #category : #baseline }
 BaselineOfDisplay >> baseline: spec [
 	<baseline>
+	spec
+		for: #common
+		do: [ spec preLoadDoIt: #preload:package:.
+			spec postLoadDoIt: #postload:package:.
 
-	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
-		spec postLoadDoIt: #'postload:package:'.
-		
-		spec 
-			package: 'Graphics-Display Objects';
-			package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
-			package: 'Graphics-Transformations'
-		
-		 ].		
-
+			spec
+				package: 'Colors';
+				package: 'Graphics-Display Objects';
+				package: 'Graphics-Primitives' with: [ spec requires: #('Graphics-Display Objects' 'Colors') ];
+				package: 'Graphics-Transformations' ]
 ]
 
 { #category : #actions }
@@ -54,12 +52,10 @@ BaselineOfDisplay >> installBitmap [
 
 { #category : #actions }
 BaselineOfDisplay >> postload: loader package: packageSpec [
-
 	| display |
-	
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
-	
+
 	self installBitmap.
 
 	display := (Smalltalk classNamed: #DisplayScreen) new.
@@ -68,16 +64,13 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	display beDisplay.
 
 	Cursor classPool at: #CurrentCursor put: Cursor new.
-	Cursor webLink. "set the webLink cursor shape"
-					
-	Cursor initialize.
-	DisplayScreen initialize.
-	BitBlt initialize.
-	Form initialize.
-	
+	Cursor webLink.	"set the webLink cursor shape"
+
+	{Cursor . DisplayScreen . BitBlt . Form . Color} do: #initialize.
+
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
-	Initialized := true.
+	Initialized := true
 ]
 
 { #category : #actions }
