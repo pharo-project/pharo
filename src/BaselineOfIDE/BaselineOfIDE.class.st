@@ -172,6 +172,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Tests'.
+		spec package: 'System-Installers-Tests'.
+		spec package: 'System-Object Events-Tests'.
+		spec package: 'System-OSEnvironments-Tests'.
 		spec package: 'Ring-Deprecated-Tests-Kernel'.
 		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
@@ -211,7 +214,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Tests'.
 		spec package: 'Monticello-Tests'.
+		spec package: 'MonticelloGUI-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -349,7 +354,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'STON-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
-		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
 		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
@@ -441,13 +445,15 @@ spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
 	'Pharo-Help'
 	'Regex-Help'
-	'Spec-Help'	
 ).	
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Debugging-Utils-Tests'
+	'Tests'
+	'RPackage-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
+	'System-Installers-Tests' 
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
 	'Fuel-Platform-Pharo-Core-Tests'	
@@ -779,6 +785,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Deprecated-Tests-Kernel'
 	'Ring-Deprecated-Tests-Containers' 
 	'Tests' 
+	'System-Object Events-Tests'
+	'System-OSEnvironments-Tests'
 	'Zinc-Character-Encoding-Tests' 
 	'System-Platforms-Tests'
 	'Text-Tests'		"required by Multilingual-Tests"
@@ -873,7 +881,7 @@ spec group: #default with: #(
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.7.2';
+		repository: 'github://pharo-vcs/iceberg:v1.6.2';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

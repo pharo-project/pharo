@@ -195,6 +195,13 @@ FileSystemDirectoryEntry >> isFile [
 ]
 
 { #category : #testing }
+FileSystemDirectoryEntry >> isHidden [
+	"Return whether the receiver is hidden"
+
+	^false
+]
+
+{ #category : #testing }
 FileSystemDirectoryEntry >> isReadable [
 
 	^false

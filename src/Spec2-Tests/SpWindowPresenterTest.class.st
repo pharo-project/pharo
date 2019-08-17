@@ -10,11 +10,22 @@ SpWindowPresenterTest >> classToTest [
 	^ SpWindowPresenter
 ]
 
+{ #category : #running }
+SpWindowPresenterTest >> initializeTestedInstance [
+
+	presenter presenter: SpLabelPresenter new.
+]
+
+{ #category : #tests }
+SpWindowPresenterTest >> openInstance [
+
+	window ifNil: [ window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec ]
+]
+
 { #category : #tests }
 SpWindowPresenterTest >> testIsClosed [
 
 	self assert: presenter isClosed.
-	presenter presenter: SpLabelPresenter new.
 	window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec.
 	self deny: presenter isClosed.
 	presenter close.
@@ -27,7 +38,6 @@ SpWindowPresenterTest >> testWhenClosedDo [
 	| closed |
 
 	closed := false.
-	presenter presenter: SpLabelPresenter new.
 	presenter whenClosedDo: [ closed := true ].
 	window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec.
 	presenter close.
@@ -39,7 +49,6 @@ SpWindowPresenterTest >> testWhenOpenedDo [
 	| opened |
 
 	opened := false.
-	presenter presenter: SpLabelPresenter new.
 	presenter whenOpenedDo: [ opened := true ].
 	window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec.
 	self assert: opened

@@ -91,7 +91,7 @@ RBRenameMethodTest >> testRenameTestMethod [
 		in: RBRefactoryTestDataApp
 		to: #renameThisMethod2:
 		permutation: (1 to: 1).
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #renameThisMethod2:) equals: (self parseMethod: 'renameThisMethod2: anArg
 	^self').
@@ -110,7 +110,7 @@ RBRenameMethodTest >> testRenameTestMethod1 [
 		in: RBRefactoryTestDataApp
 		to: #testMethod2
 		permutation: (1 to: 0).
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testMethod2) equals: (self parseMethod: 'testMethod2
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').

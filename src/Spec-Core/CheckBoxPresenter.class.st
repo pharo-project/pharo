@@ -24,9 +24,27 @@ CheckBoxPresenter class >> adapterName [
 ]
 
 { #category : #specs }
+CheckBoxPresenter class >> defaultSpec [
+	<spec>
+	
+	^ #(CheckBoxAdapter
+		adapt: #(model))
+]
+
+{ #category : #specs }
 CheckBoxPresenter class >> title [
 
 	^ 'Checkbox Button'
+]
+
+{ #category : #api }
+CheckBoxPresenter >> enabled: aBoolean [
+	"<api: #boolean getter: #enabled registration: #whenEnabledChanged:>"
+	"Set if the checkbox is enabled (clickable)"
+
+	super enabled: aBoolean.
+	self changed: #enabled.
+
 ]
 
 { #category : #api }

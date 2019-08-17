@@ -4,7 +4,7 @@ Unit test for trait related slot scopes
 Class {
 	#name : #T2TraitSlotScopeTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }

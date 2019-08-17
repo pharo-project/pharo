@@ -9,15 +9,9 @@ Class {
 
 { #category : #factory }
 MorphicDropListAdapter >> buildWidget [
-
-	self model model whenChangedDo: [ 
-		self changed: #getList.
-		self changed: #getIndex  ].
-	self model selection whenChangedDo: [ self changed: #getIndex ].
-
 	^ SpecDropListMorph new
 		wrapSelector: #wrap:withIndex:;
-		on: self list: #getList selected: #getIndex changeSelected: #setIndex:;
+		on: self list: #getList selected: #getIndex 	changeSelected: #setIndex:;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		dragEnabled: self dragEnabled;
@@ -27,17 +21,10 @@ MorphicDropListAdapter >> buildWidget [
 		yourself
 ]
 
-{ #category : #accessing }
-MorphicDropListAdapter >> displayedIcon [
-	
-	self model hasIcons ifFalse: [^ nil].
-	^ self widget currentIcon
-]
+{ #category : #'widget API' }
+MorphicDropListAdapter >> getIconFor: anItem [
 
-{ #category : #icons }
-MorphicDropListAdapter >> getIconFor: aDropListItem [ 
-	
-	^ self model getIconFor: aDropListItem
+	^ self model iconHolder cull: anItem model cull: anItem
 ]
 
 { #category : #'widget API' }
@@ -52,23 +39,9 @@ MorphicDropListAdapter >> getList [
 	^ self model getList
 ]
 
-{ #category : #accessing }
-MorphicDropListAdapter >> selectIndex: anInteger [ 
-	
-	self widget listSelectionIndex: anInteger
-]
-
-{ #category : #accessing }
-MorphicDropListAdapter >> selectedIndexes [
-	
-	| selectedIndex |
-	selectedIndex := self widget getCurrentSelectionIndex.
-	^ selectedIndex = 0 ifTrue: [ #() ] ifFalse: [ { selectedIndex } ]
-]
-
 { #category : #'widget API' }
 MorphicDropListAdapter >> setIndex: anIndex [
-	^ self model selectedIndex: anIndex
+	^ self model setIndex: anIndex
 ]
 
 { #category : #'widget API' }

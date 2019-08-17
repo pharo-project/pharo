@@ -112,6 +112,12 @@ SDL_Window >> primDestroy [
 	^ self ffiCall: #( void SDL_DestroyWindow ( self ) )
 ]
 
+{ #category : #'window management' }
+SDL_Window >> raise [
+
+	^ self ffiCall: #( void SDL_RaiseWindow( self ) )
+]
+
 { #category : #'external resource management' }
 SDL_Window >> resourceData [
 	^ {self getHandle. self windowID }

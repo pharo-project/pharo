@@ -17,16 +17,14 @@ I provide the following methods
 Class {
 	#name : #AbstractFormButtonPresenter,
 	#superclass : #AbstractWidgetPresenter,
-	#traits : 'TSpecObservable',
-	#classTraits : 'TSpecObservable classTrait',
 	#instVars : [
-		'#actionWhenActivatedHolder',
-		'#state => SpecObservableSlot',
-		'#labelClickableHolder',
-		'#label => SpecObservableSlot',
-		'#actionWhenDeactivatedHolder'
+		'actionWhenActivatedHolder',
+		'stateHolder',
+		'labelClickableHolder',
+		'labelHolder',
+		'actionWhenDeactivatedHolder'
 	],
-	#category : #'Spec-Core-Widgets'
+	#category : #'Spec-Core-Widgets-Support'
 }
 
 { #category : #api }
@@ -46,7 +44,7 @@ AbstractFormButtonPresenter >> click [
 	self toggleState
 ]
 
-{ #category : #'api-events' }
+{ #category : #'as yet unclassified' }
 AbstractFormButtonPresenter >> deactivationAction: aBlock [
 	"<api: #block getter: #desactivationAction registration: #whenDeactivationActionChanged:>"
 	"This method is used to set the action to perform when I am deactivated"
@@ -54,41 +52,38 @@ AbstractFormButtonPresenter >> deactivationAction: aBlock [
 	actionWhenDeactivatedHolder value: aBlock
 ]
 
-{ #category : #api }
-AbstractFormButtonPresenter >> enabled: aBoolean [
-	"<api: #boolean getter: #enabled registration: #whenEnabledChanged:>"
-	"Set if the button is enabled (clickable)"
-
-	super enabled: aBoolean.
-	self changed: #enabled.
-
-]
-
 { #category : #initialization }
 AbstractFormButtonPresenter >> initialize [
 
 	super initialize.
-
 	actionWhenActivatedHolder := [] asValueHolder.
 	actionWhenDeactivatedHolder := [] asValueHolder.
 	enabledHolder := true asValueHolder.
-	state := false.
-	
+	stateHolder := false asValueHolder.
 	labelClickableHolder := true asValueHolder. 
-	label := ''.
-	labelClickableHolder whenChangedDo: [:aBoolean | self changed: { #labelClickable: . aBoolean } ]
+	labelHolder := '' asValueHolder.
+	stateHolder whenChangedDo: [:bool |
+		bool
+			ifTrue: actionWhenActivatedHolder value
+			ifFalse: actionWhenDeactivatedHolder value.
+		self changed: #state ].
+	
+	labelClickableHolder whenChangedDo: [:aBoolean | self changed: { #labelClickable: . aBoolean } ].
+	labelHolder whenChangedDo: [:label | self changed: { #label: . label } ].
 ]
 
 { #category : #api }
 AbstractFormButtonPresenter >> label [
-
-	^ label
+	"<api: #inspect>"
+	^ labelHolder value
 ]
 
 { #category : #api }
 AbstractFormButtonPresenter >> label: aString [
+	"<api: #string getter: #label>"
+	"Set the label of the checkbox"
 
-	label := aString
+	labelHolder value: aString
 ]
 
 { #category : #api }
@@ -107,21 +102,26 @@ AbstractFormButtonPresenter >> labelClickable: aBoolean [
 	labelClickableHolder value: aBoolean
 ]
 
+{ #category : #'api-valueHolder' }
+AbstractFormButtonPresenter >> labelHolder [
+
+	^ labelHolder
+]
+
 { #category : #api }
 AbstractFormButtonPresenter >> state [
+	"<api: #inspect>"
+
 	"Return the current state of the form button"
 
-	^ state
+	^ stateHolder value
 ]
 
 { #category : #api }
 AbstractFormButtonPresenter >> state: aBoolean [
-
-	self state = aBoolean
-		ifTrue: [
-			"Do not update in case it does not change"
-			^ self ].
-	state := aBoolean
+	"Set if the checkbox is activated or not"
+	"<api: #boolean getter: #state>"
+	stateHolder value: aBoolean
 ]
 
 { #category : #api }
@@ -136,45 +136,37 @@ AbstractFormButtonPresenter >> toggleState [
 AbstractFormButtonPresenter >> whenActivatedDo: aBlock [
 	"This method is used to propagate the event that I have been activated" 
 	
-	self whenChangedDo: [:bool | bool ifTrue: aBlock ]
+	stateHolder whenChangedDo: [:bool | bool ifTrue: aBlock ]
 ]
 
 { #category : #'api-events' }
-AbstractFormButtonPresenter >> whenActivationActionChangedDo: aBlock [
+AbstractFormButtonPresenter >> whenActivationActionChanged: aBlock [
 	"A block performed when the activation action changed"
-
-	actionWhenActivatedHolder whenChangedDo: aBlock
+	actionWhenActivatedHolder whenChangedDo: aBlock 
 ]
 
 { #category : #'api-events' }
 AbstractFormButtonPresenter >> whenChangedDo: aBlock [
 	"This method is used to propagate the event that I have changed"
 	
-	self property: #state whenChangedDo: aBlock
+	stateHolder whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #'as yet unclassified' }
 AbstractFormButtonPresenter >> whenDeactivatedDo: aBlock [
 	"This method is used to propagate the event that I have been deactivated"
 	
-	self whenChangedDo: [:bool | bool ifFalse: aBlock ]
+	stateHolder whenChangedDo: [:bool | bool ifFalse: aBlock ]
 ]
 
-{ #category : #'api-events' }
-AbstractFormButtonPresenter >> whenDeactivationActionChangedDo: aBlock [
+{ #category : #'as yet unclassified' }
+AbstractFormButtonPresenter >> whenDeactivationActionChanged: aBlock [
 	"A block performed when the deactivation action changed"
-
-	actionWhenDeactivatedHolder whenChangedDo: aBlock
+	actionWhenDeactivatedHolder whenChangedDo:  aBlock 
 ]
 
 { #category : #'api-events' }
-AbstractFormButtonPresenter >> whenLabelChangedDo: aBlock [
-
-	self property: #label whenChangedDo: aBlock 
-]
-
-{ #category : #'api-events' }
-AbstractFormButtonPresenter >> whenLabelClickableChangedDo: aBlock [
+AbstractFormButtonPresenter >> whenLabelClickableChanged: aBlock [
 	"A block performed when the label click is activated or descativated"
 	
 	labelClickableHolder whenChangedDo:  aBlock 

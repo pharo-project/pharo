@@ -6,5 +6,5 @@ Class {
 
 { #category : #running }
 SpLabelledSliderInputTest >> classToTest [
-	^ SpLabelledSliderInput
+	^ SpLabelledSliderInputPresenter
 ]

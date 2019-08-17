@@ -29,8 +29,8 @@ Class {
 		'crc32',
 		'compressedSize',
 		'uncompressedSize',
-		'writeLocalHeaderRelativeOffset',
-		'readDataRemaining'
+		'readDataRemaining',
+		'headerStartPosition'
 	],
 	#pools : [
 		'ZipFileConstants'
@@ -590,36 +590,6 @@ ZipArchiveMember >> readRawChunk: n [
 	self subclassResponsibility
 ]
 
-{ #category : #'private-writing' }
-ZipArchiveMember >> refreshLocalFileHeaderTo: aStream [
-	"Re-writes my local header to the given stream.
-	To be called after writing the data stream.
-	Assumes that fileName and localExtraField sizes didn't change since last written."
-
-	| here systemFileName endianStream |
-	self flag: 'WTF! What is the purpose of this method?! We just wrote the headers. Why write them again?'.
-	here := aStream position.
-	systemFileName := fileName asVmPathName.
-	aStream position: writeLocalHeaderRelativeOffset.
-
-	aStream nextPutAll: LocalFileHeaderSignature.
-	
-	endianStream := ZnEndianessReadWriteStream on: aStream.
-	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
-	endianStream nextLittleEndianNumber: 2 put: self bitFlag.
-	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
-	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
-	endianStream nextLittleEndianNumber: 4 put: crc32.
-	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
-												ifTrue: [ uncompressedSize ] ifFalse: [ compressedSize ]).
-	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
-	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
-	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
-
-	aStream position: here
-
-]
-
 { #category : #private }
 ZipArchiveMember >> rewindData [
 	readDataRemaining :=  (desiredCompressionMethod = CompressionDeflated
@@ -758,7 +728,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	endianStream nextLittleEndianNumber: 2 put: internalFileAttributes.
 
 	endianStream nextLittleEndianNumber: 4 put: externalFileAttributes.
-	endianStream nextLittleEndianNumber: 4 put: writeLocalHeaderRelativeOffset.
+	endianStream nextLittleEndianNumber: 4 put: headerStartPosition.
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: systemCdExtraField asByteArray.
@@ -848,9 +818,23 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 
 { #category : #writing }
 ZipArchiveMember >> writeTo: aStream [
+	"The header contains information about the data, including compressed size and CRC,
+	 that we do not know yet! So we leave room for the header, write the data, and go
+	 back to write the header after we have the needed information."
+
+	| headerSize headerEndPosition dataEndPosition |
 	self rewindData.
-	writeLocalHeaderRelativeOffset := aStream position.
-	self writeLocalFileHeaderTo: aStream.
+	headerStartPosition := aStream position.
+	headerSize := 30
+		+ fileName asVmPathName asByteArray size 
+		+ localExtraField asByteArray size.
+	headerEndPosition := headerStartPosition + headerSize.
+	aStream nextPutAll: (ByteArray new: headerSize).
 	self writeDataTo: aStream.
-	self refreshLocalFileHeaderTo: aStream.
+	dataEndPosition := aStream position.
+	aStream position: headerStartPosition.
+	self writeLocalFileHeaderTo: aStream.
+	"Verify that our calculation of the header size was correct!"
+	aStream position == headerEndPosition ifFalse: [ self error: 'Incorrect header size!' ].
+	aStream position: dataEndPosition.
 ]

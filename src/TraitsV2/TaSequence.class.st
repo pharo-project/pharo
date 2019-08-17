@@ -314,9 +314,26 @@ TaSequence >> validateMethods: aTrait [
 
 { #category : #validations }
 TaSequence >> validateSlots: anElement [
-	self slots do: [ :e | anElement slots do: [ :other | 
+	self slots
+		do: [ :e | 
+			anElement slots
+				do: [ :other | 
 					(e name = other name and: [ e definingClass ~= other definingClass ])
-						ifTrue: [ self error: 'The added trait duplicates an existing slot ' , e name printString ] ] ]
+						ifTrue: [ self error: 'The added trait duplicates an existing slot ' , e name printString , '. Duplication between ' , e definingClass asString , ' and ' , other definingClass asString ] ] ]
+]
+
+{ #category : #precedence }
+TaSequence >> withPrecedenceOf: aTrait [ 
+	
+	| aTraitComposition |
+	aTraitComposition := aTrait asTraitComposition.
+	
+	(members includes: aTraitComposition)
+		ifFalse: [ self error: 'A trait cannot be marked with precedence if it is not in the sequence' ].
+		
+	^ (TaPrecedenceComposition withAll: members)
+			preferedTrait: aTraitComposition;
+			yourself
 ]
 
 { #category : #operations }

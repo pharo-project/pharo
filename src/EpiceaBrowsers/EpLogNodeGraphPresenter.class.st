@@ -7,7 +7,7 @@ self open.
 "
 Class {
 	#name : #EpLogNodeGraphPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'directory',
 		'monitor',
@@ -21,6 +21,21 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Graph'
 }
 
+{ #category : #accessing }
+EpLogNodeGraphPresenter class >> defaultSpec [
+	^ SpBoxLayout newVertical
+		add: #logNodesTreePresenter;
+		add:
+			(SpBoxLayout newHorizontal
+				add: #hiedraCheckBoxPresenter;
+				add: #refreshButtonPresenter;
+				add: #selectDirectoryButtonPresenter;
+				add: #openSettingsButtonPresenter;
+				yourself)
+			withConstraints: [ :constraints | constraints height: self buttonHeight - 4 ];
+		yourself
+]
+
 { #category : #'instance creation' }
 EpLogNodeGraphPresenter class >> open [
 
@@ -28,24 +43,6 @@ EpLogNodeGraphPresenter class >> open [
 		refresh;
 		openWithSpec;
 		yourself
-]
-
-{ #category : #accessing }
-EpLogNodeGraphPresenter class >> spec [
-	<spec: #default>
-
-	^ SpecLayout composed newColumn: [:column |
-		column add: #logNodesTreePresenter.
-
-		column 
-			newRow: [ :row |
-				 row 
-					add: #hiedraCheckBoxPresenter;
-					add: #refreshButtonPresenter" width: self inputTextHeight";
-					add: #selectDirectoryButtonPresenter" width: self inputTextHeight";
-					add: #openSettingsButtonPresenter;
-					yourself ]
-			 height: self buttonHeight - 4 ].
 ]
 
 { #category : #accessing }
@@ -88,29 +85,20 @@ EpLogNodeGraphPresenter >> initializeHiedraController [
 		rowHeight: self rowHeight;
 		cellWidth: self rowHeight // 3;
 		arrowSize: 2.0;
-		nodeConnectionOffset: 2.5.
-
-	"Set zero inset, else there is an empty gap cutting Hiedra links."
-	self logNodesTreePresenter rowInset: 0.
+		nodeConnectionOffset: 2.5
 
 ]
 
 { #category : #initialization }
 EpLogNodeGraphPresenter >> initializeLogNodesTreePresenter [
-
 	self initializeHiedraController.
 
-	self logNodesTreePresenter columns:	{	
-		TreeColumnPresenter new	
-			displayBlock: [ :item | hiedraColumnController cellMorphAtValue: item content ];
-			initialWidth: 50;
-			yourself.
-
-		TreeColumnPresenter new
-			displayBlock: [ :item | item content asMorph ];
-			yourself.
-	}.
-
+	self logNodesTreePresenter
+		addColumn:
+			((SpImageTableColumn evaluated: [ :item | hiedraColumnController cellMorphAtValue: item ])
+				width: 50;
+				yourself);
+		addColumn: (SpStringTableColumn evaluated: #yourself)
 ]
 
 { #category : #initialization }
@@ -154,14 +142,11 @@ EpLogNodeGraphPresenter >> initializeSelectedDirectoryButtonPresenter [
 
 { #category : #initialization }
 EpLogNodeGraphPresenter >> initializeWidgets [
-
-	self instantiatePresenters: {
-		#hiedraCheckBoxPresenter -> #CheckBoxPresenter.
-		#selectDirectoryButtonPresenter -> #ButtonPresenter.
-		#logNodesTreePresenter -> #TreePresenter.
-		#refreshButtonPresenter -> #ButtonPresenter.
-		#openSettingsButtonPresenter -> #ButtonPresenter.
-		}
+	hiedraCheckBoxPresenter := self newCheckBox.
+	selectDirectoryButtonPresenter := self newButton.
+	logNodesTreePresenter := self newTreeTable.
+	refreshButtonPresenter := self newButton.
+	openSettingsButtonPresenter := self newButton
 ]
 
 { #category : #refreshing }

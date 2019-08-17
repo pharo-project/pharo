@@ -255,12 +255,6 @@ GTSpotterStep >> isCategorySelected: aProcessor [
 	^ self hasSelected and: [ self selected processor == aProcessor ]
 ]
 
-{ #category : #'zz-deprecated' }
-GTSpotterStep >> isEmpty [
-	self deprecated: 'Use hasCandidates instead'.
-	^ self hasCandidates not
-]
-
 { #category : #testing }
 GTSpotterStep >> isSelected: aCandidateLink [
 	"Return true if aCandidateLink is currently selected,

@@ -1077,7 +1077,7 @@ PluggableTextMorph >> referencesToIt [
 	self handleEdit: [textMorph editor referencesToIt]
 ]
 
-{ #category : #scrolling }
+{ #category : #actions }
 PluggableTextMorph >> registerScrollChanges: aSelector [
 
 	self announcer 

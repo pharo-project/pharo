@@ -6,5 +6,5 @@ Class {
 
 { #category : #running }
 SpSliderInputTest >> classToTest [
-	^ SpSliderInput
+	^ SpSliderInputPresenter
 ]

@@ -74,7 +74,7 @@ SpToolBarMorph >> addItemRight: aMorph [
 		yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #addition }
 SpToolBarMorph >> addItemsFromContext: aContext [
 	
 	self flag: #TODO.

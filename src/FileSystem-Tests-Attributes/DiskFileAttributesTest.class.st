@@ -167,6 +167,12 @@ DiskFileAttributesTest >> testIsFIFO [
 ]
 
 { #category : #tests }
+DiskFileAttributesTest >> testIsHidden [
+
+	self collectionAssert: [ :each | each isHidden ] equals: false.
+]
+
+{ #category : #tests }
 DiskFileAttributesTest >> testIsReadable [
 
 	self collectionAssert: [ :each | each isReadable ].

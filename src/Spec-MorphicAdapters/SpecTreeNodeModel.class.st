@@ -153,9 +153,3 @@ SpecTreeNodeModel >> setChildren: aBlock [
 
 	self childrenItemsBlock: aBlock
 ]
-
-{ #category : #accessing }
-SpecTreeNodeModel >> visible: aBoolean [
-
-	"Do nothing. Morphs implement visible but this column, though it inherits from Morphic column and has an adapter, dos not."
-]

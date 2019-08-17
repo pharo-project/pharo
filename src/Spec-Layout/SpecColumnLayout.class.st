@@ -59,6 +59,7 @@ SpecColumnLayout >> manualFractionComputation [
 
 { #category : #converting }
 SpecColumnLayout >> privateAsArray [
+
 	self resetArrayComputation.
 	self countNumberOfProportionals.
 
@@ -68,7 +69,8 @@ SpecColumnLayout >> privateAsArray [
 
 	self shiftLastWidgets.
 
-	^ super privateAsArray
+	result addAll: super privateAsArray.
+	^ result asArray
 ]
 
 { #category : #private }

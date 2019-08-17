@@ -657,12 +657,6 @@ Class >> isClassOrTrait [
 	^true
 ]
 
-{ #category : #deprecation }
-Class >> isDeprecated [
-
-	^ false
-]
-
 { #category : #testing }
 Class >> isObsolete [
 	"Return true if the receiver is obsolete."
@@ -941,6 +935,15 @@ Class >> sharedPools [
 { #category : #'pool variables' }
 Class >> sharedPools: aCollection [
 	sharedPools := aCollection
+]
+
+{ #category : #'pool variables' }
+Class >> sharedPoolsDo: aBlockClosure [ 
+	"Iterate shared pools.
+	The shared pool collection is lazily created on access.
+	This method avoids creating the collection for a simple iteration"
+	self hasSharedPools ifFalse: [ ^ self ].
+	self sharedPools do: aBlockClosure
 ]
 
 { #category : #'initialize-release' }

@@ -17,10 +17,10 @@ RBPullUpMethodTest >> testPullUpAndCopyDown [
 		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
-	self executeRefactoring: (RBPullUpMethodRefactoring 
+	self proceedThroughWarning: [ self executeRefactoring: (RBPullUpMethodRefactoring 
 				model: model
 				pullUp: #(#yourself)
-				from: class).
+				from: class) ].
 	self assert: (class superclass parseTreeFor: #yourself) 
 			equals: (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).

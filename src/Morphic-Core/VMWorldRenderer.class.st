@@ -23,25 +23,6 @@ VMWorldRenderer class >> priority [
 	^ 1
 ]
 
-{ #category : #activation }
-VMWorldRenderer >> activate [
-
-    InputEventFetcher default startUp.
-    InputEventSensor installMouseDecodeTable.
-    InputEventSensor default startUp.
-    
-    Display setExtent: self actualScreenSize depth: 32.
-    Display beDisplay.
-
-    canvas := nil.
-    display := nil.
-
-    self assuredCanvas.
-    DisplayScreen refreshHostWindowTitle.
-    Display forceDisplayUpdate.
-    world displayWorld.
-]
-
 { #category : #operations }
 VMWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
@@ -89,15 +70,14 @@ VMWorldRenderer >> checkForNewScreenSize [
    Display setExtent: self actualScreenSize depth: 32.
    Display beDisplay.
 
+	world worldState realWindowExtent: self actualScreenSize.
+
 	world restoreMorphicDisplay.
 
 ]
 
 { #category : #activation }
 VMWorldRenderer >> deactivate [
-
-	WorldMorph currentWorld ifNotNil: [:world | world triggerEvent: #aboutToLeaveWorld ].
-	WorldMorph extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].
 
 	InputEventSensor default shutDown.
 	
@@ -158,6 +138,25 @@ VMWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: sub
 		forceDisplayUpdate
 ]
 
+{ #category : #activation }
+VMWorldRenderer >> doActivate [
+
+    InputEventFetcher default startUp.
+    InputEventSensor installMouseDecodeTable.
+    InputEventSensor default startUp.
+    
+    Display setExtent: self actualScreenSize depth: 32.
+    Display beDisplay.
+
+    canvas := nil.
+    display := nil.
+
+    self assuredCanvas.
+    DisplayScreen refreshHostWindowTitle.
+    Display forceDisplayUpdate.
+    world displayWorld.
+]
+
 { #category : #operations }
 VMWorldRenderer >> doDeferredUpdatingFor: aWorld [
 "If this platform supports deferred updates, then make my canvas be the Display (or a rectangular portion of it), set the Display to deferred update mode, and answer true. Otherwise, do nothing and answer false. One can set the class variable DisableDeferredUpdates to true to completely disable the deferred updating feature."
@@ -189,6 +188,20 @@ VMWorldRenderer >> fullscreenMode: aValue [
 
 	Display fullscreenMode: aValue.
 	self checkForNewScreenSize.
+]
+
+{ #category : #accessing }
+VMWorldRenderer >> icon: aForm [ 
+
+	"Do nothing.
+	This is not supported anymore with the old VM world renderers.
+	Use the new headless + SDL instead.
+	
+	Alternatively, if you're on windows you can try to use the following primitive from DisplayScreen that receives a path to a .ico file.
+	This primitive only works on Windows.
+	
+	DisplayScreen hostWindowIcon: path.
+	"
 ]
 
 { #category : #'display box access' }

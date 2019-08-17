@@ -3,7 +3,7 @@ I am the adapter used to bridge a ListPresenter and a PluggableListMorph
 "
 Class {
 	#name : #SpMorphicListAdapter,
-	#superclass : #SpAbstractMorphicAdapter,
+	#superclass : #SpAbstractMorphicListAdapter,
 	#category : #'Spec2-Adapters-Morphic-List'
 }
 
@@ -56,11 +56,13 @@ SpMorphicListAdapter >> buildWidget [
 	self presenter whenModelChangedDo: [ widget refresh ].
 	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
 	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
+	
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
 	self updateItemFilterBlockWith: self itemFilter.
-
+	
+	self configureScrolling.
 	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
 
 	^ widget

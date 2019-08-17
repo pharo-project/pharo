@@ -6,7 +6,11 @@ Class {
 	#name : #AbstractWorldRenderer,
 	#superclass : #Object,
 	#instVars : [
-		'world'
+		'world',
+		'alreadyActivated'
+	],
+	#classVars : [
+		'MainWorldRenderer'
 	],
 	#category : #'Morphic-Core-Worlds'
 }
@@ -14,9 +18,20 @@ Class {
 { #category : #accessing }
 AbstractWorldRenderer class >> detectCorrectOneforWorld: aWorld [
 
-(self allSubclasses sorted: [ :a :b | a priority > b priority ])
-        detect: [ :aClass | aClass isApplicableFor: aWorld ]
-        ifFound: [ :aClass | ^ aClass forWorld: aWorld ]
+	| aRenderer |
+
+	aWorld isMainWorld ifTrue:[
+		MainWorldRenderer ifNotNil: [ ^ MainWorldRenderer ]	
+	].
+
+	(self allSubclasses sorted: [ :a :b | a priority > b priority ])
+		detect: [ :aClass | aClass isApplicableFor: aWorld ]
+		ifFound: [ :aClass | aRenderer := aClass forWorld: aWorld ].
+		
+	aWorld isMainWorld 
+		ifTrue:[ ^ MainWorldRenderer := aRenderer ]
+		ifFalse: [ ^ aRenderer ].
+	
 ]
 
 { #category : #accessing }
@@ -28,15 +43,40 @@ AbstractWorldRenderer class >> forWorld: aWorld [
 ]
 
 { #category : #accessing }
+AbstractWorldRenderer class >> initialize [
+
+	SessionManager default registerSystemClassNamed: self name	
+]
+
+{ #category : #accessing }
 AbstractWorldRenderer class >> priority [ 
 
 	^ 0
 ]
 
+{ #category : #accessing }
+AbstractWorldRenderer class >> shutDown: quitting [
+	quitting
+		ifFalse: [ ^ self ].
+
+	[ MainWorldRenderer ifNotNil: [ :e | e deactivate ] ]
+		ensure: [ MainWorldRenderer := nil ]
+]
+
+{ #category : #accessing }
+AbstractWorldRenderer class >> startUp: isANewSession [
+
+	isANewSession
+		ifTrue: [ MainWorldRenderer := nil ]
+]
+
 { #category : #activation }
 AbstractWorldRenderer >> activate [
 
-	self subclassResponsibility 
+	alreadyActivated ifTrue: [ ^ self ].
+
+	self doActivate.
+	alreadyActivated := true
 ]
 
 { #category : #activation }
@@ -49,6 +89,24 @@ AbstractWorldRenderer >> actualScreenSize [
 AbstractWorldRenderer >> deactivate [
 
 	self subclassResponsibility 
+]
+
+{ #category : #activation }
+AbstractWorldRenderer >> doActivate [
+
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+AbstractWorldRenderer >> icon: aForm [ 
+
+	self subclassResponsibility
+]
+
+{ #category : #activation }
+AbstractWorldRenderer >> initialize [
+
+	alreadyActivated := false
 ]
 
 { #category : #operations }
