@@ -526,6 +526,15 @@ StandardFileStream >> nextPutAll: stringOrByteArray [
 
 ]
 
+{ #category : #reading }
+StandardFileStream >> nextWordsInto: aBitmap [
+	"Note: The file primitives automatically adjust for word based objects."
+
+	self next: aBitmap basicSize into: aBitmap startingAt: 1.
+	aBitmap restoreEndianness.
+	^ aBitmap
+]
+
 { #category : #'open/close' }
 StandardFileStream >> open [
 	"For compatibility with a few existing things."
