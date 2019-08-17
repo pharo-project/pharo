@@ -16,20 +16,20 @@ WeakMessageSendTest >> testCollectArguments [
 	| msg rcvr c|
 	
 	rcvr := OrderedCollection new.
-	c := Color green.
-	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { Color black }.
+	c := 1.
+	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { 2 }.
 	
 	msg valueWithArguments: {}.
 	
-	self assertCollection: rcvr asArray equals: { Color black }.
+	self assertCollection: rcvr asArray equals: { 2 }.
 	
 	msg valueWithArguments: { #a . WeakArray with: c }.
 	
-	self assertCollection: rcvr asArray equals: { Color black . #a }.
+	self assertCollection: rcvr asArray equals: { 2 . #a }.
 	
-	msg valueWithArguments: (WeakArray with: c).
+	msg valueWithArguments: (WeakArray with: 1).
 	
-	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }.
+	self assertCollection: rcvr asArray equals: { 2 . #a  . 1 }.
 ]
 
 { #category : #tests }
