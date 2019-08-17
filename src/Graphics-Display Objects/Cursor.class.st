@@ -1035,7 +1035,7 @@ Cursor class >> write [
 
 { #category : #primitives }
 Cursor >> activateInCursorOwner: aCursorOwner [
-	^ aCursorOwner activateCursor: self
+	^ self beCursor
 ]
 
 { #category : #converting }
