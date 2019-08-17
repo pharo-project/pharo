@@ -419,7 +419,8 @@ DateAndTime >> midnight [
 DateAndTime >> minute [
 	"Answer a number that represents the number of complete minutes in the receiver' time part, 
 	after the number of complete hours has been removed."
-	
+	"(DateAndTime fromString: ' 2004-02-29T13:33:00+02:00') minute >>> 33"
+		
  	^ self localSeconds // SecondsInMinute \\ 60
 ]
 
