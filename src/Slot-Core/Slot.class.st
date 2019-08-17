@@ -132,6 +132,13 @@ Slot >> addSlotInitToInitialize: aClass [
 		during: [ aClass compile: source classified: 'initialization' ]
 ]
 
+{ #category : #'class building' }
+Slot >> asClassVariable [
+	self
+		error:
+			'Slots can not be used to define Class Variables, you need to create a LiteralVariable subclass instead'
+]
+
 { #category : #converting }
 Slot >> asSlot [
 	^ self
