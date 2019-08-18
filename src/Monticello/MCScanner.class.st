@@ -45,7 +45,7 @@ MCScanner >> next [
 		"For an array, start a new level on the stack"
 		c = $( ifTrue: [ stream next. stack push: Stack new ] ifFalse: [
 		"At the end of an array, so add it to the previous level"
-		c = $) ifTrue: [ | x | x := stack pop. stack top push: x asArray reverse ] ifFalse: [ 
+		c = $) ifTrue: [ | x | stream next. x := stack pop. stack top push: x asArray reverse ] ifFalse: [ 
 		"Unexpected token"
 		self error: 'Unknown token type' ]]]].
 		"Keep looping while we are in an array"
