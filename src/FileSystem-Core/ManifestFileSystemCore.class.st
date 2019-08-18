@@ -13,5 +13,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestFileSystemCore class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Support' #'System-Platforms' #'Zinc-Character-Encoding-Core' #'AST-Core' #'System-Settings-Core' #'FileSystem-Disk')
+	^ #(#'System-Support' #'System-Platforms' #'Zinc-Character-Encoding-Core' #'AST-Core' #'System-Settings-Core' #'FileSystem-Disk')
 ]
