@@ -217,12 +217,8 @@ StartupPreferencesLoader >> add: anAction [
 
 { #category : #private }
 StartupPreferencesLoader >> addAtStartup: aCollection inDirectory: aFileReference named: fileName [
-
-	| scriptFile |
 	aFileReference ensureCreateDirectory.
-	scriptFile := aFileReference / fileName.
-	FileStream forceNewFileNamed: scriptFile fullName do: [ :stream | stream nextPutAll: (self buildStreamFor: aCollection) ].
-
+	aFileReference / fileName writeStreamDo: [ :stream | stream nextPutAll: (self buildStreamFor: aCollection) ]
 ]
 
 { #category : #'script generation' }

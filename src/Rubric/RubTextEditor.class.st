@@ -1994,11 +1994,8 @@ RubTextEditor >> saveContentsInFile [
 	suggestedName ifNil: [suggestedName := labelToUse , '.text'].
 	fileName := UIManager default request: 'File name?'
 				initialAnswer: suggestedName.
-	fileName isEmptyOrNil 
-		ifFalse: 
-			[(FileStream newFileNamed: fileName)
-				nextPutAll: stringToSave;
-				close]
+	fileName isEmptyOrNil
+		ifFalse: [ fileName asFileReference writeStreamDo: [ :out | out nextPutAll: stringToSave ] ]
 ]
 
 { #category : #scrolling }
