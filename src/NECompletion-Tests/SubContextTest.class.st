@@ -1,7 +1,7 @@
 Class {
 	#name : #SubContextTest,
 	#superclass : #CompletionContextTest,
-	#category : #'NECompletion-NewTests'
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #testing }

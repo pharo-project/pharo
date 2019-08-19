@@ -1,7 +1,7 @@
 Class {
 	#name : #CompletionContextTest,
 	#superclass : #TestCase,
-	#category : #'NECompletion-NewTests'
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #private }
