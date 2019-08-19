@@ -147,8 +147,7 @@ Cursor class >> currentCursor: aCursor [
 		^ self
 	].
 
-	CurrentCursor := aCursor.
-	"aCursor beCursor"
+	CurrentCursor := aCursor	
 ]
 
 { #category : #constants }
@@ -1036,7 +1035,7 @@ Cursor class >> write [
 
 { #category : #primitives }
 Cursor >> activateInCursorOwner: aCursorOwner [
-	^ aCursorOwner activateCursor: self
+	^ self beCursor
 ]
 
 { #category : #converting }
