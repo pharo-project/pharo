@@ -18,7 +18,7 @@ RBNotEnvironment >> definesClass: aClass [
 
 { #category : #testing }
 RBNotEnvironment >> includesCategory: aCategory [ 
-	^(self classNamesFor: aCategory) isEmpty not
+	^(self classNamesFor: aCategory) isNotEmpty
 ]
 
 { #category : #testing }
