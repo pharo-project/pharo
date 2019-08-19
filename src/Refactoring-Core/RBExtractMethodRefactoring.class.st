@@ -262,11 +262,10 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 		exceptForVariables: (tree arguments collect: [:each | each name])) 
 			ifFalse: [^false].
 	(definingClass = class or: 
-			[(tree superMessages detect: 
+			[(tree superMessages anySatisfy: 
 					[:each | 
 					(class superclass whichClassIncludesSelector: aSelector) 
-						~= (definingClass superclass whichClassIncludesSelector: each)]
-				ifNone: [nil]) isNil]) 
+						~= (definingClass superclass whichClassIncludesSelector: each)]) not]) 
 		ifFalse: [^false].
 	^self shouldUseExistingMethod: aSelector
 ]

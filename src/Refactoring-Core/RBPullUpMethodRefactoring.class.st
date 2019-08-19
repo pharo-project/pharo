@@ -163,8 +163,7 @@ RBPullUpMethodRefactoring >> checkSuperclass [
 			myTree := class parseTreeFor: each.
 			superTree := targetSuperclass parseTreeFor: each.
 			superTree equalTo: myTree exceptForVariables: #() ].
-	overrideSelectors isEmpty
-		ifTrue: [ ^ self ].
+	overrideSelectors ifEmpty: [ ^ self ].
 	targetSuperclass isAbstract
 		ifFalse: [ self
 				refactoringError:
@@ -187,7 +186,7 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 	oldProtocol := superclassDefiner protocolsFor: aSelector.
 	subclasses := targetSuperclass subclasses 
 				reject: [:each | each directlyDefinesMethod: aSelector].
-	subclasses isEmpty ifTrue: [^ self ].
+	subclasses ifEmpty: [^ self ].
 	(superclassDefiner parseTreeFor: aSelector) superMessages 
 		detect: [:each | superclassDefiner directlyDefinesMethod: each]
 		ifFound: 
