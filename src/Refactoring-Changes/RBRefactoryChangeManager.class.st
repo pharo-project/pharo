@@ -122,12 +122,12 @@ RBRefactoryChangeManager >> disconnectFromChanges [
 
 { #category : #testing }
 RBRefactoryChangeManager >> hasRedoableOperations [
-	^ redo isEmpty not
+	^ redo isNotEmpty
 ]
 
 { #category : #testing }
 RBRefactoryChangeManager >> hasUndoableOperations [
-	^ undo isEmpty not
+	^ undo isNotEmpty
 ]
 
 { #category : #'public access' }
@@ -159,8 +159,7 @@ RBRefactoryChangeManager >> redoChange [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> redoOperation [
-	redo isEmpty
-		ifTrue: [ ^ self ].
+	redo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [ 
 		| change |
 		change := redo removeLast.
@@ -180,8 +179,7 @@ RBRefactoryChangeManager >> undoChange [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoOperation [
-	undo isEmpty
-		ifTrue: [ ^ self ].
+	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [ 
 		| change |
 		change := undo removeLast.
