@@ -74,7 +74,7 @@ DropListItem >> initialize [
 	super initialize.
 
 	actionHolder := [] asValueHolder.
-	displayBlock := [ :e | e asString ].
+	displayBlock := [ :e | e printString ].
 	icon := nil
 ]
 

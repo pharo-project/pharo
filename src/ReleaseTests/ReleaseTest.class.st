@@ -39,7 +39,40 @@ ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
-{ #category : #testing }
+{ #category : #helpers }
+ReleaseTest >> assertValidLintRule: aLintRule [
+	self assertValidLintRule: aLintRule withExceptions: {}
+]
+
+{ #category : #helpers }
+ReleaseTest >> assertValidLintRule: aLintRule withExceptions: someNames [
+	| runner results |
+	runner := ReSmalllintChecker new.
+	runner
+		rule: {aLintRule};
+		environment: RBBrowserEnvironment default;
+		run.
+
+	results := (runner criticsOf: aLintRule) reject: [ :critique | someNames includes: critique entity name ].
+
+	self
+		assert: results isEmpty
+		description: [ String
+				streamContents: [ :s | 
+					s
+						<< aLintRule rationale;
+						lf;
+						<< 'Violations: ';
+						lf.
+					results
+						do: [ :e | 
+							s
+								<< '- ';
+								print: e entity ]
+						separatedBy: [ s lf ] ] ]
+]
+
+{ #category : #helpers }
 ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 	| keySelectors |
 	keySelectors := #(#startUp #startUp: #shutDown #shutDown:).
@@ -52,7 +85,7 @@ ReleaseTest >> knownProcesses [
 	^ self class knownProcesses
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
@@ -60,14 +93,22 @@ ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	self assertEmpty: wrong
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
 	wrong := Smalltalk globals associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
 ]
 
-{ #category : #testing }
+{ #category : #tests }
+ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
+	"If a class is using a trait with an explicit requirement method, this class should implement the method"
+	
+	self assertValidLintRule: RBExplicitRequirementMethodsRule new
+	
+]
+
+{ #category : #tests }
 ReleaseTest >> testInstalledMethodsWithIncorrectTrailerKind [
 	| incorrectMethods |
 	
@@ -82,7 +123,7 @@ ReleaseTest >> testInstalledMethodsWithIncorrectTrailerKind [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	| instanceSideMethodsWithNilKeyInLastLiteral |
 	
@@ -97,7 +138,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
 	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
@@ -111,14 +152,21 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	self assert: (registeredHandlers includes: #UIManagerSessionHandler).
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testLayoutIntegrity [
 	SystemNavigation default allClassesDo: [ :class |
 		class instanceSide classLayout checkIntegrity.
 		class classSide classLayout checkIntegrity ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
+ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
+	"If a class is using a trait with an explicit requirement method, this class should implement the method"
+	
+	self assertValidLintRule: RBLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
+]
+
+{ #category : #tests }
 ReleaseTest >> testMethodsWithUnboundGlobals [
 	| methodsWithUnboundGlobals |
 	"Ensure the environment is clean"
@@ -135,7 +183,7 @@ ReleaseTest >> testMethodsWithUnboundGlobals [
 				print: methodsWithUnboundGlobals ]]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testNoEmptyPackages [
 	"Test that we have no empty packages left"
 
@@ -144,7 +192,7 @@ ReleaseTest >> testNoEmptyPackages [
 	self assertEmpty: violating
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 	
@@ -162,7 +210,7 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testPharoVersionFileExists [
 
 	"Test there is a pharo.version file next to this image containing the short version of this pharo image.
@@ -176,7 +224,7 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
-{ #category : #'testing - rpackage' }
+{ #category : #'tests - rpackage' }
 ReleaseTest >> testRPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
 	3 timesRepeat: [ Smalltalk garbageCollect ].
@@ -191,7 +239,7 @@ ReleaseTest >> testRPackageOrganizer [
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'.
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
 	| startupList settingsIndex |
@@ -203,7 +251,7 @@ ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupLi
 		ifTrue: [ self should: [ (startupList indexOf: #FileLocator) < (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
@@ -216,7 +264,13 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
-{ #category : #'testing - rpackage' }
+{ #category : #tests }
+ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
+	self assertValidLintRule: ReTestClassNameShouldEndWithTest new
+	
+]
+
+{ #category : #'tests - rpackage' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
 	classes := Smalltalk allClassesAndTraits.
@@ -227,7 +281,7 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 	self assertEmpty: methodsWithoutPackageInfo
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testUndeclared [
 	| undeclaredBindings |
 	
@@ -243,7 +297,7 @@ ReleaseTest >> testUndeclared [
 				print: undeclaredBindings ])
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testUnknownProcesses [
 	"Make sure that there are no other processes running except the known processes"
 	
@@ -258,7 +312,7 @@ ReleaseTest >> testUnknownProcesses [
 				separatedBy: [ out << ', ' ] ])
 ]
 
-{ #category : #'testing - rpackage' }
+{ #category : #'tests - rpackage' }
 ReleaseTest >> testUnpackagedClasses [
 	| unpackagedClasses |
 	unpackagedClasses := Smalltalk allClassesAndTraits select: [:each | 
@@ -273,7 +327,7 @@ ReleaseTest >> testUnpackagedClasses [
 
 ]
 
-{ #category : #'testing - rpackage' }
+{ #category : #'tests - rpackage' }
 ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 	| unpackagePackage |
 	unpackagePackage := RPackageOrganizer default packageNamed: RPackage defaultPackageName.
@@ -281,7 +335,7 @@ ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
 	self assertEmpty: unpackagePackage classes
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 ReleaseTest >> testWorldMenuHasHelpForAllEntries [
 	"In this test we check that at least every terminal menu entry of the world menu has an help."
 

@@ -113,6 +113,11 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	
 ]
 
+{ #category : #cursor }
+WorldMorph >> activateCursor: aCursor [
+     aCursor beCursor
+]
+
 { #category : #operations }
 WorldMorph >> activateCursor: aCursor withMask: maskForm [
 

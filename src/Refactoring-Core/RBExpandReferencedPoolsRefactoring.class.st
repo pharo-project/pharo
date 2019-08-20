@@ -55,8 +55,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 			( aNode whoDefines: varName )
 				ifNil: [ ( poolVariables includes: varName )
 						ifTrue: [ pool := self whichPoolDefines: varName.
-							pool notNil
-								ifTrue: [ pools add: pool ]
+							pool ifNotNil: [ pools add: pool ]
 							]
 					]
 			].
@@ -72,7 +71,7 @@ RBExpandReferencedPoolsRefactoring >> forMethod: aParseTree fromClass: aClass to
 
 { #category : #testing }
 RBExpandReferencedPoolsRefactoring >> hasPoolsToMove [
-	^pools isEmpty not
+	^pools isNotEmpty
 ]
 
 { #category : #transforming }

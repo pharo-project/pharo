@@ -4,8 +4,7 @@ Extension { #name : #RBRefactoringError }
 RBRefactoringError >> notifyUserOfCommand: aCommand [
 
 	| answer title |
-	title := self actionBlock isNotNil
-		ifTrue: [ 'Warning' ] ifFalse: [ 'Warning. Want to proceed?' ].
+	title := self actionBlock ifNotNil: [ 'Warning' ] ifNil: [ 'Warning. Want to proceed?' ].
 
 	answer := UIManager default confirm: self messageText label: title. 
 

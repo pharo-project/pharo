@@ -21,19 +21,36 @@ Class {
 
 { #category : #specs }
 SpecDemoButtonsPresenter class >> defaultSpec [
-	^ SpecGridLayout new
-		beColumnHomogeneous;
-		borderWidth: 0;
-		add: #buttonNormal at: 1 @ 1;
-		add: #buttonDisabled at: 2 @ 1;
-		add: #buttonWithIcon at: 3 @ 1;
-		add: #buttonWithIconOnly at: 4 @ 1;
-		add: #buttonHighlighted at: 5 @ 1;
-		add: #buttonWithColor at: 1 @ 2;
-		add: #buttonWithMenu at: 2 @ 2;
-		add: #buttonWithShortcut at: 3 @ 2;
-		add: #buttonWithHelp at: 4 @ 2;
-		add: #buttonWithDifferentFont at: 5 @ 2
+
+	<spec: #default>
+
+	| fontWidth rowHeight buttonHeight |
+	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
+	rowHeight := self inputTextHeight.
+	buttonHeight := rowHeight*1.3.
+	
+	^ SpecLayout composed
+		newColumn: [ :col | 
+
+		col newRow: [ :row | 
+				row add: #buttonNormal.
+				row add: #buttonDisabled.
+				row add: #buttonWithIcon.
+				row add: #buttonWithIconOnly.
+				row add: #buttonHighlighted.
+				 ] height: buttonHeight.
+			
+		col newRow: [ :row | 
+				row add: #buttonWithColor.
+				row add: #buttonWithMenu.
+				row add: #buttonWithShortcut.
+				row add: #buttonWithHelp.
+				row add: #buttonWithDifferentFont.
+				 ] 	height: buttonHeight.
+
+		"fill the rest of the space"
+		col newRow: [ :row |  ] ]; 
+		yourself.	
 ]
 
 { #category : #accessing }
@@ -93,7 +110,6 @@ SpecDemoButtonsPresenter >> buttonWithHelp [
 
 { #category : #accessing }
 SpecDemoButtonsPresenter >> buttonWithHelp: anObject [
-
 	buttonWithHelp := anObject
 ]
 
@@ -145,46 +161,49 @@ SpecDemoButtonsPresenter >> initializePresenter [
 
 { #category : #initialization }
 SpecDemoButtonsPresenter >> initializeWidgets [
-	buttonNormal := self newButton label: 'normal'.
-	buttonDisabled := self newButton
+
+	buttonNormal := self newButton 
+		label: 'normal'.
+	buttonDisabled := self newButton 
 		label: 'disabled';
 		disable;
 		yourself.
-	buttonWithIcon := self newButton
+	buttonWithIcon := self newButton 
 		label: 'with icon';
-		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
-		yourself.
-	buttonWithIconOnly := self newButton
-		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
+		icon: (self iconNamed: #pharo);
+		yourself.		
+	buttonWithIconOnly := self newButton 
+		icon: (self iconNamed: #pharo);
 		help: 'This button has only icon, no label';
-		yourself.
-	buttonHighlighted := self newButton
+		yourself.		
+	buttonHighlighted := self newButton 
 		label: 'highlighted';
 		state: true;
-		yourself.
-	buttonWithColor := self newButton
+		yourself.	
+	buttonWithColor := self newButton 
 		label: 'red';
 		color: Color red;
 		yourself.
-	buttonWithMenu := self newButton
+	buttonWithMenu := self newButton 
 		label: 'with menu';
-		contextMenu: self subMenu;
-		yourself.
-	buttonWithShortcut := self newButton
+		menu: self subMenu;
+		yourself.		
+	buttonWithShortcut := self newButton 
 		shortcut: $o meta;
 		label: 'with shortcut';
-		yourself.
-	buttonWithHelp := self newButton
+		yourself.	
+	buttonWithHelp := self newButton 
 		label: 'with help';
-		help:
-			'This button shows
+		help: 'This button shows
 a multiline help';
-		yourself.
-	buttonWithDifferentFont := self newButton
+		yourself.	
+
+	buttonWithDifferentFont := self newButton 
 		label: 'different font';
 		font: StandardFonts codeFont;
-		yourself.
-	self focusOrder
+		yourself.	
+			
+	self focusOrder 
 		add: buttonNormal;
 		add: buttonDisabled;
 		add: buttonWithIcon;
@@ -194,35 +213,37 @@ a multiline help';
 		add: buttonWithMenu;
 		add: buttonWithShortcut;
 		add: buttonWithHelp;
-		add: buttonWithDifferentFont
+		add: buttonWithDifferentFont.
+																																																								
 ]
 
 { #category : #initialization }
-SpecDemoButtonsPresenter >> subMenu [
-	^ self newMenu
-		addItem: [ :item | 
-			item
-				name: 'Open';
-				icon: (self iconNamed: #openIcon);
-				shortcut: $o meta;
-				action: [ self inform: 'Open' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Save';
-				icon: (self iconNamed: #smallSaveIcon);
-				shortcut: $s meta;
-				action: [ self inform: 'Save' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Print';
-				shortcut: $p meta;
-				icon: (self iconNamed: #smallPrintIcon);
-				action: [ self inform: 'Print' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Kill';
-				shortcut: $k meta;
-				icon: (self iconNamed: #smallCancelIcon);
-				action: [ self inform: 'Kill' ] ];
-		yourself
+SpecDemoButtonsPresenter >> subMenu [ 
+
+	^ MenuPresenter new
+		addGroup: [ :group |
+			group addItem: [ :item |
+				item
+					name: 'Open';
+					icon: (self iconNamed: #openIcon);
+					shortcut: $o meta;
+					action: [ self inform: 'Open' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Save';
+					icon: (self iconNamed: #smallSaveIcon);
+					shortcut: $s meta;
+					action: [ self inform: 'Save' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Print';
+					shortcut: $p meta;
+					icon: (self iconNamed: #smallPrintIcon);
+					action: [ self inform: 'Print' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Kill';
+					shortcut: $k meta;
+					icon: (self iconNamed: #smallCancelIcon);
+					action: [ self inform: 'Kill' ] ] ]
 ]

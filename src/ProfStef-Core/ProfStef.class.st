@@ -56,6 +56,10 @@ Pharo Syntax Tutorial
 	ProfStef goOn: PharoSyntaxTutorial
 '
 ]]]
+
+ProfStef is interacting with a tutorial player (which encapsulate the logic of navigating within lessons) and lessonView (a dead simple little UI).
+
+
 "
 Class {
 	#name : #ProfStef,

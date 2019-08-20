@@ -564,7 +564,7 @@ MultiByteFileStream >> open: fileName forWrite: writeMode [
 
 	(writeMode and: [SessionManager default currentSession isReadOnlyAccessMode]) 
 		ifTrue: [ ((CannotDeleteFileException fileName: fileName)
-			messageText: 'Attempt to open file ' , fileName, ' as wrtitable on read-only filesystem') signal. ].
+			messageText: 'Attempt to open file ' , fileName, ' as writable on read-only filesystem') signal. ].
 
 	result := super open: fileName forWrite: writeMode.
 	result ifNotNil: [

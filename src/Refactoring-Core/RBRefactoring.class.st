@@ -122,7 +122,7 @@ RBRefactoring >> changes [
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
 	| parseTree |
 	parseTree := aRBClass parseTreeFor: aSelector.
-	parseTree notNil ifTrue: [aMatcher executeTree: parseTree].
+	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
 ]
 

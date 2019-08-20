@@ -6,7 +6,7 @@ self open
 "
 Class {
 	#name : #EpUnifiedBrowserPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'monitorLog',
 		'refreshDeferrer',
@@ -16,6 +16,15 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Unified'
 }
 
+{ #category : #accessing }
+EpUnifiedBrowserPresenter class >> defaultSpec [
+	^ SpPanedLayout newHorizontal
+		position: 40 percent;
+		add: #logNodesPresenter;
+		add: #logPresenter;
+		yourself
+]
+
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
 
@@ -23,18 +32,6 @@ EpUnifiedBrowserPresenter class >> open [
 		refresh;
 		openWithSpec;
 		yourself
-]
-
-{ #category : #accessing }
-EpUnifiedBrowserPresenter class >> spec [
-	<spec: #default>
-
-	^ SpecLayout composed
-		newRow: [ :row |
-			row 
-				add: #logNodesPresenter origin: 0@0 corner: 0.4@1;
-				addSplitter;
-				add: #logPresenter origin: 0.4@0 corner: 1@1 ]
 ]
 
 { #category : #accessing }
@@ -69,7 +66,7 @@ EpUnifiedBrowserPresenter >> initialExtent [
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializePresenter [
 	super initializePresenter.
-	self logNodesPresenter logNodesTreePresenter whenSelectedItemChangedDo: [ :items | self refreshWithLogSelected: items ].
+	self logNodesPresenter logNodesTreePresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelected: selection selectedItem ].
 	self initializeRefreshOnSessionUpdate.
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
@@ -92,10 +89,8 @@ EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
 
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializeWidgets [
-
-	self instantiatePresenters: {
-		#logNodesPresenter -> #EpLogNodeGraphPresenter.
-		#logPresenter -> #EpLogBrowserPresenter }
+	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
+	logPresenter := self instantiate: EpLogBrowserPresenter
 ]
 
 { #category : #initialization }

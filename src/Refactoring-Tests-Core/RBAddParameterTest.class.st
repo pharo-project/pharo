@@ -18,7 +18,7 @@ RBAddParameterTest >> testAddParameterForTwoArgumentMessage [
 		in: RBRefactoryTestDataApp
 		newSelector: #called:bar:on:
 		initializer: '#(1.0)'.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #called:bar:on:) equals: (self parseMethod: 'called: anObject bar: aBlock on: anObject1
 							Transcript
@@ -42,7 +42,7 @@ RBAddParameterTest >> testAddParameterThatReferencesGlobalAndLiteral [
 		in: RBRefactoryTestDataApp
 		newSelector: #testFoo:bar:
 		initializer: 'OrderedCollection new: 5'.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
@@ -59,7 +59,7 @@ RBAddParameterTest >> testAddParameterThatReferencesModelGlobal [
 		in: RBRefactoryTestDataApp
 		newSelector: #testFoo:bar:
 		initializer: 'Bar new'.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
@@ -75,7 +75,7 @@ RBAddParameterTest >> testAddParameterThatReferencesSelf [
 		in: RBRefactoryTestDataApp
 		newSelector: #testFoo:bar:
 		initializer: 'self printString'.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:) equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').

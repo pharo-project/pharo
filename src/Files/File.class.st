@@ -265,7 +265,15 @@ File class >> fileAttributeNumberMap [
 { #category : #attributes }
 File class >> fileAttributes: aString mask: attributeMask [
 
-	^self primFileAttributes: (self encodePathString: aString) mask: attributeMask
+	| attributes statAttributes mask |
+
+	attributes := self primFileAttributes: (self encodePathString: aString) mask: attributeMask.
+	mask := attributeMask bitAnd: 2r11.
+	mask = 1 ifTrue: [ statAttributes := attributes ].
+	mask = 3 ifTrue: [ statAttributes := attributes at: 1 ].
+	(statAttributes isNotNil and: [ (statAttributes at: 1) isNotNil ]) ifTrue: 
+		[ statAttributes at: 1 put: (self decodePathString: (statAttributes at: 1)) ].
+	^attributes
 ]
 
 { #category : #'primitives-version' }
@@ -722,6 +730,7 @@ stat() information:
 	9: accessDate
 	10: modifiedDate
 	11: creationDate
+	12: Windows File Attributes mask (https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants)
 
 access() information
 
