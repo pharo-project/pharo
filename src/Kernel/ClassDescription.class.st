@@ -775,7 +775,7 @@ ClassDescription >> instVarMappingFrom: oldClass [
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
-	^self localSlots collect: [ :each | each name ]
+	^self slots collect: [ :each | each name ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
