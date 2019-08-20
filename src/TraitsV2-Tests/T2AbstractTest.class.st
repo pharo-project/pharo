@@ -62,8 +62,8 @@ T2AbstractTest >> setUp [
 
 { #category : #running }
 T2AbstractTest >> tearDown [
-	createdClasses reverse do:#removeFromSystem.
+	createdClasses reverse do: #removeFromSystem.
 	createdClasses := nil.
-	
-	super tearDown.
+
+	super tearDown
 ]
