@@ -103,6 +103,11 @@ LiteralVariable >> hasProperty: aKey [
 		ifNotNil: [:prop | prop includesKey: aKey]
 ]
 
+{ #category : #'class building' }
+LiteralVariable >> installingIn: aClass [
+	"I am called by the class builder. This way a class variable can change the class it is installed in"
+]
+
 { #category : #testing }
 LiteralVariable >> isClassVariable [
 	^false
