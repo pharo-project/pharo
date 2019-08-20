@@ -843,6 +843,11 @@ String >> charactersExactlyMatching: aString [
 	^ count
 ]
 
+{ #category : #formatting }
+String >> clFormat: arguments [
+	self shouldBeImplemented 
+]
+
 { #category : #comparing }
 String >> compare: aString [ 
 	"Answer a comparison code telling how the receiver sorts relative to aString:
