@@ -381,8 +381,8 @@ TestAsserter >> denyCollection: actual hasSameElements: expected [
 	"Deny that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
 
 	self
-		deny: ((actual difference: expected) isEmpty or: [ (expected difference: actual) isEmpty ])
-		description: (String streamContents: [ :stream | stream nextPutAll: 'Given collections match!' ])
+		deny: ((actual difference: expected) isEmpty and: [ (expected difference: actual) isEmpty ])
+		description: 'Given collections match!'
 ]
 
 { #category : #asserting }
