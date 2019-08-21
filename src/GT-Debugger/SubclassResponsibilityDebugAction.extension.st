@@ -1,7 +1,7 @@
-Extension { #name : #SubclassResponsabilityDebugAction }
+Extension { #name : #SubclassResponsibilityDebugAction }
 
 { #category : #'*GT-Debugger' }
-SubclassResponsabilityDebugAction class >> gtStackDebuggingActionFor: aDebugger [
+SubclassResponsibilityDebugAction class >> gtStackDebuggingActionFor: aDebugger [
 	<gtStackDebuggingAction>
 	
 	^ (self forDebugger: aDebugger)

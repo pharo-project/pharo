@@ -12,9 +12,9 @@ To download the Pharo stable version for your platform, please visit:
 
 ## Virtual machine
 
-This repository contains only sources of the Pharo image. The virtual machine is served by a separate repository:
+This repository contains only sources of the Pharo image. The virtual machine source code is managed in a separate repository:
 
-- [https://github.com/OpenSmalltalk/opensmalltalk-vm](https://github.com/OpenSmalltalk/opensmalltalk-vm)
+- [https://github.com/pharo-project/opensmalltalk-vm](https://github.com/pharo-project/opensmalltalk-vm)
 
 ## Automated Builds
 
