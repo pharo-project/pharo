@@ -49,7 +49,7 @@ IdentitySet >> scanFor: anObject [
 	index := start := hash \\ array size + 1.
 	[ 
 		| element |
-		((element := array at: index) == nil or: [ element enclosedSetElement == anObject ])
+		((element := array at: index) == nil or: [ element enclosedElement == anObject ])
 			ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

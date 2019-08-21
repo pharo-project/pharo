@@ -53,7 +53,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 		put: (NonInteractiveTranscript stdout install).
 	Float initialize.
 
-	SetElement initialize.
+	CollectionElementWrapper initialize.
 	ExternalSemaphoreTable initialize.
 	Collection initialize.
 	CompiledMethod initialize.
