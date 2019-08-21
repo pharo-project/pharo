@@ -132,7 +132,7 @@ ZnSingleThreadedServer >> augmentResponse: response forRequest: request [
 { #category : #'request handling' }
 ZnSingleThreadedServer >> authenticateAndDelegateRequest: request [
 	"Handle request and return a response.
-	If we have a delegate, pass the responsability.
+	If we have a delegate, pass the responsibility.
 	If we have no delegate, we return a page not found.
 	Make sure to pass via our authenticator."
 
@@ -147,7 +147,7 @@ ZnSingleThreadedServer >> authenticateAndDelegateRequest: request [
 { #category : #'request handling' }
 ZnSingleThreadedServer >> authenticateRequest: request do: block [
 	"Validate request and execute block.
-	When our authenticator is not nil, pass the responsability"
+	When our authenticator is not nil, pass the responsibility"
 
 	^ self authenticator
 		ifNil: [ block value ]
