@@ -18,7 +18,7 @@ createInitialObjects
 	PBSubStepFinishedSignal log: 'preparing class builder'.
 	self bootstrapInterpreter evaluateCode: 'DangerousClassNotifier disable'.
 
-	self bootstrapInterpreter evaluateCode: 'Undeclared := WeakValueDictionary new.'.
+	self bootstrapInterpreter evaluateCode: 'Undeclared := UndeclaredDictionary new.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk := SmalltalkImage basicNew.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: (SystemDictionary withOrganizer: SystemOrganizer new).'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
