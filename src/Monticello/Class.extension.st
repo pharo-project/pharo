@@ -10,10 +10,10 @@ Class >> asClassDefinition [
 		traitComposition: self traitCompositionString
 		classTraitComposition: self class traitCompositionString
 		category: self category 
-		instVarNames: self instVarNames
+		instVarNames:  (self localSlots collect: #name)
 		classVarNames: self classVarNames
 		poolDictionaryNames: self sharedPoolNames
-		classInstVarNames: self class instVarNames
+		classInstVarNames: (self class localSlots collect: #name)
 		type: self typeOfClass
 		comment: self organization classComment	asString
 		commentStamp: self organization commentStamp].

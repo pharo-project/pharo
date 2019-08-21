@@ -118,8 +118,8 @@ T2TraitMCDefinitionsTest >> testDefinitionOfTraitUsingTrait [
 	t2 := self newTrait: #T2 with: #(a b c) uses: t1.
 	definition := t2 asClassDefinition.
 		
-	self assert: definition instanceVariablesString equals: 'a b c x y z'.
-	self assert: definition instanceVariables size equals: 6.
+	self assert: definition instanceVariablesString equals: 'a b c'.
+	self assert: definition instanceVariables size equals: 3.
 	self assert: definition traitComposition equals: 'T1'.
 	self assert: (definition instanceVariables allSatisfy: [ :e | e species = InstanceVariableSlot ])
 ]
