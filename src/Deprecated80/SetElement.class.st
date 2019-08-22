@@ -1,6 +1,6 @@
 Class {
 	#name : #SetElement,
-	#superclass : #CollectionElementWrapper,
+	#superclass : #CollectionElement,
 	#category : #Deprecated80
 }
 

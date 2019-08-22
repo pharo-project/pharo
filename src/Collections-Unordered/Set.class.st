@@ -57,7 +57,7 @@ Set >> add: newObject [
 
 	| index |
 	index := self scanFor: newObject.
-	(array at: index) ifNil: [self atNewIndex: index put: newObject asCollectionElementWrapper].
+	(array at: index) ifNil: [self atNewIndex: index put: newObject asCollectionElement].
 	^ newObject
 ]
 
@@ -201,7 +201,7 @@ Set >> like: anObject ifAbsent: aBlock [
 { #category : #private }
 Set >> noCheckAdd: anObject [
 	"This method should be deprecated"
-	array at: (self findElementOrNil: anObject) put: anObject asCollectionElementWrapper.
+	array at: (self findElementOrNil: anObject) put: anObject asCollectionElement.
 	tally := tally + 1
 ]
 

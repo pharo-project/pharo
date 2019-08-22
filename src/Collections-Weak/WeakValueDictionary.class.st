@@ -56,8 +56,8 @@ WeakValueDictionary >> at: key put: anObject [
 	| index |
 	index := self findElementOrNil: key.
 	(array at: index)
-		ifNil: [ self atNewIndex: index put: (WeakValueAssociation key: key value: anObject asCollectionElementWrapper) ]
-		ifNotNil: [ :element | element value: anObject asCollectionElementWrapper ].
+		ifNil: [ self atNewIndex: index put: (WeakValueAssociation key: key value: anObject asCollectionElement) ]
+		ifNotNil: [ :element | element value: anObject asCollectionElement ].
 	^ anObject
 ]
 

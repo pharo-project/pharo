@@ -44,10 +44,10 @@ UndefinedObject >> allSuperclassesDo: aBlockContext [
 ]
 
 { #category : #'sets support' }
-UndefinedObject >> asCollectionElementWrapper [
+UndefinedObject >> asCollectionElement [
 	"Since nil is a singleton, we need only a single wrapper instance to represent it in set,
 	created in advance"
-	^ CollectionElementWrapper withNil
+	^ CollectionElement withNil
 ]
 
 { #category : #accessing }

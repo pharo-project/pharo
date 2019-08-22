@@ -2,8 +2,8 @@ Extension { #name : #Object }
 
 { #category : #'*Deprecated80' }
 Object >> asSetElement [
-	self deprecated: 'Use #asCollectionElementWrapper instead' transformWith: '`@receiver asSetElement' -> '`@receiver asCollectionElementWrapper'.
-	^ self asCollectionElementWrapper
+	self deprecated: 'Use #asCollectionElement instead' transformWith: '`@receiver asSetElement' -> '`@receiver asCollectionElement'.
+	^ self asCollectionElement
 ]
 
 { #category : #'*Deprecated80' }
