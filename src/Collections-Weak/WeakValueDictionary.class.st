@@ -5,7 +5,7 @@ Clients may expect to get a nil value for any object they request since they can
 Implementation details:
 
 To store keys and values I am using a WeakValueAssociation. This association has a key and a value.
-The key is the key the user is giving me, but I am wrapping the value into a CollectionElementWrapper. This is explained because I need to do a distinction between nil values given by the user and nil values created by the garbage collection.
+The key is the key the user is giving me, but if the user gives me a nil as value, I wrap it into a CollectionElement. This is explained because I need to do a distinction between nil values given by the user and nil values created by the garbage collection.
 When the value of a WeakValueAssociation is a collection element wrapper on nil, then it means the user directly gave us a nil. In case the value of the WeakValueAssociation is nil, it means that we originally had a value that was garbaged collected.
 "
 Class {
@@ -16,8 +16,30 @@ Class {
 
 { #category : #adding }
 WeakValueDictionary >> add: anAssociation [
-	self at: anAssociation key put: anAssociation value.
+	"Set the value at key to be anObject.  If key is not found, create a new
+	entry for key and set is value to anObject. Answer anObject."
+
+	| index |
+	index := self findElementOrNil: anAssociation key.
+	(array at: index)
+		ifNil: [ self
+				atNewIndex: index
+				put:
+					((WeakValueAssociation key: anAssociation key value: anAssociation value asCollectionElement)
+						originalAssociationClass: anAssociation class;
+						yourself) ]
+		ifNotNil: [ :element | element value: anAssociation value asSetElement ].
 	^ anAssociation
+]
+
+{ #category : #adding }
+WeakValueDictionary >> associationAt: key ifAbsent: aBlock [
+	"Answer the association with the given key.
+	If the key is not found, return the result of evaluating aBlock."
+
+	^ (array at: (self findElementOrNil: key))
+		ifNil: [ aBlock value ]
+		ifNotNil: [ :assoc | assoc asOriginalAssociation ]
 ]
 
 { #category : #enumerating }
@@ -76,9 +98,6 @@ WeakValueDictionary >> valuesDo: aBlock [
 
 	tally = 0 ifTrue: [ ^ self ].
 	1 to: array size do: [ :eachIndex | 
-		| eachAssociation eachValue |
-		eachAssociation := array at: eachIndex.
-		nil == eachAssociation value
-			ifFalse: [ eachValue := eachAssociation value enclosedElement.
-				aBlock value: eachValue ] ]
+		(array at: eachIndex) value
+			ifNotNil: [ :assocValue | aBlock value: assocValue enclosedElement ] ]
 ]
