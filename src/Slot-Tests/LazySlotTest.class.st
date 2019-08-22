@@ -20,6 +20,15 @@ LazySlotTest >> testLazySlotCompiled [
 ]
 
 { #category : #tests }
+LazySlotTest >> testLazySlotPrint [
+	| slot |
+	slot := #mySlot => LazySlot default: 5 .
+	self assert: slot printString equals: '#mySlot => LazySlot default: 5'.
+	slot := #mySlot => LazySlot default: [5].
+	self assert: slot printString equals: '#mySlot => LazySlot default: [ 5 ]'
+]
+
+{ #category : #tests }
 LazySlotTest >> testLazySlotReadReflective [
 	| slot object|
 	slot := #slot1 => LazySlot default: 5.

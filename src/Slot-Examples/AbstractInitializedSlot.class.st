@@ -11,7 +11,8 @@ Class {
 	#name : #AbstractInitializedSlot,
 	#superclass : #InstanceVariableSlot,
 	#instVars : [
-		'default'
+		'default',
+		'isBlock'
 	],
 	#category : #'Slot-Examples-Base'
 }
@@ -23,13 +24,14 @@ AbstractInitializedSlot >> = other [
 
 { #category : #accessing }
 AbstractInitializedSlot >> default: anObject [
-	"we wrap the default in a block, this way we can support calculated default values"
-	default := [anObject]
+	default := anObject.
+	isBlock := false
 ]
 
 { #category : #accessing }
 AbstractInitializedSlot >> defaultBlock: aBlock [
-	default := aBlock
+	default := aBlock.
+	isBlock := true
 ]
 
 { #category : #comparing }
@@ -43,6 +45,6 @@ AbstractInitializedSlot >> printOn: aStream [
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
-		nextPutAll: ' default: ';
-		store: default
+		nextPutAll: ' default: '.
+	default printOn: aStream.
 ]
