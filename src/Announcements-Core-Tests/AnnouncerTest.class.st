@@ -33,6 +33,26 @@ AnnouncerTest >> setUp [
 	announcer := self newAnnouncer
 ]
 
+{ #category : #'test - subscribers' }
+AnnouncerTest >> testAccessingSubscribers [
+	"The subscripber class is this test, because this class puts the "
+	| subscribers |
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 0.
+	
+	announcer when: AnnouncementMockA do: [  ]."1"
+	announcer when: AnnouncementMockB do: [  ]."2"
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 2.
+	
+	subscribers do: [ :subscriber |	announcer unsubscribe: subscriber ].
+	
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 0.
+	
+
+]
+
 { #category : #tests }
 AnnouncerTest >> testAnnounceClass [
 	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA
@@ -64,6 +84,14 @@ AnnouncerTest >> testAnnouncingReentrant [
 	self assert: ok
 
 
+]
+
+{ #category : #'test - subscribers' }
+AnnouncerTest >> testHandleSubscriberClass [
+	"The subscripber class is this test, because this class puts the "
+	announcer when: AnnouncementMockA do: [  ].
+	self assert: (announcer handleSubscriberClass: self class).
+	self deny: (announcer handleSubscriberClass: AnnouncementMockA).
 ]
 
 { #category : #tests }
