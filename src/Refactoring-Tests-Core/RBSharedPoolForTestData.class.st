@@ -18,3 +18,9 @@ RBSharedPoolForTestData >> msg2 [
 	
 	^ Var1
 ]
+
+{ #category : #'as yet unclassified' }
+RBSharedPoolForTestData >> msg4 [
+	
+	^ Var1
+]

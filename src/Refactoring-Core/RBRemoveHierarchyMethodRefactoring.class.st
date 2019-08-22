@@ -51,6 +51,17 @@ RBRemoveHierarchyMethodRefactoring >> removeMethods: selectorCollection from: aC
 	selectors := selectorCollection
 ]
 
+{ #category : #printing }
+RBRemoveHierarchyMethodRefactoring >> storeOn: aStream [ 
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' removeMethods: '.
+	selectors asArray storeOn: aStream.
+	aStream nextPutAll: ' from: '.
+	class storeOn: aStream.
+	aStream nextPut: $)
+]
+
 { #category : #transforming }
 RBRemoveHierarchyMethodRefactoring >> transform [ 
 	self deleteSelectors
