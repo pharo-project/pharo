@@ -44,7 +44,9 @@ AbstractInitializedSlot >> printOn: aStream [
 	aStream 
 		store: self name;
 		nextPutAll: ' => ';
-		nextPutAll: self class name;
-		nextPutAll: ' default: '.
+		nextPutAll: self class name.
+	isBlock 
+		ifTrue: [aStream nextPutAll: ' defaultBlock: ']
+		ifFalse: [aStream nextPutAll: ' default: '].
 	default printOn: aStream.
 ]
