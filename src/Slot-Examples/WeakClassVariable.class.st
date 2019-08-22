@@ -15,6 +15,31 @@ Class {
 	#category : #'Slot-Examples-ClassVariables'
 }
 
+{ #category : #'code generation' }
+WeakClassVariable >> emitStore: aMethodBuilder [
+	"generate bytecode for 'varname at: 1 put: <stackTop>'"
+	| temp |
+	temp := '0slotTempForStackManipulation'.
+	"Pop the value to store into a temp to push it back in the right order"
+	aMethodBuilder addTemp: temp.
+	aMethodBuilder storeTemp: temp.
+	aMethodBuilder popTop.
+	
+	"Push the weak array into the stack, then the arguments, then send"
+	aMethodBuilder pushLiteralVariable: self.
+	aMethodBuilder pushLiteral: 1.
+	aMethodBuilder pushTemp: temp.
+	aMethodBuilder send: #at:put:
+]
+
+{ #category : #'code generation' }
+WeakClassVariable >> emitValue: aMethodBuilder [
+	"Push the weak array at: 1 on the stack"
+	aMethodBuilder pushLiteralVariable: self.
+	aMethodBuilder pushLiteral: 1.
+	aMethodBuilder send: #at:
+]
+
 { #category : #initialization }
 WeakClassVariable >> installingIn: aClass [
 	"when the var gets installed, initialize it"
