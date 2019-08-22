@@ -131,7 +131,9 @@ Dictionary >> add: anAssociation [
 	| index element |
 	index := self findElementOrNil: anAssociation key.
 	element := array at: index.
-	element ifNil: [ self atNewIndex: index put: anAssociation ] ifNotNil: [ element value: anAssociation value ].
+	element
+		ifNil: [ self atNewIndex: index put: anAssociation ]
+		ifNotNil: [ element value: anAssociation value ].
 	^ anAssociation
 ]
 
