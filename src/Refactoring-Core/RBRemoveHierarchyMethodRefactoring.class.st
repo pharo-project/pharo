@@ -1,0 +1,57 @@
+Class {
+	#name : #RBRemoveHierarchyMethodRefactoring,
+	#superclass : #RBMethodRefactoring,
+	#instVars : [
+		'selectors'
+	],
+	#category : #'Refactoring-Core-Refactorings'
+}
+
+{ #category : #removing }
+RBRemoveHierarchyMethodRefactoring class >> removeMethods: selectorCollection from: aClass [
+	^self new removeMethods: selectorCollection from: aClass
+]
+
+{ #category : #transforming }
+RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
+	 (aClass realClass methodDict keys includes: selector) ifTrue: [ 
+		 [self performComponentRefactoring: (RBRemoveMethodRefactoring 
+									model: self model
+									removeMethods: { selector }
+									from: aClass) ]
+		on: RBRefactoringError 
+			do: [ :ex | ( self confirm: ex messageText )
+				ifTrue:[ ex resume] ]]
+]
+
+{ #category : #transforming }
+RBRemoveHierarchyMethodRefactoring >> deleteSelectorInSubclasses [
+	class withAllSubclasses do: 
+		[ :each | each implements: selectors ]
+]
+
+{ #category : #transforming }
+RBRemoveHierarchyMethodRefactoring >> deleteSelectors [
+	selectors do: [ :selector |
+		class withAllSubclasses do: [ :aClass |
+			self delete: selector in: aClass
+		 ]
+	 ]
+]
+
+{ #category : #transforming }
+RBRemoveHierarchyMethodRefactoring >> preconditions [ 
+	^(selectors inject: RBCondition empty
+		into: [ :cond :selector | cond & (RBCondition definesSelector: selector in: class)])
+]
+
+{ #category : #removing }
+RBRemoveHierarchyMethodRefactoring >> removeMethods: selectorCollection from: aClass [ 
+	class := self classObjectFor: aClass.
+	selectors := selectorCollection
+]
+
+{ #category : #transforming }
+RBRemoveHierarchyMethodRefactoring >> transform [ 
+	self deleteSelectors
+]
