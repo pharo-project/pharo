@@ -4,18 +4,18 @@ A SubclassResponsabilityDebugAction is a debugging action that can create a meth
 
 "
 Class {
-	#name : #SubclassResponsabilityDebugAction,
+	#name : #SubclassResponsibilityDebugAction,
 	#superclass : #DebugAction,
 	#category : #'Debugger-Actions-Actions'
 }
 
 { #category : #registration }
-SubclassResponsabilityDebugAction class >> actionType [
+SubclassResponsibilityDebugAction class >> actionType [
 	<debuggingAction>
 ]
 
 { #category : #testing }
-SubclassResponsabilityDebugAction >> appliesToDebugger: aDebugger [
+SubclassResponsibilityDebugAction >> appliesToDebugger: aDebugger [
 	| interruptedContext |
 	
 	interruptedContext := aDebugger session interruptedContext.
@@ -28,7 +28,7 @@ SubclassResponsabilityDebugAction >> appliesToDebugger: aDebugger [
 ]
 
 { #category : #private }
-SubclassResponsabilityDebugAction >> askForSuperclassOf: aClass to: aSuperclass toImplement: aSelector ifCancel: cancelBlock [
+SubclassResponsibilityDebugAction >> askForSuperclassOf: aClass to: aSuperclass toImplement: aSelector ifCancel: cancelBlock [
 	| classes currentSuperclass chosenClassIndex |
 	
 	classes := OrderedCollection new.
@@ -49,19 +49,19 @@ SubclassResponsabilityDebugAction >> askForSuperclassOf: aClass to: aSuperclass 
 ]
 
 { #category : #accessing }
-SubclassResponsabilityDebugAction >> defaultLabel [
+SubclassResponsibilityDebugAction >> defaultLabel [
 
 	^  'Create'
 ]
 
 { #category : #accessing }
-SubclassResponsabilityDebugAction >> defaultOrder [
+SubclassResponsibilityDebugAction >> defaultOrder [
 
 	^ 1
 ]
 
 { #category : #actions }
-SubclassResponsabilityDebugAction >> executeAction [
+SubclassResponsibilityDebugAction >> executeAction [
 	| senderContext msg msgCategory chosenClass |
 	
 	senderContext := self interruptedContext sender.
@@ -84,12 +84,12 @@ SubclassResponsabilityDebugAction >> executeAction [
 ]
 
 { #category : #accessing }
-SubclassResponsabilityDebugAction >> help [
-	^ 'Create a method in a class having the responsability to implement it.'
+SubclassResponsibilityDebugAction >> help [
+	^ 'Create a method in a class having the responsibility to implement it.'
 ]
 
 { #category : #accessing }
-SubclassResponsabilityDebugAction >> id [
+SubclassResponsibilityDebugAction >> id [
 
-	^ #subclassResponsability
+	^ #subclassResponsibility
 ]

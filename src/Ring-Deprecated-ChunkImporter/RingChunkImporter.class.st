@@ -3,12 +3,7 @@ I'm an object holding the result of loading a file containing Pharo code definit
 I create ring definitions for the elements inside the chunk stream.
 Heavily inspired from FilePackage.
 
-| internalStream |
-internalStream := (String new: 1000) writeStream.
-SystemOrganization 
-	fileOutCategory: 'Tool-ExternalBrowser'
-	on: internalStream.
-RingChunkImporter fromStream: internalStream contents readStream.
+see example method class side 
 "
 Class {
 	#name : #RingChunkImporter,
@@ -19,6 +14,17 @@ Class {
 	],
 	#category : #'Ring-Deprecated-ChunkImporter-Base'
 }
+
+{ #category : #example }
+RingChunkImporter class >> example [
+	| internalStream |
+	internalStream := (String new: 1000) writeStream.
+	SystemOrganization
+		fileOutCategory: 'Ring-Deprecated-ChunkImporter-Base'
+		on: internalStream.
+	(RingChunkImporter fromStream: internalStream contents readStream)
+		inspect
+]
 
 { #category : #'instance creation' }
 RingChunkImporter class >> fromFileNamed: fileName [
