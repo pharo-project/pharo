@@ -5,9 +5,6 @@ Class {
 	#name : #WeakValueAssociation,
 	#superclass : #LookupKey,
 	#type : #weak,
-	#instVars : [
-		'originalAssociationClass'
-	],
 	#category : #'Collections-Support-Associations'
 }
 
