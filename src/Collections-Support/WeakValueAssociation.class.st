@@ -1,7 +1,5 @@
 "
 I am a lookup key (acting like an association but) holding only weakly on my value.
-
-I also store the kind of association that was given to the WeakValueDictionary to be able to recreate it in case it is necessary.
 "
 Class {
 	#name : #WeakValueAssociation,
@@ -23,27 +21,12 @@ WeakValueAssociation class >> new [
 	^ self new: 1
 ]
 
-{ #category : #converting }
-WeakValueAssociation >> asOriginalAssociation [
-	^ self originalAssociationClass ifNotNil: [ :class | class key: self key value: self value enclosedElement ] ifNil: [ self ]
-]
-
 { #category : #accessing }
 WeakValueAssociation >> key: aKey value: anObject [ 
 	"Store the arguments as the variables of the receiver."
 
 	key := aKey.
 	self value: anObject
-]
-
-{ #category : #accessing }
-WeakValueAssociation >> originalAssociationClass [
-	^ originalAssociationClass
-]
-
-{ #category : #accessing }
-WeakValueAssociation >> originalAssociationClass: anObject [
-	originalAssociationClass := anObject
 ]
 
 { #category : #evaluating }

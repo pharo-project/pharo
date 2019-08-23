@@ -135,11 +135,10 @@ WeakValueDictionaryTest >> testKeysAndValuesDoWithGarbageCollectedValue [
 WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	| dictionary |
 	dictionary := self classToBeTested new.
-	dictionary add: (GlobalVariable key: 'test' value: nil).
-	dictionary add: (GlobalVariable key: 'test2' value: 1).
+	dictionary at: 'test' put: nil.
+	dictionary at: 'test2' put: 1.
 	self assert: (dictionary associationAt: 'test') value isNil.
-	self assert: (dictionary associationAt: 'test2') value equals: 1.
-	self assert: ((dictionary associationAt: 'test') isKindOf: GlobalVariable)
+	self assert: (dictionary associationAt: 'test2') value equals: 1
 ]
 
 { #category : #tests }

@@ -16,19 +16,7 @@ Class {
 
 { #category : #adding }
 WeakValueDictionary >> add: anAssociation [
-	"Set the value at key to be anObject.  If key is not found, create a new
-	entry for key and set is value to anObject. Answer anObject."
-
-	| index |
-	index := self findElementOrNil: anAssociation key.
-	(array at: index)
-		ifNil: [ self
-				atNewIndex: index
-				put:
-					((WeakValueAssociation key: anAssociation key value: anAssociation value asCollectionElement)
-						originalAssociationClass: anAssociation class;
-						yourself) ]
-		ifNotNil: [ :element | element value: anAssociation value asSetElement ].
+	self at: anAssociation key put: anAssociation value.
 	^ anAssociation
 ]
 
@@ -39,7 +27,7 @@ WeakValueDictionary >> associationAt: key ifAbsent: aBlock [
 
 	^ (array at: (self findElementOrNil: key))
 		ifNil: [ aBlock value ]
-		ifNotNil: [ :assoc | assoc asOriginalAssociation ]
+		ifNotNil: [ :assoc | assoc key -> assoc value enclosedElement ]
 ]
 
 { #category : #enumerating }
