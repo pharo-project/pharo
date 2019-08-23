@@ -56,8 +56,9 @@ AbsolutePath >> printPathOn: aStream delimiter: aCharacter [
 { #category : #enumerating }
 AbsolutePath >> withParents [
 	| root |
+	root := Path root.
 	^ super withParents
-		remove: (root := Path root) ifAbsent: [ "In case it's absent we do not care." ];
+		remove: root ifAbsent: [ "In case it's absent we do not care." ];
 		addFirst: root;
 		yourself
 ]
