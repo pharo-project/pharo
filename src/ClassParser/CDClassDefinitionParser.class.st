@@ -199,7 +199,6 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 			^ self ].
 
 	"If we are here we did not recognize the slot syntax"
-	self halt
 ]
 
 { #category : #parsing }
