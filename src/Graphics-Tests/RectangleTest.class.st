@@ -215,11 +215,19 @@ RectangleTest >> testFloatCenter [
 RectangleTest >> testFloatCenterExtent [
 	| r1 c |
 	r1 := Rectangle 
-		floatCenter: 1.3@1.3 asPoint
+		floatCenter: 1.3@1.3
 		extent: 4.4 asPoint.
 	c := r1 floatCenter.
-	self assert: c equals: r1 floatCenter.
-	
+	self
+		assert: (c closeTo: 1.3@1.3);
+		assert: (r1 topLeft distanceTo: c) 
+			equals: (r1 bottomRight distanceTo: c);
+		assert: (r1 bottomLeft distanceTo: c) 
+			equals: (r1 topRight distanceTo: c);
+		assert: (r1 topLeft distanceTo: c)
+			equals: (r1 bottomLeft distanceTo: c);
+		assert: ((r1 translateBy: -20@10) floatCenter closeTo: (c translateBy: -20@10))
+			description: 'the center is translated with the rectangle'
 ]
 
 { #category : #tests }
