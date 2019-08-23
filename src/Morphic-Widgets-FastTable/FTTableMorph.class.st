@@ -849,6 +849,7 @@ FTTableMorph >> recalculateVerticalScrollBar [
 	 
 	visibleRows := self container calculateExactVisibleRows.	
 	numberOfRows := self dataSource numberOfRows.
+	numberOfRows = 0 ifTrue: [ ^self ].
 	interval := (visibleRows / numberOfRows) asFloat.
 	delta := 1/numberOfRows.
 	pageDelta := ((visibleRows-1) floor)*delta.

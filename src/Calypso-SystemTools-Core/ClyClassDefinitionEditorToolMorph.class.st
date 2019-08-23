@@ -60,6 +60,17 @@ ClyClassDefinitionEditorToolMorph >> fillStatusBar [
 	statusBar addCommandItem: (ClySlotClassDefinitionSwitchMorph for: self)
 ]
 
+{ #category : #testing }
+ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [ 
+
+	^ aCommand canBeExecutedInClassEditor: self
+]
+
+{ #category : #accessing }
+ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
+	^CDClassDefinitionParser parse: self editingText
+]
+
 { #category : #'selecting text' }
 ClyClassDefinitionEditorToolMorph >> selectSourceNode: aCDNode [ 
 	textMorph setSelection: aCDNode sourceInterval
@@ -77,8 +88,12 @@ ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 
 { #category : #accessing }
 ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
-	self flag: 'Future class parser should be used here'.
-	^nil
+	| selectedInterval definitionNode |
+	selectedInterval := self selectedTextInterval.
+	definitionNode := self parseClassDefinition.
+	
+	^(definitionNode bestNodeFor: selectedInterval)
+		ifNil: [ definitionNode ]
 ]
 
 { #category : #initialization }
