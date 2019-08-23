@@ -448,7 +448,7 @@ Rectangle >> flipBy: direction centerAt: aPoint [
 
 { #category : #accessing }
 Rectangle >> floatCenter [
-	"Answer the point at the center of the receiver."
+	"Answer the float point at the center of the receiver."
 	^ self topLeft + self bottomRight / 2.0
 ]
 
