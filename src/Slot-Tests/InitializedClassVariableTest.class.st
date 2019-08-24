@@ -1,0 +1,53 @@
+Class {
+	#name : #InitializedClassVariableTest,
+	#superclass : #SlotSilentTest,
+	#category : #'Slot-Tests-Examples'
+}
+
+{ #category : #tests }
+InitializedClassVariableTest >> testInitializedClassVariableCompiled [
+	| classVar |
+	classVar := #ClassVar => InitializedClassVariable default: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self compileAccessorsFor: classVar.
+	self assert: aClass new ClassVar equals: 5.
+	aClass new ClassVar: 6.
+	self assert: aClass new ClassVar equals: 6.
+	
+	
+
+	
+]
+
+{ #category : #tests }
+InitializedClassVariableTest >> testInitializedClassVariableReadReflective [
+	| classVar |
+	classVar := #ClassVar => InitializedClassVariable default: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self assert: classVar read equals: 5.
+	classVar write: 10.
+	self assert: classVar read equals: 10.
+	
+	
+	
+	
+	
+]
+
+{ #category : #tests }
+InitializedClassVariableTest >> testInitializedClassVariableReflectiveBlock [
+	| classVar |
+	classVar := #ClassVar => InitializedClassVariable defaultBlock: [5].
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self assert: classVar read equals: 5.
+	classVar write: 10.
+	self assert: classVar read equals: 10.
+	
+	
+	
+	
+	
+]
