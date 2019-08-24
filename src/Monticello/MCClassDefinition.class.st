@@ -475,7 +475,7 @@ MCClassDefinition >> printDefinitionOn: stream [
 			nextPutAll: 'poolDictionaries: ';
 			store: self sharedPoolsString;
 			cr; tab;
-			nextPutAll: 'category: ';
+			nextPutAll: 'package: ';
 			store: self category asString
 ]
 
