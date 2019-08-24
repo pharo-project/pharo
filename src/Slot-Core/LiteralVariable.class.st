@@ -67,7 +67,8 @@ LiteralVariable >> definingClass [
 
 { #category : #printing }
 LiteralVariable >> definitionString [
-	^String streamContents: [:aStream | aStream << '#' << self name << ' => '; << self class name].
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printString
 ]
 
 { #category : #'code generation' }
