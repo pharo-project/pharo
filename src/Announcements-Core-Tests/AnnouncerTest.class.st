@@ -33,6 +33,25 @@ AnnouncerTest >> setUp [
 	announcer := self newAnnouncer
 ]
 
+{ #category : #'test - subscribers' }
+AnnouncerTest >> testAccessingSubscribers [
+	| subscribers |
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 0.
+	
+	announcer when: AnnouncementMockA do: [  ]."1"
+	announcer when: AnnouncementMockB do: [  ]."2"
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 2.
+	
+	subscribers do: [ :subscriber |	announcer unsubscribe: subscriber ].
+	
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 0.
+	
+
+]
+
 { #category : #tests }
 AnnouncerTest >> testAnnounceClass [
 	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA
@@ -64,6 +83,13 @@ AnnouncerTest >> testAnnouncingReentrant [
 	self assert: ok
 
 
+]
+
+{ #category : #'test - subscribers' }
+AnnouncerTest >> testHandleSubscriberClass [
+	announcer when: AnnouncementMockA do: [  ].
+	self assert: (announcer handleSubscriberClass: self class).
+	self deny: (announcer handleSubscriberClass: AnnouncementMockA).
 ]
 
 { #category : #tests }
@@ -251,6 +277,29 @@ AnnouncerTest >> testSubscribeSubclass [
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
 	self assert: announcement equals: instance
+]
+
+{ #category : #'test - subscribers' }
+AnnouncerTest >> testSubscribersForClass [
+	| subscribers mockA mockB |
+	self assert: announcer numberOfSubscriptions equals: 0.
+	
+	mockA := AnnouncerSubscriberMockA new.
+	mockA announcer: announcer.
+	mockB := AnnouncerSubscriberMockB new.
+	mockB announcer: announcer.
+	mockA registerEvents.
+	mockB registerEvents.
+	
+	self assert: announcer numberOfSubscriptions > 0.
+	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockA.
+	self assert: subscribers size equals: 2.
+	"AnnouncerSubscriberMockB inherits AnnouncerSubscriberMockA"
+	subscribers := announcer subscriptionsForClass: AnnouncerSubscriberMockB.
+	self assert: subscribers size equals: 1.
+	subscribers := announcer subscriptionsForClass: self class.
+	self assert: subscribers size equals: 0.
+
 ]
 
 { #category : #tests }

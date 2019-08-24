@@ -32,8 +32,7 @@ Class {
 
 { #category : #'instance creation' }
 Rectangle class >> center: centerPoint extent: extentPoint [ 
-	"Answer an instance of me whose center is centerPoint and width 
-	by height is extentPoint.  "
+	"Answer an instance of me whose center is centerPoint asInteger  "
 
 	^self origin: centerPoint - (extentPoint//2) extent: extentPoint
 ]
@@ -47,6 +46,13 @@ Rectangle class >> encompassing: listOfPoints [
 		topLeft := topLeft min: p.
 		bottomRight := bottomRight max: p ].
 	^ topLeft corner: bottomRight
+]
+
+{ #category : #'instance creation' }
+Rectangle class >> floatCenter: centerPoint extent: extentPoint [ 
+	"Answer an instance of me whose center is centerPoint and width 
+	by height is extentPoint."
+	^self origin: centerPoint - (extentPoint/2.0) extent: extentPoint
 ]
 
 { #category : #'instance creation' }
@@ -438,6 +444,12 @@ Rectangle >> flipBy: direction centerAt: aPoint [
 	"Return a copy flipped #vertical or #horizontal, about aPoint."
 	^ (origin flipBy: direction centerAt: aPoint)
 		rectangle: (corner flipBy: direction centerAt: aPoint)
+]
+
+{ #category : #accessing }
+Rectangle >> floatCenter [
+	"Answer the float point at the center of the receiver."
+	^ self topLeft + self bottomRight / 2.0
 ]
 
 { #category : #'truncation and roundoff' }

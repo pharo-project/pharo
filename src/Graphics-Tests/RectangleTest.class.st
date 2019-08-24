@@ -200,6 +200,37 @@ RectangleTest >> testFlipByCenterAt [
 ]
 
 { #category : #tests }
+RectangleTest >> testFloatCenter [ 
+	| r1 c |
+	r1 := 0@0 extent: 11@21.
+	c := r1 floatCenter.
+	self assert: (r1 containsPoint: c) description: 'the center is inside the rectangle'.
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomRight distanceTo: c).
+	self assert: (r1 bottomLeft distanceTo: c) equals: (r1 topRight distanceTo: c).
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomLeft distanceTo: c).
+	self assert: (r1 translateBy: -20@10) floatCenter = (c translateBy: -20@10) description: 'the center is translated with the rectangle'
+]
+
+{ #category : #tests }
+RectangleTest >> testFloatCenterExtent [
+	| r1 c |
+	r1 := Rectangle 
+		floatCenter: 1.3@1.3
+		extent: 4.4 asPoint.
+	c := r1 floatCenter.
+	self
+		assert: (c closeTo: 1.3@1.3);
+		assert: (r1 topLeft distanceTo: c) 
+			equals: (r1 bottomRight distanceTo: c);
+		assert: (r1 bottomLeft distanceTo: c) 
+			equals: (r1 topRight distanceTo: c);
+		assert: (r1 topLeft distanceTo: c)
+			equals: (r1 bottomLeft distanceTo: c);
+		assert: ((r1 translateBy: -20@10) floatCenter closeTo: (c translateBy: -20@10))
+			description: 'the center is translated with the rectangle'
+]
+
+{ #category : #tests }
 RectangleTest >> testInsettingByNumberShouldWork [
 
 	| rec1 rec2 |
