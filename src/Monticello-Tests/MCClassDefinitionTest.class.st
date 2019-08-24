@@ -95,7 +95,7 @@ MCClassDefinitionTest >> testCreation [
 MCClassDefinitionTest >> testDefinitionString [
 	| d |
 	d := self mockClassA asClassDefinition.
-	self assert: d definitionString equals: self mockClassA oldDefinition.
+	self assert: d definitionString equals: self mockClassA oldDefinition
 ]
 
 { #category : #tests }

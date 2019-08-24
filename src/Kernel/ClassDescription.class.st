@@ -1025,8 +1025,8 @@ ClassDescription >> oldDefinition [
 			store: self classVariablesString.
 	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
 			store: self sharedPoolsString.
-	aStream cr; tab; nextPutAll: 'category: ';
-			store: self category asString.
+	aStream cr; tab; nextPutAll: 'package: ';
+			store: self package name asString.
 
 	superclass ifNil: [ 
 		aStream nextPutAll: '.'; cr.

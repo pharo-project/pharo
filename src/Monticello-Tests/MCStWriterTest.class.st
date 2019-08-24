@@ -49,7 +49,7 @@ MCMock subclass: #MCMockClassA
 	instanceVariableNames: ''ivar''
 	classVariableNames: ''CVar InitializationOrder''
 	poolDictionaries: ''''
-	category: ''MonticelloMocks''!
+	package: ''MonticelloMocks''!
 
 !MCMockClassA commentStamp: '''' prior: 0!
 This is a mock class. The Monticello tests manipulated it to simulate a developer modifying code in the image.!
@@ -63,7 +63,7 @@ MCMock subclass: #MCMockClassB
 	instanceVariableNames: ''ivarb''
 	classVariableNames: ''CVar''
 	poolDictionaries: ''MCMockAPoolDictionary''
-	category: ''MonticelloMocks''!
+	package: ''MonticelloMocks''!
 
 MCMockClassB class
 	instanceVariableNames: ''ciVar''!
