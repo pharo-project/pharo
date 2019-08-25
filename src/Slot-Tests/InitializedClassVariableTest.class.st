@@ -51,3 +51,12 @@ InitializedClassVariableTest >> testInitializedClassVariableReflectiveBlock [
 	
 	
 ]
+
+{ #category : #tests }
+InitializedClassVariableTest >> testInitializedClassVariableReflectiveBlockParameter [
+	| classVar |
+	classVar := #ClassVar => InitializedClassVariable default: [:class | class].
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self assert: classVar read equals: aClass
+]

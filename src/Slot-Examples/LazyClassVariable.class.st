@@ -26,12 +26,14 @@ LazyClassVariable >> emitValue: aMethodBuilder [
 		pushLiteral: nil;
 		send: #==;
 		jumpAheadTo: #target if: false;
-		popTop;
-		pushLiteral: default copy.
+		popTop.
 	default isBlock ifTrue: [ 
 		aMethodBuilder	
+			pushLiteral: default
 			pushReceiver;
-			send: #cull:].
+			send: #definingClass;
+			send: #cull:]
+	ifFalse: [ aMethodBuilder pushLiteral: default copy ].
 	aMethodBuilder
 		storeIntoLiteralVariable: self;
 		jumpAheadTarget: #target
@@ -42,6 +44,6 @@ LazyClassVariable >> read [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
 	^ super read ifNil: [ 
 		default isBlock 
-			ifTrue: [ self write: (default copy cull: self definingClass)] 
+			ifTrue: [ self write: (default cull: self definingClass)] 
 			ifFalse: [ self write: default copy]]
 ]

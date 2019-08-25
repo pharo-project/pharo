@@ -26,12 +26,14 @@ LazySlot >> emitValue: aMethodBuilder [
 		pushLiteral: nil;
 		send: #==;
 		jumpAheadTo: #target if: false;
-		popTop;
-		pushLiteral: default copy.
-	default isBlock ifTrue: [ 
+		popTop.
+	default isBlock 
+		ifTrue: [ 
 		aMethodBuilder	
+			pushLiteral: default copy;
 			pushReceiver;
-			send: #cull:].
+			send: #cull:]
+	   ifFalse: [ aMethodBuilder pushLiteral: default copy].
 	aMethodBuilder
 		storeInstVar: index;
 		jumpAheadTarget: #target
@@ -42,6 +44,6 @@ LazySlot >> read: anObject [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
 	^ (super read: anObject) ifNil: [ 
 		default isBlock 
-			ifTrue: [ self write: (default copy cull: anObject) to: anObject] 
+			ifTrue: [ self write: (default cull: anObject) to: anObject] 
 			ifFalse: [ self write: default copy to: anObject]]
 ]
