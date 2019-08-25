@@ -46,7 +46,7 @@ InitializedSlotTest >> testReflectiveReadWrite [
 { #category : #tests }
 InitializedSlotTest >> testReflectiveReadWriteBlock [
 	| slot object|
-	slot := #slot1 => InitializedSlot defaultBlock: [4+1].
+	slot := #slot1 => InitializedSlot default: [4+1].
 	aClass := self make: [ :builder | builder slots: {slot}].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.

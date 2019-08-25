@@ -39,7 +39,7 @@ LazyClassVariableTest >> testLazyClassVarReadReflective [
 { #category : #tests }
 LazyClassVariableTest >> testLazyClassVarReadReflectiveBlock [
 	| classVar |
-	classVar := #ClassVar => LazyClassVariable defaultBlock: [5].
+	classVar := #ClassVar => LazyClassVariable default: [5].
 	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
 
 	self assert: classVar read equals: 5.
@@ -57,8 +57,8 @@ LazyClassVariableTest >> testLazyClassVariablePrint [
 	| classVariable |
 	classVariable := #myClassVar => LazyClassVariable default: 5 .
 	self assert: classVariable printString equals: '#myClassVar => LazyClassVariable default: 5'.
-	classVariable := #myClassVar => LazyClassVariable defaultBlock: [5].
-	self assert: classVariable printString equals: '#myClassVar => LazyClassVariable defaultBlock: [ 5 ]'.
+	classVariable := #myClassVar => LazyClassVariable default: [5].
+	self assert: classVariable printString equals: '#myClassVar => LazyClassVariable default: [ 5 ]'.
 	"if the default is really a block"
 	classVariable := #myClassVar => LazyClassVariable default: [5].
 	self assert: classVariable printString equals: '#myClassVar => LazyClassVariable default: [ 5 ]' 

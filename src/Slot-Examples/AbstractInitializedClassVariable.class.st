@@ -9,22 +9,26 @@ Class {
 	#name : #AbstractInitializedClassVariable,
 	#superclass : #LiteralVariable,
 	#instVars : [
-		'default',
-		'isBlock'
+		'default'
 	],
 	#category : #'Slot-Examples-ClassVariables'
 }
 
 { #category : #accessing }
 AbstractInitializedClassVariable >> default: anObject [
-	default := anObject.
-	isBlock := false
+	default := anObject
 ]
 
-{ #category : #accessing }
-AbstractInitializedClassVariable >> defaultBlock: aBlock [
-	default := aBlock.
-	isBlock := true
+{ #category : #'code generation' }
+AbstractInitializedClassVariable >> emitStore: methodBuilder [
+
+	methodBuilder storeIntoLiteralVariable: self
+]
+
+{ #category : #'code generation' }
+AbstractInitializedClassVariable >> emitValue: methodBuilder [
+
+	methodBuilder pushLiteralVariable: self
 ]
 
 { #category : #printing }
@@ -32,9 +36,7 @@ AbstractInitializedClassVariable >> printOn: aStream [
 	aStream 
 		store: self name;
 		nextPutAll: ' => ';
-		nextPutAll: self class name.
-	isBlock 
-		ifTrue: [aStream nextPutAll: ' defaultBlock: ']
-		ifFalse: [aStream nextPutAll: ' default: '].
+		nextPutAll: self class name;
+		nextPutAll: ' default: '.
 	default printOn: aStream.
 ]
