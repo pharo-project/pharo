@@ -17,11 +17,32 @@ Class {
 	#category : #'Slot-Examples-ClassVariables'
 }
 
+{ #category : #'code generation' }
+LazyClassVariable >> emitValue: aMethodBuilder [
+	"generate bytecode for '<varname> ifNil: [<varname> := default cull: self]'"
+	aMethodBuilder
+		pushLiteralVariable: self;
+		pushDup;
+		pushLiteral: nil;
+		send: #==;
+		jumpAheadTo: #target if: false;
+		popTop;
+		pushLiteral: default.
+	default isBlock ifTrue: [ 
+		aMethodBuilder	
+			pushReceiver;
+			send: #definingClass;
+			send: #cull:].
+	aMethodBuilder
+		storeIntoLiteralVariable: self;
+		jumpAheadTarget: #target
+]
+
 { #category : #'meta-object-protocol' }
 LazyClassVariable >> read [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
 	^ super read ifNil: [ 
-		isBlock 
-			ifTrue: [ self write: (default cull: self definingClass)] 
-			ifFalse: [ self write: default]]
+		default isBlock 
+			ifTrue: [ self write: (default cull: self definingClass) ] 
+			ifFalse: [ self write: default ] ]
 ]

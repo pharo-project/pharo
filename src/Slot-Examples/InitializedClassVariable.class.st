@@ -15,7 +15,7 @@ Class {
 
 { #category : #'class building' }
 InitializedClassVariable >> installingIn: aClass [
-	isBlock 
-		ifTrue: [ self write: (default copy cull: aClass)]
-		ifFalse: [ self write: default]
+	default isBlock 
+		ifTrue: [ self write: (default cull: aClass) ]
+		ifFalse: [ self write: default ]
 ]
