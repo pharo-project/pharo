@@ -61,6 +61,14 @@ WeakValueDictionary >> at: key put: anObject [
 	^ anObject
 ]
 
+{ #category : #private }
+WeakValueDictionary >> rehash [
+	| newSelf |
+	newSelf := self species new: self size.
+	array do: [ :each | each ifNotNil: [ :asso | newSelf noCheckAdd: asso ] ].
+	array := newSelf array
+]
+
 { #category : #accessing }
 WeakValueDictionary >> size [
 	| count |
