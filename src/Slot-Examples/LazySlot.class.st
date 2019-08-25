@@ -26,14 +26,12 @@ LazySlot >> emitValue: aMethodBuilder [
 		pushLiteral: nil;
 		send: #==;
 		jumpAheadTo: #target if: false;
-		popTop.
-	default isBlock 
-		ifTrue: [ 
+		popTop;
+		pushLiteral: default.
+	default isBlock ifTrue: [ 
 		aMethodBuilder	
-			pushLiteral: default copy;
 			pushReceiver;
-			send: #cull:]
-	   ifFalse: [ aMethodBuilder pushLiteral: default copy].
+			send: #cull:].
 	aMethodBuilder
 		storeInstVar: index;
 		jumpAheadTarget: #target
@@ -45,5 +43,5 @@ LazySlot >> read: anObject [
 	^ (super read: anObject) ifNil: [ 
 		default isBlock 
 			ifTrue: [ self write: (default cull: anObject) to: anObject] 
-			ifFalse: [ self write: default copy to: anObject]]
+			ifFalse: [ self write: default to: anObject]]
 ]
