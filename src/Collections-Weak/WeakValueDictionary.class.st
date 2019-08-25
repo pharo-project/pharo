@@ -65,7 +65,7 @@ WeakValueDictionary >> at: key put: anObject [
 WeakValueDictionary >> rehash [
 	| newSelf |
 	newSelf := self species new: self size.
-	array do: [ :each | each value ifNotNil: [ :asso | newSelf noCheckAdd: asso ] ].
+	array do: [ :each | each value ifNotNil: [ :asso | newSelf noCheckAdd: each ] ].
 	array := newSelf array
 ]
 
