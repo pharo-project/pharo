@@ -198,6 +198,11 @@ RBRefactoryChangeManager >> undoOperation [
 		redo add: change execute ]
 ]
 
+{ #category : #'public access' }
+RBRefactoryChangeManager >> undoPointers [
+	^ undoPointers
+]
+
 { #category : #updating }
 RBRefactoryChangeManager >> update: anEvent [
 	isPerformingRefactoring
