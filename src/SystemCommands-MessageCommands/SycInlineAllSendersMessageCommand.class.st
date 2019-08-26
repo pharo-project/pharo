@@ -7,6 +7,11 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
+{ #category : #testing }
+SycInlineAllSendersMessageCommand class >> canBeExecutedInContext: aToolContext [
+	^ aToolContext isMethodSelected
+]
+
 { #category : #activation }
 SycInlineAllSendersMessageCommand class >> methodContextMenuActivation [
 	<classAnnotation>

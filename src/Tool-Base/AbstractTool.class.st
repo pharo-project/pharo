@@ -13,7 +13,13 @@ AbstractTool class >> menuCommandOn: aBuilder [
 	(aBuilder item: #Tools)
 		order: 1.0;
 		target: self;
-		help: 'Set of tools to get a better Pharo experience.'
+		help: 'Set of tools to get a better Pharo experience.';
+		with: [ (aBuilder item: #'Undo last refactoring')
+				target: self;
+				selector: #undoLastRefactoring;
+				help: 'Undo last refactoring, after execute this command you can not redo this refactoring.';
+				order: 1000;
+				iconName: #smallUndo.]
 ]
 
 { #category : #private }
@@ -48,6 +54,22 @@ AbstractTool class >> requestProtocolNameFor: aClass initialAnswer: aString [
 { #category : #'world menu' }
 AbstractTool class >> theme [
 	^ Smalltalk ui theme 
+]
+
+{ #category : #'world menu' }
+AbstractTool class >> undoLastRefactoring [
+	| manager |
+	manager := RBRefactoryChangeManager instance.
+	manager undoPointers ifNotEmpty: [
+	[ |limit list| 
+	list := OrderedCollection new.
+	limit := manager lastUndoPointer .
+	1 to: limit do:[ :i | list add: manager undoChange ].
+	list do: [ :e | e execute ]
+	 ] asJob
+		title: 'Refactoring';
+		run]
+	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
 ]
 
 { #category : #class }

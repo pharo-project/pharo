@@ -10,6 +10,7 @@ Class {
 	#instVars : [
 		'undo',
 		'redo',
+		'undoPointers',
 		'isPerformingRefactoring',
 		'changeFactory'
 	],
@@ -78,10 +79,15 @@ RBRefactoryChangeManager class >> unload [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> addUndo: aRefactoringChange [
-	undo addLast: aRefactoringChange.
+	undo push: aRefactoringChange.
 	undo size > UndoSize
 		ifTrue: [ undo removeFirst ].
 	redo := OrderedCollection new
+]
+
+{ #category : #'public access' }
+RBRefactoryChangeManager >> addUndoPointer: aNumber [
+	undoPointers push: aNumber
 ]
 
 { #category : #'change-factory' }
@@ -91,8 +97,9 @@ RBRefactoryChangeManager >> changeFactory [
 
 { #category : #private }
 RBRefactoryChangeManager >> clearUndoRedoList [
-	undo := OrderedCollection new.
-	redo := OrderedCollection new
+	undo := Stack new.
+	redo := OrderedCollection new.
+	undoPointers := Stack new
 ]
 
 { #category : #initialization }
@@ -148,6 +155,11 @@ RBRefactoryChangeManager >> initialize [
 ]
 
 { #category : #'public access' }
+RBRefactoryChangeManager >> lastUndoPointer [
+	^ undoPointers pop
+]
+
+{ #category : #'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
 	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
 ]
@@ -174,7 +186,7 @@ RBRefactoryChangeManager >> release [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoChange [
-	^ undo last
+	^ undo pop
 ]
 
 { #category : #'public access' }
@@ -184,6 +196,11 @@ RBRefactoryChangeManager >> undoOperation [
 		| change |
 		change := undo removeLast.
 		redo add: change execute ]
+]
+
+{ #category : #'public access' }
+RBRefactoryChangeManager >> undoPointers [
+	^ undoPointers
 ]
 
 { #category : #updating }
