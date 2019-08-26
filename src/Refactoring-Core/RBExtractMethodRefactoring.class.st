@@ -123,18 +123,7 @@ RBExtractMethodRefactoring >> checkTemporaries [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> compiledMethod [
-	^ self compiledMethodIn: class realClass
-]
-
-{ #category : #transforming }
-RBExtractMethodRefactoring >> compiledMethodIn: aClass [
-	^ [ aClass >> newExtractedSelector ]
-	on: Exception 
-	do: [ |aSuperClass|
-		aSuperClass := aClass superclass.
-		aSuperClass 
-			ifNil: [ ^ nil ]
-			ifNotNil: [ self compiledMethodIn: aSuperClass ]]
+	^ class realClass lookupSelector: newExtractedSelector
 ]
 
 { #category : #transforming }
