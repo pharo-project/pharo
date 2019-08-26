@@ -1,3 +1,7 @@
+"
+I am a refactoring for removing a method and those of its subclasses,
+ to remove the methods use RBRemoveMethodRefactoring
+"
 Class {
 	#name : #RBRemoveHierarchyMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
@@ -20,8 +24,9 @@ RBRemoveHierarchyMethodRefactoring >> delete: selector in: aClass [
 									removeMethods: { selector }
 									from: aClass) ]
 		on: RBRefactoringError 
-			do: [ :ex | ( self confirm: ex messageText )
-				ifTrue:[ ex resume] ]]
+			do: [ :ex | ( self confirm: 
+				(ex messageText copyReplaceAll: 'Browse references?' with: 'Remove anyway?') )
+				ifTrue:[ ex resume ] ] ]
 ]
 
 { #category : #transforming }

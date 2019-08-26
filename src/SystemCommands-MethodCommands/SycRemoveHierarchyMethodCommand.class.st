@@ -1,3 +1,7 @@
+"
+I am a command to remove given methods and the ones in the subclasses.
+
+"
 Class {
 	#name : #SycRemoveHierarchyMethodCommand,
 	#superclass : #SycMethodCommand,
