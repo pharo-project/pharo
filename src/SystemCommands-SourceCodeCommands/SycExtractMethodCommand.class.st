@@ -66,7 +66,7 @@ SycExtractMethodCommand >> findOcurrences: aRefactoring [
 	ocurrences ifNotEmpty: [ 
 		(self confirm: ('We find <1s> ocurrence(s) of extracted method.
 Would you like review and replace them?' expandMacrosWith: ocurrences size asString))
-		 	ifTrue: [ refactoring transform ]]
+		 	ifTrue: [ refactoring transform ] ]
 ]
 
 { #category : #execution }

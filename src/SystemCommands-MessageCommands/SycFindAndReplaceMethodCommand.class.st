@@ -7,6 +7,11 @@ Class {
 	#category : #'SystemCommands-MessageCommands'
 }
 
+{ #category : #testing }
+SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
+	^ aToolContext isMethodSelected
+]
+
 { #category : #accessing }
 SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
 	^#smallFindIcon
