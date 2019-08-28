@@ -737,7 +737,7 @@ CompiledMethod >> postCopy [
 									method: self;
 									yourself).
 		 self penultimateLiteral pragmas do:
-			[:p| p setMethod: self]]
+			[:p| p method: self]]
 
 ]
 
