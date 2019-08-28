@@ -13,7 +13,7 @@ Class {
 { #category : #'as yet unclassified' }
 HEDuplicationModeStrategy class >> forOption: keyword [
 	^ (self allSubclasses
-		detect: [ :e | e selector = keyword ]
+		detect: [ :e | e keyword = keyword ]
 		ifNone: [ self error: 'There is no duplication strategy for ''' , keyword , '''' ]) new
 ]
 
