@@ -56,22 +56,6 @@ AbstractTool class >> theme [
 	^ Smalltalk ui theme 
 ]
 
-{ #category : #'world menu' }
-AbstractTool class >> undoLastRefactoring [
-	| manager |
-	manager := RBRefactoryChangeManager instance.
-	manager undoPointers ifNotEmpty: [
-	[ |limit list| 
-	list := OrderedCollection new.
-	limit := manager lastUndoPointer .
-	1 to: limit do:[ :i | list add: manager undoChange ].
-	list do: [ :e | e execute ]
-	 ] asJob
-		title: 'Refactoring';
-		run]
-	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
-]
-
 { #category : #class }
 AbstractTool >> browseClassRefsOf: aClass [
 
