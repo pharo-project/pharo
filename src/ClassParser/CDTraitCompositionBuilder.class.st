@@ -17,13 +17,21 @@ CDTraitCompositionBuilder >> buildFrom: aNode [
 
 { #category : #visiting }
 CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [ 
+	self flag: #todo.
 	
-	^ aRBArrayNode statements collect: [ :each | 
+	aRBArrayNode statements ifEmpty: [ 
+		^CDTraitCompositionSequenceNode new 
+			sequence: #();
+			originalNode: aRBArrayNode;
+			yourself].
+	
+	self error: 'Is not supported yet'
+	"
+	aRBArrayNode statements collect: [ :each | 
 		each isLiteralNode
 			ifTrue: [ each value ]
-			ifFalse: [ each receiver value -> each arguments first value ] ]
-		
-		
+			ifFalse: [ each receiver value -> each arguments first value ] ]	
+	"
 ]
 
 { #category : #visiting }
