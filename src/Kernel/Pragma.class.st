@@ -81,7 +81,7 @@ Pragma class >> allNamed: aSymbol in: aClass sortedUsing: aSortBlock [
 { #category : #'instance creation' }
 Pragma class >> for: aMethod selector: aSelector arguments: anArray [
 	^self new
-		method aMethod;
+		method: aMethod;
 		selector: aSelector;
 		arguments: anArray;
 		yourself
