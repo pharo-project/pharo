@@ -694,8 +694,9 @@ OrderedCollection >> removeDuplicates [
 	iterator := 1.
 	[ iterator <= self size ]
 		whileTrue: [ | each newIndex |
-			each := self at: iterator.			
-			[ newIndex := (self indexOf: each startingAt: iterator+1).
+			each := self at: iterator.
+			newIndex := iterator + 1.
+			[ newIndex := (self indexOf: each startingAt: newIndex).
 			newIndex > 0 ]
 				whileTrue: [ self removeAt: newIndex ].
 			iterator := iterator + 1.
