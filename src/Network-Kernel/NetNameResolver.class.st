@@ -166,11 +166,10 @@ NetNameResolver class >> localHostAddress [
 
 { #category : #lookups }
 NetNameResolver class >> localHostAddressHackForMac [
-
 	"This is a hack. The best solution should be done by fixing the primitive on Mac"
 	| ipString |
-	ipString := Smalltalk os resultOfCommand: 'curl ipecho.net/plain'.
-	ipString ifEmpty: [ ^self loopBackAddress ].
+	ipString := Smalltalk os resultOfCommand: 'ipconfig getifaddr en0'. 
+	ipString ifEmpty:	[^self loopBackAddress].
 	^SocketAddress fromDottedString: ipString
 
 ]
