@@ -168,12 +168,6 @@ Pragma >> key [
 	^self selector
 ]
 
-{ #category : #'to be deprecated' }
-Pragma >> keyword [
-	"to be deprecated for #selector"
-	^ self selector
-]
-
 { #category : #accessing }
 Pragma >> message [
 	"Answer the message of the receiving pragma."
@@ -245,24 +239,6 @@ Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
 	
 	^ anObject perform: self keyword withArguments: self arguments
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> setArguments: anArray [
-	"to be deprecated for #arguments:"
-	arguments := anArray
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> setKeyword: aSymbol [
-	"to be deprecated for #selector:"
-	self selector: aSymbol
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> setMethod: aCompiledMethod [
-	"to be deprecated for #method:"
-	method := aCompiledMethod
 ]
 
 { #category : #processing }
