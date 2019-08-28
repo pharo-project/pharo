@@ -414,7 +414,7 @@ ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 	aSymbol = #generated
 		ifTrue: [^ (self methodDictionary includesKey: fieldname)
 				and: [(self methodDictionary at: fieldname) pragmas
-						anySatisfy: [:p | p keyword = #generated]]].
+						anySatisfy: [:p | p selector = #generated]]].
 	self error: 'unknow generation policy'
 ]
 

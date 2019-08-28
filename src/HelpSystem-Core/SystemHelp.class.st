@@ -51,7 +51,7 @@ SystemHelp class >> createHelpTopic [
 SystemHelp class >> pragmaCollector [
 	^ pragmaCollector
 		ifNil: [ pragmaCollector := (PragmaCollector
-				filter: [ :prag | prag keyword = self pragmaKeyword ])
+				filter: [ :prag | prag selector = self pragmaKeyword ])
 				reset;
 				whenChangedDo: [ self resetHelpTopic ];
 				yourself ]

@@ -450,7 +450,7 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
-	^ self pragmas anySatisfy: [ :pragma | pragma keyword = aSymbol ]
+	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
 ]
 
 { #category : #testing }

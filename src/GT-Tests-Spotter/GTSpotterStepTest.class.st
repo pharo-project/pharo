@@ -214,7 +214,7 @@ GTSpotterStepTest >> implementors: aSelector inPackages: anArray [
 { #category : #'private-navigation' }
 GTSpotterStepTest >> pragma: aSelector of: aCompiledMethod [
 	^ aCompiledMethod pragmas 
-		detect: [ :each | each keyword = aSelector ] 
+		detect: [ :each | each selector = aSelector ] 
 		ifNone: [ nil ]
 ]
 
@@ -233,7 +233,7 @@ GTSpotterStepTest >> pragmas: aSelector inPackages: anArray [
 				package methods do: [ :cm | 
 					cm methodClass isTrait ifFalse: [ 
 						(cm pragmas 
-							detect: [ :p | p keyword = aSelector ] 
+							detect: [ :p | p selector = aSelector ] 
 							ifNone: [ nil ]) ifNotNil: [ :p | pragmas add: p ] ] ] ] ] ].
 	^ pragmas
 ]

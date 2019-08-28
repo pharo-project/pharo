@@ -11,7 +11,7 @@ Class {
 MethodPragmaTest >> assertPragma: aString givesKeyword: aSymbol arguments: anArray [
 	| pragma  |
 	pragma := self pragma: aString selector: #zork.
-	self assert: pragma keyword = aSymbol.
+	self assert: pragma selector = aSymbol.
 	self assert: pragma arguments = anArray.
 
 ]
@@ -232,13 +232,6 @@ MethodPragmaTest >> testCompileValue [
 ]
 
 { #category : #'testing-pragma' }
-MethodPragmaTest >> testKeyword [
-	| pragma |
-	pragma := Pragma keyword: #foo: arguments: #( 123 ).
-	self assert: pragma keyword = #foo:.
-]
-
-{ #category : #'testing-pragma' }
 MethodPragmaTest >> testMessage [
 	| pragma message |
 	pragma := Pragma keyword: #foo: arguments: #( 123 ).
@@ -333,6 +326,13 @@ MethodPragmaTest >> testPrimitiveNamedErrorCode2 [
 	self assert: self lookup equals: nil.
 	
 
+]
+
+{ #category : #'testing-pragma' }
+MethodPragmaTest >> testSelector [
+	| pragma |
+	pragma := Pragma selector: #foo: arguments: #( 123 ).
+	self assert: pragma selector = #foo:.
 ]
 
 { #category : #testing }
