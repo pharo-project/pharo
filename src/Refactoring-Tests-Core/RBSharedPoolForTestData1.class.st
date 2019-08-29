@@ -4,7 +4,7 @@ Class {
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests-perform' }
 RBSharedPoolForTestData1 >> msg4 [
 	
 	^ Var1

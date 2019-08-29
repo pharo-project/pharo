@@ -4,13 +4,13 @@ Class {
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests-perform' }
 RBSharedPoolForTestData2 >> msg4 [
 	
 	^ Var1
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-perform' }
 RBSharedPoolForTestData2 >> reference [ 	
 	^ RBRemoveClassTest
 ]

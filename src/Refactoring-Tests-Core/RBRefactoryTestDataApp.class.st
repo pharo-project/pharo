@@ -152,7 +152,7 @@ RBRefactoryTestDataApp >> demoMethodWithDuplicates [
 	^ answer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #test }
 RBRefactoryTestDataApp >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1. 
 	self do: arg2.

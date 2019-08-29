@@ -7,19 +7,19 @@ Class {
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
-{ #category : #accessing }
+{ #category : #'tests-perform' }
 RBSharedPoolForTestData >> msg1 [
 	
 	^ Var1
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-perform' }
 RBSharedPoolForTestData >> msg2 [
 	
 	^ Var1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests-perform' }
 RBSharedPoolForTestData >> msg4 [
 	
 	^ Var1
