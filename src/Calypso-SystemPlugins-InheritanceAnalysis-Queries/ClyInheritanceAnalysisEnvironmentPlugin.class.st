@@ -69,7 +69,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> cacheAllImplementors [
 ClyInheritanceAnalysisEnvironmentPlugin >> cacheMethod: aMethod [
 	| classes |
 	classes := self implementorsOf: aMethod.
-	classes add: aMethod origin 
+	classes add: aMethod methodClass 
 
 ]
 
@@ -159,11 +159,11 @@ ClyInheritanceAnalysisEnvironmentPlugin >> isMethodOverridden: aMethod [
 	In addition using cheap processing path allows to defer the cache building.
 	It removes the effect of initial slow analysis from general browser experience 
 	where user rarely browse the root classes of big hierarchies"
-	(self isClassCheapForOverriddenMethodsAnalysis: aMethod origin) ifTrue: [ 
+	(self isClassCheapForOverriddenMethodsAnalysis: aMethod methodClass) ifTrue: [ 
 			^aMethod isOverridden ].
 	
 	classes := self implementorsOf: aMethod.	
-	methodClass := aMethod origin.
+	methodClass := aMethod methodClass.
 	^classes anySatisfy: [ :each | each inheritsFrom: methodClass ]
 ]
 
@@ -222,11 +222,11 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processMethodChange: aMethodAnnouncem
 	self updateCacheForMethod: aMethodAnnouncement methodAffected.
 	
 	method := aMethodAnnouncement methodAffected.
-	method origin superclass ifNotNil: [ :superclass |
+	method methodClass superclass ifNotNil: [ :superclass |
 		(superclass lookupSelector: method selector) ifNotNil: [:overriddenMethod |
 			^environment systemChanged: (ClyOverriddenMethodChanged method: overriddenMethod)]
 	].
-	method origin subclasses ifEmpty: [ ^self ].
+	method methodClass subclasses ifEmpty: [ ^self ].
 	environment systemChanged: (
 		ClyOverridingMethodsChanged initiatedBy: self forOverriddenMethod: method)
 ]
@@ -265,7 +265,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> updateCacheForMethod: aMethod [
 			ifTrue: [ self cacheMethod: aMethod ]
 			ifFalse: [ 
 				allImplementorsCache at: aMethod selector ifPresent: [ :classes | 
-					classes remove: aMethod origin ifAbsent: [ ].
+					classes remove: aMethod methodClass ifAbsent: [ ].
 					classes ifEmpty: [allImplementorsCache removeKey: aMethod selector]]].		
 	]
 ]
