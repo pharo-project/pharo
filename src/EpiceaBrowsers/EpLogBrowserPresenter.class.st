@@ -324,11 +324,10 @@ EpLogBrowserPresenter >> eventsMenuActions [
 { #category : #'menu - operations' }
 EpLogBrowserPresenter >> fileOutSelection [
 
-	| entries outputDirectory |
+	| entries |
 	entries := self selectedEntryItems collect: [ :each | each entry ].
-	outputDirectory := log store directory.
 	
-	EpOmbuExporter askFileNameAndFileOut: entries in: outputDirectory.
+	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator imageDirectory.
 ]
 
 { #category : #'menu - filters' }
