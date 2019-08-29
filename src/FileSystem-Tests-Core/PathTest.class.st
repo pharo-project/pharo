@@ -56,7 +56,7 @@ PathTest >> testAbsoluteWithParents [
 	self assert: (allPaths fourth isChildOf: allPaths third).
 	
 	self assert: allPaths fourth equals: path.
-	self assert: allPaths fourth == path
+	self assert: allPaths fourth identicalTo: path
 ]
 
 { #category : #tests }
@@ -617,7 +617,7 @@ PathTest >> testRelativeWithParents [
 PathTest >> testResolveAbsolute [
 	| path |
 	path := Path / 'griffle'.
-	self assert: path resolve == path.
+	self assert: path resolve identicalTo: path.
 	self assert: path isAbsolute
 ]
 
@@ -653,7 +653,7 @@ PathTest >> testResolvePath [
 PathTest >> testResolveRelative [
 	| path |
 	path := Path * 'griffle'.
-	self assert: path resolve == path.
+	self assert: path resolve identicalTo: path.
 	self assert: path isRelative
 ]
 
@@ -673,7 +673,7 @@ PathTest >> testResolveString [
 PathTest >> testRootParent [
 	| root |
 	root := Path root.
-	self assert: root parent == root
+	self assert: root parent identicalTo: root
 ]
 
 { #category : #tests }
@@ -720,7 +720,7 @@ PathTest >> testUnequalContent [
 	| a b |
 	a := Path * 'plonk'.
 	b := Path * 'griffle'.
-	self deny: a = b.
+	self deny: a identicalTo: b.
 ]
 
 { #category : #tests }
@@ -728,7 +728,7 @@ PathTest >> testUnequalSize [
 	| a b |
 	a := Path * 'plonk'.
 	b := (Path * 'plonk') / 'griffle'.
-	self deny: a = b.
+	self deny: a identicalTo: b.
 ]
 
 { #category : #tests }
@@ -760,6 +760,14 @@ PathTest >> testWithExtentionReplacesExtension [
 	path := Path * 'plonk.griffle'.
 	result := path withExtension: 'griffle'.
 	self assert: result basename equals: 'plonk.griffle'
+]
+
+{ #category : #tests }
+PathTest >> testWithParentsOnRootReturnRoot [
+	"Non regression test. Before sending #withParents to the root returned two time root.This is wrong behavior and this test ensure we do not have a regression."
+
+	self assert: FileLocator root fullPath withParents size equals: 1.
+	self assert: FileLocator root fullPath withParents anyOne equals: Path root
 ]
 
 { #category : #tests }
