@@ -4,10 +4,22 @@ I plug environment with many kind of inheritance hints.
 I tag abstract classes and method.
 I analyze method inheritance and tag method with overriden and overriding tags.
 
-I maintain cache of override method statuses in variable methodCache.
-It is a dictionary in form of selector->methodClass->status.
-Status is represented by simple two items array in form {ClyOverridingMethodTag instance. ClyOverriddenMethodTag instance}. If method does not overridden then there will be nil in this status array at 2 second position.
-I am subscribed on system changes and invalidate methodCache when related classes or methods are changed (look at #attachToSystem method for details).
+To check if method is overriding superclass methods use following expression: 
+
+	plugin isMethodOverriding: aMethod.
+
+For implementation I simply call ""aMethod isOverriding"" which checks if any superclass implements same selector. It is quite fast operation due to the fact that the size of most of the hierarchies are not much than 10.
+
+To check if method is overridden by some of subclasses methods use following expression: 
+
+	plugin isMethodOverridden: aMethod.
+
+The ""aMethod isOverridden"" can be very expensive. It enumerates all subclasses of the method class. And there are classes with really huge hierarchies like Object or Morph. 
+To optimize overridden state analysis I build the cache of all method implementors in the image (#allImplementorsCache). It makes the analysis for big hierarchies very fast. But for small hierachies the #isOverridden operation is faster. I use the cache only when the class of the method has more than 10 subclasses in the hierarchy. Testing approves that it is a good criteria. But you can specify different value using #littleHierarchyMaxSize variable.
+
+In addition #allImplementorsCache is built lazely only when I need to analyze big hierarchy. It avoids the effect of slow analysis in general browser experience. Users rarely open the browser on huge hierarcies. And only in such scenarious they can notice the little initial delay when browser is opening. (Testing shows just 200 ms to build the cache for vanila Pharo image on macair machine).
+
+I am subscribed on system changes and invalidate #allImplementorsCache when related classes or methods are changed (look at #attachToSystem method for details).
 
 In addition I provide following method groups:
 	- abstract methods
@@ -19,8 +31,9 @@ Class {
 	#name : #ClyInheritanceAnalysisEnvironmentPlugin,
 	#superclass : #ClySystemEnvironmentPlugin,
 	#instVars : [
-		'methodCache',
-		'cacheGuard'
+		'cacheGuard',
+		'allImplementorsCache',
+		'littleHierarchyMaxSize'
 	],
 	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
@@ -28,27 +41,6 @@ Class {
 { #category : #testing }
 ClyInheritanceAnalysisEnvironmentPlugin class >> isSlow [
 	^true
-]
-
-{ #category : #'methods analysis' }
-ClyInheritanceAnalysisEnvironmentPlugin >> analysisCacheFor: aMethod do: aBlock [
-	
-	cacheGuard critical: [ 
-		methodCache at: aMethod selector ifPresent: [:classCache | 
-			classCache at: aMethod methodClass ifPresent: aBlock]
-	]
-]
-
-{ #category : #'methods analysis' }
-ClyInheritanceAnalysisEnvironmentPlugin >> analyzeMethod: aMethod [
-	| cache classCache |
-	cache := Array new: 2.
-	aMethod isOverriding ifTrue: [ cache at: 1 put: ClyOverridingMethodTag instance ].
-	aMethod isOverridden ifTrue: [ cache at: 2 put: ClyOverriddenMethodTag instance ].
-	
-	cacheGuard critical: [ 
-		classCache := methodCache at: aMethod selector ifAbsentPut: [WeakIdentityKeyDictionary new].
-		classCache at: aMethod methodClass put: cache]
 ]
 
 { #category : #controlling }
@@ -59,6 +51,26 @@ ClyInheritanceAnalysisEnvironmentPlugin >> attachToSystem [
 	environment system when: ClassRemoved send: #processClassRemoval: to: self.
 	environment system when: ClassModifiedClassDefinition send: #processClassDefinitionChange: to: self.
 	environment system when: ClassModificationApplied send: #processFullClassChange: to: self.
+]
+
+{ #category : #'methods analysis' }
+ClyInheritanceAnalysisEnvironmentPlugin >> cacheAllImplementors [
+
+	cacheGuard critical: [ 
+		allImplementorsCache := IdentityDictionary new: Symbol selectorTable size.
+		environment systemScope methodsDo: [ :each |
+			self cacheMethod: each ]
+	]
+
+
+]
+
+{ #category : #'methods analysis' }
+ClyInheritanceAnalysisEnvironmentPlugin >> cacheMethod: aMethod [
+	| classes |
+	classes := self implementorsOf: aMethod.
+	classes add: aMethod origin 
+
 ]
 
 { #category : #'item decoration' }
@@ -108,14 +120,10 @@ ClyInheritanceAnalysisEnvironmentPlugin >> detachFromSystem [
 ]
 
 { #category : #'methods analysis' }
-ClyInheritanceAnalysisEnvironmentPlugin >> doesClassCache: classCache includesOverridesOf: aClass [
-
-	classCache keysDo: [ :eachClass | 
-		((eachClass instanceSide includesBehavior: aClass instanceSide) 
-			or: [ aClass instanceSide includesBehavior: eachClass instanceSide ])
-				ifTrue: [ ^true ]].
-		
-	^false
+ClyInheritanceAnalysisEnvironmentPlugin >> implementorsOf: aMethod [
+	allImplementorsCache ifNil: [ self cacheAllImplementors ].
+	
+	^allImplementorsCache at: aMethod selector ifAbsentPut: [ IdentitySet new ]
 ]
 
 { #category : #initialization }
@@ -123,25 +131,57 @@ ClyInheritanceAnalysisEnvironmentPlugin >> initialize [
 	super initialize.
 	
 	cacheGuard := Mutex new.
-	methodCache := IdentityDictionary new
+	littleHierarchyMaxSize := 10
+]
+
+{ #category : #'methods analysis' }
+ClyInheritanceAnalysisEnvironmentPlugin >> isClassCheapForOverriddenMethodsAnalysis: aClass [
+	"Building cache of all implementors is expensive operation 
+	and we are trying to avoid it until it becomes really necessary for performance.
+	Here we are using a simple criteria to detect that we can avoid the cache.
+	When there are small amount of subclasses if it always cheap operation without any cache"
+		
+	| numberOfSubclasses |
+	numberOfSubclasses := 0.
+	aClass allSubclassesDo: [ :each | 
+		numberOfSubclasses > littleHierarchyMaxSize ifTrue: [ ^false ].
+		numberOfSubclasses := numberOfSubclasses + 1].
+	^true
 ]
 
 { #category : #'methods analysis' }
 ClyInheritanceAnalysisEnvironmentPlugin >> isMethodOverridden: aMethod [
+	| classes methodClass |
+	"Implementors cache optimizes analyzis only for classes with a lot of subclasses.
+	For example Object and Morph are really profit from it.
+	But for simple hierarchies the direct overridden state analysis is quite cheap operation.
+	And it's much faster than processing using cache.
+	In addition using cheap processing path allows to defer the cache building.
+	It removes the effect of initial slow analysis from general browser experience 
+	where user rarely browse the root classes of big hierarchies"
+	(self isClassCheapForOverriddenMethodsAnalysis: aMethod origin) ifTrue: [ 
+			^aMethod isOverridden ].
 	
-	self analysisCacheFor: aMethod do: [ :tags | ^tags last notNil].
-
-	self analyzeMethod: aMethod.	
-	^self isMethodOverridden: aMethod
+	classes := self implementorsOf: aMethod.	
+	methodClass := aMethod origin.
+	^classes anySatisfy: [ :each | each inheritsFrom: methodClass ]
 ]
 
 { #category : #'methods analysis' }
 ClyInheritanceAnalysisEnvironmentPlugin >> isMethodOverriding: aMethod [
-	
-	self analysisCacheFor: aMethod do: [ :tags | ^tags first notNil].
-	
-	self analyzeMethod: aMethod.	
-	^self isMethodOverriding: aMethod
+	"We do not use implementors cache for overriding state analysis 
+	because the direct method #isOverriding is much faster"
+	^aMethod isOverriding
+]
+
+{ #category : #accessing }
+ClyInheritanceAnalysisEnvironmentPlugin >> littleHierarchyMaxSize [
+	^ littleHierarchyMaxSize
+]
+
+{ #category : #accessing }
+ClyInheritanceAnalysisEnvironmentPlugin >> littleHierarchyMaxSize: anObject [
+	littleHierarchyMaxSize := anObject
 ]
 
 { #category : #controlling }
@@ -155,15 +195,13 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processClassDefinitionChange: aClassD
 	(aClassDefinitionChange oldClassDefinition superclass 
 		= aClassDefinitionChange newClassDefinition superclass) ifTrue: [ ^self ].	
 	
-	self resetCacheOfClass: aClassDefinitionChange oldClassDefinition superclass.
 	environment systemChanged: (
 		ClyOverriddenSuperclassesChanged overridingSubclass: aClassDefinitionChange oldClassDefinition)
 ]
 
 { #category : #controlling }
 ClyInheritanceAnalysisEnvironmentPlugin >> processClassRemoval: aClassRemoved [
-	self resetCacheOfClass: aClassRemoved classAffected.
-	self resetCacheOfClass: aClassRemoved classAffected superclass.
+	self resetCacheForClass: aClassRemoved classAffected.
 	
 	environment systemChanged: (
 		ClyOverriddenSuperclassesChanged overridingSubclass: aClassRemoved classAffected)
@@ -172,7 +210,6 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processClassRemoval: aClassRemoved [
 { #category : #controlling }
 ClyInheritanceAnalysisEnvironmentPlugin >> processFullClassChange: aClassModificationApplied [
 	
-	self resetCacheOfClass: aClassModificationApplied classAffected.
 	environment systemChanged: (
 		ClyOverriddenSuperclassesChanged overridingSubclass: aClassModificationApplied classAffected).
 	environment systemChanged: (
@@ -182,7 +219,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processFullClassChange: aClassModific
 { #category : #controlling }
 ClyInheritanceAnalysisEnvironmentPlugin >> processMethodChange: aMethodAnnouncement [
 	| method |
-	self resetCacheOfMethod: aMethodAnnouncement methodAffected.
+	self updateCacheForMethod: aMethodAnnouncement methodAffected.
 	
 	method := aMethodAnnouncement methodAffected.
 	method origin superclass ifNotNil: [ :superclass |
@@ -190,26 +227,45 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processMethodChange: aMethodAnnouncem
 			^environment systemChanged: (ClyOverriddenMethodChanged method: overriddenMethod)]
 	].
 	method origin subclasses ifEmpty: [ ^self ].
-	environment systemChanged: (ClyOverridingMethodsChanged overriddenMethod: method)
+	environment systemChanged: (
+		ClyOverridingMethodsChanged initiatedBy: self forOverriddenMethod: method)
 ]
 
 { #category : #'methods analysis' }
-ClyInheritanceAnalysisEnvironmentPlugin >> resetCacheOfClass: aClass [
+ClyInheritanceAnalysisEnvironmentPlugin >> resetCacheForClass: aClass [
 	aClass ifNil: [ ^self ].
+	allImplementorsCache ifNil: [ ^self ].
 	
 	cacheGuard critical: [ | selectorsToRemove |
 		selectorsToRemove := OrderedCollection new.
-		methodCache keysAndValuesDo: [ :selector :classCache |
-			(self doesClassCache: classCache includesOverridesOf: aClass)
-					ifTrue: [ selectorsToRemove add: selector ]].
-		selectorsToRemove do: [:each | methodCache removeKey: each]
+		allImplementorsCache keysAndValuesDo: [ :selector :classCache | 
+			classCache remove: aClass instanceSide ifAbsent: [ ].
+			classCache remove: aClass classSide ifAbsent: [ ].
+			classCache ifEmpty: [ selectorsToRemove add: selector ]].
+		selectorsToRemove do: [:each | allImplementorsCache removeKey: each].
 	]
 ]
 
 { #category : #'methods analysis' }
-ClyInheritanceAnalysisEnvironmentPlugin >> resetCacheOfMethod: aMethod [
+ClyInheritanceAnalysisEnvironmentPlugin >> resetImplementorsCache [
+
+	cacheGuard critical: [ 
+		allImplementorsCache := nil.
+	]
+
+
+]
+
+{ #category : #'methods analysis' }
+ClyInheritanceAnalysisEnvironmentPlugin >> updateCacheForMethod: aMethod [
+	allImplementorsCache ifNil: [ ^self ].
 	
 	cacheGuard critical: [
-		methodCache removeKey: aMethod selector ifAbsent: [  ]
+		aMethod isInstalled 
+			ifTrue: [ self cacheMethod: aMethod ]
+			ifFalse: [ 
+				allImplementorsCache at: aMethod selector ifPresent: [ :classes | 
+					classes remove: aMethod origin ifAbsent: [ ].
+					classes ifEmpty: [allImplementorsCache removeKey: aMethod selector]]].		
 	]
 ]
