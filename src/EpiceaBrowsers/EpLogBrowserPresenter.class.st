@@ -327,7 +327,7 @@ EpLogBrowserPresenter >> fileOutSelection [
 	| entries |
 	entries := self selectedEntryItems collect: [ :each | each entry ].
 	
-	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator imageDirectory.
+	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator workingDirectory.
 ]
 
 { #category : #'menu - filters' }
