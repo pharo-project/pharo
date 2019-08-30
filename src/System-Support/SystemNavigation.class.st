@@ -64,7 +64,7 @@ SystemNavigation >> allClassesDo: aBlock [
 { #category : #query }
 SystemNavigation >> allClassesImplementing: aSelector [  
 	"Answer all classes that implement the message aSelector."
-	^self allBehaviors collect: [:class | class includesSelector: aSelector]
+	^self allBehaviors select: [:class | class includesSelector: aSelector]
 ]
 
 { #category : #query }

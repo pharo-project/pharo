@@ -53,6 +53,18 @@ SystemNavigationTest >> tearDown [
 	
 ]
 
+{ #category : #test }
+SystemNavigationTest >> testAllClassesImplementing [
+	| implementingClasses |
+	implementingClasses := self systemNavigationToTest
+		allClassesImplementing: #isSymbol.
+	self
+		assertCollection: implementingClasses
+		hasSameElements:
+			{Object.
+			Symbol}
+]
+
 { #category : #testing }
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
