@@ -84,7 +84,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
 		
-	zip writeToFileNamed: zipFile fullName.
+	zip writeToFile: zipFile fullName.
 	
 	(File named: zipFile fullName) readStreamDo: [ :str | | endianStream |
 		
@@ -213,7 +213,7 @@ ZipArchiveTest >> testFilePermissions [
 	fileMember := zip	
 		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
-	zip writeToFileNamed: zipFile fullName.
+	zip writeToFile: zipFile fullName.
 	
 	self assert: fileMember unixFileAttributes equals: 8r100666.
 	self assert: folderMember unixFileAttributes equals: 8r40755.
@@ -250,7 +250,7 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	zip
 		addDirectory: subdir as: subdir basename;
 		addFile: nestedFileToZip as: nestedFileToZip basename;
-		writeToFileNamed: zipFile fullName;
+		writeToFile: zipFile fullName;
 		close.
 	ZipArchive new
 		readFrom: zipFile;
@@ -282,7 +282,7 @@ ZipArchiveTest >> testZip [
 		addFile: fileToZip
 		as: fileToZip basename.
 	
-	zip writeToFileNamed: zipFile fullName.
+	zip writeToFile: zipFile fullName.
 	
 	(File named: zipFile fullName) readStreamDo: [ :str | | endianStream |
 		
@@ -351,7 +351,7 @@ ZipArchiveTest >> testZip [
 ZipArchiveTest >> testisZipArchive [
 	| nonArchive |
 	zip addFile: fileToZip as: fileToZip basename.
-	zip writeToFileNamed: zipFile fullName.
+	zip writeToFile: zipFile fullName.
 	self assert: (ZipArchive isZipArchive: zipFile fullName).
 	self assert: (ZipArchive isZipArchive: zipFile).
 	self assert: (zipFile binaryReadStreamDo: [ :s | ZipArchive isZipArchive: s ]).

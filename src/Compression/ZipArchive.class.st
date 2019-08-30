@@ -334,9 +334,9 @@ ZipArchive >> writeTo: stream prepending: aString [
 ]
 
 { #category : #writing }
-ZipArchive >> writeTo: stream prependingFileNamed: aFileName [
-	| prepended buffer |
-	prepended := File openForReadFileNamed: aFileName.
+ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
+	
+	aFileReferenceOrFileName asFileReference binaryReadStreamDo: [ :prepended | | buffer |
 	buffer := ByteArray new: (prepended size min: 32768).
 	[ prepended atEnd ]
 		whileFalse: [ | bytesRead |
@@ -345,29 +345,9 @@ ZipArchive >> writeTo: stream prependingFileNamed: aFileName [
 				startingAt: 1
 				count: buffer size.
 			stream next: bytesRead putAll: buffer startingAt: 1 ].
+		 ].
+	
 	self writeTo: stream
-]
-
-{ #category : #writing }
-ZipArchive >> writeToFileNamed: aFileName prepending: aString [
-	
-	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^ ZipArchiveError signal: (aFileName, ' is needed by one or more members in this archive') ].
-	
-	(File named: aFileName)
-		writeStreamDo: [ :stream | self writeTo: stream prepending: aString ]	
-]
-
-{ #category : #writing }
-ZipArchive >> writeToFileNamed: aFileName prependingFileNamed: anotherFileName [
-	
-	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^ZipArchiveError signal: (aFileName, ' is needed by one or more members in this archive') ].
-	
-	(File named: aFileName)
-		writeStreamDo: [ :stream | self writeTo: stream prependingFileNamed: anotherFileName ]	
 ]
 
 { #category : #accessing }
