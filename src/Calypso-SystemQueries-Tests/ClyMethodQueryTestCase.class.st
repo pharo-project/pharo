@@ -22,6 +22,13 @@ ClyMethodQueryTestCase >> executeQuery [
 	foundSelectors := (resultItems collect: #selector) sorted asArray.
 ]
 
+{ #category : #running }
+ClyMethodQueryTestCase >> setUpEnvironment [
+	super setUpEnvironment.
+	
+	environment system: ClySystemEnvironment currentImage
+]
+
 { #category : #'methods for tests' }
 ClyMethodQueryTestCase >> superclassSenderOfMessage1 [
 	self clyReferencedMessage1
