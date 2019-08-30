@@ -157,7 +157,7 @@ ZipWriteStream >> dynamicBlockSizeFor: lTree and: dTree using: blTree and: blFre
 		freq > 0 ifTrue:[
 			treeBits := treeBits + (freq * ((blTree bitLengthAt: i) + addl "addl bits"))]].
 	VerboseLevel > 1 ifTrue:[
-		Transcript show:'['; print: treeBits; show:' bits for dynamic tree]'].
+		self trace:'[',  treeBits asString . self trace:' bits for dynamic tree]'].
 	bits := bits + treeBits.
 
 	"Compute the size of the compressed block"
@@ -289,19 +289,19 @@ ZipWriteStream >> flushBlock: lastBlock [
 	bitsRequired := nil.
 
 	(method == #stored) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'S'].
+		VerboseLevel > 0 ifTrue:[self trace:'S'].
 		bitsRequired := storedLength.
 		encoder nextBits: 3 put: StoredBlock << 1 + lastFlag.
 		self sendStoredBlock].
 
 	(method == #fixed) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'F'].
+		VerboseLevel > 0 ifTrue:[self trace:'F'].
 		bitsRequired := fixedLength.
 		encoder nextBits: 3 put: FixedBlock << 1 + lastFlag.
 		self sendFixedBlock].
 
 	(method == #dynamic) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'D'].
+		VerboseLevel > 0 ifTrue:[self trace:'D'].
 		bitsRequired := dynamicLength.
 		encoder nextBits: 3 put: DynamicBlock << 1 + lastFlag.
 		self sendDynamicBlock: blTree 
