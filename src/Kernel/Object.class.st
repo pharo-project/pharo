@@ -1362,23 +1362,17 @@ Object >> literalEqual: other [
 
 { #category : #flagging }
 Object >> logEntry [
-
-	Transcript show: 'Entered ', thisContext sender printString; cr.
-
+	self traceCr: 'Entered ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExecution [
-
-	Transcript show: 'Executing ', thisContext sender printString; cr.
-
+	self traceCr: 'Executing ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExit [
-
-	Transcript show:  'Exited ', thisContext sender printString; cr.
-
+	self traceCr: 'Exited ' , thisContext sender printString
 ]
 
 { #category : #printing }

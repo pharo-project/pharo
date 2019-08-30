@@ -153,8 +153,8 @@ Deprecation >> hash [
 
 { #category : #handling }
 Deprecation >> logTranscript [
-	self showWarning 
-		ifTrue: [Transcript nextPutAll: self messageText; cr; flush].
+	self showWarning
+		ifTrue: [ self traceCr: self messageText ]
 ]
 
 { #category : #accessing }

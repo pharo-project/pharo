@@ -141,7 +141,7 @@ ZdcAbstractSocketStream >> isStream [
 { #category : #private }
 ZdcAbstractSocketStream >> log: object [
 	debug ifTrue: [
-		self crLog: object value ]
+		self crTrace: object value ]
 	
 ]
 

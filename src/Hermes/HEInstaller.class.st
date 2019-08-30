@@ -275,5 +275,5 @@ HEInstaller >> validateNoNewUndeclared [
 	self reportNewUndeclareds: self createdUndeclared.
 	
 	('[Hermes] Remaining Undeclared variables in the system: '
-		, Undeclared keys printString) logCr
+		, Undeclared keys printString) traceCr
 ]
