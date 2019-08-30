@@ -379,7 +379,7 @@ Finder >> messagesNameSearch: aString [
 Finder >> methodSearch: aSelectBlock [ 
 	| result | 
 	result := OrderedCollection new.
-	
+	aSelectBlock ifNil: [ ^result ].
 	self packagesSelection classesAndTraits do:[ :class |
 			class methodsDo: [ :method | 
 				(aSelectBlock value: method) ifTrue: [ result add: method ]].
