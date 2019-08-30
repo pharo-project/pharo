@@ -53,7 +53,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> attachToSystem [
 	environment system when: ClassModificationApplied send: #processFullClassChange: to: self.
 ]
 
-{ #category : #'methods analysis' }
+{ #category : #'implementors cache' }
 ClyInheritanceAnalysisEnvironmentPlugin >> cacheAllImplementors [
 
 	cacheGuard critical: [ 
@@ -65,7 +65,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> cacheAllImplementors [
 
 ]
 
-{ #category : #'methods analysis' }
+{ #category : #'implementors cache' }
 ClyInheritanceAnalysisEnvironmentPlugin >> cacheMethod: aMethod [
 	| classes |
 	classes := self implementorsOf: aMethod.
@@ -119,11 +119,18 @@ ClyInheritanceAnalysisEnvironmentPlugin >> detachFromSystem [
 	super detachFromSystem
 ]
 
-{ #category : #'methods analysis' }
+{ #category : #'implementors cache' }
 ClyInheritanceAnalysisEnvironmentPlugin >> implementorsOf: aMethod [
 	allImplementorsCache ifNil: [ self cacheAllImplementors ].
 	
-	^allImplementorsCache at: aMethod selector ifAbsentPut: [ WeakSet new ]
+	^allImplementorsCache at: aMethod selector ifAbsentPut: [ WeakOrderedCollection new ]
+	"Classes implementing each selector are cached using weak structure.
+	It allows to avoid cleaning cache when user removes the class.
+	As consequence nobody needs anymore to test the presence of given class in these caches.
+	it allows to use WeakOrderedCollection here 
+	which is much faster for building full implementors cache.
+	Notice that WeakOrderedCollection requires to be carefull with enumerating items 
+	because they can become nil by garbage collector"
 ]
 
 { #category : #initialization }
@@ -164,7 +171,8 @@ ClyInheritanceAnalysisEnvironmentPlugin >> isMethodOverridden: aMethod [
 	
 	classes := self implementorsOf: aMethod.	
 	methodClass := aMethod methodClass.
-	^classes anySatisfy: [ :each | (each inheritsFrom: methodClass) and: [ each isObsolete not ] ]
+	^classes anySatisfy: [ :each | 
+		each notNil and: [(each inheritsFrom: methodClass) and: [ each isObsolete not ]]]
 ]
 
 { #category : #'methods analysis' }
@@ -234,7 +242,20 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processMethodChange: aMethodAnnouncem
 		ClyOverridingMethodsChanged initiatedBy: self forOverriddenMethod: method)
 ]
 
-{ #category : #'methods analysis' }
+{ #category : #'implementors cache' }
+ClyInheritanceAnalysisEnvironmentPlugin >> removeMethodFromCache: aMethod [
+	
+	| classes |
+	classes := allImplementorsCache at: aMethod selector ifAbsent: [^self].
+	classes remove: aMethod methodClass ifAbsent: [ ].
+	"Classes are WeakOrderedCollection 
+	and when it is cleaned by GS it does not become empty. All items are just replaced by nil"
+	(classes isEmpty or: [ 
+		classes allSatisfy: [:each | each isNil or: [ each isObsolete ] ]])
+			ifTrue: [allImplementorsCache removeKey: aMethod selector]
+]
+
+{ #category : #'implementors cache' }
 ClyInheritanceAnalysisEnvironmentPlugin >> resetImplementorsCache [
 
 	cacheGuard critical: [ 
@@ -244,16 +265,13 @@ ClyInheritanceAnalysisEnvironmentPlugin >> resetImplementorsCache [
 
 ]
 
-{ #category : #'methods analysis' }
+{ #category : #'implementors cache' }
 ClyInheritanceAnalysisEnvironmentPlugin >> updateCacheForMethod: aMethod [
 	allImplementorsCache ifNil: [ ^self ].
 	
 	cacheGuard critical: [
 		aMethod isInstalled 
 			ifTrue: [ self cacheMethod: aMethod ]
-			ifFalse: [ 
-				allImplementorsCache at: aMethod selector ifPresent: [ :classes | 
-					classes remove: aMethod methodClass ifAbsent: [ ].
-					classes ifEmpty: [allImplementorsCache removeKey: aMethod selector]]].		
+			ifFalse: [ self removeMethodFromCache: aMethod]				
 	]
 ]
