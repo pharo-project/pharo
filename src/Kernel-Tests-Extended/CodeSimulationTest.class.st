@@ -22,7 +22,7 @@ CodeSimulationTest >> methodWithError [
 
 { #category : #tests }
 CodeSimulationTest >> methodWithTranscript [
-	Transcript show: 'something'
+	self trace: 'something'
 ]
 
 { #category : #tests }
