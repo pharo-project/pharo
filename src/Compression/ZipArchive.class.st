@@ -40,12 +40,12 @@ ZipArchive class >> compressionStored [
 ]
 
 { #category : #'fileIn/Out' }
-ZipArchive class >> extractAllIn: aFileName [
+ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 	"Service method to extract all contents of a zip."
 	| directory |
-	directory := (UIManager default chooseDirectoryFrom: aFileName asFileReference) ifNil: [^ self].
+	directory := (UIManager default chooseDirectoryFrom: aFileReferenceOrFileName asFileReference) ifNil: [^ self].
 	^ (self new) 
-		readFrom: aFileName;
+		readFrom: aFileReferenceOrFileName;
 		extractAllTo: directory.
 ]
 
@@ -241,11 +241,11 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 ]
 
 { #category : #reading }
-ZipArchive >> readFrom: aStreamOrFileName [
+ZipArchive >> readFrom: aStreamOrFile [
 	| stream name eocdPosition |
-	stream := aStreamOrFileName isStream
-		ifTrue: [ name := aStreamOrFileName printString. aStreamOrFileName ]
-		ifFalse: [ File openForReadFileNamed: (name := aStreamOrFileName asFileReference fullName) ].
+	stream := aStreamOrFile isStream
+		ifTrue: [ name := aStreamOrFile printString. aStreamOrFile ]
+		ifFalse: [ name := aStreamOrFile asFileReference fullName. aStreamOrFile binaryReadStream ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].
 	self readEndOfCentralDirectoryFrom: stream.
