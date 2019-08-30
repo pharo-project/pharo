@@ -133,9 +133,7 @@ MetacelloDictionaryRepositoryTest >> tearDown [
 	diff := finalWorkingCopyList difference: initialWorkingCopyList.
 	diff
 		do: [ :leak | 
-			Transcript
-				cr;
-				show: 'leaked package from ' , self printString , ' -> ' , leak printString ].
+			self crTrace: 'leaked package from ' , self printString , ' -> ' , leak printString ].
 	self assertEmpty: diff.
 	super tearDown
 ]

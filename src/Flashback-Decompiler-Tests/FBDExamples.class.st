@@ -1196,9 +1196,8 @@ FBDExamples >> exampleToDoArgumentNotInlined [
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleToDoInsideBlock [
 	| tmp1 block |
-	tmp1 := {1.2.
-	3.4} asOrderedCollection.
-	block := [ (tmp1 at: 1) to: (tmp1 at: 4) do: [ :arg1 | Transcript show: arg1 ] ]
+	tmp1 := {1.2 . 3.4} asOrderedCollection.
+	block := [ (tmp1 at: 1) to: (tmp1 at: 4) do: [ :arg1 | self trace: arg1 ] ]
 ]
 
 { #category : #'examples-blocks-optimized' }

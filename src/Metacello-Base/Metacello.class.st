@@ -601,9 +601,7 @@ Metacello >> onWarning: aBlock [
 Metacello >> onWarningLog [
   self
     onWarning: [ :ex | 
-      Transcript
-        cr;
-        show: ex description.
+      self crTrace: ex description.
       ex resume ]
 ]
 

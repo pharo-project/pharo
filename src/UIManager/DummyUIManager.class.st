@@ -165,10 +165,12 @@ DummyUIManager >> syntaxErrorNotificationDefaultAction: anException [
 
 { #category : #'default actions' }
 DummyUIManager >> unhandledErrorDefaultAction: anException [
-
 	self traceCr: '*** EXCEPTION ***'.
 	self traceCr: anException.
-	anException signalerContext errorReportOn: Transcript.
+	self
+		trace:
+			(String
+				streamContents: [ :stream | anException signalerContext errorReportOn: stream ]).
 	Smalltalk exitFailure
 ]
 
