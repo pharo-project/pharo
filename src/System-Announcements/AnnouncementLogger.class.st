@@ -16,7 +16,7 @@ Class {
 
 { #category : #logging }
 AnnouncementLogger >> logAnnouncement: ann [
-	ann logCr
+	ann traceCr
 ]
 
 { #category : #subscription }
