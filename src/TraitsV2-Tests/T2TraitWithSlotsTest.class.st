@@ -134,15 +134,15 @@ T2TraitWithSlotsTest >> testRedefiningSuperclass [
 	c1 := self newClass: #C1 with: #(c d) uses: t1.
 	c2 := self newClass: #C2 superclass: c1 with: #(e) uses: t2.
 	
-	self assert: c2 instVarNames equals: #(e).
-	self assert: c1 instVarNames equals: #(c d).
+	self assert: (c2 localSlots collect: #name) equals: #(e).
+	self assert: (c1 localSlots collect: #name) equals: #(c d).
 	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
 	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
 
 	c1 := self newClass: #C1 with: #(c d) uses: t1.	
 
-	self assert: c2 instVarNames equals: #(e).
-	self assert: c1 instVarNames equals: #(c d).
+	self assert: (c2 localSlots collect: #name) equals: #(e).
+	self assert: (c1 localSlots collect: #name) equals: #(c d).
 	self assertCollection: (c2 allSlots collect: #name) hasSameElements: #(c d a b e g h).
 	self assertCollection: (c1 allSlots collect: #name) hasSameElements: #(c d a b).	
 ]

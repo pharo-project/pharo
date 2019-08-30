@@ -175,20 +175,30 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
-	
-	aRBMessageNode selector = '=>' ifTrue: [ | slot |
-		slot := CDSlotNode
-			node: aRBMessageNode
-			name: aRBMessageNode receiver value
-			typeName: aRBMessageNode arguments first name
-			start: aRBMessageNode start
-			stop: aRBMessageNode stop.
-		classDefinition addSlot: slot.
-		^ self
-	].
+	aRBMessageNode isLiteralNode
+		ifTrue: [ | slot |
+			slot := CDSlotNode
+				node: aRBMessageNode
+				name: aRBMessageNode value
+				typeName: aRBMessageNode value
+				start: aRBMessageNode start
+				stop: aRBMessageNode stop.
+			classDefinition addSlot: slot.
+			^ self ].
+		
+	self flag: #fixme. "This seems to not support Slots with Parameters for now".
+	aRBMessageNode selector = '=>'
+		ifTrue: [ | slot |
+			slot := CDSlotNode
+				node: aRBMessageNode
+				name: aRBMessageNode receiver value
+				typeName: aRBMessageNode arguments first name
+				start: aRBMessageNode start
+				stop: aRBMessageNode stop.
+			classDefinition addSlot: slot.
+			^ self ].
 
 	"If we are here we did not recognize the slot syntax"
-	self halt.
 ]
 
 { #category : #parsing }

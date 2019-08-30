@@ -22,9 +22,6 @@ Class {
 	#classVars : [
 		'ContextClass'
 	],
-	#classInstVars : [
-		'uniqueInstance'
-	],
 	#category : #'NECompletion-View'
 }
 

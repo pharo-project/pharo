@@ -80,6 +80,17 @@ WeakValueDictionaryTest >> testAtIfAbsentWithGarbageCollectedValue [
 ]
 
 { #category : #tests }
+WeakValueDictionaryTest >> testAtIfPresent [
+	"Non regression test. Before we were sending #value on the value while giving it to the block to evaluate."
+
+	| d block |
+	d := self classToBeTested new.
+	d at: 1 put: (block := [ 2 ]).
+
+	d at: 1 ifPresent: [ :v | self assert: v identicalTo: block ]
+]
+
+{ #category : #tests }
 WeakValueDictionaryTest >> testAtIfPresentIfAbsentWithGarbageCollectedValue [
 
 	self

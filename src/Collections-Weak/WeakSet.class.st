@@ -22,7 +22,7 @@ WeakSet >> add: newObject [
 	| index element |
 	index := self scanFor: newObject.
 	((element := array at: index) == flag or: [ element == nil ])
-		ifTrue: [self atNewIndex: index put: newObject asSetElement].
+		ifTrue: [self atNewIndex: index put: newObject asCollectionElement].
 	^newObject
 ]
 
@@ -57,7 +57,7 @@ WeakSet >> collect: aBlock [
 	1 to: array size do: [ :index |
 		(array at: index) ifNotNil: [ :object |
 			object == flag ifFalse: [
-				newSet add: (aBlock value: object enclosedSetElement) ] ] ].
+				newSet add: (aBlock value: object enclosedElement) ] ] ].
 	^newSet
 ]
 
@@ -68,7 +68,7 @@ WeakSet >> do: aBlock [
 	1 to: array size do: [ :index |
 		(array at: index) ifNotNil: [ :object |
 			object  == flag ifFalse: [
-				aBlock value: object enclosedSetElement] ] ]
+				aBlock value: object enclosedElement] ] ]
 ]
 
 { #category : #public }
@@ -82,7 +82,7 @@ WeakSet >> do: aBlock after: anElement [
 	startIndex + 1 to: array size do: [ :index |
 		(array at: index) ifNotNil: [ :object |
 			object == flag ifFalse: [
-				aBlock value: object enclosedSetElement] ] ]
+				aBlock value: object enclosedElement] ] ]
 ]
 
 { #category : #private }
@@ -100,7 +100,7 @@ WeakSet >> fixCollisionsFrom: start [
 				tally := tally - 1 ]
 			ifNotNil: [
 				| newIndex |
-				(newIndex := self scanFor: element enclosedSetElement) = index ifFalse: [
+				(newIndex := self scanFor: element enclosedElement) = index ifFalse: [
 					array 
 						at: newIndex put: element;
 						at: index put: flag ] ] ]
@@ -170,7 +170,7 @@ WeakSet >> like: anObject [
 
 	| element |
 	^(element  := array at: (self scanFor: anObject)) == flag
-		ifFalse: [ element enclosedSetElement]
+		ifFalse: [ element enclosedElement]
 ]
 
 { #category : #accessing }
@@ -181,7 +181,7 @@ WeakSet >> like: anObject ifAbsent: aBlock [
 	| element |
 	((element  := array at: (self scanFor: anObject)) == flag or: [ element == nil ])
 		ifTrue: [ ^aBlock value ]
-		ifFalse: [ ^element enclosedSetElement ]
+		ifFalse: [ ^element enclosedElement ]
 ]
 
 { #category : #private }
@@ -193,7 +193,7 @@ WeakSet >> noCheckNoGrowFillFrom: anArray [
 		(anArray at: index) ifNotNil: [ :object |
 			object == flag ifFalse: [ 
 				array
-					at: (self scanForEmptySlotFor: object enclosedSetElement)
+					at: (self scanForEmptySlotFor: object enclosedElement)
 					put: object.
 				tally := tally + 1 ] ] ]
 ]
@@ -242,7 +242,7 @@ WeakSet >> scanFor: anObject [
 	index := start := anObject hash \\ array size + 1.
 	[ 
 		| element |
-		((element := array at: index) == flag or: [ element enclosedSetElement = anObject ])
+		((element := array at: index) == flag or: [ element enclosedElement = anObject ])
 			ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

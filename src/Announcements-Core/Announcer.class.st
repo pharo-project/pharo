@@ -29,6 +29,12 @@ Announcer >> basicSubscribe: subscription [
 ]
 
 { #category : #testing }
+Announcer >> handleSubscriberClass: eventClass [
+	self subscriptions ifNil: [ ^ false ].
+	^ self subscriptions handleSubscriberClass: eventClass
+]
+
+{ #category : #testing }
 Announcer >> hasSubscriber: anObject [
 
 	registry subscriptionsOf: anObject do: [:each | ^ true].
@@ -86,6 +92,12 @@ Announcer >> subscribe: anAnnouncementClass send: aSelector to: anObject [
 Announcer >> subscriptions [
 
 	^ registry
+]
+
+{ #category : #accessing }
+Announcer >> subscriptionsForClass: subscriberClass [
+	"Return the list of subscription for a given class"
+	^ self subscriptions subscriptionsForClass: subscriberClass
 ]
 
 { #category : #subscription }
