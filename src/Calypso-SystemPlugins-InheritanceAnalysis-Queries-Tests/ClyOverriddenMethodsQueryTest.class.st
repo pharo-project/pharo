@@ -45,7 +45,7 @@ ClyOverriddenMethodsQueryTest >> testFromThreeMethods [
 ClyOverriddenMethodsQueryTest >> testFromThreeMethodsWhenImplementorsCacheShouldBeUsed [
 	| plugin |
 	plugin := environment getPlugin: ClyInheritanceAnalysisEnvironmentPlugin.
-	plugin littleHierarchyMaxSize: 0. 
+	plugin littleHierarchyMaxSize: -1. 
 	"This parameter forces plugin to build and use the cache for analysis"
 	
 	self queryFromScope: ClyMethodScope ofAll: {

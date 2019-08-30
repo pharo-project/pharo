@@ -123,7 +123,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> detachFromSystem [
 ClyInheritanceAnalysisEnvironmentPlugin >> implementorsOf: aMethod [
 	allImplementorsCache ifNil: [ self cacheAllImplementors ].
 	
-	^allImplementorsCache at: aMethod selector ifAbsentPut: [ IdentitySet new ]
+	^allImplementorsCache at: aMethod selector ifAbsentPut: [ WeakSet new ]
 ]
 
 { #category : #initialization }
@@ -164,7 +164,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> isMethodOverridden: aMethod [
 	
 	classes := self implementorsOf: aMethod.	
 	methodClass := aMethod methodClass.
-	^classes anySatisfy: [ :each | each inheritsFrom: methodClass ]
+	^classes anySatisfy: [ :each | (each inheritsFrom: methodClass) and: [ each isObsolete not ] ]
 ]
 
 { #category : #'methods analysis' }
@@ -201,7 +201,10 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processClassDefinitionChange: aClassD
 
 { #category : #controlling }
 ClyInheritanceAnalysisEnvironmentPlugin >> processClassRemoval: aClassRemoved [
-	self resetCacheForClass: aClassRemoved classAffected.
+	"We do not update cache when class is removed 	because it will slow down removal operation.
+	(it requires enumeration of all key elements (~54000 selectors in the image)
+	The cleaning is based on weak registry for classes 
+	and cache analysis skips obsolete classes when they are still in cache"
 	
 	environment systemChanged: (
 		ClyOverriddenSuperclassesChanged overridingSubclass: aClassRemoved classAffected)
@@ -229,21 +232,6 @@ ClyInheritanceAnalysisEnvironmentPlugin >> processMethodChange: aMethodAnnouncem
 	method methodClass subclasses ifEmpty: [ ^self ].
 	environment systemChanged: (
 		ClyOverridingMethodsChanged initiatedBy: self forOverriddenMethod: method)
-]
-
-{ #category : #'methods analysis' }
-ClyInheritanceAnalysisEnvironmentPlugin >> resetCacheForClass: aClass [
-	aClass ifNil: [ ^self ].
-	allImplementorsCache ifNil: [ ^self ].
-	
-	cacheGuard critical: [ | selectorsToRemove |
-		selectorsToRemove := OrderedCollection new.
-		allImplementorsCache keysAndValuesDo: [ :selector :classCache | 
-			classCache remove: aClass instanceSide ifAbsent: [ ].
-			classCache remove: aClass classSide ifAbsent: [ ].
-			classCache ifEmpty: [ selectorsToRemove add: selector ]].
-		selectorsToRemove do: [:each | allImplementorsCache removeKey: each].
-	]
 ]
 
 { #category : #'methods analysis' }
