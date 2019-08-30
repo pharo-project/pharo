@@ -92,9 +92,9 @@ Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n match: aBloc
 ]
 
 { #category : #'archive operations' }
-Archive >> canWriteToFileNamed: aFileName [
+Archive >> canWriteToFileNamed: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
-	^(members anySatisfy: [ :ea | ea usesFileNamed: aFileName ]) not.
+	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not.
 
 ]
 
