@@ -55,7 +55,7 @@ ZipDirectoryMember >> rewindData [
 ]
 
 { #category : #testing }
-ZipDirectoryMember >> usesFile: aFileReferenceOrFileName [
+ZipDirectoryMember >> usesFileNamed: aName [
 	^false
 ]
 

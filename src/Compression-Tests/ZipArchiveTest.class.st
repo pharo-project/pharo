@@ -8,33 +8,24 @@ Class {
 		'fileToZip',
 		'zip',
 		'subdir',
-		'zipFile',
-		'fs'
+		'zipFile'
 	],
 	#category : #'Compression-Tests-Archives'
 }
 
-{ #category : #tests }
-ZipArchiveTest >> assertLastModificationTimeFrom: endianStream expected: fileModified [
-	| lastModificationTime |
-	lastModificationTime := DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4).
-	self assert:
-			(lastModificationTime
-				between: fileModified - 2 seconds
-				and: fileModified + 2 seconds).
-]
-
 { #category : #running }
 ZipArchiveTest >> setUp [
 
+	| now |
 	super setUp.
-	fs := FileSystem memory.
-	fileToZip := fs root / 'test-zip-file'.
+	now := DateAndTime now asString replaceAll: $: with: $_.
+	fileToZip := ('_test-zip-file', now) asFileReference.
 	fileToZip writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].
-	subdir := fs root / 'test-zip-dir'.
+	subdir := ('_test-zip-dir', now) asFileReference.
 	subdir ensureCreateDirectory.
-	zipFile := fs root / ('pharo_test' , '.zip').
+	zipFile := ('pharo_test', now) asFileReference, 'zip'.
 	zip := ZipArchive new.
+
 ]
 
 { #category : #running }
@@ -56,27 +47,6 @@ ZipArchiveTest >> testAddNonExistentFile [
 ]
 
 { #category : #tests }
-ZipArchiveTest >> testCanUnzipFromStream [
-	| nestedFileToZip |
-	nestedFileToZip := (subdir / '_test-zip-file.txt')
-		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
-		yourself.
-	zipFile binaryWriteStreamDo: [ :stream |
-		zip
-			addDirectory: subdir as: subdir basename;
-			addFile: nestedFileToZip as: nestedFileToZip basename;
-			writeTo: stream;
-			close. ].
-	
-	zipFile binaryReadStreamDo: [ :stream |
-		ZipArchive new
-			readFrom: stream ;
-			extractAllTo: subdir overwrite: true;
-			close ].
-
-]
-
-{ #category : #tests }
 ZipArchiveTest >> testCreateWithRelativeNames [
 	"Test creating a zip with a relative tree of files, so that the tree will
 	be created whereever the ."
@@ -93,9 +63,9 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
 		
-	zip writeToFile: zipFile.
+	zip writeToFileNamed: zipFile fullName.
 	
-	zipFile binaryReadStreamDo: [ :str | | endianStream |
+	(File named: zipFile fullName) readStreamDo: [ :str | | endianStream |
 		
 		endianStream := ZnEndianessReadWriteStream on: str.
 		
@@ -112,7 +82,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "No compression".
-		self assertLastModificationTimeFrom: endianStream expected: folderModified.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: folderModified - 1 second and: folderModified + 1 seconds).
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCrc32".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCompressedSize".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedUncompressedSize".
@@ -126,7 +96,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assertLastModificationTimeFrom: endianStream expected: fileModified.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: fileModified - 1 second and: fileModified + 1 seconds).
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
@@ -145,7 +115,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: 0 "no compression".
-		self assertLastModificationTimeFrom: endianStream expected: folderModified.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: folderModified - 1 second and: folderModified + 1 seconds).
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCrc32".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedCompressedSize".
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: 0 "expectedUncompressedSize".
@@ -168,7 +138,7 @@ ZipArchiveTest >> testCreateWithRelativeNames [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assertLastModificationTimeFrom: endianStream expected: fileModified.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: fileModified - 1 second and: fileModified + 1 seconds).
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
@@ -222,7 +192,7 @@ ZipArchiveTest >> testFilePermissions [
 	fileMember := zip	
 		addFile: nestedFileToZip
 		as: nestedFileToZip basename.
-	zip writeToFile: zipFile.
+	zip writeToFileNamed: zipFile fullName.
 	
 	self assert: fileMember unixFileAttributes equals: 8r100666.
 	self assert: folderMember unixFileAttributes equals: 8r40755.
@@ -259,7 +229,7 @@ ZipArchiveTest >> testShouldUnzipAndOverwriteWithoutInforming [
 	zip
 		addDirectory: subdir as: subdir basename;
 		addFile: nestedFileToZip as: nestedFileToZip basename;
-		writeToFile: zipFile;
+		writeToFileNamed: zipFile fullName;
 		close.
 	ZipArchive new
 		readFrom: zipFile;
@@ -291,9 +261,9 @@ ZipArchiveTest >> testZip [
 		addFile: fileToZip
 		as: fileToZip basename.
 	
-	zip writeToFile: zipFile.
+	zip writeToFileNamed: zipFile fullName.
 	
-	zipFile binaryReadStreamDo: [ :str | | endianStream |
+	(File named: zipFile fullName) readStreamDo: [ :str | | endianStream |
 		
 		endianStream := ZnEndianessReadWriteStream on: str.
 		
@@ -310,7 +280,7 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assertLastModificationTimeFrom: endianStream expected: realModificationStamp.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: realModificationStamp - 1 second and: realModificationStamp + 1 seconds).
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
@@ -328,7 +298,7 @@ ZipArchiveTest >> testZip [
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: versionNeededToExtract.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: bitFlag.
 		self assert: (endianStream nextLittleEndianNumber: 2) equals: deflateCompressionMethod.
-		self assertLastModificationTimeFrom: endianStream expected: realModificationStamp.
+		self assert: ((DateAndTime fromDosTimestamp: (endianStream nextLittleEndianNumber: 4)) between: realModificationStamp - 1 second and: realModificationStamp + 1 seconds).
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCrc32.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedCompressedSize.
 		self assert: (endianStream nextLittleEndianNumber: 4) equals: expectedUncompressedSize.
@@ -360,12 +330,14 @@ ZipArchiveTest >> testZip [
 ZipArchiveTest >> testisZipArchive [
 	| nonArchive |
 	zip addFile: fileToZip as: fileToZip basename.
-	zip writeToFile: zipFile.
+	zip writeToFileNamed: zipFile fullName.
+	self assert: (ZipArchive isZipArchive: zipFile fullName).
 	self assert: (ZipArchive isZipArchive: zipFile).
 	self assert: (zipFile binaryReadStreamDo: [ :s | ZipArchive isZipArchive: s ]).
 	nonArchive := 'non_archive_file_for_test.txt' asFileReference.
 	nonArchive ensureCreateFile.
-	[ self deny: (ZipArchive isZipArchive: nonArchive).
+	[ self deny: (ZipArchive isZipArchive: nonArchive fullName).
+	self deny: (ZipArchive isZipArchive: nonArchive).
 	self deny: (nonArchive binaryReadStreamDo: [ :s | ZipArchive isZipArchive: s ]) ]
 		ensure: [ nonArchive ensureDelete ]
 ]
