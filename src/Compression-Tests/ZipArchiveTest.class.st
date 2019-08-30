@@ -47,6 +47,27 @@ ZipArchiveTest >> testAddNonExistentFile [
 ]
 
 { #category : #tests }
+ZipArchiveTest >> testCanUnzipFromStream [
+	| nestedFileToZip |
+	nestedFileToZip := (subdir / '_test-zip-file.txt')
+		writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ];
+		yourself.
+	zipFile binaryWriteStreamDo: [ :stream |
+		zip
+			addDirectory: subdir as: subdir basename;
+			addFile: nestedFileToZip as: nestedFileToZip basename;
+			writeTo: stream;
+			close. ].
+	
+	zipFile binaryReadStreamDo: [ :stream |
+		ZipArchive new
+			readFrom: stream ;
+			extractAllTo: subdir overwrite: true;
+			close ].
+
+]
+
+{ #category : #tests }
 ZipArchiveTest >> testCreateWithRelativeNames [
 	"Test creating a zip with a relative tree of files, so that the tree will
 	be created whereever the ."
