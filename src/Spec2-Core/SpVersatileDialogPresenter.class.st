@@ -60,7 +60,7 @@ SpVersatileDialogPresenter class >> example1 [
 		footnoteArea: 'This operation can be very dangerous.';
 		openModalWithSpec.
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr.
+	dialog result traceCr.
 
 	self inform: dialog moreOptionsArea state asString
 ]
@@ -78,7 +78,7 @@ SpVersatileDialogPresenter class >> example2 [
 		yourself.
 
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #specs }
@@ -93,13 +93,10 @@ SpVersatileDialogPresenter class >> example3 [
 		footnoteIcon: (self iconNamed: #error);
 		footnoteArea: 'Saving may take several minutes';
 		yourself.
-
 	(dialog buttonAt: #save) icon: (self iconNamed: #smallSave).
-
 	dialog openModalWithSpec.
-
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #specs }
@@ -115,7 +112,7 @@ SpVersatileDialogPresenter class >> example4 [
 	dialog openModalWithSpec.
 
 	dialog withWindowDo: [ :w | w title: 'Select number' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #specs }
@@ -137,7 +134,7 @@ SpVersatileDialogPresenter class >> example5 [
 	dialog openModalWithSpec.
 
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #api }

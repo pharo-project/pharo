@@ -48,7 +48,7 @@ FastTablePresenter class >> exampleMultipleSelection [
 	example
 		items: (1 to: 10);
 		beMultipleSelection;
-		whenSelectionChanged: [ :selection | selection logCr ];
+		whenSelectionChanged: [ :selection | selection traceCr ];
 		openWithSpec.
 	^ example
 ]

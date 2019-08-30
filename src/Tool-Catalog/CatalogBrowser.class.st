@@ -194,7 +194,7 @@ CatalogBrowser >> loadConfiguration: aProject onSuccess: aBlock [
 		aProject loadConfiguration.
 		aBlock value ] 
 	on: Error do: [ :e | 
-		e logCr.
+		e traceCr.
 		self inform: 'There was an error while trying to load ', aProject name, '. Loading was cancelled.' ]
 ]
 
