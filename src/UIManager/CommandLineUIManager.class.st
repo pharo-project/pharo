@@ -215,7 +215,7 @@ CommandLineUIManager >> inform: aString [
 			nextPutAll: (String new: 79 withAll: $= ); cr].
 
 	Smalltalk logDuring: logBlock.		
-	aString logCr.
+	aString traceCr.
 ]
 
 { #category : #'ui requests' }
