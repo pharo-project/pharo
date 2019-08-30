@@ -657,6 +657,26 @@ Object >> copySameFrom: otherObject [
 
 ]
 
+{ #category : #'logging deprecating' }
+Object >> crLog [
+	self
+		deprecated: 'Please use #crTrace instead'
+		transformWith: '`@receiver crLog' -> '`@receiver crTrace'.
+	self crTrace
+]
+
+{ #category : #'logging deprecating' }
+Object >> crLog: aString [
+	"Log the argument. Use self log: instead of Transcript cr; show: "
+
+	self
+		deprecated: 'Please use trace* methods instead.'
+		transformWith:
+			'`@receiver crLog: `@statements1'
+				-> '`@receiver crTrace: `@statements1'.
+	self crTrace: aString
+]
+
 { #category : #tracing }
 Object >> crTrace [
 	self crTrace: self printString
@@ -1358,6 +1378,50 @@ Object >> isVariableBinding [
 Object >> literalEqual: other [
 
 	^ self class == other class and: [self = other]
+]
+
+{ #category : #'logging deprecating' }
+Object >> log: aString [
+	"Log the argument. Use self log: instead of Transcript show: "
+	
+	self
+		deprecated: 'Please use trace* methods instead.'
+		transformWith: '`@receiver log: `@statements1' 
+						-> '`@receiver trace: `@statements1'.
+	
+	self trace: aString
+]
+
+{ #category : #'logging deprecating' }
+Object >> logCr [
+	self
+		deprecated: 'Please use trace* methods instead.'
+		transformWith: '`@receiver logCr' -> '`@receiver traceCr'.
+	self traceCr
+]
+
+{ #category : #'logging deprecating' }
+Object >> logCr: aString [
+	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr "
+
+	self
+		deprecated: 'Please use trace* methods instead.'
+		transformWith:
+			'`@receiver logCr: `@statements1'
+				-> '`@receiver traceCr: `@statements1'.
+	self traceCr: aString
+]
+
+{ #category : #'logging deprecating' }
+Object >> logCrTab: aString [
+	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr ; tab"
+	
+	self
+		deprecated: 'Please use trace* methods instead.'
+		transformWith: '`@receiver logCrTab: `@statements1' 
+						-> '`@receiver traceCrTab: `@statements1'.
+	
+	self traceCrTab: aString
 ]
 
 { #category : #flagging }
