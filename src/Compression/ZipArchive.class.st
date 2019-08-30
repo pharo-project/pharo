@@ -241,11 +241,11 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 ]
 
 { #category : #reading }
-ZipArchive >> readFrom: aFileReferenceOrFileName [
-	| stream name eocdPosition fileRef |
-	fileRef := aFileReferenceOrFileName asFileReference. 
-	name := fileRef fullName.
-	stream := fileRef binaryReadStream. 
+ZipArchive >> readFrom: aStreamOrFileName [
+	| stream name eocdPosition |
+	stream := aStreamOrFileName isStream
+		ifTrue: [ name := aStreamOrFileName printString. aStreamOrFileName ]
+		ifFalse: [ File openForReadFileNamed: (name := aStreamOrFileName asFileReference fullName) ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].
 	self readEndOfCentralDirectoryFrom: stream.
