@@ -451,7 +451,7 @@ RubTextAreaExamples class >> textFieldWithCRAction [
 	s announcer
 		when: RubReturnEntered
 		send: #value
-		to: [ Transcript show: s text asString ]
+		to: [ self trace: s text asString ]
 ]
 
 { #category : #examples }
