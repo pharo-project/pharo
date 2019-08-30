@@ -25,8 +25,9 @@ DelayBenchmark class >> run [
 { #category : #action }
 DelayBenchmark class >> runAll [
 	"DelayBenchmark runAll"
-	Transcript clear.
-	DelayNullScheduler allSubclasses do: [ :delaySchedulerClass | self new bench: delaySchedulerClass ].
+
+	DelayNullScheduler allSubclasses
+		do: [ :delaySchedulerClass | self new bench: delaySchedulerClass ]
 ]
 
 { #category : #benchmarks }

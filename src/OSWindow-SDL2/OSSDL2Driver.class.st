@@ -46,13 +46,16 @@ OSSDL2Driver class >> isVMDisplayUsingSDL2 [
 { #category : #private }
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
-	Transcript show: 'Game controller '; show: index; show: 'removed'; cr.
+
+	self
+		traceCr: ('Game controller <1s> removed' expandMacrosWith: index)
 ]
 
 { #category : #private }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
-	Transcript show: 'Joystick '; show: index; show: 'removed'; cr.
+
+	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index)
 ]
 
 { #category : #'events-processing' }

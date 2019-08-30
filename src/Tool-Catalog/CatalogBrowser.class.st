@@ -166,7 +166,7 @@ Do you want to continue (installation could fail)?' format: { aProject name. Sma
 		aProject installStableVersion.
 		aBlock value ]
 	on: Error do: [ :e | 
-		e logCr.
+		e traceCr.
 		self inform: 'There was an error while trying to install ', aProject name, '. Installation was cancelled.' ]
 ]
 
