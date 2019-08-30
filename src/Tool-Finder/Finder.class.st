@@ -418,12 +418,12 @@ Finder >> pragmaSearch: aString [
 	result := Dictionary new.
 	
 	byCondition :=  self useRegEx 
-		ifTrue: [[ :pragma | pragma keyword matchesRegexIgnoringCase: aString ]]
-		ifFalse: [[ :pragma | pragma keyword includesSubstring: aString caseSensitive: false ]].
+		ifTrue: [[ :pragma | pragma selector matchesRegexIgnoringCase: aString ]]
+		ifFalse: [[ :pragma | pragma selector includesSubstring: aString caseSensitive: false ]].
 				
 	(PragmaCollector filter: byCondition) reset; 
 		do: [ :pragma |
-			(result at: (pragma keyword) ifAbsentPut: OrderedCollection new)				
+			(result at: (pragma selector) ifAbsentPut: OrderedCollection new)				
 				add: pragma method ].
 	^ result
 ]

@@ -20,7 +20,7 @@ Pragma class >> gtInspectorAnnotatedMethodsIn: composite [
 			Object withAllSubclassesDo: [:each |
 				Pragma withPragmasIn: each do: [:p |
 					pragmas add: p]].
-			(pragmas groupedBy: #keyword) associations sorted: [ :a :b | 
+			(pragmas groupedBy: #selector) associations sorted: [ :a :b | 
 				a key < b key ]
 		];
 		column: 'Keyword' evaluated: [ :each | each key ];
