@@ -12,7 +12,8 @@ Class {
 	#name : #ClassDescription,
 	#superclass : #Behavior,
 	#instVars : [
-		'organization'
+		'organization',
+		'instanceVariablesRawTypes'
 	],
 	#category : #'Kernel-Classes'
 }
