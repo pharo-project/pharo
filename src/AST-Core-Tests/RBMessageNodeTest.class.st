@@ -5,13 +5,15 @@ Class {
 }
 
 { #category : #testing }
-RBMessageNodeTest >> testSelectorAndArgumentNames [
+RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
-		tree := self parseMethod: 'test self doit'.
+		tree := self parseMethod: 'test self between: x and: y'.
 		message := tree sendNodes first.
-		self assert: message selectorAndArgumentNames equals: 'doit'
+		self assert: message selectorAndArgumentNames equals: 'between: x and: y'.
 		
-		
+		tree := self parseMethod: 'test self between: x and: y and: zzz'.
+		message := tree sendNodes first.
+		self assert: message selectorAndArgumentNames equals: 'between: x and: y and: zzz'
 ]
 
 { #category : #testing }

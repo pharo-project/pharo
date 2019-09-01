@@ -406,11 +406,19 @@ RBMessageNode >> selectorAndArgumentNames [
 	"Returns the selector and argument names portion of a method as a string"
 
 	^ self arguments
-		ifEmpty: [self keywords first]
-		ifNotEmpty: [| lastArgument |
-			lastArgument := self arguments last.
-			self halt. 
-			self source first: lastArgument start + (lastArgument value asString size - 1)]
+		ifEmpty: [ self keywords first ]
+		ifNotEmpty: [
+			(String streamContents: [ :st | 
+				self selectorParts
+			 		with: self arguments 
+					do: [:sel :arg | 
+							st 
+								<< sel asString;
+								<< ' ';
+								<< arg formattedCode;
+								<< ' ']]) allButLast ]
+								
+					
 ]
 
 { #category : #accessing }
