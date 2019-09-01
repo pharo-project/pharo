@@ -20,7 +20,7 @@ Class {
 { #category : #private }
 KMPragmaKeymapBuilder class >> event: anEvent [
 	anEvent method ifNil: [ ^self ].
-	((anEvent method pragmas collect: #keyword) includesAnyOf: self pragmas )
+	((anEvent method pragmas collect: #selector) includesAnyOf: self pragmas )
 		ifTrue: [ self uniqueInstance reset ]
 ]
 
@@ -127,7 +127,7 @@ KMPragmaKeymapBuilder >> pragmaCollector [
 	^ pragmaCollector
 		ifNil: [ pragmaCollector := PragmaCollector
 				filter: [ :prg | 
-					(self pragmaKeywords includes: prg keyword)
+					(self pragmaKeywords includes: prg selector)
 						and: [ prg methodSelector numArgs = 1 ] ].
 			(self pragmaKeywords notNil and: [ self pragmaKeywords notEmpty ])
 				ifTrue: [ pragmaCollector reset ].

@@ -246,12 +246,12 @@ GTSpotter >> spotterForPackagesFor: aStep [
 { #category : #'*GT-SpotterExtensions-Core' }
 GTSpotter >> spotterForPragmasFor: aStep [
 	<spotterOrder: 40>
-	aStep listProcessor 
-			allCandidates: [ Pragma allInstances collect: [ :e | e keyword ] as: Set ];
-			title: 'Pragmas';
-			itemName: [ :pragma | pragma ];
-			filter: self defaultFilterClass;
-			wantsToDisplayOnEmptyQuery: false
+	aStep listProcessor
+		allCandidates: [ Pragma allInstances collect: [ :e | e selector ] as: Set ];
+		title: 'Pragmas';
+		itemName: [ :pragma | pragma ];
+		filter: self defaultFilterClass;
+		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
