@@ -58,13 +58,13 @@ PluggableMenuSpec class >> exampleWithTwoSimpleItems [
 	"self exampleWithTwoSimpleItems"
 
 	| s |
-	s := (self withModel: Transcript) label: 'Hello'.
+	s := (self withModel: Object) label: 'Hello'.
 	s
 		add: 'Print Hello'
 		action: (MessageSend receiver: [ self traceCr: 'Hello' ] selector: #value).
 	s
 		add: 'Print Hello again'
-		selector: #show:
+		selector: #trace:
 		argumentList: {('Hello again' , String cr)}.
 	s asMenuMorph popUpInWorld
 ]

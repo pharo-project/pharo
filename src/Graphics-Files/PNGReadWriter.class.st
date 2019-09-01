@@ -1054,10 +1054,9 @@ PNGReadWriter >> processNonInterlaced [
 	copyMethod := #(#copyPixelsGray: nil #copyPixelsRGB: #copyPixelsIndexed: #copyPixelsGrayAlpha: nil #copyPixelsRGBA:)
 		at: colorType + 1.
 	debug
-		ifTrue: [ Transcript
-				cr;
-				nextPutAll: 'NI chunk size=';
-				print: idatChunkStream position ].
+		ifTrue: [ self
+				crTrace:
+					('NI chunk size=<1s>' expandMacrosWith: idatChunkStream position) ].
 	z := ZLibReadStream
 		on: idatChunkStream originalContents
 		from: 1
@@ -1212,15 +1211,19 @@ PNGReadWriter >> writeChunk: crcStream [
 		in: bytes.
 	crc := crc bitXor: 4294967295.
 	debug
-		ifTrue: [ Transcript
-				cr;
-				print: stream position;
-				space;
-				nextPutAll: (bytes copyFrom: 1 to: 4) asString;
-				nextPutAll: ' len=';
-				print: length;
-				nextPutAll: ' crc=0x';
-				nextPutAll: crc printStringHex ].
+		ifTrue: [ self
+				crTrace:
+					(String
+						streamContents: [ :stream | 
+							stream
+								cr;
+								print: stream position;
+								space;
+								nextPutAll: (bytes copyFrom: 1 to: 4) asString;
+								nextPutAll: ' len=';
+								print: length;
+								nextPutAll: ' crc=0x';
+								nextPutAll: crc printStringHex ]) ].
 	self nextLongPut: length - 4.	"exclude chunk name"
 	stream next: length putAll: bytes startingAt: 1.
 	self nextLongPut: crc.
@@ -1235,21 +1238,21 @@ PNGReadWriter >> writeFileSignature [
 ]
 
 { #category : #writing }
-PNGReadWriter >> writeIDATChunkOn: aStream [ 
+PNGReadWriter >> writeIDATChunkOn: aStream [
 	"Write the IDAT chunk"
+
 	| z |
 	aStream nextPutAll: 'IDAT' asByteArray.
 	z := ZLibWriteStream on: aStream.
-	form depth <= 8 
+	form depth <= 8
 		ifTrue: [ self writeType3DataOn: z ]
 		ifFalse: [ self writeType6DataOn: z ].
-	self debugging ifTrue: 
-		[ Transcript
-			cr;
-			nextPutAll: 'compressed size=';
-			print: aStream position;
-			nextPutAll: ' uncompressed size=';
-			print: z position ]
+	self debugging
+		ifTrue: [ self
+				crTrace:
+					('compressed size=<1s> uncompressed size=<2s>'
+						expandMacrosWith: aStream position
+						with: z position) ]
 ]
 
 { #category : #writing }
