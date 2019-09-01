@@ -402,6 +402,18 @@ RBMessageNode >> selector: aSelector [
 ]
 
 { #category : #accessing }
+RBMessageNode >> selectorAndArgumentNames [
+	"Returns the selector and argument names portion of a method as a string"
+
+	^ self arguments
+		ifEmpty: [self keywords first]
+		ifNotEmpty: [| lastArgument |
+			lastArgument := self arguments last.
+			self halt. 
+			self source first: lastArgument start + (lastArgument value asString size - 1)]
+]
+
+{ #category : #accessing }
 RBMessageNode >> selectorInterval [
 	| positions |
 	positions := self keywordsIntervals. 
@@ -410,7 +422,9 @@ RBMessageNode >> selectorInterval [
 
 { #category : #accessing }
 RBMessageNode >> selectorParts [
-	^ self keywords collect: #asSymbol.
+	"Returns a collection containing all the selector composing a message"
+	
+	^ self keywords collect: [ :each | each asSymbol]
 ]
 
 { #category : #accessing }
