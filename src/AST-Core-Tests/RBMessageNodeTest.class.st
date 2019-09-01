@@ -17,6 +17,16 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 ]
 
 { #category : #testing }
+RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexArgs [
+		| tree message |
+		tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
+		message := tree sendNodes first.
+		self assert: message selectorAndArgumentNames equals: 'between: x + 2 and: (y foo: 3)'.
+		
+		
+]
+
+{ #category : #testing }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
