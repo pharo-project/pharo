@@ -24,7 +24,7 @@ ImageFillStyle >> = anOrientedFillStyle [
 	"Answer whether equal."
 
 	^super = anOrientedFillStyle
-		and: [self form = anOrientedFillStyle form]
+		and: [(self form = anOrientedFillStyle form) and: [ offset = anOrientedFillStyle offset]]
 ]
 
 { #category : #converting }
