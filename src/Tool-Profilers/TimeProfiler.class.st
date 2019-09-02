@@ -42,7 +42,7 @@ TimeProfiler class >> example [
 { #category : #examples }
 TimeProfiler class >> exampleOnBlock [
 
-	TimeProfiler onBlock: [ 20 timesRepeat: [Transcript show: 100 factorial printString]]
+	TimeProfiler onBlock: [ 20 timesRepeat: [self trace: 100 factorial printString]]
 ]
 
 { #category : #opening }

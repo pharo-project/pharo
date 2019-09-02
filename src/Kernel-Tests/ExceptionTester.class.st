@@ -47,13 +47,13 @@ ExceptionTester >> contents [
 { #category : #'pseudo actions' }
 ExceptionTester >> doSomething [
 
-	self trace: self doSomethingString
+	self log: self doSomethingString
 ]
 
 { #category : #'pseudo actions' }
 ExceptionTester >> doSomethingElse [
 
-	self trace: self doSomethingElseString
+	self log: self doSomethingElseString
 ]
 
 { #category : #accessing }
@@ -65,7 +65,7 @@ ExceptionTester >> doSomethingElseString [
 { #category : #'pseudo actions' }
 ExceptionTester >> doSomethingExceptional [
 
-	self trace: self doSomethingExceptionalString
+	self log: self doSomethingExceptionalString
 ]
 
 { #category : #accessing }
@@ -83,7 +83,7 @@ ExceptionTester >> doSomethingString [
 { #category : #'pseudo actions' }
 ExceptionTester >> doYetAnotherThing [
 
-	self trace: self doYetAnotherThingString
+	self log: self doYetAnotherThingString
 ]
 
 { #category : #accessing }
@@ -199,10 +199,7 @@ ExceptionTester >> iterationsBeforeTimeout: anInteger [
 
 { #category : #accessing }
 ExceptionTester >> log [
-
-	log == nil
-		ifTrue: [log := OrderedCollection new].
-	^log
+	^ log ifNil: [ log := OrderedCollection new ]
 ]
 
 { #category : #logging }
@@ -317,7 +314,7 @@ ExceptionTester >> runTest: aSelector [
 		clearLog;
 		perform: aSelector ]
 			on: MyTestError do: 
-				[ :ex | self trace: 'Unhandled Exception'.
+				[ :ex | self log: 'Unhandled Exception'.
 					ex return: nil ].
 
 	actualResult	:= self log.
@@ -703,7 +700,7 @@ ExceptionTester >> testString [
 { #category : #tests }
 ExceptionTester >> warningTest [
 
-	self trace: 'About to signal warning.'.
+	self log: 'About to signal warning.'.
 	Warning signal: 'Ouch'.
-	self trace: 'Warning signal handled and resumed.'
+	self log: 'Warning signal handled and resumed.'
 ]

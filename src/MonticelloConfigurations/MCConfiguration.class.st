@@ -129,10 +129,12 @@ MCConfiguration class >> upgradeIsMerge: aBoolean [
 MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig [
 	"MCConfiguration
 		whatChangedFrom: ReleaseBuilderPloppDeveloper config20060201PloppBeta
-		to:  ReleaseBuilderPloppDeveloper config20060215premaster" 
+		to:  ReleaseBuilderPloppDeveloper config20060215premaster"
 
-	self whatChangedFrom: oldConfig to: newConfig on: Transcript.
-	Transcript flush.
+	self
+		whatChangedFrom: oldConfig
+		to: newConfig
+		on: Smalltalk tools transcript
 ]
 
 { #category : #utilities }
