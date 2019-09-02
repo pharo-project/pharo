@@ -11,6 +11,14 @@ Class {
 	#category : #'Balloon-Fills'
 }
 
+{ #category : #comparing }
+ColorFillStyle >> = anObject [
+
+	^ super = anObject
+		and: [ origin = anObject origin
+			and: [ extent = anObject extent ] ]
+]
+
 { #category : #accessing }
 ColorFillStyle >> extent [
 	"Answer the value of extent"
