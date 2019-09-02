@@ -26,7 +26,7 @@ UnixResolver >> desktop [
 
 { #category : #origins }
 UnixResolver >> documents [
-	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ self documents ]
+	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ super documents ]
 ]
 
 { #category : #origins }
