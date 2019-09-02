@@ -19,8 +19,8 @@ Class {
 EpLogBrowserToolbarPresenter class >> defaultSpec [
 	^ SpPanedLayout newHorizontal
 		position: 40 percent;
-		add: #statusLabelPresenter;
-		add: #filtersButtonPresenter;
+		add: #statusLabel;
+		add: #filtersButton;
 		yourself
 ]
 
