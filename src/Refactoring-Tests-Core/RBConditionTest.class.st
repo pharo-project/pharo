@@ -10,9 +10,8 @@ RBConditionTest >> testCheckInvalidMethodName [
 
 	self deny: (RBCondition checkMethodName: 'fofo fo').
 	self deny: (RBCondition checkMethodName: '123fofo').
-	"bug in RBParser!!!"
-	"self deny: (RBCondition checkMethodName: 'foo::')."
-	"self deny: (RBCondition checkMethodName: 'agr:goo:aa')."
+	self deny: (RBCondition checkMethodName: 'foo::').
+	self deny: (RBCondition checkMethodName: 'agr:goo:aa').
 	self deny: (RBCondition checkMethodName: 'foo:123:').
 	self deny: (RBCondition checkMethodName: 'foo[arg]').
 	self deny: (RBCondition checkMethodName: 'foo:=arg').
@@ -21,6 +20,7 @@ RBConditionTest >> testCheckInvalidMethodName [
 	self deny: (RBCondition checkMethodName: 'foo:+arg)').
 	self deny: (RBCondition checkMethodName: '<<foo:<<arg)').
 	self deny: (RBCondition checkMethodName: 'foo:agr^:').
+	self deny: (RBCondition checkMethodName: 'foo:agr')
 ]
 
 { #category : #tests }
