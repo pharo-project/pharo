@@ -229,6 +229,11 @@ FileLocator class >> documents [
 	^ self origin: #documents
 ]
 
+{ #category : #origins }
+FileLocator class >> downloads [
+	^ self origin: #downloads
+]
+
 { #category : #'windows-origins' }
 FileLocator class >> driveNamed: driveName [
 	^ FileReference fileSystem: (FileSystem disk) path: Path / (driveName, ':')
