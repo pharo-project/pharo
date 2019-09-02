@@ -13,7 +13,7 @@ LazyClassVariableTest >> testLazyClassVarCompiled [
 	self compileAccessorsFor: classVar.
 	self assert: aClass new ClassVar equals: 5.
 	aClass new ClassVar: 6.
-	self assert: aClass new ClassVar equals: 6.
+	self assert: aClass new ClassVar equals: 6
 	
 	
 
@@ -28,7 +28,7 @@ LazyClassVariableTest >> testLazyClassVarReadReflective [
 
 	self assert: classVar read equals: 5.
 	classVar write: 10.
-	self assert: classVar read equals: 10.
+	self assert: classVar read equals: 10
 	
 	
 	
@@ -44,7 +44,7 @@ LazyClassVariableTest >> testLazyClassVarReadReflectiveBlock [
 
 	self assert: classVar read equals: 5.
 	classVar write: 10.
-	self assert: classVar read equals: 10.
+	self assert: classVar read equals: 10
 	
 	
 	

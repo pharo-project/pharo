@@ -10,7 +10,7 @@ ExampleSlotWithStateTest >> testExampleClassSide [
 	aClass := self make: [ :builder | builder classSlots: {#slot1 =>ExampleSlotWithState}].
 
 	self assert: (aClass class hasSlotNamed: #slot1).
-	self assert: aClass class slotDefinitionString equals:  '{ #slot1 => ExampleSlotWithState }'.
+	self assert: aClass class slotDefinitionString equals:  '{ #slot1 => ExampleSlotWithState }'
 ]
 
 { #category : #tests }
@@ -40,5 +40,5 @@ ExampleSlotWithStateTest >> testExampleTwoSlotWithState [
 	
 	aClass := self make: [ :builder | builder  slots: {#slot2 =>ExampleSlotWithState}].
 	self deny: (aClass hasSlotNamed: #slot1).
-	self assert: (aClass hasSlotNamed: #slot2).
+	self assert: (aClass hasSlotNamed: #slot2)
 ]

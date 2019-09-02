@@ -55,5 +55,5 @@ IndexedSlot >> read: anObject [
 
 { #category : #'meta-object-protocol' }
 IndexedSlot >> write: aValue to: anObject [
-	^ thisContext object: anObject instVarAt: index put: aValue.
+	^ thisContext object: anObject instVarAt: index put: aValue
 ]

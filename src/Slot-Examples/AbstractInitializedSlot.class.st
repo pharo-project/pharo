@@ -36,5 +36,5 @@ AbstractInitializedSlot >> printOn: aStream [
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
 		nextPutAll: ' default: '.
-	default printOn: aStream.
+	default printOn: aStream
 ]

@@ -42,7 +42,7 @@ SlotExamplePerson >> directedMovies: anObject [
 { #category : #initialization }
 SlotExamplePerson >> initialize [
 	super initialize.
-	self class initializeSlots: self.
+	self class initializeSlots: self
 ]
 
 { #category : #accessing }
