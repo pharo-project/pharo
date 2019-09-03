@@ -87,7 +87,7 @@ OpalCompilerTest >> testCompileWithNilClass [
 ]
 
 { #category : #tests }
-OpalCompilerTests >> testCompilerUsingFullBlockClosureHasBlockAsLiteral [
+OpalCompilerTest >> testCompilerUsingFullBlockClosureHasBlockAsLiteral [
 
 	| compiler method |
 	compiler := Smalltalk compiler.
