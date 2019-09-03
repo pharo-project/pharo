@@ -17,6 +17,30 @@ ContinuationTest >> callcc: aBlock [
 ]
 
 { #category : #tests }
+ContinuationTest >> intersect: aLinkedList with: aCollection [
+	|vl|
+	vl := aLinkedList ifEmpty: [ nil ] ifNotEmpty: [ aLinkedList firstLink ].
+	^ LinkedList new add: (self intersectValueLink: vl with: aCollection); yourself
+]
+
+{ #category : #tests }
+ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
+	^ aValueLink
+		ifNotNil: [ | v nl rest |
+			v := aValueLink value.
+			nl := aValueLink nextLink.
+			rest := self intersectValueLink: nl with: anotherSet.
+			(anotherSet includes: v)
+				ifTrue: [ |  |
+					
+					ValueLink new
+						value: v;
+						nextLink: rest;
+						yourself ]
+				ifFalse: [ rest ] ]
+]
+
+{ #category : #tests }
 ContinuationTest >> testBlockEscape [
 	| x |
 	tmp := 0.
@@ -54,6 +78,14 @@ ContinuationTest >> testBlockVars [
 ]
 
 { #category : #tests }
+ContinuationTest >> testIntersectWith [
+	self assert: (self
+		intersect: (LinkedList with: #apple with: #banana with: #avocado)
+		with: (LinkedList with: 1 with: 2 with: #apple))
+		equals: (LinkedList with: #apple)
+]
+
+{ #category : #tests }
 ContinuationTest >> testMethodTemps [
 	| i continuation |
 	i := 0.
@@ -86,6 +118,18 @@ ContinuationTest >> testSimpleCallCC [
 			self error: 'This message shouldn''t be sent, ever.' ].
 	self assert: x.
 	self assert: v equals: 1
+]
+
+{ #category : #tests }
+ContinuationTest >> testSimpleStoreCallCC [
+	| x continuation |
+	
+	continuation := self callcc: #yourself.
+	x := false.continuation = true
+		ifTrue: [ x := true ]
+		ifFalse: [ continuation value: true.
+			self error: 'This message shouldn''t be sent, ever.' ].
+	self assert: x
 ]
 
 { #category : #tests }
