@@ -74,15 +74,23 @@ ContinuationTest >> testReentrant [
 
 { #category : #tests }
 ContinuationTest >> testSimpleCallCC [
-	| x continuation |
-	x := self callcc: [ :cc | continuation := cc. false ].
-	x ifFalse: [ continuation value: true ].
-	self assert: x
+	| x continuation v |
+	v := 0.
+	x := self
+		callcc: [ :cc | 
+			continuation := cc.
+			false ].
+	x
+		ifTrue: [ v := v + 1 ]
+		ifFalse: [ continuation value: true.
+			self error: 'This message shouldn''t be sent, ever.' ].
+	self assert: x.
+	self assert: v equals: 1
 ]
 
 { #category : #tests }
 ContinuationTest >> testSimplestCallCC [
 	| x |
-	x := self callcc: [ :cc | cc value: true ].
+	x := self callcc: [ :cc | (cc value: true) not ].
 	self assert: x
 ]
