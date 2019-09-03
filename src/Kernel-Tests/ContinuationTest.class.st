@@ -26,18 +26,17 @@ ContinuationTest >> intersect: aLinkedList with: aCollection [
 { #category : #tests }
 ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 	^ aValueLink
-		ifNotNil: [ | v nl rest |
+		ifNotNil: [ | v nl |
 			v := aValueLink value.
-			nl := aValueLink nextLink.
-			rest := self intersectValueLink: nl with: anotherSet.
+			nl := self
+				intersectValueLink: aValueLink nextLink
+				with: anotherSet.
 			(anotherSet includes: v)
-				ifTrue: [ |  |
-					
-					ValueLink new
+				ifTrue: [ ValueLink new
 						value: v;
-						nextLink: rest;
+						nextLink: nl;
 						yourself ]
-				ifFalse: [ rest ] ]
+				ifFalse: [ nl ] ]
 ]
 
 { #category : #tests }
