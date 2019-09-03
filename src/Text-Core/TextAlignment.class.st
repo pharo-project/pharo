@@ -76,10 +76,3 @@ TextAlignment >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^ alignment hash
 ]
-
-{ #category : #utilities }
-TextAlignment >> writeScanOn: strm [
-
-	strm nextPut: $a.
-	alignment printOn: strm.
-]
