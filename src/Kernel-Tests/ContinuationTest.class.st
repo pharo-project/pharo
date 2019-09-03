@@ -28,6 +28,51 @@ ContinuationTest >> intersect: aLinkedList with: aCollection [
 ]
 
 { #category : #tests }
+ContinuationTest >> intersect: aLinkedList with: aCollection continuation: hop [
+	^ 
+	aCollection ifEmpty: [ hop value: aCollection ]
+	ifNotEmpty: [
+	aLinkedList
+		ifNotEmpty: [ | list |
+			list := LinkedList new.
+			(self intersectValueLink: aLinkedList firstLink with: aCollection)
+				ifNotNil: [ :link | list add: link ].
+			list ]]
+]
+
+{ #category : #tests }
+ContinuationTest >> intersect: aSet withAll: sets [
+	^ sets
+		ifEmpty: [ aSet ]
+		ifNotEmpty: [ self intersect: aSet with: (self intersect: sets first withAll: sets allButFirst ) ]
+]
+
+{ #category : #tests }
+ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
+	^ aSet
+		ifEmpty: [ hop value: aSet ]
+		ifNotEmpty: [ sets
+				ifEmpty: [ aSet ]
+				ifNotEmpty: [ self
+						intersect: aSet
+						with: (self intersect: sets first withAll: sets allButFirst continuation: hop) ] ]
+]
+
+{ #category : #tests }
+ContinuationTest >> intersectAll: sets [
+	^ sets
+		ifNotEmpty: [ self intersect: sets first withAll: sets allButFirst ]
+]
+
+{ #category : #tests }
+ContinuationTest >> intersectAllWithCC: sets [
+	^ 
+	self callcc: [   :cc | 
+	sets
+		ifNotEmpty: [ self intersect: sets first withAll: sets allButFirst continuation: cc]]
+]
+
+{ #category : #tests }
 ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 	^ aValueLink
 		ifNotNil: [ | v nl |
@@ -41,6 +86,33 @@ ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 						nextLink: nl;
 						yourself ]
 				ifFalse: [ nl ] ]
+]
+
+{ #category : #tests }
+ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
+	^ aSet
+		ifEmpty: [ hop value: aSet ]
+		ifNotEmpty: [ sets
+				ifEmpty: [ aSet ]
+				ifNotEmpty: [ self
+						intersect: aSet
+						with:
+							(self
+								intersectWithCC: sets first
+								withAll: sets allButFirst
+								continuation: hop)
+						continuation: hop ] ]
+]
+
+{ #category : #tests }
+ContinuationTest >> intersectWithCCAllWithCC: sets [
+	^ self
+		callcc: [ :cc | 
+			sets
+				ifNotEmpty: [ self
+						intersectWithCC: sets first
+						withAll: sets allButFirst
+						continuation: cc ] ]
 ]
 
 { #category : #tests }
@@ -78,6 +150,54 @@ ContinuationTest >> testBlockVars [
 			#(1 2 3) do: [ :i |
 				self callcc: [ :cc | tmp2 := cc. continuation value: i ] ] ].
 	self assert: tmp = 6
+]
+
+{ #category : #tests }
+ContinuationTest >> testIntersectAll [
+	self
+		assert:
+			(self
+				intersectAll:
+					{(LinkedList with: 3 with: #mangos with: #and).
+					(LinkedList with: 3 with: #kiwis with: #and).
+					(LinkedList with: 3 with: #hamburges)})
+		equals: {3}.
+	self
+		assert:
+			(self
+				intersectAll:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					(LinkedList with: #no with: #food with: #and).
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}.
+	self
+		assert:
+			(self
+				intersectAll:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					LinkedList new.
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}.
+	self
+		assert:
+			(self
+				intersectAllWithCC:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					LinkedList new.
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}.
+	self
+		assert:
+			(self
+				intersectWithCCAllWithCC:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					(LinkedList with: #no with: #food with: #and).
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}
 ]
 
 { #category : #tests }
