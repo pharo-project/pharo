@@ -18,13 +18,12 @@ ContinuationTest >> callcc: aBlock [
 
 { #category : #tests }
 ContinuationTest >> intersect: aLinkedList with: aCollection [
-	| vl list|
-	vl := aLinkedList
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ aLinkedList firstLink ].
-	list := LinkedList new.
- (self intersectValueLink: vl with: aCollection) ifNotNil: [ :link | list add: link ].
-^ list
+	
+	^ aLinkedList
+		ifNotEmpty: [|list|list := LinkedList new.
+	(self intersectValueLink: aLinkedList firstLink with: aCollection)
+		ifNotNil: [ :link | list add: link ].
+	 list  ].
 	
 ]
 
