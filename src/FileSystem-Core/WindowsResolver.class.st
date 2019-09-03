@@ -19,16 +19,6 @@ WindowsResolver >> cache [
 ]
 
 { #category : #origins }
-WindowsResolver >> desktop [
-	^ self home / 'Desktop'
-]
-
-{ #category : #origins }
-WindowsResolver >> documents [
-	^ self home / 'Documents'
-]
-
-{ #category : #origins }
 WindowsResolver >> home [
 	"Value of the $USERPROFILE environment variable."
 

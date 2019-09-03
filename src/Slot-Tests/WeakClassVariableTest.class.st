@@ -12,7 +12,7 @@ WeakClassVariableTest >> testCreateClassWithWeakClassVariable [
 	classVar := #ClassVar => WeakClassVariable.
 	aClass := self make: [ :builder | builder sharedVariables: {classVar} ].
 	
-	self assert: (aClass hasClassVarNamed: 'ClassVar').
+	self assert: (aClass hasClassVarNamed: 'ClassVar')
 	
 	
 ]
@@ -32,7 +32,7 @@ WeakClassVariableTest >> testReadWriteWeakClassVarCompiled [
 	valuetoTest := Object new.
 	
 	object ClassVar: valuetoTest.
-	self assert: object ClassVar equals: valuetoTest.
+	self assert: object ClassVar equals: valuetoTest
 ]
 
 { #category : #tests }
@@ -44,7 +44,7 @@ WeakClassVariableTest >> testWeakClassVariableIsWeak [
 	classVar write: Object new.
 	Smalltalk garbageCollect.
 	"the value is GCed and we get nil"
-	self assert: classVar read equals: nil.
+	self assert: classVar read equals: nil
 ]
 
 { #category : #tests }
@@ -54,5 +54,5 @@ WeakClassVariableTest >> testWeakClassVariableReflective [
 	aClass := self make: [ :builder | builder sharedVariables: {classVar} ].
 	
 	classVar write: 5.
-	self assert: classVar read equals: 5.
+	self assert: classVar read equals: 5
 ]

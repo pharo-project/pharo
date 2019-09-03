@@ -13,7 +13,13 @@ AbstractTool class >> menuCommandOn: aBuilder [
 	(aBuilder item: #Tools)
 		order: 1.0;
 		target: self;
-		help: 'Set of tools to get a better Pharo experience.'
+		help: 'Set of tools to get a better Pharo experience.';
+		with: [ (aBuilder item: #'Undo last refactoring')
+				target: self;
+				selector: #undoLastRefactoring;
+				help: 'Undo last refactoring, after execute this command you can not redo this refactoring.';
+				order: 1000;
+				iconName: #smallUndo.]
 ]
 
 { #category : #private }

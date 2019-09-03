@@ -27,7 +27,7 @@ ComputedSlot >> = other [
 
 { #category : #'code generation' }
 ComputedSlot >> emitValue: methodBuilder [
-	"generate the bytcode for 'block cull: self'"
+	"generate the bytecode for 'block cull: self'"
 	methodBuilder
 		pushLiteral: block;
 		pushReceiver;
@@ -36,7 +36,7 @@ ComputedSlot >> emitValue: methodBuilder [
 
 { #category : #comparing }
 ComputedSlot >> hasSameDefinitionAs: otherSlot [
-	"other then #=, we use string comparition for the blocks here"
+	"other then #=, we use string comparision for the blocks here"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ block printString = otherSlot block printString ]
 
@@ -59,7 +59,7 @@ ComputedSlot >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
-	"we use #cull to support both 0-arg and 1-arg blocks"
+	"we use #cull: to support both 0-arg and 1-arg blocks"
 	^block cull: anObject
 	
 ]

@@ -46,7 +46,7 @@ BooleanSlot >> emitValue: methodBuilder [
 		pushLiteral: offset;
 		send: #bitAt:;
 		pushLiteral: 1;
-		send: #==.
+		send: #==
 	
 	
 ]
@@ -56,7 +56,7 @@ BooleanSlot >> installingIn: aClass [
 	| booleanSlots |
 	super installingIn: aClass.
 	
-	"we reuse a baselot if it is already there, if not, we add it"
+	"we reuse a baseSlot if it is already there, if not, we add it"
 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
 	aClass classLayout 
 		resolveSlot: #'_booleanBaseSlot'   
@@ -65,7 +65,7 @@ BooleanSlot >> installingIn: aClass [
 	
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	booleanSlots := aClass allSlots select: [ :each | each isKindOf: self class ].	
-	offset := booleanSlots indexOf: self.
+	offset := booleanSlots indexOf: self
 
 	
 

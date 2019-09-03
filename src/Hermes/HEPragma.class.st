@@ -53,6 +53,6 @@ HEPragma >> method [
 { #category : #accessing }
 HEPragma >> value: aPragma [
 	method := aPragma method asExportedLiteral.
-	keyword := aPragma keyword asExportedLiteral.
+	keyword := aPragma selector asExportedLiteral.
 	arguments := aPragma arguments asExportedLiteral 
 ]

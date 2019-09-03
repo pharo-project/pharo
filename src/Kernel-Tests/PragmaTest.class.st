@@ -32,7 +32,7 @@ PragmaTest >> testCopy [
 
 	self deny: atPragma == copy.
 	self assert: atPragma method == copy method.
-	self assert: atPragma keyword == copy keyword.
+	self assert: atPragma selector == copy selector.
 	self assert: atPragma arguments == copy arguments.
 ]
 

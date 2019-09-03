@@ -104,11 +104,18 @@ FFICompilerPlugin class >> initializeFFICalloutSelectors [
 
 { #category : #'private - initialization' }
 FFICompilerPlugin class >> initializeFFICalloutSelectorsListUpdate [
-
-	collector := PragmaCollector filter: [ :pragma | pragma keyword = #ffiCalloutTranslator ].
-	collector reset do: [ :pragma | self addFFICalloutSelectorFromPragma: pragma ].
-	collector when: PragmaAdded send: #addFFICalloutSelectorEvent: to: self.
-	collector when: PragmaRemoved send: #removeFFICalloutSelectorEvent: to: self
+	collector := PragmaCollector
+		filter: [ :pragma | pragma selector = #ffiCalloutTranslator ].
+	collector reset
+		do: [ :pragma | self addFFICalloutSelectorFromPragma: pragma ].
+	collector
+		when: PragmaAdded
+		send: #addFFICalloutSelectorEvent:
+		to: self.
+	collector
+		when: PragmaRemoved
+		send: #removeFFICalloutSelectorEvent:
+		to: self
 ]
 
 { #category : #installation }

@@ -13,7 +13,7 @@ LazySlotTest >> testLazySlotCompiled [
 	object := aClass new.
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: 5
 	
 
 	
@@ -42,7 +42,7 @@ LazySlotTest >> testLazySlotReadReflective [
 
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	
@@ -61,7 +61,7 @@ LazySlotTest >> testLazySlotReadReflectiveBlock [
 
 	self assert: (slot read: object) equals: aClass.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	

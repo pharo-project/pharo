@@ -16,8 +16,8 @@ Class {
 		'modifiedParseTree',
 		'parameters',
 		'needsReturn',
-		'selectorNewMethod',
-		'parameterMap'
+		'parameterMap',
+		'newExtractedSelector'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -122,6 +122,22 @@ RBExtractMethodRefactoring >> checkTemporaries [
 ]
 
 { #category : #transforming }
+RBExtractMethodRefactoring >> compiledMethod [
+	^ self compiledMethodIn: class realClass
+]
+
+{ #category : #transforming }
+RBExtractMethodRefactoring >> compiledMethodIn: aClass [
+	^ [ aClass >> newExtractedSelector ]
+	on: Exception 
+	do: [ |aSuperClass|
+		aSuperClass := aClass superclass.
+		aSuperClass 
+			ifNil: [ ^ nil ]
+			ifNotNil: [ self compiledMethodIn: aSuperClass ]]
+]
+
+{ #category : #transforming }
 RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [ 
 	assigned do: [:each | extractedParseTree body addTemporaryNamed: each]
 ]
@@ -129,9 +145,11 @@ RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [
 { #category : #transforming }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
-
-	^class allSelectors detect: [:each | self isMethodEquivalentTo: each]
-		ifNone: [nil]
+	|existSelector |
+	existSelector := self requestExistingSelector.
+	existSelector ifNotNil: [ ^ existSelector ] ifNil: [
+		^ class allSelectors detect: [:each | self isMethodEquivalentTo: each]
+			ifNone: [nil]]
 ]
 
 { #category : #initialization }
@@ -270,6 +288,11 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 	^self shouldUseExistingMethod: aSelector
 ]
 
+{ #category : #accessing }
+RBExtractMethodRefactoring >> method [ 
+	^ class realClass >> selector
+]
+
 { #category : #transforming }
 RBExtractMethodRefactoring >> methodDelimiter [
 	^'#''place.holder.for.method'''
@@ -278,6 +301,7 @@ RBExtractMethodRefactoring >> methodDelimiter [
 { #category : #transforming }
 RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	| args newSend |
+	newExtractedSelector := aSymbol .
 	args := parameters collect: [ :parm | RBVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol numArgs = 0
@@ -295,6 +319,11 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 						nextPutAll: arg asString;
 						nextPut: $  ] ].
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree
+]
+
+{ #category : #transforming }
+RBExtractMethodRefactoring >> newExtractedSelector [
+	^ newExtractedSelector
 ]
 
 { #category : #accessing }
@@ -378,12 +407,9 @@ RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> requestExistingSelector [ 
-	^(self options at: #existingSelector) value: self
-]
-
-{ #category : #accessing }
-RBExtractMethodRefactoring >> selectorNewMethod: anObject [
-	selectorNewMethod := anObject 
+	^ [(self options at: #existingSelector) value: self]
+			on: Exception 
+			do: [ nil ]
 ]
 
 { #category : #printing }
@@ -400,12 +426,17 @@ RBExtractMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
+{ #category : #accessing }
+RBExtractMethodRefactoring >> targetClass [ 
+	^ class
+]
+
 { #category : #transforming }
 RBExtractMethodRefactoring >> transform [
 	| existingSelector |
 	existingSelector := self existingSelector.
 	self nameNewMethod: (existingSelector ifNil: [
-	selectorNewMethod ifNil: [ self getNewMethodName]]
+	newExtractedSelector ifNil: [ self getNewMethodName]]
 				ifNotNil: [existingSelector]).
 	existingSelector ifNil: 
 			[ self renameAllParameters.

@@ -20,7 +20,7 @@ ExampleClassVariableTest >> testCreateClassWithClassVariable [
 			sharedVariables: {classVar}
 		].
 	
-	self assert: (aClass hasClassVarNamed: 'ClassVar').
+	self assert: (aClass hasClassVarNamed: 'ClassVar')
 
 
 
@@ -41,7 +41,7 @@ ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar1').
-	self assert: (aClass hasClassVarNamed: 'ClassVar2').
+	self assert: (aClass hasClassVarNamed: 'ClassVar2')
 
 
 
@@ -72,5 +72,5 @@ ExampleClassVariableTest >> testMigrateClassVar [
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
 	self assert: (aClass classVariableNamed: #ClassVar) class equals: ExampleClassVariableWithState.
-	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5.
+	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5
 ]

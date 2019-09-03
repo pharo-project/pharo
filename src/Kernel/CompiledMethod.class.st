@@ -450,7 +450,7 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
-	^ self pragmas anySatisfy: [ :pragma | pragma keyword = aSymbol ]
+	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
 ]
 
 { #category : #testing }
@@ -734,10 +734,10 @@ CompiledMethod >> postCopy [
 	| penultimateLiteral |
 	(penultimateLiteral := self penultimateLiteral) isMethodProperties ifTrue:
 		[self penultimateLiteral: (penultimateLiteral copy
-									setMethod: self;
+									method: self;
 									yourself).
 		 self penultimateLiteral pragmas do:
-			[:p| p setMethod: self]]
+			[:p| p method: self]]
 
 ]
 
