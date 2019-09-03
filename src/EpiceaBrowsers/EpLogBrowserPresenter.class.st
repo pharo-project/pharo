@@ -38,7 +38,10 @@ EpLogBrowserPresenter class >> defaultSpec [
 		add: #itemsPresenter;
 		add:
 			(SpBoxLayout newVertical
-				add: #toolbarPresenter withConstraints: [ :constraints | constraints height: self toolbarHeight ];
+				add: #toolbarPresenter
+					expand: false
+					fill: false
+					padding: 0;
 				add: #entryContentPresenter;
 				yourself);
 		yourself
@@ -54,13 +57,12 @@ EpLogBrowserPresenter class >> newWithLog: aLog [
 
 { #category : #'instance creation' }
 EpLogBrowserPresenter class >> open [
-
+	<script>
 	^ self openWithLog: self defaultLog
 ]
 
 { #category : #'instance creation' }
 EpLogBrowserPresenter class >> openWithLog: aLog [
-
 	^ (self newWithLog: aLog)
 		refresh;
 		openWithSpec;
@@ -167,22 +169,22 @@ EpLogBrowserPresenter >> applySelectedChanges [
 
 { #category : #modes }
 EpLogBrowserPresenter >> beApplyMode [
-	self title: 'Epicea - Apply Changes'.
-	self toolbarPresenter beApplyMode.
+	self withWindowDo: [ :window | window title: 'Epicea - Apply Changes' ].
+	toolbarPresenter beApplyMode.
 	showEntryItemMenu := false
 ]
 
 { #category : #modes }
 EpLogBrowserPresenter >> beHistoryMode [
 	self withWindowDo: [ :window | window title: 'Epicea - Log Browser' ].
-	self toolbarPresenter beHistoryMode.
+	toolbarPresenter beHistoryMode.
 	showEntryItemMenu := true
 ]
 
 { #category : #modes }
 EpLogBrowserPresenter >> beRevertMode [
-	self title: 'Epicea - Revert Changes'.
-	self toolbarPresenter beRevertMode.
+	self withWindowDo: [ :window | window title: 'Epicea - Revert Changes' ].
+	toolbarPresenter beRevertMode.
 	showEntryItemMenu := false
 ]
 
@@ -222,8 +224,8 @@ EpLogBrowserPresenter >> cachedLogEntries [
 ]
 
 { #category : #refreshing }
-EpLogBrowserPresenter >> cleanEntryContentModel [
-	self refreshEntryContentPresenterWith: #()
+EpLogBrowserPresenter >> cleanEntryContent [
+	self refreshEntryContentWith: #()
 ]
 
 { #category : #menu }
@@ -294,11 +296,6 @@ EpLogBrowserPresenter >> entries [
 EpLogBrowserPresenter >> entriesWithCodeChanges [
 
 	^ self entries select: [:each | each content isCodeChange ]
-]
-
-{ #category : #'accessing widgets' }
-EpLogBrowserPresenter >> entryContentPresenter [
-	^ entryContentPresenter 
 ]
 
 { #category : #accessing }
@@ -546,55 +543,41 @@ EpLogBrowserPresenter >> filtersSubMenu [
 	^ aMenu
 ]
 
-{ #category : #api }
-EpLogBrowserPresenter >> initialExtent [
-	^ 550 @ 700
-
-]
-
 { #category : #initialization }
 EpLogBrowserPresenter >> initialize [
-
 	super initialize.
-	
-	andFilter := EpAndFilter withAll: #().
-]
 
-{ #category : #initialization }
-EpLogBrowserPresenter >> initializeEntryContentPresenter [
-
-	self entryContentPresenter showOptions: false.
-]
-
-{ #category : #initialization }
-EpLogBrowserPresenter >> initializeItemsPresenter [
-	self itemsPresenter
-		beMultipleSelection;
-		"		autoDeselect: true; -> not implemented yet?"
-		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
-		whenSelectionChangedDo: [ self refreshEntryContentModelDeferrer schedule ];
-		contextMenu: [ self menuMorphForSelectedItems ]
+	andFilter := EpAndFilter withAll: #()
 ]
 
 { #category : #initialization }
 EpLogBrowserPresenter >> initializePresenter [
 	super initializePresenter.
-	self initializeItemsPresenter.
-	self initializeToolbarPresenter.
-	self initializeEntryContentPresenter.
 	self beHistoryMode
-]
-
-{ #category : #initialization }
-EpLogBrowserPresenter >> initializeToolbarPresenter [
-	self toolbarPresenter logBrowserPresenter: self
 ]
 
 { #category : #initialization }
 EpLogBrowserPresenter >> initializeWidgets [
 	itemsPresenter := self newList.
 	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
-	entryContentPresenter := self newDiff
+	entryContentPresenter := self newDiff.
+
+	itemsPresenter
+		beMultipleSelection;
+		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
+		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
+		contextMenu: [ self menuMorphForSelectedItems ].
+
+	toolbarPresenter logBrowserPresenter: self.
+
+	entryContentPresenter showOptions: false
+]
+
+{ #category : #initialization }
+EpLogBrowserPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter
+		initialExtent: 550 @ 700;
+		title: 'Epicea - Log Browser'
 ]
 
 { #category : #'menu - operations' }
@@ -616,7 +599,7 @@ EpLogBrowserPresenter >> itemForEntryReference: entryReference [
 			newItem ]
 ]
 
-{ #category : #'accessing widgets' }
+{ #category : #accessing }
 EpLogBrowserPresenter >> itemsPresenter [
 	^ itemsPresenter
 ]
@@ -760,47 +743,39 @@ EpLogBrowserPresenter >> refactoringMenuActions [
 EpLogBrowserPresenter >> refresh [
 	"Refresh log"
 
-	self itemsPresenter unselectAll.	"Needed, else #items: can silently fail"
-	self itemsPresenter items: self filteredEntryReferences reversed.
-
-	"Refresh toolbar"
-	self toolbarPresenter refresh
+	itemsPresenter items: self filteredEntryReferences reversed.
+	toolbarPresenter refresh
 ]
 
 { #category : #refreshing }
-EpLogBrowserPresenter >> refreshEntryContentModel [
-	self refreshEntryContentPresenterWith: self selectedEntryItems
+EpLogBrowserPresenter >> refreshEntryContent [
+	self refreshEntryContentWith: self selectedEntryItems
 ]
 
 { #category : #refreshing }
-EpLogBrowserPresenter >> refreshEntryContentModelDeferrer [
+EpLogBrowserPresenter >> refreshEntryContentDeferrer [
 		
 	^ selectionDeferrer ifNil: [
 		selectionDeferrer := OmDeferrer 
-			send: #refreshEntryContentModel
+			send: #refreshEntryContent
 			to: self
 			after: 150 milliSeconds ]
 ]
 
 { #category : #refreshing }
-EpLogBrowserPresenter >> refreshEntryContentPresenterWith: selectedItems [
-
+EpLogBrowserPresenter >> refreshEntryContentWith: selectedItems [
 	selectedItems size = 1
-		ifTrue: [
-			| item |
+		ifTrue: [ | item |
 			item := selectedItems anyOne.
-			
-			self entryContentPresenter 
-				showOnlyDestination: (item oldStateString isEmptyOrNil);
-				showOnlySource: (item newStateString isEmptyOrNil);
+			entryContentPresenter
+				showOnlyDestination: item oldStateString isEmptyOrNil;
+				showOnlySource: item newStateString isEmptyOrNil;
 				leftText: item oldStateString;
 				rightText: item newStateString ]
-		ifFalse: [
-			self entryContentPresenter
+		ifFalse: [ entryContentPresenter
 				leftText: '';
 				rightText: '';
 				showOnlyDestination: true ]
-
 ]
 
 { #category : #accessing }
@@ -884,11 +859,6 @@ EpLogBrowserPresenter >> theLog: aLog [
 	cachedItems := nil.
 	cachedLogEntries := nil.
 	log := aLog.
-]
-
-{ #category : #'accessing widgets' }
-EpLogBrowserPresenter >> toolbarPresenter [
-	^ toolbarPresenter
 ]
 
 { #category : #accessing }
