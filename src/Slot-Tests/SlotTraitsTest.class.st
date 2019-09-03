@@ -76,8 +76,8 @@ SlotTraitsTest >> testModifyTraitComposition [
 	self assertEmpty: TOne traitUsers.
 	self assertEmpty: TOne classTrait traitUsers.
 	self assert: TTwo traitUsers asArray equals: {aClass}.
-	"self assertEmpty: TTwo classTrait traitUsers ."
-	aClass classLayout checkIntegrity
+	"self assertEmpty: TTwo classTrait traitUsers."
+	aClass classLayout checkIntegrity.
 
 	self deny: (aClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #classOne).
