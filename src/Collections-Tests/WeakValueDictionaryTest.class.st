@@ -149,6 +149,7 @@ WeakValueDictionaryTest >> testSize [
 	d at: 1 put: 2.
 	d at: 2 put: nil.
 	self assert: d size equals: 2
+]
 
 { #category : #tests }
 WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
