@@ -25,7 +25,7 @@ InitializedSlotTest >> testReadWriteCompiled [
 	"test compiled write and read"
 	self assert: (object slot1) equals: 5.
 	object slot1: 10.
-	self assert: (object slot1) equals: 10.
+	self assert: (object slot1) equals: 10
 	
 	
 	
@@ -44,7 +44,7 @@ InitializedSlotTest >> testReflectiveReadWrite [
 	"test reflective write and read"
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	
@@ -63,7 +63,7 @@ InitializedSlotTest >> testReflectiveReadWriteBlock [
 	"test reflective write and read"
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	

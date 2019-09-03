@@ -18,7 +18,7 @@ ComputedSlotTest >> testReadComputedSlotCompiled [
 	
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: 5
 ]
 
 { #category : #tests }
@@ -29,7 +29,7 @@ ComputedSlotTest >> testReadComputedSlotReflective [
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
 	
-	self assert: (slot read: object) equals: 5.
+	self assert: (slot read: object) equals: 5
 ]
 
 { #category : #tests }
@@ -41,7 +41,7 @@ ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 
 	object := aClass new.
 	
-	self assert: (slot read: object) equals: 5.
+	self assert: (slot read: object) equals: 5
 ]
 
 { #category : #tests }
@@ -57,5 +57,5 @@ ComputedSlotTest >> testWriteComputedSlotCompiled [
 	self compileAccessorsFor: slot.
 	object slot1: 10.
 	"the write is ignored"
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: 5
 ]

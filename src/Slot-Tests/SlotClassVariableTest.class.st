@@ -16,7 +16,7 @@ SlotClassVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
 	class1 class addSlot: (AccessorInstanceVariableSlot named: #foo).
 
 	self assert: (class1 class canUnderstand: #foo).
-	self assert: (class1 class canUnderstand: #foo:).
+	self assert: (class1 class canUnderstand: #foo:)
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 			name: self anotherClassName;
 			superclass: class1;
 			sharedVariablesFromString: 'ASharedVariable' ].
-	self assert: class1 subclasses equals: { class2 }.
+	self assert: class1 subclasses equals: { class2 }
 
 ]
 
@@ -66,7 +66,7 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 
 	self assert: class1 class slots size equals: 1.
 	self assert: (class1 class slots at:1) name equals: #Foo.
-	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot.
+	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot
 
 ]
 
