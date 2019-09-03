@@ -132,6 +132,26 @@ WeakValueDictionaryTest >> testKeysAndValuesDoWithGarbageCollectedValue [
 ]
 
 { #category : #tests }
+WeakValueDictionaryTest >> testRehashDoesNotTransformAssociations [
+	| d |
+	d := self classToBeTested new.
+	d at: 1 put: 2.
+	self assert: (d privateAssociations anyOne isKindOf: WeakValueAssociation).
+	d rehash.
+	self assert: (d privateAssociations anyOne isKindOf: WeakValueAssociation)
+]
+
+{ #category : #'tests - size capacity' }
+WeakValueDictionaryTest >> testSize [
+	| d |
+	d := self classToBeTested new.
+	self assert: d size equals: 0.
+	d at: 1 put: 2.
+	d at: 2 put: nil.
+	self assert: d size equals: 2
+]
+
+{ #category : #tests }
 WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	| dictionary |
 	dictionary := self classToBeTested new.
