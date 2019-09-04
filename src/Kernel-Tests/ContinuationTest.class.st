@@ -116,6 +116,51 @@ ContinuationTest >> intersectWithCCAllWithCC: sets [
 ]
 
 { #category : #tests }
+ContinuationTest >> leftmost: aBlock tree: aTree [
+	^ self callcc: [ :skip | self leftmost: aBlock tree: aTree continuation: skip ]
+]
+
+{ #category : #tests }
+ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
+	^ aTree
+		ifNotNil: [ | v |
+			v := aTree value.
+			v class = ValueLink
+				ifTrue: [ self
+						leftmost: aBlock tree: v continuation: out;
+						leftmost: aBlock tree: aTree nextLink continuation: out ]
+				ifFalse: [ (aBlock value: v) ifTrue: [out value: v] ] ]
+]
+
+{ #category : #tests }
+ContinuationTest >> remove: anObj uptoLast: aLinkedList [
+^ aLinkedList ifNotEmpty: [  	|vl| 
+	vl := self
+		callcc: [ :skip | 
+			self
+				remove: anObj
+				uptoLastValueLink: aLinkedList firstLink
+				continuation: skip ].
+	LinkedList with: vl]
+]
+
+{ #category : #tests }
+ContinuationTest >> remove: anObj uptoLastValueLink: aValueLink continuation: skip [
+	^ aValueLink
+		ifNotNil: [ |v nl|
+			v := aValueLink value.
+			nl := self
+								remove: anObj
+								uptoLastValueLink: aValueLink nextLink
+								continuation: skip.
+			anObj = v
+				ifTrue: [ skip
+						value:
+							(nl) ]
+				ifFalse: [ ValueLink new value: v; nextLink: (nl);yourself ] ]
+]
+
+{ #category : #tests }
 ContinuationTest >> testBlockEscape [
 	| x |
 	tmp := 0.
@@ -217,6 +262,36 @@ ContinuationTest >> testIntersectWith [
 ]
 
 { #category : #tests }
+ContinuationTest >> testLeftmost [
+	| tree |
+	"`tree` corresponds to the sexp '(((a)) 4 (1))"
+	tree := ValueLink new
+		value:
+			(ValueLink new
+				value:
+					(ValueLink new
+						value: #a;
+						yourself);
+				yourself);
+		nextLink:
+			(ValueLink new
+				value: 4;
+				nextLink:
+					(ValueLink new
+						value:
+							(ValueLink new
+								value: 1;
+								yourself);
+						yourself);
+				yourself);
+		yourself.
+	self assert: (self leftmost: #isSymbol tree: tree) equals: #a.
+	self assert: (self leftmost: #isInteger tree: tree) equals: 4.
+	self assert: (self leftmost: #isNil tree: tree) equals: nil.
+	self assert: (self leftmost: [ :v | v = 5 ] tree: tree) equals: nil
+]
+
+{ #category : #tests }
 ContinuationTest >> testMethodTemps [
 	| i continuation |
 	i := 0.
@@ -233,6 +308,48 @@ ContinuationTest >> testReentrant [
 	self assert: assoc value ~= 5.
 	assoc value = 4
 		ifFalse: [ assoc key value: assoc ]
+]
+
+{ #category : #tests }
+ContinuationTest >> testRemoveUptoLast [
+	self
+		assert:
+			(self
+				remove: #cookies
+				uptoLast:
+					(LinkedList new
+						add: #cookies;
+						add: #chocolate;
+						add: #mints;
+						add: #caramel;
+						add: #delight;
+						add: #ginger;
+						add: #snaps;
+						add: #desserts;
+						add: #chocolate;
+						add: #mousse;
+						add: #vanilla;
+						add: #ice;
+						add: #cream;
+						add: #German;
+						add: #chocolate;
+						add: #cake;
+						add: #more;
+						add: #cookies;
+						"from this down to the last should be kept in the result
+						because the previous #cookies is the last one #cookies in the list."
+							add: #gingerbreadman;
+						add: #chocolate;
+						add: #chip;
+						add: #brownies;
+						yourself))
+		equals:
+			(LinkedList new
+				add: #gingerbreadman;
+				add: #chocolate;
+				add: #chip;
+				add: #brownies;
+				yourself)
 ]
 
 { #category : #tests }
