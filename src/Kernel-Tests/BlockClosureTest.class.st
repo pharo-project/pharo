@@ -277,6 +277,12 @@ BlockClosureTest >> testOneArgument [
 		ifError: [:err | self deny: err = 'This block requires 2 arguments.'] 
 ]
 
+{ #category : #'tests - printing' }
+BlockClosureTest >> testPrintOn [
+
+	self assert: [ 1 + 2 ] printString equals: '[ 1 + 2 ]'
+]
+
 { #category : #tests }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
