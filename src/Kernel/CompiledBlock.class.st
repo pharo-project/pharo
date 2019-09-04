@@ -22,7 +22,7 @@ CompiledBlock >> hasMethodReturn [
 		 self encoderClass methodReturnBytecodes includes: byte]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 CompiledBlock >> hasSourceCode [
 	^self method hasSourceCode
 ]
