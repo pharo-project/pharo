@@ -22,6 +22,11 @@ CompiledBlock >> hasMethodReturn [
 		 self encoderClass methodReturnBytecodes includes: byte]
 ]
 
+{ #category : #'as yet unclassified' }
+CompiledBlock >> hasSourceCode [
+	^self method hasSourceCode
+]
+
 { #category : #comparing }
 CompiledBlock >> hash [
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.

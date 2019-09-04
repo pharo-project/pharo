@@ -83,11 +83,6 @@ FullBlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
 ]
 
-{ #category : #printing }
-FullBlockClosure >> printOn: s [
-	[ super printOn: s ] on: Error do: [ :ex | s << '![' << ex messageText << ']!' ]
-]
-
 { #category : #accessing }
 FullBlockClosure >> receiver [
 	^ receiver
