@@ -277,6 +277,11 @@ RBRefactoring >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
+{ #category : #refactoring }
+RBRefactoring >> parserClass [
+	^ RBParser
+]
+
 { #category : #transforming }
 RBRefactoring >> performComponentRefactoring: aRefactoring [ 
 	aRefactoring copyOptionsFrom: self options.

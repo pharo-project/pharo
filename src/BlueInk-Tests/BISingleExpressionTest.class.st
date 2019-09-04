@@ -57,6 +57,10 @@ BISingleExpressionTest >> formatterClass: aFormatterClass [
 
 { #category : #hooks }
 BISingleExpressionTest >> parseExpression: anExpression [
+	^ self parserClass parseExpression: anExpression
+]
 
-	^ RBParser parseExpression: anExpression
+{ #category : #hooks }
+BISingleExpressionTest >> parserClass [
+	^ RBParser
 ]

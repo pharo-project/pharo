@@ -163,12 +163,13 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 RBExtractMethodRefactoring >> extractMethod [
 	| parseTree isSequence extractCode subtree newCode errorMessage |
 	extractCode := self getExtractedSource.
-	extractedParseTree := RBParser
+	extractedParseTree := self parserClass
 		parseExpression: extractCode
 		onError: [ :string :pos :parser | 
 			errorMessage := string.
 			parser parseErrorNode: string ].
-	extractedParseTree ifNil: [ self refactoringFailure: 'Invalid source to extract' ].
+	extractedParseTree
+		ifNil: [ self refactoringFailure: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
 		ifTrue: [ self
 				refactoringFailure: 'Invalid source to extract - ' , errorMessage ].
@@ -186,27 +187,31 @@ RBExtractMethodRefactoring >> extractMethod [
 				ifFalse: [ RBSequenceNode
 						temporaries: #()
 						statements: (OrderedCollection with: extractedParseTree) ]).
-	extractedParseTree body temporaries ifNotEmpty: [ extractedParseTree body temporaries: #() ].
+	extractedParseTree body temporaries
+		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
 	extractedParseTree source: extractCode.
 	parseTree := class parseTreeFor: selector.
-	parseTree ifNil: [ self refactoringFailure: 'Could not parse ' , selector printString ].
+	parseTree
+		ifNil: [ self refactoringFailure: 'Could not parse ' , selector printString ].
 	subtree := isSequence
 		ifTrue: [ self parseTreeSearcherClass
 				treeMatchingStatements: extractedParseTree body formattedCode
 				in: parseTree ]
-		ifFalse: [ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
-	subtree ifNil: [ self refactoringFailure: 'Could not extract code from method' ].
+		ifFalse:
+			[ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
+	subtree
+		ifNil: [ self refactoringFailure: 'Could not extract code from method' ].
 	newCode := self methodDelimiter.
 	isSequence
 		ifTrue: [ | stmts |
 			stmts := extractedParseTree body statements.
-			stmts ifNotEmpty: [ stmts last isAssignment
+			stmts
+				ifNotEmpty: [ stmts last isAssignment
 						ifTrue: [ | name |
 							name := stmts last variable name.
 							(self shouldExtractAssignmentTo: name)
 								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
 									stmts at: stmts size put: stmts last value ] ] ] ].
-					
 	modifiedParseTree := isSequence
 		ifTrue: [ RBParseTreeRewriter
 				replaceStatements: subtree formattedCode

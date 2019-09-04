@@ -105,8 +105,12 @@ RBTransformationTest >> objectClassVariable [
 
 { #category : #parsing }
 RBTransformationTest >> parseMethod: aString [
+	^ self parserClass parseMethod: aString
+]
 
-	^ RBParser parseMethod: aString
+{ #category : #parsing }
+RBTransformationTest >> parserClass [
+	^ RBParser
 ]
 
 { #category : #running }
