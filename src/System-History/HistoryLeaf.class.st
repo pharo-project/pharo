@@ -4,7 +4,7 @@ This class represents the abstract leaf structure of items stored in History tre
 Class {
 	#name : #HistoryLeaf,
 	#superclass : #Object,
-	#category : #'System-History'
+	#category : #'System-History-Utilities'
 }
 
 { #category : #adding }
