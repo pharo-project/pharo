@@ -47,9 +47,3 @@ TextDoIt >> evalString: str [
 TextDoIt >> info [
 	^ evalString
 ]
-
-{ #category : #styling }
-TextDoIt >> writeScanOn: strm [
-
-	strm nextPut: $d; nextPutAll: evalString; nextPutAll: ';;'
-]
