@@ -54,6 +54,15 @@ Internal Representation and Key Implementation Points.
 	redoStack:		<aStack>			A stack containing the elements that can be redone.
 	undoAction:		<aValuable>		A valuable to execute when we undo an action.
 	undoStack:		<aStack>			A stack containing the elements that can be undone.
+						
+	I work with a system of two stacks:
+	- One stack to store objects to undo 
+	- One stack to store ojbects to redo
+	
+	When the user wants to undo something, I'll pop the undo stack, evaluate the undo action with it and push it on the redo stack.
+	When the user wants to redo something, I'll pop the redo stack, evaluate the redo action with it and push it on the undo stack.
+	
+	When the user add a new item on the undo stack, I flush the redo stack.
 
 "
 Class {
