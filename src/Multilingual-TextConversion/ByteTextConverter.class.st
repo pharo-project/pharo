@@ -102,11 +102,9 @@ ByteTextConverter >> nextPut: unicodeCharacter toStream: aStream [
 { #category : #conversion }
 ByteTextConverter >> unicodeToByte: unicodeChar [
 
-	^unicodeChar codePoint < 256
-		ifTrue: [(latin1Map at: unicodeChar codePoint + 1) = 1 
-						ifTrue: [latin1Encodings at: unicodeChar codePoint + 1]
-						ifFalse: [unicodeChar]]
-		ifFalse: [self class unicodeToByteTable at: unicodeChar codePoint ifAbsent: [0 asCharacter]]
+	^unicodeChar charCode < 128
+		ifTrue: [unicodeChar]
+		ifFalse: [self class unicodeToByteTable at: unicodeChar charCode ifAbsent: [0 asCharacter]]
 ]
 
 { #category : #conversion }
