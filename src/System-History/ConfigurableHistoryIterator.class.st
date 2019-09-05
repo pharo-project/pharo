@@ -1,7 +1,7 @@
 "
 I am an history iterator you can configure with two blocks. One to define what to do during the redo action and the second to define what to do during the undo action. 
 
-Then you can register objects to me and ask to undo and redo actions, I will then use my undo and redo actions with my stored object to execute it.
+Then you can register context objects to me and ask to undo and redo actions, I will then use my undo and redo actions with my stored context to execute it.
 
 Examples
 --------------------
@@ -51,18 +51,18 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	redoAction:		<aValuable>		A valuable to execute when we redo an action.
-	redoStack:		<aStack>			A stack containing the elements that can be redone.
+	redoStack:		<aStack>			A stack containing the contexts that can be redone.
 	undoAction:		<aValuable>		A valuable to execute when we undo an action.
-	undoStack:		<aStack>			A stack containing the elements that can be undone.
+	undoStack:		<aStack>			A stack containing the contexts that can be undone.
 						
 	I work with a system of two stacks:
-	- One stack to store objects to undo 
-	- One stack to store ojbects to redo
+	- One stack to store contexts to undo 
+	- One stack to store contexts to redo
 	
 	When the user wants to undo something, I'll pop the undo stack, evaluate the undo action with it and push it on the redo stack.
 	When the user wants to redo something, I'll pop the redo stack, evaluate the redo action with it and push it on the undo stack.
 	
-	When the user add a new item on the undo stack, I flush the redo stack.
+	When the user add a new context on the undo stack, I flush the redo stack.
 
 "
 Class {
@@ -76,6 +76,11 @@ Class {
 	],
 	#category : #'System-History-Iterators'
 }
+
+{ #category : #'instance creation' }
+ConfigurableHistoryIterator class >> action: aBlock [
+	^ self undo: aBlock redo: aBlock
+]
 
 { #category : #'instance creation' }
 ConfigurableHistoryIterator class >> undo: aBlockClosure redo: aBlockClosure2 [
