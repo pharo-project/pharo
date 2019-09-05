@@ -93,13 +93,36 @@ ByteTextConverter >> nextPut: unicodeCharacter toStream: aStream [
 
 	aStream isBinary
 		ifTrue: [aStream basicNextPut: unicodeCharacter charCode]
-		ifFalse: [aStream basicNextPut: (self unicodeToByte: unicodeCharacter)]
+		ifFalse: [
+			self 
+				unicodeToBytes: unicodeCharacter 
+				do: [:encodedChar | aStream basicNextPut: encodedChar ]]
 ]
 
 { #category : #conversion }
 ByteTextConverter >> unicodeToByte: unicodeChar [
 
-	^unicodeChar charCode < 128
-		ifTrue: [unicodeChar]
-		ifFalse: [self class unicodeToByteTable at: unicodeChar charCode ifAbsent: [0 asCharacter]]
+	^unicodeChar codePoint < 256
+		ifTrue: [(latin1Map at: unicodeChar codePoint + 1) = 1 
+						ifTrue: [latin1Encodings at: unicodeChar codePoint + 1]
+						ifFalse: [unicodeChar]]
+		ifFalse: [self class unicodeToByteTable at: unicodeChar codePoint ifAbsent: [0 asCharacter]]
+]
+
+{ #category : #conversion }
+ByteTextConverter >> unicodeToBytes: unicodeChar do: aBlock [
+	"Use the latin1 map if we can. 
+	This also covers line-end conversions, so mapping is potentially 1->N"
+	unicodeChar codePoint < 256 
+		ifTrue: [
+			"A 0 entry means the character in converter's encoding has same codePoint as unicode"
+			(latin1Map at: unicodeChar codePoint + 1) = 1 
+				ifTrue: [	(latin1Encodings at: unicodeChar codePoint + 1) do: 
+								[:each | aBlock value: each ]]
+				ifFalse: [aBlock value: unicodeChar]]
+		ifFalse: [|encodedChar|
+			encodedChar := self class unicodeToByteTable 
+				at: unicodeChar codePoint 
+				ifAbsent: [0 asCharacter].
+			aBlock value: encodedChar]
 ]

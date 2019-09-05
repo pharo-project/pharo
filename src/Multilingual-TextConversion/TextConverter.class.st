@@ -1,5 +1,15 @@
 "
-The abstract class for all different type of text converters.  nextFromStream: and nextPut:toStream: are the public accessible methods.  If you are going to make a subclass for a stateful text conversion, you should override restoreStateOf:with: and saveStateOf: along the line of CompoundTextConverter.
+The historical abstract class for all different type of text converters. 
+
+nextFromStream: and nextPut:toStream: are the public accessible methods.  If you are going to make a subclass for a stateful text conversion, you should override restoreStateOf:with: and saveStateOf: along the line of CompoundTextConverter.
+
+Let this class be a lesson in the dangers of mixing too many responsibilities.
+As it's primary use was with FileStreams, and all FileStreams in Pharo do a full flush on each write,
+a lot of effort went into converting each nextPutAll:toStream: to the least amount of nextPutAll: sends needed. 
+This included optimizing for byteStrings by clever use of seek primitives and a map of non-ascii characters up to codePoint 255 that would need to be converted.
+Later on, another clever idea that the same map could be used to perform line end conversion, ended up in a half-baked implementation that only worked for byte strings, and utf8. The bugs associated with it (See ByteTextConverterTest >> #testLineEndConversion/testLineEndConversionWideString), remained unfixed until this class was superceded by ZnConverters, due to the difficulty of maintaining a class with so many mixed responsibilities.
+
+
 
 "
 Class {
@@ -113,6 +123,8 @@ TextConverter class >> newForEncoding: aString [
 
 { #category : #conversion }
 TextConverter >> convertFromSystemString: aString [
+	"System in this case means a system using this converters encoding.
+	So, convert from encoded String -> internal (unicode) String"
 
 	| readStream writeStream |
 	readStream := aString readStream.
@@ -126,7 +138,8 @@ TextConverter >> convertFromSystemString: aString [
 
 { #category : #conversion }
 TextConverter >> convertToSystemString: aString [
-
+	"System in this case means a system using this converters encoding.
+	So, convert from internal (unicode) String -> encoded String"
 	| writeStream |
 	writeStream := String new writeStream.
 	self nextPutAll: aString toStream: writeStream.
@@ -151,8 +164,8 @@ TextConverter >> installLineEndConvention: lineEndStringOrNil [
 	
 	lineEndStringOrNil ifNotNil:
 		[latin1Encodings := latin1Encodings copy.
-		latin1Encodings at: Character cr asciiValue + 1 put: (self convertFromSystemString: lineEndStringOrNil).
-		latin1Map := ByteString nonAsciiMap copy.
+		latin1Encodings at: Character cr asciiValue + 1 put: (self convertToSystemString: lineEndStringOrNil).
+		latin1Map := self class latin1Map copy.
 		latin1Map at: Character cr asciiValue + 1 put: 1]
 ]
 

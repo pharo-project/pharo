@@ -4,7 +4,7 @@ Extension { #name : #Character }
 Character >> macRomanToUnicode [
 	"Convert the receiver from MacRoman Unicode."
 
-	^MacRomanTextConverter new unicodeToByte: self
+	MacRomanTextConverter new unicodeToBytes: self do: [ :encodedChar | ^encodedChar ]
 ]
 
 { #category : #'*Multilingual-TextConversion' }

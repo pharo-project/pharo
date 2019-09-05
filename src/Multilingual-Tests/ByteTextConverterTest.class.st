@@ -36,6 +36,61 @@ ByteTextConverterTest >> testLatin2ToUnicodeConversion [
 ]
 
 { #category : #testing }
+ByteTextConverterTest >> testLineEndConversion [
+	"Regression test for line end conversion.
+	Many byte encodings have overlap in the non-ascii range (and thus 0 entries in the 128-255 range of latin1Map, meaning they shouldn't be converted.
+	Previously a full nonAsciiMap with 1 as entries for the entire 128-255 range was installed.
+	This only ever really worked for utf-8 - for byte text converters it would lead to exceptions on any non-ascii character that didn't have to be converted."
+	| cp1252Bytes internalString converter encodedBytes  |
+        
+	"æøå all map to the same code points in cp1252 as in unicode."
+	cp1252Bytes := #[16rE6 16r0D 16r0A 16rF8 16r0D 16r0A 16rE5] .
+	internalString := String streamContents: [:s | 
+		s nextPut: $æ;
+			nextPut: Character cr;
+			nextPut: $ø;
+			nextPut: Character cr;
+			nextPut: $å].
+	converter := CP1252TextConverter new.
+	converter installLineEndConvention: String crlf.
+	
+	encodedBytes := (converter convertToSystemString: internalString) asByteArray.
+	
+	encodedBytes with: cp1252Bytes do: [ :encoded :truth | 
+		self assert: encoded equals: truth].	
+]
+
+{ #category : #testing }
+ByteTextConverterTest >> testLineEndConversionWideString [
+	"Regression test for line end conversion of wide strings.
+	- This uses a different path from the optimized path employed for byte (latin1) strings,
+	and essentially translates character by character.
+	This was written before line end conversion was added to the converters, assumed all translations were 1-1, and didn't use the latin1Encodings where line end conversion is installed at all, so never worked..."
+	| cp1252Bytes internalString converter encodedBytes  |
+        
+	"æøå all map to the same code points in cp1252 as in unicode. 
+	€ however, is codePoint 16r20AC in unicode (meaning the internalString will be wide), 
+	but 16r80 in cp1252"
+	
+	cp1252Bytes := #[16rE6 16r0D 16r0A 16rF8 16r0D 16r0A 16rE5 16r0D 16r0A 16r80] .
+	internalString := String streamContents: [:s | 
+		s nextPut: $æ;
+			nextPut: Character cr;
+			nextPut: $ø;
+			nextPut: Character cr;
+			nextPut: $å;
+			nextPutAll: String cr;
+			nextPut: $€].
+	converter := CP1252TextConverter new.
+	converter installLineEndConvention: String crlf.
+	
+	encodedBytes := (converter convertToSystemString: internalString) asByteArray.
+	
+	encodedBytes with: cp1252Bytes do: [ :encoded :truth | 
+		self assert: encoded equals: truth].	
+]
+
+{ #category : #testing }
 ByteTextConverterTest >> testUnicodeToLatin2Conversion [
         | latin2Bytes internalString encodingStream encodedBytes  |
 
