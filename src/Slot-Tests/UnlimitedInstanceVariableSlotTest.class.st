@@ -23,7 +23,7 @@ UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	
 	self assert: object slot1 == 5.
 	object slot1: false.
-	self deny: object slot1.
+	self deny: object slot1
 ]
 
 { #category : #'test - unlimited ivars' }

@@ -35,7 +35,7 @@ SlotIntegrationTest >> testAddAndAddInstVarNamedWithTrait2 [
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -66,7 +66,7 @@ SlotIntegrationTest >> testAddAndRemoveInstVarNamedWithTrait2 [
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ SlotIntegrationTest >> testAddInstVarNamed [
 			slots: #( x )
 		].
 
-	self assert: aClass instVarNames = #(x).	
+	self assert: aClass instVarNames equals: #(x).	
 
 
 	anotherClass := self make: [ :builder |
@@ -89,7 +89,7 @@ SlotIntegrationTest >> testAddInstVarNamed [
 			slots: #( y )
 		].
 	
-	self assert: anotherClass instVarNames = #(y).
+	self assert: anotherClass instVarNames equals: #(y).
 ]
 
 { #category : #tests }
@@ -102,7 +102,7 @@ SlotIntegrationTest >> testAddInstVarNamedClassInterface [
 		].
 	aClass addInstVarNamed: 'x'.
 
-	self assert: aClass instVarNames = #(x).	
+	self assert: aClass instVarNames equals: #(x).	
 
 
 	anotherClass := self make: [ :builder |
@@ -112,7 +112,7 @@ SlotIntegrationTest >> testAddInstVarNamedClassInterface [
 		].
 	anotherClass addInstVarNamed: 'y'.
 	
-	self assert: anotherClass instVarNames = #(y).
+	self assert: anotherClass instVarNames equals: #(y)
 ]
 
 { #category : #tests }
@@ -145,7 +145,7 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait [
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -170,12 +170,12 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait2 [
 	aClass addInstVarNamed: #y.
 	
 	self assertTraitIntegrity.
-	self assert: aClass instVarNames = #(x y).
+	self assert: aClass instVarNames equals: #(x y).
 	
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -192,12 +192,12 @@ SlotIntegrationTest >> testAnonymousSubclass [
 	self assert: anotherClass isBehavior.
 	self assert: anotherClass superclass == aClass.
 	self deny: anotherClass name = aClass name.
-	self assert: anotherClass allInstVarNames = #(x)
+	self assert: anotherClass allInstVarNames equals: #(x)
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testCompiledMethodLayout [
-	self assert: (CompiledMethod classLayout isKindOf: CompiledMethodLayout).
+	self assert: (CompiledMethod classLayout isKindOf: CompiledMethodLayout)
 ]
 
 { #category : #tests }
@@ -223,7 +223,7 @@ SlotIntegrationTest >> testRemoveInstVarNamed [
 			slotNamed: 'b' 
 			ifFound: [ #found ] 
 			ifNone: [ #none ].
-	self assert: answer equals: #none.
+	self assert: answer equals: #none
 
 ]
 
@@ -237,7 +237,7 @@ SlotIntegrationTest >> testRemoveInstVarNamedClassInterface [
 		].
 	aClass removeInstVarNamed: #y.
 
-	self assert: aClass instVarNames = #(x z).
+	self assert: aClass instVarNames equals: #(x z).
 ]
 
 { #category : #tests }
@@ -385,7 +385,7 @@ SlotIntegrationTest >> testSlotNamedIfFoundIfNone [
 
 	self 
 		assert: (aClass slotNamed: 'b' ifFound: [ #found ] ifNone: [ #none ])
-		equals: #none.
+		equals: #none
 
 ]
 
@@ -423,5 +423,5 @@ SlotIntegrationTest >> testSlotsAreInitializedWithDefiningAnonimousClass [
 
 { #category : #tests }
 SlotIntegrationTest >> testSmallIntegerLayout [
-	self assert: (SmallInteger classLayout isKindOf: ImmediateLayout).
+	self assert: (SmallInteger classLayout isKindOf: ImmediateLayout)
 ]

@@ -6,9 +6,3 @@ Class {
 	#superclass : #TextDoIt,
 	#category : #'Text-Core-Attributes'
 }
-
-{ #category : #styling }
-TextPrintIt >> writeScanOn: strm [
-
-	strm nextPut: $P; nextPutAll: evalString; nextPutAll: ';;'
-]

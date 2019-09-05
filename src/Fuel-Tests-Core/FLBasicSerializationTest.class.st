@@ -705,7 +705,7 @@ FLBasicSerializationTest >> testSet [
 { #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetElement [
 
-	self assertSerializationEqualityOf: (SetElement with: 3)
+	self assertSerializationEqualityOf: (CollectionElement with: 3)
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
@@ -717,7 +717,7 @@ FLBasicSerializationTest >> testSetWithNil [
 { #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetWithSetElement [
 
-	self assertSerializationEqualityOf: (Set with: (SetElement with: 3))
+	self assertSerializationEqualityOf: (Set with: (CollectionElement with: 3))
 ]
 
 { #category : #tests }

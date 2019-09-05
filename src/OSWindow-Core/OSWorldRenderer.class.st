@@ -130,7 +130,7 @@ OSWorldRenderer >> doActivate [
 
 	| attributes initialExtent |
 	
-	initialExtent := world worldState realWindowExtent ifNil: [1500@1000].
+	initialExtent := world worldState realWindowExtent ifNil: [976@665].
 
 	attributes := OSWindowAttributes new.
 	attributes

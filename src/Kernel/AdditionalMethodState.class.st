@@ -257,7 +257,7 @@ AdditionalMethodState >> keysAndValuesDo: aBlock [
 		| propertyOrPragma "<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) isVariableBinding
 			ifTrue: [aBlock value: propertyOrPragma key value: propertyOrPragma value]
-			ifFalse: [aBlock value: propertyOrPragma keyword value: propertyOrPragma]]
+			ifFalse: [aBlock value: propertyOrPragma selector value: propertyOrPragma]]
 ]
 
 { #category : #accessing }
@@ -373,7 +373,7 @@ AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 		propertyOrPragma := self basicAt: i.
 		(propertyOrPragma isVariableBinding
 				ifTrue: [propertyOrPragma key]
-				ifFalse: [propertyOrPragma keyword])
+				ifFalse: [propertyOrPragma selector])
 			== aKey ifTrue:
 			[^method removeProperty: aKey]].
 	^aBlock value
@@ -392,8 +392,8 @@ AdditionalMethodState >> selector: aSymbol [
 { #category : #accessing }
 AdditionalMethodState >> setMethod: aMethod [
 	method := aMethod.
-	1 to: self basicSize do:
-		[:i| | propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifFalse:
-			[propertyOrPragma setMethod: aMethod]]
+	1 to: self basicSize do: [ :i | 
+		| propertyOrPragma	"<Association|Pragma>" |
+		(propertyOrPragma := self basicAt: i) isVariableBinding
+			ifFalse: [ propertyOrPragma method: aMethod ] ]
 ]

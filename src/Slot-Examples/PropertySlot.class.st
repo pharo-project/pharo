@@ -48,7 +48,7 @@ PropertySlot >> installingIn: aClass [
 	aClass classLayout 
 		resolveSlot: #'_propertyBaseSlot'   
 		ifFound:  [: slot |  baseSlot := slot ]
-		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)].
+		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)]
 	
 ]
 

@@ -328,6 +328,14 @@ Object >> as: aSimilarClass [
 ]
 
 { #category : #converting }
+Object >> asCollectionElement [
+	"Answer an object, which can be put into a Set as element , wrapped
+	by one of SetElement instance, if necessary. 
+	Default implementation is to answer self"
+
+]
+
+{ #category : #converting }
 Object >> asLink [
 	"Answer a string that represents the receiver."
 
@@ -339,14 +347,6 @@ Object >> asOrderedCollection [
 	"Answer an OrderedCollection with the receiver as its only element."
 
 	^ OrderedCollection with: self
-]
-
-{ #category : #converting }
-Object >> asSetElement [
-	"Answer an object, which can be put into a Set as element , wrapped
-	by one of SetElement instance, if necessary. 
-	Default implementation is to answer self"
-
 ]
 
 { #category : #converting }
@@ -832,7 +832,7 @@ Object >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #accessing }
-Object >> enclosedSetElement [
+Object >> enclosedElement [
 	"The receiver is included into a set as an element. 
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
 	a set sends this message to its element to make sure it getting real object,

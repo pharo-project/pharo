@@ -63,5 +63,5 @@ WeakSlot >> wantsInitalization [
 { #category : #'meta-object-protocol' }
 WeakSlot >> write: aValue to: anObject [
 
-	^(super read: anObject) at: 1 put: aValue.
+	^(super read: anObject) at: 1 put: aValue
 ]

@@ -90,8 +90,8 @@ PluggableSet >> scanFor: anObject [
 	[ 
 		| element |
 		((element := array at: index) == nil or: [ 
-			equalBlock ifNil: [element enclosedSetElement = anObject] ifNotNil: [ 
-				equalBlock value: element enclosedSetElement value: anObject ]])
+			equalBlock ifNil: [element enclosedElement = anObject] ifNotNil: [ 
+				equalBlock value: element enclosedElement value: anObject ]])
 			ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

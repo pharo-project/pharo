@@ -39,7 +39,7 @@ PlatformResolver >> cantFindOriginError [
 
 { #category : #origins }
 PlatformResolver >> desktop [
-	^ self subclassResponsibility
+	^ self home / 'Desktop'
 ]
 
 { #category : #private }
@@ -60,7 +60,12 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 
 { #category : #origins }
 PlatformResolver >> documents [
-	^ self subclassResponsibility
+	^ self home / 'Documents'
+]
+
+{ #category : #origins }
+PlatformResolver >> downloads [
+	^ self home / 'Downloads'
 ]
 
 { #category : #origins }
@@ -75,7 +80,7 @@ PlatformResolver >> preferences [
 
 { #category : #resolving }
 PlatformResolver >> supportedOrigins [
-	^ #(home desktop documents preferences cache temp)
+	^ #(home desktop documents downloads preferences cache temp)
 ]
 
 { #category : #origins }

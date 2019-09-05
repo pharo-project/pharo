@@ -92,13 +92,6 @@ UITheme class >> current: aUITheme [
 ]
 
 { #category : #accessing }
-UITheme class >> currentAnimationSettings [
-	"Answer the current ui theme settings."
-
-	^ self currentSettings animationSettings
-]
-
-{ #category : #accessing }
 UITheme class >> currentSettings [
 	"Answer the current ui theme settings."
 
@@ -255,6 +248,11 @@ UITheme >> alertSound [
 	"Answer the alert sound."
 
 	^self soundTheme alertSound
+]
+
+{ #category : #accessing }
+UITheme >> animationSettings [
+	^ self settings animationSettings
 ]
 
 { #category : #accessing }
@@ -2223,6 +2221,11 @@ UITheme >> fadeCheckboxWhenDisabled [
 ]
 
 { #category : #accessing }
+UITheme >> fadedBackgroundWindows [
+	^ self settings fadedBackgroundWindows
+]
+
+{ #category : #accessing }
 UITheme >> flatMenu [
 	^ self settings flatMenu
 ]
@@ -2622,7 +2625,7 @@ UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
 
 	Display depth <= 2
 		ifTrue: [ ^ Color gray ].
-	preferenced := self settings menuSelectionColor.
+	preferenced := self menuSelectionColor.
 	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
 	self preferGradientFill
 		ifFalse: [ ^ baseColor ].
@@ -2653,6 +2656,11 @@ UITheme >> menuPinForm [
 	"Answer the form to use for the pin button of a menu."
 
 	^ self iconNamed: #menuPinForm
+]
+
+{ #category : #'accessing colors' }
+UITheme >> menuSelectionColor [
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'accessing colors' }
@@ -2708,7 +2716,7 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self settings menuSelectionColor
+	^ self menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }
@@ -4659,6 +4667,11 @@ UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [
 		radial: false
 ]
 
+{ #category : #accessing }
+UITheme >> numberOfStepsForAnimations [
+	^ self animationSettings numberOfSteps
+]
+
 { #category : #cursor }
 UITheme >> overTextCursorFor: aTextMorph [
 	"Answer the pointer cursor when over an active text 
@@ -4670,10 +4683,10 @@ UITheme >> overTextCursorFor: aTextMorph [
 { #category : #'fill-styles' }
 UITheme >> paneColorFor: aWindow [
 	"Answer the pane color that should be used."
-	
-	^self settings fadedBackgroundWindows
-		ifTrue: [aWindow fillStyleToUse asColor]
-		ifFalse: [(self windowActiveFillStyleFor: aWindow) asColor]
+
+	^ (self fadedBackgroundWindows
+		ifTrue: [ aWindow fillStyleToUse ]
+		ifFalse: [ self windowActiveFillStyleFor: aWindow ]) asColor
 ]
 
 { #category : #services }
@@ -5349,6 +5362,11 @@ UITheme >> shStyleTableName [
 	^ #blueStyleTable
 ]
 
+{ #category : #testing }
+UITheme >> shouldUseAnimations [
+	^ self animationSettings useAnimation
+]
+
 { #category : #'border-styles' }
 UITheme >> sliderDisabledBorderStyleFor: aSlider [
 	"Return the disabled slider borderStyle for the given text editor."
@@ -5918,6 +5936,11 @@ UITheme >> urlColor [
 	^ Color fromHexString: '03A9F4'
 ]
 
+{ #category : #accessing }
+UITheme >> useAnimation: aBoolean [
+	^ self animationSettings useAnimation: aBoolean
+]
+
 { #category : #'fill-styles-scrollbars' }
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
@@ -6173,9 +6196,9 @@ UITheme >> windowInactiveFillStyleFor: aWindow [
 UITheme >> windowInactiveLabelFillStyleFor: aWindow [
 	"Return the window inactive label fillStyle for the given window."
 	
-	^self settings fadedBackgroundWindows
-		ifTrue: [aWindow paneColorToUse alphaMixed: 0.6 with: Color black]
-		ifFalse: [self windowActiveLabelFillStyleFor: aWindow]
+	^ self fadedBackgroundWindows
+		ifTrue: [ aWindow paneColorToUse alphaMixed: 0.6 with: Color black ]
+		ifFalse: [ self windowActiveLabelFillStyleFor: aWindow ]
 ]
 
 { #category : #'fill-styles' }

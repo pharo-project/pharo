@@ -20,6 +20,13 @@ SolidFillStyle class >> color: aColor [
 	^self new color: aColor
 ]
 
+{ #category : #comparing }
+SolidFillStyle >> = aFillStyle [
+
+	^ aFillStyle species = self species
+		and: [ self asColor = aFillStyle asColor ]
+]
+
 { #category : #converting }
 SolidFillStyle >> asColor [
 	^color
@@ -29,6 +36,12 @@ SolidFillStyle >> asColor [
 SolidFillStyle >> color: aColor [
 	color := aColor.
 	pixelValue32 := aColor scaledPixelValue32
+]
+
+{ #category : #comparing }
+SolidFillStyle >> hash [
+
+	^ color hash
 ]
 
 { #category : #testing }

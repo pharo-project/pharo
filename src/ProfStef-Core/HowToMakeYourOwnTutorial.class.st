@@ -102,9 +102,9 @@ ProfStef next.'
 { #category : #tutorial }
 HowToMakeYourOwnTutorial >> tutorial [ 
 	^ #(
-subclassAbstractTutorial
-createLessonFactoryMethods
-implementTutorial
-runYourTutorial
-)
+		subclassAbstractTutorial
+		createLessonFactoryMethods
+		implementTutorial
+		runYourTutorial
+		)
 ]

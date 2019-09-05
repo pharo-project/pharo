@@ -139,7 +139,7 @@ SystemDictionary >> classNamed: className [
 
 { #category : #'class and trait names' }
 SystemDictionary >> classNames [
-	"Answer a collection of all class names. Use the return value of #fillCaches to avoid concurrency issues."
+	"Answer a sorted collection of all class names. Use the return value of #fillCaches to avoid concurrency issues."
 	
 	^cachedClassNames ifNil: [ self fillCaches at: 1 ]
 ]
@@ -198,8 +198,10 @@ SystemDictionary >> fillCaches [
 		Since the current namespace should contains the class that describes itself as well as a new Class class.
 		we are done :)."
 	
-	cachedNonClassNames := nonClassNames.
-	cachedClassNames := classNames.
+	
+	"The cached names are sorted to allow for a very efficient hasBindingThatBeginsWith: check"	
+	cachedClassNames := classNames sort.
+	cachedNonClassNames := nonClassNames sort.
 	^{ classNames. nonClassNames }
 ]
 
@@ -262,7 +264,7 @@ SystemDictionary >> maxIdentityHash [
 
 { #category : #'class and trait names' }
 SystemDictionary >> nonClassNames [
-	"Answer a collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."
+	"Answer a sorted collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."
 	
 	^cachedNonClassNames ifNil: [ self fillCaches at: 2 ]
 ]

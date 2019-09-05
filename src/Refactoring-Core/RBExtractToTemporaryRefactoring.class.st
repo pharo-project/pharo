@@ -38,13 +38,11 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> checkVariableName [
-	(class whoDefinesInstanceVariable: newVariableName) notNil 
-		ifTrue: 
+	(class whoDefinesInstanceVariable: newVariableName) ifNotNil: 
 			[self refactoringError: ('<1p> defines an instance variable named <2s>' 
 						expandMacrosWith: class
 						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) notNil 
-		ifTrue: 
+	(class whoDefinesClassVariable: newVariableName) ifNotNil: 
 			[self refactoringError: ('<1p> defines a class variabled named <2s>' 
 						expandMacrosWith: class
 						with: newVariableName)].

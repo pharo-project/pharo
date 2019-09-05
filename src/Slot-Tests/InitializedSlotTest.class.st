@@ -5,6 +5,15 @@ Class {
 }
 
 { #category : #tests }
+InitializedSlotTest >> testLazyClassVariableReflectiveBlockParameter [
+	| classVar |
+	classVar := #ClassVar => LazyClassVariable default: [:class | class].
+	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
+
+	self assert: classVar read equals: aClass
+]
+
+{ #category : #tests }
 InitializedSlotTest >> testReadWriteCompiled [
 	| slot object|
 	slot := #slot1 => InitializedSlot default: 5.
@@ -16,7 +25,7 @@ InitializedSlotTest >> testReadWriteCompiled [
 	"test compiled write and read"
 	self assert: (object slot1) equals: 5.
 	object slot1: 10.
-	self assert: (object slot1) equals: 10.
+	self assert: (object slot1) equals: 10
 	
 	
 	
@@ -35,7 +44,7 @@ InitializedSlotTest >> testReflectiveReadWrite [
 	"test reflective write and read"
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	
@@ -46,7 +55,7 @@ InitializedSlotTest >> testReflectiveReadWrite [
 { #category : #tests }
 InitializedSlotTest >> testReflectiveReadWriteBlock [
 	| slot object|
-	slot := #slot1 => InitializedSlot defaultBlock: [4+1].
+	slot := #slot1 => InitializedSlot default: [4+1].
 	aClass := self make: [ :builder | builder slots: {slot}].
 	self assert: (aClass hasSlotNamed: #slot1).
 	object := aClass new.
@@ -54,7 +63,7 @@ InitializedSlotTest >> testReflectiveReadWriteBlock [
 	"test reflective write and read"
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	

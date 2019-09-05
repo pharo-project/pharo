@@ -282,8 +282,9 @@ DateAndTime >> = other [
 
 { #category : #converting }
 DateAndTime >> asDate [
-
-	^ Date starting: self
+    "Convert the receiver in a date object."
+    "(DateAndTime fromString: ' 2019-08-17T13:33:00+02:00') asDate >>> (Date newDay: 17 month: 8 year: 2019)"
+    ^ Date starting: self
 ]
 
 { #category : #converting }
@@ -419,7 +420,8 @@ DateAndTime >> midnight [
 DateAndTime >> minute [
 	"Answer a number that represents the number of complete minutes in the receiver' time part, 
 	after the number of complete hours has been removed."
-	
+	"(DateAndTime fromString: ' 2004-02-29T13:33:00+02:00') minute >>> 33"
+		
  	^ self localSeconds // SecondsInMinute \\ 60
 ]
 
@@ -482,7 +484,8 @@ DateAndTime >> printOn: aStream withLeadingSpace: printLeadingSpaceToo [
 DateAndTime >> second [
 	"Answer a number that represents the number of complete seconds in the receiver's time part, 
 	after the number of complete minutes has been removed."
- 
+   "(DateAndTime fromString: ' 2004-02-29T13:33:12+02:00') second >>> 12" 
+
  	^ self localSeconds \\ 60
 ]
 

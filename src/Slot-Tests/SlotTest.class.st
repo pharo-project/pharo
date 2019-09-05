@@ -20,7 +20,7 @@ SlotTest >> testAsSlotCollection [
 	self should: ['1' asSlotCollection] raise: Error.
 	
 	self should: ['ivarA ivarB i%varD iv2arF' asSlotCollection] raise: Error.
-	self should: ['iva|rG' asSlotCollection] raise: Error.
+	self should: ['iva|rG' asSlotCollection] raise: Error
 
 
 
@@ -68,7 +68,7 @@ SlotTest >> testPropertyAtPut [
 		assert: (ivar propertyAt: #testKeySelector)
 		equals: testValue.
 	ivar removeProperty: #testKeySelector.
-	self assert: ivar properties isNil.
+	self assert: ivar properties isNil
 ]
 
 { #category : #'tests - properties' }
@@ -83,7 +83,7 @@ SlotTest >> testRemoveProperty [
 		assert: (ivar propertyAt: #testKeySelector)
 		equals: nil.
 		
-	self assert: ivar properties isNil.
+	self assert: ivar properties isNil
 ]
 
 { #category : #'tests - testing' }

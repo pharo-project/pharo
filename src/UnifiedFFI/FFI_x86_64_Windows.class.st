@@ -20,8 +20,26 @@ FFI_x86_64_Windows class >> isActive [
 ]
 
 { #category : #types }
+FFI_x86_64_Windows >> bitTypeAlignment [
+
+	^ OSPlatform current ffiLongAlignment
+]
+
+{ #category : #types }
+FFI_x86_64_Windows >> externalBitType [
+
+	^ ExternalType long
+]
+
+{ #category : #types }
 FFI_x86_64_Windows >> externalLongType [
 	^ ExternalType long
+]
+
+{ #category : #types }
+FFI_x86_64_Windows >> externalUBitType [
+
+	^ ExternalType ulong
 ]
 
 { #category : #types }

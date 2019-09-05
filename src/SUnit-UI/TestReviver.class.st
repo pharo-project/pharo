@@ -191,7 +191,7 @@ TestReviver >> selectTestFailures [
 		method pragmas isEmpty
 			ifTrue: [ results add: aFile ]
 			ifFalse:  [
-				(method pragmas first keyword = #expectedFailure) 
+				(method pragmas first selector = #expectedFailure) 
 					ifFalse: [ results add: aFile ].
 				 ]
 	].

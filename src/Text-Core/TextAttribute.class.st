@@ -77,13 +77,6 @@ TextAttribute >> mayHaveExternalReferences [
 	^ false
 ]
 
-{ #category : #styling }
-TextAttribute >> oldEmphasisCode: default [
-	"Allows running thorugh possibly multiple attributes
-	and getting the emphasis out of any that has an emphasis (font number)"
-	^ default
-]
-
 { #category : #initialization }
 TextAttribute >> reset [
 	"Allow subclasses to prepare themselves for merging attributes"

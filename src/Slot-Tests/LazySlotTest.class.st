@@ -13,10 +13,22 @@ LazySlotTest >> testLazySlotCompiled [
 	object := aClass new.
 	"now compile an accessor and read"
 	self compileAccessorsFor: slot.
-	self assert: object slot1 equals: 5.
+	self assert: object slot1 equals: 5
 	
 
 	
+]
+
+{ #category : #tests }
+LazySlotTest >> testLazySlotPrint [
+	| slot |
+	slot := #mySlot => LazySlot default: 5 .
+	self assert: slot printString equals: '#mySlot => LazySlot default: 5'.
+	slot := #mySlot => LazySlot default: [5].
+	self assert: slot printString equals: '#mySlot => LazySlot default: [ 5 ]'.
+	"if the default is really a block"
+	slot := #mySlot => LazySlot default: [5].
+	self assert: slot printString equals: '#mySlot => LazySlot default: [ 5 ]' 
 ]
 
 { #category : #tests }
@@ -30,7 +42,7 @@ LazySlotTest >> testLazySlotReadReflective [
 
 	self assert: (slot read: object) equals: 5.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	
@@ -41,7 +53,7 @@ LazySlotTest >> testLazySlotReadReflective [
 { #category : #tests }
 LazySlotTest >> testLazySlotReadReflectiveBlock [
 	| slot object|
-	slot := #slot1 => LazySlot defaultBlock: [:o | o class] .
+	slot := #slot1 => LazySlot default: [:o | o class] .
 	aClass := self make: [ :builder | builder slots: {slot } ].
 	
 	"test reflective write and read"
@@ -49,7 +61,7 @@ LazySlotTest >> testLazySlotReadReflectiveBlock [
 
 	self assert: (slot read: object) equals: aClass.
 	slot write: 10 to: object.
-	self assert: (slot read: object) equals: 10.
+	self assert: (slot read: object) equals: 10
 	
 	
 	

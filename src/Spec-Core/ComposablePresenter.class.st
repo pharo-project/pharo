@@ -181,13 +181,12 @@ ComposablePresenter class >> platform [
 
 { #category : #protocol }
 ComposablePresenter class >> specSelectors [
-	
-	^  self class withAllSuperclasses flatCollect: [ :class |
-		(((SpecPragmaCollector behavior: class)
-			filter: [ :pragma | pragma keyword = #spec])
-			reset;
-			collected)
-			collect: [ :pragmas | pragmas method selector ]]
+	^ self class withAllSuperclasses
+		flatCollect: [ :class | 
+			(((SpecPragmaCollector behavior: class)
+				filter: [ :pragma | pragma selector = #spec ])
+				reset;
+				collected) collect: [ :pragmas | pragmas method selector ] ]
 ]
 
 { #category : #specs }
@@ -362,22 +361,21 @@ ComposablePresenter >> defaultSpec [
 
 { #category : #private }
 ComposablePresenter >> defaultSpecSelector [
-
-	self class class withAllSuperclassesDo: [ :class |
-		(((SpecPragmaCollector behavior: class)
-			filter: [ :pragma | 
-				pragma keyword = 'spec:' and: [ pragma arguments includes: #default ]])
-			reset;
-			collected)
-				ifNotEmpty: [ :pragmas | ^ pragmas first method selector ]].
-
+	self class class
+		withAllSuperclassesDo: [ :class | 
+			(((SpecPragmaCollector behavior: class)
+				filter:
+					[ :pragma | pragma selector = 'spec:' and: [ pragma arguments includes: #default ] ])
+				reset;
+				collected)
+				ifNotEmpty: [ :pragmas | ^ pragmas first method selector ] ].
 	self specSelectors
-		ifNotEmpty: [:col | col size = 1 ifTrue: [ ^ col first ]].
-		
+		ifNotEmpty: [ :col | 
+			col size = 1
+				ifTrue: [ ^ col first ] ].
+
 	"should use pragmas"
 	^ #defaultSpec
-	
-
 ]
 
 { #category : #accessing }

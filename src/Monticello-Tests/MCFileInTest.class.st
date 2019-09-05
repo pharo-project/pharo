@@ -61,7 +61,7 @@ MCFileInTest >> assertSuccessfulLoadWith: aBlock [
 MCFileInTest >> setUp [
 	super setUp.
 	expected := self mockSnapshot.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := ReadWriteStream on: ''
 ]
 
 { #category : #running }

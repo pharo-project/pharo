@@ -15,7 +15,9 @@ Class {
 
 { #category : #initialization }
 InitializedSlot >> initialize: anObject [
-	self write: (default copy cull: anObject) to: anObject
+	default isBlock 
+		ifTrue: [ self write: (default cull: anObject) to: anObject ]
+		ifFalse: [ self write: default to: anObject ]
 ]
 
 { #category : #'meta-object-protocol' }

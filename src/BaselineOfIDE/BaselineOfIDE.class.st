@@ -884,7 +884,7 @@ spec group: #default with: #(
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.1';
+		repository: 'github://pharo-vcs/iceberg:v1.6.2';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
