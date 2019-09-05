@@ -301,6 +301,23 @@ FFICalloutAPITest >> testFloatCall [
 
 ]
 
+{ #category : #'tests pointer' }
+FFICalloutAPITest >> testForwardedObjects [
+	| result dest |
+	dest := ByteArray new: 12.
+	"Pinning an object replaces it with a forwarded."
+	"We want to force the object to be forwarded by the ffi call primitive"
+	dest pinInMemory.
+		
+	result := self 
+		primMemMoveFrom: 'Hello, World' asByteArray 
+		to: dest 
+		size: 12.
+		
+	self deny: result isNull.	
+	self assert: dest asString equals: 'Hello, World'
+]
+
 { #category : #'tests atomic' }
 FFICalloutAPITest >> testIntCall [
 	"Test using generic FFI spec"
