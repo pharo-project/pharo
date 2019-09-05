@@ -169,9 +169,15 @@ CompiledMethodTest >> testBytecode [
 
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testComments [
+	"I am the first comment to be found in this test"
 	self
-		assert: (CompiledMethod >> #comments) comments first
-		equals: 'Answer a string representing the comments in the method. Return an empty collection if the method''s source code does not contain a comment.'.
+		assert: (CompiledMethodTest >> #testComments) comments first 
+	"And I am the second comment to be found in this test"
+		equals: 'I am the first comment to be found in this test'.
+	self
+		assert: (CompiledMethodTest >> #testComments) comments second
+		equals: 'And I am the second comment to be found in this test'.
+	"Next test assumes #compiledMethod has no comment..."
 	self assert: (CompiledMethod >> #compiledMethod) comments isEmpty
 ]
 

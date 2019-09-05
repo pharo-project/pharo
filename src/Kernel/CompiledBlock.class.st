@@ -24,8 +24,12 @@ CompiledBlock >> hasMethodReturn [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledBlock >> hasPragmaNamed: aSymbol [
-
 	^ false
+]
+
+{ #category : #testing }
+CompiledBlock >> hasSourceCode [
+	^ self method hasSourceCode
 ]
 
 { #category : #comparing }
