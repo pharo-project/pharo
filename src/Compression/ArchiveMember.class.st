@@ -79,7 +79,7 @@ ArchiveMember >> printOn: aStream [
 ]
 
 { #category : #testing }
-ArchiveMember >> usesFileNamed: aFileName [
+ArchiveMember >> usesFile: aFileReferenceOrFileName [
 	"Do I require aFileName? That is, do I care if it's clobbered?"
 	^false
 ]
