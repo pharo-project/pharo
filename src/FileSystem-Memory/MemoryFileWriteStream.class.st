@@ -38,7 +38,10 @@ MemoryFileWriteStream >> file: aMemoryFileSystemFile [
 
 { #category : #writing }
 MemoryFileWriteStream >> flush [
-	file updateContents: self stream contents
+	| contents |
+	contents := self stream contents.
+	(contents size > 0)
+		ifTrue: [ file updateContents: contents ]
 ]
 
 { #category : #testing }
