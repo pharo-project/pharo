@@ -12,7 +12,6 @@ ClyOverriddenMethodsQueryTest >> createQuery [
 { #category : #running }
 ClyOverriddenMethodsQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
-	
 	environment addPlugin: ClyInheritanceAnalysisEnvironmentPlugin new
 ]
 
@@ -34,6 +33,21 @@ ClyOverriddenMethodsQueryTest >> testCheckIfEmpty [
 { #category : #tests }
 ClyOverriddenMethodsQueryTest >> testFromThreeMethods [
 
+	self queryFromScope: ClyMethodScope ofAll: {
+		ClyAbstractClassExample >> #abstractMethod1. 
+		ClyAbstractClassExample >> #abstractMethod2.
+		ClyAbstractClassExample >> #overriddenMethod}.
+	
+	self assert: foundSelectors equals: #(abstractMethod1 overriddenMethod)
+]
+
+{ #category : #tests }
+ClyOverriddenMethodsQueryTest >> testFromThreeMethodsWhenImplementorsCacheShouldBeUsed [
+	| plugin |
+	plugin := environment getPlugin: ClyInheritanceAnalysisEnvironmentPlugin.
+	plugin littleHierarchyMaxSize: -1. 
+	"This parameter forces plugin to build and use the cache for analysis"
+	
 	self queryFromScope: ClyMethodScope ofAll: {
 		ClyAbstractClassExample >> #abstractMethod1. 
 		ClyAbstractClassExample >> #abstractMethod2.
