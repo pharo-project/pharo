@@ -208,13 +208,28 @@ Deprecation >> transform [
 		replace: rule key with: rule value.
 	(rewriteRule executeTree: node)
 		ifFalse: [ ^ self ].
-	node replaceWith: rewriteRule tree. 
+	node replaceWith: rewriteRule tree.
+	"add a hint a the beginning of the method"
+	node methodNode body addNodeFirst: self transformWarningNode.
 	Author 
 		useAuthor: 'AutoDeprecationRefactoring'
 		during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
 	Log 
 		ifNotNil: [:log | log add: self].
 	self logTranscript
+]
+
+{ #category : #handling }
+Deprecation >> transformWarningNode [
+	"we insert this #flag at the start to communicate who transformed the method"
+	^ RBMessageNode
+		receiver: (RBSelfNode named: #self)
+		selector: #flag:
+		arguments:
+			{(RBLiteralValueNode
+				value:
+					'This method was automatically transformed by execyting method '
+						, context method printString)}
 ]
 
 { #category : #accessing }
