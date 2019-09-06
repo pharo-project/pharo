@@ -228,7 +228,7 @@ Deprecation >> transformWarningNode [
 		arguments:
 			{(RBLiteralValueNode
 				value:
-					'This method was automatically transformed by execyting method '
+					'This method was automatically transformed by executing the method '
 						, context method printString)}
 ]
 
