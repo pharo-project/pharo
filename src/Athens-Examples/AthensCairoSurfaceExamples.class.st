@@ -47,7 +47,7 @@ AthensCairoSurfaceExamples class >> exampleDrawTextPath [
 		f unlock.
 	].
 	
-	Display getCanvas drawImage: surf asForm at: 0@0
+	surf asForm asMorph openInWindow
 
 ]
 
@@ -76,8 +76,8 @@ A cairo image surface bits are exposed to bitblt operations via surface plugin.
 		can setShape: (-20@ -20 corner: 20@ 20).
 		2 timesRepeat: [ can draw. can setPaint: (Color green alpha:0.5)]
 	].
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
 
+	surf asForm asMorph openInWindow
 ]
 
 { #category : #utilities }
