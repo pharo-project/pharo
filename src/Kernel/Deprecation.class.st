@@ -197,6 +197,16 @@ Deprecation >> showWarning [
 ]
 
 { #category : #handling }
+Deprecation >> signal [
+	| pragma |
+	(context method hasPragmaNamed: #transform:to:) ifFalse: [ ^super signal ].
+
+	pragma := context method pragmaAt: #transform:to:.
+	self rule: pragma arguments first -> pragma arguments second.
+	self transform
+]
+
+{ #category : #handling }
 Deprecation >> transform [
 	| node rewriteRule aMethod |
 	self shouldTransform ifFalse: [ ^ self ].
