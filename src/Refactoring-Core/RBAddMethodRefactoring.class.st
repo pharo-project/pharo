@@ -47,16 +47,15 @@ RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protoc
 
 { #category : #preconditions }
 RBAddMethodRefactoring >> preconditions [
-
 	| selector method |
-
-	method := RBParser
+	method := self parserClass
 		parseMethod: source
-		onError:
-			[ :string :position | ^ RBCondition withBlock: [ self refactoringFailure: 'The sources could not be parsed' ] ].
+		onError: [ :string :position | 
+			^ RBCondition
+				withBlock: [ self refactoringFailure: 'The sources could not be parsed' ] ].
 	selector := method selector.
 	selector ifNil: [ self refactoringFailure: 'Invalid source.' ].
-	^ ( RBCondition canUnderstand: selector in: class ) not
+	^ (RBCondition canUnderstand: selector in: class) not
 ]
 
 { #category : #printing }

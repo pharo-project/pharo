@@ -59,10 +59,8 @@ RBGenerateEqualHashRefactoring >> accessorForVariable: aString [
 
 { #category : #transforming }
 RBGenerateEqualHashRefactoring >> compileEqual [
-
 	| method statement comparison |
-
-	method := RBParser
+	method := self parserClass
 		parseMethod:
 			'= anObject
 		"Answer whether the receiver and anObject represent the same object."
@@ -73,22 +71,26 @@ RBGenerateEqualHashRefactoring >> compileEqual [
 	variables reversed
 		do: [ :each | 
 			| accessor |
-
 			accessor := self accessorForVariable: each.
 			comparison := RBMessageNode
-				receiver: ( RBVariableNode named: each )
+				receiver: (RBVariableNode named: each)
 				selector: #=
 				arguments:
-					( Array with: ( RBMessageNode receiver: ( RBVariableNode named: 'anObject' ) selector: accessor ) ).
+					(Array
+						with:
+							(RBMessageNode
+								receiver: (RBVariableNode named: 'anObject')
+								selector: accessor)).
 			statement := statement
 				ifNil: [ comparison ]
 				ifNotNil: [ RBMessageNode
 						receiver: comparison
 						selector: #and:
 						arguments:
-							( Array with: ( RBBlockNode body: ( RBSequenceNode statements: ( Array with: statement ) ) ) )
-					]
-			].
+							(Array
+								with:
+									(RBBlockNode
+										body: (RBSequenceNode statements: (Array with: statement)))) ] ].
 	method
 		addNode: statement;
 		addReturn.
@@ -97,22 +99,23 @@ RBGenerateEqualHashRefactoring >> compileEqual [
 
 { #category : #transforming }
 RBGenerateEqualHashRefactoring >> compileHash [
-
 	| method statement hash |
-
-	method := RBParser
+	method := self parserClass
 		parseMethod:
 			'hash
 		"Answer an integer value that is related to the identity of the receiver."'.
 	statement := nil.
 	variables reversed
 		do: [ :each | 
-			hash := RBMessageNode receiver: ( RBVariableNode named: each ) selector: #hash.
+			hash := RBMessageNode
+				receiver: (RBVariableNode named: each)
+				selector: #hash.
 			statement := statement
 				ifNil: [ hash ]
-				ifNotNil:
-					[ RBMessageNode receiver: hash selector: #bitXor: arguments: ( Array with: statement ) ]
-			].
+				ifNotNil: [ RBMessageNode
+						receiver: hash
+						selector: #bitXor:
+						arguments: (Array with: statement) ] ].
 	method
 		addNode: statement;
 		addReturn.

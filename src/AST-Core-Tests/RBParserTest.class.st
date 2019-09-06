@@ -21,7 +21,11 @@ RBParserTest >> compare: anObject to: anotherObject [
 { #category : #accessing }
 RBParserTest >> exampleClasses [
 	<sampleInstance>
-	^ Array with: RBParser with: RBScanner with: RBProgramNode with: BIConfigurableFormatter
+	^ Array
+		with: self parserClass
+		with: RBScanner
+		with: RBProgramNode
+		with: BIConfigurableFormatter
 ]
 
 { #category : #private }
@@ -34,9 +38,7 @@ RBParserTest >> parseError: each [
 
 { #category : #private }
 RBParserTest >> parseError: expression onError: aBlock [
-	^RBParser 
-		parseExpression: expression 
-		onError: aBlock
+	^ self parserClass parseExpression: expression onError: aBlock
 ]
 
 { #category : #private }
@@ -49,7 +51,7 @@ RBParserTest >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 RBParserTest >> parserClass [
 	^ self class parserClass
 ]
@@ -906,10 +908,14 @@ RBParserTest >> testSymbolLiteral [
 
 { #category : #private }
 RBParserTest >> treeWithEverything [
-	^ RBParser parseMethod: 'method: arg1 | temps | temps := #(10). temps foo; foo. ^(temps collect: [:e | ])'
+	^ self parserClass
+		parseMethod:
+			'method: arg1 | temps | temps := #(10). temps foo; foo. ^(temps collect: [:e | ])'
 ]
 
 { #category : #private }
 RBParserTest >> treeWithReallyEverything [
-	^ RBParser parseMethod: 'method: arg1 <foo> <foo: 1.2> | temps | temps := #[ 1 2 3 ]. temps := #(true false nil 1 1.2 $a foo #foo ''foo'' #() #(1 2) #[] #[1 2]). { 1 negated. 1 + 2. 1 raisedTo: 2 }. temps foo; foo: self. ^ (temps collect: [:e | | btemps | ((e isNil)) ])'
+	^ self parserClass
+		parseMethod:
+			'method: arg1 <foo> <foo: 1.2> | temps | temps := #[ 1 2 3 ]. temps := #(true false nil 1 1.2 $a foo #foo ''foo'' #() #(1 2) #[] #[1 2]). { 1 negated. 1 + 2. 1 raisedTo: 2 }. temps foo; foo: self. ^ (temps collect: [:e | | btemps | ((e isNil)) ])'
 ]

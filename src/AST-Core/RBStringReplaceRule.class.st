@@ -66,18 +66,17 @@ RBStringReplaceRule >> foundMatchFor: aProgramNode [
 ]
 
 { #category : #initialization }
-RBStringReplaceRule >> methodReplaceString: replaceString [ 
-	replaceTree := RBParser parseRewriteMethod: replaceString
+RBStringReplaceRule >> methodReplaceString: replaceString [
+	replaceTree := self parserClass parseRewriteMethod: replaceString
 ]
 
 { #category : #initialization }
-RBStringReplaceRule >> replaceString: replaceString [ 
-	replaceTree := RBParser parseRewriteExpression: replaceString.
-	searchTree isSequence = replaceTree isSequence 
-		ifFalse: 
-			[searchTree isSequence 
-				ifTrue: [replaceTree := RBSequenceNode statements: (Array with: replaceTree)]
-				ifFalse: [searchTree := RBSequenceNode statements: (Array with: searchTree)]]
+RBStringReplaceRule >> replaceString: replaceString [
+	replaceTree := self parserClass parseRewriteExpression: replaceString.
+	searchTree isSequence = replaceTree isSequence
+		ifFalse: [ searchTree isSequence
+				ifTrue: [ replaceTree := RBSequenceNode statements: (Array with: replaceTree) ]
+				ifFalse: [ searchTree := RBSequenceNode statements: (Array with: searchTree) ] ]
 ]
 
 { #category : #'private - searching' }

@@ -73,9 +73,9 @@ RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 ]
 
 { #category : #refactoring }
-RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [ 
+RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute.
-	RBParser parseExpression: aRefactoring storeString
+	self parserClass parseExpression: aRefactoring storeString
 ]
 
 { #category : #initialization }
