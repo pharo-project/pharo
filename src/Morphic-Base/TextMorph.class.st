@@ -1046,9 +1046,10 @@ TextMorph >> justified [
 ]
 
 { #category : #'event handling' }
-TextMorph >> keyStroke: evt [ 
+TextMorph >> keyStroke: evt [
 	"Handle a keystroke event."
-	Transcript show: 'TextMorph';cr.
+
+	self traceCr: 'TextMorph'.
 	self basicKeyStroke: evt
 ]
 

@@ -82,48 +82,118 @@ BalloonEngine class >> primitiveSetBitBltPlugin: pluginName [
 { #category : #profiling }
 BalloonEngine class >> printBezierStats [
 	<script>
-	Transcript 
-		cr; nextPutAll:'Bezier statistics:';
-		cr; tab; print: (BezierStats at: 1); tab; nextPutAll:' non-monoton curves splitted';
-		cr; tab; print: (BezierStats at: 2); tab; nextPutAll:' curves splitted for numerical accuracy';
-		cr; tab; print: (BezierStats at: 3); tab; nextPutAll:' curves splitted to avoid integer overflow';
-		cr; tab; print: (BezierStats at: 4); tab; nextPutAll:' curves internally converted to lines';
-	endEntry.
+	self
+		trace:
+			(String
+				streamContents: [ :stream | 
+					stream
+						cr;
+						nextPutAll: 'Bezier statistics:';
+						cr;
+						tab;
+						print: (BezierStats at: 1);
+						tab;
+						nextPutAll: ' non-monoton curves splitted';
+						cr;
+						tab;
+						print: (BezierStats at: 2);
+						tab;
+						nextPutAll: ' curves splitted for numerical accuracy';
+						cr;
+						tab;
+						print: (BezierStats at: 3);
+						tab;
+						nextPutAll: ' curves splitted to avoid integer overflow';
+						cr;
+						tab;
+						print: (BezierStats at: 4);
+						tab;
+						nextPutAll: ' curves internally converted to lines' ])
 ]
 
 { #category : #profiling }
-BalloonEngine class >> printStat: time count: n string: aString [
-	Transcript
+BalloonEngine class >> printStat: time count: n string: aString on: aStream [
+	aStream
 		cr;
-		print: time; tab;
-		nextPutAll:' mSecs -- ';
-		print: n; tab;
-		nextPutAll:' ops -- ';
-		print: ((time asFloat / (n max: 1) asFloat) roundTo: 0.01); tab;
+		print: time;
+		tab;
+		nextPutAll: ' mSecs -- ';
+		print: n;
+		tab;
+		nextPutAll: ' ops -- ';
+		print: (time asFloat / (n max: 1) asFloat roundTo: 0.01);
+		tab;
 		nextPutAll: ' avg. mSecs/op -- ';
-		nextPutAll: aString.
+		nextPutAll: aString
 ]
 
 { #category : #profiling }
 BalloonEngine class >> printStats [
-	<script: '
+	<script:
+		'
 	BalloonEngine doProfileStats: true.
 	BalloonEngine printStats.
 	BalloonEngine resetStats'>
-	
-	Transcript cr; nextPutAll:'/************** BalloonEngine statistics ****************/'.
-	self printStat: (Times at: 1) count: (Counts at: 1) string: 'Initialization'.
-	self printStat: (Times at: 2) count: (Counts at: 2) string: 'Finish test'.
-	self printStat: (Times at: 3) count: (Counts at: 3) string: 'Fetching/Adding GET entries'.
-	self printStat: (Times at: 4) count: (Counts at: 4) string: 'Adding AET entries'.
-	self printStat: (Times at: 5) count: (Counts at: 5) string: 'Fetching/Computing fills'.
-	self printStat: (Times at: 6) count: (Counts at: 6) string: 'Merging fills'.
-	self printStat: (Times at: 7) count: (Counts at: 7) string: 'Displaying span buffer'.
-	self printStat: (Times at: 8) count: (Counts at: 8) string: 'Fetching/Updating AET entries'.
-	self printStat: (Times at: 9) count: (Counts at: 9) string: 'Changing AET entries'.
-	Transcript cr; print: Times sum; nextPutAll:' mSecs for all operations'.
-	Transcript cr; print: Counts sum; nextPutAll: ' overall operations'.
-	Transcript endEntry.
+	| string |
+	string := String
+		streamContents: [ :aStream | 
+			aStream
+				cr;
+				nextPutAll: '/************** BalloonEngine statistics ****************/'.
+			self
+				printStat: (Times at: 1)
+				count: (Counts at: 1)
+				string: 'Initialization'
+				on: aStream.
+			self
+				printStat: (Times at: 2)
+				count: (Counts at: 2)
+				string: 'Finish test'
+				on: aStream.
+			self
+				printStat: (Times at: 3)
+				count: (Counts at: 3)
+				string: 'Fetching/Adding GET entries'
+				on: aStream.
+			self
+				printStat: (Times at: 4)
+				count: (Counts at: 4)
+				string: 'Adding AET entries'
+				on: aStream.
+			self
+				printStat: (Times at: 5)
+				count: (Counts at: 5)
+				string: 'Fetching/Computing fills'
+				on: aStream.
+			self
+				printStat: (Times at: 6)
+				count: (Counts at: 6)
+				string: 'Merging fills'
+				on: aStream.
+			self
+				printStat: (Times at: 7)
+				count: (Counts at: 7)
+				string: 'Displaying span buffer'
+				on: aStream.
+			self
+				printStat: (Times at: 8)
+				count: (Counts at: 8)
+				string: 'Fetching/Updating AET entries'
+				on: aStream.
+			self
+				printStat: (Times at: 9)
+				count: (Counts at: 9)
+				string: 'Changing AET entries'
+				on: aStream.
+			aStream
+				cr;
+				print: Times sum;
+				nextPutAll: ' mSecs for all operations'.
+			aStream
+				cr;
+				print: Counts sum;
+				nextPutAll: ' overall operations' ].
+	self trace: string
 ]
 
 { #category : #private }

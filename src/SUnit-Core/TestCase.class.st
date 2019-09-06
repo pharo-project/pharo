@@ -489,7 +489,7 @@ TestCase class >> runAllAndLogResult [
 
 	"runs all tests in the image"
 
-	TestCase suite run logCr
+	TestCase suite run traceCr
 ]
 
 { #category : #'instance creation' }

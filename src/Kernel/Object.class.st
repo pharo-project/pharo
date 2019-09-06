@@ -657,21 +657,9 @@ Object >> copySameFrom: otherObject [
 
 ]
 
-{ #category : #'logging-Deprecated' }
-Object >> crLog [
-      self crTrace: self printString
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> crLog: aString [
-	"Log the argument. Use self log: instead of Transcript cr; show: "
-	
-	Transcript cr; show: aString.
-]
-
 { #category : #tracing }
 Object >> crTrace [
-      self crTrace: self printString
+	self crTrace: self printString
 ]
 
 { #category : #tracing }
@@ -1372,51 +1360,19 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #'logging-Deprecated' }
-Object >> log: aString [
-	"Log the argument. Use self log: instead of Transcript show: "
-	
-	Transcript show: aString.
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCr [
-      self logCr: self printString
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCr: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCrTab: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr ; tab"
-	
-	Transcript show: aString ; cr ; tab
-]
-
 { #category : #flagging }
 Object >> logEntry [
-
-	Transcript show: 'Entered ', thisContext sender printString; cr.
-
+	self traceCr: 'Entered ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExecution [
-
-	Transcript show: 'Executing ', thisContext sender printString; cr.
-
+	self traceCr: 'Executing ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExit [
-
-	Transcript show:  'Exited ', thisContext sender printString; cr.
-
+	self traceCr: 'Exited ' , thisContext sender printString
 ]
 
 { #category : #printing }
@@ -2049,19 +2005,19 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 
 { #category : #tracing }
 Object >> trace [
-      self trace: self printString
+	self trace: self printString
 ]
 
 { #category : #tracing }
 Object >> trace: aString [
 	"Log the argument. Use self trace: instead of Transcript show: "
 	
-	Transcript show: aString.
+	Transcript show: aString
 ]
 
 { #category : #tracing }
 Object >> traceCr [
-      self traceCr: self printString
+	self traceCr: self printString
 ]
 
 { #category : #tracing }
@@ -2069,6 +2025,13 @@ Object >> traceCr: aString [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
 	Transcript show: aString ; cr
+]
+
+{ #category : #tracing }
+Object >> traceCrTab: aString [
+	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
+	
+	Transcript show: aString ; cr ; tab
 ]
 
 { #category : #'error handling' }

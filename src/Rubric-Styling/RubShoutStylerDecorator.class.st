@@ -139,7 +139,7 @@ RubShoutStylerDecorator >> style: aText [
 	[ ^ self styler style: aText ]
 		on: Error
 		do: [ :ex | 
-			ex logCr.
+			ex traceCr.
 			^ aText ]
 ]
 

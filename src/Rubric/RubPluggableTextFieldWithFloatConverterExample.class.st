@@ -35,7 +35,7 @@ RubPluggableTextFieldWithFloatConverterExample >> myFloat [
 { #category : #accessing }
 RubPluggableTextFieldWithFloatConverterExample >> myFloat: aFloat [
 	myFloat := aFloat.
-	aFloat logCr.
+	aFloat traceCr.
 	^true
 ]
 

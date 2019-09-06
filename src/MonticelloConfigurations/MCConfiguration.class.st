@@ -129,10 +129,12 @@ MCConfiguration class >> upgradeIsMerge: aBoolean [
 MCConfiguration class >> whatChangedFrom: oldConfig to: newConfig [
 	"MCConfiguration
 		whatChangedFrom: ReleaseBuilderPloppDeveloper config20060201PloppBeta
-		to:  ReleaseBuilderPloppDeveloper config20060215premaster" 
+		to:  ReleaseBuilderPloppDeveloper config20060215premaster"
 
-	self whatChangedFrom: oldConfig to: newConfig on: Transcript.
-	Transcript flush.
+	self
+		whatChangedFrom: oldConfig
+		to: newConfig
+		on: Smalltalk tools transcript
 ]
 
 { #category : #utilities }
@@ -280,7 +282,7 @@ MCConfiguration >> log: aStream [
 	log := aStream.
 ]
 
-{ #category : #private }
+{ #category : #logging }
 MCConfiguration >> logError: aString [
 	self log
 		cr; nextPutAll: 'ERROR: ';
@@ -289,10 +291,10 @@ MCConfiguration >> logError: aString [
 
 ]
 
-{ #category : #private }
+{ #category : #logging }
 MCConfiguration >> logUpdate: aPackage with: aVersion [
 	self log
-		cr; nextPutAll: '========== ', aVersion info name, ' =========='; cr;
+		cr; nextPutAll: ('========== <1s> ==========' expandMacrosWith:aVersion info name); cr;
 		cr; nextPutAll: aVersion info message asString; cr;
 		flush.
 
@@ -301,11 +303,11 @@ MCConfiguration >> logUpdate: aPackage with: aVersion [
 	aPackage workingCopy ancestors do: [:each |
 		(aVersion info hasAncestor: each)
 			ifTrue: [(aVersion info allAncestorsOnPathTo: each)
-				do: [:ver | self log cr; nextPutAll: '>>> ', ver name, ' <<<'; cr;
+				do: [:ver | self log cr; nextPutAll: ('>>> <1s> <<<' expandMacrosWith:ver name) ; cr;
 							nextPutAll: ver message; cr; flush]]]
 ]
 
-{ #category : #private }
+{ #category : #logging }
 MCConfiguration >> logWarning: aString [
 	self log
 		cr; nextPutAll: 'WARNING: ';

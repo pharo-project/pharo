@@ -32,7 +32,7 @@ SpFastTablePresenter class >> exampleMultipleSelection [
 	example
 		items: (1 to: 10);
 		beMultipleSelection;
-		whenSelectionChangedDo: [ :selection | selection logCr ];
+		whenSelectionChangedDo: [ :selection | selection traceCr ];
 		openWithSpec.
 	^ example
 ]

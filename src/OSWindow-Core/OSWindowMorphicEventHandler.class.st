@@ -311,10 +311,8 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
-	Transcript
-		show: 'Unknown event: ';
-		show: anEvent data printString;
-		cr
+	self
+		traceCr: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
 ]
 
 { #category : #visiting }

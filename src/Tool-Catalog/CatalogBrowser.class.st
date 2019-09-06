@@ -166,7 +166,7 @@ Do you want to continue (installation could fail)?' format: { aProject name. Sma
 		aProject installStableVersion.
 		aBlock value ]
 	on: Error do: [ :e | 
-		e logCr.
+		e traceCr.
 		self inform: 'There was an error while trying to install ', aProject name, '. Installation was cancelled.' ]
 ]
 
@@ -194,7 +194,7 @@ CatalogBrowser >> loadConfiguration: aProject onSuccess: aBlock [
 		aProject loadConfiguration.
 		aBlock value ] 
 	on: Error do: [ :e | 
-		e logCr.
+		e traceCr.
 		self inform: 'There was an error while trying to load ', aProject name, '. Loading was cancelled.' ]
 ]
 
@@ -253,7 +253,7 @@ CatalogBrowser >> refresh [
 		informUser: 'Refreshing catalog (invalidating cache)...'
 		during: [ self provider reset ] ]
 	on: Error do: [ :e |
-		e crLog.
+		e crTrace.
 		self inform: 'I cannot refresh catalog list. Please review your internet connection and try again!' ]
 ]
 

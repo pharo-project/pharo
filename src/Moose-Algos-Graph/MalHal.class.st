@@ -62,10 +62,19 @@ MalHal >> runTarjan [
 
 { #category : #logging }
 MalHal >> showLevels [
+	self
+		trace: (String streamContents: [ :stream | self writeLevelsOn: stream ])
+]
 
-	self hierarchyLevels keysAndValuesDo: [ :k :v |
-			Transcript show: k.
-			v do: [ :n | Transcript show: ' ' ; show: n ].
-			Transcript cr
-		]
+{ #category : #writing }
+MalHal >> writeLevelsOn: aStream [
+	self hierarchyLevels
+		keysAndValuesDo: [ :k :v | 
+			aStream nextPutAll: k.
+			v
+				do: [ :n | 
+					aStream
+						nextPutAll: ' ';
+						nextPutAll: n ].
+			aStream cr ]
 ]

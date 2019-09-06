@@ -8,9 +8,9 @@ Class {
 SpPrintContactBookInTranscript >> execute [
 	"Execute the actions that should be done by the command.
 	 This method expect that the context has been put in #context inst. var. if any context is relevant."
-	Transcript open.
+	Smalltalk tools transcript open.
 	self contactBook contents do: [ :contact |
-		Transcript show: contact name; show: ' - '; show: contact name; cr ]
+		self traceCr: contact name, ' - ', contact name ]
 ]
 
 { #category : #initialization }
