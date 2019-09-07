@@ -41,12 +41,15 @@ TwoInARowStar >> tree: aTree [
 
 { #category : #private }
 TwoInARowStar >> waddle: aTree [
-	^ aTree
-		ifNotNil: [ | car cdr |
+	^ (aTree isNotNil and: [ (aTree isMemberOf: Link) not ])
+		ifTrue: [ | car cdr |
 			car := aTree value.
 			cdr := aTree nextLink.
-			car class = ValueLink
+(			car isKindOf:  Link)
 				ifTrue: [ self waddle: car ]
-				ifFalse: [ Continuation currentDo: [ :rest | fill := rest. leave value: car ] ].
+				ifFalse: [ Continuation
+						currentDo: [ :rest | 
+							fill := rest.
+							leave value: car ] ].
 			self waddle: cdr ]
 ]
