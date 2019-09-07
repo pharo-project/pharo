@@ -274,6 +274,17 @@ T2TraitTest >> testSequence [
 ]
 
 { #category : #tests }
+T2TraitTest >> testSlotsAreNotDuplicated [
+	| t1 t2 c1 |
+	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
+	t2 :=  self newTrait: #T2 with: '' asSlotCollection uses: t1.
+	c1 := self newClass: #C1 with: '' asSlotCollection uses: t1 + t2.
+
+	self assert: c1 traitComposition slots size equals: c1 traitComposition slots asSet size.
+	self assert: c1 traitComposition slots size equals: 1
+]
+
+{ #category : #tests }
 T2TraitTest >> testSubclasses [
 	| t1 t2 |
 		
