@@ -14,17 +14,18 @@ Class {
 { #category : #functions }
 ContinuationTest >> intersect: aLinkedList with: aCollection [
 	^ aLinkedList
-		ifNotEmpty: [self intersectNotEmptyValueLink: aLinkedList asLinkedListWith: aCollection ]
+		ifNotEmpty: [ | list |
+			list := LinkedList new.
+			(self intersectValueLink: aLinkedList firstLink with: aCollection)
+				ifNotNil: [ :link | list add: link ].
+			 list ]
 ]
 
 { #category : #private }
 ContinuationTest >> intersect: aLinkedList with: aCollection continuation: hop [
 	^ aCollection
-		ifEmpty:[ hop value: aCollection]
-		ifNotEmpty: [ aLinkedList
-				ifNotEmpty: [ self
-						intersectNotEmptyValueLink: aLinkedList
-						asLinkedListWith: aCollection ] ]
+		ifEmpty: [ hop value: aCollection ]
+		ifNotEmpty: [  self intersect: aLinkedList with: aCollection ] 
 ]
 
 { #category : #private }
@@ -57,21 +58,13 @@ ContinuationTest >> intersectAll: sets [
 
 { #category : #functions }
 ContinuationTest >> intersectAllWithCC: sets [
-	^ Continuation currentDo: [ :cc | 
+	^ 
 			sets
-				ifNotEmpty: [ self
+				ifNotEmpty: [ Continuation
+		currentDo: [ :cc | self
 						intersect: sets first
 						withAll: sets allButFirst
 						continuation: cc ] ]
-]
-
-{ #category : #private }
-ContinuationTest >> intersectNotEmptyValueLink: aLinkedList asLinkedListWith: aCollection [
-	| list |
-					list := LinkedList new.
-					(self intersectValueLink: aLinkedList firstLink with: aCollection)
-						ifNotNil: [ :link | list add: link ].
-^					list 
 ]
 
 { #category : #private }
@@ -105,9 +98,10 @@ ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 
 { #category : #functions }
 ContinuationTest >> intersectWithCCAllWithCC: sets [
-	^ Continuation currentDo: [ :cc | 
+	^ 
 			sets
-				ifNotEmpty: [ self
+				ifNotEmpty: [ Continuation
+		currentDo: [ :cc | self
 						intersectWithCC: sets first
 						withAll: sets allButFirst
 						continuation: cc ] ]
@@ -222,10 +216,10 @@ ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 			car ~~> newCdr ].
 			car class = ValueLink
 				ifTrue: [ Continuation
-						try: [ :ooh | 
-							 (self remove: anObj oneStarWithTry: car continuation: ooh) ~~>
-								 cdr
-								 ]
+						try:
+							[ :ooh | |newCar|
+							newCar := (self remove: anObj oneStarWithTry: car continuation: ooh).
+							newCar ~~> cdr ]
 						otherwise: naturalRecursion ]
 				ifFalse: [ anObj = car
 						ifTrue: [ cdr ]
