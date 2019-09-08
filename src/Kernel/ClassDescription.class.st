@@ -906,7 +906,7 @@ ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSi
 			oldInstance class
 				slotNamed: newSlot name
 				ifFound: [ :oldSlot | 
-					newSlot wantsInitalization ifTrue: [ self initializeSlots: new ].
+					newSlot wantsInitialization ifTrue: [ self initializeSlots: new ].
 					value := oldSlot read: oldInstance.
 					newSlot write: value to: new ] ].
 	variable

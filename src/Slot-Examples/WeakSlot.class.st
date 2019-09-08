@@ -55,7 +55,7 @@ WeakSlot >> read: anObject [
 ]
 
 { #category : #'meta-object-protocol' }
-WeakSlot >> wantsInitalization [
+WeakSlot >> wantsInitialization [
 
 	^ true
 ]

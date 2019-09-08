@@ -21,6 +21,6 @@ InitializedSlot >> initialize: anObject [
 ]
 
 { #category : #'meta-object-protocol' }
-InitializedSlot >> wantsInitalization [
+InitializedSlot >> wantsInitialization [
 	^ true
 ]

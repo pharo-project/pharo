@@ -247,7 +247,7 @@ Slot >> initialize: instance [
 { #category : #'class building' }
 Slot >> installingIn: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
-	self wantsInitalization ifTrue: [ self ensureSlotIniatializationFor: aClass ].
+	self wantsInitialization ifTrue: [ self ensureSlotIniatializationFor: aClass ].
 ]
 
 { #category : #testing }
@@ -448,7 +448,7 @@ Slot >> usingMethods [
 ]
 
 { #category : #'meta-object-protocol' }
-Slot >> wantsInitalization [
+Slot >> wantsInitialization [
 	"if a slot wants to enable instance initalization, return true here"
 	^false
 ]

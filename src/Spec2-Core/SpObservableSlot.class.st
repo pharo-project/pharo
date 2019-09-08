@@ -52,7 +52,7 @@ SpObservableSlot >> read: anObject [
 ]
 
 { #category : #initialization }
-SpObservableSlot >> wantsInitalization [
+SpObservableSlot >> wantsInitialization [
 
 	^ true
 ]

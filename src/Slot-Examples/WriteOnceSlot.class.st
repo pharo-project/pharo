@@ -23,7 +23,7 @@ WriteOnceSlot >> read: anObject [
 ]
 
 { #category : #initialization }
-WriteOnceSlot >> wantsInitalization [
+WriteOnceSlot >> wantsInitialization [
 
 	^ true
 ]
