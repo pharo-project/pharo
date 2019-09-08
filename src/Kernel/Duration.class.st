@@ -384,7 +384,7 @@ Duration >> printHumanReadableOn: stream [
 		(wholeMilliseconds 'millisecond') 
 		(wholeMicroseconds 'microsecond') 
 		(wholeNanoseconds 'nanosecond')) do: [ :each |
-		count := self perform: each first.
+		count := (self perform: each first) truncated.
 		count > 0 
 			ifTrue: [
 				outputWritten ifTrue: [ stream space ].				
