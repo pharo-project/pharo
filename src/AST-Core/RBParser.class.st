@@ -453,10 +453,12 @@ RBParser >> parseErrorNode: aMessageString [
 ]
 
 { #category : #accessing }
-RBParser >> parseExpression: aString [ 
+RBParser >> parseExpression: anExpressionString [
+	"Parse and return an AST corresponding to the expression passed as argument."
+	
 	| node |
 	node := self parseStatements: false.
-	(RBMethodNode selector: #noMethod body: node) source: aString.	"Make the sequence node have a method node as its parent"
+	(self methodNodeClass selector: #noMethod body: node) source: anExpressionString.	"Make the sequence node have a method node as its parent"
 	self atEnd ifFalse: [ ^ self parseIncompleteExpression: node ].
 	^node
 ]
@@ -647,14 +649,16 @@ methodNode body: sequenceNode .
 ]
 
 { #category : #accessing }
-RBParser >> parseMethod: aString [
+RBParser >> parseMethod: aMethodDefinitionString [
+	"Parse and return a abstract syntax tree from the argument"
+	
 	| node |
 	node := self parseMethod.
-	node source: aString.
+	node source: aMethodDefinitionString.
 	self atEnd
 		ifFalse: [ 
 			 ^ self parseIncompleteExpression: node ].
-	node source: aString.
+	node source: aMethodDefinitionString.
 	^ node
 ]
 
