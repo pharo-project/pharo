@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'originalString'
 	],
-	#category : #ClassParser
+	#category : #'ClassParser-Model'
 }
 
 { #category : #parsing }

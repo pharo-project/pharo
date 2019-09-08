@@ -33,6 +33,13 @@ RBSlotInitializationNodeTest >> testPrintString [
 ]
 
 { #category : #tests }
+RBSlotInitializationNodeTest >> testPrintStringANullInitializationMessage [
+	| s1 |
+	s1 := RBSlotInitializationNode new.
+	self assert: s1 printString equals: ''
+]
+
+{ #category : #tests }
 RBSlotInitializationNodeTest >> testSlotInitializationCreation [
 
 	| s | 

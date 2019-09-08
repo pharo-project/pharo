@@ -85,10 +85,13 @@ RBSlotInitializationNode >> isNull [
 { #category : #printing }
 RBSlotInitializationNode >> printOn: aStream [
 	"We make sure that the result is empty to be used like a bad null pattern now."
-	aStream nextPutAll: selector asString.
-	selector isEmpty
-		ifFalse: [ aStream space ].
-	aStream nextPutAll: argument asString
+	
+	self isNull 
+		ifFalse: [  
+			aStream 
+				nextPutAll: selector asString; 
+	 			space;
+				nextPutAll: argument asString ]
 ]
 
 { #category : #accessing }
