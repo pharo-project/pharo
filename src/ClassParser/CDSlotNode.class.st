@@ -8,10 +8,24 @@ Class {
 		'start',
 		'stop',
 		'name',
-		'typeName'
+		'typeName',
+		'initializationMessage'
 	],
 	#category : #'ClassParser-Model'
 }
+
+{ #category : #'instance-creation' }
+CDSlotNode class >> node: aNode name: aName typeName: aTypeName initializationMessage: aString start: start stop: stop [
+	
+	^ self new
+		node: aNode;
+		name: aName;
+		typeName: aTypeName;
+		initializationMessage: aString;
+		start: start;
+		stop: stop;
+		yourself
+]
 
 { #category : #'instance-creation' }
 CDSlotNode class >> node: aNode name: aName typeName: aTypeName start: start stop: stop [
@@ -40,6 +54,18 @@ CDSlotNode >> binding [
 CDSlotNode >> index: anInteger [ 
 	
 	index := anInteger
+]
+
+{ #category : #accessing }
+CDSlotNode >> initializationMessage [
+	
+	^ initializationMessage 
+]
+
+{ #category : #accessing }
+CDSlotNode >> initializationMessage: aString [ 
+	
+	initializationMessage := aString
 ]
 
 { #category : #testing }
@@ -116,9 +142,9 @@ CDSlotNode >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
 		nextPutAll: '(';
-		nextPutAll: name;
+		print: name ;
 		nextPutAll: ' => ';
-		nextPutAll: typeName;
+		print: typeName;
 		nextPutAll: ')'
 ]
 
@@ -147,6 +173,14 @@ CDSlotNode >> stop [
 CDSlotNode >> stop: anInteger [ 
 	
 	stop := anInteger
+]
+
+{ #category : #accessing }
+CDSlotNode >> typeName [
+	"Return the type of the slot: i.e., 'x' => InstanceVariableSlot typeName will return 
+	#InstanceVariableSlot"
+	
+	^ typeName
 ]
 
 { #category : #accessing }

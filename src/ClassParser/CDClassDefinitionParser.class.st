@@ -175,6 +175,9 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
+	"what ugly method!"
+	
+	"when a slot is just 'inst'"
 	aRBMessageNode isLiteralNode
 		ifTrue: [ | slot |
 			slot := CDSlotNode
@@ -186,13 +189,27 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 			classDefinition addSlot: slot.
 			^ self ].
 		
-	self flag: #fixme. "This seems to not support Slots with Parameters for now".
-	aRBMessageNode selector = '=>'
+	"when a slot is just 'inst' => InstanceVariableSlot."	
+	aRBMessageNode receiver isLiteralNode
 		ifTrue: [ | slot |
 			slot := CDSlotNode
 				node: aRBMessageNode
 				name: aRBMessageNode receiver value
-				typeName: aRBMessageNode arguments first name
+				typeName: aRBMessageNode arguments first name 
+				start: aRBMessageNode start
+				stop: aRBMessageNode stop.
+			classDefinition addSlot: slot.
+			^ self ].
+		
+	"when a slot is just 'inst' => InstanceVariableSlot default: 5."	
+	aRBMessageNode receiver selector = '=>'
+		ifTrue: [ | slot slotDefNode |
+			slotDefNode := aRBMessageNode receiver.
+			slot := CDSlotNode
+				node: aRBMessageNode
+				name: slotDefNode value receiver value
+				typeName: slotDefNode arguments first name
+				initializationMessage: aRBMessageNode selectorAndArgumentNames
 				start: aRBMessageNode start
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.
