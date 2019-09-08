@@ -29,7 +29,7 @@ CDMoreComplexSlotParserTest >> testClassDefFromLegacyStringHasSlots [
 
 	self assert: classDefinition slotNodes first name equals: self firstInstanceVariableName.
 	self assert: classDefinition slotNodes first slotClassName equals: #LazyClassVariable.
-	self assert: classDefinition slotNodes first initializationMessage equals: 'default: 5'.
+	self assert: classDefinition slotNodes first initializationMessage printString equals: 'default: 5'.
 
 	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName.
 	self assert: classDefinition slotNodes second slotClassName equals: #InstanceVariableSlot.

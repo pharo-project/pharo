@@ -183,6 +183,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 	"what ugly method!"
 
 	"when a slot is just 'inst'"
+
 	aRBMessageNode isLiteralNode
 		ifTrue: [ | slot |
 			slot := self slotNodeClass
@@ -215,7 +216,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 				node: aRBMessageNode
 				name: slotDefNode value receiver value
 				slotClassName: slotDefNode arguments first name
-				initializationMessage: aRBMessageNode selectorAndArgumentNames
+				initializationMessage: (self slotInitializationNodeClass selector: aRBMessageNode selector argument: aRBMessageNode arguments first value)
 				start: aRBMessageNode start
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.
@@ -262,6 +263,12 @@ CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 { #category : #'private class factory' }
 CDClassDefinitionParser >> sharedPoolNodeClass [
 	^ CDSharedPoolNode
+]
+
+{ #category : #'private class factory' }
+CDClassDefinitionParser >> slotInitializationNodeClass [
+
+	^ RBSlotInitializationNode 
 ]
 
 { #category : #'private class factory' }
