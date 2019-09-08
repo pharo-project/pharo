@@ -27,15 +27,36 @@ CDMoreComplexSlotParserTest >> classDefinitionString [
 { #category : #helpers }
 CDMoreComplexSlotParserTest >> testClassDefFromLegacyStringHasSlots [
 
-	self assert: classDefinition slotNodes first name equals: self firstInstanceVariableName.
-	self assert: classDefinition slotNodes first slotClassName equals: #LazyClassVariable.
-	self assert: classDefinition slotNodes first initializationMessage printString equals: 'default: 5'.
-
-	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName.
-	self assert: classDefinition slotNodes second slotClassName equals: #InstanceVariableSlot.
-	
+	self
+		assert: classDefinition slotNodes second name
+		equals: self secondInstanceVariableName.
+	self
+		assert: classDefinition slotNodes second slotClassName
+		equals: #InstanceVariableSlot.
+	self
+		assert: classDefinition slotNodes second initializationMessage printString
+		equals: ''.
+		
 	self assert: classDefinition slotNodes third name equals: 'instVar3'.
-	self assert: classDefinition slotNodes third slotClassName equals: #InstanceVariableSlot.
-	
+	self
+		assert: classDefinition slotNodes third slotClassName
+		equals: #InstanceVariableSlot.
+	self
+		assert: classDefinition slotNodes third initializationMessage printString
+		equals: ''.
+]
 
+{ #category : #helpers }
+CDMoreComplexSlotParserTest >> testClassDefWithInitializationSlot [
+	self
+		assert: classDefinition slotNodes first name
+		equals: self firstInstanceVariableName.
+	self
+		assert: classDefinition slotNodes first slotClassName
+		equals: #LazyClassVariable.
+	self
+		assert: classDefinition slotNodes first initializationMessage printString
+		equals: 'default: 5'.
+		
+	
 ]

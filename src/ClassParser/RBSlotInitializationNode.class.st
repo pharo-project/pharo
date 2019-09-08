@@ -1,6 +1,30 @@
+"
+I represent the Slot initialization part of a slot definition. 
+I'm not super well integrated in the language AST because I'm a transformation from the AST.
+For example for this expression 'first' =>  LazyClassVariable default: 5, I represent 
+the default: 5 part. 
+Still I support visiting protocol in case. 
+
+Object subclass: #MyClass
+		slots: {
+		'first' => LazyClassVariable default: 5. 
+		'second' => InstanceVariableSlot.
+		'instVar3'
+		}
+		classVariableNames: ''
+		package: #MyPackage'
+
+In addition, to make sure that all slot definition are polymorphic 
+
+start and end are not managed for the moment at my level. 
+
+
+		
+	
+"
 Class {
 	#name : #RBSlotInitializationNode,
-	#superclass : #RBValueNode,
+	#superclass : #RBNode,
 	#instVars : [
 		'selector',
 		'argument'
@@ -25,9 +49,9 @@ RBSlotInitializationNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBSlotInitializationNode >> accept: aVisitor [
-
-	^ aVisitor visitSlotInitializationNode: self
+RBSlotInitializationNode >> acceptVisitor: aVisitor [
+	"Continue the navigation only on non null messages."
+	^ self isNull ifFalse: [ aVisitor visitSlotInitializationNode: self ]
 ]
 
 { #category : #accessing }
@@ -45,13 +69,26 @@ RBSlotInitializationNode >> hash [
 	^ self hashForCollection: self arguments
 ]
 
+{ #category : #initialization }
+RBSlotInitializationNode >> initialize [ 
+	
+	super initialize.
+	selector := #''.
+	argument := ''
+]
+
+{ #category : #testing }
+RBSlotInitializationNode >> isNull [ 
+	^ selector = #''
+]
+
 { #category : #printing }
 RBSlotInitializationNode >> printOn: aStream [
-
-	aStream 
-		<< selector asString ; 
-		space; 
-		print: argument 
+	"We make sure that the result is empty to be used like a bad null pattern now."
+	aStream nextPutAll: selector asString.
+	selector isEmpty
+		ifFalse: [ aStream space ].
+	aStream nextPutAll: argument asString
 ]
 
 { #category : #accessing }

@@ -180,16 +180,16 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
-	"what ugly method!"
+	"what ugly method! Pay attention start and stop should be tested and probably adjusted!"
 
 	"when a slot is just 'inst'"
-
 	aRBMessageNode isLiteralNode
 		ifTrue: [ | slot |
 			slot := self slotNodeClass
 				node: aRBMessageNode
 				name: aRBMessageNode value
 				slotClassName: #InstanceVariableSlot
+				initializationMessage: (self slotInitializationNodeClass new)
 				start: aRBMessageNode start
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.
@@ -202,6 +202,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 				node: aRBMessageNode
 				name: aRBMessageNode receiver value
 				slotClassName: aRBMessageNode arguments first name
+				initializationMessage: (self slotInitializationNodeClass new)
 				start: aRBMessageNode start
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.
@@ -216,7 +217,10 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 				node: aRBMessageNode
 				name: slotDefNode value receiver value
 				slotClassName: slotDefNode arguments first name
-				initializationMessage: (self slotInitializationNodeClass selector: aRBMessageNode selector argument: aRBMessageNode arguments first value)
+				initializationMessage:
+					(self slotInitializationNodeClass
+						selector: aRBMessageNode selector
+						argument: aRBMessageNode arguments first value)
 				start: aRBMessageNode start
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.

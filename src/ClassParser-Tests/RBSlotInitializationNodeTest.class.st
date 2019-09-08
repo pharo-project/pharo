@@ -18,6 +18,14 @@ RBSlotInitializationNodeTest >> testEquality [
 ]
 
 { #category : #tests }
+RBSlotInitializationNodeTest >> testIsNull [
+	| s |
+	s := RBSlotInitializationNode new.
+	self assert: s selector equals: #''.
+	self assert: s isNull
+]
+
+{ #category : #tests }
 RBSlotInitializationNodeTest >> testPrintString [
 	| s1 |
 	s1 := RBSlotInitializationNode selector: #default: argument: 5.
