@@ -8,32 +8,32 @@ Class {
 		'start',
 		'stop',
 		'name',
-		'typeName',
-		'initializationMessage'
+		'initializationMessage',
+		'slotClassName'
 	],
 	#category : #'ClassParser-Model'
 }
 
 { #category : #'instance-creation' }
-CDSlotNode class >> node: aNode name: aName typeName: aTypeName initializationMessage: aString start: start stop: stop [
+CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol initializationMessage: aMessageNode start: start stop: stop [
 	
 	^ self new
 		node: aNode;
 		name: aName;
-		typeName: aTypeName;
-		initializationMessage: aString;
+		slotClassName: aSymbol;
+		initializationMessage: aMessageNode;
 		start: start;
 		stop: stop;
 		yourself
 ]
 
 { #category : #'instance-creation' }
-CDSlotNode class >> node: aNode name: aName typeName: aTypeName start: start stop: stop [
+CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
 	
 	^ self new
 		node: aNode;
 		name: aName;
-		typeName: aTypeName;
+		slotClassName: aSymbol;
 		start: start;
 		stop: stop;
 		yourself
@@ -58,14 +58,15 @@ CDSlotNode >> index: anInteger [
 
 { #category : #accessing }
 CDSlotNode >> initializationMessage [
+	"Return the message node representing the initialization part of a slot."
 	
 	^ initializationMessage 
 ]
 
 { #category : #accessing }
-CDSlotNode >> initializationMessage: aString [ 
+CDSlotNode >> initializationMessage: aMessageNode [ 
 	
-	initializationMessage := aString
+	initializationMessage := aMessageNode
 ]
 
 { #category : #testing }
@@ -144,8 +145,22 @@ CDSlotNode >> printOn: aStream [
 		nextPutAll: '(';
 		print: name ;
 		nextPutAll: ' => ';
-		print: typeName;
+		print: slotClassName;
 		nextPutAll: ')'
+]
+
+{ #category : #accessing }
+CDSlotNode >> slotClassName [
+	"Return a symbol representing the class of the slot: i.e., 'x' => InstanceVariableSlot slotClassName returns 
+	#InstanceVariableSlot"
+	
+	^ slotClassName
+]
+
+{ #category : #accessing }
+CDSlotNode >> slotClassName: aSymbol [ 
+	
+	slotClassName := aSymbol
 ]
 
 { #category : #accessing }
@@ -173,18 +188,4 @@ CDSlotNode >> stop [
 CDSlotNode >> stop: anInteger [ 
 	
 	stop := anInteger
-]
-
-{ #category : #accessing }
-CDSlotNode >> typeName [
-	"Return the type of the slot: i.e., 'x' => InstanceVariableSlot typeName will return 
-	#InstanceVariableSlot"
-	
-	^ typeName
-]
-
-{ #category : #accessing }
-CDSlotNode >> typeName: aString [ 
-	
-	typeName := aString
 ]
