@@ -14,16 +14,18 @@ Class {
 { #category : #private }
 TwoInARowStar >> T: anObj [
 	| n |
-	n := self getNext.
-	^ n isSymbol
+	n := self getNext: anObj.
+	^ n isNotNil
 		ifTrue: [ n = anObj or: [ self T: n ] ]
 		ifFalse: [ false ]
 ]
 
 { #category : #private }
-TwoInARowStar >> getNext [
-
-	^ Continuation currentDo: [ :here_again | leave := here_again. fill value: #go ]
+TwoInARowStar >> getNext: previousObj [
+	^ Continuation
+		currentDo: [ :here_again | 
+			leave := here_again.
+			fill value: previousObj ]
 ]
 
 { #category : #API }
@@ -41,11 +43,11 @@ TwoInARowStar >> tree: aTree [
 
 { #category : #private }
 TwoInARowStar >> waddle: aTree [
-	^ (aTree isNotNil and: [ (aTree isMemberOf: Link) not ])
+	^ (aTree isNotNil and: [ (aTree isMemberOf: ValueLink)  ])
 		ifTrue: [ | car cdr |
 			car := aTree value.
 			cdr := aTree nextLink.
-(			car isKindOf:  Link)
+			(car isKindOf: Link)
 				ifTrue: [ self waddle: car ]
 				ifFalse: [ Continuation
 						currentDo: [ :rest | 
