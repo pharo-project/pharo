@@ -2430,6 +2430,24 @@ String >> trim [
 ]
 
 { #category : #copying }
+String >> trimAll [
+	"Trim all separators outside and within the receiving string."
+	
+	"   ' Hello  World ' trimAll >>> 'HelloWorld'    "
+	
+	^ self trimAll: [:each | each isSeparator ] 
+]
+
+{ #category : #copying }
+String >> trimAll: aBlock [
+	"Trim all characters satisfying the condition given in aBlock."
+
+	^self select: [ :each | 
+		(aBlock value: each) not ]
+	 
+]
+
+{ #category : #copying }
 String >> trimBoth [
 	"Trim separators from both sides of the receiving string."
 	

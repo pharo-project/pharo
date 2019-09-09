@@ -1833,6 +1833,22 @@ StringTest >> testTranslateToUppercase [
 ]
 
 { #category : #'tests - converting' }
+StringTest >> testTrimAll [
+	self assert: '' trimAll equals: ''.
+	self assert: ' ' trimAll equals: ''.
+	self assert: '	' trimAll equals: ''.
+	self assert: 'foo' trimAll equals: 'foo'.
+	self assert: ' foo ' trimAll equals: 'foo'.
+	self assert: '  foo  ' trimAll equals: 'foo'.
+	self assert: '  f oo  ' trimAll equals: 'foo'.
+	self assert: '  Hello  World  ' trimAll equals: 'HelloWorld'.
+	self assert: ((String with: Character cr), '   foo  ') trimAll equals: 'foo'.
+	
+	self assert: ('aabbaa' trimAll: [ :each | each = $a ]) equals: 'bb'.
+	self assert: ('bbaabb' trimAll: [ :each | each = $a ]) equals: 'bbbb'
+]
+
+{ #category : #'tests - converting' }
 StringTest >> testTrimBoth [
 	self assert: '' trimBoth equals: ''.
 	self assert: ' ' trimBoth equals: ''.

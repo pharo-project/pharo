@@ -141,16 +141,6 @@ WeakValueDictionaryTest >> testRehashDoesNotTransformAssociations [
 	self assert: (d privateAssociations anyOne isKindOf: WeakValueAssociation)
 ]
 
-{ #category : #'tests - size capacity' }
-WeakValueDictionaryTest >> testSize [
-	| d |
-	d := self classToBeTested new.
-	self assert: d size equals: 0.
-	d at: 1 put: 2.
-	d at: 2 put: nil.
-	self assert: d size equals: 2
-]
-
 { #category : #tests }
 WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	| dictionary |
@@ -159,6 +149,16 @@ WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	dictionary at: 'test2' put: 1.
 	self assert: (dictionary associationAt: 'test') value isNil.
 	self assert: (dictionary associationAt: 'test2') value equals: 1
+]
+
+{ #category : #'tests - size capacity' }
+WeakValueDictionaryTest >> testSize [
+	| d |
+	d := self classToBeTested new.
+	self assert: d size equals: 0.
+	d at: 1 put: 2.
+	d at: 2 put: nil.
+	self assert: d size equals: 2
 ]
 
 { #category : #tests }
