@@ -153,6 +153,11 @@ CompletionProducer >> visitTemporaryNode: aNode [
 ]
 
 { #category : #visiting }
+CompletionProducer >> visitThisContextNode: aThisContextNode [
+	^ #()
+]
+
+{ #category : #visiting }
 CompletionProducer >> visitVariableNode: aRBVariableNode [
 	| lookupClass |
 	lookupClass := currentClass ifNil: [ UndefinedObject ].
