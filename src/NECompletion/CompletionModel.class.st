@@ -91,7 +91,7 @@ CompletionModel >> hasMessage [
 { #category : #accessing }
 CompletionModel >> initEntries [
 	| producer suggestionsList |
-	producer := CompletionProducer new.
+	producer := CompletionProducerVisitor new.
 	self sorter: CompletionModel sorter.
 	producer completionContext: clazz.
 	suggestionsList := self sortList: (producer completionListForNode: node).

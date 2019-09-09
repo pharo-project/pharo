@@ -2,8 +2,8 @@
 I'm a little visitor. I take the specific node of the string that has to be completed and based on that node I give the list of completion results.
 "
 Class {
-	#name : #CompletionProducer,
-	#superclass : #Object,
+	#name : #CompletionProducerVisitor,
+	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'currentClass'
 	],
@@ -11,70 +11,54 @@ Class {
 }
 
 { #category : #accessing }
-CompletionProducer >> completionContext: aClass [ 
+CompletionProducerVisitor >> completionContext: aClass [ 
 	currentClass := aClass.
 ]
 
 { #category : #completion }
-CompletionProducer >> completionListForNode: aRBNode [
+CompletionProducerVisitor >> completionListForNode: aRBNode [
 
 	^ aRBNode acceptVisitor: self
 ]
 
 { #category : #visiting }
-CompletionProducer >> methodNames [
+CompletionProducerVisitor >> methodNames [
 	^ Symbol selectorTable
 	
 ]
 
 { #category : #utilities }
-CompletionProducer >> select: aCollection beginningWith: aString [
+CompletionProducerVisitor >> select: aCollection beginningWith: aString [
 	"Set withAll: is needed to convert potential IdentitySets to regular Sets"
 	^ Set withAll: (aCollection select: [ :each | each beginsWith: aString asString ])
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitArgumentNode: anArgumentNode [
-	"Sent *each time* an argument node is found"
-	^ self visitVariableNode: anArgumentNode
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitArrayNode: aRBArrayNode [
+CompletionProducerVisitor >> visitArrayNode: aRBArrayNode [
 	
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitAssignmentNode: aRBAssignmentNode [
+CompletionProducerVisitor >> visitAssignmentNode: aRBAssignmentNode [
 	
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitBlockNode: aRBBlockNode [
+CompletionProducerVisitor >> visitBlockNode: aRBBlockNode [
 	
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitGlobalNode: aRBGlobalNode [ 
-	^ self visitVariableNode: aRBGlobalNode 
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitInstanceVariableNode: aSelfNode [
-	^ self visitVariableNode: aSelfNode
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitLiteralArrayNode: aRBLiteralArrayNode [
+CompletionProducerVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 	
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitLiteralNode: aRBLiteralValueNode [
+CompletionProducerVisitor >> visitLiteralNode: aRBLiteralValueNode [
 	| results |
 	(aRBLiteralValueNode value isKindOf: Symbol) ifFalse: [ ^#() ].
 	"return all symbols that start with value"
@@ -88,12 +72,7 @@ CompletionProducer >> visitLiteralNode: aRBLiteralValueNode [
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitLiteralValueNode: aRBLiteralValueNode [ 
-	^ self visitLiteralNode: aRBLiteralValueNode
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitMessageNode:  aRBMessageNode [
+CompletionProducerVisitor >> visitMessageNode:  aRBMessageNode [
 	"uses the TypingVisitor and the idea of double dispatch to avoid multiple if statements"
 	| receiver | 
 	receiver := aRBMessageNode receiver.
@@ -104,61 +83,44 @@ CompletionProducer >> visitMessageNode:  aRBMessageNode [
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitMethodNode: aRBMethodNode [ 
-		
-	^(self select: self methodNames beginningWith: aRBMethodNode selector)
+CompletionProducerVisitor >> visitMethodNode: aRBMethodNode [
+	^ self select: self methodNames beginningWith: aRBMethodNode selector
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitNode: aNode [ 
-	^aNode acceptVisitor: self
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitParseErrorNode: aRBLiteralValueNode [
+CompletionProducerVisitor >> visitParseErrorNode: aRBLiteralValueNode [
 	
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitPragmaNode: aPragmaNode [
+CompletionProducerVisitor >> visitPragmaNode: aPragmaNode [
 	^ self select: Symbol allSymbols beginningWith: aPragmaNode selector
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitReturnNode: aNode [
+CompletionProducerVisitor >> visitReturnNode: aNode [
 	
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitSelfNode: aRBSelfNode [ 
-	^ self visitVariableNode: aRBSelfNode 
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitSequenceNode: aRBSequenceNode [ 
+CompletionProducerVisitor >> visitSequenceNode: aRBSequenceNode [ 
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitSuperNode: aSuperNode [
-	^ self visitVariableNode: aSuperNode
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitTemporaryNode: aNode [ 
-	"Sent *each time* a temporary node is found"
-	^ self visitVariableNode: aNode
-]
-
-{ #category : #visiting }
-CompletionProducer >> visitThisContextNode: aThisContextNode [
+CompletionProducerVisitor >> visitSlotInitializationNode: aSlotInitializationNode [
 	^ #()
 ]
 
 { #category : #visiting }
-CompletionProducer >> visitVariableNode: aRBVariableNode [
+CompletionProducerVisitor >> visitThisContextNode: aThisContextNode [
+	^ #()
+]
+
+{ #category : #visiting }
+CompletionProducerVisitor >> visitVariableNode: aRBVariableNode [
 	| lookupClass |
 	lookupClass := currentClass ifNil: [ UndefinedObject ].
 	aRBVariableNode isDefinition ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) select: [ :each | each numArgs = 0 ] ].
