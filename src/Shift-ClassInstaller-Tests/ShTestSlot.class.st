@@ -14,7 +14,7 @@ ShTestSlot >> initialize: anObject [
 ]
 
 { #category : #initialization }
-ShTestSlot >> wantsInitalization [
+ShTestSlot >> wantsInitialization [
 
 	^ true
 ]

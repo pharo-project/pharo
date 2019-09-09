@@ -69,7 +69,7 @@ HistorySlot >> size: anObject [
 ]
 
 { #category : #'meta-object-protocol' }
-HistorySlot >> wantsInitalization [
+HistorySlot >> wantsInitialization [
 
     ^ true
 ]
