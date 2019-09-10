@@ -501,6 +501,11 @@ CompiledCode >> longPrintOn: aStream [
 
 ]
 
+{ #category : #accessing }
+CompiledCode >> methodClass [
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
