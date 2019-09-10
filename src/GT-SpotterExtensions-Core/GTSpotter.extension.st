@@ -1,6 +1,12 @@
 Extension { #name : #GTSpotter }
 
 { #category : #'*GT-SpotterExtensions-Core-private' }
+GTSpotter >> compiler [
+
+	^self class compiler
+]
+
+{ #category : #'*GT-SpotterExtensions-Core-private' }
 GTSpotter >> concreteMethodsInContext: aContext usingFilter: aFilter [
 	" return the concrete methods described by the expression (Class >> #Selector) - evaluate it savely "
 	| classAndSelectorStrings class selector |
@@ -36,8 +42,8 @@ GTSpotter >> evaluateExpressionInContext: aSpotterContext usingFilter: filter [
 		class selectors anySatisfy: [ :selector | 
 			aSpotterContext textTrimmed includesSubstring: selector caseSensitive: true ] ]) ifFalse: [ ^ self ].
 	" perform the selector "
-	Smalltalk compiler 
-		silentlyDo: [ result := Smalltalk compiler evaluate: aSpotterContext textTrimmed ] 
+	self compiler 
+		silentlyDo: [ result := self compiler evaluate: aSpotterContext textTrimmed ] 
 		exceptionDo: [ ^ self ].
 	result isNumber ifFalse: [ ^ self ].
 	filter value: result. 
