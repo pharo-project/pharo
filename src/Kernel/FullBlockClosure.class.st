@@ -96,8 +96,8 @@ FullBlockClosure >> receiver: anObject [
 { #category : #evaluating }
 FullBlockClosure >> rfvalueNoContextSwitch [
 	"same as valueNoContextSwitch, for recursion stopping metalinks"
-	<metaLinkOptions: #( + optionDisabledLink)>
 	<primitive: 209>
+	<metaLinkOptions: #( + optionDisabledLink)>
 	numArgs ~= 0 ifTrue:
 		[self numArgsError: 0].
 	self primitiveFailed

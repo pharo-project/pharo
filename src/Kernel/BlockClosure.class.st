@@ -591,7 +591,7 @@ BlockClosure >> repeatWithGCIf: testBlock [
 
 { #category : #evaluating }
 BlockClosure >> rfvalueNoContextSwitch [
-	"same as alueNoContextSwitch, for recursion stopping metalinks"
+	"same as valueNoContextSwitch, for recursion stopping metalinks"
 	<primitive: 221>
 	<metaLinkOptions: #( + optionDisabledLink)>
 	numArgs ~= 0 ifTrue:
