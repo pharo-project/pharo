@@ -873,13 +873,13 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 { #category : #private }
 RPackageOrganizer >> reportBogusBehaviorOf: aSelector [
 
-	self logCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
+	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
 ]
 
 { #category : #private }
 RPackageOrganizer >> reportExtraRemovalOf: aClass [
 
-	self logCr:  'The class ',  aClass name printString, 'is removed twice'.
+	self traceCr:  'The class ',  aClass name printString, 'is removed twice'.
 ]
 
 { #category : #'public registration' }

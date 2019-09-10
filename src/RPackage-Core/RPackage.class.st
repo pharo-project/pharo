@@ -1470,7 +1470,7 @@ RPackage >> renameTo: aSymbol [
 { #category : #private }
 RPackage >> reportBogusBehaviorOf: aSelector [
 
-	self logCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
+	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
 ]
 
 { #category : #accessing }
