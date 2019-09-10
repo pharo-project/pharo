@@ -159,10 +159,16 @@ Deprecation >> logTranscript [
 
 { #category : #accessing }
 Deprecation >> messageText [
-	"Return an exception's message text."
-
-	^ 'The method ', self deprecatedMethodName, ' called from ', self sendingMethodName ,' has been deprecated.
-', explanationString
+	^String streamContents: [ :str |
+		self shouldTransform ifTrue: [ 
+			str nextPutAll:  'Automatic deprecation code rewrite: '].
+		str 
+			nextPutAll: 'The method ';
+			nextPutAll: self deprecatedMethodName;
+			nextPutAll: ' called from ';
+			nextPutAll: self sendingMethodName;
+			nextPutAll: ' has been deprecated. ';
+		 	nextPutAll: explanationString]
 ]
 
 { #category : #settings }
