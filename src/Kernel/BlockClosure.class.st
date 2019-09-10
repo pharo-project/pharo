@@ -589,6 +589,16 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
+{ #category : #evaluating }
+BlockClosure >> rfvalueNoContextSwitch [
+	"same as alueNoContextSwitch, for recursion stopping metalinks"
+	<primitive: 221>
+	<metaLinkOptions: #( + optionDisabledLink)>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
+	self primitiveFailed
+]
+
 { #category : #'debugger access' }
 BlockClosure >> sender [
 	"Answer the context that sent the message that created the receiver."

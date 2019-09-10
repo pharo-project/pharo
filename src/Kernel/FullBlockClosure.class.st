@@ -93,6 +93,16 @@ FullBlockClosure >> receiver: anObject [
 	receiver := anObject
 ]
 
+{ #category : #evaluating }
+FullBlockClosure >> rfvalueNoContextSwitch [
+	"same as valueNoContextSwitch, for recursion stopping metalinks"
+	<metaLinkOptions: #( + optionDisabledLink)>
+	<primitive: 209>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
+	self primitiveFailed
+]
+
 { #category : #simulation }
 FullBlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."
