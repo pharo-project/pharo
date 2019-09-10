@@ -63,7 +63,8 @@ Class {
 		'icon',
 		'ordering',
 		'dialog',
-		'allowedInStyle'
+		'allowedInStyle',
+		'environment'
 	],
 	#category : #'System-Settings-Core-Base'
 }
@@ -202,6 +203,11 @@ PragmaSetting >> icon: aForm [
 	icon := aForm
 ]
 
+{ #category : #accessing }
+PragmaSetting >> initialize [ 
+	environment:=Smalltalk globals.
+]
+
 { #category : #'user interface' }
 PragmaSetting >> inputMorphFor: aContainer [ 
 	^ self inputWidget
@@ -291,7 +297,7 @@ PragmaSetting >> precondition: aValuable [
 { #category : #accessing }
 PragmaSetting >> realTarget [
 	^ target isSymbol
-		ifTrue: [ Smalltalk globals at: target ifAbsent: [  ] ]
+		ifTrue: [ environment at: target ifAbsent: [  ] ]
 		ifFalse: [ target ]
 ]
 

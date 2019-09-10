@@ -44,7 +44,7 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	copysName := newName asSymbol.
 	copysName = oldClass name
 		ifTrue: [ ^ oldClass ].
-	(Smalltalk globals includesKey: copysName)
+	(environment globals includesKey: copysName)
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition
@@ -181,7 +181,7 @@ MetacelloPharoCommonPlatform >> downloadJSON: url username: username pass: pass 
 		readOnlyFileNamed: jsonFile localName
 		do: [ :fileStream | 
 			| result |
-			result := (Smalltalk at: #MCFileTreeJsonParser)
+			result := (environment at: #MCFileTreeJsonParser)
 				parseStream: fileStream self
 				deleteFileNamed: errorFileName.
 			^ result ] ]

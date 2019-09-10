@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'bypassProgressBars',
-		'bypassGoferLoadUpdateCategories'
+		'bypassGoferLoadUpdateCategories',
+		'environment'
 	],
 	#classVars : [
 		'Current'
@@ -37,7 +38,7 @@ MetacelloPlatform class >> unselect [
 { #category : #utilities }
 MetacelloPlatform >> authorName [
 
-	Smalltalk at: #Author ifPresent: [:cl | ^cl perform: #initials ].
+	environment at: #Author ifPresent: [:cl | ^cl perform: #initials ].
 	^'no developer initials'
 ]
 
@@ -107,8 +108,8 @@ MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
 { #category : #'user interaction' }
 MetacelloPlatform >> confirm: aString [
 	
-	^(Smalltalk hasClassNamed: #UIManager)
-		ifTrue: [ (Smalltalk classNamed: #UIManager) default perform: #confirm: with: aString ]
+	^(environment hasClassNamed: #UIManager)
+		ifTrue: [ (environment classNamed: #UIManager) default perform: #confirm: with: aString ]
 		ifFalse: [
 			"throw warning and answer true, if no way to announce"
 			Warning signal: aString.
@@ -125,7 +126,7 @@ MetacelloPlatform >> copyClass: oldClass as: newName inCategory: newCategoryName
 MetacelloPlatform >> createBitbucketRepository: aRepositorySpec [
 	| cl |
 	
-	cl := Smalltalk at: #'MCBitbucketRepository'.
+	cl := environment at: #'MCBitbucketRepository'.
  	^ cl location: aRepositorySpec description
 ]
 
@@ -137,10 +138,10 @@ MetacelloPlatform >> createDictionaryRepository: aRepositorySpec [
 	headerSize := 'dictionary://' size.
 	globalName := (description copyFrom: headerSize + 1 to: description size) asSymbol.
    
-	^ Smalltalk
+	^ environment
  		at: globalName
  		ifAbsent: [ 
-          Smalltalk
+          environment
             at: globalName
             put: (MCDictionaryRepository new
 					description: description;
@@ -158,7 +159,7 @@ MetacelloPlatform >> createDirectoryRepository: aRepositorySpec [
 MetacelloPlatform >> createFiletreeRepository: aRepositorySpec [
 	| cl description headerSize |
 	
-	cl := Smalltalk at: #'MCFileTreeRepository'.
+	cl := environment at: #'MCFileTreeRepository'.
 	description := aRepositorySpec description.
  	headerSize := 'filetree://' size.
 	^ cl new 
@@ -172,7 +173,7 @@ MetacelloPlatform >> createFiletreeRepository: aRepositorySpec [
 MetacelloPlatform >> createGithubRepository: aRepositorySpec [
 	| cl |
 	
-	cl := Smalltalk at: #'MCGitHubRepository'.
+	cl := environment at: #'MCGitHubRepository'.
 	^ cl location: aRepositorySpec description
 ]
 
@@ -197,7 +198,7 @@ MetacelloPlatform >> createRepository: aRepositorySpec [
 MetacelloPlatform >> createTonelRepository: aRepositorySpec [
 	| cl description headerSize |
 	
-	cl := Smalltalk at: #'TonelRepository'.
+	cl := environment at: #'TonelRepository'.
 	description := aRepositorySpec description.
 	headerSize := (aRepositorySpec type, '://') size.
  	^ cl new 
@@ -224,7 +225,7 @@ MetacelloPlatform >> defaultPackageCache [
 { #category : #attributes }
 MetacelloPlatform >> defaultPlatformAttributes [
   | versionString |
-  Smalltalk
+  environment
     at: #'SystemVersion'
     ifPresent: [ :cl | 
       versionString := cl current version.
@@ -343,7 +344,7 @@ MetacelloPlatform >> extractTypeFromDescription: description [
 
 { #category : #'github/bitbucket support' }
 MetacelloPlatform >> fileDirectoryClass [
-	^ Smalltalk at: #FileDirectory
+	^ environment at: #FileDirectory
 ]
 
 { #category : #'file system' }
@@ -370,13 +371,18 @@ MetacelloPlatform >> gitCommitShaFor: aDirectory [
 { #category : #reflection }
 MetacelloPlatform >> globalNamed: globalName [
 
-	^Smalltalk at: globalName
+	^environment at: globalName
 ]
 
 { #category : #reflection }
 MetacelloPlatform >> globalNamed: globalName ifAbsent: absentBlock [
 
-	^Smalltalk at: globalName ifAbsent: absentBlock
+	^environment at: globalName ifAbsent: absentBlock
+]
+
+{ #category : #system }
+MetacelloPlatform >> initialize [ 
+ environment := Smalltalk globals.
 ]
 
 { #category : #monticello }
@@ -451,7 +457,7 @@ MetacelloPlatform >> reenableUndefinedSybolUpdates: undefinedSymbols [
 
 { #category : #'repository creation' }
 MetacelloPlatform >> registerPackageNamed: packageName [
-  ^ (Smalltalk at: #'PackageInfo') registerPackageName: packageName
+  ^ (environment at: #'PackageInfo') registerPackageName: packageName
 ]
 
 { #category : #system }
@@ -493,7 +499,7 @@ MetacelloPlatform >> string: aString includesSubstring: aSubstring [
 { #category : #system }
 MetacelloPlatform >> suspendSystemUpdateEventsDuring: aBlock [
 	"Wraps call to the system evetn manager to tell it that we want to suspend events during execution of aBlock"
-	(Smalltalk at: #SystemChangeNotifier) uniqueInstance doSilently: aBlock
+	(environment at: #SystemChangeNotifier) uniqueInstance doSilently: aBlock
 ]
 
 { #category : #'file system' }

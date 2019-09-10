@@ -13,7 +13,8 @@ Class {
 		'comment',
 		'commentStamp',
 		'traitComposition',
-		'classTraitComposition'
+		'classTraitComposition',
+		'environment'
 	],
 	#category : #'Monticello-Modeling'
 }
@@ -135,7 +136,7 @@ MCClassDefinition >> accept: aVisitor [
 
 { #category : #accessing }
 MCClassDefinition >> actualClass [
-	^ Smalltalk globals classNamed: self className
+	^ environment classNamed: self className
 ]
 
 { #category : #initializing }
@@ -232,7 +233,7 @@ MCClassDefinition >> createClass [
 						ifFalse: [ Context comment: comment stamp: commentStamp ].
 					^ self ].
 	superClass := superclassName == #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
+		ifFalse: [ environment at: superclassName ].
 	^ [ Smalltalk classInstaller
 		make: [ :builder | 
 			builder
@@ -309,6 +310,11 @@ MCClassDefinition >> hash [
 		hash := String stringHash: v name initialHash: hash.
 	].
 	^ hash
+]
+
+{ #category : #printing }
+MCClassDefinition >> initialize [ 
+	environment := Smalltalk globals.
 ]
 
 { #category : #initializing }
@@ -401,7 +407,7 @@ MCClassDefinition >> kindOfSubclass [
 	type = #immediate ifTrue: [ ^ ' immediateSubclass: ' ].
 	type = #ephemeron ifTrue: [ ^ ' ephemeronSubclass: ' ].
 	"hack to support user defined layouts"
-	(Smalltalk hasClassNamed: type) ifTrue: [ ^type asString].
+	(environment hasClassNamed: type) ifTrue: [ ^type asString].
 	self error: 'Unrecognized class type'
 ]
 
@@ -607,7 +613,7 @@ MCClassDefinition >> type [
 
 { #category : #installing }
 MCClassDefinition >> unload [
-	Smalltalk globals removeClassNamed: name
+	environment removeClassNamed: name
 ]
 
 { #category : #accessing }

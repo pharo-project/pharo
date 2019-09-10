@@ -162,8 +162,8 @@ SettingDeclaration >> exportSettingAction [
 						ifFalse: [ self target name asSymbol ].
 						
 	currentValue := self targetSelector
-						ifNil: [ (Smalltalk at: targetSymbol) perform: self getSelector ]
-						ifNotNil: [:s | ((Smalltalk at: targetSymbol) perform: s) perform: self getSelector].
+						ifNil: [ (environment at: targetSymbol) perform: self getSelector ]
+						ifNotNil: [:s | ((environment at: targetSymbol) perform: s) perform: self getSelector].
 	
 	^ (self hasDefault not or: [ (self default = currentValue) not ])
 		ifTrue: [ self startupAction ]
@@ -398,7 +398,7 @@ SettingDeclaration >> inputWidgetForString [
 		changeSelected: #index:
 		useIndex: true
 		addToList: #addToList:
-		class: (Smalltalk globals at: self type)
+		class: (environment at: self type)
 		getEnabled: #enabled
 		default: self defaultValue.
 	self ghostHelp ifNotNil: [ :gh | widget ghostText: gh ].
@@ -556,13 +556,13 @@ SettingDeclaration >> startupAction [
 						ifFalse: [ self target name asSymbol ].
 						
 	currentValue := self targetSelector
-						ifNil: [ (Smalltalk at: targetSymbol) perform: self getSelector ]
-						ifNotNil: [:s | ((Smalltalk at: targetSymbol) perform: s) perform: self getSelector].
+						ifNil: [ (environment at: targetSymbol) perform: self getSelector ]
+						ifNotNil: [:s | ((environment at: targetSymbol) perform: s) perform: self getSelector].
 	^ StartupAction 
 		name: self label 
 		code: (String streamContents: [:s |
 					self targetSelector ifNotNil: [ s << '(' ].
-					s << '(Smalltalk at: '.
+					s << '(environment at: '.
 					targetSymbol asSymbol printOn: s.
 					self targetSelector ifNotNil: [:ts | s << ') perform: '. ts printOn: s ].
 					s << ') perform: '.
@@ -589,7 +589,7 @@ SettingDeclaration >> type: anObject [
 
 { #category : #accessing }
 SettingDeclaration >> typeClass [
-	^ Smalltalk globals at: self type ifAbsent: [  ]
+	^ environment at: self type ifAbsent: [  ]
 ]
 
 { #category : #'user interface' }
