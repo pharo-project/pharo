@@ -1104,6 +1104,13 @@ RGBehavior >> tagsDo: aBlock [
 ]
 
 { #category : #'accessing - model' }
+RGBehavior >> tagsForAllMethods [
+	"I act as #tagsForMethods but I also takes into account methods comming from traits"
+
+	^ self methods flatCollect: [ :each  | each tags ]
+]
+
+{ #category : #'accessing - model' }
 RGBehavior >> tagsForMethods [
 	"Retrieves the traits defined in the receiver"
 
