@@ -1,4 +1,0 @@
-accessing
-bootstrapInterpreter
-	
-	^ bootstrapInterpreter

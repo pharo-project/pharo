@@ -1,4 +1,0 @@
-versioning
-minorVersion
-
-	^ nil

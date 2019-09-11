@@ -1,1 +1,0 @@
-Base class used to fetch Monticello definitions (classes, methods) that will be used to create a boostraped image
