@@ -46,7 +46,8 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 	| refQuery noUsers answer subclasses users |
 	
 	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.	
-	noUsers := self confirmEmptySystemQuery: refQuery excluding: classes.
+	"we need to exclude both the class and instance side of the class"
+	noUsers := self confirmEmptySystemQuery: refQuery excluding: (classes flatCollect: [ :each | { each . each classSide } ]).
 	
 	subclasses := (classes flatCollect: [:each | each subclasses]) copyWithoutAll: classes.
 	subclasses ifNotEmpty: [ 
