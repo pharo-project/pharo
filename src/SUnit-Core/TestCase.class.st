@@ -26,7 +26,7 @@ Class {
 { #category : #'building suites' }
 TestCase class >> addTestsFor: classNameString toSuite: suite [
 	| cls |
-	cls := Smalltalk globals at: classNameString ifAbsent: [ ^ suite ].
+	cls := environment at: classNameString ifAbsent: [ ^ suite ].
 	^ cls isAbstract
 		ifTrue: [ 
 			cls allSubclasses
@@ -136,7 +136,7 @@ TestCase class >> coverage [
 	(self name endsWith: 'Test')
 		ifFalse: [ self error: 'Please, use #coverageForClass: instead' ].
 	className := self name copyFrom: 1 to: self name size - 'Test' size.
-	cls := Smalltalk globals at: className asSymbol ifAbsent: [ self error: 'Please, use #coverageForClass: instead' ].	"May happen with Transcript"
+	cls := environment at: className asSymbol ifAbsent: [ self error: 'Please, use #coverageForClass: instead' ].	"May happen with Transcript"
 	cls isBehavior
 		ifFalse: [ cls := cls class ].
 	^ self coverageForClass: cls
@@ -360,7 +360,7 @@ TestCase class >> localCoverage [
 	(self name endsWith: 'Test')
 		ifFalse: [ self error: 'Please, use #localCoverageForClass: instead' ].
 	className := self name copyFrom: 1 to: self name size - 'Test' size.
-	cls := Smalltalk globals at: className asSymbol ifAbsent: [ self error: 'Please, use #localCoverageForClass: instead' ].
+	cls := environment at: className asSymbol ifAbsent: [ self error: 'Please, use #localCoverageForClass: instead' ].
 	cls isBehavior
 		ifFalse: [ cls := cls class ].
 	^ self localCoverageForClass: cls
