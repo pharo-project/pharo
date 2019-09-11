@@ -41,6 +41,12 @@ SmallIntegerTest >> testDivide [
 	self should: [ 1 / 0 ] raise: ZeroDivide.
 ]
 
+{ #category : #'tests - other' }
+SmallIntegerTest >> testIsNotAbstract [
+
+	self deny: SmallInteger isAbstract 
+]
+
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testMaxVal [
 	Smalltalk vm wordSize = 4

@@ -688,7 +688,7 @@ ChangeSet >> checkForSlips [
 					[method := aClass compiledMethodAt: mAssoc key ifAbsent: [nil].
 					method ifNotNil:
 						[(self hasReportableSlip: method)
-							ifTrue: [ slips add: (aClass >> mAssoc key) methodReference ]]]]].
+							ifTrue: [ slips add: (aClass >> mAssoc key) ]]]]].
 	^ slips
 ]
 
@@ -800,7 +800,8 @@ ChangeSet >> expungeEmptyClassChangeEntries [
 ChangeSet >> fatDefForClass: class [ 
 	| newDef oldDef oldStrm newStrm outStrm oldVars newVars addedVars |
 	class isBehavior ifFalse: [ ^ class definition ].
-	newDef := class definition.
+	
+	newDef := class oldDefinition.
 	oldDef := (self changeRecorderFor: class) priorDefinition.
 	oldDef ifNil: [ ^ newDef ].
 	oldDef = newDef ifTrue: [ ^ newDef ].
@@ -1095,9 +1096,7 @@ ChangeSet >> initialize [
 { #category : #testing }
 ChangeSet >> isEmpty [
 	"Answer whether the receiver contains any elements."
-	
-	changeRecords ifNil: [^true].
-	^ changeRecords isEmpty 
+	^ changeRecords isEmptyOrNil 
 ]
 
 { #category : #initialization }

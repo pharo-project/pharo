@@ -145,19 +145,18 @@ TaAbstractComposition >> compile: selector into: aClass [
 				failBlock: [^ false];
 				compiledMethodTrailer: trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
-				
+
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 
-	"I have to check because during bootstrap there is no SouceFiles"
-	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
-		newMethod putSource: sourceCode
-				withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
+	(selector ~= method selector or: [self changesSourceCode: selector]) 
+		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
+		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
 		
 	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass organization protocolOrganizer
 		classify: selector
-		inProtocolNamed: (self categoryOfMethod: method withSelector: selector).
+		inProtocolNamed: (self categoryOfMethod: method withSelector: method selector).
 	
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -191,11 +190,14 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	The method is only replaced if replacing is true. 
 	"
 
-	| aCompiledMethod source newMethod traitDefining |
+	| aCompiledMethod source newMethod traitDefining sourceHasChanged |
 	
 	traitDefining := self traitDefining: aSelector.
 	aCompiledMethod := self compiledMethodAt: aSelector.
 	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
+	
+	"If the selectors are not the same I have to save the new source code"
+	sourceHasChanged := aSelector ~= aCompiledMethod selector.
 	
 	"Check if the method should be replaced. It is replaced if:
 	 - replacing is true.
@@ -208,12 +210,8 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
 	newMethod methodClass: aClass.
-		
-	"write source to changes file only if we have it (not available during bootstrap)"	
-	
-	(source isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
-		newMethod putSource: source
-			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
+			
+	newMethod setSourcePointer: aCompiledMethod sourcePointer.	
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 
@@ -253,8 +251,6 @@ TaAbstractComposition >> copyWithoutTrait: aTrait [
 { #category : #operations }
 TaAbstractComposition >> getSourceCodeOf: aCompiledMethod usingSelector: aSelector [ 
 	
-	aCompiledMethod hasSourceCode ifFalse: [ ^ nil ].
-
 	^ aCompiledMethod getSourceReplacingSelectorWith: aSelector
 ]
 
@@ -347,6 +343,17 @@ TaAbstractComposition >> isLocalAliasSelector: aSymbol [
 	^ false
 ]
 
+{ #category : #testing }
+TaAbstractComposition >> isNotEmpty [
+	^ self isEmpty not
+]
+
+{ #category : #operations }
+TaAbstractComposition >> isSourcesPresentInSystem [
+
+	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])
+]
+
 { #category : #accessing }
 TaAbstractComposition >> name [
 	self subclassResponsibility 
@@ -376,6 +383,17 @@ TaAbstractComposition >> printOn: aStream [
 TaAbstractComposition >> reverseAlias: aSelector [
 	"Returns all the aliases that point to this old selector"
 	self subclassResponsibility
+]
+
+{ #category : #compiling }
+TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
+
+	"I have to check because during bootstrap there is no SouceFiles"
+	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) 
+		and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
+			newMethod putSource: sourceCode
+					withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].	
+
 ]
 
 { #category : #accessing }

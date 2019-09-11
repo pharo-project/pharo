@@ -28,7 +28,7 @@ MCPatcher >> addDefinition: aDefinition [
 	definitions add: aDefinition
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCPatcher >> initializeWithSnapshot: aSnapshot [
 	definitions := MCDefinitionIndex definitions: aSnapshot definitions
 ]

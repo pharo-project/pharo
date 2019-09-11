@@ -14,7 +14,7 @@ NullSoundTheme class >> themeName [
 	^'No Sounds'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NullSoundTheme >> defaultDefaultSound [
 	"Answer the default default sound!"
 

@@ -4,34 +4,8 @@ A MCDefinition is the root of inheritance of entities representing code.
 Class {
 	#name : #MCDefinition,
 	#superclass : #Object,
-	#classVars : [
-		'Instances',
-		'InstancesWriteLock'
-	],
 	#category : #'Monticello-Base'
 }
-
-{ #category : #cleanup }
-MCDefinition class >> cleanUp [
-	"Flush caches"
-
-	self clearInstances.
-]
-
-{ #category : #cleanup }
-MCDefinition class >> clearInstances [
-	WeakArray removeWeakDependent: Instances.
-	Instances := nil
-]
-
-{ #category : #'instance creation' }
-MCDefinition class >> instanceLike: aDefinition [
-	Instances ifNil: [ Instances := WeakSet new ].
-	InstancesWriteLock ifNil: [ InstancesWriteLock := Semaphore forMutualExclusion ].
-	^ (Instances like: aDefinition) 
-		ifNil: [
-			InstancesWriteLock critical: [ Instances add: aDefinition ]]
-]
 
 { #category : #comparing }
 MCDefinition >> <= other [

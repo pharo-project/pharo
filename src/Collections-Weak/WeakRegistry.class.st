@@ -20,7 +20,7 @@ Class {
 
 { #category : #accessing }
 WeakRegistry class >> default [
-	^Default ifNil:[Default := self new]
+	^Default ifNil: [ Default := self new ]
 ]
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ WeakRegistry >> add: anObject [
 
 { #category : #adding }
 WeakRegistry >> add: anObject executor: anExecutor [
-" with new finalization, we can simply override associations with key == nil in valueDictionary "
+	"With new finalization, we can simply override associations with key == nil in valueDictionary "
 	self protected: [ | finItem |
 		finItem := valueDictionary at: anObject ifAbsent: [
 			WeakFinalizationList hasNewFinalization ifTrue: [
@@ -63,8 +63,8 @@ WeakRegistry >> add: anObject executor: anExecutor [
 { #category : #enumerating }
 WeakRegistry >> do: aBlock [
 	^self protected: [
-		valueDictionary keysDo: aBlock.
-	].
+		valueDictionary keysDo: aBlock
+	]
 
 ]
 
@@ -74,12 +74,12 @@ WeakRegistry >> finalizeValues [
 	
 	| finalizer |
 
-	" Do the old way, if VM don't supports us"
+	"Do the old way, if VM don't supports us"
 	WeakFinalizationList hasNewFinalization ifFalse: [ | finalizers |
 		finalizers := OrderedCollection new.
 		self protected: [ 
 			valueDictionary expiredValuesDo: [:finItem |
-				finalizers add: finItem.
+				finalizers add: finItem
 				].
 		 ].
 		finalizers do: [:each | [each finalizeValues] on: Exception fork: [:ex | ex pass ] ].
@@ -97,21 +97,22 @@ WeakRegistry >> finalizeValues [
 		next := finalizer next.
 		[ finalizer finalizeValues] on: Exception fork: [:ex | ex pass ].
 		finalizer := next
-	].
+	]
 ]
 
 { #category : #initialization }
 WeakRegistry >> initialize [
+	super initialize.
 	valueDictionary := WeakIdentityKeyDictionary new.
 	list := WeakFinalizationList new.
 	sema := Semaphore forMutualExclusion.
-	self installFinalizer.
+	self installFinalizer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private - initialization' }
 WeakRegistry >> installFinalizer [
-	" do nothing, pharo does not supports it right now
-	valueDictionary finalizer: #finalizeValues
+	"Do nothing, pharo does not supports it right now
+	  valueDictionary finalizer: #finalizeValues
 	"
 ]
 
@@ -140,7 +141,7 @@ WeakRegistry >> postCopy [
 
 { #category : #printing }
 WeakRegistry >> printElementsOn: aStream [
-	sema ifNil: [^super printElementsOn: aStream].
+	sema ifNil: [ ^super printElementsOn: aStream ].
 	aStream nextPutAll: '(<this WeakRegistry is locked>)'
 ]
 
@@ -170,12 +171,12 @@ WeakRegistry >> removeAll [
 	self protected:[
 		valueDictionary removeAll.
 		list swapWithNil. "prune finalization list as well"
-	].
+	]
 ]
 
 { #category : #accessing }
 WeakRegistry >> size [
-	^ self protected: [valueDictionary slowSize]
+	^ self protected: [ valueDictionary slowSize ]
 ]
 
 { #category : #private }

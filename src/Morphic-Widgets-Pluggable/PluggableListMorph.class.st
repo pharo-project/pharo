@@ -368,11 +368,6 @@ PluggableListMorph >> doubleClick: event [
 	^ self model perform: doubleClickSelector
 ]
 
-{ #category : #obsolete }
-PluggableListMorph >> doubleClick: event onItem: aMorph [
-	self removeObsoleteEventHandlers.
-]
-
 { #category : #initialization }
 PluggableListMorph >> doubleClickSelector: aSymbol [
 	doubleClickSelector := aSymbol
@@ -565,7 +560,7 @@ PluggableListMorph >> getMenu: shiftKeyState [
 ]
 
 { #category : #accessing }
-PluggableListMorph >> getSelectionListSelector: getListSel. [
+PluggableListMorph >> getSelectionListSelector: getListSel [
 
 	getSelectionListSelector := getListSel
 ]
@@ -870,11 +865,6 @@ PluggableListMorph >> mouseDown: evt [
 	super mouseDown: evt
 ]
 
-{ #category : #obsolete }
-PluggableListMorph >> mouseDown: event onItem: aMorph [
-	self removeObsoleteEventHandlers.
-]
-
 { #category : #'multi-selection' }
 PluggableListMorph >> mouseDownOnMultiple: event forRow: row [
 
@@ -965,11 +955,6 @@ PluggableListMorph >> mouseEnterDragging: evt [
 				ifFalse: [potentialDropRow := 0]]
 ]
 
-{ #category : #obsolete }
-PluggableListMorph >> mouseEnterDragging: anEvent onItem: aMorph [ 
-	self removeObsoleteEventHandlers.
-]
-
 { #category : #'event handling' }
 PluggableListMorph >> mouseLeaveDragging: anEvent [
 	"The mouse has left with a button down."
@@ -981,11 +966,6 @@ PluggableListMorph >> mouseLeaveDragging: anEvent [
 	self resetPotentialDropRow.
 	anEvent hand releaseMouseFocus: self.
 	"above is ugly but necessary for now"
-]
-
-{ #category : #obsolete }
-PluggableListMorph >> mouseLeaveDragging: anEvent onItem: aMorph [ 
-	self removeObsoleteEventHandlers.
 ]
 
 { #category : #'event handling' }
@@ -1058,11 +1038,6 @@ PluggableListMorph >> mouseUp: evt [
 	self isMultipleSelection
 		ifTrue: [ self mouseUpOnMultiple: evt ]
 		ifFalse: [ self mouseUpOnSingle: evt ]
-]
-
-{ #category : #obsolete }
-PluggableListMorph >> mouseUp: event onItem: aMorph [ 
-	self removeObsoleteEventHandlers.
 ]
 
 { #category : #'multi-selection' }
@@ -1179,12 +1154,6 @@ PluggableListMorph >> potentialDropRow [
 	"return the row of the item that the most recent drop hovered over, or 0 if there is no potential drop target"
 	^potentialDropRow ifNil: [ 0 ].
 
-]
-
-{ #category : #obsolete }
-PluggableListMorph >> removeObsoleteEventHandlers [
-	scroller submorphs do:[:m|
-		m eventHandler: nil; highlightForMouseDown: false; resetExtension].
 ]
 
 { #category : #'scroll cache' }
@@ -1365,20 +1334,20 @@ PluggableListMorph >> selectionColor [
 PluggableListMorph >> selectionColor: aColor [
 	"Set the colour for selected items."
 
-	| w |
+	| window |
 	selectionColor := aColor.
-	w := self ownerThatIsA: SystemWindow.
-	self selectionColorToUse:
-			((self theme settings fadedBackgroundWindows not or: [ w isNil or: [ w isActive ] ])
-				ifTrue: [ aColor ]
-				ifFalse: [ self theme unfocusedSelectionColor ])
+	window := self ownerThatIsA: SystemWindow.
+
+	self selectionColorToUse: ((self theme fadedBackgroundWindows not or: [ window isNil or: [ window isActive ] ])
+		ifTrue: [ aColor ]
+		ifFalse: [ self theme unfocusedSelectionColor ])
 ]
 
 { #category : #accessing }
 PluggableListMorph >> selectionColorToUse [
 	"Answer the colour to use for selected items."
 
-	^ selectionColorToUse ifNil: [self theme settings selectionColor] 
+	^ selectionColorToUse ifNil: [ self theme selectionColor ]
 ]
 
 { #category : #accessing }
@@ -1488,7 +1457,7 @@ PluggableListMorph >> setSelectedMorph: aMorph [
 ]
 
 { #category : #accessing }
-PluggableListMorph >> setSelectionListSelector: getListSel. [
+PluggableListMorph >> setSelectionListSelector: getListSel [
 
 	setSelectionListSelector := getListSel
 ]
@@ -1503,7 +1472,7 @@ PluggableListMorph >> specialKeyPressed: anEvent [
 		ifTrue: [" escape key"
 			^ ActiveEvent shiftPressed
 				ifTrue:
-					[ActiveWorld invokeWorldMenuFromEscapeKey]
+					[self currentWorld invokeWorldMenuFromEscapeKey]
 				ifFalse:[ 
 					(self yellowButtonActivity: false) 
 						ifTrue: [ ^ self ]]].
@@ -1582,11 +1551,6 @@ PluggableListMorph >> startDrag: evt [
 		ensure: [
 			Cursor normal show.
 			evt hand releaseMouseFocus: self] 
-]
-
-{ #category : #obsolete }
-PluggableListMorph >> startDrag: evt onItem: itemMorph [ 
-	self removeObsoleteEventHandlers.
 ]
 
 { #category : #'drag and drop' }

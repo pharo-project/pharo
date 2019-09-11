@@ -6,13 +6,6 @@ RBMethodNode >> compiledMethod [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> decompileString [ 
-
-	^ self formattedCode 
-
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysis [
 
 	self compilationContext ifNil: [ self methodClass: nil class ].
@@ -38,7 +31,7 @@ RBMethodNode >> ensureCachedArgumentNames [
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [	
 	| message |
 	message := RBMessageNode 
-		receiver: (RBSelfNode named: 'self')
+		receiver: RBSelfNode new
 		selector: #error: 
 		arguments: {RBLiteralNode value: messageText}.
 	^ self 
@@ -98,11 +91,6 @@ RBMethodNode >> ir: aIRMethodNode [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> irInstruction [
 	^ self ir
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> methodOrBlockNode [
-	"^ self"
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -196,11 +184,4 @@ RBMethodNode >> sourceText: aString [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> startWithoutParentheses [
 	^ 1
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> tempNames [
-	"compatibility method to old MethodNode"
-	self flag: #Clean.
-	^ self argumentNames, self temporaryNames
 ]

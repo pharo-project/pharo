@@ -68,7 +68,7 @@ FBDExamples >> exampleAndOr [
 	| t1 t2 |
 	t1 := true.
 	t2 := false.
-	t1 and: [ t2. '1' logCr ]. "effect"   
+	t1 and: [ t2. '1' traceCr ]. "effect"   
 ]
 
 { #category : #'examples-blocks-optimized' }
@@ -79,7 +79,7 @@ FBDExamples >> exampleAndOr2 [
 	tmp2 := false.
 	tmp2
 		ifTrue: [  ]
-		ifFalse: [ '2' logCr ].
+		ifFalse: [ '2' traceCr ].
 	^ self
 ]
 
@@ -357,7 +357,7 @@ FBDExamples >> exampleCascadeIntoBlockWithTempIntoCascade [
 { #category : #'examples - branches' }
 FBDExamples >> exampleCascadeNested [
 	<sampleInstance>
-	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	<compilerOptions: #(- #optionReadOnlyLiterals)>
 	| tmp1 tmp2 |
 	tmp1 := 1.
 	tmp2 := #(1 2 3).
@@ -905,7 +905,7 @@ FBDExamples >> examplePushBigArray [
 { #category : #'examples - loops' }
 FBDExamples >> exampleRepeatEffect [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	[ 
@@ -917,7 +917,7 @@ FBDExamples >> exampleRepeatEffect [
 { #category : #'examples - loops' }
 FBDExamples >> exampleRepeatValue [
 	<sampleInstance>
-	<compilerOptions: #(#+ #optionInlineRepeat)>
+	<compilerOptions: #(+ #optionInlineRepeat)>
 	| i |
 	i := 1.
 	^ [ 
@@ -1196,9 +1196,8 @@ FBDExamples >> exampleToDoArgumentNotInlined [
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleToDoInsideBlock [
 	| tmp1 block |
-	tmp1 := {1.2.
-	3.4} asOrderedCollection.
-	block := [ (tmp1 at: 1) to: (tmp1 at: 4) do: [ :arg1 | Transcript show: arg1 ] ]
+	tmp1 := {1.2 . 3.4} asOrderedCollection.
+	block := [ (tmp1 at: 1) to: (tmp1 at: 4) do: [ :arg1 | self trace: arg1 ] ]
 ]
 
 { #category : #'examples-blocks-optimized' }

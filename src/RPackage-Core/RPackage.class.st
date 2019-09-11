@@ -186,13 +186,13 @@ RPackage >> actualClassTags [
 { #category : #'add class' }
 RPackage >> addClass: aClass [
 	"TODO: deprecate system category / replace this with a direct call to moveClass:fromPackage:toTag:"
-	
+
 	"This does two things:
 		- make sure the class tag for ourselves exists
 		- change the class category as appropriate.
 			(and by cascade, ensure systemClassRecategorizedAction: is called)."
-	
-	aClass category: (self addClassTag: self categoryName) categoryName
+
+	aClass category: (self addClassTag: self name) categoryName
 ]
 
 { #category : #'add class' }
@@ -387,11 +387,6 @@ RPackage >> category: categoryName matches: prefix [
 	(categoryName findString: prefix startingAt: 1 caseSensitive: false) = 1
 		ifFalse: [ ^false ].
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
-]
-
-{ #category : #'under deprecation' }
-RPackage >> categoryName [
-	^ self name
 ]
 
 { #category : #'system compatibility' }
@@ -906,21 +901,6 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : #'system compatibility' }
-RPackage >> includesMethod: aSymbol ofClass: aClass [
-
-	self flag: #stef. "only used by RB"
-	self flag: #cyrille. "looks like a bogus implementation because category have nothing to do with the fact that a method is in package or not."
-	"CD: Indeed, it looks strange. 
-	With RPackage we have 'includesSelector:ofClass:. I guess it should return the same result (?)'
-	"
-	aClass ifNil: [^ false].
-	^ self
-		includesMethodCategory: ((aClass organization categoryOfElement: aSymbol)
-										ifNil: [' '])
-		ofClass: aClass
-]
-
-{ #category : #'system compatibility' }
 RPackage >> includesMethodCategory: categoryName ofClass: aClass [
 	^ (self isYourClassExtension: categoryName)
 		or: [(self includesClass: aClass)
@@ -974,6 +954,13 @@ RPackage >> initialize [
 RPackage >> isDefault [
 	"Return whether the receiver is the default package, i.e. the one used when nothing else is specified."
 	^ self name = self class defaultPackageName
+]
+
+{ #category : #testing }
+RPackage >> isDeprecated [
+	^ self packageManifestOrNil 
+		ifNil: [ ^ false ]
+		ifNotNil: [ :manifest | manifest isDeprecated ]
 ]
 
 { #category : #testing }
@@ -1062,12 +1049,6 @@ RPackage >> methodsForClass: aClass [
 	
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> methodsInCategory: aString ofClass: aClass do: aBlock [
-	((aClass organization listAtCategoryNamed: aString) ifNil: [^self])
-		do: [:sel | aBlock value: (self referenceForMethod: sel ofClass: aClass)]
-]
-
 { #category : #private }
 RPackage >> moveClass: aClass fromPackage: oldPackage toTag: aTag [ 
 
@@ -1116,6 +1097,13 @@ RPackage >> orderedClasses [
 { #category : #private }
 RPackage >> organizer [
 	^ self class organizer
+]
+
+{ #category : #accessing }
+RPackage >> packageManifestOrNil [
+	^ self definedClasses
+		detect: [ :each | each isManifest ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }
@@ -1170,11 +1158,6 @@ RPackage >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
 		put: propValue
-]
-
-{ #category : #'system compatibility' }
-RPackage >> referenceForMethod: aSymbol ofClass: aClass [
-	^ (aClass >> aSymbol) asRingDefinition
 ]
 
 { #category : #register }
@@ -1457,42 +1440,37 @@ RPackage >> renameTagsPrefixedWith: oldName to: newName [
 { #category : #register }
 RPackage >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
-	| oldName newName oldCategoryNames repositoryGroup |
 
+	| oldName newName oldCategoryNames repositoryGroup |
 	oldName := self name.
 	newName := aSymbol asSymbol.
 	repositoryGroup := self mcPackage workingCopy repositoryGroup.
-	
 	self organizer validatePackageDoesNotExist: aSymbol.
-
-	oldCategoryNames  := (self classTags collect: #categoryName as: Set) 
-		add: self categoryName;
-		difference: { newName}.
-	
+	oldCategoryNames := (self classTags collect: #categoryName as: Set)
+		add: self name;
+		difference: {newName}.
 	self name: aSymbol.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		self definedClasses do: [ :each | each category: newName, (each category allButFirst: oldName size) ].
-		oldCategoryNames do: [ :each | SystemOrganizer default removeCategory: each ] ].
-	self renameTagsPrefixedWith: oldName to: newName. 
+	SystemAnnouncer uniqueInstance
+		suspendAllWhile: [ self definedClasses
+				do:
+					[ :each | each category: newName , (each category allButFirst: oldName size) ].
+			oldCategoryNames
+				do: [ :each | SystemOrganizer default removeCategory: each ] ].
+	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
-			
-	self organizer 
+	self organizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
-	
-	self mcPackage workingCopy repositoryGroup: repositoryGroup. 
-	
-	SystemAnnouncer uniqueInstance 
-		announce: (RPackageRenamed 
-			to: self 
-			oldName: oldName 
-			newName: newName).
+	self mcPackage workingCopy repositoryGroup: repositoryGroup.
+	SystemAnnouncer uniqueInstance
+		announce:
+			(RPackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : #private }
 RPackage >> reportBogusBehaviorOf: aSelector [
 
-	self logCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
+	self traceCr: 'RPackage log: Something wrong around ', aSelector asString , 'since the removeKey: is called on not present information.'.
 ]
 
 { #category : #accessing }

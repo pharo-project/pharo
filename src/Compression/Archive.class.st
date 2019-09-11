@@ -11,29 +11,29 @@ Class {
 }
 
 { #category : #'archive operations' }
-Archive >> addDirectory: aFileName [
-	^self addDirectory: aFileName as: aFileName
+Archive >> addDirectory: aFileReference [
+	^self addDirectory: aFileReference as: aFileReference path pathString
 
 ]
 
 { #category : #'archive operations' }
-Archive >> addDirectory: aFileName as: anotherFileName [
+Archive >> addDirectory: aFileReference as: anotherFileName [
 	| newMember |
-	newMember := self memberClass newFromDirectory: aFileName.
+	newMember := self memberClass newFromDirectory: aFileReference.
 	self addMember: newMember.
 	newMember localFileName: anotherFileName.
 	^newMember
 ]
 
 { #category : #'archive operations' }
-Archive >> addFile: aFileName [
-	^self addFile: aFileName as: aFileName
+Archive >> addFile: aFileReference [
+	^self addFile: aFileReference as: aFileReference path pathString
 ]
 
 { #category : #'archive operations' }
-Archive >> addFile: aFileName as: anotherFileName [
+Archive >> addFile: aFileReference as: anotherFileName [
 	| newMember |
-	newMember := self memberClass newFromFile: aFileName.
+	newMember := self memberClass newFromFile: aFileReference.
 	newMember localFileName: anotherFileName.
 	self addMember: newMember.
 	^newMember
@@ -92,9 +92,9 @@ Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n match: aBloc
 ]
 
 { #category : #'archive operations' }
-Archive >> canWriteToFileNamed: aFileName [
+Archive >> canWriteToFile: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
-	^(members anySatisfy: [ :ea | ea usesFileNamed: aFileName ]) not.
+	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not.
 
 ]
 
@@ -215,12 +215,12 @@ Archive >> writeTo: aStream [
 ]
 
 { #category : #'archive operations' }
-Archive >> writeToFileNamed: aFileName [
+Archive >> writeToFile: aFileReferenceOrFileName [
 
 	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^self error: (aFileName, ' is needed by one or more members in this archive') ].
+	(self canWriteToFile: aFileReferenceOrFileName)
+		ifFalse: [ ^self error: (aFileReferenceOrFileName asString, ' is needed by one or more members in this archive') ].
 	
-	(File named: aFileName)
-		writeStreamDo: [ :stream | self writeTo: stream ]	
+	aFileReferenceOrFileName asFileReference
+		binaryWriteStreamDo: [ :stream | self writeTo: stream ]	
 ]

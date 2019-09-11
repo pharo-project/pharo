@@ -8,14 +8,14 @@ Class {
 RBPullUpClassVariableTest >> testMetaClassFailure [
 	self shouldFail: (RBPullUpClassVariableRefactoring 
 			variable: #RecursiveSelfRule
-			class: RBLintRuleTest class)
+			class: RBLintRuleTestData class)
 ]
 
 { #category : #'failure tests' }
 RBPullUpClassVariableTest >> testNonExistantName [
 	self shouldFail: (RBPullUpClassVariableRefactoring 
 			variable: #Foo
-			class: RBLintRuleTest)
+			class: RBLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -23,8 +23,8 @@ RBPullUpClassVariableTest >> testPullUpClassVariable [
 	| refactoring |
 	refactoring := RBPullUpClassVariableRefactoring 
 		variable: #RecursiveSelfRule
-		class: RBLintRuleTest.
+		class: RBLintRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBLintRuleTest) directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #RBTransformationRuleTest) directlyDefinesClassVariable: #RecursiveSelfRule)
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) directlyDefinesClassVariable: #RecursiveSelfRule).
+	self deny: ((refactoring model classNamed: #RBTransformationRuleTestData) directlyDefinesClassVariable: #RecursiveSelfRule)
 ]

@@ -14,12 +14,9 @@ RBEqualNotUsedRule class >> uniqueIdentifierName [
 	^'EqualNotUsedRule'
 ]
 
-{ #category : #'as yet unclassified' }
-RBEqualNotUsedRule >> check: node forCritiquesDo: aCriticBlock [
-	(node isMessage
-		and: [ node isUsed not
-				and: [ #(#= #== #~= #~~ #< #> #<= #>=) includes: node selector ] ])
-		ifTrue: [ aCriticBlock cull: (self critiqueFor: node) ]
+{ #category : #running }
+RBEqualNotUsedRule >> basicCheck: node [
+	^ node isMessage and: [ node isUsed not and: [ #(#= #== #~= #~~ #< #> #<= #>=) includes: node selector ] ]
 ]
 
 { #category : #accessing }

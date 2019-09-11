@@ -12,6 +12,12 @@ SequenceableCollection class >> << blockWithArg [
 	^ self streamContents: blockWithArg
 ]
 
+{ #category : #testing }
+SequenceableCollection class >> isAbstract [
+
+	^self name = #SequenceableCollection
+]
+
 { #category : #'stream creation' }
 SequenceableCollection class >> new: newSize streamContents: blockWithArg [
 	| stream |
@@ -1247,18 +1253,6 @@ SequenceableCollection >> indexOfSubCollection: sub startingAt: start ifAbsent: 
 	^ exceptionBlock value
 ]
 
-{ #category : #accessing }
-SequenceableCollection >> integerAt: index [
-	"Return the integer at the given index"
-	^self at: index
-]
-
-{ #category : #accessing }
-SequenceableCollection >> integerAt: index put: value [
-	"Return the integer at the given index"
-	^self at: index put: value
-]
-
 { #category : #converting }
 SequenceableCollection >> isSequenceable [
 	^ true
@@ -1576,6 +1570,10 @@ SequenceableCollection >> polynomialEval: thisX [
 
 { #category : #streaming }
 SequenceableCollection >> putOn: aStream [
+	"Write the receiver onto aStream by iterating over its elements.
+	In general we assume aStream accepts the receiver's elements as element type.
+	Return self."
+
 	self do: [ :each | each putOn: aStream ]
 ]
 

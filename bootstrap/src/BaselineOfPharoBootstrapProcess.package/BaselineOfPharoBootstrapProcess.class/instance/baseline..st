@@ -5,7 +5,7 @@ baseline: spec
 	spec for: #common do: [
 		spec blessing: #baseline.
 		spec baseline: 'Tonel' with: [ spec
-			repository: 'github://pharo-vcs/tonel:v1.0.11' ].
+			repository: 'github://pharo-vcs/tonel:v1.0.13' ].
 		spec baseline: 'Hermes' with: [ spec
 			repository: 'github://tesonep/hermes:v2.5.1';
   			loads: 'core' ].

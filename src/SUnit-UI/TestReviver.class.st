@@ -1,9 +1,9 @@
 "
 I am a UI for test failures which have been serialized as fuel files. You can:
-* materialize the failed test process to debug
-* browse the test method.
+- materialize the failed test process to debug
+- browse the test method.
 
-self open. 
+self open
 "
 Class {
 	#name : #TestReviver,
@@ -22,18 +22,8 @@ Class {
 	#category : #'SUnit-UI-Tools'
 }
 
-{ #category : #opening }
-TestReviver class >> open [
-	<script>
-	
-	|model|
-	model := self new.
-	model openWithSpec model: model.
-	^model
-]
-
 { #category : #specs }
-TestReviver class >> spec [
+TestReviver class >> defaultSpec [
 	<spec: #default>
 
 	^ SpecLayout composed
@@ -52,13 +42,23 @@ TestReviver class >> spec [
 				newRow: [ :spec | spec
 						add: #vmVersionLabel width: 100;
 						add: #vmVersion ] height: 75];
-		yourself.
+		yourself
+]
+
+{ #category : #opening }
+TestReviver class >> open [
+	<script>
+	
+	|model|
+	model := self new.
+	model openWithSpec model: model.
+	^model
 ]
 
 { #category : #accessing }
 TestReviver class >> title [
 
-	^ 'Test Error Browser'.
+	^ 'Test Error Browser'
 ]
 
 { #category : #private }
@@ -74,41 +74,44 @@ TestReviver >> browse: anAbstractFileReference [
 { #category : #private }
 TestReviver >> browseButton [
 
-	^ browseButton.
+	^ browseButton
 ]
 
 { #category : #private }
 TestReviver >> debugButton [
 
-	^ debugButton.
+	^ debugButton
 ]
 
 { #category : #private }
 TestReviver >> errorListModel [
 
-	^ errorListModel.
+	^ errorListModel
 ]
 
 { #category : #accessing }
 TestReviver >> imageVersion [
+
 	^ imageVersion
 ]
 
 { #category : #accessing }
 TestReviver >> imageVersionLabel [
+
 	^ imageVersionLabel
 ]
 
 { #category : #private }
 TestReviver >> initialExtent [
 
-	^ 700@500.
+	^ 700@500
 ]
 
 { #category : #initialization }
 TestReviver >> initializePresenter [
 
-	errorListModel whenSelectedItemChanged: [ :item | | header |
+	errorListModel whenSelectedItemChanged: [ :item | 
+		| header |
 		item 
 			ifNil: [ 
 				vmVersion text: ''.
@@ -188,7 +191,7 @@ TestReviver >> selectTestFailures [
 		method pragmas isEmpty
 			ifTrue: [ results add: aFile ]
 			ifFalse:  [
-				(method pragmas first keyword = #expectedFailure) 
+				(method pragmas first selector = #expectedFailure) 
 					ifFalse: [ results add: aFile ].
 				 ]
 	].
@@ -208,11 +211,11 @@ TestReviver >> timeStampLabel [
 { #category : #accessing }
 TestReviver >> vmVersion [
 
-	^ vmVersion.
+	^ vmVersion
 ]
 
 { #category : #accessing }
 TestReviver >> vmVersionLabel [
 
-	^ vmVersionLabel.
+	^ vmVersionLabel
 ]

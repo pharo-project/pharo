@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'byteArray'
 	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #testing }
@@ -52,8 +52,8 @@ FLInMemoryBasicSerializationTest >> testStringGlobalsAndClosure [
 	| materialized |
 	materialized := self resultOfSerializeAndMaterialize:  (Array 
 			with: 'a string' 
-			with: Transcript
-			with: [ Transcript show: 'a string' ]).
+			with: Smalltalk
+			with: [ Smalltalk vm. 'a string' ]).
 	self assert: materialized first = 'a string'.
-	self assert: materialized second == Transcript
+	self assert: materialized second == Smalltalk
 ]

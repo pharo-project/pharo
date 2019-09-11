@@ -553,7 +553,7 @@ STONReader >> processSubObjectsOf: object [
 	^ object
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 STONReader >> reset [
 	unresolvedReferences := 0.
 	objects removeAll

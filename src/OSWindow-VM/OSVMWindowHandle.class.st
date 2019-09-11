@@ -67,7 +67,7 @@ OSVMWindowHandle >> initWithAttributes: attributes [
 	self extent: attributes extent
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 OSVMWindowHandle >> initialize [
 	super initialize.
 	fullscreen := false

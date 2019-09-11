@@ -61,7 +61,7 @@ AthensCairoMatrix >> getMatrix [
 	^ self copy
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoMatrix >> initialize [
 	super initialize.
 	self loadIdentity

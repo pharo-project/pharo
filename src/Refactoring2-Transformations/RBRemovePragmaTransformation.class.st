@@ -58,34 +58,35 @@ RBRemovePragmaTransformation >> pragma: aPragmaDefinition inMethod: aSelector in
 
 { #category : #preconditions }
 RBRemovePragmaTransformation >> preconditions [
-
 	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-	  & (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
-			withBlock: [ | pragmaNode |
-				pragmaNode := RBParser parsePragma: pragma.
-				self definingMethod pragmas anySatisfy: [ :e | e selector = pragmaNode selector ] ]
-			errorString: ('Method named <1s> does not have a pragma named <2s>'
-				expandMacrosWith: selector with: (RBParser parsePragma: pragma) selector))
+		withBlock: [ self definingClass isNotNil ]
+		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
+		&
+			(RBCondition
+				withBlock: [ self definingClass canUnderstand: selector ]
+				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
+		&
+			(RBCondition
+				withBlock: [ | pragmaNode |
+					pragmaNode := self parserClass parsePragma: pragma.
+					self definingMethod pragmas
+						anySatisfy: [ :e | e selector = pragmaNode selector ] ]
+				errorString:
+					('Method named <1s> does not have a pragma named <2s>'
+						expandMacrosWith: selector
+						with: (self parserClass parsePragma: pragma) selector))
 ]
 
 { #category : #executing }
 RBRemovePragmaTransformation >> privateTransform [
-
 	| methodTree pragmaNode nodesToRemove |
 	methodTree := self definingMethod.
-	pragmaNode := RBParser parsePragma: pragma.
-	
-	nodesToRemove := ( methodTree allChildren removeDuplicates
-		select: #isPragma )
+	pragmaNode := self parserClass parsePragma: pragma.
+	nodesToRemove := (methodTree allChildren removeDuplicates
+		select: #isPragma)
 		select: [ :node | node selector = pragmaNode selector ].
-	
 	nodesToRemove do: [ :node | node parent removePragma: node ].
-	self definingClass compileTree: methodTree.
+	self definingClass compileTree: methodTree
 ]
 
 { #category : #printing }

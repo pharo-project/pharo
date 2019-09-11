@@ -26,17 +26,12 @@ TCopyPartOfSequenceable >> indexInForCollectionWithoutDuplicates [
 
 { #category : #'tests - fixture' }
 TCopyPartOfSequenceable >> test0FixtureCopyPartOfSequenceableTest [
-
 	self collectionWithoutEqualElements.
-	self collectionWithoutEqualElements
-		do: [ :each | self assert: (self collectionWithoutEqualElements occurrencesOf: each) = 1 ].
+	self collectionWithoutEqualElements do: [ :each | self assert: (self collectionWithoutEqualElements occurrencesOf: each) = 1 ].
 	self indexInForCollectionWithoutDuplicates.
-	self
-		assert:
-			(self indexInForCollectionWithoutDuplicates > 0 & self indexInForCollectionWithoutDuplicates)
-				< self collectionWithoutEqualElements size.
+	self assert: (self indexInForCollectionWithoutDuplicates > 0 & self indexInForCollectionWithoutDuplicates) < self collectionWithoutEqualElements size.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - copying part of sequenceable' }
@@ -56,11 +51,9 @@ TCopyPartOfSequenceable >> testCopyAfter [
 
 { #category : #'tests - copying part of sequenceable' }
 TCopyPartOfSequenceable >> testCopyAfterEmpty [
-
 	| result |
 	result := self empty copyAfter: self collectionWithoutEqualElements first.
-	self assert: result isEmpty
-	
+	self assertEmpty: result
 ]
 
 { #category : #'tests - copying part of sequenceable' }
@@ -81,19 +74,17 @@ TCopyPartOfSequenceable >> testCopyAfterLast [
 
 { #category : #'tests - copying part of sequenceable' }
 TCopyPartOfSequenceable >> testCopyAfterLastEmpty [
-
 	| result |
 	result := self empty copyAfterLast: self collectionWithoutEqualElements first.
-	self assert: result isEmpty
+	self assertEmpty: result
 ]
 
 { #category : #'tests - copying part of sequenceable' }
 TCopyPartOfSequenceable >> testCopyEmptyMethod [
-
 	| result |
-	result := self collectionWithoutEqualElements  copyEmpty .
-	self assert: result isEmpty .
-	self assert: result class equals: self nonEmpty class.
+	result := self collectionWithoutEqualElements copyEmpty.
+	self assertEmpty: result.
+	self assert: result class equals: self nonEmpty class
 ]
 
 { #category : #'tests - copying part of sequenceable' }
@@ -129,11 +120,9 @@ TCopyPartOfSequenceable >> testCopyUpTo [
 
 { #category : #'tests - copying part of sequenceable' }
 TCopyPartOfSequenceable >> testCopyUpToEmpty [
-
 	| result |
 	result := self empty copyUpTo: self collectionWithoutEqualElements first.
-	self assert: result isEmpty
-	
+	self assertEmpty: result
 ]
 
 { #category : #'tests - copying part of sequenceable' }
@@ -153,8 +142,7 @@ TCopyPartOfSequenceable >> testCopyUpToLast [
 
 { #category : #'tests - copying part of sequenceable' }
 TCopyPartOfSequenceable >> testCopyUpToLastEmpty [
-
 	| result |
 	result := self empty copyUpToLast: self collectionWithoutEqualElements first.
-	self assert: result isEmpty
+	self assertEmpty: result
 ]

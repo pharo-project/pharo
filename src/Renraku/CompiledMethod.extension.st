@@ -49,17 +49,12 @@ CompiledMethod >> glmCritiqueSourceIn: composite [
 
 { #category : #'*renraku' }
 CompiledMethod >> overriddenMethods [
-	| overridenMethods |
-	
-	overridenMethods := OrderedCollection new.
-
-	self methodClass allSuperclasses
-		do: [ :class |
-			class compiledMethodAt: self selector
-				ifPresent: [ :method | overridenMethods add: method ]
-				ifAbsent: [ ] ].
-			
-	^ overridenMethods 
+	"all the methods of my superclasses that are overriden by me"
+	| selector |
+	selector := self selector.
+	^ self methodClass allSuperclasses
+		select: [ :class | class includesSelector: selector ]
+		thenCollect: [ :class | class compiledMethodAt: selector ]
 ]
 
 { #category : #'*renraku' }

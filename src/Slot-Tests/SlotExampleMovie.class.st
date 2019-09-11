@@ -6,19 +6,17 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'#name',
-		'#year',
 		'#director => ToOneRelationSlot inverse: #directedMovies inClass: #SlotExamplePerson',
 		'#actors => ToManyRelationSlot inverse: #actedInMovies inClass: #SlotExamplePerson'
 	],
-	#category : #'Slot-Tests-Associations'
+	#category : #'Slot-Tests-Examples - Associations'
 }
 
 { #category : #'instance creation' }
 SlotExampleMovie class >> named: aString [
-
-	^self new
-		name: aString
-		
+	^ self new
+		name: aString;
+		yourself
 ]
 
 { #category : #accessing }
@@ -51,7 +49,7 @@ SlotExampleMovie >> director: aPerson [
 { #category : #initialization }
 SlotExampleMovie >> initialize [
 	super initialize.
-	self class initializeSlots: self.
+	self class initializeSlots: self
 ]
 
 { #category : #accessing }

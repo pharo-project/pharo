@@ -9,7 +9,7 @@ Class {
 		'dependencyIndex',
 		'repositoryIndex'
 	],
-	#category : #MonticelloGUI
+	#category : #'MonticelloGUI-Tools'
 }
 
 { #category : #opening }
@@ -350,7 +350,7 @@ MCConfigurationBrowser >> migrate [
 
 	self pickRepository ifNotNil: [:aRepository |
 		versions do: [:eachVersion |
-			Transcript cr; show: '',aRepository,' storeVersion: ', eachVersion.
+			self crTrace: '',aRepository,' storeVersion: ', eachVersion.
 			aRepository storeVersion: eachVersion
 		]
 	]

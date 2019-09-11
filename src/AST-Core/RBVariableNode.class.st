@@ -53,8 +53,8 @@ RBVariableNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBVariableNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitVariableNode: self
+RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitVariableNode: self
 ]
 
 { #category : #converting }
@@ -66,14 +66,6 @@ RBVariableNode >> adaptToSemanticNode [
 { #category : #matching }
 RBVariableNode >> copyInContext: aDictionary [ 
 	^ self class named: name.
-]
-
-{ #category : #generation }
-RBVariableNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' named: '.
-	self name printOn: aStream
 ]
 
 { #category : #comparing }
@@ -93,7 +85,7 @@ RBVariableNode >> hash [
 	^self name hash
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RBVariableNode >> initialize [
 	super initialize.
 	name := ''.
@@ -156,7 +148,7 @@ RBVariableNode >> name: aName [
 	name := aName asSymbol.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBVariableNode >> named: aName start: aPosition [
 
 	self name: aName.

@@ -22,42 +22,42 @@ RxsContextCondition >> beAny [
 	kind := #syntaxAny
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsContextCondition >> beBeginningOfLine [
 	"Matches empty string at the beginning of a line."
 
 	kind := #syntaxBeginningOfLine
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsContextCondition >> beBeginningOfWord [
 	"Matches empty string at the beginning of a word."
 
 	kind := #syntaxBeginningOfWord
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsContextCondition >> beEndOfLine [
 	"Matches empty string at the end of a line."
 
 	kind := #syntaxEndOfLine
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsContextCondition >> beEndOfWord [
 	"Matches empty string at the end of a word."
 
 	kind := #syntaxEndOfWord
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsContextCondition >> beNonWordBoundary [
 	"Analog of \B."
 
 	kind := #syntaxNonWordBoundary
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsContextCondition >> beWordBoundary [
 	"Analog of \w (alphanumeric plus _)."
 

@@ -99,10 +99,8 @@ InputEventFetcher class >> deinstall [
 	Default
 		ifNotNil: [
 			Default shutDown.
-			SessionManager default unregisterClassNamed: Default class name.
 			Default := nil].
 
-	SessionManager default unregisterClassNamed: self name
 ]
 
 { #category : #'class initialization' }
@@ -110,25 +108,6 @@ InputEventFetcher class >> install [
 	"InputEventFetcher install"
 	Default := self new.
 	Default startUp.
-
-	SessionManager default
-		registerSystemClassNamed: self name 
-		atPriority: 40.
-
-]
-
-{ #category : #'system startup' }
-InputEventFetcher class >> shutDown [
-	"InputEventFetcher shutDown"
-	
-	self default shutDown
-]
-
-{ #category : #'system startup' }
-InputEventFetcher class >> startUp [
-	"InputEventFetcher startUp"
-	
-	self default startUp
 ]
 
 { #category : #private }
@@ -207,7 +186,7 @@ InputEventFetcher >> registerHandler: handler [
 	self eventHandlers add: handler
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InputEventFetcher >> shutDown [
 	self terminateEventLoop.
 	inputSemaphore ifNotNil: [Smalltalk unregisterExternalObject: inputSemaphore]
@@ -222,7 +201,7 @@ InputEventFetcher >> signalEvent: eventBuffer [
 		handler handleEvent: eventBuffer]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InputEventFetcher >> startUp [
 	inputSemaphore := Semaphore new.
 	self primSetInputSemaphore: (Smalltalk registerExternalObject: inputSemaphore).
@@ -230,7 +209,7 @@ InputEventFetcher >> startUp [
 	self installEventLoop
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 InputEventFetcher >> terminateEventLoop [
 	"Terminate the event loop process. Terminate the old process if any."
 	"InputEventFetcher default terminateEventLoop"

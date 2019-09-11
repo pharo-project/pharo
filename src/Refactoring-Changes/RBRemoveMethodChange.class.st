@@ -28,7 +28,7 @@ RBRemoveMethodChange >> = aRemoveMethodChange [
 
 { #category : #converting }
 RBRemoveMethodChange >> asUndoOperation [
-	^ RBRefactoryChangeManager changeFactory addMethodSource: (self methodSourceFor: selector) in: self changeClass
+	^ changeFactory addMethodSource: (self methodSourceFor: selector) in: self changeClass
 ]
 
 { #category : #printing }
@@ -62,7 +62,7 @@ RBRemoveMethodChange >> selector [
 	^ selector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRemoveMethodChange >> selector: aSymbol [
 	selector := aSymbol
 ]

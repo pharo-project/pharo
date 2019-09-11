@@ -28,11 +28,10 @@ RBExcessiveInheritanceRule class >> uniqueIdentifierName [
 ]
 
 { #category : #enumerating }
-RBExcessiveInheritanceRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-	aClass isMeta ifTrue: [ ^ self ].
+RBExcessiveInheritanceRule >> basicCheck: aClass [
+	aClass isMeta ifTrue: [ ^ false ].
 	
-	aClass allSuperclasses size >= self inheritanceDepth ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aClass) ]
+	^ aClass allSuperclasses size >= self inheritanceDepth
 ]
 
 { #category : #accessing }

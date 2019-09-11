@@ -90,7 +90,7 @@ RubSurfaceSelectionShape >> vertices [
 	^ vertices
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubSurfaceSelectionShape >> vertices: aCollectionOfPoints firstIndex: firstCharIndex lastIndex: lastCharIndex color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	firstIndex := firstCharIndex.
 	lastIndex := lastCharIndex.

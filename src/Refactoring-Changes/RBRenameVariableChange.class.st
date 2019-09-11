@@ -44,7 +44,7 @@ RBRenameVariableChange >> addNewVariable [
 { #category : #accessing }
 RBRenameVariableChange >> changeClass [
 	| class |
-	class := Smalltalk globals at: self changeClassName ifAbsent: [ ^ nil ].
+	class := onSystemDictionary classNamed: self changeClassName.
 	^ isMeta ifTrue: [ class class ] ifFalse: [ class ]
 ]
 
@@ -63,9 +63,9 @@ RBRenameVariableChange >> changeClassName [
 
 { #category : #accessing }
 RBRenameVariableChange >> changeClassName: aSymbol [
+
 	className := aSymbol.
-	isMeta isNil
-		ifTrue: [ isMeta := false ]
+	isMeta ifNil: [ isMeta := false ]
 ]
 
 { #category : #printing }
@@ -109,6 +109,12 @@ RBRenameVariableChange >> isMeta [
 ]
 
 { #category : #accessing }
+RBRenameVariableChange >> nameToDisplay [
+
+	^ 'Rename ', self oldName, ' into ', self newName
+]
+
+{ #category : #accessing }
 RBRenameVariableChange >> newName [
 	^ newName
 ]
@@ -133,7 +139,21 @@ RBRenameVariableChange >> printOn: aStream [
 	aStream nextPutAll: self displayString
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 RBRenameVariableChange >> removeOldVariable [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+RBRenameVariableChange >> textToDisplay [
+
+	self printString
+]
+
+{ #category : #accessing }
+RBRenameVariableChange >> whatToDisplayIn: aChangeBrowser [
+
+	| result |
+	result := OrderedCollection with: self.
+	^ result, (self changes flatCollect: [:e | e changes ])
 ]

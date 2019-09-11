@@ -8,10 +8,10 @@ Class {
 RBApplyClassDeprecationRefactoringTest >> testBadName [
 	self
 		shouldFail: (RBApplyClassDeprecationRefactoring 
-				rename: RBLintRuleTest
+				rename: RBLintRuleTestData
 				to: self objectClassVariable);
 		shouldFail: (RBApplyClassDeprecationRefactoring 
-				rename: RBLintRuleTest
+				rename: RBLintRuleTestData
 				to: #'Ob ject')
 ]
 
@@ -57,10 +57,10 @@ RBApplyClassDeprecationRefactoringTest >> testModelRenameClass [
 	self assert: (model classNamed: #ClassDeprecatorTestingClassDeprecatedUser) equals: user.
 
 	self assert: (user parseTreeFor: #foo)
-		equals: (RBParser parseMethod: 'foo ^ClassDeprecatorTestingClassReplacement').
+		equals: (self parseMethod: 'foo ^ClassDeprecatorTestingClassReplacement').
 		
 	self assert: (user parseTreeFor: #objectName) 
-		equals: (RBParser parseMethod: 'objectName ^#(ClassDeprecatorTestingClassReplacement)').
+		equals: (self parseMethod: 'objectName ^#(ClassDeprecatorTestingClassReplacement)').
 
 	self assert: user superclass name 
 		equals: #ClassDeprecatorTestingClassReplacement

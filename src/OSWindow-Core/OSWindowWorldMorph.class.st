@@ -13,7 +13,8 @@ Class {
 	#instVars : [
 		'display',
 		'closeCallback',
-		'isResizeable'
+		'isResizeable',
+		'osWindow'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -94,12 +95,12 @@ OSWindowWorldMorph >> open [
 	self class addExtraWorld: self.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #display }
 OSWindowWorldMorph >> openInWorld [
 	^ self open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 OSWindowWorldMorph >> osWindowCloseButtonPressed [
 	self delete
 ]
@@ -115,8 +116,7 @@ OSWindowWorldMorph >> osWindowRenderer [
 
 { #category : #'session management' }
 OSWindowWorldMorph >> recreateOSWindow [
-	| attributes driver |
-	session := Smalltalk session.
+	| attributes driver | 
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: self extent;
@@ -151,10 +151,17 @@ OSWindowWorldMorph >> title: aTitle [
 	self flag: 'ToDo'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 OSWindowWorldMorph >> updateDisplay [
-	display isNil ifTrue: [
-		display := Form extent: self extent depth: 32.
-		worldState display: display
-	]
+
+	display
+		ifNil: [ display := Form extent: self extent depth: 32.
+			worldState display: display
+			]
+]
+
+{ #category : #accessing }
+OSWindowWorldMorph >> worldState [
+
+	^ worldState 
 ]

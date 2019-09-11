@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotErrorsTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #helpers }
@@ -19,16 +19,10 @@ SlotErrorsTest >> assertInvalidClassName: aName [
 		raise: InvalidGlobalName
 ]
 
-{ #category : #running }
-SlotErrorsTest >> expectedFailures [ 
-
-	^ #(testCannotBeRecompiled)
-]
-
 { #category : #tests }
 SlotErrorsTest >> testCannotBeRecompiled [
-
 	| superclass |
+	<expectedFailure>
 	superclass := self make: [ :builder | 
 		builder 
 			superclass: Object;
@@ -101,7 +95,7 @@ SlotErrorsTest >> testDangerousClassesConditions [
 	specialObjectsArrayItem := (Smalltalk specialObjectsArray select: [ :x | x isClass ]) anyOne name.
 
 	self assert: (DangerousClassNotifier shouldNotBeRedefined: #ProtoObject).
-	self assert: (DangerousClassNotifier shouldNotBeRedefined: specialObjectsArrayItem). 
+	self assert: (DangerousClassNotifier shouldNotBeRedefined: specialObjectsArrayItem)
 ]
 
 { #category : #tests }
@@ -133,8 +127,7 @@ SlotErrorsTest >> testDangerousClassesEnabling [
 	savedExistingSystemSetting 
 		ifTrue: [ DangerousClassNotifier enable ]
 		ifFalse: [ DangerousClassNotifier disable ].
-	self assert: DangerousClassNotifier enabled equals: savedExistingSystemSetting.
-
+	self assert: DangerousClassNotifier enabled equals: savedExistingSystemSetting
 ]
 
 { #category : #tests }

@@ -260,13 +260,13 @@ OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 	| ir method newMethod instance |
 	
-	method := (OCOpalExamples>>#exampleReturn1) parseTree generate.
+	method := (OCOpalExamples>>#exampleReturn42) parseTree generate.
 	instance := OCOpalExamples new.
 	
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 	
-	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleReturn1
+	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleReturn42
 ]
 
 { #category : #'tests-simple' }
@@ -499,7 +499,10 @@ OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 	
-	self assert: (newMethod valueWithReceiver: instance arguments: #()) isContext
+	instance := OCOpalExamples new.
+	newMethod valueWithReceiver: instance arguments: #().
+	
+	self assert: instance result isContext
 ]
 
 { #category : #'tests-blocks-optimized' }

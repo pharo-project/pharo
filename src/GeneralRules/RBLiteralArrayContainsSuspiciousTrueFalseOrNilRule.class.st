@@ -9,9 +9,6 @@ This smells checks methods having #(#true #false #nil) in their literal frame si
 Class {
 	#name : #RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule,
 	#superclass : #ReNodeBasedRule,
-	#instVars : [
-		'matcher'
-	],
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -23,13 +20,8 @@ RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule class >> uniqueIdentifierName
 ]
 
 { #category : #running }
-RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule >> check: aNode forCritiquesDo: aCriticBlock [
-
-	aNode isLiteralArray ifFalse: [ ^ self ].
-	(aNode value includesAny: #(#true #false #nil))
-		ifFalse: [ ^ self ].
-		
-	aCriticBlock cull: (self critiqueFor: aNode) 
+RBLiteralArrayContainsSuspiciousTrueFalseOrNilRule >> basicCheck: aNode [
+	^ aNode isLiteralArray and: [ aNode value includesAny: #(#true #false #nil) ]
 ]
 
 { #category : #accessing }

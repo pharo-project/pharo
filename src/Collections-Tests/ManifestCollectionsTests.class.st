@@ -14,7 +14,7 @@ ManifestCollectionsTests class >> dependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestCollectionsTests class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Arithmetic' #'Transcript-Core' #'OpalCompiler-Core')
+	^ #(#'Kernel-Chronology-Extras' #'Math-Operations-Extensions' #'OpalCompiler-Core')
 ]
 
 { #category : #'meta-data' }

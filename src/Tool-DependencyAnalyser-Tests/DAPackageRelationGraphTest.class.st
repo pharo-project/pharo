@@ -12,7 +12,10 @@ Class {
 		'packageA',
 		'packageB',
 		'packageC',
-		'packageD'
+		'packageD',
+		'packageKernelTests',
+		'packageMorphicBase',
+		'packageTextCore'
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }
@@ -29,6 +32,8 @@ DAPackageRelationGraphTest >> setUp [
 	packageCollectionAbstract := DAPackage on: (RPackageSet named: 'Collections-Abstract').
 	packageStrings := DAPackage on:(RPackageSet named: 'Collections-Strings').
 	packageKernel := DAPackage on:(RPackageSet named: 'Kernel').
+	packageMorphicBase := DAPackage on: (RPackageSet named: 'Morphic-Base').
+	packageTextCore := DAPackage on: (RPackageSet named: 'Text-Core').
 	packageRegexCore := DAPackage on:(RPackageSet named: 'Regex-Core').
 	packageCollectionsSequenceable := DAPackage on: (RPackageSet named: 'Collections-Sequenceable').
 	packagePackageDependencies := DAPackage on: (RPackageSet named:  #'Tool-DependencyAnalyser').
@@ -59,20 +64,27 @@ DAPackageRelationGraphTest >> testAddInheritanceDependencies [
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testAddPackage [
-	self assert: aPackageRelationGraph packages isEmpty.
+	self assertEmpty: aPackageRelationGraph packages.
 	aPackageRelationGraph addPackage: packageCollectionAbstract.
 	self assert: aPackageRelationGraph packages size = 1.
 	aPackageRelationGraph addPackage: packageCollectionsSequenceable.
-	self assert: aPackageRelationGraph packages size = 2.
+	self assert: aPackageRelationGraph packages size = 2
 ]
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testAddPackages [
 	| array |
-	self assert: aPackageRelationGraph packages isEmpty.
+	self assertEmpty: aPackageRelationGraph packages.
 	array := Array with: packageCollectionAbstract with: packageCollectionsSequenceable with: packageKernel.
 	aPackageRelationGraph addPackages: array.
-	self assert: aPackageRelationGraph packages size = 3
+	self assert: aPackageRelationGraph packages size equals: 3
+]
+
+{ #category : #tests }
+DAPackageRelationGraphTest >> testAddPoolDictionaryDependencies [
+	aPackageRelationGraph addPoolDictionaryDependencies: packageMorphicBase.
+ 
+	self assert: (packageMorphicBase dependentPackages includes: packageTextCore).
 ]
 
 { #category : #tests }
@@ -159,13 +171,13 @@ DAPackageRelationGraphTest >> testDependenciesFrom [
 	aCollection add: packageA.
 	aCollection add: packageB.
 	aCollection add: packageC.
-	(aCollection at:1) add: (DAPackageDependency from: packageA to: packageB).
-	(aCollection at:1) add: (DAPackageDependency from:packageA to: packageC).
-	(aCollection at:2) add: (DAPackageDependency from: packageB to: packageC).
+	(aCollection at: 1) add: (DAPackageDependency from: packageA to: packageB).
+	(aCollection at: 1) add: (DAPackageDependency from: packageA to: packageC).
+	(aCollection at: 2) add: (DAPackageDependency from: packageB to: packageC).
 	aCollection do: [ :package | aPackageRelationGraph addPackage: package ].
-	self assert: ((aPackageRelationGraph dependenciesFrom:'A') size = 2).
-	self assert: ((aPackageRelationGraph dependenciesFrom:'B') size = 1).
-	self assert: ((aPackageRelationGraph dependenciesFrom:'C') isEmpty).
+	self assert: (aPackageRelationGraph dependenciesFrom: 'A') size equals: 2.
+	self assert: (aPackageRelationGraph dependenciesFrom: 'B') size equals: 1.
+	self assertEmpty: (aPackageRelationGraph dependenciesFrom: 'C')
 ]
 
 { #category : #tests }
@@ -189,12 +201,12 @@ DAPackageRelationGraphTest >> testPackageAt [
 { #category : #tests }
 DAPackageRelationGraphTest >> testPackages [
 	| aCollection |
-	self assert: aPackageRelationGraph packages isEmpty.
+	self assertEmpty: aPackageRelationGraph packages.
 	aCollection := Bag new.
 	aCollection add: packagePackageDependencies.
 	aCollection add: packageKernel.
-	aCollection do: [ :each | aPackageRelationGraph addPackage: each].
-	self assert: (aPackageRelationGraph packages size = 2)
+	aCollection do: [ :each | aPackageRelationGraph addPackage: each ].
+	self assert: aPackageRelationGraph packages size equals: 2
 ]
 
 { #category : #tests }
@@ -212,16 +224,16 @@ DAPackageRelationGraphTest >> testPredecessors [
 	aCollection add: packageB.
 	aCollection add: packageC.
 	aCollection add: packageD.
-	packageA add: (DAPackageDependency from:packageA to: packageB).
-	packageA add: (DAPackageDependency from:packageA to: packageC).
-	packageA add: (DAPackageDependency from:packageA to: packageD).
-	packageB add: (DAPackageDependency from:packageB to: packageC).
-	packageB add: (DAPackageDependency from:packageB to: packageD).
+	packageA add: (DAPackageDependency from: packageA to: packageB).
+	packageA add: (DAPackageDependency from: packageA to: packageC).
+	packageA add: (DAPackageDependency from: packageA to: packageD).
+	packageB add: (DAPackageDependency from: packageB to: packageC).
+	packageB add: (DAPackageDependency from: packageB to: packageD).
 	aCollection do: [ :package | aPackageRelationGraph addPackage: package ].
-	self assert: ((aPackageRelationGraph predecessors: packageC) size = 2).
-	self assert: ((aPackageRelationGraph predecessors: (aCollection at: 1)) isEmpty).
-	self assert: ((aPackageRelationGraph predecessors: packageB) size = 1).
-	self assert: ((aPackageRelationGraph predecessors: packageD) size = 2).
+	self assert: (aPackageRelationGraph predecessors: packageC) size equals: 2.
+	self assertEmpty: (aPackageRelationGraph predecessors: (aCollection at: 1)).
+	self assert: (aPackageRelationGraph predecessors: packageB) size equals: 1.
+	self assert: (aPackageRelationGraph predecessors: packageD) size equals: 2
 ]
 
 { #category : #tests }
@@ -250,20 +262,20 @@ DAPackageRelationGraphTest >> testRemoveOutgoingDependencies [
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testRemovePackage [
-	self assert: aPackageRelationGraph packages isEmpty.
+	self assertEmpty: aPackageRelationGraph packages.
 	aPackageRelationGraph addPackage: packageCollectionAbstract.
-	self assert: aPackageRelationGraph packages size = 1.
+	self assert: aPackageRelationGraph packages size equals: 1.
 	aPackageRelationGraph removePackage: packageCollectionAbstract packageName.
-	self assert: aPackageRelationGraph packages isEmpty
+	self assertEmpty: aPackageRelationGraph packages
 ]
 
 { #category : #tests }
 DAPackageRelationGraphTest >> testSeenPackages [
 	aPackageRelationGraph addPackage: packageKernel.
 	aPackageRelationGraph addPackage: packageCollectionAbstract.
-	self assert: (aPackageRelationGraph seenPackages isEmpty).
+	self assertEmpty: aPackageRelationGraph seenPackages.
 	aPackageRelationGraph computeStaticDependencies.
-	self assert: (aPackageRelationGraph seenPackages size = 2).
+	self assert: aPackageRelationGraph seenPackages size equals: 2
 ]
 
 { #category : #tests }
@@ -283,16 +295,16 @@ DAPackageRelationGraphTest >> testSuccessors [
 	aCollection add: packageB.
 	aCollection add: packageC.
 	aCollection add: packageD.
-	packageA add: (DAPackageDependency from:packageA to: packageB).
-	packageA add: (DAPackageDependency from:packageA to: packageC).
-	packageA add: (DAPackageDependency from:packageA to: packageD).
-	packageB add: (DAPackageDependency from:packageB to: packageC).
-	packageB add: (DAPackageDependency from:packageB to: packageD).
+	packageA add: (DAPackageDependency from: packageA to: packageB).
+	packageA add: (DAPackageDependency from: packageA to: packageC).
+	packageA add: (DAPackageDependency from: packageA to: packageD).
+	packageB add: (DAPackageDependency from: packageB to: packageC).
+	packageB add: (DAPackageDependency from: packageB to: packageD).
 	aCollection do: [ :package | aPackageRelationGraph addPackage: package ].
-	self assert: ((aPackageRelationGraph successors: (aCollection at: 1)) size = 3).
-	self assert: ((aPackageRelationGraph successors: (aCollection at: 4)) isEmpty).
-	self assert: ((aPackageRelationGraph successors: (aCollection at: 2)) size = 2).
-	self assert: ((aPackageRelationGraph successors: (aCollection at: 3)) isEmpty).
+	self assert: (aPackageRelationGraph successors: (aCollection at: 1)) size equals: 3.
+	self assertEmpty: (aPackageRelationGraph successors: (aCollection at: 4)).
+	self assert: (aPackageRelationGraph successors: (aCollection at: 2)) size equals: 2.
+	self assertEmpty: (aPackageRelationGraph successors: (aCollection at: 3))
 ]
 
 { #category : #tests }

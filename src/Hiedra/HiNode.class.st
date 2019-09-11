@@ -1,74 +1,85 @@
 "
-I am a node used to render a Hiedra ruler.
+I am a node that represents a value in a Hiedra ruler. I know links that connect myself with other nodes of the same ruler (incoming and outgoing).
+
+
 "
 Class {
 	#name : #HiNode,
-	#superclass : #HiRenderingElement,
+	#superclass : #Object,
 	#instVars : [
 		'value',
-		'columnIndex',
-		'rowIndex'
+		'incomingLinks',
+		'outgoingLinks',
+		'rulerPoint'
 	],
-	#category : #'Hiedra-Rendering'
+	#category : #'Hiedra-Model'
 }
 
 { #category : #'instance creation' }
-HiNode class >> contents: anObject [
-	^ self new
-		contents: anObject;
+HiNode class >> value: aValue rulerPoint: aPoint [
+	^ self basicNew
+		initializeWithValue: aValue
+			rulerPoint: aPoint;
 		yourself
 ]
 
-{ #category : #'instance creation' }
-HiNode class >> contents: anObject rowIndex: anIndex [
-	^ self new
-		contents: anObject;
-		rowIndex: anIndex;
-		yourself
-]
-
-{ #category : #comparing }
-HiNode >> = other [
-
-	^ self class = other class and: [ value = other contents ]
+{ #category : #accessing }
+HiNode >> addIncomingLink: aHiLink [ 
+	incomingLinks add: aHiLink
 ]
 
 { #category : #accessing }
-HiNode >> columnIndex [
-	^ columnIndex
+HiNode >> addOutgoingLink: aHiLink [ 
+	outgoingLinks add: aHiLink 
 ]
 
 { #category : #accessing }
-HiNode >> columnIndex: anObject [
-	columnIndex := anObject
-]
+HiNode >> anyLink [
+	"Answer a link (assuming it has at least one either outgoing or incoming link)."
 
-{ #category : #accessing }
-HiNode >> contents [
-	^ value
-]
-
-{ #category : #accessing }
-HiNode >> contents: anObject [
-	value := anObject
-]
-
-{ #category : #comparing }
-HiNode >> hash [
-
-	^ value hash
-]
-
-{ #category : #controlling }
-HiNode >> ifNode: nodeBlock ifLink: linkBlock [
-
-	^ nodeBlock cull: self
+	^ (outgoingLinks ifEmpty: [ incomingLinks ]) first
 ]
 
 { #category : #testing }
-HiNode >> isLink [
+HiNode >> hasAnyLink [
+	^ outgoingLinks isEmpty and: [ incomingLinks isEmpty ]
+]
 
-	^ false
+{ #category : #testing }
+HiNode >> hasLinkTo: aHiNode [
+	^ outgoingLinks anySatisfy: [ :each | each target = aHiNode ]
+]
+
+{ #category : #accessing }
+HiNode >> incomingLinks [
+	^ incomingLinks
+]
+
+{ #category : #initialization }
+HiNode >> initializeWithValue: aValue rulerPoint: aPoint [
+
+	self initialize.
+	rulerPoint := aPoint.
+	value := aValue.
+	outgoingLinks := LinkedList new.
+	incomingLinks := LinkedList new.
+]
+
+{ #category : #accessing }
+HiNode >> intermediateRowIndicesTo: anotherNode [
+
+	| originRowIndex targetRowIndex |
+	originRowIndex := self rulerPoint y.
+	targetRowIndex := anotherNode rulerPoint y.
+
+	^ originRowIndex <= targetRowIndex
+		ifTrue: [ originRowIndex + 1 to: targetRowIndex - 1 ]
+		ifFalse: [ originRowIndex - 1 to: targetRowIndex + 1 by: -1 ]
+]
+
+{ #category : #accessing }
+HiNode >> outgoingLinks [
+	^ outgoingLinks
 ]
 
 { #category : #printing }
@@ -79,20 +90,17 @@ HiNode >> printOn: aStream [
 	aStream
 		nextPut: $(;
 		print: value;
+		space;
+		print: self rulerPoint;
 		nextPut: $).
 ]
 
 { #category : #accessing }
-HiNode >> rowIndex [
-	^ rowIndex
-]
-
-{ #category : #accessing }
-HiNode >> rowIndex: anObject [
-	rowIndex := anObject
-]
-
-{ #category : #accessing }
 HiNode >> rulerPoint [
-	^ columnIndex @ rowIndex 
+	^ rulerPoint
+]
+
+{ #category : #accessing }
+HiNode >> theValue [
+	^ value
 ]

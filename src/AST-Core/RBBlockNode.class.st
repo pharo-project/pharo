@@ -53,8 +53,8 @@ RBBlockNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBBlockNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitBlockNode: self
+RBBlockNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitBlockNode: self
 ]
 
 { #category : #accessing }
@@ -149,21 +149,6 @@ RBBlockNode >> directlyUses: aNode [
 	^false
 ]
 
-{ #category : #generation }
-RBBlockNode >> dumpOn: aStream [
-	aStream nextPutAll: self class name.
-	self arguments
-		ifNotEmpty: [ aStream nextPutAll: ' arguments: {'.
-			self arguments
-				do: [ :each | 
-					each dumpOn: aStream.
-					aStream nextPutAll: '. ' ].
-			aStream nextPutAll: '}' ].
-	aStream nextPutAll: ' body: ('.
-	self body dumpOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : #comparing }
 RBBlockNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].
@@ -180,6 +165,11 @@ RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 { #category : #testing }
 RBBlockNode >> hasArgumentNamed: aString [	
 	^ self arguments anySatisfy: [ :argument| argument name = aString ]
+]
+
+{ #category : #testing }
+RBBlockNode >> hasBlockReturn [
+	^ self body lastIsReturn
 ]
 
 { #category : #testing }
@@ -226,6 +216,11 @@ RBBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
+{ #category : #testing }
+RBBlockNode >> lastIsReturn [
+	^ false
+]
+
 { #category : #'accessing-token' }
 RBBlockNode >> left [
 	^ left
@@ -244,6 +239,11 @@ RBBlockNode >> match: aNode inContext: aDictionary [
 		against: aNode arguments
 		inContext: aDictionary) 
 			and: [body match: aNode body inContext: aDictionary]
+]
+
+{ #category : #accessing }
+RBBlockNode >> methodOrBlockNode [
+	"^ self"
 ]
 
 { #category : #testing }
@@ -266,6 +266,12 @@ RBBlockNode >> precedence [
 { #category : #testing }
 RBBlockNode >> references: aVariableName [ 
 	^body references: aVariableName
+]
+
+{ #category : #'adding/removing' }
+RBBlockNode >> removeTemporaryNamed: aName [
+
+	self body removeTemporaryNamed: aName
 ]
 
 { #category : #replacing }

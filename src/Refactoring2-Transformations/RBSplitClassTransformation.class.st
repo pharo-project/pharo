@@ -31,7 +31,7 @@ Class {
 { #category : #api }
 RBSplitClassTransformation class >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
  
-	^ (self new)
+	^ self new
 		class: aClass
 		instanceVariables: instVars
 		newClassName: className
@@ -41,7 +41,7 @@ RBSplitClassTransformation class >> class: aClass instanceVariables: instVars ne
 { #category : #api }
 RBSplitClassTransformation class >> model: aRBModel class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [
  
-	^ (self new)
+	^ self new
 		model: aRBModel;
 		class: aClass
 		instanceVariables: instVars

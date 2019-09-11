@@ -22,47 +22,12 @@ Class {
 	#classVars : [
 		'ContextClass'
 	],
-	#classInstVars : [
-		'uniqueInstance'
-	],
 	#category : #'NECompletion-View'
 }
 
-{ #category : #testing }
-NECController class >> allowModel: aModel [ 
-	^NECPreferences enabled and: [ aModel isCodeCompletionAllowed ]
-]
-
-{ #category : #cleanup }
-NECController class >> cleanUp [
-	self reset
-]
-
-{ #category : #accessing }
-NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
-	"Inserts code completion if allowed in this morph"
-	
-	| editor stringHolder completionAllowed controller |
-	
-	editor := aTextMorph editor.
-	stringHolder := editor ifNotNil:[ editor model ].
-	completionAllowed := self allowModel: stringHolder.
-	completionAllowed 
-		ifTrue: [ 
-			controller := self uniqueInstance.
-			controller setModel: stringHolder.
-			(controller handleKeystrokeBefore: evt editor: editor)
-				ifTrue:  [^ self ] ].
-
-	aBlock value.
-	
-	completionAllowed
-		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
-]
-
 { #category : #accessing }
 NECController class >> contextClass [
-	^ContextClass ifNil: [ ^NECContext ] 
+	^ContextClass ifNil: [ NECContext ] 
 ]
 
 { #category : #accessing }
@@ -72,30 +37,18 @@ NECController class >> contextClass: aClass [
 
 { #category : #'class initialization' }
 NECController class >> initialize [ 
-	self register
+  	self register
+]
+
+{ #category : #accessing }
+NECController class >> isCompletionEnabled [
+	^NECPreferences enabled
 ]
 
 { #category : #'tools registry' }
 NECController class >> register [
-	self registerToolsOn: Smalltalk tools.
-]
-
-{ #category : #'tools registry' }
-NECController class >> registerToolsOn: registry [
-	"self registerToolsOn: Smalltalk tools" 
-	registry register: self as: #codeCompletion
-
-]
-
-{ #category : #'instance creation' }
-NECController class >> reset [
-	uniqueInstance := nil
-	
-]
-
-{ #category : #'instance creation' }
-NECController class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self new ]
+	"just for testing: we register the subclass here to test it"
+	RubSmalltalkEditor completionEngine: CompletionController
 ]
 
 { #category : #accessing }
@@ -133,7 +86,8 @@ NECController >> editor [
 
 { #category : #'type guessing' }
 NECController >> guessTypeFor: aString [
-	^ model isNil ifFalse: [ model guessTypeForName: aString ]
+
+	^ model ifNotNil: [ model guessTypeForName: aString ]
 ]
 
 { #category : #keyboard }
@@ -154,10 +108,11 @@ NECController >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
 { #category : #keyboard }
 NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
-	true when I have handled the event and no futher processing is needed by the caller."
+	true when I have handled the event and no futher processing is needed by the caller.
+	
+	This method would be cleaner if splitted."
 
 	| keyCharacter controlKeyPressed |
-	self flag: #fixme.	"this method should be split up"
 	self setEditor: anEditor.
 	self setModel: editor model.
 	keyCharacter := aKeyboardEvent keyCharacter.
@@ -207,9 +162,6 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 				ifTrue: [ 
 					menuMorph insertCommonPrefixOrSelected
 						ifTrue: [ ^ true ] ] ].
-	self flag: #todo.	"Removing for now... most of the shortcuts are broken and no time or need now to fix them"	"(keyCharacter = $h and: [ controlKeyPressed ]) ifTrue: [ 
-		menuMorph help.
-		^ true ]."
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
@@ -355,7 +307,7 @@ NECController >> setEditor: anObject [
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECController >> setModel: aStringHolder [ 
 	model := aStringHolder
 ]
@@ -565,8 +517,9 @@ NECController >> smartStartIndexIn: currentText for: smartCharacter  opposite: o
 
 { #category : #private }
 NECController >> stopCompletionDelay [
-	
-	completionDelay ifNotNil: [ completionDelay terminate ].
+
+    completionDelay ifNotNil: [ 
+        completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
 ]
 
 { #category : #accessing }

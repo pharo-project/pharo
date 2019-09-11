@@ -21,16 +21,6 @@ GlamourPresentationPresenter class >> defaultSpec [
 ]
 
 { #category : #example }
-GlamourPresentationPresenter class >> exampleGLMExamples [
-	<sampleInstance>
-	"open the Glamour Examples Browser"
-	|ui|
-	ui := GlamourPresentationPresenter new.
-	ui presentationClass: GLMExamplesBrowser startOn: GLMBasicExamples.
-	^ ui openWithSpec
-]
-
-{ #category : #example }
 GlamourPresentationPresenter class >> exampleGLMPharoScript [
 	<sampleInstance>
 	^ GlamourPresentationPresenter new openWithSpec.
@@ -38,8 +28,9 @@ GlamourPresentationPresenter class >> exampleGLMPharoScript [
 
 { #category : #accessing }
 GlamourPresentationPresenter >> glmPres [
-	glmPres isNil ifTrue:[glmPres := GLMPharoScriptPresentation new].
-	^ glmPres 
+
+	glmPres ifNil: [ glmPres := GLMPharoScriptPresentation new ].
+	^ glmPres
 ]
 
 { #category : #initialization }
@@ -53,12 +44,15 @@ GlamourPresentationPresenter >> initializeWidgets [
 
 { #category : #accessing }
 GlamourPresentationPresenter >> presentation [
-	presentation isNil ifTrue:[
-		| morph |
-		morph := GLMMorphicRenderer new render: self glmPres.
-		morph hResizing: #spaceFill.
-		morph vResizing: #spaceFill.
-		presentation := MorphicGenericAdapter morph: morph].
+
+	presentation
+		ifNil: [ | morph |
+
+			morph := GLMMorphicRenderer new render: self glmPres.
+			morph hResizing: #spaceFill.
+			morph vResizing: #spaceFill.
+			presentation := MorphicGenericAdapter morph: morph
+			].
 
 	^ presentation
 ]

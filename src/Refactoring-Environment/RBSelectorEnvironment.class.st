@@ -176,7 +176,7 @@ RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelect
 	metaClassSelectors := metaClassSelectorDictionary
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [ 
 	"Used to recreate an environment from its storeString"
 
@@ -218,7 +218,7 @@ RBSelectorEnvironment >> includesCategory: aCategory [
 
 { #category : #testing }
 RBSelectorEnvironment >> includesClass: aClass [ 
-	^(self privateSelectorsForClass: aClass) isEmpty not 
+	^(self privateSelectorsForClass: aClass) isNotEmpty 
 		and: [super includesClass: aClass]
 ]
 
@@ -252,7 +252,7 @@ RBSelectorEnvironment >> isSelectorEnvironment [
 	^ true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBSelectorEnvironment >> on: aDictionary [ 
 	aDictionary keysAndValuesDo: [ :class :selectors | 
 		class isMeta 

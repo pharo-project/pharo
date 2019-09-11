@@ -120,7 +120,7 @@ FileSystemHandle >> reopen [
 	self open
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystemHandle >> setReference: aReference writable: aBoolean [
 	reference := aReference resolve.
 	writable := aBoolean

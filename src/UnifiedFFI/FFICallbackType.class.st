@@ -12,8 +12,40 @@ Class {
 	#category : #'UnifiedFFI-Types'
 }
 
+{ #category : #'emitting code' }
+FFICallbackType >> basicEmitArgument: aBuilder context: aContext [
+
+ 	self loader emitArgument: aBuilder context: aContext.
+
+	aBuilder send: self instanceVariableName
+
+]
+
+{ #category : #'emitting code' }
+FFICallbackType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
+
+	^ aBuilder 
+		addTemp: #tmpResult;
+		"keep invoke result into the tmpResult var"
+		storeTemp: resultVar;
+		popTop;
+		"return := self objectClass basicNew"
+		pushLiteralVariable: self objectClass binding;
+		send: #basicNew;
+		storeTemp: #tmpResult;
+		popTop;
+		"return instVarAt: (index of argName) put: result"
+		pushTemp: #tmpResult;
+		pushTemp: resultVar;
+		send: self instanceVariableName asMutator;
+		popTop;
+		pushTemp: #tmpResult;
+		returnTop	
+]
+
 { #category : #accessing }
 FFICallbackType >> instanceVariableName [
+
 	^ #thunk
 ]
 

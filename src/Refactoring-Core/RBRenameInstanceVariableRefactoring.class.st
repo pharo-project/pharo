@@ -73,12 +73,12 @@ RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 ]
 
 { #category : #refactoring }
-RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [ 
+RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute.
-	RBParser parseExpression: aRefactoring storeString
+	self parserClass parseExpression: aRefactoring storeString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameInstanceVariableRefactoring >> initialize [
 	super initialize.
 	renameAccessors := false
@@ -111,13 +111,13 @@ RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	oldAccessors do: [ :each | class removeMethod: each selector ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self rename: aVarName to: aName in: aClass renameAccessors: false
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
 	self variable: aVarName class: aClass.
 	newName := aName.
@@ -137,7 +137,7 @@ RBRenameInstanceVariableRefactoring >> renameAccessors: anObject [
 { #category : #transforming }
 RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 	| methods senders |
-	methods := (class allSelectors select: [ :each | ((class methodFor: each) = nil) not ] thenCollect: [ :each | each ])
+	methods := (class allSelectors select: [ :each | (class methodFor: each) isNotNil ] thenCollect: [ :each | each ])
 		asOrderedCollection.
 	senders := (methods
 		select: [ :each | (class methodFor: each) source includesSubstring: variableName asString ]

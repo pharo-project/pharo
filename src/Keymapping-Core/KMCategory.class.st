@@ -8,7 +8,7 @@ Class {
 		'name',
 		'platforms'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Categories'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ KMCategory >> bindToObject: anObject andMorph: aMorph [
 	^ KMCategoryBinding target: anObject morph: aMorph category: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMCategory >> buildKeymapOnMethod: method [
 
 	self addKeymapEntry: (self perform: method selector)
@@ -78,7 +78,7 @@ KMCategory >> hasKeymapNamed: aKeymapEntryName at: aPlatform [
 	^ (self entriesAt: aPlatform) hasKeymapNamed: aKeymapEntryName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMCategory >> initialize [
 
 	super initialize.

@@ -13,7 +13,7 @@ Class {
 { #category : #exceptionselector }
 ExceptionSetWithExclusions >> - exception [
 	"Add exception as an exclusion to me.
-	I will explicitely not handle my exclusion exceptions."
+	I will explicitly not handle my exclusion exceptions."
 	
 	self addExclusion: exception
 ]
@@ -21,7 +21,7 @@ ExceptionSetWithExclusions >> - exception [
 { #category : #private }
 ExceptionSetWithExclusions >> addExclusion: exception [
 	"Add exception as an exclusion to me.
-	I will explicitely not handle my exclusion exceptions."
+	I will explicitly not handle my exclusion exceptions."
 	
 	^ exclusions add: exception
 ]
@@ -29,7 +29,7 @@ ExceptionSetWithExclusions >> addExclusion: exception [
 { #category : #exceptionselector }
 ExceptionSetWithExclusions >> handles: exception [
 	"Return true when I will handled exception.
-	I extend my superclass behavior by explicitely 
+	I extend my superclass behavior by explicitly 
 	not handling a number of exclusion exceptions."
 
 	^ (super handles: exception) 

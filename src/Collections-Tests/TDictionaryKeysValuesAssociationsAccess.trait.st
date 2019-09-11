@@ -15,7 +15,7 @@ self explicitRequirement.
 { #category : #'tests - fixture' }
 TDictionaryKeysValuesAssociationsAccess >> test0FixtureDictionaryKeysValuesAssociationsAccess [
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty
+	self denyEmpty: self nonEmpty
 ]
 
 { #category : #'tests - dictionary keys values associations access' }

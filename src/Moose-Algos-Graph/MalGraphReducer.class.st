@@ -30,7 +30,7 @@ MalGraphReducer >> findCircuits [
 			circuit collect: [ :each | self findNode: each model ] ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MalGraphReducer >> initialize [
 	super initialize.
 	circuitNodes := OrderedCollection new.

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'constraintBlock'
 	],
-	#category : #'Gofer-Core'
+	#category : #'Gofer-Core-References'
 }
 
 { #category : #'instance creation' }

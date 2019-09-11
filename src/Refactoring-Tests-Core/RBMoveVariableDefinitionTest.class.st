@@ -7,14 +7,13 @@ Class {
 { #category : #tests }
 RBMoveVariableDefinitionTest >> testMoveDefinition [
 	| refactoring |
-	refactoring := RBMoveVariableDefinitionRefactoring 
-		bindTight: (self 
-				convertInterval: (19 to: 22)
-				for: (RBRefactoryTestDataApp sourceCodeAt: #moveDefinition))
+	refactoring := RBMoveVariableDefinitionRefactoring
+		bindTight: (19 to: 22)
 		in: RBRefactoryTestDataApp
 		selector: #moveDefinition.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #moveDefinition) = (RBParser parseMethod: 'moveDefinition
+
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #moveDefinition) equals: (self parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
 										| temp |
@@ -30,14 +29,12 @@ RBMoveVariableDefinitionTest >> testMoveDefinition [
 { #category : #tests }
 RBMoveVariableDefinitionTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 	| refactoring |
-	refactoring := RBMoveVariableDefinitionRefactoring 
-		bindTight: (self 
-				convertInterval: (48 to: 58)
-				for: (RBRefactoryTestDataApp sourceCodeAt: #referencesConditionFor:))
+	refactoring := RBMoveVariableDefinitionRefactoring
+		bindTight: (48 to: 58)
 		in: RBRefactoryTestDataApp
 		selector: #referencesConditionFor:.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #referencesConditionFor:) = (RBParser parseMethod: 'referencesConditionFor: aClass 
+	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #referencesConditionFor:) equals: (self parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
 								^(RBCondition withBlock: 
 										[| association |association := Smalltalk globals associationAt: aClass name
@@ -52,31 +49,30 @@ RBMoveVariableDefinitionTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACas
 
 { #category : #tests }
 RBMoveVariableDefinitionTest >> testNoMoveDefinition [
-	self shouldFail: (RBMoveVariableDefinitionRefactoring 
-			bindTight: (self 
-					convertInterval: (21 to: 24)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #moveDefinition))
-			in: RBRefactoryTestDataApp
-			selector: #noMoveDefinition)
+	self
+		shouldFail:
+			(RBMoveVariableDefinitionRefactoring
+				bindTight: (21 to: 24)
+				in: RBRefactoryTestDataApp
+				selector: #noMoveDefinition)
 ]
 
 { #category : #tests }
 RBMoveVariableDefinitionTest >> testNonExistantName [
 	self
-		shouldFail: (RBMoveVariableDefinitionRefactoring 
+		shouldFail:
+			(RBMoveVariableDefinitionRefactoring
 				bindTight: (1 to: 10)
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #name1);
-		shouldFail: (RBMoveVariableDefinitionRefactoring 
-				bindTight: (self 
-						convertInterval: (44 to: 54)
-						for: (RBLintRuleTest sourceCodeAt: #displayName))
-				in: RBLintRuleTest
+		shouldFail:
+			(RBMoveVariableDefinitionRefactoring
+				bindTight: (44 to: 54)
+				in: RBLintRuleTestData
 				selector: #displayName);
-		shouldFail: (RBMoveVariableDefinitionRefactoring 
-				bindTight: (self 
-						convertInterval: (16 to: 25)
-						for: (RBLintRuleTest sourceCodeAt: #displayName))
-				in: RBLintRuleTest
+		shouldFail:
+			(RBMoveVariableDefinitionRefactoring
+				bindTight: (16 to: 25)
+				in: RBLintRuleTestData
 				selector: #displayName)
 ]

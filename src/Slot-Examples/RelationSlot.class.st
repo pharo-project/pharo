@@ -66,19 +66,20 @@ RelationSlot >> addAssociationFrom: ownerObject to: otherObject [
 RelationSlot >> checkValue: aValue [
 
 	(aValue isKindOf: self targetClass)
-		ifFalse: [ self error: 'Invalid value' ].
+		ifFalse: [ self error: 'Invalid value' ]
 ]
 
 { #category : #'code generation' }
 RelationSlot >> emitStore: aMethodBuilder [
+	"copy of #emitStore from Slot as my superclass has overriden it"
 	| tempName |
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
 		pushReceiver;
-		pushLiteralVariable: #slot -> self;
+		pushLiteralVariable: (AdditionalBinding key: #slot value: self);
 		pushTemp: tempName;
 		send: #writeSlot:value:
 ]
@@ -91,7 +92,7 @@ RelationSlot >> hasInverse [
 
 { #category : #comparing }
 RelationSlot >> hasSameDefinitionAs: otherSlot [
-
+	"need to implement as superclass implements it"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ self targetClassName = otherSlot targetClassName 
 		and: [ inverseName = otherSlot inverseName ] ]
@@ -112,9 +113,8 @@ RelationSlot >> inClass: aTargetClassOrSymbol [
 
 { #category : #initialization }
 RelationSlot >> inverse: anInverseSymbol inClass: aTargetClassOrSymbol [
-
 	self inClass: aTargetClassOrSymbol.
-	inverseName := anInverseSymbol.
+	inverseName := anInverseSymbol
 ]
 
 { #category : #accessing }
@@ -159,7 +159,7 @@ RelationSlot >> printOn: aStream [
 				store: inverseName ].
 	aStream
 		nextPutAll: ' inClass: ';
-		store: self targetClassName.
+		store: self targetClassName
 
 ]
 

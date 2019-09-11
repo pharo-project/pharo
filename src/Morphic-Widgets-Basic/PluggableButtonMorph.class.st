@@ -355,8 +355,8 @@ PluggableButtonMorph >> changed [
 			or: [label isMorph]) ifFalse: [
 				pc := self normalColor.
 				lc := self enabled
-					ifTrue: [pc contrastingColor]
-					ifFalse: [pc contrastingColor muchDarker].
+					ifTrue: [pc contrastingBlackAndWhiteColor]
+					ifFalse: [pc contrastingBlackAndWhiteColor muchDarker].
 				self labelMorph color: lc]].
 	super changed
 ]
@@ -499,7 +499,7 @@ PluggableButtonMorph >> focusBounds [
 PluggableButtonMorph >> focusColor [
 	"Answer the keyboard focus indication color."
 
-	^self color contrastingColor
+	^self color contrastingBlackAndWhiteColor
 ]
 
 { #category : #accessing }
@@ -555,21 +555,19 @@ PluggableButtonMorph >> getFontSelector: anObject [
 ]
 
 { #category : #private }
-PluggableButtonMorph >> getMenu: shiftPressed [ 
+PluggableButtonMorph >> getMenu: shiftPressed [
+
 	"Answer the menu for this button, supplying an empty menu to be filled in. If the menu selector takes an extra argument, pass in the current state of the shift key."
 
 	| menu |
-	getMenuSelector isNil ifTrue: [^nil].
-	menu := UIManager default newMenuIn: self for: model.
-	getMenuSelector numArgs = 1 
-		ifTrue: [^model perform: getMenuSelector with: menu].
-	getMenuSelector numArgs = 2 
-		ifTrue: 
-			[^model 
-				perform: getMenuSelector
-				with: menu
-				with: shiftPressed].
-	^self error: 'The getMenuSelector must be a 1- or 2-keyword symbol'
+
+	getMenuSelector ifNil: [ ^ nil ].
+	menu := self theme newMenuIn: self for: model.
+	getMenuSelector numArgs = 1
+		ifTrue: [ ^ model perform: getMenuSelector with: menu ].
+	getMenuSelector numArgs = 2
+		ifTrue: [ ^ model perform: getMenuSelector with: menu with: shiftPressed ].
+	^ self error: 'The getMenuSelector must be a 1- or 2-keyword symbol'
 ]
 
 { #category : #accessing }

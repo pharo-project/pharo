@@ -26,8 +26,6 @@ FileReferenceTest >> setUp [
 { #category : #tests }
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
-
-	<publicTest>
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -48,8 +46,6 @@ FileReferenceTest >> testAllChildren [
 { #category : #tests }
 FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
-
-	<publicTest>
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -77,10 +73,9 @@ FileReferenceTest >> testAllEntries [
 	ref := filesystem / 'alpha'.
 	entries := ref allEntries.
 	self assert: entries size equals: 4.
-	entries
-		do: [ :entry | 
-			self assert: entry class equals: FileSystemDirectoryEntry.
-			self assert: (ref = entry reference or: [ ref contains: entry reference ]) ].
+	entries do: [:entry |
+		self assert: entry class equals: MemoryDirectoryEntry.
+		self assert: (ref = entry reference or: [ref contains: entry reference])].
 	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
@@ -239,7 +234,7 @@ FileReferenceTest >> testChildOfPath [
 	parent := Path / 'griffle'.
 	child := filesystem / 'griffle' / 'nurb'.
 	self deny: (child isChildOf: parent).
-	self deny: (parent isChildOf: child).
+	self deny: (parent isChildOf: child)
 ]
 
 { #category : #tests }
@@ -248,7 +243,7 @@ FileReferenceTest >> testChildOfReference [
 	parent := filesystem / 'griffle'.
 	child := filesystem / 'griffle' / 'nurb'.
 	self assert: (child isChildOf: parent).
-	self deny: (parent isChildOf: child).
+	self deny: (parent isChildOf: child)
 ]
 
 { #category : #tests }
@@ -318,8 +313,6 @@ FileReferenceTest >> testContents [
 { #category : #tests }
 FileReferenceTest >> testDeleteAll [
 	"allChildren returns all the files and folders recursively nested in a reference"
-
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -337,8 +330,6 @@ FileReferenceTest >> testDeleteAll [
 { #category : #tests }
 FileReferenceTest >> testDeleteAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
-
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -456,11 +447,10 @@ FileReferenceTest >> testEntries [
 	ref := filesystem / 'alpha'.
 	entries := ref entries.
 	self assert: entries size equals: 2.
-	entries
-		do: [ :entry | 
-			self assert: entry class equals: FileSystemDirectoryEntry.
-			self assert: (entry reference isChildOf: ref).
-			self assert: (#('beta' 'gamma') includes: entry reference basename) ] ]
+	entries do: [:entry |
+		self assert: entry class equals: MemoryDirectoryEntry.
+		self assert: (entry reference isChildOf: ref).
+		self assert: (#('beta' 'gamma') includes: entry reference basename)] ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -517,12 +507,11 @@ FileReferenceTest >> testGrandchildOfReference [
 	griffle := filesystem / 'griffle'.
 	nurb := filesystem / 'griffle' / 'plonk' / 'nurb'.
 	self deny: (griffle isChildOf: nurb).
-	self deny: (nurb isChildOf: griffle).
+	self deny: (nurb isChildOf: griffle)
 ]
 
 { #category : #tests }
 FileReferenceTest >> testHasChildren [
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -538,7 +527,6 @@ FileReferenceTest >> testHasChildren [
 
 { #category : #tests }
 FileReferenceTest >> testHasDirectories [
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -553,7 +541,6 @@ FileReferenceTest >> testHasDirectories [
 
 { #category : #tests }
 FileReferenceTest >> testHasFiles [
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -686,23 +673,39 @@ FileReferenceTest >> testMakeRelative [
 { #category : #'tests - handy utils' }
 FileReferenceTest >> testNextNameForExtension [
 	
-	| childFiles |
-	[ filesystem createDirectory: 'dir'.
-	filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
-	filesystem / 'dir' / 'games.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
-	filesystem / 'dir' / 'games.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
-	filesystem / 'dir' / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
-	filesystem / 'dir' / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
-	filesystem / 'dir' / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
-	filesystem / 'dir' / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
-	
-	childFiles := (filesystem root / 'dir') files.
-	self assert: childFiles size equals: 7.
-	self assert: ((filesystem root / 'dir') nextNameFor: 'games' extension: 'ston') equals: 'games.102.ston'.
+	| childFiles dir |
 
+	[ filesystem createDirectory: 'dir'.
+	dir := filesystem / 'dir'.
+	dir / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	dir / 'games.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
+	dir / 'games.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
+	dir / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	dir / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	dir / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	dir / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
 	
-			]
-			ensure: [ (filesystem / 'dir') ensureDeleteAll ]
+	childFiles := dir files.
+	self assert: childFiles size equals: 7.
+	self assert: (dir nextNameFor: 'games' extension: 'ston') equals: 'games.102.ston' ]
+		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
+
+
+	[ filesystem createDirectory: 'dir'.
+	dir := filesystem / 'dir'.
+	dir / 'foo.bar.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	dir / 'foo.bar.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
+	dir / 'foo.bar.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
+	dir / 'foo.bar.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	dir / 'foo.bar.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	dir / 'foo.bar.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	dir / 'foo.bar.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	childFiles := dir files.
+	self assert: childFiles size equals: 7.
+	self assert: (dir nextNameFor: 'foo.bar' extension: 'ston') equals: 'foo.bar.102.ston' ]
+		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
+
 ]
 
 { #category : #'tests - handy utils' }
@@ -756,6 +759,25 @@ FileReferenceTest >> testNextVersion [
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
 	self assert: versions equals: #('file.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+
+	fs := FileSystem memory.
+	file := fs / 'file123.name.ext'.
+	versions := Array streamContents: [ :stream |
+		5 timesRepeat: [ 
+			file createFile.
+			stream nextPut: file basename.
+			file := file nextVersion. ] ].
+	self assert: versions equals: #('file123.name.ext' 'file123.name.1.ext' 'file123.name.2.ext' 'file123.name.3.ext' 'file123.name.4.ext').
+
+	fs := FileSystem memory.
+	file := fs / '123.ext'.
+	versions := Array streamContents: [ :stream |
+		5 timesRepeat: [ 
+			file createFile.
+			stream nextPut: file basename.
+			file := file nextVersion. ] ].
+	self assert: versions equals: #('123.ext' '123.1.ext' '123.2.ext' '123.3.ext' '123.4.ext').
+
 ]
 
 { #category : #tests }
@@ -763,8 +785,8 @@ FileReferenceTest >> testParent [
 	| ref parent |
 	ref := filesystem * 'plonk' / 'griffle'.
 	parent := ref parent.
-	self assert: parent class = ref class.
-	self assert: (parent path at: 1) = 'plonk'
+	self assert: parent class equals: ref class.
+	self assert: (parent path at: 1) equals: 'plonk'
 ]
 
 { #category : #tests }
@@ -836,7 +858,7 @@ FileReferenceTest >> testPathRelativeTo [
 	parent := filesystem / 'griffle'.
 	childPath := Path / 'griffle' / 'plonk' / 'nurb'.
 	relative := childPath relativeTo: parent.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -916,7 +938,7 @@ FileReferenceTest >> testRelativeToPath [
 	parentPath := Path / 'griffle'.
 	child := filesystem / 'griffle' / 'plonk' / 'nurb'.
 	relative := child relativeTo: parentPath.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -925,7 +947,7 @@ FileReferenceTest >> testRelativeToReference [
 	parent := filesystem / 'griffle'.
 	child := filesystem  / 'griffle' / 'plonk' / 'nurb'.
 	relative := child relativeTo: parent.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : #tests }
@@ -970,6 +992,24 @@ FileReferenceTest >> testRootParent [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testRootReference [
+	"Check that the root entry contains sensible values.
+	On Windows this requires a pseudo entry to be available."
+
+	| rootReference |
+
+	rootReference := FileReference fileSystem: FileSystem disk path: Path root.
+
+	self assert: rootReference isDirectory.
+	self deny: rootReference isFile.
+	self assert: rootReference size equals: 0.
+	self assert: rootReference isReadable.
+	self assert: rootReference isExecutable.
+	self deny: rootReference isWritable.
+
+]
+
+{ #category : #tests }
 FileReferenceTest >> testSiblingOfReference [
 	| griffle  nurb |
 	griffle := filesystem / 'griffle'.
@@ -985,9 +1025,9 @@ FileReferenceTest >> testSimpleResolution [
 	relative := (Path * 'griffle') / 'zonk'.
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
-	self assert: (absolute path at: 1) = 'plonk'.
-	self assert: (absolute path at: 2) = 'griffle'.
-	self assert: (absolute path at: 3) = 'zonk'.
+	self assert: (absolute path at: 1) equals: 'plonk'.
+	self assert: (absolute path at: 2) equals: 'griffle'.
+	self assert: (absolute path at: 3) equals: 'zonk'.
 	
 	
 ]
@@ -997,10 +1037,10 @@ FileReferenceTest >> testSlash [
 	| ref result |
 	ref := filesystem * 'plonk'.
 	result := ref / 'griffle'.
-	self assert: result class = ref class.
+	self assert: result class equals: ref class.
 	self assert: result  isRelative.
-	self assert: (result path at: 1) = 'plonk'.
-	self assert: (result path at: 2) = 'griffle'.
+	self assert: (result path at: 1) equals: 'plonk'.
+	self assert: (result path at: 2) equals: 'griffle'.
 
 ]
 
@@ -1046,13 +1086,64 @@ FileReferenceTest >> testUpToAll [
 	ensure: [ filename asFileReference ensureDelete ] 
 ]
 
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testVersionNumberForComplexFileName [
+	
+	| dir |
+	[
+		dir := filesystem / 'dir'.
+		(dir / 'test?*file.ston') ensureCreateFile.
+	
+		self assert: (dir versionNumberFor: 'test?*file' extension: 'ston') equals: 0
+	
+	] 	ensure: [ (filesystem / 'dir') ensureDeleteAll ].
+]
+
+{ #category : #'tests - handy utils' }
+FileReferenceTest >> testVersionNumberForExtension [
+	
+	| childFiles dir |
+
+	[ filesystem createDirectory: 'dir'.
+	dir := filesystem / 'dir'.
+	dir / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	dir / 'games.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
+	dir / 'games.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
+	dir / 'games.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	dir / 'games.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	dir / 'games.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	dir / 'games.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	childFiles := dir files.
+	self assert: childFiles size equals: 7.
+	self assert: (dir versionNumberFor: 'games' extension: 'ston') equals: 101 ]
+		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
+
+
+	[ filesystem createDirectory: 'dir'.
+	dir := filesystem / 'dir'.
+	dir / 'foo.bar.51.ston' writeStreamDo: [ :stream | stream nextPutAll: '51' ].
+	dir / 'foo.bar.3.ston' writeStreamDo: [ :stream | stream nextPutAll: '3' ].
+	dir / 'foo.bar.33.ston' writeStreamDo: [ :stream | stream nextPutAll: '33' ].
+	dir / 'foo.bar.4.ston' writeStreamDo: [ :stream | stream nextPutAll: '4' ].
+	dir / 'foo.bar.101.ston' writeStreamDo: [ :stream | stream nextPutAll: '101' ].
+	dir / 'foo.bar.49.ston' writeStreamDo: [ :stream | stream nextPutAll: '49' ].
+	dir / 'foo.bar.5.ston' writeStreamDo: [ :stream | stream nextPutAll: '5' ].
+	
+	childFiles := dir files.
+	self assert: childFiles size equals: 7.
+	self assert: (dir versionNumberFor: 'foo.bar' extension: 'ston') equals: 101 ]
+		ensure: [ (filesystem / 'dir') ensureDeleteAll ].
+
+]
+
 { #category : #tests }
 FileReferenceTest >> testWithExtentionAddsExtension [
 	| ref result |
 	ref := filesystem * 'plonk'.
 	result := ref withExtension: 'griffle'.
 	self assert: result isRelative.
-	self assert: result basename = 'plonk.griffle'
+	self assert: result basename equals: 'plonk.griffle'
 ]
 
 { #category : #tests }
@@ -1077,8 +1168,8 @@ FileReferenceTest >> testWithoutExtension [
 FileReferenceTest >> testWorkingDirectoryParent [
 	| wd |
 	wd := filesystem referenceTo: Path workingDirectory.
-	self assert: wd parent path size = 1.
-	self assert: (wd parent path at: 1) = '..'.
+	self assert: wd parent path size equals: 1.
+	self assert: (wd parent path at: 1) equals: '..'.
 ]
 
 { #category : #tests }

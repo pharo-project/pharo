@@ -40,7 +40,7 @@ RBParseErrorNode >> = anObject [
 
 { #category : #visiting }
 RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
-	^ aProgramNodeVisitor visitParseErrorNode: self.
+	^ aProgramNodeVisitor visitParseErrorNode: self
 ]
 
 { #category : #converting }
@@ -86,6 +86,11 @@ RBParseErrorNode >> hash [
 
 { #category : #testing }
 RBParseErrorNode >> isFaulty [
+	^true
+]
+
+{ #category : #testing }
+RBParseErrorNode >> isParseError [
 	^true
 ]
 

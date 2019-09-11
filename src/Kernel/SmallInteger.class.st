@@ -1,5 +1,5 @@
 "
-My instances are 31-bit numbers, stored in twos complement form. The allowable range is approximately +- 1 billion (see SmallInteger minVal, maxVal).
+My instances are 31-bit numbers or 63-bit numbers depending on the image architecture, stored in twos complement form. The allowable range is approximately +- 1 billion (31 bits), 1 quintillion (63 bits)  (see SmallInteger minVal, maxVal).
 "
 Class {
 	#name : #SmallInteger,
@@ -536,6 +536,10 @@ SmallInteger >> printOn: stream base: base [
 
 { #category : #printing }
 SmallInteger >> printOn: stream base: base length: minimumLength padded: padWithZeroes [
+	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
+	
+	"(String streamContents: [ :s | 10 printOn: s base: 10 length: 4 padded: true] ) >>> '0010'"
+	"(String streamContents: [ :s | -10 printOn: s base: 10 length: 4 padded: true] ) >>> '-010'"
 
 	| n numberOfDigits totalLength divisor |
 	self < 0
@@ -598,7 +602,12 @@ SmallInteger >> printStringBase: b [
 	"Return a String representation of this number in base b.
 	For SmallIntegers, it is more efficient to print directly in a String,
 	rather than using a Stream like super."
-
+	
+	"10 printStringBase: 10 >>> '10'"
+	"-10 printStringBase: 10 >>> '-10'"
+	"10 printStringBase: 2 >>> '1010'"
+	"10 printStringBase: 16 >>> 'A'"
+	
 	self < 0
 		ifTrue: [^ '-'
 				, (self negated printStringBase: b)].

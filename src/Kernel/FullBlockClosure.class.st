@@ -83,11 +83,6 @@ FullBlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
 ]
 
-{ #category : #private }
-FullBlockClosure >> printOn: s [
-	[ super printOn: s ] on: Error do: [ :ex | s << '![' << ex messageText << ']!' ]
-]
-
 { #category : #accessing }
 FullBlockClosure >> receiver [
 	^ receiver
@@ -96,6 +91,16 @@ FullBlockClosure >> receiver [
 { #category : #accessing }
 FullBlockClosure >> receiver: anObject [
 	receiver := anObject
+]
+
+{ #category : #evaluating }
+FullBlockClosure >> rfvalueNoContextSwitch [
+	"same as valueNoContextSwitch, for recursion stopping metalinks"
+	<primitive: 209>
+	<metaLinkOptions: #( + optionDisabledLink)>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
+	self primitiveFailed
 ]
 
 { #category : #simulation }

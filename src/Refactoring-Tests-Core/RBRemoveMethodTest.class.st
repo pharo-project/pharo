@@ -4,11 +4,6 @@ Class {
 	#category : #'Refactoring-Tests-Core'
 }
 
-{ #category : #accessing }
-RBRemoveMethodTest >> expectedFailures [
-	^ #(testRemoveSameMethodButSendsSuper)
-]
-
 { #category : #tests }
 RBRemoveMethodTest >> testModelRecursiveMethodThatIsNotReferencedFromOtherMethods [
 	| class otherClass |
@@ -43,12 +38,13 @@ RBRemoveMethodTest >> testRemoveMethod [
 RBRemoveMethodTest >> testRemoveReferenced [
 	self shouldFail: (RBRemoveMethodRefactoring 
 			removeMethods: #(#checkClass: )
-			from: RBBasicLintRuleTest)
+			from: RBBasicLintRuleTestData)
 ]
 
 { #category : #'failure tests' }
 RBRemoveMethodTest >> testRemoveSameMethodButSendsSuper [
+	<expectedFailure>
 	self shouldWarn: (RBRemoveMethodRefactoring 
 			removeMethods: #(#new )
-			from: RBBasicLintRuleTest class)
+			from: RBBasicLintRuleTestData class)
 ]

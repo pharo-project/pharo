@@ -198,7 +198,7 @@ BlockLocalTempCounter >> send: selector super: supered numArgs: numberArguments 
 	stackPointer := stackPointer - numberArguments
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BlockLocalTempCounter >> tempCountForBlockAt: pc in: method [
 	"Compute the number of local temporaries in a block.
 	 If the block begins with a sequence of push: nil bytecodes then some of

@@ -4,8 +4,3 @@ Extension { #name : #AbstractTool }
 AbstractTool >> guessTypeForName: aString [
 	^nil
 ]
-
-{ #category : #'*NECompletion' }
-AbstractTool >> isCodeCompletionAllowed [ 
-	^true
-]

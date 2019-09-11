@@ -37,8 +37,8 @@ RBCascadeNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitCascadeNode: self
+RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitCascadeNode: self
 ]
 
 { #category : #querying }
@@ -71,18 +71,6 @@ RBCascadeNode >> directlyUses: aNode [
 	^messages last = aNode and: [self isDirectlyUsed]
 ]
 
-{ #category : #generation }
-RBCascadeNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' messages: {'.
-	self messages
-		do: [ :each | 
-			each dumpOn: aStream.
-			aStream nextPutAll: '. ' ].
-	aStream nextPut: $}
-]
-
 { #category : #comparing }
 RBCascadeNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class ifFalse: [^false].
@@ -108,6 +96,14 @@ RBCascadeNode >> isFaulty [
 	^self messages anySatisfy: #isFaulty
 ]
 
+{ #category : #accessing }
+RBCascadeNode >> leftmostChainReceiver [
+
+	^ self receiver isMessage
+		ifTrue: [ self receiver receiver ]
+		ifFalse: [ self receiver ]
+]
+
 { #category : #matching }
 RBCascadeNode >> match: aNode inContext: aDictionary [ 
 	aNode class = self class ifFalse: [^false].
@@ -128,7 +124,7 @@ RBCascadeNode >> messages: messageNodeCollection [
 	messages do: [:each | each parent: self]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBCascadeNode >> messages: messageNodes semicolons: integerCollection [ 
 	self messages: messageNodes.
 	semicolons := integerCollection
@@ -155,6 +151,12 @@ RBCascadeNode >> precedence [
 { #category : #accessing }
 RBCascadeNode >> receiver [
 	^self messages first receiver
+]
+
+{ #category : #'adding/removing' }
+RBCascadeNode >> removeNode: aNode [
+
+	self messages remove: aNode ifAbsent: [ ]
 ]
 
 { #category : #replacing }

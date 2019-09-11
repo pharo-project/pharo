@@ -4,8 +4,3 @@ Extension { #name : #SmalltalkImage }
 SmalltalkImage >> getSystemAttribute: aNumber [
 	^ self vm getSystemAttribute: aNumber
 ]
-
-{ #category : #'*UnifiedFFI' }
-SmalltalkImage >> platformName [
-	^ self os platformName
-]

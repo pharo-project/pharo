@@ -70,7 +70,6 @@ Class {
 		'pressedImage',
 		'selectedImage',
 		'checkedImage',
-		'announcer',
 		'checkedColor',
 		'normalColor',
 		'pressedColor',

@@ -32,11 +32,6 @@ GLMCompositePresentation >> accordionArrangement [
 ]
 
 { #category : #scripting }
-GLMCompositePresentation >> accumulator [ 
-	^ self custom: GLMAccumulator new
-]
-
-{ #category : #scripting }
 GLMCompositePresentation >> actionList [
 	^ self custom: GLMActionListPresentation new
 ]
@@ -355,9 +350,4 @@ GLMCompositePresentation >> verticallyStackedArrangement [
 GLMCompositePresentation >> withAllPanesAndPresentationsDo: aBlock [
 	super withAllPanesAndPresentationsDo: aBlock.
 	self do: [:each | each withAllPanesAndPresentationsDo: aBlock ]
-]
-
-{ #category : #scripting }
-GLMCompositePresentation >> wrapper [
-	^ self custom: GLMWrapper new
 ]

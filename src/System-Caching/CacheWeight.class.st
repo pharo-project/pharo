@@ -36,7 +36,7 @@ CacheWeight >> compute: valuable [
 	compute := valuable
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CacheWeight >> initialize [
 	super initialize.
 	total := 0.
@@ -66,7 +66,7 @@ CacheWeight >> remove: value [
 	total := total - weight
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CacheWeight >> reset [
 	total := 0
 ]

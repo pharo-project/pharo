@@ -42,7 +42,7 @@ Class {
 		'packageSearchList',
 		'versionSearchList'
 	],
-	#category : #MonticelloGUI
+	#category : #'MonticelloGUI-Tools'
 }
 
 { #category : #'as yet unclassified' }

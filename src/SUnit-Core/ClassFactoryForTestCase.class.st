@@ -77,17 +77,17 @@ ClassFactoryForTestCase >> createdTraits [
 
 { #category : #accessing }
 ClassFactoryForTestCase >> defaultCategory [
-	^ (self packageName , '-', self defaultCategoryPostfix) asSymbol
-]
-
-{ #category : #accessing }
-ClassFactoryForTestCase >> defaultCategoryPostfix [
-	^ #Default
+	^ (self packageName , '-', self defaultTagPostfix) asSymbol
 ]
 
 { #category : #accessing }
 ClassFactoryForTestCase >> defaultSuperclass [ 
 	^Object
+]
+
+{ #category : #accessing }
+ClassFactoryForTestCase >> defaultTagPostfix [
+	^ #Default
 ]
 
 { #category : #cleaning }
@@ -175,7 +175,7 @@ ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
 		uses: aTraitComposition 
 		instanceVariableNames: '' 
 		classVariableNames: ''
-		category: self defaultCategoryPostfix.
+		category: self defaultTagPostfix.
 ]
 
 { #category : #creating }
@@ -185,7 +185,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesS
 		uses: { }
 		instanceVariableNames: ivNamesString 
 		classVariableNames: classVarsString 
-		category: self defaultCategoryPostfix
+		category: self defaultTagPostfix
 ]
 
 { #category : #creating }
@@ -230,7 +230,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
 		uses: aTraitComposition 
 		instanceVariableNames: '' 
 		classVariableNames: ''
-		category: self defaultCategoryPostfix.
+		category: self defaultTagPostfix.
 ]
 
 { #category : #creating }
@@ -238,15 +238,15 @@ ClassFactoryForTestCase >> newTrait [
 	^ self
 		newTraitNamed: self newTraitName
 		uses: Array new
-		category: self defaultCategoryPostfix
+		tag: self defaultTagPostfix
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newTraitInCategory: category [
+ClassFactoryForTestCase >> newTraitInTag: aTag [
 	^ self
 		newTraitNamed: self newTraitName
 		uses: Array new
-		category: category asSymbol.
+		tag: aTag asSymbol
 ]
 
 { #category : #creating }
@@ -257,13 +257,13 @@ ClassFactoryForTestCase >> newTraitName [
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition category: aCategory [
+ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
 	| newTrait |
 	
 	newTrait := Trait 
 					named: aTraitName
 					uses: aTraitComposition 
-					category: (self packageName, '-', aCategory) asSymbol..
+					package: (self packageName, '-', aTag) asSymbol.
 		
 	self createdTraits add: newTrait.
 	
@@ -271,11 +271,11 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition cat
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newTraitUsing: aTraitComposition. [
+ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 	^self 
 		newTraitNamed: self newTraitName 
 		uses: aTraitComposition 
-		category: self defaultCategoryPostfix.
+		tag: self defaultTagPostfix.
 ]
 
 { #category : #accessing }
@@ -304,7 +304,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 		silentlyNewSubclassOf: aClass
 		instanceVariableNames: ivNamesString
 		classVariableNames: classVarsString
-		category: self defaultCategoryPostfix
+		category: self defaultTagPostfix
 ]
 
 { #category : #'creating - silently' }
@@ -356,5 +356,5 @@ ClassFactoryForTestCase >> withNotificationsNewClassWithInstanceVariableNames: i
 		newSubclassOf: Object
 		instanceVariableNames: instanceVariableNames
 		classVariableNames: ''
-		category: self defaultCategoryPostfix
+		category: self defaultTagPostfix
 ]

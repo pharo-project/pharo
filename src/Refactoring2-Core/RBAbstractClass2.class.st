@@ -54,34 +54,38 @@ RBAbstractClass2 >> checkSelector: aSelector using: aMatcher [
 ]
 
 { #category : #transforming }
-RBAbstractClass2 >> convertMethod: selector using: searchReplacer [ 
+RBAbstractClass2 >> convertMethod: selector using: searchReplacer [
+
 	"Convert the parse tree for selector using the searchReplacer. If a
 	change is made then compile it into the changeBuilder."
 
 	| parseTree |
+
 	parseTree := self parseTreeFor: selector.
-	parseTree isNil ifTrue: [^self].
-	(searchReplacer executeTree: parseTree) 
-		ifTrue: [self compileTree: searchReplacer tree]
+	parseTree ifNil: [ ^ self ].
+	( searchReplacer executeTree: parseTree )
+		ifTrue: [ self compileTree: searchReplacer tree ]
 ]
 
 { #category : #querying }
 RBAbstractClass2 >> getterMethodFor: aVariableName [
-
 	| matcher candidateGetters |
-	matcher := RBParseTreeSearcher getterMethod: aVariableName.
-	
+	matcher := self parseTreeSearcherClass getterMethod: aVariableName.
 	candidateGetters := (self definesInstanceVariable: aVariableName)
 		ifTrue: [ self whichSelectorsReferToInstanceVariable: aVariableName ]
 		ifFalse: [ self whichSelectorsReferToClassVariable: aVariableName ].
 	candidateGetters := candidateGetters
 		select: [ :each | each numArgs == 0 ].
-	
 	^ candidateGetters
 		detect: [ :each | 
-			(self checkSelector: each using: matcher) notNil 
-			and: [(self subclassRedefines: each) not]]
-		ifNone: [nil]
+			(self checkSelector: each using: matcher) notNil
+				and: [ (self subclassRedefines: each) not ] ]
+		ifNone: [ nil ]
+]
+
+{ #category : #querying }
+RBAbstractClass2 >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
 ]
 
 { #category : #accessing }
@@ -115,21 +119,18 @@ RBAbstractClass2 >> renameInstanceVariable: oldName to: newName around: aBlock [
 
 { #category : #querying }
 RBAbstractClass2 >> setterMethodFor: aVariableName [
-
 	| matcher candidateSetters |
-	matcher := RBParseTreeSearcher setterMethod: aVariableName.
-			
+	matcher := self parseTreeSearcherClass setterMethod: aVariableName.
 	candidateSetters := (self definesInstanceVariable: aVariableName)
 		ifTrue: [ self whichSelectorsReferToInstanceVariable: aVariableName ]
 		ifFalse: [ self whichSelectorsReferToClassVariable: aVariableName ].
 	candidateSetters := candidateSetters
 		select: [ :each | each numArgs == 1 ].
-		
-	^ candidateSetters 
+	^ candidateSetters
 		detect: [ :each | 
-			(self checkSelector: each using: matcher) notNil 
-			and: [(self subclassRedefines: each) not]]
-		ifNone: [nil]
+			(self checkSelector: each using: matcher) notNil
+				and: [ (self subclassRedefines: each) not ] ]
+		ifNone: [ nil ]
 ]
 
 { #category : #accessing }

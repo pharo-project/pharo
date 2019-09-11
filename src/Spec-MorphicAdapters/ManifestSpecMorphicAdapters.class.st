@@ -7,6 +7,13 @@ Class {
 	#category : #'Spec-MorphicAdapters-Manifest'
 }
 
+{ #category : #deprecation }
+ManifestSpecMorphicAdapters class >> isDeprecated [
+	"Spec should be replaced by Spec 2"
+
+	^ true
+]
+
 { #category : #'code-critics' }
 ManifestSpecMorphicAdapters class >> ruleGTExampleNotDefinedRuleV1FalsePositive [
 	^ #(#(#(#RGClassDefinition #(#AbstractMorphicAdapter)) #'2016-07-01T15:56:13.367433+02:00') )

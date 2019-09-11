@@ -36,8 +36,8 @@ TGrowableTest >> test0FixtureRequirementsOfTGrowableTest [
 	self nonEmpty.
 	self element.
 	self elementNotIn.
-	self assert: self empty isEmpty.
-	self deny: self nonEmpty isEmpty.
+	self assertEmpty: self empty.
+	self denyEmpty: self nonEmpty.
 	self assert: (self nonEmpty includes: self element).
 	self deny: (self nonEmpty includes: self elementNotIn)
 ]

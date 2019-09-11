@@ -8,14 +8,6 @@ Morph >> adoptPaneColor [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-Morph >> basicTheme: aUITheme [
-	"Set the current theme for the receiver."
-
-	self theme = aUITheme ifFalse: [
-		self setProperty: #theme toValue: aUITheme]
-]
-
-{ #category : #'*Polymorph-Widgets' }
 Morph >> boundsWithinCorners [
  	"Changed to be more realistic..."
 	
@@ -63,7 +55,7 @@ Morph >> focusChanged [
 Morph >> focusColor [
 	"Answer the keyboard focus indication color."
 
-	^self borderStyle color contrastingColor
+	^self borderStyle color contrastingBlackAndWhiteColor
 ]
 
 { #category : #'*Polymorph-Widgets' }
@@ -314,7 +306,7 @@ Morph >> showBalloon: msgString hand: aHand [
 	|w h|
 	(w := self world) ifNil: [^self].
 	h := aHand ifNil: [w activeHand].
-	( self theme   builder newBalloonHelp: msgString for: self balloonHelpAligner)
+	( self theme builder newBalloonHelp: msgString for: self balloonHelpAligner)
 		popUpFor: self hand: h
 ]
 
@@ -356,32 +348,6 @@ Morph class >> theme [
 	"Answer the ui theme that provides controls."
 
 	^ Smalltalk ui theme
-]
-
-{ #category : #'*Polymorph-Widgets' }
-Morph >> theme [
-	"Answer the current theme for the receiver."
-
-	(self valueOfProperty: #theme) ifNotNil: [:t | ^ t].
-	^(self owner ifNil: [self class]) theme
-]
-
-{ #category : #'*Polymorph-Widgets' }
-Morph >> theme: aUITheme [
-	"Set the current theme for the receiver."
-
-	self theme = aUITheme ifFalse: [
-		self basicTheme: aUITheme.
-		self themeChanged]
-]
-
-{ #category : #'*Polymorph-Widgets' }
-Morph >> themeChanged [
-	"The current theme has changed.
-	Update any dependent visual aspects."
-
-	self submorphsDo: [:m | m themeChanged].
-	self changed
 ]
 
 { #category : #'*Polymorph-Widgets' }

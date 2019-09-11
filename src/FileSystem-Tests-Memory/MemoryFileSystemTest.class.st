@@ -7,7 +7,7 @@ Class {
 	#category : #'FileSystem-Tests-Memory-Base'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MemoryFileSystemTest >> createFileSystem [
 	^ FileSystem memory
 ]
@@ -131,6 +131,19 @@ MemoryFileSystemTest >> testDirectoryMoveToRename [
 		ensure: 
 			[ src exists ifTrue: [ src deleteAll ].
 			dest exists ifTrue: [ dest deleteAll ] ].
+]
+
+{ #category : #tests }
+MemoryFileSystemTest >> testEnsureCreateFileDoesNotOverwriteExistingContent [
+	| file |
+	file := filesystem root / 'a.txt'.
+	file writeStreamDo: [ :s | s nextPutAll: 'ok' ].
+	self assert: file contents equals: 'ok'.
+	
+	file ensureCreateFile.
+
+	self assert: file contents equals: 'ok'.
+
 ]
 
 { #category : #tests }

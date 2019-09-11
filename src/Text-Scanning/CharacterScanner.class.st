@@ -121,7 +121,6 @@ Class {
 		'emphasisCode',
 		'kern',
 		'indentationLevel',
-		'wantsColumnBreaks',
 		'pendingKernX'
 	],
 	#classVars : [
@@ -262,7 +261,7 @@ CharacterScanner >> indentationLevel: anInteger [
 	indentationLevel := anInteger
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CharacterScanner >> initialize [
 	destX := destY := leftMargin := 0.
 ]

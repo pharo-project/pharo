@@ -11,20 +11,20 @@ RBMoveInstanceVariableToClassTransformationTest >> testRefactoring [
 	refactoring := (RBMoveInstanceVariableToClassTransformation
 						model: model
 						variable: 'methodBlock'
-						fromClass: #RBBasicLintRuleTest
-						toClass: #RBFooLintRuleTest)
+						fromClass: #RBBasicLintRuleTestData
+						toClass: #RBFooLintRuleTestData)
 						asRefactoring.
 				
-	oldClass := refactoring model classNamed: #RBBasicLintRuleTest.
-	newClass := refactoring model classNamed: #RBFooLintRuleTest.
+	oldClass := refactoring model classNamed: #RBBasicLintRuleTestData.
+	newClass := refactoring model classNamed: #RBFooLintRuleTestData.
 	self assert: (oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self deny: (newClass directlyDefinesInstanceVariable: 'methodBlock').
 	
 	[ refactoring transform ] on: RBRefactoringError do: [ :e | e resume ].
 	self assert: refactoring model changes changes size equals: 2.
 
-	oldClass := refactoring model classNamed: #RBBasicLintRuleTest.
-	newClass := refactoring model classNamed: #RBFooLintRuleTest.
+	oldClass := refactoring model classNamed: #RBBasicLintRuleTestData.
+	newClass := refactoring model classNamed: #RBFooLintRuleTestData.
 	self deny: (oldClass directlyDefinesInstanceVariable: 'methodBlock').
 	self assert: (newClass directlyDefinesInstanceVariable: 'methodBlock').
 	
@@ -68,8 +68,8 @@ RBMoveInstanceVariableToClassTransformationTest >> testVariableAlreadyExists [
 	self shouldFail: (RBMoveInstanceVariableToClassTransformation
 							model: model
 							variable: 'result'
-							fromClass: #RBFooLintRuleTest
-							toClass: #RBBasicLintRuleTest)
+							fromClass: #RBFooLintRuleTestData
+							toClass: #RBBasicLintRuleTestData)
 							asRefactoring
 ]
 
@@ -79,7 +79,7 @@ RBMoveInstanceVariableToClassTransformationTest >> testVariableDoesNotExistInOld
 	self shouldFail: (RBMoveInstanceVariableToClassTransformation
 							model: model
 							variable: 'abc'
-							fromClass: #RBFooLintRuleTest
-							toClass: #RBBasicLintRuleTest)
+							fromClass: #RBFooLintRuleTestData
+							toClass: #RBBasicLintRuleTestData)
 							asRefactoring
 ]

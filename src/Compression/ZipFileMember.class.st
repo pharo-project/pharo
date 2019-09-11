@@ -230,7 +230,7 @@ ZipFileMember >> unzipTimestamp: dosTimestampInteger [
 ]
 
 { #category : #testing }
-ZipFileMember >> usesFileNamed: aFileName [
+ZipFileMember >> usesFile: aFileReferenceOrFileName [
 	"Do I require aFileName? That is, do I care if it's clobbered?"
-	^ externalFileName asFileReference = aFileName asFileReference
+	^ externalFileName asFileReference = aFileReferenceOrFileName asFileReference
 ]

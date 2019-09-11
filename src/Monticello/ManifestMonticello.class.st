@@ -1,7 +1,10 @@
+"
+Includes the Monticello source code control system.
+"
 Class {
 	#name : #ManifestMonticello,
 	#superclass : #PackageManifest,
-	#category : #Monticello
+	#category : #'Monticello-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
@@ -11,5 +14,5 @@ ManifestMonticello class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestMonticello class >> manuallyResolvedDependencies [
-	^ #(#'Graphics-Primitives' #'OpalCompiler-Core' #'System-Localization' #Jobs #'Random-Core' #'FFI-Kernel' #'Ring-Deprecated-Monticello' #'System-Settings-Core' #'FileSystem-Disk')
+	^ #(#'Graphics-Primitives' #'OpalCompiler-Core' #'System-Localization' #Jobs #'Random-Core' #'FFI-Kernel' #'Ring-Definitions-Monticello' #'System-Settings-Core' #'FileSystem-Disk')
 ]

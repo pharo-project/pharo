@@ -29,7 +29,7 @@ RBRenameClassChange >> = aRenameClassChange [
 
 { #category : #accessing }
 RBRenameClassChange >> changeClass [
-	^ Smalltalk globals at: oldName asSymbol ifAbsent: [ Smalltalk globals at: newName asSymbol ]
+	^ (onSystemDictionary classNamed: oldName) ifNil: [ onSystemDictionary classNamed: newName ]
 ]
 
 { #category : #private }
@@ -51,6 +51,12 @@ RBRenameClassChange >> hash [
 ]
 
 { #category : #accessing }
+RBRenameClassChange >> nameToDisplay [
+
+	^ self printString
+]
+
+{ #category : #accessing }
 RBRenameClassChange >> newName [
 	^ newName
 ]
@@ -58,6 +64,13 @@ RBRenameClassChange >> newName [
 { #category : #accessing }
 RBRenameClassChange >> oldName [
 	^ oldName
+]
+
+{ #category : #accessing }
+RBRenameClassChange >> oldVersionTextToDisplay [
+	^ String streamContents: [ :s | 
+			self changes do: [ :c | 	s << c oldVersionTextToDisplay; cr ]]
+
 ]
 
 { #category : #printing }
@@ -69,7 +82,7 @@ RBRenameClassChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameClassChange >> rename: oldString to: newString [ 
 	oldName := oldString.
 	newName := newString
@@ -82,4 +95,18 @@ RBRenameClassChange >> renameChangesForClass: oldClassName to: newClassName [
 	oldName asSymbol = oldClassName
 		ifTrue: [ change rename: newClassName to: newName ].
 	^ change
+]
+
+{ #category : #accessing }
+RBRenameClassChange >> textToDisplay [
+	^ String streamContents: [ :s | 
+         s << self printString ; cr.
+         self changes do: [ :c | 	s << c textToDisplay; cr ]]
+
+]
+
+{ #category : #accessing }
+RBRenameClassChange >> whatToDisplayIn: aChangeBrowser [
+	^ { self }
+	
 ]

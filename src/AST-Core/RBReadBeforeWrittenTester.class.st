@@ -46,7 +46,7 @@ RBReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [
 		read
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBReadBeforeWrittenTester >> checkNewTemps: aBoolean [ 
 	checkNewTemps := aBoolean
 ]
@@ -84,7 +84,7 @@ RBReadBeforeWrittenTester >> initialize [
 	checkNewTemps := true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBReadBeforeWrittenTester >> initializeVars: varNames [ 
 	varNames do: [:each | self currentScope at: each put: nil]
 ]
@@ -102,43 +102,49 @@ RBReadBeforeWrittenTester >> processBlock: aNode [
 ]
 
 { #category : #private }
-RBReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [ 
+RBReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [
+
 	| trueScope falseScope |
+
 	self createScope.
 	self executeTree: aNode arguments first body.
 	trueScope := self removeScope.
 	self createScope.
 	self executeTree: aNode arguments last body.
 	falseScope := self removeScope.
-	self currentScope keysAndValuesDo: 
-			[:key :value | 
-			value isNil 
-				ifTrue: 
-					[(trueScope at: key) == (falseScope at: key) 
-						ifTrue: [self currentScope at: key put: (trueScope at: key)]
-						ifFalse: 
-							[((trueScope at: key) == true or: [(falseScope at: key) == true]) 
-								ifTrue: [self currentScope at: key put: true]]]]
+	self currentScope
+		keysAndValuesDo: [ :key :value | 
+			value
+				ifNil: [ ( trueScope at: key ) == ( falseScope at: key )
+						ifTrue: [ self currentScope at: key put: ( trueScope at: key ) ]
+						ifFalse: [ ( ( trueScope at: key ) == true or: [ ( falseScope at: key ) == true ] )
+								ifTrue: [ self currentScope at: key put: true ]
+							]
+					]
+			]
 ]
 
 { #category : #private }
-RBReadBeforeWrittenTester >> processStatementNode: aNode [ 
+RBReadBeforeWrittenTester >> processStatementNode: aNode [
+
 	| temps |
-	(checkNewTemps not or: [aNode temporaries isEmpty]) 
-		ifTrue: 
-			[aNode statements do: [:each | self executeTree: each].
-			^self].
+
+	( checkNewTemps not or: [ aNode temporaries isEmpty ] )
+		ifTrue: [ aNode statements do: [ :each | self executeTree: each ].
+			^ self
+			].
 	self createScope.
-	temps := aNode temporaries collect: [:each | each name].
+	temps := aNode temporaries collect: [ :each | each name ].
 	self initializeVars: temps.
-	aNode statements do: [:each | self executeTree: each].
-	self removeScope keysAndValuesDo: 
-			[:key :value | 
-			(temps includes: key) 
-				ifTrue: [value == true ifTrue: [read add: key]]
-				ifFalse: 
-					[(self currentScope at: key) isNil 
-						ifTrue: [self currentScope at: key put: value]]]
+	aNode statements do: [ :each | self executeTree: each ].
+	self removeScope
+		keysAndValuesDo: [ :key :value | 
+			( temps includes: key )
+				ifTrue: [ value == true
+						ifTrue: [ read add: key ]
+					]
+				ifFalse: [ ( self currentScope at: key ) ifNil: [ self currentScope at: key put: value ] ]
+			]
 ]
 
 { #category : #accessing }
@@ -154,19 +160,19 @@ RBReadBeforeWrittenTester >> removeScope [
 ]
 
 { #category : #private }
-RBReadBeforeWrittenTester >> variableRead: aNode [ 
-	(self currentScope includesKey: aNode name) 
-		ifTrue: 
-			[(self currentScope at: aNode name) isNil 
-				ifTrue: [self currentScope at: aNode name put: true]]
+RBReadBeforeWrittenTester >> variableRead: aNode [
+
+	( self currentScope includesKey: aNode name )
+		ifTrue: [ ( self currentScope at: aNode name ) ifNil: [ self currentScope at: aNode name put: true ] ]
 ]
 
 { #category : #private }
-RBReadBeforeWrittenTester >> variableWritten: aNode [ 
-	(self currentScope includesKey: aNode variable name) 
-		ifTrue: 
-			[(self currentScope at: aNode variable name) isNil 
-				ifTrue: [self currentScope at: aNode variable name put: false]]
+RBReadBeforeWrittenTester >> variableWritten: aNode [
+
+	( self currentScope includesKey: aNode variable name )
+		ifTrue: [ ( self currentScope at: aNode variable name )
+				ifNil: [ self currentScope at: aNode variable name put: false ]
+			]
 ]
 
 { #category : #visiting }

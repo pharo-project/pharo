@@ -52,30 +52,30 @@ TreePresenter class >> defaultSpec [
 TreePresenter class >> example [
 	<sampleInstance>
 	| m |
-
 	m := self new.
 	m openWithSpec.
-	
 	m roots: #(a b c d).
-	m childrenBlock: [:it | it = #c 
-		ifTrue: [ {1. 2. 3} ]
-		ifFalse: [ {} ]].
-	m displayBlock: [:item | item isSymbol
-		ifTrue: [ item asUppercase , ' symbol' ]
-		ifFalse: [ item printString ]].
-	m 
+	m
+		childrenBlock: [ :it | 
+			it = #c
+				ifTrue: [ {1 . 2 . 3} ]
+				ifFalse: [ {} ] ].
+	m
+		displayBlock: [ :item | 
+			item isSymbol
+				ifTrue: [ item asUppercase , ' symbol' ]
+				ifFalse: [ item printString ] ].
+	m
 		dragEnabled: true;
 		dropEnabled: true;
-		wantDropBlock: [ :draggedItem :event :source | 
-			draggedItem isTransferable and: [ draggedItem source = m ] ];
+		wantDropBlock:
+				[ :draggedItem :event :source | draggedItem isTransferable and: [ draggedItem source = m ] ];
 		acceptDropBlock: [ :transfer :event :source :receiver | 
-			Transcript 
-				show: 'Dragged node '; 
-				show: transfer passenger content; 
-				show: ' to node '; 
-				show: receiver content; 
-				cr ].
-		
+			self
+				traceCr:
+					('Dragged node <1s> to node <2s>'
+						expandMacrosWith: transfer passenger content asString
+						with: receiver content asString) ].
 	^ m
 ]
 
@@ -95,6 +95,7 @@ TreePresenter class >> exampleOfAutoRefreshOnExpand [
 
 { #category : #examples }
 TreePresenter class >> exampleWithCustomColumnsAndNodes [
+	<haltOrBreakpointForTesting>
 	"self exampleWithCustomColumnsAndNodes"
 	| m col1 col2 |
 
@@ -138,6 +139,7 @@ TreePresenter class >> exampleWithCustomColumnsAndNodes [
 
 { #category : #examples }
 TreePresenter class >> exampleWithCustomColumnsAndNodesAndChildren [
+	<haltOrBreakpointForTesting>
 	"self exampleWithCustomColumnsAndNodesAndChildren"
 
 	| m col1 col2 |

@@ -15,13 +15,10 @@ RBLiteralArrayCharactersRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBLiteralArrayCharactersRule >> check: aNode forCritiquesDo: aCriticBlock [
-
-	aNode isLiteralArray ifFalse: [ ^ self ].
-	aNode value ifEmpty: [ ^ self ].
-	(aNode value allSatisfy: #isCharacter)
-		ifTrue: [ 
-			aCriticBlock cull: (self critiqueFor: aNode) ]
+RBLiteralArrayCharactersRule >> basicCheck: aNode [
+	aNode isLiteralArray ifFalse: [ ^ false ].
+	aNode value ifEmpty: [ ^ false ].
+	^ aNode value allSatisfy: #isCharacter
 ]
 
 { #category : #accessing }

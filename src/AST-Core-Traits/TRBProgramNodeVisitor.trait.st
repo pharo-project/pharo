@@ -1,5 +1,5 @@
 "
-A TRBProgramNodeVisitor is a simple  that define visitor methods. 
+A TRBProgramNodeVisitor is a simple Trait that define visitor methods. 
 "
 Trait {
 	#name : #TRBProgramNodeVisitor,
@@ -27,19 +27,21 @@ TRBProgramNodeVisitor >> visitArrayNode: anArrayNode [
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitAssignmentNode: anAssignmentNode [
 
-	self visitNode: anAssignmentNode variable.
-	self visitNode: anAssignmentNode value
+	self 
+		visitNode: anAssignmentNode variable;
+		visitNode: anAssignmentNode value
 ]
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitBlockNode: aBlockNode [ 
-	self visitArgumentNodes: aBlockNode arguments.
-	self visitNode: aBlockNode body
+	self 
+		visitArgumentNodes: aBlockNode arguments;
+		visitNode: aBlockNode body
 ]
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [ 
-	aCascadeNode messages do: [:each | self visitNode: each]
+	aCascadeNode messages do: [:aMessage | self visitNode: aMessage]
 ]
 
 { #category : #visiting }
@@ -72,7 +74,7 @@ TRBProgramNodeVisitor >> visitMessageNode: aMessageNode [
 TRBProgramNodeVisitor >> visitMethodNode: aMethodNode [ 
 	self visitArgumentNodes: aMethodNode arguments.
 	aMethodNode pragmas
-		do: [ :each | self visitNode: each ].
+		do: [:each | self visitNode: each ].
 	self visitNode: aMethodNode body
 ]
 
@@ -87,15 +89,17 @@ TRBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitPatternBlockNode: aRBPatternBlockNode [ 
-	self visitArgumentNodes: aRBPatternBlockNode arguments.
-	self visitNode: aRBPatternBlockNode body
+	self 
+		visitArgumentNodes: aRBPatternBlockNode arguments;
+		visitNode: aRBPatternBlockNode body
 ]
 
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [ 
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
-	self visitNode: aRBPatternWrapperBlockNode body
+	self 
+		visitNode: aRBPatternWrapperBlockNode wrappedNode;
+		visitArgumentNodes: aRBPatternWrapperBlockNode arguments;
+		visitNode: aRBPatternWrapperBlockNode body
 ]
 
 { #category : #visiting }
@@ -125,15 +129,26 @@ TRBProgramNodeVisitor >> visitSuperNode: aSuperNode [
 ]
 
 { #category : #visiting }
+TRBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
+	"| temp |
+	temp is a temporary node as we can find in the body of methods, but it can't be visited the same way.
+	IT redirects the message on argumentNodeVisitor as a way to keep retrocompatibility"
+
+	^ self visitArgumentNode: aTemporaryDeclarationNode
+]
+
+{ #category : #visiting }
 TRBProgramNodeVisitor >> visitTemporaryNode: aNode [ 
 	"Sent *each time* a temporary node is found"
 	^ self visitVariableNode: aNode
 ]
 
 { #category : #visiting }
-TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [ 
+TRBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 	"This is triggered when defining the temporaries between the pipes"
-	^self visitArgumentNodes: aNodeCollection
+
+	^ aNodeCollection
+		do: [ :each | self visitTemporaryDeclarationNode: each ]
 ]
 
 { #category : #visiting }

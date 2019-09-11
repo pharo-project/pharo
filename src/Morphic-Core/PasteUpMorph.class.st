@@ -17,6 +17,7 @@ Class {
 		'griddingOn'
 	],
 	#classVars : [
+		'ShouldShowWorldMenu',
 		'ShouldSwapMenuOpenerButtons',
 		'WindowEventHandler',
 		'WorldAnnouncer'
@@ -26,7 +27,8 @@ Class {
 
 { #category : #'initialize-release' }
 PasteUpMorph class >> initialize [
-	ShouldSwapMenuOpenerButtons := false
+	ShouldSwapMenuOpenerButtons := false.
+	self shouldShowWorldMenu: true
 ]
 
 { #category : #acessing }
@@ -40,6 +42,26 @@ PasteUpMorph class >> isMenuOpenByLeftClick [
 "
 
 	^ self shouldSwapMenuOpenerButtons ==> [ Smalltalk os isMacOS ]
+]
+
+{ #category : #accessing }
+PasteUpMorph class >> shouldShowWorldMenu [
+	^ ShouldShowWorldMenu
+]
+
+{ #category : #accessing }
+PasteUpMorph class >> shouldShowWorldMenu: anObject [
+	ShouldShowWorldMenu := anObject
+]
+
+{ #category : #settings }
+PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #shouldShowWorldMenu)
+		target: self;
+		parent: #morphic;
+		label: 'Show world menu';
+		description: 'Whether the World''s world menu should be shown or not on a click in the World.'
 ]
 
 { #category : #acessing }
@@ -145,36 +167,16 @@ PasteUpMorph >> backgroundMorph [
 
 { #category : #accessing }
 PasteUpMorph >> backgroundMorph: aMorph [
+
 	"Set the background morph.
 	Probably best if locked prior to adding."
 
-	self backgroundMorph isNil ifFalse: [
-		self backgroundMorph delete].
+	self backgroundMorph ifNotNil: [ self backgroundMorph delete ].
 	backgroundMorph := aMorph.
-	aMorph isNil ifFalse: [
-		aMorph bounds: self bounds.
-		self addMorphBack: aMorph]
-]
-
-{ #category : #initialization }
-PasteUpMorph >> becomeActiveDuring: aBlock [
-	"Make the receiver the ActiveWorld during the evaluation of aBlock.
-	Note that this method does deliberately *not* use #ensure: to prevent
-	re-installation of the world on project switches."
-	| priorWorld priorHand priorEvent |
-	priorWorld := ActiveWorld.
-	priorHand := ActiveHand.
-	priorEvent := ActiveEvent.
-	ActiveWorld := self.
-	ActiveHand := self hands first. "default"
-	ActiveEvent := nil. "not in event cycle"
-	aBlock
-		on: Error
-		do: [:ex | 
-			ActiveWorld := priorWorld.
-			ActiveEvent := priorEvent.
-			ActiveHand := priorHand.
-			ex pass]
+	aMorph
+		ifNotNil: [ aMorph bounds: self bounds.
+			self addMorphBack: aMorph
+			]
 ]
 
 { #category : #viewing }
@@ -186,24 +188,28 @@ PasteUpMorph >> bringTopmostsToFront [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> bringWindowsFullOnscreen [
+
 	"Make ever SystemWindow on the desktop be totally on-screen, whenever possible."
 
 	| r |
+
 	bounds
-		allAreasOutsideList: (self taskbars collect: [ :t | t bounds ])
+		allAreasOutsideList: ( self taskbars collect: [ :t | t bounds ] )
 		do: [ :e | 
-			r isNil
-				ifTrue: [ r := e ]
-				ifFalse: [ 
-					r area > e area
+			r
+				ifNil: [ r := e ]
+				ifNotNil: [ r area > e area
 						ifTrue: [ r ]
-						ifFalse: [ e ] ] ].
-	(self windowsSatisfying: [ :w | true ])
+						ifFalse: [ e ]
+					]
+			].
+	( self windowsSatisfying: [ :w | true ] )
 		do: [ :aWindow | 
-			aWindow right: (aWindow right min: r right).
-			aWindow bottom: (aWindow bottom min: r bottom).
-			aWindow left: (aWindow left max: r left).
-			aWindow top: (aWindow top max: r top) ]
+			aWindow right: ( aWindow right min: r right ).
+			aWindow bottom: ( aWindow bottom min: r bottom ).
+			aWindow left: ( aWindow left max: r left ).
+			aWindow top: ( aWindow top max: r top )
+			]
 ]
 
 { #category : #'session management' }
@@ -234,7 +240,7 @@ PasteUpMorph >> closeAllUnchangedWindows [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllWindowsDiscardingChanges [
-	World systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
+	self currentWorld systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -333,17 +339,6 @@ PasteUpMorph >> defersHaloOnClickTo: aSubMorph [
 	
 ]
 
-{ #category : #'world state' }
-PasteUpMorph >> deleteAllHalos [
-	"self halt.
-	self haloMorphs
-		do: [:each | (each target isKindOf: SelectionMorph)
-				ifTrue: [each target delete]].
-	self hands
-		do: [:each | each removeHalo]"
-	self flag: #???
-]
-
 { #category : #'world menu' }
 PasteUpMorph >> discoveredWorldMenu [
 	^ owner discoveredWorldMenu
@@ -440,13 +435,16 @@ PasteUpMorph >> dropFiles: anEvent [
 	TODO:
 		- use a more general mechanism for figuring out what to do with the file (perhaps even offering a choice from a menu)
 		- remember the resource location or (when in browser) even the actual file handle"
-	| numFiles |	
+
+	| numFiles |
 	numFiles := anEvent contents.
-	
-	1 to: numFiles do: [:i | | aFileReference handler |
+	1 to: numFiles do: [ :i | 
+		| aFileReference handler |
 		aFileReference := FileReference requestDropReference: i.
-		handler := ExternalDropHandler lookupExternalDropHandler: aFileReference.
-		handler ifNotNil: [ aFileReference binaryWriteStreamDo: [ :stream | handler handle: stream in: self dropEvent: anEvent ] ]].
+		handler := ExternalDropHandler
+			lookupExternalDropHandler: aFileReference.
+		handler
+			ifNotNil: [ handler handle: aFileReference in: self dropEvent: anEvent ] ]
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -663,6 +661,10 @@ PasteUpMorph >> initializeDesktopCommandKeySelectors [
 PasteUpMorph >> invokeWorldMenu: evt [
 	"Put up the world menu, triggered by the passed-in event."
 	| menu |
+	
+	"If the user does not want a world menu, do not invoke it."
+	self class shouldShowWorldMenu ifFalse: [ ^ self ].
+	
 	self bringTopmostsToFront.
 	"put up screen menu"
 	(menu := self worldMenu) popUpEvent: evt in: self.
@@ -882,10 +884,10 @@ PasteUpMorph >> repelsMorph: aMorph event: ev [
 
 { #category : #recategorized }
 PasteUpMorph >> resizeBackgroundMorph [
+
 	"Resize the background morph to fit the world."
 
-	self backgroundMorph isNil ifFalse: [
-		self backgroundMorph extent: self extent]
+	self backgroundMorph ifNotNil: [ self backgroundMorph extent: self extent ]
 ]
 
 { #category : #options }
@@ -907,7 +909,7 @@ PasteUpMorph >> resizeToFitString [
 { #category : #'world state' }
 PasteUpMorph >> restoreDisplay [
 
-	World restoreMorphicDisplay.	"I don't actually expect this to be called"
+	self currentWorld restoreMorphicDisplay.	"I don't actually expect this to be called"
 ]
 
 { #category : #'world state' }
@@ -915,25 +917,6 @@ PasteUpMorph >> restoreMainDockingBarDisplay [
 	"Restore the display of docking bars"
 	self dockingBars
 		do: [:each | each updateBounds]
-]
-
-{ #category : #'world state' }
-PasteUpMorph >> restoreMorphicDisplay [
-
-	DisplayScreen startUp.
-
-	self
-		extent: Display extent;
-		viewBox: Display boundingBox;
-		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
-		resizeBackgroundMorph;
-		submorphsDo: [ :each | each displayExtentChanged ];
-		fullRepaintNeeded.
-		
-	self defer: [Cursor normal show].
-		
-	self layoutChanged.
-
 ]
 
 { #category : #gridding }
@@ -1003,7 +986,7 @@ PasteUpMorph >> toggleResizeToFit [
 PasteUpMorph >> useRoundedCorners [
 	"Somewhat special cased because we do have to fill Display for this"
 	super useRoundedCorners.
-	self == World ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
+	self == self currentWorld ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
 ]
 
 { #category : #'project state' }

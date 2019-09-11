@@ -7,10 +7,7 @@ Class {
 	#classVars : [
 		'ClassVariableForTesting'
 	],
-	#classInstVars : [
-		'interval'
-	],
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #'closures for testing' }

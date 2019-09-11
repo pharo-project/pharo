@@ -9,7 +9,7 @@ Class {
 		'labelMorph',
 		'getContentSelector'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #adding }

@@ -20,7 +20,7 @@ Class {
 { #category : #private }
 KMPragmaKeymapBuilder class >> event: anEvent [
 	anEvent method ifNil: [ ^self ].
-	((anEvent method pragmas collect: #keyword) includesAnyOf: self pragmas )
+	((anEvent method pragmas collect: #selector) includesAnyOf: self pragmas )
 		ifTrue: [ self uniqueInstance reset ]
 ]
 
@@ -40,7 +40,8 @@ KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 	SystemAnnouncer uniqueInstance 
 		unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak subscribe: MethodAdded, MethodModified, MethodRemoved 
+	SystemAnnouncer uniqueInstance weak 
+		when: MethodAdded, MethodModified, MethodRemoved 
 		send: #event: 
 		to: self.
 ]
@@ -126,7 +127,7 @@ KMPragmaKeymapBuilder >> pragmaCollector [
 	^ pragmaCollector
 		ifNil: [ pragmaCollector := PragmaCollector
 				filter: [ :prg | 
-					(self pragmaKeywords includes: prg keyword)
+					(self pragmaKeywords includes: prg selector)
 						and: [ prg methodSelector numArgs = 1 ] ].
 			(self pragmaKeywords notNil and: [ self pragmaKeywords notEmpty ])
 				ifTrue: [ pragmaCollector reset ].
@@ -140,7 +141,7 @@ KMPragmaKeymapBuilder >> pragmaKeywords [
 	^  self class pragmas
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMPragmaKeymapBuilder >> release [
 	self pragmaCollector unsubscribe: self.
 	self pragmaCollector announcer initialize. "Hack because the announcer is not garbage collected."
@@ -151,7 +152,7 @@ KMPragmaKeymapBuilder >> release [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMPragmaKeymapBuilder >> reset [
 	pragmaCollector := nil.
 	"KeymapManager default: KeymapManager new."

@@ -53,9 +53,9 @@ http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font
 			int strlen,
 			void ** glyphs,
 			int * numGlyphs,
-			0,
-			0,
-			0))
+			NULL,
+			NULL,
+			NULL))
 ]
 
 { #category : #accessing }

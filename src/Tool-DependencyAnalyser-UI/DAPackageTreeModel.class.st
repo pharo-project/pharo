@@ -108,8 +108,7 @@ DAPackageTreeModel >> initializePresenter [
 DAPackageTreeModel >> initializeWidgets [
 	tree := self newTree
 		multiSelection: true;
-		on: $b meta
-			do: [ self selectedItemFromTree spawnNewBrowser ];
+		bindKeyCombination: $b meta toAction: [ self selectedItemFromTree spawnNewBrowser ];
 		columns: {(TreeColumnPresenter new displayBlock: [ :node | node label ])};
 		yourself.
 	buttonRefresh := self newButton

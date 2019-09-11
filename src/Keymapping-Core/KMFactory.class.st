@@ -4,7 +4,7 @@ I am a class used to access some of the main classes of Keymapping. See my class
 Class {
 	#name : #KMFactory,
 	#superclass : #Object,
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #accessing }

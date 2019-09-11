@@ -119,6 +119,13 @@ TestCase class >> buildSuiteFromSelectors [
 	^self buildSuiteFromMethods: self allTestSelectors
 ]
 
+{ #category : #'accessing comment' }
+TestCase class >> comment [
+	^super hasComment
+		ifTrue: [ super comment ] 
+		ifFalse: ['This class contains tests'].
+]
+
 { #category : #coverage }
 TestCase class >> coverage [
 	"returns the coverage determined by a simple static analysis of test coverage 
@@ -218,6 +225,11 @@ TestCase class >> generateLastStoredRunMethod [
 		self class
 			compile: (self lastRunMethodNamed: #lastStoredRun)
 			classified: 'history' ]
+]
+
+{ #category : #'accessing comment' }
+TestCase class >> hasComment [
+	^true
 ]
 
 { #category : #testing }
@@ -477,7 +489,7 @@ TestCase class >> runAllAndLogResult [
 
 	"runs all tests in the image"
 
-	TestCase suite run logCr
+	TestCase suite run traceCr
 ]
 
 { #category : #'instance creation' }
@@ -572,7 +584,7 @@ TestCase >> announcer [
 { #category : #private }
 TestCase >> cleanUpInstanceVariables [
 	self class allInstVarNames do: [ :name |
-		name = 'testSelector' ifFalse: [
+		(self instanceVariablesToKeep includes: name) ifFalse: [
 			self instVarNamed: name put: nil ] ]
 ]
 
@@ -627,6 +639,11 @@ TestCase >> failureLog [
 			
 ]
 
+{ #category : #private }
+TestCase >> instanceVariablesToKeep [
+	^ #('testSelector')
+]
+
 { #category : #testing }
 TestCase >> isExpectedFailure [
 	^self expectedFailures includes: testSelector
@@ -658,6 +675,7 @@ TestCase >> onPharoCITestingEnvironment [
 
 { #category : #running }
 TestCase >> openDebuggerOnFailingTestMethod [
+	<haltOrBreakpointForTesting>
 	"SUnit has halted one step in front of the failing test method. Step over the 'self halt' and 
 	 send into 'self perform: testSelector' to see the failure from the beginning"
 

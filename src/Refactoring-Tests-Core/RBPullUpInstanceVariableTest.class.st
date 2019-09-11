@@ -10,15 +10,15 @@ RBPullUpInstanceVariableTest >> testPullUpInstVar [
 	self proceedThroughWarning: 
 		[ refactoring := RBPullUpInstanceVariableRefactoring 
 			variable: 'result'
-			class: RBLintRuleTest.
+			class: RBLintRuleTestData.
 		self executeRefactoring: refactoring ].
-	self assert: ((refactoring model classNamed: #RBLintRuleTest) directlyDefinesInstanceVariable: 'result').
-	self deny: ((refactoring model classNamed: #RBBasicLintRuleTest) directlyDefinesInstanceVariable: 'result')
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) directlyDefinesInstanceVariable: 'result').
+	self deny: ((refactoring model classNamed: #RBBasicLintRuleTestData) directlyDefinesInstanceVariable: 'result')
 ]
 
 { #category : #'failure tests' }
 RBPullUpInstanceVariableTest >> testPullUpVariableNotDefined [
 	self shouldFail: (RBPullUpInstanceVariableRefactoring 
 			variable: 'notDefinedVariable'
-			class: RBLintRuleTest)
+			class: RBLintRuleTestData)
 ]

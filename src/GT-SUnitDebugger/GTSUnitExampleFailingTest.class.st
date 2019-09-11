@@ -113,7 +113,7 @@ GTSUnitExampleFailingTest >> testSimpleFailingAssestion [
 
 { #category : #tests }
 GTSUnitExampleFailingTest >> testWithHalt [
-
+	<haltOrBreakpointForTesting>
 	self assert: true.
 	self halt
 ]

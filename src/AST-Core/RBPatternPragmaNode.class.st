@@ -1,5 +1,5 @@
 "
-RBPatternPragmaNode  is a RBPragmaNode that is used by the tree searcher  to
+RBPatternPragmaNode is a RBPragmaNode that is used by the tree searcher  to
 match pragma statements. Just like RBPatternMethodNode for method nodes.
 
 Instance Variables:

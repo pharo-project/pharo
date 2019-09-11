@@ -7,48 +7,18 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
-{ #category : #private }
-ObjectTest >> a [
-	self b.
-]
-
-{ #category : #private }
-ObjectTest >> a1 [
-	self b1.
-]
-
-{ #category : #private }
-ObjectTest >> b [
-	self haltIf: #testHaltIf.
-]
-
-{ #category : #private }
-ObjectTest >> b1 [
-	self haltIf: #testasdasdfHaltIf.
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldHaltAfter: aNumber times: aBlock [
+{ #category : #tests }
+ObjectTest >> testAs [
+	| coll1 coll2 |
+	coll1 := { 1 . 2 . 3 }.
+	coll2 := coll1 as: OrderedCollection.
 	
-	self shouldHaltWhen: [ aNumber timesRepeat: aBlock ].
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldHaltWhen: aBlock [
-
-	self should: aBlock raise: Halt.
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldntHaltAfter: aNumber times: aBlock [
+	self assert: coll2 equals: (OrderedCollection with: 1 with: 2 with: 3).
+	self deny: coll1 == coll2.
 	
-	self shouldntHaltWhen: [ aNumber timesRepeat: aBlock ].
-]
-
-{ #category : #'assertions - halt' }
-ObjectTest >> shouldntHaltWhen: aBlock [
-
-	self shouldnt: aBlock raise: Halt.
+	"If the object has the right type, do nothing."
+	coll2 := coll1 as: Array.
+	self assert: coll1 == coll2
 ]
 
 { #category : #tests }
@@ -94,25 +64,6 @@ ObjectTest >> testDisplayStringLimitedString [
 	| actual |
 	actual := Object new displayStringLimitedTo: 4.
 	self assert: actual equals: 'an O...etc...'
-]
-
-{ #category : #'tests - debugging' }
-ObjectTest >> testHaltIf [
-
-	self shouldHaltWhen: [self haltIf: true].
-	self shouldntHaltWhen: [self haltIf: false].
-
-	self shouldHaltWhen: [self haltIf: [true]].
-	self shouldntHaltWhen: [self haltIf: [false]].
-
-	self shouldHaltWhen: [self haltIf: #testHaltIf].
-	self shouldntHaltWhen: [self haltIf: #teadfasdfltIf].
-
-	self shouldHaltWhen: [self a].
-	self shouldntHaltWhen: [self a1].
-
-	self shouldHaltWhen: [self haltIf: [:receiver | receiver class = self class]].
-	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
 ]
 
 { #category : #tests }

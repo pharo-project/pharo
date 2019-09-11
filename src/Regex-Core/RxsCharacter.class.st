@@ -46,7 +46,7 @@ RxsCharacter >> enumerateTo: aSet ignoringCase: aBoolean [
 		ifFalse: [aSet add: character]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsCharacter >> initializeCharacter: aCharacter [
 	"See class comment for instance variable description."
 

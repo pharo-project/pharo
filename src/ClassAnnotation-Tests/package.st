@@ -1,0 +1,1 @@
+Package { #name : #'ClassAnnotation-Tests' }

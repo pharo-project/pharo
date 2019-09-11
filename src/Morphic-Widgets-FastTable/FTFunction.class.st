@@ -91,7 +91,7 @@ FTFunction >> keyStroke: anEvent [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FTFunction >> reset [
 	self subclassResponsibility 
 ]

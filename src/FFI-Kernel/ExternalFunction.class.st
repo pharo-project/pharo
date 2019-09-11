@@ -72,17 +72,20 @@ ExternalFunction class >> externalCallFailed [
 
 { #category : #'error handling' }
 ExternalFunction class >> externalCallFailedWith: primErrorCode [
+
 	"Raise an error after a failed call to an external function.
 	 The primFailCode could be any of:
 		- a symbol; one of the standard primitive errors defined in Smalltalk primitiveErrorTable
 		- nil; the VM does not support primitive errors and is not providing error codes
 		- an integer; one of the FFI codes incremented by Smalltalk primitiveErrorTable size + 2
 		  so as not to clash with the standard primitive errors."
-	^self error: (primErrorCode isInteger
-					ifTrue: [self errorMessageFor: primErrorCode - (Smalltalk primitiveErrorTable size + 2)]
-					ifFalse: [primErrorCode isNil
-								ifTrue: ['Call to external function failed']
-								ifFalse: [primErrorCode]])
+
+	^ self
+		error:
+			( primErrorCode isInteger
+				ifTrue: [ self errorMessageFor: primErrorCode - ( Smalltalk primitiveErrorTable size + 2 ) ]
+				ifFalse:
+					[ primErrorCode ifNil: [ 'Call to external function failed' ] ifNotNil: [ primErrorCode ] ] )
 ]
 
 { #category : #'compiler support' }
@@ -176,7 +179,7 @@ ExternalFunction >> flags [
 	^flags
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ExternalFunction >> initialize [
 	"Initialize the receiver"
 	handle := ExternalAddress new.
@@ -220,7 +223,7 @@ ExternalFunction >> invokeWith: arg1 with: arg2 with: arg3 with: arg4 with: arg5
 { #category : #invoking }
 ExternalFunction >> invokeWithArguments: argArray [
 	"Manually invoke the receiver, representing an external function."
-	<primitive: 'primitiveCalloutWithArgs' module:'SqueakFFIPrims'>
+	<primitive: 'primitiveCalloutWithArgs' module: 'SqueakFFIPrims' error: ec>
 	^self externalCallFailed
 ]
 

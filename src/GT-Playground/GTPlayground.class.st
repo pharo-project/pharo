@@ -108,13 +108,13 @@ GTPlayground class >> isGTPlaygroundEnabled [
 { #category : #'world menu' }
 GTPlayground class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: Smalltalk tools workspace title asSymbol)
+	(aBuilder item: #Playground)
 		parent: #Tools;
 		action: [ Smalltalk tools openWorkspace ];
 		order: 10;
 		keyText: 'o, w';
 		help: 'A window used as a scratchpad area where fragments of Pharo code can be entered, stored, edited, and evaluated.';
-		icon: Smalltalk tools workspace taskbarIcon
+		icon: (self iconNamed: #workspaceIcon)
 ]
 
 { #category : #'instance creation' }
@@ -381,6 +381,7 @@ GTPlayground >> codePresentationIn: composite [
 { #category : #building }
 GTPlayground >> compose [
 	self title: self defaultPlaygroundTitle.
+	self titleIcon: self playgroundIcon.
 	self act: [:b | b update] icon: GLMUIThemeExtraIcons glamorousRefresh entitled: 'Update'.
 	self act: [:b | 
 		HelpBrowser open selectTopicSatisfying: [:each |
@@ -520,6 +521,12 @@ GTPlayground >> playgroundActionsIn: aGTPlayground [
 	"Build Playground actions that appears on the title bar."
 	self playgroundActions do: [ :eachAction | 
 		aGTPlayground addAction: eachAction ]
+]
+
+{ #category : #accessing }
+GTPlayground >> playgroundIcon [
+	
+	^ self iconNamed: #workspace
 ]
 
 { #category : #'accessing-dynamic' }

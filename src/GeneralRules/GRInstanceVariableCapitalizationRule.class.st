@@ -24,8 +24,8 @@ GRInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlo
 
 { #category : #'running-helpers' }
 GRInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
-	| crit |
 
+	| crit |
 	crit := ReRefactoringCritique
 		withAnchor: (ReVarSearchSourceAnchor
 			entity: aClass

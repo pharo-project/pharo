@@ -17,7 +17,7 @@ Behavior >> spotterCompositionFor: aStep [
 	<spotterOrder: 25>
 	aStep listProcessor
 			title: 'Composing traits';
-			allCandidates: [ self traitComposition allTraits ];
+			allCandidates: [ self allTraits ];
 			itemIcon: #systemIcon;
 			filter: GTFilterSubstring
 ]
@@ -69,8 +69,8 @@ Behavior >> spotterTraitUsersFor: aStep [
 Behavior >> spotterUsedSlotsFor: aStep [
 	<spotterOrder: 70>
 	aStep listProcessor
-			title: 'Special Slots';
-			allCandidates: [ self slots select: [ :slot | slot isSpecial ] ];
+			title: 'Full Definition Slots';
+			allCandidates: [ self slots select: [ :slot | slot needsFullDefinition ] ];
 			itemName: [ :item | item definitionString ];
 			filter: GTFilterSubstring
 ]

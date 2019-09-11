@@ -41,3 +41,9 @@ FFIFloat64 >> emitPointerArityRoll: aBuilder context: aContext [
 		arity: self pointerArity
 		selector: #packAsDoubleToArity:
 ]
+
+{ #category : #callbacks }
+FFIFloat64 >> extractFromCallbackOn: aCallbackArgumentReader [ 
+	
+	aCallbackArgumentReader extractDouble
+]

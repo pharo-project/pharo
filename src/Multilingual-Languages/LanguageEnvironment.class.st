@@ -49,7 +49,12 @@ LanguageEnvironment class >> clearDefault [
 { #category : #accessing }
 LanguageEnvironment class >> currentPlatform [
 
-	^ Locale currentPlatform languageEnvironment.
+	| localeClass |
+	"A minimal (headless) image has LanguageEnvironment but not Locale!"
+	localeClass := self environment 
+		at: #Locale 
+		ifAbsent: [self error: 'Locale is missing from the environment!'].
+	^ localeClass currentPlatform languageEnvironment.
 
 ]
 
@@ -85,12 +90,13 @@ LanguageEnvironment class >> fileNameConverterClass [
 LanguageEnvironment class >> initKnownEnvironments [
 	"LanguageEnvironment initKnownEnvironments"
 
-	| known |
+	| known localeIdClass |
+	localeIdClass := self localeIdClass.
 	known := Dictionary new.
 	self allSubclassesDo: [:subClass | 
 		subClass supportedLanguages do: [:language | | env id | 
 			env := subClass new.
-			id := LocaleID isoString: language.
+			id := localeIdClass isoString: language.
 			env localeID: id.
 			known at: id put: env]].
 	^known
@@ -101,7 +107,7 @@ LanguageEnvironment class >> initialize [
 	"LanguageEnvironment initialize"
 
 	SessionManager default 
-		registerSystemClassNamed: #LanguageEnvironment "prevent subclasses ro register themselves"
+		registerSystemClassNamed: #LanguageEnvironment "prevent subclasses from registering themselves"
 ]
 
 { #category : #'rendering support' }
@@ -172,10 +178,21 @@ LanguageEnvironment class >> localeChanged [
 ]
 
 { #category : #accessing }
+LanguageEnvironment class >> localeIdClass [
+	"A minimal (headless) image has LanguageEnvironment but not LocaleID!
+	 See https://github.com/pharo-project/pharo/issues/3844"
+
+	^self environment 
+		at: #LocaleID 
+		ifAbsent: [self error: 'LocaleID is not present in this image!'].
+]
+
+{ #category : #accessing }
 LanguageEnvironment class >> localeID: localeID [
+
 	self knownEnvironments
 		at: localeID ifPresent: [:value | ^ value ];
-		at: LocaleID default ifPresent: [ :value | ^ value ].
+		at: self localeIdClass default ifPresent: [ :value | ^ value ].
 	
 	"Something is wrong"
 	self resetKnownEnvironments.

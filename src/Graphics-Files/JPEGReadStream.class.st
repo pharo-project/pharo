@@ -207,7 +207,7 @@ JPEGReadStream >> nextBytes: n [
 	^(self next: n) asByteArray
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 JPEGReadStream >> reset [
 	super reset.
 	self resetBitBuffer

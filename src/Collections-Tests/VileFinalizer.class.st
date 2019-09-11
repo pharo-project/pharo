@@ -16,7 +16,7 @@ VileFinalizer >> finalize [
 	weakRegistry remove: self ifAbsent: [].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 VileFinalizer >> initialize: registry [
 	weakRegistry := registry.
 	weakRegistry add: self.

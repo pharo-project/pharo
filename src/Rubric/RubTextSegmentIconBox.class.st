@@ -2,7 +2,6 @@ Class {
 	#name : #RubTextSegmentIconBox,
 	#superclass : #Morph,
 	#instVars : [
-		'icon',
 		'previouslyIn'
 	],
 	#category : #'Rubric-Editing-Widgets'
@@ -63,7 +62,7 @@ RubTextSegmentIconBox >> verticalSeparatorBounds [
 
 { #category : #accessing }
 RubTextSegmentIconBox >> verticalSeparatorColor [
-	^ (self textArea backgroundColor contrastingColor ) alpha: 0.3
+	^ (self textArea backgroundColor contrastingBlackAndWhiteColor ) alpha: 0.3
 ]
 
 { #category : #accessing }

@@ -76,7 +76,7 @@ AlienWeakTable >> finalizeValues [
 		 lastUsedIndex := newLastUsedIndex]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AlienWeakTable >> initializeWithOwner: anObject [
 	accessProtect := Semaphore forMutualExclusion.
 	firstUnusedIndex := 1.

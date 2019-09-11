@@ -1,13 +1,13 @@
 Extension { #name : #Class }
 
 { #category : #'*TraitsV2' }
-Class >> immediateSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames 
+Class >> immediateSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList 
 	classVariableNames: classVarNames package: cat [
 	"Added to allow for a simplified subclass creation experience. "
 	
 	^ self immediateSubclass: aClassName 
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames  
+		instanceVariableNames: instVarNameList  
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		package: cat
@@ -50,24 +50,24 @@ Class >> subclass: t uses: aTraitComposition [
 ]
 
 { #category : #'*TraitsV2' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [ 
+Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [ 
 
 	^ self
 		subclass: aTraitName
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		category: cat 
 ]
 
 { #category : #'*TraitsV2' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
+Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 
 	^ self
 		subclass: aTraitName
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		category: cat
 ]
@@ -138,8 +138,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -156,8 +155,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -174,8 +172,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -192,8 +189,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 				sharedPools: somePoolDictionaries;
 				traitComposition: aTraitComposition asTraitComposition;
 				classTraitComposition: aTraitComposition asTraitComposition classComposition;
-				category: aCategory;
-				copyClassSlotsFromExistingClass ]
+				category: aCategory ]
 ]
 
 { #category : #'*TraitsV2' }
@@ -249,12 +245,12 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 
 	^ self
 		variableByteSubclass: className
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		category: cat
@@ -279,24 +275,24 @@ Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNam
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 
 	^ self
 		variableSubclass: aClassName
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		category: cat
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
+Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 
 	^ self
 		variableSubclass: aClassName
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		category: cat
 ]
@@ -327,22 +323,22 @@ Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: 
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 
 	^ self
 		variableWordSubclass: className
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		package: cat
 ]
 
 { #category : #'*TraitsV2' }
-Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
+Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 	^ self
 		variableWordSubclass: className
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		package: cat
@@ -374,24 +370,24 @@ Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNam
 ]
 
 { #category : #'*TraitsV2' }
-Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
 
 	^ self
 		weakSubclass: className
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: ''
 		category: cat
 ]
 
 { #category : #'*TraitsV2' }
-Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
+Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
 
 	^ self
 		weakSubclass: className
 		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		category: cat
 ]

@@ -8,8 +8,8 @@ Class {
 GLMFinderTest >> testEmptyPanes [
 	| browser | 
 	browser := GLMFinder new. 
-	self assert: browser panes isEmpty. 
-	self assert: browser transmissions isEmpty.
+	self assertEmpty: browser panes. 
+	self assertEmpty: browser transmissions.
 ]
 
 { #category : #tests }
@@ -162,7 +162,7 @@ GLMFinderTest >> testPanesHaveDifferentRegistries [
 	| browser |
 	browser := GLMFinder new.
 	browser addPresentation: (GLMPresentation new title: 'presentation1').
-	self assert: browser panes isEmpty.	"Outer entity changed."
+	self assertEmpty: browser panes.	"Outer entity changed."
 	(browser pane port: #entity) value: #value1.
 	self assert: browser panes size equals: 1.
 	(browser panes first port: #selection) value: #value2.
@@ -245,7 +245,7 @@ GLMFinderTest >> testValidSubscriptionsInComplexBrowser [
 	 
 	browser := GLMFinder new. 
 	browser show: [:a | a custom: navigator].
-	self assert: browser panes isEmpty.
+	self assertEmpty: browser panes.
 	(browser pane port: #entity) value: String. 
 	self assert: browser panes size equals: 1. 
 	pane1 := browser panes first.

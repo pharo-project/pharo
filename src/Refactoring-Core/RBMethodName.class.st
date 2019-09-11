@@ -23,10 +23,10 @@ Class {
 
 { #category : #'instance creation' }
 RBMethodName class >> selector: aSymbol arguments: stringCollection [ 
-	^(self new)
-		selector: aSymbol;
-		arguments: stringCollection;
-		yourself
+	^ self new 
+			selector: aSymbol;
+			arguments: stringCollection;
+			yourself
 ]
 
 { #category : #accessing }
@@ -42,8 +42,10 @@ RBMethodName >> arguments: nameCollection [
 
 { #category : #testing }
 RBMethodName >> isValid [
-	^ (RBCondition checkMethodName: self selector in: self class) 
-		and: [ self selector numArgs = self arguments size ]
+	"Return whether the receiver looks like a method with a selector in sync with the arguments in a possible class"
+	
+	^ 	selector isString and: [(RBScanner isSelector: selector)
+			and: [ selector numArgs = arguments size ]]
 ]
 
 { #category : #printing }

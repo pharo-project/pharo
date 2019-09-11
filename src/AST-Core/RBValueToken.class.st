@@ -48,7 +48,7 @@ RBValueToken >> value: anObject [
 	value := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBValueToken >> value: aString start: anInteger [ 
 	value := aString.
 	sourcePointer := anInteger

@@ -73,6 +73,8 @@ AbstractLayout >> hasSlot: aSlot [
 
 { #category : #api }
 AbstractLayout >> hasSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString.
+	this includs non-visible slots"
 	^self allSlots anySatisfy: [:slot | slot name = aString  ]
 ]
 
@@ -94,12 +96,6 @@ AbstractLayout >> host [
 { #category : #accessing }
 AbstractLayout >> host: aClass [
 	host := aClass
-]
-
-{ #category : #accessing }
-AbstractLayout >> instVarIndexFor: aString ifAbsent: aBlockClosure [
-	"we do not have instance variables"
-	^aBlockClosure value
 ]
 
 { #category : #accessing }
@@ -129,8 +125,12 @@ AbstractLayout >> isWeak [
 
 { #category : #accessing }
 AbstractLayout >> resolveSlot: aName [
-	self flag: 'Signal rather than error'.
-	self error: 'No slots found'
+	^SlotNotFound signalForName: aName
+]
+
+{ #category : #api }
+AbstractLayout >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
+	^exceptionBlock value
 ]
 
 { #category : #accessing }

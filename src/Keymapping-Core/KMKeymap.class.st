@@ -11,7 +11,7 @@ Class {
 		'defaultShortcut',
 		'description'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Base'
 }
 
 { #category : #'instance creation' }
@@ -142,8 +142,11 @@ KMKeymap >> notifyCompleteMatchTo: aListener buffer: aBuffer [
 { #category : #matching }
 KMKeymap >> notifyPartialMatchTo: aListener [
 	| listeners |
-	aListener isCollection ifTrue: [ listeners := aListener ] ifFalse: [ { aListener } ].
-	listeners do: [ :l | l partialMatch ].
+
+	listeners := aListener isCollection 
+		ifTrue: [ aListener ] 
+		ifFalse: [ { aListener } ].
+	listeners do: [ :each | each partialMatch ]
 ]
 
 { #category : #matching }
@@ -168,7 +171,7 @@ KMKeymap >> printOn: aStream [
 		cr.    
 ]
 
-{ #category : #'enabling/disabling' }
+{ #category : #initialization }
 KMKeymap >> reset [
 
 	self shortcut: self defaultShortcut.

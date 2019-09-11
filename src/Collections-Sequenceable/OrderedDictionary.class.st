@@ -150,6 +150,11 @@ OrderedDictionary >> associationAt: aKey ifPresent: aBlock [
 ]
 
 { #category : #accessing }
+OrderedDictionary >> associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	^ dictionary associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock
+]
+
+{ #category : #accessing }
 OrderedDictionary >> associations [
 	| associations i |
 
@@ -181,13 +186,10 @@ OrderedDictionary >> at: firstKey at: secondKey [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey."
 
 	"
-	[
-	| d |
-	d := Dictionary new.
-	d at: #top at: #below1 put: 1.
-	d at: #top at: #below1 put: 2.
-	d at: #top at: #below1.
-	] value
+	(Dictionary new
+		at: #top at: #below1 put: 1;
+		at: #top at: #below1 put: 2;
+		at: #top at: #below1)
 	>>>
 	2"
 
@@ -589,11 +591,6 @@ OrderedDictionary >> removeKeys: aKeyCollection [
 						ifAbsent: [nil]]]
 ]
 
-{ #category : #removing }
-OrderedDictionary >> removeUnreferencedKeys [
-	^ self unreferencedKeys do: [:each | self removeKey: each]
-]
-
 { #category : #enumerating }
 OrderedDictionary >> select: aBlock [
 	^ self species newFrom:
@@ -618,11 +615,6 @@ OrderedDictionary >> storeOn: aStream [
 				separatedBy: [ aStream << ';' ].
 			aStream << '; yourself' ].
 	aStream << ')'
-]
-
-{ #category : #private }
-OrderedDictionary >> unreferencedKeys [
-	^ Dictionary unreferencedKeysIn: self
 ]
 
 { #category : #accessing }

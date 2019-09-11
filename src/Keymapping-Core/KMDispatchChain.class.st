@@ -10,7 +10,7 @@ Class {
 		'dispatcher',
 		'initialTarget'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Dispatching'
 }
 
 { #category : #'instance creation' }
@@ -31,7 +31,7 @@ KMDispatchChain >> dispatch: aKeyboardEvent [
 	aKeyboardEvent wasHandled ifFalse: [ KMBuffer uniqueInstance clearBuffer ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMDispatchChain >> dispatcher: aDispatcher [
 	dispatcher := aDispatcher.
 	self target: dispatcher target.
@@ -48,7 +48,7 @@ KMDispatchChain >> do: aBlock [
 		]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMDispatchChain >> startOn: anInitialTarget [
 	initialTarget := anInitialTarget.
 ]
@@ -58,7 +58,7 @@ KMDispatchChain >> target [
 	^target
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KMDispatchChain >> target: aTarget [
 	target := aTarget
 ]

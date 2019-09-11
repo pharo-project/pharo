@@ -27,10 +27,8 @@ RBAssignmentOnBlockArgumentRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBAssignmentOnBlockArgumentRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	((RBFindBlockArgumentAssignment collectAssignments: aMethod ast) notEmpty) ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aMethod) ] 
-		
+RBAssignmentOnBlockArgumentRule >> basicCheck: aMethod [
+	^ (RBFindBlockArgumentAssignment collectAssignments: aMethod ast) isNotEmpty
 ]
 
 { #category : #accessing }

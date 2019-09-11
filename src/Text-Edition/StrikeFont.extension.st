@@ -43,7 +43,7 @@ StrikeFont class >> fromUser: priorFont allowKeyboard: aBoolean [
 			subMenu: ptMenu ].
 	spec := fontMenu 
 		invokeModalAt: ActiveHand position
-		in: ActiveWorld
+		in: self currentWorld
 		allowKeyboard: aBoolean.
 	spec ifNil: [ ^ nil ].
 	style := TextStyle named: spec first.

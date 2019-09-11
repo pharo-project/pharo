@@ -347,28 +347,29 @@ BalloonBezierSimulation >> printOn: aStream [
 		nextPut:$)
 ]
 
-{ #category : #private }
+{ #category : #printing }
 BalloonBezierSimulation >> quickPrint: curve [
-	Transcript nextPut:$(;
-		print: curve start;
-		space;
-		print: curve via;
-		space;
-		print: curve end;
-		nextPut:$).
+	self quickPrint: curve first: false
 ]
 
-{ #category : #private }
+{ #category : #printing }
 BalloonBezierSimulation >> quickPrint: curve first: aBool [
-	aBool ifTrue:[Transcript cr].
-	Transcript nextPut:$(;
-		print: curve start;
+	aBool
+		ifTrue: [ self trace: String cr ].
+	self
+		trace: (String streamContents: [ :e | self quickPrint: curve on: e ])
+]
+
+{ #category : #printing }
+BalloonBezierSimulation >> quickPrint: curve on: aStream [
+	aStream
+		nextPut: $(;
+		nextPutAll: curve start asString;
 		space;
-		print: curve via;
+		nextPutAll: curve via asString;
 		space;
-		print: curve end;
-		nextPut:$).
-	Transcript endEntry.
+		nextPutAll: curve end asString;
+		nextPut: $)
 ]
 
 { #category : #accessing }

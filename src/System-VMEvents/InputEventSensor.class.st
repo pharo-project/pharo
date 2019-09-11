@@ -97,17 +97,6 @@ InputEventSensor class >> installMouseDecodeTable [
 				ifFalse: [ByteArray withAll: (0 to: 255)]
 ]
 
-{ #category : #'system startup' }
-InputEventSensor class >> shutDown [
-	self default shutDown.
-]
-
-{ #category : #'system startup' }
-InputEventSensor class >> startUp [	
-	self installMouseDecodeTable.
-	self default startUp
-]
-
 { #category : #settings }
 InputEventSensor class >> swapMouseButtons [
 	^ Smalltalk os isWindows not

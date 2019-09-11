@@ -102,10 +102,15 @@ GLMFastListOutlineDataSource >> rowMorphForElement: element [
 	rowElements
 		add: (self formatedDisplayValueOf: element) asMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: element).
-	^ Smalltalk ui theme newRowIn: World for: rowElements
+	^ self theme newRowIn: self currentWorld for: rowElements
 ]
 
 { #category : #accessing }
 GLMFastListOutlineDataSource >> tagsToFilterBy [
 	^ tagsToFilterBy ifNil: [ tagsToFilterBy := OrderedCollection new ]
+]
+
+{ #category : #factory }
+GLMFastListOutlineDataSource >> theme [ 
+	^ Smalltalk ui theme
 ]

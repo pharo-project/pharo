@@ -9,9 +9,8 @@ Class {
 
 { #category : #accessing }
 SimpleTestResourceCircular class >> resources [
-	^preventAvailability isNil
-		ifTrue: [super resources , (Array with: SimpleTestResourceA1)]
-		ifFalse:
-			[super resources
-				, (Array with: SimpleTestResourceA1 with: SimpleTestResourceCircular1)]
+
+	^ preventAvailability
+		ifNil: [ super resources , ( Array with: SimpleTestResourceA1 ) ]
+		ifNotNil: [ super resources , ( Array with: SimpleTestResourceA1 with: SimpleTestResourceCircular1 ) ]
 ]

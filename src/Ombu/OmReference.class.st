@@ -57,7 +57,7 @@ OmReference >> hash [
 	^ (self species hash bitXor: self localName hash) bitXor: self globalName hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OmReference >> initializeWithLocalName: aLocalName globalName: aGlobalName [
 
 	self initialize.

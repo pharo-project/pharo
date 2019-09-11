@@ -27,12 +27,6 @@ ExternalData >> copyFrom: start to: stop [
 ]
 
 { #category : #'*UnifiedFFI' }
-ExternalData >> printOn: stream [ 
-	stream << $( << type asString << $). 
-	self getHandle printOn: stream.
-]
-
-{ #category : #'*UnifiedFFI' }
 ExternalData >> readString [
 	self isNull ifTrue: [ ^ nil ].
 	^ self fromCString

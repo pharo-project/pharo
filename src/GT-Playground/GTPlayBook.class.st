@@ -26,6 +26,7 @@ Class {
 GTPlayBook class >> cacheDirectory [
 	" lazy initialize the cache and always ensure its existence - especially while the image is running "
 	cacheDirectory ifNil: [ cacheDirectory := self defaultCacheDirectory ].
+	cacheDirectory fileSystem isWritable ifFalse: [ ^ cacheDirectory ].
 	^ cacheDirectory ensureCreateDirectory
 ]
 
@@ -110,7 +111,7 @@ GTPlayBook class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 GTPlayBook class >> reset [
 	
 	instance := nil.
@@ -201,7 +202,7 @@ GTPlayBook >> gtPagesIn: composite [
 		filterOn: [ :text :each | text match: each content ]
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTPlayBook >> initialize [
 	self flag: 'error handling'.
 	

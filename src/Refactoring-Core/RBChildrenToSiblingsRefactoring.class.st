@@ -85,16 +85,18 @@ RBChildrenToSiblingsRefactoring >> computeSubclassSupersOf: aClass [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in: aClass [ 
+RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in: aClass [
+
 	| source |
-	(aClass superclass definesMethod: aSelector) ifTrue: [^self].
+
+	( aClass superclass definesMethod: aSelector )
+		ifTrue: [ ^ self ].
 	source := self subclassResponsibilityFor: aSelector in: aClass.
-	source isNil ifTrue: [^self].
-	aClass superclass compile: source
-		classified: (aClass protocolsFor: aSelector)
+	source ifNil: [ ^ self ].
+	aClass superclass compile: source classified: ( aClass protocolsFor: aSelector )
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBChildrenToSiblingsRefactoring >> name: aClassName class: aClass subclasses: subclassCollection [ 
 	className := aClassName asSymbol.
 	parent := self model classFor: aClass.
@@ -170,13 +172,13 @@ RBChildrenToSiblingsRefactoring >> pullUpPoolVariables [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [ 
+RBChildrenToSiblingsRefactoring >> pushUp: aSelector in: aClass [
+
 	| source |
+
 	source := aClass sourceCodeFor: aSelector.
-	source isNil 
-		ifFalse: 
-			[aClass superclass compile: source
-				classified: (aClass protocolsFor: aSelector)]
+	source
+		ifNotNil: [ aClass superclass compile: source classified: ( aClass protocolsFor: aSelector ) ]
 ]
 
 { #category : #'private-methods' }
@@ -214,12 +216,11 @@ RBChildrenToSiblingsRefactoring >> selectorsToPushUpFrom: aClass [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [ 
-	^ ((aClass isMeta 
+RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [
+	^ (aClass isMeta
 		ifTrue: [ subclasses collect: [ :each | each classSide ] ]
-		ifFalse: [ subclasses ]) 
-		detect: [ :each | (each directlyDefinesMethod: aSelector) not ]
-		ifNone: [ nil ]) notNil
+		ifFalse: [ subclasses ])
+		anySatisfy: [ :each | (each directlyDefinesMethod: aSelector) not ]
 ]
 
 { #category : #printing }
@@ -237,14 +238,16 @@ RBChildrenToSiblingsRefactoring >> storeOn: aStream [
 ]
 
 { #category : #'private-methods' }
-RBChildrenToSiblingsRefactoring >> subclassResponsibilityFor: aSelector in: aClass [ 
+RBChildrenToSiblingsRefactoring >> subclassResponsibilityFor: aSelector in: aClass [
 	| methodNode position source |
 	source := aClass sourceCodeFor: aSelector.
-	methodNode := RBParser parseMethod: source onError: [:err :pos | ^nil].
-	position := methodNode arguments isEmpty 
-				ifTrue: [methodNode keywordsIntervals last last ]
-				ifFalse: [methodNode arguments last stop].
-	^'<1s><n><t>self subclassResponsibility' 
+	methodNode := self parserClass
+		parseMethod: source
+		onError: [ :err :pos | ^ nil ].
+	position := methodNode arguments isEmpty
+		ifTrue: [ methodNode keywordsIntervals last last ]
+		ifFalse: [ methodNode arguments last stop ].
+	^ '<1s><n><t>self subclassResponsibility'
 		expandMacrosWith: (source copyFrom: 1 to: position)
 ]
 

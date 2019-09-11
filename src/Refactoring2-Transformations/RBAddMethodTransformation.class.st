@@ -46,15 +46,18 @@ RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: 
 
 { #category : #preconditions }
 RBAddMethodTransformation >> preconditions [
-
 	| rbMethod |
-	rbMethod := RBParser
-				parseMethod: sourceCode
-				onError: [ :string :position | 
-					^ RBCondition withBlock: [self refactoringError:
-					'The content of this method cannot be parsed.']].
-	rbMethod selector isNil ifTrue: [self refactoringError: 'The method has no selector.'].
-	^ (RBCondition canUnderstand: rbMethod selector in: self definingClass) not
+	rbMethod := self parserClass
+		parseMethod: sourceCode
+		onError: [ :string :position | 
+			^ RBCondition
+				withBlock: [ self
+						refactoringError: 'The content of this method cannot be parsed.' ] ].
+	rbMethod selector
+		ifNil: [ self refactoringError: 'The method has no selector.' ].
+	^ (RBCondition
+		canUnderstand: rbMethod selector
+		in: self definingClass) not
 ]
 
 { #category : #executing }

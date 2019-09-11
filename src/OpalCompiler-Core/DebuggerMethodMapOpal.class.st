@@ -24,7 +24,7 @@ DebuggerMethodMapOpal class >> forMethod: aMethod [ "<CompiledMethod>"
 				
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DebuggerMethodMapOpal >> forMethod: aCompiledMethod [ 
 	methodNode := aCompiledMethod ast
 ]

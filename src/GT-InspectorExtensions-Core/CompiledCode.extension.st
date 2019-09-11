@@ -65,7 +65,7 @@ CompiledCode >> gtInspectorPragmasIn: composite [
 						| methods | 
 						methods := OrderedCollection new.
 						Object withAllSubclassesDo: [ :each | 
-							methods addAll: ((Pragma allNamed: pragma keyword in: each) collect: #method) ].
+							methods addAll: ((Pragma allNamed: pragma selector in: each) collect: #method) ].
 						methods ];
 					format: #selector ].
 			t transmit

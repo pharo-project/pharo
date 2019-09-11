@@ -20,7 +20,7 @@ Class {
 		'updateSelector',
 		'keystrokeSelector'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ SearchMorph >> addToList: aString [
 
 { #category : #accessing }
 SearchMorph >> content: anObject [ 
-	content := anObject trimBoth.
+	content := anObject asString trimBoth.
 	self addToList: content.
 	self listSelectionIndex: (self list indexOf: content).
 	self updateList
@@ -153,18 +153,15 @@ SearchMorph >> maxSize: aNumber [
 
 { #category : #drawing }
 SearchMorph >> newContentMorph [
-	|pluggableTextMorph|
-	pluggableTextMorph := super newContentMorph.
+	| editorMorph|
+	editorMorph := super newContentMorph.
 
-	pluggableTextMorph 
+	editorMorph 
 		autoAccept: false;
-		askBeforeDiscardingEdits: false;
-		setProperty: #wantsFrameAdornments toValue: false;
-		changedAction: [:aString| self contentChanged: aString asString];
-		eventHandler: MorphicEventHandler new.
-		
-	pluggableTextMorph on: #keyStroke send: #keyStroke:fromMorph: to: self.
-	^ pluggableTextMorph
+		withoutAdornment;
+		changedAction: [:aString| self contentChanged: aString asString].
+	editorMorph announcer when: RubKeystroke send: #whenKeystroke: to: self.
+	^ editorMorph
 ]
 
 { #category : #private }
@@ -213,4 +210,10 @@ SearchMorph >> updateSelector [
 { #category : #accessing }
 SearchMorph >> updateSelector: aSymbol [ 
 	updateSelector := aSymbol
+]
+
+{ #category : #'event handling' }
+SearchMorph >> whenKeystroke: anAnnouncement [
+	^ self keyStroke: anAnnouncement event fromMorph: anAnnouncement morph
+
 ]

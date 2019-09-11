@@ -274,7 +274,7 @@ Alien class >> lookupOrNil: symbol  "<String>" inLibrary: libraryName [ "<String
 	"Answer the address of symbol in libraryName, or nil if it is not in the library.
 	Exceptions will be raised for invalid libraries, symbol names, etc."
 	^[self lookup: symbol inLibrary: libraryName ]
-		on: NotFoundError
+		on: LibrarySymbolNotFoundError
 		do: [:ex| nil]
 ]
 
@@ -518,7 +518,7 @@ Alien >> freeAfter: aBlock [
 	^[aBlock value: self] ensure: [self free]
 ]
 
-{ #category : #'instance initalization' }
+{ #category : #initialization }
 Alien >> initialize [
 	"Subclasses should redefine this method to perform initializations on instance creation"
 	"Overrides ProtoObjects' method for explicitness."
@@ -629,7 +629,7 @@ Alien >> primFindSymbol: symbolName [ "<String> ^<Integer>"
 	 its address, or fail if the receiver is invalid or the symbol cannot be found."
 	<primitive: 'primInLibraryFindSymbol' module: 'IA32ABI' error: errorCode>
 	^errorCode == #'not found'
-		ifTrue: [NotFoundError signal]
+		ifTrue: [LibrarySymbolNotFoundError signal]
 		ifFalse: [self primitiveFailed]
 ]
 

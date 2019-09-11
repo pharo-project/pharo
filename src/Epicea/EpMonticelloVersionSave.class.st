@@ -53,7 +53,7 @@ EpMonticelloVersionSave >> hash [
 		bitXor: self repositoryDescription hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 EpMonticelloVersionSave >> initializeWithVersionName: aVersionName repositoryDescription: aRepositoryDescription [ 
 	self initialize.
 	

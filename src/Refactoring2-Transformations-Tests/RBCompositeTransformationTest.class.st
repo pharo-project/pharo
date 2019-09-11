@@ -31,5 +31,5 @@ RBCompositeTransformationTest >> testTransform [
 	class := transformation model classNamed: (self changeMock name, 'Temporary') asSymbol.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self assert: (class parseTreeFor: #printString1)
-		  equals: (RBParser parseMethod: 'printString1 ^super printString')
+		  equals: (self parseMethod: 'printString1 ^super printString')
 ]

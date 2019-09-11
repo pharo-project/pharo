@@ -417,7 +417,7 @@ MorphTreeMorph >> adoptPaneColor: paneColor [
 	
 	super adoptPaneColor: paneColor.
 	paneColor ifNil: [^self].
-	self color: (self preferedPaneColor ifNil: [ Smalltalk ui theme backgroundColor ] ).
+	self color: (self preferedPaneColor ifNil: [ self theme backgroundColor ] ).
 
 ]
 
@@ -888,7 +888,7 @@ MorphTreeMorph >> expandedForm [
 MorphTreeMorph >> expandedFormForMorph: aMorph [
 	"Answer the form to use for expanded items."
 	
-	^ ((aMorph selected) and: [self selectionColor luminance < 0.7])
+	^ (aMorph selected and: [self selectionColor luminance < 0.7])
 		ifTrue: [self theme whiteTreeExpandedForm]
 		ifFalse: [self theme treeExpandedForm]
 ]
@@ -1573,7 +1573,7 @@ MorphTreeMorph >> removeColumn: aTreeColumn [
 ]
 
 { #category : #'column handling' }
-MorphTreeMorph >> removeColumnAtIndex: aPosition. [
+MorphTreeMorph >> removeColumnAtIndex: aPosition [
 	"remove a column at a given position - rough implementation"
 	self columns removeAt: aPosition.
 	self columnsChanged.
@@ -1804,15 +1804,16 @@ MorphTreeMorph >> selectionColor [
 MorphTreeMorph >> selectionColor: aColor [
 	"Set the colour for selected items."
 
-	| w |
+	| window |
 	aColor
-		ifNil: [self removeProperty: #selectionColor]
-		ifNotNil: [self setProperty: #selectionColor toValue: aColor].
-	w := self ownerThatIsA: SystemWindow.
-	self selectionColorToUse: (
-		(self theme settings fadedBackgroundWindows not or: [w isNil or: [w isActive]])
-			ifTrue: [aColor]
-			ifFalse: [self theme unfocusedSelectionColor])
+		ifNil: [ self removeProperty: #selectionColor ]
+		ifNotNil: [ self setProperty: #selectionColor toValue: aColor ].
+
+	window := self ownerThatIsA: SystemWindow.
+
+	self selectionColorToUse: ((self theme fadedBackgroundWindows not or: [ window isNil or: [ window isActive ] ])
+		ifTrue: [ aColor ]
+		ifFalse: [ self theme unfocusedSelectionColor ])
 ]
 
 { #category : #selection }

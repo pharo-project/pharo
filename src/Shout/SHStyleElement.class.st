@@ -79,22 +79,23 @@ SHStyleElement >> emphasisAsArray [
 
 { #category : #printing }
 SHStyleElement >> printOn: aStream [
+
 	super printOn: aStream.
-	color isNil
-		ifFalse: [ 
-			aStream
+	color
+		ifNotNil: [ aStream
 				nextPutAll: ' color: ';
-				nextPutAll: color printString ].
-	emphasis isNil
-		ifFalse: [ 
-			aStream
+				nextPutAll: color printString
+			].
+	emphasis
+		ifNotNil: [ aStream
 				nextPutAll: ' emphasis: ';
-				nextPutAll: emphasis printString ].
-	tokens isNil
-		ifFalse: [ 
-			aStream
+				nextPutAll: emphasis printString
+			].
+	tokens
+		ifNotNil: [ aStream
 				nextPutAll: ' tokens: ';
-				nextPutAll: tokens printString ]
+				nextPutAll: tokens printString
+			]
 ]
 
 { #category : #styling }

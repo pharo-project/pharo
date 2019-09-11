@@ -18,31 +18,31 @@ RubEditingArea >> autoScroll: anEvent [
 	scrollPane scrollWhenMouseMove: anEvent pivotPoint: self scrollPivot
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForPlainText [
 	self editingMode: RubPlainTextMode new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForSmalltalkCode [
 	self editingMode: RubSmalltalkCodeMode new
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForSmalltalkCodeInClass: aClass [
 	self editingMode: (RubSmalltalkCodeMode new
 		classOrMetaClass: aClass;
 		yourself)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForSmalltalkCodeWithDefaultFont [
 	self editingMode: RubSmalltalkCodeMode new.
 	self font: StandardFonts defaultFont
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubEditingArea >> beForSmalltalkComment [
 	self editingMode: RubSmalltalkCommentMode new
 ]
@@ -75,7 +75,7 @@ RubEditingArea >> bindingOf: aString [
 	^ self editingMode bindingOf: aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #styler }
 RubEditingArea >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 	self shoutStyler ifNotNil: [ :styler | styler classOrMetaClass: aBehavior]
@@ -173,18 +173,18 @@ RubEditingArea >> removeHoverHighlightSegment [
 		ifNotNil: [ :aSegment | aSegment delete ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #styler }
 RubEditingArea >> shoutAboutToStyle: myself [
 
 	^self editingMode shoutAboutToStyle: myself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #styler }
 RubEditingArea >> shoutStyler [
 	^ self decoratorNamed: #shoutStyler
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #styler }
 RubEditingArea >> textArea [
 	"for #whenTextAreaSelectionChanged:"
 	^self
@@ -215,7 +215,7 @@ RubEditingArea >> withoutSelectionBar [
 	self withoutDecoratorNamed: #selectionBar
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #styler }
 RubEditingArea >> withoutShoutStyler [
 	self withoutDecoratorNamed: #shoutStyler
 ]

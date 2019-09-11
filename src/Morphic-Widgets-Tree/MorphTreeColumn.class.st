@@ -225,7 +225,7 @@ MorphTreeColumn >> nodeStringGetter: aSelectorOrAValuable [
 		ifFalse: [[:node | (aSelectorOrAValuable value: node complexContents ) asMorph]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MorphTreeColumn >> release [
 	container := nil.
 	header := nil.

@@ -1,7 +1,7 @@
 "
-RubTextAreaExamples blueTextOnGrayBacgroundNotWrapped.
-RubTextAreaExamples blueTextOnGrayBacgroundWrappedTo400.
-RubTextAreaExamples blueTextOnGrayBacgroundWrappedTo400Version2.
+RubTextAreaExamples blueTextOnGrayBackgroundNotWrapped.
+RubTextAreaExamples blueTextOnGrayBackgroundWrappedTo400.
+RubTextAreaExamples blueTextOnGrayBackgroundWrappedTo400Version2.
 RubTextAreaExamples profileSourcesFileViewing.
 RubTextAreaExamples rightFlushed.
 RubTextAreaExamples shoutedScriptingTextArea.
@@ -27,7 +27,7 @@ Class {
 { #category : #examples }
 RubTextAreaExamples class >> autoReactingText [
 	"self autoReactingText"
-
+	<sampleInstance>
 	| area seg blk |
 	area := RubEditingArea new
 		beWrapped;
@@ -35,7 +35,8 @@ RubTextAreaExamples class >> autoReactingText [
 	area setTextWith: 'Click or keep the mouse down on [0]'.
 	area width: 400.
 	seg := RubPlainSegmentMorph inTextArea: area from: 34 to: 35.
-	blk := [ seg replaceTextWith: (seg getText string asNumber + 1) asString ].
+	blk := [ seg
+		replaceTextWith: (seg getText string asNumber + 1) asString ].
 	seg on: #mouseDown send: #value to: blk.
 	seg on: #mouseStillDown send: #value to: blk.
 	seg beExtendable.
@@ -44,22 +45,22 @@ RubTextAreaExamples class >> autoReactingText [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> blueTextOnGrayBacgroundNotWrapped [
-	"self blueTextOnGrayBacgroundNotWrapped"
-
+RubTextAreaExamples class >> blueTextOnGrayBackgroundNotWrapped [
+	"self blueTextOnGrayBackgroundNotWrapped"
+	<sampleInstance>
 	RubEditingArea new
 		backgroundColor: Color lightGray;
 		updateTextWith: self smallLoremIpsum;
 		textColor: Color blue;
-		beNotWrapped; 
+		beNotWrapped;
 		width: 400;
 		openInWorld
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400 [
-	"self blueTextOnGrayBacgroundWrappedTo400"
-
+RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400 [
+	"self blueTextOnGrayBackgroundWrappedTo400"
+	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;
@@ -71,13 +72,15 @@ RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400 [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400Version2 [
-	"self blueTextOnGrayBacgroundWrappedTo400Version2"
-
+RubTextAreaExamples class >> blueTextOnGrayBackgroundWrappedTo400Version2 [
+	"self blueTextOnGrayBackgroundWrappedTo400Version2"
+	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;
-		updateTextWith: ((Text fromString: self smallLoremIpsum) addAttribute: (TextColor color: Color blue));
+		updateTextWith:
+			((Text fromString: self smallLoremIpsum)
+				addAttribute: (TextColor color: Color blue));
 		backgroundColor: Color lightGray;
 		openInWorld
 ]
@@ -85,7 +88,7 @@ RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400Version2 [
 { #category : #examples }
 RubTextAreaExamples class >> centered [
 	"self centered"
-
+	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 300;
@@ -109,12 +112,6 @@ RubTextAreaExamples class >> hasBindingThatBeginsWith: aString [
 { #category : #accessing }
 RubTextAreaExamples class >> interactionModel [
 	^ ModelForShout 
-]
-
-{ #category : #NOcompletion }
-RubTextAreaExamples class >> isCodeCompletionAllowed [
-
-	^ true.
 ]
 
 { #category : #accessing }
@@ -156,6 +153,7 @@ RubTextAreaExamples class >> nicolaiAttributeFix [
 
 { #category : #examples }
 RubTextAreaExamples class >> presentationInput [
+	<sampleInstance>
 	"
 	
 	self presentationInput.
@@ -172,15 +170,15 @@ RubTextAreaExamples class >> presentationInput [
 				addKeymapEntry:
 					(KMKeymap
 						shortcut: Character tab shift
-						action: [ 
-							RubEditingArea new
+						action: [ RubEditingArea new
 								beWrapped;
-								width: World width / 3;
+								width: self currentWorld width / 3;
 								updateTextWith: '';
 								takeKeyboardFocus;
-								backgroundColor: Color paleYellow;
+								backgroundColor: Color black;
 								cellInset: 50;
-								onAnnouncement: MorphLostFocus do: [ :ann | ann morph delete ];
+								onAnnouncement: MorphLostFocus
+									do: [ :ann | ann morph delete ];
 								font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20);
 								openCenteredInWorld ]))
 ]
@@ -190,37 +188,31 @@ RubTextAreaExamples class >> profileSourcesFileViewing [
 	"The big test to check that a TextArea is able to compose and ''quickly'' show
 	 a big file content "
 
-	"self profileSourcesFileViewing"
-
+	<script>
 	| contents |
-	
-	contents := nil.
-	
-	self
-	show: 'Wait a moment loading text, the sources file is huge' translated
-	while: [ 
-		contents := (FileStream readOnlyFileNamed: Smalltalk sourcesFile basename) contents
-	].
+	"Do not profile reading of source file."
+	contents := Smalltalk sourcesFile contents.
 
-	TimeProfiler spyAllOn: [ 
-		RubEditingArea new
-			beWrapped;
-			width: 600;
-			updateTextWith: contents;
-			openInWorld  
-	]
+	TimeProfiler
+		spyAllOn: [ RubEditingArea new
+				beWrapped;
+				width: 600;
+				updateTextWith: contents;
+				openInWorld ]
 ]
 
 { #category : #examples }
 RubTextAreaExamples class >> rightFlushed [
 	"self rightFlushed"
-
-	RubEditingArea new
+	<sampleInstance>
+	
+	^ RubEditingArea new
 		beWrapped;
 		width: 300;
 		updateTextWith: 'AAAAAA' , Character cr asString , 'BBBB';
 		rightFlush;
-		openInWorld
+		openInWorld;
+		yourself
 ]
 
 { #category : #NOcompletion }
@@ -236,8 +228,8 @@ RubTextAreaExamples class >> shoutAboutToStyle: aStyler [
 
 { #category : #examples }
 RubTextAreaExamples class >> shoutedScriptingTextArea [
-	"self shoutedScriptingTextArea" 
-
+	"self shoutedScriptingTextArea"
+	<sampleInstance>
 	ModelForShout := nil.
 	RubEditingArea new
 		beWrapped;
@@ -269,16 +261,27 @@ RubTextAreaExamples class >> show: aMessage while: aBlock [
 { #category : #examples }
 RubTextAreaExamples class >> simplestEmptyNotWrapped [
 	"self simplestEmptyNotWrapped"
-
+<sampleInstance>
 	RubEditingArea new
 		beNotWrapped;
 		openInWorld
 ]
 
 { #category : #examples }
+RubTextAreaExamples class >> simplestEmptyNotWrappedWithMaxLength [
+	"self simplestEmptyNotWrapped"
+
+	<sampleInstance>
+	RubEditingArea new
+		beNotWrapped;
+		maxLength: 10;
+		openInWorld
+]
+
+{ #category : #examples }
 RubTextAreaExamples class >> simplestEmptyTextField [
 	"self simplestEmptyTextField"
-
+<sampleInstance>
 	RubTextFieldArea new
 		forbidMenu;
 		openInWorld
@@ -287,7 +290,7 @@ RubTextAreaExamples class >> simplestEmptyTextField [
 { #category : #examples }
 RubTextAreaExamples class >> simplestEmptyWrappedTo400 [
 	"self simplestEmptyWrappedTo400"
-
+<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;
@@ -297,7 +300,7 @@ RubTextAreaExamples class >> simplestEmptyWrappedTo400 [
 { #category : #examples }
 RubTextAreaExamples class >> simplestWrappedTo400 [
 	"self simplestWrappedTo400"
-
+<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;
@@ -313,7 +316,7 @@ RubTextAreaExamples class >> smallLoremIpsum [
 { #category : #examples }
 RubTextAreaExamples class >> smallLoremIpsumWrappedTo400 [
 	"self smallLoremIpsumWrappedTo400"
-
+<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;
@@ -324,13 +327,15 @@ RubTextAreaExamples class >> smallLoremIpsumWrappedTo400 [
 { #category : #examples }
 RubTextAreaExamples class >> smalltalkCodeWithStabilo [
 	"self smalltalkCodeWithStabilo"
+<sampleInstance>
 	| area seg code |
 	area := RubEditingArea new
 		beWrapped;
 		width: 400;
 		updateTextWith: (code := self someSmallSmalltalkCode).
-	area addSegment: (seg := RubPlainSegmentMorph inTextArea: area from: 3 to: code size).
-	seg color: (Color yellow).
+	area
+		addSegment: (seg := RubPlainSegmentMorph inTextArea: area from: 3 to: code size).
+	seg color: Color yellow.
 	seg borderColor: (Color orange alpha: 0.5).
 	seg beSmoothCurve.
 	area openInWorld
@@ -339,6 +344,7 @@ RubTextAreaExamples class >> smalltalkCodeWithStabilo [
 { #category : #examples }
 RubTextAreaExamples class >> smalltalkCodeWrappedTo400 [
 	"self smalltalkCodeWrappedTo400"
+<sampleInstance>
 	| area |
 	ModelForShout := self.
 	area := RubEditingArea new
@@ -354,19 +360,22 @@ RubTextAreaExamples class >> smalltalkCodeWrappedTo400 [
 { #category : #examples }
 RubTextAreaExamples class >> smalltalkCodeWrappedWithSegments [
 	"self smalltalkCodeWrappedWithSegments"
-
+<sampleInstance>
 	| area s |
 	area := self smalltalkCodeWrappedTo400.
-	area addSegment: (RubUnderlinedSegmentMorph inTextArea: area from: 1 to: 29).
+	area
+		addSegment: (RubUnderlinedSegmentMorph inTextArea: area from: 1 to: 29).
 	s := RubUnderlinedSegmentMorph inTextArea: area from: 43 to: 57.
 	s straight: false.
 	area addSegment: s.
-	area addSegment: (s := RubUnderlinedSegmentMorph inTextArea: area from: 81 to: 185).
+	area
+		addSegment: (s := RubUnderlinedSegmentMorph inTextArea: area from: 81 to: 185).
 	s color: (Color blue alpha: 0.02).
 	s borderColor: Color blue.
 	s underlineColor: Color blue.
-	area addSegment: (s := RubPlainSegmentMorph inTextArea: area from: 300 to: 500).
-	s color: (Color yellow).
+	area
+		addSegment: (s := RubPlainSegmentMorph inTextArea: area from: 300 to: 500).
+	s color: Color yellow.
 	s borderColor: (Color orange alpha: 0.5).
 	s beSmoothCurve.
 	s balloonColor: Color yellow.
@@ -404,9 +413,10 @@ RubTextAreaExamples class >> someSmalltalkScript [
 { #category : #examples }
 RubTextAreaExamples class >> sourceCodeTemplateWrappedTo400 [
 	"self sourceCodeTemplateWrappedTo400"
+<sampleInstance>
 	ModelForShout := self.
 	RubEditingArea new
-		model: self ;
+		model: self;
 		beForSmalltalkCode;
 		beWrapped;
 		width: 400;
@@ -418,33 +428,36 @@ RubTextAreaExamples class >> sourceCodeTemplateWrappedTo400 [
 RubTextAreaExamples class >> textAreaWithBiggerFont [
 	" self textAreaWithBiggerFont "
 
+	<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;
 		updateTextWith: 'test';
 		takeKeyboardFocus;
-		onAnnouncement: MorphLostFocus do: [ :ann | ann morph delete ];
 		font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20);
-		openCenteredInWorld
+		openInWorld
 ]
 
 { #category : #examples }
 RubTextAreaExamples class >> textFieldWithCRAction [
 	"self textFieldWithCRAction"
-
+<sampleInstance>
 	| s |
 	s := RubTextFieldArea new
 		width: 800;
 		setTextWith: 'My contents will be printed in the Transcript when return is entered';
 		forbidMenu;
 		openInWorld.
-	s announcer when: RubReturnEntered send: #value to:  [ Transcript show: s text asString ]
+	s announcer
+		when: RubReturnEntered
+		send: #value
+		to: [ self trace: s text asString ]
 ]
 
 { #category : #examples }
 RubTextAreaExamples class >> withOnlyThePrimarySelection [
 	"self withOnlyThePrimarySelection"
-
+<sampleInstance>
 	ModelForShout := nil.
 	RubEditingArea new
 		beWrapped;
@@ -452,15 +465,13 @@ RubTextAreaExamples class >> withOnlyThePrimarySelection [
 		model: self;
 		withoutAnyDecorator;
 		updateTextWith: self smallLoremIpsum;
-		openInWorld.
-		
-
+		openInWorld
 ]
 
 { #category : #examples }
 RubTextAreaExamples class >> wrappedTo400WithMarginsOf40 [
 	"self wrappedTo400WithMarginsOf40"
-
+<sampleInstance>
 	RubEditingArea new
 		beWrapped;
 		width: 400;

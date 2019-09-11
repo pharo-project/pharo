@@ -35,18 +35,23 @@ BaselineOfUI >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
 
-		spec baseline: 'Spec' with: [spec repository: repository].
+		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [spec repository: repository].
+		spec baseline: 'Spec2' with: [spec repository: repository].
+		spec baseline: 'Spec' with: [spec repository: repository].
 
 		spec package: 'StartupPreferences'.
-		
-		spec package: 'DebuggerActions'.
-		spec package: 'DebuggerFilters'.
-		spec package: 'DebuggerModel'.
+	
+		"Debugger-Actions package depends on Fuel-Tools-Pharo"
+		spec package: 'Fuel-Tools-Pharo'.
+
+		spec package: 'Debugger-Actions'.
+		spec package: 'Debugger-Filters'.
+		spec package: 'Debugger-Model'.
+		spec package: 'Debugging-Settings'.
 
 		spec package: 'Fonts-Chooser'.
 
-		spec package: 'Tool-Base'.
 		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 
@@ -58,8 +63,6 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'WebBrowser-Core'.
 
 		spec package: 'HelpSystem-Core'.
-
-		spec package: 'Rubric'.
 	].
 ]
 

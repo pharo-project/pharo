@@ -31,3 +31,10 @@ GlobalVariable >> emitValue: methodBuilder [
 GlobalVariable >> isGlobalVariable [
 	^true
 ]
+
+{ #category : #testing }
+GlobalVariable >> isReferenced [
+ 	"A Global could be referenced from any method"
+ 	^Smalltalk globals allBehaviors
+ 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self ]
+]

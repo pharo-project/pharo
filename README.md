@@ -12,38 +12,40 @@ To download the Pharo stable version for your platform, please visit:
 
 ## Virtual machine
 
-This repository contains only sources of the Pharo image. The virtual machine is served by a separate repository:
+This repository contains only sources of the Pharo image. The virtual machine source code is managed in a separate repository:
 
-- [https://github.com/OpenSmalltalk/opensmalltalk-vm](https://github.com/OpenSmalltalk/opensmalltalk-vm)
+- [https://github.com/pharo-project/opensmalltalk-vm](https://github.com/pharo-project/opensmalltalk-vm)
 
 ## Automated Builds
 
 This repository is being built on a [Jenkins server](https://ci.inria.fr/pharo-ci-jenkins2) and uploaded to [files.pharo.org](https://files.pharo.org).
 
-- [Latest build - 64bit](http://files.pharo.org/image/70/latest-64.zip)
-- [Latest build - 32bit](http://files.pharo.org/image/70/latest.zip) 
+- [Latest build - 64bit](http://files.pharo.org/image/80/latest-64.zip)
+- [Latest build - 32bit](http://files.pharo.org/image/80/latest.zip) 
 
 The minimal image contains the basic Pharo packages without the graphical user interface. It is useful as a base for server-side applications deployment.
 
-- [Minimal image latest build - 64bit](http://files.pharo.org/image/70/latest-minimal-64.zip)
-- [Minimal image latest build - 32bit](http://files.pharo.org/image/70/latest-minimal-32.zip) 
+- [Minimal image latest build - 64bit](http://files.pharo.org/image/80/latest-minimal-64.zip)
+- [Minimal image latest build - 32bit](http://files.pharo.org/image/80/latest-minimal-32.zip) 
 
 
 ## Bootstrapping Pharo from sources
 
 To bootstrap a new Pharo image you need the latest stable version of Pharo. For more information about bootstrapping, refer to [guillep/PharoBootstrap](https://github.com/guillep/PharoBootstrap).
 
-The bootstrapping can be done using the following script:
+The bootstrapping can be done on a properly-named branch using the following script:
 
-```bash
+```
 BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 bash ./bootstrap/scripts/bootstrap.sh
 ```
 
-This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo7.0-32bit-hhhhhhh.zip where hhhhhhh is the identifying hash.
+This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo8.0-32bit-hhhhhhh.zip where hhhhhhh is the hash of the current checkout.
 
 Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
 
 __Tip:__ You can set `BOOTSTRAP_REPOSITORY` and `BOOTSTRAP_CACHE` environment variables to do the bootstrap outside of the source repository.
+
+__Note:__ If you are on a branch that doesn't follow the expected naming convention ('`PharoX.Y`'), then the script will pick an appropriate default (such as `Pharo7.0`). To build Pharo8.0 from a custom branch, you need to set `BRANCH_NAME=Pharo8.0` before the bootstrap script is run. 
 
 
 ## File format
@@ -53,3 +55,6 @@ This source code repository is exported in [Tonel format](https://github.com/pha
 ## How to contribute
 
 Pharo is an opensource project very friendly to contributions of the users. See the document [CONTRIBUTING](CONTRIBUTING.md) how you can help to improve Pharo.
+
+
+

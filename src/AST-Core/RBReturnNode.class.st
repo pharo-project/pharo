@@ -28,25 +28,27 @@ RBReturnNode class >> value: aNode [
 ]
 
 { #category : #comparing }
-RBReturnNode >> = anObject [ 
-	self == anObject ifTrue: [^true].
-	self class = anObject class ifFalse: [^false].
-	^self value = anObject value
+RBReturnNode >> = anObject [
+	self == anObject
+		ifTrue: [ ^ true ].
+	self class = anObject class
+		ifFalse: [ ^ false ].
+	^ self value = anObject value
 ]
 
 { #category : #visiting }
-RBReturnNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitReturnNode: self
+RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitReturnNode: self
 ]
 
 { #category : #accessing }
 RBReturnNode >> children [
-	^Array with: value
+	^ Array with: value
 ]
 
 { #category : #testing }
 RBReturnNode >> containsReturn [
-	^true
+	^ true
 ]
 
 { #category : #matching }
@@ -54,15 +56,6 @@ RBReturnNode >> copyInContext: aDictionary [
 	^ self class new
 		value: (self value copyInContext: aDictionary);
 		yourself
-]
-
-{ #category : #accessing }
-RBReturnNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: ('.
-	self value dumpOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : #comparing }
@@ -107,6 +100,12 @@ RBReturnNode >> postCopy [
 	self value: self value copy
 ]
 
+{ #category : #'adding/removing' }
+RBReturnNode >> removeNode: aNode [
+
+	self parent removeNode: self
+]
+
 { #category : #replacing }
 RBReturnNode >> replaceNode: aNode withNode: anotherNode [ 
 	value == aNode ifTrue: [self value: anotherNode]
@@ -122,7 +121,7 @@ RBReturnNode >> return: anInteger [
 	return := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBReturnNode >> return: returnInteger value: aValueNode [ 
 	return := returnInteger.
 	self value: aValueNode

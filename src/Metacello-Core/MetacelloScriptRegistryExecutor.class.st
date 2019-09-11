@@ -17,6 +17,6 @@ MetacelloScriptRegistryExecutor >> projectSpecSelectBlock [
 MetacelloScriptRegistryExecutor >> remove [
 ]
 
-{ #category : #'actions api' }
+{ #category : #initialization }
 MetacelloScriptRegistryExecutor >> reset [
 ]

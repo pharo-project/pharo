@@ -1,7 +1,10 @@
 Class {
 	#name : #SlotMigrationTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests'
+	#instVars : [
+		'instance'
+	],
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }
@@ -30,7 +33,7 @@ SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
 			sharedVariablesFromString: 'Var' ]. 
 	
 	self assert: aClass subclasses size equals: 1.
-	self assert: aClass subclasses anyOne == anotherClass.
+	self assert: aClass subclasses anyOne == anotherClass
 
 ]
 
@@ -46,7 +49,7 @@ SlotMigrationTest >> testAddSlotAndMigrate [
 	
 	"it should have an instance variable"
 	instance instVarAt: 1 put: 125.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -73,7 +76,7 @@ SlotMigrationTest >> testAddSlotPropagateAndMigrate [
 	instance instVarNamed: 'aSlot' put: 42.
 	self assert: (instance instVarNamed: 'aSlot') equals: 42.
 	superclass classLayout checkIntegrity.
-	subclass classLayout checkIntegrity.
+	subclass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -88,7 +91,7 @@ SlotMigrationTest >> testAddTestSlot [
 	
 	"It should not have move the first instance as TestSlot size = 0"
 	self assert: (instance instVarAt: 1) equals: 125.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -103,57 +106,58 @@ SlotMigrationTest >> testChangeLayoutTypeFromByte [
 	aClass classLayout checkIntegrity.
 	
 	self deny: aClass classLayout isBits.
-	self assert: aClass instVarNames equals: { #id. #name }.
+	self assert: aClass instVarNames equals: { #id. #name }
 ]
 
 { #category : #tests }
 SlotMigrationTest >> testChangeLayoutTypeToByte [
-	aClass := self 
-		makeWithLayout: FixedLayout
-		andSlots: { #id. #name }.
+	aClass := self makeWithLayout: FixedLayout andSlots: {#id . #name}.
 	"Change the layout of the class from pointer to bytes"
 	aClass := self makeWithLayout: ByteLayout.
-	
+
 	aClass classLayout checkIntegrity.
-	
+
 	self assert: aClass classLayout isBits.
-	self assert: aClass instVarNames isEmpty.
+	self assertEmpty: aClass instVarNames
 ]
 
 { #category : #tests }
 SlotMigrationTest >> testChangeSuperclass [
-
 	"Define original hierarchy"
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			superclass: Object ]. 
 
-	anotherClass := self make: [ :builder |
-		builder 
-			name: self anotherClassName;
-			superclass: aClass ].
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				superclass: Object ].
+
+	anotherClass := self
+		make: [ :builder | 
+			builder
+				name: self anotherClassName;
+				superclass: aClass ].
 
 	self assert: aClass subclasses size equals: 1.
 	self assert: aClass subclasses anyOne == anotherClass.
 	self assert: anotherClass superclass == aClass.
 
 	"Change to a new superclass"
-	yetAnotherClass := self make: [ :builder |
-		builder 
-			name: self yetAnotherClassName;
-			superclass: Object ]. 
+	yetAnotherClass := self
+		make: [ :builder | 
+			builder
+				name: self yetAnotherClassName;
+				superclass: Object ].
 
-	anotherClass := self make: [ :builder |
-		builder 
-			name: self anotherClassName;
-			superclass: yetAnotherClass ]. 
-	
-	self assert: aClass subclasses isEmpty.
+	anotherClass := self
+		make: [ :builder | 
+			builder
+				name: self anotherClassName;
+				superclass: yetAnotherClass ].
+
+	self assertEmpty: aClass subclasses.
 	self assert: yetAnotherClass subclasses size equals: 1.
 	self assert: yetAnotherClass subclasses anyOne == anotherClass.
-	self assert: anotherClass superclass == yetAnotherClass.
-
+	self assert: anotherClass superclass == yetAnotherClass
 ]
 
 { #category : #tests }
@@ -175,7 +179,7 @@ SlotMigrationTest >> testChangingFormatKeepsMethod [
 
 	self assert: (anotherClass methodDictionary includesKey: #a).
 	aClass classLayout checkIntegrity.
-	anotherClass classLayout checkIntegrity.
+	anotherClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -192,7 +196,7 @@ SlotMigrationTest >> testMigrateTestSlot [
 	
 	self assert: ((aClass slotNamed: #aSlot) read: instance) equals: 125.
 	self assert: ((aClass slotNamed: #aSlot) read: instance2) equals: 125.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -211,7 +215,7 @@ SlotMigrationTest >> testRedefineSuperclass [
 	self makeWithLayout: FixedLayout.
 
 	superclass classLayout checkIntegrity.
-	class classLayout checkIntegrity.
+	class classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -227,7 +231,7 @@ SlotMigrationTest >> testRemoveSlotAndMigrate [
 	self makeWithLayout: FixedLayout.
 	
 	self should: [ instance instVarAt: 1 ] raise: Error.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -241,7 +245,7 @@ SlotMigrationTest >> testRemoveTestSlot [
 	
 
 	self assert: (instance instVarAt: 1) equals: 125.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -290,70 +294,74 @@ SlotMigrationTest >> testReshapeByteVariableToPointerPropagatesToDeepHierarchy [
 	{ aClass. anotherClass. yetAnotherClass. yetYetAnotherClass } do: [ :each | 
 		each classLayout checkIntegrity.
 		self assert: each isFixed description: each name, ' was not reshaped.'.
-		self assert: each isPointers description: each name, ' was not reshaped.' ].
+		self assert: each isPointers description: each name, ' was not reshaped.' ]
 ]
 
 { #category : #tests }
 SlotMigrationTest >> testReshapeClassPropagatesToDeepHierarchy [
 	"Test reshaping a class which is head of a hierarchy of 4 levels"
-	
-	"level 1"
-	aClass := self make: [ :builder |
-		builder name: self aClassName ].
 
-	self assert: aClass subclasses isEmpty.
+	"level 1"
+
+	aClass := self make: [ :builder | builder name: self aClassName ].
+
+	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
 
 	"level 2"
-	anotherClass := self make: [ :builder |
-		builder 
-			superclass: aClass;
-			name: self anotherClassName ].
-	
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses isEmpty.
+	anotherClass := self
+		make: [ :builder | 
+			builder
+				superclass: aClass;
+				name: self anotherClassName ].
+
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assertEmpty: anotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 
 	"level 3"
-	yetAnotherClass := self make: [ :builder |
-		builder 
-			superclass: anotherClass;
-			name: self yetAnotherClassName ].
+	yetAnotherClass := self
+		make: [ :builder | 
+			builder
+				superclass: anotherClass;
+				name: self yetAnotherClassName ].
 
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses equals: { yetAnotherClass }.
-	self assert: yetAnotherClass subclasses isEmpty.
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assert: anotherClass subclasses equals: {yetAnotherClass}.
+	self assertEmpty: yetAnotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
 
 	"level 4"
-	yetYetAnotherClass := self make: [ :builder |
-		builder 
-			superclass: yetAnotherClass;
-			name: self yetYetAnotherClassName ].
+	yetYetAnotherClass := self
+		make: [ :builder | 
+			builder
+				superclass: yetAnotherClass;
+				name: self yetYetAnotherClassName ].
 
 
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses equals: { yetAnotherClass }.
-	self assert: yetAnotherClass subclasses equals: { yetYetAnotherClass }.
-	self assert: yetYetAnotherClass subclasses isEmpty.
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assert: anotherClass subclasses equals: {yetAnotherClass}.
+	self assert: yetAnotherClass subclasses equals: {yetYetAnotherClass}.
+	self assertEmpty: yetYetAnotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
 	yetYetAnotherClass classLayout checkIntegrity.
 
 	"reshape level 1"
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			slots:#(x) ].
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				slots: #(x) ].
 
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
-	yetYetAnotherClass classLayout checkIntegrity.
+	yetYetAnotherClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -401,63 +409,61 @@ SlotMigrationTest >> testReshapePointerToByteVariablePropagatesToDeepHierarchy [
 	{ aClass. anotherClass. yetAnotherClass. yetYetAnotherClass } do: [ :each | 
 		each classLayout checkIntegrity.
 		self assert: each isVariable description: each name, ' was not reshaped.'.
-		self assert: each isBytes description: each name, ' was not reshaped.' ].
+		self assert: each isBytes description: each name, ' was not reshaped.' ]
 ]
 
 { #category : #tests }
 SlotMigrationTest >> testReshapeSuperSuperClass [
-
 	| supersuperclass superclass subclass |
+	supersuperclass := self
+		make: [ :builder | 
+			builder
+				superclass: Object;
+				name: self aClassName;
+				slots: #(a b) ].
 
-	supersuperclass := self make: [ :builder |
-		builder 
-			superclass: Object;
-			name: self aClassName;
-			slots: #(a b).
-		 ].
-
-	self assert: supersuperclass subclasses isEmpty.
+	self assertEmpty: supersuperclass subclasses.
 	supersuperclass classLayout checkIntegrity.
-	
-	superclass := self make: [ :builder |
-		builder 
-			superclass: supersuperclass;
-			name: self anotherClassName.
-		 ].
 
-	self assert: supersuperclass subclasses equals: { superclass }.
-	self assert: superclass subclasses isEmpty.
+	superclass := self
+		make: [ :builder | 
+			builder
+				superclass: supersuperclass;
+				name: self anotherClassName ].
+
+	self assert: supersuperclass subclasses equals: {superclass}.
+	self assertEmpty: superclass subclasses.
 	superclass classLayout checkIntegrity.
 	supersuperclass classLayout checkIntegrity.
-	
-	subclass := self make: [ :builder |
-		builder 
-			superclass: superclass;
-			name: self yetAnotherClassName;
-			slots:#(c d).
-		 ].
 
-	self assert: supersuperclass subclasses equals: { superclass }.
-	self assert: superclass subclasses equals: { subclass }.
-	self assert: subclass subclasses isEmpty.
+	subclass := self
+		make: [ :builder | 
+			builder
+				superclass: superclass;
+				name: self yetAnotherClassName;
+				slots: #(c d) ].
+
+	self assert: supersuperclass subclasses equals: {superclass}.
+	self assert: superclass subclasses equals: {subclass}.
+	self assertEmpty: subclass subclasses.
 	subclass classLayout checkIntegrity.
 	superclass classLayout checkIntegrity.
 	supersuperclass classLayout checkIntegrity.
 
 	"reshape the super super class"
-	supersuperclass := self make: [ :builder |
-		builder 
-			superclass: Object;
-			name: self aClassName;
-			slots: #(a b a2).
-		 ].
-	
-	self assert: supersuperclass subclasses equals: { superclass }.
-	self assert: superclass subclasses equals: { subclass }.
-	self assert: subclass subclasses isEmpty.	
+	supersuperclass := self
+		make: [ :builder | 
+			builder
+				superclass: Object;
+				name: self aClassName;
+				slots: #(a b a2) ].
+
+	self assert: supersuperclass subclasses equals: {superclass}.
+	self assert: superclass subclasses equals: {subclass}.
+	self assertEmpty: subclass subclasses.
 	subclass classLayout checkIntegrity.
 	superclass classLayout checkIntegrity.
-	supersuperclass classLayout checkIntegrity.
+	supersuperclass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -486,7 +492,7 @@ SlotMigrationTest >> testShiftSlotAndMigrate [
 	"it should have migrated methods"
 	self assert: instance a equals: 1.
 	self assert: instance c equals: 3.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -508,7 +514,7 @@ SlotMigrationTest >> testSuperclassChangeLayoutType [
 	class classLayout checkIntegrity.
 	
 	self deny: superclass classLayout isBits.
-	self assert: class classLayout isBits.
+	self assert: class classLayout isBits
 ]
 
 { #category : #tests }
@@ -535,5 +541,5 @@ SlotMigrationTest >> testSwitchSlotsAndMigrate [
 	"it should have migrated methods"
 	self assert: instance a equals: $A.
 	self assert: instance b equals: $B.
-	aClass classLayout checkIntegrity.
+	aClass classLayout checkIntegrity
 ]

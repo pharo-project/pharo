@@ -20,6 +20,12 @@ Win64Platform class >> isActivePlatform [
 	^ self currentPlatformName = 'Win64'
 ]
 
+{ #category : #visiting }
+Win64Platform >> accept: aVisitor [
+
+	^ aVisitor visitWindows64: self
+]
+
 { #category : #testing }
 Win64Platform >> isWin64 [
 	^ true

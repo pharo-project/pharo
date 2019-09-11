@@ -73,6 +73,27 @@ MorphicEventHandlerTest >> testMouseEnterDraggingFromMorph [
 	self assert: ((morph handleMouseEnter: event) == true)
 ]
 
+{ #category : #tests }
+MorphicEventHandlerTest >> testMouseEnterEventIsNotDuplicated [
+	| mockObject window evt |
+	mockObject := MockObjectForEventTests new.
+
+	[ window := mockObject stringMorph openInWindow.
+	evt := MouseButtonEvent new
+		setType: nil
+		position: mockObject stringMorph center
+		which: MouseButtonEvent redButton
+		buttons: MouseButtonEvent redButton
+		hand: nil
+		stamp: nil.
+
+	self assert: mockObject counter equals: 0.
+
+	mockObject stringMorph handleMouseEnter: evt.
+	self assert: mockObject counter equals: 1 ]
+		ensure: [ window ifNotNil: #close ]
+]
+
 { #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseEnterFromMorph [
 

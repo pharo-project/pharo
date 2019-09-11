@@ -267,7 +267,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	].
 	effectTranslator visitNode: aMethodNode body.
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].
-	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFValueReificationVar; returnTop].
+	(aMethodNode hasProperty: #wrappedPrimitive) ifTrue: [methodBuilder pushTemp: #RFReifyValueVar; returnTop].
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop].
 
 ]
@@ -316,7 +316,7 @@ RFASTTranslator >> visitVariableNode: aVariableNode [
 
 { #category : #reflectivity }
 RFASTTranslator >> visitVariableValue: aVariable [
-	self flag: #TBD. "needs to be extendend to other kinds of variables and cleaned"
+	self flag: #pharoTodo. "needs to be extendend to other kinds of variables and cleaned"
 	((aVariable isKindOf: LiteralVariable) or: [ (aVariable isKindOf: Slot) ]) ifTrue: [ self emitPreamble: aVariable. self emitMetaLinkBefore: aVariable. ].
 	aVariable emitValue: methodBuilder.
 	((aVariable isKindOf: LiteralVariable) or: [ (aVariable isKindOf: Slot) ]) ifTrue: [self emitMetaLinkAfterNoEnsure: aVariable].

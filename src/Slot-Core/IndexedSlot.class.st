@@ -22,6 +22,12 @@ IndexedSlot >> = other [
 ]
 
 { #category : #comparing }
+IndexedSlot >> hasSameDefinitionAs: other [
+	"Definiton does not contain index"
+	^super = other
+]
+
+{ #category : #comparing }
 IndexedSlot >> hash [
 	^ (self species hash bitXor: self name hash) bitXor: (self index ifNil: [ 0 ])
 ]
@@ -38,7 +44,7 @@ IndexedSlot >> index: anIndex [
 
 { #category : #testing }
 IndexedSlot >> isVirtual [
-	"virtual slots do not take up space in the object and have size = 0"
+	"indexed slots are the only not virtual slots for now"
 	^false
 ]
 
@@ -49,5 +55,5 @@ IndexedSlot >> read: anObject [
 
 { #category : #'meta-object-protocol' }
 IndexedSlot >> write: aValue to: anObject [
-	^ thisContext object: anObject instVarAt: index put: aValue.
+	^ thisContext object: anObject instVarAt: index put: aValue
 ]

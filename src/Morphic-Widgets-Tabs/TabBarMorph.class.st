@@ -30,6 +30,9 @@ TabBarMorph >> actionsChanged: aTab [
 TabBarMorph >> addActionsFor: aTab [
 	| rightOffset |
 	
+	"This check should maybe not be there but without it the CI fails a lot. Maybe it is due to a race condition?"
+	aTab ifNil: [ ^ self ].
+
 	rightOffset := self actionOffset.
 	
 	aTab hasMenu
@@ -126,7 +129,7 @@ TabBarMorph >> adjustLayout [
 { #category : #drawing }
 TabBarMorph >> borderColor [
 	"I do not use #borderColor because I want a light border"
-	^ Smalltalk ui theme lightBackgroundColor
+	^ self theme lightBackgroundColor
 ]
 
 { #category : #accessing }
@@ -175,23 +178,23 @@ TabBarMorph >> createMenuButton [
 	"Answer a button for the window menu."
 	| form msb |
 	
-	form := Smalltalk ui theme windowMenuForm.
+	form := self theme windowMenuForm.
 	msb := MultistateButtonMorph new extent: form extent.
 	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
 	
-	form := Smalltalk ui theme windowMenuPassiveForm.
+	form := self theme windowMenuPassiveForm.
 	msb extent: form extent.
 	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
 	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
 	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
 	
-	form := Smalltalk ui theme windowMenuForm.
+	form := self theme windowMenuForm.
 	msb extent: form extent.
 	msb
 		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
 		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
 	
-	form := Smalltalk ui theme windowMenuPassiveForm.
+	form := self theme windowMenuPassiveForm.
 	msb
 		extent: form extent;
 		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
@@ -331,7 +334,7 @@ TabBarMorph >> popUpMenu [
 	| menu |
 	
 	menu := self selectedTab menu.
-	menu popUpAt: menuButton bottomRight forHand: ActiveHand in: World
+	menu popUpAt: menuButton bottomRight forHand: ActiveHand in: self currentWorld
 ]
 
 { #category : #private }
@@ -415,7 +418,7 @@ TabBarMorph >> selectTabAt: index ifAbsent: aBlock [
 
 { #category : #drawing }
 TabBarMorph >> selectedColor [
-	^ Smalltalk ui theme selectionColor
+	^ self theme selectionColor
 ]
 
 { #category : #accessing }

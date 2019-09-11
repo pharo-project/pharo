@@ -18,12 +18,11 @@ TBeginsEndsWith >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TBeginsEndsWith >> test0FixtureBeginsEndsWithTest [
-
 	self nonEmpty.
-	self deny: self nonEmpty isEmpty.
+	self denyEmpty: self nonEmpty.
 	self assert: self nonEmpty size > 1.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - begins ends with' }

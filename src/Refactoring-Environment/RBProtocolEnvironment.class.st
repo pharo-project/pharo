@@ -28,7 +28,7 @@ RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protoc
 		class: aClass protocols: aCollection; yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBProtocolEnvironment >> class: aClass protocols: aCollection [
 	class := aClass.
 	protocols := aCollection

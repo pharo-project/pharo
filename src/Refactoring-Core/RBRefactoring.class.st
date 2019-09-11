@@ -99,7 +99,9 @@ RBRefactoring class >> setDefaultOption: aSymbol to: aBlock [
 ]
 
 { #category : #utilities }
-RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [ 
+RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [
+	"Return the class variable association of class aClass"
+	 
 	^aClass realClass classPool associationAt: aName asSymbol
 		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]
 ]
@@ -120,7 +122,7 @@ RBRefactoring >> changes [
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
 	| parseTree |
 	parseTree := aRBClass parseTreeFor: aSelector.
-	parseTree notNil ifTrue: [aMatcher executeTree: parseTree].
+	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
 ]
 
@@ -187,15 +189,17 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 ]
 
 { #category : #support }
-RBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [ 
+RBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [
+
 	"Convert the parse tree for selector using the searchReplacer. If a
 	change is made then compile it into the changeBuilder."
 
 	| parseTree |
+
 	parseTree := aClass parseTreeFor: selector.
-	parseTree isNil ifTrue: [^self].
-	(searchReplacer executeTree: parseTree) 
-		ifTrue: [aClass compileTree: searchReplacer tree]
+	parseTree ifNil: [ ^ self ].
+	( searchReplacer executeTree: parseTree )
+		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
 { #category : #accessing }
@@ -219,20 +223,21 @@ RBRefactoring >> defaultEnvironment [
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.
-	RBRefactoringManager instance addRefactoring: self
+	RBRefactoryChangeManager instance performChange: self changes; addUndoPointer: 1
 ]
 
 { #category : #transforming }
 RBRefactoring >> model [
-	^ model isNil 
-		ifTrue: 
-			[model := (RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment)
-						name: self printString;
-						yourself]
-		ifFalse: [model]
+
+	^ model
+		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+				name: self printString;
+				yourself
+			]
+		ifNotNil: [ model ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoring >> model: aRBNamespace [ 
 	model := aRBNamespace
 ]
@@ -253,12 +258,28 @@ RBRefactoring >> openBrowserOn: anEnvironment [
 
 { #category : #accessing }
 RBRefactoring >> options [
-	^options isNil ifTrue: [self class refactoringOptions] ifFalse: [options]
+
+	^ options ifNil: [ self class refactoringOptions ] ifNotNil: [ options ]
 ]
 
 { #category : #accessing }
 RBRefactoring >> options: aDictionary [ 
 	options := aDictionary
+]
+
+{ #category : #utilities }
+RBRefactoring >> parseTreeSearcher [
+	^ self parseTreeSearcherClass new
+]
+
+{ #category : #transforming }
+RBRefactoring >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
+]
+
+{ #category : #refactoring }
+RBRefactoring >> parserClass [
+	^ RBParser
 ]
 
 { #category : #transforming }
@@ -439,14 +460,15 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 ]
 
 { #category : #utilities }
-RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [ 
+RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
-	matcher := RBParseTreeSearcher new.
-	block := 
-			[:aNode :answer | 
-			(aNode intersectsInterval: anInterval) ifTrue: [aNode] ifFalse: [answer]].
+	matcher := self parseTreeSearcher.
+	block := [ :aNode :answer | 
+	(aNode intersectsInterval: anInterval)
+		ifTrue: [ aNode ]
+		ifFalse: [ answer ] ].
 	matcher
 		matches: aName do: block;
 		matchesArgument: aName do: block.
-	^matcher executeTree: aParseTree initialAnswer: nil
+	^ matcher executeTree: aParseTree initialAnswer: nil
 ]

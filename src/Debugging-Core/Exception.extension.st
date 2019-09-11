@@ -2,7 +2,7 @@ Extension { #name : #Exception }
 
 { #category : #'*Debugging-Core' }
 Exception >> retry [
-	"Abort an exception handler and re-evaluate its protected block."
+	"Abort an exception handler and re-evaluate its protected block."
 
 	handlerContext restart
 ]

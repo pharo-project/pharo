@@ -84,12 +84,12 @@ GLMNestedBrowserTest >> testCondition [
 				yourself).
 	self assert: (browser1 pane port: #entity) value isNil.
 	self assert: (browser1 panes first port: #entity) value isNil.
-	self assert: browser1 panes first presentations isEmpty.
+	self assertEmpty: browser1 panes first presentations.
 	(browser1 pane port: #entity) value: 41.
 	self assert: (browser1 pane port: #entity) value equals: 41.
 	self assert: (browser1 panes first port: #entity) value equals: 41.
 	self assert: browser1 panes first presentations size equals: 1.
-	self assert: browser1 panes first matchingPresentations size equals: 0.
+	self assertEmpty: browser1 panes first matchingPresentations.
 	(browser1 pane port: #entity) value: 42.
 	self assert: (browser1 pane port: #entity) value equals: 42.	"	self assert: (browser1 panes first port: #entity) presentations value = 84.
 "
@@ -137,10 +137,10 @@ GLMNestedBrowserTest >> testEntityPropogation [
 	self assert: (browser1 pane port: #entity) value isNil.
 	self assert: browser1 panes size equals: 1.
 	self assert: (browser1 panes first port: #entity) value isNil.
-	self assert: browser1 panes first presentations isEmpty.
+	self assertEmpty: browser1 panes first presentations.
 	self assert: browser2 panes size equals: 1.
 	self assert: (browser2 panes first port: #entity) value isNil.
-	self assert: browser2 panes first presentations isEmpty.
+	self assertEmpty: browser2 panes first presentations.
 	(browser1 pane port: #entity) value: 42.
 	self assert: (browser1 pane port: #entity) value equals: 42.
 	self assert: browser1 panes size equals: 1.

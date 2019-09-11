@@ -39,7 +39,7 @@ NECEntryDescription >> label [
 	^ label
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 NECEntryDescription >> setLabel: firstString title: secondString description: thirdString [ 
 	label := firstString.
 	title := secondString.

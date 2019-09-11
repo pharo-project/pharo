@@ -42,7 +42,7 @@ TimeProfiler class >> example [
 { #category : #examples }
 TimeProfiler class >> exampleOnBlock [
 
-	TimeProfiler onBlock: [ 20 timesRepeat: [Transcript show: 100 factorial printString]]
+	TimeProfiler onBlock: [ 20 timesRepeat: [self trace: 100 factorial printString]]
 ]
 
 { #category : #opening }
@@ -300,13 +300,13 @@ TimeProfiler >> menu: menu shifted: b [
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand [
-	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3]
+	^ minPercentageToExpand ifNil: [minPercentageToExpand := 3.0]
 ]
 
 { #category : #'UI specific' }
 TimeProfiler >> minPercentageToExpand: aPercentage [
 	minPercentageToExpand := aPercentage.
-	self changed: #minPercentageToExpand.
+	self changed: #minPercentageToExpand
 
 ]
 
@@ -342,6 +342,7 @@ TimeProfiler >> open [
 		getText: #selectedMethodCode
 		setText: #selectedMethodCode:notifying:
 		getEnabled: nil.
+
 	codePane getMenuSelector: #codePaneMenu:shifted:.
 	codePane font: StandardFonts codeFont.
 	self withToolBar
@@ -537,6 +538,7 @@ TimeProfiler >> selectedMethodCode [
 
 { #category : #compiling }
 TimeProfiler >> selectedMethodCode: aString notifying: aController [
+
 	"Compile the code in aString. Notify aController of any syntax errors. 
 	Answer false if the compilation fails. Otherwise answer true."
 
@@ -544,15 +546,16 @@ TimeProfiler >> selectedMethodCode: aString notifying: aController [
 		ifNil: [ ^ false ]
 		ifNotNil: [ :currNode | 
 			| class oldSelector category newSelector |
+
 			class := currNode methodClass.
 			oldSelector := currNode selector.
 			class ifNil: [ ^ false ].	"Normal method accept"
 			category := class organization categoryOfElement: oldSelector.
 			newSelector := class compile: aString classified: category notifying: aController.
-			newSelector isNil
-				ifTrue: [ ^ false ].
+			newSelector ifNil: [ ^ false ].
 			self changed: #selectedMethodCode.
-			^ true ]
+			^ true
+			]
 ]
 
 { #category : #accessing }
@@ -668,10 +671,10 @@ TimeProfiler >> threshold [
 
 { #category : #accessing }
 TimeProfiler >> threshold: aTreshold [
-	(aTreshold ~= threshold and: [aTreshold between: 0 and: 1000])
-		ifTrue: [
-			threshold := aTreshold.
-			self updateList].
+	(aTreshold ~= threshold and: [ aTreshold between: 0 and: 1000 ])
+		ifFalse: [ ^ self ].
+	threshold := aTreshold.
+	self updateList.
 	self changed: #threshold
 ]
 
@@ -687,7 +690,7 @@ TimeProfiler >> toolBarOn: aWindow [
 	toolBar := toolBar := aWindow
 		newToolbar:
 			{((uiTheme
-				newButtonIn: World
+				newButtonIn: self currentWorld
 				for: self
 				getState: nil
 				action: #profileIt
@@ -697,7 +700,7 @@ TimeProfiler >> toolBarOn: aWindow [
 				help: nil)
 				label:
 					(uiTheme
-						newRowIn: World
+						newRowIn: self currentWorld
 						for:
 							{(AlphaImageMorph new
 								image: (self iconNamed: #smallDoItIcon)).
@@ -738,7 +741,7 @@ TimeProfiler >> toolBarOn: aWindow [
 			aWindow newToolSpacer.
 			aWindow newToolSpacer.
 			(uiTheme
-				newCheckboxIn: World
+				newCheckboxIn: self currentWorld
 				for: self
 				getSelected: #reportOtherProcesses
 				setSelected: #reportOtherProcesses:

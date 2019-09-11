@@ -150,7 +150,7 @@ RubTextSegmentIconDisplayer >> iconPositionOfSegment: aSegment [
 		translateBy: 0 negated @ (self offset y negated + self bounds top)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubTextSegmentIconDisplayer >> initialize [
 	super initialize.
 	self clipSubmorphs: false
@@ -232,7 +232,7 @@ RubTextSegmentIconDisplayer >> verticalSeparatorBounds [
 
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> verticalSeparatorColor [
-	^ (self textArea backgroundColor contrastingColor ) alpha: 0.3
+	^ (self textArea backgroundColor contrastingBlackAndWhiteColor ) alpha: 0.3
 ]
 
 { #category : #accessing }

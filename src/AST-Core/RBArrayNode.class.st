@@ -104,18 +104,6 @@ RBArrayNode >> copyInContext: aDictionary [
 	^ self class statements: (self copyList: self statements inContext: aDictionary)
 ]
 
-{ #category : #generation }
-RBArrayNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' statements: { '.
-	self statements
-		do: [ :each | 
-			each dumpOn: aStream.
-			aStream nextPutAll: '. ' ].
-	aStream nextPut: $}
-]
-
 { #category : #comparing }
 RBArrayNode >> equalTo: anObject withMapping: aDictionary [ 
 	self class = anObject class 

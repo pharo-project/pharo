@@ -56,7 +56,7 @@ GLMPagerScrollButtonBrick >> index: anObject [
 	index := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GLMPagerScrollButtonBrick >> initialize [
 	super initialize.
 

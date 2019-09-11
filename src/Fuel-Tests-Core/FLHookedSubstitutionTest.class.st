@@ -4,7 +4,7 @@ SUnit tests for hooked serialization using fuel
 Class {
 	#name : #FLHookedSubstitutionTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }
@@ -74,7 +74,7 @@ FLHookedSubstitutionTest >> testProxyByTarget [
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 
 	| aProxyClass result pair | 
-	self flag: #todo. "I don't understand what are we testing here."
+	self flag: #pharoTodo. "I don't understand what are we testing here."
 
 	aProxyClass := (self newSubclassOf: Object instanceVariableNames: 'target' classVariableNames: '') 
 		duringTestCompileSilently: 'target: x  target := x';

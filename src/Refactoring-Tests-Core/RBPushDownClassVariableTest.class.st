@@ -109,7 +109,7 @@ RBPushDownClassVariableTest >> testModelRemoveUnusedVariable [
 RBPushDownClassVariableTest >> testNonExistantName [
 	self shouldFail: (RBPushDownClassVariableRefactoring 
 			variable: #Foo
-			class: RBBasicLintRuleTest)
+			class: RBBasicLintRuleTestData)
 ]
 
 { #category : #tests }
@@ -117,8 +117,8 @@ RBPushDownClassVariableTest >> testPushDownClassVariable [
 	| refactoring |
 	refactoring := RBPushDownClassVariableRefactoring 
 		variable: #Foo1
-		class: RBLintRuleTest.
-	self assert: ((refactoring model classNamed: #RBLintRuleTest) directlyDefinesClassVariable: #Foo1).
+		class: RBLintRuleTestData.
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) directlyDefinesClassVariable: #Foo1).
 	self executeRefactoring: refactoring.
-	(refactoring model classNamed: #RBLintRuleTest) withAllSubclasses do: [ :each | self deny: (each directlyDefinesClassVariable: #Foo1) ]
+	(refactoring model classNamed: #RBLintRuleTestData) withAllSubclasses do: [ :each | self deny: (each directlyDefinesClassVariable: #Foo1) ]
 ]

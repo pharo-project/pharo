@@ -45,7 +45,7 @@ ShDefaultBuilderEnhancer >> configureClass: newClass superclass: superclass with
 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> configureMetaclass: newMetaclass superclass: superclass withLayoutType: aLayoutType slots: classSlots [
-	newMetaclass superclass: superclass withLayoutType: aLayoutType slots: classSlots.
+	newMetaclass superclass: superclass withLayoutType: aLayoutType slots: classSlots
 ]
 
 { #category : #initialization }
@@ -67,11 +67,29 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShBitLayoutChangeDetector.
 	aBuilder addChangeComparer: ShClassSlotChangeDetector.
 	aBuilder addChangeComparer: ShSuperclassChangedDetector.
+	aBuilder addChangeComparer: ShMetaclassChangeDetector
 
 ]
 
 { #category : #events }
 ShDefaultBuilderEnhancer >> metaclassCreated: builder [
+]
+
+{ #category : #events }
+ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+
+	aShiftClassInstaller migrateInstancesTo: aClass
+]
+
+{ #category : #events }
+ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [ 
+
+	aShiftClassInstaller migrateClassTo: aClass
+]
+
+{ #category : #'class modifications' }
+ShDefaultBuilderEnhancer >> newMetaclass: builder [
+	^ builder metaclassClass new
 ]
 
 { #category : #'class modifications' }
@@ -84,6 +102,11 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 { #category : #'class modifications' }
 ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
 	
-	newClass subclasses do: [ :e | installer remake: e ].
+	newClass subclasses do: [ :e | installer remake: e ]
 
+]
+
+{ #category : #'class modifications' }
+ShDefaultBuilderEnhancer >> validateRedefinition: anOldClass [
+	"Subclasses can validate that the new definition is coherent with the old class"
 ]

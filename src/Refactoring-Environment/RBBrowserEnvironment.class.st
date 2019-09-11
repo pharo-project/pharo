@@ -47,11 +47,13 @@ RBBrowserEnvironment >> & anEnvironment [
 ]
 
 { #category : #accessing }
-RBBrowserEnvironment >> addSearchString: aString [ 
-	searchStrings isNil ifTrue: [
-		searchStrings := SortedCollection sortBlock: [ :a :b | 
-			(a indexOf: $: ifAbsent: [ a size ]) > (b indexOf: $: ifAbsent: [ b size ]) ] ].
-	(searchStrings includes: aString)
+RBBrowserEnvironment >> addSearchString: aString [
+
+	searchStrings
+		ifNil: [ searchStrings := SortedCollection
+				sortBlock: [ :a :b | ( a indexOf: $: ifAbsent: [ a size ] ) > ( b indexOf: $: ifAbsent: [ b size ] ) ]
+			].
+	( searchStrings includes: aString )
 		ifFalse: [ searchStrings add: aString ]
 ]
 
@@ -117,29 +119,6 @@ RBBrowserEnvironment >> asSelectorEnvironment [
 	^(RBClassEnvironment onEnvironment: self classes: self classes) asSelectorEnvironment
 ]
 
-{ #category : #conversion }
-RBBrowserEnvironment >> asSystemNavigationEnvironment [
-
-	| env globalsNames |
-	"Optimization for the default environment AKA Smalltalk"
-	self class == RBBrowserEnvironment 
-		ifTrue: [ ^ Smalltalk globals ].
-	
-	env := SystemDictionary new.
-	
-	self classesDo: [:each | 
-		env add: ( Smalltalk globals associationAt: each instanceSide name )].
-	self traitsDo:  [:each | 
-		env add: ( Smalltalk globals associationAt: each name )].
-	globalsNames := Smalltalk globals keys asOrderedCollection.
-	globalsNames removeAll: ( Smalltalk globals classNames ).
-	 globalsNames removeAll: ( Smalltalk globals traitNames ).
-	globalsNames do: [:each | 
-		env add: ( Smalltalk globals associationAt: each )].
-
-	^ env
-]
-
 { #category : #'accessing-classes' }
 RBBrowserEnvironment >> associationAt: aKey [
 	^ self associationAt: aKey ifAbsent: [ self error: aKey printString , ' not found' ]
@@ -166,13 +145,11 @@ RBBrowserEnvironment >> at: aKey [
 
 { #category : #'accessing-classes' }
 RBBrowserEnvironment >> at: aKey ifAbsent: aBlock [
+
 	| association |
-	association := self
-		associationAt: aKey 
-		ifAbsent: [ nil ].
-	^ association isNil
-		ifTrue: [ aBlock value ]
-		ifFalse: [ association value ]
+
+	association := self associationAt: aKey ifAbsent: [ nil ].
+	^ association ifNil: [ aBlock value ] ifNotNil: [ association value ]
 ]
 
 { #category : #accessing }
@@ -431,12 +408,11 @@ RBBrowserEnvironment >> keys [
 
 { #category : #private }
 RBBrowserEnvironment >> label [
-	^ label isNil
-		ifTrue: [ self defaultLabel ]
-		ifFalse: [ label ]
+
+	^ label ifNil: [ self defaultLabel ] ifNotNil: [ label ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBrowserEnvironment >> label: aString [
 	label := aString
 ]
@@ -563,9 +539,8 @@ RBBrowserEnvironment >> rootEnvironment [
 
 { #category : #accessing }
 RBBrowserEnvironment >> searchStrings [
-	^searchStrings isNil
-		ifTrue: [#()]
-		ifFalse: [searchStrings]
+
+	^ searchStrings ifNil: [ #() ] ifNotNil: [ searchStrings ]
 ]
 
 { #category : #accessing }
@@ -587,9 +562,9 @@ RBBrowserEnvironment >> selectMethods: aBlock [
 { #category : #accessing }
 RBBrowserEnvironment >> selectionIntervalFor: aString [ 
 	| interval |
-	self searchStrings isEmpty ifTrue: [^nil].
+	self searchStrings ifEmpty: [^nil].
 	interval := self selectionParseTreeIntervalFor: aString.
-	interval notNil ifTrue: [^interval].
+	interval ifNotNil: [^interval].
 	self searchStrings do: 
 			[:each | 
 			| search index |
@@ -613,7 +588,7 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 		each isSymbol 
 			ifTrue: [
 				tree := RBParseTreeSearcher buildSelectorTree: each.
-				tree notNil ifTrue: [ matcher matchesTree: tree do: answerBlock ] ]
+				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
 				tree := RBVariableNode named: each.
 				matcher

@@ -39,7 +39,7 @@ RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: a
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
 	self className: aName.
 	superclass := self classObjectFor: aClass.
@@ -62,7 +62,7 @@ RBAddClassRefactoring >> preconditions [
 	^cond & (RBCondition isValidClassName: className) 
 		& (RBCondition isGlobal: className in: self model) not 
 			& (RBCondition isSymbol: category) 
-			& ((RBCondition withBlock: [category isEmpty not]) 
+			& ((RBCondition withBlock: [category isNotEmpty ]) 
 					errorMacro: 'Invalid category name')
 ]
 

@@ -142,7 +142,7 @@ TaskListMorph >> initializeLayout [
 TaskListMorph >> initializeTasks [
 	"Set up the current tasks."
 	
-	self tasks: ((World submorphs
+	self tasks: ((self currentWorld submorphs
 		collect: [:m | m taskbarTask])
 		select: [:m | m notNil]) asOrderedCollection
 ]

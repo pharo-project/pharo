@@ -28,20 +28,22 @@ Class {
 
 { #category : #private }
 NECPreferences class >> availableControllers [
-	^NECController withAllSubclasses
+	^ NECController withAllSubclasses
 ]
 
 { #category : #accessing }
 NECPreferences class >> availablePopupShortcuts [
-	^ {
-		Character space shift. 
-		Character tab asKeyCombination}
+	^ {Character space shift . Character tab asKeyCombination}
+]
+
+{ #category : #private }
+NECPreferences class >> availableSorters [
+	^ CompletionSorter subclasses
 ]
 
 { #category : #accessing }
-NECPreferences class >> backgroundColor [ 
-	^backgroundColor ifNil: [ 
-		backgroundColor := (Smalltalk ui theme settings menuColor ifNil: [ Color white ]) ]
+NECPreferences class >> backgroundColor [
+	^ backgroundColor
 ]
 
 { #category : #accessing }
@@ -70,11 +72,9 @@ NECPreferences class >> caseSensitive: aBoolean [
 	caseSensitive := aBoolean
 ]
 
-{ #category : #private }
-NECPreferences class >> currentController [ 
-	^ (Smalltalk tools hasToolNamed: #codeCompletion)
-		ifTrue: [ Smalltalk tools codeCompletion ]
-		ifFalse: [ nil ]
+{ #category : #defaults }
+NECPreferences class >> defaultBackgroundColor [
+	^ self theme menuColor
 ]
 
 { #category : #defaults }
@@ -84,23 +84,22 @@ NECPreferences class >> defaultPopupDelay [
 
 { #category : #defaults }
 NECPreferences class >> defaultPopupShortcut [
-	^Character tab asShortcut
+	^ Character tab asShortcut
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultPopupShowAutomatic [
-	^true
+	^ true
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultSpaceAfterCompletion [
-	^true
+	^ true
 ]
 
 { #category : #defaults }
 NECPreferences class >> defaultUseEnterToAccept [
-	
-	^ false
+	^ true
 ]
 
 { #category : #accessing }
@@ -131,7 +130,7 @@ NECPreferences class >> initialize [
 	smartCharacters := true.
 	expandPrefixes := true.
 	captureNavigationKeys := false.
-	useEnterToAccept := true.
+	useEnterToAccept := self defaultUseEnterToAccept.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
 		at: $( put: $) -> true;
@@ -141,10 +140,10 @@ NECPreferences class >> initialize [
 		at: $' put: $' -> true;
 		at: $< put: $> -> false;
 		at: $| put: $| -> false.
-		
+
 	smartCharactersWithSingleSpace := ''.
 	smartCharactersWithDoubleSpace := '[]{}'.
-	backgroundColor := Smalltalk ui theme settings menuColor ifNil: [ Color white ].
+	backgroundColor := self defaultBackgroundColor.
 	popupShowWithShortcut := self defaultPopupShortcut.
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
@@ -153,7 +152,7 @@ NECPreferences class >> initialize [
 
 { #category : #accessing }
 NECPreferences class >> popupAutomaticDelay [
-	^popupAutomaticDelay ifNil: [ popupAutomaticDelay := self defaultPopupDelay ] 
+	^ popupAutomaticDelay
 ]
 
 { #category : #accessing }
@@ -163,7 +162,7 @@ NECPreferences class >> popupAutomaticDelay: anObject [
 
 { #category : #accessing }
 NECPreferences class >> popupShowAutomatic [
-	^ popupShowAutomatic ifNil: [ popupShowAutomatic := self defaultPopupShowAutomatic ]
+	^ popupShowAutomatic
 ]
 
 { #category : #accessing }
@@ -173,7 +172,7 @@ NECPreferences class >> popupShowAutomatic: aBoolean [
 
 { #category : #accessing }
 NECPreferences class >> popupShowWithShortcut [
-	^ popupShowWithShortcut ifNil: [ popupShowWithShortcut := self defaultPopupShortcut ]
+	^ popupShowWithShortcut
 ]
 
 { #category : #accessing }
@@ -191,16 +190,27 @@ NECPreferences class >> settingsOn: aBuilder [
 		iconName: #smallConfigurationIcon;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
-					| availableControllers |
+					| availableControllers availableSorters |
 					availableControllers := self availableControllers.
 					availableControllers size > 1
 						ifTrue: [ 
 							(aBuilder pickOne: #completionController)
 								order: -1;
 								label: 'Controller';
-								getSelector: #currentController;
-								setSelector: #useController:;
+								target: RubSmalltalkEditor;
+								getSelector: #completionEngine;
+								setSelector: #completionEngine:;
 								domainValues: availableControllers ].
+					availableSorters := self availableSorters.
+					availableSorters size > 1
+						ifTrue: [ 
+							(aBuilder pickOne: #completionSorter)
+								order: -1;
+								label: 'Sorter';
+								target: CompletionModel;
+								getSelector: #sorter;
+								setSelector: #sorter:;
+								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.
 					(aBuilder setting: #expandPrefixes)
@@ -280,7 +290,7 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 
 { #category : #accessing }
 NECPreferences class >> spaceAfterCompletion [
-	^ spaceAfterCompletion ifNil: [ spaceAfterCompletion := true ]
+	^ spaceAfterCompletion
 ]
 
 { #category : #accessing }
@@ -288,14 +298,15 @@ NECPreferences class >> spaceAfterCompletion: anObject [
 	spaceAfterCompletion := anObject
 ]
 
-{ #category : #private }
-NECPreferences class >> useController: aClass [
-	aClass registerToolsOn: Smalltalk tools
+{ #category : #accessing }
+NECPreferences class >> theme [
+	self flag: #SmalltalkReference.
+	^ Smalltalk ui theme
 ]
 
 { #category : #accessing }
 NECPreferences class >> useEnterToAccept [
-	^ useEnterToAccept ifNil: [ useEnterToAccept := self defaultUseEnterToAccept ]
+	^ useEnterToAccept
 ]
 
 { #category : #accessing }

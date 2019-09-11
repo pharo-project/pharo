@@ -47,12 +47,6 @@ RubWorkspaceExample class >> open [
 ]
 
 { #category : #'private - accessing' }
-RubWorkspaceExample class >> spyAnnouncer [
-	"Set it to true if you want to observe textsurface announcements"
-	^ false
-]
-
-{ #category : #'private - accessing' }
 RubWorkspaceExample class >> title [
 	^ 'Rubric workspace example'
 ]
@@ -62,7 +56,6 @@ RubWorkspaceExample class >> windowWithScrolledText: aScrolledText [
 	| w |
 	w := StandardWindow new.
 	w title: self title.
-	self spyAnnouncer ifTrue: [aScrolledText textArea announcer open].
 	w addMorph: aScrolledText fullFrame: LayoutFrame identity.
 	^w
 ]
@@ -79,15 +72,14 @@ RubWorkspaceExample >> announcer [
 ]
 
 { #category : #shout }
-RubWorkspaceExample >> bindingOf: aString [ 
-	
-	mustDeclareVariables ifTrue: [^ nil].
-	"I want to have workspace that force the user to declare  
+RubWorkspaceExample >> bindingOf: aString [
+
+	mustDeclareVariables
+		ifTrue: [ ^ nil ].	"I want to have workspace that force the user to declare  
 	variables. Still subclasses may want to do something else"
-	bindings isNil
-		ifTrue: [self initializeBindings].
-	(bindings includesKey: aString)
-		ifFalse: [bindings at: aString put: nil].
+	bindings ifNil: [ self initializeBindings ].
+	( bindings includesKey: aString )
+		ifFalse: [ bindings at: aString put: nil ].
 	^ bindings associationAt: aString
 ]
 
@@ -106,14 +98,13 @@ RubWorkspaceExample >> getText [
 
 { #category : #shout }
 RubWorkspaceExample >> guessTypeForName: aString [
+
 	| binding |
-	
-	bindings isNil ifFalse: [ 
-		binding := bindings 
-			at: aString
-			ifAbsent: [ nil ].
-		binding isNil
-			ifFalse: [ ^ binding class ] ].
+
+	bindings
+		ifNotNil: [ binding := bindings at: aString ifAbsent: [ nil ].
+			binding ifNotNil: [ ^ binding class ]
+			].
 
 	^ nil
 ]
@@ -128,19 +119,13 @@ RubWorkspaceExample >> hasBindingThatBeginsWith: aString [
 	^false
 ]
 
-{ #category : #shout }
+{ #category : #initialization }
 RubWorkspaceExample >> initialize [
 	super initialize.
 	textModel := RubScrolledTextModel new
 		interactionModel: self;
 		yourself.
 	mustDeclareVariables := false
-]
-
-{ #category : #completion }
-RubWorkspaceExample >> isCodeCompletionAllowed [
-
-	^ true.
 ]
 
 { #category : #'user interface' }

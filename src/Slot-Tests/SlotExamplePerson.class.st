@@ -9,15 +9,14 @@ Class {
 		'#directedMovies => ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie',
 		'#actedInMovies => ToManyRelationSlot inverse: #actors inClass: #SlotExampleMovie'
 	],
-	#category : #'Slot-Tests-Associations'
+	#category : #'Slot-Tests-Examples - Associations'
 }
 
 { #category : #'instance creation' }
 SlotExamplePerson class >> named: aString [
-
-	^self new
-		name: aString
-		
+	^ self new
+		name: aString;
+		yourself
 ]
 
 { #category : #accessing }
@@ -43,7 +42,7 @@ SlotExamplePerson >> directedMovies: anObject [
 { #category : #initialization }
 SlotExamplePerson >> initialize [
 	super initialize.
-	self class initializeSlots: self.
+	self class initializeSlots: self
 ]
 
 { #category : #accessing }

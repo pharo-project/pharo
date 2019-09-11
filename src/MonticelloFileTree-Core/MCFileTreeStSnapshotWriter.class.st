@@ -80,7 +80,7 @@ MCFileTreeStSnapshotWriter >> writeClassTraitDefinition: definition to: traitPat
         visit: [ self writeClassTraitDefinition: definition ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeStSnapshotWriter >> writeDefinitions: aCollection [
   | basePath extensionClasses extensionMethodDefinitions methodHolders |
   self writeBasicDefinitions: aCollection.

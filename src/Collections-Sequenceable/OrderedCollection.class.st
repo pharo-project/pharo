@@ -87,7 +87,21 @@ OrderedCollection class >> arrayType [
 	^ Array
 ]
 
-{ #category : #initialization }
+{ #category : #cleanup }
+OrderedCollection class >> cleanUp: aggressive [
+	"Rehash all instances when cleaning aggressively"
+
+	aggressive ifTrue: [self compactAll].
+]
+
+{ #category : #cleanup }
+OrderedCollection class >> compactAll [
+	"OrderedCollection compactAll"	
+		
+	self allSubclassesDo: #compactAllInstances
+]
+
+{ #category : #cleanup }
 OrderedCollection class >> compactAllInstances [
 	self allInstances do: #compact
 ]
@@ -672,6 +686,24 @@ OrderedCollection >> removeAt: index [
 ]
 
 { #category : #removing }
+OrderedCollection >> removeDuplicates [
+	| iterator |
+	"Remove the copies of elements, but keep the same order"
+	
+	self ifEmpty: [ ^ self ].
+	iterator := 1.
+	[ iterator <= self size ]
+		whileTrue: [ | each newIndex |
+			each := self at: iterator.
+			newIndex := iterator + 1.
+			[ newIndex := (self indexOf: each startingAt: newIndex).
+			newIndex > 0 ]
+				whileTrue: [ self removeAt: newIndex ].
+			iterator := iterator + 1.
+	 ]
+]
+
+{ #category : #removing }
 OrderedCollection >> removeFirst [
 	"Remove the first element of the receiver and answer it. If the receiver is 
 	empty, create an error notification."
@@ -740,7 +772,7 @@ OrderedCollection >> removeLast: n [
 	^ list
 ]
 
-{ #category : #removing }
+{ #category : #initialization }
 OrderedCollection >> reset [
 	"Quickly remove all elements. The objects will be still referenced, but will not be 	accessible."
 	

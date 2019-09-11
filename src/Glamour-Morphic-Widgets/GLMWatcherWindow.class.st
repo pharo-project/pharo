@@ -30,7 +30,7 @@ GLMWatcherWindow class >> buildKeymapsOn: aBuilder [
 	aBuilder attachShortcutCategory: #Glamour to: Morph.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 GLMWatcherWindow class >> reset [ 
 	"self reset"
 	uniqueInstance := nil
@@ -136,7 +136,7 @@ GLMWatcherWindow >> inactiveTitleFillStyle [
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GLMWatcherWindow >> initialize [
 	super initialize.
 	self fillStyle: self defaultFillStyle.
@@ -159,7 +159,7 @@ GLMWatcherWindow >> morphicLayerNumber [
 	^ 10
 ]
 
-{ #category : #'open/close' }
+{ #category : #display }
 GLMWatcherWindow >> openInWorld [
 	super openInWorld.
 	isOpen := true.

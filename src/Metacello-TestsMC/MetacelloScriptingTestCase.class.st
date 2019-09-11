@@ -6,13 +6,15 @@
 "
 Class {
 	#name : #MetacelloScriptingTestCase,
-	#superclass : #MetacelloScriptingStdTstHarness,
+	#superclass : #MetacelloScriptingStdTstHarnessTestCase,
 	#instVars : [
 		'externalRepository',
 		'mczConfigurationRepository',
 		'configurationDirectory',
 		'externalDirectory',
-		'sampleDirectory'
+		'sampleDirectory',
+		'configurationRepository',
+		'monticelloRepository'
 	],
 	#category : #'Metacello-TestsMC'
 }

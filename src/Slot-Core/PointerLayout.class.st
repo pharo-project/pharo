@@ -100,29 +100,6 @@ PointerLayout >> checkSlotNames [
 						signal ]]]
 ]
 
-{ #category : #diff }
-PointerLayout >> computeChangesFrom: other in: modification [
-	| additions changes removals copies |
-	other hasSlots ifFalse: [ ^ modification additions: self allSlots asArray ].
-	
-	additions := self allSlots.
-	removals := OrderedCollection new.
-	copies := modification copies.
-	changes := modification changes.
-	
-	other allSlots do: [ :oldSlot |
-		(self popSlot: oldSlot from: additions)
-			ifNil: [ removals add: oldSlot ]
-			ifNotNil: [ :newSlot |
-				newSlot = oldSlot
-					ifTrue: [ copies at: newSlot put: oldSlot ]
-					ifFalse: [ changes at: newSlot put: oldSlot ]]].
-			
-	modification
-		additions: additions asArray;
-		removals: removals asArray.
-]
-
 { #category : #api }
 PointerLayout >> definesSlotNamed: aString [ 
 	^self resolveSlot: aString ifFound: [ true ] ifNone: [ false ].
@@ -138,14 +115,6 @@ PointerLayout >> extend [
 { #category : #extending }
 PointerLayout >> extend: aScope [
 	^ self species new slotScope: aScope
-]
-
-{ #category : #reshaping }
-PointerLayout >> extendAgain: aLayout with: someScope [
-	| result |
-	result := aLayout copy.
-	result slotScope: someScope.
-	^ result
 ]
 
 { #category : #extending }
@@ -198,39 +167,13 @@ PointerLayout >> initializeInstance: anInstance [
 ]
 
 { #category : #accessing }
-PointerLayout >> instVarIndexFor: aString ifAbsent: aBlockClosure [
-	| idx |
-	idx := 1.
-	slotScope do: [:each |
-		each isVisible ifTrue: [
-			each name = aString ifTrue: [^idx].
-			idx := idx +1]].
-	^aBlockClosure value
-]
-
-{ #category : #accessing }
 PointerLayout >> instVarNames [
 	^ slotScope visibleSlotNames
-]
-
-{ #category : #diff }
-PointerLayout >> popSlot: aSlot from: collection [
-	collection withIndexDo: [ :slot :index |
-		slot name == aSlot name
-			ifTrue: [ ^ collection removeAt: index ]].
-	^ nil
 ]
 
 { #category : #copying }
 PointerLayout >> postCopy [
 	slotScope := slotScope copy
-]
-
-{ #category : #reshaping }
-PointerLayout >> reshapeTo: aModification [
-	| newScope |
-	newScope := slotScope rebase: aModification originalScope to: aModification newScope.
-	^ aModification newLayout extendAgain: self with: newScope.
 ]
 
 { #category : #accessing }

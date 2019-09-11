@@ -133,12 +133,12 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 	self updateStyler
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #helper }
 RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
 	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
-	formatted := tree formattedCodeWithMaxLineLength: self maxFormatterLineLength.
+	formatted := tree formattedCode.
 	formatted = source
 		ifTrue: [ ^ self ].
 	self textArea updateTextWith: formatted
@@ -154,13 +154,6 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 RubSmalltalkCodeMode >> hasBindingThatBeginsWith: aString [ 
 	" For the shout styler "
 	^ self model notNil and: [ self model hasBindingThatBeginsWith: aString ]
-]
-
-{ #category : #formatting }
-RubSmalltalkCodeMode >> maxFormatterLineLength [
-	^ self textArea wrapped
-		ifTrue: [ (self textArea innerBounds width / 9) integerPart ]
-		ifFalse: [ 70 ]
 ]
 
 { #category : #parsing }
@@ -185,7 +178,7 @@ RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 
 { #category : #shout }
 RubSmalltalkCodeMode >> shoutStyler [
-	^ self textArea decoratorNamed: #shoutStyler
+	^ self textArea shoutStyler
 ]
 
 { #category : #shout }
@@ -195,7 +188,7 @@ RubSmalltalkCodeMode >> updateStyler [
 	self textArea shoutStyler ifNotNil: [ :s | s classOrMetaClass: classOrMetaclass ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #update }
 RubSmalltalkCodeMode >> updateTextAreaWhenPlugged [
 	self withShoutStyler.
 	super updateTextAreaWhenPlugged
@@ -203,7 +196,7 @@ RubSmalltalkCodeMode >> updateTextAreaWhenPlugged [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #update }
 RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 	self textArea withoutShoutStyler.
 	super updateTextAreaWhenUnplugged

@@ -24,7 +24,6 @@ Class {
 		'bindings',
 		'window',
 		'fileName',
-		'lineEnding',
 		'encoding',
 		'textView'
 	],
@@ -196,12 +195,13 @@ Workspace >> fileName: anObject [
 
 { #category : #'shout bindings' }
 Workspace >> guessTypeForName: aString [
+
 	| binding |
+
 	bindings
-		ifNotNil: [ 
-			binding := bindings at: aString ifAbsent: [ nil ].
-			binding isNil
-				ifFalse: [ ^ binding class ] ].
+		ifNotNil: [ binding := bindings at: aString ifAbsent: [ nil ].
+			binding ifNotNil: [ ^ binding class ]
+			].
 	^ nil
 ]
 

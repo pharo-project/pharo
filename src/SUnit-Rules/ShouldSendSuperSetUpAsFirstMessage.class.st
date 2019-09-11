@@ -14,25 +14,28 @@ ShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 ]
 
 { #category : #utilities }
+ShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
+{ #category : #utilities }
 ShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompiledMethod [
 	"Return true if the method is a setUp method and a call to super setUp is not the first message send."
-	
+
 	| searcher |
-	searcher := RBParseTreeSearcher new 
-						matchesAnyMethodOf: #(
-							'setUp             super setUp. `.@any' 
-							'setUp | `@temps | super setUp. `.@any') 
-						do: [ :node :answer | true ];
-						yourself.
-	^(searcher executeTree: aCompiledMethod parseTree initialAnswer: false) not
+	searcher := self parseTreeSearcher
+		matchesAnyMethodOf:
+			#('setUp             super setUp. `.@any' 'setUp | `@temps | super setUp. `.@any')
+			do: [ :node :answer | true ];
+		yourself.
+	^ (searcher
+		executeTree: aCompiledMethod parseTree
+		initialAnswer: false) not
 ]
 
 { #category : #running }
-ShouldSendSuperSetUpAsFirstMessage >> check: aMethod forCritiquesDo: aCritiqueBlock [
-
-	((aMethod methodClass inheritsFrom: TestCase)
-		and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ]])
-			ifTrue: [ aCritiqueBlock cull: (self critiqueFor: aMethod) ]
+ShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
+	^ (aMethod methodClass inheritsFrom: TestCase) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
 ]
 
 { #category : #accessing }

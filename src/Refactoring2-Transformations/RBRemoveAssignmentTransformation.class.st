@@ -75,24 +75,19 @@ RBRemoveAssignmentTransformation >> preconditions [
 
 { #category : #executing }
 RBRemoveAssignmentTransformation >> privateTransform [
-
 	| methodTree valueNode assignments nodeToRemove |
 	methodTree := self definingMethod.
-	
-	assignments := ( methodTree allChildren
-		select: #isAssignment )
+	assignments := (methodTree allChildren select: #isAssignment)
 		select: [ :each | each variable name asString = variableName ].
-	
-	nodeToRemove := ( assignments size = 1 )
+	nodeToRemove := assignments size = 1
 		ifTrue: [ assignments first ]
-		ifFalse: [ 
-			valueNode := RBParser parseExpression: value.
-			assignments detectMax: [ :node | 
-				( ( node allChildren collect: #class ) 
-					intersection: ( valueNode allChildren collect: #class ) ) size ] ].
-	
+		ifFalse: [ valueNode := self parserClass parseExpression: value.
+			assignments
+				detectMax: [ :node | 
+					((node allChildren collect: #class)
+						intersection: (valueNode allChildren collect: #class)) size ] ].
 	nodeToRemove parent removeNode: nodeToRemove.
-	class compileTree: methodTree.
+	class compileTree: methodTree
 ]
 
 { #category : #printing }

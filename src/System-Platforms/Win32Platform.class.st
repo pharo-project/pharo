@@ -20,6 +20,12 @@ Win32Platform class >> isActivePlatform [
 	^ self currentPlatformName = 'Win32'
 ]
 
+{ #category : #visiting }
+Win32Platform >> accept: aVisitor [
+
+	^ aVisitor visitWindows32: self
+]
+
 { #category : #testing }
 Win32Platform >> isWin32 [
 	^ true

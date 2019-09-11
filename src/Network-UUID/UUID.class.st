@@ -159,31 +159,19 @@ UUID >> isNilUUID [
 	^ self allSatisfy: [ :each | each isZero ]
 ]
 
-{ #category : #private }
-UUID >> printHexAt: index to: aStream [
-	"Print the hex value of my byte at index to aStream"
-	
-	| map v |
-	map := '0123456789abcdef'.
-	v := self at: index.
-	aStream nextPut: (map at: (v bitShift: -4) + 1). 
-	aStream nextPut: (map at: (v bitAnd: 15) + 1).
-
-]
-
 { #category : #printing }
 UUID >> printOn: aStream [
 	"Print my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) on aStream"
 
-	1 to: 4 do: [ :i | self printHexAt: i to: aStream ].
+	1 to: 4 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	5 to: 6 do: [ :i | self printHexAt: i to: aStream ].
+	5 to: 6 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	7 to: 8 do: [ :i | self printHexAt: i to: aStream ].
+	7 to: 8 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	9 to: 10 do: [ :i | self printHexAt: i to: aStream ].
+	9 to: 10 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ].
 	aStream nextPut: $-.
-	11 to: 16 do: [ :i | self printHexAt: i to: aStream ]
+	11 to: 16 do: [ :i | (self at: i) printLowercaseHexByteOn: aStream ]
 ]
 
 { #category : #printing }
@@ -199,25 +187,13 @@ UUID >> printString [
 UUID >> readFrom: aStream [
 	"Read my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens) from aStream"
 	
-	1 to: 4 do: [ :i | self at: i put: (self readHexByteFrom: aStream) ].
+	1 to: 4 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	5 to: 6 do: [ :i | self at: i put: (self readHexByteFrom: aStream) ].
+	5 to: 6 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	7 to: 8 do: [ :i | self at: i put: (self readHexByteFrom: aStream) ].
+	7 to: 8 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	9 to: 10 do: [ :i | self at: i put: (self readHexByteFrom: aStream) ].
+	9 to: 10 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
-	11 to: 16 do: [ :i | self at: i put: (self readHexByteFrom: aStream) ]
-]
-
-{ #category : #private }
-UUID >> readHexByteFrom: aStream [
-	"Read and return a single lowercase hex encoded byte from aStream"
-	
-	| map v |
-	map := '0123456789abcdef'.
-	v := (map indexOf: aStream next asLowercase ifAbsent: [ self error: 'hex digit expected' ]) - 1.
-	v := v bitShift: 4.
-	v := v + (map indexOf: aStream next asLowercase ifAbsent: [ self error: 'hex digit expected' ]) - 1.
-	^ v
+	11 to: 16 do: [ :i | self at: i put: (Integer readHexByteFrom: aStream) ]
 ]

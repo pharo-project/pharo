@@ -183,10 +183,11 @@ Timespan >> intersection: aTimespan [
 
 	 | aBegin anEnd |
 	 aBegin := self start max: aTimespan start.
-	 anEnd := self end min: aTimespan end.
-	 anEnd < aBegin ifTrue: [^nil].
+	"Use start + duration rather than end, because the latter subtracts clockPrecision."
+	 anEnd := (self start + self duration) min: (aTimespan start + aTimespan duration).
+	 anEnd <= aBegin ifTrue: [^nil].
 
-	 ^ self class starting: aBegin ending: anEnd.
+	 ^ self species starting: aBegin ending: anEnd.
 
 ]
 

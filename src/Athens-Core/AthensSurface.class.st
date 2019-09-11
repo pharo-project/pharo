@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'currentCanvas'
 	],
-	#category : #'Athens-Core'
+	#category : #'Athens-Core-Base'
 }
 
 { #category : #'instance creation' }

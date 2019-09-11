@@ -25,12 +25,12 @@ HEExtendedInstaller >> duplicationMode: anObject [
 ]
 
 { #category : #'validating existance' }
-HEExtendedInstaller >> existingClass: aHEClass. [
+HEExtendedInstaller >> existingClass: aHEClass [
 	^ duplicationMode existingClass: aHEClass on: self.
 ]
 
 { #category : #'validating existance' }
-HEExtendedInstaller >> existingTrait: aHETrait. [
+HEExtendedInstaller >> existingTrait: aHETrait [
 	^ duplicationMode existingTrait: aHETrait on: self.
 ]
 
@@ -60,7 +60,7 @@ HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 		ifNotEmpty: [ message := 'New Undeclared created... check dependencies: ', newUndeclareds keys printString.
 			failOnUndeclared
 				ifTrue: [ self error: message ]
-				ifFalse: [ message logCr ] ]
+				ifFalse: [ message traceCr ] ]
 ]
 
 { #category : #'validating existance' }

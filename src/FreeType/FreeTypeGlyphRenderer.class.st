@@ -177,12 +177,13 @@ FreeTypeGlyphRenderer >> renderGlyph: aCharacter depth: depth subpixelPosition: 
 	hintingFlags := FreeTypeSettings current hintingFlags.
 	flags :=  LoadNoBitmap bitOr:( LoadIgnoreTransform bitOr: hintingFlags). 
 	face loadCharacter:charCode flags: flags]
-	on: FT2Error do:[:e | 
+	on: FT2Error, PrimitiveFailed do:[:e | 
 		^(GlyphForm extent: 0@0 depth: depth)
 			advance: 0@0;
 			linearAdvance: 0@0;
 			offset:0@0;
-			yourself]. 
+			yourself].
+		 
 	glyph := face glyph. 
 	slant := aFreeTypeFont simulatedItalicSlant.
 	extraWidth := (glyph height * slant) abs ceiling.

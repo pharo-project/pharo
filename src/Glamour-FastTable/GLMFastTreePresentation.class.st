@@ -69,7 +69,7 @@ GLMFastTreePresentation >> hasChildrenBlock [
 	^ self parameters at: 'hasChildrenBlock' ifAbsent: [ nil ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMFastTreePresentation >> initialize [
 	super initialize.
 	parameters := Dictionary new

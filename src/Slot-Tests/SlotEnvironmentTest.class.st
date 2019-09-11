@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotEnvironmentTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }
@@ -16,5 +16,5 @@ SlotEnvironmentTest >> testBasicEnvironment [
 	self assert: (environment includesKey: aClass name).	
 	self assert: (environment at: aClass name) == aClass.
 	
-	self deny: (Smalltalk globals includesKey: aClass name).
+	self deny: (Smalltalk globals includesKey: aClass name)
 ]

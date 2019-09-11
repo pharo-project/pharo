@@ -6,45 +6,41 @@ Class {
 
 { #category : #'failure tests' }
 RBRenameTemporaryTest >> testBadInterval [
-	self shouldFail: (RBRenameTemporaryRefactoring 
-			renameTemporaryFrom: (self 
-					convertInterval: (14 to: 17)
-					for: (RBRefactoryTestDataApp sourceCodeAt: #testMethod))
-			to: 'asdf'
-			in: RBRefactoryTestDataApp
-			selector: #testMethod)
+	self
+		shouldFail:
+			(RBRenameTemporaryRefactoring
+				renameTemporaryFrom: (14 to: 17)
+				to: 'asdf'
+				in: RBRefactoryTestDataApp
+				selector: #testMethod)
 ]
 
 { #category : #'failure tests' }
 RBRenameTemporaryTest >> testBadName [
 	self
-		shouldFail: (RBRenameTemporaryRefactoring 
-				renameTemporaryFrom: (self 
-						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+		shouldFail:
+			(RBRenameTemporaryRefactoring
+				renameTemporaryFrom: (15 to: 19)
 				to: 'name'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor);
-		shouldFail: (RBRenameTemporaryRefactoring 
-				renameTemporaryFrom: (self 
-						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+		shouldFail:
+			(RBRenameTemporaryRefactoring
+				renameTemporaryFrom: (15 to: 19)
 				to: 'rules'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor);
-		shouldFail: (RBRenameTemporaryRefactoring 
-				renameTemporaryFrom: (self 
-						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+		shouldFail:
+			(RBRenameTemporaryRefactoring
+				renameTemporaryFrom: (15 to: 19)
 				to: 'DependentFields'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor);
-		shouldFail: (RBRenameTemporaryRefactoring 
-				renameTemporaryFrom: (self 
-						convertInterval: (15 to: 19)
-						for: (RBLintRuleTest sourceCodeAt: #openEditor))
+		shouldFail:
+			(RBRenameTemporaryRefactoring
+				renameTemporaryFrom: (15 to: 19)
 				to: 'a b'
-				in: RBLintRuleTest
+				in: RBLintRuleTestData
 				selector: #openEditor)
 ]
 
@@ -72,15 +68,14 @@ RBRenameTemporaryTest >> testModelBadName [
 { #category : #tests }
 RBRenameTemporaryTest >> testRenameTemporary [
 	| refactoring |
-	refactoring := RBRenameTemporaryRefactoring 
-		renameTemporaryFrom: (self 
-				convertInterval: (15 to: 19)
-				for: (RBLintRuleTest sourceCodeAt: #openEditor))
+	refactoring := RBRenameTemporaryRefactoring
+		renameTemporaryFrom: (15 to: 19)
 		to: 'asdf'
-		in: RBLintRuleTest
+		in: RBLintRuleTestData
 		selector: #openEditor.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBLintRuleTest) parseTreeFor: #openEditor) = (RBParser parseMethod: 'openEditor
+
+	self assert: ((refactoring model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor) equals: (self parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].

@@ -15,15 +15,13 @@ RBEqualsTrueRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBEqualsTrueRule >> check: aNode forCritiquesDo: aCriticBlock [
+RBEqualsTrueRule >> basicCheck: aNode [
 	| parent |
-	aNode isLiteralNode ifFalse: [ ^ self ].
-	(#(true false) includes: aNode value) ifFalse: [ ^ self ].
-	(parent := aNode parent) ifNil: [ ^ self ].
-	parent isMessage ifFalse: [ ^ self ].
-	(#(#= #== #~= #~~) includes: parent selector) ifFalse: [ ^ self ].
-	
-	aCriticBlock cull: (self critiqueFor: aNode)
+	aNode isLiteralNode ifFalse: [ ^ false ].
+	(#(true false) includes: aNode value) ifFalse: [ ^ false ].
+	(parent := aNode parent) ifNil: [ ^ false ].
+	parent isMessage ifFalse: [ ^ false ].
+	^ #(#= #== #~= #~~) includes: parent selector
 ]
 
 { #category : #accessing }

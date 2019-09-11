@@ -95,28 +95,28 @@ RxsPredicate >> beAlphabetic [
 	negation := [:char | char isLetter not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beBackslash [
 
 	predicate := [:char | char == $\].
 	negation := [:char | char ~~ $\]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beControl [
 
 	predicate := [:char | char asInteger < 32].
 	negation := [:char | char asInteger >= 32]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beDigit [
 
 	predicate := [:char | char isDigit].
 	negation := [:char | char isDigit not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beGraphics [
 
 	self
@@ -124,7 +124,7 @@ RxsPredicate >> beGraphics [
 		negate
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beHexDigit [
 
 	| hexLetters |
@@ -133,7 +133,7 @@ RxsPredicate >> beHexDigit [
 	negation := [:char | char isDigit not and: [(hexLetters includes: char) not]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beLowercase [
 
 	predicate := [:char | char isLowercase].
@@ -148,7 +148,7 @@ RxsPredicate >> beNotDigit [
 		negate
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beNotSpace [
 
 	self
@@ -156,7 +156,7 @@ RxsPredicate >> beNotSpace [
 		negate
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beNotWordConstituent [
 
 	self
@@ -164,7 +164,7 @@ RxsPredicate >> beNotWordConstituent [
 		negate
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> bePrintable [
 
 	self
@@ -172,7 +172,7 @@ RxsPredicate >> bePrintable [
 		negate
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> bePunctuation [
 
 	| punctuationChars |
@@ -188,7 +188,7 @@ RxsPredicate >> beSpace [
 	negation := [:char | char isSeparator not]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsPredicate >> beUppercase [
 
 	predicate := [:char | char isUppercase].

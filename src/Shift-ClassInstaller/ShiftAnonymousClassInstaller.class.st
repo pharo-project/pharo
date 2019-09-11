@@ -16,7 +16,7 @@ ShiftAnonymousClassInstaller >> comment: newClass [
 ]
 
 { #category : #building }
-ShiftAnonymousClassInstaller >> installInEnvironment: newClass. [
+ShiftAnonymousClassInstaller >> installInEnvironment: newClass [
 	^ self
 ]
 
@@ -26,7 +26,7 @@ ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
 
 { #category : #building }
 ShiftAnonymousClassInstaller >> lookupOldClass [
-	^ self.
+	^ self
 ]
 
 { #category : #notifications }

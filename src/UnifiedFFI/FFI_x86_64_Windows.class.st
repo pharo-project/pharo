@@ -20,8 +20,26 @@ FFI_x86_64_Windows class >> isActive [
 ]
 
 { #category : #types }
+FFI_x86_64_Windows >> bitTypeAlignment [
+
+	^ OSPlatform current ffiLongAlignment
+]
+
+{ #category : #types }
+FFI_x86_64_Windows >> externalBitType [
+
+	^ ExternalType long
+]
+
+{ #category : #types }
 FFI_x86_64_Windows >> externalLongType [
 	^ ExternalType long
+]
+
+{ #category : #types }
+FFI_x86_64_Windows >> externalUBitType [
+
+	^ ExternalType ulong
 ]
 
 { #category : #types }
@@ -29,27 +47,10 @@ FFI_x86_64_Windows >> externalULongType [
 	^ ExternalType ulong
 ]
 
-{ #category : #'default abi' }
-FFI_x86_64_Windows >> floatRegisterCountForParameterPassing [
-	^ 4
-]
+{ #category : #'instance creation' }
+FFI_x86_64_Windows >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [ 
 
-{ #category : #'default abi' }
-FFI_x86_64_Windows >> integerRegisterCountForParameterPassing [
-	^ 4
-]
-
-{ #category : #types }
-FFI_x86_64_Windows >> longType [
-	^ FFIInt32
-]
-
-{ #category : #'default abi' }
-FFI_x86_64_Windows >> shadowCallSpaceSize [
-	^ 32
-]
-
-{ #category : #types }
-FFI_x86_64_Windows >> ulongType [
-	^ FFIUInt32
+	^ FFIWin64CallbackArgumentReader 
+		forCallback: aCallback
+		inContext: aCallbackContext
 ]

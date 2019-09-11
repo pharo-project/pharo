@@ -144,12 +144,15 @@ FFICallout >> directArgName: typeName ptrArity: ptrArity [
 	"Answer 'direct' type arguments (without argument names): 
 		self, nil,true, false or a constant (like a number)"
 
-	typeName = 'nil'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveExternalType: #uint32) ].
+	(typeName = 'NULL' or: [ typeName = 'nil' ])
+		ifTrue: [ 
+			^ (self resolveType: #'void *')
+				loader: (self valueArgumentLoader: ExternalAddress null);
+				yourself ].
 	typeName = 'false'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveExternalType: #bool) ].
+		ifTrue: [ ^ FFIConst value: 0 type: (self resolveType: #bool) ].
 	typeName = 'true'
-		ifTrue: [ ^ FFIConst value: 1 type: (self resolveExternalType: #bool) ].
+		ifTrue: [ ^ FFIConst value: 1 type: (self resolveType: #bool) ].
 	ptrArity > 0
 		ifTrue: [ self error: 'missing argument name' ].	"lone self"
 	typeName = 'self'
@@ -180,7 +183,20 @@ FFICallout >> initialize [
 
 { #category : #private }
 FFICallout >> integerConstantArgument: anInteger [
-	^ FFIConst value: anInteger type: (self resolveExternalType:  #uint32)
+
+	^ FFIConst 
+		value: anInteger
+		type: (anInteger >=0 
+			ifTrue: [ self resolveType: #uint32 ]
+			ifFalse: [ self resolveType: #int32 ])
+]
+
+{ #category : #private }
+FFICallout >> integerConstantArgument: anInteger type: aType [
+
+	^ FFIConst 
+		value: anInteger
+		type: (self resolveType: aType)
 ]
 
 { #category : #'argument loaders' }
@@ -370,18 +386,17 @@ FFICallout >> resolveType: aTypeName [
 { #category : #'spec parsing' }
 FFICallout >> returnType: aType [
 	aType first = 'receiver'
-		ifTrue: [ 
-			| rcvr rqstr |
+		ifTrue: [ | possibleClass requestorClass |
 			"check that:
 				1. method belongs to class side
 				2. method class is subclass of NBExternalObject
 				3. receiver is the same or subclass of the requestor -- since the requestor is the implementor"
-			rcvr := self receiver.
-			rqstr := self requestor soleInstance.
-			(rcvr isBehavior
-				and: [ (rcvr == rqstr or: [ rcvr inheritsFrom: rqstr ]) ])
-				ifTrue: [ ^ self typeName: rcvr name pointerArity: aType second ] ].
-	self receiver: nil. "if the type is not 'receiver' then we don't need the receiver of the message so set it to nil"
+			possibleClass := self receiver.
+			requestorClass := self requestor soleInstance.
+			(possibleClass isBehavior
+				and: [ possibleClass includesBehavior: requestorClass ])
+				ifTrue: [ ^ self typeName: possibleClass name pointerArity: aType second ] ].
+	self receiver: nil.	"if the type is not 'receiver' then we don't need the receiver of the message so set it to nil"
 	^ self typeName: aType first pointerArity: aType second
 ]
 
@@ -399,4 +414,12 @@ FFICallout >> sender: aSenderContext [
 { #category : #private }
 FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
+]
+
+{ #category : #private }
+FFICallout >> valueArgumentLoader: anObject [
+
+	^ FFIValueArgument new
+		value: anObject;
+		yourself
 ]

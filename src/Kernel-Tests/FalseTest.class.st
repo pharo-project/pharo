@@ -23,7 +23,7 @@ FalseTest >> testAnd [
 { #category : #'tests - converting' }
 FalseTest >> testAsBit [
 
-       self assert: (false asBit = 0).
+	self assert: false asBit equals: 0
 ]
 
 { #category : #'tests - controlling' }

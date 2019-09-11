@@ -30,9 +30,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'globals',
-		'deferredStartupActions',
 		'specialObjectsArray',
-		'session',
 		'vm'
 	],
 	#classVars : [
@@ -164,10 +162,23 @@ SmalltalkImage >> arguments [
 
 	"Smalltalk commandLine arguments"
 
+	^ self argumentsStartingAtIndex: 1
+]
+
+{ #category : #private }
+SmalltalkImage >> argumentsInclude: aString [
+
+	^ (self argumentsStartingAtIndex: 0) includes: aString
+]
+
+{ #category : #private }
+SmalltalkImage >> argumentsStartingAtIndex: anIndex [
+	"Answer an array with all the command line arguments"
+
 	^ Array
 		streamContents: [ :str | 
 			| arg i |
-			i := 1.
+			i := anIndex.
 			[ i > 998 or: [ (arg := self argumentAt: i) isNil ] ]
 				whileFalse: [ 
 					str nextPut: arg.
@@ -752,6 +763,12 @@ SmalltalkImage >> hasClassNamed: aString [
 	^ globals hasClassNamed: aString
 ]
 
+{ #category : #compiler }
+SmalltalkImage >> hasCompiler [
+
+	^ self compilerClass isNotNil
+]
+
 { #category : #image }
 SmalltalkImage >> image [
 	"Answer the object to query about the current object memory and execution environment."
@@ -763,7 +780,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ self primImagePath asFileReference parent
+	^ self imagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
@@ -1130,7 +1147,7 @@ SmalltalkImage >> memoryHogs [
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
     "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo7.x' #'pharo7.0.x')
+   ^ #(#squeakCommon #pharo #'pharo8.x' #'pharo8.0.x')
 ]
 
 { #category : #'special objects' }
@@ -1154,7 +1171,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	"This association holds the active process (a ProcessScheduler)"
 	newArray at: 4 put: (self globals associationAt: #Processor).
 	"Numerous classes below used for type checking and instantiation"
-	newArray at: 5 put: Bitmap.
+	newArray at: 5 put: (self globals at: #Bitmap ifAbsent: [nil]).
 	newArray at: 6 put: SmallInteger.
 	newArray at: 7 put: ByteString.
 	newArray at: 8 put: Array.
@@ -1164,7 +1181,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 12 put: nil. "was BlockContext."
 	newArray at: 13 put: Point.
 	newArray at: 14 put: LargePositiveInteger.
-	newArray at: 15 put: Display.
+	newArray at: 15 put: (self globals at: #Display ifAbsent: [nil]).
 	newArray at: 16 put: Message.
 	newArray at: 17 put: CompiledMethod.
 	newArray at: 18 put: ((self primitiveGetSpecialObjectsArray at: 18) ifNil: [Semaphore new]). "low space Semaphore"
@@ -1329,7 +1346,7 @@ SmalltalkImage >> primBytesLeft [
 	^0
 ]
 
-{ #category : #'image, changes name' }
+{ #category : #primitives }
 SmalltalkImage >> primImagePath [
 	"Answer the full path name for the current image."
 	"Smalltalk imageName"
@@ -1338,7 +1355,7 @@ SmalltalkImage >> primImagePath [
 	self primitiveFailed
 ]
 
-{ #category : #'image, changes name' }
+{ #category : #primitives }
 SmalltalkImage >> primImagePath: newName [
 	"Set the the full path name for the current image.  All further snapshots will use this."
 
@@ -1561,12 +1578,7 @@ SmalltalkImage >> renameClass: aClass from: oldName [
 SmalltalkImage >> renameClassNamed: oldName as: newName [
 	"Invoked from fileouts:  if there is currently a class in the system named oldName, then rename it to newName.  If anything untoward happens, report it in the Transcript.  "
 
-	| oldClass |
-	(oldClass := self at: oldName asSymbol ifAbsent: [ nil ]) 
-		ifNil: [ 
-			self crTrace: 'Class-rename for ' , oldName , ' ignored because ' , oldName , ' does not exist.'.
-			^ self ].
-	oldClass rename: newName
+	^ globals renameClassNamed: oldName as: newName
 ]
 
 { #category : #'memory space' }

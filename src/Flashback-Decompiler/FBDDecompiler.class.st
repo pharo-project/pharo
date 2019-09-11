@@ -199,7 +199,7 @@ FBDDecompiler >> errorCodeNameFor: cm [
 	"Assumes the method holds a primitive with error code"
 	| primitivePragma selectorParts |
 	primitivePragma := cm pragmas detect: [ :pragma | 
-		selectorParts := pragma keyword separateKeywords splitOn: '  '.
+		selectorParts := pragma selector separateKeywords splitOn: '  '.
 		selectorParts first = 'primitive:' ].
 	^ primitivePragma argumentAt: (selectorParts indexOf: 'error:')
 ]
@@ -233,6 +233,11 @@ FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 		body: seq
 		pragmas: (self pragmasForMethod: aCompiledMethod)
 		class: aCompiledMethod methodClass
+]
+
+{ #category : #'data flow instructions' }
+FBDDecompiler >> goToNextInstruction [
+	instructionStream nextInstruction
 ]
 
 { #category : #private }
@@ -446,7 +451,7 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
 		RBPragmaNode 
-			selector: each keyword 
+			selector: each selector 
 			arguments: (each arguments collect: [ :arg | RBLiteralNode value: arg ]) ]
 ]
 
@@ -568,11 +573,7 @@ FBDDecompiler >> shouldUseOriginalMethod: aCompiledMethod [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> skipTemps: numTemps [
-	self flag: #FIXME. "should dispatch to the encoder"
-	instructionStream method encoderClass name = #EncoderForSistaV1
-		ifTrue: [ numTemps > 0 ifTrue: [ instructionStream nextInstruction ] ]
-		ifFalse: [ numTemps timesRepeat: [ instructionStream nextInstruction ] ]
-	
+	instructionStream method encoderClass skipTemps: numTemps for: self
 ]
 
 { #category : #'data flow instructions' }

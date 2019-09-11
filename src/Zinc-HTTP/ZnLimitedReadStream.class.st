@@ -53,7 +53,7 @@ ZnLimitedReadStream >> close [
 
 { #category : #accessing }
 ZnLimitedReadStream >> collectionSpecies [
-	"I can be set to binary or ascii explicitely.
+	"I can be set to binary or ascii explicitly.
 	If not set, delegate to our wrapped stream."
 	
 	^ binary notNil
@@ -232,7 +232,7 @@ ZnLimitedReadStream >> readInto: collection startingAt: offset count: count [
 	^ actual
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ZnLimitedReadStream >> reset [
 	"We don't allow it"
 ]

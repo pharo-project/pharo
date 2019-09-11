@@ -17,10 +17,10 @@ BecomeTest >> testBecome [
 	a become: b.
 
 	self 
-		assert: a = 'cd';
-		assert: b = 'ab';
-		assert: c = 'cd';
-		assert: d = 'ab'.
+		assert: a equals: 'cd';
+		assert: b equals: 'ab';
+		assert: c equals: 'cd';
+		assert: d equals: 'ab'.
 
 
 
@@ -39,10 +39,10 @@ BecomeTest >> testBecomeForward [
 	a becomeForward: b.
 
 	self 
-		assert: a = 'cd';
-		assert: b = 'cd';
-		assert: c = 'cd';
-		assert: d = 'cd'.
+		assert: a equals: 'cd';
+		assert: b equals: 'cd';
+		assert: c equals: 'cd';
+		assert: d equals: 'cd'.
 
 
 
@@ -64,8 +64,8 @@ BecomeTest >> testBecomeForwardCopyIdentityHash [
 
 	self 
 		assert: a == b;
-		assert: a identityHash = identityHashOfA;
-		assert: b identityHash = identityHashOfA.
+		assert: a identityHash equals: identityHashOfA;
+		assert: b identityHash equals: identityHashOfA.
 
 
 ]
@@ -86,8 +86,8 @@ BecomeTest >> testBecomeForwardDontCopyIdentityHash [
 
 	self 
 		assert: a == b;
-		assert: a identityHash = identityHashOfB;
-		assert: b identityHash = identityHashOfB.
+		assert: a identityHash equals: identityHashOfB;
+		assert: b identityHash equals: identityHashOfB.
 
 
 ]
@@ -105,9 +105,9 @@ BecomeTest >> testBecomeForwardHash [
 	a becomeForward: b.
 
 	self 
-		assert: a hash = hb;
-		assert: b hash = hb;
-		assert: c hash = hb.
+		assert: a hash equals: hb;
+		assert: b hash equals: hb;
+		assert: c hash equals: hb.
 
 
 
@@ -128,8 +128,8 @@ BecomeTest >> testBecomeForwardIdentityHash [
 	a becomeForward: b.
 
 	self 
-		assert: a identityHash = ha;
-		assert: b identityHash = ha.
+		assert: a identityHash equals: ha;
+		assert: b identityHash equals: ha.
 
 
 ]
@@ -149,10 +149,10 @@ BecomeTest >> testBecomeHash [
 	a become: b.
 
 	self 
-		assert: a hash = hb;
-		assert: b hash = ha;
-		assert: c hash = hb;
-		assert: d hash = ha.
+		assert: a hash equals: hb;
+		assert: b hash equals: ha;
+		assert: c hash equals: hb;
+		assert: d hash equals: ha
 
 
 
@@ -172,8 +172,8 @@ BecomeTest >> testBecomeIdentityHash [
 	a become: b.
 
 	self 
-		assert: a identityHash = c identityHash;
-		assert: b identityHash = d identityHash;
-		deny: a identityHash = b identityHash.
+		assert: a identityHash equals: c identityHash;
+		assert: b identityHash equals: d identityHash;
+		deny: a identityHash equals: b identityHash.
 
 ]

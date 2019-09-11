@@ -78,7 +78,7 @@ OSWindowJoystickExample >> redraw [
 		drawBullets
 ]
 
-{ #category : #'game controls' }
+{ #category : #initialization }
 OSWindowJoystickExample >> reset [
 	characterPosition := 320@240.
 	characterVelocity := 0@0.

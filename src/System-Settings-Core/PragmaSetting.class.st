@@ -92,14 +92,14 @@ PragmaSetting >> asString [
 { #category : #'user interface' }
 PragmaSetting >> chooseFileDirectory [
 	| result |
-	result := self theme chooseDirectoryIn: World title: 'Choose a file' path: nil.
+	result := self theme chooseDirectoryIn: self currentWorld title: 'Choose a file' path: nil.
 	result ifNotNil: [ self realValue: result fullName ].
 ]
 
 { #category : #'user interface' }
 PragmaSetting >> chooseFilePath [
     | result |
-    result := self theme chooseFullFileNameIn: World title: 'Choose a file' extensions: nil path: nil preview: true.
+    result := self theme chooseFullFileNameIn: self currentWorld title: 'Choose a file' extensions: nil path: nil preview: true.
     result ifNotNil: [ self realValue: result.]
 ]
 
@@ -206,7 +206,7 @@ PragmaSetting >> icon: aForm [
 PragmaSetting >> inputMorphFor: aContainer [ 
 	^ self inputWidget
 		ifNotNil: [:iw | 
-			( self theme newRowIn: World for: {iw})
+			( self theme newRowIn: self currentWorld for: {iw})
 				 clipSubmorphs: true;
 				 hResizing: #shrinkWrap;
 				 cellInset: 0;

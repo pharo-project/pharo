@@ -182,7 +182,7 @@ CriticsCache >> falsePositiveOf: aRule [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CriticsCache >> initCache [
 
 	checker rule leaves do: [ :rule | 

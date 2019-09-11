@@ -37,9 +37,9 @@ RubGhostTextDisplayer >> computedWidthFrom: aRectangle [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubGhostTextDisplayer >> defaultTextColor [
-	^ Color lightGray
+	^ self theme ghostTextColor
 ]
 
 { #category : #geometry }
@@ -67,6 +67,12 @@ RubGhostTextDisplayer >> fontName: aFontName pointSize: anInteger [
 { #category : #accessing }
 RubGhostTextDisplayer >> fontPointSize: anInteger [
 	self handleTextChangeWhile: [ghostText fontPointSize: anInteger]
+]
+
+{ #category : #accessing }
+RubGhostTextDisplayer >> ghostText [ 
+	"Return the editing area of the ghostText"
+	^ ghostText
 ]
 
 { #category : #accessing }
@@ -155,6 +161,6 @@ RubGhostTextDisplayer >> updateMarginsWith: aMargin [
 RubGhostTextDisplayer >> updateTextWith: aText [
 	self
 		handleTextChangeWhile: [ 
-			ghostText updateTextWith: aText.
+			ghostText updateTextWith: aText asText.
 			ghostText textColor: self textColor ]
 ]

@@ -13,9 +13,8 @@ Class {
 		'rules'
 	],
 	#classInstVars : [
-		'uniqueInstance',
-		'managers',
-		'default'
+		'default',
+		'managers'
 	],
 	#category : #'Renraku-Utility'
 }
@@ -135,7 +134,7 @@ ReRuleManager class >> removeManagerFor: anRPackage [
 	
 ]
 
-{ #category : #utilities }
+{ #category : #initialization }
 ReRuleManager class >> reset [
 	<script>
 	managers := nil.

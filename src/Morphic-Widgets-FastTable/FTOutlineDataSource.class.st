@@ -46,11 +46,7 @@ FTOutlineDataSource >> elementAt: index [
 
 { #category : #accessing }
 FTOutlineDataSource >> headerColumn: column [
-	column id ifNil: [ ^ nil ]. 
-	^ FTCellMorph new 
-		listCentering: #center;
-		addMorph: column id asMorph;
-		yourself
+	^ self basicHeaderCellFor: column
 ]
 
 { #category : #accessing }

@@ -133,7 +133,7 @@ ClassChangeRecord >> findOrMakeMethodChangeAt: selector priorMethod: priorMethod
 		ifAbsentPut: [MethodChangeRecord new]
 ]
 
-{ #category : #removal }
+{ #category : #removing }
 ClassChangeRecord >> forgetChangesIn: otherRecord [
 	"See forgetAllChangesFoundIn:.  Used in culling changeSets."
 
@@ -180,7 +180,7 @@ ClassChangeRecord >> initFor: className [
 	priorName := thisName := className.
 ]
 
-{ #category : #removal }
+{ #category : #removing }
 ClassChangeRecord >> isClassRemoval [
 	"NOTE: there are other removals with changeType #addedThenRemoved,
 	but this message is used to write out removals in fileOut, and those
@@ -266,7 +266,7 @@ ClassChangeRecord >> noteNewName: newName [
 ClassChangeRecord >> notePriorDefinition: oldClass [
 
 	oldClass ifNil: [^ self].
-	priorDefinition ifNil: [priorDefinition := oldClass definition]
+	priorDefinition ifNil: [priorDefinition := oldClass oldDefinition]
 ]
 
 { #category : #'method changes' }

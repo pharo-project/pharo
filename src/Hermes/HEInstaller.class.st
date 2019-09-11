@@ -91,7 +91,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	newTrait := traitClass
 		named: aTraitDefinition traitName
 		uses: traitComposition
-		category: aTraitDefinition category
+		package: aTraitDefinition category
 		env: environment.
 
 	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment) asTraitComposition.
@@ -157,7 +157,7 @@ HEInstaller >> existingClass: aHEClass [
 ]
 
 { #category : #'validating existance' }
-HEInstaller >> existingTrait: aHETrait. [
+HEInstaller >> existingTrait: aHETrait [
 	(environment includesKey: aHETrait traitName) ifTrue:[ 
 		self error: (self messageExistingTrait: aHETrait)
 	].
@@ -275,5 +275,5 @@ HEInstaller >> validateNoNewUndeclared [
 	self reportNewUndeclareds: self createdUndeclared.
 	
 	('[Hermes] Remaining Undeclared variables in the system: '
-		, Undeclared keys printString) logCr
+		, Undeclared keys printString) traceCr
 ]

@@ -226,23 +226,26 @@ RxMatcher >> currentState [
 
 { #category : #private }
 RxMatcher >> hookBranchOf: regexNode onto: endMarker [
+
 	"Private - Recurse down the chain of regexes starting at
 	regexNode, compiling their branches and hooking their tails 
 	to the endMarker node."
 
 	| rest |
-	rest := regexNode regex isNil
-		ifTrue: [nil]
-		ifFalse: [self hookBranchOf: regexNode regex onto: endMarker].
-	^RxmBranch new
-		next: ((regexNode branch dispatchTo: self)
-					pointTailTo: endMarker; 
-					yourself);
+
+	rest := regexNode regex
+		ifNil: [ nil ]
+		ifNotNil: [ self hookBranchOf: regexNode regex onto: endMarker ].
+	^ RxmBranch new
+		next:
+			( ( regexNode branch dispatchTo: self )
+				pointTailTo: endMarker;
+				yourself );
 		alternative: rest;
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxMatcher >> initialize: syntaxTreeRoot ignoreCase: aBoolean [
 	"Compile thyself for the regex with the specified syntax tree.
 	See comment and `building' protocol in this class and 
@@ -638,28 +641,31 @@ RxMatcher >> syntaxBeginningOfWord [
 
 { #category : #'double dispatch' }
 RxMatcher >> syntaxBranch: branchNode [
+
 	"Double dispatch from the syntax tree. 
 	Branch node is a link in a chain of concatenated pieces.
 	First build the matcher for the rest of the chain, then make 
 	it for the current piece and hook the rest to it."
+
 	| result next rest |
-	branchNode branch isNil
-		ifTrue: [^branchNode piece dispatchTo: self].
-	"Optimization: glue a sequence of individual characters into a single string to match."
-	branchNode piece isAtomic ifTrue:
-		[result := (String new: 40) writeStream.
-		next := branchNode tryMergingInto: result.
-		result := result contents.
-		result size > 1 ifTrue: "worth merging"
-			[rest := next notNil 
-				ifTrue: [next dispatchTo: self]
-				ifFalse: [nil].
-			^(RxmSubstring new substring: result ignoreCase: ignoreCase)
-				pointTailTo: rest;
-				yourself]].
-	"No optimization possible or worth it, just concatenate all. "
-	^(branchNode piece dispatchTo: self)
-		pointTailTo: (branchNode branch dispatchTo: self);
+
+	branchNode branch ifNil: [ ^ branchNode piece dispatchTo: self ].	"Optimization: glue a sequence of individual characters into a single string to match."
+	branchNode piece isAtomic
+		ifTrue: [ result := ( String new: 40 ) writeStream.
+			next := branchNode tryMergingInto: result.
+			result := result contents.
+			result size > 1
+				ifTrue: [ "worth merging"
+					rest := next notNil
+						ifTrue: [ next dispatchTo: self ]
+						ifFalse: [ nil ].
+					^ ( RxmSubstring new substring: result ignoreCase: ignoreCase )
+						pointTailTo: rest;
+						yourself
+					]
+			].	"No optimization possible or worth it, just concatenate all. "
+	^ ( branchNode piece dispatchTo: self )
+		pointTailTo: ( branchNode branch dispatchTo: self );
 		yourself
 ]
 
@@ -792,24 +798,31 @@ RxMatcher >> syntaxWordBoundary [
 
 { #category : #private }
 RxMatcher >> tryMatch [
+
 	"Match thyself against the current stream."
 
 	| oldMarkerPositions |
+
 	oldMarkerPositions := markerPositions.
 	markerPositions := Array new: markerCount.
 	1 to: markerCount do: [ :i | markerPositions at: i put: OrderedCollection new ].
-	lastResult := startOptimizer isNil
-		ifTrue: [ matcher matchAgainst: self]
-		ifFalse: [ (startOptimizer canStartMatch: stream peek in: self) and: [ matcher matchAgainst: self ] ].
-	"check for duplicates"
-	(lastResult not or: [ oldMarkerPositions isNil or: [ oldMarkerPositions size ~= markerPositions size ] ])
+	lastResult := startOptimizer
+		ifNil: [ matcher matchAgainst: self ]
+		ifNotNil: [ ( startOptimizer canStartMatch: stream peek in: self ) and: [ matcher matchAgainst: self ] ].	"check for duplicates"
+	( lastResult not
+		or: [ oldMarkerPositions isNil or: [ oldMarkerPositions size ~= markerPositions size ] ] )
 		ifTrue: [ ^ lastResult ].
-	oldMarkerPositions with: markerPositions do: [ :oldPos :newPos |
-		oldPos size = newPos size 
-			ifFalse: [ ^ lastResult ].
-		oldPos with: newPos do: [ :old :new |
-			old = new
-				ifFalse: [ ^ lastResult ] ] ].
-	"this is a duplicate"
+	oldMarkerPositions
+		with: markerPositions
+		do: [ :oldPos :newPos | 
+			oldPos size = newPos size
+				ifFalse: [ ^ lastResult ].
+			oldPos
+				with: newPos
+				do: [ :old :new | 
+					old = new
+						ifFalse: [ ^ lastResult ]
+					]
+			].	"this is a duplicate"
 	^ lastResult := false
 ]

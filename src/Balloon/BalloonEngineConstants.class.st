@@ -211,31 +211,31 @@ Class {
 	#category : #'Balloon-Engine'
 }
 
-{ #category : #'pool definition' }
+{ #category : #'private - initialization' }
 BalloonEngineConstants class >> initEdgeConstants [
 	"Initialize the edge constants"
 
 	"Edge primitive types"
 	GEPrimitiveEdge := 2.			"External edge - not handled by the GE"
-	GEPrimitiveWideEdge := 3.		"Wide external edge"
+	GEPrimitiveWideEdge := 3.	"Wide external edge"
 	GEPrimitiveLine := 4.			"Straight line"
-	GEPrimitiveWideLine := 5.		"Wide line"
+	GEPrimitiveWideLine := 5.	"Wide line"
 	GEPrimitiveBezier := 6.		"Quadratic bezier curve"
 	GEPrimitiveWideBezier := 7.	"Wide bezier curve"
 
 	"Special flags"
-	GEPrimitiveWide := 16r01.		"Flag determining a wide primitive"
-	GEPrimitiveWideMask := 16rFE.	"Mask for clearing the wide flag"
-	GEEdgeFillsInvalid := 16r10000. "Flag determining if left/right fills of an edge are invalid"
-	GEEdgeClipFlag := 16r20000.	"Flag determining if this is a clip edge"
+	GEPrimitiveWide := 16r01.			"Flag determining a wide primitive"
+	GEPrimitiveWideMask := 16rFE.		"Mask for clearing the wide flag"
+	GEEdgeFillsInvalid := 16r10000. 	"Flag determining if left/right fills of an edge are invalid"
+	GEEdgeClipFlag := 16r20000.			"Flag determining if this is a clip edge"
 
 	"General edge state constants"
-	GEXValue := 4.					"Current raster x"
-	GEYValue := 5.					"Current raster y"
-	GEZValue := 6.					"Current raster z"
+	GEXValue := 4.						"Current raster x"
+	GEYValue := 5.						"Current raster y"
+	GEZValue := 6.						"Current raster z"
 	GENumLines := 7.					"Number of scan lines remaining"
 	GEFillIndexLeft := 8.				"Left fill index"
-	GEFillIndexRight := 9.				"Right fill index"
+	GEFillIndexRight := 9.			"Right fill index"
 	GEBaseEdgeSize := 10.				"Basic size of each edge"
 
 	"General fill state constants"
@@ -256,20 +256,20 @@ BalloonEngineConstants class >> initEdgeConstants [
 
 	"Additional stuff for wide lines"
 	GLWideFill := 16.					"Current fill of line"
-	GLWideWidth := 17.				"Current width of line"
-	GLWideEntry := 18.				"Initial steps"
+	GLWideWidth := 17.					"Current width of line"
+	GLWideEntry := 18.					"Initial steps"
 	GLWideExit := 19.					"Final steps"
 	GLWideExtent := 20.				"Target width"
 	GLWideSize := 21.					"Size of wide lines"
 
 	"General Bezier state constants"
 	GBUpdateData := 10.				"Incremental update data for beziers"
-	GBUpdateX := 0.				"Last computed X value (24.8)"
-	GBUpdateY := 1.				"Last computed Y value (24.8)"
-	GBUpdateDX := 2.				"Delta X forward difference step (8.24)"
-	GBUpdateDY := 3.				"Delta Y forward difference step (8.24)"
-	GBUpdateDDX := 4.				"Delta DX forward difference step (8.24)"
-	GBUpdateDDY := 5.				"Delta DY forward difference step (8.24)"
+	GBUpdateX := 0.						"Last computed X value (24.8)"
+	GBUpdateY := 1.						"Last computed Y value (24.8)"
+	GBUpdateDX := 2.					"Delta X forward difference step (8.24)"
+	GBUpdateDY := 3.					"Delta Y forward difference step (8.24)"
+	GBUpdateDDX := 4.					"Delta DX forward difference step (8.24)"
+	GBUpdateDDY := 5.					"Delta DY forward difference step (8.24)"
 		"Note: The following four entries are only needed before the incremental
 			state is computed. They are therefore aliased to the incremental values above"
 	GBViaX := 12.						"via x"
@@ -277,21 +277,22 @@ BalloonEngineConstants class >> initEdgeConstants [
 	GBEndX := 14.						"end x"
 	GBEndY := 15.						"end y"
 	GBBaseSize := 16.					"Basic size of each bezier.
-										Note: MUST be greater or equal to the size of lines"
+                                   Note: MUST be greater or equal to the size of lines"
+
 	"Additional stuff for wide beziers"
 	GBWideFill := 16.					"Current fill of line"
-	GBWideWidth := 17.				"Current width of line"
-	GBWideEntry := 18.				"Initial steps"
+	GBWideWidth := 17.					"Current width of line"
+	GBWideEntry := 18.					"Initial steps"
 	GBWideExit := 19.					"Final steps"
 	GBWideExtent := 20.				"Target extent"
-	GBFinalX := 21.					"Final X value"
-	GBWideUpdateData := 22.	"Update data for second curve"
-	GBWideSize := 28.					"Size of wide beziers"
+	GBFinalX := 21.						"Final X value"
+	GBWideUpdateData := 22.			"Update data for second curve"
+	GBWideSize := 28					"Size of wide beziers"
 
 
 ]
 
-{ #category : #'pool definition' }
+{ #category : #'private - initialization' }
 BalloonEngineConstants class >> initFillConstants [
 	"Initialize the fill constants"
 
@@ -303,15 +304,15 @@ BalloonEngineConstants class >> initFillConstants [
 	GEPrimitiveRepeatedBitmapFill := 16r500.
 
 	"General fill state constants"
-	GEBaseFillSize := 4.				"Basic size of each fill"
+	GEBaseFillSize := 4.			"Basic size of each fill"
 
 	"Oriented fill constants"
-	GFOriginX := 4.				"X origin of fill"
-	GFOriginY := 5.				"Y origin of fill"
+	GFOriginX := 4.					"X origin of fill"
+	GFOriginY := 5.					"Y origin of fill"
 	GFDirectionX := 6.				"X direction of fill"
 	GFDirectionY := 7.				"Y direction of fill"
-	GFNormalX := 8.				"X normal of fill"
-	GFNormalY := 9.				"Y normal of fill"
+	GFNormalX := 8.					"X normal of fill"
+	GFNormalY := 9.					"Y normal of fill"
 
 	"Gradient fill constants"
 	GFRampLength := 10.			"Length of following color ramp"
@@ -327,11 +328,10 @@ BalloonEngineConstants class >> initFillConstants [
 	GBColormapSize := 15.			"Size of colormap, if any"
 	GBTileFlag := 16.				"True if the bitmap is tiled"
 	GBColormapOffset := 18.		"Offset of colormap, if any"
-	GBMBaseSize := 18.			"Basic size of bitmap fill"
-
+	GBMBaseSize := 18				"Basic size of bitmap fill"
 ]
 
-{ #category : #'pool definition' }
+{ #category : #'private - initialization' }
 BalloonEngineConstants class >> initPrimitiveConstants [
 	"Initialize the primitive constants"
 
@@ -345,38 +345,38 @@ BalloonEngineConstants class >> initPrimitiveConstants [
 	GEObjectType := 0.				"Type of object"
 	GEObjectLength := 1.			"Length of object"
 	GEObjectIndex := 2.			"Index into external objects"
-	GEObjectUnused := 3.			"Currently unused"
+	GEObjectUnused := 3			"Currently unused"
 
 
 ]
 
-{ #category : #'pool definition' }
+{ #category : #'private - initialization' }
 BalloonEngineConstants class >> initStateConstants [
-	"Initialize the state Constants"
+	"Initialize the state constants"
 
-	GEStateUnlocked := 0.			"Buffer is unlocked and can be modified as wanted"
-	GEStateAddingFromGET := 1.	"Adding edges from the GET"
-	GEStateWaitingForEdge := 2.	"Waiting for edges added to GET"
-	GEStateScanningAET := 3.		"Scanning the active edge table"
+	GEStateUnlocked := 0.				"Buffer is unlocked and can be modified as wanted"
+	GEStateAddingFromGET := 1.		"Adding edges from the GET"
+	GEStateWaitingForEdge := 2.		"Waiting for edges added to GET"
+	GEStateScanningAET := 3.			"Scanning the active edge table"
 	GEStateWaitingForFill := 4.		"Waiting for a fill to mix in during AET scan"
 	GEStateBlitBuffer := 5.			"Blt the current scan line"
-	GEStateUpdateEdges := 6.		"Update edges to next scan line"
-	GEStateWaitingChange := 7.	"Waiting for a changed edge"
+	GEStateUpdateEdges := 6.			"Update edges to next scan line"
+	GEStateWaitingChange := 7.		"Waiting for a changed edge"
 	GEStateCompleted := 8.			"Rendering completed"
 
 	"Error constants"
-	GErrorNoMoreSpace := 1.		"No more space in collection"
-	GErrorBadState := 2.			"Tried to call a primitive while engine in bad state"
-	GErrorNeedFlush := 3.			"Tried to call a primitive that requires flushing before"
+	GErrorNoMoreSpace := 1.			"No more space in collection"
+	GErrorBadState := 2.				"Tried to call a primitive while engine in bad state"
+	GErrorNeedFlush := 3.				"Tried to call a primitive that requires flushing before"
 
 	"Incremental error constants"
-	GErrorGETEntry := 4.			"Unknown entry in GET"
-	GErrorFillEntry := 5.			"Unknown FILL encountered"
-	GErrorAETEntry := 6.			"Unknown entry in AET"
+	GErrorGETEntry := 4.				"Unknown entry in GET"
+	GErrorFillEntry := 5.				"Unknown FILL encountered"
+	GErrorAETEntry := 6				"Unknown entry in AET"
 
 ]
 
-{ #category : #'pool definition' }
+{ #category : #'private - initialization' }
 BalloonEngineConstants class >> initWorkBufferConstants [
 	"Initialize the work buffer constants"
 
@@ -386,13 +386,13 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 	GWMinimalSize := 256.				"Minimal size of work buffer"
 
 	"Header entries"
-	GWMagicIndex := 0.				"Index of magic number"
-	GWSize := 1.						"Size of full buffer"
+	GWMagicIndex := 0.					"Index of magic number"
+	GWSize := 1.							"Size of full buffer"
 	GWState := 2.						"Current state (e.g., locked or not."
 	"Buffer entries"
 	GWObjStart := 8.					"objStart"
-	GWObjUsed := 9.					"objUsed"
-	GWBufferTop := 10.				"wbTop"
+	GWObjUsed := 9.						"objUsed"
+	GWBufferTop := 10.					"wbTop"
 	GWGETStart := 11.					"getStart"
 	GWGETUsed := 12.					"getUsed"
 	GWAETStart := 13.					"aetStart"
@@ -405,10 +405,10 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 	GWColorTransform := 24.			"8 word RGBA color transformation"
 
 	"Span entries"
-	GWSpanStart := 32.				"spStart"
+	GWSpanStart := 32.					"spStart"
 	GWSpanSize := 33.					"spSize"
 	GWSpanEnd := 34.					"spEnd"
-	GWSpanEndAA := 35.				"spEndAA"
+	GWSpanEndAA := 35.					"spEndAA"
 
 	"Bounds entries"
 	GWFillMinX := 36.					"fillMinX"
@@ -435,12 +435,12 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 	"Misc entries"
 	GWNeedsFlush := 63.				"True if the engine may need a flush"
 	GWStopReason := 64.				"stopReason"
-	GWLastExportedEdge := 65.			"last exported edge"
-	GWLastExportedFill := 66.			"last exported fill"
-	GWLastExportedLeftX := 67.			"last exported leftX"
+	GWLastExportedEdge := 65.		"last exported edge"
+	GWLastExportedFill := 66.		"last exported fill"
+	GWLastExportedLeftX := 67.		"last exported leftX"
 	GWLastExportedRightX := 68.		"last exported rightX"
 	GWClearSpanBuffer := 69.			"Do we have to clear the span buffer?"
-	GWPointListFirst := 70.				"First point list in buffer"
+	GWPointListFirst := 70.			"First point list in buffer"
 
 	GWPoint1 := 80.
 	GWPoint2 := 82.
@@ -471,16 +471,16 @@ BalloonEngineConstants class >> initWorkBufferConstants [
 
 	"Bezier stats"
 	GWBezierMonotonSubdivisions := 108. 	"# of subdivision due to non-monoton beziers"
-	GWBezierHeightSubdivisions := 109.		"# of subdivisions due to excessive height"
+	GWBezierHeightSubdivisions := 109.	"# of subdivisions due to excessive height"
 	GWBezierOverflowSubdivisions := 110.	"# of subdivisions due to possible int overflow"
 	GWBezierLineConversions := 111.		"# of beziers converted to lines"
 
 	GWHasClipShapes := 112.		"True if the engine contains clip shapes"
-	GWCurrentZ := 113.			"Current z value of primitives"
+	GWCurrentZ := 113				"Current z value of primitives"
 
 ]
 
-{ #category : #'pool definition' }
+{ #category : #initialization }
 BalloonEngineConstants class >> initialize [
 	"BalloonEngineConstants initialize"
 	self initStateConstants.
@@ -493,17 +493,17 @@ BalloonEngineConstants class >> initialize [
 	self initializeInstVarNames: BalloonFillData prefixedBy: 'FT'.
 ]
 
-{ #category : #'pool definition' }
+{ #category : #'private - initialization' }
 BalloonEngineConstants class >> initializeInstVarNames: aClass prefixedBy: aString [
 
 	| token |
 	aClass instVarNames doWithIndex:[:instVarName :index| | value aToken |
 		aToken := (aString, instVarName first asUppercase asString, (instVarName copyFrom: 2 to: instVarName size),'Index') asSymbol.
 		value := index - 1.
-		(self bindingOf: aToken) ifNil:[self addClassVarNamed: aToken].
+		(self bindingOf: aToken) ifNil:[ self addClassVarNamed: aToken ].
 		(self bindingOf: aToken) value: value.
 	].
 	token := (aString, aClass name,'Size') asSymbol.
-	(self bindingOf: token) ifNil:[self addClassVarNamed: token].
-	(self bindingOf: token) value: aClass instSize.
+	(self bindingOf: token) ifNil: [ self addClassVarNamed: token ].
+	(self bindingOf: token) value: aClass instSize
 ]

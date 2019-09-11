@@ -1,9 +1,6 @@
 Class {
 	#name : #OCBytecodeGeneratorTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'a'
-	],
 	#category : #'OpalCompiler-Tests-Bytecode'
 }
 
@@ -334,7 +331,7 @@ OCBytecodeGeneratorTest >> testPushLiteralVariable [
 	cm := self newBytecodeGen
 		numArgs: 0;
 		numTemps: 0;
-		pushLiteralVariable: (LookupKey key: '1');
+		pushLiteralVariable: (AdditionalBinding key: '1');
 		returnTop;
 		compiledMethod.
 

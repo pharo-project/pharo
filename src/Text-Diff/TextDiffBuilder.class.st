@@ -25,7 +25,7 @@ Class {
 		'NormalTextAttributes',
 		'RemoveTextAttributes'
 	],
-	#category : #'Text-Diff'
+	#category : #'Text-Diff-Building'
 }
 
 { #category : #'instance creation' }

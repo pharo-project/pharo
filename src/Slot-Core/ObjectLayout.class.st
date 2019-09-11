@@ -4,9 +4,6 @@ I am the superclass of standard layouts for Objects.
 Class {
 	#name : #ObjectLayout,
 	#superclass : #AbstractLayout,
-	#instVars : [
-		'compactClassIndex'
-	],
 	#category : #'Slot-Core-Layout'
 }
 
@@ -36,12 +33,6 @@ ObjectLayout class >> layoutForType: typeSymbol [
 	"hack to support user defined layouts"
 	(Smalltalk hasClassNamed: typeSymbol) ifTrue: [ ^Smalltalk globals at: typeSymbol ].
 	Error signal: 'Invalid layout type: ', typeSymbol asString.
-]
-
-{ #category : #diff }
-ObjectLayout >> computeChangesFrom: other in: modification [
-	other hasSlots ifTrue: [
-		modification removals: other allSlots asArray ]
 ]
 
 { #category : #extending }
@@ -139,35 +130,11 @@ ObjectLayout >> format [
 ]
 
 { #category : #initialization }
-ObjectLayout >> initialize [
-	compactClassIndex := 0
-]
-
-{ #category : #'initialize-release' }
 ObjectLayout >> initializeInstance: anInstance [
-	self subclassResponsibility
+	"do nothing by default, overriden by PointerLayout"
 ]
 
 { #category : #format }
 ObjectLayout >> instanceSpecification [
 	self subclassResponsibility
-]
-
-{ #category : #reshaping }
-ObjectLayout >> reshapeFrom: oldScope to: newParentLayout [
-	"Answer the reshaped version of me for a new parent layout."
-
-	| newScope |
-	newScope := self slotScope 
-		rebase: oldScope 
-		to: newParentLayout slotScope.
-	^ newParentLayout extendAgain: self with: newScope.
-]
-
-{ #category : #reshaping }
-ObjectLayout >> reshapeTo: aModification [
-	^ self class 
-		extending: aModification classLayout
-		scope: LayoutEmptyScope instance
-		host: self host
 ]

@@ -9,7 +9,8 @@
 function is_release_build() {
 	set -f
 	local versionTag=$(git tag --list --points-at HEAD | grep -E "^v[0-9]+\.[0-9]+.[0-9]+(\-[a-zA-Z0-9_]+)?$")
-    if [ "${versionTag}" == "" ]; then
+    set +f
+	if [ "${versionTag}" == "" ]; then
         echo 0
     else
         echo 1
@@ -26,6 +27,7 @@ function ensure_branch_name() {
 	if [ "${BRANCH_NAME}" == "" ]; then
 		set -f
 		BRANCH_NAME="$(git branch | grep \* | cut -d' ' -f 2)"
+	    set +f
 	fi
 }
 
@@ -79,8 +81,12 @@ function set_version_pull_request_variables() {
 #  PHARO_NAME_PREFIX -> Prefix to name the buids (Pharo7.0.0-rc1, Pharo7.0-SNAPSHOT, Pharo7.0.0-PR)
 #  PHARO_SHORT_VERSION -> Short version of the image (70, 80, etc.)
 #  PHARO_VM_VERSION -> VM version (equivallent to PHARO_SHORT_VERSION)
+#
+# Input environment variables:
+#  BOOTSTRAP_REPOSITORY - the root directory of the git repository
 function set_version_variables() {
-	
+
+	pushd "$BOOTSTRAP_REPOSITORY" > /dev/null
 	if [ $(is_development_build) == 1 ]; then
 		if [ $(is_release_build) == 1 ]; then
 			set_version_release_variables
@@ -91,6 +97,13 @@ function set_version_variables() {
 		set_version_pull_request_variables
 	fi
 	
-	# this is just to make things clear (and because they could change in the future, who knows :P)
-	PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
+	# I will use 70 vm for now (we still do not have 80 vm)
+	#PHARO_VM_VERSION="${PHARO_SHORT_VERSION}"
+	PHARO_VM_VERSION="70"
+	
+	# Prefix the commit hash with a g, to be compatible with git-describe commit hashes
+	# https://git-scm.com/docs/git-describe
+	PHARO_COMMIT_HASH="g$(git rev-parse --verify HEAD)"
+	popd > /dev/null
 } 
+

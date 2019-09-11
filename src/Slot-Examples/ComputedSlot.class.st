@@ -9,7 +9,7 @@ e.g. make a class lile this:
 Object subclass: #TT
 	slots: { #i => ComputedSlot with: [ :o | o class methods size ] }
 	classVariables: {  }
-	category: 'TT'
+	package: 'TT'
 "
 Class {
 	#name : #ComputedSlot,
@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #comparing }
@@ -25,14 +25,18 @@ ComputedSlot >> = other [
 	^ super = other and: [block = other block]
 ]
 
-{ #category : #accessing }
-ComputedSlot >> block [
-	^block
+{ #category : #'code generation' }
+ComputedSlot >> emitValue: methodBuilder [
+	"generate the bytecode for 'block cull: self'"
+	methodBuilder
+		pushLiteral: block;
+		pushReceiver;
+		send: #cull:.
 ]
 
 { #category : #comparing }
 ComputedSlot >> hasSameDefinitionAs: otherSlot [
-
+	"other then #=, we use string comparision for the blocks here"
 	^ (super hasSameDefinitionAs: otherSlot) 
 		and: [ block printString = otherSlot block printString ]
 
@@ -55,7 +59,8 @@ ComputedSlot >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
-	^block value: anObject
+	"we use #cull: to support both 0-arg and 1-arg blocks"
+	^block cull: anObject
 	
 ]
 
@@ -66,5 +71,5 @@ ComputedSlot >> with: aBlock [
 
 { #category : #'meta-object-protocol' }
 ComputedSlot >> write: aValue to: anObject [
-	"ignored"
+	"ignored, as the slot returns the computed value on read"
 ]

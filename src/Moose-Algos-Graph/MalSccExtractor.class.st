@@ -21,7 +21,7 @@ MalSccExtractor >> circuits [
 	^ circuits
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 MalSccExtractor >> initialize [ 
 
 	super initialize.

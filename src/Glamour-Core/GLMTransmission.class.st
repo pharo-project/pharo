@@ -223,7 +223,7 @@ GLMTransmission >> fromOutsidePort: aPortSymbol transformed: aBlock [
 	^ self from: #outer port: aPortSymbol transformed: aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMTransmission >> initialize [
 	super initialize.
 	transmissionStrategy := GLMNoStrategy new.
@@ -291,7 +291,7 @@ GLMTransmission >> presentations: aCompositePresentation [
 	self transmissionStrategy presentations: aCompositePresentation
 ]
 
-{ #category : #transmitting }
+{ #category : #printing }
 GLMTransmission >> printOn: aStream [ 
 	 
 	aStream 
@@ -380,16 +380,18 @@ GLMTransmission >> transmitIn: aContext [
 
 { #category : #transmitting }
 GLMTransmission >> value [
+
 	<debuggingStone: #transmissionTransformation label: 'Transmission transformation'>
 	| originalValue |
-	originalValue := self originReferences size = 1 
-		ifTrue: [ self originReferences first value ] 
-		ifFalse: [ GLMMultiValue withAll: (self originReferences collect: [:each | each value]) ].
-	^ self transformation isNil 
-		ifTrue: [ originalValue ] 
-		ifFalse: [ self transformation glamourValue: (
-			originalValue asGlamorousMultiValue, 
-			self origins asGlamorousMultiValue) ]
+
+	originalValue := self originReferences size = 1
+		ifTrue: [ self originReferences first value ]
+		ifFalse: [ GLMMultiValue withAll: ( self originReferences collect: [ :each | each value ] ) ].
+	^ self transformation
+		ifNil: [ originalValue ]
+		ifNotNil: [ self transformation
+				glamourValue: originalValue asGlamorousMultiValue , self origins asGlamorousMultiValue
+			]
 ]
 
 { #category : #scripting }

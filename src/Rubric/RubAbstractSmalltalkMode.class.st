@@ -14,11 +14,11 @@ RubAbstractSmalltalkMode >> editorClass [
 ]
 
 { #category : #testing }
-RubAbstractSmalltalkMode >> isCodeCompletionAllowed [
+RubAbstractSmalltalkMode >> isCompletionEnabled [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RubAbstractSmalltalkMode >> isScripting [
 	^ false
 ]

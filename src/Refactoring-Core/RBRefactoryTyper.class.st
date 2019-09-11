@@ -62,9 +62,9 @@ Class {
 
 { #category : #'instance creation' }
 RBRefactoryTyper class >> newFor: aRBNamespace [ 
-	^(self new)
-		model: aRBNamespace;
-		yourself
+	^ self new
+			model: aRBNamespace;
+			yourself
 ]
 
 { #category : #accessing }
@@ -113,13 +113,16 @@ RBRefactoryTyper >> collectionNameFor: aString [
 RBRefactoryTyper >> computeEquivalenceClassesForMethodsAndVars [
 	| searcher |
 	backpointers := self backpointersDictionary.
-	class instanceVariableNames 
-		do: [:each | backpointers at: each put: (self backpointersSetWith: each)].
-	class withAllSubclasses do: 
-		[:sub | sub selectors do: [:each | backpointers at: each put: (self backpointersSetWith: each)]].
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '^``@object'
-		do: [:aNode :answer | self processNode: aNode value].
+	class instanceVariableNames
+		do: [ :each | backpointers at: each put: (self backpointersSetWith: each) ].
+	class withAllSubclasses
+		do: [ :sub | 
+			sub selectors
+				do: [ :each | backpointers at: each put: (self backpointersSetWith: each) ] ].
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '^``@object'
+		do: [ :aNode :answer | self processNode: aNode value ].
 	self executeSearch: searcher
 ]
 
@@ -127,24 +130,26 @@ RBRefactoryTyper >> computeEquivalenceClassesForMethodsAndVars [
 RBRefactoryTyper >> computeMessagesSentToVariables [
 	| searcher |
 	variableMessages := Dictionary new.
-	class instanceVariableNames 
-		do: [:each | variableMessages at: each put: Set new].
-	searcher := RBParseTreeSearcher new.
-	class instanceVariableNames do: 
-			[:each | 
+	class instanceVariableNames
+		do: [ :each | variableMessages at: each put: Set new ].
+	searcher := self parseTreeSearcher.
+	class instanceVariableNames
+		do: [ :each | 
 			| block |
-			block := [:aNode :answer | 
-				(variableMessages at: each ifAbsentPut: [Set new]) add: aNode selector.
-				self processCollectionMessagesFor: each in: aNode].
+			block := [ :aNode :answer | 
+			(variableMessages at: each ifAbsentPut: [ Set new ])
+				add: aNode selector.
+			self processCollectionMessagesFor: each in: aNode ].
 			searcher matches: each , ' `@messageName: ``@args' do: block.
-			(backpointers at: each) do: 
-					[:sel | 
-					sel isSymbol 
-						ifTrue: 
-							[searcher 
-								matches: ('(self <1s>) `@messageName: ``@args' 
-										expandMacrosWith: (RBParseTreeSearcher buildSelectorString: sel)) asString
-								do: block]]].
+			(backpointers at: each)
+				do: [ :sel | 
+					sel isSymbol
+						ifTrue: [ searcher
+								matches:
+									('(self <1s>) `@messageName: ``@args'
+										expandMacrosWith: (self parseTreeSearcherClass buildSelectorString: sel))
+										asString
+								do: block ] ] ].
 	searcher answer: variableMessages.
 	self executeSearch: searcher
 ]
@@ -177,33 +182,36 @@ RBRefactoryTyper >> findTypeFor: selectorCollection [
 ]
 
 { #category : #assignments }
-RBRefactoryTyper >> guessTypeFromAssignment: aNode [ 
+RBRefactoryTyper >> guessTypeFromAssignment: aNode [
+
 	| type set newType |
+
 	type := nil.
-	aNode value isAssignment 
-		ifTrue: 
-			[^self guessTypeFromAssignment: (RBAssignmentNode variable: aNode variable
-						value: aNode value value)].
-	aNode value isBlock ifTrue: [type := model classFor: [] class].
-	aNode value isLiteralNode 
-		ifTrue: 
-			[aNode value value isNil ifTrue: [^self].
-			type := model classFor: (self typeFor: aNode value value)].
-	aNode value isMessage 
-		ifTrue: 
-			[aNode value receiver isVariable 
-				ifTrue: [type := model classNamed: aNode value receiver name asSymbol].
-			aNode value selector = #asValue 
-				ifTrue: [type := model classNamed: #ValueHolder].
-			(#(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) 
-				includes: aNode value selector) ifTrue: [type := model classFor: Boolean]].
-	type isNil ifTrue: [^self].
+	aNode value isAssignment
+		ifTrue: [ ^ self
+				guessTypeFromAssignment: ( RBAssignmentNode variable: aNode variable value: aNode value value )
+			].
+	aNode value isBlock
+		ifTrue: [ type := model classFor: [  ] class ].
+	aNode value isLiteralNode
+		ifTrue: [ aNode value value ifNil: [ ^ self ].
+			type := model classFor: ( self typeFor: aNode value value )
+			].
+	aNode value isMessage
+		ifTrue: [ aNode value receiver isVariable
+				ifTrue: [ type := model classNamed: aNode value receiver name asSymbol ].
+			aNode value selector = #asValue
+				ifTrue: [ type := model classNamed: #ValueHolder ].
+			( #(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) includes: aNode value selector )
+				ifTrue: [ type := model classFor: Boolean ]
+			].
+	type ifNil: [ ^ self ].
 	set := variableTypes at: aNode variable name.
-	newType := set detect: [:each | type includesClass: each] ifNone: [nil].
-	newType isNil ifTrue: [^self].
-	((self rootClasses includes: newType) or: [ newType = (model classFor: Object) ])
-		ifTrue: [newType := type].
-	(bestGuesses at: aNode variable name ifAbsentPut: [Set new]) add: newType
+	newType := set detect: [ :each | type includesClass: each ] ifNone: [ nil ].
+	newType ifNil: [ ^ self ].
+	( ( self rootClasses includes: newType ) or: [ newType = ( model classFor: Object ) ] )
+		ifTrue: [ newType := type ].
+	( bestGuesses at: aNode variable name ifAbsentPut: [ Set new ] ) add: newType
 ]
 
 { #category : #accessing }
@@ -275,6 +283,16 @@ RBRefactoryTyper >> model: aRBSmalltalk [
 	model := aRBSmalltalk
 ]
 
+{ #category : #'selectors-collections' }
+RBRefactoryTyper >> parseTreeSearcher [
+	^ self parseTreeSearcherClass new
+]
+
+{ #category : #selectors }
+RBRefactoryTyper >> parseTreeSearcherClass [
+	^ RBParseTreeSearcher
+]
+
 { #category : #printing }
 RBRefactoryTyper >> printOn: aStream [ 
 	aStream
@@ -300,15 +318,14 @@ RBRefactoryTyper >> printType: aClass for: aString on: aStream [
 	name := self collectionNameFor: aString.
 	(aClass includesClass: (model classFor: Collection))
 		ifTrue: [colTypes := self guessTypesFor: name].
-	colTypes isEmpty ifFalse: [aStream nextPut: $(].
+	colTypes ifNotEmpty: [aStream nextPut: $(].
 	aClass printOn: aStream.
-	colTypes isEmpty
-		ifFalse: 
+	colTypes ifNotEmpty: 
 			[aStream nextPutAll: ' of: '.
 			colTypes size > 1 ifTrue: [aStream nextPut: $(].
 			self printTypeFor: name on: aStream.
 			colTypes size > 1 ifTrue: [aStream nextPut: $)]].
-	colTypes isEmpty ifFalse: [aStream nextPut: $)]
+	colTypes ifNotEmpty: [aStream nextPut: $)]
 ]
 
 { #category : #printing }
@@ -327,17 +344,22 @@ RBRefactoryTyper >> printTypeFor: aString on: aStream [
 ]
 
 { #category : #'selectors-collections' }
-RBRefactoryTyper >> processCollectionFor: key messagesTo: aName in: aBlock [ 
+RBRefactoryTyper >> processCollectionFor: key messagesTo: aName in: aBlock [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher 
+	searcher := self parseTreeSearcher.
+	searcher
 		matches: aName , ' `@message: ``@args'
 		do: [ :aNode :answer | 
 			self processCollectionMessagesFor: key in: aNode.
-			answer add: aNode selector; yourself ].
-	searcher 
+			answer
+				add: aNode selector;
+				yourself ].
+	searcher
 		executeTree: aBlock
-		initialAnswer: (variableMessages at: (self collectionNameFor: key) ifAbsentPut: [ Set new ])
+		initialAnswer:
+			(variableMessages
+				at: (self collectionNameFor: key)
+				ifAbsentPut: [ Set new ])
 ]
 
 { #category : #'selectors-collections' }
@@ -422,15 +444,16 @@ RBRefactoryTyper >> refineTypes: aClassCollection with: anotherClassCollection [
 RBRefactoryTyper >> refineTypesByLookingAtAssignments [
 	| searcher needsSearch |
 	needsSearch := false.
-	searcher := RBParseTreeSearcher new.
-	variableTypes keysAndValuesDo: 
-			[:key :value | 
-			(key first = $-) 
-				ifFalse: 
-					[needsSearch := true.
-					searcher matches: key , ' := ``@object'
-						do: [:aNode :answer | self guessTypeFromAssignment: aNode]]].
-	needsSearch ifTrue: [self executeSearch: searcher]
+	searcher := self parseTreeSearcher.
+	variableTypes
+		keysAndValuesDo: [ :key :value | 
+			key first = $-
+				ifFalse: [ needsSearch := true.
+					searcher
+						matches: key , ' := ``@object'
+						do: [ :aNode :answer | self guessTypeFromAssignment: aNode ] ] ].
+	needsSearch
+		ifTrue: [ self executeSearch: searcher ]
 ]
 
 { #category : #private }
@@ -478,4 +501,21 @@ RBRefactoryTyper >> typesFor: anInstVarName [
 RBRefactoryTyper >> typesFor: anInstVarName in: aClass [ 
 	class = aClass ifFalse: [self runOn: aClass].
 	^variableTypes at: anInstVarName ifAbsent: [Set new]
+]
+
+{ #category : #accessing }
+RBRefactoryTyper >> typesFor: variableName in: aParseTree model: aRBSmalltalk [
+	| searcher messages |
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: variableName , ' `@message: ``@args'
+		do: [ :aNode :answer | 
+			answer
+				add: aNode selector;
+				yourself ].
+	messages := searcher executeTree: aParseTree initialAnswer: Set new.
+	^ self
+		model: aRBSmalltalk;
+		findTypeFor: messages; 
+		yourself
 ]

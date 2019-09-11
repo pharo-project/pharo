@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'inMemoryStream'
 	],
-	#category : 'Fuel-Tests-Core-StreamStrategies'
+	#category : #'Fuel-Tests-Core-StreamStrategies'
 }
 
 { #category : #reading }

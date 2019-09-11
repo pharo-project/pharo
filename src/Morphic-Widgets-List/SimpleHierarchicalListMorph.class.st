@@ -22,10 +22,6 @@ Class {
 		'lastKeystrokes',
 		'searchedElement'
 	],
-	#classInstVars : [
-		'expandedForm',
-		'notExpandedForm'
-	],
 	#category : #'Morphic-Widgets-List'
 }
 
@@ -94,7 +90,7 @@ SimpleHierarchicalListMorph class >> exampleSubmorphs [
 	| morph |
 	morph :=
 		SimpleHierarchicalListMorph
-			on: [ Array with:  (MorphWithSubmorphsWrapper with: World)  ]
+			on: [ Array with:  (MorphWithSubmorphsWrapper with: self currentWorld)  ]
 			list: #value
 			selected: nil
 			changeSelected: nil
@@ -635,26 +631,25 @@ SimpleHierarchicalListMorph >> insertNewMorphs: morphList [
 ]
 
 { #category : #'event handling' }
-SimpleHierarchicalListMorph >> keyStroke: event [ 
+SimpleHierarchicalListMorph >> keyStroke: event [
+
 	"Process potential command keys that are not handled by keymappings yet"
-	
+
 	| args aCharacter |
-	aCharacter := event keyValue asCharacter. 
-	event anyModifierKeyPressed ifFalse: [
-		self basicKeyPressed: aCharacter.
-		^false].
-	(self scrollByKeyboard: event) ifTrue: [^true].
-	keystrokeActionSelector isNil ifTrue: [^false].
-	(args := keystrokeActionSelector numArgs) = 1 
-		ifTrue: [^model perform: keystrokeActionSelector with: aCharacter].
-	args = 2 
-		ifTrue: 
-			[^model 
-				perform: keystrokeActionSelector
-				with: aCharacter
-				with: self].
-	^self 
-		error: 'The keystrokeActionSelector must be a 1- or 2-keyword symbol'
+
+	aCharacter := event keyValue asCharacter.
+	event anyModifierKeyPressed
+		ifFalse: [ self basicKeyPressed: aCharacter.
+			^ false
+			].
+	( self scrollByKeyboard: event )
+		ifTrue: [ ^ true ].
+	keystrokeActionSelector ifNil: [ ^ false ].
+	( args := keystrokeActionSelector numArgs ) = 1
+		ifTrue: [ ^ model perform: keystrokeActionSelector with: aCharacter ].
+	args = 2
+		ifTrue: [ ^ model perform: keystrokeActionSelector with: aCharacter with: self ].
+	^ self error: 'The keystrokeActionSelector must be a 1- or 2-keyword symbol'
 ]
 
 { #category : #updating }
@@ -751,12 +746,6 @@ SimpleHierarchicalListMorph >> mouseDown: evt [
 	evt hand waitForClicksOrDrag: self event: evt selectors: selectors threshold: 10 "pixels".
 ]
 
-{ #category : #obsolete }
-SimpleHierarchicalListMorph >> mouseDown: event onItem: aMorph [
-	self removeObsoleteEventHandlers.
-
-]
-
 { #category : #accessing }
 SimpleHierarchicalListMorph >> mouseDownHighlightColor [
 	"Answer a good color to use for drawing the mouse down highlight.
@@ -801,11 +790,6 @@ SimpleHierarchicalListMorph >> mouseEnterDragging: evt [
 		].
 ]
 
-{ #category : #obsolete }
-SimpleHierarchicalListMorph >> mouseEnterDragging: anEvent onItem: aMorph [ 
-	self removeObsoleteEventHandlers.
-]
-
 { #category : #'event handling' }
 SimpleHierarchicalListMorph >> mouseLeaveDragging: anEvent [
 	(self dropEnabled and:[anEvent hand hasSubmorphs]) ifFalse: ["no d&d"
@@ -814,11 +798,6 @@ SimpleHierarchicalListMorph >> mouseLeaveDragging: anEvent [
 	anEvent hand releaseMouseFocus: self.
 	"above is ugly but necessary for now"
 
-]
-
-{ #category : #obsolete }
-SimpleHierarchicalListMorph >> mouseLeaveDragging: anEvent onItem: aMorph [ 
-	self removeObsoleteEventHandlers.
 ]
 
 { #category : #'event handling' }
@@ -906,12 +885,6 @@ SimpleHierarchicalListMorph >> potentialDropMorph [
 SimpleHierarchicalListMorph >> potentialDropMorph: aMorph [
 	potentialDropMorph := aMorph.
 	aMorph highlightForDrop
-]
-
-{ #category : #obsolete }
-SimpleHierarchicalListMorph >> removeObsoleteEventHandlers [
-	scroller submorphs do:[:m|
-		m eventHandler: nil; highlightForMouseDown: false; resetExtension].
 ]
 
 { #category : #'dropping/grabbing' }
@@ -1006,15 +979,16 @@ SimpleHierarchicalListMorph >> selectionColor [
 SimpleHierarchicalListMorph >> selectionColor: aColor [
 	"Set the colour for selected items."
 
-	|w|
+	| window |
 	aColor
-		ifNil: [self removeProperty: #selectionColor]
-		ifNotNil: [self setProperty: #selectionColor toValue: aColor].
-	w := self ownerThatIsA: SystemWindow.
-	self selectionColorToUse: (
-		(self theme settings fadedBackgroundWindows not or: [w isNil or: [w isActive]])
-			ifTrue: [aColor]
-			ifFalse: [self theme unfocusedSelectionColor])
+		ifNil: [ self removeProperty: #selectionColor ]
+		ifNotNil: [ self setProperty: #selectionColor toValue: aColor ].
+		
+	window := self ownerThatIsA: SystemWindow.
+	
+	self selectionColorToUse: ((self theme fadedBackgroundWindows not or: [ window isNil or: [ window isActive ] ])
+		ifTrue: [ aColor ]
+		ifFalse: [ self theme unfocusedSelectionColor ])
 ]
 
 { #category : #accessing }
@@ -1135,11 +1109,6 @@ SimpleHierarchicalListMorph >> startDrag: anEvent [
 				dragTransferType: (self model dragTransferTypeForMorph: self).
 			anEvent hand grabMorph: aTransferMorph].
 	anEvent hand releaseMouseFocus: self
-]
-
-{ #category : #obsolete }
-SimpleHierarchicalListMorph >> startDrag: evt onItem: itemMorph [ 
-	self removeObsoleteEventHandlers.
 ]
 
 { #category : #testing }

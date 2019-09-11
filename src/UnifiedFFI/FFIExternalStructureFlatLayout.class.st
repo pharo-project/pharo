@@ -28,7 +28,7 @@ FFIExternalStructureFlatLayout >> addField: registerClass size: fieldSize alignm
 ]
 
 { #category : #building }
-FFIExternalStructureFlatLayout >> addMemoryFieldSize: fieldSize alignment: fieldAlignment. [
+FFIExternalStructureFlatLayout >> addMemoryFieldSize: fieldSize alignment: fieldAlignment [
 	self addField: #memory size: fieldSize alignment: fieldAlignment
 ]
 
@@ -50,23 +50,24 @@ FFIExternalStructureFlatLayout >> alignment: anObject [
 
 { #category : #'system v abi' }
 FFIExternalStructureFlatLayout >> combineSysVAMD64RegisterClass: leftClass with: rightClass [
+
 	"AMD64 SystemV eightbyte classification reduction"
-	
+
 	"Same class."
 	leftClass == rightClass ifTrue: [ ^ leftClass ].
-	
+
 	"If one has no class, use the other."
-	leftClass isNil ifTrue: [ ^ rightClass ].
-	rightClass isNil ifTrue: [ ^ leftClass ].
-	
+	leftClass ifNil: [ ^ rightClass ].
+	rightClass ifNil: [ ^ leftClass ].
+
 	"If one is memory, the result is memory."
-	(leftClass == #memory or: [ rightClass == #memory ]) ifTrue: [ ^ #memory ].
-	
+	( leftClass == #memory or: [ rightClass == #memory ] ) ifTrue: [ ^ #memory ].	
+
 	"If one is integer, the result is integer."
-	(leftClass == #integer or: [ rightClass == #integer ]) ifTrue: [ ^ #integer ].
-	
-	"TODO: If one of the classes is X87, X87UP, COMPLEX_X87 class, #memory is used as class."
-	
+	( leftClass == #integer or: [ rightClass == #integer ] ) ifTrue: [ ^ #integer ].
+
+	"TODO: If one of the classes is X87, X87UP, COMPLEX_X87 class, #memory is used as class."	
+
 	"Otherwise, use the SSE class"
 	^ #float
 ]

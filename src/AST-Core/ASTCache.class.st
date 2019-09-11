@@ -24,6 +24,12 @@ Class {
 	#category : #'AST-Core-Parser'
 }
 
+{ #category : #'private - announcements' }
+ASTCache class >> announceCacheReset [
+
+	SystemAnnouncer uniqueInstance announce: ASTCacheReset new 
+]
+
 { #category : #accessing }
 ASTCache class >> at: aCompiledMethod [
 	^ default at: aCompiledMethod
@@ -36,7 +42,7 @@ ASTCache class >> default [
 
 { #category : #accessing }
 ASTCache class >> default: anASTCache [
-	default := anASTCache.
+	default := anASTCache
 ]
 
 { #category : #'class initialization' }
@@ -45,10 +51,11 @@ ASTCache class >> initialize [
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #'initialization-release' }
+{ #category : #initialization }
 ASTCache class >> reset [
-	default reset.
-	SystemAnnouncer uniqueInstance announce: ASTCacheReset new 
+	<script>
+	self default reset.
+	self announceCacheReset
 ]
 
 { #category : #'system startup' }
@@ -64,7 +71,7 @@ ASTCache >> at: aCompiledMethod [
 			aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass ]
 ]
 
-{ #category : #'initialization-release' }
+{ #category : #initialization }
 ASTCache >> reset [
 	self removeAll
 ]

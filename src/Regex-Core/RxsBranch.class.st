@@ -31,7 +31,7 @@ RxsBranch >> dispatchTo: aMatcher [
 	^aMatcher syntaxBranch: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxsBranch >> initializePiece: aPiece branch: aBranch [
 	"See class comment for instance variables description."
 
@@ -53,15 +53,15 @@ RxsBranch >> piece [
 
 { #category : #optimization }
 RxsBranch >> tryMergingInto: aStream [
+
 	"Concatenation of a few simple characters can be optimized
 	to be a plain substring match. Answer the node to resume
 	syntax tree traversal at. Epsilon node used to terminate the branch
 	will implement this to answer nil, thus indicating that the branch
 	has ended."
 
-	piece isAtomic ifFalse: [^self].
+	piece isAtomic
+		ifFalse: [ ^ self ].
 	aStream nextPut: piece character.
-	^branch isNil
-		ifTrue: [branch]
-		ifFalse: [branch tryMergingInto: aStream]
+	^ branch ifNil: [ branch ] ifNotNil: [ branch tryMergingInto: aStream ]
 ]

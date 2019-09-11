@@ -73,14 +73,8 @@ HistoryIteratorTest >> testGrouping [
 	self assert: historyList size equals: 1.
 	self assert: (historyList at: 1) isComposite.
 	self assert: (historyList at: 1) opened.
-	historyList doAndAddRecord: (
-		UndoRedoRecord
-			do: (MessageSend receiver: aCollection selector: #addLast: argument: 1)
-			undo: (MessageSend receiver: aCollection selector: #removeLast)).
-	historyList doAndAddRecord: (
-		UndoRedoRecord
-			do: (MessageSend receiver: aCollection selector: #addLast: argument: 2)
-			undo: (MessageSend receiver: aCollection selector: #removeLast)).
+	historyList doAndAddRecord: (UndoRedoRecord do: (MessageSend receiver: aCollection selector: #addLast: argument: 1) undo: (MessageSend receiver: aCollection selector: #removeLast)).
+	historyList doAndAddRecord: (UndoRedoRecord do: (MessageSend receiver: aCollection selector: #addLast: argument: 2) undo: (MessageSend receiver: aCollection selector: #removeLast)).
 	self assert: historyList size equals: 1.
 	self assert: (historyList at: 1) size equals: 2.
 	historyList closeGroup.
@@ -89,7 +83,7 @@ HistoryIteratorTest >> testGrouping [
 	self assert: aCollection first equals: 1.
 	self assert: aCollection last equals: 2.
 	historyList undo.
-	self assert: aCollection isEmpty
+	self assertEmpty: aCollection
 ]
 
 { #category : #testing }

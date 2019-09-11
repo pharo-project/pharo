@@ -76,7 +76,7 @@ Class {
 		'scrollPaneWidth',
 		'baseColor'
 	],
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }
@@ -84,7 +84,7 @@ IdentifierChooserMorph class >> allowedArea [
 	"The area allowed for the building and positioning of the morph"
 	| allowedArea |
 	allowedArea := Display usableArea.
-	allowedArea := allowedArea intersect: World visibleClearArea ifNone: [ 0@0 corner: 0@0 "not sure about this"].
+	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ 0@0 corner: 0@0 "not sure about this"].
 	^allowedArea
 ]
 
@@ -297,33 +297,37 @@ IdentifierChooserMorph >> newChoiceButtonFor: index [
 
 { #category : #'ui-building' }
 IdentifierChooserMorph >> newChoicesMorph [
+
 	"Answer a row of columns of buttons and separators based on the model."
 
-	| answer morphs str  |
+	| answer morphs str |
+
 	answer := self newRow
 		cellPositioning: #topLeft;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
-	self labels ifEmpty: [^answer].
-	self labels first isNil
-		ifTrue: [self labels: self labels allButFirst].
-	self labels ifEmpty: [^answer].
-	self labels last isNil
-		ifTrue: [self labels: self labels allButLast].
-	self labels ifEmpty: [^answer].
+	self labels ifEmpty: [ ^ answer ].
+	self labels first ifNil: [ self labels: self labels allButFirst ].
+	self labels ifEmpty: [ ^ answer ].
+	self labels last ifNil: [ self labels: self labels allButLast ].
+	self labels ifEmpty: [ ^ answer ].
 	morphs := OrderedCollection new.
-	1 to: self labels size do: [:i |
-		morphs add: (self newChoiceButtonFor: i)].
+	1 to: self labels size do: [ :i | morphs add: ( self newChoiceButtonFor: i ) ].
 	str := morphs readStream.
-	[str atEnd] whileFalse: [
-		answer
-			addMorphBack: (self newMenuWith: (str next: self maxLines));
-			addMorphBack: self newVerticalSeparator].
+	[ str atEnd ]
+		whileFalse: [ answer
+				addMorphBack: ( self newMenuWith: ( str next: self maxLines ) );
+				addMorphBack: self newVerticalSeparator
+			].
 	answer removeMorph: answer submorphs last.
 	answer submorphs last hResizing: #spaceFill.
-	scrollPaneWidth ifNotNil: [answer hResizing: #spaceFill. answer submorphs last hResizing: #rigid. answer submorphs last width: scrollPaneWidth].
-	self choiceMenus: (answer submorphs select: [:m| m isMenuMorph]).
-	^answer
+	scrollPaneWidth
+		ifNotNil: [ answer hResizing: #spaceFill.
+			answer submorphs last hResizing: #rigid.
+			answer submorphs last width: scrollPaneWidth
+			].
+	self choiceMenus: ( answer submorphs select: [ :m | m isMenuMorph ] ).
+	^ answer
 ]
 
 { #category : #'ui-building' }
@@ -520,29 +524,36 @@ IdentifierChooserMorph >> switchToNextColumn [
 
 { #category : #'event handling' }
 IdentifierChooserMorph >> switchToOtherColumn: aBlock [
+
 	"Give the next embedded menu keyboard focus. 
 	The next menu indice is computed by the argument"
 
 	| menuWithFocus idx menu sub subIdx |
-	(self choiceMenus isNil or: [self choiceMenus isEmpty]) 
-		ifTrue: [^self].
+
+	( self choiceMenus isNil or: [ self choiceMenus isEmpty ] )
+		ifTrue: [ ^ self ].
 	menuWithFocus := self choiceMenus
-		detect: [:m | m menuItems 
-			anySatisfy: [:sm | 
-				((sm isMenuItemMorph)  and: [sm isSelected]) 
-					ifTrue: [sub := sm]. 
-				sm isSelected]]
-		ifNone: [].
-	self choiceMenus do: [:embeddedMenu | embeddedMenu selectItem: nil event: nil].
-	menuWithFocus isNil
-		ifTrue: [self selectFirstItem]
-		ifFalse: [
-			idx := aBlock value: (self choiceMenus indexOf: menuWithFocus).
-			menu := (self choiceMenus at: idx).
-			subIdx := sub ifNil: [1] ifNotNil: [(menuWithFocus menuItems indexOf: sub) min: menu menuItems size].
-			menu selectItem: (menu menuItems at: subIdx) event: nil.
-			self scrollPane ifNotNil: [:sp | sp scrollToShow: menu bounds]].
-	self activeHand newKeyboardFocus: self.
+		detect: [ :m | 
+			m menuItems
+				anySatisfy: [ :sm | 
+					( sm isMenuItemMorph and: [ sm isSelected ] )
+						ifTrue: [ sub := sm ].
+					sm isSelected
+					]
+			]
+		ifNone: [  ].
+	self choiceMenus do: [ :embeddedMenu | embeddedMenu selectItem: nil event: nil ].
+	menuWithFocus
+		ifNil: [ self selectFirstItem ]
+		ifNotNil: [ idx := aBlock value: ( self choiceMenus indexOf: menuWithFocus ).
+			menu := self choiceMenus at: idx.
+			subIdx := sub
+				ifNil: [ 1 ]
+				ifNotNil: [ ( menuWithFocus menuItems indexOf: sub ) min: menu menuItems size ].
+			menu selectItem: ( menu menuItems at: subIdx ) event: nil.
+			self scrollPane ifNotNil: [ :sp | sp scrollToShow: menu bounds ]
+			].
+	self activeHand newKeyboardFocus: self
 ]
 
 { #category : #'event handling' }
@@ -554,9 +565,4 @@ IdentifierChooserMorph >> switchToPreviousColumn [
 			ifTrue: [self choiceMenus size]
 			ifFalse: [prevIdx - 1]]
 
-]
-
-{ #category : #accessing }
-IdentifierChooserMorph >> theme [
-		^ Smalltalk ui theme 
 ]

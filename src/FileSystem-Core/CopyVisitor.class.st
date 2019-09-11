@@ -37,7 +37,7 @@ CopyVisitor >> copyFile: aReference [
 	aReference copyTo: copy
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CopyVisitor >> initializeWithSource: srcReference dest: dstReference [
 	self initialize.
 	source := srcReference.

@@ -471,7 +471,7 @@ MultiByteFileStream >> nextChunk [
 							| character state |
 							[(character := self next) == nil
 								or: [character == $!
-										and: [state := converter saveStateOf: self..
+										and: [state := converter saveStateOf: self.
 											self next ~~ $!]]]
 								whileFalse: [stream nextPut: character].
 							character
@@ -530,7 +530,7 @@ MultiByteFileStream >> nextPreamble [
 							| character state |
 							[(character := self next) == nil
 								or: [character == $!
-										and: [state := converter saveStateOf: self..
+										and: [state := converter saveStateOf: self.
 											self next ~~ $!]]]
 								whileFalse: [stream nextPut: character].
 							character
@@ -561,6 +561,11 @@ MultiByteFileStream >> nextPutAll: aCollection [
 { #category : #'open/close' }
 MultiByteFileStream >> open: fileName forWrite: writeMode [ 
 	| result |
+
+	(writeMode and: [SessionManager default currentSession isReadOnlyAccessMode]) 
+		ifTrue: [ ((CannotDeleteFileException fileName: fileName)
+			messageText: 'Attempt to open file ' , fileName, ' as writable on read-only filesystem') signal. ].
+
 	result := super open: fileName forWrite: writeMode.
 	result ifNotNil: [
 			converter ifNil: [self converter: UTF8TextConverter new].
@@ -623,7 +628,7 @@ MultiByteFileStream >> requestDropStream: dropIndex [
 	^result
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 MultiByteFileStream >> reset [
 
 	super reset.

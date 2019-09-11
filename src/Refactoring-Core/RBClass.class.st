@@ -54,31 +54,35 @@ RBClass >> addPoolDictionary: aString [
 
 { #category : #accessing }
 RBClass >> allClassVariableNames [
+
 	| sprClass |
+
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self classVariableNames]
-		ifFalse: [sprClass allClassVariableNames , self classVariableNames]
+	^ sprClass
+		ifNil: [ self classVariableNames ]
+		ifNotNil: [ sprClass allClassVariableNames , self classVariableNames ]
 ]
 
 { #category : #accessing }
 RBClass >> allPoolDictionaryNames [
+
 	| sprClass |
+
 	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self sharedPoolNames]
-		ifFalse: [sprClass allPoolDictionaryNames , self sharedPoolNames]
+	^ sprClass
+		ifNil: [ self sharedPoolNames ]
+		ifNotNil: [ sprClass allPoolDictionaryNames , self sharedPoolNames ]
 ]
 
 { #category : #accessing }
 RBClass >> category [
-	^category isNil 
-		ifTrue: 
-			[self isDefined
-				ifTrue: [category := self realClass category]
-				ifFalse: [model environment whichCategoryIncludes: self name]]
-		ifFalse: [category]
 
+	^ category
+		ifNil: [ self isDefined
+				ifTrue: [ category := self realClass category ]
+				ifFalse: [ model environment whichCategoryIncludes: self name ]
+			]
+		ifNotNil: [ category ]
 ]
 
 { #category : #accessing }
@@ -182,10 +186,24 @@ RBClass >> isMeta [
 	^false
 ]
 
+{ #category : #testing }
+RBClass >> isSharedPool [
+	
+	^ (self allSuperclasses collect: #name) includes: #SharedPool
+]
+
+{ #category : #querying }
+RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
+ 
+	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | 			|modelClass|
+			modelClass := self model classNamed: aMethod methodClass name.
+			modelClass methodFor: aMethod selector
+		]
+]
+
 { #category : #accessing }
 RBClass >> poolDictionaryNames: aCollectionOfStrings [ 
-	poolDictionaryNames := (aCollectionOfStrings 
-				collect: [:each | each asSymbol]) asOrderedCollection
+	poolDictionaryNames := (aCollectionOfStrings collect: [:each | each asSymbol]) asOrderedCollection
 ]
 
 { #category : #private }
@@ -204,7 +222,7 @@ RBClass >> privatePoolDictionaryNames [
 	^poolDictionaryNames
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBClass >> realName: aSymbol [ 
 	self realClass: (self class environment at: aSymbol)
 ]

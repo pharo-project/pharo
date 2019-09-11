@@ -36,7 +36,7 @@ FTFilterFunction >> filter [
 
 	table dataSource: (pattern ifEmpty: [ initialDataSource ] ifNotEmpty: [ initialDataSource newDataSourceMatching: (filterClass pattern: pattern) ]).
 	table refresh.
-	table selectRowIndexes: #().
+	table deselectAll.
 		
 	self isExplicite
 		ifTrue: [ self resizeWidget ]
@@ -104,7 +104,7 @@ FTFilterFunction >> reinitializeTable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FTFilterFunction >> reset [
 	"self filter"
 ]

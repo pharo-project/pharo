@@ -25,7 +25,7 @@ instance variables
 "
 Class {
 	#name : #RBComment,
-	#superclass : #Object,
+	#superclass : #RBNode,
 	#instVars : [
 		'contents',
 		'start'
@@ -41,6 +41,16 @@ RBComment class >> with: aString at: startPosition [
 	
 ]
 
+{ #category : #visiting }
+RBComment >> acceptVisitor: aProgramNodeVisitor [
+	"At some point we will have to think what we do to visit comment. 
+	It may have an impact on visitors so this should be done carefully.
+	Since by default previously comment node were not subclass of ProgramNode 
+	we do nothing by default."
+
+	
+]
+
 { #category : #accessing }
 RBComment >> contents [
 	^ contents
@@ -49,8 +59,9 @@ RBComment >> contents [
 { #category : #testing }
 RBComment >> intersectsInterval: anInterval [ 
 	"Make comments polymorphic with program nodes for hit detection"
+	
 	^(anInterval first between: self start and: self stop) 
-		or: [self start between: anInterval first and: anInterval last]
+		or: [ self start between: anInterval first and: anInterval last ]
 ]
 
 { #category : #printing }
@@ -68,7 +79,7 @@ RBComment >> size [
 
 { #category : #accessing }
 RBComment >> start [
-	^ start.
+	^ start
 ]
 
 { #category : #accessing }
@@ -76,9 +87,9 @@ RBComment >> stop [
 	^ start + self size - 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBComment >> with: aString at: startPosition [
 	start := startPosition.
-	contents := aString.
+	contents := aString
 
 ]

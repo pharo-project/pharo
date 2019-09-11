@@ -15,10 +15,12 @@ MetacelloMCVersionSpec >> computeVersionStatus: matchBlock [
 
 { #category : #accessing }
 MetacelloMCVersionSpec >> computeVersionStatus: resolvedPackageAndProjectNames matchBlock: matchBlock [
+
 	| status |
-	status := resolvedPackageAndProjectNames isNil
-		ifTrue: [ self isPartiallyCurrent ]
-		ifFalse: [ self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
+
+	status := resolvedPackageAndProjectNames
+		ifNil: [ self isPartiallyCurrent ]
+		ifNotNil: [ self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
 	status isAllLoadedToSpec: matchBlock.
 	status isLoadedToSpec: matchBlock.
 	status isLoadedMatchConstraints: matchBlock.

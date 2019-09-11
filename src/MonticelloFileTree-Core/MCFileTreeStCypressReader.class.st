@@ -33,24 +33,33 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromDirectory: aDirecto
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
-    | classDirectory classPropertiesDict classComment entries methodPropertiesDict |
-    classDirectory := self fileUtils directoryFromEntry: classEntry.
-    ((entries := classDirectory entries) detect: [:entry | self isPropertyFile: entry] ifNone: [  ])
-        ifNotNil: [ :propertyEntry | propertyEntry readStreamDo: [ :fileStream | classPropertiesDict := STON fromStream: fileStream ] ].
-    (entries detect: [ :entry | entry name = 'README.md' ] ifNone: [  ])
-        ifNotNil: [ :commentEntry | commentEntry readStreamDo: [ :fileStream | classComment := fileStream contents ] ].
-    methodPropertiesDict := Dictionary new.
-    (entries detect: [ :entry | self isMethodPropertyFile: entry] ifNone: [  ])
-        ifNotNil: [ :propertyEntry | 
-            propertyEntry
-                readStreamDo: [ :fileStream | 
-                    "Issue 33: https://github.com/dalehenrich/filetree/issues/33"
-                    methodPropertiesDict := STON fromStream: fileStream ] ].
-    self addClassDefinitionFrom: classPropertiesDict comment: classComment withSqueakLineEndings.
-    self
-        addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
-        methodProperties: methodPropertiesDict
-        in: entries
+	| classDirectory classPropertiesDict classComment entries methodPropertiesDict |
+	classDirectory := self fileUtils directoryFromEntry: classEntry.
+	entries := classDirectory entries.
+	entries
+		detect: [ :entry | self isPropertyFile: entry ]
+		ifFound: [ :propertyEntry | 
+			propertyEntry
+				readStreamDo: [ :fileStream | classPropertiesDict := STON fromStream: fileStream ] ].
+	entries
+		detect: [ :entry | entry name = 'README.md' ]
+		ifFound: [ :commentEntry | 
+			commentEntry
+				readStreamDo: [ :fileStream | classComment := fileStream contents ] ].
+	methodPropertiesDict := Dictionary new.
+	entries
+		detect: [ :entry | self isMethodPropertyFile: entry ]
+		ifFound: [ :propertyEntry | 
+			propertyEntry
+				readStreamDo:
+					[ :fileStream | "Issue 33: https://github.com/dalehenrich/filetree/issues/33" methodPropertiesDict := STON fromStream: fileStream ] ].
+	self
+		addClassDefinitionFrom: classPropertiesDict
+		comment: classComment withSqueakLineEndings.
+	self
+		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
+		methodProperties: methodPropertiesDict
+		in: entries
 ]
 
 { #category : #utilities }
@@ -83,28 +92,26 @@ MCFileTreeStCypressReader >> addClassDefinitionFrom: classPropertiesDict comment
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addExtensionClassAndMethodDefinitionsFromEntry: classEntry [
-  | classDirectory classPropertiesDict methodPropertiesDict entries |
-  classDirectory := self fileUtils directoryFromEntry: classEntry.
-  ((entries := classDirectory entries)
-    detect: [ :entry | self isPropertyFile: entry ]
-    ifNone: [  ])
-    ifNotNil: [ :propertyEntry | 
-      propertyEntry
-        readStreamDo: [ :fileStream | 
-          classPropertiesDict := STON fromStream: fileStream ] ].
-  methodPropertiesDict := Dictionary new.
-  (entries detect: [ :entry | self isMethodPropertyFile: entry ] ifNone: [  ])
-    ifNotNil: [ :propertyEntry | 
-      propertyEntry
-        readStreamDo: [ :fileStream | 
-          "Issue 33: https://github.com/dalehenrich/filetree/issues/33"
-          methodPropertiesDict := STON fromStream: fileStream ] ].
-  self
-    addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
-    methodProperties: methodPropertiesDict
-    in: entries
-    extensionMethod: true
-
+	| classDirectory classPropertiesDict methodPropertiesDict entries |
+	classDirectory := self fileUtils directoryFromEntry: classEntry.
+	entries := classDirectory entries.
+	entries
+		detect: [ :entry | self isPropertyFile: entry ]
+		ifFound: [ :propertyEntry | 
+			propertyEntry
+				readStreamDo: [ :fileStream | classPropertiesDict := STON fromStream: fileStream ] ].
+	methodPropertiesDict := Dictionary new.
+	entries
+		detect: [ :entry | self isMethodPropertyFile: entry ]
+		ifFound: [ :propertyEntry | 
+			propertyEntry
+				readStreamDo:
+					[ :fileStream | "Issue 33: https://github.com/dalehenrich/filetree/issues/33" methodPropertiesDict := STON fromStream: fileStream ] ].
+	self
+		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
+		methodProperties: methodPropertiesDict
+		in: entries
+		extensionMethod: true
 ]
 
 { #category : #utilities }
@@ -118,65 +125,64 @@ MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodPrope
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addMethodDefinitionsForClass: className methodProperties: methodProperties in: entries extensionMethod: extensionMethod [
-    entries
-        do: [ :entry | 
-            | classIsMeta |
-            classIsMeta := false.
-            entry name = 'class'
-                ifTrue: [ classIsMeta := true ].
-            (entry name = 'instance' or: [ entry name = 'class' ])
-                ifTrue: [ 
-                    ((self fileUtils directoryFromEntry: entry) entries select: [ :each | each name endsWith: '.st' ])
-                        do: [ :methodEntry | 
-                            methodEntry
-                                readStreamDo: [ :fileStream | 
-                                    | category source timestamp selector |
-                                    category := fileStream nextLine.
-                                    source := fileStream upToEnd.
-                                    selector := self methodSelectorFor: source.
-                                    timestamp := methodProperties
-                                        at:
-                                            (classIsMeta
-                                                ifTrue: [ 'class' ]
-                                                ifFalse: [ 'instance' ])
-                                        ifPresent: [ :map | map at: selector asString ifAbsent: [  ] ].	"Issue 33: https://github.com/dalehenrich/filetree/issues/33"
-                                    timestamp
-                                        ifNil: [ timestamp := self info author , ' ' , self info date mmddyyyy , ' ' , self info time print24 ].
-                                    extensionMethod
-                                      ifTrue: [ self validateExtensionMethodCategory: category for: className selector: selector ].
-                                    definitions
-                                        add:
-                                            (MCMethodDefinition
-                                                className: className
-                                                classIsMeta: classIsMeta
-                                                selector: selector
-                                                category: category
-                                                timeStamp: timestamp
-                                                source: source) ] ] ] ]
-
+	entries
+		do: [ :entry | 
+			| classIsMeta |
+			classIsMeta := false.
+			entry name = 'class' ifTrue: [ classIsMeta := true ].
+			(entry name = 'instance' or: [ entry name = 'class' ])
+				ifTrue: [ (self loadableDefinitionsFrom: (self fileUtils directoryFromEntry: entry))
+						do: [ :methodEntry | 
+							methodEntry
+								readStreamDo: [ :fileStream | 
+									| category source timestamp selector |
+									category := fileStream nextLine.
+									source := fileStream upToEnd.
+									selector := self methodSelectorFor: source.
+									timestamp := methodProperties at: (classIsMeta ifTrue: [ 'class' ] ifFalse: [ 'instance' ]) ifPresent: [ :map | map at: selector asString ifAbsent: [  ] ].	"Issue 33: https://github.com/dalehenrich/filetree/issues/33"
+									timestamp ifNil: [ timestamp := self info author , ' ' , self info date mmddyyyy , ' ' , self info time print24 ].
+									extensionMethod ifTrue: [ self validateExtensionMethodCategory: category for: className selector: selector ].
+									definitions
+										add:
+											(MCMethodDefinition
+												className: className
+												classIsMeta: classIsMeta
+												selector: selector
+												category: category
+												timeStamp: timestamp
+												source: source) ] ] ] ]
 ]
 
 { #category : #utilities }
 MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
-    | classDirectory classPropertiesDict classComment entries methodPropertiesDict |
-    classDirectory := self fileUtils directoryFromEntry: classEntry.
-    ((entries := classDirectory entries) detect: [:entry | self isPropertyFile: entry] ifNone: [  ])
-        ifNotNil: [ :propertyEntry | propertyEntry readStreamDo: [ :fileStream | classPropertiesDict := STON fromStream: fileStream ] ].
-    (entries detect: [ :entry | entry name = 'README.md' ] ifNone: [  ])
-        ifNotNil: [ :commentEntry | commentEntry readStreamDo: [ :fileStream | classComment := fileStream contents ] ]
-        ifNil: [ classComment := '' ].
-    methodPropertiesDict := Dictionary new.
-    (entries detect: [ :entry | self isMethodPropertyFile: entry] ifNone: [  ])
-        ifNotNil: [ :propertyEntry | 
-            propertyEntry
-                readStreamDo: [ :fileStream | 
-                    "Issue 33: https://github.com/dalehenrich/filetree/issues/33"
-                    methodPropertiesDict := STON fromStream: fileStream ] ].
-    self addTraitDefinitionFrom: classPropertiesDict comment: classComment withSqueakLineEndings.
-    self
-        addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
-        methodProperties: methodPropertiesDict
-        in: entries
+	| classDirectory classPropertiesDict classComment entries methodPropertiesDict |
+	classDirectory := self fileUtils directoryFromEntry: classEntry.
+	entries := classDirectory entries.
+	entries
+		detect: [ :entry | self isPropertyFile: entry ]
+		ifFound: [ :propertyEntry | 
+			propertyEntry
+				readStreamDo: [ :fileStream | classPropertiesDict := STON fromStream: fileStream ] ].
+	entries
+		detect: [ :entry | entry name = 'README.md' ]
+		ifFound: [ :commentEntry | 
+			commentEntry
+				readStreamDo: [ :fileStream | classComment := fileStream contents ] ]
+		ifNone: [ classComment := '' ].
+	methodPropertiesDict := Dictionary new.
+	entries
+		detect: [ :entry | self isMethodPropertyFile: entry ]
+		ifFound: [ :propertyEntry | 
+			propertyEntry
+				readStreamDo:
+					[ :fileStream | "Issue 33: https://github.com/dalehenrich/filetree/issues/33" methodPropertiesDict := STON fromStream: fileStream ] ].
+	self
+		addTraitDefinitionFrom: classPropertiesDict
+		comment: classComment withSqueakLineEndings.
+	self
+		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
+		methodProperties: methodPropertiesDict
+		in: entries
 ]
 
 { #category : #utilities }
@@ -271,9 +277,9 @@ MCFileTreeStCypressReader >> methodSelectorFor: source [
 
 { #category : #accessing }
 MCFileTreeStCypressReader >> packageNameFromPackageDirectory [
-    | filename |
-    filename := self fileUtils directoryName: packageDirectory.
-    ^ filename copyFrom: 1 to: (filename lastIndexOf: $.) - 1
+    | filename2 |
+    filename2 := self fileUtils directoryName: packageDirectory.
+    ^ filename2 copyFrom: 1 to: (filename2 lastIndexOf: $.) - 1
 ]
 
 { #category : #validation }

@@ -13,7 +13,7 @@ Class {
 { #category : #public }
 NECInstVarTypeGuesser >> methodRefs [
 	| theClass selectors |
-	theClass := receiverClass classThatDefinesInstanceVariable: variableName.
+	theClass := receiverClass classThatDefinesInstVarNamed: variableName.
 	theClass ifNil: [ ^ nil ].
 	selectors := theClass whichSelectorsStoreInto: variableName.
 	^ selectors collect: [ :each | 

@@ -86,8 +86,7 @@ ReAbstractCritique >> actions [
 
 { #category : #actions }
 ReAbstractCritique >> ban [
-	
-	sourceAnchor sourceEntity ban: self  
+	self entity ban: self
 ]
 
 { #category : #accessing }
@@ -133,7 +132,7 @@ ReAbstractCritique >> gtInspectorSourceCodeIn: composite [
 { #category : #actions }
 ReAbstractCritique >> guidedBan [
 
-	ReCriticEngine guidedBy: sourceAnchor entity ban: self
+	ReCriticEngine guidedBy: self entity  ban: self
 ]
 
 { #category : #accessing }
@@ -167,7 +166,7 @@ ReAbstractCritique >> popDescriptionUp [
 	UIManager default longMessage: self description title: self title
 ]
 
-{ #category : #initialization }
+{ #category : #printing }
 ReAbstractCritique >> printOn: aStream [
 
 	super printOn: aStream.

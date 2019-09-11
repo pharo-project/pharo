@@ -42,7 +42,8 @@ Class {
 		'frames',
 		'canvasWidth',
 		'canvasHeight',
-		'backgroundColorIndex'
+		'backgroundColorIndex',
+		'comment'
 	],
 	#classVars : [
 		'Extension',
@@ -486,6 +487,17 @@ GIFReadWriter >> readColorTable: numberOfEntries [
 ]
 
 { #category : #'private-decoding' }
+GIFReadWriter >> readCommentExtension [
+	| blockTerminator |
+	blockTerminator := self next.
+	blockTerminator > 0
+		ifTrue: [ comment := self next: blockTerminator.
+			blockTerminator := self next ].
+	blockTerminator = 0
+		ifFalse: [ ^ self error: 'Invalid Block Terminator' ]
+]
+
+{ #category : #'private-decoding' }
 GIFReadWriter >> readDisposal: aPackedByte [
 	"Read the three-bit disposal flag from
 	the packed byte in the Graphic Control Extension block.
@@ -547,7 +559,10 @@ GIFReadWriter >> readExtensionBlock: aGifBlock withFrame: anImageFrame [
 			delay: (delayByte2 * 256 + delayByte1) * 10.
 		self next = 0 ifFalse: [ ^ self error: 'Corrupt GCE Block!' ].
 		^ self ].
-	
+
+	extensionType = 254 ifTrue: [ 
+		^ self readCommentExtension ].
+
 	"If you get to this point, we don't know the Extension Type"
 	^ self error: 'Unknown GIF Extension: ',(extensionType asString).
 ]

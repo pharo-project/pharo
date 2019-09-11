@@ -56,7 +56,7 @@ ReMissingMethodCritique >> initializeRule: aRule target: anEntity class: aClass 
 	class := aClass.
 	selector :=  aSymbol.
 	
-	tinyHint := class == sourceAnchor entity
+	tinyHint := class == self entity 
 		ifTrue: [ selector ]
 		ifFalse: [ class name, '>>#', selector ]
 ]

@@ -194,7 +194,7 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
 	
-	[ ^ aBlock value: changesFile] ensure: [ self emptyReadStreamsQueue ]
+	^ aBlock value: changesFile
 ]
 
 { #category : #'public - file system operations' }
@@ -212,7 +212,9 @@ SourceFileArray >> closeFileArray: anArray [
 
 	anArray 
 		reject: [ :file | file isNil ] 
-		thenDo: [ :file | file close ]
+		thenDo: [ :file | file close ].
+		
+	^ anArray
 ]
 
 { #category : #private }
@@ -237,8 +239,7 @@ SourceFileArray >> deferFlushDuring: aBlock [
 	
 	^ [ aBlock value ] ensure: [
 		flushChanges := true.
-		self flushChangesFile.
-		self emptyReadStreamsQueue ]
+		self flushChangesFile ]
 ]
 
 { #category : #'public - file system operations' }
@@ -253,13 +254,21 @@ SourceFileArray >> emptyReadStreamsQueue [
 { #category : #'public - file system operations' }
 SourceFileArray >> ensureOpen [
 	"Ensure that the source and changes files are opened.
-	Close them before re-opening them.
+	Close them before re-opening them."
 	
-	This could be optimized by jut checking if they are open and doing nothing in that case."
+	| aSourcesFile aChangesFile |
+
 	self close.
+
+	aSourcesFile := PharoFilesOpener default sourcesFileOrNil.
+	aChangesFile := PharoFilesOpener default changesFileOrNil.
+	
+	aChangesFile ifNil: [ 
+		aChangesFile := PharoFilesOpener default changesFileOrNilReadOnly: true silent: false ].
+
 	files := Array
-		with: PharoFilesOpener default sourcesFileOrNil
-		with: PharoFilesOpener default changesFileOrNil.
+		with: aSourcesFile
+		with: aChangesFile.
 			
 	readOnlyQueue := SharedQueue new.
 ]
@@ -310,8 +319,7 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
-	self changesFileStream ifNotNil: #flush.
-	self emptyReadStreamsQueue.
+	self changesFileStream ifNotNil: [:stream | stream flush].
 ]
 
 { #category : #'public - file system operations' }
@@ -320,26 +328,16 @@ SourceFileArray >> forceChangesToDisk [
 
 	| changesFile |
 	changesFile := self changesFileStream.
-	changesFile flush.
+	changesFile isReadOnly ifFalse: [ 
+		changesFile flush ].
 	changesFile close.
 	changesFile tryOpen.
-	changesFile setToEnd.
-	self emptyReadStreamsQueue
+	changesFile setToEnd
 ]
 
 { #category : #'public - string reading' }
-SourceFileArray >> getPreambleFrom: aFileStream at: position [
-	"To read preamble of method we need read back characters until $!.
-	But given aFileStream can have UTF8 encoding which make it a bit tricky to scan stream in reverse order.
-	First we need to move back in stream using byte reading without encoding. It performed by basicNext.
-	Next we still could not read exact number of characters because (position-startIndex) is not characters number in case of UTF8.
-	So at the end we use another loop to read encoded characters step by step until stream will be at original position"
-
-	| startIndex |
-	startIndex := position.
-	[ startIndex >= 0 and: [ aFileStream position: startIndex. aFileStream next ~~ $! ] ] whileTrue: [ startIndex := startIndex - 1 ].
-	
-	^ String streamContents: [ :result | result nextPutAll: (aFileStream next: position - aFileStream position + 1) ]
+SourceFileArray >> getPreambleFrom: aSourceFileStream at: position [
+	^ aSourceFileStream getPreambleAt: position 
 ]
 
 { #category : #initialization }
@@ -578,7 +576,6 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	(ChunkWriteStream on: file) nextChunkPut: aString.
 
 	self flushChangesFile.
-	self emptyReadStreamsQueue.
 
 	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)
 ]

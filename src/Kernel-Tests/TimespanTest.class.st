@@ -335,17 +335,8 @@ TimespanTest >> testIntersectionWithDisjoint [
 TimespanTest >> testIntersectionWithIncluded [
 	self
 		assert: (aTimespan intersection: anIncludedTimespan)
-		equals:
-			(Timespan
-				starting: jan01
-				duration:
-					(Duration
-						days: 0
-						hours: 23
-						minutes: 59
-						seconds: 59
-						nanoSeconds: 999999999)).
-	self deny: (aTimespan intersection: anIncludedTimespan) equals: anIncludedTimespan
+		equals: anIncludedTimespan
+
 ]
 
 { #category : #tests }
@@ -357,27 +348,14 @@ TimespanTest >> testIntersectionWithOverlapping [
 				starting: jan01
 				duration:
 					(Duration
-						days: 5
-						hours: 23
-						minutes: 59
-						seconds: 59
-						nanoSeconds: 999999999))
+						days: 6))
 ]
 
 { #category : #tests }
 TimespanTest >> testIntersectionWithSelf [
 	self
 		assert: (aTimespan intersection: aTimespan)
-		equals:
-			(Timespan
-				starting: jan01
-				duration:
-					(Duration
-						days: 6
-						hours: 23
-						minutes: 59
-						seconds: 59
-						nanoSeconds: 999999999)).
+		equals: aTimespan.
 	self deny: (aTimespan intersection: anIncludedTimespan) equals: aTimespan
 ]
 
@@ -385,19 +363,7 @@ TimespanTest >> testIntersectionWithSelf [
 TimespanTest >> testIntersectionWithSeparate [
 	self assert: (aTimespan intersection: aDisjointTimespan) isNil.
 	self deny: (aTimespan intersection: anOverlappingTimespan) isNil.
-	self
-		assert: (aTimespan intersection: anIncludedTimespan)
-		equals:
-			(Timespan
-				starting: jan01
-				duration:
-					(Duration
-						days: 0
-						hours: 23
-						minutes: 59
-						seconds: 59
-						nanoSeconds: 999999999)).
-	self deny: (aTimespan intersection: anIncludedTimespan) equals: anIncludedTimespan
+	self assert: (aTimespan intersection: anIncludedTimespan) equals: anIncludedTimespan
 ]
 
 { #category : #tests }
@@ -480,6 +446,29 @@ TimespanTest >> testStart [
 { #category : #tests }
 TimespanTest >> testStartingEnding [
 	self assert: aTimespan equals: (Timespan starting: jan01 ending: jan08)
+]
+
+{ #category : #tests }
+TimespanTest >> testSubclassArithmetic [
+
+	| timespans |
+	timespans := { Year currentYear.
+					 	Month current.
+						(Week starting: DateAndTime now).
+						Date today.
+						Timespan starting: (DateAndTime now) duration: 1 hour }.
+	timespans do:
+		[ :ts |
+			self assert: ts + aDay - ts equals: aDay.
+			self assert: ts - aDay - ts equals: aDay negated.
+			timespans do:
+				[ :otherTs |
+					self assert: (ts intersection: otherTs) equals: (otherTs intersection: ts) ] ].
+
+	self assert: (timespans first intersection: timespans second) equals: timespans second.
+	self assert: (timespans first intersection: timespans fourth) equals: timespans fourth.
+	self assert: (timespans second intersection: timespans fourth) equals: timespans fourth.
+
 ]
 
 { #category : #tests }

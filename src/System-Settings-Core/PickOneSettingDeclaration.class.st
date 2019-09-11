@@ -23,9 +23,10 @@ PickOneSettingDeclaration >> chooseValue [
 
 { #category : #'user interface' }
 PickOneSettingDeclaration >> content [
-	^ (self domainValues
-		detect: [:v | v realValue = self realValue]
-		ifNone: [^ 'nil']) name
+	^ self domainValues
+		detect: [ :setting | setting realValue = self realValue ]
+		ifFound: [ :setting | setting name ]
+		ifNone: [ 'nil' ]
 ]
 
 { #category : #'user interface' }
@@ -49,9 +50,9 @@ PickOneSettingDeclaration >> index: anInteger [
 { #category : #'user interface' }
 PickOneSettingDeclaration >> inputWidget [
 	| widget row |
-	row := self theme newRowIn: World for: {
+	row := self theme newRowIn: self currentWorld for: {
 				widget := (self theme 
-						newDropListIn: World
+						newDropListIn: self currentWorld
 						for: self
 						list: #domainValuesLabels
 						getSelected: #index

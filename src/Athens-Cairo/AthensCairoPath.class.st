@@ -27,7 +27,7 @@ AthensCairoPath >> asAthensShapeOn: anAthensCanvas [
 	^ self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPath >> initialize [ 
 	handle value = 0 ifTrue: [ 
 		self error: 'Error creating new path' ].

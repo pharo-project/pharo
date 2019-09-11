@@ -35,7 +35,7 @@ RubTextScrollPane >> appendText: stringOrText [
 
 { #category : #'text area protocol' }
 RubTextScrollPane >> beNotWrapped [
-	self handleWrappingPolicyChange: [ self textArea beNotWrapped]
+	self handleWrappingPolicyChange: [ self textArea wrapped: false]
 ]
 
 { #category : #'text area protocol' }
@@ -57,7 +57,7 @@ RubTextScrollPane >> currentVScrollBarThickness [
 		ifFalse: [ 0 ]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> defaultScrollTarget [
 	^ RubEditingArea new
 ]
@@ -202,7 +202,7 @@ RubTextScrollPane >> hideOrShowScrollBar [
 	self updateScrollbars
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> initialize [
 	super initialize.
 	self scroller extent: self textArea extent.
@@ -271,7 +271,7 @@ RubTextScrollPane >> position: aPoint [
 	super position: aPoint
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> registerTextArea [
 	self hasTextArea
 		ifTrue: [
@@ -460,7 +460,7 @@ RubTextScrollPane >> unplug [
 	super unplug
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 RubTextScrollPane >> unregisterTextArea [
 	self hasTextArea
 		ifTrue: [ 

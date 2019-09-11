@@ -13,13 +13,8 @@ RBDefineEntityComplianceCheckRule class >> checksClass [
 ]
 
 { #category : #running }
-RBDefineEntityComplianceCheckRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-	
-	((aClass inheritsFrom: RBLintRule) and: [ 
-		aClass isVisible and: [
-			self complianceMethods noneSatisfy: [ :method |
-				aClass perform: method ] ] ]) ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aClass) ]
+RBDefineEntityComplianceCheckRule >> basicCheck: aClass [
+	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ self complianceMethods noneSatisfy: [ :method | aClass perform: method ] ] ]
 ]
 
 { #category : #properties }

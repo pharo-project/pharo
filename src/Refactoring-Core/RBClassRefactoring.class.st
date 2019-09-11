@@ -30,7 +30,7 @@ RBClassRefactoring class >> model: aRBSmalltalk className: aName [
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBClassRefactoring >> className: aName [
 	className := aName
 ]

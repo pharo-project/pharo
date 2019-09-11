@@ -18,7 +18,7 @@ Class {
 	#category : #'Athens-Core-Paths'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 AthensBezierConverter class >> initialize [
 
 	CollinearityEps := 1e-30.
@@ -57,7 +57,7 @@ AthensBezierConverter >> curveVia: pt1 to: pt2 [
 		x3: pt2 x y3: pt2 y
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensBezierConverter >> initialize [
 
 	distanceTolerance := 0.5.

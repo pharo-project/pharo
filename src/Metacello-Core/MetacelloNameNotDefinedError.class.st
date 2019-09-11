@@ -4,7 +4,7 @@ Class {
 	#category : #'Metacello-Core-Exceptions-Errors'
 }
 
-{ #category : #Accessing }
+{ #category : #accessing }
 MetacelloNameNotDefinedError >> isResumable [
   "Pharo and Squeak compatibility"
 

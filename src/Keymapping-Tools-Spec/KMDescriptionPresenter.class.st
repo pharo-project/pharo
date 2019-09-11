@@ -3,15 +3,10 @@ A KMDescription is a window showing the description of shortcuts for a specified
 "
 Class {
 	#name : #KMDescriptionPresenter,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'shortcutList',
-		'collectingBlock',
-		'categories',
-		'orderingList',
-		'sortingBlock',
-		'updatingBlock',
-		'okToolbar',
+		'actionBar',
 		'categoryList'
 	],
 	#category : #'Keymapping-Tools-Spec'
@@ -19,141 +14,57 @@ Class {
 
 { #category : #specs }
 KMDescriptionPresenter class >> defaultSpec [
-	<spec>
-	
-	^ SpecLayout composed
-		newColumn: [:c | 
-			c 
-				newRow: [:r | 
-					r 
-						add: #categoryList;
-						add: #orderingList ] height: 25;
-				add: #shortcutList;
-				add: #okToolbar height: 25 ]
+	^ SpBoxLayout newVertical
+		add: #categoryList withConstraints: [ :c | c height: 25 ];
+		add: #shortcutList;
+		add: #actionBar withConstraints: [ :c | c height: 25 ];
+		yourself
 ]
 
 { #category : #example }
 KMDescriptionPresenter class >> example [
-
-	| d |
-	d := self new.
-	d categories: #(GlobalShortcuts MonticelloShortcuts TextEditor).
-	d openWithSpec
-]
-
-{ #category : #specs }
-KMDescriptionPresenter class >> title [
-
-	^ 'Shortcuts description'
-]
-
-{ #category : #accessing }
-KMDescriptionPresenter >> categories [
-	
-	^ categories
+	self new
+		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);
+		openWithSpec
 ]
 
 { #category : #api }
 KMDescriptionPresenter >> categories: aCollectionOfSymbols [
-	| cats |
-	
-	cats := aCollectionOfSymbols collect: [:e | KMRepository default categoryForName: e].
-	categories value: cats.
-	self updateShortcutList
-]
-
-{ #category : #accessing }
-KMDescriptionPresenter >> categoryList [
-	
-	^ categoryList
-]
-
-{ #category : #initialization }
-KMDescriptionPresenter >> collectDescriptionShortcut [
-	collectingBlock := [ :e | {(e description asString) . ':' . (e shortcut asString)} ]
-]
-
-{ #category : #initialization }
-KMDescriptionPresenter >> collectShortcutDescription [
-	collectingBlock := [:e | {e shortcut asString. ':'. e description asString} ]
-]
-
-{ #category : #initialization }
-KMDescriptionPresenter >> initCategoryList: aCollection [
-	categoryList emptyList.
-	aCollection do: [ :cat | categoryList addItemLabeled: cat name do: [ self updateShortcutList ] ]
-]
-
-{ #category : #private }
-KMDescriptionPresenter >> initialExtent [
-
-	^  (600@350)
-]
-
-{ #category : #initialization }
-KMDescriptionPresenter >> initialize [
-
-	categories := nil asValueHolder.
-	sortingBlock := [:a :b | a first < b first ].
-	super initialize.
-      self collectShortcutDescription
-
+	categoryList items: (aCollectionOfSymbols collect: [ :e | KMRepository default categoryForName: e ])
 ]
 
 { #category : #initialization }
 KMDescriptionPresenter >> initializePresenter [
-		
-	categories whenChangedDo: [:col | self initCategoryList:col ].
-	okToolbar okAction: [ self delete ].
+	categoryList
+		transmitTo: shortcutList
+		transform: [ :category | (category entriesAt: #all) keymaps sorted: [ :keymap | keymap shortcut asString ] ascending ]
 ]
 
 { #category : #initialization }
 KMDescriptionPresenter >> initializeWidgets [
-
 	categoryList := self newDropList.
-	shortcutList := self newMultiColumnList.
-	okToolbar := self instantiate: OkToolbar.
-	orderingList := self newDropList.
-	
-	orderingList 
-		addItemLabeled:'shortcut	:	description' 
-			do: [self collectShortcutDescription.
-				 self updateShortcutList];
-		addItemLabeled:'description	:	shortcut' 
-			do: [self collectDescriptionShortcut.
-				 self updateShortcutList].
-	
-	shortcutList 
-		displayBlock: [ :e | e ];
-		allowToSelect: false.
+	shortcutList := self newTable.
+	actionBar := self newActionBar.
 
-	okToolbar okButton
-			label: 'Close';
-			state: false
-]
+	categoryList displayBlock: [ :category | category name ].
 
-{ #category : #accessing }
-KMDescriptionPresenter >> okToolbar [
-	
-	^ okToolbar
-]
+	shortcutList
+		addColumn: (SpStringTableColumn title: 'Shortcut' evaluated: #shortcut);
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: #name);
+		addColumn: (SpStringTableColumn title: 'Description' evaluated: #description);
+		beResizable.
 
-{ #category : #accessing }
-KMDescriptionPresenter >> orderingList [
-	
-	^ orderingList
-]
-
-{ #category : #accessing }
-KMDescriptionPresenter >> shortcutList [
-	
-	^ shortcutList
+	actionBar
+		addLast:
+			(SpButtonPresenter new
+				action: [ self window close ];
+				label: 'Close';
+				yourself)
 ]
 
 { #category : #initialization }
-KMDescriptionPresenter >> updateShortcutList [
-	| cat items |
-	cat := categories value at: self categoryList selectedIndex.
-	items := (cat entriesAt: #all) keymaps collect: [ :e | collectingBlock value: e ].
-	shortcutList items: (items sorted: sortingBlock)
+KMDescriptionPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter
+		title: 'Shortcuts description';
+		initialExtent: 600 @ 350
 ]

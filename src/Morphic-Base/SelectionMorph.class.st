@@ -240,8 +240,8 @@ SelectionMorph >> defaultBorderColor [
 { #category : #initialization }
 SelectionMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	^ (self theme settings menuSelectionColor) alpha: 0.08
 
+	^ self theme menuSelectionColor alpha: 0.08
 ]
 
 { #category : #'submorphs-add/remove' }
@@ -318,16 +318,17 @@ SelectionMorph >> distributeVertically [
 SelectionMorph >> doDup: evt fromHalo: halo handle: dupHandle [
 
 	selectedItems := selectedItems collect: #duplicate.
-	selectedItems do: [:m | self owner addMorph: m].
-	dupDelta isNil
-		ifTrue: ["First duplicate operation -- note starting location"
-				dupLoc := self position.
-				evt hand grabMorph: self.
-				halo removeAllHandlesBut: dupHandle]
-		ifFalse: ["Subsequent duplicate does not grab, but only moves me and my morphs"
-				dupLoc := nil.
-				self position: self position + dupDelta]
-
+	selectedItems do: [ :m | self owner addMorph: m ].
+	dupDelta
+		ifNil: [ "First duplicate operation -- note starting location"
+			dupLoc := self position.
+			evt hand grabMorph: self.
+			halo removeAllHandlesBut: dupHandle
+			]
+		ifNotNil: [ "Subsequent duplicate does not grab, but only moves me and my morphs"
+			dupLoc := nil.
+			self position: self position + dupDelta
+			]
 ]
 
 { #category : #private }
@@ -373,7 +374,7 @@ SelectionMorph >> duplicate [
 	"Make a duplicate of the receiver and havbe the hand grab it"
 
 	selectedItems :=  selectedItems collect: #duplicate.
-	selectedItems reverseDo: [:m | (owner ifNil: [ActiveWorld]) addMorph: m].
+	selectedItems reverseDo: [:m | (owner ifNil: [self currentWorld]) addMorph: m].
 	dupLoc := self position.
 	ActiveHand grabMorph: self.
 	
@@ -534,13 +535,14 @@ SelectionMorph >> selectedItems [
 ]
 
 { #category : #private }
-SelectionMorph >> setOtherSelection: otherOrNil [ 
+SelectionMorph >> setOtherSelection: otherOrNil [
+
 	otherSelection := otherOrNil.
-	otherOrNil isNil 
-		ifTrue: [super borderColor: Color blue]
-		ifFalse: 
-			[itemsAlreadySelected := otherSelection selectedItems.
-			super borderColor: Color green]
+	otherOrNil
+		ifNil: [ super borderColor: Color blue ]
+		ifNotNil: [ itemsAlreadySelected := otherSelection selectedItems.
+			super borderColor: Color green
+			]
 ]
 
 { #category : #private }

@@ -98,6 +98,11 @@ BIConfigurableFormatter class >> initialize [
 ]
 
 { #category : #accessing }
+BIConfigurableFormatter class >> isPrettyPrinter [
+	^ true
+]
+
+{ #category : #accessing }
 BIConfigurableFormatter class >> keepBlockInMessage [
 	^ DefaultPrettyPrintContext keepBlockInMessage
 ]
@@ -475,10 +480,9 @@ BIConfigurableFormatter >> bracketWith: bracketString around: aBlock [
 
 { #category : #private }
 BIConfigurableFormatter >> characterSeparatorMethodSignatureFor: aMethodNode [
-	^ [ 
-	(self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
-		ifTrue: [ self newLine ]
-		ifFalse: [ self space ] ]
+	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
+			ifTrue: [ self newLine ]
+			ifFalse: [ self space ]
 ]
 
 { #category : #accessing }
@@ -491,11 +495,6 @@ BIConfigurableFormatter >> codeStream: anObject [
 	codeStream := anObject
 ]
 
-{ #category : #'public interface' }
-BIConfigurableFormatter >> containerWidth: anInteger [
-	self installNewValueInContext: {(#maxLineLength: -> anInteger)}
-]
-
 { #category : #private }
 BIConfigurableFormatter >> currentLineLength [
 	^ codeStream position - lineStart
@@ -504,6 +503,7 @@ BIConfigurableFormatter >> currentLineLength [
 { #category : #'public interface' }
 BIConfigurableFormatter >> format: aParseTree [
 	originalSource := aParseTree source.
+	self initializeCodeStream.
 	self visitNode: aParseTree.
 	^ codeStream contents
 ]
@@ -555,16 +555,16 @@ BIConfigurableFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatBlockCommentFor: aBlockNode [
-	originalSource isNil
-		ifTrue: [  ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aBlockNode comments
 		do: [ :each | 
-			
 			self basicFormatCommentFor: each.
-			(self isNonEmptySingleLineBlock: aBlockNode)
-				ifTrue: [  self space ].
-			(self willBeMultiline: aBlockNode body)
-				ifTrue: [  self newLine ] ]
+			( self isNonEmptySingleLineBlock: aBlockNode )
+				ifTrue: [ self space ].
+			( self willBeMultiline: aBlockNode body )
+				ifTrue: [ self newLine ]
+			]
 ]
 
 { #category : #accessing }
@@ -579,13 +579,13 @@ BIConfigurableFormatter >> formatCommentWithStatements: aBoolean [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatCommentsFor: aNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aNode comments
-		do:
-			[ :each | 
+		do: [ :each | 
 			self basicFormatCommentFor: each.
-			self newLine ]
+			self newLine
+			]
 ]
 
 { #category : #private }
@@ -617,17 +617,15 @@ BIConfigurableFormatter >> formatMethodBodyFor: aMethodNode [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatMethodCommentFor: aMethodNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aMethodNode comments
-		do:
-			[ :each | 
-			
-			self useBasicCommentFormat 
-			ifTrue: [ self basicFormatCommentFor: each ]
-			ifFalse: [ 
-			self resizeCommentFor: each startingAt: 0].
-			self newLines: self newLinesAfterMethodComment ]
+		do: [ :each | 
+			self useBasicCommentFormat
+				ifTrue: [ self basicFormatCommentFor: each ]
+				ifFalse: [ self resizeCommentFor: each startingAt: 0 ].
+			self newLines: self newLinesAfterMethodComment
+			]
 ]
 
 { #category : #'private-formatting' }
@@ -713,22 +711,22 @@ BIConfigurableFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatStatementCommentsFor: aStatementNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	self formatCommentWithStatements
 		ifFalse: [ ^ self ].
 	aStatementNode statementComments
-		do:
-			[ :each | 
+		do: [ :each | 
 			| count |
+
 			count := self newLinesBeforeStartingAt: each start.
-			self retainBlankLinesBeforeComments & (count > 0)
+			self retainBlankLinesBeforeComments & ( count > 0 )
 				ifTrue: [ self newLines: count ]
 				ifFalse: [ codeStream tab ].
 			self useBasicCommentFormat
 				ifTrue: [ self basicFormatCommentFor: each ]
-				ifFalse: [ 
-			self resizeCommentFor: each startingAt: self currentLineLength ]]
+				ifFalse: [ self resizeCommentFor: each startingAt: self currentLineLength ]
+			]
 ]
 
 { #category : #private }
@@ -849,8 +847,13 @@ BIConfigurableFormatter >> initialize [
 	self indent: 0.
 	self isInCascadeNode: false.
 	lookaheadCode := IdentityDictionary new.
-	codeStream := WriteStream on: (String new: 256).
+	self initializeCodeStream.
 	context := DefaultPrettyPrintContext
+]
+
+{ #category : #initialization }
+BIConfigurableFormatter >> initializeCodeStream [
+	codeStream := WriteStream on: (String new: 256)
 ]
 
 { #category : #'public interface' }
@@ -997,6 +1000,7 @@ BIConfigurableFormatter >> needsParenthesisFor: aNode [
 	aNode ifNil: [ ^ false ].
 	aNode isValue
 		ifFalse: [ ^ false ].
+	aNode isParseError ifTrue: [ ^false ].
 	parent := aNode parent ifNil: [ ^ false ].
 	(aNode isMessage and: [ 
 		parent isMessage and: [ 
@@ -1212,7 +1216,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
-		separatedBy: (self characterSeparatorMethodSignatureFor: aMethodNode)
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ]
 ]
 
 { #category : #private }
@@ -1232,7 +1236,7 @@ BIConfigurableFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
-		separatedBy: (self characterSeparatorMethodSignatureFor: aMethodNode).
+		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode].
 	self newLines: 1
 ]
 
@@ -1447,6 +1451,16 @@ BIConfigurableFormatter >> visitLiteralNode: aLiteralNode [
 ]
 
 { #category : #visiting }
+BIConfigurableFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
+	| binding |
+	binding := aLiteralVariableNode binding.
+	self writeString: binding key storeString, ' -> '.
+	aLiteralVariableNode binding value isLiteral
+		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
+		ifTrue: [ self writeString:  binding value asString ]
+]
+
+{ #category : #visiting }
 BIConfigurableFormatter >> visitMessageNode: aMessageNode [ 
 	self visitNode: aMessageNode receiver.
 	self formatSelectorAndArguments: aMessageNode
@@ -1477,6 +1491,11 @@ BIConfigurableFormatter >> visitNode: aNode [
 				ifFalse: [ self formatCommentsFor: aNode ].
 			needsParenthesis
 				ifTrue: [ codeStream nextPutAll: self stringInsideParentheses ] ]
+]
+
+{ #category : #visiting }
+BIConfigurableFormatter >> visitParseErrorNode: aNode [
+	self writeString: aNode value
 ]
 
 { #category : #visiting }

@@ -26,7 +26,7 @@ ReReplaceNodeCritique >> change [
 	"creates new AST by replacing the node. Then the 'add method' change is generated from new AST"
 
 	| newTree newTreeNode |
-	newTree := sourceAnchor entity parseTree.
+	newTree := self entity  parseTree.
 	newTreeNode := newTree nodeAtTraversalIndex: (
 		oldNode methodNode traversalIndexOf: oldNode).
 	self assert: newTreeNode = oldNode.
@@ -35,7 +35,7 @@ ReReplaceNodeCritique >> change [
 	newTreeNode becomeForward: newNode.
 	^ RBAddMethodChange
 		compile: newTree methodNode newSource
-		in: sourceAnchor entity methodClass
+		in: self entity  methodClass
 ]
 
 { #category : #initialization }
@@ -50,5 +50,5 @@ ReReplaceNodeCritique >> initializeRule: aRule sourceAnchor: anAnchor oldNode: a
 { #category : #testing }
 ReReplaceNodeCritique >> providesChange [
 
-	^ sourceAnchor entity isCompiledMethod
+	^ self entity isCompiledMethod
 ]

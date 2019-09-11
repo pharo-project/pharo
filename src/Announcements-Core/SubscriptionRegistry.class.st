@@ -52,6 +52,14 @@ SubscriptionRegistry >> deliver: anAnnouncement to: subs startingAt: startIndex 
 				self deliver: anAnnouncement to: subs startingAt: index + 1 ]]
 ]
 
+{ #category : #testing }
+SubscriptionRegistry >> handleSubscriberClass: eventClass [
+	"Return true if the receiver has a callback subscripbed for the event class"
+	^ subscriptions anySatisfy: [ :sub | 
+		(sub subscriber class == eventClass) or: 
+			[ sub subscriber class includesBehavior: eventClass ] ]
+]
+
 { #category : #initialization }
 SubscriptionRegistry >> initialize [
 	monitor := Semaphore forMutualExclusion.
@@ -97,7 +105,7 @@ SubscriptionRegistry >> replace: subscription with: newOne [
 	^ newOne
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
 	
@@ -111,6 +119,16 @@ SubscriptionRegistry >> reset [
 { #category : #accessing }
 SubscriptionRegistry >> subscriptions [
 	^ subscriptions
+]
+
+{ #category : #accessing }
+SubscriptionRegistry >> subscriptionsForClass: subscriberClass [
+	"Return the list of subscription for a given class"
+	^ Array streamContents: [ :s|
+			subscriptions do: [:each| 
+				(each subscriber class == subscriberClass 
+				 or: [each subscriber class includesBehavior: subscriberClass])
+					ifTrue: [ s nextPut: each subscriber ]]]
 ]
 
 { #category : #accessing }

@@ -3,7 +3,7 @@ Benchmark for window processing
 "
 Class {
 	#name : #OSWindowBench,
-	#superclass : #TestCase,
+	#superclass : #Object,
 	#category : #'OSWindow-Tests-Benchmarks'
 }
 
@@ -13,7 +13,7 @@ OSWindowBench >> benchEventProcessing [
 	
 	| window sema |
 	
-	window := World osWindow.
+	window := self currentWorld osWindow.
 	sema := Semaphore new.
 	[ 
 		"TimeProfiler spyAllOn:[ sema wait ]"		

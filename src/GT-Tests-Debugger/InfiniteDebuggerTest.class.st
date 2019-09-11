@@ -15,11 +15,11 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	| preWindow debugButton debugWindow overButton process |
 	<expectedFailure>
 	
-	process := [ TestClassForTestingDebugger debug: #bla ] forkAt: 41.
+	process := [ TestClassForTestingDebuggerTest debug: #bla ] forkAt: 41.
 
 	1000 milliSecond asDelay wait.
-	World doOneCycle.
-	preWindow := (World allMorphs
+	self currentWorld doOneCycle.
+	preWindow := (self currentWorld allMorphs
 		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of ' ] ])
 		first.
 	debugButton := (preWindow allMorphs
@@ -28,8 +28,8 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	preWindow := nil.
 	debugButton := nil.
 	100 milliSecond asDelay wait.
-	World doOneCycle.
-	debugWindow := (World allMorphs
+	self currentWorld doOneCycle.
+	debugWindow := (self currentWorld allMorphs
 		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of Test' ] ])
 		first.
 	overButton := (debugWindow allMorphs
@@ -37,7 +37,7 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 
 	overButton performAction.
 	100 milliSecond asDelay wait.
-	World doOneCycle.
+	self currentWorld doOneCycle.
 
 	process terminate.	
 	debugWindow close.

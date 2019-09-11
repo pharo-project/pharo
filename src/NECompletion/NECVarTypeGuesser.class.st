@@ -18,6 +18,7 @@ Class {
 
 { #category : #private }
 NECVarTypeGuesser class >> classFrom: className [
+
 	^ Smalltalk globals at: className asSymbol ifAbsent: [  ]
 ]
 
@@ -71,16 +72,16 @@ NECVarTypeGuesser >> blockReturnTop [
 
 { #category : #'bytecode decoding' }
 NECVarTypeGuesser >> computeVarType [
-	| info tempNames name |
+	| info tempNames name node |
 	types ifEmpty: [ ^ nil ].
 	info := types first.
 	(hasSend and: [ info isDefinedByMessageSend not ])
-		ifTrue: [ 
-			info type: nil.
+		ifTrue: [ info type: nil.
 			^ info ].
-	info isDefinedByTemporary
-		ifFalse: [ ^ info ].
-	tempNames := (receiverClass compiler parse: currentMethod sourceCode) tempNames.
+	info isDefinedByTemporary ifFalse: [ ^ info ].
+	node := receiverClass compiler parse: currentMethod sourceCode.
+	self flag: #pharoFixMe.	"I think tempNames is a bad name if we also take the arguments names? So, should we rename it or should we not take arguments names?"
+	tempNames := node argumentNames , node temporaryNames.
 	name := tempNames at: info temporaryOffset + 1.
 	info type: (self class getClassFromTypeSuggestingName: name).
 	^ info
@@ -186,7 +187,7 @@ NECVarTypeGuesser >> pushTemporaryVariable: offset [
 	types add: info
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 NECVarTypeGuesser >> reset [
 	contextCount > 0 ifTrue:[^self].
 	types reset.

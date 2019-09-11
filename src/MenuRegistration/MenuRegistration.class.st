@@ -166,7 +166,6 @@ Class {
 		'spec',
 		'owner',
 		'isGroup',
-		'ordering',
 		'precondition'
 	],
 	#category : #'MenuRegistration-Core'
@@ -440,10 +439,13 @@ MenuRegistration >> precondition: aValuable [
 MenuRegistration >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream << ' ( ' << self name asString << ' ) '
+	aStream 
+		<< ' ( ';
+		print: self name; 
+		<< ' ) '
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MenuRegistration >> release [
 	itemList := nil.
 	self releaseActionMap.
@@ -456,7 +458,7 @@ MenuRegistration >> removeItem: anItem [
 	self itemList remove: anItem 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MenuRegistration >> reset [
 	itemList 
 		ifNotNil: [

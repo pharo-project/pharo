@@ -65,7 +65,8 @@ GTFilter >> applyFilterInContext: aSpotterContext [
 
 { #category : #private }
 GTFilter >> applyFilterInContext: aSpotterContext error: anException [
-	('[Spotter] Exception in filter <', self class name, '>: ', anException asString) logCr.
+	('[Spotter] Exception in filter <' , self class name , '>: '
+		, anException asString) traceCr.
 	^ self defaultFilteredItems
 ]
 
@@ -120,7 +121,7 @@ GTFilter >> hasFilteredItems [
 	^ self filteredItems isEmptyOrNil not
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GTFilter >> initialize [
 	super initialize.
 	

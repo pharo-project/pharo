@@ -297,7 +297,7 @@ ExternalType class >> noticeRenamingOf: aClass from: oldName to: newName [
 
 { #category : #private }
 ExternalType class >> pointerSpec [
-	^(4 bitOr: FFIFlagPointer)
+	^(Smalltalk wordSize bitOr: FFIFlagPointer)
 ]
 
 { #category : #'type constants' }
@@ -413,14 +413,14 @@ ExternalType >> asPointerType [
 ]
 
 { #category : #converting }
-ExternalType >> asPointerType: pointerSize [
+ExternalType >> asPointerType: anotherPointerSize [
 	"convert the receiver into a pointer type"
 	| type |
 	type := self asPointerType.
-	^type pointerSize = pointerSize
+	^type pointerSize = anotherPointerSize
 		ifTrue: [type]
 		ifFalse:
-			[type copy pointerSize: pointerSize; yourself]
+			[type copy pointerSize: anotherPointerSize; yourself]
 ]
 
 { #category : #accessing }
@@ -517,16 +517,15 @@ ExternalType >> isVoid [
 
 { #category : #private }
 ExternalType >> newReferentClass: aClass [
+
 	"The class I'm referencing has changed. Update my spec."
+
 	referentClass := aClass.
-	self isPointerType ifTrue:[^self]. "for pointers only the referentClass changed"
-	referentClass == nil ifTrue:[
-		"my class has been removed - make me 'struct { void }'"
-		compiledSpec := WordArray with: (FFIFlagStructure).
-	] ifFalse:[
-		"my class has been changed - update my compiledSpec"
-		compiledSpec := referentClass compiledSpec.
-	].
+	self isPointerType
+		ifTrue: [ ^ self ].	"for pointers only the referentClass changed"
+	compiledSpec := referentClass
+		ifNil: [ "my class has been removed - make me 'struct { void }'" WordArray with: FFIFlagStructure ]
+		ifNotNil: [ "my class has been changed - update my compiledSpec" referentClass compiledSpec ]
 ]
 
 { #category : #accessing }
@@ -559,10 +558,12 @@ ExternalType >> printAtomicType: spec on: aStream [
 
 { #category : #printing }
 ExternalType >> printOn: aStream [
-	referentClass == nil
-		ifTrue:[aStream nextPutAll: (AtomicTypeNames at: self atomicType)]
-		ifFalse:[aStream nextPutAll: referentClass name].
-	self isPointerType ifTrue:[aStream nextPut: $*].
+
+	referentClass
+		ifNil: [ aStream nextPutAll: ( AtomicTypeNames at: self atomicType ) ]
+		ifNotNil: [ aStream nextPutAll: referentClass name ].
+	self isPointerType
+		ifTrue: [ aStream nextPut: $* ]
 ]
 
 { #category : #printing }
@@ -580,7 +581,9 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 	(spec bitClear: FFIStructSizeMask) = FFIFlagStructure ifTrue:
 		[| next |
 		 next := initialSpecIndex + 1.
-		 aStream nextPutAll: 'struct {'.
+		 aStream
+			nextPutAll: subStructureClassBinding value compositeName;
+			nextPutAll: ' {'.
 		 subStructureClassBinding value fields withIndexDo:
 			[:tuple :i|
 			aStream cr.
@@ -595,18 +598,24 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 		 self assert: (next - 1 = compiledSpec size or: [(compiledSpec at: next) = FFIFlagStructure]).
 		 ^next <= compiledSpec size ifTrue: [next + 1] ifFalse: [next]].
 	self assert: (spec anyMask: FFIFlagPointer).
-	aStream nextPutAll: 'struct '; nextPutAll: subStructureClassBinding value name; nextPutAll: ' *'; nextPutAll: name.
+	(subStructureClassBinding value isKindOf: ExternalUnion)
+			ifTrue: [aStream nextPutAll: 'union ']
+			ifFalse: [aStream nextPutAll: 'struct '].
+	aStream nextPutAll: subStructureClassBinding value name; nextPutAll: ' *'; nextPutAll: name.
 	^initialSpecIndex + 1
 ]
 
 { #category : #printing }
 ExternalType >> printTypedefOn: s [
 	s nextPutAll: 'typedef '.
-	(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure
+	(referentClass notNil
+	 and: [(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure])
 		ifTrue:
 			[| next |
 			 next := 2.
-			 s nextPutAll: 'struct {'.
+			 s
+				nextPutAll: referentClass compositeName;
+				nextPutAll: ' {'.
 			 referentClass fields withIndexDo:
 				[:tuple :i|
 				s cr.
@@ -680,10 +689,27 @@ ExternalType >> setReferencedType: aType [
 
 { #category : #printing }
 ExternalType >> storeOn: aStream [
-	referentClass == nil
-		ifTrue:[aStream nextPutAll: ExternalType name; space; nextPutAll: (AtomicTypeNames at: self atomicType)]
-		ifFalse:[aStream nextPut: $(; nextPutAll: ExternalType name; space; nextPutAll: #structTypeNamed:; space;  store: referentClass name; nextPut: $)].
-	self isPointerType ifTrue: [aStream space; nextPutAll: #asPointer].
+
+	referentClass
+		ifNil: [ aStream
+				nextPutAll: ExternalType name;
+				space;
+				nextPutAll: ( AtomicTypeNames at: self atomicType )
+			]
+		ifNotNil: [ aStream
+				nextPut: $(;
+				nextPutAll: ExternalType name;
+				space;
+				nextPutAll: #structTypeNamed:;
+				space;
+				store: referentClass name;
+				nextPut: $)
+			].
+	self isPointerType
+		ifTrue: [ aStream
+				space;
+				nextPutAll: #asPointer
+			]
 ]
 
 { #category : #printing }

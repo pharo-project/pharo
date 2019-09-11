@@ -4,13 +4,18 @@ i represent texture/image/form/surface paints in cairo backend.
 Class {
 	#name : #AthensCairoPatternSurfacePaint,
 	#superclass : #AthensCairoPatternPaint,
+	#instVars : [
+		'surface',
+		'origin',
+		'extent'
+	],
 	#pools : [
 		'AthensCairoDefinitions'
 	],
 	#category : #'Athens-Cairo-Paints'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 	|pat|
 	pat := self primCreateForSurface: anAthensCairoSurface .
@@ -18,7 +23,7 @@ AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 	^ pat
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #primitives }
 AthensCairoPatternSurfacePaint class >> primCreateForSurface: anAthensCairoSurface [
 	
 "	pattern = cairo_pattern_create_for_surface (image);"
@@ -44,7 +49,7 @@ AthensCairoPatternSurfacePaint >> athensFillRectangle: aRectangle on: aCanvas [
 
 { #category : #accessing }
 AthensCairoPatternSurfacePaint >> direction: aPoint [ 
-	direction := aPoint.
+	self deprecated: 'This method does nothing. It will be removed.'
 ]
 
 { #category : #accessing }
@@ -57,7 +62,7 @@ AthensCairoPatternSurfacePaint >> extent: aPatternExtent [
 	extent:= aPatternExtent
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [ 
 	self initialize.
 	surface := anAthensCairoSurface .
