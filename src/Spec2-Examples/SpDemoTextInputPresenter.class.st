@@ -1,0 +1,130 @@
+"
+This demo shows differenty styles of text inputs.
+"
+Class {
+	#name : #SpDemoTextInputPresenter,
+	#superclass : #SpPresenter,
+	#instVars : [
+		'labelNormal',
+		'fieldNormal',
+		'labelDisabled',
+		'fieldDisabled',
+		'labelEncrypted',
+		'fieldEncrypted',
+		'fieldPlaceholderText',
+		'labelPlaceholderText'
+	],
+	#category : #'Spec2-Examples-Demo-TextInput'
+}
+
+{ #category : #specs }
+SpDemoTextInputPresenter class >> defaultSpec [
+	^ SpGridLayout new
+		beColumnNotHomogeneous;
+		add: #labelNormal at: 1 @ 1;
+		add: #fieldNormal at: 2 @ 1;
+		add: #labelDisabled at: 1 @ 2;
+		add: #fieldDisabled at: 2 @ 2;
+		add: #labelPlaceholderText at: 1 @ 3;
+		add: #fieldPlaceholderText at: 2 @ 3;
+		add: #labelEncrypted at: 1 @ 4;
+		add: #fieldEncrypted at: 2 @ 4;
+		yourself
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldDisabled [
+	^ fieldDisabled
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldDisabled: anObject [
+	fieldDisabled := anObject
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldEncrypted [
+	^ fieldEncrypted
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldEncrypted: anObject [
+	fieldEncrypted := anObject
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldNormal [
+	^ fieldNormal
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldNormal: anObject [
+	fieldNormal := anObject
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldPlaceholderText [
+	^ fieldPlaceholderText
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> fieldPlaceholderText: anObject [
+	fieldPlaceholderText := anObject
+]
+
+{ #category : #initialization }
+SpDemoTextInputPresenter >> initializeWidgets [
+	labelNormal := self newLabel label: 'Normal:'.
+	fieldNormal := self newTextInput.
+	
+	labelDisabled := self newLabel label: 'Disabled:'.
+	fieldDisabled := self newTextInput enabled: false.
+	
+	labelPlaceholderText := self newLabel label: 'Placeholder:'.
+	fieldPlaceholderText := self newTextInput placeholder: 'Placeholder text'.
+	
+	labelEncrypted := self newLabel label: 'Password:'.
+	fieldEncrypted := self newTextInput
+		text: 'Password';
+		bePassword
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelDisabled [
+	^ labelDisabled
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelDisabled: anObject [
+	labelDisabled := anObject
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelEncrypted [
+	^ labelEncrypted
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelEncrypted: anObject [
+	labelEncrypted := anObject
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelNormal [
+	^ labelNormal
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelNormal: anObject [
+	labelNormal := anObject
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelPlaceholderText [
+	^ labelPlaceholderText
+]
+
+{ #category : #accessing }
+SpDemoTextInputPresenter >> labelPlaceholderText: anObject [
+	labelPlaceholderText := anObject
+]

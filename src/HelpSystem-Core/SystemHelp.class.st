@@ -10,17 +10,28 @@ So ""HelpBrowser open"" is the same as ""HelpBrowser openOn: SystemHelp"".
 Class {
 	#name : #SystemHelp,
 	#superclass : #Object,
+	#classInstVars : [
+		'pragmaCollector',
+		'helpTopic'
+	],
 	#category : #'HelpSystem-Core-Utilities'
 }
 
 { #category : #'private accessing' }
 SystemHelp class >> allSystemHelpPragmas [
-	^(PragmaCollector filter: [:prag | prag keyword = self pragmaKeyword ]) reset collected
+	^ self pragmaCollector collected
 
 ]
 
-{ #category : #conversion }
+{ #category : #accessing }
 SystemHelp class >> asHelpTopic [ 
+
+	^ helpTopic ifNil: [ helpTopic := self createHelpTopic].
+
+]
+
+{ #category : #reset }
+SystemHelp class >> createHelpTopic [
 	|topic helpOnHelp sortedTopics |
 	topic := HelpTopic named: 'Help'.
 	self allSystemHelpPragmas do: [:each | 
@@ -32,8 +43,18 @@ SystemHelp class >> asHelpTopic [
 	sortedTopics remove: helpOnHelp.
 	sortedTopics addLast: helpOnHelp.
 	topic subtopics: sortedTopics.
-	^topic.
+	^topic
 
+]
+
+{ #category : #accessing }
+SystemHelp class >> pragmaCollector [
+	^ pragmaCollector
+		ifNil: [ pragmaCollector := (PragmaCollector
+				filter: [ :prag | prag selector = self pragmaKeyword ])
+				reset;
+				whenChangedDo: [ self resetHelpTopic ];
+				yourself ]
 ]
 
 { #category : #'private accessing' }
@@ -41,4 +62,10 @@ SystemHelp class >> pragmaKeyword [
 
 	^#systemHelp
 
+]
+
+{ #category : #reset }
+SystemHelp class >> resetHelpTopic [
+
+	helpTopic := self createHelpTopic 
 ]

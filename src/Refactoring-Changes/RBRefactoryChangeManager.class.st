@@ -10,7 +10,9 @@ Class {
 	#instVars : [
 		'undo',
 		'redo',
-		'isPerformingRefactoring'
+		'undoPointers',
+		'isPerformingRefactoring',
+		'changeFactory'
 	],
 	#classVars : [
 		'Instance',
@@ -21,7 +23,7 @@ Class {
 
 { #category : #'change-factory' }
 RBRefactoryChangeManager class >> changeFactory [
-	^self instance changeFactory
+	^ self instance changeFactory
 ]
 
 { #category : #'class initialization' }
@@ -77,24 +79,30 @@ RBRefactoryChangeManager class >> unload [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> addUndo: aRefactoringChange [
-	undo addLast: aRefactoringChange.
+	undo push: aRefactoringChange.
 	undo size > UndoSize
 		ifTrue: [ undo removeFirst ].
 	redo := OrderedCollection new
 ]
 
+{ #category : #'public access' }
+RBRefactoryChangeManager >> addUndoPointer: aNumber [
+	undoPointers push: aNumber
+]
+
 { #category : #'change-factory' }
 RBRefactoryChangeManager >> changeFactory [
-	^ RBRefactoryChangeFactory new
+	^ changeFactory
 ]
 
 { #category : #private }
 RBRefactoryChangeManager >> clearUndoRedoList [
-	undo := OrderedCollection new.
-	redo := OrderedCollection new
+	undo := Stack new.
+	redo := OrderedCollection new.
+	undoPointers := Stack new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChangeManager >> connectToChanges [
 	SystemAnnouncer uniqueInstance weak
 		when: CategoryAdded,
@@ -114,19 +122,19 @@ RBRefactoryChangeManager >> connectToChanges [
 		to: self.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChangeManager >> disconnectFromChanges [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #testing }
 RBRefactoryChangeManager >> hasRedoableOperations [
-	^ redo isEmpty not
+	^ redo isNotEmpty
 ]
 
 { #category : #testing }
 RBRefactoryChangeManager >> hasUndoableOperations [
-	^ undo isEmpty not
+	^ undo isNotEmpty
 ]
 
 { #category : #'public access' }
@@ -139,10 +147,16 @@ RBRefactoryChangeManager >> ignoreChangesWhile: aBlock [
 
 { #category : #initialization }
 RBRefactoryChangeManager >> initialize [
-	undo := OrderedCollection new.
-	redo := OrderedCollection new.
+	super initialize.
+	changeFactory := RBRefactoryChangeFactory new.
+	self clearUndoRedoList.
 	isPerformingRefactoring := false.
 	self connectToChanges
+]
+
+{ #category : #'public access' }
+RBRefactoryChangeManager >> lastUndoPointer [
+	^ undoPointers pop
 ]
 
 { #category : #'public access' }
@@ -157,15 +171,14 @@ RBRefactoryChangeManager >> redoChange [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> redoOperation [
-	redo isEmpty
-		ifTrue: [ ^ self ].
+	redo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [ 
 		| change |
 		change := redo removeLast.
 		undo add: change execute ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRefactoryChangeManager >> release [
 	self disconnectFromChanges.
 	super release.	
@@ -173,17 +186,21 @@ RBRefactoryChangeManager >> release [
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoChange [
-	^ undo last
+	^ undo pop
 ]
 
 { #category : #'public access' }
 RBRefactoryChangeManager >> undoOperation [
-	undo isEmpty
-		ifTrue: [ ^ self ].
+	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [ 
 		| change |
 		change := undo removeLast.
 		redo add: change execute ]
+]
+
+{ #category : #'public access' }
+RBRefactoryChangeManager >> undoPointers [
+	^ undoPointers
 ]
 
 { #category : #updating }

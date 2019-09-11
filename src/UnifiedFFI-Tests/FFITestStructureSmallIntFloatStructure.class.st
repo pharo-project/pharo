@@ -18,7 +18,7 @@ FFITestStructureSmallIntFloatStructure class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
 	float x;
-	int y;
+	int32 y;
 	float z;
 	float w;
 	)

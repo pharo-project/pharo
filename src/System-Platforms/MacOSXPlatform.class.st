@@ -18,6 +18,12 @@ MacOSXPlatform class >> isActivePlatform [
 	^ self isMacOS
 ]
 
+{ #category : #visiting }
+MacOSXPlatform >> accept: aVisitor [
+
+	^ aVisitor visitMacOSX: self
+]
+
 { #category : #accessing }
 MacOSXPlatform >> family [
 	^#MacOSX

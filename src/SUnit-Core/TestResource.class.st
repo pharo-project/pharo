@@ -97,9 +97,13 @@ TestResource class >> makeAvailable [
 	current := nil.
 	candidate := self new.
 	self resources do: [:each | each availableFor: candidate].
-	[candidate setUp.
+	
+	"Execute the TestResource's #setUp method within the DefaultExecutionEnvironment to prevent
+	forked processes created within #setUp from being terminated by the TestExecutionEnvironment
+	(in #checkForkedProcesses) it is running in."
+	DefaultExecutionEnvironment beActiveDuring: [[candidate setUp.
 	candidate isAvailable ifTrue: [current := candidate]]
-		ensure: [current == candidate ifFalse: [candidate tearDown]]
+		ensure: [current == candidate ifFalse: [candidate tearDown]]]
 ]
 
 { #category : #'instance creation' }
@@ -109,7 +113,7 @@ TestResource class >> new [
 	^super new initialize.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 TestResource class >> reset [
 	[self isAlreadyAvailable ifTrue: [current tearDown]]
 		ensure: [current := nil]
@@ -156,9 +160,7 @@ TestResource class >> signalInitializationError [
 
 { #category : #accessing }
 TestResource >> description [
-	description isNil
-		ifTrue: [ ^ '' ].
-	^ description
+	^ description ifNil: [ String empty ]
 ]
 
 { #category : #accessing }

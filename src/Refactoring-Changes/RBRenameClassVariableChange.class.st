@@ -37,6 +37,8 @@ RBRenameClassVariableChange >> printOn: aStream [
 
 { #category : #private }
 RBRenameClassVariableChange >> removeOldVariable [
+	self flag: #todo.
+	"We should use the factory"
 	(RBRemoveClassVariableChange remove: oldName from: self changeClass)
 		execute
 ]

@@ -8,16 +8,8 @@ Class {
 }
 
 { #category : #running }
-GRTemporaryVariableCapitalizationRule >> check: aNode forCritiquesDo: aCriticBlock [
-
-	((self checkIsVariableWithParent: aNode) and: [ 
-	
-	((self checkIsArgumentDefinition: aNode) or: [ 
-	  self checkIsTempDefinition: aNode ])
-	
-	and: [ aNode name first isUppercase ] ]) 
-
-	ifTrue: [ aCriticBlock cull: (self critiqueFor: aNode) ]
+GRTemporaryVariableCapitalizationRule >> basicCheck: aNode [
+	^ (self checkIsVariableWithParent: aNode) and: [ ((self checkIsArgumentDefinition: aNode) or: [ self checkIsTempDefinition: aNode ]) and: [ aNode name first isUppercase ] ]
 ]
 
 { #category : #'running-helpers' }

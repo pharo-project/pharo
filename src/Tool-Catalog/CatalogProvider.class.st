@@ -75,7 +75,7 @@ CatalogProvider >> projects [
 	^ projects ifNil: [ #() ]
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 CatalogProvider >> reset [
 	"Reset my cached data so that I will reload it on next access"
 	

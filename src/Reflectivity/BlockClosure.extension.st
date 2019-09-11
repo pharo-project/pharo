@@ -6,14 +6,12 @@ BlockClosure >> rfEnsure: aBlock [
 
 	<primitive: 198>
 	<metaLinkOptions: #( + optionDisabledLink)>
-	| returnValue b |
-	returnValue := self rfvalue.
-	aBlock isNil
-		ifFalse: [ 
-			"nil out aBlock temp before evaluating aBlock so it is not executed again if aBlock remote returns"
-			b := aBlock.
-			thisContext rftempAt: 1 put: nil.
-			b rfvalue ].
+	| returnValue complete |
+	returnValue := self rfvalueNoContextSwitch.
+	complete ifNil:[
+		complete := true.
+		aBlock rfvalue.
+	].
 	^ returnValue
 ]
 

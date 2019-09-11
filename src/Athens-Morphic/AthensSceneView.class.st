@@ -113,7 +113,7 @@ AthensSceneView >> inState: stateName do: aBlock [
 	^ (state at: stateName ifAbsent: nil) ifNotNil: aBlock 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensSceneView >> initialize [
 
 	super initialize.
@@ -154,7 +154,7 @@ AthensSceneView >> layoutChanged [
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensSceneView >> minimumExtent [
 	^ 300@300
 ]
@@ -342,7 +342,7 @@ AthensSceneView >> stepTime [
 	^ 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'stepping and presenter' }
 AthensSceneView >> stopStepping [
 	keepRefreshing ifFalse: [
 			^ super stopStepping ]

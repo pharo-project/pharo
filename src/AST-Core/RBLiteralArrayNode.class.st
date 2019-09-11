@@ -48,8 +48,8 @@ RBLiteralArrayNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitLiteralArrayNode: self
+RBLiteralArrayNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitLiteralArrayNode: self
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ RBLiteralArrayNode >> contents [
 	^contents
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralArrayNode >> contents: aRBLiteralNodeCollection [ 
 	contents := aRBLiteralNodeCollection.
 	contents do: [:each | each parent: self]
@@ -75,15 +75,6 @@ RBLiteralArrayNode >> copyInContext: aDictionary [
 		contents: (self copyList: self contents inContext: aDictionary)
 		stopPosition: -1
 		isByteArray: isByteArray
-]
-
-{ #category : #generation }
-RBLiteralArrayNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: #('.
-	(self contents collect: [ :each | each value ]) printOn: aStream delimiter: ' '.
-	aStream nextPutAll: ')'
 ]
 
 { #category : #comparing }
@@ -145,7 +136,7 @@ RBLiteralArrayNode >> replaceSourceWith: aNode [
 		do: [:first :second | first = second ifFalse: [ first replaceSourceWith: second]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBLiteralArrayNode >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [ 
 	start := startInteger.
 	self contents: anArray.

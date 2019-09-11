@@ -64,7 +64,7 @@ FLPlatform class >> extensionPragmas [
 			self class withAllSuperclassesDo: [ :class |
 				stop ifFalse: [
 					Pragma withPragmasIn: class do:  [ :pragma |
-						(pragma keyword = selector and: [
+						(pragma selector = selector and: [
 							"don't collect overridden methods"
 							(pragmas includesKey: pragma selector) not ]) ifTrue: [
 								pragmas
@@ -105,7 +105,7 @@ FLPlatform class >> removeModifications [
 	SystemOrganizer default removeCategory: self hacksCategoryName
 ]
 
-{ #category : #'private-convenience' }
+{ #category : #initialization }
 FLPlatform class >> reset [
 	Current := nil
 ]
@@ -115,9 +115,19 @@ FLPlatform >> absolutePathOf: aString [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'accessing-compiler' }
+FLPlatform >> addAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
+	self subclassResponsibility
+]
+
 { #category : #operations }
 FLPlatform >> addHacks [
 	self class addHacks
+]
+
+{ #category : #'accessing-tests' }
+FLPlatform >> classFactoryForTestCaseClass [
+	^ ClassFactoryForTestCase
 ]
 
 { #category : #'accessing-files' }
@@ -163,6 +173,16 @@ FLPlatform >> isSqueak [
 { #category : #'accessing-compiler' }
 FLPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	^ self subclassResponsibility
+]
+
+{ #category : #'accessing-tests' }
+FLPlatform >> setTestTimeLimitFor: aTest to: aDuration [
+	self subclassResponsibility
+]
+
+{ #category : #'accessing-compiler' }
+FLPlatform >> silentlyAddAndClassifySelector: aSymbol inClass: aClass withMethod: aCompiledMethod inProtocol: aString [
+	self subclassResponsibility
 ]
 
 { #category : #'accessing-system' }

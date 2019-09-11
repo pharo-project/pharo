@@ -38,13 +38,11 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 
 { #category : #preconditions }
 RBExtractToTemporaryRefactoring >> checkVariableName [
-	(class whoDefinesInstanceVariable: newVariableName) notNil 
-		ifTrue: 
+	(class whoDefinesInstanceVariable: newVariableName) ifNotNil: 
 			[self refactoringError: ('<1p> defines an instance variable named <2s>' 
 						expandMacrosWith: class
 						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) notNil 
-		ifTrue: 
+	(class whoDefinesClassVariable: newVariableName) ifNotNil: 
 			[self refactoringError: ('<1p> defines a class variabled named <2s>' 
 						expandMacrosWith: class
 						with: newVariableName)].
@@ -66,7 +64,7 @@ RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
@@ -95,11 +93,12 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 
 { #category : #'private-accessing' }
 RBExtractToTemporaryRefactoring >> parseTree [
-	parseTree isNil 
-		ifTrue: 
-			[parseTree := class parseTreeFor: selector.
-			parseTree isNil ifTrue: [self refactoringFailure: 'Could not parse method']].
-	^parseTree
+
+	parseTree
+		ifNil: [ parseTree := class parseTreeFor: selector.
+			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+			].
+	^ parseTree
 ]
 
 { #category : #preconditions }
@@ -114,13 +113,15 @@ RBExtractToTemporaryRefactoring >> preconditions [
 
 { #category : #'private-accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
+
 	| source |
+
 	source := class sourceCodeFor: selector.
-	source isNil ifTrue: [self refactoringFailure: 'Couldn''t find sources'].
-	((sourceInterval first between: 1 and: source size) 
-		and: [sourceInterval last between: 1 and: source size]) 
-			ifFalse: [self refactoringFailure: 'Invalid interval'].
-	^source copyFrom: sourceInterval first to: sourceInterval last
+	source ifNil: [ self refactoringFailure: 'Couldn''t find sources' ].
+	( ( sourceInterval first between: 1 and: source size )
+		and: [ sourceInterval last between: 1 and: source size ] )
+		ifFalse: [ self refactoringFailure: 'Invalid interval' ].
+	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
 { #category : #printing }
@@ -150,8 +151,9 @@ RBExtractToTemporaryRefactoring >> transform [
 RBExtractToTemporaryRefactoring >> verifySelectedInterval [
 	| selectedParseTree selectedSources |
 	selectedSources := self selectedSource.
-	selectedParseTree := RBParser parseExpression: selectedSources
-				onError: [:message :position | self refactoringFailure: 'Invalid selection'].
-	selectedParseTree isSequence 
-		ifTrue: [self refactoringFailure: 'Cannot assign temp to multiple statements']
+	selectedParseTree := self parserClass
+		parseExpression: selectedSources
+		onError: [ :message :position | self refactoringFailure: 'Invalid selection' ].
+	selectedParseTree isSequence
+		ifTrue: [ self refactoringFailure: 'Cannot assign temp to multiple statements' ]
 ]

@@ -4,11 +4,6 @@ Class {
 	#category : #'Glamour-Tests-Morphic'
 }
 
-{ #category : #tests }
-GLMTextMorphicTest >> expectedFailures [
-	^ #(testUpdatingTextPortUpdatesTheMorph)
-]
-
 { #category : #private }
 GLMTextMorphicTest >> simulateOnlyOneClickOn: aMorph [
 	(Delay forMilliseconds: HandMorph doubleClickTime + 1) wait.
@@ -41,7 +36,7 @@ GLMTextMorphicTest >> testMultipleSelectionWithChange [
 	composite := GLMCompositePresentation new with: [ :a | a text display: '123456789' ].
 	window := composite openOn: 4.
 	textMorph := self find: RubScrolledTextMorph in: window.
-	self assert: textMorph selectionInterval isEmpty.
+	self assertEmpty: textMorph selectionInterval.
 	textPresentation := composite presentations first.
 	textPresentation selectionInterval: (2 to: 5).
 	self assert: textMorph textArea editor selection asString equals: '2345'.
@@ -93,11 +88,12 @@ GLMTextMorphicTest >> testUnregisterFromAnnouncementsWhenUpdating [
 
 { #category : #tests }
 GLMTextMorphicTest >> testUpdatingTextPortUpdatesTheMorph [
+	<expectedFailure>
 	| composite textMorph |
 	composite := GLMCompositePresentation new with: [:a | a text ].
 	window := composite openOn: 'fourtytwo'.
 	composite first text: '42'.
 	self assert: (composite pane port: #text) value asString equals: '42'.
-	textMorph := self find: GLMPluggableTextMorph in: window.
+	textMorph := self find: RubPluggableTextMorph in: window.
 	self assert: textMorph text asString equals: '42'
 ]

@@ -32,9 +32,9 @@ RBChangeMethodNameRefactoring >> hasPermutedArguments [
 
 { #category : #private }
 RBChangeMethodNameRefactoring >> implementors [
-	implementors isNil 
-		ifTrue: [implementors := self model allImplementorsOf: oldSelector].
-	^implementors
+
+	implementors ifNil: [ implementors := self model allImplementorsOf: oldSelector ].
+	^ implementors
 ]
 
 { #category : #testing }
@@ -102,21 +102,23 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 
 { #category : #transforming }
 RBChangeMethodNameRefactoring >> renameImplementors [
-	self implementors do: 
-			[:each | 
+
+	self implementors
+		do: [ :each | 
 			| parseTree |
+
 			parseTree := each parseTreeFor: oldSelector.
-			parseTree isNil 
-				ifTrue: [self refactoringFailure: 'Could not parse source code.'].
-			self implementorsCanBePrimitives 
-				ifFalse: 
-					[parseTree isPrimitive 
-						ifTrue: 
-							[self refactoringFailure: ('<1p>''s implementation of #<2s> is a primitive' 
-										expandMacrosWith: each
-										with: oldSelector)]].
+			parseTree ifNil: [ self refactoringFailure: 'Could not parse source code.' ].
+			self implementorsCanBePrimitives
+				ifFalse: [ parseTree isPrimitive
+						ifTrue: [ self
+								refactoringFailure:
+									( '<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each with: oldSelector )
+							]
+					].
 			self modifyImplementorParseTree: parseTree in: each.
-			(each methodFor: oldSelector) compileTree: parseTree]
+			( each methodFor: oldSelector ) compileTree: parseTree
+			]
 ]
 
 { #category : #transforming }
@@ -124,7 +126,7 @@ RBChangeMethodNameRefactoring >> renameMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [ 
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.

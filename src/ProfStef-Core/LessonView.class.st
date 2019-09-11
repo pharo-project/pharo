@@ -75,7 +75,7 @@ LessonView >> hasBindingThatBeginsWith: aString [
 	^ false
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 LessonView >> initialize [
 
 	super initialize.
@@ -86,7 +86,7 @@ LessonView >> initialize [
 
 { #category : #testing }
 LessonView >> isOpenInWindow [
-	^ World systemWindows includes: window
+	^ self currentWorld systemWindows includes: window
 ]
 
 { #category : #gui }

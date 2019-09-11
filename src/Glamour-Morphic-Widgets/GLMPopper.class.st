@@ -19,7 +19,7 @@ Class {
 { #category : #utilities }
 GLMPopper class >> installAlarm: aSelector for: anObject [
 
-	World
+	self currentWorld
 		addAlarm: aSelector
 		withArguments: #()
 		for: anObject
@@ -29,21 +29,10 @@ GLMPopper class >> installAlarm: aSelector for: anObject [
 { #category : #utilities }
 GLMPopper class >> installAlarm: aSelector for: anObject withArguments: anArray [
 
-	World
+	self currentWorld
 		addAlarm: aSelector
 		withArguments: anArray
 		for: anObject
-		at: Time millisecondClockValue + 50.
-]
-
-{ #category : #utilities }
-GLMPopper class >> installAlarmFor: aBlock [
-	<deprecated: 'Please use installAlarm: for: instead.
-		Installing alarm for a block without existing references is not the best practice as it can be garbage collected and alarm will never be launched.'>
-	World
-		addAlarm: #value
-		withArguments: #()
-		for: aBlock
 		at: Time millisecondClockValue + 50.
 ]
 
@@ -107,16 +96,16 @@ GLMPopper >> withString: string from: aMorph [
 	stringMorph := RubEditingArea new 
 		font: self theme textFont;
 		updateTextWith: string.
-	width := stringMorph width + 12 min: World width / 3.
-	left := desiredOrigin x + width > World width
-		ifTrue: [ World width - width ]
+	width := stringMorph width + 12 min: self currentWorld width / 3.
+	left := desiredOrigin x + width > self currentWorld width
+		ifTrue: [ self currentWorld width - width ]
 		ifFalse: [ desiredOrigin x ].
 	height := (stringMorph
 		beWrapped;
 		width: width;
-		yourself) height + 2 min: World height / 3.
-	top := desiredOrigin y + height > World height
-		ifTrue: [ World height - height ]
+		yourself) height + 2 min: self currentWorld height / 3.
+	top := desiredOrigin y + height > self currentWorld height
+		ifTrue: [ self currentWorld height - height ]
 		ifFalse: [ desiredOrigin y ].
 	self updateWithString: string from: aMorph.
 	self

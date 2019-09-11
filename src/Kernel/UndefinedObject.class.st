@@ -44,10 +44,15 @@ UndefinedObject >> allSuperclassesDo: aBlockContext [
 ]
 
 { #category : #'sets support' }
-UndefinedObject >> asSetElement [
+UndefinedObject >> asCollectionElement [
 	"Since nil is a singleton, we need only a single wrapper instance to represent it in set,
 	created in advance"
-	^ SetElement withNil
+	^ CollectionElement withNil
+]
+
+{ #category : #accessing }
+UndefinedObject >> at: index put: anObject [ 
+	self shouldNotImplement 
 ]
 
 { #category : #'bottom context' }
@@ -77,11 +82,46 @@ UndefinedObject >> deepCopy [
 	with self."
 ]
 
+{ #category : #'reflective operations' }
+UndefinedObject >> doesNotUnderstand: aMessage [
+	<debuggerCompleteToSender>
+	"Handle the fact that there was an attempt to send the given message to an Undeclared variable (nil), hence the receiver does not understand this message (typically #new)."
+	"Testing: (3 activeProcess)"
+
+	| exception resumeValue node |
+	
+	(node := self findUndeclaredVariableIn: thisContext sender sourceNodeExecuted) ifNil: [ 
+		 ^super doesNotUnderstand: aMessage ].
+				
+	(exception := VariableNotDeclared new)
+			message: aMessage;
+			variableNode: node;
+			receiver: self.
+			
+	resumeValue := exception signal.
+	^ exception reachedDefaultHandler
+			ifTrue: [ aMessage sentTo: self ]
+			ifFalse: [ resumeValue ] .
+			
+	
+]
+
 { #category : #'class hierarchy' }
 UndefinedObject >> environment [
 	"Necessary to support disjoint class hierarchies."
 
 	^self class environment
+]
+
+{ #category : #'reflective operations' }
+UndefinedObject >> findUndeclaredVariableIn: ast [
+	"Walk the ast of the current statment and find the undeclared variable node, or nil (if none).
+	Assumes there is only one such variable in an executing statement"
+	
+	ast nodesDo: [:node |
+		(node isVariable and: [ node isUndeclared]) ifTrue: [ ^node ]].
+
+	^nil
 ]
 
 { #category : #testing }
@@ -159,11 +199,6 @@ UndefinedObject >> isNotNil [
 	^false
 ]
 
-{ #category : #'class hierarchy' }
-UndefinedObject >> literalScannedAs: scannedLiteral notifying: requestor [ 
-	^ scannedLiteral
-]
-
 { #category : #testing }
 UndefinedObject >> notNil [ 
 	"Refer to the comment in Object|notNil."
@@ -198,7 +233,7 @@ UndefinedObject >> storeOn: aStream [
 
 { #category : #'class hierarchy' }
 UndefinedObject >> subclass: nameOfClass  
-	instanceVariableNames: instVarNames
+	instanceVariableNames: instVarNameList
 	classVariableNames: classVarNames
 	poolDictionaries: poolDictnames
 	category: category [
@@ -206,7 +241,7 @@ UndefinedObject >> subclass: nameOfClass
 	self traceCr: ('Attempt to create ', nameOfClass, ' as a subclass of nil.  Possibly a class is being loaded before its superclass.').
 	^ Object
 		subclass: nameOfClass
-		instanceVariableNames: instVarNames
+		instanceVariableNames: instVarNameList
 		classVariableNames: classVarNames
 		poolDictionaries: poolDictnames
 		category: category

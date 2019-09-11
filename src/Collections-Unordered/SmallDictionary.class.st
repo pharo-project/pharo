@@ -177,6 +177,16 @@ SmallDictionary >> associationAt: key ifPresent: aBlock [
 ]
 
 { #category : #accessing }
+SmallDictionary >> associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	"Lookup the given key in the receiver. If it is present, answer the
+	value of evaluating the first block optionally with the association for the key.
+	Otherwise answer the value of the second block."
+
+	self associationAt: key ifPresent: [:assoc | ^ aPresentBlock cull: assoc].
+	^ anAbsentBlock value
+]
+
+{ #category : #accessing }
 SmallDictionary >> associations [
 	"Answer a collection containing associations for the receiver.
 	Suggested by l. Uzonyi
@@ -224,13 +234,10 @@ SmallDictionary >> at: firstKey at: secondKey [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey."
 
 	"
-	[
-	| d |
-	d := Dictionary new.
-	d at: #top at: #below1 put: 1.
-	d at: #top at: #below1 put: 2.
-	d at: #top at: #below1.
-	] value
+	(Dictionary new
+		at: #top at: #below1 put: 1;
+		at: #top at: #below1 put: 2;
+		at: #top at: #below1)
 	>>>
 	2"
 
@@ -705,11 +712,6 @@ SmallDictionary >> removeKey: key ifAbsent: aBlock [
 	^value
 ]
 
-{ #category : #removing }
-SmallDictionary >> removeUnreferencedKeys [
-	^ self unreferencedKeys do: [ :key | self removeKey: key ]
-]
-
 { #category : #enumerating }
 SmallDictionary >> select: aBlock [ 
 	"Evaluate aBlock with each of my values as the argument. Collect into a
@@ -749,11 +751,6 @@ SmallDictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [ aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : #private }
-SmallDictionary >> unreferencedKeys [
-	^ Dictionary unreferencedKeysIn: self
 ]
 
 { #category : #accessing }

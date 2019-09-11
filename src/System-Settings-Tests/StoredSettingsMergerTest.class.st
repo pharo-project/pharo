@@ -18,7 +18,7 @@ StoredSettingsMergerTest >> setUp [
 
 { #category : #tests }
 StoredSettingsMergerTest >> testEmpty [
-	self assert: merger storedSettings isEmpty.
+	self assertEmpty: merger storedSettings
 ]
 
 { #category : #tests }

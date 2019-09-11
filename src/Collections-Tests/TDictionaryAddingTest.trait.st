@@ -26,7 +26,7 @@ TDictionaryAddingTest >> nonEmptyDict [
 { #category : #'tests - fixture' }
 TDictionaryAddingTest >> test0FixtureDictionaryAddingTest [
 	self nonEmptyDict.
-	self deny: self nonEmptyDict isEmpty.
+	self denyEmpty: self nonEmptyDict.
 	self associationWithKeyNotInToAdd.
 	self deny: (self nonEmptyDict keys includes: self associationWithKeyNotInToAdd key).
 	self associationWithKeyAlreadyInToAdd.
@@ -58,12 +58,12 @@ TDictionaryAddingTest >> testAddWithKeyAlreadyIn [
 	| dictionary result association oldSize |
 	dictionary := self nonEmptyDict.
 	oldSize := dictionary size.
-	association := self associationWithKeyAlreadyInToAdd .
+	association := self associationWithKeyAlreadyInToAdd.
 	result := dictionary add: association.
-	
+
 	self assert: result = association.
 	self assert: (dictionary at: association key) = association value.
-	self assert: dictionary size = oldSize .
+	self assert: dictionary size equals: oldSize
 ]
 
 { #category : #'tests - adding' }
@@ -73,10 +73,10 @@ TDictionaryAddingTest >> testAddWithKeyNotIn [
 	oldSize := dictionary size.
 	association := self associationWithKeyNotInToAdd.
 	result := dictionary add: association.
-	
-	self assert: result = association.
-	self assert: (dictionary at: association key) = association value.
-	self assert: dictionary size = oldSize  + 1.
+
+	self assert: result equals: association.
+	self assert: (dictionary at: association key) equals: association value.
+	self assert: dictionary size equals: oldSize + 1
 ]
 
 { #category : #'tests - adding' }
@@ -84,18 +84,18 @@ TDictionaryAddingTest >> testDeclareFrom [
 	| newDict v dictionary keyIn associationKeyNotIn |
 	dictionary := self nonEmptyDict.
 	keyIn := dictionary keys anyOne.
-	associationKeyNotIn := self associationWithKeyNotInToAdd .
-	newDict := self collectionClass new add: associationKeyNotIn; yourself.
-	
-	
-	
+	associationKeyNotIn := self associationWithKeyNotInToAdd.
+	newDict := self collectionClass new
+		add: associationKeyNotIn;
+		yourself.
+
 	"if the key already exist, nothing changes"
-	v := dictionary  at: keyIn.
-	dictionary  declare: keyIn  from: newDict.
-	self assert: (dictionary  at: keyIn ) = v.
-	
+	v := dictionary at: keyIn.
+	dictionary declare: keyIn from: newDict.
+	self assert: (dictionary at: keyIn) equals: v.
+
 	"if the key does not exist, then it gets removed from newDict and is added to the receiver"
 	self nonEmptyDict declare: associationKeyNotIn key from: newDict.
-	self assert: (dictionary  at: associationKeyNotIn key) = associationKeyNotIn value.
-	self assert: (newDict size = 0)
+	self assert: (dictionary at: associationKeyNotIn key) equals: associationKeyNotIn value.
+	self assert: newDict size equals: 0
 ]

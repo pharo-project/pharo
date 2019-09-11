@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'searchedTextListMaxSize'
 	],
-	#category : #'Tool-Finder'
+	#category : #'Tool-Finder-UI'
 }
 
 { #category : #'event subscriptions' }
@@ -551,7 +551,7 @@ FinderUI >> currentSearchMode [
 { #category : #accessing }
 FinderUI >> currentSearchMode: aSymbol [
 	self finder searchingStringSilently: self searchingTextArea contentMorph textMorph text asString.
-	self searchingTextArea contentMorph textMorph hasUnacceptedEdits: false.
+	self searchingTextArea contentMorph hasUnacceptedEdits: false.
 	self finder currentSearchMode: aSymbol
 ]
 

@@ -1,3 +1,6 @@
+"
+Test sample for MethodFinderTest
+"
 Class {
 	#name : #MethodFinderTopClass,
 	#superclass : #Object,
@@ -15,13 +18,13 @@ MethodFinderTopClass class >> forbiddenSelectorsForMethodFinder [
 	^ #(topDisapprovedButBottomApprovedMethod)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderTopClass >> onlyTopDefinedApprovedMethod [
 	"comment stating purpose of message"
 	^ self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderTopClass >> onlyTopDefinedDisaprovedMethod [
 
 	^self
@@ -32,13 +35,13 @@ MethodFinderTopClass >> test [
 	^ self onlyTopDefinedDisaprovedMethod 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderTopClass >> topApprovedButBottomDisapprovedMethod [
 
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MethodFinderTopClass >> topDisapprovedButBottomApprovedMethod [
 
 	^self

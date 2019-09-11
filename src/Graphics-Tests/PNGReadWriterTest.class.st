@@ -272,7 +272,7 @@ PNGReadWriterTest >> encodeAndDecodeDisplay: depth [
 	| form |
 	fileName := 'testDisplay', depth printString,'.png'.
 	form := Form extent: (Display extent min: 560@560) depth: depth.
-	World fullDrawOn: form getCanvas.
+	self currentWorld fullDrawOn: form getCanvas.
 	self encodeAndDecode: form.
 	self deleteFile.
 ]
@@ -403,7 +403,7 @@ PNGReadWriterTest >> setUp [
 
 { #category : #running }
 PNGReadWriterTest >> tearDown [
-	World changed.
+	self currentWorld changed.
 	super tearDown
 ]
 
@@ -635,23 +635,6 @@ PNGReadWriterTest >> testPngEncodingColors32 [
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> testPngEncodingColors8 [
 	self encodeColors: self coloredFiles8 depth: 8.
-]
-
-{ #category : #'tests - bits' }
-PNGReadWriterTest >> testPngSuite [
-	"Requires the suite from 
-		ftp://swrinde.nde.swri.edu/pub/png/images/suite/PngSuite.zip
-	to be present as PngSuite.zip"
-	| file |
-	file := [ FileStream readOnlyFileNamed: 'PngSuite.zip'] on: Error do:[:ex| ex return].
-	file ifNil:[^self].
-	[ | zip entries |zip := ZipArchive new readFrom: file.
-	entries := zip members select:[:mbr| mbr fileName asLowercase endsWith: '.png'].
-	entries do:[:mbr| 
-		(mbr fileName asLowercase first = $x)
-			ifTrue: [self encodeAndDecodeWithError: mbr contentStream ]
-			ifFalse: [self encodeAndDecodeStream: mbr contentStream ] ].
-	] ensure:[file close].
 ]
 
 { #category : #'tests - colors' }

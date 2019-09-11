@@ -51,12 +51,17 @@ Class {
 
 { #category : #'expanding-collapsing' }
 FTBasicItem class >> expandedForm [
-	^ Smalltalk ui theme treeExpandedForm
+	^ self theme treeExpandedForm
+]
+
+{ #category : #accessing }
+FTBasicItem class >> theme [
+	^ Smalltalk ui theme
 ]
 
 { #category : #'expanding-collapsing' }
 FTBasicItem class >> unexpandedForm [
-	^ Smalltalk ui theme treeUnexpandedForm
+	^ self theme treeUnexpandedForm
 ]
 
 { #category : #accessing }
@@ -192,6 +197,12 @@ FTBasicItem >> expandedButton [
 		borderWidth: 0
 ]
 
+{ #category : #accessing }
+FTBasicItem >> expandedChildren [
+	self isExpanded ifFalse: [ ^ {} ].
+	^ self children flatCollect: #withExpandedChildren
+]
+
 { #category : #button }
 FTBasicItem >> generateButton [
 	^ isExpanded
@@ -250,4 +261,9 @@ FTBasicItem >> refreshTable [
 { #category : #updating }
 FTBasicItem >> updateData [
 	children := nil
+]
+
+{ #category : #accessing }
+FTBasicItem >> withExpandedChildren [
+	^ {self} , self expandedChildren
 ]

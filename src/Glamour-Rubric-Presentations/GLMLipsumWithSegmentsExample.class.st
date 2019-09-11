@@ -38,6 +38,6 @@ GLMLipsumWithSegmentsExample >> presentation [
 			seg := RubUnderlinedSegmentMorph from: 1000 to: 1030.
 			seg icon: (self iconNamed: #smallHelpIcon).
 			seg label: 'Print it'.
-			seg iconBlock: [ :segment :event | Transcript show: segment getText ].
+			seg iconBlock: [ :segment :event | self trace: segment getText ].
 			t addTextSegment: seg]
 ]

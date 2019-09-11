@@ -56,6 +56,10 @@ Pharo Syntax Tutorial
 	ProfStef goOn: PharoSyntaxTutorial
 '
 ]]]
+
+ProfStef is interacting with a tutorial player (which encapsulate the logic of navigating within lessons) and lessonView (a dead simple little UI).
+
+
 "
 Class {
 	#name : #ProfStef,
@@ -145,15 +149,19 @@ ProfStef class >> next [
 
 { #category : #zen }
 ProfStef class >> openPharoZenWorkspace [
-	"Open a Workspace showing the Pharo Zen values in random order"
-	<script>
+    "Open a Workspace showing the Pharo Zen values in random order"
 
-	TextPresenter new
-		text: self pharoZenValuesContents;
-		title: 'Pharo Zen' translated;
-		aboutText: self aboutPharoZen;
-		beForText;
-		openWithSpec
+    <script>
+    | presenter |
+    presenter := SpTextPresenter new
+        text: self pharoZenValuesContents;
+        openWithSpec.
+
+    presenter
+        withWindowDo: [ :w | 
+            w
+                title: 'Pharo Zen' translated;
+                aboutText: self aboutPharoZen ]
 ]
 
 { #category : #zen }
@@ -202,7 +210,7 @@ ProfStef class >> previous [
 	^ self default previous
 ]
 
-{ #category : #'class initialization' }
+{ #category : #initialization }
 ProfStef class >> reset [
 	<script>
 		
@@ -251,7 +259,7 @@ ProfStef >> goOn: aTutorialClass [
 ProfStef >> helpBrowserWindow [
 	"Yes this is a hack"
 	
-	^ World systemWindows 
+	^ self currentWorld systemWindows 
 		detect: [ :each | each model class = HelpBrowser ] 
 		ifNone: [ nil ]
 ]

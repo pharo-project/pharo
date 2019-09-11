@@ -43,11 +43,12 @@ GLMMorphicRubricTextRenderer >> modelFor: aPresentation [
 GLMMorphicRubricTextRenderer >> morph [
 	^ RubScrolledTextMorph new
 		getSelectionSelector: #primarySelectionInterval;
-		color: Smalltalk ui theme backgroundColor;
-		textColor: Smalltalk ui theme  textColor;
+		color: self theme backgroundColor;
+		textColor:
+			self theme textColor;
 		textFont: StandardFonts defaultFont;
 		model: textModel;
-		yourself.
+		yourself
 ]
 
 { #category : #private }

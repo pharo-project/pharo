@@ -38,6 +38,14 @@ Class {
 	#category : #'Kernel-Numbers'
 }
 
+{ #category : #'instance creation' }
+Number class >> new [
+
+	self == Number ifTrue: [
+		^ self error: 'Number is an abstract class.  Make a concrete subclass.'].
+	^ super new
+]
+
 { #category : #constants }
 Number class >> one [
 
@@ -529,21 +537,19 @@ Number >> printOn: aStream showingDecimalPlaces: placesDesired [
 
 { #category : #printing }
 Number >> printShowingDecimalPlaces: placesDesired [
-	"Print the receiver showing precisely the given number of places desired.  If placesDesired is positive, a decimal point and that many digits after the decimal point will always be shown.  If placesDesired is zero, a whole number will be shown, without a decimal point."
+	"Print the receiver showing precisely the given number of places desired.  If placesDesired is positive, a decimal point and that many digits after the decimal point will always be shown.  If placesDesired is zero, a whole number will be shown, without a decimal point. Here are some examples:"
 	
-	" Here are some examples:
-		(23 printShowingDecimalPlaces: 2) >>> '23.00'
-		(23.5698 printShowingDecimalPlaces: 2) >>> '23.57'
-		(-234.567 printShowingDecimalPlaces: 5) >>> '-234.56700'
-		(23.4567 printShowingDecimalPlaces: 0) >>> '23'
-		(-23.4567 printShowingDecimalPlaces: 0) >>> '-23'
-		(100000000 printShowingDecimalPlaces: 1) >>> '100000000.0'
-		(0.98 printShowingDecimalPlaces: 5) >>> '0.98000'
-		(-0.98 printShowingDecimalPlaces: 2) >>> '-0.98'
-		(2.567 printShowingDecimalPlaces: 2) >>> '2.57'
-		(-2.567 printShowingDecimalPlaces: 2) >>> '-2.57'
-		(0 printShowingDecimalPlaces: 2) >>> '0.00'
-	"
+	"(23 printShowingDecimalPlaces: 2) >>> '23.00'"
+	"(23.5698 printShowingDecimalPlaces: 2) >>> '23.57'"
+	"(-234.567 printShowingDecimalPlaces: 5) >>> '-234.56700'"
+	"(23.4567 printShowingDecimalPlaces: 0) >>> '23'"
+	"(-23.4567 printShowingDecimalPlaces: 0) >>> '-23'"
+	"(100000000 printShowingDecimalPlaces: 1) >>> '100000000.0'"
+	"(0.98 printShowingDecimalPlaces: 5) >>> '0.98000'"
+	"(-0.98 printShowingDecimalPlaces: 2) >>> '-0.98'"
+	"(2.567 printShowingDecimalPlaces: 2) >>> '2.57'"
+	"(-2.567 printShowingDecimalPlaces: 2) >>> '-2.57'"
+	"(0 printShowingDecimalPlaces: 2) >>> '0.00'"
 
 	^String new: placesDesired + 10 streamContents: [:aStream |
 		self printOn: aStream showingDecimalPlaces: placesDesired]
@@ -556,6 +562,13 @@ Number >> printString [
 
 { #category : #printing }
 Number >> printStringBase: base [
+	"Return a String representation of this number in base b."
+	
+	"10 printStringBase: 10 >>> '10'"
+	"-10 printStringBase: 10 >>> '-10'"
+	"10 printStringBase: 2 >>> '1010'"
+	"10 printStringBase: 16 >>> 'A'"
+	
 	^ String streamContents:
 		[:strm | self printOn: strm base: base]
 ]
@@ -749,6 +762,10 @@ Number >> storeOn: aStream base: base [
 
 { #category : #printing }
 Number >> storeStringBase: base [
+	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
+	"(10 storeStringBase: 16) >>> '16rA'"
+	"(10 storeStringBase: 10) >>> '10'"
+
 	^ String streamContents: [:strm | self storeOn: strm base: base]
 ]
 

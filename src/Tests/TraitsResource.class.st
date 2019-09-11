@@ -170,7 +170,7 @@ TraitsResource >> createTraitNamed: aSymbol uses: aTraitComposition [
 	trait := Trait
 		named: aSymbol
 		uses: aTraitComposition
-		category: self categoryName.
+		package: self categoryName.
 	self createdClassesAndTraits add: trait.
 	^trait
 ]
@@ -431,14 +431,15 @@ TraitsResource >> t9: anObject [
 
 { #category : #running }
 TraitsResource >> tearDown [
+
 	self createdClassesAndTraits reverse
 		do: [ :aClassOrTrait | 
 			| behaviorName |
 			behaviorName := aClassOrTrait name.
 			Smalltalk globals
 				at: behaviorName
-				ifPresent: [ :classOrTrait | classOrTrait removeFromSystem ].
-			ChangeSet current removeClassChanges: behaviorName ].
+				ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ] ].
+
 	createdClassesAndTraits := self
 		t1:
 			(self

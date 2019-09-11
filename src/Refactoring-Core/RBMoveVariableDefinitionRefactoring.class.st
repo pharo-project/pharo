@@ -38,8 +38,7 @@ RBMoveVariableDefinitionRefactoring class >> model: aRBSmalltalk bindTight: anIn
 { #category : #transforming }
 RBMoveVariableDefinitionRefactoring >> checkNodes: sequenceNodes [ 
 	(sequenceNodes 
-		detect: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]
-		ifNone: [nil]) notNil 
+		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]) 
 		ifTrue: [^false].
 	sequenceNodes do: 
 			[:each | 
@@ -53,25 +52,23 @@ RBMoveVariableDefinitionRefactoring >> checkNodes: sequenceNodes [
 
 { #category : #transforming }
 RBMoveVariableDefinitionRefactoring >> checkParseTree [
+
 	| node |
+
 	blockNodes := OrderedCollection new.
-	node := self whichVariableNode: parseTree
-				inInterval: interval
-				name: name.
-	node isNil
-		ifTrue: [self refactoringFailure: 'Unable to locate node in parse tree'].
+	node := self whichVariableNode: parseTree inInterval: interval name: name.
+	node ifNil: [ self refactoringFailure: 'Unable to locate node in parse tree' ].
 	definingNode := node whoDefines: name.
-	definingNode isNil
-		ifTrue: [self refactoringFailure: 'Cannot locate variable definition'].
+	definingNode ifNil: [ self refactoringFailure: 'Cannot locate variable definition' ].
 	definingNode isSequence
-		ifFalse: [self refactoringFailure: 'Variable is an argument'].
-	(self usesDirectly: definingNode)
-		ifTrue: [self refactoringFailure: 'Variable already bound tightly as possible'].
-	(self checkNodes: (self subblocksIn: definingNode))
-		ifFalse: [self refactoringError: 'Variable is possibly read before written']
+		ifFalse: [ self refactoringFailure: 'Variable is an argument' ].
+	( self usesDirectly: definingNode )
+		ifTrue: [ self refactoringFailure: 'Variable already bound tightly as possible' ].
+	( self checkNodes: ( self subblocksIn: definingNode ) )
+		ifFalse: [ self refactoringError: 'Variable is possibly read before written' ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMoveVariableDefinitionRefactoring >> class: aClass selector: aSelector interval: anInterval [ 
 	interval := anInterval.
 	class := self classObjectFor: aClass.
@@ -113,16 +110,18 @@ RBMoveVariableDefinitionRefactoring >> storeOn: aStream [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [ 
+RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '[:`@blockTemps | | `@temps | `@.Statements]'
-		do: 
-			[:aNode :answer | 
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
+		do: [ :aNode :answer | 
 			(aNode references: name)
-				ifTrue: [answer add: aNode].
-			answer].
-	^searcher executeTree: aParseTree initialAnswer: OrderedCollection new
+				ifTrue: [ answer add: aNode ].
+			answer ].
+	^ searcher
+		executeTree: aParseTree
+		initialAnswer: OrderedCollection new
 ]
 
 { #category : #transforming }
@@ -133,12 +132,12 @@ RBMoveVariableDefinitionRefactoring >> transform [
 ]
 
 { #category : #transforming }
-RBMoveVariableDefinitionRefactoring >> usesDirectly: aParseTree [ 
+RBMoveVariableDefinitionRefactoring >> usesDirectly: aParseTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
-			do: [:aNode :answer | answer];
-		matches: name do: [:aNode :answer | true].
-	^searcher executeTree: aParseTree initialAnswer: false
+			do: [ :aNode :answer | answer ];
+		matches: name do: [ :aNode :answer | true ].
+	^ searcher executeTree: aParseTree initialAnswer: false
 ]

@@ -16,6 +16,44 @@ Class {
 	#category : #'Graphics-Canvas'
 }
 
+{ #category : #caching }
+FormCanvas class >> defaultTranslucentPatterns [
+	| patterns |
+	patterns := Array new: 8.
+	#(1 2 4 8)
+		do: [ :d | 
+			| mask bits pattern patternList |
+			patternList := Array new: 5.
+			mask := (1 bitShift: d) - 1.
+			bits := 2 * d.
+			[ bits >= 32 ]
+				whileFalse: [ mask := mask bitOr: (mask bitShift: bits).	"double the length of mask"
+					bits := bits + bits ].
+
+			"0% pattern"
+			pattern := Bitmap with: 0 with: 0.
+			patternList at: 1 put: pattern.
+
+			"25% pattern"
+			pattern := Bitmap with: mask with: 0.
+			patternList at: 2 put: pattern.
+
+			"50% pattern"
+			pattern := Bitmap with: mask with: mask bitInvert32.
+			patternList at: 3 put: pattern.
+
+			"75% pattern"
+			pattern := Bitmap with: mask with: 4294967295.
+			patternList at: 4 put: pattern.
+
+			"100% pattern"
+			pattern := Bitmap with: 4294967295 with: 4294967295.
+			patternList at: 5 put: pattern.
+			patterns at: d put: patternList ].
+
+	^ patterns
+]
+
 { #category : #'instance creation' }
 FormCanvas class >> extent: aPoint [
 
@@ -38,58 +76,6 @@ FormCanvas class >> extent: extent depth: depth origin: aPoint clipRect: aRectan
 		yourself
 ]
 
-{ #category : #caching }
-FormCanvas class >> initializeTranslucentPatterns [
-	
-	TranslucentPatterns := Array new: 8. 
-	#(1 2 4 8 ) do: 
-		[ :d | | mask bits pattern patternList | 
-		patternList := Array new: 5.
-		mask := (1 bitShift: d) - 1.
-		bits := 2 * d.
-		[ bits >= 32 ] whileFalse: 
-			[ mask := mask bitOr: (mask bitShift: bits).	"double the length of mask"
-			bits := bits + bits ].
-		"0% pattern"
-		pattern := Bitmap 
-			with: 0
-			with: 0.
-		patternList 
-			at: 1
-			put: pattern.
-		"25% pattern"
-		pattern := Bitmap 
-			with: mask
-			with: 0.
-		patternList 
-			at: 2
-			put: pattern.
-		"50% pattern"
-		pattern := Bitmap 
-			with: mask
-			with: mask bitInvert32.
-		patternList 
-			at: 3
-			put: pattern.
-		"75% pattern"
-		pattern := Bitmap 
-			with: mask
-			with: 4294967295.
-		patternList 
-			at: 4
-			put: pattern.
-		"100% pattern"
-		pattern := Bitmap 
-			with: 4294967295
-			with: 4294967295.
-		patternList 
-			at: 5
-			put: pattern.
-		TranslucentPatterns 
-			at: d
-			put: patternList ]
-]
-
 { #category : #'instance creation' }
 FormCanvas class >> on: aForm [
 
@@ -99,8 +85,8 @@ FormCanvas class >> on: aForm [
 
 { #category : #caching }
 FormCanvas class >> translucentPatterns [
-	TranslucentPatterns isNil ifTrue:[ self initializeTranslucentPatterns ].
-	^ 	TranslucentPatterns  
+
+	^ TranslucentPatterns ifNil: [ TranslucentPatterns := self defaultTranslucentPatterns ]
 ]
 
 { #category : #accessing }
@@ -298,11 +284,11 @@ FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor:
 FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given oval."
 
-	self flag: #bob.		"this and its siblings could be moved up to Canvas with the
+	self flag: #pharoFixMe.		"Bob: this and its siblings could be moved up to Canvas with the
 						right #balloonFillOval:..."
 
 	(aFillStyle isBitmapFill and:[aFillStyle isKindOf: InfiniteForm]) ifTrue:[
-		self flag: #fixThis.
+		self flag: #pharoFixMe. "See PluggableCanvas>>fillOval:fillStyle:borderWidth:borderColor:"
 		^self fillOval: aRectangle color: aFillStyle borderWidth: bw borderColor: bc].
 	(aFillStyle isSolidFill) ifTrue:[
 		^self fillOval: aRectangle color: aFillStyle asColor borderWidth: bw borderColor: bc].
@@ -432,58 +418,6 @@ FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 		displayOnPort: clippedPort
 		offsetBy: additionalOffset
 
-]
-
-{ #category : #initialization }
-FormCanvas >> initializeTranslucentPatterns [
-	
-	TranslucentPatterns := Array new: 8. 
-	#(1 2 4 8 ) do: 
-		[ :d | | mask bits pattern patternList | 
-		patternList := Array new: 5.
-		mask := (1 bitShift: d) - 1.
-		bits := 2 * d.
-		[ bits >= 32 ] whileFalse: 
-			[ mask := mask bitOr: (mask bitShift: bits).	"double the length of mask"
-			bits := bits + bits ].
-		"0% pattern"
-		pattern := Bitmap 
-			with: 0
-			with: 0.
-		patternList 
-			at: 1
-			put: pattern.
-		"25% pattern"
-		pattern := Bitmap 
-			with: mask
-			with: 0.
-		patternList 
-			at: 2
-			put: pattern.
-		"50% pattern"
-		pattern := Bitmap 
-			with: mask
-			with: mask bitInvert32.
-		patternList 
-			at: 3
-			put: pattern.
-		"75% pattern"
-		pattern := Bitmap 
-			with: mask
-			with: 4294967295.
-		patternList 
-			at: 4
-			put: pattern.
-		"100% pattern"
-		pattern := Bitmap 
-			with: 4294967295
-			with: 4294967295.
-		patternList 
-			at: 5
-			put: pattern.
-		TranslucentPatterns 
-			at: d
-			put: patternList ]
 ]
 
 { #category : #testing }

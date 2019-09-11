@@ -74,7 +74,7 @@ GLMMorphicTextRenderer >> textModelFor: aPresentation [
 
 { #category : #rendering }
 GLMMorphicTextRenderer >> textMorphForModel:  aTextModel [
-	^ (GLMPluggableTextMorph
+	^ (RubPluggableTextMorph
 		on: aTextModel
 		text: #text
 		accept: #accept:notifying:
@@ -86,7 +86,7 @@ GLMMorphicTextRenderer >> textMorphForModel:  aTextModel [
 		layoutFrame: (LayoutFrame identity);
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
-		color: Smalltalk ui theme backgroundColor;
+		color: self theme backgroundColor;
 		detachAllKeymapCategories;
 		yourself
 ]

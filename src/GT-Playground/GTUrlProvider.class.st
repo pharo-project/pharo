@@ -81,7 +81,7 @@ GTUrlProvider >> urlProvider [
 	^ urlProvider ifNil: [ urlProvider := self class urlProvider ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GTUrlProvider >> urlProvider: anUrlObject [
 	urlProvider := anUrlObject asZnUrl 
 ]

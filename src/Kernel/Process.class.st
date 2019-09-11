@@ -47,8 +47,7 @@ Process class >> allocatePSKey: aPSVariable [
 	if object is not registered, first search for an empty slot for insertion and if not found, grow an array to add new object"
 
 	| index |
-	PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ].
-	PSKeysSema critical: [
+	self psKeysSema critical: [
 		PSKeys 
 			ifNil: [ PSKeys := WeakArray with: aPSVariable. index := 1 ]
 			ifNotNil: [ 
@@ -91,6 +90,13 @@ Process class >> forContext: aContext priority: anInteger [
 	newProcess priority: anInteger.
 	Processor activeProcess installEnvIntoForked: newProcess.
 	^newProcess
+]
+
+{ #category : #'process specific' }
+Process class >> psKeysSema [
+	"Isolate handling of class variable"
+
+	^PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ]
 ]
 
 { #category : #'process specific' }
@@ -145,23 +151,19 @@ Process >> calleeOf: aContext [
 ]
 
 { #category : #'changing suspended state' }
-Process >> complete: aContext [ 
+Process >> complete: aContext [
 	"Run self until aContext is popped or an unhandled error is raised.  Return self's new top context, unless an unhandled error was raised then return the signaler context (rather than open a debugger)."
-	
-	| ctxt pair error |
+
+	| ctxt pair |
 	ctxt := suspendedContext.
-	suspendedContext := nil.  "disable this process while running its stack in active process below"
+	suspendedContext := nil.	"disable this process while running its stack in active process below"
 	pair := Processor activeProcess
-				evaluate: [ctxt runUntilErrorOrReturnFrom: aContext]
+				evaluate: [ ctxt runUntilErrorOrReturnFrom: aContext ]
 				onBehalfOf: self.
 	suspendedContext := pair first.
-	error := pair second.
-	error class = Halt ifTrue: [ 
-		aContext methodNode 
-			pragmaNamed: #debuggerCompleteToSender 
-			ifPresent: [ ^ self completeTo: aContext sender ] ].
-	error ifNotNil: [^ error signalerContext].
-	^ suspendedContext
+	^ pair second
+		ifNil: [ suspendedContext ]
+		ifNotNil: [ :error | error completeProcess: self with: aContext ]
 ]
 
 { #category : #'changing suspended state' }
@@ -455,7 +457,7 @@ Process >> pvtSignal: anException list: aList [
 	"Since this method is not called in a normal way, we need to take care
 	that it doesn't directly return to the caller (because I believe that could
 	have the potential to push an unwanted object on the caller's stack)."
-
+	<debuggerCompleteToSender>
 	| blocker |
 	self isActiveProcess ifFalse: [^self].
 	anException signal.

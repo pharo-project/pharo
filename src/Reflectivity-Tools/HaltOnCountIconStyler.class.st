@@ -21,5 +21,6 @@ HaltOnCountIconStyler >> iconLabelBlock: aNode [
 
 { #category : #testing }
 HaltOnCountIconStyler >> shouldStyleNode: aNode [
-	^aNode isMessage and: [ aNode selector = #haltOnCount:]
+	^ aNode isMessage
+		and: [ #(#haltOnCount: #haltFromCount:) includes: aNode selector ]
 ]

@@ -12,10 +12,11 @@ Class {
 	#name : #FFICallback,
 	#superclass : #Object,
 	#instVars : [
-		'callback',
-		'thunk',
+		'backendCallback',
 		'functionSpec',
-		'block'
+		'block',
+		'calloutAPIClass',
+		'library'
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }
@@ -54,7 +55,7 @@ FFICallback class >> forAddress: address [
 		Of course, the callback needs to exist before :)
 		And the callback needs to be created with FFICallback (not plain Alien callbacks), then 
 		we can be sure block in fact contains the FFICallback instance"
-	^ (Callback forAddress: address) evaluator
+	^ (Callback forAddress: address) evaluator frontendCallback
 ]
 
 { #category : #'private primitives' }
@@ -69,74 +70,28 @@ FFICallback class >> signature: aSignature block: aBlock [
 	^ self new signature: aSignature block: aBlock
 ]
 
-{ #category : #evaluation }
-FFICallback >> argumentsFor: stackPointer context: callbackContext [
-	| index architecture intRegisterCount intRegisterSize intRegisterIndex floatRegisterCount floatRegisterSize floatRegisterIndex floatRegisters intRegisters structureRegisterLayout |
-	self flag: 'TODO: Refactor and improve this code.'.
-	architecture := FFIArchitecture forCurrentArchitecture.
-	
-	intRegisterCount := architecture integerRegisterCountForParameterPassing.
-	intRegisterSize := architecture integerRegisterSize.
-	intRegisterIndex := 0.
-	
-	floatRegisterCount := architecture floatRegisterCountForParameterPassing.
-	floatRegisterSize := architecture floatRegisterSize.
-	floatRegisterIndex := 0.
-	
-	floatRegisters := callbackContext floatregargsp.
-	intRegisters := callbackContext intregargsp.
-	
-	index := 1 + architecture shadowCallSpaceSize.
-	^ functionSpec arguments 
-		collect: [ :each | | value parameterClass |
-			parameterClass := each stackParameterClass.
-			(parameterClass == #integer and: [ intRegisterIndex < intRegisterCount and: [each typeSize <= intRegisterSize ]]) ifTrue: [
-				value := each callbackValueFor: intRegisters at: intRegisterIndex*intRegisterSize + 1.
-				intRegisterIndex := intRegisterIndex + 1
-			] ifFalse: [ 
-				(parameterClass == #float and: [ floatRegisterIndex < floatRegisterCount and: [each typeSize <= floatRegisterSize ]]) ifTrue: [
-					value := each callbackValueFor: floatRegisters at: floatRegisterIndex*floatRegisterSize + 1.
-					floatRegisterIndex := floatRegisterIndex + 1
-				] ifFalse: [
-					(parameterClass == #structure and:
-					[ (structureRegisterLayout := architecture computeStructureRegisterPassingLayout: each objectClass) isNotNil and:
-					[intRegisterIndex + structureRegisterLayout integerRegisterCount <= intRegisterSize and:
-					[floatRegisterIndex + structureRegisterLayout floatRegisterCount <= floatRegisterSize]]]) ifTrue: [
-						"This is structure whose content was splitted in registers."
-						value := each objectClass new.
-						structureRegisterLayout fields do: [ :structureField |
-							structureField registerClass == #integer ifTrue: [
-								1 to: structureField size do: [ :i |
-									value getHandle byteAt: structureField offset + i put:
-										(intRegisters unsignedByteAt: intRegisterIndex*intRegisterSize + i)
-								].
-							] ifFalse: [
-								self assert: structureField registerClass == #float.
-								1 to: structureField size do: [ :i |
-									value getHandle byteAt: structureField offset + i put:
-										(floatRegisters unsignedByteAt: floatRegisterIndex*floatRegisterSize + i)
-								].
-								floatRegisterIndex := floatRegisterIndex + 1
-							] 
-						]
-					] ifFalse: [ 
-						"Memory parameter" 
-						value := each callbackValueFor: stackPointer at: index.
-						index := index + each typeSize.
-					]
-				].
-			].
-		
-			value ].	
+{ #category : #accessing }
+FFICallback >> backendCallback [
+	"declare the backend callback"
+	^ backendCallback ifNil: [ backendCallback := self calloutAPIClass newCallbackBackendFor: self ].
+
 ]
 
-{ #category : #evaluation }
-FFICallback >> executeWithArguments: argumentValues [
-	
-	^ [ block valueWithArguments: argumentValues ]
-		on: Error 
-		fork: [ :e | e pass ]
-		return: [ self returnOnError ]
+{ #category : #accessing }
+FFICallback >> beNull [
+
+	self backendCallback beNull
+]
+
+{ #category : #accessing }
+FFICallback >> calloutAPIClass [
+
+	^ calloutAPIClass ifNil: [ super calloutAPIClass ]
+]
+
+{ #category : #accessing }
+FFICallback >> calloutAPIClass: anObject [
+	calloutAPIClass := anObject
 ]
 
 { #category : #private }
@@ -153,6 +108,28 @@ FFICallback >> ffiInstVarArgument: argName generator: generator [
 		yourself
 ]
 
+{ #category : #accessing }
+FFICallback >> ffiLibrary: aFFILibrary [
+
+	library := aFFILibrary
+]
+
+{ #category : #accessing }
+FFICallback >> ffiLibraryName [
+
+	^ (library ifNil: [ 'default' ]) asFFILibrary
+]
+
+{ #category : #accessing }
+FFICallback >> functionSpec [
+	^ functionSpec
+]
+
+{ #category : #accessing }
+FFICallback >> getHandle [
+	^ self thunk
+]
+
 { #category : #private }
 FFICallback >> newParser [ 
 	^ FFIFunctionParser new
@@ -166,29 +143,30 @@ FFICallback >> newParser [
 FFICallback >> returnOnError [
 
 	^ functionSpec returnType defaultReturnOnError
+
 ]
 
 { #category : #initialization }
-FFICallback >> signature: signature "<String>" block: aBlock [ "<BlockClosure>"
+FFICallback >> signature: signature block: aBlock [
 	functionSpec := self newParser parseAnonymousFunction: signature.
 	block := aBlock.
-	"declare the real callback"
-	callback := Callback forCallbackEvaluator: self.
-	"keeping the thunk here to easy the FFI method compilation"
-	thunk := callback thunk.
+
 ]
 
 { #category : #accessing }
 FFICallback >> thunk [
-	^ thunk
+
+	(block isNil or: [functionSpec isNil])
+		ifTrue: [ ^ ExternalAddress null ].
+
+	^ self backendCallback thunk
 ]
 
-{ #category : #evaluation }
-FFICallback >> valueWithContext: callbackContext sp: stackPointer [
-	| argumentValues |
+{ #category : #evaluating }
+FFICallback >> valueWithArguments: args [
 
-	argumentValues := self argumentsFor: stackPointer context: callbackContext.
-	^ functionSpec returnType 
-		callbackReturnOn: callbackContext 
-		for: (self executeWithArguments: argumentValues)
+	^ [ block valueWithArguments: args ]
+		on: Error 
+		fork: [ :e | e debug ]
+		return: [ self returnOnError ]
 ]

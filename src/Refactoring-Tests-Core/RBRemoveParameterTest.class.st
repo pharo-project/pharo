@@ -9,11 +9,11 @@ RBRemoveParameterTest >> testNonExistantName [
 	self
 		shouldFail: (RBRemoveParameterRefactoring 
 				removeParameter: 'asdf'
-				in: RBBasicLintRuleTest
+				in: RBBasicLintRuleTestData
 				selector: #checkClass:);
 		shouldFail: (RBRemoveParameterRefactoring 
 				removeParameter: 'aSmalllintContext'
-				in: RBBasicLintRuleTest
+				in: RBBasicLintRuleTestData
 				selector: #checkClass1:)
 ]
 
@@ -38,11 +38,11 @@ RBRemoveParameterTest >> testRemoveParameter [
 		removeParameter: 'anArg'
 		in: RBRefactoryTestDataApp
 		selector: ('rename' , 'ThisMethod:') asSymbol.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBRefactoryTestDataApp.
-	self assert: (class parseTreeFor: #renameThisMethod) = (RBParser parseMethod: 'renameThisMethod
+	self assert: (class parseTreeFor: #renameThisMethod) equals: (self parseMethod: 'renameThisMethod
 								^self').
-	self assert: (class parseTreeFor: #callMethod) = (RBParser parseMethod: 'callMethod
+	self assert: (class parseTreeFor: #callMethod) equals: (self parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)
 ]

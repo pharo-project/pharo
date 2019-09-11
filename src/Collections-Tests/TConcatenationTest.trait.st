@@ -26,11 +26,11 @@ TConcatenationTest >> secondCollection [
 { #category : #'tests - fixture' }
 TConcatenationTest >> test0FixtureConcatenationTest [
 	self firstCollection.
-	self deny: self firstCollection isEmpty.
+	self denyEmpty: self firstCollection.
 	self firstCollection.
-	self deny: self firstCollection isEmpty.
+	self denyEmpty: self firstCollection.
 	self empty.
-	self assert: self empty isEmpty
+	self assertEmpty: self empty
 ]
 
 { #category : #'tests - concatenation' }

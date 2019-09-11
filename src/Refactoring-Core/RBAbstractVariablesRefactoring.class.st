@@ -109,7 +109,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariables [
 	variables do: [ :each | self abstractInstanceVariable: each ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [ 
 	| poolRefactoring |
 	tree := aBRProgramNode.
@@ -140,11 +140,12 @@ RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
 	instVarWriters := Set new.
 	classVarReaders := Set new.
 	classVarWriters := Set new.
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '`var := ``@anything'
-			do: [:aNode :answer | self processAssignmentNode: aNode];
-		matches: '`var' do: [:aNode :answer | self processReferenceNode: aNode].
+			do: [ :aNode :answer | self processAssignmentNode: aNode ];
+		matches: '`var'
+			do: [ :aNode :answer | self processReferenceNode: aNode ].
 	searcher executeTree: tree.
 	self removeDefinedClassVariables
 ]
@@ -174,7 +175,7 @@ RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) notNil ifTrue: [^self].
+	(aNode whoDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName) 
 		ifTrue: [instVarWriters add: varName].
 	(self classVariableNames includes: varName) 
@@ -186,7 +187,7 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
 	ignore = varName ifTrue: [^self].
-	(aNode whoDefines: varName) notNil ifTrue: [^self].
+	(aNode whoDefines: varName) ifNotNil: [^self].
 	(self instanceVariableNames includes: varName) 
 		ifTrue: [instVarReaders add: varName].
 	(self classVariableNames includes: varName) 

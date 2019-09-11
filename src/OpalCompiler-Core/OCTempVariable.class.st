@@ -55,12 +55,6 @@ OCTempVariable >> hash [
 	^ name hash bitXor: (usage hash bitXor: scope hash).
 ]
 
-{ #category : #debugging }
-OCTempVariable >> indexFromIR [
-
-	^scope outerNotOptimizedScope node irInstruction indexForVarNamed: name
-]
-
 { #category : #initialization }
 OCTempVariable >> initialize [
 	super initialize.
@@ -135,25 +129,18 @@ OCTempVariable >> markWrite [
 
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
-	"Usually the loop is useless, the first case with i = offset returns the correct result. 
-	However, the loop is required for specific case as Debugger restart feature."
-
 	^ aContext tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name)
 ]
 
 { #category : #debugging }
 OCTempVariable >> searchFromContext: aContext scope: contextScope [
-	"Usually the loop is useless, the first case with i = offset returns the correct result. 
-	However, the loop is required for specific case as Debugger restart feature."
 
 	^ contextScope lookupVar: name inContext: aContext
 ]
 
 { #category : #debugging }
 OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
-	
-	"offset := contextScope outerOffsetTo: scope.
-	contextForRead := aContext.
-	offset timesRepeat: [contextForRead := contextForRead outerContext].
-	"^aContext tempAt: self indexFromIR put: aValue
+	^aContext 
+		tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name) 
+		put: aValue
 ]

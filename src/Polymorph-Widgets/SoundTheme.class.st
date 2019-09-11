@@ -98,7 +98,7 @@ SoundTheme >> alertSound [
 	^self sounds at: #alert ifAbsent: [self defaultSound]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultAbortSound [
 	"Answer the default abort sound."
 
@@ -112,7 +112,7 @@ SoundTheme >> defaultAlertSound [
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultDefaultSound [
 	"Answer the default default sound!"
 
@@ -126,14 +126,14 @@ SoundTheme >> defaultDenySound [
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultMessageSound [
 	"Answer the default message sound."
 
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultQuestionSound [
 	"Answer the default question sound."
 
@@ -147,21 +147,21 @@ SoundTheme >> defaultSound [
 	^self sounds at: #default ifAbsent: [self defaultDefaultSound]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultWindowCloseSound [
 	"Answer the default window close sound."
 
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultWindowMaximizeSound [
 	"Answer the default window maximize sound."
 
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultWindowMinimizeSound [
 	"Answer the default window minimize sound."
 
@@ -175,14 +175,14 @@ SoundTheme >> defaultWindowOpenSound [
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultWindowRestoreDownSound [
 	"Answer the default window restore down sound."
 
 	^self defaultSound
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> defaultWindowRestoreUpSound [
 	"Answer the default window restore up sound."
 
@@ -204,7 +204,7 @@ SoundTheme >> initialize [
 	self initializeSounds
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SoundTheme >> initializeSounds [
 	"Initialize the receiver's event sounds."
 

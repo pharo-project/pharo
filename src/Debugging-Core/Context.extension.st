@@ -284,8 +284,7 @@ Context >> stepToHome: aContext [
 		context := aContext insertSender: (Context
 			contextOn: UnhandledError do: [:ex |
 				error ifNil: [
-					"this is ugly but it fixes the side-effects of not sending an Unhandled error on Halt"
-					error := (ex isKindOf: Halt) ifTrue: [ ex ] ifFalse: [ ex exception ].
+					error := ex exception.
 					topContext := thisContext.
 					ex resumeUnchecked: here jump ]
 						ifNotNil: [ ex pass ]]).
@@ -296,7 +295,7 @@ Context >> stepToHome: aContext [
 	[ctxt := ctxt step.
 	error ifNotNil: [
 		"Error was raised, remove inserted above contexts then return signaler context"
-			"aContext terminateTo: context sender."  "remove above ensure and handler contexts"
+			aContext terminateTo: context sender.  "remove above ensure and handler contexts"
 			^ {ctxt. error}].
 	
 	home == ctxt home] whileFalse: [

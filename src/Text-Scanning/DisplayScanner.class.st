@@ -55,7 +55,6 @@ Class {
 		'foregroundColor',
 		'backgroundColor',
 		'defaultTextColor',
-		'paragraphColor',
 		'morphicOffset',
 		'ignoreColorChanges',
 		'lastDisplayableIndex',
@@ -106,8 +105,7 @@ DisplayScanner >> crossedX [
 
 { #category : #private }
 DisplayScanner >> defaultTextColor [
-	defaultTextColor ifNil:[ defaultTextColor := Smalltalk ui theme textColor ].
-	^defaultTextColor
+	^ defaultTextColor ifNil:[ defaultTextColor := Smalltalk ui theme textColor ]
 ]
 
 { #category : #private }
@@ -195,7 +193,7 @@ DisplayScanner >> fillTextBackground [
 	self subclassResponsibility
 ]
 
-{ #category : #displaying }
+{ #category : #initialization }
 DisplayScanner >> initialize [
 	super initialize.
 	ignoreColorChanges := false.

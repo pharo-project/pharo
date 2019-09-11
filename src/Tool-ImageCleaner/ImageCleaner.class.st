@@ -37,16 +37,42 @@ ImageCleaner class >> cleanUpForRelease [
 	self new cleanUpForRelease
 ]
 
+{ #category : #accessing }
+ImageCleaner class >> examplePackages [
+	<script: 'self examplePackages inspect'>
+	
+	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
+]
+
+{ #category : #accessing }
+ImageCleaner class >> helpPackages [
+	<script: 'self helpPackages inspect'>
+	
+	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Help' ]
+]
+
+{ #category : #accessing }
+ImageCleaner class >> testPackages [
+	<script: 'self testPackages inspect'>
+	
+	^ (RPackageOrganizer default packageNames
+		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
+		copyWithout: 'ReleaseTests'
+]
+
 { #category : #api }
 ImageCleaner >> cleanUpForProduction [
 	<script: 'self new cleanUpForProduction'>
 
+	|unloading|	
 	PolymorphSystemSettings showDesktopLogo: false.
-	self packagesForCleanUpInProduction
-		do: [ :each | (MCPackage named: each) unload ].
-	self helpPackages do: [ :each | (MCPackage named: each) unload ].
-	self testPackages do: [ :each | (MCPackage named: each) unload ].
-	self examplePackages do: [ :each | (MCPackage named: each) unload ].
+	
+	unloading := [ :each | (MCPackage named: each) unload ].	
+	self packagesForCleanUpInProduction do: unloading.
+	self class helpPackages do: unloading.
+	self class testPackages do: unloading.
+	self class examplePackages do: unloading.
+	
 	self cleanUpForRelease
 ]
 
@@ -56,20 +82,24 @@ ImageCleaner >> cleanUpForRelease [
 
 	Author fullName: 'MrCleaner'.
 	self cleanUpMethods.
-	OrderedCollection compactAllInstances.
 	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
 	SystemNavigation new
 		allObjectsDo: [ :each | 
 			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
 				ifTrue: [ each releaseCachedState ] ].
 	
-	self removeEmptyCategories.
-	self removeEmptyPackages.
+	self 
+		removeEmptyCategories;
+		removeEmptyPackages.
+		
 	Smalltalk organization sortCategories.
-	Smalltalk garbageCollect.
-	Smalltalk cleanOutUndeclared. 
-	Smalltalk fixObsoleteReferences.
-	Smalltalk cleanUp: true except: #() confirming: false.	
+
+	Smalltalk 
+		garbageCollect;
+		cleanOutUndeclared; 
+		fixObsoleteReferences;
+		cleanUp: true except: #() confirming: false.	
+	HashedCollection rehashAll.		
 	Author reset
 ]
 
@@ -78,8 +108,11 @@ ImageCleaner >> cleanUpMethods [
 	"Make sure that all methods in use are restarted"
 	<script: 'self new cleanUpMethods'>
 	WeakArray restartFinalizationProcess.
-	WorldState allInstancesDo: [ :ws | ws convertAlarms; cleanStepList; resetWorldMenu].
-	WorldState allInstancesDo: [ :ws | ws instVarNamed: 'menuBuilder' put: nil ].
+	
+	WorldState 
+		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList; resetWorldMenu];
+		allInstancesDo: [ :ws | ws instVarNamed: 'menuBuilder' put: nil ].
+		
 	ProcessBrowser initialize.
 	Delay restartTimerEventLoop.
 ]

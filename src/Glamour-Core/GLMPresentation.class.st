@@ -334,9 +334,11 @@ GLMPresentation >> doValidate: anObject on: aPort [
 
 { #category : #accessing }
 GLMPresentation >> dynamicActions [
+
 	"These are actions that make sense for the entire presentation.
 	They are dynamic in the sense that they will be evaluated lazily by the renderer"
-	dynamicActionsBlock isNil ifTrue: [ ^ OrderedCollection new ].
+
+	dynamicActionsBlock ifNil: [ ^ OrderedCollection new ].
 	^ dynamicActionsBlock glamourValue: self
 ]
 
@@ -411,7 +413,7 @@ GLMPresentation >> hasTransformation [
 	^ transformation isNotNil and: [ transformation ~= #yourself ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPresentation >> initialize [
 	super initialize.
 	updateActions := OrderedCollection new.
@@ -428,7 +430,7 @@ GLMPresentation >> initialize: aBlock [
 	initializationBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMPresentation >> initializePresentation [
 	initializationBlock ifNotNil: [ initializationBlock value: self ]
 ]
@@ -633,14 +635,15 @@ GLMPresentation >> postCopy [
 
 { #category : #printing }
 GLMPresentation >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream
 		nextPutAll: '(id=';
-		nextPutAll: self identityHash printString;
+		print: self identityHash ;
 		nextPutAll: ' title=';
-		nextPutAll: self titleValue asString;
+		print: self titleValue ;
 		nextPutAll: ' pane=';
-		nextPutAll: self pane printString;
+		print: self pane ;
 		nextPutAll: ')'
 ]
 
@@ -686,10 +689,8 @@ GLMPresentation >> requestRefresh [
 
 { #category : #copying }
 GLMPresentation >> rootPrototype [
-	^ self parentPrototype isNil 
-		ifTrue: [ self ] 
-		ifFalse: [ self parentPrototype rootPrototype ]
 
+	^ self parentPrototype ifNil: [ self ] ifNotNil: [ self parentPrototype rootPrototype ]
 ]
 
 { #category : #'accessing ports' }

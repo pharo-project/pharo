@@ -55,7 +55,7 @@ CallbackForWin64X64 >> valueInContext: callbackContext [ "<VMCallbackContext32|V
 	numEvaluatorArgs = 2 ifTrue:
 		[^self perform: evaluator
 			with: callbackContext
-			with: callbackContext intregargsp].
+			with: callbackContext stackp].
 	numEvaluatorArgs = 3 ifTrue:
 		[^self perform: evaluator
 			with: callbackContext

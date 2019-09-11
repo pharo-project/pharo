@@ -3,6 +3,17 @@ I represent the user environment variables. See  `man environ` for more details.
 Get access using: 
 
 	Smalltalk os environment
+
+I have a Dictionary-like API to access the system environment variables.
+The common denominator for all platforms implements a simple API that uses strings.
+In other words, methods
+
+- #at:
+- #at:put:
+
+and its variants receive normal strings and decide wether they have to encode those strings to platform bytes or not depending on the platform.
+
+My subclasses may or may not provide additional APIs to have more control on the particular encoding used.
 "
 Class {
 	#name : #OSEnvironment,
@@ -48,7 +59,7 @@ OSEnvironment class >> initialize [
 
 { #category : #testing }
 OSEnvironment class >> isAvailable [
-	self flag: #todo. "Replace this for a check of FFI available"
+	self flag: #pharoTodo. "Replace this for a check of FFI available"
 	self environment at: #FFICalloutAPI ifAbsent: [ ^ false ].
 	^ true
 ]
@@ -94,39 +105,75 @@ OSEnvironment >> associationsDo: aBlock [
 
 { #category : #accessing }
 OSEnvironment >> at: aKey [
+	"Gets the value of an environment variable called `aKey`.
+	Throws a KeyNotFound exception if not found.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
 	^ self at: aKey ifAbsent: [ KeyNotFound signalFor: aKey ]
 ]
 
 { #category : #accessing }
 OSEnvironment >> at: aKey ifAbsent: aBlock [
-	^ (self getEnv: aKey) ifNil: aBlock
+	"Gets the value of an environment variable called `aKey`.
+	Execute aBlock if absent.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+	
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSEnvironment >> at: key ifAbsentPut: aBlock [ 
-	"Return the value at the given key. 
-	If key is not included in the receiver store the result 
-	of evaluating aBlock as new value."
+OSEnvironment >> at: aKey ifAbsentPut: aBlock [ 
+	"Gets the value of an environment variable called `aKey`.
+	If absent, insert the value given by aBlock.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
 
-	^ self at: key ifAbsent: [ self at: key put: aBlock value ]
+	^ self at: aKey ifAbsent: [ self at: aKey put: aBlock value ]
 ]
 
 { #category : #accessing }
 OSEnvironment >> at: aKey ifPresent: aBlock [
+	"Gets the value of an environment variable called `aKey` and invoke aBlock with it.
+	Return nil if absent.
+	It is the system reponsibility to manage the encodings of the argument and return values.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
 	^ aBlock value: (self at: aKey ifAbsent: [ ^ nil ])
 ]
 
 { #category : #accessing }
-OSEnvironment >> at: key ifPresent: oneArgBlock ifAbsent: absentBlock [
-	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the oneArgBlock with the value associated with the key, otherwise answer the value of absentBlock."
+OSEnvironment >> at: aKey ifPresent: presentBlock ifAbsent: absentBlock [
+	"Gets the value of an environment variable called `aKey`.
+	Call presentBlock with it if present.
+	Execute absentBlock if absent.
+	It is the system reponsibility to manage the encodings of the argument and return values.
 	
-	self at: key ifPresent: [ :v | ^oneArgBlock cull: v ].
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+	
+	self at: aKey ifPresent: [ :v | ^ presentBlock cull: v ].
 	^absentBlock value
 ]
 
 { #category : #accessing }
 OSEnvironment >> at: aKey put: aValue [
-	^ self setEnv: aKey value: aValue
+	"Sets the value of an environment variable called `aKey` to `aValue`.
+	It is the system reponsibility to manage the encodings of both arguments.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
+	^ self subclassResponsibility
 ]
 
 { #category : #enumeration }
@@ -136,23 +183,17 @@ OSEnvironment >> do: aBlock [
 ]
 
 { #category : #accessing }
-OSEnvironment >> getEnv: varName [
-	
-	"This method calls the Standard C Library getenv() function."
-	"OSEnvironment current getEnv: 'HOME' "
-	
-	<primitive: 'primitiveGetenv' module: '' error: ec>
-	ec ifNil: [ ^self getEnvViaFFI: varName ].
-	ec == #'bad argument' ifTrue: [
-		varName isString 
-			ifFalse: [ ^self getEnv: varName asString ] ].
-	self primitiveFail
-]
+OSEnvironment >> getEnv: aKey [
+	"Gets the value of an environment variable called `aKey`.
+	Returns nil if not found."
+	self
+		deprecated: 'Use #at:ifAbsent: instead'
+		on: '16 January 2019'
+		in: #Pharo7
+		transformWith: '`@receiver getEnv: `@arg' 
+						-> '`@receiver at: `@arg ifAbsent: [ nil ]'.
 
-{ #category : #private }
-OSEnvironment >> getEnvViaFFI: arg1 [
-	"This method calls the Standard C Library getenv() function. The name of the argument (arg1) should fit decompiled version."
-	 ^ self ffiCall: #( String getenv (String arg1) ) module: LibC
+ 	^ self at: aKey ifAbsent: [ nil ]
 ]
 
 { #category : #testing }
@@ -167,7 +208,7 @@ OSEnvironment >> includesKey: aKey [
 	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 OSEnvironment >> initializeWith: anOSPlatform [
 	super initialize.
 	platform := anOSPlatform
@@ -207,8 +248,14 @@ OSEnvironment >> platform [
 ]
 
 { #category : #accessing }
-OSEnvironment >> removeKey: key [
-	^ self unsetEnv: key
+OSEnvironment >> removeKey: aKey [
+	"Removes the entry `aKey` from the environment variables.
+	It is the system reponsibility to manage the encoding of the argument.
+	
+	This is the common denominator API for all platforms.
+	Rationale: Windows does not (compared to *nix systems) provide a encoded byte representation of the value. Windows has instead its own wide string representation."
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }

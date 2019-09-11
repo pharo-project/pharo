@@ -6,7 +6,6 @@ Class {
 	#superclass : #RubParagraphDecorator,
 	#instVars : [
 		'styler',
-		'shoutIsAvailable',
 		'text',
 		'replaceStart',
 		'replaceStop'
@@ -140,7 +139,7 @@ RubShoutStylerDecorator >> style: aText [
 	[ ^ self styler style: aText ]
 		on: Error
 		do: [ :ex | 
-			ex logCr.
+			ex traceCr.
 			^ aText ]
 ]
 

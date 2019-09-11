@@ -443,8 +443,8 @@ HeapTest >> test0FixtureRequirementsOfTGrowableTest [
 	self nonEmpty.
 	self element.
 	self elementNotInForOccurrences.
-	self assert: self empty isEmpty.
-	self deny: self nonEmpty isEmpty.
+	self assertEmpty: self empty.
+	self denyEmpty: self nonEmpty.
 	self assert: (self nonEmpty includes: self element).
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences)
 ]
@@ -523,14 +523,13 @@ HeapTest >> testFirst [
 
 { #category : #'basic tests' }
 HeapTest >> testHeap [
-	| heap | 
+	| heap |
 	heap := Heap new.
 	self assert: heap isHeap.
-	
-	self assert: heap isEmpty.
-	heap add: 1.
-	self deny: heap isEmpty
 
+	self assertEmpty: heap.
+	heap add: 1.
+	self denyEmpty: heap
 ]
 
 { #category : #tests }

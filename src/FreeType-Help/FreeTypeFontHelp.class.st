@@ -1,3 +1,6 @@
+"
+This help book explains how to interact with FreetypeFonts
+"
 Class {
 	#name : #FreeTypeFontHelp,
 	#superclass : #CustomHelp,

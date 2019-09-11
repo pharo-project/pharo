@@ -21,14 +21,14 @@ PopupChoiceDialogWindow class >> chooseFrom: aList lines: lines title: title [
 	"self chooseFrom: #('yes' 'no') lines: #(1 2)  title: 'Foo is the question'"
 	"self chooseFrom: #('yes' 'no') lines: #()  title: 'Foo is the question'"
 	| pd |
-	pd := (self newWithTheme: World theme)
+	pd := (self newWithTheme: self currentWorld theme)
 		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
 		labels: aList;
 		lines: (lines ifNil: [#()]);
 		model: aList.
 	"World may be not the best choice because a window may want to be in controlaList 
 	this point should be investigated based on UIManager default modalMorph"
-	^(World openModal: pd) choice
+	^(self currentWorld openModal: pd) choice
 ]
 
 { #category : #'instance creation' }
@@ -320,7 +320,7 @@ PopupChoiceDialogWindow >> newFilterEntry [
 		getEnabled: nil
 		help: 'Filters the options according to a matching substring' translated.
 	entry acceptOnCR: false.
-	entry textMorph crAction: (MessageSend receiver: self selector: #ok).
+	entry crAction: (MessageSend receiver: self selector: #ok).
 	^entry 
 
 ]

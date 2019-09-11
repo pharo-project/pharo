@@ -13,7 +13,6 @@ Class {
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
 		'font',
-		'surface',
 		'utfConverter',
 		'canvas',
 		'advance',
@@ -74,9 +73,9 @@ http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font
 			int strlen,
 			void ** glyphs,
 			int * numGlyphs,
-			0,
-			0,
-			0))
+			NULL,
+			NULL,
+			NULL))
 ]
 
 { #category : #accessing }
@@ -152,7 +151,7 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 	^ glyphs
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CairoFreetypeFontRenderer >> initialize [ 
 	utfConverter := CairoUTF8Converter new.
 	advance := 0@0.

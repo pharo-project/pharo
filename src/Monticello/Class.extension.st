@@ -3,17 +3,17 @@ Extension { #name : #Class }
 { #category : #'*Monticello' }
 Class >> asClassDefinition [
 	"we use a very ugly hack to encode complex slots as string with MC... later MC should model Slots directly"
-	self usesSpecialVariables ifFalse: [  
+	self needsSlotClassDefinition ifFalse: [  
 	 ^MCClassDefinition
 		name: self name
 		superclassName: (self superclass ifNil: [ nil asString ] ifNotNil: [ self superclass name ])
 		traitComposition: self traitCompositionString
 		classTraitComposition: self class traitCompositionString
 		category: self category 
-		instVarNames: self instVarNames
+		instVarNames:  (self localSlots collect: #name)
 		classVarNames: self classVarNames
 		poolDictionaryNames: self sharedPoolNames
-		classInstVarNames: self class instVarNames
+		classInstVarNames: (self class localSlots collect: #name)
 		type: self typeOfClass
 		comment: self organization classComment	asString
 		commentStamp: self organization commentStamp].

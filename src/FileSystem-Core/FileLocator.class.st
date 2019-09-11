@@ -229,6 +229,11 @@ FileLocator class >> documents [
 	^ self origin: #documents
 ]
 
+{ #category : #origins }
+FileLocator class >> downloads [
+	^ self origin: #downloads
+]
+
 { #category : #'windows-origins' }
 FileLocator class >> driveNamed: driveName [
 	^ FileReference fileSystem: (FileSystem disk) path: Path / (driveName, ':')
@@ -426,7 +431,7 @@ FileLocator >> hash [
 	^ origin hash bitXor: path hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileLocator >> initializeWithOrigin: aSymbol path: aPath [
 	self initialize.
 	origin := aSymbol.

@@ -17,15 +17,6 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
-{ #category : #reshaping }
-VariableLayout >> extendAgain: aLayout with: someScope [
-	| result |
-	result := self species new.
-	result host: aLayout host.
-	result slotScope: someScope.
-	^ result
-]
-
 { #category : #format }
 VariableLayout >> instanceSpecification [
 	^ self hasFields

@@ -4,9 +4,6 @@ SUnit tests for key mapping categories
 Class {
 	#name : #KMCategoryTest,
 	#superclass : #AbstractKeymappingTest,
-	#instVars : [
-		'categoryContainer'
-	],
 	#category : #'Keymapping-Tests'
 }
 

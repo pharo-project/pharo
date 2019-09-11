@@ -197,110 +197,27 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
 	| outerColor |
-	(aButton valueOfProperty: #noBorder ifAbsent: [false]) ifTrue: [
-		^ SimpleBorder new width: 0; baseColor: Color transparent ].
-	outerColor := self glamorousDarkBaseColorFor: aButton.
-	^SimpleBorder new
-					width: 1;
-					baseColor: outerColor
+	(aButton valueOfProperty: #noBorder ifAbsent: [false]) 
+		ifTrue: [ ^ SimpleBorder new 
+							width: 0; 
+							baseColor: Color transparent ].
+	outerColor := self darkBaseColorFor: aButton.
+	^ SimpleBorder new
+			width: 1;
+			baseColor: outerColor
 ]
 
 { #category : #'border-styles' }
 PharoLightTheme >> configureWindowBorderFor: aWindow [
-"	super configureWindowBorderFor: aWindow.
-	aWindow roundedCorners: #()"
+
 	| aStyle |
-	
-	aStyle := 
-		SimpleBorder new 
-			color: (Color lightGray);
-			width: 1.
-			
-	aWindow borderStyle: aStyle.
+	aStyle := SimpleBorder new 
+					color: (Color lightGray);
+					width: 1.
+	aWindow borderStyle: aStyle
 ]
 
-{ #category : #private }
-PharoLightTheme >> glamorousBaseColorFor: aButton [
-	^ self class baseColor
-	"unfortunately, it looks like paneColor does not always return the wanted color"
-	"aButton paneColorOrNil ifNil: [Color r: 200 g: 200 b: 200 range: 255]"
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousBasePassiveBackgroundColorFor: aButton [
-	^ self class basePassiveBackgroundColor
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousBaseSelectionColorFor: aButton [
-	^ self class baseSelectionColor
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousDarkBaseColorFor: aButton [
-	^ self class darkBaseColor
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousLightColorFor: aButton [
-	^ self class lightBaseColor
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousLightSelectionColorFor: aMorph [
-	^ self class lightSelectionColor
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
-	"Return the normal button fillStyle for the given button."
-	
-"	| baseColor |
-	baseColor := self glamorousBaseColorFor: aMorph.
-	^ self glamorousNormalFillStyleWithBaseColor: baseColor for: aMorph height: anInteger
-"
-
-	^ SolidFillStyle color: (self glamorousLightColorFor: aMorph)
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
-	| top bottom |
-	top := aColor darker.
-	bottom := aColor.
-	^(GradientFillStyle ramp: {
-			0.0->top.
-			0.7->bottom.})
-		origin: aMorph bounds origin;
-		direction: 0 @ anInteger;
-		radial: false
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousSelectedFillStyleFor: aMorph height: anInteger [
-	
-
-	^ SolidFillStyle color: (self glamorousLightSelectionColorFor:  aMorph)
-
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousVeryLightFillStyleFor: aMorph height: anInteger [
-	"Return the very light button fillStyle for the given button."
-	
-"	| baseColor |
-	baseColor := self glamorousBaseColorFor: aMorph.
-	^ self glamorousNormalFillStyleWithBaseColor: baseColor for: aMorph height: anInteger
-"
-	^ SolidFillStyle color: (self glamorousVeyLightSelectionColorFor: aMorph)
-]
-
-{ #category : #private }
-PharoLightTheme >> glamorousVeyLightSelectionColorFor: aMorph [
-	^ self class veryLightSelectionColor
-]
-
-{ #category : #private }
+{ #category : #initialization }
 PharoLightTheme >> initialize [
 	"self beCurrent"
 
@@ -309,7 +226,7 @@ PharoLightTheme >> initialize [
 	self settings preferGradientFill: false.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #forms }
 PharoLightTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 
@@ -326,7 +243,7 @@ PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 			ifTrue: [0 @ aScrollbar height]
 			ifFalse: [aScrollbar width @ 0])"
 "	^ SolidFillStyle color: Color lightGray lighter."
-	^ self glamorousSelectedFillStyleFor: aScrollbar height: aScrollbar height
+	^ self selectedFillStyleFor: aScrollbar height: aScrollbar height
 ]
 
 { #category : #'fill-styles-taskbar' }

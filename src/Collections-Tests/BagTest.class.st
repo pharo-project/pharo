@@ -11,8 +11,6 @@ Class {
 		'nonEmpty',
 		'collectResult',
 		'emptyButAllocatedWith20',
-		'elementExistsTwice',
-		'element',
 		'collectionWithElement',
 		'collectionIn',
 		'collectionNotIn',
@@ -371,6 +369,23 @@ BagTest >> testAsBag [
 ]
 
 { #category : #'basic tests' }
+BagTest >> testAsDictionary [
+
+	| aBag aDictonary |
+	aBag := Bag new.	
+	aBag add:'a' withOccurrences: 4.
+	aBag add:'b' withOccurrences: 2.
+	aDictonary := aBag asDictionary.
+	self assert: aDictonary size equals: 2.
+	self assert: (aBag as: Dictionary) equals: aDictonary.
+	self assert: (aDictonary at: 'a') equals: 4.
+	self assert: aBag asDictionary equals: aBag valuesAndCounts.
+	self deny: aBag asDictionary == aBag valuesAndCounts.
+	
+	
+]
+
+{ #category : #'basic tests' }
 BagTest >> testAsSet [
 
 	| aBag aSet |
@@ -404,8 +419,8 @@ BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
 BagTest >> testCreation [
 	| bag |
 	bag := Bag new.
-	self assert: (bag size) equals: 0.
-	self assert: (bag isEmpty)
+	self assert: bag size equals: 0.
+	self assertEmpty: bag
 ]
 
 { #category : #tests }
@@ -450,12 +465,12 @@ BagTest >> testEqual [
 BagTest >> testFlatCollect [
 	| bag |
 	bag := Bag new.
-	bag add: { 1. 2. 3 }.
-	bag add: { 4. 5. 6 }.
+	bag add: {1 . 2 . 3}.
+	bag add: {4 . 5 . 6}.
 
 	self assert: (bag flatCollect: [ :x | x ]) equals: #(1 2 3 4 5 6) asBag.
 	self assert: (bag flatCollect: [ :x | x ]) class == Bag.
-	self assert: (#() asBag flatCollect: [:x | 1 to: 4 ]) isEmpty
+	self assertEmpty: (#() asBag flatCollect: [ :x | 1 to: 4 ])
 ]
 
 { #category : #'tests - includes' }
@@ -501,19 +516,19 @@ BagTest >> testOccurrencesOf [
 BagTest >> testRemove [
 	| bag item |
 	item := 'test item'.
-	bag := Bag new. 
-	
+	bag := Bag new.
+
 	bag add: item.
-	self assert: (bag size) equals: 1.
+	self assert: bag size equals: 1.
 	bag remove: item.
-	self assert: bag isEmpty.
-	
+	self assertEmpty: bag.
+
 	bag add: item withOccurrences: 2.
 	bag remove: item.
 	bag remove: item.
-	self assert: (bag size) equals: 0.
-	
-	self should: [bag remove: item.] raise: Error
+	self assert: bag size equals: 0.
+
+	self should: [ bag remove: item ] raise: Error
 ]
 
 { #category : #tests }

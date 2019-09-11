@@ -4,7 +4,7 @@ Drop list supporting morphs in list.
 Class {
 	#name : #MorphDropListMorph,
 	#superclass : #DropListMorph,
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }

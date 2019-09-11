@@ -17,13 +17,11 @@ Class {
 		'nonEmpty',
 		'otherList',
 		'link',
-		'collectionWithNil',
 		'collectionWithoutNil',
 		'nonEmpty1Element',
 		'collectionWithoutEqualElements',
 		'elementNotIn',
 		'elementIn',
-		'sameAtendAndBegining',
 		'collection5Elements',
 		'collectResult',
 		'unsortedCollection',
@@ -111,9 +109,9 @@ LinkedListTest >> collectionWithSortableElements [
 
 { #category : #requirements }
 LinkedListTest >> collectionWithoutEqualElements [
+	" return a collection not including equal elements "
 
-" return a collection not including equal elements "
-	^collectionWithoutEqualElements 
+	^ collectionWithoutEqualElements
 ]
 
 { #category : #requirements }
@@ -328,22 +326,22 @@ LinkedListTest >> tearDown [
 
 { #category : #tests }
 LinkedListTest >> test01add [
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	list add: link1.
 	self assert: list size = 1.
 	self assert: list first = link1.
-	
+
 	list add: link2.
 	self assert: list size = 2.
 	self assert: list first = link1.
 	self assert: list second = link2.
-	
+
 	list add: link3.
 	self assert: list size = 3.
 	self assert: list first = link1.
 	self assert: list second = link2.
 	self assert: list third = link3.
-	
+
 	list add: link4.
 	self assert: list size = 4.
 	self assert: list first = link1.
@@ -354,23 +352,23 @@ LinkedListTest >> test01add [
 
 { #category : #tests }
 LinkedListTest >> test02addLast [
-	self assert: list isEmpty.
-	
+	self assertEmpty: list.
+
 	list addLast: link1.
 	self assert: list size = 1.
 	self assert: list first = link1.
-	
+
 	list addLast: link2.
 	self assert: list size = 2.
 	self assert: list first = link1.
 	self assert: list second = link2.
-	
+
 	list addLast: link3.
 	self assert: list size = 3.
 	self assert: list first = link1.
 	self assert: list second = link2.
 	self assert: list third = link3.
-	
+
 	list addLast: link4.
 	self assert: list size = 4.
 	self assert: list first = link1.
@@ -381,23 +379,23 @@ LinkedListTest >> test02addLast [
 
 { #category : #tests }
 LinkedListTest >> test03addFirst [
-	self assert: list isEmpty.
-	
+	self assertEmpty: list.
+
 	list addFirst: link1.
 	self assert: list size = 1.
 	self assert: list first = link1.
-	
+
 	list addFirst: link2.
 	self assert: list size = 2.
 	self assert: list first = link2.
 	self assert: list second = link1.
-	
+
 	list addFirst: link3.
 	self assert: list size = 3.
 	self assert: list first = link3.
 	self assert: list second = link2.
 	self assert: list third = link1.
-	
+
 	list addFirst: link4.
 	self assert: list size = 4.
 	self assert: list first = link4.
@@ -408,23 +406,23 @@ LinkedListTest >> test03addFirst [
 
 { #category : #tests }
 LinkedListTest >> test04addBefore [
-	self assert: list isEmpty.
-	
+	self assertEmpty: list.
+
 	list add: link1.
 	self assert: list size = 1.
 	self assert: list first == link1.
-	
+
 	list add: link2 before: link1.
 	self assert: list size = 2.
 	self assert: list first == link2.
 	self assert: list second == link1.
-	
+
 	list add: link3 before: link1.
 	self assert: list size = 3.
 	self assert: list first == link2.
 	self assert: list second == link3.
 	self assert: list third == link1.
-	
+
 	list add: link4 before: link1.
 	self assert: list size = 4.
 	self assert: list first == link2.
@@ -435,7 +433,7 @@ LinkedListTest >> test04addBefore [
 
 { #category : #tests }
 LinkedListTest >> test05addBefore [
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	
 	list add: link1.
 	self assert: list size = 1.
@@ -462,7 +460,7 @@ LinkedListTest >> test05addBefore [
 
 { #category : #tests }
 LinkedListTest >> test06addAfter [
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	
 	list add: link1.
 	self assert: list size = 1.
@@ -489,7 +487,7 @@ LinkedListTest >> test06addAfter [
 
 { #category : #tests }
 LinkedListTest >> test07addAfter [
-	self assert: list isEmpty.
+	self assertEmpty: list.
 	
 	list add: link1.
 	self assert: list size = 1.
@@ -590,7 +588,7 @@ LinkedListTest >> test10removeFirst [
 	self assert: list first == link4.
 	
 	list removeFirst.
-	self assert: list isEmpty
+	self assertEmpty: list
 ]
 
 { #category : #tests }
@@ -622,7 +620,7 @@ LinkedListTest >> test11removeLast [
 	self assert: list first == link1.
 	
 	list removeFirst.
-	self assert: list isEmpty
+	self assertEmpty: list
 ]
 
 { #category : #tests }
@@ -654,7 +652,7 @@ LinkedListTest >> test12remove [
 	self assert: list first == link4.
 	
 	list remove: link4.
-	self assert: list isEmpty
+	self assertEmpty: list
 ]
 
 { #category : #tests }
@@ -663,48 +661,48 @@ LinkedListTest >> test13remove [
 	list add: link2.
 	list add: link3.
 	list add: link4.
-	
+
 	self assert: list size = 4.
 	self assert: list first == link1.
 	self assert: list second == link2.
 	self assert: list third == link3.
 	self assert: list fourth == link4.
-	
+
 	list remove: link1.
 	self assert: list size = 3.
 	self assert: list first == link2.
 	self assert: list second == link3.
 	self assert: list third == link4.
-	
+
 	list remove: link4.
 	self assert: list size = 2.
 	self assert: list first == link2.
 	self assert: list second == link3.
-	
+
 	list remove: link2.
 	self assert: list size = 1.
 	self assert: list first == link3.
-	
+
 	list remove: link3.
-	self assert: list isEmpty
+	self assertEmpty: list
 ]
 
 { #category : #tests }
 LinkedListTest >> test14removeIfAbsent [
 	list add: link1.
-	
+
 	self assert: list size = 1.
 	self assert: list first == link1.
-	
+
 	list remove: link1.
-	self assert: list isEmpty.
-	
-	[list remove: link1]
+	self assertEmpty: list.
+
+	[ list remove: link1 ]
 		on: Error
-		do: [^ self].
-		
+		do: [ ^ self ].
+
 	"The execution should not get here. If yes, something went wrong."
-	self assert: false
+	self fail
 ]
 
 { #category : #tests }

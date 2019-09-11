@@ -7,7 +7,7 @@ Class {
 	#category : #'FileSystem-Tests-Core-Visitors'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 AbstractEnumerationVisitorTest class >> isAbstract [
 	^ self name = #AbstractEnumerationVisitorTest
 ]
@@ -16,7 +16,7 @@ AbstractEnumerationVisitorTest class >> isAbstract [
 AbstractEnumerationVisitorTest >> assertEntries: references are: expected [
 	| strings |
 	self assert: references isArray.
-	references do: [ :ea | self assert: ea class equals: FileSystemDirectoryEntry ].
+	references do: [ :ea | self assert: ea class equals: MemoryDirectoryEntry ].
 	strings := references collect: [ :ea | ea reference pathString ].
 	self assert: strings equals: expected
 ]
@@ -29,5 +29,5 @@ AbstractEnumerationVisitorTest >> root [
 { #category : #running }
 AbstractEnumerationVisitorTest >> setUp [
 	super setUp.
-	self setUpGreek.
+	self setUpGreek
 ]

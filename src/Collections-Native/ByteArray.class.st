@@ -144,26 +144,12 @@ ByteArray >> hash [
 
 { #category : #converting }
 ByteArray >> hex [
-    " an alternate implementation was | result stream |
-	result := String new: self size * 2.
-	stream := result writeStream.
-	1 to: self size do: [ :ix | |each|
-		each := self at: ix.
-		stream
-			nextPut: ('0123456789ABCDEF' at: each // 16 + 1);
-			nextPut: ('0123456789ABCDEF' at: each \\ 16 + 1)].
-    ^ result"
-	
-	"Answer a hexa decimal representation of the receiver"
-	| string v index map |
-	map := '0123456789abcdef'.
-	string := String new: self size * 2. "hex"
-	index := 0.
-	1 to: self size do: [ :i |
-		v := self at: i.
-		string at: (index := index + 1) put: (map at: (v bitShift: -4) + 1).
-		string at: (index := index + 1) put: (map at: (v bitAnd: 15) + 1)].
-	^string
+	"Answer a lowercase hexadecimal String representation of the receiver"
+		
+	^ String
+		new: self size * 2
+		streamContents: [ :out |
+			self do: [ :each | each printLowercaseHexByteOn: out ] ]
 ]
 
 { #category : #printing }
@@ -183,9 +169,8 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 					<< (i printPaddedWith: $0 to: 8 base: 16);
 					<< '  '.
 				string := String new writeStream ].
-			aStream
-				<< (ch printPaddedWith: $0 to: 2 base: 16);
-				<< ' '.
+			ch printHexByteOn: aStream.
+			aStream space.
 			(ch between: 32 and: 126) ifTrue: 
 				[ string nextPut: (Character value: ch) ]
 			ifFalse:
@@ -273,6 +258,14 @@ ByteArray >> longAt: index put: value bigEndian: aBool [
 ]
 
 { #category : #printing }
+ByteArray >> printHexOn: characterWriteStream [
+	"Print a hexadecimal representation of the receiver on characterWriteStream
+	using exactly 2 characters for each byte"
+
+	self do: [ :each | each printHexByteOn: characterWriteStream ]
+]
+
+{ #category : #printing }
 ByteArray >> printOn: aStream [
 
 	aStream nextPutAll: '#['.
@@ -282,23 +275,22 @@ ByteArray >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #'initialize-release' }
-ByteArray >> readHexFrom: aStream [
-	"Initialize the receiver from a hexadecimal string representation"
-	| map v ch value |
-	map := '0123456789abcdefABCDEF'.
-	1 to: self size do: [ :i |
-		ch := aStream next.
-		v := (map indexOf: ch) - 1.
-		((v between: 0 and: 15) or: [((v:= v - 6) between: 0 and: 15)]) ifFalse:[^self error: 'Hex digit 
-expected'].
-		value := v bitShift: 4.
-		ch := aStream next.
-		v := (map indexOf: ch) - 1.
-		((v between: 0 and: 15) or: [((v:= v - 6) between: 0 and: 15)]) ifFalse:[^self error: 'Hex digit 
-expected'].
-		value := value + v.
-		self at: i put: value].
+{ #category : #streaming }
+ByteArray >> putOn: aStream [
+	"Write the receiver onto aStream by iterating over its elements.
+	In general we assume aStream accepts the receiver's elements as element type.
+	This is an optimisation.
+	Return self."
+
+	aStream nextPutAll: self
+]
+
+{ #category : #initialization }
+ByteArray >> readHexFrom: characterReadStream [
+	"Initialize the receiver from a hexadecimal representation."
+	
+	1 to: self size do: [ :offset |
+		self at: offset put: (Integer readHexByteFrom: characterReadStream) ]
 ]
 
 { #category : #private }

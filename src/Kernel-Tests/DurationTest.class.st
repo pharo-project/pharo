@@ -248,7 +248,9 @@ DurationTest >> testHumanReadablePrintString [
 		equals: '1 day 1 hour 1 minute 1 second'.
 	self 
 		assert: (Duration days: 2 hours: 4 minutes: 8 seconds: 16) humanReadablePrintString 
-		equals: '2 days 4 hours 8 minutes 16 seconds'
+		equals: '2 days 4 hours 8 minutes 16 seconds'.
+		
+	self shouldnt: [ 17.6782 years humanReadablePrintString ] raise: MessageNotUnderstood .
 ]
 
 { #category : #tests }

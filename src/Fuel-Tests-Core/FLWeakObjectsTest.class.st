@@ -4,7 +4,7 @@ SUnit tests for fuel serialization of weak objects
 Class {
 	#name : #FLWeakObjectsTest,
 	#superclass : #FLSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }

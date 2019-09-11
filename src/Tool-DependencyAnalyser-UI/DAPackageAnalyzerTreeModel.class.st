@@ -162,8 +162,7 @@ DAPackageAnalyzerTreeModel >> actionOnSave [
 { #category : #protocol }
 DAPackageAnalyzerTreeModel >> actionWhenTextFieldChanged [
 	textPackageField
-		whenTextChanged: [ 
-			textPackageField text 
+		whenTextChanged: [ textPackageField text
 				ifEmpty: [ self resetFilter ]
 				ifNotEmpty: [ self filter: textPackageField text ].
 			self buildRoots ]
@@ -299,13 +298,10 @@ DAPackageAnalyzerTreeModel >> initializePresenter [
 { #category : #initialization }
 DAPackageAnalyzerTreeModel >> initializeWidgets [
 	super initializeWidgets.
-	
 	packageLabel := self newLabel label: 'Analysis of packages'.
-	
 	textPackageField := self newTextInput
 		ghostText: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
-	
 	self initializeButtons
 ]
 

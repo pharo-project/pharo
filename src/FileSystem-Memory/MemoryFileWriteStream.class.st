@@ -38,7 +38,10 @@ MemoryFileWriteStream >> file: aMemoryFileSystemFile [
 
 { #category : #writing }
 MemoryFileWriteStream >> flush [
-	file updateContents: self stream contents
+	| contents |
+	contents := self stream contents.
+	(contents size > 0)
+		ifTrue: [ file updateContents: contents ]
 ]
 
 { #category : #testing }
@@ -59,6 +62,15 @@ MemoryFileWriteStream >> nextPutAll: aCollection [
 { #category : #positioning }
 MemoryFileWriteStream >> position [
 	^ self stream position
+]
+
+{ #category : #positioning }
+MemoryFileWriteStream >> position: anInteger [
+	"Set the current position for accessing the objects to be anInteger, as long 
+	as anInteger is within the bounds of the receiver's contents. If it is not, 
+	create an error notification."
+
+	stream position: anInteger
 ]
 
 { #category : #positioning }

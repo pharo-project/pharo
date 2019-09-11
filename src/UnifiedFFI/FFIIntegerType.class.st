@@ -13,6 +13,12 @@ FFIIntegerType >> defaultReturnOnError [
 	^ 0
 ]
 
+{ #category : #callbacks }
+FFIIntegerType >> extractFromCallbackOn: aCallbackArgumentReader [
+ 
+	^ aCallbackArgumentReader extractIntegerType
+]
+
 { #category : #'stack parameter classification' }
 FFIIntegerType >> stackValueParameterClass [
 	^ #integer

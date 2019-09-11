@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotLayoutEqualityTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #accessing }
@@ -24,7 +24,7 @@ SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isEqualToClas
 	
 	self assert: aClass classLayout equals: aClass classLayout.	
 	self assert: aClass classLayout equals: anotherClass classLayout.
-	self assert: aClass classLayout hash equals: anotherClass classLayout hash.
+	self assert: aClass classLayout hash equals: anotherClass classLayout hash
 ]
 
 { #category : #helpers }
@@ -41,7 +41,7 @@ SlotLayoutEqualityTest >> assertClassBuiltWith: blockToBuildAClass isNotEqualToC
 			in: blockToBuildAnotherClass ].
 	
 	self assert: aClass classLayout ~= anotherClass classLayout.
-	self assert: aClass classLayout hash ~= anotherClass classLayout hash.
+	self assert: aClass classLayout hash ~= anotherClass classLayout hash
 ]
 
 { #category : #tests }
@@ -75,7 +75,7 @@ SlotLayoutEqualityTest >> testLayoutWithSlotsEquals [
 			isEqualToClassBuiltWith: [:builder | 
 				builder 
 					layoutClass: aLayoutClass;
-					slots: { #field1}  ].]
+					slots: { #field1}  ]]
 ]
 
 { #category : #tests }

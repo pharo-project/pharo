@@ -7,6 +7,11 @@ Class {
 	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
+{ #category : #values }
+GLMBrickThemerModule >> theme [ 
+	^ Smalltalk ui theme
+]
+
 { #category : #accessing }
 GLMBrickThemerModule >> themer [
 

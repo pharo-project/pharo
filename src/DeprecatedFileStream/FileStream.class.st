@@ -8,7 +8,7 @@ What you should remember:
 - DO NOT USE FileStream class
 - 'file.txt' asFileReference readStream and similar methods now return an instance of ZnCharacterReadStream instead of MultiByteFileStream
 - 'file.txt' asFileReference writeStream and similar methods now return an instance of ZnCharacterWriteStream instead of MultiByteFileStream
-- the new API has a more clear separation between binary and text files
+- the new API has a clearer separation between binary and text files
 
 1. Basic Files
 By default files are binary. Not buffered.
@@ -18,8 +18,8 @@ Obsolete code:
 FileStream readOnlyFileNamed: '1.txt' do: [ :stream | 
     stream upToEnd ].
 New code:
-(File named: ‘name’) readStream.
-(File named: ‘name’) readStreamDo: [ :stream | … ].
+(File named: 'name') readStream.
+(File named: 'name') readStreamDo: [ :stream | … ].
 '1.txt' asFileReference readStreamDo: [ :stream | 
     stream upToEnd ].
 
@@ -190,9 +190,6 @@ To use the file system for most applications, you typically create a FileStream.
 Class {
 	#name : #FileStream,
 	#superclass : #ReadWriteStream,
-	#instVars : [
-		'rwmode'
-	],
 	#classVars : [
 		'Stderr',
 		'Stdin',
@@ -294,6 +291,10 @@ FileStream class >> flushAndVoidStdioFiles [
 FileStream class >> forceNewFileNamed: fileName [
  	"Create a new file with the given name, and answer a stream opened for writing on that file. If the file already exists, delete it without asking before creating the new file."
 
+	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [ ((CannotDeleteFileException fileName: fileName)
+		messageText: 'Could not delete the old version of file ' , fileName) signal.
+		^ NullStream new ].
+
 	^self concreteStream forceNewFileNamed: fileName
 ]
 
@@ -389,6 +390,13 @@ FileStream class >> oldFileOrNoneNamed: fileName [
 ]
 
 { #category : #'instance creation' }
+FileStream class >> onHandle: aFileSystemHandle [
+	^ self concreteStream new
+		open: aFileSystemHandle fullName
+		forWrite: aFileSystemHandle isWritable
+]
+
+{ #category : #'instance creation' }
 FileStream class >> readOnlyFileNamed: fileName [ 
 	^ self concreteStream readOnlyFileNamed: (self fullName: fileName)
 ]
@@ -435,7 +443,7 @@ FileStream class >> standardIOStreamNamed: moniker forWrite: forWrite [
 	
 	| index |
 	
-	self flag: #todo. "This is an ugly hack, while waiting for a real fix for windows. There  several problems with this approach, but it allow us to run tests, etc."
+	"This is an ugly hack, while waiting for a real fix for windows. There  several problems with this approach, but it allow us to run tests, etc."
 	Smalltalk os isWin32 
 		ifTrue: [ 
 			[ ^ MultiByteFileStream forceNewFileNamed: moniker asString ]
@@ -781,7 +789,7 @@ FileStream >> reopen [
 
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 FileStream >> reset [
 	"Set the current character position to the beginning of the file."
 

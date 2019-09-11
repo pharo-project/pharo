@@ -30,6 +30,12 @@ UnixStore class >> maxFileNameLength [
 ]
 
 { #category : #public }
+UnixStore class >> readOnlyVariant [
+
+	^ ReadOnlyUnixStore
+]
+
+{ #category : #public }
 UnixStore class >> separator [ 
 	^ $:
 ]
@@ -46,4 +52,12 @@ UnixStore >> checkName: aFileName fixErrors: fixing [
 	fixing ifFalse: [self error:'Invalid file name'].
 	
 	^ fName copyReplaceAll: self delimiter asString with: '#'
+]
+
+{ #category : #testing }
+UnixStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not.
+	On Unix, use the file naming convention that file names beginning with a dot are not displayed"
+
+	^aResolvable basename first = $.
 ]

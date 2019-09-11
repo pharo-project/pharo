@@ -60,7 +60,7 @@ Rectangle >> newRectButtonPressedDo: newRectBlock [
 	"Track the outline of a new rectangle until mouse button changes. newFrameBlock produces each new rectangle from the previous. Only tracks while mouse is down."
 	| rect newRect buttonNow hand |
 	
-	hand := World activeHand.
+	hand := self currentWorld activeHand.
 	
 	buttonNow := hand anyButtonPressed.
 	rect := self.
@@ -80,7 +80,7 @@ Rectangle >> newRectButtonPressedDo: newRectBlock [
 		].
 	
 	self drawReverseFrame: rect.
-	World activeHand
+	self currentWorld activeHand
 		newMouseFocus: nil;
 		showTemporaryCursor: nil.
 	^ rect
@@ -91,7 +91,7 @@ Rectangle >> newRectFrom: newRectBlock [
 	"Track the outline of a new rectangle until mouse button changes. newFrameBlock produces each new rectangle from the previous"
 	| rect newRect buttonStart buttonNow  hand |
 
-	hand := World activeHand.
+	hand := self currentWorld activeHand.
 	
 	buttonStart := buttonNow := hand anyButtonPressed.
 	rect := self.

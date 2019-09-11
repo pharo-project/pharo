@@ -7,18 +7,15 @@ Keep in mind:
 "
 Class {
 	#name : #PropertySlot,
-	#superclass : #Slot,
-	#instVars : [
-		'baseSlot'
-	],
-	#category : #'Slot-Examples-base'
+	#superclass : #DerivedSlot,
+	#category : #'Slot-Examples-Base'
 }
 
 { #category : #'code generation' }
 PropertySlot >> emitStore: methodBuilder [
+	"generate bytecode for 'baseSlot at: 1 put: <stackTop>'"
 	| tempName |
-
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -32,27 +29,26 @@ PropertySlot >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 PropertySlot >> emitValue: methodBuilder [
-
-		methodBuilder
-			pushInstVar: baseSlot index;
-			pushLiteral: self name;
-			pushLiteral: nil;
-			send: #at:ifAbsent:
+	"generate bytecode for '<baseSlot> at: name ifAbsent: nil'"
+	methodBuilder
+		pushInstVar: baseSlot index;
+		pushLiteral: self name;
+		pushLiteral: nil;
+		send: #at:ifAbsent:
 	
 	
 ]
 
 { #category : #'class building' }
-PropertySlot >> layoutChanged: aClass [
-	super layoutChanged: aClass.
-	"we check on the slot level as the slot is hidden"
-	(baseSlot notNil and: [aClass classLayout hasSlotNamed: baseSlot name]) ifTrue: [
-		baseSlot := aClass classLayout slotNamed: baseSlot name. "make sure we all use the same baseSlot"
-		^self. ].
-	"here we need to be more clever: if a subclass defines it, 
-	move the difiniton here"
-	self flag: #TBD.
-	aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new).
+PropertySlot >> installingIn: aClass [
+	super installingIn: aClass.
+	
+	"we reuse a baselot if it is already there, if not, we add it"
+	"TODO: this does not take into account adding PropertySlot higher up in the Hierarchy"
+	aClass classLayout 
+		resolveSlot: #'_propertyBaseSlot'   
+		ifFound:  [: slot |  baseSlot := slot ]
+		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)]
 	
 ]
 

@@ -6,7 +6,7 @@ Trait {
 	#category : #'Collections-Tests-Abstract'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #asserting }
 TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
 
 	| result |
@@ -15,7 +15,7 @@ TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
 	self collectionWithEqualElements do: [ :initial | self assert: (result occurrencesOf: initial) equals: 1 ]
 ]
 
-{ #category : #'tests - converting' }
+{ #category : #asserting }
 TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass [
 
 	| result |
@@ -27,7 +27,7 @@ TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass
 	^ result
 ]
 
-{ #category : #'tests - converting' }
+{ #category : #asserting }
 TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 
 	| result |

@@ -30,12 +30,12 @@ RubSmalltalkCommentMode class >> menuOn: aBuilder [
 	RubSmalltalkCodeMode menuOn: aBuilder 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #helper }
 RubSmalltalkCommentMode >> formatMethodCode [
 	"do nothing for code comments"
 ]
 
 { #category : #testing }
-RubSmalltalkCommentMode >> isCodeCompletionAllowed [
+RubSmalltalkCommentMode >> isCompletionEnabled [
 	^ false
 ]

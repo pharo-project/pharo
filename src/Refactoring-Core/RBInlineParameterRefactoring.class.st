@@ -71,24 +71,24 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 			[:each | 
 			| tree |
 			tree := each parseTree.
-			tree notNil ifTrue: [coll addAll: (self expressionsToInlineFrom: tree)]].
+			tree ifNotNil: [coll addAll: (self expressionsToInlineFrom: tree)]].
 	^coll asOrderedCollection
 ]
 
 { #category : #private }
-RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [ 
+RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '``@obj ' , (self buildSelectorString: oldSelector)
-		do: 
-			[:aNode :answer | 
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '``@obj ' , (self buildSelectorString: oldSelector)
+		do: [ :aNode :answer | 
 			answer
 				add: (aNode arguments at: parameterIndex);
-				yourself].
-	^searcher executeTree: aTree initialAnswer: OrderedCollection new
+				yourself ].
+	^ searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
@@ -110,7 +110,7 @@ RBInlineParameterRefactoring >> myConditions [
 	self getNewSelector.
 	expressions := self allExpressionsToInline.
 	^(RBCondition definesSelector: oldSelector in: class) 
-		& ((RBCondition withBlock: [expressions isEmpty not]) 
+		& ((RBCondition withBlock: [expressions isNotEmpty ]) 
 				errorMacro: 'No callers. Use Remove Method instead.') 
 			& ((RBCondition withBlock: [expressions size = 1]) 
 					errorMacro: 'All values passed as this argument must be identical.') 

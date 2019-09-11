@@ -5,6 +5,9 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
+. ${SCRIPTS}/envversion.sh
+
 #Get the hash of the built image
 
 PHARO_NAME_PREFIX=$(find . -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
@@ -22,6 +25,11 @@ cp "${FULL_IMAGE_NAME64}" latest-64.zip
 cp "${MINIMAL_IMAGE_NAME32}" latest-minimal.zip
 cp "${MINIMAL_IMAGE_NAME32}" latest-minimal-32.zip
 cp "${MINIMAL_IMAGE_NAME64}" latest-minimal-64.zip
+
+if [ $(is_release_build) == 1 ]; then
+	cp "${FULL_IMAGE_NAME32}" stable-32.zip
+	cp "${FULL_IMAGE_NAME64}" stable-64.zip
+fi
 
 for f in ${PHARO_NAME_PREFIX}*-32bit-*.zip; do
 	#If it is not base image

@@ -625,7 +625,7 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Modifies collection while iterating over it'.
-	addSearcher := RBBasicLintRuleTest modifiesCollection.
+	addSearcher := RBBasicLintRuleTestData modifiesCollection.
 	detector methodBlock: 
 			[:context :result | 
 			addSearcher executeTree: context parseTree initialAnswer: false.
@@ -683,18 +683,26 @@ RBBasicDummyLintRuleTest class >> overridesSpecialMessage [
 ]
 
 { #category : #miscellaneous }
+RBBasicDummyLintRuleTest class >> parseTreeSearcher [
+	^ RBParseTreeSearcher new
+]
+
+{ #category : #miscellaneous }
 RBBasicDummyLintRuleTest class >> precedence [
 	| detector matcher |
 	detector := self new.
-	detector name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
-	matcher := RBParseTreeSearcher new.
-	matcher addSearches: #('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
-				-> [:aNode :answer | answer or: [aNode receiver parentheses isEmpty]].
-	detector methodBlock: 
-			[:context :result | 
+	detector
+		name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
+	matcher := self parseTreeSearcher.
+	matcher
+		addSearches:
+			#('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
+				-> [ :aNode :answer | answer or: [ aNode receiver parentheses isEmpty ] ].
+	detector
+		methodBlock: [ :context :result | 
 			(matcher executeTree: context parseTree initialAnswer: false)
-				ifTrue: [result addClass: context selectedClass selector: context selector]].
-	^detector
+				ifTrue: [ result addClass: context selectedClass selector: context selector ] ].
+	^ detector
 ]
 
 { #category : #accessing }
@@ -772,60 +780,73 @@ RBBasicDummyLintRuleTest class >> sendsDifferentSuper [
 
 { #category : #bugs }
 RBBasicDummyLintRuleTest class >> sentNotImplemented [
+
 	| detector |
+
 	detector := self new.
 	detector name: 'Messages sent but not implemented'.
-	detector methodBlock: 
-			[:context :result | 
+	detector
+		methodBlock: [ :context :result | 
 			| message |
-			message := context messages detect: [:each | (context implements: each) not]
-						ifNone: [nil].
-			message isNil ifTrue: 
-					[message := context superMessages detect: 
-									[:each | 
-									context selectedClass superclass isNil
-										or: [(context selectedClass superclass canUnderstand: each) not]]
-								ifNone: [nil].
-					message isNil ifTrue: 
-							[message := context selfMessages
-										detect: [:each | (context selectedClass canUnderstand: each) not]
-										ifNone: [nil]]].
-			message notNil ifTrue: 
-					[result addSearchString: message.
-					result addClass: context selectedClass selector: context selector]].
-	^detector
+
+			message := context messages detect: [ :each | ( context implements: each ) not ] ifNone: [ nil ].
+			message
+				ifNil: [ message := context superMessages
+						detect: [ :each | 
+							context selectedClass superclass isNil
+								or: [ ( context selectedClass superclass canUnderstand: each ) not ]
+							]
+						ifNone: [ nil ].
+					message
+						ifNil: [ message := context selfMessages
+								detect: [ :each | ( context selectedClass canUnderstand: each ) not ]
+								ifNone: [ nil ]
+							]
+					].
+			message notNil
+				ifTrue: [ result addSearchString: message.
+					result addClass: context selectedClass selector: context selector
+					]
+			].
+	^ detector
 ]
 
 { #category : #'possible bugs' }
 RBBasicDummyLintRuleTest class >> sentNotImplementedInApplication [
+
 	| detector |
+
 	detector := self new.
 	detector name: 'Messages sent but not implemented in application'.
-	detector methodBlock: 
-			[:context :result | 
+	detector
+		methodBlock: [ :context :result | 
 			| message class block |
+
 			message := context messages
-						detect: [:each | (context isItem: each in: context application) not]
-						ifNone: [nil].
+				detect: [ :each | ( context isItem: each in: context application ) not ]
+				ifNone: [ nil ].
 			class := context selectedClass.
-			block := 
-					[:each | 
-					| app |
-					app := context application.
-					(self canCall: each
-						in: class
-						from: app) not].
-			message isNil ifTrue: [message := context selfMessages detect: block ifNone: [nil]].
-			message isNil ifTrue: 
-					[class := class superclass.
-					class isNil
-						ifTrue: 
-							[context superMessages isEmpty ifFalse: [message := context superMessages asArray first]]
-						ifFalse: [message := context superMessages detect: block ifNone: [nil]]].
-			message notNil ifTrue: 
-					[result addSearchString: message.
-					result addClass: context selectedClass selector: context selector]].
-	^detector
+			block := [ :each | 
+			| app |
+
+			app := context application.
+			( self canCall: each in: class from: app ) not
+			].
+			message ifNil: [ message := context selfMessages detect: block ifNone: [ nil ] ].
+			message
+				ifNil: [ class := class superclass.
+					class
+						ifNil: [ context superMessages isEmpty
+								ifFalse: [ message := context superMessages asArray first ]
+							]
+						ifNotNil: [ message := context superMessages detect: block ifNone: [ nil ] ]
+					].
+			message notNil
+				ifTrue: [ result addSearchString: message.
+					result addClass: context selectedClass selector: context selector
+					]
+			].
+	^ detector
 ]
 
 { #category : #'intention revealing' }
@@ -1218,7 +1239,7 @@ RBBasicDummyLintRuleTest class >> yourselfNotUsed [
 	^detector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
@@ -1238,12 +1259,12 @@ RBBasicDummyLintRuleTest >> checkMethod: aSmalllintContext [
 	^methodBlock value: aSmalllintContext value: result
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> classBlock [
 	^ self anInstVar + 5
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> classBlock: aBlock [
 	classBlock := aBlock testMethod1
 ]
@@ -1278,12 +1299,12 @@ RBBasicDummyLintRuleTest >> method: anObject1 with: anObject2 lots: anObject3 of
 	^ anObject5 + anObject1 > (anObject4 - anObject2 + anObject3)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> newResultClass: aClass [ 
 "New one:)"
 	result := aClass new
@@ -1310,7 +1331,7 @@ RBBasicDummyLintRuleTest >> result: aResult [
 	result := aResult copyEmpty
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBBasicDummyLintRuleTest >> resultClass: aClass [ 
 	result := aClass new
 ]

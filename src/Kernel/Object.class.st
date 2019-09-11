@@ -240,17 +240,12 @@ Object class >> whatIsAPrimitive [
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"the code of Association>>#key:value: is inline here for speed"
-	"The following example creates an association whose key is number 1 and value string 'one'.
-	1 -> 'one'
-	>>> 1 -> 'one'
-
-	(1 -> 'one') key
-	>>> 1
-
-	(1 -> 'one') value
-	>>> 'one'
+	"The following example creates an association whose key is number 1 and value string 'one'."
+	"(1 -> 'one') >>> 1 -> 'one'"
+	"(1 -> 'one') key >>> 1"
+	"(1 -> 'one') value >>> 'one'"
 	
-	Note that key and value can be ANY object."
+	"Note that key and value can be ANY object."
 	
 	^Association basicNew key: self value: anObject
 ]
@@ -325,9 +320,19 @@ Object >> addDependent: anObject [
 
 { #category : #converting }
 Object >> as: aSimilarClass [
-	"Create an object of class aSimilarClass that has similar contents to the receiver."
+	"Create an object of class aSimilarClass that has similar contents to the receiver if the object is not already an instance of this class."
+
+	aSimilarClass == self class ifTrue: [ ^ self ].
 
 	^ aSimilarClass newFrom: self
+]
+
+{ #category : #converting }
+Object >> asCollectionElement [
+	"Answer an object, which can be put into a Set as element , wrapped
+	by one of SetElement instance, if necessary. 
+	Default implementation is to answer self"
+
 ]
 
 { #category : #converting }
@@ -345,14 +350,6 @@ Object >> asOrderedCollection [
 ]
 
 { #category : #converting }
-Object >> asSetElement [
-	"Answer an object, which can be put into a Set as element , wrapped
-	by one of SetElement instance, if necessary. 
-	Default implementation is to answer self"
-
-]
-
-{ #category : #converting }
 Object >> asString [
 	"Answer a string that represents the receiver."
 
@@ -363,13 +360,14 @@ Object >> asString [
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
 	We check for true explicitly to make the assertion fail for non booleans"
+	<debuggerCompleteToSender>
 	self assert: aBlock description: 'Assertion failed'.
 ]
 
 { #category : #asserting }
 Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
-	
+	<debuggerCompleteToSender>
 	aBlock value 
 		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
 ]
@@ -497,24 +495,6 @@ Object >> beWritableObject [
 	 primitive to fail with a #'no modification' error code.
 	 Set the read-only flag of the receiver to false and answer the previous vaue of the flag."
 	^self setIsReadOnlyObject: false
-]
-
-{ #category : #'reflective operations' }
-Object >> becomeForward: otherObject [ 
-	"Primitive. All variables in the entire system that used to point
-	to the receiver now point to the argument.
-	Fails if either argument is a SmallInteger."
-
-	{self} elementsForwardIdentityTo: {otherObject}
-]
-
-{ #category : #'reflective operations' }
-Object >> becomeForward: otherObject copyHash: copyHash [
-	"Primitive. All variables in the entire system that used to point to the receiver now point to the argument.
-	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
-	Fails if either argument is a SmallInteger."
-
-	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
 ]
 
 { #category : #binding }
@@ -677,21 +657,9 @@ Object >> copySameFrom: otherObject [
 
 ]
 
-{ #category : #'logging-Deprecated' }
-Object >> crLog [
-      self crTrace: self printString
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> crLog: aString [
-	"Log the argument. Use self log: instead of Transcript cr; show: "
-	
-	Transcript cr; show: aString.
-]
-
 { #category : #tracing }
 Object >> crTrace [
-      self crTrace: self printString
+	self crTrace: self printString
 ]
 
 { #category : #tracing }
@@ -852,7 +820,7 @@ Object >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #accessing }
-Object >> enclosedSetElement [
+Object >> enclosedElement [
 	"The receiver is included into a set as an element. 
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
 	a set sends this message to its element to make sure it getting real object,
@@ -920,21 +888,20 @@ Object >> explicitRequirement [
 	originalMethod := callingContext method.
 	originalMethod isFromTrait
 		ifFalse: errorBlock.
-		
 	originalReceiver := callingContext receiver.
 	originalSelector := originalMethod selector.
 	originalArguments := callingContext arguments.
-	
 	originalReceiver class superclass
 		withAllSuperclassesDo: [ :superClass | 
 			superClass
 				compiledMethodAt: originalSelector
 				ifPresent: [ :method | 
 					(method isProvided or: [ method isFromTrait not ])
-						ifTrue: [ 
-							callingContext return: (method valueWithReceiver: originalReceiver arguments: originalArguments) ] ]
-				ifAbsent: [  ] ].
-
+						ifTrue: [ callingContext
+								return:
+									(method
+										valueWithReceiver: originalReceiver
+										arguments: originalArguments) ] ] ].
 	errorBlock value
 ]
 
@@ -977,6 +944,14 @@ Object >> halt: aString [
 ]
 
 { #category : #halting }
+Object >> haltFromCount: anInteger [
+	"Always halt after a count has been reached"
+
+	<debuggerCompleteToSender>
+	Halt fromCount: anInteger
+]
+
+{ #category : #halting }
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
 	Halt if: condition.
@@ -1001,9 +976,11 @@ Object >> haltIfTest [
 ]
 
 { #category : #halting }
-Object >> haltOnCount: anInteger [ 
+Object >> haltOnCount: anInteger [
+	"Halts once when a count is reached"
+
 	<debuggerCompleteToSender>
-	Halt onCount: anInteger.
+	Halt onCount: anInteger
 ]
 
 { #category : #halting }
@@ -1086,16 +1063,24 @@ Object >> instVarAt: index put: anObject [
 
 { #category : #introspection }
 Object >> instVarNamed: aString [
-	"Return the value of the instance variable in me with that name.  Slow and unclean, but very useful. "
+	"Return the value of the instance variable in me with that name.  Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ])
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot read: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #introspection }
 Object >> instVarNamed: aString put: aValue [
-	"Store into the value of the instance variable in me of that name. Slow and unclean, but very useful. "
+	"Store into the value of the instance variable in me of that name. Slow, but very useful.
+	We support here all slots (even non indexed) but raise a backward compatible exception"
 
-	^ self instVarAt: (self class instVarIndexFor: aString asString ifAbsent: [ InstanceVariableNotFound signalFor: aString asString ]) put: aValue
+	^ self class
+		slotNamed: aString
+		ifFound: [ :slot | slot write: aValue to: self ]
+		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
 { #category : #testing }
@@ -1211,12 +1196,11 @@ Object >> isInterval [
 ]
 
 { #category : #'class membership' }
-Object >> isKindOf: aClass [ 
-	"Answer whether the class, aClass, is a superclass or class of the receiver."
+Object >> isKindOf: aClass [
+	"Answer whether the class, aClass, is a superclass or class of the receiver.
+	The current implemementation allows for a Trait to be used as argument"
 
-	self class == aClass
-		ifTrue: [^true]
-		ifFalse: [^self class inheritsFrom: aClass]
+	^ self class == aClass or: [ self class inheritsFrom: aClass ]
 ]
 
 { #category : #testing }
@@ -1376,51 +1360,19 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #'logging-Deprecated' }
-Object >> log: aString [
-	"Log the argument. Use self log: instead of Transcript show: "
-	
-	Transcript show: aString.
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCr [
-      self logCr: self printString
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCr: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCrTab: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr ; tab"
-	
-	Transcript show: aString ; cr ; tab
-]
-
 { #category : #flagging }
 Object >> logEntry [
-
-	Transcript show: 'Entered ', thisContext sender printString; cr.
-
+	self traceCr: 'Entered ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExecution [
-
-	Transcript show: 'Executing ', thisContext sender printString; cr.
-
+	self traceCr: 'Executing ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExit [
-
-	Transcript show:  'Exited ', thisContext sender printString; cr.
-
+	self traceCr: 'Exited ' , thisContext sender printString
 ]
 
 { #category : #printing }
@@ -1660,15 +1612,15 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	but with the supplied superclass instead.  It will fail if lookupClass
 	cannot be found among the receiver's superclasses.
 	Primitive. Essential. See Object documentation whatIsAPrimitive."
-	
+
 	<reflective: #object:performMessageInSuperclass:>
 	<primitive: 100>
-	(selector isSymbol)
-		ifFalse: [^ self error: 'selector argument must be a Symbol'].
-	(selector numArgs = argArray size)
-		ifFalse: [^ self error: 'incorrect number of arguments'].
-	(self class == lookupClass or: [self class inheritsFrom: lookupClass])
-		ifFalse: [^ self error: 'lookupClass is not in my inheritance chain'].
+	selector isSymbol
+		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
+	selector numArgs = argArray size
+		ifFalse: [ ^ self error: 'incorrect number of arguments' ].
+	(self class includesBehavior: lookupClass)
+		ifFalse: [ ^ self error: 'lookupClass is not in my inheritance chain' ].
 	self primitiveFailed
 ]
 
@@ -1777,6 +1729,10 @@ Object >> printStringLimitedTo: limit using: printBlock [
 
 { #category : #streaming }
 Object >> putOn: aStream [
+	"Write the receiver onto aStream.
+	In general we assume aStream accepts the receiver as element type.
+	Return self."
+	
 	aStream nextPut: self
 ]
 
@@ -1793,7 +1749,7 @@ Object >> readSlot: aSlot [
 
 { #category : #introspection }
 Object >> readSlotNamed: aName [
-	^self readSlot: (self class slotNamed: aName)
+	^(self class slotNamed: aName) read: self
 ]
 
 { #category : #dependencies }
@@ -1864,8 +1820,9 @@ Object >> setPinned: aBoolean [
 { #category : #pinning }
 Object >> setPinnedInMemory: aBoolean [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
-	 memory. But it can also pin an object so that it will not be moved, which can make
-	 it easier to pass objects out through the FFI.  Objects are unpinnned when created.
+	 memory. But it can also pin an object so that it will not be moved around in memory,
+    while still being reclamable by the garbage collector. This can make
+	 it easier to pass objects out through the FFI. Objects are unpinnned when created.
 	 This primitive either pins or unpins an object, and answers if it was already pinned."
 	<primitive: 184 error: ec>
 	^self primitiveFailed
@@ -2048,19 +2005,19 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 
 { #category : #tracing }
 Object >> trace [
-      self trace: self printString
+	self trace: self printString
 ]
 
 { #category : #tracing }
 Object >> trace: aString [
 	"Log the argument. Use self trace: instead of Transcript show: "
 	
-	Transcript show: aString.
+	Transcript show: aString
 ]
 
 { #category : #tracing }
 Object >> traceCr [
-      self traceCr: self printString
+	self traceCr: self printString
 ]
 
 { #category : #tracing }
@@ -2068,6 +2025,13 @@ Object >> traceCr: aString [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
 	Transcript show: aString ; cr
+]
+
+{ #category : #tracing }
+Object >> traceCrTab: aString [
+	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
+	
+	Transcript show: aString ; cr ; tab
 ]
 
 { #category : #'error handling' }
@@ -2244,9 +2208,11 @@ Object >> yourself [
 	To get the receiver we can simply use a cascade as follows:
 		#('hello' 'world') at: 2 put: 'pharo'; yourself
 	and since yourself returns the receiver of the message we will get the modified array.
+	
 	Stepping back using a cascade and yourself is equivalent to declare a variable, assign the expression and return the variable as follows:
 	| a |
-	a := #('hello' 'world') at: 2 put: 'pharo'.
+	a := #('hello' 'world'). 
+	a at: 2 put: 'pharo'.
 	a 
 	"
 	

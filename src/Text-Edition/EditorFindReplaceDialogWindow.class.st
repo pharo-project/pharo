@@ -263,10 +263,6 @@ EditorFindReplaceDialogWindow >> newFindTextEntryMorph [
 		withDropListButton;
 		crAction: [:t | self find];
 		yourself.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	textFieldMorph := pt. 
 	^ pt
 
@@ -330,10 +326,6 @@ EditorFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 			crAction: [:t | self replace];
 			withDropListButton;
 			yourself.
-	pt textMorph
-		autoFit: true;
-		wrapFlag: false;
-		margins: (2@1) asMargin.
 	^ pt
 
 ]
@@ -362,7 +354,7 @@ EditorFindReplaceDialogWindow >> on: aTextView [
 
 { #category : #action }
 EditorFindReplaceDialogWindow >> open [
-	self openAsIsIn: World.
+	self openAsIsIn: self currentWorld.
 	self extent: self extent.
 	self activate
 

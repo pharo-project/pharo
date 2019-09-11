@@ -44,7 +44,7 @@ PackageTreeExample >> menu: menu shifted: b [
 
 { #category : #showing }
 PackageTreeExample >> open [
-	^ self openDialogWindowIn: World title: 'Packages'.
+	^ self openDialogWindowIn: self currentWorld title: 'Packages'.
 
 ]
 

@@ -15,10 +15,10 @@ RBDummyCompositeLintRuleTest class >> allRules [
 { #category : #'all checks' }
 RBDummyCompositeLintRuleTest class >> lintChecks [
 	^ self 
-		rules: (RBBasicLintRuleTest protocolsToCheck collect: 
+		rules: (RBBasicLintRuleTestData protocolsToCheck collect: 
 			[ :each | 
 			self 
-				ruleFor: RBBasicLintRuleTest
+				ruleFor: RBBasicLintRuleTestData
 				protocol: each ])
 		name: 'Lint checks'
 ]
@@ -48,7 +48,7 @@ RBDummyCompositeLintRuleTest class >> rules: aCollection name: aString [
 { #category : #'all checks' }
 RBDummyCompositeLintRuleTest class >> transformations [
 	^ self 
-		ruleFor: RBTransformationRuleTest
+		ruleFor: RBTransformationRuleTestData
 		protocol: 'transformations'
 ]
 
@@ -93,7 +93,7 @@ RBDummyCompositeLintRuleTest >> problemCount [
 	^rules inject: 0 into: [:count :each | count + each problemCount]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBDummyCompositeLintRuleTest >> resetResult [
 	rules do: [:each | each resetResult]
 ]
@@ -103,7 +103,7 @@ RBDummyCompositeLintRuleTest >> rules [
 	^rules
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBDummyCompositeLintRuleTest >> rules: aCollection [
 	rules := aCollection
 ]

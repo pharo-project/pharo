@@ -22,7 +22,7 @@ Class {
 	#category : #'Athens-Text'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #documentation }
 AthensTextRenderer class >> textGoryDetails [
 
 "
@@ -71,12 +71,12 @@ When displaying or rendering underlined text, this value corresponds to the vert
 "
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 AthensTextRenderer >> initialize [
 	color := Color black.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTextRenderer >> render: aText lines: lines on: aCanvas [
 
 	text := aText.
@@ -97,7 +97,7 @@ AthensTextRenderer >> render: aText lines: lines on: aCanvas [
 		] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTextRenderer >> renderBackground: bkObj [
 "self halt."
 	canvas setPaint: bkObj color.
@@ -105,7 +105,7 @@ AthensTextRenderer >> renderBackground: bkObj [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTextRenderer >> renderBackground: aColor width: w [
 "self halt."
 	canvas setPaint: aColor.
@@ -113,18 +113,18 @@ AthensTextRenderer >> renderBackground: aColor width: w [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensTextRenderer >> renderCharactersFrom: start to: stop [
 
 	" accumulate advance while rendering spans"
 	"canvas drawShape: (advance x @ advance y extent: 2 @ 2)."
 	glyphRenderer advance: advance.
-	advance := advance + (glyphRenderer renderCharacters: text from: start to: stop).
+	advance := advance + (glyphRenderer renderCharacters: text asString from: start to: stop).
 	
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextRenderer >> setCurrentColor: aColor [
 	color = aColor ifTrue: [ ^ self ].
 	color := aColor.
@@ -132,7 +132,7 @@ AthensTextRenderer >> setCurrentColor: aColor [
 	glyphRenderer ifNotNil:  [ glyphRenderer setColor: aColor ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensTextRenderer >> setCurrentFont: aFont [
 	font := aFont.
 	glyphRenderer := font glyphRendererOn: canvas surface.

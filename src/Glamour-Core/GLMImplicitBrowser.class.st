@@ -7,7 +7,6 @@ Class {
 	#name : #GLMImplicitBrowser,
 	#superclass : #GLMBrowser,
 	#instVars : [
-		'presentations',
 		'transmission'
 	],
 	#category : #'Glamour-Core'

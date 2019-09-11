@@ -691,28 +691,32 @@ HaloMorph >> containsPoint: aPoint event: anEvent [
 ]
 
 { #category : #private }
-HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [ 
+HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
+
 	| bou handle |
+
 	bou := Rectangle center: aPoint extent: self handleSize asPoint.
 	self gradientHalo
-		ifTrue: [
-			handle := Morph newBounds: bou color: aColor.
+		ifTrue: [ handle := Morph newBounds: bou color: aColor.
 			handle borderWidth: 1.
 			handle useRoundedCorners.
-			self setColor: aColor toHandle: handle]
-		ifFalse: [handle := EllipseMorph newBounds: bou color: aColor].
+			self setColor: aColor toHandle: handle
+			]
+		ifFalse: [ handle := EllipseMorph newBounds: bou color: aColor ].
 	handle borderColor: aColor muchDarker.
 	handle wantsYellowButtonMenu: false.
-	iconName isNil
-		ifFalse: [| form | 
-			form := self iconNamed: iconName.
-			form isNil
-				ifFalse: [| image | 
+	iconName
+		ifNotNil: [ ( self iconNamed: iconName )
+				ifNotNil: [ :form | 
+					| image |
+
 					image := ImageMorph new.
 					image form: form.
-					image color: aColor contrastingForegroundColor.
+					image color: aColor contrastingBlackAndWhiteColor.
 					image lock.
-					handle addMorphCentered: image]].
+					handle addMorphCentered: image
+					]
+			].
 	^ handle
 ]
 
@@ -749,7 +753,7 @@ HaloMorph >> doDebug: evt with: menuHandle [
 
 	menu := innerTarget buildDebugMenu: evt hand.
 	menu buildTitle: [ :menuTitle | menuTitle
-		title: (innerTarget externalName truncateWithElipsisTo: 40);
+		title: (innerTarget externalName asString truncateWithElipsisTo: 40);
 		"icon: Smalltalk ui icons smallDebugIcon;"
 		withCloseBox;
 		withPinBox
@@ -854,7 +858,7 @@ HaloMorph >> doRot: evt with: rotHandle [
 		ifTrue: [self setColor: Color lightBlue toHandle: rotHandle]
 		ifFalse: [self setColor: Color blue toHandle: rotHandle].
 	rotHandle submorphsDo:
-		[:m | m color: rotHandle color contrastingForegroundColor].
+		[:m | m color: rotHandle color contrastingBlackAndWhiteColor].
 	self removeAllHandlesBut: rotHandle.
 	self showingDirectionHandles ifFalse:
 		[self showDirectionHandles: true addHandles: false].
@@ -876,7 +880,7 @@ HaloMorph >> doScale: evt with: scaleHandle [
 						ifFalse: [Color orange].
 	self setColor: colorToUse toHandle: scaleHandle.
 	scaleHandle
-		submorphsDo: [:m | m color: colorToUse contrastingForegroundColor].
+		submorphsDo: [:m | m color: colorToUse contrastingBlackAndWhiteColor].
 	scaleHandle position: newHandlePos.
 
 ]
@@ -959,13 +963,10 @@ HaloMorph >> handlerForBlueButtonDown: anEvent [
 
 { #category : #initialization }
 HaloMorph >> initialize [
-	"initialize the state of the receiver"
 	super initialize.
 
 	growingOrRotating := false.
-	self borderStyle: (SimpleBorder
-		width: 2
-		color: self theme settings menuSelectionColor)
+	self borderStyle: (SimpleBorder width: 2 color: self theme menuSelectionColor)
 ]
 
 { #category : #accessing }
@@ -1079,26 +1080,26 @@ HaloMorph >> obtainHaloForEvent: evt andRemoveAllHandlesBut: aHandle [
 ]
 
 { #category : #events }
-HaloMorph >> popUpFor: aMorph event: evt [ 
+HaloMorph >> popUpFor: aMorph event: evt [
+
 	"This message is sent by morphs that explicitly request the halo on a button click. Note: anEvent is in aMorphs coordinate frame."
 
 	| hand anEvent |
+
 	self flag: #workAround.	"We should really have some event/hand here..."
-	anEvent := evt isNil 
-				ifTrue: 
-					[hand := aMorph world ifNotNil: [:w | w activeHand].
-					hand ifNil: [hand := aMorph world primaryHand]. 
-					hand lastEvent transformedBy: (aMorph transformedFrom: nil)]
-				ifFalse: 
-					[hand := evt hand.
-					evt].
+	anEvent := evt
+		ifNil: [ hand := aMorph world ifNotNil: [ :w | w activeHand ].
+			hand ifNil: [ hand := aMorph world primaryHand ].
+			hand lastEvent transformedBy: ( aMorph transformedFrom: nil )
+			]
+		ifNotNil: [ hand := evt hand.
+			evt
+			].
 	self target: aMorph.
 	hand halo: self.
 	hand world addMorphFront: self.
-	positionOffset := anEvent position 
-				- (aMorph point: aMorph position in: owner).
-	self startStepping.
-	
+	positionOffset := anEvent position - ( aMorph point: aMorph position in: owner ).
+	self startStepping
 ]
 
 { #category : #geometry }

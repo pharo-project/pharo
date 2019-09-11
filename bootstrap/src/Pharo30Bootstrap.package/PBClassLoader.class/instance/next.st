@@ -1,4 +1,0 @@
-accessing
-next
-
-	self subclassResponsibility

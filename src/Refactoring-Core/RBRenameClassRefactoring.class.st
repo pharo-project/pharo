@@ -29,7 +29,7 @@ RBRenameClassRefactoring class >> rename: aClass to: aNewName [
 	^self new className: aClass name newName: aNewName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRenameClassRefactoring >> className: aName newName: aNewName [ 
 	className := aName asSymbol.
 	class := self model classNamed: className.

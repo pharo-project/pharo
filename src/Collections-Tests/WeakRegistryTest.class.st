@@ -19,18 +19,14 @@ WeakRegistryTest >> signalMockException [
 
 { #category : #tests }
 WeakRegistryTest >> testFinalization [
-
 	| w finalized block object |
 	w := WeakRegistry new: 1.
 	finalized := false.
 	block := [ :v | finalized := v ].
-	object := ObjectFinalizer "an object that responds to #finalize"
-		receiver: block
-		selector: #value:
-		argument: true.
+	object := ObjectFinalizer receiver: block selector: #value: argument: true.	"an object that responds to #finalize"
 	w add: object.
-	object := nil. "let it go"
-	Smalltalk garbageCollect. "finalize it"
+	object := nil.	"let it go"
+	Smalltalk garbageCollect.	"finalize it"
 
 	"This is an odd issue. It seems that in some situations the finalization
 	process doesn't run 'in time' for the isEmpty assertion below to succeed.
@@ -40,7 +36,7 @@ WeakRegistryTest >> testFinalization [
 	just wait a little to ensure that the finalization process has been run."
 	(Delay forMilliseconds: 100) wait.
 
-	self assert: w isEmpty.
+	self assertEmpty: w.
 	self assert: finalized
 ]
 
@@ -76,22 +72,17 @@ WeakRegistryTest >> testFinalizationWithBadFinalizer [
 
 { #category : #tests }
 WeakRegistryTest >> testFinalizationWithMultipleFinalizersPerObject [
-
 	| object registry counter |
 	registry := WeakRegistry new.
 	object := Object new.
 	counter := 0.
-	5 timesRepeat: [
-		registry add: object executor: (ObjectFinalizer
-			receiver: [ counter := counter + 1 ]
-			selector: #value) ].
+	5 timesRepeat: [ registry add: object executor: (ObjectFinalizer receiver: [ counter := counter + 1 ] selector: #value) ].
 	self assert: registry size = 1.
-	object := nil. 
+	object := nil.
 	Smalltalk garbageCollect.
 	registry finalizeValues.
-	self assert: registry isEmpty.
+	self assertEmpty: registry.
 	self assert: counter = 5
-
 ]
 
 { #category : #tests }
@@ -178,50 +169,40 @@ WeakRegistryTest >> testGrowingDoesntLeak [
 
 { #category : #tests }
 WeakRegistryTest >> testRemovingByAHighPriorityProcessDoesntLeak [
-
 	| w finalized block hash object executor semaphore |
 	w := WeakRegistry new: 1.
 	finalized := false.
 	block := [ :v | finalized := v ].
 	object := Object new.
-	executor := ObjectFinalizer
-		receiver: block
-		selector: #value:
-		argument: true.
+	executor := ObjectFinalizer receiver: block selector: #value: argument: true.
 	hash := object hash.
 	w add: hash.
 	w add: object executor: executor.
 	semaphore := Semaphore new.
-	[ 
-		object := nil. "let it go"
-		w remove: hash.
-		semaphore signal ] 
-			forkAt: WeakArray runningFinalizationProcess priority + 1.
+	[ object := nil.	"let it go"
+	w remove: hash.
+	semaphore signal ] forkAt: WeakArray runningFinalizationProcess priority + 1.
 	semaphore wait.
-	Smalltalk garbageCollect. "finalize it"
-	self assert: w isEmpty.
+	Smalltalk garbageCollect.	"finalize it"
+	self assertEmpty: w.
 	self assert: finalized
 ]
 
 { #category : #tests }
 WeakRegistryTest >> testRemovingDoesntLeak [
-
 	| w finalized block hash object executor |
 	w := WeakRegistry new: 1.
 	finalized := false.
 	block := [ :v | finalized := v ].
 	object := Object new.
-	executor := ObjectFinalizer
-		receiver: block
-		selector: #value:
-		argument: true.
+	executor := ObjectFinalizer receiver: block selector: #value: argument: true.
 	hash := object hash.
 	w add: hash.
 	w add: object executor: executor.
-	object := nil. "let it go"
+	object := nil.	"let it go"
 	w remove: hash.
-	Smalltalk garbageCollect. "finalize it"
-	self assert: w isEmpty.
+	Smalltalk garbageCollect.	"finalize it"
+	self assertEmpty: w.
 	self assert: finalized
 ]
 

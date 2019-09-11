@@ -37,7 +37,7 @@ GLMMorphicPharoScriptRenderer >> morph [
 		model: textModel;
 		beForSmalltalkScripting;
 		textFont: StandardFonts codeFont;
-		color: Smalltalk ui theme backgroundColor;
+		color: self theme backgroundColor;
 		notificationStrategy: GLMPopperNotificationStrategy new;
 		yourself.
 	"Without forcing styling explicitly the first time the presentation is opened with some text on it the styling is wrong."

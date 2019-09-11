@@ -6,8 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'buffer',
-		'len',
-		'asm',
 		'encoder',
 		'bs'
 	],
@@ -60,7 +58,7 @@ CairoUTF8Converter >> convertChar: aCharacter [
 	^ buffer
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CairoUTF8Converter >> initialize [
 	encoder := ZnUTF8Encoder new.
 ]

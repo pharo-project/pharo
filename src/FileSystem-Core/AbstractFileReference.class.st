@@ -31,6 +31,11 @@ AbstractFileReference >> absolutePath [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+AbstractFileReference >> accessTime [
+	^ self resolve accessTime 
+]
+
 { #category : #enumerating }
 AbstractFileReference >> allChildren [
 	"Return all the files and folders recursively nested in the receiver"
@@ -193,6 +198,11 @@ AbstractFileReference >> canonicalize [
 	^ self withPath: self resolve path canonicalize
 ]
 
+{ #category : #accessing }
+AbstractFileReference >> changeTime [
+	^ self resolve changeTime 
+]
+
 { #category : #private }
 AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 	"
@@ -301,13 +311,15 @@ AbstractFileReference >> delete [
 
 { #category : #operations }
 AbstractFileReference >> deleteAll [
-	"Delete this directory and all children of it, raise an error if the file does not exist."
+	"Delete this directory and all children of it, raise an error if the file does not exist.
+	Don't follow symbolic links (so files outside the receiver's tree will not be deleted)."
 	DeleteVisitor delete: self resolve
 ]
 
 { #category : #operations }
 AbstractFileReference >> deleteAllChildren [
-	"delete all children of the receiver, raise an error if the receiver does not exist"
+	"Delete all children of the receiver, raise an error if the receiver does not exist.
+	Don't follow symbolic links (so files outside the receiver's tree will not be deleted)."
 	
 	self children do: [:aReference | aReference deleteAll ]
 ]
@@ -316,6 +328,11 @@ AbstractFileReference >> deleteAllChildren [
 AbstractFileReference >> deleteIfAbsent: aBlock [
 	"Delete the receiver, when it does not exist evaluate the block"
 	self resolve deleteIfAbsent: aBlock
+]
+
+{ #category : #testing }
+AbstractFileReference >> deviceId [
+	^ self resolve deviceId
 ]
 
 { #category : #enumerating }
@@ -477,6 +494,11 @@ AbstractFileReference >> fullPath [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+AbstractFileReference >> gid [
+	^ self resolve gid
+]
+
 { #category : #enumerating }
 AbstractFileReference >> glob: aBlock [
 	^ SelectVisitor breadthFirst: self resolve select: aBlock
@@ -535,9 +557,24 @@ AbstractFileReference >> indicator [
 		ifFalse: ['?']
 ]
 
+{ #category : #accessing }
+AbstractFileReference >> inode [
+	^ self resolve inode
+]
+
 { #category : #testing }
 AbstractFileReference >> isAbsolute [ 
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+AbstractFileReference >> isBlock [
+	^ self resolve isBlock 
+]
+
+{ #category : #accessing }
+AbstractFileReference >> isCharacter [
+	^ self resolve isCharacter
 ]
 
 { #category : #testing }
@@ -554,6 +591,16 @@ AbstractFileReference >> isContainedBy: anObject [
 { #category : #testing }
 AbstractFileReference >> isDirectory [
 	^ self resolve isDirectory
+]
+
+{ #category : #testing }
+AbstractFileReference >> isExecutable [
+	^ self resolve isExecutable
+]
+
+{ #category : #testing }
+AbstractFileReference >> isFIFO [
+	^ self resolve isFIFO
 ]
 
 { #category : #testing }
@@ -574,6 +621,16 @@ AbstractFileReference >> isRelative [
 { #category : #testing }
 AbstractFileReference >> isRoot [
 	^ self resolve isRoot
+]
+
+{ #category : #testing }
+AbstractFileReference >> isSocket [
+	^ self resolve isSocket
+]
+
+{ #category : #testing }
+AbstractFileReference >> isSymlink [
+	^ self resolve isSymlink
 ]
 
 { #category : #testing }
@@ -617,6 +674,11 @@ AbstractFileReference >> moveTo: aReference [
 { #category : #utilities }
 AbstractFileReference >> nextVersion [
 	^ self resolve nextVersion
+]
+
+{ #category : #accessing }
+AbstractFileReference >> numberOfHardLinks [
+	^ self resolve numberOfHardLinks
 ]
 
 { #category : #streams }
@@ -761,6 +823,16 @@ AbstractFileReference >> streamWritable: writable do: aBlock [
 	^ writable 
 		ifTrue: [ self writeStreamDo: aBlock ]
 		ifFalse: [ self readStreamDo: aBlock ]
+]
+
+{ #category : #accessing }
+AbstractFileReference >> targetPath [
+	^ self resolve targetPath
+]
+
+{ #category : #accessing }
+AbstractFileReference >> uid [
+	^ self resolve uid
 ]
 
 { #category : #accessing }

@@ -6,7 +6,11 @@ Class {
 	#superclass : #RubTextEditor,
 	#instVars : [
 		'selectorChooser',
-		'notificationStrategy'
+		'notificationStrategy',
+		'completionEngine'
+	],
+	#classVars : [
+		'CompletionEngine'
 	],
 	#category : #'Rubric-Editing-Code'
 }
@@ -130,7 +134,25 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	
 ]
 
-{ #category : #NOcompletion }
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> completionEngine [
+	
+	^ CompletionEngine
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> completionEngine: anEngine [
+	
+	CompletionEngine := anEngine
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor class >> noCompletion [
+
+	CompletionEngine := nil
+]
+
+{ #category : #'completion engine' }
 RubSmalltalkEditor >> atCompletionPosition [
 	"Return true if the cursor is at a possible completion position"
 	| cursorPosition |
@@ -234,19 +256,21 @@ RubSmalltalkEditor >> bindingOf: aString [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> browseClassFrom: aClassString [
+
 	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
 
 	| selectedClass |
+
 	"self lineSelectAndEmptyCheck: [ ^ self ]."
-	(aClassString isNil or: [ aClassString isEmpty]) ifTrue: [ 
-		textArea flash.
-		^self ]. 
-	
-	selectedClass := self model systemNavigation 
-		classFromPattern: aClassString 
+	( aClassString isNil or: [ aClassString isEmpty ] )
+		ifTrue: [ textArea flash.
+			^ self
+			].
+
+	selectedClass := self model systemNavigation
+		classFromPattern: aClassString
 		withCaption: 'choose a class to browse...'.
-	selectedClass isNil
-		ifTrue: [ ^ self internalCallToImplementorsOf: aClassString ].
+	selectedClass ifNil: [ ^ self internalCallToImplementorsOf: aClassString ].
 	Smalltalk tools browser openOnClass: selectedClass
 ]
 
@@ -318,10 +342,30 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 	^ self compile: self selectionAsStream for: anObject in: evalContext
 ]
 
-{ #category : #private }
-RubSmalltalkEditor >> completionAround:  aBlock  keyStroke: anEvent [
-	"I'm a editor for Smalltalk, so, ok do completion around"
-	Smalltalk tools codeCompletionAround: aBlock textMorph: textArea keyStroke: anEvent
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
+	"I'm a editor for Smalltalk, so, do completion around"
+	
+	self isCompletionEnabled ifFalse: [  ^aBlock value ].
+	
+	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
+	(self selectorChooserHandlesKeyboard: anEvent)
+				ifFalse: [ aBlock value ].
+	self selectorChooserKeystroke: anEvent.
+	completionEngine handleKeystrokeAfter: anEvent editor: self
+
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> completionEngine [
+	^ completionEngine
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> completionEngine: aCompletionEngine [
+
+	completionEngine := aCompletionEngine.
+	self textArea ifNotNil: [:txtArea | txtArea setCompletionEngine: aCompletionEngine] 
 ]
 
 { #category : #'new selection' }
@@ -366,21 +410,17 @@ RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInter
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> debug: aStream [
-
 	| method receiver context |
-	(self model respondsTo: #doItReceiver) 
-		ifTrue: 
-			[receiver := self model doItReceiver.
-			context := self model doItContext]
-		ifFalse:
-			[receiver := context := nil].
+	(self model respondsTo: #doItReceiver)
+		ifTrue: [ receiver := self model doItReceiver.
+			context := self model doItContext ]
+		ifFalse: [ receiver := context := nil ].
 	method := self compile: aStream for: receiver in: context.
-	
-	method isReturnSpecial ifTrue:[ self inform:'Nothing to debug, the expression is optimized'. ^self.].
-	
-	method notNil ifTrue: [
-		self debug: method receiver: receiver in: context ].
-	
+	method isReturnSpecial
+		ifTrue: [ self inform: 'Nothing to debug, the expression is optimized'.
+			^ self ].
+	method notNil
+		ifTrue: [ self debug: method receiver: receiver in: context ]
 ]
 
 { #category : #'do-its' }
@@ -702,7 +742,8 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 { #category : #initialization }
 RubSmalltalkEditor >> initialize [
 	super initialize.
-	notificationStrategy := RubTextInsertionStrategy new editor: self
+	notificationStrategy := RubTextInsertionStrategy new editor: self.
+	CompletionEngine ifNotNil: [self completionEngine: CompletionEngine new]
 ]
 
 { #category : #keymapping }
@@ -747,6 +788,13 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 	
 ]
 
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> isCompletionEnabled [
+	CompletionEngine ifNil: [ ^false ].
+	CompletionEngine isCompletionEnabled ifFalse: [ ^false ].
+	^ self editingMode isCompletionEnabled
+]
+
 { #category : #testing }
 RubSmalltalkEditor >> isSmalltalkEditor [
 	^ true 
@@ -772,12 +820,9 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 
 { #category : #'typing support' }
 RubSmalltalkEditor >> keystroke: aKeyboardEvent [
-	self
-		completionAround: [ 
-			(self selectorChooserHandlesKeyboard: aKeyboardEvent)
-				ifFalse: [ super keystroke: aKeyboardEvent ].
-			self selectorChooserKeystroke: aKeyboardEvent ]
-		keyStroke: aKeyboardEvent
+
+	self completionAround: [super keystroke: aKeyboardEvent ] keyStroke: aKeyboardEvent
+	
 ]
 
 { #category : #'menu messages' }
@@ -935,7 +980,7 @@ RubSmalltalkEditor >> referencesTo: aVariableOrClassName [
 	env := self modelCurrentSelectedClass ifNil: [ Smalltalk globals ].
 
 	env isBehavior ifTrue: [
-		(env instVarIndexFor: aVariableOrClassName) > 0 ifTrue: [
+		(env hasSlotNamed: aVariableOrClassName) ifTrue: [
 		 ^ self systemNavigation browseAllAccessesTo: aVariableOrClassName from: env]].
 
 	ref:= (env bindingOf: aVariableOrClassName) ifNil: [ ^ self ].
@@ -1136,6 +1181,7 @@ RubSmalltalkEditor >> selectorChooserFocusChange [
 { #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserHandlesKeyboard: aKeyboardEvent [
 	"Return true or false on whether the code editor can handle keyboard event"
+	
 	^ (selectorChooser notNil and: [ selectorChooser handlesKeyboard: aKeyboardEvent ])
 
 ]
@@ -1236,6 +1282,14 @@ RubSmalltalkEditor >> tallySelection [
 	self tally: self selectionAsStream
 	
 
+]
+
+{ #category : #'completion engine' }
+RubSmalltalkEditor >> textArea: atextArea [
+
+	atextArea setCompletionEngine: self completionEngine.
+	super textArea: atextArea.
+	completionEngine setModel: self model
 ]
 
 { #category : #'menu messages' }

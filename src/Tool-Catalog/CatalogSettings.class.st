@@ -35,8 +35,7 @@ CatalogSettings class >> catalogSettingsOn: aBuilder [
 CatalogSettings class >> catalogSourceURL [
 	"Return the source URL for retrieving catalog infos"
 	
-	CatalogSourceURL ifNil: [ CatalogSourceURL := self defaultCatalogSourceURL ].
-	^CatalogSourceURL
+	^ CatalogSourceURL ifNil: [ CatalogSourceURL := self defaultCatalogSourceURL ]
 ]
 
 { #category : #accessing }
@@ -56,8 +55,7 @@ CatalogSettings class >> defaultCatalogSourceURL [
 CatalogSettings class >> displayCatalogProjectsInSpotter [
 	"Return true if the catalog projects should be displayed in spotter, false otherwise"
 	
-	DisplayCatalogProjectsInSpotter ifNil: [ DisplayCatalogProjectsInSpotter := true ].
-	^DisplayCatalogProjectsInSpotter
+	^ DisplayCatalogProjectsInSpotter ifNil: [ DisplayCatalogProjectsInSpotter := true ]
 ]
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ Class {
 		'morph',
 		'directKeymaps'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Dispatching'
 }
 
 { #category : #'instance creation' }
@@ -133,7 +133,7 @@ KMDispatcher >> dispatchKeystroke: aKeyEvent [
 
 	KMBuffer uniqueInstance addEvent: aKeyEvent.
 
-	chain := KMDispatchChain from: (KmGlobalDispatcher new dispatcher: self; yourself) andDispatcher: self.
+	chain := KMDispatchChain from: (KMGlobalDispatcher new dispatcher: self; yourself) andDispatcher: self.
 	chain dispatch: aKeyEvent.
 ]
 
@@ -209,7 +209,7 @@ KMDispatcher >> removeKeyCombination: aShortcut [
 	removalTarget removeKeymapEntry: keymap
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 KMDispatcher >> reset [
 	self resetTargets.
 	self resetPerInstanceTarget

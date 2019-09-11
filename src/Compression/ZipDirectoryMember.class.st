@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-ZipDirectoryMember class >> newNamed: aFileName [
-	^(self new) localFileName: aFileName; yourself
+ZipDirectoryMember class >> newFromDirectory: aFileReference [
+	^(self new) localFileNameFrom: aFileReference; yourself
 ]
 
 { #category : #private }
@@ -39,11 +39,15 @@ ZipDirectoryMember >> isDirectory [
 { #category : #accessing }
 ZipDirectoryMember >> localFileName: aString [
 
-	| file |
-	file := aString asFileReference.	
-	super localFileName: (file basename copyWith: $/).
-	file exists ifFalse: [ ^ self ].
-	self modifiedAt: file entry modificationTime.
+	self localFileNameFrom: aString asFileReference
+]
+
+{ #category : #accessing }
+ZipDirectoryMember >> localFileNameFrom: aFileReference [
+
+	super localFileName: (aFileReference basename copyWith: $/).
+	aFileReference exists ifFalse: [ ^ self ].
+	self modifiedAt: aFileReference entry modificationTime.
 ]
 
 { #category : #private }
@@ -51,7 +55,7 @@ ZipDirectoryMember >> rewindData [
 ]
 
 { #category : #testing }
-ZipDirectoryMember >> usesFileNamed: aName [
+ZipDirectoryMember >> usesFile: aFileReferenceOrFileName [
 	^false
 ]
 

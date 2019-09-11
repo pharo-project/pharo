@@ -43,13 +43,14 @@ RBInlineTemporaryRefactoring >> compileMethod [
 { #category : #testing }
 RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: assignmentNode variable name , ' := ``@object'
-		do: [:aNode :answer | answer + 1].
-	^(searcher executeTree: definingNode initialAnswer: 0) == 1
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: assignmentNode variable name , ' := ``@object'
+		do: [ :aNode :answer | answer + 1 ].
+	^ (searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
@@ -105,19 +106,17 @@ RBInlineTemporaryRefactoring >> transform [
 
 { #category : #preconditions }
 RBInlineTemporaryRefactoring >> verifySelectedInterval [
+
 	sourceTree := class parseTreeFor: selector.
-	sourceTree isNil ifTrue: [self refactoringFailure: 'Could not parse source'].
+	sourceTree ifNil: [ self refactoringFailure: 'Could not parse source' ].
 	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
-	assignmentNode isAssignment 
-		ifFalse: 
-			[self refactoringFailure: 'The selected node is not an assignment statement'].
+	assignmentNode isAssignment
+		ifFalse: [ self refactoringFailure: 'The selected node is not an assignment statement' ].
 	definingNode := assignmentNode whoDefines: assignmentNode variable name.
-	self hasOnlyOneAssignment 
-		ifFalse: 
-			[self refactoringError: 'There are multiple assignments to the variable'].
-	(RBReadBeforeWrittenTester isVariable: assignmentNode variable name
-		writtenBeforeReadIn: definingNode) 
-			ifFalse: 
-				[self 
-					refactoringError: 'The variable is possible read before it is assigned']
+	self hasOnlyOneAssignment
+		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].
+	( RBReadBeforeWrittenTester
+		isVariable: assignmentNode variable name
+		writtenBeforeReadIn: definingNode )
+		ifFalse: [ self refactoringError: 'The variable is possible read before it is assigned' ]
 ]

@@ -21,21 +21,19 @@ GLMActionTest >> testCondition [
 { #category : #tests }
 GLMActionTest >> testShortcutAsString [
 	| action modifier |
-	
 	modifier := Smalltalk os menuShortcutModifierString.
 	action := GLMAction new.
 	action shortcut: $i.
-	self assert: action shortcutAsString equals: modifier, '+i'.
+	self assert: action shortcutAsString equals: modifier , '+i'.
 	action shortcut: $I.
-	self assert: action shortcutAsString equals: modifier, '+shift+i'.
+	self assert: action shortcutAsString equals: modifier , '+shift+i'.
 	action shortcut: nil.
-	self assert: action shortcutAsString isEmpty
+	self assertEmpty: action shortcutAsString
 ]
 
 { #category : #tests }
 GLMActionTest >> testShortcutFromKeymap [
 	| action modifier |
-	
 	modifier := Smalltalk os defaultModifier.
 	action := GLMAction new.
 	action keymap: modifier + $i asShortcut.
@@ -43,5 +41,5 @@ GLMActionTest >> testShortcutFromKeymap [
 	action keymap: modifier + $i shift.
 	self assert: action keymap equals: modifier + $i shift.
 	action keymap: nil.
-	self assert: action shortcutAsString isEmpty
+	self assertEmpty: action shortcutAsString
 ]

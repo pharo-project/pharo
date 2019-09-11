@@ -50,18 +50,24 @@ WeekTest >> tearDown [
 
 { #category : #tests }
 WeekTest >> testByWeekNumber [
-	"Check some week dates, assuming that the week starts on Sunday"
+	"Check some week dates, and check that the week starts on Monday
+	 even though Week >> startDay is set to Sunday in setUp."
 	week := Week year: 2013 week: 1.
-	self assert: week start equals: (DateAndTime year: 2012 month: 12 day: 30).
-	
+	self assert: week start equals: (DateAndTime year: 2012 month: 12 day: 31).
+	self assert: week start dayOfWeek equals: 2.
+
 	week := Week year: 2013 week: 32.
-	self assert: week start equals: (DateAndTime year: 2013 month: 8 day: 4).
+	self assert: week start equals: (DateAndTime year: 2013 month: 8 day: 5).
+	self assert: week start dayOfWeek equals: 2.
 	
 	week := Week year: 2013 week: 52.
-	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 22).
+	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 23).
+	self assert: week start dayOfWeek equals: 2.
 	
 	week := Week year: 2014 week: 1.
-	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 29).
+	self assert: week start equals: (DateAndTime year: 2013 month: 12 day: 30).
+	self assert: week start dayOfWeek equals: 2.
+
 ]
 
 { #category : #tests }
@@ -77,15 +83,13 @@ WeekTest >> testDayNames [
 
 { #category : #tests }
 WeekTest >> testEnumerating [
-
 	| days |
 	days := OrderedCollection new.
 	0 to: 6 do: [ :i | days add: ('28 June 1998' asDate addDays: i) ].
 
 	week datesDo: [ :d | days remove: d ].
-	
-	self assert: days isEmpty.
 
+	self assertEmpty: days
 ]
 
 { #category : #tests }

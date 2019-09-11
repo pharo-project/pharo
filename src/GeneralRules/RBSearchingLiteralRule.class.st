@@ -1,5 +1,5 @@
 "
-Checks for repeated literal equalitity tests that should rather be implemented as a search in a literal collection.
+Checks for repeated literal equality tests that should rather be implemented as a search in a literal collection.
 "
 Class {
 	#name : #RBSearchingLiteralRule,
@@ -69,5 +69,5 @@ RBSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anOb
 
 { #category : #accessing }
 RBSearchingLiteralRule >> name [
-	^ 'Uses or''s instead of a searching literal'
+	^ 'Uses or instead of a searching literal'
 ]

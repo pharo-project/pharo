@@ -20,7 +20,7 @@ FileSystemError class >> signalWith: aReference [
 	^ (self reference: aReference) signal
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FileSystemError >> initializeWithReference: aReference [
 	reference := aReference.
 	messageText := aReference printString

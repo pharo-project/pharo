@@ -40,14 +40,14 @@ TaskbarMorph class >> maximumButtonsDefault [
 	^100
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 TaskbarMorph class >> reset [
 	<script>
 	"Remove the taskbar and add a new one." 
 	
-	(World submorphs select: [:m | m isKindOf: self])
+	(self currentWorld submorphs select: [:m | m isKindOf: self])
 		do: [:tb | tb delete].
-	World createTaskbarIfNecessary
+	self currentWorld createTaskbarIfNecessary
 ]
 
 { #category : #setting }
@@ -67,7 +67,7 @@ TaskbarMorph class >> showTaskbarPreferenceChanged [
 	"Add or remove the taskbar as appropriate.
 	Delegate to the current World."
 	
-	World showWorldTaskbar:  self showTaskbar
+	self currentWorld showWorldTaskbar:  self showTaskbar
 ]
 
 { #category : #setting }
@@ -297,12 +297,12 @@ TaskbarMorph >> removeFromWorld [
 
 	|mins animation|
 	mins := self tasks select: [:t | t isMinimized].
-	animation := self theme settings animationSettings useAnimation.
-	animation ifTrue: [self theme settings animationSettings useAnimation: false].
+	animation := self theme shouldUseAnimations.
+	animation ifTrue: [self theme useAnimation: false].
 	[mins do: [:t | t morph restore; resetCollapsedFrame].
 	self delete.
 	mins do: [:t | t morph minimize]]
-		ensure: [animation ifTrue: [self theme settings animationSettings useAnimation: true]]
+		ensure: [animation ifTrue: [self theme useAnimation: true]]
 ]
 
 { #category : #setting }
@@ -358,6 +358,25 @@ TaskbarMorph >> updateBounds [
 ]
 
 { #category : #private }
+TaskbarMorph >> updateOrderedTasksFrom: tasksThatShouldBeUpdated [
+	| deadTasks |
+	deadTasks := OrderedCollection new.
+	self orderedTasks
+		do: [ :aTaskbarTask | 
+			tasksThatShouldBeUpdated
+				detect:
+					[ :aTaskThatShouldBeUpdated | aTaskThatShouldBeUpdated morph = aTaskbarTask morph ]
+				ifFound: [ :foundTask | tasksThatShouldBeUpdated remove: foundTask ]
+				ifNone: [ deadTasks add: aTaskbarTask ] ].
+	(deadTasks isEmpty and: [ tasksThatShouldBeUpdated isEmpty ])
+		ifTrue: [ ^ self ].
+	self orderedTasks: (self orderedTasks 
+		removeAll: deadTasks;
+		addAll: tasksThatShouldBeUpdated;
+		yourself)
+]
+
+{ #category : #private }
 TaskbarMorph >> updateTaskButtons [
 	"Make buttons for the ordered tasks."
 	
@@ -377,24 +396,30 @@ TaskbarMorph >> updateTasks [
 	"Check for changes in the world's submorphs.
 	Note that if the task attributes change then a
 	task will be considered dead along with a new replacement."
-	
-	|wm deadTasks newTasks|
-	wm := self worldMorphs.
-	self tasks: ((wm collect: [:m | m taskbarTask]) select: [:m | m notNil]) asOrderedCollection.
+
+	| wm deadTasks newTasks taskbarTasksFromWorldMorph |
+	wm := self worldMorphs asOrderedCollection.
+	taskbarTasksFromWorldMorph := (wm collect: [ :m | m taskbarTask ])
+		reject: [ :m | m isNil ].
+	self tasks: taskbarTasksFromWorldMorph.
 	deadTasks := self orderedTasks difference: self tasks.
 	newTasks := self tasks difference: self orderedTasks.
-	(newTasks isEmpty and: [deadTasks isEmpty])
-		ifTrue: [^self]. "no changes"
-	newTasks copy do: [:t |
-		self orderedTasks detect: [:ot | ot morph = t morph] ifFound: [:ot |
-			self orderedTasks replaceAll: ot with: t.
-			deadTasks remove: ot.
-			newTasks remove: t]]. "replace in order any changed tasks."
+	(newTasks isEmpty and: [ deadTasks isEmpty ])
+		ifTrue: [ ^ self ].	"no changes"
+	newTasks copy
+		do: [ :t | 
+			self orderedTasks
+				detect: [ :ot | ot morph = t morph ]
+				ifFound: [ :ot | 
+					self orderedTasks replaceAll: ot with: t.
+					deadTasks remove: ot.
+					newTasks remove: t ] ].	"replace in order any changed tasks."
 	self orderedTasks
 		removeAll: deadTasks;
 		addAll: newTasks reversed.
 	self updateTaskButtons.
-	self defer: [self layoutChanged] "may have a different number of rows"
+	self
+		defer: [ "may have a different number of rows" self layoutChanged ]
 ]
 
 { #category : #accessing }

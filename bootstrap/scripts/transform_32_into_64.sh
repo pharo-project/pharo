@@ -5,7 +5,7 @@ set -o nounset
 set -o xtrace
 
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
-. ${SCRIPTS}/envversion.sh
+. ${SCRIPTS}/envvars.sh
 
 set_version_variables
 
@@ -59,8 +59,7 @@ for f in  ${PHARO_NAME_PREFIX}-32bit-*.zip; do
 	printf "\231\002\320\003" > displaySize.bin
 	dd if="displaySize.bin" of="${PHARO_NAME_PREFIX}-64bit-$HASH.image" bs=1 seek=40 count=4 conv=notrunc
 	
-	echo "70" > pharo.version
-	PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1)	
+	PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1 | cut -d'.' -f 1-2)
 	zip ${PHARO_NAME_PREFIX}-64bit-$HASH.zip ${PHARO_NAME_PREFIX}-64bit-$HASH.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
 	rm -f *.image *.changes *.sources
 done

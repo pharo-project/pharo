@@ -43,5 +43,5 @@ BorderedMorph class >> exampleGradient [
 	fs direction: (morph bounds width // 2) @ 0.
 	fs radial: true.
 	morph fillStyle: fs.
-	World primaryHand attachMorph: morph.
+	self currentWorld primaryHand attachMorph: morph.
 ]

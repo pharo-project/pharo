@@ -2,26 +2,21 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*Refactoring2-Transformations' }
 RBProgramNode >> allAccesses [
-
-	^ self allChildren select: #isVariable
+	self deprecated: 'Use #allVariables instead' transformWith: '`@receiver allAccesses' -> '`@receiver allVariables'.
+	^ self allVariables
 ]
 
 { #category : #'*Refactoring2-Transformations' }
-RBProgramNode >> parentSuchAs: aBlock [
+RBProgramNode >> allVariables [
+	"Return all the variables in subnodes"
 
-	^ (self parent perform: aBlock)
+	^ self allChildren select: [ :each | each isVariable ]
+]
+
+{ #category : #'*Refactoring2-Transformations' }
+RBProgramNode >> parentSuchAs: aPredicateSelector [
+	self flag: #pharoFixMe. "either there is a precondition stating that there is a parent matching or we need to check and return something when there is no parent matching."
+	^ (self parent perform: aPredicateSelector)
 		ifTrue: [ self parent ]
-		ifFalse: [ ^ self parent parentSuchAs: aBlock ]
-]
-
-{ #category : #'*Refactoring2-Transformations' }
-RBProgramNode >> sourceCode [
-
-	| interval |
-	interval := self sourceInterval.
-	interval ifEmpty: [ ^ '' ].
-	
-	^ self source 
-		copyFrom: interval first
-		to: interval last
+		ifFalse: [ ^ self parent parentSuchAs: aPredicateSelector ]
 ]

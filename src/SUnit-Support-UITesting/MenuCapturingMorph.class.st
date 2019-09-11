@@ -21,8 +21,9 @@ MenuCapturingMorph >> menu [
 { #category : #'stepping and presenter' }
 MenuCapturingMorph >> step [
 
-	menu := World submorphs detect: [ :m | m isKindOf: MenuMorph ] ifNone: [ menu ].
-	menu isNil ifFalse: [ 
-		menu delete.
-		self delete ].
+	menu := self currentWorld submorphs detect: [ :m | m isKindOf: MenuMorph ] ifNone: [ menu ].
+	menu
+		ifNotNil: [ menu delete.
+			self delete
+			]
 ]

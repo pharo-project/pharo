@@ -176,7 +176,7 @@ ToggleMenuItemMorph >> icon [
 	self getStateSelector ifNil: [^super icon].
 	state := (MessageSend receiver: self target selector: self getStateSelector)
 		valueWithEnoughArguments: self arguments .
-	self flag: #CleanYesNoOnOffAfter.
+	self flag: #pharoFixMe.
 	(state isKindOf: Association)
 		ifTrue: [^ state key ifTrue: [self onImage] ifFalse: [self offImage]]
 		ifFalse: [

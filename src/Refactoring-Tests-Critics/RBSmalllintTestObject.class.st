@@ -64,6 +64,7 @@ RBSmalllintTestObject >> booleanPrecedence [
 
 { #category : #methods }
 RBSmalllintTestObject >> codeCruftLeftInMethods [
+	<haltOrBreakpointForTesting>
 	| a b c |
 	a := b := c := 2.
 	self halt.

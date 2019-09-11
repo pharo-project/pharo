@@ -45,7 +45,7 @@ MenuMorph class >> chooseFrom: aList lines: linesArray title: queryString [
 		menu add: (aList at: i) asString target: [:v| result := v] selector: #value: argument: i.
 		(linesArray includes: i) ifTrue: [menu addLine]].
 	
-	menu invokeAt: ActiveHand position in: ActiveWorld allowKeyboard: true.
+	menu invokeAt: ActiveHand position in: self currentWorld allowKeyboard: true.
 	^result
 ]
 
@@ -70,7 +70,7 @@ MenuMorph class >> chooseFrom: aList values: valueList lines: linesArray title: 
 		menu add: (aList at: i) asString target: [:v| result := v] selector: #value: argument: (valueList at: i).
 		(linesArray includes: i) ifTrue:[menu addLine]].
 
-	menu invokeAt: ActiveHand position in: ActiveWorld allowKeyboard: true.
+	menu invokeAt: ActiveHand position in: self currentWorld allowKeyboard: true.
 	^result
 ]
 
@@ -130,7 +130,7 @@ MenuMorph class >> confirm: queryString trueChoice: trueChoice falseChoice: fals
 		argument: false.
 	[ menu
 		invokeAt: ActiveHand position
-		in: ActiveWorld
+		in: self currentWorld
 		allowKeyboard: true.
 	result isNil ] whileTrue.
 	^ result
@@ -515,7 +515,7 @@ MenuMorph >> addUpdating: wordingSelector target: target selector: aSymbol argum
  
 	|aString str|
 	aString := (MessageSend receiver: target selector: wordingSelector) valueWithEnoughArguments: argList.
-	self flag: #CleanYesNoOnOffAfter.
+	self flag: #pharoFixMe.
 	(aString isKindOf: Association)
 	     ifTrue: [aString := aString value]
 		ifFalse: [
@@ -535,7 +535,7 @@ MenuMorph >> addUpdating: wordingSelector target: target selector: aSymbol argum
 MenuMorph >> addWithLabel: aLabelString enablement: anEnablementSelector action: aSymbol [
 	"Append a menu item with the given label. If the item is selected, it will send the given selector to the target object with the given arguments. If the selector takes one more argument than the number of arguments in the given list, then the triggering event is supplied as as the last argument.  In this variant, the wording of the menu item is constant, and the optional enablementSelector determines whether or not the item should be enabled."
 
-	self flag: #ToDeprecate.
+	self flag: #pharoToDeprecate.
 	self
 		addToggle: aLabelString
 		target: defaultTarget
@@ -692,7 +692,7 @@ MenuMorph >> detachSubMenu: evt [
 { #category : #control }
 MenuMorph >> displayAt: aPoint during: aBlock [
 	"Add this menu to the Morphic world during the execution of the given block."
-	ActiveWorld addMorph: self centeredNear: aPoint.
+	self currentWorld addMorph: self centeredNear: aPoint.
 	self world displayWorld.  "show myself"
 	aBlock value.
 	self delete
@@ -736,8 +736,8 @@ MenuMorph >> displayFiltered: evt [
 { #category : #menu }
 MenuMorph >> doButtonAction [
 	"Do the receiver's inherent button action.  Makes sense for the kind of MenuMorph that is a wrapper for a single menu-item -- pass it on the the item"
-	self flag: '?'.
-	self hasItems ifTrue: [self menuItems first doButtonAction]
+
+	self hasItems ifTrue: [ self menuItems first doButtonAction ]
 ]
 
 { #category : #drawing }
@@ -909,7 +909,7 @@ MenuMorph >> invokeModal [
 MenuMorph >> invokeModal: allowKeyboardControl [
 	"Invoke this menu and don't return until the user has chosen a value.  If the allowKeyboarControl boolean is true, permit keyboard control of the menu"
 
-	^ self invokeModalAt: ActiveHand position in: ActiveWorld allowKeyboard: allowKeyboardControl
+	^ self invokeModalAt: ActiveHand position in: self currentWorld allowKeyboard: allowKeyboardControl
 ]
 
 { #category : #'modal control' }
@@ -1282,7 +1282,7 @@ MenuMorph >> popUpInWorld: aWorld [
 MenuMorph >> popUpNoKeyboard [
 	"Present this menu in the current World, *not* allowing keyboard input into the menu"
 
-	^ self popUpAt: ActiveHand position forHand: ActiveHand in: ActiveWorld allowKeyboard: false
+	^ self popUpAt: ActiveHand position forHand: ActiveHand in: self currentWorld allowKeyboard: false
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Simple themed separator morph.
 Class {
 	#name : #SeparatorMorph,
 	#superclass : #PanelMorph,
-	#category : #'Polymorph-Widgets'
+	#category : #'Polymorph-Widgets-Base'
 }
 
 { #category : #accessing }

@@ -72,7 +72,7 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode scope: scope.  scope node: aMethodNode.
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
-	self declareVariableNode: (RBVariableNode named: #RFValueReificationVar).
+	self declareVariableNode: (RBVariableNode named: #RFReifyValueVar).
 	self analyseForLinksForNodes: aMethodNode.
 	self visitNode: aMethodNode body.
 
@@ -113,7 +113,7 @@ RFSemanticAnalyzer >> visitVarWrite: aNode [
 { #category : #visiting }
 RFSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	super visitVariableNode: aVariableNode.
-	self flag: #TBD. "needs to be extendend to other kinds of variables and cleaned"
+	self flag: #pharoTodo. "needs to be extendend to other kinds of variables and cleaned"
 	aVariableNode isGlobal ifTrue: [  
 		self analyseForLinksForVariables: aVariableNode ].
 	(aVariableNode isInstance) ifTrue: [  

@@ -22,8 +22,8 @@ TSizeTest >> sizeCollection [
 TSizeTest >> test0TSizeTest [
 	self empty.
 	self sizeCollection.
-	self assert: self empty isEmpty.
-	self deny: self sizeCollection isEmpty
+	self assertEmpty: self empty.
+	self denyEmpty: self sizeCollection
 ]
 
 { #category : #'tests - size capacity' }

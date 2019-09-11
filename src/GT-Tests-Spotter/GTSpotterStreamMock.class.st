@@ -12,7 +12,7 @@ GTSpotterStreamMock >> addObject: anObject inProcessor: aProcessor [
 	objects add: anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GTSpotterStreamMock >> initialize [
 	super initialize.
 	objects := OrderedCollection new.

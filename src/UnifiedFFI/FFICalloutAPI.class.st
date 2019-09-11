@@ -44,6 +44,12 @@ FFICalloutAPI class >> new [
 ]
 
 { #category : #private }
+FFICalloutAPI class >> newCallbackBackendFor: aCallback [
+
+	^ FFIAlienCallback fromFrontendCallback: aCallback
+]
+
+{ #category : #private }
 FFICalloutAPI >> callingConvention [
 	^ callingConvention
 ]
@@ -107,6 +113,15 @@ FFICalloutAPI >> initializeContext: aContext [
 { #category : #action }
 FFICalloutAPI >> newBuilder [
 	^ FFICalloutMethodBuilder calloutAPI: self
+]
+
+{ #category : #'as yet unclassified' }
+FFICalloutAPI >> newCallbackWithSignature: signature block: aBlock library: aLibrary [
+
+	^ (FFICallback signature: signature block: aBlock)
+		calloutAPIClass: self class;
+		ffiLibrary: aLibrary;
+		yourself
 ]
 
 { #category : #accessing }

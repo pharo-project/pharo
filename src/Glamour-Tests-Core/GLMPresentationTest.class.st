@@ -4,11 +4,6 @@ Class {
 	#category : #'Glamour-Tests-Core'
 }
 
-{ #category : #testing }
-GLMPresentationTest >> expectedFailures [ 
-	^ #(testToSendMultipleValue)
-]
-
 { #category : #tests }
 GLMPresentationTest >> testActions [
 	| listing |
@@ -403,6 +398,7 @@ GLMPresentationTest >> testToSendAs [
 
 { #category : #tests }
 GLMPresentationTest >> testToSendMultipleValue [
+	<expectedFailure>
 	| presentation |
 	presentation := GLMPresentation new.
 	presentation selection: (GLMMultiValue withAll: #(#foo #bar )).

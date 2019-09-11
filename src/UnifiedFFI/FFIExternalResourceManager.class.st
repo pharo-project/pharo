@@ -86,7 +86,7 @@ FFIExternalResourceManager class >> addResource: anObject executor: anExecutor [
 	self uniqueInstance addResource: anObject executor: anExecutor
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 FFIExternalResourceManager class >> reset [
 	uniqueInstance := nil
 ]

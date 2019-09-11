@@ -1,5 +1,7 @@
 "
 Utility class to test exceptions
+
+For a partial explaination of how this class is used, look at the comment of class ExceptionTests.
 "
 Class {
 	#name : #ExceptionTester,
@@ -197,10 +199,7 @@ ExceptionTester >> iterationsBeforeTimeout: anInteger [
 
 { #category : #accessing }
 ExceptionTester >> log [
-
-	log == nil
-		ifTrue: [log := OrderedCollection new].
-	^log
+	^ log ifNil: [ log := OrderedCollection new ]
 ]
 
 { #category : #logging }

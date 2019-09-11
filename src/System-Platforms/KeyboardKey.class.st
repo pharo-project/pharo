@@ -227,32 +227,6 @@ KeyboardKey class >> initializeKeyTable [
 		16r005f underscore "XK_underscore"
 		16r0060 grave "XK_grave"
 		"16r0060 quoteleft" "XK_quoteleft"
-		16r0061 a "XK_a"
-		16r0062 b "XK_b"
-		16r0063 c "XK_c"
-		16r0064 d "XK_d"
-		16r0065 e "XK_e"
-		16r0066 f "XK_f"
-		16r0067 g "XK_g"
-		16r0068 h "XK_h"
-		16r0069 i "XK_i"
-		16r006a j "XK_j"
-		16r006b k "XK_k"
-		16r006c l "XK_l"
-		16r006d m "XK_m"
-		16r006e n "XK_n"
-		16r006f o "XK_o"
-		16r0070 p "XK_p"
-		16r0071 q "XK_q"
-		16r0072 r "XK_r"
-		16r0073 s "XK_s"
-		16r0074 t "XK_t"
-		16r0075 u "XK_u"
-		16r0076 v "XK_v"
-		16r0077 w "XK_w"
-		16r0078 x "XK_x"
-		16r0079 y "XK_y"
-		16r007a z "XK_z"
 		16r007b braceleft "XK_braceleft"
 		16r007c bar "XK_bar"
 		16r007d braceright "XK_braceright"
@@ -262,6 +236,7 @@ KeyboardKey class >> initializeKeyTable [
 
 { #category : #macos }
 KeyboardKey class >> initializeMacOSVirtualKeyTable [
+	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
 	MacosVirtualKeyTable := Dictionary new.
 	MacosVirtualKeyTable
 		at: 16r24 put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -293,7 +268,7 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 		at: 16r67 put: (self value: 16rffc8); "  kVK_F11                       = 0x67"
 		at: 16r6D put: (self value: 16rffc7); "  kVK_F10                       = 0x6D"
 		at: 16r6F put: (self value: 16rffc9); "  kVK_F12                       = 0x6F"
-		at: 16r72 put: (self value: 16r72); "  kVK_Help                      = 0x72" "Not mapped"
+		"at: 16r72 put: (self value: 16r72);" "  kVK_Help                      = 0x72" "Not mapped"
 		at: 16r73 put: (self value: 16rff50); "  kVK_Home                      = 0x73"
 		at: 16r74 put: (self value: 16rff55); "  kVK_PageUp                    = 0x74"
 		at: 16r75 put: (self value: 16rffff); "  kVK_ForwardDelete             = 0x75"
@@ -374,119 +349,121 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 
 { #category : #unix }
 KeyboardKey class >> initializeUnixVirtualKeyTable [
+	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
 	UnixVirtualKeyTable := Dictionary new.
 	UnixVirtualKeyTable
-		at: Character cr asciiValue put: (self value: 16rff0d); " kVK_Return                    = 0x24"
-		at: Character tab asciiValue put: (self value: 16rff09); "  kVK_Tab                       = 0x30"
-		at: Character space asciiValue put: (self value: 16rff80); "  kVK_Space                     = 0x31"
-		at: Character delete asciiValue put: (self value: 16rffff); "  kVK_Delete                    = 0x33"
-		at: Character escape asciiValue put: (self value: 16rff1b); "  kVK_Escape                    = 0x35"
-		at: 8 put: (self value: 16rff08); "  kVK_Command                   = 0x37"
-		at: -1 put: (self value: 16rffe7); "  kVK_Command                   = 0x37"
-		at: 255 put: (self value: 16rffe1); "  kVK_Shift                     = 0x38"
-		at: -1 put: (self value: 16rffe5); "  kVK_CapsLock                  = 0x39"
-		at: 247 put: (self value: 16rffe9); "  kVK_Option                    = 0x3A"
-		at: 251 put: (self value: 16rffe3); "  kVK_Control                   = 0x3B"
-		at: 254 put: (self value: 16rffe2); "  kVK_RightShift                = 0x3C"
-		at: -1 put: (self value: 16rffea); "  kVK_RightOption               = 0x3D"
-		at: -1 put: (self value: 16rffe4); "  kVK_RightControl              = 0x3E"
-		at: -1 put: (self value: 16r08f6); "  kVK_Function                  = 0x3F"
-		at: -1 put: (self value: 16r48); "  kVK_VolumeUp                  = 0x48"  "Not mapped"
-		at: -1 put: (self value: 16r49); "  kVK_VolumeDown                = 0x49" "Not mapped"
-		at: -1 put: (self value: 16r4A); "  kVK_Mute                      = 0x4A" "Not mapped"
-		at: -1 put: (self value: 16rffbe); "  kVK_F1                        = 0x7A"
-		at: -1 put: (self value: 16rffbf); "  kVK_F2                        = 0x78"
-		at: -1 put: (self value: 16rffc0); "  kVK_F3                        = 0x63"
-		at: -1 put: (self value: 16rffc1); "  kVK_F4                        = 0x76"
-		at: -1 put: (self value: 16rffc2); "  kVK_F5                        = 0x60"
-		at: -1 put: (self value: 16rffc3); "  kVK_F6                        = 0x61"
-		at: -1 put: (self value: 16rffc4); "  kVK_F7                        = 0x62"
-		at: -1 put: (self value: 16rffc5); "  kVK_F8                        = 0x64"
-		at: -1 put: (self value: 16rffc6); "  kVK_F9                        = 0x65"
-		at: -1 put: (self value: 16rffc8); "  kVK_F11                       = 0x67"
-		at: -1 put: (self value: 16rffc7); "  kVK_F10                       = 0x6D"
-		at: -1 put: (self value: 16rffc9); "  kVK_F12                       = 0x6F"
-		at: -1 put: (self value: 16r72); "  kVK_Help                      = 0x72" "Not mapped"
-		at: Character home asciiValue put: (self value: 16rff50); "  kVK_Home                      = 0x73"
-		at: Character pageUp asciiValue put: (self value: 16rff55); "  kVK_PageUp                    = 0x74"
-		at: Character delete asciiValue put: (self value: 16rffff); "  kVK_ForwardDelete             = 0x75"
-		at: Character end asciiValue put: (self value: 16rff57); "  kVK_End                       = 0x77"
-		at: Character pageDown asciiValue put: (self value: 16rff56); "  kVK_PageDown                  = 0x79"
-		at: Character arrowLeft asciiValue put: (self value: 16rff96); "  kVK_LeftArrow                 = 0x7B"
-		at: Character arrowRight asciiValue put: (self value: 16rff98); "  kVK_RightArrow                = 0x7C"
-		at: Character arrowDown asciiValue put: (self value: 16rff99); "  kVK_DownArrow                 = 0x7D"
-		at: Character arrowUp asciiValue put: (self value: 16rff97); "  kVK_UpArrow                   = 0x7E"
+		at: Character cr asciiValue put: (self value: 16rff0d); " kVK_Return       = 0x24"
+		at: Character tab asciiValue put: (self value: 16rff09); "  kVK_Tab        = 0x30"
+		at: Character space asciiValue put: (self value: 16rff80); "  kVK_Space    = 0x31"
+		at: Character delete asciiValue put: (self value: 16rffff); "  kVK_Delete  = 0x33"
+		at: Character escape asciiValue put: (self value: 16rff1b); "  kVK_Escape  = 0x35"
+		at: 8 put: (self value: 16rff08); "  kVK_Command                           = 0x37"
+		at: -1 put: (self value: 16rffe7); "  kVK_Command                          = 0x37"
+		at: 255 put: (self value: 16rffe1); "  kVK_Shift                           = 0x38"
+		at: -1 put: (self value: 16rffe5); "  kVK_CapsLock                         = 0x39"
+		at: 247 put: (self value: 16rffe9); "  kVK_Option                          = 0x3A"
+		at: 251 put: (self value: 16rffe3); "  kVK_Control                         = 0x3B"
+		at: 254 put: (self value: 16rffe2); "  kVK_RightShift                      = 0x3C"
+      at: 246 put: (self value: 16rffea); " kVK_RightOption                      = 0x3D"
+      at: 250 put: (self value: 16rffe4); " kVK_RightControl                     = 0x3E"
+		at: -1 put: (self value: 16r08f6); "  kVK_Function                         = 0x3F"
+		at: -1 put: (self value: 16r48); "  kVK_VolumeUp                           = 0x48"  "Not mapped"
+		at: -1 put: (self value: 16r49); "  kVK_VolumeDown                         = 0x49" "Not mapped"
+		at: -1 put: (self value: 16r4A); "  kVK_Mute                               = 0x4A" "Not mapped"
+		at: -1 put: (self value: 16rffbe); "  kVK_F1                               = 0x7A"
+		at: -1 put: (self value: 16rffbf); "  kVK_F2                               = 0x78"
+		at: -1 put: (self value: 16rffc0); "  kVK_F3                               = 0x63"
+		at: -1 put: (self value: 16rffc1); "  kVK_F4                               = 0x76"
+		at: -1 put: (self value: 16rffc2); "  kVK_F5                               = 0x60"
+		at: -1 put: (self value: 16rffc3); "  kVK_F6                               = 0x61"
+		at: -1 put: (self value: 16rffc4); "  kVK_F7                               = 0x62"
+		at: -1 put: (self value: 16rffc5); "  kVK_F8                               = 0x64"
+		at: -1 put: (self value: 16rffc6); "  kVK_F9                               = 0x65"
+		at: -1 put: (self value: 16rffc8); "  kVK_F11                              = 0x67"
+		at: -1 put: (self value: 16rffc7); "  kVK_F10                              = 0x6D"
+		at: -1 put: (self value: 16rffc9); "  kVK_F12                              = 0x6F"
+		"at: -1 put: (self value: 16r72);" "  kVK_Help                               = 0x72" "Not mapped"
+		at: Character home asciiValue put: (self value: 16rff50); "  kVK_Home      = 0x73"
+		at: Character pageUp asciiValue put: (self value: 16rff55); "  kVK_PageUp  = 0x74"
+		at: Character delete asciiValue put: (self value: 16rffff); "  kVK_ForwardDelete   = 0x75"
+		at: Character end asciiValue put: (self value: 16rff57); "  kVK_End                = 0x77"
+		at: Character pageDown asciiValue put: (self value: 16rff56); "  kVK_PageDown      = 0x79"
+		at: Character arrowLeft asciiValue put: (self value: 16rff96); "  kVK_LeftArrow    = 0x7B"
+		at: Character arrowRight asciiValue put: (self value: 16rff98); "  kVK_RightArrow  = 0x7C"
+		at: Character arrowDown asciiValue put: (self value: 16rff99); "  kVK_DownArrow    = 0x7D"
+		at: Character arrowUp asciiValue put: (self value: 16rff97); "  kVK_UpArrow        = 0x7E"
 		at: $a asciiValue put: (self value: 16r41); "kVK_ANSI_A                    = 0x00"
-		at: $b asciiValue put: (self value: 16r42); "  kVK_ANSI_B                    = 0x0B"
-		at: $c asciiValue put: (self value: 16r43); "  kVK_ANSI_C                    = 0x08"
-		at: $d asciiValue put: (self value: 16r44); "  kVK_ANSI_D                    = 0x02"
-		at: $e asciiValue put: (self value: 16r45); "  kVK_ANSI_E                    = 0x0E"
-		at: $f asciiValue put: (self value: 16r46); "  kVK_ANSI_F                    = 0x03"
-		at: $g asciiValue put: (self value: 16r47); "  kVK_ANSI_G                    = 0x05"
-		at: $h asciiValue put: (self value: 16r48); "  kVK_ANSI_H                    = 0x04"
-		at: $i asciiValue put: (self value: 16r49); "  kVK_ANSI_I                    = 0x22"
-		at: $j asciiValue put: (self value: 16r4a); "  kVK_ANSI_J                    = 0x26"
-		at: $k asciiValue put: (self value: 16r4b); "  kVK_ANSI_K                    = 0x28"
-		at: $l asciiValue put: (self value: 16r4c); "  kVK_ANSI_L                    = 0x25"
-		at: $m asciiValue put: (self value: 16r4d); "  kVK_ANSI_M                    = 0x2E"
-		at: $n asciiValue put: (self value: 16r4e); "  kVK_ANSI_N                    = 0x2D"
-		at: $o asciiValue put: (self value: 16r4f); "  kVK_ANSI_O                    = 0x1F"
-		at: $p asciiValue put: (self value: 16r50); "  kVK_ANSI_P                    = 0x23"
-		at: $q asciiValue put: (self value: 16r51); "  kVK_ANSI_Q                    = 0x0C"
-		at: $r asciiValue put: (self value: 16r52); "  kVK_ANSI_R                    = 0x0F"
-		at: $s asciiValue put: (self value: 16r53); "  kVK_ANSI_S                    = 0x01"
-		at: $t asciiValue put: (self value: 16r54); "  kVK_ANSI_T                    = 0x11"
-		at: $u asciiValue put: (self value: 16r55); "  kVK_ANSI_U                    = 0x20"
-		at: $v asciiValue put: (self value: 16r56); "  kVK_ANSI_V                    = 0x09"
-		at: $w asciiValue put: (self value: 16r57); "  kVK_ANSI_W                    = 0x0D"
-		at: $x asciiValue put: (self value: 16r58); "  kVK_ANSI_X                    = 0x07"
-		at: $y asciiValue put: (self value: 16r59); "  kVK_ANSI_Y                    = 0x10"
-		at: $z asciiValue put: (self value: 16r5a); "  kVK_ANSI_Z                    = 0x06"
+		at: $b asciiValue put: (self value: 16r42); "  kVK_ANSI_B                  = 0x0B"
+		at: $c asciiValue put: (self value: 16r43); "  kVK_ANSI_C                  = 0x08"
+		at: $d asciiValue put: (self value: 16r44); "  kVK_ANSI_D                  = 0x02"
+		at: $e asciiValue put: (self value: 16r45); "  kVK_ANSI_E                  = 0x0E"
+		at: $f asciiValue put: (self value: 16r46); "  kVK_ANSI_F                  = 0x03"
+		at: $g asciiValue put: (self value: 16r47); "  kVK_ANSI_G                  = 0x05"
+		at: $h asciiValue put: (self value: 16r48); "  kVK_ANSI_H                  = 0x04"
+		at: $i asciiValue put: (self value: 16r49); "  kVK_ANSI_I                  = 0x22"
+		at: $j asciiValue put: (self value: 16r4a); "  kVK_ANSI_J                  = 0x26"
+		at: $k asciiValue put: (self value: 16r4b); "  kVK_ANSI_K                  = 0x28"
+		at: $l asciiValue put: (self value: 16r4c); "  kVK_ANSI_L                  = 0x25"
+		at: $m asciiValue put: (self value: 16r4d); "  kVK_ANSI_M                  = 0x2E"
+		at: $n asciiValue put: (self value: 16r4e); "  kVK_ANSI_N                  = 0x2D"
+		at: $o asciiValue put: (self value: 16r4f); "  kVK_ANSI_O                  = 0x1F"
+		at: $p asciiValue put: (self value: 16r50); "  kVK_ANSI_P                  = 0x23"
+		at: $q asciiValue put: (self value: 16r51); "  kVK_ANSI_Q                  = 0x0C"
+		at: $r asciiValue put: (self value: 16r52); "  kVK_ANSI_R                  = 0x0F"
+		at: $s asciiValue put: (self value: 16r53); "  kVK_ANSI_S                  = 0x01"
+		at: $t asciiValue put: (self value: 16r54); "  kVK_ANSI_T                  = 0x11"
+		at: $u asciiValue put: (self value: 16r55); "  kVK_ANSI_U                  = 0x20"
+		at: $v asciiValue put: (self value: 16r56); "  kVK_ANSI_V                  = 0x09"
+		at: $w asciiValue put: (self value: 16r57); "  kVK_ANSI_W                  = 0x0D"
+		at: $x asciiValue put: (self value: 16r58); "  kVK_ANSI_X                  = 0x07"
+		at: $y asciiValue put: (self value: 16r59); "  kVK_ANSI_Y                  = 0x10"
+		at: $z asciiValue put: (self value: 16r5a); "  kVK_ANSI_Z                  = 0x06"
 		
-		at: $0 asciiValue put: (self value: 16r30); "  kVK_ANSI_0                    = 0x1D"
-		at: $1 asciiValue put: (self value: 16r31); "  kVK_ANSI_1                    = 0x12"
-		at: $2 asciiValue put: (self value: 16r32); "  kVK_ANSI_2                    = 0x13"
-		at: $3 asciiValue put: (self value: 16r33); "  kVK_ANSI_3                    = 0x14"
-		at: $4 asciiValue put: (self value: 16r34); "  kVK_ANSI_4                    = 0x15"
-		at: $5 asciiValue put: (self value: 16r35); "  kVK_ANSI_5                    = 0x17"
-		at: $6 asciiValue put: (self value: 16r36); "  kVK_ANSI_6                    = 0x16"
-		at: $7 asciiValue put: (self value: 16r37); "  kVK_ANSI_7                    = 0x1A"
-		at: $8 asciiValue put: (self value: 16r38); "  kVK_ANSI_8                    = 0x1C"
-		at: $9 asciiValue put: (self value: 16r39); "  kVK_ANSI_9                    = 0x19"
+		at: $0 asciiValue put: (self value: 16r30); "  kVK_ANSI_0                  = 0x1D"
+		at: $1 asciiValue put: (self value: 16r31); "  kVK_ANSI_1                  = 0x12"
+		at: $2 asciiValue put: (self value: 16r32); "  kVK_ANSI_2                  = 0x13"
+		at: $3 asciiValue put: (self value: 16r33); "  kVK_ANSI_3                  = 0x14"
+		at: $4 asciiValue put: (self value: 16r34); "  kVK_ANSI_4                  = 0x15"
+		at: $5 asciiValue put: (self value: 16r35); "  kVK_ANSI_5                  = 0x17"
+		at: $6 asciiValue put: (self value: 16r36); "  kVK_ANSI_6                  = 0x16"
+		at: $7 asciiValue put: (self value: 16r37); "  kVK_ANSI_7                  = 0x1A"
+		at: $8 asciiValue put: (self value: 16r38); "  kVK_ANSI_8                  = 0x1C"
+		at: $9 asciiValue put: (self value: 16r39); "  kVK_ANSI_9                  = 0x19"
 
-		at: $- asciiValue put: (self value: 16r2d); "  kVK_ANSI_Minus                = 0x1B"
-		at: $= asciiValue put: (self value: 16r3d); "  kVK_ANSI_Equal                = 0x18"
-		at: $[ asciiValue put: (self value: 16r5b); "  kVK_ANSI_LeftBracket          = 0x21"
-		at: $] asciiValue put: (self value: 16r5d); "  kVK_ANSI_RightBracket         = 0x1E"
-		at: $' asciiValue put: (self value: 16r27); "  kVK_ANSI_Quote                = 0x27"
-		at: $; asciiValue put: (self value: 16r3b); "  kVK_ANSI_Semicolon            = 0x29"
-		at: $/ asciiValue put: (self value: 16r5c); "  kVK_ANSI_Backslash            = 0x2A"
-		at: $, asciiValue put: (self value: 16r2c); "  kVK_ANSI_Comma                = 0x2B"
-		at: $\ asciiValue put: (self value: 16r2f); "  kVK_ANSI_Slash                = 0x2C"
-		at: $. asciiValue put: (self value: 16r2e); "  kVK_ANSI_Period               = 0x2F"
-		at: $` asciiValue put: (self value: 16r60); "  kVK_ANSI_Grave                = 0x32"
-		at: 1 put: (self value: 16rffae); "  kVK_ANSI_KeypadDecimal        = 0x41"
-		at: 1 put: (self value: 16rffaa); "  kVK_ANSI_KeypadMultiply       = 0x43"
-		at: 1 put: (self value: 16rffab); "  kVK_ANSI_KeypadPlus           = 0x45"
-		at: 1 put: (self value: 16r47); "  kVK_ANSI_KeypadClear          = 0x47" "Not mapped"
-		at: 1 put: (self value: 16rffaf); "  kVK_ANSI_KeypadDivide         = 0x4B"
-		at: 1 put: (self value: 16rff8d); "  kVK_ANSI_KeypadEnter          = 0x4C"
-		at: 1 put: (self value: 16rffad); "  kVK_ANSI_KeypadMinus          = 0x4E"
-		at: 1 put: (self value: 16rffbd); "  kVK_ANSI_KeypadEquals         = 0x51"
-		at: 1 put: (self value: 16rffb0); "  kVK_ANSI_Keypad0              = 0x52"
-		at: 1 put: (self value: 16rffb1); "  kVK_ANSI_Keypad1              = 0x53"
-		at: 1 put: (self value: 16rffb2); "  kVK_ANSI_Keypad2              = 0x54"
-		at: 1 put: (self value: 16rffb3); "  kVK_ANSI_Keypad3              = 0x55"
-		at: 1 put: (self value: 16rffb4); "  kVK_ANSI_Keypad4              = 0x56"
-		at: 1 put: (self value: 16rffb5); "  kVK_ANSI_Keypad5              = 0x57"
-		at: 1 put: (self value: 16rffb6); "  kVK_ANSI_Keypad6              = 0x58"
-		at: 1 put: (self value: 16rffb7); "  kVK_ANSI_Keypad7              = 0x59"
-		at: 1 put: (self value: 16rffb8); "  kVK_ANSI_Keypad8              = 0x5B"
-		at: 1 put: (self value: 16rffb9) "  kVK_ANSI_Keypad9              = 0x5C"
+		at: $- asciiValue put: (self value: 16r2d); "  kVK_ANSI_Minus              = 0x1B"
+		at: $= asciiValue put: (self value: 16r3d); "  kVK_ANSI_Equal              = 0x18"
+		at: $[ asciiValue put: (self value: 16r5b); "  kVK_ANSI_LeftBracket        = 0x21"
+		at: $] asciiValue put: (self value: 16r5d); "  kVK_ANSI_RightBracket       = 0x1E"
+		at: $' asciiValue put: (self value: 16r27); "  kVK_ANSI_Quote              = 0x27"
+		at: $; asciiValue put: (self value: 16r3b); "  kVK_ANSI_Semicolon          = 0x29"
+		at: $/ asciiValue put: (self value: 16r5c); "  kVK_ANSI_Backslash          = 0x2A"
+		at: $, asciiValue put: (self value: 16r2c); "  kVK_ANSI_Comma              = 0x2B"
+		at: $\ asciiValue put: (self value: 16r2f); "  kVK_ANSI_Slash              = 0x2C"
+		at: $. asciiValue put: (self value: 16r2e); "  kVK_ANSI_Period             = 0x2F"
+		at: $` asciiValue put: (self value: 16r60); "  kVK_ANSI_Grave              = 0x32"
+		at: 1 put: (self value: 16rffae); "  kVK_ANSI_KeypadDecimal                = 0x41"
+		at: 1 put: (self value: 16rffaa); "  kVK_ANSI_KeypadMultiply               = 0x43"
+		at: 1 put: (self value: 16rffab); "  kVK_ANSI_KeypadPlus                   = 0x45"
+		at: 1 put: (self value: 16r47); "  kVK_ANSI_KeypadClear                    = 0x47" "Not mapped"
+		at: 1 put: (self value: 16rffaf); "  kVK_ANSI_KeypadDivide                 = 0x4B"
+		at: 1 put: (self value: 16rff8d); "  kVK_ANSI_KeypadEnter                  = 0x4C"
+		at: 1 put: (self value: 16rffad); "  kVK_ANSI_KeypadMinus                  = 0x4E"
+		at: 1 put: (self value: 16rffbd); "  kVK_ANSI_KeypadEquals                 = 0x51"
+		at: 1 put: (self value: 16rffb0); "  kVK_ANSI_Keypad0                      = 0x52"
+		at: 1 put: (self value: 16rffb1); "  kVK_ANSI_Keypad1                      = 0x53"
+		at: 1 put: (self value: 16rffb2); "  kVK_ANSI_Keypad2                      = 0x54"
+		at: 1 put: (self value: 16rffb3); "  kVK_ANSI_Keypad3                      = 0x55"
+		at: 1 put: (self value: 16rffb4); "  kVK_ANSI_Keypad4                      = 0x56"
+		at: 1 put: (self value: 16rffb5); "  kVK_ANSI_Keypad5                      = 0x57"
+		at: 1 put: (self value: 16rffb6); "  kVK_ANSI_Keypad6                      = 0x58"
+		at: 1 put: (self value: 16rffb7); "  kVK_ANSI_Keypad7                      = 0x59"
+		at: 1 put: (self value: 16rffb8); "  kVK_ANSI_Keypad8                      = 0x5B"
+		at: 1 put: (self value: 16rffb9) "  kVK_ANSI_Keypad9                       = 0x5C"
 ]
 
 { #category : #windows }
 KeyboardKey class >> initializeWindowsVirtualKeyTable [
+	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
 	WindowsVirtualKeyTable := Dictionary new.
 	WindowsVirtualKeyTable
 		at: 16r0d put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -519,7 +496,7 @@ KeyboardKey class >> initializeWindowsVirtualKeyTable [
 		at: 16r79 put: (self value: 16rffc8); "  kVK_F11                       = 0x67"
 		at: 16r7a put: (self value: 16rffc7); "  kVK_F10                       = 0x6D"
 		at: 16r7b put: (self value: 16rffc9); "  kVK_F12                       = 0x6F"
-		at: 16r2f put: (self value: 16r72); "  kVK_Help                      = 0x72" "Not mapped"
+		"at: 16r2f put: (self value: 16r72);" "  kVK_Help                      = 0x72" "Not mapped"
 		at: 16r24 put: (self value: 16rff50); "  kVK_Home                      = 0x73"
 		at: 16r21 put: (self value: 16rff55); "  kVK_PageUp                    = 0x74"
 		at: 16r2e put: (self value: 16rffff); "  kVK_ForwardDelete             = 0x75"
@@ -604,9 +581,20 @@ KeyboardKey class >> macOSVirtualKeyTable [
 	^MacosVirtualKeyTable
 ]
 
+{ #category : #'instance creation' }
+KeyboardKey class >> named: aString [
+	"Returns the instance of myself having aString as name.
+	
+	 (KeyboardKey named: 'SHIFT_L') >>> (KeyboardKey value: 65505)
+	"
+	
+	^ KeyTable detect: [ :keyboardKey | keyboardKey name = aString ]
+]
+
 { #category : #unix }
 KeyboardKey class >> unixVirtualKeyTable [
-	^KeyTable
+	UnixVirtualKeyTable ifNil: [ self initializeUnixVirtualKeyTable. ].
+	^UnixVirtualKeyTable
 ]
 
 { #category : #unknownKeys }
@@ -660,16 +648,21 @@ KeyboardKey >> printOn: aStream [
 		nextPutAll: 'Key ';
 		nextPutAll: name;
 		nextPutAll: ' code: (';
-		nextPutAll: value asString;
+		print: value;
 		nextPutAll: ')'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #accessing }
+KeyboardKey >> value [
+	^ value
+]
+
+{ #category : #initialization }
 KeyboardKey >> withValue: aValue [
 	self withValue: aValue andName: self class unknownKeyName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 KeyboardKey >> withValue: aValue andName: aName [
 	value := aValue.
 	name := aName

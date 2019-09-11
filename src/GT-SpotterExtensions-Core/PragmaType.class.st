@@ -26,7 +26,7 @@ PragmaType class >> all [
 	Object withAllSubclassesDo: [:each |
 		Pragma withPragmasIn: each do: [:p |
 			pragmas add: p]].
-	^ (pragmas groupedBy: #keyword) associations collect: [ :association |
+	^ (pragmas groupedBy: #selector) associations collect: [ :association |
 		PragmaType new
 			keyword: association key; 
 			pragmas: association value ] 
@@ -72,7 +72,7 @@ PragmaType >> pragmas [
 		pragmas := OrderedCollection new.
 		SystemNavigation new allBehaviorsDo: [ :each |
 			Pragma withPragmasIn: each do: [ :p |
-				p keyword = self keyword ifTrue: [ 
+				p selector = self selector ifTrue: [ 
 					pragmas add: p ] ] ].
 		pragmas ]
 ]
@@ -82,7 +82,7 @@ PragmaType >> pragmas: aCollection [
 	pragmas := aCollection
 ]
 
-{ #category : #ui }
+{ #category : #printing }
 PragmaType >> printOn: stream [
 	stream nextPutAll: self keyword
 ]

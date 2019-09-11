@@ -6,7 +6,6 @@ Class {
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'textArea',
-		'scopeChooser',
 		'changesTree',
 		'changes'
 	],
@@ -62,7 +61,7 @@ ChangesBrowser >> accept [
 	[ self pickedChanges do: [ :change | RBRefactoryChangeManager instance performChange: change ] ] asJob
 		title: 'Refactoring';
 		run.
-	window value delete
+	self window delete
 ]
 
 { #category : #private }
@@ -78,7 +77,7 @@ ChangesBrowser >> buildDiffFor: aChange [
 
 { #category : #api }
 ChangesBrowser >> cancel [
-	window value delete
+	self window delete
 ]
 
 { #category : #accessing }
@@ -114,7 +113,9 @@ ChangesBrowser >> initializeChangesTree [
 
 { #category : #initialization }
 ChangesBrowser >> initializePresenter [
-	changesTree whenHighlightedItemChanged: [ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
+	changesTree
+		whenHighlightedItemChanged:
+			[ :item | item ifNotNil: [ textArea text: (self buildDiffFor: item content) ] ]
 ]
 
 { #category : #initialization }
@@ -155,17 +156,6 @@ ChangesBrowser >> pickedChanges [
 	^ changesTree roots select: [ :i | selectedItems includes: i ]
 ]
 
-{ #category : #accessing }
-ChangesBrowser >> scopeChooser [
-	^ scopeChooser
-		ifNil: [ 
-			scopeChooser := self instantiate: EnvironmentChooser.
-			scopeChooser
-				whenEnvironmentChanged: [ self updateChanges ];
-				label: 'Scope:'.
-			scopeChooser ]
-]
-
 { #category : #initialization }
 ChangesBrowser >> setFocus [
 	self focusOrder
@@ -191,7 +181,7 @@ ChangesBrowser >> updateChanges [
 		compositeRefactoryChange.
 	changes do: [ :each | aCompositeChange addChange: each ].
 
-	self flag: 'todo'.	"Filter the shown changes depending on the selected scope"
+	"Later we could filter the shown changes depending on the selected scope"
 
 	changesTree roots: (aCompositeChange whatToDisplayIn: self)
 ]

@@ -43,15 +43,13 @@ Stdio class >> cleanStdioHandles [
 
 { #category : #private }
 Stdio class >> createStdioFileFor: moniker [
-	^ [ self createWriteStreamBlock cull: moniker asString ]
+	^ [[ self createWriteStreamBlock cull: moniker asString ]
 		on: CannotDeleteFileException
 		do:
 			[ "HACK: if the image is opened a second time windows barks about the already opened locked file"
-			[ self createWriteStreamBlock
+			 self createWriteStreamBlock
 				cull: moniker asString , '_' , (Random new nextInt: SmallInteger maxVal) asString ]
-				on: FileException
-				do:
-					[ "Nothing, we do not have the rights to write and cannot suppose a dependency to the class MemoryFileSystemFile" ] ]
+	 ] on: FileException do: [ NullStream new ] 
 ]
 
 { #category : #accessing }

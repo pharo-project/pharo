@@ -24,7 +24,8 @@ Class {
 	#superclass : #IdentityDictionary,
 	#instVars : [
 		'cachedClassNames',
-		'cachedNonClassNames'
+		'cachedNonClassNames',
+		'cachedBehaviors'
 	],
 	#category : #'System-Support-Utilities'
 }
@@ -41,8 +42,14 @@ SystemDictionary class >> withOrganizer: anOrganizer [
 { #category : #'classes and traits' }
 SystemDictionary >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
+	^cachedBehaviors ifNil: [cachedBehaviors := self allClassesAndTraits flatCollect: [:each | {each . each classSide} ]]
+]
 
-	^ self allClassesAndTraits flatCollect: [:each | {each . each classSide} ]
+{ #category : #'classes and traits' }
+SystemDictionary >> allBehaviorsDo: aBlock [
+	"Execute a block on each class, metaclass, trait and trait class"
+
+	self allBehaviors do: aBlock
 ]
 
 { #category : #'classes and traits' }
@@ -74,6 +81,11 @@ SystemDictionary >> allClassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each class in the system."
 
 	^self classNames do: [:name | aBlock value: (self at: name)]
+]
+
+{ #category : #'classes and traits' }
+SystemDictionary >> allMethods [
+	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
 ]
 
 { #category : #'classes and traits' }
@@ -185,30 +197,30 @@ SystemDictionary >> fillCaches [
 		When bootstrapping we want the class Class of the current kernel defined in the current namespace.
 		Since the current namespace should contains the class that describes itself as well as a new Class class.
 		we are done :)."
-		
-	classNames sort.
+	
+	
+	"The cached names are sorted to allow for a very efficient hasBindingThatBeginsWith: check"	
+	cachedClassNames := classNames sort.
 	cachedNonClassNames := nonClassNames sort.
-	cachedClassNames := classNames.
 	^{ classNames. nonClassNames }
 ]
 
 { #category : #'class and trait names' }
 SystemDictionary >> flushClassNameCache [
-	"Smalltalk flushClassNameCache"
 	"Force recomputation of the cached list of class names and non-class names."
 
-	cachedClassNames := cachedNonClassNames := nil
+	<script: 'Smalltalk flushClassNameCache'>
+	cachedClassNames := cachedNonClassNames := cachedBehaviors := nil
 ]
 
 { #category : #'classes and traits' }
-SystemDictionary >> forgetClass: aClass logged: aBool [ 
+SystemDictionary >> forgetClass: aClass logged: aBool [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
 	self organization removeElement: aClass name.
 	SessionManager default unregisterClassNamed: aClass name.
-	self removeKey: aClass name ifAbsent: [].
-	self flushClassNameCache
+	self removeKey: aClass name ifAbsent: [  ]
 ]
 
 { #category : #testing }
@@ -313,14 +325,19 @@ SystemDictionary >> removeClassNamed: aName [
 	self at: aName asSymbol ifPresent: [:oldClass | oldClass removeFromSystem]
 ]
 
+{ #category : #removing }
+SystemDictionary >> removeFromCaches: aKey [
+	"In case we remove a key from the system dictionary, we do not need to flush all the caches. We can just remove it from the class name and non class name caches."
+
+	cachedClassNames ifNotNil: [ :cache | cache remove: aKey ifAbsent: [  ] ].
+	cachedNonClassNames ifNotNil: [ :cache | cache remove: aKey ifAbsent: [  ] ].
+	cachedBehaviors := nil
+]
+
 { #category : #'dictionary access' }
 SystemDictionary >> removeKey: key ifAbsent: aBlock [
-	"Remove key (and its associated value) from the receiver. If key is not in
-	the receiver, answer the result of evaluating aBlock. Otherwise, answer
-	the value externally named by key."
-	
-	self flushClassNameCache.
-	^super removeKey: key ifAbsent: aBlock
+	self removeFromCaches: key.
+	^ super removeKey: key ifAbsent: aBlock
 ]
 
 { #category : #renaming }

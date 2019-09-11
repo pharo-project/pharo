@@ -144,7 +144,7 @@ BlockClosure >> cull: anArg [
 	"([:x | x + 12] cull: 3)
 	>>> 15
 	"
-	
+	<debuggerCompleteToSender>
 	^numArgs = 0 
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
@@ -541,7 +541,7 @@ BlockClosure >> outerContext [
 	^outerContext
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
 	outerContext := aContext.
 	startpc := aStartpc.
@@ -587,6 +587,16 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	ans := self value.
 	(testBlock value: ans) ifTrue: [ Smalltalk garbageCollect. ans := self value ].
 	^ans
+]
+
+{ #category : #evaluating }
+BlockClosure >> rfvalueNoContextSwitch [
+	"same as valueNoContextSwitch, for recursion stopping metalinks"
+	<primitive: 221>
+	<metaLinkOptions: #( + optionDisabledLink)>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
+	self primitiveFailed
 ]
 
 { #category : #'debugger access' }
@@ -754,28 +764,27 @@ BlockClosure >> valueSupplyingAnswers: aListOfPairs [
 	"evaluate the block using a list of questions / answers that might be called upon to
 	automatically respond to Object>>confirm: or FillInTheBlank requests"
 
-	^ self 
+	^ self
 		on: ProvideAnswerNotification
-		do: 
-			[:notify | | answer caption |
-			
-			caption := notify messageText withSeparatorsCompacted. "to remove new lines"
-			answer := aListOfPairs
-				detect: 
-					[:each | caption = each first or:
-						[(caption includesSubstring: each first caseSensitive: false) or:
-						[(each first match: caption) or:
-						[(String includesSelector: #matchesRegex:) and: 
-						[ [ caption matchesRegex: each first ] on: Error do: [:ignored | false ]]]]]]
-					ifNone: [nil].
-			answer
-				ifNotNil: [notify resume: answer second]
-				ifNil: 
-					[ | outerAnswer |
-					outerAnswer := ProvideAnswerNotification signal: notify messageText.
-					outerAnswer 
-						ifNil: [notify resume] 
-						ifNotNil: [notify resume: outerAnswer]]]
+		do: [ :notify | 
+			| caption |
+			caption := notify messageText withSeparatorsCompacted.	"to remove new lines"
+			aListOfPairs
+				detect: [ :each | 
+					caption = each first
+						or: [ (caption includesSubstring: each first caseSensitive: false)
+								or: [ (each first match: caption)
+										or: [ (String includesSelector: #matchesRegex:)
+												and: [ [ caption matchesRegex: each first ]
+														on: Error
+														do: [ :ignored | false ] ] ] ] ] ]
+				ifFound: [ :answer | notify resume: answer second ]
+				ifNone: [ | outerAnswer |
+					outerAnswer := ProvideAnswerNotification
+						signal: notify messageText.
+					outerAnswer
+						ifNil: [ notify resume ]
+						ifNotNil: [ notify resume: outerAnswer ] ] ]
 ]
 
 { #category : #evaluating }
@@ -925,7 +934,7 @@ BlockClosure >> valueWithPossibleArgument: anArg [
 BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 	"Evaluate the receiver.
 	If the evaluation does not complete in less than aDuration evaluate the timeoutBlock instead"
-
+	<debuggerCompleteToSender>
 	| theProcess delay watchdog tag |
 
 	aDuration <= Duration zero ifTrue: [^ timeoutBlock value ].
@@ -970,7 +979,8 @@ BlockClosure >> whileFalse: aBlock [
 	This is in case the message is sent to other than a literal block.
 	Evaluate the argument, aBlock, as long as the value of the receiver is false."
 
-	self value ifFalse: [ aBlock value. self whileFalse: aBlock ]
+	self value ifFalse: [ aBlock value. self whileFalse: aBlock ].
+	^ nil
 ]
 
 { #category : #controlling }
@@ -1002,5 +1012,6 @@ BlockClosure >> whileTrue: aBlock [
 	This is in case the message is sent to other than a literal block.
 	Evaluate the argument, aBlock, as long as the value of the receiver is true."
 
-	self value ifTrue: [ aBlock value. self whileTrue: aBlock ]
+	self value ifTrue: [ aBlock value. self whileTrue: aBlock ].
+	^ nil
 ]

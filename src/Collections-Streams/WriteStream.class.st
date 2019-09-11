@@ -32,10 +32,14 @@ WriteStream class >> with: aCollection from: firstIndex to: lastIndex [
 
 { #category : #accessing }
 WriteStream >> << anObject [
-	"A more readable, shorter alternative to #nextPutAll: that also
-	accepts non-Collection arguments"
+	"Write anObject to the receiver, dispatching using #putOn:
+	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
+	the element type of the receiver as well as a collection of those elements.
+	No further conversions of anObject are applied.
+	This is an optimisation.
+	Return self to accomodate chaining."
 
-	anObject class == collection class
+ 	anObject class == collection class
 		ifTrue: [ self nextPutAll: anObject ]
 		ifFalse: [ anObject putOn: self ]
 ]
@@ -256,7 +260,7 @@ WriteStream >> position: anInteger [
 	super position: anInteger
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 WriteStream >> reset [ 
 	"Refer to the comment in PositionableStream|reset."
 

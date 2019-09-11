@@ -4,6 +4,8 @@ I represent a bar with annotations for the text area, like editing mode, line nu
 Class {
 	#name : #RubAnnotationDisplayer,
 	#superclass : #RubScrolledTextSideRuler,
+	#traits : 'TRubWithWrapPolicy + (TRubWithLineNumber - {#fontToUse})',
+	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
 	#instVars : [
 		'lineAnnotation',
 		'row',
@@ -42,24 +44,6 @@ RubAnnotationDisplayer >> changeColumnDisplay [
 		ifNotNil: [ self paragraphProvider withoutColumns ].
 	self textArea changed.
 	self updateContents
-]
-
-{ #category : #'submorphs-accessing' }
-RubAnnotationDisplayer >> changeLineNumbersDisplay [
-	self paragraphProvider lineNumbersRuler 
-		ifNil: [ self paragraphProvider withLineNumbers ]
-		ifNotNil: [ self paragraphProvider withoutLineNumbers ].
-	self paragraphProvider manageLayout.
-	self updateContents
-]
-
-{ #category : #'submorphs-accessing' }
-RubAnnotationDisplayer >> changeWrappingPolicy [
-	self paragraphProvider wrapped 
-		ifTrue: [ self paragraphProvider beNotWrapped  ]
-		ifFalse: [ self paragraphProvider beWrapped ].
-	self updateContents.
-	self paragraphProvider changed
 ]
 
 { #category : #'submorphs-accessing' }
@@ -115,12 +99,7 @@ RubAnnotationDisplayer >> editingModeLabelMorph [
 		font: self fontToUse
 ]
 
-{ #category : #accessing }
-RubAnnotationDisplayer >> fontToUse [
-	^ RubAbstractTextArea lineNumbersFont 
-]
-
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RubAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom.
@@ -130,20 +109,6 @@ RubAnnotationDisplayer >> initialize [
 { #category : #accessing }
 RubAnnotationDisplayer >> level [
 	^ 1
-]
-
-{ #category : #'submorphs-accessing' }
-RubAnnotationDisplayer >> lineNumbersDisplayLabel [
-	^ self paragraphProvider lineNumbersRuler  
-		ifNil: [ '+L' ]
-		ifNotNil: [ 'L' ]
-]
-
-{ #category : #'submorphs-accessing' }
-RubAnnotationDisplayer >> lineNumbersDisplayLabelMorph [
-	^ StringMorph
-		contents: self lineNumbersDisplayLabel
-		font: self fontToUse
 ]
 
 { #category : #geometry }
@@ -283,18 +248,4 @@ RubAnnotationDisplayer >> updateContents [
 	lineNumbersDisplayMorph contents: self lineNumbersDisplayLabel.
 	row position: self innerBounds topLeft.
 	row width: self innerBounds width
-]
-
-{ #category : #'submorphs-accessing' }
-RubAnnotationDisplayer >> wrappingPolicyLabel [
-	^ self paragraphProvider wrapped
-				ifTrue: [ 'W' ]
-				ifFalse: [ 'NW' ]
-]
-
-{ #category : #'submorphs-accessing' }
-RubAnnotationDisplayer >> wrappingPolicyLabelMorph [
-	^ StringMorph
-		contents: self wrappingPolicyLabel
-		font: self fontToUse
 ]

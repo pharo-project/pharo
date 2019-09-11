@@ -149,7 +149,7 @@ TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	forkedProcesses add: aProcess.
 	aProcess suspendedContext sender ifNotNil: [ ^self ]. "Some existing tests in system create processes on arbitrary block and then check suspendedContext state. Without this 'if' all this tests will fail"
 	processBlock := aProcess suspendedContext receiver.
-	processBlock isClosure ifFalse: [ ^self ]. "same case as in previous comment".
+	processBlock isClosure ifFalse: [ ^self ]. "same case as in previous comment"
 	
 	aProcess on: Error do: [ :err | | activeProcess |
 		"It is possible to fork process with copy of stack from another process
@@ -175,7 +175,7 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 
 	[[self runTestCaseSafelly: aTestCase] ensure: [
 		testCompleted := true.
-		watchDogSemaphore signal]. "signal that test case completes".
+		watchDogSemaphore signal]. "signal that test case completes"
 	
 	self checkForkedProcesses] ifCurtailed: [
 		forkedProcesses removeAll.

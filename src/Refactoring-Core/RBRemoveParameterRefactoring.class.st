@@ -59,11 +59,13 @@ RBRemoveParameterRefactoring >> getNewSelector [
 ]
 
 { #category : #transforming }
-RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [ 
+RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
+
 	| tree |
+
 	tree := each parseTreeFor: oldSelector.
-	tree isNil ifTrue: [self refactoringFailure: 'Cannot parse sources.'].
-	^tree references: (tree argumentNames at: parameterIndex)
+	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
+	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
 { #category : #preconditions }
@@ -79,7 +81,7 @@ RBRemoveParameterRefactoring >> myConditions [
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [ 
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.

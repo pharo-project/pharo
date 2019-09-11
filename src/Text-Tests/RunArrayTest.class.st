@@ -9,11 +9,7 @@ Class {
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testANewRunArrayIsEmpty [
-
-	| t |
-	t := RunArray new.
-	self assert: t isEmpty 
-
+	self assertEmpty: RunArray new
 ]
 
 { #category : #'tests - accessing' }

@@ -62,7 +62,7 @@ RBMetaclass >> printOn: aStream [
 	aStream nextPutAll: ' class'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBMetaclass >> realName: aSymbol [ 
 	self realClass: (Smalltalk globals at: aSymbol) classSide
 ]

@@ -27,10 +27,12 @@ RBSmalllintContext >> addLiteralsFor: aCompiledMethod [
 
 { #category : #private }
 RBSmalllintContext >> buildParseTree [
+
 	| tree |
+
 	tree := self selectedClass parseTreeFor: self selector.
-	tree isNil ifTrue: [^RBParser parseMethod: 'method'].
-	^tree
+	tree ifNil: [ ^ RBParser parseMethod: 'method' ].
+	^ tree
 ]
 
 { #category : #private }
@@ -64,10 +66,12 @@ RBSmalllintContext >> computeLiteralsForClass: aClass [
 ]
 
 { #category : #private }
-RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [ 
+RBSmalllintContext >> computeLiteralsForSelector: aSelector in: aClass [
+
 	| method |
-	method := aClass compiledMethodAt: aSelector ifAbsent: [nil].
-	method isNil ifTrue: [^self].
+
+	method := aClass compiledMethodAt: aSelector ifAbsent: [ nil ].
+	method ifNil: [ ^ self ].
 	self addLiteralsFor: method
 ]
 
@@ -107,13 +111,15 @@ RBSmalllintContext >> isAbstract: aClass [
 
 { #category : #accessing }
 RBSmalllintContext >> literals [
-	literalSemaphore isNil
-		ifTrue: 
-			[literals isNil ifTrue: 
-					[self computeLiterals.
-					literalSemaphore wait]]
-		ifFalse: [literalSemaphore wait].
-	^literals
+
+	literalSemaphore
+		ifNil: [ literals
+				ifNil: [ self computeLiterals.
+					literalSemaphore wait
+					]
+			]
+		ifNotNil: [ literalSemaphore wait ].
+	^ literals
 ]
 
 { #category : #accessing }
@@ -123,9 +129,8 @@ RBSmalllintContext >> messages [
 
 { #category : #accessing }
 RBSmalllintContext >> parseTree [
-	^parseTree isNil
-		ifTrue: [parseTree := self buildParseTree]
-		ifFalse: [parseTree]
+
+	^ parseTree ifNil: [ parseTree := self buildParseTree ] ifNotNil: [ parseTree ]
 ]
 
 { #category : #private }
@@ -144,11 +149,18 @@ RBSmalllintContext >> primitiveComputeLiterals [
 
 { #category : #printing }
 RBSmalllintContext >> printOn: aStream [
+
 	super printOn: aStream.
-	self selectedClass isNil ifFalse: [ 
-		aStream nextPut: $ ; nextPutAll: self selectedClass name.
-		self selector isNil ifFalse: [ 
-			aStream nextPutAll: '>>'; print: self selector ] ]
+	self selectedClass
+		ifNotNil: [ aStream
+				nextPut: $ ;
+				nextPutAll: self selectedClass name.
+			self selector
+				ifNotNil: [ aStream
+						nextPutAll: '>>';
+						print: self selector
+					]
+			]
 ]
 
 { #category : #accessing }
@@ -161,9 +173,9 @@ RBSmalllintContext >> protocols [
 	^Array with: self protocol
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBSmalllintContext >> release [
-	literalProcess notNil ifTrue: [literalProcess terminate].
+	literalProcess ifNotNil: [literalProcess terminate].
 	super release
 ]
 
@@ -191,13 +203,15 @@ RBSmalllintContext >> selector: anObject [
 
 { #category : #accessing }
 RBSmalllintContext >> selectors [
-	literalSemaphore isNil
-		ifTrue: 
-			[selectors isNil ifTrue: 
-					[self computeLiterals.
-					literalSemaphore wait]]
-		ifFalse: [literalSemaphore wait].
-	^selectors
+
+	literalSemaphore
+		ifNil: [ selectors
+				ifNil: [ self computeLiterals.
+					literalSemaphore wait
+					]
+			]
+		ifNotNil: [ literalSemaphore wait ].
+	^ selectors
 ]
 
 { #category : #accessing }
@@ -207,9 +221,10 @@ RBSmalllintContext >> selfMessages [
 ]
 
 { #category : #private }
-RBSmalllintContext >> signalProcesses: aSemaphore [ 
-	aSemaphore isNil ifTrue: [^self].
-	[aSemaphore isEmpty] whileFalse: [aSemaphore signal]
+RBSmalllintContext >> signalProcesses: aSemaphore [
+
+	aSemaphore ifNil: [ ^ self ].
+	[ aSemaphore isEmpty ] whileFalse: [ aSemaphore signal ]
 ]
 
 { #category : #accessing }

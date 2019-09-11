@@ -3,7 +3,7 @@ I test the serialization of classes and traits as *external* objects, i.e. the c
 "
 Trait {
 	#name : #FLTGlobalClassOrTraitSerializationTest,
-	#category : 'Fuel-Tests-Core-Base'
+	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #tests }

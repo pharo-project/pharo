@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #EmbeddedFreeType
+	#category : #'EmbeddedFreeType-Installation'
 }
 
 { #category : #accessing }
@@ -80,7 +80,7 @@ EmbeddedFreeTypeFontInstaller >> addFromFileContents: bytes baseName:  originalF
 	[ "we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
 	face newFaceFromExternalMemory: externalMem index: i.
 	face loadFields] 
-		on: FT2Error 
+		on: FT2Error, PrimitiveFailed 
 		do:[:e | 
 			self failedToOpen:face index: i.
 			^ self].

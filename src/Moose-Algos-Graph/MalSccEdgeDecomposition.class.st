@@ -22,7 +22,7 @@ MalSccEdgeDecomposition >> edgeClass [
 	^ MalGraphEdge 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 MalSccEdgeDecomposition >> initialize [ 
 	super initialize.
 	bfsp := MalBreadthFirstSearchPath new.

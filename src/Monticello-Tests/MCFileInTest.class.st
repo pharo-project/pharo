@@ -45,7 +45,7 @@ MCFileInTest >> assertNoChange [
 	| actual |
 	actual := MCSnapshotResource takeSnapshot.
 	diff := actual patchRelativeToBase: expected.
-	self assert: diff isEmpty
+	self assertEmpty: diff
 ]
 
 { #category : #testing }
@@ -61,7 +61,7 @@ MCFileInTest >> assertSuccessfulLoadWith: aBlock [
 MCFileInTest >> setUp [
 	super setUp.
 	expected := self mockSnapshot.
-	stream := RWBinaryOrTextStream on: String new.
+	stream := ReadWriteStream on: ''
 ]
 
 { #category : #running }

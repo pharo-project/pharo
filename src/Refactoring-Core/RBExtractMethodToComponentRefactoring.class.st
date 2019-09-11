@@ -35,7 +35,7 @@ RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anIn
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
@@ -74,15 +74,16 @@ RBExtractMethodToComponentRefactoring >> inlineForwarder [
 
 { #category : #transforming }
 RBExtractMethodToComponentRefactoring >> moveMethod [
+
 	| variable refactoring |
-	variable := self selectVariableToMoveMethodTo: extractedMethodSelector
-				class: class.
-	variable isNil ifTrue: [self refactoringFailure: 'Did not extract method'].
-	refactoring := RBMoveMethodRefactoring 
-				model: self model
-				selector: extractedMethodSelector
-				class: class
-				variable: variable.
+
+	variable := self selectVariableToMoveMethodTo: extractedMethodSelector class: class.
+	variable ifNil: [ self refactoringFailure: 'Did not extract method' ].
+	refactoring := RBMoveMethodRefactoring
+		model: self model
+		selector: extractedMethodSelector
+		class: class
+		variable: variable.
 	self performComponentRefactoring: refactoring
 ]
 

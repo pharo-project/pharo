@@ -50,7 +50,7 @@ RFArgumentsReification >> preambleForMessage: aNode [
 			arguments add:  (RBTemporaryNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
-	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
+	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble 
 ]
@@ -61,7 +61,7 @@ RFArgumentsReification >> preambleForMethod: aNode [
 	preamble := OrderedCollection new.
 	arguments := aNode argumentNames collect: [ :name | RBTemporaryNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
-	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
+	preamble add: (RFStorePopIntoTempNode named: self varName).
 	^ preamble 
 ]
 
@@ -71,7 +71,7 @@ RFArgumentsReification >> preambleSequence: aNode [
 	preamble := OrderedCollection new.
 	arguments := aNode parent argumentNames collect: [ :name | RBTemporaryNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
-	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
+	preamble add: (RFStorePopIntoTempNode named: self varName).
 	^ preamble 
 ]
 

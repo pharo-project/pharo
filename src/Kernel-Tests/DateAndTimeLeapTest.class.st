@@ -12,8 +12,7 @@ Class {
 	#instVars : [
 		'aDateAndTime',
 		'aDuration',
-		'aTimeZone',
-		'localTimeZoneToRestore'
+		'aTimeZone'
 	],
 	#category : #'Kernel-Tests-Chronology'
 }

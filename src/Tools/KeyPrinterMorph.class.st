@@ -38,10 +38,10 @@ KeyPrinterMorph >> keyDown: anEvent [
 { #category : #'event handling' }
 KeyPrinterMorph >> mouseDown: event [ 
 	super mouseDown: event.
-	World activeHand newKeyboardFocus: self
+	self currentWorld activeHand newKeyboardFocus: self
 ]
 
-{ #category : #initialize }
+{ #category : #display }
 KeyPrinterMorph >> openInWorld [
 
 	self

@@ -55,10 +55,12 @@ Class {
 
 { #category : #finalization }
 FT2Face class >> finalizeResourceData: handle [
-	handle isNil ifTrue: [ ^ self ].
-	handle isNull ifTrue: [ ^ self ].
 
-	FT2Library current ffiDoneFace: handle. 
+	handle ifNil: [ ^ self ].
+	handle isNull
+		ifTrue: [ ^ self ].
+
+	FT2Library current ffiDoneFace: handle.
 	handle beNull
 ]
 
@@ -263,13 +265,13 @@ FT2Face >> ffiLoadGlyph: glyph_index flags: load_flags [
 ]
 
 { #category : #'private-ffi-calls' }
-FT2Face >> ffiOutline: outline embolden: strength. [
+FT2Face >> ffiOutline: outline embolden: strength [
 
 	^ self ffiCall: #(FT_Error FT_Outline_Embolden(FT_Outline*  outline, FT_Pos strength ))
 ]
 
 { #category : #'private-ffi-calls' }
-FT2Face >> ffiOutline: outline transformByMatrix: matrix. [
+FT2Face >> ffiOutline: outline transformByMatrix: matrix [
 	^ self ffiCall: #(void FT_Outline_Transform( FT_Outline*  outline, FT_Matrix*   matrix ))
 ]
 
@@ -492,7 +494,7 @@ FT2Face >> maxAdvanceWidth [
 	^maxAdvanceWidth
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 	| memSize holder returnCode |
 
@@ -509,7 +511,7 @@ FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 	self autoRelease.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FT2Face >> newFaceFromFile: file index: anInteger [
 	| holder returnCode fileName |
 	

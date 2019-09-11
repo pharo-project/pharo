@@ -30,7 +30,6 @@ RubLipsumBasicExample class >> openScrolledText: aScrolledText [
 	window := StandardWindow new.
 	window addMorph: aScrolledText fullFrame: LayoutFrame identity.
 	window title: self title.
-	self spyAnnouncer ifTrue: [ aScrolledText textArea announcer open ].
 	window openInWorld
 ]
 
@@ -39,12 +38,6 @@ RubLipsumBasicExample class >> openWrapped [
 	"self openWrapped"
 	self openScrolledText: self new newScrolledTextWrapped.
 
-]
-
-{ #category : #examples }
-RubLipsumBasicExample class >> spyAnnouncer [
-	"Set it to true if you want to observe textArea announcements"
-	^ false
 ]
 
 { #category : #examples }

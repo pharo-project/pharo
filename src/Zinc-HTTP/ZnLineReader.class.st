@@ -75,7 +75,7 @@ ZnLineReader >> processNext [
 	
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 ZnLineReader >> reset [
 	position := 0
 ]

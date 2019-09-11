@@ -6,7 +6,6 @@ Class {
 	#superclass : #SimpleButtonMorph,
 	#instVars : [
 		'graphicalMorph',
-		'oldBorder',
 		'oldBorderStyle',
 		'mouseOverBorderStyle'
 	],

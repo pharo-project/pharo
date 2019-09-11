@@ -11,7 +11,7 @@ GLMBrickPopupEditBorderThemer >> backgroundColor [
 
 { #category : #'brick-popup' }
 GLMBrickPopupEditBorderThemer >> contentBackgroundColor [
-	^ Smalltalk ui theme backgroundColor "delegate to current Pharo theme"
+	^ self theme backgroundColor "delegate to current Pharo theme"
 ]
 
 { #category : #'brick-popup' }

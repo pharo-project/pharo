@@ -85,7 +85,7 @@ GLMFastTreeDataSource >> dataCache [
 
 { #category : #selecting }
 GLMFastTreeDataSource >> explicitSelection: anObject [
-	self table selectRowIndexes: (self searchText: anObject asString)
+	self table selectIndexes: (self searchText: anObject asString)
 ]
 
 { #category : #accessing }
@@ -161,24 +161,23 @@ GLMFastTreeDataSource >> rowMorphForItem: anItem [
 	rowElements
 		add: (self formatedDisplayValueOf: anItem data) asMorph asReadOnlyMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: anItem data).
-	^ Smalltalk ui theme newRowIn: World for: rowElements
+	^ Smalltalk ui theme newRowIn: self currentWorld for: rowElements
 ]
 
 { #category : #selecting }
 GLMFastTreeDataSource >> selection: ann [
 	| selection |
-	selection := ann newSelectedRowIndexes
+	selection := ann newSelectedIndexes
 		select: [ :each | each ~= 0 ]
 		thenCollect: [ :each | (self elementAt: each) data ].
 	selection
-		ifNotEmpty: [ 
-			self announcer
+		ifNotEmpty: [ self announcer
 				announce:
 					(GLMTreeMorphSelectionChanged new
 						selectionValue:
-								((selection size = 1 and: [ self glamourPresentation isSingle ])
-										ifTrue: [ selection first ]
-										ifFalse: [ selection ]);
+							((selection size = 1 and: [ self glamourPresentation isSingle ])
+								ifTrue: [ selection first ]
+								ifFalse: [ selection ]);
 						selectionPathValue: selection;
 						yourself) ]
 ]
@@ -188,7 +187,7 @@ GLMFastTreeDataSource >> strongSelection: ann [
 	self announcer
 		announce:
 			(GLMTreeMorphStrongSelectionChanged new
-				strongSelectionValue: (self elementAt: ann selectedRowIndex) data;
+				strongSelectionValue: (self elementAt: ann selectedIndex) data;
 				yourself)
 ]
 

@@ -44,7 +44,7 @@ MCMergeRecord >> imagePatch [
 	^ imagePatch ifNil: [imagePatch := self packageSnapshot patchRelativeToBase: self ancestorSnapshot]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCMergeRecord >> initializeWithVersion: aVersion [
 	version := aVersion
 ]

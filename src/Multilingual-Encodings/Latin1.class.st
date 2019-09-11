@@ -63,7 +63,7 @@ Latin1 class >> isCasedLetter: char [
 
 { #category : #'character classification' }
 Latin1 class >> isClosePunctuation: char [
-^ Unicode isClosePunctuation: char
+	^ Unicode isClosePunctuation: char
 ]
 
 { #category : #'character classification' }
@@ -176,12 +176,12 @@ Latin1 class >> isOtherLetter: char [
 
 { #category : #'character classification' }
 Latin1 class >> isOtherNumber: char [
-^ Unicode isOtherNumber: char
+	^ Unicode isOtherNumber: char
 ]
 
 { #category : #'character classification' }
 Latin1 class >> isOtherPunctuation: char [
-^ Unicode isOtherPunctuation: char
+	^ Unicode isOtherPunctuation: char
 ]
 
 { #category : #'character classification' }

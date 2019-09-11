@@ -17,6 +17,12 @@ FFIArchitecture class >> forCurrentArchitecture [
 ]
 
 { #category : #testing }
+FFIArchitecture class >> isAbstract [ 
+
+	^self name = #FFIArchitecture
+]
+
+{ #category : #testing }
 FFIArchitecture class >> isActive [
 	^ false
 ]
@@ -28,20 +34,27 @@ FFIArchitecture class >> new [
 
 { #category : #private }
 FFIArchitecture class >> uniqueInstance [
-	self = FFIArchitecture 
+	self isAbstract  
 		ifTrue: [ self error: 'I''m an abstract class, use one of my children instead.' ].
 	^ uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
 ]
 
-{ #category : #'default abi' }
-FFIArchitecture >> areStructuresSplitIntoRegisters [
-	^ false
+{ #category : #types }
+FFIArchitecture >> bitTypeAlignment [
+
+	^ 1
 ]
 
-{ #category : #'default abi' }
-FFIArchitecture >> computeStructureRegisterPassingLayout: aStructureClass [
-	^ nil
-	
+{ #category : #types }
+FFIArchitecture >> bitTypeSize [
+
+	^ self externalBitType byteSize
+]
+
+{ #category : #types }
+FFIArchitecture >> externalBitType [
+
+	^ ExternalType signedByte
 ]
 
 { #category : #types }
@@ -55,33 +68,14 @@ FFIArchitecture >> externalSizeTType [
 ]
 
 { #category : #types }
-FFIArchitecture >> externalULongType [
-	^ ExternalType ulong
-]
+FFIArchitecture >> externalUBitType [
 
-{ #category : #'default abi' }
-FFIArchitecture >> floatRegisterCountForParameterPassing [
-	^ 0
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> floatRegisterSize [
-	self subclassResponsibility
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> integerRegisterCountForParameterPassing [
-	^ 0
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> integerRegisterSize [
-	self subclassResponsibility
+	^ ExternalType unsignedByte
 ]
 
 { #category : #types }
-FFIArchitecture >> longType [
-	^ FFIInt32
+FFIArchitecture >> externalULongType [
+	^ ExternalType ulong
 ]
 
 { #category : #types }
@@ -90,26 +84,11 @@ FFIArchitecture >> longTypeSize [
 ]
 
 { #category : #'default abi' }
-FFIArchitecture >> maxStructureSizeToPassInRegisters [
-	^ 0
-]
-
-{ #category : #'default abi' }
 FFIArchitecture >> returnSingleFloatsAsDoubles [
 	self subclassResponsibility
-]
-
-{ #category : #'default abi' }
-FFIArchitecture >> shadowCallSpaceSize [
-	^ 0
 ]
 
 { #category : #types }
 FFIArchitecture >> sizeTTypeSize [
 	^ self externalSizeTType byteSize
-]
-
-{ #category : #types }
-FFIArchitecture >> ulongType [
-	^ FFIUInt32
 ]

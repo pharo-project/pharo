@@ -8,8 +8,7 @@ Class {
 	#instVars : [
 		'displayBlock',
 		'iconBlock',
-		'menuBlock',
-		'header'
+		'menuBlock'
 	],
 	#category : #'Morphic-Widgets-FastTable-Easy'
 }

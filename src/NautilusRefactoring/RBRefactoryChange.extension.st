@@ -6,24 +6,6 @@ RBRefactoryChange >> accept: aText notifying: aController [
 ]
 
 { #category : #'*NautilusRefactoring' }
-RBRefactoryChange >> nameToDisplay [
-
-	^ self name
-]
-
-{ #category : #'*NautilusRefactoring' }
-RBRefactoryChange >> oldVersionTextToDisplay [
-
-	^ ''
-]
-
-{ #category : #'*NautilusRefactoring' }
-RBRefactoryChange >> textToDisplay [
-
-	^ self name
-]
-
-{ #category : #'*NautilusRefactoring' }
 RBRefactoryChange >> whatToDisplayIn: aChangeBrowser [
 
 	^ { self }

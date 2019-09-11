@@ -7,11 +7,6 @@ Class {
 	#category : #'SmartSuggestions-Suggestion'
 }
 
-{ #category : #accessing }
-SugsBrowseClassReferences class >> nodes [
-	^{RBGlobalNode}
-]
-
 { #category : #execution }
 SugsBrowseClassReferences >> execute [
 	SystemNavigation default browseAllCallsOnClass: context bindedSelectedClass.

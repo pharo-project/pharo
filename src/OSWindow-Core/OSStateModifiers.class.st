@@ -26,6 +26,12 @@ OSStateModifiers >> alt [
 ]
 
 { #category : #accessing }
+OSStateModifiers >> any [ 
+
+	^ self cmd | self alt | self ctrl
+]
+
+{ #category : #accessing }
 OSStateModifiers >> buttons [
 	^ buttons
 ]

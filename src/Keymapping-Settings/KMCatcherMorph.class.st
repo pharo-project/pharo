@@ -62,7 +62,7 @@ KMCatcherMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas. 
 	focused ifTrue: [
-		Smalltalk ui theme drawTextAdornmentFor: self color: Color orange on: aCanvas]
+		self theme drawTextAdornmentFor: self color: Color orange on: aCanvas]
 ]
 
 { #category : #'event handling' }
@@ -89,12 +89,10 @@ KMCatcherMorph >> initialize [
 	self listCentering: #center.
 	self width: 300.
 	self height: 25.
-	self color: (Smalltalk ui theme textEditorDisabledFillStyleFor: self).
-	self borderStyle: (Smalltalk ui theme textEditorDisabledBorderStyleFor: self).
-	
+	self color: (self theme textEditorDisabledFillStyleFor: self).
+	self borderStyle: (self theme textEditorDisabledBorderStyleFor: self).
 	labelMorph := StringMorph contents: ''.
-	self addMorph: (labelMorph).
-	
+	self addMorph: labelMorph.
 	edited := false.
 	focused := false.
 	self initializeKeystrokes.
@@ -118,8 +116,8 @@ KMCatcherMorph >> keyboardFocusChange: aBoolean [
 	super keyboardFocusChange: aBoolean.
 	focused := aBoolean.
 	focused
-		ifTrue: [ self color: (Smalltalk ui theme textEditorNormalFillStyleFor: self) ]
-		ifFalse: [ self color: (Smalltalk ui theme textEditorDisabledFillStyleFor: self) ].
+		ifTrue: [ self color: (self theme textEditorNormalFillStyleFor: self) ]
+		ifFalse: [ self color: (self theme textEditorDisabledFillStyleFor: self) ].
 	^ true
 ]
 
@@ -145,7 +143,7 @@ KMCatcherMorph >> mouseDown: event [
 	super mouseDown: event.
 	event yellowButtonPressed 
 		ifTrue: [ self showContextMenu ]
-		ifFalse: [ World activeHand newKeyboardFocus: self ]
+		ifFalse: [ self currentWorld activeHand newKeyboardFocus: self ]
 ]
 
 { #category : #accessing }

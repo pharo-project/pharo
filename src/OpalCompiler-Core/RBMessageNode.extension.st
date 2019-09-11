@@ -74,8 +74,7 @@ RBMessageNode >> isInlineRepeat [
 		ifFalse: [ ^ false ]].
 	self receiver isBlock
 		ifFalse: [ ^ false ].
-	self receiver arguments size isZero
-		ifFalse: [ ^ false ].
+	self receiver arguments ifNotEmpty: [ ^ false ].
 	self isCascaded
 		ifTrue: [ ^ false ].
 	#repeat = self selector
@@ -94,7 +93,7 @@ RBMessageNode >> isInlineTimesRepeat [
 	#timesRepeat: = self selector ifFalse: [^ false].
 	block := self arguments last.
 	block isBlock ifFalse: [^ false].
-	block arguments size isZero ifFalse: [^ false].
+	block arguments ifNotEmpty: [^ false].
 	^ true
 ]
 

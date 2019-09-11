@@ -29,10 +29,12 @@ PluggableMenuSpec >> buildWith: aBuilder [
 { #category : #'*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithOneSingleItem [
 	"self exampleWithOneSingleItem"
-	
+
 	| s |
-	s := (self withModel: nil ) label: 'Hello'. 
-	s add: 'Print Hello' action: (MessageSend receiver: [Transcript show: 'Hello', String cr] selector: #value).
+	s := (self withModel: nil) label: 'Hello'.
+	s
+		add: 'Print Hello'
+		action: (MessageSend receiver: [ self traceCr: 'Hello' ] selector: #value).
 	s asMenuMorph popUpInWorld
 ]
 
@@ -54,10 +56,16 @@ PluggableMenuSpec class >> exampleWithSubMenu [
 { #category : #'*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithTwoSimpleItems [
 	"self exampleWithTwoSimpleItems"
+
 	| s |
-	s := (self withModel: Transcript ) label: 'Hello'. 
-	s add: 'Print Hello' action: (MessageSend receiver: [Transcript show: 'Hello', String cr] selector: #value).
-	s add: 'Print Hello again' selector: #show: argumentList: {'Hello again', String cr}.
+	s := (self withModel: Object) label: 'Hello'.
+	s
+		add: 'Print Hello'
+		action: (MessageSend receiver: [ self traceCr: 'Hello' ] selector: #value).
+	s
+		add: 'Print Hello again'
+		selector: #trace:
+		argumentList: {('Hello again' , String cr)}.
 	s asMenuMorph popUpInWorld
 ]
 

@@ -16,34 +16,36 @@ Class {
 	#category : #'Athens-Morphic'
 }
 
-{ #category : #'as yet unclassified' }
-AthensParagraph >> caretRect [ ^ (0@0 corner: 0@0)  
+{ #category : #accessing }
+AthensParagraph >> caretRect [ 
+
+	^ (0@0 corner: 0@0)  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> characterBlockForIndex: index [ 
 
-		^ self defaultCharacterBlock
+	^ self defaultCharacterBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #composition }
 AthensParagraph >> compose: aText style: aTextStyle from: startingIndex in: aRectangle [ 
 	text := aText.
 	textStyle := aTextStyle
 	
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 AthensParagraph >> compose: aText style: aTextStyle in: rect [ 
 
 	text := aText.
 	textStyle := aTextStyle.
 	containerRect := rect.
-	lines := (AthensTextComposer scan: aText for: AthensTextScanner new) lines.
+	lines := (AthensTextComposer scan: aText for: AthensTextScanner new) lines
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> defaultCharacterBlock [
 	^ (CharacterBlock new stringIndex: 1 text: text
 			topLeft: 0@0 extent: 0 @ 0)
@@ -64,32 +66,33 @@ AthensParagraph >> drawOnAthensCanvas: canvas bounds: aRectangle [
 "
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensParagraph >> extent [
 	^ containerRect width @ lines last bottom
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> extraSelectionChanged [
-"
+	"
 	refreshExtraSelection := true
 "
 
-	self flag: #foo
+	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> findReplaceSelectionRegex: aRegex [
-"	findReplaceSelectionRegex := aRegex. "
-	self flag: #foo
+	"	findReplaceSelectionRegex := aRegex. "
 
+	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
-{ #category : #'as yet unclassified' }
-AthensParagraph >> focused [ ^ false
+{ #category : #accessing }
+AthensParagraph >> focused [ 
+	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensParagraph >> focused: bool [
 
 	"why we should care?"
@@ -97,51 +100,48 @@ AthensParagraph >> focused: bool [
 	"self flag: #ooo"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> positionWhenComposed: pos [
 	positionWhenComposed := pos
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> secondarySelection: aSubstring [
-"	secondarySelection := aSubstring."
-	self flag: #foo.
+	"	secondarySelection := aSubstring."
+
+	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> selectionColor: anUndefinedObject [ 
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> selectionRects [
 	^ #()
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #selection }
 AthensParagraph >> selectionStart: startBlock selectionStop: stopBlock [
 	selectionStart := startBlock.
-	selectionStop := stopBlock.
+	selectionStop := stopBlock
 ]
 
-{ #category : #'as yet unclassified' }
-AthensParagraph >> showCared [ 
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensParagraph >> showCaret [  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensParagraph >> showCaret: abool [  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensParagraph >> text [
 	^ text
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AthensParagraph >> textOwner: anUndefinedObject [ 
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]

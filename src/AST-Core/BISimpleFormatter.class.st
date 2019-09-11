@@ -32,17 +32,17 @@ BISimpleFormatter class >> format: aParseTree withIndents: anInteger [
 		format: aParseTree
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 BISimpleFormatter class >> formatAsYouReadPolicy [
 	^ FormatAsYouReadPolicy
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 BISimpleFormatter class >> formatAsYouReadPolicy: anObject [
 	FormatAsYouReadPolicy := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 BISimpleFormatter class >> initialize [
   "self initialize"
   FormatAsYouReadPolicy := false.
@@ -59,7 +59,8 @@ BISimpleFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 
 { #category : #private }
 BISimpleFormatter >> basicFormatCommentFor: aComment [
-	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop).
+
+	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop)
 ]
 
 { #category : #private }
@@ -82,11 +83,6 @@ BISimpleFormatter >> codeStream: anObject [
 ]
 
 { #category : #'public interface' }
-BISimpleFormatter >> containerWidth: anInteger [
-	"nothing done on purpose"
-]
-
-{ #category : #'public interface' }
 BISimpleFormatter >> format: aParseTree [
 	originalSource := aParseTree source.
 	self visitNode: aParseTree.
@@ -99,16 +95,17 @@ BISimpleFormatter >> formatArray: anArrayNode [
 		do: [ :each | 
 				self visitNode: each ]
 		separatedBy: 
-				[ codeStream nextPutAll: ' . ' .
+				[ codeStream nextPutAll: ' . '.
 				self newLine ]
 ]
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatBlock: aBlockNode [
-	self formatBlockArgumentsFor: aBlockNode.
-	self space.
-	self visitNode: aBlockNode body.
-	self space
+	self 
+		formatBlockArgumentsFor: aBlockNode;
+		space;
+		visitNode: aBlockNode body;
+		space
 
 
 ]
@@ -118,46 +115,48 @@ BISimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 	aBlockNode arguments isEmpty
 		ifTrue: [ ^ self ].
 	aBlockNode arguments
-		do:
-			[ :each | 
-			codeStream nextPut: $:.
-			self visitNode: each.
-			self formatCommentsFor: each.
-			self space ].
+		do: [ :each | 
+			   codeStream nextPut: $:.
+			   self 
+					visitNode: each;
+			   		formatCommentsFor: each;
+					space ].
 	codeStream nextPutAll: '| '
 ]
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatCommentsFor: aNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aNode comments
-		do:
-			[ :each | 
-			self basicFormatCommentFor: each.
-			self newLine ]
+		do: [ :each | 
+			self
+				basicFormatCommentFor: each;
+				newLine
+			]
 ]
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatMethodBodyFor: aMethodNode [
 	self
-		indentAround:
-			[ 
-			self newLine.
-			self formatMethodCommentFor: aMethodNode.
-			self formatPragmasFor: aMethodNode.
-			self visitNode: aMethodNode body ]
+		indentAround: [ 
+			self
+				newLine;
+				formatMethodCommentFor: aMethodNode;
+				formatPragmasFor: aMethodNode;
+				visitNode: aMethodNode body ]
 ]
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatMethodCommentFor: aNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aNode comments
-		do:
-			[ :each | 
-			self basicFormatCommentFor: each.
-			self newLine ]
+		do: [ :each | 
+			self
+				basicFormatCommentFor: each;
+				newLine
+			]
 ]
 
 { #category : #'private-formatting' }
@@ -169,7 +168,7 @@ BISimpleFormatter >> formatMethodPatternFor: aMethodNode [
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatPragmasFor: aMethodNode [
-	aMethodNode pragmas do: [ :each | self visitNode: each; newLine ]
+	aMethodNode pragmas do: [:each | self visitNode: each; newLine ]
 ]
 
 { #category : #'private-formatting' }
@@ -207,26 +206,27 @@ BISimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	statements := aSequenceNode statements.
 	statements isEmpty
 		ifTrue: [ ^ self ].
-	1 to: statements size do:
-		[ :i | 
+ 
+	statements doWithIndex: [ :el :i | 
 		self visitNode: (statements at: i).
 		i < statements size
 			ifTrue: [ codeStream nextPut: $.. 
 						self newLine].
-		self formatStatementCommentsFor: (statements at: i).
+		self formatStatementCommentsFor: el.
 		i < statements size
 			ifTrue: [  ] ]
 ]
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatStatementCommentsFor: aStatementNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aStatementNode statementComments
-		do:
-			[ :each | 
-			 self newLine. 
-			 self basicFormatCommentFor: each ]
+		do: [ :each | 
+			self
+				newLine;
+				basicFormatCommentFor: each
+			]
 ]
 
 { #category : #private }
@@ -235,15 +235,15 @@ BISimpleFormatter >> formatTemporariesFor: aSequenceNode [
 		ifTrue: [ ^ self ].
 	self
 		bracketWith: '|'
-		around:
-			[ 
+		around: [ 
 			self space.
 			aSequenceNode temporaries
 				do:
 					[ :each | 
-					self visitNode: each.
-					self formatStatementCommentsFor: each .
-					self space ] ].
+					self 
+						visitNode: each;
+						formatStatementCommentsFor: each;
+						space ]].
 	self newLine.
 ]
 
@@ -259,8 +259,10 @@ BISimpleFormatter >> formattedSourceFor: aNode [
 
 { #category : #private }
 BISimpleFormatter >> handleLineForArgument: anArgument [
-  self space.
-  self visitNode: anArgument
+
+  self 
+		space;
+		visitNode: anArgument
 ]
 
 { #category : #accessing }
@@ -275,9 +277,10 @@ BISimpleFormatter >> indent: anInteger [
 ]
 
 { #category : #private }
-BISimpleFormatter >> indent: anInteger around: aBlock [ 
+BISimpleFormatter >> indent: anInteger around: aBlock [
 	self indent: self indent + anInteger.
-	^aBlock ensure: [self indent: self indent - anInteger]
+	^ aBlock
+		ensure: [ self indent: self indent - anInteger ]
 ]
 
 { #category : #private }
@@ -296,7 +299,7 @@ BISimpleFormatter >> initialize [
 	lineStart := 0.
 	self indent: 0.
 	lookaheadCode := IdentityDictionary new.
-	codeStream := (String new: 256) writeStream.
+	codeStream := (String new: 256) writeStream
 	
 ]
 
@@ -312,20 +315,32 @@ BISimpleFormatter >> lineStart: anObject [
 
 { #category : #private }
 BISimpleFormatter >> needsParenthesisFor: aNode [
-  | parent |
-  aNode ifNil: [ ^false ].
-  aNode isValue ifFalse: [ ^false ].
-   parent := aNode parent ifNil: [ ^false ].
-   aNode precedence < parent precedence ifTrue: [ ^false ].
-   (aNode isAssignment and: [ parent isAssignment ]) ifTrue: [ ^false ].
-   (aNode isAssignment and: [ aNode isCascade ]) ifTrue: [ ^true ].
-   aNode precedence = 0 ifTrue: [ ^false ].
-   aNode isMessage ifFalse: [ ^true ].
-   aNode isUnary ifTrue: [ ^false ].
-   aNode isKeyword ifTrue: [ ^true ].
-   (parent isMessage and: [ parent receiver == aNode ]) ifFalse: [ ^true ].
-   aNode precedence = parent precedence ifFalse: [ ^true ].
-   ^self precedenceOf: parent selector greaterThan: aNode selector
+	| parent |
+	aNode ifNil: [ ^ false ].
+	aNode isValue
+		ifFalse: [ ^ false ].
+	aNode isParseError 
+		ifTrue: [ ^false ].
+	parent := aNode parent ifNil: [ ^ false ].
+	aNode precedence < parent precedence
+		ifTrue: [ ^ false ].
+	(aNode isAssignment and: [ parent isAssignment ])
+		ifTrue: [ ^ false ].
+	(aNode isAssignment and: [ aNode isCascade ])
+		ifTrue: [ ^ true ].
+	aNode precedence = 0
+		ifTrue: [ ^ false ].
+	aNode isMessage
+		ifFalse: [ ^ true ].
+	aNode isUnary
+		ifTrue: [ ^ false ].
+	aNode isKeyword
+		ifTrue: [ ^ true ].
+	(parent isMessage and: [ parent receiver == aNode ])
+		ifFalse: [ ^ true ].
+	aNode precedence = parent precedence
+		ifFalse: [ ^ true ].
+	^ self precedenceOf: parent selector greaterThan: aNode selector
 ]
 
 { #category : #private }
@@ -370,7 +385,7 @@ BISimpleFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 	self
 		with: aMethodNode selectorParts
 		and: aMethodNode arguments
-		do: [ :key :arg | 
+		do: [:key :arg | 
 			codeStream nextPutAll: key.
 			self space.
 			self visitNode: arg ]
@@ -403,57 +418,61 @@ BISimpleFormatter >> visitAssignmentNode: anAssignmentNode [
 BISimpleFormatter >> visitBlockNode: aBlockNode [
 	self
 		bracketWith: '[]'
-		around: [ self formatBlock: aBlockNode ].
+		around: [ self formatBlock: aBlockNode ]
 	
 ]
 
 { #category : #visiting }
 BISimpleFormatter >> visitCascadeNode: aCascadeNode [
-
 	self visitNode: aCascadeNode receiver.
 	self
-		indentAround:
-			[ 
-			self newLine.
+		indentAround: [ self newLine.
 			aCascadeNode messages
-				do:
-					[ :each | self indentAround: [ self formatSelectorAndArguments: each firstSeparator: [  ] restSeparator: [ self space ] ] ]
-				separatedBy: [ 
-					codeStream nextPut: $;.
-					self newLine ] ].
-	
+				do: [ :each | 
+					self
+						indentAround: [ self
+								formatSelectorAndArguments: each
+								firstSeparator: [  ]
+								restSeparator: [ self space ] ] ]
+				separatedBy: [ codeStream nextPut: $;.
+					self newLine ] ]
 ]
 
 { #category : #visiting }
-BISimpleFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [ 
+BISimpleFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 	| brackets |
 	codeStream nextPut: $#.
-	brackets := aRBArrayLiteralNode isForByteArray 
-				ifTrue: ['[]']
-				ifFalse: ['()'].
-	self bracketWith: brackets
-		around: 
-			[aRBArrayLiteralNode contents do: [:each | self visitNode: each]
-				separatedBy: [self space]]
+	brackets := aRBArrayLiteralNode isForByteArray
+		ifTrue: [ '[]' ]
+		ifFalse: [ '()' ].
+	self
+		bracketWith: brackets
+		around: [ aRBArrayLiteralNode contents
+				do: [ :each | self visitNode: each ]
+				separatedBy: [ self space ] ]
 ]
 
 { #category : #visiting }
 BISimpleFormatter >> visitLiteralNode: aLiteralNode [
-	aLiteralNode value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString: aLiteralNode sourceText ]
+	self
+		writeString:
+			(aLiteralNode value isLiteral
+				ifFalse: [ '''<an unprintable nonliteral value>''' ]
+				ifTrue: [ aLiteralNode sourceText ])
 ]
 
 { #category : #visiting }
 BISimpleFormatter >> visitMessageNode: aMessageNode [ 
-	self visitNode: aMessageNode receiver.
-	self formatSelectorAndArguments: aMessageNode
+	self 
+		visitNode: aMessageNode receiver;
+		formatSelectorAndArguments: aMessageNode
 ]
 
 { #category : #visiting }
 BISimpleFormatter >> visitMethodNode: aMethodNode [ 
-	self formatMethodPatternFor: aMethodNode.
-	self formatMethodBodyFor: aMethodNode
+	self 
+		formatMethodPatternFor: aMethodNode;
+		formatMethodBodyFor: aMethodNode
 ]
 
 { #category : #visiting }
@@ -471,11 +490,16 @@ BISimpleFormatter >> visitNode: aNode [
 ]
 
 { #category : #visiting }
+BISimpleFormatter >> visitParseErrorNode: aNode [
+		self writeString: aNode value
+]
+
+{ #category : #visiting }
 BISimpleFormatter >> visitPatternBlockNode: aRBPatternBlockNode [ 
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternBlockNode]
+		around: [ self formatBlock: aRBPatternBlockNode ]
 ]
 
 { #category : #visiting }
@@ -484,7 +508,7 @@ BISimpleFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternWrapperBlockNode]
+		around: [ self formatBlock: aRBPatternWrapperBlockNode ]
 ]
 
 { #category : #visiting }
@@ -508,9 +532,11 @@ BISimpleFormatter >> visitReturnNode: aReturnNode [
 
 { #category : #visiting }
 BISimpleFormatter >> visitSequenceNode: aSequenceNode [
-	self formatTemporariesFor: aSequenceNode.
-	self formatCommentsFor: aSequenceNode.
-	self formatSequenceNodeStatementsFor: aSequenceNode
+
+	self 
+		formatTemporariesFor: aSequenceNode;
+		formatCommentsFor: aSequenceNode;
+		formatSequenceNodeStatementsFor: aSequenceNode
 ]
 
 { #category : #visiting }

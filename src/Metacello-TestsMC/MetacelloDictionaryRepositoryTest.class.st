@@ -37,11 +37,9 @@ MetacelloDictionaryRepositoryTest >> doSilently [
 
 { #category : #utilities }
 MetacelloDictionaryRepositoryTest >> hasPackage: aString [
-	| package |
-	package := MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aString ]
-		ifNone: [ nil ].
-	^ package notNil
+
+	^ MCWorkingCopy allManagers
+		anySatisfy: [ :each | each packageName = aString ]
 ]
 
 { #category : #accessing }
@@ -122,30 +120,22 @@ MetacelloDictionaryRepositoryTest >> setUp [
 
 { #category : #running }
 MetacelloDictionaryRepositoryTest >> tearDown [
-  | aGofer finalWorkingCopyList diff |
-  aGofer := Gofer new.
-  self tearDownPackages: aGofer.
-  aGofer references notEmpty
-    ifTrue: [ aGofer metacelloUnload ].
-  Smalltalk globals removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  Smalltalk globals removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
-  Smalltalk globals
-    removeKey: #'Metacello_Configuration_Test_Alternate_Repository'
-    ifAbsent: [  ].
-  self tempRepositories
-    do: [ :repo | MCRepositoryGroup default removeIdenticalRepository: repo ].
-  MetacelloPlatform current reenableUndefinedSybolUpdates: undefinedSymbols.
-  finalWorkingCopyList := MCWorkingCopy allManagers
-    collect: [ :each | each packageName ].
-  diff := finalWorkingCopyList difference: initialWorkingCopyList.
-  diff
-    do: [ :leak | 
-      Transcript
-        cr;
-        show:
-            'leaked package from ' , self printString , ' -> ' , leak printString ].
-  self assert: diff isEmpty.
-  super tearDown
+	| aGofer finalWorkingCopyList diff |
+	aGofer := Gofer new.
+	self tearDownPackages: aGofer.
+	aGofer references notEmpty ifTrue: [ aGofer metacelloUnload ].
+	Smalltalk globals removeKey: #Metacello_Gofer_Test_Repository ifAbsent: [  ].
+	Smalltalk globals removeKey: #Metacello_Configuration_Test_Repository ifAbsent: [  ].
+	Smalltalk globals removeKey: #Metacello_Configuration_Test_Alternate_Repository ifAbsent: [  ].
+	self tempRepositories do: [ :repo | MCRepositoryGroup default removeIdenticalRepository: repo ].
+	MetacelloPlatform current reenableUndefinedSybolUpdates: undefinedSymbols.
+	finalWorkingCopyList := MCWorkingCopy allManagers collect: [ :each | each packageName ].
+	diff := finalWorkingCopyList difference: initialWorkingCopyList.
+	diff
+		do: [ :leak | 
+			self crTrace: 'leaked package from ' , self printString , ' -> ' , leak printString ].
+	self assertEmpty: diff.
+	super tearDown
 ]
 
 { #category : #running }

@@ -1,8 +1,10 @@
 "
-MessageList is a simple object that holds a set of ordered method definitions.
-See MessageList example for an example.
+RecentMessageList is a simple object that holds a set of ordered method/class definitions.
+It is used by the EmergencyEvaluator (Transcripter) to be able to revert the last method that you 
+edited and that totally broke the system. 
 
-MessageList example
+We can open the RecentMessageList as a tool (and the dependencies to the message browser is not that nice).
+We will have to improve this in the future. 
 
 Instance Variables:
 	methodReferenceList	<Collection>
@@ -32,6 +34,15 @@ RecentMessageList class >> icon [
 	^ self iconNamed: #recentMessagesIcon
 ]
 
+{ #category : #initialization }
+RecentMessageList class >> initialize [ 
+	"Once loaded the recent message is active. 
+	Decided not to use the startUp to be able to keep the list over snapshots."
+	"self initialize"
+	
+	self startReceivingNotifications
+]
+
 { #category : #'instance creation' }
 RecentMessageList class >> new [
 	^ self uniqueInstance
@@ -40,7 +51,21 @@ RecentMessageList class >> new [
 { #category : #'instance creation' }
 RecentMessageList class >> open [
 	
-	self new open.
+	self new open
+]
+
+{ #category : #menu }
+RecentMessageList class >> recentMessageListMenuOn: aBuilder [ 
+	<worldMenu> 
+	
+	(aBuilder item: #'Recent Messages')
+		action: [ self  open];
+		parent: #Tools;
+		order: 720; 
+		keyText: 'z';
+		help: 'The recent message list is an handy tools to check what you recently did.';
+		icon: self icon
+	
 ]
 
 { #category : #'instance creation' }
@@ -48,14 +73,24 @@ RecentMessageList class >> resetUniqueInstance [
 	"Reset the singleton of the recentMessageBrowser model, so if you execute it you will lose all the history of the recent messages."
 	"self resetUniqueInstance"
 	
-	self stopNotifications.
+	self stopReceivingNotifications.
 	self uniqueInstance triggerEvent: #reset.
 	UniqueInstance := nil
 	
 ]
 
 { #category : #events }
-RecentMessageList class >> stopNotifications [
+RecentMessageList class >> startReceivingNotifications [
+	"self startReceivingNotifications"
+	
+	self resetUniqueInstance.
+	"to force the iniatialize again since it is the initialize that is doing the registration 
+	of the instance to the systemAnnouncer."
+	self uniqueInstance
+]
+
+{ #category : #events }
+RecentMessageList class >> stopReceivingNotifications [
 	SystemAnnouncer uniqueInstance unsubscribe: self uniqueInstance
 ]
 
@@ -109,21 +144,21 @@ RecentMessageList >> aMethodHasBeenRemoved: aMethodEvent [
 ]
 
 { #category : #actions }
-RecentMessageList >> addMethodReference: aMethodReference. [
+RecentMessageList >> addMethodReference: aMethodReference [
 
 	self addMethodReferenceSilently: aMethodReference.
 	self checkSize.
 	self updateView
 ]
 
-{ #category : #actions }
+{ #category : #private }
 RecentMessageList >> addMethodReferenceSilently: aMethodReference [
 
 	self methodReferenceList add: aMethodReference.
 	lastEntry := aMethodReference.
 ]
 
-{ #category : #actions }
+{ #category : #private }
 RecentMessageList >> checkSize [
 
 	| result |
@@ -138,7 +173,8 @@ RecentMessageList >> checkSize [
 
 { #category : #actions }
 RecentMessageList >> clearAll [
-
+	"Flush the current kept entities and restart."
+	
 	self methodReferenceList: OrderedCollection new.
 	self updateView.
 ]
@@ -152,18 +188,20 @@ RecentMessageList >> createAClassReference: aCommentedEvent [
 { #category : #private }
 RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 	
-	| method |
-	method := aModifiedMethodEvent method.
+	| method methodDef |
 
-	^ (RGMethodDefinition
-		realClass: method methodClass
-		selector: method selector) asHistorical
+	method := aModifiedMethodEvent method.
+	methodDef := (RGMethodDefinition realClass: method methodClass selector: method selector).
+	method package ifNotNil: [ methodDef package: (RGPackageDefinition new name: method package packageName) ].
+	^ methodDef asHistorical
+		
+
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 RecentMessageList >> defaultMaxListSize [
 
-	^100
+	^ 100
 ]
 
 { #category : #initialization }
@@ -202,7 +240,7 @@ RecentMessageList >> methodReferenceList [
 	^ methodReferenceList
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 RecentMessageList >> methodReferenceList: anObject [
 
 	methodReferenceList := anObject
@@ -216,7 +254,7 @@ RecentMessageList >> open [
 		topologicSort: false;
 		sortingBlock: [ :a :b | a timeStamp > b timeStamp ];
 		messages: methodReferenceList;
-		title: 'Recently accepted Methods' translated;
+		title: 'Recently accepted methods' translated;
 		open
 ]
 
@@ -237,7 +275,7 @@ RecentMessageList >> registerToAnnouncements [
 
 { #category : #private }
 RecentMessageList >> removeAClass: anEvent [
-	
+	"When we remove a class, we remove all the methods that belonged to such class."
 	| tempList |
 	tempList := self methodReferenceList select:[:each | each className = anEvent classRemoved name asSymbol].
 	tempList do: [:each | self removeMethodReference: each]

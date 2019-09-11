@@ -62,12 +62,12 @@ RBRenameTemporaryVariableTransformationTest >> testRename [
 	| transformation |
 	transformation := (RBRenameTemporaryVariableTransformation 
 							rename: #rules to: #asdf
-							in: #RBLintRuleTest
+							in: #RBLintRuleTestData
 							selector: #openEditor)
 							transform.
 							
-	self assert: ((transformation model classNamed: #RBLintRuleTest) parseTreeFor: #openEditor)
-		  equals: (RBParser parseMethod: 'openEditor
+	self assert: ((transformation model classNamed: #RBLintRuleTestData) parseTreeFor: #openEditor)
+		  equals: (self parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].
@@ -110,6 +110,6 @@ RBRenameTemporaryVariableTransformationTest >> testVariableDoesNotExist [
 	self shouldFail: (RBRenameTemporaryVariableTransformation 
 							rename: #rule
 							to: #name
-							in: #RBLintRuleTest
+							in: #RBLintRuleTestData
 							selector: #openEditor)
 ]

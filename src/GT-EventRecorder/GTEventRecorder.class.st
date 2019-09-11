@@ -61,15 +61,17 @@ GTEventRecorder class >> isGlobalRecorder: aGTEventRecorder [
 { #category : #initialization }
 GTEventRecorder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
+	
 	uniqueInstance ifNil: [ ^ self ].
 	SystemAnnouncer uniqueInstance
 		unsubscribe: uniqueInstance.
-	SystemAnnouncer uniqueInstance weak subscribe: PrivacyChangedAnnoucement
+	SystemAnnouncer uniqueInstance weak 
+			when: PrivacyChangedAnnouncement
 			send: #privacyChanged 
-			to: uniqueInstance.
+			to: uniqueInstance
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GTEventRecorder class >> reset [
 	"Stop and remove the process for sending usage data. Delete all recorder that from the queue."
 	uniqueInstance ifNil: [ ^ self ].

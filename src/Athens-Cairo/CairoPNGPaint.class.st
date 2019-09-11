@@ -43,7 +43,7 @@ CairoPNGPaint >> asAthensPaintOn: anAthensCanvas [
  
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CairoPNGPaint >> initializeOnFileNamed: aFileName [
 	fileName := aFileName.
 ]

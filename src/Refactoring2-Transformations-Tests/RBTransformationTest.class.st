@@ -2,7 +2,6 @@ Class {
 	#name : #RBTransformationTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'changes',
 		'manager',
 		'model'
 	],
@@ -80,7 +79,7 @@ RBTransformationTest >> abstractVariableTestData [
 { #category : #mocking }
 RBTransformationTest >> changeMock [
 
-	^ Smalltalk at: #RBRefactoringChangeMock
+	^ Smalltalk globals at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -104,6 +103,16 @@ RBTransformationTest >> objectClassVariable [
 	^ Object classPool keys detect: [:each | true]
 ]
 
+{ #category : #parsing }
+RBTransformationTest >> parseMethod: aString [
+	^ self parserClass parseMethod: aString
+]
+
+{ #category : #parsing }
+RBTransformationTest >> parserClass [
+	^ RBParser
+]
+
 { #category : #running }
 RBTransformationTest >> perform: aChange do: aBlock [
 	"Perform a change in the system silently, evaluate aBlock and then undo the change again."
@@ -125,7 +134,7 @@ RBTransformationTest >> proceedThroughWarning: aBlock [
 { #category : #mocking }
 RBTransformationTest >> removeMockClass [
 
-	Smalltalk removeClassNamed: #RBRefactoringChangeMock.
+	Smalltalk globals removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #running }
@@ -133,8 +142,6 @@ RBTransformationTest >> setUp [
 
 	super setUp.
 	self createMockClass.
-	manager := RBRefactoringManager classVarNamed: #Instance.
-	RBRefactoringManager classVarNamed: #Instance put: nil.
 	model := RBNamespace2 new
 ]
 
@@ -148,8 +155,6 @@ RBTransformationTest >> shouldFail: aRefactoring [
 { #category : #running }
 RBTransformationTest >> tearDown [
 
-	RBRefactoringManager instance release.
-	RBRefactoringManager classVarNamed: #Instance put: manager.
 	self removeMockClass.
 	super tearDown
 ]
@@ -157,24 +162,21 @@ RBTransformationTest >> tearDown [
 { #category : #testing }
 RBTransformationTest >> testAPI [
 	"all classes must implement #storeOn: and #transform"
-	
+
 	| incompleteTransformations |
 	incompleteTransformations := RBTransformation allSubclasses
 		select: [ :each | 
 			| selectors |
 			selectors := each methods collect: #selector.
-	
-			each subclasses isEmpty
-				and: [ (selectors includes: #privateTransform) not
-				and: [ (selectors includes: #storeOn:) not ] ] ].
-	self assert: incompleteTransformations isEmpty.
-	
+
+			each subclasses isEmpty and: [ (selectors includes: #privateTransform) not and: [ (selectors includes: #storeOn:) not ] ] ].
+	self assertEmpty: incompleteTransformations.
+
 	incompleteTransformations := RBCompositeTransformation allSubclasses
 		select: [ :each | 
 			| selectors |
 			selectors := each methods collect: #selector.
-	
-			each subclasses isEmpty
-				and: [ (selectors includes: #buildTransformations) not ] ].
-	self assert: incompleteTransformations isEmpty.
+
+			each subclasses isEmpty and: [ (selectors includes: #buildTransformations) not ] ].
+	self assertEmpty: incompleteTransformations
 ]

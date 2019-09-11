@@ -53,7 +53,7 @@ Timespan class >> starting: startDateAndTime ending: endDateAndTime [
 Timespan >> + operand [
 	"operand conforms to protocol Duration" 	
 
-	^ self class starting: (self start + operand) duration: self duration
+	^ self species starting: (self start + operand) duration: self duration
 
 ]
 

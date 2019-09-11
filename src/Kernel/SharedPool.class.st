@@ -47,6 +47,11 @@ SharedPool class >> includesKey: aName [
 ]
 
 { #category : #testing }
+SharedPool class >> isPool [
+	^true
+]
+
+{ #category : #testing }
 SharedPool class >> isUsed [
 	^super isUsed or: [self poolUsers isNotEmpty]
 ]
@@ -71,12 +76,21 @@ SharedPool class >> localBindingOf: varName [
 	^nil
 ]
 
-{ #category : #pools }
-SharedPool class >> poolUsers [
-	"Answer an Array of all classes that uses the shared pool"
+{ #category : #queries }
+SharedPool class >> methodsAccessingPoolVariables [
+	"Answer all methods that use one of the variables defined by the shared pool"
+	^ self classVariables flatCollect: [ :variable | variable usingMethods ]
+]
 
-	| aCollection |
-	aCollection := ReadWriteStream on: Array new.
-	self environment allClassesDo: [:class | (class includesSharedPoolNamed: self name) ifTrue: [aCollection nextPut: class]].
-	^ aCollection contents
+{ #category : #queries }
+SharedPool class >> poolUsers [
+	"Answer all classes that uses the shared pool"
+
+	^self environment allClasses select:  [:class | class includesSharedPoolNamed: self name]
+]
+
+{ #category : #queries }
+SharedPool class >> usingMethods [
+	"Answer all methods that reference the Pool the variables defined by the shared pool"
+	^super usingMethods, self methodsAccessingPoolVariables
 ]

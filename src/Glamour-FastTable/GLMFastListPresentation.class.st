@@ -60,7 +60,7 @@ GLMFastListPresentation >> allowSeparators [
 	^ self parameters at: 'withSeparators' ifAbsent: [ false ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMFastListPresentation >> initialize [
 	super initialize.
 	parameters := Dictionary new

@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo'
+	#category : #'Athens-Cairo-Base'
 }
 
 { #category : #converting }
@@ -94,6 +94,28 @@ AthensCairoCanvas >> drawWithAlpha: alpha [
 AthensCairoCanvas >> fill [
 	^ self ffiCall: #(void cairo_fill (self))
 
+]
+
+{ #category : #'ffi-calls' }
+AthensCairoCanvas >> fillPreserve [
+	^ self nbCall: #(#void #cairo_fill_preserve #(#self))
+
+	
+]
+
+{ #category : #accessing }
+AthensCairoCanvas >> fillRule [
+	^ self ffiCall: #( cairo_fill_rule_t cairo_get_fill_rule ( self ) )
+]
+
+{ #category : #accessing }
+AthensCairoCanvas >> fillRuleEvenOdd [
+	self setFillRule: CAIRO_FILL_RULE_EVEN_ODD
+]
+
+{ #category : #accessing }
+AthensCairoCanvas >> fillRuleWinding [
+	self setFillRule: CAIRO_FILL_RULE_WINDING
 ]
 
 { #category : #private }
@@ -272,6 +294,11 @@ AthensCairoCanvas >> setClipRect: aRectOrNil [
 			]
 ]
 
+{ #category : #initialization }
+AthensCairoCanvas >> setFillRule: aCairoFillRule [
+	^ self ffiCall: #( void cairo_set_fill_rule ( self, cairo_fill_rule_t aCairoFillRule ) )
+]
+
 { #category : #private }
 AthensCairoCanvas >> setFontMatrix: aMatrix [
 	"
@@ -371,6 +398,14 @@ void                cairo_text_extents                  (cairo_t *cr,
 "
 	^ self ffiCall: #( void cairo_text_extents (self, char * utf8String, cairo_text_extents_t * extentsObj) )
 	
+]
+
+{ #category : #'ffi-calls' }
+AthensCairoCanvas >> textPath: anUTF8String [
+	"A drawing operator that generates the shape from a string of UTF-8 characters, rendered according to the current font_face, font_size (font_matrix), and font_options. "
+	
+	^ self nbCall: #(void cairo_text_path (self, char * anUTF8String ))
+
 ]
 
 { #category : #'path segments visitor' }

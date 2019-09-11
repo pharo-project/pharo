@@ -6,7 +6,6 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'cache',
-		'cache1K',
 		'fullCache',
 		'font1',
 		'font1XGlyph',
@@ -18,7 +17,7 @@ Class {
 	#pools : [
 		'FreeTypeCacheConstants'
 	],
-	#category : #'FreeType-Tests-cache'
+	#category : #'FreeType-Tests-Cache'
 }
 
 { #category : #running }
@@ -91,15 +90,10 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 
 { #category : #tests }
 FreeTypeCacheTest >> testFailedGet [
-	| |
-
-	self 
-		should: [cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph] 
-		raise: Error.
-	self assert: (cache instVarNamed: #fontTable) isEmpty. 
-	self assert: (cache instVarNamed: #used) = 0.
+	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
+	self assertEmpty: (cache instVarNamed: #fontTable).
+	self assert: (cache instVarNamed: #used) equals: 0.
 	self validateSizes: cache
-	
 ]
 
 { #category : #tests }
@@ -123,10 +117,9 @@ FreeTypeCacheTest >> testInstanceInitialization [
 	self assert: (cache instVarNamed: #maximumSize) = FreeTypeCache defaultMaximumSize.
 	self assert: (cache instVarNamed: #used) = 0.
 	self assert: (cache instVarNamed: #fontTable) class = cache dictionaryClass.
-	self assert: (cache instVarNamed: #fontTable) isEmpty.
+	self assertEmpty: (cache instVarNamed: #fontTable).
 	self assert: (cache instVarNamed: #fifo) class = cache fifoClass.
-	self assert: (cache instVarNamed: #fifo) isEmpty.
-	
+	self assertEmpty: (cache instVarNamed: #fifo)
 ]
 
 { #category : #tests }
@@ -328,12 +321,12 @@ FreeTypeCacheTest >> testRemoveAll [
 	fifo := fullCache instVarNamed: #fifo.
 	fontTable := fullCache instVarNamed: #fontTable.
 	fullCache removeAll.
-	self assert: (fullCache instVarNamed: #fifo) isEmpty.
-	self assert: (fullCache instVarNamed: #fontTable) isEmpty.
+	self assertEmpty: (fullCache instVarNamed: #fifo).
+	self assertEmpty: (fullCache instVarNamed: #fontTable).
 	self assert: (fullCache instVarNamed: #used) = 0.
 	self assert: m = (fullCache instVarNamed: #maximumSize).
 	self assert: fifo class = (fullCache instVarNamed: #fifo) class.
-	self assert: fontTable class = (fullCache instVarNamed: #fontTable) class.	
+	self assert: fontTable class = (fullCache instVarNamed: #fontTable) class
 ]
 
 { #category : #tests }

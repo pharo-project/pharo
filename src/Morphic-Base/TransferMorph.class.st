@@ -103,7 +103,7 @@ TransferMorph >> animationForMoveSuccess: success [
 { #category : #initialization }
 TransferMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	^ Smalltalk ui theme selectionColor
+	^ self theme selectionColor
 ]
 
 { #category : #'submorphs-add/remove' }

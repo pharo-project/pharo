@@ -39,9 +39,8 @@ RBConjunctiveCondition >> errorBlockFor: aBoolean [
 
 { #category : #private }
 RBConjunctiveCondition >> errorMacro [
-	^errorMacro isNil
-		ifTrue: [self longMacro]
-		ifFalse: [super errorMacro]
+
+	^ errorMacro ifNil: [ self longMacro ] ifNotNil: [ super errorMacro ]
 ]
 
 { #category : #private }
@@ -51,7 +50,7 @@ RBConjunctiveCondition >> errorStringFor: aBoolean [
 		ifFalse: [self perform: failed]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBConjunctiveCondition >> left: aCondition right: aCondition2 [ 
 	left := aCondition.
 	right := aCondition2.
@@ -75,9 +74,10 @@ RBConjunctiveCondition >> neitherFailed [
 
 { #category : #printing }
 RBConjunctiveCondition >> printOn: aStream [ 
-	aStream nextPutAll: left asString;
+	aStream 
+		print: left;
 		nextPutAll: ' & ';
-		nextPutAll: right asString
+		print: right
 
 ]
 

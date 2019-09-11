@@ -72,11 +72,11 @@ OCASTCheckerTest >> testExampleSelf [
 	ast := (OCOpalExamples>>#exampleSelf) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
-	self assert: ast scope tempVars size = 1.
+	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'self') isSelf.
 	
-	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 
-	self assert: assignment value binding isSelf.
+	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
+	self assert: assignment arguments first binding isSelf.
 ]
 
 { #category : #'testing - variables' }
@@ -93,11 +93,11 @@ OCASTCheckerTest >> testExampleSuper [
 	ast := (OCOpalExamples>>#exampleSuper) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
-	self assert: ast scope tempVars size = 1.
+	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'super') isSuper.
 	
-	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 
-	self assert: assignment value binding isSuper.
+	assignment := RBParseTreeSearcher treeMatching: 'self result:``@anything' in: ast. 
+	self assert: assignment arguments first binding isSuper.
 ]
 
 { #category : #'testing - variables' }
@@ -114,11 +114,11 @@ OCASTCheckerTest >> testExampleThisContext [
 	ast := (OCOpalExamples>>#exampleThisContext) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
-	self assert: ast scope tempVars size = 1.
+	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'thisContext') isThisContext.
 	
-	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 
-	self assert: assignment value binding isThisContext.
+	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
+	self assert: assignment arguments first binding isThisContext.
 ]
 
 { #category : #'testing - blocks - optimized' }
@@ -133,16 +133,16 @@ OCASTCheckerTest >> testExampleToDoArgument [
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testInstanceVar [
 	| ast assignment |
-	ast := (OCOpalExamples>>#exampleiVar) parseTree.
+	ast := (OCOpalExamples >> #exampleInstanceVariableAssignment) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
-	self assert: ast scope tempVars isEmpty.
-	
+	self assertEmpty: ast scope tempVars.
+
 	self assert: ast scope outerScope isInstanceScope.
 	self assert: (ast scope outerScope lookupVar: 'iVar') isInstance.
-	
-	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 
-	self assert: assignment variable isInstance.
+
+	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
+	self assert: assignment variable isInstance
 ]
 
 { #category : #'testing - variables' }
@@ -267,10 +267,10 @@ OCASTCheckerTest >> testOptimizedBlocksAndSameNameTemps [
 { #category : #'testing - simple' }
 OCASTCheckerTest >> testReturn1 [
 	| ast |
-	ast := (OCOpalExamples>>#exampleReturn1) parseTree.
+	ast := (OCOpalExamples >> #exampleReturn42) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
-	self assert: ast scope tempVars isEmpty.
+	self assertEmpty: ast scope tempVars
 ]
 
 { #category : #'testing - simple' }
@@ -278,7 +278,7 @@ OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 	| ast |
 	{[ 1 + 2 ].
 	thisContext.
-	(OCOpalExamples >> #exampleReturn1)}
+	(OCOpalExamples >> #exampleReturn42)}
 		do: [ :object | 
 			ast := object sourceNode.
 			ast doSemanticAnalysis ].

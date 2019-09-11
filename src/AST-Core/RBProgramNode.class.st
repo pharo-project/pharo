@@ -30,7 +30,7 @@ Class Variables:
 "
 Class {
 	#name : #RBProgramNode,
-	#superclass : #Object,
+	#superclass : #RBNode,
 	#instVars : [
 		'parent',
 		'properties'
@@ -63,11 +63,6 @@ RBProgramNode class >> resetFormatter [
 	self formatterClass: nil
 
 	
-]
-
-{ #category : #visiting }
-RBProgramNode >> acceptVisitor: aProgramNodeVisitor [ 
-	self subclassResponsibility
 ]
 
 { #category : #replacing }
@@ -264,7 +259,7 @@ RBProgramNode >> copyList: matchNodes inContext: aDictionary [
 { #category : #accessing }
 RBProgramNode >> debugHighlightRange [
 
-	^ self debugHighlightStart to: self debugHighlightStop .
+	^ self debugHighlightStart to: self debugHighlightStop
 ]
 
 { #category : #accessing }
@@ -298,12 +293,12 @@ RBProgramNode >> do: aBlock [
 
 { #category : #generation }
 RBProgramNode >> dump [
-	^  String streamContents: [:s | self dumpOn: s]
-]
+	"Generate a literal expression that recreates the receiver"
 
-{ #category : #generation }
-RBProgramNode >> dumpOn: aStream [
-	self subclassResponsibility 
+	| visitor |
+	visitor := RBDumpVisitor new.
+	self acceptVisitor: visitor.
+	^ visitor stream contents
 ]
 
 { #category : #comparing }
@@ -333,19 +328,20 @@ RBProgramNode >> evaluatedFirst: aNode [
 
 { #category : #accessing }
 RBProgramNode >> formattedCode [
-	^ self formattedCodeWithMaxLineLength: 70
-]
-
-{ #category : #accessing }
-RBProgramNode >> formattedCodeWithMaxLineLength: anInteger [
-	^ self formatterClass new
-		containerWidth: anInteger;
-		format: self
+	^ self formatterClass new format: self
 ]
 
 { #category : #accessing }
 RBProgramNode >> formatterClass [
 	^ self class formatterClass
+]
+
+{ #category : #testing }
+RBProgramNode >> hasComments [
+	"Answer whether the receiver as comments"
+	
+	^ self comments isNotEmpty
+	
 ]
 
 { #category : #testing }
@@ -366,6 +362,11 @@ RBProgramNode >> hasProperty: aKey [
 { #category : #comparing }
 RBProgramNode >> hashForCollection: aCollection [
 	^ aCollection isEmpty ifTrue: [ 0 ] ifFalse: [ aCollection first hash ]
+]
+
+{ #category : #querying }
+RBProgramNode >> instanceVariableNodes [
+		^self variableNodes select: [:each | each isInstance]
 ]
 
 { #category : #querying }
@@ -469,6 +470,11 @@ RBProgramNode >> isMessage [
 
 { #category : #testing }
 RBProgramNode >> isMethod [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isParseError [
 	^false
 ]
 
@@ -618,8 +624,24 @@ RBProgramNode >> methodNode [
 ]
 
 { #category : #accessing }
+RBProgramNode >> methodOrBlockNode [
+	^ parent ifNotNil: [ parent methodOrBlockNode ]
+]
+
+{ #category : #accessing }
 RBProgramNode >> newSource [
 	^self formattedCode
+]
+
+{ #category : #'node access' }
+RBProgramNode >> nodeForOffset: anInteger [
+	| children |
+	"choosing the best node on the specific offset"
+	children := self children.
+	"when we are on a leaf, we take the leaf node"
+	(children isEmpty) ifTrue: [ (self sourceInterval includes: anInteger) ifTrue: [^self]].
+	"if the node has children then we check the children"
+	children do: [:each | (each sourceInterval includes: anInteger) ifTrue: [^each nodeForOffset: anInteger] ].
 ]
 
 { #category : #iterating }
@@ -680,7 +702,7 @@ RBProgramNode >> propertyAt: aKey ifAbsent: aBlock [
 	"Answer the property value associated with aKey or, if aKey isn't found, answer the result of evaluating aBlock."
 	
 	^ properties 
-		ifNil: [ aBlock value ]
+		ifNil: aBlock
 		ifNotNil: [ properties at: aKey ifAbsent: aBlock ]
 ]
 
@@ -695,7 +717,7 @@ RBProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
 RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	"Answer the property value associated with aKey or, if aKey is found, answer the result of evaluating aPresentBlock, else evaluates anAbsentBlock."
 
-	^ properties ifNil: [ anAbsentBlock ] ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock ]
+	^ properties ifNil: anAbsentBlock ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock ]
 ]
 
 { #category : #properties }
@@ -782,6 +804,12 @@ RBProgramNode >> replaceWith: aNode [
 	parent replaceNode: self withNode: aNode
 ]
 
+{ #category : #enumeration }
+RBProgramNode >> reverseNodesDo: aBlock [ 
+	self children reverseDo: [ :each | each reverseNodesDo: aBlock ].
+	aBlock value: self
+]
+
 { #category : #querying }
 RBProgramNode >> selfMessages [
 	^(self sendNodes select: [ :node | node isSelfSend ] thenCollect: [ :node | node selector ]) asSet
@@ -811,7 +839,19 @@ RBProgramNode >> size [
 
 { #category : #accessing }
 RBProgramNode >> source [
-	^parent notNil ifTrue: [parent source] ifFalse: [nil]
+	^ parent notNil ifTrue: [ parent source ] ifFalse: [ nil ]
+]
+
+{ #category : #accessing }
+RBProgramNode >> sourceCode [
+
+	| interval |
+	interval := self sourceInterval.
+	interval ifEmpty: [ ^ '' ].
+	
+	^ self source 
+		copyFrom: interval first
+		to: interval last
 ]
 
 { #category : #accessing }
@@ -843,6 +883,12 @@ RBProgramNode >> statementNode [
 
 	(parent isNil or: [parent isSequence]) ifTrue: [^self].
 	^parent statementNode
+]
+
+{ #category : #accessing }
+RBProgramNode >> statements [
+	^ #()
+	
 ]
 
 { #category : #accessing }

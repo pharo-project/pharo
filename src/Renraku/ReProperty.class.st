@@ -22,6 +22,11 @@ ReProperty >> color [
 	^ Color black alpha: 0.1
 ]
 
+{ #category : #accessing }
+ReProperty >> entity [
+	^ self sourceAnchor entity
+]
+
 { #category : #actions }
 ReProperty >> gtInspectorActions [
 	^ (self actions collect: [ :act | 

@@ -242,21 +242,15 @@ GLMAction >> shortcut: aCharacter [
 	aCharacter ifNil: [ 
 		keymap := nil.
 		^ self ].
-	keymap := 
-		(aCharacter isUppercase 
-			ifTrue: [ aCharacter meta shift ]
-			ifFalse: [ aCharacter meta ])
+	keymap :=  KMModifier meta + aCharacter asKeyCombination
+
 ]
 
 { #category : #accessing }
 GLMAction >> shortcutAsString [ 
 	"Answers a string explaining shortcut"
 	self shortcut ifNil: [ ^ '' ].
-	^ String streamContents: [ :stream |
-		stream << Smalltalk os menuShortcutModifierString << '+'.
-		self shortcut isUppercase 
-			ifTrue: [ stream << 'shift+' ].
-		stream << self shortcut asLowercase asString ]
+	^self keymap printOsRepresentation
 ]
 
 { #category : #accessing }

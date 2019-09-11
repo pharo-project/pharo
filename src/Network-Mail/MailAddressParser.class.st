@@ -11,10 +11,19 @@ Class {
 	#instVars : [
 		'tokens',
 		'addresses',
-		'curAddrTokens'
+		'curAddrTokens',
+		'storeNames'
 	],
 	#category : #'Network-Mail'
 }
+
+{ #category : #parsing }
+MailAddressParser class >> addressesAndNamePairsIn: aString [
+	"return a collection of the addresses and the corresponding names listed in aString"
+	| tokens |
+	tokens := MailAddressTokenizer tokensIn: aString.
+	^(self new initialize: tokens) grabAddressesAndNames
+]
 
 { #category : #parsing }
 MailAddressParser class >> addressesIn: aString [
@@ -45,7 +54,9 @@ MailAddressParser >> finishAddress [
 
 { #category : #parsing }
 MailAddressParser >> grabAddressWithRoute [
-	"grad an address of the form 'Descriptive Text <real.address@c.d.e>"
+	"grab an address of the form 'Descriptive Text <real.address@c.d.e>"
+
+	| name |
 	
 	self startNewAddress.
 
@@ -59,11 +70,9 @@ MailAddressParser >> grabAddressWithRoute [
 	] whileFalse: [ self addToAddress ].
 
 	tokens removeLast.  "remove the <"
-
-
-	self removePhrase.
-
-	self finishAddress
+	self finishAddress.
+	name := self grabName.
+	storeNames ifTrue: [addresses addFirst: {name . addresses removeFirst}].
 ]
 
 { #category : #parsing }
@@ -100,6 +109,21 @@ MailAddressParser >> grabAddresses [
 	].
 
 	^addresses
+]
+
+{ #category : #parsing }
+MailAddressParser >> grabAddressesAndNames [
+	
+	storeNames := true.
+	
+	self grabAddresses.
+
+	addresses := addresses collect: [:a |
+		a isString 
+			ifTrue: [{'' . a}]
+			ifFalse: [a] ].
+
+	^ addresses
 ]
 
 { #category : #parsing }
@@ -173,10 +197,21 @@ MailAddressParser >> grabGroupAddress [
 	self removePhrase.
 ]
 
+{ #category : #parsing }
+MailAddressParser >> grabName [
+
+	| name |
+	name := ''.
+	[tokens notEmpty and: [#(Atom QuotedString $. $@) includes: (tokens last type) ]] 
+		whileTrue: [ name := ' ' join: {tokens removeLast text copyWithoutAll: '"'. name} ].
+	^ name trimBoth
+]
+
 { #category : #initialization }
 MailAddressParser >> initialize: tokenList [
 	tokens := tokenList asOrderedCollection copy.
 	addresses := OrderedCollection new.
+	storeNames := false.
 ]
 
 { #category : #parsing }
@@ -184,7 +219,7 @@ MailAddressParser >> removePhrase [
 	"skip most characters to the left of this"
 
 	[
-		tokens isEmpty not and: [
+		tokens isNotEmpty and: [
 			#(Atom QuotedString $. $@) includes: (tokens last type) ]
 	] whileTrue: [ tokens removeLast ].
 

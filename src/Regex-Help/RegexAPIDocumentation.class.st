@@ -20,5 +20,5 @@ RegexAPIDocumentation class >> builder [
 
 { #category : #accessing }
 RegexAPIDocumentation class >> helpPackages [
-	^#('Regex-Core' 'Regex-Core-Exceptions' 'Regex-Tests-Core')
+	^#('Regex-Core' 'Regex-Core-Exceptions' 'Regex-Core-Tests')
 ]

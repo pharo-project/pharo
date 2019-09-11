@@ -19,60 +19,142 @@ WelcomeHelp class >> changeLog [
 	^ HelpTopic 
 		title: 'Changelog'
 		contents: (self heading: 'Changelog highlights'),
-'- moving the development process to git and GitHub (see ',(self url: 'https://github.com/pharo-project/pharo'),')
-- bootstraping of a smaller image that will not include compiler/parser (Compiler and related packages are exported and loaded using a binary exporter named Hermes)
-- integration of Renraku quality framework
-- integration of WebBrowser
-- using Tonel format for Iceberg (a single file per class instead of a file per method)
-- including the Shift Class Builder
-- release checks for proper categorization (no protocols left	without methods, categorization
-- many new extensions to tools like the inspectors (for instance to browse instances when inspecting the class)
-- ability to call external commands without additional packages - including piping (see Smalltalk os runCommand: ... and resultOfCommand:)
-', (self heading: 'Primary Issues'), 
-'Over ... fixes and enhancements were integrated in this release.
-
-- better package structuring, better separation of code packages vs tests packages
-- improved release tests to ensure proper categorization of common methods (hash, =, setUp, tearDown, etc.), to avoid unused temps and other
-- simplified suggestions menu definitions
-- additional smart suggestions to browse variable definition
-- addition of "Users of it" in the "Code Search" menu 
-- new "Browse receiver" feature in the debugger
-- additional filters and titles in the simple method browser that is included in the inspector
-- allow to define other default folders for GTPlayBook
-- improvements for MetaLink (including better inspection)
-- Command line handler improvements for deployment scenarios
-- Horizontal scroll bar for FastTable
-- Glamour example browser is now searchable
-- Playground is now also extensible (similar to GTInspector)
-- Conditional breakpoints/watches
-
-As the complete list of fixed issues is too large to be placed here, you can review it on the FogBugz issue tracker (', (self url: 'https://pharo.manuscript.com'), ') (requires account).', 
-(self subheading: 'Tools'),
-'- Integration of Calypso (new and improved SystemBrowser)
-- Improved Iceberg Git repositories manager
-- integration of ReferenceFinder
-', 
-(self subheading: 'VM related'), 
-'- EncoderForSistaV1',
-(self subheading: 'Reflectivity'), 
-'- General improvements
-- ...
-', 
-(self subheading: 'Other'), 
-'- create clear image entry point (PharoBootstrapInitialization>>#initializeImageOfType:majorVersion:minor:suffix:buid:commitHash:)', 
+'- Pharo development moved to Github and Pharo is now bootstrapped
+- 64-bit VM for Windows as a technical preview
+- Introduction of a modular implementation of Stateful traits (see user documentation ',(self url: 'https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Traits.md'),')
+- Replacement of Nautilus by Calypso System Browser (',(self url: 'https://github.com/pharo-ide/Calypso'),') 
+- A new version of Iceberg (',(self url: 'https://github.com/pharo-vcs/Iceberg'),') with a new interface more user-friendly
+- Migration of Streams to the Zinc streams implementation that is more modular'
+, 
+(self subheading: 'Revolutionary kernel changes'), 
+'- Pharo is now bootstrapped
+- Modular stateful traits
+- Traits flattening in kernel packages
+- New sources file for every bootstrapped version, empty changes
+- New class builder
+- Binary packages loading (Hermes)
+- Use of Zinc streams as default streams 
+  - migration guideline: ',(self url: 'https://github.com/pharo-open-documentation/pharo-wiki/blob/master/Migration/MigrationToPharo7.md')
+, 
+ (self subheading: 'Infrastructure changes'), 
+'- Switch to GitHub
+- Tonel code format 
+- Update building infrastructure to Jenkins 2'
+, 
+(self subheading: 'Code management'), 
+'- Introduction of Calypso, the new system browser
+  - New navigation model    
+  - Faster UI
+  - Tabs toolbar instead of single source code panel
+  - Explicit commands (e.g., add new method) instead of duplicated menu and shortcuts
+  - Extendable by plugins
+  - Suitable for the remote scenario
+  - "Dynamic protocols", supporting multiple tags per method
+  - No longer requires star convention for class extension
+  - Visibility option for inherited methods
+  - Variable view as the special mode for method group view.
+  - Better keyboard navigation
+  - And many more improvements'
+, 
+(self subheading: 'Iceberg'), 
+'- A new friendly user interface
+- Simplification of solving problems with repositories
+- Workflow simplification
+- Better GitHub, BitBucket, GitLab support
+- Improved code merging and comparisons
+- New code serialization format (Tonel)
+- Repositories metadata
+- Documentation
+- Better error handling, tags support
+- Improved Iceberg-Metacello integration
+- Credentials store'
+, 
 (self subheading: 'Cleanups'), 
-'- Object>>#setPinned: is now private
-- unnecessary "self debug:" comment removed 
-- super setUp now called in various test classes 
-- better zeroconf reporting of missing i386 libraries for command line
-- halt: and haltIf: are also highlighted in red as the other flavours of halt messages   
-- 
-', 
-(self subheading: 'Unit testing/Documentation'), 
-'- More class comments and documentation', 
-(self subheading: 'Network'), 
-'- Zinc/Zodiac update
-
+'- Remove Nautilus
+- Remove UpdateStream
+- Remove all Configurations
+- Remove ShoreLine-Report
+- Remove TxText
+- Remove PluggableTabBarMorph
+- Remove the old Compiler
+- Remove Watery theme
+- Remove Versionner
+- Remove Komitter
+- Remove LegacyWeakSubscription
+- Continue on deprecation of FileStream
+- Dead code cleanups
+- Code organization cleanups
+- Unify categorization of common methods
+- Cleanups of object inspection protocol
+- Start Ring deprecation
+- Better structure of packages
+- Add more package comments'
+, 
+(self subheading: 'Updates'), 
+'- Zinc
+- Epicea
+- FFI
+- Metacello
+- Fuel'
+, 
+(self subheading: 'New projects'), 
+'- Integration of Calypso
+- Integration of WebBrowser, a utility to open the default web browser of the user on an URL
+- Integration of ReferenceFinder to find reference paths between objects to help find memory leaks
+- Integration of Hermes, a binary code loader for Pharo''s bootstrap
+- Integration of Refactoring 2, a re-architecture of the Refactoring project
+- Integration of Commander, a project to implement Command design pattern
+- Integration of ClassAnnotation, a reusable mechanism for first-class annotations in Pharo'
+, 
+(self subheading: 'Spec'), 
+'- Renamed ComposableModel into ComposablePresenter and changed the suffix of all subclasses
+- New calendar presenter 
+- Spec-Demo (Under Help menu entry)
+- Improved Spec linking to domain models'
+, 
+(self subheading: 'Look & Feel'), 
+'- Uses the white theme by default
+- Improves themes switching
+- Uses a Main menu bar to make Pharo more standard to other applications
+- Improvement of the design of the Taskbar
+- New window management shortcuts
+- Better support of fallback bitmap fonts
+- Improved Inspector refreshing
+- Spotter is now looking for opened windows
+- Support for display scale factor
+- FastTable improvements'
+, 
+(self subheading: 'VM interface'), 
+'- 64-bit VM for windows as a technical preview
+- DoubleWord and DoubleByte arrays
+- Added EncoderForSistaV1
+- Added read-only literals support
+- Improvements and fixes for 64-bit support
+- Fixes for FullBlockClosure
+- Support of the new bytecode set
+- Uses FFI to bridge Pharo with FreeType'
+, 
+(self subheading: 'Reflectivity'), 
+'- Breakpoint improvements
+- Introduction of Breakpoint browser (under the Debugging menu bar entry)
+- Test coverage using metalinks
+- Reflectivity and metalink improvements'
+, 
+(self subheading: 'Other'), 
+'- The logic of the Finder was rewritten
+- Startup now running in a fresh process
+- Better pin messages
+- NewValueHolder and Model API unification
+- Better separation of working and image directories
+- SortFunctions are now composable
+- Better OSWindow support
+- Converted rules to the Renraku architecture
+- Class and method comment improvements
+- Extensible Playground (pageActionOrder:)
+- Optional password management for command line handlers
+- System dependencies tests
+- Unified way to obtain package manifests		
+		
 You can see the Pharo 7.0 changelog at: 
 
 ', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo70ChangeLogs.md')
@@ -194,7 +276,7 @@ WelcomeHelp class >> openForRelease [
 	| browser window findBlock |
 	
 	findBlock := [ :each | (each isKindOf: SystemWindow) and: [ each label = self bookName ] ]. 
-	World submorphs 
+	self currentWorld submorphs 
 		detect: findBlock 
 		ifFound: [ :oldWindow | oldWindow delete ].
 	browser := self open.
@@ -282,7 +364,7 @@ Pharo is a pure object-oriented programming language and a powerful environment,
 For more information, please visit here: ', (self url: 'http://pharo.org'),
 (self subheading: 'Quick setup'),
 'Choose your preferred color theme: ',
-(self doItFrom: 'PharoLightTheme beCurrent' text: 'White Theme'), ' or ',
+(self doItFrom: 'PharoLightTheme beCurrent' text: 'Light Theme'), ' or ',
 (self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' 
 
 Click if you have access to a: ',

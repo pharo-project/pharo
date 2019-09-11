@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'Fuel-Tests-Core-Mocks'
+	#category : #'Fuel-Tests-Core-Mocks'
 }
 
 { #category : #accessing }
@@ -23,7 +23,7 @@ FLSingletonMock class >> new [
 	self error: 'I''m a singleton!'
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FLSingletonMock class >> reset [
 	Instance := nil
 ]

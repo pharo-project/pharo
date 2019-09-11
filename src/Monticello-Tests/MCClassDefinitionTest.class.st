@@ -1,9 +1,6 @@
 Class {
 	#name : #MCClassDefinitionTest,
 	#superclass : #MCTestCase,
-	#instVars : [
-		'previousChangeSet'
-	],
 	#category : #'Monticello-Tests-Base'
 }
 
@@ -98,7 +95,7 @@ MCClassDefinitionTest >> testCreation [
 MCClassDefinitionTest >> testDefinitionString [
 	| d |
 	d := self mockClassA asClassDefinition.
-	self assert: d definitionString equals: self mockClassA definition.
+	self assert: d definitionString equals: self mockClassA oldDefinition.
 ]
 
 { #category : #tests }
@@ -145,9 +142,9 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	c := Smalltalk globals classNamed: 'MCMockClassC'.
 	self assert: (c isKindOf: Class).
 	self assert: c superclass equals: Object.
-	self assert: c instVarNames isEmpty.
-	self assert: c classVarNames isEmpty.
-	self assert: c sharedPools isEmpty.
+	self assertEmpty: c instVarNames.
+	self assertEmpty: c classVarNames.
+	self assertEmpty: c sharedPools.
 	self assert: c category equals: self mockCategoryName.
 	self assert: c organization classComment equals: (self commentForClass: 'MCMockClassC').
 	self assert: c organization commentStamp equals: (self commentStampForClass: 'MCMockClassC').

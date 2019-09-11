@@ -122,7 +122,7 @@ LRUCache >> includesKey: key [
 	^ keyIndex includesKey: key
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 LRUCache >> initialize [
 	super initialize.
 	keyIndex := Dictionary new.

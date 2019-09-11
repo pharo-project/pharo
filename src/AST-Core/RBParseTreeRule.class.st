@@ -46,14 +46,19 @@ RBParseTreeRule >> foundMatchFor: aProgramNode [
 	^aProgramNode
 ]
 
-{ #category : #'initialize-release' }
-RBParseTreeRule >> methodSearchString: aString [ 
-	searchTree := RBParser parseRewriteMethod: aString
+{ #category : #initialization }
+RBParseTreeRule >> methodSearchString: aString [
+	searchTree := self parserClass parseRewriteMethod: aString
 ]
 
 { #category : #'initialize-release' }
 RBParseTreeRule >> owner: aParseTreeSearcher [
 	owner := aParseTreeSearcher
+]
+
+{ #category : #initialization }
+RBParseTreeRule >> parserClass [
+	^ RBParser
 ]
 
 { #category : #matching }
@@ -69,9 +74,9 @@ RBParseTreeRule >> performOn: aProgramNode [
 		
 ]
 
-{ #category : #'initialize-release' }
-RBParseTreeRule >> searchString: aString [ 
-	searchTree := RBParser parseRewriteExpression: aString
+{ #category : #initialization }
+RBParseTreeRule >> searchString: aString [
+	searchTree := self parserClass parseRewriteExpression: aString
 ]
 
 { #category : #accessing }

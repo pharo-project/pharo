@@ -73,12 +73,7 @@ CompiledCode >> = aCompiledMethod [
 
 { #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
-	self ast nodesDo: [ :node | 
-		node isVariable and: [
-			node isInstance and: [ 
-				(node binding slot ==  aSlot)
-					 ifTrue: [^true]]]]. 
-	^false
+	^aSlot isAccessedIn: self
 	
 ]
 
@@ -95,10 +90,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^self 
-		propertyAt: #argumentNames 
-		ifAbsent: [ self ast argumentNames ]
-
+	^ self ast argumentNames
 ]
 
 { #category : #converting }
@@ -441,7 +433,7 @@ CompiledCode >> literals [
 	"Answer an Array of the literals referenced by the receiver.	
 	 Exclude superclass + selector/properties"
 	| literals numberLiterals |
-	literals := Array new: (numberLiterals := self numLiterals - 2).
+	literals := Array new: (numberLiterals := self numLiterals - self numberOfReservedLiterals).
 	1 to: numberLiterals do: [:index |
 		literals at: index put: (self objectAt: index + 1)].
 	^literals
@@ -509,7 +501,12 @@ CompiledCode >> longPrintOn: aStream [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #accessing }
+CompiledCode >> methodClass [
+	self subclassResponsibility
+]
+
+{ #category : #initialization }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
 	(self numTemps + newFrameSize) > LargeFrame ifTrue:
@@ -536,6 +533,12 @@ CompiledCode >> numTemps [
 	"Answer the number of temporary variables used by the receiver."
 	
 	^ (self header bitShift: -18) bitAnd: 16r3F
+]
+
+{ #category : #accessing }
+CompiledCode >> numberOfReservedLiterals [
+
+	self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -567,7 +570,7 @@ CompiledCode >> primitiveErrorVariableName [
 	self isPrimitive ifTrue:
 		[self pragmas do:
 			[:pragma| | kwds ecIndex |
-			((kwds := pragma keyword keywords) first = 'primitive:'
+			((kwds := pragma selector keywords) first = 'primitive:'
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil
@@ -591,12 +594,7 @@ CompiledCode >> readsRef: literalAssociation [
 
 { #category : #scanning }
 CompiledCode >> readsSlot: aSlot [
-	| nodes |
-	nodes := self ast allChildren.
-	nodes := nodes select: #isVariable.
-	nodes := nodes select: #isInstance.
-	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
-	^ nodes anySatisfy: [ :node | node binding slot == aSlot ]
+	^aSlot isReadIn: self
 ]
 
 { #category : #accessing }
@@ -702,7 +700,7 @@ CompiledCode >> sendsToSuper [
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsToSuper ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 CompiledCode >> setFrameBit: boolean [ 
 	"true for large frame, else false"
 	| largeFrameBit newHeader |
@@ -804,12 +802,5 @@ CompiledCode >> writesRef: literalAssociation [
 
 { #category : #scanning }
 CompiledCode >> writesSlot: aSlot [
-	self ast nodesDo: [ :node | 
-		node isVariable and: [
-			node parent isAssignment and: [  
-				(node parent variable = node) and: [  
-					node isInstance and: [
-						(node binding slot ==  aSlot)
-					 		ifTrue: [^true]]]]]]. 
-	^false
+	^aSlot isWrittenIn: self
 ]

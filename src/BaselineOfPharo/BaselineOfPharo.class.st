@@ -15,6 +15,8 @@ BaselineOfPharo >> baseline: spec [
 		
 		spec baseline: 'IDE' with: [spec repository: repository].
 		spec package: 'Deprecated70'.
+		spec package: 'Deprecated80'.
+		spec package: 'Gofer-UI'.
 	]
 ]
 

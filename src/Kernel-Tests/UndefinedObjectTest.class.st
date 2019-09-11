@@ -22,27 +22,15 @@ UndefinedObjectTest >> testDeepCopy [
 ]
 
 { #category : #'tests - testing' }
-UndefinedObjectTest >> testHaltIfNil [
-
-	self should: [ nil haltIfNil] raise: Halt.
-]
-
-{ #category : #'tests - testing' }
 UndefinedObjectTest >> testIfNil [
-
-	self should: [ nil ifNil: [self halt]] raise: Halt.
-
-
-
+	<haltOrBreakpointForTesting>
+	self should: [ nil ifNil: [ self error ] ] raise: Error
 ]
 
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testIfNilIfNotNil [
-
-	self should: [ nil ifNil: [self halt] ifNotNil: [self error] ] raise: Halt.
-
-
-
+	<haltOrBreakpointForTesting>
+	self should: [ nil ifNil: [ self error ] ifNotNil: [  ] ] raise: Error
 ]
 
 { #category : #'tests - testing' }
@@ -65,11 +53,8 @@ UndefinedObjectTest >> testIfNotNilDo [
 
 { #category : #'tests - testing' }
 UndefinedObjectTest >> testIfNotNilIfNil [
-
-	self should: [ nil ifNotNil: [self error] ifNil: [self halt] ] raise: Halt.
-
-
-
+	<haltOrBreakpointForTesting>
+	self should: [ nil ifNotNil: [  ] ifNil: [ self error ] ] raise: Error
 ]
 
 { #category : #'tests - testing' }

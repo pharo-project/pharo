@@ -57,16 +57,19 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> checkSuperMessages [
-	self inlineClass = class ifTrue: [^self].
-	self inlineClass superclass isNil ifTrue: [^self].
-	inlineParseTree superMessages do: 
-			[:each | 
-			(self inlineClass superclass whoDefinesMethod: each) 
-				= (class superclass whoDefinesMethod: each) 
-					ifFalse: 
-						[self 
-							refactoringError: ('Cannot inline method since it sends a super message <1s> that is overriden' 
-									expandMacrosWith: each)]]
+
+	self inlineClass = class
+		ifTrue: [ ^ self ].
+	self inlineClass superclass ifNil: [ ^ self ].
+	inlineParseTree superMessages
+		do: [ :each | 
+			( self inlineClass superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
+				ifFalse: [ self
+						refactoringError:
+							( 'Cannot inline method since it sends a super message <1s> that is overriden'
+								expandMacrosWith: each )
+					]
+			]
 ]
 
 { #category : #transforming }
@@ -76,22 +79,18 @@ RBInlineMethodRefactoring >> compileMethod [
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> findSelectedMessage [
+
 	sourceParseTree := class parseTreeFor: sourceSelector.
-	sourceParseTree isNil 
-		ifTrue: [self refactoringFailure: 'Could not parse sources'].
+	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage isNil 
-		ifTrue: 
-			[self 
-				refactoringFailure: 'The selection doesn''t appear to be a message send'].
-	sourceMessage isCascade 
-		ifTrue: [sourceMessage := sourceMessage messages last].
-	sourceMessage isMessage 
-		ifFalse: 
-			[self 
-				refactoringFailure: 'The selection doesn''t appear to be a message send'].
-	(sourceMessage receiver isSelfOrSuper)
-			ifFalse: [self refactoringError: 'Cannot inline non-self messages']
+	sourceMessage
+		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade
+		ifTrue: [ sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage
+		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+	sourceMessage receiver isSelfOrSuper
+		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
 ]
 
 { #category : #testing }
@@ -99,18 +98,20 @@ RBInlineMethodRefactoring >> hasMultipleReturns [
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
 
 	| searcher |
-	searcher := RBParseTreeSearcher new.
-	searcher matches: '^``@object'
-		do: 
-			[:aNode :hasAReturn | 
-			hasAReturn ifTrue: [^true].
-			true].
-	searcher executeTree: inlineParseTree
+	searcher := self parseTreeSearcher.
+	searcher
+		matches: '^``@object'
+		do: [ :aNode :hasAReturn | 
+			hasAReturn
+				ifTrue: [ ^ true ].
+			true ].
+	searcher
+		executeTree: inlineParseTree
 		initialAnswer: inlineParseTree lastIsReturn not.
-	^false
+	^ false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBInlineMethodRefactoring >> inline: anInterval inMethod: aSelector forClass: aClass [ 
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.
@@ -119,18 +120,20 @@ RBInlineMethodRefactoring >> inline: anInterval inMethod: aSelector forClass: aC
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> inlineClass [
-	^inlineClass isNil 
-		ifTrue: 
-			[inlineClass := (sourceMessage receiver name = 'super' 
-						ifTrue: [class superclass]
-						ifFalse: [class]) whoDefinesMethod: self inlineSelector]
-		ifFalse: [inlineClass]
+
+	^ inlineClass
+		ifNil: [ inlineClass := ( sourceMessage receiver name = 'super'
+				ifTrue: [ class superclass ]
+				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
+			]
+		ifNotNil: [ inlineClass ]
 ]
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> inlineSelector [
-	sourceMessage isNil ifTrue: [self findSelectedMessage].
-	^sourceMessage selector
+
+	sourceMessage ifNil: [ self findSelectedMessage ].
+	^ sourceMessage selector
 ]
 
 { #category : #transforming }
@@ -247,16 +250,18 @@ RBInlineMethodRefactoring >> normalizeReturns [
 
 { #category : #transforming }
 RBInlineMethodRefactoring >> parseInlineMethod [
-	self inlineClass isNil 
-		ifTrue: 
-			[self 
-				refactoringFailure: ('<1p> or its superclasses don''t contain method <2s>' 
+
+	self inlineClass
+		ifNil: [ self
+				refactoringFailure:
+					( '<1p> or its superclasses don''t contain method <2s>'
 						expandMacrosWith: class
-						with: self inlineSelector)].
+						with: self inlineSelector )
+			].
 	inlineParseTree := self inlineClass parseTreeFor: self inlineSelector.
-	inlineParseTree isNil 
-		ifTrue: [self refactoringFailure: 'Could not parse sources'].
-	inlineParseTree lastIsReturn ifFalse: [inlineParseTree addSelfReturn]
+	inlineParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
+	inlineParseTree lastIsReturn
+		ifFalse: [ inlineParseTree addSelfReturn ]
 ]
 
 { #category : #preconditions }

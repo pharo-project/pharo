@@ -33,12 +33,19 @@ TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 
 { #category : #'class modifications' }
 TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
+
+	(self isTraitedMetaclass: aBuilder)
+		ifFalse: [ ^ self ].
+
 	builder newMetaclass rebuildMethodDictionary.
 	aBuilder newClass rebuildMethodDictionary.
 ]
 
 { #category : #migrating }
 TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
+
+	(self isTraitedMetaclass: aBuilder)
+		ifFalse: [ ^ self ].
 
 	aBuilder newClass traitComposition addUser: aBuilder newClass.
 	aBuilder newMetaclass traitComposition addUser: aBuilder newMetaclass.
@@ -70,6 +77,9 @@ TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 
 { #category : #events }
 TraitBuilderEnhancer >> classCreated: aBuilder [
+
+	(self isTraitedMetaclass: aBuilder)
+		ifFalse: [ ^ self ].
 
 	builder newMetaclass initializeBasicMethods.
 	
@@ -141,6 +151,8 @@ TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 	
 	aBuilder traitComposition: aClass traitComposition.
 	aBuilder classTraitComposition: aClass class traitComposition.
+	
+	aBuilder metaclassClass: aClass class class.
 ]
 
 { #category : #migrating }
@@ -155,10 +167,35 @@ TraitBuilderEnhancer >> initializeBuilder: aBuilder [
 	builder := aBuilder.
 
 	aBuilder addChangeComparer: TraitCompositionChangedDetector.
+]
+
+{ #category : #testing }
+TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [ 
 	
+	^ aBuilder metaclassClass includesBehavior: TraitedMetaclass
+	
+]
+
+{ #category : #events }
+TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [ 
+
+	"Traits does not have instances"
+	aClass isTrait 
+		ifTrue: [ ^ self ].
+
+	super migrateInstancesTo: aClass installer: aShiftClassInstaller 
+]
+
+{ #category : #'class modifications' }
+TraitBuilderEnhancer >> newMetaclass: aBuilder [
+
+	(aBuilder traitComposition asTraitComposition isNotEmpty or: [ aBuilder classTraitComposition asTraitComposition isNotEmpty or: [ aBuilder superclass class class = TraitedMetaclass]])
+		ifTrue: [ aBuilder metaclassClass: TraitedMetaclass ].
+				
 	aBuilder metaSuperclass = Trait
-		ifTrue: [ aBuilder metaclassClass: MetaclassForTraits ]
-		ifFalse: [ aBuilder metaclassClass: TraitedMetaclass ]
+		ifTrue: [ aBuilder metaclassClass: MetaclassForTraits ].		
+		
+	^ super newMetaclass: aBuilder
 ]
 
 { #category : #'class modifications' }
@@ -190,6 +227,12 @@ TraitBuilderEnhancer >> traitCompositionOf: aBuilder [
 TraitBuilderEnhancer >> traitCompositionOfClass: aClass [ 
 	
 	^ aClass traitComposition asTraitComposition
+]
+
+{ #category : #migrating }
+TraitBuilderEnhancer >> validateRedefinition: anOldClass [
+	(anOldClass isNotNil and: [ anOldClass isTrait ~= builder isTrait ])
+		ifTrue: [ self error: 'A class should not be redefined as a trait. First remove it from the system.' ]
 ]
 
 { #category : #validating }

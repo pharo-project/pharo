@@ -43,9 +43,3 @@ TextURL >> info [
 TextURL >> url: aString [
 	url := aString
 ]
-
-{ #category : #styling }
-TextURL >> writeScanOn: strm [
-
-	strm nextPut: $R; nextPutAll: url; nextPut: $;
-]

@@ -26,9 +26,24 @@ CompiledMethod >> destroyTwin [
 ]
 
 { #category : #'*Reflectivity' }
+CompiledMethod >> hasBreakpoint [
+	^ Breakpoint isInstalledIn: self
+	
+	
+]
+
+{ #category : #'*Reflectivity' }
 CompiledMethod >> hasLinks [
+	self 
+		deprecated: 'use #hasMetaLinks'
+		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
+	^self hasMetaLinks
+]
+
+{ #category : #'*Reflectivity' }
+CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
-	^self reflectiveMethod hasLinks. 
+	^self reflectiveMethod hasMetaLinks. 
 ]
 
 { #category : #'*Reflectivity' }

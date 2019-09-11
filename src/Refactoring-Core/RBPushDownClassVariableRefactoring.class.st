@@ -18,9 +18,8 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 	classes := class withAllSubclasses reject: [ :each |
 		(each whichSelectorsReferToClassVariable: variableName) isEmpty
 			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ].
-	destinationClass := classes isEmpty 
-		ifTrue: [ nil ]
-		ifFalse: [ classes asOrderedCollection first ].
+	destinationClass := classes ifEmpty: [ nil ]
+		ifNotEmpty: [ classes asOrderedCollection first ].
 	classes do: [ :each | 
 		(destinationClass includesClass: each) 
 			ifTrue: [ destinationClass := each ]
@@ -49,17 +48,20 @@ RBPushDownClassVariableRefactoring >> signalMultipleReferenceError [
 ]
 
 { #category : #preconditions }
-RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [ 
-	class realClass isNil 
-		ifTrue: [ self refactoringError: errorString ]
-		ifFalse: [| classVarName error |
+RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
+
+	class realClass
+		ifNil: [ self refactoringError: errorString ]
+		ifNotNil: [ | classVarName error |
+
 			error := '<1s><n>Browse references?' expandMacrosWith: errorString.
 			classVarName := variableName asSymbol.
-			self 
+			self
 				refactoringError: error
-				with: [ self openBrowserOn: (RBVariableEnvironment 
-						referencesToClassVariable: classVarName
-						in: class realClass)]]
+				with: [ self
+						openBrowserOn: ( RBVariableEnvironment referencesToClassVariable: classVarName in: class realClass )
+					]
+			]
 ]
 
 { #category : #preconditions }
@@ -71,7 +73,8 @@ RBPushDownClassVariableRefactoring >> signalStillReferencedError [
 
 { #category : #transforming }
 RBPushDownClassVariableRefactoring >> transform [
+
 	class removeClassVariable: variableName.
-	destinationClass isNil ifTrue: [^self].
+	destinationClass ifNil: [ ^ self ].
 	destinationClass addClassVariable: variableName
 ]

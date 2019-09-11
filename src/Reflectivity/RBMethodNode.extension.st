@@ -15,26 +15,23 @@ RBMethodNode >> metaLinkOptions [
 ]
 
 { #category : #'*Reflectivity' }
-RBMethodNode >> metaLinkOptionsFromClassAndMethod [ 
+RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 	| options |
 	options := Set new.
-	self methodClass 
-		compiledMethodAt: #metaLinkOptions 
-		ifPresent: [:method | options parseOptions: ((method valueWithReceiver: nil arguments: #()) asDictionary at:  self selector ifAbsent: [#()])] 
-		ifAbsent: [].
+	self methodClass
+		compiledMethodAt: #metaLinkOptions
+		ifPresent: [ :method | 
+			options
+				parseOptions:
+					((method valueWithReceiver: nil arguments: #()) asDictionary
+						at: self selector
+						ifAbsent: [ #() ]) ].
 	"set meta link options defined per method"
-	(self pragmas select: [ :pragma | pragma selector == #metaLinkOptions:]) 
-		do: [ :pragma | (pragma asPragma setKeyword: #parseOptions:) sendTo: options ].
-	^options.
-		
-	
-]
-
-{ #category : #'*Reflectivity' }
-RBMethodNode >> method [
-	"return the method that I have been compiled for"
-	self compilationContext ifNil: [ ^nil ].
-	^self compilationContext getClass >> self selector
+	(self pragmas
+		select: [ :pragma | pragma selector == #metaLinkOptions: ])
+		do:
+			[ :pragma | (pragma asPragma selector: #parseOptions:) sendTo: options ].
+	^ options
 ]
 
 { #category : #'*Reflectivity' }

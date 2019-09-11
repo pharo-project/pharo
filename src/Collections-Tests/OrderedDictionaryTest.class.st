@@ -691,28 +691,17 @@ OrderedDictionaryTest >> testCopyEmpty [
 { #category : #tests }
 OrderedDictionaryTest >> testDeclareFrom [
 	| dictionary otherDictionary |
-
 	dictionary := self emptyDictionary.
 	otherDictionary := self dictionaryWithOrderedAssociations.
-	self orderedKeys do: [:each |
-		self assert:
-			(dictionary
-				declare: each
-				from: otherDictionary) == dictionary].
-	self
-		assertIsDictionary: dictionary
-		withOrderedAssociations: self orderedAssociations.
-	self assert: otherDictionary isEmpty.
+	self orderedKeys do: [ :each | self assert: (dictionary declare: each from: otherDictionary) == dictionary ].
+	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations.
+	self assertEmpty: otherDictionary.
 
-	self orderedKeys do: [:each |
-		otherDictionary add: (each -> self newValue).
-		self assert:
-			(dictionary
-				declare: each
-				from: otherDictionary) == dictionary].
-	self
-		assertIsDictionary: dictionary
-		withOrderedAssociations: self orderedAssociations.
+	self orderedKeys
+		do: [ :each | 
+			otherDictionary add: each -> self newValue.
+			self assert: (dictionary declare: each from: otherDictionary) == dictionary ].
+	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations
 ]
 
 { #category : #tests }
@@ -740,7 +729,7 @@ OrderedDictionaryTest >> testDictionaryPublicProtocolCompatibility [
 		do: [:assoc | 
 			assoc value protocols
 				reject: [:protocol | 
-					#('private' 'print' 'copy' 'compar' '*')
+					#('private' 'print' 'undeclared' 'copy' 'compar' '*')
 						anySatisfy: [:each | protocol asString beginsWith: each]]
 				thenDo: [:protocol | 
 					(assoc value selectorsInProtocol: protocol)
@@ -1123,31 +1112,24 @@ OrderedDictionaryTest >> testKeysAndValuesDo [
 { #category : #tests }
 OrderedDictionaryTest >> testKeysAndValuesRemove [
 	| dictionary |
-
 	dictionary := self dictionaryWithOrderedAssociations.
-	self orderedAssociations withIndexDo: [:removedAssociation :i |
-		| unremovedAssociations |
-		unremovedAssociations :=
-			(self orderedAssociationsAllButFirst: i) asOrderedCollection.
-		dictionary keysAndValuesRemove: [:key :value |
-			(self isTestingIdentityDictionary
-				ifTrue: [key == removedAssociation key]
-				ifFalse: [key = removedAssociation key])
-				ifTrue: [
-					self assert: value equals: removedAssociation value.
-					true]
-				ifFalse: [| unremovedAssociation |
-					unremovedAssociation := unremovedAssociations removeFirst.
-					self isTestingIdentityDictionary
-						ifTrue: [self assert: key == unremovedAssociation key]
-						ifFalse: [self assert: key equals: unremovedAssociation key].
-					self assert: value equals: unremovedAssociation value.
-					false]].
-		self assert: unremovedAssociations isEmpty.
-		self
-			assertKey: removedAssociation key
-			wasRemovedfrom: dictionary].
-	self assert: dictionary isEmpty.
+	self orderedAssociations
+		withIndexDo: [ :removedAssociation :i | 
+			| unremovedAssociations |
+			unremovedAssociations := (self orderedAssociationsAllButFirst: i) asOrderedCollection.
+			dictionary
+				keysAndValuesRemove: [ :key :value | 
+					(self isTestingIdentityDictionary ifTrue: [ key == removedAssociation key ] ifFalse: [ key = removedAssociation key ])
+						ifTrue: [ self assert: value equals: removedAssociation value.
+							true ]
+						ifFalse: [ | unremovedAssociation |
+							unremovedAssociation := unremovedAssociations removeFirst.
+							self isTestingIdentityDictionary ifTrue: [ self assert: key == unremovedAssociation key ] ifFalse: [ self assert: key equals: unremovedAssociation key ].
+							self assert: value equals: unremovedAssociation value.
+							false ] ].
+			self assertEmpty: unremovedAssociations.
+			self assertKey: removedAssociation key wasRemovedfrom: dictionary ].
+	self assertEmpty: dictionary
 ]
 
 { #category : #tests }
@@ -1246,17 +1228,13 @@ OrderedDictionaryTest >> testOccurancesOf [
 { #category : #tests }
 OrderedDictionaryTest >> testRemoveAll [
 	| dictionary removedKeys |
-
 	dictionary := self dictionaryWithOrderedAssociations.
 	removedKeys := dictionary keys.
 	self
-		deny: dictionary isEmpty;
+		denyEmpty: dictionary;
 		assert: dictionary removeAll == dictionary;
-		assert: dictionary isEmpty.
-	removedKeys do: [:each |
-		self
-			assertKey: each
-			wasRemovedfrom: dictionary].
+		assertEmpty: dictionary.
+	removedKeys do: [ :each | self assertKey: each wasRemovedfrom: dictionary ]
 ]
 
 { #category : #tests }

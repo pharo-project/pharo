@@ -140,7 +140,7 @@ RBParseTreeSearcher >> answer [
 	^answer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBParseTreeSearcher >> answer: anObject [
 	answer := anObject
 ]

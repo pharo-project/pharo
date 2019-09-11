@@ -89,19 +89,15 @@ ClassFactoryWithOrganizationTest >> testMultipleClassCreation [
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> testPackageCleanUp [
 	| createdClassNames allClasses |
-	3 timesRepeat: [
-		factory newClassInCategory: #One].
-	2 timesRepeat: [
-		factory newClassInCategory: #Two].
+	3 timesRepeat: [ factory newClassInCategory: #One ].
+	2 timesRepeat: [ factory newClassInCategory: #Two ].
 	createdClassNames := factory createdClassNames.
-	factory cleanUp.	
-	self assert: (factory createdClasses allSatisfy: [:class| class isObsolete]). 
+	factory cleanUp.
+	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
 	allClasses := self testedEnvironment allClasses.
-	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
-	self assert: (self testedOrganization categoriesMatching: factory packageName, '*') isEmpty. 
-	self class environment at: #ChangeSet ifPresent: [:changeSet |
-		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ].
-
+	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
+	self assertEmpty: (self testedOrganization categoriesMatching: factory packageName , '*').
+	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
 ]
 
 { #category : #testing }
@@ -122,15 +118,14 @@ ClassFactoryWithOrganizationTest >> testSingleClassCreation [
 
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> testSingleClassFastCreation [
-	|class elementsInCategoryForTest |
+	| class elementsInCategoryForTest |
 	class := factory newClass.
 	self assert: (self testedEnvironment allClasses includes: class).
-	elementsInCategoryForTest := self testedOrganization listAtCategoryNamed: factory defaultCategory. 
-	factory createdClasses do: [ :aClass |
-		self assertEnvironmentOf: aClass ].
+	elementsInCategoryForTest := self testedOrganization listAtCategoryNamed: factory defaultCategory.
+	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ].
 	self assert: elementsInCategoryForTest = {class name}.
-	self assert: class instVarNames isEmpty.
-	self assert: class classPool isEmpty
+	self assertEmpty: class instVarNames.
+	self assertEmpty: class classPool
 ]
 
 { #category : #accessing }

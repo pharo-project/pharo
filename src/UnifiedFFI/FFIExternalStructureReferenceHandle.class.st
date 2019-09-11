@@ -128,7 +128,7 @@ FFIExternalStructureReferenceHandle >> isExternalAddress [
 
 { #category : #testing }
 FFIExternalStructureReferenceHandle >> isNull [
-	self flag: #todo. "This is probably wrong"
+	self flag: #pharoTodo. "This is probably wrong"
 	^ handle isNull
 ]
 
@@ -140,6 +140,16 @@ FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset [
 { #category : #accessing }
 FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset put: value [
 	^ handle platformLongAt: startOffset + byteOffset put: value
+]
+
+{ #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset [ 
+	^ handle platformSizeTAt: startOffset + byteOffset
+]
+
+{ #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset put: aValue [ 
+	^ handle platformSizeTAt: startOffset + byteOffset put: aValue
 ]
 
 { #category : #accessing }

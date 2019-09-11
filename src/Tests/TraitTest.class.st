@@ -18,7 +18,7 @@ TraitTest >> createClassUsing: aTrait [
 { #category : #utilities }
 TraitTest >> createTrait [
 	| trait |
-	trait := Trait named: #ATraitForTests uses: {} category: 'AAA'.
+	trait := Trait named: #ATraitForTests uses: {} package: 'AAA'.
 	trait compile: 'm1 ^1' classified: 'test'.
 	^ trait
 ]
@@ -52,9 +52,8 @@ TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 ]
 
 { #category : #testing }
-TraitTest >> testAllClassVarNames [	
-	
-	self assert: self t1 allClassVarNames isEmpty
+TraitTest >> testAllClassVarNames [
+	self assertEmpty: self t1 allClassVarNames
 ]
 
 { #category : #testing }
@@ -70,18 +69,14 @@ TraitTest >> testComposedBy [
 { #category : #testing }
 TraitTest >> testCompositionCopy [
  
-	| t6compositionCopyFirst |
 	self assert: (self t1 + self t2) allTraits 
 				equals: (self t1 + self t2) copyTraitExpression allTraits.
 	self assert: (self t1 classTrait + self t2 classTrait) allTraits 
 				equals: (self t1 classTrait + self t2 classTrait) copyTraitExpression allTraits.
 	self assert: self t6 traitComposition allTraits 
 				equals: self t6 traitComposition copyTraitExpression allTraits.
-	self 
-		assert: (self t6 asTraitComposition copyTraitExpression allTraits includesAll: { (self t1). (self t2). (self t6) }).
-	"make no undue sharing happens of exclusions and aliases after an expression copy"
-	t6compositionCopyFirst := self t6 traitComposition copyTraitExpression.
-
+	self assert: (self t6 asTraitComposition copyTraitExpression allTraits 
+				includesAll: { (self t1). (self t2). (self t6) }).
 ]
 
 { #category : #testing }
@@ -89,7 +84,7 @@ TraitTest >> testErrorClassCreation [
     | tmpCategory trait aSubclass aClass |
 	
     tmpCategory := 'TemporaryGeneratedClasses'.
-    trait := Trait named: #TMyTrait uses: {} category: tmpCategory.
+    trait := Trait named: #TMyTrait uses: {} package: tmpCategory.
     
     [ aClass := nil
         subclass: #AClass
@@ -241,11 +236,9 @@ TraitTest >> testExplicitRequirementWithSuperclassImplementatiosAlwaysReturnsThe
 
 { #category : #testing }
 TraitTest >> testForbidInstantiation [
-
-   | tmpCategory trait |
-tmpCategory := 'TemporaryGeneratedClasses'.
-   trait := Trait named: #TMyTrait uses: {} category: tmpCategory.
-    
+	| tmpCategory trait |
+	tmpCategory := 'TemporaryGeneratedClasses'.
+	trait := Trait named: #TMyTrait uses: {} package: tmpCategory.
 	self should: [ trait basicNew ] raise: Error 
 ]
 
@@ -344,10 +337,11 @@ origin of Tr2>>foo is Tr1"
 
 { #category : #testing }
 TraitTest >> testPrinting [
+
 	self assertPrints: self t6 definition
 		like: 'Trait named: #T6
 	uses: T1 + (T2 @ {#m22Alias->#m22})
-	category: ''Tests-Traits'''
+	package: ''Tests-Traits'''
 ]
 
 { #category : #testing }
@@ -360,7 +354,6 @@ TraitTest >> testPrintingClassSide [
 
 { #category : #testing }
 TraitTest >> testRemoveFromSystem [
-	self flag: #fix.	"It has to be refactored when Mariano's ClassBuilder for testCase is integrated :)"
 	SystemAnnouncer uniqueInstance
 		suspendAllWhile: [ 
 			| aClass aTrait |
@@ -386,21 +379,17 @@ TraitTest >> testTraitCompositionRespectsParenthesis [
 
 { #category : #testing }
 TraitTest >> testTraitRemoval [
-	self flag: #fix.	"It has to be refactored when Mariano's ClassBuilder for testCase is integrated :)"
 	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [ 
-			| aClass aTrait |
-			[ 
-			aTrait := self createTrait.
+		suspendAllWhile: [ | aClass aTrait |
+			[ aTrait := self createTrait.
 			aClass := self createClassUsing: aTrait.
-			self assert: aClass localSelectors isEmpty.
+			self assertEmpty: aClass localSelectors.
 			aClass removeFromComposition: aTrait.
-			self assert: aClass localSelectors isEmpty.
-			self assert: aClass organization allMethodSelectors isEmpty.
+			self assertEmpty: aClass localSelectors.
+			self assertEmpty: aClass organization allMethodSelectors.
 			self deny: aClass hasTraitComposition.
-			self deny: (aTrait traitUsers includes: aClass). ]
-				ensure: [ 
-					aClass removeFromSystem: false.
+			self deny: (aTrait traitUsers includes: aClass) ]
+				ensure: [ aClass removeFromSystem: false.
 					aTrait removeFromSystem: false ] ]
 ]
 
@@ -426,15 +415,15 @@ TraitTest >> testTraitsUsersSanity [
 { #category : #testing }
 TraitTest >> testUsers [
 	self assert: self t1 traitUsers size = 3.
-	self assert: (self t1 traitUsers includesAll: {self t4. self t5. self t6 }).
-	self assert: self t3 traitUsers isEmpty.
+	self assert: (self t1 traitUsers includesAll: {self t4 . self t5 . self t6}).
+	self assertEmpty: self t3 traitUsers.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.
 	self c2 setTraitComposition: self t1 + self t5.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.
 	self c2 setTraitComposition: self t2 asTraitComposition.
-	self assert: self t5 traitUsers isEmpty
+	self assertEmpty: self t5 traitUsers
 ]
 
 { #category : #testing }

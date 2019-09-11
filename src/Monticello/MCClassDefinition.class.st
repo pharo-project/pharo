@@ -63,29 +63,20 @@ comment: commentString [
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString
-commentStamp: stampString [
-	^ self instanceLike:
-		(self new initializeWithName: nameString
-					superclassName: superclassString
-					traitComposition: '{}'
-					classTraitComposition: '{}'
-					category: categoryString 
-					instVarNames: ivarArray
-					classVarNames: cvarArray
-					poolDictionaryNames: poolArray
-					classInstVarNames: civarArray
-					type: typeSymbol
-					comment: commentString
-					commentStamp: stampString)
+MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+	^ self new
+		initializeWithName: nameString
+		superclassName: superclassString
+		traitComposition: '{}'
+		classTraitComposition: '{}'
+		category: categoryString
+		instVarNames: ivarArray
+		classVarNames: cvarArray
+		poolDictionaryNames: poolArray
+		classInstVarNames: civarArray
+		type: typeSymbol
+		comment: commentString
+		commentStamp: stampString
 ]
 
 { #category : #obsolete }
@@ -106,32 +97,20 @@ comment: commentString [
 ]
 
 { #category : #'instance creation' }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-traitComposition: traitCompositionString
-classTraitComposition: classTraitCompositionString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString
-commentStamp: stampString [
-	
-	^ self instanceLike:
-		(self new initializeWithName: nameString
-					superclassName: superclassString
-					traitComposition: traitCompositionString
-					classTraitComposition: classTraitCompositionString
-					category: categoryString 
-					instVarNames: ivarArray
-					classVarNames: cvarArray
-					poolDictionaryNames: poolArray
-					classInstVarNames: civarArray
-					type: typeSymbol
-					comment: commentString
-					commentStamp: stampString)
+MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+	^ self new
+		initializeWithName: nameString
+		superclassName: superclassString
+		traitComposition: traitCompositionString
+		classTraitComposition: classTraitCompositionString
+		category: categoryString
+		instVarNames: ivarArray
+		classVarNames: cvarArray
+		poolDictionaryNames: poolArray
+		classInstVarNames: civarArray
+		type: typeSymbol
+		comment: commentString
+		commentStamp: stampString
 ]
 
 { #category : #comparing }
@@ -186,7 +165,7 @@ MCClassDefinition >> classInstanceVariables [
 
 	variables ifNil: [ ^ #() ].
 
-	^self usesSpecialVariables 
+	^self needsSlotClassDefinition 
 		ifTrue: [ self variablesOfType: #isClassInstanceVariable]
 		ifFalse: [self classInstanceVariablesString asSlotCollection]
 ]
@@ -223,7 +202,7 @@ MCClassDefinition >> classVarNames [
 
 { #category : #printing }
 MCClassDefinition >> classVariables [
-	^self usesSpecialVariables 
+	^self needsSlotClassDefinition 
 		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
 		ifFalse: [(self classVariablesString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]].
 
@@ -391,7 +370,7 @@ MCClassDefinition >> instVarNames [
 
 { #category : #printing }
 MCClassDefinition >> instanceVariables [
-	^self usesSpecialVariables 
+	^self needsSlotClassDefinition 
 		ifTrue: [self variablesOfType: #isInstanceVariable]
 		ifFalse: [self instanceVariablesString asSlotCollection]
 ]
@@ -429,6 +408,14 @@ MCClassDefinition >> kindOfSubclass [
 { #category : #installing }
 MCClassDefinition >> load [
 	self createClass
+]
+
+{ #category : #installing }
+MCClassDefinition >> needsSlotClassDefinition [
+	"this checks if any ivar or class var is using more than just standard definitions.
+	Complex vars are encoded with a string that starts with a # or one that has a space"
+	
+	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
 ]
 
 { #category : #accessing }
@@ -621,14 +608,6 @@ MCClassDefinition >> type [
 { #category : #installing }
 MCClassDefinition >> unload [
 	Smalltalk globals removeClassNamed: name
-]
-
-{ #category : #installing }
-MCClassDefinition >> usesSpecialVariables [
-	"this checks if any ivar or class var is using more than just standard definitions.
-	Complex vars are encoded with a string that starts with a # or one that has a space"
-	
-	^self variables anySatisfy: [:var | (var name beginsWith:'#') or: [ var name includes: Character space ]]
 ]
 
 { #category : #accessing }

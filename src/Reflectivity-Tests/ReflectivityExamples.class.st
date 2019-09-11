@@ -53,6 +53,12 @@ ReflectivityExamples >> exampleAssignmentIvar [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleAssignmentIvar: anObject [
+	ivar := anObject.
+	^ivar
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleBlock [
 	^ [2 + 3] value 
 ]
@@ -112,6 +118,11 @@ ReflectivityExamples >> exampleLiteralArray [
 ]
 
 { #category : #examples }
+ReflectivityExamples >> exampleMessageSend [
+	self tagExec: #yes
+]
+
+{ #category : #examples }
 ReflectivityExamples >> exampleMethod [
 
 	^ 2 + 3
@@ -125,7 +136,7 @@ ReflectivityExamples >> exampleMethod2 [
 
 { #category : #examples }
 ReflectivityExamples >> exampleMethodMultipleSites [
-	Transcript show: Object new.
+	self trace: Object new.
 	^ 2 + 3
 ]
 

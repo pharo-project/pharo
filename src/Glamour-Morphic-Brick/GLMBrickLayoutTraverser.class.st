@@ -226,12 +226,6 @@ GLMBrickLayoutTraverser >> markLayoutDirty: aBrick [
 	aBrick ifNotNil: [ :b | b isBrick ifTrue: [ b markLayoutDirty ] ]
 ]
 
-{ #category : #private }
-GLMBrickLayoutTraverser >> markOppositeDirty: aBrick [
-
-	^ self subclassResponsibility
-]
-
 { #category : #accessing }
 GLMBrickLayoutTraverser >> opposite [
 

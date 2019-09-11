@@ -63,37 +63,31 @@ RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
+
 	sourceParseTree := class parseTreeFor: sourceSelector.
-	sourceParseTree isNil 
-		ifTrue: [self refactoringFailure: 'Could not parse sources'].
+	sourceParseTree ifNil: [ self refactoringFailure: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage isNil 
-		ifTrue: 
-			[self 
-				refactoringFailure: 'The selection doesn''t appear to be a message send'].
-	sourceMessage isCascade 
-		ifTrue: [sourceMessage := sourceMessage messages last].
-	sourceMessage isMessage 
-		ifFalse: 
-			[self 
-				refactoringFailure: 'The selection doesn''t appear to be a message send']
+	sourceMessage
+		ifNil: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade
+		ifTrue: [ sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage
+		ifFalse: [ self refactoringFailure: 'The selection doesn''t appear to be a message send' ]
 ]
 
 { #category : #transforming }
 RBInlineMethodFromComponentRefactoring >> inlineClass [
+
 	| imps |
-	inlineClass notNil ifTrue: [^inlineClass].
-	imps := (self model allImplementorsOf: self inlineSelector) 
-				asOrderedCollection.
-	imps size = 1 ifTrue: [^inlineClass := imps first].
-	imps isEmpty 
-		ifTrue: 
-			[self 
-				refactoringFailure: 'Nobody defines a method named ' , self inlineSelector].
+
+	inlineClass ifNotNil: [ ^ inlineClass ].
+	imps := ( self model allImplementorsOf: self inlineSelector ) asOrderedCollection.
+	imps size = 1
+		ifTrue: [ ^ inlineClass := imps first ].
+	imps ifEmpty: [ self refactoringFailure: 'Nobody defines a method named ' , self inlineSelector ].
 	inlineClass := self requestImplementorToInline: imps.
-	inlineClass isNil 
-		ifTrue: [self refactoringFailure: 'No implementor selected'].
-	^inlineClass
+	inlineClass ifNil: [ self refactoringFailure: 'No implementor selected' ].
+	^ inlineClass
 ]
 
 { #category : #testing }

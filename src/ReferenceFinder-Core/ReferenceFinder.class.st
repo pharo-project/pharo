@@ -12,7 +12,7 @@ Class {
 		'testBlock',
 		'foundBlock'
 	],
-	#category : #'ReferenceFinder-Core'
+	#category : #'ReferenceFinder-Core-Base'
 }
 
 { #category : #accessing }
@@ -176,20 +176,17 @@ ReferenceFinder >> ignore: anObject [
 	self addBacklinkFrom: anObject to: anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ReferenceFinder >> initialize [
 	self startFrom: Smalltalk
 ]
 
 { #category : #private }
 ReferenceFinder >> printToDoNotice [
-	Transcript
-		cr;
-		show: 'Level ';
-		show: backlinks size printString;
-		show: ' with ';
-		show: objectsLeft size printString;
-		show: ' objects to search'
+	self
+		crTrace:
+			'Level ' , backlinks size printString , ' with '
+				, objectsLeft size printString , ' objects to search'
 ]
 
 { #category : #private }
@@ -257,7 +254,7 @@ ReferenceFinder >> searchVariablesIn: anObject [
 	^nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ReferenceFinder >> startFrom: anObject [ 
 	backlinks := OrderedCollection new.
 	self addBacklinkLevel.

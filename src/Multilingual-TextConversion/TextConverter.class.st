@@ -145,7 +145,7 @@ TextConverter >> initialize [
 	latin1Encodings := self class latin1Encodings.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TextConverter >> installLineEndConvention: lineEndStringOrNil [
 
 	

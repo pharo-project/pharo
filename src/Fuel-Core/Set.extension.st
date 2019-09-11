@@ -8,7 +8,7 @@ Set >> addIfNotPresent: anObject ifPresentDo: aBlock [
 	| index |
 	index := self scanFor: anObject.
 	(array at: index) 
-		ifNil: [self atNewIndex: index put: anObject asSetElement]
+		ifNil: [self atNewIndex: index put: anObject asCollectionElement]
 		ifNotNil: [ aBlock value ].
 	^ anObject
 

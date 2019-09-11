@@ -12,14 +12,12 @@ FFI_i386 class >> isActive [
 	^ Smalltalk vm wordSize = 4
 ]
 
-{ #category : #'default abi' }
-FFI_i386 >> floatRegisterSize [
-	^ 8
-]
+{ #category : #callback }
+FFI_i386 >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
 
-{ #category : #'default abi' }
-FFI_i386 >> integerRegisterSize [
-	^ 4
+	^ FFIi386CallbackArgumentReader
+		forCallback: aCallback
+		inContext: aCallbackContext
 ]
 
 { #category : #'default abi' }

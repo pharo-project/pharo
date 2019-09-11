@@ -1,6 +1,11 @@
 Extension { #name : #Behavior }
 
 { #category : #'*TraitsV2' }
+Behavior >> allTraits [
+	^ #()
+]
+
+{ #category : #'*TraitsV2' }
 Behavior >> hasTraitComposition [
 	
 	^ false 
@@ -13,6 +18,15 @@ Behavior >> isAliasSelector: aSymbol [
 	the tree of traits compositions."
 
 	^ false
+]
+
+{ #category : #'*TraitsV2' }
+Behavior >> isComposedBy: aTrait [
+	"Answers if this object includes trait aTrait into its composition"
+	aTrait isTrait ifFalse: [ ^false].
+	^self hasTraitComposition 
+		ifTrue: [ self traitComposition includesTrait: aTrait ]
+		ifFalse: [ false ]
 ]
 
 { #category : #'*TraitsV2' }

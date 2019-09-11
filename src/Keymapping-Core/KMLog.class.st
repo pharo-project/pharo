@@ -7,69 +7,50 @@ Class {
 	#classInstVars : [
 		'debug'
 	],
-	#category : #'Keymapping-Core'
+	#category : #'Keymapping-Core-Debugging'
 }
+
+{ #category : #'class initialization' }
+KMLog class >> initialize [ 
+	debug := false
+]
 
 { #category : #logging }
 KMLog class >> log: aKeyEvent [
-
-	debug == true ifFalse: [ ^self ].
-	
-	self logger
-		nextPutAll: aKeyEvent printString;
-		cr;
-		flush.
+	debug 	ifFalse: [ ^ self ].
+	self traceCr: aKeyEvent printString
 ]
 
 { #category : #logging }
 KMLog class >> logCompleteMatch: aKeymap [
-
-	debug == true ifFalse: [ ^self ].
-	
-	self logger 
-		nextPutAll: 'Complete match: ';
-		nextPutAll: aKeymap printString;
-		cr;
-		flush.
+	debug
+		ifFalse: [ ^ self ].
+	self traceCr: 'Complete match: ' , aKeymap printString
 ]
 
 { #category : #logging }
 KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
-
-	debug == true ifFalse: [ ^self ].
-	
-	self logger 
-		nextPutAll: aMorph printString;
-		nextPutAll: ' Complete match: ';
-		nextPutAll: aKeymap printString;
-		cr;
-		flush.
+	debug 
+		ifFalse: [ ^ self ].
+	self
+		traceCr: aMorph printString , ' Complete match: ' , aKeymap printString
 ]
 
 { #category : #logging }
 KMLog class >> logPartialMatch: anEvent [
-
-	debug == true ifFalse: [ ^self ].
-	
-	self logger 
-		nextPutAll: 'Partial match: ';
-		nextPutAll: anEvent printString;
-		cr;
-		flush.
-]
-
-{ #category : #accessing }
-KMLog class >> logger [
-
-	^Transcript
+	debug 
+		ifFalse: [ ^ self ].
+	self traceCr: 'Partial match: ' , anEvent printString
 ]
 
 { #category : #debugging }
 KMLog class >> removeDebug [
+	<script>
 	debug := false
 ]
 
 { #category : #debugging }
 KMLog class >> setDebug [
+	<script>
 	debug := true
 ]

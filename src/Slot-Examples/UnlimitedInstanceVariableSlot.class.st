@@ -3,38 +3,18 @@ We store state in a hidden array. Contrary to normal instance variables the numb
 "
 Class {
 	#name : #UnlimitedInstanceVariableSlot,
-	#superclass : #Slot,
+	#superclass : #DerivedSlot,
 	#instVars : [
-		'baseSlot',
-		'offset',
-		'baseSlotSize'
+		'offset'
 	],
-	#category : #'Slot-Examples-base'
+	#category : #'Slot-Examples-Base'
 }
-
-{ #category : #'class building' }
-UnlimitedInstanceVariableSlot >> calculateOffset: aClass [
-	| ivarSlots  calculatedOffset |
-	"first we get all boolean slots and sort them by index"
-	ivarSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
-	ivarSlots := ivarSlots select: [ :each | each offset isNotNil ].
-	ivarSlots sort: [ :a :b | a offset < b offset ]. 
-	ivarSlots ifEmpty: [ ^1 ]. "we are the first one!"
-
-	"now we find the first spot where the next offset is not yet taken"
-	calculatedOffset := (ivarSlots withIndexCollect: [ :each :myIndex | myIndex ->each offset ]) 
-		findFirst: [ :each | each key ~= each value ].
-	calculatedOffset = 0  "no hole found: use the next index after the last slot"
-		ifTrue: [ ^ ivarSlots last offset + 1].
-	^calculatedOffset
-	
-]
 
 { #category : #'code generation' }
 UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
+	"generate bytecode for 'baseSlot at: index put: <stackTop>'"
 	| tempName |
-
-	tempName := Object new.
+	tempName := '0slotTempForStackManipulation'.
 	methodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
@@ -47,11 +27,11 @@ UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 
 { #category : #'code generation' }
 UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
-
-		methodBuilder
-			pushInstVar: baseSlot index;
-			pushLiteral: offset;
-			send: #at:
+	"generate bytecode for '<baseSlot> at: offset'"
+	methodBuilder
+		pushInstVar: baseSlot index;
+		pushLiteral: offset;
+		send: #at:
 			
 ]
 
@@ -62,23 +42,20 @@ UnlimitedInstanceVariableSlot >> growBaseSlot: aClass [
 
 { #category : #'class building' }
 UnlimitedInstanceVariableSlot >> installingIn: aClass [
+	| unlimitedSlots |
 	super installingIn: aClass.
-	offset := self calculateOffset: aClass.
-]
-
-{ #category : #'class building' }
-UnlimitedInstanceVariableSlot >> layoutChanged: aClass [
-	super layoutChanged: aClass.
-	"we check on the slot level as the slot is hidden"
-	(baseSlot notNil and: [aClass classLayout hasSlotNamed: baseSlot name]) ifTrue: [
-		baseSlot := aClass classLayout slotNamed: baseSlot name. "make sure we all use the same baseSlot"
-		self growBaseSlot: aClass.
-		^self. ].
-	"here we need to be more clever: if a subclass defines it, 
-	move the difiniton here"
-	self flag: #TBD.
-	aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1)).
 	
+	"we reuse a baseSlot if it is already there, if not, we add it"
+	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
+	aClass classLayout 
+		resolveSlot: #'_ivarArrayBaseSlot'   
+		ifFound:  [: slot |  baseSlot := slot. self growBaseSlot: aClass. ]
+		ifNone: [aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1))].
+	
+	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
+	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
+	offset := unlimitedSlots indexOf: self
+
 ]
 
 { #category : #accessing }

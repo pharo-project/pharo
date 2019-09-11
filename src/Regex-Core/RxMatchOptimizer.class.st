@@ -24,14 +24,15 @@ Class {
 }
 
 { #category : #accessing }
-RxMatchOptimizer >> canStartMatch: aCharacter in: aMatcher [ 
+RxMatchOptimizer >> canStartMatch: aCharacter in: aMatcher [
+
 	"Answer whether a match could commence at the given lookahead
 	character, or in the current state of <aMatcher>. True answered
 	by this method does not mean a match will definitly occur, while false
 	answered by this method *does* guarantee a match will never occur."
 
-	aCharacter isNil ifTrue: [^true].
-	^testBlock == nil or: [testBlock value: aCharacter value: aMatcher]
+	aCharacter ifNil: [ ^ true ].
+	^ testBlock == nil or: [ testBlock value: aCharacter value: aMatcher ]
 ]
 
 { #category : #accessing }
@@ -80,7 +81,7 @@ RxMatchOptimizer >> determineTestMethod [
 	^[:char :matcher | testers contains: [:t | t value: char value: matcher]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RxMatchOptimizer >> initialize: aRegex ignoreCase: aBoolean [ 
 	"Set `testMethod' variable to a can-match predicate block:
 	two-argument block which accepts a lookahead character

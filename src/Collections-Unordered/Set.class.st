@@ -57,7 +57,7 @@ Set >> add: newObject [
 
 	| index |
 	index := self scanFor: newObject.
-	(array at: index) ifNil: [self atNewIndex: index put: newObject asSetElement].
+	(array at: index) ifNil: [self atNewIndex: index put: newObject asCollectionElement].
 	^ newObject
 ]
 
@@ -74,7 +74,7 @@ Set >> collect: aBlock [
 
 	| newSet |
 	newSet := self species new: self size.
-	array do: [:each | each ifNotNil: [newSet add: (aBlock value: each enclosedSetElement)]].
+	array do: [:each | each ifNotNil: [newSet add: (aBlock value: each enclosedElement)]].
 	^ newSet
 ]
 
@@ -111,7 +111,7 @@ Set >> do: aBlock [
 	1 to: array size do:
 		[:index |
 		| each |
-		(each := array at: index) ifNotNil: [aBlock value: each enclosedSetElement]]
+		(each := array at: index) ifNotNil: [aBlock value: each enclosedElement]]
 ]
 
 { #category : #private }
@@ -124,7 +124,7 @@ Set >> fixCollisionsFrom: start [
 	index := start.
 	[ (element := array at: (index := index \\ array size + 1)) == nil ] whileFalse: [
 		| newIndex |
-		(newIndex := self scanFor: element enclosedSetElement) = index ifFalse: [
+		(newIndex := self scanFor: element enclosedElement) = index ifFalse: [
 			array swap: index with: newIndex ] ]
 ]
 
@@ -140,7 +140,7 @@ Set >> grow [
 		do:
 			[ :each | 
 			each == nil
-				ifFalse: [ self noCheckAdd: each enclosedSetElement] ]
+				ifFalse: [ self noCheckAdd: each enclosedElement] ]
 ]
 
 { #category : #testing }
@@ -152,15 +152,16 @@ Set >> includes: anObject [
 Set >> intersection: aCollection [
 	"Answer the set theoretic intersection of two collections.
 	Optimized version for Sets where no intermediate Set is necessary"
+
 	"(#(1 2 3 4) asSet intersection: #(3 4 5) asSet) >>> #(3 4) asSet"
+
 	"(#(1 2 3 4) asSet intersection: #() asSet) >>> Set new"
+
 	"( #() asSet intersection: #(1 2 3 4) asSet) >>> Set new"
-	
+
 	| outputSet |
 	outputSet := self class new.
-	aCollection do: [ :each|
-		((self includes: each) and: [(outputSet includes: each) not])
-				ifTrue: [ outputSet add: each]].
+	aCollection do: [ :each | (self includes: each) ifTrue: [ outputSet add: each ] ].
 	^ outputSet
 ]
 
@@ -174,7 +175,7 @@ Set >> isHealthy [
 	"
 	array withIndexDo: [ :element :index |
 		element ifNotNil: [
-			(self scanFor: element enclosedSetElement) == index
+			(self scanFor: element enclosedElement) == index
 				ifFalse: [ ^ false ]]].
 	^ true
 ]
@@ -194,13 +195,13 @@ Set >> like: anObject ifAbsent: aBlock [
 	or evaluate the block if not found. Relies heavily on hash properties"
 	| element |
 	element := array at: (self scanFor: anObject).
-	^ element ifNil: [ aBlock value ] ifNotNil: [ element enclosedSetElement ]
+	^ element ifNil: [ aBlock value ] ifNotNil: [ element enclosedElement ]
 ]
 
 { #category : #private }
 Set >> noCheckAdd: anObject [
 	"This method should be deprecated"
-	array at: (self findElementOrNil: anObject) put: anObject asSetElement.
+	array at: (self findElementOrNil: anObject) put: anObject asCollectionElement.
 	tally := tally + 1
 ]
 
@@ -211,7 +212,7 @@ Set >> noCheckNoGrowFillFrom: anArray [
 	1 to: anArray size do: [ :index |
 		(anArray at: index) ifNotNil: [ :object |
 			array
-				at: (self scanForEmptySlotFor: object enclosedSetElement)
+				at: (self scanForEmptySlotFor: object enclosedElement)
 				put: object ] ]
 ]
 
@@ -254,7 +255,7 @@ Set >> scanFor: anObject [
 	index := start := anObject hash \\ array size + 1.
 	[ 
 		| element |
-		((element := array at: index) == nil or: [ element enclosedSetElement = anObject ])
+		((element := array at: index) == nil or: [ element enclosedElement = anObject ])
 			ifTrue: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
 	self errorNoFreeSpace

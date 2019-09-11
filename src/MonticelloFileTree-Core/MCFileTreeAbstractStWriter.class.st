@@ -54,7 +54,7 @@ MCFileTreeAbstractStWriter >> fileUtils [
     ^ MCFileTreeFileUtils current
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeAbstractStWriter >> initialize [
     stWriter := MCFileTreePackageStructureStWriter new
         initializers: (initializers := Set new);
@@ -143,7 +143,7 @@ MCFileTreeAbstractStWriter >> writeClassTraitDefinition: definition [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeAbstractStWriter >> writeDefinitions: aCollection [
     "the correct initialization order is unknown if some classes are missing in the image"
 
@@ -162,7 +162,7 @@ MCFileTreeAbstractStWriter >> writeInDirectoryName: directoryNameOrPath fileName
             visitBlock value ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeAbstractStWriter >> writeInitializers [
     self
         writeInDirectoryName: self monticelloMetaDirName
@@ -179,7 +179,7 @@ MCFileTreeAbstractStWriter >> writeMethodDefinition: definition [
     stWriter visitMethodDefinition: definition
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MCFileTreeAbstractStWriter >> writePropertiesFile [
     self
         writeInDirectoryName: '.'

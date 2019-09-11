@@ -22,9 +22,9 @@ RBExtractMethodTransformationTest >> testBadInterval [
 				
 	self shouldFail: (RBExtractMethodTransformation
 							extract: (self sourceCodeAt: (80 to: 147)
-								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTest class)
+								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 							from: #subclassOf:overrides: to: #bla
-							in: #'RBBasicLintRuleTest class')
+							in: #'RBBasicLintRuleTestData class')
 							asRefactoring
 	
 ]
@@ -34,23 +34,23 @@ RBExtractMethodTransformationTest >> testExtractFailure [
 
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (80 to: 269)
-						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTest class)
+						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTest class')
+			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring.
 	
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (53 to: 56)
-						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTest class)
+						forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 			from: #subclassOf:overrides:
-			to: #foo in: #'RBBasicLintRuleTest class')
+			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring.
 	
 	self shouldFail: (RBExtractMethodTransformation
 			extract: (self sourceCodeAt: (77 to: 222)
-						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTest class)
+						forMethod: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
 			from: #subclassResponsibilityNotDefined
-			to: #foo in: #'RBBasicLintRuleTest class')
+			to: #foo in: #'RBBasicLintRuleTestData class')
 			asRefactoring
 ]
 
@@ -61,7 +61,7 @@ RBExtractMethodTransformationTest >> testMethodDoesNotExist [
 			extract: 'bla'
 			from: #checkClass1:
 			to: #bla
-			in: #RBBasicLintRuleTest)
+			in: #RBBasicLintRuleTestData)
 			asRefactoring
 ]
 
@@ -80,12 +80,12 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 	
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
 	self assert: (class parseTreeFor: #openEditor)
-		  equals: (RBParser parseMethod: 'openEditor
+		  equals: (self parseMethod: 'openEditor
 				| rules |
 				rules := self failedRules.
 				^self foo: rules').
 	self assert: (class parseTreeFor: #foo:)
-		  equals: (RBParser parseMethod: 'foo: rules
+		  equals: (self parseMethod: 'foo: rules
 				rules isEmpty ifTrue: [^self].
 				rules size == 1 ifTrue: [^rules first viewResults]')
 ]
@@ -102,19 +102,19 @@ RBExtractMethodTransformationTest >> testRefactoring [
 						classified: aSmalllintContext protocols]'
 		from: #checkMethod:
 		to: #foo:
-		in: #RBTransformationRuleTest)
+		in: #RBTransformationRuleTestData)
 		asRefactoring transform.
 		
 	self assert: transformation model changes changes size equals: 2.
 	
-	class := transformation model classNamed: #RBTransformationRuleTest.
+	class := transformation model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) 
-		  equals: (RBParser parseMethod: 'checkMethod: aSmalllintContext 
+		  equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 			class := aSmalllintContext selectedClass.
 			(rewriteRule executeTree: aSmalllintContext parseTree)
 				ifTrue: [self foo: aSmalllintContext]').	
 	self assert: (class parseTreeFor: #foo:)
-		  equals: (RBParser parseMethod: 'foo: aSmalllintContext 
+		  equals: (self parseMethod: 'foo: aSmalllintContext 
 			(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 				ifFalse: [ builder
 							compile: rewriteRule tree printString
@@ -151,12 +151,12 @@ RBExtractMethodTransformationTest >> testTransform [
 	
 	class := transformation model classNamed: self changeMock name.		
 	self assert: (class parseTreeFor: #foo) 
-		  equals: (RBParser parseMethod: 'foo
+		  equals: (self parseMethod: 'foo
 													| temp |
 													temp := self foobar.
 													^temp * temp').
 	self assert: (class parseTreeFor: #foobar)
-		  equals: (RBParser parseMethod: 'foobar
+		  equals: (self parseMethod: 'foobar
 													| temp bar |
 													bar := 5.
 													temp := bar * bar.
@@ -170,22 +170,22 @@ RBExtractMethodTransformationTest >> testWithArgument [
 	| refactoring class |
 	refactoring := (RBExtractMethodTransformation
 		extract: (self sourceCodeAt: (145 to: 343)
-					 forMethod: #checkMethod: in: RBTransformationRuleTest)
+					 forMethod: #checkMethod: in: RBTransformationRuleTestData)
 		from: #checkMethod:
 		to: #foo:
-		in: #RBTransformationRuleTest)
+		in: #RBTransformationRuleTestData)
 		asRefactoring transform.
 		
 	self assert: refactoring model changes changes size equals: 2.
 		
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:) 
-		  equals: (RBParser parseMethod: 'checkMethod: aSmalllintContext 
+		  equals: (self parseMethod: 'checkMethod: aSmalllintContext 
 					class := aSmalllintContext selectedClass.
 					(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 						[self foo: aSmalllintContext]').
 	self assert: (class parseTreeFor: #foo:) 
-		  equals: (RBParser parseMethod: 'foo: aSmalllintContext
+		  equals: (self parseMethod: 'foo: aSmalllintContext
 					(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 						ifFalse: 
 							[builder compile: rewriteRule tree printString
@@ -212,9 +212,9 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 	
 	self assert: refactoring model changes changes size equals: 4.
 	self assert: (class parseTreeFor: #foo) 
-		  equals: (RBParser parseMethod: 'foo [self foobar] value').
+		  equals: (self parseMethod: 'foo [self foobar] value').
 	self assert: (class parseTreeFor: #foobar) 
-		  equals: (RBParser parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
+		  equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')
 ]
 
 { #category : #testing }
@@ -241,9 +241,9 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 	
 	self assert: refactoring model changes changes size equals: 4.
 	self assert: (class parseTreeFor: #foo) 
-		  equals: (RBParser parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
+		  equals: (self parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
 	self assert: (class parseTreeFor: #foobar) 
-		  equals: (RBParser parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')
+		  equals: (self parseMethod: 'foobar | temp bar | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')
 ]
 
 { #category : #testing }
@@ -253,21 +253,21 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 	refactoring := (RBExtractMethodTransformation
 		extract: (self
 			sourceCodeAt: (22 to: 280)
-			forMethod: #superSends in: RBTransformationRuleTest)
+			forMethod: #superSends in: RBTransformationRuleTestData)
 		from: #superSends
-		to: #foo1 in: #RBTransformationRuleTest)
+		to: #foo1 in: #RBTransformationRuleTestData)
 		asRefactoring transform.
 	
 	self assert: refactoring model changes changes size equals: 2.
 	
-	class := refactoring model classNamed: #RBTransformationRuleTest.
+	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self assert: (class parseTreeFor: #superSends)
-		  equals: (RBParser parseMethod: 'superSends
+		  equals: (self parseMethod: 'superSends
 				| rule |
 				rule := self foo1.
 				self rewriteUsing: rule').
 	self assert: (class parseTreeFor: #foo1)
-		  equals: (RBParser parseMethod: 'foo1 | rule |
+		  equals: (self parseMethod: 'foo1 | rule |
 				rule := RBParseTreeRewriter new.
 				rule addSearch: ''super `@message: ``@args''
 					-> ([:aNode | 
@@ -294,13 +294,13 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
 
 	class := refactoring model classNamed: #RBDummyLintRuleTest.
 	self assert: (class parseTreeFor: #displayName)
-		  equals: (RBParser parseMethod: 'displayName
+		  equals: (self parseMethod: 'displayName
 					| nameStream |
 					nameStream := WriteStream on: (String new: 64).
 					self foo: nameStream.
 					^nameStream contents').
 	self assert: (class parseTreeFor: #foo:)
-		  equals: (RBParser parseMethod: 'foo: nameStream
+		  equals: (self parseMethod: 'foo: nameStream
 					nameStream nextPutAll: self name;
 								nextPutAll: '' (''.
 					self problemCount printOn: nameStream.

@@ -6,3 +6,10 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'Spec-Tests-Manifest'
 }
+
+{ #category : #deprecation }
+ManifestSpecTests class >> isDeprecated [
+	"Spec should be replaced by Spec 2"
+
+	^ true
+]

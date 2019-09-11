@@ -17,7 +17,6 @@ Class {
 		'tagsBlock',
 		'tagsFilterBlock',
 		'sortBlock',
-		'defaultSortBlock',
 		'modifiedBlock'
 	],
 	#category : #'Glamour-Presentations'

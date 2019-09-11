@@ -26,10 +26,8 @@ RBExcessiveMethodsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBExcessiveMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock [ 
-	(aClass selectors size >= self methodsCount) ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aClass) ]
-		
+RBExcessiveMethodsRule >> basicCheck: aClass [
+	^ aClass selectors size >= self methodsCount
 ]
 
 { #category : #accessing }

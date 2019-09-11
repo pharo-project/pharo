@@ -58,13 +58,12 @@ ClassOrganizationTest >> testCategories [
 { #category : #tests }
 ClassOrganizationTest >> testListAtCategoryNamed [
 	| methods |
-
 	methods := self organization listAtCategoryNamed: 'empty'.
-	self assert: methods isEmpty.
-		
+	self assertEmpty: methods.
+
 	methods := self organization listAtCategoryNamed: 'one'.
 	self assert: methods size = 1.
-	self assert: methods first = #one.
+	self assert: methods first = #one
 ]
 
 { #category : #tests }

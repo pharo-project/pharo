@@ -4,7 +4,7 @@ I'm a test case of SlotClassBuilder integration in the system. Tipically, my tes
 Class {
 	#name : #SlotIntegrationTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-ClassBuilder'
 }
 
 { #category : #tests }
@@ -35,7 +35,7 @@ SlotIntegrationTest >> testAddAndAddInstVarNamedWithTrait2 [
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -66,7 +66,7 @@ SlotIntegrationTest >> testAddAndRemoveInstVarNamedWithTrait2 [
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ SlotIntegrationTest >> testAddInstVarNamed [
 			slots: #( x )
 		].
 
-	self assert: aClass instVarNames = #(x).	
+	self assert: aClass instVarNames equals: #(x).	
 
 
 	anotherClass := self make: [ :builder |
@@ -89,7 +89,7 @@ SlotIntegrationTest >> testAddInstVarNamed [
 			slots: #( y )
 		].
 	
-	self assert: anotherClass instVarNames = #(y).
+	self assert: anotherClass instVarNames equals: #(y).
 ]
 
 { #category : #tests }
@@ -102,7 +102,7 @@ SlotIntegrationTest >> testAddInstVarNamedClassInterface [
 		].
 	aClass addInstVarNamed: 'x'.
 
-	self assert: aClass instVarNames = #(x).	
+	self assert: aClass instVarNames equals: #(x).	
 
 
 	anotherClass := self make: [ :builder |
@@ -112,7 +112,7 @@ SlotIntegrationTest >> testAddInstVarNamedClassInterface [
 		].
 	anotherClass addInstVarNamed: 'y'.
 	
-	self assert: anotherClass instVarNames = #(y).
+	self assert: anotherClass instVarNames equals: #(y)
 ]
 
 { #category : #tests }
@@ -145,7 +145,7 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait [
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -170,12 +170,12 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait2 [
 	aClass addInstVarNamed: #y.
 	
 	self assertTraitIntegrity.
-	self assert: aClass instVarNames = #(x y).
+	self assert: aClass instVarNames equals: #(x y).
 	
 	self assert: TOne traitUsers asArray equals: { aClass }.
 	
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
@@ -192,12 +192,12 @@ SlotIntegrationTest >> testAnonymousSubclass [
 	self assert: anotherClass isBehavior.
 	self assert: anotherClass superclass == aClass.
 	self deny: anotherClass name = aClass name.
-	self assert: anotherClass allInstVarNames = #(x)
+	self assert: anotherClass allInstVarNames equals: #(x)
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testCompiledMethodLayout [
-	self assert: (CompiledMethod classLayout isKindOf: CompiledMethodLayout).
+	self assert: (CompiledMethod classLayout isKindOf: CompiledMethodLayout)
 ]
 
 { #category : #tests }
@@ -223,7 +223,7 @@ SlotIntegrationTest >> testRemoveInstVarNamed [
 			slotNamed: 'b' 
 			ifFound: [ #found ] 
 			ifNone: [ #none ].
-	self assert: answer equals: #none.
+	self assert: answer equals: #none
 
 ]
 
@@ -237,92 +237,93 @@ SlotIntegrationTest >> testRemoveInstVarNamedClassInterface [
 		].
 	aClass removeInstVarNamed: #y.
 
-	self assert: aClass instVarNames = #(x z).
+	self assert: aClass instVarNames equals: #(x z).
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testRemoveInstVarNamedWithTrait2 [
 	"Add instance variables using the builder interface"
-	
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			traitComposition: TOne;
-			slots: #( x )
-		].
+
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				traitComposition: TOne;
+				slots: #(x) ].
 
 	self assert: aClass instVarNames equals: #(x).
-	
-	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
+	self assert: TOne traitUsers asArray equals: {aClass}.
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1.
 
 	aClass removeInstVarNamed: #x.
-	
-	self assert: aClass instVarNames isEmpty.
-	
-	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
+	self assertEmpty: aClass instVarNames.
+
+	self assert: TOne traitUsers asArray equals: {aClass}.
+
 	self assert: (aClass canUnderstand: #one).
-	self assert: aClass new one equals: 1.
+	self assert: aClass new one equals: 1
 ]
 
 { #category : #tests }
 SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	"Test reshaping a class which is head of a hierarchy of 4 levels"
-	
+
 	"level 1"
+
 	aClass := Object
-		subclass: self aClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self aClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: aClass subclasses isEmpty.
+	self assertEmpty: aClass subclasses.
 	aClass classLayout checkIntegrity.
 
 	"level 2"
 	anotherClass := aClass
-		subclass: self anotherClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self anotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
-	
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses isEmpty.
+
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assertEmpty: anotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 
 	"level 3"
 	yetAnotherClass := anotherClass
-		subclass: self yetAnotherClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self yetAnotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses equals: { yetAnotherClass }.
-	self assert: yetAnotherClass subclasses isEmpty.
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assert: anotherClass subclasses equals: {yetAnotherClass}.
+	self assertEmpty: yetAnotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
 
 	"level 4"
 	yetYetAnotherClass := yetAnotherClass
-		subclass: self yetYetAnotherClassName 
-		instanceVariableNames: '' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self yetYetAnotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
-	self assert: aClass subclasses equals: { anotherClass }.
-	self assert: anotherClass subclasses equals: { yetAnotherClass }.
-	self assert: yetAnotherClass subclasses equals: { yetYetAnotherClass }.
-	self assert: yetYetAnotherClass subclasses isEmpty.
+	self assert: aClass subclasses equals: {anotherClass}.
+	self assert: anotherClass subclasses equals: {yetAnotherClass}.
+	self assert: yetAnotherClass subclasses equals: {yetYetAnotherClass}.
+	self assertEmpty: yetYetAnotherClass subclasses.
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
@@ -330,17 +331,17 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 
 	"reshape level 1"
 	aClass := Object
-		subclass: self aClassName 
-		instanceVariableNames: 'x' 
-		classVariableNames: '' 
-		poolDictionaries: '' 
+		subclass: self aClassName
+		instanceVariableNames: 'x'
+		classVariableNames: ''
+		poolDictionaries: ''
 		category: self aCategory.
 
 	self assert: aClass instVarNames equals: #(x).
 	aClass classLayout checkIntegrity.
 	anotherClass classLayout checkIntegrity.
 	yetAnotherClass classLayout checkIntegrity.
-	yetYetAnotherClass classLayout checkIntegrity.
+	yetYetAnotherClass classLayout checkIntegrity
 ]
 
 { #category : #tests }
@@ -384,7 +385,7 @@ SlotIntegrationTest >> testSlotNamedIfFoundIfNone [
 
 	self 
 		assert: (aClass slotNamed: 'b' ifFound: [ #found ] ifNone: [ #none ])
-		equals: #none.
+		equals: #none
 
 ]
 
@@ -422,5 +423,5 @@ SlotIntegrationTest >> testSlotsAreInitializedWithDefiningAnonimousClass [
 
 { #category : #tests }
 SlotIntegrationTest >> testSmallIntegerLayout [
-	self assert: (SmallInteger classLayout isKindOf: ImmediateLayout).
+	self assert: (SmallInteger classLayout isKindOf: ImmediateLayout)
 ]

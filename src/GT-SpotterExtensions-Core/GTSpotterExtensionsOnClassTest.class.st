@@ -8,8 +8,7 @@ Class {
 GTSpotterExtensionsOnClassTest >> testBasic [
 
 	| def cls |
-	cls := GTSpotterExtensionsOnClassTest.
+	cls := self class.
 	def := cls definitionForSpotter.
-	self assert: (def beginsWith: cls definitionForNautilus).
-	self deny: cls hasComment.
+	self assert: (def beginsWith: cls definition)
 ]

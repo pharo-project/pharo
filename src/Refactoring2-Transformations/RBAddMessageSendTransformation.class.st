@@ -59,43 +59,41 @@ RBAddMessageSendTransformation >> messageSend: aMessageSend inMethod: aSelector 
 
 { #category : #preconditions }
 RBAddMessageSendTransformation >> preconditions [
-
 	^ (RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
-		& (RBCondition
-			withBlock: [ self definingClass canUnderstand: selector ]
-			errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
-		& (RBCondition
-			withBlock: [ | messageNode |
-				messageNode := RBParser parseExpression: message.
-				messageNode allAccesses allSatisfy: [ :e | 
-					(self definingMethod hasArgumentNamed: e name)
-					or: [ self definingMethod hasTemporaryNamed: e name ] ]]
-			errorString: ('Some variables in this message send are not defined in method named <1s>.'
-					expandMacrosWith: selector))
+		withBlock: [ self definingClass isNotNil ]
+		errorString: ('Class named <1s> does not exist' expandMacrosWith: className))
+		&
+			(RBCondition
+				withBlock: [ self definingClass canUnderstand: selector ]
+				errorString: ('Method named <1s> does not exist' expandMacrosWith: selector))
+		&
+			(RBCondition
+				withBlock: [ | messageNode |
+					messageNode := self parserClass parseExpression: message.
+					messageNode allVariables
+						allSatisfy: [ :e | 
+							(self definingMethod hasArgumentNamed: e name)
+								or: [ self definingMethod hasTemporaryNamed: e name ] ] ]
+				errorString:
+					('Some variables in this message send are not defined in method named <1s>.'
+						expandMacrosWith: selector))
 ]
 
 { #category : #executing }
 RBAddMessageSendTransformation >> privateTransform [
-
-	| methodTree messageNode assignments variables  previousNode |
+	| methodTree messageNode assignments variables previousNode |
 	methodTree := self definingMethod.
-	messageNode := RBParser parseExpression: message.
+	messageNode := self parserClass parseExpression: message.
 
 	"if the message requires variables, look for the right variables in this context"
-	variables := messageNode allAccesses.
-	assignments := ( methodTree allChildren 
-		select: #isAssignment )
+	variables := messageNode allVariables.
+	assignments := (methodTree allChildren select: #isAssignment)
 		select: [ :each | variables includes: each variable ].
-		
 	previousNode := assignments detectMax: #stop.
-	
 	previousNode
 		ifNil: [ methodTree body addNodeFirst: messageNode ]
 		ifNotNil: [ previousNode parent addNode: messageNode after: previousNode ].
-	
-	class compileTree: methodTree.
+	class compileTree: methodTree
 ]
 
 { #category : #printing }

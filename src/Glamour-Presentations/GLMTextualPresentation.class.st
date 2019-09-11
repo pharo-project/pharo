@@ -15,9 +15,7 @@ Class {
 	#name : #GLMTextualPresentation,
 	#superclass : #GLMFormatedPresentation,
 	#instVars : [
-		'selectedText',
 		'cursorPosition',
-		'text',
 		'doItReceiver',
 		'doItContext',
 		'textBlock',
@@ -79,9 +77,10 @@ GLMTextualPresentation >> selectLine [
 
 { #category : #'accessing ports' }
 GLMTextualPresentation >> selectedText [
-	^ (self pane port: #selectedText) value isNil 
-		ifTrue: [self selectedTextBlock value]
-		ifFalse: [(self pane port: #selectedText) value]
+
+	^ ( self pane port: #selectedText ) value
+		ifNil: [ self selectedTextBlock value ]
+		ifNotNil: [ ( self pane port: #selectedText ) value ]
 ]
 
 { #category : #'accessing ports' }
@@ -112,9 +111,10 @@ GLMTextualPresentation >> selectionInterval: anInterval [
 
 { #category : #'accessing ports' }
 GLMTextualPresentation >> text [
-	^ (self pane port: #text) value isNil 
-		ifTrue: [self textBlock value]
-		ifFalse: [(self pane port: #text) value]
+
+	^ ( self pane port: #text ) value
+		ifNil: [ self textBlock value ]
+		ifNotNil: [ ( self pane port: #text ) value ]
 ]
 
 { #category : #'accessing ports' }

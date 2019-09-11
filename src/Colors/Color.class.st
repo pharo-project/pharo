@@ -286,11 +286,17 @@ Color class >> fromHexString: aColorHex [
 
 	"(Color fromHexString: 'FFFFFF')>>> (Color white) "
 
-	| green red blue |
-	red := (Integer readFrom: (aColorHex first: 2) base: 16) / 255.
-	green := (Integer readFrom: (aColorHex copyFrom: 3 to: 4) base: 16) / 255.
-	blue := (Integer readFrom: (aColorHex last: 2) base: 16) / 255.
-	^ self r: red g: green b: blue
+	| green red blue alpha hexString |
+	hexString := aColorHex withoutPrefix: '#'.
+	red := (Integer readFrom: (hexString first: 2) base: 16) / 255.
+	green := (Integer readFrom: (hexString copyFrom: 3 to: 4) base: 16) / 255.
+	blue := (Integer readFrom: (hexString copyFrom: 5 to: 6) base: 16) / 255.
+	
+	alpha := hexString size = 8 
+		ifFalse: [ 1.0 ]
+		ifTrue: [ (Integer readFrom: (hexString copyFrom: 7 to: 8) base: 16) / 255 ].
+	
+	^ self r: red g: green b: blue alpha: alpha
 ]
 
 { #category : #'instance creation' }
@@ -1039,6 +1045,7 @@ Color >> asColorref [
 	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
 	"(Color red asColorref) >>> 229"
 	"(Color white asColorref) >>>  16777215"
+	
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
 ]
 
@@ -1135,6 +1142,13 @@ Color >> basicPixelValueForDepth: d [
 			ifTrue: [ rgbBlack ]
 			ifFalse: [ val ] ].
 	self error: 'unknown pixel depth: ' , d printString
+]
+
+{ #category : #'accessing - higher level' }
+Color >> beOpaque [
+	"Set the transparency of the receiver to opaque, i.e. alpha to 1.0."
+	
+	^ self alpha: 1.0
 ]
 
 { #category : #transformations }
@@ -1235,7 +1249,7 @@ Color >> colorForInsets [
 ]
 
 { #category : #conversions }
-Color >> contrastingColor [
+Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self class black].
@@ -1253,14 +1267,6 @@ Color >> contrastingColorAdjustment [
 	^ self luminance > 0.5
 		ifTrue: [ self darker ] 
 		ifFalse:  [ self lighter ]
-]
-
-{ #category : #conversions }
-Color >> contrastingForegroundColor [
-        "Make a foreground color contrasting with me"
-        ^self luminance >= 0.5
-                ifTrue: [self class black]
-                ifFalse: [self class white]
 ]
 
 { #category : #transformations }
@@ -1328,7 +1334,9 @@ Color >> flushCache [
 { #category : #accessing }
 Color >> green [
 	"Return the green component of this color, a float in the range [0.0..1.0]."
-
+	"Color red green >>> 0.0"
+	"(Color r: 0.5 g: 0.5 b: 1) green >>>  0.5004887585532747"
+	
 	^ self privateGreen asFloat / ComponentMax
 ]
 
@@ -1341,7 +1349,8 @@ Color >> hash [
 { #category : #accessing }
 Color >> hslSaturation [
 	"Return the HSL saturation of this color, a value between 0.0 and 1.0."
-
+	"Color red hslSaturation >>> 1.0"
+	"(Color r: 0.5 g: 0.5 b: 1) hslSaturation >>> 1.0"
 	| chroma |
 	chroma := self chroma.
 	"Chroma is zero for black and white, which are the two cases of division by zero below."
@@ -1353,7 +1362,9 @@ Color >> hslSaturation [
 { #category : #accessing }
 Color >> hsvSaturation [
 	"Return the HSV saturation of this color, a value between 0.0 and 1.0."
-
+	"Color red hsvSaturation >>> 1.0"
+	"(Color r: 0.5 g: 0.5 b: 1) hsvSaturation >>> 0.4995112414467253"
+	
 	| max |
 	max := self privateMaxComponent.
 	max isZero
@@ -1364,6 +1375,9 @@ Color >> hsvSaturation [
 { #category : #accessing }
 Color >> hue [
 	"Return the hue of this color, an angle in the range [0.0..360.0]."
+	"Color red hue >>> 0.0"
+	"(Color r: 0.5 g: 0.5 b: 1) hue >>> 240.0"
+	
 	| r g b max min span h |
 	r := self privateRed.
 	g := self privateGreen.
@@ -1857,8 +1871,10 @@ Color >> red [
 
 { #category : #other }
 Color >> rgbTriplet [
-	"Color fromUser rgbTriplet"
-
+	"Returns an array composed of the three color float components."
+	
+	"Color black rgbTriplet >>> #(0.0 0.0 0.0)"
+	"Color red rgbTriplet >>> #(1.0 0.0 0.0)"
 	^ Array
 		with: (self red roundTo: 0.01)
 		with: (self green roundTo: 0.01)
@@ -2051,16 +2067,20 @@ Color >> storeArrayValuesOn: aStream [
 
 { #category : #printing }
 Color >> storeOn: aStream [
-	self isTransparent ifTrue: [^ aStream nextPutAll: '(Color transparent)'].
-
+	self isTransparent
+		ifTrue: [ ^ aStream nextPutAll: '(Color transparent)' ].
 	aStream
-		nextPutAll: '(' , self class name;
-		nextPutAll: ' r: '; print: (self red roundTo: 0.001);
-		nextPutAll: ' g: '; print: (self green roundTo: 0.001);
-		nextPutAll: ' b: '; print: (self blue roundTo: 0.001);
-		nextPutAll: ' alpha: '; print: (self alpha roundTo: 0.001);
-		nextPutAll: ')'.
-
+		nextPutAll: '(';
+		nextPutAll: self class name;
+		nextPutAll: ' r: ';
+		print: self red;
+		nextPutAll: ' g: ';
+		print: self green;
+		nextPutAll: ' b: ';
+		print: self blue;
+		nextPutAll: ' alpha: ';
+		print: self alpha;
+		nextPutAll: ')'
 ]
 
 { #category : #transformations }

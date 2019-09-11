@@ -6,12 +6,6 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#instVars : [
-		'surface',
-		'origin',
-		'direction',
-		'extent'
-	],
 	#pools : [
 		'AthensCairoDefinitions'
 	],
@@ -82,7 +76,7 @@ AthensCairoPatternPaint >> athensLoadOn: anAthensCanvas [
 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPatternPaint >> defaultExtend [
 "The default extend mode is CAIRO_EXTEND_NONE for surface patterns and CAIRO_EXTEND_PAD for gradient patterns.
 "
@@ -90,7 +84,7 @@ AthensCairoPatternPaint >> defaultExtend [
 	^  CAIRO_EXTEND_NONE
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AthensCairoPatternPaint >> initialize [
 	handle value = 0 
 		ifTrue: [ self error: 'Error creating new paint' ].

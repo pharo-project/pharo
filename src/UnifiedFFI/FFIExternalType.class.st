@@ -116,13 +116,13 @@ FFIExternalType >> basicHandle: aHandle at: index put: value [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : #callbacks }
 FFIExternalType >> callbackReturnOn: callbackContext for: anObject [
 	"By default, I answer an integral return (not a float)"
 	^ callbackContext wordResult: anObject
 ]
 
-{ #category : #accessing }
+{ #category : #callbacks }
 FFIExternalType >> callbackValueFor: anObject at: index [
 	"This is the value for a callback. 
 	 The callback parameters came from an external adress who can be treated as a ByteArray, so it 
@@ -218,8 +218,20 @@ FFIExternalType >> initialize [
 ]
 
 { #category : #testing }
+FFIExternalType >> isExternalStructure [
+
+	^ false
+]
+
+{ #category : #testing }
 FFIExternalType >> isExternalType [
 	^ true
+]
+
+{ #category : #testing }
+FFIExternalType >> isFloatType [
+
+	^ false
 ]
 
 { #category : #testing }

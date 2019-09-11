@@ -198,6 +198,11 @@ TestResult >> errors [
 ]
 
 { #category : #accessing }
+TestResult >> errors: anOrderedCollection [
+	errors := anOrderedCollection
+]
+
+{ #category : #accessing }
 TestResult >> expectedDefectCount [
 	^ self expectedDefects size
 ]
@@ -226,6 +231,11 @@ TestResult >> failureCount [
 { #category : #compatibility }
 TestResult >> failures [
 	^ self unexpectedFailures, self unexpectedPasses 
+]
+
+{ #category : #accessing }
+TestResult >> failures: aSet [
+	failures := aSet
 ]
 
 { #category : #'filein/out' }
@@ -314,6 +324,11 @@ TestResult >> passed [
 ]
 
 { #category : #accessing }
+TestResult >> passed: anOrderedCollection [
+	passed := anOrderedCollection
+]
+
+{ #category : #accessing }
 TestResult >> passedCount [
 
 	^self passed size
@@ -321,21 +336,25 @@ TestResult >> passedCount [
 
 { #category : #printing }
 TestResult >> printOn: aStream [
+	self runCount isZero ifTrue: [ ^ aStream nextPutAll: 'No tests ran' ].
 	aStream
-		nextPutAll: self runCount printString;
-		nextPutAll: ' run, ';
-		nextPutAll: self expectedPassCount printString;
-		nextPutAll: ' passes, ';
-		nextPutAll: self skippedCount printString;
+		print: self runCount;
+		nextPutAll: ' ran, ';
+		print: self expectedPassCount;
+		nextPutAll: ' passed, ';
+		print: self skippedCount;
 		nextPutAll: ' skipped, ';
-		nextPutAll: self expectedDefectCount printString;
-		nextPutAll:' expected failures, ';
-		nextPutAll: self unexpectedFailureCount printString;
-		nextPutAll: ' failures, ';
-		nextPutAll: self unexpectedErrorCount printString;
-		nextPutAll:' errors, ';
-		nextPutAll: self unexpectedPassCount printString;
-		nextPutAll:' unexpected passes'.
+		print: self expectedDefectCount;
+		nextPutAll: (' expected failure' asPluralBasedOn: self expectedDefectCount); 
+		nextPutAll: ', ';
+		print: self unexpectedFailureCount;
+		nextPutAll: (' failure' asPluralBasedOn: self unexpectedFailureCount);
+		nextPutAll: ', ';
+		print: self unexpectedErrorCount;
+		nextPutAll: (' error' asPluralBasedOn: self unexpectedErrorCount);
+		nextPutAll: ', ';
+		print: self unexpectedPassCount;
+		nextPutAll: ' passed unexpected'
 ]
 
 { #category : #running }

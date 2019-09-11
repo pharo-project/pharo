@@ -182,11 +182,12 @@ FLContextSerializationTest >> testContextWithTemp [
 { #category : #tests }
 FLContextSerializationTest >> testDoIt [
 	"Serialization of DoIt methods should be possible by default.
-	Note: apparently this test didn't use to terminate some times.
-	I've added the #valueWithin:onTimeout: as a fallback for that."
+	Note: apparently this test didn't use to terminate some times."
 
 	| context |
-	self timeLimit: 30 seconds.
+	FLPlatform current
+		setTestTimeLimitFor: self
+		to: 30 seconds.
 	[ Smalltalk compiler evaluate: 'self error' ]
 		on: Error
 		do: [ :error | context := error signalerContext copyStack ].

@@ -75,8 +75,8 @@ OCPragmaTest >> testDoublePragma [
 	| aRBMethode |	
 	aRBMethode := OpalCompiler new parse: self methodDoublePragma.
 	
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:).
-	self assert: (aRBMethode compiledMethod pragmas second keyword = #hello:)
+	self assert: (aRBMethode compiledMethod pragmas first selector = #hello:).
+	self assert: (aRBMethode compiledMethod pragmas second selector = #hello:)
 ]
 
 { #category : #testing }
@@ -99,8 +99,8 @@ OCPragmaTest >> testPragmaAfterBeforTemp [
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodPragmaAfterBeforTemps.
 
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:).
-	self assert: (aRBMethode compiledMethod pragmas second keyword = #world:)
+	self assert: (aRBMethode compiledMethod pragmas first selector = #hello:).
+	self assert: (aRBMethode compiledMethod pragmas second selector = #world:)
 	
 ]
 
@@ -111,7 +111,7 @@ OCPragmaTest >> testPragmaTwoParam [
 	aRBMethode := OpalCompiler new parse: self methodPragmaTwoParam.
 
 
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:by:)
+	self assert: (aRBMethode compiledMethod pragmas first selector = #hello:by:)
 	
 ]
 
@@ -121,7 +121,7 @@ OCPragmaTest >> testPragmaUnarayMessage [
 
 	aRBMethode := OpalCompiler new parse: self methodPragmaUnarayMessage.
 	
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello)
+	self assert: (aRBMethode compiledMethod pragmas first selector = #hello)
 ]
 
 { #category : #testing }
@@ -162,6 +162,6 @@ OCPragmaTest >> testPrimitiveStringModule [
 OCPragmaTest >> testSinglePragma [
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodSinglePragma.
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:)
+	self assert: (aRBMethode compiledMethod pragmas first selector = #hello:)
 	
 ]

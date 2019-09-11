@@ -44,8 +44,8 @@ RBAssignmentNode >> = anObject [
 ]
 
 { #category : #visiting }
-RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [ 
-	^aProgramNodeVisitor visitAssignmentNode: self
+RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
+	^ aProgramNodeVisitor visitAssignmentNode: self
 ]
 
 { #category : #'accessing-token' }
@@ -106,17 +106,6 @@ RBAssignmentNode >> directlyUses: aNode [
 	^aNode = value ifTrue: [true] ifFalse: [self isDirectlyUsed]
 ]
 
-{ #category : #generation }
-RBAssignmentNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' variable: ('.
-	self variable dumpOn: aStream.
-	aStream nextPutAll: ') value: ('.
-	self value dumpOn: aStream.
-	aStream nextPut: $)
-]
-
 { #category : #comparing }
 RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [ 
 	^self class = anObject class and: 
@@ -163,6 +152,12 @@ RBAssignmentNode >> postCopy [
 { #category : #accessing }
 RBAssignmentNode >> precedence [
 	^5
+]
+
+{ #category : #'adding/removing' }
+RBAssignmentNode >> removeNode: aNode [
+
+	self replaceNode: aNode withNode: aNode receiver
 ]
 
 { #category : #replacing }
@@ -242,7 +237,7 @@ RBAssignmentNode >> variable: varNode [
 	variable parent: self
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [ 
 	self variable: aVariableNode.
 	self value: aValueNode.

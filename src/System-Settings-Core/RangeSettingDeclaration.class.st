@@ -24,8 +24,8 @@ RangeSettingDeclaration >> hasEditableList [
 
 { #category : #'user interface' }
 RangeSettingDeclaration >> inputWidget [
-	^ (self theme newRowIn: World for: {(self theme 
-							newTextEntryIn: World 
+	^ (self theme newRowIn: self currentWorld for: {(self theme 
+							newTextEntryIn: self currentWorld 
 							for: self
 							get: #realValue
 							set: #realValue:
@@ -64,6 +64,7 @@ RangeSettingDeclaration >> realValue: aValue [
 	aValue
 		ifNil: [self settingReceiver perform: self setSelector with: nil]
 		ifNotNil: [self settingReceiver perform: self setSelector with: ((aValue max: self range first) min: self range last)].
-	self triggerEvent: self privateChangeEvent with: self
+	self triggerEvent: self privateChangeEvent with: self.
+	^ true
 	
 ]

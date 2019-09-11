@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'readStream',
 		'parsedDeclarations',
-		'nextChar',
 		'classSelector',
 		'classTraitSelector',
 		'commentStampSelector',
@@ -166,7 +165,7 @@ ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 	"
 
 	| behaviorName isMeta stamp |
-	self asSetElement.
+	self asCollectionElement.
 	behaviorName := commentPreamble first asSymbol.
 	isMeta := commentPreamble second ~= self commentStampSelector.
 	stamp := isMeta

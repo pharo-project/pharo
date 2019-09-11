@@ -128,7 +128,7 @@ EpLogTest >> testHeadReference [
 EpLogTest >> testPriorEntriesFromNullReferenceIsEmpty [
 	| priorEntries |
 	priorEntries := log priorEntriesFrom: log nullReference.
-	self assert: priorEntries isEmpty
+	self assertEmpty: priorEntries
 ]
 
 { #category : #tests }

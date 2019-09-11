@@ -7,9 +7,7 @@ Class {
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
 	#instVars : [
-		'environment',
-		'logBrowserModel',
-		'sourceEntries'
+		'environment'
 	],
 	#category : #'EpiceaBrowsers-Visitors'
 }
@@ -122,7 +120,7 @@ EpApplyPreviewer >> visitClassChange: aChange [
 	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :aClass |
-			^ aClass definition = aChange behaviorAffected definition
+			^ aClass oldDefinition = aChange behaviorAffected definition
 				ifTrue: [ #() ]
 				ifFalse: [ { EpClassModification oldClass: aClass newClass: aChange behaviorAffected } ]
 			].
@@ -158,21 +156,20 @@ EpApplyPreviewer >> visitEvent: aChange [
 EpApplyPreviewer >> visitMethodChange: aChange [
 	"Addition and Modification come here"
 
-	self 
+	self
 		behaviorNamed: aChange behaviorAffectedName
 		ifPresent: [ :behavior | 
-			^behavior 
+			^ behavior
 				compiledMethodAt: aChange methodAffectedSelector
-				ifPresent: [ :method |
-					(method protocol ~= aChange methodAffectedProtocol or: [
-					method sourceCode ~= aChange methodAffectedSourceCode ]) 
-						ifTrue: [ { EpMethodModification oldMethod: method newMethod: aChange methodAffected } ]
+				ifPresent: [ :method | 
+					(method protocol ~= aChange methodAffectedProtocol
+						or: [ method sourceCode ~= aChange methodAffectedSourceCode ])
+						ifTrue: [ {(EpMethodModification
+								oldMethod: method
+								newMethod: aChange methodAffected)} ]
 						ifFalse: [ #() ] ]
-				ifAbsent: [ 
-					{ EpMethodAddition method: aChange methodAffected } ] ].
-	
-	^ { aChange }
-
+				ifAbsent: [ {(EpMethodAddition method: aChange methodAffected)} ] ].
+	^ {aChange}
 ]
 
 { #category : #visitor }

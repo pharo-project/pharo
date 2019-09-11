@@ -122,7 +122,7 @@ IRMethod >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #translating }
 IRMethod >> compiledBlock: scope [
 
 	^compiledMethod 
@@ -193,7 +193,7 @@ IRMethod >> generate: trailer [
 	^ compiledMethod
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #translating }
 IRMethod >> generateBlock: trailer withScope: scope [
 	| irTranslator |
       irTranslator := IRTranslatorV2 context: compilationContext trailer: trailer.
@@ -310,7 +310,7 @@ IRMethod >> optimize [
 	
 	"This last two optimizations works but the problem 
 	when you absorb conditional jumps 
-	is that and: / or: chained generate explicitely 
+	is that and: / or: chained generate explicitly 
 	constant conditional jumps to tip the JIt and the 
 	decompiler that they are and: or: and not conditions/loops
 	

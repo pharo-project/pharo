@@ -262,7 +262,7 @@ PragmaMenuBuilder >> pragmaCollector [
 	^ pragmaCollector
 		ifNil: [ pragmaCollector := PragmaCollector
 				filter: [ :prg | 
-					(self pragmaKeywords includes: prg keyword)
+					(self pragmaKeywords includes: prg selector)
 						and: [ prg methodSelector numArgs = 1 ] ].
 			(self pragmaKeywords notNil and: [ self pragmaKeywords notEmpty ])
 				ifTrue: [ pragmaCollector reset ].
@@ -295,7 +295,7 @@ PragmaMenuBuilder >> pragmaKeywords: aCollection [
 	pragmaKeywords addAll: (aCollection collect: [:k | k asSymbol])
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PragmaMenuBuilder >> release [
 	self pragmaCollector unsubscribe: self.
 	pragmaCollector := nil.

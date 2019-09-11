@@ -7,7 +7,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #accessing }
+{ #category : #initialization }
 MalDisjointSetsNextNode >> initialize [
 
 	self flag: #refactor.

@@ -1,6 +1,6 @@
 Class {
 	#name : #GLMMorphicTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractMorphicUITest,
 	#instVars : [
 		'window'
 	],
@@ -43,12 +43,6 @@ GLMMorphicTest >> findWherePresentationIs: aPresentation in: aMorph [
 					and: [(morph model respondsTo: #glamourPresentation) 
 					and: [morph model glamourPresentation == aPresentation]] ]
 			in: aMorph  
-]
-
-{ #category : #private }
-GLMMorphicTest >> repeatAssert: aBlock equals: aResult [
-
-	self assert: (self wait: 0.5 until: aBlock evaluatesTo: aResult)
 ]
 
 { #category : #private }
@@ -99,20 +93,4 @@ GLMMorphicTest >> send: treeMorph mouseUpWithShift: aBoolean onItem: treeNodeMor
 GLMMorphicTest >> tearDown [
 	window ifNotNil: [ window delete ].
 	super tearDown
-]
-
-{ #category : #private }
-GLMMorphicTest >> wait: maxWaitSeconds until: validateBlock evaluatesTo: expectedResult [
-	"Evaluate validateBlock until it returns expectedResult or 
-maxWaitSeconds have passed,
-	 pausing between evaluations.  Return the last result of validateBlock 
-value"
-
-	| startTime result |
-	startTime := Time millisecondClockValue.
-	[result := validateBlock value = expectedResult] whileFalse:
-			[(Time millisecondClockValue - startTime > (maxWaitSeconds * 1000)) ifTrue: [^result].
-			(Delay forMilliseconds: 50) wait].
-	^ result
-
 ]

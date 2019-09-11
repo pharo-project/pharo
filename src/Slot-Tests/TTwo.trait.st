@@ -3,10 +3,10 @@ I am a trait used for testing.
 "
 Trait {
 	#name : #TTwo,
-	#category : #'Slot-Tests'
+	#category : #'Slot-Tests-Data'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TTwo >> two [
 	^ 2
 ]

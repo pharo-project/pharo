@@ -51,7 +51,7 @@ CoverageDemoTest >> testCoverageControlFlow [
 		deny:
 			(ReflectivityExamples >> #exampleIfTrueIfFalse) blockNodes first
 				hasBeenExecuted.
-	self flag: #TBD.	"should be true. need to implement links on optimized block bodies"
+	self flag: #pharoTodo.	"should be true. need to implement links on optimized block bodies"
 	self
 		deny:
 			(ReflectivityExamples >> #exampleIfTrueIfFalse) blockNodes first body
@@ -78,6 +78,6 @@ CoverageDemoTest >> testCoverageMethod [
 	(ReflectivityExamples>>#exampleMethod) ast link: link.
 
 	self deny: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted.
-	self assert: ReflectivityExamples new exampleMethod = 5.
+	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: (ReflectivityExamples>>#exampleMethod) ast hasBeenExecuted.
 ]

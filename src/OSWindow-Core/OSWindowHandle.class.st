@@ -160,8 +160,9 @@ OSWindowHandle >> resizable: aBoolean [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #cursor }
 OSWindowHandle >> setMouseCursor: cursorWithMask [
+	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
 { #category : #accessing }

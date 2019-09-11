@@ -22,7 +22,7 @@ GLMMemoryLogger >> announcements: anObject [
 	announcements := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GLMMemoryLogger >> initialize [ 
 	announcements := OrderedCollection new
 ]
