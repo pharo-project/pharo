@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -84,7 +84,7 @@ SystemDependenciesTest >> knownFileSystemDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#Monticello #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core')
+	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -157,7 +157,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport)
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport)
 ]
 
 { #category : #'known dependencies' }

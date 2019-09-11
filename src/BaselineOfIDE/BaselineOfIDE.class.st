@@ -175,7 +175,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'System-Installers-Tests'.
 		spec package: 'System-Object Events-Tests'.
 		spec package: 'System-OSEnvironments-Tests'.
-		spec package: 'Ring-Deprecated-Tests-Kernel'.
+		spec package: 'Ring-Definitions-Tests-Core'.
 		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
@@ -192,8 +192,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Deprecated-Tests-Containers'.
-		spec package: 'Ring-Deprecated-Tests-Kernel'.
+		spec package: 'Ring-Definitions-Tests-Containers'.
+		spec package: 'Ring-Definitions-Tests-Core'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -347,7 +347,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Core-Tests'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Deprecated-Tests-Monticello'.
+		spec package: 'Ring-Definitions-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
@@ -395,6 +395,8 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
+
+                spec baseline: 'Ring' with: [spec repository: repository].
 
 
       self groups: spec.
@@ -483,7 +485,7 @@ spec group: 'General-Tests-Group' with: #(
 	'ProfStef-Tests'
 	'Reflectivity-Tools-Tests'
 	'Regex-Core-Tests'
-	'Ring-Deprecated-Tests-Monticello'
+	'Ring-Definitions-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
@@ -782,8 +784,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Deprecated-Tests-Kernel'
-	'Ring-Deprecated-Tests-Containers' 
+	'Ring-Definitions-Tests-Core'
+	'Ring-Definitions-Tests-Containers' 
 	'Tests' 
 	'System-Object Events-Tests'
 	'System-OSEnvironments-Tests'
@@ -873,6 +875,7 @@ spec group: #default with: #(
 	'UndefinedClasses-Group'
 	
 	'Calypso'
+	'Ring'
 ).
 
 ]
