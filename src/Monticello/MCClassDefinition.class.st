@@ -328,6 +328,7 @@ classInstVarNames: civarArray
 type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
+	self initialize.
 	name := nameString asSymbol.
 	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
 	category := categoryString.
@@ -354,6 +355,7 @@ classInstVarNames: civarArray
 type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
+	self initialize.
 	name := nameString asSymbol.
 	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
 	traitComposition := traitCompositionString.
