@@ -254,7 +254,7 @@ RGClassTest >> testTagsForAllMethods [
 	
 	method1 := class1 ensureLocalMethodNamed: #method1.	
 	method1 tagWith: #tag1.
-	self assert: class1 tagsForAllMethods equals: #(#tag1).
+	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1).
 
 	method2 := trait1 ensureLocalMethodNamed: #method2.
 	method2 tagWith: #tag1.
@@ -288,14 +288,14 @@ RGClassTest >> testTagsForAllMethodsForClassWithoutTraits [
 	self assert: class tagsForMethods isEmpty.
 	
 	method1 tagWith: #tag1.
-	self assert: class tagsForAllMethods equals: #(#tag1).
+	self assertCollection: class tagsForAllMethods hasSameElements: #(#tag1).
 	
 	method2 tagWith: #tag1.
-	self assert: class tagsForAllMethods equals: #(#tag1).
+	self assertCollection: class tagsForAllMethods hasSameElements: #(#tag1).
 
 	method1 tagWith: #tag2.
-	self assert: method1 tags sorted equals: #(#tag1 #tag2).
-	self assert: class tagsForMethods sorted equals: #(#tag1 #tag2).
+	self assertCollection: method1 tags sorted hasSameElements: #(#tag1 #tag2).
+	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2).
 	
 ]
 

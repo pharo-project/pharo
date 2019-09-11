@@ -1107,7 +1107,7 @@ RGBehavior >> tagsDo: aBlock [
 RGBehavior >> tagsForAllMethods [
 	"I act as #tagsForMethods but I also takes into account methods comming from traits"
 
-	^ self methods flatCollect: [ :each  | each tags ]
+	^ self methods flatCollect: [ :each  | each tags ] as: Set
 ]
 
 { #category : #'accessing - model' }
