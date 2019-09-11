@@ -20,6 +20,8 @@ BlockClosure >> rfvalue [
 	"same as value, for recursion stopping metalinks"
 	<primitive: 201>
 	<metaLinkOptions: #( + optionDisabledLink)>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
 	^self primitiveFailed
 ]
 
