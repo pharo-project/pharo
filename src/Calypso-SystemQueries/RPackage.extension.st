@@ -41,7 +41,7 @@ RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
 	
 	classAndSelectors keysAndValuesDo: [ :className :selectors |
 		((selectors includes: selector) 
-			and: [ (Smalltalk globals classNamed: className) inheritsFrom: methodClass ])
+			and: [ (environment classNamed: className) inheritsFrom: methodClass ])
 				ifTrue: [ ^true ] ].
 	^false
 ]
@@ -55,7 +55,7 @@ RPackage >> definesOverridesOfClassSide: aMethod in: classAndSelectors [
 	
 	classAndSelectors keysAndValuesDo: [ :className :selectors |
 		((selectors includes: selector) 
-			and: [ (Smalltalk globals classNamed: className) classSide inheritsFrom: methodClass ])
+			and: [ (environment classNamed: className) classSide inheritsFrom: methodClass ])
 				ifTrue: [ ^true ] ].
 	^false
 ]

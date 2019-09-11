@@ -44,7 +44,7 @@ MetacelloPharoCommonPlatform >> copyClass: oldClass as: newName inCategory: newC
 	copysName := newName asSymbol.
 	copysName = oldClass name
 		ifTrue: [ ^ oldClass ].
-	(environment globals includesKey: copysName)
+	(environment includesKey: copysName)
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
 	newDefinition := oldClass definition copyReplaceAll: '#' , oldClass name asString with: '#' , copysName asString printString.
 	newDefinition := newDefinition

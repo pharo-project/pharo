@@ -76,7 +76,8 @@ Class {
 		'metaclassExtensionSelectors',
 		'classes',
 		'name',
-		'classTags'
+		'classTags',
+		'environment'
 	],
 	#classVars : [
 		'PackageGlobalOrganizer',
@@ -539,7 +540,7 @@ RPackage >> definedClasses [
 	| definedClasses |
 	definedClasses := Set new.
 	classes do: [:each | 
-		Smalltalk globals 
+		Smalltalk globals
 			at: each 
 			ifPresent: [:aClass| definedClasses add: aClass ]].
 	^ definedClasses
@@ -645,6 +646,16 @@ RPackage >> ensureProperties [
 ]
 
 { #category : #accessing }
+RPackage >> environment [
+	^ environment
+]
+
+{ #category : #accessing }
+RPackage >> environment: anObject [
+	environment := anObject
+]
+
+{ #category : #accessing }
 RPackage >> extendedClassNames [ 
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 	
@@ -728,9 +739,9 @@ RPackage >> extensionMethods [
 	
 	allExtensionMethods := OrderedCollection new.
 	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) >> selector) ] ].
+		methods do: [ :selector | allExtensionMethods add: ((environment at: classSymbol) >> selector) ] ].
 	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) classSide >> selector) ] ].	
+		methods do: [ :selector | allExtensionMethods add: ((environment at: classSymbol) classSide >> selector) ] ].	
 	
 	^ allExtensionMethods				
 ]
@@ -948,6 +959,7 @@ RPackage >> initialize [
 	classDefinedSelectors := Dictionary new.
 	metaclassDefinedSelectors := Dictionary new.
 	classTags := Set new.
+	environment := Smalltalk globals.
 ]
 
 { #category : #testing }
@@ -1522,7 +1534,7 @@ RPackage >> systemCategoryPrefix [
 { #category : #'system compatibility' }
 RPackage >> systemOrganization [ 
 
-	^ Smalltalk globals organization
+	^ environment organization
 ]
 
 { #category : #queries }
