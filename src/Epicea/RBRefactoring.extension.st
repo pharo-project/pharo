@@ -9,11 +9,13 @@ RBRefactoring >> asEpiceaEvent [
 
 { #category : #'*Epicea-Refactorings' }
 RBRefactoring >> propagateTransformation [
-	"Perform the *secondary transformation* of the refactoring. Each refactoring performs main 
-	transformations and secondary transformations. 
+	"Perform the *secondary transformation* of the refactoring. Refactorings perform a main 
+	transformations and optionally a secondary transformations. 
 	For example, in a class rename, the main transformations may be removing the class and adding 
 	it with another name. A secondary transformation in this case is fixing the references in 
 	methods to the class."
+	
+	"The default is to do nothing"
 
-	self subclassResponsibility
+	
 ]
