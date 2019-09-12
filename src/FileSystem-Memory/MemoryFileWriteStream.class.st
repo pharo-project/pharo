@@ -3,7 +3,7 @@ A file write stream - but within memory
 "
 Class {
 	#name : #MemoryFileWriteStream,
-	#superclass : #Object,
+	#superclass : #Stream,
 	#instVars : [
 		'file',
 		'stream'
@@ -14,9 +14,14 @@ Class {
 { #category : #'instance creation' }
 MemoryFileWriteStream class >> on: aFile [
 
-	^ self new
+	^ self basicNew
 		file: aFile;
 		yourself
+]
+
+{ #category : #testing }
+MemoryFileWriteStream >> atEnd [
+	self shouldNotImplement 
 ]
 
 { #category : #'opening-closing' }
@@ -29,6 +34,11 @@ MemoryFileWriteStream >> close [
 { #category : #'opening-closing' }
 MemoryFileWriteStream >> closed [
 	^ file closed
+]
+
+{ #category : #accessing }
+MemoryFileWriteStream >> contents [
+	self shouldNotImplement 
 ]
 
 { #category : #accessing }
@@ -47,6 +57,11 @@ MemoryFileWriteStream >> flush [
 { #category : #testing }
 MemoryFileWriteStream >> isBinary [
 	^ self stream isBinary
+]
+
+{ #category : #accessing }
+MemoryFileWriteStream >> next [
+	self shouldNotImplement  
 ]
 
 { #category : #writing }
