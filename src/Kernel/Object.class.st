@@ -1915,25 +1915,25 @@ Object >> species [
 
 { #category : #'model - stepping' }
 Object >> stepAt: millisecondClockValue in: aWindow [
-
+	self deprecated: 'Refactor to use the Model or the Morph step protocol'.
 	^ self stepIn: aWindow
 ]
 
 { #category : #'model - stepping' }
 Object >> stepIn: aWindow [
-
+	self deprecated: 'Refactor to use the Model or the Morph step protocol'.
 	^ self step
 ]
 
 { #category : #'model - stepping' }
 Object >> stepTime [
-	
+	self deprecated: 'Refactor to use the Model or the Morph step protocol'.	
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
 { #category : #'model - stepping' }
 Object >> stepTimeIn: aSystemWindow [
-	
+	self deprecated: 'Refactor to use the Model or the Morph step protocol'.
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
@@ -2168,13 +2168,13 @@ Object >> veryDeepInner: deepCopier [
 Object >> wantsSteps [
 	"Overridden by morphic classes whose instances want to be stepped,
 	or by model classes who want their morphic views to be stepped."
-
+	self deprecated: 'Refactor to use the Model or the Morph step protocol'.
 	^ false
 ]
 
 { #category : #'model - stepping' }
 Object >> wantsStepsIn: aSystemWindow [
-	
+	self deprecated: 'Refactor to use the Model or the Morph step protocol'.
 	^ self wantsSteps
 ]
 
