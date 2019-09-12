@@ -326,7 +326,7 @@ RGEnvironment >> ensureClassNamed: aSymbol [
 		 | behaviorClass newBehavior sibling siblingName |
 		siblingName := (aSymbol endsWith: ' class') 
 			ifTrue: [ aSymbol withoutSuffix: ' class' ]
-			ifFalse: [ (aSymbol, 'class') asSymbol ].
+			ifFalse: [ (aSymbol, ' class') asSymbol ].
 				
 			sibling := self ask behaviors detect: [ :each | each name = siblingName ] ifNone: nil.
 			sibling ifNotNil: [ 
