@@ -39,7 +39,7 @@ SpTextFieldExample >> initialExtent [
 { #category : #initialization }
 SpTextFieldExample >> initializePresenter [
 	
-	textField acceptBlock: [:text | Smalltalk globals at: text asSymbol
+	textField acceptBlock: [:text | self class environment at: text asSymbol
 								ifPresent: [:class | methodBrowser messages: class methods ]
 								ifAbsent: [ methodBrowser messages: #() ]]
 ]

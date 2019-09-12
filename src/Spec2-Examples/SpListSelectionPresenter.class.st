@@ -44,7 +44,7 @@ SpListSelectionPresenter >> initializeWidgets [
 	textModel1 := self newText.
 	textModel2 := self newCode.
 	listModel beMultipleSelection.
-	listModel items: Smalltalk globals allClasses
+	listModel items: self class environment allClasses
 ]
 
 { #category : #accessing }
