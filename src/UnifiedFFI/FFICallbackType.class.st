@@ -65,7 +65,7 @@ FFICallbackType >> offsetWriteFieldAt: offsetVariableName with: valueName [
 			<< 'handle ' << cr 
 			<< tab << tab << 'pointerAt: ' << offsetVariableName << cr 
 			<< tab << tab << 'put: (anObject ' << cr 
-			<< tab << tab << tab << 'ifNotNil: [ ExternalAddress fromAddress: anObject thunk address ]' << cr
+			<< tab << tab << tab << 'ifNotNil: [ anObject thunk asExternalAddress ]' << cr
 			<< tab << tab << tab << 'ifNil: [ ExternalAddress null ])' ]
 ]
 
