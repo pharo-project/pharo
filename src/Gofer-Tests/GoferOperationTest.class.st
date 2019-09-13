@@ -56,7 +56,7 @@ GoferOperationTest >> setUp [
 
 { #category : #running }
 GoferOperationTest >> setUpEnvironment [
-	environment:= Smalltalk globals.
+	environment := self class environment.
 ]
 
 { #category : #running }
