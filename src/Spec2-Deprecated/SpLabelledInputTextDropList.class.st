@@ -83,8 +83,8 @@ SpLabelledInputTextDropList >> ghostText: aText [
 ]
 
 { #category : #initialization }
-SpLabelledInputTextDropList >> initializeWidgets [
-super initializeWidgets.
+SpLabelledInputTextDropList >> initializePresenters [
+super initializePresenters.
 	self content: SpInputTextDropList.
 ]
 

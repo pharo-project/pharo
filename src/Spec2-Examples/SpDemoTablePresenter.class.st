@@ -30,7 +30,7 @@ SpDemoTablePresenter >> initialize [
 ]
 
 { #category : #initialization }
-SpDemoTablePresenter >> initializeWidgets [
+SpDemoTablePresenter >> initializePresenters [
 	table1 := self newTable.
 	label := self newLabel.
 

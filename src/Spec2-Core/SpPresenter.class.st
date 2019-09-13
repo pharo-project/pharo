@@ -1,19 +1,19 @@
 "
-ComposablePresenter is an abstract class which represent a applicative presenter made to be composed with other ComposablePresenter
+SpPresenter is an abstract class which represent a applicative presenter made to be composed with other SpPresenter
 
-Most often, I am used to display other subclasses of ComposablePresenter or subclasses of AbstractWidgetPresenter.
+Most often, I am used to display other subclasses of SpPresenter or subclasses of SpAbstractWidgetPresenter.
 
 I collaborate with 
--  ValueHolder to managed some of my variables.
+- ValueHolder to managed some of my variables.
 - SpecFocusOrder when no focusOrder are specified.
 - SpecLayout
 - WindowPresenter or DialogWindowPresenter to display myself.
 
-A new subclass of ComposablePresenter must at least define initializeWidgets and defaultSpec on the class side.
+A new subclass of SpPresenter must at least define initializeWidgets and defaultSpec on the class side.
 
 I provide the following methods
 - aboutText: set the text displayed in the About.
-- title: set the title of the window.
+- initializeWindow: to set the title, and other information related to the window.
 - extent: set the initial size of the window, alternative possibility is define again initialExtent, it must be called before have displayed the widget. 
 - focusOrder: set an instance what manage the order of focus of the keyboard navigation.
 - bindKeyCombination:toAction: create a shortcut on keyboard what perform the block of the  action.
@@ -25,7 +25,7 @@ On my class side, I provide methods returning standard height and width for some
 todo
 - announce:
 - applyMenuModel: and neglectMenuModel:
-- keyStrokeForNextFocus: , giveFocusToNextFrom: and takeKeyboardFocus
+- keyStrokeForNextFocus:, giveFocusToNextFrom: and takeKeyboardFocus
 - ensureExtentFor:
 - hide
 - needRebuild
@@ -36,13 +36,13 @@ todo
 Window
 =======
 
-- openWithSpec instantiate a WindowPresenter using the lookup to found the layout to use.
-- openDialogWithSpec instanciate a DialogWindowPresenter using the lookup to found the layout to use.
+- openWithSpec instantiates a WindowPresenter using the lookup to found the layout to use.
+- openDialogWithSpec instanciates a DialogWindowPresenter using the lookup to found the layout to use.
 Their variants openWithSpec: and openDialogWithSpec:  use the layout parameter.
 
 These methods can be useful to manage the window
-- isDisplayed return true if the window of the widget is displayed
-- hasWindow return true if the widget have a window
+- isDisplayed returns true if the window of the widget is displayed
+- hasWindow returns true if the widget have a window
 - centered to center the window in the world.
 - delete to delete the window.
 
@@ -115,6 +115,21 @@ SpPresenter class >> iconNamed: aSymbol [
 	^ Smalltalk ui icons iconNamed: aSymbol
 ]
 
+{ #category : #'labelled-presenters' }
+SpPresenter class >> iconWidth [
+	^ 24
+]
+
+{ #category : #testing }
+SpPresenter class >> isAbstract [
+	^ self = SpPresenter
+]
+
+{ #category : #'labelled-presenters' }
+SpPresenter class >> labelWidth [
+	^ 100
+]
+
 { #category : #'instance creation' }
 SpPresenter class >> newApplication: anApplication [
 
@@ -159,7 +174,7 @@ SpPresenter class >> newApplication: anApplication owner: anOwningPresenter mode
 SpPresenter class >> on: aDomainObject [
 
 	"self 
-		deprecated: 'ComposablePresenters are instantiated in the context of an application!' 
+		deprecated: 'SpPresenters are instantiated in the context of an application!' 
 		on: '2019-02-26' 
 		in: #Pharo8."
 		
@@ -187,7 +202,7 @@ SpPresenter class >> title [
 { #category : #TOREMOVE }
 SpPresenter >> aboutText [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -244,15 +259,17 @@ SpPresenter >> announce: anAnnouncement [
 	self announcer announce: anAnnouncement
 ]
 
-{ #category : #events }
+{ #category : #'api-events' }
 SpPresenter >> announceDisplayed [
-
 	"When using a VersatileDialogPresenter the adapter is nil.
 	We do not know if that is a correct behaviour"
-	self announcer announce: (SpWidgetDisplayed new
-		presenter: self;
-		widget: (adapter ifNotNil: [ adapter widget]);
-		yourself).
+
+	self announcer
+		announce:
+			(SpWidgetDisplayed new
+				presenter: self;
+				widget: (adapter ifNotNil: [ adapter widget ]);
+				yourself)
 ]
 
 { #category : #accessing }
@@ -296,7 +313,7 @@ SpPresenter >> asPresenter [
 { #category : #TOREMOVE }
 SpPresenter >> askOkToClose [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -345,6 +362,11 @@ SpPresenter >> centeredRelativeTo: aModel [
 		w centeredRelativeTo: aModel ]
 ]
 
+{ #category : #initialization }
+SpPresenter >> connectPresenters [
+	"The method connectPresenters defines the interactions between the dif- ferent widgets. By connecting the behaviors of the different widgets it speci- fies the overall presentation, i.e., how the overall UI responds to interactions by the user. Usually this method consists of specifications of actions to per- form when a certain event is received by a widget. The whole interaction flow of the UI then emerges from the propagation of those events."
+]
+
 { #category : #private }
 SpPresenter >> createInstanceFor: aClassSymbol [
 	"Retrieve the class corresponding to aClassSymbol using the bindings, then create a new instance of theis class"
@@ -364,6 +386,11 @@ SpPresenter >> defaultSpec [
 SpPresenter >> defaultWindowPresenterClass [
 
 	^ SpWindowPresenter
+]
+
+{ #category : #'as yet unclassified' }
+SpPresenter >> defer: aBlockClosure [ 
+	self application defer: aBlockClosure
 ]
 
 { #category : #private }
@@ -472,6 +499,23 @@ SpPresenter >> giveFocusToPreviousFrom: aModel [
 			true ]
 ]
 
+{ #category : #'api-focus' }
+SpPresenter >> gtInspectorPreviewIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	self adapter ifNotNil: [ :w | w gtInspectorPreviewIn: composite ]
+]
+
+{ #category : #'api-focus' }
+SpPresenter >> gtInspectorSubPresentersIn: composite [
+	<gtInspectorPresentationOrder: 20>
+	composite tree
+		title: 'Sub presenters';
+		rootsExpanded;
+		display: [ :each | {each} ];
+		children: [ :each | each presenters ];
+		when: [ :each | each presenters isNotEmpty ]
+]
+
 { #category : #'private-focus' }
 SpPresenter >> handlesKeyboard: evt [
 
@@ -494,7 +538,7 @@ SpPresenter >> iconNamed: aSymbol [
 SpPresenter >> initialExtent [
 	
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -519,11 +563,20 @@ SpPresenter >> initialize [
 
 { #category : #initialization }
 SpPresenter >> initializePresenter [
-	"Used to specify the subwidgets, and/or to bind them together"
-
-	"By default, do not do anything"
+	"Now, presenters should implement #connectPresenters instead."
 
 	self property: #extent whenChangedDo: [ :ex | self withAdapterDo: [ :widget | (widget respondsTo: #extent:) ifTrue: [ widget extent: ex ] ] ]
+]
+
+{ #category : #initialization }
+SpPresenter >> initializePresenters [
+	"The method initializePresenters instantiates, saves in instance vari- ables, and partially configures the different widgets that will be part of the UI.
+	In general the initializePresenters method should follow the pattern:
+		• widget instantiation
+		• widget configuration specification
+		• specification of focus order"
+
+	"self subclassResponsibility"
 ]
 
 { #category : #'initialization - private' }
@@ -542,9 +595,11 @@ SpPresenter >> initializePrivateAnnouncer [
 
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateHooks [
-
+	self flag: #todo. "We should remove later #initializeWidgets and #initializePresenter."
 	self initializeWidgets.
+	self initializePresenters.
 	self initializePresenter.
+	self connectPresenters.
 	self updatePresenter.
 
 ]
@@ -559,8 +614,7 @@ SpPresenter >> initializePrivateValueHolders [
 
 { #category : #initialization }
 SpPresenter >> initializeWidgets [
-	
-	self subclassResponsibility
+	"Now, presenters should implement #initializePresenters instead."
 ]
 
 { #category : #initialization }
@@ -581,20 +635,20 @@ SpPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #'instance creation' }
-SpPresenter >> instantiate: aComposablePresenterClass [
-	"Instantiate a ComposablePresenter subclass and set its instance owner"
-	^ aComposablePresenterClass owner: self
+SpPresenter >> instantiate: aPresenterClass [
+	"Instantiate a SpPresenter subclass and set its instance owner"
+	^ aPresenterClass owner: self
 ]
 
 { #category : #'instance creation' }
-SpPresenter >> instantiate: aComposablePresenterClass on: aModel [
-	"Instantiate a ComposablePresenter subclass and set its instance owner and model"
-	^ aComposablePresenterClass owner: self on: aModel
+SpPresenter >> instantiate: aPresenterClass on: aModel [
+	"Instantiate a SpPresenter subclass and set its instance owner and model"
+	^ aPresenterClass owner: self on: aModel
 ]
 
 { #category : #'instance creation' }
 SpPresenter >> instantiatePresenters: aCollectionOfPairs [
-	"instantiatePresenters: is legacy code in ComposablePresenter and must not be used. It will be deprecated and removed."
+	"instantiatePresenters: is legacy code in SpPresenter and must not be used. It will be deprecated and removed."
 
 	"Used to instantiate multiple sub widget at once. Take aCollectionOfPairs where each odd element is an inst var name and each even element is a class name, create an instance from the class name and store it into the inst var"
 
@@ -611,7 +665,6 @@ SpPresenter >> instantiatePresenters: aCollectionOfPairs [
 
 { #category : #api }
 SpPresenter >> isBuilt [
-	
 	^ self isDisplayed
 ]
 
@@ -794,6 +847,12 @@ SpPresenter >> newSlider [
 ]
 
 { #category : #widgets }
+SpPresenter >> newStatusBar [
+
+	^ self instantiate: SpStatusBarPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newTable [
 
 	^ self instantiate: SpTablePresenter
@@ -967,7 +1026,7 @@ SpPresenter >> takeLastKeyboardFocus [
 { #category : #TOREMOVE }
 SpPresenter >> title [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -1027,12 +1086,9 @@ SpPresenter >> visibleIf: aValuable [
 	visible := aValuable
 ]
 
-{ #category : #events }
-SpPresenter >> whenDisplayDo: aBlockClosure [ 
-
-	self announcer 
-		when: SpWidgetDisplayed
-		do: aBlockClosure
+{ #category : #'api-events' }
+SpPresenter >> whenDisplayDo: aBlockClosure [
+	self announcer when: SpWidgetDisplayed do: aBlockClosure
 ]
 
 { #category : #'api-events' }
@@ -1061,7 +1117,7 @@ SpPresenter >> whenWindowChanged: aBlock [
 { #category : #TOREMOVE }
 SpPresenter >> windowIcon [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.

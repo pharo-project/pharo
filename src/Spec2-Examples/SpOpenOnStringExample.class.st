@@ -80,14 +80,7 @@ SpOpenOnStringExample >> check [
 ]
 
 { #category : #initialization }
-SpOpenOnStringExample >> initialize: aString [
-	label label: aString.
-	input text: aString.
-	textToReset := aString
-]
-
-{ #category : #initialization }
-SpOpenOnStringExample >> initializePresenter [
+SpOpenOnStringExample >> connectPresenters [
 	button action: [ input text: textToReset ].
 	input whenTextChangedDo: [ :text | label label: text ].
 	check
@@ -98,7 +91,14 @@ SpOpenOnStringExample >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpOpenOnStringExample >> initializeWidgets [
+SpOpenOnStringExample >> initialize: aString [
+	label label: aString.
+	input text: aString.
+	textToReset := aString
+]
+
+{ #category : #initialization }
+SpOpenOnStringExample >> initializePresenters [
 	label := self instantiate: SpLabelPresenter.
 	check := self instantiate: SpCheckBoxPresenter.
 	input := self instantiate: SpTextInputFieldPresenter.

@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #initialization }
-SpMorphicImageAdapter >> adapt: aComposablePresenter [
+SpMorphicImageAdapter >> adapt: aPresenter [
 
-	super adapt: aComposablePresenter.
+	super adapt: aPresenter.
 	widget
 		on: #click
 		send: #click

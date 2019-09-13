@@ -1,6 +1,6 @@
 Class {
 	#name : #SpTextInputFieldPresenterTest,
-	#superclass : #SpTextPresenterTest,
+	#superclass : #SpAbstractTextPresenterTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 
@@ -77,14 +77,6 @@ SpTextInputFieldPresenterTest >> testMaxLengthTruncatesText [
 	presenter maxLength: 10.
 	presenter text: '1234567890 ---'.
 	self assert: presenter text equals: '1234567890'
-]
-
-{ #category : #tests }
-SpTextInputFieldPresenterTest >> testPlaceholderIsSet [
-
-	presenter placeholder: 'enter something...'.
-	
-	self assert: presenter placeholder equals: 'enter something...'
 ]
 
 { #category : #tests }

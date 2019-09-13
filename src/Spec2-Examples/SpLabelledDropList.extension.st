@@ -10,6 +10,6 @@ SpLabelledDropList class >> example [
 SpLabelledDropList class >> setUpExample: example [
 	example
 		items: {'item 1' . 'item 2'};
-		displayBlock: [ :item | item asString ];
+		display: [ :item | item asString ];
 		extent: 400 @ 50
 ]

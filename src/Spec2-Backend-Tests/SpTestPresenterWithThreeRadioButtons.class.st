@@ -20,7 +20,7 @@ SpTestPresenterWithThreeRadioButtons class >> defaultSpec [
 ]
 
 { #category : #initialization }
-SpTestPresenterWithThreeRadioButtons >> initializePresenter [ 
+SpTestPresenterWithThreeRadioButtons >> connectPresenters [ 
 
 	radio1 state: false.
 	radio2 state: true.
@@ -29,7 +29,7 @@ SpTestPresenterWithThreeRadioButtons >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpTestPresenterWithThreeRadioButtons >> initializeWidgets [
+SpTestPresenterWithThreeRadioButtons >> initializePresenters [
 	
 	radio1 := self newRadioButton
 					label: 'radio1';

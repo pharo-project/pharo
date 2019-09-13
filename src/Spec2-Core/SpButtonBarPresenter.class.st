@@ -46,6 +46,13 @@ SpButtonBarPresenter >> items [
 	^ items value
 ]
 
+{ #category : #api }
+SpButtonBarPresenter >> items: aCollectionOfButtonPresenters [
+	items := OrderedCollection new asValueHolder.
+	items addAll: aCollectionOfButtonPresenters .
+^ self
+]
+
 { #category : #accessing }
 SpButtonBarPresenter >> placeAtEnd [
 

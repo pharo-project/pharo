@@ -84,22 +84,6 @@ SpMorphicTextInputFieldAdapter >> isPassword [
 ]
 
 { #category : #accessing }
-SpMorphicTextInputFieldAdapter >> placeHolderText [
-	
-	^ widget ghostText 
-]
-
-{ #category : #'widget API' }
-SpMorphicTextInputFieldAdapter >> placeholder [
-	^ self model placeholder
-]
-
-{ #category : #'widget API' }
-SpMorphicTextInputFieldAdapter >> placeholder: aText [
-	^ self model placeholder: aText
-]
-
-{ #category : #accessing }
 SpMorphicTextInputFieldAdapter >> text: aString [
 	widget
 		setText: aString;

@@ -55,8 +55,9 @@ SpNotebookPresenter >> pages [
 { #category : #accessing }
 SpNotebookPresenter >> pages: aCollection [
 
-	aCollection do: [ :each |
-		self addPage: each ]
+	aCollection do: [ :each | each owner: self ].
+	pagesHolder rawValue: aCollection.
+	pagesHolder valueChanged: nil
 ]
 
 { #category : #private }

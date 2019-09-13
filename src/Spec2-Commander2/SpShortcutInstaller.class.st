@@ -26,6 +26,6 @@ SpShortcutInstaller >> visitCommand: aCmCommand [
 		ifFalse: [ ^ self ].
 	self presenter
 		bindKeyCombination: aCmCommand shortcutKey
-		toAction: [ aCmCommand canBeRun
+		toAction: [ aCmCommand canBeExecuted
 				ifTrue: [ aCmCommand execute ] ]
 ]

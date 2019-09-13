@@ -18,6 +18,6 @@ SpDemoRadioButtonsPresenter class >> defaultSpec [
 ]
 
 { #category : #initialization }
-SpDemoRadioButtonsPresenter >> initializeWidgets [
+SpDemoRadioButtonsPresenter >> initializePresenters [
 	radioButtonExample := self instantiate: SpRadioButtonExample
 ]

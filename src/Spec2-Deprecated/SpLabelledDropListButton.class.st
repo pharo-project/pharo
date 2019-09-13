@@ -92,8 +92,8 @@ SpLabelledDropListButton >> icon: anIcon [
 ]
 
 { #category : #initialization }
-SpLabelledDropListButton >> initializeWidgets [
-super initializeWidgets.
+SpLabelledDropListButton >> initializePresenters [
+super initializePresenters.
 	self content: SpDropListButton.
 ]
 

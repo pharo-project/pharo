@@ -8,7 +8,8 @@ Class {
 	#name : #SpMorphicButtonAdapter,
 	#superclass : #SpAbstractMorphicAdapter,
 	#instVars : [
-		'subMenuWidget'
+		'subMenuWidget',
+		'styleName'
 	],
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
@@ -167,6 +168,18 @@ SpMorphicButtonAdapter >> showSubMenuIfPresent [
 SpMorphicButtonAdapter >> state [
 
 	^ self model state
+]
+
+{ #category : #accessing }
+SpMorphicButtonAdapter >> styleName [
+
+	^ styleName ifNil: [ super styleName ]
+]
+
+{ #category : #accessing }
+SpMorphicButtonAdapter >> styleName: aString [ 
+
+	styleName := aString
 ]
 
 { #category : #accessing }

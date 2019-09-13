@@ -10,25 +10,6 @@ SpTreeMultipleSelectionMode >> isMultipleSelection [
 	^ true
 ]
 
-{ #category : #accessing }
-SpTreeMultipleSelectionMode >> presenter: aTreeTablePresenter [ 
-
-	presenter := aTreeTablePresenter 
-]
-
-{ #category : #selection }
-SpTreeMultipleSelectionMode >> replaceOtherSelectionMode: anotherSelectionMode [
-
-	| originalValueHolder |
-
-	selection := anotherSelectionMode selectedPath.
-	originalValueHolder := anotherSelectionMode observablePropertyNamed: #selection.
-	
-	originalValueHolder announcer subscriptions subscriptions do: [ 
-		self halt.	
-	]
-]
-
 { #category : #selection }
 SpTreeMultipleSelectionMode >> selectPath: aPath [ 
 	

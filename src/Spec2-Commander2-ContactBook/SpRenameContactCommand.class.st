@@ -18,7 +18,7 @@ SpRenameContactCommand >> asSpecCommand [
 ]
 
 { #category : #hooks }
-SpRenameContactCommand >> canBeRun [
+SpRenameContactCommand >> canBeExecuted [
 	^ self context isContactSelected
 ]
 
@@ -32,6 +32,7 @@ SpRenameContactCommand >> execute [
 SpRenameContactCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'Rename'; "This is the name of the command that will be shown to the user."
-		basicDescription: 'Rename the selected contact.'. "This is the description of the command that will be shown to the user."
+		name: 'Rename';
+		"This is the name of the command that will be shown to the user."
+			description: 'Rename the selected contact.'	"This is the description of the command that will be shown to the user."
 ]

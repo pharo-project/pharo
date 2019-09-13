@@ -1,6 +1,6 @@
 Class {
 	#name : #SpListSelectionPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Examples'
 }
 

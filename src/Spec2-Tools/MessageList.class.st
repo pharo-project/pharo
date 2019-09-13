@@ -113,7 +113,7 @@ MessageList >> initialize [
 ]
 
 { #category : #initialization }
-MessageList >> initializeWidgets [
+MessageList >> initializePresenters [
 	listModel := self newTable.
 
 	listModel

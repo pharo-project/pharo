@@ -83,7 +83,7 @@ SpDynamicWidgetChange >> initialize [
 ]
 
 { #category : #initialization }
-SpDynamicWidgetChange >> initializeWidgets [
+SpDynamicWidgetChange >> initializePresenters [
 
 	button := self newButton.
 	bottom := self newList.

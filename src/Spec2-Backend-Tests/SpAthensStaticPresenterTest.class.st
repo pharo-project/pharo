@@ -1,6 +1,6 @@
 Class {
 	#name : #SpAthensStaticPresenterTest,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
+	#superclass : #SpAbstractWidgetAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
@@ -26,6 +26,20 @@ SpAthensStaticPresenterTest >> classToTest [
 SpAthensStaticPresenterTest >> initializeTestedInstance [
 	presenter drawBlock: [ "nothing to do" ].
 	presenter surfaceExtent: 800@600
+]
+
+{ #category : #accessing }
+SpAthensStaticPresenterTest >> testContextMenu [
+	| menu changed |
+	
+	self assert: presenter contextMenu isNil.
+	menu := SpMenuPresenter new.
+	changed := false.
+	presenter whenMenuChangedDo: [ 
+		changed := true. ].
+	presenter contextMenu: menu.
+	self assert: presenter contextMenu equals: menu.
+	self assert: changed
 ]
 
 { #category : #accessing }

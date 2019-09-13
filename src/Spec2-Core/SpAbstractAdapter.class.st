@@ -20,10 +20,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpAbstractAdapter class >> adapt: aComposablePresenter [
+SpAbstractAdapter class >> adapt: aPresenter [
 	
 	^ self new
-		adapt: aComposablePresenter;
+		adapt: aPresenter;
 		yourself
 ]
 
@@ -48,6 +48,11 @@ SpAbstractAdapter class >> allAdapters [
 	^ self subclassResponsibility
 ]
 
+{ #category : #testing }
+SpAbstractAdapter class >> isAbstract [
+	^ self = SpAbstractAdapter
+]
+
 { #category : #accessing }
 SpAbstractAdapter class >> owner: anOwner [
 
@@ -55,10 +60,10 @@ SpAbstractAdapter class >> owner: anOwner [
 ]
 
 { #category : #initialization }
-SpAbstractAdapter >> adapt: aComposablePresenter [
+SpAbstractAdapter >> adapt: aPresenter [
 
-	model := aComposablePresenter.
-	aComposablePresenter addDependent: self.
+	model := aPresenter.
+	aPresenter addDependent: self.
 
 	widget := self buildWidget.
 ]

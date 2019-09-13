@@ -19,26 +19,6 @@ CmCommandGroupDecorator >> allCommands [
 	^ self decoratedGroup allCommands
 ]
 
-{ #category : #accessing }
-CmCommandGroupDecorator >> basicDescription [
-	^ self decoratedGroup basicDescription
-]
-
-{ #category : #accessing }
-CmCommandGroupDecorator >> basicDescription: aString [
-	self decoratedGroup basicDescription: aString
-]
-
-{ #category : #accessing }
-CmCommandGroupDecorator >> basicName [
-	^ self decoratedGroup basicName
-]
-
-{ #category : #accessing }
-CmCommandGroupDecorator >> basicName: aString [
-	self decoratedGroup basicName: aString
-]
-
 { #category : #'public-api' }
 CmCommandGroupDecorator >> commandOrGroupNamed: aString [
 	^ self decoratedGroup commandOrGroupNamed: aString
@@ -69,6 +49,21 @@ CmCommandGroupDecorator >> description [
 	^ self decoratedGroup description
 ]
 
+{ #category : #accessing }
+CmCommandGroupDecorator >> description: aString [
+	self decoratedGroup description: aString
+]
+
+{ #category : #accessing }
+CmCommandGroupDecorator >> dynamicDescription [
+	^ self decoratedGroup dynamicDescription
+]
+
+{ #category : #accessing }
+CmCommandGroupDecorator >> dynamicName [
+	^ self decoratedGroup dynamicName
+]
+
 { #category : #'public-api' }
 CmCommandGroupDecorator >> entries [
 	^ self decoratedGroup entries
@@ -92,6 +87,11 @@ CmCommandGroupDecorator >> hasEntryNamed: aString [
 { #category : #accessing }
 CmCommandGroupDecorator >> name [
 	^ self decoratedGroup name
+]
+
+{ #category : #accessing }
+CmCommandGroupDecorator >> name: aString [
+	self decoratedGroup name: aString
 ]
 
 { #category : #'public-api' }

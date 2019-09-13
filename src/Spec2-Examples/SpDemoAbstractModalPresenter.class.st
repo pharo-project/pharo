@@ -31,7 +31,7 @@ SpDemoAbstractModalPresenter >> explanation [
 ]
 
 { #category : #initialization }
-SpDemoAbstractModalPresenter >> initializeWidgets [
+SpDemoAbstractModalPresenter >> initializePresenters [
 	explanation := self newText.
 	
 	explanation text: self content

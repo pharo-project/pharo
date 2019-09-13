@@ -4,7 +4,7 @@ Extension { #name : #SpPresenter }
 SpPresenter >> aboutText: aString [
 	self
 		deprecated:
-			'With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+			'With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
@@ -15,7 +15,7 @@ SpPresenter >> aboutText: aString [
 SpPresenter >> askOkToClose: aBoolean [
 	self
 		deprecated:
-			'With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+			'With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
@@ -130,7 +130,7 @@ SpPresenter >> specSpacer [
 SpPresenter >> title: aString [
 	self
 		deprecated:
-			'With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+			'With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.
@@ -151,7 +151,7 @@ SpPresenter >> widget [
 SpPresenter >> windowIcon: aForm [
 	self
 		deprecated:
-			'With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+			'With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.'.

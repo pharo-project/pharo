@@ -42,7 +42,7 @@ SpRadioButtonExample class >> title [
 ]
 
 { #category : #initialization }
-SpRadioButtonExample >> initializePresenter [
+SpRadioButtonExample >> connectPresenters [
 	button1 whenActivatedDo: [ self updateLabel ].
 	button1 whenDeactivatedDo: [ self updateLabel ].
 
@@ -52,7 +52,7 @@ SpRadioButtonExample >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpRadioButtonExample >> initializeWidgets [
+SpRadioButtonExample >> initializePresenters [
 	button1 := self newRadioButton.
 	button2 := self newRadioButton.
 	button3 := self newRadioButton.

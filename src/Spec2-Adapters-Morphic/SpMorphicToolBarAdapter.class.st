@@ -12,24 +12,11 @@ SpMorphicToolBarAdapter >> addModelTo: toolBarMorph [
 
 	toolBarMorph displayMode: self model displayMode. 
 	toolBarMorph height: self model displayMode height.
+	toolBarMorph setBalloonText: self model help.
 
-	self model items 
-		at: SpToolBarItemPosition left 
-		ifPresent: [ :items |
-			items do: [ :each | 
-				toolBarMorph addItemLeft: (self 
-					configureItem: each 
-					morph: each buildWithSpec 
-					toolBar: toolBarMorph) ] ].
+	self model whenItemsChangeDo: [self updateItems: toolBarMorph].
 
-	self model items 
-		at: SpToolBarItemPosition right 
-		ifPresent: [ :items |
-			items do: [ :each | 
-				toolBarMorph addItemRight: (self 
-					configureItem: each 
-					morph: each buildWithSpec 
-					toolBar: toolBarMorph) ] ]
+	self updateItems: toolBarMorph.
 ]
 
 { #category : #factory }
@@ -54,4 +41,37 @@ SpMorphicToolBarAdapter >> configureItem: itemModel morph: itemMorph toolBar: to
 		item: itemModel.
 		
 	^ itemMorph
+]
+
+{ #category : #testing }
+SpMorphicToolBarAdapter >> hasButtonWithLabel: aString [
+
+	^ (self widget leftPanel submorphs , self widget rightPanel submorphs)
+		detect: [ :e | (e isKindOf: SpToolBarButtonMorph) and: [ e label = aString ] ]
+		ifFound: [ true ]
+		ifNone: [ false ]
+]
+
+{ #category : #testing }
+SpMorphicToolBarAdapter >> numberOfItems [
+	
+	^ self widget leftPanel submorphs size + self widget rightPanel submorphs size
+]
+
+{ #category : #factory }
+SpMorphicToolBarAdapter >> updateItems: toolBarMorph [
+
+	toolBarMorph clearItems.
+
+	self model leftItems do: [ :each | 
+		toolBarMorph addItemLeft: (self 
+			configureItem: each 
+			morph: each buildWithSpec 
+			toolBar: toolBarMorph) ].
+
+	self model rightItems do: [ :each | 
+		toolBarMorph addItemRight: (self 
+			configureItem: each 
+			morph: each buildWithSpec 
+			toolBar: toolBarMorph) ]
 ]

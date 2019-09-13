@@ -27,6 +27,15 @@ SpSearchableList class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #examples }
+SpSearchableList class >> example [
+	<sampleInstance>
+	"self example"
+
+	^ self new
+		items: #(#aaa #abc #axz #bbb #bfbg #bof #c); openWithSpec
+]
+
 { #category : #deprecation }
 SpSearchableList class >> isDeprecated [
 	"Now lists have a filter integrated in them."
@@ -35,17 +44,19 @@ SpSearchableList class >> isDeprecated [
 ]
 
 { #category : #initialization }
-SpSearchableList >> initializePresenter [
+SpSearchableList >> connectPresenters [
 	searchPresenter
-		whenTextChangedDo:
-			[ :newText |
-			searchPresenter getText asLowercase
+		whenTextChangedDo: [ :newText | 
+			searchPresenter text asLowercase
 				ifEmpty: [ listPresenter items: baseItems ]
-				ifNotEmpty: [ :text | listPresenter items: (baseItems select: [ :element | element asLowercase beginsWith: text ]) ] ]
+				ifNotEmpty: [ :text | 
+					listPresenter
+						items:
+							(baseItems select: [ :element | element asLowercase beginsWith: text ]) ] ]
 ]
 
 { #category : #initialization }
-SpSearchableList >> initializeWidgets [
+SpSearchableList >> initializePresenters [
 	listPresenter := self newList.
 	searchPresenter := self newTextInput.
 	searchPresenter

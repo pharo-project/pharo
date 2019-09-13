@@ -81,7 +81,7 @@ self subclassResponsibility
 ]
 
 { #category : #initialization }
-SpAbstractTwoButtons >> initializeWidgets [
+SpAbstractTwoButtons >> initializePresenters [
 	firstButton := self instantiate: SpButtonPresenter.
 	secondButton := self instantiate: SpButtonPresenter.
 	self initializeButtons.

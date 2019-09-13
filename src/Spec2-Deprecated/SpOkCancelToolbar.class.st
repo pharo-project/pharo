@@ -69,6 +69,13 @@ SpOkCancelToolbar >> cancelled: aBoolean [
 ]
 
 { #category : #initialization }
+SpOkCancelToolbar >> connectPresenters [
+
+	super connectPresenters.
+	cancelButton action: [ self performCancelAction ]
+]
+
+{ #category : #initialization }
 SpOkCancelToolbar >> initialize [
 	cancelled := false.
 	cancelAction := [ true ].
@@ -76,16 +83,9 @@ SpOkCancelToolbar >> initialize [
 ]
 
 { #category : #initialization }
-SpOkCancelToolbar >> initializePresenter [
+SpOkCancelToolbar >> initializePresenters [
 
-	super initializePresenter.
-	cancelButton action: [ self performCancelAction ]
-]
-
-{ #category : #initialization }
-SpOkCancelToolbar >> initializeWidgets [
-
-	super initializeWidgets.
+	super initializePresenters.
 	cancelButton := self newButton.
 
 	self registerCancelButtonEvents.

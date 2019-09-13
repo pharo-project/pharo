@@ -13,45 +13,45 @@ Trait {
 }
 
 { #category : #accessing }
-CmTWithBasicNameAndDescription >> basicDescription [
+CmTWithBasicNameAndDescription >> description [
 	^ basicDescription
 ]
 
 { #category : #accessing }
-CmTWithBasicNameAndDescription >> basicDescription: anObject [
+CmTWithBasicNameAndDescription >> description: anObject [
 	basicDescription := anObject
 ]
 
 { #category : #accessing }
-CmTWithBasicNameAndDescription >> basicName [
-	^ basicName
-]
-
-{ #category : #accessing }
-CmTWithBasicNameAndDescription >> basicName: anObject [
-	basicName := anObject
-]
-
-{ #category : #accessing }
-CmTWithBasicNameAndDescription >> description [
+CmTWithBasicNameAndDescription >> dynamicDescription [
 	"This hook is called to generate a description dynamically.
 	 In the case of a command, the context can be used to provide additional
 	 contextual information to the String returned.
 	 When entering this method, one can expect that the context can be accessed
 	 through a call to #context method.
-	 By default, my #basicDescription is returned.
+	 By default, my #description is returned.
 	"
-	^ self basicDescription
+	^ self description
 ]
 
 { #category : #accessing }
-CmTWithBasicNameAndDescription >> name [
+CmTWithBasicNameAndDescription >> dynamicName [
 	"This hook is called to generate a name dynamically.
 	 In the case of a command, the context can be used to provide additional
 	 contextual information to the String returned.
 	 When entering this method, one can expect that the context can be accessed
 	 through a call to #context method.
-	 By default, my #basicName is returned.
+	 By default, my #name is returned.
 	"
-	^ self basicName
+	^ self name
+]
+
+{ #category : #accessing }
+CmTWithBasicNameAndDescription >> name [
+	^ basicName
+]
+
+{ #category : #accessing }
+CmTWithBasicNameAndDescription >> name: anObject [
+	basicName := anObject
 ]

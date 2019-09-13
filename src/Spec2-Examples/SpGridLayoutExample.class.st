@@ -38,6 +38,7 @@ SpGridLayoutExample class >> defaultSpec [
 			yourself);
 		add: (SpGridLayout new
 			beColumnHomogeneous;
+			beRowNotHomogeneous;
 			add: 'Border Width' 			at: 1@1; add: #borderWidth 		at: 2@1;
 			add: 'Column Spacing'			at: 1@2; add: #columnSpacing 	at: 2@2;
 			add: 'Row spacing'				at: 1@3; add: #rowSpacing 		at: 2@3;
@@ -157,7 +158,7 @@ SpGridLayoutExample class >> openWithGtk [
 ]
 
 { #category : #initialization }
-SpGridLayoutExample >> initializeWidgets [
+SpGridLayoutExample >> initializePresenters [
 
 	"example elements"
 	"element11 := self newMorph morph: (self newSimpleButtonMorph: '1x1' color: Color red).

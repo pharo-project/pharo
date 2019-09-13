@@ -22,8 +22,8 @@ SpChangePhoneCommand >> execute [
 SpChangePhoneCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'Change phone';
-		basicDescription: 'Change the phone number of the contact.'
+		name: 'Change phone';
+		description: 'Change the phone number of the contact.'
 ]
 
 { #category : #accessing }
