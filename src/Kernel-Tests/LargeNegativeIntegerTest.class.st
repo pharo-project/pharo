@@ -8,6 +8,17 @@ Class {
 }
 
 { #category : #tests }
+LargeNegativeIntegerTest >> testByteAt [
+
+	| lni |
+	lni := -114605103402541699037609980192546360895434064385.
+	1 to: 20 do: [:i | | digit |
+		digit := lni byteAt: i.
+		self assert: i equals: digit]
+
+]
+
+{ #category : #tests }
 LargeNegativeIntegerTest >> testDenormalizedPrintString [
 	"Check that an un-normalized instance behaves reasonably."
 
@@ -26,22 +37,11 @@ LargeNegativeIntegerTest >> testDenormalizedPrintString [
 ]
 
 { #category : #tests }
-LargeNegativeIntegerTest >> testDigitAt [
-
-	| lni |
-	lni := -114605103402541699037609980192546360895434064385.
-	1 to: 20 do: [:i | | digit |
-		digit := lni digitAt: i.
-		self assert: i equals: digit]
-
-]
-
-{ #category : #tests }
 LargeNegativeIntegerTest >> testDigitAtPut [
 
 	| lni |
 	lni := LargeNegativeInteger new: 20.
-	1 to: 20 do: [:i | lni digitAt: i put: i].
+	1 to: 20 do: [:i | lni byteAt: i put: i].
 	self assert: -114605103402541699037609980192546360895434064385 equals: lni
 
 ]
@@ -51,7 +51,7 @@ LargeNegativeIntegerTest >> testDigitLength [
 
 	| lni |
 	lni := -114605103402541699037609980192546360895434064385.
-	self assert: 20 equals: lni digitLength
+	self assert: 20 equals: lni bytesCount
 
 ]
 
@@ -95,18 +95,18 @@ LargeNegativeIntegerTest >> testReplaceFromToWithStartingAt [
 
 	| lni20 lni7 |
 	lni20 := LargeNegativeInteger new: 20.
-	1 to: 20 do: [:i | lni20 digitAt: i put: i].
+	1 to: 20 do: [:i | lni20 byteAt: i put: i].
 	lni7 := LargeNegativeInteger new: 7.
-	1 to: 7 do: [:i | lni7 digitAt: i put: 11 - i].
+	1 to: 7 do: [:i | lni7 byteAt: i put: 11 - i].
 	lni20 replaceFrom: 6 to: 10 with: lni7 startingAt: 2.
 	"unmodified digits"
 	(1 to: 5) , (11 to: 20) do: [:e | | digit |
-		digit := lni20 digitAt: e.
+		digit := lni20 byteAt: e.
 		self assert: e equals: digit].
 	"replaced digits"
 	6 to: 10 do: [:e | | digit replacementDigit |
-		digit := lni20 digitAt: e.
-		replacementDigit := lni7 digitAt: e - 4.
+		digit := lni20 byteAt: e.
+		replacementDigit := lni7 byteAt: e - 4.
 		self assert: replacementDigit equals: digit]
 
 ]

@@ -343,10 +343,10 @@ MatrixTransform2x3 >> restoreEndianness [
 			do: 
 				[ :i | 
 				w := self basicAt: i.
-				b1 := w digitAt: 1.
-				b2 := w digitAt: 2.
-				b3 := w digitAt: 3.
-				b4 := w digitAt: 4.
+				b1 := w byteAt: 1.
+				b2 := w byteAt: 2.
+				b3 := w byteAt: 3.
+				b4 := w byteAt: 4.
 				w := (b1 << 24) + (b2 << 16) + (b3 << 8) + b4.
 				self 
 					basicAt: i

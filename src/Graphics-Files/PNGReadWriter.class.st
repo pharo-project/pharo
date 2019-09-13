@@ -487,7 +487,7 @@ PNGReadWriter >> copyPixelsRGB: y [
 			[i := 1.
 			1 to: width do:
 				[ :x |
-				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue digitAt: k) ~= (thisScanline at: i + 6 - k)]])
+				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) ~= (thisScanline at: i + 6 - k)]])
 					ifTrue:
 						[pixel
 							at: 3 put: (thisScanline at: i);
@@ -535,7 +535,7 @@ PNGReadWriter >> copyPixelsRGB: y at: startX by: incX [
 			xx := startX+1.
 			1 to: loopsToDo do:
 				[ :j |
-				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue digitAt: k) ~= (thisScanline at: i + 6 - k)]])
+				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) ~= (thisScanline at: i + 6 - k)]])
 					ifTrue:
 						[pixel
 							at: 3 put: (thisScanline at: i);
