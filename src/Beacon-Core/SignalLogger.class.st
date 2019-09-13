@@ -88,15 +88,6 @@ SignalLogger class >> start [
 	^ self instance start
 ]
 
-{ #category : #convenience }
-SignalLogger class >> startBlocGlobalLogger [
-
-	BlSpaceRenderSignal ignore.
-	BlTaskExecutionSignal ignoreRepeatedTasks.
-	self startSingleGlobalLogger.
-
-]
-
 { #category : #registering }
 SignalLogger class >> startFor: anAnnouncementOrASetOfAnnouncements [
 	"Start listening to announcements. 
