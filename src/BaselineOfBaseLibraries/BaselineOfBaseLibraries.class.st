@@ -11,7 +11,6 @@ BaselineOfBaseLibraries >> baseline: spec [
 	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
 		
 		spec
 			baseline: 'SUnitCore'
