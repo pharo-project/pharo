@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 SpComponentListFastTableDataSource >> cellColumn: column row: rowIndex [
-	| displayValue cell item |
+	| cell item |
 	item := self model presenters at: rowIndex.
 	cell := FTCellMorph new
 		cellInset: 5;

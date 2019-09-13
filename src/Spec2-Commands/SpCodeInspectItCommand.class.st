@@ -26,8 +26,5 @@ SpCodeInspectItCommand >> execute [
 
 { #category : #execution }
 SpCodeInspectItCommand >> inspectObject: anObject [
-	
-	self flag: #TODO. "this is just result inspectIt. I'm putting this now to show the flow"
-	StInspector openOn: anObject
-
+	anObject inspect
 ]

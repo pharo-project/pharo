@@ -9,10 +9,10 @@ Class {
 
 { #category : #running }
 SpMorphicBoxLayoutTest >> tearDown [
-
-	instance ifNotNil: [ 
-		instance close.
-		instance := nil ]
+	instance
+		ifNotNil: [ instance close.
+			instance := nil ].
+	super tearDown
 ]
 
 { #category : #tests }

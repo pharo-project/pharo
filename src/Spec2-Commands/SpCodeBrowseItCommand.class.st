@@ -17,10 +17,8 @@ SpCodeBrowseItCommand class >> defaultShortcutKey [
 ]
 
 { #category : #private }
-SpCodeBrowseItCommand >> browseClass: aClass [ 
-
-	self flag: #TODO. "this is just browseIt. I'm putting this now to show the flow"
-	StSystemBrowser openOnClass: aClass
+SpCodeBrowseItCommand >> browseClass: aClass [
+	aClass browse
 ]
 
 { #category : #execution }
