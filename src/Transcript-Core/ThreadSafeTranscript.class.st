@@ -119,8 +119,8 @@ ThreadSafeTranscript >> critical: block [
 
 { #category : #streaming }
 ThreadSafeTranscript >> endEntry [
-"	Signal to #step to display all the characters since the last #step. 
-	Stream is reset there.
+"	
+	The next #stepGlobal message (usually invoked by Morhic stepping) will raise an #appendEntry update and reset the stream.
 "  
   	self critical: [ deferredEndEntry := true ].
 ]
