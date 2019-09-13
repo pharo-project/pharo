@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfBaseLibrairies,
+	#name : #BaselineOfBaseLibraries,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfBaseLibraries
 }
 
 { #category : #baselines }
-BaselineOfBaseLibrairies >> baseline: spec [
+BaselineOfBaseLibraries >> baseline: spec [
 	<baseline>
 	| repository |
 	repository := self packageRepositoryURL.
