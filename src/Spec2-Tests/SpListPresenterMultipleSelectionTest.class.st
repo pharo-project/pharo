@@ -1,6 +1,6 @@
 Class {
 	#name : #SpListPresenterMultipleSelectionTest,
-	#superclass : #SpTestCase,
+	#superclass : #SpTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 
@@ -11,11 +11,10 @@ SpListPresenterMultipleSelectionTest >> classToTest [
 
 { #category : #running }
 SpListPresenterMultipleSelectionTest >> setUp [
-
 	super setUp.
 	presenter
 		beMultipleSelection;
-		items: #(10 20 30).
+		items: #(10 20 30)
 ]
 
 { #category : #'tests-select-index' }

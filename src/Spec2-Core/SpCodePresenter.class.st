@@ -52,8 +52,45 @@ SpCodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
+{ #category : #private }
+SpCodePresenter >> buildCodeKeyBindings [
+	
+	^ self codeCommandGroup asKMCategory
+]
+
+{ #category : #private }
+SpCodePresenter >> buildCodeMenu [
+	
+	
+	^ self codeCommandGroup asMenuPresenter
+]
+
+{ #category : #private }
+SpCodePresenter >> codeCommandGroup [
+	| group |
+	
+	group := CmCommandGroup forSpec
+		beDisplayedAsGroup;
+		yourself.
+		
+	self flag: #TODO. "This needs to be discoverable (otherwise is not extensible)
+	ot at least, we need to add a plug for extensions"
+	{ 	
+		SpCodeDoItCommand. 
+		SpCodePrintItCommand. 
+		SpCodeInspectItCommand. 
+		SpCodeDebugItCommand. 
+		SpCodeProfileItCommand.
+		SpCodeBrowseItCommand.
+	} do: [ :eachClass | 
+		group register: (eachClass forSpecContext: self) ].
+
+	^ group
+]
+
 { #category : #'api-shortcuts' }
 SpCodePresenter >> contextKeyBindings [
+	"contextKeyBindings stores a KMCategory with keybindings for this presenter"
 
 	^ contextKeyBindings
 ]
@@ -110,8 +147,8 @@ SpCodePresenter >> initialize [
 	
 	self registerEventsForStyling.
 	
-	self contextMenu: [ self getMenu ]"self buildCodeMenu".
-	"self contextKeyBindings: self buildCodeKeyBindings"
+	self contextMenu: self buildCodeMenu.
+	self contextKeyBindings: self buildCodeKeyBindings
 ]
 
 { #category : #initialization }

@@ -6,6 +6,7 @@ Class {
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
 		'#presenter => SpObservableSlot',
+		'#initialPosition => SpObservableSlot',
 		'#initialExtent => SpObservableSlot',
 		'#isResizeable => SpObservableSlot',
 		'#menu => SpObservableSlot',
@@ -208,10 +209,8 @@ SpWindowPresenter >> hasStatusBar [
 ]
 
 { #category : #testing }
-SpWindowPresenter >> hasToolBar [
-	
-	^ self toolBar notNil
-	and: [ self toolBar notEmpty ]
+SpWindowPresenter >> hasToolbar [
+	^ self toolBar notNil and: [ self toolBar notEmpty ]
 ]
 
 { #category : #api }
@@ -222,6 +221,18 @@ SpWindowPresenter >> initialExtent [
 { #category : #api }
 SpWindowPresenter >> initialExtent: anExtent [
 	initialExtent := anExtent
+]
+
+{ #category : #api }
+SpWindowPresenter >> initialPosition [
+
+	^ initialPosition
+]
+
+{ #category : #api }
+SpWindowPresenter >> initialPosition: aPoint [
+
+	initialPosition := aPoint
 ]
 
 { #category : #initialization }
@@ -336,13 +347,10 @@ SpWindowPresenter >> okToChange [
 
 { #category : #private }
 SpWindowPresenter >> openWithSpecLayout: aSpec [
-
 	self buildWithSpecLayout: aSpec.
 	self changed: #open with: #().
-	
 	self allPresenters do: [ :each | each announceDisplayed ].
-
-	self updateTitle.
+	self updateTitle
 ]
 
 { #category : #accessing }
@@ -413,9 +421,8 @@ SpWindowPresenter >> toolBar: aToolbarPresenter [
 
 { #category : #'private-traversing' }
 SpWindowPresenter >> traversePresentersDo: aBlock excluding: excludes [
-
 	super traversePresentersDo: aBlock excluding: excludes.
-	presenter traversePresentersDo: aBlock excluding: excludes.
+	presenter traversePresentersDo: aBlock excluding: excludes
 ]
 
 { #category : #api }
@@ -437,12 +444,26 @@ SpWindowPresenter >> updateTitle [
 
 { #category : #'api-events' }
 SpWindowPresenter >> whenClosedDo: aBlock [
-	self property: #isClosed whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
+	
+	self 
+		property: #isClosed 
+		whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
 ]
 
 { #category : #'api-events' }
 SpWindowPresenter >> whenOpenedDo: aBlock [
-	self property: #isClosed whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+
+	self 
+		property: #isClosed 
+		whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+]
+
+{ #category : #'api-events' }
+SpWindowPresenter >> whenWillCloseDo: aBlock [
+	
+	self announcer 
+		when: SpWindowWillClose
+		do: aBlock
 ]
 
 { #category : #accessing }

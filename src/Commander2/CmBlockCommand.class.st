@@ -8,7 +8,7 @@ Class {
 	#superclass : #CmCommand,
 	#instVars : [
 		'block',
-		'canBeRunBlock'
+		'canBeExecutedBlock'
 	],
 	#category : #'Commander2-Commands'
 }
@@ -23,25 +23,24 @@ CmBlockCommand >> block: anObject [
 	block := anObject
 ]
 
-{ #category : #hooks }
-CmBlockCommand >> canBeRun [
-	self hasContext "When no context is set, we consider the command to be runnable. So we call super."
-		ifFalse: [ ^ super canBeRun ].
-		
-	^ self canBeRunBlock value: self context
+{ #category : #testing }
+CmBlockCommand >> canBeExecuted [
+	self hasContext
+		ifFalse: [ ^ super canBeExecuted ].	"When no context is set, we consider the command to be runnable. So we call super."
+	^ self canBeExecutedBlock value: self context
 ]
 
 { #category : #accessing }
-CmBlockCommand >> canBeRunBlock [
-	^ canBeRunBlock
+CmBlockCommand >> canBeExecutedBlock [
+	^ canBeExecutedBlock
 ]
 
 { #category : #accessing }
-CmBlockCommand >> canBeRunBlock: anObject [
-	canBeRunBlock := anObject
+CmBlockCommand >> canBeExecutedBlock: anObject [
+	canBeExecutedBlock := anObject
 ]
 
-{ #category : #execution }
+{ #category : #executing }
 CmBlockCommand >> execute [
 	self hasContext
 		ifTrue: [ block value: self context ]
@@ -51,5 +50,5 @@ CmBlockCommand >> execute [
 { #category : #initialization }
 CmBlockCommand >> initialize [
 	super initialize.
-	self canBeRunBlock: [ :ctxt | true ]
+	self canBeExecutedBlock: [ :ctxt | true ]
 ]

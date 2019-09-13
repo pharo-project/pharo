@@ -26,6 +26,14 @@ SpPresenter class >> buildRootCommandsGroupFor: presenterInstance [
 ]
 
 { #category : #'*Spec2-Commander2' }
+SpPresenter >> defaultCommandsContext [
+	"The default context set to commands is the presenter itself.
+	 This method might be overriden to change this behaviour.
+	"
+	^ self
+]
+
+{ #category : #'*Spec2-Commander2' }
 SpPresenter >> rootCommandsGroup [
-	^ self class buildRootCommandsGroupFor: self
+	^ SpRecursiveContextSetter visit: (self class buildRootCommandsGroupFor: self defaultCommandsContext) toSetContext: self defaultCommandsContext
 ]

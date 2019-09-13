@@ -17,16 +17,11 @@ CmCommandDecoratorTest >> setUp [
 	commandToBeDecorated := CmCommand new.
 	
 	commandToBeDecorated
-		basicName: 'command for test';
-		basicDescription: 'This command is only cerated for the purpose of unit tests.';
+		name: 'command for test';
+		description: 'This command is only cerated for the purpose of unit tests.';
 		context: Object new.
 		
 	decorator := CmCommandDecorator decorate: commandToBeDecorated
-]
-
-{ #category : #test }
-CmCommandDecoratorTest >> testBasicName [
-	self assert: decorator basicName equals: commandToBeDecorated basicName
 ]
 
 { #category : #test }
@@ -47,7 +42,17 @@ CmCommandDecoratorTest >> testDecoratedCommand [
 
 { #category : #test }
 CmCommandDecoratorTest >> testDescription [
-	self assert: decorator basicDescription equals: commandToBeDecorated basicDescription
+	self assert: decorator description equals: commandToBeDecorated description
+]
+
+{ #category : #test }
+CmCommandDecoratorTest >> testDynamicDescription [
+	self assert: decorator description equals: commandToBeDecorated description
+]
+
+{ #category : #test }
+CmCommandDecoratorTest >> testDynamicName [
+	self assert: decorator dynamicName equals: commandToBeDecorated dynamicName
 ]
 
 { #category : #test }

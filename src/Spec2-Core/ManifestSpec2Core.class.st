@@ -1,5 +1,9 @@
 "
-Core package for the Spec UI framework
+I am a package part of the Spec 2 project.
+
+Spec is a framework in Pharo for describing user interfaces. It allows for the construction of a wide variety of UIs; from small windows with a few but- tons up to complex tools like a debugger. Indeed, multiple tools in Pharo are written in Spec, e.g., Iceberg, Change Sorter, Critics Browser, and the Pharo debugger.
+
+I contain the core of Spec 2. By core I mean all the code defining the basics of Spec and the basic widgets users should use to build their applications.
 "
 Class {
 	#name : #ManifestSpec2Core,
@@ -33,18 +37,8 @@ ManifestSpec2Core class >> ruleLongMethodsRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
-ManifestSpec2Core class >> ruleRBEquivalentSuperclassMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#'ComposablePresenter class' #iconNamed: #true)) #'2018-11-07T10:48:10.451257+01:00') )
-]
-
-{ #category : #'code-critics' }
 ManifestSpec2Core class >> ruleRBOverridesDeprecatedMethodRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#SpMenuItemPresenter #name #false)) #'2016-07-01T15:56:13.378417+02:00') )
-]
-
-{ #category : #'code-critics' }
-ManifestSpec2Core class >> ruleSubclassResponsibilityNotDefinedRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#'ComposablePresenter class' #defaultSpec #true)) #'2016-07-01T15:56:13.461086+02:00') )
 ]
 
 { #category : #'code-critics' }

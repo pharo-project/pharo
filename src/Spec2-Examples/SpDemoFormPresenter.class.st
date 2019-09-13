@@ -58,7 +58,7 @@ SpDemoFormPresenter >> initialize [
 ]
 
 { #category : #initialization }
-SpDemoFormPresenter >> initializeWidgets [
+SpDemoFormPresenter >> initializePresenters [
 	form := (self instantiate: SpDemoLabeledContainer)
 		label: 'form';
 		subwidget: (self instantiate: SpDemoStandaloneFormPresenter on: self announcingObject).

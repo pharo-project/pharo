@@ -1,14 +1,13 @@
 Class {
 	#name : #SpAbstractListPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#traits : 'TSpHaveWrappingScrollBars',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
+	#traits : 'TSpHaveWrappingScrollBars + SpTContextMenu',
+	#classTraits : 'TSpHaveWrappingScrollBars classTrait + SpTContextMenu classTrait',
 	#instVars : [
 		'#selectionMode',
 		'#activationBlock',
 		'#activateOnSingleClick',
 		'#model',
-		'#contextMenu => SpObservableSlot',
 		'#itemFilter => SpObservableSlot',
 		'#verticalAlignment'
 	],
@@ -63,20 +62,6 @@ SpAbstractListPresenter >> clickAtIndex: anIndex [
 SpAbstractListPresenter >> clickItem: anInteger [ 
 	
 	self selectIndex: anInteger
-]
-
-{ #category : #api }
-SpAbstractListPresenter >> contextMenu [
-	"Return the block used to defined the menu"
-
-	^ contextMenu
-]
-
-{ #category : #api }
-SpAbstractListPresenter >> contextMenu: aValuable [
-	"Set the block used to defined the menu"
-
-	contextMenu := aValuable
 ]
 
 { #category : #api }
@@ -185,8 +170,6 @@ SpAbstractListPresenter >> listElementAt: anIndex ifAbsent: aBlock [
 
 { #category : #api }
 SpAbstractListPresenter >> listSize [
-	"<api: #inspect>"
-
 	"Return the size of the list"
 
 	^ self model size
@@ -256,8 +239,6 @@ SpAbstractListPresenter >> selectItems: aCollection [
 
 { #category : #api }
 SpAbstractListPresenter >> selectedItems [
-	"<api: #inspect>"
-
 	"Return all the selected items in the case of a multiple selection list"
 
 	^ self selectedItemsAtIndexes: self selection selectedIndexes
@@ -323,9 +304,8 @@ SpAbstractListPresenter >> unselectItem: anInteger [
 	self selection unselectItem: anInteger
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 SpAbstractListPresenter >> verticalAlignment [
-
 	^ verticalAlignment
 ]
 
@@ -338,13 +318,6 @@ SpAbstractListPresenter >> whenActivatedDo: aBlockClosure [
 { #category : #'api-events' }
 SpAbstractListPresenter >> whenItemFilterBlockChangedDo: aBlock [
 	self property: #itemFilter whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
-SpAbstractListPresenter >> whenMenuChangedDo: aBlock [
-	"Set a block to value when the menu block has changed"
-
-	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

@@ -181,9 +181,9 @@ SpTabPresenter >> morphHolder [
 ]
 
 { #category : #api }
-SpTabPresenter >> presenter: aComposablePresenter [
-	aComposablePresenter owner: self.
-	self retrievingBlock: [ aComposablePresenter buildWithSpec ]
+SpTabPresenter >> presenter: aPresenter [
+	aPresenter owner: self.
+	self retrievingBlock: [ aPresenter buildWithSpec ]
 ]
 
 { #category : #api }

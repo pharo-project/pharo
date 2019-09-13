@@ -184,6 +184,12 @@ SpMorphicTreeTableAdapter >> selectedItem [
 ]
 
 { #category : #accessing }
+SpMorphicTreeTableAdapter >> selectedPath [
+	
+	^ self selectedPaths first 
+]
+
+{ #category : #accessing }
 SpMorphicTreeTableAdapter >> selectedPaths [
 	
 	^ self widget selectedIndexes collect: [ :e | self widget dataSource pathFromIndex: e  ] 
@@ -198,9 +204,9 @@ SpMorphicTreeTableAdapter >> selectionChanged: ann [
 
 { #category : #factory }
 SpMorphicTreeTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
-
-	self presenter activatesOnDoubleClick ifFalse: [ ^ self ].	
-	self presenter doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex
+	self presenter activatesOnDoubleClick
+		ifFalse: [ ^ self ].
+	self presenter doubleClickAtPath: self selectedPath
 ]
 
 { #category : #factory }

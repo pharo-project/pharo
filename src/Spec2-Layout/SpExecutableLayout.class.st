@@ -57,7 +57,7 @@ SpExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
 		adapter 
 			add: (self 
 				resolvePresenter: presenterNameOrLayout 
-				model: aPresenter 
+				presenter: aPresenter 
 				bindings: bindings) 
 			constraints: constraints ].
 
@@ -96,20 +96,20 @@ SpExecutableLayout >> presenters [
 ]
 
 { #category : #private }
-SpExecutableLayout >> resolvePresenter: presenterNameOrLayout model: aModel bindings: bindings [
+SpExecutableLayout >> resolvePresenter: presenterNameOrLayout presenter: aPresenter bindings: bindings [
 
 	"most common case: I receive a symbol that I need to convert into a presenter"
 	presenterNameOrLayout isSymbol ifTrue: [ 
-		^ (self subpresenterOrLayoutNamed: presenterNameOrLayout of: aModel)
-			ifNil: [ self error: 'You presenter named "', presenterNameOrLayout , '" from ', aModel printString ,' was not initialized.' ] ].
+		^ (self subpresenterOrLayoutNamed: presenterNameOrLayout of: aPresenter)
+			ifNil: [ self error: 'You presenter named "', presenterNameOrLayout , '" from ', aPresenter printString ,' was not initialized.' ] ].
 	
 	"I receive a layout: dig inside."
 	presenterNameOrLayout isSpLayout ifTrue: [ 
-		^ presenterNameOrLayout buildAdapterFor: aModel bindings: bindings ].
+		^ presenterNameOrLayout buildAdapterFor: aPresenter bindings: bindings ].
 	
 	"I receive an arbitrary object (needs to understand #asPresenter)"
 	^ presenterNameOrLayout asPresenter
-		owner: aModel;
+		owner: aPresenter;
 		yourself
 ]
 

@@ -9,17 +9,17 @@ self example
 Class {
 	#name : #SpTreeTablePresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#traits : 'TSpHaveWrappingScrollBars',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
+	#traits : 'TSpHaveWrappingScrollBars + SpTContextMenu',
+	#classTraits : 'TSpHaveWrappingScrollBars classTrait + SpTContextMenu classTrait',
 	#instVars : [
 		'#columns => SpObservableSlot',
 		'#showColumnHeaders => SpObservableSlot',
 		'#isResizable => SpObservableSlot',
 		'#selection => SpObservableSlot',
-		'#doubleClickAction => SpObservableSlot',
 		'#roots => SpObservableSlot',
 		'#childrenBlock',
-		'#contextMenu => SpObservableSlot'
+		'#activationBlock',
+		'#activateOnSingleClick'
 	],
 	#category : #'Spec2-Core-Widgets-Tree'
 }
@@ -28,6 +28,30 @@ Class {
 SpTreeTablePresenter class >> adapterName [
 
 	^ #TreeTableAdapter
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> activateOnDoubleClick [
+	
+	activateOnSingleClick := false
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> activateOnSingleClick [
+	
+	activateOnSingleClick := true
+]
+
+{ #category : #testing }
+SpTreeTablePresenter >> activatesOnDoubleClick [
+	
+	^ activateOnSingleClick not
+]
+
+{ #category : #testing }
+SpTreeTablePresenter >> activatesOnSingleClick [
+	
+	^ activateOnSingleClick
 ]
 
 { #category : #api }
@@ -74,6 +98,15 @@ SpTreeTablePresenter >> childrenFor: anObject [
 	^ self children value: anObject
 ]
 
+{ #category : #simulation }
+SpTreeTablePresenter >> clickAtPath: aPath [
+
+	self selectPath: aPath.
+
+	activateOnSingleClick ifFalse: [ ^ self ].
+	self doActivateAtPath: aPath
+]
+
 { #category : #accessing }
 SpTreeTablePresenter >> columns [
 	^ columns
@@ -84,35 +117,24 @@ SpTreeTablePresenter >> columns: aCollection [
 	columns := aCollection
 ]
 
-{ #category : #api }
-SpTreeTablePresenter >> contextMenu [
-	^ contextMenu
-]
+{ #category : #simulation }
+SpTreeTablePresenter >> doActivateAtPath: aPath [
+	"Activate only if there is an item at that position"
 
-{ #category : #api }
-SpTreeTablePresenter >> contextMenu: aValuable [
-	"Set the block used to defined the menu"
-	
-	contextMenu := aValuable
-]
-
-{ #category : #private }
-SpTreeTablePresenter >> doubleClickAction [
-
-	^ doubleClickAction
-]
-
-{ #category : #'api-events' }
-SpTreeTablePresenter >> doubleClickAction: aBlockClosure [ 
-	
-	doubleClickAction := aBlockClosure
+	self itemAtPath: aPath ifAbsent: [ ^ self ].
+	activationBlock
+		cull:
+			((SpTreeSingleSelectionMode on: self)
+				selectPath: aPath;
+				yourself)
 ]
 
 { #category : #simulation }
-SpTreeTablePresenter >> doubleClickAtIndex: anInteger [ 
+SpTreeTablePresenter >> doubleClickAtPath: aPath [
+	self selectPath: aPath.
 	
-	self selectedIndex: anInteger.
-	doubleClickAction cull: anInteger
+	activateOnSingleClick ifTrue: [ ^ self ].
+	self doActivateAtPath: aPath
 ]
 
 { #category : #api }
@@ -126,12 +148,16 @@ SpTreeTablePresenter >> initialize [
 	super initialize.
 
 	self withScrollBars.
+	
+	activationBlock := [ ].
+	
 	showColumnHeaders := true.
 	columns := #().
 	isResizable := false.
 	selection := SpTreeSingleSelectionMode on: self.
 	childrenBlock := [ :item | #() ].
 	roots := #().
+	self activateOnDoubleClick.
 	self registerEvents
 ]
 
@@ -185,7 +211,9 @@ SpTreeTablePresenter >> itemAtPath: anArray ifAbsent: aBlock [
 
 { #category : #initialization }
 SpTreeTablePresenter >> registerEvents [
-	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
+
+	self whenMenuChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter updateMenu ] ]
 ]
 
 { #category : #accessing }
@@ -237,6 +265,11 @@ SpTreeTablePresenter >> unselectAll [
 ]
 
 { #category : #'api-events' }
+SpTreeTablePresenter >> whenActivatedDo: aBlockClosure [
+	activationBlock := aBlockClosure
+]
+
+{ #category : #'api-events' }
 SpTreeTablePresenter >> whenColumnsChangedDo: aBlockClosure [
 	self property: #columns whenChangedDo: aBlockClosure
 ]
@@ -245,13 +278,6 @@ SpTreeTablePresenter >> whenColumnsChangedDo: aBlockClosure [
 SpTreeTablePresenter >> whenIsResizableChangedDo: aBlock [
 
 	self property: #isResizable whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
-SpTreeTablePresenter >> whenMenuChangedDo: aBlock [
-	"Set a block to value when the menu block has changed"
-
-	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #accessing }
@@ -269,13 +295,13 @@ SpTreeTablePresenter >> whenRootsChangedDo: aBlockClosure [
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedIndexChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection first ]
+	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection first ]
 ]
 
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedItemChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection second ]
+	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection second ]
 ]
 
 { #category : #'api-events' }

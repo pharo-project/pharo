@@ -34,12 +34,12 @@ SpListSelectionPresenter class >> example [
 ]
 
 { #category : #initialization }
-SpListSelectionPresenter >> initializePresenter [
+SpListSelectionPresenter >> connectPresenters [
 	listModel whenSelectionChangedDo: [ self updateText ]
 ]
 
 { #category : #initialization }
-SpListSelectionPresenter >> initializeWidgets [
+SpListSelectionPresenter >> initializePresenters [
 	listModel := self newList.
 	textModel1 := self newText.
 	textModel2 := self newCode.

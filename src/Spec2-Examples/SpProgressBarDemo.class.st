@@ -42,6 +42,11 @@ SpProgressBarDemo class >> example [
 	^ self new openWithSpec
 ]
 
+{ #category : #initialization }
+SpProgressBarDemo >> connectPresenters [
+	withText whenValueChangedDo: [ :value | label label: (value * 100) asInteger asString , '%' ]
+]
+
 { #category : #accessing }
 SpProgressBarDemo >> fixed [
 	^ fixed
@@ -63,12 +68,7 @@ SpProgressBarDemo >> indeterminated: anObject [
 ]
 
 { #category : #initialization }
-SpProgressBarDemo >> initializePresenter [
-	withText whenValueChangedDo: [ :value | label label: (value * 100) asInteger asString , '%' ]
-]
-
-{ #category : #initialization }
-SpProgressBarDemo >> initializeWidgets [
+SpProgressBarDemo >> initializePresenters [
 	| progress progress2 |
 	indeterminated := self newProgressBar.
 	fixed := self newProgressBar.

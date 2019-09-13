@@ -1,6 +1,6 @@
 Class {
 	#name : #SpAbstractListAdapterSingleSelectionTest,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
+	#superclass : #SpAbstractWidgetAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
@@ -24,25 +24,25 @@ SpAbstractListAdapterSingleSelectionTest >> initializeTestedInstance [
 SpAbstractListAdapterSingleSelectionTest >> testSelectManyIndexesKeepsLastSelectionInWidget [
 	presenter selectIndex: 1.
 	presenter selectIndex: 2.
-	self assert: self widget selectedIndexes equals: #(2)
+	self assert: self adapter selectedIndexes equals: #(2)
 ]
 
 { #category : #'tests-model-to-widget' }
 SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterIndexOutsideRangeUnsetsSelectedIndexInWidget [
 	presenter selectIndex: 100.
-	self assert: self widget selectedIndexes isEmpty
+	self assert: self adapter selectedIndexes isEmpty
 ]
 
 { #category : #'tests-model-to-widget' }
 SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterIndexSetsSelectedIndexInWidget [
 	presenter selectIndex: 1.
-	self assert: (self widget selectedIndexes includes: 1)
+	self assert: (self adapter selectedIndexes includes: 1)
 ]
 
 { #category : #'tests-model-to-widget' }
 SpAbstractListAdapterSingleSelectionTest >> testSelectPresenterItemSetsSelectedIndexInWidget [
 	presenter selectItem: 20.
-	self assert: (self widget selectedIndexes includes: 2)
+	self assert: (self adapter selectedIndexes includes: 2)
 ]
 
 { #category : #'tests-widget-to-model' }
@@ -60,7 +60,7 @@ SpAbstractListAdapterSingleSelectionTest >> testSelectWidgetIndexRaisesSelection
 	| selectedIndex |
 	presenter selection
 		whenChangedDo: [ :selection | selectedIndex := selection selectedIndex ].
-	self widget selectIndex: 1.
+	self adapter selectIndex: 1.
 	self assert: selectedIndex equals: 1
 ]
 
@@ -95,7 +95,7 @@ SpAbstractListAdapterSingleSelectionTest >> testUnselectPresenterIndexUnselectsI
 	presenter
 		selectIndex: 1;
 		unselectIndex: 1.
-	self assert: self widget selectedIndexes isEmpty
+	self assert: self adapter selectedIndexes isEmpty
 ]
 
 { #category : #'tests-model-to-widget' }
@@ -103,7 +103,7 @@ SpAbstractListAdapterSingleSelectionTest >> testUnselectPresenterItemUnselectsIn
 	presenter
 		selectItem: 20;
 		unselectItem: 20.
-	self assert: self widget selectedIndexes isEmpty
+	self assert: self adapter selectedIndexes isEmpty
 ]
 
 { #category : #'tests-widget-to-model' }

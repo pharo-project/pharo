@@ -47,25 +47,8 @@ SpDemoListsPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #defaults }
-SpDemoListsPresenter >> iconFor: class [
-	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
-		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
-			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
-			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
-	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
-	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
-		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
-			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
-			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
-	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
-	^ class systemIcon
-]
-
 { #category : #initialization }
-SpDemoListsPresenter >> initializePresenter [
+SpDemoListsPresenter >> connectPresenters [
 	list1
 		whenSelectionChangedDo: [ :selection | 
 			[ :elem | 
@@ -96,8 +79,25 @@ SpDemoListsPresenter >> initializePresenter [
 				cull: selection selectedItem ]
 ]
 
+{ #category : #defaults }
+SpDemoListsPresenter >> iconFor: class [
+	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
+		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
+			^ self iconNamed: #testNotRunIcon ].
+	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
+		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
+			^ self iconNamed: #testNotRunIcon ].
+	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+	^ class systemIcon
+]
+
 { #category : #initialization }
-SpDemoListsPresenter >> initializeWidgets [
+SpDemoListsPresenter >> initializePresenters [
 	list1 := self newList.
 	list2 := self newList.
 	list3 := self newList.
@@ -132,7 +132,7 @@ SpDemoListsPresenter >> list1 [
 { #category : #menu }
 SpDemoListsPresenter >> list1Menu [
 	^ self newMenu
-		addTitle: 'Context menu example';
+		title: 'Context menu example';
 		addGroup: [ :aGroup | 
 			aGroup
 				addItem: [ :anItem | 

@@ -24,6 +24,18 @@ SpWindow >> allowedToClose [
 		ifFalse: [ true ].
 ]
 
+{ #category : #'open/close' }
+SpWindow >> deleteDiscardingChanges [
+	| announcement |
+
+	announcement := SpWindowWillClose new
+		window: self;
+		yourself.
+	self announce: announcement.
+	self currentWorld announcer announce: announcement.	
+	^ super deleteDiscardingChanges
+]
+
 { #category : #testing }
 SpWindow >> hasWidget: aMorph [ 
 	

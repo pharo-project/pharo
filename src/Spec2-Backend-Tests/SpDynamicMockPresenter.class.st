@@ -26,7 +26,7 @@ SpDynamicMockPresenter >> dynamicPresenter: anObject [
 ]
 
 { #category : #initialization }
-SpDynamicMockPresenter >> initializeWidgets [
+SpDynamicMockPresenter >> initializePresenters [
 	dynamicPresenter := self newNullPresenter.
 	self rebuildDynamicPresenter
 ]

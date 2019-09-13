@@ -1,6 +1,6 @@
 Class {
 	#name : #SpDropListExampleTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Examples-Morphic'
 }
 

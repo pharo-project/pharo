@@ -3,7 +3,7 @@ SUnit tests for Button model
 "
 Class {
 	#name : #SpButtonPresenterTest,
-	#superclass : #SpTestCase,
+	#superclass : #SpTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 

@@ -135,13 +135,7 @@ VersionBrowser >> compareToOtherVersion [
 ]
 
 { #category : #initialization }
-VersionBrowser >> initialize [
-	isShowingDiff := false.
-	super initialize
-]
-
-{ #category : #initialization }
-VersionBrowser >> initializePresenter [
+VersionBrowser >> connectPresenters [
 	messageList
 		whenSelectionChangedDo: [ :selection | self selectItem: selection selectedItem ];
 		messages: self buildChangeList.
@@ -150,7 +144,13 @@ VersionBrowser >> initializePresenter [
 ]
 
 { #category : #initialization }
-VersionBrowser >> initializeWidgets [
+VersionBrowser >> initialize [
+	isShowingDiff := false.
+	super initialize
+]
+
+{ #category : #initialization }
+VersionBrowser >> initializePresenters [
 	messageList := self instantiate: MessageList.
 	toolbarPresenter := self instantiate: SpMethodToolbar.
 

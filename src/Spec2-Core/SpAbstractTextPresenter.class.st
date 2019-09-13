@@ -1,20 +1,27 @@
 Class {
 	#name : #SpAbstractTextPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
+	#traits : 'SpTContextMenu',
+	#classTraits : 'SpTContextMenu classTrait',
 	#instVars : [
 		'#hasUnacceptedEdits => SpObservableSlot',
 		'#selection => SpObservableSlot',
 		'#autoAccept => SpObservableSlot',
 		'#wantsVisualFeedback => SpObservableSlot',
 		'#askBeforeDiscardingEdits => SpObservableSlot',
-		'#contextMenu => SpObservableSlot',
 		'#text => SpObservableSlot',
 		'#actionToPerform => SpObservableSlot',
 		'#readSelection => SpObservableSlot',
-		'#actionPerformed => SpObservableSlot'
+		'#actionPerformed => SpObservableSlot',
+		'#placeholder => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
+
+{ #category : #testing }
+SpAbstractTextPresenter class >> isAbstract [
+	^ self = SpAbstractTextPresenter
+]
 
 { #category : #api }
 SpAbstractTextPresenter >> accept [
@@ -68,6 +75,7 @@ SpAbstractTextPresenter >> acceptText: aString [
 
 { #category : #private }
 SpAbstractTextPresenter >> actionPerformed [
+
 	actionPerformed := self text
 ]
 
@@ -96,29 +104,21 @@ SpAbstractTextPresenter >> autoAccept: aBoolean [
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> clearSelection [
-"	<api: #do>"
-   "Remove selection from the text model"
+SpAbstractTextPresenter >> clearContent [
+	self text: ''
+]
 
-	self setSelection: (0 to: 0)
+{ #category : #api }
+SpAbstractTextPresenter >> clearSelection [
+	"Remove selection from the text model"
+
+	self selection: (0 to: 0)
 ]
 
 { #category : #'undo-redo' }
 SpAbstractTextPresenter >> clearUndoManager [
 
 	self withAdapterDo: #clearUndoManager
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> contextMenu [
-
-	^ contextMenu
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> contextMenu: aValuable [
-
-	contextMenu := aValuable
 ]
 
 { #category : #api }
@@ -154,13 +154,17 @@ SpAbstractTextPresenter >> getMenu [
 { #category : #api }
 SpAbstractTextPresenter >> getSelection [
 	"Get the text selection"
-
-	^ selection ifNil: [ ^ 1 to: 0 ]
+	
+	self 
+		deprecated: 'Use #selection instead.' 
+		transformWith: '`@receiver getSelection' 
+		            -> '`@receiver selection'.
+		
+	^ self selection
 ]
 
 { #category : #api }
 SpAbstractTextPresenter >> hasEditingConflicts [
-	"<api:#inspect>"
 	"Return if the text zone has editing conflicts"
 
 	^ self widget 
@@ -171,7 +175,6 @@ SpAbstractTextPresenter >> hasEditingConflicts [
 { #category : #api }
 SpAbstractTextPresenter >> hasEditingConflicts: aBoolean [
 	"Set if the text zone has editing conflicts"
-	"<api:#boolean getter: #hasEditingConflicts>"
 	
 	^ self changed: #hasEditingConflicts: with: { aBoolean }
 ]
@@ -195,6 +198,7 @@ SpAbstractTextPresenter >> initialize [
 	super initialize.
 
 	text := ''.
+	placeholder := ''.
 	actionToPerform := [ :txt |  ].
 	readSelection := [ selection ].
 	actionPerformed := ''.
@@ -205,6 +209,15 @@ SpAbstractTextPresenter >> initialize [
 	askBeforeDiscardingEdits := true.
 
 	self registerEvents
+]
+
+{ #category : #api }
+SpAbstractTextPresenter >> insert: aString at: positionIndex [
+	"inserts aString into the text string. 
+	 positionIndex indicates the position index (as in #indexOf) the insertion."
+	
+	self withAdapterDo: [ :anAdapter |
+		anAdapter insert: aString at: positionIndex ]
 ]
 
 { #category : #api }
@@ -231,6 +244,23 @@ SpAbstractTextPresenter >> isForSmalltalkCode: aBoolean [
 SpAbstractTextPresenter >> notify: errorMessage at: position in: sourceCode [
 
 	self changed: #notify:at:in: with: { errorMessage . position . sourceCode }
+]
+
+{ #category : #api }
+SpAbstractTextPresenter >> placeholder [
+
+	^ placeholder
+]
+
+{ #category : #accessing }
+SpAbstractTextPresenter >> placeholder: aText [
+
+	placeholder := aText
+]
+
+{ #category : #private }
+SpAbstractTextPresenter >> rawSelection: anInterval [
+	self property: #selection rawValue: anInterval
 ]
 
 { #category : #api }
@@ -269,6 +299,14 @@ SpAbstractTextPresenter >> selectAll [
 	self changed: #selectAll with: #()
 ]
 
+{ #category : #api }
+SpAbstractTextPresenter >> selectLine [
+
+	self withAdapterDo: [ :anAdapter |
+		anAdapter selectLine ].
+	^ self selection
+]
+
 { #category : #NOCompletion }
 SpAbstractTextPresenter >> selectedClassOrMetaClass [
 
@@ -276,15 +314,31 @@ SpAbstractTextPresenter >> selectedClassOrMetaClass [
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> setSelection: anInterval [
+SpAbstractTextPresenter >> selection [
+	"Get the text selection.
+	 I will update the selection from adapter first"
+	self withAdapterDo: [ :anAdapter | 
+		self rawSelection: anAdapter selection ].
+	^ selection ifNil: [ ^ 1 to: 0 ]
+]
+
+{ #category : #api }
+SpAbstractTextPresenter >> selection: anInterval [
 	"Set the text selection without changing the readSelectionBlock"
 
 	selection := anInterval
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> setSelectionInterval: anInterval [
-	self property: #selection rawValue: anInterval
+SpAbstractTextPresenter >> setSelection: anInterval [
+	"Set the text selection without changing the readSelectionBlock"
+
+	self 
+		deprecated: 'Use #selection: instead.' 
+		transformWith: '`@receiver setSelection: `@statement' 
+		            -> '`@receiver selection: `@statement'.
+
+	self selection: anInterval
 ]
 
 { #category : #api }
@@ -301,6 +355,8 @@ SpAbstractTextPresenter >> text: aText [
 
 { #category : #private }
 SpAbstractTextPresenter >> textArea [
+	
+	self flag: #REMOVEME.
 	^ self adapter widget
 ]
 
@@ -322,7 +378,6 @@ SpAbstractTextPresenter >> wantsVisualFeedback: aBoolean [
 
 { #category : #'api-events' }
 SpAbstractTextPresenter >> whenAboutToStyleChangedDo: aBlock [
-	"<api: #event>"
 	"Set a block to perform when the about to style block changed"
 	
 	self whenAboutToStyleBlockChanged: [:block :old :announcement :anAnnouncer | 
@@ -344,10 +399,9 @@ SpAbstractTextPresenter >> whenAutoAcceptChangedDo: aBlock [
 ]
 
 { #category : #'api-events' }
-SpAbstractTextPresenter >> whenMenuChangedDo: aBlock [
-	"Set a block to value when the menu block has changed"
+SpAbstractTextPresenter >> whenPlaceholderChangedDo: aBlock [
 	
-	self property: #contextMenu whenChangedDo: aBlock
+	self property: #placeholder whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

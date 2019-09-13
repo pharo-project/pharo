@@ -28,6 +28,54 @@ SpCommandTest >> setUp [
 ]
 
 { #category : #test }
+SpCommandTest >> testAsButtonPresenter [
+	| buttonPresenter |
+	command := CmCommand forSpec
+					basicName: 'foo';
+					basicDescription: 'bar';
+					yourself.
+					
+	
+	buttonPresenter := command asButtonPresenter.
+	
+	self assert: buttonPresenter label equals: 'foo'.
+	self assert: buttonPresenter help equals: 'bar'.
+	self assert: buttonPresenter icon isNil
+]
+
+{ #category : #test }
+SpCommandTest >> testAsButtonPresenter2 [
+	| buttonPresenter |
+	command := CmCommand forSpec
+					basicName: 'foo';
+					basicDescription: 'bar';
+					iconName: #blank;
+					yourself.
+					
+	
+	buttonPresenter := command asButtonPresenter.
+	
+	self assert: buttonPresenter label equals: 'foo'.
+	self assert: buttonPresenter help equals: 'bar'.
+	self assert: buttonPresenter icon equals: (buttonPresenter iconNamed: #blank)
+]
+
+{ #category : #test }
+SpCommandTest >> testAsButtonPresenterExecutesOnClick [
+	| flag buttonPresenter |
+	flag := false.
+	command := CmBlockCommand new
+					block: [ flag := true ];
+					yourself.
+	
+	buttonPresenter := command asSpecCommand asButtonPresenter.
+	
+	buttonPresenter click.
+	
+	self assert: flag equals: true
+]
+
+{ #category : #test }
 SpCommandTest >> testHasIcon [
 	self deny: command hasIcon.
 	

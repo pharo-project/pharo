@@ -14,7 +14,7 @@ SpMockMillerPresenter >> activate [
 ]
 
 { #category : #initialization }
-SpMockMillerPresenter >> initializeWidgets [
+SpMockMillerPresenter >> initializePresenters [
 	
 	"Nothing"
 ]

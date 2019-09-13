@@ -49,7 +49,7 @@ SpMillerColumnPresenter >> initialize [
 ]
 
 { #category : #initialization }
-SpMillerColumnPresenter >> initializeWidgets [
+SpMillerColumnPresenter >> initializePresenters [
 	
 	layout := SpBoxLayout newHorizontal
 ]
