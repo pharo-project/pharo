@@ -780,7 +780,7 @@ ClyFullBrowser >> specifyClassItemNameOn: nameMorph for: classItem [
 	self packageSelection isMultipleSelected ifTrue: [
 		nameMorph contents: (definition printFullNameOf: classItem)].
 	(self isPackagePartOfSelection: definition definingPackage) 
-		ifFalse: [nameMorph color: Smalltalk ui theme classExtensionColor]
+		ifFalse: [nameMorph color: self theme classExtensionColor]
 ]
 
 { #category : #private }
@@ -790,7 +790,7 @@ ClyFullBrowser >> specifyMethodItemNameOn: nameMorph for: methodItem [
 	
 	definition := methodItem	systemDefinition.
 	(self isPackagePartOfSelection: definition definingPackage) ifFalse: [
-		nameMorph color: Smalltalk ui theme classExtensionColor].
+		nameMorph color: self theme classExtensionColor].
 	
 	self classSelection isMultipleSelected ifTrue: [
 		^nameMorph contents: (definition printFullNameOf: methodItem)].

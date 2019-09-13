@@ -1,3 +1,6 @@
+"
+Morph and Model methods should access to the GUI theme via 'self theme' and not 'Smalltalk ui theme'.
+"
 Class {
 	#name : #ManifestRenraku,
 	#superclass : #PackageManifest,
