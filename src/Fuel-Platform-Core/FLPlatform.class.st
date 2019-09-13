@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Fuel-Platform-Core'
+	#category : #'Fuel-Platform-Core'
 }
 
 { #category : #'private-extensions' }
@@ -64,7 +64,7 @@ FLPlatform class >> extensionPragmas [
 			self class withAllSuperclassesDo: [ :class |
 				stop ifFalse: [
 					Pragma withPragmasIn: class do:  [ :pragma |
-						(pragma keyword = selector and: [
+						(pragma selector = selector and: [
 							"don't collect overridden methods"
 							(pragmas includesKey: pragma selector) not ]) ifTrue: [
 								pragmas
@@ -105,7 +105,7 @@ FLPlatform class >> removeModifications [
 	SystemOrganizer default removeCategory: self hacksCategoryName
 ]
 
-{ #category : #'private-convenience' }
+{ #category : #initialization }
 FLPlatform class >> reset [
 	Current := nil
 ]

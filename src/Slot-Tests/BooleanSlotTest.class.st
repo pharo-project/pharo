@@ -27,7 +27,7 @@ BooleanSlotTest >> testExampleBooleanSlot [
 	
 	self assert: object slot1 == true.
 	object slot1: false.
-	self assert: object slot1 == false.
+	self assert: object slot1 == false
 ]
 
 { #category : #tests }
@@ -49,16 +49,16 @@ BooleanSlotTest >> testExampleTwoBooleanSlots [
 	object := aClass new. 
 	"test reflective write and read"
 	slot1 write: true to: object.
-	self assert: (slot1 read: object) = true.
+	self assert: (slot1 read: object) equals: true.
 	
 	slot2 write: true to: object.
-	self assert: (slot2 read: object) = true.
+	self assert: (slot2 read: object) equals: true.
 	
 	slot2 write: true to: object.
 	slot1 write: false to: object.
-	self assert: (slot2 read: object) = true.
+	self assert: (slot2 read: object) equals: true.
 	slot2 write: false to: object.
-	self assert: (slot2 read: object) = false.
+	self assert: (slot2 read: object) equals: false
 	
 	
 	
@@ -94,7 +94,7 @@ BooleanSlotTest >> testExampleTwoBooleanSlotsRemoveOne [
 	slot2 write: false to: object.
 	self deny: (slot2 read: object).
 	
-	aClass removeSlot: slot1.
+	aClass removeSlot: slot1
 	
 	
 	

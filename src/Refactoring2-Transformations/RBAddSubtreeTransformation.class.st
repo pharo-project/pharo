@@ -73,13 +73,14 @@ RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector
 
 { #category : #preconditions }
 RBAddSubtreeTransformation >> preconditions [
-
 	^ (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition withBlock: [
-				RBParser
-				parseExpression: sourceCode
-				onError: [ :string :pos | 
-					self refactoringError: 'Invalid source to add - ', string ]. true ])
+		&
+			(RBCondition
+				withBlock: [ self parserClass
+						parseExpression: sourceCode
+						onError:
+							[ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
+					true ])
 ]
 
 { #category : #executing }

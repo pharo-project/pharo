@@ -55,12 +55,12 @@ Class {
 	#category : #'Kernel-Numbers'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 Float class >> basicNew [
 	^BoxedFloat64 basicNew: 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 Float class >> basicNew: anInteger [
 	^BoxedFloat64 basicNew: 2
 ]

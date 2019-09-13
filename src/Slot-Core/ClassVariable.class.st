@@ -15,9 +15,9 @@ Class {
 { #category : #printing }
 ClassVariable >> definitionString [
 	"non special globals are defined by the symbol"
-	^self needsFullDefinition
-		ifTrue: [super definitionString]
-		ifFalse: [self name printString]
+	^ self needsFullDefinition
+		ifTrue: [ super definitionString ]
+		ifFalse: [ self name printString ]
 
 ]
 
@@ -37,5 +37,21 @@ ClassVariable >> emitValue: methodBuilder [
 
 { #category : #testing }
 ClassVariable >> isClassVariable [
-	^true
+	^ true
+]
+
+{ #category : #testing }
+ClassVariable >> isReferenced [
+ 	"A class variable can only be accessed in the defintionClass and its subclasses (both class and instance side)"
+ 	
+	^ self definingClass withAllSubclasses
+ 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self . behavior class hasSelectorReferringTo: self ]
+]
+
+{ #category : #queries }
+ClassVariable >> usingMethods [
+	self definingClass isPool ifTrue: [ ^ super usingMethods ].
+	"if we are a class variable, we only need to search the sublasses and metaclasses"
+	^ self definingClass withAllSubclasses flatCollect: [ :class | 
+			(class thoroughWhichMethodsReferTo: self), (class class thoroughWhichMethodsReferTo: self) ]
 ]

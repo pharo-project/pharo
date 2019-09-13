@@ -66,6 +66,18 @@ FileSystem >> accessTimeOf: aResolvable [
 ]
 
 { #category : #public }
+FileSystem >> beReadOnly [
+
+	store := store asReadOnlyStore
+]
+
+{ #category : #public }
+FileSystem >> beWritable [
+
+	store := store asWritableStore
+]
+
+{ #category : #public }
 FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
@@ -553,6 +565,14 @@ FileSystem >> isFile: aResolvable [
 ]
 
 { #category : #'public-testing' }
+FileSystem >> isHidden: aResolvable attributes: statAttributesArray [
+	"Resolve the argument, and answer a boolean indicating whether the file is hidden or not.
+	statAttributesArray is optional and may be supplied for performance.  It is the result of File>>fileAttributes:mask: or nil"
+
+	^ store isHidden: (self resolve: aResolvable) attributes: statAttributesArray 
+]
+
+{ #category : #'public-testing' }
 FileSystem >> isReadable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file or directory that can be read from."
@@ -580,6 +600,12 @@ FileSystem >> isSymlink: aResolvable [
 	to a directory, false if it refers to a file or doesn't exist."
 
 	^ store isSymlink: (self resolve: aResolvable)
+]
+
+{ #category : #'public-testing' }
+FileSystem >> isWritable [ 
+
+	^ self store isWritable
 ]
 
 { #category : #'public-testing' }
@@ -790,6 +816,11 @@ FileSystem >> sizeOf: aResolvable [
 { #category : #accessing }
 FileSystem >> store [
 	^ store
+]
+
+{ #category : #accessing }
+FileSystem >> store: aFileSystemStore [
+	store := aFileSystemStore
 ]
 
 { #category : #converting }

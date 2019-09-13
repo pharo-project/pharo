@@ -6,14 +6,12 @@ BlockClosure >> rfEnsure: aBlock [
 
 	<primitive: 198>
 	<metaLinkOptions: #( + optionDisabledLink)>
-	| returnValue b |
-	returnValue := self rfvalue.
-	aBlock isNil
-		ifFalse: [ 
-			"nil out aBlock temp before evaluating aBlock so it is not executed again if aBlock remote returns"
-			b := aBlock.
-			thisContext rftempAt: 1 put: nil.
-			b rfvalue ].
+	| returnValue complete |
+	returnValue := self rfvalueNoContextSwitch.
+	complete ifNil:[
+		complete := true.
+		aBlock rfvalue.
+	].
 	^ returnValue
 ]
 
@@ -22,6 +20,8 @@ BlockClosure >> rfvalue [
 	"same as value, for recursion stopping metalinks"
 	<primitive: 201>
 	<metaLinkOptions: #( + optionDisabledLink)>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
 	^self primitiveFailed
 ]
 

@@ -16,21 +16,18 @@ Class {
 
 { #category : #specs }
 SpOpenOnNilExample class >> defaultSpec [
-	<spec: #default>
-	^ SpLayout composed
-		newRow: #text height: 25;
-		yourself.
+	^ SpBoxLayout newVertical
+		add: #text withConstraints: [ :constraints | constraints height: 25 ];
+		yourself
 ]
 
 { #category : #examples }
 SpOpenOnNilExample class >> example [
 	<sampleInstance>
-	| example |
-	example := self new.
-	example
+	^ self new
 		extent: 200 @ 100;
-		openWithSpec.
-	^ example
+		openWithSpec;
+		yourself
 ]
 
 { #category : #initialization }

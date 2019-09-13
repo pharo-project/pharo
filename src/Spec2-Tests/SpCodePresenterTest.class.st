@@ -12,7 +12,7 @@ SpCodePresenterTest >> classToTest [
 
 { #category : #tests }
 SpCodePresenterTest >> testContextKeyBindings [
-	self skip. "The version in Pharo is not complete."
+	self skip.
 	self assert: presenter contextKeyBindings notNil
 ]
 

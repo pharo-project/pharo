@@ -90,7 +90,7 @@ HistorySlotTest >> testIsFirstElementNil [
 
 	instance := aClass new.
 
-  	self assert: (instance slot1)  equals:  nil.
+  	self assert: (instance slot1) equals: nil
 ]
 
 { #category : #tests }

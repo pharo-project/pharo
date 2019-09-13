@@ -67,7 +67,7 @@ ClassAnnotationRegistry class >> annotationPragmaName [
 ClassAnnotationRegistry class >> annotationPragmasIn: aClass do: aBlock [
 
 	Pragma withPragmasIn: aClass do: [ :pragma |
-		pragma keyword == self annotationPragmaName ifTrue: [aBlock value: pragma]]
+		pragma selector == self annotationPragmaName ifTrue: [aBlock value: pragma]]
 ]
 
 { #category : #'pragma collecting' }
@@ -156,7 +156,7 @@ ClassAnnotationRegistry class >> handleOldMethodChange: aMethodModified [
 	self resetIf: [ self doesMethodAffectAnnotations: aMethodModified oldMethod]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ClassAnnotationRegistry class >> reset [
 	<script>
 	

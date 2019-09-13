@@ -23,7 +23,7 @@ Class {
 		'isExpanded',
 		'hasChildren'
 	],
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Obsolete'
 }
 
 { #category : #specs }

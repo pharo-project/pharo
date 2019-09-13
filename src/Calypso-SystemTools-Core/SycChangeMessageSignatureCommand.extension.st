@@ -7,14 +7,6 @@ SycChangeMessageSignatureCommand class >> browserMenuOrder [
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
-SycChangeMessageSignatureCommand class >> methodMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation 
-		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext 
-]
-
-{ #category : #'*Calypso-SystemTools-Core' }
 SycChangeMessageSignatureCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	

@@ -1,6 +1,122 @@
 Extension { #name : #SpAbstractTextPresenter }
 
 { #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> aboutToStyle: aBoolean [	
+	"<api: #boolean getter: #isAboutToStyle registration: #whenAboutToStyleChanged:>"
+	"Set if the text zone must be styled"
+	
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> aboutToStyleBlock [
+	"Return the block used to know if the text must be styled"	
+	"<api:#inspect>"
+
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> aboutToStyleBlock: aBlockReturningABoolean [
+	"<api: #block getter: #aboutToStyleBlock registration: #whenAboutToStyleBlockChanged:>"
+	"Set the block used to know if the text must be styled.
+	The block must return a boolean"
+
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> beForCode [
+
+	self 
+		deprecated: 'The forCode functionality has moved to TextCodePresenter, please use it instead TextPresenter.' 
+		on: '2019-04-05' 
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> beForText [
+
+	self 
+		deprecated: 'The forCode functionality has moved to TextCodePresenter, please use it instead TextPresenter.' 
+		on: '2019-04-05' 
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> behavior [
+	"Return the class corresponding to the method class of the source code you are editing"
+
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> behavior: aClass [
+	"Set the class corresponding to the method class of the source code you are editing"
+
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> doItContext [
+
+	self 
+		deprecated: 'This has been moved to specific presenters (check children)' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> doItContext: anObject [
+
+	self 
+		deprecated: 'This has been moved to specific presenters (check children)' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> doItReceiver [
+
+	self 
+		deprecated: 'This has been moved to specific presenters (check children)' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> doItReceiver: anObject [
+
+	self 
+		deprecated: 'This has been moved to specific presenters (check children)' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> getText [
+	self deprecated: 'Use #text instead' transformWith: '`@receiver getText' -> '`@receiver text'.
+	^ self text
+]
+
+{ #category : #'*Spec2-Deprecated' }
 SpAbstractTextPresenter >> isAboutToStyle [
 	"Return if the text zone is shouted or not"
 
@@ -14,6 +130,16 @@ SpAbstractTextPresenter >> isAboutToStyle [
 SpAbstractTextPresenter >> whenAboutToStyleBlockChanged: aBlock [
 	self deprecated: 'Use #whenAboutToStyleBlockChangedDo: instead.' transformWith: '`@receiver whenAboutToStyleBlockChanged: `@statements' -> '`@receiver whenAboutToStyleBlockChangedDo: `@statements'.
 	self whenAboutToStyleBlockChangedDo: aBlock
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> whenAboutToStyleBlockChangedDo: aBlock [
+	"Set a block to perform when the about to style block changed"
+	
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -41,9 +167,30 @@ SpAbstractTextPresenter >> whenBehaviorChanged: aBlock [
 ]
 
 { #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> whenBehaviorChangedDo: aBlock [
+	"Set a block to perform when the behavior class changed"
+	
+	self 
+		deprecated: 'This has been moved to specific presenters' 
+		on: '2019-04-15'
+		in: #Pharo8
+]
+
+{ #category : #'*Spec2-Deprecated' }
 SpAbstractTextPresenter >> whenCodeCompletionAllowedChanged: aBlock [
-	self deprecated: 'Use #whenCodeCompletionAllowedChangedDo: instead.' transformWith: '`@receiver whenCodeCompletionAllowedChanged: `@statements' -> '`@receiver whenCodeCompletionAllowedChangedDo: `@statements'.
-	self whenCodeCompletionAllowedChangedDo: aBlock
+	self
+		deprecated: 'Use #whenTextIsAcceptedDo: instead or nothing. Currently, both those methods are doing the same thing but my name is really missleading. Thus, I''ll be removed.'
+		transformWith: '`@receiver whenCodeCompletionAllowedChanged: `@statements' -> '`@receiver whenTextIsAcceptedDo: `@statements'.
+	self whenTextIsAcceptedDo: aBlock
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpAbstractTextPresenter >> whenCodeCompletionAllowedChangedDo: aBlock [
+	self
+		deprecated: 'Use #whenTextIsAcceptedDo: instead or nothing. Currently, both those methods are doing the same thing but my name is really missleading. Thus, I''ll be removed.'
+		transformWith: '`@receiver whenCodeCompletionAllowedChangedDo: `@statements' -> '`@receiver whenTextIsAcceptedDo: `@statements'.
+
+	self whenTextIsAcceptedDo: aBlock
 ]
 
 { #category : #'*Spec2-Deprecated' }

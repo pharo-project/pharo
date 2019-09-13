@@ -21,12 +21,11 @@ SettingNode >> spotterForSettingsFor: aStep [
 
 { #category : #'*GT-SpotterExtensions-Core' }
 SettingNode >> spotterLabel [
+
 	| label |
+
 	label := self settingDeclaration label.
-	^ self parentNode isNil
-		ifTrue: [ label ]
-		ifFalse: [ self parentNode spotterLabel , '/', label ]
-		
+	^ self parentNode ifNil: [ label ] ifNotNil: [ self parentNode spotterLabel , '/' , label ]
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }

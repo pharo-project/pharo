@@ -1106,14 +1106,14 @@ RubTextEditor >> find: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubTextEditor >> findAgain [
-	"Find the text-to-find again."
-	| where |
-	where := self findReplaceService findNext.
-	where isNil
-		ifTrue: [self flash]
-		ifFalse: [ self selectInterval: where].
-	^ where
 
+	"Find the text-to-find again."
+
+	| where |
+
+	where := self findReplaceService findNext.
+	where ifNil: [ self flash ] ifNotNil: [ self selectInterval: where ].
+	^ where
 ]
 
 { #category : #'typing/selecting keys' }
@@ -1126,13 +1126,14 @@ RubTextEditor >> findAgain: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubTextEditor >> findAgainAndReplace [
-	"Find the text-to-find again and eventually replace it with the current replace text."
-	| where |
-	where := self findAgain.
-	where isNil
-		ifFalse: [self findReplaceService replaceText 
-				ifNotEmpty: [:rt | self replaceSelectionWith: rt]]
 
+	"Find the text-to-find again and eventually replace it with the current replace text."
+
+	| where |
+
+	where := self findAgain.
+	where
+		ifNotNil: [ self findReplaceService replaceText ifNotEmpty: [ :rt | self replaceSelectionWith: rt ] ]
 ]
 
 { #category : #'find-select' }
@@ -1174,9 +1175,11 @@ RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
 
 { #category : #'find-select' }
 RubTextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
+
 	| where |
+
 	where := self findPrevious: aRegex startingAt: self startIndex.
-	where isNil ifFalse: [self selectInterval: where].
+	where ifNotNil: [ self selectInterval: where ].
 	^ where
 ]
 
@@ -1991,11 +1994,8 @@ RubTextEditor >> saveContentsInFile [
 	suggestedName ifNil: [suggestedName := labelToUse , '.text'].
 	fileName := UIManager default request: 'File name?'
 				initialAnswer: suggestedName.
-	fileName isEmptyOrNil 
-		ifFalse: 
-			[(FileStream newFileNamed: fileName)
-				nextPutAll: stringToSave;
-				close]
+	fileName isEmptyOrNil
+		ifFalse: [ fileName asFileReference writeStreamDo: [ :out | out nextPutAll: stringToSave ] ]
 ]
 
 { #category : #scrolling }

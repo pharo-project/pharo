@@ -74,8 +74,9 @@ RBMoveMethodRefactoring >> addSelfReturn [
 
 { #category : #private }
 RBMoveMethodRefactoring >> buildParseTree [
-	parseTree := (class parseTreeFor: selector) copy.
-	parseTree isNil ifTrue: [self refactoringFailure: 'Could not parse method']
+
+	parseTree := ( class parseTreeFor: selector ) copy.
+	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
 ]
 
 { #category : #preconditions }
@@ -115,7 +116,7 @@ RBMoveMethodRefactoring >> checkForSuperReferences [
 RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 	| varNames |
 	varNames := parseTree allDefinedVariables.
-	selfVariableName notNil ifTrue: [varNames add: selfVariableName].
+	selfVariableName ifNotNil: [varNames add: selfVariableName].
 	varNames do: 
 			[:name | 
 			moveToClasses do: 
@@ -188,29 +189,27 @@ RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 
 { #category : #'private-accessing' }
 RBMoveMethodRefactoring >> getClassesForInstanceVariable [
+
 	| definingClass typer types |
+
 	definingClass := class whoDefinesInstanceVariable: variable.
 	typer := RBRefactoryTyper newFor: self model.
 	typer runOn: definingClass.
 	types := typer typesFor: variable.
-	types isEmpty 
-		ifTrue: [types := OrderedCollection with: (self model classNamed: #Object)].
-	moveToClasses := self selectVariableTypesFrom: types
-				selected: (typer guessTypesFor: variable).
-	moveToClasses isNil ifTrue: [self refactoringFailure: 'Method not moved']
+	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
+	moveToClasses := self selectVariableTypesFrom: types selected: ( typer guessTypesFor: variable ).
+	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
 
 { #category : #'private-accessing' }
 RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
+
 	| types |
-	types := RBRefactoryTyper 
-				typesFor: variable
-				in: parseTree
-				model: self model.
-	types isEmpty 
-		ifTrue: [types := OrderedCollection with: (self model classNamed: #Object)].
+
+	types := RBRefactoryTyper typesFor: variable in: parseTree model: self model.
+	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: types.
-	moveToClasses isNil ifTrue: [self refactoringFailure: 'Method not moved']
+	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
 
 { #category : #'private-accessing' }
@@ -221,60 +220,62 @@ RBMoveMethodRefactoring >> getClassesToMoveTo [
 			[self isMovingToInstVar 
 				ifTrue: [self getClassesForInstanceVariable]
 				ifFalse: [self getClassForGlobalOrClassVariable]].
-	moveToClasses isEmpty 
-		ifTrue: [self refactoringFailure: 'No classes selected, method not moved.']
+	moveToClasses ifEmpty: [self refactoringFailure: 'No classes selected, method not moved.']
 ]
 
 { #category : #preconditions }
 RBMoveMethodRefactoring >> getNewMethodName [
+
 	| newSelector parameters alreadyDefined methodName newMethodName |
+
 	self removeArgument.
-	parameters := parseTree argumentNames asOrderedCollection.
-	"parameters remove: variable ifAbsent: []."
-	self needsToReplaceSelfReferences 
-		ifTrue: [parameters add: selfVariableName].
-	methodName := RBMethodName selector: (self uniqueMethodNameFor: parameters size) arguments: parameters.
-	
-	[newMethodName := self requestMethodNameFor: methodName.
-	newMethodName isNil ifTrue: [self refactoringFailure: 'Did not move method'].
-	newMethodName isValid 
-		ifTrue: [newSelector := newMethodName selector]
-		ifFalse: [self refactoringWarning: 'Invalid method name'].
+	parameters := parseTree argumentNames asOrderedCollection.	"parameters remove: variable ifAbsent: []."
+	self needsToReplaceSelfReferences
+		ifTrue: [ parameters add: selfVariableName ].
+	methodName := RBMethodName
+		selector: ( self uniqueMethodNameFor: parameters size )
+		arguments: parameters.
+
+	[ newMethodName := self requestMethodNameFor: methodName.
+	newMethodName ifNil: [ self refactoringFailure: 'Did not move method' ].
+	newMethodName isValid
+		ifTrue: [ newSelector := newMethodName selector ]
+		ifFalse: [ self refactoringWarning: 'Invalid method name' ].
 	parameters := newMethodName arguments.
-	(self checkMethodName: newSelector in: class) 
-		ifFalse: 
-			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
-			newSelector := nil].
-	alreadyDefined := moveToClasses 
-				detect: [:each | each hierarchyDefinesMethod: newSelector]
-				ifNone: [nil].
-	alreadyDefined notNil 
-		ifTrue: 
-			[self 
-				refactoringWarning: ('<1s> is already defined by <2p> or a super/subclass<n>Try another?' 
+	( self checkMethodName: newSelector in: class )
+		ifFalse: [ self refactoringWarning: newSelector , ' is not a valid selector name.'.
+			newSelector := nil
+			].
+	alreadyDefined := moveToClasses
+		detect: [ :each | each hierarchyDefinesMethod: newSelector ]
+		ifNone: [ nil ].
+	alreadyDefined ifNotNil: [ self
+				refactoringWarning:
+					( '<1s> is already defined by <2p> or a super/subclass<n>Try another?'
 						expandMacrosWith: newSelector
-						with: alreadyDefined).
-			newSelector := nil].
-	newSelector isNil] 
-			whileTrue: [].
+						with: alreadyDefined ).
+			newSelector := nil
+			].
+	newSelector isNil
+	] whileTrue: [  ].
 	parseTree
 		renameSelector: newSelector
-		andArguments: (parameters collect: [:each | RBVariableNode named: each]) 
-			asArray
+		andArguments: ( parameters collect: [ :each | RBVariableNode named: each ] ) asArray
 ]
 
 { #category : #transforming }
 RBMoveMethodRefactoring >> hasOnlySelfReturns [
-	^ hasOnlySelfReturns isNil
-		ifTrue: [ | searcher |
+
+	^ hasOnlySelfReturns
+		ifNil: [ | searcher |
+
 			searcher := self parseTreeSearcher.
 			searcher
 				matches: '^self' do: [ :aNode :answer | answer ];
 				matches: '^`@object' do: [ :aNode :answer | false ].
-			hasOnlySelfReturns := searcher
-				executeTree: parseTree
-				initialAnswer: true ]
-		ifFalse: [ hasOnlySelfReturns ]
+			hasOnlySelfReturns := searcher executeTree: parseTree initialAnswer: true
+			]
+		ifNotNil: [ hasOnlySelfReturns ]
 ]
 
 { #category : #testing }

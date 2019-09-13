@@ -72,14 +72,9 @@ ParametrizedTestCase class >> testParameters [
 ]
 
 { #category : #private }
-ParametrizedTestCase >> cleanUpInstanceVariables [
-	| instanceVariablesNames |
+ParametrizedTestCase >> instanceVariablesToKeep [
 
-	instanceVariablesNames := #('testSelector' 'parametersToUse').
-	self class allInstVarNames
-		do: [ :name | 
-			(instanceVariablesNames includes: name)
-				ifFalse: [ self instVarNamed: name put: nil ] ]
+	^ super instanceVariablesToKeep, #('testSelector' 'parametersToUse')
 ]
 
 { #category : #accessing }

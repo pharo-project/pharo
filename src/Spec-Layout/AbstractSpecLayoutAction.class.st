@@ -5,6 +5,7 @@ Class {
 	#name : #AbstractSpecLayoutAction,
 	#superclass : #Object,
 	#instVars : [
+		'arguments',
 		'selector'
 	],
 	#category : #'Spec-Layout-Actions'
@@ -12,12 +13,24 @@ Class {
 
 { #category : #accesing }
 AbstractSpecLayoutAction >> arguments [
-	^ self subclassResponsibility
+	^ arguments
+]
+
+{ #category : #accesing }
+AbstractSpecLayoutAction >> arguments: anObject [
+	arguments := anObject
 ]
 
 { #category : #protocol }
 AbstractSpecLayoutAction >> asSpecElements [
-	^ {self selector} , self arguments
+
+	self subclassResponsibility 
+]
+
+{ #category : #protocol }
+AbstractSpecLayoutAction >> generateArguments [
+
+	
 ]
 
 { #category : #accesing }

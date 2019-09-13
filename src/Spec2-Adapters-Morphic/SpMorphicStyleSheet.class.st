@@ -47,11 +47,16 @@ SpMorphicStyleSheet class >> newDefault [
 	^ SpMorphicDefaultStyleSheet new
 ]
 
-{ #category : #utils }
+{ #category : #initialization }
 SpMorphicStyleSheet class >> reset [ 
 	<script>
 	
 	Current := nil
+]
+
+{ #category : #accessing }
+SpMorphicStyleSheet class >> theme [
+	^ Smalltalk ui theme
 ]
 
 { #category : #accessing }
@@ -148,6 +153,11 @@ SpMorphicStyleSheet >> propertyAt: aName put: aValue [
 	^ self properties 
 		at: aName 
 		put: aValue
+]
+
+{ #category : #accessing }
+SpMorphicStyleSheet >> theme [
+	^ self class theme
 ]
 
 { #category : #style }

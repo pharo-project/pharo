@@ -5,7 +5,7 @@ SpListPresenter >> allowToSelect [
 	"Return whether the list items can be selected or not"
 	
 	self deprecated: 'Should not use. Use #selectionMode instead'.
-	^ allowToSelect value
+	^ allowToSelect
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -13,9 +13,8 @@ SpListPresenter >> allowToSelect: aBoolean [
 	"Set if the list items can be selected or not"
 
 	self deprecated: 'Should not use. Use #selectionMode: instead'.
-	allowToSelect value: aBoolean.
-	aBoolean 
-		ifFalse: [ self resetSelection ].
+	allowToSelect := aBoolean.
+	aBoolean ifFalse: [ self resetSelection ]
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -24,7 +23,7 @@ SpListPresenter >> autoDeselect [
 	"If true, clicking again on the selected item will unselect it"
 
 	self deprecated: 'Should not use. This feature is not supported anymore'.	
-	^ autoDeselect value
+	^ autoDeselect
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -32,7 +31,7 @@ SpListPresenter >> autoDeselect: aBoolean [
 	"Set if the list items can be selected again"
 
 	self deprecated: 'Should not use. This feature is not supported anymore'.
-	autoDeselect value: aBoolean
+	autoDeselect := aBoolean
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -57,15 +56,36 @@ SpListPresenter >> backgroundColorFor: anItem at: index [
 ]
 
 { #category : #'*Spec2-Deprecated' }
+SpListPresenter >> resetFilteringBlock [
+	self
+		deprecated: 'This feature is now removed from Spec 2. If the visible elements of the list need to be changed, it''s the users of the lists that should manage it and update the list of items of the list.'
+]
+
+{ #category : #'*Spec2-Deprecated' }
 SpListPresenter >> whenAllowToSelectChanged: aBlock [
 	self deprecated: 'Use #whenAllowToSelectChangedDo: instead.' transformWith: '`@receiver whenAllowToSelectChanged: `@statements' -> '`@receiver whenAllowToSelectChangedDo: `@statements'.
 	self whenAllowToSelectChangedDo: aBlock
 ]
 
 { #category : #'*Spec2-Deprecated' }
+SpListPresenter >> whenAllowToSelectChangedDo: aBlock [
+	"Set a block to value when the value of allowToSelect has changed"
+	self deprecated: 'Should not use. Use #selectionMode instead'.
+	self property: #allowToSelect whenChangedDo: aBlock
+]
+
+{ #category : #'*Spec2-Deprecated' }
 SpListPresenter >> whenAutoDeselectChanged: aBlock [
 	self deprecated: 'Use #whenAutoDeselectChangedDo: instead.' transformWith: '`@receiver whenAutoDeselectChanged: `@statements' -> '`@receiver whenAutoDeselectChangedDo: `@statements'.
 	self whenAutoDeselectChangedDo: aBlock
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpListPresenter >> whenAutoDeselectChangedDo: aBlock [
+	"Set a block to value when the value of autoDeselect has changed"
+
+	self deprecated: 'Should not use. This feature is not supported anymore'.
+	self property: #autoDeselect whenChangedDo: aBlock
 ]
 
 { #category : #'*Spec2-Deprecated' }
@@ -85,6 +105,14 @@ SpListPresenter >> whenDisplayBlockChanged: aBlock [
 SpListPresenter >> whenFilteringBlockChanged: aBlock [
 	self deprecated: 'Use #whenFilteringBlockChangedDo: instead.' transformWith: '`@receiver whenFilteringBlockChanged: `@statements' -> '`@receiver whenFilteringBlockChangedDo: `@statements'.
 	self whenFilteringBlockChangedDo: aBlock
+]
+
+{ #category : #'*Spec2-Deprecated' }
+SpListPresenter >> whenFilteringBlockChangedDo: aBlock [
+	"Set a block to value when the filtering block block has changed"
+
+	self
+		deprecated: 'This feature is now removed from Spec 2. If the visible elements of the list need to be changed, it''s the users of the lists that should manage it and update the list of items of the list.'
 ]
 
 { #category : #'*Spec2-Deprecated' }

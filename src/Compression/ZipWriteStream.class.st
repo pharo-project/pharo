@@ -74,16 +74,18 @@ ZipWriteStream class >> maxLiteralCodes [
 { #category : #'regression test' }
 ZipWriteStream class >> printRegressionStats: stats from: fd [
 	| raw compressed numFiles |
-	raw := stats at: #rawSize ifAbsent:[0].
-	raw = 0 ifTrue:[^self].
-	compressed := stats at: #compressedSize ifAbsent:[0].
-	numFiles := stats at: #numFiles ifAbsent:[0].
-	Transcript cr; nextPutAll: fd fullName.
-	Transcript cr; tab; nextPutAll:'Files compressed: ', numFiles asStringWithCommas.
-	Transcript cr; tab; nextPutAll:'Bytes compressed: ', raw asStringWithCommas.
-	Transcript cr; tab; nextPutAll:'Avg. compression ratio: ';
-		print: ((compressed / raw asFloat * 100.0) truncateTo: 0.01).
-	Transcript endEntry.
+	raw := stats at: #rawSize ifAbsent: [ 0 ].
+	raw = 0
+		ifTrue: [ ^ self ].
+	compressed := stats at: #compressedSize ifAbsent: [ 0 ].
+	numFiles := stats at: #numFiles ifAbsent: [ 0 ].
+	self traceCr: fd fullName.
+	self traceCrTab: 'Files compressed: ' , numFiles asStringWithCommas.
+	self traceCrTab: 'Bytes compressed: ' , raw asStringWithCommas.
+	self
+		traceCrTab:
+			'Avg. compression ratio: '
+				, (compressed / raw asFloat * 100.0 truncateTo: 0.01) asString
 ]
 
 { #category : #'regression test' }
@@ -157,7 +159,7 @@ ZipWriteStream >> dynamicBlockSizeFor: lTree and: dTree using: blTree and: blFre
 		freq > 0 ifTrue:[
 			treeBits := treeBits + (freq * ((blTree bitLengthAt: i) + addl "addl bits"))]].
 	VerboseLevel > 1 ifTrue:[
-		Transcript show:'['; print: treeBits; show:' bits for dynamic tree]'].
+		self trace:'[',  treeBits asString . self trace:' bits for dynamic tree]'].
 	bits := bits + treeBits.
 
 	"Compute the size of the compressed block"
@@ -246,75 +248,92 @@ ZipWriteStream >> flushBlock [
 { #category : #encoding }
 ZipWriteStream >> flushBlock: lastBlock [
 	"Send the current block"
-	| lastFlag bitsRequired method bitsSent
-	storedLength fixedLength dynamicLength 
-	blTree lTree dTree blBits blFreq |
 
-	lastFlag := lastBlock ifTrue:[1] ifFalse:[0].
+	| lastFlag bitsRequired method bitsSent storedLength fixedLength dynamicLength blTree lTree dTree blBits blFreq |
+	lastFlag := lastBlock
+		ifTrue: [ 1 ]
+		ifFalse: [ 0 ].
 
 	"Compute the literal/length and distance tree"
 	lTree := ZipEncoderTree buildTreeFrom: literalFreq maxDepth: MaxBits.
 	dTree := ZipEncoderTree buildTreeFrom: distanceFreq maxDepth: MaxBits.
 
 	"Compute the bit length tree"
-	blBits := lTree bitLengths, dTree bitLengths.
+	blBits := lTree bitLengths , dTree bitLengths.
 	blFreq := WordArray new: MaxBitLengthCodes.
 	self scanBitLengths: blBits into: blFreq.
-	blTree := ZipEncoderTree buildTreeFrom: blFreq maxDepth: MaxBitLengthBits.
+	blTree := ZipEncoderTree
+		buildTreeFrom: blFreq
+		maxDepth: MaxBitLengthBits.
 
 	"Compute the bit length for the current block.
 	Note: Most of this could be computed on the fly but it's getting
 	really ugly in this case so we do it afterwards."
 	storedLength := self storedBlockSize.
 	fixedLength := self fixedBlockSizeFor: lTree and: dTree.
-	dynamicLength := self dynamicBlockSizeFor: lTree and: dTree 
-							using: blTree and: blFreq.
-	VerboseLevel > 1 ifTrue:[
-		Transcript cr; show:'Block sizes (S/F/D):';
-			space; print: storedLength // 8; 
-			nextPut:$/; print: fixedLength // 8; 
-			nextPut:$/; print: dynamicLength // 8; space; endEntry].
+	dynamicLength := self
+		dynamicBlockSizeFor: lTree
+		and: dTree
+		using: blTree
+		and: blFreq.
+	VerboseLevel > 1
+		ifTrue: [ self
+				traceCr:
+					(String
+						streamContents: [ :stream | 
+							stream
+								nextPutAll: 'Block sizes (S/F/D):' space;
+								print: storedLength // 8;
+								nextPut: $/;
+								print: fixedLength // 8;
+								nextPut: $/;
+								print: dynamicLength // 8;
+								space;
+								endEntry ]) ].
 
 	"Check which method to use"
 	method := self forcedMethod.
-	method ifNil:[
-		method := (storedLength < fixedLength and:[storedLength < dynamicLength]) 
-			ifTrue:[#stored]
-			ifFalse:[fixedLength < dynamicLength ifTrue:[#fixed] ifFalse:[#dynamic]]].
-	(method == #stored and:[blockStart < 0]) ifTrue:[
-		"Cannot use #stored if the block is not available"
-		method := fixedLength < dynamicLength ifTrue:[#fixed] ifFalse:[#dynamic]].
-
-	bitsSent := encoder bitPosition. "# of bits sent before this block"
+	method
+		ifNil: [ method := (storedLength < fixedLength
+				and: [ storedLength < dynamicLength ])
+				ifTrue: [ #stored ]
+				ifFalse: [ fixedLength < dynamicLength
+						ifTrue: [ #fixed ]
+						ifFalse: [ #dynamic ] ] ].
+	(method == #stored and: [ blockStart < 0 ])
+		ifTrue: [ "Cannot use #stored if the block is not available"
+			method := fixedLength < dynamicLength
+				ifTrue: [ #fixed ]
+				ifFalse: [ #dynamic ] ].
+	bitsSent := encoder bitPosition.	"# of bits sent before this block"
 	bitsRequired := nil.
-
-	(method == #stored) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'S'].
-		bitsRequired := storedLength.
-		encoder nextBits: 3 put: StoredBlock << 1 + lastFlag.
-		self sendStoredBlock].
-
-	(method == #fixed) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'F'].
-		bitsRequired := fixedLength.
-		encoder nextBits: 3 put: FixedBlock << 1 + lastFlag.
-		self sendFixedBlock].
-
-	(method == #dynamic) ifTrue:[
-		VerboseLevel > 0 ifTrue:[Transcript show:'D'].
-		bitsRequired := dynamicLength.
-		encoder nextBits: 3 put: DynamicBlock << 1 + lastFlag.
-		self sendDynamicBlock: blTree 
-			literalTree: lTree 
-			distanceTree: dTree 
-			bitLengths: blBits].
-
+	method == #stored
+		ifTrue: [ VerboseLevel > 0
+				ifTrue: [ self trace: 'S' ].
+			bitsRequired := storedLength.
+			encoder nextBits: 3 put: (StoredBlock << 1) + lastFlag.
+			self sendStoredBlock ].
+	method == #fixed
+		ifTrue: [ VerboseLevel > 0
+				ifTrue: [ self trace: 'F' ].
+			bitsRequired := fixedLength.
+			encoder nextBits: 3 put: (FixedBlock << 1) + lastFlag.
+			self sendFixedBlock ].
+	method == #dynamic
+		ifTrue: [ VerboseLevel > 0
+				ifTrue: [ self trace: 'D' ].
+			bitsRequired := dynamicLength.
+			encoder nextBits: 3 put: (DynamicBlock << 1) + lastFlag.
+			self
+				sendDynamicBlock: blTree
+				literalTree: lTree
+				distanceTree: dTree
+				bitLengths: blBits ].
 	bitsRequired = (encoder bitPosition - bitsSent)
-		ifFalse:[self error:'Bits size mismatch'].
-
-	lastBlock 
-		ifTrue:[self release]
-		ifFalse:[self initializeNewBlock].
+		ifFalse: [ self error: 'Bits size mismatch' ].
+	lastBlock
+		ifTrue: [ self release ]
+		ifFalse: [ self initializeNewBlock ]
 ]
 
 { #category : #accessing }

@@ -150,18 +150,6 @@ NautilusRefactoring >> buildRenameRefactoringEngineFor: aClass [
 		to: newName
 ]
 
-{ #category : #'rewrite code' }
-NautilusRefactoring >> categoryRegex [
-	self model refactorCode: self categoryRegexText
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> categoryRegexText [
-	^ 'RBCategoryRegexRefactoring new
-	replace: ''^Kernel-(.*)$'' with: ''System-$1'' ignoreCase: false;
-	yourself'
-]
-
 { #category : #'undo-redo' }
 NautilusRefactoring >> changeManager [
 	^ RBRefactoryChangeManager instance
@@ -240,11 +228,6 @@ NautilusRefactoring >> classObjectFor: anObject [
 	(anObject isBehavior or: [anObject isTrait]) ifTrue: [ ^ environment classFor: anObject ].
 	anObject isSymbol ifTrue: [ ^ environment classNamed: anObject ].
 	^ anObject
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> classRegex [
-	self model refactorCode: self classRegexText
 ]
 
 { #category : #'rewrite code' }
@@ -363,6 +346,14 @@ NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 ]
 
 { #category : #display }
+NautilusRefactoring >> handleMethodNameRequest: aMethodName in: ref [
+	|dialog|
+	dialog := SycMethodNameEditor openOn: aMethodName withRefactoring: ref.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	^ aMethodName
+]
+
+{ #category : #display }
 NautilusRefactoring >> handleWarning: anException [
 	self inform: anException messageText.
 	anException resume
@@ -370,11 +361,12 @@ NautilusRefactoring >> handleWarning: anException [
 
 { #category : #private }
 NautilusRefactoring >> informAnExceptionFor: anException [
-	anException actionBlock isNil
-		ifTrue: [ self inform: anException messageText ]
-		ifFalse: [ 
-			(self confirm: anException messageText)
-				ifTrue: [ anException actionBlock value ] ]
+
+	anException actionBlock
+		ifNil: [ self inform: anException messageText ]
+		ifNotNil: [ ( self confirm: anException messageText )
+				ifTrue: [ anException actionBlock value ]
+			]
 ]
 
 { #category : #method }
@@ -1027,23 +1019,6 @@ NautilusRefactoring >> promptOnRefactoring [
 	^ promptOnRefactoring ifNil: [ self class promptOnRefactoring ]
 ]
 
-{ #category : #option }
-NautilusRefactoring >> promptOnRefactoring: aBoolean [
-	promptOnRefactoring := aBoolean
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> protocolRegex [
-	self model refactorCode: self protocolRegexText
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> protocolRegexText [
-	^ 'RBProtocolRegexRefactoring new
-	replace: ''^\*system(.*)$'' with: ''*kernel$1'' ignoreCase: true;
-	yourself'
-]
-
 { #category : #'class var' }
 NautilusRefactoring >> pullUpClassVarFrom: aClass [
 	self performRefactoringFor: #privatePullUpClassVarFrom: with: aClass
@@ -1086,28 +1061,6 @@ NautilusRefactoring >> realizeClass [
 ]
 
 { #category : #'undo-redo' }
-NautilusRefactoring >> redoEnabled [
-	^ self changeManager hasRedoableOperations
-]
-
-{ #category : #'undo-redo' }
-NautilusRefactoring >> redoLabel [
-	| stream |
-	stream := WriteStream with: 'Redo'.
-	self changeManager hasRedoableOperations
-		ifFalse: [ ^ stream contents ].
-	stream
-		nextPut: $ ;
-		nextPutAll: self changeManager redoChange name.
-	stream position > 40
-		ifTrue: [ 
-			stream
-				position: 40;
-				nextPutAll: '...' ].
-	^ stream contents
-]
-
-{ #category : #'undo-redo' }
 NautilusRefactoring >> redoOperation [ 
 	self changeManager redoOperation
 ]
@@ -1118,7 +1071,7 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #implementorToInline
 		toUse: [ :ref :imps | self requestImplementorToInline: imps ];
 		setOption: #methodName
-		toUse: [ :ref :name | self requestMethodNameFor: name ];
+		toUse: [ :ref :name | self requestMethodNameFor: name in: ref ];
 		setOption: #selfArgumentName
 		toUse: [ :ref | self requestSelfArgumentName ];
 		setOption: #selectVariableToMoveTo
@@ -1287,28 +1240,14 @@ NautilusRefactoring >> requestMethodNameFor: aMethodName [
 	^ self handleMethodNameRequest: aMethodName
 ]
 
+{ #category : #requests }
+NautilusRefactoring >> requestMethodNameFor: aMethodName in: ref [
+	^ self handleMethodNameRequest: aMethodName in: ref
+]
+
 { #category : #option }
 NautilusRefactoring >> requestSelfArgumentName [
 	^ self request: 'Enter name for argument to refer to "self" in extracted method'
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> rewriteCode [
-	self model rewriteCode: self rewriteCodeText
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> rewriteCodeText [
-	^ 'RBParseTreeRewriter new
-	replace: ''`@object'' with: ''`@object'';
-	replace: ''`@object'' with: ''`@object'' when: [ :node | true ];
-	replace: ''`@object'' withValueFrom: [ :node | node ];
-	replace: ''`@object'' withValueFrom: [ :node | node ] when: [ :node | true ];
-	replaceMethod: ''`@method: `@args | `@temps | `@.statements'' with: ''`@method: `@args | `@temps | `@.statements'';
-	replaceMethod: ''`@method: `@args | `@temps | `@.statements'' with: ''`@method: `@args | `@temps | `@.statements'' when: [ :node | true ];
-	replaceMethod: ''`@method: `@args | `@temps | `@.statements'' withValueFrom: [ :node | node ];
-	replaceMethod: ''`@method: `@args | `@temps | `@.statements'' withValueFrom: [ :node | node ] when: [ :node | true ];
-	yourself'
 ]
 
 { #category : #'rewrite code' }
@@ -1326,10 +1265,12 @@ NautilusRefactoring >> searchCodeText [
 
 { #category : #option }
 NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
+
 	| parseTree nameList |
+
 	parseTree := aClass parseTreeFor: aSelector.
-	parseTree isNil
-		ifTrue: [ parseTree := RBMethodNode selector: #value body: (RBSequenceNode statements: #()) ].
+	parseTree
+		ifNil: [ parseTree := RBMethodNode selector: #value body: ( RBSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;
@@ -1337,7 +1278,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 	^ self
 		chooseFrom: nameList
 		title: 'Select variable to move method into:'
-		lines: (Array with: parseTree argumentNames size)
+		lines: ( Array with: parseTree argumentNames size )
 ]
 
 { #category : #option }
@@ -1377,24 +1318,6 @@ NautilusRefactoring >> shouldUseExistingMethod: aMethodName [
 	^ true
 ]
 
-{ #category : #'rewrite code' }
-NautilusRefactoring >> sourceRegex [
-	self model refactorCode: self sourceRegexText
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> sourceRegexText [
-	^ 'RBSourceRegexRefactoring new
-	
-	"Example 1: Replace symbols with strings"
-	replace: ''#(\w+)'' with: ''''''$1'''''' ignoreCase: false;
-	
-	"Example 2: Replace 4 spaces with tabs"
-	replace: ''    '' with: ''	'' ignoreCase: false;
-
-	yourself'
-]
-
 { #category : #source }
 NautilusRefactoring >> splitCascadeBetween: anInterval from: aMethod [
 	self performRefactoringFor: #privateSplitCascadeBetween:from: with: anInterval with: aMethod
@@ -1416,41 +1339,6 @@ NautilusRefactoring >> temporaryToInstanceVariableNamed: name Between: anInterva
 	aMethod ifNil: [ ^ self ].
 	refactoring := self privateTemporaryToInstanceVariableNamed: name Between: anInterval from: aMethod.
 	self performRefactoring: refactoring
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> typeClass [
-	self model sourceCode: (self typeClassTextFor: self model selectedClasses)
-]
-
-{ #category : #'rewrite code' }
-NautilusRefactoring >> typeClassTextFor: aCollectionOfClass [
-	^ String streamContents: [:s |
-		aCollectionOfClass do: [:class |
-			s << (RBRefactoryTyper new runOn: class) printString.
-			s cr; cr ]]
-]
-
-{ #category : #'undo-redo' }
-NautilusRefactoring >> undoEnabled [
-	^ self changeManager hasUndoableOperations
-]
-
-{ #category : #'undo-redo' }
-NautilusRefactoring >> undoLabel [
-	| stream |
-	stream := WriteStream with: 'Undo'.
-	self changeManager hasUndoableOperations
-		ifFalse: [ ^ stream contents ].
-	stream
-		nextPut: $ ;
-		nextPutAll: self changeManager undoChange name.
-	stream position > 40
-		ifTrue: [ 
-			stream
-				position: 40;
-				nextPutAll: '...' ].
-	^ stream contents
 ]
 
 { #category : #'undo-redo' }

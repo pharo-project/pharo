@@ -27,7 +27,7 @@ SpSmokeTestCase class >> shouldInheritSelectors [
 { #category : #tests }
 SpSmokeTestCase >> testExample [
 	"We do not use #shouldnt:raise: to get feedback on the CI"
-	
+
 	self flag: #todo.	"All widgets should have an example. When it will be done remove this skip"
 	(self classToTest respondsTo: #example) ifFalse: [ self skip ].
 
@@ -39,7 +39,6 @@ SpSmokeTestCase >> testExample [
 					'Broken class example: ' , self classToTest asString
 						,
 							'
-
 ' , e signalerContext shortStack ]
 ]
 
@@ -55,6 +54,5 @@ SpSmokeTestCase >> testOpenWithSpec [
 					'Broken class simple instance: ' , self classToTest asString
 						,
 							'
-
 ' , e signalerContext shortStack ]
 ]

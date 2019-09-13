@@ -105,7 +105,7 @@ GoferOperationTest >> testLocalChanges [
 		load.
 	(Smalltalk globals classNamed: #GoferBar) compile: 'foo'.
 	changes := gofer localChanges.
-	self assert: changes operations size = 1
+	self assert: changes operations size equals: 1
 ]
 
 { #category : #tests }

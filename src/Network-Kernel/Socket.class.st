@@ -1702,11 +1702,8 @@ Socket >> unregister [
 
 { #category : #waiting }
 Socket >> waitForAcceptFor: timeout [
-	"Wait and accept an incoming connection. Return nil if it falis"
-	self waitForConnectionFor: timeout ifTimedOut: [^ nil].
-	^ self isConnected
-		ifTrue:[self accept]
-		
+	"Wait and accept an incoming connection. Return nil if it fails"
+	^ self waitForAcceptFor: timeout ifTimedOut: [nil].
 ]
 
 { #category : #waiting }

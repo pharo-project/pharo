@@ -21,17 +21,37 @@ Class {
 }
 
 { #category : #private }
-MCWorkingCopy class >> ancestorsFromArray: anArray cache: aDictionary [
-	^ anArray ifNotNil: [anArray collect: [:dict | self infoFromDictionary: dict cache: aDictionary]]
+MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
+	"While using recursion is simpler, it runs a risk of stack overflow for packages with many ancestors,
+	 so we use a local stack to pre-load the cache in reverse order. 
+	 The original code remains on the last line, so the intermediate code 
+	 does not change the external behavior. "
+
+	| index stack |
+	anArray ifNil: [^nil].
+	stack := OrderedCollection withAll: anArray.
+	index := 1.
+	[ index <= stack size ] whileTrue: [
+		| dict id |
+		dict := stack at: index.
+		id := (dict at: #id) asString.
+		(cacheDictionary includesKey: id) ifFalse: [
+			stack addAll: (dict at: #ancestors ifAbsent: [#()]).
+		].
+		index := index + 1.
+	].
+	stack reverseDo: [:each | 
+		self infoFromDictionary: each cache: cacheDictionary.
+	].
+	^ anArray collect: [:dict | self infoFromDictionary: dict cache: cacheDictionary]
 ]
 
 { #category : #querying }
 MCWorkingCopy class >> hasPackageNamed: aName [
 	" self hasPackageNamed: 'ConfigurationOfFuel' "
-	
+
 	^ MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aName ]
-		ifNone: [ false ].
+		anySatisfy: [ :each | each packageName = aName ]
 ]
 
 { #category : #private }

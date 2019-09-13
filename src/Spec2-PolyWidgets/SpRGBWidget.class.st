@@ -24,18 +24,15 @@ Class {
 
 { #category : #specs }
 SpRGBWidget class >> defaultSpec [
-	<spec: #default>
-	^ SpLayout composed
-		newColumn: [ :column | 
-			column
-				add: #preview;
-				add: #sliders ];
+	^ SpBoxLayout newVertical
+		add: #preview;
+		add: #sliders;
 		yourself
 ]
 
 { #category : #api }
 SpRGBWidget >> color [
- ^ sliders color
+	^ sliders color
 ]
 
 { #category : #initialization }
@@ -69,5 +66,5 @@ SpRGBWidget >> sliders [
 
 { #category : #'api-events' }
 SpRGBWidget >> whenExtentForPreviewChanged: aBlock [
- extentForPreview whenChangedDo: aBlock 
+	extentForPreview whenChangedDo: aBlock 
 ]

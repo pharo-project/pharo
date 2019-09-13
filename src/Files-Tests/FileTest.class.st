@@ -28,7 +28,9 @@ FileTest >> testCheckExistenceOfNonExistingFileDoesNotThrowException [
 
 	| file |
 	file := File named: 'asd.txt'.
-	self shouldnt: [file checkDoesNotExist] raise: Error.
+	[file checkDoesNotExist] 
+		on: FileAlreadyExistsException
+		do: [ :ex | self assert: false description: 'File should not exist!' ]
 ]
 
 { #category : #tests }
@@ -49,15 +51,6 @@ FileTest >> testFileExists [
 	file writeStream close.
 	self assert: file exists.
 	file delete.
-]
-
-{ #category : #tests }
-FileTest >> testFilesAreRegisteredInWeakRegistry [
-
-	|  f |
-	[f := (File named: 'asd.txt') writeStream.
-	self assert: (File registry keys includes: f)]
-		ensure: [ f ifNotNil: #close ]
 ]
 
 { #category : #tests }
@@ -90,35 +83,21 @@ FileTest >> testOpeningFileObjectCreatesFile [
 ]
 
 { #category : #tests }
-FileTest >> testOpeningFileSetsPositionAtBeggining [
+FileTest >> testOpeningFileSetsPositionAtBeginning [
 
 	| file |
-	[(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
+	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 	file := (File named: 'asd.txt') openForWrite.
-	self assert: file position equals: 0 
-		] ensure: [ file ifNotNil: #close ]
+	[self assert: file position equals: 0 
+		] ensure: [ file ifNotNil: [ file close ] ]
 ]
 
 { #category : #tests }
 FileTest >> testOpeningForAppendSetsPositionAtEnd [
 
 	| file |
-	[ (File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
+	(File named: 'asd.txt') writeStreamDo: [ :stream | stream nextPutAll: 'aaa' ].
 	file := (File named: 'asd.txt') openForAppend.
-	self assert: file position equals: 3
-		] ensure: [ file ifNotNil: #close ]
-]
-
-{ #category : #tests }
-FileTest >> testRegistryShouldBeCleaned [
-
-	| oldSize |
-	"We force some garbage collection to avoid noise in the test"
-	3 timesRepeat: [Smalltalk garbageCollect].
-	oldSize := File registry size.
-
-	(File named: 'asd.txt') writeStream.
-	3 timesRepeat: [Smalltalk garbageCollect].
-	
-	self assert: oldSize equals: File registry size.
+	[ self assert: file position equals: 3
+		] ensure: [ file ifNotNil: [ file close ] ]
 ]

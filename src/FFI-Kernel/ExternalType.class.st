@@ -413,14 +413,14 @@ ExternalType >> asPointerType [
 ]
 
 { #category : #converting }
-ExternalType >> asPointerType: pointerSize [
+ExternalType >> asPointerType: anotherPointerSize [
 	"convert the receiver into a pointer type"
 	| type |
 	type := self asPointerType.
-	^type pointerSize = pointerSize
+	^type pointerSize = anotherPointerSize
 		ifTrue: [type]
 		ifFalse:
-			[type copy pointerSize: pointerSize; yourself]
+			[type copy pointerSize: anotherPointerSize; yourself]
 ]
 
 { #category : #accessing }
@@ -517,16 +517,15 @@ ExternalType >> isVoid [
 
 { #category : #private }
 ExternalType >> newReferentClass: aClass [
+
 	"The class I'm referencing has changed. Update my spec."
 
 	referentClass := aClass.
 	self isPointerType
 		ifTrue: [ ^ self ].	"for pointers only the referentClass changed"
-	compiledSpec := referentClass isNil
-		ifTrue:
-			[ "my class has been removed - make me 'struct { void }'" WordArray with: FFIFlagStructure ]
-		ifFalse:
-			[ "my class has been changed - update my compiledSpec" referentClass compiledSpec ]
+	compiledSpec := referentClass
+		ifNil: [ "my class has been removed - make me 'struct { void }'" WordArray with: FFIFlagStructure ]
+		ifNotNil: [ "my class has been changed - update my compiledSpec" referentClass compiledSpec ]
 ]
 
 { #category : #accessing }
@@ -559,10 +558,12 @@ ExternalType >> printAtomicType: spec on: aStream [
 
 { #category : #printing }
 ExternalType >> printOn: aStream [
-	referentClass isNil
-		ifTrue:[aStream nextPutAll: (AtomicTypeNames at: self atomicType)]
-		ifFalse:[aStream nextPutAll: referentClass name].
-	self isPointerType ifTrue:[aStream nextPut: $*].
+
+	referentClass
+		ifNil: [ aStream nextPutAll: ( AtomicTypeNames at: self atomicType ) ]
+		ifNotNil: [ aStream nextPutAll: referentClass name ].
+	self isPointerType
+		ifTrue: [ aStream nextPut: $* ]
 ]
 
 { #category : #printing }
@@ -688,10 +689,27 @@ ExternalType >> setReferencedType: aType [
 
 { #category : #printing }
 ExternalType >> storeOn: aStream [
-	referentClass isNil
-		ifTrue:[aStream nextPutAll: ExternalType name; space; nextPutAll: (AtomicTypeNames at: self atomicType)]
-		ifFalse:[aStream nextPut: $(; nextPutAll: ExternalType name; space; nextPutAll: #structTypeNamed:; space;  store: referentClass name; nextPut: $)].
-	self isPointerType ifTrue: [aStream space; nextPutAll: #asPointer].
+
+	referentClass
+		ifNil: [ aStream
+				nextPutAll: ExternalType name;
+				space;
+				nextPutAll: ( AtomicTypeNames at: self atomicType )
+			]
+		ifNotNil: [ aStream
+				nextPut: $(;
+				nextPutAll: ExternalType name;
+				space;
+				nextPutAll: #structTypeNamed:;
+				space;
+				store: referentClass name;
+				nextPut: $)
+			].
+	self isPointerType
+		ifTrue: [ aStream
+				space;
+				nextPutAll: #asPointer
+			]
 ]
 
 { #category : #printing }

@@ -94,6 +94,8 @@ BaselineOfIDE >> additionalInitialization [
 	
 	SDL_Event initialize.
 	
+	HiRulerBuilderTest initialize.
+	
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
@@ -135,6 +137,11 @@ BaselineOfIDE >> baseline: spec [
 		].
 
 		spec baseline: 'Clap' with: [ spec repository: repository ].
+	
+		spec baseline: 'SUnit' with: [
+			spec loads: 'Tests'. 
+			spec repository: repository
+		].
 		
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
@@ -145,6 +152,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Epicea'.
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
+		spec package: 'Hiedra-Examples'.
 		spec package: 'Hiedra-Tests'. 
 		spec package: 'Ombu-Tests'.
 		spec package: 'Epicea-Tests'.
@@ -162,8 +170,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
+		spec package: 'Network-Mail-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Deprecated-Tests-Kernel'.
+		spec package: 'System-Installers-Tests'.
+		spec package: 'System-Object Events-Tests'.
+		spec package: 'System-OSEnvironments-Tests'.
+		spec package: 'Ring-Definitions-Tests-Core'.
 		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
@@ -180,8 +192,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Deprecated-Tests-Containers'.
-		spec package: 'Ring-Deprecated-Tests-Kernel'.
+		spec package: 'Ring-Definitions-Tests-Containers'.
+		spec package: 'Ring-Definitions-Tests-Core'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -202,7 +214,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Tests'.
 		spec package: 'Monticello-Tests'.
+		spec package: 'MonticelloGUI-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -255,7 +269,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SmartSuggestions'.
 		
 		spec package: 'MonticelloMocks'.
-		spec package: 'NodeNavigation'.
 		spec package: 'OpalCompiler-Tools'.
 
 		spec package: 'OSWindow-Core'.
@@ -314,7 +327,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NewValueHolder-Tests'.		
 		spec package: 'NECompletion-Tests'.
-		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'PerformMessageCommandLineHandler'.
@@ -335,16 +347,13 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Core-Tests'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Deprecated-Tests-Monticello'.
+		spec package: 'Ring-Definitions-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
-		spec package: 'SUnit-Tests'.
-		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
-		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
 		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
@@ -387,6 +396,8 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
 
+                spec baseline: 'Ring' with: [spec repository: repository].
+
 
       self groups: spec.
 	].
@@ -399,6 +410,7 @@ BaselineOfIDE >> groups: spec [
 spec group: 'Mandatory-Group' with: #(
 	'Fuel-Tools-Pharo'	"required by GT-Debugger HudsonBuildTools20"
 	'Network-Tests'		"required by Multilingual-Tests"
+	'Network-Mail-Tests'	"previously part of Network-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
 
@@ -411,18 +423,14 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'PerformMessageCommandLineHandler' 	"standalone"
 	'Files-Prompt'
-).	
-	
-spec group: 'NodeNavigation-Group' with: #(
-	'NodeNavigation'	"standalone?"
-	'NodeNavigation-Tests'	
-).					
+).				
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens' "dependency of Hiedra"
 	'Ombu'
 	'Epicea'
 	'Hiedra'
+	'Hiedra-Examples'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
 	'Ombu-Tests'
@@ -439,13 +447,15 @@ spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
 	'Pharo-Help'
 	'Regex-Help'
-	'Spec-Help'	
 ).	
 
 spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Debugging-Utils-Tests'
+	'Tests'
+	'RPackage-Tests'
 	'Monticello-Tests'	"required by MonticelloMocks"
+	'System-Installers-Tests' 
 	'MonticelloMocks'
 	'Fuel-Tests-Core'
 	'Fuel-Platform-Pharo-Core-Tests'	
@@ -475,12 +485,11 @@ spec group: 'General-Tests-Group' with: #(
 	'ProfStef-Tests'
 	'Reflectivity-Tools-Tests'
 	'Regex-Core-Tests'
-	'Ring-Deprecated-Tests-Monticello'
+	'Ring-Definitions-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
-	'SUnit-Tests'
-	'SUnit-Support-UITesting-Tests'
+	'SUnit'
 	'Spec-Tests'
 	'System-Caching-Tests'
 	'System-Hashing-Tests'
@@ -775,9 +784,11 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Deprecated-Tests-Kernel'
-	'Ring-Deprecated-Tests-Containers' 
+	'Ring-Definitions-Tests-Core'
+	'Ring-Definitions-Tests-Containers' 
 	'Tests' 
+	'System-Object Events-Tests'
+	'System-OSEnvironments-Tests'
 	'Zinc-Character-Encoding-Tests' 
 	'System-Platforms-Tests'
 	'Text-Tests'		"required by Multilingual-Tests"
@@ -811,10 +822,10 @@ spec group: 'GT&QA-Group' with: #(
 ).		
 
 spec group: 'UndefinedClasses-Group' with: #(
-		'ClassParser'
-		'ClassParser-Tests'
-		'UndefinedClasses'
-		'UndefinedClasses-Tests'
+	'ClassParser'
+	'ClassParser-Tests'
+	'UndefinedClasses'
+	'UndefinedClasses-Tests'
 ).		
 
 spec group: #default with: #(
@@ -845,7 +856,6 @@ spec group: #default with: #(
 	'Catalog-Group'
 	'Epicea-Group'
 	'Optional-Group'
-	'NodeNavigation-Group'
 	'General-Tests-Group'
 	'SortFunctions-Group'	
 	'ReferenceFinder-Group'
@@ -865,6 +875,7 @@ spec group: #default with: #(
 	'UndefinedClasses-Group'
 	
 	'Calypso'
+	'Ring'
 ).
 
 ]
@@ -873,7 +884,7 @@ spec group: #default with: #(
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.7.2';
+		repository: 'github://pharo-vcs/iceberg:v1.6.2';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

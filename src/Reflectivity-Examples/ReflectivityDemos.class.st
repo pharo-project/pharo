@@ -22,10 +22,10 @@ ReflectivityDemos >> cleanUp [
 ReflectivityDemos >> demoSelfSendLogging [
 	<script: 'self new demoSelfSendLogging'>
 	
-	"Running this method, Open first a Transcript and then the TabsExample.	
+	"Running this method, Open first a Transcript and then the SpDemoNotebookPresenter.	
 		
 	Transcript open.
-	TabsExample open.
+	SpDemoNotebookPresenter example.
 	
 	To clean up, run the #cleanUp script of this class.
 	
@@ -34,10 +34,10 @@ ReflectivityDemos >> demoSelfSendLogging [
 	"
 	
 	| theClass |
-	theClass := TabsExample.
+	theClass := SpDemoNotebookPresenter.
 	Link := MetaLink new
 		metaObject: [ :context :object | context sender receiver == object
-				ifTrue: [ context crLog ] ];
+				ifTrue: [ context crTrace ] ];
 		selector: #value:value:;
 		option: #(+optionCompileOnLinkInstallation);
 		arguments: #(context object);

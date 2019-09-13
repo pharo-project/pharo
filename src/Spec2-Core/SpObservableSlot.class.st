@@ -30,8 +30,7 @@ SpObservableSlot >> emitValue: aMethodBuilder [
 
 { #category : #initialization }
 SpObservableSlot >> initialize: anObject [
-
-	super write: nil asValueHolder to: anObject
+	super write: SpValueHolder new to: anObject
 ]
 
 { #category : #testing }
@@ -53,7 +52,7 @@ SpObservableSlot >> read: anObject [
 ]
 
 { #category : #initialization }
-SpObservableSlot >> wantsInitalization [
+SpObservableSlot >> wantsInitialization [
 
 	^ true
 ]

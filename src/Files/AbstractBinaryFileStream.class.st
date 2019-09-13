@@ -255,7 +255,7 @@ AbstractBinaryFileStream >> readInto: readBuffer startingAt: startIndex count: c
 	^ File read: handle into: readBuffer startingAt: startIndex count: count
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 AbstractBinaryFileStream >> reset [
 	self position: 0
 ]

@@ -24,6 +24,13 @@ SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
 ]
 
 { #category : #'*Deprecated80' }
+SystemNavigation >> allReferencesToPool: aPool [
+	"Answer all the references to variable aPool"
+	self deprecated: 'use #usingMethods on the Pool'.
+	^aPool usingMethods 
+]
+
+{ #category : #'*Deprecated80' }
 SystemNavigation >> allUnreferencedClassVariablesOf: aClass [
 	"Answer a list of the receiver's unreferenced class vars, including those defined in superclasses"
 	self deprecated: 'just all allUnreferencedClassVariables on the class'.

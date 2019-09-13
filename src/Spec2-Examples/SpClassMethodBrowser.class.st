@@ -54,10 +54,7 @@ SpClassMethodBrowser >> classes: aList [
 
 { #category : #initialization }
 SpClassMethodBrowser >> initializePresenter [
-	classListPresenter
-		transmitTo: methodListPresenter
-		transform: [ :class | class methods sort: #selector descending ]
-		postTransmission: [ :destination | destination selectIndex: 1 ].
+	classListPresenter transmitTo: methodListPresenter transform: [ :class | class methods sort: #selector descending ] postTransmission: [ :destination | destination selectIndex: 1 ].
 
 	methodListPresenter
 		transmitTo: textPresenter

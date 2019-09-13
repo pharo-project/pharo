@@ -451,8 +451,11 @@ RBSequenceNode >> statements: stmtCollection [
 
 { #category : #accessing }
 RBSequenceNode >> stop [
-	^(periods isEmpty ifTrue: [0] ifFalse: [periods last]) 
-		max: (statements isEmpty ifTrue: [0] ifFalse: [statements last stop])
+	^{  
+	temporaries isEmpty ifTrue: [0] ifFalse: [ self temporaries last stop]. 
+	periods isEmpty ifTrue: [0] ifFalse: [periods last].
+	statements isEmpty ifTrue: [0] ifFalse: [statements last stop]
+	} max
 ]
 
 { #category : #accessing }

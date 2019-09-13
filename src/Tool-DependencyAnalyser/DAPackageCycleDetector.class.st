@@ -196,7 +196,7 @@ DAPackageCycleDetector >> relationGraph [
 	^ relationGraph
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 DAPackageCycleDetector >> reset [
 	cycles := SortedCollection new.
 	visitedNodes := nil.

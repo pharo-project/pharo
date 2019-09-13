@@ -3,7 +3,7 @@ Extension { #name : #UIManager }
 { #category : #'*Regex-Core' }
 UIManager >> request: aTitleString regex: initialRegexString [
 	"Prompt the user for a valid regex.
-	Return nil on cancel or a valid RxMatcher"
+	 Return nil on cancel or a valid RxMatcher"
 	| regex |
 	regex := initialRegexString.
 	"loop until we get a valid regex string back"
@@ -17,5 +17,5 @@ UIManager >> request: aTitleString regex: initialRegexString [
 		
 		[ ^ regex asRegex ] on: Error do: [ :regexParsingError|
 			self defer: [	self inform: 'Bad Regex: ', regexParsingError asString ]].
-	] repeat.
+	] repeat
 ]

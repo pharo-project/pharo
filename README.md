@@ -12,9 +12,9 @@ To download the Pharo stable version for your platform, please visit:
 
 ## Virtual machine
 
-This repository contains only sources of the Pharo image. The virtual machine is served by a separate repository:
+This repository contains only sources of the Pharo image. The virtual machine source code is managed in a separate repository:
 
-- [https://github.com/OpenSmalltalk/opensmalltalk-vm](https://github.com/OpenSmalltalk/opensmalltalk-vm)
+- [https://github.com/pharo-project/opensmalltalk-vm](https://github.com/pharo-project/opensmalltalk-vm)
 
 ## Automated Builds
 
@@ -33,17 +33,19 @@ The minimal image contains the basic Pharo packages without the graphical user i
 
 To bootstrap a new Pharo image you need the latest stable version of Pharo. For more information about bootstrapping, refer to [guillep/PharoBootstrap](https://github.com/guillep/PharoBootstrap).
 
-The bootstrapping can be done using the following script:
+The bootstrapping can be done on a properly-named branch using the following script:
 
-```bash
+```
 BUILD_NUMBER=42 BOOTSTRAP_ARCH=32 bash ./bootstrap/scripts/bootstrap.sh
 ```
 
-This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo7.0-32bit-hhhhhhh.zip where hhhhhhh is the identifying hash.
+This will generate and archive images at various stages of the bootstrap process up to the full image in Pharo8.0-32bit-hhhhhhh.zip where hhhhhhh is the hash of the current checkout.
 
 Additional information on the stages of the bootstrap and how to snapshot during the process are provided as comments in bootstrap.sh.
 
 __Tip:__ You can set `BOOTSTRAP_REPOSITORY` and `BOOTSTRAP_CACHE` environment variables to do the bootstrap outside of the source repository.
+
+__Note:__ If you are on a branch that doesn't follow the expected naming convention ('`PharoX.Y`'), then the script will pick an appropriate default (such as `Pharo7.0`). To build Pharo8.0 from a custom branch, you need to set `BRANCH_NAME=Pharo8.0` before the bootstrap script is run. 
 
 
 ## File format

@@ -77,7 +77,7 @@ Class {
 		'history',
 		'opened'
 	],
-	#category : #'System-History'
+	#category : #'System-History-Utilities'
 }
 
 { #category : #adding }
@@ -196,7 +196,7 @@ HistoryNode >> removeLast: count [
 	self history removeLast: count
 ]
 
-{ #category : #'opening-closing' }
+{ #category : #initialization }
 HistoryNode >> reset [
 	history := nil.
 	opened := true

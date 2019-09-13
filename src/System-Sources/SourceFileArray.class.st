@@ -212,7 +212,9 @@ SourceFileArray >> closeFileArray: anArray [
 
 	anArray 
 		reject: [ :file | file isNil ] 
-		thenDo: [ :file | file close ]
+		thenDo: [ :file | file close ].
+		
+	^ anArray
 ]
 
 { #category : #private }
@@ -252,13 +254,21 @@ SourceFileArray >> emptyReadStreamsQueue [
 { #category : #'public - file system operations' }
 SourceFileArray >> ensureOpen [
 	"Ensure that the source and changes files are opened.
-	Close them before re-opening them.
+	Close them before re-opening them."
 	
-	This could be optimized by jut checking if they are open and doing nothing in that case."
+	| aSourcesFile aChangesFile |
+
 	self close.
+
+	aSourcesFile := PharoFilesOpener default sourcesFileOrNil.
+	aChangesFile := PharoFilesOpener default changesFileOrNil.
+	
+	aChangesFile ifNil: [ 
+		aChangesFile := PharoFilesOpener default changesFileOrNilReadOnly: true silent: false ].
+
 	files := Array
-		with: PharoFilesOpener default sourcesFileOrNil
-		with: PharoFilesOpener default changesFileOrNil.
+		with: aSourcesFile
+		with: aChangesFile.
 			
 	readOnlyQueue := SharedQueue new.
 ]
@@ -309,7 +319,7 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
-	self changesFileStream ifNotNil: #flush.
+	self changesFileStream ifNotNil: [:stream | stream flush].
 ]
 
 { #category : #'public - file system operations' }

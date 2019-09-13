@@ -92,30 +92,32 @@ DockingBarMorph >> activate: evt [
 ]
 
 { #category : #control }
-DockingBarMorph >> activeSubmenu: aSubmenu [ 
-	activeSubMenu ifNotNil: [activeSubMenu delete].
+DockingBarMorph >> activeSubmenu: aSubmenu [
+
+	activeSubMenu ifNotNil: [ activeSubMenu delete ].
 	activeSubMenu := aSubmenu.
-	aSubmenu isNil ifTrue: [^ self].
+	aSubmenu ifNil: [ ^ self ].
 	activeSubMenu selectItem: nil event: nil.
 	activeSubMenu borderColor: self borderColor.
 	activeSubMenu beSticky.
 	activeSubMenu resistsRemoval: true.
-	activeSubMenu removeMatchString.
+	activeSubMenu removeMatchString
 ]
 
 { #category : #menu }
 DockingBarMorph >> add: wordingString font: aFont icon: aForm help: helpString subMenu: aMenuMorph [
+
 	"Append the given submenu with the given label."
-	
+
 	| item |
+
 	item := DockingBarToggleMenuItemMorph new.
 	item
 		font: aFont;
 		contents: wordingString;
 		subMenu: aMenuMorph;
 		icon: aForm.
-	helpString isNil
-		ifFalse: [item setBalloonText: helpString].
+	helpString ifNotNil: [ item setBalloonText: helpString ].
 	self addMorphBack: item
 ]
 
@@ -518,31 +520,33 @@ DockingBarMorph >> isVertical [
 ]
 
 { #category : #'dropping/grabbing' }
-DockingBarMorph >> justDroppedInto: aMorph event: anEvent [ 
-	| ownerBounds leftRegion droppedPosition rightRegion topRegion bottomRegion |
-	super justDroppedInto: aMorph event: anEvent.
-	
-	self owner isNil ifTrue: [^ self].
-	ownerBounds := aMorph bounds.
-	topRegion := ownerBounds bottom: ownerBounds top + (ownerBounds height // 5).
-	bottomRegion := ownerBounds top: ownerBounds bottom - (ownerBounds height // 5).
+DockingBarMorph >> justDroppedInto: aMorph event: anEvent [
 
-	leftRegion := ownerBounds right: ownerBounds left + (ownerBounds width // 5).
+	| ownerBounds leftRegion droppedPosition rightRegion topRegion bottomRegion |
+
+	super justDroppedInto: aMorph event: anEvent.
+
+	self owner ifNil: [ ^ self ].
+	ownerBounds := aMorph bounds.
+	topRegion := ownerBounds bottom: ownerBounds top + ( ownerBounds height // 5 ).
+	bottomRegion := ownerBounds top: ownerBounds bottom - ( ownerBounds height // 5 ).
+
+	leftRegion := ownerBounds right: ownerBounds left + ( ownerBounds width // 5 ).
 	leftRegion := leftRegion top: topRegion bottom.
 	leftRegion := leftRegion bottom: bottomRegion top.
-	rightRegion := ownerBounds left: ownerBounds right - (ownerBounds width // 5).
+	rightRegion := ownerBounds left: ownerBounds right - ( ownerBounds width // 5 ).
 	rightRegion := rightRegion top: topRegion bottom.
 	rightRegion := rightRegion bottom: bottomRegion top.
 
 	droppedPosition := anEvent position.
-	(topRegion containsPoint: droppedPosition) ifTrue: [
-			^ self adhereToTop].
-	(bottomRegion containsPoint: droppedPosition) ifTrue: [
-			^ self adhereToBottom].
-	(leftRegion containsPoint: droppedPosition) ifTrue: [
-			^ self adhereToLeft].
-	(rightRegion containsPoint: droppedPosition) ifTrue: [
-			^ self adhereToRight].
+	( topRegion containsPoint: droppedPosition )
+		ifTrue: [ ^ self adhereToTop ].
+	( bottomRegion containsPoint: droppedPosition )
+		ifTrue: [ ^ self adhereToBottom ].
+	( leftRegion containsPoint: droppedPosition )
+		ifTrue: [ ^ self adhereToLeft ].
+	( rightRegion containsPoint: droppedPosition )
+		ifTrue: [ ^ self adhereToRight ].
 	self beFloating
 ]
 
@@ -700,11 +704,11 @@ DockingBarMorph >> selectItem: aMenuItem event: anEvent [
 
 { #category : #private }
 DockingBarMorph >> selectedItem [
-	selectedItem isNil
-		ifTrue: [^ nil].
+
+	selectedItem ifNil: [ ^ nil ].
 	^ selectedItem isSelected
-		ifTrue: [ selectedItem]
-		ifFalse: [ nil]
+		ifTrue: [ selectedItem ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #construction }
@@ -763,19 +767,19 @@ DockingBarMorph >> updateColor [
 { #category : #'private - layout' }
 DockingBarMorph >> updateExtent [
 	"private - update the receiver's extent"
+
 	| margin usedHeight |
 	self fullBounds.
-	self fillsOwner
-		ifFalse: [^ self].
-	margin := self avoidVisibleBordersAtEdge
-				ifTrue: [self borderWidth * 2]
-				ifFalse: [0].
-	self isHorizontal
-		ifTrue: [self width: self owner width + margin].
-	self isVertical
-		ifTrue: [
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top #bottom ).
-			self height: self owner height + margin - usedHeight]
+	self fillsOwner ifFalse: [ ^ self ].
+	
+	"Nil check because there is probably a race condition here making the CI fail a lot."
+	self owner
+		ifNotNil: [ :anOwner | 
+			margin := self avoidVisibleBordersAtEdge ifTrue: [ self borderWidth * 2 ] ifFalse: [ 0 ].
+			self isHorizontal ifTrue: [ self width: anOwner width + margin ].
+			self isVertical
+				ifTrue: [ usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top #bottom).
+					self height: anOwner height + margin - usedHeight ] ]
 ]
 
 { #category : #'private - layout' }

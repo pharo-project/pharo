@@ -77,13 +77,6 @@ ToolRegistry >> browseDirectToolReferences [
 		name: 'All direct references to tools to fix'
 ]
 
-{ #category : #misc }
-ToolRegistry >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
-	^(self hasToolNamed: #codeCompletion)
-	ifTrue: [ self codeCompletion codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt ]
-	ifFalse: [ aBlock value ]
-]
-
 { #category : #'handling DNU' }
 ToolRegistry >> doesNotUnderstand: aMessage [
 	"Return a tool identified by a message selector.

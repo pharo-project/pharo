@@ -16,27 +16,24 @@ Class {
 
 { #category : #specs }
 SpOpenOnIntExample class >> defaultSpec [
-	<spec: #default>
-	^ SpLayout composed
-		newColumn: [ :column | 
-			column 
-				add: #text height: 25;
-				newRow: [ :row | 
-					row
-						add: #minus;
-						addSplitter;
-						add: #plus ]
-					height: 25 ];
+	^ SpBoxLayout newVertical
+		add: #text withConstraints: [ :constraints | constraints height: 25 ];
+		add:
+			(SpBoxLayout newHorizontal
+				add: #minus;
+				add: #plus;
+				yourself)
+			withConstraints: [ :constraints | constraints height: 25 ];
 		yourself
 ]
 
 { #category : #examples }
 SpOpenOnIntExample class >> example [
 	<sampleInstance>
-	| example |
-	example := (self new: 42).
-	example extent: 100@100; openWithSpec.
-	^example
+	^ (self new: 42)
+		extent: 100 @ 100;
+		openWithSpec;
+		yourself
 ]
 
 { #category : #instantiation }

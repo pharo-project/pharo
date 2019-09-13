@@ -1616,8 +1616,7 @@ StrikeFont >> newFromStrike: fileName [
 	is optional."
 	| strike startName raster16  |
 	name := fileName copyUpTo: $..	"assumes extension (if any) is '.strike'"
-	strike := FileStream readOnlyFileNamed: name , '.strike.'.
-	strike binary.
+	strike := File openForReadFileNamed: name , '.strike.'.
 
 	"strip off direcory name if any"
 	startName := name size.
@@ -1754,7 +1753,7 @@ StrikeFont >> readFromBitFont: fileName [
 	written by Peter DiCamillo at Brown University"
 	"StrikeFont new readFromBitFont: 'Palatino10.BF' "
 	| f lastAscii charLine width ascii charForm line missingForm tempGlyphs iRect p rectLine left tokens right |
-	f := FileStream readOnlyFileNamed: fileName.
+	f := File openForReadFileNamed: fileName.
 	self readBFHeaderFrom: f.
 
 	"NOTE: if font has been scaled (and in any case),
@@ -1885,8 +1884,7 @@ StrikeFont >> readFromStrike2: fileName [
 	| file |
 	self assert:['*.sf2' match: fileName]. "likely incompatible"
 	name := fileName copyUpTo: $..	"Drop filename extension"
-	file := FileStream readOnlyFileNamed: fileName.
-	file binary.
+	file := File openForReadFileNamed: fileName.
 	[ self readFromStrike2Stream: file ] ensure: [ file close ]
 ]
 
@@ -1932,7 +1930,7 @@ StrikeFont >> releaseCachedState [
 	self reset.
 ]
 
-{ #category : #emphasis }
+{ #category : #initialization }
 StrikeFont >> reset [
 	"Reset the cache of derivative emphasized fonts"
 	fallbackFont class = FixedFaceFont ifTrue: [ fallbackFont := nil ].

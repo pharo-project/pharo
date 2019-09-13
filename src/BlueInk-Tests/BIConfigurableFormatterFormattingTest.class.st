@@ -19,10 +19,15 @@ BIConfigurableFormatterFormattingTest >> formatterClass [
 ]
 
 { #category : #tests }
+BIConfigurableFormatterFormattingTest >> testIsPrettyPrinter [
+	self assert: BIConfigurableFormatter isPrettyPrinter 
+]
+
+{ #category : #tests }
 BIConfigurableFormatterFormattingTest >> testShouldReinitializeCodeStreamBetweenFormating [
-	|astNode formater context|
+	| astNode formater context |
 	context := BIPrettyPrinterContext new.
 	formater := BIConfigurableFormatter new installNewContext: context.
-	astNode := RBParser parseExpression: '1'.
+	astNode := self parserClass parseExpression: '1'.
 	self assert: (formater format: astNode) equals: '1'
 ]

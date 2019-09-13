@@ -3,8 +3,8 @@ SUnit tests for RBMethodNode
 "
 Class {
 	#name : #RBMethodNodeTest,
-	#superclass : #TestCase,
-	#category : #'AST-Core-Tests'
+	#superclass : #RBParseTreeTest,
+	#category : #'AST-Core-Tests-Nodes'
 }
 
 { #category : #helpers }
@@ -13,9 +13,8 @@ RBMethodNodeTest >> methodWithArg: someArgName and: someAnotherArgName [
 ]
 
 { #category : #helpers }
-RBMethodNodeTest >> parseMethod: aString [ 
-
-	^ RBParser parseMethod: aString
+RBMethodNodeTest >> parseMethod: aString [
+	^ self parserClass parseMethod: aString
 ]
 
 { #category : #tests }
@@ -55,6 +54,58 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 	self assert: tree hasComments.
 	
 
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetAssignment [
+	"test the case of a Assignment"
+
+	| source ast foundNode |
+	source := 'method Object := Class'.
+	ast := self parserClass parseMethod: source.
+	foundNode := ast nodeForOffset: 9.
+	self assert: foundNode class == RBVariableNode.
+	foundNode := ast nodeForOffset: 14.
+	self assert: foundNode class == RBAssignmentNode.
+	foundNode := ast nodeForOffset: 19.
+	self assert: foundNode class == RBVariableNode
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetMessage [
+	"test the case of Messages"
+
+	| source ast foundNode |
+	source := 'method Object doit: Class'.
+	ast := self parserClass parseMethod: source.
+	foundNode := ast nodeForOffset: 9.
+	self assert: foundNode class == RBVariableNode.
+	foundNode := ast nodeForOffset: 14.
+	self assert: foundNode class == RBMessageNode.
+	foundNode := ast nodeForOffset: 22.
+	self assert: foundNode class == RBVariableNode
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetTempDefinition [
+	"test the case of Messages"
+
+	| source ast foundNode |
+	source := 'method | temp |'.
+	ast := self parserClass parseFaultyMethod: source.
+	foundNode := ast nodeForOffset: 12.
+	self assert: foundNode class == RBVariableNode
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testNodeForOffsetVar [
+	"test the case of a variable"
+
+	| source ast foundNode |
+	source := 'method Object'.
+	ast := self parserClass parseMethod: source.
+	foundNode := ast nodeForOffset: 9.
+	self assert: foundNode class == RBVariableNode
 ]
 
 { #category : #tests }

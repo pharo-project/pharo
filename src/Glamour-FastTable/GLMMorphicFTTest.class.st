@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #asserting }
-GLMMorphicFTTest >> assertNoDuplicatedAnnoucementsIn: anAnnouncement [
+GLMMorphicFTTest >> assertNoDuplicatedAnnouncementsIn: anAnnouncement [
 	| duplications |
 	duplications := (anAnnouncement subscriptions subscriptions
 		groupedBy: [ :aSubscription | aSubscription announcementClass ])
@@ -38,8 +38,8 @@ GLMMorphicFTTest >> testNoDuplicateRegistrationsInFastTableRenderer [
 	   openOn: (1 to: 42).
 
 	table := self find: FTTableMorph in: window.
-	self assertNoDuplicatedAnnoucementsIn: table announcer.
-	self assertNoDuplicatedAnnoucementsIn: table dataSource announcer.
+	self assertNoDuplicatedAnnouncementsIn: table announcer.
+	self assertNoDuplicatedAnnouncementsIn: table dataSource announcer.
 ]
 
 { #category : #tests }
@@ -47,8 +47,13 @@ GLMMorphicFTTest >> testTypeOfMultipleSelection [
 	| composer firstTreeMorph treeNodeMorph |
 	composer := GLMCompositePresentation new.
 	composer fastList beMultiple.
-	window := composer openOn: { {1} asSet . {1} asOrderedCollection }.
+	window := composer
+		openOn:
+			{{1} asSet.
+			{1} asOrderedCollection}.
 	firstTreeMorph := self find: FTTableMorph in: window.
-	treeNodeMorph := firstTreeMorph selectionStrategy toggleRowIndex: 1.
-	self assert: composer selection asOrderedCollection equals: {{1} asSet} asOrderedCollection
+	treeNodeMorph := firstTreeMorph selectionStrategy toggleIndex: 1.
+	self
+		assert: composer selection asOrderedCollection
+		equals: {{1} asSet} asOrderedCollection
 ]

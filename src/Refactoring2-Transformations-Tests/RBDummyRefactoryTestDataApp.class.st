@@ -59,17 +59,13 @@ RBDummyRefactoryTestDataApp >> callMethod [
 RBDummyRefactoryTestDataApp >> called: anObject on1: aBlock [ 
 	| each |
 	each := anObject printString.
-	Transcript
-		show: each;
-		cr.
+	self traceCr: each.
 	aBlock value: each
 ]
 
 { #category : #inline }
 RBDummyRefactoryTestDataApp >> called: anObject on: aBlock [ 
-	Transcript
-		show: anObject printString;
-		cr.
+	self traceCr: anObject printString.
 	aBlock value
 ]
 
@@ -454,7 +450,7 @@ RBDummyRefactoryTestDataApp >> returnsBooleanAndOther [
 
 { #category : #lint }
 RBDummyRefactoryTestDataApp >> returnsIfTrue [
-	^self ifNil: [4]
+	^self isNil ifTrue: [4]
 ]
 
 { #category : #lint }
@@ -482,9 +478,7 @@ RBDummyRefactoryTestDataApp >> sizeCheck [
 	self isEmpty
 		ifFalse: [self do: 
 					[:each | 
-					Transcript
-						show: each;
-						cr]]
+					self traceCr: each]]
 ]
 
 { #category : #lint }

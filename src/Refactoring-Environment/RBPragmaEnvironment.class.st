@@ -63,7 +63,7 @@ RBPragmaEnvironment >> includesClass: aClass [
 
 { #category : #testing }
 RBPragmaEnvironment >> includesPragma: aPragma [
-	^ (keywords includes: aPragma keyword) and: [ condition value: aPragma ]
+	^ (keywords includes: aPragma selector) and: [ condition value: aPragma ]
 ]
 
 { #category : #testing }

@@ -22,15 +22,15 @@ Class {
 	#name : #SpButtonPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'actionHolder',
-		'labelHolder',
-		'fontHolder',
-		'stateHolder',
-		'actionPerformedHolder',
-		'askBeforeChangingHolder',
-		'iconHolder',
-		'shortcutHolder',
-		'contextMenuHolder'
+		'#action => SpObservableSlot',
+		'#actionPerformed => SpObservableSlot',
+		'#askBeforeChanging => SpObservableSlot',
+		'#contextMenu => SpObservableSlot',
+		'#font => SpObservableSlot',
+		'#icon => SpObservableSlot',
+		'#label => SpObservableSlot',
+		'#shortcut => SpObservableSlot',
+		'#state => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -49,18 +49,16 @@ SpButtonPresenter class >> title [
 
 { #category : #api }
 SpButtonPresenter >> action [
-	"<api: #inspect>"
 	"get the block performed when the button is clicked"
 
-	^ actionHolder value
+	^ action
 ]
 
 { #category : #api }
 SpButtonPresenter >> action: aBlock [
 	"set the block performed when the button is clicked"
-	"<api: #block getter: #getAction registration: #whenActionChangedDo:>"
 
-	actionHolder value: aBlock
+	action := aBlock
 ]
 
 { #category : #private }
@@ -90,14 +88,12 @@ SpButtonPresenter >> addShortcutTipFor: aCharacter on: aString [
 
 { #category : #api }
 SpButtonPresenter >> askBeforeChanging [
-
-	^ askBeforeChangingHolder value
+	^ askBeforeChanging
 ]
 
 { #category : #api }
 SpButtonPresenter >> askBeforeChanging: aBoolean [
-
-	askBeforeChangingHolder value: aBoolean
+	askBeforeChanging := aBoolean
 ]
 
 { #category : #simulating }
@@ -113,14 +109,12 @@ SpButtonPresenter >> click [
 
 { #category : #api }
 SpButtonPresenter >> contextMenu [
-		
-	^ contextMenuHolder value
+	^ contextMenu
 ]
 
 { #category : #api }
 SpButtonPresenter >> contextMenu: aMenu [
-		
-	contextMenuHolder value: aMenu
+	contextMenu := aMenu
 ]
 
 { #category : #'private-focus' }
@@ -132,86 +126,64 @@ SpButtonPresenter >> ensureKeyBindingsFor: widget [
 
 { #category : #api }
 SpButtonPresenter >> font [
-
-	^ fontHolder value
+	^ font
 ]
 
 { #category : #api }
 SpButtonPresenter >> font: aFont [
-
-	fontHolder value: aFont
-]
-
-{ #category : #api }
-SpButtonPresenter >> getAction [
-	"<api: #inspect>"
-	"get the block performed when the button is clicked"
-
-	^ actionHolder value
+	font := aFont
 ]
 
 { #category : #api }
 SpButtonPresenter >> icon [
-
-	^ iconHolder value
+	^ icon
 ]
 
 { #category : #api }
 SpButtonPresenter >> icon: anIcon [
-
-	iconHolder value: anIcon
+	icon := anIcon
 ]
 
 { #category : #api }
 SpButtonPresenter >> iconName: aSymbol [
-
-	iconHolder value: (self iconNamed: aSymbol)
+	self icon: (self iconNamed: aSymbol)
 ]
 
 { #category : #initialization }
 SpButtonPresenter >> initialize [
-
 	super initialize.
 
-	actionHolder := [] asValueHolder.
-	labelHolder := '' asValueHolder.
-	fontHolder := nil asValueHolder.
-	iconHolder := nil asValueHolder.
-	stateHolder := false asValueHolder.
-	actionPerformedHolder := nil asValueHolder.
-	askBeforeChangingHolder := false asValueHolder.
-	shortcutHolder := nil asValueHolder.
-	contextMenuHolder := nil asValueHolder.	
-	
-	labelHolder whenChangedDo: [ self changed: #label ].
-	fontHolder whenChangedDo: [ self changed: #font ].
-	iconHolder whenChangedDo: [ self changed: #label ].
-	stateHolder whenChangedDo: [ self changed: #state ].
-	contextMenuHolder whenChangedDo: [ self withAdapterDo: #updateMenu ].
-	askBeforeChangingHolder whenChangedDo: [:newValue | 
-		self changed: { #askBeforeChanging: . newValue} ].
-	shortcutHolder whenChangedDo: [ :newShortcut :oldShortcut |
-		self unregisterShortcut: oldShortcut.
-		self registerShortcut: newShortcut.
-		self changed: #label ].
-	
+	action := [  ].
+	label := ''.
+	state := false.
+	askBeforeChanging := false.
+
+	self whenLabelChangedDo: [ self changed: #label ].
+	self whenFontChangedDo: [ self changed: #font ].
+	self whenIconChangedDo: [ self changed: #label ].
+	self whenStateChangedDo: [ self changed: #state ].
+	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ].
+	self property: #askBeforeChanging whenChangedDo: [ :newValue | self changed: {#askBeforeChanging: . newValue} ].
+	self
+		property: #shortcut
+		whenChangedDo: [ :newShortcut :oldShortcut | 
+			self unregisterShortcut: oldShortcut.
+			self registerShortcut: newShortcut.
+			self changed: #label ].
+
 	self bindKeyCombination: Character space toAction: [ self action ].
-	
-	self color: nil.
+
+	self color: nil
 ]
 
 { #category : #morphic }
 SpButtonPresenter >> label [
-	"<api: #inspect>"
-	
- 	^ self addShortcutTipFor: labelHolder value
+	^ self addShortcutTipFor: label
 ]
 
 { #category : #api }
 SpButtonPresenter >> label: aStringOrImageMorph [
-	"<api: #string getter: #label registration: #whenLabelChangedDo:>"
-
-	labelHolder value: aStringOrImageMorph
+	label := aStringOrImageMorph
 ]
 
 { #category : #api }
@@ -238,10 +210,10 @@ SpButtonPresenter >> menu: aMenu [
 
 { #category : #morphic }
 SpButtonPresenter >> performAction [
+	self action value.
 
-	actionHolder value value.
 	" Here I set a dummy value just to make the holder raise an event "
-	actionPerformedHolder value: nil.
+	actionPerformed := nil
 ]
 
 { #category : #private }
@@ -257,14 +229,12 @@ SpButtonPresenter >> registerShortcut: newShortcut [
 
 { #category : #api }
 SpButtonPresenter >> shortcut [
-
-	^ shortcutHolder value
+	^ shortcut
 ]
 
 { #category : #api }
 SpButtonPresenter >> shortcut: aShortcut [
-
-	shortcutHolder value: aShortcut
+	shortcut := aShortcut
 ]
 
 { #category : #private }
@@ -277,16 +247,14 @@ SpButtonPresenter >> shortcutCharacter [
 
 { #category : #morphic }
 SpButtonPresenter >> state [
-	"<api: #inspect>"
-	^ stateHolder value
+	^ state
 ]
 
 { #category : #api }
 SpButtonPresenter >> state: aBoolean [
-	"<api: #boolean getter: #state registration: #whenStateChangedDo:>"
 	"set if the button is highlighted"
-	
-	^ stateHolder value: aBoolean
+
+	state := aBoolean
 ]
 
 { #category : #private }
@@ -300,16 +268,15 @@ SpButtonPresenter >> unregisterShortcut: oldShortcut [
 ]
 
 { #category : #'api-events' }
-SpButtonPresenter >> whenActionChangedDo: aBlock [ 
-
-	actionHolder whenChangedDo: aBlock
+SpButtonPresenter >> whenActionChangedDo: aBlock [
+	self property: #action whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenActionPerformedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
-	actionPerformedHolder whenChangedDo: aBlock
+	self property: #actionPerformed whenChangedDo: aBlock
 ]
 
 { #category : #'API - events' }
@@ -322,31 +289,30 @@ SpButtonPresenter >> whenActivatedDo: aBlockClosure [
 SpButtonPresenter >> whenFontChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
-	fontHolder whenChangedDo: aBlock
+	self property: #font whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenIconChangedDo: aBlock [
-
-	iconHolder whenChangedDo: aBlock
+	self property: #icon whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenLabelChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
-	labelHolder whenChangedDo: aBlock
+	self property: #label whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenMenuChangedDo: aBlock [
  
-	contextMenuHolder whenChangedDo: aBlock
+	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenStateChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
-	stateHolder whenChangedDo: aBlock
+	self property: #state whenChangedDo: aBlock
 ]

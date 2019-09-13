@@ -19,9 +19,3 @@ Class {
 SpStubAdapterBindings >> abstractAdapterClass [
 	^ SpStubAbstractAdapter
 ]
-
-{ #category : #font }
-SpStubAdapterBindings >> defaultFont [
-
-	^ StubFixedFont new
-]

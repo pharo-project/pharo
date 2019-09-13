@@ -53,6 +53,18 @@ SystemNavigationTest >> tearDown [
 	
 ]
 
+{ #category : #test }
+SystemNavigationTest >> testAllClassesImplementing [
+	| implementingClasses |
+	implementingClasses := self systemNavigationToTest
+		allClassesImplementing: #isSymbol.
+	self
+		assertCollection: implementingClasses
+		hasSameElements:
+			{Object.
+			Symbol}
+]
+
 { #category : #testing }
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
@@ -65,15 +77,6 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 	self assert: (classSideProtocols allSatisfy: #isSymbol).
 	self assert: (instSideProtocols includesAll: (Object protocols)).
 	self assert: (classSideProtocols includesAll: (Object class protocols)).
-]
-
-{ #category : #testing }
-SystemNavigationTest >> testAllReferencesToPool [
-	| result |
-	result := self systemNavigationToTest allReferencesToPool: FooSharedPool.
-	self assert: result size equals: 1.
-	result := self systemNavigationToTest allReferencesToPool: UnreferencedSharedPool.
-	self assert: result size equals: 0
 ]
 
 { #category : #testing }

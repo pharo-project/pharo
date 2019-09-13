@@ -101,29 +101,32 @@ ExternalStructure class >> checkFieldLayoutChange [
 
 { #category : #'field definition' }
 ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
+
 	"Define all the fields in the receiver.
 	Return the newly compiled spec."
+
 	| fieldName fieldType isPointerField externalType newCompiledSpec |
+
 	fieldName := spec first.
 	fieldType := spec second.
 	isPointerField := fieldType last = $*.
 	fieldType := fieldType copyWithout: $*.
 	externalType := ExternalType atomicTypeNamed: fieldType.
-	externalType isNil ifTrue:["non-atomic"
-		Symbol hasInterned: fieldType ifTrue:[:sym|
-			externalType := ExternalType structTypeNamed: sym]].
-	externalType isNil ifTrue:[
-		Transcript show:'(', fieldType,' is void)'.
-		externalType := ExternalType void].
-	isPointerField ifTrue:[externalType := externalType asPointerType].
-	(fieldName notNil and:[self shouldGenerate: fieldName policy: aSymbol]) ifTrue:[
-		self defineAliasAccessorsFor: fieldName
-			type: externalType].
-	newCompiledSpec := isPointerField 
-		ifTrue:[WordArray with: 
-					(ExternalType structureSpec bitOr: ExternalType pointerSpec)]
-		ifFalse:[externalType compiledSpec].
-	^newCompiledSpec
+	externalType
+		ifNil:
+			[ "non-atomic" Symbol hasInterned: fieldType ifTrue: [ :sym | externalType := ExternalType structTypeNamed: sym ] ].
+	externalType
+		ifNil: [ self trace: '(' , fieldType , ' is void)'.
+			externalType := ExternalType void
+			].
+	isPointerField
+		ifTrue: [ externalType := externalType asPointerType ].
+	( fieldName notNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
+		ifTrue: [ self defineAliasAccessorsFor: fieldName type: externalType ].
+	newCompiledSpec := isPointerField
+		ifTrue: [ WordArray with: ( ExternalType structureSpec bitOr: ExternalType pointerSpec ) ]
+		ifFalse: [ externalType compiledSpec ].
+	^ newCompiledSpec
 ]
 
 { #category : #'field definition' }
@@ -183,7 +186,7 @@ ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 					ifTrue: [:sym | externalType := ExternalType structTypeNamed: sym].
 			].
 			externalType == nil ifTrue:[
-				Transcript show: '(' , fieldType , ' is void)'.
+				self trace: '(' , fieldType , ' is void)'.
 				externalType := ExternalType void.
 			].
 			isPointerField ifTrue: [externalType := externalType asPointerType: self pointerSize]].
@@ -411,7 +414,7 @@ ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 	aSymbol = #generated
 		ifTrue: [^ (self methodDictionary includesKey: fieldname)
 				and: [(self methodDictionary at: fieldname) pragmas
-						anySatisfy: [:p | p keyword = #generated]]].
+						anySatisfy: [:p | p selector = #generated]]].
 	self error: 'unknow generation policy'
 ]
 

@@ -40,7 +40,7 @@ TaskbarMorph class >> maximumButtonsDefault [
 	^100
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 TaskbarMorph class >> reset [
 	<script>
 	"Remove the taskbar and add a new one." 
@@ -297,12 +297,12 @@ TaskbarMorph >> removeFromWorld [
 
 	|mins animation|
 	mins := self tasks select: [:t | t isMinimized].
-	animation := self theme settings animationSettings useAnimation.
-	animation ifTrue: [self theme settings animationSettings useAnimation: false].
+	animation := self theme shouldUseAnimations.
+	animation ifTrue: [self theme useAnimation: false].
 	[mins do: [:t | t morph restore; resetCollapsedFrame].
 	self delete.
 	mins do: [:t | t morph minimize]]
-		ensure: [animation ifTrue: [self theme settings animationSettings useAnimation: true]]
+		ensure: [animation ifTrue: [self theme useAnimation: true]]
 ]
 
 { #category : #setting }

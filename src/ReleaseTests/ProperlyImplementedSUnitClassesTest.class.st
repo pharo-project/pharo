@@ -14,9 +14,12 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperSetupIsCalledAsFirstM
 	| violating |
 	violating := OrderedCollection new.
 	TestCase
-		allSubclassesDo:
-			[ :each | each compiledMethodAt: #setUp ifPresent: [ :method | (ShouldSendSuperSetUpAsFirstMessage superSetUpNotCalledFirstIn: method) ifTrue: [ violating add: method ] ] ifAbsent: nil ].
-
+		allSubclassesDo: [ :each | 
+			each
+				compiledMethodAt: #setUp
+				ifPresent: [ :method | 
+					(ShouldSendSuperSetUpAsFirstMessage superSetUpNotCalledFirstIn: method)
+						ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating
 ]
 
@@ -27,7 +30,12 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLas
 	| violating |
 	violating := OrderedCollection new.
 	TestCase
-		allSubclassesDo:
-			[ :each | each compiledMethodAt: #tearDown ifPresent: [ :method | (ShouldSendSuperTearDownAsLastMessage superTearDownNotCalledLastIn: method) ifTrue: [ violating add: method ] ] ifAbsent: nil ].
+		allSubclassesDo: [ :each | 
+			each
+				compiledMethodAt: #tearDown
+				ifPresent: [ :method | 
+					(ShouldSendSuperTearDownAsLastMessage
+						superTearDownNotCalledLastIn: method)
+						ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating
 ]

@@ -89,17 +89,17 @@ Class {
 	#instVars : [
 		'#application',
 		'#focusOrder',
-		'#extentHolder',
 		'#additionalKeyBindings',
-		'#keyStrokesForNextFocusHolder',
-		'#keyStrokesForPreviousFocusHolder',
-		'#windowIcon',
-		'#aboutText',
-		'#askOkToClose',
-		'#titleHolder',
+		'#windowIcon => SpObservableSlot',
+		'#aboutText => SpObservableSlot',
+		'#askOkToClose => SpObservableSlot',
+		'#titleHolder => SpObservableSlot',
 		'#additionalSubpresentersMap',
 		'#layout',
-		'#visible => SpObservableSlot'
+		'#visible => SpObservableSlot',
+		'#extent => SpObservableSlot',
+		'#keyStrokesForNextFocus => SpObservableSlot',
+		'#keyStrokesForPreviousFocus => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Base'
 }
@@ -194,15 +194,7 @@ SpPresenter >> aboutText [
 	
 	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
-	^ aboutText value
-]
-
-{ #category : #private }
-SpPresenter >> addAll: aWindow withSpec: aSpec [
-
-	aWindow
-		addMorph: (self buildWithSpec: aSpec)
-		frame: (0@0 corner: 1@1).
+	^ aboutText
 ]
 
 { #category : #private }
@@ -252,6 +244,17 @@ SpPresenter >> announce: anAnnouncement [
 	self announcer announce: anAnnouncement
 ]
 
+{ #category : #events }
+SpPresenter >> announceDisplayed [
+
+	"When using a VersatileDialogPresenter the adapter is nil.
+	We do not know if that is a correct behaviour"
+	self announcer announce: (SpWidgetDisplayed new
+		presenter: self;
+		widget: (adapter ifNotNil: [ adapter widget]);
+		yourself).
+]
+
 { #category : #accessing }
 SpPresenter >> application [
 
@@ -292,7 +295,6 @@ SpPresenter >> asPresenter [
 
 { #category : #TOREMOVE }
 SpPresenter >> askOkToClose [
-
 	"DO NOT USE
 	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
@@ -300,7 +302,8 @@ SpPresenter >> askOkToClose [
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
 	
 	This method cannot be deprecated because during a transition phase we keep this mecanism. "
-	^ askOkToClose value
+
+	^ askOkToClose
 ]
 
 { #category : #'private building' }
@@ -403,26 +406,24 @@ SpPresenter >> ensureKeyBindingsFor: aWidget [
 SpPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 
-	^ keyStrokesForNextFocusHolder value
+	^ keyStrokesForNextFocus
 ]
 
 { #category : #'api-focus' }
 SpPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the previous widget"
 
-	^ keyStrokesForPreviousFocusHolder value
+	^ keyStrokesForPreviousFocus
 ]
 
 { #category : #TOMOVE }
 SpPresenter >> extent [
-
-	^  extentHolder value
+	^ extent
 ]
 
 { #category : #TOMOVE }
 SpPresenter >> extent: aPoint [
-
-	^  extentHolder value: aPoint
+	^ extent := aPoint
 ]
 
 { #category : #accessing }
@@ -522,18 +523,14 @@ SpPresenter >> initializePresenter [
 
 	"By default, do not do anything"
 
-	extentHolder whenChangedDo: [ :ex | 
-		self withAdapterDo: [ :widget | 
-			(widget respondsTo: #extent:)
-				ifTrue: [ widget extent: ex ] ] ]
+	self property: #extent whenChangedDo: [ :ex | self withAdapterDo: [ :widget | (widget respondsTo: #extent:) ifTrue: [ widget extent: ex ] ] ]
 ]
 
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateAnnouncements [
-
-	keyStrokesForNextFocusHolder whenChangedDo: [ self registerKeyStrokesForNextFor: self widget ].
-	keyStrokesForPreviousFocusHolder whenChangedDo: [ self registerKeyStrokesForPreviousFor: self widget ].
-	titleHolder whenChangedDo: [ self updateTitle ]
+	self property: #keyStrokesForNextFocus whenChangedDo: [ self registerKeyStrokesForNextFor: self widget ].
+	self property: #keyStrokesForPreviousFocus whenChangedDo: [ self registerKeyStrokesForPreviousFor: self widget ].
+	self property: #titleHolder whenChangedDo: [ self updateTitle ]
 ]
 
 { #category : #'initialization - private' }
@@ -554,16 +551,10 @@ SpPresenter >> initializePrivateHooks [
 
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateValueHolders [
-
-	extentHolder := nil asValueHolder.
-	keyStrokesForNextFocusHolder := { KMNoShortcut new } asValueHolder.
-	keyStrokesForPreviousFocusHolder := { KMNoShortcut new } asValueHolder.
-	aboutText := nil asValueHolder.
-	windowIcon := nil asValueHolder.
-	askOkToClose := false asValueHolder.
-	titleHolder := self class title asValueHolder.
-	
-
+	self keyStrokeForNextFocus: KMNoShortcut new.
+	self keyStrokeForPreviousFocus: KMNoShortcut new.
+	askOkToClose := false.
+	titleHolder := self class title
 ]
 
 { #category : #initialization }
@@ -619,6 +610,12 @@ SpPresenter >> instantiatePresenters: aCollectionOfPairs [
 ]
 
 { #category : #api }
+SpPresenter >> isBuilt [
+	
+	^ self isDisplayed
+]
+
+{ #category : #api }
 SpPresenter >> isDisplayed [
 	"Return true if the widget is currently displayed on screen"
 	
@@ -636,26 +633,22 @@ SpPresenter >> isVisible [
 
 { #category : #'api-focus' }
 SpPresenter >> keyStrokeForNextFocus: aKMShortcut [
-
-	keyStrokesForNextFocusHolder value: { aKMShortcut }
+	self keyStrokesForNextFocus: {aKMShortcut}
 ]
 
 { #category : #'api-focus' }
 SpPresenter >> keyStrokeForPreviousFocus: aKMShortcut [
-
-	keyStrokesForPreviousFocusHolder value: { aKMShortcut }
+	self keyStrokesForPreviousFocus: {aKMShortcut}
 ]
 
 { #category : #'api-focus' }
 SpPresenter >> keyStrokesForNextFocus: aCollection [
-
-	keyStrokesForNextFocusHolder value: aCollection
+	keyStrokesForNextFocus := aCollection
 ]
 
 { #category : #'api-focus' }
 SpPresenter >> keyStrokesForPreviousFocus: aCollection [
-
-	keyStrokesForPreviousFocusHolder value: aCollection 
+	keyStrokesForPreviousFocus := aCollection
 ]
 
 { #category : #accessing }
@@ -981,7 +974,7 @@ SpPresenter >> title [
 	
 	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
-	^ titleHolder value
+	^ titleHolder
 ]
 
 { #category : #TOREMOVE }
@@ -1034,6 +1027,14 @@ SpPresenter >> visibleIf: aValuable [
 	visible := aValuable
 ]
 
+{ #category : #events }
+SpPresenter >> whenDisplayDo: aBlockClosure [ 
+
+	self announcer 
+		when: SpWidgetDisplayed
+		do: aBlockClosure
+]
+
 { #category : #'api-events' }
 SpPresenter >> whenShortcutsChanged: aBlock [
 	"Set a block to value when the shortcuts block has changed"
@@ -1067,5 +1068,5 @@ SpPresenter >> windowIcon [
 	
 	This method cannot be deprecated because during a transition phase we keep this mecanism. "
 
-	^ windowIcon value
+	^ windowIcon
 ]

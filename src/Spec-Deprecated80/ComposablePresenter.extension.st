@@ -39,7 +39,6 @@ ComposablePresenter >> newIconList [
 
 { #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> newMultiColumnList [
-	self deprecated: 'Use newTable instead' on: '2019-02-05' in: #Pharo8.
 	^ self instantiate: MultiColumnListPresenter
 ]
 
@@ -67,9 +66,6 @@ ComposablePresenter >> newTabManager [
 
 { #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> newTree [
-	
-	self deprecated: 'Use #newTreeTable instead'.
-
 	^ self instantiate: TreePresenter
 ]
 
@@ -86,13 +82,7 @@ ComposablePresenter >> on: aShortcut do: aBlock [
 
 { #category : #'*Spec-Deprecated80' }
 ComposablePresenter >> setModal: aWindow [
-
-	self 
-		deprecated: 'Do not use this directly. Use #openModalWithSpec (and family) instead.' 
-		on: '2019-02-26' 
-		in: #Pharo8.
-	
-	self changed: #setModal: with: { aWindow }
+	self changed: #setModal: with: {aWindow}
 ]
 
 { #category : #'*Spec-Deprecated80' }

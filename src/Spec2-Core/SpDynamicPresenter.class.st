@@ -43,12 +43,6 @@ SpDynamicPresenter >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #initialization }
-SpDynamicPresenter >> initialize [
-	layout := nil asValueHolder.
-	super initialize
-]
-
-{ #category : #initialization }
 SpDynamicPresenter >> initializeWidgets [
 ]
 
@@ -59,14 +53,12 @@ SpDynamicPresenter >> instantiatePresenters: aCollectionOfPairs [
 
 { #category : #accessing }
 SpDynamicPresenter >> layout [
-
-	^ layout value
+	^ layout
 ]
 
 { #category : #accessing }
 SpDynamicPresenter >> layout: aLayout [
-
-	layout value: aLayout
+	layout := aLayout
 ]
 
 { #category : #api }

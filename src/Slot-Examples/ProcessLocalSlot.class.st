@@ -64,7 +64,7 @@ ProcessLocalSlot >> read: anObject [
 ]
 
 { #category : #'meta-object-protocol' }
-ProcessLocalSlot >> wantsInitalization [
+ProcessLocalSlot >> wantsInitialization [
 
 	^ true
 ]

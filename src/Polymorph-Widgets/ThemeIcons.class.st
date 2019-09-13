@@ -126,7 +126,7 @@ ThemeIcons class >> fetchPacks [
 		contents ] 
 	on: Error do: [ :e | 
 		"in case of error (no inet connection, for example) I retrieve just current icon set"
-		e crLog.
+		e crTrace.
 		^ { self current } ].
 	^ (STON fromString: jsonList) 
 		collect: [ :each | | packName |
@@ -270,7 +270,7 @@ ThemeIcons >> iconNamed: aSymbol [
 		ifNone: [ 
 			self isReportingNotFound 
 				ifTrue: [ 
-					self crLog: (aSymbol, ' icon not found!').
+					self crTrace: (aSymbol, ' icon not found!').
 					self notFoundIcon ]
 				ifFalse: [ self blankIcon ]]) scaledByDisplayScaleFactor
 ]
@@ -312,7 +312,7 @@ ThemeIcons >> loadIconsFromUrl [
 			[ newIcons 	
 				at: each base asSymbol
 				put: (self readPNGFrom: each) ]
-			on: Error do: [ :e | self crLog: each fullName, ' not a PNG, skipping.'  ]].
+			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
 	icons := newIcons.
 ]
 

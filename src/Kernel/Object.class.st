@@ -328,6 +328,14 @@ Object >> as: aSimilarClass [
 ]
 
 { #category : #converting }
+Object >> asCollectionElement [
+	"Answer an object, which can be put into a Set as element , wrapped
+	by one of SetElement instance, if necessary. 
+	Default implementation is to answer self"
+
+]
+
+{ #category : #converting }
 Object >> asLink [
 	"Answer a string that represents the receiver."
 
@@ -339,14 +347,6 @@ Object >> asOrderedCollection [
 	"Answer an OrderedCollection with the receiver as its only element."
 
 	^ OrderedCollection with: self
-]
-
-{ #category : #converting }
-Object >> asSetElement [
-	"Answer an object, which can be put into a Set as element , wrapped
-	by one of SetElement instance, if necessary. 
-	Default implementation is to answer self"
-
 ]
 
 { #category : #converting }
@@ -495,24 +495,6 @@ Object >> beWritableObject [
 	 primitive to fail with a #'no modification' error code.
 	 Set the read-only flag of the receiver to false and answer the previous vaue of the flag."
 	^self setIsReadOnlyObject: false
-]
-
-{ #category : #'reflective operations' }
-Object >> becomeForward: otherObject [ 
-	"Primitive. All variables in the entire system that used to point
-	to the receiver now point to the argument.
-	Fails if either argument is a SmallInteger."
-
-	{self} elementsForwardIdentityTo: {otherObject}
-]
-
-{ #category : #'reflective operations' }
-Object >> becomeForward: otherObject copyHash: copyHash [
-	"Primitive. All variables in the entire system that used to point to the receiver now point to the argument.
-	If copyHash is true, the argument's identity hash bits will be set to those of the receiver.
-	Fails if either argument is a SmallInteger."
-
-	{self} elementsForwardIdentityTo: {otherObject} copyHash: copyHash
 ]
 
 { #category : #binding }
@@ -675,21 +657,9 @@ Object >> copySameFrom: otherObject [
 
 ]
 
-{ #category : #'logging-Deprecated' }
-Object >> crLog [
-      self crTrace: self printString
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> crLog: aString [
-	"Log the argument. Use self log: instead of Transcript cr; show: "
-	
-	Transcript cr; show: aString.
-]
-
 { #category : #tracing }
 Object >> crTrace [
-      self crTrace: self printString
+	self crTrace: self printString
 ]
 
 { #category : #tracing }
@@ -850,7 +820,7 @@ Object >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #accessing }
-Object >> enclosedSetElement [
+Object >> enclosedElement [
 	"The receiver is included into a set as an element. 
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
 	a set sends this message to its element to make sure it getting real object,
@@ -918,21 +888,20 @@ Object >> explicitRequirement [
 	originalMethod := callingContext method.
 	originalMethod isFromTrait
 		ifFalse: errorBlock.
-		
 	originalReceiver := callingContext receiver.
 	originalSelector := originalMethod selector.
 	originalArguments := callingContext arguments.
-	
 	originalReceiver class superclass
 		withAllSuperclassesDo: [ :superClass | 
 			superClass
 				compiledMethodAt: originalSelector
 				ifPresent: [ :method | 
 					(method isProvided or: [ method isFromTrait not ])
-						ifTrue: [ 
-							callingContext return: (method valueWithReceiver: originalReceiver arguments: originalArguments) ] ]
-				ifAbsent: [  ] ].
-
+						ifTrue: [ callingContext
+								return:
+									(method
+										valueWithReceiver: originalReceiver
+										arguments: originalArguments) ] ] ].
 	errorBlock value
 ]
 
@@ -1227,12 +1196,11 @@ Object >> isInterval [
 ]
 
 { #category : #'class membership' }
-Object >> isKindOf: aClass [ 
-	"Answer whether the class, aClass, is a superclass or class of the receiver."
+Object >> isKindOf: aClass [
+	"Answer whether the class, aClass, is a superclass or class of the receiver.
+	The current implemementation allows for a Trait to be used as argument"
 
-	self class == aClass
-		ifTrue: [^true]
-		ifFalse: [^self class inheritsFrom: aClass]
+	^ self class == aClass or: [ self class inheritsFrom: aClass ]
 ]
 
 { #category : #testing }
@@ -1392,51 +1360,19 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #'logging-Deprecated' }
-Object >> log: aString [
-	"Log the argument. Use self log: instead of Transcript show: "
-	
-	Transcript show: aString.
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCr [
-      self logCr: self printString
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCr: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr
-]
-
-{ #category : #'logging-Deprecated' }
-Object >> logCrTab: aString [
-	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr ; tab"
-	
-	Transcript show: aString ; cr ; tab
-]
-
 { #category : #flagging }
 Object >> logEntry [
-
-	Transcript show: 'Entered ', thisContext sender printString; cr.
-
+	self traceCr: 'Entered ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExecution [
-
-	Transcript show: 'Executing ', thisContext sender printString; cr.
-
+	self traceCr: 'Executing ' , thisContext sender printString
 ]
 
 { #category : #flagging }
 Object >> logExit [
-
-	Transcript show:  'Exited ', thisContext sender printString; cr.
-
+	self traceCr: 'Exited ' , thisContext sender printString
 ]
 
 { #category : #printing }
@@ -1676,15 +1612,15 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	but with the supplied superclass instead.  It will fail if lookupClass
 	cannot be found among the receiver's superclasses.
 	Primitive. Essential. See Object documentation whatIsAPrimitive."
-	
+
 	<reflective: #object:performMessageInSuperclass:>
 	<primitive: 100>
-	(selector isSymbol)
-		ifFalse: [^ self error: 'selector argument must be a Symbol'].
-	(selector numArgs = argArray size)
-		ifFalse: [^ self error: 'incorrect number of arguments'].
-	(self class == lookupClass or: [self class inheritsFrom: lookupClass])
-		ifFalse: [^ self error: 'lookupClass is not in my inheritance chain'].
+	selector isSymbol
+		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
+	selector numArgs = argArray size
+		ifFalse: [ ^ self error: 'incorrect number of arguments' ].
+	(self class includesBehavior: lookupClass)
+		ifFalse: [ ^ self error: 'lookupClass is not in my inheritance chain' ].
 	self primitiveFailed
 ]
 
@@ -2069,19 +2005,19 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 
 { #category : #tracing }
 Object >> trace [
-      self trace: self printString
+	self trace: self printString
 ]
 
 { #category : #tracing }
 Object >> trace: aString [
 	"Log the argument. Use self trace: instead of Transcript show: "
 	
-	Transcript show: aString.
+	Transcript show: aString
 ]
 
 { #category : #tracing }
 Object >> traceCr [
-      self traceCr: self printString
+	self traceCr: self printString
 ]
 
 { #category : #tracing }
@@ -2089,6 +2025,13 @@ Object >> traceCr: aString [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
 	Transcript show: aString ; cr
+]
+
+{ #category : #tracing }
+Object >> traceCrTab: aString [
+	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
+	
+	Transcript show: aString ; cr ; tab
 ]
 
 { #category : #'error handling' }

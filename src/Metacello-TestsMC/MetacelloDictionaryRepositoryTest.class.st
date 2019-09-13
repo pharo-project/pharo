@@ -37,11 +37,9 @@ MetacelloDictionaryRepositoryTest >> doSilently [
 
 { #category : #utilities }
 MetacelloDictionaryRepositoryTest >> hasPackage: aString [
-	| package |
-	package := MCWorkingCopy allManagers
-		detect: [ :each | each packageName = aString ]
-		ifNone: [ nil ].
-	^ package notNil
+
+	^ MCWorkingCopy allManagers
+		anySatisfy: [ :each | each packageName = aString ]
 ]
 
 { #category : #accessing }
@@ -135,9 +133,7 @@ MetacelloDictionaryRepositoryTest >> tearDown [
 	diff := finalWorkingCopyList difference: initialWorkingCopyList.
 	diff
 		do: [ :leak | 
-			Transcript
-				cr;
-				show: 'leaked package from ' , self printString , ' -> ' , leak printString ].
+			self crTrace: 'leaked package from ' , self printString , ' -> ' , leak printString ].
 	self assertEmpty: diff.
 	super tearDown
 ]

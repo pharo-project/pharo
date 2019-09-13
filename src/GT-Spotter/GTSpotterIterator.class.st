@@ -201,7 +201,7 @@ GTSpotterIterator >> reject: aBlock thenDo: aBlock2 [
 			ifFalse: [ aBlock2 value: each ] ]
 ]
 
-{ #category : #public }
+{ #category : #initialization }
 GTSpotterIterator >> reset [
 	items := nil.
 ]

@@ -82,6 +82,10 @@ StandardFileStream class >> forceNewFileNamed: fileName [
 	asking before creating the new file."
 	| dir  fullName f |
 	
+	SessionManager default currentSession isReadOnlyAccessMode ifTrue: [ ((CannotDeleteFileException fileName: fileName)
+		messageText: 'Could not delete the old version of file ' , fileName) signal.
+		^ NullStream new ].
+	
 	fullName := self fullName: fileName.
 	(self isAFileNamed: fullName)
 		ifFalse: [f := self new open: fullName forWrite: true.
@@ -534,6 +538,8 @@ StandardFileStream >> open: fileName forWrite: writeMode [
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	| f |
 	f := fileName asVmPathName.
+	
+	(writeMode and: [ FileSystem disk isWritable not ]) ifTrue: [ ^ nil ].
 
 	fileID := StandardFileStream retryWithGC:[self primOpen: f writable: writeMode] 
 					until:[:id| id notNil] 
@@ -892,7 +898,7 @@ StandardFileStream >> requestDropStream: dropIndex [
 	self enableReadBuffering
 ]
 
-{ #category : #positioning }
+{ #category : #initialization }
 StandardFileStream >> reset [
 	self ensureOpen.
 	self position: 0.

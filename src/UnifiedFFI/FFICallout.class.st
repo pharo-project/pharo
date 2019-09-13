@@ -386,18 +386,17 @@ FFICallout >> resolveType: aTypeName [
 { #category : #'spec parsing' }
 FFICallout >> returnType: aType [
 	aType first = 'receiver'
-		ifTrue: [ 
-			| rcvr rqstr |
+		ifTrue: [ | possibleClass requestorClass |
 			"check that:
 				1. method belongs to class side
 				2. method class is subclass of NBExternalObject
 				3. receiver is the same or subclass of the requestor -- since the requestor is the implementor"
-			rcvr := self receiver.
-			rqstr := self requestor soleInstance.
-			(rcvr isBehavior
-				and: [ (rcvr == rqstr or: [ rcvr inheritsFrom: rqstr ]) ])
-				ifTrue: [ ^ self typeName: rcvr name pointerArity: aType second ] ].
-	self receiver: nil. "if the type is not 'receiver' then we don't need the receiver of the message so set it to nil"
+			possibleClass := self receiver.
+			requestorClass := self requestor soleInstance.
+			(possibleClass isBehavior
+				and: [ possibleClass includesBehavior: requestorClass ])
+				ifTrue: [ ^ self typeName: possibleClass name pointerArity: aType second ] ].
+	self receiver: nil.	"if the type is not 'receiver' then we don't need the receiver of the message so set it to nil"
 	^ self typeName: aType first pointerArity: aType second
 ]
 

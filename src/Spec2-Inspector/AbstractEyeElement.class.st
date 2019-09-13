@@ -10,8 +10,8 @@ value: object represented by this eye element
 Class {
 	#name : #AbstractEyeElement,
 	#superclass : #Model,
-	#traits : 'TInspectorActions',
-	#classTraits : 'TInspectorActions classTrait',
+	#traits : 'TEyeInspectorActions',
+	#classTraits : 'TEyeInspectorActions classTrait',
 	#instVars : [
 		'host'
 	],

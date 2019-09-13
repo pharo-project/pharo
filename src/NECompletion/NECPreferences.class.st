@@ -36,6 +36,11 @@ NECPreferences class >> availablePopupShortcuts [
 	^ {Character space shift . Character tab asKeyCombination}
 ]
 
+{ #category : #private }
+NECPreferences class >> availableSorters [
+	^ CompletionSorter subclasses
+]
+
 { #category : #accessing }
 NECPreferences class >> backgroundColor [
 	^ backgroundColor
@@ -185,7 +190,7 @@ NECPreferences class >> settingsOn: aBuilder [
 		iconName: #smallConfigurationIcon;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
-					| availableControllers |
+					| availableControllers availableSorters |
 					availableControllers := self availableControllers.
 					availableControllers size > 1
 						ifTrue: [ 
@@ -196,6 +201,16 @@ NECPreferences class >> settingsOn: aBuilder [
 								getSelector: #completionEngine;
 								setSelector: #completionEngine:;
 								domainValues: availableControllers ].
+					availableSorters := self availableSorters.
+					availableSorters size > 1
+						ifTrue: [ 
+							(aBuilder pickOne: #completionSorter)
+								order: -1;
+								label: 'Sorter';
+								target: CompletionModel;
+								getSelector: #sorter;
+								setSelector: #sorter:;
+								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.
 					(aBuilder setting: #expandPrefixes)

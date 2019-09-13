@@ -182,33 +182,36 @@ RBRefactoryTyper >> findTypeFor: selectorCollection [
 ]
 
 { #category : #assignments }
-RBRefactoryTyper >> guessTypeFromAssignment: aNode [ 
+RBRefactoryTyper >> guessTypeFromAssignment: aNode [
+
 	| type set newType |
+
 	type := nil.
-	aNode value isAssignment 
-		ifTrue: 
-			[^self guessTypeFromAssignment: (RBAssignmentNode variable: aNode variable
-						value: aNode value value)].
-	aNode value isBlock ifTrue: [type := model classFor: [] class].
-	aNode value isLiteralNode 
-		ifTrue: 
-			[aNode value value isNil ifTrue: [^self].
-			type := model classFor: (self typeFor: aNode value value)].
-	aNode value isMessage 
-		ifTrue: 
-			[aNode value receiver isVariable 
-				ifTrue: [type := model classNamed: aNode value receiver name asSymbol].
-			aNode value selector = #asValue 
-				ifTrue: [type := model classNamed: #ValueHolder].
-			(#(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) 
-				includes: aNode value selector) ifTrue: [type := model classFor: Boolean]].
-	type isNil ifTrue: [^self].
+	aNode value isAssignment
+		ifTrue: [ ^ self
+				guessTypeFromAssignment: ( RBAssignmentNode variable: aNode variable value: aNode value value )
+			].
+	aNode value isBlock
+		ifTrue: [ type := model classFor: [  ] class ].
+	aNode value isLiteralNode
+		ifTrue: [ aNode value value ifNil: [ ^ self ].
+			type := model classFor: ( self typeFor: aNode value value )
+			].
+	aNode value isMessage
+		ifTrue: [ aNode value receiver isVariable
+				ifTrue: [ type := model classNamed: aNode value receiver name asSymbol ].
+			aNode value selector = #asValue
+				ifTrue: [ type := model classNamed: #ValueHolder ].
+			( #(#and: #or: #= #== #~= #~~ #<= #< #~~ #> #>=) includes: aNode value selector )
+				ifTrue: [ type := model classFor: Boolean ]
+			].
+	type ifNil: [ ^ self ].
 	set := variableTypes at: aNode variable name.
-	newType := set detect: [:each | type includesClass: each] ifNone: [nil].
-	newType isNil ifTrue: [^self].
-	((self rootClasses includes: newType) or: [ newType = (model classFor: Object) ])
-		ifTrue: [newType := type].
-	(bestGuesses at: aNode variable name ifAbsentPut: [Set new]) add: newType
+	newType := set detect: [ :each | type includesClass: each ] ifNone: [ nil ].
+	newType ifNil: [ ^ self ].
+	( ( self rootClasses includes: newType ) or: [ newType = ( model classFor: Object ) ] )
+		ifTrue: [ newType := type ].
+	( bestGuesses at: aNode variable name ifAbsentPut: [ Set new ] ) add: newType
 ]
 
 { #category : #accessing }
@@ -315,15 +318,14 @@ RBRefactoryTyper >> printType: aClass for: aString on: aStream [
 	name := self collectionNameFor: aString.
 	(aClass includesClass: (model classFor: Collection))
 		ifTrue: [colTypes := self guessTypesFor: name].
-	colTypes isEmpty ifFalse: [aStream nextPut: $(].
+	colTypes ifNotEmpty: [aStream nextPut: $(].
 	aClass printOn: aStream.
-	colTypes isEmpty
-		ifFalse: 
+	colTypes ifNotEmpty: 
 			[aStream nextPutAll: ' of: '.
 			colTypes size > 1 ifTrue: [aStream nextPut: $(].
 			self printTypeFor: name on: aStream.
 			colTypes size > 1 ifTrue: [aStream nextPut: $)]].
-	colTypes isEmpty ifFalse: [aStream nextPut: $)]
+	colTypes ifNotEmpty: [aStream nextPut: $)]
 ]
 
 { #category : #printing }

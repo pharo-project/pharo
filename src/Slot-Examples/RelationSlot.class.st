@@ -66,7 +66,7 @@ RelationSlot >> addAssociationFrom: ownerObject to: otherObject [
 RelationSlot >> checkValue: aValue [
 
 	(aValue isKindOf: self targetClass)
-		ifFalse: [ self error: 'Invalid value' ].
+		ifFalse: [ self error: 'Invalid value' ]
 ]
 
 { #category : #'code generation' }
@@ -114,7 +114,7 @@ RelationSlot >> inClass: aTargetClassOrSymbol [
 { #category : #initialization }
 RelationSlot >> inverse: anInverseSymbol inClass: aTargetClassOrSymbol [
 	self inClass: aTargetClassOrSymbol.
-	inverseName := anInverseSymbol.
+	inverseName := anInverseSymbol
 ]
 
 { #category : #accessing }
@@ -159,7 +159,7 @@ RelationSlot >> printOn: aStream [
 				store: inverseName ].
 	aStream
 		nextPutAll: ' inClass: ';
-		store: self targetClassName.
+		store: self targetClassName
 
 ]
 

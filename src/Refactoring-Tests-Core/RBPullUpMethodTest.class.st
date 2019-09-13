@@ -17,10 +17,10 @@ RBPullUpMethodTest >> testPullUpAndCopyDown [
 		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
-	self executeRefactoring: (RBPullUpMethodRefactoring 
+	self proceedThroughWarning: [ self executeRefactoring: (RBPullUpMethodRefactoring 
 				model: model
 				pullUp: #(#yourself)
-				from: class).
+				from: class) ].
 	self assert: (class superclass parseTreeFor: #yourself) 
 			equals: (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
@@ -42,6 +42,32 @@ RBPullUpMethodTest >> testPullUpClassMethod [
 			model: model
 			pullUp: #(#foo )
 			from: class classSide)
+]
+
+{ #category : #tests }
+RBPullUpMethodTest >> testPullUpInAHighHierarchyClass [
+	| class superClass |
+	model 
+		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model 
+		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	model 
+		defineClass: 'Subclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: #''Refactory-Test data'''.
+	class := model classNamed: #Foo1.
+	superClass := model classNamed: #SomeClass .
+	class compile: 'example ^1' classified: #(#accessing).
+	self executeRefactoring: (RBPullUpMethodRefactoring 
+				model: model
+				pullUp: #(#example)
+				from: class 
+				to: superClass ).
+	self assert: (superClass parseTreeFor: #example) 
+				equals: (self parseMethod: 'example ^1').
+	self deny: (class directlyDefinesMethod: #example).
+	class := model classNamed: #Subclass.
+	self assert: (class definesMethod: #example).
+	self assert: (class parseTreeFor: #example) 
+				equals: ((model classNamed: #SomeClass) parseTreeFor: #example)
 ]
 
 { #category : #tests }

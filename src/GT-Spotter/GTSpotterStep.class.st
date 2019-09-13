@@ -255,12 +255,6 @@ GTSpotterStep >> isCategorySelected: aProcessor [
 	^ self hasSelected and: [ self selected processor == aProcessor ]
 ]
 
-{ #category : #'zz-deprecated' }
-GTSpotterStep >> isEmpty [
-	self deprecated: 'Use hasCandidates instead'.
-	^ self hasCandidates not
-]
-
 { #category : #testing }
 GTSpotterStep >> isSelected: aCandidateLink [
 	"Return true if aCandidateLink is currently selected,
@@ -422,7 +416,7 @@ GTSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 		do: [ :exception | 
 			self exceptionHandler 
 				handleException: exception 
-				do: [ ('[Spotter] Exception in process: ', exception asString) logCr ] ]
+				do: [ ('[Spotter] Exception in process: ', exception asString) traceCr ] ]
 ]
 
 { #category : #selecting }

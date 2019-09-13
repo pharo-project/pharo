@@ -22,6 +22,11 @@ CompiledBlock >> hasMethodReturn [
 		 self encoderClass methodReturnBytecodes includes: byte]
 ]
 
+{ #category : #testing }
+CompiledBlock >> hasSourceCode [
+	^self method hasSourceCode
+]
+
 { #category : #comparing }
 CompiledBlock >> hash [
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.
@@ -63,6 +68,12 @@ CompiledBlock >> methodClass [
 { #category : #accessing }
 CompiledBlock >> methodNode [
 	^ self outerCode methodNode
+]
+
+{ #category : #accessing }
+CompiledBlock >> numberOfReservedLiterals [
+
+	^ 1
 ]
 
 { #category : #accessing }

@@ -59,7 +59,7 @@ ZipNewFileMember >> rewindData [
 ]
 
 { #category : #testing }
-ZipNewFileMember >> usesFileNamed: aFileName [
+ZipNewFileMember >> usesFile: aFileReferenceOrFileName [
 	"Do I require aFileName? That is, do I care if it's clobbered?"
-	^externalFileName asFileReference = aFileName asFileReference
+	^externalFileName asFileReference = aFileReferenceOrFileName asFileReference
 ]

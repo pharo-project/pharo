@@ -136,7 +136,7 @@ ReflectivityExamples >> exampleMethod2 [
 
 { #category : #examples }
 ReflectivityExamples >> exampleMethodMultipleSites [
-	Transcript show: Object new.
+	self trace: Object new.
 	^ 2 + 3
 ]
 

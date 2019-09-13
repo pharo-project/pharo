@@ -19,7 +19,7 @@ SpToolBarButtonMorph >> badge [
 
 { #category : #accessing }
 SpToolBarButtonMorph >> badgeColor [
-	^ Smalltalk ui theme badgeColor
+	^ self theme badgeColor
 ]
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ SpToolBarButtonMorph >> badgeSelector: aSymbol [
 
 { #category : #accessing }
 SpToolBarButtonMorph >> badgeTextColor [
-	^ Smalltalk ui theme badgeTextColor
+	^ self theme badgeTextColor
 ]
 
 { #category : #accessing }

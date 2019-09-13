@@ -205,10 +205,21 @@ SDL2 class >> initLibrary [
 	Session == Smalltalk session ifTrue: [ ^ 1 ].
 	"Configure SDL2 in 'application mode', to let the screen to turn off on inactivity.
 	 But we let the user to restore 'game mode' on screen, by using #disableScreenSaver"
+	
+	self initPlatformSpecific.
+	
 	self setHint: SDL_HINT_VIDEO_ALLOW_SCREENSAVER value: '1'.
 	self setHint: SDL_HINT_NO_SIGNAL_HANDLERS value: '1'.
 	self init: SDL_INIT_NOPARACHUTE.
 	Session := Smalltalk session.
+]
+
+{ #category : #common }
+SDL2 class >> initPlatformSpecific [
+
+	Smalltalk os isMacOSX ifTrue: [  
+		SDLOSXPlatformInitializer new run.	
+	] 
 ]
 
 { #category : #common }

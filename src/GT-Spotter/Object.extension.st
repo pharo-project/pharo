@@ -108,5 +108,5 @@ Object >> spotterProcessorsFor: aSpotterStep pragma: aPragma [
 			aSpotterStep exceptionHandler
 				handleException: exception
 				do: [ ('[Spotter] Exception while collecting processors for <'
-						, self class name , '>: ' , exception asString) logCr ] ]
+						, self class name , '>: ' , exception asString) traceCr ] ]
 ]

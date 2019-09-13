@@ -28,6 +28,17 @@ LiteralVariable class >> checkValidName: aString [
 		ifFalse: [InvalidGlobalName signal: 'Class name does not start with a valid Global Var Initial' for: aString]"
 ]
 
+{ #category : #'gt-inspector-extension' }
+LiteralVariable class >> gtInspectorAllVariablesIn: composite [
+ 	"This provides a list of all defined Class or Global Variables"
+ 	<gtInspectorPresentationOrder: 20>
+ 	composite list 
+ 		title: 'All Defined Variables';
+ 		display: [ self allSubclasses sorted: #name ascending ];
+ 		tags: [ :each | { each package name } ];
+ 		when: [self == LiteralVariable  ].
+]
+
 { #category : #'class initialization' }
 LiteralVariable class >> initialize [
 	Properties := Properties
@@ -56,7 +67,8 @@ LiteralVariable >> definingClass [
 
 { #category : #printing }
 LiteralVariable >> definitionString [
-	^String streamContents: [:aStream | aStream << '#' << self name << ' => '; << self class name].
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printString
 ]
 
 { #category : #'code generation' }
@@ -92,6 +104,11 @@ LiteralVariable >> hasProperty: aKey [
 		ifNotNil: [:prop | prop includesKey: aKey]
 ]
 
+{ #category : #'class building' }
+LiteralVariable >> installingIn: aClass [
+	"I am called by the class builder. This way a class variable can change the class it is installed in"
+]
+
 { #category : #testing }
 LiteralVariable >> isClassVariable [
 	^false
@@ -114,7 +131,8 @@ LiteralVariable >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 LiteralVariable >> isReferenced [
-	^self usingMethods isNotEmpty
+	"my subclasses override this if they can be referenced in code"
+	^false
 ]
 
 { #category : #testing }

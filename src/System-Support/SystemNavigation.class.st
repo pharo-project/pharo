@@ -64,7 +64,7 @@ SystemNavigation >> allClassesDo: aBlock [
 { #category : #query }
 SystemNavigation >> allClassesImplementing: aSelector [  
 	"Answer all classes that implement the message aSelector."
-	^self allBehaviors collect: [:class | class includesSelector: aSelector]
+	^self allBehaviors select: [:class | class includesSelector: aSelector]
 ]
 
 { #category : #query }
@@ -189,23 +189,6 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 		symbol
 			ifFalse: [ class withMethodsReferTo: aLiteral do: aBlock ]
 			ifTrue: [ class withThorougMethodsReferTo: aLiteral do: aBlock ] ]
-]
-
-{ #category : #query }
-SystemNavigation >> allReferencesToPool: aPool [
-	"Answer all the references to variable aPool"
-
-	| list |
-	list := OrderedCollection new.
-	self
-		allClassesDo: [ :cls | 
-			cls
-				selectorsAndMethodsDo: [ :sel :meth | 
-					meth literals
-						detect: [ :lit | (lit isVariableBinding and: [ lit key notNil ]) 
-													and: [ aPool includesKey: lit key ] ]
-						ifFound: [ list add: (cls>>sel) methodReference ] ] ].
-	^ list
 ]
 
 { #category : #'message sends' }

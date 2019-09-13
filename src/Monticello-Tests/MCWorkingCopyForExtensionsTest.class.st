@@ -8,18 +8,15 @@ Class {
 MCWorkingCopyForExtensionsTest >> tearDown [
 	'ATestPackage' asPackage removeFromSystem.
 	'AnotherTestPackage' asPackage removeFromSystem.
-	
 	Object
 		compiledMethodAt: #testingMethod
-		ifPresent: [ Object removeSelector: #testingMethod ]
-		ifAbsent: [  ].
-
-	('Atestpackage-something-else' asPackageIfAbsent: [ nil ]) ifNotNil: #removeFromSystem.
-
+		ifPresent: [ Object removeSelector: #testingMethod ].
+	('Atestpackage-something-else' asPackageIfAbsent: [ nil ])
+		ifNotNil: [ :package | package removeFromSystem ].
 	MCWorkingCopy registry
 		at: (MCPackage named: 'atestpackage-something-else')
 		ifPresent: [ :aWC | aWC unload ].
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

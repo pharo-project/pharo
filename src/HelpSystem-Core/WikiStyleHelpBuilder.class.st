@@ -29,7 +29,7 @@ Class {
 
 { #category : #'private accessing' }
 WikiStyleHelpBuilder class >> allHelpPragmas [
-	 ^(PragmaCollector filter: [:pragma | self pragmaKeywords includes: pragma keyword]) reset collected
+	 ^(PragmaCollector filter: [:pragma | self pragmaKeywords includes: pragma selector]) reset collected
 
 ]
 

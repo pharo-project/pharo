@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-OSSDL2WindowHandle class >> newWithHandle: handle attributes: attributes [.
+OSSDL2WindowHandle class >> newWithHandle: handle attributes: attributes [
 	^ self basicNew initWithHandle: handle attributes: attributes; yourself
 ]
 
@@ -286,6 +286,12 @@ OSSDL2WindowHandle >> prepareExternalResourceForAutoRelease [
 	handle autoRelease
 ]
 
+{ #category : #accessing }
+OSSDL2WindowHandle >> raise [
+
+	handle raise
+]
+
 { #category : #'mouse capture' }
 OSSDL2WindowHandle >> releaseMouse [
 	SDL2 setRelativeMouseMode: false
@@ -319,11 +325,6 @@ OSSDL2WindowHandle >> setDraggableArea: aRectangle [
 		].
 	
 	^handle setHitTest: myCallback.
-]
-
-{ #category : #cursor }
-OSSDL2WindowHandle >> setMouseCursor: cursorWithMask [
-	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
 { #category : #cursor }

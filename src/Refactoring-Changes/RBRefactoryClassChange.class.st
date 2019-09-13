@@ -51,9 +51,10 @@ RBRefactoryClassChange >> changeClassName [
 ]
 
 { #category : #accessing }
-RBRefactoryClassChange >> changeClassName: aSymbol [ 
+RBRefactoryClassChange >> changeClassName: aSymbol [
+
 	className := aSymbol.
-	isMeta isNil ifTrue: [ isMeta := false ]
+	isMeta ifNil: [ isMeta := false ]
 ]
 
 { #category : #printing }
@@ -92,6 +93,11 @@ RBRefactoryClassChange >> isMeta [
 RBRefactoryClassChange >> methodSourceFor: aSymbol [
 	^ (self changeClass includesSelector: aSymbol)
 		ifTrue: [ self changeClass sourceCodeAt: aSymbol ]
+]
+
+{ #category : #accessing }
+RBRefactoryClassChange >> parserClass [
+	^ RBParser
 ]
 
 { #category : #private }

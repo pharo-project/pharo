@@ -7,16 +7,16 @@ Class {
 	#category : #'Slot-Core-Layout'
 }
 
-{ #category : #extending }
-DoubleWordLayout >> extendDoubleWord [
-	^ DoubleWordLayout new
-]
-
-{ #category : #'methodsFor:' }
-DoubleWordLayout >> extending: superLayout scope: aScope host: aClass [
+{ #category : #'instance creation' }
+DoubleWordLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendDoubleWord
 		host: aClass;
 		yourself
+]
+
+{ #category : #extending }
+DoubleWordLayout >> extendDoubleWord [
+	^ DoubleWordLayout new
 ]
 
 { #category : #format }

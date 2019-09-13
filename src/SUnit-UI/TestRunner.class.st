@@ -94,11 +94,11 @@ TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [
 	listOfPackages
 		reject: #isNil
 		thenDo: [:package | 
-			package methodReferences
+			package methods
 				reject: [ :method | (#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
-												or: [ method compiledMethod isAbstract
-													or: [ (method compiledMethod refersToLiteral: #ignoreForCoverage)
-														or: [ method methodClass instanceSide allSuperclasses includes: TestCase ] ] ] ]
+												or: [ method  isAbstract
+													or: [ (method  refersToLiteral: #ignoreForCoverage)
+														or: [ method methodClass isTestCase ] ] ] ]
 				thenDo: [:method | methods add: method ] ]
 ]
 
@@ -502,8 +502,8 @@ TestRunner >> excludeClassesNotUnderTestFrom: methods [
 							theClass := Smalltalk globals classNamed: className.
 							theClass
 								ifNotNil: [ 
-									theClass methods do: [ :each | methods remove: each methodReference ifAbsent: [  ] ].
-									theClass class methods do: [ :each | methods remove: each methodReference ifAbsent: [  ] ] ] ] ] ]
+									theClass methods do: [ :each | methods remove: each  ifAbsent: [  ] ].
+									theClass class methods do: [ :each | methods remove: each  ifAbsent: [  ] ] ] ] ] ]
 ]
 
 { #category : #processing }
@@ -590,13 +590,12 @@ TestRunner >> fileOutResults [
 
 { #category : #'accessing-classes' }
 TestRunner >> filterClasses [
+
 	| pattern |
-	pattern := UIManager default 
-		request: 'Pattern to select tests:' 
-		initialAnswer: '*'.
-	pattern isNil ifTrue: [ ^ self ].
-	classesSelected := (classes select: [ :each | 
-		pattern match: each name ]) asSet.
+
+	pattern := UIManager default request: 'Pattern to select tests:' initialAnswer: '*'.
+	pattern ifNil: [ ^ self ].
+	classesSelected := ( classes select: [ :each | pattern match: each name ] ) asSet.
 	self
 		changed: #allSelections;
 		changed: #classSelected;
@@ -605,14 +604,16 @@ TestRunner >> filterClasses [
 
 { #category : #'accessing-packages' }
 TestRunner >> filterPackages [
+
 	| pattern |
-	pattern := UIManager default 
-		request: 'Pattern to select package:' 
-		initialAnswer: '*'.
-	pattern isNil ifTrue: [ ^ self ].
-	packagesSelected := (packages 
-		select: [ :each | pattern match: each ]) asSet.
-	self changed: #allSelections; changed: #packageSelected; updateClasses
+
+	pattern := UIManager default request: 'Pattern to select package:' initialAnswer: '*'.
+	pattern ifNil: [ ^ self ].
+	packagesSelected := ( packages select: [ :each | pattern match: each ] ) asSet.
+	self
+		changed: #allSelections;
+		changed: #packageSelected;
+		updateClasses
 ]
 
 { #category : #utilities }
@@ -866,14 +867,14 @@ TestRunner >> runCoverage [
 
 { #category : #actions }
 TestRunner >> runErrors [
-	self result instVarNamed: 'errors' put: OrderedCollection new.
+	self result errors: OrderedCollection new.
 	self runTestSuites: self errorTestSuites.
 ]
 
 { #category : #actions }
 TestRunner >> runFailures [
-	self result instVarNamed: 'failures' put: Set new.
-	self runTestSuites: self failureTestSuites.
+	self result failures: Set new.
+	self runTestSuites: self failureTestSuites
 ]
 
 { #category : #actions }
@@ -1157,35 +1158,38 @@ TestRunner >> update [
 
 { #category : #updating }
 TestRunner >> updateClasses [
+
 	| classesForCategories |
+
 	classesForCategories := self findClassesForPackages: packagesSelected.
-	
-	classPattern ifNotNil: [
-		classesForCategories := classesForCategories reject: [:cls| (classPattern matchesIn: cls name) isEmpty ]].
-	
-	classes := classesForCategories asArray
-		sort: [ :a :b | self sortClass: a before: b ].
+
+	classPattern
+		ifNotNil: [ classesForCategories := classesForCategories
+				reject: [ :cls | ( classPattern matchesIn: cls name ) isEmpty ]
+			].
+
+	classes := classesForCategories asArray sort: [ :a :b | self sortClass: a before: b ].
 	classIndex := 0.
-	classesSelected := classesSelected isNil
-		ifTrue: [ classesForCategories ]
-		ifFalse: [ 
-			classesSelected
-				select: [ :each | classesForCategories includes: each ] ].
-	self changed: #classList; 
-		changed: #classSelected; 
-		changed: #hasRunnable.
+	classesSelected := classesSelected
+		ifNil: [ classesForCategories ]
+		ifNotNil: [ classesSelected select: [ :each | classesForCategories includes: each ] ].
+	self
+		changed: #classList;
+		changed: #classSelected;
+		changed: #hasRunnable
 ]
 
 { #category : #updating }
 TestRunner >> updatePackages [
+
 	packages := self findPackages.
 	packageIndex := 0.
-	packagesSelected := packagesSelected isNil
-		ifTrue: [ Set new ]
-		ifFalse: [
-			packagesSelected
-				select: [ :each | packages includes: each ] ].
-	self changed: #packageList; changed: #packageSelected.
+	packagesSelected := packagesSelected
+		ifNil: [ Set new ]
+		ifNotNil: [ packagesSelected select: [ :each | packages includes: each ] ].
+	self
+		changed: #packageList;
+		changed: #packageSelected
 ]
 
 { #category : #updating }

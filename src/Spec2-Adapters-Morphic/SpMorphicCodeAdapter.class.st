@@ -52,12 +52,6 @@ SpMorphicCodeAdapter >> hasSyntaxHighlight [
 ]
 
 { #category : #NOCompletion }
-SpMorphicCodeAdapter >> isCodeCompletionAllowed [
-
-	^ true
-]
-
-{ #category : #NOCompletion }
 SpMorphicCodeAdapter >> receiverClass [
 
 	^ self behavior

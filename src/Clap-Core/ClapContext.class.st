@@ -37,7 +37,7 @@ ClapContext class >> defaultRoot [
 
 { #category : #accessing }
 ClapContext class >> pragmaCommands [
-	^ (PragmaCollector filter: [:prg | prg keyword = 'commandline']) reset
+	^ (PragmaCollector filter: [:prg | prg selector = 'commandline']) reset
 		collect: [ :pragma |
 			| theClass theSelector |
 			theClass := pragma method methodClass.
@@ -194,8 +194,8 @@ ClapContext >> initialize [
 { #category : #activation }
 ClapContext >> interpret: argumentsSequence [
 	^ self arguments: argumentsSequence;
-		ifMatch: [ :match |
-			match value: self.
+		ifMatch: [ :matched |
+			matched value: self.
 			self exitSuccess ]
 		ifMismatch: [ self noneMatched ]
 ]

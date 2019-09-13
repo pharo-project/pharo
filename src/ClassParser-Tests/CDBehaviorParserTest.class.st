@@ -25,12 +25,6 @@ CDBehaviorParserTest >> className [
 ]
 
 { #category : #helpers }
-CDBehaviorParserTest >> firstInstanceVariableIndex [
-
-	^ self classDefinitionString findString: self firstInstanceVariableName
-]
-
-{ #category : #helpers }
 CDBehaviorParserTest >> firstInstanceVariableName [
 
 	^ 'first'
@@ -40,18 +34,6 @@ CDBehaviorParserTest >> firstInstanceVariableName [
 CDBehaviorParserTest >> nodeFor: aString [ 
 	
 	^ classDefinition bestNodeFor: (self selectionOf: aString)
-]
-
-{ #category : #helpers }
-CDBehaviorParserTest >> secondClassVariableIndex [
-
-	^ self classDefinitionString findString: self secondClassVariableName
-]
-
-{ #category : #helpers }
-CDBehaviorParserTest >> secondInstanceVariableIndex [
-
-	^ self classDefinitionString findString: self secondInstanceVariableName
 ]
 
 { #category : #helpers }

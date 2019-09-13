@@ -81,13 +81,6 @@ CairoBackendCache >> initialize [
 	self flush
 ]
 
-{ #category : #removeMe }
-CairoBackendCache >> nbSessionChanged [
-
-	self initialize.
-	
-]
-
 { #category : #removing }
 CairoBackendCache >> removeAt: anObject [
 

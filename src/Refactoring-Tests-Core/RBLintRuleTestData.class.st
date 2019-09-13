@@ -2,7 +2,6 @@
 This hierarchy is code that is used as test data to test the refactoring engine. As such the code might make
 no sense or have lots of easy possible improvements... but as it is used for testing, they should not be fixed.
 "
-
 Class {
 	#name : #RBLintRuleTestData,
 	#superclass : #Object,
@@ -101,10 +100,9 @@ RBLintRuleTestData >> openEditor [
 ]
 
 { #category : #printing }
-RBLintRuleTestData >> printOn: aStream [ 
-	name isNil
-		ifTrue: [super printOn: aStream]
-		ifFalse: [aStream nextPutAll: name]
+RBLintRuleTestData >> printOn: aStream [
+
+	name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: name ]
 ]
 
 { #category : #accessing }

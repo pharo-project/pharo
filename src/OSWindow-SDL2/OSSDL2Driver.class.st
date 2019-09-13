@@ -46,13 +46,16 @@ OSSDL2Driver class >> isVMDisplayUsingSDL2 [
 { #category : #private }
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
-	Transcript show: 'Game controller '; show: index; show: 'removed'; cr.
+
+	self
+		traceCr: ('Game controller <1s> removed' expandMacrosWith: index)
 ]
 
 { #category : #private }
 OSSDL2Driver >> closeRemovedJoystick: index [
 	"TODO: What should I do here?"
-	Transcript show: 'Joystick '; show: index; show: 'removed'; cr.
+
+	self traceCr: ('Joystick <1s> removed' expandMacrosWith: index)
 ]
 
 { #category : #'events-processing' }
@@ -120,6 +123,16 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 		osWindow setJustCreatedHandle: window.
 	].
 	^ window
+]
+
+{ #category : #'events-processing' }
+OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
+
+	anSDLEvent ifNil: [ ^ self ].
+
+	((anSDLEvent isKindOf: SDL_KeyDownEvent)
+		and: [ (anSDLEvent keysym mod anyMask: 1344) and: [ anSDLEvent keysym scancode = 55 ] ])
+		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
 ]
 
 { #category : #'events-processing' }
@@ -248,8 +261,8 @@ OSSDL2Driver >> processEvent: sdlEvent [
 	| event |
 			
 	[  
-		event := self convertEvent: sdlEvent.
-		
+		event := self convertEvent: sdlEvent.	
+		self evaluateUserInterrupt: sdlEvent mapped.
 		event ifNotNil: [ eventQueue nextPut: event ].
 	] on: Error do: [ :err | 
 		"It is critical, that event handling keep running despite errors.
@@ -306,7 +319,8 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 
 { #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
+	EventLoopProcess ifNotNil: [ 
+		EventLoopProcess isTerminating ifFalse: [EventLoopProcess terminate. EventLoopProcess := nil] ].
 	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
 		[ self eventLoopProcessWithVMWindow ] 
 		forkAt: Processor lowIOPriority

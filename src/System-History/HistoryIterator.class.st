@@ -30,7 +30,7 @@ Class {
 		'recorder',
 		'maxSize'
 	],
-	#category : #'System-History'
+	#category : #'System-History-Iterators'
 }
 
 { #category : #adding }
@@ -223,7 +223,7 @@ HistoryIterator >> removeFirst [
 	self recorder removeFirst
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 HistoryIterator >> reset [
 	self recorder reset.
 	index := nil.

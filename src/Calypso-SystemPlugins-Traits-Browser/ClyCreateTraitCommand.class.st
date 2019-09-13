@@ -35,6 +35,11 @@ ClyCreateTraitCommand class >> fullBrowserMenuActivation [
 ]
 
 { #category : #accessing }
+ClyCreateTraitCommand >> defaultMenuIconName [
+	^#trait
+]
+
+{ #category : #accessing }
 ClyCreateTraitCommand >> defaultMenuItemName [
 	^'New trait'
 ]

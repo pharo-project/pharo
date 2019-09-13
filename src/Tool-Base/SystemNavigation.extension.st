@@ -25,7 +25,7 @@ SystemNavigation >> browseAllCallsOnClass: aClass [
 	aClass. For example, SystemNavigation new browseAllCallsOnClass: Object."
 
 	^ self
-		browseMessageList: ((aClass allCallsOnIn: self) asSortedCollection)
+		browseMessageList: (aClass allCallsOnIn: self)
 		name: 'Users of class ' , aClass instanceSide name
 		autoSelect: aClass instanceSide name
 ]
@@ -120,7 +120,7 @@ SystemNavigation >> browseAllStoresInto: instVarName from: aClass [
 SystemNavigation >> browseAllUsersOfTrait: aTrait [
 	"Launch a class-list list browser on all classes or traits which import aTrait"
 	
-	^Smalltalk tools browser messageList browseClasses: aTrait traitUsers
+	^Smalltalk tools messageList browseClasses: aTrait traitUsers
 ]
 
 { #category : #'*Tool-Base' }
@@ -199,10 +199,10 @@ SystemNavigation >> browseHierarchy: aBehavior [
 
 { #category : #'*Tool-Base' }
 SystemNavigation >> browseHierarchy: aClass selector: aSelector [
+
 	"Open a browser"
 
-	aClass isNil
-		ifTrue: [ ^ self ].
+	aClass ifNil: [ ^ self ].
 	^ Smalltalk tools browser new
 		spawnHierarchyForClass: aClass selector: aSelector;
 		yourself

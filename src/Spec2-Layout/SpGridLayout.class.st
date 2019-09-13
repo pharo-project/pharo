@@ -14,6 +14,8 @@ Class {
 		'borderWidth',
 		'columnSpacing',
 		'rowSpacing',
+		'rowConstraints',
+		'columnConstraints',
 		'columnHomogeneous',
 		'rowHomogeneous'
 	],
@@ -105,6 +107,25 @@ SpGridLayout >> children [
 	^ children
 ]
 
+{ #category : #accessing }
+SpGridLayout >> column: aNumber withConstraints: aBlock [
+	| constraints |
+
+	constraints := SpGridAxisConstraints new.
+	aBlock value: constraints.
+	columnConstraints 
+		at: aNumber
+		put: constraints
+]
+
+{ #category : #accessing }
+SpGridLayout >> columnConstraintsAt: columnNumber [
+
+	^ columnConstraints 
+		at: columnNumber 
+		ifAbsent: [ nil ]
+]
+
 { #category : #private }
 SpGridLayout >> columnHomogeneous: anObject [
 	columnHomogeneous := anObject
@@ -133,6 +154,8 @@ SpGridLayout >> initialize [
 	super initialize.
 	self beColumnHomogeneous.
 	self beRowHomogeneous.
+	columnConstraints := Dictionary new.
+	rowConstraints := Dictionary new.
 ]
 
 { #category : #testing }
@@ -143,6 +166,25 @@ SpGridLayout >> isColumnHomogeneous [
 { #category : #testing }
 SpGridLayout >> isRowHomogeneous [
 	^ rowHomogeneous
+]
+
+{ #category : #accessing }
+SpGridLayout >> row: aNumber withConstraints: aBlock [
+	| constraints |
+
+	constraints := SpGridAxisConstraints new.
+	aBlock value: constraints.
+	rowConstraints 
+		at: aNumber
+		put: constraints
+]
+
+{ #category : #accessing }
+SpGridLayout >> rowConstraintsAt: rowNumber [
+
+	^ rowConstraints 
+		at: rowNumber 
+		ifAbsent: [ nil ]
 ]
 
 { #category : #private }

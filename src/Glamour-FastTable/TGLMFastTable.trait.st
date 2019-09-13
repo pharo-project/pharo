@@ -67,7 +67,7 @@ TGLMFastTable >> dataCache [
 ]
 
 { #category : #cache }
-TGLMFastTable >> dataCacheFor: anElement [.
+TGLMFastTable >> dataCacheFor: anElement [
 
 	^ self dataCache at: anElement ifAbsentPut: [ Dictionary new ]
 ]

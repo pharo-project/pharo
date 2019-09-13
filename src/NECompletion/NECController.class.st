@@ -22,46 +22,12 @@ Class {
 	#classVars : [
 		'ContextClass'
 	],
-	#classInstVars : [
-		'uniqueInstance'
-	],
 	#category : #'NECompletion-View'
 }
 
-{ #category : #testing }
-NECController class >> allowModel: aModel [ 
-	^NECPreferences enabled and: [ aModel isCodeCompletionAllowed ]
-]
-
-{ #category : #cleanup }
-NECController class >> cleanUp [
-	self reset
-]
-
-{ #category : #accessing }
-NECController class >> codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt [
-	"Inserts code completion if allowed in this morph"
-	
-	| editor stringHolder completionAllowed controller |
-	editor := aTextMorph editor.
-	stringHolder := editor ifNotNil:[ editor model ].
-	completionAllowed := self allowModel: stringHolder.
-	completionAllowed 
-		ifTrue: [ 
-			controller := self uniqueInstance.
-			controller setModel: stringHolder.
-			(controller handleKeystrokeBefore: evt editor: editor)
-				ifTrue:  [^ self ] ].
-
-	aBlock value.
-	
-	completionAllowed
-		ifTrue: [ controller handleKeystrokeAfter: evt editor: editor ]
-]
-
 { #category : #accessing }
 NECController class >> contextClass [
-	^ContextClass ifNil: [ ^NECContext ] 
+	^ContextClass ifNil: [ NECContext ] 
 ]
 
 { #category : #accessing }
@@ -70,34 +36,19 @@ NECController class >> contextClass: aClass [
 ]
 
 { #category : #'class initialization' }
-NECController class >> initialize [
-	"self initialize"
-	
-	self register
+NECController class >> initialize [ 
+  	self register
+]
+
+{ #category : #accessing }
+NECController class >> isCompletionEnabled [
+	^NECPreferences enabled
 ]
 
 { #category : #'tools registry' }
 NECController class >> register [
-
-	RubSmalltalkEditor completionEngine: self.
-]
-
-{ #category : #'tools registry' }
-NECController class >> registerToolsOn: registry [
-	"self registerToolsOn: Smalltalk tools" 
-	registry remove: #codeCompletion
-
-]
-
-{ #category : #'instance creation' }
-NECController class >> reset [
-	uniqueInstance := nil
-	
-]
-
-{ #category : #'instance creation' }
-NECController class >> uniqueInstance [
-	^uniqueInstance ifNil: [ uniqueInstance := self new ]
+	"just for testing: we register the subclass here to test it"
+	RubSmalltalkEditor completionEngine: CompletionController
 ]
 
 { #category : #accessing }
@@ -135,7 +86,8 @@ NECController >> editor [
 
 { #category : #'type guessing' }
 NECController >> guessTypeFor: aString [
-	^ model isNil ifFalse: [ model guessTypeForName: aString ]
+
+	^ model ifNotNil: [ model guessTypeForName: aString ]
 ]
 
 { #category : #keyboard }

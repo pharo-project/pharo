@@ -1,4 +1,4 @@
 package-names
 monticelloPackageNames
 
-	^ #('System-Model' 'Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'Ring-Deprecated-ChunkImporter'  'Compression' 'Monticello' 'Ring-Deprecated-Monticello' )
+	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' )

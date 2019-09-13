@@ -155,7 +155,7 @@ GTEventDelivery >> offerPermission [
 ]
 
 { #category : #delivery }
-GTEventDelivery >> packAndDeliver: aBoolean. [
+GTEventDelivery >> packAndDeliver: aBoolean [
 	recorder pack.
 	self deliver: aBoolean.
 	

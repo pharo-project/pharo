@@ -126,13 +126,14 @@ BISimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatCommentsFor: aNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aNode comments
 		do: [ :each | 
-				self 
-					basicFormatCommentFor: each;
-					newLine ]
+			self
+				basicFormatCommentFor: each;
+				newLine
+			]
 ]
 
 { #category : #'private-formatting' }
@@ -148,13 +149,14 @@ BISimpleFormatter >> formatMethodBodyFor: aMethodNode [
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatMethodCommentFor: aNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aNode comments
 		do: [ :each | 
-			self 
+			self
 				basicFormatCommentFor: each;
-				newLine ]
+				newLine
+			]
 ]
 
 { #category : #'private-formatting' }
@@ -204,26 +206,27 @@ BISimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	statements := aSequenceNode statements.
 	statements isEmpty
 		ifTrue: [ ^ self ].
-	1 to: statements size do:
-		[ :i | 
+ 
+	statements doWithIndex: [ :el :i | 
 		self visitNode: (statements at: i).
 		i < statements size
 			ifTrue: [ codeStream nextPut: $.. 
 						self newLine].
-		self formatStatementCommentsFor: (statements at: i).
+		self formatStatementCommentsFor: el.
 		i < statements size
 			ifTrue: [  ] ]
 ]
 
 { #category : #'private-formatting' }
 BISimpleFormatter >> formatStatementCommentsFor: aStatementNode [
-	originalSource isNil
-		ifTrue: [ ^ self ].
+
+	originalSource ifNil: [ ^ self ].
 	aStatementNode statementComments
 		do: [ :each | 
-			 self 
+			self
 				newLine;
-			 	basicFormatCommentFor: each ]
+				basicFormatCommentFor: each
+			]
 ]
 
 { #category : #private }

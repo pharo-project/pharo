@@ -109,16 +109,17 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
+
 	| matcher parseTree superclass |
+
 	matcher := self parseTreeSearcherClass justSendsSuper.
 	parseTree := class parseTreeFor: aSelector.
-	(matcher executeTree: parseTree initialAnswer: false)
+	( matcher executeTree: parseTree initialAnswer: false )
 		ifFalse: [ ^ false ].
 	parseTree lastIsReturn
 		ifTrue: [ ^ true ].
 	superclass := class superclass whichClassIncludesSelector: aSelector.
-	superclass isNil
-		ifTrue: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
+	superclass ifNil: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
 								 delete it since it would be an error anyway."
 	parseTree := superclass parseTreeFor: aSelector.
 	matcher := self parseTreeSearcher.
@@ -127,10 +128,10 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 		do: [ :aNode :answer | 
 			answer
 				add: aNode value;
-				yourself ].
+				yourself
+			].
 	matcher executeTree: parseTree initialAnswer: Set new.
-	^ (matcher answer detect: [ :each | each isSelf not ] ifNone: [ nil ])
-		isNil
+	^ ( matcher answer anySatisfy: [ :each | each isSelf not ]) not
 ]
 
 { #category : #preconditions }
@@ -160,13 +161,16 @@ RBRemoveMethodRefactoring >> storeOn: aStream [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> superclassEquivalentlyDefines: aSelector [ 
+RBRemoveMethodRefactoring >> superclassEquivalentlyDefines: aSelector [
+
 	| superTree myTree |
-	class superclass isNil ifTrue: [^false].
+
+	class superclass ifNil: [ ^ false ].
 	superTree := class superclass parseTreeFor: aSelector.
 	myTree := class parseTreeFor: aSelector.
-	(superTree isNil or: [myTree isNil]) ifTrue: [^false].
-	^superTree equalTo: myTree exceptForVariables: #()
+	( superTree isNil or: [ myTree isNil ] )
+		ifTrue: [ ^ false ].
+	^ superTree equalTo: myTree exceptForVariables: #()
 ]
 
 { #category : #transforming }

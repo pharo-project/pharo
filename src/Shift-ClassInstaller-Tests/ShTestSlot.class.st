@@ -1,3 +1,6 @@
+"
+A test slot used in ShClassInstallerTest
+"
 Class {
 	#name : #ShTestSlot,
 	#superclass : #IndexedSlot,
@@ -7,11 +10,11 @@ Class {
 { #category : #initialization }
 ShTestSlot >> initialize: anObject [
 
-	super write: 'initialized' to: anObject.
+	super write: 'initialized' to: anObject
 ]
 
 { #category : #initialization }
-ShTestSlot >> wantsInitalization [
+ShTestSlot >> wantsInitialization [
 
 	^ true
 ]

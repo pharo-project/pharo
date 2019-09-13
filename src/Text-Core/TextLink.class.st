@@ -118,9 +118,3 @@ TextLink >> validate: specString [
 		ifFalse: [ '' ].	"OK if method name is not interned -- may not be defined yet"
 	^ first , ' ' , mid , last
 ]
-
-{ #category : #styling }
-TextLink >> writeScanOn: strm [
-
-	strm nextPut: $L; nextPutAll: classAndMethod; nextPut: $;
-]

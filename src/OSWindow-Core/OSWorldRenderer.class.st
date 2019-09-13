@@ -25,30 +25,6 @@ OSWorldRenderer class >> priority [
 ]
 
 { #category : #initialization }
-OSWorldRenderer >> activate [
-
-	| attributes |
-
-	attributes := OSWindowAttributes new.
-	attributes
-		extent: 1000@1000;
-		title: Smalltalk shortImageName;
-		icon: (self iconNamed: #pharoIcon).
-
-	display := Form extent: 1000@1000 depth: 32.
-	world extent: 1000@1000.
-
-	driver := self pickMostSuitableWindowDriver.
-	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
-	
-	world worldState doFullRepaint.
-	world displayWorld.
-	
-	Stdio stdout << 'World extent:'; << world extent printString ;crlf.
-]
-
-{ #category : #initialization }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
 	osWindow ifNotNil: [ osWindow setMouseCursor: aCursor mask: maskForm ]
@@ -78,13 +54,23 @@ OSWorldRenderer >> checkForNewScreenSize [
 	(display isNil or: [display extent = self actualScreenSize]) 
 		ifTrue: [ ^ self ].
 
-	Stdio stdout << 'New size'; crlf.
-
 	display := Form extent: self actualScreenSize depth: 32.
 	self osWindowRenderer form: display.
 
+	world worldState realWindowExtent: self actualScreenSize.
+
 	world restoreMorphicDisplay.
 
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> clipboardText [
+	^ osWindow clipboardText
+]
+
+{ #category : #initialization }
+OSWorldRenderer >> clipboardText: aString [
+	osWindow clipboardText: aString asString
 ]
 
 { #category : #initialization }
@@ -140,16 +126,51 @@ OSWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: sub
 ]
 
 { #category : #initialization }
+OSWorldRenderer >> doActivate [
+
+	| attributes initialExtent |
+	
+	initialExtent := world worldState realWindowExtent ifNil: [976@665].
+
+	attributes := OSWindowAttributes new.
+	attributes
+		extent: initialExtent;
+		title: Smalltalk shortImageName;
+		windowCentered:true;
+		icon: (self iconNamed: #pharoBig).
+
+	display := Form extent: initialExtent depth: 32.
+	world extent: initialExtent.
+
+	driver := self pickMostSuitableWindowDriver.
+	attributes preferableDriver: driver.
+	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: world).
+	
+	osWindow focus. 
+	
+	world worldState doFullRepaint.
+	world displayWorld.
+	
+	OSWindowClipboard new beDefault.
+]
+
+{ #category : #initialization }
 OSWorldRenderer >> driver [
 
 	^ driver
 ]
 
 { #category : #operations }
-OSWorldRenderer >> fullscreenMode: aValue [.
+OSWorldRenderer >> fullscreenMode: aValue [
 
 	osWindow fullscreen: aValue.
 	self checkForNewScreenSize.
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> icon: aForm [ 
+
+	osWindow icon: aForm
 ]
 
 { #category : #initialization }

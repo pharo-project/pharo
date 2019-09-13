@@ -21,10 +21,6 @@ NullWorldRenderer class >> priority [
 	^ 0
 ]
 
-{ #category : #activation }
-NullWorldRenderer >> activate [
-]
-
 { #category : #operations }
 NullWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
@@ -86,6 +82,10 @@ NullWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: s
 
 ]
 
+{ #category : #activation }
+NullWorldRenderer >> doActivate [
+]
+
 { #category : #operations }
 NullWorldRenderer >> forceDamageToScreen: allDamage [
 
@@ -97,4 +97,10 @@ NullWorldRenderer >> forceDamageToScreen: allDamage [
 NullWorldRenderer >> forceDisplayUpdate [
 
 	" Do Nothing "
+]
+
+{ #category : #accessing }
+NullWorldRenderer >> icon: aForm [ 
+
+	"Do nothing, a null world rendered has no window, so no icon either"
 ]

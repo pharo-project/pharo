@@ -1,12 +1,9 @@
 "
-Description
---------------------
-
 A LabelledPresenter is a simple presenter to display an input with a label and optionnaly a description.
 
-Example:
+self example.
 
-	self instantiate: (LabelledPresenter label: 'Email' input: self newTextInput description: 'Email adress to use to send activation and informations emails.')
+	
 "
 Class {
 	#name : #SpLabelledPresenter,
@@ -21,20 +18,25 @@ Class {
 
 { #category : #specs }
 SpLabelledPresenter class >> defaultSpec [
-	^ SpLayout composed
-		newRow: [ :row | 
-			row
-				newColumn: [ :c | 
-					c
-						newRow: [ :r | r add: #labelPresenter ] height: self inputTextHeight;
-						addSpacer ]
-					width: self labelWidth;
-				newColumn: [ :c | 
-					c
-						newRow: [ :r | r add: #input ] height: self inputTextHeight;
-						newRow: [ :r | r add: #descriptionPresenter ] height: self inputTextHeight ] ]
-			height: self labelledPresenterHeight;
+	^ SpBoxLayout newHorizontal
+		add: #labelPresenter withConstraints: [ :constraints | constraints width: self labelWidth ];
+		add:
+			(SpBoxLayout newVertical
+				add: #input withConstraints: [ :constraints | constraints height: self inputTextHeight ];
+				add: #descriptionPresenter withConstraints: [ :constraints | constraints height: self inputTextHeight ]);
 		yourself
+]
+
+{ #category : #specs }
+SpLabelledPresenter class >> example [
+	| inputPresenter |
+	inputPresenter := SpTextInputFieldPresenter new.
+	(SpLabelledPresenter 
+		label: 'Email' 
+		input: inputPresenter
+		description: 'Email adress to use to send activation and informations emails.')
+		openWithSpec
+	
 ]
 
 { #category : #'instance creation' }
@@ -49,11 +51,6 @@ SpLabelledPresenter class >> label: aString input: aPresenter description: anoth
 		input: aPresenter;
 		description: anotherString;
 		yourself
-]
-
-{ #category : #specs }
-SpLabelledPresenter class >> title [
-	^ 'Labelled presenter'
 ]
 
 { #category : #accessing }

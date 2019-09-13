@@ -85,10 +85,3 @@ TextFontChange >> printOn: strm [
 	super printOn: strm.
 	strm nextPutAll: ' font: '; print: fontNumber
 ]
-
-{ #category : #utilities }
-TextFontChange >> writeScanOn: strm [
-
-	strm nextPut: $f.
-	fontNumber printOn: strm.
-]

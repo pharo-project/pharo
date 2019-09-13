@@ -34,7 +34,7 @@ ChangesLog class >> registerInterestToSystemAnnouncement [
 
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 ChangesLog class >> reset [
 	SystemAnnouncer uniqueInstance unsubscribe: DefaultInstance.
 	DefaultInstance := nil.
@@ -81,17 +81,17 @@ ChangesLog >> logChange: aStringOrText [
 ]
 
 { #category : #'event-listening' }
-ChangesLog >> logClassRemoved: annoucement [
-	annoucement classRemoved acceptsLoggingOfCompilation ifTrue: [
-		self logChange: 'Smalltalk globals removeClassNamed: #', annoucement classRemoved name	
+ChangesLog >> logClassRemoved: announcement [
+	announcement classRemoved acceptsLoggingOfCompilation ifTrue: [
+		self logChange: 'Smalltalk globals removeClassNamed: #', announcement classRemoved name	
 	].
 
 ]
 
 { #category : #'event-listening' }
-ChangesLog >> logClassRenamed: annoucement [
-	annoucement classRenamed acceptsLoggingOfCompilation ifTrue: [
-		self logChange: '(Smalltalk globals at: #', annoucement oldName, ') rename: #', annoucement newName.	
+ChangesLog >> logClassRenamed: announcement [
+	announcement classRenamed acceptsLoggingOfCompilation ifTrue: [
+		self logChange: '(Smalltalk globals at: #', announcement oldName, ') rename: #', announcement newName.	
 	].
 
 ]

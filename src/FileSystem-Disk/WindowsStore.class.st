@@ -30,6 +30,12 @@ WindowsStore class >> maxFileNameLength [
 ]
 
 { #category : #accessing }
+WindowsStore class >> readOnlyVariant [
+
+	^ ReadOnlyWindowsStore
+]
+
+{ #category : #accessing }
 WindowsStore class >> separator [ 
 	^ $\
 ]
@@ -162,6 +168,19 @@ WindowsStore >> isFIFO: aPath [
 
 	aPath isRoot ifTrue: [ ^self rootEntry isFIFO ].
 	^super isFIFO: aPath
+]
+
+{ #category : #testing }
+WindowsStore >> isHidden: aPath attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not.
+	statAttributesArray is optional and may be supplied for performance.  It is the result of File>>fileAttributes:mask: or nil"
+
+	| attributesArray |
+	
+	attributesArray := statAttributesArray ifNil: 
+		[ File fileAttributes: (self stringFromPath: aPath) mask: 1 ].
+
+	^(attributesArray at: 13) anyMask: 16r2
 ]
 
 { #category : #testing }

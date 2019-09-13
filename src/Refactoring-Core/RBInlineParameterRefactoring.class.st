@@ -71,7 +71,7 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 			[:each | 
 			| tree |
 			tree := each parseTree.
-			tree notNil ifTrue: [coll addAll: (self expressionsToInlineFrom: tree)]].
+			tree ifNotNil: [coll addAll: (self expressionsToInlineFrom: tree)]].
 	^coll asOrderedCollection
 ]
 
@@ -110,7 +110,7 @@ RBInlineParameterRefactoring >> myConditions [
 	self getNewSelector.
 	expressions := self allExpressionsToInline.
 	^(RBCondition definesSelector: oldSelector in: class) 
-		& ((RBCondition withBlock: [expressions isEmpty not]) 
+		& ((RBCondition withBlock: [expressions isNotEmpty ]) 
 				errorMacro: 'No callers. Use Remove Method instead.') 
 			& ((RBCondition withBlock: [expressions size = 1]) 
 					errorMacro: 'All values passed as this argument must be identical.') 

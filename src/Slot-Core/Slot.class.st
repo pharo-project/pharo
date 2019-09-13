@@ -103,7 +103,7 @@ Slot class >> slotSetting: aBuilder [
 Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
 	^self environment allBehaviors 
-		flatCollect:  [ :class | class slots select: [ :slot | slot class == self ] ]
+		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
 ]
 
 { #category : #comparing }
@@ -130,6 +130,13 @@ Slot >> addSlotInitToInitialize: aClass [
 	Author 
 		useAuthor: 'Generated' 
 		during: [ aClass compile: source classified: 'initialization' ]
+]
+
+{ #category : #'class building' }
+Slot >> asClassVariable [
+	self
+		error:
+			'Slots can not be used to define Class Variables, you need to create a LiteralVariable subclass instead'
 ]
 
 { #category : #converting }
@@ -240,7 +247,7 @@ Slot >> initialize: instance [
 { #category : #'class building' }
 Slot >> installingIn: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
-	self wantsInitalization ifTrue: [ self ensureSlotIniatializationFor: aClass ].
+	self wantsInitialization ifTrue: [ self ensureSlotIniatializationFor: aClass ].
 ]
 
 { #category : #testing }
@@ -441,7 +448,7 @@ Slot >> usingMethods [
 ]
 
 { #category : #'meta-object-protocol' }
-Slot >> wantsInitalization [
+Slot >> wantsInitialization [
 	"if a slot wants to enable instance initalization, return true here"
 	^false
 ]

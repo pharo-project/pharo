@@ -13,14 +13,14 @@ ExampleClassVariableTest >> testCreateClassWithClassVariable [
 	
 	| classVar |
 	
-	classVar := #ClassVar => ExampleClassVariable.
+	classVar := #ClassVar => ExampleClassVariableWithState.
 	
 	aClass := self make: [ :builder |
 		builder 
 			sharedVariables: {classVar}
 		].
 	
-	self assert: (aClass hasClassVarNamed: 'ClassVar').
+	self assert: (aClass hasClassVarNamed: 'ClassVar')
 
 
 
@@ -32,8 +32,8 @@ ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 	
 	| classVar1 classVar2 |
 	
-	classVar1 := #ClassVar1 => ExampleClassVariable.
-	classVar2 := #ClassVar2 => ExampleClassVariable.
+	classVar1 := #ClassVar1 => ExampleClassVariableWithState.
+	classVar2 := #ClassVar2 => ExampleClassVariableWithState.
 	
 	aClass := self make: [ :builder |
 		builder 
@@ -41,7 +41,7 @@ ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar1').
-	self assert: (aClass hasClassVarNamed: 'ClassVar2').
+	self assert: (aClass hasClassVarNamed: 'ClassVar2')
 
 
 
@@ -53,7 +53,7 @@ ExampleClassVariableTest >> testMigrateClassVar [
 	
 	| classVar |
 	
-	classVar := #ClassVar => ExampleClassVariable.
+	classVar := #ClassVar => ExampleClassVariableWithState.
 	
 	aClass := self make: [ :builder |
 		builder 
@@ -71,6 +71,6 @@ ExampleClassVariableTest >> testMigrateClassVar [
 		].
 	
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
-	self assert: (aClass classVariableNamed: #ClassVar) class equals: ExampleClassVariable.
-	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5.
+	self assert: (aClass classVariableNamed: #ClassVar) class equals: ExampleClassVariableWithState.
+	self assert: (aClass classVariableNamed: #ClassVar) read equals: 5
 ]

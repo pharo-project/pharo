@@ -34,18 +34,11 @@ Class {
 
 { #category : #specs }
 SpDemoFormPresenter class >> defaultSpec [
-
-	<spec: #default>
-
-	| fontWidth formWidth |
-	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
-	formWidth := fontWidth * 35.
-	
-	^ SpLayout composed
-		newRow: [ :row | 
-			row add: #form right: formWidth.
-			row add: #resultPane];
-		yourself.	
+	^ SpPanedLayout newHorizontal
+		position: (StandardFonts defaultFont widthOfString: 'M') * 35;
+		add: #form;
+		add: #resultPane;
+		yourself
 ]
 
 { #category : #accessing }

@@ -12,7 +12,7 @@ Class {
 		'testBlock',
 		'foundBlock'
 	],
-	#category : #'ReferenceFinder-Core'
+	#category : #'ReferenceFinder-Core-Base'
 }
 
 { #category : #accessing }
@@ -183,13 +183,10 @@ ReferenceFinder >> initialize [
 
 { #category : #private }
 ReferenceFinder >> printToDoNotice [
-	Transcript
-		cr;
-		show: 'Level ';
-		show: backlinks size printString;
-		show: ' with ';
-		show: objectsLeft size printString;
-		show: ' objects to search'
+	self
+		crTrace:
+			'Level ' , backlinks size printString , ' with '
+				, objectsLeft size printString , ' objects to search'
 ]
 
 { #category : #private }

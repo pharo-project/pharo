@@ -4,7 +4,7 @@ SUnit tests for BISimpleFormatter
 Class {
 	#name : #RBFormatterTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Formatter'
 }
 
 { #category : #private }
@@ -17,10 +17,9 @@ RBFormatterTest >> formatClass: aClass [
 RBFormatterTest >> formatClass: aClass selector: aSymbol [
 	| source tree1 tree2 |
 	source := aClass sourceCodeAt: aSymbol.
-	tree1 := RBParser parseMethod: source.
-	tree2 := RBParser
-		parseMethod:
-			(self formatterClass new format: tree1)
+	tree1 := self parserClass parseMethod: source.
+	tree2 := self parserClass
+		parseMethod: (self formatterClass new format: tree1)
 		onError: [ :err :pos | self assert: false ].
 	self assert: tree1 equals: tree2
 ]

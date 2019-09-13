@@ -111,17 +111,16 @@ SerialPort >> nextPutAll: aStringOrByteArray [
 ]
 
 { #category : #'open/close' }
-SerialPort >> openPort: portId [ 
+SerialPort >> openPort: portId [
+
 	"Open the given serial port, using the settings specified by my
 	instance variables."
 
-	| result |	
+	| result |
 
-	self close.
-	
-	"8-10 - wks - this has to tell us if it fails: step 1, save the primitive result"
+	self close.	"8-10 - wks - this has to tell us if it fails: step 1, save the primitive result"
 	result := portId isString
-		ifTrue: [self
+		ifTrue: [ self
 				primOpenPortByName: portId
 				baudRate: baudRate
 				stopBitsType: stopBitsType
@@ -130,8 +129,9 @@ SerialPort >> openPort: portId [
 				inFlowControlType: inputFlowControlType
 				outFlowControlType: outputFlowControlType
 				xOnByte: xOnByte
-				xOffByte: xOffByte]
-		ifFalse: [self
+				xOffByte: xOffByte
+			]
+		ifFalse: [ self
 				primOpenPort: portId
 				baudRate: baudRate
 				stopBitsType: stopBitsType
@@ -140,13 +140,11 @@ SerialPort >> openPort: portId [
 				inFlowControlType: inputFlowControlType
 				outFlowControlType: outputFlowControlType
 				xOnByte: xOnByte
-				xOffByte: xOffByte].
-
-	"wks - raise an error if there was a failure."
-	result isNil ifTrue:[ self error: 'Cannot open ', portId printString ].
+				xOffByte: xOffByte
+			].	"wks - raise an error if there was a failure."
+	result ifNil: [ self error: 'Cannot open ' , portId printString ].
 
 	port := portId
-
 ]
 
 { #category : #accessing }

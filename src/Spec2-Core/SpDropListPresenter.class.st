@@ -119,46 +119,15 @@ SpDropListPresenter >> iconBlock: aBlock [
 	iconBlock := aBlock
 ]
 
-{ #category : #api }
-SpDropListPresenter >> iconHolder [
-	
-	self 
-		deprecated: 'Use iconBlock instead' 
-		transformWith: '`@receiver iconHolder' -> '`@receiver iconBlock'.
-
-	^ self iconBlock
-]
-
-{ #category : #api }
-SpDropListPresenter >> iconHolder: aBlock [	
-	self 
-		deprecated: 'Use iconBlock: instead' 
-		transformWith: '`@receiver iconHolder: `@statements1' -> '`@receiver iconBlock: `@statements1'.
-	
-	self iconBlock: aBlock
-]
-
 { #category : #initialization }
 SpDropListPresenter >> initialize [
-
 	super initialize.
-	
+
 	model := SpCollectionListModel on: #().
 	selection := SpSingleSelectionMode on: self.
 	displayBlock := [ :itemModel :item | item label ].
 	iconBlock := [ :itemModel :item | item icon ].
-	
-	startsWithSelection := true.
-		
-"	listHolder whenChangedDo: [ 
-		self changed: #getList.
-		self changed: #getIconFor:.
-		self internalResetSelection.].
-				
-	selectionHolder whenChangedDo: [ self changed: #getIndex ].
-	iconHolder := [ Name already defined -> :model :item | item icon ] asValueHolder.
-	
-	"
+	startsWithSelection := true
 ]
 
 { #category : #api }
@@ -211,7 +180,7 @@ SpDropListPresenter >> selectedIndex [
 	^ self getIndex
 ]
 
-{ #category : #API }
+{ #category : #api }
 SpDropListPresenter >> selectedIndex: anInteger [ 
 	
 	self selection selectIndex: anInteger.
@@ -242,28 +211,6 @@ SpDropListPresenter >> selectedItem: anItem [
 { #category : #api }
 SpDropListPresenter >> selection [
 	^ selection
-]
-
-{ #category : #api }
-SpDropListPresenter >> setSelectedIndex: anIndex [
-	self
-		deprecated: 'Use #selectedIndex: instead'
-		transformWith:
-			'`@receiver setSelectedIndex: `@argument'
-				-> '`@receiver selectedIndex:`@argument'.
-	^ self selectedIndex: anIndex	
-
-]
-
-{ #category : #api }
-SpDropListPresenter >> setSelectedItem: anItem [
-	self
-		deprecated: 'Use #selectedItem: instead'
-		transformWith:
-			'`@receiver setSelectedItem: `@argument'
-				-> '`@receiver selectedItem:`@argument'.
-	^ self selectedItem: anItem	
-
 ]
 
 { #category : #api }
@@ -304,15 +251,6 @@ SpDropListPresenter >> whenSelectionChangedDo: aBlock [
 	If you are interested in the index, use whenSelectionIndexChanged:"
 
 	selection whenChangedDo: aBlock.
-]
-
-{ #category : #'api-events' }
-SpDropListPresenter >> whenSelectionIndexChangedDo: aBlock [
-	"Set a block to perform when the selected index is changed"
-
-	self deprecated: 'Use whenSelectionChanged:'.
-
-	selection whenSelectionChanged: aBlock
 ]
 
 { #category : #'api-events' }

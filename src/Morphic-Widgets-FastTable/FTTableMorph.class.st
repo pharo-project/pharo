@@ -127,6 +127,17 @@ FTTableMorph >> allowsDeselection: aBoolean [
 	allowsDeselection := aBoolean
 ]
 
+{ #category : #private }
+FTTableMorph >> announceScrollChangedFrom: oldIndex to: newIndex [
+	"If the index did not change, do nothing"
+	oldIndex = newIndex ifTrue: [ ^ self ].
+	self
+		doAnnounce:
+			((FTScrollingChanged from: oldIndex to: newIndex)
+				fastTable: self;
+				yourself)
+]
+
 { #category : #updating }
 FTTableMorph >> autoScrollHeightLimit [
 
@@ -146,8 +157,8 @@ FTTableMorph >> basicHighlightRowIndexes: anArray [
 
 { #category : #private }
 FTTableMorph >> basicMoveShowIndexTo: aNumber [
-	showIndex := aNumber.
 
+	showIndex := aNumber
 ]
 
 { #category : #private }
@@ -349,6 +360,12 @@ FTTableMorph >> extent: aPoint [
 	self resizeAllSubviews
 ]
 
+{ #category : #accessing }
+FTTableMorph >> firstVisibleRowIndex [
+	
+	^ self container firstVisibleRowIndex
+]
+
 { #category : #'event handling' }
 FTTableMorph >> handleMouseMove: anEvent [
 	"Reimplemented because we really want #mouseMove when a morph is dragged around"
@@ -399,17 +416,6 @@ FTTableMorph >> hasSelection [
 { #category : #'accessing colors' }
 FTTableMorph >> headerColor [
 	^ headerColor ifNil: [ self class defaultHeaderColor ]
-]
-
-{ #category : #'accessing colors' }
-FTTableMorph >> headerColor: aColor [
-	self
-		deprecated:
-			'This method will be removed in the next Pharo version. The header color is not the responsibility of the FastTable. If you want to change the color of the table''s header you should do it in the datasource. In the datasource there is a method to return a header''s cell, you should change the color there.'
-		on: '29-04-2019'
-		in: #Pharo8.
-	"When this method will be removed, remove also #headerColor and related methods."
-	headerColor := aColor
 ]
 
 { #category : #accessing }
@@ -705,6 +711,12 @@ FTTableMorph >> keyboardFocusChange: aBoolean [
 	self focusChanged
 ]
 
+{ #category : #accessing }
+FTTableMorph >> lastVisibleRowIndex [
+
+	^ self container lastVisibleRowIndex
+]
+
 { #category : #layout }
 FTTableMorph >> minHeight [ 
 	"Ceiling is required because there is strange behavior when this method return float.
@@ -806,11 +818,14 @@ FTTableMorph >> moveShowIndexTo: arg [
 	 showing pointer should do it directly. 
 	 Use me just in case you need to force a refresh after settign the index"
 
-	| index |
+	| index oldIndex |
 	index := self selectionModeStrategy rowIndexFrom: arg.
+	oldIndex := showIndex.
 	self basicMoveShowIndexTo: index.
 	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: index).
-	self refresh
+	self refresh.
+	
+	self announceScrollChangedFrom: oldIndex to: index.
 ]
 
 { #category : #accessing }
@@ -834,6 +849,7 @@ FTTableMorph >> recalculateVerticalScrollBar [
 	 
 	visibleRows := self container calculateExactVisibleRows.	
 	numberOfRows := self dataSource numberOfRows.
+	numberOfRows = 0 ifTrue: [ ^self ].
 	interval := (visibleRows / numberOfRows) asFloat.
 	delta := 1/numberOfRows.
 	pageDelta := ((visibleRows-1) floor)*delta.
@@ -960,6 +976,15 @@ FTTableMorph >> rowIndexToVerticalScrollBarValue: aNumber [
 { #category : #private }
 FTTableMorph >> scrollBarThickness [
 	^ self theme scrollbarThickness
+]
+
+{ #category : #private }
+FTTableMorph >> scrollToIndex: anIndex [
+	(self container isRowIndexFullyVisible: anIndex) ifTrue: [ ^ self ].
+
+	anIndex <= self showIndex
+		ifTrue: [ self moveShowIndexTo: anIndex ]
+		ifFalse: [ self moveShowIndexTo: (self selectionModeStrategy indexForRow: anIndex - self container calculateMinVisibleRows + 1) ]
 ]
 
 { #category : #'accessing colors' }

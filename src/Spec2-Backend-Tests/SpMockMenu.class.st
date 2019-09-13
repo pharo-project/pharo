@@ -1,18 +1,21 @@
 Class {
 	#name : #SpMockMenu,
 	#superclass : #Object,
+	#traits : 'TSpObservable',
+	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
-		'realMenu',
-		'shownHolder'
+		'#realMenu',
+		'#shown => SpObservableSlot'
 	],
 	#category : #'Spec2-Backend-Tests'
 }
 
 { #category : #initialization }
 SpMockMenu >> initialize [
-
+	
+	self class initializeSlots: self.
 	super initialize.
-	shownHolder := false asValueHolder
+	shown := false
 ]
 
 { #category : #accessing }
@@ -27,18 +30,15 @@ SpMockMenu >> realMenu: anObject [
 
 { #category : #accessing }
 SpMockMenu >> shown [
-
-	^ shownHolder value
+	^ shown
 ]
 
 { #category : #accessing }
 SpMockMenu >> shown: anObject [
-
-	shownHolder value: anObject
+	shown := anObject
 ]
 
 { #category : #accessing }
 SpMockMenu >> whenShownDo: aBlock [
-
-	shownHolder whenChangedDo: aBlock
+	self property: #shown whenChangedDo: aBlock
 ]

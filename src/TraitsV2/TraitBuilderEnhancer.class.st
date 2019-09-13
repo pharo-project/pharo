@@ -151,7 +151,8 @@ TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 	
 	aBuilder traitComposition: aClass traitComposition.
 	aBuilder classTraitComposition: aClass class traitComposition.
-
+	
+	aBuilder metaclassClass: aClass class class.
 ]
 
 { #category : #migrating }

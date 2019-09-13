@@ -55,10 +55,49 @@
 	"(Smalltalk at: #GTExampleOrganizer) stop.
     (Smalltalk at: #GTExampleOrganizer) compile: 'methodRemoved: anAnnouncement'."
 	(Smalltalk at: #GLMBrick) removeFromSystem.
-	tests := #('AST-Interpreter-Test' 'AST-Tests-Core' 'Announcements-Tests-Core' 'AsmJit-Tests' 'ClassOrganizer-Tests' 'ConfigurationCommandLineHandler-Tests' 'FileSystem-Tests-Core' 'FileSystem-Tests-Disk' 'FileSystem-Tests-Memory' 'Gofer-Tests' 'Graphics-Tests' 'HelpSystem-Tests' 'Keymapping-Tests' 'Manifest-Resources-Tests' 'Manifest-Tests' 'Metacello-TestsCore' 'Metacello-TestsMC' 'Metacello-TestsMCCore' 'Metacello-TestsMCResources' 'Metacello-TestsPharo20MC' 'Metacello-TestsPlatform' 'Metacello-TestsTutorial' 'Multilingual-Tests' 'NativeBoost-Tests' 'OpalCompiler-Tests' 'ProfStef-Tests' 'RPackage-Tests' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Core' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'Regex-Tests-Core' 'Ring-Deprecated-Tests-Containers' 'Ring-Deprecated-Tests-Kernel' 'Ring-Deprecated-Tests-Monticello' 'System-SessionManager-Tests' 'SUnit-Tests' 'SUnit-UITesting' 'Spec-Tests' 'Text-Tests' 'UpdateStreamer-Tests' 'Zinc-Character-Encoding-Tests' 'Zinc-Resource-Meta-Tests' 'Zinc-Tests' 'Zodiac-Tests' 'FuelTests' 'KernelTests' 'MorphicTests' 'NetworkTests' 'ShoutTests' 'SlotTests' 'Tests' 'BalloonTests' 'CollectionsTests' 'CompressionTests' #'Debugger-Tests' 'EmbeddedFreeType-Tests' 'FontInfrastructure-Tests' 'FreeTypeTests' 'Graphics-Fonts-Tests' 'Monticello-Tests' 'NECompletion-Tests' 'Nautilus-Tests' 'Reflectivity-Tests' 'ReleaseTests' #'ScriptLoader-Tests' 'Slot-Tests' 'SmartSuggestions-Tests' 'System-CachingTests' 'System-History-Tests' 'System-Localization-Tests' 'Text-Edition-Tests' 'Tool-FileList-Tests' 'ToolsTest' 'UserManager-Tests' 'Versionner-Tests-Core-Commands' 'Versionner-Tests-Core-DependenciesModel' 'Versionner-Tests-Resources').
+	tests := #(
+		'Announcements-Tests-Core' 'AsmJit-Tests' 'AST-Interpreter-Test' 'AST-Tests-Core' 
+		'BalloonTests' 
+		'ClassOrganizer-Tests' 'CollectionsTests' 'CompressionTests' 
+			'ConfigurationCommandLineHandler-Tests' 
+		'Debugger-Tests' 
+		'EmbeddedFreeType-Tests' 
+		'FileSystem-Tests-Core' 'FileSystem-Tests-Disk' 'FileSystem-Tests-Memory' 
+			'FontInfrastructure-Tests' 'FreeTypeTests' 'FuelTests' 
+		'Gofer-Tests' 'Graphics-Fonts-Tests' 'Graphics-Tests' 
+		'HelpSystem-Tests' 
+		'KernelTests' 'Keymapping-Tests' 
+		'Manifest-Resources-Tests' 'Manifest-Tests' 
+			'Metacello-TestsCore' 'Metacello-TestsMC' 'Metacello-TestsMCCore' 
+				'Metacello-TestsMCResources' 'Metacello-TestsPharo20MC' 
+				'Metacello-TestsPlatform' 'Metacello-TestsTutorial' 
+			'Monticello-Tests' 'MorphicTests' 'Multilingual-Tests' 
+		'NativeBoost-Tests' 'Nautilus-Tests' 'NECompletion-Tests' 'NetworkTests' 
+		'OpalCompiler-Tests' 
+		'ProfStef-Tests' 
+		'Refactoring-Tests-Changes' 'Refactoring-Tests-Core' 'Refactoring-Tests-Critics' 
+			'Refactoring-Tests-Environment' 
+			'Reflectivity-Tests' 'Regex-Tests-Core' 'ReleaseTests' 
+			'Ring-Deprecated-Tests-Containers' 'Ring-Deprecated-Tests-Kernel' 
+				'Ring-Deprecated-Tests-Monticello' 
+			'RPackage-Tests' 
+		'ScriptLoader-Tests' 'ShoutTests' 'Slot-Tests' 'SlotTests' 'SmartSuggestions-Tests' 
+			'Spec-Tests' 
+			'SUnit-Tests' 'SUnit-UITesting' 
+			'System-CachingTests' 'System-History-Tests' 'System-Installers-Tests' 
+				'System-Localization-Tests' 'System-Object Events-Tests' 
+				'System-OSEnvironments-Tests' 'System-SessionManager-Tests' 
+		'Text-Edition-Tests' 'Tests' 'Text-Tests' 'Tool-FileList-Tests' 'ToolsTest' 
+		'UpdateStreamer-Tests' 'UserManager-Tests' 
+		'Versionner-Tests-Core-Commands' 'Versionner-Tests-Core-DependenciesModel' 
+			'Versionner-Tests-Resources'
+		'Zinc-Character-Encoding-Tests' 'Zinc-Resource-Meta-Tests' 'Zinc-Tests' 'Zodiac-Tests' 
+	).
 	unloadFirst := #('QualityAssistantRecording' 'QualityAssistant' 'GT-Debugger').
-	bootstrappedPackages := BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap compilerPackageNames , BaselineOfPharoBootstrap fileSystemPackageNames
-		, BaselineOfMonticello corePackageNames.
+	bootstrappedPackages := BaselineOfPharoBootstrap kernelPackageNames , 
+		BaselineOfPharoBootstrap compilerPackageNames , 
+		BaselineOfPharoBootstrap fileSystemPackageNames , 
+		BaselineOfMonticello corePackageNames.
 	keep := bootstrappedPackages.
 
 	" clean "

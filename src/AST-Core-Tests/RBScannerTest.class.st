@@ -4,7 +4,7 @@ SUnit tests for RBScanner
 Class {
 	#name : #RBScannerTest,
 	#superclass : #TestCase,
-	#category : #'AST-Core-Tests'
+	#category : #'AST-Core-Tests-Parser'
 }
 
 { #category : #initialize }
@@ -33,8 +33,7 @@ RBScannerTest >> testNextWithAWrongSymbolGetError [
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
-	| source scanner token |
-	
+	| source scanner token |	
 	source := 'identifierToken'.
 	scanner := self buildScannerForText: source.
 	token := scanner next.
@@ -45,16 +44,14 @@ RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
-	| source |
-	
+	| source |	
 	source := 'self "'.
 	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
 ]
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnOpeningCommentGetError [
-	| source |
-	
+	| source |	
 	source := '"only the opening'.
 	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
 ]
@@ -69,8 +66,7 @@ RBScannerTest >> testNextWithAnOpeningStringsGetError [
 
 { #category : #tests }
 RBScannerTest >> testNextWithAnUnknownCharacterGetError [
-	| source scanner scannedToken |
-	
+	| source scanner scannedToken |	
 	source := '¿'.
 	scanner := self buildScannerForText: source.
 	scannedToken := scanner next.
@@ -79,21 +75,35 @@ RBScannerTest >> testNextWithAnUnknownCharacterGetError [
 
 { #category : #tests }
 RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
-	| source scanner token |
+	| source token |
 	source := '"only the"" opening"'.
 	self
-		shouldnt: [ token := (scanner := self buildScannerForText: source) next ]
+		shouldnt: [ token := (self buildScannerForText: source) next ]
 		raise: SyntaxErrorNotification.
 	self assert: token comments first equals: (1 to: source size)
 ]
 
 { #category : #tests }
 RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
-	| source scanner token |
+	| source |
 	source := '"only the"" opening'.
 	self
-		should: [ token := (scanner := self buildScannerForText: source) next ]
+		should: [ (self buildScannerForText: source) next ]
 		raise: SyntaxErrorNotification
+]
+
+{ #category : #tests }
+RBScannerTest >> testScanTokens [
+	| inp exp |
+	inp := 'Object subclass: #NameOfSubclass'.
+	exp := {'Object'.
+	'subclass:'.
+	#NameOfSubclass asString}.
+	self assert: (RBScanner scanTokens: inp) equals: exp.
+	inp := 'classVariableNames: '''' "ha ha"
+package: ''UndefinedClasses-Experiment'.
+	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
+	self assert: (RBScanner scanTokens: inp) equals: exp
 ]
 
 { #category : #utilities }

@@ -13,7 +13,7 @@ GLMHorizontalLinearLayout class >> cleanUp [
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GLMHorizontalLinearLayout class >> reset [
 	"
 	self reset

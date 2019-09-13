@@ -19,7 +19,8 @@ Class {
 		'menuBuilder',
 		'activeHand',
 		'currentCursor',
-		'worldRenderer'
+		'worldRenderer',
+		'realWindowExtent'
 	],
 	#classVars : [
 		'CanSurrenderToOS',
@@ -187,21 +188,27 @@ WorldState class >> pharoItemsOn: aBuilder [
 				selector: #saveAndQuit;
 				help: 'Save the current image on disk, and quit Pharo.';
 				order: 4;
-				iconName: #smallQuitIcon. 
+				iconName: #smallQuitIcon;
+				withSeparatorAfter. 
 			(aBuilder item: #Quit)
 				target: self;
 				selector: #quitSession;
 				help: 'Quit Pharo without saving the image on disk.';
 				order: 5;
-				iconName: #smallQuitIcon;
-				withSeparatorAfter ]
+				iconName: #smallQuitIcon ]
 ]
 
 { #category : #'world menu items' }
 WorldState class >> quitSession [
-	| save |
-	save := UIManager default confirm: 'Save changes before quitting?' translated orCancel: [ ^ self ].
-	save 
+	| response |
+	response := UIManager default 
+						confirm: 'Save changes before quitting?' 
+						trueChoice: 'Save' 
+						falseChoice: 'Discard' 
+						cancelChoice: 'Cancel'
+						default: nil. 
+	response ifNil: [ ^self ].
+	response 
 		ifTrue: [Smalltalk snapshot: true andQuit: true] 
 		ifFalse: [Smalltalk snapshot: false andQuit: true]
  
@@ -628,6 +635,12 @@ WorldState >> handsReverseDo: aBlock [
 	^ hands reverseDo: aBlock
 ]
 
+{ #category : #accessing }
+WorldState >> icon: aForm [ 
+
+	worldRenderer icon: aForm
+]
+
 { #category : #initialization }
 WorldState >> initialize [
 
@@ -699,6 +712,18 @@ WorldState >> isStepping: aMorph selector: aSelector [
 WorldState >> listOfSteppingMorphs [
 	^stepList collect:[:entry| entry receiver].
 
+]
+
+{ #category : #hands }
+WorldState >> realWindowExtent [
+
+	^ realWindowExtent
+]
+
+{ #category : #hands }
+WorldState >> realWindowExtent: aValue [
+
+	realWindowExtent := aValue
 ]
 
 { #category : #canvas }
@@ -864,7 +889,6 @@ WorldState >> worldRenderer [
 { #category : #accessing }
 WorldState >> worldRenderer: anObject [
 
-	worldRenderer deactivate.
 	worldRenderer := anObject.
 	worldRenderer activate
 ]

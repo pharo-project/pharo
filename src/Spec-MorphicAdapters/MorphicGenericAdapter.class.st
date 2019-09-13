@@ -18,24 +18,6 @@ MorphicGenericAdapter class >> morph: morph [
 ]
 
 { #category : #accessing }
-MorphicGenericAdapter >> adapter [
-
-	^ self
-]
-
-{ #category : #api }
-MorphicGenericAdapter >> buildWithSpec [
-
-	^ self widget
-]
-
-{ #category : #api }
-MorphicGenericAdapter >> buildWithSpec: aString [ 
-	
-	^ self buildWithSpec
-]
-
-{ #category : #accessing }
 MorphicGenericAdapter >> morph [
 
 	^ self widget

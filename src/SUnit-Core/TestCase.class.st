@@ -489,7 +489,7 @@ TestCase class >> runAllAndLogResult [
 
 	"runs all tests in the image"
 
-	TestCase suite run logCr
+	TestCase suite run traceCr
 ]
 
 { #category : #'instance creation' }
@@ -584,7 +584,7 @@ TestCase >> announcer [
 { #category : #private }
 TestCase >> cleanUpInstanceVariables [
 	self class allInstVarNames do: [ :name |
-		name = 'testSelector' ifFalse: [
+		(self instanceVariablesToKeep includes: name) ifFalse: [
 			self instVarNamed: name put: nil ] ]
 ]
 
@@ -637,6 +637,11 @@ TestCase >> failureLog [
 	^Transcript
 
 			
+]
+
+{ #category : #private }
+TestCase >> instanceVariablesToKeep [
+	^ #('testSelector')
 ]
 
 { #category : #testing }

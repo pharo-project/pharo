@@ -21,8 +21,8 @@ Class {
 	#name : #SpMenuGroupPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'items',
-		'autoRefresh'
+		'#items',
+		'#autoRefresh => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -53,14 +53,12 @@ SpMenuGroupPresenter >> addMenuItem: aMenuItem [
 
 { #category : #api }
 SpMenuGroupPresenter >> autoRefresh [
-
-	^ autoRefresh value
+	^ autoRefresh
 ]
 
 { #category : #api }
 SpMenuGroupPresenter >> autoRefresh: aBoolean [
-
-	autoRefresh value: aBoolean
+	autoRefresh := aBoolean
 ]
 
 { #category : #private }
@@ -80,12 +78,10 @@ SpMenuGroupPresenter >> fromSpec: aSpec [
 
 { #category : #initialization }
 SpMenuGroupPresenter >> initialize [
-
 	super initialize.
 
 	items := OrderedCollection new asValueHolder.
-	autoRefresh := nil asValueHolder.
-	autoRefresh whenChangedDo: [ :aBoolean | self menuItems do: [ :each | each autoRefresh: aBoolean ] ]
+	self property: #autoRefresh whenChangedDo: [ :aBoolean | self menuItems do: [ :each | each autoRefresh: aBoolean ] ]
 ]
 
 { #category : #testing }

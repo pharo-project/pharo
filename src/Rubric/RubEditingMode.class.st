@@ -94,7 +94,7 @@ RubEditingMode >> interactive [
 ]
 
 { #category : #testing }
-RubEditingMode >> isCodeCompletionAllowed [
+RubEditingMode >> isCompletionEnabled [
 	^ false
 ]
 

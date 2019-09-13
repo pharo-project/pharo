@@ -177,6 +177,16 @@ SmallDictionary >> associationAt: key ifPresent: aBlock [
 ]
 
 { #category : #accessing }
+SmallDictionary >> associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+	"Lookup the given key in the receiver. If it is present, answer the
+	value of evaluating the first block optionally with the association for the key.
+	Otherwise answer the value of the second block."
+
+	self associationAt: key ifPresent: [:assoc | ^ aPresentBlock cull: assoc].
+	^ anAbsentBlock value
+]
+
+{ #category : #accessing }
 SmallDictionary >> associations [
 	"Answer a collection containing associations for the receiver.
 	Suggested by l. Uzonyi

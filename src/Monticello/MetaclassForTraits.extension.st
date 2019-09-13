@@ -4,7 +4,7 @@ Extension { #name : #MetaclassForTraits }
 MetaclassForTraits >> asMCDefinition [
 
 	^MCClassTraitDefinition
-		baseTraitName: self baseTrait name
+		baseTraitName: self instanceSide name
 		classTraitComposition: self traitCompositionString
 		category: self category
 			

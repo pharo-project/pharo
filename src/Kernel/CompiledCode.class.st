@@ -90,10 +90,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^self 
-		propertyAt: #argumentNames 
-		ifAbsent: [ self ast argumentNames ]
-
+	^ self ast argumentNames
 ]
 
 { #category : #converting }
@@ -436,7 +433,7 @@ CompiledCode >> literals [
 	"Answer an Array of the literals referenced by the receiver.	
 	 Exclude superclass + selector/properties"
 	| literals numberLiterals |
-	literals := Array new: (numberLiterals := self numLiterals - 2).
+	literals := Array new: (numberLiterals := self numLiterals - self numberOfReservedLiterals).
 	1 to: numberLiterals do: [:index |
 		literals at: index put: (self objectAt: index + 1)].
 	^literals
@@ -504,6 +501,11 @@ CompiledCode >> longPrintOn: aStream [
 
 ]
 
+{ #category : #accessing }
+CompiledCode >> methodClass [
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
@@ -531,6 +533,12 @@ CompiledCode >> numTemps [
 	"Answer the number of temporary variables used by the receiver."
 	
 	^ (self header bitShift: -18) bitAnd: 16r3F
+]
+
+{ #category : #accessing }
+CompiledCode >> numberOfReservedLiterals [
+
+	self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -562,7 +570,7 @@ CompiledCode >> primitiveErrorVariableName [
 	self isPrimitive ifTrue:
 		[self pragmas do:
 			[:pragma| | kwds ecIndex |
-			((kwds := pragma keyword keywords) first = 'primitive:'
+			((kwds := pragma selector keywords) first = 'primitive:'
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil

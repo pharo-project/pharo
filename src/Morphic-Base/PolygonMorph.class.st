@@ -756,36 +756,40 @@ PolygonMorph >> couldHaveRoundedCorners [
 
 { #category : #private }
 PolygonMorph >> curveBounds [
+
 	"Compute the bounds from actual curve traversal, with 
 	leeway for borderWidth. 
 	Also note the next-to-first and next-to-last points for arrow 
 	directions."
+
 	"wiz - to avoid roundoff errors we return unrounded curvebounds."
+
 	"we expect our receiver to take responsibility for approriate rounding adjustment."
+
 	"hint: this is most likely 'self curveBounds expanded' "
-	| pointAfterFirst pointBeforeLast  oX oY cX cY |
+
+	| pointAfterFirst pointBeforeLast oX oY cX cY |
+
 	self isCurvy
-		ifFalse: [^ (Rectangle encompassing: vertices)
-				expandBy: borderWidth * 0.5 ].
-	curveState := nil.
-	"Force recomputation"
-	"curveBounds := vertices first corner: vertices last."
+		ifFalse: [ ^ ( Rectangle encompassing: vertices ) expandBy: borderWidth * 0.5 ].
+	curveState := nil.	"Force recomputation"	"curveBounds := vertices first corner: vertices last."
 	pointAfterFirst := nil.
 	self
-		lineSegmentsDo: [:p1 :p2 | 
-			pointAfterFirst isNil
-				ifTrue: [pointAfterFirst := p2 floor .
+		lineSegmentsDo: [ :p1 :p2 | 
+			pointAfterFirst
+				ifNil: [ pointAfterFirst := p2 floor.
 					oX := cX := p1 x.
-					oY := cY := p1 y. ].
-			"curveBounds := curveBounds encompass: p2 ."
-			oX:= oX min: p2 x.
+					oY := cY := p1 y
+					].	"curveBounds := curveBounds encompass: p2 ."
+			oX := oX min: p2 x.
 			cX := cX max: p2 x.
 			oY := oY min: p2 y.
 			cY := cY max: p2 y.
-			pointBeforeLast := p1 floor ].
+			pointBeforeLast := p1 floor
+			].
 	curveState at: 2 put: pointAfterFirst.
 	curveState at: 3 put: pointBeforeLast.
-	^ ( oX @ oY corner: cX @ cY )  expandBy: borderWidth * 0.5 
+	^ ( oX @ oY corner: cX @ cY ) expandBy: borderWidth * 0.5
 ]
 
 { #category : #menu }
@@ -1958,13 +1962,16 @@ PolygonMorph >> rotationCenter [
 
 { #category : #geometry }
 PolygonMorph >> rotationCenter: aPointOrNil [
-	"Set the new rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
-	| box |
-	aPointOrNil isNil
-		ifTrue: [self removeProperty: #referencePosition]
-		ifFalse: [box := self bounds.
-				self setProperty: #referencePosition toValue: box origin + (aPointOrNil * box extent)]
 
+	"Set the new rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
+
+	| box |
+
+	aPointOrNil
+		ifNil: [ self removeProperty: #referencePosition ]
+		ifNotNil: [ box := self bounds.
+			self setProperty: #referencePosition toValue: box origin + ( aPointOrNil * box extent )
+			]
 ]
 
 { #category : #'rotate scale and flex' }

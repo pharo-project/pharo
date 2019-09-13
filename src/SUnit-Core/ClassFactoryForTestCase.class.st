@@ -271,7 +271,7 @@ ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag
 ]
 
 { #category : #creating }
-ClassFactoryForTestCase >> newTraitUsing: aTraitComposition. [
+ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 	^self 
 		newTraitNamed: self newTraitName 
 		uses: aTraitComposition 

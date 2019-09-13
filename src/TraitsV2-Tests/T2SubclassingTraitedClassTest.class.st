@@ -1,7 +1,7 @@
 Class {
 	#name : #T2SubclassingTraitedClassTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests'
 }
 
 { #category : #tests }

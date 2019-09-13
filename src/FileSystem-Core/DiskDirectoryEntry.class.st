@@ -175,8 +175,6 @@ DiskDirectoryEntry >> getAllAttributes [
 	allAttributes := self primitives fileAttributes: self pathString mask: self allAttributeMask.
 	statAttributes := allAttributes at: 1.
 	accessAttributes := allAttributes at: 2.
-	(statAttributes at: 1) ifNotNil: 
-		[ statAttributes at: 1 put: (self primitives decodePathString: (statAttributes at: 1)) ].
 
 ]
 
@@ -184,15 +182,13 @@ DiskDirectoryEntry >> getAllAttributes [
 DiskDirectoryEntry >> getStatAttributes [
 	"Store the receivers stat() attributes for future reference"
 
-	statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask.
-	(statAttributes at: 1) ifNotNil: 
-		[ statAttributes at: 1 put: (self primitives decodePathString: (statAttributes at: 1)) ].
-	^statAttributes
+	^statAttributes := self primitives fileAttributes: self pathString mask: self statAttributeMask.
+
 ]
 
 { #category : #accessing }
 DiskDirectoryEntry >> gid [
-	"Answer the UID of the owner of the receiver"
+	"Answer the GID of the owner of the receiver"
 	
 	^self statAttributes at: 7
 ]
@@ -284,6 +280,13 @@ DiskDirectoryEntry >> isFile [
 	^[ (self primitives modeIsDirectory: self mode) not ]
 		on: FileDoesNotExistException
 		do: [ false ].
+]
+
+{ #category : #testing }
+DiskDirectoryEntry >> isHidden [
+	"Answer a boolean indicating whether the receiver is hidden"
+
+	^reference fileSystem isHidden: reference attributes: self statAttributes
 ]
 
 { #category : #testing }

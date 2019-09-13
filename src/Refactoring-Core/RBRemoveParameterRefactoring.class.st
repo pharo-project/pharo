@@ -59,11 +59,13 @@ RBRemoveParameterRefactoring >> getNewSelector [
 ]
 
 { #category : #transforming }
-RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [ 
+RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
+
 	| tree |
+
 	tree := each parseTreeFor: oldSelector.
-	tree isNil ifTrue: [self refactoringFailure: 'Cannot parse sources.'].
-	^tree references: (tree argumentNames at: parameterIndex)
+	tree ifNil: [ self refactoringFailure: 'Cannot parse sources.' ].
+	^ tree references: ( tree argumentNames at: parameterIndex )
 ]
 
 { #category : #preconditions }

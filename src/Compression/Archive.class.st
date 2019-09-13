@@ -92,9 +92,9 @@ Archive >> addTree: aFileNameOrDirectory removingFirstCharacters: n match: aBloc
 ]
 
 { #category : #'archive operations' }
-Archive >> canWriteToFileNamed: aFileName [
+Archive >> canWriteToFile: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
-	^(members anySatisfy: [ :ea | ea usesFileNamed: aFileName ]) not.
+	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not.
 
 ]
 
@@ -215,12 +215,12 @@ Archive >> writeTo: aStream [
 ]
 
 { #category : #'archive operations' }
-Archive >> writeToFileNamed: aFileName [
+Archive >> writeToFile: aFileReferenceOrFileName [
 
 	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^self error: (aFileName, ' is needed by one or more members in this archive') ].
+	(self canWriteToFile: aFileReferenceOrFileName)
+		ifFalse: [ ^self error: (aFileReferenceOrFileName asString, ' is needed by one or more members in this archive') ].
 	
-	(File named: aFileName)
-		writeStreamDo: [ :stream | self writeTo: stream ]	
+	aFileReferenceOrFileName asFileReference
+		binaryWriteStreamDo: [ :stream | self writeTo: stream ]	
 ]

@@ -206,8 +206,7 @@ RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 			[:each | 
 			| binding |
 			binding := aClass bindingOf: each.
-			binding notNil 
-				ifTrue: [selectors addAll: (aClass whichSelectorsReferTo: binding)]].
+			binding ifNotNil: [selectors addAll: (aClass whichSelectorsReferTo: binding)]].
 	^selectors
 ]
 
@@ -289,17 +288,20 @@ RBVariableEnvironment >> environmentForInstanceVariable: aString in: aClass [
 ]
 
 { #category : #private }
-RBVariableEnvironment >> flushCachesFor: aClass [ 
-	selectorCache isNil ifTrue: [ ^ self] .
-	aClass instanceSide withAllSubclasses do: [ :each | 
-		selectorCache
-			removeKey: each name ifAbsent: [];
-			removeKey: each classSide name ifAbsent: [] ]
+RBVariableEnvironment >> flushCachesFor: aClass [
+
+	selectorCache ifNil: [ ^ self ].
+	aClass instanceSide withAllSubclasses
+		do: [ :each | 
+			selectorCache
+				removeKey: each name ifAbsent: [  ];
+				removeKey: each classSide name ifAbsent: [  ]
+			]
 ]
 
 { #category : #testing }
 RBVariableEnvironment >> includesCategory: aCategory [ 
-	^(self classNamesFor: aCategory) isEmpty not
+	^(self classNamesFor: aCategory) isNotEmpty
 ]
 
 { #category : #testing }
@@ -307,14 +309,13 @@ RBVariableEnvironment >> includesClass: aClass [
 	(super includesClass: aClass) ifFalse: [^false].
 	(instanceVariables includesKey: aClass name) ifTrue: [^true].
 	(classVariables includesKey: aClass name) ifTrue: [^true].
-	^((self selectorCacheFor: aClass) 
-		detect: [:each | self includesSelector: each in: aClass]
-		ifNone: [nil]) notNil
+	^(self selectorCacheFor: aClass) 
+		anySatisfy: [:each | self includesSelector: each in: aClass]
 ]
 
 { #category : #testing }
 RBVariableEnvironment >> includesProtocol: aProtocol in: aClass [ 
-	^(self selectorsFor: aProtocol in: aClass) isEmpty not
+	^(self selectorsFor: aProtocol in: aClass) isNotEmpty
 ]
 
 { #category : #testing }
@@ -434,7 +435,7 @@ RBVariableEnvironment >> removeClass: aClass classVariable: aSymbol [
 	| vars |
 	vars := classVariables at: aClass name ifAbsent: [Set new].
 	vars remove: aSymbol ifAbsent: [].
-	vars isEmpty ifTrue: [classVariables removeKey: aClass name ifAbsent: []].
+	vars ifEmpty: [classVariables removeKey: aClass name ifAbsent: []].
 	self flushCachesFor: aClass
 ]
 
@@ -443,8 +444,7 @@ RBVariableEnvironment >> removeClass: aClass instanceVariable: aString [
 	| vars |
 	vars := instanceVariables at: aClass name ifAbsent: [Set new].
 	vars remove: aString ifAbsent: [].
-	vars isEmpty 
-		ifTrue: [instanceVariables removeKey: aClass name ifAbsent: []].
+	vars ifEmpty: [instanceVariables removeKey: aClass name ifAbsent: []].
 	self flushCachesFor: aClass
 ]
 
@@ -453,8 +453,7 @@ RBVariableEnvironment >> removeClass: aClass instanceVariableReader: aString [
 	| vars |
 	vars := instanceVariableReaders at: aClass name ifAbsent: [Set new].
 	vars remove: aString ifAbsent: [].
-	vars isEmpty 
-		ifTrue: [instanceVariableReaders removeKey: aClass name ifAbsent: []].
+	vars ifEmpty: [instanceVariableReaders removeKey: aClass name ifAbsent: []].
 	self flushCachesFor: aClass
 ]
 
@@ -463,16 +462,14 @@ RBVariableEnvironment >> removeClass: aClass instanceVariableWriter: aString [
 	| vars |
 	vars := instanceVariableWriters at: aClass name ifAbsent: [Set new].
 	vars remove: aString ifAbsent: [].
-	vars isEmpty 
-		ifTrue: [instanceVariableWriters removeKey: aClass name ifAbsent: []].
+	vars ifEmpty: [instanceVariableWriters removeKey: aClass name ifAbsent: []].
 	self flushCachesFor: aClass
 ]
 
 { #category : #private }
 RBVariableEnvironment >> selectorCache [
-	^selectorCache isNil 
-		ifTrue: [selectorCache := Dictionary new]
-		ifFalse: [selectorCache]
+
+	^ selectorCache ifNil: [ selectorCache := Dictionary new ] ifNotNil: [ selectorCache ]
 ]
 
 { #category : #private }

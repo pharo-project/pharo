@@ -7,11 +7,38 @@ Class {
 	#category : #'SystemCommands-MethodCommands'
 }
 
+{ #category : #activation }
+SycPushUpMethodCommand class >> methodContextMenuActivation [
+	<classAnnotation>
+	
+	^CmdContextMenuActivation 
+		byItemOf: ClyMoreRefactorsMenuGroup 
+		order: 10 
+		for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : #activation }
+SycPushUpMethodCommand class >> methodShortcutActivation [
+	<classAnnotation>
+	
+	^CmdShortcutActivation by: $p meta, $u meta for: ClyMethod asCalypsoItemContext
+]
+
 { #category : #execution }
 SycPushUpMethodCommand >> asRefactorings [
+	|dialog refactoring|
+	refactoring :=  RBPullUpMethodRefactoring 
+		pullUp: methods  
+		from: methods first origin.
+	refactoring setOption: #superClass toUse: [ :ref |
+		dialog := RBPushUpPreview on: ref.
+		dialog cancelled ifTrue: [ CmdCommandAborted signal ]].
+	^ OrderedCollection with: refactoring 
+]
 
-	^methods collect: [:method | 
-		RBPullUpMethodRefactoring pullUp: {method selector} from: method origin]
+{ #category : #accessing }
+SycPushUpMethodCommand >> defaultMenuIconName [ 
+	^ #up
 ]
 
 { #category : #accessing }

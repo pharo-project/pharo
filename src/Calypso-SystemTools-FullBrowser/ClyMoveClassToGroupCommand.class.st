@@ -18,6 +18,16 @@ Class {
 }
 
 { #category : #activation }
+ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
+	<classAnnotation>
+	
+	^ CmdContextMenuActivation  
+		byItemOf: ClyMoreRefactorsMenuGroup  
+		order: 1000
+		for: ClyClass asCalypsoItemContext 
+]
+
+{ #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 	
@@ -45,13 +55,6 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 ]
 
 { #category : #activation }
-ClyMoveClassToGroupCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyClassContextOfFullBrowser 
-]
-
-{ #category : #activation }
 ClyMoveClassToGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 	
@@ -66,6 +69,11 @@ ClyMoveClassToGroupCommand >> classGroup [
 { #category : #accessing }
 ClyMoveClassToGroupCommand >> classGroup: anObject [
 	classGroup := anObject
+]
+
+{ #category : #accessing }
+ClyMoveClassToGroupCommand >> defaultMenuIconName [ 
+	^ #smallRedo
 ]
 
 { #category : #accessing }

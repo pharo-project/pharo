@@ -691,28 +691,32 @@ HaloMorph >> containsPoint: aPoint event: anEvent [
 ]
 
 { #category : #private }
-HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [ 
+HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
+
 	| bou handle |
+
 	bou := Rectangle center: aPoint extent: self handleSize asPoint.
 	self gradientHalo
-		ifTrue: [
-			handle := Morph newBounds: bou color: aColor.
+		ifTrue: [ handle := Morph newBounds: bou color: aColor.
 			handle borderWidth: 1.
 			handle useRoundedCorners.
-			self setColor: aColor toHandle: handle]
-		ifFalse: [handle := EllipseMorph newBounds: bou color: aColor].
+			self setColor: aColor toHandle: handle
+			]
+		ifFalse: [ handle := EllipseMorph newBounds: bou color: aColor ].
 	handle borderColor: aColor muchDarker.
 	handle wantsYellowButtonMenu: false.
-	iconName isNil
-		ifFalse: [| form | 
-			form := self iconNamed: iconName.
-			form isNil
-				ifFalse: [| image | 
+	iconName
+		ifNotNil: [ ( self iconNamed: iconName )
+				ifNotNil: [ :form | 
+					| image |
+
 					image := ImageMorph new.
 					image form: form.
 					image color: aColor contrastingBlackAndWhiteColor.
 					image lock.
-					handle addMorphCentered: image]].
+					handle addMorphCentered: image
+					]
+			].
 	^ handle
 ]
 
@@ -959,13 +963,10 @@ HaloMorph >> handlerForBlueButtonDown: anEvent [
 
 { #category : #initialization }
 HaloMorph >> initialize [
-	"initialize the state of the receiver"
 	super initialize.
 
 	growingOrRotating := false.
-	self borderStyle: (SimpleBorder
-		width: 2
-		color: self theme settings menuSelectionColor)
+	self borderStyle: (SimpleBorder width: 2 color: self theme menuSelectionColor)
 ]
 
 { #category : #accessing }
@@ -1079,26 +1080,26 @@ HaloMorph >> obtainHaloForEvent: evt andRemoveAllHandlesBut: aHandle [
 ]
 
 { #category : #events }
-HaloMorph >> popUpFor: aMorph event: evt [ 
+HaloMorph >> popUpFor: aMorph event: evt [
+
 	"This message is sent by morphs that explicitly request the halo on a button click. Note: anEvent is in aMorphs coordinate frame."
 
 	| hand anEvent |
+
 	self flag: #workAround.	"We should really have some event/hand here..."
-	anEvent := evt isNil 
-				ifTrue: 
-					[hand := aMorph world ifNotNil: [:w | w activeHand].
-					hand ifNil: [hand := aMorph world primaryHand]. 
-					hand lastEvent transformedBy: (aMorph transformedFrom: nil)]
-				ifFalse: 
-					[hand := evt hand.
-					evt].
+	anEvent := evt
+		ifNil: [ hand := aMorph world ifNotNil: [ :w | w activeHand ].
+			hand ifNil: [ hand := aMorph world primaryHand ].
+			hand lastEvent transformedBy: ( aMorph transformedFrom: nil )
+			]
+		ifNotNil: [ hand := evt hand.
+			evt
+			].
 	self target: aMorph.
 	hand halo: self.
 	hand world addMorphFront: self.
-	positionOffset := anEvent position 
-				- (aMorph point: aMorph position in: owner).
-	self startStepping.
-	
+	positionOffset := anEvent position - ( aMorph point: aMorph position in: owner ).
+	self startStepping
 ]
 
 { #category : #geometry }

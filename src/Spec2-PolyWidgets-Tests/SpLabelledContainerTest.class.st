@@ -1,12 +1,12 @@
 Class {
 	#name : #SpLabelledContainerTest,
 	#superclass : #SpSmokeTestCase,
-	#category : #'Spec2-PolyWidgets-Tests'
+	#category : #'Spec2-PolyWidgets-Tests-Tests'
 }
 
 { #category : #running }
 SpLabelledContainerTest >> classToTest [
-	^ SpLabelledContainer
+	^ SpLabelledContainerPrestenter
 ]
 
 { #category : #running }

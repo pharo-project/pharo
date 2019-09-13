@@ -30,6 +30,11 @@ SycRenameTempCommand >> applyResultInContext: aSourceCodeContext [
 ]
 
 { #category : #accessing }
+SycRenameTempCommand >> defaultMenuIconName [ 
+	^ #edit
+]
+
+{ #category : #accessing }
 SycRenameTempCommand >> defaultMenuItemName [
 	^'Rename temp'
 ]

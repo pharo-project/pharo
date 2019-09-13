@@ -58,7 +58,7 @@ SpDemoTreeTablePresenter >> menu [
 						name: 'Print in transcript';
 						shortcut: $p meta;
 						description: 'Print the selected class on Transcript';
-						action: [ table1 selectedItem logCr ] ];
+						action: [ table1 selectedItem traceCr ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Browse';
@@ -74,26 +74,26 @@ SpDemoTreeTablePresenter >> menu [
 										addItem: [ :item | 
 											item
 												name: 'Print number of methods';
-												action: [ table1 selectedItem methods size logCr ] ];
+												action: [ table1 selectedItem methods size traceCr ] ];
 										addItem: [ :item | 
 											item
 												name: 'Print number of variables';
-												action: [ table1 selectedItem instanceVariables size logCr ] ] ]) ] ];
+												action: [ table1 selectedItem instanceVariables size traceCr ] ] ]) ] ];
 		addGroup: [ :aGroup | 
 			aGroup
 				addItem: [ :anItem | 
 					anItem
 						name: 'Item showing only if item a odd number of letters';
 						visibleIf: [ table1 selectedItem printString size odd ];
-						action: [ table1 selectedItem logCr ] ];
+						action: [ table1 selectedItem traceCr ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Disabled in second group';
 						disable;
-						action: [ table1 selectedItem logCr ] ];
+						action: [ table1 selectedItem traceCr ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Disabled if class begins with A';
 						enabled: [ table1 selectedItem printString first ~= $A ];
-						action: [ table1 selectedItem logCr ] ] ]
+						action: [ table1 selectedItem traceCr ] ] ]
 ]

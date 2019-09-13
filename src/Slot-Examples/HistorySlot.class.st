@@ -26,7 +26,7 @@ HistorySlot >> initialize [
 
 { #category : #initialization }
 HistorySlot >> initialize: anObject [
-	super write: (OrderedCollection with: nil) to: anObject.
+	super write: (OrderedCollection with: nil) to: anObject
 
 ]
 
@@ -69,7 +69,7 @@ HistorySlot >> size: anObject [
 ]
 
 { #category : #'meta-object-protocol' }
-HistorySlot >> wantsInitalization [
+HistorySlot >> wantsInitialization [
 
     ^ true
 ]

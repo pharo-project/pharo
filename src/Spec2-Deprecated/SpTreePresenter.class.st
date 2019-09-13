@@ -32,7 +32,7 @@ Class {
 		'hasChildrenBlockHolder',
 		'autoRefreshOnExpand'
 	],
-	#category : #'Spec2-Deprecated'
+	#category : #'Spec2-Deprecated-Replaced'
 }
 
 { #category : #specs }

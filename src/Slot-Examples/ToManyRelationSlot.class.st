@@ -31,6 +31,6 @@ ToManyRelationSlot >> remove: oldObject from: collectionOwner [
 ]
 
 { #category : #'meta-object-protocol' }
-ToManyRelationSlot >> wantsInitalization [
+ToManyRelationSlot >> wantsInitialization [
 	^ true
 ]
