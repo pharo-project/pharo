@@ -47,10 +47,10 @@ BISettingPreviewer class >> defaultSpec [
 
 { #category : #settings }
 BISettingPreviewer class >> dialogOpenBIPreviewer [
-	^ Smalltalk ui theme
+	^ self theme
 		newRowIn: self currentWorld
 		for:
-			{(Smalltalk ui theme buttonLabelForText: 'Open Blue Ink Setting Previewer ').
+			{(self theme buttonLabelForText: 'Open Blue Ink Setting Previewer ').
 			self buildOpenBIInspectorButton}
 ]
 
