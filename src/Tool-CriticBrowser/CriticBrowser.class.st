@@ -125,11 +125,6 @@ CriticBrowser class >> taskbarIconName [
 	^#smallWarningIcon
 ]
 
-{ #category : #menu }
-CriticBrowser class >> theme [
-	^ Smalltalk ui theme 
-]
-
 { #category : #'user interface' }
 CriticBrowser >> addModelItemsToWindowMenu: aMenu [
 	"Add model-related items to the window menu"

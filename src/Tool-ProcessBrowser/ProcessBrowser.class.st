@@ -464,11 +464,6 @@ ProcessBrowser class >> terminateProcess: aProcess [
 
 ]
 
-{ #category : #theme }
-ProcessBrowser class >> theme [
-	^ Smalltalk ui theme
-]
-
 { #category : #'process control' }
 ProcessBrowser class >> unregisterWellKnownProcess: aProcess [
 	"Remove the first registry entry that matches aProcess. Use

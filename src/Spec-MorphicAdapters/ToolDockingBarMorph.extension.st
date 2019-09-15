@@ -6,9 +6,9 @@ ToolDockingBarMorph >> adoptMenuGroupModel: aGroupModel first: aBoolean [
 	
 	aBoolean ifFalse: [ 
 		self 
-			addMorphBack: (Smalltalk ui theme newToolSpacerIn: self);
-			addMorphBack: (Smalltalk ui theme newToolbarHandleIn: self);
-			addMorphBack: (Smalltalk ui theme newToolSpacerIn: self) ].
+			addMorphBack: (self theme newToolSpacerIn: self);
+			addMorphBack: (self theme newToolbarHandleIn: self);
+			addMorphBack: (self theme newToolSpacerIn: self) ].
 			
 	controls := OrderedCollection new.
 	aGroupModel menuItems do: [ :item | self adoptMenuItemModel: item accumulator: controls ].
@@ -25,14 +25,14 @@ ToolDockingBarMorph >> adoptMenuItemModel: item accumulator: controls [
 			controls add: button ]
 		ifNotNil: [ 
 			self emptyAccumulator: controls.
-			self addMorphBack: (Smalltalk ui theme newToolSpacerIn: self).
+			self addMorphBack: (self theme newToolSpacerIn: self).
 			self 
 				add: item name
-				font: Smalltalk ui theme menuBarFont
+				font: self theme menuBarFont
 				icon: item icon
 				help: item description
 				subMenu: item subMenu buildWithSpecAsPopup.
-			self addMorphBack: (Smalltalk ui theme newToolSpacerIn: self) ]
+			self addMorphBack: (self theme newToolSpacerIn: self) ]
 ]
 
 { #category : #'*Spec-MorphicAdapters' }
@@ -47,7 +47,7 @@ ToolDockingBarMorph >> adoptMenuModel: aMenuModel [
 { #category : #'*Spec-MorphicAdapters' }
 ToolDockingBarMorph >> buildButtonFor: item [
 
-	^ Smalltalk ui theme
+	^ self theme
 		newButtonIn: self for: item
 		getState: nil
 		action: #performMenuActionWith:

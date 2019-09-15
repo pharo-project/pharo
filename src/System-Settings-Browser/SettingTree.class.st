@@ -184,11 +184,6 @@ SettingTree >> storeSettingNodes [
 	self persistence storeSettingNodes
 ]
 
-{ #category : #theme }
-SettingTree >> theme [
-	^ Smalltalk ui theme
-]
-
 { #category : #querying }
 SettingTree >> unclassified [
 	^ self nodeList select: [:node | node parentName notNil and: [node parentNode isNil]].

@@ -12,11 +12,16 @@ ReThemeAccess class >> checksMethod [
 	^ true
 ]
 
+{ #category : #'class initialization' }
+ReThemeAccess class >> initialize [
+   " ReRuleManager cleanUp "
+]
+
 { #category : #running }
 ReThemeAccess >> basicCheck: aMethod [
 	^ ((aMethod methodClass inheritsFrom: Morph) 
 		or: [aMethod methodClass inheritsFrom: Model])
-	and: [aMethod sourceCode includesAll: 'Smalltalk ui theme']
+	and: [aMethod sourceCode matchesRegex: '.*Smalltalk\s+ui\s+theme.*']
 
 ]
 
