@@ -153,6 +153,16 @@ MemoryFileSystemTest >> testIsMemoryFileSystem [
 ]
 
 { #category : #tests }
+MemoryFileSystemTest >> testLargeFile [
+	| bytes |
+	bytes := ByteArray new: 80000.
+	self 
+		shouldnt: [(FileSystem memory / 'output.bytes')
+			binaryWriteStreamDo: [ :stream | stream nextPutAll: bytes]]
+		raise: Error.
+]
+
+{ #category : #tests }
 MemoryFileSystemTest >> testModifiedTimeWhenFileCreated [
 	self assert: (filesystem / 'file.txt') ensureCreateFile modificationTime notNil
 ]
