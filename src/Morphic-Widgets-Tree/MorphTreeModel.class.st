@@ -89,11 +89,6 @@ MorphTreeModel class >> itemsList: itemsList itemsHeaderName: aName wrapBlockOrS
 		yourself
 ]
 
-{ #category : #accessing }
-MorphTreeModel class >> theme [
-	^ Smalltalk ui theme
-]
-
 { #category : #'keyboard managing' }
 MorphTreeModel >> arrowEvent: event key: aChar target: aMorph [
 	"Give model the capability of handle a key before is handled by MorphTreeListManager"

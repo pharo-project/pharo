@@ -108,11 +108,6 @@ HelpBrowser class >> taskbarIconName [
 	^ #bookIcon
 ]
 
-{ #category : #accessing }
-HelpBrowser class >> theme [
-	^ Smalltalk ui theme 
-]
-
 { #category : #ui }
 HelpBrowser >> close [
 	window notNil ifTrue: [window delete]

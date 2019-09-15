@@ -72,11 +72,6 @@ TestRunner class >> taskbarIconName [
 	^#testRunnerIcon
 ]
 
-{ #category : #theme }
-TestRunner class >> theme [
-	^ Smalltalk ui theme
-]
-
 { #category : #actions }
 TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [ 
 	"This method looks for #packageNamesUnderTest method in class side of classes defined packages in listOfPackages.
@@ -388,7 +383,7 @@ TestRunner >> classSelected: anInteger [
 TestRunner >> classesFrame [
 	^LayoutFrame new
 		leftFraction: 0.25;
-		topOffset: (Smalltalk ui theme textFont height + 13);
+		topOffset: (self theme textFont height + 13);
 		rightFraction: 0.5;
 		bottomOffset: self buttonHeight negated
 ]
@@ -768,7 +763,7 @@ TestRunner >> packageMenu: aMenu [
 TestRunner >> packageSearchFrame [
 	^LayoutFrame new
 		rightFraction: 0.25;
-		bottomFraction: 0 offset: (Smalltalk ui theme textFont height + 6)
+		bottomFraction: 0 offset: (self theme textFont height + 6)
 ]
 
 { #category : #building }
@@ -794,7 +789,7 @@ TestRunner >> packageSelected: anInteger [
 TestRunner >> packagesFrame [
 	^LayoutFrame new
 		rightFraction: 0.25;
-		topOffset: (Smalltalk ui theme textFont height + 13);
+		topOffset: (self theme textFont height + 13);
 		bottomOffset: self buttonHeight negated
 ]
 

@@ -854,7 +854,7 @@ SettingBrowser >> treeMorphIn: aMorph [
 		doubleClickSelector: #doubleClick;
 		rowInset: 6;
 		columnInset: 6;
-		rowColorForEven: Smalltalk ui theme lightBackgroundColor;
+		rowColorForEven: self theme lightBackgroundColor;
 		yourself.
 	^ treeMorph buildContents
 ]

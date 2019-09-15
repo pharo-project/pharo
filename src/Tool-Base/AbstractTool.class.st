@@ -51,11 +51,6 @@ AbstractTool class >> requestProtocolNameFor: aClass initialAnswer: aString [
 	^ ui chooseFromOwner: self currentWorld
 ]
 
-{ #category : #'world menu' }
-AbstractTool class >> theme [
-	^ Smalltalk ui theme 
-]
-
 { #category : #class }
 AbstractTool >> browseClassRefsOf: aClass [
 
