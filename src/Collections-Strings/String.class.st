@@ -1597,9 +1597,13 @@ String >> hash [
 
 { #category : #comparing }
 String >> howManyMatch: string [ 
-	"Count the number of characters that match up in self and aString."
-	| count shorterLength |
+	"Count the number of characters in a substring that matches up in self and aString."
+	"('ab ab ac de' howManyMatch: 'ab') >>> 2"
+	"('abab ac de' howManyMatch: 'abab') >>> 4"
+	"('ab ab ac de' howManyMatch: 'a') >>> 1"
+	"('ab ab ac de' howManyMatch: 'z') >>> 0"
 	
+	| count shorterLength |
 	count := 0.
 	shorterLength := self size min: string size.
 	1 to: shorterLength do: [:index |
@@ -2293,7 +2297,11 @@ String >> startingAt: keyStart match: text startingAt: textStart [
 { #category : #accessing }
 String >> startsWithDigit [
 	"Answer whether the receiver's first character represents a digit"
-
+	"'abc' startsWithDigit >>> false"
+	"'0abc' startsWithDigit >>> true"
+	"'1abc' startsWithDigit >>> true"
+	"'11abc' startsWithDigit >>> true"
+	
 	^ self size > 0 and: [self first isDigit]
 ]
 
