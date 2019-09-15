@@ -169,7 +169,7 @@ BISettingPreviewer >> displayNodeFor: aNode [
 		addAllMorphs:
 			{nodeMorphLeft.
 			nodeMorphRight}; 
-		color: Smalltalk ui theme lightBackgroundColor;
+		color: self theme lightBackgroundColor;
 		hResizing: #shrinkWrap;
 		yourself
 ]
