@@ -39,5 +39,5 @@ PasteUpMorph >> makeAScreenshot [
 								nextPutAll: name fullName;
 								cr;
 								nextPutAll: 'Click to open location' ])
-				actionOnClick: [ name openInNativeBrowser ] ]
+				actionOnClick: [ name openInOSFileBrowser ] ]
 ]

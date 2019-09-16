@@ -13,13 +13,13 @@ Class {
 { #category : #example }
 NativeBrowserExample class >> example [
 	<example>
-	FileSystem workingDirectory openInNativeBrowser
+	FileSystem workingDirectory openInOSFileBrowser
 ]
 
 { #category : #example }
 NativeBrowserExample class >> example2 [
 	<example>
-	OSPlatform current openNativeBrowserOn: FileLocator home
+	OSPlatform current openOSFileBrowserOn: FileLocator home
 ]
 
 { #category : #'see class side' }
