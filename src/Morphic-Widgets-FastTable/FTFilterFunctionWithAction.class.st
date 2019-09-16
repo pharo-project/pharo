@@ -48,8 +48,8 @@ FTFilterFunctionWithAction >> action: aBlockClosure named: aString [
 ]
 
 { #category : #accessing }
-FTFilterFunctionWithAction >> beExplicite [
-	super beExplicite.
+FTFilterFunctionWithAction >> beExplicit [
+	super beExplicit.
 	table addMorph: actionButton.
 	table selectedIndex = 0
 		ifTrue: [ table selectIndex: 1 ]

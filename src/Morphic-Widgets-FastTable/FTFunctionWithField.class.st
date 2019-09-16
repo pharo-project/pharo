@@ -37,7 +37,7 @@ FTFunctionWithField class >> isAbstract [
 ]
 
 { #category : #accessing }
-FTFunctionWithField >> beExplicite [
+FTFunctionWithField >> beExplicit [
 	self initializeMorph.
 	table
 		addMorph: field;
@@ -72,7 +72,7 @@ FTFunctionWithField >> initializeMorph [
 ]
 
 { #category : #testing }
-FTFunctionWithField >> isExplicite [
+FTFunctionWithField >> isExplicit [
 	^ field isNotNil
 ]
 
