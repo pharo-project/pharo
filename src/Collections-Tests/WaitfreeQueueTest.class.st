@@ -55,7 +55,7 @@ WaitfreeQueueTest >> testNextOrNilSuchThat [
 
 	queue := WaitfreeQueue new.
 	1 to: 10 do: [ :i |
-		queue 	nextPut: i ].
+		queue nextPut: i ].
 
 	"Remove the first element"
 	self assert: (queue nextOrNilSuchThat: [ :o | o = 1 ]) equals: 1.
@@ -74,7 +74,7 @@ WaitfreeQueueTest >> testNextOrNilSuchThat [
 	self assert: queue tail isZombie.
 
 	11 to: 13 do: [ :i |
-		queue 	nextPut: i ].
+		queue nextPut: i ].
 
 	#(2 3 7 8 9 11 12 13) do: [ :i |
 		self assert: queue nextOrNil equals: i ].
