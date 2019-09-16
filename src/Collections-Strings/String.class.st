@@ -1555,10 +1555,11 @@ String >> findWordStart: key startingAt: start [
 
 { #category : #formatting }
 String >> format: collection [
-	"Format the receiver by interpolating elements from collection, as in the following examples:  
-	('Today is {1}.' format: {Date today}) >>> 'Today is 30 August 2019.'.
-	('Today is {date}.' format: (Dictionary with: #date->Date today)) >>>  'Today is 30 August 2019.'
-	('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
+	"Format the receiver by interpolating elements from collection, as in the following examples:" 
+	"('Today is {1}.' format: {Date today}) >>> 'Today is 30 August 2019.'"
+	"('Today is {date}.' format: (Dictionary with: #date -> Date today)) >>>  'Today is 30 August 2019.'"
+	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
+	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
 
 	^ self class
 		new: self size
