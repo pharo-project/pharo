@@ -10,6 +10,11 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
+{ #category : #accessing }
+SpMorphicLinkAdapter >> action [
+	^ self model action
+]
+
 { #category : #factory }
 SpMorphicLinkAdapter >> buildWidget [
 	"Since Pharo does not yet have a real morph for URL, I create my own. Maybe later we will have real links in Morphic?"
@@ -55,12 +60,7 @@ SpMorphicLinkAdapter >> mouseLeave: anEvent from: aMorph [
 { #category : #'event handling' }
 SpMorphicLinkAdapter >> mouseUp: anEvent from: aMorph [
 	aMorph color: self urlHoverColor.
-	WebBrowser openOn: self url
-]
-
-{ #category : #accessing }
-SpMorphicLinkAdapter >> url [
-	^ self model url
+	self action value
 ]
 
 { #category : #'accessing colors' }

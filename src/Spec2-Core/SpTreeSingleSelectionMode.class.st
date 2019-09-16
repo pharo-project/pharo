@@ -5,18 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-SpTreeSingleSelectionMode >> isMultipleSelection [
-
-	^ false
-]
-
-{ #category : #accessing }
-SpTreeSingleSelectionMode >> presenter: aTreeTablePresenter [ 
-
-	presenter := aTreeTablePresenter
-]
-
-{ #category : #accessing }
 SpTreeSingleSelectionMode >> selectPath: aPath [
 	"If the path is out of range, keep the selection."
 	presenter itemAtPath: aPath ifAbsent: [ ^ self ].

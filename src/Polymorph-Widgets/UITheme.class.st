@@ -56,7 +56,7 @@ UITheme class >> cleanUp [
 { #category : #accessing }
 UITheme class >> current [
 	"Answer the current ui theme.
-	WARNING: Direct access to this method is ill-adviced, use Smalltalk ui theme instead."
+	WARNING: Direct access to this method is ill-adviced, use self theme instead."
 
 	^Current ifNil: [
 		Current := PharoLightTheme newDefault.

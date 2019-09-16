@@ -1,6 +1,6 @@
 Class {
 	#name : #SpLinkPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 
@@ -12,13 +12,24 @@ SpLinkPresenterTest >> classToTest [
 { #category : #tests }
 SpLinkPresenterTest >> testLabelIsUrlByDefault [
 	self assert: presenter label isNil.
-	self assert: presenter url isNil.
 	presenter url: 'Test'.
-	self assert: presenter url equals: 'Test'.
 	self assert: presenter label equals: 'Test'.
 	presenter label: 'Label'.
-	self assert: presenter url equals: 'Test'.
 	self assert: presenter label equals: 'Label'
+]
+
+{ #category : #tests }
+SpLinkPresenterTest >> testWhenActionChangedDo [
+	| count result |
+	count := 0.
+	presenter
+		whenActionChangedDo: [ :block | 
+			count := count + 1.
+			result := block ].
+	presenter action: [ 'Test' ].
+	self assert: result isBlock.
+	self assert: result value equals: 'Test'.
+	self assert: count equals: 1
 ]
 
 { #category : #tests }
@@ -30,19 +41,6 @@ SpLinkPresenterTest >> testWhenLabelChangedDo [
 			count := count + 1.
 			result := label ].
 	presenter label: 'Test'.
-	self assert: result equals: 'Test'.
-	self assert: count equals: 1
-]
-
-{ #category : #tests }
-SpLinkPresenterTest >> testWhenUrlChangedDo [
-	| count result |
-	count := 0.
-	presenter
-		whenUrlChangedDo: [ :label | 
-			count := count + 1.
-			result := label ].
-	presenter url: 'Test'.
 	self assert: result equals: 'Test'.
 	self assert: count equals: 1
 ]

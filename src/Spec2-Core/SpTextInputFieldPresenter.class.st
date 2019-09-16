@@ -31,7 +31,6 @@ Class {
 		'#acceptOnCR => SpObservableSlot',
 		'#entryCompletion => SpObservableSlot',
 		'#isPassword => SpObservableSlot',
-		'#placeholder => SpObservableSlot',
 		'#maxLength => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
@@ -118,7 +117,6 @@ SpTextInputFieldPresenter >> initialize [
 	super initialize.
 
 	maxLength := 0.
-	placeholder := ''.
 	acceptOnCR := true.
 	isPassword := false.
 	self whenAcceptOnCRChangedDo: [ :bool | self changed: #acceptOnCR: with: {bool} ]
@@ -143,20 +141,7 @@ SpTextInputFieldPresenter >> maxLength: anInteger [
 ]
 
 { #category : #api }
-SpTextInputFieldPresenter >> placeholder [
-
-	^ placeholder
-]
-
-{ #category : #accessing }
-SpTextInputFieldPresenter >> placeholder: aText [
-
-	placeholder := aText
-]
-
-{ #category : #api }
 SpTextInputFieldPresenter >> removeEntryCompletion [
-	"< api:#do>"
 	"Remove the entry completion"
 	
 	self entryCompletion: nil
@@ -203,10 +188,4 @@ SpTextInputFieldPresenter >> whenMaxLengthChangedDo: aBlockClosure [
 SpTextInputFieldPresenter >> whenPasswordChangedDo: aBlockClosure [ 
 	
 	self property: #isPassword whenChangedDo: aBlockClosure
-]
-
-{ #category : #'api-events' }
-SpTextInputFieldPresenter >> whenPlaceholderChangedDo: aBlock [
-	
-	self property: #placeholder whenChangedDo: aBlock
 ]

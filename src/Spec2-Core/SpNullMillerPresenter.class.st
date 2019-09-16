@@ -20,7 +20,7 @@ SpNullMillerPresenter class >> defaultSpec [
 ]
 
 { #category : #initialization }
-SpNullMillerPresenter >> initializeWidgets [
+SpNullMillerPresenter >> initializePresenters [
 	
 	"Do nothing"
 ]

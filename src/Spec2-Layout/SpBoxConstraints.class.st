@@ -12,19 +12,19 @@ Class {
 	#category : #'Spec2-Layout-Box'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 SpBoxConstraints class >> defaultExpand [
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 SpBoxConstraints class >> defaultFill [
 
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 SpBoxConstraints class >> defaultPadding [ 
 
 	^ 0

@@ -72,6 +72,11 @@ EyeAbstractInspector >> hasSelectedObject [
 ]
 
 { #category : #initialization }
+EyeAbstractInspector >> initialize [
+	super initialize.
+]
+
+{ #category : #initialization }
 EyeAbstractInspector >> initializePresenter [
 	self property: #object whenChangedDo: [ self objectChanged ].
 	text whenBuiltDo: [ :w | self text behavior: self object class ].

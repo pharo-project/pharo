@@ -1,6 +1,8 @@
 Class {
 	#name : #SpAthensStaticPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
+	#traits : 'SpTContextMenu',
+	#classTraits : 'SpTContextMenu classTrait',
 	#instVars : [
 		'#drawBlock => SpObservableSlot',
 		'#surfaceExtent => SpObservableSlot'

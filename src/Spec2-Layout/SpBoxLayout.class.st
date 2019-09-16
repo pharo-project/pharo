@@ -44,6 +44,16 @@ SpBoxLayout >> add: aName [
 
 { #category : #adding }
 SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill padding: aNumber [
+"
+aName 		- the presenter to be added to box
+expand 	- true if the new child is to be given extra space allocated to box . 
+			  The extra space will be divided evenly between all children that use this option
+fill 		- true if space given to child by the expand option is actually allocated to child , 
+			  rather than just padding it. This parameter has no effect if expand is set to false. 
+padding 	- extra space in pixels to put between this child and its neighbors, over and above 
+			  the global amount specified by “spacing” property. If child is a widget at one of 
+			  the reference ends of box , then padding pixels are also put between child and the
+			  reference edge of box"
 
 	self 
 		add: aName 
@@ -52,6 +62,18 @@ SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill padding: aNumber
 				expand: shouldExpand;
 				fill: shouldFill; 
 				padding: aNumber ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> add: aPresenter height: anInteger [ 
+	self add: aPresenter withConstraints: [:constraints | constraints height: anInteger ].
+]
+
+{ #category : #adding }
+SpBoxLayout >> add: aPresenter width: anInteger [
+	self
+		add: aPresenter
+		withConstraints: [ :constraints | constraints width: anInteger ].
 ]
 
 { #category : #adding }

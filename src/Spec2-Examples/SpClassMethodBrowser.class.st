@@ -53,7 +53,7 @@ SpClassMethodBrowser >> classes: aList [
 ]
 
 { #category : #initialization }
-SpClassMethodBrowser >> initializePresenter [
+SpClassMethodBrowser >> connectPresenters [
 	classListPresenter transmitTo: methodListPresenter transform: [ :class | class methods sort: #selector descending ] postTransmission: [ :destination | destination selectIndex: 1 ].
 
 	methodListPresenter
@@ -63,7 +63,7 @@ SpClassMethodBrowser >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpClassMethodBrowser >> initializeWidgets [
+SpClassMethodBrowser >> initializePresenters [
 	classListPresenter := self newList.
 	methodListPresenter := self newList.
 	textPresenter := self newCode.

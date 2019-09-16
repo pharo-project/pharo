@@ -4,6 +4,9 @@ SUnit tests for Gofer operations
 Class {
 	#name : #GoferOperationTest,
 	#superclass : #GoferTest,
+	#instVars : [
+		'environment'
+	],
 	#category : #'Gofer-Tests-Tests'
 }
 
@@ -14,14 +17,24 @@ GoferOperationTest >> allManagers [
 	
 ]
 
+{ #category : #accessing }
+GoferOperationTest >> environment [
+	^ environment
+]
+
+{ #category : #accessing }
+GoferOperationTest >> environment: anObject [
+	environment := anObject
+]
+
 { #category : #utilities }
 GoferOperationTest >> hasClass: aSymbol [
-	^ Smalltalk globals includesKey: aSymbol
+	^ environment includesKey: aSymbol
 ]
 
 { #category : #utilities }
 GoferOperationTest >> hasClass: aSymbol selector: aSelector [
-	^ (Smalltalk globals classNamed: aSymbol) includesSelector: aSelector
+	^ (environment classNamed: aSymbol) includesSelector: aSelector
 ]
 
 { #category : #utilities }
@@ -37,7 +50,13 @@ GoferOperationTest >> hasVersion: aString [
 { #category : #running }
 GoferOperationTest >> setUp [
 	super setUp.
+	self setUpEnvironment.
 	gofer repository: self monticelloRepository
+]
+
+{ #category : #running }
+GoferOperationTest >> setUpEnvironment [
+	environment := self class environment.
 ]
 
 { #category : #running }
@@ -57,8 +76,8 @@ GoferOperationTest >> testCleanup [
 	gofer
 		package: 'GoferFoo';
 		load.
-	class := Smalltalk globals classNamed: #GoferFoo.
-	Smalltalk globals organization addCategory: #'GoferFoo-Empty'.
+	class := environment classNamed: #GoferFoo.
+	environment organization addCategory: #'GoferFoo-Empty'.
 	class organization addCategory: #empty.
 	class class organization addCategory: #empty.
 	gofer cleanup.
@@ -103,7 +122,7 @@ GoferOperationTest >> testLocalChanges [
 	gofer
 		package: 'GoferBar';
 		load.
-	(Smalltalk globals classNamed: #GoferBar) compile: 'foo'.
+	(environment classNamed: #GoferBar) compile: 'foo'.
 	changes := gofer localChanges.
 	self assert: changes operations size equals: 1
 ]
@@ -118,7 +137,7 @@ GoferOperationTest >> testMerge [
 	gofer
 		package: 'GoferBar';
 		load.
-	(Smalltalk globals classNamed: #GoferBar) compile: 'foo'.
+	(environment classNamed: #GoferBar) compile: 'foo'.
 	[ gofer merge ]
 		on: ProvideAnswerNotification
 		do: [ :e | e resume: true ].
@@ -166,7 +185,7 @@ GoferOperationTest >> testRemoteChanges [
 	gofer
 		package: 'GoferBar';
 		load.
-	(Smalltalk globals classNamed: #GoferBar) compile: 'foo'.
+	(environment classNamed: #GoferBar) compile: 'foo'.
 	changes := gofer remoteChanges.
 	self assert: changes operations size equals: 1
 ]
@@ -177,10 +196,10 @@ GoferOperationTest >> testRevert [
 		package: 'GoferFoo';
 		package: 'GoferBar';
 		load.
-	(Smalltalk globals classNamed: #GoferBar) category: 'GoferFoo'.
+	(environment classNamed: #GoferBar) category: 'GoferFoo'.
 	gofer revert.
-	self assert: (Smalltalk globals classNamed: #GoferFoo) category asSymbol equals: #GoferFoo.
-	self assert: (Smalltalk globals classNamed: #GoferBar) category asSymbol equals: #GoferBar
+	self assert: (environment classNamed: #GoferFoo) category asSymbol equals: #GoferFoo.
+	self assert: (environment classNamed: #GoferBar) category asSymbol equals: #GoferBar
 ]
 
 { #category : #tests }

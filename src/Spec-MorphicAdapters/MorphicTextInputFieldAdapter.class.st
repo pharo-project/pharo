@@ -23,7 +23,7 @@ MorphicTextInputFieldAdapter >> acceptOnCR [
 MorphicTextInputFieldAdapter >> adapt: aModel [
 	
 	super adapt: aModel.
-	aModel whenBuiltDo: [ :w | w widget color: Smalltalk ui theme backgroundColor ]
+	aModel whenBuiltDo: [ :w | w widget color: self theme backgroundColor ]
 ]
 
 { #category : #factory }

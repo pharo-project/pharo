@@ -38,7 +38,7 @@ SpMorphicModalWindowAdapter >> open [
 	self model windowIsOpening.
 
 	backdropMorph := FullscreenMorph new
-		color: (Color black alpha: 0.7);
+		color: self theme modalBackdropColor;
 		on: #click send: #mouseClick:onBackdrop: to: self;
 		openInWorld;
 		yourself.

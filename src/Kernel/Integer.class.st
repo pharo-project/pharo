@@ -295,17 +295,6 @@ Integer >> as31BitSmallInt [
 ]
 
 { #category : #'converting-arrays' }
-Integer >> asArray [
-
-	| stream |
-	stream := Array new writeStream.
-	self bytesCount to: 1 by: -1 do: [:digitIndex |
-		stream nextPut: (self byteAt: digitIndex)].
-	^ stream contents
-
-]
-
-{ #category : #'converting-arrays' }
 Integer >> asByteArray [
 
 	| stream |

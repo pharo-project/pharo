@@ -79,7 +79,7 @@ SpDropListButton >> icon: anIcon [
 ]
 
 { #category : #initialization }
-SpDropListButton >> initializeWidgets [
+SpDropListButton >> initializePresenters [
 	dropList := self instantiate: SpDropListPresenter.
 	button := self instantiate: SpButtonPresenter.
 	self focusOrder

@@ -1,6 +1,6 @@
 Class {
 	#name : #SpMillerColumnPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Miller'
 }
 

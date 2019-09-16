@@ -11,6 +11,11 @@ Class {
 	#category : #'System-Model-Base'
 }
 
+{ #category : #accessing }
+Model class >> theme [
+	^ Smalltalk ui theme
+]
+
 { #category : #'dependents-private' }
 Model >> actAsExecutor [
 	"Prepare the receiver to act as executor for any resources associated with it"

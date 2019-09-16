@@ -81,7 +81,7 @@ SpDemoCheckboxesPresenter >> checkboxWithLabelOnLeft: anObject [
 ]
 
 { #category : #initialization }
-SpDemoCheckboxesPresenter >> initializeWidgets [
+SpDemoCheckboxesPresenter >> initializePresenters [
 
 	checkboxNormal  := self newCheckBox
 		label: 'normal'.

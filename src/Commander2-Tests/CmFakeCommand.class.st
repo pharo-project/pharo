@@ -4,25 +4,25 @@ Class {
 	#category : #'Commander2-Tests'
 }
 
-{ #category : #hooks }
-CmFakeCommand >> canBeRun [
+{ #category : #testing }
+CmFakeCommand >> canBeExecuted [
 	^ self context = 42
 ]
 
 { #category : #accessing }
-CmFakeCommand >> description [
-	^ super description , ' ' , self context asString
+CmFakeCommand >> dynamicDescription [
+	^ super dynamicDescription , ' ' , self context asString
+]
+
+{ #category : #accessing }
+CmFakeCommand >> dynamicName [
+	^ super dynamicName , ' ' , self context asString
 ]
 
 { #category : #initialization }
 CmFakeCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'Fake command';
-		basicDescription: 'I am a fake command for testing purposes.'
-]
-
-{ #category : #accessing }
-CmFakeCommand >> name [
-	^ super name , ' ' , self context asString
+		name: 'Fake command';
+		description: 'I am a fake command for testing purposes.'
 ]

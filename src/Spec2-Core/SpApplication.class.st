@@ -48,6 +48,11 @@ SpApplication >> close [
 	self windows copy do: #close
 ]
 
+{ #category : #'as yet unclassified' }
+SpApplication >> defer: aBlockClosure [ 
+	self backend defer: aBlockClosure.
+]
+
 { #category : #windows }
 SpApplication >> hasWindow: aWindow [
 	

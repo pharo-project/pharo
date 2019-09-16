@@ -10,24 +10,20 @@ Class {
 
 { #category : #testing }
 SpAbstractMorphicListAdapter class >> isAbstract [
-
-	^ self == SpAbstractMorphicListAdapter
+	^ self = SpAbstractMorphicListAdapter
 ]
 
 { #category : #scrolling }
 SpAbstractMorphicListAdapter >> configureScrolling [
-
-	self presenter verticalAlignment whenChangedDo: [ 
-		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
-	self presenter whenDisplayDo: [ 
-		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
-		self scrollingChanged ].
-	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self.
+	self presenter verticalAlignment whenChangedDo: [ widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
+	self presenter
+		whenDisplayDo: [ widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
+			self scrollingChanged ].
+	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self
 ]
 
 { #category : #scrolling }
 SpAbstractMorphicListAdapter >> scrollingChanged [
-
 	widget container updateAllRows.
 	self presenter verticalAlignment
 		firstVisibleRowIndex: widget firstVisibleRowIndex;

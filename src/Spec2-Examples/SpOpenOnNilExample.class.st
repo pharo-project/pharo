@@ -36,7 +36,7 @@ SpOpenOnNilExample >> initialize: anInteger [
 ]
 
 { #category : #initialization }
-SpOpenOnNilExample >> initializeWidgets [
+SpOpenOnNilExample >> initializePresenters [
 	text := self instantiate: SpTextInputFieldPresenter.
 	text
 		text: 'Object is nil';

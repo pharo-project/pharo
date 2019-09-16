@@ -14,10 +14,10 @@ Class {
 
 { #category : #specs }
 SpWorldPresenter class >> defaultSpec [
-	<spec>
-	
 	self setUpWorld.
-	^ self currentWorld asSpAdapter
+	^ SpMorphPresenter new
+		morph: self currentWorld;
+		yourself
 ]
 
 { #category : #private }
@@ -46,8 +46,9 @@ SpWorldPresenter >> addPresenterIn: container withSpecLayout: aSpec [
 
 { #category : #factory }
 SpWorldPresenter >> buildWidget [
-
-	^ self currentWorld asSpAdapter
+	^ SpMorphPresenter new
+		morph: self currentWorld;
+		yourself
 ]
 
 { #category : #private }

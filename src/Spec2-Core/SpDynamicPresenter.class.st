@@ -43,7 +43,7 @@ SpDynamicPresenter >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #initialization }
-SpDynamicPresenter >> initializeWidgets [
+SpDynamicPresenter >> initializePresenters [
 ]
 
 { #category : #'instance creation' }

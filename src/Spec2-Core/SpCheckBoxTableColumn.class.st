@@ -32,16 +32,3 @@ SpCheckBoxTableColumn >> onDesactivation [
 SpCheckBoxTableColumn >> onDesactivation: anObject [
 	onDesactivation := anObject
 ]
-
-{ #category : #accessing }
-SpCheckBoxTableColumn >> readObject: anItem [
-	| presenter |
-	presenter := SpCheckBoxPresenter new
-		state: (super readObject: anItem);
-		yourself.
-
-	self onActivation ifNotNil: [ :valuable | presenter whenActivatedDo: [ valuable cull: anItem ] ].
-	self onDesactivation ifNotNil: [ :valuable | presenter whenDeactivatedDo: [ valuable cull: anItem ] ].
-
-	^ presenter buildWithSpec
-]

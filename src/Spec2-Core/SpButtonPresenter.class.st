@@ -21,11 +21,12 @@ todo
 Class {
 	#name : #SpButtonPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
+	#traits : 'SpTContextMenu',
+	#classTraits : 'SpTContextMenu classTrait',
 	#instVars : [
 		'#action => SpObservableSlot',
 		'#actionPerformed => SpObservableSlot',
 		'#askBeforeChanging => SpObservableSlot',
-		'#contextMenu => SpObservableSlot',
 		'#font => SpObservableSlot',
 		'#icon => SpObservableSlot',
 		'#label => SpObservableSlot',
@@ -71,18 +72,18 @@ SpButtonPresenter >> addShortcutTipFor: aString [
 
 { #category : #private }
 SpButtonPresenter >> addShortcutTipFor: aCharacter on: aString [
+
 	| index text |
-	
-	aString isNil ifTrue: [ ^ nil ].
+
+	aString ifNil: [ ^ nil ].
 	text := aString asText.
 	aCharacter ifNil: [ ^ text ].
 	index := aString asLowercase indexOf: aCharacter asLowercase.
-	index isZero ifTrue: [ ^ text ].
-	
+	index isZero
+		ifTrue: [ ^ text ].
+
 	^ text
-		addAttribute: (TextEmphasis underlined) 
-		from: index
-		to: index;
+		addAttribute: TextEmphasis underlined from: index to: index;
 		yourself
 ]
 
@@ -105,16 +106,6 @@ SpButtonPresenter >> click [
 	
 	self isEnabled ifFalse: [ ^ self ].
 	^ self performAction
-]
-
-{ #category : #api }
-SpButtonPresenter >> contextMenu [
-	^ contextMenu
-]
-
-{ #category : #api }
-SpButtonPresenter >> contextMenu: aMenu [
-	contextMenu := aMenu
 ]
 
 { #category : #'private-focus' }
@@ -302,12 +293,6 @@ SpButtonPresenter >> whenLabelChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
 	self property: #label whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
-SpButtonPresenter >> whenMenuChangedDo: aBlock [
- 
-	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

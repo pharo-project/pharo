@@ -42,36 +42,36 @@ SpTransmissionExample >> classTemplateFor: aPackage [
 ]
 
 { #category : #initialization }
-SpTransmissionExample >> initializeWidgets [
-	
-	packages := self newList displayBlock: #name. 
-	classes := self newList displayBlock: #name. 
-	protocols := self newList displayBlock: [ :aPair | aPair value name ]. 
-	methods := self newList displayBlock: #selector. 
+SpTransmissionExample >> initializePresenters [
+	packages := self newList display: #name.
+	classes := self newList display: #name.
+	protocols := self newList display: [ :aPair | aPair value name ].
+	methods := self newList display: #selector.
 	code := self newCode.
-
-	packages transmitTo: classes transform: [ :aPackage | aPackage definedClasses asArray ].
-	packages transmitTo: code transform: [ :aPackage | self classTemplateFor: aPackage ].
-	
-	classes 
-		transmitTo: protocols 
-		transform: [ :aClass |
-			aClass organization allProtocols 
+	packages
+		transmitTo: classes
+		transform: [ :aPackage | aPackage definedClasses asArray ].
+	packages
+		transmitTo: code
+		transform: [ :aPackage | self classTemplateFor: aPackage ].
+	classes
+		transmitTo: protocols
+		transform: [ :aClass | 
+			aClass organization allProtocols
 				collect: [ :each | aClass -> each ]
 				as: OrderedCollection ]
 		postTransmission: [ :destination :origin | destination selectIndex: 1 ].
 	classes transmitTo: code transform: #definitionWithSlots.
-			
-	protocols 
-		transmitTo: methods 
+	protocols
+		transmitTo: methods
 		transform: [ :aPair | 
-			aPair value methods 
+			aPair value methods
 				collect: [ :each | aPair key >> each ]
 				as: OrderedCollection ].
-	protocols transmitTo: code transform: [ :aPair | aPair key sourceCodeTemplate ].
-
+	protocols
+		transmitTo: code
+		transform: [ :aPair | aPair key sourceCodeTemplate ].
 	methods transmitTo: code transform: #sourceCode.
-	
 	packages items: RPackageOrganizer default packages
 ]
 
