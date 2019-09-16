@@ -208,6 +208,10 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 			classDefinition addSlot: slot.
 			^ self ].
 
+	"When a slot is defined by just using a slot class (without => syntax) we just return"
+	(aRBMessageNode receiver isGlobal) ifTrue: [
+		 ^self ].
+
 	"when a slot is just 'inst' => InstanceVariableSlot default: 5."
 	aRBMessageNode receiver selector = '=>'
 		ifTrue: [ "If we are here we did not recognize the slot syntax"
