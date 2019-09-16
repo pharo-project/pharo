@@ -127,13 +127,14 @@ Object class >> howToModifyPrimitives [
 { #category : #'class initialization' }
 Object class >> initialize [
 	"Object initialize"
-	DependentsFields ifNil:[self initializeDependentsFields].
+	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
 { #category : #'class initialization' }
 Object class >> initializeDependentsFields [
-	"Object initialize"
-	DependentsFields := WeakIdentityKeyDictionary new.
+	<script: 'Object initialize'>
+	
+	DependentsFields := WeakIdentityKeyDictionary new
 
 ]
 
@@ -148,13 +149,13 @@ Object class >> newFrom: aSimilarObject [
 
 { #category : #'class initialization' }
 Object class >> reInitializeDependentsFields [
-	"Object reInitializeDependentsFields"
+	<script>
+
 	| oldFields |
 	oldFields := DependentsFields.
 	DependentsFields := WeakIdentityKeyDictionary new.
-	oldFields keysAndValuesDo:[:obj :deps|
-		deps do:[:d| obj addDependent: d]].
-
+	oldFields
+		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
 
 { #category : #'instance creation' }
