@@ -149,7 +149,7 @@ Object class >> newFrom: aSimilarObject [
 
 { #category : #'class initialization' }
 Object class >> reInitializeDependentsFields [
-	"Object reInitializeDependentsFields"
+	<script>
 
 	| oldFields |
 	oldFields := DependentsFields.
