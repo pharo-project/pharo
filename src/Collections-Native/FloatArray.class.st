@@ -54,8 +54,7 @@ FloatArray >> dot: aFloatVector [
 	<primitive: 'primitiveDotProduct' module: 'FloatArrayPlugin'>
 	self size = aFloatVector size ifFalse:[^self error:'Must be equal size'].
 	result := 0.0.
-	1 to: self size do:[:i|
-		result := result + ((self at: i) * (aFloatVector at: i))].
+	self withIndexDo: [:el :i| result := result + (el * (aFloatVector at: i))].
 	^result
 ]
 

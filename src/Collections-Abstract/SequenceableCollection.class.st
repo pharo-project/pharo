@@ -228,7 +228,7 @@ SequenceableCollection >> asFloatArray [
 
 	| floatArray |
 	floatArray := FloatArray new: self size.
-	1 to: self size do:[:i| floatArray at: i put: (self at: i) asFloat ].
+	self withIndexDo: [:el :i| floatArray at: i put: el asFloat ].
 	^floatArray
 ]
 

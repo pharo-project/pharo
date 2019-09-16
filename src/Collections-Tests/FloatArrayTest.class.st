@@ -359,10 +359,19 @@ FloatArrayTest >> subCollectionNotIn [
 FloatArrayTest >> testArithmeticCoercion [
 	"This test is related to http://bugs.squeak.org/view.php?id=6782"
 	
-	self should: [3.0 / (FloatArray with: 2.0) = (FloatArray with: 1.5)].
-	self should: [3.0 * (FloatArray with: 2.0) = (FloatArray with: 6.0)].
-	self should: [3.0 + (FloatArray with: 2.0) = (FloatArray with: 5.0)].
-	self should: [3.0 - (FloatArray with: 2.0) = (FloatArray with: 1.0)].
+	self assert: 3.0 / (FloatArray with: 2.0) equals: (FloatArray with: 1.5).
+	self assert: 3.0 * (FloatArray with: 2.0) equals: (FloatArray with: 6.0).
+	self assert: 3.0 + (FloatArray with: 2.0) equals: (FloatArray with: 5.0).
+	self assert: 3.0 - (FloatArray with: 2.0) equals: (FloatArray with: 1.0)
+]
+
+{ #category : #'tests - arithmetic' }
+FloatArrayTest >> testDotProduct [
+	|a b|
+	a := #(2.0 3.0 4.0 5.0) asFloatArray.
+	b := #(2.0 3.0 4.0 5.0) asFloatArray.
+	self assert: (a dot: b) equals: 54 
+	 
 ]
 
 { #category : #testing }
