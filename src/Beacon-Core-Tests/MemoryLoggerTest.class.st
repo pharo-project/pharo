@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'previousRecordings'
 	],
-	#category : #'Beacon-Core-Tests'
+	#category : #'Beacon-Core-Tests-Tests'
 }
 
 { #category : #testing }

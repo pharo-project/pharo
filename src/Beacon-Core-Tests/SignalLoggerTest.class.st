@@ -5,7 +5,7 @@ A SignalLoggerTest is xxxxxxxxx.
 Class {
 	#name : #SignalLoggerTest,
 	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests'
+	#category : #'Beacon-Core-Tests-Tests'
 }
 
 { #category : #tests }

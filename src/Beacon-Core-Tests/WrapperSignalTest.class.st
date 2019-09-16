@@ -5,7 +5,7 @@ A WrapperSignalTest is xxxxxxxxx.
 Class {
 	#name : #WrapperSignalTest,
 	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests'
+	#category : #'Beacon-Core-Tests-Tests'
 }
 
 { #category : #tests }
