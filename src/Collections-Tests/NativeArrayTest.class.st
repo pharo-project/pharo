@@ -51,16 +51,16 @@ NativeArrayTest >> testAtAllPut [
 	self guineaPigHerd do: [ :guineaPig |
 		guineaPig atAllPut: 42.
 		1 to: (self wordSize min: guineaPig size) do: [ :i |
-			self assert: (guineaPig at: i) = 42 ].
+			self assert: (guineaPig at: i) equals: 42 ].
 		(guineaPig size - self wordSize max: 1) to: guineaPig size do: [ :i |
-			self assert: (guineaPig at: i) = 42 ] ]
+			self assert: (guineaPig at: i) equals: 42 ] ]
 ]
 
 { #category : #tests }
 NativeArrayTest >> testAtAllPutFail [
 	"Makes sure the primitive works correctly with different data structures"
 	self guineaPigHerd do: [ :guineaPig |
-		self should: [guineaPig atAllPut: -1] raise: Error ].
+		self should: [guineaPig atAllPut: -1] raise: Error ]
 ]
 
 { #category : #tests }
@@ -100,8 +100,8 @@ NativeArrayTest >> testReplaceFromToWithStartingAt [
 		1 to: copy size do: [ :l | copy at: l put: l ]. 
 		self alignmentIndexesDo: [ :i :j :k |
 					guineaPig replaceFrom: i to: j + 8 with: copy startingAt: k.
-					self assert: (guineaPig at: i) = (copy at: k).
-					self assert: (guineaPig at: j + 8) = (copy at: j + 8 - i + k) ] ]
+					self assert: (guineaPig at: i) equals: (copy at: k).
+					self assert: (guineaPig at: j + 8) equals: (copy at: j + 8 - i + k) ] ]
 ]
 
 { #category : #utilities }
