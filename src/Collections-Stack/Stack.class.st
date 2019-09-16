@@ -11,18 +11,20 @@ Class {
 Stack >> pop [
 	"Returns the first element and remove it from the stack."
 
-	^self  removeFirst 
+	^self removeFirst 
 ]
 
 { #category : #adding }
 Stack >> push: anObject [ 
 	"Adds a new object of any kind on top of the stack."
+	
 	self addFirst: anObject.
-	^ anObject.
+	^ anObject
 ]
 
 { #category : #accessing }
 Stack >> top [
 	"Answer the first element of the stack without removing it."
+	
 	^ self first
 ]
