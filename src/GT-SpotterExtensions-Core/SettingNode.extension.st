@@ -23,7 +23,6 @@ SettingNode >> spotterForSettingsFor: aStep [
 SettingNode >> spotterLabel [
 
 	| label |
-
 	label := self settingDeclaration label.
 	^ self parentNode ifNil: [ label ] ifNotNil: [ self parentNode spotterLabel , '/' , label ]
 ]
