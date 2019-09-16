@@ -1,3 +1,6 @@
+"
+Image session management
+"
 Class {
 	#name : #ManifestSystemSessionManager,
 	#superclass : #PackageManifest,
