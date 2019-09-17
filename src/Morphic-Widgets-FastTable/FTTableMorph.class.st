@@ -274,7 +274,7 @@ FTTableMorph >> deselectAll [
 FTTableMorph >> disableFunction [
 	"Disabling it just sets the funtion to nil, so I can safely skip it in #keyStrokeSearch:"
 
-	function isExplicite
+	function isExplicit
 		ifTrue: [ function disable.
 			self resizeAllSubviews	"This is call because now the container will take all the available space." ].
 	function := FTNilFunction table: self
@@ -913,7 +913,7 @@ FTTableMorph >> resizeAllSubviews [
 	self container setNeedsRefreshExposedRows.
 	self container updateExposedRows.
 	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: showIndex).
-	function isExplicite
+	function isExplicit
 		ifTrue: [ function resizeWidget ]
 ]
 
@@ -925,7 +925,7 @@ FTTableMorph >> resizeContainer [
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
-			(function isExplicite
+			(function isExplicit
 				ifTrue: [ function resizeContainerFrom: topLeft to: bottomRight ]
 				ifFalse: [ topLeft corner: bottomRight ])
 ]

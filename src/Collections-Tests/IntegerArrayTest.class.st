@@ -11,10 +11,10 @@ Class {
 IntegerArrayTest >> testAt [
 	| array |
 	array := IntegerArray new: 5 withAll: 2.
-	self assert: (array at: 3) = 2.
+	self assert: (array at: 3) equals: 2.
 	
 	array at: 3 put: 5.
-	self assert: (array at: 3) = 5
+	self assert: (array at: 3) equals: 5
 
 ]
 
@@ -23,7 +23,7 @@ IntegerArrayTest >> testPutAllNegative [
 	| array |
 	array := IntegerArray new: 2.
 	array  atAllPut: -1000.
-	self assert: (array at: 2) = -1000
+	self assert: (array at: 2) equals: -1000
 ]
 
 { #category : #tests }
@@ -31,5 +31,5 @@ IntegerArrayTest >> testPutNegative [
 	| array |
 	array := IntegerArray new: 2.
 	array at: 2 put: -1000.
-	self assert: (array at: 2) = -1000
+	self assert: (array at: 2) equals: -1000
 ]

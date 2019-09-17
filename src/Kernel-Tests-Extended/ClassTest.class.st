@@ -5,7 +5,8 @@ Class {
 	#name : #ClassTest,
 	#superclass : #ClassTestCase,
 	#instVars : [
-		'className'
+		'className',
+		'testEnvironment'
 	],
 	#category : #'Kernel-Tests-Extended-Classes'
 }
@@ -20,7 +21,7 @@ ClassTest >> categoryNameForTemporaryClasses [
 { #category : #setup }
 ClassTest >> deleteClass [
 	| cl |
-	cl := Smalltalk globals at: className ifAbsent: [ ^ self ].
+	cl := testEnvironment at: className ifAbsent: [ ^ self ].
 	
 	Smalltalk globals at: #ChangeSet ifPresent: [ 
 		cl removeFromChanges ].
@@ -51,6 +52,7 @@ ClassTest >> referencingMethod3 [
 ClassTest >> setUp [
 	super setUp.
 	className := #TUTU.
+	testEnvironment:= Smalltalk globals.
 	self deleteClass.
 	Object subclass: className
 		instanceVariableNames: ''
@@ -70,7 +72,7 @@ ClassTest >> tearDown [
 { #category : #tests }
 ClassTest >> testAddClassSlot [
 	| tutu slot1 slot2 |
-	tutu := Smalltalk globals at: #TUTU.
+	tutu := testEnvironment at: #TUTU.
 	slot1 := #X => InstanceVariableSlot.
 	slot2 := #Y => InstanceVariableSlot.
 	tutu addClassSlot: slot1.
@@ -83,7 +85,7 @@ ClassTest >> testAddClassSlot [
 ClassTest >> testAddInstVarName [
 
 	| tutu |
-	tutu := Smalltalk globals at: #TUTU.
+	tutu := testEnvironment at: #TUTU.
 	tutu addInstVarNamed: 'x'.
 	self assert: tutu instVarNames equals: #('x').
 	tutu addInstVarNamed: 'y'.
@@ -94,7 +96,7 @@ ClassTest >> testAddInstVarName [
 ClassTest >> testAddSlot [
 
 	| tutu |
-	tutu := Smalltalk globals at: #TUTU.
+	tutu := testEnvironment at: #TUTU.
 	tutu addSlot: #x => InstanceVariableSlot.
 	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu name equals: #TUTU.
@@ -131,7 +133,7 @@ ClassTest >> testAllSharedPools [
 ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	"Test that when the shape of a class changes, the key of the last literal of the methods is not nil"
 	| tutu |
-	tutu := Smalltalk globals at: #TUTU.
+	tutu := testEnvironment at: #TUTU.
 	tutu compile: 'foo'.
 	self deny: (tutu >> #foo) allLiterals last key isNil.
 	tutu addInstVarNamed: 'x'.
@@ -154,6 +156,16 @@ ClassTest >> testCompileAll [
 ClassTest >> testDependencies [
 	self assert: (ClassTest dependentClasses includes: ClassTest superclass).
 	self assert: (ClassTest dependentClasses includes: Date)
+]
+
+{ #category : #accessing }
+ClassTest >> testEnvironment [
+	^ testEnvironment
+]
+
+{ #category : #accessing }
+ClassTest >> testEnvironment: anObject [
+	testEnvironment := anObject
 ]
 
 { #category : #'tests - access' }
@@ -314,7 +326,7 @@ ClassTest >> testReferencedClasses [
 { #category : #tests }
 ClassTest >> testRemoveClassSlot [
 	| tutu slot1 slot2 |
-	tutu := Smalltalk globals at: #TUTU.
+	tutu := testEnvironment at: #TUTU.
 	slot1 := #X => InstanceVariableSlot.
 	slot2 := #Y => InstanceVariableSlot.
 	tutu addClassSlot: slot1.
@@ -357,14 +369,14 @@ ClassTest >> testSharedPools [
 { #category : #'tests - class creation' }
 ClassTest >> testSubclass [
 	| cls |
-	(Smalltalk globals includesKey: #SubclassExample)
-		ifTrue: [ (Smalltalk globals at: #SubclassExample) removeFromSystem ].
+	(testEnvironment includesKey: #SubclassExample)
+		ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
 	
-	self deny: (Smalltalk globals includesKey: #SubclassExample).
+	self deny: (testEnvironment includesKey: #SubclassExample).
 	cls := Object subclass: #SubclassExample.
-	self assert: (Smalltalk globals includesKey: #SubclassExample).
+	self assert: (testEnvironment includesKey: #SubclassExample).
 
-	self assert: (Smalltalk globals at: #SubclassExample) == cls.
+	self assert: (testEnvironment at: #SubclassExample) == cls.
 	self assert: cls category equals: self unclassifiedCategory.
 	self assert: cls instVarNames equals: #().
 	
@@ -374,14 +386,14 @@ ClassTest >> testSubclass [
 { #category : #'tests - class creation' }
 ClassTest >> testSubclassInstanceVariableNames [
 	| cls |
-	(Smalltalk globals includesKey: #SubclassExample)
-		ifTrue: [ (Smalltalk at: #SubclassExample) removeFromSystem ].
+	(testEnvironment includesKey: #SubclassExample)
+		ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
 	
-	self deny: (Smalltalk globals includesKey: #SubclassExample).
+	self deny: (testEnvironment includesKey: #SubclassExample).
 	cls := Object subclass: #SubclassExample instanceVariableNames: 'x y'.
-	self assert: (Smalltalk globals includesKey: #SubclassExample).
+	self assert: (testEnvironment includesKey: #SubclassExample).
 
-	self assert: (Smalltalk at: #SubclassExample) == cls.
+	self assert: (testEnvironment at: #SubclassExample) == cls.
 	self assert: cls category equals: self unclassifiedCategory.
 	self assert: cls instVarNames equals: #('x' 'y').
 	
