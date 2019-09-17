@@ -42,7 +42,7 @@ FLDecoder >> decodeYourself [
 	| objectCount |
 	objectCount := self nextEncodedPositiveInteger.
 	
-	indexStream := FLIndexStream on: stream digits: objectCount digitLength.
+	indexStream := FLIndexStream on: stream digits: objectCount bytesCount.
 	objects := Array new: objectCount.
 	objectsWriteStream := WriteStream on: objects.
 

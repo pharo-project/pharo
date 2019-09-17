@@ -264,7 +264,7 @@ Integer >> montgomeryDigitMax [
 { #category : #'*Math-Operations-Extensions' }
 Integer >> montgomeryNumberOfDigits [
 	"Answer the number of montgomery digits required to represent the receiver."
-	^self digitLength * 8 + (self montgomeryDigitLength - 1) // self montgomeryDigitLength
+	^self bytesCount * 8 + (self montgomeryDigitLength - 1) // self montgomeryDigitLength
 ]
 
 { #category : #'*Math-Operations-Extensions' }

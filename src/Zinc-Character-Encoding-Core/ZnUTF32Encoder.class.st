@@ -110,14 +110,14 @@ ZnUTF32Encoder >> writeCodePoint: codePoint to: stream [
 	self isBigEndian 
 		ifTrue: [ 
 			stream 
-				nextPut: (codePoint digitAt: 4); 
-				nextPut: (codePoint digitAt: 3); 
-				nextPut: (codePoint digitAt: 2); 
-				nextPut: (codePoint digitAt: 1) ]
+				nextPut: (codePoint byteAt: 4); 
+				nextPut: (codePoint byteAt: 3); 
+				nextPut: (codePoint byteAt: 2); 
+				nextPut: (codePoint byteAt: 1) ]
 		ifFalse: [ 
 			stream 
-				nextPut: (codePoint digitAt: 1); 
-				nextPut: (codePoint digitAt: 2); 
-				nextPut: (codePoint digitAt: 3); 
-				nextPut: (codePoint digitAt: 4) ]
+				nextPut: (codePoint byteAt: 1); 
+				nextPut: (codePoint byteAt: 2); 
+				nextPut: (codePoint byteAt: 3); 
+				nextPut: (codePoint byteAt: 4) ]
 ]

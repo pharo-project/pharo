@@ -22,9 +22,9 @@ LargePositiveInteger >> bitAt: anInteger [
 	
 	| digitIndex bitIndex |
 	digitIndex := anInteger - 1 // 8 + 1.
-	digitIndex > self digitLength ifTrue: [^0].
+	digitIndex > self bytesCount ifTrue: [^0].
 	bitIndex := anInteger - 1 \\ 8 + 1.
-	^(self digitAt: digitIndex) bitAt: bitIndex
+	^(self byteAt: digitIndex) bitAt: bitIndex
 ]
 
 { #category : #'bit manipulation' }
@@ -69,7 +69,7 @@ LargePositiveInteger >> mightBeASquare [
 	where x is any hex digit and e is any even digit
 	Also, the receiver must be an aven power of two."
 	| lsb |
-	lsb := self digitAt: 1.
+	lsb := self byteAt: 1.
 	^(lsb = 0 and: [ self lowBit odd ])	"00 (and even power of 2)"
 		or: [ lsb = 16r40				"40"
 		or: [ (lsb bitAnd: 16r7) = 1		"any|1 or any|9"
@@ -79,7 +79,7 @@ LargePositiveInteger >> mightBeASquare [
 
 { #category : #arithmetic }
 LargePositiveInteger >> negated [ 
-	^ (self copyto: (LargeNegativeInteger new: self digitLength))
+	^ (self copyto: (LargeNegativeInteger new: self bytesCount))
 		normalize  "Need to normalize to catch SmallInteger minVal"
 ]
 
@@ -96,9 +96,9 @@ LargePositiveInteger >> normalize [
 	| sLen val len oldLen |
 	<primitive: 'primNormalizePositive' module:'LargeIntegers'>
 	"First establish len = significant length"
-	len := oldLen := self digitLength.
+	len := oldLen := self bytesCount.
 	[len = 0 ifTrue: [^0].
-	(self digitAt: len) = 0]
+	(self byteAt: len) = 0]
 		whileTrue: [len := len - 1].
 
 	"Now check if in SmallInteger range.  Fast compute SmallInteger maxVal digitLength"
@@ -106,11 +106,11 @@ LargePositiveInteger >> normalize [
 				ifTrue: [8]
 				ifFalse: [4].
 	(len <= sLen
-	 and: [(self digitAt: sLen) <= (SmallInteger maxVal digitAt: sLen)])
+	 and: [(self byteAt: sLen) <= (SmallInteger maxVal byteAt: sLen)])
 		ifTrue: ["If so, return its SmallInt value"
 				val := 0.
 				len to: 1 by: -1 do:
-					[:i | val := (val *256) + (self digitAt: i)].
+					[:i | val := (val *256) + (self byteAt: i)].
 				^ val].
 
 	"Return self, or a shortened copy"
@@ -134,7 +134,7 @@ LargePositiveInteger >> printOn: aStream base: b [
 	
 	| halfDigits halfPower head tail nDigitsUnderestimate |
 	"Don't engage any arithmetic if not normalized"
-	(self digitLength = 0 or: [(self digitAt: self digitLength) = 0]) 
+	(self bytesCount = 0 or: [(self byteAt: self bytesCount) = 0]) 
 		ifTrue: [ ^self normalize printOn: aStream base: b ].
 	
 	nDigitsUnderestimate := b = 10
