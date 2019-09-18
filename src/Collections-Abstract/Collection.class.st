@@ -466,6 +466,15 @@ Collection >> copyWithoutAll: aCollection [
 	^ self reject: [:each | aCollection includes: each]
 ]
 
+{ #category : #copying }
+Collection >> copyWithoutDuplicates [
+	"Answer a copy of the receiver twithout any duplicated elements"
+	"#(2 3 4 4  5 6) copyWithoutDuplicates  >>> #(2 3 4 5 6)"
+	"#('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates >>> #('la' 'do' 'si')"
+	"#(#do #la #si #do #la) copyWithoutDuplicates >>> #(#la #do #si)"
+	^ self asSet asArray
+]
+
 { #category : #enumerating }
 Collection >> count: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
