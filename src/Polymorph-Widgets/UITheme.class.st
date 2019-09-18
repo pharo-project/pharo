@@ -37,6 +37,11 @@ UITheme class >> baseColor [
 ]
 
 { #category : #accessing }
+UITheme class >> basePassiveBackgroundColor [ 
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
 UITheme class >> baseSelectionColor [ 
 	^ self subclassResponsibility 
 ]
@@ -106,6 +111,11 @@ UITheme class >> currentSettings [
 	"Answer the current ui theme settings."
 
 	^ self current settings
+]
+
+{ #category : #accessing }
+UITheme class >> darkBaseColor [
+	self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -226,6 +236,11 @@ UITheme class >> themeName [
 	"Answer the friendly name of the theme."
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> veryLightSelectionColor [ 
+	^ self subclassResponsibility 
 ]
 
 { #category : #services }
