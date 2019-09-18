@@ -171,7 +171,7 @@ SycRefactoringPreview >> initializeWidgets [
 		addColumn: (SpStringTableColumn evaluated: #name);
 		hideColumnHeaders.
 	diffPresenter disable.
-	scopeDropList display: [ :scope | scope description capitalized ].
+	scopeDropList displayBlock: [ :scope | scope description capitalized ].
 	self
 		selectectAllCheckBox;
 		setShortcuts;
