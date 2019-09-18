@@ -2,13 +2,13 @@
 test related to AST -> IR mapping and back
 "
 Class {
-	#name : #ASTtoIRMappingTests,
+	#name : #ASTtoIRMappingTest,
 	#superclass : #TestCase,
 	#category : #'OpalCompiler-Tests-Mapping'
 }
 
 { #category : #tests }
-ASTtoIRMappingTests >> testOffsetVectorTemp [
+ASTtoIRMappingTest >> testOffsetVectorTemp [
 	| ast var |
 	"Temps that are stored in a temp vector have a unique index in the vector"
 	ast := Smalltalk compiler
