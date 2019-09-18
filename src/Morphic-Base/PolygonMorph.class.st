@@ -2092,7 +2092,7 @@ PolygonMorph >> standardArrows [
 	self computeBounds
 ]
 
-{ #category : #accessing }
+{ #category : #stepping }
 PolygonMorph >> step [
 	borderDashSpec ifNil: [^super step].
 	borderDashSpec size < 5 ifTrue: [^super step].
@@ -2103,7 +2103,7 @@ PolygonMorph >> step [
 	^ super step
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 PolygonMorph >> stepTime [
 
 	^ 100
@@ -2275,7 +2275,7 @@ PolygonMorph >> verticesAt: ix put: newPoint [
 	self computeBounds
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 PolygonMorph >> wantsSteps [
 	super wantsSteps ifTrue: [^true].
 

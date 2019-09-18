@@ -131,7 +131,7 @@ AnimatedImageMorph >> restoreBackground [
 	activeForm := canvas form.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 AnimatedImageMorph >> step [
 	frameStream ifNil: [ ^ self ].
 	frameStream atEnd ifTrue: [ 
@@ -154,7 +154,7 @@ AnimatedImageMorph >> step [
 	self changed.
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 AnimatedImageMorph >> stepTime [
 	frameStream ifNil: [ ^ self defaultDelay ].
 	^ currentFrame delay.

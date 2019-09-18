@@ -50,7 +50,7 @@ SpIndeterminatedProgressBarMorph >> drawOn: aCanvas [
 	self borderStyle frameRectangle: self bounds on: aCanvas
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SpIndeterminatedProgressBarMorph >> indeterminateStepIncrease [
 	"To get a feeling of recent design we use a progression with two timing and we switch the speed at each passage."
 
@@ -64,7 +64,7 @@ SpIndeterminatedProgressBarMorph >> initialize [
 	oddPassage := true
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SpIndeterminatedProgressBarMorph >> step [
 	"At each step we are increasing the value of the progress bar. If we get at the end, we juts begin once again."
 
@@ -81,7 +81,7 @@ SpIndeterminatedProgressBarMorph >> step [
 	oddPassage := oddPassage not
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SpIndeterminatedProgressBarMorph >> stepTime [
 	^ 20
 ]

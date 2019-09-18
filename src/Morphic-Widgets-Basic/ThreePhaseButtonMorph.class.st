@@ -296,7 +296,7 @@ ThreePhaseButtonMorph >> state: newState [
 	self invalidRect: bounds.	"All three images must be the same size"
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ThreePhaseButtonMorph >> step [
 	(self hasProperty: #doesButtonAction) ifTrue:[
 		self doButtonAction.
@@ -304,7 +304,7 @@ ThreePhaseButtonMorph >> step [
 	].
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 ThreePhaseButtonMorph >> stepTime [
 	(self hasProperty: #doesButtonAction) ifTrue:[^1].
 	^super stepTime
@@ -349,7 +349,7 @@ state := state veryDeepCopyWith: deepCopier.
 actWhen := actWhen.		"Symbol"
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 ThreePhaseButtonMorph >> wantsSteps [
 	^self hasProperty: #doesButtonAction
 ]

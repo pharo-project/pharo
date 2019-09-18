@@ -1913,25 +1913,25 @@ Object >> species [
 	^self class
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepAt: millisecondClockValue in: aWindow [
 
 	^ self stepIn: aWindow
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepIn: aWindow [
 
 	^ self step
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepTime [
 	
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepTimeIn: aSystemWindow [
 	
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
@@ -2164,7 +2164,7 @@ Object >> veryDeepInner: deepCopier [
 	"avoid to use me we will deprecate it in the future"
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> wantsSteps [
 	"Overridden by morphic classes whose instances want to be stepped,
 	or by model classes who want their morphic views to be stepped."
@@ -2172,7 +2172,7 @@ Object >> wantsSteps [
 	^ false
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> wantsStepsIn: aSystemWindow [
 	
 	^ self wantsSteps
