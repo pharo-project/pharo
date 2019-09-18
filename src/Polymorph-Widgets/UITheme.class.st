@@ -31,6 +31,16 @@ UITheme class >> allThemeClasses [
 		a themeName <= b themeName]
 ]
 
+{ #category : #accessing }
+UITheme class >> baseColor [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+UITheme class >> baseSelectionColor [ 
+	^ self subclassResponsibility 
+]
+
 { #category : #query }
 UITheme class >> beCurrent [
 	"Make a new instance of the receiver be the current theme."
@@ -138,8 +148,12 @@ UITheme class >> isCurrent [
 
 { #category : #accessing }
 UITheme class >> lightBaseColor [
+	self subclassResponsibility 
+]
 
-	^ Color white
+{ #category : #accessing }
+UITheme class >> lightSelectionColor [ 
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -195,6 +209,11 @@ UITheme class >> resetDefaultSettings [
 	"Reset the default settings to use the original values."
 
 	self defaultSettings: nil
+]
+
+{ #category : #initialization }
+UITheme class >> setPreferredPreferences [ 
+	self subclassResponsibility 
 ]
 
 { #category : #accessing }
