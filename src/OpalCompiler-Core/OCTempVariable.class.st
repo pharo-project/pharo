@@ -57,10 +57,6 @@ OCTempVariable >> hash [
 
 { #category : #debugging }
 OCTempVariable >> indexFromIRFromScope: aScope [
-	"I think we do not need the aScope parameter: scope of the var will always be aScope, 
-	as shown by the assert."
-	"next step: use indexFromIR instead"
-	self assert: scope == aScope.
 	^aScope outerNotOptimizedScope node irInstruction indexForVarNamed: name
 ]
 
