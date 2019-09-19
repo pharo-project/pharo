@@ -1431,6 +1431,12 @@ BIConfigurableFormatter >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+BIConfigurableFormatter >> visitEmptyNode: aSequenceNode [
+	self formatTemporariesFor: aSequenceNode.
+	self formatCommentsFor: aSequenceNode
+]
+
+{ #category : #visiting }
 BIConfigurableFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [ 
 	| brackets |
 	codeStream nextPut: $#.
