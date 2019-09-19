@@ -20,7 +20,8 @@ CDSlotParserSimpleInstanceVariableTest >> classDefinitionString [
 
 	^ '{superclassname} subclass: #{classname}
 		slots: \{
-		''instVar3''
+		''{instvar1}'' .
+		''{instvar2}''
 		\}
 		classVariableNames: ''{classvar1} {classvar2}''
 		package: #MyPackage'
@@ -38,7 +39,7 @@ CDSlotParserSimpleInstanceVariableTest >> testClassDefFromLegacyString [
 
 	" slot: { #instVar3} "
 
-	self assert: classDefinition slotNodes first name equals: 'instVar3'.
+	self assert: classDefinition slotNodes first name equals: 'first'.
 	self
 		assert: classDefinition slotNodes first slotClassName
 		equals: #InstanceVariableSlot.
