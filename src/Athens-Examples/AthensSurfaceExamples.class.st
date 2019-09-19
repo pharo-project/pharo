@@ -662,11 +662,6 @@ AthensSurfaceExamples >> createSurface: anExtent [
 	^ self class newSurface: anExtent
 ]
 
-{ #category : #initialization }
-AthensSurfaceExamples >> initialize [
-	super initialize
-]
-
 { #category : #accessing }
 AthensSurfaceExamples >> renderBlock [
 	

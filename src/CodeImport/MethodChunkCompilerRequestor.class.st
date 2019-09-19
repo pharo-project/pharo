@@ -22,11 +22,6 @@ MethodChunkCompilerRequestor >> fileCompileRequestor: anObject [
 	fileCompileRequestor := anObject
 ]
 
-{ #category : #initialization }
-MethodChunkCompilerRequestor >> initialize [
-	super initialize
-]
-
 { #category : #accessing }
 MethodChunkCompilerRequestor >> interactive [
 	^ interactive

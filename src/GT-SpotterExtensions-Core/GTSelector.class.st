@@ -52,11 +52,6 @@ GTSelector >> implementors [
 			collect: [ :each | each compiledMethod ] ]
 ]
 
-{ #category : #initialization }
-GTSelector >> initialize [
-	super initialize
-]
-
 { #category : #accessing }
 GTSelector >> name [
 	^ name

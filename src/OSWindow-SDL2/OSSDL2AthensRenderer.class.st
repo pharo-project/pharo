@@ -49,11 +49,6 @@ OSSDL2AthensRenderer >> destroy [
 ]
 
 { #category : #initialization }
-OSSDL2AthensRenderer >> initialize [
-	super initialize
-]
-
-{ #category : #initialization }
 OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [ 
 	self initialize.
 	self window: aWindowHandle.
