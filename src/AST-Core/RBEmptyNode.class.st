@@ -7,14 +7,16 @@ Class {
 	#name : #RBEmptyNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'start'
+		'start',
+		'periods'
 	],
 	#category : #'AST-Core-Nodes'
 }
 
 { #category : #accessing }
-RBEmptyNode class >> at: aPosition [
+RBEmptyNode class >> at: aPosition periods: aColl [
 	^ self new
+		periods: aColl;
 		start: aPosition;
 		yourself
 ]
@@ -32,6 +34,16 @@ RBEmptyNode >> isEmptyNode [
 { #category : #testing }
 RBEmptyNode >> isFaulty [
 	^ true
+]
+
+{ #category : #accessing }
+RBEmptyNode >> periods [
+	^ periods
+]
+
+{ #category : #accessing }
+RBEmptyNode >> periods: anObject [
+	periods := anObject
 ]
 
 { #category : #accessing }
