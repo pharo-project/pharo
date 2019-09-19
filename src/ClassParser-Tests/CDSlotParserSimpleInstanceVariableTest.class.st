@@ -31,7 +31,8 @@ CDSlotParserSimpleInstanceVariableTest >> classDefinitionString [
 				'instvar1' -> self firstInstanceVariableName.
 				'instvar2' -> self secondInstanceVariableName.
 				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName. } asDictionary
+				'classvar2' -> self secondClassVariableName 
+		} asDictionary
 ]
 
 { #category : #tests }

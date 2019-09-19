@@ -10,6 +10,7 @@ CDSlotParserArgumentingSlotTest >> classDefinitionString [
 	^ '{superclassname} subclass: #{classname}
 		slots: \{
 		''{instvar1}'' =>  (LazyClassVariable default: 5). 
+		''{instvar2}'' =>  (ObservableSlot default: 5). 
 		\}
 		classVariableNames: ''''
 		package: #MyPackage'
