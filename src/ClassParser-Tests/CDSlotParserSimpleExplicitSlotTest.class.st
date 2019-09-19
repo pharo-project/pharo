@@ -1,15 +1,25 @@
+"
+A slot definition can be composed as follows: 
+
+{
+#x .
+#x => Observable .
+#x => (Observable keyword: literal message: literal2)
+}
+This test is about the second case.
+ 
+"
 Class {
-	#name : #CDMoreComplexSlotParserTest,
+	#name : #CDSlotParserSimpleExplicitSlotTest,
 	#superclass : #CDClassDefinitionParserTest,
 	#category : #'ClassParser-Tests'
 }
 
 { #category : #helpers }
-CDMoreComplexSlotParserTest >> classDefinitionString [
+CDSlotParserSimpleExplicitSlotTest >> classDefinitionString [
 
 	^ '{superclassname} subclass: #{classname}
 		slots: \{
-		''{instvar1}'' =>  LazyClassVariable default: 5. 
 		''{instvar2}'' => InstanceVariableSlot.
 		''instVar3''
 		\}
@@ -25,8 +35,9 @@ CDMoreComplexSlotParserTest >> classDefinitionString [
 ]
 
 { #category : #helpers }
-CDMoreComplexSlotParserTest >> testClassDefFromLegacyStringHasSlots [
+CDSlotParserSimpleExplicitSlotTest >> testClassDefSimpleSlotDefinition [
 
+	" slot: { #instVar3 => LazySlot} "
 	self
 		assert: classDefinition slotNodes second name
 		equals: self secondInstanceVariableName.
@@ -36,27 +47,6 @@ CDMoreComplexSlotParserTest >> testClassDefFromLegacyStringHasSlots [
 	self
 		assert: classDefinition slotNodes second initializationMessage printString
 		equals: ''.
-		
-	self assert: classDefinition slotNodes third name equals: 'instVar3'.
-	self
-		assert: classDefinition slotNodes third slotClassName
-		equals: #InstanceVariableSlot.
-	self
-		assert: classDefinition slotNodes third initializationMessage printString
-		equals: ''.
-]
-
-{ #category : #helpers }
-CDMoreComplexSlotParserTest >> testClassDefWithInitializationSlot [
-	self
-		assert: classDefinition slotNodes first name
-		equals: self firstInstanceVariableName.
-	self
-		assert: classDefinition slotNodes first slotClassName
-		equals: #LazyClassVariable.
-	self
-		assert: classDefinition slotNodes first initializationMessage printString
-		equals: 'default: 5'.
 		
 	
 ]

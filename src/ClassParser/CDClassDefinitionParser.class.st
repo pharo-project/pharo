@@ -196,7 +196,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 			^ self ].
 
 	"when a slot is just 'inst' => InstanceVariableSlot."
-	aRBMessageNode receiver isLiteralNode
+	aRBMessageNode arguments first isLiteralNode
 		ifTrue: [ | slot |
 			slot := self slotNodeClass
 				node: aRBMessageNode
@@ -208,8 +208,8 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 			classDefinition addSlot: slot.
 			^ self ].
 
-	"when a slot is just 'inst' => InstanceVariableSlot default: 5."
-	aRBMessageNode receiver selector = '=>'
+	"when a slot is just 'inst' => (InstanceVariableSlot default: 5)."
+	aRBMessageNode selector = '=>'
 		ifTrue: [ "If we are here we did not recognize the slot syntax"
 			| slot slotDefNode |
 			slotDefNode := aRBMessageNode receiver.
