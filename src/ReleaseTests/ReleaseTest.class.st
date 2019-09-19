@@ -193,6 +193,13 @@ ReleaseTest >> testNoEmptyPackages [
 ]
 
 { #category : #tests }
+ReleaseTest >> testNoNilAssignmentInInitializeMethod [
+	
+	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
+	
+]
+
+{ #category : #tests }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 	
