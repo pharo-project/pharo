@@ -26,17 +26,25 @@ Class {
 	#name : #RBSlotInitializationNode,
 	#superclass : #RBNode,
 	#instVars : [
-		'selector',
-		'argument'
+		'selectorParts',
+		'argumentParts'
 	],
 	#category : #'ClassParser-Model'
 }
 
 { #category : #'instance creation' }
-RBSlotInitializationNode class >> selector: aSelector argument: value [
+RBSlotInitializationNode class >> selector: aSelector arguments: aCollection [
 	^ self new
 		selector: aSelector;
-		argument: value;
+		argument: aCollection;
+		yourself
+]
+
+{ #category : #'instance creation' }
+RBSlotInitializationNode class >> selectorParts: selectors arguments: aCollection [
+	^ self new
+		selectorParts: selectors;
+		argumentParts: aCollection;
 		yourself
 ]
 
@@ -44,8 +52,8 @@ RBSlotInitializationNode class >> selector: aSelector argument: value [
 RBSlotInitializationNode >> = anObject [ 
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
- 	(self selector = anObject selector) ifFalse: [^false].
-	^ self argument = anObject argument
+ 	(self selectorParts = anObject selectorParts) ifFalse: [^false].
+	^ self argumentParts = anObject argumentParts
 ]
 
 { #category : #visiting }
@@ -55,13 +63,13 @@ RBSlotInitializationNode >> acceptVisitor: aVisitor [
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> argument [
-	^ argument
+RBSlotInitializationNode >> argumentParts [
+	^ argumentParts 
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> argument: anInteger [ 
-	argument := anInteger
+RBSlotInitializationNode >> argumentParts: aCollection [ 
+	argumentParts := aCollection
 ]
 
 { #category : #comparing }
@@ -73,13 +81,13 @@ RBSlotInitializationNode >> hash [
 RBSlotInitializationNode >> initialize [ 
 	
 	super initialize.
-	selector := #''.
-	argument := ''
+	selectorParts := #().
+	argumentParts := #()
 ]
 
 { #category : #testing }
 RBSlotInitializationNode >> isNull [ 
-	^ selector = #''
+	^ selectorParts isEmpty
 ]
 
 { #category : #printing }
@@ -87,19 +95,29 @@ RBSlotInitializationNode >> printOn: aStream [
 	"We make sure that the result is empty to be used like a bad null pattern now."
 	
 	self isNull 
-		ifFalse: [  
-			aStream 
-				nextPutAll: selector asString; 
-	 			space;
-				nextPutAll: argument asString ]
+		ifFalse: [ 
+				| size |
+				size := selectorParts size. 
+				selectorParts withIndexDo: [ :each :i |
+							aStream 
+								<< each asString ;
+								<< ' ';
+								print: (argumentParts at: i).
+							i = size ifFalse: [ aStream	<< ' ']]]
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> selector [
-	^ selector
+RBSlotInitializationNode >> selectorParts [
+	^ selectorParts 
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> selector: aSymbol [
-	selector := aSymbol
+RBSlotInitializationNode >> selectorParts: aCollection [ 
+	selectorParts := aCollection
+]
+
+{ #category : #accessing }
+RBSlotInitializationNode >> selectorString [
+	^ String streamContents: [ :s |  
+			selectorParts do: [ :e | s <<e ] ] 
 ]

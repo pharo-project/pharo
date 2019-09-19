@@ -10,25 +10,23 @@ Class {
 { #category : #tests }
 RBSlotInitializationNodeTest >> testEquality [
 	| s1 s2 |
-	s1 := RBSlotInitializationNode selector: #default: argument: 5.
-
-	s2 := RBSlotInitializationNode selector: #default: argument: 5.
-
-	self assert: s1 = s2
+	s1 := RBSlotInitializationNode selectorParts: #(#default:) argumentParts: 5.
+	s2 := RBSlotInitializationNode selectorParts: #(#default:) argumentParts: 5.
+	self assert: s1 equals: s2
 ]
 
 { #category : #tests }
 RBSlotInitializationNodeTest >> testIsNull [
 	| s |
 	s := RBSlotInitializationNode new.
-	self assert: s selector equals: #''.
+	self assert: s selectorString equals: ''.
 	self assert: s isNull
 ]
 
 { #category : #tests }
 RBSlotInitializationNodeTest >> testPrintString [
 	| s1 |
-	s1 := RBSlotInitializationNode selector: #default: argument: 5.
+	s1 := RBSlotInitializationNode selectorParts: #(#default:) argumentParts: #(5).
 	self assert: s1 printString equals: 'default: 5'
 ]
 
@@ -40,10 +38,34 @@ RBSlotInitializationNodeTest >> testPrintStringANullInitializationMessage [
 ]
 
 { #category : #tests }
+RBSlotInitializationNodeTest >> testPrintStringMultiple [
+	| s1 |
+	s1 := RBSlotInitializationNode selectorParts: #(default: named:) argumentParts: #(5 'titi').
+	self assert: s1 printString equals: 'default: 5 named: ''titi'''
+]
+
+{ #category : #tests }
+RBSlotInitializationNodeTest >> testSelector [
+	| s1 |
+	s1 := RBSlotInitializationNode selectorParts: #default:named: argumentParts: #(5 'titi').
+	self assert: s1 selectorString equals: 'default:named:'.
+]
+
+{ #category : #tests }
 RBSlotInitializationNodeTest >> testSlotInitializationCreation [
 
 	| s | 
-	s := RBSlotInitializationNode selector: #default: argument: 5.
-	self assert: s selector equals: #default:.
-	self assert: s argument equals: 5
+	s := RBSlotInitializationNode selectorParts: #(#default:) arguments: #(5).
+	self assert: s selectorString equals: #default:.
+	self assert: s argumentParts equals: #(5)
+]
+
+{ #category : #tests }
+RBSlotInitializationNodeTest >> testSlotMultipleInitializationCreation [
+
+	| s | 
+	s := RBSlotInitializationNode selectorParts: #(default: named:) arguments: #(5 'titi').
+	self assert: s selectorParts equals: #(default: named:).
+	self assert: s selectorString equals: 'default:named:'.
+	self assert: s argumentParts equals: #(5 'titi')
 ]
