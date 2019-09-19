@@ -134,7 +134,7 @@ OCTempVariable >> markWrite [
 
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
-	^ aContext tempAt: self indexFromIR
+	^ aContext tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name)
 ]
 
 { #category : #debugging }
