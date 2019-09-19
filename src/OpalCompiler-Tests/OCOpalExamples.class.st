@@ -20,7 +20,7 @@ OCOpalExamples class >> compilerClass [
 	^OpalCompiler
 ]
 
-{ #category : #compiler }
+{ #category : #initialization }
 OCOpalExamples class >> reset [
 
 	ClassVariable := nil

@@ -181,7 +181,7 @@ SliderPresenter >> quantum: aNumber [
 	quantum value: aNumber
 ]
 
-{ #category : #api }
+{ #category : #initialization }
 SliderPresenter >> reset [
 	"<api:#do>"
 	"Reset the cursor to the minimum value"

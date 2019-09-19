@@ -42,7 +42,7 @@ AthensCanvas class >> on: aSurface [
 	^ self basicNew initializeWithSurface: aSurface
 ]
 
-{ #category : #private }
+{ #category : #initialization }
 AthensCanvas class >> reset [
 
 	StrokePaintCache := LRUCache new maximumWeight: 100.
