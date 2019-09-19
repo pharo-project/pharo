@@ -150,7 +150,7 @@ CircularMemoryLogger >> recordings [
 			ifFalse: [ recordings first: index ])
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CircularMemoryLogger >> reset [
 	"it simply removes all recordings without
 	affecting the running status of the logger"

@@ -53,7 +53,7 @@ SpecPragmaCollector >> installSystemNotifications [
 	"We do not need to register anything for spec, and if we do it will make it really slow"
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 SpecPragmaCollector >> reset [
 	"reinitialize current system settings"
 	self

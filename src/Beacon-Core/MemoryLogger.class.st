@@ -34,7 +34,7 @@ Class {
 	#category : #'Beacon-Core-Loggers'
 }
 
-{ #category : #registering }
+{ #category : #initialization }
 MemoryLogger class >> reset [
 	self instance reset
 ]
@@ -133,7 +133,7 @@ MemoryLogger >> recordings [
 	^ recordings copy
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MemoryLogger >> reset [
 	"it simply removes all recordings without
 	affecting the running status of the logger"
