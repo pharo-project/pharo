@@ -54,9 +54,7 @@ GTSelector >> implementors [
 
 { #category : #initialization }
 GTSelector >> initialize [
-	super initialize.
-	
-	methods := nil
+	super initialize
 ]
 
 { #category : #accessing }

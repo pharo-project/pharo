@@ -50,6 +50,7 @@ RBParser class >> parseExpression: aString onError: aBlock [
 	parser errorBlock: aBlock.
 	parser initializeParserWith: aString.
 	node := parser parseExpression: aString.
+	node statements ifEmpty: [ ^ RBEmptyNode at: node start ].
 	^(node statements size == 1 and: [node temporaries isEmpty]) 
 		ifTrue: [node statements first]
 		ifFalse: [node]

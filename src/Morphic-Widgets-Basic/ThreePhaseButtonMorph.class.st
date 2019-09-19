@@ -167,16 +167,14 @@ ThreePhaseButtonMorph >> helpText: aString [
 
 { #category : #initialization }
 ThreePhaseButtonMorph >> initialize [
-
 	super initialize.
 	state := #off.
-	target := nil.
 	actionSelector := #flash.
 	arguments := EmptyArray.
-	actWhen := #buttonUp.
+	actWhen := #buttonUp
 
 	"self on: #mouseStillDown send: #dragIfAuthoring: to: self."
-		"real move should include a call on dragIfAuthoring: "
+	"real move should include a call on dragIfAuthoring: "
 ]
 
 { #category : #testing }

@@ -24,12 +24,7 @@ MethodChunkCompilerRequestor >> fileCompileRequestor: anObject [
 
 { #category : #initialization }
 MethodChunkCompilerRequestor >> initialize [
-
-	super initialize.
-
-	fileCompileRequestor := nil.
-	interactive := nil.
-	methodChunk := nil.
+	super initialize
 ]
 
 { #category : #accessing }

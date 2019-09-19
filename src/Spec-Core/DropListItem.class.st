@@ -70,12 +70,10 @@ DropListItem >> icon: anObject [
 
 { #category : #initialization }
 DropListItem >> initialize [
-
 	super initialize.
 
-	actionHolder := [] asValueHolder.
-	displayBlock := [ :e | e printString ].
-	icon := nil
+	actionHolder := [  ] asValueHolder.
+	displayBlock := [ :e | e printString ]
 ]
 
 { #category : #accessing }

@@ -50,11 +50,7 @@ OSSDL2AthensRenderer >> destroy [
 
 { #category : #initialization }
 OSSDL2AthensRenderer >> initialize [
-
-	super initialize.
-	sdlSurface := nil.
-	texture := nil.
-	renderer := nil.
+	super initialize
 ]
 
 { #category : #initialization }
