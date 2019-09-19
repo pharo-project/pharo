@@ -20,3 +20,8 @@ Class {
 RBNode >> acceptVisitor: aProgramNodeVisitor [
 	self subclassResponsibility
 ]
+
+{ #category : #testing }
+RBNode >> isEmptyNode [
+	^ false
+]

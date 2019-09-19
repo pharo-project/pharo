@@ -445,7 +445,7 @@ RBSequenceNode >> statements [
 
 { #category : #accessing }
 RBSequenceNode >> statements: stmtCollection [ 
-	statements := stmtCollection.
+	statements := stmtCollection reject: [ :each | each isEmptyNode ].
 	statements do: [:each | each parent: self]
 ]
 

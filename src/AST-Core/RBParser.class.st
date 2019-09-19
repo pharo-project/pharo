@@ -50,7 +50,11 @@ RBParser class >> parseExpression: aString onError: aBlock [
 	parser errorBlock: aBlock.
 	parser initializeParserWith: aString.
 	node := parser parseExpression: aString.
-	^(node statements size == 1 and: [node temporaries isEmpty]) 
+	
+	"If there is no statement, it means it is not really a RBSequenceNode but an RBEmptyNode. It can happen while parsing a rewrite rule."
+	node statements ifEmpty: [ ^ RBEmptyNode at: node start ].
+	
+	^(node statements size = 1 and: [node temporaries isEmpty]) 
 		ifTrue: [node statements first]
 		ifFalse: [node]
 ]

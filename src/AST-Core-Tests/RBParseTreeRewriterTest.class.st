@@ -17,6 +17,15 @@ RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
 ]
 
 { #category : #helpers }
+RBParseTreeRewriterTest >> methodWithNilAssignment [
+	| temp |
+	temp := 1.
+	temp := 1 + temp.
+	temp := nil.
+	
+]
+
+{ #category : #helpers }
 RBParseTreeRewriterTest >> parseExpression: aString [
 	^ self parserClass parseExpression: aString
 ]
@@ -328,6 +337,15 @@ RBParseTreeRewriterTest >> testRewrites [
 		self compare: (self parseExpression: (rewrite executeTree: (self parseExpression: each first);
 				 tree) formattedCode)
 			to: (self parseExpression: (each at: 2))]
+]
+
+{ #category : #'tests - ok' }
+RBParseTreeRewriterTest >> testRewritesWithEmptyRewriteRulesRemoveMatchingNodes [
+	| node |
+	rewriter replace: '`var := nil.' with: ''.
+
+	node := (self class >> #methodWithNilAssignment) parseTree.
+	self assert: (rewriter executeTree: node) description: 'The execution of the rewriter should update the AST of the test method since it has a nil assignment.'
 ]
 
 { #category : #setup }

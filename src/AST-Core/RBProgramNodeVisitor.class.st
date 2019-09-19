@@ -46,6 +46,11 @@ RBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitEmptyNode: aLiteralNode [
+	
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitGlobalNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
 ]
