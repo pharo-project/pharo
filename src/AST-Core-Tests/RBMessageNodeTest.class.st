@@ -5,6 +5,59 @@ Class {
 }
 
 { #category : #testing }
+RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
+	| tree message |
+	tree := self parseMethod: 'test 1 + 2 '.
+	message := tree sendNodes first.
+	self assert: message argumentPartStrings equals: #('2').
+		
+		
+]
+
+{ #category : #testing }
+RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
+	| tree message |
+	tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
+	message := tree sendNodes first.
+	self assert: message argumentPartStrings asArray equals: #('x + 2' '(y foo: 3)')
+		
+		
+]
+
+{ #category : #testing }
+RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
+	| tree message |
+	tree := self parseMethod: 'test self between: 2 and: 3'.
+	message := tree sendNodes first.
+	self assert: message argumentPartStrings asArray equals: #('2' '3').
+		
+		
+]
+
+{ #category : #testing }
+RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
+
+		| tree message |
+		tree := self parseMethod: 'test self between: x and: y'.
+		message := tree sendNodes first.
+		self assert: message argumentPartStrings asArray equals: #('x' 'y').
+		
+		tree := self parseMethod: 'test self between: x and: y and: zzz'.
+		message := tree sendNodes first.
+		self assert: message argumentPartStrings asArray equals: #('x' 'y' 'zzz')
+]
+
+{ #category : #testing }
+RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
+	| tree message |
+	tree := self parseMethod: 'test 1 foo '.
+	message := tree sendNodes first.
+	self assert: message argumentPartStrings equals: #().
+		
+		
+]
+
+{ #category : #testing }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
@@ -59,10 +112,10 @@ RBMessageNodeTest >> testSelectorInterval [
 
 { #category : #testing }
 RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
-		| tree message |
-		tree := self parseMethod: 'test 1 + 2 '.
-		message := tree sendNodes first.
-		self assert: message selectorParts equals: #(#+).
+	| tree message |
+	tree := self parseMethod: 'test 1 + 2 '.
+	message := tree sendNodes first.
+	self assert: message selectorParts equals: #(#+).
 		
 		
 ]

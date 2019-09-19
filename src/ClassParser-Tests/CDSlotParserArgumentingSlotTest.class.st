@@ -12,13 +12,15 @@ CDSlotParserArgumentingSlotTest >> classDefinitionString [
 		''{instvar1}'' =>  (LazyClassVariable default: 5). 
 		''{instvar2}'' =>  (ObservableSlot default: 5). 
 		\}
-		classVariableNames: ''''
+		classVariableNames: ''{classvar1} {classvar2}''
 		package: #MyPackage'
 			format: { 
 				'classname' -> self className.
 				'superclassname' -> self superclassName.
 				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName } asDictionary
+				'instvar2' -> self secondInstanceVariableName.
+				'classvar1' -> self firstClassVariableName.
+				'classvar2' -> self secondClassVariableName } asDictionary
 ]
 
 { #category : #tests }

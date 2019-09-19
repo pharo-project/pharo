@@ -194,37 +194,46 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.
 			^ self ].
-
-	"when a slot is just 'inst' => InstanceVariableSlot."
-	aRBMessageNode arguments first isGlobal
-		ifTrue: [ | slot |
-			slot := self slotNodeClass
-				node: aRBMessageNode
-				name: aRBMessageNode receiver value
-				slotClassName: aRBMessageNode arguments first name
-				initializationMessage: (self slotInitializationNodeClass new)
-				start: aRBMessageNode start
-				stop: aRBMessageNode stop.
-			classDefinition addSlot: slot.
-			^ self ].
-
-	"when a slot is just 'inst' => (InstanceVariableSlot default: 5)."
-	aRBMessageNode selector = '=>'
-		ifTrue: [ "If we are here we did not recognize the slot syntax"
-			| slot slotDefNode |
-			slotDefNode := aRBMessageNode receiver.
-			slot := self slotNodeClass
-				node: aRBMessageNode
-				name: slotDefNode value receiver value
-				slotClassName: slotDefNode arguments first name
-				initializationMessage:
-					(self slotInitializationNodeClass
-						selector: aRBMessageNode selector
-						argument: aRBMessageNode arguments first value)
-				start: aRBMessageNode start
-				stop: aRBMessageNode stop.
-			classDefinition addSlot: slot.
-			^ self ]
+	
+	aRBMessageNode selector = '=>' 
+		ifTrue: [  
+		aRBMessageNode arguments first isMessage
+		
+		ifFalse: [  
+			"when a slot is just 'inst' => InstanceVariableSlot."
+			aRBMessageNode arguments first isGlobal
+				ifTrue: [ | slot |
+					slot := self slotNodeClass
+						node: aRBMessageNode
+						name: aRBMessageNode receiver value
+						slotClassName: aRBMessageNode arguments first name
+						initializationMessage: (self slotInitializationNodeClass new)
+						start: aRBMessageNode start
+						stop: aRBMessageNode stop.
+						classDefinition addSlot: slot.
+				^ self ].
+				"we will have to do something for example if we have 
+				#x => 2"
+				]
+			ifTrue: [  
+				"when a slot is just 'inst' => (InstanceVariableSlot default: 5)."
+				
+				| slot slotDefNode |
+				slotDefNode := aRBMessageNode.
+				self halt.
+				slot := self slotNodeClass
+					node: aRBMessageNode
+					name: slotDefNode receiver value
+					slotClassName: slotDefNode arguments first receiver name
+					initializationMessage:
+						(self slotInitializationNodeClass
+							selector: aRBMessageNode arguments first selector
+							argument: (aRBMessageNode arguments first argumentPartStrings))
+					start: aRBMessageNode start
+					stop: aRBMessageNode stop.
+				classDefinition addSlot: slot.
+				^ self ]
+		]
 ]
 
 { #category : #parsing }
