@@ -172,8 +172,21 @@ OCAbstractMethodScope >> localTemps [
 ]
 
 { #category : #lookup }
+OCAbstractMethodScope >> lookupAndReadVar: name inContext: aContext [
+	"We lookup a variable in a context. If it not in this context, we look in the outer context using the corresponding outer scope. If found, we return the value"
+	
+	| variable theValue |
+	
+	variable := self
+		variableNamed: name
+		ifAbsent: [ 	^self outerScopeLookupVar: name inContext: aContext].
+	theValue := variable readFromContext: aContext scope: self.
+	^ theValue
+]
+
+{ #category : #lookup }
 OCAbstractMethodScope >> lookupTempVector: name inContext: aContext [
-	"Similar to lookupVariable:inContext: but looks for a temp vector. If we don't find the temp vector (because it was nilled or not created), we lookup in the outer context with the corresponding outer scope"
+	"Similar to lookupAndReadVar:inContext: but looks for a temp vector. If we don't find the temp vector (because it was nilled or not created), we lookup in the outer context with the corresponding outer scope"
 	
 	| variable theVector |
 	variable := self
@@ -195,23 +208,10 @@ OCAbstractMethodScope >> lookupVar: name [
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupVar: name inContext: aContext [
-	"We lookup a variable in a context. If it not in this context, we look in the outer context using the corresponding outer scope"
-	
-	| variable theValue |
-	variable := self
-		variableNamed: name
-		ifAbsent: [ 	^self outerScopeLookupVar: name inContext: aContext].
-	theValue := variable readFromContext: aContext scope: self.
-	^ theValue
-]
-
-{ #category : #lookup }
 OCAbstractMethodScope >> lookupVarForDeclaration: name [
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = 'thisContext' ifTrue: [^ thisContextVar].
 	^self outerScope lookupVarForDeclaration: name
-	
 ]
 
 { #category : #debugging }
