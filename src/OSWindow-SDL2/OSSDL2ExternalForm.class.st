@@ -44,13 +44,6 @@ OSSDL2ExternalForm >> destroySurface [
 	].
 ]
 
-{ #category : #initialization }
-OSSDL2ExternalForm >> initialize [
-	super initialize.
-	pointer := nil.
-	
-]
-
 { #category : #accessing }
 OSSDL2ExternalForm >> pointer [
 	^pointer

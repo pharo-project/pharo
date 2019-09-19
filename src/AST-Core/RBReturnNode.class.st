@@ -71,11 +71,9 @@ RBReturnNode >> hash [
 
 { #category : #initialization }
 RBReturnNode >> initialize [
-
 	super initialize.
 
-	return := 0.
-	value := nil.
+	return := 0
 ]
 
 { #category : #testing }

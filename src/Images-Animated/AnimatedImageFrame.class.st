@@ -63,11 +63,9 @@ AnimatedImageFrame >> form: aForm [
 { #category : #initialization }
 AnimatedImageFrame >> initialize [
 	super initialize.
-	offset := 0@0.
+	offset := 0 @ 0.
 	delay := self defaultDelay.
-	form := nil.
-	disposal := #otherDisposal.
-	
+	disposal := #otherDisposal
 ]
 
 { #category : #accessing }
