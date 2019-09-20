@@ -75,7 +75,7 @@ DebuggerMethodMapOpal >> tempNamed: name in: aContext [
 	| scope var |
 	scope := aContext sourceNodeExecuted scope.
 	var := scope lookupVar: name.
-	^var searchFromContext: aContext scope: scope.
+	^var readFromContext: aContext scope: scope.
 		
 ]
 

@@ -180,7 +180,7 @@ OCAbstractMethodScope >> lookupAndReadVar: name inContext: aContext [
 	variable := self
 		variableNamed: name
 		ifAbsent: [ 	^self outerScopeLookupVar: name inContext: aContext].
-	theValue := variable readFromContext: aContext scope: self.
+	theValue := variable readFromContext: aContext.
 	^ theValue
 ]
 
@@ -192,7 +192,7 @@ OCAbstractMethodScope >> lookupTempVector: name inContext: aContext [
 	variable := self
 		variableNamed: name
 		ifAbsent: [^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
-	theVector := variable readFromContext: aContext scope: self.
+	theVector := variable readFromContext: aContext.
 	theVector ifNil: [ ^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
 	^ { variable . theVector }
 ]

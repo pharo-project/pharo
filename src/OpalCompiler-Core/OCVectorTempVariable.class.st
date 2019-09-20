@@ -36,16 +36,6 @@ OCVectorTempVariable >> isTempVectorTemp [
 OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
 	| offset pairVariableVector |
-	self isThisEverCalled: 'this should never be called on vector temps'.
-	pairVariableVector := contextScope lookupTempVector: vectorName inContext: aContext.
-	offset := pairVariableVector first indexInTempVectorFromIR: name.
-	^pairVariableVector second at: offset.
-]
-
-{ #category : #debugging }
-OCVectorTempVariable >> searchFromContext: aContext scope: contextScope [
-
-	| offset pairVariableVector |
 	pairVariableVector := contextScope lookupTempVector: vectorName inContext: aContext.
 	offset := pairVariableVector first indexInTempVectorFromIR: name.
 	^pairVariableVector second at: offset.
@@ -72,7 +62,7 @@ OCVectorTempVariable >> vectorOffset [
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	| tempVectorVar theVector offset |
 	tempVectorVar := contextScope lookupVar: vectorName.
-	theVector := tempVectorVar readFromContext: aContext scope: tempVectorVar scope.
+	theVector := tempVectorVar readFromContext: aContext.
 	offset := tempVectorVar indexInTempVectorFromIR: name.
 	^theVector at: offset put: aValue.
 ]
