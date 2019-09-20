@@ -36,6 +36,7 @@ OCVectorTempVariable >> isTempVectorTemp [
 OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
 	| offset pairVariableVector |
+	self isThisEverCalled: 'this should never be called on vector temps'.
 	pairVariableVector := contextScope lookupTempVector: vectorName inContext: aContext.
 	offset := pairVariableVector first indexInTempVectorFromIR: name.
 	^pairVariableVector second at: offset.

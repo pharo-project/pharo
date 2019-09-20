@@ -54,21 +54,6 @@ OCExtraBindingScope >> lookupVar: name [
 	^ super lookupVar: name 
 ]
 
-{ #category : #lookup }
-OCExtraBindingScope >> lookupVar: name inContext: context [
-
-	name = 'self' ifTrue: [  ^outerScope lookupVar: name inContext: context outerContext].
-	name = 'super' ifTrue: [  ^outerScope lookupVar: name inContext: context outerContext].
-	"Globals are not shadowed"
-	name first isUppercase ifTrue: [  | found |
-		found := outerScope outerScope lookupVar: name inContext: context outerContext.
-		found ifNotNil: [ ^found ]].
-	
-	(bindings bindingOf: name asSymbol) ifNotNil: [:assoc | 
-		^ OCLiteralVariable new assoc: assoc; scope: self; yourself].
-	^ super lookupVar: name inContext: context outerContext.
-]
-
 { #category : #'instance creation' }
 OCExtraBindingScope >> newMethodScope [
 	 
