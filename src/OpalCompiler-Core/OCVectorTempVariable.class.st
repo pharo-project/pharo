@@ -41,15 +41,6 @@ OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 	^pairVariableVector second at: offset.
 ]
 
-{ #category : #debugging }
-OCVectorTempVariable >> searchFromContext: aContext scope: contextScope [
-
-	| offset pairVariableVector |
-	pairVariableVector := contextScope lookupTempVector: vectorName inContext: aContext.
-	offset := pairVariableVector first indexInTempVectorFromIR: name.
-	^pairVariableVector second at: offset.
-]
-
 { #category : #accessing }
 OCVectorTempVariable >> vectorName [
 	^ vectorName
@@ -71,7 +62,7 @@ OCVectorTempVariable >> vectorOffset [
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	| tempVectorVar theVector offset |
 	tempVectorVar := contextScope lookupVar: vectorName.
-	theVector := tempVectorVar readFromContext: aContext scope: tempVectorVar scope.
+	theVector := tempVectorVar readFromContext: aContext.
 	offset := tempVectorVar indexInTempVectorFromIR: name.
 	^theVector at: offset put: aValue.
 ]

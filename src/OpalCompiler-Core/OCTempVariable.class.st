@@ -55,6 +55,11 @@ OCTempVariable >> hash [
 	^ name hash bitXor: (usage hash bitXor: scope hash).
 ]
 
+{ #category : #debugging }
+OCTempVariable >> indexFromIR [
+	^scope outerNotOptimizedScope node irInstruction indexForVarNamed: name
+]
+
 { #category : #initialization }
 OCTempVariable >> initialize [
 	super initialize.
@@ -128,19 +133,25 @@ OCTempVariable >> markWrite [
 ]
 
 { #category : #debugging }
-OCTempVariable >> readFromContext: aContext scope: contextScope [
-	^ aContext tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name)
+OCTempVariable >> readFromContext: aContext [
+
+	^ aContext tempAt: self indexFromIR
 ]
 
 { #category : #debugging }
-OCTempVariable >> searchFromContext: aContext scope: contextScope [
-
-	^ contextScope lookupVar: name inContext: aContext
+OCTempVariable >> readFromContext: aContext scope: contextScope [
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
+	^ self readFromContext: definitionContext
 ]
 
 { #category : #debugging }
 OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
-	^aContext 
-		tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name) 
+
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
+
+	^definitionContext 
+		tempAt: self indexFromIR
 		put: aValue
 ]
