@@ -28,13 +28,13 @@ SpSpinnerMorph class >> spinnerForm [
 		offset: 0 @ 0
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #acccessing }
 SpSpinnerMorph >> extent [
 
 	^ transformationMorph extent
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #initalize }
 SpSpinnerMorph >> initialize [
 
 	| wheelImageMorph |
@@ -46,19 +46,19 @@ SpSpinnerMorph >> initialize [
 	self addMorph: transformationMorph
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #initalize }
 SpSpinnerMorph >> newSpinnerMorph [
 
 	^ self spinnerForm asMorph
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #accessing }
 SpSpinnerMorph >> spinnerForm [
 
 	^ self class spinnerForm
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SpSpinnerMorph >> step [
 
 	| oldAngle transform |
@@ -69,13 +69,13 @@ SpSpinnerMorph >> step [
 		invalidRect: transformationMorph fullBounds
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SpSpinnerMorph >> stepTime [
 
 	^ 50
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SpSpinnerMorph >> wantsSteps [
 
 	^ true

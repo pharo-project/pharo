@@ -31,23 +31,18 @@ DebuggerMethodMapOpal >> forMethod: aCompiledMethod [
 
 { #category : #public }
 DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
-	"Answer the value of the temp at index in aContext where index is relative
-	 to the array of temp names answered by tempNamesForContext:"
-
-	| name |	
-	name := (self tempNamesForContext: aContext) at: index.
-	^self tempNamed: name in: aContext.
+	"Answer the value of the temp at index in aContext where index is relative"
+	
+	^self tempNamed: (aContext tempNames at: index) in: aContext
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
 	"Assign the value of the temp at index in aContext where index is relative
-	 to the array of temp names answered by tempNamesForContext:.
+	 to the array of temp names
 	 If the value is a copied value we also need to set it along the lexical chain."
 	
-	| name |	
-	name := (self tempNamesForContext: aContext) at: index.
-	^self tempNamed: name in: aContext put: aValue.
+	^self tempNamed: (aContext tempNames at: index) in: aContext put: aValue
 ]
 
 { #category : #public }

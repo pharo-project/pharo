@@ -41,13 +41,10 @@ SpecSplitterVertical >> generateArguments [
 
 { #category : #initialization }
 SpecSplitterVertical >> initialize [
-
 	super initialize.
 
 	selector := #newVSplitterAt:.
-	layoutFrame := ((0@0 corner: 0@0) asSpecLayoutFrame 
-							rightOffset: 1).
-	commands := nil.
+	layoutFrame := (0 @ 0 corner: 0 @ 0) asSpecLayoutFrame rightOffset: 1
 ]
 
 { #category : #testing }

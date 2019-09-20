@@ -253,9 +253,8 @@ LazyListMorph >> initialize [
 	self color: self theme textColor.
 	font := StandardFonts listFont.
 	listItems := #().
-	selectedRow := nil.
 	selectedRows := PluggableSet integerSet.
-	self adjustHeight.
+	self adjustHeight
 ]
 
 { #category : #'row management' }

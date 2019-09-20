@@ -455,8 +455,6 @@ DockingBarMorph >> initialize [
 
 	super initialize.
 	""
-	selectedItem := nil.
-	activeSubMenu := nil.
 	fillsOwner := true.
 	avoidVisibleBordersAtEdge := true.
 	autoGradient := self wantsGradientByDefault.

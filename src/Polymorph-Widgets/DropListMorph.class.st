@@ -708,7 +708,7 @@ DropListMorph >> showList [
 			]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 DropListMorph >> step [
 	"Reset mouse focus to the list if it is showing."
 	self listVisible ifTrue: [
@@ -718,7 +718,7 @@ DropListMorph >> step [
 			self activeHand newMouseFocus: self listMorph]]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 DropListMorph >> stepTime [
 	"Answer the desired time between steps in milliseconds."
 
@@ -867,7 +867,7 @@ DropListMorph >> wantsKeyboardFocus [
 		self allowKeyboardFocus]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 DropListMorph >> wantsSteps [
 	"Step is very very time consuming..."
 	^ false

@@ -136,17 +136,12 @@ SpCodePresenter >> hasSyntaxHighlight [
 ]
 
 { #category : #initialization }
-SpCodePresenter >> initialize [ 
-
+SpCodePresenter >> initialize [
 	super initialize.
-	
-	behavior := nil.
-	doItContext := nil.
-	doItReceiver := nil.
 	self withSyntaxHighlight.
-	
+
 	self registerEventsForStyling.
-	
+
 	self contextMenu: self buildCodeMenu.
 	self contextKeyBindings: self buildCodeKeyBindings
 ]

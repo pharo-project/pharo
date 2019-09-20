@@ -394,9 +394,8 @@ StringMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 { #category : #initialization }
 StringMorph >> initialize [
 	"initialize the state of the receiver"
-	super initialize.
 
-	font := nil.
+	super initialize.
 	emphasis := 0.
 	hasFocus := false.
 	backgroundColor := Color transparent

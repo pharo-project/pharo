@@ -970,14 +970,14 @@ ScrollBar >> sliderThickness [
 	^self theme scrollbarMinimumThumbThickness
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ScrollBar >> step [
 	| action |
 	action := self scrollBarAction.
 	action ifNotNil:[self perform: action].
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 ScrollBar >> stepTime [
 	^ currentScrollDelay ifNil: [300]
 ]
@@ -1089,7 +1089,7 @@ ScrollBar >> waitForDelay1: delay1 delay2: delay2 [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 ScrollBar >> wantsSteps [
 	^self scrollBarAction notNil
 ]

@@ -60,6 +60,13 @@ OCVectorTempVariable >> vectorName: anObject [
 	vectorName := anObject
 ]
 
+{ #category : #accessing }
+OCVectorTempVariable >> vectorOffset [
+	"Temps that are stored in a temp vector have a unique index in the vector.
+	 We first lookup the temp vector sem var by name and then get the index from the IR"
+	^(scope lookupVar: vectorName) indexInTempVectorFromIR: name
+]
+
 { #category : #debugging }
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	| tempVectorVar theVector offset |
