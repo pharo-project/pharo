@@ -651,6 +651,11 @@ TestCase >> failureLog [
 ]
 
 { #category : #private }
+TestCase >> initialize [ 
+	aTestEnvironment := Smalltalk globals.
+]
+
+{ #category : #private }
 TestCase >> instanceVariablesToKeep [
 	^ #('testSelector')
 ]
@@ -799,7 +804,7 @@ TestCase >> setTestSelector: aSymbol [
 { #category : #running }
 TestCase >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
-	aTestEnvironment := Smalltalk globals.
+
 ]
 
 { #category : #events }
