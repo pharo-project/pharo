@@ -25,7 +25,7 @@ Context >> lookupSymbol: aSymbol [
 	scope := self sourceNodeExecuted scope.
 	var := scope lookupVar: aSymbol asString.
 	"Local variables"
-	(var isKindOf: OCTempVariable) ifTrue: [^ var searchFromContext: self scope: scope].
+	(var isKindOf: OCTempVariable) ifTrue: [^ var readFromContext: self scope: scope].
 	"Instance variables"
 	(var isKindOf: OCSlotVariable) ifTrue: [^ self receiver instVarNamed: aSymbol].
 	"Class variables and globals"
