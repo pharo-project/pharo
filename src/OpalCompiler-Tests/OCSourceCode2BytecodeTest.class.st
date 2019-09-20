@@ -555,7 +555,7 @@ OCSourceCode2BytecodeTest >> testPushReceiverVariableBytecode [
 	scanner := InstructionStream on: method.
 	self
 		assert: ((did := scanner peekInstruction) selector == #pushReceiverVariable:
-				and: [did arguments first == 2])
+				and: [did arguments first == 3])
 		description: 'Failed ' , selector
 ]
 
@@ -659,7 +659,7 @@ OCSourceCode2BytecodeTest >> testStoreAndPopReceiverVariableBytecode [
 	scanner := InstructionStream on: method.
 	self
 		assert: ((did := scanner nextInstruction; peekInstruction) selector == #popIntoReceiverVariable:
-				and: [did arguments first == 2])
+				and: [did arguments first == 3])
 		description: 'Failed ' , selector
 ]
 
@@ -691,7 +691,7 @@ OCSourceCode2BytecodeTest >> testStoreIntoReceiverVariableBytecode [
 	scanner := InstructionStream on: method.
 	self
 		assert: ((did := scanner nextInstruction; peekInstruction) selector == #storeIntoReceiverVariable:
-				and: [did arguments first == 2])
+				and: [did arguments first == 3])
 		description: 'Failed ' , selector
 ]
 
