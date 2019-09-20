@@ -179,7 +179,7 @@ OCAbstractMethodScope >> lookupAndReadVar: name inContext: aContext [
 	
 	variable := self
 		variableNamed: name
-		ifAbsent: [ 	^self outerScopeLookupVar: name inContext: aContext].
+		ifAbsent: [ 	^self outerScope lookupAndReadVar: name inContext: (self nextOuterScopeContextOf: aContext)].
 	theValue := variable readFromContext: aContext.
 	^ theValue
 ]
@@ -240,14 +240,14 @@ OCAbstractMethodScope >> newOptimizedBlockScope: int [
 			yourself.
 ]
 
+{ #category : #lookup }
+OCAbstractMethodScope >> nextOuterScopeContextOf: aContext [
+	^aContext
+]
+
 { #category : #scope }
 OCAbstractMethodScope >> outerNotOptimizedScope [
 	^self
-]
-
-{ #category : #lookup }
-OCAbstractMethodScope >> outerScopeLookupVar: name inContext: aContext [
-	Error signal: 'Cannot find variable named''', name, ''' in this method'
 ]
 
 { #category : #scope }
