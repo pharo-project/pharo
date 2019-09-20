@@ -1,9 +1,12 @@
 "
 I represent the Slot initialization part of a slot definition. 
-I'm not super well integrated in the language AST because I'm a transformation from the AST.
-For example for this expression 'first' =>  LazyClassVariable default: 5, I represent 
+I'm a transformation from the AST.
+
+For example for this expression 'first' => (LazyClassVariable default: 5), I represent 
 the default: 5 part. 
-Still I support visiting protocol in case. 
+
+Slot initialization node works for the three slot forms below. 
+To make sure that all slot definition are polymorphic, all slots have a initializationNode (some acting as null node).
 
 Object subclass: #MyClass
 		slots: {
@@ -14,15 +17,9 @@ Object subclass: #MyClass
 		classVariableNames: ''
 		package: #MyPackage'
 
-In addition, to make sure that all slot definition are polymorphic 
-
-start and end are not managed for the moment at my level. 
-
-argumentParts holds a collection of strings since we can have 
-
 'first' => LazyClassVariable default: x + 3
 
-In this case the argument part is #('x + 3')
+In this case the argument parts is a RBMessageNode.
 
 
 		

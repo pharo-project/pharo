@@ -25,7 +25,7 @@ CDSlotParserArgumentingSlotTest >> classDefinitionString [
 	^ '{superclassname} subclass: #{classname}
 		slots: \{
 		''{instvar1}'' =>  (LazyClassVariable default: 5). 
-		''{instvar2}'' =>  (ObservableSlot default: 5). 
+		''{instvar2}'' =>  (ObservableSlot default: true extras: (1 + 4)). 
 		\}
 		classVariableNames: ''{classvar1} {classvar2}''
 		package: #MyPackage'
@@ -43,12 +43,42 @@ CDSlotParserArgumentingSlotTest >> testClassDefWithInitializationSlot [
 	self
 		assert: classDefinition slotNodes first name
 		equals: self firstInstanceVariableName.
+		
 	self
 		assert: classDefinition slotNodes first slotClassName
 		equals: #LazyClassVariable.
+		
 	self
-		assert: classDefinition slotNodes first initializationMessage printString
-		equals: 'default: ''5'''.
+		assert: classDefinition slotNodes first initializationMessage selectorParts 
+		equals: #(default:).
+
+	self assert: classDefinition slotNodes first initializationMessage argumentParts isCollection.		
+	self
+		assert: (classDefinition slotNodes first initializationMessage argumentParts first isKindOf: RBLiteralValueNode)
+		
 		
 	
+]
+
+{ #category : #tests }
+CDSlotParserArgumentingSlotTest >> testClassDefWithInitializationSlot2 [
+	self
+		assert: classDefinition slotNodes second name
+		equals: self secondInstanceVariableName.
+		
+	self
+		assert: classDefinition slotNodes second slotClassName
+		equals: #ObservableSlot.
+		
+	self
+		assert: classDefinition slotNodes second initializationMessage selectorParts 
+		equals: #(default: extras:).
+
+	self assert: classDefinition slotNodes second initializationMessage argumentParts isCollection.		
+	self
+		assert: (classDefinition slotNodes second initializationMessage argumentParts first isKindOf: RBLiteralValueNode).
+	self
+		assert: classDefinition slotNodes second initializationMessage argumentParts first value equals: true.
+	self
+		assert: (classDefinition slotNodes second initializationMessage argumentParts second isKindOf: RBMessageNode)
 ]

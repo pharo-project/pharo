@@ -189,7 +189,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 				node: aRBMessageNode
 				name: aRBMessageNode value
 				slotClassName: #InstanceVariableSlot
-				initializationMessage: (self slotInitializationNodeClass new)
+				initializationMessage: self slotInitializationNodeClass new
 				start: aRBMessageNode start
 				stop: aRBMessageNode stop.
 			classDefinition addSlot: slot.
@@ -207,7 +207,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 						node: aRBMessageNode
 						name: aRBMessageNode receiver value
 						slotClassName: aRBMessageNode arguments first name
-						initializationMessage: (self slotInitializationNodeClass new)
+						initializationMessage: self slotInitializationNodeClass new
 						start: aRBMessageNode start
 						stop: aRBMessageNode stop.
 						classDefinition addSlot: slot.
@@ -227,7 +227,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 					initializationMessage:
 						(self slotInitializationNodeClass
 							selectorParts: aRBMessageNode arguments first selectorParts
-							argumentParts: aRBMessageNode arguments first argumentPartStrings)
+							argumentParts: aRBMessageNode arguments first arguments)
 					start: aRBMessageNode start
 					stop: aRBMessageNode stop.
 				classDefinition addSlot: slot.

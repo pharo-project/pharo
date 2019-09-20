@@ -2,7 +2,6 @@ Class {
 	#name : #CDSlotNode,
 	#superclass : #CDNode,
 	#instVars : [
-		'slot',
 		'node',
 		'index',
 		'start',
