@@ -112,7 +112,7 @@ ClassTestCase >> targetClass [
 		do: [ 
 			| className |
 			className := self class name asString copyFrom: 1 to: self class name size - 4.
-			^ Smalltalk globals at: className asString asSymbol ]
+			^ aTestEnvironment at: className asString asSymbol ]
 ]
 
 { #category : #tests }

@@ -10,7 +10,8 @@ Class {
 	#superclass : #TestAsserter,
 	#instVars : [
 		'testSelector',
-		'expectedFails'
+		'expectedFails',
+		'aTestEnvironment'
 	],
 	#classVars : [
 		'Announcers',
@@ -554,6 +555,16 @@ TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
 
+{ #category : #accessing }
+TestCase >> aTestEnvironment [
+	^ aTestEnvironment
+]
+
+{ #category : #accessing }
+TestCase >> aTestEnvironment: anObject [
+	aTestEnvironment := anObject
+]
+
 { #category : #dependencies }
 TestCase >> addDependentToHierachy: anObject [ 
 	"an empty method. for Composite compability with TestSuite"
@@ -788,6 +799,7 @@ TestCase >> setTestSelector: aSymbol [
 { #category : #running }
 TestCase >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+	aTestEnvironment := Smalltalk globals.
 ]
 
 { #category : #events }
