@@ -57,7 +57,7 @@ OCTempVariable >> hash [
 
 { #category : #debugging }
 OCTempVariable >> indexFromIR [
-	^scope outerNotOptimizedScope node irInstruction indexForVarNamed: name
+	^scope indexFromIRForVarNamed: name
 ]
 
 { #category : #initialization }
@@ -133,16 +133,16 @@ OCTempVariable >> markWrite [
 ]
 
 { #category : #debugging }
-OCTempVariable >> readFromContext: aContext [
-
-	^ aContext tempAt: self indexFromIR
-]
-
-{ #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
 	| definitionContext |
 	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
-	^ self readFromContext: definitionContext
+	^ self readFromLocalContext: definitionContext
+]
+
+{ #category : #debugging }
+OCTempVariable >> readFromLocalContext: aContext [
+
+	^ aContext tempAt: self indexFromIR
 ]
 
 { #category : #debugging }
