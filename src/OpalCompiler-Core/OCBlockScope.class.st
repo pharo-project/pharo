@@ -35,10 +35,3 @@ OCBlockScope >> nextOuterScopeContextOf: aContext [
 	But if it is method context lookup will continue in same context but within outer scope"
 	^ aContext outerContext ifNil: [ aContext ]
 ]
-
-{ #category : #lookup }
-OCBlockScope >> outerScopeLookupVar: name inContext: aContext [
-	^ self outerScope 
-		lookupVar: name
-		inContext: (self nextOuterScopeContextOf: aContext)
-]

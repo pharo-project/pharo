@@ -37,13 +37,6 @@ OCEnvironmentScope >> lookupVar: name [
 
 ]
 
-{ #category : #lookup }
-OCEnvironmentScope >> lookupVar: name inContext: aContext [
-	"I'll lookup a variable in the (global) environment. The context does not play any role in here because variables in classes are statically defined"
-
-	^ self lookupVar: name
-]
-
 { #category : #creation }
 OCEnvironmentScope >> newClassScope: aClass [
 
