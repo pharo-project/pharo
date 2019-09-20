@@ -556,7 +556,7 @@ BlockClosure >> printOn: aStream [
 
 	aStream nextPutAll: ((self method hasSourceCode
 		or: [ "There is a decompiler"
-			Smalltalk globals includesKey: #FBDDecompiler ])
+			self class environment includesKey: #FBDDecompiler ])
 				ifTrue: [ self sourceNode formattedCode ]
 				ifFalse: [ 'aBlockClosure(no source code or decompiler available)' ])
 ]
