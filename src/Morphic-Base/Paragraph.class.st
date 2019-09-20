@@ -217,7 +217,7 @@ Paragraph >> caretRect [
 
 { #category : #access }
 Paragraph >> caretWidth [
-	^ Editor dumbbellCursor		
+	^ TextEditor dumbbellCursor		
 			ifTrue: [ 2 ]		
 			ifFalse: [ 0 ]
 ]
