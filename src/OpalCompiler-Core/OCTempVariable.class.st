@@ -60,11 +60,6 @@ OCTempVariable >> indexFromIR [
 	^scope outerNotOptimizedScope node irInstruction indexForVarNamed: name
 ]
 
-{ #category : #debugging }
-OCTempVariable >> indexFromIRFromScope: aScope [
-	^aScope outerNotOptimizedScope node irInstruction indexForVarNamed: name
-]
-
 { #category : #initialization }
 OCTempVariable >> initialize [
 	super initialize.
@@ -145,13 +140,18 @@ OCTempVariable >> readFromContext: aContext [
 
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
-
-	^ contextScope lookupAndReadVar: name inContext: aContext
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
+	^ self readFromContext: definitionContext
 ]
 
 { #category : #debugging }
 OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
-	^aContext 
-		tempAt: (self indexFromIRFromScope: contextScope) 
+
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
+
+	^definitionContext 
+		tempAt: self indexFromIR
 		put: aValue
 ]
