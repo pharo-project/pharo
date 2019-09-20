@@ -1,9 +1,12 @@
 "
 I represent the Slot initialization part of a slot definition. 
-I'm not super well integrated in the language AST because I'm a transformation from the AST.
-For example for this expression 'first' =>  LazyClassVariable default: 5, I represent 
+I'm a transformation from the AST.
+
+For example for this expression 'first' => (LazyClassVariable default: 5), I represent 
 the default: 5 part. 
-Still I support visiting protocol in case. 
+
+Slot initialization node works for the three slot forms below. 
+To make sure that all slot definition are polymorphic, all slots have a initializationNode (some acting as null node).
 
 Object subclass: #MyClass
 		slots: {
@@ -14,9 +17,9 @@ Object subclass: #MyClass
 		classVariableNames: ''
 		package: #MyPackage'
 
-In addition, to make sure that all slot definition are polymorphic 
+'first' => LazyClassVariable default: x + 3
 
-start and end are not managed for the moment at my level. 
+In this case the argument parts is a RBMessageNode.
 
 
 		
@@ -26,17 +29,17 @@ Class {
 	#name : #RBSlotInitializationNode,
 	#superclass : #RBNode,
 	#instVars : [
-		'selector',
-		'argument'
+		'selectorParts',
+		'argumentParts'
 	],
 	#category : #'ClassParser-Model'
 }
 
 { #category : #'instance creation' }
-RBSlotInitializationNode class >> selector: aSelector argument: value [
+RBSlotInitializationNode class >> selectorParts: selectors argumentParts: aCollection [
 	^ self new
-		selector: aSelector;
-		argument: value;
+		selectorParts: selectors;
+		argumentParts: aCollection;
 		yourself
 ]
 
@@ -44,8 +47,8 @@ RBSlotInitializationNode class >> selector: aSelector argument: value [
 RBSlotInitializationNode >> = anObject [ 
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
- 	(self selector = anObject selector) ifFalse: [^false].
-	^ self argument = anObject argument
+ 	(self selectorParts = anObject selectorParts) ifFalse: [^false].
+	^ self argumentParts = anObject argumentParts
 ]
 
 { #category : #visiting }
@@ -55,13 +58,13 @@ RBSlotInitializationNode >> acceptVisitor: aVisitor [
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> argument [
-	^ argument
+RBSlotInitializationNode >> argumentParts [
+	^ argumentParts 
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> argument: anInteger [ 
-	argument := anInteger
+RBSlotInitializationNode >> argumentParts: aCollection [ 
+	argumentParts := aCollection
 ]
 
 { #category : #comparing }
@@ -73,13 +76,13 @@ RBSlotInitializationNode >> hash [
 RBSlotInitializationNode >> initialize [ 
 	
 	super initialize.
-	selector := #''.
-	argument := ''
+	selectorParts := #().
+	argumentParts := #()
 ]
 
 { #category : #testing }
 RBSlotInitializationNode >> isNull [ 
-	^ selector = #''
+	^ selectorParts isEmpty
 ]
 
 { #category : #printing }
@@ -87,19 +90,29 @@ RBSlotInitializationNode >> printOn: aStream [
 	"We make sure that the result is empty to be used like a bad null pattern now."
 	
 	self isNull 
-		ifFalse: [  
-			aStream 
-				nextPutAll: selector asString; 
-	 			space;
-				nextPutAll: argument asString ]
+		ifFalse: [ 
+				| size |
+				size := selectorParts size. 
+				selectorParts withIndexDo: [ :each :i |
+							aStream 
+								<< each asString ;
+								<< ' ';
+								<< (argumentParts at: i) printString.
+							i = size ifFalse: [ aStream	<< ' ']]]
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> selector [
-	^ selector
+RBSlotInitializationNode >> selectorParts [
+	^ selectorParts 
 ]
 
 { #category : #accessing }
-RBSlotInitializationNode >> selector: aSymbol [
-	selector := aSymbol
+RBSlotInitializationNode >> selectorParts: aCollection [ 
+	selectorParts := aCollection
+]
+
+{ #category : #accessing }
+RBSlotInitializationNode >> selectorString [
+	^ String streamContents: [ :s |  
+			selectorParts do: [ :e | s <<e ] ] 
 ]
