@@ -68,6 +68,16 @@ Magnitude >> between: min and: max [
 ]
 
 { #category : #comparing }
+Magnitude >> clampLow: minValue high: maxValue [
+"Answer my value  constrained to the intervale [minValue ; maxValue]"
+" 10 clampLow: 12 high: 20 >>> 12"
+" 13 clampLow: 12 high: 20 >>> 13"
+" 12 clampLow: 12 high: 20 >>> 12"
+" 100 clampLow: 12 high: 20 >>> 20"
+	^ (self min: maxValue) max: minValue 
+]
+
+{ #category : #comparing }
 Magnitude >> hash [
 	"Hash must be redefined whenever = is redefined."
 
@@ -95,7 +105,7 @@ Magnitude >> min: aMagnitude [
 ]
 
 { #category : #comparing }
-Magnitude >> min: aMin max: aMax [ 
-
-	^ (self min: aMin) max: aMax
+Magnitude >> min: aMaxValue max: aMinValue [
+"This meaningless message should be deprecated some day in favour of clampLow:high:"
+	^ self clampLow: aMinValue high: aMaxValue
 ]
