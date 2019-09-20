@@ -44,10 +44,10 @@ RBNamespace2 >> convertClasses: classSet select: aBlock using: searchReplacer [
 RBNamespace2 >> createNewClassFor: aBehavior [
 	| nonMeta meta className |
 	className := aBehavior instanceSide name.
-	nonMeta := (RBClass2 existingNamed: className)
+	nonMeta := (self rbClassClass existingNamed: className)
 		model: self;
 		yourself.
-	meta := (RBMetaclass2 existingNamed: className)
+	meta := (self rbMetaclassClass existingNamed: className)
 		model: self;
 		yourself.
 	^ changedClasses at: className put: (Array with: nonMeta with: meta)
@@ -55,33 +55,41 @@ RBNamespace2 >> createNewClassFor: aBehavior [
 
 { #category : #converting }
 RBNamespace2 >> defineClass: aString [
-
 	| change newClass newClassName |
-
 	change := changes defineClass: aString.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
 	newClass
 		ifNil: [ | newMetaclass |
-
 			self unmarkAsRemoved: ' class'.
-			newClass := RBClass2 named: newClassName.
-			newMetaclass := RBMetaclass2 named: newClassName.
+			newClass := self rbClassClass named: newClassName.
+			newMetaclass := self rbMetaclassClass named: newClassName.
 			newClass model: self.
 			newMetaclass model: self.
-			newClasses at: newClassName put: ( Array with: newClass with: newMetaclass )
-			].
-	newClass superclass: ( self classNamed: change superclassName ).
+			newClasses
+				at: newClassName
+				put: (Array with: newClass with: newMetaclass) ].
+	newClass superclass: (self classNamed: change superclassName).
 	newClass superclass
 		ifNil: [ self rootClasses add: newClass.
-			newClass theMetaClass superclass: ( self classFor: Object class superclass )
-			]
+			newClass theMetaClass
+				superclass: (self classFor: Object class superclass) ]
 		ifNotNil: [ newClass theMetaClass superclass: newClass superclass theMetaClass ].
 	newClass instanceVariableNames: change instanceVariableNames.
 	newClass classVariableNames: change classVariableNames.
 	newClass poolDictionaryNames: change sharedPoolNames.
 	newClass category: change category.
 	^ change
+]
+
+{ #category : #converting }
+RBNamespace2 >> rbClassClass [
+	^ RBClass2
+]
+
+{ #category : #converting }
+RBNamespace2 >> rbMetaclassClass [
+	^ RBMetaclass2
 ]
 
 { #category : #transforming }

@@ -136,7 +136,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #initialize) 
 		equals: (self parseMethod: 'initialize
 			super initialize.
-			changes := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
+			changes := changeFactory compositeRefactoryChange.
 			self environment: RBBrowserEnvironment new.
 			newClasses := IdentityDictionary new.
 			changedClasses := IdentityDictionary new.
