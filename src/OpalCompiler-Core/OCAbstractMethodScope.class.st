@@ -139,6 +139,11 @@ OCAbstractMethodScope >> id: int [
 	id := int
 ]
 
+{ #category : #'temp vars' }
+OCAbstractMethodScope >> indexFromIRForVarNamed: aName [
+	^self outerNotOptimizedScope node irInstruction indexForVarNamed: aName
+]
+
 { #category : #initialization }
 OCAbstractMethodScope >> initialize [
 
@@ -188,7 +193,7 @@ OCAbstractMethodScope >> lookupTempVector: name inContext: aContext [
 	variable := self
 		variableNamed: name
 		ifAbsent: [^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
-	theVector := variable readFromContext: aContext.
+	theVector := variable readFromLocalContext: aContext.
 	theVector ifNil: [ ^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
 	^ { variable . theVector }
 ]

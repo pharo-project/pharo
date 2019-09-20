@@ -62,7 +62,7 @@ OCVectorTempVariable >> vectorOffset [
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	| tempVectorVar theVector offset |
 	tempVectorVar := contextScope lookupVar: vectorName.
-	theVector := tempVectorVar readFromContext: aContext.
+	theVector := tempVectorVar readFromLocalContext: aContext.
 	offset := tempVectorVar indexInTempVectorFromIR: name.
 	^theVector at: offset put: aValue.
 ]
