@@ -216,19 +216,18 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 				#x => 2"
 				]
 			ifTrue: [  
-				"when a slot is just 'inst' => (InstanceVariableSlot default: 5)."
 				
+				"when a slot is 'inst' => (InstanceVariableSlot default: 5)."
 				| slot slotDefNode |
 				slotDefNode := aRBMessageNode.
-				self halt.
 				slot := self slotNodeClass
 					node: aRBMessageNode
 					name: slotDefNode receiver value
 					slotClassName: slotDefNode arguments first receiver name
 					initializationMessage:
 						(self slotInitializationNodeClass
-							selector: aRBMessageNode arguments first selector
-							argument: (aRBMessageNode arguments first argumentPartStrings))
+							selectorParts: aRBMessageNode arguments first selectorParts
+							argumentParts: aRBMessageNode arguments first argumentPartStrings)
 					start: aRBMessageNode start
 					stop: aRBMessageNode stop.
 				classDefinition addSlot: slot.

@@ -18,6 +18,12 @@ In addition, to make sure that all slot definition are polymorphic
 
 start and end are not managed for the moment at my level. 
 
+argumentParts holds a collection of strings since we can have 
+
+'first' => LazyClassVariable default: x + 3
+
+In this case the argument part is #('x + 3')
+
 
 		
 	
@@ -33,15 +39,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBSlotInitializationNode class >> selector: aSelector arguments: aCollection [
-	^ self new
-		selector: aSelector;
-		argument: aCollection;
-		yourself
-]
-
-{ #category : #'instance creation' }
-RBSlotInitializationNode class >> selectorParts: selectors arguments: aCollection [
+RBSlotInitializationNode class >> selectorParts: selectors argumentParts: aCollection [
 	^ self new
 		selectorParts: selectors;
 		argumentParts: aCollection;
@@ -102,7 +100,7 @@ RBSlotInitializationNode >> printOn: aStream [
 							aStream 
 								<< each asString ;
 								<< ' ';
-								print: (argumentParts at: i).
+								<< (argumentParts at: i) printString.
 							i = size ifFalse: [ aStream	<< ' ']]]
 ]
 

@@ -1,3 +1,18 @@
+"
+A slot definition can be composed as follows: 
+
+{
+#x .
+#x => Observable .
+#x => (Observable keyword: literal message: literal2)
+}
+This test is about the second case.
+
+
+However I'm not really happy about the representation of literal in the RBSlotInitializationNode class.
+Indeed I currently store '5' as argument of keyword: 5 and probably 'true' for keyword: true
+and it will force the visitors to rescan. 
+"
 Class {
 	#name : #CDSlotParserArgumentingSlotTest,
 	#superclass : #CDClassDefinitionParserTest,
@@ -33,7 +48,7 @@ CDSlotParserArgumentingSlotTest >> testClassDefWithInitializationSlot [
 		equals: #LazyClassVariable.
 	self
 		assert: classDefinition slotNodes first initializationMessage printString
-		equals: 'default: 5'.
+		equals: 'default: ''5'''.
 		
 	
 ]

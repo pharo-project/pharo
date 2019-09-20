@@ -55,7 +55,7 @@ RBSlotInitializationNodeTest >> testSelector [
 RBSlotInitializationNodeTest >> testSlotInitializationCreation [
 
 	| s | 
-	s := RBSlotInitializationNode selectorParts: #(#default:) arguments: #(5).
+	s := RBSlotInitializationNode selectorParts: #(#default:) argumentParts: #(5).
 	self assert: s selectorString equals: #default:.
 	self assert: s argumentParts equals: #(5)
 ]
@@ -64,7 +64,7 @@ RBSlotInitializationNodeTest >> testSlotInitializationCreation [
 RBSlotInitializationNodeTest >> testSlotMultipleInitializationCreation [
 
 	| s | 
-	s := RBSlotInitializationNode selectorParts: #(default: named:) arguments: #(5 'titi').
+	s := RBSlotInitializationNode selectorParts: #(default: named:) argumentParts: #(5 'titi').
 	self assert: s selectorParts equals: #(default: named:).
 	self assert: s selectorString equals: 'default:named:'.
 	self assert: s argumentParts equals: #(5 'titi')
