@@ -11,8 +11,8 @@ Class {
 FLUserGuidesTest >> tearDown [
 	#('demo.fuel' 'numbers.fuel' 'number.fuel.zip' 'example.FL')
 		do: [ :each | self deleteFileNamed: each ].
-	Smalltalk globals removeKey: #GlobalSet1 ifAbsent: [  ].
-	Smalltalk globals removeKey: #GlobalSet2 ifAbsent: [  ].
+	aTestEnvironment removeKey: #GlobalSet1 ifAbsent: [  ].
+	aTestEnvironment removeKey: #GlobalSet2 ifAbsent: [  ].
 	super tearDown
 ]
 
@@ -143,7 +143,7 @@ FLUserGuidesTest >> testPluggableSubstitution [
 
 { #category : #'tests-Getting Started' }
 FLUserGuidesTest >> testShowingProgressBar [
-	(Smalltalk globals includesKey: #FLProgressSerialization)
+	(aTestEnvironment includesKey: #FLProgressSerialization)
 		ifFalse: [ " Needs:
 		(ConfigurationOfFuel project latestVersion) load: 'FuelProgressUpdate'.
 		" ^ self skip ].

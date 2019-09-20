@@ -161,9 +161,9 @@ FLBasicSerializationTest >> testConsiderCustomGlobal [
 
 	aPerson := FLPerson new.
 	[ 
-		Smalltalk globals at: globalKey put: aPerson.
+		aTestEnvironment at: globalKey put: aPerson.
 		self assertSerializationIdentityOf: aPerson.
-	] ensure: [ Smalltalk globals removeKey: globalKey ]
+	] ensure: [ aTestEnvironment removeKey: globalKey ]
 
 ]
 
@@ -179,12 +179,12 @@ FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 
 	aPerson := FLPerson new.	
 	[ 
-		Smalltalk globals at: aWideSymbol put: aPerson.
+		aTestEnvironment at: aWideSymbol put: aPerson.
 		self
 			shouldnt: [ self resultOfSerializeAndMaterialize: aPerson ]
 			raise: Error
 	] ensure: [ 
-		Smalltalk globals removeKey: aWideSymbol ].
+		aTestEnvironment removeKey: aWideSymbol ].
 
 ]
 
@@ -345,9 +345,9 @@ FLBasicSerializationTest >> testDontConsiderCustomGlobal [
 	globalName := #FLGlobalVariableForTesting.
 	
 	[ 
-		Smalltalk globals at: globalName put: aPerson.
+		aTestEnvironment at: globalName put: aPerson.
 		self deny: (self resultOfSerializeAndMaterialize: aPerson) == aPerson 
-	] ensure: [ Smalltalk globals removeKey: globalName ]. 
+	] ensure: [ aTestEnvironment removeKey: globalName ]. 
 
 ]
 
@@ -864,11 +864,11 @@ FLBasicSerializationTest >> testWideStringClassName [
 		yourself.
 	class := Class new setName: className; yourself.
 	[
-		Smalltalk globals at: class name put: class.
+		aTestEnvironment at: class name put: class.
 		self
 			shouldnt: [ self resultOfSerializeAndMaterialize: class ]
 			raise: Error
-	] ensure:[ Smalltalk globals removeKey: class name ]
+	] ensure:[ aTestEnvironment removeKey: class name ]
 ]
 
 { #category : #'tests-strings' }
@@ -879,7 +879,7 @@ FLBasicSerializationTest >> testWideStringGlobal [
 		yourself.
 	globalValue := global, 'value'.
 	[
-		Smalltalk globals
+		aTestEnvironment
 			at: global
 			put: globalValue.
 		self analyzer considerGlobal: global.
@@ -889,7 +889,7 @@ FLBasicSerializationTest >> testWideStringGlobal [
 			raise: Error.
 		self assert: self materialized class equals: Association.
 		self assert: self materialized value == global
-	] ensure: [ Smalltalk globals removeKey: global ]
+	] ensure: [ aTestEnvironment removeKey: global ]
 ]
 
 { #category : #'tests-collections' }
