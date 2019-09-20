@@ -446,7 +446,7 @@ ArrayTest >> setUp [
 	literalArray := #(1 true 3 #four).
 	selfEvaluatingArray := { 1. true. (3/4). String loremIpsum. (2 to: 4) . 5 }.
 	nonSEArray1 := { 1 . Set with: 1 }.
-	nonSEarray2 := { Smalltalk globals associationAt: #Array }.
+	nonSEarray2 := { aTestEnvironment associationAt: #Array }.
 	example1 := #(1 2 3 4 5) copy.
 	indexArray:= {2. 3. 4.}.
 	valueArray:={0. 0. 0.}.
