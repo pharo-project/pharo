@@ -625,6 +625,24 @@ OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 
 ]
 
+{ #category : #'testing - variables' }
+OCASTClosureAnalyzerTest >> testVariableDefintionScopeUpdate [
+	"the scope of local var definitons needs to be updated, too"
+
+	| ast |
+	ast := OpalCompiler new parse:
+			'm04_two_temps_one_temp_in_remote_vector
+
+| t1 t2 |
+
+t1 := 1.
+[ t2 := t1 +  1.0 ] value.
+
+^t2'.
+	ast doSemanticAnalysis.
+	self assert: ast temporaries second binding class equals: OCVectorTempVariable
+]
+
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testWrittenAfterClosedOver [
 	| ast |

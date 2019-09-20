@@ -167,16 +167,14 @@ ThreePhaseButtonMorph >> helpText: aString [
 
 { #category : #initialization }
 ThreePhaseButtonMorph >> initialize [
-
 	super initialize.
 	state := #off.
-	target := nil.
 	actionSelector := #flash.
 	arguments := EmptyArray.
-	actWhen := #buttonUp.
+	actWhen := #buttonUp
 
 	"self on: #mouseStillDown send: #dragIfAuthoring: to: self."
-		"real move should include a call on dragIfAuthoring: "
+	"real move should include a call on dragIfAuthoring: "
 ]
 
 { #category : #testing }
@@ -296,7 +294,7 @@ ThreePhaseButtonMorph >> state: newState [
 	self invalidRect: bounds.	"All three images must be the same size"
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ThreePhaseButtonMorph >> step [
 	(self hasProperty: #doesButtonAction) ifTrue:[
 		self doButtonAction.
@@ -304,7 +302,7 @@ ThreePhaseButtonMorph >> step [
 	].
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 ThreePhaseButtonMorph >> stepTime [
 	(self hasProperty: #doesButtonAction) ifTrue:[^1].
 	^super stepTime
@@ -349,7 +347,7 @@ state := state veryDeepCopyWith: deepCopier.
 actWhen := actWhen.		"Symbol"
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 ThreePhaseButtonMorph >> wantsSteps [
 	^self hasProperty: #doesButtonAction
 ]

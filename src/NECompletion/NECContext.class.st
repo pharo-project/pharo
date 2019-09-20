@@ -403,8 +403,7 @@ NECContext >> initialize [
 	selectors := true.
 	ranges := OrderedCollection new.
 	completionIndex := 0.
-	completionToken := nil.
-	globals := self class environment.
+	globals := self class environment
 ]
 
 { #category : #'private-compute-index' }

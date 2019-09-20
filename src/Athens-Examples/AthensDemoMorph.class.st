@@ -407,13 +407,13 @@ AthensDemoMorph >> render [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 AthensDemoMorph >> step [
 	frame := frame + 1.
 	self changed
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 AthensDemoMorph >> stepTime [
 	^ 0
 ]

@@ -47,13 +47,6 @@ AthensStrikeFontRenderer >> font: anObject [
 	font := anObject
 ]
 
-{ #category : #initialization }
-AthensStrikeFontRenderer >> initialize [
-	super initialize.
-	font := nil.
-	canvas := nil
-]
-
 { #category : #rendering }
 AthensStrikeFontRenderer >> renderCharacters: aString from: start to: end [
 	| cairoText |

@@ -20,7 +20,7 @@ GLMPaginatedMorphTreeMorph >> stepTime [
 	^ self model stepTime
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 GLMPaginatedMorphTreeMorph >> wantsSteps [
 	^ self model wantsSteps
 ]

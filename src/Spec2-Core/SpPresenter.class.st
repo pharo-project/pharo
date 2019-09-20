@@ -549,11 +549,9 @@ SpPresenter >> initialExtent [
 
 { #category : #initialization }
 SpPresenter >> initialize [
-
 	super initialize.
 
 	visible := true.
-	additionalSubpresentersMap := nil.
 
 	self initializePrivateAnnouncer.
 	self initializePrivateValueHolders.

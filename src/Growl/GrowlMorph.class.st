@@ -369,7 +369,7 @@ GrowlMorph >> resetVanishTimer [
 	self resetAlpha.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 GrowlMorph >> step [
 
 	(self containsPoint: ActiveHand position) ifTrue: [
@@ -379,7 +379,7 @@ GrowlMorph >> step [
 	self alpha: self alpha - 0.05.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 GrowlMorph >> stepTime [
 	^ 100
 ]
@@ -491,7 +491,7 @@ GrowlMorph >> vanishDelay: aDuration [
 	self resetVanishTimer
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 GrowlMorph >> wantsSteps [
 	^ true
 ]

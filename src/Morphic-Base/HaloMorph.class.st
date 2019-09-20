@@ -976,7 +976,7 @@ HaloMorph >> innerTarget [
 
 ]
 
-{ #category : #stepping }
+{ #category : #'halos and balloon help' }
 HaloMorph >> localHaloBoundsFor: aMorph [
 	"aMorph may be in the hand and perhaps not in our world"
 
@@ -1347,7 +1347,7 @@ HaloMorph >> step [
 	self bounds: newBounds
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 HaloMorph >> stepTime [
 
 	^ 0  "every cycle"

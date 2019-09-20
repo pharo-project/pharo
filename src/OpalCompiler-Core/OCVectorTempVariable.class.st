@@ -36,6 +36,7 @@ OCVectorTempVariable >> isTempVectorTemp [
 OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
 	| offset pairVariableVector |
+	self isThisEverCalled: 'this should never be called on vector temps'.
 	pairVariableVector := contextScope lookupTempVector: vectorName inContext: aContext.
 	offset := pairVariableVector first indexInTempVectorFromIR: name.
 	^pairVariableVector second at: offset.
@@ -58,6 +59,13 @@ OCVectorTempVariable >> vectorName [
 { #category : #accessing }
 OCVectorTempVariable >> vectorName: anObject [
 	vectorName := anObject
+]
+
+{ #category : #accessing }
+OCVectorTempVariable >> vectorOffset [
+	"Temps that are stored in a temp vector have a unique index in the vector.
+	 We first lookup the temp vector sem var by name and then get the index from the IR"
+	^(scope lookupVar: vectorName) indexInTempVectorFromIR: name
 ]
 
 { #category : #debugging }

@@ -445,13 +445,8 @@ AthensCanvasWrapper >> imagePaint: aForm at: aPoint sourceRect: sourceRect [
 
 { #category : #initialization }
 AthensCanvasWrapper >> initialize [
-
 	super initialize.
-
-	athensCanvas := nil.
-	currentClipRect := nil.
-	origin := 0@0.
-
+	origin := 0 @ 0
 ]
 
 { #category : #'canvas testing' }
