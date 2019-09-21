@@ -23,7 +23,7 @@ ClassTest >> deleteClass [
 	| cl |
 	cl := testEnvironment at: className ifAbsent: [ ^ self ].
 	
-	Smalltalk globals at: #ChangeSet ifPresent: [ 
+	aTestEnvironment at: #ChangeSet ifPresent: [ 
 		cl removeFromChanges ].
 	
 	cl removeFromSystemUnlogged
