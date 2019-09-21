@@ -97,12 +97,12 @@ MCTestCase >> mockClass: className super: superclassName [
 
 { #category : #mocks }
 MCTestCase >> mockClassA [
-	^ Smalltalk globals at: #MCMockClassA
+	^ aTestEnvironment at: #MCMockClassA
 ]
 
 { #category : #mocks }
 MCTestCase >> mockClassB [
-	^ Smalltalk globals at: #MCMockClassB
+	^ aTestEnvironment at: #MCMockClassB
 ]
 
 { #category : #mocks }

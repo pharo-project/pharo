@@ -19,7 +19,7 @@ MCClassDefinitionTest class >> restoreClassAComment [
 	"This is an utility class to restore the class comment in a mock class used by the test"
 	<script>
 	
-	Smalltalk globals
+	self environment
 		at: #MCMockClassA
 		ifPresent: [ :a | a classComment: self classAComment stamp: self classACommentStamp ]
 ]
@@ -39,12 +39,12 @@ MCClassDefinitionTest >> creationMessage [
 { #category : #running }
 MCClassDefinitionTest >> setUp [
 	super setUp.
-	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
+	aTestEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
 ]
 
 { #category : #running }
 MCClassDefinitionTest >> tearDown [
-	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
+	aTestEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
 	super tearDown
 ]
 
@@ -138,8 +138,8 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	| d c |
 	d := self mockClass: 'MCMockClassC' super: 'Object'.
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	c := Smalltalk globals classNamed: 'MCMockClassC'.
+	self assert: (aTestEnvironment hasClassNamed: 'MCMockClassC').
+	c := aTestEnvironment classNamed: 'MCMockClassC'.
 	self assert: (c isKindOf: Class).
 	self assert: c superclass equals: Object.
 	self assertEmpty: c instVarNames.
@@ -149,7 +149,7 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	self assert: c organization classComment equals: (self commentForClass: 'MCMockClassC').
 	self assert: c organization commentStamp equals: (self commentStampForClass: 'MCMockClassC').
 	d unload.
-	self deny: (Smalltalk hasClassNamed: 'MCMockClassC')
+	self deny: (aTestEnvironment hasClassNamed: 'MCMockClassC')
 ]
 
 { #category : #tests }
