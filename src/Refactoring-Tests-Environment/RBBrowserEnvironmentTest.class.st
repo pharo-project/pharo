@@ -80,7 +80,7 @@ RBBrowserEnvironmentTest >> keysFor: aBrowserEnvironment [
 	| allKeys |
 	allKeys := IdentitySet withAll: aBrowserEnvironment keys.
 	allKeys addAll: aBrowserEnvironment not keys.
-	allKeys removeAll: Smalltalk globals keys.
+	allKeys removeAll: aTestEnvironment keys.
 	self assertEmpty: allKeys
 ]
 

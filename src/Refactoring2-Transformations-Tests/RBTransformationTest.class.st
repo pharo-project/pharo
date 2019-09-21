@@ -15,7 +15,7 @@ RBTransformationTest >> abstractVariableTestData [
 	classes := #(#Bar #Foo) 
 		inject: OrderedCollection new 
 		into: [ :sum :each | 
-			Smalltalk globals at: each ifPresent: [ :class | 
+			aTestEnvironment at: each ifPresent: [ :class | 
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
@@ -79,7 +79,7 @@ RBTransformationTest >> abstractVariableTestData [
 { #category : #mocking }
 RBTransformationTest >> changeMock [
 
-	^ Smalltalk globals at: #RBRefactoringChangeMock
+	^ aTestEnvironment at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -134,7 +134,7 @@ RBTransformationTest >> proceedThroughWarning: aBlock [
 { #category : #mocking }
 RBTransformationTest >> removeMockClass [
 
-	Smalltalk globals removeClassNamed: #RBRefactoringChangeMock.
+	aTestEnvironment removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #running }

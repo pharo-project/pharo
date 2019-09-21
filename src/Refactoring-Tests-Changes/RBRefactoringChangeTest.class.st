@@ -16,7 +16,7 @@ RBRefactoringChangeTest class >> packageNamesUnderTest [
 
 { #category : #mocking }
 RBRefactoringChangeTest >> changeMock [
-	^ Smalltalk globals at: #RBRefactoringChangeMock
+	^ aTestEnvironment at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -73,7 +73,7 @@ RBRefactoringChangeTest >> perform: aChange do: aBlock [
 
 { #category : #mocking }
 RBRefactoringChangeTest >> removeMockClass [
-	Smalltalk globals removeClassNamed: #RBRefactoringChangeMock.
+	aTestEnvironment removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #mocking }
