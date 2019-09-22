@@ -1,5 +1,5 @@
 Class {
-	#name : #DTTestCoverageTestForCoverage,
+	#name : #DTCoverageMockTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'mockObj'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #running }
-DTTestCoverageTestForCoverage >> setUp [
+DTCoverageMockTest >> setUp [
 	super setUp.
 	mockObj := MockForCoverage new.
 
@@ -16,12 +16,12 @@ DTTestCoverageTestForCoverage >> setUp [
 ]
 
 { #category : #running }
-DTTestCoverageTestForCoverage >> testMethod1forMock [
+DTCoverageMockTest >> testMethod1forMock [
 	self assert: mockObj method1ForMock equals: 2
 ]
 
 { #category : #running }
-DTTestCoverageTestForCoverage >> testMethod2forMock [
+DTCoverageMockTest >> testMethod2forMock [
 	self
 		assert: 5
 		equals: 5

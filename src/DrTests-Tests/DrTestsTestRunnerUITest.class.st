@@ -10,7 +10,7 @@ Class {
 	#category : #'DrTests-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 DrTestsTestRunnerUITest >> setUp [
 
 	super setUp.

@@ -15,14 +15,14 @@ Class {
 	#category : #'DrTests-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 DrTestsTestRunnerTest >> setUp [
 	super setUp.
 	package := RPackage organizer
 		packageNamed: 'DrTests-TestCoverage-MocksForTests'.
-	testToReRun := DTTestCoverageTestForCoverage
+	testToReRun := DTCoverageMockTest
 		selector: #testMethod1forMock.
-	testCase := DTTestCoverageTestForCoverage.
+	testCase := DTCoverageMockTest.
 	conf := DTPluginConfiguration
 		items:
 			({package}
