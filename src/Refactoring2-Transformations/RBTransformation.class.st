@@ -112,12 +112,10 @@ RBTransformation >> checksPreconditions [
 
 { #category : #private }
 RBTransformation >> convertMethod: selector for: aClass using: searchReplacer [
-
 	"Convert the parse tree for selector using the searchReplacer. If a
 	change is made then compile it into the changeBuilder."
 
 	| parseTree |
-
 	parseTree := aClass parseTreeFor: selector.
 	parseTree ifNil: [ ^ self ].
 	( searchReplacer executeTree: parseTree )
@@ -145,7 +143,7 @@ RBTransformation >> defaultEnvironment [
 
 { #category : #initialization }
 RBTransformation >> initialize [
-
+	super initialize.
 	preconditionChecking := false
 ]
 

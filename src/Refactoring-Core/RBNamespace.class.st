@@ -343,7 +343,7 @@ RBNamespace >> includesGlobal: aSymbol [
 { #category : #initialization }
 RBNamespace >> initialize [
 	super initialize.
-	changes := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
+	changes := changeFactory compositeRefactoryChange.
 	environment := RBBrowserEnvironment new.
 	newClasses := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
@@ -471,7 +471,7 @@ RBNamespace >> removeMethod: aSelector from: aRBClass [
 { #category : #changes }
 RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	| change value dict |
-	change := RBRefactoryChangeManager changeFactory renameClass: aRBClass to: aSymbol.
+	change := changeFactory renameClass: aRBClass to: aSymbol.
 	self performChange: change around: aBlock.
 	self flushCaches.
 	dict := (newClasses includesKey: aRBClass name)
@@ -491,7 +491,7 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 
 { #category : #'private-changes' }
 RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBlock [ 
-	^self performChange: (RBRefactoryChangeManager changeFactory  
+	^self performChange: (changeFactory  
 				renameClassVariable: oldName
 				to: newName
 				in: aRBClass)
@@ -500,7 +500,7 @@ RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBl
 
 { #category : #'private-changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [ 
-	^self performChange: (RBRefactoryChangeManager changeFactory 
+	^self performChange: (changeFactory 
 				renameInstanceVariable: oldName
 				to: newName
 				in: aRBClass)
