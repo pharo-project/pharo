@@ -435,7 +435,8 @@ RBProgramNode >> isEvaluatedFirst [
 
 { #category : #testing }
 RBProgramNode >> isFaulty [
-	self subclassResponsibility
+	"return true if the AST contains a RBParseErrorNode"
+	^false
 ]
 
 { #category : #deprecated }
