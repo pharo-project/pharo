@@ -128,6 +128,11 @@ LiteralVariable >> preambles [
 ]
 
 { #category : #'*Reflectivity' }
+LiteralVariable >> readNodes [
+	^ self astNodes select: [ :each | each isRead ]
+]
+
+{ #category : #'*Reflectivity' }
 LiteralVariable >> removeLink: aMetaLink [
 	self usingMethods do: [:method | method removeLink: aMetaLink].
 	self links remove: aMetaLink.
