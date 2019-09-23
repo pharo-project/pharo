@@ -114,7 +114,7 @@ TraitTest >> testErrorClassCreation [
 
     ] ensure: [
         #(AClass AClass2 TMyTrait) do: [ :aClassName |
-            Smalltalk globals at: aClassName ifPresent: [ :v | v removeFromSystem ]]]
+            aTestEnvironment at: aClassName ifPresent: [ :v | v removeFromSystem ]]]
 ]
 
 { #category : #testing }
@@ -396,7 +396,7 @@ TraitTest >> testTraitRemoval [
 { #category : #testing }
 TraitTest >> testTraitsMethodClassSanity [
 		
-	(Smalltalk globals allTraits flatCollect: #traitUsers) asSet do: [ :each |
+	(aTestEnvironment allTraits flatCollect: #traitUsers) asSet do: [ :each |
 		each selectorsDo: [ :selector |
 			self should: [ (each >> selector) methodClass == each ] ] ]
 ]
