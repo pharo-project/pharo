@@ -28,15 +28,15 @@ SystemDictionaryTest >> classToBeTested [
 { #category : #tests }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsClassForClasses [
 	
-	self assert: Object ==  (Smalltalk globals classOrTraitNamed: 'Object').
-	self assert: Object ==  (Smalltalk globals classOrTraitNamed: #Object).
+	self assert: Object ==  (aTestEnvironment classOrTraitNamed: 'Object').
+	self assert: Object ==  (aTestEnvironment classOrTraitNamed: #Object).
 ]
 
 { #category : #tests }
 SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
 	
-	self assert: nil = (Smalltalk globals classOrTraitNamed: 'Undeclared').
-	self assert: nil = (Smalltalk globals classOrTraitNamed: #Undeclared).
+	self assert: nil = (aTestEnvironment classOrTraitNamed: 'Undeclared').
+	self assert: nil = (aTestEnvironment classOrTraitNamed: #Undeclared).
 ]
 
 { #category : #tests }
