@@ -176,13 +176,12 @@ OCAbstractMethodScope >> localTemps [
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupDefiningContextFor: name startingFrom: aContext [
-	"We lookup a variable in a context. If it not in this context, we look in the outer context using the corresponding outer scope. If found, we return the context"
+OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aContext [
+	"Is this the definition context for var? If it not, we look in the outer context using the corresponding outer scope. If found, we return the context"
 	
-	self
-		variableNamed: name
-		ifAbsent: [ ^self outerScope lookupDefiningContextFor: name startingFrom: (self nextOuterScopeContextOf: aContext)].
-	^aContext
+	^self = var scope
+		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: (self nextOuterScopeContextOf: aContext) ]
+		ifTrue: [ aContext ]
 ]
 
 { #category : #lookup }
