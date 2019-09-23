@@ -205,7 +205,7 @@ GoferApiTest >> testSqueaksource [
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testSubDirectoryRepository [
-	Smalltalk globals
+	aTestEnvironment
 		at: #MCSubDirectoryRepository
 		ifPresent: [ :subDirectoryRepositoryClass | |path|
 			path := (FileSystem disk workingDirectory / '*') fullName.

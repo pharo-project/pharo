@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 JobTest >> tearDown [
 
-	Smalltalk globals at: #SystemProgressMorph ifPresent: [:spm | 
+	aTestEnvironment at: #SystemProgressMorph ifPresent: [:spm | 
 		spm uniqueInstance bars do: [ :e | e close ]].
 	super tearDown
 ]
