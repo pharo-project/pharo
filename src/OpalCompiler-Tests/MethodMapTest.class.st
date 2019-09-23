@@ -122,7 +122,7 @@ MethodMapTest >> testExampleTempNamedPutCopying [
 
 { #category : #'testing - temp access' }
 MethodMapTest >> testExampleTempNamedPutCopying2 [
-	"modifying a copied temp variable will *not* modify the value in the outer context"
+	"modifying a copied temp variable will modify the value in the outer context"
 
 	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying2) equals: 2
 ]
