@@ -14,7 +14,7 @@ SugsMenuBuilderTest >> testFindBestNodeForClassItsRBVariable [
 	node :=SugsMenuBuilder findBestNodeFor:  SugsMockContext classContext.
 	self assert: (node isKindOf: RBVariableNode).
 	"Es una forma un tanto molesta de preguntar... es de clase?" 
-	self assert:( node binding isLiteralVariable and: [Smalltalk globals  includesAssociation: node binding assoc ]).
+	self assert:( node binding isLiteralVariable and: [aTestEnvironment  includesAssociation: node binding assoc ]).
 ]
 
 { #category : #'tests - nodes' }
@@ -24,7 +24,7 @@ SugsMenuBuilderTest >> testFindBestNodeForClassVarItsRBVariable [
 	node :=SugsMenuBuilder findBestNodeFor:  SugsMockContext classVariableContext .
 	self assert: (node  isKindOf: RBVariableNode).
 	"Es una forma un tanto molesta de preguntar... es una var de clase?" 
-	self assert:( node binding isLiteralVariable and: [(Smalltalk globals  includesAssociation: node binding assoc ) not]).
+	self assert:( node binding isLiteralVariable and: [(aTestEnvironment  includesAssociation: node binding assoc ) not]).
 ]
 
 { #category : #'tests - nodes' }
