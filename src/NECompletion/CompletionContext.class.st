@@ -59,8 +59,9 @@ CompletionContext >> narrowWith: aString [
 CompletionContext >> parseSource [
 
 	ast := isWorkspace
-		ifTrue: [ ( RBParser parseFaultyExpression: source ) doSemanticAnalysis ]
-		ifFalse: [ ( RBParser parseFaultyMethod: source ) doSemanticAnalysisIn: theClass ].
+		ifTrue: [RBParser parseFaultyExpression: source]
+		ifFalse: [RBParser parseFaultyMethod: source].
+	ast doSemanticAnalysisIn: theClass.
 	TypingVisitor new visitNode: ast
 ]
 
