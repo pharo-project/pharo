@@ -59,14 +59,14 @@ OCCompilerTest >> runCase [
 { #category : #running }
 OCCompilerTest >> setUp [
 	super setUp.
-	Smalltalk globals at: #OCCompilerTestTestVar put: MockForCompilation.
+	aTestEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
 	
 	
 ]
 
 { #category : #running }
 OCCompilerTest >> tearDown [
-	Smalltalk globals removeKey: #OCCompilerTestTestVar.
+	aTestEnvironment removeKey: #OCCompilerTestTestVar.
 	super tearDown
 ]
 

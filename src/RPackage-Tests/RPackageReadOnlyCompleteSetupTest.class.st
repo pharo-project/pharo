@@ -131,12 +131,12 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 
 { #category : #'test compiled method' }
 RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
-	self deny: ((Smalltalk globals at: #A1DefinedInP1) isExtendedInPackage: p1).
-	self assert: (p1 includesClass: (Smalltalk globals at: #A1DefinedInP1)).
-	self deny: (p1 extendsClass: (Smalltalk globals at: #A1DefinedInP1)).
-	self assert: ((Smalltalk globals at: #A2DefinedInP2) isExtendedInPackage: p1).
-	self deny: (p1 includesClass: (Smalltalk globals at: #A2DefinedInP2)).
-	self assert: (p1 extendsClass: (Smalltalk globals at: #A2DefinedInP2)).
+	self deny: ((aTestEnvironment at: #A1DefinedInP1) isExtendedInPackage: p1).
+	self assert: (p1 includesClass: (aTestEnvironment at: #A1DefinedInP1)).
+	self deny: (p1 extendsClass: (aTestEnvironment at: #A1DefinedInP1)).
+	self assert: ((aTestEnvironment at: #A2DefinedInP2) isExtendedInPackage: p1).
+	self deny: (p1 includesClass: (aTestEnvironment at: #A2DefinedInP2)).
+	self assert: (p1 extendsClass: (aTestEnvironment at: #A2DefinedInP2)).
 	
 ]
 
