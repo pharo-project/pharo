@@ -12,7 +12,11 @@ Class {
 		'morph'
 	],
 	#classVars : [
+		'BlinkingCursor',
 		'CaseSensitiveFinds',
+		'CmdKeysInText',
+		'DumbbellCursor',
+		'SkipOverMultipleSpaces',
 		'UseFindReplaceSelection',
 		'UseSecondarySelection',
 		'UseSelectionBar',
