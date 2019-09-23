@@ -12,7 +12,7 @@ BuilderManifestTest >> setUp [
 	
 	| cl |
 	super setUp.
-	cl := Smalltalk globals at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -25,7 +25,7 @@ BuilderManifestTest >> setUp [
 BuilderManifestTest >> tearDown [
 	
 	| cl |
-	cl := Smalltalk globals at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -252,7 +252,7 @@ BuilderManifestTest >> testContainsToDo [
 BuilderManifestTest >> testCreationManifest [
 	| manifestBuilder cl |
 	manifestBuilder := TheManifestBuilder new.
-	cl := Smalltalk globals at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -267,7 +267,7 @@ BuilderManifestTest >> testCreationManifest [
 BuilderManifestTest >> testCreationManifestOn [
 	| manifestBuilder cl |
 	manifestBuilder := TheManifestBuilder new.
-	cl := Smalltalk globals at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
