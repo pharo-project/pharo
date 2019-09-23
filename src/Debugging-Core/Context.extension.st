@@ -21,15 +21,14 @@ Context >> callPrimitive: primNumber [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
-	| scope var |
-	scope := self sourceNodeExecuted scope.
-	var := scope lookupVar: aSymbol asString.
+	| var |
+	var := (self sourceNodeExecuted scope) lookupVar: aSymbol.
 	"Local variables"
-	(var isKindOf: OCTempVariable) ifTrue: [^ var readFromContext: self scope: scope].
+	var isTemp ifTrue: [^ self tempNamed: aSymbol].
 	"Instance variables"
-	(var isKindOf: OCSlotVariable) ifTrue: [^ self receiver instVarNamed: aSymbol].
+	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
 	"Class variables and globals"
-	(var isKindOf: OCLiteralVariable) ifTrue: [ ^ var assoc value ].
+	var isGlobal ifTrue: [ ^ var assoc value ].
 	^ nil.
 	
 ]
