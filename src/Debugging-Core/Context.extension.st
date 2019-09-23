@@ -371,14 +371,12 @@ Context >> tempNamed: aName [
 
 	And when we check self asContext pc we get 17, which is *before* the nil is pushed. Therefore we should pay attention when querying a temporary if the temporary allocation was executed."
 
-	| index |
-	index := self tempNames indexOf: aName.
-	^ self namedTempAt: index
+	^self debuggerMap tempNamed: aName in: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
-	^self namedTempAt: (self tempNames indexOf: aName) put: anObject
+	^self debuggerMap tempNamed: aName in: self put: anObject 
 ]
 
 { #category : #'*Debugging-Core' }
