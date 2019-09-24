@@ -23,14 +23,15 @@ ZnDigestAuthenticator class >> hasMD5Support [
 
 { #category : #accessing }
 ZnDigestAuthenticator class >> md5Hash: aString [
-	| hash |
+	| hash env|
+	env := self environment.
 	"Answer hash of aString as lowercase 32 digit hex String."
-	Smalltalk at: #MD5 ifPresent: [ :cls |
+	env at: #MD5 ifPresent: [ :cls |
 		^ ((cls new initialize) hashStream: (aString asByteArray readStream)) hex ].
-	hash := Smalltalk at: #CMD5Hasher ifPresent: [ :cls |
+	hash := env at: #CMD5Hasher ifPresent: [ :cls |
 		cls hashMessage: aString ].
 	hash ifNil: [
-		hash := Smalltalk at: #TCryptoRandom ifPresent: [ :cls |
+		hash := env at: #TCryptoRandom ifPresent: [ :cls |
 			(cls basicNew perform: #md5HashMessage: with: aString) asInteger ] ].
 	hash ifNotNil: [
 		hash := hash hex asLowercase.

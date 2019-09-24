@@ -24,10 +24,10 @@ WorldPresenter class >> defaultSpec [
 WorldPresenter class >> setUpWorld [
 	World changeProportionalLayout.
 	World submorphs do: [:e | e delete ].
- 	(Smalltalk at: #PolymorphSystemSettings) 
+ 	(self environment at: #PolymorphSystemSettings) 
 		perform: #desktopColor: 
 		with: self theme backgroundColor.
-	(Smalltalk at: #TaskbarMorph) perform: #showTaskbar: with: false
+	(self environment at: #TaskbarMorph) perform: #showTaskbar: with: false
 ]
 
 { #category : #private }

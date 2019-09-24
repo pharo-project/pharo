@@ -86,7 +86,7 @@ Alien class >> ensureInSpecialObjectsArray [
 	self ~~ Alien ifTrue: [^self].
 
 	index := 53.
-	((Smalltalk includesKey: #VMObjectIndices)
+	((self environment includesKey: #VMObjectIndices)
 	 and: [((Smalltalk at: #VMObjectIndices) classPool at: #ClassAlien ifAbsent: []) ~= (index - 1)]) ifTrue:
 		[self error: 'index probably wrong'].
 

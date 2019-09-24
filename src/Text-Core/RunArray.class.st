@@ -119,7 +119,7 @@ RunArray class >> scanFrom: strm [
 		char == $f ifTrue: [attrList add: 
 			(TextFontChange new fontNumber: (Integer readFrom: strm ifFail: [0]))].
 		char == $F ifTrue: [attrList add: (TextFontReference toFont: 
-			(Smalltalk at: #StrikeFont ifPresent: [:sf | sf familyName: (strm upTo: $#) size: (Integer readFrom: strm ifFail: [0])]))].
+			(self environment at: #StrikeFont ifPresent: [:sf | sf familyName: (strm upTo: $#) size: (Integer readFrom: strm ifFail: [0])]))].
 		char == $b ifTrue: [attrList add: (TextEmphasis bold)].
 		char == $i ifTrue: [attrList add: (TextEmphasis italic)].
 		char == $u ifTrue: [attrList add: (TextEmphasis underlined)].
