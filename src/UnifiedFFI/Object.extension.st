@@ -16,40 +16,46 @@ Object >> ffiCall: fnSpec [
 ]
 
 { #category : #'*UnifiedFFI' }
-Object >> ffiCall: fnSpec module: aModuleName [
+Object >> ffiCall: fnSpec library: aLibrary [
+	<ffiCalloutTranslator>
+	
+	self ffiCall: fnSpec library: aLibrary options: #()
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 	<ffiCalloutTranslator>
 	
 	| ffiLibrary |
-	
-	ffiLibrary := aModuleName asFFILibrary.
+	"find the original ffi caller"
+	thisContext findContextSuchThat: [ :ctx | (ctx method hasPragmaNamed: #ffiCalloutTranslator) not ].
+
+	ffiLibrary := aLibrary asFFILibrary.
 	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
 		convention: self ffiCallingConvention;
-		options: ffiLibrary options;
-		function: fnSpec module: aModuleName
+		options: (ffiLibrary options), callOptions;
+		function: fnSpec module: aLibrary
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec module: aModuleName [
+	<ffiCalloutTranslator>
+	
+	self ffiCall: fnSpec library: aModuleName
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 	<ffiCalloutTranslator>
 	
-	| ffiLibrary |
-	
-	ffiLibrary := aModuleName asFFILibrary.	
-	
-	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: (ffiLibrary options), callOptions;
-		function: fnSpec module: aModuleName
+	self ffiCall: fnSpec library: aModuleName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: (self ffiLibrary options), callOptions;
-		function: fnSpec module: self ffiLibrary moduleName
+	self ffiCall: fnSpec library: self ffiLibrary moduleName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }

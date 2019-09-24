@@ -180,9 +180,12 @@ FFICompilerPlugin >> transform [
 
 { #category : #api }
 FFICompilerPlugin >> transformsFFIMethod [
- 
-  ast nodesDo: [:each | 
-      each isMessage ifTrue: [    
-    		(self ffiCalloutSelectors includes: each selector) ifTrue: [^true]]].
-  ^false
+	
+	(ast hasPragmaNamed: #ffiCalloutTranslator)
+		ifTrue: [ ^ false ].
+	ast nodesDo: [ :each | 
+			each isMessage ifTrue: [
+				(self ffiCalloutSelectors includes: each selector)
+					ifTrue: [ ^ true ] ] ].
+	^ false
 ]
