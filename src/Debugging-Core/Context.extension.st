@@ -56,6 +56,16 @@ Context >> namedTempAt: index put: aValue [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> pcRange [
+	^self pcRangeContextIsActive: false
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> pcRangeContextIsActive: aBoolean [
+	^self method rangeForPC: pc contextIsActive: aBoolean
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> previousPcWithCorrectMapping [
 	"Answer a pc inside the enclosing block or mathod that is correctly mapped to an AST node"
 	"This is an ugly and temporary fix for Pharo 3. 
