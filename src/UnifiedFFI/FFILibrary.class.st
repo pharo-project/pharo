@@ -53,7 +53,7 @@ FFILibrary >> calloutAPIClass [
 
 { #category : #'library path' }
 FFILibrary >> ffiLibraryName [
-	^ self moduleName
+	^ self libraryName
 ]
 
 { #category : #accessing }

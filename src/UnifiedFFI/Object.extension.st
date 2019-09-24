@@ -55,7 +55,7 @@ Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 Object >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
 	
-	self ffiCall: fnSpec library: self ffiLibrary moduleName options: callOptions
+	self ffiCall: fnSpec library: self ffiLibrary libraryName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }

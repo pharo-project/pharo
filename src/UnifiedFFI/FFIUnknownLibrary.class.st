@@ -16,7 +16,7 @@ Class {
 	#name : #FFIUnknownLibrary,
 	#superclass : #FFILibrary,
 	#instVars : [
-		'moduleName'
+		'libraryName'
 	],
 	#category : #'UnifiedFFI-Libraries'
 }
@@ -35,11 +35,11 @@ FFIUnknownLibrary class >> new [
 
 { #category : #initialization }
 FFIUnknownLibrary >> initializeName: aString [ 
-	moduleName := aString.
+	libraryName := aString.
 	self initialize
 ]
 
 { #category : #accessing }
-FFIUnknownLibrary >> moduleName [ 
-	^ moduleName
+FFIUnknownLibrary >> libraryName [
+	^ libraryName
 ]

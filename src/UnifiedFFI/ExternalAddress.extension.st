@@ -76,7 +76,7 @@ ExternalAddress class >> loadSymbol: moduleSymbol [
 ExternalAddress class >> loadSymbol: moduleSymbol from: moduleNameOrClass [ 
 	^ self 
 		loadSymbol: moduleSymbol 
-		module: moduleNameOrClass asFFILibrary moduleName.
+		module: moduleNameOrClass asFFILibrary libraryName.
 	
 ]
 
