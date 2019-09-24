@@ -68,11 +68,6 @@ FFILibrary >> macLibraryName [
 	^ self macModuleName
 ]
 
-{ #category : #accessing }
-FFILibrary >> moduleName [ 
-	^ Smalltalk platform ffiLibraryName: self
-]
-
 { #category : #'accessing platform' }
 FFILibrary >> options [
 	
