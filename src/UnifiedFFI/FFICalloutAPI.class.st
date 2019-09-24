@@ -83,8 +83,7 @@ FFICalloutAPI >> findUffiEnterContext [
 	"Finds the initial context where entering the uffi framework.
 	That is, the context that was marked with the #ffiCalloutTranslator pragma, whose caller was not.
 	The found context determines how uffi was called. Its sender context is the client context.
-	
-	Return the selector of the uffiEnterContext"
+	If no context is found, return nil"
 	
 	| pragmaName uffiEnterContext |
 	pragmaName := #ffiCalloutTranslator.
