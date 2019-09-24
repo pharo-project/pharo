@@ -809,9 +809,7 @@ ProcessBrowser >> pcRange [
 	the selected context's program counter value."
 	(selectedContext isNil or: [methodText isEmptyOrNil])
 		ifTrue: [^ 1 to: 0].
-	^selectedContext method
-		rangeForPC: (selectedContext pc ifNotNil: [:pc| pc] ifNil: [selectedContext method endPC])
-		contextIsActive: stackListIndex = 1
+	^selectedContext pcRangeContextIsActive: (stackListIndex = 1)
 ]
 
 { #category : #'process list' }

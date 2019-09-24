@@ -196,7 +196,7 @@ MethodMapTest >> testSimpleSourceMapping [
 
 	method := Object>>('ha', 'lt') asSymbol.
 
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: (Smalltalk vm for32bit: 23 for64bit: 43).
+	range := (self compileMethod: method) rangeForPC: (Smalltalk vm for32bit: 23 for64bit: 43).
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'now'.
 
