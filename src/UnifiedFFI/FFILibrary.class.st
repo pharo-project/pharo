@@ -92,21 +92,9 @@ FFILibrary >> unix32LibraryName [
 ]
 
 { #category : #'accessing platform' }
-FFILibrary >> unix32ModuleName [
-	"Point to #unixModuleName to keep backward compatibility." 
-	^ self unixLibraryName
-]
-
-{ #category : #'accessing platform' }
 FFILibrary >> unix64LibraryName [
 	"Point to #unixLibraryName to keep backward compatibility." 
 	^ self unixLibraryName
-]
-
-{ #category : #'accessing platform' }
-FFILibrary >> unix64ModuleName [
-	"Point to #unixModuleName to keep backward compatibility." 
-	^ self unixModuleName
 ]
 
 { #category : #'accessing platform' }
