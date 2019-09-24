@@ -67,7 +67,7 @@ Context >> pcRangeContextIsActive: contextIsActive [
 	the pc was already advanced one bytecode, so we need to go back this one bytecode, which
 	can consist of multiple bytes. But on IR, we record the *last* bytecode offset as the offset of
 	the IR instruction, which means we can just go back one"
-	thePC := contextIsActive ifTrue: [pc] ifFalse: [pc - 1].
+	thePC := contextIsActive ifTrue: [thePC] ifFalse: [thePC - 1].
 	
 	^self method rangeForPC: thePC
 ]
