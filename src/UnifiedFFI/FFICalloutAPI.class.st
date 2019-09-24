@@ -105,7 +105,7 @@ FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 			builder
 				signature: functionSignature;
 				sender: sender;
-				module: moduleNameOrLibrary ].
+				library: moduleNameOrLibrary ].
 	ffiMethod
 		selector: sender selector;
 		methodClass: sender methodClass.	"Replace with generated ffi method, but save old one for future use"
