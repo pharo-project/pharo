@@ -48,11 +48,11 @@ MetacelloConfigTemplate class >> DevelopmentSupport [
 { #category : #private }
 MetacelloConfigTemplate class >> baseConfigurationClassIfAbsent: aBlock [
 
-	^Smalltalk
+	^self environment 
 		at: #'ConfigurationOf'
 		ifAbsent: [ 
 			self ensureMetacelloBaseConfiguration.
-			Smalltalk at: #'ConfigurationOf' ifAbsent: aBlock ].
+			self environment  at: #'ConfigurationOf' ifAbsent: aBlock ].
 ]
 
 { #category : #private }
@@ -63,7 +63,7 @@ MetacelloConfigTemplate class >> ensureMetacello [
 
 { #category : #private }
 MetacelloConfigTemplate class >> ensureMetacelloBaseConfiguration [
-  Smalltalk
+  self environment 
     at: #'ConfigurationOf'
     ifAbsent: [ 
       | repository version |
@@ -133,7 +133,7 @@ MetacelloConfigTemplate class >> validate [
 
 	<apiDocumentation>
 	self ensureMetacello.
-	^ ((Smalltalk at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
+	^ ((self environment  at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
 { #category : #accessing }

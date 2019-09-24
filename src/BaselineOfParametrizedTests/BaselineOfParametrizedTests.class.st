@@ -15,11 +15,11 @@ BaselineOfParametrizedTests class >> DevelopmentSupport [
 { #category : #private }
 BaselineOfParametrizedTests class >> baseConfigurationClassIfAbsent: aBlock [
 
-	^Smalltalk
+	^self environment
 		at: #MetacelloBaseConfiguration
 		ifAbsent: [ 
 			self ensureMetacelloBaseConfiguration.
-			Smalltalk at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
+			self environment at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
 
 ]
 
@@ -32,7 +32,7 @@ BaselineOfParametrizedTests class >> ensureMetacello [
 { #category : #private }
 BaselineOfParametrizedTests class >> ensureMetacelloBaseConfiguration [
 
-	Smalltalk
+	self environment
 		at: #MetacelloBaseConfiguration
 		ifAbsent: [ 
 			| repository version |
@@ -99,7 +99,7 @@ BaselineOfParametrizedTests class >> validate [
 
 	<apiDocumentation>
 	self ensureMetacello.
-	^ ((Smalltalk at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) explore
 ]
 
 { #category : #baselines }
