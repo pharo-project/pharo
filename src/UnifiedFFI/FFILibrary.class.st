@@ -56,6 +56,16 @@ FFILibrary >> ffiLibraryName [
 	^ self moduleName
 ]
 
+{ #category : #accessing }
+FFILibrary >> libraryName [ 
+	^ Smalltalk platform ffiLibraryName: self
+]
+
+{ #category : #'accessing platform' }
+FFILibrary >> macLibraryName [
+	^ self macModuleName
+]
+
 { #category : #'accessing platform' }
 FFILibrary >> macModuleName [ 
 	^ self subclassResponsibility
@@ -63,7 +73,7 @@ FFILibrary >> macModuleName [
 
 { #category : #accessing }
 FFILibrary >> moduleName [ 
-	^ Smalltalk platform ffiModuleName: self
+	^ Smalltalk platform ffiLibraryName: self
 ]
 
 { #category : #'accessing platform' }
@@ -79,7 +89,19 @@ FFILibrary >> uniqueInstance [
 ]
 
 { #category : #'accessing platform' }
+FFILibrary >> unix32LibraryName [
+	"Point to #unixModuleName to keep backward compatibility." 
+	^ self unixModuleName
+]
+
+{ #category : #'accessing platform' }
 FFILibrary >> unix32ModuleName [
+	"Point to #unixModuleName to keep backward compatibility." 
+	^ self unixModuleName
+]
+
+{ #category : #'accessing platform' }
+FFILibrary >> unix64LibraryName [
 	"Point to #unixModuleName to keep backward compatibility." 
 	^ self unixModuleName
 ]
@@ -91,10 +113,22 @@ FFILibrary >> unix64ModuleName [
 ]
 
 { #category : #'accessing platform' }
+FFILibrary >> unixLibraryName [
+	"Kept for backward compatibility. 
+	 Users should use unix32* or unix64*"
+	^ self subclassResponsibility
+]
+
+{ #category : #'accessing platform' }
 FFILibrary >> unixModuleName [
 	"Kept for backward compatibility. 
 	 Users should use unix32* or unix64*"
 	^ self subclassResponsibility
+]
+
+{ #category : #'accessing platform' }
+FFILibrary >> win32LibraryName [ 
+	^ self win32ModuleName
 ]
 
 { #category : #'accessing platform' }

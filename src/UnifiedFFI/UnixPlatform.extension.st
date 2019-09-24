@@ -1,6 +1,6 @@
 Extension { #name : #UnixPlatform }
 
 { #category : #'*UnifiedFFI' }
-UnixPlatform >> ffiModuleName: aLibrary [ 
-	^ aLibrary unixModuleName
+UnixPlatform >> ffiLibraryName: aLibrary [ 
+	^ aLibrary unixLibraryName
 ]
