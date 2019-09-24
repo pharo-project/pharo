@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'accessing platform' }
-CairoLibrary >> macModuleName [
+CairoLibrary >> macLibraryName [
 	^ 'libcairo.2.dylib'
 ]
 

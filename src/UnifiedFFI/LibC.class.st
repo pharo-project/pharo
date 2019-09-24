@@ -69,7 +69,7 @@ LibC >> fgetc: stream [
 ]
 
 { #category : #'private - accessing' }
-LibC >> macModuleName [
+LibC >> macLibraryName [
 	^ 'libc.dylib'
 ]
 
