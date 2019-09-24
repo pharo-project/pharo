@@ -67,7 +67,7 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	| methodTree modifiedNode |
 	methodTree := self definingMethod.
 
-	modifiedNode := (methodTree allChildren select: #isSequence)
+	modifiedNode := (methodTree allChildren select: [:each | each isSequence])
 						detect: [ :sequence | sequence defines: variableName ]
 						ifNone: [ nil ].
 	

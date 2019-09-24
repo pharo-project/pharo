@@ -48,3 +48,18 @@ OCCopyingTempVariable >> tempVectorForTempStoringIt [
 		ifFalse: [^ searchScope tempVector]
 	
 ]
+
+{ #category : #debugging }
+OCCopyingTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
+	
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
+	originalVar writeFromContext: aContext scope: contextScope value: aValue.
+	
+	self flag: #FIXME.
+	"we need to change all the copies, too"
+	
+	^definitionContext 
+		tempAt: self indexFromIR
+		put: aValue
+]

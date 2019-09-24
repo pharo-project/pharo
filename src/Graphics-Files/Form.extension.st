@@ -12,6 +12,15 @@ Form class >> fileReaderServicesForFile: fullName suffix: suffix [
 ]
 
 { #category : #'*Graphics-Files' }
+Form class >> fromBase64String: aBase64EncodedString [
+	"Convenient method to instantiate a Form from an image content encoded in base64 (used to store image data in a method for example".
+	"Encoded string can be obtained with:
+	(Base64MimeConverter mimeEncode: 'picture.png' asFileReference binaryReadStream) contents."
+	
+	^ self fromBinaryStream: aBase64EncodedString base64Decoded asByteArray readStream
+]
+
+{ #category : #'*Graphics-Files' }
 Form class >> fromBinaryStream: aBinaryStream [
 	"Read a Form or ColorForm from given file, using the first byte of the file to guess its format. Currently handles: GIF, uncompressed BMP, and both old and new DisplayObject writeOn: formats, JPEG, and PCX. Return nil if the file could not be read or was of an unrecognized format."
 

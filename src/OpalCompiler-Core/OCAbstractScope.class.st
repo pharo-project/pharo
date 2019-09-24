@@ -56,12 +56,6 @@ OCAbstractScope >> isMethodScope [
 ]
 
 { #category : #lookup }
-OCAbstractScope >> lookupAndReadVar: name inContext: aContext [
-
-	^ self outerScope lookupAndReadVar: name inContext: aContext outerContext
-]
-
-{ #category : #lookup }
 OCAbstractScope >> lookupSelector: name [
 
 	Symbol hasInterned: name ifTrue: [ :sym | ^ sym].

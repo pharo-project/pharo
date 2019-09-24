@@ -21,15 +21,14 @@ Context >> callPrimitive: primNumber [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
-	| scope var |
-	scope := self sourceNodeExecuted scope.
-	var := scope lookupVar: aSymbol asString.
+	| var |
+	var := (self sourceNodeExecuted scope) lookupVar: aSymbol.
 	"Local variables"
-	(var isKindOf: OCTempVariable) ifTrue: [^ var searchFromContext: self scope: scope].
+	var isTemp ifTrue: [^ self tempNamed: aSymbol].
 	"Instance variables"
-	(var isKindOf: OCSlotVariable) ifTrue: [^ self receiver instVarNamed: aSymbol].
+	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
 	"Class variables and globals"
-	(var isKindOf: OCLiteralVariable) ifTrue: [ ^ var assoc value ].
+	var isGlobal ifTrue: [ ^ var assoc value ].
 	^ nil.
 	
 ]
@@ -371,14 +370,12 @@ Context >> tempNamed: aName [
 
 	And when we check self asContext pc we get 17, which is *before* the nil is pushed. Therefore we should pay attention when querying a temporary if the temporary allocation was executed."
 
-	| index |
-	index := self tempNames indexOf: aName.
-	^ self namedTempAt: index
+	^self debuggerMap tempNamed: aName in: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
-	^self namedTempAt: (self tempNames indexOf: aName) put: anObject
+	^self debuggerMap tempNamed: aName in: self put: anObject 
 ]
 
 { #category : #'*Debugging-Core' }

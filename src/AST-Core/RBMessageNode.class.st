@@ -66,6 +66,13 @@ RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #accessing }
+RBMessageNode >> argumentPartStrings [
+	"Return a collection of string representing the code of the argument."
+	^ arguments collect: [ :each | each formattedCode asString 
+			"strangely enough literal formatted code is not a string" ]  
+]
+
+{ #category : #accessing }
 RBMessageNode >> arguments [
 	^arguments ifNil: [#()] ifNotNil: [arguments]
 ]
