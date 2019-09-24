@@ -22,8 +22,8 @@ FLUserGuidesTest >> testConsiderGlobal [
 	| aSerializer anArray materializedArray |
 	"Prepare an array whose two elements are system globals."
 	anArray := Array with: Set new with: Set new.
-	Smalltalk at: #GlobalSet1 put: anArray first.
-	Smalltalk at: #GlobalSet2 put: anArray second.
+	aTestEnvironment at: #GlobalSet1 put: anArray first.
+	aTestEnvironment at: #GlobalSet2 put: anArray second.
 
 	"Serialize considering *only first* as a global object."
 	FLPlatform current
@@ -41,8 +41,8 @@ FLUserGuidesTest >> testConsiderGlobal [
 				materializeFrom: aStream) root].
 				
 	"Check that second element is a new Set."
-	[ (Smalltalk at: #GlobalSet1) == materializedArray first ] assert.
-	[ (Smalltalk at: #GlobalSet2) ~~ materializedArray second ] assert
+	[ (aTestEnvironment at: #GlobalSet1) == materializedArray first ] assert.
+	[ (aTestEnvironment at: #GlobalSet2) ~~ materializedArray second ] assert
 ]
 
 { #category : #'tests-Getting Started' }

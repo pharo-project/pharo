@@ -354,7 +354,7 @@ BuilderManifestTest >> testIsClassAManifest [
 		
 	self deny: Point isManifest.
 	TheManifestBuilder of: MFClassA. 
-	self assert: ( (Smalltalk at: #ManifestManifestResourcesTests) isManifest)
+	self assert: ( (aTestEnvironment at: #ManifestManifestResourcesTests) isManifest)
 ]
 
 { #category : #tests }

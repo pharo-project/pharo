@@ -38,7 +38,7 @@ MetacelloIssueTestCase >> project [
 
 { #category : #accessing }
 MetacelloIssueTestCase >> projectClass [
-    ^ Smalltalk at: self projectName asSymbol
+    ^ aTestEnvironment at: self projectName asSymbol
 ]
 
 { #category : #accessing }
@@ -77,10 +77,10 @@ MetacelloIssueTestCase >> setUp [
   gofer := Gofer new.
   gofer disablePackageCache.
   gofer repository: repo.
-  Smalltalk at: #'Metacello_Gofer_Test_Repository' put: repo.
+  aTestEnvironment at: #'Metacello_Gofer_Test_Repository' put: repo.
   repo := self configurationRepository.
   gofer repository: repo.
-  Smalltalk at: #'Metacello_Configuration_Test_Repository' put: repo.
+  aTestEnvironment at: #'Metacello_Configuration_Test_Repository' put: repo.
   initialWorkingCopyList := MCWorkingCopy allManagers
     collect: [ :each | each packageName ]
 ]

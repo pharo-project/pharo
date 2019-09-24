@@ -10,9 +10,9 @@ Class {
 { #category : #tests }
 FLClassSerializationTest >> during: aBlock rename: aClass as: anotherClass [
 
-	[ Smalltalk at: aClass name put: anotherClass.
+	[ aTestEnvironment at: aClass name put: anotherClass.
 	^aBlock value ] ensure: [ 
-	Smalltalk at: aClass name put: aClass ].
+	aTestEnvironment at: aClass name put: aClass ].
 ]
 
 { #category : #tests }

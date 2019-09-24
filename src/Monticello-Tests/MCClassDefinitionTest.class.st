@@ -172,10 +172,10 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (aTestEnvironment hasClassNamed: 'MCMockClassC').
+	cls := aTestEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((aTestEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
 ]
 
 { #category : #tests }
@@ -198,10 +198,10 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (aTestEnvironment hasClassNamed: 'MCMockClassC').
+	cls := aTestEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((aTestEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
 ]
 
 { #category : #tests }
@@ -224,12 +224,12 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (aTestEnvironment hasClassNamed: 'MCMockClassC').
+	cls := aTestEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
 	self assert: (cls includesSelector: #c2).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait1).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait2)
+	self assert: ((aTestEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1).
+	self assert: ((aTestEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait2)
 ]
 
 { #category : #tests }
@@ -252,8 +252,8 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (aTestEnvironment hasClassNamed: 'MCMockClassC').
+	cls := aTestEnvironment at: #MCMockClassC.
 	self assert: (cls selectors includesAll: {#c}).
 	self deny: (cls selectors includesAnyOf: {#c1})
 ]

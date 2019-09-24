@@ -7,7 +7,7 @@ Class {
 { #category : #running }
 MetacelloExternalScriptingTestCase >> setUpRepositoryContents [
     super setUpRepositoryContents.
-    Smalltalk at: #'Metacello_Config_Test_Repository' put: configurationRepository
+    aTestEnvironment at: #'Metacello_Config_Test_Repository' put: configurationRepository
 ]
 
 { #category : #running }
@@ -15,7 +15,7 @@ MetacelloExternalScriptingTestCase >> tearDownRepositories [
   super tearDownRepositories.
   MCRepositoryGroup default
     removeIdenticalRepository:
-      (Smalltalk at: #'Metacello_XXX_Test_Repository' ifAbsent: [  ]).
+      (aTestEnvironment at: #'Metacello_XXX_Test_Repository' ifAbsent: [  ]).
   aTestEnvironment removeKey: #'Metacello_Config_Test_Repository' ifAbsent: [  ].
   aTestEnvironment removeKey: #'Metacello_XXX_Test_Repository' ifAbsent: [  ]
 ]
