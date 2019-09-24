@@ -13,7 +13,9 @@ Form class >> fileReaderServicesForFile: fullName suffix: suffix [
 
 { #category : #'*Graphics-Files' }
 Form class >> fromBase64String: aBase64EncodedString [
-	"Convenient method to instantiate a Form from an image content encoded in base64 (used to store image data in a method for example"
+	"Convenient method to instantiate a Form from an image content encoded in base64 (used to store image data in a method for example".
+	"Encoded string can be obtained with:
+	(Base64MimeConverter mimeEncode: 'picture.png' asFileReference binaryReadStream) contents."
 	
 	^ self fromBinaryStream: aBase64EncodedString base64Decoded asByteArray readStream
 ]
