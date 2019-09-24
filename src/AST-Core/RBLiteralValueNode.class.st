@@ -54,11 +54,6 @@ RBLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
-{ #category : #testing }
-RBLiteralValueNode >> isFaulty [
-	^false
-]
-
 { #category : #accessing }
 RBLiteralValueNode >> sourceText [
 	^ sourceText ifNil: [

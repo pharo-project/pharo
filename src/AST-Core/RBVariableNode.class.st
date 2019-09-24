@@ -98,11 +98,6 @@ RBVariableNode >> isDefinition [
 ]
 
 { #category : #testing }
-RBVariableNode >> isFaulty [
-	^false
-]
-
-{ #category : #testing }
 RBVariableNode >> isImmediateNode [
 	^true
 ]

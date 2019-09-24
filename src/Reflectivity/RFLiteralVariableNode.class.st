@@ -40,11 +40,6 @@ RFLiteralVariableNode >> dumpOn: aStream [
 	self value printOn: aStream
 ]
 
-{ #category : #testing }
-RFLiteralVariableNode >> isFaulty [
-	^false
-]
-
 { #category : #accessing }
 RFLiteralVariableNode >> start [
 	^0
