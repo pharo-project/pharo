@@ -7,6 +7,22 @@ Class {
 	#category : #'Collections-Tests-Support'
 }
 
+{ #category : #test }
+CollectionTest >> testCopyWithoutDuplicates [
+ 	| a b |
+	a := #(1 2 3 4 4 5 6 1) copyWithoutDuplicates.
+	b := #(4 2 3 1 6 5).
+	self assert: [(a includesAll: b) and: [ b includesAll: a ]].
+
+	a := #('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates .
+	b := #('do' 'la' 'si' ).
+	self assert: [(a includesAll: b) and: [ b includesAll: a ]].
+
+	a := #(#do #la #si #do #la) copyWithoutDuplicates.
+	b := #(#si #la #do).
+	self assert: [(a includesAll: b) and: [ b includesAll: a ]].
+]
+
 { #category : #tests }
 CollectionTest >> testGroupedByGroupsOrderSimple [
 	| dataCollection grouped keys |
