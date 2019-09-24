@@ -4,6 +4,11 @@ Tests for FFICalloutAPI
 Class {
 	#name : #FFICalloutAPITest,
 	#superclass : #TestCase,
+	#instVars : [
+		'senderCtx',
+		'uffiCtx',
+		'lastUffiCtx'
+	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
@@ -117,6 +122,29 @@ FFICalloutAPITest >> runCase [
 	ensure: [ FFICalloutAPI calloutAPIClass: oldAPIClass ]
 ]
 
+{ #category : #'tests context' }
+FFICalloutAPITest >> setUp [
+
+	super setUp.	
+	senderCtx := Context
+		sender: nil
+		receiver: nil
+		method: Object>>#yourself
+		arguments: #().
+	
+	uffiCtx := Context
+		sender: senderCtx
+		receiver: nil
+		method: Object>>#ffiCall:
+		arguments: #(1).
+		
+	lastUffiCtx := Context
+		sender: uffiCtx
+		receiver: nil
+		method: Object>>#ffiCall:options:
+		arguments: #(1 2).
+]
+
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testByteArrayToExternalAddress [
 	| result dest |
@@ -220,6 +248,26 @@ FFICalloutAPITest >> testCallWithSelfParameter [
 		raise: Error.
 	"Since is a strcpy it will answer a byte array terminated in zero"
 	self assert: object handle asString equals: ('Hello, World' copyWith: (Character value: 0))
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testCaptureFFIMethodSelectorLookupsFirstMethodInSenderChain [
+	| api selector |
+	
+	api := FFICalloutAPI inContext: lastUffiCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: uffiCtx method selector
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testCaptureFFIMethodSelectorLookupsMethodInSenderChain [
+	| api selector |
+	
+	api := FFICalloutAPI inContext: uffiCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: uffiCtx method selector
 ]
 
 { #category : #'tests atomic' }
@@ -365,6 +413,23 @@ FFICalloutAPITest >> testPrintString [
 	result := self ffiCopyString: 'Hello World!' to: buffer.
 	self assert: result equals: 'Hello World!'.
 	self assert: buffer asString equals: 'Hello World!'
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testSenderLookupsMethodInSenderChain [
+	| api |
+	
+	api := FFICalloutAPI inContext: uffiCtx.
+	self assert: api senderContext equals: senderCtx
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testSenderLookupsMethodInSenderChainWithManyUFFIMethods [
+	| api |
+	
+	api := FFICalloutAPI inContext: lastUffiCtx.
+
+	self assert: api senderContext equals: senderCtx
 ]
 
 { #category : #'tests pointer' }

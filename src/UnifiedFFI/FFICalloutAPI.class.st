@@ -71,10 +71,10 @@ FFICalloutAPI >> convention: aCallingConvention [
 ]
 
 { #category : #action }
-FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
+FFICalloutAPI >> function: functionSignature library: aLibrary [
 	| sender ffiMethod ffiMethodSelector |
-	sender := context ifNil: [ thisContext sender sender ].
-	ffiMethodSelector := thisContext sender method selector.
+	sender := self senderContext.
+	ffiMethodSelector := self uFFIEnterMethodSelector.
 
 	"Build new method"
 	ffiMethod := self newBuilder
@@ -82,7 +82,7 @@ FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
 			builder
 				signature: functionSignature;
 				sender: sender;
-				module: moduleNameOrLibrary ].
+				module: aLibrary ].
 	ffiMethod
 		selector: sender selector;
 		methodClass: sender methodClass.
@@ -95,6 +95,12 @@ FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
 	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.
 	"Resend"
 	sender return: (sender receiver withArgs: sender arguments executeMethod: ffiMethod)
+]
+
+{ #category : #action }
+FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
+	
+	^ self function: functionSignature library: moduleNameOrLibrary
 ]
 
 { #category : #initialization }
@@ -134,7 +140,37 @@ FFICalloutAPI >> options: anObject [
 	options := anObject
 ]
 
+{ #category : #accessing }
+FFICalloutAPI >> senderContext [
+	
+	^ self uffiEnterContext sender
+]
+
 { #category : #'call conventions' }
 FFICalloutAPI >> stdcall [
 	callingConvention := #stdcall
+]
+
+{ #category : #accessing }
+FFICalloutAPI >> uFFIEnterMethodSelector [
+	
+	"Return the selector of the uffiEnterContext.
+	That is, the selector that was called by client code to invoke uffi "
+	^ self uffiEnterContext method selector
+]
+
+{ #category : #configuration }
+FFICalloutAPI >> uffiEnterContext [
+	"Finds the initial context where entering the uffi framework.
+	That is, the context that was marked with the #ffiCalloutTranslator pragma, whose caller was not.
+	The found context determines how uffi was called. Its sender context is the client context.
+	
+	Return the selector of the uffiEnterContext "
+	| pragmaName uffiEnterContext |
+	pragmaName := #ffiCalloutTranslator.
+	
+	uffiEnterContext := context findContextSuchThat: [ :ctx |
+		(ctx method hasPragmaNamed: pragmaName)
+			and: [ (ctx sender method hasPragmaNamed: pragmaName) not] ].
+	^ uffiEnterContext
 ]

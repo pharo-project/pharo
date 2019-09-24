@@ -27,14 +27,11 @@ Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 	<ffiCalloutTranslator>
 	
 	| ffiLibrary |
-	"find the original ffi caller"
-	thisContext findContextSuchThat: [ :ctx | (ctx method hasPragmaNamed: #ffiCalloutTranslator) not ].
-
 	ffiLibrary := aLibrary asFFILibrary.
-	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
+	^ (ffiLibrary calloutAPIClass inContext: thisContext)
 		convention: self ffiCallingConvention;
 		options: (ffiLibrary options), callOptions;
-		function: fnSpec module: aLibrary
+		function: fnSpec module: ffiLibrary
 ]
 
 { #category : #'*UnifiedFFI' }
