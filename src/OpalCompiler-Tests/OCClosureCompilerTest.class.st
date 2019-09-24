@@ -317,9 +317,9 @@ OCClosureCompilerTest >> doTestDebuggerTempAccessWith: one with: two [
 		self  evaluate: 'local1 := 25' in: thisContext to: self.
 		self assert: local1 = 25.
 		{ r1. r2. r3. r4 } "placate the compiler"].
-	self assert: local1 = -3.0.
-	"this is not 25 as the var is a local, non escaping variable that was copied into the block,
-	If the compiler would have known about the write, it would have made the var escaping".
+	self assert: local1 = 25.
+	"this is 25 even though the var is a local, non escaping variable that was copied into the block.
+	But the DoIt compiles temp acces using #namedTempAt:put:, which updates the copies and the original".
 	self assert: remote1 = (6/7)
 ]
 

@@ -135,7 +135,7 @@ OCTempVariable >> markWrite [
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
 	| definitionContext |
-	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
+	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
 	^ self readFromLocalContext: definitionContext
 ]
 
@@ -149,7 +149,7 @@ OCTempVariable >> readFromLocalContext: aContext [
 OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| definitionContext |
-	definitionContext := contextScope lookupDefiningContextFor: name startingFrom: aContext.
+	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
 
 	^definitionContext 
 		tempAt: self indexFromIR
