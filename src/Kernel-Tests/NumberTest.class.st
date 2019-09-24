@@ -7,6 +7,13 @@ Class {
 	#category : #'Kernel-Tests-Numbers'
 }
 
+{ #category : #test }
+NumberTest >> testAsInteger [
+	self assert: 0.5 asInteger equals: 1.
+	self assert: (1/2) asInteger equals: 1
+	
+]
+
 { #category : #tests }
 NumberTest >> testFractionPart [
 

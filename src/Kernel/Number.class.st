@@ -266,7 +266,7 @@ Number >> asFloat [
 Number >> asInteger [
 	"Answer an Integer nearest the receiver toward zero."
 
-	^self truncated
+	^self rounded
 ]
 
 { #category : #converting }
