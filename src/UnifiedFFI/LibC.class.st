@@ -131,12 +131,12 @@ LibC >> system: command [
 ]
 
 { #category : #'private - accessing' }
-LibC >> unixModuleName [
+LibC >> unixLibraryName [
 	^ 'libc.so.6'
 ]
 
 { #category : #'private - accessing' }
-LibC >> win32ModuleName [
+LibC >> win32LibraryName [
 	"While this is not a 'libc' properly, msvcrt has the functions we are defining here"
 	^ 'msvcrt.dll'
 ]

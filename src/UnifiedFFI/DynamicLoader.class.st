@@ -59,6 +59,6 @@ DynamicLoader >> macModuleName [
 ]
 
 { #category : #'accessing platform' }
-DynamicLoader >> unixModuleName [
+DynamicLoader >> unixLibraryName [
 	^ 'libdl.so'
 ]

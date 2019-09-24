@@ -42,8 +42,7 @@ FT2Library >> ffiDoneFace: aHandle [
 { #category : #'private-ffi' }
 FT2Library >> ffiGetBitmap: abitmap fromOutline: outline [
 	self
-		ffiCall:
-			#(FT_Error FT_Outline_Get_Bitmap (self, void* outline , void* abitmap))
+		ffiCall: #(#FT_Error #FT_Outline_Get_Bitmap #(#self #, #void #* #outline #, #void #* #abitmap))
 ]
 
 { #category : #'ffi-calls' }

@@ -256,7 +256,8 @@ FT2Face >> ffiGetPostscriptName [
 
 { #category : #'private-ffi-calls' }
 FT2Face >> ffiLoadChar: char_code flags: load_flags [
-	^ self ffiCall: #(FT_Error FT_Load_Char(self, FT_ULong  char_code, FT_Int32  load_flags ))
+	^ self
+		ffiCall: #(#FT_Error #FT_Load_Char #(#self #, #FT_ULong #char_code #, #FT_Int32 #load_flags))
 ]
 
 { #category : #'private-ffi-calls' }
@@ -272,7 +273,8 @@ FT2Face >> ffiOutline: outline embolden: strength [
 
 { #category : #'private-ffi-calls' }
 FT2Face >> ffiOutline: outline transformByMatrix: matrix [
-	^ self ffiCall: #(void FT_Outline_Transform( FT_Outline*  outline, FT_Matrix*   matrix ))
+	^ self
+		ffiCall: #(#void #FT_Outline_Transform #(#FT_Outline #* #outline #, #FT_Matrix #* #matrix))
 ]
 
 { #category : #'private-ffi-calls' }
@@ -282,9 +284,8 @@ FT2Face >> ffiSelectCharmap: encoding_value [
 
 { #category : #'private-ffi-calls' }
 FT2Face >> ffiSetPixelWidth: pixel_width height: pixel_height [
-	^ self ffiCall: #(long FT_Set_Pixel_Sizes(self,
-                      FT_UInt  pixel_width,
-                      FT_UInt  pixel_height ))
+	^ self
+		ffiCall: #(#long #FT_Set_Pixel_Sizes #(#self #, #FT_UInt #pixel_width #, #FT_UInt #pixel_height))
 ]
 
 { #category : #'private-ffi-calls' }
@@ -294,7 +295,8 @@ FT2Face >> ffiTransformMatrix: matrix delta: delta [
 
 { #category : #'private-ffi-calls' }
 FT2Face >> ffiTranslateOutline: outline x: xOffset y: yOffset [
-	self ffiCall: #(void FT_Outline_Translate (FT_Outline * outline , FT_Pos xOffset , FT_Pos yOffset))
+	self
+		ffiCall: #(#void #FT_Outline_Translate #(#FT_Outline #* #outline #, #FT_Pos #xOffset #, #FT_Pos #yOffset))
 ]
 
 { #category : #glyphs }
