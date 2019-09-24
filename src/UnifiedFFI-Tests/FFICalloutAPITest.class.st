@@ -145,6 +145,14 @@ FFICalloutAPITest >> setUp [
 		arguments: #(1 2).
 ]
 
+{ #category : #running }
+FFICalloutAPITest >> tearDown [
+	
+	self resetFFIMethods.
+	FFICallbackFunctionResolution reset.
+	super tearDown.
+]
+
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testByteArrayToExternalAddress [
 	| result dest |
