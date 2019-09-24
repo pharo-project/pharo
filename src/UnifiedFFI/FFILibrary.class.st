@@ -68,11 +68,6 @@ FFILibrary >> macLibraryName [
 	^ self macModuleName
 ]
 
-{ #category : #'accessing platform' }
-FFILibrary >> macModuleName [ 
-	^ self subclassResponsibility
-]
-
 { #category : #accessing }
 FFILibrary >> moduleName [ 
 	^ Smalltalk platform ffiLibraryName: self
@@ -122,20 +117,8 @@ FFILibrary >> unixLibraryName [
 ]
 
 { #category : #'accessing platform' }
-FFILibrary >> unixModuleName [
-	"Kept for backward compatibility. 
-	 Users should use unix32* or unix64*"
-	^ self subclassResponsibility
-]
-
-{ #category : #'accessing platform' }
 FFILibrary >> win32LibraryName [
 	"Calling by default #win32ModuleName for backwards compatibility.
 	Please redefine #win32LibraryName"
 	^ self win32ModuleName
-]
-
-{ #category : #'accessing platform' }
-FFILibrary >> win32ModuleName [ 
-	^ self subclassResponsibility
 ]
