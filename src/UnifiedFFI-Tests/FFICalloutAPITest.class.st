@@ -250,26 +250,6 @@ FFICalloutAPITest >> testCallWithSelfParameter [
 	self assert: object handle asString equals: ('Hello, World' copyWith: (Character value: 0))
 ]
 
-{ #category : #'tests context' }
-FFICalloutAPITest >> testCaptureFFIMethodSelectorLookupsFirstMethodInSenderChain [
-	| api selector |
-	
-	api := FFICalloutAPI inContext: lastUffiCtx.
-	selector := api uFFIEnterMethodSelector.
-
-	self assert: selector equals: uffiCtx method selector
-]
-
-{ #category : #'tests context' }
-FFICalloutAPITest >> testCaptureFFIMethodSelectorLookupsMethodInSenderChain [
-	| api selector |
-	
-	api := FFICalloutAPI inContext: uffiCtx.
-	selector := api uFFIEnterMethodSelector.
-
-	self assert: selector equals: uffiCtx method selector
-]
-
 { #category : #'tests atomic' }
 FFICalloutAPITest >> testCharCall [
 	"Test using generic FFI spec"
@@ -419,7 +399,7 @@ FFICalloutAPITest >> testPrintString [
 FFICalloutAPITest >> testSenderLookupsMethodInSenderChain [
 	| api |
 	
-	api := FFICalloutAPI inContext: uffiCtx.
+	api := FFICalloutAPI inUFFIContext: uffiCtx.
 	self assert: api senderContext equals: senderCtx
 ]
 
@@ -427,7 +407,7 @@ FFICalloutAPITest >> testSenderLookupsMethodInSenderChain [
 FFICalloutAPITest >> testSenderLookupsMethodInSenderChainWithManyUFFIMethods [
 	| api |
 	
-	api := FFICalloutAPI inContext: lastUffiCtx.
+	api := FFICalloutAPI inUFFIContext: lastUffiCtx.
 
 	self assert: api senderContext equals: senderCtx
 ]
@@ -443,4 +423,34 @@ FFICalloutAPITest >> testVoidPointer [
 		
 	self deny: result isNull.	
 	self assert: dest asString equals: 'Hello, World'
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testuFFIMethodSelectorInNonMarkedContextDoesNotFindAMethodEnterSelector [
+	| api selector |
+	
+	api := FFICalloutAPI inUFFIContext: senderCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: nil
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testuFFIMethodSelectorLookupsFirstMethodInSenderChain [
+	| api selector |
+	
+	api := FFICalloutAPI inUFFIContext: lastUffiCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: uffiCtx method selector
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testuFFIMethodSelectorLookupsMethodInSenderChain [
+	| api selector |
+	
+	api := FFICalloutAPI inUFFIContext: uffiCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: uffiCtx method selector
 ]

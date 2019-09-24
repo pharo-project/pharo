@@ -7,7 +7,7 @@ Object >> nbCall: fnSpec [
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
-		function: fnSpec module: self ffiLibraryName
+		function: fnSpec library: self ffiLibraryName
 ]
 
 { #category : #'*UnifiedFFI-Legacy' }
@@ -17,7 +17,7 @@ Object >> nbCall: fnSpec module: aModuleNameOrHandle [
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
-		function: fnSpec module: aModuleNameOrHandle
+		function: fnSpec library: aModuleNameOrHandle
 ]
 
 { #category : #'*UnifiedFFI-Legacy' }
@@ -28,7 +28,7 @@ Object >> nbCall: fnSpec module: aModuleNameOrHandle options: callOptions [
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: callOptions;
-		function: fnSpec module: aModuleNameOrHandle
+		function: fnSpec library: aModuleNameOrHandle
 ]
 
 { #category : #'*UnifiedFFI-Legacy' }
@@ -39,5 +39,5 @@ Object >> nbCall: fnSpec options: callOptions [
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: callOptions;
-		function: fnSpec module: self ffiLibraryName
+		function: fnSpec library: self ffiLibraryName
 ]

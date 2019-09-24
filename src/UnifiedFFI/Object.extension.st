@@ -9,10 +9,7 @@ Object >> calloutAPIClass [
 Object >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: self ffiLibrary uniqueInstance options;
-		function: fnSpec module: self ffiLibrary uniqueInstance
+	self ffiCall: fnSpec library: self ffiLibrary
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -28,10 +25,10 @@ Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 	
 	| ffiLibrary |
 	ffiLibrary := aLibrary asFFILibrary.
-	^ (ffiLibrary calloutAPIClass inContext: thisContext)
+	^ (ffiLibrary calloutAPIClass inUFFIContext: thisContext)
 		convention: self ffiCallingConvention;
 		options: (ffiLibrary options), callOptions;
-		function: fnSpec module: ffiLibrary
+		function: fnSpec library: ffiLibrary
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -62,7 +59,9 @@ Object >> ffiCallingConvention [
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCalloutIn: aContext [
-	
+	"For backwards compatibility.
+	It receives the context that is performing the ffi callout.
+	This context will be used to know what method to compile and where to restart the execution"
 	^ self calloutAPIClass inContext: aContext
 ]
 

@@ -5,9 +5,10 @@ Class {
 	#name : #FFICalloutAPI,
 	#superclass : #Object,
 	#instVars : [
-		'context',
 		'options',
-		'callingConvention'
+		'callingConvention',
+		'senderContext',
+		'uFFIEntryPointContext'
 	],
 	#classVars : [
 		'CalloutAPIClass'
@@ -39,6 +40,13 @@ FFICalloutAPI class >> inContext: aContext [
 ]
 
 { #category : #'instance creation' }
+FFICalloutAPI class >> inUFFIContext: aContext [
+	^ self basicNew 
+		initializeUFFIContext: aContext;
+		yourself
+]
+
+{ #category : #'instance creation' }
 FFICalloutAPI class >> new [ 
 	self error: 'Use #inContext'
 ]
@@ -61,7 +69,7 @@ FFICalloutAPI >> cdecl [
 
 { #category : #accessing }
 FFICalloutAPI >> context [
-	^ context
+	^ senderContext
 ]
 
 { #category : #accessing }
@@ -70,37 +78,52 @@ FFICalloutAPI >> convention: aCallingConvention [
 	callingConvention := aCallingConvention
 ]
 
+{ #category : #configuration }
+FFICalloutAPI >> findUffiEnterContext [
+	"Finds the initial context where entering the uffi framework.
+	That is, the context that was marked with the #ffiCalloutTranslator pragma, whose caller was not.
+	The found context determines how uffi was called. Its sender context is the client context.
+	
+	Return the selector of the uffiEnterContext"
+	
+	| pragmaName uffiEnterContext |
+	pragmaName := #ffiCalloutTranslator.
+	
+	uffiEnterContext := (uFFIEntryPointContext ifNil: [ thisContext ]) findContextSuchThat: [ :ctx |
+		(ctx method hasPragmaNamed: pragmaName)
+			and: [ (ctx sender method hasPragmaNamed: pragmaName) not] ].
+	^ uffiEnterContext
+]
+
 { #category : #action }
-FFICalloutAPI >> function: functionSignature library: aLibrary [
+FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 	| sender ffiMethod ffiMethodSelector |
 	sender := self senderContext.
-	ffiMethodSelector := self uFFIEnterMethodSelector.
-
-	"Build new method"
+	ffiMethodSelector := self uFFIEnterMethodSelector.	"Build new method"
 	ffiMethod := self newBuilder
 		build: [ :builder | 
 			builder
 				signature: functionSignature;
 				sender: sender;
-				module: aLibrary ].
+				module: moduleNameOrLibrary ].
 	ffiMethod
 		selector: sender selector;
-		methodClass: sender methodClass.
-	"Replace with generated ffi method, but save old one for future use"
-	ffiMethod propertyValueAt: #ffiNonCompiledMethod put: (sender methodClass methodDict at: sender selector).
-	"For senders search, one need to keep the selector in the properties"
+		methodClass: sender methodClass.	"Replace with generated ffi method, but save old one for future use"
+	ffiMethod
+		propertyValueAt: #ffiNonCompiledMethod
+		put: (sender methodClass methodDict at: sender selector).	"For senders search, one need to keep the selector in the properties"
 	ffiMethod propertyValueAt: #ffiMethodSelector put: ffiMethodSelector.
-	sender methodClass methodDict at: sender selector put: ffiMethod.
-	"Register current method as compiled for ffi"
-	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.
-	"Resend"
-	sender return: (sender receiver withArgs: sender arguments executeMethod: ffiMethod)
+	sender methodClass methodDict at: sender selector put: ffiMethod.	"Register current method as compiled for ffi"
+	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.	"Resend"
+	sender
+		return: (sender receiver withArgs: sender arguments executeMethod: ffiMethod).
+	^ self
 ]
 
-{ #category : #action }
-FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
+{ #category : #'backward compatibility' }
+FFICalloutAPI >> function: aCollection module: aClass [ 
 	
-	^ self function: functionSignature library: moduleNameOrLibrary
+	^ self function: aCollection library: aClass
 ]
 
 { #category : #initialization }
@@ -112,7 +135,13 @@ FFICalloutAPI >> initialize [
 
 { #category : #initialization }
 FFICalloutAPI >> initializeContext: aContext [
-	context := aContext.
+	senderContext := aContext.
+	self initialize
+]
+
+{ #category : #initialization }
+FFICalloutAPI >> initializeUFFIContext: aUFFIEntryPointContext [
+	uFFIEntryPointContext := aUFFIEntryPointContext.
 	self initialize
 ]
 
@@ -143,7 +172,8 @@ FFICalloutAPI >> options: anObject [
 { #category : #accessing }
 FFICalloutAPI >> senderContext [
 	
-	^ self uffiEnterContext sender
+	senderContext ifNotNil: [ ^ senderContext ].
+	^ self findUffiEnterContext sender
 ]
 
 { #category : #'call conventions' }
@@ -155,22 +185,8 @@ FFICalloutAPI >> stdcall [
 FFICalloutAPI >> uFFIEnterMethodSelector [
 	
 	"Return the selector of the uffiEnterContext.
-	That is, the selector that was called by client code to invoke uffi "
-	^ self uffiEnterContext method selector
-]
-
-{ #category : #configuration }
-FFICalloutAPI >> uffiEnterContext [
-	"Finds the initial context where entering the uffi framework.
-	That is, the context that was marked with the #ffiCalloutTranslator pragma, whose caller was not.
-	The found context determines how uffi was called. Its sender context is the client context.
+	That is, the selector that was called by client code to invoke uffi.
+	If we got here from a context not controlled by uffi, return nil, as we have found no method"
 	
-	Return the selector of the uffiEnterContext "
-	| pragmaName uffiEnterContext |
-	pragmaName := #ffiCalloutTranslator.
-	
-	uffiEnterContext := context findContextSuchThat: [ :ctx |
-		(ctx method hasPragmaNamed: pragmaName)
-			and: [ (ctx sender method hasPragmaNamed: pragmaName) not] ].
-	^ uffiEnterContext
+	^ self findUffiEnterContext ifNotNil: [ :ctx | ctx method selector ]
 ]
