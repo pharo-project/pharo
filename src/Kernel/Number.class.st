@@ -264,9 +264,10 @@ Number >> asFloat [
 
 { #category : #converting }
 Number >> asInteger [
-	"Answer an Integer nearest the receiver toward zero."
+	"Round me towards nearest integer closer to zero."
+	"This violates the ANSI standard, but the system depends on this"
 
-	^self truncated
+	^self truncated 
 ]
 
 { #category : #converting }
