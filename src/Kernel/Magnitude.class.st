@@ -59,22 +59,26 @@ Magnitude >> >= aMagnitude [
 	^aMagnitude <= self
 ]
 
+{ #category : #comparing }
+Magnitude >> beBetween: minValue and: maxValue [
+"Answer my value  constrained to the intervale [minValue ; maxValue]
+I take care of the situation where minValue > maxValue
+ 10 beBetween: 12 and: 20 >>> 12
+ 10 beBetween: 20 and: 12 >>> 12
+ 13 beBetween: 12 and: 20 >>> 13
+ 12 beBetween: 12 and: 20 >>> 12
+ 100 beBetween: 12 and: 20 >>> 20"
+	^ minValue <= maxValue 
+		ifTrue: [ (self min: maxValue) max: minValue ]
+ifFalse: [ (self min: minValue) max: maxValue ]
+]
+
 { #category : #testing }
 Magnitude >> between: min and: max [ 
 	"Answer whether the receiver is less than or equal to the argument, max, 
 	and greater than or equal to the argument, min."
 
 	^self >= min and: [self <= max]
-]
-
-{ #category : #comparing }
-Magnitude >> clampLow: minValue high: maxValue [
-"Answer my value  constrained to the intervale [minValue ; maxValue]"
-" 10 clampLow: 12 high: 20 >>> 12"
-" 13 clampLow: 12 high: 20 >>> 13"
-" 12 clampLow: 12 high: 20 >>> 12"
-" 100 clampLow: 12 high: 20 >>> 20"
-	^ (self min: maxValue) max: minValue 
 ]
 
 { #category : #comparing }
@@ -105,7 +109,12 @@ Magnitude >> min: aMagnitude [
 ]
 
 { #category : #comparing }
-Magnitude >> min: aMaxValue max: aMinValue [
-"This meaningless message should be deprecated some day in favour of clampLow:high:"
-	^ self clampLow: aMinValue high: aMaxValue
+Magnitude >> min: maxValue max: minValue [
+"Take the minimum between self and maxValue, then the maximum with minValue
+(10 min: 20 max: 5) >>> 10
+(10 min: 20 max: 11) >>> 11
+(24 min: 20 max: 5) >>> 10
+"
+	^ (self min: maxValue) max: minValue
+
 ]

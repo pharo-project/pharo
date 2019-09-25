@@ -8,11 +8,21 @@ Class {
 }
 
 { #category : #test }
-MagnitudeTest >> testClampLowHigh [
-	self assert: (10 clampLow: 12 high: 20) equals: 12.
-	self assert: (13 clampLow: 12 high: 20) equals: 13.
-	self assert: (12 clampLow: 12 high: 20) equals: 12.
-	self assert: (100 clampLow: 12 high: 20) equals: 20
+MagnitudeTest >> testBeBetweenAnd [
+	"inside"
+	self assert: (10 beBetween: 5 and: 20) equals: 10.
+	self assert: (10 beBetween: 20 and: 5) equals: 10.
+	"equal to one end interval"
+	self assert: (5 beBetween: 5 and: 20) equals: 5.
+	self assert: (5 beBetween: 20 and: 5) equals: 5.
+	self assert: (20 beBetween: 5 and: 20) equals: 20.
+	self assert: (20 beBetween: 20 and: 5) equals: 20.
+	"bellow"
+	self assert: (1 beBetween: 5 and: 20) equals: 5.
+	self assert: (1 beBetween: 20 and: 5) equals: 5.
+	"above"
+	self assert: (30 beBetween: 5 and: 20) equals: 20.
+	self assert: (30 beBetween: 20 and: 5) equals: 20.
 ]
 
 { #category : #test }
