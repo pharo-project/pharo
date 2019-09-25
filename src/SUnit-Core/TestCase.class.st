@@ -614,6 +614,11 @@ TestCase >> defaultTimeLimit [
 	^self class defaultTimeLimit
 ]
 
+{ #category : #accessing }
+TestCase >> environmentOfTest [
+	^ testingEnvironment
+]
+
 { #category : #private }
 TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
 	^[aBlock value.
@@ -817,11 +822,6 @@ TestCase >> skipOnPharoCITestingEnvironment [
 { #category : #running }
 TestCase >> tearDown [
 	"Hooks that subclasses may override to clean the fixture of test."
-]
-
-{ #category : #accessing }
-TestCase >> testingEnvironment [
-	^ testingEnvironment
 ]
 
 { #category : #accessing }
