@@ -64,8 +64,7 @@ DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: contextIsActive
 	IR instruction, which means we can just go back one"
 
 	pc := contextIsActive ifTrue: [aPC] ifFalse: [aPC - 1].
-	^(methodNode sourceNodeForPC:  pc) debugHighlightRange
-	
+	^(methodNode sourceNodeForPC: pc) debugHighlightRange
 ]
 
 { #category : #public }
