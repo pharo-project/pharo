@@ -9,8 +9,9 @@ Class {
 
 { #category : #test }
 NumberTest >> testAsInteger [
-	self assert: 0.5 asInteger equals: 1.
-	self assert: (1/2) asInteger equals: 1
+	"ensure we keep using truncated in asInteger"
+	self assert: 0.5 asInteger equals: 0.
+	self assert: (1/2) asInteger equals: 0
 	
 ]
 
@@ -172,4 +173,13 @@ NumberTest >> testReciprocal [
 		assert: -3 reciprocal = (-1/3).
 		
 	self should: [ 0 reciprocal ] raise: ZeroDivide
+]
+
+{ #category : #test }
+NumberTest >> testRounded [
+
+	self assert: 0 rounded equals: 0.
+	self assert: 1 rounded equals: 1.
+	self assert: (1/2) rounded equals: 1.
+	self assert: ((1/2) - Float epsilon) rounded equals: 0.
 ]
