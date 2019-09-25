@@ -32,9 +32,11 @@ BaselineOf >> packageRepositoryURL [
 		ifNil: [ '' ].
 	url ifNotEmpty: [ ^ url ].
 	
-	"The following is in case the url of the repository could not be determined. It looks at iceberg repositories in the image to see if any contains the baseline we are trying to load. If there is one, we return its repository url"
-	packageName := self class package name.
-	^ 'tonel://' , (IceRepository registry detect: [ :repo | repo workingCopy packageNames includes: packageName ] ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ] ifNone: [ '' ])
+	self class environment at: #IceRepository ifPresent: [ :class |
+		"The following is in case the url of the repository could not be determined. It looks at iceberg repositories in the image to see if any contains the baseline we are trying to load. If there is one, we return its repository url"
+		packageName := self class package name.
+		^ 'tonel://' , (class registry detect: [ :repo | repo workingCopy packageNames includes: packageName ] ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ] ifNone: [ '' ])
+	].
 
 
 	
