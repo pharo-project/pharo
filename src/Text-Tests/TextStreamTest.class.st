@@ -43,7 +43,7 @@ TextStreamTest >> testWithAttributeDo [
 		self assert: attributes isArray.
 		self assert: attributes first emphasisCode equals: 1].
 	"no attribute on this space character"
-	self assert: (stream contents runs at: 6) isEmpty.
+	self assertEmpty: (stream contents runs at: 6).
 	"part of the text bold"
 	7 to: 13 do: [ :index |
 		attributes := stream contents runs at: index.
