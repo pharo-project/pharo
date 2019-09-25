@@ -70,7 +70,7 @@ I take care of the situation where minValue > maxValue
  100 beBetween: 12 and: 20 >>> 20"
 	^ minValue <= maxValue 
 		ifTrue: [ (self min: maxValue) max: minValue ]
-ifFalse: [ (self min: minValue) max: maxValue ]
+		ifFalse: [ (self min: minValue) max: maxValue ]
 ]
 
 { #category : #testing }
