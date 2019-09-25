@@ -262,7 +262,7 @@ FLSerializationTest >> tearDownClassFactory [
 { #category : #running }
 FLSerializationTest >> tearDownGlobalVariables [
 
-	aTestEnvironment removeKey: #FLGlobalVariableForTesting ifAbsent: []
+	testingEnvironment removeKey: #FLGlobalVariableForTesting ifAbsent: []
 ]
 
 { #category : #running }

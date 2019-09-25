@@ -97,12 +97,12 @@ MCTestCase >> mockClass: className super: superclassName [
 
 { #category : #mocks }
 MCTestCase >> mockClassA [
-	^ aTestEnvironment at: #MCMockClassA
+	^ testingEnvironment at: #MCMockClassA
 ]
 
 { #category : #mocks }
 MCTestCase >> mockClassB [
-	^ aTestEnvironment at: #MCMockClassB
+	^ testingEnvironment at: #MCMockClassB
 ]
 
 { #category : #mocks }

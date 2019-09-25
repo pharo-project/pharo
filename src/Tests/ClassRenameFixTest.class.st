@@ -49,9 +49,9 @@ ClassRenameFixTest >> renameClassUsing: aBlock [
 		category: 'ClassRenameFix-GeneradClass'.
 	newClassName := self newUniqueClassName.
 	aBlock value: createdClass value: newClassName.
-	self assert: (aTestEnvironment classNamed: originalName) isNil.
-	self assert: (aTestEnvironment classNamed: newClassName) notNil.
-	foundClasses := aTestEnvironment organization listAtCategoryNamed: 'ClassRenameFix-GeneradClass'.
+	self assert: (testingEnvironment classNamed: originalName) isNil.
+	self assert: (testingEnvironment classNamed: newClassName) notNil.
+	foundClasses := testingEnvironment organization listAtCategoryNamed: 'ClassRenameFix-GeneradClass'.
 	self assert: foundClasses notEmpty.
 	self assert: (foundClasses includes: newClassName).
 	self assert: createdClass name = newClassName
@@ -92,6 +92,6 @@ ClassRenameFixTest >> testRenameClassUsingClass [
 ClassRenameFixTest >> verifyRenameEvent: aRenamedEvent [
 	| renamedClass |
 	renamedClass := aRenamedEvent classRenamed.
-	self assert: (aTestEnvironment classNamed: newClassName) name = newClassName.
+	self assert: (testingEnvironment classNamed: newClassName) name = newClassName.
 	self assert: renamedClass name = newClassName
 ]

@@ -15,7 +15,7 @@ RBTransformationTest >> abstractVariableTestData [
 	classes := #(#Bar #Foo) 
 		inject: OrderedCollection new 
 		into: [ :sum :each | 
-			aTestEnvironment at: each ifPresent: [ :class | 
+			testingEnvironment at: each ifPresent: [ :class | 
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
@@ -79,7 +79,7 @@ RBTransformationTest >> abstractVariableTestData [
 { #category : #mocking }
 RBTransformationTest >> changeMock [
 
-	^ aTestEnvironment at: #RBRefactoringChangeMock
+	^ testingEnvironment at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -134,7 +134,7 @@ RBTransformationTest >> proceedThroughWarning: aBlock [
 { #category : #mocking }
 RBTransformationTest >> removeMockClass [
 
-	aTestEnvironment removeClassNamed: #RBRefactoringChangeMock.
+	testingEnvironment removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #running }

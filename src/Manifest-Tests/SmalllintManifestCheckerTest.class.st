@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 SmalllintManifestCheckerTest >> cleaningResources [
-	aTestEnvironment
+	testingEnvironment
 		at: #ManifestManifestResourcesTests
 		ifPresent: [ :cl | 
 			cl

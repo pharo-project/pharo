@@ -15,7 +15,7 @@ BuilderManifestTest >> setUp [
 	
 	| cl |
 	super setUp.
-	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 
 	cl
 		ifNotNil: [ 
@@ -29,7 +29,7 @@ BuilderManifestTest >> setUp [
 BuilderManifestTest >> tearDown [
 	
 	| cl |
-	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -257,7 +257,7 @@ BuilderManifestTest >> testCreationManifest [
 	| manifestBuilder cl |
 	manifestBuilder := TheManifestBuilder new.
   
-	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -273,7 +273,7 @@ BuilderManifestTest >> testCreationManifestOn [
 	| manifestBuilder cl |
 	manifestBuilder := TheManifestBuilder new.
 
-	cl := aTestEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -354,7 +354,7 @@ BuilderManifestTest >> testIsClassAManifest [
 		
 	self deny: Point isManifest.
 	TheManifestBuilder of: MFClassA. 
-	self assert: ( (aTestEnvironment at: #ManifestManifestResourcesTests) isManifest)
+	self assert: ( (testingEnvironment at: #ManifestManifestResourcesTests) isManifest)
 ]
 
 { #category : #tests }

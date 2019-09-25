@@ -23,7 +23,7 @@ ClassTest >> deleteClass [
 	| cl |
 	cl := testEnvironment at: className ifAbsent: [ ^ self ].
 	
-	aTestEnvironment at: #ChangeSet ifPresent: [ 
+	testingEnvironment at: #ChangeSet ifPresent: [ 
 		cl removeFromChanges ].
 	
 	cl removeFromSystemUnlogged

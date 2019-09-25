@@ -75,7 +75,7 @@ ClassFactoryForTestCaseTest >> testDefaultCategoryCleanUp [
 	self assert: (factory createdTraits allSatisfy: [:trait| trait isObsolete]). 
 	
 	allClasses := SystemNavigation new allClasses.
-	allTraits := aTestEnvironment allTraits.
+	allTraits := testingEnvironment allTraits.
 	
 	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
 	self assert: (factory createdTraits noneSatisfy: [:trait| allTraits includes: trait]).
@@ -153,7 +153,7 @@ ClassFactoryForTestCaseTest >> testSingleClassFastCreation [
 ClassFactoryForTestCaseTest >> testSingleTraitCreation [
 	| trait |
 	trait := factory newTrait.
-	self assert: (aTestEnvironment allTraits includes: trait).
+	self assert: (testingEnvironment allTraits includes: trait).
 	self assert: trait traitUsers size = 0.
 	self assert: trait traits size = 0
 ]

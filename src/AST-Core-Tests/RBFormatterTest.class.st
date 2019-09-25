@@ -34,7 +34,7 @@ RBFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
 		do: [ :each | 
 			| class |
-			class := aTestEnvironment classNamed: each.
+			class := testingEnvironment classNamed: each.
 			self
 				formatClass: class;
 				formatClass: class class ]

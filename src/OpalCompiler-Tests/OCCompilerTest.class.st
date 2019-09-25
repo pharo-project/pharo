@@ -59,14 +59,14 @@ OCCompilerTest >> runCase [
 { #category : #running }
 OCCompilerTest >> setUp [
 	super setUp.
-	aTestEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
+	testingEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
 	
 	
 ]
 
 { #category : #running }
 OCCompilerTest >> tearDown [
-	aTestEnvironment removeKey: #OCCompilerTestTestVar.
+	testingEnvironment removeKey: #OCCompilerTestTestVar.
 	super tearDown
 ]
 

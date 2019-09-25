@@ -38,7 +38,7 @@ MetacelloIssueTestCase >> project [
 
 { #category : #accessing }
 MetacelloIssueTestCase >> projectClass [
-    ^ aTestEnvironment at: self projectName asSymbol
+    ^ testingEnvironment at: self projectName asSymbol
 ]
 
 { #category : #accessing }
@@ -77,10 +77,10 @@ MetacelloIssueTestCase >> setUp [
   gofer := Gofer new.
   gofer disablePackageCache.
   gofer repository: repo.
-  aTestEnvironment at: #'Metacello_Gofer_Test_Repository' put: repo.
+  testingEnvironment at: #'Metacello_Gofer_Test_Repository' put: repo.
   repo := self configurationRepository.
   gofer repository: repo.
-  aTestEnvironment at: #'Metacello_Configuration_Test_Repository' put: repo.
+  testingEnvironment at: #'Metacello_Configuration_Test_Repository' put: repo.
   initialWorkingCopyList := MCWorkingCopy allManagers
     collect: [ :each | each packageName ]
 ]
@@ -97,12 +97,12 @@ MetacelloIssueTestCase >> tearDown [
     ifTrue: [ aGofer metacelloUnload ].
   MCRepositoryGroup default
     removeIdenticalRepository:
-        (aTestEnvironment at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
+        (testingEnvironment at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
     removeIdenticalRepository:
-        (aTestEnvironment at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
+        (testingEnvironment at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
     yourself.
-  aTestEnvironment removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  aTestEnvironment removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
+  testingEnvironment removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
+  testingEnvironment removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
   finalWorkingCopyList := MCWorkingCopy allManagers
     collect: [ :each | each packageName ].
   diff := finalWorkingCopyList difference: initialWorkingCopyList.

@@ -94,7 +94,7 @@ SlotClassBuilderTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each | 
-			aTestEnvironment
+			testingEnvironment
 				at: each 
 				ifPresent: [ :class | class removeFromSystem ]]].
 

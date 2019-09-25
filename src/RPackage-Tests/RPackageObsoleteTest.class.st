@@ -45,7 +45,7 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 			foo setName: foo originalName.
 			foo removeFromSystem.
 			].
-		aTestEnvironment removeKey: #FooForTest  ifAbsent:  [].
+		testingEnvironment removeKey: #FooForTest  ifAbsent:  [].
 	]
 ]
 

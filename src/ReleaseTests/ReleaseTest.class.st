@@ -89,14 +89,14 @@ ReleaseTest >> knownProcesses [
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
-	aTestEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
+	testingEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
 	self assertEmpty: wrong
 ]
 
 { #category : #tests }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
-	wrong := aTestEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
+	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
 ]
 
@@ -147,7 +147,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	
 	keyClasses do:	[ :className |
 		self assert: (registeredHandlers includes: className).
-		self assert: (self hasStartUpOrShutDownMethod: (aTestEnvironment at: className)) ].
+		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 	
 	self assert: (registeredHandlers includes: #UIManagerSessionHandler).
 ]

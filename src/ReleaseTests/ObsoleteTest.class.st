@@ -27,7 +27,7 @@ ObsoleteTest >> tearDown [
 { #category : #tests }
 ObsoleteTest >> testClassObsolete [
 	| aClass |
-	aTestEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
+	testingEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
 	aClass := classFactory newClass.
 	
 	self deny: aClass isObsolete.
@@ -70,8 +70,8 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 { #category : #tests }
 ObsoleteTest >> testTraitObsolete [
 	| aClass aTrait |
-	aTestEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
-	aTestEnvironment at: #TraitForObsoleteTest ifPresent: [ :tr | tr removeFromSystem ].
+	testingEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
+	testingEnvironment at: #TraitForObsoleteTest ifPresent: [ :tr | tr removeFromSystem ].
 	
 	aTrait := classFactory newTrait.
 	aClass := classFactory newClassUsing: aTrait.

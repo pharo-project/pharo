@@ -316,7 +316,7 @@ IRBuilderTest >> testLiteralVariableGlobale [
 
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: (aTestEnvironment associationAt: #Smalltalk);	
+		pushLiteralVariable: (testingEnvironment associationAt: #Smalltalk);	
 		returnTop;
 		ir.
 

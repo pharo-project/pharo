@@ -22,7 +22,7 @@ ChangeSetClassChangesTest >> categoryNameForTemporaryClasses [
 { #category : #support }
 ChangeSetClassChangesTest >> deleteClass [
 	| cl |
-	cl := aTestEnvironment at: className ifAbsent: [ ^ self ].
+	cl := testingEnvironment at: className ifAbsent: [ ^ self ].
 	cl
 		removeFromChanges;
 		removeFromSystemUnlogged
@@ -31,7 +31,7 @@ ChangeSetClassChangesTest >> deleteClass [
 { #category : #support }
 ChangeSetClassChangesTest >> deleteRenamedClass [
 	| cl |
-	cl := aTestEnvironment at: renamedName ifAbsent: [ ^ self ].
+	cl := testingEnvironment at: renamedName ifAbsent: [ ^ self ].
 	cl
 		removeFromChanges;
 		removeFromSystemUnlogged
@@ -66,7 +66,7 @@ ChangeSetClassChangesTest >> setUp [
 
 { #category : #running }
 ChangeSetClassChangesTest >> tearDown [
-	(aTestEnvironment classNamed: #JunkClass) ifNotNil: [ :c | c removeFromSystem: true ].
+	(testingEnvironment classNamed: #JunkClass) ifNotNil: [ :c | c removeFromSystem: true ].
 	SystemOrganization removeCategory: #'DeleteMe-1'.
 	SystemOrganization removeCategory: #'DeleteMe-2'.
 	ChangeSet current removeClassChanges: 'JunkClass'.
@@ -86,12 +86,12 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 		classVariableNames: ''
 		poolDictionaries: ''
 		package: 'DeleteMe-1'.
-	saveClassDefinition := (aTestEnvironment classNamed: #JunkClass) oldDefinition.
+	saveClassDefinition := (testingEnvironment classNamed: #JunkClass) oldDefinition.
 	self
 		assert:
 			(self
 				isDefinition: saveClassDefinition
-				equivalentTo: (ChangeSet current fatDefForClass: (aTestEnvironment classNamed: #JunkClass))).	"Redefine the class, adding one instance variable"
+				equivalentTo: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass))).	"Redefine the class, adding one instance variable"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz aaa'
@@ -99,22 +99,22 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 		poolDictionaries: ''
 		package: 'DeleteMe-1'.	"Assert that the class definition has changed"
 	self deny: (self 
-		isDefinition: (aTestEnvironment classNamed: #JunkClass) oldDefinition 
+		isDefinition: (testingEnvironment classNamed: #JunkClass) oldDefinition 
 		equivalentTo: saveClassDefinition).
 	self
 		deny:
 			(self
 				isDefinition: saveClassDefinition
-				equivalentTo: (ChangeSet current fatDefForClass: (aTestEnvironment classNamed: #JunkClass))).
+				equivalentTo: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass))).
 	self
 		assert:
 			(self
-				isDefinition: (aTestEnvironment classNamed: #JunkClass) oldDefinition
-				equivalentTo: (ChangeSet current fatDefForClass: (aTestEnvironment classNamed: #JunkClass))).	"Assert that the change has been recorded in the current change set"
+				isDefinition: (testingEnvironment classNamed: #JunkClass) oldDefinition
+				equivalentTo: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass))).	"Assert that the change has been recorded in the current change set"
 	self
 		assert:
 			(self
-				isDefinition: (ChangeSet current changeRecorderFor: (aTestEnvironment classNamed: #JunkClass)) priorDefinition
+				isDefinition: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) priorDefinition
 				equivalentTo: saveClassDefinition)
 ]
 
@@ -127,7 +127,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	no change records pertaining to it in the change set."
 
 	self deny: (Smalltalk hasClassNamed: 'JunkClass').
-	self assert: (ChangeSet current changeRecorderFor: (aTestEnvironment classNamed: #JunkClass)) thisName = 'nil'.	"Remove bogus change records created as side effect of preceding assert"
+	self assert: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) thisName = 'nil'.	"Remove bogus change records created as side effect of preceding assert"
 	ChangeSet current removeClassChanges: 'nil'.	"Define a class and save its definition"
 	Object
 		subclass: #JunkClass
@@ -145,7 +145,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	self
 		assert:
 			(self
-				isDefinition: (ChangeSet current changeRecorderFor: (aTestEnvironment classNamed: #JunkClass)) priorDefinition
+				isDefinition: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) priorDefinition
 				equivalentTo:
 					'Object subclass: #JunkClass
 	instanceVariableNames: ''zzz ''
@@ -167,29 +167,29 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 		classVariableNames: ''
 		poolDictionaries: ''
 		package: 'DeleteMe-1'.
-	saveClassDefinition := (aTestEnvironment classNamed: #JunkClass) oldDefinition.
-	self assert: saveClassDefinition equals: (ChangeSet current fatDefForClass: (aTestEnvironment classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
+	saveClassDefinition := (testingEnvironment classNamed: #JunkClass) oldDefinition.
+	self assert: saveClassDefinition equals: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass)).	"Redefine the class, changing only the class category"
 	Object
 		subclass: #JunkClass
 		instanceVariableNames: 'zzz'
 		classVariableNames: ''
 		poolDictionaries: ''
 		package: 'DeleteMe-2'.	"Assert that the class definition has changed"
-	self deny: (self isDefinition: (aTestEnvironment classNamed: #JunkClass) definition equivalentTo: saveClassDefinition).
+	self deny: (self isDefinition: (testingEnvironment classNamed: #JunkClass) definition equivalentTo: saveClassDefinition).
 	self
 		deny:
 			(self
 				isDefinition: saveClassDefinition
-				equivalentTo: (ChangeSet current fatDefForClass: (aTestEnvironment classNamed: #JunkClass))).
+				equivalentTo: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass))).
 	self
 		assert:
 			(self
-				isDefinition: (aTestEnvironment classNamed: #JunkClass) oldDefinition
-				equivalentTo: (ChangeSet current fatDefForClass: (aTestEnvironment classNamed: #JunkClass))).	"Assert that the change has been recorded in the current change set"
+				isDefinition: (testingEnvironment classNamed: #JunkClass) oldDefinition
+				equivalentTo: (ChangeSet current fatDefForClass: (testingEnvironment classNamed: #JunkClass))).	"Assert that the change has been recorded in the current change set"
 	self
 		assert:
 			(self
-				isDefinition: (ChangeSet current changeRecorderFor: (aTestEnvironment classNamed: #JunkClass)) priorDefinition
+				isDefinition: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) priorDefinition
 				equivalentTo:
 					'Object subclass: #JunkClass
 	instanceVariableNames: ''zzz ''
@@ -207,7 +207,7 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	no change records pertaining to it in the change set."
 
 	self deny: (Smalltalk hasClassNamed: 'JunkClass').
-	self assert: (ChangeSet current changeRecorderFor: (aTestEnvironment classNamed: #JunkClass)) thisName equals: 'nil'.	"Remove bogus change records created as side effect of preceding assert"
+	self assert: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) thisName equals: 'nil'.	"Remove bogus change records created as side effect of preceding assert"
 	ChangeSet current removeClassChanges: 'nil'.	"Define a class and save its definition"
 	Object
 		subclass: #JunkClass
@@ -225,7 +225,7 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	self
 		assert:
 			(self
-				isDefinition: (ChangeSet current changeRecorderFor: (aTestEnvironment classNamed: #JunkClass)) priorDefinition
+				isDefinition: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) priorDefinition
 				equivalentTo:
 					'Object subclass: #JunkClass
 	instanceVariableNames: ''zzz ''
@@ -247,7 +247,7 @@ ChangeSetClassChangesTest >> testRenaming [
 	| oldName newMetaclassName class |
 	oldName := className.
 	newMetaclassName := (renamedName , #' class') asSymbol.
-	class := aTestEnvironment at: oldName.
+	class := testingEnvironment at: oldName.
 	class class compile: 'dummyMeth'.
 	class rename: renamedName.
 	self assert: class name equals: renamedName.

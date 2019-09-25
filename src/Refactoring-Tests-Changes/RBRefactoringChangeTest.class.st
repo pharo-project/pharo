@@ -16,7 +16,7 @@ RBRefactoringChangeTest class >> packageNamesUnderTest [
 
 { #category : #mocking }
 RBRefactoringChangeTest >> changeMock [
-	^ aTestEnvironment at: #RBRefactoringChangeMock
+	^ testingEnvironment at: #RBRefactoringChangeMock
 ]
 
 { #category : #mocking }
@@ -73,7 +73,7 @@ RBRefactoringChangeTest >> perform: aChange do: aBlock [
 
 { #category : #mocking }
 RBRefactoringChangeTest >> removeMockClass [
-	aTestEnvironment removeClassNamed: #RBRefactoringChangeMock.
+	testingEnvironment removeClassNamed: #RBRefactoringChangeMock.
 ]
 
 { #category : #mocking }

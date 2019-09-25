@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 JobTest >> tearDown [
 
-	aTestEnvironment at: #SystemProgressMorph ifPresent: [:spm | 
+	testingEnvironment at: #SystemProgressMorph ifPresent: [:spm | 
 		spm uniqueInstance bars do: [ :e | e close ]].
 	super tearDown
 ]

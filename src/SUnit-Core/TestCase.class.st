@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'testSelector',
 		'expectedFails',
-		'aTestEnvironment'
+		'testingEnvironment'
 	],
 	#classVars : [
 		'Announcers',
@@ -555,16 +555,6 @@ TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
 
-{ #category : #accessing }
-TestCase >> aTestEnvironment [
-	^ aTestEnvironment
-]
-
-{ #category : #accessing }
-TestCase >> aTestEnvironment: anObject [
-	aTestEnvironment := anObject
-]
-
 { #category : #dependencies }
 TestCase >> addDependentToHierachy: anObject [ 
 	"an empty method. for Composite compability with TestSuite"
@@ -652,7 +642,7 @@ TestCase >> failureLog [
 
 { #category : #private }
 TestCase >> initialize [ 
-	aTestEnvironment := Smalltalk globals.
+	testingEnvironment := Smalltalk globals.
 ]
 
 { #category : #private }
@@ -827,6 +817,16 @@ TestCase >> skipOnPharoCITestingEnvironment [
 { #category : #running }
 TestCase >> tearDown [
 	"Hooks that subclasses may override to clean the fixture of test."
+]
+
+{ #category : #accessing }
+TestCase >> testingEnvironment [
+	^ testingEnvironment
+]
+
+{ #category : #accessing }
+TestCase >> testingEnvironment: anObject [
+	testingEnvironment := anObject
 ]
 
 { #category : #accessing }

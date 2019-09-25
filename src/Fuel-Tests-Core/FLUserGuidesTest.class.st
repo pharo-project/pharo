@@ -11,8 +11,8 @@ Class {
 FLUserGuidesTest >> tearDown [
 	#('demo.fuel' 'numbers.fuel' 'number.fuel.zip' 'example.FL')
 		do: [ :each | self deleteFileNamed: each ].
-	aTestEnvironment removeKey: #GlobalSet1 ifAbsent: [  ].
-	aTestEnvironment removeKey: #GlobalSet2 ifAbsent: [  ].
+	testingEnvironment removeKey: #GlobalSet1 ifAbsent: [  ].
+	testingEnvironment removeKey: #GlobalSet2 ifAbsent: [  ].
 	super tearDown
 ]
 
@@ -22,8 +22,8 @@ FLUserGuidesTest >> testConsiderGlobal [
 	| aSerializer anArray materializedArray |
 	"Prepare an array whose two elements are system globals."
 	anArray := Array with: Set new with: Set new.
-	aTestEnvironment at: #GlobalSet1 put: anArray first.
-	aTestEnvironment at: #GlobalSet2 put: anArray second.
+	testingEnvironment at: #GlobalSet1 put: anArray first.
+	testingEnvironment at: #GlobalSet2 put: anArray second.
 
 	"Serialize considering *only first* as a global object."
 	FLPlatform current
@@ -41,8 +41,8 @@ FLUserGuidesTest >> testConsiderGlobal [
 				materializeFrom: aStream) root].
 				
 	"Check that second element is a new Set."
-	[ (aTestEnvironment at: #GlobalSet1) == materializedArray first ] assert.
-	[ (aTestEnvironment at: #GlobalSet2) ~~ materializedArray second ] assert
+	[ (testingEnvironment at: #GlobalSet1) == materializedArray first ] assert.
+	[ (testingEnvironment at: #GlobalSet2) ~~ materializedArray second ] assert
 ]
 
 { #category : #'tests-Getting Started' }
@@ -143,7 +143,7 @@ FLUserGuidesTest >> testPluggableSubstitution [
 
 { #category : #'tests-Getting Started' }
 FLUserGuidesTest >> testShowingProgressBar [
-	(aTestEnvironment includesKey: #FLProgressSerialization)
+	(testingEnvironment includesKey: #FLProgressSerialization)
 		ifFalse: [ " Needs:
 		(ConfigurationOfFuel project latestVersion) load: 'FuelProgressUpdate'.
 		" ^ self skip ].
