@@ -5,6 +5,10 @@ My preconditions verify, that the old class exists (in  the current namespace) a
 
 The refactoring transformation will replace the current class and its definition with the new class name. And update all references in all methods in this namespace, to use the new name. Even the definition for subclasses of the old class will be changed.
 
+Example
+---------------
+
+	(RBRenameClassRefactoring rename: RBRenameClassRefactoring to: 'RBRenameClassRefactoring2') execute
 "
 Class {
 	#name : #RBRenameClassRefactoring,
