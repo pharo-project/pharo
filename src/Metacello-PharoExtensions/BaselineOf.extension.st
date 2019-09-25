@@ -26,9 +26,15 @@ BaselineOf >> packageRepositoryURL [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
 
-	^ self packageRepository
+	| url packageName |
+	url := self packageRepository
 		ifNotNil: [ :aRepository | aRepository description ]
-		ifNil: [ '' ]
+		ifNil: [ '' ].
+	url ifNotEmpty: [ ^ url ].
+	
+	"The following is in case the url of the repository could not be determined. It looks at iceberg repositories in the image to see if any contains the baseline we are trying to load. If there is one, we return its repository url"
+	packageName := self class package name.
+	^ 'tonel://' , (IceRepository registry detect: [ :repo | repo workingCopy packageNames includes: packageName ] ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ] ifNone: [ '' ])
 
 
 	
