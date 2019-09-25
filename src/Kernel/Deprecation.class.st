@@ -215,7 +215,7 @@ Deprecation >> signal [
 { #category : #handling }
 Deprecation >> transform [
 	| node rewriteRule aMethod |
-	self shouldTransform ifFalse: [ ^ self ].
+	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender method.
 	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
@@ -223,7 +223,7 @@ Deprecation >> transform [
 	rewriteRule := self rewriterClass new 
 		replace: rule key with: rule value.
 	(rewriteRule executeTree: node)
-		ifFalse: [ ^ self ].
+		ifFalse: [ ^ self signal ].
 	node replaceWith: rewriteRule tree. 
 	Author 
 		useAuthor: 'AutoDeprecationRefactoring'
