@@ -66,5 +66,5 @@ TextStreamTest >> testWithAttributesDo [
 		self assert: attributes second color equals: Color yellow ].
 	"No attribute for the remaining part of the text"
 	6 to: 12 do: [ :index |
-		self assert: (stream contents runs at: index ) isEmpty]
+		self assertEmpty: (stream contents runs at: index ) ]
 ]
