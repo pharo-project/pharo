@@ -23,7 +23,7 @@ TextStreamTest >> testNextPutAll [
 	self assert: stream contents isText.
 	self assert: stream contents string equals: 'Pharo '.
 	"No attribute was set"
-	1 to: 6 do: [:index | self assert: (stream contents runs at: index) isEmpty]
+	1 to: 6 do: [:index | self assertEmpty: (stream contents runs at: index) ]
 ]
 
 { #category : #test }
