@@ -210,8 +210,12 @@ FFICallout >> loaderForArgNamed: argName [
 		loader ifNil: [ 
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.
-			loader 
-				ifNil: [ FFIVariableNameNotFound signalFor: argName ] ] ].
+			loader ifNil: [ | binding |
+				binding := requestor ffiBindingOf: argName.
+				binding ifNil: [ FFIVariableNameNotFound signalFor: argName].
+				loader := FFIClassVariableArgument new 
+					argName: argName;
+					yourself ] ] ].
 	^ loader
 ]
 

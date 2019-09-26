@@ -20,6 +20,12 @@ FFIFunctionResolutionTest >> pushLiteral: aLiteral [
 ]
 
 { #category : #helpers }
+FFIFunctionResolutionTest >> pushLiteralVariable: aClassVariable [ 
+	
+	stack push: { #classVariable . aClassVariable }
+]
+
+{ #category : #helpers }
 FFIFunctionResolutionTest >> pushReceiver [
 	
 	stack push: #( self )
@@ -30,6 +36,31 @@ FFIFunctionResolutionTest >> setUp [
 
 	super setUp.
 	stack := Stack new.
+]
+
+{ #category : #tests }
+FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoader [
+
+	| argument receiver context resolver |
+	argument := FFIVariableArgument
+		name: 'AsciiOrder'
+		typeName: 'int'
+		arity: 0.
+
+	receiver := 'aString'.
+	context := Context
+		sender: nil
+		receiver: receiver
+		method: String>>#asDate
+		arguments: #().
+	resolver := FFICallout new
+		sender: context;
+		yourself.
+	
+	argument resolveUsing: resolver.
+	argument loader emitArgument: self context: context.
+
+	self assert: stack pop equals: { #classVariable . (String classPool bindingOf: #AsciiOrder )}
 ]
 
 { #category : #tests }
