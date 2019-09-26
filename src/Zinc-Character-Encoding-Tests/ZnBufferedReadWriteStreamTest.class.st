@@ -18,15 +18,18 @@ ZnBufferedReadWriteStreamTest >> testBuffering [
 
 { #category : #tests }
 ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
-	| string |
-	string := String streamContents: [ :stringStream | 
-		ZnBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
-			bufferedStream sizeBuffer: 8.
-			bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
-			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6. 
-			bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
-			bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6.] ].
-	self assert: string equals: '01234567890123456789'
+	| stringStream |
+
+	stringStream := ReadWriteStream with: ''.
+	
+	ZnBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
+		bufferedStream sizeBuffer: 8.
+		bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
+		bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6. 
+		bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
+		bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6.] .
+	
+	self assert: stringStream contents equals: '01234567890123456789'
 ]
 
 { #category : #tests }
@@ -116,6 +119,23 @@ ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
 ]
 
 { #category : #tests }
+ZnBufferedReadWriteStreamTest >> testSetAtEnd [
+
+	| stream originalStream|
+
+	stream := ZnBufferedReadWriteStream on: (originalStream := ReadWriteStream with: '0123456789').
+	originalStream reset.
+	
+	stream setToEnd.
+	
+	stream nextPut: $A.
+	stream flush.
+
+	self assert: originalStream contents equals: '0123456789A'.
+
+]
+
+{ #category : #tests }
 ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
 	
@@ -140,23 +160,27 @@ ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 
 { #category : #tests }
 ZnBufferedReadWriteStreamTest >> testWriting [
-	| string |
-	string := String streamContents: [ :stringStream | | bufferedStream |
-		bufferedStream := ZnBufferedReadWriteStream on: stringStream.
-		0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
-		bufferedStream flush ].
-	self assert: string = '0123456789'
+	| stringStream bufferedStream |
+	stringStream := ReadWriteStream with: ''.
+	
+	bufferedStream := ZnBufferedReadWriteStream on: stringStream.
+	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
+	bufferedStream flush.
+	
+	self assert: stringStream contents = '0123456789'
 ]
 
 { #category : #tests }
 ZnBufferedReadWriteStreamTest >> testWritingOverflow [
-	| string |
-	string := String streamContents: [ :stringStream | | bufferedStream |
-		bufferedStream := ZnBufferedReadWriteStream on: stringStream.
-		bufferedStream sizeBuffer: 8.
-		0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
-		bufferedStream nextPutAll: '0123'; nextPutAll: '4567'; nextPutAll: '89'.
-		bufferedStream nextPutAll: '0123456789'; nextPutAll: '0123456789'.
-		bufferedStream flush ].
-	self assert: string = '0123456789012345678901234567890123456789'
+	| stringStream bufferedStream |
+	
+	stringStream := ReadWriteStream with: ''.
+	bufferedStream := ZnBufferedReadWriteStream on: stringStream.
+	bufferedStream sizeBuffer: 8.
+	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
+	bufferedStream nextPutAll: '0123'; nextPutAll: '4567'; nextPutAll: '89'.
+	bufferedStream nextPutAll: '0123456789'; nextPutAll: '0123456789'.
+	bufferedStream flush.
+		
+	self assert: stringStream contents equals: '0123456789012345678901234567890123456789'
 ]
