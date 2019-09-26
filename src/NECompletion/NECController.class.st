@@ -211,6 +211,13 @@ NECController >> isMenuOpen [
 	^menuMorph notNil
 ]
 
+{ #category : #testing }
+NECController >> isScripting [
+	
+	"demeters law :("
+	^ self editor textArea editingMode isScripting
+]
+
 { #category : #keyboard }
 NECController >> leftArrow [
 	"I return false when the arrow is at its left-most position.
