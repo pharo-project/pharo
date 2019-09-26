@@ -46,7 +46,7 @@ FFIFunctionParserTest >> assertType: anArgument named: aTypeName [
 { #category : #asserting }
 FFIFunctionParserTest >> assertValue: aLiteralArgument is: aValue [
 	
-	self assert: aLiteralArgument equals: aValue
+	self assert: aLiteralArgument value equals: aValue
 ]
 
 { #category : #factory }
@@ -81,9 +81,9 @@ FFIFunctionParserTest >> testParseAnonymousFunction [
 		args := parser arguments.
 		self assert: args size equals: 8.
 
-		self assert: (args at: 1) equals: 0. 
-		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
-		self assert: (args at: 3) equals: -10. 
+		self assert: (args at: 1) asOldArraySpec equals: #(nil nil 0 0).
+		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0).
+		self assert: (args at: 3) asOldArraySpec equals: #(nil nil -10 0).
 		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
 		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0). 
 		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1). 
@@ -123,9 +123,9 @@ FFIFunctionParserTest >> testParseFunction [
 		args := parser arguments.
 		self assert: args size equals: 8.
 
-		self assert: (args at: 1) equals: 0. 
+		self assert: (args at: 1) asOldArraySpec equals: #(nil nil 0 0). 
 		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
-		self assert: (args at: 3) equals: -10. 
+		self assert: (args at: 3) asOldArraySpec equals: #(nil nil -10 0). 
 		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
 		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0). 
 		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1). 

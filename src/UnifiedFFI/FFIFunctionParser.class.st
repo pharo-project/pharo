@@ -27,12 +27,6 @@ FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptr
 		name: argName
 		typeName: aTypeName
 		arity: arity
-"	type := self typeName: typeName pointerArity: ptrArity.
-	type loader: (self loaderForArgNamed: argName indirectIndex: anIndex).
-	
-	^ type"
-
-"	^ { argName. anIndex. aTypeName. arity }"
 ]
 
 { #category : #initialization }
@@ -43,7 +37,9 @@ FFIFunctionParser >> initialize [
 
 { #category : #'requestor callbacks' }
 FFIFunctionParser >> integerConstantArgument: aValue [
-	^ aValue
+	^ FFIValueArgument new
+		value: aValue;
+		yourself
 ]
 
 { #category : #accessing }
