@@ -3,7 +3,8 @@ Class {
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
 		'name',
-		'type'
+		'type',
+		'loader'
 	],
 	#category : #'UnifiedFFI-Base'
 }
@@ -24,6 +25,11 @@ FFIVariableArgument >> asOldArraySpec [
 ]
 
 { #category : #accessing }
+FFIVariableArgument >> loader [
+	^ loader
+]
+
+{ #category : #accessing }
 FFIVariableArgument >> name [
 	^ name
 ]
@@ -31,6 +37,12 @@ FFIVariableArgument >> name [
 { #category : #accessing }
 FFIVariableArgument >> name: anObject [
 	name := anObject
+]
+
+{ #category : #resolution }
+FFIVariableArgument >> resolveUsing: aResolver [
+	
+	loader := aResolver loaderForArgNamed: name indirectIndex: nil
 ]
 
 { #category : #accessing }

@@ -115,3 +115,28 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 
 	self assert: stack pop equals: { #literal . 1 }.
 ]
+
+{ #category : #tests }
+FFIFunctionResolutionTest >> testResolveInstanceVariableShouldSetInstanceVariableLoader [
+
+	| argument receiver context resolver |
+	argument := FFIVariableArgument
+		name: 'x'
+		typeName: 'int'
+		arity: 0.
+
+	receiver := 17@25.
+	context := Context
+		sender: nil
+		receiver: receiver
+		method: Point>>#abs
+		arguments: #().
+	resolver := FFICallout new
+		sender: context;
+		yourself.
+	
+	argument resolveUsing: resolver.
+	argument loader emitArgument: self context: context.
+
+	self assert: stack pop equals: #(ivar 1)
+]
