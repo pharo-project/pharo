@@ -13,8 +13,22 @@ Class {
 }
 
 { #category : #'requestor callbacks' }
-FFIFunctionParser >> argName: aName indirectIndex: anIndex type: aTypeName ptrArity: arity [
-	^ { aName. anIndex. aTypeName. arity }
+FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: arity [
+
+	argName ifNil: [ 
+		"allow nil,true,false as untyped arguments"
+		"Do not accept nil, true or false followed by *s"
+		arity > 0 ifTrue: [ self error: 'missing argument name' ].
+		^ FFIValueArgument new
+			value: aTypeName;
+			yourself ].
+
+"	type := self typeName: typeName pointerArity: ptrArity.
+	type loader: (self loaderForArgNamed: argName indirectIndex: anIndex).
+	
+	^ type"
+
+	^ { argName. anIndex. aTypeName. arity }
 ]
 
 { #category : #initialization }

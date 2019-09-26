@@ -7,6 +7,12 @@ Class {
 	#category : #'UnifiedFFI-Arguments'
 }
 
+{ #category : #converting }
+FFIValueArgument >> asOldArraySpec [
+
+	^ { nil . nil . value . 0 }
+]
+
 { #category : #'emitting code' }
 FFIValueArgument >> emitArgument: aBuilder context: aContext [
 	

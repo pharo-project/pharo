@@ -10,25 +10,25 @@ Class {
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsFalse: anArgument [
 	
-	self assert: anArgument third equals: 'false'
+	self assert: anArgument value equals: 'false'
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsNil: anArgument [
 	
-	self assert: anArgument third equals: 'nil'
+	self assert: anArgument value equals: 'nil'
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsSelf: anArgument [
 	
-	self assert: anArgument third equals: 'self'
+	self assert: anArgument value equals: 'self'
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsTrue: anArgument [
 	
-	self assert: anArgument third equals: 'true'
+	self assert: anArgument value equals: 'true'
 ]
 
 { #category : #asserting }
@@ -82,9 +82,9 @@ FFIFunctionParserTest >> testParseAnonymousFunction [
 		self assert: args size equals: 8.
 
 		self assert: (args at: 1) equals: 0. 
-		self assert: (args at: 2) equals: #(nil nil 'nil' 0). 
+		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
 		self assert: (args at: 3) equals: -10. 
-		self assert: (args at: 4) equals: #(nil nil 'FOO_BAR' 0). 
+		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
 		self assert: (args at: 5) equals: #('a' nil 'int' 0). 
 		self assert: (args at: 6) equals: #('_b' nil 'int' 1). 
 		self assert: (args at: 7) equals: #('c' nil 'char' 2). 
@@ -124,9 +124,9 @@ FFIFunctionParserTest >> testParseFunction [
 		self assert: args size equals: 8.
 
 		self assert: (args at: 1) equals: 0. 
-		self assert: (args at: 2) equals: #(nil nil 'nil' 0). 
+		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
 		self assert: (args at: 3) equals: -10. 
-		self assert: (args at: 4) equals: #(nil nil 'FOO_BAR' 0). 
+		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
 		self assert: (args at: 5) equals: #('a' nil 'int' 0). 
 		self assert: (args at: 6) equals: #('_b' nil 'int' 1). 
 		self assert: (args at: 7) equals: #('c' nil 'char' 2). 
