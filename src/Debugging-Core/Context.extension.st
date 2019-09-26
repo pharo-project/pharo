@@ -56,20 +56,9 @@ Context >> namedTempAt: index put: aValue [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> pcRangeContextIsActive: contextIsActive [
+Context >> pcRange [
 	"return the debug highlight for aPC"
-	| thePC |
-	
-	"make sure we have some usable value (can happen for contexts in the ProcessBrowser"
-	thePC := pc ifNil: [self method endPC].
-	
-	"When on the top of the stack the pc is pointing to right instruction, but deeper in the stack
-	the pc was already advanced one bytecode, so we need to go back this one bytecode, which
-	can consist of multiple bytes. But on IR, we record the *last* bytecode offset as the offset of
-	the IR instruction, which means we can just go back one"
-	thePC := contextIsActive ifTrue: [thePC] ifFalse: [thePC - 1].
-	
-	^self method rangeForPC: thePC
+	^self sourceNodeExecuted debugHighlightRange 
 ]
 
 { #category : #'*Debugging-Core' }

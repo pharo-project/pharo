@@ -190,20 +190,6 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 
 ]
 
-{ #category : #'testing - source mapping' }
-MethodMapTest >> testSimpleSourceMapping [
-	| method range highlight |
-
-	method := Object>>('ha', 'lt') asSymbol.
-
-	range := method rangeForPC: (Smalltalk vm for32bit: 23 for64bit: 43).
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals: 'now'.
-
-
-	
-]
-
 { #category : #'testing - temp access' }
 MethodMapTest >> testTempNamedTempCopyingNestedBlock [
 	self assert: (self compileAndRunExample:  #exampleTempNamedTempCopyingNestedBlock) equals: 1.
