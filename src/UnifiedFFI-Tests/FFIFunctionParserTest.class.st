@@ -34,13 +34,13 @@ FFIFunctionParserTest >> assertIsTrue: anArgument [
 { #category : #asserting }
 FFIFunctionParserTest >> assertIsVariable: argument named: aName [
 
-	self assert: argument first equals: aName
+	self assert: argument name equals: aName
 ]
 
 { #category : #asserting }
 FFIFunctionParserTest >> assertType: anArgument named: aTypeName [
 	
-	self assert: anArgument third equals: aTypeName
+	self assert: anArgument type name equals: aTypeName
 ]
 
 { #category : #asserting }
@@ -85,10 +85,10 @@ FFIFunctionParserTest >> testParseAnonymousFunction [
 		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
 		self assert: (args at: 3) equals: -10. 
 		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
-		self assert: (args at: 5) equals: #('a' nil 'int' 0). 
-		self assert: (args at: 6) equals: #('_b' nil 'int' 1). 
-		self assert: (args at: 7) equals: #('c' nil 'char' 2). 
-		self assert: (args at: 8) equals: #('d_' nil 'void' 3 ) ]
+		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0). 
+		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1). 
+		self assert: (args at: 7) asOldArraySpec equals: #('c' nil 'char' 2). 
+		self assert: (args at: 8) asOldArraySpec equals: #('d_' nil 'void' 3 ) ]
 ]
 
 { #category : #tests }
@@ -127,10 +127,10 @@ FFIFunctionParserTest >> testParseFunction [
 		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0). 
 		self assert: (args at: 3) equals: -10. 
 		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0). 
-		self assert: (args at: 5) equals: #('a' nil 'int' 0). 
-		self assert: (args at: 6) equals: #('_b' nil 'int' 1). 
-		self assert: (args at: 7) equals: #('c' nil 'char' 2). 
-		self assert: (args at: 8) equals: #('d_' nil 'void' 3 )
+		self assert: (args at: 5) asOldArraySpec equals: #('a' nil 'int' 0). 
+		self assert: (args at: 6) asOldArraySpec equals: #('_b' nil 'int' 1). 
+		self assert: (args at: 7) asOldArraySpec equals: #('c' nil 'char' 2). 
+		self assert: (args at: 8) asOldArraySpec equals: #('d_' nil 'void' 3 )
 	].
 
 ]

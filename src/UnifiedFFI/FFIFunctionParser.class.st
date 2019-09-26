@@ -23,12 +23,16 @@ FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptr
 			value: aTypeName;
 			yourself ].
 
+	^ FFIVariableArgument
+		name: argName
+		typeName: aTypeName
+		arity: arity
 "	type := self typeName: typeName pointerArity: ptrArity.
 	type loader: (self loaderForArgNamed: argName indirectIndex: anIndex).
 	
 	^ type"
 
-	^ { argName. anIndex. aTypeName. arity }
+"	^ { argName. anIndex. aTypeName. arity }"
 ]
 
 { #category : #initialization }
