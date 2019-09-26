@@ -238,13 +238,6 @@ OSSDL2Driver >> openAddedJoystick: index [
 
 ]
 
-{ #category : #private }
-OSSDL2Driver >> pauseEventsWhile: aBlock [
-
-	EventLoopProcess suspend.
-	aBlock ensure: [ EventLoopProcess resume ]
-]
-
 { #category : #'events-processing' }
 OSSDL2Driver >> primSetupInputSemaphore: semaIndex [
 	<primitive: #primitiveSetSDL2Input module: #SDL2DisplayPlugin>
