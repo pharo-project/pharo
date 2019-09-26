@@ -16,6 +16,20 @@ TextStreamTest >> setUp [
 ]
 
 { #category : #test }
+TextStreamTest >> testApplyAttributeBeginningAt [
+	| attributes |
+	stream nextPutAll: 'Pharo is cool'.
+	stream applyAttribute:  TextEmphasis underlined beginningAt: 10.
+	1 to: 9 do: [ :index |
+		attributes := stream contents runs at: index.
+		self assertEmpty: attributes].	
+	10 to: 14 do: [ :index |
+		attributes := stream contents runs at: index.
+		self assert: attributes isArray.
+		self assert: attributes first emphasisCode equals: 4].
+]
+
+{ #category : #test }
 TextStreamTest >> testNextPutAll [
 	stream 
 		nextPutAll: 'Pharo';
