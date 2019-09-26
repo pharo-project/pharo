@@ -6,7 +6,7 @@ Class {
 		'type',
 		'loader'
 	],
-	#category : #'UnifiedFFI-Base'
+	#category : #'UnifiedFFI-Arguments'
 }
 
 { #category : #'instance-creation' }

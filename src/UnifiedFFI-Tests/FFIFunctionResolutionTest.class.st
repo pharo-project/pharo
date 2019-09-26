@@ -31,11 +31,42 @@ FFIFunctionResolutionTest >> pushReceiver [
 	stack push: #( self )
 ]
 
+{ #category : #helpers }
+FFIFunctionResolutionTest >> pushTemp: aString [ 
+	
+	stack push: { #temp . aString }
+]
+
 { #category : #running }
 FFIFunctionResolutionTest >> setUp [
 
 	super setUp.
 	stack := Stack new.
+]
+
+{ #category : #tests }
+FFIFunctionResolutionTest >> testResolveArgumentVariableShouldSetArgumentVariableLoader [
+
+	| argument receiver context resolver |
+	argument := FFIVariableArgument
+		name: 'arg'
+		typeName: 'int'
+		arity: 0.
+
+	receiver := 17@25.
+	context := Context
+		sender: nil
+		receiver: receiver
+		method: Point>>#*
+		arguments: #().
+	resolver := FFICallout new
+		sender: context;
+		yourself.
+	
+	argument resolveUsing: resolver.
+	argument loader emitArgument: self context: context.
+
+	self assert: stack pop equals: { #temp . 'arg' }
 ]
 
 { #category : #tests }
