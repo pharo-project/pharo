@@ -15,15 +15,6 @@ Class {
 }
 
 { #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopiedTempToAllScopesUpToDefVector: aVariable [
-		
-	(self hasCopyingTempNamed: aVariable name)
-		ifFalse: [self addCopyingTemp: aVariable ].
-	self tempVectorName = aVariable name ifTrue: [^ self].
-	^ self outerScope addCopiedTempToAllScopesUpToDefVector: aVariable.
-]
-
-{ #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
 	copiedVars add: (OCCopyingTempVariable new
 			originalVar: aTempVar originalVar;
@@ -54,11 +45,11 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 ]
 
 { #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefVector: aName [
+OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefVectorNamed: aName [
 		
 	(self hasCopyingTempNamed: aName) ifFalse: [self addCopyingTempNamed: aName].
 	self tempVectorName = aName ifTrue: [^ self].
-	^ self outerScope addCopyingTempToAllScopesUpToDefVector: aName.
+	^ self outerScope addCopyingTempToAllScopesUpToDefVectorNamed: aName.
 ]
 
 { #category : #'temp vars' }

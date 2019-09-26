@@ -68,6 +68,6 @@ OCASTClosureAnalyzer >> visitVariableNode: aVariableNode [
 	aVariableNode adaptToSemanticNode.
 	aVariableNode isTemp ifFalse: [^self].
 	var := self lookupAndFixBinding: aVariableNode.
-	var isTempVectorTemp ifTrue: [scope addCopyingTempToAllScopesUpToDefVector: var vectorName].
+	var isTempVectorTemp ifTrue: [scope addCopyingTempToAllScopesUpToDefVectorNamed: var vectorName].
 	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var].
 ]
