@@ -126,6 +126,12 @@ ZnBufferedReadWriteStream >> flush [
 	isDirty := false
 ]
 
+{ #category : #testing }
+ZnBufferedReadWriteStream >> isBinary [
+	
+	^ innerStream isBinary 
+]
+
 { #category : #private }
 ZnBufferedReadWriteStream >> isPositionInBuffer: aPosition [
 
