@@ -285,6 +285,12 @@ FFIFunctionParser >> returnType: aType [
 	^ aType
 ]
 
+{ #category : #accessing }
+FFIFunctionParser >> setStream: aReadStream [
+	
+	stream := aReadStream
+]
+
 { #category : #parsing }
 FFIFunctionParser >> skipSpace [
 	| ch |

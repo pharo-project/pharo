@@ -7,9 +7,62 @@ Class {
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
+{ #category : #asserting }
+FFIFunctionParserTest >> assertIsFalse: anArgument [
+	
+	self assert: anArgument third equals: 'false'
+]
+
+{ #category : #asserting }
+FFIFunctionParserTest >> assertIsNil: anArgument [
+	
+	self assert: anArgument third equals: 'nil'
+]
+
+{ #category : #asserting }
+FFIFunctionParserTest >> assertIsSelf: anArgument [
+	
+	self assert: anArgument third equals: 'self'
+]
+
+{ #category : #asserting }
+FFIFunctionParserTest >> assertIsTrue: anArgument [
+	
+	self assert: anArgument third equals: 'true'
+]
+
+{ #category : #asserting }
+FFIFunctionParserTest >> assertIsVariable: argument named: aName [
+
+	self assert: argument first equals: aName
+]
+
+{ #category : #asserting }
+FFIFunctionParserTest >> assertType: anArgument named: aTypeName [
+	
+	self assert: anArgument third equals: aTypeName
+]
+
+{ #category : #asserting }
+FFIFunctionParserTest >> assertValue: aLiteralArgument is: aValue [
+	
+	self assert: aLiteralArgument equals: aValue
+]
+
 { #category : #factory }
 FFIFunctionParserTest >> newParser [
 	^ FFIFunctionParser new
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testEmptyArgumentReturnsNil [
+	| parser |
+	
+	parser := self newParser
+		setStream: 'void' readStream;
+		yourself.
+	
+	self assert: parser parseArgument isNil
 ]
 
 { #category : #tests }
@@ -96,4 +149,112 @@ FFIFunctionParserTest >> testParseFunctionNoArguments [
 	
 		args := parser arguments.
 		self assert: args size equals: 0 ]
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedVariableArgumentHasName [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'arbitrary a' readStream;
+		yourself.
+	
+	argument := parser parseArgument.
+	self assertIsVariable: argument named: 'a'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedVariableArgumentHasType [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'arbitrary a' readStream;
+		yourself.
+	
+	argument := parser parseArgument.
+	self assertType: argument named: 'arbitrary'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedConstantIntegerArgumentHasConstantValue [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: '1' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertValue: argument is: 1
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedConstantNegativeIntegerArgumentHasConstantValue [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: '-1' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertValue: argument is: -1
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedFalseArgumentIsFalse [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'false' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertIsFalse: argument
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedNilArgumentIsNil [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'nil' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertIsNil: argument
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedSelfArgumentIsSelf [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'self' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertIsSelf: argument
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedTrueArgumentIsTrue [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'true' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertIsTrue: argument
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testVariableArgumentReturnsVariable [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'arbitrary a' readStream;
+		yourself.
+	
+	argument := parser parseArgument.
+	self assertIsVariable: argument named: 'a'
 ]
