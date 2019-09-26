@@ -3,7 +3,8 @@ Class {
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
 		'value',
-		'resolution'
+		'resolution',
+		'type'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -32,6 +33,13 @@ FFIValueArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext
 	self shouldNotImplement
 ]
 
+{ #category : #resolving }
+FFIValueArgument >> initialize [
+
+	super initialize.
+	type := FFIUndefinedTypeDeclaration new.
+]
+
 { #category : #accessing }
 FFIValueArgument >> loader [
 	
@@ -56,6 +64,12 @@ FFIValueArgument >> resolveUsing: aResolver [
 FFIValueArgument >> rolledPointerTempName [
 
 	self shouldNotImplement
+]
+
+{ #category : #accessing }
+FFIValueArgument >> type [
+	
+	^ type
 ]
 
 { #category : #accessing }
