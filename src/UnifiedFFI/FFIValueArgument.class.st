@@ -2,7 +2,8 @@ Class {
 	#name : #FFIValueArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
-		'value'
+		'value',
+		'resolution'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -29,6 +30,18 @@ FFIValueArgument >> emitArgument: aBuilder context: aContext objectClass: object
 FFIValueArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	self shouldNotImplement
+]
+
+{ #category : #accessing }
+FFIValueArgument >> loader [
+	
+	^ resolution
+]
+
+{ #category : #resolving }
+FFIValueArgument >> resolveUsing: aResolver [
+	
+	resolution := FFIConst value: value
 ]
 
 { #category : #private }
