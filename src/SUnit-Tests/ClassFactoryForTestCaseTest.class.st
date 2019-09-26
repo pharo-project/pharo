@@ -3,7 +3,7 @@ SUnit tests for ClassFactoryForTestCase
 "
 Class {
 	#name : #ClassFactoryForTestCaseTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'factory'
 	],

@@ -3,7 +3,7 @@ A ManifestBuilderTest is a class to test the behavior of ManifestBuilder
 "
 Class {
 	#name : #BuilderManifestTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'environment'
 	],

@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRefactoringBrowserTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#category : #'Refactoring-Tests-Core'
 }
 

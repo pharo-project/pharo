@@ -1,6 +1,6 @@
 Class {
 	#name : #SlotClassBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'aClass',
 		'anotherClass',

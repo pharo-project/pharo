@@ -1,6 +1,6 @@
 Class {
 	#name : #ClassRenameFixTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'previousChangeSet',
 		'testsChangeSet',

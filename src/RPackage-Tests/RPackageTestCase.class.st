@@ -3,7 +3,7 @@ Common superclass for RPackage related tests
 "
 Class {
 	#name : #RPackageTestCase,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'announcerForTest',
 		'oldSystemAnnouncer',

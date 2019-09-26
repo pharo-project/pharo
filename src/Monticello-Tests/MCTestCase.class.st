@@ -3,7 +3,7 @@ Abstract superclass for monticello tests
 "
 Class {
 	#name : #MCTestCase,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#category : #'Monticello-Tests-Base'
 }
 

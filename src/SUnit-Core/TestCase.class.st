@@ -10,8 +10,7 @@ Class {
 	#superclass : #TestAsserter,
 	#instVars : [
 		'testSelector',
-		'expectedFails',
-		'testingEnvironment'
+		'expectedFails'
 	],
 	#classVars : [
 		'Announcers',
@@ -614,11 +613,6 @@ TestCase >> defaultTimeLimit [
 	^self class defaultTimeLimit
 ]
 
-{ #category : #accessing }
-TestCase >> environmentOfTest [
-	^ testingEnvironment
-]
-
 { #category : #private }
 TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
 	^[aBlock value.
@@ -643,11 +637,6 @@ TestCase >> failureLog [
 	^Transcript
 
 			
-]
-
-{ #category : #private }
-TestCase >> initialize [ 
-	testingEnvironment := Smalltalk globals.
 ]
 
 { #category : #private }
@@ -822,11 +811,6 @@ TestCase >> skipOnPharoCITestingEnvironment [
 { #category : #running }
 TestCase >> tearDown [
 	"Hooks that subclasses may override to clean the fixture of test."
-]
-
-{ #category : #accessing }
-TestCase >> testingEnvironment: anObject [
-	testingEnvironment := anObject
 ]
 
 { #category : #accessing }

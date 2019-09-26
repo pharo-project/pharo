@@ -3,7 +3,7 @@ I contain tests that validate the integrity of the system.
 "
 Class {
 	#name : #ReleaseTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#category : #'ReleaseTests-Release'
 }
 

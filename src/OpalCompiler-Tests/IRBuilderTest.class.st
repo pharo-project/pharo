@@ -1,6 +1,6 @@
 Class {
 	#name : #IRBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#classVars : [
 		'TestToPush'
 	],

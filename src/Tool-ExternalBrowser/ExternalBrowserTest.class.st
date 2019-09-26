@@ -1,6 +1,6 @@
 Class {
 	#name : #ExternalBrowserTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'initialWindows',
 		'file'
