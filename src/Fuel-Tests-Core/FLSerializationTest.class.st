@@ -3,7 +3,7 @@ Superclass for serialization tests
 "
 Class {
 	#name : #FLSerializationTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'serializer',
 		'materializer',

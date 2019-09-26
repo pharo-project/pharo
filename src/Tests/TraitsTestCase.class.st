@@ -1,6 +1,6 @@
 Class {
 	#name : #TraitsTestCase,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'createdClassesAndTraits',
 		'oldAnnouncer'

@@ -1,6 +1,6 @@
 Class {
 	#name : #ReflectiveMethodTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'selector'
 	],

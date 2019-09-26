@@ -1,6 +1,6 @@
 Class {
 	#name : #ZnClientTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Zinc-Tests'
 }
 

@@ -3,7 +3,7 @@ CompilerTest is a holder for SUnit test of Compiler
 "
 Class {
 	#name : #OCCompilerTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'errorMessage',
 		'errorLocation',

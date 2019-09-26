@@ -1,6 +1,6 @@
 Class {
 	#name : #RBParseTreeTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'AST-Core-Tests-Parser'
 }
 

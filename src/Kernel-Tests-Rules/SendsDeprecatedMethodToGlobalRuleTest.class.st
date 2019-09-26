@@ -1,6 +1,6 @@
 Class {
 	#name : #SendsDeprecatedMethodToGlobalRuleTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'testClass',
 		'globalName'

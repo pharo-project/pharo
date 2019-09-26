@@ -3,7 +3,7 @@ Unit test for RBBrowserEnvironment
 "
 Class {
 	#name : #RBBrowserEnvironmentTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'universalEnvironment'
 	],

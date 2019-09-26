@@ -3,7 +3,7 @@ SUnit tests for Job class
 "
 Class {
 	#name : #JobTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Jobs-Tests-Base'
 }
 

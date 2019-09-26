@@ -3,7 +3,7 @@ SUnit tests to tests conflicts for instance variables and class variable names
 "
 Class {
 	#name : #IVsAndClassVarNamesConflictTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'classFactory'
 	],

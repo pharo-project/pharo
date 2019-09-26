@@ -3,7 +3,7 @@ Example class for ClassTest
 "
 Class {
 	#name : #ObsoleteTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'classFactory'
 	],

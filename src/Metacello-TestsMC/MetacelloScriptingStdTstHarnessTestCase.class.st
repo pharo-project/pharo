@@ -1,6 +1,6 @@
 Class {
 	#name : #MetacelloScriptingStdTstHarnessTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'registry',
 		'undefinedSymbols',

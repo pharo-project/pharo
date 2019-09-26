@@ -1,6 +1,6 @@
 Class {
 	#name : #RBTransformationTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'manager',
 		'model'

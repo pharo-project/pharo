@@ -3,7 +3,7 @@ I provide at least one test which corresponds to a message sent by InstructionSt
 "
 Class {
 	#name : #OCSourceCode2BytecodeTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'instVar'
 	],

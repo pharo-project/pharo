@@ -3,7 +3,7 @@ SUnit tests for the Smart suggestions menu builder
 "
 Class {
 	#name : #SugsMenuBuilderTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'SmartSuggestions-Tests'
 }
 

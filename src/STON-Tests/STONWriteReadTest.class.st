@@ -3,7 +3,7 @@ STONWriteReadTests test serialization followed by materialization.
 "
 Class {
 	#name : #STONWriteReadTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'STON-Tests-Writer'
 }
 

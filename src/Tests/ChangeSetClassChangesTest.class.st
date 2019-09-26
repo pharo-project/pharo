@@ -4,7 +4,7 @@ Class category changes are not being properly added to the default changeset in 
 "
 Class {
 	#name : #ChangeSetClassChangesTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'className',
 		'renamedName'

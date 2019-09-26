@@ -1,5 +1,5 @@
 Class {
-	#name : #TestCaseWithEnvironment,
+	#name : #AbstractEnvironmentTestCase,
 	#superclass : #TestCase,
 	#instVars : [
 		'testingEnvironment'
@@ -8,16 +8,16 @@ Class {
 }
 
 { #category : #accessing }
-TestCaseWithEnvironment >> environmentOfTest [
+AbstractEnvironmentTestCase >> environmentOfTest [
 	^ testingEnvironment
 ]
 
 { #category : #private }
-TestCaseWithEnvironment >> initialize [ 
+AbstractEnvironmentTestCase >> initialize [ 
 	testingEnvironment := Smalltalk globals.
 ]
 
 { #category : #accessing }
-TestCaseWithEnvironment >> testingEnvironment: anObject [
+AbstractEnvironmentTestCase >> testingEnvironment: anObject [
 	testingEnvironment := anObject
 ]

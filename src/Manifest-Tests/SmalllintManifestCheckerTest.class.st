@@ -3,7 +3,7 @@ SUnit tests for SmalllintManifestChecker
 "
 Class {
 	#name : #SmalllintManifestCheckerTest,
-	#superclass : #TestCaseWithEnvironment,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'checker'
 	],

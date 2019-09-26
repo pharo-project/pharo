@@ -1,6 +1,6 @@
 Class {
 	#name : #MetacelloIssueTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'gofer',
 		'initialWorkingCopyList'
