@@ -1,6 +1,6 @@
 Class {
 	#name : #MetacelloRepositorySqueakCommonTestCase,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#category : #'Metacello-TestsPlatform'
 }
 

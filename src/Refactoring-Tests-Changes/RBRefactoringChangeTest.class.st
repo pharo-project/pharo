@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRefactoringChangeTest,
-	#superclass : #TestCase,
+	#superclass : #TestCaseWithEnvironment,
 	#instVars : [
 		'changes',
 		'workingEnvironment',
