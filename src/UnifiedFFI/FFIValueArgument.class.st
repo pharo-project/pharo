@@ -40,7 +40,15 @@ FFIValueArgument >> loader [
 
 { #category : #resolving }
 FFIValueArgument >> resolveUsing: aResolver [
-	
+
+	value = 'false' ifTrue: [ 
+		^ resolution := FFIConst value: 0 type: (aResolver resolveType: #bool) ].
+	value = 'true' ifTrue: [ 
+		^ resolution := FFIConst value: 1 type: (aResolver resolveType: #bool) ].
+	(value = 'nil' or: [ value = 'NULL' ]) ifTrue: [ 
+		^ resolution := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *') ].
+	value = 'self' ifTrue: [
+		^ resolution := FFISelfArgument new ].
 	resolution := FFIConst value: value
 ]
 

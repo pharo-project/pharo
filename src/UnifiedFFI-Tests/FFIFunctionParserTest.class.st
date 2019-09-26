@@ -14,6 +14,12 @@ FFIFunctionParserTest >> assertIsFalse: anArgument [
 ]
 
 { #category : #asserting }
+FFIFunctionParserTest >> assertIsNULL: anArgument [
+	
+	self assert: anArgument value equals: 'NULL'
+]
+
+{ #category : #asserting }
 FFIFunctionParserTest >> assertIsNil: anArgument [
 	
 	self assert: anArgument value equals: 'nil'
@@ -209,6 +215,18 @@ FFIFunctionParserTest >> testUntypedFalseArgumentIsFalse [
 
 	argument := parser parseArgument.
 	self assertIsFalse: argument
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testUntypedNilArgumentIsNULL [
+	| parser argument |
+	
+	parser := self newParser
+		setStream: 'NULL' readStream;
+		yourself.
+
+	argument := parser parseArgument.
+	self assertIsNULL: argument
 ]
 
 { #category : #tests }
