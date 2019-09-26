@@ -226,12 +226,6 @@ DebugSession >> isInterruptedContextDoesNotUnderstand [
 	^ self interruptedContext selector == #doesNotUnderstand:
 ]
 
-{ #category : #context }
-DebugSession >> isLatestContext: aContext [
-
-	^ interruptedProcess suspendedContext == aContext
-]
-
 { #category : #testing }
 DebugSession >> isTestMethod: aCompiledMethod of: aTestCase [
 
@@ -270,7 +264,7 @@ DebugSession >> pcRangeForContext: aContext [
 
 	(aContext isNil or: [ aContext isDead ])
 		ifTrue: [ ^ 1 to: 0 ].
-	^ aContext pcRangeContextIsActive: (self isLatestContext: aContext)
+	^ aContext pcRange
 ]
 
 { #category : #'debugging actions' }
