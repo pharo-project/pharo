@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'name',
 		'type',
-		'loader'
+		'loader',
+		'resolvedType'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -42,7 +43,14 @@ FFIVariableArgument >> name: anObject [
 { #category : #resolution }
 FFIVariableArgument >> resolveUsing: aResolver [
 	
-	loader := aResolver loaderForArgNamed: name indirectIndex: nil
+	loader := aResolver loaderForArgNamed: name indirectIndex: nil.
+	resolvedType := type resolveUsing: aResolver forArgument: self.
+]
+
+{ #category : #accessing }
+FFIVariableArgument >> resolvedType [
+	
+	^ resolvedType
 ]
 
 { #category : #accessing }

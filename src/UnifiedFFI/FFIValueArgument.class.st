@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'value',
 		'resolution',
-		'type'
+		'type',
+		'resolvedType'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -50,14 +51,29 @@ FFIValueArgument >> loader [
 FFIValueArgument >> resolveUsing: aResolver [
 
 	value = 'false' ifTrue: [ 
-		^ resolution := FFIConst value: 0 type: (aResolver resolveType: #bool) ].
+		resolution := FFIConst value: 0 type: (aResolver resolveType: #bool).
+		resolvedType := type resolveUsing: aResolver forArgument: self.
+		^ self ].
 	value = 'true' ifTrue: [ 
-		^ resolution := FFIConst value: 1 type: (aResolver resolveType: #bool) ].
+		resolution := FFIConst value: 1 type: (aResolver resolveType: #bool).
+		resolvedType := type resolveUsing: aResolver forArgument: self.
+		^ self ].
 	(value = 'nil' or: [ value = 'NULL' ]) ifTrue: [ 
-		^ resolution := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *') ].
+		resolution := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *').
+		resolvedType := type resolveUsing: aResolver forArgument: self.
+		^ self ].
 	value = 'self' ifTrue: [
-		^ resolution := FFISelfArgument new ].
-	resolution := FFIConst value: value
+		resolution := FFISelfArgument new.
+		resolvedType := type resolveUsing: aResolver forArgument: self.
+		^ self ].
+	resolution := FFIConst value: value.
+	resolvedType := type resolveUsing: aResolver forArgument: self.
+]
+
+{ #category : #accessing }
+FFIValueArgument >> resolvedType [
+	
+	^ resolvedType
 ]
 
 { #category : #private }

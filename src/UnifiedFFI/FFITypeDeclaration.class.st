@@ -36,3 +36,11 @@ FFITypeDeclaration >> name [
 FFITypeDeclaration >> name: anObject [
 	name := anObject
 ]
+
+{ #category : #resolution }
+FFITypeDeclaration >> resolveUsing: aResolver forArgument: aFFIVariableArgument [ 
+	
+	^ (aResolver resolveType: name)
+		pointerArity: arity;
+		yourself
+]
