@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'size'
 	],
-	#category : #'Slot-Examples-Base'
+	#category : #'VariablesLibrary-Slots'
 }
 
 { #category : #'code generation' }

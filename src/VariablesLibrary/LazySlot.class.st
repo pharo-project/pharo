@@ -14,7 +14,7 @@ The slot instead does the nil check as part of the slot read operation.
 Class {
 	#name : #LazySlot,
 	#superclass : #AbstractInitializedSlot,
-	#category : #'Slot-Examples-Base'
+	#category : #'VariablesLibrary-Slots'
 }
 
 { #category : #'code generation' }

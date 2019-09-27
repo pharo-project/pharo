@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : #'Slot-Examples-ClassVariables'
+	#category : #'VariablesLibrary-ClassVariables'
 }
 
 { #category : #accessing }

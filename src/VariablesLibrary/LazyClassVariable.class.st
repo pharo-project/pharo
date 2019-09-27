@@ -14,7 +14,7 @@ This class variable instead does the nil check as part of the variable read oper
 Class {
 	#name : #LazyClassVariable,
 	#superclass : #AbstractInitializedClassVariable,
-	#category : #'Slot-Examples-ClassVariables'
+	#category : #'VariablesLibrary-ClassVariables'
 }
 
 { #category : #'code generation' }
