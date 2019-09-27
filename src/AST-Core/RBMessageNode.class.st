@@ -115,12 +115,6 @@ RBMessageNode >> copyInContext: aDictionary [
 ]
 
 { #category : #accessing }
-RBMessageNode >> debugHighlightStart [
-
-	^ self  keywordsPositions first
-]
-
-{ #category : #accessing }
 RBMessageNode >> debugHighlightStop [
 
 	^ self stopWithoutParentheses
