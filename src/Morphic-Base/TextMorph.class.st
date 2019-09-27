@@ -1098,7 +1098,7 @@ TextMorph >> manageCursor [
 		ifTrue: [^ self
 				resetBlinkCursor;
 				stopBlinking].
-	Editor blinkingCursor 
+	TextEditor blinkingCursor 
 		ifTrue: [self startBlinking]
 		ifFalse: [self ensureCursor]
 ]
