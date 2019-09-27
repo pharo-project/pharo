@@ -1,13 +1,13 @@
 Class {
-	#name : #ZnBufferedReadWriteStreamTest,
+	#name : #SourceFileBufferedReadWriteStreamTest,
 	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#category : #Tests
 }
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testBuffering [
+SourceFileBufferedReadWriteStreamTest >> testBuffering [
 	| stream |
-	stream := ZnBufferedReadWriteStream on: '01234567890123456789' readStream.
+	stream := SourceFileBufferedReadWriteStream on: '01234567890123456789' readStream.
 	stream sizeBuffer: 8.
 	self deny: stream atEnd.
 	self assert: (stream next: 10) equals: '0123456789'.
@@ -17,12 +17,12 @@ ZnBufferedReadWriteStreamTest >> testBuffering [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
+SourceFileBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 	| stringStream |
 
 	stringStream := ReadWriteStream with: ''.
 	
-	ZnBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
+	SourceFileBufferedReadWriteStream on: stringStream do: [ : bufferedStream |
 		bufferedStream sizeBuffer: 8.
 		bufferedStream next: 5 putAll: '--012345--' startingAt: 3.
 		bufferedStream next: 5 putAll: '0123456789XX' startingAt: 6. 
@@ -33,9 +33,9 @@ ZnBufferedReadWriteStreamTest >> testNextPutAllStartingAt [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testPeek [
+SourceFileBufferedReadWriteStreamTest >> testPeek [
 	| stream |
-	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
+	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
 	'0123456789' do: [ :each |
 		self deny: stream atEnd.
@@ -47,9 +47,9 @@ ZnBufferedReadWriteStreamTest >> testPeek [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testReadInto [
+SourceFileBufferedReadWriteStreamTest >> testReadInto [
 	| stream buffer count |
-	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
+	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
 	buffer := String new: 6 withAll: Character space.
 	stream skip: 1.
@@ -63,9 +63,9 @@ ZnBufferedReadWriteStreamTest >> testReadInto [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testReadIntoLarger [
+SourceFileBufferedReadWriteStreamTest >> testReadIntoLarger [
 	| stream buffer count |
-	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
+	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 4.
 	buffer := String new: 10.
 	count := stream readInto: buffer startingAt: 1 count: 10.
@@ -74,7 +74,7 @@ ZnBufferedReadWriteStreamTest >> testReadIntoLarger [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testReadThenWrite [
+SourceFileBufferedReadWriteStreamTest >> testReadThenWrite [
 	| stream stringStream |
 	
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
@@ -82,7 +82,7 @@ ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 
 	stringStream := ReadWriteStream with: '0123456789'.
 	stringStream reset.
-	stream := ZnBufferedReadWriteStream on: stringStream.
+	stream := SourceFileBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
 	
 	stream next: 4.
@@ -99,9 +99,9 @@ ZnBufferedReadWriteStreamTest >> testReadThenWrite [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testReadUpTo [
+SourceFileBufferedReadWriteStreamTest >> testReadUpTo [
 	| stream |
-	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
+	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 8.
 	self assert: (stream upTo: $5) equals: '01234'.
 	self assert: stream upToEnd equals: '6789'.
@@ -109,9 +109,9 @@ ZnBufferedReadWriteStreamTest >> testReadUpTo [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
+SourceFileBufferedReadWriteStreamTest >> testReadUpToEnd [
 	| stream |
-	stream := ZnBufferedReadWriteStream on: '0123456789' readStream.
+	stream := SourceFileBufferedReadWriteStream on: '0123456789' readStream.
 	stream sizeBuffer: 4.
 	stream next: 2.
 	self assert: stream upToEnd equals: '23456789'.
@@ -119,11 +119,11 @@ ZnBufferedReadWriteStreamTest >> testReadUpToEnd [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testSetAtEnd [
+SourceFileBufferedReadWriteStreamTest >> testSetAtEnd [
 
 	| stream originalStream|
 
-	stream := ZnBufferedReadWriteStream on: (originalStream := ReadWriteStream with: '0123456789').
+	stream := SourceFileBufferedReadWriteStream on: (originalStream := ReadWriteStream with: '0123456789').
 	originalStream reset.
 	
 	stream setToEnd.
@@ -136,7 +136,7 @@ ZnBufferedReadWriteStreamTest >> testSetAtEnd [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testWriteThenRead [
+SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
 	
 	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
@@ -144,7 +144,7 @@ ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 
 	stringStream := ReadWriteStream with: '0123456789'.
 	stringStream reset.
-	stream := ZnBufferedReadWriteStream on: stringStream.
+	stream := SourceFileBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
 	
 	stream nextPutAll: 'ABCD'.
@@ -159,11 +159,11 @@ ZnBufferedReadWriteStreamTest >> testWriteThenRead [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testWriting [
+SourceFileBufferedReadWriteStreamTest >> testWriting [
 	| stringStream bufferedStream |
 	stringStream := ReadWriteStream with: ''.
 	
-	bufferedStream := ZnBufferedReadWriteStream on: stringStream.
+	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
 	bufferedStream flush.
 	
@@ -171,11 +171,11 @@ ZnBufferedReadWriteStreamTest >> testWriting [
 ]
 
 { #category : #tests }
-ZnBufferedReadWriteStreamTest >> testWritingOverflow [
+SourceFileBufferedReadWriteStreamTest >> testWritingOverflow [
 	| stringStream bufferedStream |
 	
 	stringStream := ReadWriteStream with: ''.
-	bufferedStream := ZnBufferedReadWriteStream on: stringStream.
+	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	bufferedStream sizeBuffer: 8.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
 	bufferedStream nextPutAll: '0123'; nextPutAll: '4567'; nextPutAll: '89'.

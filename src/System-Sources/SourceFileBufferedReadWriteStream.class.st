@@ -1,18 +1,9 @@
 "
-I am ZnBufferedReadWriteStream.
-I wrap a buffered read stream and a buffered write stream on the same file.
-
-I discard my read buffer on writes, and flush my write buffer on reads.
-Make sure to always send me #flush or #close when you're done,
-otherwise the last buffer might not yet have been written.
-My class side's #on:do: helps to ensure this.
-
-I can wrap both binary or character streams and act accordingly.
-
-Part of Zinc HTTP Components.
+I am Buffered Read Write Stream.
+I should only be used in the SourceFile implementation
 "
 Class {
-	#name : #ZnBufferedReadWriteStream,
+	#name : #SourceFileBufferedReadWriteStream,
 	#superclass : #Object,
 	#instVars : [
 		'innerStream',
@@ -23,18 +14,18 @@ Class {
 		'nextPosition',
 		'isDirty'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : #'System-Sources-Streams'
 }
 
 { #category : #'instance creation' }
-ZnBufferedReadWriteStream class >> on: writeStream [
+SourceFileBufferedReadWriteStream class >> on: writeStream [
 	^ self basicNew
 		on: writeStream;
 		yourself
 ]
 
 { #category : #convenience }
-ZnBufferedReadWriteStream class >> on: readStream do: block [
+SourceFileBufferedReadWriteStream class >> on: readStream do: block [
 	"Execute block with as argument a ZnBufferedReadStream on readStream.
 	Return the value of block."
 
@@ -46,13 +37,13 @@ ZnBufferedReadWriteStream class >> on: readStream do: block [
 ]
 
 { #category : #testing }
-ZnBufferedReadWriteStream >> atEnd [
+SourceFileBufferedReadWriteStream >> atEnd [
 	
 	^ self atEnd: nextPosition
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> atEnd: anInteger [ 
+SourceFileBufferedReadWriteStream >> atEnd: anInteger [ 
 	
 	anInteger < streamSize ifTrue: [ ^ false ].
 	anInteger <= (bufferOffset + bufferLength)  ifTrue: [ ^ false ].
@@ -61,7 +52,7 @@ ZnBufferedReadWriteStream >> atEnd: anInteger [
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> bufferAt: aPosition [
+SourceFileBufferedReadWriteStream >> bufferAt: aPosition [
 
 	^ buffer at:  (aPosition - bufferOffset)
 	
@@ -69,7 +60,7 @@ ZnBufferedReadWriteStream >> bufferAt: aPosition [
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
+SourceFileBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
 
 	self checkBufferFor: nextPosition.
 
@@ -79,40 +70,40 @@ ZnBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> checkBufferFor: aPosition [
+SourceFileBufferedReadWriteStream >> checkBufferFor: aPosition [
 
 	(self isPositionInBuffer: aPosition)
 		ifFalse: [ self refreshBufferFrom: aPosition ]
 ]
 
 { #category : #closing }
-ZnBufferedReadWriteStream >> close [
+SourceFileBufferedReadWriteStream >> close [
 	
 	self flush.
 	innerStream close
 ]
 
 { #category : #testing }
-ZnBufferedReadWriteStream >> closed [
+SourceFileBufferedReadWriteStream >> closed [
 
 	^ innerStream closed
 ]
 
 { #category : #'initialize-release' }
-ZnBufferedReadWriteStream >> collectionSpecies [
+SourceFileBufferedReadWriteStream >> collectionSpecies [
 	^ innerStream isBinary
 		ifTrue: [ ByteArray ]
 		ifFalse: [ String ]
 ]
 
 { #category : #initialization }
-ZnBufferedReadWriteStream >> defaultBufferSize [
+SourceFileBufferedReadWriteStream >> defaultBufferSize [
 	
 	^ 2 raisedToInteger: 16
 ]
 
 { #category : #writing }
-ZnBufferedReadWriteStream >> flush [
+SourceFileBufferedReadWriteStream >> flush [
 	
 	isDirty ifFalse: [ ^ self ]. 
 		
@@ -127,31 +118,31 @@ ZnBufferedReadWriteStream >> flush [
 ]
 
 { #category : #testing }
-ZnBufferedReadWriteStream >> isBinary [
+SourceFileBufferedReadWriteStream >> isBinary [
 	
 	^ innerStream isBinary 
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> isPositionInBuffer: aPosition [
+SourceFileBufferedReadWriteStream >> isPositionInBuffer: aPosition [
 
 	^ aPosition between: bufferOffset and: bufferOffset + bufferLength
 ]
 
 { #category : #testing }
-ZnBufferedReadWriteStream >> isReadOnly [
+SourceFileBufferedReadWriteStream >> isReadOnly [
 	
 	^ false
 ]
 
 { #category : #testing }
-ZnBufferedReadWriteStream >> isStream [
+SourceFileBufferedReadWriteStream >> isStream [
 
 	^ true
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> next [ 
+SourceFileBufferedReadWriteStream >> next [ 
 	| value |
 
 	self atEnd 
@@ -167,7 +158,7 @@ ZnBufferedReadWriteStream >> next [
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> next: aQuantity [
+SourceFileBufferedReadWriteStream >> next: aQuantity [
 
 	| read collection |
 
@@ -184,7 +175,7 @@ ZnBufferedReadWriteStream >> next: aQuantity [
 ]
 
 { #category : #writing }
-ZnBufferedReadWriteStream >> next: aQuantity putAll: aCollection startingAt: startingAt [
+SourceFileBufferedReadWriteStream >> next: aQuantity putAll: aCollection startingAt: startingAt [
 
 	aCollection readStreamDo: [ :s | 
 		s skip: startingAt - 1.
@@ -192,7 +183,7 @@ ZnBufferedReadWriteStream >> next: aQuantity putAll: aCollection startingAt: sta
 ]
 
 { #category : #writing }
-ZnBufferedReadWriteStream >> nextPut: anElement [ 
+SourceFileBufferedReadWriteStream >> nextPut: anElement [ 
 	
 	self checkBufferFor: nextPosition.
 		
@@ -203,13 +194,13 @@ ZnBufferedReadWriteStream >> nextPut: anElement [
 ]
 
 { #category : #writing }
-ZnBufferedReadWriteStream >> nextPutAll: aCollection [
+SourceFileBufferedReadWriteStream >> nextPutAll: aCollection [
 	
 	aCollection do: [ :each | self nextPut: each ]
 ]
 
 { #category : #'instance creation' }
-ZnBufferedReadWriteStream >> on: aStream [
+SourceFileBufferedReadWriteStream >> on: aStream [
 
 	innerStream := aStream.
 	nextPosition := aStream position + 1.
@@ -225,7 +216,7 @@ ZnBufferedReadWriteStream >> on: aStream [
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> peek [
+SourceFileBufferedReadWriteStream >> peek [
 	
 	| value |
 	value := self next.
@@ -237,21 +228,21 @@ ZnBufferedReadWriteStream >> peek [
 ]
 
 { #category : #querying }
-ZnBufferedReadWriteStream >> position [
+SourceFileBufferedReadWriteStream >> position [
 
 	^ nextPosition - 1 
 
 ]
 
 { #category : #querying }
-ZnBufferedReadWriteStream >> position: aNewPosition [
+SourceFileBufferedReadWriteStream >> position: aNewPosition [
 
 	^ nextPosition := aNewPosition + 1
 
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt count: count [
+SourceFileBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt count: count [
 
 	| remainingCount maxPositionInBuffer read countToRead |
 
@@ -279,7 +270,7 @@ ZnBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt count: cou
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> refreshBufferFrom: aPosition [
+SourceFileBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 
 	| nextBufferPosition |
 
@@ -303,19 +294,19 @@ ZnBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> setToEnd [
+SourceFileBufferedReadWriteStream >> setToEnd [
 
 	nextPosition := (streamSize max: (bufferOffset + bufferLength)) + 1
 ]
 
 { #category : #querying }
-ZnBufferedReadWriteStream >> size [ 
+SourceFileBufferedReadWriteStream >> size [ 
 
 	^ streamSize max: (bufferOffset + bufferLength)
 ]
 
 { #category : #'initialize-release' }
-ZnBufferedReadWriteStream >> sizeBuffer: size [
+SourceFileBufferedReadWriteStream >> sizeBuffer: size [
 
 	bufferLength > 0 ifTrue: [ self flush ].
 	bufferLength := 0.
@@ -324,13 +315,13 @@ ZnBufferedReadWriteStream >> sizeBuffer: size [
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> skip: aQuantity [
+SourceFileBufferedReadWriteStream >> skip: aQuantity [
 
 	nextPosition := nextPosition + aQuantity
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> upTo: value [ 
+SourceFileBufferedReadWriteStream >> upTo: value [ 
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream.
 	This could be further optimzed."
@@ -342,7 +333,7 @@ ZnBufferedReadWriteStream >> upTo: value [
 ]
 
 { #category : #reading }
-ZnBufferedReadWriteStream >> upToEnd [
+SourceFileBufferedReadWriteStream >> upToEnd [
 	"Read elements until the stream is atEnd and return them as a collection."
 
 	| toRead |

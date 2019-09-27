@@ -2,17 +2,17 @@
 I am a read-write character stream. I am mainly used to open the Pharo source and changes files.
 "
 Class {
-	#name : #ZnCharacterReadWriteStream,
+	#name : #SourceFileCharacterReadWriteStream,
 	#superclass : #Object,
 	#instVars : [
 		'readStream',
 		'writeStream'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : #'System-Sources-Streams'
 }
 
 { #category : #'instance creation' }
-ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
+SourceFileCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 
 	^ self new
 		on: wrappedStream encoding: encoding;
@@ -20,71 +20,71 @@ ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> atEnd [
+SourceFileCharacterReadWriteStream >> atEnd [
 	
 	^ readStream atEnd
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> close [
+SourceFileCharacterReadWriteStream >> close [
 	
 	writeStream close
 ]
 
 { #category : #testing }
-ZnCharacterReadWriteStream >> closed [
+SourceFileCharacterReadWriteStream >> closed [
 	^ writeStream closed
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> collectionSpecies [
+SourceFileCharacterReadWriteStream >> collectionSpecies [
 	^ String
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> cr [
+SourceFileCharacterReadWriteStream >> cr [
 	
 	writeStream cr
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> flush [
+SourceFileCharacterReadWriteStream >> flush [
 
 	writeStream flush
 ]
 
 { #category : #testing }
-ZnCharacterReadWriteStream >> isReadOnly [
+SourceFileCharacterReadWriteStream >> isReadOnly [
 	
 	^ false
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> next [
+SourceFileCharacterReadWriteStream >> next [
 	
 	^ readStream next
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> next: anInteger [ 
+SourceFileCharacterReadWriteStream >> next: anInteger [ 
 	
 	^ readStream next: anInteger
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> nextPut: aCharacter [
+SourceFileCharacterReadWriteStream >> nextPut: aCharacter [
 
 	^ writeStream nextPut: aCharacter
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> nextPutAll: aString [
+SourceFileCharacterReadWriteStream >> nextPutAll: aString [
 
 	^ writeStream nextPutAll: aString
 ]
 
 { #category : #'instance creation' }
-ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
+SourceFileCharacterReadWriteStream >> on: aStream encoding: encoding [
 	| encoder |
 	encoder := encoding asZnCharacterEncoder.
 	readStream := ZnCharacterReadStream on: aStream encoding: encoder.
@@ -92,66 +92,66 @@ ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> peek [
+SourceFileCharacterReadWriteStream >> peek [
 	
 	^ readStream peek
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> position [
+SourceFileCharacterReadWriteStream >> position [
 
 	^ readStream position
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> position: anInteger [ 
+SourceFileCharacterReadWriteStream >> position: anInteger [ 
 	
 	readStream position: anInteger
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> print: object [
+SourceFileCharacterReadWriteStream >> print: object [
 	writeStream print: object
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> readOnlyCopy [
+SourceFileCharacterReadWriteStream >> readOnlyCopy [
 
 	^ readStream
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> setToEnd [
+SourceFileCharacterReadWriteStream >> setToEnd [
 
 	writeStream setToEnd
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> size [
+SourceFileCharacterReadWriteStream >> size [
 
 	^ readStream size
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> skip: anInteger [ 
+SourceFileCharacterReadWriteStream >> skip: anInteger [ 
 	
 	readStream skip: anInteger
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> space [
+SourceFileCharacterReadWriteStream >> space [
 	
 	writeStream space
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> tab [
+SourceFileCharacterReadWriteStream >> tab [
 	
 	writeStream tab
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> upToAll: aCollection [
+SourceFileCharacterReadWriteStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
 	
 	^ self collectionSpecies streamContents: [ :out |
@@ -175,7 +175,7 @@ ZnCharacterReadWriteStream >> upToAll: aCollection [
 ]
 
 { #category : #accessing }
-ZnCharacterReadWriteStream >> upToEnd [
+SourceFileCharacterReadWriteStream >> upToEnd [
 	
 	^ readStream upToEnd
 ]
