@@ -19,7 +19,7 @@ ZnFileSystemUtils class >> baseNameFor: fileName [
 ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
-	^ fileReference writeStream binary
+	^ fileReference binaryWriteStream
 ]
 
 { #category : #defaults }
