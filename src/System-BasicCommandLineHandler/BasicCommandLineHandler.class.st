@@ -77,6 +77,8 @@ BasicCommandLineHandler class >> startUp: isImageStarting [
 	"only handle when lauching a new image"
 	isImageStarting ifFalse: [ ^ self ].
 
+	JS ifConnected: [ ^self ].
+	
 	Smalltalk session 
 		addDeferredStartupAction: [ self new activate ]
 ]

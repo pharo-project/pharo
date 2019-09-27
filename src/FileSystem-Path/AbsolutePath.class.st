@@ -27,7 +27,11 @@ AbsolutePath >> isAbsolute [
 
 { #category : #testing }
 AbsolutePath >> isRoot [
-	^ self size = 0
+	^self size = 0 or: [
+		JS
+			ifConnected: [
+				self size = 1 and: [(self at: 1) = 'SqueakJS']]
+			ifNotConnected: [false]]
 ]
 
 { #category : #printing }

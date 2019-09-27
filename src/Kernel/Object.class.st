@@ -824,6 +824,7 @@ Object >> doesNotUnderstand: aMessage [
 	"Testing: (3 activeProcess)"
 		
 	| exception resumeValue |
+	JS ifConnected: [JS debugger].
 	(exception := MessageNotUnderstood new)
 		message: aMessage;
 		receiver: self.

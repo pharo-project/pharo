@@ -372,6 +372,7 @@ VirtualMachine >> isRunningCogit [
 	"Returns true if we're running on the Cog JIT
 	 (vmParameterAt: 46 is the size of the machine code zone)"
 
+	JS ifConnected: [ ^false ].
 	^[(self parameterAt: 46) > 0] on: Error do:[:ex| ex return: false]
 ]
 
@@ -648,7 +649,7 @@ VirtualMachine >> parameterAt: parameterIndex [
 	71	the vmProxyMinorVersion (the interpreterProxy VM_MINOR_VERSION)"
 
 	<primitive: 254>
-	self primitiveFailed
+	^nil
 ]
 
 { #category : #parameters }
