@@ -19,7 +19,7 @@ FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptr
 		"allow nil,true,false as untyped arguments"
 		"Do not accept nil, true or false followed by *s"
 		arity > 0 ifTrue: [ self error: 'missing argument name' ].
-		^ FFIValueArgument new
+		^ FFIConstantArgument new
 			value: aTypeName;
 			yourself ].
 
@@ -37,7 +37,7 @@ FFIFunctionParser >> initialize [
 
 { #category : #'requestor callbacks' }
 FFIFunctionParser >> integerConstantArgument: aValue [
-	^ FFIValueArgument new
+	^ FFIConstantArgument new
 		value: aValue;
 		yourself
 ]
@@ -296,7 +296,7 @@ FFIFunctionParser >> requestor: aRequestor [
 
 { #category : #'requestor callbacks' }
 FFIFunctionParser >> returnType: aType [
-	^ aType
+	^ FFITypeDeclaration typeName: aType first arity: aType second
 ]
 
 { #category : #accessing }

@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'name',
-		'arity'
+		'arity',
+		'resolvedType'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -27,6 +28,24 @@ FFITypeDeclaration >> arity: anObject [
 	arity := anObject
 ]
 
+{ #category : #converting }
+FFITypeDeclaration >> asOldArraySpec [
+	
+	^ { name . arity }
+]
+
+{ #category : #'emitting code' }
+FFITypeDeclaration >> emitReturn: anIRBuilder resultTempVar: aString context: aContext [
+	
+	^ resolvedType emitReturn: anIRBuilder resultTempVar: aString context: aContext
+]
+
+{ #category : #'as yet unclassified' }
+FFITypeDeclaration >> externalTypeWithArity [
+	
+	^ resolvedType externalTypeWithArity
+]
+
 { #category : #accessing }
 FFITypeDeclaration >> name [
 	^ name
@@ -35,6 +54,12 @@ FFITypeDeclaration >> name [
 { #category : #accessing }
 FFITypeDeclaration >> name: anObject [
 	name := anObject
+]
+
+{ #category : #resolution }
+FFITypeDeclaration >> resolveUsing: aResolver [
+
+	resolvedType := (aResolver resolveType: name) pointerArity: arity
 ]
 
 { #category : #resolution }

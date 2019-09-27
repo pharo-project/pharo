@@ -3,7 +3,11 @@ Tests for FFIFunctionParser
 "
 Class {
 	#name : #FFIFunctionParserTest,
-	#superclass : #TestCase,
+	#superclass : #FFIAbstractTest,
+	#instVars : [
+		'ctx',
+		'resolver'
+	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
@@ -61,9 +65,40 @@ FFIFunctionParserTest >> assertValue: aLiteralArgument is: aValue [
 	self assert: aLiteralArgument value equals: aValue
 ]
 
+{ #category : #helpers }
+FFIFunctionParserTest >> ffiInstVarArgument: argName generator: aGenerator [
+	
+	^ FFIInstVarArgument new 
+		argName: argName;
+		yourself
+]
+
 { #category : #factory }
 FFIFunctionParserTest >> newParser [
 	^ FFIFunctionParser new
+]
+
+{ #category : #factory }
+FFIFunctionParserTest >> newParserWithRequestor [
+	
+	^ FFIFunctionParser new
+		requestor: resolver;
+		yourself
+]
+
+{ #category : #factory }
+FFIFunctionParserTest >> setUp [
+
+	super setUp.
+	ctx := Context
+		sender: nil
+		receiver: FFITestObject new
+		method: FFITestObject>>#b:d:
+		arguments: #( 25 17 ).
+		
+	resolver := FFICallout new
+		sender: ctx;
+		yourself
 ]
 
 { #category : #tests }
@@ -88,7 +123,7 @@ FFIFunctionParserTest >> testParseAnonymousFunction [
 		
 		self assert: parser isAnonymous.
 		self assert: parser functionName isNil.
-		self assert: parser returnType equals: #('int' 2).
+		self assert: parser returnType asOldArraySpec equals: #('int' 2).
 		
 		args := parser arguments.
 		self assert: args size equals: 8.
@@ -114,7 +149,7 @@ FFIFunctionParserTest >> testParseAnonymousFunctionNoArguments [
 		
 		self assert: parser isAnonymous.
 		self assert: parser functionName isNil.
-		self assert: parser returnType equals: #('int' 2).
+		self assert: parser returnType asOldArraySpec equals: #('int' 2).
 	
 		args := parser arguments.
 		self assert: args size equals: 0 ]
@@ -130,7 +165,7 @@ FFIFunctionParserTest >> testParseFunction [
 		parser := self newParser parseNamedFunction: spec.
 		
 		self assert: parser functionName equals: 'function_n$a$m$e'.
-		self assert: parser returnType equals: #('int' 2).
+		self assert: parser returnType asOldArraySpec equals: #('int' 2).
 		
 		args := parser arguments.
 		self assert: args size equals: 8.
@@ -148,6 +183,29 @@ FFIFunctionParserTest >> testParseFunction [
 ]
 
 { #category : #tests }
+FFIFunctionParserTest >> testParseFunction2 [
+	#((int * * #'function_n$a$m$e' ( 0, nil, -10," FOO_BAR , "int a, int* _b, char** c, void* * * d_))
+	 " ' int * * function_n$a$m$e (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )'" ) 
+	do: [:spec | | functionSpec1 functionSpec2 method1 method2 builder |
+		functionSpec1 := self newParser parseNamedFunction: spec.
+		functionSpec1 resolveUsing: resolver.
+		
+		functionSpec2 := self newParserWithRequestor parseNamedFunction: spec.
+		
+		builder := (FFICalloutMethodBuilder calloutAPI: (FFICalloutAPI inContext: nil))
+			sender: ctx;
+			yourself.
+			"signature: functionSignature;
+			sender: sender."
+		method1 := builder generateMethodFromSpec: functionSpec1.
+		method2 := builder generateMethodFromSpec: functionSpec2.
+		self assert: method1 bytecode equals: method2 bytecode.
+		self assert: method1 literals allButFirst equals: method2 literals allButFirst.
+		self assert: (method1 literals first analogousCodeTo: method2 literals first) ].
+
+]
+
+{ #category : #tests }
 FFIFunctionParserTest >> testParseFunctionNoArguments [
 	| parser args |
 	
@@ -157,7 +215,7 @@ FFIFunctionParserTest >> testParseFunctionNoArguments [
 		parser := self newParser parseNamedFunction: spec.
 		
 		self assert: parser functionName equals: 'function_name'.
-		self assert: parser returnType equals: #('int' 2).
+		self assert: parser returnType asOldArraySpec equals: #('int' 2).
 	
 		args := parser arguments.
 		self assert: args size equals: 0 ]

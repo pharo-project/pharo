@@ -25,6 +25,27 @@ FFIVariableArgument >> asOldArraySpec [
 	^ { name . nil . type name . type arity }
 ]
 
+{ #category : #'emitting code' }
+FFIVariableArgument >> emitArgument: anIRBuilder context: aContext [
+
+	self resolvedType emitArgument: anIRBuilder context: aContext.
+]
+
+{ #category : #'emitting code' }
+FFIVariableArgument >> emitReturnArgument: anIRBuilder context: aContext [ 
+	
+	loader
+		emitPointerArityUnpack: anIRBuilder 
+		type: self resolvedType
+		context: aContext
+]
+
+{ #category : #accessing }
+FFIVariableArgument >> externalTypeWithArity [
+	
+	^ resolvedType externalTypeWithArity
+]
+
 { #category : #accessing }
 FFIVariableArgument >> loader [
 	^ loader
@@ -42,9 +63,10 @@ FFIVariableArgument >> name: anObject [
 
 { #category : #resolution }
 FFIVariableArgument >> resolveUsing: aResolver [
-	
+
 	loader := aResolver loaderForArgNamed: name indirectIndex: nil.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
+	resolvedType loader: loader.
 ]
 
 { #category : #accessing }

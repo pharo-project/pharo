@@ -1,33 +1,11 @@
 Class {
 	#name : #FFIFunctionResolutionTest,
-	#superclass : #TestCase,
+	#superclass : #FFIAbstractTest,
 	#instVars : [
-		'stack',
-		'intType',
-		'int32Type'
+		'stack'
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
-
-{ #category : #helpers }
-FFIFunctionResolutionTest >> externalTypeAlias: aTypeName [
-
-	"Prefix the type so we have control over it.
-	If it is already prefixed, do not prefix it (otherwise this loops)."
-	(aTypeName beginsWith: '_test_type_')
-		ifTrue: [ ^ aTypeName ].
-	^ '_test_type_', aTypeName
-]
-
-{ #category : #helpers }
-FFIFunctionResolutionTest >> ffiBindingOf: aString [
-	
-	aString = '_test_type_int'
-		ifTrue: [ ^ aString -> intType ].
-	aString = '_test_type_bool'
-		ifTrue: [ ^ aString -> int32Type ].
-	self error: 'Type not recognized: ', aString
-]
 
 { #category : #helpers }
 FFIFunctionResolutionTest >> pushInstVar: anInteger [ 
@@ -64,8 +42,6 @@ FFIFunctionResolutionTest >> setUp [
 
 	super setUp.
 	stack := Stack new.
-	intType := FFITestType new.
-	int32Type := FFITestType new.
 ]
 
 { #category : #tests }
@@ -116,7 +92,7 @@ FFIFunctionResolutionTest >> testResolveArgumentVariableWithExplicitTypeResolves
 	
 	argument resolveUsing: resolver.
 
-	self assert: argument resolvedType equals: intType
+	self assert: argument resolvedType class equals: intType
 ]
 
 { #category : #tests }
@@ -158,7 +134,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 	
 	argument resolveUsing: resolver.
 
-	self assert: argument resolvedType equals: int32Type
+	self assert: argument resolvedType class equals: int32Type
 ]
 
 { #category : #tests }

@@ -1,5 +1,5 @@
 Class {
-	#name : #FFIValueArgument,
+	#name : #FFIConstantArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
 		'value',
@@ -11,56 +11,56 @@ Class {
 }
 
 { #category : #converting }
-FFIValueArgument >> asOldArraySpec [
+FFIConstantArgument >> asOldArraySpec [
 
 	^ { nil . nil . value . 0 }
 ]
 
 { #category : #'emitting code' }
-FFIValueArgument >> emitArgument: aBuilder context: aContext [
+FFIConstantArgument >> emitArgument: aBuilder context: aContext [
 	
-	aBuilder pushLiteral: self value
+	self loader emitArgument: aBuilder context: aContext
 ]
 
 { #category : #'emitting code' }
-FFIValueArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
+FFIConstantArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	
 	self shouldNotImplement
 ]
 
 { #category : #'private emitting code' }
-FFIValueArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
+FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	self shouldNotImplement
 ]
 
 { #category : #'emitting code' }
-FFIValueArgument >> emitReturnArgument: anIRBuilder context: aContext [
+FFIConstantArgument >> emitReturnArgument: anIRBuilder context: aContext [
 
 	"Nothing to do here"
 ]
 
 { #category : #accessing }
-FFIValueArgument >> externalTypeWithArity [
+FFIConstantArgument >> externalTypeWithArity [
 	
 	^ self resolvedType externalTypeWithArity
 ]
 
 { #category : #resolving }
-FFIValueArgument >> initialize [
+FFIConstantArgument >> initialize [
 
 	super initialize.
 	type := FFIUndefinedTypeDeclaration new.
 ]
 
 { #category : #accessing }
-FFIValueArgument >> loader [
+FFIConstantArgument >> loader [
 	
 	^ resolution
 ]
 
 { #category : #resolving }
-FFIValueArgument >> resolveUsing: aResolver [
+FFIConstantArgument >> resolveUsing: aResolver [
 
 	value = 'false' ifTrue: [ 
 		resolution := FFIConst value: 0 type: (aResolver resolveType: #bool).
@@ -83,35 +83,35 @@ FFIValueArgument >> resolveUsing: aResolver [
 ]
 
 { #category : #accessing }
-FFIValueArgument >> resolvedType [
+FFIConstantArgument >> resolvedType [
 	
 	^ resolvedType
 ]
 
 { #category : #accessing }
-FFIValueArgument >> resolvedValue [
+FFIConstantArgument >> resolvedValue [
 	self shouldBeImplemented.
 ]
 
 { #category : #private }
-FFIValueArgument >> rolledPointerTempName [
+FFIConstantArgument >> rolledPointerTempName [
 
 	self shouldNotImplement
 ]
 
 { #category : #accessing }
-FFIValueArgument >> type [
+FFIConstantArgument >> type [
 	
 	^ type
 ]
 
 { #category : #accessing }
-FFIValueArgument >> value [ 
+FFIConstantArgument >> value [ 
 
 	^ value
 ]
 
 { #category : #accessing }
-FFIValueArgument >> value: anObject [
+FFIConstantArgument >> value: anObject [
 	value := anObject
 ]
