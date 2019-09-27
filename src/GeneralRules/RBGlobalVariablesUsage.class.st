@@ -17,7 +17,13 @@ RBGlobalVariablesUsage class >> checksMethod [
 { #category : #running }
 RBGlobalVariablesUsage >> basicCheck: aMethod [
 	^ (aMethod literals
-		select: [ :l | l isSymbol not and: [ l isGlobalVariable ] ])
+		select: [ :l | 
+			l isSymbol not 
+				and: [ l isString not
+				and: [ l isNumber not
+				and: [ l isArray not
+				and: [ l isCharacter not
+				and: [ l isGlobalVariable ] ] ] ] ] ])
 		anySatisfy: [ :v | v value isClass not ]
 ]
 
