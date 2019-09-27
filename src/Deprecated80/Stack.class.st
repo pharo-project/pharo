@@ -3,6 +3,8 @@ This class is deprecated because while exposing the API of a Stack, it was also 
 
 This was wrong because if one needs something else than #pop, #push, #top and #size, then it means that what one is looking for is a LinkedList.
 Thus, one should explicitely use it.
+
+Use NewStack instead.
 "
 Class {
 	#name : #Stack,
