@@ -254,11 +254,11 @@ GLMStringBrick >> initialize [
 	text := ''.
 	
 	textPosition := #leftCenter.
-	
+
 	self
+		updateFont;
 		hShrinkWrap;
 		vShrinkWrap.
-	self updateFont.
 	
 ]
 
