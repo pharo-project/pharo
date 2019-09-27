@@ -115,8 +115,8 @@ ConfigurableHistoryIterator >> hasPrevious [
 { #category : #initialization }
 ConfigurableHistoryIterator >> initialize [
 	super initialize.
-	undoStack := Stack new.
-	redoStack := Stack new
+	undoStack := NewStack new.
+	redoStack := NewStack new
 ]
 
 { #category : #actions }

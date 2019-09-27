@@ -36,7 +36,7 @@ SpMenuPresenterBuilder >> initialize [
 	
 	super initialize.
 	self menuPresenter: self class menuPresenterClass new.
-	stack := Stack new
+	stack := NewStack new
 		push: self menuPresenter;
 		yourself
 ]

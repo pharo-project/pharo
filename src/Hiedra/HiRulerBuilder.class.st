@@ -43,7 +43,7 @@ HiRulerBuilder >> buildLinksStartingAt: aValue [
 	"This method traverses the values using the linkBlock."
 
 	| pending |
-	pending := Stack new.
+	pending := NewStack new.
 	self stackLinksFrom: aValue in: pending.
 
 	[ pending isEmpty ] whileFalse: [

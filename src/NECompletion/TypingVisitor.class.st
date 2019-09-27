@@ -13,7 +13,7 @@ Class {
 { #category : #visiting }
 TypingVisitor >> initialize [
 
-	typeStack := Stack new.
+	typeStack := NewStack new.
 	typeStack push: Dictionary new.
 ]
 

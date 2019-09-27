@@ -121,13 +121,13 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 				the prefix index values and take the suffix each
 				time"
 				ifFalse: [ 
-					searchStack := Stack new.
+					searchStack := NewStack new.
 					searchIndex := anInteger + 1.
 					[ searchIndex > clearCode ] whileTrue: [ 
 						searchStack push: (suffixTable at: searchIndex).
 						searchIndex := (prefixTable at: searchIndex) + 1 ].
 					searchStack push: (suffixTable at: searchIndex).
-					first := searchStack first.
+					first := searchStack top.
 					searchStack do: [ :int |
 						self writeBit: int on: aWriteStream ] ]. 
 			]
@@ -141,13 +141,13 @@ LzwGifDecoder >> handleCode: anInteger withPreviousCode: prevInteger on: aWriteS
 						writeBit: first on: aWriteStream.
 					 ]
 				ifFalse: [ 
-					searchStack := Stack new.
+					searchStack := NewStack new.
 					searchIndex := prevInteger + 1.
 					[ searchIndex > clearCode ] whileTrue: [ 
 						searchStack push: (suffixTable at: searchIndex).
 						searchIndex := (prefixTable at: searchIndex) + 1 ].
 					searchStack push: (suffixTable at: searchIndex).
-					first := searchStack first.
+					first := searchStack top.
 					searchStack do: [ :int |
 						self writeBit: int on: aWriteStream ].
 					self writeBit: first on: aWriteStream ]. 

@@ -118,7 +118,7 @@ WikiStyleHelpBuilder >> helpTag [
 WikiStyleHelpBuilder >> helpTopicFromFormattedString: aString title: aTitle [
 	| helpString currentLevel section topicStack topic |
 	helpString := aString.
-	topicStack := Stack new.
+	topicStack := NewStack new.
 	topicStack push: (HelpTopic new title: aTitle).
 	currentLevel := 0.
 	section := ''.

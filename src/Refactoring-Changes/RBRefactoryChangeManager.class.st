@@ -97,9 +97,9 @@ RBRefactoryChangeManager >> changeFactory [
 
 { #category : #private }
 RBRefactoryChangeManager >> clearUndoRedoList [
-	undo := Stack new.
+	undo := NewStack new.
 	redo := OrderedCollection new.
-	undoPointers := Stack new
+	undoPointers := NewStack new
 ]
 
 { #category : #initialization }

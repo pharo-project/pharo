@@ -31,7 +31,7 @@ MCScanner >> next [
 	 for some packages on some platforms, so we implement it using a local stack."
 
 	| stack |
-	stack := Stack with: Stack new.
+	stack := NewStack with: NewStack new.
 	[
 		| c |
 		stream skipSeparators.
@@ -43,7 +43,7 @@ MCScanner >> next [
 		"Any alphanumeric, including an integer, is treated as a Symbol even if not preceeded by a $#"
 		c isAlphaNumeric ifTrue: [ stack top push: self nextSymbol ] ifFalse: [
 		"For an array, start a new level on the stack"
-		c = $( ifTrue: [ stream next. stack push: Stack new ] ifFalse: [
+		c = $( ifTrue: [ stream next. stack push: NewStack new ] ifFalse: [
 		"At the end of an array, so add it to the previous level"
 		c = $) ifTrue: [ | x | stream next. x := stack pop. stack top push: x asArray reverse ] ifFalse: [ 
 		"Unexpected token"
