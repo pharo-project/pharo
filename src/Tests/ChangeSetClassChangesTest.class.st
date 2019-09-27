@@ -70,6 +70,8 @@ ChangeSetClassChangesTest >> tearDown [
 	SystemOrganization removeCategory: #'DeleteMe-1'.
 	SystemOrganization removeCategory: #'DeleteMe-2'.
 	ChangeSet current removeClassChanges: 'JunkClass'.
+	self deleteClass.
+	self deleteRenamedClass.
 	super tearDown
 ]
 

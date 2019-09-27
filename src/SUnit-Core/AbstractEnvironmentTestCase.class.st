@@ -13,7 +13,8 @@ AbstractEnvironmentTestCase >> environmentOfTest [
 ]
 
 { #category : #private }
-AbstractEnvironmentTestCase >> initialize [ 
+AbstractEnvironmentTestCase >> initialize [
+	super initialize.
 	testingEnvironment := Smalltalk globals.
 ]
 
