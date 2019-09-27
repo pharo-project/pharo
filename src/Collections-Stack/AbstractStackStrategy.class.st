@@ -17,7 +17,7 @@ Class {
 { #category : #enumerating }
 AbstractStackStrategy >> do: aBlock [
  	"Evaluate aBlock with each of the receiver's elements as the argument.
- 	 Starts by the element at the top of the Linked list and goes to the deepest element."
+ 	 Starts by the element at the top of the stackt and goes to the deepest element."
 
   	self subclassResponsibility
 ]
