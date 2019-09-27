@@ -25,7 +25,7 @@ ChangeSetClassChangesTest >> deleteClass [
 	cl := testingEnvironment at: className ifAbsent: [ ^ self ].
 	cl
 		removeFromChanges;
-		removeFromSystemUnlogged
+		removeFromSystem
 ]
 
 { #category : #support }
@@ -34,7 +34,7 @@ ChangeSetClassChangesTest >> deleteRenamedClass [
 	cl := testingEnvironment at: renamedName ifAbsent: [ ^ self ].
 	cl
 		removeFromChanges;
-		removeFromSystemUnlogged
+		removeFromSystem
 ]
 
 { #category : #support }
