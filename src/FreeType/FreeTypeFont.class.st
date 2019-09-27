@@ -793,13 +793,12 @@ FreeTypeFont >> simulatedItalicSlant [
 { #category : #'glyph lookup' }
 FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	| |
 	^FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: FreeTypeCacheGlyphLCD + sub
 		ifAbsentPut: [
-			self mutex critical: [ 
+			self mutex criticalReleasingOnError: [ 
 				FreeTypeGlyphRenderer current
 					subGlyphOf: aCharacter 
 					colorValue: aColorValue 
