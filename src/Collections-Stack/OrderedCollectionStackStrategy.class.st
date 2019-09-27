@@ -19,8 +19,8 @@ OrderedCollectionStackStrategy >> do: aBlock [
 
 { #category : #initialization }
 OrderedCollectionStackStrategy >> initialize [
- 	super initialize.
- 	orderedCollection := OrderedCollection new
+	super initialize.
+	self reset
 ]
 
 { #category : #removing }
@@ -32,6 +32,11 @@ OrderedCollectionStackStrategy >> pop [
 OrderedCollectionStackStrategy >> push: newObject [
  	orderedCollection addLast: newObject.
  	^ newObject
+]
+
+{ #category : #initialization }
+OrderedCollectionStackStrategy >> reset [
+	orderedCollection := OrderedCollection new
 ]
 
 { #category : #accessing }

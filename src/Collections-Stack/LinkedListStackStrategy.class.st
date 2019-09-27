@@ -19,8 +19,8 @@ LinkedListStackStrategy >> do: aBlock [
 
 { #category : #initialization }
 LinkedListStackStrategy >> initialize [
- 	super initialize.
- 	linkedList := LinkedList new
+	super initialize.
+	self reset
 ]
 
 { #category : #removing }
@@ -33,6 +33,11 @@ LinkedListStackStrategy >> pop [
 LinkedListStackStrategy >> push: newObject [
  	linkedList addFirst: newObject.
  	^ newObject
+]
+
+{ #category : #initialization }
+LinkedListStackStrategy >> reset [
+	linkedList := LinkedList new
 ]
 
 { #category : #accessing }

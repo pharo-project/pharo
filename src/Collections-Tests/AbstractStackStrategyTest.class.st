@@ -66,6 +66,22 @@ AbstractStackStrategyTest >> testPush [
 ]
 
 { #category : #tests }
+AbstractStackStrategyTest >> testReset [
+	| stack |
+	stack := strategy.
+	
+	stack push: 1.
+	stack push: 2.
+	stack push: 3.
+	
+	self assert: stack size equals: 3.
+	
+	stack reset.
+	
+	self assert: stack size equals: 0
+]
+
+{ #category : #tests }
 AbstractStackStrategyTest >> testSize [
 
   	| aStack |

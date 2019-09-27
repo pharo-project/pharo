@@ -38,6 +38,12 @@ AbstractStackStrategy >> push: newObject [
  	self subclassResponsibility
 ]
 
+{ #category : #initialization }
+AbstractStackStrategy >> reset [
+	"Reset the Stack. Removes all the object it used to contain."
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 AbstractStackStrategy >> size [
 	"Returns the size of the stack."
