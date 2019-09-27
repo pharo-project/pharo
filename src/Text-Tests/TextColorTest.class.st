@@ -7,9 +7,13 @@ Class {
 { #category : #tests }
 TextColorTest >> testColor [
 	| textColor |
-	textColor := TextColor new color: Color red.
+	textColor := TextColor color: Color red.
 	self assert: textColor color equals: Color red.
 	self assert: textColor asColor equals: Color red.
+	
+	textColor  color: Color yellow.
+	self assert: textColor color equals: Color yellow.
+	self assert: textColor asColor equals: Color yellow.
 	
 ]
 
