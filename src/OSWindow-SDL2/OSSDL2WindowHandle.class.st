@@ -55,7 +55,7 @@ OSSDL2WindowHandle >> clipboardText: aText [
 
 { #category : #'event handling' }
 OSSDL2WindowHandle >> convertButtonState: mouseState modState: modState modifiers: modifiers [
-	| shift ctrl alt gui |
+	| shift ctrl alt ralt gui |
 	modifiers buttons button1: (mouseState bitAnd: SDL_BUTTON_LMASK) ~= 0.
 	modifiers buttons button2: (mouseState bitAnd: SDL_BUTTON_MMASK) ~= 0.
 	modifiers buttons button3: (mouseState bitAnd: SDL_BUTTON_RMASK) ~= 0.
@@ -65,11 +65,21 @@ OSSDL2WindowHandle >> convertButtonState: mouseState modState: modState modifier
 	shift := (modState bitAnd: KMOD_SHIFT) ~= 0.
 	ctrl := (modState bitAnd: KMOD_CTRL) ~= 0.
 	alt := (modState bitAnd: KMOD_LALT) ~= 0.
+	ralt := (modState bitAnd: KMOD_RALT) ~= 0.
 	gui := (modState bitAnd: KMOD_GUI) ~= 0.
+    
+	"Several keyboard layouts use AltGr to enter some symbols. In that case,
+	the AltGr does not play role of a modifer and should be ignored. 
+	As (hopefully) tempral solution, let's ignore all the modifiers if the AltGr is
+	pressed (in this case, SDL adds Ctrl modifiers too).
+	See https://github.com/pharo-project/pharo/issues/4745
+	"
+	ralt ifTrue: [ ^ self ].
+    
 	modifiers leftShift: shift; rightShift: shift;
-			   leftCtrl: ctrl; rightCtrl: ctrl;
-			   leftAlt: alt; rightAlt: alt;
-				leftCmd: gui; rightCmd: gui.
+		leftCtrl: ctrl; rightCtrl: ctrl;
+		leftAlt: alt; rightAlt: ralt;
+		leftCmd: gui; rightCmd: gui.
 ]
 
 { #category : #private }
