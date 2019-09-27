@@ -17,7 +17,15 @@ RBGlobalVariableRuleTest >> methodNotUsesGlobal [
 
 { #category : #tests }
 RBGlobalVariableRuleTest >> methodNotUsesGlobal2 [
-	Object new 
+	| x y z a b c |
+	x := '...'.
+	y := 1.9 .
+	z := #(a b c).
+	a := { 1 . 2 . 3 }.
+	b := #a.
+	c := $a.
+	
+	^ x
 ]
 
 { #category : #tests }
@@ -31,6 +39,12 @@ RBGlobalVariableRuleTest >> methodUsesGlobal2 [
 ]
 
 { #category : #tests }
+RBGlobalVariableRuleTest >> testTheRuleCanCheckMethodsWithDifferentKindsOfLiterals [
+	self assert: (RBGlobalVariablesUsage new check: self class>>#methodNotUsesGlobal2)
+		isEmpty  
+]
+
+{ #category : #tests }
 RBGlobalVariableRuleTest >> testTheRuleOnlyDetect2MethodsWithGlobalVariables [
 	self assert: self applyingCritiques size equals: 2
 ]
@@ -38,6 +52,6 @@ RBGlobalVariableRuleTest >> testTheRuleOnlyDetect2MethodsWithGlobalVariables [
 { #category : #tests }
 RBGlobalVariableRuleTest >> testTheRuleOnlyMethodUsesGlobal1And2 [
 	self
-		assert: (self applyingCritiques collect: #selector) asArray
-		equals: {#methodUsesGlobal . #methodUsesGlobal2}
+		assert: (self applyingCritiques collect: #selector) asSet
+		equals: {#methodUsesGlobal . #methodUsesGlobal2} asSet
 ]
