@@ -80,6 +80,11 @@ NewStack >> remove: oldObject ifAbsent: anExceptionBlock [
 	self shouldNotImplement
 ]
 
+{ #category : #removing }
+NewStack >> removeAll [
+	self strategy reset
+]
+
 { #category : #accessing }
 NewStack >> strategy [
 	^ strategy

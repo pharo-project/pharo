@@ -81,6 +81,21 @@ StackTest >> testPush [
 ]
 
 { #category : #tests }
+StackTest >> testRemoveAll [
+	| aStack |
+	aStack := NewStack new.
+	aStack push: 1.
+	aStack push: 2.
+	aStack push: 3.
+	
+	self assert: aStack size equals: 3.
+	
+	aStack removeAll.
+	
+	self assert: aStack isEmpty
+]
+
+{ #category : #tests }
 StackTest >> testSize [
 	
 	| aStack |
