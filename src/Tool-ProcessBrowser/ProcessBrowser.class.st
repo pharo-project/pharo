@@ -809,7 +809,7 @@ ProcessBrowser >> pcRange [
 	the selected context's program counter value."
 	(selectedContext isNil or: [methodText isEmptyOrNil])
 		ifTrue: [^ 1 to: 0].
-	^selectedContext pcRange
+	^selectedContext pcRangeContextIsActive: (stackListIndex = 1)
 ]
 
 { #category : #'process list' }
