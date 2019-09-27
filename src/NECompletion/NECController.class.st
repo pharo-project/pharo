@@ -215,7 +215,9 @@ NECController >> isMenuOpen [
 NECController >> isScripting [
 	
 	"demeters law :("
-	^ self editor textArea editingMode isScripting
+	^ self editor 
+		ifNotNil: [ self editor textArea editingMode isScripting ]
+		ifNil: [ false ]
 ]
 
 { #category : #keyboard }
