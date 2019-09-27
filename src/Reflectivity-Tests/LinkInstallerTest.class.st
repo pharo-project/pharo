@@ -1,5 +1,5 @@
 Class {
-	#name : #LinkInstallerTests,
+	#name : #LinkInstallerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'obj1',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #running }
-LinkInstallerTests >> setUp [
+LinkInstallerTest >> setUp [
 	super setUp.
 	Smalltalk garbageCollectMost.
 	MetaLink uninstallAll.
@@ -23,7 +23,7 @@ LinkInstallerTests >> setUp [
 ]
 
 { #category : #running }
-LinkInstallerTests >> tearDown [
+LinkInstallerTest >> tearDown [
 	ReflectivityExamples2 new removeModifiedMethodWithInstVarAccess.
 	ReflectivityExamples new removeTemporaryMethods.
 	Smalltalk garbageCollectMost.
@@ -33,7 +33,7 @@ LinkInstallerTests >> tearDown [
 ]
 
 { #category : #nodes }
-LinkInstallerTests >> testCallToSuper [
+LinkInstallerTest >> testCallToSuper [
 	| obj link node |
 	obj := ReflectivityExamples2Subclass new.
 	node := (ReflectivityExamples2Subclass  >> #methodWithOverrides) ast.
@@ -45,7 +45,7 @@ LinkInstallerTests >> testCallToSuper [
 ]
 
 { #category : #nodes }
-LinkInstallerTests >> testCallToSuperWithArgs [
+LinkInstallerTest >> testCallToSuperWithArgs [
 	| obj link node |
 	obj := ReflectivityExamples2Subclass new.
 	node := (ReflectivityExamples2Subclass  >> #methodWithOverrides:with:) ast.
@@ -57,7 +57,7 @@ LinkInstallerTests >> testCallToSuperWithArgs [
 ]
 
 { #category : #nodes }
-LinkInstallerTests >> testFindingAnonymousNodes [
+LinkInstallerTest >> testFindingAnonymousNodes [
 	| link varNode instance objectSpecificVarNode |
 	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
 	
@@ -72,7 +72,7 @@ LinkInstallerTests >> testFindingAnonymousNodes [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testLinkOnClassVar [
+LinkInstallerTest >> testLinkOnClassVar [
 	| link|
 	link := MetaLink new.
 	
@@ -99,7 +99,7 @@ LinkInstallerTests >> testLinkOnClassVar [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testLinkOnClassVarForObject [
+LinkInstallerTest >> testLinkOnClassVarForObject [
 	| link obj |
 	self skip.
 	self flag: 'must be fixed'.
@@ -129,7 +129,7 @@ LinkInstallerTests >> testLinkOnClassVarForObject [
 ]
 
 { #category : #nodes }
-LinkInstallerTests >> testLinkOnRBProgramNode [
+LinkInstallerTest >> testLinkOnRBProgramNode [
 	| link varNode instance objectSpecificVarNode |
 	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
 	link := MetaLink new.
@@ -144,7 +144,7 @@ LinkInstallerTests >> testLinkOnRBProgramNode [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testLinkOnTempVar [
+LinkInstallerTest >> testLinkOnTempVar [
 	| methodNode link |
 	methodNode := (ReflectivityExamples2 >> #methodWithTempVarAccess) ast.
 	link := MetaLink new.
@@ -184,7 +184,7 @@ LinkInstallerTests >> testLinkOnTempVar [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testLinkOnTempVarForObject [
+LinkInstallerTest >> testLinkOnTempVarForObject [
 	|  link obj |
 	
 	link := MetaLink new.
@@ -225,7 +225,7 @@ LinkInstallerTests >> testLinkOnTempVarForObject [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testMetaLinkOnOneObject [
+LinkInstallerTest >> testMetaLinkOnOneObject [
 	"Only one metalink for on object of a particular class. Other instances of this class must remain unaffected."
 
 	| metalink |
@@ -253,7 +253,7 @@ LinkInstallerTests >> testMetaLinkOnOneObject [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testMetaLinkWithAnonymousClasses [
+LinkInstallerTest >> testMetaLinkWithAnonymousClasses [
 	| metalink |
 
 	"We just need to link a MetaLink to an object"
@@ -272,7 +272,7 @@ LinkInstallerTests >> testMetaLinkWithAnonymousClasses [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testMethodModified [
+LinkInstallerTest >> testMethodModified [
 	"When modifying a method for which there was an object specific link,
 	all links must be removed"
 
@@ -295,7 +295,7 @@ LinkInstallerTests >> testMethodModified [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testMethodRemoved [
+LinkInstallerTest >> testMethodRemoved [
 	"When removing a method for which there was an object specific link,
 	all links must be removed"
 
@@ -318,7 +318,7 @@ LinkInstallerTests >> testMethodRemoved [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testNodesRemovedFromLinkWhenMethodRemoved [
+LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemoved [
 	"Ensures that when a method is removed and a permalink is present, the nodes are removed from the link as they do not exist anymore"
 	
 	|methodNode link|
@@ -339,7 +339,7 @@ LinkInstallerTests >> testNodesRemovedFromLinkWhenMethodRemoved [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
+LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
 	"Ensures that when a method is removed and a permalink is present, the nodes are removed from the link as they do not exist anymore"
 	
 	|link obj|
@@ -364,7 +364,7 @@ LinkInstallerTests >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testOneMetaLinkClassAndObjects [
+LinkInstallerTest >> testOneMetaLinkClassAndObjects [
 	"Installs a MetaLink on one class. Installs another MetaLink on one instance of this class.
 	- all instances of the class must be affected by the first MetaLink
 	- only one specific instance must be affected by the second MetaLink"
@@ -415,7 +415,7 @@ LinkInstallerTests >> testOneMetaLinkClassAndObjects [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testOneMetaLinkManyObjects [
+LinkInstallerTest >> testOneMetaLinkManyObjects [
 	| counter metalink |
 	counter := 0.
 	metalink := MetaLink new.
@@ -437,7 +437,7 @@ LinkInstallerTests >> testOneMetaLinkManyObjects [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testPermaLinkNotInstalledOnObjectIfExistsInClass [
+LinkInstallerTest >> testPermaLinkNotInstalledOnObjectIfExistsInClass [
 	
 	|link obj|
 	ReflectivityExamples2 new generateNewMethodWithInstVarAccess.
@@ -457,7 +457,7 @@ LinkInstallerTests >> testPermaLinkNotInstalledOnObjectIfExistsInClass [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testPropagateClassScopedLinks [
+LinkInstallerTest >> testPropagateClassScopedLinks [
 	"When class scoped links exist on a node,
 	they must also be added to all anonymous classes with copy of this node and link."
 
@@ -477,7 +477,7 @@ LinkInstallerTests >> testPropagateClassScopedLinks [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testPropagateClassScopedLinksOnMethodNode [
+LinkInstallerTest >> testPropagateClassScopedLinksOnMethodNode [
 	"When class scoped links exist on a method node,
 	they must also be added to all anonymous classes with copy of this node and link."
 
@@ -497,7 +497,7 @@ LinkInstallerTests >> testPropagateClassScopedLinksOnMethodNode [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testPropagateClassScopedLinksRemoval [
+LinkInstallerTest >> testPropagateClassScopedLinksRemoval [
 	"When removing a class scoped link from a node,
 	it must also be removed from all anonymous classes with copy of this node and link."
 
@@ -520,7 +520,7 @@ LinkInstallerTests >> testPropagateClassScopedLinksRemoval [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testPropagateClassScopedLinksRemovalFromMethodNode [
+LinkInstallerTest >> testPropagateClassScopedLinksRemovalFromMethodNode [
 	"When removing a class scoped link from a method node,
 	it must also be removed from all anonymous classes with copy of this node and link."
 
@@ -543,7 +543,7 @@ LinkInstallerTests >> testPropagateClassScopedLinksRemovalFromMethodNode [
 ]
 
 { #category : #nodes }
-LinkInstallerTests >> testPropagateLinksOnRBProgramNode [
+LinkInstallerTest >> testPropagateLinksOnRBProgramNode [
 	| link link2 varNode instance objectSpecificVarNode |
 	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
 	link := MetaLink new.
@@ -563,7 +563,7 @@ LinkInstallerTests >> testPropagateLinksOnRBProgramNode [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testPropagateNewClassScopedLinks [
+LinkInstallerTest >> testPropagateNewClassScopedLinks [
 	"When adding a class scoped link from a node,
 	it must also be added to all anonymous classes with copy of this node and link."
 
@@ -585,7 +585,7 @@ LinkInstallerTests >> testPropagateNewClassScopedLinks [
 ]
 
 { #category : #'links - updating' }
-LinkInstallerTests >> testPropagateNewClassScopedLinksOnMethodNode [
+LinkInstallerTest >> testPropagateNewClassScopedLinksOnMethodNode [
 	"When adding a class scoped link from a node,
 	it must also be added to all anonymous classes with copy of this node and link."
 
@@ -607,7 +607,7 @@ LinkInstallerTests >> testPropagateNewClassScopedLinksOnMethodNode [
 ]
 
 { #category : #'links - removing' }
-LinkInstallerTests >> testRemovingMetaLinkOnOneObject [
+LinkInstallerTest >> testRemovingMetaLinkOnOneObject [
 	"When removing a link from an object, the object looses the behavior brought by the link"
 
 	| metalink |
@@ -631,7 +631,7 @@ LinkInstallerTests >> testRemovingMetaLinkOnOneObject [
 ]
 
 { #category : #'links - removing' }
-LinkInstallerTests >> testRemovingMethodNodes [
+LinkInstallerTest >> testRemovingMethodNodes [
 	| metalink metalink2 node1 node2 |
 
 	metalink := MetaLink new.
@@ -651,7 +651,7 @@ LinkInstallerTests >> testRemovingMethodNodes [
 ]
 
 { #category : #'links - removing' }
-LinkInstallerTests >> testRemovingNodeFromObject [
+LinkInstallerTest >> testRemovingNodeFromObject [
 	| metalink metalink2 |
 	
 	"Two links are put on the object which is migrated to an anon subclass."
@@ -671,7 +671,7 @@ LinkInstallerTests >> testRemovingNodeFromObject [
 ]
 
 { #category : #'links - removing' }
-LinkInstallerTests >> testRemovingNodes [
+LinkInstallerTest >> testRemovingNodes [
 	| metalink metalink2 node1 node2 |
 
 	metalink := MetaLink new.
@@ -691,7 +691,7 @@ LinkInstallerTests >> testRemovingNodes [
 ]
 
 { #category : #'links - removing' }
-LinkInstallerTests >> testRemovingNodesWithSuper [
+LinkInstallerTest >> testRemovingNodesWithSuper [
 	| obj link node |
 	obj := ReflectivityExamples2Subclass new.
 	node := (ReflectivityExamples2Subclass >> #methodWithOverrides) ast.
@@ -703,7 +703,7 @@ LinkInstallerTests >> testRemovingNodesWithSuper [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testSlotOrVarLinksAddedAfterMethodAddition [
+LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAddition [
 	
 	|methodNode link|
 	methodNode := (ReflectivityExamples2 >> #methodWithInstVarAccess) ast.
@@ -725,7 +725,7 @@ LinkInstallerTests >> testSlotOrVarLinksAddedAfterMethodAddition [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testSlotOrVarLinksAddedAfterMethodAdditionForObject [
+LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAdditionForObject [
 	
 	|methodNode link obj|
 
@@ -749,7 +749,7 @@ LinkInstallerTests >> testSlotOrVarLinksAddedAfterMethodAdditionForObject [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testSlotOrVarLinksRemainAfterMethodModification [
+LinkInstallerTest >> testSlotOrVarLinksRemainAfterMethodModification [
 	|methodNode link|
 
 	ReflectivityExamples2 new resetModifiedMethodWithInstVarAccess.
@@ -769,7 +769,7 @@ LinkInstallerTests >> testSlotOrVarLinksRemainAfterMethodModification [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testSlotOrVarLinksRemainAfterMethodModificationForObject [
+LinkInstallerTest >> testSlotOrVarLinksRemainAfterMethodModificationForObject [
 	|methodNode link obj|
 
 	obj := ReflectivityExamples2 new.
@@ -788,7 +788,7 @@ LinkInstallerTests >> testSlotOrVarLinksRemainAfterMethodModificationForObject [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testTwoMetaLinksOneObject [
+LinkInstallerTest >> testTwoMetaLinksOneObject [
 	"Two metalinks for one object of a particular class. Other instances of this class must remain unaffected."
 
 	| metalink metalink2 | 
@@ -829,7 +829,7 @@ LinkInstallerTests >> testTwoMetaLinksOneObject [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testUninstallLink [
+LinkInstallerTest >> testUninstallLink [
 	"A link which is object specific must be removed from every possible node when uninstalled throug the MetaLink uninstall api"
 
 	| metalink node |
@@ -846,7 +846,7 @@ LinkInstallerTests >> testUninstallLink [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testUninstallLinkFromNode [
+LinkInstallerTest >> testUninstallLinkFromNode [
 	"A link which is object specific must be removed from every possible node when uninstalled throug the MetaLink uninstall api"
 
 	| metalink node |
@@ -869,7 +869,7 @@ LinkInstallerTests >> testUninstallLinkFromNode [
 ]
 
 { #category : #permalinks }
-LinkInstallerTests >> testUninstallLinkOnSlotOrVar [
+LinkInstallerTest >> testUninstallLinkOnSlotOrVar [
 	| link linkRegistry |
 	link := MetaLink new.
 	linkRegistry := link linkInstaller linksRegistry.
@@ -892,7 +892,7 @@ LinkInstallerTests >> testUninstallLinkOnSlotOrVar [
 ]
 
 { #category : #'links - installing' }
-LinkInstallerTests >> testUninstallOneMetaLinkManyObjects [
+LinkInstallerTest >> testUninstallOneMetaLinkManyObjects [
 	"Globally uninstalling a link installed on many objects
 		- link should not be active anymore
 		- objects must recover their original classes"

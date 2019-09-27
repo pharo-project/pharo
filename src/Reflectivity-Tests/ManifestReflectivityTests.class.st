@@ -1,5 +1,5 @@
 Class {
 	#name : #ManifestReflectivityTests,
 	#superclass : #PackageManifest,
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Manifest'
 }

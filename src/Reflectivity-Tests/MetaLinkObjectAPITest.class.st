@@ -1,5 +1,5 @@
 Class {
-	#name : #MetaLinkObjectAPITests,
+	#name : #MetaLinkObjectAPITest,
 	#superclass : #TestCase,
 	#instVars : [
 		'tag'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #initialization }
-MetaLinkObjectAPITests >> link [
+MetaLinkObjectAPITest >> link [
 	^ MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
@@ -17,7 +17,7 @@ MetaLinkObjectAPITests >> link [
 ]
 
 { #category : #initialization }
-MetaLinkObjectAPITests >> linkForTemp [
+MetaLinkObjectAPITest >> linkForTemp [
 	| okNode |
 	okNode := RBLiteralValueNode value: 'ok'.
 	^ MetaLink new
@@ -28,25 +28,25 @@ MetaLinkObjectAPITests >> linkForTemp [
 ]
 
 { #category : #running }
-MetaLinkObjectAPITests >> setUp [
+MetaLinkObjectAPITest >> setUp [
 	super setUp.
 	tag := OrderedCollection new.
 	MetaLink uninstallAll 
 ]
 
 { #category : #tagging }
-MetaLinkObjectAPITests >> tagExec: aTag [
+MetaLinkObjectAPITest >> tagExec: aTag [
 	tag add: aTag
 ]
 
 { #category : #running }
-MetaLinkObjectAPITests >> tearDown [
+MetaLinkObjectAPITest >> tearDown [
 	MetaLink uninstallAll.
 	super tearDown.
 ]
 
 { #category : #'class api' }
-MetaLinkObjectAPITests >> testLinkClassToAST [
+MetaLinkObjectAPITest >> testLinkClassToAST [
 	|link instance|	
 	link := self link.
 		
@@ -61,7 +61,7 @@ MetaLinkObjectAPITests >> testLinkClassToAST [
 ]
 
 { #category : #'class api' }
-MetaLinkObjectAPITests >> testLinkClassToClassVarNamed [
+MetaLinkObjectAPITest >> testLinkClassToClassVarNamed [
 	|link instance|	
 	link := self link.
 		
@@ -77,7 +77,7 @@ MetaLinkObjectAPITests >> testLinkClassToClassVarNamed [
 ]
 
 { #category : #'class api' }
-MetaLinkObjectAPITests >> testLinkClassToSlotNamed [
+MetaLinkObjectAPITest >> testLinkClassToSlotNamed [
 
 	|link instance|	
 	link := self link.
@@ -93,7 +93,7 @@ MetaLinkObjectAPITests >> testLinkClassToSlotNamed [
 ]
 
 { #category : #'class api' }
-MetaLinkObjectAPITests >> testLinkClassToTempVarNamed [
+MetaLinkObjectAPITest >> testLinkClassToTempVarNamed [
 	|link instance|	
 	link := self linkForTemp.
 		
@@ -108,7 +108,7 @@ MetaLinkObjectAPITests >> testLinkClassToTempVarNamed [
 ]
 
 { #category : #'object - api' }
-MetaLinkObjectAPITests >> testLinkObjectToAST [
+MetaLinkObjectAPITest >> testLinkObjectToAST [
 	|link instance instance2|	
 	link := self link.	
 
@@ -125,7 +125,7 @@ MetaLinkObjectAPITests >> testLinkObjectToAST [
 ]
 
 { #category : #'object - api' }
-MetaLinkObjectAPITests >> testLinkObjectToClassVarName [
+MetaLinkObjectAPITest >> testLinkObjectToClassVarName [
 	|link instance |	
 	self skip.
 	self flag: 'must be fixed'.
@@ -145,7 +145,7 @@ MetaLinkObjectAPITests >> testLinkObjectToClassVarName [
 ]
 
 { #category : #'object - api' }
-MetaLinkObjectAPITests >> testLinkObjectToSlotNamed [
+MetaLinkObjectAPITest >> testLinkObjectToSlotNamed [
 
 	|link instance |	
 	link := self link.
@@ -163,7 +163,7 @@ MetaLinkObjectAPITests >> testLinkObjectToSlotNamed [
 ]
 
 { #category : #'object - api' }
-MetaLinkObjectAPITests >> testLinkObjectToTempVarName [
+MetaLinkObjectAPITest >> testLinkObjectToTempVarName [
 
 	|link instance |	
 	link := self link.
@@ -181,7 +181,7 @@ MetaLinkObjectAPITests >> testLinkObjectToTempVarName [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToClassVarNameAll [
+MetaLinkObjectAPITest >> testLinkToClassVarNameAll [
 
 	|link instance |	
 	link := self link.
@@ -209,7 +209,7 @@ MetaLinkObjectAPITests >> testLinkToClassVarNameAll [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToClassVarNameReads [
+MetaLinkObjectAPITest >> testLinkToClassVarNameReads [
 
 	|link instance |	
 	link := self link.
@@ -237,7 +237,7 @@ MetaLinkObjectAPITests >> testLinkToClassVarNameReads [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToClassVarNameWrites [
+MetaLinkObjectAPITest >> testLinkToClassVarNameWrites [
 	|link instance |	
 	link := self link.
 	
@@ -264,7 +264,7 @@ MetaLinkObjectAPITests >> testLinkToClassVarNameWrites [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToSlotNamedAll [
+MetaLinkObjectAPITest >> testLinkToSlotNamedAll [
 
 	|link instance |	
 	link := self link.	
@@ -292,7 +292,7 @@ MetaLinkObjectAPITests >> testLinkToSlotNamedAll [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToSlotNamedReads [
+MetaLinkObjectAPITest >> testLinkToSlotNamedReads [
 
 	|link instance |	
 	link := self link.	
@@ -320,7 +320,7 @@ MetaLinkObjectAPITests >> testLinkToSlotNamedReads [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToSlotNamedWrites [
+MetaLinkObjectAPITest >> testLinkToSlotNamedWrites [
 	|link instance |	
 	link := self link.	
 	instance := ReflectivityExamples2 new.	
@@ -347,7 +347,7 @@ MetaLinkObjectAPITests >> testLinkToSlotNamedWrites [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToTempVarNameAll [
+MetaLinkObjectAPITest >> testLinkToTempVarNameAll [
 
 	|link instance |	
 	link := self link.	
@@ -375,7 +375,7 @@ MetaLinkObjectAPITests >> testLinkToTempVarNameAll [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToTempVarNameReads [
+MetaLinkObjectAPITest >> testLinkToTempVarNameReads [
 	|link instance |	
 	link := self link.	
 	instance := ReflectivityExamples2 new.	
@@ -402,7 +402,7 @@ MetaLinkObjectAPITests >> testLinkToTempVarNameReads [
 ]
 
 { #category : #'common api' }
-MetaLinkObjectAPITests >> testLinkToTempVarNameWrites [
+MetaLinkObjectAPITest >> testLinkToTempVarNameWrites [
 	|link instance |	
 	link := self link.	
 	instance := ReflectivityExamples2 new.	

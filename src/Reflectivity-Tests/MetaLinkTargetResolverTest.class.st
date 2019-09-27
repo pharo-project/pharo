@@ -2,13 +2,13 @@
 Note that for API with options the same methods are called for objects and classes, so the test is made only once.
 "
 Class {
-	#name : #MetaLinkTargetResolverTests,
+	#name : #MetaLinkTargetResolverTest,
 	#superclass : #TestCase,
 	#category : #'Reflectivity-Tests'
 }
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindClassVariable [
+MetaLinkTargetResolverTest >> testFindClassVariable [
 	| classVar |
 	classVar := ReflectivityExamples classVariableNamed: 'singleton'.
 	self assert: (MetalinkTargetResolver classVariableNamed: 'singleton' for: ReflectivityExamples) == classVar.
@@ -16,7 +16,7 @@ MetaLinkTargetResolverTests >> testFindClassVariable [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindClassVariableWithOptions [
+MetaLinkTargetResolverTest >> testFindClassVariableWithOptions [
 	| classVar readNodes writeNodes |
 	classVar := ReflectivityExamples classVariableNamed: 'singleton'.
 	readNodes := classVar readNodes asIdentitySet.
@@ -30,7 +30,7 @@ MetaLinkTargetResolverTests >> testFindClassVariableWithOptions [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindMethod [
+MetaLinkTargetResolverTest >> testFindMethod [
 	| ast  |
 	ast := (ReflectivityExamples >> #exampleMethod) ast.
 	self assert: (MetalinkTargetResolver methodNamed: #exampleMethod for: ReflectivityExamples) == ast.
@@ -38,7 +38,7 @@ MetaLinkTargetResolverTests >> testFindMethod [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindSlot [
+MetaLinkTargetResolverTest >> testFindSlot [
 	| slot |
 	slot := ReflectivityExamples slotNamed: 'tag'.
 	self assert: (MetalinkTargetResolver slotNamed: 'tag' for: ReflectivityExamples) == slot.
@@ -46,7 +46,7 @@ MetaLinkTargetResolverTests >> testFindSlot [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindSlotWithOptions [
+MetaLinkTargetResolverTest >> testFindSlotWithOptions [
 	| slot readNodes writeNodes |
 	slot := ReflectivityExamples slotNamed: 'tag'.
 	readNodes := slot readNodes asIdentitySet.
@@ -60,7 +60,7 @@ MetaLinkTargetResolverTests >> testFindSlotWithOptions [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindTemporaryVariable [
+MetaLinkTargetResolverTest >> testFindTemporaryVariable [
 	| temp |
 	temp := (ReflectivityExamples >> #exampleIfTrueIfFalse) temporaryVariableNamed: #t.	
 	self assert: (MetalinkTargetResolver temporaryNamed: #t inMethod: #exampleIfTrueIfFalse for: ReflectivityExamples) = temp.
@@ -68,7 +68,7 @@ MetaLinkTargetResolverTests >> testFindTemporaryVariable [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testFindTemporaryVariableWithOptions [
+MetaLinkTargetResolverTest >> testFindTemporaryVariableWithOptions [
 	| temp readNodes writeNodes |
 	temp := ReflectivityExamples >> #exampleIfTrueIfFalse temporaryVariableNamed: #t.
 	readNodes := temp readNodes asIdentitySet.
@@ -97,7 +97,7 @@ MetaLinkTargetResolverTests >> testFindTemporaryVariableWithOptions [
 ]
 
 { #category : #tests }
-MetaLinkTargetResolverTests >> testRecoverClassFromEntity [
+MetaLinkTargetResolverTest >> testRecoverClassFromEntity [
 	self assert: (MetalinkTargetResolver classFor: ReflectivityExamples new) == ReflectivityExamples.
 	self assert: (MetalinkTargetResolver classFor: ReflectivityExamples) == ReflectivityExamples
 ]
