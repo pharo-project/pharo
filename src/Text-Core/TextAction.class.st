@@ -1,5 +1,28 @@
 "
-A sepcific text attribute to run actions on a text
+I attach a bloc of code to a portion of text. The bloc is executed when the user clic on this portion of text.
+
+---- exemple 1 -----
+| stream |
+stream := TextStream on: (Text new: 100).
+stream 
+	nextPutAll:  'Start a ';
+	withAttributes: {TextEmphasis underlined. TextAction new actOnClickBlock: [Smalltalk tools browser open ]}
+	do: [ stream nextPutAll: 'browser' ].
+TextMorph new 
+	newContents: stream contents;
+	openInWindow .
+---- exemple 2 -----
+| stream |
+stream := TextStream on: (Text new: 100).
+stream 
+	withAttributes: {TextAction new actOnClickBlock: [:attr :event :textMorph :parag :editor | 		
+		textMorph owner color: Color white.
+		parag rightFlush.
+		editor flash]}
+	do: [ stream nextPutAll: 'Change me' ].
+TextMorph new 
+	newContents: stream contents;
+	openInWindow .
 "
 Class {
 	#name : #TextAction,
@@ -31,7 +54,6 @@ TextAction class >> initialize [
 { #category : #evaluating }
 TextAction >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 	"sent when a user clicks on a piece of text to which I am applied in an editor"
-
 	"may be self is included in the event or an Object. "
 	^ actOnClickBlock valueWithEnoughArguments: (Array with: self with: anEvent with: anObject with: paragraph with: editor)
 ]
