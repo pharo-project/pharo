@@ -23,7 +23,7 @@ TextAlignmentTest >> testAlignment [
 	self assert: TextAlignment rightFlush alignment equals: TextConstants RightFlush. 
 	self assert: TextAlignment centered alignment equals: TextConstants Centered . 
 	self assert: TextAlignment justified  alignment equals: TextConstants Justified . 
-	
+	"We can change alignment"
 	attribute := TextAlignment leftFlush.
 	attribute alignment: TextConstants RightFlush.
 	self assert: attribute alignment equals: TextConstants RightFlush 

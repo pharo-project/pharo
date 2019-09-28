@@ -55,6 +55,27 @@ TextEmphasisTest >> testDominates [
 ]
 
 { #category : #tests }
+TextEmphasisTest >> testEmphasisCode [
+	| attr |
+	"test each emphasis code value"
+	self assert: TextEmphasis normal emphasisCode equals: 0.
+	self assert: TextEmphasis bold emphasisCode equals: 1.
+	self assert: TextEmphasis italic emphasisCode equals: 2.
+	self assert: TextEmphasis underlined emphasisCode equals: 4.
+	self assert: TextEmphasis narrow emphasisCode equals: 8.
+	self assert: TextEmphasis struckOut emphasisCode equals: 16.
+	"Turn bold to underlined"
+	attr := TextEmphasis bold emphasisCode: 4.
+	self assert: attr equals: 4.
+	"We can add the emphasisCode"
+	attr := TextEmphasis new emphasisCode: 
+		TextEmphasis italic emphasisCode 
+		+ TextEmphasis bold emphasisCode 
+		+ TextEmphasis struckOut  emphasisCode.
+	self assert: attr emphasisCode equals: 2r10011
+]
+
+{ #category : #tests }
 TextEmphasisTest >> testFromCode [
 	| t1 |
 	t1 := TextEmphasis fromCode: 2r10101.
@@ -68,4 +89,19 @@ TextEmphasisTest >> testRemove [
 	t1 add: TextEmphasis italic.
 	t1 remove: TextEmphasis bold.
 	self assert: t1 = TextEmphasis italic description: 'Removing bold didn''t leave italics'
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testSet [
+	"Not set with normal emphasis..."
+	self deny: TextEmphasis normal set.
+	"...but set for the other emphasis"
+	#(#bold #italic #underlined #narrow #struckOut) do: [ :anEmphasis |
+		self assert: (TextEmphasis perform: anEmphasis) set].
+	"and can be turned off"
+	#(#bold #italic #underlined #narrow #struckOut) do: [ :anEmphasis |
+		| attr |
+		attr := TextEmphasis perform: anEmphasis.
+		attr turnOff.
+		self deny: attr set].
 ]

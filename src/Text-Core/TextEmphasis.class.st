@@ -87,7 +87,7 @@ TextEmphasis >> dominates: other [
 		and: [emphasisCode = other emphasisCode]
 ]
 
-{ #category : #styling }
+{ #category : #accessing }
 TextEmphasis >> emphasisCode [
 	^ emphasisCode
 ]
@@ -128,7 +128,7 @@ TextEmphasis >> turnOff [
 	setMode := false
 ]
 
-{ #category : #styling }
+{ #category : #accessing }
 TextEmphasis >> value [
 	"a synonym for empahasisCode, to make me polymorphic with Numbers"
 	
