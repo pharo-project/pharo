@@ -3,11 +3,8 @@ I command to launch the Abstract refactorings: create accessors and abstract the
 "
 Class {
 	#name : #SycAbstractAllInstVarAccessorsCommand,
-	#superclass : #CmdCommand,
-	#instVars : [
-		'variable'
-	],
-	#category : #'SystemCommands-VariableCommands'
+	#superclass : #SycClassCommand,
+	#category : #'SystemCommands-ClassCommands'
 }
 
 { #category : #activation }
@@ -21,7 +18,7 @@ SycAbstractAllInstVarAccessorsCommand class >> browserShortcutActivation [
 SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 	
-	^CmdContextMenuActivation byRootGroupItemFor: ClyVariableContextOfFullBrowser 
+	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyClassContextOfFullBrowser 
 ]
 
 { #category : #activation }
@@ -33,9 +30,12 @@ SycAbstractAllInstVarAccessorsCommand class >> sourceCodeMenuActivation [
 
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
-	^ {RBAbstractInstanceVariableRefactoring 
-		variable: variable actualVariable name
-		class: variable definingClass}
+
+	| refactorings |
+	refactorings := classes flatCollect: [:eachClass |
+		eachClass	 slots collect: [:var | 
+			var createRefactoring: RBAbstractInstanceVariableRefactoring for: eachClass]].
+	^ refactorings
 ]
 
 { #category : #accessing }
@@ -56,11 +56,12 @@ SycAbstractAllInstVarAccessorsCommand >> execute [
 
 { #category : #testing }
 SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [
-	^ true
+	^true
 ]
 
 { #category : #testing }
 SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
-	variable := aToolContext lastSelectedVariable.
+	
+	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
 ]
