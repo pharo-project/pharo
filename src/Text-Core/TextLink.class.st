@@ -94,8 +94,7 @@ TextLink >> validate: specString [
 
 	| list first mid last |
 	list := specString findTokens: ' 	.|'.
-	list isEmpty
-		ifTrue: [ ^ nil ].
+	list ifEmpty: [ ^ nil ].
 	last := list last.
 	last first isUppercase
 		ifTrue: [ 

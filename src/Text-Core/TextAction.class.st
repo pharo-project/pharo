@@ -89,27 +89,24 @@ Click Here<3+4>
 	(b1 < b2) & (b1 > 0) ifFalse: ["only one part"
 		param := self validate: aString.
 		param ifNil: [ ^{ nil. nil } ].
-		^ Array with: param with: (param size = 0 ifTrue: [nil] ifFalse: [param])].
+		^ Array with: param with: (param ifEmpty: [nil] ifNotEmpty: [param])].
 	"Two parts"
 	trim := aString trimBoth.
 	(trim at: 1) == $< 
 		ifTrue: [(trim last) == $>
 			ifTrue: ["only instructions" 
 				param := self validate: (aString copyFrom: b1+1 to: b2-1).
-				show := param size = 0 ifTrue: [nil] ifFalse: [param]]
+				show := param ifEmpty: [nil] ifNotEmpty: [param]]
 			ifFalse: ["at the front"
 				param := self validate: (aString copyFrom: b1+1 to: b2-1).
-				show := param size = 0 ifTrue: [nil] 
-						ifFalse: [aString copyFrom: b2+1 to: aString size]]]
+				show := param ifEmpty: [nil] ifNotEmpty: [aString copyFrom: b2+1 to: aString size]]]
 		ifFalse: [(trim last) == $>
 			ifTrue: ["at the end"
 				param := self validate: (aString copyFrom: b1+1 to: b2-1).
-				show := param size = 0 ifTrue: [nil] 
-						ifFalse: [aString copyFrom: 1 to: b1-1]]
+				show := param ifEmpty: [nil] ifNotEmpty: [aString copyFrom: 1 to: b1-1]]
 			ifFalse: ["Illegal -- <> has text on both sides"
 				show := nil]].
 	^ Array with: param with: show
-
 ]
 
 { #category : #testing }

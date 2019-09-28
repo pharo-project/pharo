@@ -561,15 +561,12 @@ EpLogBrowserPresenter >> initializeWidgets [
 	itemsPresenter := self newList.
 	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
 	entryContentPresenter := self newDiff.
-
 	itemsPresenter
 		beMultipleSelection;
-		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
+		display: [ :entryReference | self morphForItemAt: entryReference ];
 		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
 		contextMenu: [ self menuMorphForSelectedItems ].
-
 	toolbarPresenter logBrowserPresenter: self.
-
 	entryContentPresenter showOptions: false
 ]
 
