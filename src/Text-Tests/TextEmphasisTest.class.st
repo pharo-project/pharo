@@ -27,6 +27,17 @@ TextEmphasisTest >> testAdd [
 ]
 
 { #category : #tests }
+TextEmphasisTest >> testBold [
+	self assert: TextEmphasis bold equals: 1.
+
+]
+
+{ #category : #test }
+TextEmphasisTest >> testDominatedByCmd0 [
+	self assert: TextEmphasis new dominatedByCmd0
+]
+
+{ #category : #tests }
 TextEmphasisTest >> testDominates [
 	| text attr |
 	"self domination"
@@ -83,6 +94,24 @@ TextEmphasisTest >> testFromCode [
 ]
 
 { #category : #tests }
+TextEmphasisTest >> testItalic [
+	self assert: TextEmphasis italic equals: 2
+
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testNarrow [
+	self assert: TextEmphasis narrow  equals: 8
+
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testNormal [
+	self assert: TextEmphasis normal equals: 0
+
+]
+
+{ #category : #tests }
 TextEmphasisTest >> testRemove [
 	| t1  |
 	t1 := TextEmphasis bold.
@@ -104,4 +133,37 @@ TextEmphasisTest >> testSet [
 		attr := TextEmphasis perform: anEmphasis.
 		attr turnOff.
 		self deny: attr set].
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testStruckOut [
+	self assert: TextEmphasis struckOut equals: 16
+
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testUnderlined [
+	self assert: TextEmphasis underlined equals: 4
+
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testValue [
+	| attr |
+	"asking for the value return the emphasis code"
+	self assert: TextEmphasis normal value equals: 0.
+	self assert: TextEmphasis bold value equals: 1.
+	self assert: TextEmphasis italic value equals: 2.
+	self assert: TextEmphasis underlined value equals: 4.
+	self assert: TextEmphasis narrow value equals: 8.
+	self assert: TextEmphasis struckOut value equals: 16.
+
+	"We can add the emphasisCode, value should respond accordingly"
+	attr := TextEmphasis new emphasisCode: 
+		TextEmphasis italic emphasisCode 
+		+ TextEmphasis bold emphasisCode 
+		+ TextEmphasis struckOut  emphasisCode.
+	self assert: attr value equals: 2r10011.
+	"equality is based on the value"
+	self assert: attr equals: 2r10011
 ]

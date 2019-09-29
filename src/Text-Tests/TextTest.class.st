@@ -4,7 +4,7 @@ A TextTest is a test class for testing the behavior of Text
 Class {
 	#name : #TextTest,
 	#superclass : #TestCase,
-	#category : #'Text-Tests'
+	#category : #'Text-Tests-Base'
 }
 
 { #category : #tests }
