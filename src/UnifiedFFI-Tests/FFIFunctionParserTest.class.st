@@ -184,7 +184,7 @@ FFIFunctionParserTest >> testParseFunction [
 
 { #category : #tests }
 FFIFunctionParserTest >> testParseFunction2 [
-	#((int * * #'function_n$a$m$e' ( 0, nil, -10," FOO_BAR , "int a, int* _b, char** c, void* * * d_))
+	#((int * * #'function_n$a$m$e' ( self, 0, nil, -10," FOO_BAR , "int a, int* _b, char** c, void* * * d_))
 	 " ' int * * function_n$a$m$e (0, nil, -10, FOO_BAR , int a, int* _b, char** c, void* * * d_ )'" ) 
 	do: [:spec | | functionSpec1 functionSpec2 method1 method2 builder |
 		functionSpec1 := self newParser parseNamedFunction: spec.

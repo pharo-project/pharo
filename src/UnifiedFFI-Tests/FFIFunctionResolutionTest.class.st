@@ -180,10 +180,10 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 ]
 
 { #category : #tests }
-FFIFunctionResolutionTest >> testResolveConstantSelfShouldSetConstantSelfLoader [
+FFIFunctionResolutionTest >> testResolveConstantSelfOfExternalObjectShouldSetConstantFirstInstanceVariableLoader [
 
 	| argument receiver context resolver |
-	argument := FFIValueArgument new
+	argument := FFIConstantArgument new
 		value: 'self';
 		yourself.
 		
@@ -201,7 +201,31 @@ FFIFunctionResolutionTest >> testResolveConstantSelfShouldSetConstantSelfLoader 
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 
-	self assert: stack pop equals: #(#self).
+	self assert: stack pop equals: #(#ivar 1).
+]
+
+{ #category : #tests }
+FFIFunctionResolutionTest >> testResolveConstantSelfShouldResolveToExternalObjectType [
+
+	| argument receiver context resolver |
+	argument := FFIConstantArgument new
+		value: 'self';
+		yourself.
+		
+	receiver := FFIExternalObjectForTest new.
+	context := Context
+		sender: nil
+		receiver: receiver
+		method: FFIExternalObjectForTest>>#testMethod
+		arguments: #().
+		
+	resolver := FFICallout new
+		sender: context;
+		yourself.
+	
+	argument resolveUsing: resolver.
+
+	self assert: argument resolvedType equals: (receiver class asExternalTypeOn: nil)
 ]
 
 { #category : #tests }

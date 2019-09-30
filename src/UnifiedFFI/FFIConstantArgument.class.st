@@ -75,8 +75,8 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		^ self ].
 	value = 'self' ifTrue: [
-		resolution := FFISelfArgument new.
-		resolvedType := type resolveUsing: aResolver forArgument: self.
+		resolution := resolvedType := type resolveUsing: aResolver forArgument: self.
+		resolution loader: FFISelfArgument new.
 		^ self ].
 	resolution := FFIConst value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.

@@ -1,6 +1,6 @@
 Class {
 	#name : #FFITestObject,
-	#superclass : #Object,
+	#superclass : #FFIExternalObject,
 	#instVars : [
 		'a',
 		'c'
