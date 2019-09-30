@@ -42,6 +42,15 @@ FFIFunctionParser >> integerConstantArgument: aValue [
 		yourself
 ]
 
+{ #category : #'requestor callbacks' }
+FFIFunctionParser >> integerConstantArgument: anInteger type: aTypeName [
+
+	^ FFIConstantArgument new
+		value: anInteger;
+		type: (FFITypeDeclaration typeName: aTypeName arity: 0);
+		yourself
+]
+
 { #category : #accessing }
 FFIFunctionParser >> parseAnonymousFunction: aFunctionDefinition [
 	"Parse a function definition in a form of: 
@@ -297,6 +306,12 @@ FFIFunctionParser >> requestor: aRequestor [
 { #category : #'requestor callbacks' }
 FFIFunctionParser >> returnType: aType [
 	^ FFITypeDeclaration typeName: aType first arity: aType second
+]
+
+{ #category : #accessing }
+FFIFunctionParser >> setOn: aStreamSource [
+
+	stream := aStreamSource readStream.
 ]
 
 { #category : #accessing }

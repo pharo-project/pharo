@@ -118,17 +118,22 @@ FFICallout >> aliasForType: aTypeName [
 ]
 
 { #category : #'spec parsing' }
-FFICallout >> argName: argName indirectIndex: anIndex type: typeName ptrArity: ptrArity [
-	| type |
+FFICallout >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: arity [
 
 	argName ifNil: [ 
 		"allow nil,true,false as untyped arguments"
-		^ self directArgName: typeName ptrArity: ptrArity ].
+		arity > 0 ifTrue: [ self error: 'missing argument name' ].
+		^ FFIConstantArgument new
+			value: aTypeName;
+			resolveUsing: self;
+			yourself ].
 
-	type := self typeName: typeName pointerArity: ptrArity.
-	type loader: (self loaderForArgNamed: argName indirectIndex: anIndex).
-	
-	^ type
+	^ (FFIVariableArgument
+		name: argName
+		typeName: aTypeName
+		arity: arity)
+		resolveUsing: self;
+		yourself
 ]
 
 { #category : #accessing }
@@ -137,30 +142,6 @@ FFICallout >> callType: aCallType [
 	aCallType == #stdcall ifTrue: [ ^ self stdcall ].
 	
 	self error: 'unknown call type'
-]
-
-{ #category : #private }
-FFICallout >> directArgName: typeName ptrArity: ptrArity [
-	"Answer 'direct' type arguments (without argument names): 
-		self, nil,true, false or a constant (like a number)"
-
-	(typeName = 'NULL' or: [ typeName = 'nil' ])
-		ifTrue: [ 
-			^ (self resolveType: #'void *')
-				loader: (self valueArgumentLoader: ExternalAddress null);
-				yourself ].
-	typeName = 'false'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveType: #bool) ].
-	typeName = 'true'
-		ifTrue: [ ^ FFIConst value: 1 type: (self resolveType: #bool) ].
-	ptrArity > 0
-		ifTrue: [ self error: 'missing argument name' ].	"lone self"
-	typeName = 'self'
-		ifTrue: [ 
-			^ (requestor asExternalTypeOn: self) 
-				prepareAsSelfFromCalloutDeclaration;
-				loader: self receiverArgumentLoader ].
-	^ self resolveType: typeName
 ]
 
 { #category : #accessing }
@@ -184,19 +165,20 @@ FFICallout >> initialize [
 { #category : #private }
 FFICallout >> integerConstantArgument: anInteger [
 
-	^ FFIConst 
-		value: anInteger
-		type: (anInteger >=0 
-			ifTrue: [ self resolveType: #uint32 ]
-			ifFalse: [ self resolveType: #int32 ])
+	^ FFIConstantArgument new
+		value: anInteger;
+		resolveUsing: self;
+		yourself
 ]
 
 { #category : #private }
-FFICallout >> integerConstantArgument: anInteger type: aType [
+FFICallout >> integerConstantArgument: anInteger type: aTypeName [
 
-	^ FFIConst 
-		value: anInteger
-		type: (self resolveType: aType)
+	^ FFIConstantArgument new
+		value: anInteger;
+		type: (FFITypeDeclaration typeName: aTypeName arity: 0);
+		resolveUsing: self;
+		yourself
 ]
 
 { #category : #'argument loaders' }
@@ -384,7 +366,7 @@ FFICallout >> resolveType: aTypeName [
 	binding ifNotNil: [ 
 		^ (binding value asExternalTypeOn: self) pointerArity: ptrArity ].
 
-	^ self error: 'Unable to resolve external type: ' , aTypeName
+	^ self error: 'Unable to resolve external type: ' , aTypeName asString
 ]
 
 { #category : #'spec parsing' }
@@ -418,12 +400,4 @@ FFICallout >> sender: aSenderContext [
 { #category : #private }
 FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
-]
-
-{ #category : #private }
-FFICallout >> valueArgumentLoader: anObject [
-
-	^ FFIValueArgument new
-		value: anObject;
-		yourself
 ]

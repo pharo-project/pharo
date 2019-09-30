@@ -2,10 +2,7 @@ Class {
 	#name : #FFIVariableArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
-		'name',
-		'type',
-		'loader',
-		'resolvedType'
+		'name'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -31,26 +28,6 @@ FFIVariableArgument >> emitArgument: anIRBuilder context: aContext [
 	self resolvedType emitArgument: anIRBuilder context: aContext.
 ]
 
-{ #category : #'emitting code' }
-FFIVariableArgument >> emitReturnArgument: anIRBuilder context: aContext [ 
-	
-	loader
-		emitPointerArityUnpack: anIRBuilder 
-		type: self resolvedType
-		context: aContext
-]
-
-{ #category : #accessing }
-FFIVariableArgument >> externalTypeWithArity [
-	
-	^ resolvedType externalTypeWithArity
-]
-
-{ #category : #accessing }
-FFIVariableArgument >> loader [
-	^ loader
-]
-
 { #category : #accessing }
 FFIVariableArgument >> name [
 	^ name
@@ -67,20 +44,4 @@ FFIVariableArgument >> resolveUsing: aResolver [
 	loader := aResolver loaderForArgNamed: name indirectIndex: nil.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
 	resolvedType loader: loader.
-]
-
-{ #category : #accessing }
-FFIVariableArgument >> resolvedType [
-	
-	^ resolvedType
-]
-
-{ #category : #accessing }
-FFIVariableArgument >> type [
-	^ type
-]
-
-{ #category : #accessing }
-FFIVariableArgument >> type: anObject [
-	type := anObject
 ]

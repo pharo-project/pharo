@@ -2,10 +2,7 @@ Class {
 	#name : #FFIConstantArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
-		'value',
-		'resolution',
-		'type',
-		'resolvedType'
+		'value'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -13,7 +10,13 @@ Class {
 { #category : #converting }
 FFIConstantArgument >> asOldArraySpec [
 
-	^ { nil . nil . value . 0 }
+	^ {
+		nil .
+		nil .
+		value isNumber
+			ifTrue: [ value ]
+			ifFalse: [ value asString ] .
+		0 }
 ]
 
 { #category : #'emitting code' }
@@ -34,29 +37,11 @@ FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aCont
 	self shouldNotImplement
 ]
 
-{ #category : #'emitting code' }
-FFIConstantArgument >> emitReturnArgument: anIRBuilder context: aContext [
-
-	"Nothing to do here"
-]
-
-{ #category : #accessing }
-FFIConstantArgument >> externalTypeWithArity [
-	
-	^ self resolvedType externalTypeWithArity
-]
-
 { #category : #resolving }
 FFIConstantArgument >> initialize [
 
 	super initialize.
 	type := FFIUndefinedTypeDeclaration new.
-]
-
-{ #category : #accessing }
-FFIConstantArgument >> loader [
-	
-	^ resolution
 ]
 
 { #category : #resolving }
@@ -80,29 +65,6 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		^ self ].
 	resolution := FFIConst value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
-]
-
-{ #category : #accessing }
-FFIConstantArgument >> resolvedType [
-	
-	^ resolvedType
-]
-
-{ #category : #accessing }
-FFIConstantArgument >> resolvedValue [
-	self shouldBeImplemented.
-]
-
-{ #category : #private }
-FFIConstantArgument >> rolledPointerTempName [
-
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
-FFIConstantArgument >> type [
-	
-	^ type
 ]
 
 { #category : #accessing }

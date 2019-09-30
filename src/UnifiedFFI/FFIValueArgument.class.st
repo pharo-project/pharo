@@ -1,6 +1,6 @@
 Class {
 	#name : #FFIValueArgument,
-	#superclass : #FFIFunctionArgument,
+	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
 		'value',
 		'resolution',

@@ -255,7 +255,7 @@ FFICalloutAPITest >> testCharPointer [
 FFICalloutAPITest >> testDoubleCall [
 	"Test using generic FFI spec"
 	| callback result |
-	
+	self error: 'bad?'.
 	callback := FFICallback 
 		signature: #(double (double x)) 
 		block: [ :x | x abs ].
@@ -279,7 +279,7 @@ FFICalloutAPITest >> testDoubleCall [
 FFICalloutAPITest >> testFloatCall [
 	"Test using generic FFI spec"
 	| callback result |
-	
+	self error: 'bad?'.
 	callback := FFICallback 
 		signature: #(float (float x)) 
 		block: [ :x | x abs ].

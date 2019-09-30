@@ -14,8 +14,8 @@ Class {
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg [ 
 
-	self assert: type class equals: typeClass.
-	self assert: type pointerArity equals: ptrArity.
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType pointerArity equals: ptrArity.
 	self assert: type loader class equals: FFIMethodArgument.
 	self assert: type loader argName equals: arg 
 ]
@@ -23,23 +23,23 @@ FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass arity: ptrArity value: anObject [ 
 
-	self assert: type class equals: typeClass.
-	self assert: type pointerArity equals: ptrArity.
-	self assert: type loader class equals: FFIValueArgument.
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType pointerArity equals: ptrArity.
+	self assert: type loader class equals: FFIConst.
 	self assert: type loader value equals: anObject 
 ]
 
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass value: const [
-	self assert: type class equals: typeClass.
-	self assert: type value equals: const
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType value equals: const
 ]
 
 { #category : #private }
 FFICalloutTest >> checkTypeSelf: type class: typeClass arity: ptrArity [ 
 
-	self assert: type class equals: typeClass.
-	self assert: type pointerArity equals: ptrArity.
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType pointerArity equals: ptrArity.
 	self assert: type loader class equals: FFISelfArgument.
 ]
 
@@ -75,12 +75,12 @@ FFICalloutTest >> testBuildingFnSpec [
 "void**arg2"		self checkType: s next class: FFIVoid arity: 2 argument: 'arg2'.
 "TYPEVAR arg1"	self checkType: s next class: FFILong arity: 0 argument: 'arg1'.
 "char arg3"		self checkType: s next class: FFICharacterType arity: 0 argument: 'arg3'.
-"0"					self checkType: s next class: FFIConst value: 0.
-"(ulong)42"		self checkType: s next class: FFIConst value: 42.
+"0"					self checkType: s next class: FFIUInt32 value: 0.
+"(ulong)42"		self checkType: s next class: FFIULong value: 42.
 "nil"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
 "NULL"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
-"true"				self checkType: s next class: FFIConst value: 1.
-"false"			self checkType: s next class: FFIConst value: 0.
+"true"				self checkType: s next class: FFIBool value: 1.
+"false"			self checkType: s next class: FFIBool value: 0.
 "CLASSVAR"		self checkType: s next class: FFIConst value: 100.
 "ExternalAddress"	self checkType: s next class: FFIOop arity: 0 argument: 'arg11'.
 "ByteArray" 			self checkType: s next class: FFIOop arity: 0 argument: 'arg12'.

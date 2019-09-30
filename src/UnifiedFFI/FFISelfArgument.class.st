@@ -11,7 +11,7 @@ To be able to pass an object as ""self "" it need to accomplish one of this cond
 "
 Class {
 	#name : #FFISelfArgument,
-	#superclass : #FFIFunctionArgument,
+	#superclass : #FFIFunctionArgumentLoader,
 	#category : #'UnifiedFFI-Arguments'
 }
 

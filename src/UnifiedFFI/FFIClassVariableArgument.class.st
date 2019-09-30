@@ -1,6 +1,6 @@
 Class {
 	#name : #FFIClassVariableArgument,
-	#superclass : #FFIFunctionArgument,
+	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
 		'argName'
 	],

@@ -44,8 +44,8 @@ FFIOpaqueObjectTest >> testParseAsBigArityPointer [
 	
 	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject **arg ) ). 
 	arg := fnSpec arguments first.
-	self assert: arg class equals: FFIOpaqueObjectType.
-	self assert: arg pointerArity equals: 2.
+	self assert: arg resolvedType class equals: FFIOpaqueObjectType.
+	self assert: arg resolvedType pointerArity equals: 2.
 	
 	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject **function ( ) ). 
 	returnType := fnSpec returnType.
@@ -59,8 +59,8 @@ FFIOpaqueObjectTest >> testParseAsPointer [
 	
 	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject *arg ) ). 
 	arg := fnSpec arguments first.
-	self assert: arg class equals: FFIOpaqueObjectType.
-	self assert: arg pointerArity equals: 1.
+	self assert: arg resolvedType class equals: FFIOpaqueObjectType.
+	self assert: arg resolvedType pointerArity equals: 1.
 	
 	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject *function ( ) ). 
 	returnType := fnSpec returnType.

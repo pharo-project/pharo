@@ -13,8 +13,10 @@ FFIUndefinedTypeDeclaration >> isUndefined [
 { #category : #resolution }
 FFIUndefinedTypeDeclaration >> resolveUsing: aResolver forArgument: aFFIValueArgument [ 
 	
-	(aFFIValueArgument value = 'nil' or: [ aFFIValueArgument value = 'NULL' ])
-		ifTrue: [ ^ (aResolver resolveType: #'void *') ].
+	(aFFIValueArgument value isNil
+		or: [aFFIValueArgument value = 'nil'
+			or: [ aFFIValueArgument value = 'NULL' ]])
+				ifTrue: [ ^ (aResolver resolveType: #'void *') ].
 	(#('true' 'false') includes: aFFIValueArgument value) 
 		ifTrue: [ ^ aResolver resolveType: #bool ].
 	aFFIValueArgument value isInteger
@@ -24,5 +26,7 @@ FFIUndefinedTypeDeclaration >> resolveUsing: aResolver forArgument: aFFIValueArg
 	(aFFIValueArgument value = 'self') ifTrue: [ 
 		^ (aResolver requestor asExternalTypeOn: aResolver) 
 			prepareAsSelfFromCalloutDeclaration ].
-	self halt.
+	
+	"This is actually a class variable with  a value..."
+	^ aResolver resolveType: aFFIValueArgument value
 ]
