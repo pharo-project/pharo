@@ -117,6 +117,13 @@ FFICalloutAPITest >> runCase [
 	ensure: [ FFICalloutAPI calloutAPIClass: oldAPIClass ]
 ]
 
+{ #category : #running }
+FFICalloutAPITest >> tearDown [
+	
+	self resetFFIMethods.
+	super tearDown.
+]
+
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testByteArrayToExternalAddress [
 	| result dest |
