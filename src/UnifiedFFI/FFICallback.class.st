@@ -132,7 +132,7 @@ FFICallback >> getHandle [
 
 { #category : #private }
 FFICallback >> newParser [ 
-	^ FFIFunctionParser new
+	^ FFISplitFunctionParser new
 		requestor: (FFICallout new
 			requestor: self;
 			yourself);

@@ -81,7 +81,7 @@ FFIFunctionParserTest >> ffiInstVarArgument: argName generator: aGenerator [
 
 { #category : #factory }
 FFIFunctionParserTest >> newParser [
-	^ FFIFunctionParser new
+	^ FFISplitFunctionParser new
 ]
 
 { #category : #factory }

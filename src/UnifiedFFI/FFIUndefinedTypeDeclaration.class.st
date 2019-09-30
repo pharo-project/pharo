@@ -17,7 +17,7 @@ FFIUndefinedTypeDeclaration >> resolveUsing: aResolver forArgument: aFFIValueArg
 		or: [aFFIValueArgument value = 'nil'
 			or: [ aFFIValueArgument value = 'NULL' ]])
 				ifTrue: [ ^ (aResolver resolveType: #'void *') ].
-	(#('true' 'false') includes: aFFIValueArgument value) 
+	(#(true false) includes: aFFIValueArgument value) 
 		ifTrue: [ ^ aResolver resolveType: #bool ].
 	aFFIValueArgument value isInteger
 		ifTrue: [ ^ (aFFIValueArgument value >=0 

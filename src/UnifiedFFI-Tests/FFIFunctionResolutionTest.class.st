@@ -125,7 +125,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 
 	| argument resolver |
 	argument := FFIConstantArgument new
-		value: 'false';
+		value: false;
 		yourself.
 	
 	resolver := FFICallout new
@@ -170,7 +170,7 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 
 	| argument |
 	argument := FFIConstantArgument new
-		value: 'nil';
+		value: nil;
 		yourself.
 	
 	argument resolveUsing: FFICallout new.
@@ -233,7 +233,7 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 
 	| argument |
 	argument := FFIConstantArgument new
-		value: 'true';
+		value: true;
 		yourself.
 	
 	argument resolveUsing: FFICallout new.

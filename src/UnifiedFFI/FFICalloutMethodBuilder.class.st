@@ -158,7 +158,7 @@ FFICalloutMethodBuilder >> moduleName [
 
 { #category : #private }
 FFICalloutMethodBuilder >> parseSignature: aSignature [
-	^ FFIFunctionParser new  
+	^ FFISplitFunctionParser new  
 		requestor: self requestor;
 		parseNamedFunction: aSignature
 ]

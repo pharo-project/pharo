@@ -47,15 +47,17 @@ FFIConstantArgument >> initialize [
 { #category : #resolving }
 FFIConstantArgument >> resolveUsing: aResolver [
 
-	value = 'false' ifTrue: [ 
+	value = false ifTrue: [ 
 		loader := FFIConst value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
+		resolvedType loader: loader.
 		^ self ].
-	value = 'true' ifTrue: [ 
+	value = true ifTrue: [ 
 		loader := FFIConst value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
+		resolvedType loader: loader.
 		^ self ].
-	(value isNil or: [value = 'nil' or: [ value = 'NULL' ]]) ifTrue: [ 
+	(value isNil or: [ value = 'NULL' ]) ifTrue: [ 
 		loader := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *').
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
@@ -66,6 +68,7 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		^ self ].
 	loader := FFIConst value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
+	resolvedType loader: loader.
 ]
 
 { #category : #accessing }

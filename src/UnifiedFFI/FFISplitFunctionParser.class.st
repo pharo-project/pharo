@@ -5,6 +5,39 @@ Class {
 }
 
 { #category : #accessing }
+FFISplitFunctionParser >> parseAnonymousFunction: aFunctionDefinition [
+	"Parse a function definition in a form of: 
+	
+	 #( returnType (arguments) )
+	
+	 or
+
+	 'returnType (arguments)'
+
+	 Answer an instance of FFIFunctionSpec class"
+	| argsSpec typeAndName |
+	
+	fnSpec := FFIFunctionSpec new.
+	
+	self setOn: aFunctionDefinition.
+	
+	argsSpec := stream contents last.
+	typeAndName := stream contents allButLast.
+		
+	"Parse return type"
+	stream := typeAndName readStream.
+	fnSpec returnType: self parseReturn.
+
+	stream atEnd ifFalse: [ self error: 'Nothing more expected after function type'].	
+
+	"Function arguments"	
+	stream := argsSpec readStream.
+	self parseArguments.
+
+	^ fnSpec
+]
+
+{ #category : #accessing }
 FFISplitFunctionParser >> parseArgument [
 	| argument argName indirectIndex typeAndPtrArity next |
 	" An argument can be:

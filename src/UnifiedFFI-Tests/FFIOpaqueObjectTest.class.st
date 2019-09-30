@@ -19,7 +19,7 @@ FFIOpaqueObjectTest >> ffiInstVarArgument: argName generator: generator [
 
 { #category : #tests }
 FFIOpaqueObjectTest >> newParser [ 
-	^ FFIFunctionParser new
+	^ FFISplitFunctionParser new
 		requestor: (FFICallout new
 			requestor: self;
 			yourself);

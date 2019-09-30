@@ -252,7 +252,7 @@ FFICallout >> namedFnSpec: namedFn [
 
 { #category : #accessing }
 FFICallout >> newSpecParser [
-	^ FFIFunctionParser new requestor: self
+	^ FFISplitFunctionParser new requestor: self
 
 ]
 
