@@ -127,6 +127,5 @@ SpMethodBrowser >> toolbarModel [
 
 { #category : #api }
 SpMethodBrowser >> wrapWith: aBlock [
-
-	listModel displayBlock: aBlock
+	listModel display: aBlock
 ]

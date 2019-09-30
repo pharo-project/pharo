@@ -428,10 +428,11 @@ Context >> tempsAndValues [
 	"Return a string of the temporary variabls and their current values"
 	
 	^ String streamContents: [ :aStream |
-		self tempNames doWithIndex: [ :title :index |
-			 aStream nextPutAll: title; nextPut: $:; space; tab.
-			 self print: (self namedTempAt: index) on: aStream.
-			 aStream cr ]].
+		self tempNames 
+			do: [ :name  |
+			 aStream nextPutAll: name; nextPut: $:; space; tab.
+			 self print: (self tempNamed: name) on: aStream]
+			separatedBy: [aStream cr ]]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -439,12 +440,13 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 	"Return a string of the temporary variabls and their current values"
 
 	^ String streamContents: [ :aStream |
-		self tempNames doWithIndex: [ :title :index |
-			indent timesRepeat: [ aStream tab ].
-			aStream nextPutAll: title; nextPut: $:; space; tab.
-			aStream nextPutAll: 
-				((self namedTempAt: index) printStringLimitedTo: (sizeLimit -3 -title size max: 1)).
-			aStream cr ]].
+		self tempNames 
+			do: [ :name |
+				indent timesRepeat: [ aStream tab ].
+				aStream nextPutAll: name; nextPut: $:; space; tab.
+				aStream nextPutAll: 
+					((self tempNamed: name) printStringLimitedTo: (sizeLimit -3 -name size max: 1))]
+			separatedBy: [aStream cr ]]
 ]
 
 { #category : #'*Debugging-Core' }
