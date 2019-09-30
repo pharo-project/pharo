@@ -48,22 +48,23 @@ FFIConstantArgument >> initialize [
 FFIConstantArgument >> resolveUsing: aResolver [
 
 	value = 'false' ifTrue: [ 
-		resolution := FFIConst value: 0 type: (aResolver resolveType: #bool).
+		loader := FFIConst value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		^ self ].
 	value = 'true' ifTrue: [ 
-		resolution := FFIConst value: 1 type: (aResolver resolveType: #bool).
+		loader := FFIConst value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		^ self ].
-	(value = 'nil' or: [ value = 'NULL' ]) ifTrue: [ 
-		resolution := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *').
+	(value isNil or: [value = 'nil' or: [ value = 'NULL' ]]) ifTrue: [ 
+		loader := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *').
 		resolvedType := type resolveUsing: aResolver forArgument: self.
+		resolvedType loader: loader.
 		^ self ].
 	value = 'self' ifTrue: [
-		resolution := resolvedType := type resolveUsing: aResolver forArgument: self.
-		resolution loader: FFISelfArgument new.
+		loader := resolvedType := type resolveUsing: aResolver forArgument: self.
+		loader loader: FFISelfArgument new.
 		^ self ].
-	resolution := FFIConst value: value.
+	loader := FFIConst value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
 ]
 
