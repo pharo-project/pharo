@@ -32,7 +32,7 @@ FFICalloutTest >> checkType: type class: typeClass arity: ptrArity value: anObje
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass value: const [
 	self assert: type resolvedType class equals: typeClass.
-	self assert: type resolvedType value equals: const
+	self assert: type value equals: const
 ]
 
 { #category : #private }
@@ -41,6 +41,27 @@ FFICalloutTest >> checkTypeSelf: type class: typeClass arity: ptrArity [
 	self assert: type resolvedType class equals: typeClass.
 	self assert: type resolvedType pointerArity equals: ptrArity.
 	self assert: type loader class equals: FFISelfArgument.
+]
+
+{ #category : #private }
+FFICalloutTest >> checkUntypedClassVariable: aFFIConstantArgument class: aTypeClass value: aValue [ 
+	
+	self assert: aFFIConstantArgument resolvedType class equals: aTypeClass.
+	self assert: aFFIConstantArgument resolvedType value equals: aValue.
+]
+
+{ #category : #private }
+FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeClass arity: anInteger value: aValue [
+
+	self assert: aFFIConstantArgument resolvedType class equals: aTypeClass.
+	self assert: aFFIConstantArgument resolvedType pointerArity equals: anInteger.
+	self assert: aFFIConstantArgument loader value equals: aValue.
+]
+
+{ #category : #private }
+FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeClass value: aValue [
+	
+	self checkUntypedConstantType: aFFIConstantArgument class: aTypeClass arity: 0 value: aValue
 ]
 
 { #category : #binding }
@@ -77,11 +98,11 @@ FFICalloutTest >> testBuildingFnSpec [
 "char arg3"		self checkType: s next class: FFICharacterType arity: 0 argument: 'arg3'.
 "0"					self checkType: s next class: FFIUInt32 value: 0.
 "(ulong)42"		self checkType: s next class: FFIULong value: 42.
-"nil"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
-"NULL"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
-"true"				self checkType: s next class: FFIBool value: 1.
-"false"			self checkType: s next class: FFIBool value: 0.
-"CLASSVAR"		self checkType: s next class: FFIConst value: 100.
+"nil"				self checkUntypedConstantType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
+"NULL"				self checkUntypedConstantType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
+"true"				self checkUntypedConstantType: s next class: FFIBool value: 1.
+"false"			self checkUntypedConstantType: s next class: FFIBool value: 0.
+"CLASSVAR"		self checkUntypedClassVariable: s next class: FFIConst value: 100.
 "ExternalAddress"	self checkType: s next class: FFIOop arity: 0 argument: 'arg11'.
 "ByteArray" 			self checkType: s next class: FFIOop arity: 0 argument: 'arg12'.
 ]
