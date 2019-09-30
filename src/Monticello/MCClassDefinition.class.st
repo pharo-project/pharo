@@ -135,7 +135,7 @@ MCClassDefinition >> accept: aVisitor [
 
 { #category : #accessing }
 MCClassDefinition >> actualClass [
-	^ Smalltalk globals classNamed: self className
+	^ environment classNamed: self className
 ]
 
 { #category : #initializing }
@@ -232,7 +232,7 @@ MCClassDefinition >> createClass [
 						ifFalse: [ Context comment: comment stamp: commentStamp ].
 					^ self ].
 	superClass := superclassName == #nil
-		ifFalse: [ Smalltalk globals at: superclassName ].
+		ifFalse: [ environment at: superclassName ].
 	^ [ Smalltalk classInstaller
 		make: [ :builder | 
 			builder
@@ -323,6 +323,7 @@ type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
 	name := nameString asSymbol.
+	environment:= self class environment.
 	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
 	category := categoryString.
 	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
@@ -349,6 +350,7 @@ type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
 	name := nameString asSymbol.
+	environment:= self class environment.
 	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
 	traitComposition := traitCompositionString.
 	classTraitComposition := classTraitCompositionString.
@@ -607,7 +609,7 @@ MCClassDefinition >> type [
 
 { #category : #installing }
 MCClassDefinition >> unload [
-	Smalltalk globals removeClassNamed: name
+	environment removeClassNamed: name
 ]
 
 { #category : #accessing }

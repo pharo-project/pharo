@@ -4,6 +4,9 @@ A MCDefinition is the root of inheritance of entities representing code.
 Class {
 	#name : #MCDefinition,
 	#superclass : #Object,
+	#instVars : [
+		'environment'
+	],
 	#category : #'Monticello-Base'
 }
 
@@ -68,6 +71,11 @@ MCDefinition >> fullTimeStamp [
 { #category : #comparing }
 MCDefinition >> hash [
 	^ self description hash
+]
+
+{ #category : #initialization }
+MCDefinition >> initialize [ 
+	environment := self class environment.
 ]
 
 { #category : #testing }
