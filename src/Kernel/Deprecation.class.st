@@ -34,12 +34,25 @@ Class {
 		'condition'
 	],
 	#classVars : [
+		'Active',
 		'Log',
 		'RaiseWarning',
 		'ShowWarning'
 	],
 	#category : #'Kernel-Exceptions'
 }
+
+{ #category : #logging }
+Deprecation class >> activateTransformations [
+
+	^ Active ifNil: [ Active := true ]
+]
+
+{ #category : #logging }
+Deprecation class >> activateTransformations: aBoolean [
+
+	Active := aBoolean
+]
 
 { #category : #logging }
 Deprecation class >> deprecationsWhile: aBlock [
@@ -193,7 +206,7 @@ Deprecation >> sendingMethodName [
 
 { #category : #handling }
 Deprecation >> shouldTransform [
-	^ self raiseWarning  "when desprecations are disables, we do not want to transform, either"
+	^ self class activateTransformations
 		and: [ condition isNil or: [ condition cull: self ] ]
 ]
 

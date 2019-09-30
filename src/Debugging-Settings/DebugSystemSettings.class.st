@@ -55,6 +55,9 @@ DebugSystemSettings class >> debugSettingsOn: aBuilder [
 				description: 'How deprecation are handled' ;
 				target: Deprecation;
 				with: [
+					(aBuilder setting: #activateTransformations)
+						label: 'Performs automatic transformations on deprecated methods' ;
+						description: 'If true, then the caller will be rewritten for each deprecated method invocation' .
 					(aBuilder setting: #raiseWarning)
 						label: 'Raise a blocking dialog' ;
 						description: 'If true, then a dialog is popup for each deprecated method invocation' .
