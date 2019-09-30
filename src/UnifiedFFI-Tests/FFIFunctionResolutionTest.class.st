@@ -124,7 +124,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader [
 
 	| argument resolver |
-	argument := FFIValueArgument new
+	argument := FFIConstantArgument new
 		value: 'false';
 		yourself.
 	
@@ -141,7 +141,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 
 	| argument |
-	argument := FFIValueArgument new
+	argument := FFIConstantArgument new
 		value: 1;
 		yourself.
 	
@@ -155,7 +155,7 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader [
 
 	| argument |
-	argument := FFIValueArgument new
+	argument := FFIConstantArgument new
 		value: 'NULL';
 		yourself.
 	
@@ -169,7 +169,7 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader 
 FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 
 	| argument |
-	argument := FFIValueArgument new
+	argument := FFIConstantArgument new
 		value: 'nil';
 		yourself.
 	
@@ -208,7 +208,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfShouldSetConstantSelfLoader 
 FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 
 	| argument |
-	argument := FFIValueArgument new
+	argument := FFIConstantArgument new
 		value: 'true';
 		yourself.
 	
