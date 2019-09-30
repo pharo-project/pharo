@@ -185,7 +185,7 @@ MCPackageLoader >> orderedAdditions [
 
 { #category : #private }
 MCPackageLoader >> provisions [
-	^ provisions ifNil: [provisions := Set withAll: Smalltalk globals keys]
+	^ provisions ifNil: [provisions := Set withAll: self class environment keys]
 ]
 
 { #category : #'patch ops' }

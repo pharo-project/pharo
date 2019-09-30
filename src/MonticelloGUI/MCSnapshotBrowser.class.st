@@ -308,14 +308,14 @@ MCSnapshotBrowser >> scriptDefinitionString [
 { #category : #accessing }
 MCSnapshotBrowser >> selectedClass [
 	classSelection ifNil: [ ^ nil ].
-	^ Smalltalk globals at: classSelection ifAbsent: [ nil ]
+	^ environment at: classSelection ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
 MCSnapshotBrowser >> selectedClassOrMetaClass [
 	| class |
 	classSelection ifNil: [ ^ nil ].
-	class := Smalltalk globals at: classSelection ifAbsent: [ ^ nil ].
+	class := environment at: classSelection ifAbsent: [ ^ nil ].
 	^ self switchIsClass
 		ifTrue: [ class class ]
 		ifFalse: [ class ]

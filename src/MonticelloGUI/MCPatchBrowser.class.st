@@ -87,7 +87,7 @@ MCPatchBrowser >> selectedClass [
 	(definition := selection definition) ifNil: [ ^ nil ].
 	definition isMethodDefinition
 		ifFalse: [ ^ nil ].
-	^ Smalltalk globals at: definition className ifAbsent: [  ]
+	^ environment at: definition className ifAbsent: [  ]
 ]
 
 { #category : #subclassresponsibility }

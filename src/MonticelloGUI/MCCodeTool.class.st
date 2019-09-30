@@ -7,7 +7,8 @@ Class {
 	#name : #MCCodeTool,
 	#superclass : #MCTool,
 	#instVars : [
-		'items'
+		'items',
+		'environment'
 	],
 	#category : #'MonticelloGUI-Tools'
 }
@@ -113,6 +114,11 @@ MCCodeTool >> fileOutMessage [
 					ifNil:
 						[internalStream nextChunkPut: patchOp definition className, ' removeFromSystem']]].
 		CodeExporter writeSourceCodeFrom: internalStream baseName: fileName isSt: true]
+]
+
+{ #category : #initialization }
+MCCodeTool >> initialize [ 
+	environment := self class environment.
 ]
 
 { #category : #menus }
