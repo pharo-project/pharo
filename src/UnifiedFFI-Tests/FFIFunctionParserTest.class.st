@@ -265,6 +265,27 @@ FFIFunctionParserTest >> testParseFunctionNoArguments [
 ]
 
 { #category : #tests }
+FFIFunctionParserTest >> testTypedConstantIntegerArgumentHasConstantValue [
+	| argument |
+	argument := self parseArgument: 'int 1'.
+	self assertValue: argument is: 1
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedConstantIntegerArgumentHasDefinedType [
+	| argument |
+	argument := self parseArgument: 'int 1'.
+	self assertType: argument named: 'int'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedConstantIntegerArgumentHasZeroArity [
+	| argument |
+	argument := self parseArgument: 'int 1'.
+	self assertType: argument arity: 0
+]
+
+{ #category : #tests }
 FFIFunctionParserTest >> testTypedDoublePointerVariableArgumentHasArity [
 	| argument |
 	argument := self parseArgument: 'arbitrary** a'.
@@ -304,6 +325,20 @@ FFIFunctionParserTest >> testTypedPointerVariableArgumentHasType [
 	| argument |
 	argument := self parseArgument: 'arbitrary* a'.
 	self assertType: argument named: 'arbitrary'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedTrueArgumentHasDefinedType [
+	| argument |
+	argument := self parseArgument: 'int64 true'.
+	self assertType: argument named: 'int64'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedTrueArgumentIsTrue [
+	| argument |
+	argument := self parseArgument: 'int true'.
+	self assertIsTrue: argument
 ]
 
 { #category : #tests }

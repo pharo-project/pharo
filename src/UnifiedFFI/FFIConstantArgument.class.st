@@ -7,6 +7,15 @@ Class {
 	#category : #'UnifiedFFI-Arguments'
 }
 
+{ #category : #'as yet unclassified' }
+FFIConstantArgument class >> value: aValue typeName: aTypeName arity: anInteger [
+	
+	^ self new
+		value: aValue;
+		type: (FFITypeDeclaration typeName: aTypeName arity: anInteger);
+		yourself
+]
+
 { #category : #converting }
 FFIConstantArgument >> asOldArraySpec [
 

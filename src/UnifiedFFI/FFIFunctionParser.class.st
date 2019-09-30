@@ -23,10 +23,15 @@ FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptr
 			value: aTypeName;
 			yourself ].
 
-	^ FFIVariableArgument
-		name: argName
-		typeName: aTypeName
-		arity: arity
+	^ argName isSymbol ifTrue: [ 
+		FFIVariableArgument
+			name: argName
+			typeName: aTypeName
+			arity: arity ] ifFalse: [ 
+		FFIConstantArgument
+			value: argName
+			typeName: aTypeName
+			arity: arity ]
 ]
 
 { #category : #initialization }
@@ -247,7 +252,7 @@ FFIFunctionParser >> parseType [
 			].
 
 	ptrArity := 0.
-	[ stream atEnd not and: [ stream peek beginsWith: '*'] ] whileTrue: [ | pointerMarker |
+	[ stream atEnd not and: [ stream peek isString and: [ stream peek beginsWith: '*' ] ] ] whileTrue: [ | pointerMarker |
 		pointerMarker := stream next.
 		self assert: (pointerMarker allSatisfy: [ :e | e = $* ]).
 		ptrArity := ptrArity + pointerMarker size ].
