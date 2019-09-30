@@ -129,7 +129,7 @@ FFICallbackArgumentReader >> callbackContext: anObject [
 { #category : #extracting }
 FFICallbackArgumentReader >> extractArguments [
 
-	callback functionSpec arguments do: [ :type | self extractNext: type ].
+	callback functionSpec arguments do: [ :type | self extractNext: type resolvedType ].
 
 ]
 
