@@ -13,7 +13,8 @@ Class {
 		'comment',
 		'commentStamp',
 		'traitComposition',
-		'classTraitComposition'
+		'classTraitComposition',
+		'environment'
 	],
 	#category : #'Monticello-Modeling'
 }

@@ -4,9 +4,6 @@ A MCDefinition is the root of inheritance of entities representing code.
 Class {
 	#name : #MCDefinition,
 	#superclass : #Object,
-	#instVars : [
-		'environment'
-	],
 	#category : #'Monticello-Base'
 }
 

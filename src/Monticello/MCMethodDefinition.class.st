@@ -114,7 +114,7 @@ MCMethodDefinition >> accept: aVisitor [
 
 { #category : #accessing }
 MCMethodDefinition >> actualClass [
-	^ environment
+	^ Smalltalk globals
 		at: className
 		ifPresent: [ :class | 
 			classIsMeta
@@ -203,7 +203,6 @@ category: catString
 timeStamp: timeString
 source: sourceString [
 	className := classString asSymbol.
-	environment:= self class environment.
 	selector := selectorString asSymbol.
 	category := (catString asSymbol) ifEmpty: [#'as yet unclassified'].
 	timeStamp := timeString.
@@ -230,7 +229,7 @@ MCMethodDefinition >> isExternalStructureFieldDefinition [
 	^ selector = #fields
 		and: [classIsMeta
 			and: [
-				(environment at: #ExternalStructure ifPresent: [:externalStructure |
+				(Smalltalk globals at: #ExternalStructure ifPresent: [:externalStructure |
 					self actualClass instanceSide inheritsFrom: externalStructure]) == true]]
 
 ]
