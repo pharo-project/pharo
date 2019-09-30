@@ -5,7 +5,7 @@ I provide helper methods deadling with
 -> temporary variables for contexts
 -> reading and setting tempary variables
 
-All methods here should be moved to MethodContext.
+All methods here habe been moved to Context
 "
 Class {
 	#name : #DebuggerMethodMapOpal,
@@ -31,22 +31,19 @@ DebuggerMethodMapOpal >> forMethod: aCompiledMethod [
 
 { #category : #public }
 DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
-	"Answer the value of the temp at index in aContext where index is relative"
-	
-	^self tempNamed: (aContext tempNames at: index) in: aContext
+	"please use #namedTempAt: on Context"
+	^aContext namedTempAt: index
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
-	"Assign the value of the temp at index in aContext where index is relative
-	 to the array of temp names
-	 If the value is a copied value we also need to set it along the lexical chain."
-	
-	^self tempNamed: (aContext tempNames at: index) in: aContext put: aValue
+	"please use #namedTempAt:put: on Context"
+	^aContext namedTempAt: index put: aValue
 ]
 
 { #category : #initialization }
 DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: aBoolean [
+	"please use pcRangeContextIsActive: on Context"
 	"return the debug highlight for aPC"		
 	| pc | 			
 
@@ -61,33 +58,19 @@ DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: aBoolean [
 
 { #category : #public }
 DebuggerMethodMapOpal >> tempNamed: name in: aContext [
-	"Answer the value of the temp with name in aContext"
-	
-	| scope var |
-	scope := aContext sourceNodeExecuted scope.
-	var := scope lookupVar: name.
-	^var readFromContext: aContext scope: scope.
+	"please use #tempNamed: on Context"
+	^aContext tempNamed: name
 		
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> tempNamed: name in: aContext put: aValue [
-	"Assign the value of the temp with name in aContext
-	 If the value is a copied value we also need to set it along the lexical chain."
-
-	| scope var |
-	scope := aContext sourceNodeExecuted scope.
-	var := scope lookupVar: name.
-	^var writeFromContext: aContext scope: scope value: aValue.
-	
-	
-	
+	"please use #tempNamed:put: on Context"
+	^aContext tempNamed: name put: aValue
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> tempNamesForContext: aContext [
-	"Answer an Array of all the temp names in scope in aContext starting with
-	 the home's first local (the first argument or first temporary if no arguments)."
-	
-	^ aContext sourceNodeExecuted scope allTempNames.
+	"use tempNames on Context"
+	^ aContext tempNames 
 ]
