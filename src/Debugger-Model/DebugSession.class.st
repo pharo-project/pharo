@@ -228,8 +228,7 @@ DebugSession >> isInterruptedContextDoesNotUnderstand [
 
 { #category : #context }
 DebugSession >> isLatestContext: aContext [
-
-	^ interruptedProcess suspendedContext == aContext
+  	^ interruptedProcess suspendedContext == aContext
 ]
 
 { #category : #testing }

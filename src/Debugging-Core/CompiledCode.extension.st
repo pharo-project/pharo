@@ -103,9 +103,9 @@ CompiledCode >> pcPreviousTo: pc [
 ]
 
 { #category : #'*Debugging-Core' }
-CompiledCode >> rangeForPC: aPC [
-	"return which code to hightlight in the debugger"
-	^(self methodNode sourceNodeForPC: aPC) debugHighlightRange
+CompiledCode >> rangeForPC: aPC [	
+ 	"return which code to hightlight in the debugger"		
+ 	^(self sourceNodeForPC: aPC) debugHighlightRange
 ]
 
 { #category : #'*Debugging-Core' }

@@ -82,7 +82,7 @@ BaselineOf class >> validate [
 
   <apiDocumentation>
   self ensureMetacello.
-  ^ ((Smalltalk at: #'MetacelloToolBox')
+  ^ ((self environment at: #'MetacelloToolBox')
     validateBaseline: self
     debug: #()
     recurse: false) inspect

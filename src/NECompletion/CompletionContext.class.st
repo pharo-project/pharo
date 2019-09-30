@@ -74,9 +74,11 @@ CompletionContext >> receiverClass [
 
 { #category : #'initialize-release' }
 CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
-	isWorkspace:= aECController editor 
-		ifNotNil: [ :editor | isWorkspace := editor textArea editingMode isScripting ]
+	
+	isWorkspace:= aECController 
+		ifNotNil: [ aECController isScripting ]
 		ifNil: [ false ].
+
 	theClass := aClass. 
 	source := aString.
 	position := anInteger
