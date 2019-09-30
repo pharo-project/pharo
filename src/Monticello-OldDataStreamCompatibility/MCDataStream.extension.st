@@ -48,7 +48,7 @@ MCDataStream >> readMethod [
 	instSize := (byteStream nextNumber: 4) - 1.
 	refPosn := self getCurrentReference.
 	className := self next.
-	newClass := Smalltalk globals at: className asSymbol.
+	newClass := environment at: className asSymbol.
 	xxHeader := self next.	"nArgs := (xxHeader >> 24) bitAnd: 16rF."	"nTemps := (xxHeader >> 18) bitAnd: 16r3F."	"largeBit := (xxHeader >> 17) bitAnd: 1."
 	nLits := xxHeader >> 9 bitAnd: 16rFF.	"primBits := ((xxHeader >> 19) bitAnd: 16r600) + (xxHeader bitAnd: 16r1FF)."
 	byteCodeSizePlusTrailer := instSize - newClass instSize - ((nLits + 1) * 4).	"0"
@@ -106,7 +106,7 @@ MCDataStream >> readShortInst [
 	instSize := byteStream next - 1.	"one byte of size"
 	refPosn := self getCurrentReference.
 	aSymbol := self readShortRef.	"class symbol in two bytes of file pos"
-	newClass := Smalltalk globals at: aSymbol asSymbol.
+	newClass := environment at: aSymbol asSymbol.
 	anObject := newClass isVariable
 		ifFalse: [ newClass basicNew ]
 		ifTrue: [ newClass basicNew: instSize - newClass instSize ].	"Create object here"
@@ -149,7 +149,7 @@ MCDataStream >> readWordLike [
 	"Can be used by any class that is bits and not bytes (WordArray, Bitmap, SoundBuffer, etc)."
 	refPosn := self getCurrentReference.
 	aSymbol := self next.
-	newClass := Smalltalk globals at: aSymbol asSymbol.
+	newClass := environment at: aSymbol asSymbol.
 	anObject := newClass newFromStream: byteStream.	"Size is number of long words."
 	self setCurrentReference: refPosn.	"before returning to next"
 	^ anObject

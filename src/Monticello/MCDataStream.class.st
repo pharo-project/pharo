@@ -26,7 +26,8 @@ Class {
 	#instVars : [
 		'byteStream',
 		'topCall',
-		'basePos'
+		'basePos',
+		'environment'
 	],
 	#classVars : [
 		'ReadSelectors',
@@ -322,6 +323,11 @@ MCDataStream >> getCurrentReference [
     ^ 0
 ]
 
+{ #category : #initialization }
+MCDataStream >> initialize [ 
+	environment := self class environment.
+]
+
 { #category : #'write and read' }
 MCDataStream >> maybeBeginReference: internalObject [
 	"Do nothing.  See ReferenceStream|maybeBeginReference:"
@@ -486,7 +492,7 @@ MCDataStream >> readInstance [
 	instSize := (byteStream nextNumber: 4) - 1.
 	refPosn := self getCurrentReference.
 	aSymbol := self next.
-	newClass := Smalltalk globals at: aSymbol asSymbol.
+	newClass := environment at: aSymbol asSymbol.
 	anObject := newClass isVariable
 		ifFalse: [ newClass basicNew ]
 		ifTrue: [ newClass basicNew: instSize - newClass instSize ].	"Create object here"

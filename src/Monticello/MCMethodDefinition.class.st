@@ -22,8 +22,7 @@ Class {
 		'selector',
 		'className',
 		'timeStamp',
-		'sortKey',
-		'environment'
+		'sortKey'
 	],
 	#classVars : [
 		'Definitions',
@@ -204,7 +203,6 @@ category: catString
 timeStamp: timeString
 source: sourceString [
 	className := classString asSymbol.
-	environment := Smalltalk globals.
 	selector := selectorString asSymbol.
 	category := (catString asSymbol) ifEmpty: [#'as yet unclassified'].
 	timeStamp := timeString.
@@ -231,7 +229,7 @@ MCMethodDefinition >> isExternalStructureFieldDefinition [
 	^ selector = #fields
 		and: [classIsMeta
 			and: [
-				(environment at: #ExternalStructure ifPresent: [:externalStructure |
+				(Smalltalk globals at: #ExternalStructure ifPresent: [:externalStructure |
 					self actualClass instanceSide inheritsFrom: externalStructure]) == true]]
 
 ]
