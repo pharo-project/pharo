@@ -307,6 +307,34 @@ FFIFunctionParserTest >> testTypedDoublePointerVariableArgumentHasType [
 ]
 
 { #category : #tests }
+FFIFunctionParserTest >> testTypedFalseArgumentHasDefinedType [
+	| argument |
+	argument := self parseArgument: 'int64 false'.
+	self assertType: argument named: 'int64'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedFalseArgumentIsFalse [
+	| argument |
+	argument := self parseArgument: 'int false'.
+	self assertIsFalse: argument
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedFloatArgumentHasDefinedType [
+	| argument |
+	argument := self parseArgument: 'int64 1.32'.
+	self assertType: argument named: 'int64'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedFloatArgumentIsFloat [
+	| argument |
+	argument := self parseArgument: 'int 1.32'.
+	self assertValue: argument is: 1.32
+]
+
+{ #category : #tests }
 FFIFunctionParserTest >> testTypedPointerVariableArgumentHasArity [
 	| argument |
 	argument := self parseArgument: 'arbitrary* a'.
@@ -325,6 +353,20 @@ FFIFunctionParserTest >> testTypedPointerVariableArgumentHasType [
 	| argument |
 	argument := self parseArgument: 'arbitrary* a'.
 	self assertType: argument named: 'arbitrary'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedStringArgumentHasDefinedType [
+	| argument |
+	argument := self parseArgument: 'stringy ''a string'''.
+	self assertType: argument named: 'stringy'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedStringArgumentIsString [
+	| argument |
+	argument := self parseArgument: 'stringy ''a stringy'''.
+	self assertValue: argument is: 'a stringy'
 ]
 
 { #category : #tests }
