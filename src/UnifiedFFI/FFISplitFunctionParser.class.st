@@ -163,8 +163,8 @@ FFISplitFunctionParser >> parseType [
 
 	"skip 'const' , which is often used but has no any use for us "
 	typeName = 'const'
-		ifTrue: [ self skipSpace.
-			typeName := self parseWord.
+		ifTrue: [
+			typeName := stream next.
 			typeName ifNil: [ ^ self error: 'type name expected' ]
 			].
 
