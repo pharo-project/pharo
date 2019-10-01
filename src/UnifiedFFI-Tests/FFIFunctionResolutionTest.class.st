@@ -309,6 +309,19 @@ FFIFunctionResolutionTest >> testResolveConstantSelfShouldResolveToExternalObjec
 ]
 
 { #category : #tests }
+FFIFunctionResolutionTest >> testResolveConstantSelfStringInStrictResolverFails [
+
+	| argument resolver |
+	argument := FFIConstantArgument new
+		value: 17;
+		yourself.
+
+	resolver := FFICallout new.
+	resolver beStrict.
+	self should: [argument resolveUsing: resolver] raise: FFIUnsupportedUntypedLiteral
+]
+
+{ #category : #tests }
 FFIFunctionResolutionTest >> testResolveConstantSelfStringShouldSetConstantLoader [
 
 	| argument |

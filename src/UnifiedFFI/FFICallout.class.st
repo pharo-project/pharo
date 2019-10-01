@@ -24,7 +24,8 @@ Class {
 		'requestor',
 		'methodArgs',
 		'receiver',
-		'method'
+		'method',
+		'resolutionMode'
 	],
 	#classVars : [
 		'TypeAliases'
@@ -136,6 +137,12 @@ FFICallout >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: 
 		yourself
 ]
 
+{ #category : #configuration }
+FFICallout >> beStrict [
+	
+	resolutionMode := FFIStrictResolutionMode new
+]
+
 { #category : #accessing }
 FFICallout >> callType: aCallType [
 	aCallType == #cdecl ifTrue: [ ^ self cdecl ].
@@ -159,7 +166,8 @@ FFICallout >> indirectLoader: aLoader byIndex: anIndex [
 { #category : #initialization }
 FFICallout >> initialize [
 	super initialize.
-	options := Dictionary new
+	options := Dictionary new.
+	resolutionMode := FFIInferenceResolutionMode new
 ]
 
 { #category : #private }
@@ -370,6 +378,12 @@ FFICallout >> resolveType: aTypeName [
 ]
 
 { #category : #'spec parsing' }
+FFICallout >> resolveUntypedArgument: anArgument [
+
+	^ resolutionMode resolveUndeclaredTypeForArgument: anArgument withResolver: self
+]
+
+{ #category : #'spec parsing' }
 FFICallout >> returnType: aType [
 	aType first = 'receiver'
 		ifTrue: [ | possibleClass requestorClass |
@@ -400,4 +414,10 @@ FFICallout >> sender: aSenderContext [
 { #category : #private }
 FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
+]
+
+{ #category : #errors }
+FFICallout >> unsupportedUntypedLiteral: aLiteral [
+	
+	FFIUnsupportedUntypedLiteral signalFor: aLiteral
 ]
