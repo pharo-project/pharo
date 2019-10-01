@@ -118,25 +118,6 @@ FFICallout >> aliasForType: aTypeName [
 	^ TypeAliases at: alias ifAbsent: [ alias ]
 ]
 
-{ #category : #'spec parsing' }
-FFICallout >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: arity [
-
-	argName ifNil: [ 
-		"allow nil,true,false as untyped arguments"
-		arity > 0 ifTrue: [ self error: 'missing argument name' ].
-		^ FFIConstantArgument new
-			value: aTypeName;
-			resolveUsing: self;
-			yourself ].
-
-	^ (FFIVariableArgument
-		name: argName
-		typeName: aTypeName
-		arity: arity)
-		resolveUsing: self;
-		yourself
-]
-
 { #category : #configuration }
 FFICallout >> beNonStrict [
 
@@ -179,25 +160,6 @@ FFICallout >> indirectLoader: aLoader byIndex: anIndex [
 FFICallout >> initialize [
 	super initialize.
 	options := Dictionary new.
-]
-
-{ #category : #private }
-FFICallout >> integerConstantArgument: anInteger [
-
-	^ FFIConstantArgument new
-		value: anInteger;
-		resolveUsing: self;
-		yourself
-]
-
-{ #category : #private }
-FFICallout >> integerConstantArgument: anInteger type: aTypeName [
-
-	^ FFIConstantArgument new
-		value: anInteger;
-		type: (FFITypeDeclaration typeName: aTypeName arity: 0);
-		resolveUsing: self;
-		yourself
 ]
 
 { #category : #testing }
@@ -406,23 +368,6 @@ FFICallout >> resolveType: aTypeName [
 FFICallout >> resolveUntypedArgument: anArgument [
 
 	^ self resolutionMode resolveUndeclaredTypeForArgument: anArgument withResolver: self
-]
-
-{ #category : #'spec parsing' }
-FFICallout >> returnType: aType [
-	aType first = 'receiver'
-		ifTrue: [ | possibleClass requestorClass |
-			"check that:
-				1. method belongs to class side
-				2. method class is subclass of NBExternalObject
-				3. receiver is the same or subclass of the requestor -- since the requestor is the implementor"
-			possibleClass := self receiver.
-			requestorClass := self requestor soleInstance.
-			(possibleClass isBehavior
-				and: [ possibleClass includesBehavior: requestorClass ])
-				ifTrue: [ ^ self typeName: possibleClass name pointerArity: aType second ] ].
-	self receiver: nil.	"if the type is not 'receiver' then we don't need the receiver of the message so set it to nil"
-	^ self typeName: aType first pointerArity: aType second
 ]
 
 { #category : #accessing }
