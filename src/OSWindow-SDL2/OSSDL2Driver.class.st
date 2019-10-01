@@ -434,6 +434,7 @@ OSSDL2Driver >> visitControllerDeviceRemovedEvent: controllerEvent [
 
 { #category : #'global events' }
 OSSDL2Driver >> visitDropEvent: dropEvent [
+
 	^ OSWindowDropEvent new
 		timestamp: dropEvent timestamp;
 		filePath: dropEvent file readString
