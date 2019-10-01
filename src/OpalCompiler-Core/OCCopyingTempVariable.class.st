@@ -55,6 +55,6 @@ OCCopyingTempVariable >> writeFromContext: aContext scope: contextScope value: a
 	"we need to change this var all the copies, too"
 	contextScope setCopyingTempToAllScopesUpToDefTemp: originalVar to: aValue from: aContext.
 	"the original temp"
-	^originalVar writeFromContext: aContext scope: contextScope value: aValue.
+	^originalVar writeFromContext: aContext scope: contextScope value: aValue
 
 ]
