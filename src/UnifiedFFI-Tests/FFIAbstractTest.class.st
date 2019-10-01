@@ -11,6 +11,12 @@ Class {
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
+{ #category : #testing }
+FFIAbstractTest class >> isAbstract [
+
+	^ self == FFIAbstractTest
+]
+
 { #category : #private }
 FFIAbstractTest >> externalTypeAlias: aTypeName [
 

@@ -59,13 +59,19 @@ FFITypeDeclaration >> name: anObject [
 { #category : #resolution }
 FFITypeDeclaration >> resolveUsing: aResolver [
 
-	resolvedType := (aResolver resolveType: name) pointerArity: arity
+	resolvedType := (aResolver resolveType: name) pointerArity: arity.
+	resolvedType isExternalType
+		ifTrue: [ resolvedType validateAfterParse: self asOldArraySpec ].
+	^ resolvedType
 ]
 
 { #category : #resolution }
 FFITypeDeclaration >> resolveUsing: aResolver forArgument: aFFIVariableArgument [ 
 	
-	^ (aResolver resolveType: name)
-		pointerArity: arity;
-		yourself
+	^ self resolveUsing: aResolver
+]
+
+{ #category : #accessing }
+FFITypeDeclaration >> resolvedType [
+	^ resolvedType
 ]

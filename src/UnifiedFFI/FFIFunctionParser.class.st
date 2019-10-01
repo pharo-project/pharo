@@ -105,7 +105,7 @@ FFIFunctionParser >> parseArgument [
 	"constant conditions"
 	(stream contents size = 1 and: [ 
 		stream contents first ~= #void ]) ifTrue: [ 
-		^ self requestor integerConstantArgument: stream next ].
+		^ self integerConstantArgument: stream next ].
 	stream peek isArray ifTrue: [ 
 		^ self parseArgumentCastedType ].
 
@@ -121,14 +121,11 @@ FFIFunctionParser >> parseArgument [
 	"for sole 'void' fake argument "
 	(typeAndPtrArity = #('void' 0) and: [ argName isNil ])
 		ifTrue: [ ^ nil ].
-	argument := requestor
+	argument := self
 		argName: argName
 		indirectIndex: indirectIndex
 		type: typeAndPtrArity first
 		ptrArity: typeAndPtrArity second.
-
-	argument resolvedType isExternalType
-		ifTrue: [ argument resolvedType validateAfterParse: typeAndPtrArity ].
 
 	^ argument 
 ]
@@ -139,7 +136,7 @@ FFIFunctionParser >> parseArgumentCastedType [
 
 	castedType := self parseCastedType.
 	number := stream next.
-	^ self requestor integerConstantArgument: number type: castedType
+	^ self integerConstantArgument: number type: castedType
 ]
 
 { #category : #accessing }
@@ -226,12 +223,8 @@ FFIFunctionParser >> parseNamedFunction: aFunctionDefinition [
 
 { #category : #parsing }
 FFIFunctionParser >> parseReturn [
-	| returnTypeTuple returnType |
-	returnTypeTuple := self parseType.
-	returnType := self requestor returnType: returnTypeTuple.
-	returnType isExternalType
-		ifTrue: [ returnType validateAfterParse: returnTypeTuple ].
-	^ returnType
+
+	^ self returnType: self parseType.
 ]
 
 { #category : #accessing }

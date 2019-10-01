@@ -101,10 +101,10 @@ FFICalloutTest >> testBuildingFnSpec [
 		methodArgs: #(arg1 arg2 arg3 arg11 arg12);
 		namedFnSpec: #( long* fn (int self ,  String arg1, void**arg2, TYPEVAR arg1, char arg3, 0, (ulong)42, nil, NULL, true, false , CLASSVAR, ExternalAddress arg11, ByteArray arg12 ) ).
 
-
+	generator fnSpec resolveUsing: generator.
 	type := generator fnSpec returnType.
-	self assert: type class equals: FFILong.	
-	self assert: type pointerArity equals: 1.
+	self assert: type resolvedType class equals: FFILong.	
+	self assert: type resolvedType pointerArity equals: 1.
 	
 	self assert: (generator fnSpec arguments size) equals: 14.
 	s := generator fnSpec arguments readStream.

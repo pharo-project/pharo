@@ -42,6 +42,6 @@ FFIVariableArgument >> name: anObject [
 FFIVariableArgument >> resolveUsing: aResolver [
 
 	loader := aResolver loaderForArgNamed: name indirectIndex: nil.
-	resolvedType := type resolveUsing: aResolver forArgument: self.
+	resolvedType := type resolveUsing: aResolver forArgument: self.	
 	resolvedType loader: loader.
 ]
