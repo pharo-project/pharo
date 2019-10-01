@@ -44,15 +44,17 @@ Context >> methodReturnConstant: value [
 { #category : #'*Debugging-Core' }
 Context >> namedTempAt: index [
 	"Answer the value of the temp at index in the receiver's sequence of tempNames."
-	^self debuggerMap namedTempAt: index in: self
+	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
+	adds every variable that could be acccessed from a source perspective but might not be"
+	^self tempNamed: (self tempNames at: index)
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> namedTempAt: index put: aValue [
-	"Set the value of the temp at index in the receiver's sequence of tempNames.
-	 (Note that if the value is a copied value it is also set out along the lexical chain,
-	  but alas not in along the lexical chain.)."
-	^self debuggerMap namedTempAt: index put: aValue in: self
+	"Set the value of the temp at index in the receiver's sequence of tempNames"
+	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
+	adds every variable that could be acccessed from a source perspective but might not be"
+	^self tempNamed: (self tempNames at: index) put: aValue
 ]
 
 { #category : #'*Debugging-Core' }
@@ -380,33 +382,35 @@ Context class >> tallyMethods: aBlock [
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName [
-	"Returns the value of the temporaries, aName."
+	"Returns the value of the temporaries, aName"
 
-	"Implementation notes: temporary initialization in blocks simply uses pushNil to allocate and initialize each temp.  So if one inspects [|a|a:=2] and sends it self method symbolic you get:
-
-	13 <8F 00 00 05> closureNumCopied: 0 numArgs: 0 bytes 17 to 21
-	17 	<73> pushConstant: nil
-	18 	<77> pushConstant: 2
-	19 	<81 40> storeIntoTemp: 0
-	21 	<7D> blockReturn
-	22 <7C> returnTop
-
-	And when we check self asContext pc we get 17, which is *before* the nil is pushed. Therefore we should pay attention when querying a temporary if the temporary allocation was executed."
-
-	^self debuggerMap tempNamed: aName in: self
+	| scope var |
+	scope := self sourceNodeExecuted scope.
+	var := scope lookupVar: aName.
+	^var readFromContext: self scope: scope.
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
-	^self debuggerMap tempNamed: aName in: self put: anObject 
+	"Assign the value of the temp with name in aContext"
+	
+	| scope var |
+	scope := self sourceNodeExecuted scope.
+	var := scope lookupVar: aName.
+	^var writeFromContext: self scope: scope value: anObject
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNames [
-	"Answer a SequenceableCollection of the names of the receiver's temporary 
-	 variables, which are strings."
-
-	^ self debuggerMap tempNamesForContext: self
+	"Answer all the temp names in scope in aContext starting with the home's first local 
+	(the first argument or first temporary if no arguments).
+	
+	These are all the temps that a programmer could access in the context, but keep in mind
+	that as they might not be accesses here. 
+	In addition, even vars that are accessed in this context could be stored
+	in a temp vector, which itself would be a copied temp that has no name..."
+	
+	^ self sourceNodeExecuted scope allTempNames
 ]
 
 { #category : #'*Debugging-Core' }
