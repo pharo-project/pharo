@@ -328,7 +328,7 @@ SystemNavigation >> methodsWithUnboundGlobals [
 			[:l|
 			l isVariableBinding
 			and: [l key isSymbol "avoid class-side methodClass literals"
-			and: [ (l value isKindOf: Slot) not
+			and: [ (l isKindOf: AdditionalBinding) not
 			and: [(m methodClass classBindingOf: l key)
 					ifNil: [(Undeclared associationAt: l key ifAbsent: []) ~~ l]
 					ifNotNil: [:b| b ~~ l]]]]]]
