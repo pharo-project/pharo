@@ -23,10 +23,19 @@ FFIUndefinedTypeDeclaration >> resolveUsing: aResolver forArgument: aFFIValueArg
 		ifTrue: [ ^ (aFFIValueArgument value >=0 
 			ifTrue: [ aResolver resolveType: #uint32 ]
 			ifFalse: [ aResolver resolveType: #int32 ]) ].
-	(aFFIValueArgument value = 'self') ifTrue: [ 
+	(aFFIValueArgument value == #self) ifTrue: [ 
 		^ (aResolver requestor asExternalTypeOn: aResolver) 
 			prepareAsSelfFromCalloutDeclaration ].
 	
-	"This is actually a class variable with  a value..."
-	^ aResolver resolveType: aFFIValueArgument value
+	^ aFFIValueArgument value isSymbol
+		ifTrue: [ 
+			"This is actually a class variable with a value..."
+			aResolver resolveType: aFFIValueArgument value ]
+		ifFalse: [ self unsupportedUntypedLiteral: aFFIValueArgument value ]
+]
+
+{ #category : #errors }
+FFIUndefinedTypeDeclaration >> unsupportedUntypedLiteral: aLiteral [
+	
+	FFIUnsupportedUntypedLiteral signalFor: aLiteral
 ]

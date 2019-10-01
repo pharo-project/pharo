@@ -370,6 +370,20 @@ FFIFunctionParserTest >> testTypedStringArgumentIsString [
 ]
 
 { #category : #tests }
+FFIFunctionParserTest >> testTypedStringSelfArgumentHasDefinedType [
+	| argument |
+	argument := self parseArgument: 'stringy ''self'''.
+	self assertType: argument named: 'stringy'
+]
+
+{ #category : #tests }
+FFIFunctionParserTest >> testTypedStringSelfArgumentIsString [
+	| argument |
+	argument := self parseArgument: 'stringy ''self'''.
+	self assertValue: argument is: 'self'
+]
+
+{ #category : #tests }
 FFIFunctionParserTest >> testTypedTrueArgumentHasDefinedType [
 	| argument |
 	argument := self parseArgument: 'int64 true'.

@@ -5,7 +5,8 @@ Class {
 		'intType',
 		'int32Type',
 		'voidType',
-		'charType'
+		'charType',
+		'uint32Type'
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
@@ -44,6 +45,7 @@ FFIAbstractTest >> setUp [
 	super setUp.
 	intType := FFIInt32.
 	int32Type := FFIInt32.
+	uint32Type := FFIUInt32.
 	voidType := FFIVoid.
 	charType := FFICharacterType.
 ]
