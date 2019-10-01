@@ -56,6 +56,14 @@ MethodMapExamples >> exampleTempNamedPutCopying2 [
 ]
 
 { #category : #examples }
+MethodMapExamples >> exampleTempNamedPutCopying3 [
+	| b |
+	b := 1.
+	^[[ | a |
+		 a := b .thisContext tempNamed: 'b' put: 2. thisContext outerContext tempNamed: 'b' ] value ] value
+]
+
+{ #category : #examples }
 MethodMapExamples >> exampleTempNamedPutTempVector [
 	| b |
 	b := 1.

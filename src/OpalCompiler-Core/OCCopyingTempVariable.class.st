@@ -54,10 +54,10 @@ OCCopyingTempVariable >> writeFromContext: aContext scope: contextScope value: a
 	
 	| definitionContext |
 	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
-	originalVar writeFromContext: aContext scope: contextScope value: aValue.
-	
-	self flag: #FIXME.
 	"we need to change all the copies, too"
+	contextScope setCopyingTempToAllScopesUpToDefTemp: originalVar to: aValue from: aContext.
+	"and the original temp"
+	originalVar writeFromContext: aContext scope: contextScope value: aValue.
 	
 	^definitionContext 
 		tempAt: self indexFromIR
