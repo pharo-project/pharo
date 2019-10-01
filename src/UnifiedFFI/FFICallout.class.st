@@ -138,9 +138,21 @@ FFICallout >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: 
 ]
 
 { #category : #configuration }
+FFICallout >> beNonStrict [
+
+	self beStrict: false
+]
+
+{ #category : #configuration }
 FFICallout >> beStrict [
 	
-	resolutionMode := FFIStrictResolutionMode new
+	self beStrict: true
+]
+
+{ #category : #configuration }
+FFICallout >> beStrict: aBoolean [
+	
+	self options at: #optStrict put: aBoolean
 ]
 
 { #category : #accessing }
@@ -167,7 +179,6 @@ FFICallout >> indirectLoader: aLoader byIndex: anIndex [
 FFICallout >> initialize [
 	super initialize.
 	options := Dictionary new.
-	resolutionMode := FFIInferenceResolutionMode new
 ]
 
 { #category : #private }
@@ -187,6 +198,12 @@ FFICallout >> integerConstantArgument: anInteger type: aTypeName [
 		type: (FFITypeDeclaration typeName: aTypeName arity: 0);
 		resolveUsing: self;
 		yourself
+]
+
+{ #category : #testing }
+FFICallout >> isStrict [
+
+	^ self resolutionMode isStrict
 ]
 
 { #category : #'argument loaders' }
@@ -338,6 +355,14 @@ FFICallout >> requestor: aRequestor [
 ]
 
 { #category : #accessing }
+FFICallout >> resolutionMode [
+	
+	^ (self optionAt: #optStrict)
+		ifTrue: [ FFIStrictResolutionMode new ]
+		ifFalse: [ FFIInferenceResolutionMode new ]
+]
+
+{ #category : #accessing }
 FFICallout >> resolveExternalType: anObject [ 
 	^ (self resolveType: anObject) externalType 
 ]
@@ -380,7 +405,7 @@ FFICallout >> resolveType: aTypeName [
 { #category : #'spec parsing' }
 FFICallout >> resolveUntypedArgument: anArgument [
 
-	^ resolutionMode resolveUndeclaredTypeForArgument: anArgument withResolver: self
+	^ self resolutionMode resolveUndeclaredTypeForArgument: anArgument withResolver: self
 ]
 
 { #category : #'spec parsing' }

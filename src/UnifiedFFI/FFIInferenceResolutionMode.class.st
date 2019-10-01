@@ -12,6 +12,12 @@ Class {
 	#category : #'UnifiedFFI-Callouts'
 }
 
+{ #category : #testing }
+FFIInferenceResolutionMode >> isStrict [
+	
+	^ false
+]
+
 { #category : #resolution }
 FFIInferenceResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 

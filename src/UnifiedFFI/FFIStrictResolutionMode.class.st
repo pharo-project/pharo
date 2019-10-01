@@ -7,6 +7,12 @@ Class {
 	#category : #'UnifiedFFI-Callouts'
 }
 
+{ #category : #testing }
+FFIStrictResolutionMode >> isStrict [
+	
+	^ true
+]
+
 { #category : #resolution }
 FFIStrictResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 

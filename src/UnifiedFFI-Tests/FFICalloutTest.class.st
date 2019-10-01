@@ -70,6 +70,24 @@ FFICalloutTest >> ffiBindingOf: aName [
 ]
 
 { #category : #tests }
+FFICalloutTest >> testBeNonStrictTurnsOptionOff [
+	|generator|
+	generator := FFICallout new.
+	
+	generator beNonStrict.
+	self deny: generator isStrict
+]
+
+{ #category : #tests }
+FFICalloutTest >> testBeStrictTurnsOptionOn [
+	|generator|
+	generator := FFICallout new.
+	
+	generator beStrict.
+	self assert: generator isStrict
+]
+
+{ #category : #tests }
 FFICalloutTest >> testBuildingFnSpec [
 	| generator type s |
 
@@ -127,4 +145,22 @@ FFICalloutTest >> testParseOptions [
 	self deny: (generator optionAt: #optEncoding)
 	
 	
+]
+
+{ #category : #tests }
+FFICalloutTest >> testStrictModeOptionOff [
+	|generator|
+	generator := FFICallout new.
+	
+	generator parseOptions: #(- optStrict ).
+	self deny: generator isStrict
+]
+
+{ #category : #tests }
+FFICalloutTest >> testStrictModeOptionOn [
+	|generator|
+	generator := FFICallout new.
+	
+	generator parseOptions: #(+ optStrict ).
+	self assert: generator isStrict
 ]
