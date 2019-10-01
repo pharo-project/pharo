@@ -270,7 +270,7 @@ OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue f
 	self = aVar scope
 		ifTrue: [ ^ aVar writeFromLocalContext: aContext put: aValue ].
 	(self lookupVar: aVar name) writeFromLocalContext: aContext put: aValue.
-	self outerScope
+	^self outerScope
 		setCopyingTempToAllScopesUpToDefTemp: aVar
 		to: aValue
 		from: (self nextOuterScopeContextOf: aContext)

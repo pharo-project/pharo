@@ -150,7 +150,7 @@ OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| definitionContext |
 	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
-	self writeFromLocalContext: definitionContext put: aValue
+	^self writeFromLocalContext: definitionContext put: aValue
 ]
 
 { #category : #debugging }
