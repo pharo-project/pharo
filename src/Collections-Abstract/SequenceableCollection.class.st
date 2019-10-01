@@ -733,7 +733,7 @@ SequenceableCollection >> do: aBlock without: anItem [
 
 { #category : #enumerating }
 SequenceableCollection >> doWithIndex: elementAndIndexBlock [
-	"Just like with:do: except that the iteration index supplies the second argument to the block."
+	"Just like do: except that the iteration index supplies the second argument to the block"
 	"Use the new version with consistent naming"
 
 	"(Array streamContents: [:stream | #(11 22 13) doWithIndex: [ :each :i | stream nextPut: (each * each + i)]]) >>> #(122 486 172)"
@@ -2017,7 +2017,7 @@ SequenceableCollection >> withIndexCollect: elementAndIndexBlock [
 
 { #category : #enumerating }
 SequenceableCollection >> withIndexDo: elementAndIndexBlock [
-	"Just like with:do: except that the iteration index supplies the second argument to the block. "
+	"Just like do: except that the iteration index supplies the second argument to the block"
 
 	"(Array streamContents: [:stream| #(11 22 13) withIndexDo: [ :each :i | stream nextPut: (each * each + i)]]) >>> #(122 486 172)"
 
