@@ -40,7 +40,7 @@ GTInspectorContextNamedTempNode >> label [
 
 { #category : #accessing }
 GTInspectorContextNamedTempNode >> rawValue [
-	^ self hostObject namedTempAt: tempIndex
+	^ self hostObject tempNamed: tempName
 ]
 
 { #category : #accessing }
