@@ -191,6 +191,14 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 			ifTrue: [ class withThorougMethodsReferTo: aLiteral do: aBlock ] ]
 ]
 
+{ #category : #query }
+SystemNavigation >> allReferencesToBinding: aVariablesBinding [
+	"Answer all the methods that refer to aVariableBinding, do not go into netsted Arrays"
+
+	^ self allBehaviors flatCollect: [ :class | 
+			(class whichMethodsReferTo: aVariablesBinding) collect: [ :method | method methodReference ] ]
+]
+
 { #category : #'message sends' }
 SystemNavigation >> allSendersOf: selector [ 
 	^self allReferencesTo: selector
