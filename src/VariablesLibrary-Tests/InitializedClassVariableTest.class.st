@@ -1,7 +1,7 @@
 Class {
 	#name : #InitializedClassVariableTest,
 	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#category : #'VariablesLibrary-Tests'
 }
 
 { #category : #tests }

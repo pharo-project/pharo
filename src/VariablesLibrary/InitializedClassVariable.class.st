@@ -10,7 +10,7 @@ I am a class variabke that can initialize itself class creation.
 Class {
 	#name : #InitializedClassVariable,
 	#superclass : #AbstractInitializedClassVariable,
-	#category : #'Slot-Examples-ClassVariables'
+	#category : #'VariablesLibrary-ClassVariables'
 }
 
 { #category : #'class building' }

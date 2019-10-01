@@ -12,7 +12,7 @@ weakArray at: 1
 Class {
 	#name : #WeakClassVariable,
 	#superclass : #LiteralVariable,
-	#category : #'Slot-Examples-ClassVariables'
+	#category : #'VariablesLibrary-ClassVariables'
 }
 
 { #category : #'code generation' }

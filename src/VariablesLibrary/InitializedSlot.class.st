@@ -10,7 +10,7 @@ I am showing how a slot can initialize itself on object creation.
 Class {
 	#name : #InitializedSlot,
 	#superclass : #AbstractInitializedSlot,
-	#category : #'Slot-Examples-Base'
+	#category : #'VariablesLibrary-Slots'
 }
 
 { #category : #initialization }
