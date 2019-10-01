@@ -265,13 +265,11 @@ OCAbstractMethodScope >> removeTemp: tempVar [
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue from: aContext [
-	| copiedVar |
 	"we need to update all the copies if we change the value of a copied temp"
 
 	self = aVar scope
-		ifTrue: [ ^ self ].
-	copiedVar := self lookupVar: aVar name.
-	aContext tempAt: copiedVar indexFromIR put: aValue.
+		ifTrue: [ ^ aVar writeFromLocalContext: aContext put: aValue ].
+	(self lookupVar: aVar name) writeFromLocalContext: aContext put: aValue.
 	self outerScope
 		setCopyingTempToAllScopesUpToDefTemp: aVar
 		to: aValue
