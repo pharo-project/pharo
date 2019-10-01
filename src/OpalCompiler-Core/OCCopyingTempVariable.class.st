@@ -51,15 +51,7 @@ OCCopyingTempVariable >> tempVectorForTempStoringIt [
 
 { #category : #debugging }
 OCCopyingTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
-	
-	| definitionContext |
-	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
-	originalVar writeFromContext: aContext scope: contextScope value: aValue.
-	
-	self flag: #FIXME.
-	"we need to change all the copies, too"
-	
-	^definitionContext 
-		tempAt: self indexFromIR
-		put: aValue
+
+	"we need to change this var, all the other copies, and the orginal"
+	^contextScope setCopyingTempToAllScopesUpToDefTemp: originalVar to: aValue from: aContext
 ]
