@@ -120,10 +120,6 @@ TextTest >> testPrepend [
 
 { #category : #running }
 TextTest >> testRangeOfStartingAt [
-"	text addAttribute: TextEmphasis bold from: 1 to: 5.
-	text addAttribute: TextColor blue from: 1 to: 5.
-	text addAttribute: TextEmphasis underlined from: 7 to: 8.
-	text addAttribute: TextColor red from: 7 to: 13."
 	self assert: (text rangeOf: TextEmphasis bold startingAt: 1) equals: (1 to: 5).
 	"even an index at beginning of the range, it returns the whole interval"
 	self assert: (text rangeOf: TextEmphasis bold startingAt: 2) equals: (1 to: 5).
@@ -137,4 +133,43 @@ TextTest >> testRangeOfStartingAt [
 	self assert: (text rangeOf: TextEmphasis underlined startingAt: 7) equals: (7 to: 8).
 	self assert: (text rangeOf: TextEmphasis underlined startingAt: 8) equals: (7 to: 8).
 	self deny: (text rangeOf: TextEmphasis underlined startingAt: 5) equals: (7 to: 8).
+]
+
+{ #category : #running }
+TextTest >> testReplaceFromToWith [
+	| anotherText bold|
+	bold := TextEmphasis bold.
+	anotherText := 'hot' asText addAttribute: bold.
+	text replaceFrom: 10 to: 13 with: anotherText.
+	self assert: text string equals: 'Pharo is hot'.
+	self assert: text size equals: 12.
+	"check attribute is has expected"
+	10 to: 12 do: [ :index | 
+		| attr |
+		attr := text attributesAt: index.
+		self assert: attr size equals: 1.
+		self assert: attr first equals: bold ]
+]
+
+{ #category : #tests }
+TextTest >> testRuns [
+	| attributes |
+	attributes := RunArray new: 13 withAll: TextColor red.
+	text runs: attributes.
+	
+	attributes := RunArray new: 12 withAll: TextColor red.
+	self should: [ text runs: attributes ] raise: Error.
+
+	attributes := RunArray new: 14 withAll: TextColor red.
+	self should: [ text runs: attributes ] raise: Error.
+]
+
+{ #category : #tests }
+TextTest >> testSize [
+	self assert: text size equals: 13
+]
+
+{ #category : #tests }
+TextTest >> testString [
+	self assert: text string equals: 'Pharo is cool'
 ]
