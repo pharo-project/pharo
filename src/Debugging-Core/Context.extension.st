@@ -317,15 +317,13 @@ Context >> stepToHome: aContext [
 	[ctxt := ctxt step.
 	error ifNotNil: [
 		"Error was raised, remove inserted above contexts then return signaler context"
-		"not sure why this is commented out, I think if error is not nil the block has been
-		executed and thus the on:do: was executed, thus no need to remove it."
-		"aContext terminateTo: context sender."  "remove above ensure and handler contexts"
-			^ {ctxt. error}].
+		aContext terminateTo: context sender.  "remove above ensure and handler contexts"
+		^ {ctxt. error}].
 	
 	home == ctxt home] whileFalse: [
 		home isDead ifTrue: [^ {ctxt. nil}]
 	].
-	"Error was *not* raised we need to it remove inserted above contexts then return signaler context"
+	"Error was *not* raised we need to remove inserted above contexts then return signaler context"
 	aContext terminateTo: context sender.  "remove above ensure and handler contexts"
 	^ {ctxt. nil}
 ]
