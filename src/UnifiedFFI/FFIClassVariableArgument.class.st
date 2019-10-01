@@ -1,3 +1,6 @@
+"
+I am a loader for class variables, pushing to the stack the class variable literal
+"
 Class {
 	#name : #FFIClassVariableArgument,
 	#superclass : #FFIFunctionArgumentLoader,

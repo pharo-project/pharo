@@ -1,3 +1,10 @@
+"
+I am a function argument representing a literal value (in contrast to a variable).
+The parser creates me when it finds other than symbols as arguments.
+
+I am resolved by resolving my type.
+The type knows how to resolve itself in a context.
+"
 Class {
 	#name : #FFIConstantArgument,
 	#superclass : #FFIFunctionArgument,

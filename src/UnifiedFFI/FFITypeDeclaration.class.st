@@ -1,3 +1,7 @@
+"
+I represent a type declaration in a FFI function signature. I have a type name and an arity (the number of indirections indicated by pointer marker stars *).
+I am resolved as an external FFI type with my arity.
+"
 Class {
 	#name : #FFITypeDeclaration,
 	#superclass : #Object,
