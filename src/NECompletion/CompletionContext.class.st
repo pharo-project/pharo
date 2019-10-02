@@ -61,6 +61,11 @@ CompletionContext >> parseSource [
 	ast := isWorkspace
 		ifTrue: [RBParser parseFaultyExpression: source]
 		ifFalse: [RBParser parseFaultyMethod: source].
+	ast methodNode 
+		compilationContext: 
+			(Smalltalk compiler compilationContextClass new
+             class: theClass;forSyntaxHighlighting: true).
+		
 	ast doSemanticAnalysisIn: theClass.
 	TypingVisitor new visitNode: ast
 ]
