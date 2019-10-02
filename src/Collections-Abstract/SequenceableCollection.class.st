@@ -1057,7 +1057,7 @@ SequenceableCollection >> groupsOf: n atATimeCollect: aBlock [
 	"(#(1 1 1 10 10 10 100  100 100) groupsOf: 3 atATimeCollect: [ :x | x ]) >>> #(#(1 1 1) #(10 10 10) #(100 100 100))"
 
 	| passArray |
-	passArray := aBlock numArgs = 1.
+	passArray := aBlock numArgs <= 1.
 	^ (n to: self size by: n)
 		collect: [ :index | 
 			| args |
