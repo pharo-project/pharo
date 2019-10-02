@@ -103,7 +103,7 @@ FFIFunctionParserTest >> parseArgument: inputToParse [
 	^ parser parseArgument
 ]
 
-{ #category : #factory }
+{ #category : #running }
 FFIFunctionParserTest >> setUp [
 
 	super setUp.
