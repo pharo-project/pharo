@@ -142,6 +142,23 @@ TIterateSequencedReadableTest >> testFromToDo [
 ]
 
 { #category : #'tests - iterate on sequenced reable collections' }
+TIterateSequencedReadableTest >> testGroupsOfAtATimeCollect [
+	| groupsOf2 |
+	self assertEmpty: (self empty groupsOf: 2 atATimeCollect: [ :x | x ]).
+	self assertEmpty: (self empty groupsOf: 2 atATimeCollect: #yourself).
+	
+	groupsOf2 := self nonEmptyMoreThan1Element groupsOf: 2 atATimeCollect: [ :x | x ].
+	
+	self assert: groupsOf2 size equals: self nonEmptyMoreThan1Element size // 2.
+	self assert: (groupsOf2 allSatisfy: [ :array | array size = 2 ]).
+	
+	groupsOf2 := self nonEmptyMoreThan1Element groupsOf: 3 atATimeCollect: #yourself.
+	
+	self assert: groupsOf2 size equals: self nonEmptyMoreThan1Element size // 3.
+	self assert: (groupsOf2 allSatisfy: [ :array | array size = 3 ]).
+]
+
+{ #category : #'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testKeysAndValuesDo [
 	"| result |
 	result:= OrderedCollection new.
