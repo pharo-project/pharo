@@ -963,9 +963,19 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
 
 { #category : #private }
 SHRBTextStyler >> parse: aText isMethod: isMethod [
-	^ isMethod
-		ifTrue: [ RBParser parseFaultyMethod: aText asString ]
-		ifFalse: [ RBParser parseFaultyExpression: aText asString ]
+	|root|
+	
+	isMethod 
+		ifTrue: [
+			[root := RBParser parseFaultyMethod: aText asString.
+			root methodNode methodClass: classOrMetaClass.
+			^root] 
+				on: Error 
+				do: [
+					"Problem: if called with a exprssion, we end here.
+					leads to wrong use by clients. Need to be fixed"
+					^RBParser parseFaultyExpression: aText asString]]
+		ifFalse:[ ^RBParser parseFaultyExpression: aText asString ].
 ]
 
 { #category : #private }
