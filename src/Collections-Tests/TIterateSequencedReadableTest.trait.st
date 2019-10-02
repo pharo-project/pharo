@@ -145,8 +145,8 @@ TIterateSequencedReadableTest >> testFromToDo [
 TIterateSequencedReadableTest >> testGroupsOfAtATimeCollect [
 	| groupsOf2 |
 	self assertEmpty: (self empty groupsOf: 2 atATimeCollect: [ :x | x ]).
-   self assertEmpty: (self empty groupsOf: 2 atATimeCollect: #yourself).
-		
+	self assertEmpty: (self empty groupsOf: 2 atATimeCollect: #yourself).
+	
 	groupsOf2 := self nonEmptyMoreThan1Element groupsOf: 2 atATimeCollect: [ :x | x ].
 	
 	self assert: groupsOf2 size equals: self nonEmptyMoreThan1Element size // 2.
