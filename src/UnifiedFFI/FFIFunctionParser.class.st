@@ -13,8 +13,25 @@ Class {
 }
 
 { #category : #'requestor callbacks' }
-FFIFunctionParser >> argName: aName indirectIndex: anIndex type: aTypeName ptrArity: arity [
-	^ { aName. anIndex. aTypeName. arity }
+FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: arity [
+
+	argName ifNil: [ 
+		"allow nil,true,false as untyped arguments"
+		"Do not accept nil, true or false followed by *s"
+		arity > 0 ifTrue: [ self error: 'missing argument name' ].
+		^ FFIConstantArgument new
+			value: aTypeName;
+			yourself ].
+
+	^ argName isSymbol ifTrue: [ 
+		FFIVariableArgument
+			name: argName
+			typeName: aTypeName
+			arity: arity ] ifFalse: [ 
+		FFIConstantArgument
+			value: argName
+			typeName: aTypeName
+			arity: arity ]
 ]
 
 { #category : #initialization }
@@ -25,7 +42,18 @@ FFIFunctionParser >> initialize [
 
 { #category : #'requestor callbacks' }
 FFIFunctionParser >> integerConstantArgument: aValue [
-	^ aValue
+	^ FFIConstantArgument new
+		value: aValue;
+		yourself
+]
+
+{ #category : #'requestor callbacks' }
+FFIFunctionParser >> integerConstantArgument: anInteger type: aTypeName [
+
+	^ FFIConstantArgument new
+		value: anInteger;
+		type: (FFITypeDeclaration typeName: aTypeName arity: 0);
+		yourself
 ]
 
 { #category : #accessing }
@@ -39,34 +67,31 @@ FFIFunctionParser >> parseAnonymousFunction: aFunctionDefinition [
 	 'returnType (arguments)'
 
 	 Answer an instance of FFIFunctionSpec class"
-	| argsSpec retType |
+	| argsSpec typeAndName |
 	
 	fnSpec := FFIFunctionSpec new.
 	
-	aFunctionDefinition isString 
-		ifTrue: [
-			retType :=  (aFunctionDefinition copyUpTo: $( ) trimBoth.
-			argsSpec := ((aFunctionDefinition copyAfter: $( ) copyUpTo: $)) trimBoth ] 
-		ifFalse: [
-			argsSpec := aFunctionDefinition last flatCollect: [:ea | ea asString, ' ' ].
-			retType := aFunctionDefinition allButLast  flatCollect: [:ea | ea asString, ' ' ] ].
+	self setOn: aFunctionDefinition.
 	
+	argsSpec := stream contents last.
+	typeAndName := stream contents allButLast.
+		
 	"Parse return type"
-	stream := retType readStream.
+	stream := typeAndName readStream.
 	fnSpec returnType: self parseReturn.
 
 	stream atEnd ifFalse: [ self error: 'Nothing more expected after function type'].	
-	
-	"Function arguments"
+
+	"Function arguments"	
 	stream := argsSpec readStream.
 	self parseArguments.
 
 	^ fnSpec
 ]
 
-{ #category : #parsing }
+{ #category : #accessing }
 FFIFunctionParser >> parseArgument [
-	| argument argName indirectIndex typeAndPtrArity char |
+	| argument argName indirectIndex typeAndPtrArity next |
 	" An argument can be:
 
  - nil , true , false
@@ -77,83 +102,66 @@ FFIFunctionParser >> parseArgument [
  - type name *** arg name
 
 "
-	char := stream peek.
-	
 	"constant conditions"
-	(char isDigit or: [ char = $- ]) ifTrue: [ 
-		^ self requestor integerConstantArgument: self parseInt ].
-	char = $# ifTrue: [ 
+	(stream contents size = 1 and: [ 
+		stream contents first ~= #void ]) ifTrue: [ 
+		^ self integerConstantArgument: stream next ].
+	stream peek isArray ifTrue: [ 
 		^ self parseArgumentCastedType ].
 
 	"none of them, parse type and name"
 	typeAndPtrArity := self parseType.
-	self skipSpace.
-	argName := self parseWord.
-	self skipSpace.
-	char := stream peek.
-	char = $@
+	argName := stream next.
+	next := stream peek.
+	next = $@
 		ifTrue: [ 
 			stream next.
-			self skipSpace.
 			argName := argName.
 			indirectIndex := self parseInt ].	
 	"for sole 'void' fake argument "
 	(typeAndPtrArity = #('void' 0) and: [ argName isNil ])
 		ifTrue: [ ^ nil ].
-	argument := requestor
+	argument := self
 		argName: argName
 		indirectIndex: indirectIndex
 		type: typeAndPtrArity first
 		ptrArity: typeAndPtrArity second.
-	argument isExternalType
-		ifTrue: [ argument validateAfterParse: typeAndPtrArity ].
 
 	^ argument 
 ]
 
-{ #category : #parsing }
+{ #category : #accessing }
 FFIFunctionParser >> parseArgumentCastedType [
 	| castedType number |
 
 	castedType := self parseCastedType.
-	self skipSpace.
-	number := self parseInt.
-	^ self requestor integerConstantArgument: number type: castedType
+	number := stream next.
+	^ self integerConstantArgument: number type: castedType
 ]
 
-{ #category : #parsing }
+{ #category : #accessing }
 FFIFunctionParser >> parseArguments [
 "
 Parse a arguments spec in a form of: 
 
 #( type1 name1 , type2 name2 , nil, true, false , 100 )
 "
-	[ stream atEnd ] whileFalse: [
+	| allThings |
+	allThings := stream.
+	[ allThings atEnd ] whileFalse: [
+		stream := (allThings upTo: #,) readStream.
 		self parseArgument ifNotNil: [ :arg | 
-			fnSpec addArgument: arg ].
-		
-		self skipSpace.
-		
-		stream atEnd ifFalse: [ 
-			stream peek = $, ifFalse: [ 
-				self error: 'comma expected' ].
-			stream next. self skipSpace ] ]
+			fnSpec addArgument: arg ] ]
 ]
 
-{ #category : #parsing }
+{ #category : #accessing }
 FFIFunctionParser >> parseCastedType [
-	| castedType |
 
-	stream next. "skip $("
-	stream next = $( ifFalse: [ 
-		self error: '$( expected' ].
-	castedType := String new writeStream.	
-	[ stream atEnd not and: [stream peek ~= $) ] ] 
-	whileTrue: [ castedType nextPut: stream next ].
-	stream next. "skip $)"	
-
-	"first one will always be $#"
-	^ castedType contents allButFirst trimmed
+	^ (String streamContents: [ :castedType |
+		stream next do: [ :typepart |
+			castedType
+				nextPutAll: typepart;
+				space ] ]) trimBoth
 ]
 
 { #category : #parsing }
@@ -192,20 +200,17 @@ FFIFunctionParser >> parseNamedFunction: aFunctionDefinition [
 	
 	fnSpec := FFIFunctionSpec new.
 	
-	aFunctionDefinition isString 
-		ifTrue: [
-			typeAndName :=  (aFunctionDefinition copyUpTo: $( ) trimBoth.
-			argsSpec := ((aFunctionDefinition copyAfter: $( ) copyUpTo: $)) trimBoth ] 
-		ifFalse: [
-			argsSpec := aFunctionDefinition last flatCollect: [:ea | ea asString, ' ' ].
-			typeAndName := aFunctionDefinition allButLast flatCollect: [:ea | ea asString, ' ' ] ].
+	self setOn: aFunctionDefinition.
+	
+	argsSpec := stream contents last.
+	typeAndName := stream contents allButLast.
 		
 	"Parse return type"
 	stream := typeAndName readStream.
 	fnSpec returnType: self parseReturn.
 
 	"Function name"	
-	fnName := self parseWord.
+	fnName := stream next.
 	fnName ifNil: [ self error: 'function name expected' ].
 	fnSpec functionName: fnName.
 
@@ -218,36 +223,33 @@ FFIFunctionParser >> parseNamedFunction: aFunctionDefinition [
 
 { #category : #parsing }
 FFIFunctionParser >> parseReturn [
-	| returnTypeTuple returnType |
-	returnTypeTuple := self parseType.
-	returnType := self requestor returnType: returnTypeTuple.
-	returnType isExternalType
-		ifTrue: [ returnType validateAfterParse: returnTypeTuple ].
-	^ returnType
+
+	^ self returnType: self parseType.
 ]
 
-{ #category : #parsing }
+{ #category : #accessing }
 FFIFunctionParser >> parseType [
 
 	" parse type name and optional number of asterisks, following it"
 
 	| typeName ptrArity |
 
-	typeName := self parseWord.
+	typeName := stream next.
 	typeName ifNil: [ ^ self error: 'type name expected' ].	
 
 	"skip 'const' , which is often used but has no any use for us "
 	typeName = 'const'
-		ifTrue: [ self skipSpace.
-			typeName := self parseWord.
+		ifTrue: [
+			typeName := stream next.
 			typeName ifNil: [ ^ self error: 'type name expected' ]
 			].
 
 	ptrArity := 0.
-	[ self skipSpace. stream peek = $* ]
-		whileTrue: [ ptrArity := ptrArity + 1.
-			stream next
-			].	
+	[ stream atEnd not and: [ stream peek isString and: [ stream peek beginsWith: '*' ] ] ] whileTrue: [ | pointerMarker |
+		pointerMarker := stream next.
+		self assert: (pointerMarker allSatisfy: [ :e | e = $* ]).
+		ptrArity := ptrArity + pointerMarker size ].
+	
 	"Answer a tuple name, arity"
 	^ {typeName. ptrArity}
 ]
@@ -282,7 +284,26 @@ FFIFunctionParser >> requestor: aRequestor [
 
 { #category : #'requestor callbacks' }
 FFIFunctionParser >> returnType: aType [
-	^ aType
+	^ FFITypeDeclaration typeName: aType first arity: aType second
+]
+
+{ #category : #accessing }
+FFIFunctionParser >> setOn: aStreamSource [
+
+	| functionDeclarationArray |
+	functionDeclarationArray := aStreamSource isString ifTrue: [ | node |
+			node := RBParser parseExpression: '#(', aStreamSource, ')'.
+			node isLiteralNode ifFalse: [ self halt ].
+			node evaluate
+		] ifFalse: [ aStreamSource ].
+			
+	stream := functionDeclarationArray readStream.
+]
+
+{ #category : #accessing }
+FFIFunctionParser >> setStream: aReadStream [
+	
+	stream := aReadStream
 ]
 
 { #category : #parsing }
