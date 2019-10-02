@@ -440,7 +440,7 @@ PasteUpMorph >> dropFiles: anEvent [
 	numFiles := anEvent contents.
 	1 to: numFiles do: [ :i | 
 		| aFileReference handler |
-		aFileReference := FileReference requestDropReference: i.
+		aFileReference := anEvent requestDropReference: i.
 		handler := ExternalDropHandler
 			lookupExternalDropHandler: aFileReference.
 		handler
