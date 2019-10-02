@@ -11,6 +11,22 @@ Class {
 	#category : #'Text-Tests-Base'
 }
 
+{ #category : #examples }
+TextTest >> replacementExample3 [
+  "For a Text t, the following assertion should always hold:
+     t string size = t run size 
+   This test examines the preservation of this assertion for in-place replacement 
+   Here, the replacement text is shorteer than the text that is shall replace."
+   | replacement startPos length startPosInRep string2 |
+   text := (string := 'This is again simple text' copy) asText.
+   "Without the copy, we would modify a constant that the compiler attached at the compiled method."
+   startPos := string findString: 'simple'. 
+   length  := 'simple' size.
+   replacement := (string2 := 'both simple and short') asText.
+   startPosInRep :=  string2 findString: 'short'.
+   text replaceFrom: startPos to: startPos + length - 1 with: replacement startingAt: startPosInRep
+]
+
 { #category : #running }
 TextTest >> setUp [
 	string := 'Pharo is cool'.
@@ -24,12 +40,10 @@ TextTest >> setUp [
 { #category : #tests }
 TextTest >> testAppend [
 	| receiver argument result expectedResult |
-
-	"Append text without attribute"
+      "Append text without attribute"
 	receiver := 'xxx' asText  addAttribute: TextEmphasis bold from: 1 to: 3.
 	argument := 'yyy'.
-	expectedResult := 'xxxyyy' asText 
-		addAttribute: TextEmphasis bold from: 1 to: 3.
+	expectedResult := 'xxxyyy' asText addAttribute: TextEmphasis bold from: 1 to: 3.
 	result := receiver append: argument.
 	self assert: result == receiver. 
 	self assert: result string equals: expectedResult string.
@@ -45,6 +59,22 @@ TextTest >> testAppend [
 	self assert: result == receiver. 
 	self assert: result string equals: expectedResult string.
 	self assert: result runs equals: expectedResult runs.
+]
+
+{ #category : #tests }
+TextTest >> testAsNumber [
+	self assert: '123' asText asNumber equals: 123.
+	self assert: '1.23e2' asText asNumber equals: 123.
+	self assert: '2r1000' asText asNumber equals: 8.
+
+
+]
+
+{ #category : #tests }
+TextTest >> testAsString [
+	self assert: text asString equals: 'Pharo is cool'
+
+
 ]
 
 { #category : #tests }
@@ -82,6 +112,17 @@ TextTest >> testFindStringStartingAtCaseSensitive [
 ]
 
 { #category : #tests }
+TextTest >> testHowManyMatch [
+	self assert: (text howManyMatch: 'Pharo') equals: 5.
+	self assert: (text howManyMatch: 'Pha') equals: 3.
+	self assert: (text howManyMatch: 'P') equals: 1.
+	self assert: (text howManyMatch: 'p') equals: 0.
+	self assert: (text howManyMatch: 'is') equals: 0.
+	self assert: (text howManyMatch: 'cool') equals: 0.
+
+]
+
+{ #category : #tests }
 TextTest >> testLineCount [
 	text := Text streamContents: [:str | str << 'Pharo' << Character cr << 'is' << Character cr << 'cool'].
 	self assert: text lineCount equals: 3
@@ -91,23 +132,18 @@ TextTest >> testLineCount [
 { #category : #tests }
 TextTest >> testPrepend [
 	| receiver argument result expectedResult |
-
 	"Prepend text without attribute"
-	receiver := 'xxx' asText  
-		addAttribute: TextEmphasis bold from: 1 to: 3.
+	receiver := 'xxx' asText  addAttribute: TextEmphasis bold from: 1 to: 3.
 	argument := 'yyy'.
-	expectedResult := 'yyyxxx' asText 
-		addAttribute: TextEmphasis bold from: 4 to: 6.
+	expectedResult := 'yyyxxx' asText addAttribute: TextEmphasis bold from: 4 to: 6.
 	result := receiver prepend: argument.
 	self assert: result == receiver. 
 	self assert: result string equals: expectedResult string.
 	self assert: result runs equals: expectedResult runs.
 
 	"Prepend text with attribute"
-	receiver := 'xxx' asText  
-		addAttribute: TextEmphasis bold from: 1 to: 3.
-	argument := 'yyy' asText 
-		addAttribute: TextEmphasis italic from: 1 to: 3.
+	receiver := 'xxx' asText  addAttribute: TextEmphasis bold from: 1 to: 3.
+	argument := 'yyy' asText addAttribute: TextEmphasis italic from: 1 to: 3.
 	expectedResult := 'yyyxxx' asText 
 		addAttribute: TextEmphasis italic from: 1 to: 3;
 		addAttribute: TextEmphasis bold from: 4 to: 6.
@@ -152,6 +188,48 @@ TextTest >> testReplaceFromToWith [
 ]
 
 { #category : #tests }
+TextTest >> testReplacementAtStartPos1 [
+	"For a Text t, the following assertion should always hold:
+     t string size = t run size 
+	This test examines the preservation of this assertion for in-place replacement"
+	| replacement  length  |
+	text := 'This is a simple text' copy asText.
+	"Without the copy, we would modify a constant that the compiler attached at the compiled method."
+	length := 'This' size.
+	replacement := 'That' asText.
+	text replaceFrom: 1 to: length with: replacement startingAt: 1.
+	self assert: text string size equals: text runs size
+]
+
+{ #category : #tests }
+TextTest >> testReplacementAtStartPos2 [
+  	"For a Text t, the following assertion should always hold:
+     t string size = t run size 
+	 This test examines the preservation of this assertion for in-place replacement."
+	| replacement  length  |
+	text := 'This is a simple text' copy asText.
+	"Without the copy, we would modify a constant that the compiler attached at the compiled method."
+	length  := 'This' size.
+	replacement := 'That********' asText.
+	text replaceFrom: 1 to: length with: replacement startingAt: 1.
+	self assert: text string size equals: text runs size
+]
+
+{ #category : #tests }
+TextTest >> testReplacementAtStartPos3 [
+	"For a Text t, the following assertion should always hold:
+		t string size = t run size 
+	This test examines the preservation of this assertion for in-place replacement 
+	Here, the replacement text is shorter than the text that is shall replace."
+   | text1  replacement  length  |
+   text1 := 'This is a simple text' copy asText.
+   "Without the copy, we would modify a constant that the compiler attached at the compiled method."
+   length  := 'This' size.
+   replacement := 'Tht' asText.
+  self should: [ text1 replaceFrom: 1 to: length with: replacement startingAt: 1] raise: Error
+]
+
+{ #category : #tests }
 TextTest >> testRuns [
 	| attributes |
 	attributes := RunArray new: 13 withAll: TextColor red.
@@ -172,4 +250,59 @@ TextTest >> testSize [
 { #category : #tests }
 TextTest >> testString [
 	self assert: text string equals: 'Pharo is cool'
+]
+
+{ #category : #tests }
+TextTest >> testTextReplacement1 [
+	"For a Text t, the following assertion should always hold:
+     t string size = t run size 
+	This test examines the preservation of this assertion for in-place replacement"
+   | replacement startPos length startPosInRep string2 |
+   text := (string := 'This is a simple text' copy) asText.
+   "Without the copy, we would modify a constant that the compiler attached at the compiled method."
+   startPos := string findString: 'simple'. 
+   length  := 'simple' size.
+   replacement := (string2 := 'both simple and short*') asText.
+   startPosInRep :=  string2 findString: 'short'.
+   text replaceFrom: startPos to: startPos + length - 1 with: replacement startingAt: startPosInRep.
+   self assert: text string size equals: text runs size
+]
+
+{ #category : #tests }
+TextTest >> testTextReplacement2 [
+	"For a Text t, the following assertion should always hold:
+     	t string size = t run size 
+    This test examines the preservation of this assertion for in-place replacement.
+    Here, the replacement text has trailing characters."
+	| replacement startPos length startPosInRep string2 |
+	text := (string := 'This is simple text' copy) asText.
+	"Without the copy, we would modify a constant that the compiler attached at the compiled method."
+	startPos := string findString: 'simple'. 
+	length := 'simple' size.
+	replacement := (string2 := 'both simple and short*************') asText.
+	startPosInRep :=  string2 findString: 'short'.
+	text replaceFrom: startPos to: startPos + length - 1 with: replacement startingAt: startPosInRep.
+	self assert: text string size equals: text runs size
+]
+
+{ #category : #tests }
+TextTest >> testTextReplacement3 [
+	"For a Text t, the following assertion should always hold:
+		t string size = t run size 
+	This test examines the preservation of this assertion for in-place replacement 
+	Here, the replacement text is shorteer than the text that is shall replace."
+
+	self should: [ self replacementExample3 ] raise: Error
+]
+
+{ #category : #tests }
+TextTest >> testUnembellished [
+	| anotherText |
+	self deny: text unembellished.
+	anotherText := 'Hello' asText 
+		addAttribute: TextEmphasis bold.
+	self assert: anotherText unembellished.
+	anotherText addAttribute: TextFontChange font2.
+	self deny: anotherText unembellished.
+
 ]
