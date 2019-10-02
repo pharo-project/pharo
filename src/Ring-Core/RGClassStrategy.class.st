@@ -44,7 +44,7 @@ RGClassStrategy >> allClassVariables [
 
 	^ ((self owner superclass == nil) or: [ self owner superclass == self owner]) 
 		ifTrue: [ self classVariables ]
-		ifFalse: [ self owner superclass allClassVariables, classVariables ]
+		ifFalse: [ self owner superclass allClassVariables, self classVariables ]
 ]
 
 { #category : #'private - backend access' }
