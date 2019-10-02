@@ -963,16 +963,9 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
 
 { #category : #private }
 SHRBTextStyler >> parse: aText isMethod: isMethod [
-	|root|
-	
-	isMethod 
-		ifTrue: [
-			[root := RBParser parseFaultyMethod: aText asString.
-			root methodNode methodClass: classOrMetaClass.
-			^root] 
-				on: Error 
-				do: [^RBParser parseFaultyExpression: aText asString]]
-		ifFalse:[ ^RBParser parseFaultyExpression: aText asString ].
+	^ isMethod
+		ifTrue: [ RBParser parseFaultyMethod: aText asString ]
+		ifFalse: [ RBParser parseFaultyExpression: aText asString ]
 ]
 
 { #category : #private }
@@ -981,17 +974,14 @@ SHRBTextStyler >> pixelHeight [
 ]
 
 { #category : #private }
-SHRBTextStyler >> privateStyle: aText [ 
-    | ast |
-
-    ast := self parse: aText isMethod: self isForWorkspace not.
-    ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
-            class: (classOrMetaClass ifNil: [UndefinedObject]);
+SHRBTextStyler >> privateStyle: aText [
+	| ast |
+	ast := self parse: aText isMethod: self isForWorkspace not.
+	ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
 				forSyntaxHighlighting: true;
-            requestor: workspace).
-    ast doSemanticAnalysis.
-    self style: aText ast: ast.
-    ^ aText
+				requestor: workspace).
+	ast doSemanticAnalysisIn: classOrMetaClass.
+	^ self style: aText ast: ast
 ]
 
 { #category : #private }
@@ -1032,7 +1022,7 @@ SHRBTextStyler >> style: aText ast: ast [
 	bracketLevel := 0.
 	parentheseLevel:=0.
 	ast acceptVisitor: self.
-	aText runs: (RunArray newFrom: charAttr)	
+	^aText runs: (RunArray newFrom: charAttr)	
 
 ]
 
