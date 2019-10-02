@@ -309,7 +309,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FreeType-Tests'.
 		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
-		spec package: 'GT-EventRecorder-Tests'.
 		spec package: 'GT-Tests-Debugger'.
 		spec package: 'GT-Tests-Inspector'.
 		spec package: 'GT-Tests-Playground'.
