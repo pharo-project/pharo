@@ -720,7 +720,6 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-SUnitDebugger'
 ).
 spec group: 'GT-Tests-Group' with: #(
-	'GT-EventRecorder-Tests'
 	'GT-Tests-Debugger'
 	'GT-Tests-Inspector'
 	'GT-Tests-Playground'
