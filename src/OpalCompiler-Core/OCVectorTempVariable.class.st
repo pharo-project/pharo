@@ -35,10 +35,15 @@ OCVectorTempVariable >> isTempVectorTemp [
 { #category : #debugging }
 OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
-	| offset pairVariableVector |
-	pairVariableVector := contextScope lookupTempVector: vectorName inContext: aContext.
-	offset := pairVariableVector first indexInTempVectorFromIR: name.
-	^pairVariableVector second at: offset.
+	| tempVectorVar theVector offset |
+	tempVectorVar := contextScope lookupVar: vectorName.
+	theVector := tempVectorVar readFromLocalContext: aContext.
+	theVector ifNil: [ ^ 
+		 "If we don't find the temp vector (because it was nilled or not created), we 
+		  lookup in the outer context with the corresponding outer scope"
+		self readFromContext: aContext outerContext scope: contextScope outerScope].
+	offset := tempVectorVar indexInTempVectorFromIR: name.
+	^theVector at: offset
 ]
 
 { #category : #accessing }
@@ -63,6 +68,10 @@ OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aV
 	| tempVectorVar theVector offset |
 	tempVectorVar := contextScope lookupVar: vectorName.
 	theVector := tempVectorVar readFromLocalContext: aContext.
+	theVector ifNil: [ ^ 
+		 "If we don't find the temp vector (because it was nilled or not created), we 
+		  lookup in the outer context with the corresponding outer scope"
+		self readFromContext: aContext outerContext scope: contextScope outerScope].
 	offset := tempVectorVar indexInTempVectorFromIR: name.
 	^theVector at: offset put: aValue.
 ]
