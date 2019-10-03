@@ -21,7 +21,7 @@ HashAndEqualsTestCase >> setUp [
 
 { #category : #tests }
 HashAndEqualsTestCase >> testEquality [
-	"Check TextAttribute subclasses with equality message report it correctly"
+	"Check that TextAttribute subclasses report equality correctly"
 	prototypes
 		do: [:p | self
 				should: [(EqualityTester with: p) result]] 
