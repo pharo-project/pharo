@@ -39,7 +39,7 @@ TextEmphasisTest >> testDominatedByCmd0 [
 
 { #category : #tests }
 TextEmphasisTest >> testDominates [
-	| text attr |
+	| text |
 	"self domination"
 	#(#bold #italic  #underlined #narrow #struckOut) do: [ :anEmphasis |
 		self assert: ((TextEmphasis perform: anEmphasis) dominates: (TextEmphasis perform: anEmphasis)) ].
