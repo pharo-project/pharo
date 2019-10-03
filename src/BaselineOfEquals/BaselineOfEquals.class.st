@@ -9,5 +9,8 @@ BaselineOfEquals >> baseline: spec [
 	<baseline>
 
 	spec for: #'common' do: [
-		spec package: #Equals ]
+		spec 
+			package: #Equals;
+			package: #'Equals-Tests' with: [ spec requires: #(Equals) ] ].
+
 ]
