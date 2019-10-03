@@ -5,7 +5,8 @@ Class {
 	#name : #OCTempVariable,
 	#superclass : #OCAbstractLocalVariable,
 	#instVars : [
-		'escaping'
+		'escaping',
+		'index'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -57,7 +58,7 @@ OCTempVariable >> hash [
 
 { #category : #debugging }
 OCTempVariable >> indexFromIR [
-	^scope indexFromIRForVarNamed: name
+	^index ifNil: [index := scope indexFromIRForVarNamed: name]
 ]
 
 { #category : #initialization }
