@@ -21,13 +21,6 @@ SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 	^CmdContextMenuActivation byRootGroupItemOrder: 2.1 for: ClyClassContextOfFullBrowser 
 ]
 
-{ #category : #activation }
-SycAbstractAllInstVarAccessorsCommand class >> sourceCodeMenuActivation [
-	<classAnnotation>
-	
-	^SycSourceCodeMenuActivation byRootGroupItemFor: ClySourceCodeContext
-]
-
 { #category : #accessing }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 
