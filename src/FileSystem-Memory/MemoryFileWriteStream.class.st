@@ -47,6 +47,12 @@ MemoryFileWriteStream >> isBinary [
 ]
 
 { #category : #writing }
+MemoryFileWriteStream >> next: numberOfElements putAll: aCollection startingAt: startingAt [ 
+
+	^ stream next: numberOfElements putAll: aCollection startingAt: startingAt 
+]
+
+{ #category : #writing }
 MemoryFileWriteStream >> nextPut: aCollection [
 	^ self stream nextPut: aCollection
 ]
@@ -59,6 +65,12 @@ MemoryFileWriteStream >> nextPutAll: aCollection [
 { #category : #positioning }
 MemoryFileWriteStream >> position [
 	^ self stream position
+]
+
+{ #category : #position }
+MemoryFileWriteStream >> position: aPosition [ 
+	
+	stream position: aPosition
 ]
 
 { #category : #positioning }
