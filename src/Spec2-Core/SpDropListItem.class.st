@@ -80,7 +80,8 @@ SpDropListItem >> initialize [
 	super initialize.
 
 	action := [  ].
-	displayBlock := [ :e | e asString ]
+	displayBlock := [ :e | e asString ].
+	icon := nil
 ]
 
 { #category : #accessing }

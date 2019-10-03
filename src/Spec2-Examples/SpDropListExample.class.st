@@ -103,7 +103,7 @@ SpDropListExample >> initializePresenters [
 	heterogeneousDropList setSelectedIndex: 1.
 	same for:
 	heterogeneousDropList setIndex: 1"
-	uniformDropList selectedIndex: 1.
+	uniformDropList selectIndex: 1.
 	self setFocus
 ]
 

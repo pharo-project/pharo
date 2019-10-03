@@ -235,10 +235,13 @@ SpVersatileDialogPresenter >> footnoteIcon: aForm [
 
 { #category : #initialization }
 SpVersatileDialogPresenter >> initialize [
-	super initialize.
 
+	super initialize.
+	
 	moreOptionsVisible := false.
-	buttons := OrderedDictionary new
+	buttons := OrderedDictionary new.
+	result := nil.
+
 ]
 
 { #category : #initialization }

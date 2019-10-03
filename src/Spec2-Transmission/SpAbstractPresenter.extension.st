@@ -13,6 +13,13 @@ SpAbstractPresenter >> defineOutputPorts [
 ]
 
 { #category : #'*Spec2-Transmission' }
+SpAbstractPresenter >> hasPortNamed: aName [ 
+
+	^ (self defineOutputPorts anySatisfy: [ :each | each name = aName ])
+		or: [ self defineInputPorts anySatisfy: [ :each | each name = aName ] ]
+]
+
+{ #category : #'*Spec2-Transmission' }
 SpAbstractPresenter >> inputPortDefault [
 
 	"first input port will be default. 

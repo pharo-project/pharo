@@ -37,10 +37,13 @@ SpSplitterVertical >> commands: anObject [
 
 { #category : #initialization }
 SpSplitterVertical >> initialize [
+
 	super initialize.
 
 	selector := #newVSplitterAt:.
-	layoutFrame := (0 @ 0 corner: 0 @ 0) asSpLayoutFrame rightOffset: 1
+	layoutFrame := ((0@0 corner: 0@0) asSpLayoutFrame 
+							rightOffset: 1).
+	commands := nil.
 ]
 
 { #category : #testing }

@@ -82,6 +82,12 @@ SpMenuGroupPresenter >> buildWithSpecLayout: aSpecLayout [
 	^ widget
 ]
 
+{ #category : #testing }
+SpMenuGroupPresenter >> canTakeKeyboardFocus [
+
+	^ false
+]
+
 { #category : #'api-building' }
 SpMenuGroupPresenter >> fromSpec: aSpec [
 	self addItem: [ :item | item fromSpec: aSpec ]

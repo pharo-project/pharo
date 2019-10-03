@@ -24,5 +24,8 @@ SpMorphicNotebookAdapter >> numberOfTabs [
 
 { #category : #'*Spec2-Morphic-Backend-Tests' }
 SpMorphicNotebookAdapter >> selectedPageName [
-	^ (self widget tabSelectorMorph selectedTab label submorphs detect: [ :each | each isKindOf: StringMorph ]) contents
+
+	^ (self widget tabSelectorMorph selectedTab label submorphs
+		detect: [ :each | each isKindOf: StringMorph ]) 
+		contents
 ]

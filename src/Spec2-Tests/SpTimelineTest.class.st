@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'timeline'
 	],
-	#category : #'Spec2-Core-Widgets-Athens'
+	#category : #'Spec2-Tests-Core'
 }
 
 { #category : #running }

@@ -26,9 +26,11 @@ SpNotebookPresenter >> addPage: aPage [
 
 { #category : #initialization }
 SpNotebookPresenter >> initialize [
+
 	super initialize.
 	pagesHolder := OrderedCollection new asValueHolder.
-
+	selectedPage := nil.
+	
 	pagesHolder whenChangedDo: [ self pagesChanged ]
 ]
 
@@ -103,7 +105,7 @@ SpNotebookPresenter >> selectPageIndex: aNumber [
 ]
 
 { #category : #accessing }
-SpNotebookPresenter >> selectedPage [ 
+SpNotebookPresenter >> selectedPage [
 
 	^ selectedPage
 ]
@@ -129,6 +131,18 @@ SpNotebookPresenter >> selectedPageIndex [
 SpNotebookPresenter >> selectedPageIndex: aNumber [
 
 	self selectedPage: (self pages at: aNumber)
+]
+
+{ #category : #'private-traversing' }
+SpNotebookPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	excludes add: self.
+	aBlock value: self.
+	
+	self selectedPage ifNil: [ ^ self ].
+	self selectedPage activePresenter
+		traverseInFocusOrderDo: aBlock 
+		excluding: excludes
 ]
 
 { #category : #private }

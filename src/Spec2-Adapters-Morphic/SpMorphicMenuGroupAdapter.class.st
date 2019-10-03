@@ -8,6 +8,11 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
+{ #category : #initialization }
+SpMorphicMenuGroupAdapter >> addKeyBindingsTo: aMorph [
+	"This does not has keybindings"
+]
+
 { #category : #private }
 SpMorphicMenuGroupAdapter >> applyVisibility [
 
