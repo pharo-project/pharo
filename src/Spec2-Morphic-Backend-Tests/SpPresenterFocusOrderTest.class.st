@@ -1,6 +1,8 @@
 Class {
 	#name : #SpPresenterFocusOrderTest,
-	#superclass : #AbstractMorphicUITest,
+	#superclass : #TestCase,
+	#traits : 'SpTMorphicUIRedrawer',
+	#classTraits : 'SpTMorphicUIRedrawer classTrait',
 	#instVars : [
 		'mock'
 	],
@@ -69,6 +71,12 @@ SpPresenterFocusOrderTest >> pressTab [
 		control: false
 		option: false.
 	self waitUntilUIRedrawed		
+]
+
+{ #category : #running }
+SpPresenterFocusOrderTest >> setUp [
+	super setUp.
+	self initializeSemaphore
 ]
 
 { #category : #emulating }
