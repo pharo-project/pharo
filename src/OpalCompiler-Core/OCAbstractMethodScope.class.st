@@ -176,19 +176,6 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupTempVector: name inContext: aContext [
-	"Similar to lookupAndReadVar:inContext: but looks for a temp vector. If we don't find the temp vector (because it was nilled or not created), we lookup in the outer context with the corresponding outer scope"
-	
-	| variable theVector |
-	variable := self
-		variableNamed: name
-		ifAbsent: [^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
-	theVector := variable readFromLocalContext: aContext.
-	theVector ifNil: [ ^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
-	^ { variable . theVector }
-]
-
-{ #category : #lookup }
 OCAbstractMethodScope >> lookupVar: name [
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector  at: name ifPresent: [:v | ^ v].
