@@ -19,7 +19,7 @@ Class {
 		'lock',
 		'value'
 	],
-	#category : #'Spec2-Core-Observable'
+	#category : #'Spec2-Layout-Observable'
 }
 
 { #category : #'instance creation' }

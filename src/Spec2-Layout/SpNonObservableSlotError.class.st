@@ -1,5 +1,5 @@
 Class {
 	#name : #SpNonObservableSlotError,
 	#superclass : #Error,
-	#category : #'Spec2-Core-Observable'
+	#category : #'Spec2-Layout-Observable'
 }

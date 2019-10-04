@@ -1,7 +1,7 @@
 Class {
 	#name : #SpObservableSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Spec2-Core-Observable'
+	#category : #'Spec2-Layout-Observable'
 }
 
 { #category : #'code generation' }
