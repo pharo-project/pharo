@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 TextStreamTest >> setUp [
+	super setUp.
 	stream := TextStream on: (Text new:100)
 ]
 
