@@ -13,7 +13,7 @@ Class {
 		'#x => SpObservableSlot',
 		'#y'
 	],
-	#category : #'Spec2-Layout-Observable'
+	#category : #'Spec2-ObservableSlot'
 }
 
 { #category : #initialization }

@@ -1,6 +1,6 @@
 Trait {
 	#name : #TSpObservable,
-	#category : #'Spec2-Layout-Observable'
+	#category : #'Spec2-ObservableSlot'
 }
 
 { #category : #events }
