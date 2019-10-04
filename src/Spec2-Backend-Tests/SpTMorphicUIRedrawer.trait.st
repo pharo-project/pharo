@@ -11,6 +11,11 @@ Trait {
 	#category : #'Spec2-Backend-Tests'
 }
 
+{ #category : #running }
+SpTMorphicUIRedrawer >> defaultWaitDuration [
+	^ 500 milliSecond
+]
+
 { #category : #initialization }
 SpTMorphicUIRedrawer >> initializeSemaphore [
 	uiWaitingSemaphore := Semaphore new
