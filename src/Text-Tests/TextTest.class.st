@@ -56,6 +56,7 @@ TextTest >> replacementExample3 [
 
 { #category : #running }
 TextTest >> setUp [
+	super setUp.
 	string := 'Pharo is cool'.
 	text :=  string copy asText.
 	text addAttribute: TextEmphasis bold from: 1 to: 5.
