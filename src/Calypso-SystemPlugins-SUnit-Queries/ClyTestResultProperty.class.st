@@ -87,15 +87,16 @@ ClyTestResultProperty >> brokenCount [
 
 { #category : #presentation }
 ClyTestResultProperty >> createIcon [
-	allCount = 0 ifTrue: [ ^ Smalltalk ui icons iconNamed: #testNotRunIcon ].
+
+	allCount = 0 ifTrue: [ ^ self iconNamed: #testNotRunIcon ].
 	allCount = successCount
-		ifTrue: [ ^Smalltalk ui icons iconNamed: #testGreenIcon ].
+		ifTrue: [ ^ self iconNamed: #testGreenIcon ].
 	errorCount = 0 & (failureCount > 0)
-		ifTrue: [ ^Smalltalk ui icons iconNamed: #testYellowIcon ].
+		ifTrue: [ ^ self iconNamed: #testYellowIcon ].
 	errorCount > 0
-		ifTrue: [ ^Smalltalk ui icons iconNamed: #testRedIcon ].
+		ifTrue: [ ^ self iconNamed: #testRedIcon ].
 		
-	^Smalltalk ui icons iconNamed: #testNotRunIcon.
+	^ self iconNamed: #testNotRunIcon
 ]
 
 { #category : #accessing }
