@@ -370,7 +370,7 @@ OpalCompiler >> context: aContext [
 
 { #category : #'public access' }
 OpalCompiler >> decompileMethod: aCompiledMethod [
-	^ self compilationContext environment
+	^ Smalltalk globals
 		at: #FBDDecompiler  
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error 
@@ -584,7 +584,7 @@ OpalCompiler >> isInteractiveFor: aRequestor [
 { #category : #private }
 OpalCompiler >> logDoIt [
 	self compilationContext logged ifFalse: [ ^self ].
-	self compilationContext environment
+	Smalltalk globals
 			at: #SystemAnnouncer 
 			ifPresent: [ :sysAnn | 
 				sysAnn uniqueInstance evaluated: source contents context: context ]
