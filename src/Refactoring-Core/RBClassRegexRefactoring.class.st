@@ -1,7 +1,10 @@
 "
 I am a regex refactoring renaming class names.
+I offer several models of operation in addition to regex matching. 
 
-See comment of superclass for a nice script.
+Refactored classes can be renamed, copied and kept aside old ones: try renameClasses, copyClasses, or createClasses. 
+
+See also the comment of superclass for a nice script.
 "
 Class {
 	#name : #RBClassRegexRefactoring,
