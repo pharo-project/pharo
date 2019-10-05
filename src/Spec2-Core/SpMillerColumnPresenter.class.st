@@ -27,9 +27,9 @@ Class {
 SpMillerColumnPresenter >> addPresenter: newSubPresenter [
 
 	newSubPresenter whenActivatedDo: [ :selection | 
-			self changeSelection: selection selectedItem from: newSubPresenter ].
+		self changeSelection: selection selectedItem from: newSubPresenter ].
 	newSubPresenter owner: self.
-	layout add: newSubPresenter.
+	layout add: newSubPresenter
 ]
 
 { #category : #initialization }
@@ -51,13 +51,19 @@ SpMillerColumnPresenter >> initialize [
 { #category : #initialization }
 SpMillerColumnPresenter >> initializePresenters [
 	
-	layout := SpBoxLayout newHorizontal
+	layout := SpMillerLayout newHorizontal
 ]
 
 { #category : #initialization }
 SpMillerColumnPresenter >> newPresenterFor: aModel [
 
 	^ newPresenterBlock value: aModel
+]
+
+{ #category : #'as yet unclassified' }
+SpMillerColumnPresenter >> pages [
+	
+	^ layout presenters
 ]
 
 { #category : #accessing }
@@ -97,4 +103,37 @@ SpMillerColumnPresenter >> setRootModel: aModel [
 SpMillerColumnPresenter >> size [
 
 	^ self presenters size
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> spacing [
+
+	^ layout spacing
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> spacing: aNumber [
+
+	layout spacing: aNumber
+]
+
+{ #category : #'private-traversing' }
+SpMillerColumnPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self pages do: [ :each | 
+		each 
+			traverseInFocusOrderDo: aBlock 
+			excluding: excludes ]
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> visiblePages [ 
+
+	^ layout visiblePages
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> visiblePages: aNumber [ 
+
+	layout visiblePages: aNumber
 ]

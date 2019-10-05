@@ -68,7 +68,7 @@ SpMorphicDropListAdapter >> selectedIndexes [
 
 { #category : #'widget API' }
 SpMorphicDropListAdapter >> setIndex: anIndex [
-	^ self model selectedIndex: anIndex
+	^ self model selectIndex: anIndex
 ]
 
 { #category : #'widget API' }

@@ -1,3 +1,19 @@
+"
+I'm a layout to show presenters in an ordered box. 
+Box can be horizontal or vertical and presenters will be ordered top to down or left to right following direction decided. 
+The basic message to add presenters is: #add:expand:fill:padding: (see comment there to understand what the arguments can be). 
+To make things easier, I add some basic convenience methods: #add:, #add:expand:
+
+Also, I can add presenters aligned to the bottom in case of vertical layouts or right for horizontal layouts.
+
+Example: 
+
+SpBoxLayout new
+	add: 'Some header' expand: false fill: false padding: 5;
+	add: #content;
+	addLast: 'Some footer' expand: false fill: false padding: 5;
+	yourself
+"
 Class {
 	#name : #SpBoxLayout,
 	#superclass : #SpExecutableLayout,
@@ -40,6 +56,15 @@ SpBoxLayout >> add: aName [
 	self 
 		add: aName 
 		withConstraints: [ :constraints | ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> add: aName expand: shouldExpand [
+
+	^ self 
+		add: aName 
+		withConstraints: [ :constraints | 
+			constraints expand: shouldExpand ]
 ]
 
 { #category : #adding }
@@ -90,6 +115,15 @@ SpBoxLayout >> addLast: aName [
 	self 
 		addLast: aName 
 		withConstraints: [ :constraints | ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> addLast: aName expand: shouldExpand [
+
+	self 
+		addLast: aName 
+		withConstraints: [ :constraints | 
+			constraints expand: shouldExpand ]
 ]
 
 { #category : #adding }
@@ -198,6 +232,13 @@ SpBoxLayout >> remove: aPresenter [
 
 	children removeKey: aPresenter.
 	adapter ifNotNil: [ :theAdapter | theAdapter remove: aPresenter ]
+]
+
+{ #category : #removing }
+SpBoxLayout >> removeAll [
+
+	children removeAll.
+	adapter ifNotNil: [ :anAdapter | anAdapter removeAll ]
 ]
 
 { #category : #accessing }

@@ -1,6 +1,6 @@
 Extension { #name : #Slot }
 
-{ #category : #'*Spec2-Core-Observable' }
+{ #category : #'*Spec2-ObservableSlot' }
 Slot >> isObservableSlot [
 	
 	^ false

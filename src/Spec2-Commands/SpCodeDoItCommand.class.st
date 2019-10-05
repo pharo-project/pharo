@@ -13,7 +13,9 @@ SpCodeDoItCommand class >> defaultName [
 { #category : #default }
 SpCodeDoItCommand class >> defaultShortcutKey [
 
-	^ $d meta
+	^ $d command mac 
+		| $d control win 
+		| $d control unix
 ]
 
 { #category : #execution }

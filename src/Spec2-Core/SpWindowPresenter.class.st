@@ -183,12 +183,6 @@ SpWindowPresenter >> giveFocusToNextFrom: aModel [
 	^ self presenter giveFocusToNextFrom: aModel
 ]
 
-{ #category : #focus }
-SpWindowPresenter >> giveFocusToPreviousFrom: aModel [ 
-
-	^ self presenter giveFocusToPreviousFrom: aModel 
-]
-
 { #category : #testing }
 SpWindowPresenter >> hasMenu [ 
 	
@@ -420,7 +414,17 @@ SpWindowPresenter >> toolBar: aToolbarPresenter [
 ]
 
 { #category : #'private-traversing' }
+SpWindowPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	"I am not focusable (not with tab)"
+	self presenter 
+		traverseInFocusOrderDo: aBlock 
+		excluding: excludes
+]
+
+{ #category : #'private-traversing' }
 SpWindowPresenter >> traversePresentersDo: aBlock excluding: excludes [
+	
 	super traversePresentersDo: aBlock excluding: excludes.
 	presenter traversePresentersDo: aBlock excluding: excludes
 ]
@@ -456,6 +460,14 @@ SpWindowPresenter >> whenOpenedDo: aBlock [
 	self 
 		property: #isClosed 
 		whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+]
+
+{ #category : #'api-events' }
+SpWindowPresenter >> whenResizingDo: aBlock [
+	
+	self announcer 
+		when: WindowResizing
+		do: aBlock
 ]
 
 { #category : #'api-events' }

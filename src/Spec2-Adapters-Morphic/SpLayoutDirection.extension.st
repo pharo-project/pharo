@@ -12,6 +12,12 @@ SpLayoutDirection >> newSplitter [
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirection >> setRigidityOfNonExpendedMorph: aMorph [ 
+SpLayoutDirection >> recalculatePages: anAdaptor [
+
+	self subclassResponsibility
+]
+
+{ #category : #'*Spec2-Adapters-Morphic' }
+SpLayoutDirection >> setRigidityOfNonExpandedMorph: aMorph [ 
 	self subclassResponsibility
 ]

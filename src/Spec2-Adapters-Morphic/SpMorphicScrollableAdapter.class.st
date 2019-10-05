@@ -29,21 +29,22 @@ SpMorphicScrollableAdapter >> basicAdd: aPresenter constraints: constraints to: 
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 
-	aPanel addMorph: childMorph.
+	aPanel scrollTarget: childMorph.
 	
 	^ childMorph
 ]
 
 { #category : #protocol }
 SpMorphicScrollableAdapter >> layout: aLayout [
-	widget
-		ifNil: [ widget := PanelMorph new
-				changeTableLayout;
-				hResizing: #spaceFill;
-				vResizing: #spaceFill;
-				color: Color transparent;
-				borderColor: Color transparent;
-				yourself ].
+	
+	widget ifNil: [ 
+		widget := GeneralScrollPane new
+			changeScrollerTableLayout;
+			hResizing: #spaceFill;
+			vResizing: #spaceFill;
+			color: Color transparent;
+			borderColor: Color transparent;
+			yourself ].
 
 	super layout: aLayout
 ]

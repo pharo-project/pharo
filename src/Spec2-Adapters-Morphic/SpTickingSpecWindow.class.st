@@ -7,7 +7,7 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Support'
 }
 
-{ #category : #stepping }
+{ #category : #'stepping and presenter' }
 SpTickingSpecWindow >> step [
 	self model step.
 ]
