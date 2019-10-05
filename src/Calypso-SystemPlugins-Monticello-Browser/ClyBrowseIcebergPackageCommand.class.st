@@ -1,3 +1,6 @@
+"
+I am a command to open Calypso browser on given package from given Iceberg repository
+"
 Class {
 	#name : #ClyBrowseIcebergPackageCommand,
 	#superclass : #IceTipPackageCommand,
