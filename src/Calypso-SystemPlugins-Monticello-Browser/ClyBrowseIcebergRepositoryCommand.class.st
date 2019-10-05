@@ -47,5 +47,5 @@ ClyBrowseIcebergRepositoryCommand >> execute [
 			snapshot importInto: env asPackageNamed: packageName ] 
 		displayingProgress: 'loading'.
 	env clean.
-	env browse.
+	env browseAs: repositoryModel entity description
 ]
