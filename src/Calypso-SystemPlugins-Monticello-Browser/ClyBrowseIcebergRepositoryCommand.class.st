@@ -24,6 +24,11 @@ ClyBrowseIcebergRepositoryCommand class >> browserShortcutActivation [
 	^ CmdShortcutActivation by: $b meta for: IceTipRepositoryListContext
 ]
 
+{ #category : #testing }
+ClyBrowseIcebergRepositoryCommand class >> canBeExecutedInContext: aToolContext [
+	^ aToolContext isRepositoryOperational
+]
+
 { #category : #accessing }
 ClyBrowseIcebergRepositoryCommand class >> defaultHelp [
 	^ 'Browse the version in repository'
