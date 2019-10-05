@@ -6,6 +6,29 @@ They have to implement the RBRefactoring method #transform.
 
 I have no special precondition.
 
+Here is a sample of a script that will change of the YK* classes of package PrefixOfPackageNames* into ZG*.
+
+
+| pkgPrefix newClassPrefix env model |
+pkgPrefix := 'PrefixOfPackageNames'.
+newClassPrefix := 'ZG'.
+env := RBBrowserEnvironment new 
+			forPackageNames: (RPackage organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
+model := (RBClassModelFactory rbNamespace onEnvironment: env) name: 'MyModel'; yourself.
+RBClassRegexRefactoring new
+  model: model;
+  renameClasses;
+	replace: '^YK(.*)$' with: newClassPrefix,'$1';
+  execute.
+
+
+
+
+
+
+
+
+
 "
 Class {
 	#name : #RBRegexRefactoring,

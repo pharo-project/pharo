@@ -1,5 +1,7 @@
 "
 I am a regex refactoring renaming class names.
+
+See comment of superclass for a nice script.
 "
 Class {
 	#name : #RBClassRegexRefactoring,
