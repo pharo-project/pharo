@@ -653,13 +653,6 @@ Collection >> errorNotFound: anObject [
 ]
 
 { #category : #private }
-Collection >> errorNotKeyed [
-
-	self error: ('Instances of {1} do not respond to keyed accessing messages.' format: {self class name})
-
-]
-
-{ #category : #private }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 
