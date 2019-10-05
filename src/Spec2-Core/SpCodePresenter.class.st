@@ -126,9 +126,6 @@ SpCodePresenter >> initialize [
 
 	super initialize.
 	
-	behavior := nil.
-	doItContext := nil.
-	doItReceiver := nil.
 	self withSyntaxHighlight.
 	
 	self registerEventsForStyling.

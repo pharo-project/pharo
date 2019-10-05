@@ -7,7 +7,7 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 SpStyleTest >> tearDown [ 
 
 	aClass ifNotNil: [ :e | e removeFromSystem ].
