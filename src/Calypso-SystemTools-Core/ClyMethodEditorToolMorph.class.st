@@ -181,7 +181,7 @@ ClyMethodEditorToolMorph >> packageEditingMethod: aMethod [
 				execute].
 	
 		(extendingPackage isNil and: [ aMethod isExtension ]) ifTrue: [ 
-			(SycMoveMethodsToClassPackageCommand for: {aMethod}) 
+			(SycMoveMethodsToPackageDefiningClassCommand for: {aMethod}) 
 				execute]
 	]
 ]
