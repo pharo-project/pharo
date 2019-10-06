@@ -4,7 +4,7 @@ I am a command to move method to the package of defining class.
 I am used to convert extension method to normal one
 "
 Class {
-	#name : #SycMoveMethodsToClassPackageCommand,
+	#name : #SycMoveMethodsToPackageDefiningClassCommand,
 	#superclass : #SycMethodRepackagingCommand,
 	#instVars : [
 		'targetTagName'
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #testing }
-SycMoveMethodsToClassPackageCommand class >> canBeExecutedInContext: aToolContext [
+SycMoveMethodsToPackageDefiningClassCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isExtensionMethodSelected
 ]
 
 { #category : #activation }
-SycMoveMethodsToClassPackageCommand class >> methodContextMenuActivation [
+SycMoveMethodsToPackageDefiningClassCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 	
 	^CmdContextMenuActivation 
@@ -28,17 +28,17 @@ SycMoveMethodsToClassPackageCommand class >> methodContextMenuActivation [
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassPackageCommand >> defaultMenuIconName [ 
+SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuIconName [ 
 	^ #smallRedo
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassPackageCommand >> defaultMenuItemName [
-	^'Move to class package'
+SycMoveMethodsToPackageDefiningClassCommand >> defaultMenuItemName [
+	^'Move to package defining the class'
 ]
 
 { #category : #execution }
-SycMoveMethodsToClassPackageCommand >> execute [
+SycMoveMethodsToPackageDefiningClassCommand >> execute [
 
 	| classPackage |
 	methods do: [ :each | 
@@ -48,18 +48,18 @@ SycMoveMethodsToClassPackageCommand >> execute [
 ]
 
 { #category : #execution }
-SycMoveMethodsToClassPackageCommand >> prepareFullExecutionInContext: aToolContext [
+SycMoveMethodsToPackageDefiningClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	
 	targetTagName := aToolContext requestSingleMethodTag: 'Choose protocol for methods'
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassPackageCommand >> targetTagName [
+SycMoveMethodsToPackageDefiningClassCommand >> targetTagName [
 	^ targetTagName
 ]
 
 { #category : #accessing }
-SycMoveMethodsToClassPackageCommand >> targetTagName: anObject [
+SycMoveMethodsToPackageDefiningClassCommand >> targetTagName: anObject [
 	targetTagName := anObject
 ]
