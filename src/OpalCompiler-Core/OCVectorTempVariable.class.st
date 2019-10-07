@@ -64,7 +64,10 @@ OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 	index := index ifNil: [ tempVectorVar indexInTempVectorFromIR: name ].
 	"We can call this method on a context in any state, e.g. even when the copied var is not yet initialized.
 	In this case, we lookup in the outer context with the corresponding outer scope"
-	^ theVector ifNil: [ self readVectorFromContext: aContext outerContext scope: contextScope outerScope ]
+	^ theVector ifNil: [ 
+		"but there might be no outer context, so in that case, just return an empty array of the correct size"
+		aContext outerContext ifNil: [ ^Array new: tempVectorVar tempVectorForTempStoringIt size ].
+		self readVectorFromContext: aContext outerContext scope: contextScope outerScope ]
 ]
 
 { #category : #accessing }
