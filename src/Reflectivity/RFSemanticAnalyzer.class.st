@@ -89,7 +89,7 @@ RFSemanticAnalyzer >> visitNode: aNode [
 RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [ 
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var	ifNil: [ 
 			var := scope addTemp: name ].
 	aNode binding: var.
@@ -99,7 +99,7 @@ RFSemanticAnalyzer >> visitStoreIntoTempNode: aNode [
 RFSemanticAnalyzer >> visitStorePopIntoTempNode: aNode [ 
 	| name var |
 	name := aNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var	ifNil: [ 
 			var := scope addTemp: name ].
 	aNode binding: var.
