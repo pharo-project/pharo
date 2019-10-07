@@ -54,13 +54,20 @@ OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 { #category : #debugging }
 OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 	| tempVectorVar theVector |
+	"We need to first read the temp vector. We use the closest copied var up the stack possible as
+	 as the definition context could be already garbage collected"
 	tempVectorVar := contextScope lookupVar: vectorName.
-	theVector := tempVectorVar readFromLocalContext: aContext.
+	"We might be called from the debugger for a context that actually does not access the temp vector, 
+	so we need to read possibly from a context above aContext"
+	theVector := tempVectorVar readFromContext: aContext scope: contextScope.
+	"Cache the index in the temp vecor (for speed and easy debugging)"
 	index := index ifNil: [ tempVectorVar indexInTempVectorFromIR: name ].
-
-	"If we don't find the temp vector (because it was nilled or not created), we 
-	 lookup in the outer context with the corresponding outer scope"
-	^ theVector ifNil: [ self readVectorFromContext: aContext outerContext scope: contextScope outerScope ]
+	"We can call this method on a context in any state, e.g. even when the copied var is not yet initialized.
+	In this case, we lookup in the outer context with the corresponding outer scope"
+	^ theVector ifNil: [ aContext outerContext 
+		"but there might be no outer context, so in that case, just return an empty array of the correct size"
+			ifNil: [ Array new: tempVectorVar tempVectorForTempStoringIt size ]
+			ifNotNil: [: ctxt | self readVectorFromContext: ctxt scope: contextScope outerScope ]]
 ]
 
 { #category : #accessing }
