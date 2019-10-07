@@ -205,12 +205,6 @@ IRMethod >> generateBlock: trailer withScope: scope [
 	^ compiledMethod
 ]
 
-{ #category : #testing }
-IRMethod >> hasTempVector: aSymbol [
-	startSequence withAllSuccessorsDo: [ :seq | (seq hasTempVector: aSymbol) ifTrue: [ ^ true ]].
-	^ false
-]
-
 { #category : #scoping }
 IRMethod >> indexForVarNamed: aName [
 

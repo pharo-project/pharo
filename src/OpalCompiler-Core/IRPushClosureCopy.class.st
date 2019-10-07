@@ -60,11 +60,6 @@ IRPushClosureCopy >> definedTemps [
 	^self tempMap keys copyWithoutAll: (arguments, copiedValues).
 ]
 
-{ #category : #testing }
-IRPushClosureCopy >> hasTempVector: aSymbol [
-	^ (blockSequence hasTempVector: aSymbol) or:[sequence hasTempVector: aSymbol]
-]
-
 { #category : #scoping }
 IRPushClosureCopy >> indexForVarNamed: aName [
 
