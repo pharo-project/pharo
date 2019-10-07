@@ -399,6 +399,5 @@ IRMethod >> tempMap [
 
 { #category : #enumerating }
 IRMethod >> tempVectorNamed: aName [
-	
-	^self firstInstructionMatching: [:ir | ir isTempVector and:  [ir name = aName ] ]
+	^startSequence tempVectorNamed: aName
 ]

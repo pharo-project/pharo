@@ -34,11 +34,6 @@ IRPushClosureCopy >> arguments: anArray [
 	arguments := anArray
 ]
 
-{ #category : #private }
-IRPushClosureCopy >> blockHasTempVector: aSymbol [
-	^ blockSequence hasTempVector: aSymbol
-]
-
 { #category : #accessing }
 IRPushClosureCopy >> blockSequence [ 
 ^blockSequence
@@ -124,11 +119,6 @@ IRPushClosureCopy >> numArgs: aSmallInteger [
 	numArgs := aSmallInteger
 ]
 
-{ #category : #private }
-IRPushClosureCopy >> sequenceHasTempVector: aSymbol [
-	^ sequence hasTempVector: aSymbol
-]
-
 { #category : #mapping }
 IRPushClosureCopy >> sourceNodeExecuted [
 	^self sourceNode parent
@@ -158,9 +148,5 @@ IRPushClosureCopy >> tempVectorName [
 
 { #category : #accessing }
 IRPushClosureCopy >> tempVectorNamed: aName [
-    (self blockHasTempVector: aName)
-        ifTrue: [ ^ blockSequence tempVectorNamed: aName ].
-    (self sequenceHasTempVector: aName)
-                ifTrue: [ ^ sequence tempVectorNamed: aName ].
-    ^ nil
+	^ blockSequence tempVectorNamed: aName
 ]
