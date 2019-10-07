@@ -111,9 +111,3 @@ OCAbstractScope >> scopeLevel [
 	outerScope ifNil: [^ 0].
 	^ outerScope scopeLevel + 1
 ]
-
-{ #category : #accessing }
-OCAbstractScope >> variableNamed: aName [
-
-	^ self variableNamed: aName ifAbsent: [ nil ]
-]
