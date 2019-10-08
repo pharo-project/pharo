@@ -283,6 +283,13 @@ RubSmalltalkEditor >> browseClassFromIt [
 ]
 
 { #category : #'menu messages' }
+RubSmalltalkEditor >> browseClassOfIt [
+	"Launch a browser for the class of the current selection"
+	self evaluateSelectionAndDo: [:result | result class browse]
+
+]
+
+{ #category : #'menu messages' }
 RubSmalltalkEditor >> browseIt [
 	"Launch a browser for the current selection, if appropriate"
 	^ self browseClassFromIt

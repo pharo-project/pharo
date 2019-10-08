@@ -127,6 +127,12 @@ GLMRubricSmalltalkCodePresentation >> executionSelectionActions [
 				keymap: PharoShortcuts current printItShortcut; 
 				yourself.
 		(GLMGenericAction new) 
+				title: 'Browse class of it'; 
+				action: [ :aPresentation |
+					aPresentation highlightEvaluateAndDo: [ :result | result class browse ] ]; 
+				icon: GLMUIThemeExtraIcons glamorousInspect;
+				yourself.
+		(GLMGenericAction new) 
 				title: 'Inspect it'; 
 				action: [ :aPresentation |
 					aPresentation highlightEvaluateAndDo: [ :result | result inspect ] ]; 

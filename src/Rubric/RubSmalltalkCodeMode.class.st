@@ -47,6 +47,11 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		selector: #printIt;
 		help: nil;
 		iconName: #smallPrintItIcon.
+	(aBuilder item: #'Browse class of it' translated)
+		order: 1;
+		selector: #browseClassOfIt;
+		help: nil;
+		iconName: #smallInspectItIcon.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
