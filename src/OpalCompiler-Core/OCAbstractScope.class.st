@@ -69,6 +69,13 @@ OCAbstractScope >> lookupVar: name [
 	^ self outerScope lookupVar: name
 ]
 
+{ #category : #lookup }
+OCAbstractScope >> lookupVarForDeclaration: name [
+	"subclass responsibility"
+
+	^ self outerScope lookupVarForDeclaration: name
+]
+
 { #category : #accessing }
 OCAbstractScope >> node [
 	^node
