@@ -17,7 +17,7 @@ MagnitudeTest >> testBeBetweenAnd [
 	self assert: (5 beBetween: 20 and: 5) equals: 5.
 	self assert: (20 beBetween: 5 and: 20) equals: 20.
 	self assert: (20 beBetween: 20 and: 5) equals: 20.
-	"bellow"
+	"below"
 	self assert: (1 beBetween: 5 and: 20) equals: 5.
 	self assert: (1 beBetween: 20 and: 5) equals: 5.
 	"above"
