@@ -61,7 +61,7 @@ Magnitude >> >= aMagnitude [
 
 { #category : #comparing }
 Magnitude >> beBetween: minValue and: maxValue [
-"Answer my value  constrained to the intervale [minValue ; maxValue]
+"Answer my value constrained to the interval [minValue ; maxValue]
 I take care of the situation where minValue > maxValue
  10 beBetween: 12 and: 20 >>> 12
  10 beBetween: 20 and: 12 >>> 12
