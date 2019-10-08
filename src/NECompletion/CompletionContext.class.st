@@ -11,7 +11,8 @@ Class {
 		'completionToken',
 		'model',
 		'ast',
-		'node'
+		'node',
+		'isWorkspace'
 	],
 	#category : #'NECompletion-New'
 }
@@ -57,9 +58,15 @@ CompletionContext >> narrowWith: aString [
 { #category : #parsing }
 CompletionContext >> parseSource [
 
-	ast := theClass
-		ifNil: [ ( RBParser parseFaultyExpression: source ) doSemanticAnalysis ]
-		ifNotNil: [ ( RBParser parseFaultyMethod: source ) doSemanticAnalysisIn: theClass ].
+	ast := isWorkspace
+		ifTrue: [RBParser parseFaultyExpression: source]
+		ifFalse: [RBParser parseFaultyMethod: source].
+	ast methodNode 
+		compilationContext: 
+			(Smalltalk compiler compilationContextClass new
+             class: theClass;forSyntaxHighlighting: true).
+		
+	ast doSemanticAnalysisIn: theClass.
 	TypingVisitor new visitNode: ast
 ]
 
@@ -72,6 +79,11 @@ CompletionContext >> receiverClass [
 
 { #category : #'initialize-release' }
 CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
+	
+	isWorkspace:= aECController 
+		ifNotNil: [ aECController isScripting ]
+		ifNil: [ false ].
+
 	theClass := aClass. 
 	source := aString.
 	position := anInteger

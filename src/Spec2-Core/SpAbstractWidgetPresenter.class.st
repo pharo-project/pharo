@@ -219,7 +219,6 @@ SpAbstractWidgetPresenter >> help: aString [
 SpAbstractWidgetPresenter >> initialize [
 	super initialize.
 
-	help := nil.
 	borderWidth := 0.
 	borderColor := Color transparent.
 	enabled := true.
@@ -237,8 +236,8 @@ SpAbstractWidgetPresenter >> initialize [
 	self whenEnabledChangedDo: [ :b | self withAdapterDo: [ :w | w update: #enabled: with: {b} ] ].
 	self property: #dragEnabled whenChangedDo: [ :b | self withWidgetDo: [ :w | w update: #dragEnabled: with: {b} ] ].
 	self property: #dropEnabled whenChangedDo: [ :b | self withWidgetDo: [ :w | w update: #dropEnabled: with: {b} ] ].
-	
-	styles := #().
+
+	styles := #()
 ]
 
 { #category : #initialization }
@@ -277,6 +276,15 @@ SpAbstractWidgetPresenter >> transferBlock: aBlock [
 { #category : #'drag and drop' }
 SpAbstractWidgetPresenter >> transferFor: passenger from: source [
 	^ self transferBlock value: passenger value: source
+]
+
+{ #category : #'private-traversing' }
+SpAbstractWidgetPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self canTakeKeyboardFocus ifFalse: [ ^ self ].
+	
+	excludes add: self.
+	aBlock value: self
 ]
 
 { #category : #'private-traversing' }

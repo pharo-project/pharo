@@ -25,7 +25,7 @@ Class {
 
 { #category : #'instance creation' }
 RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol [ 
-	^(self new)
+	^ self new 
 		modelClass: aRBClass;
 		method: aCompiledMethod;
 		selector: aSymbol;
@@ -79,6 +79,12 @@ RBMethod >> method [
 { #category : #accessing }
 RBMethod >> method: aCompiledMethod [ 
 	compiledMethod := aCompiledMethod
+]
+
+{ #category : #accessing }
+RBMethod >> methodClass [
+
+	^ class
 ]
 
 { #category : #accessing }

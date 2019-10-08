@@ -9,5 +9,8 @@ SpAbstractListPresenter >> defineInputPorts [
 { #category : #'*Spec2-Transmission' }
 SpAbstractListPresenter >> defineOutputPorts [
 	
-	^ { SpListSelectionPort new }
+	^ { 
+	SpListSelectionPort new. 
+	SpActivationPort new 
+	}
 ]

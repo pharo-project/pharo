@@ -37,6 +37,12 @@ AthensSurface >> asForm [
 	self subclassResponsibility
 ]
 
+{ #category : #converting }
+AthensSurface >> asMorph [
+	"Answer a Morph, given this Athens surface"
+	^ self asForm asMorph
+]
+
 { #category : #caching }
 AthensSurface >> cacheAt: anObject ifAbsentPut: aBlock [
 	"Answer an object from surface's cache identified by anObject,

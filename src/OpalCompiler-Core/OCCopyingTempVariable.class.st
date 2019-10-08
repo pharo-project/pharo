@@ -48,3 +48,10 @@ OCCopyingTempVariable >> tempVectorForTempStoringIt [
 		ifFalse: [^ searchScope tempVector]
 	
 ]
+
+{ #category : #debugging }
+OCCopyingTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
+
+	"we need to change this var, all the other copies, and the orginal"
+	^contextScope setCopyingTempToAllScopesUpToDefTemp: originalVar to: aValue from: aContext
+]

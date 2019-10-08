@@ -217,11 +217,6 @@ ClyMainItemCellMorph >> expandedButton [
 		borderWidth: 0
 ]
 
-{ #category : #accessing }
-ClyMainItemCellMorph >> iconNamed: aString [ 
-	^Smalltalk ui icons iconNamed: aString
-]
-
 { #category : #initialization }
 ClyMainItemCellMorph >> initialize [
 	super initialize.

@@ -29,7 +29,7 @@ ToggleMenuItemShortcutWithText >> drawOn: aCanvas [
 		drawText: keyText
 		on: aCanvas
 		in: keyBounds
-		color: self owner stringColorToUse
+		color: self color
 ]
 
 { #category : #accessing }

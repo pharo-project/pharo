@@ -306,12 +306,12 @@ EyeInspectorNavigator >> setRefreshedToTrue [
 	canBeRefreshed := true
 ]
 
-{ #category : #initialization }
+{ #category : #stepping }
 EyeInspectorNavigator >> step [
 	self inspector step.
 ]
 
-{ #category : #initialization }
+{ #category : #stepping }
 EyeInspectorNavigator >> stepTime [
 	^ 1500
 ]

@@ -50,7 +50,7 @@ NECMenuMorph class >> convertToSHSymbol: aSymbol [
 
 { #category : #'help text' }
 NECMenuMorph class >> explanationAttributes [
-	^{TextIndent spaceUsed; tabs: 2}
+	^{TextIndent tabs: 2}
 ]
 
 { #category : #'help text' }
@@ -229,7 +229,7 @@ NECMenuMorph class >> shortcut: aString text: secondString on: aTextStream [
 
 { #category : #'help text' }
 NECMenuMorph class >> shortcutAttributes [
-	^ {TextIndent spaceUsed; tabs: 1. TextEmphasis italic }
+	^ {TextIndent  tabs: 1. TextEmphasis italic }
 ]
 
 { #category : #'preferences-fonts' }

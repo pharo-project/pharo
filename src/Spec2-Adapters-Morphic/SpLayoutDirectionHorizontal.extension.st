@@ -10,11 +10,19 @@ SpLayoutDirectionHorizontal >> addPadding: aNumber toMorph: aMorph into: anAdapt
 
 { #category : #'*Spec2-Adapters-Morphic' }
 SpLayoutDirectionHorizontal >> newSplitter [
+
 	^ SpPanedResizerMorph newHorizontal
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionHorizontal >> setRigidityOfNonExpendedMorph: aMorph [ 
+SpLayoutDirectionHorizontal >> recalculatePages: anAdaptor [
+
+	^ anAdaptor recalculatePageWidths
+]
+
+{ #category : #'*Spec2-Adapters-Morphic' }
+SpLayoutDirectionHorizontal >> setRigidityOfNonExpandedMorph: aMorph [
+
 	aMorph 
 		vResizing: #spaceFill; 
 		hResizing: #rigid

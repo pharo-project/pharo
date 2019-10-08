@@ -25,6 +25,12 @@ CDNode class >> on: aRBMessageNode [
 		yourself
 ]
 
+{ #category : #visitor }
+CDNode >> acceptVisitor: aProgramNodeVisitor [
+	
+	self subclassResponsibility
+]
+
 { #category : #accessing }
 CDNode >> addChild: aChild [
 

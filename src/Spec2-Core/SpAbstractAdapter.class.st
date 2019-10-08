@@ -65,7 +65,7 @@ SpAbstractAdapter >> adapt: aPresenter [
 	model := aPresenter.
 	aPresenter addDependent: self.
 
-	widget := self buildWidget.
+	widget := self buildWidget
 ]
 
 { #category : #protocol }
@@ -167,12 +167,6 @@ SpAbstractAdapter >> selector [
 SpAbstractAdapter >> selector: anObject [
 	
 	selector := anObject
-]
-
-{ #category : #protocol }
-SpAbstractAdapter >> takeKeyboardFocus [
-	
-	self widget ifNotNil: [:w | w takeKeyboardFocus ]
 ]
 
 { #category : #updating }

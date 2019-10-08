@@ -85,11 +85,11 @@ RBReplaceSubtreeTransformation >> privateTransform [
 		onError: [ :string :pos | ^ nil ].
 	newTree ifNil: [ ^ self ].
 	tree := oldTree isSequence
-		ifTrue: [ RBParseTreeRewriter
+		ifTrue: [ self parseTreeRewriterClass
 				replaceStatements: oldTree formattedCode
 				with: newSourceCode
 				in: tree ]
-		ifFalse: [ RBParseTreeRewriter
+		ifFalse: [ self parseTreeRewriterClass
 				replace: oldTree formattedCode
 				with: newSourceCode
 				in: tree

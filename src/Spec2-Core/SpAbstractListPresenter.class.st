@@ -310,9 +310,9 @@ SpAbstractListPresenter >> verticalAlignment [
 ]
 
 { #category : #'api-events' }
-SpAbstractListPresenter >> whenActivatedDo: aBlockClosure [ 
+SpAbstractListPresenter >> whenActivatedDo: aBlock [ 
 	
-	activationBlock := aBlockClosure.
+	activationBlock := aBlock
 ]
 
 { #category : #'api-events' }

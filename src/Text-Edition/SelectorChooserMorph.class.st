@@ -191,7 +191,7 @@ SelectorChooserMorph >> setPosition [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SelectorChooserMorph >> step [
 	[requestorPos 
 		ifNil: [requestorPos := requestor owner position]
@@ -205,12 +205,12 @@ SelectorChooserMorph >> step [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 SelectorChooserMorph >> stepTime [
 	^ 500
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 SelectorChooserMorph >> wantsSteps [ 
 	^ requestor notNil
 ]

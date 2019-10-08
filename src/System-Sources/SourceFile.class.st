@@ -244,8 +244,8 @@ SourceFile >> tryOpenReadOnly: readOnly [
 	readOnly ifFalse: [
 		potentialLocations
 			do: [ :each | 
-				[ stream := ZnCharacterReadWriteStream
-					on: (each asFileReference / basename) binaryReadWriteStream
+				[ stream := SourceFileCharacterReadWriteStream
+					on: (SourceFileBufferedReadWriteStream on:(each asFileReference / basename) unbufferedBinaryWriteStream)
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 

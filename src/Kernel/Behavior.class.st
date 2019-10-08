@@ -872,12 +872,9 @@ Behavior >> hasMethods [
 
 { #category : #'testing method dictionary' }
 Behavior >> hasSelectorReferringTo: literal [
-	"Answer true if any of my methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
-	thorough "
+	"Answer true if any of my methods access the argument as a literal"
 
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
-		
 ]
 
 { #category : #'testing class hierarchy' }
@@ -1804,16 +1801,7 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 
 { #category : #'testing method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
-	"Answer a set of selectors whose methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
-	thorough "
-	| specialIndex selectors |
-	"for speed we check the special selectors here once per class"
-	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
-	selectors := OrderedCollection new.
-	self selectorsAndMethodsDo: [ :sel :method |
-			(method hasSelector: literal specialSelectorIndex: specialIndex) ifTrue: [selectors add: sel]].
-	^ selectors
+	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : #accessing }
@@ -1887,8 +1875,15 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 ]
 
 { #category : #'testing method dictionary' }
-Behavior >> whichSelectorsReferTo: literal [ 
-	^ self thoroughWhichSelectorsReferTo: literal
+Behavior >> whichMethodsReferTo: aLiteral [
+	"Answer methods whose methods directly refers to the argument as a literal"
+
+	^ self methods select: [ :method | method hasLiteral: aLiteral ]
+]
+
+{ #category : #'testing method dictionary' }
+Behavior >> whichSelectorsReferTo: literal [
+	^ (self whichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : #queries }

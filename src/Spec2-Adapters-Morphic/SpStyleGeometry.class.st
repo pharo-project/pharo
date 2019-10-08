@@ -1,3 +1,13 @@
+"
+I'm a style to control the geometry of a widget. 
+I keep properties like 
+
+- extent
+- minExtent
+- maxExtent
+- vResizing
+- hResizing
+"
 Class {
 	#name : #SpStyleGeometry,
 	#superclass : #SpStyleProperty,

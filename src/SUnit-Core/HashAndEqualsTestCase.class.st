@@ -21,7 +21,7 @@ HashAndEqualsTestCase >> setUp [
 
 { #category : #tests }
 HashAndEqualsTestCase >> testEquality [
-	"Check that TextFontChanges report equality correctly"
+	"Check that TextAttribute subclasses report equality correctly"
 	prototypes
 		do: [:p | self
 				should: [(EqualityTester with: p) result]] 
@@ -29,7 +29,7 @@ HashAndEqualsTestCase >> testEquality [
 
 { #category : #tests }
 HashAndEqualsTestCase >> testHash [
-	"test that TextFontChanges hash correctly"
+	"Check TextAttribute subclasses with equality method hash correctly"
 	prototypes do: [:p |
 		self should: [(HashTester with: p) result]] 
 ]

@@ -5,7 +5,7 @@ I provide helper methods deadling with
 -> temporary variables for contexts
 -> reading and setting tempary variables
 
-All methods here should be moved to MethodContext.
+All methods here habe been moved to Context
 "
 Class {
 	#name : #DebuggerMethodMapOpal,
@@ -31,77 +31,46 @@ DebuggerMethodMapOpal >> forMethod: aCompiledMethod [
 
 { #category : #public }
 DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
-	"Answer the value of the temp at index in aContext where index is relative
-	 to the array of temp names answered by tempNamesForContext:"
-
-	| name |	
-	name := (self tempNamesForContext: aContext) at: index.
-	^self tempNamed: name in: aContext.
+	"please use #namedTempAt: on Context"
+	^aContext namedTempAt: index
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
-	"Assign the value of the temp at index in aContext where index is relative
-	 to the array of temp names answered by tempNamesForContext:.
-	 If the value is a copied value we also need to set it along the lexical chain."
-	
-	| name |	
-	name := (self tempNamesForContext: aContext) at: index.
-	^self tempNamed: name in: aContext put: aValue.
+	"please use #namedTempAt:put: on Context"
+	^aContext namedTempAt: index put: aValue
 ]
 
-{ #category : #public }
-DebuggerMethodMapOpal >> rangeForPC: aPC [
-	"return the debug highlight for aPC"
-	
-	^self rangeForPC: aPC contextIsActiveContext: false
-	
-]
+{ #category : #initialization }
+DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: aBoolean [
+	"please use pcRangeContextIsActive: on Context"
+	"return the debug highlight for aPC"		
+	| pc | 			
 
-{ #category : #public }
-DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: contextIsActive [
-	"return the debug highlight for aPC"
-	| pc |
+  	"When on the top of the stack the pc is pointing to right instruction, but deeper in the stack		
+ 	the pc was already advanced one bytecode, so we need to go back this one bytecode, which		
+ 	can consist of multiple bytes. But on IR, we record the *last* bytecode offset as the offset of the		
+ 	IR instruction, which means we can just go back one"		
 	
-	"When on the top of the stack the pc is pointing to right instruction, but deeper in the stack
-	the pc was already advanced one bytecode, so we need to go back this one bytecode, which
-	can consist of multiple bytes. But on IR, we record the *last* bytecode offset as the offset of the
-	IR instruction, which means we can just go back one"
-
-	pc := contextIsActive ifTrue: [aPC] ifFalse: [aPC - 1].
-	^(methodNode sourceNodeForPC:  pc) debugHighlightRange
-	
+	pc := aBoolean ifTrue: [aPC] ifFalse: [aPC - 1].		
+ 	^(methodNode sourceNodeForPC: pc) debugHighlightRange
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> tempNamed: name in: aContext [
-	"Answer the value of the temp with name in aContext"
-	
-	| scope var |
-	scope := aContext sourceNodeExecuted scope.
-	var := scope lookupVar: name.
-	^var searchFromContext: aContext scope: scope.
+	"please use #tempNamed: on Context"
+	^aContext tempNamed: name
 		
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> tempNamed: name in: aContext put: aValue [
-	"Assign the value of the temp with name in aContext
-	 If the value is a copied value we also need to set it along the lexical chain."
-
-	| scope var |
-	scope := aContext sourceNodeExecuted scope.
-	var := scope lookupVar: name.
-	^var writeFromContext: aContext scope: scope value: aValue.
-	
-	
-	
+	"please use #tempNamed:put: on Context"
+	^aContext tempNamed: name put: aValue
 ]
 
 { #category : #public }
 DebuggerMethodMapOpal >> tempNamesForContext: aContext [
-	"Answer an Array of all the temp names in scope in aContext starting with
-	 the home's first local (the first argument or first temporary if no arguments)."
-	
-	^ aContext sourceNodeExecuted scope allTempNames.
+	"use tempNames on Context"
+	^ aContext tempNames 
 ]

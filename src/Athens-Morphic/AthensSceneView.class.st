@@ -307,7 +307,7 @@ AthensSceneView >> startZooming: zoom center: center [
 	self startStepping
 ]
 
-{ #category : #'zoom animation' }
+{ #category : #stepping }
 AthensSceneView >> step [
 
 	self inState: #zooming do: [ :zoomState |
@@ -337,12 +337,12 @@ AthensSceneView >> step [
 
 ]
 
-{ #category : #'zoom animation' }
+{ #category : #stepping }
 AthensSceneView >> stepTime [
 	^ 0
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 AthensSceneView >> stopStepping [
 	keepRefreshing ifFalse: [
 			^ super stopStepping ]

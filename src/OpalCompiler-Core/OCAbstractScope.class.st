@@ -70,12 +70,6 @@ OCAbstractScope >> lookupVar: name [
 ]
 
 { #category : #lookup }
-OCAbstractScope >> lookupVar: name inContext: aContext [
-
-	^ self outerScope lookupVar: name inContext: aContext outerContext
-]
-
-{ #category : #lookup }
 OCAbstractScope >> lookupVarForDeclaration: name [
 	"subclass responsibility"
 
@@ -116,10 +110,4 @@ OCAbstractScope >> scopeLevel [
 
 	outerScope ifNil: [^ 0].
 	^ outerScope scopeLevel + 1
-]
-
-{ #category : #accessing }
-OCAbstractScope >> variableNamed: aName [
-
-	^ self variableNamed: aName ifAbsent: [ nil ]
 ]

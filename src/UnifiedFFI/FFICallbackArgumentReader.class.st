@@ -129,7 +129,7 @@ FFICallbackArgumentReader >> callbackContext: anObject [
 { #category : #extracting }
 FFICallbackArgumentReader >> extractArguments [
 
-	callback functionSpec arguments do: [ :type | self extractNext: type ].
+	callback functionSpec arguments do: [ :type | self extractNext: type resolvedType ].
 
 ]
 
@@ -224,7 +224,7 @@ FFICallbackArgumentReader >> initialize [
 	extractedArguments := OrderedCollection new.
 	
 	"If the function returns an struct by copy there is a hidden parameter with a pointer storing it".
-	returnType := callback functionSpec returnType.
+	returnType := callback functionSpec returnType resolvedType.
 	(returnType isExternalStructure and: [ returnType isPointer not ]) ifTrue: [ 
 		returnValueHolder := self stackPointer pointerAt: 1.
 		currentStackOffset := currentStackOffset + Smalltalk wordSize.

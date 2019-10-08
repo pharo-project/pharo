@@ -466,6 +466,15 @@ Collection >> copyWithoutAll: aCollection [
 	^ self reject: [:each | aCollection includes: each]
 ]
 
+{ #category : #copying }
+Collection >> copyWithoutDuplicates [
+	"Answer a copy of the receiver without any duplicated elements"
+	"(#(2 3 4 4  5 6) copyWithoutDuplicates)  >>> #(2 3 4 5 6)"
+	"(#('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates) >>> #('la' 'do' 'si')"
+	"(#(#do #la #si #do #la) copyWithoutDuplicates) >>> #(#la #do #si)"
+	^ self asSet asArray
+]
+
 { #category : #enumerating }
 Collection >> count: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
@@ -644,13 +653,6 @@ Collection >> errorNotFound: anObject [
 ]
 
 { #category : #private }
-Collection >> errorNotKeyed [
-
-	self error: ('Instances of {1} do not respond to keyed accessing messages.' format: {self class name})
-
-]
-
-{ #category : #private }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 
@@ -695,11 +697,11 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	"Evaluate aBlock for each of the receiver's elements and answer the
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
+
 	| col |
-	col := aCollectionClass new: self size. 	
-	self do: [ :each |
-		col addAll: (aBlock value: each) ].
-	^col
+	col := OrderedCollection new: self size.
+	self do: [ :each | col addAll: (aBlock value: each) ].
+	^ aCollectionClass withAll: col 
 ]
 
 { #category : #enumerating }
@@ -966,7 +968,7 @@ Collection >> notEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : #enumerating }
 Collection >> occurrencesOf: anObject [ 
 	"Answer how many of the receiver's elements are equal to anObject."
 

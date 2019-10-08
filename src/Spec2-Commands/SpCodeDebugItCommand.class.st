@@ -13,7 +13,9 @@ SpCodeDebugItCommand class >> defaultName [
 { #category : #default }
 SpCodeDebugItCommand class >> defaultShortcutKey [
 
-	^ $d shift meta
+	^ $d shift command mac 
+		| $d shift control win
+		| $d shift control unix
 ]
 
 { #category : #execution }

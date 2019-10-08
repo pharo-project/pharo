@@ -65,7 +65,7 @@ AthensTextRenderManualTests class >> test2 [
 		c renderOn: canvas
 	].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #tests }
@@ -90,7 +90,7 @@ AthensTextRenderManualTests class >> test3 [
 			canvas pathTransform translateBy: 0 @11.
 		].
 	].
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 
 
 ]
@@ -114,7 +114,7 @@ AthensTextRenderManualTests class >> test4 [
 			canvas pathTransform translateBy: 0.1@10.
 		]
 	].
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 
 
 ]
@@ -137,7 +137,7 @@ AthensTextRenderManualTests class >> test5 [
 			canvas pathTransform translateBy: 10@0.1.
 		]
 	].
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 
 
 ]
@@ -237,7 +237,7 @@ AthensTextRenderManualTests class >> testWindowRender [
 		canvas fullDrawMorph: win.
 	].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 
 
 ]

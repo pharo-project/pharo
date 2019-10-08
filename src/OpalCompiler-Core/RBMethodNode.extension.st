@@ -18,7 +18,7 @@ RBMethodNode >> doSemanticAnalysis [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> doSemanticAnalysisIn: behavior [
-	self methodClass: behavior.
+	behavior ifNotNil: [self methodClass: behavior].
 	self doSemanticAnalysis
 ]
 
@@ -153,14 +153,13 @@ RBMethodNode >> rewriteTempsForContext: aContext [
 	| rewriter contextOnlyTemps |
 	rewriter := RBParseTreeRewriter new.
 	contextOnlyTemps := self notShadowedTemporaryNamesFrom: aContext.
-	aContext tempNames
-		withIndexDo:
-			[ :tempName :index | 
+	aContext tempNames do:
+			[ :tempName | 
 			(contextOnlyTemps includes: tempName)
 				ifTrue:
 					[ rewriter
-						replace: tempName , ' := ``@object' with: 'ThisContext namedTempAt:' , index asString , 'put: ``@object';
-						replace: tempName with: 'ThisContext namedTempAt:' , index asString ] ].
+						replace: tempName , ' := ``@object' with: 'ThisContext tempNamed: ', tempName asString printString  , ' put: ``@object';
+						replace: tempName with: 'ThisContext tempNamed: ' , tempName asString printString ] ].
 	^ rewriter
 		executeTree: self;
 		tree

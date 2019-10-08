@@ -119,6 +119,13 @@ RBProgramNode >> allTemporaryVariables [
 ]
 
 { #category : #accessing }
+RBProgramNode >> allVariables [
+	"Return all the variables in subnodes"
+
+	^ self allChildren select: [ :each | each isVariable ]
+]
+
+{ #category : #accessing }
 RBProgramNode >> asReturn [
 	"Change the current node to a return node."
 
@@ -428,7 +435,8 @@ RBProgramNode >> isEvaluatedFirst [
 
 { #category : #testing }
 RBProgramNode >> isFaulty [
-	self subclassResponsibility
+	"return true if the AST contains a RBParseErrorNode"
+	^false
 ]
 
 { #category : #deprecated }

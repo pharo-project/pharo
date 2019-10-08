@@ -3,7 +3,7 @@ I implement the push strategy for method arguments who are simple variables.
 "
 Class {
 	#name : #FFIMethodArgument,
-	#superclass : #FFIFunctionArgument,
+	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
 		'index',
 		'argName'

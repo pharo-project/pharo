@@ -24,7 +24,8 @@ Class {
 		'requestor',
 		'methodArgs',
 		'receiver',
-		'method'
+		'method',
+		'resolutionMode'
 	],
 	#classVars : [
 		'TypeAliases'
@@ -117,18 +118,22 @@ FFICallout >> aliasForType: aTypeName [
 	^ TypeAliases at: alias ifAbsent: [ alias ]
 ]
 
-{ #category : #'spec parsing' }
-FFICallout >> argName: argName indirectIndex: anIndex type: typeName ptrArity: ptrArity [
-	| type |
+{ #category : #configuration }
+FFICallout >> beNonStrict [
 
-	argName ifNil: [ 
-		"allow nil,true,false as untyped arguments"
-		^ self directArgName: typeName ptrArity: ptrArity ].
+	self beStrict: false
+]
 
-	type := self typeName: typeName pointerArity: ptrArity.
-	type loader: (self loaderForArgNamed: argName indirectIndex: anIndex).
+{ #category : #configuration }
+FFICallout >> beStrict [
 	
-	^ type
+	self beStrict: true
+]
+
+{ #category : #configuration }
+FFICallout >> beStrict: aBoolean [
+	
+	self options at: #optStrict put: aBoolean
 ]
 
 { #category : #accessing }
@@ -137,30 +142,6 @@ FFICallout >> callType: aCallType [
 	aCallType == #stdcall ifTrue: [ ^ self stdcall ].
 	
 	self error: 'unknown call type'
-]
-
-{ #category : #private }
-FFICallout >> directArgName: typeName ptrArity: ptrArity [
-	"Answer 'direct' type arguments (without argument names): 
-		self, nil,true, false or a constant (like a number)"
-
-	(typeName = 'NULL' or: [ typeName = 'nil' ])
-		ifTrue: [ 
-			^ (self resolveType: #'void *')
-				loader: (self valueArgumentLoader: ExternalAddress null);
-				yourself ].
-	typeName = 'false'
-		ifTrue: [ ^ FFIConst value: 0 type: (self resolveType: #bool) ].
-	typeName = 'true'
-		ifTrue: [ ^ FFIConst value: 1 type: (self resolveType: #bool) ].
-	ptrArity > 0
-		ifTrue: [ self error: 'missing argument name' ].	"lone self"
-	typeName = 'self'
-		ifTrue: [ 
-			^ (requestor asExternalTypeOn: self) 
-				prepareAsSelfFromCalloutDeclaration;
-				loader: self receiverArgumentLoader ].
-	^ self resolveType: typeName
 ]
 
 { #category : #accessing }
@@ -178,25 +159,13 @@ FFICallout >> indirectLoader: aLoader byIndex: anIndex [
 { #category : #initialization }
 FFICallout >> initialize [
 	super initialize.
-	options := Dictionary new
+	options := Dictionary new.
 ]
 
-{ #category : #private }
-FFICallout >> integerConstantArgument: anInteger [
+{ #category : #testing }
+FFICallout >> isStrict [
 
-	^ FFIConst 
-		value: anInteger
-		type: (anInteger >=0 
-			ifTrue: [ self resolveType: #uint32 ]
-			ifFalse: [ self resolveType: #int32 ])
-]
-
-{ #category : #private }
-FFICallout >> integerConstantArgument: anInteger type: aType [
-
-	^ FFIConst 
-		value: anInteger
-		type: (self resolveType: aType)
+	^ self resolutionMode isStrict
 ]
 
 { #category : #'argument loaders' }
@@ -210,8 +179,12 @@ FFICallout >> loaderForArgNamed: argName [
 		loader ifNil: [ 
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.
-			loader 
-				ifNil: [ FFIVariableNameNotFound signalFor: argName ] ] ].
+			loader ifNil: [ | binding |
+				binding := requestor ffiBindingOf: argName.
+				binding ifNil: [ FFIVariableNameNotFound signalFor: argName].
+				loader := FFIClassVariableArgument new 
+					argName: argName;
+					yourself ] ] ].
 	^ loader
 ]
 
@@ -344,6 +317,14 @@ FFICallout >> requestor: aRequestor [
 ]
 
 { #category : #accessing }
+FFICallout >> resolutionMode [
+	
+	^ (self optionAt: #optStrict)
+		ifTrue: [ FFIStrictResolutionMode new ]
+		ifFalse: [ FFIInferenceResolutionMode new ]
+]
+
+{ #category : #accessing }
 FFICallout >> resolveExternalType: anObject [ 
 	^ (self resolveType: anObject) externalType 
 ]
@@ -380,24 +361,13 @@ FFICallout >> resolveType: aTypeName [
 	binding ifNotNil: [ 
 		^ (binding value asExternalTypeOn: self) pointerArity: ptrArity ].
 
-	^ self error: 'Unable to resolve external type: ' , aTypeName
+	^ self error: 'Unable to resolve external type: ' , aTypeName asString
 ]
 
 { #category : #'spec parsing' }
-FFICallout >> returnType: aType [
-	aType first = 'receiver'
-		ifTrue: [ | possibleClass requestorClass |
-			"check that:
-				1. method belongs to class side
-				2. method class is subclass of NBExternalObject
-				3. receiver is the same or subclass of the requestor -- since the requestor is the implementor"
-			possibleClass := self receiver.
-			requestorClass := self requestor soleInstance.
-			(possibleClass isBehavior
-				and: [ possibleClass includesBehavior: requestorClass ])
-				ifTrue: [ ^ self typeName: possibleClass name pointerArity: aType second ] ].
-	self receiver: nil.	"if the type is not 'receiver' then we don't need the receiver of the message so set it to nil"
-	^ self typeName: aType first pointerArity: aType second
+FFICallout >> resolveUntypedArgument: anArgument [
+
+	^ self resolutionMode resolveUndeclaredTypeForArgument: anArgument withResolver: self
 ]
 
 { #category : #accessing }
@@ -416,10 +386,8 @@ FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
 ]
 
-{ #category : #private }
-FFICallout >> valueArgumentLoader: anObject [
-
-	^ FFIValueArgument new
-		value: anObject;
-		yourself
+{ #category : #errors }
+FFICallout >> unsupportedUntypedLiteral: aLiteral [
+	
+	FFIUnsupportedUntypedLiteral signalFor: aLiteral
 ]

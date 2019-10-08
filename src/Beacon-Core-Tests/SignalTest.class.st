@@ -9,6 +9,14 @@ Class {
 }
 
 { #category : #tests }
+SignalTest >> testPrintOneLineString [
+	| signal |
+	signal := BeaconSignal new.
+	self assert: (' ' split: signal printOneLineString) second equals: 'BeaconSignal'
+ 
+]
+
+{ #category : #tests }
 SignalTest >> testTimestampByDefault [
 	| before signal after |
 	before := DateAndTime now.

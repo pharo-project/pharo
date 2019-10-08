@@ -18,6 +18,12 @@ SpStatusBarPresenter class >> adapterName [
 	^ #StatusBarAdapter
 ]
 
+{ #category : #testing }
+SpStatusBarPresenter >> canTakeKeyboardFocus [
+
+	^ false
+]
+
 { #category : #accessing }
 SpStatusBarPresenter >> message [
 	^ message
