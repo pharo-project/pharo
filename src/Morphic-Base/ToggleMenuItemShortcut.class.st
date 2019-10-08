@@ -15,7 +15,7 @@ I format those imputs into something similar (check #expand: method for better e
 "
 Class {
 	#name : #ToggleMenuItemShortcut,
-	#superclass : #Object,
+	#superclass : #DisplayableObject,
 	#instVars : [
 		'keyText',
 		'owner',
@@ -111,7 +111,7 @@ ToggleMenuItemShortcut >> boundsForKeyText: aString font: aFont [
 { #category : #accessing }
 ToggleMenuItemShortcut >> color [
 
-	^ color ifNil: [ Smalltalk ui theme ghostTextColor ]
+	^ color ifNil: [ self theme ghostTextColor ]
 ]
 
 { #category : #accessing }
