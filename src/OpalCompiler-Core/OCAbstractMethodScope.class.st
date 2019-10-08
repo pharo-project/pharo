@@ -178,18 +178,11 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 { #category : #lookup }
 OCAbstractMethodScope >> lookupVar: name [
 	copiedVars at: name ifPresent: [:v | ^ v].
-	tempVector  at: name ifPresent: [:v | ^ v].
+	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = 'thisContext' ifTrue: [^ thisContextVar].
 	^self outerScope lookupVar: name
 	
-]
-
-{ #category : #lookup }
-OCAbstractMethodScope >> lookupVarForDeclaration: name [
-	tempVars at: name ifPresent: [:v | ^ v].
-	name = 'thisContext' ifTrue: [^ thisContextVar].
-	^self outerScope lookupVarForDeclaration: name
 ]
 
 { #category : #scope }

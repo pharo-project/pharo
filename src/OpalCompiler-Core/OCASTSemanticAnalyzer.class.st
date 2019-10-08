@@ -48,7 +48,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode [
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable [
 	| name var |
 	name := aVariableNode name.
-	var := scope lookupVarForDeclaration: name.
+	var := scope lookupVar: name.
 	var
 		ifNotNil: [ 
 			self variable: aVariableNode shadows: var.
