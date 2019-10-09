@@ -37,15 +37,6 @@ OCRequestorScope >> findVariable: aBlock ifNone: aNotFound [
 ]
 
 { #category : #lookup }
-OCRequestorScope >> lookupGlobalVar: aName [
-	"consider variables with upper case as global vars resolveable in the outer scope "
-
-	^ aName first isUppercase
-		ifTrue: [ outerScope lookupVar: aName ]
-		ifFalse: [ nil ]
-]
-
-{ #category : #lookup }
 OCRequestorScope >> lookupVar: name [
 
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].

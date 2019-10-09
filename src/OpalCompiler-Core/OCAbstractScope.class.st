@@ -56,13 +56,6 @@ OCAbstractScope >> isMethodScope [
 ]
 
 { #category : #lookup }
-OCAbstractScope >> lookupSelector: name [
-
-	Symbol hasInterned: name ifTrue: [ :sym | ^ sym].
-	^ nil
-]
-
-{ #category : #lookup }
 OCAbstractScope >> lookupVar: name [
 	"search the scope (and the outer scopes) for a variable 'name' and return it"
 	^self subclassResponsibility
@@ -98,12 +91,6 @@ OCAbstractScope >> outerScope: aSemScope [
 
 	outerScope := aSemScope.
 	aSemScope addChild: self. 
-]
-
-{ #category : #lookup }
-OCAbstractScope >> possibleSelectorsFor: string [
-
-	^ Symbol possibleSelectorsFor: string
 ]
 
 { #category : #levels }

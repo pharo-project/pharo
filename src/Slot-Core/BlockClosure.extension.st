@@ -2,7 +2,7 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*Slot-Core' }
 BlockClosure >> hasTemporaryVariableNamed: aName [
-	^(self tempNames includes: aName)
+	^self tempNames includes: aName
 ]
 
 { #category : #'*Slot-Core' }

@@ -339,11 +339,6 @@ IRMethod >> removeEmptyStart [
 
 ]
 
-{ #category : #inlining }
-IRMethod >> removeReturn [
-	self allSequences last removeLast.
-]
-
 { #category : #accessing }
 IRMethod >> sourceInterval [
 	^self sourceNode sourceInterval
