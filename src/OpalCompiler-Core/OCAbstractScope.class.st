@@ -64,14 +64,15 @@ OCAbstractScope >> lookupSelector: name [
 
 { #category : #lookup }
 OCAbstractScope >> lookupVar: name [
-	"subclass responsibility"
-
-	^ self outerScope lookupVar: name
+	"search the scope (and the outer scopes) for a variable 'name' and return it"
+	^self subclassResponsibility
 ]
 
 { #category : #lookup }
 OCAbstractScope >> lookupVarForDeclaration: name [
-	"subclass responsibility"
+	"This is a version of #lookupVar: that skips the OCRequestorScope.
+	When looking temp var declarations, we do not want the Requestor scope to automatically
+	create that variable. Subclasses override if they do not skip but do a lookup"
 
 	^ self outerScope lookupVarForDeclaration: name
 ]

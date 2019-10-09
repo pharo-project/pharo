@@ -55,7 +55,7 @@ OCRequestorScope >> lookupVar: name [
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
 	(compilationContext forSyntaxHighlighting
 		and: [ (requestor hasBindingOf: name asSymbol) not ])
-		ifTrue: [ ^ super lookupVar: name ].
+		ifTrue: [ ^ outerScope lookupVar: name ].
 
 	"the requestors #bindingOf may create a binding for not yet existing variables"
 	(requestor bindingOf: name asSymbol)
@@ -64,7 +64,7 @@ OCRequestorScope >> lookupVar: name [
 				assoc: assoc;
 				scope: self;
 				yourself ].
-	^ super lookupVar: name
+	^ outerScope lookupVar: name
 ]
 
 { #category : #lookup }
