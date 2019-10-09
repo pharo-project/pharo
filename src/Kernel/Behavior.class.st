@@ -8,7 +8,8 @@ Class {
 		'superclass',
 		'methodDict',
 		'format',
-		'layout'
+		'layout',
+		'lookupMethodDict'
 	],
 	#classVars : [
 		'ClassProperties',
