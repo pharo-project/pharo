@@ -20,19 +20,14 @@ Class {
 RBImplementedNotSentRule class >> allMessages [
 	"return all 'message sends' in the systed and cache them"
 
-	allMessages ifNil: [
+	^allMessages ifNil: [
 		allMessages := IdentitySet new.
 	
-		ProtoObject
-			withAllSubclassesDo: [ :class | 
-				class methodsDo: [ :method |
+		Smalltalk globals allBehaviors do: [ :behavior | 
+				behavior methodsDo: [ :method |
 					self forApproxMessagesOf: method do: [ :mes |
-						allMessages add: mes ] ].
-				class class methodsDo: [ :method |
-					self forApproxMessagesOf: method do: [ :mes |
-						allMessages add: mes ] ] ] ].
-			
-	^ allMessages
+						allMessages add: mes ] ] ].
+		allMessages	]
 ]
 
 { #category : #testing }
@@ -114,7 +109,7 @@ RBImplementedNotSentRule class >> unsubscribe [
 
 { #category : #running }
 RBImplementedNotSentRule >> basicCheck: aMethod [
-	"Check if there are any senders. Furthermore methods with pragmas are likely to be sent through reflection, thus do not report those. Also test methods are sent through reflection, so ignore those as well."
+	"Check if there are any senders. Furthermore methods with pragmas are likely to be sent through reflection, thus do not report those."
 
 	aMethod pragmas ifNotEmpty: [ ^ false ].
 	aMethod isTestMethod ifTrue: [ ^ false ].
