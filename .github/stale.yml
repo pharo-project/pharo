@@ -5,7 +5,7 @@ daysUntilStale: 250
 
 # Number of days of inactivity before an Issue or Pull Request with the stale label is closed.
 # Set to false to disable. If disabled, issues still need to be closed manually, but will remain marked as stale.
-daysUntilClose: 7
+# daysUntilClose: 7
 
 # Only issues or pull requests with all of these labels are check if stale. Defaults to `[]` (disabled)
 onlyLabels: []
@@ -32,7 +32,7 @@ staleLabel: stale
 markComment: >
   To limit bug bankruptcy (see https://www.joelonsoftware.com/2012/07/09/software-inventory/)
   this issue has been automatically marked as stale because it has not had any activity in 6 months. 
-  It will be closed in 1 week if no further activity occurs. If this issue remains important to you, 
+  If no further activity occurs, it might be closed. If this issue remains important to you, 
   please comment to reactivate the issue. Thank you for your contributions.
 
 # Comment to post when removing the stale label.
