@@ -62,17 +62,17 @@ ClassOrganizationTest >> testListAtCategoryNamed [
 	self assertEmpty: methods.
 
 	methods := self organization listAtCategoryNamed: 'one'.
-	self assert: methods size = 1.
-	self assert: methods first = #one
+	self assert: methods size equals: 1.
+	self assert: methods first equals: #one
 ]
 
 { #category : #tests }
 ClassOrganizationTest >> testRemoveCategory [
-	self assert: self organization categories size = 2.
+	self assert: self organization categories size equals: 2.
 	self should: [ self organization removeCategory: 'one' ] raise: Error.
 	self organization removeCategory: 'empty'.
-	self assert: self organization categories size = 1.
-	self assert: self organization categories first = 'one'
+	self assert: self organization categories size equals: 1.
+	self assert: self organization categories first equals: 'one'
 ]
 
 { #category : #tests }

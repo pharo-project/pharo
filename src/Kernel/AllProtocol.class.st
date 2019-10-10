@@ -40,15 +40,13 @@ AllProtocol >> isVirtualProtocol [
 ]
 
 { #category : #accessing }
-AllProtocol >> methods [
-
-	^ self protocolOrganizer allMethods
+AllProtocol >> methodSelectors [
+	^ self protocolOrganizer allMethodSelectors
 ]
 
 { #category : #accessing }
 AllProtocol >> name [
-
-	^ (self methods isEmpty and: [ protocolOrganizer protocols isEmpty])
+	^ (self isEmpty and: [ protocolOrganizer protocols isEmpty ])
 		ifTrue: [ self class nullCategory ]
 		ifFalse: [ name ]
 ]

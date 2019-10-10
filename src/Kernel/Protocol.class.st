@@ -6,8 +6,8 @@ Class {
 	#name : #Protocol,
 	#superclass : #Object,
 	#instVars : [
-		'methods',
-		'name'
+		'name',
+		'methodSelectors'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -58,13 +58,12 @@ Protocol class >> unclassified [
 
 { #category : #accessing }
 Protocol >> addAllMethodsFrom: aProtocol [
-
-	aProtocol methods do: [ :each | self addMethod: each ].
+	aProtocol methodSelectors do: [ :each | self addMethodSelector: each ]
 ]
 
 { #category : #accessing }
-Protocol >> addMethod: aSymbol [
-	^ methods add: aSymbol
+Protocol >> addMethodSelector: aSymbol [
+	^ methodSelectors add: aSymbol
 ]
 
 { #category : #private }
@@ -80,7 +79,7 @@ Protocol >> canBeRenamed [
 { #category : #testing }
 Protocol >> includesSelector: selector [
 
-	^ methods includes: selector
+	^ methodSelectors includes: selector
 ]
 
 { #category : #initialization }
@@ -88,14 +87,13 @@ Protocol >> initialize [
 
 	super initialize.
 
-	methods := IdentitySet new.
+	methodSelectors := IdentitySet new.
 	name := self class defaultName.
 ]
 
 { #category : #testing }
 Protocol >> isEmpty [
-
-	^ self methods isEmpty
+	^ self methodSelectors isEmpty
 ]
 
 { #category : #testing }
@@ -110,15 +108,13 @@ Protocol >> isVirtualProtocol [
 ]
 
 { #category : #accessing }
-Protocol >> methods [
-
-	^ methods
+Protocol >> methodSelectors [
+	^ methodSelectors
 ]
 
 { #category : #accessing }
-Protocol >> methods: anObject [
-	
-	methods := anObject
+Protocol >> methodSelectors: anObject [
+	methodSelectors := anObject
 ]
 
 { #category : #accessing }
@@ -134,26 +130,23 @@ Protocol >> name: anObject [
 
 { #category : #printing }
 Protocol >> printOn: aStream [
-
-	aStream 
+	aStream
 		nextPutAll: self class name;
 		nextPutAll: ' (';
 		nextPutAll: self name;
 		nextPutAll: ') - ';
-		print: self methods size;
+		print: self methodSelectors size;
 		nextPutAll: ' selector(s)'
 ]
 
 { #category : #accessing }
-Protocol >> removeAllMethods [
-
-	^ methods removeAll.
+Protocol >> removeAllMethodSelectors [
+	^ methodSelectors removeAll
 ]
 
 { #category : #accessing }
-Protocol >> removeMethod: aSymbol [
-
-	^ methods remove: aSymbol
+Protocol >> removeMethodSelector: aSymbol [
+	^ methodSelectors remove: aSymbol
 ]
 
 { #category : #accessing }
