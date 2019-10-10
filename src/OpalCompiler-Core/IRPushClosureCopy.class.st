@@ -13,7 +13,6 @@ Class {
 		'blockSequence',
 		'tempMap',
 		'copiedValues',
-		'lastBlockSequence',
 		'arguments'
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
@@ -86,16 +85,6 @@ IRPushClosureCopy >> isJump [
 { #category : #testing }
 IRPushClosureCopy >> isPushClosureCopy [
 	^true
-]
-
-{ #category : #accessing }
-IRPushClosureCopy >> lastBlockSequence [ 
-	^lastBlockSequence
-]
-
-{ #category : #accessing }
-IRPushClosureCopy >> lastBlockSequence: aSequence [
-	lastBlockSequence := aSequence
 ]
 
 { #category : #accessing }

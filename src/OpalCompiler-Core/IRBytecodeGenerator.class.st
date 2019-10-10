@@ -166,6 +166,11 @@ IRBytecodeGenerator >> closureFrom: fromSeqId to: toSeqId copyNumCopiedValues: n
 ]
 
 { #category : #accessing }
+IRBytecodeGenerator >> compilationContext [
+	^ compilationContext ifNil: [compilationContext := CompilationContext default]
+]
+
+{ #category : #accessing }
 IRBytecodeGenerator >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
@@ -212,7 +217,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits [
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
-	cmClass := compilationContext productionEnvironment at: #CompiledMethod ifAbsent: [ CompiledMethod ].
+	cmClass := self compilationContext productionEnvironment at: #CompiledMethod ifAbsent: [ CompiledMethod ].
 	cm := trailer createMethod: self bytecodes size class: cmClass header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
@@ -362,8 +367,7 @@ IRBytecodeGenerator >> initialize [
 	additionalLiterals := OCLiteralSet new.
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
-	self label: self newDummySeqId.
-	compilationContext := CompilationContext default.
+	self label: self newDummySeqId
 	
 
 	
