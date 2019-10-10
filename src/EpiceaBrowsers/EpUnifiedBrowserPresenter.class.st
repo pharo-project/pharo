@@ -51,10 +51,23 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 		order: 401
 ]
 
+{ #category : #refreshing }
+EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
+	^ selection selectedItems
+		ifEmpty: [ EpLog newNull ]
+		ifNotEmpty: [ :items | 
+			| entries |
+			"Needed to reverse the selected logs to have the expected order (as user)."
+			entries := items reversed flatCollect: [:each | each log entries ].
+			EpLog newWithEntries: entries ].
+
+
+]
+
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializePresenter [
 	super initializePresenter.
-	logNodesPresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelected: selection selectedItem ].
+	logNodesPresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelection: selection ].
 	self initializeRefreshOnSessionUpdate.
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
@@ -101,27 +114,17 @@ EpUnifiedBrowserPresenter >> refresh [
 EpUnifiedBrowserPresenter >> refreshIfMonitorLogSelected [
 	"See initializeWorkaroundToRefreshOnMonitorLogAnnouncement"
 
-	self selectedLogNode
-		ifNotNil: [ :item | 
-			item isMonitor ifFalse: [ ^ self ].	"Monitor log isn't selected"
-			logPresenter refresh ]
+	(logNodesPresenter selectedLogNodes anySatisfy: [ :item | item isMonitor ])
+		ifTrue: [ logPresenter refresh ]
 ]
 
 { #category : #refreshing }
-EpUnifiedBrowserPresenter >> refreshWithLogSelected: item [
-	| freshLog |
-	freshLog := item ifNil: [ EpLog newNull ] ifNotNil: [ item log ].
+EpUnifiedBrowserPresenter >> refreshWithLogSelection: selection [
 
 	logPresenter
-		theLog: freshLog;
-		removeAllFilters;
+		theLog: (self freshLogFromSelection: selection);
 		refresh;
 		cleanEntryContent
-]
-
-{ #category : #accessing }
-EpUnifiedBrowserPresenter >> selectedLogNode [
-	^ logNodesPresenter selectedLogNode
 ]
 
 { #category : #initialization }
