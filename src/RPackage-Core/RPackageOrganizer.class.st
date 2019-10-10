@@ -489,7 +489,7 @@ RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 	package := self packageMatchingExtensionName: protocolName.
 	package ifNil: [
 		package := self basicRegisterPackage: (self packageClass named: protocolName) ].
-	nonTraitMethods := aProtocol methods 
+	nonTraitMethods := aProtocol methodSelectors 
 		select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ].
 	nonTraitMethods ifEmpty:[^ self].
 	self registerExtendingPackage: package forClass: aBehavior.
