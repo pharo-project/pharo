@@ -48,8 +48,7 @@ ClassOrganization >> allCategories [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
-	
-	^ protocolOrganizer allMethods
+	^ protocolOrganizer allMethodSelectors
 ]
 
 { #category : #accessing }
