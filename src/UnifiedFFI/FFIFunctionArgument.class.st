@@ -15,6 +15,12 @@ FFIFunctionArgument >> asOldArraySpec [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+FFIFunctionArgument >> defaultReturnOnError [
+
+	^ self resolvedType defaultReturnOnError
+]
+
 { #category : #resolution }
 FFIFunctionArgument >> emitReturnArgument: anIRBuilder context: aContext [
 
