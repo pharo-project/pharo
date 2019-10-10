@@ -19,6 +19,14 @@ Protocol >> methods: aCollection [
 ]
 
 { #category : #'*Deprecated80' }
+Protocol class >> name: nm methods: methods [
+	self
+		deprecated: 'Use #name:methodSelectors: instead'
+		transformWith: '`@receiver name: `@arg1 methods: `@arg2' -> '`@receiver name: `@arg1 methodSelectors: `@arg2'.
+	^ self name: nm methods: methods
+]
+
+{ #category : #'*Deprecated80' }
 Protocol >> removeAllMethods [
 	self deprecated: 'Use #removeAllMethodSelectors instead' transformWith: '`@receiver removeAllMethods' -> '`@receiver removeAllMethodSelectors'.
 	^ self removeAllMethodSelectors

@@ -37,10 +37,9 @@ Protocol class >> name: nm [
 ]
 
 { #category : #'instance creation' }
-Protocol class >> name: nm methods: methods [ 
-
+Protocol class >> name: nm methodSelectors: methods [
 	^ self new
-		methods: methods;
+		methodSelectors: methods;
 		name: nm asSymbol;
 		yourself
 ]
