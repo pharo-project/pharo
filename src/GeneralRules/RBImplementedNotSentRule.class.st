@@ -18,7 +18,7 @@ Class {
 
 { #category : #accessing }
 RBImplementedNotSentRule class >> allMessages [
-	"return all 'message sends' in the systed and cache them"
+	"return all 'message sends' in the system and cache them"
 
 	^allMessages ifNil: [
 		allMessages := IdentitySet new.
