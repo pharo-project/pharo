@@ -528,7 +528,7 @@ RPackageOrganizer >> initializeMethodsFor: aBehavior [
 	(aBehavior organization protocols
 		select: [ :each | each isExtensionProtocol not ])
 		do: [ :eachProtocol | 
-			 (eachProtocol methods 
+			 (eachProtocol methodSelectors 
 				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
 				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
 ]
