@@ -25,6 +25,20 @@ SpStyleSTONReader >> isStyleClassChar: char [
 	^ char = $.
 ]
 
+{ #category : #private }
+SpStyleSTONReader >> lookupClass: name [
+
+	"The SpStyleSTONReader only looks for ston names in the hierarchy of SpStyle"
+	
+	^ classes 
+		at: name 
+		ifAbsentPut: [
+			(SpStyle allSubclasses , Color withAllSubclasses) 
+				detect: [ :class | class isMeta not and: [ class stonName = name ]  ]
+				ifNone: [ NotFound signalFor: name ] ]
+	
+]
+
 { #category : #parsing }
 SpStyleSTONReader >> parseSimpleValue [
 	| char |

@@ -44,7 +44,7 @@ OCExtraBindingScope >> findVariable: aBlock ifNone: aNotFound [
 OCExtraBindingScope >> lookupVar: name [
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
 	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
-	"the requestors #bindingOf may create a binding for not yet existing variables"
+	
 	(bindings bindingOf: name asSymbol)
 		ifNotNil: [ :assoc | 
 			^ OCLiteralVariable new
@@ -58,19 +58,4 @@ OCExtraBindingScope >> lookupVar: name [
 OCExtraBindingScope >> newMethodScope [
 	 
 	^ OCMethodScope new outerScope: (self outerScope: outerScope instanceScope) 
-]
-
-{ #category : #'instance creation' }
-OCExtraBindingScope >> variableNamed: name ifAbsent: aBlock [
-
-	name = 'self' ifTrue: [  ^outerScope lookupVar: name].
-	name = 'super' ifTrue: [  ^outerScope lookupVar: name].
-	name first isUppercase ifTrue: [  | found |
-		found := outerScope lookupVar: name.
-		found ifNotNil: [ ^found ]].
-	
-	(bindings bindingOf: name asSymbol) ifNotNil: [:assoc | 
-		^ OCLiteralVariable new assoc: assoc; scope: self; yourself].
-
-	^ aBlock value
 ]

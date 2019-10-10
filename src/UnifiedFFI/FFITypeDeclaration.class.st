@@ -38,13 +38,19 @@ FFITypeDeclaration >> asOldArraySpec [
 	^ { name . arity }
 ]
 
+{ #category : #accessing }
+FFITypeDeclaration >> defaultReturnOnError [
+
+	^ self resolvedType defaultReturnOnError
+]
+
 { #category : #'emitting code' }
 FFITypeDeclaration >> emitReturn: anIRBuilder resultTempVar: aString context: aContext [
 	
 	^ resolvedType emitReturn: anIRBuilder resultTempVar: aString context: aContext
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FFITypeDeclaration >> externalTypeWithArity [
 	
 	^ resolvedType externalTypeWithArity

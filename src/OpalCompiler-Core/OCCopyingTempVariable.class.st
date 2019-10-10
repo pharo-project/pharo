@@ -14,7 +14,8 @@ Class {
 
 { #category : #debugging }
 OCCopyingTempVariable >> indexInTempVectorFromIR: aName [
-	^(scope methodScope node irInstruction tempVectorNamed: name) indexForVarNamed: aName.
+	^(self tempVectorDefinitionScopeForTempStoringIt node irInstruction tempVectorNamed: name) 
+		indexForVarNamed: aName
 ]
 
 { #category : #testing }
@@ -33,9 +34,8 @@ OCCopyingTempVariable >> originalVar: anObject [
 ]
 
 { #category : #'temp vector' }
-OCCopyingTempVariable >> tempVectorForTempStoringIt [
-	"If I am stroring a temp Vector, this method returns this victor.
-	useful for analysis e.g. which variables are active in a context"
+OCCopyingTempVariable >> tempVectorDefinitionScopeForTempStoringIt [
+	"If I am stroring a temp Vector, this method returns the definition scope"
 	
 	| searchScope |
 	self isStoringTempVector ifFalse: [^nil].
@@ -45,8 +45,13 @@ OCCopyingTempVariable >> tempVectorForTempStoringIt [
 		whileFalse: [searchScope := searchScope outerScope].
 	searchScope isInstanceScope 
 		ifTrue: [ ^nil] "not found"
-		ifFalse: [^ searchScope tempVector]
-	
+		ifFalse: [^ searchScope ]
+]
+
+{ #category : #'temp vector' }
+OCCopyingTempVariable >> tempVectorForTempStoringIt [
+	"If I am stroring a temp Vector, this method returns this vector"
+	^self tempVectorDefinitionScopeForTempStoringIt tempVector
 ]
 
 { #category : #debugging }

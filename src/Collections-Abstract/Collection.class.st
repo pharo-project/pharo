@@ -653,13 +653,6 @@ Collection >> errorNotFound: anObject [
 ]
 
 { #category : #private }
-Collection >> errorNotKeyed [
-
-	self error: ('Instances of {1} do not respond to keyed accessing messages.' format: {self class name})
-
-]
-
-{ #category : #private }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 
@@ -975,7 +968,7 @@ Collection >> notEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : #enumerating }
 Collection >> occurrencesOf: anObject [ 
 	"Answer how many of the receiver's elements are equal to anObject."
 

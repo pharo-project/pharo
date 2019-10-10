@@ -22,7 +22,11 @@ SpStyle class >> createDefaultStyleSheet [
 	Font { #name : "Source Sans Pro", #size : 10 },
 	Geometry { #height: 25 },
 	.label [
-		Geometry { #hResizing: true }		
+		Geometry { #hResizing: true },
+		.shortcut [ 
+			Draw { #color : Color{ #rgb: 622413393 } },
+			Font { #name : "Lucida Grande", #size: 10 }
+		]
 	],
 	.link [  
 		Geometry { #hResizing: true }		
@@ -46,14 +50,18 @@ SpStyle class >> createDefaultStyleSheet [
 		Geometry { #width: 150, #hResizing: true }
 	],
 	.actionBar [  
-		Container { #borderWidth: 5, #padding: 5 },
-		Geometry { #width: 150, #hResizing: true }
+		Container { 
+			#borderColor: Color { #rgb: 0, #alpha: 0 }, 
+			#borderWidth: 2, 
+			#padding: 5 },
+		Geometry { #width: 150, #height: 29, #hResizing: true, #vResizing: false }
 	],
 	.menuBar [
 		Geometry { #width: 150, #hResizing: true }
 	],
 	.actionButton [  
-		Geometry { #width: 80, #hResizing: true }
+		Geometry { #width: 60, #hResizing: false },
+		.showIcon [ Geometry { #width: 25 } ]
 	],
 	.toolBar [ 
 		Geometry { #hResizing: true },
@@ -63,6 +71,9 @@ SpStyle class >> createDefaultStyleSheet [
 		.iconsAndLabel [  
 			Geometry { #height: 45 }
 		]
+	],
+	.code [
+		Font { #name : "Source Code Pro", #size : 10 }
 	]
 ]
 '
@@ -76,6 +87,13 @@ SpStyle class >> defaultStyleSheet [
 	^ DefaultStyleSheet ifNil: [ 
 		DefaultStyleSheet := self createDefaultStyleSheet ].
 
+]
+
+{ #category : #accessing }
+SpStyle class >> reset [ 
+	<script>
+
+	DefaultStyleSheet := nil
 ]
 
 { #category : #operations }

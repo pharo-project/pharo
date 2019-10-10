@@ -10,14 +10,20 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Table'
 }
 
+{ #category : #initialization }
+SpMorphicTreeTableAdapter >> addFocusRotationKeyBindings [
+	
+	^ super addFocusRotationKeyBindings
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 
-	self model columns do: [ :each | 
+	self presenter columns do: [ :each | 
 		tableMorph addColumn: (self newColumnFrom: each) ].
 	self ensureAtLeastOneColumnIn: tableMorph.
 
-	self model selection isMultipleSelection ifTrue: [  
+	self presenter selection isMultipleSelection ifTrue: [  
 		tableMorph beMultipleSelection ].
 
 	self isShowingColumnHeaders 
@@ -32,22 +38,24 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 	
 	tableMorph dataSource: self newDataSource.
 	
-	self model selection isEmpty 
+	self presenter selection isEmpty 
 		ifFalse: [ self updateSelectionOf: tableMorph ].
 	
-	self model whenSelectionChangedDo: [ self updateSelectionOf: tableMorph ].
-	self model whenRootsChangedDo: [ 
+	self presenter whenSelectionChangedDo: [ 
+		self updateSelectionOf: tableMorph ].
+	
+	self presenter whenRootsChangedDo: [ 
 		tableMorph selectIndexes: #().
 		tableMorph dataSource: self newDataSource ].
 	
-	self model whenShowColumnHeadersChangedDo: [ 	
+	self presenter whenShowColumnHeadersChangedDo: [ 	
 		self isShowingColumnHeaders 
 			ifTrue: [ tableMorph showColumnHeaders ] 
 			ifFalse: [ tableMorph hideColumnHeaders ] ].
 		
-	self model whenColumnsChangedDo: [
+	self presenter whenColumnsChangedDo: [
 		tableMorph columns: #(). 
-		self model columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
+		self presenter columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
 		tableMorph dataSource: self newDataSource ].
 	
 	tableMorph
@@ -56,7 +64,7 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 			to: self;
 		onAnnouncement: FTStrongSelectionChanged
 			send: #strongSelectionChanged:
-			to: self.
+			to: self
 ]
 
 { #category : #factory }

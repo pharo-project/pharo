@@ -7,6 +7,11 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
+{ #category : #initialization }
+SpMorphicBaseMenuAdapter >> addKeyBindingsTo: aMorph [
+	"This does not has keybindings"
+]
+
 { #category : #protocol }
 SpMorphicBaseMenuAdapter >> icon [
 

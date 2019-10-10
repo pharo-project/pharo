@@ -95,6 +95,18 @@ KMSingleKeyCombination >> name [
 	^ self key asString
 ]
 
+{ #category : #'accessing platform' }
+KMSingleKeyCombination >> platformCharacter [
+
+	^ key
+]
+
+{ #category : #'accessing platform' }
+KMSingleKeyCombination >> platformModifier [
+
+	^ self modifier
+]
+
 { #category : #printing }
 KMSingleKeyCombination >> prettyPrintOn: aStream [
 

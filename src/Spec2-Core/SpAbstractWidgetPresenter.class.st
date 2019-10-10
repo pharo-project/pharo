@@ -218,6 +218,7 @@ SpAbstractWidgetPresenter >> help: aString [
 { #category : #initialization }
 SpAbstractWidgetPresenter >> initialize [
 	super initialize.
+
 	borderWidth := 0.
 	borderColor := Color transparent.
 	enabled := true.
@@ -275,6 +276,15 @@ SpAbstractWidgetPresenter >> transferBlock: aBlock [
 { #category : #'drag and drop' }
 SpAbstractWidgetPresenter >> transferFor: passenger from: source [
 	^ self transferBlock value: passenger value: source
+]
+
+{ #category : #'private-traversing' }
+SpAbstractWidgetPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self canTakeKeyboardFocus ifFalse: [ ^ self ].
+	
+	excludes add: self.
+	aBlock value: self
 ]
 
 { #category : #'private-traversing' }

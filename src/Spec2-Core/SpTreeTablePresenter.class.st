@@ -161,12 +161,12 @@ SpTreeTablePresenter >> initialize [
 	self registerEvents
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 SpTreeTablePresenter >> isResizable [
 	^ isResizable
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpTreeTablePresenter >> isResizable: aBoolean [
 	isResizable := aBoolean
 ]
@@ -265,8 +265,9 @@ SpTreeTablePresenter >> unselectAll [
 ]
 
 { #category : #'api-events' }
-SpTreeTablePresenter >> whenActivatedDo: aBlockClosure [
-	activationBlock := aBlockClosure
+SpTreeTablePresenter >> whenActivatedDo: aBlock [
+
+	activationBlock := aBlock
 ]
 
 { #category : #'api-events' }

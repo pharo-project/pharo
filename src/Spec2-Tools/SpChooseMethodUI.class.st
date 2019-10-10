@@ -157,32 +157,26 @@ SpChooseMethodUI >> initializePresenters [
 	radioButtonClassSide := self newRadioButton.
 	radioButtonInstanceSide := self newRadioButton.
 	protocolList := self newList.
-
 	packageList
 		items: RPackageOrganizer default packages;
-		displayBlock: #name;
+		display: #name;
 		sortingBlock: #name ascending;
 		icons: [ :item | self iconNamed: #package ].
-
 	classList
 		sortingBlock: #name ascending;
 		icons: [ :item | self iconNamed: item systemIconName ].
-
 	protocolList
-		displayBlock: #name;
+		display: #name;
 		sortingBlock: #name ascending.
-
 	methodList
 		sortingBlock: #name ascending;
-		displayBlock: #selector.
-
+		display: #selector.
 	radioButtonClassSide label: 'class side'.
 	radioButtonInstanceSide
 		label: 'instance side';
 		state: true.
-
-	radioButtonInstanceSide associatedRadioButtons: {radioButtonClassSide}.
-
+	radioButtonInstanceSide
+		associatedRadioButtons: {radioButtonClassSide}.
 	self focusOrder
 		add: packageList;
 		add: classList;

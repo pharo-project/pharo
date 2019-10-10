@@ -558,10 +558,10 @@ EpMonitor >> sessionStore [
 
 { #category : #'announcement handling' }
 EpMonitor >> snapshotDone: aSnapshotDone [
-"-> disable this event as a workaround to case 18374"
+	"Log the event, but only the original save (read SnapshotDone comment)."
 
-"	aSnapshotDone isNewImage 
-		ifFalse: [ self sessionSnapshot ]"
+	aSnapshotDone isNewImage
+		ifFalse: [ self sessionSnapshot ]
 ]
 
 { #category : #private }
@@ -596,6 +596,7 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		ClassCommented -> #classCommented:.
 		MethodRecategorized -> #methodRecategorized:.
 		MCVersionSaved	-> #monticelloVersionSaved:.
+		SnapshotDone -> #snapshotDone:.
 		
 	} do: [ :pair |
 		systemAnnouncer weak

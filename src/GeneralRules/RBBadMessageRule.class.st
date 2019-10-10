@@ -1,5 +1,7 @@
 "
 This smell arises when methods send messages that perform low level things. You might want to limit the number of such messages in your application. Messages such as #isKindOf: can signify a lack of polymorphism. You can see which methods are ""questionable"" by editing the RBBadMessageRule>>badSelectors method. Some examples are: #respondsTo: #isMemberOf: #performMethod: and #performMethod:arguments:
+
+This rule is not active for methods in test classes.
 "
 Class {
 	#name : #RBBadMessageRule,
@@ -21,7 +23,10 @@ RBBadMessageRule >> badSelectors [
 
 { #category : #enumerating }
 RBBadMessageRule >> basicCheck: aNode [
-	^ aNode isMessage and: [ self badSelectors includes: aNode selector ]
+	aNode isMessage ifFalse: [ ^false ].
+	"In tests using these messages (like isKindOf:) is no problem"
+	aNode methodNode methodClass isTestCase ifTrue: [ ^false ].
+	^ self badSelectors includes: aNode selector
 ]
 
 { #category : #accessing }
