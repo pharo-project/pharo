@@ -35,17 +35,6 @@ RBImplementedNotSentRule class >> allMessages [
 	^ allMessages
 ]
 
-{ #category : #accessing }
-RBImplementedNotSentRule class >> approxMessagesOf: aMethod [
-	| messages |
-	messages := IdentitySet new.
-	self
-		forApproxMessagesOf: aMethod
-		do: [ :msg | messages add: msg ].
-		
-	^ messages 
-]
-
 { #category : #testing }
 RBImplementedNotSentRule class >> checksMethod [
 	^ true 
@@ -128,7 +117,7 @@ RBImplementedNotSentRule >> basicCheck: aMethod [
 	"Check if there are any senders. Furthermore methods with pragmas are likely to be sent through reflection, thus do not report those. Also test methods are sent through reflection, so ignore those as well."
 
 	aMethod pragmas ifNotEmpty: [ ^ false ].
-	(aMethod methodClass isMeta not and: [ aMethod methodClass isTestCase ]) ifTrue: [ ^ false ].
+	aMethod isTestMethod ifTrue: [ ^ false ].
 
 	^ (self class allMessages includes: aMethod selector) not
 ]
