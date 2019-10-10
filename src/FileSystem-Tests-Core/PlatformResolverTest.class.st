@@ -14,8 +14,7 @@ PlatformResolverTest >> createResolver [
 
 { #category : #tests }
 PlatformResolverTest >> testCache [
-	| cache |
-	cache := self assertOriginResolves: #cache
+	self assertOriginResolves: #cache
 ]
 
 { #category : #tests }
