@@ -11,38 +11,40 @@ Internal Representation and Key Implementation Points.
 	criticClass:		<aClass> 		The critic class to browse.
 "
 Class {
-	#name : #ClyBrowseRuleCommand,
-	#superclass : #ClyBrowserCommand,
-	#instVars : [
-		'criticClass'
-	],
+	#name : #ClyBrowseCritiqueRuleCommand,
+	#superclass : #ClyCritiqueCommand,
 	#category : #'Calypso-SystemPlugins-Critic-Browser'
 }
 
 { #category : #activation }
-ClyBrowseRuleCommand class >> browserContextMenuActivation [
+ClyBrowseCritiqueRuleCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyCriticContext
 ]
 
+{ #category : #activation }
+ClyBrowseCritiqueRuleCommand class >> criticTableIconActivation [
+	"We do not want this command to appear in the command icons next to critiques."
+
+	
+]
+
 { #category : #accessing }
-ClyBrowseRuleCommand >> defaultMenuIconName [
+ClyBrowseCritiqueRuleCommand >> defaultMenuIconName [
 	^ #smallSystemBrowser
 ]
 
 { #category : #accessing }
-ClyBrowseRuleCommand >> defaultMenuItemName [
+ClyBrowseCritiqueRuleCommand >> defaultMenuItemName [
 	^ 'Browse rule'
 ]
 
-{ #category : #execution }
-ClyBrowseRuleCommand >> execute [
-	criticClass browse
+{ #category : #'table decoration' }
+ClyBrowseCritiqueRuleCommand >> description [
+	^ 'Command to browse the class defining the rule producing the critique.'
 ]
 
 { #category : #execution }
-ClyBrowseRuleCommand >> prepareFullExecutionInContext: aContext [
-	super prepareFullExecutionInContext: aContext.
-
-	criticClass := aContext selectedCritique rule class
+ClyBrowseCritiqueRuleCommand >> execute [
+	self critique rule class browse
 ]
