@@ -29,7 +29,9 @@ PlatformResolver class >> primitiveGetUntrustedUserDirectory [
 { #category : #origins }
 PlatformResolver >> cache [
 	"Operating Systems often define standard locations for a personal cache directory. The cache directory is a user-specific non-essential (cached) place where data should be written."
-	self subclassResponsibility
+
+	<origin>
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
@@ -60,31 +62,38 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 
 { #category : #origins }
 PlatformResolver >> documents [
+	<origin>
 	^ self home / 'Documents'
 ]
 
 { #category : #origins }
 PlatformResolver >> downloads [
+	<origin>
 	^ self home / 'Downloads'
+]
+
+{ #category : #'as yet unclassified' }
+PlatformResolver >> googleDrive [
+	<origin>
+	^ self home / 'Google Drive'
 ]
 
 { #category : #origins }
 PlatformResolver >> home [
+	<origin>
 	^ self subclassResponsibility
 ]
 
 { #category : #origins }
 PlatformResolver >> preferences [
+	<origin>
 	^ self subclassResponsibility
-]
-
-{ #category : #resolving }
-PlatformResolver >> supportedOrigins [
-	^ #(home desktop documents downloads preferences cache temp)
 ]
 
 { #category : #origins }
 PlatformResolver >> temp [
 	"Where to put files that are not supposed to last long"
-	^ self subclassResponsibility 
+
+	<origin>
+	^ self subclassResponsibility
 ]
