@@ -14,7 +14,7 @@ RBSmalllintTest >> assertEnvironment: anEnvironment hasAllClassesOfTheResult: cr
 
 	critiques do: [ :crit |
 		| target |
-		target := crit sourceAnchor entity.
+		target := crit entity.
 		self assert: target isClass.
 		self assert: (anEnvironment includesClass: target) ]
 ]
@@ -24,7 +24,7 @@ RBSmalllintTest >> assertEnvironment: anEnvironment hasAllMethodsOfTheResult: cr
 
 	critiques do: [ :crit |
 		| target |
-		target := crit sourceAnchor entity.
+		target := crit entity.
 		self assert: target isCompiledMethod.
 		self assert: (anEnvironment includesMethod: target) ]
 ]
@@ -49,14 +49,14 @@ RBSmalllintTest >> assertIsValidRule: aRule [
 RBSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnvironment [
 	anEnvironment classesDo: [ :class |
 		self assert: (critiques anySatisfy: [ :crit |
-			crit sourceAnchor entity instanceSide = class instanceSide ]) ]
+			crit entity instanceSide = class instanceSide ]) ]
 ]
 
 { #category : #asserting }
 RBSmalllintTest >> assertResult: critiques hasAllMethodsInEnvironment: anEnvironment [
 	anEnvironment methodsDo: [ :method |
 		self assert: (critiques anySatisfy: [ :crit |
-			crit sourceAnchor entity = method ]) ]
+			crit entity = method ]) ]
 ]
 
 { #category : #private }

@@ -23,6 +23,9 @@ RBRefersToClassRule class >> uniqueIdentifierName [
 { #category : #running }
 RBRefersToClassRule >> basicCheck: aMethod [
 	| class |
+	"The class method #isAbstract needs to explicitly hardcode class references. So we do not criticize this."
+	(aMethod methodClass isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ false ].
+
 	class := aMethod methodClass instanceSide.
 	^ aMethod hasLiteral: (class environment associationAt: class name ifAbsent: [ ^ false ])
 ]
