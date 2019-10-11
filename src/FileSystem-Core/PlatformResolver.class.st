@@ -72,12 +72,6 @@ PlatformResolver >> downloads [
 	^ self home / 'Downloads'
 ]
 
-{ #category : #'as yet unclassified' }
-PlatformResolver >> googleDrive [
-	<origin>
-	^ self home / 'Google Drive'
-]
-
 { #category : #origins }
 PlatformResolver >> home [
 	<origin>
