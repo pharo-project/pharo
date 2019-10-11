@@ -103,31 +103,6 @@ ObjectTest >> testPrintLimitedString [
 ]
 
 { #category : #'tests-printing' }
-ObjectTest >> testPrintOnOneLine [
-	|ws|
-	ws := String new writeStream.
-	'this is a test' printOnOneLine: ws.
-	self assert: ws contents equals: '''this is a test'''.
-
-]
-
-{ #category : #'tests-printing' }
-ObjectTest >> testPrintOnOneLineString [
-	self 
-		assert: ('this is a test' printOnOneLineString) 
-		equals: '''this is a test'''.
-	
-	self 
-		assert: ('this is a', Character cr asString, 'test') printOnOneLineString 
-		equals: '''this is a test'''.
-	
-	self 
-		assert: ('this is a', Character lf asString, 'test') printOnOneLineString 
-		equals: '''this is a test'''.
-
-]
-
-{ #category : #'tests-printing' }
 ObjectTest >> testPrintString [
 
 	self assert: Object new printString equals: 'an Object'

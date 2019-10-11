@@ -1704,30 +1704,6 @@ Object >> printOn: aStream [
 ]
 
 { #category : #printing }
-Object >> printOnOneLine: aStream [
-	"Append to the argument, aStream, a sequence of characters that  
-	identifies the receiver, while replacing cr and lf with one space.
-	
-	This is usually called by #printOnOneLineString with a filtering
-	stream, replacing cr and lf with spaces"
-
-	self printOn: aStream.
-]
-
-{ #category : #printing }
-Object >> printOnOneLineString [
-	"Answer a String whose characters are a description of the receiver, 
-	avoiding printing cr and lf"
-
-	|spaces filter|
-	spaces := { Character cr. Character lf }.
-	filter := FilteringStream on: String new writeStream with: [ :c | 
-		(spaces includes: c) ifTrue:[ Character space ] ifFalse:[c] ].
-	self printOnOneLine: filter.
-	^ filter contents
-]
-
-{ #category : #printing }
 Object >> printString [
 	"Answer a String whose characters are a description of the receiver. 
 	If you want to print without a character limit, use fullPrintString."
