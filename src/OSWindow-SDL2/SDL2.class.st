@@ -31,11 +31,10 @@ SDL2 class >> checkLibraryName: aName [
 
 { #category : #clipboard }
 SDL2 class >> clipboardText [
-	| text |
+	| textPointer |
 	
-	text := self primClipboardText.
-	^ text readStringUTF8
-
+	textPointer := self primClipboardText.
+	^ [textPointer readStringUTF8] ensure: [ textPointer free ]
 ]
 
 { #category : #clipboard }
@@ -51,7 +50,9 @@ SDL2 class >> clipboardText: text [
 			toStream: stream.
 		stream nextPut: 0 ].
 	
-	self primClipboardText: encoded
+	encoded setPinnedInMemory: true.
+	
+	self primClipboardText: encoded.
 ]
 
 { #category : #cursor }
@@ -91,7 +92,8 @@ SDL2 class >> disableScreenSaver [
 
 { #category : #native }
 SDL2 class >> ffiLibraryName [
-	^ self moduleName
+	
+	^ SDL2Library
 ]
 
 { #category : #native }
@@ -218,7 +220,7 @@ SDL2 class >> initLibrary [
 SDL2 class >> initPlatformSpecific [
 
 	Smalltalk os isMacOSX ifTrue: [  
-		SDLOSXPlatformInitializer new run.	
+		SDLOSXPlatformInitializer uniqueInstance run.	
 	] 
 ]
 
@@ -290,7 +292,7 @@ SDL2 class >> pollEvent: event [
 
 { #category : #clipboard }
 SDL2 class >> primClipboardText [
-	^ self ffiCall: #( ExternalAddress SDL_GetClipboardText ( ) )
+	^ self ffiCall: #(void* SDL_GetClipboardText ( ) )
 ]
 
 { #category : #clipboard }
@@ -336,6 +338,11 @@ SDL2 class >> showCursor: toggle [
 SDL2 class >> ticks [
 	"Gets the number of milliseconds since the SDL library was initialized"
 	^ self ffiCall: #( Uint32 SDL_GetTicks ( ) )
+]
+
+{ #category : #event }
+SDL2 class >> waitEvent: event timeout: aTimeout [
+	^ self ffiCall: #(int SDL_WaitEventTimeout(SDL_Event event, int aTimeout) )
 ]
 
 { #category : #common }
