@@ -69,8 +69,8 @@ ReRuleManager class >> defaultRules [
 
 { #category : #helpers }
 ReRuleManager class >> excludedRuleNames [
-
-	^ #(RBImplementedNotSentRule)
+	"here rules can be excluded, but it is better to implement #enabled on the rule to return false to disable it. Do not forget to call #reset on this class after changing this method!"
+	^ #()
 ]
 
 { #category : #'class initialization' }
