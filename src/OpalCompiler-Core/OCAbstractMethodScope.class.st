@@ -145,7 +145,7 @@ OCAbstractMethodScope >> localTemps [
 			self copiedVars
 				do: [ :var | 
 					var isStoringTempVector
-						ifTrue: [ var tempVectorForTempStoringIt
+						ifTrue: [ var originalVar scope tempVector
 								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
 			str nextPutAll: self tempVars ]
 ]
