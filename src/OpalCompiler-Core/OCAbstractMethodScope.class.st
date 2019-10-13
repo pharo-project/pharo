@@ -9,7 +9,8 @@ Class {
 		'tempVars',
 		'copiedVars',
 		'tempVector',
-		'id'
+		'id',
+		'tempVectorVar'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -27,29 +28,12 @@ OCAbstractMethodScope >> addCopyingTemp: aTempVar [
 ]
 
 { #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTempNamed: name [
-	copiedVars add: (OCCopyingTempVariable new
-			name: name;
-			scope: self;
-			yourself).
-	^copiedVars
-]
-
-{ #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
 	(self hasCopyingTempNamed: aVar name) ifFalse: [self addCopyingTemp: aVar].
-	tempVars at: aVar name ifPresent: [:v | ^ self].
+	self = aVar scope ifTrue: [^ self].
 	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar.
 				
-]
-
-{ #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefVectorNamed: aName [
-		
-	(self hasCopyingTempNamed: aName) ifFalse: [self addCopyingTempNamed: aName].
-	self tempVectorName = aName ifTrue: [^ self].
-	^ self outerScope addCopyingTempToAllScopesUpToDefVectorNamed: aName.
 ]
 
 { #category : #'temp vars' }
@@ -161,7 +145,7 @@ OCAbstractMethodScope >> localTemps [
 			self copiedVars
 				do: [ :var | 
 					var isStoringTempVector
-						ifTrue: [ var tempVectorForTempStoringIt
+						ifTrue: [ var originalVar scope tempVector
 								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
 			str nextPutAll: self tempVars ]
 ]
@@ -177,10 +161,12 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 
 { #category : #lookup }
 OCAbstractMethodScope >> lookupVar: name [
+	
 	copiedVars at: name ifPresent: [:v | ^ v].
-	tempVector  at: name ifPresent: [:v | ^ v].
+	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = 'thisContext' ifTrue: [^ thisContextVar].
+	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
 	^self outerScope lookupVar: name
 	
 ]
@@ -285,4 +271,12 @@ OCAbstractMethodScope >> tempVectorName [
 	"the name of the tempVector is not a valid name of a temp variable
 	 This way we avoid name clashes "
 	^'0vector', id asString
+]
+
+{ #category : #'temp vars - vector' }
+OCAbstractMethodScope >> tempVectorVar [
+	^ tempVectorVar ifNil: [ tempVectorVar := OCTempVariable new
+			name: self tempVectorName;
+			scope: self;
+			yourself]
 ]
