@@ -21,7 +21,7 @@ MalDisjointSetsNextNode >> nextNodes [
 	^ nextNodes 
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 MalDisjointSetsNextNode >> to: targetNode [
 	self nextNodes add: targetNode
 ]

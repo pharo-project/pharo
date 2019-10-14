@@ -29,7 +29,7 @@ MalSccEdgeDecomposition >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 MalSccEdgeDecomposition >> nodeClass [
 	^ MalBfsNode 
 ]

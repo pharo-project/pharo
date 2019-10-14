@@ -13,7 +13,7 @@ MalWeightedEdge >> asTuple [
 	^ {from model. to model. weight}
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 MalWeightedEdge >> printString [
 
 	^ self from printString, ' -> ', self to printString, ' (', self weight printString, ')'

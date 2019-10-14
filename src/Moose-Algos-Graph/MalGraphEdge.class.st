@@ -9,7 +9,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MalGraphEdge class >> with: aModel [
 
 	^ self new model: aModel
@@ -59,7 +59,7 @@ MalGraphEdge >> printOn: aStream [
 	self to printOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 MalGraphEdge >> printString [
 
 	^ self from printString, ' -> ', self to printString

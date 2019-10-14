@@ -75,11 +75,8 @@ MalDijkstra >> pathWeight [
 
 { #category : #initialization }
 MalDijkstra >> reset [
-
-	self nodes do: [:n|
-		n pathWeight: Float infinity ].
-	self edges do: [:e |
-		e visited: false ]
+	self nodes do: [ :n | n pathWeight: Float infinity ].
+	self edges do: [ :e | e visited: false ]
 ]
 
 { #category : #running }

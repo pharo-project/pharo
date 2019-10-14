@@ -28,7 +28,7 @@ MalHitsNode >> hub: anObject [
 	hub := anObject
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 MalHitsNode >> label [
 
 	^ 'H '
