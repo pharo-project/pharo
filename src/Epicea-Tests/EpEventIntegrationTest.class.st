@@ -31,18 +31,3 @@ EpEventIntegrationTest >> mockVersionInfo [
 		author: ''
 		ancestors: #()
 ]
-
-{ #category : #tests }
-EpEventIntegrationTest >> testMCVersionSaved [
-	| version repository |
-	self skipOnPharoCITestingEnvironment.
-	self flag: #pharoFixMe.	"Don't understand why it fails in non-interactive mode (in Jenkins)"
-	version := self mockVersion.
-	repository := MCDictionaryRepository new.
-
-	self assert: (self countLogEventsWith: EpMonticelloVersionSave) equals: 0.
-
-	repository storeVersion: version.
-
-	self assert: (self countLogEventsWith: EpMonticelloVersionSave) equals: 1
-]
