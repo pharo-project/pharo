@@ -146,7 +146,7 @@ CompletionModel >> notEmpty [
 { #category : #accessing }
 CompletionModel >> sortList: aList [
 	"this is where the sorting strategy is set"
-	^ sorter sortCompletionList: aList asOrderedCollection
+	^ sorter sortCompletionList: aList
 ]
 
 { #category : #accessing }
