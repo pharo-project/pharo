@@ -16,5 +16,5 @@ ReverseAlphabeticSorter class >> kind [
 { #category : #description }
 ReverseAlphabeticSorter class >> sortCompletionList: aList [
 
-	^ aList sorted reverse.
+	^ aList asOrderedCollection sort reverse
 ]
