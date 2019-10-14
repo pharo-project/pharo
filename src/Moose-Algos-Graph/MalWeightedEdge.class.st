@@ -13,10 +13,15 @@ MalWeightedEdge >> asTuple [
 	^ {from model. to model. weight}
 ]
 
-{ #category : #accessing }
-MalWeightedEdge >> printString [
+{ #category : #printing }
+MalWeightedEdge >> printOn: aStream [
+	self from printOn: aStream.
+	aStream nextPutAll: ' -> '.
+	self to printOn: aStream.
+	aStream nextPutAll: ' ('.
+	self weight printOn: aStream.
+	aStream nextPut: $).
 
-	^ self from printString, ' -> ', self to printString, ' (', self weight printString, ')'
 ]
 
 { #category : #accessing }
