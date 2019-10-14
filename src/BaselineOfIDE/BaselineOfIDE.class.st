@@ -260,6 +260,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SUnit-Rules'.	
 
 		spec package: 'Moose-Algos-Graph'.
+		spec package: 'Moose-Algos-Graph-Tests'.
 		spec package: 'Tool-DependencyAnalyser'.
 		spec package: 'Tool-DependencyAnalyser-UI'.
 		spec package: 'Tool-DependencyAnalyser-Tests'.	"standalone"
