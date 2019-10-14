@@ -1,5 +1,5 @@
 Class {
-	#name : #OCCleanBockTest,
+	#name : #OCCleanBlockTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'instVar'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #tests }
-OCCleanBockTest >> testBlockIsClean [
+OCCleanBlockTest >> testBlockIsClean [
 	self assert: [  ] sourceNode isClean.
 	self assert: [ 1 + 2 ] sourceNode isClean.
 	self assert: [ :a | a + 2 ] sourceNode isClean.
@@ -18,7 +18,7 @@ OCCleanBockTest >> testBlockIsClean [
 ]
 
 { #category : #tests }
-OCCleanBockTest >> testBlockIsNotClean [
+OCCleanBlockTest >> testBlockIsNotClean [
 	| escpWrite escpRead |
 	escpRead := escpWrite := 1.
 	self deny: [ self foo ] sourceNode isClean.
