@@ -9,9 +9,8 @@ Class {
 
 { #category : #initialization }
 MalDisjointSetsNextNode >> initialize [
-
-	self flag: #refactor.
-	self makeSet. "should be called in super initialize"
+	super initialize.
+	self makeSet.
 	nextNodes := OrderedCollection new
 ]
 
