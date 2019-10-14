@@ -17,7 +17,7 @@ MalSccEdgeDecomposition >> bfsPathFrom: startNode to: endNode [
 		run
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 MalSccEdgeDecomposition >> edgeClass [
 	^ MalGraphEdge 
 ]

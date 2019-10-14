@@ -6,7 +6,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #running }
+{ #category : #configuration }
 MalSccNodeDecomposition >> nodeClass [
 
 	^ MalSndNode
