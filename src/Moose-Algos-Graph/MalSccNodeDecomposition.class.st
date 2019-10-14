@@ -14,14 +14,12 @@ MalSccNodeDecomposition >> nodeClass [
 
 { #category : #running }
 MalSccNodeDecomposition >> retrieveCircuit: aNode [
-
-	|c i|
+	| c i |
 	c := OrderedCollection new.
 	i := aNode.
-	[ i notNil ] whileTrue: [
-		c addFirst: i model.
-		i := i bfsAncestor.
-	].
+	[ i notNil ]
+		whileTrue: [ c addFirst: i model.
+			i := i bfsAncestor ].
 	^ c
 ]
 
