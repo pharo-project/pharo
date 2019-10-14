@@ -737,6 +737,7 @@ spec group: 'DependencyAnalyser-Core-Group' with: #(
 	'Tool-DependencyAnalyser-UI'
 ).
 spec group: 'DependencyAnalyser-Tests-Group' with: #(
+	'Moose-Algos-Graph-Tests'
 	'Tool-DependencyAnalyser-Tests'	
 	'Tool-DependencyAnalyser-Tests-Data'	
 ).
