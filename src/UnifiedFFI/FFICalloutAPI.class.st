@@ -34,6 +34,7 @@ FFICalloutAPI class >> defaultCalloutAPIClass [
 
 { #category : #'instance creation' }
 FFICalloutAPI class >> inContext: aContext [
+	"Should not be used. For backwards compatibility only"
 	^ self basicNew 
 		initializeContext: aContext;
 		yourself
