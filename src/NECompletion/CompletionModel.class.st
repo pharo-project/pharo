@@ -123,9 +123,11 @@ CompletionModel >> narrowString [
 
 { #category : #action }
 CompletionModel >> narrowWith: aString [ 
-	completionToken := aString ifNil: [  '' ].
-	node narrowWith: completionToken.
-	entries := nil
+	completionToken := aString ifNil: [ '' ].
+	entries := entries 
+		ifNil: [ self initEntries ]
+		ifNotNil: [  entries select: [ :each | each contents beginsWith: completionToken  ] ]
+
 ]
 
 { #category : #accessing }
