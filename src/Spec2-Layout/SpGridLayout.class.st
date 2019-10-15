@@ -126,12 +126,6 @@ SpGridLayout >> borderWidth: anObject [
 ]
 
 { #category : #accessing }
-SpGridLayout >> children [
-
-	^ children
-]
-
-{ #category : #accessing }
 SpGridLayout >> column: aNumber withConstraints: aBlock [
 	| constraints |
 

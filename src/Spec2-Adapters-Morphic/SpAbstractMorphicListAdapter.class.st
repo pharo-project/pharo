@@ -22,10 +22,27 @@ SpAbstractMorphicListAdapter >> configureScrolling [
 	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self
 ]
 
+{ #category : #'widget API' }
+SpAbstractMorphicListAdapter >> itemFilter [
+	^ self model itemFilter
+]
+
 { #category : #scrolling }
 SpAbstractMorphicListAdapter >> scrollingChanged [
 	widget container updateAllRows.
 	self presenter verticalAlignment
 		firstVisibleRowIndex: widget firstVisibleRowIndex;
 		lastVisibleRowIndex: widget lastVisibleRowIndex
+]
+
+{ #category : #factory }
+SpAbstractMorphicListAdapter >> updateItemFilterBlockWith: block [
+
+	^ block
+		ifNotNil: [ 
+			widget
+				enableFilter: (SpFTSpecFilter block: block);
+				explicitFunction ]
+		ifNil: [ 
+			widget disableFunction ]
 ]

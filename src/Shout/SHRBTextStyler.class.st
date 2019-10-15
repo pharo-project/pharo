@@ -971,7 +971,10 @@ SHRBTextStyler >> parse: aText isMethod: isMethod [
 			root methodNode methodClass: classOrMetaClass.
 			^root] 
 				on: Error 
-				do: [^RBParser parseFaultyExpression: aText asString]]
+				do: [
+					"Problem: if called with a exprssion, we end here.
+					leads to wrong use by clients. Need to be fixed"
+					^RBParser parseFaultyExpression: aText asString]]
 		ifFalse:[ ^RBParser parseFaultyExpression: aText asString ].
 ]
 
@@ -981,17 +984,14 @@ SHRBTextStyler >> pixelHeight [
 ]
 
 { #category : #private }
-SHRBTextStyler >> privateStyle: aText [ 
-    | ast |
-
-    ast := self parse: aText isMethod: self isForWorkspace not.
-    ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
-            class: (classOrMetaClass ifNil: [UndefinedObject]);
+SHRBTextStyler >> privateStyle: aText [
+	| ast |
+	ast := self parse: aText isMethod: self isForWorkspace not.
+	ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
 				forSyntaxHighlighting: true;
-            requestor: workspace).
-    ast doSemanticAnalysis.
-    self style: aText ast: ast.
-    ^ aText
+				requestor: workspace).
+	ast doSemanticAnalysisIn: classOrMetaClass.
+	^ self style: aText ast: ast
 ]
 
 { #category : #private }
@@ -1032,7 +1032,7 @@ SHRBTextStyler >> style: aText ast: ast [
 	bracketLevel := 0.
 	parentheseLevel:=0.
 	ast acceptVisitor: self.
-	aText runs: (RunArray newFrom: charAttr)	
+	^aText runs: (RunArray newFrom: charAttr)	
 
 ]
 

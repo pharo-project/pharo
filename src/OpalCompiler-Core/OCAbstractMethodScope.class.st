@@ -9,19 +9,11 @@ Class {
 		'tempVars',
 		'copiedVars',
 		'tempVector',
-		'id'
+		'id',
+		'tempVectorVar'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
-
-{ #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopiedTempToAllScopesUpToDefVector: aVariable [
-		
-	(self hasCopyingTempNamed: aVariable name)
-		ifFalse: [self addCopyingTemp: aVariable ].
-	self tempVectorName = aVariable name ifTrue: [^ self].
-	^ self outerScope addCopiedTempToAllScopesUpToDefVector: aVariable.
-]
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
@@ -36,29 +28,12 @@ OCAbstractMethodScope >> addCopyingTemp: aTempVar [
 ]
 
 { #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTempNamed: name [
-	copiedVars add: (OCCopyingTempVariable new
-			name: name;
-			scope: self;
-			yourself).
-	^copiedVars
-]
-
-{ #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
 	(self hasCopyingTempNamed: aVar name) ifFalse: [self addCopyingTemp: aVar].
-	tempVars at: aVar name ifPresent: [:v | ^ self].
+	self = aVar scope ifTrue: [^ self].
 	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar.
 				
-]
-
-{ #category : #'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefVector: aName [
-		
-	(self hasCopyingTempNamed: aName) ifFalse: [self addCopyingTempNamed: aName].
-	self tempVectorName = aName ifTrue: [^ self].
-	^ self outerScope addCopyingTempToAllScopesUpToDefVector: aName.
 ]
 
 { #category : #'temp vars' }
@@ -170,7 +145,7 @@ OCAbstractMethodScope >> localTemps [
 			self copiedVars
 				do: [ :var | 
 					var isStoringTempVector
-						ifTrue: [ var tempVectorForTempStoringIt
+						ifTrue: [ var originalVar scope tempVector
 								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
 			str nextPutAll: self tempVars ]
 ]
@@ -185,24 +160,13 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> lookupTempVector: name inContext: aContext [
-	"Similar to lookupAndReadVar:inContext: but looks for a temp vector. If we don't find the temp vector (because it was nilled or not created), we lookup in the outer context with the corresponding outer scope"
-	
-	| variable theVector |
-	variable := self
-		variableNamed: name
-		ifAbsent: [^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
-	theVector := variable readFromLocalContext: aContext.
-	theVector ifNil: [ ^ self outerScope lookupTempVector: name inContext: aContext outerContext ].
-	^ { variable . theVector }
-]
-
-{ #category : #lookup }
 OCAbstractMethodScope >> lookupVar: name [
+	
 	copiedVars at: name ifPresent: [:v | ^ v].
-	tempVector  at: name ifPresent: [:v | ^ v].
+	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = 'thisContext' ifTrue: [^ thisContextVar].
+	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
 	^self outerScope lookupVar: name
 	
 ]
@@ -272,6 +236,19 @@ OCAbstractMethodScope >> removeTemp: tempVar [
 	tempVars removeKey: tempVar name
 ]
 
+{ #category : #'temp vars - copying' }
+OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue from: aContext [
+	"we need to update all the copies if we change the value of a copied temp"
+
+	self = aVar scope
+		ifTrue: [ ^ aVar writeFromLocalContext: aContext put: aValue ].
+	(self lookupVar: aVar name) writeFromLocalContext: aContext put: aValue.
+	^self outerScope
+		setCopyingTempToAllScopesUpToDefTemp: aVar
+		to: aValue
+		from: (self nextOuterScopeContextOf: aContext)
+]
+
 { #category : #'temp vars' }
 OCAbstractMethodScope >> tempVarNames [
 
@@ -296,12 +273,10 @@ OCAbstractMethodScope >> tempVectorName [
 	^'0vector', id asString
 ]
 
-{ #category : #lookup }
-OCAbstractMethodScope >> variableNamed: name ifAbsent: aBlock [
-	copiedVars at: name ifPresent: [:v | ^ v].
-	tempVector  at: name ifPresent: [:v | ^ v].
-	tempVars at: name ifPresent: [:v | ^ v].
-	name = 'thisContext' ifTrue: [^ thisContextVar].
-	
-	^ aBlock value.
+{ #category : #'temp vars - vector' }
+OCAbstractMethodScope >> tempVectorVar [
+	^ tempVectorVar ifNil: [ tempVectorVar := OCTempVariable new
+			name: self tempVectorName;
+			scope: self;
+			yourself]
 ]

@@ -125,7 +125,8 @@ FFICalloutAPITest >> runCase [
 { #category : #'tests context' }
 FFICalloutAPITest >> setUp [
 
-	super setUp.	
+	super setUp.
+  self resetFFIMethods.
 	senderCtx := Context
 		sender: nil
 		receiver: nil
@@ -147,8 +148,6 @@ FFICalloutAPITest >> setUp [
 
 { #category : #running }
 FFICalloutAPITest >> tearDown [
-	
-	self resetFFIMethods.
 	FFICallbackFunctionResolution reset.
 	super tearDown.
 ]
@@ -291,7 +290,6 @@ FFICalloutAPITest >> testCharPointer [
 FFICalloutAPITest >> testDoubleCall [
 	"Test using generic FFI spec"
 	| callback result |
-	
 	callback := FFICallback 
 		signature: #(double (double x)) 
 		block: [ :x | x abs ].
@@ -315,7 +313,6 @@ FFICalloutAPITest >> testDoubleCall [
 FFICalloutAPITest >> testFloatCall [
 	"Test using generic FFI spec"
 	| callback result |
-	
 	callback := FFICallback 
 		signature: #(float (float x)) 
 		block: [ :x | x abs ].

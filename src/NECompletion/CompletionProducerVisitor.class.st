@@ -7,6 +7,9 @@ Class {
 	#instVars : [
 		'currentClass'
 	],
+	#classInstVars : [
+		'aCollection'
+	],
 	#category : #'NECompletion-New'
 }
 
@@ -29,8 +32,7 @@ CompletionProducerVisitor >> methodNames [
 
 { #category : #utilities }
 CompletionProducerVisitor >> select: aCollection beginningWith: aString [
-	"Set withAll: is needed to convert potential IdentitySets to regular Sets"
-	^ Set withAll: (aCollection select: [ :each | each beginsWith: aString asString ])
+	^ aCollection select: [ :each | each beginsWith: aString asString ]
 ]
 
 { #category : #visiting }

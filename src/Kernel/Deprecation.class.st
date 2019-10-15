@@ -34,12 +34,25 @@ Class {
 		'condition'
 	],
 	#classVars : [
+		'Active',
 		'Log',
 		'RaiseWarning',
 		'ShowWarning'
 	],
 	#category : #'Kernel-Exceptions'
 }
+
+{ #category : #logging }
+Deprecation class >> activateTransformations [
+
+	^ Active ifNil: [ Active := true ]
+]
+
+{ #category : #logging }
+Deprecation class >> activateTransformations: aBoolean [
+
+	Active := aBoolean
+]
 
 { #category : #logging }
 Deprecation class >> deprecationsWhile: aBlock [
@@ -193,7 +206,7 @@ Deprecation >> sendingMethodName [
 
 { #category : #handling }
 Deprecation >> shouldTransform [
-	^ self raiseWarning  "when desprecations are disables, we do not want to transform, either"
+	^ self class activateTransformations
 		and: [ condition isNil or: [ condition cull: self ] ]
 ]
 
@@ -215,7 +228,7 @@ Deprecation >> signal [
 { #category : #handling }
 Deprecation >> transform [
 	| node rewriteRule aMethod |
-	self shouldTransform ifFalse: [ ^ self ].
+	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender method.
 	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
@@ -223,7 +236,7 @@ Deprecation >> transform [
 	rewriteRule := self rewriterClass new 
 		replace: rule key with: rule value.
 	(rewriteRule executeTree: node)
-		ifFalse: [ ^ self ].
+		ifFalse: [ ^ self signal ].
 	node replaceWith: rewriteRule tree. 
 	Author 
 		useAuthor: 'AutoDeprecationRefactoring'

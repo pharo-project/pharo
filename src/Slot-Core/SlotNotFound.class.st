@@ -1,12 +1,11 @@
 "
-I am an exception to indicate that a slot is found in a layout.
+I am an exception to indicate that a slot is found in a layout or in the image.
 "
 Class {
 	#name : #SlotNotFound,
 	#superclass : #ClassBuilderError,
 	#instVars : [
-		'name',
-		'targetClass'
+		'name'
 	],
 	#category : #'Slot-Core-Exception'
 }
@@ -18,17 +17,9 @@ SlotNotFound class >> signalForName: aSymbol [
 		signal
 ]
 
-{ #category : #signalling }
-SlotNotFound class >> signalForName: aSymbol inClass: aClass [
-	self new
-		name: aSymbol;
-		targetClass: aClass;
-		signal
-]
-
 { #category : #accessing }
 SlotNotFound >> messageText [
-	^ 'Slot ''', name asString, ''' not found', (targetClass ifNil: [''] ifNotNil:[' in ', targetClass name])
+	^ 'Could not build slot named ''' , name asString , ''' because the assignated slot was not found in the image.'
 ]
 
 { #category : #accessing }
@@ -39,14 +30,4 @@ SlotNotFound >> name [
 { #category : #accessing }
 SlotNotFound >> name: anObject [
 	name := anObject
-]
-
-{ #category : #accessing }
-SlotNotFound >> targetClass [
-	^ targetClass
-]
-
-{ #category : #accessing }
-SlotNotFound >> targetClass: aClass [
-	targetClass := aClass
 ]

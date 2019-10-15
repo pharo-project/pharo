@@ -75,7 +75,7 @@ SpAbstractTreeSingleSelectionMode >> unselectAll [
 ]
 
 { #category : #'api - events' }
-SpAbstractTreeSingleSelectionMode >> whenChangedDo: aBlockClosure [ 
+SpAbstractTreeSingleSelectionMode >> whenChangedDo: aBlock [ 
 	
-	self property: #selection whenChangedDo: aBlockClosure 
+	self property: #selection whenChangedDo: aBlock 
 ]

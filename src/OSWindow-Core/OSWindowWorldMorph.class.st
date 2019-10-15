@@ -120,7 +120,7 @@ OSWindowWorldMorph >> recreateOSWindow [
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: self extent;
-		title: Smalltalk shortImageName;
+		title: Smalltalk image imageFile fullName;
 		icon: (self iconNamed: #pharoIcon);
 		resizable: isResizeable.
 	self updateDisplay.

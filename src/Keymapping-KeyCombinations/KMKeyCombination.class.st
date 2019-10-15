@@ -112,6 +112,18 @@ KMKeyCombination >> platform [
 	^#all
 ]
 
+{ #category : #'accessing platform' }
+KMKeyCombination >> platformCharacter [
+
+	^ ''
+]
+
+{ #category : #'accessing platform' }
+KMKeyCombination >> platformModifier [
+
+	^ nil
+]
+
 { #category : #printing }
 KMKeyCombination >> prettyPrintOn: aStream [
 

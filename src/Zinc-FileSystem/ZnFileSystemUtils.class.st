@@ -16,12 +16,16 @@ ZnFileSystemUtils class >> baseNameFor: fileName [
 ]
 
 { #category : #streams }
+ZnFileSystemUtils class >> binaryFileReadStreamFor: fileName [ 
+
+	^ fileName asFileReference binaryReadStream
+]
+
+{ #category : #streams }
 ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
 	| fileReference |
 	fileReference := fileName asFileReference.
-	^ (fileReference respondsTo: #binaryReadWriteStream)
-		ifTrue: [ fileReference binaryReadWriteStream ]
-		ifFalse: [ fileReference writeStream binary ]
+	^ fileReference binaryWriteStream
 ]
 
 { #category : #defaults }

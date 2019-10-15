@@ -1,8 +1,9 @@
 Class {
 	#name : #SpMorphicBackendForTest,
 	#superclass : #SpAbstractBackendForTest,
+	#traits : 'SpTMorphicUIRedrawer',
+	#classTraits : 'SpTMorphicUIRedrawer classTrait',
 	#instVars : [
-		'uiWaitingSemaphore',
 		'app'
 	],
 	#category : #'Spec2-Backend-Tests'
@@ -102,17 +103,10 @@ SpMorphicBackendForTest >> doubleClickFirstRowAndColumn: anAdapter [
 
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 SpMorphicBackendForTest >> initialize [
-
 	super initialize.
-	uiWaitingSemaphore := Semaphore new
-]
-
-{ #category : #running }
-SpMorphicBackendForTest >> isRunningInUIProcess [
-
-	^ UIManager default uiProcess == Processor activeProcess
+	self initializeSemaphore
 ]
 
 { #category : #opening }
@@ -131,22 +125,4 @@ SpMorphicBackendForTest >> runTest: aBlock [
 	app := SpApplication new.
 	app useBackend: #Morphic.
 	aBlock value
-]
-
-{ #category : #running }
-SpMorphicBackendForTest >> waitUntilUIRedrawed [
-
-	"I wait until the UI has been redrawn. 
-	I take care of selecting how to do it. 
-	If I am in the CI I should defer a semaphore signal. 
-	If I am running in the UI process I can directly execute a doOneCycle on the World.
-	If I am in the CI the tests and the UI run in different process. So I should not do a #doOneCycle.
-	If I do it, I am in a race condition!"
-	self isRunningInUIProcess ifTrue: [ 
-		self currentWorld doOneCycle.
-		^ self.	
-	]. 
-
-	self currentWorld defer: [ uiWaitingSemaphore ifNotNil: #signal ].	
-	uiWaitingSemaphore wait: 500 milliSecond
 ]

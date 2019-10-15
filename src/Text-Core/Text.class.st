@@ -587,7 +587,7 @@ Text >> string [
 	^string
 ]
 
-{ #category : #attributes }
+{ #category : #testing }
 Text >> unembellished [ 
 	"Return true if the only emphases are the default font and bold"
 	| font1 bold |

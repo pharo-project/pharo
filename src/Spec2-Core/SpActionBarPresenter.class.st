@@ -43,3 +43,22 @@ SpActionBarPresenter >> items [
 
 	^ items value
 ]
+
+{ #category : #'private-traversing' }
+SpActionBarPresenter >> presenters [
+
+	^ self items values flattened
+]
+
+{ #category : #'private-traversing' }
+SpActionBarPresenter >> presentersInFocusOrder [
+
+	^ self presenters
+]
+
+{ #category : #'private-traversing' }
+SpActionBarPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self presentersInFocusOrder do: [ :each |
+		each traverseInFocusOrderDo: aBlock excluding: excludes ]
+]

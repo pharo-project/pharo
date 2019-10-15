@@ -466,6 +466,15 @@ Collection >> copyWithoutAll: aCollection [
 	^ self reject: [:each | aCollection includes: each]
 ]
 
+{ #category : #copying }
+Collection >> copyWithoutDuplicates [
+	"Answer a copy of the receiver without any duplicated elements"
+	"(#(2 3 4 4  5 6) copyWithoutDuplicates)  >>> #(2 3 4 5 6)"
+	"(#('do' 'la' 'si' 'do' 'la') copyWithoutDuplicates) >>> #('la' 'do' 'si')"
+	"(#(#do #la #si #do #la) copyWithoutDuplicates) >>> #(#la #do #si)"
+	^ self asSet asArray
+]
+
 { #category : #enumerating }
 Collection >> count: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
@@ -641,13 +650,6 @@ Collection >> errorNotFound: anObject [
 	"Raise a NotFound exception."
 
 	NotFound signalFor: anObject
-]
-
-{ #category : #private }
-Collection >> errorNotKeyed [
-
-	self error: ('Instances of {1} do not respond to keyed accessing messages.' format: {self class name})
-
 ]
 
 { #category : #private }
@@ -966,7 +968,7 @@ Collection >> notEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : #enumerating }
 Collection >> occurrencesOf: anObject [ 
 	"Answer how many of the receiver's elements are equal to anObject."
 

@@ -102,6 +102,6 @@ SpSingleSelectionMode >> unselectIndex: anInteger [
 ]
 
 { #category : #events }
-SpSingleSelectionMode >> whenChangedDo: aBlockClosure [
-	self property: #selectedIndex whenChangedDo: [ aBlockClosure cull: self ]
+SpSingleSelectionMode >> whenChangedDo: aBlock [
+	self property: #selectedIndex whenChangedDo: [ aBlock cull: self ]
 ]

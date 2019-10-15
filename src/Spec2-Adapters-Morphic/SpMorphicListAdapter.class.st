@@ -37,6 +37,7 @@ SpMorphicListAdapter >> backgroundColorFor: anItem at: index [
 { #category : #factory }
 SpMorphicListAdapter >> buildWidget [
 	| datasource |
+	
 	datasource := SpListFastTableDataSource new.
 	datasource model: self model.
 	widget := FTTableMorph new
@@ -63,7 +64,9 @@ SpMorphicListAdapter >> buildWidget [
 	self updateItemFilterBlockWith: self itemFilter.
 
 	self configureScrolling.
-	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
+	widget 
+		bindKeyCombination: Character space 
+		toAction: [ self model clickOnSelectedItem ].
 
 	^ widget
 ]
@@ -85,11 +88,6 @@ SpMorphicListAdapter >> isNonEditableRow: aRow column: aColumn [
 SpMorphicListAdapter >> isShowColumnHeaders [
 	
 	^ widget isShowColumnHeaders 
-]
-
-{ #category : #'widget API' }
-SpMorphicListAdapter >> itemFilter [
-	^ self model itemFilter
 ]
 
 { #category : #'widget API' }
@@ -214,15 +212,6 @@ SpMorphicListAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 	self presenter activatesOnDoubleClick
 		ifTrue: [ self presenter
 				doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex ]
-]
-
-{ #category : #factory }
-SpMorphicListAdapter >> updateItemFilterBlockWith: block [
-	^ block
-		ifNotNil: [ widget
-				enableFilter: (SpFTSpecFilter block: block);
-				explicitFunction ]
-		ifNil: [ widget disableFunction ]
 ]
 
 { #category : #events }

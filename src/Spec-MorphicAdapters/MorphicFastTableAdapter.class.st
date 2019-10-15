@@ -32,7 +32,7 @@ MorphicFastTableAdapter >> buildWidget [
 			setBalloonText: self help; 
 			hResizing: 	#spaceFill;
 			vResizing: 	#spaceFill;
-			selectRowIndex: 1;
+			selectIndex: 1;
 			enableFilter: FTSubstringFilter;			
 			explicitFunction;
 			yourself

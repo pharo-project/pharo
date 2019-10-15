@@ -13,6 +13,6 @@ WinPlatform >> privShellExecute: lpOperation file: lpFile parameters: lpParamete
 ]
 
 { #category : #'*Native-Browser' }
-WinPlatform >> privateOpenNativeBrowserOn: pathString [
+WinPlatform >> privateOpenOSFileBrowserOn: pathString [
 	^ self privShellExecute: 'explore' file: pathString parameters: '' directory: '' show: 5 "SW_SHOW"
 ]

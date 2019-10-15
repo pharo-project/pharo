@@ -40,6 +40,9 @@ Class {
 		'selector',
 		'options'
 	],
+	#classInstVars : [
+		'linkInstaller'
+	],
 	#category : #'Reflectivity-Core'
 }
 
@@ -58,10 +61,19 @@ MetaLink class >> defaultOptions [
 	)
 ]
 
+{ #category : #accessing }
+MetaLink class >> linkInstaller [
+	^linkInstaller 
+		ifNil: [ linkInstaller := MetaLinkInstaller new ]
+]
+
 { #category : #cleanup }
 MetaLink class >> uninstallAll [
 	<script>
+	self linkInstaller uninstallSuperJumpLinks.
 	self allInstances do: #uninstall.
+	self linkInstaller unsubscribeFromAnnouncers.
+	linkInstaller := nil
 ]
 
 { #category : #accessing }
@@ -176,7 +188,7 @@ MetaLink >> definitionString [
 	]
 ]
 
-{ #category : #'reflecive api' }
+{ #category : #'reflective api' }
 MetaLink >> disable [
 	"turn off link reflectively while keeping the condition"
 	self hasReifiedCondition
@@ -193,7 +205,7 @@ MetaLink >> doesNotUnderstand: message [
 	^ super doesNotUnderstand: message
 ]
 
-{ #category : #'reflecive api' }
+{ #category : #'reflective api' }
 MetaLink >> enable [
 	"turn on link reflectively if it has been turned off"
 	self hasReifiedCondition
@@ -210,6 +222,11 @@ MetaLink >> hasCondition [
 { #category : #testing }
 MetaLink >> hasMetaLevel [
 	^level notNil
+]
+
+{ #category : #testing }
+MetaLink >> hasNodes [
+	^ nodes notEmpty
 ]
 
 { #category : #options }
@@ -239,6 +256,30 @@ MetaLink >> installOn: aNode [
 	
 ]
 
+{ #category : #'installing - link installer' }
+MetaLink >> installOnClassVarNamed: aClassVarName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
+	| permalink |
+	permalink := self permaLinkFor: aClassOrObject option: option instanceSpecific: instanceSpecific.
+	^ self linkInstaller installPermaLink: permalink onClassVarNamed: aClassVarName
+]
+
+{ #category : #'installing - link installer' }
+MetaLink >> installOnSlotNamed: aSlotName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
+	| permalink |
+	permalink := self
+		permaLinkFor: aClassOrObject
+		option: option
+		instanceSpecific: instanceSpecific.
+	^ self linkInstaller installPermaLink: permalink onSlotNamed: aSlotName
+]
+
+{ #category : #'installing - link installer' }
+MetaLink >> installOnTempVarNamed: aTempName inMethod: aMethodName for: aClassOrObject option: option instanceSpecific: instanceSpecific [
+	| permalink |
+	permalink := self permaLinkFor: aClassOrObject option: option instanceSpecific: instanceSpecific.
+	^ self linkInstaller installPermaLink: permalink onTempVarNamed: aTempName inMethod: aMethodName
+]
+
 { #category : #installing }
 MetaLink >> installOnVariable: aVariable [
 	nodes add: aVariable
@@ -259,6 +300,17 @@ MetaLink >> level [
 MetaLink >> level: anObject [
 	level := anObject.
 	self invalidate.
+]
+
+{ #category : #accessing }
+MetaLink >> linkInstaller [
+	^ self class linkInstaller
+]
+
+{ #category : #'installing - link installer' }
+MetaLink >> linkToNode: aNode forObject: anObject [
+
+	self linkInstaller install: self onNode: aNode forObject: anObject
 ]
 
 { #category : #accessing }
@@ -414,11 +466,42 @@ MetaLink >> parseOptions: optionsArray [
 	options parseOptions: optionsArray
 ]
 
+{ #category : #'installing - link installer' }
+MetaLink >> permaLinkFor: aClassOrObject option: option instanceSpecific: instanceSpecific [
+	| permaLink |
+	permaLink := PermaLink new.
+	permaLink persistenceType: option.
+	permaLink isInstanceSpecific: instanceSpecific.
+	permaLink slotOrVarClass: aClassOrObject.
+	permaLink link: self.
+	^ permaLink
+]
+
+{ #category : #'link api' }
+MetaLink >> printString [
+	|ws|
+	ws := WriteStream on: String new.
+	ws nextPutAll: (self control ifNil:['']).
+	ws space.
+	ws nextPutAll: metaObject printString.
+	ws space.
+	ws nextPutAll: selector asString.
+	^ws contents
+]
+
 { #category : #private }
 MetaLink >> reificationsFor: aBlockOrBoolean [
 	(aBlockOrBoolean isKindOf: Boolean) ifTrue: [ ^#() ].
 	(aBlockOrBoolean isKindOf: RFCondition) ifTrue: [^aBlockOrBoolean reifications].
 	^aBlockOrBoolean argumentNames.
+]
+
+{ #category : #installing }
+MetaLink >> removeNode: aNode [
+	"Silently remove aNode from the nodes list.
+	No effect if aNode was not initially present."
+	self hasNodes ifFalse:[^self].
+	nodes remove: aNode ifAbsent:[]
 ]
 
 { #category : #accessing }
@@ -435,8 +518,16 @@ MetaLink >> selector: aSymbol [
 
 { #category : #installing }
 MetaLink >> uninstall [
-	nodes do: [:node | node removeLink: self].
-	nodes removeAll.
+	self linkInstaller uninstallFromAllAnonymousNodes: self.
+	self linkInstaller uninstallPermaLinkFor: self.
+	nodes do: [ :node | node removeLink: self ].
+	nodes removeAll 
+]
+
+{ #category : #'installing - link installer' }
+MetaLink >> unlinkFromNode: aNode forObject: anObject [
+
+	self linkInstaller uninstall: self fromNode: aNode forObject: anObject
 ]
 
 { #category : #ast }

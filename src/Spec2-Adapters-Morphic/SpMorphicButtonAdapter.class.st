@@ -46,13 +46,7 @@ SpMorphicButtonAdapter >> buildLabel: text withIcon: icon [
 SpMorphicButtonAdapter >> buildWidget [
 	| button | 
 
-	button := PluggableButtonMorph
-				on: self 
-				getState: #state 
-				action:  #action 
-				label: #label 
-				menu: #menu:.
-
+	button := self newButton.	
 	button 
 		getEnabledSelector: #enabled ;
 		getFontSelector: #font ;
@@ -62,11 +56,16 @@ SpMorphicButtonAdapter >> buildWidget [
 		setBalloonText: self model help ;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled ;	
-		eventHandler: (MorphicEventHandler new on: #keyStroke send: #keyStroke:fromMorph: to: self).
+		eventHandler: (MorphicEventHandler new 
+			on: #keyStroke 
+			send: #keyStroke:fromMorph: 
+			to: self).
 	
 	self color ifNotNil: [ self setWidgetColor: button ].
 	
-	button bindKeyCombination: Character space toAction: [ self action ].
+	button 
+		bindKeyCombination: Character space 
+		toAction: [ self action ].
 
 	^ button
 ]
@@ -128,6 +127,17 @@ SpMorphicButtonAdapter >> menu: aMenu [
 ]
 
 { #category : #factory }
+SpMorphicButtonAdapter >> newButton [
+	
+	^ PluggableButtonMorph
+		on: self 
+		getState: #state 
+		action:  #action 
+		label: #label 
+		menu: #menu:
+]
+
+{ #category : #factory }
 SpMorphicButtonAdapter >> setWidgetColor: button [
 
 		| normalColorBlock clickedColorBlock |
@@ -147,21 +157,29 @@ SpMorphicButtonAdapter >> setWidgetColor: button [
 ]
 
 { #category : #'widget API' }
+SpMorphicButtonAdapter >> showSubMenu: aMenu [ 
+
+	aMenu menuGroups ifNil: [ ^ self ].
+	 
+	subMenuWidget ifNotNil: [ 
+		subMenuWidget delete.
+		subMenuWidget := nil ].
+	subMenuWidget := (SpMorphicMenuAdapter adaptAsPopup: aMenu) widget.
+	subMenuWidget
+		popUpAdjacentTo: { 
+			self widget bounds bottomLeft.
+			self widget bounds bottomRight }
+		forHand: ActiveHand
+		from: self widget.
+	subMenuWidget popUpOwner: self
+]
+
+{ #category : #'widget API' }
 SpMorphicButtonAdapter >> showSubMenuIfPresent [
-	self model contextMenu
-		ifNotNil: [ self model menu menuGroups isEmpty
-				ifFalse: [ subMenuWidget
-						ifNotNil: [ subMenuWidget delete.
-							subMenuWidget := nil ].
-					subMenuWidget := (SpMorphicMenuAdapter
-						adaptAsPopup: self model menu) widget.
-					subMenuWidget
-						popUpAdjacentTo:
-							{self widget bounds bottomLeft.
-							self widget bounds bottomRight}
-						forHand: ActiveHand
-						from: self widget.
-					subMenuWidget popUpOwner: self ] ]
+
+	self model contextMenu ifNil: [ ^ self ].
+	self showSubMenu: self model contextMenu.
+	
 ]
 
 { #category : #'widget API' }

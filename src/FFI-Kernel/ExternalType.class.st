@@ -211,7 +211,7 @@ ExternalType class >> initializeStructureTypes [
 	| referentClass pointerType |
 	self cleanupUnusedTypes.
 	StructTypes keysAndValuesDo:[:referentName :type|
-		referentClass := (Smalltalk at: referentName ifAbsent:[nil]).
+		referentClass := (self environment at: referentName ifAbsent:[nil]).
 		(referentClass isBehavior and:[
 			referentClass includesBehavior: ExternalStructure])
 				ifFalse:[referentClass := nil].
@@ -242,7 +242,7 @@ ExternalType class >> newTypeNamed: aString force: aBool [
 	sym := aString asSymbol.
 	type := StructTypes at: aString ifAbsent:[nil].
 	type == nil ifFalse:[^type].
-	referentClass := Smalltalk at: sym ifAbsent:[nil].
+	referentClass := self environment at: sym ifAbsent:[nil].
 	(referentClass isBehavior and:[referentClass includesBehavior: ExternalStructure])
 		ifFalse:[referentClass := nil].
 	"If we don't have a referent class and are not forced to create a type get out"

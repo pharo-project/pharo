@@ -13,9 +13,10 @@ SpMorphicCodeAdapter >> behavior [
 { #category : #factory }
 SpMorphicCodeAdapter >> buildWidget [
 	| newWidget |
+	
 	newWidget := super buildWidget.
-
-	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | self setEditingModeFor: newWidget ].
+	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
+		self setEditingModeFor: newWidget ].
 	
 	^ newWidget
 ]
@@ -71,6 +72,7 @@ SpMorphicCodeAdapter >> selectedClassOrMetaClass [
 
 { #category : #private }
 SpMorphicCodeAdapter >> setEditingModeFor: textArea [
+
 	self hasSyntaxHighlight
 		ifTrue: [ self setEditingModeFor: textArea withBehavior: self behavior ]
 		ifFalse: [ super setEditingModeFor: textArea ]

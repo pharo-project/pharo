@@ -80,7 +80,7 @@ ToggleMenuItemShortcutWithSymbol >> drawOn: aCanvas [
 	aCanvas 
 		paragraph: paragraph 
 		bounds: keyBounds 
-		color: self owner stringColorToUse
+		color: self color
 ]
 
 { #category : #drawing }

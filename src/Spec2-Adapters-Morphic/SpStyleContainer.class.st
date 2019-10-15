@@ -1,9 +1,18 @@
+"
+I'm a style to control the properties of a container. 
+I keep properties like 
+
+- borderColor
+- borderWidth
+- padding
+"
 Class {
 	#name : #SpStyleContainer,
 	#superclass : #SpStyleProperty,
 	#instVars : [
 		'borderWidth',
-		'padding'
+		'padding',
+		'borderColor'
 	],
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
@@ -17,26 +26,43 @@ SpStyleContainer class >> stonName [
 { #category : #operations }
 SpStyleContainer >> applyTo: aMorph [ 
 
+	self borderColor ifNotNil: [ :aColor | aMorph borderColor: aColor ].
 	self borderWidth ifNotNil: [ :aNumber | aMorph borderWidth: aNumber ].
 	self padding ifNotNil: [ :aNumber | aMorph cellInset: aNumber ]
 ]
 
 { #category : #accessing }
+SpStyleContainer >> borderColor [
+
+	^ borderColor
+]
+
+{ #category : #accessing }
+SpStyleContainer >> borderColor: aColor [
+
+	borderColor := aColor
+]
+
+{ #category : #accessing }
 SpStyleContainer >> borderWidth [
+
 	^ borderWidth
 ]
 
 { #category : #accessing }
-SpStyleContainer >> borderWidth: anObject [
-	borderWidth := anObject
+SpStyleContainer >> borderWidth: aNumber [
+
+	borderWidth := aNumber
 ]
 
 { #category : #accessing }
 SpStyleContainer >> padding [
+
 	^ padding
 ]
 
 { #category : #accessing }
-SpStyleContainer >> padding: anObject [
-	padding := anObject
+SpStyleContainer >> padding: aNumber [
+
+	padding := aNumber
 ]

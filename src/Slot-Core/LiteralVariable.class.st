@@ -225,7 +225,7 @@ LiteralVariable >> removeProperty: propName ifAbsent: aBlock [
 
 { #category : #queries }
 LiteralVariable >> usingMethods [
-	^SystemNavigation new allReferencesTo: self
+	^SystemNavigation new allReferencesToBinding: self
 ]
 
 { #category : #'meta-object-protocol' }
