@@ -438,7 +438,7 @@ CompletionContextTest >> testUntypedSelectorsOnly [
 	context := self createContextFor: text at: text size.
 	model := context model.
 	self assert: model hasMessage.
-	self assert: model message = 'press key for selectors'.
+	self assert: model message equals: 'press key for selectors'.
 	context narrowWith: 'ab'.
 	self denyEmpty: (model entriesOfType: #selector).
 	self assertEmpty: (model entriesOfType: #local).
