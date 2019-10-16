@@ -214,11 +214,6 @@ SHRange >> start: startInteger end: endInteger type: typeSymbol [
 ]
 
 { #category : #accessing }
-SHRange >> stringIn: aText [
-	^ (self textIn: aText) asString
-]
-
-{ #category : #accessing }
 SHRange >> textIn: aText [
 	^ aText copyFrom: self start to: self end
 ]
