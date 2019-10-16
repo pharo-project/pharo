@@ -805,10 +805,11 @@ Collection >> ifEmpty: aBlock [
 { #category : #testing }
 Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise"
-	" If the notEmptyBlock has an argument, eval with the receiver as its argument"
+	"If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
-	self isEmpty ifTrue: [ ^emptyBlock value ].
-	^notEmptyBlock cull: self
+	^ self isEmpty
+		ifTrue: [ emptyBlock value ]
+		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -816,10 +817,9 @@ Collection >> ifNotEmpty: aBlock [
 	"Evaluate the given block with the receiver as argument, answering its value
     unless the receiver is empty, in which case answer the receiver."
 
-    ^self isEmpty
-          ifTrue: [self]
-          ifFalse: [aBlock cull: self] 
-
+	^ self isEmpty
+		ifTrue: [ self ]
+		ifFalse: [ aBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -827,8 +827,10 @@ Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise
 	 If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
-	self isEmpty ifFalse: [ ^notEmptyBlock cull: self ].
-	^emptyBlock value
+	^ self isEmpty
+		ifTrue: [ emptyBlock value ]
+		ifFalse: [ notEmptyBlock cull: self ]
+		
 ]
 
 { #category : #testing }
