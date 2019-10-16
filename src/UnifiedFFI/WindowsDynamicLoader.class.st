@@ -29,6 +29,6 @@ WindowsDynamicLoader >> loadSymbolFrom: hModule name: lpProcName [
 ]
 
 { #category : #'accessing platform' }
-WindowsDynamicLoader >> win32ModuleName [
+WindowsDynamicLoader >> win32LibraryName [
 	^ 'Kernel32.dll'
 ]

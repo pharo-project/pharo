@@ -69,13 +69,14 @@ LibC >> fgetc: stream [
 ]
 
 { #category : #'private - accessing' }
-LibC >> macModuleName [
+LibC >> macLibraryName [
 	^ 'libc.dylib'
 ]
 
 { #category : #'api - misc' }
 LibC >> memCopy: src to: dest size: n [
-	^ self ffiCall: #(void *memcpy(void *dest, const void *src, size_t n))
+	^ self
+		ffiCall: #(#void #* #memcpy #(#void #* #dest #, #const #void #* #src #, #size_t #n))
 ]
 
 { #category : #'api - processes' }
@@ -130,12 +131,12 @@ LibC >> system: command [
 ]
 
 { #category : #'private - accessing' }
-LibC >> unixModuleName [
+LibC >> unixLibraryName [
 	^ 'libc.so.6'
 ]
 
 { #category : #'private - accessing' }
-LibC >> win32ModuleName [
+LibC >> win32LibraryName [
 	"While this is not a 'libc' properly, msvcrt has the functions we are defining here"
 	^ 'msvcrt.dll'
 ]

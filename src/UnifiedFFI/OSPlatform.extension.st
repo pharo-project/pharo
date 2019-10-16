@@ -18,14 +18,14 @@ OSPlatform >> ffiInt64Alignment [
 ]
 
 { #category : #'*UnifiedFFI' }
-OSPlatform >> ffiLongAlignment [
-	"By default is 4, windows and maybe others can use other"
-	^ Smalltalk wordSize
+OSPlatform >> ffiLibraryName: aLibrary [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #'*UnifiedFFI' }
-OSPlatform >> ffiModuleName: aLibrary [ 
-	^ self subclassResponsibility
+OSPlatform >> ffiLongAlignment [
+	"By default is 4, windows and maybe others can use other"
+	^ Smalltalk wordSize
 ]
 
 { #category : #'*UnifiedFFI' }

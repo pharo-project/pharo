@@ -13,12 +13,12 @@ WinPlatform >> ffiFloat64Alignment [
 ]
 
 { #category : #'*UnifiedFFI' }
-WinPlatform >> ffiLongAlignment [
-	"In Windows, sizeof(long) == 4 always."
-	^ 4
+WinPlatform >> ffiLibraryName: aLibrary [ 
+	^ aLibrary win32LibraryName
 ]
 
 { #category : #'*UnifiedFFI' }
-WinPlatform >> ffiModuleName: aLibrary [ 
-	^ aLibrary win32ModuleName
+WinPlatform >> ffiLongAlignment [
+	"In Windows, sizeof(long) == 4 always."
+	^ 4
 ]
