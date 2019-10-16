@@ -84,9 +84,3 @@ MorphicTextInputFieldAdapter >> ghostText: aText [
 
 	^ self model ghostText: aText
 ]
-
-{ #category : #NOCompletion }
-MorphicTextInputFieldAdapter >> isCodeCompletionAllowed [
-	
-	^ false
-]
