@@ -1,3 +1,7 @@
+"
+This tests the old NECContext. This should go away eventually, for now we keep the tests as a reference. The subclass CompletionContextTest
+implements the same tests, but for the new implementation
+"
 Class {
 	#name : #NECContextTest,
 	#superclass : #TestCase,
@@ -71,9 +75,9 @@ NECContextTest >> testCompletionToken [
 	text := 'testIt: aRectangle
 	| abc |
 	test.
-	abc daf'.
+	abc da'.
 	context := self createContextFor: text at: text size.
-	self assert: context completionToken = 'daf'
+	self assert: context completionToken equals: 'da'
 ]
 
 { #category : #tests }
@@ -438,7 +442,7 @@ NECContextTest >> testUntypedSelectorsOnly [
 	context := self createContextFor: text at: text size.
 	model := context model.
 	self assert: model hasMessage.
-	self assert: model message = 'press key for selectors'.
+	self assert: model message equals: 'press key for selectors'.
 	context narrowWith: 'ab'.
 	self denyEmpty: (model entriesOfType: #selector).
 	self assertEmpty: (model entriesOfType: #local).

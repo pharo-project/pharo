@@ -16,5 +16,5 @@ AlphabeticSorter class >> kind [
 { #category : #description }
 AlphabeticSorter class >> sortCompletionList: aList [
 
-	^ aList sorted.
+	^ aList asOrderedCollection sort
 ]

@@ -23,9 +23,13 @@ MalWeightedEdge >> asTuple [
 ]
 
 { #category : #printing }
-MalWeightedEdge >> printString [
-
-	^ self from printString, ' -> ', self to printString, ' (', self weight printString, ')'
+MalWeightedEdge >> printOn: aStream [
+	self from printOn: aStream.
+	aStream nextPutAll: ' -> '.
+	self to printOn: aStream.
+	aStream nextPutAll: ' ('.
+	self weight printOn: aStream.
+	aStream nextPut: $).
 ]
 
 { #category : #accessing }

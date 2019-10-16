@@ -503,16 +503,6 @@ EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
 ]
 
 { #category : #'announcement handling' }
-EpMonitor >> monticelloVersionSaved: aMCVersionSaved [ 
-
-	self handleAnyErrorDuring: [
-		aMCVersionSaved repository description = 'cache' ifFalse: [
-			self addEvent: aMCVersionSaved asEpiceaEvent ].
-		"Note: Tried to encapsulate this check in the hierarchy of MCRepository 
-		but caused troubles to iceberg, since it has a repository that's not in such hierarchy." ]
-]
-
-{ #category : #'announcement handling' }
 EpMonitor >> protocolAdded: aProtocolAdded [
 
 	self handleAnyErrorDuring: [
@@ -595,7 +585,6 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		ClassRenamed -> #classRenamed:.
 		ClassCommented -> #classCommented:.
 		MethodRecategorized -> #methodRecategorized:.
-		MCVersionSaved	-> #monticelloVersionSaved:.
 		SnapshotDone -> #snapshotDone:.
 		
 	} do: [ :pair |

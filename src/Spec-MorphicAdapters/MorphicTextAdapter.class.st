@@ -168,12 +168,6 @@ MorphicTextAdapter >> isAboutToStyle [
 	^ self model isAboutToStyle
 ]
 
-{ #category : #NOCompletion }
-MorphicTextAdapter >> isCodeCompletionAllowed [
-
-	^ self model isCodeCompletionAllowed
-]
-
 { #category : #'spec protocol' }
 MorphicTextAdapter >> isForSmalltalkCode [
 	^ self model isForSmalltalkCode

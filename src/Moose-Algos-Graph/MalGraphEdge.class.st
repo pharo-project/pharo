@@ -72,12 +72,6 @@ MalGraphEdge >> printOn: aStream [
 	self to printOn: aStream
 ]
 
-{ #category : #printing }
-MalGraphEdge >> printString [
-
-	^ self from printString, ' -> ', self to printString
-]
-
 { #category : #accessing }
 MalGraphEdge >> to [
 	^ to

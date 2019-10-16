@@ -53,17 +53,19 @@ FFILibrary >> calloutAPIClass [
 
 { #category : #'library path' }
 FFILibrary >> ffiLibraryName [
-	^ self moduleName
-]
-
-{ #category : #'accessing platform' }
-FFILibrary >> macModuleName [ 
-	^ self subclassResponsibility
+	^ self libraryName
 ]
 
 { #category : #accessing }
-FFILibrary >> moduleName [ 
-	^ Smalltalk platform ffiModuleName: self
+FFILibrary >> libraryName [ 
+	^ Smalltalk platform ffiLibraryName: self
+]
+
+{ #category : #'accessing platform' }
+FFILibrary >> macLibraryName [
+	"Calling by default #macModuleName for backwards compatibility.
+	Please redefine #macLibraryName"
+	^ self macModuleName
 ]
 
 { #category : #'accessing platform' }
@@ -79,25 +81,27 @@ FFILibrary >> uniqueInstance [
 ]
 
 { #category : #'accessing platform' }
-FFILibrary >> unix32ModuleName [
-	"Point to #unixModuleName to keep backward compatibility." 
-	^ self unixModuleName
+FFILibrary >> unix32LibraryName [
+	"Use to #unixLibraryName to keep backward compatibility." 
+	^ self unixLibraryName
 ]
 
 { #category : #'accessing platform' }
-FFILibrary >> unix64ModuleName [
-	"Point to #unixModuleName to keep backward compatibility." 
-	^ self unixModuleName
+FFILibrary >> unix64LibraryName [
+	"Point to #unixLibraryName to keep backward compatibility." 
+	^ self unixLibraryName
 ]
 
 { #category : #'accessing platform' }
-FFILibrary >> unixModuleName [
+FFILibrary >> unixLibraryName [
 	"Kept for backward compatibility. 
 	 Users should use unix32* or unix64*"
-	^ self subclassResponsibility
+	^ self unixModuleName
 ]
 
 { #category : #'accessing platform' }
-FFILibrary >> win32ModuleName [ 
-	^ self subclassResponsibility
+FFILibrary >> win32LibraryName [
+	"Calling by default #win32ModuleName for backwards compatibility.
+	Please redefine #win32LibraryName"
+	^ self win32ModuleName
 ]

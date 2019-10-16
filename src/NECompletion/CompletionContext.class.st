@@ -49,10 +49,9 @@ CompletionContext >> model [
 
 { #category : #action }
 CompletionContext >> narrowWith: aString [
-	"method borrowed from NECContext to make the completion plugging work"
 	completionToken := aString.
 	model := self createModel.
-	model narrowWith: aString.
+	model narrowWith: aString
 ]
 
 { #category : #parsing }
