@@ -131,9 +131,8 @@ SpPickListPresenter >> initialize [
 
 { #category : #initialization }
 SpPickListPresenter >> initializePresenters [
-	
 	listPresenter := self newList.
-	listPresenter displayBlock: [ :item | item ].
+	listPresenter display: [ :item | item ].
 	self focusOrder add: listPresenter
 ]
 

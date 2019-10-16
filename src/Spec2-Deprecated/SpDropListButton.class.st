@@ -60,7 +60,7 @@ SpDropListButton >> button [
 
 { #category : #'api-shortcuts' }
 SpDropListButton >> displayBlock: aBlock [
-	self dropList displayBlock: aBlock
+	self dropList display: aBlock
 ]
 
 { #category : #accessing }
