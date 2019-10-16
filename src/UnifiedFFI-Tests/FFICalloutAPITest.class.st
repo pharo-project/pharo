@@ -122,11 +122,11 @@ FFICalloutAPITest >> runCase [
 	ensure: [ FFICalloutAPI calloutAPIClass: oldAPIClass ]
 ]
 
-{ #category : #'tests context' }
+{ #category : #running }
 FFICalloutAPITest >> setUp [
 
 	super setUp.
-  self resetFFIMethods.
+	self resetFFIMethods.
 	senderCtx := Context
 		sender: nil
 		receiver: nil
