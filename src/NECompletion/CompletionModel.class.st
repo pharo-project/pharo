@@ -5,7 +5,7 @@ Class {
 	#name : #CompletionModel,
 	#superclass : #Object,
 	#instVars : [
-		'clazz',
+		'class',
 		'node',
 		'completionToken',
 		'entries',
@@ -30,8 +30,8 @@ CompletionModel class >> sorter: aSorter [
 ]
 
 { #category : #accessing }
-CompletionModel >> clazz: anObject [
-	clazz := anObject
+CompletionModel >> class: aClass [
+	class := aClass.
 ]
 
 { #category : #entries }
@@ -88,7 +88,7 @@ CompletionModel >> initEntries [
 	| producer suggestionsList |
 	producer := CompletionProducerVisitor new.
 	self sorter: self class sorter.
-	producer completionContext: clazz.
+	producer completionContext: class.
 	suggestionsList := self sortList: (producer completionListForNode: node).
 	^ suggestionsList collect: [ :each | CompletionEntry contents: each node: node ]
 ]
