@@ -46,7 +46,7 @@ MalTarjanNode >> initialize [
 
 { #category : #testing }
 MalTarjanNode >> isInCycle [
-	^ self cycleNodes isEmpty not
+	^ self cycleNodes isNotEmpty
 ]
 
 { #category : #testing }

@@ -9,9 +9,7 @@ Class {
 
 { #category : #accessing }
 MalDisjointSetNode >> find [
-
-	^ (self = parent) ifTrue: [ self ]
-					ifFalse: [ parent find ]
+	^ self = parent ifTrue: [ self ] ifFalse: [ parent find ]
 ]
 
 { #category : #accessing }
@@ -22,7 +20,6 @@ MalDisjointSetNode >> label [
 
 { #category : #accessing }
 MalDisjointSetNode >> makeSet [
-
 	parent := self
 ]
 

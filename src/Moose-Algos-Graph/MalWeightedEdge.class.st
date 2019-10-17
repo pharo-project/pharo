@@ -1,3 +1,12 @@
+"
+I represent a weighted edge in a graph. 
+
+Public API and Key Messages
+- weight
+ 
+Instance Variables
+	weight: <Number>
+"
 Class {
 	#name : #MalWeightedEdge,
 	#superclass : #MalGraphEdge,
@@ -21,7 +30,6 @@ MalWeightedEdge >> printOn: aStream [
 	aStream nextPutAll: ' ('.
 	self weight printOn: aStream.
 	aStream nextPut: $).
-
 ]
 
 { #category : #accessing }
