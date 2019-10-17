@@ -58,7 +58,7 @@ CompletionProducerVisitor >> visitLiteralNode: aRBLiteralValueNode [
 	| value |
 	
 	value := aRBLiteralValueNode value.
-	(value isKindOf: Symbol) ifFalse: [ ^#() ].
+	value isSymbol ifFalse: [ ^ #() ].
 	"return all symbols that start with value"
 	^Symbol allSymbols select: [ :each | (each beginsWith: value) and: [each isLiteralSymbol]]
 ]
