@@ -206,8 +206,9 @@ Deprecation >> sendingMethodName [
 
 { #category : #handling }
 Deprecation >> shouldTransform [
-	^ self class activateTransformations
-		and: [ condition isNil or: [ condition cull: self ] ]
+	self class activateTransformations ifFalse: [ ^false  ].
+	(condition isNil or: [ condition cull: self ]) ifFalse: [ ^false ].
+	^rule isNotNil
 ]
 
 { #category : #settings }
