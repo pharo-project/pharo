@@ -122,7 +122,7 @@ CompletionProducerVisitor >> visitVariableNode: aRBVariableNode [
 	 	(self select: (lookupClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name),
 		(self select: aRBVariableNode methodNode temporaryNames beginningWith: aRBVariableNode name),
 		(self select: aRBVariableNode methodNode argumentNames beginningWith: aRBVariableNode name),
-		(self select: lookupClass allClassVarNames beginningWith: aRBVariableNode name),
+		(self select: lookupClass allClassVarNames asOrderedCollection beginningWith: aRBVariableNode name),
 		(self select: (lookupClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: aRBVariableNode name)
 
 ]
