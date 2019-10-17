@@ -53,7 +53,7 @@ KMShortcutPrinter >> genericSpecialCharacter: char [
 
 	char = Character cr ifTrue: [ ^ 'Enter' ].
 	char = Character space ifTrue: [ ^ 'Space' ].
-	^ char	
+	^ char	 asUppercase
 ]
 
 { #category : #visiting }
@@ -61,7 +61,7 @@ KMShortcutPrinter >> macSpecialCharacter: char [
 
 	char = Character cr ifTrue: [ ^ self class symbolTableAt: #Enter ifAbsent: [ 'Enter' ] ].	
 	char = Character space ifTrue: [ ^ self class symbolTableAt: #Space ifAbsent: [ 'Space' ] ].	
-	^ char	
+	^ char	asUppercase
 ]
 
 { #category : #accessing }
