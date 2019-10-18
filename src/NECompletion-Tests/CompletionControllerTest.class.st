@@ -61,8 +61,6 @@ CompletionControllerTest >> setEditorText: aString [
 
 { #category : #running }
 CompletionControllerTest >> setUp [
-	"Setting up code for NECControllerTest"
-
 	super setUp.
 	
 	editor := RubTextEditor forTextArea: RubTextFieldArea new.
@@ -72,8 +70,6 @@ CompletionControllerTest >> setUp [
 
 { #category : #running }
 CompletionControllerTest >> tearDown [
-	"Tearing down code for NECControllerTest"
-
 	controller := nil.
 	editor := nil.
 	super tearDown

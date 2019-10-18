@@ -1,6 +1,6 @@
 Class {
 	#name : #CompletionContextTest,
-	#superclass : #NECContextTest,
+	#superclass : #TestCase,
 	#category : #'NECompletion-Tests'
 }
 
@@ -16,57 +16,6 @@ CompletionContextTest >> createContextFor: aString at: anInteger [
 		class: NECTestClass
 		source: aString
 		position: anInteger
-]
-
-{ #category : #tests }
-CompletionContextTest >> testBlockTemporaries [
-	| text temps context |
-	self skip.
-	text := 'testIt
-	| a b c |
-	a _ [ :each | |d | ^d].
-	^self'.
-	context := self 
-		createContextFor: text
-		at: 39.
-	temps := context temporaries collect: [ :each | each contents ].
-	self assert: temps size = 5.
-	self assert: temps first = 'a'.
-	self assert: temps second = 'b'.
-	self assert: temps third = 'c'.
-	self assert: temps fourth = 'each'.
-	self assert: temps fifth = 'd'
-]
-
-{ #category : #tests }
-CompletionContextTest >> testBlockTemporariesBoxed [
-	| text temps context |
-	self skip.
-	text := 'testIt
-	| a b c |
-	a := [ :each | |d | d = a ifTrue:[ |x|  ] ifFalse:[ |y|.
-	^self'.
-	context := self 
-		createContextFor: text
-		at: 73.
-	temps := context temporaries collect: [ :each | each contents ].
-	self assert: temps size = 5.
-	self assert: temps first = 'a'.
-	self assert: temps second = 'b'.
-	self assert: temps third = 'c'.
-	self assert: temps fourth = 'each'.
-	self assert: temps fifth = 'd'.
-
-]
-
-{ #category : #tests }
-CompletionContextTest >> testCompletionToken [
-	| text context |
-	self skip: 'not sure why this fails'.
-	text := 'testIt: aRectangle
-	aRe'.
-	context := self createContextFor: text at: text size.
-	self assert: context completionToken equals: 'aRe'
 ]
 
 { #category : #tests }
@@ -97,12 +46,6 @@ CompletionContextTest >> testCreateModel [
 ]
 
 { #category : #tests }
-CompletionContextTest >> testEmpty [
-	self skip: 'does this test make sense?'.
-	self createContextFor: '' at: 0
-]
-
-{ #category : #tests }
 CompletionContextTest >> testExpressionInIncompleteParanthesis [
 	| text context model |
 	text := 'testIt
@@ -112,17 +55,6 @@ CompletionContextTest >> testExpressionInIncompleteParanthesis [
 		at: text size.
 	model := context model.
 	self assert: ((model entries collect: #contents) isEmpty).
-]
-
-{ #category : #tests }
-CompletionContextTest >> testInTheMiddelOfAWord [
-	| text context |
-	self skip: 'we do this at a different point, so idk if this makes sense'.
-	text := 'hagada'.
-	context := self 
-		createContextFor: text
-		at: 4.
-	self assert: context completionToken equals: 'haga'
 ]
 
 { #category : #tests }
@@ -270,191 +202,6 @@ CompletionContextTest >> testReceiverGlobalVarNew [
 ]
 
 { #category : #tests }
-CompletionContextTest >> testReceiverTempVar [
-	| text context |
-	self skip.
-	text := 'testIt
-	| aha |
-	aha _ ''test''.
-	aha p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == ByteString.
-	text := 'testIt
-	| aha |
-	ah _ ''test''.
-	ah p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass isNil.
-	text := 'testIt
-	| aha |
-	aha _ constantString.
-	aha p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == ByteString.
-	text := 'testIt
-	| aha |
-	aha _ constant asDate.
-	aha p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass isNil.
-	text := 'testIt
-	| aha bili |
-	aha _ constantString.
-	bili _ aha.
-	bili p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == ByteString.
-	text := 'testIt
-	| aha bili |
-	aha _ constantString.
-	bili _ aha _ 15.
-	bili p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass = SmallInteger.
-	text := 'testIt
-	| aha bili |
-	aha _ constantString.
-	bili _ 15.
-	bili _ aha.
-	bili p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == SmallInteger.
-	text := 'testIt
-	[ :each | |a| a _ 16. a print'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == SmallInteger.
-	text := 'testIt
-	[ :each | |a| a _ Dictionary new. a print'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == Dictionary.
-	text := 'testIt
-	[ :each | |a| a _ Dictionary. a print'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == Dictionary class.
-	text := 'testIt
-	| aha |
-	aha _ constantLargeInteger.
-	aha p'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass = LargePositiveInteger.
-]
-
-{ #category : #tests }
-CompletionContextTest >> testReceiverTempVar2 [
-	| text context model |
-	self skip: 'check why fails'.
-	text := 'openMenuFor: aParagraphEditor 
-	| theMenu |
-	context := NECContext
-				controller: self
-				class: model receiverClass
-				source: aParagraphEditor text string
-				position: aParagraphEditor caret - 1.
-	editor := aParagraphEditor.
-	theMenu := NECMenuMorph
-				controller: self
-				position: (aParagraphEditor selectionPosition: context completionToken).
-	theMenu isClosed
-		ifFalse: [menuMorph := theMenu]. theMenu ins'.
-	context := self createContextFor: text at: text size.
-	model := context model.
-	self assert: ((model entries collect: #contents) includes: #insertCommonPrefixOrSelected)
-]
-
-{ #category : #tests }
-CompletionContextTest >> testReceiverTempVar3 [
-"if tempvar assignment is from a keyword message send (case 3), the guessed type should be 'nil' as in case for simple messages. Don't move over to other var assignments (smallint for var b)"
-	| text context model |
-	self skip: 'check why fails'.
-	"case 1 guess from constant"
-	text := 'testIt
-	| a b |
-	a := ''test''.
-	b := 10.
-	a as'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass == ByteString.
-	"case 2 can not guess from return value of a message send"
-	text := 'testIt
-	| a b |
-	a _ self class.
-	b _ 10.
-	a as'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	self assert: context receiverClass isNil.
-	"case 3 can not guess from return value of a keyword message send"
-	text := 'testIt
-	| a b |
-	a := self init:''test''.
-	b := 10.
-	a as'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	model := context model.
-	self assert: model title equals: ''
-]
-
-{ #category : #tests }
-CompletionContextTest >> testTemporaries [
-	| text temps context |
-	self skip.
-	text := 'testIt: aRectangle
-	| a b c |
-	a _ [ :each | |d | ^d].
-	^self'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	temps := context temporaries collect: [ :each | each contents ].
-	self assert: temps size = 4.
-	self assert: temps first = 'aRectangle'.
-	self assert: temps second = 'a'.
-	self assert: temps third = 'b'.
-	self assert: temps fourth = 'c'
-]
-
-{ #category : #tests }
-CompletionContextTest >> testUnfinishedString [
-	| text context model |
-	self skip: 'does this even make sense?'.
-	text := 'testIt: aRectangle
-	| a b c |
-	self test: ''unfi'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	model := context model.
-	self assert: (model entries collect: #contents) isEmpty.
-]
-
-{ #category : #tests }
 CompletionContextTest >> testUntypedSelectorsOnly [
 	| text context model |
 	text := 'testIt: aRectangle
@@ -464,39 +211,4 @@ CompletionContextTest >> testUntypedSelectorsOnly [
 	model := context model.
 	context narrowWith: 'ab'.
 	self assert: ((model entries collect: #contents) includes: #abs)
-]
-
-{ #category : #tests }
-CompletionContextTest >> testUntypedVarsOnly [
-	self skip: 'does this test make sense?'.
-	self checkUntypedVariablesOnly: 'testIt
-	'.
-	self checkUntypedVariablesOnly: '+ aTest
-	'.
-	self checkUntypedVariablesOnly: 'gaga: aTest
-	'.
-	self checkUntypedVariablesOnly: 'gaga
-	^ '.
-	self checkUntypedVariablesOnly: 'testIt 
-	a ifTrue:[ '.
-	self checkUntypedVariablesOnly: 'testIt 
-	a ifTrue:[ :each'.
-	self checkUntypedVariablesOnly: 'testIt 
-	a ifTrue:[ :each |'.
-	self checkUntypedVariablesOnly: 'testIt 
-	a ifTrue:[ :each | '.
-	self checkUntypedVariablesOnly: 'testIt
-	<primitive: 67> 
-	'.
-	self checkUntypedVariablesOnly: 'testIt
-	ab _'.
-	self checkUntypedVariablesOnly: 'testIt
-	ab _ '.
-	self checkUntypedVariablesOnly: 'self compare: '.
-	self checkUntypedVariablesOnly: 'self compare: x caseSensitive: '.
-	self checkUntypedVariablesOnly: 'self gaga: x gugu: ('.
-	self checkUntypedVariablesOnly: 'testIt
-	a _ 15 + '.
-	self checkUntypedVariablesOnly: 'testIt
-	self hugatada: '
 ]
