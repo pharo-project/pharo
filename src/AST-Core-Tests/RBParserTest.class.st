@@ -483,7 +483,8 @@ RBParserTest >> testParseFaultyMethod [
 		add: 'method: asd  ^ {'; "Only Open a literal array"
 		add: 'selector '''; 
 		add: 'selector #^';
-		add: 'selector ¿'.
+		add: 'selector ¿';
+		add: ':nl'.
 
 
 	strangeExpressions do: [ :exp | 
