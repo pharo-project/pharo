@@ -2,7 +2,7 @@
 A NECControllerTest is a test class for testing the behavior of NECController
 "
 Class {
-	#name : #NECControllerTest,
+	#name : #CompletionControllerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'controller',
@@ -12,17 +12,17 @@ Class {
 }
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> allSelfClosingCharacters [
+CompletionControllerTest >> allSelfClosingCharacters [
 	^ {'{}' . '[]' . '()' . '<>' . '||' . '""' . ''''''}
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> allSmartCharacters [
+CompletionControllerTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> keyboardEventFor: char [
+CompletionControllerTest >> keyboardEventFor: char [
 
 	| event |
 	event := KeyboardEvent new.
@@ -39,39 +39,39 @@ NECControllerTest >> keyboardEventFor: char [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> selectAll [
+CompletionControllerTest >> selectAll [
 	editor selectAll 
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> selectAt: anIndex [
+CompletionControllerTest >> selectAt: anIndex [
 	editor selectFrom: anIndex to: anIndex - 1
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> selectFrom: start to: stop [
+CompletionControllerTest >> selectFrom: start to: stop [
 	editor selectFrom: start to: stop
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> setEditorText: aString [
+CompletionControllerTest >> setEditorText: aString [
 	editor selectAll; addString:  aString 
 	
 ]
 
 { #category : #running }
-NECControllerTest >> setUp [
+CompletionControllerTest >> setUp [
 	"Setting up code for NECControllerTest"
 
 	super setUp.
 	
 	editor := RubTextEditor forTextArea: RubTextFieldArea new.
-	controller := NECController new.
+	controller := CompletionController new.
 	controller setEditor: editor
 ]
 
 { #category : #running }
-NECControllerTest >> tearDown [
+CompletionControllerTest >> tearDown [
 	"Tearing down code for NECControllerTest"
 
 	controller := nil.
@@ -80,7 +80,7 @@ NECControllerTest >> tearDown [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartBackspace [
+CompletionControllerTest >> testSmartBackspace [
 	"Pressing backspace inside paired smart characters should remove both of them"
 	self allSmartCharacters
 		do: [ :chars | 
@@ -94,7 +94,7 @@ NECControllerTest >> testSmartBackspace [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartBackspaceOutsideSmartCharacters [
+CompletionControllerTest >> testSmartBackspaceOutsideSmartCharacters [
 
 	self setEditorText: '.[];'; selectAll.
 	self selectAt: 2.
@@ -110,7 +110,7 @@ NECControllerTest >> testSmartBackspaceOutsideSmartCharacters [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartBackspaceWithSelection [
+CompletionControllerTest >> testSmartBackspaceWithSelection [
 
 	self setEditorText: 'Hello'; selectAll.
 	self assert: controller smartBackspace not description: 'No smartbackspace if selection'.
@@ -123,7 +123,7 @@ NECControllerTest >> testSmartBackspaceWithSelection [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartCharacterPairForIfAbsent [
+CompletionControllerTest >> testSmartCharacterPairForIfAbsent [
 
 	"Check leading smart character has matching trailing character - e.g. { and }"
 	self allSmartCharacters do: [ :pairs |
@@ -138,7 +138,7 @@ NECControllerTest >> testSmartCharacterPairForIfAbsent [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartCharacterWithEventAndSelection [
+CompletionControllerTest >> testSmartCharacterWithEventAndSelection [
 	"Test we surround selected text with smart characters properly"
 	self
 		setEditorText: ' text ';
@@ -162,7 +162,7 @@ NECControllerTest >> testSmartCharacterWithEventAndSelection [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartCharacterWithEventSelfClosing [
+CompletionControllerTest >> testSmartCharacterWithEventSelfClosing [
 	self
 		setEditorText: ' ';
 		selectAt: 2.
@@ -187,7 +187,7 @@ NECControllerTest >> testSmartCharacterWithEventSelfClosing [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartCharactersOppositeOf [
+CompletionControllerTest >> testSmartCharactersOppositeOf [
 	
 	self allSmartCharacters
 		do: [ :pairs | 
@@ -197,7 +197,7 @@ NECControllerTest >> testSmartCharactersOppositeOf [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartCharactersShouldClose [
+CompletionControllerTest >> testSmartCharactersShouldClose [
 	"Some smart characters shouldn't auto close, ohers not"
 	self assert: (controller smartCharacterShouldClose: $() equals: true.
 	self assert: (controller smartCharacterShouldClose: $<) equals: false.
@@ -205,7 +205,7 @@ NECControllerTest >> testSmartCharactersShouldClose [
 ]
 
 { #category : #'tests-keyboard' }
-NECControllerTest >> testSmartNeedExtraRemoveInForOppositeAt [
+CompletionControllerTest >> testSmartNeedExtraRemoveInForOppositeAt [
 
 	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).
 	self deny: (controller smartNeedExtraRemoveIn: '(()' for: $( opposite:$) at:2).
