@@ -7,12 +7,12 @@ Class {
 	#instVars : [
 		'source',
 		'position',
-		'theClass',
 		'completionToken',
 		'model',
 		'ast',
 		'node',
-		'isWorkspace'
+		'isWorkspace',
+		'class'
 	],
 	#category : #'NECompletion-New'
 }
@@ -39,7 +39,7 @@ CompletionContext >> completionToken [
 CompletionContext >> createModel [
 	self parseSource.
 	node := ast nodeForOffset: position.
-  ^ (CompletionModel new node: node) class: theClass
+	^ CompletionModel new node: node
 ]
 
 { #category : #accessing }
@@ -63,9 +63,9 @@ CompletionContext >> parseSource [
 	ast methodNode 
 		compilationContext: 
 			(Smalltalk compiler compilationContextClass new
-             class: theClass;forSyntaxHighlighting: true).
+             class: class;forSyntaxHighlighting: true).
 		
-	ast doSemanticAnalysisIn: theClass.
+	ast doSemanticAnalysisIn: class.
 	TypingVisitor new visitNode: ast
 ]
 
@@ -83,7 +83,7 @@ CompletionContext >> setController: aECController class: aClass source: aString 
 		ifNotNil: [ aECController isScripting ]
 		ifNil: [ false ].
 
-	theClass := aClass. 
+	class := aClass. 
 	source := aString.
 	position := anInteger
 ]

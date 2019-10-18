@@ -6,7 +6,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'contents',
-		'type',
 		'node'
 	],
 	#category : #'NECompletion-New'
