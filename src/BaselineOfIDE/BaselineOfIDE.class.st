@@ -386,18 +386,14 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring2-Transformations'.
 		spec package: 'Refactoring2-Transformations-Tests'.
 
-		spec package: 'ClassParser'.
-		spec package: 'ClassParser-Tests'.
-		spec package: 'UndefinedClasses'.
-		spec package: 'UndefinedClasses-Tests'.
+		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
 		spec baseline: 'Calypso' with: [ 
 			spec
 				repository: repository;
 				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
 
-                spec baseline: 'Ring' with: [spec repository: repository].
-
+      spec baseline: 'Ring' with: [spec repository: repository].
 
       self groups: spec.
 	].
@@ -821,13 +817,6 @@ spec group: 'GT&QA-Group' with: #(
 	'Reflectivity-Group'
 ).		
 
-spec group: 'UndefinedClasses-Group' with: #(
-	'ClassParser'
-	'ClassParser-Tests'
-	'UndefinedClasses'
-	'UndefinedClasses-Tests'
-).		
-
 spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
@@ -872,7 +861,7 @@ spec group: #default with: #(
 	'Slot'
 	
 	'Refactoring2-Group'
-	'UndefinedClasses-Group'
+	'ClassParser'
 	
 	'Calypso'
 	'Ring'
