@@ -187,8 +187,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Ring-Definitions-Tests-Containers'.
 		spec package: 'Ring-Definitions-Tests-Core'.
 		
-		spec package: 'System-Serial Port'.
-		
 		spec package: 'Zodiac-Tests'.	
 		spec package: 'Zodiac-Extra'.	
 		spec package: 'Zinc-Zodiac'.	
@@ -261,12 +259,11 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'OSWindow-SDL2'.
 		spec package: 'OSWindow-VM'.
 				
-		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
 		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
-		spec package: 'STON-Text support'.
 		
+		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
@@ -282,7 +279,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Compression-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
 		spec package: 'FileSystem-Tests-Attributes'.
-		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
 		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'GT-Tests-Debugger'.
@@ -297,9 +293,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Multilingual-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
-		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
-		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
@@ -349,17 +343,6 @@ spec group: 'Mandatory-Group' with: #(
 	'Network-Mail-Tests'	"previously part of Network-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
-
-spec group: 'Optional-Group' with: #(
-	'Athens' "dependency"
-
-	'PharoDocComment'	"standalone"
-	'STON-Text support'	"standalone?"
-	'System-CommandLine-TextSupport'	"standalone?"
-	'System-Serial Port'	"standalone?"
-	'PerformMessageCommandLineHandler' 	"standalone"
-	'Files-Prompt'
-).				
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens' "dependency of Hiedra"
@@ -679,7 +662,6 @@ spec group: #default with: #(
 	'Refactoring-Group'
 	'Catalog-Group'
 	'Epicea-Core-Group'
-	'Optional-Group'
 	'GeneralTests'
 	'SortFunctions'	
 	'ReferenceFinder'
