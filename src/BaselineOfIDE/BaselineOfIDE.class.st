@@ -153,10 +153,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
 		spec package: 'Hiedra-Examples'.
-		spec package: 'Hiedra-Tests'. 
-		spec package: 'Ombu-Tests'.
-		spec package: 'Epicea-Tests'.
-		spec package: 'EpiceaBrowsers-Tests'.
 
 		
 		spec package: 'Shout'.
@@ -609,7 +605,6 @@ spec group: 'OSWindow-Group' with: #(
 ).
 
 spec group: 'Kernel-Tests-Group' with: #(
-	'RPackage-Tests'
 	'CodeImport-Tests'	 
 	'Collections-Tests'
 	'Kernel-Tests' 
@@ -620,7 +615,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
-	'FileSystem-Tests-Memory'
 	'FileSystem-Tests-Attributes'
 	'Files-Tests' 
 	'Jobs-Tests' 
@@ -630,7 +624,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	"'ReleaseTests'"
 	'Ring-Definitions-Tests-Core'
 	'Ring-Definitions-Tests-Containers' 
-	'Tests' 
 	'System-Object Events-Tests'
 	'System-OSEnvironments-Tests'
 	'Zinc-Character-Encoding-Tests' 
