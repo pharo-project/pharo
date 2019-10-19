@@ -147,13 +147,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
 		spec package: 'NautilusRefactoring-Tests'.
-
-		spec package: 'Ombu'.
-		spec package: 'Epicea'.
-		spec package: 'Hiedra'.
-		spec package: 'EpiceaBrowsers'.
-		spec package: 'Hiedra-Examples'.
-
 		
 		spec package: 'Shout'.
 		spec package: 'Reflectivity-Tools'.
@@ -263,6 +256,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
 		
+		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 
@@ -343,14 +337,6 @@ spec group: 'Mandatory-Group' with: #(
 	'Network-Mail-Tests'	"previously part of Network-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
-
-spec group: 'Epicea-Core-Group' with: #(
-	'Athens' "dependency of Hiedra"
-	'Ombu'
-	'Epicea'
-	'Hiedra'
-	'Hiedra-Examples'
-	'EpiceaBrowsers').
 
 spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
@@ -661,7 +647,8 @@ spec group: #default with: #(
 	'OSWindow-Group'
 	'Refactoring-Group'
 	'Catalog-Group'
-	'Epicea-Core-Group'
+	'Epicea'
+	'Misc'
 	'GeneralTests'
 	'SortFunctions'	
 	'ReferenceFinder'
