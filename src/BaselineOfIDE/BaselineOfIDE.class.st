@@ -243,15 +243,12 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SmartSuggestions'.
 		
 		spec package: 'OpalCompiler-Tools'.
-
-		spec package: 'OSWindow-Core'.
-		spec package: 'OSWindow-SDL2'.
-		spec package: 'OSWindow-VM'.
 				
 		spec package: 'GeneralRules'.
 		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
 		
+		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
@@ -282,8 +279,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Jobs-Tests'.
 		spec package: 'Manifest-Tests'.
 		spec package: 'Multilingual-Tests'.
-		spec package: 'OSWindow-SDL2-Examples'.
-		spec package: 'OSWindow-Tests'.
 		spec package: 'Pharo-Help'.
 		spec package: 'Random-Tests'.
 		spec package: 'ReflectionMirrors-Primitives-Tests'.
@@ -511,23 +506,6 @@ spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Tests-Group'
 ).	
 
-spec group: 'OSWindow-Core-Group' with: #(
-	'Glamour-Core-Group'	"dependency, cleanup needed"
-	'GT-Core-Group'	"dependency, cleanup needed"
-	'Athens' "dependency"
-	'OSWindow-Core'
-	'OSWindow-SDL2'
-	'OSWindow-VM'
-	'OSWindow-SDL2-Examples'
-).	
-spec group: 'OSWindow-Tests-Group' with: #(
-	'OSWindow-Tests'
-).
-spec group: 'OSWindow-Group' with: #(
-	'OSWindow-Core-Group'
-	'OSWindow-Tests-Group'
-).
-
 spec group: 'Kernel-Tests-Group' with: #(
 	'CodeImport-Tests'	 
 	'Collections-Tests'
@@ -599,7 +577,7 @@ spec group: #default with: #(
 	'GT&QA-Group'
 
 	"standalone but dependent:"
-	'OSWindow-Group'
+	'OSWindow'
 	'Refactoring'
 	'Catalog'
 	'Epicea'
