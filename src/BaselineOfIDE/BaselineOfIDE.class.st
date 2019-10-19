@@ -380,8 +380,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfMetacello'.
 		spec package: 'BaselineOfTelePharoSupport'.
 		
-		spec package: 'ReferenceFinder-Core'.
-
+		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
@@ -639,10 +638,6 @@ spec group: 'SortFunctions-Group' with: #(
 	'SortFunctions-Tests'
 ).
 
-spec group: 'ReferenceFinder-Group' with: #(
-	'ReferenceFinder-Core'
-).
-
 spec group: 'QualityAssistant-Core-Group' with: #(
 	"'Manifest-Tests' 'Polymorph-Widgets-Rules' depend on it, needs cleanup"
 	'Manifest-Core-Group' "dependency"
@@ -838,7 +833,7 @@ spec group: #default with: #(
 	'Optional-Group'
 	'General-Tests-Group'
 	'SortFunctions-Group'	
-	'ReferenceFinder-Group'
+	'ReferenceFinder'
 	
 	'BaselineOfPharoBootstrap'
 	'BaselineOfMonticello'
