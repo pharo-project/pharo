@@ -174,7 +174,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'OpalCompiler-Tests'.
-		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Definitions-Tests-Containers'.
@@ -232,7 +231,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tool-CriticBrowser'.
 
 		spec package: 'Renraku'.
-		spec package: 'SUnit-Rules'.	
 
 		spec package: 'Moose-Algos-Graph'.
 		spec package: 'Moose-Algos-Graph-Tests'.
@@ -254,6 +252,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
 		
+		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
@@ -281,28 +280,19 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Glamour-Morphic-Brick-Tests'.
 		spec package: 'Glamour-Tests-Rubric'.
 		spec package: 'Jobs-Tests'.
-		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Manifest-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'Pharo-Help'.
-		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'Random-Tests'.
-		spec package: 'Refactoring-Help'.
-		spec package: 'Refactoring-Tests-Changes'.
-		spec package: 'Refactoring-Tests-Critics'.
-		spec package: 'Refactoring-Tests-Environment'.
 		spec package: 'ReflectionMirrors-Primitives-Tests'.
 		spec package: 'Reflectivity-Examples'.
 		spec package: 'Regex-Help'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Rubric-Rules'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
-		spec package: 'System-Settings-Rules'.
-		spec package: 'System-Support-Rules'.
 		spec package: 'System-Platforms-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 
@@ -423,31 +413,6 @@ spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsPlatform'	
 	'Metacello-TestsReference'
 	'Metacello-Gitlab-Tests'
-).
-
-spec group: 'Refactoring-Rules-Group' with: #(
-	'QualityAssistant-Core-Group' "dependency"
-	'SUnit-Rules'	
-	'Kernel-Tests-Rules'
-	'Polymorph-Widgets-Rules'
-	'System-Settings-Rules'
-	'System-Support-Rules'
-	'Rubric-Rules'
-).
-spec group: 'Refactoring-Tests-Group' with: #(
-	'Refactoring-Tests-Core'		"'Kernel-Tests' depend on it, cleanup needed!"
-	'Refactoring-Tests-Changes'
-	'Refactoring-Tests-Critics'
-	'Refactoring-Tests-Environment'
-).
-spec group: 'Refactoring-Help-Group' with: #(
-	'Refactoring-Help'
-
-).
-spec group: 'Refactoring-Group' with: #(
-	'Refactoring-Rules-Group'
-	'Refactoring-Tests-Group'
-	'Refactoring-Help-Group' 
 ).
 
 spec group: 'QualityAssistant-Core-Group' with: #(
@@ -635,7 +600,7 @@ spec group: #default with: #(
 
 	"standalone but dependent:"
 	'OSWindow-Group'
-	'Refactoring-Group'
+	'Refactoring'
 	'Catalog'
 	'Epicea'
 	'Misc'
