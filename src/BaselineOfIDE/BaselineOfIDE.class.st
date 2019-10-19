@@ -282,9 +282,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FuzzyMatcher'.
 		spec package: 'STON-Text support'.
 		
-		"SortFunctions (standalone)"
-		spec package: 'SortFunctions-Core'.
-		spec package: 'SortFunctions-Tests'.
+		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 
 		"standalone packages"
 		spec package: 'Announcements-Help'.
@@ -633,11 +631,6 @@ spec group: 'Catalog-Group' with: #(
 	'Catalog-Core-Group'
 ).
 
-spec group: 'SortFunctions-Group' with: #(
-	'SortFunctions-Core'
-	'SortFunctions-Tests'
-).
-
 spec group: 'QualityAssistant-Core-Group' with: #(
 	"'Manifest-Tests' 'Polymorph-Widgets-Rules' depend on it, needs cleanup"
 	'Manifest-Core-Group' "dependency"
@@ -832,7 +825,7 @@ spec group: #default with: #(
 	'Epicea-Group'
 	'Optional-Group'
 	'General-Tests-Group'
-	'SortFunctions-Group'	
+	'SortFunctions'	
 	'ReferenceFinder'
 	
 	'BaselineOfPharoBootstrap'
