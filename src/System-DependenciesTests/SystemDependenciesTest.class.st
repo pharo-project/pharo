@@ -320,7 +320,12 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfUI.
 	BaselineOfUnifiedFFI.
 	BaselineOfClassAnnotation.
-	BaselineOfSystemCommands } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+	BaselineOfSystemCommands.
+	BaselineOfClassParser.
+	BaselineOfRefactoring.
+	BaselineOfReferenceFinder.
+	BaselineOfSortFunctions.	
+	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
 	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
