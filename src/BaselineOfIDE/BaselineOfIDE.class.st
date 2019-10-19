@@ -163,6 +163,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Reflectivity-Tools'.
 
 		spec package: 'Rubric-Styling'.
+
+		spec package: 'AST-Core-Tests'.
 		
 		spec baseline: 'BlueInk' with: [ 
 			spec repository: repository; loads: #('Core'). ].
@@ -177,7 +179,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'System-Object Events-Tests'.
 		spec package: 'System-OSEnvironments-Tests'.
 		spec package: 'Ring-Definitions-Tests-Core'.
-		spec package: 'AST-Core-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests-Core'.
 		spec package: 'Fuel-Platform-Pharo-Core-Tests'.
