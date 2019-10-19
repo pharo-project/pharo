@@ -27,6 +27,6 @@ BaselineOfQAGT >> baseline: spec [
 			spec baseline: 'PharoGT' with: [ spec repository: repository ].
 			spec baseline: 'Manifest' with: [ spec repository: repository ].
 			spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository ].
-			spec baseline: 'QualityAsistant' with: [ spec repository: repository ].
+			spec baseline: 'QualityAssistant' with: [ spec repository: repository ].
 			spec baseline: 'Reflectivity' with: [ spec repository: repository ] ]
 ]
