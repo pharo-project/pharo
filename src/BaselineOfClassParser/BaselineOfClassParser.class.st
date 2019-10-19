@@ -1,6 +1,6 @@
 Class {
 	#name : #BaselineOfClassParser,
-	#superclass : #Object,
+	#superclass : #BaselineOf,
 	#category : #BaselineOfClassParser
 }
 
