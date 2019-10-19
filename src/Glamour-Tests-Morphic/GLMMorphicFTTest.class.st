@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicFTTest,
 	#superclass : #GLMMorphicTest,
-	#category : #'Glamour-FastTable-Morphic-Renderer'
+	#category : #'Glamour-Tests-Morphic'
 }
 
 { #category : #asserting }
