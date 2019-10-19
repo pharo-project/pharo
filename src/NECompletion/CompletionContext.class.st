@@ -69,13 +69,6 @@ CompletionContext >> parseSource [
 	TypingVisitor new visitNode: ast
 ]
 
-{ #category : #accessing }
-CompletionContext >> receiverClass [
-	node isMessage ifFalse: [ ^nil ].
-	^node receiver propertyAt: #type ifAbsent: [ nil ] .
-
-]
-
 { #category : #'initialize-release' }
 CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
 	
