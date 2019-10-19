@@ -225,8 +225,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-Spotter-UI'.
 		spec package: 'GT-SpotterExtensions-Core'.
 
-		spec package: 'Tool-Catalog'.	"standalone"
-
 		spec package: 'GT-Debugger'.
 		spec package: 'GT-BytecodeDebugger'.
 		spec package: 'GT-SUnitDebugger'.
@@ -256,6 +254,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GeneralRules-Tests'.
 		spec package: 'FuzzyMatcher'.
 		
+		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
@@ -450,15 +449,6 @@ spec group: 'Refactoring-Group' with: #(
 	'Refactoring-Tests-Group'
 	'Refactoring-Help-Group' 
 ).
-spec group: 'Catalog-Core-Group' with: #(
-	'Glamour-Core-Group'	"dependency"
-	'GT-Core-Group'	"dependency"
-	'Tool-Catalog'
-).
-
-spec group: 'Catalog-Group' with: #(
-	'Catalog-Core-Group'
-).
 
 spec group: 'QualityAssistant-Core-Group' with: #(
 	"'Manifest-Tests' 'Polymorph-Widgets-Rules' depend on it, needs cleanup"
@@ -646,7 +636,7 @@ spec group: #default with: #(
 	"standalone but dependent:"
 	'OSWindow-Group'
 	'Refactoring-Group'
-	'Catalog-Group'
+	'Catalog'
 	'Epicea'
 	'Misc'
 	'GeneralTests'
