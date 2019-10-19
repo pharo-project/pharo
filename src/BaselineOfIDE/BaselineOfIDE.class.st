@@ -143,13 +143,7 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 		
-		spec package: 'ReleaseTests'. 
-		spec package: 'Refactoring-Critics'.
-		spec package: 'NautilusRefactoring'.
-		spec package: 'NautilusRefactoring-Tests'.
-		
 		spec package: 'Shout'.
-		spec package: 'Reflectivity-Tools'.
 
 		spec package: 'Rubric-Styling'.
 
@@ -170,11 +164,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-Extended'.
-		spec package: 'Kernel-Tests-WithCompiler'.
-		spec package: 'Manifest-Core'.
-		spec package: 'Manifest-Resources-Tests'.
+		spec package: 'Kernel-Tests-WithCompiler'..
 		spec package: 'OpalCompiler-Tests'.
-		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Definitions-Tests-Containers'.
 		spec package: 'Ring-Definitions-Tests-Core'.
@@ -193,61 +184,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'MonticelloGUI-Tests'.
-
-		spec package: 'Glamour-Announcements'.
-		spec package: 'Glamour-Helpers'.
-		spec package: 'Glamour-Core'.
-		spec package: 'Glamour-Tasks'.
-		spec package: 'Glamour-PagerModel'.
-		spec package: 'Glamour-Presentations'.
-		spec package: 'Glamour-Browsers'.
-		spec package: 'Glamour-Morphic-Brick'.
-		spec package: 'Glamour-Tests-Core'.
-		spec package: 'Glamour-Tests-Resources'.
-		spec package: 'Glamour-Morphic-Theme'.
-		spec package: 'Glamour-Morphic-Widgets'.
-		spec package: 'Glamour-Morphic-Renderer'.
-		spec package: 'Glamour-Morphic-Pager'.
-		spec package: 'Glamour-Tests-Morphic'.
-		spec package: 'Glamour-Rubric-Presentations'.
-		spec package: 'Glamour-FastTable'.
-		spec package: 'Glamour-SpecIntegration'.
-	
-		spec package: 'GT-Inspector'.
-		spec package: 'GT-InspectorExtensions-Core'.
-
-		spec package: 'GT-Playground'.
-
-		spec package: 'GT-EventRecorder'.
-
-		spec package: 'GT-Spotter'.
-		spec package: 'GT-Spotter-UI'.
-		spec package: 'GT-SpotterExtensions-Core'.
-
-		spec package: 'GT-Debugger'.
-		spec package: 'GT-BytecodeDebugger'.
-		spec package: 'GT-SUnitDebugger'.
-
-		spec package: 'Tool-CriticBrowser'.
-
-		spec package: 'Renraku'.
-
-		spec package: 'Moose-Algos-Graph'.
-		spec package: 'Moose-Algos-Graph-Tests'.
-		spec package: 'Tool-DependencyAnalyser'.
-		spec package: 'Tool-DependencyAnalyser-UI'.
-		spec package: 'Tool-DependencyAnalyser-Tests'.	"standalone"
-		spec package: 'Tool-DependencyAnalyser-Tests-Data'.	"standalone"
- 
-		spec package: 'Kernel-Rules'.
-		spec package: 'SmartSuggestions'.
-		
-		spec package: 'OpalCompiler-Tools'.
-				
-		spec package: 'GeneralRules'.
-		spec package: 'GeneralRules-Tests'.
+					
 		spec package: 'FuzzyMatcher'.
 		
+		spec baseline: 'QAGT' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Catalog' with: [ spec repository: repository ].
@@ -270,24 +210,13 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Tests'.
 		spec package: 'FuzzyMatcher-Tests'.
-		spec package: 'GT-Tests-Debugger'.
-		spec package: 'GT-Tests-Inspector'.
-		spec package: 'GT-Tests-Playground'.
-		spec package: 'GT-Tests-Spotter'.
-		spec package: 'Glamour-Morphic-Brick-Tests'.
-		spec package: 'Glamour-Tests-Rubric'.
 		spec package: 'Jobs-Tests'.
-		spec package: 'Manifest-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'Pharo-Help'.
 		spec package: 'Random-Tests'.
 		spec package: 'ReflectionMirrors-Primitives-Tests'.
-		spec package: 'Reflectivity-Examples'.
 		spec package: 'Regex-Help'.
-		spec package: 'Renraku-Help'.
-		spec package: 'Renraku-Test'.
 		spec package: 'Shout-Tests'.
-		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'System-Platforms-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 
@@ -357,11 +286,6 @@ spec group: 'ReflectionMirrors-Group' with: #(
 	'ReflectionMirrors-Tests-Group'
 ).
 
-spec group: 'Reflectivity-Group' with: #(
-	'Reflectivity-Tests'	"required by Reflectivity-Examples"
-	'Reflectivity-Examples'
-).
-
 spec group: 'SmartSuggestions-Core-Group' with: #(
 	"depends on 'Glamour-Core-Group', circular dependency, needs fix"
 	'SmartSuggestions'
@@ -372,19 +296,6 @@ spec group: 'SmartSuggestions-Tests-Group' with: #(
 spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Core-Group'
 	'SmartSuggestions-Tests-Group'
-).
-
-spec group: 'Manifest-Core-Group' with: #(
-	'Manifest-Core'
-).
-spec group: 'Manifest-Tests-Group' with: #(
-	'Kernel-Tests-Group' "dependency"
-	'Manifest-Resources-Tests'
-	'Manifest-Tests'	"depends on QA, needs cleanup"
-).
-spec group: 'Manifest-Group' with: #(
-	'Manifest-Core-Group'
-	'Manifest-Tests-Group'
 ).
 
 spec group: 'Shout-Core-Group' with: #(
@@ -409,102 +320,6 @@ spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsReference'
 	'Metacello-Gitlab-Tests'
 ).
-
-spec group: 'QualityAssistant-Core-Group' with: #(
-	"'Manifest-Tests' 'Polymorph-Widgets-Rules' depend on it, needs cleanup"
-	'Manifest-Core-Group' "dependency"
-	'Glamour-Core-Group'	"dependency"
-	'DependencyAnalyser-Core-Group' "dependency"
-	'GT-Core-Group'	"dependency"
-	'Renraku'		
-	'Tool-CriticBrowser'
-).
-spec group: 'QualityAssistant-Tests-Group' with: #(
-	'Renraku-Test'
-).
-spec group: 'QualityAssistant-Help-Group' with: #(
-	'Renraku-Help'
-).
-spec group: 'QualityAssistant-Group' with: #(
-	'QualityAssistant-Core-Group'
-	'QualityAssistant-Tests-Group'
-	'QualityAssistant-Help-Group'
-).
-
-spec group: 'Glamour-Core-Group' with: #(
-	'Shout-Core-Group'  "dependecy"
-	"circular dependency on 'Glamour-Tests-Group', 'GT-Core-Group'"
-	'Athens' "dependency"
-	'Glamour-Announcements'
-	'Glamour-Helpers'
-	'Glamour-Core'
-	'Glamour-Tasks'
-	'Glamour-PagerModel'
-	'Glamour-Presentations'
-	'Glamour-Browsers'
-	'Glamour-Morphic-Brick'
-	'Glamour-Morphic-Theme'
-	'Glamour-Morphic-Widgets'
-	'Glamour-Morphic-Renderer'
-	'Glamour-Morphic-Pager'
-	'Glamour-Rubric-Presentations'	"requires Shout"
-	'Glamour-FastTable'	
-	'Glamour-SpecIntegration'
-).
-spec group: 'Glamour-Tests-Group' with: #(
-	'Glamour-Tests-Core'
-	'Glamour-Tests-Resources'
-	'Glamour-Tests-Morphic'
-	'Glamour-Morphic-Brick-Tests'
-	'Glamour-Tests-Rubric'
-).
-spec group: 'Glamour-Group' with: #(
-	'Glamour-Core-Group'
-	'Glamour-Tests-Group'
-).
-
-spec group: 'GT-Core-Group' with: #(
-	'SmartSuggestions-Group' "dependency"
-	'Glamour-Core-Group'	"dependency"
-	"'Morphic-Core' 'System-Settings' is dependent on this group, needs clenup"
-	'OpalCompiler-Tools'
-	'GT-Inspector'
-	'GT-InspectorExtensions-Core'
-	'GT-Playground'
-	'GT-EventRecorder'
-	'GT-Spotter'
-	'GT-Spotter-UI'
-	'GT-SpotterExtensions-Core'
-	'GT-Debugger'
-	'GT-BytecodeDebugger'
-	'GT-SUnitDebugger'
-).
-spec group: 'GT-Tests-Group' with: #(
-	'GT-Tests-Debugger'
-	'GT-Tests-Inspector'
-	'GT-Tests-Playground'
-	'GT-Tests-Spotter'
-).
-spec group: 'GT-Group' with: #(
-	'GT-Core-Group'
-	'GT-Tests-Group'
-).
-
-spec group: 'DependencyAnalyser-Core-Group' with: #(
-	'Manifest-Core-Group' "dependency"
-	'Moose-Algos-Graph'
-	'Tool-DependencyAnalyser'
-	'Tool-DependencyAnalyser-UI'
-).
-spec group: 'DependencyAnalyser-Tests-Group' with: #(
-	'Moose-Algos-Graph-Tests'
-	'Tool-DependencyAnalyser-Tests'	
-	'Tool-DependencyAnalyser-Tests-Data'	
-).
-spec group: 'DependencyAnalyser-Group' with: #(
-	'DependencyAnalyser-Core-Group'
-	'DependencyAnalyser-Tests-Group'
-).	
 
 spec group: 'Kernel-Tests-Group' with: #(
 	'CodeImport-Tests'	 
@@ -533,27 +348,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
-spec group: 'GT&QA-Group' with: #(
-	'GeneralRules'		"depends on QA, needs cleanup"
-	'GeneralRules-Tests' "depends on QA, needs cleanup"
-	'Kernel-Rules'		"depends on QA, DependencyAnalyzer, needs cleanup"
-
-	'ReleaseTests' 		"required by Manifest-Core Refactoring-Critics"
-	'Reflectivity-Tools'	"required by Manifest-Core Refactoring-Critics"
-
-	'NautilusRefactoring'	"required by Epicea, SmartSuggestions"
-	'NautilusRefactoring-Tests'
-	'Refactoring-Critics'	"depends on QA, needs cleanup"
-
-	'Glamour-Group'
-	'GT-Group'
-
-	'Manifest-Group'
-	'DependencyAnalyser-Group'
-	'QualityAssistant-Group'
-	'Reflectivity-Group'
-).		
-
 spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
@@ -573,8 +367,8 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
-
-	'GT&QA-Group'
+	
+	'QAGT'
 
 	"standalone but dependent:"
 	'OSWindow'

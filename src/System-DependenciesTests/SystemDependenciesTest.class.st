@@ -329,6 +329,16 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMisc.
 	BaselineOfEpicea.
 	BaselineOfCatalog.
+	BaselineOfRefactoring.
+	BaselineOfOSWindow.
+	BaselineOfQAGT.
+	BaselineOfPharoGlamour.
+	BaselineOfPharoGT.
+	BaselineOfManifest.
+	BaselineOfDependencyAnalyzer.
+	BaselineOfQualityAssistant.
+	BaselineOfReflectivity.
+	BaselineOfSmartSuggestions.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
