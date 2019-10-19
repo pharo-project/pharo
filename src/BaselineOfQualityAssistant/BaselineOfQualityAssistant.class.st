@@ -11,8 +11,8 @@ BaselineOfQualityAssistant >> baseline: spec [
 	spec for: #'common' do: [
 			
 		spec 
-			package: 'Renraku';
 			package: 'Tool-CriticBrowser';
+			package: 'Renraku';
 			package: 'Renraku-Test';
 			package: 'Renraku-Help'.
 		spec 
