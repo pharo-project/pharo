@@ -26,9 +26,9 @@ BaselineOfQAGT >> baseline: spec [
 			package: 'NautilusRefactoring-Tests'.
 	].
 	
+	spec package: 'Refactoring-Critics'.
 	spec baseline: 'Manifest' with: [ spec repository: repository ].
 	
-	spec package: 'Refactoring-Critics'.
 	
 	spec baseline: 'QualityAssistant' with: [ spec repository: repository ].
 	spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository ].
