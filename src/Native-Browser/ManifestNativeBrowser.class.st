@@ -11,7 +11,7 @@ You can use it like this:
 ```
 FileSystem workingDirectory openInOSFileBrowser.
 
-OSPlatform current openOSFileBrowserOn: FileLocator home.
+NativeBrowserOpenVisitor openOn: FileLocator home.
 ```
 "
 Class {
