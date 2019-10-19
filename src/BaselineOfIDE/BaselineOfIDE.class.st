@@ -312,7 +312,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfTelePharoSupport'.
 		
 		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
-		spec baseline: 'Refactoring' with: [ spec repository: repository ].
+		spec baseline: 'Refactoring2' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
 		spec baseline: 'Calypso' with: [ 
@@ -654,7 +654,7 @@ spec group: #default with: #(
 	'Traits'
 	'Slot'
 	
-	'Refactoring'
+	'Refactoring2'
 	'ClassParser'
 	
 	'Calypso'

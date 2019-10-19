@@ -322,7 +322,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfClassAnnotation.
 	BaselineOfSystemCommands.
 	BaselineOfClassParser.
-	BaselineOfRefactoring.
+	BaselineOfRefactoring2.
 	BaselineOfReferenceFinder.
 	BaselineOfSortFunctions.
 	BaselineOfGeneralTests.
