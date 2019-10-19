@@ -27,7 +27,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Debugger-Tests';
 			package: 'EmbeddedFreeType-Tests';
 			
-			package: 'Epicea-Tests-Group';
 			package: 'Ombu-Tests';
 			package: 'Epicea-Tests';
 			package: 'Hiedra-Tests';
