@@ -164,7 +164,8 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'Rubric-Styling'.
 		
-		spec package: 'BlueInk-Core'.
+		spec baseline: 'BlueInk' with: [ 
+			spec repository: repository; loads: #('Core'). ].
 		
 		spec package: 'Transcript-NonInteractive-Tests'.
 		spec package: 'Collections-Tests'.
@@ -288,8 +289,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Announcements-Help'.
 		spec package: 'Announcements-Core-Tests'.
 		spec package: 'Balloon-Tests'.
-		spec package: 'BlueInk-Extras'.
-		spec package: 'BlueInk-Tests'.
+
+		spec baseline: 'BlueInk' with: [ 
+			spec repository: repository; loads: #('Extras' 'Tests'). ].
+		
 		spec package: 'Morphic-Widgets-FastTable-Tests'.
 		spec package: 'CodeImport-Tests'.
 		spec package: 'Collections-DoubleLinkedList-Tests'.
@@ -561,19 +564,6 @@ spec group: 'Manifest-Group' with: #(
 	'Manifest-Tests-Group'
 ).
 
-spec group: 'BlueInk-Core-Group' with: #(
-	'BlueInk-Core'
-	'BlueInk-Extras'
-).
-spec group: 'BlueInk-Tests-Group' with: #(
-	'Kernel-Tests-Group' "dependency"
-	'BlueInk-Tests'	
-).
-spec group: 'BlueInk-Group' with: #(
-	'BlueInk-Core-Group'
-	'BlueInk-Tests-Group'
-).
-
 spec group: 'Shout-Core-Group' with: #(
 	'Shout'		"'Polymorph-Widgets' and 'NECompletion' depend on it, fix needed?"
 	'Rubric-Styling'	"requires 'Shout'"      
@@ -745,7 +735,6 @@ spec group: 'OSWindow-Group' with: #(
 ).
 
 spec group: 'Kernel-Tests-Group' with: #(
-	'BlueInk-Core-Group' "dependency"
 	'RPackage-Tests'
 	'CodeImport-Tests'	 
 	'Collections-Tests'
@@ -805,7 +794,7 @@ spec group: #default with: #(
 	'Mandatory-Group'
 
 	'Kernel-Tests-Group'
-	'BlueInk-Group'
+	'BlueInk'
 
 	'Shout-Group'
 
