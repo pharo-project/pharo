@@ -169,25 +169,19 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'BlueInk' with: [ 
 			spec repository: repository; loads: #('Core'). ].
 		
-		spec package: 'Transcript-NonInteractive-Tests'.
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Tests'.
-		spec package: 'System-Installers-Tests'.
 		spec package: 'System-Object Events-Tests'.
 		spec package: 'System-OSEnvironments-Tests'.
 		spec package: 'Ring-Definitions-Tests-Core'.
 		spec package: 'FileSystem-Tests-Core'.
-		spec package: 'Fuel-Tests-Core'.
-		spec package: 'Fuel-Platform-Pharo-Core-Tests'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-Extended'.
 		spec package: 'Kernel-Tests-WithCompiler'.
-		spec package: 'Debugging-Utils-Tests'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'OpalCompiler-Tests'.
@@ -196,12 +190,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Definitions-Tests-Containers'.
 		spec package: 'Ring-Definitions-Tests-Core'.
-		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
 		
-		spec package: 'Zinc-Resource-Meta-Tests'.
-
 		spec package: 'Zodiac-Tests'.	
 		spec package: 'Zodiac-Extra'.	
 		spec package: 'Zinc-Zodiac'.	
@@ -215,9 +206,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsReference'.	"standalone"
 		spec package: 'Metacello-Gitlab-Tests'.
 
-		spec package: 'RPackage-Tests'.
-		spec package: 'Tests'.
-		spec package: 'Monticello-Tests'.
 		spec package: 'MonticelloGUI-Tests'.
 
 		spec package: 'Glamour-Announcements'.
@@ -271,7 +259,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
-		spec package: 'MonticelloMocks'.
 		spec package: 'OpalCompiler-Tools'.
 
 		spec package: 'OSWindow-Core'.
@@ -284,33 +271,23 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FuzzyMatcher'.
 		spec package: 'STON-Text support'.
 		
+		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 
 		"standalone packages"
 		spec package: 'Announcements-Help'.
 		spec package: 'Announcements-Core-Tests'.
-		spec package: 'Balloon-Tests'.
 
 		spec baseline: 'BlueInk' with: [ 
 			spec repository: repository; loads: #('Extras' 'Tests'). ].
 		
-		spec package: 'Morphic-Widgets-FastTable-Tests'.
 		spec package: 'CodeImport-Tests'.
-		spec package: 'Collections-DoubleLinkedList-Tests'.
-		spec package: 'Collections-Arithmetic-Tests'.
 		spec package: 'Compression-Tests'.
-		spec package: 'ConfigurationCommandLineHandler-Tests'.
-		spec package: 'MetacelloCommandLineHandler-Tests'.
-		spec package: 'Debugger-Tests'.
-		spec package: 'EmbeddedFreeType-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
-		spec package: 'FileSystem-Tests-Memory'.
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
-		spec package: 'Fonts-Infrastructure-Tests'.
-		spec package: 'FreeType-Tests'.
-		spec package: 'FreeType-Help'.
 		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'GT-Tests-Debugger'.
 		spec package: 'GT-Tests-Inspector'.
@@ -318,25 +295,16 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GT-Tests-Spotter'.
 		spec package: 'Glamour-Morphic-Brick-Tests'.
 		spec package: 'Glamour-Tests-Rubric'.
-		spec package: 'Graphics-Tests'.
-		spec package: 'HelpSystem-Tests'.
-		spec package: 'IssueTracking-Tests'.
 		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
-		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
-		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
-		spec package: 'NewValueHolder-Tests'.		
-		spec package: 'NECompletion-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
-		spec package: 'PharoDocComment-Tests'.
 		spec package: 'Polymorph-Widgets-Rules'.
-		spec package: 'ProfStef-Tests'.
 		spec package: 'Random-Tests'.
 		spec package: 'Refactoring-Help'.
 		spec package: 'Refactoring-Tests-Changes'.
@@ -344,38 +312,16 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Environment'.
 		spec package: 'ReflectionMirrors-Primitives-Tests'.
 		spec package: 'Reflectivity-Examples'.
-		spec package: 'Reflectivity-Tools-Tests'.
 		spec package: 'Regex-Help'.
-		spec package: 'Regex-Core-Tests'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Definitions-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
-		spec package: 'Rubric-Tests'.
-		spec package: 'ScriptingExtensions-Tests'.
-		spec package: 'STON-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
-		spec package: 'Spec-Tests'.
-		spec package: 'System-BasicCommandLineHandler-Tests'.
-		spec package: 'System-Caching-Tests'.
-		spec package: 'System-Hashing-Tests'.
-		spec package: 'System-History-Tests'.
-		spec package: 'System-Localization-Tests'.
-		spec package: 'System-SessionManager-Tests'.
 		spec package: 'System-Settings-Rules'.
-		spec package: 'System-Settings-Tests'.
 		spec package: 'System-Support-Rules'.
-		spec package: 'System-Support-Tests'.
 		spec package: 'System-Platforms-Tests'.
-		spec package: 'Text-Edition-Tests'.
-		spec package: 'Tool-FileList-Tests'.
-		spec package: 'Tools-Test'.	
 		spec package: 'Zinc-Character-Encoding-Tests'.
-		spec package: 'Zinc-Resource-Meta-FileSystem'.			
-		spec package: 'Zinc-HTTP-Examples'.
-		spec package: 'Zinc-Tests'.
-		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
@@ -426,84 +372,11 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Hiedra'
 	'Hiedra-Examples'
 	'EpiceaBrowsers').
-spec group: 'Epicea-Tests-Group' with: #(
-	'Ombu-Tests'
-	'Epicea-Tests'
-	'Hiedra-Tests'
-	'EpiceaBrowsers-Tests'
-).	
-spec group: 'Epicea-Group' with: #(
-	'Epicea-Core-Group' 
-	'Epicea-Tests-Group'
-).	
 
 spec group: 'General-Help-Group' with: #(
 	'Announcements-Help'
 	'Pharo-Help'
 	'Regex-Help'
-).	
-
-spec group: 'General-Tests-Group' with: #(
-	'Kernel-Tests-Group' "dependency"
-	'Debugging-Utils-Tests'
-	'Tests'
-	'RPackage-Tests'
-	'Monticello-Tests'	"required by MonticelloMocks"
-	'System-Installers-Tests' 
-	'MonticelloMocks'
-	'Fuel-Tests-Core'
-	'Fuel-Platform-Pharo-Core-Tests'	
-	'Balloon-Tests'
-	'Collections-DoubleLinkedList-Tests'
-	'Collections-Arithmetic-Tests'
-	'ConfigurationCommandLineHandler-Tests'
-	'MetacelloCommandLineHandler-Tests'
-	'Debugger-Tests'
-	'EmbeddedFreeType-Tests'
-	'Epicea-Tests-Group'
-	'FileSystem-Tests-Memory'
-	'Fonts-Infrastructure-Tests'
-	'FreeType-Tests'
-	'FreeType-Help'
-
-	'Graphics-Tests'
-	'HelpSystem-Tests'
-	'IssueTracking-Tests'
-	'Keymapping-Tests'
-
-	'Morphic-Tests'
-	
-	'Morphic-Widgets-FastTable-Tests'
-	'NECompletion-Tests'
-	'NewValueHolder-Tests'
-	'ProfStef-Tests'
-	'Reflectivity-Tools-Tests'
-	'Regex-Core-Tests'
-	'Ring-Definitions-Tests-Monticello'
-	'Rubric-Tests'
-	'ScriptingExtensions-Tests'
-	'STON-Tests'
-	'SUnit'
-	'Spec-Tests'
-	'System-Caching-Tests'
-	'System-Hashing-Tests'
-	'System-History-Tests'
-	'System-Localization-Tests'
-	'System-SessionManager-Tests'
-	'System-Settings-Tests'
-	'System-Support-Tests'
-	'Text-Edition-Tests'
-	'Tool-FileList-Tests'
-	'Tools-Test'
-	'Zinc-Resource-Meta-FileSystem'	
-	'Zinc-Resource-Meta-Tests'
-	'Zinc-HTTP-Examples'
-	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
-	'System-Identification-Tests'		
-	'System-DependenciesTests'
-	'System-BasicCommandLineHandler-Tests'
-	'Transcript-NonInteractive-Tests'
-	'PharoDocComment-Tests'	"standalone"
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -812,9 +685,9 @@ spec group: #default with: #(
 	'OSWindow-Group'
 	'Refactoring-Group'
 	'Catalog-Group'
-	'Epicea-Group'
+	'Epicea-Core-Group'
 	'Optional-Group'
-	'General-Tests-Group'
+	'GeneralTests'
 	'SortFunctions'	
 	'ReferenceFinder'
 	
