@@ -382,10 +382,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'ReferenceFinder-Core'.
 
-		spec package: 'Refactoring2-Core'.
-		spec package: 'Refactoring2-Transformations'.
-		spec package: 'Refactoring2-Transformations-Tests'.
-
+		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
 		spec baseline: 'Calypso' with: [ 
@@ -790,12 +787,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
-spec group: 'Refactoring2-Group' with: #(
-	'Refactoring2-Core'
-	'Refactoring2-Transformations'
-	'Refactoring2-Transformations-Tests'
-).
-
 spec group: 'GT&QA-Group' with: #(
 	'GeneralRules'		"depends on QA, needs cleanup"
 	'GeneralRules-Tests' "depends on QA, needs cleanup"
@@ -860,7 +851,7 @@ spec group: #default with: #(
 	'Traits'
 	'Slot'
 	
-	'Refactoring2-Group'
+	'Refactoring'
 	'ClassParser'
 	
 	'Calypso'
