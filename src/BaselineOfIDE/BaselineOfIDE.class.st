@@ -187,7 +187,6 @@ BaselineOfIDE >> baseline: spec [
 					
 		spec package: 'FuzzyMatcher'.
 		
-		spec baseline: 'SmartSuggestions' with: [ spec repository: repository ].
 		spec baseline: 'QAGT' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
@@ -357,7 +356,6 @@ spec group: #default with: #(
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	
-	'SmartSuggestions'
 	'QAGT'
 
 	"standalone but dependent:"
