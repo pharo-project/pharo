@@ -181,6 +181,7 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'MonticelloGUI-Tests'.
 					
+		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		
@@ -210,7 +211,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Multilingual-Tests'.
 		spec package: 'Pharo-Help'.
 		spec package: 'Random-Tests'.
-		spec package: 'ReflectionMirrors-Primitives-Tests'.
 		spec package: 'Regex-Help'.
 		spec package: 'Shout-Tests'.
 		spec package: 'System-Platforms-Tests'.
@@ -252,13 +252,6 @@ spec group: 'General-Help-Group' with: #(
 	'Pharo-Help'
 	'Regex-Help'
 ).	
-
-spec group: 'ReflectionMirrors-Tests-Group' with: #(
-	'ReflectionMirrors-Primitives-Tests'
-).
-spec group: 'ReflectionMirrors-Group' with: #(
-	'ReflectionMirrors-Tests-Group'
-).
 
 spec group: 'Shout-Core-Group' with: #(
 	'Shout'		"'Polymorph-Widgets' and 'NECompletion' depend on it, fix needed?"
@@ -326,7 +319,7 @@ spec group: #default with: #(
 	"standalone:" 
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
-	'ReflectionMirrors-Group'
+	'ReflectionMirrors'
 	'Zodiac'
 	
 	'FuzzyMatcher'	
