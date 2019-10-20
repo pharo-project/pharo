@@ -54,8 +54,6 @@ BaselineOfIDE >> additionalInitialization [
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
 	
-	CatalogSettings displayCatalogProjectsInSpotter: false.
-
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
@@ -87,7 +85,6 @@ BaselineOfIDE >> additionalInitialization [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
 	
-	self loadIceberg.	
 	self makeCalypsoDefaultBrowser.
 ]
 
@@ -154,9 +151,6 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository; loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
       spec baseline: 'Ring' with: [spec repository: repository].
 
-		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
-		spec baseline: 'PharoGT' with: [ spec repository: repository ].
-		spec baseline: 'Catalog' with: [ spec repository: repository ].
 	].
 
 ]
