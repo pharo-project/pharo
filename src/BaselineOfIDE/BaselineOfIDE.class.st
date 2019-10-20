@@ -187,6 +187,7 @@ BaselineOfIDE >> baseline: spec [
 					
 		spec package: 'FuzzyMatcher'.
 		
+		spec baseline: 'SmartSuggestions' with: [ spec repository: repository ].
 		spec baseline: 'QAGT' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
@@ -286,18 +287,6 @@ spec group: 'ReflectionMirrors-Group' with: #(
 	'ReflectionMirrors-Tests-Group'
 ).
 
-spec group: 'SmartSuggestions-Core-Group' with: #(
-	"depends on 'Glamour-Core-Group', circular dependency, needs fix"
-	'SmartSuggestions'
-).
-spec group: 'SmartSuggestions-Tests-Group' with: #(
-	'SmartSuggestions-Tests'
-).
-spec group: 'SmartSuggestions-Group' with: #(
-	'SmartSuggestions-Core-Group'
-	'SmartSuggestions-Tests-Group'
-).
-
 spec group: 'Shout-Core-Group' with: #(
 	'Shout'		"'Polymorph-Widgets' and 'NECompletion' depend on it, fix needed?"
 	'Rubric-Styling'	"requires 'Shout'"      
@@ -368,6 +357,7 @@ spec group: #default with: #(
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	
+	'SmartSuggestions'
 	'QAGT'
 
 	"standalone but dependent:"

@@ -13,9 +13,7 @@ BaselineOfPharoGT >> baseline: spec [
 	repository := self packageRepositoryURL.	
 
 	spec for: #'common' do: [
-		
-		spec baseline: 'SmartSuggestions' with: [ spec repository: repository ].
-		
+				
 		spec 
 			package: 'OpalCompiler-Tools';
 			package: 'GT-Inspector';
