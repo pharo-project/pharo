@@ -11,10 +11,10 @@ BaselineOfZodiac >> baseline: spec [
 		spec 
 			package: 'Zinc-Zodiac';
 			package: 'Zodiac-Extra';
-			package: 'Zinc-Tests'.
+			package: 'Zodiac-Tests'.
 
 		spec 
 			group: 'Core' with: #('Zinc-Zodiac' 'Zodiac-Extra');
-			group: 'Tests' with: #('Zinc-Tests');
+			group: 'Tests' with: #('Zodiac-Tests');
 			group: 'default' with: #('Core' 'Tests') ]
 ]
