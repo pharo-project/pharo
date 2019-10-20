@@ -21,7 +21,6 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'FileSystem-Tests-Attributes';
 			package: 	'Files-Tests' ;
 			package: 	'Jobs-Tests' ;
-			package: 	'Multilingual-Tests';
 			package: 	'OpalCompiler-Tests'; 
 			package: 	'Random-Tests';
 			package: 	'Ring-Definitions-Tests-Core';
@@ -30,5 +29,6 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'System-OSEnvironments-Tests';
 			package: 	'Zinc-Character-Encoding-Tests' ;
 			package: 	'System-Platforms-Tests';
-			package: 	'Text-Tests'	 ]
+			package: 	'Text-Tests'	;
+			package: 	'Multilingual-Tests' ]
 ]
