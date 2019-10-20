@@ -144,12 +144,6 @@ MorphicTextAdapter >> getText [
 	^ self model text
 ]
 
-{ #category : #NOCompletion }
-MorphicTextAdapter >> guessTypeForName: aString [
-
-	^nil
-]
-
 { #category : #'spec protocol' }
 MorphicTextAdapter >> hasEditingConflicts: aBoolean [
  
