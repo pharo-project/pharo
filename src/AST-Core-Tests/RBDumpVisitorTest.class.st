@@ -2,13 +2,13 @@
 SUnit tests for the RBDumpVisitor visit, called by the #dump method on RBProgramNodes.
 "
 Class {
-	#name : #RBDumpNodeTest,
+	#name : #RBDumpVisitorTest,
 	#superclass : #RBParseTreeTest,
-	#category : #'AST-Core-Tests-Nodes'
+	#category : #'AST-Core-Tests-Visitors'
 }
 
 { #category : #tests }
-RBDumpNodeTest >> testArrayNodeDump [
+RBDumpVisitorTest >> testArrayNodeDump [
 	| node dumpedNode |
 	"Empty Array"
 	node := self parseExpression: '{}'.
@@ -30,7 +30,7 @@ RBDumpNodeTest >> testArrayNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testAssignmentNodeDump [
+RBDumpVisitorTest >> testAssignmentNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'a := 3.'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -43,7 +43,7 @@ RBDumpNodeTest >> testAssignmentNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testBlockNodeDump [
+RBDumpVisitorTest >> testBlockNodeDump [
 	| node dumpedNode |
 	"Simple block"
 	node := self parseExpression: '[self]'.
@@ -71,7 +71,7 @@ RBDumpNodeTest >> testBlockNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testCascadeNodeDump [
+RBDumpVisitorTest >> testCascadeNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'self foo; bar'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -83,7 +83,7 @@ RBDumpNodeTest >> testCascadeNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testDumpOnObjectMethod [
+RBDumpVisitorTest >> testDumpOnObjectMethod [
 	| node dumpedNode |
 	node := (Object>>#readSlot:) ast.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -97,7 +97,7 @@ RBDumpNodeTest >> testDumpOnObjectMethod [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testDumpOnSelfClassMethods [
+RBDumpVisitorTest >> testDumpOnSelfClassMethods [
 	| methods node dumpedNode |
 	methods := {(self class >> #testAssignmentNodeDump).
 	(self class >> #uselessMethod).
@@ -114,7 +114,7 @@ RBDumpNodeTest >> testDumpOnSelfClassMethods [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testErrorNodeDump [
+RBDumpVisitorTest >> testErrorNodeDump [
 	| node dumpedNode |
 	node := self parseFaultyExpression: '( +'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -126,7 +126,7 @@ RBDumpNodeTest >> testErrorNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testGlobalNodeDump [
+RBDumpVisitorTest >> testGlobalNodeDump [
 	| node dumpedNode |
 	"Global nodes are only generated when a semantic analysis is triggered on a method"
 	node := self parseMethod: 'foo ^ Object'.
@@ -139,7 +139,7 @@ RBDumpNodeTest >> testGlobalNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testLiteralArrayNodeDump [
+RBDumpVisitorTest >> testLiteralArrayNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: '#(1 $a true ''a'')'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -151,7 +151,7 @@ RBDumpNodeTest >> testLiteralArrayNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testLiteralValueNodeDump [
+RBDumpVisitorTest >> testLiteralValueNodeDump [
 	| node dumpedNode |
 	"Numeric are literals"
 	node := self parseExpression: '1'.
@@ -195,7 +195,7 @@ RBDumpNodeTest >> testLiteralValueNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testMessageNodeDump [
+RBDumpVisitorTest >> testMessageNodeDump [
 	| node dumpedNode |
 	"Simple selector"
 	node := self parseExpression: 'self foo'.
@@ -232,7 +232,7 @@ RBDumpNodeTest >> testMessageNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testMethodNodeDump [
+RBDumpVisitorTest >> testMethodNodeDump [
 	| node dumpedNode |
 	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -246,7 +246,7 @@ RBDumpNodeTest >> testMethodNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testPragmaNodeDump [
+RBDumpVisitorTest >> testPragmaNodeDump [
 	| node dumpedNode |
 	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -260,7 +260,7 @@ RBDumpNodeTest >> testPragmaNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testReturnNodeDump [
+RBDumpVisitorTest >> testReturnNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: '^ 1 + 1'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -274,7 +274,7 @@ RBDumpNodeTest >> testReturnNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testSelfNodeDump [
+RBDumpVisitorTest >> testSelfNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'self'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -286,7 +286,7 @@ RBDumpNodeTest >> testSelfNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testSequenceNodeDump [
+RBDumpVisitorTest >> testSequenceNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'foo. bar.'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -300,7 +300,7 @@ RBDumpNodeTest >> testSequenceNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testSuperNodeDump [
+RBDumpVisitorTest >> testSuperNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'super'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -312,7 +312,7 @@ RBDumpNodeTest >> testSuperNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testThisContextNodeDump [
+RBDumpVisitorTest >> testThisContextNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'thisContext'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -324,7 +324,7 @@ RBDumpNodeTest >> testThisContextNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> testVariableNodeDump [
+RBDumpVisitorTest >> testVariableNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'a'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
@@ -336,7 +336,7 @@ RBDumpNodeTest >> testVariableNodeDump [
 ]
 
 { #category : #tests }
-RBDumpNodeTest >> uselessMethod [
+RBDumpVisitorTest >> uselessMethod [
 	<useless>
 	
 ]
