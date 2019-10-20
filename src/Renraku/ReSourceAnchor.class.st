@@ -22,13 +22,6 @@ ReSourceAnchor >> entity [
 	^ self sourceEntity
 ]
 
-{ #category : #'gt-inspector-extension' }
-ReSourceAnchor >> gtInspectorAnchorIn: composite [
-	<gtInspectorPresentationOrder: 0>
-
-	^ sourceEntity glmCritiqueSourceIn: composite
-]
-
 { #category : #initialization }
 ReSourceAnchor >> initializeEnitity: anEntity [ 
 	

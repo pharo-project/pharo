@@ -157,7 +157,7 @@ SpNotebookMorph >> newTabSelectorMorph [
 
 { #category : #private }
 SpNotebookMorph >> newToolbarMorph [
-	^ GLMPanelMorph new
+	^ SpNotebookPanelMorph new
 		fillStyle: (SolidFillStyle color: Color transparent);
 		borderStyle: (BorderStyle width: 0);
 		vResizing: #spaceFill;
@@ -189,7 +189,7 @@ SpNotebookMorph >> removePage: aPage [
 
 	self announcer
 		announce:
-			(LazyTabPageRemoved new
+			(SpNotebookPageRemoved new
 				tabs: self;
 				page: aPage;
 				pageIndex: removedPageIndex;

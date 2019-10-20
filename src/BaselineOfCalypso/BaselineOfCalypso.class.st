@@ -141,10 +141,6 @@ BaselineOfCalypso >> baseline: spec [
 			package: #'Calypso-SystemPlugins-DependencyAnalyser-Browser' with: [
 				spec requires: #(#'Calypso-SystemTools-Core' ) ];			
 			
-			package: #'Calypso-SystemPlugins-Spotter' with: [
-				spec requires: #(#'Calypso-SystemTools-FullBrowser' #'Calypso-SystemTools-QueryBrowser') ];			
-			
-			
 			package: #'Calypso-Browser' with: [
 				spec requires: #(#'Calypso-NavigationModel' 'Commander' ). ];
 

@@ -19,14 +19,6 @@ ReSearchStringSourceAnchor class >> entity: anEntity string: aString [
 		yourself
 ]
 
-{ #category : #'gt-inspector-extension' }
-ReSearchStringSourceAnchor >> gtInspectorAnchorIn: composite [
-	<gtInspectorPresentationOrder: 0>
-
-	(super gtInspectorAnchorIn: composite)
-		initialize: [ :p | p selectionInterval: self interval ]
-]
-
 { #category : #initialization }
 ReSearchStringSourceAnchor >> initializeEnitity: anEntiy searchString: aString [ 
 	
