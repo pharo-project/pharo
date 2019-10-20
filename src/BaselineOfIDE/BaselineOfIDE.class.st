@@ -143,10 +143,6 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 		
-		spec package: 'Shout'.
-
-		spec package: 'Rubric-Styling'.
-
 		spec package: 'AST-Core-Tests'.
 		
 		spec baseline: 'BlueInk' with: [ 
@@ -181,6 +177,9 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'MonticelloGUI-Tests'.
 					
+		spec baseline: 'Shout' with: [ spec repository: repository ].
+
+		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
 		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
@@ -209,7 +208,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Jobs-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'Random-Tests'.
-		spec package: 'Shout-Tests'.
 		spec package: 'System-Platforms-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 
@@ -243,18 +241,6 @@ spec group: 'Mandatory-Group' with: #(
 	'Network-Mail-Tests'	"previously part of Network-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
-
-spec group: 'Shout-Core-Group' with: #(
-	'Shout'		"'Polymorph-Widgets' and 'NECompletion' depend on it, fix needed?"
-	'Rubric-Styling'	"requires 'Shout'"      
-).
-spec group: 'Shout-Tests-Group' with: #(
-	'Shout-Tests'
-).
-spec group: 'Shout-Group' with: #(
-	'Shout-Core-Group'
-	'Shout-Tests-Group'
-).
 
 spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsMCResources'
@@ -305,7 +291,7 @@ spec group: #default with: #(
 	'Kernel-Tests-Group'
 	'BlueInk'
 
-	'Shout-Group'
+	'Shout'
 
 	"standalone:" 
 	'Metacello-Tests-Group'		 
