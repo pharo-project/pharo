@@ -14,7 +14,6 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Kernel-Tests'; 
 			package: 	'Kernel-Tests-Extended' ;
 			package: 	'Kernel-Tests-WithCompiler';
-			package: 	'AST-Core-Tests'; 
 			package: 	'Announcements-Core-Tests';
 			package: 	'Compression-Tests'; 
 			package: 	'FileSystem-Tests-Core' ;
