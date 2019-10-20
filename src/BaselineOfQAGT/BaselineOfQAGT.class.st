@@ -21,7 +21,6 @@ BaselineOfQAGT >> baseline: spec [
 	
 	spec baseline: 'QualityAssistant' with: [ spec repository: repository ].
 	spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository ].
-	spec baseline: 'Reflectivity' with: [ spec repository: repository ]. 
 
 	spec 
 			package: 'GeneralRules';
@@ -30,5 +29,7 @@ BaselineOfQAGT >> baseline: spec [
 			package: 'ReleaseTests';
 			package: 'Reflectivity-Tools';
 			package: 'NautilusRefactoring';
-			package: 'NautilusRefactoring-Tests'  ]
+			package: 'NautilusRefactoring-Tests'.
+			
+	spec baseline: 'Reflectivity' with: [ spec repository: repository ] ]
 ]
