@@ -297,7 +297,6 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'GeneralHelp'
 	'ReflectionMirrors'
-	'Zodiac'
 	
 	'FuzzyMatcher'	
 	'QAGT'
@@ -309,6 +308,7 @@ spec group: #default with: #(
 	'Epicea'
 	'Misc'
 	'GeneralTests'
+	'Zodiac'
 	'SortFunctions'	
 	'ReferenceFinder'
 	
