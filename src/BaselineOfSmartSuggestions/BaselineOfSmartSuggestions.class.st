@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfSmartSuggestions,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfRefactoring
+	#category : #BaselineOfSmartSuggestions
 }
 
 { #category : #baselines }
