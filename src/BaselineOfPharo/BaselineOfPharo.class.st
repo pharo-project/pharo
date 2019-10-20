@@ -15,10 +15,10 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'BaseLibraries' with: [spec repository: repository].
 		
 		spec baseline: 'IDE' with: [spec repository: repository].
-		spec package: 'Deprecated70'.
+"		spec package: 'Deprecated70'.
 		spec package: 'Deprecated80'.
 		spec package: 'Gofer-UI'.
-	]
+"	]
 ]
 
 { #category : #baseline }
