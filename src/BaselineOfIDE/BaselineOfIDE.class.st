@@ -143,29 +143,15 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository
 		].
 		
-		spec package: 'AST-Core-Tests'.
-		
 		spec baseline: 'BlueInk' with: [ 
 			spec repository: repository; loads: #('Core'). ].
 		
-		spec package: 'Collections-Tests'.
-		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'System-Object Events-Tests'.
-		spec package: 'System-OSEnvironments-Tests'.
-		spec package: 'Ring-Definitions-Tests-Core'.
-		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
-		spec package: 'Kernel-Tests'.
-		spec package: 'Kernel-Tests-Extended'.
-		spec package: 'Kernel-Tests-WithCompiler'..
-		spec package: 'OpalCompiler-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Definitions-Tests-Containers'.
-		spec package: 'Ring-Definitions-Tests-Core'.
-		
+	
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
 		spec package: 'Metacello-TestsCommonMC'.
@@ -194,22 +180,10 @@ BaselineOfIDE >> baseline: spec [
 
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 
-		"standalone packages"
-		spec package: 'Announcements-Core-Tests'.
-
 		spec baseline: 'BlueInk' with: [ 
 			spec repository: repository; loads: #('Extras' 'Tests'). ].
-		
-		spec package: 'CodeImport-Tests'.
-		spec package: 'Compression-Tests'.
-		spec package: 'FileSystem-Tests-Disk'.
-		spec package: 'FileSystem-Tests-Attributes'.
-		spec package: 'Files-Tests'.
-		spec package: 'Jobs-Tests'.
-		spec package: 'Multilingual-Tests'.
-		spec package: 'Random-Tests'.
-		spec package: 'System-Platforms-Tests'.
-		spec package: 'Zinc-Character-Encoding-Tests'.
+	
+		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
@@ -253,33 +227,6 @@ spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-Gitlab-Tests'
 ).
 
-spec group: 'Kernel-Tests-Group' with: #(
-	'CodeImport-Tests'	 
-	'Collections-Tests'
-	'Kernel-Tests' 
-	'Kernel-Tests-Extended' 
-	'Kernel-Tests-WithCompiler'
-	'AST-Core-Tests' "requires BlueInk-Core"
-	'Announcements-Core-Tests'
-	'Compression-Tests' 
-	'FileSystem-Tests-Core' 
-	'FileSystem-Tests-Disk'
-	'FileSystem-Tests-Attributes'
-	'Files-Tests' 
-	'Jobs-Tests' 
-	'Multilingual-Tests'
-	'OpalCompiler-Tests' 
-	'Random-Tests'
-	"'ReleaseTests'"
-	'Ring-Definitions-Tests-Core'
-	'Ring-Definitions-Tests-Containers' 
-	'System-Object Events-Tests'
-	'System-OSEnvironments-Tests'
-	'Zinc-Character-Encoding-Tests' 
-	'System-Platforms-Tests'
-	'Text-Tests'		"required by Multilingual-Tests"
-).
-
 spec group: #default with: #(
 	'BasicTools'	"dependency"
 	'Athens'
@@ -288,8 +235,8 @@ spec group: #default with: #(
 	
 	'Mandatory-Group'
 
-	'Kernel-Tests-Group'
 	'BlueInk'
+	'KernelTests'
 
 	'Shout'
 
