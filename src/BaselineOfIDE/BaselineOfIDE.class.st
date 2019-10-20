@@ -196,7 +196,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 
 		"standalone packages"
-		spec package: 'Announcements-Help'.
 		spec package: 'Announcements-Core-Tests'.
 
 		spec baseline: 'BlueInk' with: [ 
@@ -209,9 +208,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Files-Tests'.
 		spec package: 'Jobs-Tests'.
 		spec package: 'Multilingual-Tests'.
-		spec package: 'Pharo-Help'.
 		spec package: 'Random-Tests'.
-		spec package: 'Regex-Help'.
 		spec package: 'Shout-Tests'.
 		spec package: 'System-Platforms-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
@@ -246,12 +243,6 @@ spec group: 'Mandatory-Group' with: #(
 	'Network-Mail-Tests'	"previously part of Network-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
-
-spec group: 'General-Help-Group' with: #(
-	'Announcements-Help'
-	'Pharo-Help'
-	'Regex-Help'
-).	
 
 spec group: 'Shout-Core-Group' with: #(
 	'Shout'		"'Polymorph-Widgets' and 'NECompletion' depend on it, fix needed?"
@@ -318,7 +309,7 @@ spec group: #default with: #(
 
 	"standalone:" 
 	'Metacello-Tests-Group'		 
-	'General-Help-Group'
+	'GeneralHelp'
 	'ReflectionMirrors'
 	'Zodiac'
 	

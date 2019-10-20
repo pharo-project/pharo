@@ -342,6 +342,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfFuzzyMatcher.
 	BaselineOfZodiac.
 	BaselineOfReflectionMirrors.
+	BaselineOfGeneralHelp.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
