@@ -27,7 +27,7 @@ Class {
 
 { #category : #accessing }
 NECController class >> contextClass [
-	^ContextClass ifNil: [ NECContext ] 
+	^ContextClass ifNil: [ CompletionContext ] 
 ]
 
 { #category : #accessing }
@@ -49,11 +49,6 @@ NECController class >> isCompletionEnabled [
 NECController class >> register [
 	"just for testing: we register the subclass here to test it"
 	RubSmalltalkEditor completionEngine: CompletionController
-]
-
-{ #category : #accessing }
-NECController >> additionals [
-	^ nil
 ]
 
 { #category : #testing }
@@ -82,12 +77,6 @@ NECController >> contextClass [
 { #category : #accessing }
 NECController >> editor [
 	^ editor
-]
-
-{ #category : #'type guessing' }
-NECController >> guessTypeFor: aString [
-
-	^ model ifNotNil: [ model guessTypeForName: aString ]
 ]
 
 { #category : #keyboard }
