@@ -15,6 +15,9 @@ BaselineOfQAGT >> baseline: spec [
 		spec for: #'common' do: [
 			spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 			spec baseline: 'PharoGT' with: [ spec repository: repository ].
+
+			spec package: 'NautilusRefactoring'.
+				
 			spec baseline: 'SmartSuggestions' with: [ spec repository: repository ].
 				
 			spec package: 'Refactoring-Critics'.
@@ -29,7 +32,6 @@ BaselineOfQAGT >> baseline: spec [
 				package: 'Kernel-Rules';
 				package: 'ReleaseTests';
 				package: 'Reflectivity-Tools';
-				package: 'NautilusRefactoring';
 				package: 'NautilusRefactoring-Tests'.
 					
 			spec baseline: 'Reflectivity' with: [ spec repository: repository ] ]
