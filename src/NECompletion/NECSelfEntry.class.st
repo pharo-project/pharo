@@ -7,11 +7,6 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #operations }
-NECSelfEntry >> guessTypeWith: anECContext [ 
-	^ anECContext theClass
-]
-
 { #category : #accessing }
 NECSelfEntry >> label [
 	^ 'self'
