@@ -150,8 +150,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
-		spec package: 'ReleaseTests'.
-	
+		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
 		spec package: 'Metacello-TestsCommonMC'.
@@ -162,6 +161,11 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-Gitlab-Tests'.
 
 		spec package: 'MonticelloGUI-Tests'.
+
+		spec baseline: 'BlueInk' with: [ 
+			spec repository: repository; loads: #('Extras' 'Tests'). ].
+	
+		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 					
 		spec baseline: 'Shout' with: [ spec repository: repository ].
 
@@ -180,10 +184,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 
-		spec baseline: 'BlueInk' with: [ 
-			spec repository: repository; loads: #('Extras' 'Tests'). ].
-	
-		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
@@ -200,8 +200,6 @@ BaselineOfIDE >> baseline: spec [
 				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
 
       spec baseline: 'Ring' with: [spec repository: repository].
-
-      self groups: spec.
 	].
 
 ]
