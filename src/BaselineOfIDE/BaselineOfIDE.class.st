@@ -185,7 +185,7 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'MonticelloGUI-Tests'.
 					
-		spec package: 'FuzzyMatcher'.
+		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		
 		spec baseline: 'QAGT' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
@@ -209,7 +209,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'FileSystem-Tests-Disk'.
 		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Tests'.
-		spec package: 'FuzzyMatcher-Tests'.
 		spec package: 'Jobs-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'Pharo-Help'.
@@ -256,17 +255,6 @@ spec group: 'General-Help-Group' with: #(
 	'Pharo-Help'
 	'Regex-Help'
 ).	
-
-spec group: 'FuzzyMatcher-Core-Group' with: #(
-	'FuzzyMatcher'
-).
-spec group: 'FuzzyMatcher-Tests-Group' with: #(
-	'FuzzyMatcher-Tests'
-).
-spec group: 'FuzzyMatcher-Group' with: #(
-	'FuzzyMatcher-Core-Group'
-	'FuzzyMatcher-Tests-Group'
-).
 
 spec group: 'Zodiac-Extras-Group' with: #(
 	'Zodiac-Extra'
@@ -354,8 +342,8 @@ spec group: #default with: #(
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
 	'Zodiac-Group'
-	'FuzzyMatcher-Group'
 	
+	'FuzzyMatcher'	
 	'QAGT'
 
 	"standalone but dependent:"
