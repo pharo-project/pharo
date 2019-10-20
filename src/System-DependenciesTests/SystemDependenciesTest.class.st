@@ -339,6 +339,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfQualityAssistant.
 	BaselineOfReflectivity.
 	BaselineOfSmartSuggestions.
+	BaselineOfFuzzyMatcher.
+	BaselineOfZodiac.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).

@@ -170,10 +170,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Ring-Definitions-Tests-Containers'.
 		spec package: 'Ring-Definitions-Tests-Core'.
 		
-		spec package: 'Zodiac-Tests'.	
-		spec package: 'Zodiac-Extra'.	
-		spec package: 'Zinc-Zodiac'.	
-			
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
 		spec package: 'Metacello-TestsCommonMC'.
@@ -185,6 +181,7 @@ BaselineOfIDE >> baseline: spec [
 
 		spec package: 'MonticelloGUI-Tests'.
 					
+		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		
 		spec baseline: 'QAGT' with: [ spec repository: repository ].
@@ -256,17 +253,6 @@ spec group: 'General-Help-Group' with: #(
 	'Regex-Help'
 ).	
 
-spec group: 'Zodiac-Extras-Group' with: #(
-	'Zodiac-Extra'
-	'Zinc-Zodiac'
-).
-spec group: 'Zodiac-Tests-Group' with: #(
-	'Zodiac-Tests'
-).
-spec group: 'Zodiac-Group' with: #(
-	'Zodiac-Extras-Group'
-	'Zodiac-Tests-Group'
-).
 spec group: 'ReflectionMirrors-Tests-Group' with: #(
 	'ReflectionMirrors-Primitives-Tests'
 ).
@@ -341,7 +327,7 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	'Zodiac-Group'
+	'Zodiac'
 	
 	'FuzzyMatcher'	
 	'QAGT'
