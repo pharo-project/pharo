@@ -204,7 +204,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
-	  BaselineOfMetacello allPackageNames
+	  (BaselineOfMetacello packagesOfGroupNamed: 'Core')
 ]
 
 { #category : #accessing }
@@ -320,7 +320,33 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfUI.
 	BaselineOfUnifiedFFI.
 	BaselineOfClassAnnotation.
-	BaselineOfSystemCommands } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+	BaselineOfSystemCommands.
+	BaselineOfClassParser.
+	BaselineOfRefactoring2.
+	BaselineOfReferenceFinder.
+	BaselineOfSortFunctions.
+	BaselineOfGeneralTests.
+	BaselineOfMisc.
+	BaselineOfEpicea.
+	BaselineOfCatalog.
+	BaselineOfRefactoring.
+	BaselineOfOSWindow.
+	BaselineOfQAGT.
+	BaselineOfPharoGlamour.
+	BaselineOfPharoGT.
+	BaselineOfManifest.
+	BaselineOfDependencyAnalyzer.
+	BaselineOfQualityAssistant.
+	BaselineOfReflectivity.
+	BaselineOfSmartSuggestions.
+	BaselineOfFuzzyMatcher.
+	BaselineOfZodiac.
+	BaselineOfReflectionMirrors.
+	BaselineOfGeneralHelp.
+	BaselineOfShout.
+	BaselineOfKernelTests.
+	BaselineOfBlueInk.
+	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
 	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
@@ -330,6 +356,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  (self packagesOfGroupNamed: 'CoreBrowser' on: BaselineOfCalypso ).
 	packages := packages ,  (self packagesOfGroupNamed: 'CoreEnvironment' on: BaselineOfCalypso ).
 	packages := packages ,  #('Calypso-SystemTools-Core').
+	packages := packages ,  (BaselineOfMetacello packagesOfGroupNamed: 'Tests').
+	
 
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
