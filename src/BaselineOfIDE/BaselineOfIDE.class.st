@@ -117,62 +117,35 @@ BaselineOfIDE >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 		
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
-		
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
-
 		spec baseline: 'Shift' with: [
-			spec loads: 'shift-tests'. 
-			spec repository: repository
-		].
-
+			spec repository: repository; loads: 'shift-tests'].
 		spec baseline: 'Traits' with: [
-			spec loads: 'traits-tests'. 
-			spec repository: repository
-		].
-	
+			spec repository: repository; loads: 'traits-tests' ].
 		spec baseline: 'Slot' with: [
-			spec loads: 'slot-tests'. 
-			spec repository: repository
-		].
-
+			spec repository: repository; loads: 'slot-tests' ].
 		spec baseline: 'Clap' with: [ spec repository: repository ].
-	
 		spec baseline: 'SUnit' with: [
-			spec loads: 'Tests'. 
-			spec repository: repository
-		].
-		
+			spec repository: repository; loads: 'Tests' ].
 		spec baseline: 'BlueInk' with: [ 
-			spec repository: repository; loads: #('Core'). ].
+			spec repository: repository; loads: #('Core') ].
 		
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		
-		spec package: 'Metacello-TestsMCResources'.
-		spec package: 'Metacello-TestsCore'.
-		spec package: 'Metacello-TestsCommonMC'.
-		spec package: 'Metacello-TestsMC'.	"standalone"
-		spec package: 'Metacello-TestsMCCore'.	"standalone"
-		spec package: 'Metacello-TestsPlatform'.	"standalone"
-		spec package: 'Metacello-TestsReference'.	"standalone"
-		spec package: 'Metacello-Gitlab-Tests'.
-
+		spec baseline: 'Metacello' with: [ 
+			spec repository: repository; loads: #('Tests') ].
 		spec package: 'MonticelloGUI-Tests'.
-
 		spec baseline: 'BlueInk' with: [ 
 			spec repository: repository; loads: #('Extras' 'Tests'). ].
-	
 		spec baseline: 'KernelTests' with: [ spec repository: repository ].
-					
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-
 		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
 		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
-		
 		spec baseline: 'QAGT' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
@@ -181,9 +154,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
-
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
-
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
@@ -193,87 +164,10 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring2' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
-
 		spec baseline: 'Calypso' with: [ 
-			spec
-				repository: repository;
-				loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
-
+			spec repository: repository; loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
       spec baseline: 'Ring' with: [spec repository: repository].
 	].
-
-]
-
-{ #category : #baseline }
-BaselineOfIDE >> groups: spec [ 
-    
-spec group: 'Mandatory-Group' with: #(
-	'Fuel-Tools-Pharo'	"required by GT-Debugger HudsonBuildTools20"
-	'Network-Tests'		"required by Multilingual-Tests"
-	'Network-Mail-Tests'	"previously part of Network-Tests"
-	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
-). 
-
-spec group: 'Metacello-Tests-Group' with: #(
-	'Metacello-TestsMCResources'
-	'Metacello-TestsCore'
-	'Metacello-TestsCommonMC'
-	'Metacello-TestsMC'	
-	'Metacello-TestsMCCore'	
-	'Metacello-TestsPlatform'	
-	'Metacello-TestsReference'
-	'Metacello-Gitlab-Tests'
-).
-
-spec group: #default with: #(
-	'BasicTools'	"dependency"
-	'Athens'
-	'Flashback'
-	'Clap'
-	
-	'Mandatory-Group'
-
-	'BlueInk'
-	'KernelTests'
-
-	'Shout'
-
-	"standalone:" 
-	'Metacello-Tests-Group'		 
-	'GeneralHelp'
-	'ReflectionMirrors'
-	
-	'FuzzyMatcher'	
-	'QAGT'
-
-	"standalone but dependent:"
-	'OSWindow'
-	'Refactoring'
-	'Catalog'
-	'Epicea'
-	'Misc'
-	'GeneralTests'
-	'Zodiac'
-	'SortFunctions'	
-	'ReferenceFinder'
-	
-	'BaselineOfPharoBootstrap'
-	'BaselineOfMonticello'
-	'BaselineOfMetacello'
-	'BaselineOfTelePharoSupport'
-	
-	"Importing tests of Shift"
-	'Shift'
-	"Importing tests of Traits"
-	'Traits'
-	'Slot'
-	
-	'Refactoring2'
-	'ClassParser'
-	
-	'Calypso'
-	'Ring'
-).
 
 ]
 
