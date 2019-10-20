@@ -181,7 +181,6 @@ BaselineOfIDE >> baseline: spec [
 
 		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
 		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
-		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		
 		spec baseline: 'QAGT' with: [ spec repository: repository ].
@@ -191,6 +190,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 
