@@ -107,6 +107,8 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.
 	Smalltalk cleanOutUndeclared. 
+	
+	CompletionSorter register.
 
 	Author reset.
 
