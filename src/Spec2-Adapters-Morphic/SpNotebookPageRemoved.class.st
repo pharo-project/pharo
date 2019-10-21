@@ -2,7 +2,8 @@ Class {
 	#name : #SpNotebookPageRemoved,
 	#superclass : #SpNotebookPageAnnouncement,
 	#instVars : [
-		'newIndex'
+		'newIndex',
+		'tabs'
 	],
 	#category : #'Spec2-Adapters-Morphic-Notebook'
 }
@@ -15,4 +16,14 @@ SpNotebookPageRemoved >> newIndex [
 { #category : #accessing }
 SpNotebookPageRemoved >> newIndex: anObject [
 	newIndex := anObject
+]
+
+{ #category : #accessing }
+SpNotebookPageRemoved >> tabs [
+	^ tabs
+]
+
+{ #category : #accessing }
+SpNotebookPageRemoved >> tabs: anObject [
+	tabs := anObject
 ]
