@@ -139,7 +139,9 @@ Pragma >> argumentNamed: aSymbol [
 { #category : #'accessing-pragma' }
 Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
 	"Answer the argument of the pragma after the keyword given as parameter.
-	If none, return the result of the block given as parameter."
+	If none, return the result of the block given as parameter.
+	
+	I am more readable than #argumentAt: but also slower."
 
 	^ self argumentAt:
 		(self selector keywords
