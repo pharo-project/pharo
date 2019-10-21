@@ -101,7 +101,7 @@ EpLostChangesDetector >> lostChanges [
 	"Then, there are lost events"
 	entries := freshLog priorEntriesFrom: freshLog headReference upTo: lastSessionHeadReference.
 
-	^ entries ifNotEmpty: [ entries allButLast "reject lastSessionHeadReference's change"]
+	^ entries ifNotEmpty: [ entries allButLast reversed ]
 ]
 
 { #category : #accessing }
