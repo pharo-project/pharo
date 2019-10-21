@@ -10,7 +10,6 @@ Class {
 	#superclass : #MalGraphAlgorithm,
 	#instVars : [
 		'previousRanks',
-		'currentRank',
 		'rootNodes',
 		'leafNodes',
 		'maxIterations'
@@ -30,20 +29,17 @@ MalLongestPath >> computeRootNodes [
 
 { #category : #computing }
 MalLongestPath >> computeStep [
-	| nodesToManage |
-	self isCompleted
-		ifFalse: [ 
-			currentRank := OrderedCollection new.
-			nodesToManage := self nodes reject: [ :node | previousRanks includes: node ].
-			nodesToManage
-				do: [ :node | 
-					(previousRanks includesAll: node previousNodes)
-						ifTrue: [ 
-							currentRank add: node.
-							node pathWeight: (node previousNodes max: [ :maxNode | maxNode pathWeight ]) + 1 ] ].
-			previousRanks addAll: currentRank.
-			maxIterations := maxIterations -1.
-			self computeStep ]
+	| currentRank |
+	self isCompleted ifTrue: [ ^ self ].
+	currentRank := OrderedCollection new.
+	(self nodes difference: previousRanks)
+		select: [ :node | previousRanks includesAll: node previousNodes ]
+		thenDo: [ :node | 
+			currentRank add: node.
+			node pathWeight: (node previousNodes max: [ :maxNode | maxNode pathWeight ]) + 1 ].
+	previousRanks addAll: currentRank.
+	maxIterations := maxIterations - 1.
+	self computeStep
 ]
 
 { #category : #configuration }
@@ -54,6 +50,7 @@ MalLongestPath >> edgeClass [
 { #category : #initialization }
 MalLongestPath >> initialize [
 	super initialize.
+	maxIterations := -1.
 	previousRanks := OrderedCollection new
 ]
 
@@ -65,7 +62,7 @@ MalLongestPath >> initializeRootNodes [
 
 { #category : #testing }
 MalLongestPath >> isCompleted [
-	maxIterations = 0
+	maxIterations isZero
 		ifTrue: [ self error: 'Algorithm should be finished by now...'.
 			^ true ].
 	^ (self leafNodes anySatisfy: [ :node | node pathWeight = Float infinity ]) not
@@ -101,6 +98,7 @@ MalLongestPath >> rootNodes: aCollectionOfNodes [
 
 { #category : #running }
 MalLongestPath >> run [
+	self ensureNodesAreSorted.
 	self initializeRootNodes.
 	self computeLeafNodes.
 	previousRanks addAll: self rootNodes.

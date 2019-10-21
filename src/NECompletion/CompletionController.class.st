@@ -6,8 +6,3 @@ Class {
 	#superclass : #NECController,
 	#category : #'NECompletion-New'
 }
-
-{ #category : #private }
-CompletionController >> contextClass [
-	^ CompletionContext 
-]

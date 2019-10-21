@@ -2007,6 +2007,7 @@ StringTest >> testWithSqueakLineEndings [
 		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		(WideString with: 403 asCharacter with: Character lf) -> (WideString with: 403 asCharacter with: Character cr).
 	} do: [ :each |
 		self assert: each key withSqueakLineEndings equals: each value ]
 ]
@@ -2027,6 +2028,7 @@ StringTest >> testWithUnixLineEndings [
 		'abc', String crlf, String crlf, 'abc' -> ('abc', String lf, String lf, 'abc').
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
+		(WideString with: 403 asCharacter with: Character cr) -> (WideString with: 403 asCharacter with: Character lf).
 	} do: [ :each |
 		self assert: each key withUnixLineEndings equals: each value ]
 ]

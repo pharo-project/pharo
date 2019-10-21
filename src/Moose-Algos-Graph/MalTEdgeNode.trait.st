@@ -3,25 +3,25 @@ Trait {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #edges }
 MalTEdgeNode >> from: aNode edge: anEdge [
 
 	self previousEdges add: anEdge
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #edges }
 MalTEdgeNode >> nextEdges [
 
 	self explicitRequirement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #edges }
 MalTEdgeNode >> previousEdges [
 
 	self explicitRequirement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #edges }
 MalTEdgeNode >> to: aNode edge: anEdge [
 
 	self nextEdges add: anEdge

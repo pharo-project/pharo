@@ -9,12 +9,12 @@ Class {
 }
 
 { #category : #'accessing platform' }
-CairoLibrary >> macModuleName [
+CairoLibrary >> macLibraryName [
 	^ 'libcairo.2.dylib'
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> unix32ModuleName [
+CairoLibrary >> unix32LibraryName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
 	Packages such as snapcraft can also change the path.
@@ -31,7 +31,7 @@ CairoLibrary >> unix32ModuleName [
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> unix64ModuleName [
+CairoLibrary >> unix64LibraryName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
 	Packages such as snapcraft can also change the path.
@@ -48,13 +48,13 @@ CairoLibrary >> unix64ModuleName [
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> unixModuleName [
+CairoLibrary >> unixLibraryName [
 	"Backward compatibility"
-	^ self unix32ModuleName
+	^ self unix32LibraryName
 		
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> win32ModuleName [ 
+CairoLibrary >> win32LibraryName [ 
 	^ 'libcairo-2.dll'
 ]

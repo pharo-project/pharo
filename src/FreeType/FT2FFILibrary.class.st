@@ -137,17 +137,17 @@ FT2FFILibrary class >> translateErrorCode: aCode [
 ]
 
 { #category : #'accessing platform' }
-FT2FFILibrary >> macModuleName [ 
+FT2FFILibrary >> macLibraryName [ 
 	^ 'libfreetype.dylib'
 ]
 
 { #category : #'accessing platform' }
-FT2FFILibrary >> unixModuleName [
+FT2FFILibrary >> unixLibraryName [
 	^ 'libfreetype.so.6'
 ]
 
 { #category : #'accessing platform' }
-FT2FFILibrary >> win32ModuleName [
+FT2FFILibrary >> win32LibraryName [
 	#('libfreetype.dll' 'libfreetype-6.dll') 
 		detect: [ :each | (FileLocator vmDirectory / each) exists ]
 		ifFound: [ :each | ^ each ].

@@ -7,12 +7,12 @@ Class {
 	#instVars : [
 		'source',
 		'position',
-		'theClass',
 		'completionToken',
 		'model',
 		'ast',
 		'node',
-		'isWorkspace'
+		'isWorkspace',
+		'class'
 	],
 	#category : #'NECompletion-New'
 }
@@ -39,7 +39,7 @@ CompletionContext >> completionToken [
 CompletionContext >> createModel [
 	self parseSource.
 	node := ast nodeForOffset: position.
-  ^ (CompletionModel new node: node) clazz: theClass
+	^ CompletionModel new node: node
 ]
 
 { #category : #accessing }
@@ -49,10 +49,9 @@ CompletionContext >> model [
 
 { #category : #action }
 CompletionContext >> narrowWith: aString [
-	"method borrowed from NECContext to make the completion plugging work"
 	completionToken := aString.
 	model := self createModel.
-	model narrowWith: aString.
+	model narrowWith: aString
 ]
 
 { #category : #parsing }
@@ -64,17 +63,10 @@ CompletionContext >> parseSource [
 	ast methodNode 
 		compilationContext: 
 			(Smalltalk compiler compilationContextClass new
-             class: theClass;forSyntaxHighlighting: true).
+             class: class;forSyntaxHighlighting: true).
 		
-	ast doSemanticAnalysisIn: theClass.
+	ast doSemanticAnalysisIn: class.
 	TypingVisitor new visitNode: ast
-]
-
-{ #category : #accessing }
-CompletionContext >> receiverClass [
-	node isMessage ifFalse: [ ^nil ].
-	^node receiver propertyAt: #type ifAbsent: [ nil ] .
-
 ]
 
 { #category : #'initialize-release' }
@@ -84,7 +76,7 @@ CompletionContext >> setController: aECController class: aClass source: aString 
 		ifNotNil: [ aECController isScripting ]
 		ifNil: [ false ].
 
-	theClass := aClass. 
+	class := aClass. 
 	source := aString.
 	position := anInteger
 ]

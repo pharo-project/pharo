@@ -111,24 +111,6 @@ ReAbstractCritique >> description [
 	^ rule rationale
 ]
 
-{ #category : #'gt-extension' }
-ReAbstractCritique >> gtInspectorDescriptionIn: composite [
-	<gtInspectorPresentationOrder: 1>
-
-	^ composite text
-		title: 'Description';
-		display: [ self description ]
-]
-
-{ #category : #'gt-extension' }
-ReAbstractCritique >> gtInspectorSourceCodeIn: composite [
-	<gtInspectorPresentationOrder: 0>
-
-	sourceAnchor gtInspectorAnchorIn: composite
-	
-		
-]
-
 { #category : #actions }
 ReAbstractCritique >> guidedBan [
 
@@ -192,15 +174,6 @@ ReAbstractCritique >> providesChange [
 { #category : #accessing }
 ReAbstractCritique >> rule [
 	^ rule
-]
-
-{ #category : #'gt-extension' }
-ReAbstractCritique >> spotterPreviewRationaleIn: aComposite [
-	<spotterPreview: 5>
-	aComposite text
-		title: [ self title ];
-		display: [ self description ];
-		entity: self
 ]
 
 { #category : #accessing }

@@ -10,8 +10,8 @@ Class {
 		'requestor',
 		'sender',
 		'signature',
-		'module',
-		'functionResolutionStrategies'
+		'functionResolutionStrategies',
+		'library'
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -66,7 +66,7 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	
 	externalFunction := ExternalLibraryFunction
 		name: functionSpec functionName
-		module: self moduleName
+		module: self libraryName
 		callType: self callType
 		returnType: functionSpec returnType externalTypeWithArity
 		argumentTypes: (functionSpec arguments collect: #externalTypeWithArity).
@@ -132,29 +132,29 @@ FFICalloutMethodBuilder >> initializeCalloutAPI: aCalloutAPI [
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilder >> method [
-	^ self sender method
+FFICalloutMethodBuilder >> library [
+	^ library
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilder >> module [ 
-	^ module
-]
-
-{ #category : #accessing }
-FFICalloutMethodBuilder >> module: moduleNameOrLibraryClass [ 
+FFICalloutMethodBuilder >> library: aLibrary [
 	"A module can be a string with a path to the library or a reference to a class who is child 
 	 of FFILibrary.
 	 Example: 'libc' or LibC"
-	module := moduleNameOrLibraryClass
+	library := aLibrary
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilder >> moduleName [
+FFICalloutMethodBuilder >> libraryName [
 	"Answer the module name, who can come from a string with the path to the module or a 
 	 reference to a class who is child of FFILibrary"
-	self module ifNil: [ ^ nil ].
-	^ self module asFFILibrary moduleName
+	self library ifNil: [ ^ nil ].
+	^ self library asFFILibrary libraryName
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> method [
+	^ self sender method
 ]
 
 { #category : #private }

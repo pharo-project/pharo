@@ -61,6 +61,12 @@ OCTempVariable >> indexFromIR [
 	^index ifNil: [index := scope indexFromIRForVarNamed: name]
 ]
 
+{ #category : #debugging }
+OCTempVariable >> indexInTempVectorFromIR: aName [
+	"if I am storing  temp vector, return the index of var name"
+	^(scope node irInstruction tempVectorNamed: name) indexForVarNamed: aName
+]
+
 { #category : #initialization }
 OCTempVariable >> initialize [
 	super initialize.

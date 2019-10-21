@@ -7,11 +7,6 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #operations }
-NECClassVarEntry >> guessTypeWith: anECContext [ 
-	^ anECContext guessClassVarClass: contents
-]
-
 { #category : #accessing }
 NECClassVarEntry >> label [
 	^ 'class variable'

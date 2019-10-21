@@ -92,12 +92,6 @@ ReSettings class >> showErrorsSettingsOn: aBuilder [
 		parent: #qualityAssistant.
 ]
 
-{ #category : #properties }
-ReSettings class >> spotterExtMethods [
-	^ GTSpotter spotterExtendingMethods select: [ :m |
-		m compiledMethod package = #Renraku asPackage ]
-]
-
 { #category : #'settings-accessing' }
 ReSettings class >> spotterPlugin [
 	

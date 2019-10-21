@@ -4,6 +4,11 @@ Tests for FFICalloutAPI
 Class {
 	#name : #FFICalloutAPITest,
 	#superclass : #TestCase,
+	#instVars : [
+		'senderCtx',
+		'uffiCtx',
+		'lastUffiCtx'
+	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
 
@@ -118,9 +123,32 @@ FFICalloutAPITest >> runCase [
 ]
 
 { #category : #running }
-FFICalloutAPITest >> tearDown [
-	
+FFICalloutAPITest >> setUp [
+
+	super setUp.
 	self resetFFIMethods.
+	senderCtx := Context
+		sender: nil
+		receiver: nil
+		method: Object>>#yourself
+		arguments: #().
+	
+	uffiCtx := Context
+		sender: senderCtx
+		receiver: nil
+		method: Object>>#ffiCall:
+		arguments: #(1).
+		
+	lastUffiCtx := Context
+		sender: uffiCtx
+		receiver: nil
+		method: Object>>#ffiCall:options:
+		arguments: #(1 2).
+]
+
+{ #category : #running }
+FFICalloutAPITest >> tearDown [
+	FFICallbackFunctionResolution reset.
 	super tearDown.
 ]
 
@@ -372,6 +400,23 @@ FFICalloutAPITest >> testPrintString [
 	self assert: buffer asString equals: 'Hello World!'
 ]
 
+{ #category : #'tests context' }
+FFICalloutAPITest >> testSenderLookupsMethodInSenderChain [
+	| api |
+	
+	api := FFICalloutAPI inUFFIContext: uffiCtx.
+	self assert: api senderContext equals: senderCtx
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testSenderLookupsMethodInSenderChainWithManyUFFIMethods [
+	| api |
+	
+	api := FFICalloutAPI inUFFIContext: lastUffiCtx.
+
+	self assert: api senderContext equals: senderCtx
+]
+
 { #category : #'tests pointer' }
 FFICalloutAPITest >> testVoidPointer [
 	| result dest |
@@ -383,4 +428,34 @@ FFICalloutAPITest >> testVoidPointer [
 		
 	self deny: result isNull.	
 	self assert: dest asString equals: 'Hello, World'
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testuFFIMethodSelectorInNonMarkedContextDoesNotFindAMethodEnterSelector [
+	| api selector |
+	
+	api := FFICalloutAPI inUFFIContext: senderCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: nil
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testuFFIMethodSelectorLookupsFirstMethodInSenderChain [
+	| api selector |
+	
+	api := FFICalloutAPI inUFFIContext: lastUffiCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: uffiCtx method selector
+]
+
+{ #category : #'tests context' }
+FFICalloutAPITest >> testuFFIMethodSelectorLookupsMethodInSenderChain [
+	| api selector |
+	
+	api := FFICalloutAPI inUFFIContext: uffiCtx.
+	selector := api uFFIEnterMethodSelector.
+
+	self assert: selector equals: uffiCtx method selector
 ]

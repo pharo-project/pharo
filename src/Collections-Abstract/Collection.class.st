@@ -794,10 +794,10 @@ Collection >> identityIncludes: anObject [
 { #category : #testing }
 Collection >> ifEmpty: aBlock [
 	"Evaluate the given block, answering its value if the receiver is empty, otherwise answer the receiver."
-	
+
 	"Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: ['As yet unclassified'])"
 
-	^ self isEmpty 
+	^ self isEmpty
 		ifTrue: [ aBlock value ]
 		ifFalse: [ self ]
 ]
@@ -805,10 +805,11 @@ Collection >> ifEmpty: aBlock [
 { #category : #testing }
 Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise"
-	" If the notEmptyBlock has an argument, eval with the receiver as its argument"
+	"If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
-	self isEmpty ifTrue: [ ^emptyBlock value ].
-	^notEmptyBlock cull: self
+	^ self isEmpty
+		ifTrue: [ emptyBlock value ]
+		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -816,10 +817,9 @@ Collection >> ifNotEmpty: aBlock [
 	"Evaluate the given block with the receiver as argument, answering its value
     unless the receiver is empty, in which case answer the receiver."
 
-    ^self isEmpty
-          ifTrue: [self]
-          ifFalse: [aBlock cull: self] 
-
+	^ self isEmpty
+		ifTrue: [ self ]
+		ifFalse: [ aBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -827,8 +827,9 @@ Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise
 	 If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
-	self isEmpty ifFalse: [ ^notEmptyBlock cull: self ].
-	^emptyBlock value
+	^ self isEmpty
+		ifTrue: [ emptyBlock value ]
+		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -976,40 +977,6 @@ Collection >> occurrencesOf: anObject [
 	tally := 0.
 	self do: [:each | anObject = each ifTrue: [tally := tally + 1]].
 	^tally
-]
-
-{ #category : #enumerating }
-Collection >> piecesCutWhere: binaryBlock [
-	"Answer substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-	"( #(1 2 3 1 6 1 2 3 4) piecesCutWhere: [ :a :b | a = 1 and: [ b = 2]]) asArray >>> #(#(1) #(2 3 1 6 1) #(2 3 4))"
-	| pieces |
-	pieces := OrderedCollection new.
-	self 
-		piecesCutWhere: binaryBlock
-		do: [ :piece | pieces add: piece ].
-	^pieces
-
-   "'Now is the time for all good people to come to the aid of the cause of world peace.  It is just fine, even desirable, to love your country, if that means wanting it to play a beneficial role in the course of world events and be the best possible example of a good society.  But if it means wanting dominion over the rest of the world, it is not love but defensiveness or self-glorification, and will lead only to oblivion.'  piecesCutWhere: [:a :b| a = $. and: [b isSeparator]]"
-]
-
-{ #category : #enumerating }
-Collection >> piecesCutWhere: binaryBlock do: pieceBlock [
-	"Evaluate pieceBlock with substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-
-	| size lastCut this next |
-	(size := self size) <= 1 ifTrue:
-		 [size = 1 ifTrue: [pieceBlock value: self].
-		^self].
-	lastCut := 1.
-	this := self at: 1.
-	2 to: size do:
-		[:i|
-		next := self at: i.
-		(binaryBlock value: this value: next) ifTrue:
-			[pieceBlock value: (self copyFrom: lastCut to: i - 1).
-			lastCut := i].
-		this := next].
-	pieceBlock value: (self copyFrom: lastCut to: size)
 ]
 
 { #category : #printing }

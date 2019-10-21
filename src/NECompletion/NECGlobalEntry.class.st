@@ -7,15 +7,6 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #operations }
-NECGlobalEntry >> guessTypeWith: anECContext [ 
-	| globalEntry |
-	globalEntry := anECContext globals at: contents ifAbsent: [^ nil].
-	globalEntry isBehavior ifTrue: [^ globalEntry].
-	globalEntry ifNotNil: [^ globalEntry class].
-	^ nil
-]
-
 { #category : #accessing }
 NECGlobalEntry >> label [
 	^ 'global'

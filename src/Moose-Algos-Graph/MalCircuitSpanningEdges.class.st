@@ -18,7 +18,7 @@ MalCircuitSpanningEdges >> doUnvisitedEdges: aBlock [
 
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 MalCircuitSpanningEdges >> edgeClass [
 
 	^ MalCseEdge 
@@ -67,7 +67,7 @@ MalCircuitSpanningEdges >> initialize [
 
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 MalCircuitSpanningEdges >> nodeClass [
 
 	^ MalDijkstraNode

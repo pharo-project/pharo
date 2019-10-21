@@ -40,8 +40,7 @@ RBGlobalVariableRuleTest >> methodUsesGlobal2 [
 
 { #category : #tests }
 RBGlobalVariableRuleTest >> testTheRuleCanCheckMethodsWithDifferentKindsOfLiterals [
-	self assert: (RBGlobalVariablesUsage new check: self class>>#methodNotUsesGlobal2)
-		isEmpty  
+	self assertEmpty: (RBGlobalVariablesUsage new check: self class >> #methodNotUsesGlobal2)
 ]
 
 { #category : #tests }
@@ -51,7 +50,5 @@ RBGlobalVariableRuleTest >> testTheRuleOnlyDetect2MethodsWithGlobalVariables [
 
 { #category : #tests }
 RBGlobalVariableRuleTest >> testTheRuleOnlyMethodUsesGlobal1And2 [
-	self
-		assert: (self applyingCritiques collect: #selector) asSet
-		equals: {#methodUsesGlobal . #methodUsesGlobal2} asSet
+	self assertCollection: (self applyingCritiques collect: #selector) hasSameElements: {#methodUsesGlobal . #methodUsesGlobal2}
 ]

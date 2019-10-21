@@ -62,6 +62,22 @@ KMPlatformSpecificKeyCombination >> platform: aPlatform [
 	platform := aPlatform
 ]
 
+{ #category : #'accessing platform' }
+KMPlatformSpecificKeyCombination >> platformCharacter [
+
+	^ (self platform = #all or: [ self platform = OSPlatform current platformFamily ])
+		ifTrue: [ self shortcut platformCharacter ]
+		ifFalse: [ nil ]
+]
+
+{ #category : #'accessing platform' }
+KMPlatformSpecificKeyCombination >> platformModifier [
+
+	^ (self platform = #all or: [ self platform = OSPlatform current platformFamily ])
+		ifTrue: [ self shortcut platformModifier ]
+		ifFalse: [ nil ]
+]
+
 { #category : #printing }
 KMPlatformSpecificKeyCombination >> prettyPrintOn: aStream [
 

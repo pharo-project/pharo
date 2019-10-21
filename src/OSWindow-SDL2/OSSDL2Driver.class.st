@@ -131,7 +131,9 @@ OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 	anSDLEvent ifNil: [ ^ self ].
 
 	((anSDLEvent isKindOf: SDL_KeyDownEvent)
-		and: [ (anSDLEvent keysym mod anyMask: 1344) and: [ anSDLEvent keysym scancode = 55 ] ])
+		and: [ ((anSDLEvent keysym mod bitAnd: 16r200) = 0) "ignore all if AltGr is pressed" 
+		and: [(anSDLEvent keysym mod anyMask: 1344) 
+		and: [ anSDLEvent keysym scancode = 55 ] ]])
 		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
 ]
 

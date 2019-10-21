@@ -229,10 +229,11 @@ DrTests >> initializePluginsDropList [
 DrTests >> initializePresenter [
 	super initializePresenter.
 	self resultViewsDropList
-		whenSelectedItemChangedDo: [ :resultTreeViewOrNil |
-			resultTreeViewOrNil ifNotNil: [ 
-				resultsList roots: (resultTreeViewOrNil resultTreeFor: pluginResult) subResults ] ].
-	self pluginsDropList selectedIndex: 1
+		whenSelectedItemChangedDo: [ :resultTreeViewOrNil | 
+			resultTreeViewOrNil
+				ifNotNil: [ resultsList
+						roots: (resultTreeViewOrNil resultTreeFor: pluginResult) subResults ] ].
+	self pluginsDropList selectIndex: 1
 ]
 
 { #category : #initialization }
@@ -453,21 +454,16 @@ DrTests >> updateResultLabel [
 DrTests >> updateResultViewsDropList [
 	| newPragmas |
 	newPragmas := self currentPlugin resultTreeViews.
-		
-	(self resultViewsDropList listItems = newPragmas and: [ newPragmas isNotEmpty ]) ifTrue: [ 
-		self resultViewsDropList selectedIndex: self resultViewsDropList selectedIndex. "Trigger action attached to selection change."
-		^ self ].
-	
+	(self resultViewsDropList listItems = newPragmas
+		and: [ newPragmas isNotEmpty ])
+		ifTrue: [ self resultViewsDropList
+				selectedIndex: self resultViewsDropList selectedIndex.	"Trigger action attached to selection change."
+			^ self ].
 	self resultViewsDropList selectedItem
 		ifNotNil: [ self resultViewsDropList resetSelection ].
-	
-	self resultViewsDropList
-		items: newPragmas.
-	
+	self resultViewsDropList items: newPragmas.
 	newPragmas isNotEmpty
-		ifTrue: [ 
-			self resultViewsDropList
-				selectedIndex: 1 ]
+		ifTrue: [ self resultViewsDropList selectIndex: 1 ]
 ]
 
 { #category : #api }

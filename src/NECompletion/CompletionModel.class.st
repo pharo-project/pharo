@@ -5,7 +5,6 @@ Class {
 	#name : #CompletionModel,
 	#superclass : #Object,
 	#instVars : [
-		'clazz',
 		'node',
 		'completionToken',
 		'entries',
@@ -29,23 +28,7 @@ CompletionModel class >> sorter: aSorter [
 	
 ]
 
-{ #category : #accessing }
-CompletionModel >> arrowString [
-
- 	^ completionToken
-]
-
-{ #category : #accessing }
-CompletionModel >> clazz [
-	^ clazz
-]
-
-{ #category : #accessing }
-CompletionModel >> clazz: anObject [
-	clazz := anObject
-]
-
-{ #category : #accessing }
+{ #category : #entries }
 CompletionModel >> commonPrefix [
 	"Longest match among the typed text and all menu entries"
 
@@ -61,7 +44,7 @@ CompletionModel >> commonPrefix [
 	^ seed first: prefixLength.
 ]
 
-{ #category : #accessing }
+{ #category : #entries }
 CompletionModel >> completionAt: aNumber [
 	| entry |
 	
@@ -74,36 +57,41 @@ CompletionModel >> completionAt: aNumber [
 ]
 
 { #category : #accessing }
+CompletionModel >> completionToken [
+
+ 	^ completionToken
+]
+
+{ #category : #accessing }
 CompletionModel >> entries [
 	^entries ifNil: [entries := self initEntries ].
 ]
 
-{ #category : #accessing }
+{ #category : #entries }
 CompletionModel >> entryCount [
 	^ self entries size
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CompletionModel >> hasMessage [
 	^ self message notNil
 ]
 
-{ #category : #accessing }
+{ #category : #entries }
 CompletionModel >> initEntries [
 	| producer suggestionsList |
 	producer := CompletionProducerVisitor new.
-	self sorter: CompletionModel sorter.
-	producer completionContext: clazz.
+	self sorter: self class sorter.
 	suggestionsList := self sortList: (producer completionListForNode: node).
 	^ suggestionsList collect: [ :each | CompletionEntry contents: each node: node ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 CompletionModel >> initialize [ 
 	completionToken := ''
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CompletionModel >> isEmpty [ 
 	^ self entries isEmpty
 ]
@@ -115,7 +103,7 @@ CompletionModel >> message [
 		ifFalse: [nil]
 ]
 
-{ #category : #action }
+{ #category : #accessing }
 CompletionModel >> narrowString [
 
  	^ completionToken
@@ -123,9 +111,11 @@ CompletionModel >> narrowString [
 
 { #category : #action }
 CompletionModel >> narrowWith: aString [ 
-	completionToken := aString ifNil: [  '' ].
-	node narrowWith: completionToken.
-	entries := nil
+	completionToken := aString ifNil: [ '' ].
+	entries := entries 
+		ifNil: [ self initEntries ]
+		ifNotNil: [  entries select: [ :each | each contents beginsWith: completionToken  ] ]
+
 ]
 
 { #category : #accessing }
@@ -138,23 +128,23 @@ CompletionModel >> node: anObject [
 	node := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CompletionModel >> notEmpty [
 	^ self entries isNotEmpty
 ]
 
-{ #category : #accessing }
+{ #category : #sorting }
 CompletionModel >> sortList: aList [
 	"this is where the sorting strategy is set"
-	^ sorter sortCompletionList: aList asOrderedCollection
+	^ sorter sortCompletionList: aList
 ]
 
-{ #category : #accessing }
+{ #category : #sorting }
 CompletionModel >> sorter [
 	^ sorter
 ]
 
-{ #category : #accessing }
+{ #category : #sorting }
 CompletionModel >> sorter: aSorter [
 	"the functionality allowing to hook up the sorter"
 	sorter := aSorter

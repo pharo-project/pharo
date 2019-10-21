@@ -49,11 +49,6 @@ GLMSmalltalkCodeModel >> doItReceiver [
 	^ self glamourPresentation doItReceiver 
 ]
 
-{ #category : #completion }
-GLMSmalltalkCodeModel >> guessTypeForName: aString [ 
-	^ nil
-]
-
 { #category : #accessing }
 GLMSmalltalkCodeModel >> hasBindingOf: aSymbol [
 	^ self variableBindings includesKey: aSymbol
