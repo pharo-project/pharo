@@ -197,11 +197,6 @@ ClyTextEditorToolMorph >> findAnyString: strings in: text [
 ]
 
 { #category : #'rubric interaction model' }
-ClyTextEditorToolMorph >> guessTypeForName: aString [
-	^nil
-]
-
-{ #category : #'rubric interaction model' }
 ClyTextEditorToolMorph >> hasBindingOf: aString [ 
 	^self selectedClassOrMetaClass hasBindingOf: aString
 ]
