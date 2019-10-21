@@ -11,12 +11,13 @@ Class {
 
 { #category : #'building suites' }
 KMShortcutPrinterTest class >> testParameters [
-	| cmd ctrl alt shift |
-	
+	| cmd ctrl alt shift enter |
+
 	cmd :=	 (Character value: 16r2318) asString.
 	alt := (Character value: 16r2325) asString. 
 	ctrl := (Character value: 16r2303) asString. 
 	shift := (Character value: 16r21E7) asString.
+	enter := (Character value: 16r23ce) asString.
 
 	^ super testParameters
 		"linux"
@@ -28,6 +29,10 @@ KMShortcutPrinterTest class >> testParameters [
 			#platform -> UnixPlatform new. 
 			#shortcut -> $n shift alt control command. 
 			#result -> 'Shift+Alt+Ctrl+Cmd+N' };
+		addCase: { 
+			#platform -> UnixPlatform new. 
+			#shortcut -> Character cr shift. 
+			#result -> 'Shift+Enter' };
 		"windows"
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n command. #result -> 'Cmd+N' };
 		addCase: { #platform -> WinPlatform new. #shortcut -> $n control. #result -> 'Ctrl+N' };
@@ -37,6 +42,10 @@ KMShortcutPrinterTest class >> testParameters [
 			#platform -> WinPlatform new. 
 			#shortcut -> $n shift alt control command. 
 			#result -> 'Shift+Alt+Ctrl+Cmd+N' };
+		addCase: { 
+			#platform -> WinPlatform new. 
+			#shortcut -> Character cr shift. 
+			#result -> 'Shift+Enter' };
 		"mac"
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> $n command. #result -> (cmd, 'N') };
 		addCase: { #platform -> MacOSPlatform new. #shortcut -> $n control. #result -> (ctrl, 'N') };
@@ -45,7 +54,11 @@ KMShortcutPrinterTest class >> testParameters [
 		addCase: { 
 			#platform -> MacOSPlatform new. 
 			#shortcut -> $n shift alt control command. 
-			#result -> (shift, alt, ctrl, cmd, 'N') }
+			#result -> (shift, alt, ctrl, cmd, 'N') };
+		addCase: { 
+			#platform -> MacOSPlatform new. 
+			#shortcut -> Character cr shift. 
+			#result -> (shift, enter) }			
 ]
 
 { #category : #accessing }
