@@ -6,5 +6,5 @@ FFILibrary >> moduleName [
 		deprecated: 'Please use #libraryName instead'
 		transformWith: '`@receiver moduleName' -> '`@receiver libraryName'.
 
-	^self moduleName
+	^self libraryName
 ]
