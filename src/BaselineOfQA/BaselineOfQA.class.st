@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfQAGT,
+	#name : #BaselineOfQA,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfQA
 }
 
 { #category : #baselines }
-BaselineOfQAGT >> baseline: spec [
+BaselineOfQA >> baseline: spec [
 	<baseline>
 	
 	| repository | 

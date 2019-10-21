@@ -331,7 +331,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfCatalog.
 	BaselineOfRefactoring.
 	BaselineOfOSWindow.
-	BaselineOfQAGT.
+	BaselineOfQA.
 	BaselineOfPharoGlamour.
 	BaselineOfPharoGT.
 	BaselineOfManifest.
