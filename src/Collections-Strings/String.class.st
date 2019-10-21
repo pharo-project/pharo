@@ -2589,25 +2589,32 @@ String >> withInternetLineEndings [
 
 { #category : #'platform conventions' }
 String >> withLineEndings: lineEndingString [
-
-	| stream |
+	"Answer a new instance where all occurrences of CRLF, CR, and LF are substituted with the specified line ending string."
 	
-	stream := nil.
-	self lineIndicesDo: [ :start :endWithoutDelimiters :end |
-		(stream isNil and: [ endWithoutDelimiters ~= end ]) ifTrue: [
-			(self copyFrom: endWithoutDelimiters + 1 to: end) = lineEndingString ifFalse: [
-				stream := WriteStream with: self copy.
-				stream position: start - 1 ]].
-		stream ifNotNil: [
-			stream next: endWithoutDelimiters - start + 1 putAll: self startingAt: start.
-			endWithoutDelimiters = end ifFalse: [
-				stream nextPutAll: lineEndingString ]]].
-	^stream
-		ifNil: [ self ]
-		ifNotNil: [ 
-			stream position = self size
-				ifTrue: [ stream originalContents ]
-				ifFalse: [ stream contents ]]
+	^ self species streamContents: [ :out |
+		| in c |
+		in := self readStream.
+		[ in atEnd ] whileFalse: [
+			c := in next.
+			"CR"
+			c == Character cr ifTrue: [
+				c := in peek.
+				"CR LF"
+				c == Character lf ifTrue: [
+					in next.
+				].
+				out nextPutAll: lineEndingString
+			] ifFalse: [
+				"LF"
+				c == Character lf ifTrue: [
+					out nextPutAll: lineEndingString
+				] ifFalse: [
+					out nextPut: c
+				]
+			]
+		]
+	]
+
 ]
 
 { #category : #converting }
@@ -2664,24 +2671,16 @@ String >> withSeparatorsCompacted [
 
 { #category : #'platform conventions' }
 String >> withSqueakLineEndings [
-	"Assume the string is textual, and that CR, LF, and CRLF are all valid line endings.
-	Replace each occurence with a single CR."
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
 
-	(self includes: Character lf) ifFalse: [ ^self ].
-	(self includes: Character cr) ifFalse: [
-		^self translateWith: String crLfExchangeTable ].
-	^self withLineEndings: String cr
+	^ self withLineEndings: String cr
 ]
 
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
-	"Assume the string is textual, and that CR, LF, and CRLF are all valid line endings.
-	Replace each occurence with a single LF."
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
 
-	(self includes: Character cr) ifFalse: [ ^self ].
-	(self includes: Character lf) ifFalse: [
-		^self translateWith: String crLfExchangeTable ].
-	^self withLineEndings: String lf
+	^ self withLineEndings: String lf
 ]
 
 { #category : #converting }
