@@ -4,7 +4,7 @@ A bottom bar to change the editing mode, switch with/without line numbers and sw
 Class {
 	#name : #RubWorkspaceBar,
 	#superclass : #RubScrolledTextSideRuler,
-	#traits : 'TRubWithWrapPolicy + TRubWithLineNumber',
+	#traits : 'TRubWithWrapPolicy + (TRubWithLineNumber - {#fontToUse})',
 	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
 	#instVars : [
 		'row',
