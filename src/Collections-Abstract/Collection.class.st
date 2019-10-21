@@ -979,40 +979,6 @@ Collection >> occurrencesOf: anObject [
 	^tally
 ]
 
-{ #category : #enumerating }
-Collection >> piecesCutWhere: binaryBlock [
-	"Answer substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-	"( #(1 2 3 1 6 1 2 3 4) piecesCutWhere: [ :a :b | a = 1 and: [ b = 2]]) asArray >>> #(#(1) #(2 3 1 6 1) #(2 3 4))"
-	| pieces |
-	pieces := OrderedCollection new.
-	self 
-		piecesCutWhere: binaryBlock
-		do: [ :piece | pieces add: piece ].
-	^pieces
-
-   "'Now is the time for all good people to come to the aid of the cause of world peace.  It is just fine, even desirable, to love your country, if that means wanting it to play a beneficial role in the course of world events and be the best possible example of a good society.  But if it means wanting dominion over the rest of the world, it is not love but defensiveness or self-glorification, and will lead only to oblivion.'  piecesCutWhere: [:a :b| a = $. and: [b isSeparator]]"
-]
-
-{ #category : #enumerating }
-Collection >> piecesCutWhere: binaryBlock do: pieceBlock [
-	"Evaluate pieceBlock with substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-
-	| size lastCut this next |
-	(size := self size) <= 1 ifTrue:
-		 [size = 1 ifTrue: [pieceBlock value: self].
-		^self].
-	lastCut := 1.
-	this := self at: 1.
-	2 to: size do:
-		[:i|
-		next := self at: i.
-		(binaryBlock value: this value: next) ifTrue:
-			[pieceBlock value: (self copyFrom: lastCut to: i - 1).
-			lastCut := i].
-		this := next].
-	pieceBlock value: (self copyFrom: lastCut to: size)
-]
-
 { #category : #printing }
 Collection >> printElementsOn: aStream [
 	"The original code used #skip:, but some streams do not support that,
