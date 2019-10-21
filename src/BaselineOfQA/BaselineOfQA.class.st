@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfQAGT,
+	#name : #BaselineOfQA,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfQAGT
+	#category : #BaselineOfQA
 }
 
 { #category : #baselines }
-BaselineOfQAGT >> baseline: spec [
+BaselineOfQA >> baseline: spec [
 	<baseline>
 	
 	| repository | 
@@ -13,9 +13,6 @@ BaselineOfQAGT >> baseline: spec [
 	repository := self packageRepositoryURL.	
 	
 		spec for: #'common' do: [
-			spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
-			spec baseline: 'PharoGT' with: [ spec repository: repository ].
-
 			spec package: 'NautilusRefactoring'.
 				
 			spec baseline: 'SmartSuggestions' with: [ spec repository: repository ].

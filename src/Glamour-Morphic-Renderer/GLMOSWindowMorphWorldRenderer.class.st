@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #'OSWindow-Core-Morphic'
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #rendering }

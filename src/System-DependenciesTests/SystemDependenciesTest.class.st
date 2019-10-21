@@ -60,7 +60,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"	
 	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' 'Glamour-Morphic-Widgets' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog' 'ParametrizedTests' 'Deprecated80')
+	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'Deprecated80')
 ]
 
 { #category : #'known dependencies' }
@@ -184,7 +184,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' 'Deprecated80')
+	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' 'Deprecated80')
 ]
 
 { #category : #utilities }
@@ -331,7 +331,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfCatalog.
 	BaselineOfRefactoring.
 	BaselineOfOSWindow.
-	BaselineOfQAGT.
+	BaselineOfQA.
 	BaselineOfPharoGlamour.
 	BaselineOfPharoGT.
 	BaselineOfManifest.

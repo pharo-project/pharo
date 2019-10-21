@@ -36,19 +36,6 @@ Class {
 { #category : #actions }
 BaselineOfIDE >> additionalInitialization [
 
-	self class environment at: #GTGenericStackDebugger ifPresent: [
-	  Smalltalk tools register: GTGenericStackDebugger as: #debugger.
-	  Smalltalk tools registeredDebuggersWithRanks.
-	  Smalltalk tools debuggers add: ((self class environment at: #GTGenericStackDebugger)->3).
-	  Smalltalk tools debuggers add: ((self class environment at: #GTSUnitDebugger)->70).
-	  Smalltalk tools debuggers add: ((self class environment at: #GTBytecodeDebugger)->5).].
-
-	  
-	self class environment at: #GTPlayground ifPresent: [:playground | 
-	  Smalltalk tools register: playground as: #workspace.].
-	self class environment at: #GTInspector ifPresent: [:inspector | 
-	  Smalltalk tools register: inspector as: #inspector.].
-
 	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
@@ -146,10 +133,9 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'GeneralHelp' with: [ spec repository: repository ].
 		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
-		spec baseline: 'QAGT' with: [ spec repository: repository ].
+		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
-		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
@@ -167,6 +153,11 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('FullEnvironment' 'SystemBrowser' 'Tests'). ].
       spec baseline: 'Ring' with: [spec repository: repository].
+
+		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
+		spec baseline: 'PharoGT' with: [ spec repository: repository ].
+		spec baseline: 'Catalog' with: [ spec repository: repository ].
+		spec package: 'Pharo-WelcomeHelp'.
 	].
 
 ]
@@ -215,8 +206,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	
-	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
-
 	Smalltalk cleanOutUndeclared. 
 
 	Stdio stdout 

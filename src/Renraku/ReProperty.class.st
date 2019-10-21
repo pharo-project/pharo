@@ -27,17 +27,6 @@ ReProperty >> entity [
 	^ self sourceAnchor entity
 ]
 
-{ #category : #actions }
-ReProperty >> gtInspectorActions [
-	^ (self actions collect: [ :act | 
-		GLMGenericAction new
-			action: [ act actOnCritic: self ofEntity: self sourceAnchor entity ];
-		icon: act icon;
-		title: act description;
-		yourself ]),
-	super gtInspectorActions
-]
-
 { #category : #accessing }
 ReProperty >> icon [
 

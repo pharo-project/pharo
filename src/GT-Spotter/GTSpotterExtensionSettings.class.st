@@ -14,6 +14,18 @@ Class {
 	#category : #'GT-Spotter-Model'
 }
 
+{ #category : #Renraku }
+GTSpotterExtensionSettings class >> Object_spotterRePropertiesFor [
+
+	^ ReSettings spotterPlugin 
+]
+
+{ #category : #Renraku }
+GTSpotterExtensionSettings class >> Object_spotterRePropertiesFor: aBoolean [
+
+	^ ReSettings spotterPlugin: aBoolean
+]
+
 { #category : #settings }
 GTSpotterExtensionSettings class >> catalogSettingsOn: aBuilder [
 	<systemsettings>
