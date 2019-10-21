@@ -249,7 +249,7 @@ FileSystemStore >> directoryAt: aPath nodesDo: aBlock [
 
 { #category : #public }
 FileSystemStore >> ensureCreateDirectory: aPath [
-	(self isDirectory: aPath) ifTrue: [ ^ self ].
+	((self exists: aPath) and: [ self isDirectory: aPath]) ifTrue: [ ^ self ].
 	self ensureCreateDirectory: aPath parent.
 	self createDirectory: aPath
 ]
