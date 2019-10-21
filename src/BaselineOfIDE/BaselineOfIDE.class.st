@@ -157,6 +157,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'Catalog' with: [ spec repository: repository ].
+		spec package: 'Pharo-WelcomeHelp'.
 	].
 
 ]
