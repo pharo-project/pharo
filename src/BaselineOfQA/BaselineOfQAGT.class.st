@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfQAGT,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfQAGT
+	#category : #BaselineOfQA
 }
 
 { #category : #baselines }
