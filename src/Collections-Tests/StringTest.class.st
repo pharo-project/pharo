@@ -2015,6 +2015,7 @@ StringTest >> testWithSqueakLineEndings [
 { #category : #'tests - internet' }
 StringTest >> testWithUnixLineEndings [
 
+	| original newString |
 	{
 		'abc' -> 'abc'.
 		'abc', String cr -> ('abc', String lf).
@@ -2030,7 +2031,13 @@ StringTest >> testWithUnixLineEndings [
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
 		(WideString with: 403 asCharacter with: Character cr) -> (WideString with: 403 asCharacter with: Character lf).
 	} do: [ :each |
-		self assert: each key withUnixLineEndings equals: each value ]
+		self assert: each key withUnixLineEndings equals: each value ].
+	
+	original :='asa' , String cr , 'asa'.
+	self assert: (original at: 4) equals: Character cr.
+	newString := original withUnixLineEndings.
+	self assert: (original at: 4) equals: Character cr.
+	self assert: (newString at: 4) equals: Character lf.
 ]
 
 { #category : #'tests - converting' }
