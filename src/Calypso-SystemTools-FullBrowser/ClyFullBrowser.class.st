@@ -151,9 +151,6 @@ ClyFullBrowser class >> worldMenuOn: aBuilder [
 	
 	isDefaultBrowser := Smalltalk tools browser = self.
 	(isDefaultBrowser and: [ self environment hasClassNamed: #Nautilus ])
-		ifTrue: [ 
-			target := self environment classNamed: #Nautilus.
-			targetName := target name ]
 		ifFalse: [ 
 			target := self.
 			targetName := 'Calypso' ].
