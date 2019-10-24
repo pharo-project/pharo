@@ -426,7 +426,11 @@ String class >> with: aCharacter [
 String >> < aString [ 
 	"Answer whether the receiver sorts before aString.
 	The collation order is simple ascii (with case differences)."
-
+	" 'abc' < 'def' >>> true"
+	" 'abc' < 'abc' >>> false"
+	" 'def' < 'abc' >>> false"
+	
+	
 	^ (self compare: self with: aString collated: AsciiOrder) = 1
 ]
 
@@ -465,7 +469,13 @@ String >> >= aString [
 
 { #category : #comparing }
 String >> alike: aString [ 
-	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score.  Case is ignored."
+	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score (but see example with 7).  Case is ignored. This method is used to help find mistyped variable names in methods."
+	"('abc' alike: 'abc') >>> 7.
+	('abc' alike: '1') >>> 0.
+	('abc' alike: 'ABC') >>> 7.
+	('abc' alike: 'ab') >>> 3.
+	('abc' alike: 'bbb') >>> 1.
+	('abc' alike: 'xyz') >>> 1."
 
 	| i j k minSize bonus |
 	minSize := (j := self size) min: (k := aString size).
