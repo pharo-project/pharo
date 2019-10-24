@@ -15,7 +15,7 @@ FTTableContainerRowNotHomogeneousMorph >> calculateExactVisibleRows [
 	self table hasDataSource ifFalse: [
 		^ super calculateExactVisibleRows ]. 
 	
-	rowIndex := self table showIndex.
+	rowIndex := self table showIndex max: 1.
 	height := 0.
 	maxHeight := self height.
 	headerRow ifNotNil: [ maxHeight := maxHeight - headerRow height ].	
