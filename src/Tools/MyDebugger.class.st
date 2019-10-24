@@ -1,7 +1,7 @@
 Class {
 	#name : #MyDebugger,
 	#superclass : #Object,
-	#category : #DebuggerSelector
+	#category : #'Tools-Debugger'
 }
 
 { #category : #'opening api' }
@@ -10,8 +10,12 @@ MyDebugger class >> handlesContext: aContext [
 ]
 
 { #category : #'opening api' }
+MyDebugger class >> iAmADebugger [
+	<iAmADebugger>
+]
+
+{ #category : #'opening api' }
 MyDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
-	<debugger>
 	Transcript show: 'Opening MyDebugger'
 ]
 

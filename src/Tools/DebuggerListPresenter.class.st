@@ -5,15 +5,17 @@ Class {
 		'debuggerList',
 		'actionBar'
 	],
-	#category : #DebuggerSelector
+	#category : #'Tools-Debugger'
 }
 
 { #category : #specs }
 DebuggerListPresenter class >> defaultSpec [
-
+	| toolbarHeight |
+	toolbarHeight := 35.
 	^ SpBoxLayout newVertical
 		add: #debuggerList;
-		add: #actionBar.
+		add: #actionBar withConstraints: [:cstr | cstr height: toolbarHeight];
+		yourself.
 ]
 
 { #category : #'world menu' }
@@ -33,14 +35,23 @@ DebuggerListPresenter class >> title [
 
 { #category : #initialization }
 DebuggerListPresenter >> getDebuggerClasses [
-	^ ((PragmaCollector filter: [:prg | prg selector = #'debugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ].
+	^ ((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ].
+]
+
+{ #category : #initialization }
+DebuggerListPresenter >> iconManager [
+	^ Smalltalk ui icons.
 ]
 
 { #category : #initialization }
 DebuggerListPresenter >> initializeWidgets [
-	debuggerList := SpTablePresenter new
+	debuggerList := self newTable
 		addColumn: (SpStringTableColumn title: 'Rank' evaluated: #rank);
 		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: #yourself);
 		items: self getDebuggerClasses.
-	actionBar := SpActionBarPresenter new.
+	actionBar := self newToolBar
+		addItem: (SpToolBarButton new
+			label: 'Browse';
+			icon: (self iconManager iconNamed: #smallFind);
+			action: [  ]).
 ]
