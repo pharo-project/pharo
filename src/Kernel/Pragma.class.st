@@ -129,6 +129,27 @@ Pragma >> argumentAt: anInteger [
 ]
 
 { #category : #'accessing-pragma' }
+Pragma >> argumentNamed: aSymbol [
+	"Answer the argument of the pragma after the keyword given as parameter.
+	If none, raise an error."
+
+	^ self argumentNamed: aSymbol ifNone: [ self error: 'No argument of this name.' ]
+]
+
+{ #category : #'accessing-pragma' }
+Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
+	"Answer the argument of the pragma after the keyword given as parameter.
+	If none, return the result of the block given as parameter.
+	
+	I am more readable than #argumentAt: but also slower."
+
+	^ self argumentAt:
+		(self selector keywords
+			indexOf: aSymbol asMutator
+			ifAbsent: [ ^ aBlockClosure value])
+]
+
+{ #category : #'accessing-pragma' }
 Pragma >> arguments [
 	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
 	
