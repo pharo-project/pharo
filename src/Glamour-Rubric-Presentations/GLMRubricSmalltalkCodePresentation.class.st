@@ -11,19 +11,13 @@ Class {
 	#category : #'Glamour-Rubric-Presentations'
 }
 
-{ #category : #'actions browsing' }
-GLMRubricSmalltalkCodePresentation >> browseIt [
-
-	self announce: (GLMTextEditorRequest for: #browseIt)
-]
-
 { #category : #accessing }
 GLMRubricSmalltalkCodePresentation >> browsingSelectionActions [
 
 	^ { (GLMGenericAction new) 
 				title: 'Browse it';
 				action: [ :aPresentation |
-					aPresentation browseIt  ]; 
+					aPresentation browseFullClass  ]; 
 				shortcut: $b; 
 				category: 'Code search...';
 				yourself.

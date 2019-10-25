@@ -48,7 +48,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 		do: [ :target | target editor querySymbol: nil ]
 		description: 'Query symbol'.
 	
-	(aBuilder shortcut: #browseIt)
+	(aBuilder shortcut: #browseFullClass)
 		category: RubSmalltalkEditor name
 		default: $b meta
 		do: [ :target | target editor browseIt: nil ]
@@ -275,24 +275,17 @@ RubSmalltalkEditor >> browseClassFrom: aClassString [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> browseClassFromIt [
+RubSmalltalkEditor >> browseFullClass [
 	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
 	
 	"self lineSelectAndEmptyCheck: [^ self]."
 	self browseClassFrom: self findClassFromAST
 ]
 
-{ #category : #'menu messages' }
-RubSmalltalkEditor >> browseIt [
-	"Launch a browser for the current selection, if appropriate"
-	^ self browseClassFromIt
-
-]
-
 { #category : #'editing keys' }
 RubSmalltalkEditor >> browseIt: t1 [ 
 
-	self browseIt.
+	self browseFullClass.
 	^ true
 ]
 
