@@ -1,5 +1,7 @@
 "
 I am a regex refactoring replacing method sources.
+
+See comment of superclass for a nice script to be adapated to method sources.
 "
 Class {
 	#name : #RBSourceRegexRefactoring,

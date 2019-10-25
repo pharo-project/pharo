@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 FLPharoPlatform class >> addNativeBoostComponents [
-	Smalltalk
+	self environment
 		at: #NBExternalHandle
 		ifPresent: [ :handle | ^ self ].
 		
@@ -18,7 +18,7 @@ FLPharoPlatform class >> addNativeBoostComponents [
 
 { #category : #testing }
 FLPharoPlatform class >> addPackageManifest [
-	Smalltalk
+	self environment
 		at: #PackageManifest
 		ifPresent: [ ^ self ].
 	

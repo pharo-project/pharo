@@ -135,7 +135,7 @@ OSWorldRenderer >> doActivate [
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: initialExtent;
-		title: Smalltalk shortImageName;
+		title: Smalltalk image imageFile fullName;
 		windowCentered:true;
 		icon: (self iconNamed: #pharoBig).
 

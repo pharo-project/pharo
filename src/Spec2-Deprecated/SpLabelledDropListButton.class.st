@@ -68,7 +68,7 @@ SpLabelledDropListButton >> button [
 
 { #category : #'api-shortcuts' }
 SpLabelledDropListButton >> displayBlock: aBlock [
-	^self dropList displayBlock: aBlock
+	^ self dropList display: aBlock
 ]
 
 { #category : #accessing }

@@ -125,6 +125,22 @@ EpCodeChangeIntegrationTest >> testClassRemoval [
 ]
 
 { #category : #tests }
+EpCodeChangeIntegrationTest >> testClassRemovalWithMethods [
+
+	| events category |
+	aClass := classFactory newClass.
+	category := aClass category.
+	1 to: 7 do: [:index |
+		aClass compile: 'inst', index asString.
+		aClass classSide compile: 'class', index asString ].
+	aClass removeFromSystem.
+	
+	events := self allLogEventsWith: EpMethodRemoval.
+	self assert: events size equals: 14.
+	self assert: (events allSatisfy: [ :each | each affectedPackageName = category ])
+]
+
+{ #category : #tests }
 EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 
 	aClass := classFactory newClass.

@@ -28,11 +28,16 @@ FFIOpaqueObjectTest >> newParser [
 
 { #category : #tests }
 FFIOpaqueObjectTest >> testDereferencedExternalObjectError [
+	| fnSpec |
 	self 
-		should: [ self newParser parseNamedFunction: #( void function ( FFIOpaqueObject arg ) ) ]
+		should: [ 
+			fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject arg ) ).
+			fnSpec resolveUsing: self newParser requestor. ]
 		raise: FFIDereferencedOpaqueObjectError.
 	self 
-		should: [ self newParser parseNamedFunction: #( FFIOpaqueObject function ( ) ) ]
+		should: [ 
+			fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject function ( ) ).
+			fnSpec resolveUsing: self newParser requestor. ]
 		raise: FFIDereferencedOpaqueObjectError
 		
 
@@ -43,14 +48,16 @@ FFIOpaqueObjectTest >> testParseAsBigArityPointer [
 	 | fnSpec arg returnType |
 	
 	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject **arg ) ). 
+	fnSpec resolveUsing: self newParser requestor.
 	arg := fnSpec arguments first.
-	self assert: arg class equals: FFIOpaqueObjectType.
-	self assert: arg pointerArity equals: 2.
+	self assert: arg resolvedType class equals: FFIOpaqueObjectType.
+	self assert: arg resolvedType pointerArity equals: 2.
 	
 	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject **function ( ) ). 
+	fnSpec resolveUsing: self newParser requestor.
 	returnType := fnSpec returnType.
-	self assert: returnType class equals: FFIOpaqueObjectType.
-	self assert: returnType pointerArity equals: 2
+	self assert: returnType resolvedType class equals: FFIOpaqueObjectType.
+	self assert: returnType resolvedType pointerArity equals: 2
 ]
 
 { #category : #tests }
@@ -58,12 +65,14 @@ FFIOpaqueObjectTest >> testParseAsPointer [
 	 | fnSpec arg returnType |
 	
 	fnSpec := self newParser parseNamedFunction: #( void function ( FFIOpaqueObject *arg ) ). 
+	fnSpec resolveUsing: self newParser requestor.
 	arg := fnSpec arguments first.
-	self assert: arg class equals: FFIOpaqueObjectType.
-	self assert: arg pointerArity equals: 1.
+	self assert: arg resolvedType class equals: FFIOpaqueObjectType.
+	self assert: arg resolvedType pointerArity equals: 1.
 	
 	fnSpec := self newParser parseNamedFunction: #( FFIOpaqueObject *function ( ) ). 
+	fnSpec resolveUsing: self newParser requestor.
 	returnType := fnSpec returnType.
-	self assert: returnType class equals: FFIOpaqueObjectType.
-	self assert: returnType pointerArity equals: 1
+	self assert: returnType resolvedType class equals: FFIOpaqueObjectType.
+	self assert: returnType resolvedType pointerArity equals: 1
 ]

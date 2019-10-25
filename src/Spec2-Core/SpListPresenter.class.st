@@ -66,8 +66,7 @@ SpListPresenter class >> title [
 { #category : #private }
 SpListPresenter >> clickOnSelectedItem [
 	| item |
-	
-	item := self selectedItem.
+	item := self selection selectedItem.
 	(item notNil and: [ item respondsTo: #click ])
 		ifTrue: [ ^ item click ]
 		ifFalse: [ ^ false ]
@@ -172,8 +171,7 @@ SpListPresenter >> initialize [
 	super initialize.
 	autoDeselect := true.
 	allowToSelect := true.
-	display := [ :object | object asStringOrText ].
-	self bindKeyCombination: Character space toAction: [ self clickOnSelectedItem ]
+	display := [ :object | object asStringOrText ]
 ]
 
 { #category : #private }

@@ -140,6 +140,13 @@ SpCommand >> positionStrategy [
 	^ positionStrategy
 ]
 
+{ #category : #printing }
+SpCommand >> printOn: stream [ 
+
+	super printOn: stream.
+	stream << '(' << self name << ')'
+]
+
 { #category : #accessing }
 SpCommand >> shortcutKey [
 	^ shortcutKey ifNil: [ CmNoShortcutIsDefined signalCommand: self ]

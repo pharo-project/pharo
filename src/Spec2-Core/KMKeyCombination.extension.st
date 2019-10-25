@@ -5,3 +5,9 @@ KMKeyCombination >> spCurrentCharacter [
 
 	^ ''
 ]
+
+{ #category : #'*Spec2-Core' }
+KMKeyCombination >> spModifier [
+
+	^ nil
+]

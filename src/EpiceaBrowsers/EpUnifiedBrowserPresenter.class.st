@@ -114,7 +114,6 @@ EpUnifiedBrowserPresenter >> refreshWithLogSelected: item [
 
 	logPresenter
 		theLog: freshLog;
-		removeAllFilters;
 		refresh;
 		cleanEntryContent
 ]

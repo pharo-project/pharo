@@ -137,7 +137,6 @@ SugsBreakConditionSuggestion >> rewriteASTToSimulateExecutionInADifferentContext
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes collect: [ :varNode | varNode name ]) asSet asArray.
 	allUndeclaredVariableSymbols withIndexDo: [:tempName :index | 
 		rewriter2
-			"replace: tempName , ' := ``@object' with: 'ThisContext namedTempAt:' , index asString , 'put: ``@object';"
 			replace: tempName with: '(ThisContext lookupSymbol: #' , tempName, ')'
 	].
 

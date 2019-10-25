@@ -31,8 +31,7 @@ SystemResolverTest >> testImageDirectory [
 SystemResolverTest >> testLocalDirectory [
 	| reference |
 	reference := resolver resolve: #localDirectory.
-	self assert: (reference isKindOf: FileReference).
-	^ reference
+	self assert: (reference isKindOf: FileReference)
 ]
 
 { #category : #testing }

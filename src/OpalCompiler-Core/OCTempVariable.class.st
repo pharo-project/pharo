@@ -1,11 +1,12 @@
 "
-I model temp variables. With Closures, there are two kinds: Copying and those that are stores in a so called temp vector, a heap allocated array that itself is stored in an un-named copying temp variable.
+I model temp variables. With Closures, there are two kinds: Copying and those that are stored in a so called temp vector, a heap allocated array that itself is stored in a copying temp variable.
 "
 Class {
 	#name : #OCTempVariable,
 	#superclass : #OCAbstractLocalVariable,
 	#instVars : [
-		'escaping'
+		'escaping',
+		'index'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -57,7 +58,13 @@ OCTempVariable >> hash [
 
 { #category : #debugging }
 OCTempVariable >> indexFromIR [
-	^scope indexFromIRForVarNamed: name
+	^index ifNil: [index := scope indexFromIRForVarNamed: name]
+]
+
+{ #category : #debugging }
+OCTempVariable >> indexInTempVectorFromIR: aName [
+	"if I am storing  temp vector, return the index of var name"
+	^(scope node irInstruction tempVectorNamed: name) indexForVarNamed: aName
 ]
 
 { #category : #initialization }
@@ -150,8 +157,11 @@ OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| definitionContext |
 	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
+	^self writeFromLocalContext: definitionContext put: aValue
+]
 
-	^definitionContext 
-		tempAt: self indexFromIR
-		put: aValue
+{ #category : #debugging }
+OCTempVariable >> writeFromLocalContext: aContext put: aValue [
+
+	^ aContext tempAt: self indexFromIR put: aValue
 ]

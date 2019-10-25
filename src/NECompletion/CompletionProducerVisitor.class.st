@@ -4,16 +4,11 @@ I'm a little visitor. I take the specific node of the string that has to be comp
 Class {
 	#name : #CompletionProducerVisitor,
 	#superclass : #RBProgramNodeVisitor,
-	#instVars : [
-		'currentClass'
+	#classInstVars : [
+		'aCollection'
 	],
 	#category : #'NECompletion-New'
 }
-
-{ #category : #accessing }
-CompletionProducerVisitor >> completionContext: aClass [ 
-	currentClass := aClass.
-]
 
 { #category : #completion }
 CompletionProducerVisitor >> completionListForNode: aRBNode [
@@ -21,16 +16,9 @@ CompletionProducerVisitor >> completionListForNode: aRBNode [
 	^ aRBNode acceptVisitor: self
 ]
 
-{ #category : #visiting }
-CompletionProducerVisitor >> methodNames [
-	^ Symbol selectorTable
-	
-]
-
 { #category : #utilities }
 CompletionProducerVisitor >> select: aCollection beginningWith: aString [
-	"Set withAll: is needed to convert potential IdentitySets to regular Sets"
-	^ Set withAll: (aCollection select: [ :each | each beginsWith: aString asString ])
+	^ aCollection select: [ :each | each beginsWith: aString asString ]
 ]
 
 { #category : #visiting }
@@ -59,16 +47,12 @@ CompletionProducerVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 { #category : #visiting }
 CompletionProducerVisitor >> visitLiteralNode: aRBLiteralValueNode [
-	| results |
-	(aRBLiteralValueNode value isKindOf: Symbol) ifFalse: [ ^#() ].
+	| value |
+	
+	value := aRBLiteralValueNode value.
+	value isSymbol ifFalse: [ ^ #() ].
 	"return all symbols that start with value"
-	results := OrderedCollection new.
-	Symbol allSymbolTablesDo: [ :symbol |
-		(symbol beginsWith: aRBLiteralValueNode value)
-			ifTrue: [ results add: symbol ].
-		results size >= 10 ifTrue: [ ^ results ]
-	].
-	^ results
+	^Symbol allSymbols select: [ :each | (each beginsWith: value) and: [each isLiteralSymbol]]
 ]
 
 { #category : #visiting }
@@ -84,7 +68,7 @@ CompletionProducerVisitor >> visitMessageNode:  aRBMessageNode [
 
 { #category : #visiting }
 CompletionProducerVisitor >> visitMethodNode: aRBMethodNode [
-	^ self select: self methodNames beginningWith: aRBMethodNode selector
+	^ self select: Symbol selectorTable beginningWith: aRBMethodNode selector
 ]
 
 { #category : #visiting }
@@ -121,17 +105,17 @@ CompletionProducerVisitor >> visitThisContextNode: aThisContextNode [
 
 { #category : #visiting }
 CompletionProducerVisitor >> visitVariableNode: aRBVariableNode [
-	| lookupClass |
-	lookupClass := currentClass ifNil: [ UndefinedObject ].
+	| methodNode lookupClass |
+	methodNode := aRBVariableNode methodNode.
+	lookupClass := methodNode compilationContext getClass.
 	aRBVariableNode isDefinition ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) select: [ :each | each numArgs = 0 ] ].
    aRBVariableNode isArgument ifTrue: [ ^ (self select: Symbol allSymbols beginningWith: aRBVariableNode name) select: [ :each | each numArgs = 0 ] ].
 	"using a stream to store results should be better"
-	^ (self select: Smalltalk globals keys beginningWith: aRBVariableNode name) , 
-	  (self select: (lookupClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name) ,
-		(self select: aRBVariableNode methodNode temporaryNames beginningWith: aRBVariableNode name),
-		(self select: aRBVariableNode methodNode argumentNames beginningWith: aRBVariableNode name),
-		(self select: lookupClass allClassVarNames beginningWith: aRBVariableNode name),
+	^	(self select: Smalltalk globals keys beginningWith: aRBVariableNode name), 
+	 	(self select: (lookupClass allSlots collect: [ :each | each name ]) beginningWith: aRBVariableNode name),
+		(self select: methodNode temporaryNames beginningWith: aRBVariableNode name),
+		(self select: methodNode argumentNames beginningWith: aRBVariableNode name),
+		(self select: lookupClass allClassVarNames asOrderedCollection beginningWith: aRBVariableNode name),
 		(self select: (lookupClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: aRBVariableNode name)
-		",(self select: self methodNames beginningWith: aRBVariableNode name)"
 
 ]

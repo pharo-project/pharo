@@ -144,12 +144,6 @@ MorphicTextAdapter >> getText [
 	^ self model text
 ]
 
-{ #category : #NOCompletion }
-MorphicTextAdapter >> guessTypeForName: aString [
-
-	^nil
-]
-
 { #category : #'spec protocol' }
 MorphicTextAdapter >> hasEditingConflicts: aBoolean [
  
@@ -166,12 +160,6 @@ MorphicTextAdapter >> hasUnacceptedEdits: aBoolean [
 MorphicTextAdapter >> isAboutToStyle [
 
 	^ self model isAboutToStyle
-]
-
-{ #category : #NOCompletion }
-MorphicTextAdapter >> isCodeCompletionAllowed [
-
-	^ self model isCodeCompletionAllowed
 ]
 
 { #category : #'spec protocol' }

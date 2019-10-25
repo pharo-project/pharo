@@ -194,6 +194,11 @@ ThreadSafeTranscript >> printOn: aStream [
 	aStream nextPutAll: 'Transcript'
 ]
 
+{ #category : #accessing }
+ThreadSafeTranscript >> selectedClassOrMetaClass [
+	^ nil
+]
+
 { #category : #updating }
 ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [ 
 	^ false

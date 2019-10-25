@@ -71,36 +71,39 @@ SpDropListExample >> initializePresenters [
 	heterogeneousDropList := self newDropList.
 	container := self newMorph.
 	disabledDropList := self newDropList.
-
 	container morph: PanelMorph new.
 	self instantiateMorphs.
 	self containerMorph
 		changeTableLayout;
 		listDirection: #bottomToLeft.
-
 	disabledDropList
 		items: #('Disabled' 'Two' 'Three');
-		displayBlock: [ :each | each ];
+		display: [ :each | each ];
 		disable.
-
 	uniformDropList
-		items: {morph1 . morph2 . morph3};
-		displayBlock: [ :m | m color name capitalized , ' morph' ];
+		items:
+			{morph1.
+			morph2.
+			morph3};
+		display: [ :m | m color name capitalized , ' morph' ];
 		iconBlock: [ :e | self iconNamed: #testGreenIcon ];
 		whenSelectedItemChangedDo: [ :m | 
 			self containerMorph
 				removeAllMorphs;
 				addMorph: m ].
-
 	heterogeneousDropList
-		addItemLabeled: 'Open workspace' do: [ Smalltalk tools workspace open ] icon: (self iconNamed: #smallOkIcon);
-		addItemLabeled: 'Inspect current morph' do: [ uniformDropList selectedItem inspect ] icon: (self iconNamed: #testRedIcon).
+		addItemLabeled: 'Open workspace'
+			do: [ Smalltalk tools workspace open ]
+			icon: (self iconNamed: #smallOkIcon);
+		addItemLabeled: 'Inspect current morph'
+			do: [ uniformDropList selectedItem inspect ]
+			icon: (self iconNamed: #testRedIcon).
 
 	"If this is uncommented, it will fire the action of the first item, which is not what we want:
 	heterogeneousDropList setSelectedIndex: 1.
 	same for:
 	heterogeneousDropList setIndex: 1"
-	uniformDropList selectedIndex: 1.
+	uniformDropList selectIndex: 1.
 	self setFocus
 ]
 

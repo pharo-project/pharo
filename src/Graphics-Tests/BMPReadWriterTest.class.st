@@ -10,9 +10,7 @@ Class {
 { #category : #data }
 BMPReadWriterTest >> bmpData16bit [
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest16b.bmp') binary)
-				contents
+		'bmptest16b.bmp' asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk24AAAAAAAAADYAAAAoAAAACAAAAAgAAAABABAAAAAAAIIAAADDDgAAww4AAAAAAAAAAAAA
 4APgA+AD4AMfAB8AHwAfAOAD4APgA+ADHwAfAB8AHwDgA+AD/3//f/9//38fAB8A4APgA/9/
@@ -23,9 +21,7 @@ AHwAfAAAAAAAAAAAAHwAfAB8AHwAAA==' base64Decoded
 { #category : #data }
 BMPReadWriterTest >> bmpData24bit [
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest24.bmp') binary)
-				contents
+		 'bmptest24.bmp' asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk32AAAAAAAAADYAAAAoAAAACAAAAAgAAAABABgAAAAAAAAAAADEDgAAxA4AAAAAAAAAAAAA
 AP8AAP8AAP8AAP8A/wAA/wAA/wAA/wAAAP8AAP8AAP8AAP8A/wAA/wAA/wAA/wAAAP8AAP8A
@@ -37,9 +33,7 @@ AAD/AAD/AAAAAAAAAAAAAAAAAAD/AAD/AAD/AAD/' base64Decoded
 { #category : #data }
 BMPReadWriterTest >> bmpData32bit [
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest32b.bmp') binary)
-				contents
+		'bmptest32b.bmp'asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk04AQAAAAAAADYAAAAoAAAACAAAAAgAAAABACAAAAAAAAIBAADDDgAAww4AAAAAAAAAAAAA
 AP8AAAD/AAAA/wAAAP8AAP8AAAD/AAAA/wAAAP8AAAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8A
@@ -52,9 +46,7 @@ AAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/wAAAP8AAAD/AAAA' base64Decoded
 { #category : #data }
 BMPReadWriterTest >> bmpData4bit [
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest4.bmp') binary)
-				contents
+		'bmptest4.bmp' asFileReference binaryReadStream upToEnd base64Encoded.
 	"
 	^ 'Qk12BAAAAAAAADYEAAAoAAAACAAAAAgAAAABAAgAAAAAAEAAAADEDgAAxA4AAAAAAAAAAAAA
 AAAAAAAAgAAAgAAAAICAAIAAAACAAIAAgIAAAMDAwADA3MAA8MqmAAAgQAAAIGAAACCAAAAg
@@ -83,9 +75,7 @@ AAAAAPn5+fk=' base64Decoded
 { #category : #data }
 BMPReadWriterTest >> bmpData8bit [
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest8.bmp') binary)
-				contents
+		 'bmptest8.bmp' asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk12BAAAAAAAADYEAAAoAAAACAAAAAgAAAABAAgAAAAAAEAAAADEDgAAxA4AAAAAAAAAAAAA
 AAAAAAAAgAAAgAAAAICAAIAAAACAAIAAgIAAAMDAwADA3MAA8MqmAAAgQAAAIGAAACCAAAAg
@@ -115,9 +105,7 @@ AAAAAPn5+fk=' base64Decoded
 BMPReadWriterTest >> bmpDataR5G6B5 [
 	"This is a BMP file based on BitmapV4Header which is currently unsupported."
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest16-R5G6B5.bmp') binary)
-				contents
+		 'bmptest16-R5G6B5.bmp' asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk3IAAAAAAAAAEYAAAA4AAAACAAAAAgAAAABABAAAwAAAIIAAADDDgAAww4AAAAAAAAAAAAA
 APgAAOAHAAAfAAAAAAAAAOAH4AfgB+AHHwAfAB8AHwDgB+AH4AfgBx8AHwAfAB8A4AfgB///
@@ -129,9 +117,7 @@ APgA+AAAAAAAAAAAAPgA+AD4APgAAAAAAAAAAAD4APgA+AD4AAA=' base64Decoded
 BMPReadWriterTest >> bmpDataX4R4G4B4 [
 	"This is a BMP file based on BitmapV4Header which is currently unsupported."
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest16-X4R4G4B4.bmp') binary)
-				contents
+		'bmptest16-X4R4G4B4.bmp' asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk3IAAAAAAAAAEYAAAA4AAAACAAAAAgAAAABABAAAwAAAIIAAADDDgAAww4AAAAAAAAAAAAA
 AA8AAPAAAAAPAAAAAAAAAPAA8ADwAPAADwAPAA8ADwDwAPAA8ADwAA8ADwAPAA8A8ADwAP8P
@@ -143,9 +129,7 @@ AA8ADwAAAAAAAAAAAA8ADwAPAA8AAAAAAAAAAAAPAA8ADwAPAAA=' base64Decoded
 BMPReadWriterTest >> bmpDataX8R8G8B8 [
 	"This is a BMP file based on BitmapV4Header which is currently unsupported."
 	"Created via:
-		(Base64MimeConverter mimeEncode: 
-			(FileStream readOnlyFileNamed: 'bmptest32-X8R8G8B8.bmp') binary)
-				contents
+		'bmptest32-X8R8G8B8.bmp' asFileReference binaryReadStream upToEnd base64Encoded 
 	"
 	^ 'Qk1IAQAAAAAAAEYAAAA4AAAACAAAAAgAAAABACAAAwAAAAIBAADDDgAAww4AAAAAAAAAAAAA
 AAAA/wAA/wAA/wAAAAAAAAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAAD/AAAA

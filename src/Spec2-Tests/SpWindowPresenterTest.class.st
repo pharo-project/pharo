@@ -58,6 +58,7 @@ SpWindowPresenterTest >> testWhenOpenedDo [
 { #category : #tests }
 SpWindowPresenterTest >> testWhenWillCloseDo [
 	| willClose closed |
+
 	willClose := false.
 	closed := false.
 	presenter whenWillCloseDo: [ willClose := true ].

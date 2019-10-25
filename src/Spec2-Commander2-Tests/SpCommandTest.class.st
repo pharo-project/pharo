@@ -31,13 +31,10 @@ SpCommandTest >> setUp [
 SpCommandTest >> testAsButtonPresenter [
 	| buttonPresenter |
 	command := CmCommand forSpec
-					basicName: 'foo';
-					basicDescription: 'bar';
-					yourself.
-					
-	
+		name: 'foo';
+		description: 'bar';
+		yourself.
 	buttonPresenter := command asButtonPresenter.
-	
 	self assert: buttonPresenter label equals: 'foo'.
 	self assert: buttonPresenter help equals: 'bar'.
 	self assert: buttonPresenter icon isNil
@@ -47,17 +44,16 @@ SpCommandTest >> testAsButtonPresenter [
 SpCommandTest >> testAsButtonPresenter2 [
 	| buttonPresenter |
 	command := CmCommand forSpec
-					basicName: 'foo';
-					basicDescription: 'bar';
-					iconName: #blank;
-					yourself.
-					
-	
+		name: 'foo';
+		description: 'bar';
+		iconName: #blank;
+		yourself.
 	buttonPresenter := command asButtonPresenter.
-	
 	self assert: buttonPresenter label equals: 'foo'.
 	self assert: buttonPresenter help equals: 'bar'.
-	self assert: buttonPresenter icon equals: (buttonPresenter iconNamed: #blank)
+	self
+		assert: buttonPresenter icon
+		equals: (buttonPresenter iconNamed: #blank)
 ]
 
 { #category : #test }

@@ -13,7 +13,9 @@ SpCodeBrowseItCommand class >> defaultName [
 { #category : #default }
 SpCodeBrowseItCommand class >> defaultShortcutKey [
 
-	^ $b meta
+	^ $b command mac 
+		| $b control win
+		| $b control unix
 ]
 
 { #category : #private }

@@ -19,7 +19,6 @@ FTExamples class >> example1 [
 			sorted: [ :a :b | a name < b name]));
 		yourself.
 	list openInWindow
-
 ]
 
 { #category : #examples }
@@ -501,6 +500,21 @@ FTExamples class >> exampleOutline2 [
 		extent: 300 @ 300;
 		dataSource: (FTOutlineDataSource items: data).
 	list openInWindow
+]
+
+{ #category : #examples }
+FTExamples class >> exampleRowNotHomogeneousList1 [
+	"Show a list with all Object methods"
+	<example>
+	| list |
+
+	list := FTTableMorph new
+		extent: 300@550;
+		beRowNotHomogeneous;
+		dataSource: (FTExampleMethodNotHomogeneousListDataSource for: Object);
+		yourself.
+		
+	^ list openInWindow
 ]
 
 { #category : #examples }

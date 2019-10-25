@@ -51,12 +51,12 @@ UndefinedSortFunction >> initialize [
 	direction := -1
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #converting }
 UndefinedSortFunction >> undefinedFirst [
 	direction := -1
 ]
 
-{ #category : #'initailize-release' }
+{ #category : #converting }
 UndefinedSortFunction >> undefinedLast [
 	direction := 1
 ]

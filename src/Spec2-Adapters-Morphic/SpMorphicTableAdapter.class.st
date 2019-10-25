@@ -38,7 +38,12 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 			send: #strongSelectionChanged:
 			to: self.
 
-	tableMorph dataSource: self newDataSource
+	tableMorph dataSource: self newDataSource.
+	
+	self presenter whenItemFilterBlockChangedDo: [ :block | self 
+		updateItemFilterBlockWith: block ].
+	self updateItemFilterBlockWith: self itemFilter.
+
 ]
 
 { #category : #factory }

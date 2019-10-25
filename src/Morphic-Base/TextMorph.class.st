@@ -184,6 +184,12 @@ TextMorph >> areasRemainingToFill: aRectangle [
 				ifFalse: [^ aRectangle areasOutside: self bounds]]
 ]
 
+{ #category : #converting }
+TextMorph >> asReadOnlyMorph [
+
+	^ StringMorph contents: self text
+]
+
 { #category : #accessing }
 TextMorph >> asText [
 	^ text
@@ -1098,7 +1104,7 @@ TextMorph >> manageCursor [
 		ifTrue: [^ self
 				resetBlinkCursor;
 				stopBlinking].
-	Editor blinkingCursor 
+	TextEditor blinkingCursor 
 		ifTrue: [self startBlinking]
 		ifFalse: [self ensureCursor]
 ]

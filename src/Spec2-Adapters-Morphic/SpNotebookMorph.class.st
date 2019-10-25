@@ -157,7 +157,7 @@ SpNotebookMorph >> newTabSelectorMorph [
 
 { #category : #private }
 SpNotebookMorph >> newToolbarMorph [
-	^ GLMPanelMorph new
+	^ SpNotebookPanelMorph new
 		fillStyle: (SolidFillStyle color: Color transparent);
 		borderStyle: (BorderStyle width: 0);
 		vResizing: #spaceFill;
@@ -189,7 +189,7 @@ SpNotebookMorph >> removePage: aPage [
 
 	self announcer
 		announce:
-			(LazyTabPageRemoved new
+			(SpNotebookPageRemoved new
 				tabs: self;
 				page: aPage;
 				pageIndex: removedPageIndex;
@@ -213,36 +213,29 @@ SpNotebookMorph >> suspendAnnouncementsDuring: aBlock [
 
 { #category : #private }
 SpNotebookMorph >> updatePageIndex: index [
-
 	"Change to the given page index, update the toolbar and send the announcement"
-
 	| oldPage |
 
-	index = 0
-		ifTrue: [ ^ self ].
+	index = 0 ifTrue: [ ^ self ].
 
 	oldPage := self tabSelectorMorph selectedTab.
 	self pageMorph
-		ifNil: [ self contentMorph addMorph: ( self pageAt: index ) ]
+		ifNil: [ self contentMorph addMorph: (self pageAt: index) ]
 		ifNotNil: [ :page |
 			| pageBounds |
 			pageBounds := self pageMorph bounds.
 			self contentMorph replaceSubmorph: page by: ( self pageAt: index ).
-			self
-				flag: 'Without setting here the bounds the pange moves a few pizels when refreshing the inspector'.
+			self flag: 'Without setting here the bounds the page moves a few pixels when refreshing the inspector'.
 			self pageMorph bounds: pageBounds.
-			self pageMorph layoutChanged
-			].
+			self pageMorph layoutChanged ].
 
 	self headerMorph layoutChanged.
 	self pageMorph layoutChanged.
 	self adoptPaneColor: ( self owner ifNil: [ self ] ) paneColor.
 	( self tabSelectorMorph tabs at: index ) font: self tabSelectorMorph font.
 
-	self announcer
-		announce:
-			( SpNotebookPageChanged new
-				page: ( self pages at: index );
-				oldPage: oldPage;
-				pageIndex: index )
+	self announcer announce: (SpNotebookPageChanged new
+		page: (self pages at: index);
+		oldPage: oldPage;
+		pageIndex: index)
 ]

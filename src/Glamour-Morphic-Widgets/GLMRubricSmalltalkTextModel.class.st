@@ -55,11 +55,6 @@ GLMRubricSmalltalkTextModel >> formatSourceCode [
 ]
 
 { #category : #bindings }
-GLMRubricSmalltalkTextModel >> guessTypeForName: aString [ 
-	^ nil
-]
-
-{ #category : #bindings }
 GLMRubricSmalltalkTextModel >> hasBindingOf: aSymbol [
 
 	^ self variableBindings includesKey: aSymbol
@@ -114,6 +109,12 @@ GLMRubricSmalltalkTextModel >> shoutAboutToStyle: aPluggableShoutMorph [
 	self highlightSmalltalkContext ifNotNil: [ :classOrMetaClass |
  		aPluggableShoutMorph classOrMetaClass: classOrMetaClass  ].
 	^ true
+]
+
+{ #category : #'smartSuggestions - support' }
+GLMRubricSmalltalkTextModel >> sugsContext [
+
+	^ SugsGlamourCodeContext model: self
 ]
 
 { #category : #bindings }

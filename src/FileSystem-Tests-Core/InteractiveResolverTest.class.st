@@ -27,8 +27,7 @@ InteractiveResolverTest >> testCached [
 
 { #category : #tests }
 InteractiveResolverTest >> testNew [
-	[self assertOriginResolves: #home]
+	[ self assertOriginResolves: #home ]
 		on: ResolutionRequest
-		do: [:req | req resume: self home].
-	
+		do: [ :req | req resume: self home ]
 ]

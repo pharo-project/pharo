@@ -193,6 +193,20 @@ FTTableMorph >> beResizable [
 ]
 
 { #category : #accessing }
+FTTableMorph >> beRowNotHomogeneous [
+	"by default, tables have homogeneous row heigths, taken from rowHeight variable. 
+	 We can switch to variable size by sending this message. 
+	 The resulting table will be less effcicient than the first, but probably not in a way users 
+	 can notice"
+	| oldContainer |
+
+	oldContainer := container.
+	container := FTTableContainerRowNotHomogeneousMorph new.
+	self replaceSubmorph: oldContainer by: container.
+	self resizeAllSubviews
+]
+
+{ #category : #accessing }
 FTTableMorph >> beRowSelection [
 	self selectionModeStrategy: (FTRowSelectionModeStrategy table: self)
 ]

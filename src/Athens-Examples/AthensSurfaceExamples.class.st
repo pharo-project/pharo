@@ -45,7 +45,7 @@ AthensSurfaceExamples class >> draw2Strings [
 		can pathTransform translateBy: advance.
 		can drawString: 'in mind.'].
 	
-	surf asForm asMorph openInWindow.
+	surf asMorph openInWindow.
 ]
 
 { #category : #examples }
@@ -189,7 +189,7 @@ AthensSurfaceExamples class >> example10 [
 		can setStrokePaint: Color red.
 		can draw ].
 		
-	surf asForm asMorph openInWindow.
+	surf asMorph openInWindow.
 
 ]
 
@@ -243,7 +243,7 @@ AthensSurfaceExamples class >> example3 [
 		]	
 	].
 
-	surf asForm asMorph openInWindow. 
+	surf asMorph openInWindow. 
 
 ]
 
@@ -277,7 +277,7 @@ AthensSurfaceExamples class >> example3stroke [
 		]	
 	].
 
-	surf asForm asMorph openInWindow. 
+	surf asMorph openInWindow. 
 
 ]
 
@@ -304,7 +304,7 @@ AthensSurfaceExamples class >> example4 [
 		can drawShape: path.
 	].
 
-	surf asForm asMorph openInWindow. 
+	surf asMorph openInWindow. 
 
 ]
 
@@ -338,7 +338,7 @@ AthensSurfaceExamples class >> example5 [
 			])
 	].
 
-	surf asForm asMorph openInWindow. 
+	surf asMorph openInWindow. 
 ]
 
 { #category : #examples }
@@ -366,7 +366,7 @@ AthensSurfaceExamples class >> example6 [
 		can pathTransform translateX: 50 Y: 50; rotateByDegrees: 30.
 		can drawShape: (0@0 corner: 50@50) ].
 
-		surf asForm asMorph openInWindow
+		surf asMorph openInWindow
 
 ]
 
@@ -392,7 +392,7 @@ AthensSurfaceExamples class >> example6point1 [
 
 		can drawShape: (0@0 corner: 50@50) ].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -420,7 +420,7 @@ AthensSurfaceExamples class >> example6stroke [
 		can pathTransform translateX: 50 Y: 50.
 		can drawShape: (0@0 corner: 50@50) ].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -455,7 +455,7 @@ AthensSurfaceExamples class >> example7 [
 			
 		].		
 	].
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -477,7 +477,7 @@ AthensSurfaceExamples class >> example8 [
 
 			can drawShape: (0@0 corner: 200@200)].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -499,7 +499,7 @@ AthensSurfaceExamples class >> example9 [
 			setPaint: paint;
 			drawShape: (0@0 corner: 100@200)].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -522,7 +522,7 @@ AthensSurfaceExamples class >> exampleClip [
 		]
 	].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -551,7 +551,7 @@ AthensSurfaceExamples class >> exampleDrawForm [
 		can pathTransform translateX: 30 Y: 30. 
 		can draw ].
 	
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -573,7 +573,7 @@ AthensSurfaceExamples class >> exampleDrawForm2 [
 		can paintTransform scaleBy: 3; rotateByDegrees: 30.
 		can draw ].
 	
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -597,7 +597,7 @@ AthensSurfaceExamples class >> exampleDrawText [
 		can pathTransform translateX: 0 Y: (font getPreciseAscent).
 		can drawString: 'Hello Athens!' ].
 	
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 
 ]
 
@@ -620,7 +620,7 @@ AthensSurfaceExamples class >> exampleStrokeRect [
 		]	
 	].
 
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -633,7 +633,7 @@ AthensSurfaceExamples class >> exampleUseForm [
 	form getCanvas fillRectangle: (20@20 corner: 50@50)  color: (Color blue).
 	
 	surf := AthensCairoSurface fromForm: form.
-	surf asForm asMorph openInWindow
+	surf asMorph openInWindow
 
 ]
 

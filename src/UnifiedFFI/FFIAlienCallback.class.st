@@ -68,7 +68,7 @@ FFIAlienCallback >> valueWithContext: callbackContext sp: stackPointer [
 	
 	self flag: #todo. "This can be optimised in a shadow method"
 	argumentValues := self argumentsFor: stackPointer context: callbackContext.
-	^ frontendCallback functionSpec returnType 
+	^ frontendCallback functionSpec returnType resolvedType
 		callbackReturnOn: callbackContext 
 		for: (frontendCallback valueWithArguments: argumentValues)
 ]

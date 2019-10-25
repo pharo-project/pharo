@@ -21,6 +21,12 @@ SpButtonBarPresenter >> add: aButtonPresenter [
 	items add: aButtonPresenter
 ]
 
+{ #category : #testing }
+SpButtonBarPresenter >> canTakeKeyboardFocus [
+
+	^ false
+]
+
 { #category : #initialization }
 SpButtonBarPresenter >> initialize [
 
@@ -63,4 +69,10 @@ SpButtonBarPresenter >> placeAtEnd [
 SpButtonBarPresenter >> placeAtStart [ 
 
 	placeAtStart := true
+]
+
+{ #category : #'private-traversing' }
+SpButtonBarPresenter >> presenters [
+	
+	^ self items
 ]

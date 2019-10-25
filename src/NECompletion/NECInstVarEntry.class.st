@@ -7,16 +7,6 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #operations }
-NECInstVarEntry >> guessTypeWith: anECContext [ 
-	^ anECContext guessInstVarClass: contents
-]
-
-{ #category : #testing }
-NECInstVarEntry >> isInstance [
-	^true
-]
-
 { #category : #accessing }
 NECInstVarEntry >> label [
 	^ 'instance variable'

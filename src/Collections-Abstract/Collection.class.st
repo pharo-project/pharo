@@ -98,6 +98,8 @@ Collection class >> withAll: aCollection [
 
 { #category : #enumerating }
 Collection >> & aCollection [
+	"#(1 2 3 4) & #(1 2 4 6 7) >>> #(1 2 4)"
+	
 	^ self intersection: aCollection
 ]
 
@@ -111,6 +113,9 @@ Collection >> , aCollection [
 
 { #category : #enumerating }
 Collection >> \ aCollection [
+	"Return all the elements in self that are not in aCollection"
+	"'abc' \ 'cbe' >>> 'a'."
+	
 	^ self difference: aCollection
 ]
 
@@ -180,6 +185,8 @@ Collection >> allSatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver.
 	If aBlock returns false for any element return false.
 	Otherwise return true."
+	"#(1 2) allSatisfy: [ :each | each even ] >>> false"
+	"#(2 4) allSatisfy: [ :each | each even ] >>> true"
 
 	self do: [:each | (aBlock value: each) ifFalse: [^ false]].
 	^ true
@@ -202,6 +209,8 @@ Collection >> anySatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver.
 	If aBlock returns true for any element return true.
 	Otherwise return false."
+	"#(1 3) anySatisfy: [ :each | each even ] >>> false"
+	"#(1 2) anySatisfy: [ :each | each even ] >>> true"
 
 	self do: [:each | (aBlock value: each) ifTrue: [^ true]].
 	^ false
@@ -479,6 +488,7 @@ Collection >> copyWithoutDuplicates [
 Collection >> count: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Answer the number of elements that answered true."
+	"#(1 2 3 4) count: [ :each | each even ] >>> true"
 
 	| sum |
 	sum := 0.
@@ -490,6 +500,7 @@ Collection >> count: aBlock [
 Collection >> detect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument. 
 	Answer the first element for which aBlock evaluates to true."
+	"(#(1 2 3 4) detect: [ :each | each even ]) >>> 2"
 
 	^ self detect: aBlock ifNone: [self errorNotFound: aBlock]
 ]
@@ -501,6 +512,8 @@ Collection >> detect: aBlock ifFound: foundBlock [
 	foundBlock. 
 	If no element matches the criteria then do nothing.
 	Always returns self to avoid misuse and a potential isNil check on the sender."
+	"(#(1 2) detect: [ :each | each even ] ifFound: [ ^'yay!' ]) >>> 'yay'"
+	"(#(1 3) detect: [ :each | each even ] ifFound: [ ^'yay!' ]) >>> #(1 3)"
 
 	self
 		detect: aBlock
@@ -653,13 +666,6 @@ Collection >> errorNotFound: anObject [
 ]
 
 { #category : #private }
-Collection >> errorNotKeyed [
-
-	self error: ('Instances of {1} do not respond to keyed accessing messages.' format: {self class name})
-
-]
-
-{ #category : #private }
 Collection >> errorSizeMismatch [
 	"Signal a SizeMismatch exception"
 
@@ -801,10 +807,10 @@ Collection >> identityIncludes: anObject [
 { #category : #testing }
 Collection >> ifEmpty: aBlock [
 	"Evaluate the given block, answering its value if the receiver is empty, otherwise answer the receiver."
-	
+
 	"Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: ['As yet unclassified'])"
 
-	^ self isEmpty 
+	^ self isEmpty
 		ifTrue: [ aBlock value ]
 		ifFalse: [ self ]
 ]
@@ -812,10 +818,11 @@ Collection >> ifEmpty: aBlock [
 { #category : #testing }
 Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise"
-	" If the notEmptyBlock has an argument, eval with the receiver as its argument"
+	"If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
-	self isEmpty ifTrue: [ ^emptyBlock value ].
-	^notEmptyBlock cull: self
+	^ self isEmpty
+		ifTrue: [ emptyBlock value ]
+		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -823,10 +830,9 @@ Collection >> ifNotEmpty: aBlock [
 	"Evaluate the given block with the receiver as argument, answering its value
     unless the receiver is empty, in which case answer the receiver."
 
-    ^self isEmpty
-          ifTrue: [self]
-          ifFalse: [aBlock cull: self] 
-
+	^ self isEmpty
+		ifTrue: [ self ]
+		ifFalse: [ aBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -834,8 +840,9 @@ Collection >> ifNotEmpty: notEmptyBlock ifEmpty: emptyBlock [
 	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise
 	 If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
-	self isEmpty ifFalse: [ ^notEmptyBlock cull: self ].
-	^emptyBlock value
+	^ self isEmpty
+		ifTrue: [ emptyBlock value ]
+		ifFalse: [ notEmptyBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -975,7 +982,7 @@ Collection >> notEmpty [
 	^ self isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : #enumerating }
 Collection >> occurrencesOf: anObject [ 
 	"Answer how many of the receiver's elements are equal to anObject."
 
@@ -983,40 +990,6 @@ Collection >> occurrencesOf: anObject [
 	tally := 0.
 	self do: [:each | anObject = each ifTrue: [tally := tally + 1]].
 	^tally
-]
-
-{ #category : #enumerating }
-Collection >> piecesCutWhere: binaryBlock [
-	"Answer substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-	"( #(1 2 3 1 6 1 2 3 4) piecesCutWhere: [ :a :b | a = 1 and: [ b = 2]]) asArray >>> #(#(1) #(2 3 1 6 1) #(2 3 4))"
-	| pieces |
-	pieces := OrderedCollection new.
-	self 
-		piecesCutWhere: binaryBlock
-		do: [ :piece | pieces add: piece ].
-	^pieces
-
-   "'Now is the time for all good people to come to the aid of the cause of world peace.  It is just fine, even desirable, to love your country, if that means wanting it to play a beneficial role in the course of world events and be the best possible example of a good society.  But if it means wanting dominion over the rest of the world, it is not love but defensiveness or self-glorification, and will lead only to oblivion.'  piecesCutWhere: [:a :b| a = $. and: [b isSeparator]]"
-]
-
-{ #category : #enumerating }
-Collection >> piecesCutWhere: binaryBlock do: pieceBlock [
-	"Evaluate pieceBlock with substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-
-	| size lastCut this next |
-	(size := self size) <= 1 ifTrue:
-		 [size = 1 ifTrue: [pieceBlock value: self].
-		^self].
-	lastCut := 1.
-	this := self at: 1.
-	2 to: size do:
-		[:i|
-		next := self at: i.
-		(binaryBlock value: this value: next) ifTrue:
-			[pieceBlock value: (self copyFrom: lastCut to: i - 1).
-			lastCut := i].
-		this := next].
-	pieceBlock value: (self copyFrom: lastCut to: size)
 ]
 
 { #category : #printing }
@@ -1321,5 +1294,8 @@ Collection >> write: anObject [
 
 { #category : #enumerating }
 Collection >> | aCollection [
+	"Return all the elements that appear in self or in aCollection"
+	"'abc' | 'cbe' >>> 'bcea'"
+	
 	^ self union: aCollection
 ]

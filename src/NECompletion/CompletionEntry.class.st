@@ -6,8 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'contents',
-		'type',
-		'node'
+		'node',
+		'description'
 	],
 	#category : #'NECompletion-New'
 }
@@ -22,6 +22,14 @@ CompletionEntry class >> contents: aString node: aNode [
 	^ self new setContents: aString node: aNode
 ]
 
+{ #category : #ui }
+CompletionEntry >> browseWith: aCompletionContext [
+	| class |
+	class := node methodNode compilationContext getClass.
+	Smalltalk tools browser openOnClass: class.
+	^true
+]
+
 { #category : #accessing }
 CompletionEntry >> completion [
 	^ self contents asSymbol
@@ -30,6 +38,11 @@ CompletionEntry >> completion [
 { #category : #accessing }
 CompletionEntry >> contents [
 	^contents
+]
+
+{ #category : #description }
+CompletionEntry >> descriptionWith: aCompletionContext [ 
+	^description ifNil: [ ^ description := node completionDescription].
 ]
 
 { #category : #initialization }

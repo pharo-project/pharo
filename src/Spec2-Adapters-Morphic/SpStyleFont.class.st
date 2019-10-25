@@ -1,3 +1,10 @@
+"
+I'm a style to control the font of a widget. 
+I keep properties like 
+
+- name -> The font name 
+- size -> The font size
+"
 Class {
 	#name : #SpStyleFont,
 	#superclass : #SpStyleProperty,

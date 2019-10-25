@@ -108,6 +108,6 @@ SpMultipleSelectionMode >> unselectIndex: anIndex [
 ]
 
 { #category : #events }
-SpMultipleSelectionMode >> whenChangedDo: aBlockClosure [
-	self property: #selectedIndexes whenChangedDo: [ aBlockClosure cull: self ]
+SpMultipleSelectionMode >> whenChangedDo: aBlock [
+	self property: #selectedIndexes whenChangedDo: [ aBlock cull: self ]
 ]

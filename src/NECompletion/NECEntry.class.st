@@ -19,11 +19,6 @@ NECEntry class >> contents: aString [
 	^ self new setContents: aString
 ]
 
-{ #category : #'instance creation' }
-NECEntry class >> contents: aString type: aSymbol [
-	^ self new setContents: aString type: aSymbol
-]
-
 { #category : #operations }
 NECEntry >> <= aECEntry [ 
 	^ contents <= aECEntry contents
@@ -68,16 +63,6 @@ NECEntry >> descriptionWith: anECContext [
 	^ description := self createDescriptionWith: anECContext
 ]
 
-{ #category : #operations }
-NECEntry >> guessTypeWith: anECContext [ 
-	^ nil
-]
-
-{ #category : #testing }
-NECEntry >> isInstance [
-	^ false
-]
-
 { #category : #testing }
 NECEntry >> isLocal [
 	^ false
@@ -107,12 +92,6 @@ NECEntry >> printOn: aStream [
 { #category : #accessing }
 NECEntry >> setContents: aString [ 
 	contents := aString.
-]
-
-{ #category : #accessing }
-NECEntry >> setContents: aString type: aSymbol [ 
-	contents := aString.
-	type := aSymbol
 ]
 
 { #category : #accessing }

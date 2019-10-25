@@ -40,7 +40,7 @@ SpMorphicBoxAdapter >> addConstraits: constraints toChild: childMorph [
 				vResizing: #spaceFill ]
 		ifFalse: [
 			"Set morph to stay rigid"
-			layout direction setRigidityOfNonExpendedMorph: theMorph.
+			layout direction setRigidityOfNonExpandedMorph: theMorph.
 			constraints width ifNotNil: [ :w | theMorph width: w ].
 			constraints height ifNotNil: [ :h | theMorph height: h ] ].
 	
@@ -102,6 +102,9 @@ SpMorphicBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 	constraints isPlacedAtStart
 		ifTrue: [ aPanel submorphs first addMorphBack: childMorph ]
 		ifFalse: [ aPanel submorphs second addMorphBack: childMorph ].
+	
+	aPanel height: (aPanel height max: childMorph height).
+	aPanel width: (aPanel width max: childMorph width).
 		
 	^ childMorph
 ]
@@ -152,6 +155,7 @@ SpMorphicBoxAdapter >> newPanel [
 		changeTableLayout;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
+		extent: 0@0;
 		color: Color transparent;
 		borderColor: Color transparent;
 		yourself
@@ -192,29 +196,16 @@ SpMorphicBoxAdapter >> remove: aPresenter [
 	widget submorphs second removeMorph: morph.
 ]
 
-{ #category : #factory }
-SpMorphicBoxAdapter >> removeSubWidgets [
+{ #category : #accessing }
+SpMorphicBoxAdapter >> removeAll [
 
 	widget submorphs first removeAllMorphs.
 	widget submorphs second removeAllMorphs
 ]
 
-{ #category : #private }
-SpMorphicBoxAdapter >> wrapMorphIfNeeded: aMorph padding: aNumber [
-	
-	aNumber = 0 ifTrue: [ ^ aMorph ].
-	^ Morph new
-		layoutPolicy: TableLayout new;
-		color: Color transparent;
-		borderColor: Color transparent;
-		borderWidth: aNumber;
-		hResizing: aMorph hResizing;
-		vResizing: aMorph vResizing;
-		width: aMorph width + (aNumber * 2);
-		height: aMorph height + (aNumber * 2);
-		addMorph: (aMorph
-			hResizing: #spaceFill;
-			vResizing: #spaceFill;
-			yourself);
-		yourself
+{ #category : #factory }
+SpMorphicBoxAdapter >> removeSubWidgets [
+
+	widget submorphs first removeAllMorphs.
+	widget submorphs second removeAllMorphs
 ]

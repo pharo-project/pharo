@@ -13,7 +13,9 @@ SpCodeInspectItCommand class >> defaultName [
 { #category : #default }
 SpCodeInspectItCommand class >> defaultShortcutKey [
 
-	^ $i meta
+	^ $i command mac 
+		| $i control win
+		| $i control unix
 ]
 
 { #category : #execution }
