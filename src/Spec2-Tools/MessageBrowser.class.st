@@ -550,7 +550,7 @@ MessageBrowser >> textModel: aModel [
 
 { #category : #private }
 MessageBrowser >> title [
-	^ title ifNil: [ title := self defaultTitle ]
+	^ title ifNil: [ self defaultTitle ]
 
 ]
 
