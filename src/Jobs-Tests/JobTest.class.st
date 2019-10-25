@@ -3,14 +3,14 @@ SUnit tests for Job class
 "
 Class {
 	#name : #JobTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Jobs-Tests-Base'
 }
 
 { #category : #running }
 JobTest >> tearDown [
 
-	Smalltalk globals at: #SystemProgressMorph ifPresent: [:spm | 
+	testingEnvironment at: #SystemProgressMorph ifPresent: [:spm | 
 		spm uniqueInstance bars do: [ :e | e close ]].
 	super tearDown
 ]

@@ -18,7 +18,7 @@ Class {
 { #category : #utilities }
 RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 
-	Smalltalk globals at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
+	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
 { #category : #utilities }

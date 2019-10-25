@@ -15,7 +15,7 @@ They should also implement to confirm that all methods have been tested.
 "
 Class {
 	#name : #ClassTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'SUnit-Core-Utilities'
 }
 
@@ -112,7 +112,7 @@ ClassTestCase >> targetClass [
 		do: [ 
 			| className |
 			className := self class name asString copyFrom: 1 to: self class name size - 4.
-			^ Smalltalk globals at: className asString asSymbol ]
+			^ testingEnvironment at: className asString asSymbol ]
 ]
 
 { #category : #tests }

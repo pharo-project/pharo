@@ -3,7 +3,7 @@ Superclass for serialization tests
 "
 Class {
 	#name : #FLSerializationTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'serializer',
 		'materializer',
@@ -262,7 +262,7 @@ FLSerializationTest >> tearDownClassFactory [
 { #category : #running }
 FLSerializationTest >> tearDownGlobalVariables [
 
-	Smalltalk globals removeKey: #FLGlobalVariableForTesting ifAbsent: []
+	testingEnvironment removeKey: #FLGlobalVariableForTesting ifAbsent: []
 ]
 
 { #category : #running }

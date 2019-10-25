@@ -43,7 +43,7 @@ RPackageIncrementalTest >> p3Name [
 
 { #category : #utilities }
 RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
-	Smalltalk at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
+	testingEnvironment at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
 ]
 
 { #category : #running }

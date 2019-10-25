@@ -3,7 +3,7 @@ Abstract superclass for monticello tests
 "
 Class {
 	#name : #MCTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Monticello-Tests-Base'
 }
 
@@ -97,12 +97,12 @@ MCTestCase >> mockClass: className super: superclassName [
 
 { #category : #mocks }
 MCTestCase >> mockClassA [
-	^ Smalltalk globals at: #MCMockClassA
+	^ testingEnvironment at: #MCMockClassA
 ]
 
 { #category : #mocks }
 MCTestCase >> mockClassB [
-	^ Smalltalk globals at: #MCMockClassB
+	^ testingEnvironment at: #MCMockClassB
 ]
 
 { #category : #mocks }
