@@ -75,10 +75,10 @@ Boolean >> and: alternativeBlock [
 	the argument, alternativeBlock; otherwise answer false without 
 	evaluating the argument."
 	
-	"true and: true >>> true"
-	"true and: false >>> false"
-	"false and: true >>> false"
-	"false and: false >>> true"
+	"true and: [true] >>> true"
+	"true and: [false] >>> false"
+	"false and: [true] >>> false"
+	"false and: [false] >>> true"
 
 	self subclassResponsibility
 ]
