@@ -35,7 +35,7 @@ DebuggerListPresenter class >> title [
 
 { #category : #initialization }
 DebuggerListPresenter >> getDebuggerClasses [
-	^ ((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ].
+	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) sort: [:dbgClass1 :dbgClass2 | dbgClass1 rank <= dbgClass2 rank]; yourself.
 ]
 
 { #category : #initialization }
@@ -53,5 +53,5 @@ DebuggerListPresenter >> initializeWidgets [
 		addItem: (SpToolBarButton new
 			label: 'Browse';
 			icon: (self iconManager iconNamed: #smallFind);
-			action: [  ]).
+			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
 ]
