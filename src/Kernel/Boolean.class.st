@@ -30,7 +30,12 @@ Boolean class >> new [
 { #category : #'logical operations' }
 Boolean >> & aBoolean [ 
 	"Evaluating conjunction. Evaluate the argument. Then answer true if 
-	both the receiver and the argument are true."
+	both the receiver and the argument are true.
+	true  & true  >>> true
+	false & true  >>> false
+	true  & false >>> false
+	false & false >>> false
+	"
 
 	self subclassResponsibility
 ]
@@ -184,7 +189,12 @@ Boolean >> xor: alternativeBlock [
 { #category : #'logical operations' }
 Boolean >> | aBoolean [ 
 	"Evaluating disjunction (OR). Evaluate the argument. Then answer true 
-	if either the receiver or the argument is true."
+	if either the receiver or the argument is true.
+	true  | true  >>> true
+	false | true  >>> true
+	true  | false >>> true
+	false | false >>> false
+	"
 
 	self subclassResponsibility
 ]
