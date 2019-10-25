@@ -2676,6 +2676,13 @@ String >> withSeparatorsCompacted [
 	"'test  test		 ' withSeparatorsCompacted"
 ]
 
+{ #category : #formatting }
+String >> withSqueakLineEndings [
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
+	
+	^ self withInternalLineEndings
+]
+
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."

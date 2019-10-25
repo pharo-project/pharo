@@ -609,3 +609,10 @@ Text >> withInternalLineEndings [
 	(newText asString includes: Character lf) ifFalse: [ ^newText ].
 	^newText copyReplaceAll: String lf with: String cr.
 ]
+
+{ #category : #formatting }
+Text >> withSqueakLineEndings [
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
+	
+	^ self withInternalLineEndings
+]
