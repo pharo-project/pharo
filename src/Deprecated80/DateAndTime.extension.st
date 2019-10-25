@@ -6,5 +6,5 @@ DateAndTime class >> fromSqueakTime: anInteger [
 	Squeak time is in the local timezone with an epoch of 1 Jan. 1901"
 	
 	self deprecated: 'Use #fromInternalTime: instead.' transformWith: '`@receiver fromSqueakTime: `@arg' -> '`@receiver fromInternalTime: `@arg'.
-	^ self basicPharoToIso
+	^ self fromInternalTime: anInteger
 ]
