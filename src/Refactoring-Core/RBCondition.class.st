@@ -200,7 +200,7 @@ RBCondition class >> hierarchyOf: aClass canUnderstand: aSelector [
 	^self new
 		type: (Array with: #hierarchyUnderstandsSelector with: aClass with: aSelector)
 		block: [aClass hierarchyDefinesMethod: aSelector]
-		errorString: aClass printString , ' <1?or a subclass:and all subclasses do not> understand<1?s:> ' , aSelector printString
+		errorString: aClass printString , ' <1? and/or part of it''s Hierarchy already: and/or part of it''s Hierarchy do not> understand<1?s:> ' , aSelector printString
 ]
 
 { #category : #'instance creation' }
