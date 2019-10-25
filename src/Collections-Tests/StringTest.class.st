@@ -1943,6 +1943,27 @@ StringTest >> testWithFirstCharacterDownshifted [
 ]
 
 { #category : #'tests - internet' }
+StringTest >> testWithInternalLineEndings [
+
+	{
+		'abc' -> 'abc'.
+		'abc', String cr -> ('abc', String cr).
+		'abc', String lf -> ('abc', String cr).
+		'abc', String crlf -> ('abc', String cr).
+		String cr, 'abc' -> (String cr, 'abc').
+		String lf, 'abc' -> (String cr, 'abc').
+		String crlf, 'abc' -> (String cr, 'abc').
+		'abc', String cr, String cr, 'abc' -> ('abc', String cr, String cr, 'abc').
+		'abc', String lf, String lf, 'abc' -> ('abc', String cr, String cr, 'abc').
+		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
+		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		(WideString with: 403 asCharacter with: Character lf) -> (WideString with: 403 asCharacter with: Character cr).
+	} do: [ :each |
+		self assert: each key withInternalLineEndings equals: each value ]
+]
+
+{ #category : #'tests - internet' }
 StringTest >> testWithInternetLineEndings [
 
 	{
@@ -1989,27 +2010,6 @@ StringTest >> testWithSeparatorsCompacted [
 	) pairsDo: [ :input :output |
 		self assert: input withSeparatorsCompacted equals: output ]
 	
-]
-
-{ #category : #'tests - internet' }
-StringTest >> testWithSqueakLineEndings [
-
-	{
-		'abc' -> 'abc'.
-		'abc', String cr -> ('abc', String cr).
-		'abc', String lf -> ('abc', String cr).
-		'abc', String crlf -> ('abc', String cr).
-		String cr, 'abc' -> (String cr, 'abc').
-		String lf, 'abc' -> (String cr, 'abc').
-		String crlf, 'abc' -> (String cr, 'abc').
-		'abc', String cr, String cr, 'abc' -> ('abc', String cr, String cr, 'abc').
-		'abc', String lf, String lf, 'abc' -> ('abc', String cr, String cr, 'abc').
-		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
-		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
-		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
-		(WideString with: 403 asCharacter with: Character lf) -> (WideString with: 403 asCharacter with: Character cr).
-	} do: [ :each |
-		self assert: each key withSqueakLineEndings equals: each value ]
 ]
 
 { #category : #'tests - internet' }

@@ -425,7 +425,7 @@ Character >> basicIdentityHash [
 ]
 
 { #category : #converting }
-Character >> basicSqueakToIso [
+Character >> basicPharoToIso [
 	| tmp1 |
 	self asInteger < 128
 		ifTrue: [ ^ self ].

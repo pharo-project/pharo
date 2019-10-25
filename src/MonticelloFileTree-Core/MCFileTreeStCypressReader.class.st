@@ -55,7 +55,7 @@ MCFileTreeStCypressReader >> addClassAndMethodDefinitionsFromEntry: classEntry [
 					[ :fileStream | "Issue 33: https://github.com/dalehenrich/filetree/issues/33" methodPropertiesDict := STON fromStream: fileStream ] ].
 	self
 		addClassDefinitionFrom: classPropertiesDict
-		comment: classComment withSqueakLineEndings.
+		comment: classComment withInternalLineEndings.
 	self
 		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
 		methodProperties: methodPropertiesDict
@@ -178,7 +178,7 @@ MCFileTreeStCypressReader >> addTraitAndMethodDefinitionsFromEntry: classEntry [
 					[ :fileStream | "Issue 33: https://github.com/dalehenrich/filetree/issues/33" methodPropertiesDict := STON fromStream: fileStream ] ].
 	self
 		addTraitDefinitionFrom: classPropertiesDict
-		comment: classComment withSqueakLineEndings.
+		comment: classComment withInternalLineEndings.
 	self
 		addMethodDefinitionsForClass: (classPropertiesDict at: 'name')
 		methodProperties: methodPropertiesDict
