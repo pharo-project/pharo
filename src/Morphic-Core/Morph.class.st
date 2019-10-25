@@ -1116,6 +1116,12 @@ Morph >> asMorph [
 ]
 
 { #category : #converting }
+Morph >> asReadOnlyMorph [
+
+	^ self
+]
+
+{ #category : #converting }
 Morph >> asText [
 
 	| anchor embedMorphSignal |
