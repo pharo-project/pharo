@@ -2679,6 +2679,7 @@ String >> withSqueakLineEndings [
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
+	"('asa' , String cr , 'asa') withUnixLineEndings at: 4 >>> Character lf"
 
 	^ self withLineEndings: String lf
 ]
