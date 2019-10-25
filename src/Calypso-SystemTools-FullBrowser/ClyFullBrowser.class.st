@@ -146,19 +146,7 @@ ClyFullBrowser class >> taskbarIconName [
 { #category : #'world menu' }
 ClyFullBrowser class >> worldMenuOn: aBuilder [ 
 	<worldMenu> 
-	| isDefaultBrowser target targetName |
-	(self environment hasClassNamed: #Nautilus) ifFalse: [^self].
-	
-	isDefaultBrowser := Smalltalk tools browser = self.
-	(isDefaultBrowser and: [ self environment hasClassNamed: #Nautilus ])
-		ifFalse: [ 
-			target := self.
-			targetName := 'Calypso' ].
-	(aBuilder item: (targetName, ' browser') asSymbol)	
-		order: 0.5;
-		help: targetName, ' browser';
-		icon: (self iconNamed: #nautilus);
-		action: [ target open ]
+	^ self
 ]
 
 { #category : #private }
