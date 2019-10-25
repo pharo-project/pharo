@@ -143,12 +143,6 @@ ClyFullBrowser class >> taskbarIconName [
 	^#smallSystemBrowser
 ]
 
-{ #category : #'world menu' }
-ClyFullBrowser class >> worldMenuOn: aBuilder [ 
-	<worldMenu> 
-	^ self
-]
-
 { #category : #private }
 ClyFullBrowser >> adoptForExtendedClass [
 	| extendingPackages extraGroups |
