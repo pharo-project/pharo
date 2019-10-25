@@ -35,7 +35,7 @@ DebuggerListPresenter class >> title [
 
 { #category : #initialization }
 DebuggerListPresenter >> getDebuggerClasses [
-	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) sort: [:dbgClass1 :dbgClass2 | dbgClass1 rank <= dbgClass2 rank]; yourself.
+	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) sort: [:dbgClass1 :dbgClass2 | dbgClass1 rank >= dbgClass2 rank]; yourself.
 ]
 
 { #category : #initialization }

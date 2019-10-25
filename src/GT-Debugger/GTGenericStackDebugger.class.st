@@ -98,6 +98,12 @@ GTGenericStackDebugger class >> helpClass [
 	^ GTDebuggerHelp
 ]
 
+{ #category : #'debugger declaration' }
+GTGenericStackDebugger class >> iAmADebugger [
+	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
+	<iAmADebugger>
+]
+
 { #category : #'settings api' }
 GTGenericStackDebugger class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile ifNil: [LogDebuggerStackToFile := true]
@@ -116,6 +122,12 @@ GTGenericStackDebugger class >> logFileName [
 { #category : #'settings api' }
 GTGenericStackDebugger class >> logFileName: newName [
 	LogFileName := newName
+]
+
+{ #category : #'debugger declaration' }
+GTGenericStackDebugger class >> rank [
+	"Returns an int. When an exception needs to  be debugged, the rank is used to choose among the available debuggers. A higher rank means a higher priority."
+	^ 30
 ]
 
 { #category : #'tools registry' }

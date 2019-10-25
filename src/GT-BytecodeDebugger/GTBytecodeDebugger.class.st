@@ -18,6 +18,18 @@ GTBytecodeDebugger class >> helpClass [
 	^ GTBytecodeDebuggerHelp
 ]
 
+{ #category : #'debugger declaration' }
+GTBytecodeDebugger class >> iAmADebugger [
+	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
+	<iAmADebugger>
+]
+
+{ #category : #'debugger declaration' }
+GTBytecodeDebugger class >> rank [
+	"Returns an int. When an exception needs to  be debugged, the rank is used to choose among the available debuggers. A higher rank means a higher priority."
+	^ 20
+]
+
 { #category : #'tools registry' }
 GTBytecodeDebugger class >> register [
 
