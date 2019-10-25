@@ -207,7 +207,7 @@ MorphTest >> testIsMorph [
 	self assert: (morph isMorph).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'testing - initialization' }
 MorphTest >> testMouseOverRotationHandleShouldNotSignalMessageNotUnderstood [
 	"Mousing hover the rotation handle of a morph should not raise '#degrees was sent to nil'"
 
@@ -215,14 +215,13 @@ MorphTest >> testMouseOverRotationHandleShouldNotSignalMessageNotUnderstood [
 	| mouseDownEventToCreateHalos handMorph halo pos mouseMoveEvent |
 	handMorph := WorldMorph cursorOwnerWorld worldState hands first.
 	mouseDownEventToCreateHalos := MouseButtonEvent new setType: #mouseDown position: circleMorph position buttons: 73 hand: handMorph.
-	"73 encodes the shift+Alt/Option modifiers"
 	circleMorph openInWorld.
 	halo := circleMorph addHalo: mouseDownEventToCreateHalos.
 	"Specifically finding the rotation halo does not seem easy to do in a robust way (you could always search for the name of the icon or some other characteristic like that, but what if the icon is changed in the future?). So we'll send a mouse hover event to each submorph. "
 	halo submorphs do: [ :subMorph |
 		pos := subMorph position.
 		mouseMoveEvent := MouseMoveEvent new setType: #mouseMove startPoint: pos endPoint: pos trail: nil buttons: 0 hand: handMorph stamp: 0.
-		self flag: #improvement. "Is there a way to be more precise in the following assertion: to say that the block shouldn't raise a MessageNotUnderstood **for the #degrees selector**?"
+		"Is there a way to be more precise in the following assertion: to say that the block shouldn't raise a MessageNotUnderstood **for the #degrees selector**?"
 		self shouldnt: [subMorph handleEvent: mouseMoveEvent] raise: MessageNotUnderstood.
 	].
 ]

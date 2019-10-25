@@ -3167,9 +3167,9 @@ Morph >> handlesMouseMove: anEvent [
 			+ and some button is down,
 			+ and the receiver is the current mouse focus."
 			
-	self eventHandler ifNotNil: [ :handler | 
+	"self eventHandler ifNotNil: [ :handler | 
 		(handler handlesMouseMove: anEvent) ifTrue: [ 
-			^ true ] ].
+			^ true ] ]."
 				
 	^anEvent hand submorphs isEmpty and: [ 	 
 		(anEvent anyButtonPressed and:[
