@@ -13,7 +13,7 @@ InformDebugger class >> handlesContext: aContext [
 	^ true
 ]
 
-{ #category : #'opening api' }
+{ #category : #'debugger declaration' }
 InformDebugger class >> iAmADebugger [
 	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
 	<iAmADebugger>
@@ -24,7 +24,7 @@ InformDebugger class >> openOn: aDebugSession withFullView: aBool andNotificatio
 	self inform: (self messageToPrintFrom: aDebugSession)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'debugger declaration' }
 InformDebugger class >> rank [
 	"Returns an int. When an exception needs to  be debugged, the rank is used to choose among the available debuggers. A higher rank means a higher priority."
 	^ 10

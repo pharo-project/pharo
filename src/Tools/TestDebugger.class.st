@@ -9,7 +9,7 @@ TestDebugger class >> handlesContext: aContext [
 	^ true
 ]
 
-{ #category : #'opening api' }
+{ #category : #'debugger declaration' }
 TestDebugger class >> iAmADebugger [
 	<iAmADebugger>
 ]
@@ -19,7 +19,7 @@ TestDebugger class >> openOn: aDebugSession withFullView: aBool andNotification:
 	Transcript show: 'Opening MyDebugger'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'debugger declaration' }
 TestDebugger class >> rank [
 	^ 50
 ]
