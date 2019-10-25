@@ -293,6 +293,23 @@ DateAndTimeTest >> testOffset [
 	self deny: dateAndTime1 localSeconds == dateAndTime2 localSeconds.
 ]
 
+{ #category : #'tests - epoch' }
+DateAndTimeTest >> testPharoEpoch [
+
+  self useNonUtcTimeZoneDuring: [ | localEpoch |
+    localEpoch := '1901-01-01T00:00:00' asDateAndTime.
+    self deny: (DateAndTime epoch = localEpoch).
+    self deny: (((DateAndTime fromSeconds: 0) offset: 0) = localEpoch) ].
+    
+  self useTimeZone: 'UTC' during: [ | localEpoch |
+    localEpoch := '1901-01-01T00:00:00' asDateAndTime.
+    self assert: DateAndTime epoch equals: localEpoch.
+    self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: localEpoch ].
+  
+  self assert: DateAndTime epoch equals: '1901-01-01T00:00:00+00:00' asDateAndTime. 
+  self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: '1901-01-01T00:00:00+00:00' asDateAndTime.
+]
+
 { #category : #tests }
 DateAndTimeTest >> testPrintString [
 	| dt dtNoOffset |
@@ -650,23 +667,6 @@ DateAndTimeTest >> testSimpleAccessors [
 		assert: (t minutes = t minute);
 		assert: (t seconds = t second).
 
-]
-
-{ #category : #'tests - epoch' }
-DateAndTimeTest >> testSqueakEpoch [
-
-  self useNonUtcTimeZoneDuring: [ | localEpoch |
-    localEpoch := '1901-01-01T00:00:00' asDateAndTime.
-    self deny: (DateAndTime epoch = localEpoch).
-    self deny: (((DateAndTime fromSeconds: 0) offset: 0) = localEpoch) ].
-    
-  self useTimeZone: 'UTC' during: [ | localEpoch |
-    localEpoch := '1901-01-01T00:00:00' asDateAndTime.
-    self assert: DateAndTime epoch equals: localEpoch.
-    self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: localEpoch ].
-  
-  self assert: DateAndTime epoch equals: '1901-01-01T00:00:00+00:00' asDateAndTime. 
-  self assert: ((DateAndTime fromSeconds: 0) offset: 0) equals: '1901-01-01T00:00:00+00:00' asDateAndTime.
 ]
 
 { #category : #'tests - arithmetic' }

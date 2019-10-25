@@ -104,7 +104,7 @@ MCMethodDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ 
 			aDefinition category = self category
-				and: [ aDefinition source withSqueakLineEndings = self source withSqueakLineEndings ] ]
+				and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
 { #category : #visiting }
@@ -207,7 +207,7 @@ source: sourceString [
 	category := (catString asSymbol) ifEmpty: [#'as yet unclassified'].
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
-	source := sourceString withSqueakLineEndings.
+	source := sourceString withInternalLineEndings.
 
 ]
 

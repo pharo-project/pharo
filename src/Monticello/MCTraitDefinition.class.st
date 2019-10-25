@@ -115,7 +115,7 @@ MCTraitDefinition >> initializeWithName: classNameString
 		name := classNameString asSymbol.
 		traitComposition := traitCompositionString.
 	     category := categoryString.
-		comment := commentString withSqueakLineEndings.
+		comment := commentString withInternalLineEndings.
 		variables := OrderedCollection  new.
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp]
 
@@ -133,7 +133,7 @@ MCTraitDefinition >> initializeWithName: classNameString
 		name := classNameString asSymbol.
 		traitComposition := traitCompositionString.
 	    category := categoryString.
-		comment := commentString withSqueakLineEndings.
+		comment := commentString withInternalLineEndings.
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
 		variables := OrderedCollection  new.
 		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
@@ -151,7 +151,7 @@ MCTraitDefinition >> initializeWithName: classNameString
 		name := classNameString asSymbol.
 		traitComposition := traitCompositionString.
 	    category := categoryString.
-		comment := commentString withSqueakLineEndings.
+		comment := commentString withInternalLineEndings.
 		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
 		variables := OrderedCollection  new.
 		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.

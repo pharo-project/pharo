@@ -117,12 +117,6 @@ GoferApiTest >> testHttpRepositoryUseStoredCredentials [
 	
 ]
 
-{ #category : #'tests - repositories - places' }
-GoferApiTest >> testImpara [
-	gofer impara: 'Tweak'.
-	self assert: gofer repositories: #('http://source.impara.de/Tweak')
-]
-
 { #category : #tests }
 GoferApiTest >> testInitialReferences [
 	self assertEmpty: gofer references
@@ -189,18 +183,6 @@ GoferApiTest >> testRepositoryErrors [
 GoferApiTest >> testSmalltalkhub [
 	gofer smalltalkhubUser: 'dh83' project: 'ci'.
 	self assert: gofer repositories: #('http://smalltalkhub.com/mc/dh83/ci/main/')
-]
-
-{ #category : #'tests - repositories - places' }
-GoferApiTest >> testSqueakfoundation [
-	gofer squeakfoundation: '39a'.
-	self assert: gofer repositories: #('http://source.squeakfoundation.org/39a')
-]
-
-{ #category : #'tests - repositories - places' }
-GoferApiTest >> testSqueaksource [
-	gofer squeaksource: 'Seaside29'.
-	self assert: gofer repositories: #('http://www.squeaksource.com/Seaside29')
 ]
 
 { #category : #'tests - repositories' }
