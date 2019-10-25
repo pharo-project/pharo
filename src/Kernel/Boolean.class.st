@@ -181,10 +181,10 @@ Boolean >> or: alternativeBlock [
 	the argument, alternativeBlock; otherwise answer true without 
 	evaluating the argument."
 	
-	"true or: true >>> true"
-	"true or: false >>> true"
-	"false or: true >>> true"
-	"false or: false >>> false"
+	"true or: [true] >>> true"
+	"true or: [false] >>> true"
+	"false or: [true] >>> true"
+	"false or: [false] >>> false"
 
 	self subclassResponsibility
 ]
@@ -212,10 +212,10 @@ Boolean >> xor: alternativeBlock [
 	"Nonevaluating conjunction. If the receiver is true, answer the opposite of the 
 	the argument, alternativeBlock; otherwise answer the value of the alternativeBlock."
 	
-	"true xor: true >>> false"
-	"true xor: false >>> true"
-	"false xor: true >>> true"
-	"false xor: false >>> false"
+	"true xor: [true] >>> false"
+	"true xor: [false] >>> true"
+	"false xor: [true] >>> true"
+	"false xor: [false] >>> false"
 
 	self subclassResponsibility
 ]
