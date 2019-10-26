@@ -613,6 +613,12 @@ RubAbstractTextArea >> defaultColor [
 
 ]
 
+{ #category : #'event handling' }
+RubAbstractTextArea >> defaultFindReplaceServiceClass [
+
+	^ RubFindReplaceService
+]
+
 { #category : #menu }
 RubAbstractTextArea >> defaultGetMenuPolicy [
 	^ self
@@ -814,7 +820,7 @@ RubAbstractTextArea >> findRegex [
 { #category : #'event handling' }
 RubAbstractTextArea >> findReplaceService [
 	^ findReplaceService ifNil: [
-		findReplaceService := RubFindReplaceService new ].
+		findReplaceService := self defaultFindReplaceServiceClass newFor: self].
 ]
 
 { #category : #'find-replace' }

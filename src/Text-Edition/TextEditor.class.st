@@ -9,7 +9,8 @@ Class {
 		'model',
 		'editingState',
 		'selectionShowing',
-		'morph'
+		'morph',
+		'findReplaceService'
 	],
 	#classVars : [
 		'BlinkingCursor',
@@ -1277,6 +1278,12 @@ TextEditor >> cut: aKeyboardEvent [
 	^true
 ]
 
+{ #category : #'find-select' }
+TextEditor >> defaultFindReplaceServiceClass [
+
+	^ FindReplaceService
+]
+
 { #category : #'new selection' }
 TextEditor >> deselect [
 	"If the text selection is visible on the screen, reverse its highlight."
@@ -1683,7 +1690,7 @@ TextEditor >> findRegex [
 
 { #category : #'find-select' }
 TextEditor >> findReplaceService [
-	^ FindReplaceService default
+	^ findReplaceService ifNil: [ self defaultFindReplaceServiceClass newFor: self ]
 ]
 
 { #category : #'find-select' }

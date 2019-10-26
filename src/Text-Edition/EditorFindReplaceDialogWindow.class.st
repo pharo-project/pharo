@@ -100,6 +100,12 @@ EditorFindReplaceDialogWindow >> defaultButton [
 		ifAbsent: [] 
 ]
 
+{ #category : #accessing }
+EditorFindReplaceDialogWindow >> defaultFindReplaceServiceClass [
+
+	^ FindReplaceService
+]
+
 { #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> defaultFocusMorph [
 	^ self findTextFieldMorph textMorph
@@ -422,7 +428,7 @@ EditorFindReplaceDialogWindow >> searchBackwards: aBoolean [
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> state [
-	^ state ifNil: [self state: FindReplaceService new]
+	^ state ifNil: [self state: (self defaultFindReplaceServiceClass newFor: self)]
 ]
 
 { #category : #accessing }
