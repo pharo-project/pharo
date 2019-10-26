@@ -12,31 +12,37 @@ Class {
 }
 
 { #category : #accessing }
+GLMRubricSmalltalkCodePresentation >> browseFullClass [
+
+ 	self announce: (GLMTextEditorRequest for: #browseFullClass)
+]
+
+{ #category : #accessing }
 GLMRubricSmalltalkCodePresentation >> browsingSelectionActions [
 
 	^ { (GLMGenericAction new) 
-				title: 'Browse it';
+				title: 'Browse Full Class';
 				action: [ :aPresentation |
 					aPresentation browseFullClass  ]; 
 				shortcut: $b; 
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'Senders of it';
+				title: 'Senders';
 				action: [ :aPresentation |
 					aPresentation sendersOfIt ]; 
 				shortcut: $n; 
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'Implementors of it';
+				title: 'Implementors';
 				action: [ :aPresentation |
 					aPresentation implementorsOfIt ]; 
 				shortcut: $m; 
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'References to it';
+				title: 'References';
 				action: [ :aPresentation |
 					aPresentation referencesToIt ]; 
 				"shortcut: $N; "
@@ -54,7 +60,7 @@ GLMRubricSmalltalkCodePresentation >> browsingSelectionActions [
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'Method source with it';
+				title: 'Method source containing selection';
 				action: [ :aPresentation |
 					aPresentation selectLine.
 					self systemNavigation 
