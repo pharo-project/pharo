@@ -35,8 +35,15 @@ Class {
 		'acceptOnFocusChange',
 		'selectionColor'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Text'
+	#category : #Deprecated80
 }
+
+{ #category : #testing }
+TextMorphForEditView class >> isDeprecated [
+	"PluggableTextMorph is removed in favor of Rubric."
+
+	^ true
+]
 
 { #category : #editing }
 TextMorphForEditView >> acceptContents [

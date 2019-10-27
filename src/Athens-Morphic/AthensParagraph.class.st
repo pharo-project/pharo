@@ -71,22 +71,6 @@ AthensParagraph >> extent [
 	^ containerRect width @ lines last bottom
 ]
 
-{ #category : #selection }
-AthensParagraph >> extraSelectionChanged [
-	"
-	refreshExtraSelection := true
-"
-
-	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
-]
-
-{ #category : #selection }
-AthensParagraph >> findReplaceSelectionRegex: aRegex [
-	"	findReplaceSelectionRegex := aRegex. "
-
-	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
-]
-
 { #category : #accessing }
 AthensParagraph >> focused [ 
 	^ false
@@ -103,13 +87,6 @@ AthensParagraph >> focused: bool [
 { #category : #selection }
 AthensParagraph >> positionWhenComposed: pos [
 	positionWhenComposed := pos
-]
-
-{ #category : #selection }
-AthensParagraph >> secondarySelection: aSubstring [
-	"	secondarySelection := aSubstring."
-
-	self flag: #pharoToRemove	"This method is only needed for TextMorphForEditView. This class is planned for removal with PluggableTextMorph. When it will be removed, this class can probably be cleaned."
 ]
 
 { #category : #selection }

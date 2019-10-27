@@ -7,8 +7,15 @@ Class {
 	#instVars : [
 		'maxLength'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Text'
+	#category : #Deprecated80
 }
+
+{ #category : #testing }
+TextMorphForFieldView class >> isDeprecated [
+	"PluggableTextMorph is removed in favor of Rubric."
+
+	^ true
+]
 
 { #category : #private }
 TextMorphForFieldView >> editorClass [
