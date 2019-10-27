@@ -516,16 +516,6 @@ SequenceableCollection >> combinationsAt: jj in: aCollection after: nn do: aBloc
 					do: aBlock ] ]
 ]
 
-{ #category : #converting }
-SequenceableCollection >> concatenation [
-	|result index|
-
-	result := Array new: (self inject: 0 into: [:sum :each | sum + each size]).
-	index := 0.
-	self do: [:each | each do: [:item | result at: (index := index+1) put: item]].
-	^result
-]
-
 { #category : #copying }
 SequenceableCollection >> copyAfter: anElement [
 	"Answer a copy of the receiver from after the first occurence
