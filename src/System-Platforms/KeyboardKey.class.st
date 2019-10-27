@@ -236,7 +236,7 @@ KeyboardKey class >> initializeKeyTable [
 
 { #category : #macos }
 KeyboardKey class >> initializeMacOSVirtualKeyTable [
-	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
+	self flag: #pharoTodo. "Some values are missing, need to gather them from users who are able to."
 	MacosVirtualKeyTable := Dictionary new.
 	MacosVirtualKeyTable
 		at: 16r24 put: (self value: 16rff0d); " kVK_Return                    = 0x24"
@@ -349,7 +349,7 @@ KeyboardKey class >> initializeMacOSVirtualKeyTable [
 
 { #category : #unix }
 KeyboardKey class >> initializeUnixVirtualKeyTable [
-	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
+	self flag: #pharoTodo. "Some values are missing, need to gather them from users who are able to."
 	UnixVirtualKeyTable := Dictionary new.
 	UnixVirtualKeyTable
 		at: Character cr asciiValue put: (self value: 16rff0d); " kVK_Return       = 0x24"
@@ -463,7 +463,7 @@ KeyboardKey class >> initializeUnixVirtualKeyTable [
 
 { #category : #windows }
 KeyboardKey class >> initializeWindowsVirtualKeyTable [
-	self flag: #TODO. "Some values are missing, need to gather them from users who are able to."
+	self flag: #pharoTodo. "Some values are missing, need to gather them from users who are able to."
 	WindowsVirtualKeyTable := Dictionary new.
 	WindowsVirtualKeyTable
 		at: 16r0d put: (self value: 16rff0d); " kVK_Return                    = 0x24"
