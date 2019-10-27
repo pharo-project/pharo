@@ -51,7 +51,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #browseFullClass)
 		category: RubSmalltalkEditor name
 		default: $b meta
-		do: [ :target | target editor browseIt: nil ]
+		do: [ :target | target editor browseFullClass ]
 		description: 'Browse'.
 	
 	(aBuilder shortcut: #doIt)
@@ -256,16 +256,13 @@ RubSmalltalkEditor >> bindingOf: aString [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> browseClassFrom: aClassString [
-
 	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
 
 	| selectedClass |
-
 	"self lineSelectAndEmptyCheck: [ ^ self ]."
 	( aClassString isNil or: [ aClassString isEmpty ] )
 		ifTrue: [ textArea flash.
-			^ self
-			].
+			^ self ].
 
 	selectedClass := self model systemNavigation
 		classFromPattern: aClassString
@@ -274,16 +271,25 @@ RubSmalltalkEditor >> browseClassFrom: aClassString [
 	Smalltalk tools browser openOnClass: selectedClass
 ]
 
+{ #category : #'editing keys' }
+RubSmalltalkEditor >> browseClassOfExpression [
+ 	"Launch a browser for the class of the current selection, i.e. if you select 1+2 then you will get a class browser on class Point. Notice that this method handles also when the expression is a class."
+	
+ 	self evaluateSelectionAndDo: [:result | result class instanceSide browse ].
+	^ true
+]
+
 { #category : #'menu messages' }
 RubSmalltalkEditor >> browseFullClass [
-	"Launch a hierarchy browser for the class indicated by the current selection.  If multiple classes matching the selection exist, let the user choose among them."
+	"Launch a browser for the class indicated by the current selection. Note that if the selection is a valid expression it will browse the class of the result. If multiple classes matching the selection exist, let the user choose among them."
 	
-	"self lineSelectAndEmptyCheck: [^ self]."
-	self browseClassFrom: self findClassFromAST
+
+	"previous code was: self browseClassFrom: self findClassFromAST"
+	self browseClassOfExpression 
 ]
 
 { #category : #'editing keys' }
-RubSmalltalkEditor >> browseIt: t1 [ 
+RubSmalltalkEditor >> browseFullClassIt: t1 [ 
 
 	self browseFullClass.
 	^ true
@@ -556,23 +562,16 @@ RubSmalltalkEditor >> findClassFromAST [
 	"Try to make a class name out of the current text selection"
 
 	| node fallbackBlock className |		
-	
 	"Preserve original behavior - although could consider building AST from selection"
 	self hasSelection ifTrue: [ 
 		^(self selection string copyWithoutAll: CharacterSet crlf) trimBoth ].
-	
 	fallbackBlock := [^nil].
-
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
-	
 	[node isVariable] whileFalse: [ 
 	 	(node := node parent) ifNil: fallbackBlock ].
-	
 	className := node name.
-	
 	[ className first isUppercase ] whileFalse: [ 
 		(className := className allButFirst) ifEmpty: fallbackBlock  ].
-	
 	^className
 ]
 
