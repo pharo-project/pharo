@@ -177,7 +177,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 	packageOrganizer addMethod: (c1 >> #methodPackagedInP1).
 
 	self deny: (packageOrganizer includesPackageNamed: #'p1-something').
-	self assert: (p1 extensionClasses includes: c1)
+	self assert: (p1 extendedClasses includes: c1)
 
 ]
 
