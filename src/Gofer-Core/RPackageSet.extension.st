@@ -2,17 +2,12 @@ Extension { #name : #RPackageSet }
 
 { #category : #'*Gofer-Core' }
 RPackageSet >> classesAndMetaClasses [
-	^ self
-		collectFromAllPackages: [ :p | 
-			OrderedCollection new
-				addAll: p definedClasses;
-				addAll: (p definedClasses collect: [ :each | each classSide ]);
-				yourself ]
+	^ self packages
+		flatCollect: [ :p | p definedClasses , (p definedClasses collect: [ :each | each classSide ]) ]
 ]
 
 { #category : #'*Gofer-Core' }
 RPackageSet >> coreCategoriesForClass: aClass [
-	^ self
-		collectFromAllPackages: [ :p | p organization categories reject: [ :cat | p isForeignClassExtension: cat ] ]
-		with: aClass
+	^ self packages
+		flatCollect: [ :p | aClass organization categories reject: [ :cat | p isForeignClassExtension: cat ] ]
 ]
