@@ -86,6 +86,11 @@ Boolean >> eqv: aBoolean [
 	"Answer true if the receiver is equivalent to aBoolean."
 
 	^self == aBoolean
+	
+	"false eqv: true >>> false"
+	"(1 == 1) eqv: true >>> true"
+	"( 1 > 2)  eqv: false >>> true"
+
 ]
 
 { #category : #controlling }
