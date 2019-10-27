@@ -164,12 +164,6 @@ FindReplaceService >> findText: aStringOrText isRegex: aBoolean entireWordsOnly:
 ]
 
 { #category : #accessing }
-FindReplaceService >> findTextSilently: aStringOrText [
-	findText := aStringOrText asText.
-	self changed: #findText
-]
-
-{ #category : #accessing }
 FindReplaceService >> isRegex [
 	^ isRegex ifNil: [isRegex := false]
 ]
