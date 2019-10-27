@@ -713,7 +713,7 @@ RPackageOrganizer >> packageOf: aClass [
 { #category : #'package access from class' }
 RPackageOrganizer >> packageOfClassNamed: aName [
 
-	self flag: self. "shouldProbablyReturnUnunpackagedPackage instead of nil"
+	self flag: #pharoFixMe. "Should probably return _UnunpackagedPackage instead of nil"
 	^ classPackageMapping at: aName asSymbol ifAbsent: [nil]
 ]
 

@@ -491,16 +491,6 @@ RPackage >> classes [
 	
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> classesAndMetaClasses [
-	"Return a Set with all classes and metaclasses belonging to this package"
-	self flag: #stef. "only used by goferCleanUp"
-	^ OrderedCollection new
-		addAll: self definedClasses;
-		addAll: (self definedClasses collect: [:each | each classSide]);
-		yourself.
-]
-
 { #category : #'class tags' }
 RPackage >> classesForClassTag: aSymbol [
 	"Returns the classes tagged using aSymbol"
@@ -517,14 +507,6 @@ RPackage >> classesTaggedWith: aSymbol [
 	This method select all classes which are tagged by given symbol"
 	
 	^(self classTagNamed: aSymbol) classes
-]
-
-{ #category : #'system compatibility' }
-RPackage >> coreCategoriesForClass: aClass [
-
-	self flag: #stef. "only used by goferCleanUp"
-	^ aClass organization categories 
-		reject: [ :cat | self isForeignClassExtension: cat ]
 ]
 
 { #category : #accessing }
@@ -713,12 +695,6 @@ RPackage >> extensionCategoriesForClass: aClass [
 	self flag: #stef. "only used by goferCleanUp and PackageEnvironment of RB"
 	^ aClass organization categories 
 		select: [ :cat | self isYourClassExtension: cat ]
-]
-
-{ #category : #'system compatibility' }
-RPackage >> extensionClasses [
-	self flag: #stef. "only used by RB and Gofer"
-	^ self extendedClasses
 ]
 
 { #category : #accessing }

@@ -2850,7 +2850,7 @@ TextEditor >> setIndices: shiftPressed forward: forward [
 	| indices |
 	indices := Dictionary new.
 	self flag: 'to be reviewed'.
-	(shiftPressed)
+	shiftPressed
 		ifTrue: [
 			indices at: #moving put: self pointIndex.
 			indices at: #fixed put: self markIndex
@@ -2864,7 +2864,7 @@ TextEditor >> setIndices: shiftPressed forward: forward [
 					indices at: #fixed put: self stopIndex.
 				]
 		].
-	^indices
+	^ indices
 ]
 
 { #category : #'menu messages' }

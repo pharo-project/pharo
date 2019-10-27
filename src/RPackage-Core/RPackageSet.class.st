@@ -13,8 +13,6 @@ Class {
 		'definedClasses',
 		'extensionMethods',
 		'methods',
-		'classesAndMetaClasses',
-		'extensionClasses',
 		'systemCategories'
 	],
 	#classInstVars : [
@@ -114,12 +112,6 @@ RPackageSet >> classes [
 	^classes ifNil: [ classes := self collectFromAllPackages: #definedClasses ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> classesAndMetaClasses [
-	^classesAndMetaClasses ifNil: [ 
-		classesAndMetaClasses := self collectFromAllPackages: #classesAndMetaClasses ]
-]
-
 { #category : #private }
 RPackageSet >> collectFromAllPackages: selector [
 	^self packages
@@ -134,24 +126,19 @@ RPackageSet >> collectFromAllPackages: selector with: anObject [
 		into: [ :all :each | all, (each perform: selector with: anObject) asArray ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> coreCategoriesForClass: aClass [
-	^self collectFromAllPackages: #coreCategoriesForClass: with: aClass
-]
-
 { #category : #accessing }
 RPackageSet >> definedClasses [
 	^definedClasses ifNil: [ definedClasses := self collectFromAllPackages: #definedClasses ]
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> extensionCategoriesForClass: aClass [
-	^ aClass organization categories select: [:cat | self isYourClassExtension: cat]
+RPackageSet >> extendedClasses [
+	^ self collectFromAllPackages: #extendedClasses
 ]
 
 { #category : #'system compatibility' }
-RPackageSet >> extensionClasses [
-	^extensionClasses ifNil: [ extensionClasses := self collectFromAllPackages: #extensionClasses ]
+RPackageSet >> extensionCategoriesForClass: aClass [
+	^ aClass organization categories select: [:cat | self isYourClassExtension: cat]
 ]
 
 { #category : #accessing }

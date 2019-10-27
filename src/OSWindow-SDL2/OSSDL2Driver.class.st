@@ -294,7 +294,7 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 	converted := event accept: self.
 	converted ifNil: [ ^ self ].
 	globalListeners do: [ :list | list handleEvent: converted ].
-	self flag: 'TODO: Avoid holding the mutex for so long'.	
+	self flag: #pharoFixMe. "Avoid holding the mutex for so long".	
 	WindowMapMutex critical: [
 		WindowMap valuesDo: [ :window | window deliverGlobalEvent: converted ].
 	]
