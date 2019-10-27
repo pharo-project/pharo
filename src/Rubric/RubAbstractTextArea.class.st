@@ -107,6 +107,9 @@ Class {
 		'LineNumbersTextColor',
 		'WalkAlongDisplayedLine'
 	],
+	#classInstVars : [
+		'defaultFindReplaceServiceClass'
+	],
 	#category : #'Rubric-Editing-Core'
 }
 
@@ -128,6 +131,12 @@ RubAbstractTextArea class >> caseSensitiveFinds [
 { #category : #settings }
 RubAbstractTextArea class >> caseSensitiveFinds: aBoolean [
 	CaseSensitiveFinds := aBoolean
+]
+
+{ #category : #accessing }
+RubAbstractTextArea class >> defaultFindReplaceServiceClass [
+
+	^ defaultFindReplaceServiceClass ifNil: [ RubFindReplaceService ]
 ]
 
 { #category : #settings }
@@ -616,7 +625,7 @@ RubAbstractTextArea >> defaultColor [
 { #category : #'event handling' }
 RubAbstractTextArea >> defaultFindReplaceServiceClass [
 
-	^ RubFindReplaceService
+	^ self class defaultFindReplaceServiceClass
 ]
 
 { #category : #menu }

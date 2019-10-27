@@ -13,6 +13,9 @@ Class {
 		'Replacements',
 		'Singleton'
 	],
+	#classInstVars : [
+		'defaultFindReplaceServiceClass'
+	],
 	#category : #'Text-Edition'
 }
 
@@ -21,6 +24,12 @@ EditorFindReplaceDialogWindow class >> cleanUp [
 	Singleton ifNotNil: [ 
 			Singleton close.
 			Singleton := nil ]
+]
+
+{ #category : #accessing }
+EditorFindReplaceDialogWindow class >> defaultFindReplaceServiceClass [
+
+	^ defaultFindReplaceServiceClass ifNil: [ FindReplaceService ]
 ]
 
 { #category : #accessing }
@@ -103,7 +112,7 @@ EditorFindReplaceDialogWindow >> defaultButton [
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> defaultFindReplaceServiceClass [
 
-	^ FindReplaceService
+	^ self class defaultFindReplaceServiceClass
 ]
 
 { #category : #'user-interface' }

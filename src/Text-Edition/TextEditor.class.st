@@ -25,7 +25,8 @@ Class {
 	],
 	#classInstVars : [
 		'cmdActions',
-		'shiftCmdActions'
+		'shiftCmdActions',
+		'defaultFindReplaceServiceClass'
 	],
 	#category : #'Text-Edition'
 }
@@ -147,6 +148,12 @@ TextEditor class >> cmdKeysInText [
 { #category : #settings }
 TextEditor class >> cmdKeysInText: aBoolean [
 	CmdKeysInText := aBoolean
+]
+
+{ #category : #shortcuts }
+TextEditor class >> defaultFindReplaceServiceClass [
+
+	^ defaultFindReplaceServiceClass ifNil: [ FindReplaceService ]
 ]
 
 { #category : #settings }
