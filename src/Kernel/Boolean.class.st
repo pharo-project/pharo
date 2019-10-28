@@ -121,7 +121,7 @@ Boolean >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [
 	"Same as ifTrue:ifFalse:."
 	
 	"true ifFalse: [ ^'That is false!' ] ifTrue: [ ^'That is true!' ]  >>> 'That is true!'"
-	"false ifFalse: [ ^'That is false!' ] ifTrue: [ ^'That is true!' ]  >>> 'That is false!'"
+	"false ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is false!'"
 
 	self subclassResponsibility
 ]
