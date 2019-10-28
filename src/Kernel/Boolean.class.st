@@ -149,7 +149,7 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	actually reach here because the expression is compiled in-line."
 	
 	"true ifTrue: [ ^'That is true!' ] ifFalse: [ ^'That is false!' ]  >>> 'That is true!'"
-	"false ifTrue: [ ^'That is true!' ] ifFalse: [ ^'That is false!' ]  >>> 'That is false!'"
+	"false ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is false!'"
 
 	self subclassResponsibility
 ]
