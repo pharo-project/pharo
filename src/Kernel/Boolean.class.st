@@ -111,7 +111,7 @@ Boolean >> ifFalse: alternativeBlock [
 	the expression is compiled in-line."
 	
 	"false ifFalse: [ 'This statement is false!' ] >>> 'This statement is false!'" 
-	"true ifFalse: [^ 'This statement is false!'] >>> nil"
+	"true ifFalse: [ 'This statement is false!' ] >>> nil"
 
 	self subclassResponsibility
 ]
