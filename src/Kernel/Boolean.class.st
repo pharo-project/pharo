@@ -120,7 +120,7 @@ Boolean >> ifFalse: alternativeBlock [
 Boolean >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [ 
 	"Same as ifTrue:ifFalse:."
 	
-	"true ifFalse: [ ^'That is false!' ] ifTrue: [ ^'That is true!' ]  >>> 'That is true!'"
+	"true ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is true!'"
 	"false ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is false!'"
 
 	self subclassResponsibility
@@ -134,8 +134,8 @@ Boolean >> ifTrue: alternativeBlock [
 	receiver is nonBoolean. Execution does not actually reach here because 
 	the expression is compiled in-line."
 	
-	"true ifTrue: [^ 'This statement is true!'] >>> 'This statement is true!'" 
-	"false ifTrue: [^ 'This statement is true!'] >>> nil"
+	"true ifTrue: [ 'This statement is true!' ] >>> 'This statement is true!'" 
+	"false ifTrue: [ 'This statement is true!' ] >>> nil"
 
 	self subclassResponsibility
 ]
@@ -148,7 +148,7 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	is a nonBoolean then create an error notification. Execution does not 
 	actually reach here because the expression is compiled in-line."
 	
-	"true ifTrue: [ ^'That is true!' ] ifFalse: [ ^'That is false!' ]  >>> 'That is true!'"
+	"true ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is true!'"
 	"false ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is false!'"
 
 	self subclassResponsibility
