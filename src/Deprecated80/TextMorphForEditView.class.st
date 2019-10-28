@@ -161,6 +161,16 @@ TextMorphForEditView >> drawOn: aCanvas [
 
 ]
 
+{ #category : #drawing }
+TextMorphForEditView >> drawOnAthensCanvas: anAthensCanvas [
+	self useSelectionBar
+		ifTrue: [self paragraph displaySelectionBarOnAthensCanvas: anAthensCanvas].
+	self useExtraSelection 
+		ifTrue: [self paragraph displayExtraSelectionOnAthensCanvas: anAthensCanvas].
+	super drawOnAthensCanvas: anAthensCanvas.
+
+]
+
 { #category : #'edit view' }
 TextMorphForEditView >> editView [
 	^ editView
@@ -445,6 +455,12 @@ TextMorphForEditView >> startBlinking [
 TextMorphForEditView >> startDrag: event [
 
 	self editView startDrag: event
+]
+
+{ #category : #theme }
+TextMorphForEditView >> themeChanged [
+	self color: self defaultColor.
+	super themeChanged
 ]
 
 { #category : #'multi level undo' }
