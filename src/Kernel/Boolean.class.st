@@ -110,7 +110,7 @@ Boolean >> ifFalse: alternativeBlock [
 	receiver is nonBoolean. Execution does not actually reach here because 
 	the expression is compiled in-line."
 	
-	"false ifFalse: [^ 'This statement is false!'] >>> 'This statement is false!'" 
+	"false ifFalse: [ 'This statement is false!' ] >>> 'This statement is false!'" 
 	"true ifFalse: [^ 'This statement is false!'] >>> nil"
 
 	self subclassResponsibility
