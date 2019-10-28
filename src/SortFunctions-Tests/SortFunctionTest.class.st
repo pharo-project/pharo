@@ -89,6 +89,13 @@ SortFunctionTest >> testSingleArgBlock [
 	self assert: (function value: 3 @ 2 value: 1 @ 1)
 ]
 
+{ #category : #tests }
+SortFunctionTest >> testSortUsingBooleans [
+	| datas |
+	datas := #(1 2 3 4 5).
+	self assert: (datas sorted: #odd ascending) equals: #(2 4 1 3 5)
+]
+
 { #category : #'tests - sorting' }
 SortFunctionTest >> testSorting [
 	| data sorted |
