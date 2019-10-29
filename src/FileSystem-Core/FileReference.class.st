@@ -466,6 +466,13 @@ FileReference >> size [
 ]
 
 { #category : #streams }
+FileReference >> unbufferedBinaryWriteStream [
+	"Answer a binary read/write stream on the receiver"
+
+	^ filesystem binaryWriteStreamOn: self path
+]
+
+{ #category : #streams }
 FileReference >> writeStream [
 	
 	^ self writeStreamEncoded: 'utf8'
