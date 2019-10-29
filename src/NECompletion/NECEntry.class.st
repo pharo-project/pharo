@@ -64,7 +64,7 @@ NECEntry >> createDescriptionWith: anECContext [
 
 { #category : #operations }
 NECEntry >> descriptionWith: anECContext [ 
-	^description ifNotNil: [ description := self createDescriptionWith: anECContext ]
+	^description ifNil: [ description := self createDescriptionWith: anECContext ]
 ]
 
 { #category : #operations }
