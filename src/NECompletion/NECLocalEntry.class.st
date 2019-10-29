@@ -9,11 +9,6 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #testing }
-NECLocalEntry >> isLocal [
-	^true
-]
-
 { #category : #accessing }
 NECLocalEntry >> label [
 	^ 'local variable'
