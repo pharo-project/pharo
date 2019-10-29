@@ -44,33 +44,6 @@ ZnBufferedReadWriteStream >> atEnd [
 ]
 
 { #category : #private }
-ZnBufferedReadWriteStream >> atEnd: anInteger [ 
-	
-	anInteger < streamSize ifTrue: [ ^ false ].
-	anInteger <= (bufferOffset + bufferLength)  ifTrue: [ ^ false ].
-	
-	^ true
-]
-
-{ #category : #private }
-ZnBufferedReadWriteStream >> bufferAt: aPosition [
-
-	^ buffer at:  (aPosition - bufferOffset)
-	
-	
-]
-
-{ #category : #private }
-ZnBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
-
-	self checkBufferFor: nextPosition.
-
-	bufferLength := (aPosition - bufferOffset) max: bufferLength.
-	buffer at: (aPosition - bufferOffset) put: anElement
-	
-]
-
-{ #category : #private }
 ZnBufferedReadWriteStream >> checkBufferFor: aPosition [
 
 	(self isPositionInBuffer: aPosition)
@@ -89,13 +62,6 @@ ZnBufferedReadWriteStream >> closed [
 	^ readStream closed
 ]
 
-{ #category : #'initialize-release' }
-ZnBufferedReadWriteStream >> collectionSpecies [
-	^ innerStream isBinary
-		ifTrue: [ ByteArray ]
-		ifFalse: [ String ]
-]
-
 { #category : #initialization }
 ZnBufferedReadWriteStream >> defaultBufferSize [
 	
@@ -112,12 +78,6 @@ ZnBufferedReadWriteStream >> flush [
 ZnBufferedReadWriteStream >> isBinary [
 	
 	^ readStream isBinary
-]
-
-{ #category : #private }
-ZnBufferedReadWriteStream >> isPositionInBuffer: aPosition [
-
-	^ aPosition between: bufferOffset and: bufferOffset + bufferLength
 ]
 
 { #category : #testing }
@@ -223,30 +183,6 @@ ZnBufferedReadWriteStream >> readingActionDo: aBlock [
 		writeStream flush.
 		readStream discardBuffer ].
 	^ aBlock ensure: [ lastRead := true ]
-]
-
-{ #category : #private }
-ZnBufferedReadWriteStream >> refreshBufferFrom: aPosition [
-
-	| nextBufferPosition |
-
-	nextBufferPosition := (((aPosition - 1) max:0) // buffer size) * buffer size.
-	bufferOffset = nextBufferPosition ifTrue: [ ^ self ].
-
-	self flush.
-
-	"If the position is outside the real stream I will only flush the buffer if I have to empty it."
-	(nextBufferPosition >= streamSize) 
-		ifTrue: [
-			bufferOffset := nextBufferPosition.
-			bufferLength := 0.	
-			^ self	].
-		 
-	(nextBufferPosition = (bufferOffset + bufferLength)) 
-		ifFalse: [ innerStream position: nextBufferPosition ].
-
-	bufferLength := innerStream readInto: buffer startingAt: 1 count: buffer size.
-	bufferOffset := nextBufferPosition.
 ]
 
 { #category : #accessing }
