@@ -859,8 +859,7 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 Behavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	
-	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
-	^false
+	^self methods anySatisfy: [:each | each isAbstract ]
 ]
 
 { #category : #'testing method dictionary' }
