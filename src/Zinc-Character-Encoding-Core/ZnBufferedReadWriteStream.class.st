@@ -15,13 +15,9 @@ Class {
 	#name : #ZnBufferedReadWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'innerStream',
-		'buffer',
-		'bufferLength',
-		'streamSize',
-		'bufferOffset',
-		'nextPosition',
-		'isDirty'
+		'readStream',
+		'writeStream',
+		'lastRead'
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }
@@ -38,17 +34,13 @@ ZnBufferedReadWriteStream class >> on: readStream do: block [
 	"Execute block with as argument a ZnBufferedReadStream on readStream.
 	Return the value of block."
 
-	| stream |
-
-	stream := self on: readStream.
-
-	^ [block value: stream ] ensure: [ stream flush ]
+	^ block value: (self on: readStream)
 ]
 
 { #category : #testing }
 ZnBufferedReadWriteStream >> atEnd [
 	
-	^ self atEnd: nextPosition
+	^ self readingActionDo: [ readStream atEnd ]
 ]
 
 { #category : #private }
@@ -85,17 +77,16 @@ ZnBufferedReadWriteStream >> checkBufferFor: aPosition [
 		ifFalse: [ self refreshBufferFrom: aPosition ]
 ]
 
-{ #category : #closing }
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> close [
 	
-	self flush.
-	innerStream close
+	writeStream flush.
+	writeStream close.
 ]
 
 { #category : #testing }
 ZnBufferedReadWriteStream >> closed [
-
-	^ innerStream closed
+	^ readStream closed
 ]
 
 { #category : #'initialize-release' }
@@ -111,25 +102,16 @@ ZnBufferedReadWriteStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
 
-{ #category : #writing }
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> flush [
 	
-	isDirty ifFalse: [ ^ self ]. 
-		
-	innerStream position: bufferOffset.
-	innerStream next: bufferLength putAll: buffer startingAt: 1.
-	
-	innerStream flush.
-	
-	streamSize := innerStream size.
-	
-	isDirty := false
+	self writingActionDo: [ writeStream flush ]
 ]
 
 { #category : #testing }
 ZnBufferedReadWriteStream >> isBinary [
 	
-	^ innerStream isBinary 
+	^ readStream isBinary
 ]
 
 { #category : #private }
@@ -150,132 +132,97 @@ ZnBufferedReadWriteStream >> isStream [
 	^ true
 ]
 
-{ #category : #reading }
-ZnBufferedReadWriteStream >> next [ 
-	| value |
-
-	self atEnd 
-		ifTrue: [^ nil].	
-		
-	self checkBufferFor:nextPosition.
-		
-	value := self bufferAt: nextPosition.
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> next [
 	
-	nextPosition := nextPosition + 1.
-
-	^ value
+	^ self readingActionDo: [ 
+		readStream next ]
 ]
 
-{ #category : #reading }
-ZnBufferedReadWriteStream >> next: aQuantity [
-
-	| read collection |
-
-	collection := self collectionSpecies new: aQuantity.	
-
-	read := self 
-		readInto: collection 
-		startingAt: 1 
-		count: aQuantity.
-
-	^ read = aQuantity 
-		ifTrue: [ collection ]
-		ifFalse: [ collection copyFrom: 1 to: read - 1 ]     
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> next: anInteger [ 
+	
+	^ self readingActionDo: [ 
+		readStream next: anInteger ]
 ]
 
-{ #category : #writing }
-ZnBufferedReadWriteStream >> next: aQuantity putAll: aCollection startingAt: startingAt [
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> next: count putAll: collection [
 
-	aCollection readStreamDo: [ :s | 
-		s skip: startingAt - 1.
-		self nextPutAll:  (s next: aQuantity)].
+	self writingActionDo: [ 
+		writeStream next: count putAll: collection ]
 ]
 
-{ #category : #writing }
-ZnBufferedReadWriteStream >> nextPut: anElement [ 
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> next: count putAll: collection startingAt: offset [
 	
-	self checkBufferFor: nextPosition.
-		
-	self bufferAt: nextPosition put: anElement.
-	
-	isDirty := true.
-	nextPosition := nextPosition + 1
+	self writingActionDo: [
+		writeStream next: count putAll: collection startingAt: offset ]
 ]
 
-{ #category : #writing }
-ZnBufferedReadWriteStream >> nextPutAll: aCollection [
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> nextPut: aCharacter [ 
 	
-	aCollection do: [ :each | self nextPut: each ]
+	self writingActionDo: [ writeStream nextPut: aCharacter ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> nextPutAll: aString [ 
+	
+	^ self writingActionDo: [ writeStream nextPutAll: aString ]
 ]
 
 { #category : #'instance creation' }
 ZnBufferedReadWriteStream >> on: aStream [
 
-	innerStream := aStream.
-	nextPosition := aStream position + 1.
-	streamSize := aStream size.
-	
-	bufferOffset := -1.
-	bufferLength := 0.
-	isDirty := false.
-	
-	self sizeBuffer: self defaultBufferSize.
-	
-
+	lastRead := true.
+	readStream := ZnBufferedReadStream on: aStream.
+	writeStream := ZnBufferedWriteStream on: aStream.
 ]
 
-{ #category : #reading }
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> peek [
 	
-	| value |
-	value := self next.
-	"If I have read correctly I reset the position"
-	value ifNotNil: [ nextPosition := nextPosition - 1  ].
-	
-	^ value
-	
+	^ self readingActionDo: [ 
+		readStream peek ]
 ]
 
-{ #category : #querying }
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> position [
-
-	^ nextPosition - 1 
-
+	
+	^ lastRead
+		ifTrue: [ readStream position ]
+		ifFalse: [ writeStream position ]
 ]
 
-{ #category : #querying }
-ZnBufferedReadWriteStream >> position: aNewPosition [
-
-	^ nextPosition := aNewPosition + 1
-
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> position: anInteger [ 
+	
+	self writingActionDo: [ 
+		writeStream position: anInteger ]
+	
 ]
 
-{ #category : #reading }
-ZnBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt count: count [
-
-	| remainingCount maxPositionInBuffer read countToRead |
-
-	remainingCount := count.
-	read := 0.
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> readInto: collection startingAt: offset count: requestedCount [
 	
-	[ remainingCount > 0  and: [ self atEnd not ]]
-		whileTrue: [  
-			self checkBufferFor: nextPosition.
-			
-			maxPositionInBuffer := bufferOffset + bufferLength.
-			countToRead := ( maxPositionInBuffer - (nextPosition - 1) ) min: remainingCount. 
-			aBuffer
-				replaceFrom: startingAt + read
-				to: startingAt + read + countToRead - 1
-				with: buffer
-				startingAt: (nextPosition - bufferOffset).
-				
-			nextPosition := nextPosition + countToRead.
-			remainingCount := remainingCount - countToRead.
-			read := read + countToRead
-		].
+	^ self readingActionDo: [ 
+		readStream readInto: collection startingAt: offset count: requestedCount ]
+]
+
+{ #category : #private }
+ZnBufferedReadWriteStream >> readingActionDo: aBlock [
+
+	"Reading from the read stream.
+	We should 
+	 - flush the write stream
+	 - discard the read buffer (which may contain incorrect data).
+	 - and then perform the read."
 	
-	^ read.
+	lastRead ifFalse: [ 
+		writeStream flush.
+		readStream discardBuffer ].
+	^ aBlock ensure: [ lastRead := true ]
 ]
 
 { #category : #private }
@@ -302,51 +249,71 @@ ZnBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 	bufferOffset := nextBufferPosition.
 ]
 
-{ #category : #reading }
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> setToEnd [
-
-	nextPosition := (streamSize max: (bufferOffset + bufferLength)) + 1
+	
+	^ self writingActionDo: [ 
+		writeStream setToEnd ]
 ]
 
-{ #category : #querying }
-ZnBufferedReadWriteStream >> size [ 
-
-	^ streamSize max: (bufferOffset + bufferLength)
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> size [
+	^ readStream size
 ]
 
 { #category : #'initialize-release' }
-ZnBufferedReadWriteStream >> sizeBuffer: size [
-
-	bufferLength > 0 ifTrue: [ self flush ].
-	bufferLength := 0.
-
-	buffer := self collectionSpecies new: size
-]
-
-{ #category : #reading }
-ZnBufferedReadWriteStream >> skip: aQuantity [
-
-	nextPosition := nextPosition + aQuantity
-]
-
-{ #category : #reading }
-ZnBufferedReadWriteStream >> upTo: value [ 
-	"Read upto but not including value and return them as a collection.
-	If value is not found, return the entire contents of the stream.
-	This could be further optimzed."
+ZnBufferedReadWriteStream >> sizeBuffer: anInteger [ 
 	
-	^ self collectionSpecies 
-		streamContents: [ :writeStream | | element |
-			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [ 
-				writeStream nextPut: element ] ]
+	readStream sizeBuffer: anInteger.
+	writeStream sizeBuffer: anInteger.
 ]
 
-{ #category : #reading }
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> skip: anInteger [ 
+	
+	self readingActionDo: [ 
+		readStream skip: anInteger ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> truncate [
+	
+	self writingActionDo: [ writeStream truncate ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> truncate: anInteger [ 
+	
+	self writingActionDo: [ writeStream truncate: anInteger ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> upTo: aCharacter [ 
+	
+	^ self readingActionDo: [ readStream upTo: aCharacter ]
+]
+
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> upToEnd [
-	"Read elements until the stream is atEnd and return them as a collection."
+	
+	^ self readingActionDo: [ readStream upToEnd ]
+]
 
-	| toRead |
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> wrappedStream [
 
-	toRead := (streamSize - (nextPosition - 1)) max: 0.
-	^ self next: toRead.
+	^ readStream wrappedStream
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> writingActionDo: aBlock [
+	
+	"Writing to the write stream.
+	We should 
+	 - write the write stream
+	 - discard the read buffer (which may contain incorrect data)"
+	lastRead ifTrue: [ 
+		writeStream discardBuffer ].
+	readStream discardBuffer.
+	^ aBlock ensure: [ lastRead := false ]
 ]

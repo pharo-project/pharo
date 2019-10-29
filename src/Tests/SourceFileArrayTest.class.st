@@ -377,10 +377,10 @@ SourceFileArrayTest >> testWriteToBufferedStream [
 	array := SourceFileArray new.
 	
 	array changesFileStream: 
-		(ZnCharacterReadWriteStream on: (ZnBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'changes.chunk') path)) encoding: #utf8).
+		(SourceFileCharacterReadWriteStream on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'changes.chunk') path)) encoding: #utf8).
 	
 	array sourcesFileStream: 
-		(ZnCharacterReadWriteStream on: (ZnBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'sources.chunk') path)) encoding: #utf8).
+		(SourceFileCharacterReadWriteStream on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'sources.chunk') path)) encoding: #utf8).
 
 	array
 		writeSource: 'some source'
