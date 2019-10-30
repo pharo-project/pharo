@@ -64,7 +64,7 @@ CompletionControllerTest >> setUp [
 	super setUp.
 	
 	editor := RubTextEditor forTextArea: RubTextFieldArea new.
-	controller := CompletionController new.
+	controller := CompletionEngine new.
 	controller setEditor: editor
 ]
 
