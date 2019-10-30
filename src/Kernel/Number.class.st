@@ -196,7 +196,11 @@ Number >> @ y [
 { #category : #arithmetic }
 Number >> \\ aNumber [ 
 	"modulo. Remainder defined in terms of //. Answer a Number with the 
-	same sign as aNumber. e.g. 9\\4 = 1, -9\\4 = 3, 9\\-4 = -3, 0.9\\0.4 = 0.1."
+	same sign as aNumber."
+	
+	"9 \\ 4 >>> 1"
+	"-9 \\ 4 >>> 3"
+	"9 \\ -4 >>> -3"
 
 	^self - (self // aNumber * aNumber)
 ]
@@ -447,20 +451,28 @@ Number >> isZero [
 
 { #category : #'*Kernel-Chronology' }
 Number >> milliSecond [
- 
+	"1 milliSecond >>> 0:00:00:00.001"
+	"1 second + 1 milliSecond >>> 0:00:00:01.001"
+	
  	^ self milliSeconds
  
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> milliSeconds [
- 
+ 	
+	"2 milliSeconds >>> 0:00:00:00.002"
+	"1 second + 2 milliSeconds >>> 0:00:00:01.002"
+	
  	^ Duration milliSeconds: self
  
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> minute [
+
+	"1 minute >>> 0:00:01:00"
+	"1 hour + 1 minute >>> 0:01:01:00"
  
  	^ self minutes
  
@@ -468,12 +480,18 @@ Number >> minute [
 
 { #category : #'*Kernel-Chronology' }
 Number >> minutes [
+
+	"2 minutes >>> 0:00:02:00"
+	"1 hour + 2 minutes >>> 0:01:02:00"
  
  	^ Duration minutes: self
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> nanoSecond [
+
+	"1 nanoSecond >>> 0:00:00:00.000000001"
+	"1 milliSecond + 1 nanoSecond >>> 0:00:00:00.001000001"
  
  	^ self nanoSeconds
  
@@ -481,6 +499,9 @@ Number >> nanoSecond [
 
 { #category : #'*Kernel-Chronology' }
 Number >> nanoSeconds [
+
+	"2 nanoSeconds >>> 0:00:00:00.000000002"
+	"1 milliSecond + 2 nanoSeconds >>> 0:00:00:00.001000002"
  
  	^ Duration nanoSeconds: self.
 ]
@@ -589,6 +610,11 @@ Number >> quo: aNumber [
 { #category : #'mathematical functions' }
 Number >> raisedTo: aNumber [ 
 	"Answer the receiver raised to aNumber."
+	
+	"2 raisedTo: 8 >>> 256"
+	"8 raisedTo: 2 >>> 64"
+	"2 raisedTo: (1/12) >>> 1.0594630943592953"
+	"2 raisedTo: -1 >>> (1/2)"
 
 	aNumber isInteger ifTrue: [
 		"Do the special case of integer power"
@@ -645,6 +671,11 @@ Number >> raisedToInteger: anInteger [
 Number >> reciprocal [
 	"Returns the reciprocal of self.
 	In case self is 0 the / signals ZeroDivide"
+	
+	"1/2 reciprocal >>> 2"
+	"2 reciprocal >>> (1/2)"
+	"1.25 reciprocal >>> 0.8"
+	"-2 reciprocal >>> (-1/2)"
 	
 	^1 / self
 ]
@@ -707,19 +738,30 @@ Number >> roundUpTo: aNumber [
 { #category : #'truncation and round off' }
 Number >> rounded [
 	"Answer the integer nearest the receiver."
+	
+	"1.4 rounded >>> 1"
+	"1.5 rounded >>> 2"
+	"2 rounded >>> 2"
+	"-1.5 rounded >>> -2"
 
 	^(self + (self sign / 2)) truncated
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> second [
- 
+ 	
+	"1 second >>> 0:00:00:01"
+	"1 minute + 1 second >>> 0:00:01:01"
+	
  	^ self seconds
  
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> seconds [
+
+	"2 seconds >>> 0:00:00:02"
+	"1 minute + 2 seconds >>> 0:00:01:02"
  
  	^ Duration seconds: self
 ]
