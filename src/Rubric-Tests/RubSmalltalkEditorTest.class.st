@@ -589,12 +589,12 @@ RubSmalltalkEditorTest >> testInstanceVersusSharedCompletionEngine [
 	textEditor := RubSmalltalkEditor new.
 	self assert: textEditor completionEngine isNil.
 	
-	RubSmalltalkEditor completionEngine: CompletionController.
+	RubSmalltalkEditor completionEngine: CompletionEngine.
 	self assert: textEditor completionEngine isNil.
 	
 	"but now when we create a new one it gets the correct engine"
 	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine class equals: CompletionController.
+	self assert: textEditor completionEngine class equals: CompletionEngine.
 	
 	
 	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
@@ -1041,8 +1041,8 @@ RubSmalltalkEditorTest >> testSettingCompletionFromEditor [
 	| currentCompletion |
 	[ currentCompletion := RubSmalltalkEditor completionEngine. 
 	
-	RubSmalltalkEditor completionEngine: CompletionController.
-	self assert: RubSmalltalkEditor completionEngine equals: CompletionController.
+	RubSmalltalkEditor completionEngine: CompletionEngine.
+	self assert: RubSmalltalkEditor completionEngine equals: CompletionEngine.
 	
 	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
 	
@@ -1054,11 +1054,11 @@ RubSmalltalkEditorTest >> testSettingCompletionFromEditorToTextArea [
 	| textEditor currentCompletion |
 	[ currentCompletion := RubSmalltalkEditor completionEngine.
 	
-	RubSmalltalkEditor completionEngine: CompletionController.
+	RubSmalltalkEditor completionEngine: CompletionEngine.
 	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine class equals: CompletionController.
+	self assert: textEditor completionEngine class equals: CompletionEngine.
 	textEditor textArea: RubEditingArea new. 
-	self assert: textEditor textArea completionEngine class equals: CompletionController.
+	self assert: textEditor textArea completionEngine class equals: CompletionEngine.
 	
 	] ensure: [ RubSmalltalkEditor completionEngine: currentCompletion ]
 	

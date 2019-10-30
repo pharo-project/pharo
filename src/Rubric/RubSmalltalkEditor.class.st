@@ -10,7 +10,7 @@ Class {
 		'completionEngine'
 	],
 	#classVars : [
-		'CompletionEngine'
+		'CompletionEngineClass'
 	],
 	#category : #'Rubric-Editing-Code'
 }
@@ -137,19 +137,19 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 { #category : #'completion engine' }
 RubSmalltalkEditor class >> completionEngine [
 	
-	^ CompletionEngine
+	^ CompletionEngineClass
 ]
 
 { #category : #'completion engine' }
 RubSmalltalkEditor class >> completionEngine: anEngine [
 	
-	CompletionEngine := anEngine
+	CompletionEngineClass := anEngine
 ]
 
 { #category : #'completion engine' }
 RubSmalltalkEditor class >> noCompletion [
 
-	CompletionEngine := nil
+	CompletionEngineClass := nil
 ]
 
 { #category : #'completion engine' }
@@ -735,7 +735,7 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 RubSmalltalkEditor >> initialize [
 	super initialize.
 	notificationStrategy := RubTextInsertionStrategy new editor: self.
-	CompletionEngine ifNotNil: [self completionEngine: CompletionEngine new]
+	CompletionEngineClass ifNotNil: [self completionEngine: CompletionEngineClass new]
 ]
 
 { #category : #keymapping }
@@ -782,8 +782,8 @@ RubSmalltalkEditor >> internalCallToImplementorsOf: aSelector [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> isCompletionEnabled [
-	CompletionEngine ifNil: [ ^false ].
-	CompletionEngine isCompletionEnabled ifFalse: [ ^false ].
+	CompletionEngineClass ifNil: [ ^false ].
+	CompletionEngineClass isCompletionEnabled ifFalse: [ ^false ].
 	^ self editingMode isCompletionEnabled
 ]
 

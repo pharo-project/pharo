@@ -27,8 +27,8 @@ Class {
 }
 
 { #category : #private }
-NECPreferences class >> availableControllers [
-	^ NECController withAllSubclasses
+NECPreferences class >> availableEngines [
+	^ CompletionEngine withAllSubclasses
 ]
 
 { #category : #accessing }
@@ -191,12 +191,12 @@ NECPreferences class >> settingsOn: aBuilder [
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
 					| availableControllers availableSorters |
-					availableControllers := self availableControllers.
+					availableControllers := self availableEngines.
 					availableControllers size > 1
 						ifTrue: [ 
-							(aBuilder pickOne: #completionController)
+							(aBuilder pickOne: #completionEngine)
 								order: -1;
-								label: 'Controller';
+								label: 'CompletionEngine';
 								target: RubSmalltalkEditor;
 								getSelector: #completionEngine;
 								setSelector: #completionEngine:;
