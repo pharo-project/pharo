@@ -83,7 +83,7 @@ CompletionModel >> initEntries [
 	producer := CompletionProducerVisitor new.
 	self sorter: self class sorter.
 	suggestionsList := self sortList: (producer completionListForNode: node).
-	^ suggestionsList collect: [ :each | CompletionEntry contents: each node: node ]
+	^ suggestionsList collect: [ :each | NECEntry contents: each node: node ]
 ]
 
 { #category : #initialization }

@@ -8,7 +8,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'contents',
-		'type',
+		'node',
 		'description'
 	],
 	#category : #'NECompletion-Model'
@@ -19,6 +19,11 @@ NECEntry class >> contents: aString [
 	^ self new setContents: aString
 ]
 
+{ #category : #'instance creation' }
+NECEntry class >> contents: aString node: aNode [
+	^ self new setContents: aString node: aNode
+]
+
 { #category : #operations }
 NECEntry >> <= aECEntry [ 
 	^ contents <= aECEntry contents
@@ -26,12 +31,11 @@ NECEntry >> <= aECEntry [
 
 { #category : #'ui related' }
 NECEntry >> browseWith: anECContext [ 
-	| guessType |
-	guessType := self guessTypeWith: anECContext.
-	guessType ifNil: [^ false].
-	self flag: #SmalltalkReference. "Reference to Smalltalk tools"
-	Smalltalk tools browser openOnClass: guessType.
-	^ true
+	| class |
+	"no really correct, we need the class of the node..."
+	class := node methodNode compilationContext getClass.
+	Smalltalk tools browser openOnClass: class.
+	^true
 ]
 
 { #category : #accessing }
@@ -47,7 +51,8 @@ NECEntry >> contents [
 { #category : #'detail information' }
 NECEntry >> createDescriptionWith: anECContext [ 
 	| clazz |
-	clazz := self guessTypeWith: anECContext.
+	"no really correct, we need the class of the node..."
+	clazz := node methodNode compilationContext getClass.
 	^ clazz 
 		ifNil: [ NECEntryDescription label: self label ]
 		ifNotNil: 
@@ -59,18 +64,13 @@ NECEntry >> createDescriptionWith: anECContext [
 
 { #category : #operations }
 NECEntry >> descriptionWith: anECContext [ 
-	description ifNotNil: [ ^ description ].
-	^ description := self createDescriptionWith: anECContext
+	^description ifNil: [ description := self createDescriptionWith: anECContext ]
 ]
 
-{ #category : #testing }
-NECEntry >> isLocal [
-	^ false
-]
-
-{ #category : #testing }
-NECEntry >> isSelector [
-	^ false
+{ #category : #operations }
+NECEntry >> guessTypeWith: aContext [
+	"senders of this need to get the type from the AST"
+	^nil
 ]
 
 { #category : #accessing }
@@ -95,6 +95,12 @@ NECEntry >> setContents: aString [
 ]
 
 { #category : #accessing }
+NECEntry >> setContents: aString node: aNode [
+	contents := aString.
+	node := aNode
+]
+
+{ #category : #accessing }
 NECEntry >> type [
-	^type
+	^nil
 ]
