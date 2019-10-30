@@ -4,7 +4,16 @@ Class {
 	#instVars : [
 		'service',
 		'findInput',
-		'findButton'
+		'findButton',
+		'regExpCheckBox',
+		'backwardsCheckBox',
+		'caseCheckBox',
+		'wrapCheckBox',
+		'entireCheckBox',
+		'replaceButton',
+		'replaceAllButton',
+		'cancelButton',
+		'updateFromModel'
 	],
 	#category : #'Rubric-Editing-FindReplaceService'
 }
@@ -14,7 +23,22 @@ SpecRubDialog class >> defaultSpec [
 	<spec>
 	^ SpBoxLayout newVertical
 		add: #findInput;
-		add: #findButton;
+		add: (SpGridLayout new 
+			beColumnHomogeneous;
+			beRowHomogeneous;
+			add: #regExpCheckBox at: 1@1;
+			add: #backwardsCheckBox at: 2@1;
+			add: #caseCheckBox at: 1@2;
+			add: #wrapCheckBox at: 2@2;
+			add: #entireCheckBox at: 1@3;
+			yourself);
+		addLast: (SpBoxLayout newHorizontal 
+			borderWidth: 5;
+			spacing: 5;
+			add: #findButton;
+			add: #replaceButton;
+			add: #replaceAllButton;
+			add: #cancelButton);
 		yourself
 ]
 
@@ -40,11 +64,26 @@ SpecRubDialog >> findInput: anObject [
 
 { #category : #initialization }
 SpecRubDialog >> initializePresenters [
-	findInput := self newTextInput autoAccept: true.
+	findInput := self newTextInput autoAccept: true; placeholder: 'Text to find'.
 	findInput whenTextChangedDo: [ self updateFindText ].
+	
+	regExpCheckBox := self newCheckBox label: 'Regular expression'.
+	backwardsCheckBox := self newCheckBox label: 'Search backwards'.
+	caseCheckBox := self newCheckBox label: 'Case sensitive'.
+	wrapCheckBox := self newCheckBox label: 'Wrap around'.
+	entireCheckBox := self newCheckBox label: 'Entire words only'.
+	
 	findButton := self newButton label: 'Find'.
 	findButton action: [ service find ].
-	self updateFromModel
+	
+	replaceButton := self newButton label: 'Replace';
+		action: [ service find ].
+	replaceAllButton := self newButton label: 'Replace';
+		action: [ service find ].
+	cancelButton := self newButton label: 'Replace all';
+		action: [ service find ].
+	updateFromModel := self newButton label: 'Cancel';
+		action: [ service find ].
 ]
 
 { #category : #accessing }
