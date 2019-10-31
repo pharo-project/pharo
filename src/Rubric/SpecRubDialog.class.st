@@ -51,6 +51,15 @@ SpecRubDialog class >> defaultSpec [
 ]
 
 { #category : #accessing }
+SpecRubDialog >> assignEnterKeystrokeEventFor: aPresenter [
+
+	"Morphic dependent!"
+
+	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann |
+		service find ] ].
+]
+
+{ #category : #accessing }
 SpecRubDialog >> closeWindowOnEscIn: aPresenter [
 
 	"Morphic dependent!"
@@ -94,7 +103,7 @@ SpecRubDialog >> initializeDialogWindow: aDialogWindowPresenter [
 				
 	aDialogWindowPresenter
 		title: self title;
-		initialExtent: 430 @ 220
+		initialExtent: 430 @ 220.
 ]
 
 { #category : #initialization }
@@ -104,6 +113,7 @@ SpecRubDialog >> initializePresenters [
 	findInput whenTextChangedDo: [ self updateFindText ].
 	
 	self closeWindowOnEscIn: findInput.
+	self assignEnterKeystrokeEventFor: findInput.
 	
 	regExpCheckBox := self newCheckBox label: 'Regular expression'.
 	backwardsCheckBox := self newCheckBox label: 'Search backwards'.
