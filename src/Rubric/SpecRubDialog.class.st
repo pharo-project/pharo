@@ -13,7 +13,9 @@ Class {
 		'replaceButton',
 		'replaceAllButton',
 		'cancelButton',
-		'updateFromModel'
+		'updateFromModel',
+		'replaceTextInput',
+		'replaceLabel'
 	],
 	#category : #'Rubric-Editing-FindReplaceService'
 }
@@ -22,7 +24,8 @@ Class {
 SpecRubDialog class >> defaultSpec [
 	<spec>
 	^ SpBoxLayout newVertical
-		add: #findInput;
+		add: #findInput
+			expand: false fill: false padding: 0;
 		add: (SpGridLayout new 
 			beColumnHomogeneous;
 			beRowHomogeneous;
@@ -34,6 +37,11 @@ SpecRubDialog class >> defaultSpec [
 			yourself);
 		addLast: (SpBoxLayout newHorizontal 
 			borderWidth: 5;
+			spacing: 5;
+			add: #replaceLabel  expand: false fill: false padding: 0;
+			add: #replaceTextInput);
+		addLast: (SpBoxLayout newHorizontal 
+			borderWidth: 3;
 			spacing: 5;
 			add: #findButton;
 			add: #replaceButton;
@@ -78,12 +86,21 @@ SpecRubDialog >> initializePresenters [
 	
 	replaceButton := self newButton label: 'Replace';
 		action: [ service find ].
-	replaceAllButton := self newButton label: 'Replace';
+	replaceAllButton := self newButton label: 'Replace All';
 		action: [ service find ].
-	cancelButton := self newButton label: 'Replace all';
+	cancelButton := self newButton label: 'Cancel';
 		action: [ service find ].
-	updateFromModel := self newButton label: 'Cancel';
-		action: [ service find ].
+		
+	replaceTextInput := self newTextInput autoAccept: true.
+	replaceLabel := self newLabel label: 'Replace with:'.
+]
+
+{ #category : #accessing }
+SpecRubDialog >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter
+		title: self title;
+		initialExtent: 300 @ 220
 ]
 
 { #category : #accessing }
@@ -100,6 +117,12 @@ SpecRubDialog >> service: anObject [
 SpecRubDialog >> setModelBeforeInitialization: aService [
 
 	service := aService
+]
+
+{ #category : #accessing }
+SpecRubDialog >> title [ 
+	
+	^ 'Find & Replace'
 ]
 
 { #category : #initialization }
