@@ -40,14 +40,23 @@ SpecRubDialog class >> defaultSpec [
 			spacing: 5;
 			add: #replaceLabel  expand: false fill: false padding: 0;
 			add: #replaceTextInput);
-		addLast: (SpBoxLayout newHorizontal 
+		"addLast: (SpBoxLayout newHorizontal 
 			borderWidth: 3;
 			spacing: 5;
 			add: #findButton;
 			add: #replaceButton;
 			add: #replaceAllButton;
-			add: #cancelButton);
+			add: #cancelButton);"
 		yourself
+]
+
+{ #category : #accessing }
+SpecRubDialog >> closeWindowOnEscIn: aPresenter [
+
+	"Morphic dependent!"
+
+	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubKeystroke do: [ :ann |
+		ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] ].
 ]
 
 { #category : #accessing }
@@ -70,10 +79,31 @@ SpecRubDialog >> findInput: anObject [
 	findInput := anObject.
 ]
 
+{ #category : #accessing }
+SpecRubDialog >> initializeDialogWindow: aDialogWindowPresenter [
+	
+	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter | 
+			service find ].
+	replaceButton := aDialogWindowPresenter addButton: 'Replace' do: [ :presenter | 
+			service find ].
+	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter | 
+			service find ].
+	cancelButton := aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter | 
+			presenter triggerCancelAction.
+			presenter close ].
+				
+	aDialogWindowPresenter
+		title: self title;
+		initialExtent: 430 @ 220
+]
+
 { #category : #initialization }
 SpecRubDialog >> initializePresenters [
 	findInput := self newTextInput autoAccept: true; placeholder: 'Text to find'.
+	
 	findInput whenTextChangedDo: [ self updateFindText ].
+	
+	self closeWindowOnEscIn: findInput.
 	
 	regExpCheckBox := self newCheckBox label: 'Regular expression'.
 	backwardsCheckBox := self newCheckBox label: 'Search backwards'.
@@ -92,15 +122,9 @@ SpecRubDialog >> initializePresenters [
 		action: [ service find ].
 		
 	replaceTextInput := self newTextInput autoAccept: true.
-	replaceLabel := self newLabel label: 'Replace with:'.
-]
+	self closeWindowOnEscIn: replaceTextInput.
 
-{ #category : #accessing }
-SpecRubDialog >> initializeWindow: aWindowPresenter [
-	super initializeWindow: aWindowPresenter.
-	aWindowPresenter
-		title: self title;
-		initialExtent: 300 @ 220
+	replaceLabel := self newLabel label: 'Replace with:'.
 ]
 
 { #category : #accessing }

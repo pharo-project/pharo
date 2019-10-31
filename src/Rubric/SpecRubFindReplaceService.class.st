@@ -115,7 +115,7 @@ SpecRubFindReplaceService >> openDialog [
 	dialogWindow ifNotNil: [ 
 		dialogWindow close ].
 	
-	dialogWindow := dialog openWithSpec.
+	dialogWindow := dialog openDialogWithSpec: #defaultSpec.
 ]
 
 { #category : #services }
