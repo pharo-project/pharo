@@ -94,7 +94,7 @@ SpecRubDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter | 
 			service find ].
 	replaceButton := aDialogWindowPresenter addButton: 'Replace' do: [ :presenter | 
-			service find ].
+			self replace ].
 	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter | 
 			service find ].
 	cancelButton := aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter | 
@@ -135,6 +135,25 @@ SpecRubDialog >> initializePresenters [
 	self closeWindowOnEscIn: replaceTextInput.
 
 	replaceLabel := self newLabel label: 'Replace with:'.
+]
+
+{ #category : #accessing }
+SpecRubDialog >> newReplacement [
+	| t |
+	(t := replaceTextInput text asString) ifEmpty: [^ self ].
+	
+	service replaceText: replaceTextInput text asString.
+	"(self prevReplacements includes: t)
+		ifFalse: [self prevReplacements addFirst: t].
+	self prevReplacements size > self maxPreviousListSize
+		ifTrue: [self prevReplacements removeLast]"
+]
+
+{ #category : #accessing }
+SpecRubDialog >> replace [
+	self newReplacement.
+	service replace.
+	service find
 ]
 
 { #category : #accessing }
