@@ -508,8 +508,3 @@ CompletionEngine >> stopCompletionDelay [
     completionDelay ifNotNil: [ 
         completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
 ]
-
-{ #category : #accessing }
-CompletionEngine >> workspace [
-	^nil
-]

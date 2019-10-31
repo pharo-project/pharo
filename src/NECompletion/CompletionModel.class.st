@@ -79,10 +79,9 @@ CompletionModel >> hasMessage [
 
 { #category : #entries }
 CompletionModel >> initEntries [
-	| producer suggestionsList |
-	producer := CompletionProducerVisitor new.
+	| suggestionsList |
 	self sorter: self class sorter.
-	suggestionsList := self sortList: (producer completionListForNode: node).
+	suggestionsList := self sortList: node completionEntries.
 	^ suggestionsList collect: [ :each | NECEntry contents: each node: node ]
 ]
 
