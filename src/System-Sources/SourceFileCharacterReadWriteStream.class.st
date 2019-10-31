@@ -72,6 +72,12 @@ SourceFileCharacterReadWriteStream >> next: anInteger [
 ]
 
 { #category : #accessing }
+SourceFileCharacterReadWriteStream >> next: anInteger putAll: aString startingAt: startIndex [
+
+	^ writeStream next: anInteger putAll: aString startingAt: startIndex
+]
+
+{ #category : #accessing }
 SourceFileCharacterReadWriteStream >> nextPut: aCharacter [
 
 	^ writeStream nextPut: aCharacter
