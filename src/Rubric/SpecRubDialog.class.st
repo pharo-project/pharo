@@ -56,7 +56,7 @@ SpecRubDialog >> assignEnterKeystrokeEventFor: aPresenter [
 	"Morphic dependent!"
 
 	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann |
-		service find ] ].
+		self find ] ].
 ]
 
 { #category : #accessing }
@@ -66,6 +66,12 @@ SpecRubDialog >> closeWindowOnEscIn: aPresenter [
 
 	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubKeystroke do: [ :ann |
 		ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] ].
+]
+
+{ #category : #accessing }
+SpecRubDialog >> find [ 
+	self updateService.
+	service find
 ]
 
 { #category : #accessing }
@@ -92,14 +98,20 @@ SpecRubDialog >> findInput: anObject [
 SpecRubDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	
 	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter | 
-			service find ].
+			self find ].
 	replaceButton := aDialogWindowPresenter addButton: 'Replace' do: [ :presenter | 
 			self replace ].
 	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter | 
-			service find ].
+			self replaceAll ].
 	cancelButton := aDialogWindowPresenter addButton: 'Cancel' do: [ :presenter | 
 			presenter triggerCancelAction.
 			presenter close ].
+		
+	self focusOrder 
+		add: findButton;
+		add: replaceButton;
+		add: replaceAllButton;
+		add: cancelButton.
 				
 	aDialogWindowPresenter
 		title: self title;
@@ -120,21 +132,21 @@ SpecRubDialog >> initializePresenters [
 	caseCheckBox := self newCheckBox label: 'Case sensitive'.
 	wrapCheckBox := self newCheckBox label: 'Wrap around'.
 	entireCheckBox := self newCheckBox label: 'Entire words only'.
-	
-	findButton := self newButton label: 'Find'.
-	findButton action: [ service find ].
-	
-	replaceButton := self newButton label: 'Replace';
-		action: [ service find ].
-	replaceAllButton := self newButton label: 'Replace All';
-		action: [ service find ].
-	cancelButton := self newButton label: 'Cancel';
-		action: [ service find ].
-		
+			
 	replaceTextInput := self newTextInput autoAccept: true.
 	self closeWindowOnEscIn: replaceTextInput.
 
 	replaceLabel := self newLabel label: 'Replace with:'.
+	
+	self focusOrder 
+		add: findInput;
+		add: replaceTextInput;
+		add: regExpCheckBox;
+		add: backwardsCheckBox;
+		add: caseCheckBox;
+		add: wrapCheckBox;
+		add: entireCheckBox.
+		
 ]
 
 { #category : #accessing }
@@ -143,17 +155,22 @@ SpecRubDialog >> newReplacement [
 	(t := replaceTextInput text asString) ifEmpty: [^ self ].
 	
 	service replaceText: replaceTextInput text asString.
-	"(self prevReplacements includes: t)
-		ifFalse: [self prevReplacements addFirst: t].
-	self prevReplacements size > self maxPreviousListSize
-		ifTrue: [self prevReplacements removeLast]"
+
 ]
 
 { #category : #accessing }
 SpecRubDialog >> replace [
+	self updateService.
 	self newReplacement.
 	service replace.
 	service find
+]
+
+{ #category : #accessing }
+SpecRubDialog >> replaceAll [
+	self updateService.
+	self newReplacement.
+	service replaceAll.
 ]
 
 { #category : #accessing }
@@ -191,4 +208,15 @@ SpecRubDialog >> updateFromModel [
 	findInput text: self service findText.
 
 
+]
+
+{ #category : #accessing }
+SpecRubDialog >> updateService [
+
+	service caseSensitive: caseCheckBox state.
+	service isRegex: regExpCheckBox state.
+	service entireWordsOnly: entireCheckBox state.
+	service wrapAround: wrapCheckBox state.
+	service searchBackwards: backwardsCheckBox state.
+	
 ]
