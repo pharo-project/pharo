@@ -252,7 +252,7 @@ FileSystem >> copyFileAndDelete: sourcePath to: destination [
 	[self copy: sourcePath toReference: destination] 
 		on: Error 
 		do: [ :error |
-			destination delete.
+			destination ensureDelete.
 			error signal].
 	self delete: sourcePath.
 	^destination
