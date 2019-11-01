@@ -136,7 +136,13 @@ RubAbstractTextArea class >> caseSensitiveFinds: aBoolean [
 { #category : #accessing }
 RubAbstractTextArea class >> defaultFindReplaceServiceClass [
 
-	^ defaultFindReplaceServiceClass ifNil: [ SpecRubFindReplaceService ]
+	^ defaultFindReplaceServiceClass ifNil: [ RubFindReplaceService ]
+]
+
+{ #category : #accessing }
+RubAbstractTextArea class >> defaultFindReplaceServiceClass: aClass [
+
+	^ defaultFindReplaceServiceClass := aClass
 ]
 
 { #category : #settings }

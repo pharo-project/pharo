@@ -1,5 +1,8 @@
+"
+I am a Spec dialog used for find & replace service. I am currently partly dependent on Morphic backend because of more user friendly keyboard manipulation.
+"
 Class {
-	#name : #SpecRubDialog,
+	#name : #SpRubFindReplaceDialog,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'service',
@@ -17,11 +20,11 @@ Class {
 		'replaceTextInput',
 		'replaceLabel'
 	],
-	#category : #'Rubric-Editing-FindReplaceService'
+	#category : #'Rubric-SpecFindReplaceDialog'
 }
 
 { #category : #specs }
-SpecRubDialog class >> defaultSpec [
+SpRubFindReplaceDialog class >> defaultSpec [
 	<spec>
 	^ SpBoxLayout newVertical
 		add: #findInput
@@ -50,8 +53,8 @@ SpecRubDialog class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> assignEnterKeystrokeEventFor: aPresenter [
+{ #category : #'morphic dependencies' }
+SpRubFindReplaceDialog >> assignEnterKeystrokeEventFor: aPresenter [
 
 	"Morphic dependent!"
 
@@ -59,8 +62,8 @@ SpecRubDialog >> assignEnterKeystrokeEventFor: aPresenter [
 		self find ] ].
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> closeWindowOnEscIn: aPresenter [
+{ #category : #'morphic dependencies' }
+SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
 
 	"Morphic dependent!"
 
@@ -68,34 +71,34 @@ SpecRubDialog >> closeWindowOnEscIn: aPresenter [
 		ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] ].
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> find [ 
+{ #category : #operations }
+SpRubFindReplaceDialog >> find [ 
 	self updateService.
 	service find
 ]
 
 { #category : #accessing }
-SpecRubDialog >> findButton [
+SpRubFindReplaceDialog >> findButton [
 	^ findButton
 ]
 
 { #category : #accessing }
-SpecRubDialog >> findButton: anObject [
+SpRubFindReplaceDialog >> findButton: anObject [
 	findButton := anObject
 ]
 
 { #category : #accessing }
-SpecRubDialog >> findInput [
+SpRubFindReplaceDialog >> findInput [
 	^ findInput
 ]
 
 { #category : #accessing }
-SpecRubDialog >> findInput: anObject [
+SpRubFindReplaceDialog >> findInput: anObject [
 	findInput := anObject.
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> initializeDialogWindow: aDialogWindowPresenter [
+{ #category : #initialization }
+SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	
 	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter | 
 			self find ].
@@ -116,10 +119,13 @@ SpecRubDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	aDialogWindowPresenter
 		title: self title;
 		initialExtent: 430 @ 220.
+		
+	aDialogWindowPresenter whenClosedDo: [ service discardDialog ]
+
 ]
 
 { #category : #initialization }
-SpecRubDialog >> initializePresenters [
+SpRubFindReplaceDialog >> initializePresenters [
 	findInput := self newTextInput autoAccept: true; placeholder: 'Text to find'.
 	
 	findInput whenTextChangedDo: [ self updateFindText ].
@@ -149,8 +155,8 @@ SpecRubDialog >> initializePresenters [
 		
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> newReplacement [
+{ #category : #private }
+SpRubFindReplaceDialog >> newReplacement [
 	| t |
 	(t := replaceTextInput text asString) ifEmpty: [^ self ].
 	
@@ -158,60 +164,62 @@ SpecRubDialog >> newReplacement [
 
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> replace [
+{ #category : #operations }
+SpRubFindReplaceDialog >> replace [
 	self updateService.
 	self newReplacement.
 	service replace.
 	service find
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> replaceAll [
+{ #category : #operations }
+SpRubFindReplaceDialog >> replaceAll [
 	self updateService.
 	self newReplacement.
 	service replaceAll.
 ]
 
 { #category : #accessing }
-SpecRubDialog >> service [
+SpRubFindReplaceDialog >> service [
 	^ service
 ]
 
 { #category : #accessing }
-SpecRubDialog >> service: anObject [
+SpRubFindReplaceDialog >> service: anObject [
 	service := anObject
 ]
 
 { #category : #initialization }
-SpecRubDialog >> setModelBeforeInitialization: aService [
+SpRubFindReplaceDialog >> setModelBeforeInitialization: aService [
 
 	service := aService
 ]
 
 { #category : #accessing }
-SpecRubDialog >> title [ 
+SpRubFindReplaceDialog >> title [ 
 	
 	^ 'Find & Replace'
 ]
 
 { #category : #initialization }
-SpecRubDialog >> updateFindText [
+SpRubFindReplaceDialog >> updateFindText [
 
 	#updateFindText traceCr.
 	service findText: self findInput text asString.
 ]
 
 { #category : #initialization }
-SpecRubDialog >> updateFromModel [
+SpRubFindReplaceDialog >> updateFromModel [
 
-	findInput text: self service findText.
+	findInput text: (self service findText
+		ifEmpty: [ '' ]
+		ifNotEmpty: [ :aText | aText asString lines first ]).
 
 
 ]
 
-{ #category : #accessing }
-SpecRubDialog >> updateService [
+{ #category : #private }
+SpRubFindReplaceDialog >> updateService [
 
 	service caseSensitive: caseCheckBox state.
 	service isRegex: regExpCheckBox state.
