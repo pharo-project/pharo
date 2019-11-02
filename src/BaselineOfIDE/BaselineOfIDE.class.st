@@ -122,6 +122,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
+		self package: 'System-Hashing-Testing'.
 		
 		spec baseline: 'Metacello' with: [ 
 			spec repository: repository; loads: #('Tests') ].
