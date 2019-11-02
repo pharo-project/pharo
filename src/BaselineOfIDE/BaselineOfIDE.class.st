@@ -68,6 +68,9 @@ BaselineOfIDE >> additionalInitialization [
 	RBProgramNode formatterClass: BIConfigurableFormatter.
 
 	Color flushCache.
+	
+	RubTextFieldArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
+	RubEditingArea defaultFindReplaceServiceClass: SpRubFindReplaceService.
 
 	ASTTransformExamplePluginActive recompile.
 	PharoCommandLineHandler recompile.
@@ -123,6 +126,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'System-Hashing-Testing'.
+		spec package: 'Rubric-SpecFindReplaceDialog'.
 		
 		spec baseline: 'Metacello' with: [ 
 			spec repository: repository; loads: #('Tests') ].
