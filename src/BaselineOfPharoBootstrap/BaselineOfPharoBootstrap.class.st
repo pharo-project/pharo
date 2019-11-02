@@ -96,6 +96,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
+		spec package: 'NumberParser'.
 
 		spec package: 'Math-Operations-Extensions'.
 
@@ -188,6 +189,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-SessionManager'.
 			'System-Sources'.
 			'System-Support'.
+			'NumberParser'.
 
 			'UIManager'.
 			'Zinc-Character-Encoding-Core' }.

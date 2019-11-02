@@ -37,18 +37,14 @@ ASTCache class >> at: aCompiledMethod [
 
 { #category : #accessing }
 ASTCache class >> default [
-	^ default
+	^ default ifNil: [ 
+		SessionManager default registerSystemClassNamed: self name.
+		default := self new ]
 ]
 
 { #category : #accessing }
 ASTCache class >> default: anASTCache [
 	default := anASTCache
-]
-
-{ #category : #'class initialization' }
-ASTCache class >> initialize [
-	default := self new.
-	SessionManager default registerSystemClassNamed: self name
 ]
 
 { #category : #initialization }
