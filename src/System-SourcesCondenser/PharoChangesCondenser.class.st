@@ -11,7 +11,7 @@ Class {
 		'remoteStringMap',
 		'sourceStreams'
 	],
-	#category : #'System-Sources-Changes-Condense'
+	#category : #'System-SourcesCondenser'
 }
 
 { #category : #helper }

@@ -14,7 +14,7 @@ ManifestCollectionsStreams class >> dependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestCollectionsStreams class >> manuallyResolvedDependencies [
-	^ #(#UIManager #'Collections-Abstract' #Jobs)
+	^ #(#UIManager #'Collections-Abstract')
 ]
 
 { #category : #'meta-data' }
