@@ -273,14 +273,6 @@ CommandLineUIManager >> logYellowDuring: aBlock [
 	^ self logColored: '33' during: aBlock
 ]
 
-{ #category : #'ui requests' }
-CommandLineUIManager >> merge: merger informing: aString [
-	"Check for conflicts, if there are none, just continue. 
-	 Merger will accept all conflicts"
-	merger hasConflicts ifFalse: [ ^ self ].
-	self abort: aString title: 'Conflict detected'
-]
-
 { #category : #display }
 CommandLineUIManager >> newDisplayDepthNoRestore: pixelSize [	
 	"do nothing"

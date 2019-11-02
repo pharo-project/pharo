@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#DeprecatedFileStream #'FileSystem-Core' #'System-Changes' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -84,7 +84,7 @@ SystemDependenciesTest >> knownFileSystemDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Monticello #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'System-Changes' #'AST-Core')
+	^ #(#'FileSystem-Core' #'OpalCompiler-Core' #'System-Changes' #'AST-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -157,7 +157,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'System-Changes' #'AST-Core')
+	^ #(#'FileSystem-Core' #'OpalCompiler-Core' #'System-Changes' #'AST-Core')
 ]
 
 { #category : #'known dependencies' }
