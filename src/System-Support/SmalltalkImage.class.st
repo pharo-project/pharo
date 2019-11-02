@@ -1417,14 +1417,12 @@ SmalltalkImage >> privSaveImageWithCleanup [
 	[
 		self snapshot: true andQuit: true.
 	] ifError: [:e |
-		| rep |
-		rep := FileStream forceNewFileNamed: 'PharoDebug.log'.
-		rep nextPutAll: 'Error:'; cr.
-		rep nextPutAll: e asString; cr.
-  		rep nextPutAll: thisContext stack size asString.
- 	  	thisContext stack copy withIndexDo: [:stck :i |
-			[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []].
-		rep close. 
+		'PharoDebug.log' asFileReference ensureDelete; writeStreamDo: [ :rep |
+			rep nextPutAll: 'Error:'; cr.
+			rep nextPutAll: e asString; cr.
+	  		rep nextPutAll: thisContext stack size asString.
+	 	  	thisContext stack copy withIndexDo: [:stck :i |
+				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []]]. 
 		Smalltalk exitFailure ]
 ]
 
