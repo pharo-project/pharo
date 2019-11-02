@@ -3,7 +3,7 @@ I am a warning about the definition of a new Undeclared variable. I may be quite
 "
 Class {
 	#name : #NewUndeclaredWarning,
-	#superclass : #Warning,
+	#superclass : #SystemNotification,
 	#instVars : [
 		'undeclaredName',
 		'originName'
@@ -18,12 +18,6 @@ NewUndeclaredWarning class >> signal: undeclaredName in: originName [
 		undeclaredName: undeclaredName;
 		originName: originName;
 		signal.
-]
-
-{ #category : #accessing }
-NewUndeclaredWarning >> defaultAction [
-	
-	UIManager default newUndeclaredWarningDefaultAction: self
 ]
 
 { #category : #accessing }

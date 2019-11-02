@@ -314,13 +314,6 @@ MorphicUIManager >> defer: aValuable [
 ]
 
 { #category : #'ui requests' }
-MorphicUIManager >> deprecationPerformedNotificationDefaultAction: aWarning [
-
-	aWarning messageText traceCr.
-	aWarning resume.
-]
-
-{ #category : #'ui requests' }
 MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	"Open an editor on the given string/text"
 	
@@ -548,13 +541,6 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 		newMenuIn: aThemedMorph for: aModel
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> newUndeclaredWarningDefaultAction: aWarning [
-
-	aWarning messageText traceCr.
-	aWarning resume.
-]
-
 { #category : #events }
 MorphicUIManager >> onEventSensorStartup: anEventSensor [
 
@@ -758,6 +744,13 @@ MorphicUIManager >> syntaxErrorNotificationDefaultAction: anException [
 	Note, if there is no #syntaxErrorDebugger registered, it will be silently ignored"
 	^Smalltalk tools using: #syntaxErrorDebugger do: [:tool | 
 			tool open: (tool syntaxError: anException)]
+]
+
+{ #category : #'ui requests' }
+MorphicUIManager >> systemNotificationDefaultAction: aNotification [
+
+	aNotification messageText traceCr.
+	aNotification resume.
 ]
 
 { #category : #'ui process' }

@@ -69,15 +69,6 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 ]
 
 { #category : #temps }
-BytecodeEncoder >> bindAndJuggle: name [
-	"This is used to insert a new temp and reorder temps on editing.
-	 It doesn't really work for closure compilation since we have multiple
-	 locations for temps.  Simply signal a reparse is necessary."
-
-	ReparseAfterSourceEditing signal
-]
-
-{ #category : #temps }
 BytecodeEncoder >> blockExtentsToTempsMap [
 	"Answer a Dictionary of blockExtent to temp locations for the current method.
 	 This is used by the debugger to locate temp vars in contexts.  A temp map

@@ -1,6 +1,6 @@
 Extension { #name : #Fraction }
 
-{ #category : #'*AST-Core-Parser' }
+{ #category : #'*NumberParser' }
 Fraction class >> readFrom: stringOrStream [ 
 	"Answer a Fraction as described on aStream with following rules:
 	- numerator can specify a different radix (like '16rABC').

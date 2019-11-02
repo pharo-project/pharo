@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #'OpalCompiler-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -157,7 +157,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #'OpalCompiler-Core' #'System-Changes' #'AST-Core')
+	^ #(#'FileSystem-Core' #'System-Changes' #'AST-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -368,6 +368,14 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalKernelDependencies [
+
+"
+If you will break or weaken this test, a puppy will die!!! 
+     _ _      _
+    o'')}____//
+     `_/      )
+     (_(_/-(_/
+" 
 	| dependencies |
 	self longTestCase.
 

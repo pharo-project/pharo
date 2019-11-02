@@ -367,14 +367,6 @@ UIManager >> deny: aStringOrText title: aString [
 	^self subclassResponsibility 
 ]
 
-{ #category : #'default actions' }
-UIManager >> deprecationPerformedNotificationDefaultAction: aWarning [
-
-	"by default, do nothing"
-	
-	aWarning resume.
-]
-
 { #category : #'ui requests' }
 UIManager >> edit: aText [
 	"Open an editor on the given string/text."
@@ -500,14 +492,6 @@ UIManager >> newMenuIn: aThemedMorph for: aModel [
 	"Answer a new menu."
 	
 	^self subclassResponsibility
-]
-
-{ #category : #'default actions' }
-UIManager >> newUndeclaredWarningDefaultAction: aWarning [
-
-	"by default, do nothing"
-	
-	aWarning resume.
 ]
 
 { #category : #'non-interactive' }
@@ -694,6 +678,14 @@ UIManager >> spawnNewProcessIfThisIsUI: suspendedProcess [
 UIManager >> syntaxErrorNotificationDefaultAction: anException [
 
 	^ self subclassResponsibility 
+]
+
+{ #category : #'default actions' }
+UIManager >> systemNotificationDefaultAction: aNotification [
+
+	"by default, do nothing"
+	
+	aNotification resume.
 ]
 
 { #category : #'ui process' }

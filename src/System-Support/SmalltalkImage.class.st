@@ -303,14 +303,6 @@ SmalltalkImage >> changeImagePathTo: aString [
 ]
 
 { #category : #'image, changes name' }
-SmalltalkImage >> changesFile [
-	"Answer the file containing the current changes."
-
-	^ FileLocator changes
-
-]
-
-{ #category : #'image, changes name' }
 SmalltalkImage >> changesName [
 	"Answer the name for the changes file corresponding to the image file name."
 	"Smalltalk changesName"
@@ -452,11 +444,6 @@ SmalltalkImage >> compactClassesArray [
 SmalltalkImage >> compiler [
 	^self compilerClass new
 		environment: self globals
-]
-
-{ #category : #compiler }
-SmalltalkImage >> compilerClass [
-	^CompilerClass ifNil: [CompilerClass := OpalCompiler].
 ]
 
 { #category : #'memory space' }
@@ -781,12 +768,6 @@ SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
 	^ self imagePath asFileReference parent
-]
-
-{ #category : #'image, changes name' }
-SmalltalkImage >> imageFile [
-
-	^ FileLocator image
 ]
 
 { #category : #image }

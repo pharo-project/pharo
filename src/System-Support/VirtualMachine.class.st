@@ -37,15 +37,6 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 ]
 
 { #category : #accessing }
-VirtualMachine >> binary [
-	"Answer the a file reference to the virtual machine binary."
-	"SmalltalkImage current vmBinary"
-
-	^ FileLocator vmBinary
-
-]
-
-{ #category : #accessing }
 VirtualMachine >> buildDate [			
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"

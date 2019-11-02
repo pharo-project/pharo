@@ -3,12 +3,6 @@ I am a notificaton about an operation that was performed as reaction of a Deprec
 "
 Class {
 	#name : #DeprecationPerformedNotification,
-	#superclass : #Notification,
+	#superclass : #SystemNotification,
 	#category : #'Kernel-Exceptions'
 }
-
-{ #category : #exceptiondescription }
-DeprecationPerformedNotification >> defaultAction [
-	
-	UIManager default deprecationPerformedNotificationDefaultAction: self
-]

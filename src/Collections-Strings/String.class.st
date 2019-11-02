@@ -2131,11 +2131,6 @@ String >> padRightTo: length with: char [
 	^ self, (String new: (length - self size max: 0) withAll: char)
 ]
 
-{ #category : #converting }
-String >> parseLiterals [
-	^ self class compiler parseLiterals: self
-]
-
 { #category : #printing }
 String >> printOn: aStream [ 
 	"Print inside string quotes, doubling inbedded quotes."
