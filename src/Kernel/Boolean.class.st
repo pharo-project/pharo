@@ -72,6 +72,11 @@ Boolean >> and: alternativeBlock [
 { #category : #converting }
 Boolean >> asBit [
 	"convert myself to an Integer representing 1 for true and 0 for false"
+	
+	"($b > $c) asBit>>> 0"
+	"true asBit >>> 1" 
+	"#(true true false true) inject: 0 into: [ :sum :each | sum + each asBit] >>> 3"
+	
 	self subclassResponsibility
 ]
 
@@ -146,6 +151,7 @@ Boolean >> isSelfEvaluating [
 Boolean >> not [
 	"Negation. Answer true if the receiver is false, answer false if the 
 	receiver is true."
+	"false not >>> true"
 
 	self subclassResponsibility
 ]
