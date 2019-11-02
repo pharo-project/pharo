@@ -31,6 +31,11 @@ Boolean class >> new [
 Boolean >> & aBoolean [ 
 	"Evaluating conjunction. Evaluate the argument. Then answer true if 
 	both the receiver and the argument are true."
+	
+	"true & true >>> true"
+	"true & false >>> false"
+	"false & true >>> false"
+	"false & false >>> false"
 
 	self subclassResponsibility
 ]
@@ -56,6 +61,10 @@ Boolean >> ==> aBlock [
 	   F   |   T   |      T
 	   F   |   F   |      T
 	"
+	"true ==> [true] >>> true"
+	"true ==> [false] >>> false"
+	"false ==> [true] >>> true"
+	"false ==> [false] >>> true"
 
 	^self not or: [aBlock value]
 ]
@@ -65,6 +74,11 @@ Boolean >> and: alternativeBlock [
 	"Nonevaluating conjunction. If the receiver is true, answer the value of 
 	the argument, alternativeBlock; otherwise answer false without 
 	evaluating the argument."
+	
+	"true and: [true] >>> true"
+	"true and: [false] >>> false"
+	"false and: [true] >>> false"
+	"false and: [false] >>> true"
 
 	self subclassResponsibility
 ]
@@ -104,6 +118,9 @@ Boolean >> ifFalse: alternativeBlock [
 	the argument, alternativeBlock. Create an error notification if the 
 	receiver is nonBoolean. Execution does not actually reach here because 
 	the expression is compiled in-line."
+	
+	"false ifFalse: [ 'This statement is false!' ] >>> 'This statement is false!'" 
+	"true ifFalse: [ 'This statement is false!' ] >>> nil"
 
 	self subclassResponsibility
 ]
@@ -111,6 +128,9 @@ Boolean >> ifFalse: alternativeBlock [
 { #category : #controlling }
 Boolean >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [ 
 	"Same as ifTrue:ifFalse:."
+	
+	"true ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is true!'"
+	"false ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is false!'"
 
 	self subclassResponsibility
 ]
@@ -122,6 +142,9 @@ Boolean >> ifTrue: alternativeBlock [
 	the argument, alternativeBlock. Create an error notification if the 
 	receiver is nonBoolean. Execution does not actually reach here because 
 	the expression is compiled in-line."
+	
+	"true ifTrue: [ 'This statement is true!' ] >>> 'This statement is true!'" 
+	"false ifTrue: [ 'This statement is true!' ] >>> nil"
 
 	self subclassResponsibility
 ]
@@ -133,6 +156,9 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	result of evaluating the argument falseAlternativeBlock. If the receiver 
 	is a nonBoolean then create an error notification. Execution does not 
 	actually reach here because the expression is compiled in-line."
+	
+	"true ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is true!'"
+	"false ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is false!'"
 
 	self subclassResponsibility
 ]
@@ -151,6 +177,7 @@ Boolean >> isSelfEvaluating [
 Boolean >> not [
 	"Negation. Answer true if the receiver is false, answer false if the 
 	receiver is true."
+	"true not >>> false"
 	"false not >>> true"
 
 	self subclassResponsibility
@@ -161,6 +188,11 @@ Boolean >> or: alternativeBlock [
 	"Nonevaluating disjunction. If the receiver is false, answer the value of 
 	the argument, alternativeBlock; otherwise answer true without 
 	evaluating the argument."
+	
+	"true or: [true] >>> true"
+	"true or: [false] >>> true"
+	"false or: [true] >>> true"
+	"false or: [false] >>> false"
 
 	self subclassResponsibility
 ]
@@ -187,6 +219,11 @@ Boolean >> veryDeepCopyWith: deepCopier [
 Boolean >> xor: alternativeBlock [ 
 	"Nonevaluating conjunction. If the receiver is true, answer the opposite of the 
 	the argument, alternativeBlock; otherwise answer the value of the alternativeBlock."
+	
+	"true xor: [true] >>> false"
+	"true xor: [false] >>> true"
+	"false xor: [true] >>> true"
+	"false xor: [false] >>> false"
 
 	self subclassResponsibility
 ]
@@ -195,6 +232,11 @@ Boolean >> xor: alternativeBlock [
 Boolean >> | aBoolean [ 
 	"Evaluating disjunction (OR). Evaluate the argument. Then answer true 
 	if either the receiver or the argument is true."
+	
+	"true | true >>> true"
+	"true | false >>> true"
+	"false | true >>> true"
+	"false | false >>> false"
 
 	self subclassResponsibility
 ]
