@@ -85,9 +85,9 @@ OCUndeclaredVariableWarning >> defaultAction [
 	selector := self methodNode selector. 
 	varName := node name.
 
-	self methodNode selector ifNotNil: [self crTrace: className, '>>', selector, ' ']
-			ifNil: [self traceCr:''].
-	self traceCr: '(' , varName , ' is Undeclared) '.
+	NewUndeclaredWarning signal: varName in: (self methodNode selector 
+		ifNotNil: [className, '>>', selector]
+			ifNil: ['<unknown>']).
 
 	^super defaultAction ifNil: [
 		Undeclared add: (UndeclaredVariable named: varName asSymbol).

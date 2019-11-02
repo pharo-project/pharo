@@ -367,6 +367,14 @@ UIManager >> deny: aStringOrText title: aString [
 	^self subclassResponsibility 
 ]
 
+{ #category : #'default actions' }
+UIManager >> deprecationPerformedNotificationDefaultAction: aWarning [
+
+	"by default, do nothing"
+	
+	aWarning resume.
+]
+
 { #category : #display }
 UIManager >> displayProgress: titleString from: minVal to: maxVal during: workBlock [
 	"SystemProgressMorph show: titleString from: minVal to:  during: "
@@ -503,6 +511,14 @@ UIManager >> newMenuIn: aThemedMorph for: aModel [
 	"Answer a new menu."
 	
 	^self subclassResponsibility
+]
+
+{ #category : #'default actions' }
+UIManager >> newUndeclaredWarningDefaultAction: aWarning [
+
+	"by default, do nothing"
+	
+	aWarning resume.
 ]
 
 { #category : #'non-interactive' }

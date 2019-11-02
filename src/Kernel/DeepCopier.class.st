@@ -108,8 +108,7 @@ DeepCopier >> checkDeep [
 	DeepCopier new checkDeep 	"
 
 	<script: 'DeepCopier new checkDeep'>
-	self
-		trace:
+	Warning signal:
 			(String
 				streamContents: [ :stream | 
 					stream

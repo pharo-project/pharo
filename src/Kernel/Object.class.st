@@ -658,18 +658,6 @@ Object >> copySameFrom: otherObject [
 
 ]
 
-{ #category : #tracing }
-Object >> crTrace [
-	self crTrace: self printString
-]
-
-{ #category : #tracing }
-Object >> crTrace: aString [
-	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
-	
-	Transcript cr; show: aString.
-]
-
 { #category : #copying }
 Object >> deepCopy [
 	"Answer a copy of the receiver with its own copy of each instance variable. deepCopy does a deep copy. It should never be overridden and only be used if you want to get these very specific semantics.
@@ -1361,21 +1349,6 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #flagging }
-Object >> logEntry [
-	self traceCr: 'Entered ' , thisContext sender printString
-]
-
-{ #category : #flagging }
-Object >> logExecution [
-	self traceCr: 'Executing ' , thisContext sender printString
-]
-
-{ #category : #flagging }
-Object >> logExit [
-	self traceCr: 'Exited ' , thisContext sender printString
-]
-
 { #category : #printing }
 Object >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all 
@@ -2002,37 +1975,6 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 			receiver: aFinalizer
 			selector: aSelector
 			argument: aResourceHandle)
-]
-
-{ #category : #tracing }
-Object >> trace [
-	self trace: self printString
-]
-
-{ #category : #tracing }
-Object >> trace: aString [
-	"Log the argument. Use self trace: instead of Transcript show: "
-	
-	Transcript show: aString
-]
-
-{ #category : #tracing }
-Object >> traceCr [
-	self traceCr: self printString
-]
-
-{ #category : #tracing }
-Object >> traceCr: aString [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr
-]
-
-{ #category : #tracing }
-Object >> traceCrTab: aString [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr ; tab
 ]
 
 { #category : #'error handling' }

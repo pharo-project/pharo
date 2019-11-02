@@ -9,6 +9,6 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemHashing class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Platforms' #'OpalCompiler-Core' #'Transcript-Core' #'AST-Core' #'Collections-Abstract')
+	^ #(#'Collections-Streams' #'System-Platforms' #'OpalCompiler-Core' #'AST-Core' #'Collections-Abstract')
 
 ]

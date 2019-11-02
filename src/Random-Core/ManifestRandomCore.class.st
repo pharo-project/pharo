@@ -12,12 +12,6 @@ ManifestRandomCore class >> ignoredDependencies [
 	^ #(#Transcript)
 ]
 
-{ #category : #'meta-data - dependency analyser' }
-ManifestRandomCore class >> manuallyResolvedDependencies [
-	^ #(#'Transcript-Core')
-
-]
-
 { #category : #accessing }
 ManifestRandomCore class >> packageName [
 	^ 'Random-Core'

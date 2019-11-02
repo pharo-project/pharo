@@ -314,6 +314,13 @@ MorphicUIManager >> defer: aValuable [
 ]
 
 { #category : #'ui requests' }
+MorphicUIManager >> deprecationPerformedNotificationDefaultAction: aWarning [
+
+	aWarning messageText traceCr.
+	aWarning resume.
+]
+
+{ #category : #'ui requests' }
 MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	"Open an editor on the given string/text"
 	
@@ -539,6 +546,13 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 	"UIManager default"
 	^self theme 
 		newMenuIn: aThemedMorph for: aModel
+]
+
+{ #category : #'ui requests' }
+MorphicUIManager >> newUndeclaredWarningDefaultAction: aWarning [
+
+	aWarning messageText traceCr.
+	aWarning resume.
 ]
 
 { #category : #events }

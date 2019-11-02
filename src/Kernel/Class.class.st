@@ -811,7 +811,8 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 			ifFalse: [ ^ self ] ].
 	
 	varUserClass 
-		ifNotNil: [self crTrace: self name , ' (' , aString , ' is Undeclared) '.
+		ifNotNil: [
+			NewUndeclaredWarning signal: aString in: self name.
 			Undeclared declare: aSymbol from: self classPool]
 		ifNil: [ self classPool removeKey: aSymbol].
 		
