@@ -32,7 +32,7 @@ ASTCache class >> announceCacheReset [
 
 { #category : #accessing }
 ASTCache class >> at: aCompiledMethod [
-	^ default at: aCompiledMethod
+	^ self default at: aCompiledMethod
 ]
 
 { #category : #accessing }
