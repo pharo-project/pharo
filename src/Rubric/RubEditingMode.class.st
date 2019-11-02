@@ -26,7 +26,7 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 		with: [ 
 					(aBuilder item: #'Browse full class' translated)
 						keyText: 'b';
-						selector: #browseIt.
+						selector: #browseFullClass.
 					(aBuilder item: #'Senders of it' translated)
 						keyText: 'n';
 						selector: #sendersOfIt.

@@ -326,7 +326,7 @@ commentStamp: stampStringOrNil [
 	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
 	category := categoryString.
 	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
-	comment := commentString withSqueakLineEndings.
+	comment := commentString withInternalLineEndings.
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
@@ -354,7 +354,7 @@ commentStamp: stampStringOrNil [
 	classTraitComposition := classTraitCompositionString.
 	category := categoryString.
 	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
-	comment := commentString withSqueakLineEndings.
+	comment := commentString withInternalLineEndings.
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.

@@ -1822,17 +1822,6 @@ Behavior >> typeOfClass [
 	^#normal
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> ultimateSourceCodeAt: selector ifAbsent: aBlock [
-	"Return the source code at selector, deferring to superclass if necessary"
-	^ self sourceCodeAt: selector ifAbsent:
-		[self superclass
-			ifNil:
-				[aBlock value]
-			 ifNotNil:
-				[self superclass ultimateSourceCodeAt: selector ifAbsent: aBlock]]
-]
-
 { #category : #'user interface' }
 Behavior >> unreferencedInstanceVariables [
 	"Return a list of the instance variables defined in the receiver which are not referenced in the receiver or any of its subclasses."

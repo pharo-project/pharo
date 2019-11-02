@@ -2581,6 +2581,13 @@ String >> withCRs [
 ]
 
 { #category : #'platform conventions' }
+String >> withInternalLineEndings [
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR. Pharo internally uses CR for carriage return."
+
+	^ self withLineEndings: String cr
+]
+
+{ #category : #'platform conventions' }
 String >> withInternetLineEndings [
 	"change line endings from CR's and LF's to CRLF's.  This is probably in prepration for sending a string over the Internet"
 	
@@ -2669,16 +2676,17 @@ String >> withSeparatorsCompacted [
 	"'test  test		 ' withSeparatorsCompacted"
 ]
 
-{ #category : #'platform conventions' }
+{ #category : #formatting }
 String >> withSqueakLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
-
-	^ self withLineEndings: String cr
+	
+	^ self withInternalLineEndings
 ]
 
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
+	"('asa' , String cr , 'asa') withUnixLineEndings at: 4 >>> Character lf"
 
 	^ self withLineEndings: String lf
 ]

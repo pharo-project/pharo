@@ -239,7 +239,6 @@ NECMenuMorph class >> titleFont [
 
 { #category : #actions }
 NECMenuMorph >> browse [
-
 	(self selectedEntry browseWith: context)
 		ifTrue: [ controller closeMenu ]
 ]

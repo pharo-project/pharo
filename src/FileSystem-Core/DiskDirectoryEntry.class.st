@@ -88,7 +88,7 @@ DiskDirectoryEntry >> accessAttributes: anArray [
 { #category : #accessing }
 DiskDirectoryEntry >> accessTime [
 
-	^DateAndTime fromSqueakTime: (self statAttributes at: 9)
+	^DateAndTime fromInternalTime: (self statAttributes at: 9)
 ]
 
 { #category : #accessing }
@@ -125,8 +125,7 @@ DiskDirectoryEntry >> changeTime [
 	"Answer the time the receivers metadata was last changed.
 	On platforms that don't support change time, use the modification time"
 
-	^DateAndTime fromSqueakTime: ((self statAttributes at: 11) ifNil: 
-						[self statAttributes at: 12 ])
+	^DateAndTime fromInternalTime: ((self statAttributes at: 11) ifNil: [ self statAttributes at: 12 ])
 
 ]
 
@@ -142,7 +141,7 @@ DiskDirectoryEntry >> changeUnixTime [
 DiskDirectoryEntry >> creationTime [
 	"Answer the receivers creation time.  If this is not available, answer the change time, i.e. the time at which the receivers metadata was last updated."
 
-	^DateAndTime fromSqueakTime: ((self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ])
+	^DateAndTime fromInternalTime: ((self statAttributes at: 12) ifNil: [ self statAttributes at: 11 ])
 ]
 
 { #category : #accessing }
@@ -337,7 +336,7 @@ DiskDirectoryEntry >> mode [
 DiskDirectoryEntry >> modificationTime [
 	"Answer the receiver's modification time"
 
-	^DateAndTime fromSqueakTime: (self statAttributes at: 10)
+	^DateAndTime fromInternalTime: (self statAttributes at: 10)
 ]
 
 { #category : #accessing }

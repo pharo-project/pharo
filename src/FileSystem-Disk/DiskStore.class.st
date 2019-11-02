@@ -142,7 +142,7 @@ DiskStore >> = other [
 DiskStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 
-	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
+	^DateAndTime fromInternalTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
 ]
 
 { #category : #public }
@@ -244,12 +244,11 @@ DiskStore >> changeTimeOf: aPath [
 	"Answer the time the metadata of aPath was last changed.
 	On platforms that don't support change time, use the modification time."
 
-	| pathString squeakTime |
-	
+	| pathString time |
 	pathString := self stringFromPath: aPath.
-	squeakTime := (File fileAttribute: pathString number: 11) ifNil: 
+	time := (File fileAttribute: pathString number: 11) ifNil: 
 			[ File fileAttribute: pathString number: 12 ].
-	^DateAndTime fromSqueakTime: squeakTime
+	^DateAndTime fromInternalTime: time
 ]
 
 { #category : #public }
@@ -294,12 +293,11 @@ DiskStore >> createDirectory: path [
 { #category : #accessing }
 DiskStore >> creationTimeOf: aPath [
 	"Answer the creation time of aPath.  If the platform doesn't support creation time, use change time"
-	| pathString squeakTime |
-
+	
+	| pathString time |
 	pathString := self stringFromPath: aPath.
-	squeakTime := (File fileAttribute: pathString number: 12) ifNil: 
-			[ File fileAttribute: pathString number: 11 ].
-	^DateAndTime fromSqueakTime: squeakTime
+	time := (File fileAttribute: pathString number: 12) ifNil: [ File fileAttribute: pathString number: 11 ].
+	^DateAndTime fromInternalTime: time
 
 ]
 
@@ -556,7 +554,7 @@ DiskStore >> maxFileNameLength [
 DiskStore >> modificationTimeOf: aPath [
 	"Return the date of last modification of the File described by aPath"
 
-	^DateAndTime fromSqueakTime: (File fileAttribute: (self stringFromPath: aPath) number: 10)
+	^DateAndTime fromInternalTime: (File fileAttribute: (self stringFromPath: aPath) number: 10)
 ]
 
 { #category : #private }

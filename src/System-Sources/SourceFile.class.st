@@ -116,6 +116,13 @@ SourceFile >> next: anInteger [
 	^ stream next: anInteger
 ]
 
+{ #category : #accessing }
+SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
+
+	stream next: anInteger putAll: aString startingAt: startIndex
+
+]
+
 { #category : #'fileIn/Out' }
 SourceFile >> nextChunk [
 

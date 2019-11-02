@@ -44,7 +44,8 @@ CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 	contents do: [ :each | 
 		each registerContextMenuItemsWithBuilder: aBuilder ].
 	
-	self isInlined ifTrue: [ aBuilder withSeparatorAfter ]
+	self isInlined & aBuilder items notEmpty 
+		ifTrue: [ aBuilder withSeparatorAfter ]
 ]
 
 { #category : #'*Commander-Activators-ContextMenu' }

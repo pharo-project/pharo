@@ -86,6 +86,11 @@ Boolean >> and: alternativeBlock [
 { #category : #converting }
 Boolean >> asBit [
 	"convert myself to an Integer representing 1 for true and 0 for false"
+	
+	"($b > $c) asBit>>> 0"
+	"true asBit >>> 1" 
+	"#(true true false true) inject: 0 into: [ :sum :each | sum + each asBit] >>> 3"
+	
 	self subclassResponsibility
 ]
 
@@ -96,10 +101,14 @@ Boolean >> deepCopy [
 ]
 
 { #category : #'logical operations' }
-Boolean >> eqv: aBoolean [ 
+Boolean >> eqv: aBoolean [
 	"Answer true if the receiver is equivalent to aBoolean."
 
-	^self == aBoolean
+	"false eqv: true >>> false"
+	"(1 == 1) eqv: true >>> true"
+	"( 1 > 2)  eqv: false >>> true"
+
+	^ self == aBoolean
 ]
 
 { #category : #controlling }
@@ -168,7 +177,6 @@ Boolean >> isSelfEvaluating [
 Boolean >> not [
 	"Negation. Answer true if the receiver is false, answer false if the 
 	receiver is true."
-	
 	"true not >>> false"
 	"false not >>> true"
 

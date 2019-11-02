@@ -32,18 +32,20 @@ ChunkWriteStream >> nextChunkPut: aString [
 
 { #category : #accessing }
 ChunkWriteStream >> nextPut: aString [
-    "Append the argument, aString, to the receiver, doubling embedded terminators."
- 
-    | i remainder terminator | 
-    terminator := $!.
-    remainder := aString asString.
-    [(i := remainder indexOf: terminator) = 0] whileFalse:
-        [decoratedStream nextPutAll: (remainder copyFrom: 1 to: i).
-        decoratedStream nextPut: terminator.  "double imbedded terminators"
-        remainder := remainder copyFrom: i+1 to: remainder size].
-    decoratedStream nextPutAll: remainder. 
-    decoratedStream nextPut: terminator.
-    decoratedStream flush.
+	"Append the argument, aString, to the receiver, doubling embedded ! terminators and adding a extra one"
+
+	| string start bangIndex |
+	string := aString asString.
+	start := 1.
+	[ (bangIndex := string indexOf: self terminatorMark startingAt: start) = 0 ]
+		whileFalse: [
+			decoratedStream next: bangIndex - start + 1 putAll: string startingAt: start.
+			self bang. "double it"
+			start := bangIndex + 1 ].
+	decoratedStream next: string size - start + 1 putAll: string startingAt: start.
+	self bang. "one extra"
+	decoratedStream flush
+
 ]
 
 { #category : #accessing }

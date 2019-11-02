@@ -7,7 +7,7 @@ Class {
 { #category : #default }
 SpCodeBrowseItCommand class >> defaultName [
 
-	^ 'Browse it'
+	^ 'Browse Full Class'
 ]
 
 { #category : #default }

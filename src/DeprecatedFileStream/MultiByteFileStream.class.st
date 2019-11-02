@@ -444,7 +444,7 @@ MultiByteFileStream >> next: n innerFor: aString [
 		].
 	].
  
-	^ aString withSqueakLineEndings.
+	^ aString withInternalLineEndings.
 
 ]
 

@@ -19,7 +19,7 @@ MCClassDefinitionTest class >> restoreClassAComment [
 	"This is an utility class to restore the class comment in a mock class used by the test"
 	<script>
 	
-	Smalltalk globals
+	self environment
 		at: #MCMockClassA
 		ifPresent: [ :a | a classComment: self classAComment stamp: self classACommentStamp ]
 ]
@@ -39,12 +39,12 @@ MCClassDefinitionTest >> creationMessage [
 { #category : #running }
 MCClassDefinitionTest >> setUp [
 	super setUp.
-	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
+	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
 ]
 
 { #category : #running }
 MCClassDefinitionTest >> tearDown [
-	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
+	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
 	super tearDown
 ]
 
@@ -138,8 +138,8 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	| d c |
 	d := self mockClass: 'MCMockClassC' super: 'Object'.
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	c := Smalltalk globals classNamed: 'MCMockClassC'.
+	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
+	c := testingEnvironment classNamed: 'MCMockClassC'.
 	self assert: (c isKindOf: Class).
 	self assert: c superclass equals: Object.
 	self assertEmpty: c instVarNames.
@@ -149,7 +149,7 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	self assert: c organization classComment equals: (self commentForClass: 'MCMockClassC').
 	self assert: c organization commentStamp equals: (self commentStampForClass: 'MCMockClassC').
 	d unload.
-	self deny: (Smalltalk hasClassNamed: 'MCMockClassC')
+	self deny: (testingEnvironment hasClassNamed: 'MCMockClassC')
 ]
 
 { #category : #tests }
@@ -172,10 +172,10 @@ MCClassDefinitionTest >> testValidTraitComposition [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
+	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
 ]
 
 { #category : #tests }
@@ -198,10 +198,10 @@ MCClassDefinitionTest >> testValidTraitComposition2 [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
+	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait1)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1)
 ]
 
 { #category : #tests }
@@ -224,12 +224,12 @@ MCClassDefinitionTest >> testValidTraitComposition3 [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
+	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls includesSelector: #c1).
 	self assert: (cls includesSelector: #c2).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait1).
-	self assert: ((Smalltalk at: #MCMockClassC) traitComposition allTraits includes: Trait2)
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait1).
+	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: Trait2)
 ]
 
 { #category : #tests }
@@ -252,8 +252,8 @@ MCClassDefinitionTest >> testValidTraitComposition4 [
 		comment: (self commentForClass: className)
 		commentStamp: (self commentStampForClass: className).
 	d load.
-	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
-	cls := Smalltalk at: #MCMockClassC.
+	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
+	cls := testingEnvironment at: #MCMockClassC.
 	self assert: (cls selectors includesAll: {#c}).
 	self deny: (cls selectors includesAnyOf: {#c1})
 ]

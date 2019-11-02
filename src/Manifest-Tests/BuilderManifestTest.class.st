@@ -3,7 +3,7 @@ A ManifestBuilderTest is a class to test the behavior of ManifestBuilder
 "
 Class {
 	#name : #BuilderManifestTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'environment'
 	],
@@ -15,8 +15,8 @@ BuilderManifestTest >> setUp [
 	
 	| cl |
 	super setUp.
-	environment := self class environment.
-	cl := environment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+
 	cl
 		ifNotNil: [ 
 			cl
@@ -29,7 +29,7 @@ BuilderManifestTest >> setUp [
 BuilderManifestTest >> tearDown [
 	
 	| cl |
-	cl := environment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -256,7 +256,8 @@ BuilderManifestTest >> testContainsToDo [
 BuilderManifestTest >> testCreationManifest [
 	| manifestBuilder cl |
 	manifestBuilder := TheManifestBuilder new.
-	cl := environment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+  
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -271,7 +272,8 @@ BuilderManifestTest >> testCreationManifest [
 BuilderManifestTest >> testCreationManifestOn [
 	| manifestBuilder cl |
 	manifestBuilder := TheManifestBuilder new.
-	cl := environment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
+
+	cl := testingEnvironment at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 
 			cl
@@ -352,7 +354,7 @@ BuilderManifestTest >> testIsClassAManifest [
 		
 	self deny: Point isManifest.
 	TheManifestBuilder of: MFClassA. 
-	self assert: ( (Smalltalk at: #ManifestManifestResourcesTests) isManifest)
+	self assert: ( (testingEnvironment at: #ManifestManifestResourcesTests) isManifest)
 ]
 
 { #category : #tests }

@@ -9,9 +9,8 @@ Class {
 
 { #category : #factory }
 MorphicFastTableAdapter >> buildWidget [
-
 	^ FTPluggableIconListMorphAdaptor new
-		   model: self model;
+		  model: self model;
 			hideColumnHeaders;
 			beResizable;
 			columns: self model columns;
