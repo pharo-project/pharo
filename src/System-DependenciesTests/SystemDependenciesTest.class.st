@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'System-Changes' #'AST-Core' #'Collections-Arithmetic' #Jobs )
+	^ #(#'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'System-Changes' #'AST-Core' #Jobs )
 ]
 
 { #category : #'known dependencies' }
@@ -157,7 +157,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'System-Changes' #Jobs #'AST-Core' #'Collections-Arithmetic')
+	^ #(#'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'System-Changes' #Jobs #'AST-Core')
 ]
 
 { #category : #'known dependencies' }
