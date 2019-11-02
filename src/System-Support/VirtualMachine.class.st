@@ -445,10 +445,9 @@ VirtualMachine >> maxExternalSemaphores: aSize [
 	self maxExternalSemaphores ifNil: [ ^ 0 ].
 	
 	[ self maxExternalSemaphoresSilently: aSize.
-	self
-		crTrace: 'WARNING: Had to increase size of semaphore signal handling table due to many external objects concurrently in use';
-		crTrace: 'You should increase this size at startup using #maxExternalSemaphoresSilently:';
-		crTrace: 'Current table size: ' , self maxExternalSemaphores printString ] forkAt: Processor userBackgroundPriority.
+	SystemNotification signal: ('WARNING: Had to increase size of semaphore signal handling table due to many external objects concurrently in use', String cr,
+		'You should increase this size at startup using #maxExternalSemaphoresSilently:', String cr,
+		'Current table size: ' , self maxExternalSemaphores printString) ] forkAt: Processor userBackgroundPriority.
 	
 	self error: 'Not enough space for external objects, set a larger size at startup!'.
 	^ self maxExternalSemaphores

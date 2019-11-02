@@ -139,8 +139,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 					resolvedReference workingCopy repositoryGroup addRepository: repo ]
 				ifFalse: [ resolvedReference workingCopy repositoryGroup
 						addRepository: resolvedReference repository ].
-			self
-				crTrace:
+			SystemNotification signal:
 					'Loaded -> ' , resolvedReference name , ' --- '
 						, repo repositoryDescription , ' --- '
 						, resolvedReference repository description ]
