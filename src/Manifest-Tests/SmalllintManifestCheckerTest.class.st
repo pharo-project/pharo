@@ -3,7 +3,7 @@ SUnit tests for SmalllintManifestChecker
 "
 Class {
 	#name : #SmalllintManifestCheckerTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'checker'
 	],
@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 SmalllintManifestCheckerTest >> cleaningResources [
-	Smalltalk globals
+	testingEnvironment
 		at: #ManifestManifestResourcesTests
 		ifPresent: [ :cl | 
 			cl

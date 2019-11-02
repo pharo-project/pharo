@@ -13,8 +13,6 @@ Class {
 		'definedClasses',
 		'extensionMethods',
 		'methods',
-		'classesAndMetaClasses',
-		'extensionClasses',
 		'systemCategories'
 	],
 	#classInstVars : [
@@ -111,37 +109,17 @@ RPackageSet >> changeRecordForOverriddenMethod: aMethodDefinition [
 
 { #category : #accessing }
 RPackageSet >> classes [
-	^classes ifNil: [ classes := self collectFromAllPackages: #definedClasses ]
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> classesAndMetaClasses [
-	^classesAndMetaClasses ifNil: [ 
-		classesAndMetaClasses := self collectFromAllPackages: #classesAndMetaClasses ]
-]
-
-{ #category : #private }
-RPackageSet >> collectFromAllPackages: selector [
-	^self packages
-		inject: #()
-		into: [ :all :each | all, (each perform: selector) asArray ]
-]
-
-{ #category : #private }
-RPackageSet >> collectFromAllPackages: selector with: anObject [
-	^self packages
-		inject: #()
-		into: [ :all :each | all, (each perform: selector with: anObject) asArray ]
-]
-
-{ #category : #'system compatibility' }
-RPackageSet >> coreCategoriesForClass: aClass [
-	^self collectFromAllPackages: #coreCategoriesForClass: with: aClass
+	^classes ifNil: [ classes := self packages flatCollect: #definedClasses ]
 ]
 
 { #category : #accessing }
 RPackageSet >> definedClasses [
-	^definedClasses ifNil: [ definedClasses := self collectFromAllPackages: #definedClasses ]
+	^definedClasses ifNil: [ definedClasses := self packages flatCollect: #definedClasses ]
+]
+
+{ #category : #'system compatibility' }
+RPackageSet >> extendedClasses [
+	^ self packages flatCollect: #extendedClasses
 ]
 
 { #category : #'system compatibility' }
@@ -149,15 +127,11 @@ RPackageSet >> extensionCategoriesForClass: aClass [
 	^ aClass organization categories select: [:cat | self isYourClassExtension: cat]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> extensionClasses [
-	^extensionClasses ifNil: [ extensionClasses := self collectFromAllPackages: #extensionClasses ]
-]
-
 { #category : #accessing }
 RPackageSet >> extensionMethods [
-	^extensionMethods ifNil: [
-		extensionMethods := ((self collectFromAllPackages: #extensionMethods) collect: #asRingDefinition) asSet asArray ]
+	^ extensionMethods ifNil: [
+		extensionMethods :=
+		((self packages flatCollect: [ :p | p extensionMethods ] as: Set) collect: #asRingDefinition) asArray ]
 ]
 
 { #category : #testing }
@@ -205,7 +179,7 @@ RPackageSet >> methodCategoryPrefix [
 
 { #category : #accessing }
 RPackageSet >> methods [
-	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: #asRingDefinition ]
+	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) collect: #asRingDefinition ]
 ]
 
 { #category : #accessing }
@@ -220,8 +194,7 @@ RPackageSet >> packages [
 
 { #category : #'system compatibility' }
 RPackageSet >> systemCategories [
-	^systemCategories ifNil: [ systemCategories := (self collectFromAllPackages: #systemCategories) asSet asArray].
-	
+	^ systemCategories ifNil: [ systemCategories := (self packages flatCollect: #systemCategories as: Set) asArray ]
 ]
 
 { #category : #accessing }

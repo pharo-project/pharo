@@ -23,7 +23,7 @@ PlatformResolver class >> platformName [
 PlatformResolver class >> primitiveGetUntrustedUserDirectory [
 	<primitive: 'primitiveGetUntrustedUserDirectory' module: 'SecurityPlugin'>
 	self primitiveFailed.
-	self flag: 'use a more decent way to get a path in the users home directory'.
+	self flag: #pharoFixMe. "use a more decent way to get a path in the users home directory"
 ]
 
 { #category : #origins }

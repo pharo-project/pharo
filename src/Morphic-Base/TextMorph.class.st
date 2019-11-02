@@ -184,6 +184,12 @@ TextMorph >> areasRemainingToFill: aRectangle [
 				ifFalse: [^ aRectangle areasOutside: self bounds]]
 ]
 
+{ #category : #converting }
+TextMorph >> asReadOnlyMorph [
+
+	^ StringMorph contents: self text
+]
+
 { #category : #accessing }
 TextMorph >> asText [
 	^ text

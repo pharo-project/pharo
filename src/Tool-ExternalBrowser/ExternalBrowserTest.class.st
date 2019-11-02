@@ -1,6 +1,6 @@
 Class {
 	#name : #ExternalBrowserTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'initialWindows',
 		'file'
@@ -64,7 +64,7 @@ ExternalBrowserTest >> setUp [
 ExternalBrowserTest >> tearDown [ 
 	| newWindows |
 	file deleteIfAbsent: [ ].
-	self class environment at: self classNameForTest  ifPresent: [ : cl | cl removeFromSystem ].
+	testingEnvironment at: self classNameForTest ifPresent: [ : cl | cl removeFromSystem ].
 	newWindows := self currentWorld windowsSatisfying: [ : each | (initialWindows includes: each) not ].
 	newWindows do: #delete.
 	super tearDown.

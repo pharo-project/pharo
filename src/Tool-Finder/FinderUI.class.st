@@ -959,6 +959,12 @@ FinderUI >> selectedClass [
 ]
 
 { #category : #accessing }
+FinderUI >> selectedClassOrMetaClass [
+
+	^ self selectedClass
+]
+
+{ #category : #accessing }
 FinderUI >> selectedMethod [
 	^ self finder selectedMethod
 ]

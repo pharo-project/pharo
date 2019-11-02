@@ -9,7 +9,7 @@ I'm invoked before and after a keystroke. Check method handleKeystrokeBefore: ev
 The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of ==atCompletionPosition==
 "
 Class {
-	#name : #NECController,
+	#name : #CompletionEngine,
 	#superclass : #Object,
 	#instVars : [
 		'model',
@@ -26,38 +26,27 @@ Class {
 }
 
 { #category : #accessing }
-NECController class >> contextClass [
+CompletionEngine class >> contextClass [
 	^ContextClass ifNil: [ CompletionContext ] 
 ]
 
 { #category : #accessing }
-NECController class >> contextClass: aClass [
+CompletionEngine class >> contextClass: aClass [
 	ContextClass := aClass
 ]
 
-{ #category : #'class initialization' }
-NECController class >> initialize [ 
-  	self register
-]
-
 { #category : #accessing }
-NECController class >> isCompletionEnabled [
+CompletionEngine class >> isCompletionEnabled [
 	^NECPreferences enabled
 ]
 
-{ #category : #'tools registry' }
-NECController class >> register [
-	"just for testing: we register the subclass here to test it"
-	RubSmalltalkEditor completionEngine: CompletionController
-]
-
 { #category : #testing }
-NECController >> captureNavigationKeys [
+CompletionEngine >> captureNavigationKeys [
 	^ NECPreferences captureNavigationKeys
 ]
 
 { #category : #'menu morph' }
-NECController >> closeMenu [
+CompletionEngine >> closeMenu [
 	self stopCompletionDelay.
 	menuMorph
 		ifNotNil: [ menuMorph delete ].
@@ -65,22 +54,22 @@ NECController >> closeMenu [
 ]
 
 { #category : #accessing }
-NECController >> context [
+CompletionEngine >> context [
 	^context
 ]
 
 { #category : #private }
-NECController >> contextClass [
+CompletionEngine >> contextClass [
 	^self class contextClass
 ]
 
 { #category : #accessing }
-NECController >> editor [
+CompletionEngine >> editor [
 	^ editor
 ]
 
 { #category : #keyboard }
-NECController >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
+CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
 	(aParagraphEditor isNil or: [ self isMenuOpen not ])
 		ifTrue: [ ^ self ].
 		
@@ -95,7 +84,7 @@ NECController >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
 ]
 
 { #category : #keyboard }
-NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
+CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean. 
 	true when I have handled the event and no futher processing is needed by the caller.
 	
@@ -165,7 +154,7 @@ NECController >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 ]
 
 { #category : #keyboard }
-NECController >> handleKeystrokeWithoutMenu: aKeyboardEvent [
+CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	"I handle resetting the completion menu, and I return true when I handle an event."
 	
 	self editor atCompletionPosition ifFalse: [ 
@@ -190,18 +179,18 @@ NECController >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 ]
 
 { #category : #keyboard }
-NECController >> invalidateEditorMorph [
+CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds.
 
 ]
 
 { #category : #'menu morph' }
-NECController >> isMenuOpen [
+CompletionEngine >> isMenuOpen [
 	^menuMorph notNil
 ]
 
 { #category : #testing }
-NECController >> isScripting [
+CompletionEngine >> isScripting [
 	
 	"demeters law :("
 	^ self editor 
@@ -210,7 +199,7 @@ NECController >> isScripting [
 ]
 
 { #category : #keyboard }
-NECController >> leftArrow [
+CompletionEngine >> leftArrow [
 	"I return false when the arrow is at its left-most position.
 	Otherwise i return true."
 	
@@ -222,23 +211,23 @@ NECController >> leftArrow [
 ]
 
 { #category : #'menu morph' }
-NECController >> menuClosed [
+CompletionEngine >> menuClosed [
 	menuMorph := nil.
 	context := nil.
 ]
 
 { #category : #private }
-NECController >> menuMorphClass [
+CompletionEngine >> menuMorphClass [
 	^ NECMenuMorph
 ]
 
 { #category : #accessing }
-NECController >> model [
+CompletionEngine >> model [
 	^model
 ]
 
 { #category : #keyboard }
-NECController >> newSmartCharacterInsertionStringForLeft: left right: right [
+CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 	((NECPreferences smartCharactersWithDoubleSpace includes: left) or: [
 	(NECPreferences smartCharactersWithDoubleSpace includes: right)])
 	ifTrue: [ 
@@ -253,12 +242,12 @@ NECController >> newSmartCharacterInsertionStringForLeft: left right: right [
 ]
 
 { #category : #'menu morph' }
-NECController >> openMenu [
+CompletionEngine >> openMenu [
 	^ self openMenuFor: editor.
 ]
 
 { #category : #'menu morph' }
-NECController >> openMenuFor: aParagraphEditor [ 
+CompletionEngine >> openMenuFor: aParagraphEditor [ 
 	| theMenu |
 	self stopCompletionDelay.
 	
@@ -282,7 +271,7 @@ NECController >> openMenuFor: aParagraphEditor [
 ]
 
 { #category : #private }
-NECController >> resetCompletionDelay [
+CompletionEngine >> resetCompletionDelay [
 	"Open the popup after 100ms and only after certain characters"
 	self stopCompletionDelay.
 	self isMenuOpen ifTrue: [ ^ self ].
@@ -297,7 +286,7 @@ NECController >> resetCompletionDelay [
 ]
 
 { #category : #private }
-NECController >> setEditor: anObject [
+CompletionEngine >> setEditor: anObject [
 	editor ifNotNil: [  
 		"make sure we unsubscribe from old editor"
 		editor morph ifNotNil: [:m | m announcer unsubscribe: self] ].
@@ -306,12 +295,12 @@ NECController >> setEditor: anObject [
 ]
 
 { #category : #initialization }
-NECController >> setModel: aStringHolder [ 
+CompletionEngine >> setModel: aStringHolder [ 
 	model := aStringHolder
 ]
 
 { #category : #keyboard }
-NECController >> smartBackspace [
+CompletionEngine >> smartBackspace [
 	| opposite currentText currentEditor smartCharacter |
 	
 	currentEditor := editor.
@@ -346,12 +335,12 @@ NECController >> smartBackspace [
 ]
 
 { #category : #settings }
-NECController >> smartCharacterOppositeOf: char ifAbsent: aBlock [
+CompletionEngine >> smartCharacterOppositeOf: char ifAbsent: aBlock [
 	^(self smartCharactersMapping at: char ifAbsent: [ ^aBlock value ]) key
 ]
 
 { #category : #settings }
-NECController >> smartCharacterPairFor: char ifAbsent: aBlock [
+CompletionEngine >> smartCharacterPairFor: char ifAbsent: aBlock [
 	| left right |
 	
 	left := self smartCharactersMapping at: char ifPresent: [ char ] ifAbsent: [ 
@@ -363,12 +352,12 @@ NECController >> smartCharacterPairFor: char ifAbsent: aBlock [
 ]
 
 { #category : #settings }
-NECController >> smartCharacterShouldClose: char [
+CompletionEngine >> smartCharacterShouldClose: char [
 	^(self smartCharactersMapping at: char ifAbsent: [ ^false ]) value
 ]
 
 { #category : #keyboard }
-NECController >> smartCharacterWithEvent: anEvent [
+CompletionEngine >> smartCharacterWithEvent: anEvent [
 	"char is extracted from anEvent, anEvent is passed because we may need it.
 	We may remove char if this is not costly."
 
@@ -413,17 +402,17 @@ NECController >> smartCharacterWithEvent: anEvent [
 ]
 
 { #category : #settings }
-NECController >> smartCharacters [
+CompletionEngine >> smartCharacters [
 	^ NECPreferences smartCharacters 
 ]
 
 { #category : #settings }
-NECController >> smartCharactersMapping [
+CompletionEngine >> smartCharactersMapping [
 	^ NECPreferences smartCharactersMapping 
 ]
 
 { #category : #keyboard }
-NECController >> smartInputWithEvent: anEvent [
+CompletionEngine >> smartInputWithEvent: anEvent [
 	"aCharacter is extracted from anEvent, anEvent is passed because we may need it.
 	We may remove aCharacter if this is not costly."
 	
@@ -438,7 +427,7 @@ NECController >> smartInputWithEvent: anEvent [
 ]
 
 { #category : #settings }
-NECController >> smartInverseMapping [
+CompletionEngine >> smartInverseMapping [
 	^ inverseMapping ifNil: [ 
 		inverseMapping := Dictionary new.
 		self smartCharactersMapping
@@ -447,7 +436,7 @@ NECController >> smartInverseMapping [
 ]
 
 { #category : #private }
-NECController >> smartNeedExtraRemoveIn: currentText for: opposite [
+CompletionEngine >> smartNeedExtraRemoveIn: currentText for: opposite [
 	"Test if smart remove need to remove an extra character when the smart character 
 	 is equal to its opposite"
 	
@@ -457,7 +446,7 @@ NECController >> smartNeedExtraRemoveIn: currentText for: opposite [
 ]
 
 { #category : #private }
-NECController >> smartNeedExtraRemoveIn: currentText for: smartCharacter opposite: opposite at: position [
+CompletionEngine >> smartNeedExtraRemoveIn: currentText for: smartCharacter opposite: opposite at: position [
 	"Test if we need to remove an extra character when removing a smart character (any kind of smart character)"
 	
 	smartCharacter = opposite
@@ -475,7 +464,7 @@ NECController >> smartNeedExtraRemoveIn: currentText for: smartCharacter opposit
 ]
 
 { #category : #private }
-NECController >> smartNeedExtraRemovePairedIn: currentText for: smartCharacter opposite: opposite at: position [
+CompletionEngine >> smartNeedExtraRemovePairedIn: currentText for: smartCharacter opposite: opposite at: position [
 	"Test if we need to remove an extra character when removed a paired smart character.
 	 A paired smart character is any smart character who has an opposite who is diferent to itself: [], ()"
 	
@@ -503,7 +492,7 @@ NECController >> smartNeedExtraRemovePairedIn: currentText for: smartCharacter o
 ]
 
 { #category : #private }
-NECController >> smartStartIndexIn: currentText for: smartCharacter  opposite: opposite  at: position [
+CompletionEngine >> smartStartIndexIn: currentText for: smartCharacter  opposite: opposite  at: position [
 	
 	(position - 1) to: 1 by: -1 do: [ :index | | char | 
 		char := currentText at: index.
@@ -514,13 +503,8 @@ NECController >> smartStartIndexIn: currentText for: smartCharacter  opposite: o
 ]
 
 { #category : #private }
-NECController >> stopCompletionDelay [
+CompletionEngine >> stopCompletionDelay [
 
     completionDelay ifNotNil: [ 
         completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
-]
-
-{ #category : #accessing }
-NECController >> workspace [
-	^nil
 ]

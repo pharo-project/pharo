@@ -2,22 +2,7 @@ Extension { #name : #RBCompositeLintRule }
 
 { #category : #'*Manifest-Core' }
 RBCompositeLintRule class >> allGoodRules [
-	| rules |
-	rules := self rules: (self rulesClassifiedFor: RBLintRule) name: 'All Rules'.
-	self removedRules do: [ :r | rules removeRule: r ].
-	rules removeRule: (RBCompositeLintRule new name: 'Spelling').
-	rules removeRule: RBMissingTranslationsInMenusRule new.
-	^ rules
-]
-
-{ #category : #'*Manifest-Core' }
-RBCompositeLintRule class >> removedRules [
-	^ {(RBCompositeLintRule new name: 'Spelling').  
-		RBMissingTranslationsInMenusRule new.
-		RBAssignmentWithoutEffectRule new.
-		RBUtilityMethodsRule new. }
-	
-
+	^ self rules: (self rulesClassifiedFor: RBLintRule) name: 'All Rules'
 ]
 
 { #category : #'*Manifest-Core' }

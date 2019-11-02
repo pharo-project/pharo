@@ -98,6 +98,8 @@ Collection class >> withAll: aCollection [
 
 { #category : #enumerating }
 Collection >> & aCollection [
+	"#(1 2 3 4) & #(1 2 4 6 7) >>> #(1 2 4)"
+	
 	^ self intersection: aCollection
 ]
 
@@ -111,6 +113,9 @@ Collection >> , aCollection [
 
 { #category : #enumerating }
 Collection >> \ aCollection [
+	"Return all the elements in self that are not in aCollection"
+	"'abc' \ 'cbe' >>> 'a'."
+	
 	^ self difference: aCollection
 ]
 
@@ -180,6 +185,8 @@ Collection >> allSatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver.
 	If aBlock returns false for any element return false.
 	Otherwise return true."
+	"#(1 2) allSatisfy: [ :each | each even ] >>> false"
+	"#(2 4) allSatisfy: [ :each | each even ] >>> true"
 
 	self do: [:each | (aBlock value: each) ifFalse: [^ false]].
 	^ true
@@ -202,6 +209,8 @@ Collection >> anySatisfy: aBlock [
 	"Evaluate aBlock with the elements of the receiver.
 	If aBlock returns true for any element return true.
 	Otherwise return false."
+	"#(1 3) anySatisfy: [ :each | each even ] >>> false"
+	"#(1 2) anySatisfy: [ :each | each even ] >>> true"
 
 	self do: [:each | (aBlock value: each) ifTrue: [^ true]].
 	^ false
@@ -479,6 +488,7 @@ Collection >> copyWithoutDuplicates [
 Collection >> count: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Answer the number of elements that answered true."
+	"#(1 2 3 4) count: [ :each | each even ] >>> true"
 
 	| sum |
 	sum := 0.
@@ -490,6 +500,7 @@ Collection >> count: aBlock [
 Collection >> detect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument. 
 	Answer the first element for which aBlock evaluates to true."
+	"(#(1 2 3 4) detect: [ :each | each even ]) >>> 2"
 
 	^ self detect: aBlock ifNone: [self errorNotFound: aBlock]
 ]
@@ -501,6 +512,8 @@ Collection >> detect: aBlock ifFound: foundBlock [
 	foundBlock. 
 	If no element matches the criteria then do nothing.
 	Always returns self to avoid misuse and a potential isNil check on the sender."
+	"(#(1 2) detect: [ :each | each even ] ifFound: [ ^'yay!' ]) >>> 'yay'"
+	"(#(1 3) detect: [ :each | each even ] ifFound: [ ^'yay!' ]) >>> #(1 3)"
 
 	self
 		detect: aBlock
@@ -1281,5 +1294,8 @@ Collection >> write: anObject [
 
 { #category : #enumerating }
 Collection >> | aCollection [
+	"Return all the elements that appear in self or in aCollection"
+	"'abc' | 'cbe' >>> 'bcea'"
+	
 	^ self union: aCollection
 ]

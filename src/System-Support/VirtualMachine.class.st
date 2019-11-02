@@ -346,7 +346,7 @@ VirtualMachine >> isPharoVM [
 	"Answers if this VM is a valid PharoVM (made with our sources)"
 	| version |
 	
-	self flag: #todo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
+	self flag: #pharoTodo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
 	version := self version.
 	^ (version beginsWith: 'PharoVM')
 		or: [ 

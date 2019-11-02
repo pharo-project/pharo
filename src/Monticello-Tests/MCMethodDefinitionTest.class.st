@@ -22,8 +22,8 @@ MCMethodDefinitionTest >> ownPackage [
 MCMethodDefinitionTest >> setUp [
 	super setUp.
 	extensionPackage := (MCWorkingCopy forPackage: (MCPackage named: 'FooBarBaz')).
-	navigation := (Smalltalk hasClassNamed: #SystemNavigation)
-		ifTrue: [ (Smalltalk globals at: #SystemNavigation) new ]
+	navigation := (testingEnvironment hasClassNamed: #SystemNavigation)
+		ifTrue: [ (testingEnvironment at: #SystemNavigation) new ]
 		ifFalse: [ Smalltalk ].
 	isModified := self ownPackage modified
 ]

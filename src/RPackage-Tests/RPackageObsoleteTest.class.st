@@ -45,7 +45,7 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 			foo setName: foo originalName.
 			foo removeFromSystem.
 			].
-		Smalltalk globals removeKey: #FooForTest  ifAbsent:  [].
+		testingEnvironment removeKey: #FooForTest  ifAbsent:  [].
 	]
 ]
 

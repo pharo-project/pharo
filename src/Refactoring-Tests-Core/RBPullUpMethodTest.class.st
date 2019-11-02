@@ -97,7 +97,7 @@ RBPullUpMethodTest >> testPullUpWhenSuperClassDoesNotDirectlyImplement [
 	classes := #(#ClassA #ClassB #ClassC)
 		inject: OrderedCollection new
 		into: [ :sum :each | 
-			Smalltalk globals
+			testingEnvironment
 				at: each
 				ifPresent: [ :class | 
 					sum

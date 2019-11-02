@@ -94,7 +94,9 @@ FTTableContainerMorph >> calculateExactVisibleRows [
 
 	| visibleRows |
 	visibleRows := self height / (self table rowHeight + self table intercellSpacing y).
-	^ headerRow ifNotNil: [ visibleRows - 1 ] ifNil: [ visibleRows ]
+	^ headerRow 
+		ifNotNil: [ visibleRows - 1 ] 
+		ifNil: [ visibleRows ]
 ]
 
 { #category : #private }
@@ -115,17 +117,16 @@ FTTableContainerMorph >> calculateMinVisibleRows [
 FTTableContainerMorph >> calculateStartIndexWhenShowing: visibleRows [
 	"Answer the first row to show when showing visibleRows rows. 
 	 This works in case we are exceeding the available rows to show"
-
 	| currentIndex startIndex oldIndex |
+	
 	currentIndex := self table showIndex.
-	currentIndex + visibleRows - 1 > self table numberOfRows ifTrue: [ 
-		currentIndex := self table numberOfRows - visibleRows + 2].
+	currentIndex + visibleRows - 1 > self table numberOfRows 
+		ifTrue: [ currentIndex := self table numberOfRows - visibleRows + 2 ].
 	startIndex := currentIndex max: 1.
 	oldIndex := self table showIndex.
 	self table basicMoveShowIndexTo: startIndex.
 	self table announceScrollChangedFrom: oldIndex to: self table showIndex.
-	^startIndex
-	
+	^ startIndex
 ]
 
 { #category : #private }
@@ -179,15 +180,27 @@ FTTableContainerMorph >> defaultColor [
 
 { #category : #drawing }
 FTTableContainerMorph >> drawOn: canvas [
-	| x y cellWidth cellHeight rowsToDisplay rowSubviews highligtedIndexes primarySelectionIndex |
+
 	super drawOn: canvas.
+	self drawRowsOn: canvas
+]
+
+{ #category : #drawing }
+FTTableContainerMorph >> drawOnAthensCanvas: anAthensCanvas [
+	self drawOnCanvasWrapperFor: anAthensCanvas
+]
+
+{ #category : #drawing }
+FTTableContainerMorph >> drawRowsOn: canvas [
+	| x y cellWidth cellHeight rowsToDisplay rowSubviews highligtedIndexes primarySelectionIndex |
+
 	self canRefreshValues ifFalse: [ ^ self ].	"Nothing to update yet"
 
 	x := self left + self class rowLeftMargin.
 	y := self top.
 	cellWidth := self width - self class rowLeftMargin.
 	cellHeight := self table rowHeight rounded.
-	highligtedIndexes := self table selectedIndexes , self table highlightedIndexes.
+	highligtedIndexes := self table selectedIndexes, self table highlightedIndexes.
 	primarySelectionIndex := self table selectedIndex.
 
 	"For some superweird reason, calling #calculateExposedRows here instead in #changed (where
@@ -198,45 +211,39 @@ FTTableContainerMorph >> drawOn: canvas [
 
 	rowsToDisplay := self exposedRows.
 	rowSubviews := OrderedCollection new: rowsToDisplay size + 1.
-	headerRow
-		ifNotNil: [ headerRow bounds: (self left @ y extent: self width @ cellHeight).
-			y := y + cellHeight + self table intercellSpacing y.
-			rowSubviews add: headerRow ].
+	headerRow ifNotNil: [ 
+		headerRow bounds: (self left @ y extent: self width @ cellHeight).
+		y := y + cellHeight + self table intercellSpacing y.
+		rowSubviews add: headerRow ].
 	
-	rowsToDisplay
-		keysAndValuesDo: [ :rowIndex :row | 
-			| visibleHeight |
-			visibleHeight := cellHeight min: self bottom - y.
-			row bounds: (x @ y extent: cellWidth @ visibleHeight).
-			y := y + visibleHeight + self table intercellSpacing y.
+	rowsToDisplay keysAndValuesDo: [ :rowIndex :row | 
+		| visibleHeight |
+		visibleHeight := (self rowHeight: rowIndex default: cellHeight) min: self bottom - y.
+		row bounds: (x @ y extent: cellWidth @ visibleHeight).
+		y := y + visibleHeight + self table intercellSpacing y.
 
-			rowSubviews add: row.
+		rowSubviews add: row.
 
-			(self table selectionModeStrategy
+		(self table selectionModeStrategy
 				selectablesToHighlightFromRow: row
 				at: rowIndex
 				withHighlightedIndexes: highligtedIndexes
-				andPrimaryIndex: primarySelectionIndex) keysAndValuesDo: [ :morph :isPrimary | morph selectionColor: (self table colorForSelection: isPrimary) ] ].
+				andPrimaryIndex: primarySelectionIndex) 
+			keysAndValuesDo: [ :morph :isPrimary | 
+				morph selectionColor: (self table colorForSelection: isPrimary) ] ].
 
 	"We should notify existing rows about deletion and new rows about insertion. 
 	It is required to correctly manage stepping animation of cells"
-	submorphs
-		do: [ :each | 
-			each
-				privateOwner: nil;
-				outOfWorld: self world ].
+	submorphs do: [ :each | 
+		each
+			privateOwner: nil;
+			outOfWorld: self world ].
 	submorphs := rowSubviews asArray.
 	submorphs do: [ :each | each intoWorld: self world ].
 
 	self table isResizable ifTrue: [ self addResizeSplitters ].
 
-
 	needsRefreshExposedRows := false
-]
-
-{ #category : #drawing }
-FTTableContainerMorph >> drawOnAthensCanvas: anAthensCanvas [
-	self drawOnCanvasWrapperFor: anAthensCanvas
 ]
 
 { #category : #private }
@@ -322,6 +329,12 @@ FTTableContainerMorph >> rowAndColumnIndexContainingPoint: aPoint [
 	^ {nil. nil}
 ]
 
+{ #category : #private }
+FTTableContainerMorph >> rowHeight: rowIndex default: aNumber [
+
+	^ aNumber
+]
+
 { #category : #accessing }
 FTTableContainerMorph >> rowIndexContainingPoint: aPoint [
 	self exposedRows keysAndValuesDo: [ :rowIndex :row | 
@@ -342,10 +355,11 @@ FTTableContainerMorph >> table [
 
 { #category : #updating }
 FTTableContainerMorph >> updateAllRows [
+
 	self table isShowColumnHeaders 
 		ifTrue: [ self updateHeaderRow ]
 		ifFalse: [ headerRow := nil ].
-	self updateExposedRows.
+	self updateExposedRows
 	
 ]
 
@@ -399,7 +413,7 @@ FTTableContainerMorph >> updateHeaderRow [
 		columnHeaders at: index put: headerCell.
 		FTDisplayColumn column: each width: columnWidth ].
 	 
-	headerRow := (FTTableRowMorph table: self table)
+	headerRow := (FTTableHeaderRowMorph table: self table)
 		privateOwner: self;
 		addAllMorphs: columnHeaders;
 		yourself

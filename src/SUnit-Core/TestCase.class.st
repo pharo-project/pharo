@@ -788,6 +788,7 @@ TestCase >> setTestSelector: aSymbol [
 { #category : #running }
 TestCase >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+
 ]
 
 { #category : #events }

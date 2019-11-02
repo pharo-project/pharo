@@ -185,11 +185,6 @@ DictionaryTest >> expectedElementByDetect [
 ]
 
 { #category : #requirements }
-DictionaryTest >> expectedSizeAfterReject [
-	self flag: 'what should this return?'
-]
-
-{ #category : #requirements }
 DictionaryTest >> indexInNonEmpty [
 	"Return an index key between bounds of 'nonEmpty'"
 

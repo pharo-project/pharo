@@ -3,7 +3,7 @@ CompilerTest is a holder for SUnit test of Compiler
 "
 Class {
 	#name : #OCCompilerTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'errorMessage',
 		'errorLocation',
@@ -59,14 +59,14 @@ OCCompilerTest >> runCase [
 { #category : #running }
 OCCompilerTest >> setUp [
 	super setUp.
-	Smalltalk globals at: #OCCompilerTestTestVar put: MockForCompilation.
+	testingEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
 	
 	
 ]
 
 { #category : #running }
 OCCompilerTest >> tearDown [
-	Smalltalk globals removeKey: #OCCompilerTestTestVar.
+	testingEnvironment removeKey: #OCCompilerTestTestVar.
 	super tearDown
 ]
 
