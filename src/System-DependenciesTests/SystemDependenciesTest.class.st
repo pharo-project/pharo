@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #'OpalCompiler-Core' #'System-Changes')
+	^ #(#'FileSystem-Core' #'OpalCompiler-Core')
 ]
 
 { #category : #'known dependencies' }
