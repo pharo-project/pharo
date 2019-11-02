@@ -14,5 +14,5 @@ ManifestSystemSupport class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemSupport class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Support' #'System-Localization' #'System-Settings-Core' #'System-Platforms')
+	^ #(#'Collections-Support' #'System-Settings-Core' #'System-Platforms')
 ]

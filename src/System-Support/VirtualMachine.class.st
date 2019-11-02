@@ -689,7 +689,7 @@ VirtualMachine >> platformSourceVersion [
 	"Smalltalk vm platformSourceVersion"
 
 	<primitive: 'primitivePlatformSourceVersion'>
-	self notify: 'This virtual machine does not support the optional primitive #primitivePlatformSourceVersion' translated.
+	self notify: 'This virtual machine does not support the optional primitive #primitivePlatformSourceVersion'.
 	^''
 ]
 
@@ -1033,7 +1033,7 @@ VirtualMachine >> versionLabel [
 	"Smalltalk vm versionLabel"
 
 	<primitive: 'primitiveVMVersion'>
-	self notify: 'This virtual machine does not support the optional primitive #primitiveVMVersion' translated.
+	self notify: 'This virtual machine does not support the optional primitive #primitiveVMVersion'.
 	^''
 ]
 
