@@ -30,8 +30,7 @@ Boolean class >> new [
 { #category : #'logical operations' }
 Boolean >> & aBoolean [ 
 	"Evaluating conjunction. Evaluate the argument. Then answer true if 
-	both the receiver and the argument are true."
-	
+	both the receiver and the argument are true."	
 	"true & true >>> true"
 	"true & false >>> false"
 	"false & true >>> false"
@@ -66,7 +65,7 @@ Boolean >> ==> aBlock [
 	"false ==> [true] >>> true"
 	"false ==> [false] >>> true"
 
-	^self not or: [aBlock value]
+	^ self not or: [ aBlock value ]
 ]
 
 { #category : #controlling }
