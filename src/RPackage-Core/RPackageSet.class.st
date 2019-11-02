@@ -97,16 +97,6 @@ RPackageSet >> categoryNames [
 		into: [ :all :each | all, (each classTagCategoryNames asArray) ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> changeRecordForOverriddenMethod: aMethodDefinition [
-	^ SourceFiles
-		changeRecordsFor: aMethodDefinition 
-		detect: [ :protocol | 
-			self 
-				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
-]
-
 { #category : #accessing }
 RPackageSet >> classes [
 	^classes ifNil: [ classes := self packages flatCollect: #definedClasses ]
