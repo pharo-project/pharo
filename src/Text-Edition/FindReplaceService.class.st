@@ -17,10 +17,11 @@ Class {
 	#category : #'Text-Edition'
 }
 
-{ #category : #accessing }
-FindReplaceService class >> newFor: anObject [
+{ #category : #'instance creation' }
+FindReplaceService class >> newFor: textArea [
 
-	^ super new
+	"sublasses may use the text area object"
+	^ self new
 ]
 
 { #category : #accessing }

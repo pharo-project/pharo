@@ -16,12 +16,6 @@ Class {
 }
 
 { #category : #accessing }
-SpRubFindReplaceService class >> newFor: anObject [
-
-	^ super new
-]
-
-{ #category : #accessing }
 SpRubFindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
 ]

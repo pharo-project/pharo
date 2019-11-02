@@ -9,12 +9,6 @@ Class {
 }
 
 { #category : #accessing }
-DummyFindReplaceService class >> newFor: anObject [
-
-	^ super new
-]
-
-{ #category : #accessing }
 DummyFindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
 ]
