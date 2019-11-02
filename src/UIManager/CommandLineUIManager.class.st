@@ -218,14 +218,6 @@ CommandLineUIManager >> inform: aString [
 	aString traceCr.
 ]
 
-{ #category : #'ui requests' }
-CommandLineUIManager >> informUserDuring: aBlock [
-	self
-		displayProgress: ''
-		from: 1 to: 100
-		during: aBlock
-]
-
 { #category : #initialization }
 CommandLineUIManager >> initialize [
 	doNotQuitOnRestart := false.

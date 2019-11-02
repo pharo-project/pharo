@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemSources class >> manuallyResolvedDependencies [
-	^ #(#Jobs #'Announcements-Core' #'Collections-Abstract')
+	^ #(#'Announcements-Core' #'Collections-Abstract')
 ]

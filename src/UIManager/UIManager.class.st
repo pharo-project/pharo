@@ -375,17 +375,6 @@ UIManager >> deprecationPerformedNotificationDefaultAction: aWarning [
 	aWarning resume.
 ]
 
-{ #category : #display }
-UIManager >> displayProgress: titleString from: minVal to: maxVal during: workBlock [
-	"SystemProgressMorph show: titleString from: minVal to:  during: "
-
-	^ workBlock asJob
-			title: titleString;
-			min: minVal;
-			max: maxVal;
-			run
-]
-
 { #category : #'ui requests' }
 UIManager >> edit: aText [
 	"Open an editor on the given string/text."
