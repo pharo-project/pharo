@@ -454,6 +454,12 @@ SmalltalkImage >> compilerClass [
 	^ self class compilerClass
 ]
 
+{ #category : #acccessing }
+SmalltalkImage >> compilerClass: aClass [
+
+	self class compilerClass: aClass
+]
+
 { #category : #'memory space' }
 SmalltalkImage >> createStackOverflow [
 	"For testing the low space handler..."
