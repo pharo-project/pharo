@@ -482,13 +482,11 @@ String >> >= aString [
 
 { #category : #comparing }
 String >> alike: aString [ 
-	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score (but see example with 7).  Case is ignored. This method is used to help find mistyped variable names in methods.
-	('abc' alike: 'abc') >>> 7.
-	('action' alike: 'actions') >>> 7.
-	('action' alike: 'caption') >>> 5.
-	('action' alike: 'name') >>> 0.
-	"
-		
+	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score (but see example with 7).  Case is ignored. This method is used to help find mistyped variable names in methods."
+	"('abc' alike: 'abc') >>> 7."
+	"('action' alike: 'actions') >>> 7."
+	"('action' alike: 'caption') >>> 5."
+	"('action' alike: 'name') >>> 0."	
 
 	| i j k minSize bonus |
 	minSize := (j := self size) min: (k := aString size).
