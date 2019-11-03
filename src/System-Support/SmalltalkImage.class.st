@@ -446,6 +446,11 @@ SmalltalkImage >> compiler [
 		environment: self globals
 ]
 
+{ #category : #acccessing }
+SmalltalkImage >> compilerClass [
+	^ self class compilerClass
+]
+
 { #category : #'memory space' }
 SmalltalkImage >> createStackOverflow [
 	"For testing the low space handler..."

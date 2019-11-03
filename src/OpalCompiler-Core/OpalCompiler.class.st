@@ -189,6 +189,12 @@ OpalCompiler class >> recompileAll [
 
 ]
 
+{ #category : #public }
+OpalCompiler class >> register [ 
+
+	SmalltalkImage current compilerClass: self
+]
+
 { #category : #overlay }
 OpalCompiler class >> startUsingOverlayForDevelopment [
 	"this method sets up an overlay so we can change the compiler package without breaking the compiler"
