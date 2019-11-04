@@ -342,7 +342,7 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 { #category : #drawing }
 NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [ 
 	self hasMessage ifFalse: [ ^ self ].
-	context model isEmpty ifFalse: [ 
+	context model hasEntries ifTrue: [ 
 		aCanvas 
 			line: rectangle topLeft
 			to: rectangle topRight
@@ -382,7 +382,7 @@ NECMenuMorph >> drawOn: aCanvas [
 	self lastVisible ~= self itemsCount 
 		ifTrue: [ self drawBottomScrollArrowOn: aCanvas ].
 		
-	model notEmpty ifTrue: [ 
+	model hasEntries ifTrue: [ 
 		self firstVisible to: self lastVisible do: [ :index | 
 			self drawLine: index on: aCanvas rectangle: rectangle.
 			rectangle := self prepareRectForNextRow: rectangle ]].
@@ -477,7 +477,7 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
 
 	| prefix |
-	context model isEmpty ifTrue: [^ false].
+	context model hasEntries ifFalse: [^ false].
 	context model entries size = 1
 		ifTrue: [ ^ self insertSelected ].
 	prefix := context model commonPrefix.
@@ -509,7 +509,7 @@ NECMenuMorph >> insertCompletion: aString [
 
 { #category : #actions }
 NECMenuMorph >> insertSelected [
-	context model isEmpty ifTrue: [^ false].
+	context model hasEntries ifFalse: [^ false].
 	self insertCompletion: (context model completionAt: self selected).
 	self delete.
 	^ true
@@ -579,7 +579,7 @@ NECMenuMorph >> narrowCompletion [
 	(model entries size = 1 and: [ model entries first contents = context completionToken ]) ifTrue: [
 		self delete.
 		^ false ].
-	model notEmpty ifTrue: [ self selected: 1 ].
+	model hasEntries ifTrue: [ self selected: 1 ].
 	self show.
 	^ true
 ]
@@ -659,7 +659,7 @@ NECMenuMorph >> selected [
 { #category : #accessing }
 NECMenuMorph >> selected: aNumber [ 
 	"Set the value of selected"
-	context model notEmpty ifTrue: 
+	context model hasEntries ifTrue: 
 		[ ((1 to: self itemsCount) includes: aNumber) ifTrue: [ aNumber ~= selected ifTrue: [ selected := aNumber ] ] ]
 ]
 
