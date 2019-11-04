@@ -251,9 +251,8 @@ TaSequence >> selectors [
 
 { #category : #accessing }
 TaSequence >> slots [
-	^ (members flatCollect: #slots)
-		removeDuplicates;
-		yourself
+	^ ((members flatCollect: #slots)
+		asSet) asOrderedCollection 
 ]
 
 { #category : #accessing }

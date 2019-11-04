@@ -80,7 +80,7 @@ RBRemoveMessageSendTransformation >> privateTransform [
 	methodTree := self definingMethod.
 	
 	"try to find a message node with the same selector"
-	nodesToModify := ( methodTree allChildren removeDuplicates
+	nodesToModify := ( methodTree allChildren asSet
 		select: #isMessage )
 		select: [ :node | node selector = message asSymbol ].
 	
