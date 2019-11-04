@@ -1353,13 +1353,6 @@ ClassDescription >> wantsChangeSetLogging [
 	^ true
 ]
 
-{ #category : #compiling }
-ClassDescription >> wantsRecompilationProgressReported [
-	"Answer whether the receiver would like progress of its recompilation reported interactively to the user."
-
-	^ true
-]
-
 { #category : #organization }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [ 
 	"Answer the category of the argument, aSelector, in the organization of 
