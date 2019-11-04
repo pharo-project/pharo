@@ -69,12 +69,6 @@ String class >> cr [
 
 ]
 
-{ #category : #accessing }
-String class >> crLfExchangeTable [
-
-	^CrLfExchangeTable
-]
-
 { #category : #'instance creation' }
 String class >> crlf [
 	"Answer a string containing a carriage return and a linefeed."
@@ -173,8 +167,6 @@ String class >> initialize [
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
 	CSNonSeparators := CSSeparators complement.
-	
-	CrLfExchangeTable := self newCrLfExchangeTable
 ]
 
 { #category : #initialization }
@@ -302,18 +294,6 @@ String class >> newCaseSensitiveOrder [
 			[newTab  at: i put: (order := order+1)]].
 	order = 255 ifFalse: [self error: 'order problem'].
 	^ newTab 
-]
-
-{ #category : #initialization }
-String class >> newCrLfExchangeTable [
-	"a table for exchanging cr with lf and vica versa"
-	^ Character allByteCharacters collect: [ :each |
-		each = Character cr 
-			ifTrue: [ Character lf ]
-			ifFalse: [ 
-				each = Character lf
-					ifTrue: [ Character cr ]
-					ifFalse:[ each ]]]
 ]
 
 { #category : #initialization }
