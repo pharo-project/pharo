@@ -73,6 +73,11 @@ CompletionModel >> entryCount [
 ]
 
 { #category : #testing }
+CompletionModel >> hasEntries [
+	^ self entries isNotEmpty
+]
+
+{ #category : #testing }
 CompletionModel >> hasMessage [
 	^ self message notNil
 ]
@@ -90,16 +95,11 @@ CompletionModel >> initialize [
 	completionToken := ''
 ]
 
-{ #category : #testing }
-CompletionModel >> isEmpty [ 
-	^ self entries isEmpty
-]
-
 { #category : #accessing }
 CompletionModel >> message [
-	^self isEmpty 
-		ifTrue: ['no completions found'] 
-		ifFalse: [nil]
+	^self hasEntries 
+		ifFalse: ['no completions found'] 
+		ifTrue: [nil]
 ]
 
 { #category : #accessing }
@@ -125,11 +125,6 @@ CompletionModel >> node [
 { #category : #accessing }
 CompletionModel >> node: anObject [
 	node := anObject
-]
-
-{ #category : #testing }
-CompletionModel >> notEmpty [
-	^ self entries isNotEmpty
 ]
 
 { #category : #sorting }
