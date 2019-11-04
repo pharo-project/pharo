@@ -361,10 +361,3 @@ Metaclass >> wantsChangeSetLogging [
 
 	^ self instanceSide wantsChangeSetLogging
 ]
-
-{ #category : #compiling }
-Metaclass >> wantsRecompilationProgressReported [
-	"The metaclass follows the rule of the class itself."
-
-	^ self instanceSide wantsRecompilationProgressReported
-]
