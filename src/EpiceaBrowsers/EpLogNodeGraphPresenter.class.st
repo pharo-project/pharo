@@ -21,7 +21,7 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Graph'
 }
 
-{ #category : #accessing }
+{ #category : #specs }
 EpLogNodeGraphPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		add: #logNodesTable;
