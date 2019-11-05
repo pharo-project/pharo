@@ -209,7 +209,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								label: 'Sorter';
 								target: CompletionModel;
 								getSelector: #sorterClass;
-								setSelector: #sorterCalss:;
+								setSelector: #sorterClass:;
 								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.
