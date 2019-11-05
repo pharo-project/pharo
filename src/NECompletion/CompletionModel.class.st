@@ -11,20 +11,20 @@ Class {
 		'sorter'
 	],
 	#classVars : [
-		'Sorter'
+		'SorterClass'
 	],
 	#category : #'NECompletion-New'
 }
 
 { #category : #accessing }
-CompletionModel class >> sorter [
-	^ Sorter
+CompletionModel class >> sorterClass [
+	^ SorterClass
 ]
 
 { #category : #accessing }
-CompletionModel class >> sorter: aSorter [
+CompletionModel class >> sorterClass: aSorter [
 
-	Sorter := aSorter
+	SorterClass := aSorter
 	
 ]
 
@@ -85,7 +85,7 @@ CompletionModel >> hasMessage [
 { #category : #entries }
 CompletionModel >> initEntries [
 	| suggestionsList |
-	self sorter: self class sorter.
+	self sorter: self class sorterClass new.
 	suggestionsList := self sortList: node completionEntries.
 	^ suggestionsList collect: [ :each | NECEntry contents: each node: node ]
 ]
