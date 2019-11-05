@@ -1359,12 +1359,6 @@ Behavior >> nonObsoleteClass [
 	^ self environment at: obsName asSymbol
 ]
 
-{ #category : #accessing }
-Behavior >> numberOfInstanceVariables [
-	^ self instVarNames size
-
-]
-
 { #category : #initialization }
 Behavior >> obsolete [
 	"nothing to be done"
