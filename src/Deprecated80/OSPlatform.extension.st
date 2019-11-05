@@ -1,8 +1,9 @@
 Extension { #name : #OSPlatform }
 
 { #category : #'*Deprecated80' }
-OSPlatform >> openNativeBrowserOn: aFileReference [ 
-	self deprecated: 'Use message openOSFileBrowserOn:' transformWith: '`@receiver openNativeBrowserOn: `@statements1' -> '`@receiver v `@statements1'.
-	^ self openOSFileBrowserOn: aFileReference
-
+OSPlatform >> openNativeBrowserOn: aFileReference [
+	self
+		deprecated: 'Use message NativeBrowserOpenVisitor openOn: instead'
+		transformWith: '`@receiver openNativeBrowserOn: `@arg' -> 'NativeBrowserOpenVisitor openOn: `@arg'.
+	^ NativeBrowserOpenVisitor openOn: aFileReference
 ]
