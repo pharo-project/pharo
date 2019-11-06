@@ -15,8 +15,7 @@ IR
 
 
 These plugins are called <<HERE>>, that is, after semantic analysis before generating the IR.
-They are sorted by #priority and handed the AST without making a copy (as plugins might just analyste
-the AST).. If you modify the AST, you have to make a copy before!
+They are sorted by #priority and handed the AST without making a copy (as plugins might just analyse the AST). If you modify the AST, you have to make a copy before!
 
 
 "
