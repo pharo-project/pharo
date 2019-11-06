@@ -1,6 +1,6 @@
-Extension { #name : #Encoder }
+Extension { #name : #BytecodeEncoder }
 
 { #category : #'*Flashback-Decompiler' }
-Encoder class >> skipTemps: numTemps for: aDecompiler [
+BytecodeEncoder class >> skipTemps: numTemps for: aDecompiler [
 	numTemps timesRepeat: [ aDecompiler goToNextInstruction ]
 ]
