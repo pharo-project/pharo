@@ -55,7 +55,7 @@ RPackageOrganizer default basicInitializeFromPackagesList: #(
     ''Collections-Sequenceable'' ''Collections-Stack'' ''Collections-Streams''
      ''Collections-Support'' ''Collections-Unordered'' 
      ''FileSystem-Core'' ''FileSystem-Disk''
-     ''Jobs''   ''Multilingual-Encodings'' ''Multilingual-Languages''
+     ''Jobs''  ''System-SourcesCondenser.hermes'' ''Multilingual-Encodings'' ''Multilingual-Languages''
     ''Multilingual-TextConversion'' ''Network-UUID'' ''OpalCompiler-Core'' ''Random-Core'' ''RPackage-Core'' 
     ''Ring-Definitions-Containers'' ''Ring-Definitions-Core'' ''Ring-OldChunkImporter''
     ''Slot'' ''System-Announcements'' ''System-BasicCommandLineHandler'' ''System-Changes'' 

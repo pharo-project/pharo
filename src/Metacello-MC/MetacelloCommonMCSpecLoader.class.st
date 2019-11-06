@@ -169,7 +169,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			resolvedReference workingCopy repositoryGroup addRepository: aPackageLoadDirective repository.
-			self crTrace:
+			SystemNotification signal:
 					'Loaded -> ' , resolvedReference name , ' --- '
 						, aPackageLoadDirective repository repositoryDescription , ' --- '
 						, resolvedReference repository description
@@ -195,7 +195,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
               goferLoad addResolved: resolvedReference.
               answers addAll: packageLoadDirective spec answers.
               packageLoadDirective resolvedReference: resolvedReference ] ].
-     self crTrace: 'Starting atomic load'.
+     SystemNotification signal: 'Starting atomic load'.
       loadBlock := [ 
       "pkgLoads do: [:packageLoadDirective |  mcLoader preLoad: packageLoadDirective spec ]."
       goferLoad execute.
@@ -225,7 +225,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
       answers notEmpty
         ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
         ifFalse: [ loadBlock value ].
-      self crTrace: 'Finished atomic load' ]
+      SystemNotification signal: 'Finished atomic load' ]
     displaying: 'Atomic Load...'
 ]
 
@@ -365,7 +365,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
         whileTrue: [ 
             retryCount > 0
                 ifTrue: [ 
-                    self crTrace: '...RETRY->' , packageSpec file ].
+                    SystemNotification signal: '...RETRY->' , packageSpec file ].
             references := [ self resolvePackageSpecReferences: packageSpec gofer: gofer ]
                 on: Error , GoferRepositoryError
                 do: [ :ex | 
@@ -376,7 +376,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
                             (ex isKindOf: GoferRepositoryError)
                                 ifTrue: [ 
                                     "ignore repository errors at this point, in case an alternate repository is in the list "
-                                   self crTrace: 'gofer repository error: ' , ex description printString , '...ignoring'.
+                                   SystemNotification signal: 'gofer repository error: ' , ex description printString , '...ignoring'.
                                     repositoryError := ex.
                                     ex resume: #() ]
                                 ifFalse: [ ex pass ] ].
@@ -384,7 +384,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
             retryCount := retryCount + 1 ].
     references isEmpty
         ifTrue: [ 
-            self crTrace: '...FAILED->' , packageSpec file.
+            SystemNotification signal: '...FAILED->' , packageSpec file.
             (MetacelloPackageSpecResolutionError new
                 packageSpec: packageSpec;
                 repositories: gofer repositories;

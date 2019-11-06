@@ -280,7 +280,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	'Starting postload action' traceCr.
+	SystemNotification signal: 'Starting postload action'.
 
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
@@ -374,7 +374,7 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	'Starting preload action' traceCr.
+	SystemNotification signal: 'Starting preload action'.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.

@@ -1,13 +1,13 @@
 Extension { #name : #Integer }
 
-{ #category : #'*AST-Core-Parser' }
+{ #category : #'*NumberParser' }
 Integer class >> readFrom: aStringOrStream [ 
 	"Answer a new Integer as described on the stream, aStream.
 	Embedded radix specifiers not allowed - use Number readFrom: for that."
 	^self readFrom: aStringOrStream base: 10
 ]
 
-{ #category : #'*AST-Core-Parser' }
+{ #category : #'*NumberParser' }
 Integer class >> readFrom: aStringOrStream base: base [ 
 	"Answer an instance of one of the concrete subclasses if Integer. 
 	Initial minus sign accepted, and bases > 10 use letters A-Z.
@@ -19,7 +19,7 @@ Integer class >> readFrom: aStringOrStream base: base [
 	^(NumberParser on: aStringOrStream) nextIntegerBase: base
 ]
 
-{ #category : #'*AST-Core-Parser' }
+{ #category : #'*NumberParser' }
 Integer class >> readFrom: aStringOrStream ifFail: aBlock [
 	"Answer an instance of one of the concrete subclasses if Integer. 
 	Initial minus sign accepted.
@@ -30,7 +30,7 @@ Integer class >> readFrom: aStringOrStream ifFail: aBlock [
 	^(NumberParser on: aStringOrStream) nextIntegerBase: 10 ifFail: aBlock
 ]
 
-{ #category : #'*AST-Core-Parser' }
+{ #category : #'*NumberParser' }
 Integer class >> readFrom: aStream radix: radix [
 	"retained for compatibility for now. do not use"
 	^self readFrom: aStream base: radix

@@ -179,8 +179,7 @@ ConfigurationOf class >> ensureMetacello: loadList [
 						on: Error
 						do: [ :ex | 
 							error := ex.
-							self
-								crTrace:
+							SystemNotification signal:
 									(String
 										streamContents: [ :stream | 
 											stream nextPutAll: 'failed ensureMetacello using '.
@@ -216,11 +215,9 @@ ConfigurationOf class >> retry: aBlock retryCount: retryCount [
 				on: Error
 				do: [ :ex | 
 					count < retryCount
-						ifTrue: [ self crTrace: 'RETRYING AFTER:'.
-							ex description crTrace.
+						ifTrue: [ SystemNotification signal: 'RETRYING AFTER: ', String cr, ex description.
 							(Delay forSeconds: 5) wait ]
-						ifFalse: [ self crTrace: 'FAILED RETRYING:'.
-							ex description crTrace.
+						ifFalse: [ SystemNotification signal: 'FAILED RETRYING:', String cr, ex description.
 							ex pass ] ].
 			count := count + 1 ]
 ]

@@ -121,22 +121,6 @@ SystemNavigation >> allMethodsSelect: aBlock [
 ]
 
 { #category : #query }
-SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive [
-	"Answer a SortedCollection of all the methods that contain, in source code, aString as a substring.  Search the class comments also"
-
-	| list addMethod addComment |
-	list := OrderedCollection new.
-	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
-	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
-	self allBehaviorsDo: [:each |
-		each selectorsDo: [:sel | 
-			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive) 
-					ifTrue: [ addMethod value: each value: sel ]].
-			(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
-	^ list 
-]
-
-{ #category : #query }
 SystemNavigation >> allObjects [
 	"Answer an Array of all objects in the system.  Fail if there isn't enough memory to instantiate the result."
 	

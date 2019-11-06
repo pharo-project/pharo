@@ -203,7 +203,7 @@ MCFileTreeAbstractReader >> packageProperties [
                                         ifTrue: [ self error: 'noMethodMetaData and separateMethodMetaAndSource cannot both be true' ] ] ]
                                 on: Error
                                 do: [ :ex | 
-                                    self crTrace:
+                                    SystemNotification signal:
                                                 'Error reading package properties (.filetree): ' , packageDirectory pathName , ' :: ' , ex description ] ] ] ].
     ^ packageProperties
 ]

@@ -6,7 +6,7 @@ Additionally I will empty the current .changes file.
 Class {
 	#name : #PharoSourcesCondenser,
 	#superclass : #PharoChangesCondenser,
-	#category : #'System-Sources-Changes-Condense'
+	#category : #'System-SourcesCondenser'
 }
 
 { #category : #helper }

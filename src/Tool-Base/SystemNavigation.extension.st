@@ -1,6 +1,22 @@
 Extension { #name : #SystemNavigation }
 
 { #category : #'*Tool-Base' }
+SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive [
+	"Answer a SortedCollection of all the methods that contain, in source code, aString as a substring.  Search the class comments also"
+
+	| list addMethod addComment |
+	list := OrderedCollection new.
+	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
+	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
+	self allBehaviorsDo: [:each |
+		each selectorsDo: [:sel | 
+			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive) 
+					ifTrue: [ addMethod value: each value: sel ]].
+			(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
+	^ list 
+]
+
+{ #category : #'*Tool-Base' }
 SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 	"Create and schedule a Message Set browser for all the receiver's methods 
 	or any methods of a subclass/superclass that refer to the instance variable name."

@@ -164,10 +164,10 @@ Deprecation >> hash [
 	^(context ifNil: [explanationString]) hash
 ]
 
-{ #category : #handling }
+{ #category : #private }
 Deprecation >> logTranscript [
 	self showWarning
-		ifTrue: [ self traceCr: self messageText ]
+		ifTrue: [ DeprecationPerformedNotification signal: self messageText ]
 ]
 
 { #category : #accessing }
