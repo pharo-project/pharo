@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #'Transcript-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -84,7 +84,7 @@ SystemDependenciesTest >> knownFileSystemDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#'Zinc-Resource-Meta-Core')
 ]
 
 { #category : #'known dependencies' }
