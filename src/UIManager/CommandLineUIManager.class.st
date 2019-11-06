@@ -214,8 +214,7 @@ CommandLineUIManager >> inform: aString [
 			nextPutAll: aString; cr;
 			nextPutAll: (String new: 79 withAll: $= ); cr].
 
-	Smalltalk logDuring: logBlock.		
-	aString traceCr.
+	Smalltalk logDuring: logBlock.
 ]
 
 { #category : #initialization }
@@ -386,6 +385,20 @@ CommandLineUIManager >> stdin [
 CommandLineUIManager >> stdout [
 	
 	^ Stdio stdout
+]
+
+{ #category : #'ui requests' }
+CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
+	
+	Smalltalk logDuring: [:logger |
+		logger cr;
+			nextPutAll: (String new: 79 withAll: $= ); cr;
+			nextPutAll: 'System notification: ';
+			nextPutAll: aNotification messageText; cr;
+			nextPutAll: (String new: 79 withAll: $= ); cr].
+	
+	aNotification resume.
+
 ]
 
 { #category : #'ui TEasilyThemed' }
