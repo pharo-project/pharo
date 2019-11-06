@@ -126,7 +126,7 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 				cr.
 			outStream
 				tab;
-				nextPutAll: '** ERROR!  THIS SCRIPT IS MISSING ** ' translated;
+				nextPutAll: '** ERROR!  THIS SCRIPT IS MISSING ** ';
 				cr;
 				cr.
 			outStream nextPutAll: '  '.
