@@ -194,12 +194,12 @@ NECPreferences class >> settingsOn: aBuilder [
 					availableControllers := self availableEngines.
 					availableControllers size > 1
 						ifTrue: [ 
-							(aBuilder pickOne: #completionEngine)
+							(aBuilder pickOne: #completionEngineClass)
 								order: -1;
 								label: 'CompletionEngine';
 								target: RubSmalltalkEditor;
-								getSelector: #completionEngine;
-								setSelector: #completionEngine:;
+								getSelector: #completionEngineClass;
+								setSelector: #completionEngineClass:;
 								domainValues: availableControllers ].
 					availableSorters := self availableSorters.
 					availableSorters size > 1

@@ -135,13 +135,13 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 ]
 
 { #category : #'completion engine' }
-RubSmalltalkEditor class >> completionEngine [
+RubSmalltalkEditor class >> completionEngineClass [
 	
 	^ CompletionEngineClass
 ]
 
 { #category : #'completion engine' }
-RubSmalltalkEditor class >> completionEngine: anEngine [
+RubSmalltalkEditor class >> completionEngineClass: anEngine [
 	
 	CompletionEngineClass := anEngine
 ]
