@@ -146,9 +146,7 @@ CompletionModel >> sorter: aSorter [
 
 { #category : #accessing }
 CompletionModel >> title [
-	| type |
 	[
-	type := node receiver propertyAt: #type ifAbsent: [ ^ '' ].
-	^ type name
+	^ node receiver propertyAt: #type ifPresent: #name ifAbsent: ''
 	] on: Error do: [ :e | ^ '' ]
 ]

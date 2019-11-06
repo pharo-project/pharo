@@ -319,7 +319,7 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 	preString := preString <= 0
 		ifFalse: [ string first: preString - 1 ]
 		ifTrue: [ String empty ].
-	type := symbol type.
+	type := symbol hightlightSymbol.
 	font := self selectFont: type.
 	index = self selected
 		ifTrue: [ 

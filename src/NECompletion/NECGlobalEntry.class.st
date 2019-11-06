@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-NECGlobalEntry >> label [
-	^ 'global'
+NECGlobalEntry >> hightlightSymbol [
+	^ #globalVar
 ]
 
 { #category : #accessing }
-NECGlobalEntry >> type [
-	^ #globalVar
+NECGlobalEntry >> label [
+	^ 'global'
 ]

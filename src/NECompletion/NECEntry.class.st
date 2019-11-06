@@ -74,6 +74,11 @@ NECEntry >> guessTypeWith: aContext [
 ]
 
 { #category : #accessing }
+NECEntry >> hightlightSymbol [
+	^nil
+]
+
+{ #category : #accessing }
 NECEntry >> label [
 	^ 'unknown'
 ]
@@ -85,7 +90,7 @@ NECEntry >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: contents;
 		nextPut: $,;
-		nextPutAll: self type;
+		nextPutAll: self hightlightSymbol;
 		nextPut: $)
 ]
 
@@ -98,9 +103,4 @@ NECEntry >> setContents: aString [
 NECEntry >> setContents: aString node: aNode [
 	contents := aString.
 	node := aNode
-]
-
-{ #category : #accessing }
-NECEntry >> type [
-	^nil
 ]
