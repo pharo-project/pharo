@@ -76,7 +76,7 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization')
+	^ #(#'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets')
 ]
 
 { #category : #'known dependencies' }
@@ -105,27 +105,11 @@ SystemDependenciesTest >> knownKernelDependencies [
 ]
 
 { #category : #'known dependencies' }
-SystemDependenciesTest >> knownMetacelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #()
-]
-
-{ #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization')
+	^ #( #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
 ]
 
 { #category : #'known dependencies' }
@@ -141,7 +125,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -166,7 +150,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -405,7 +389,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	
 	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
 	
-	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies.
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }

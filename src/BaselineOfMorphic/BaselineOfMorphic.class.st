@@ -46,7 +46,6 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
-		spec package: 'Text-Core'.
 		spec package: 'System-Clipboard'.
 		
 		spec package: 'Balloon'.
@@ -59,8 +58,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Fuel-Platform-Core'.
 		spec package: 'Fuel-Platform-Pharo-Core'.
 		spec package: 'Fuel-Platform-Pharo-07'.
-
-		spec package: 'Fonts-Abstract'.
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
