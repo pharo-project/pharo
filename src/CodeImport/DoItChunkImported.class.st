@@ -5,7 +5,7 @@ Class {
 	#name : #DoItChunkImported,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'content',
+		'contents',
 		'requestor',
 		'logSource'
 	],
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : #accessing }
-DoItChunkImported >> content [
-	^ content
+DoItChunkImported >> contents [
+	^ contents
 ]
 
 { #category : #accessing }
-DoItChunkImported >> content: anObject [
-	content := anObject
+DoItChunkImported >> contents: anObject [
+	contents := anObject
 ]
 
 { #category : #accessing }
