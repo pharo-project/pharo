@@ -942,7 +942,7 @@ Behavior >> initializeSlots: anObject [
 	self classLayout initializeInstance: anObject
 ]
 
-{ #category : #testing }
+{ #category : #'accessing instances and variables' }
 Behavior >> instSize [
 	"Answer the number of named instance variables
 	(as opposed to indexed variables) of the receiver.
@@ -1357,12 +1357,6 @@ Behavior >> nonObsoleteClass [
 	[obsName beginsWith: 'AnObsolete']
 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
 	^ self environment at: obsName asSymbol
-]
-
-{ #category : #accessing }
-Behavior >> numberOfInstanceVariables [
-	^ self instVarNames size
-
 ]
 
 { #category : #initialization }
