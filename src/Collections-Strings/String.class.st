@@ -22,7 +22,6 @@ Class {
 		'CSSeparators',
 		'CaseInsensitiveOrder',
 		'CaseSensitiveOrder',
-		'CrLfExchangeTable',
 		'LowercasingTable',
 		'Tokenish',
 		'TypeTable',
