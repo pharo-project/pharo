@@ -109,7 +109,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	Smalltalk cleanOutUndeclared. 
 	
 	CompletionSorter register.
-	RubSmalltalkEditor completionEngine: CompletionEngine.
+	RubSmalltalkEditor completionEngineClass: CompletionEngine.
 	
 	Author reset.
 
