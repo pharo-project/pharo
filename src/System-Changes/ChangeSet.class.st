@@ -349,8 +349,8 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: MethodAdded send: #methodAdded: to: aChangeSet;
 		when: MethodModified send: #methodModified: to: aChangeSet;
 		when: MethodRemoved send: #methodRemoved: to: aChangeSet;
-		when: MethodRecategorized  send: #methodRecategorized: to: aChangeSet;
-		when: DoItChunkImported  send: #doItChunkImported: to: aChangeSet.
+		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
+		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
 		
 	
 	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself).
