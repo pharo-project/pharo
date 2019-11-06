@@ -15,7 +15,7 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Unified'
 }
 
-{ #category : #accessing }
+{ #category : #specs }
 EpUnifiedBrowserPresenter class >> defaultSpec [
 	^ SpPanedLayout newHorizontal
 		position: 40 percent;
@@ -73,14 +73,20 @@ EpUnifiedBrowserPresenter >> initializePresenter [
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
-	self updatesAnnouncer weak when: OmSessionStoreUpdated send: #refresh to: self
+EpUnifiedBrowserPresenter >> initializePresenters [
+	logPresenter := self instantiate: EpLogBrowserPresenter.
+
+	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
+	logNodesPresenter whenSelectionChangedDo: [ :selection |
+		self refreshWithLogSelection: selection ].
+
+	self initializeRefreshOnSessionUpdate.
+	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserPresenter >> initializeWidgets [
-	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
-	logPresenter := self instantiate: EpLogBrowserPresenter
+EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
+	self updatesAnnouncer weak when: OmSessionStoreUpdated send: #refresh to: self
 ]
 
 { #category : #initialization }
@@ -97,7 +103,9 @@ EpUnifiedBrowserPresenter >> initializeWorkaroundToRefreshOnMonitorLogAnnounceme
 
 	self monitorLogAnnouncer weak when: EpEntryAdded send: #schedule to: refreshDeferrer.
 
-	self whenWindowChanged: [ :windowModel | windowModel whenClosedDo: [ self monitorLogAnnouncer unsubscribe: refreshDeferrer ] ]
+	self whenWindowChanged: [ :windowModel |
+		windowModel whenClosedDo: [
+			self monitorLogAnnouncer unsubscribe: refreshDeferrer ] ]
 ]
 
 { #category : #initialization }
