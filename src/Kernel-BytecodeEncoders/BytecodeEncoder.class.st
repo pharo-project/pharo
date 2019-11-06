@@ -3,7 +3,7 @@ I am an abstract superclass for different bytecode set encoders.  Subclasses inh
 "
 Class {
 	#name : #BytecodeEncoder,
-	#superclass : #Encoder,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'position',
@@ -54,6 +54,12 @@ BytecodeEncoder class >> nonExtensionPcAt: pc in: method [
 	[self isExtension: (bytecode := method at: thePC)] whileTrue:
 		[thePC := thePC + (self bytecodeSize: bytecode)].
 	^thePC
+]
+
+{ #category : #'bytecode decoding' }
+BytecodeEncoder class >> quickPrimSpecialConstants [
+	"Note: they are different from the encoder special literals."
+	^ #(true false nil -1 0 1 2) 
 ]
 
 { #category : #'bytecode decoding' }
