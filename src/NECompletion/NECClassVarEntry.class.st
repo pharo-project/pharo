@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-NECClassVarEntry >> label [
-	^ 'class variable'
+NECClassVarEntry >> hightlightSymbol [
+	^ #classVar
 ]
 
 { #category : #accessing }
-NECClassVarEntry >> type [
-	^ #classVar
+NECClassVarEntry >> label [
+	^ 'class variable'
 ]
