@@ -80,14 +80,6 @@ SystemDependenciesTest >> knownDisplayDependencies [
 ]
 
 { #category : #'known dependencies' }
-SystemDependenciesTest >> knownFileSystemDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'Zinc-Resource-Meta-Core')
-]
-
-{ #category : #'known dependencies' }
 SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
@@ -269,7 +261,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
