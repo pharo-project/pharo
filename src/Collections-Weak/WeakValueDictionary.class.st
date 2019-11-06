@@ -77,7 +77,9 @@ WeakValueDictionary >> includesKey: key [
 
 	"Here we need to check that we have a key and also that the value of the key was not garbarge collected."
 
-	^ (array at: (self scanFor: key)) ifNil: [ false ] ifNotNil: [ :value | value value isNotNil ]
+	^ (array at: (self scanFor: key))
+		ifNil: [ false ]
+		ifNotNil: [ :value | value value isNotNil ]
 ]
 
 { #category : #private }
