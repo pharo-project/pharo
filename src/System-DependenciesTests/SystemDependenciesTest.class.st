@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#'FileSystem-Core' #'System-Changes' #'System-Localization' #'Transcript-Core')
 ]
 
 { #category : #'known dependencies' }
