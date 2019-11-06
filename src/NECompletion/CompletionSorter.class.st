@@ -16,11 +16,11 @@ CompletionSorter class >> kind [
 
 { #category : #'tools registry' }
 CompletionSorter class >> register [
-	CompletionModel sorter: AlphabeticSorter
+	CompletionModel sorterClass: AlphabeticSorter
 ]
 
-{ #category : #description }
-CompletionSorter class >> sortCompletionList: aList [
+{ #category : #sorting }
+CompletionSorter >> sortCompletionList: aList [
 
-	self shouldBeImplemented.
+	self shouldBeImplemented
 ]
