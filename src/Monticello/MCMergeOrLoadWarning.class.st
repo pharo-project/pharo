@@ -26,9 +26,9 @@ MCMergeOrLoadWarning >> cancel [
 MCMergeOrLoadWarning >> defaultAction [
 	^ ( UIManager default
 		confirm: self messageText
-		trueChoice: 'Load' translated
-		falseChoice: 'Merge' translated
-		cancelChoice: 'Cancel' translated
+		trueChoice: 'Load'
+		falseChoice: 'Merge'
+		cancelChoice: 'Cancel'
 		default: nil ).
 ]
 
