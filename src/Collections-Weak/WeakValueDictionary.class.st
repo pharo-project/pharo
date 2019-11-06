@@ -73,9 +73,7 @@ WeakValueDictionary >> at: key put: anObject [
 
 { #category : #testing }
 WeakValueDictionary >> includesKey: key [
-	"Answer whether the receiver has a key equal to the argument, key."
-
-	"Here we need to check that we have a key and also that the value of the key was not garbarge collected."
+	"Answer whether the receiver has a key equal to the argument and also that the value associated to this key was not garbage collected."
 
 	^ (array at: (self scanFor: key))
 		ifNil: [ false ]
