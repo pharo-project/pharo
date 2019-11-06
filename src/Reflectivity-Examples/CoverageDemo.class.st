@@ -30,6 +30,19 @@ CoverageDemo class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #example }
+CoverageDemo class >> exampleIfTrueIfFalse [
+	| t |
+	t := false.
+	t ifTrue: [ self bar ] ifFalse: [ 'hello' ].
+	^ 5 
+]
+
+{ #category : #example }
+CoverageDemo class >> exampleMethod [
+	^ 2 + 3
+]
+
 { #category : #open }
 CoverageDemo class >> open [
 	<script>
@@ -75,17 +88,17 @@ CoverageDemo >> exampleMethod [
 { #category : #example }
 CoverageDemo >> exampleNotCompleteCoverage [
 
-	self coverageCode: [ ReflectivityExamples new exampleIfTrueIfFalse. ].
-	self compiledMethods add: ReflectivityExamples>>#exampleIfTrueIfFalse.
+	self coverageCode: [ CoverageDemo exampleIfTrueIfFalse. ].
+	self compiledMethods add: CoverageDemo class >>#exampleIfTrueIfFalse.
 	
 	self openWithSpec.
 ]
 
 { #category : #initialization }
 CoverageDemo >> initialize [
-	coverageCode := [ ReflectivityExamples new exampleMethod ].
+	coverageCode := [ CoverageDemo exampleMethod ].
 	compiledMethods := OrderedCollection new.
-	compiledMethods add: ReflectivityExamples >> #exampleMethod.
+	compiledMethods add: CoverageDemo class >> #exampleMethod.
 
 	super initialize
 ]
