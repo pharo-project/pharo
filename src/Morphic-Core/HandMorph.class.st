@@ -984,7 +984,10 @@ HandMorph >> position [
 
 	^temporaryCursor
 		ifNil: [bounds topLeft]
-		ifNotNil: [bounds topLeft - temporaryCursorOffset]
+		ifNotNil: [
+			temporaryCursorOffset 
+				ifNil: [ bounds topLeft ]
+				ifNotNil: [ :anOffset | bounds topLeft - anOffset ] ]
 ]
 
 { #category : #geometry }
