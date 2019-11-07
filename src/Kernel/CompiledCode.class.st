@@ -90,7 +90,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^ self ast argumentNames
+	^ self propertyAt: #argumentNames ifAbsent: [ self ast argumentNames ]
 ]
 
 { #category : #converting }
@@ -370,6 +370,16 @@ CompiledCode >> isCollection [
 ]
 
 { #category : #testing }
+CompiledCode >> isCompiledBlock [
+	^ false
+]
+
+{ #category : #testing }
+CompiledCode >> isDoIt [
+	^ false
+]
+
+{ #category : #testing }
 CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
@@ -538,7 +548,7 @@ CompiledCode >> numTemps [
 { #category : #accessing }
 CompiledCode >> numberOfReservedLiterals [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -574,6 +584,11 @@ CompiledCode >> primitiveErrorVariableName [
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil
+]
+
+{ #category : #accessing }
+CompiledCode >> propertyAt: aString ifAbsent: aFullBlockClosure [
+	^ aFullBlockClosure value
 ]
 
 { #category : #scanning }

@@ -48,7 +48,7 @@ BlockClosureTest >> testTallyInstructions [
 	
 	"We test class name and not the class because there are multiple versions of the encoders depending on the compiler used."
 	| expectedResult |
-	expectedResult := 27.
+	expectedResult := (aBlockContext method encoderClass = EncoderForSistaV1) ifTrue: [26] ifFalse: [27].
 	self assert: (Context tallyInstructions: aBlockContext ) size equals: expectedResult
 ]
 
