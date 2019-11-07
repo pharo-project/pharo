@@ -23,5 +23,5 @@ BaselineOfFuel >> baseline: spec [
 		group: 'Core' with: #('Fuel-Core' 'Fuel-Platform-Core' 'Fuel-Platform-Pharo-Core' 'Fuel-Platform-Pharo-07');
 		group: 'Tools' with: #('Fuel-Tools-Pharo');
 		group: 'Tests' with: #('Fuel-Platform-Pharo-Core-Tests' 'Fuel-Tests-Core');
-		group: 'default' with: #('Core' 'Tools' 'Tests' )
+		group: 'default' with: #('Core' )
 ]
