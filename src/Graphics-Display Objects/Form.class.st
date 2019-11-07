@@ -277,20 +277,6 @@ Form >> allocateForm: extentPoint [
 	^Form extent: extentPoint depth: self nativeDepth
 ]
 
-{ #category : #filling }
-Form >> anyShapeFill [
-	"Fill the interior of the outermost outlined region in the receiver, a 1-bit deep form.  Typically the resulting form is used with fillShape:fillColor: to paint a solid color.  See also convexShapeFill:"
-
-	| shape |
-	"Draw a seed line around the edge and fill inward from the outside."
-	shape := self findShapeAroundSeedBlock: [:f | f borderWidth: 1].
-	"Reverse so that this becomes solid in the middle"
-	shape := shape reverse.
-	"Finally erase any bits from the original so the fill is only elsewhere"
-	shape copy: shape boundingBox from: self to: 0@0 rule: Form erase.
-	^ shape
-]
-
 { #category : #converting }
 Form >> as8BitColorForm [
 	"Simple conversion of zero pixels to transparent.  Force it to 8 bits."
@@ -523,17 +509,6 @@ the border."
         blt height: rect height - borderWidth - borderWidth; width:
 borderWidth; copyBits.
         blt destX: rect corner x - borderWidth; copyBits
-]
-
-{ #category : #bordering }
-Form >> borderWidth: anInteger [ 
-	"Set the width of the border for the receiver to be anInteger and paint it 
-	using black as the border color."
-
-	self 
-		border: self boundingBox 
-		width: anInteger 
-		fillColor: Smalltalk ui theme borderColor
 ]
 
 { #category : #bordering }
@@ -2004,39 +1979,6 @@ Form >> readFromOldFormat: aBinaryStream [
 
 ]
 
-{ #category : #resources }
-Form >> readResourceFrom: aStream [ 
-	"Store a resource representation of the receiver on aStream.
-	Must be specific to the receiver so that no code is filed out."
-
-	| bitsSize msb |
-	(aStream next: 4) asString = self resourceTag 
-		ifFalse: 
-			[aStream position: aStream position - 4.
-			^self readNativeResourceFrom: aStream].
-	width := aStream nextNumber: 4.
-	height := aStream nextNumber: 4.
-	depth := aStream nextNumber: 4.
-	bitsSize := aStream nextNumber: 4.
-	bitsSize = 0 
-		ifFalse: 
-			[bits := aStream next: bitsSize.
-			^self].
-	msb := (aStream nextNumber: 4) = 1.
-	bitsSize := aStream nextNumber: 4.
-	bits := Bitmap new: self bitsSize.
-	(Form 
-		extent: width @ height
-		depth: depth
-		bits: (aStream next: bitsSize * 4)) displayOn: self.
-	msb = EndianDetector isBigEndian 
-		ifFalse: 
-			[Bitmap 
-				swapBytesIn: bits
-				from: 1
-				to: bits size]
-]
-
 { #category : #analyzing }
 Form >> rectangleEnclosingPixelsNotOfColor: aColor [
 	"Answer the smallest rectangle enclosing all the pixels of me that are different from the given color. Useful for extracting a foreground graphic from its background."
@@ -2183,11 +2125,6 @@ Form >> replaceColor: oldColor withColor: newColor [
 		ifTrue: [target displayOn: self].
 ]
 
-{ #category : #resources }
-Form >> resourceTag [
-	^'FORM'
-]
-
 { #category : #'color mapping' }
 Form >> rgbaBitMasks [
 	"Return the masks for specifying the R,G,B, and A components in the receiver"
@@ -2291,13 +2228,6 @@ Form >> rotateBy: deg smoothing: cellSize [
 		rotateBy: (a := a+5) smoothing: 2) display].
 f display
 "
-]
-
-{ #category : #'scaling, rotation' }
-Form >> scaledByDisplayScaleFactor [
-	
-	^ self scaledToSize: self extent * self currentWorld displayScaleFactor.
-
 ]
 
 { #category : #'scaling, rotation' }
@@ -2481,24 +2411,6 @@ Form >> storeOn: aStream base: anInteger [
 	aStream nextPutAll: 'offset: '.
 	self offset printOn: aStream.
 	aStream nextPut: $).
-
-]
-
-{ #category : #resources }
-Form >> storeResourceOn: aStream [
-	"Store a resource representation of the receiver on aStream.
-	Must be specific to the receiver so that no code is filed out."
-	self hibernate.
-	aStream nextPutAll: self resourceTag asByteArray. "tag"
-	aStream nextNumber: 4 put: width.
-	aStream nextNumber: 4 put: height.
-	aStream nextNumber: 4 put: depth.
-	(bits isMemberOf: ByteArray) ifFalse:
-		"must store bitmap"
-		[aStream nextNumber: 4 put: 0. "tag"
-		aStream nextNumber: 4 put: (EndianDetector isBigEndian ifTrue:[1] ifFalse: [0])].
-	aStream nextNumber: 4 put: bits size.
-	aStream nextPutAll: bits.
 
 ]
 
