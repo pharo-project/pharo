@@ -56,10 +56,9 @@ CompletionContext >> narrowWith: aString [
 
 { #category : #parsing }
 CompletionContext >> parseSource [
-	 ast := Smalltalk compiler
+	 ast := class compiler
 				source: source;
 				options: #(+ optionParseErrors + optionSkipSemanticWarnings);
-				class: class;
 				noPattern: isWorkspace;
 				parse.
 	ast doSemanticAnalysisIn: class.

@@ -971,10 +971,9 @@ SHRBTextStyler >> pixelHeight [
 { #category : #private }
 SHRBTextStyler >> privateStyle: aText [
 	| ast |
-	ast := Smalltalk compiler
+	ast := classOrMetaClass compiler
 				source: aText;
 				options: #(+ optionParseErrors + optionSkipSemanticWarnings);
-				class: classOrMetaClass;
 				noPattern: self isForWorkspace;
 				requestor: workspace;
 				parse.
