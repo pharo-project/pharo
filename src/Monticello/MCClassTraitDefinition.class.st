@@ -28,11 +28,10 @@ MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: cl
 
 { #category : #comparing }
 MCClassTraitDefinition >> = aDefinition [
-	^ (super = aDefinition)
-		and: [baseTrait = aDefinition baseTrait
-		and: [self classTraitCompositionString = aDefinition classTraitCompositionString]]
-
-
+	^ super = aDefinition
+		and: [ baseTrait = aDefinition baseTrait
+		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
+		and: [ category = aDefinition category ] ] ]
 ]
 
 { #category : #visiting }
@@ -91,8 +90,8 @@ MCClassTraitDefinition >> hash [
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
-	^hash
-
+	hash := String stringHash: category initialHash: hash.
+	^ hash
 ]
 
 { #category : #initialization }
