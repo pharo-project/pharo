@@ -102,9 +102,8 @@ MCMethodDefinition class >> shutDown [
 { #category : #comparing }
 MCMethodDefinition >> = aDefinition [
 	^ super = aDefinition
-		and: [ 
-			aDefinition category = self category
-				and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
+		and: [ aDefinition category = self category
+		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
 { #category : #visiting }
