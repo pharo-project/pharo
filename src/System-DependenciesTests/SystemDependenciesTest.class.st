@@ -101,7 +101,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #( #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
+	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
 ]
 
 { #category : #'known dependencies' }
@@ -244,7 +244,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 		BaselineOfTraits corePackages,		
 		BaselineOfDisplay allPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownDisplayDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }

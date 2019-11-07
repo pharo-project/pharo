@@ -184,13 +184,6 @@ DisplayScreen >> beDisplay [
 	self primitiveFailed
 ]
 
-{ #category : #other }
-DisplayScreen >> boundingBox [
-
-	ActiveWorld ifNil: [ ^ 0@0 corner: 0@0 ].
-	^ ActiveWorld bounds
-]
-
 { #category : #deferring }
 DisplayScreen >> deferUpdates: aBoolean [
 	^self class deferUpdates: aBoolean
@@ -338,8 +331,9 @@ DisplayScreen >> fullscreen [
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	self currentWorld worldState worldRenderer fullscreenMode: (LastScreenModeSelected := aBoolean)
-	
+	SystemAnnouncer uniqueInstance announce: (FullscreenAnnouncement new 
+		displayScreen: self;
+		fullscreen: (LastScreenModeSelected := aBoolean))
 ]
 
 { #category : #other }
