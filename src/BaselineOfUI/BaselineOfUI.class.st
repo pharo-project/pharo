@@ -44,14 +44,13 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'StartupPreferences'.
 	
-		"Debugger-Actions package depends on Fuel-Tools-Pharo"
-		spec baseline: 'Fuel' with: [
-			spec repository: repository; loads: 'Tools' ].
-
 		spec package: 'Debugger-Actions'.
 		spec package: 'Debugger-Filters'.
 		spec package: 'Debugger-Model'.
 		spec package: 'Debugging-Settings'.
+
+		spec baseline: 'Fuel' with: [
+			spec repository: repository; loads: 'Tools' ].
 
 		spec package: 'Fonts-Chooser'.
 
