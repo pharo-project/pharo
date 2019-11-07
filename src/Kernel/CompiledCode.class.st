@@ -90,7 +90,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^ self ast argumentNames
+	^ self propertyAt: #argumentNames ifAbsent: [ self ast argumentNames ]
 ]
 
 { #category : #converting }
