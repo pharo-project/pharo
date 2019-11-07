@@ -114,6 +114,9 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings-Core'.
 		spec package: 'System-Settings-Browser'.
+		"the following package is listed here to be after Setting core 
+		however conceptually it could be placed somewhere else."
+		spec package: 'Formatter-Settings'.
 		spec package: 'System-Sound'.
 		
 		spec package: 'Text-Diff'.
