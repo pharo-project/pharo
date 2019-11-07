@@ -123,7 +123,6 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'System-Hashing-Testing'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
@@ -143,6 +142,8 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Refactoring' with: [ spec repository: repository ].
 		spec baseline: 'Epicea' with: [ spec repository: repository ].
 		spec baseline: 'Misc' with: [ spec repository: repository ].
+		spec baseline: 'Fuel' with: [ 
+			spec repository: repository; loads: #('Tests') ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].

@@ -44,6 +44,9 @@ BaselineOfMorphic >> baseline: spec [
 			baseline: 'MorphicCore' with: [spec repository: repository];
 			baseline: 'MenuRegistration' with: [spec repository: repository].
 
+		spec baseline: 'Fuel' with: [ 
+			spec repository: repository; loads: #('Core') ].
+
 		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Clipboard'.
@@ -54,10 +57,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
-		spec package: 'Fuel-Core'.
-		spec package: 'Fuel-Platform-Core'.
-		spec package: 'Fuel-Platform-Pharo-Core'.
-		spec package: 'Fuel-Platform-Pharo-07'.
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
