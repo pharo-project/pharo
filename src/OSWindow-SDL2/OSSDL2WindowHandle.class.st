@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'handle',
 		'currentCursor',
-		'iconSurface'
+		'iconSurface',
+		'lastKeyboardFocus'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -102,10 +103,10 @@ OSSDL2WindowHandle >> deliverGlobalEvent: aGlobalEvent [
 
 { #category : #initialize }
 OSSDL2WindowHandle >> destroy [
+
 	handle ifNotNil: [ :validHandle | 
 		OSSDL2Driver current unregisterWindowWithId: validHandle windowID.
-		validHandle destroy
-	].
+		validHandle destroy ].
 
 	renderer := nil.
 	handle := nil.
@@ -150,6 +151,7 @@ OSSDL2WindowHandle >> getWMInfo [
 
 { #category : #initialize }
 OSSDL2WindowHandle >> handle [
+
 	^ handle
 ]
 
@@ -185,6 +187,13 @@ OSSDL2WindowHandle >> icon: aForm [
 OSSDL2WindowHandle >> initWithHandle: aHandle attributes: attributes [
 	handle := aHandle.
 	attributes applyTo: self
+]
+
+{ #category : #initialization }
+OSSDL2WindowHandle >> initialize [
+	
+	self class initializeSlots: self.
+	super initialize.
 ]
 
 { #category : #'text input' }
@@ -307,6 +316,14 @@ OSSDL2WindowHandle >> releaseMouse [
 	SDL2 setRelativeMouseMode: false
 ]
 
+{ #category : #private }
+OSSDL2WindowHandle >> resetKeyboardFocus [
+		
+	ActiveHand ifNil: [ ^ self ].
+	lastKeyboardFocus := ActiveHand keyboardFocus.
+	ActiveHand keyboardFocus: nil
+]
+
 { #category : #accessing }
 OSSDL2WindowHandle >> resizable [
 	^ handle getFlags anyMask: SDL_WINDOW_RESIZABLE
@@ -321,6 +338,19 @@ OSSDL2WindowHandle >> resizable: aBoolean [
 OSSDL2WindowHandle >> restore [
 
 	handle restore
+]
+
+{ #category : #private }
+OSSDL2WindowHandle >> restoreKeyboardFocus [
+
+	(handle isNil 
+		or: [ lastKeyboardFocus isNil 
+		or: [ ActiveHand isNil ] ])
+		ifTrue: [ ^ self ].
+	
+	[ ActiveHand keyboardFocus: lastKeyboardFocus ]
+	ensure: [ 
+		lastKeyboardFocus := nil ]
 ]
 
 { #category : #'window management' }
@@ -487,45 +517,34 @@ OSSDL2WindowHandle >> visitWindowEvent: windowEvent [
 	osWindow ifNil: [ ^self ].
 	
 	windowEvent event = SDL_WINDOWEVENT_EXPOSED ifTrue: [
-		^ ((OSWindowExposeEvent for: osWindow) timestamp: windowEvent timestamp) deliver.
-	].
+		^ ((OSWindowExposeEvent for: osWindow) timestamp: windowEvent timestamp) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_HIDDEN ifTrue: [ 
-		^ (OSWindowHiddenEvent for: osWindow) deliver.
-	].
+		^ (OSWindowHiddenEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_SHOWN ifTrue: [ 
-		^ ((OSWindowShownEvent for: osWindow) timestamp: windowEvent timestamp) deliver.
-	].
+		^ ((OSWindowShownEvent for: osWindow) timestamp: windowEvent timestamp) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_CLOSE ifTrue: [ 
-		^ (OSWindowCloseEvent for: osWindow) deliver.
-	].
+		^ (OSWindowCloseEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_MOVED ifTrue: [ 
-		^ (OSWindowMoveEvent for: osWindow) deliver
-	].
+		^ (OSWindowMoveEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_RESIZED ifTrue: [ 
 		^ (OSWindowResizeEvent for: osWindow)
 				width: windowEvent data1;
 				height: windowEvent data2;
-				deliver.
-	].
+				deliver ].
 	windowEvent event = SDL_WINDOWEVENT_ENTER ifTrue: [ 
-		^ (OSWindowMouseEnterEvent for: osWindow) deliver
-	].
+		^ (OSWindowMouseEnterEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_LEAVE ifTrue: [ 
-		^ (OSWindowMouseLeaveEvent for: osWindow) deliver
-	].
+		^ (OSWindowMouseLeaveEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_FOCUS_GAINED ifTrue: [ 
-		^ (OSWindowFocusInEvent for: osWindow) deliver
-	].
+		self restoreKeyboardFocus.
+		^ (OSWindowFocusInEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_FOCUS_LOST ifTrue: [ 
-		^ (OSWindowFocusOutEvent for: osWindow) deliver
-	].
+		self resetKeyboardFocus.		
+		^ (OSWindowFocusOutEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_MAXIMIZED ifTrue: [ 
-		^ (OSWindowMaximizedEvent for: osWindow) deliver
-	].
+		^ (OSWindowMaximizedEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_MINIMIZED ifTrue: [ 
-		^ (OSWindowMinimizedEvent for: osWindow) deliver
-	].
-
+		^ (OSWindowMinimizedEvent for: osWindow) deliver ]
 ]
 
 { #category : #accessing }
