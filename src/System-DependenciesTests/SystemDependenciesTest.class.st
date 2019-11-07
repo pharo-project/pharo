@@ -338,7 +338,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfDependencyAnalyzer.
 	BaselineOfQualityAssistant.
 	BaselineOfReflectivity.
-	BaselineOfSmartSuggestions.
 	BaselineOfFuzzyMatcher.
 	BaselineOfZodiac.
 	BaselineOfReflectionMirrors.
