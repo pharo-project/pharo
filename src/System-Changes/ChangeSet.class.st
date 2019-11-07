@@ -349,7 +349,8 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: MethodAdded send: #methodAdded: to: aChangeSet;
 		when: MethodModified send: #methodModified: to: aChangeSet;
 		when: MethodRemoved send: #methodRemoved: to: aChangeSet;
-		when: MethodRecategorized  send: #methodRecategorized: to: aChangeSet.
+		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
+		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
 		
 	
 	SystemAnnouncer uniqueInstance announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself).
@@ -767,6 +768,20 @@ ChangeSet >> containsClass: aClass [
 { #category : #'filein/out' }
 ChangeSet >> defaultChangeSetDirectory [
 	^self class defaultChangeSetDirectory
+]
+
+{ #category : #'change logging' }
+ChangeSet >> doItChunkImported: anAnnouncemnet [
+
+	ChangeSet current = self ifFalse: [ ^ self ].
+	
+	"Parse preamble and postcript as a do it."
+	
+	((anAnnouncemnet contents beginsWith: '"Change Set:') and: [ self preambleString isNil ])
+		ifTrue: [ self preambleString: anAnnouncemnet contents ].
+	((anAnnouncemnet contents beginsWith: '"Postscript:') and: [ self postscriptString isNil ])
+		ifTrue: [ self postscriptString: anAnnouncemnet contents ].
+
 ]
 
 { #category : #accessing }

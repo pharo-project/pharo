@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -76,15 +76,7 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownFileSystemDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets')
 ]
 
 { #category : #'known dependencies' }
@@ -105,35 +97,11 @@ SystemDependenciesTest >> knownKernelDependencies [
 ]
 
 { #category : #'known dependencies' }
-SystemDependenciesTest >> knownLocalMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMetacelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization' #'Transcript-Core')
+	^ #( #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
 ]
 
 { #category : #'known dependencies' }
@@ -149,7 +117,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -174,7 +142,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -293,7 +261,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -401,7 +369,7 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownLocalMonticelloDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -413,7 +381,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	
 	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
 	
-	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies.
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
@@ -433,7 +401,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownMonticelloDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }

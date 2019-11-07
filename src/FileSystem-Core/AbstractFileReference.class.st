@@ -648,11 +648,6 @@ AbstractFileReference >> makeRelative: anObject [
 	^ anObject relativeToReference: self resolve
 ]
 
-{ #category : #delegated }
-AbstractFileReference >> mimeTypes [
-	^ self resolve mimeTypes
-]
-
 { #category : #accessing }
 AbstractFileReference >> modificationTime [
 	^ self resolve modificationTime 

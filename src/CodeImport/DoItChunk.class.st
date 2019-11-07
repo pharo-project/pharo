@@ -28,12 +28,12 @@ DoItChunk >> importFor: requestor logSource: logSource [
 	
 	(contents beginsWith: '----') ifTrue: [ ^self ].
 	
-	"Ugly hack to parse preamble and postcript as a do it."
-	((contents beginsWith: '"Change Set:') and: [ ChangeSet current preambleString isNil ])
-		ifTrue: [ ChangeSet current preambleString: contents ].
-	((contents beginsWith: '"Postscript:') and: [ ChangeSet current postscriptString isNil ])
-		ifTrue: [ ChangeSet current postscriptString: contents ].
-
+	SystemAnnouncer uniqueInstance announce: (DoItChunkImported new
+		contents: contents; 
+		requestor: requestor;
+		logSource: logSource;
+		yourself). 
+	
 	^Smalltalk compiler class new
 		source: contents;
 		requestor: requestor;
