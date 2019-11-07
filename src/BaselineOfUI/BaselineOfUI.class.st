@@ -85,14 +85,3 @@ BaselineOfUI >> postload: loader package: packageSpec [
 
 	Initialized := true
 ]
-
-{ #category : #baseline }
-BaselineOfUI >> project [
-	
-	| aProject |
-	
-	aProject := super project.
-	aProject loadType: #atomic.
-	^ aProject.
-	
-]
