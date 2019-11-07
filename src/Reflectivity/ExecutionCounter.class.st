@@ -35,11 +35,44 @@ ExecutionCounter class >> debugWorldMenuOn: aBuilder [
 		action: [ ExecutionCounter resetAll ]
 ]
 
+{ #category : #'system annoucements' }
+ExecutionCounter class >> handleClassRemoved: anAnnouncement [
+	self allCounters copy do: [ :breakpoint |
+		breakpoint link methods
+			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
+			ifFound: [ self allCounters remove: breakpoint ] ]
+]
+
+{ #category : #'system annoucements' }
+ExecutionCounter class >> handleMethodModified: anAnnouncement [
+	self removeFromMethod: anAnnouncement oldMethod
+]
+
+{ #category : #'system annoucements' }
+ExecutionCounter class >> handleMethodRemoved: anAnnouncement [
+	self removeFromMethod: anAnnouncement method
+]
+
+{ #category : #'class initialization' }
+ExecutionCounter class >> initialize [
+	self registerInsterestToSystemAnnouncement 
+]
+
 { #category : #'instance creation' }
 ExecutionCounter class >> installOn: aRBProgramNode [
 	^self new
 		node: aRBProgramNode;
 		install.
+]
+
+{ #category : #'class initialization' }
+ExecutionCounter class >> registerInsterestToSystemAnnouncement [
+	<systemEventRegistration>
+
+	SystemAnnouncer uniqueInstance unsubscribe: self.
+	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
+	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
+	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
 { #category : #cleanup }
@@ -52,6 +85,14 @@ ExecutionCounter class >> removeAll [
 ExecutionCounter class >> removeFrom: aNode [
 
 	(self allCounters at: aNode ifAbsent: [ ^self ]) uninstall
+]
+
+{ #category : #cleanup }
+ExecutionCounter class >> removeFromMethod: aMethod [ 
+	self allCounters copy do: [ :counter |
+		counter link methods
+			detect: [ :m | m == aMethod ]
+			ifFound: [ self allCounters remove: counter ] ]
 ]
 
 { #category : #cleanup }
