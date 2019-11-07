@@ -94,8 +94,5 @@ ClyJumpToTestMethodCommand >> systemEnvironment [
 
 { #category : #accessing }
 ClyJumpToTestMethodCommand >> testMethodNameFor: aMethod [
-	^ (String
-		streamContents: [ :s | 
-			s nextPutAll: 'test'.
-			(aMethod selector splitOn: $:) do: [ :each | s nextPutAll: each capitalized ] ]) asSymbol
+	^ aMethod selector asTestSelector
 ]

@@ -128,6 +128,14 @@ Character class >> delete [
 	^ self value: 127
 ]
 
+{ #category : #'special characters' }
+Character class >> devide [
+
+	self deprecated: 'Use message divide' transformWith: '`@receiver devide' -> '`@receiver divide'.
+	
+	^self divide
+]
+
 { #category : #'instance creation' }
 Character class >> digitValue: x [ 
 	"Answer the Character whose digit value is x. For example,
