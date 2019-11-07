@@ -314,7 +314,7 @@ CompilationContext class >> optionsDescription [
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code')
-	(- optionSkipSemanticWarnings 					'Do not warn about sementics (e.g. undeclared vars)')
+	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
 		
 	) 
 ]
