@@ -10,6 +10,7 @@ BaselineOfMisc >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 'PharoDocComment';
+			package: 'STON-Text support';
 			package: 'System-CommandLine-TextSupport';
 			package: 'System-Serial Port';
 			package: 'PerformMessageCommandLineHandler';
