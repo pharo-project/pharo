@@ -567,6 +567,13 @@ Integer >> bitXor: n [
 		length: (self digitLength max: norm digitLength)
 ]
 
+{ #category : #'system primitives' }
+Integer >> byteAt: index [
+	"Alias to support forward compatibility with Pharo 8"
+	
+	^ self digitAt: index
+]
+
 { #category : #'truncation and round off' }
 Integer >> ceiling [ 
 	"Refer to the comment in Number|ceiling."
