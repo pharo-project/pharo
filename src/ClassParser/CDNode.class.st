@@ -167,14 +167,3 @@ CDNode >> stop [
 	
 	^ originalNode stop
 ]
-
-{ #category : #'to be removed once CDNode get subclass of RBProgramNode' }
-CDNode >> suggestions [
-	^SugsSuggestion for: self class
-]
-
-{ #category : #'to be moved to sugs' }
-CDNode >> sugsMenuLabel [
-
-	^ 'CDNode'
-]
