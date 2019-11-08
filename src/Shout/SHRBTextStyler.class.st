@@ -975,8 +975,8 @@ SHRBTextStyler >> privateStyle: aText [
 		ifFalse: [ RBParser parseFaultyMethod: aText ] 
 		ifTrue: [ RBParser parseFaultyExpression: aText ].
 	
-	ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
-				forSyntaxHighlighting: true;
+	ast methodNode compilationContext: (Smalltalk compiler compilationContext
+				parseOptions: #(+ optionParseErrors + optionSkipSemanticWarnings);
 				requestor: workspace).
 	ast doSemanticAnalysisIn: classOrMetaClass.
 	^ self style: aText ast: ast

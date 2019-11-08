@@ -44,7 +44,7 @@ OCRequestorScope >> lookupVar: name [
 	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name].
 	
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
-	(compilationContext forSyntaxHighlighting
+	(compilationContext optionSkipSemanticWarnings
 		and: [ (requestor hasBindingOf: name asSymbol) not ])
 		ifTrue: [ ^ outerScope lookupVar: name ].
 
