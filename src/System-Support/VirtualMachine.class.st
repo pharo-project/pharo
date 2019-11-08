@@ -333,6 +333,12 @@ VirtualMachine >> is64bit [
 ]
 
 { #category : #testing }
+VirtualMachine >> isAIOInterrupt [
+
+	^ (self getSystemAttribute: 1010) = 'AIO'
+]
+
+{ #category : #testing }
 VirtualMachine >> isPharoVM [
 	"Answers if this VM is a valid PharoVM (made with our sources)"
 	| version |
