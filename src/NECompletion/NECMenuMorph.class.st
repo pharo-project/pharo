@@ -480,7 +480,7 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 	context entries size = 1
 		ifTrue: [ ^ self insertSelected ].
 	prefix := context commonPrefix.
-	prefix = context narrowString ifTrue:[^ self insertSelected].
+	prefix = context completionToken ifTrue:[^ self insertSelected].
 	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
 	prefix size > controller editor wordAtCaret size
 		ifTrue: [ 

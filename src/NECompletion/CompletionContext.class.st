@@ -106,28 +106,19 @@ CompletionContext >> message [
 		ifTrue: [nil]
 ]
 
-{ #category : #accessing }
-CompletionContext >> narrowString [
-
- 	^ completionToken
-]
-
 { #category : #action }
 CompletionContext >> narrowWith: aString [
-	"we only need to re-init if the string is shorter"
+	"we need to re-init if the string is shorter as the user types backspace"
 	(aString size < self completionToken size) ifTrue: [	entries := self initEntries ].
-	completionToken := aString.
-	entries := self entries select: [ :each | each contents beginsWith: completionToken ]
+	"we narrow the entries down"
+	entries := self entries select: [ :each | each contents beginsWith: completionToken ].
+	"and update the completionToken"
+	completionToken := aString
 ]
 
 { #category : #accessing }
 CompletionContext >> node [
 	^ node
-]
-
-{ #category : #accessing }
-CompletionContext >> node: anObject [
-	node := anObject
 ]
 
 { #category : #parsing }
@@ -173,5 +164,7 @@ CompletionContext >> sorter: aSorter [
 
 { #category : #accessing }
 CompletionContext >> title [
-	^[node receiver propertyAt: #type ifPresent: #name ifAbsent: '' ] on: Error do: [ :e | '' ]
+	"we only give a title if we know the type of the receiver of a message send"
+	node isMessage ifFalse: [ ^'' ].
+	^node receiver propertyAt: #type ifPresent: #name ifAbsent: ''
 ]
