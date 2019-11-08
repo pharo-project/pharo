@@ -8,11 +8,15 @@ Class {
 		'source',
 		'position',
 		'completionToken',
-		'model',
 		'ast',
 		'node',
 		'isWorkspace',
-		'class'
+		'class',
+		'entries',
+		'sorter'
+	],
+	#classVars : [
+		'SorterClass'
 	],
 	#category : #'NECompletion-New'
 }
@@ -27,31 +31,103 @@ CompletionContext class >> controller: aNECController class: aClass source: aStr
 ]
 
 { #category : #accessing }
+CompletionContext class >> sorterClass [
+	^ SorterClass
+]
+
+{ #category : #accessing }
+CompletionContext class >> sorterClass: aSorter [
+	SorterClass := aSorter
+]
+
+{ #category : #entries }
+CompletionContext >> commonPrefix [
+	"Longest match among the typed text and all menu entries"
+
+ 	| seed matchLengths prefixLength |
+	entries := self entries.
+	seed := entries first contents asString.
+	matchLengths := entries allButFirst
+		collect: [ :entry | seed charactersExactlyMatching: entry contents asString ]
+		thenSelect: [ :e | e >= completionToken size ].
+	prefixLength := matchLengths isEmpty
+		ifTrue: [ 0 ]
+		ifFalse: [ matchLengths min ].
+	^ seed first: prefixLength.
+]
+
+{ #category : #accessing }
+CompletionContext >> completionAt: aNumber [
+	| entry |
+	
+	entry := (self entries at: aNumber) completion separateKeywords.
+	^ NECPreferences spaceAfterCompletion 
+		ifTrue: [ entry, ' ' ]
+		ifFalse: [ entry ]
+]
+
+{ #category : #accessing }
 CompletionContext >> completionToken [
-
-	"here we need to return the name of the var or selector"
-
-	node ifNil: [ ^ '' ].
-	^ completionToken ifNil: [ node completionToken ]
+	^ completionToken ifNil: [ ^ ''  ]
 ]
 
 { #category : #accessing }
-CompletionContext >> createModel [
-	self parseSource.
-	node := ast nodeForOffset: position.
-	^ CompletionModel new node: node
+CompletionContext >> entries [
+	^entries ifNil: [entries := self initEntries ]
+]
+
+{ #category : #entries }
+CompletionContext >> entryCount [
+	^ self entries size
+]
+
+{ #category : #testing }
+CompletionContext >> hasEntries [
+	^ self entries isEmptyOrNil not
+]
+
+{ #category : #testing }
+CompletionContext >> hasMessage [
+	^ self message notNil
+]
+
+{ #category : #entries }
+CompletionContext >> initEntries [
+	| suggestionsList |
+	self sorter: self class sorterClass new.
+	suggestionsList := self sortList: node completionEntries.
+	^ suggestionsList collect: [ :each | NECEntry contents: each node: node ]
 ]
 
 { #category : #accessing }
-CompletionContext >> model [
-    ^model ifNil: [ model := self createModel ]
+CompletionContext >> message [
+	^self hasEntries 
+		ifFalse: ['no completions found'] 
+		ifTrue: [nil]
+]
+
+{ #category : #accessing }
+CompletionContext >> narrowString [
+
+ 	^ completionToken
 ]
 
 { #category : #action }
 CompletionContext >> narrowWith: aString [
+	"we only need to re-init if the string is shorter"
+	(aString size < self completionToken size) ifTrue: [	entries := self initEntries ].
 	completionToken := aString.
-	model := self createModel.
-	model narrowWith: aString
+	entries := self entries select: [ :each | each contents beginsWith: completionToken ]
+]
+
+{ #category : #accessing }
+CompletionContext >> node [
+	^ node
+]
+
+{ #category : #accessing }
+CompletionContext >> node: anObject [
+	node := anObject
 ]
 
 { #category : #parsing }
@@ -71,12 +147,31 @@ CompletionContext >> parseSource [
 
 { #category : #'initialize-release' }
 CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
+	class := aClass. 
+	source := aString.
+	position := anInteger.
 	
 	isWorkspace:= aECController 
 		ifNotNil: [ aECController isScripting ]
 		ifNil: [ false ].
+	self parseSource.
+	node := ast nodeForOffset: position.
+	completionToken := node completionToken
+]
 
-	class := aClass. 
-	source := aString.
-	position := anInteger
+{ #category : #sorting }
+CompletionContext >> sortList: aList [
+	"this is where the sorting strategy is set"
+	^ sorter sortCompletionList: aList
+]
+
+{ #category : #sorting }
+CompletionContext >> sorter: aSorter [
+	"the functionality allowing to hook up the sorter"
+	sorter := aSorter
+]
+
+{ #category : #accessing }
+CompletionContext >> title [
+	^[node receiver propertyAt: #type ifPresent: #name ifAbsent: '' ] on: Error do: [ :e | '' ]
 ]

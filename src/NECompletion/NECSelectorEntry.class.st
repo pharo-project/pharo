@@ -54,7 +54,7 @@ NECSelectorEntry >> createDescriptionWith: anECContext [
 { #category : #private }
 NECSelectorEntry >> findMethodWith: anECContext do: foundBlock ifAbsent: notfoundBlock [ 
 	| theClass result implementors |
-	theClass := anECContext model theClass.
+	theClass := anECContext theClass.
 	result := theClass
 				ifNil: [implementors := self systemNavigation allImplementorsOf: contents.
 					implementors size == 1
