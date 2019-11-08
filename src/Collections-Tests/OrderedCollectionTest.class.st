@@ -793,6 +793,18 @@ OrderedCollectionTest >> testBeginsWithAnyOf [
 	self deny: (la beginsWithAnyOf: #((42))).
 ]
 
+{ #category : #'tests - enumerating' }
+OrderedCollectionTest >> testBind [
+	
+	| aCollection isExecuted |
+	
+	aCollection := #(1 2 3).
+	
+	self assertCollection: (aCollection bind: [ :first :second :third | { first. second. third } ]) equals: aCollection.
+	
+	self assert: (#() bind: [ #blockResult ]) equals: #blockResult 
+]
+
 { #category : #'tests - accessing' }
 OrderedCollectionTest >> testCapacityFromAsOrderedCollection [
 	"Allows one to check the current capacity of an Ordered collection"

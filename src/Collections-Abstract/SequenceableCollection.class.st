@@ -434,6 +434,15 @@ SequenceableCollection >> beginsWithAnyOf: aCollection [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> bind: aBlock [ 
+
+	"passes the collection as arguments of a block"
+	"(#(1 2 3) bind: [ :first :second :third | first + second + third ]) >>> 6"
+
+	^ aBlock valueWithArguments: self
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> collect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Collect the resulting values into a collection like the receiver. Answer  
