@@ -86,7 +86,7 @@ MCClassTraitDefinition >> hash [
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
-	hash := String stringHash: category initialHash: hash.
+	category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
 	^ hash
 ]
 
