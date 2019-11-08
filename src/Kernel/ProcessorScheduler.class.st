@@ -28,6 +28,18 @@ Class {
 	#category : #'Kernel-Processes'
 }
 
+{ #category : #defaults }
+ProcessorScheduler class >> defaultAIOInterruptIdleTime [
+		
+	^ 60000000
+]
+
+{ #category : #defaults }
+ProcessorScheduler class >> defaultIdleTime [
+		
+	^ 50000
+]
+
 { #category : #'background process' }
 ProcessorScheduler class >> idleProcess [
 	"A default background process which is invisible. During the idle time, the delays may not wake up."
@@ -36,7 +48,7 @@ ProcessorScheduler class >> idleProcess [
 		[self relinquishProcessorForMicroseconds: IdleTime]
 ]
 
-{ #category : #settings }
+{ #category : #accessing }
 ProcessorScheduler class >> idleTime [
 
 	"The default idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time."
@@ -44,7 +56,7 @@ ProcessorScheduler class >> idleTime [
 	^ IdleTime
 ]
 
-{ #category : #settings }
+{ #category : #accessing }
 ProcessorScheduler class >> idleTime: microsecondsCount [
 
 	IdleTime := microsecondsCount
@@ -73,11 +85,23 @@ ProcessorScheduler class >> initialize [
 	LowIOPriority := 60.
 	HighIOPriority := 70.
 	TimingPriority := 80.
-	IdleTime := 50000.
+	self initializeIdleTime.
 
 	SessionManager default
 		registerSystemClassNamed: self name
 		atPriority: 30.
+]
+
+{ #category : #'class initialization' }
+ProcessorScheduler class >> initializeIdleTime [
+	
+	"If value was changed manually, do not verify the value"
+	({ self defaultIdleTime. self defaultAIOInterruptIdleTime } includes: IdleTime) 
+		ifFalse: [ ^ self ].
+
+	IdleTime := Smalltalk vm isAIOInterrupt 
+		ifTrue: [ self defaultAIOInterruptIdleTime ]
+		ifFalse: [ self defaultIdleTime ]
 ]
 
 { #category : #'instance creation' }
@@ -98,11 +122,12 @@ ProcessorScheduler class >> relinquishProcessorForMicroseconds: anInteger [
 
 ]
 
-{ #category : #'background process' }
+{ #category : #'system startup' }
 ProcessorScheduler class >> startUp [
 	"Install a background process of the lowest possible priority that is always runnable."
 	"Details: The virtual machine requires that there is always some runnable process that can be scheduled; this background process ensures that this is the case."
 
+	self initializeIdleTime.
 	Smalltalk installLowSpaceWatcher.
 	BackgroundProcess ifNotNil: [BackgroundProcess terminate].
 	BackgroundProcess := [self idleProcess] newProcess.
