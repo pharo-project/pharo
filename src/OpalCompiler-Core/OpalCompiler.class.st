@@ -737,12 +737,11 @@ OpalCompiler >> source: aString [
 { #category : #'public access' }
 OpalCompiler >> transformDoit [
 	"if we compile an expression, we wrap it in a method here"
-	self compilationContext noPattern ifFalse: [ ^self ].
+	self compilationContext noPattern ifFalse: [ ^ast ].
 	ast := context 
 		ifNil: [ast asDoit] 
 		ifNotNil: [ast asDoitForContext: context].
-	ast compilationContext: self compilationContext.
-	^ast
+	^ast compilationContext: self compilationContext
 ]
 
 { #category : #'old - deprecated' }
