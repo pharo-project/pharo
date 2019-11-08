@@ -802,7 +802,10 @@ OrderedCollectionTest >> testBind [
 	
 	self assertCollection: (aCollection bind: [ :first :second :third | { first. second. third } ]) equals: aCollection.
 	
-	self assert: (#() bind: [ #blockResult ]) equals: #blockResult 
+	self assert: (#() bind: [ #blockResult ]) equals: #blockResult .
+	
+	self should: [#() bind: [ :arg | #blockResult ]] raise: ArgumentsCountMismatch.
+	self should: [#(1 2) bind: [ :arg | #blockResult ]] raise: ArgumentsCountMismatch
 ]
 
 { #category : #'tests - accessing' }
