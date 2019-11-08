@@ -56,11 +56,13 @@ CompletionContext >> narrowWith: aString [
 
 { #category : #parsing }
 CompletionContext >> parseSource [
-	 ast := class compiler
-				source: source;
-				options: #(+ optionParseErrors + optionSkipSemanticWarnings);
-				noPattern: isWorkspace;
-				parse.
+	ast := isWorkspace 
+		ifFalse: [ RBParser parseFaultyMethod: source ] 
+		ifTrue: [ RBParser parseFaultyExpression: source ].
+	
+	ast methodNode compilationContext: (Smalltalk compiler compilationContext
+				parseOptions: #(+ optionParseErrors + optionSkipSemanticWarnings);
+				requestor: isWorkspace).
 	ast doSemanticAnalysisIn: class.
 	TypingVisitor new visitNode: ast
 ]
