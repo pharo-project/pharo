@@ -536,11 +536,6 @@ GTGenericStackDebugger >> stackWidgetIn: composite [
 		hideHeader
 ]
 
-{ #category : #'old api' }
-GTGenericStackDebugger >> sugsContext [
-	^SugsDebuggerContext model: self
-]
-
 { #category : #'printing/formatting' }
 GTGenericStackDebugger >> textAttributesForStackEntry: aContext [
 
