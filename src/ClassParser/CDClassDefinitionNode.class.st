@@ -12,7 +12,7 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 CDClassDefinitionNode class >> on: aRBMessageNode [ 
 	
 	^ self new

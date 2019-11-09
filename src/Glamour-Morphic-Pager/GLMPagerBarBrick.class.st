@@ -9,13 +9,13 @@ Class {
 	#category : #'Glamour-Morphic-Pager-Brick'
 }
 
-{ #category : #'bar-accessing' }
+{ #category : #accessing }
 GLMPagerBarBrick >> buttonsBrick [
 
 	^ buttonsBrick
 ]
 
-{ #category : #'bar-accessing' }
+{ #category : #accessing }
 GLMPagerBarBrick >> buttonsBrick: aBrick [
 
 	buttonsBrick := aBrick.
@@ -37,39 +37,39 @@ GLMPagerBarBrick >> initialize [
 		useVerticalLinearLayout
 ]
 
-{ #category : #'bar-instance creation' }
+{ #category : #'instance creation' }
 GLMPagerBarBrick >> newButtonsBrick [
 
 	^ GLMPagerButtonsPaneBrick new
 ]
 
-{ #category : #'bar-instance creation' }
+{ #category : #'instance creation' }
 GLMPagerBarBrick >> newSliderBrick [
 
 	^ GLMPagerScrollSlidingBrick new
 ]
 
-{ #category : #'bar-event-handling' }
+{ #category : #'event-handling' }
 GLMPagerBarBrick >> onPagePoped [
 
 	buttonsBrick onPagePoped.
 	self recomputeScrollBar.
 ]
 
-{ #category : #'bar-event-handling' }
+{ #category : #'event-handling' }
 GLMPagerBarBrick >> onPagePushed: addedAnnouncement [
 
 	self buttonsBrick onPagePushed: addedAnnouncement.
 	self recomputeScrollBar
 ]
 
-{ #category : #'bar-accessing' }
+{ #category : #accessing }
 GLMPagerBarBrick >> pagerModel [
 
 	^ pagerModel
 ]
 
-{ #category : #'bar-accessing' }
+{ #category : #accessing }
 GLMPagerBarBrick >> pagerModel: aModel [
 	
 	pagerModel := aModel.
@@ -87,13 +87,13 @@ GLMPagerBarBrick >> recomputeScrollBar [
 	self sliderBrick ifNotNil: #setWidthAfterResizing
 ]
 
-{ #category : #'bar-accessing' }
+{ #category : #accessing }
 GLMPagerBarBrick >> sliderBrick [
 
 	^ sliderBrick
 ]
 
-{ #category : #'bar-accessing' }
+{ #category : #accessing }
 GLMPagerBarBrick >> sliderBrick: aBrick [
 
 	sliderBrick := aBrick.

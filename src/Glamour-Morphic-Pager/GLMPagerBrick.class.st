@@ -57,25 +57,25 @@ GLMPagerBrick >> initializeShortcuts [
 		toAction: [ self pressedScrollerSizeCombination: #right ].
 ]
 
-{ #category : #'pager-instance creation' }
+{ #category : #'instance creation' }
 GLMPagerBrick >> newPagerBar [
 
 	^ GLMPagerBarBrick new
 ]
 
-{ #category : #'pager-instance creation' }
+{ #category : #'instance creation' }
 GLMPagerBrick >> newScrollBrick [
 
 	^ GLMPagerScrollBrick new
 ]
 
-{ #category : #'pager-event-handling' }
+{ #category : #'event-handling' }
 GLMPagerBrick >> onPagePoped [
 
 	self showOrHideScrollBar
 ]
 
-{ #category : #'pager-event-handling' }
+{ #category : #'event-handling' }
 GLMPagerBrick >> onPagePushed [
 
 	self showOrHideScrollBar
@@ -88,13 +88,13 @@ GLMPagerBrick >> outOfWorld: aWorld [
 	^ super outOfWorld: aWorld.
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> pagerBar [
 
 	^ pagerBar
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> pagerBar: aBrick [
 
 	pagerBar := aBrick.
@@ -109,12 +109,12 @@ GLMPagerBrick >> pagerBar: aBrick [
 	self addBrickBack: self pagerBar
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> pagerModel [
 	^ pagerModel
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> pagerModel: aModel [
 
 	pagerModel := aModel.
@@ -128,19 +128,19 @@ GLMPagerBrick >> pagerModel: aModel [
 	self pagerBar: self newPagerBar
 ]
 
-{ #category : #'pager-api' }
+{ #category : #api }
 GLMPagerBrick >> popAndReplacePane: aMorph [
 	"replaces last pane with new pane"
 	self pagerModel popAndReplacePane: aMorph
 ]
 
-{ #category : #'pager-api' }
+{ #category : #api }
 GLMPagerBrick >> popPane [
 	"pops the last pane with smooth animation"
 	self pagerModel popPane: true.
 ]
 
-{ #category : #'pager-actions' }
+{ #category : #actions }
 GLMPagerBrick >> pressedScrollerSizeCombination: aSymbol [
 
 	firstCombination ifNil: [ firstCombination := aSymbol. ^ self].
@@ -149,7 +149,7 @@ GLMPagerBrick >> pressedScrollerSizeCombination: aSymbol [
 	firstCombination := nil.
 ]
 
-{ #category : #'pager-api' }
+{ #category : #api }
 GLMPagerBrick >> pushPane: aMorph [
 	"pushes a pane to the end with smooth scroll animation"
 	| isSmooth |
@@ -158,13 +158,13 @@ GLMPagerBrick >> pushPane: aMorph [
 	self pagerModel pushPane: aMorph smooth: isSmooth
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> scrollBrick [
 
 	^ scrollBrick
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> scrollBrick: aBrick [
 
 	scrollBrick := aBrick.
@@ -177,7 +177,7 @@ GLMPagerBrick >> scrollBrick: aBrick [
 	self addBrickBack: self scrollBrick
 ]
 
-{ #category : #'pager-actions' }
+{ #category : #actions }
 GLMPagerBrick >> scrollerSizeShortcutAction: first second: second [
 	
 	(first = #left) & (second = #left) ifTrue: [ pagerModel enlargeToLeft ].
@@ -186,7 +186,7 @@ GLMPagerBrick >> scrollerSizeShortcutAction: first second: second [
 	(first = #right) & (second = #right) ifTrue: [ pagerModel enlargeToRight ]
 ]
 
-{ #category : #'pager-actions' }
+{ #category : #actions }
 GLMPagerBrick >> showOrHideScrollBar [
 	
 	((self pagerModel size > self pagerModel minimumPageNumberForScrollbar) & (self showScrollBarWhenNeeded))
@@ -195,14 +195,14 @@ GLMPagerBrick >> showOrHideScrollBar [
 		ifFalse: [ self removeBrick: self pagerBar ].
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> showScrollBarWhenNeeded [
 	"retuns true if scrollbar should be visible if number of pages > 1,
 	otherwise false"
 	^ showScrollBarWhenNeeded ifNil: [ showScrollBarWhenNeeded := true ]
 ]
 
-{ #category : #'pager-accessing' }
+{ #category : #accessing }
 GLMPagerBrick >> showScrollBarWhenNeeded: aBoolean [
 
 	showScrollBarWhenNeeded := aBoolean
