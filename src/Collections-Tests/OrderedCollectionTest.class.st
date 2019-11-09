@@ -796,7 +796,7 @@ OrderedCollectionTest >> testBeginsWithAnyOf [
 { #category : #'tests - enumerating' }
 OrderedCollectionTest >> testBind [
 	
-	| aCollection isExecuted |
+	| aCollection |
 	
 	aCollection := #(1 2 3).
 	
