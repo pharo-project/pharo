@@ -123,13 +123,13 @@ SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
 
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 SourceFile >> nextChunk [
 
 	^ (ChunkReadStream on: stream) next
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 SourceFile >> nextChunkPut: aChunk [
 
 	^ (ChunkWriteStream on: stream) nextPut: aChunk

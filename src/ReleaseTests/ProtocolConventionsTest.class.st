@@ -31,6 +31,11 @@ Some classes are violating this convention:
 ]
 
 { #category : #tests }
+ProtocolConventionsTest >> testFileInOutProtocolIsUsed [
+	self assertProtocols: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') areNotUsedInsteadOf: #'file in/out'
+]
+
+{ #category : #tests }
 ProtocolConventionsTest >> testInstanceCreationProtocolIsUsed [
 	self assertProtocols: #(#'instance-creation') areNotUsedInsteadOf: #'instance creation'
 ]
