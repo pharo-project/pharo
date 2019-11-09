@@ -361,6 +361,16 @@ FloatTest >> testNaNisLiteral [
 	self deny: Float nan isLiteral description: 'there is no literal representation of NaN'
 ]
 
+{ #category : #test }
+FloatTest >> testNegative [
+
+	self assert: 0.0 negative not.
+	self assert: -1.0 negative.
+	self assert: Float fmax negated negative.
+	self assert: Float negativeInfinity negative.
+	
+]
+
 { #category : #'tests - zero behavior' }
 FloatTest >> testNegativeZeroAbs [
 
@@ -372,6 +382,20 @@ FloatTest >> testNegativeZeroSign [
 
 	self assert: Float negativeZero sign equals: 0. "Like any other zero, a negative zero has its sign being zero"
 	self assert: Float negativeZero signBit equals: 1 "But it can be distinguished with its signBit"
+]
+
+{ #category : #test }
+FloatTest >> testPositive [
+
+	self assert: 0.0 positive.
+	self assert: 1.0 positive.
+	self assert: Float negativeZero positive not.
+	self assert: -1.0 positive not.
+	self assert: Float fmin positive.
+	self assert: Float fmax positive.
+	self assert: Float infinity positive.
+	
+	
 ]
 
 { #category : #'tests - printing' }

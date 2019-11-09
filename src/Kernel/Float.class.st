@@ -941,6 +941,17 @@ Float >> negated [
 	^-1.0 * self
 ]
 
+{ #category : #testing }
+Float >> negative [
+	"use signbit to handle possitive and negative zero"
+	^ self signBit = 1
+]
+
+{ #category : #testing }
+Float >> positive [
+	^self signBit = 0
+]
+
 { #category : #printing }
 Float >> printBinaryLiteralOn: stream [
 
