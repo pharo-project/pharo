@@ -124,7 +124,7 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 	instanceVariableNames: ''instVar''
 	classVariableNames: ''ClassVar''
 	poolDictionaries: ''PoolDict''
-	category: ''' , self class category , '''' for: self.
+	package: ''' , self class category , '''' for: self.
 	self assert: change controller equals: self.
 	self assert: change superclassName equals: self class superclass name.
 	self assert: change changeClassName equals: self class name.
@@ -325,7 +325,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClass [
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''' , self class category , ''''.
+	package: ''' , self class category , ''''.
 	self perform: change do: [
 		self assert: (workingEnvironment  hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
@@ -349,7 +349,7 @@ RBRefactoringChangeTest >> testPerformAddRemoveClassInteractively [
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''' , self class category , '''' for: self.
+	package: ''' , self class category , '''' for: self.
 	self perform: change do: [ 
 		self assert: (workingEnvironment hasClassNamed: change changeClassName).
 		self assert: change definedClass name equals: change changeClassName.
