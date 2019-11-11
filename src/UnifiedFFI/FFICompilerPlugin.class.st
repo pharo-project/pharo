@@ -34,20 +34,12 @@ Class {
 	#classVars : [
 		'FFICalloutSelectors'
 	],
-	#classInstVars : [
-		'collector'
-	],
 	#category : #'UnifiedFFI-Base'
 }
 
 { #category : #adding }
 FFICompilerPlugin class >> addFFICalloutSelector: aString [ 
 	FFICalloutSelectors add: aString
-]
-
-{ #category : #adding }
-FFICompilerPlugin class >> addFFICalloutSelectorEvent: aPragmaAdded [
-	self addFFICalloutSelectorFromPragma: aPragmaAdded pragma
 ]
 
 { #category : #adding }
@@ -104,18 +96,11 @@ FFICompilerPlugin class >> initializeFFICalloutSelectors [
 
 { #category : #'private - initialization' }
 FFICompilerPlugin class >> initializeFFICalloutSelectorsListUpdate [
-	collector := PragmaCollector
+	| pragmaCollector |
+	pragmaCollector := PragmaCollector
 		filter: [ :pragma | pragma selector = #ffiCalloutTranslator ].
-	collector reset
+	pragmaCollector reset
 		do: [ :pragma | self addFFICalloutSelectorFromPragma: pragma ].
-	collector
-		when: PragmaAdded
-		send: #addFFICalloutSelectorEvent:
-		to: self.
-	collector
-		when: PragmaRemoved
-		send: #removeFFICalloutSelectorEvent:
-		to: self
 ]
 
 { #category : #installation }
@@ -134,7 +119,10 @@ FFICompilerPlugin class >> priority [
 
 { #category : #private }
 FFICompilerPlugin class >> recompileSenders [
-	collector reset do: [ :pragma | self recompileSendersOf: pragma method ]
+	| pragmaCollector |
+	pragmaCollector := PragmaCollector
+		filter: [ :pragma | pragma selector = #ffiCalloutTranslator ].
+	pragmaCollector reset do: [ :pragma | self recompileSendersOf: pragma method ]
 ]
 
 { #category : #private }
@@ -145,12 +133,6 @@ FFICompilerPlugin class >> recompileSendersOf: aCompiledMethod [
 { #category : #removing }
 FFICompilerPlugin class >> removeFFICalloutSelector: aString [
 	FFICalloutSelectors remove: aString ifAbsent: [  ]
-]
-
-{ #category : #removing }
-FFICompilerPlugin class >> removeFFICalloutSelectorEvent: aPragmaRemoved [
-	self removeFFICalloutSelector: aPragmaRemoved pragma methodSelector.
-	self recompileSendersOf: aPragmaRemoved pragma method
 ]
 
 { #category : #installation }
