@@ -210,7 +210,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
+		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -313,6 +314,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfBlueInk.
+	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
@@ -438,7 +440,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
-		BaselineOfMenuRegistration allPackageNames ).
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -495,6 +498,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
 
 		BaselineOfCommander2 allPackageNames,
 		
@@ -547,7 +551,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfCommander2 allPackageNames,
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
-		BaselineOfMenuRegistration allPackageNames )).
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core) )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]
