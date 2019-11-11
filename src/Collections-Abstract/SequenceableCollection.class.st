@@ -434,6 +434,17 @@ SequenceableCollection >> beginsWithAnyOf: aCollection [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> bind: aBlock [ 
+
+	"Extract items from the receiver and use them as argumeents of aBlock. Signal an error
+	(ArgumentsCountMismatch) when the arguments count of aBlock does not match the receiver size." 
+	
+	"(#(1 2 3) bind: [ :first :second :third | first + second + third ]) >>> 6"
+
+	^ aBlock valueWithArguments: self
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> collect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Collect the resulting values into a collection like the receiver. Answer  
