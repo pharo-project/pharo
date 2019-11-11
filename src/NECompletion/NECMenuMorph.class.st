@@ -251,7 +251,7 @@ NECMenuMorph >> close [
 { #category : #initialization }
 NECMenuMorph >> createTitle [
 	| titleString transformationMorph |
-	titleString := context model title ifNil: [ ^ self ].
+	titleString := context title ifNil: [ ^ self ].
 	
 	titleStringMorph := StringMorph new.
 	titleStringMorph 
@@ -311,9 +311,9 @@ NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 
 { #category : #drawing }
 NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
-	| symbol font type string preString model highlightRectangle |
-	model := context model.
-	symbol := model entries at: index.
+	| symbol font type string preString highlightRectangle |
+	
+	symbol := context entries at: index.
 	string := symbol contents.
 	preString := string asLowercase findString: context completionToken asLowercase.
 	preString := preString <= 0
@@ -342,7 +342,7 @@ NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
 { #category : #drawing }
 NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [ 
 	self hasMessage ifFalse: [ ^ self ].
-	context model hasEntries ifTrue: [ 
+	context hasEntries ifTrue: [ 
 		aCanvas 
 			line: rectangle topLeft
 			to: rectangle topRight
@@ -355,8 +355,8 @@ NECMenuMorph >> drawMessageOn: aCanvas in: rectangle [
 { #category : #drawing }
 NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [ 
 	| message |
-	message := context model hasMessage 
-		ifTrue: [ context model message ]
+	message := context hasMessage 
+		ifTrue: [ context message ]
 		ifFalse: [ self detailMessage ].
 	aCanvas 
 		drawString: message
@@ -367,14 +367,13 @@ NECMenuMorph >> drawModelMessageOn: aCanvas in: rectangle [
 
 { #category : #drawing }
 NECMenuMorph >> drawOn: aCanvas [ 
-	| rectangle model |
+	| rectangle |
 	"draw background"
 	super drawOn: aCanvas.
 	
 	rectangle := self bounds insetBy: 1.
 	rectangle := rectangle bottom: rectangle top + self class itemHeight.
 	rectangle := rectangle left: rectangle left + 20.
-	model := context model.
 	
 	self extent: self extent.
 	self firstVisible > 1 
@@ -382,7 +381,7 @@ NECMenuMorph >> drawOn: aCanvas [
 	self lastVisible ~= self itemsCount 
 		ifTrue: [ self drawBottomScrollArrowOn: aCanvas ].
 		
-	model hasEntries ifTrue: [ 
+	context hasEntries ifTrue: [ 
 		self firstVisible to: self lastVisible do: [ :index | 
 			self drawLine: index on: aCanvas rectangle: rectangle.
 			rectangle := self prepareRectForNextRow: rectangle ]].
@@ -415,7 +414,7 @@ NECMenuMorph >> end [
 
 { #category : #private }
 NECMenuMorph >> firstVisible [
-	^firstVisible min: context model entryCount
+	^firstVisible min: context entryCount
 ]
 
 { #category : #paging }
@@ -477,11 +476,11 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
 
 	| prefix |
-	context model hasEntries ifFalse: [^ false].
-	context model entries size = 1
+	context hasEntries ifFalse: [^ false].
+	context entries size = 1
 		ifTrue: [ ^ self insertSelected ].
-	prefix := context model commonPrefix.
-	prefix = context model narrowString ifTrue:[^ self insertSelected].
+	prefix := context commonPrefix.
+	prefix = context completionToken ifTrue:[^ self insertSelected].
 	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
 	prefix size > controller editor wordAtCaret size
 		ifTrue: [ 
@@ -509,8 +508,8 @@ NECMenuMorph >> insertCompletion: aString [
 
 { #category : #actions }
 NECMenuMorph >> insertSelected [
-	context model hasEntries ifFalse: [^ false].
-	self insertCompletion: (context model completionAt: self selected).
+	context hasEntries ifFalse: [^ false].
+	self insertCompletion: (context completionAt: self selected).
 	self delete.
 	^ true
 ]
@@ -522,7 +521,7 @@ NECMenuMorph >> isClosed [
 
 { #category : #private }
 NECMenuMorph >> itemsCount [
-	^context model entryCount
+	^context entryCount
 ]
 
 { #category : #private }
@@ -571,15 +570,14 @@ NECMenuMorph >> moveUp [
 
 { #category : #actions }
 NECMenuMorph >> narrowCompletion [
-	| model |
+
 	self selected: 0.
 	firstVisible := 1.
-	model := context model.
-	model narrowWith: context completionToken.
-	(model entries size = 1 and: [ model entries first contents = context completionToken ]) ifTrue: [
+	context narrowWith: context completionToken.
+	(context entries size = 1 and: [ context entries first contents = context completionToken ]) ifTrue: [
 		self delete.
 		^ false ].
-	model hasEntries ifTrue: [ self selected: 1 ].
+	context hasEntries ifTrue: [ self selected: 1 ].
 	self show.
 	^ true
 ]
@@ -646,7 +644,7 @@ NECMenuMorph >> selectIndexAtPoint: aPoint [
 	| yPos  |
 	yPos := aPoint y - self bounds top.
 	selected := firstVisible + (yPos / self class itemHeight) floor.
-	selected := selected min: context model entries size max: 1.
+	selected := selected min: context entries size max: 1.
 ]
 
 { #category : #accessing }
@@ -659,13 +657,13 @@ NECMenuMorph >> selected [
 { #category : #accessing }
 NECMenuMorph >> selected: aNumber [ 
 	"Set the value of selected"
-	context model hasEntries ifTrue: 
+	context hasEntries ifTrue: 
 		[ ((1 to: self itemsCount) includes: aNumber) ifTrue: [ aNumber ~= selected ifTrue: [ selected := aNumber ] ] ]
 ]
 
 { #category : #accessing }
 NECMenuMorph >> selectedEntry [
-	^ context model entries at: self selected
+	^ context entries at: self selected
 ]
 
 { #category : #initialization }

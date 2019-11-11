@@ -79,7 +79,7 @@ CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEdito
 	self setModel: aParagraphEditor model.
 	context narrowWith: aParagraphEditor wordAtCaret.
 	menuMorph narrowCompletion.
-	(context isNil or: [ context model hasEntries not])
+	(context isNil or: [ context hasEntries not])
 		ifTrue: [ ^self closeMenu ]
 ]
 
@@ -266,7 +266,7 @@ CompletionEngine >> openMenuFor: aParagraphEditor [
 	theMenu isClosed
 		ifFalse: [ menuMorph := theMenu ].
 	
-	(context isNil or: [ context model hasEntries not ])
+	(context isNil or: [ context hasEntries not ])
 		ifTrue: [ ^self closeMenu ].
 ]
 
