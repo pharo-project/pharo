@@ -94,8 +94,8 @@ CompletionContext >> hasMessage [
 { #category : #entries }
 CompletionContext >> initEntries [
 	| suggestionsList |
-	self sorter: self class sorterClass new.
-	suggestionsList := self sortList: node completionEntries.
+	sorter := self class sorterClass new context: self.
+	suggestionsList := sorter sortCompletionList: node completionEntries.
 	^ suggestionsList collect: [ :each | NECEntry contents: each node: node ]
 ]
 
@@ -134,6 +134,12 @@ CompletionContext >> parseSource [
 	TypingVisitor new visitNode: ast
 ]
 
+{ #category : #accessing }
+CompletionContext >> position [
+	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
+	^ position
+]
+
 { #category : #'initialize-release' }
 CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
 	class := aClass. 
@@ -146,18 +152,6 @@ CompletionContext >> setController: aECController class: aClass source: aString 
 	self parseSource.
 	node := ast nodeForOffset: position.
 	completionToken := node completionToken
-]
-
-{ #category : #sorting }
-CompletionContext >> sortList: aList [
-	"this is where the sorting strategy is set"
-	^ sorter sortCompletionList: aList
-]
-
-{ #category : #sorting }
-CompletionContext >> sorter: aSorter [
-	"the functionality allowing to hook up the sorter"
-	sorter := aSorter
 ]
 
 { #category : #accessing }
