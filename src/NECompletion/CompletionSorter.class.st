@@ -16,7 +16,7 @@ CompletionSorter class >> kind [
 
 { #category : #'tools registry' }
 CompletionSorter class >> register [
-	CompletionModel sorterClass: AlphabeticSorter
+	CompletionContext sorterClass: AlphabeticSorter
 ]
 
 { #category : #sorting }

@@ -15,7 +15,7 @@ Class {
 	#category : #'UnifiedFFI-Arguments'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 FFIVariableArgument class >> name: aString typeName: aTypeName arity: anInteger [
 	
 	^ self new

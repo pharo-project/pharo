@@ -15,8 +15,6 @@ BaselineOfQA >> baseline: spec [
 		spec for: #'common' do: [
 			spec package: 'NautilusRefactoring'.
 				
-			spec baseline: 'SmartSuggestions' with: [ spec repository: repository ].
-				
 			spec package: 'Refactoring-Critics'.
 			spec baseline: 'Manifest' with: [ spec repository: repository ].
 			

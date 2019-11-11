@@ -4,7 +4,7 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 CDSharedVariableNode class >> slot: aSlot node: aNode [ 
 	
 	^ self new

@@ -207,7 +207,7 @@ NECPreferences class >> settingsOn: aBuilder [
 							(aBuilder pickOne: #completionSorter)
 								order: -1;
 								label: 'Sorter';
-								target: CompletionModel;
+								target: CompletionContext;
 								getSelector: #sorterClass;
 								setSelector: #sorterClass:;
 								domainValues: availableSorters ].

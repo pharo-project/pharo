@@ -10,27 +10,27 @@ Class {
 	#category : #'Glamour-Morphic-Pager-Brick'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GLMPagerScrollButtonBrick >> checkedFocusedIcon [
 	^ checkedFocusedIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GLMPagerScrollButtonBrick >> checkedFocusedIcon: aForm [
 	checkedFocusedIcon := aForm.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GLMPagerScrollButtonBrick >> checkedIcon [
 	^ checkedIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GLMPagerScrollButtonBrick >> checkedIcon: aForm [
 	checkedIcon := aForm.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'brick-interactable-actions' }
 GLMPagerScrollButtonBrick >> click: anEvent [
 	super click: anEvent.
 	
@@ -38,7 +38,7 @@ GLMPagerScrollButtonBrick >> click: anEvent [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'brick-interactable-actions' }
 GLMPagerScrollButtonBrick >> deselect [
 	super deselect.
 	
@@ -63,12 +63,12 @@ GLMPagerScrollButtonBrick >> initialize [
 	focused := false.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'brick-interactable-testing' }
 GLMPagerScrollButtonBrick >> isFocused [
 	^ focused
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'brick-interactable-actions' }
 GLMPagerScrollButtonBrick >> select [
 	super select.
 	
@@ -76,7 +76,7 @@ GLMPagerScrollButtonBrick >> select [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GLMPagerScrollButtonBrick >> setFocused [
 
 	focused ifFalse: [
@@ -85,7 +85,7 @@ GLMPagerScrollButtonBrick >> setFocused [
 		focused := true ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GLMPagerScrollButtonBrick >> setNotFocused [
 
 	focused ifTrue: [

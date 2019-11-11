@@ -307,6 +307,26 @@ SystemNavigation >> isUnsentMessage: selector [
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
 ]
 
+{ #category : #'identifying obsoletes' }
+SystemNavigation >> methodsReferencingObsoleteClasses [
+	"Returns all methods that reference obsolete behaviors"
+	
+	| obsClasses |
+	obsClasses := self obsoleteBehaviors.
+	
+	^Array streamContents: [ :methods |
+		obsClasses keysAndValuesDo: 
+			[ :index :each | | obsRefs | 
+			obsRefs := each pointersToExcept: obsClasses.
+			obsRefs do: [ :ref | 
+				"Figure out if it may be a global"
+				(ref isVariableBinding and: [ref key isString	"or Symbol"]) 
+					ifTrue: [
+						(ref pointersTo) do: [ :meth | 
+							meth isCompiledMethod
+								ifTrue: [methods nextPut: meth]]]]]]
+]
+
 { #category : #query }
 SystemNavigation >> methodsWithUnboundGlobals [
 	"This says that for any global, it should match either the class's notion of what bindingOf: the key is, or bindingOf: should be nil and the binding should be in Undeclared. If the class answers a different binding through bindingOf: or answers no binding and the binding is not in Undeclared then the variable in the method is wrong.
@@ -372,25 +392,4 @@ Smalltalk browseAllSelect:
 			ifTrue: [found := true]].
 	found]
 "
-]
-
-{ #category : #'identifying obsoletes' }
-SystemNavigation >> obsoleteMethodReferences [
-	"Returns all referenced behaviors that are obsolete"
-	"self new obsoleteMethodReferences"
-	
-	| obsClasses references |
-	references := Array new writeStream.
-	obsClasses := self obsoleteBehaviors.
-	obsClasses keysAndValuesDo: 
-		[ :index :each | | obsRefs | 
-			obsRefs := each pointersToExcept: obsClasses.
-			obsRefs do: [ :ref | 
-				"Figure out if it may be a global"
-				(ref isVariableBinding and: [ref key isString	"or Symbol"]) 
-					ifTrue: [
-						(ref pointersTo) do: [ :meth | 
-							meth isCompiledMethod
-								ifTrue: [references nextPut: meth]]]]].
-	^ references contents
 ]

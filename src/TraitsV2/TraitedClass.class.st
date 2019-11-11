@@ -206,8 +206,7 @@ TraitedClass >> isLocalMethodsProtocol: aProtocol [
 	"Checks if the protocol has local selectors"
 
 	aProtocol methodSelectors ifEmpty: [ ^ true ].
-	^ aProtocol methodSelectors
-		anySatisfy: [ :each | self isLocalSelector: each ]
+	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
 ]
 
 { #category : #testing }

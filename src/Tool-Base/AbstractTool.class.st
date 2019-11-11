@@ -51,6 +51,11 @@ AbstractTool class >> requestProtocolNameFor: aClass initialAnswer: aString [
 	^ ui chooseFromOwner: self currentWorld
 ]
 
+{ #category : #method }
+AbstractTool >> browseAllStoresInto: aVariableName from: aClass [ 
+	^self systemNavigation browseAllStoresInto: aVariableName from: aClass 
+]
+
 { #category : #class }
 AbstractTool >> browseClassRefsOf: aClass [
 
