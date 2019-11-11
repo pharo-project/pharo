@@ -45,7 +45,7 @@ ResumableTestFailureTestCase >> regularTestFailureTest [
 	self assert: false description: 'You should see me'
 ]
 
-{ #category : #'Not categorized' }
+{ #category : #'test data' }
 ResumableTestFailureTestCase >> resumableTestFailureTest [
 	self
 		assert: false description: 'You should see more than me' resumable: true; 
@@ -69,7 +69,7 @@ ResumableTestFailureTestCase >> tearDown [
 	super tearDown 
 ]
 
-{ #category : #running }
+{ #category : #tests }
 ResumableTestFailureTestCase >> testResumable [
 	| result suite |
 	suite := self classForTestSuite new.
