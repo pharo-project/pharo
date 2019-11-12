@@ -48,8 +48,13 @@ GTSUnitDebugger class >> lookupStackSize [
 
 { #category : #'debugger declaration' }
 GTSUnitDebugger class >> rank [
-	"Returns an int. When an exception needs to  be debugged, the rank is used to choose among the available debuggers. A higher rank means a higher priority."
-	^ 40
+	^ 100
+]
+
+{ #category : #'debugger declaration' }
+GTSUnitDebugger class >> rankDebugSession: aDebugSession [
+	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is."
+	(self handlesContext: aDebugSession interruptedContext) ifTrue: [ ^ self rank ] ifFalse: [ ^ -1 ]
 ]
 
 { #category : #'tools registry' }

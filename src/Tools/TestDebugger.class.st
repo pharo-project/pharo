@@ -4,11 +4,6 @@ Class {
 	#category : #'Tools-Debugger'
 }
 
-{ #category : #'opening api' }
-TestDebugger class >> handlesContext: aContext [
-	^ true
-]
-
 { #category : #'debugger declaration' }
 TestDebugger class >> iAmADebugger [
 	<iAmADebugger>
@@ -20,6 +15,7 @@ TestDebugger class >> openOn: aDebugSession withFullView: aBool andNotification:
 ]
 
 { #category : #'debugger declaration' }
-TestDebugger class >> rank [
-	^ 50
+TestDebugger class >> rankDebugSession: aDebugSession [
+	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is"
+	^ 20
 ]
