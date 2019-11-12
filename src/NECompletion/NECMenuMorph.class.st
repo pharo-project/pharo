@@ -239,7 +239,7 @@ NECMenuMorph class >> titleFont [
 
 { #category : #actions }
 NECMenuMorph >> browse [
-	(self selectedEntry browseWith: context)
+	(self selectedEntry browse)
 		ifTrue: [ controller closeMenu ]
 ]
 
@@ -704,7 +704,7 @@ NECMenuMorph >> updateDetail [
 	detailMorph
 		ifNil: [^ self].
 	detailMorph
-		entryDescription: (self selectedEntry descriptionWith: context);
+		entryDescription: (self selectedEntry description);
 		position: detailPosition menuWidth: self width;
 		show
 ]

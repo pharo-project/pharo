@@ -30,7 +30,7 @@ NECEntry >> <= aECEntry [
 ]
 
 { #category : #'ui related' }
-NECEntry >> browseWith: anECContext [ 
+NECEntry >> browse [
 	| class |
 	"no really correct, we need the class of the node..."
 	class := node methodNode compilationContext getClass.
@@ -49,9 +49,10 @@ NECEntry >> contents [
 ]
 
 { #category : #'detail information' }
-NECEntry >> createDescriptionWith: anECContext [ 
+NECEntry >> createDescription [
 	| clazz |
 	"no really correct, we need the class of the node..."
+	
 	clazz := node methodNode compilationContext getClass.
 	^ clazz 
 		ifNil: [ NECEntryDescription label: self label ]
@@ -63,14 +64,8 @@ NECEntry >> createDescriptionWith: anECContext [
 ]
 
 { #category : #operations }
-NECEntry >> descriptionWith: anECContext [ 
-	^description ifNil: [ description := self createDescriptionWith: anECContext ]
-]
-
-{ #category : #operations }
-NECEntry >> guessTypeWith: aContext [
-	"senders of this need to get the type from the AST"
-	^nil
+NECEntry >> description [
+	^description ifNil: [ description := self createDescription ]
 ]
 
 { #category : #accessing }
