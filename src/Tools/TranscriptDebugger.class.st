@@ -7,12 +7,6 @@ Class {
 	#category : #'Tools-Debugger'
 }
 
-{ #category : #testing }
-TranscriptDebugger class >> handlesContext: aContext [
-	"Returns whether this debugger is suitable to debug @aContext"
-	^ true
-]
-
 { #category : #'debugger declaration' }
 TranscriptDebugger class >> iAmADebugger [
 	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
@@ -25,7 +19,7 @@ TranscriptDebugger class >> openOn: aDebugSession withFullView: aBool andNotific
 ]
 
 { #category : #'debugger declaration' }
-TranscriptDebugger class >> rank [
-	"Returns an int. When an exception needs to  be debugged, the rank is used to choose among the available debuggers. A higher rank means a higher priority."
-	^10
+TranscriptDebugger class >> rankDebugSession: aDebugSession [
+	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is"
+	^ 10
 ]

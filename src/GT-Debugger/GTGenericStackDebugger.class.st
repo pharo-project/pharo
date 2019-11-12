@@ -126,8 +126,13 @@ GTGenericStackDebugger class >> logFileName: newName [
 
 { #category : #'debugger declaration' }
 GTGenericStackDebugger class >> rank [
-	"Returns an int. When an exception needs to  be debugged, the rank is used to choose among the available debuggers. A higher rank means a higher priority."
 	^ 30
+]
+
+{ #category : #'debugger declaration' }
+GTGenericStackDebugger class >> rankDebugSession: aDebugSession [
+	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is."
+	^ self rank
 ]
 
 { #category : #'tools registry' }

@@ -298,7 +298,7 @@ MorphicUIManager >> debugProcess: process context: context label: title fullView
 			"schedule debugger in deferred UI message to address
 			redraw problems after opening a debugger e.g. from
 			the testrunner."
-		[ Smalltalk tools debugger 
+		[ Debugger
 				openOn: debugSession withFullView: bool andNotification: notificationString.
 		] on: Error do: [ :ex | 	debugSession signalDebuggerError: ex] 
 	].
