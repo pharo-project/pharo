@@ -12,8 +12,7 @@ Class {
 		'node',
 		'isWorkspace',
 		'class',
-		'entries',
-		'sorter'
+		'entries'
 	],
 	#classVars : [
 		'SorterClass'
@@ -93,10 +92,10 @@ CompletionContext >> hasMessage [
 
 { #category : #entries }
 CompletionContext >> initEntries [
-	| suggestionsList |
+	| suggestionsList sorter |
 	sorter := self class sorterClass new context: self.
 	suggestionsList := sorter sortCompletionList: node completionEntries.
-	^ suggestionsList collect: [ :each | NECEntry contents: each node: node ]
+	^ suggestionsList
 ]
 
 { #category : #accessing }
