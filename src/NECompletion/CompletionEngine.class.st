@@ -252,7 +252,7 @@ CompletionEngine >> openMenuFor: aParagraphEditor [
 	self stopCompletionDelay.
 	
 	context := self contextClass
-				controller: self
+				engine: self
 				class: model selectedClassOrMetaClass 
 				source: aParagraphEditor text string
 				position: aParagraphEditor caret - 1.

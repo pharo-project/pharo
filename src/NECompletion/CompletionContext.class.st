@@ -21,9 +21,9 @@ Class {
 }
 
 { #category : #'instance creation' }
-CompletionContext class >> controller: aNECController class: aClass source: aString position: anInteger [ 
+CompletionContext class >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	^ self new
-		setController: aNECController
+		engine: aCompletionEngine
 		class: aClass
 		source: aString
 		position: anInteger
@@ -68,6 +68,20 @@ CompletionContext >> completionAt: aNumber [
 { #category : #accessing }
 CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
+]
+
+{ #category : #'initialize-release' }
+CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
+	class := aClass. 
+	source := aString.
+	position := anInteger.
+	
+	isWorkspace:= aCompletionEngine 
+		ifNotNil: [ aCompletionEngine isScripting ]
+		ifNil: [ false ].
+	self parseSource.
+	node := ast nodeForOffset: position.
+	completionToken := node completionToken
 ]
 
 { #category : #accessing }
@@ -137,20 +151,6 @@ CompletionContext >> parseSource [
 CompletionContext >> position [
 	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
 	^ position
-]
-
-{ #category : #'initialize-release' }
-CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
-	class := aClass. 
-	source := aString.
-	position := anInteger.
-	
-	isWorkspace:= aECController 
-		ifNotNil: [ aECController isScripting ]
-		ifNil: [ false ].
-	self parseSource.
-	node := ast nodeForOffset: position.
-	completionToken := node completionToken
 ]
 
 { #category : #accessing }

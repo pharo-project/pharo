@@ -12,7 +12,7 @@ CompletionContextTest class >> shouldInheritSelectors [
 { #category : #private }
 CompletionContextTest >> createContextFor: aString at: anInteger [ 
 	^ CompletionContext
-		controller: CompletionEngine new
+		engine: CompletionEngine new
 		class: NECTestClass
 		source: aString
 		position: anInteger
