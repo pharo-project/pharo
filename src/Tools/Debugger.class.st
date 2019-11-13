@@ -1,6 +1,8 @@
 "
 This class is not actually a debugger, but when asked to open on a debug session, it will look at all the debuggers available in the system and open the best one for the particular DebugSession being opened.
 
+For the conditions a class must satisfy in order to be considered a debugger class, look at the #isThisClassADebugger method.
+
 If the variable mainDebuggerClass is set to hold a debugger class, it will be used in priority to open debug sessions (unless it cannot open them, in which case we fallback to the default algorithm)
 "
 Class {
@@ -14,7 +16,31 @@ Class {
 
 { #category : #initialization }
 Debugger class >> getDebuggerClasses [
-	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) yourself.
+	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) select: [:aClass | self isThisClassADebugger: aClass] yourself.
+]
+
+{ #category : #initialization }
+Debugger class >> isThisClassADebugger: aClass [
+	"Returns whether @aClass implements the required methods to be considered a debugger class. It must:
+	- have a #iAmADebugger method, with the #iAmADebugger pragma
+	- implement all the class methods from class AbstractDebugger that are marked as being subclass responsibility
+	- implement all the instance-side methods from class AbstractDebugger that are marked as being subclass responsibility"
+	| requiredClassMethods aClassClassMethods requiredMethods aClassMethods |
+	(aClass class allMethods anySatisfy: [:meth | meth selector = #iAmADebugger & (meth hasPragmaNamed: #iAmADebugger)]) ifFalse: [ ^ false ]. "aClass must have a class method named #iAmADebugger and having the #iAmADebugger pragma"
+	
+	requiredClassMethods := (AbstractDebugger class allMethods select: [:aMethod | aMethod methodClass = AbstractDebugger class]) select: [:aMethod | aMethod isSubclassResponsibility]. "Lists all class methods exactly (i.e. not inherited) on class AbstractDebugger that are marked as being subclass responsibility"
+	aClassClassMethods := aClass class allMethods. "List all class methods on class aClass (including inherited class methods)"
+	aClassClassMethods := aClassClassMethods reject: [ :aMethod | aMethod isSubclassResponsibility ]. "Remove class methods that are marked as being subclass responsibility. In particular, this removes methods inherited from the AbstractDebugger class if aClass inherits from it"
+	((aClassClassMethods collect: [:aMethod | aMethod selector]) includesAll: (requiredClassMethods collect: [:aMethod | aMethod selector])) ifFalse: [ ^ false ]. "Requires that aClass implements all the methods from the requiredClassMethods list"
+	
+	"Then we do the same thing, but for methods on the instance side"
+	requiredMethods := (AbstractDebugger allMethods select: [:aMethod | aMethod methodClass = AbstractDebugger]) select: [:aMethod | aMethod isSubclassResponsibility].
+	aClassMethods := aClass class allMethods.
+	aClassMethods := aClassMethods reject: [ :aMethod | aMethod isSubclassResponsibility ].
+	((aClassMethods collect: [:aMethod | aMethod selector]) includesAll: (requiredMethods collect: [:aMethod | aMethod selector])) ifFalse: [ ^ false ].
+	
+	^ true.
+	
 ]
 
 { #category : #accessor }
@@ -24,6 +50,7 @@ Debugger class >> mainDebuggerClass [
 
 { #category : #accessor }
 Debugger class >> mainDebuggerClass: aClass [
+	(self isThisClassADebugger: aClass) ifFalse: [ CannotSetAsMainDebuggerAClassThatIsNotADebuggerClass signal ].
 	mainDebuggerClass := aClass
 ]
 
