@@ -147,7 +147,8 @@ GTMoldableDebugger class >> taskbarIconName [
 
 { #category : #callbacks }
 GTMoldableDebugger >> actOnBrowserClosing: ann [
-	self session ifNotNil: [ :aSession | aSession terminate ]
+	"Terminating debug sessions is now handled by DebugSessionStorage, to allow other debuggers to re-open the debug session debugged by a GTDebugger after the latter has been closed"
+	"self session ifNotNil: [ :aSession | aSession terminate ]"
 ]
 
 { #category : #callbacks }
