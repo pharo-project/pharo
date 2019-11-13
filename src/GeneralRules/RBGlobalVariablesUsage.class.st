@@ -18,7 +18,7 @@ RBGlobalVariablesUsage class >> checksMethod [
 RBGlobalVariablesUsage >> basicCheck: aMethod [
 	^ (aMethod literals
 		select: [ :l | l isLiteral not and: [ l isGlobalVariable ] ])
-		noneSatisfy: [ :v | v value isClass or: [ v value isTrait ] ]
+		noneSatisfy: [ :v | v value isClassOrTrait ]
 ]
 
 { #category : #running }
