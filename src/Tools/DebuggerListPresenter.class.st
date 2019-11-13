@@ -6,19 +6,36 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'debuggerList',
-		'actionBar'
+		'debuggerListToolBar',
+		'debugSessionList',
+		'debugSessionListToolBar'
 	],
 	#category : #'Tools-Debugger'
 }
 
 { #category : #specs }
 DebuggerListPresenter class >> defaultSpec [
-	| toolbarHeight |
-	toolbarHeight := 35.
-	^ SpBoxLayout newVertical
-		add: #debuggerList;
-		add: #actionBar withConstraints: [:cstr | cstr height: toolbarHeight];
-		yourself.
+	| toolBarHeight titleHeight |
+	titleHeight := 20.
+	toolBarHeight := 35.
+	^ SpBoxLayout newHorizontal
+		add: (SpBoxLayout newVertical
+			add: 'Debug Sessions' height: titleHeight;
+			add: #debugSessionList;
+			add: #debugSessionListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
+			yourself		
+		);
+		add: (SpBoxLayout newVertical
+			add: 'Debugger List' height: titleHeight;
+			add: #debuggerList;
+			add: #debuggerListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
+			yourself);
+		yourself
+]
+
+{ #category : #api }
+DebuggerListPresenter class >> initialExtent [
+	^ 700@300
 ]
 
 { #category : #'world menu' }
@@ -28,7 +45,16 @@ DebuggerListPresenter class >> menuCommandOn: aBuilder [
 		parent: #Debugging;
 		order: 3;
 		help: 'Lists all available debuggers in the image.';
-		action: [ self new openWithSpec ]
+		action: [ self open ]
+]
+
+{ #category : #api }
+DebuggerListPresenter class >> open [
+	<example>
+	| a |
+	a := self new openWithSpec.
+	a window extent: self initialExtent.
+	^ a
 ]
 
 { #category : #'world menu' }
@@ -41,6 +67,18 @@ DebuggerListPresenter >> compareRank: rank1 to: rank2 [
 	rank1 isInteger ifFalse: [ ^ false ]. "If rank1 is not an integer, (typically a string), then it is smaller than rank2"
 	rank2 isInteger ifFalse: [ ^ true ]. "If rank2 is not an integer, (typically a string), then it is smaller than rank1"
 	^ rank1 >= rank2 "Otherwise, both ranks are int, we return the result of their comparison"
+]
+
+{ #category : #'button action' }
+DebuggerListPresenter >> debugDebugSessionAction [
+	"Describe the action performed by the 'Debug' button under the Debug Session List.
+	Requires a debug session to be selected in the list of debug sessions, and a debugger to be selected in the list of debuggers. If these conditions are not met, inform the user and stop.
+	If they are met, tell the selected debugger to open the selected debug session"
+	
+	| debugSession debuggerClass |
+	debugSession := (debugSessionList selectedItems ifEmpty: [ self inform: 'You must selected a Debug Session to debug'. ^ self ] ifNotEmpty: [:selectedItems | selectedItems at: 1]) debugSession.
+	debuggerClass := debuggerList selectedItems ifEmpty: [ self inform: 'You must select a debugger'. ^ self ] ifNotEmpty: [:selectedItems | selectedItems at: 1].
+	debuggerClass openOn: debugSession withFullView: true andNotification: nil
 ]
 
 { #category : #helpers }
@@ -68,13 +106,52 @@ DebuggerListPresenter >> iconManager [
 
 { #category : #initialization }
 DebuggerListPresenter >> initializeWidgets [
+	| timeOfStorageColumnWidth |
+	timeOfStorageColumnWidth := 115.
+	debugSessionList := self newTable
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession name] );
+		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
+	self refreshDebugSessionList.
+	
+	debugSessionListToolBar := self makeDebugSessionListToolbar.
+
 	debuggerList := self newTable
 		addColumn: (SpStringTableColumn title: 'Rank' evaluated: self getBlockTryingToGetRankOfDebugger);
 		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: #yourself);
 		items: (Debugger getDebuggerClasses sort: self getSortingBlock).
-	actionBar := self newToolBar
+	debuggerListToolBar := self newToolBar
 		addItem: (SpToolBarButton new
 			label: 'Browse';
 			icon: (self iconManager iconNamed: #smallFind);
 			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
+]
+
+{ #category : #helpers }
+DebuggerListPresenter >> makeDebugSessionListToolbar [
+	| toolBar |
+	toolBar := self newToolBar.
+	toolBar addItem: (SpToolBarButton new
+		label: 'Debug';
+		icon: (self iconManager iconNamed: #glamorousBug);
+		action: [ self debugDebugSessionAction ]
+	).
+	toolBar addItem: (SpToolBarButton new
+			label: 'Inspect';
+			icon: (self iconManager iconNamed: #smallFind);
+			action: [debugSessionList selectedItems ifNotEmpty: [:selectedItems | (selectedItems at: 1) inspect]]).
+	toolBar addItem: (SpToolBarButton new
+		label: 'Terminate';
+		icon: (self iconManager iconNamed: #remotesManagerRemoveRemote);
+		action: [ debugSessionList selectedItems ifNotEmpty: [:selectedItems | DebugSessionStorage terminate: (selectedItems at: 1). self refreshDebugSessionList ] ]
+	).
+	toolBar addItem: (SpToolBarButton new
+			label: 'Terminate All';
+			icon: (self iconManager iconNamed: #glamorousTrash);
+			action: [DebugSessionStorage terminateAll. self refreshDebugSessionList]).
+	^ toolBar
+]
+
+{ #category : #helpers }
+DebuggerListPresenter >> refreshDebugSessionList [
+	debugSessionList items: DebugSessionStorage storage
 ]
