@@ -673,10 +673,11 @@ OpalCompiler >> parse: textOrStream in: aClass notifying: req [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-
-	^ast := self compilationContext optionParseErrors 
+	ast := self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
-		ifFalse: [self parserClass parseExpression: source contents]
+		ifFalse: [self parserClass parseExpression: source contents].
+	ast methodNode compilationContext: self compilationContext.
+	^ast.
 ]
 
 { #category : #'public access' }

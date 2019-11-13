@@ -123,13 +123,11 @@ CompletionContext >> node [
 
 { #category : #parsing }
 CompletionContext >> parseSource [
-	ast := isWorkspace 
-		ifFalse: [ RBParser parseFaultyMethod: source ] 
-		ifTrue: [ RBParser parseFaultyExpression: source ].
-	
-	ast methodNode compilationContext: (Smalltalk compiler compilationContext
-				parseOptions: #(+ optionParseErrors + optionSkipSemanticWarnings);
-				requestor: isWorkspace).
+	ast := Smalltalk compiler
+		source: source;
+		noPattern: isWorkspace;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		parse.
 	ast doSemanticAnalysisIn: class.
 	TypingVisitor new visitNode: ast
 ]
