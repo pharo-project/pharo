@@ -8,21 +8,15 @@ Class {
 }
 
 { #category : #'ui related' }
-NECSelectorEntry >> browseWith: anECContext [
-	"If there's a corresponding class, search for the method there,
-	otherwise search for the method in the system."
-
-	self flag: #SmalltalkReferences. "Reference to Smalltalk tools"
-	(self guessTypeWith: anECContext)
-		ifNotNil: [ :clazz|
-			Smalltalk tools browser openOnClass: clazz.
-			^ true ].
+NECSelectorEntry >> browse [
+	| class |
+	class := node receiver propertyAt: #type ifAbsent: nil.
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: class].
 	
 	^ self
-		findMethodWith: anECContext
-		do: [ :class :method | 
+		findMethodAndDo: [ :clss :method | 
 			Smalltalk tools browser 
-				openOnClass: class 
+				openOnClass: clss 
 				selector: method selector. 
 			true ]
 		ifAbsent: [ :selector | 
@@ -32,19 +26,12 @@ NECSelectorEntry >> browseWith: anECContext [
 ]
 
 { #category : #'detail information' }
-NECSelectorEntry >> createDescriptionWith: anECContext [
+NECSelectorEntry >> createDescription [
 	"Creates description either from looking up the method in a class,
 	or in the system."
 
-	(self guessTypeWith: anECContext)
-		ifNotNil: [ :clazz|
-			^ NECEntryDescription 
-					label: self label
-					title: clazz printString
-					description: clazz comment	].
 	^ self
-		findMethodWith: anECContext
-		do: [:clazz :method | 
+		findMethodAndDo: [:clazz :method | 
 			self
 				methodSourceDescription: clazz
 				method: method ]
@@ -52,9 +39,9 @@ NECSelectorEntry >> createDescriptionWith: anECContext [
 ]
 
 { #category : #private }
-NECSelectorEntry >> findMethodWith: anECContext do: foundBlock ifAbsent: notfoundBlock [ 
+NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [ 
 	| theClass result implementors |
-	theClass := anECContext theClass.
+	theClass := node receiver propertyAt: #type ifAbsent: nil.
 	result := theClass
 				ifNil: [implementors := self systemNavigation allImplementorsOf: contents.
 					implementors size == 1
@@ -62,7 +49,7 @@ NECSelectorEntry >> findMethodWith: anECContext do: foundBlock ifAbsent: notfoun
 							ref := implementors first.
 							ref realClass lookupSelector: ref selector]
 						ifFalse: [^ notfoundBlock value: contents]]
-				ifNotNil: [self lookupSelector: contents class: theClass]. 
+				ifNotNil: [theClass lookupSelector: contents ]. 
 	^ foundBlock value: result first value: result second
 ]
 
@@ -89,7 +76,11 @@ NECSelectorEntry >> implementorsDescription: aSymbol [
 { #category : #accessing }
 NECSelectorEntry >> label [
 	"I return whether the variable is a class or a method."
-	^ (self guessTypeWith: nil) ifNil:[ 'method' ] ifNotNil: [ 'class' ].
+	
+	 ^node receiver 
+		propertyAt: #type 
+		ifPresent:  [ 'method' ] 
+		ifAbsent:  [ 'class' ]
 ]
 
 { #category : #private }
