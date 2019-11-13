@@ -511,7 +511,7 @@ ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
 	^ secondarySelectionTextColor 
-		ifNil: [ Smalltalk ui theme secondarySelectionColor contrastingBlackAndWhiteColor ]
+		ifNil: [self theme secondarySelectionColor contrastingBlackAndWhiteColor ]
 ]
 
 { #category : #accessing }

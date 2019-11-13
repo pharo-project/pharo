@@ -60,7 +60,10 @@ SmalltalkImage class >> cleanUp [
 
 { #category : #settings }
 SmalltalkImage class >> compilerClass [
-	^CompilerClass
+
+	^CompilerClass ifNil: [ 
+		"use OpalCompiler as the fallback compiler if installed"
+		self class environment at: #OpalCompiler ifAbsent: [ nil ] ]
 ]
 
 { #category : #settings }
@@ -303,14 +306,6 @@ SmalltalkImage >> changeImagePathTo: aString [
 ]
 
 { #category : #'image, changes name' }
-SmalltalkImage >> changesFile [
-	"Answer the file containing the current changes."
-
-	^ FileLocator changes
-
-]
-
-{ #category : #'image, changes name' }
 SmalltalkImage >> changesName [
 	"Answer the name for the changes file corresponding to the image file name."
 	"Smalltalk changesName"
@@ -454,9 +449,15 @@ SmalltalkImage >> compiler [
 		environment: self globals
 ]
 
-{ #category : #compiler }
+{ #category : #acccessing }
 SmalltalkImage >> compilerClass [
-	^CompilerClass ifNil: [CompilerClass := OpalCompiler].
+	^ self class compilerClass
+]
+
+{ #category : #acccessing }
+SmalltalkImage >> compilerClass: aClass [
+
+	self class compilerClass: aClass
 ]
 
 { #category : #'memory space' }
@@ -715,14 +716,14 @@ SmalltalkImage >> getFileNameFromUser [
 
 	| givenName strippedName imageFile changesFile |
 	givenName := UIManager default
-		request: 'New File Name?' translated
+		request: 'New File Name?'
 		initialAnswer: (self imageFile basename copyUpToLast:  Path extensionDelimiter).
 	strippedName := self stripImageExtensionFrom: givenName.
 	strippedName isEmptyOrNil ifTrue: [^nil].
 	imageFile := self fileForImageNamed: strippedName.
 	changesFile := self fileForChangesNamed: strippedName.
 	((imageFile exists or: [changesFile exists]) and:
-		[(self confirm: ('{1} already exists. Overwrite?' translated format: {strippedName})) not])
+		[(self confirm: ('{1} already exists. Overwrite?' format: {strippedName})) not])
 			ifTrue: [^nil].
 	^strippedName
 ]
@@ -783,12 +784,6 @@ SmalltalkImage >> imageDirectory [
 	^ self imagePath asFileReference parent
 ]
 
-{ #category : #'image, changes name' }
-SmalltalkImage >> imageFile [
-
-	^ FileLocator image
-]
-
 { #category : #image }
 SmalltalkImage >> imageFormatVersion [
 	"Answer an integer identifying the type of image. The image version number may
@@ -799,7 +794,7 @@ SmalltalkImage >> imageFormatVersion [
 	"Smalltalk image imageFormatVersion"
 
 	<primitive: 'primitiveImageFormatVersion'>
-	self notify: 'This virtual machine does not support the optional primitive #primitiveImageFormatVersion' translated.
+	self notify: 'This virtual machine does not support the optional primitive #primitiveImageFormatVersion'.
 	^''
 ]
 
@@ -1417,14 +1412,12 @@ SmalltalkImage >> privSaveImageWithCleanup [
 	[
 		self snapshot: true andQuit: true.
 	] ifError: [:e |
-		| rep |
-		rep := FileStream forceNewFileNamed: 'PharoDebug.log'.
-		rep nextPutAll: 'Error:'; cr.
-		rep nextPutAll: e asString; cr.
-  		rep nextPutAll: thisContext stack size asString.
- 	  	thisContext stack copy withIndexDo: [:stck :i |
-			[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []].
-		rep close. 
+		'PharoDebug.log' asFileReference ensureDelete; writeStreamDo: [ :rep |
+			rep nextPutAll: 'Error:'; cr.
+			rep nextPutAll: e asString; cr.
+	  		rep nextPutAll: thisContext stack size asString.
+	 	  	thisContext stack copy withIndexDo: [:stck :i |
+				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []]]. 
 		Smalltalk exitFailure ]
 ]
 
@@ -1504,7 +1497,7 @@ SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
 					oldCodeString := cls sourceCodeAt: selector.
 					(oldCodeString includes: Character lf)
 						ifTrue: [
-							newCodeString := oldCodeString withSqueakLineEndings.
+							newCodeString := oldCodeString withInternalLineEndings.
 							nameString := cls name , '>>' , selector.
 							((cls compiledMethodAt: selector) hasLiteralSuchThat: [ :lit | lit asString includes: Character lf ])
 								ifTrue: [(authors at: 'OK')

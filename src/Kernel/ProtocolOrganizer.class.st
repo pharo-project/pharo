@@ -33,9 +33,8 @@ ProtocolOrganizer >> addProtocolNamed: aName [
 ]
 
 { #category : #accessing }
-ProtocolOrganizer >> allMethods [
-
-	^ self protocols flatCollect: [:p | p methods ].
+ProtocolOrganizer >> allMethodSelectors [
+	^ self protocols flatCollect: [ :p | p methodSelectors ]
 ]
 
 { #category : #accessing }
@@ -57,19 +56,16 @@ ProtocolOrganizer >> allProtocolsNames [
 ]
 
 { #category : #'protocol - adding' }
-ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [ 
+ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 	| name protocol |
-	
 	name := aProtocolName.
-	name = allProtocol name
-		ifTrue: [ name := Protocol unclassified ].
-		
+	name = allProtocol name ifTrue: [ name := Protocol unclassified ].
+
 	"maybe here we should check if this method already belong to another protocol"
-	(self protocolsOfSelector: aSymbol) do: [:p | p removeMethod: aSymbol ].
+	(self protocolsOfSelector: aSymbol) do: [ :p | p removeMethodSelector: aSymbol ].
 	protocol := self getProtocolNamed: name ifNone: [ self addProtocolNamed: name ].
-	
-	protocol addMethod: aSymbol
-	
+
+	protocol addMethodSelector: aSymbol
 ]
 
 { #category : #private }
@@ -85,13 +81,12 @@ ProtocolOrganizer >> extensionProtocols [
 
 { #category : #importing }
 ProtocolOrganizer >> fromSpec: aSpec [
-	
-	aSpec do: [:spec || name methods |
-		name := spec first asSymbol.
-		methods := spec allButFirst asSet.
-		self addProtocol: (Protocol 
-								name: name
-								methods: methods) ]
+	aSpec
+		do: [ :spec | 
+			| name methods |
+			name := spec first asSymbol.
+			methods := spec allButFirst asSet.
+			self addProtocol: (Protocol name: name methodSelectors: methods) ]
 ]
 
 { #category : #protocol }
@@ -119,10 +114,9 @@ ProtocolOrganizer >> initialize [
 
 { #category : #'backward compatibility' }
 ProtocolOrganizer >> methodsInProtocolNamed: aName [
-	aName = AllProtocol defaultName 
-		ifTrue: [ ^ self allMethods ].
+	aName = AllProtocol defaultName ifTrue: [ ^ self allMethodSelectors ].
 
-	^ (self protocolNamed: aName) methods
+	^ (self protocolNamed: aName) methodSelectors
 ]
 
 { #category : #private }
@@ -133,7 +127,7 @@ ProtocolOrganizer >> moveMethodsFrom: fromProtocolNamed to: toProtocolNamed [
 	toProtocol := self protocolNamed: toProtocolNamed.
 	
 	toProtocol addAllMethodsFrom: fromProtocol.
-	fromProtocol removeAllMethods.
+	fromProtocol removeAllMethodSelectors.
 	
 	^ toProtocol.
 ]
@@ -190,7 +184,7 @@ ProtocolOrganizer >> removeEmptyProtocols [
 { #category : #accessing }
 ProtocolOrganizer >> removeMethod: aSymbol [
 
-	(self protocolsOfSelector: aSymbol) do: [ :p | p removeMethod: aSymbol ]
+	(self protocolsOfSelector: aSymbol) do: [ :p | p removeMethodSelector: aSymbol ]
 ]
 
 { #category : #'protocol - removing' }

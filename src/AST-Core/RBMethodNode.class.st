@@ -478,12 +478,6 @@ RBMethodNode >> methodOrBlockNode [
 	"^ self"
 ]
 
-{ #category : #completion }
-RBMethodNode >> narrowWith: aString [
-
-	self selector: aString asSymbol
-]
-
 { #category : #accessing }
 RBMethodNode >> newSource [
 	replacements ifNil: [^self formattedCode].

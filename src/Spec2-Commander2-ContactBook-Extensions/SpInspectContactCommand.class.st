@@ -16,6 +16,6 @@ SpInspectContactCommand >> execute [
 SpInspectContactCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'Inspect';
-		basicDescription: 'Inspect the context of this command.'
+		name: 'Inspect';
+		description: 'Inspect the context of this command.'
 ]

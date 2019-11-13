@@ -369,6 +369,13 @@ WorldMorph >> fullRepaintNeeded [
 
 ]
 
+{ #category : #'event handling' }
+WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
+
+	self currentWorld worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
+	
+]
+
 { #category : #'world state' }
 WorldMorph >> haloMorphs [
 
@@ -397,9 +404,11 @@ WorldMorph >> initialize [
 	worldState := WorldState new.
  	super initialize.
 	
+	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self.	
+	
 	"subscribe to the tools registry to update the world menu when needed"
 	Smalltalk tools whenToolRegistered: [ :tool :toolName | WorldState defaultWorldMenu ].
-	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ]
+	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ].
 ]
 
 { #category : #'change reporting' }

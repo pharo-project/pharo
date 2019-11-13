@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestMultilingualEncodings class >> manuallyResolvedDependencies [
-	^ #(#'Multilingual-TextConversion' #'AST-Core' #'Collections-Streams' #'Collections-Abstract')
+	^ #(#'Multilingual-TextConversion' #'Collections-Streams' #'Collections-Abstract')
 ]

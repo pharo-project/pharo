@@ -60,19 +60,23 @@ SpScrollSyncExample >> defaultSpecLayout [
 { #category : #initialization }
 SpScrollSyncExample >> initialize [
 	super initialize.
-	sideRuler := (Morph new
-		color: Color yellow;
-		extent: 50 @ 500;
-		useGradientFill;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		yourself) asSpAdapter.
 	currentVerticalScrollPosition := 0
 ]
 
 { #category : #initialization }
-SpScrollSyncExample >> initializeWidgets [
+SpScrollSyncExample >> initializePresenters [
 	text := self newText.
+	sideRuler := self newMorph.
+
+	sideRuler
+		morph:
+			(Morph new
+				color: Color yellow;
+				extent: 50 @ 500;
+				useGradientFill;
+				hResizing: #spaceFill;
+				vResizing: #spaceFill;
+				yourself).
 
 	text whenScrollValueChangedDo: [ :newPosition | self syncMorphPosition ].
 	text text: self loremIpsum

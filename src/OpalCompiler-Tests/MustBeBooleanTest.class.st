@@ -1,3 +1,8 @@
+"
+This class tests sending #ifTrue: and similar methods to non-Booleans.
+
+See the comment of MyBooleanObject for more information
+"
 Class {
 	#name : #MustBeBooleanTest,
 	#superclass : #TestCase,

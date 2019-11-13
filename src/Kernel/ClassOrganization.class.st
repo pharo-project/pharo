@@ -48,8 +48,7 @@ ClassOrganization >> allCategories [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
-	
-	^ protocolOrganizer allMethods
+	^ protocolOrganizer allMethodSelectors
 ]
 
 { #category : #accessing }
@@ -369,7 +368,7 @@ ClassOrganization >> renameCategory: oldName toBe: newName [
 
 	self notifyOfChangedCategoryFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolOrganizer protocolNamed: newName) methods 
+	(self protocolOrganizer protocolNamed: newName) methodSelectors 
 		do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
 ]
 

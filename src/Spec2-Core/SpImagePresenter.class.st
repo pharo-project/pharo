@@ -60,8 +60,6 @@ SpImagePresenter >> image: aForm [
 { #category : #initialization }
 SpImagePresenter >> initialize [
 	super initialize.
-
-	image := nil.
 	action := [  ].
 	autoScale := false
 ]

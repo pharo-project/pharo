@@ -99,9 +99,8 @@ DateAndTime class >> epoch [
 ]
 
 { #category : #'instance creation' }
-DateAndTime class >> fromSqueakTime: anInteger [
-	"Answer an instance of the receiver with the time represente by anInteger.
-	Squeak time is in the local timezone with an epoch of 1 Jan. 1901"
+DateAndTime class >> fromInternalTime: anInteger [
+	"Answer an instance of the receiver with the time represented by anInteger. Pharo internal time is an integer representing time in the local timezone with an epoch of 1 Jan. 1901"
 
 	^(self fromSeconds: anInteger offset: 0) translateTo: self localOffset.
 ]

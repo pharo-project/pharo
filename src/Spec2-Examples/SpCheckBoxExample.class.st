@@ -42,7 +42,7 @@ SpCheckBoxExample class >> title [
 ]
 
 { #category : #initialization }
-SpCheckBoxExample >> initializePresenter [
+SpCheckBoxExample >> connectPresenters [
 	button1 whenActivatedDo: [ self updateLabel ].
 	button1 whenDeactivatedDo: [ self updateLabel ].
 
@@ -52,7 +52,7 @@ SpCheckBoxExample >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpCheckBoxExample >> initializeWidgets [ 
+SpCheckBoxExample >> initializePresenters [ 
 
 	button1 := self newCheckBox.
 	button2 := self newCheckBox.

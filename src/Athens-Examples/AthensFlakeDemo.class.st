@@ -155,14 +155,14 @@ AthensFlakeDemo >> render [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 AthensFlakeDemo >> step [
 	frame := Time millisecondClockValue / 100.
 	
 	self changed
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 AthensFlakeDemo >> stepTime [
 	^ 0
 ]

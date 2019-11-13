@@ -228,7 +228,6 @@ SpTreePresenter >> beCheckList [
 
 { #category : #'api-compatibility' }
 SpTreePresenter >> childrenBlock [
-	"< api: #inspect>"
 	"Return the block used to retrieve the children of a node.
 	The optional block arguments are:
 		- the node
@@ -239,7 +238,6 @@ SpTreePresenter >> childrenBlock [
 
 { #category : #'api-compatibility' }
 SpTreePresenter >> childrenBlock: aBlock [
-	"< api: #block getter: #childrenBlock registration: #whenChildrenBlockChanged:>"
 	"Set the block used to retrieve the children of a node.
 	The optional block arguments are:
 		- the node
@@ -302,7 +300,6 @@ SpTreePresenter >> deselectAll [
 
 { #category : #'api-compatibility' }
 SpTreePresenter >> displayBlock [
-	"< api: #inspect>"
 	"Return the block used to generate the display of the items.
 	The optioanl block arguments are:
 		- the item
@@ -313,7 +310,6 @@ SpTreePresenter >> displayBlock [
 
 { #category : #'api-compatibility' }
 SpTreePresenter >> displayBlock: aBlock [
-	"<api: #block getter: #displayBlock registration: #whenDisplayBlockChanged:>"
 	"Set the block used to generate the display of the items.
 	The optioanl block arguments are:
 		- the item
@@ -386,7 +382,6 @@ SpTreePresenter >> filterWith: aFilter [
 
 { #category : #'api-compatibility' }
 SpTreePresenter >> hasChildrenBlock [
-	"<api: #inspect>"
 	"Get the block used to check if a node has children.
 	The optional block arguments are:
 		- the node
@@ -397,7 +392,6 @@ SpTreePresenter >> hasChildrenBlock [
 
 { #category : #'api-compatibility' }
 SpTreePresenter >> hasChildrenBlock: aBlock [
-	"< api: #block getter: #hasChildrenBlock registration: #whenHasChildrenBlockChanged:>"
 	"Set the block used to  check if a node has children.
 	The optional block arguments are:
 		- the node
@@ -414,7 +408,6 @@ SpTreePresenter >> hasChildrenFor: anItem [
 
 { #category : #api }
 SpTreePresenter >> hasSelectedItem [
-	"< api: #inspect>"
 	"Return true if the tree contains any selected items"
 	
 	^ selectionHolder value isNotEmpty
@@ -422,7 +415,6 @@ SpTreePresenter >> hasSelectedItem [
 
 { #category : #api }
 SpTreePresenter >> highlightedItem [
-	"<api: #inspect>"
 	"Return the currently highlighted item"
 
 	^ highlightedItem value
@@ -430,7 +422,6 @@ SpTreePresenter >> highlightedItem [
 
 { #category : #api }
 SpTreePresenter >> highlightedItem: anItem [
-	"< api: #st getter: #highlightedItem registration: #whenHighlightedItemChanged:>"
 	"Set the highlightedItem item"
 	"In the case of keyboard navigation with checklist, it may differ from the last selected item"
 	
@@ -520,7 +511,6 @@ SpTreePresenter >> keyStrokeAction: aBlock [
 
 { #category : #api }
 SpTreePresenter >> menu [
-	"<api: #inspect>"
 	"Return the block used to generate the tree menu"
 
 	^ menuBlockHolder value
@@ -528,7 +518,6 @@ SpTreePresenter >> menu [
 
 { #category : #api }
 SpTreePresenter >> menu: aBlock [
-"	< api: #block getter: #menu registration: #whenMenuChanged:>"
 	"Set the block used to generate the tree menu"
 
 	menuBlockHolder value: aBlock
@@ -683,7 +672,6 @@ SpTreePresenter >> rootNodeHolder: aBlock [
 
 { #category : #api }
 SpTreePresenter >> roots [
-	"< api: #inspect>"
 	"Return the tree roots"
 
 	^ rootsHolder value
@@ -691,7 +679,6 @@ SpTreePresenter >> roots [
 
 { #category : #api }
 SpTreePresenter >> roots: aCollection [
-	"< api: #st getter: #roots registration: #whenRootsChanged:>"
 	"Set the tree roots"
 
 	rootsHolder value: aCollection.
@@ -730,7 +717,6 @@ SpTreePresenter >> selectOnlyLastHighlighted [
 
 { #category : #api }
 SpTreePresenter >> selectedItem [
-	"< api: #inspect>"
 	"Return the selected item"
 	"In the case of a multiple selection list, it returns the last selected item"
 	
@@ -741,7 +727,6 @@ SpTreePresenter >> selectedItem [
 
 { #category : #api }
 SpTreePresenter >> selectedItem: anItem [
-	"< api: #st getter: #selectedItem registration: #whenSelectedItemsChanged:>"
 	"Set the selected item"
 	"In the case of a multiple selection list, it returns the last selected item"
 	
@@ -750,7 +735,6 @@ SpTreePresenter >> selectedItem: anItem [
 
 { #category : #api }
 SpTreePresenter >> selectedItems [
-	"< api: #inspect>"
 	"Return the selected items"
 	
 	^ selectionHolder value
@@ -758,11 +742,9 @@ SpTreePresenter >> selectedItems [
 
 { #category : #api }
 SpTreePresenter >> selectedItems: aCollection [
-	"<api: #st getter: #selectedItems registration: #whenSelectedItemsChanged:>"
 	"Set the selected item"
 	"In the case of a multiple selection list, it returns the last selected item"
 
-	"treePresenter selectNodePath: aCollection."
 	selectionHolder value: aCollection.
 	
 ]
@@ -789,7 +771,6 @@ SpTreePresenter >> selectionChanged: ann [
 
 { #category : #api }
 SpTreePresenter >> updateTree [
-	"< api: #do>"
 	"Force the tree to refresh"
 
 	self changed: #updateTree with: {}.

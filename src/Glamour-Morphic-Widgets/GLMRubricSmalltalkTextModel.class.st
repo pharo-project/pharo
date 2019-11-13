@@ -55,11 +55,6 @@ GLMRubricSmalltalkTextModel >> formatSourceCode [
 ]
 
 { #category : #bindings }
-GLMRubricSmalltalkTextModel >> guessTypeForName: aString [ 
-	^ nil
-]
-
-{ #category : #bindings }
 GLMRubricSmalltalkTextModel >> hasBindingOf: aSymbol [
 
 	^ self variableBindings includesKey: aSymbol

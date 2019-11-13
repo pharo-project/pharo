@@ -88,6 +88,14 @@ SortedCollection class >> sortUsing: aBlockOrSortFunction [
 	^ self new sortBlock: aBlockOrSortFunction
 ]
 
+{ #category : #copying }
+SortedCollection >> , otherCollection [
+	| newSortedCollection |
+	newSortedCollection := super , otherCollection.
+	newSortedCollection sortBlock: self sortBlock .
+	^newSortedCollection 
+]
+
 { #category : #comparing }
 SortedCollection >> = aSortedCollection [
 	"Answer true if my and aSortedCollection's species are the same,

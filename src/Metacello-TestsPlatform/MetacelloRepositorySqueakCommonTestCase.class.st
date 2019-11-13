@@ -1,6 +1,6 @@
 Class {
 	#name : #MetacelloRepositorySqueakCommonTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Metacello-TestsPlatform'
 }
 
@@ -108,7 +108,7 @@ MetacelloRepositorySqueakCommonTestCase >> project [
 { #category : #running }
 MetacelloRepositorySqueakCommonTestCase >> setUp [
     super setUp.
-    Smalltalk
+    testingEnvironment
         at: #'Metacello_Platform_Test_GlobalDictionary'
         put:
             (MCDictionaryRepository new
@@ -119,7 +119,7 @@ MetacelloRepositorySqueakCommonTestCase >> setUp [
 { #category : #running }
 MetacelloRepositorySqueakCommonTestCase >> tearDown [
     
-    Smalltalk globals removeKey: #'Metacello_Platform_Test_GlobalDictionary' ifAbsent: [  ].
+    testingEnvironment removeKey: #'Metacello_Platform_Test_GlobalDictionary' ifAbsent: [  ].
 	super tearDown
 ]
 
@@ -162,7 +162,7 @@ MetacelloRepositorySqueakCommonTestCase >> testDictionaryRepository [
     self assert: repoSpec type = 'dictionary'.
     repo := repoSpec createRepository.
     self assert: repo class == MCDictionaryRepository.
-    self assert: repo dictionary == (Smalltalk at: #'Metacello_Platform_Test_GlobalDictionary') dictionary
+    self assert: repo dictionary == (testingEnvironment at: #'Metacello_Platform_Test_GlobalDictionary') dictionary
 ]
 
 { #category : #tests }
@@ -195,7 +195,7 @@ MetacelloRepositorySqueakCommonTestCase >> testFileTreeRepository [
   self assert: repoSpec type = 'filetree'.
   repo := repoSpec createRepository.
   self
-    assert: repo class == (Smalltalk at: #'MCFileTreeRepository' ifAbsent: [  ]).
+    assert: repo class == (testingEnvironment at: #'MCFileTreeRepository' ifAbsent: [  ]).
   Transcript cr; show: 'testFileTreeRepository: ', (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName.
   self
     assert:

@@ -76,6 +76,22 @@ SpDemo >> availablePages [
 	^ SpDemoPage availablePages
 ]
 
+{ #category : #initialization }
+SpDemo >> connectPresenters [
+	list selectItem: self selectedPage.
+	list
+		whenSelectionChangedDo: [ :selection | 
+			selection selectedItem
+				ifNotNil: [ :newPageClass | 
+					newPageClass = self selectedPage
+						ifFalse: [ self selectedPage: newPageClass.
+							page := self instantiate: newPageClass.
+							self needRebuild: false.
+							self buildWithSpec.
+							list selectItem: self selectedPage ] ]
+				ifNil: [ "Avoid the user to have no page selected at all." list setSelectedItem: self selectedPage ] ]
+]
+
 { #category : #accessing }
 SpDemo >> defaultPage [
 
@@ -94,23 +110,7 @@ SpDemo >> initialExtent [
 ]
 
 { #category : #initialization }
-SpDemo >> initializePresenter [
-	list selectItem: self selectedPage.
-	list
-		whenSelectionChangedDo: [ :selection | 
-			selection selectedItem
-				ifNotNil: [ :newPageClass | 
-					newPageClass = self selectedPage
-						ifFalse: [ self selectedPage: newPageClass.
-							page := self instantiate: newPageClass.
-							self needRebuild: false.
-							self buildWithSpec.
-							list selectItem: self selectedPage ] ]
-				ifNil: [ "Avoid the user to have no page selected at all." list setSelectedItem: self selectedPage ] ]
-]
-
-{ #category : #initialization }
-SpDemo >> initializeWidgets [
+SpDemo >> initializePresenters [
 	menu := self mainMenu.
 	list := self newList.
 	page := self instantiate: (selectedPage := self availablePages first).
@@ -119,7 +119,7 @@ SpDemo >> initializeWidgets [
 
 	list
 		items: self availablePages;
-		displayBlock: [ :item | item pageName ];
+		display: [ :item | item pageName ];
 		contextMenu:
 			(self newMenu
 				addItem: [ :item | 

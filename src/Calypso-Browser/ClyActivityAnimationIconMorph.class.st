@@ -33,7 +33,7 @@ ClyActivityAnimationIconMorph >> addLabel: aStringOrMorph [
 	
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #acccessing }
 ClyActivityAnimationIconMorph >> currentIcon [
 	^TabMorph perform: (#refreshIcon, progress asString) asSymbol
 ]
@@ -58,7 +58,7 @@ ClyActivityAnimationIconMorph >> initialize [
 	self extent: progressIconMorph extent.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ClyActivityAnimationIconMorph >> step [
 	progress := progress + 1.
 	progress > 10 ifTrue: [ progress := 1 ].
@@ -66,7 +66,7 @@ ClyActivityAnimationIconMorph >> step [
 	progressIconMorph form: self currentIcon
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ClyActivityAnimationIconMorph >> stepTime [
 	
 	^ 100 "milliseconds"

@@ -7,20 +7,20 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MalDisjointSets >> components [
 
 	^ (components keys collect: [:parent| 
 		(components at: parent) collect: [:n| n model] ]) asOrderedCollection 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #configuration }
 MalDisjointSets >> nodeClass [
 
 	^ MalDisjointSetsNextNode 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 MalDisjointSets >> run [
 
 	"partition nodes by connectivity"

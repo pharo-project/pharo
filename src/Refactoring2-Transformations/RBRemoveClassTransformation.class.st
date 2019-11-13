@@ -65,7 +65,7 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 RBRemoveClassTransformation >> environmentWithReferencesTo: aClass [
 
 	^ RBBrowserEnvironment new 
-		referencesTo: (Smalltalk globals 
+		referencesTo: (self environment 
 			associationAt: aClass 
 			ifAbsent: [ aClass ])
 ]

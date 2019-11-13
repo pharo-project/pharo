@@ -23,7 +23,7 @@ Class {
 	#category : #'Morphic-Widgets-Tabs'
 }
 
-{ #category : #'stepping and presenter' }
+{ #category : #accessing }
 TabBuildingIconMorph >> currentIcon [
 	^TabMorph perform: (#refreshIcon, progress asString) asSymbol
 ]
@@ -40,7 +40,7 @@ TabBuildingIconMorph >> initialize [
 	self extent: progressIconMorph extent.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 TabBuildingIconMorph >> step [
 	progress := progress + 1.
 	progress > 10 ifTrue: [ progress := 1 ].
@@ -48,7 +48,7 @@ TabBuildingIconMorph >> step [
 	progressIconMorph form: self currentIcon
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 TabBuildingIconMorph >> stepTime [
 	
 	^ 100 "milliseconds"

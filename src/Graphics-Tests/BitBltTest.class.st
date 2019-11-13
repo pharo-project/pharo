@@ -61,7 +61,7 @@ BitBltTest >> testAlphaCompositing2 [
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositing2Simulated [
 
-	Smalltalk globals
+	testingEnvironment
 		at: #BitBltSimulation
 		ifPresent: [ :bitblt | 
 			| bb f1 mixColor f2 result eps |
@@ -84,7 +84,7 @@ BitBltTest >> testAlphaCompositing2Simulated [
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositingSimulated [
 
-	Smalltalk globals
+	testingEnvironment
 		at: #BitBltSimulation
 		ifPresent: [ :bitblt | 
 			| mixColor result eps f1 bb f2 |

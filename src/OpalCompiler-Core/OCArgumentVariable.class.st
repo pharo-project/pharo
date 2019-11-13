@@ -30,3 +30,8 @@ OCArgumentVariable >> isWritable [
 
 	^ false
 ]
+
+{ #category : #debugging }
+OCArgumentVariable >> writeFromContext: aContext scope: contextScope value: aValue [
+	self error: 'Arguments are read only'
+]

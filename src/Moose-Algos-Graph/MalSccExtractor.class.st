@@ -28,9 +28,3 @@ MalSccExtractor >> initialize [
 	circuits := Set new.
 
 ]
-
-{ #category : #running }
-MalSccExtractor >> run [
-
-	self subclassResponsibility
-]

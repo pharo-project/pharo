@@ -1,6 +1,11 @@
 Extension { #name : #Text }
 
 { #category : #'*GT-InspectorExtensions-Core' }
+Text >> gtDisplayOn: aStream [
+	self printOn: aStream
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
 Text >> gtInspectorItemsIn: composite [
 	"No items presentation for a Text"
 ]

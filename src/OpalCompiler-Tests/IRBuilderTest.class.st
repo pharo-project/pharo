@@ -1,6 +1,6 @@
 Class {
 	#name : #IRBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#classVars : [
 		'TestToPush'
 	],
@@ -316,7 +316,7 @@ IRBuilderTest >> testLiteralVariableGlobale [
 
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: (Smalltalk globals associationAt: #Smalltalk);	
+		pushLiteralVariable: (testingEnvironment associationAt: #Smalltalk);	
 		returnTop;
 		ir.
 

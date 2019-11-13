@@ -116,6 +116,18 @@ KMModifiedKeyCombination >> modifier: aModifier [
 	modifier := aModifier
 ]
 
+{ #category : #'accessing platform' }
+KMModifiedKeyCombination >> platformCharacter [
+	
+	^ self character key
+]
+
+{ #category : #'accessing platform' }
+KMModifiedKeyCombination >> platformModifier [
+	
+	^ self modifier
+]
+
 { #category : #printing }
 KMModifiedKeyCombination >> printOn: aStream [
 	modifier printOn: aStream.

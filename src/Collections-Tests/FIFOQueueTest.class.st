@@ -97,17 +97,17 @@ FIFOQueueTest >> testBasics [
 	
 	q nextPut: 5.
 	
-	self assert: q peek = 5.
-	self assert: q nextOrNil = 5.
+	self assert: q peek equals: 5.
+	self assert: q nextOrNil equals: 5.
 	
 	q nextPut: 10.
 	q nextPut: 15.
 	
-	self assert: q nextOrNil = 10.
-	self assert: q peek = 15.
-	self assert: q nextOrNil = 15.
+	self assert: q nextOrNil equals: 10.
+	self assert: q peek equals: 15.
+	self assert: q nextOrNil equals: 15.
 	
-	self assert: q nextOrNil == nil
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -119,7 +119,7 @@ FIFOQueueTest >> testContention1 [
 	q nextPut: 5.
 	q nextPut: 10.
 
-	self should: [ q nextOrNil = 5 ].
+	self assert: q nextOrNil equals: 5.
 
 	[ r1 := q next ] fork.
 	[ r2 := q next ] fork.
@@ -128,10 +128,9 @@ FIFOQueueTest >> testContention1 [
 	q nextPut: 10.
 	Processor yield.
 
-	self should: [ r1 = 10 ].
-	self should: [ r2 = 10 ].
-	self should: [ q nextOrNil = nil ].
-
+	self assert: r1 equals: 10.
+	self assert: r2 equals: 10.
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -148,14 +147,13 @@ FIFOQueueTest >> testFlush [
 	sema wait. 
 	q flush: [:each | self assert: v < each. v := each ].
 
-	self assert: v = 10	
+	self assert: v equals: 10	
 ]
 
 { #category : #tests }
 FIFOQueueTest >> testFlushAllSuchThat [
 	| q |
 	q := self newQueue.
-
 	
 	#( 1 2 3 4 5 6 7 8 9 10 ) do: [:each | q nextPut: each ]. 
 	
@@ -163,7 +161,7 @@ FIFOQueueTest >> testFlushAllSuchThat [
 	
 	q flush: [:each | self assert: each even ].
 	
-	self assert: q nextOrNil == nil
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -205,8 +203,8 @@ FIFOQueueTest >> testHeavyContention [
 	done waitTimeoutSeconds: 10.
 	 
 	feeders do: [:ea | ea terminate ].
-	self assert: (count = 1000 ).
-	self assert: q nextOrNil == nil
+	self assert: count equals: 1000.
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -247,9 +245,8 @@ FIFOQueueTest >> testHeavyContention2 [
 	done waitTimeoutSeconds: 10.
 	 
 	feeders do: [:ea | ea terminate ].
-	self assert: (count = 1000 ).
-	self assert: q nextOrNil == nil
-
+	self assert: count equals: 1000.
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -260,10 +257,10 @@ FIFOQueueTest >> testNextOrNilSuchThat [
 	q nextPut: 6.
 
 	item := q nextOrNilSuchThat: [ :x | x even ].
-	self should: [ item = 6 ].
+	self assert: item equals: 6.
 
-	self should: [ q nextOrNil = 5 ].
-	self should: [ q nextOrNil = nil ].
+	self assert: q nextOrNil equals: 5.
+	self should: q nextOrNil isNil
 
 ]
 
@@ -275,7 +272,7 @@ FIFOQueueTest >> testSize [
 	#( 1 2 3 4 5 6 7 8 9 10 ) do: [:each |
 		q nextPut: each ].
 
-	self assert: (q size = 10)
+	self assert: q size equals: 10
 ]
 
 { #category : #tests }
@@ -288,7 +285,7 @@ FIFOQueueTest >> testSuchThat [
 
 	self assert: (q nextOrNilSuchThat: [:e | e = 100 ]) isNil.	
 
-	self assert: (q nextOrNilSuchThat: [:e | e = 5 ]) = 5.	
+	self assert: (q nextOrNilSuchThat: [:e | e = 5 ]) equals: 5.	
 
 	9 timesRepeat: [ 
 		self assert: (q nextOrNil notNil) ].

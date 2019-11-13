@@ -10,7 +10,8 @@ Class {
 	#instVars : [
 		'link1',
 		'link2',
-		'link3'
+		'link3',
+		'link4'
 	],
 	#category : #'Spec2-Examples-Demo-Other'
 }
@@ -21,6 +22,7 @@ SpDemoLinksPresenter class >> defaultSpec [
 		add: #link1;
 		add: #link2;
 		add: #link3;
+		add: #link4;
 		yourself
 ]
 
@@ -31,10 +33,11 @@ SpDemoLinksPresenter class >> open [
 ]
 
 { #category : #initialization }
-SpDemoLinksPresenter >> initializeWidgets [
+SpDemoLinksPresenter >> initializePresenters [
 	link1 := self newLink.
 	link2 := self newLink.
 	link3 := self newLink.
+	link4 := self newLink.
 
 	link1 url: 'https://pharo.org'.
 
@@ -45,20 +48,9 @@ SpDemoLinksPresenter >> initializeWidgets [
 	link3
 		url: 'https://pharo.org';
 		label: 'Pharo website';
-		color: Color purple
-]
+		color: Color purple.
 
-{ #category : #accessing }
-SpDemoLinksPresenter >> link1 [
-	^ link1
-]
-
-{ #category : #accessing }
-SpDemoLinksPresenter >> link2 [
-	^ link2
-]
-
-{ #category : #accessing }
-SpDemoLinksPresenter >> link3 [
-	^ link3
+	link4
+		action: [ Object browse ];
+		label: 'Browse Object'
 ]

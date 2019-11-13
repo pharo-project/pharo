@@ -12,8 +12,12 @@ SpCodePresenterTest >> classToTest [
 
 { #category : #tests }
 SpCodePresenterTest >> testContextKeyBindings [
-	self skip.
-	self assert: presenter contextKeyBindings notNil
+	| contextKeyBindings |
+	
+	contextKeyBindings := presenter contextKeyBindings.
+	self assert: contextKeyBindings notNil.
+	self assert: (contextKeyBindings isKindOf: KMCategory).
+	
 ]
 
 { #category : #tests }

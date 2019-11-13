@@ -130,8 +130,3 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 				
 				
 ]
-
-{ #category : #fonts }
-GraphicFontSettings class >> theme [ 
-	^ Smalltalk ui theme
-]

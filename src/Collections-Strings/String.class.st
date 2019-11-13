@@ -22,7 +22,6 @@ Class {
 		'CSSeparators',
 		'CaseInsensitiveOrder',
 		'CaseSensitiveOrder',
-		'CrLfExchangeTable',
 		'LowercasingTable',
 		'Tokenish',
 		'TypeTable',
@@ -67,12 +66,6 @@ String class >> cr [
 
 	^ self with: Character cr
 
-]
-
-{ #category : #accessing }
-String class >> crLfExchangeTable [
-
-	^CrLfExchangeTable
 ]
 
 { #category : #'instance creation' }
@@ -173,8 +166,6 @@ String class >> initialize [
  	"separators and non-separators"
 	CSSeparators := CharacterSet separators.
 	CSNonSeparators := CSSeparators complement.
-	
-	CrLfExchangeTable := self newCrLfExchangeTable
 ]
 
 { #category : #initialization }
@@ -305,18 +296,6 @@ String class >> newCaseSensitiveOrder [
 ]
 
 { #category : #initialization }
-String class >> newCrLfExchangeTable [
-	"a table for exchanging cr with lf and vica versa"
-	^ Character allByteCharacters collect: [ :each |
-		each = Character cr 
-			ifTrue: [ Character lf ]
-			ifFalse: [ 
-				each = Character lf
-					ifTrue: [ Character cr ]
-					ifFalse:[ each ]]]
-]
-
-{ #category : #initialization }
 String class >> newLowercasingTable [
 	"a table for translating to lower case"
 	^ String withAll: (Character allByteCharacters collect: [:c | c asLowercase])
@@ -426,7 +405,11 @@ String class >> with: aCharacter [
 String >> < aString [ 
 	"Answer whether the receiver sorts before aString.
 	The collation order is simple ascii (with case differences)."
-
+	" 'abc' < 'def' >>> true"
+	" 'abc' < 'abc' >>> false"
+	" 'def' < 'abc' >>> false"
+	
+	
 	^ (self compare: self with: aString collated: AsciiOrder) = 1
 ]
 
@@ -434,6 +417,9 @@ String >> < aString [
 String >> <= aString [ 
 	"Answer whether the receiver sorts before or equal to aString.
 	The collation order is simple ascii (with case differences)."
+	" 'abc' <= 'def' >>> true"
+	" 'abc' <= 'abc' >>> true"
+	" 'def' <= 'abc' >>> false"
 	
 	^ (self compare: self with: aString collated: AsciiOrder) <= 2
 ]
@@ -442,6 +428,9 @@ String >> <= aString [
 String >> = aString [ 
 	"Answer whether the receiver sorts equally as aString.
 	The collation order is simple ascii (with case differences)."
+	" 'abc' = 'def' >>> false"
+	" 'abc' = 'abc' >>> true"
+	" 'def' = 'abc' >>> false"
 	
 	(aString isString and: [self size = aString size]) ifFalse: [^false].
 	^ (self compare: self with: aString collated: AsciiOrder) = 2
@@ -451,6 +440,10 @@ String >> = aString [
 String >> > aString [ 
 	"Answer whether the receiver sorts after aString.
 	The collation order is simple ascii (with case differences)."
+	" 'def' > 'abc' >>> true"
+	" 'def' > 'def' >>> false"
+	" 'abc' > 'def' >>> false"
+
 
 	^ (self compare: self with: aString collated: AsciiOrder) = 3
 ]
@@ -459,13 +452,20 @@ String >> > aString [
 String >> >= aString [ 
 	"Answer whether the receiver sorts after or equal to aString.
 	The collation order is simple ascii (with case differences)."
+	" 'def' >= 'abc' >>> true"
+	" 'def' >= 'def' >>> true"
+	" 'abc' >= 'def' >>> false"
 
 	^ (self compare: self with: aString collated: AsciiOrder) >= 2
 ]
 
 { #category : #comparing }
 String >> alike: aString [ 
-	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score.  Case is ignored."
+	"Answer some indication of how alike the receiver is to the argument,  0 is no match, twice aString size is best score (but see example with 7).  Case is ignored. This method is used to help find mistyped variable names in methods."
+	"('abc' alike: 'abc') >>> 7."
+	"('action' alike: 'actions') >>> 7."
+	"('action' alike: 'caption') >>> 5."
+	"('action' alike: 'name') >>> 0."	
 
 	| i j k minSize bonus |
 	minSize := (j := self size) min: (k := aString size).
@@ -1555,10 +1555,11 @@ String >> findWordStart: key startingAt: start [
 
 { #category : #formatting }
 String >> format: collection [
-	"Format the receiver by interpolating elements from collection, as in the following examples:  
-	('Today is {1}.' format: {Date today}) >>> 'Today is 30 August 2019.'.
-	('Today is {date}.' format: (Dictionary with: #date->Date today)) >>>  'Today is 30 August 2019.'
-	('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
+	"Format the receiver by interpolating elements from collection, as in the following examples:" 
+	"('Today is {1}.' format: {Date today}) >>> 'Today is 30 August 2019.'"
+	"('Today is {date}.' format: (Dictionary with: #date -> Date today)) >>>  'Today is 30 August 2019.'"
+	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
+	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
 
 	^ self class
 		new: self size
@@ -1597,9 +1598,13 @@ String >> hash [
 
 { #category : #comparing }
 String >> howManyMatch: string [ 
-	"Count the number of characters that match up in self and aString."
-	| count shorterLength |
+	"Count the number of characters in a substring that matches up in self and aString."
+	"('ab ab ac de' howManyMatch: 'ab') >>> 2"
+	"('abab ac de' howManyMatch: 'abab') >>> 4"
+	"('ab ab ac de' howManyMatch: 'a') >>> 1"
+	"('ab ab ac de' howManyMatch: 'z') >>> 0"
 	
+	| count shorterLength |
 	count := 0.
 	shorterLength := self size min: string size.
 	1 to: shorterLength do: [:index |
@@ -2126,11 +2131,6 @@ String >> padRightTo: length with: char [
 	^ self, (String new: (length - self size max: 0) withAll: char)
 ]
 
-{ #category : #converting }
-String >> parseLiterals [
-	^ self class compiler parseLiterals: self
-]
-
 { #category : #printing }
 String >> printOn: aStream [ 
 	"Print inside string quotes, doubling inbedded quotes."
@@ -2293,7 +2293,11 @@ String >> startingAt: keyStart match: text startingAt: textStart [
 { #category : #accessing }
 String >> startsWithDigit [
 	"Answer whether the receiver's first character represents a digit"
-
+	"'abc' startsWithDigit >>> false"
+	"'0abc' startsWithDigit >>> true"
+	"'1abc' startsWithDigit >>> true"
+	"'11abc' startsWithDigit >>> true"
+	
 	^ self size > 0 and: [self first isDigit]
 ]
 
@@ -2510,10 +2514,8 @@ String >> truncateTo: smallSize [
 	"return myself or a copy shortened to smallSize."
 
 	^ self size <= smallSize
-		ifTrue:
-			[self]
-		ifFalse:
-			[self copyFrom: 1 to: smallSize]
+		ifTrue: [ self ]
+		ifFalse: [ self copyFrom: 1 to: smallSize ]
 ]
 
 { #category : #converting }
@@ -2574,6 +2576,13 @@ String >> withCRs [
 ]
 
 { #category : #'platform conventions' }
+String >> withInternalLineEndings [
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR. Pharo internally uses CR for carriage return."
+
+	^ self withLineEndings: String cr
+]
+
+{ #category : #'platform conventions' }
 String >> withInternetLineEndings [
 	"change line endings from CR's and LF's to CRLF's.  This is probably in prepration for sending a string over the Internet"
 	
@@ -2582,25 +2591,32 @@ String >> withInternetLineEndings [
 
 { #category : #'platform conventions' }
 String >> withLineEndings: lineEndingString [
-
-	| stream |
+	"Answer a new instance where all occurrences of CRLF, CR, and LF are substituted with the specified line ending string."
 	
-	stream := nil.
-	self lineIndicesDo: [ :start :endWithoutDelimiters :end |
-		(stream isNil and: [ endWithoutDelimiters ~= end ]) ifTrue: [
-			(self copyFrom: endWithoutDelimiters + 1 to: end) = lineEndingString ifFalse: [
-				stream := WriteStream with: self copy.
-				stream position: start - 1 ]].
-		stream ifNotNil: [
-			stream next: endWithoutDelimiters - start + 1 putAll: self startingAt: start.
-			endWithoutDelimiters = end ifFalse: [
-				stream nextPutAll: lineEndingString ]]].
-	^stream
-		ifNil: [ self ]
-		ifNotNil: [ 
-			stream position = self size
-				ifTrue: [ stream originalContents ]
-				ifFalse: [ stream contents ]]
+	^ self species streamContents: [ :out |
+		| in c |
+		in := self readStream.
+		[ in atEnd ] whileFalse: [
+			c := in next.
+			"CR"
+			c == Character cr ifTrue: [
+				c := in peek.
+				"CR LF"
+				c == Character lf ifTrue: [
+					in next.
+				].
+				out nextPutAll: lineEndingString
+			] ifFalse: [
+				"LF"
+				c == Character lf ifTrue: [
+					out nextPutAll: lineEndingString
+				] ifFalse: [
+					out nextPut: c
+				]
+			]
+		]
+	]
+
 ]
 
 { #category : #converting }
@@ -2655,26 +2671,19 @@ String >> withSeparatorsCompacted [
 	"'test  test		 ' withSeparatorsCompacted"
 ]
 
-{ #category : #'platform conventions' }
+{ #category : #formatting }
 String >> withSqueakLineEndings [
-	"Assume the string is textual, and that CR, LF, and CRLF are all valid line endings.
-	Replace each occurence with a single CR."
-
-	(self includes: Character lf) ifFalse: [ ^self ].
-	(self includes: Character cr) ifFalse: [
-		^self translateWith: String crLfExchangeTable ].
-	^self withLineEndings: String cr
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with CR."
+	
+	^ self withInternalLineEndings
 ]
 
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
-	"Assume the string is textual, and that CR, LF, and CRLF are all valid line endings.
-	Replace each occurence with a single LF."
+	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
+	"('asa' , String cr , 'asa') withUnixLineEndings at: 4 >>> Character lf"
 
-	(self includes: Character cr) ifFalse: [ ^self ].
-	(self includes: Character lf) ifFalse: [
-		^self translateWith: String crLfExchangeTable ].
-	^self withLineEndings: String lf
+	^ self withLineEndings: String lf
 ]
 
 { #category : #converting }

@@ -18,48 +18,18 @@ Class {
 }
 
 { #category : #default }
-CmCommand class >> defaultCommandName [ 
+CmCommand class >> defaultDescription [
+	^ 'Not described command.'
+]
+
+{ #category : #default }
+CmCommand class >> defaultName [ 
 
 	^ 'Unnamed'
 ]
 
-{ #category : #default }
-CmCommand class >> defaultDescription [
-	^ 'I''m command and I should provide a nice description for my user.'
-]
-
-{ #category : #'instance creation' }
-CmCommand class >> forSpec [
-	^ self new
-		asSpecCommand
-]
-
-{ #category : #'instance creation' }
-CmCommand class >> forSpecContext: anObject [
-
-	^ self forSpec 
-	context: anObject;
-	yourself
-]
-
-{ #category : #'instance creation' }
-CmCommand class >> forSpecWithIconNamed: aSymbol [
-	^ self new asSpecCommandWithIconNamed: aSymbol
-]
-
-{ #category : #'instance creation' }
-CmCommand class >> forSpecWithIconNamed: aSymbol shortcutKey: aKMKeyCombination [
-	^ self new
-		asSpecCommandWithIconNamed: aSymbol shortcutKey: aKMKeyCombination
-]
-
-{ #category : #running }
-CmCommand class >> runWith: anObject [
-	self new runWith: anObject
-]
-
-{ #category : #hooks }
-CmCommand >> canBeRun [
+{ #category : #testing }
+CmCommand >> canBeExecuted [
 	"See my super class comment for this method.
 	 By default I return true.
 	"
@@ -88,6 +58,6 @@ CmCommand >> hasContext [
 { #category : #initialization }
 CmCommand >> initialize [
 	super initialize.
-	self basicName: self class defaultCommandName.
-	self basicDescription: self class defaultDescription
+	self name: self class defaultName.
+	self description: self class defaultDescription
 ]

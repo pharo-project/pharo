@@ -19,14 +19,14 @@ CmCommandsGroupTest >> setUp [
 	super setUp.
 	group := CmCommandGroup named: 'main group'.
 	firstCommand := CmBlockCommand new
-							basicName: 'first command';
+							name: 'first command';
 							block: [ :x | x ];
 							context: [ 1 ];
 							yourself.
 	
 	
 	subCommand1 :=  CmBlockCommand new
-							basicName: 'sub command 1';
+							name: 'sub command 1';
 							block: [ :x | x ];
 							context: [ 11 ];
 							yourself.
@@ -96,7 +96,7 @@ CmCommandsGroupTest >> testInitialize [
 	| newGroup |
 	newGroup := CmCommandGroup new.
 	
-	self assert: newGroup basicName equals: CmCommandGroup defaultName.
+	self assert: newGroup name equals: CmCommandGroup defaultName.
 	self assert: newGroup entries isEmpty
 ]
 
@@ -106,7 +106,7 @@ CmCommandsGroupTest >> testRegisterCommandWithContext [
 	self deny: (group hasEntryNamed: 'second command').
 	
 	secondCommand := CmBlockCommand new 
-							basicName: 'second command';
+							name: 'second command';
 							block: [ :x | x ];
 							context: 42;
 							yourself.
@@ -123,7 +123,7 @@ CmCommandsGroupTest >> testRegisterCommandWithContextBlock [
 	self deny: (group hasEntryNamed: 'second command').
 	
 	secondCommand := CmBlockCommand new 
-							basicName: 'second command';
+							name: 'second command';
 							block: [ :x | x ];
 							context: [ 42 ];
 							yourself.
@@ -133,7 +133,7 @@ CmCommandsGroupTest >> testRegisterCommandWithContextBlock [
 	self assert: (group commandOrGroupNamed: 'second command') equals: secondCommand.
 	
 	secondCommandWithSameName := CmBlockCommand new 
-											basicName: 'second command';
+											name: 'second command';
 											block: [ :x | x ];
 											context: [ ];
 											yourself.

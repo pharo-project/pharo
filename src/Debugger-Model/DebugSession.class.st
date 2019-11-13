@@ -228,8 +228,7 @@ DebugSession >> isInterruptedContextDoesNotUnderstand [
 
 { #category : #context }
 DebugSession >> isLatestContext: aContext [
-
-	^ interruptedProcess suspendedContext == aContext
+  	^ interruptedProcess suspendedContext == aContext
 ]
 
 { #category : #testing }
@@ -270,9 +269,7 @@ DebugSession >> pcRangeForContext: aContext [
 
 	(aContext isNil or: [ aContext isDead ])
 		ifTrue: [ ^ 1 to: 0 ].
-	^ aContext debuggerMap
-		rangeForPC: aContext pc
-		contextIsActiveContext: (self isLatestContext: aContext)
+	^ aContext pcRangeContextIsActive: (self isLatestContext: aContext)
 ]
 
 { #category : #'debugging actions' }
@@ -418,29 +415,6 @@ DebugSession >> returnValue: anObject from: aContext [
 	previous := aContext sender.
 	"self resetContext: previous."
 	interruptedProcess popTo: previous value: anObject.
-	self updateContextTo: previous.
-	self contextChanged 
-]
-
-{ #category : #'debugging actions' }
-DebugSession >> returnValueFrom: aContext [
-	"Force a return of a given value to the previous context!"
-
-	| previous expression value |
-	self flag: 'should be called only on the selected context'.	
-	self flag: 'remove me'.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
-	
-	expression := UIManager default request: 'Enter expression for return value:'.
-	value := self class compiler
-					source: expression;
-			context: aContext;
-			receiver: aContext receiver;
-			evaluate.
-				
-	previous := aContext sender.
-	"self resetContext: previous."
-	interruptedProcess popTo: previous value: value.
 	self updateContextTo: previous.
 	self contextChanged 
 ]

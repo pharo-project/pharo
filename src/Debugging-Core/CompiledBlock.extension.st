@@ -1,11 +1,6 @@
 Extension { #name : #CompiledBlock }
 
 { #category : #'*Debugging-Core' }
-CompiledBlock >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
-]
-
-{ #category : #'*Debugging-Core' }
 CompiledBlock >> pcInOuter [
 	| outer end instructionStream |
 	outer := self outerCode.

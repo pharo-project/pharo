@@ -258,7 +258,7 @@ ListPresenter >> initializeValueHolders [
 	multiSelectionHolder := IdentityDictionary new asValueHolder.
 	multiSelection := false asValueHolder.
 	allowToSelect := true asValueHolder.
-	backgroundColorBlock := [ :item :index | Smalltalk ui theme backgroundColor ] asValueHolder.
+	backgroundColorBlock := [ :item :index | self theme backgroundColor ] asValueHolder.
 	autoDeselect := true asValueHolder.
 	listAnnouncer := Announcer new.
 

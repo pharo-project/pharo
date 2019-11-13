@@ -41,7 +41,7 @@ MalHalNode >> isSource [
 	^ self previousNodes isEmpty 
 ]
 
-{ #category : #'hal-algorithm' }
+{ #category : #accessing }
 MalHalNode >> label [
 
 	^ 'Ha '

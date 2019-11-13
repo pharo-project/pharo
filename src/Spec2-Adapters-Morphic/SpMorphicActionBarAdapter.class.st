@@ -21,9 +21,24 @@ SpMorphicActionBarAdapter >> addModelTo: aMorph [
 
 	self flag: #TODO. "Maybe validate they are just buttons inside?"
 	(self model items at: #start ifAbsent: [ #() ]) do: [ :each |
-		aMorph submorphs first addMorphBack: (self configureActionButton: each buildWithSpec) ].
+		aMorph submorphs first addMorphBack: (self buildActionButton: each) ].
 	(self model items at: #end ifAbsent: [ #() ]) reverseDo: [ :each |
-		aMorph submorphs second addMorphBack: (self configureActionButton: each buildWithSpec) ]
+		aMorph submorphs second addMorphBack: (self buildActionButton: each) ]
+]
+
+{ #category : #factory }
+SpMorphicActionBarAdapter >> buildActionButton: aButtonPresenter [
+	| morph |
+	
+	self flag: #TODO. "This should not be here once we implement bubble up styles with the 
+	new style mechanism (because then we will have a style '.actionBar.button' instead 
+	'actionButton'"
+	morph := aButtonPresenter buildWithSpec.
+	aButtonPresenter adapter 
+		styleName: 'actionButton';
+		applyStyle: morph.
+		
+	^ morph
 ]
 
 { #category : #factory }
@@ -36,13 +51,6 @@ SpMorphicActionBarAdapter >> buildWidget [
 	self addModelTo: panelMorph.
 	
 	^ panelMorph
-]
-
-{ #category : #factory }
-SpMorphicActionBarAdapter >> configureActionButton: aMorph [	
-		
-	(self styleAt: #ActionButton) applyTo: aMorph.
-	^ aMorph
 ]
 
 { #category : #factory }

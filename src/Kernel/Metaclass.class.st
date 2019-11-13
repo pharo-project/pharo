@@ -118,7 +118,7 @@ Metaclass >> classVariables [
 	^self instanceSide classVariables
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Metaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
@@ -128,7 +128,7 @@ Metaclass >> definition [
 	^ self definitionWithoutSlots
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Metaclass >> definitionWithSlots [
 	"Refer to the comment in ClassDescription|definition."
 
@@ -140,7 +140,7 @@ Metaclass >> definitionWithSlots [
 			nextPutAll: self slotDefinitionString ]
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Metaclass >> definitionWithoutSlots [
 
 	^ String streamContents: [:stream |
@@ -260,7 +260,7 @@ Metaclass >> obsoleteSubclasses [
 	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Metaclass >> oldDefinition [
 	"Refer to the comment in ClassDescription|definition.
 	 This method is for compatibility with Class>>#oldDefinition"
@@ -360,11 +360,4 @@ Metaclass >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism.The metaclass follows the rule of the class itself."
 
 	^ self instanceSide wantsChangeSetLogging
-]
-
-{ #category : #compiling }
-Metaclass >> wantsRecompilationProgressReported [
-	"The metaclass follows the rule of the class itself."
-
-	^ self instanceSide wantsRecompilationProgressReported
 ]

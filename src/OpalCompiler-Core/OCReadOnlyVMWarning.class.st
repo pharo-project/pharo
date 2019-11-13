@@ -17,7 +17,7 @@ OCReadOnlyVMWarning >> defaultAction [
 						compilationContext: compilationContext;
 						messageText: self messageText;
 						signal ]
-				ifFalse: [ self crTrace: self messageText ])
+				ifFalse: [ SystemNotification signal: self messageText ])
 ]
 
 { #category : #initialization }

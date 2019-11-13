@@ -129,7 +129,7 @@ SpAbstractSelectionMode >> unselectItem: anInteger [
 ]
 
 { #category : #events }
-SpAbstractSelectionMode >> whenChangedDo: aBlockClosure [ 
+SpAbstractSelectionMode >> whenChangedDo: aBlock [ 
 	
 	self subclassResponsibility
 ]

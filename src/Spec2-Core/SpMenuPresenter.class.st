@@ -109,6 +109,12 @@ SpMenuPresenter >> buildWithSpecAsPopup [
 	^ self buildWithSpec: #popup
 ]
 
+{ #category : #testing }
+SpMenuPresenter >> canTakeKeyboardFocus [
+
+	^ false
+]
+
 { #category : #accessing }
 SpMenuPresenter >> defaultGroup [
 	^ defaultGroup

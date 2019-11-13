@@ -14,5 +14,5 @@ ManifestUIManager class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestUIManager class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Support' #'OpalCompiler-Core' #Jobs #'System-Localization' #Monticello #'System-Settings-Core')
+	^ #(#'Collections-Streams' #'System-Support' #'System-Settings-Core')
 ]

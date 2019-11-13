@@ -13,8 +13,8 @@ AlphabeticSorter class >> kind [
 	^ 'alphabetical'
 ]
 
-{ #category : #description }
-AlphabeticSorter class >> sortCompletionList: aList [
+{ #category : #sorting }
+AlphabeticSorter >> sortCompletionList: aList [
 
-	^ aList sorted.
+	^ aList asOrderedCollection sort
 ]

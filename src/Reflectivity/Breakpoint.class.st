@@ -73,12 +73,12 @@ Breakpoint class >> handleClassRemoved: anAnnouncement [
 
 { #category : #'system announcements' }
 Breakpoint class >> handleMethodModified: anAnnouncement [
-	self removeBreakpointsFromMethod: anAnnouncement oldMethod
+	self removeFromMethod: anAnnouncement oldMethod
 ]
 
 { #category : #'system announcements' }
 Breakpoint class >> handleMethodRemoved: anAnnouncement [
-	self removeBreakpointsFromMethod: anAnnouncement method
+	self removeFromMethod: anAnnouncement method
 ]
 
 { #category : #initialization }
@@ -114,20 +114,20 @@ Breakpoint class >> removeAll [
 	self all copy do: #remove
 ]
 
-{ #category : #removing }
-Breakpoint class >> removeBreakpointsFromMethod: aMethod [ 
-	self all copy do: [ :breakpoint |
-		breakpoint link methods
-			detect: [ :m | m == aMethod ]
-			ifFound: [ self all remove: breakpoint ] ]
-]
-
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
 	| links breakpointsToRemove |
 	links := aNode beforeLinks select: [ :link | link metaObject = Break].
 	breakpointsToRemove := self all select: [ :br | links includes: br link].
 	breakpointsToRemove do: #remove
+]
+
+{ #category : #cleanup }
+Breakpoint class >> removeFromMethod: aMethod [ 
+	self all copy do: [ :breakpoint |
+		breakpoint link methods
+			detect: [ :m | m == aMethod ]
+			ifFound: [ self all remove: breakpoint ] ]
 ]
 
 { #category : #api }

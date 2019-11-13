@@ -8,5 +8,6 @@ SpAbstractTextPresenter >> defineInputPorts [
 
 { #category : #'*Spec2-Transmission' }
 SpAbstractTextPresenter >> defineOutputPorts [
-	^ {SpTextChangedPort new}
+
+	^ { SpTextChangedPort new }
 ]

@@ -44,7 +44,7 @@ RGClassStrategy >> allClassVariables [
 
 	^ ((self owner superclass == nil) or: [ self owner superclass == self owner]) 
 		ifTrue: [ self classVariables ]
-		ifFalse: [ self owner superclass allClassVariables, classVariables ]
+		ifFalse: [ self owner superclass allClassVariables, self classVariables ]
 ]
 
 { #category : #'private - backend access' }
@@ -309,7 +309,7 @@ RGClassStrategy >> definitionWithSlots [
 	poolString = '' ifFalse: [
 		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
 			store: poolString].
-	aStream cr; tab; nextPutAll: 'category: ';
+	aStream cr; tab; nextPutAll: 'package: ';
 			store: self category asString.
 
 	self owner superclass ifNil: [ 

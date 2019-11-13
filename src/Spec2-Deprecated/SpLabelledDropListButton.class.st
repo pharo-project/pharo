@@ -68,7 +68,7 @@ SpLabelledDropListButton >> button [
 
 { #category : #'api-shortcuts' }
 SpLabelledDropListButton >> displayBlock: aBlock [
-	^self dropList displayBlock: aBlock
+	^ self dropList display: aBlock
 ]
 
 { #category : #accessing }
@@ -92,8 +92,8 @@ SpLabelledDropListButton >> icon: anIcon [
 ]
 
 { #category : #initialization }
-SpLabelledDropListButton >> initializeWidgets [
-super initializeWidgets.
+SpLabelledDropListButton >> initializePresenters [
+super initializePresenters.
 	self content: SpDropListButton.
 ]
 

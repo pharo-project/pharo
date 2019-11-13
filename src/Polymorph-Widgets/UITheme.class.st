@@ -31,6 +31,21 @@ UITheme class >> allThemeClasses [
 		a themeName <= b themeName]
 ]
 
+{ #category : #accessing }
+UITheme class >> baseColor [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+UITheme class >> basePassiveBackgroundColor [ 
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+UITheme class >> baseSelectionColor [ 
+	^ self subclassResponsibility 
+]
+
 { #category : #query }
 UITheme class >> beCurrent [
 	"Make a new instance of the receiver be the current theme."
@@ -56,7 +71,7 @@ UITheme class >> cleanUp [
 { #category : #accessing }
 UITheme class >> current [
 	"Answer the current ui theme.
-	WARNING: Direct access to this method is ill-adviced, use Smalltalk ui theme instead."
+	WARNING: Direct access to this method is ill-adviced, use self theme instead."
 
 	^Current ifNil: [
 		Current := PharoLightTheme newDefault.
@@ -99,6 +114,11 @@ UITheme class >> currentSettings [
 ]
 
 { #category : #accessing }
+UITheme class >> darkBaseColor [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
 UITheme class >> defaultSettings [
 	"Answer the default settings for the theme."
 	
@@ -138,8 +158,12 @@ UITheme class >> isCurrent [
 
 { #category : #accessing }
 UITheme class >> lightBaseColor [
+	self subclassResponsibility 
+]
 
-	^ Color white
+{ #category : #accessing }
+UITheme class >> lightSelectionColor [ 
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -197,6 +221,11 @@ UITheme class >> resetDefaultSettings [
 	self defaultSettings: nil
 ]
 
+{ #category : #initialization }
+UITheme class >> setPreferredPreferences [ 
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 UITheme class >> standardThemeClass [
 	^ PharoLightTheme 
@@ -207,6 +236,11 @@ UITheme class >> themeName [
 	"Answer the friendly name of the theme."
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> veryLightSelectionColor [ 
+	^ self subclassResponsibility 
 ]
 
 { #category : #services }

@@ -61,12 +61,12 @@ HandleMorph >> keyStroke: evt [
 			self delete ]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 HandleMorph >> step [
 	pointBlock value: self center
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 HandleMorph >> stepTime [
 	"Update every hundredth of a second."
 	^ 10

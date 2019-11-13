@@ -193,6 +193,20 @@ FTTableMorph >> beResizable [
 ]
 
 { #category : #accessing }
+FTTableMorph >> beRowNotHomogeneous [
+	"by default, tables have homogeneous row heigths, taken from rowHeight variable. 
+	 We can switch to variable size by sending this message. 
+	 The resulting table will be less effcicient than the first, but probably not in a way users 
+	 can notice"
+	| oldContainer |
+
+	oldContainer := container.
+	container := FTTableContainerRowNotHomogeneousMorph new.
+	self replaceSubmorph: oldContainer by: container.
+	self resizeAllSubviews
+]
+
+{ #category : #accessing }
 FTTableMorph >> beRowSelection [
 	self selectionModeStrategy: (FTRowSelectionModeStrategy table: self)
 ]
@@ -274,7 +288,7 @@ FTTableMorph >> deselectAll [
 FTTableMorph >> disableFunction [
 	"Disabling it just sets the funtion to nil, so I can safely skip it in #keyStrokeSearch:"
 
-	function isExplicite
+	function isExplicit
 		ifTrue: [ function disable.
 			self resizeAllSubviews	"This is call because now the container will take all the available space." ].
 	function := FTNilFunction table: self
@@ -913,7 +927,7 @@ FTTableMorph >> resizeAllSubviews [
 	self container setNeedsRefreshExposedRows.
 	self container updateExposedRows.
 	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: showIndex).
-	function isExplicite
+	function isExplicit
 		ifTrue: [ function resizeWidget ]
 ]
 
@@ -925,7 +939,7 @@ FTTableMorph >> resizeContainer [
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
-			(function isExplicite
+			(function isExplicit
 				ifTrue: [ function resizeContainerFrom: topLeft to: bottomRight ]
 				ifFalse: [ topLeft corner: bottomRight ])
 ]

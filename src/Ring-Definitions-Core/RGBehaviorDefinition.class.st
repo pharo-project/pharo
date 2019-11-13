@@ -215,7 +215,7 @@ RGBehaviorDefinition >> compiledMethodNamed: selector [
 	ifFalse:[ nil ]
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 RGBehaviorDefinition >> definition [
 
 	^ self definitionSource

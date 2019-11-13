@@ -373,7 +373,7 @@ TextStyle >> consolidate [
 				to: defFonts size
 				do: 
 					[ :j | 
-					(font name asUppercase copyWithout: $ ) = ((defFonts at: j) name asUppercase copyWithout: $ ) ifTrue: 
+					(font familyName asUppercase copyWithout: $ ) = ((defFonts at: j) familyName asUppercase copyWithout: $ ) ifTrue: 
 						[ fontArray 
 							at: i
 							put: (defFonts at: j) ] ] ]
@@ -477,17 +477,17 @@ TextStyle >> fontIndexOfSize: desiredHeight [
 
 { #category : #accessing }
 TextStyle >> fontNamed: fontName [  "TextStyle default fontNamed: 'TimesRoman10'"
-	^ fontArray detect: [:x | x name sameAs: fontName]
+	^ fontArray detect: [:x | x familyName sameAs: fontName]
 ]
 
 { #category : #accessing }
 TextStyle >> fontNames [  "TextStyle default fontNames"
-	^ fontArray collect: [:x | x name]
+	^ fontArray collect: [:x | x familyName]
 ]
 
 { #category : #accessing }
 TextStyle >> fontNamesAndSizes [  "TextStyle default fontNames"
-	^ fontArray collect: [:x | x name, ' ', x height printString]
+	^ fontArray collect: [:x | x familyName, ' ', x height printString]
 ]
 
 { #category : #'fonts and font indexes' }

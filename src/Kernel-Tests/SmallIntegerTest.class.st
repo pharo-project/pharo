@@ -13,6 +13,16 @@ SmallIntegerTest >> testBasicNew [
 	self should: [SmallInteger basicNew] raise: self defaultTestError. 
 ]
 
+{ #category : #'tests - Class Methods' }
+SmallIntegerTest >> testByteAt [
+
+	| number |
+	number := 16rABCDEF.
+	self assert: (number byteAt: 1) equals: 16rEF.
+	self assert: (number byteAt: 2) equals: 16rCD.
+	self assert: (number byteAt: 3) equals: 16rAB.
+]
+
 { #category : #'tests - operations' }
 SmallIntegerTest >> testCeiling [
 
@@ -20,16 +30,6 @@ SmallIntegerTest >> testCeiling [
 	self assert: -2 ceiling = -2.
 	self assert: 2.1 ceiling = 3.
 	self assert: -2.1 ceiling = -2.
-]
-
-{ #category : #'tests - Class Methods' }
-SmallIntegerTest >> testDigitAt [
-
-	| number |
-	number := 16rABCDEF.
-	self assert: (number digitAt: 1) equals: 16rEF.
-	self assert: (number digitAt: 2) equals: 16rCD.
-	self assert: (number digitAt: 3) equals: 16rAB.
 ]
 
 { #category : #'tests - arithmetic' }

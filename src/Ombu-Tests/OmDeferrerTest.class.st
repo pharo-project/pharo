@@ -1,5 +1,5 @@
 "
-An EpDeferrerTest is a test class for testing the behavior of EpDeferrer
+An EpDeferrerTest is a test class for testing the behavior of OmDeferrer
 "
 Class {
 	#name : #OmDeferrerTest,

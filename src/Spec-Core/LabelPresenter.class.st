@@ -44,7 +44,7 @@ LabelPresenter class >> title [
 
 { #category : #initialization }
 LabelPresenter >> defaultColor [
-	^ Smalltalk ui theme textColor
+	^ self theme textColor
 ]
 
 { #category : #api }

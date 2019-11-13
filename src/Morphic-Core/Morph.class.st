@@ -1116,6 +1116,12 @@ Morph >> asMorph [
 ]
 
 { #category : #converting }
+Morph >> asReadOnlyMorph [
+
+	^ self
+]
+
+{ #category : #converting }
 Morph >> asText [
 
 	| anchor embedMorphSignal |
@@ -3512,11 +3518,11 @@ Morph >> initialExtent [
 { #category : #initialization }
 Morph >> initialize [
 	"initialize the state of the receiver"
+
 	super initialize.
-	owner := nil.
 	submorphs := EmptyArray.
 	bounds := self defaultBounds.
-	color := self defaultColor.
+	color := self defaultColor
 ]
 
 { #category : #'accessing - extension' }

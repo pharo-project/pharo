@@ -14,5 +14,5 @@ ManifestNetworkUUID class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestNetworkUUID class >> manuallyResolvedDependencies [
-	^ #(#'AST-Core' #'Collections-Abstract')
+	^ #(#'Collections-Abstract')
 ]

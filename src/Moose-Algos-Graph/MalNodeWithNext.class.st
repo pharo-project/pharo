@@ -32,7 +32,7 @@ MalNodeWithNext >> nextNodes: aNodeList [
 	nextNodes := aNodeList
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 MalNodeWithNext >> to: targetNode [
 	self nextNodes add: targetNode 
 ]

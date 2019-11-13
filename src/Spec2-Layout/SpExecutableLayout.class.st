@@ -18,6 +18,7 @@ SpExecutableLayout >> adapterName [
 { #category : #accessing }
 SpExecutableLayout >> add: aName withConstraints: aBlock [
 	| constraints |
+
 	constraints := self constraintsClass new.
 	aBlock value: constraints.
 	children at: aName put: constraints
@@ -57,17 +58,35 @@ SpExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
 		adapter 
 			add: (self 
 				resolvePresenter: presenterNameOrLayout 
-				model: aPresenter 
+				presenter: aPresenter 
 				bindings: bindings) 
 			constraints: constraints ].
 
 	^ adapter
 ]
 
+{ #category : #accessing }
+SpExecutableLayout >> children [
+
+	^ children
+]
+
 { #category : #private }
 SpExecutableLayout >> constraintsClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> deepPresenters [
+	"answer all presenters in the layout hierarchy"
+	
+	^ self presenters
+		inject: #()
+		into: [ :all :each | 
+			all, (each isSpLayout 
+				ifTrue: [ each deepPresenters ]
+				ifFalse: [ { each } ]) ]
 ]
 
 { #category : #initialization }
@@ -96,20 +115,20 @@ SpExecutableLayout >> presenters [
 ]
 
 { #category : #private }
-SpExecutableLayout >> resolvePresenter: presenterNameOrLayout model: aModel bindings: bindings [
+SpExecutableLayout >> resolvePresenter: presenterNameOrLayout presenter: aPresenter bindings: bindings [
 
 	"most common case: I receive a symbol that I need to convert into a presenter"
 	presenterNameOrLayout isSymbol ifTrue: [ 
-		^ (self subpresenterOrLayoutNamed: presenterNameOrLayout of: aModel)
-			ifNil: [ self error: 'You presenter named "', presenterNameOrLayout , '" from ', aModel printString ,' was not initialized.' ] ].
+		^ (self subpresenterOrLayoutNamed: presenterNameOrLayout of: aPresenter)
+			ifNil: [ self error: 'You presenter named "', presenterNameOrLayout , '" from ', aPresenter printString ,' was not initialized.' ] ].
 	
 	"I receive a layout: dig inside."
 	presenterNameOrLayout isSpLayout ifTrue: [ 
-		^ presenterNameOrLayout buildAdapterFor: aModel bindings: bindings ].
+		^ presenterNameOrLayout buildAdapterFor: aPresenter bindings: bindings ].
 	
 	"I receive an arbitrary object (needs to understand #asPresenter)"
 	^ presenterNameOrLayout asPresenter
-		owner: aModel;
+		owner: aPresenter;
 		yourself
 ]
 
@@ -128,4 +147,12 @@ SpExecutableLayout >> subpresenterOrLayoutNamed: presenterNameOrLayout of: aPres
 	^ aPresenter additionalSubpresentersMap
 		at: presenterNameOrLayout
 		ifAbsent: [ aPresenter presenterAt: presenterNameOrLayout ifAbsent: [ self error: 'No presenter named "' , presenterNameOrLayout , '" was found in ' , aPresenter printString ] ]
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> traversePresentersDo: aBlock [
+
+	self 
+		traversePresentersDo: aBlock 
+		excluding: Set new
 ]

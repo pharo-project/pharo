@@ -7,8 +7,6 @@ Class {
 	#name : #MalKruskal,
 	#superclass : #MalGraphAlgorithm,
 	#instVars : [
-		'sortedEdges',
-		'treeEdges',
 		'sortBlock'
 	],
 	#category : #'Moose-Algos-Graph'
@@ -44,23 +42,18 @@ MalKruskal >> nodeClass [
 
 { #category : #running }
 MalKruskal >> run [
+	| treeEdges |
 	treeEdges := OrderedCollection new.
-	self sortedEdges: edges.
 	nodes do: #makeSet.
-	sortedEdges do: [ :edge|
-		(edge from find = edge to find) 
-		ifFalse: [ edge from union: edge to.
-					treeEdges add: edge ] ].
-	^ treeEdges 
+	(edges asSortedCollection: sortBlock)
+		reject: [ :edge | edge from find = edge to find ]
+		thenDo: [ :edge | 
+			edge from union: edge to.
+			treeEdges add: edge ].
+	^ treeEdges
 ]
 
 { #category : #configuration }
 MalKruskal >> sortBlock: aBlock [
 	sortBlock := aBlock
-]
-
-{ #category : #running }
-MalKruskal >> sortedEdges: aCollectionOfWeightedEdges [
-	sortedEdges := SortedCollection sortBlock: sortBlock.
-	sortedEdges addAll: aCollectionOfWeightedEdges 
 ]

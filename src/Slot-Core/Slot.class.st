@@ -204,7 +204,7 @@ Slot >> ensureProperties [
 ]
 
 { #category : #private }
-Slot >> ensureSlotIniatializationFor: aClass [
+Slot >> ensureSlotInitializationFor: aClass [
 	self ensureInitalizeMethodExists: aClass. 
 	self addSlotInitToInitialize: aClass.
 ]
@@ -247,7 +247,7 @@ Slot >> initialize: instance [
 { #category : #'class building' }
 Slot >> installingIn: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
-	self wantsInitialization ifTrue: [ self ensureSlotIniatializationFor: aClass ].
+	self wantsInitialization ifTrue: [ self ensureSlotInitializationFor: aClass ].
 ]
 
 { #category : #testing }

@@ -15,10 +15,11 @@ I format those imputs into something similar (check #expand: method for better e
 "
 Class {
 	#name : #ToggleMenuItemShortcut,
-	#superclass : #Object,
+	#superclass : #DisplayableObject,
 	#instVars : [
 		'keyText',
-		'owner'
+		'owner',
+		'color'
 	],
 	#category : #'Morphic-Base-Menus'
 }
@@ -53,23 +54,25 @@ ToggleMenuItemShortcut class >> normalize: aString [
 { #category : #private }
 ToggleMenuItemShortcut class >> normalizeCondensedStyle: aString [
 	"Assuming a keyText 'Old Style': the menu keys will come as 'o, k'"
+
 	^ String streamContents: [ :stream | | keys |
 		keys := (aString substrings: ',') collect: [ :each | each trimBoth ].
-		stream << OSPlatform current menuShortcutString capitalized << ' + '.
+		stream << OSPlatform current menuShortcutString capitalized << '+'.
 		keys 
 			do: [ :each | 
-			(each first isUppercase) ifTrue: [ stream << 'Shift + ' ].
+			(each first isUppercase) ifTrue: [ stream << 'Shift+' ].
 			stream << each asLowercase capitalized ]
-			separatedBy: [ stream << ' + ' ] ]
+			separatedBy: [ stream << '+' ] ]
 ]
 
 { #category : #private }
 ToggleMenuItemShortcut class >> normalizeFullStyle: aString [
 	"Assuming is a keytext with the format: 'cmd+shift+something'"
+
 	^ String streamContents: [ :stream | 
 			((aString substrings: '+') collect: #trimBoth)
 				do: [ :each | stream << (each asLowercase capitalized) ]
-				separatedBy: [ stream << ' + ' ] ]	
+				separatedBy: [ stream << '+' ] ]
 ]
 
 { #category : #'instance creation' }
@@ -103,6 +106,18 @@ ToggleMenuItemShortcut >> boundsForKeyText: aString font: aFont [
 	ktp := ktp - (ktw := aFont widthOfString: aString).
 	b := ktp @ ((self owner bounds top + self owner bounds bottom - aFont height) // 2) extent: ktw @ self owner height.
 	^ b
+]
+
+{ #category : #accessing }
+ToggleMenuItemShortcut >> color [
+
+	^ color ifNil: [ self theme ghostTextColor ]
+]
+
+{ #category : #accessing }
+ToggleMenuItemShortcut >> color: aColor [
+
+	color := aColor
 ]
 
 { #category : #drawing }

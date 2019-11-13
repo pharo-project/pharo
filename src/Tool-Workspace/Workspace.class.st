@@ -194,20 +194,8 @@ Workspace >> fileName: anObject [
 ]
 
 { #category : #'shout bindings' }
-Workspace >> guessTypeForName: aString [
-
-	| binding |
-
-	bindings
-		ifNotNil: [ binding := bindings at: aString ifAbsent: [ nil ].
-			binding ifNotNil: [ ^ binding class ]
-			].
-	^ nil
-]
-
-{ #category : #'shout bindings' }
 Workspace >> hasBindingOf: aString [ 
-	^(self guessTypeForName: aString) notNil
+	^bindings includesKey: aString asSymbol
 ]
 
 { #category : #'shout bindings' }
@@ -340,6 +328,11 @@ Workspace >> setBindings: aDictionary [
 
 	bindings := aDictionary.
 
+]
+
+{ #category : #accessing }
+Workspace >> sourceTextArea [
+	^ self textView
 ]
 
 { #category : #'file support' }

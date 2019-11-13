@@ -25,6 +25,12 @@ GLMMorphicRenderer >> open: aRenderable [
 	^ window openInWorld 
 ]
 
+{ #category : #OSWindow }
+GLMMorphicRenderer >> openInExternalWindow: aRenderable [
+    window := GLMOSWindowMorphWorldRenderer render: aRenderable from: self.
+    ^ window open
+]
+
 { #category : #'rendering presentations' }
 GLMMorphicRenderer >> renderAccordionCompositePresentation: aCompositePresentation [
 	^ GLMMorphicAccordionRenderer render: aCompositePresentation from: self

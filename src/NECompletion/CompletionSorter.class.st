@@ -6,6 +6,9 @@ Sorter allSubclasses collect: #kind an OrderedCollection('' 'alphabetical' '' ''
 Class {
 	#name : #CompletionSorter,
 	#superclass : #Object,
+	#instVars : [
+		'context'
+	],
 	#category : #'NECompletion-New'
 }
 
@@ -16,11 +19,21 @@ CompletionSorter class >> kind [
 
 { #category : #'tools registry' }
 CompletionSorter class >> register [
-	CompletionModel sorter: AlphabeticSorter
+	CompletionContext sorterClass: AlphabeticSorter
 ]
 
-{ #category : #description }
-CompletionSorter class >> sortCompletionList: aList [
+{ #category : #accessing }
+CompletionSorter >> context [
+	^ context
+]
 
-	self shouldBeImplemented.
+{ #category : #accessing }
+CompletionSorter >> context: anObject [
+	context := anObject
+]
+
+{ #category : #sorting }
+CompletionSorter >> sortCompletionList: aList [
+
+	self shouldBeImplemented
 ]

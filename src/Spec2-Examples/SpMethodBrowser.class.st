@@ -53,14 +53,8 @@ SpMethodBrowser >> action [
 	^ textModel acceptBlock
 ]
 
-{ #category : #api }
-SpMethodBrowser >> displayBlock: aBlock [
-
-	listModel displayBlock: aBlock
-]
-
 { #category : #initialization }
-SpMethodBrowser >> initializePresenter [
+SpMethodBrowser >> connectPresenters [
 	listModel
 		whenSelectionChangedDo: [ :selection | 
 			selection isEmpty
@@ -77,8 +71,14 @@ SpMethodBrowser >> initializePresenter [
 		wrapWith: [ :item | item methodClass name , '>>#' , item selector ]
 ]
 
+{ #category : #api }
+SpMethodBrowser >> displayBlock: aBlock [
+
+	listModel displayBlock: aBlock
+]
+
 { #category : #initialization }
-SpMethodBrowser >> initializeWidgets [
+SpMethodBrowser >> initializePresenters [
 	listModel := self instantiate: SpListPresenter .
 	textModel := self newCode.
 	toolbarModel := self instantiate: SpMethodToolbar.
@@ -127,6 +127,5 @@ SpMethodBrowser >> toolbarModel [
 
 { #category : #api }
 SpMethodBrowser >> wrapWith: aBlock [
-
-	listModel displayBlock: aBlock
+	listModel display: aBlock
 ]

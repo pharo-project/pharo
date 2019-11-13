@@ -1,10 +1,9 @@
 "
-My single instance, named Processor, coordinates the use of the physical processor by all Processes requiring service.
+My single instance,  named Processor,  coordinates the use of the physical processor by all Processes requiring service.
 
 My instances variables are managed by the VM. The VM has for role to choose which process should be executed and when.
 
-NB: DelayScheduler is THE HIGHEST priority code which is run in Pharo. See DelayScheduler for additional comments.
-
+NB: DelayBasicScheduler is THE HIGHEST priority code which is run in Pharo. See DelayBasicScheduler for additional comments.
 
 "
 Class {

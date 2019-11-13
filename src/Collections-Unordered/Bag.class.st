@@ -93,16 +93,6 @@ Bag >> associationsDo: aBlock [
 ]
 
 { #category : #accessing }
-Bag >> at: index [ 
-	self errorNotKeyed
-]
-
-{ #category : #accessing }
-Bag >> at: index put: anObject [ 
-	self errorNotKeyed
-]
-
-{ #category : #accessing }
 Bag >> cumulativeCounts [
 	"Answer with a collection of cumulative percents covered by elements so far."
 	

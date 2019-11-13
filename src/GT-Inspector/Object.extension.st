@@ -75,3 +75,8 @@ Object >> gtInspectorVariableValuePairs [
 	self gtInspectorVariableNodesIn: bindings.
 	^ bindings collect: [ :aNode | aNode key -> aNode value ]
 ]
+
+{ #category : #'*GT-Inspector' }
+Object >> inspectInExternalWindow [
+	^ GTInspector new openInExternalWindowOn: self
+]

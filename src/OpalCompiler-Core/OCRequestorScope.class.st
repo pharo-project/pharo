@@ -37,15 +37,6 @@ OCRequestorScope >> findVariable: aBlock ifNone: aNotFound [
 ]
 
 { #category : #lookup }
-OCRequestorScope >> lookupGlobalVar: aName [
-	"consider variables with upper case as global vars resolveable in the outer scope "
-
-	^ aName first isUppercase
-		ifTrue: [ outerScope lookupVar: aName ]
-		ifFalse: [ nil ]
-]
-
-{ #category : #lookup }
 OCRequestorScope >> lookupVar: name [
 
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
@@ -53,9 +44,9 @@ OCRequestorScope >> lookupVar: name [
 	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name].
 	
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
-	(compilationContext forSyntaxHighlighting
+	(compilationContext optionSkipSemanticWarnings
 		and: [ (requestor hasBindingOf: name asSymbol) not ])
-		ifTrue: [ ^ super lookupVar: name ].
+		ifTrue: [ ^ outerScope lookupVar: name ].
 
 	"the requestors #bindingOf may create a binding for not yet existing variables"
 	(requestor bindingOf: name asSymbol)
@@ -64,19 +55,7 @@ OCRequestorScope >> lookupVar: name [
 				assoc: assoc;
 				scope: self;
 				yourself ].
-	^ super lookupVar: name
-]
-
-{ #category : #lookup }
-OCRequestorScope >> lookupVar: name inContext: context [
-
-	name = 'self' ifTrue: [  ^outerScope lookupVar: name inContext: context outerContext].
-	name = 'super' ifTrue: [  ^outerScope lookupVar: name inContext: context outerContext].
-	name first isUppercase ifTrue: [ ^outerScope lookupVar: name inContext: context outerContext]. 
-	
-	(requestor bindingOf: name asSymbol) ifNotNil: [:assoc | 
-		^ OCLiteralVariable new assoc: assoc; scope: self; yourself].
-	^ super lookupVar: name inContext: context outerContext.
+	^ outerScope lookupVar: name
 ]
 
 { #category : #lookup }
@@ -93,17 +72,4 @@ OCRequestorScope >> requestor [
 { #category : #accessing }
 OCRequestorScope >> requestor: anObject [
 	requestor := anObject
-]
-
-{ #category : #lookup }
-OCRequestorScope >> variableNamed: name ifAbsent: aBlock [
-
-	name = 'self' ifTrue: [  ^outerScope lookupVar: name].
-	name = 'super' ifTrue: [  ^outerScope lookupVar: name].
-	name first isUppercase ifTrue: [ ^outerScope lookupVar: name ]. 
-	
-	(requestor bindingOf: name asSymbol) ifNotNil: [:assoc | 
-		^ OCLiteralVariable new assoc: assoc; scope: self; yourself].
-
-	^ aBlock value
 ]

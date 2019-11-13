@@ -27,7 +27,7 @@ SpTableCommonPropertiestTest >> testAddColumnInPresenterAddsItToWidget [
 	self presenter
 		addColumn: newColumn.
 
-	self assert: self widget columns last id equals: newColumn title
+	self assert: self adapter columns last id equals: newColumn title
 ]
 
 { #category : #tests }
@@ -41,7 +41,7 @@ SpTableCommonPropertiestTest >> testHideColumnHeadersInPresenterHidesThemInWidge
 { #category : #tests }
 SpTableCommonPropertiestTest >> testListWithoutColumnsHasSingleColumn [
 
-	self assert: self widget columns size equals: 1
+	self assert: self adapter columns size equals: 1
 ]
 
 { #category : #tests }

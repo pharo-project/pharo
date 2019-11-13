@@ -115,14 +115,12 @@ MCClassDefinition class >> name: nameString superclassName: superclassString tra
 
 { #category : #comparing }
 MCClassDefinition >> = aDefinition [
-	^(super = aDefinition)
-		and: [superclassName = aDefinition superclassName
-		and: [self traitCompositionString = aDefinition traitCompositionString
-		and: [self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [category = aDefinition category
-		and: [type = aDefinition type
-		and: [self sortedVariables = aDefinition sortedVariables
-		and: [comment = aDefinition comment]]]]]]]
+	^ super = aDefinition
+		and: [ superclassName = aDefinition superclassName
+		and: [ self traitCompositionString = aDefinition traitCompositionString
+		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
+		and: [ category = aDefinition category
+		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
 { #category : #visiting }
@@ -326,7 +324,7 @@ commentStamp: stampStringOrNil [
 	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
 	category := categoryString.
 	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
-	comment := commentString withSqueakLineEndings.
+	comment := commentString withInternalLineEndings.
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
@@ -354,7 +352,7 @@ commentStamp: stampStringOrNil [
 	classTraitComposition := classTraitCompositionString.
 	category := categoryString.
 	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
-	comment := commentString withSqueakLineEndings.
+	comment := commentString withInternalLineEndings.
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.

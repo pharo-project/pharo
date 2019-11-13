@@ -5,14 +5,10 @@ Class {
 	#name : #SpDemoTextInputPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'labelNormal',
 		'fieldNormal',
-		'labelDisabled',
 		'fieldDisabled',
-		'labelEncrypted',
 		'fieldEncrypted',
-		'fieldPlaceholderText',
-		'labelPlaceholderText'
+		'fieldPlaceholderText'
 	],
 	#category : #'Spec2-Examples-Demo-TextInput'
 }
@@ -21,13 +17,13 @@ Class {
 SpDemoTextInputPresenter class >> defaultSpec [
 	^ SpGridLayout new
 		beColumnNotHomogeneous;
-		add: #labelNormal at: 1 @ 1;
+		add: 'Normal:' at: 1 @ 1;
 		add: #fieldNormal at: 2 @ 1;
-		add: #labelDisabled at: 1 @ 2;
+		add: 'Disabled:' at: 1 @ 2;
 		add: #fieldDisabled at: 2 @ 2;
-		add: #labelPlaceholderText at: 1 @ 3;
+		add: 'Placeholder:' at: 1 @ 3;
 		add: #fieldPlaceholderText at: 2 @ 3;
-		add: #labelEncrypted at: 1 @ 4;
+		add: 'Password:' at: 1 @ 4;
 		add: #fieldEncrypted at: 2 @ 4;
 		yourself
 ]
@@ -73,58 +69,14 @@ SpDemoTextInputPresenter >> fieldPlaceholderText: anObject [
 ]
 
 { #category : #initialization }
-SpDemoTextInputPresenter >> initializeWidgets [
-	labelNormal := self newLabel label: 'Normal:'.
+SpDemoTextInputPresenter >> initializePresenters [
 	fieldNormal := self newTextInput.
 	
-	labelDisabled := self newLabel label: 'Disabled:'.
 	fieldDisabled := self newTextInput enabled: false.
 	
-	labelPlaceholderText := self newLabel label: 'Placeholder:'.
 	fieldPlaceholderText := self newTextInput placeholder: 'Placeholder text'.
 	
-	labelEncrypted := self newLabel label: 'Password:'.
 	fieldEncrypted := self newTextInput
 		text: 'Password';
 		bePassword
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelDisabled [
-	^ labelDisabled
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelDisabled: anObject [
-	labelDisabled := anObject
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelEncrypted [
-	^ labelEncrypted
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelEncrypted: anObject [
-	labelEncrypted := anObject
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelNormal [
-	^ labelNormal
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelNormal: anObject [
-	labelNormal := anObject
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelPlaceholderText [
-	^ labelPlaceholderText
-]
-
-{ #category : #accessing }
-SpDemoTextInputPresenter >> labelPlaceholderText: anObject [
-	labelPlaceholderText := anObject
 ]

@@ -42,14 +42,9 @@ SpDemoNotebookPresenter >> browserPage [
 				yourself ]
 ]
 
-{ #category : #pages }
-SpDemoNotebookPresenter >> dynamicPage [
-	^ SpNotebookPage title: 'Dynamic' icon: (self iconNamed: #nautilusIcon) provider: [ SpDynamicWidgetChange new ]
-]
-
 { #category : #initialization }
-SpDemoNotebookPresenter >> initializePresenter [
-	super initializePresenter.
+SpDemoNotebookPresenter >> connectPresenters [
+	super connectPresenters.
 
 	checkbox whenActivatedDo: [ notebook addPage: (dynamicPage := self dynamicPage) ].
 
@@ -60,8 +55,13 @@ SpDemoNotebookPresenter >> initializePresenter [
 					dynamicPage := nil ] ]
 ]
 
+{ #category : #pages }
+SpDemoNotebookPresenter >> dynamicPage [
+	^ SpNotebookPage title: 'Dynamic' icon: (self iconNamed: #nautilusIcon) provider: [ SpDynamicWidgetChange new ]
+]
+
 { #category : #initialization }
-SpDemoNotebookPresenter >> initializeWidgets [
+SpDemoNotebookPresenter >> initializePresenters [
 	notebook := self newNotebook.
 	checkbox := self newCheckBox.
 

@@ -11,7 +11,7 @@ ManifestOpalCompilerCore class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestOpalCompilerCore class >> manuallyResolvedDependencies [
-	^ #(#'Morphic-Base' #'Transcript-Core' #'System-Settings-Core' #CodeExport #'System-Announcements' #'System-Sources')
+	^ #(#'Morphic-Base' #'System-Settings-Core' #CodeExport #'System-Announcements' #'System-Sources')
 ]
 
 { #category : #'code-critics' }

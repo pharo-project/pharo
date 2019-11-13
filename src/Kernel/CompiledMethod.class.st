@@ -597,6 +597,8 @@ CompiledMethod >> isProvided: marker [
 
 { #category : #testing }
 CompiledMethod >> isRequired [
+	"A method is required if it is a method declaring a subclass responsibility or an explicit requirement. This mean the method needs to be overriden (in case of subclass reponsibility) or implemented (in case of explicit requirement)."
+
 	^ self isRequired: self markerOrNil
 ]
 

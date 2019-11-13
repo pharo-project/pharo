@@ -170,9 +170,6 @@ Timespan >> includesAny: aCollection [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Timespan >> includesAnyOf: aCollection [ 
-	
-	self flag: 'use includesAny: instead'.
-	
 	^ self includesAny: aCollection
 ]
 

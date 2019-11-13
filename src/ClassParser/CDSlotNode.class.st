@@ -2,7 +2,6 @@ Class {
 	#name : #CDSlotNode,
 	#superclass : #CDNode,
 	#instVars : [
-		'slot',
 		'node',
 		'index',
 		'start',
@@ -14,7 +13,7 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol initializationMessage: aMessageNode start: start stop: stop [
 	
 	^ self new
@@ -27,7 +26,7 @@ CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol initializatio
 		yourself
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol start: start stop: stop [
 	
 	^ self new

@@ -225,7 +225,7 @@ someMethod
 	^true! !
 Trait named: #TBehavior
 	uses: {}
-	category: ''Traits-Kernel-Traits''!' readStream.
+	package: ''Traits-Kernel-Traits''!' readStream.
 
 	trait := importer environment ask behaviorNamed: #'TBehavior classTrait'.
 	self assert: trait notNil.
@@ -249,7 +249,7 @@ someMethod
 	^true! !
 Trait named: #TBehavior
 	uses: {}
-	category: ''Traits-Kernel-Traits''!' readStream.
+	package: ''Traits-Kernel-Traits''!' readStream.
 
 	trait := importer environment ask behaviorNamed: #TBehavior.
 	self assert: trait notNil.
@@ -808,7 +808,7 @@ Ring2ChunkImporterTest >> testStandardTraitWithSingleTrait [
 	
 	importer fileInFrom: 'Trait named: #TClass
 	uses: TBehaviorCategorization
-	category: ''Traits-Kernel-Traits''' readStream.
+	package: ''Traits-Kernel-Traits''' readStream.
 
 	trait := importer environment ask behaviorNamed: #TClass.
 	self assert: trait notNil.

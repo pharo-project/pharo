@@ -128,11 +128,6 @@ Character class >> delete [
 	^ self value: 127
 ]
 
-{ #category : #'special characters' }
-Character class >> devide [
-	^self codePoint: 247
-]
-
 { #category : #'instance creation' }
 Character class >> digitValue: x [ 
 	"Answer the Character whose digit value is x. For example,
@@ -141,6 +136,11 @@ Character class >> digitValue: x [
 	| n |
 	n := x asInteger.
 	^self value: (n < 10 ifTrue: [n + 48] ifFalse: [n + 55])
+]
+
+{ #category : #'special characters' }
+Character class >> divide [
+	^self codePoint: 247
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -288,7 +288,7 @@ Character class >> space [
 
 { #category : #'special characters' }
 Character class >> specialCharacters [
-	^'+-/\*~<>=@,%|&?!', {self centeredDot . self devide . self plusOrMinus . self times }
+	^'+-/\*~<>=@,%|&?!', {self centeredDot . self divide . self plusOrMinus . self times }
 ]
 
 { #category : #queries }
@@ -425,7 +425,7 @@ Character >> basicIdentityHash [
 ]
 
 { #category : #converting }
-Character >> basicSqueakToIso [
+Character >> basicPharoToIso [
 	| tmp1 |
 	self asInteger < 128
 		ifTrue: [ ^ self ].

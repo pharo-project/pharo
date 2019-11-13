@@ -54,11 +54,11 @@ DynamicLoader >> loadSymbolFrom: handle name: symbol [
 ]
 
 { #category : #'accessing platform' }
-DynamicLoader >> macModuleName [
+DynamicLoader >> macLibraryName [
 	^ 'libc.dylib'
 ]
 
 { #category : #'accessing platform' }
-DynamicLoader >> unixModuleName [
+DynamicLoader >> unixLibraryName [
 	^ 'libdl.so'
 ]

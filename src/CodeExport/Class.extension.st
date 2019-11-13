@@ -33,7 +33,7 @@ Class >> fileOutOn: aFileStream [
 Class >> fileOutOn: aFileStream initializing: aBool [
 	"File a description of the receiver on aFileStream."
 
-	self crTrace: self name.
+	SystemNotification signal: self name.
 	super fileOutOn: aFileStream.
 	self class nonTrivial
 		ifTrue: [
@@ -48,7 +48,7 @@ Class >> fileOutPool: aPool onFileStream: aFileStream [
 	| aPoolName |
 	(aPool  isKindOf: SharedPool class) ifTrue:[^self notify: 'we do not fileout SharedPool type shared pools for now'].
 	aPoolName := self environment keyAtIdentityValue: aPool.
-	self crTrace: aPoolName.
+	SystemNotification signal: aPoolName.
 	aFileStream nextPutAll: 'Transcript show: ''' , aPoolName , '''; cr!'; cr.
 	aFileStream nextPutAll: 'Smalltalk at: #' , aPoolName , ' put: Dictionary new!'; cr.
 	aPool keys asSortedCollection do: [ :aKey | | aValue |

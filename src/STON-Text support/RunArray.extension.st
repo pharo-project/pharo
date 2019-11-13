@@ -1,6 +1,13 @@
 Extension { #name : #RunArray }
 
 { #category : #'*STON-Text support' }
+RunArray class >> fromSton: stonReader [
+	^ self new
+		fromSton: stonReader;
+		yourself
+]
+
+{ #category : #'*STON-Text support' }
 RunArray >> fromSton: stonReader [
 	stonReader parseNamedInstVarsFor: self
 ]

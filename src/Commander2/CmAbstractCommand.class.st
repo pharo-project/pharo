@@ -15,7 +15,7 @@ CmAbstractCommand >> acceptVisitor: aCmCommandOrGroup [
 ]
 
 { #category : #testing }
-CmAbstractCommand >> canBeRun [
+CmAbstractCommand >> canBeExecuted [
 	"This hook allows the command decide if it can be run with the context it holds or not.
 	 It should return a boolean.
 	"
@@ -32,7 +32,7 @@ CmAbstractCommand >> context: anObject [
 	^ self subclassResponsibility
 ]
 
-{ #category : #hooks }
+{ #category : #executing }
 CmAbstractCommand >> execute [
 	"Execute the actions that should be done by the command.
 	 This method expect that the context has been put in #context inst. var. if any context is relevant."

@@ -147,6 +147,13 @@ FFIFunctionSpec >> printType: typeAndArity on: stream [
 
 ]
 
+{ #category : #resolution }
+FFIFunctionSpec >> resolveUsing: aResolver [
+	
+	returnType resolveUsing: aResolver.
+	arguments do: [ :e | e resolveUsing: aResolver ]
+]
+
 { #category : #accessing }
 FFIFunctionSpec >> returnType [
 	^ returnType

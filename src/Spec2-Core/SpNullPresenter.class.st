@@ -16,6 +16,6 @@ SpNullPresenter class >> defaultSpec [
 ]
 
 { #category : #initialization }
-SpNullPresenter >> initializeWidgets [
+SpNullPresenter >> initializePresenters [
 	"Does nothing. That's the point of null presenter."
 ]
