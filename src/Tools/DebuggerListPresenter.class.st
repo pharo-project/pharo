@@ -20,31 +20,31 @@ DebuggerListPresenter class >> defaultSpec [
 	toolBarHeight := 35.
 	^ SpBoxLayout newHorizontal
 		add: (SpBoxLayout newVertical
+			add: 'Debuggers' height: titleHeight;
+			add: #debuggerList;
+			add: #debuggerListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
+			yourself);
+		add: (SpBoxLayout newVertical
 			add: 'Debug Sessions' height: titleHeight;
 			add: #debugSessionList;
 			add: #debugSessionListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
 			yourself		
 		);
-		add: (SpBoxLayout newVertical
-			add: 'Debugger List' height: titleHeight;
-			add: #debuggerList;
-			add: #debuggerListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
-			yourself);
 		yourself
 ]
 
 { #category : #api }
 DebuggerListPresenter class >> initialExtent [
-	^ 700@300
+	^ 750@300
 ]
 
 { #category : #'world menu' }
 DebuggerListPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'List Debuggers')
+	(aBuilder item: #'List Debuggers and Debug Sessions')
 		parent: #Debugging;
 		order: 3;
-		help: 'Lists all available debuggers in the image.';
+		help: 'Shows the list all available debuggers in the image, and all debug sessions';
 		action: [ self open ]
 ]
 
@@ -59,7 +59,7 @@ DebuggerListPresenter class >> open [
 
 { #category : #'world menu' }
 DebuggerListPresenter class >> title [
-	^ 'List of Available Debuggers'
+	^ 'Debuggers and Debug Sessions'
 ]
 
 { #category : #helpers }
@@ -78,6 +78,7 @@ DebuggerListPresenter >> debugDebugSessionAction [
 	| debugSession debuggerClass |
 	debugSession := (debugSessionList selectedItems ifEmpty: [ self inform: 'You must selected a Debug Session to debug'. ^ self ] ifNotEmpty: [:selectedItems | selectedItems at: 1]) debugSession.
 	debuggerClass := debuggerList selectedItems ifEmpty: [ self inform: 'You must select a debugger'. ^ self ] ifNotEmpty: [:selectedItems | selectedItems at: 1].
+	debuggerClass rankDebugSession: debugSession. "Give debuggerClass a chance to signal the DebugSessionCannotBeOpenedByThisDebugger exception if it cannot open debugSession"
 	debuggerClass openOn: debugSession withFullView: true andNotification: nil
 ]
 
