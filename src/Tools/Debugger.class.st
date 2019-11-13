@@ -19,6 +19,6 @@ Debugger class >> openOn: aDebugSession withFullView: aBool andNotification: aSt
 	"Members of listOfDebuggerClassesSortedByRank are of the form [debuggerClass, rank it gave to @aDebugSession]"
 	listOfDebuggerClassesSortedByRank := (self getDebuggerClasses collect: [ :aDebuggerClass | { aDebuggerClass. aDebuggerClass rankDebugSession: aDebugSession } ]) sort: [ :val1 :val2 | (val1 at: 2) >= (val2 at: 2) ].
 	(listOfDebuggerClassesSortedByRank collect: [ :couple | couple at: 1 ]) do: [ :aDebuggerClass |
-		[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. ^ nil] on: Error do: [  ].
+		[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. ^ nil] on: Error do: [ "Trying to open this debugger raised an error, so we stay in the loop and try the next highest-ranking debugger" ].
 		 ]
 ]
