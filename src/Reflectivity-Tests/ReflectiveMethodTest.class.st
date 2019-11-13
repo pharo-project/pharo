@@ -1,6 +1,6 @@
 Class {
 	#name : #ReflectiveMethodTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'selector'
 	],
@@ -157,7 +157,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariable [
 	| globalVar link |
 	selector := #exampleGlobalRead.
 	link := MetaLink new.
-	globalVar := (Smalltalk globals at: #GlobalForTesting) binding.
+	globalVar := (testingEnvironment at: #GlobalForTesting) binding.
 	globalVar link: link. 
 	self assert: (globalVar links includes: link).
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.
@@ -171,7 +171,7 @@ ReflectiveMethodTest >> testSetLinkOnGlobalVariableAndUninstall [
 	| global link |
 	selector := #exampleGlobalRead.
 	link := MetaLink new.
-	global := (Smalltalk globals at: #GlobalForTesting) binding.
+	global := (testingEnvironment at: #GlobalForTesting) binding.
 	global link: link.
 	self assert: (global links includes: link). 
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: ReflectiveMethod.

@@ -1,7 +1,7 @@
 "
 I am a regex refactoring renaming class categories (package names).
 
-
+See comment of superclass for a nice script to be adapated to package names.
 "
 Class {
 	#name : #RBCategoryRegexRefactoring,

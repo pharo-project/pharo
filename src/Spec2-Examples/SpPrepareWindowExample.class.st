@@ -101,7 +101,7 @@ SpPrepareWindowExample >> initialize [
 ]
 
 { #category : #initialization }
-SpPrepareWindowExample >> initializeWidgets [
+SpPrepareWindowExample >> initializePresenters [
 	
 	text := self newText text: 'Implementing #prepareWindow:, you can add a menu, toolbar and statusBar to your component.
 

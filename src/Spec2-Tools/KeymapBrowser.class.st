@@ -69,6 +69,15 @@ KeymapBrowser >> collectAllShortcuts [
 	self kmTable items: self shortcuts
 ]
 
+{ #category : #initialization }
+KeymapBrowser >> connectPresenters [
+	filterField
+		whenTextChangedDo: [ :text | 
+			clearFilterButton enabled: text isNotEmpty.
+			self setFilter: text ].
+	clearFilterButton action: [ filterField text: '' ]
+]
+
 { #category : #accessing }
 KeymapBrowser >> filterField [
 	^ filterField
@@ -85,16 +94,7 @@ KeymapBrowser >> initialExtent [
 ]
 
 { #category : #initialization }
-KeymapBrowser >> initializePresenter [
-	filterField
-		whenTextChangedDo: [ :text | 
-			clearFilterButton enabled: text isNotEmpty.
-			self setFilter: text ].
-	clearFilterButton action: [ filterField text: '' ]
-]
-
-{ #category : #initialization }
-KeymapBrowser >> initializeWidgets [
+KeymapBrowser >> initializePresenters [
 	kmTable := self newTable.
 	kmTable
 		addColumn: (SpStringTableColumn title: 'Shortcut' evaluated: [ :aKMShortcutDeclaration | aKMShortcutDeclaration realValue shortcut asString ]);
@@ -135,7 +135,7 @@ KeymapBrowser >> kmTable: anObject [
 { #category : #private }
 KeymapBrowser >> menu: aMenu shifted: aBoolean [
 	(aMenu add: 'Refresh' target: self selector: #collectAllShortcuts) icon: (self iconNamed: #smallUpdateIcon).
-	self kmTable selection selectedItem ifNil: [ ^ aMenu ].
+	self kmTable selectedItem ifNil: [ ^ aMenu ].
 	(aMenu add: 'Browse Definition' target: self selector: #browseDefinitionOfSelectedShortcut) icon: (self iconNamed: #smallSystemBrowserIcon).
 	(aMenu add: 'Inspect Action' target: self selector: #inspectActionOfSelectedShortcut) icon: (self iconNamed: #smallInspectItIcon).
 	^ aMenu

@@ -116,7 +116,7 @@ RGTraitStrategy >> definition [
 				store: self owner name.
 		stream cr; tab; nextPutAll: 'uses: ';
 				nextPutAll: self owner traitCompositionString.
-		stream cr; tab; nextPutAll: 'category: ';
+		stream cr; tab; nextPutAll: 'package: ';
 				store: self owner category asString].
 ]
 

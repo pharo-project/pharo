@@ -15,18 +15,16 @@ BaselineOfSlot class >> corePackages [
 { #category : #baselines }
 BaselineOfSlot >> baseline: spec [
 	<baseline>
+	spec
+		for: #common
+		do: [ spec
+				package: 'Slot-Core';
+				package: 'Slot-Examples' with: [ spec requires: #('Slot-Core') ];
+				package: 'Slot-Tests' with: [ spec requires: #('Slot-Core' 'Slot-Examples') ];
+				package: 'VariablesLibrary' with: [ spec requires: #('Slot-Core') ];
+				package: 'VariablesLibrary-Tests' with: [ spec requires: #('VariablesLibrary' 'Slot-Tests') ].
 
-	spec for: #common do: [
-
-		spec 
-			package: 'Slot-Core';
-			package: 'Slot-Examples' with: [ spec requires: #('Slot-Core') ];
-			package: 'Slot-Tests' with: [ spec requires: #('Slot-Core' 'Slot-Examples') ].
-
-		spec group: 'core' with: #('Slot-Core').
-	
-		spec group: 'default' with: #('core' 'slot-tests').
-		spec group: 'slot-tests' with: #('Slot-Tests').		
-	 ].	
-
+			spec
+				group: 'core' with: #('Slot-Core' 'VariablesLibrary');
+				group: 'slot-tests' with: #('Slot-Tests' 'VariablesLibrary-Tests') ]
 ]

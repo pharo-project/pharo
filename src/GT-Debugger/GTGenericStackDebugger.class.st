@@ -489,7 +489,8 @@ GTGenericStackDebugger >> setDebuggerToFirstNonFilteredContext [
 	| selection |
 	selection := self stackPresentation selection.
 	(selection isNil or: [ selection method hasPragmaNamed: #debuggerCompleteToSender ])
-		ifTrue: [ self stackPresentation selection: self filteredStack first ]
+		ifTrue: [
+			  self filteredStack ifNotEmpty: [ :stack | self stackPresentation selection: stack first ]]
 ]
 
 { #category : #accessing }
@@ -533,11 +534,6 @@ GTGenericStackDebugger >> stackWidgetIn: composite [
 		column: 'Other' 
 			evaluated: [ :aContext | self formatStackExtraColumnForContext: aContext ];
 		hideHeader
-]
-
-{ #category : #'old api' }
-GTGenericStackDebugger >> sugsContext [
-	^SugsDebuggerContext model: self
 ]
 
 { #category : #'printing/formatting' }

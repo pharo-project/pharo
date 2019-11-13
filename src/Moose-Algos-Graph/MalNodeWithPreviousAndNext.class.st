@@ -11,7 +11,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #adding }
+{ #category : #accessing }
 MalNodeWithPreviousAndNext >> from: sourceNode [
 	self previousNodes add: sourceNode 
 ]

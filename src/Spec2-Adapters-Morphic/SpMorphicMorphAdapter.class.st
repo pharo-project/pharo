@@ -16,8 +16,8 @@ SpMorphicMorphAdapter >> buildWidget [
 	self presenter whenMorphChangedDo: [ :morph | 
 		self applyStyle: morph.
 		currentMorph owner 
-			replaceSubmorph: currentMorph 
-			by: morph ].
+			ifNotNil: [ :ownerMorph | 
+				ownerMorph replaceSubmorph: currentMorph by: morph ] ].
 	
 	^ currentMorph
 ]

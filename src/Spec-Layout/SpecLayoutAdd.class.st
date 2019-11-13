@@ -57,11 +57,9 @@ SpecLayoutAdd >> generateArguments [
 
 { #category : #initialization }
 SpecLayoutAdd >> initialize [
-
 	super initialize.
 	self selector: #add:.
-	layoutFrame := SpecLayoutFrame identity.
-	subwidget := nil.
+	layoutFrame := SpecLayoutFrame identity
 ]
 
 { #category : #accessing }

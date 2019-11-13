@@ -14,32 +14,12 @@ Class {
 	#category : #'Commander2-Commands'
 }
 
-{ #category : #accessing }
-CmCommandDecorator >> basicDescription [
-	^ self decoratedCommand basicDescription
-]
-
-{ #category : #accessing }
-CmCommandDecorator >> basicDescription: aString [
-	self decoratedCommand basicDescription: aString
-]
-
-{ #category : #accessing }
-CmCommandDecorator >> basicName [
-	^ self decoratedCommand basicName
-]
-
-{ #category : #accessing }
-CmCommandDecorator >> basicName: aString [
-	self decoratedCommand basicName: aString
-]
-
 { #category : #testing }
-CmCommandDecorator >> canBeRun [
+CmCommandDecorator >> canBeExecuted [
 	"This hook allows the command decide if it can be run with the context it holds or not.
 	 It should return a boolean.
 	"
-	^ self decoratedCommand canBeRun
+	^ self decoratedCommand canBeExecuted
 ]
 
 { #category : #accessing }
@@ -72,7 +52,22 @@ CmCommandDecorator >> description [
 	^ self decoratedCommand description
 ]
 
-{ #category : #hooks }
+{ #category : #accessing }
+CmCommandDecorator >> description: aString [
+	self decoratedCommand description: aString
+]
+
+{ #category : #accessing }
+CmCommandDecorator >> dynamicDescription [
+	^ self decoratedCommand dynamicDescription
+]
+
+{ #category : #accessing }
+CmCommandDecorator >> dynamicName [
+	^ self decoratedCommand dynamicName
+]
+
+{ #category : #executing }
 CmCommandDecorator >> execute [
 	self decoratedCommand execute
 ]
@@ -80,4 +75,9 @@ CmCommandDecorator >> execute [
 { #category : #accessing }
 CmCommandDecorator >> name [
 	^ self decoratedCommand name
+]
+
+{ #category : #accessing }
+CmCommandDecorator >> name: aString [
+	self decoratedCommand name: aString
 ]

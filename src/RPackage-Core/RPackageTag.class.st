@@ -79,13 +79,13 @@ RPackageTag >> ensureSystemCategory [
 ]
 
 { #category : #accessing }
-RPackageTag >> extensionCategoriesForClass: aClass [ 
-	^ self package extensionCategoriesForClass: aClass
+RPackageTag >> extendedClasses [
+	^ #()
 ]
 
 { #category : #accessing }
-RPackageTag >> extensionClasses [ 
-	^ #()
+RPackageTag >> extensionCategoriesForClass: aClass [ 
+	^ self package extensionCategoriesForClass: aClass
 ]
 
 { #category : #testing }

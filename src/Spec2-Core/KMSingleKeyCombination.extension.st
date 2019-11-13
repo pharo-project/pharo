@@ -5,3 +5,9 @@ KMSingleKeyCombination >> spCurrentCharacter [
 
 	^ key
 ]
+
+{ #category : #'*Spec2-Core' }
+KMSingleKeyCombination >> spModifier [
+
+	^ self modifier
+]

@@ -21,7 +21,6 @@ SpMorphPresenter >> defineInputPorts [
 
 { #category : #initialization }
 SpMorphPresenter >> initialize [
-
 	super initialize.
 ]
 

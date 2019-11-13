@@ -1943,6 +1943,27 @@ StringTest >> testWithFirstCharacterDownshifted [
 ]
 
 { #category : #'tests - internet' }
+StringTest >> testWithInternalLineEndings [
+
+	{
+		'abc' -> 'abc'.
+		'abc', String cr -> ('abc', String cr).
+		'abc', String lf -> ('abc', String cr).
+		'abc', String crlf -> ('abc', String cr).
+		String cr, 'abc' -> (String cr, 'abc').
+		String lf, 'abc' -> (String cr, 'abc').
+		String crlf, 'abc' -> (String cr, 'abc').
+		'abc', String cr, String cr, 'abc' -> ('abc', String cr, String cr, 'abc').
+		'abc', String lf, String lf, 'abc' -> ('abc', String cr, String cr, 'abc').
+		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
+		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		(WideString with: 403 asCharacter with: Character lf) -> (WideString with: 403 asCharacter with: Character cr).
+	} do: [ :each |
+		self assert: each key withInternalLineEndings equals: each value ]
+]
+
+{ #category : #'tests - internet' }
 StringTest >> testWithInternetLineEndings [
 
 	{
@@ -1992,28 +2013,9 @@ StringTest >> testWithSeparatorsCompacted [
 ]
 
 { #category : #'tests - internet' }
-StringTest >> testWithSqueakLineEndings [
-
-	{
-		'abc' -> 'abc'.
-		'abc', String cr -> ('abc', String cr).
-		'abc', String lf -> ('abc', String cr).
-		'abc', String crlf -> ('abc', String cr).
-		String cr, 'abc' -> (String cr, 'abc').
-		String lf, 'abc' -> (String cr, 'abc').
-		String crlf, 'abc' -> (String cr, 'abc').
-		'abc', String cr, String cr, 'abc' -> ('abc', String cr, String cr, 'abc').
-		'abc', String lf, String lf, 'abc' -> ('abc', String cr, String cr, 'abc').
-		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
-		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
-		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
-	} do: [ :each |
-		self assert: each key withSqueakLineEndings equals: each value ]
-]
-
-{ #category : #'tests - internet' }
 StringTest >> testWithUnixLineEndings [
 
+	| original newString |
 	{
 		'abc' -> 'abc'.
 		'abc', String cr -> ('abc', String lf).
@@ -2027,8 +2029,15 @@ StringTest >> testWithUnixLineEndings [
 		'abc', String crlf, String crlf, 'abc' -> ('abc', String lf, String lf, 'abc').
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
+		(WideString with: 403 asCharacter with: Character cr) -> (WideString with: 403 asCharacter with: Character lf).
 	} do: [ :each |
-		self assert: each key withUnixLineEndings equals: each value ]
+		self assert: each key withUnixLineEndings equals: each value ].
+	
+	original :='asa' , String cr , 'asa'.
+	self assert: (original at: 4) equals: Character cr.
+	newString := original withUnixLineEndings.
+	self assert: (original at: 4) equals: Character cr.
+	self assert: (newString at: 4) equals: Character lf.
 ]
 
 { #category : #'tests - converting' }

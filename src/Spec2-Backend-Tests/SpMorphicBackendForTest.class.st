@@ -1,18 +1,19 @@
 Class {
 	#name : #SpMorphicBackendForTest,
 	#superclass : #SpAbstractBackendForTest,
+	#traits : 'SpTMorphicUIRedrawer',
+	#classTraits : 'SpTMorphicUIRedrawer classTrait',
 	#instVars : [
-		'uiWaitingSemaphore',
 		'app'
 	],
 	#category : #'Spec2-Backend-Tests'
 }
 
 { #category : #asserting }
-SpMorphicBackendForTest >> assertHasHeader: aFTTableMorph [
+SpMorphicBackendForTest >> assertHasHeader: anAdapter [
 	self waitUntilUIRedrawed.
 
-	self assert: (aFTTableMorph instVarNamed: #showColumnHeaders)
+	self assert: (anAdapter widget instVarNamed: #showColumnHeaders)
 ]
 
 { #category : #asserting }
@@ -32,13 +33,13 @@ SpMorphicBackendForTest >> assertImage: actual equals: expected [
 ]
 
 { #category : #asserting }
-SpMorphicBackendForTest >> assertList: aFTTableMorph displayItems: aCollection [ 
+SpMorphicBackendForTest >> assertList: anAdapter displayItems: aCollection [ 
 	
 	| tableContainer tableRowContents |
 	
 	self waitUntilUIRedrawed.
 	
-	tableContainer := aFTTableMorph submorphs first.
+	tableContainer := anAdapter widget submorphs first.
 	tableRowContents := tableContainer submorphs collect: [ :row | 
 		| cell |
 		cell := row submorphs first.
@@ -50,13 +51,13 @@ SpMorphicBackendForTest >> assertList: aFTTableMorph displayItems: aCollection [
 ]
 
 { #category : #asserting }
-SpMorphicBackendForTest >> assertListHeaderOf: aFTTableMorph equals: aCollection [ 
+SpMorphicBackendForTest >> assertListHeaderOf: anAdapter equals: aCollection [ 
 
 	| tableContainer tableRowMorph cells |
 	
 	self waitUntilUIRedrawed.
 	
-	tableContainer := aFTTableMorph submorphs first.
+	tableContainer := anAdapter widget submorphs first.
 	tableRowMorph := tableContainer submorphs first.
 	cells := tableRowMorph submorphs.
 	
@@ -70,49 +71,42 @@ SpMorphicBackendForTest >> canChangeFonts [
 ]
 
 { #category : #emulating }
-SpMorphicBackendForTest >> clickFirstRowAndColumn: aFTTableMorph [ 
+SpMorphicBackendForTest >> clickFirstRowAndColumn: anAdapter [ 
 
 	self waitUntilUIRedrawed.
 	
-	aFTTableMorph mouseDown: (MouseEvent new
+	anAdapter widget mouseDown: (MouseEvent new
 		setHand: HandMorph new;
-		setPosition: aFTTableMorph submorphs first submorphs first bounds center;
+		setPosition: anAdapter widget submorphs first submorphs first bounds center;
 		yourself).
 
 ]
 
 { #category : #asserting }
-SpMorphicBackendForTest >> denyHasHeader: aFTTableMorph [ 
+SpMorphicBackendForTest >> denyHasHeader: anAdapter [ 
 
 	| tableContainer |
 	self waitUntilUIRedrawed.
 
-	tableContainer := aFTTableMorph submorphs first.
+	tableContainer := anAdapter widget submorphs first.
 	self assert: tableContainer submorphs size = 3
 ]
 
 { #category : #simulating }
-SpMorphicBackendForTest >> doubleClickFirstRowAndColumn: aFTTableMorph [ 
+SpMorphicBackendForTest >> doubleClickFirstRowAndColumn: anAdapter [ 
 
 	self waitUntilUIRedrawed.
 
-	aFTTableMorph doubleClick: (MouseEvent new
-		setPosition: aFTTableMorph submorphs first submorphs first bounds center;
+	anAdapter widget doubleClick: (MouseEvent new
+		setPosition: anAdapter widget submorphs first submorphs first bounds center;
 		yourself).
 
 ]
 
-{ #category : #running }
+{ #category : #initialization }
 SpMorphicBackendForTest >> initialize [
-
 	super initialize.
-	uiWaitingSemaphore := Semaphore new
-]
-
-{ #category : #running }
-SpMorphicBackendForTest >> isRunningInUIProcess [
-
-	^ UIManager default uiProcess == Processor activeProcess
+	self initializeSemaphore
 ]
 
 { #category : #opening }
@@ -131,22 +125,4 @@ SpMorphicBackendForTest >> runTest: aBlock [
 	app := SpApplication new.
 	app useBackend: #Morphic.
 	aBlock value
-]
-
-{ #category : #running }
-SpMorphicBackendForTest >> waitUntilUIRedrawed [
-
-	"I wait until the UI has been redrawn. 
-	I take care of selecting how to do it. 
-	If I am in the CI I should defer a semaphore signal. 
-	If I am running in the UI process I can directly execute a doOneCycle on the World.
-	If I am in the CI the tests and the UI run in different process. So I should not do a #doOneCycle.
-	If I do it, I am in a race condition!"
-	self isRunningInUIProcess ifTrue: [ 
-		self currentWorld doOneCycle.
-		^ self.	
-	]. 
-
-	self currentWorld defer: [ uiWaitingSemaphore ifNotNil: #signal ].	
-	uiWaitingSemaphore wait: 500 milliSecond
 ]

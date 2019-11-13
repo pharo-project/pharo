@@ -110,6 +110,13 @@ BehaviorTest >> testIncludesMethod [
 	self deny: (LookupKey includesMethod: Point>>#x).
 ]
 
+{ #category : #metrics }
+BehaviorTest >> testInstSize [
+	self assert: Object instSize equals: 0.
+	self assert: Point instSize equals: 2.
+	self assert: Metaclass instSize equals: 6
+]
+
 { #category : #tests }
 BehaviorTest >> testIsAbstract [
 
@@ -177,13 +184,6 @@ BehaviorTest >> testMethodsWritingSlot [
 	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x)) size.
 	numberViaIVar := (Point whichSelectorsStoreInto: 'x') size.
 	self assert: numberViaSlot = numberViaIVar.
-]
-
-{ #category : #metrics }
-BehaviorTest >> testNumberOfInstanceVariables [
-	self assert: Object numberOfInstanceVariables equals: 0.
-	self assert: Point numberOfInstanceVariables equals: 2.
-	self assert: Metaclass numberOfInstanceVariables equals: 1
 ]
 
 { #category : #'tests - properties' }

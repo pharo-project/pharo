@@ -116,13 +116,6 @@ FileReference >> binaryReadStream [
 ]
 
 { #category : #streams }
-FileReference >> binaryReadWriteStream [
-	"Answer a binary read/write stream on the receiver"
-
-	^ ZnBufferedReadWriteStream on: (filesystem binaryWriteStreamOn: self path)
-]
-
-{ #category : #streams }
 FileReference >> binaryWriteStream [
 	"Answer a buffered binary write stream on the receiver"
 
@@ -395,12 +388,6 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 ]
 
 { #category : #accessing }
-FileReference >> mimeTypes [
-	"Return the possible mime types for the given path."
-	^ filesystem mimeTypesAt: path
-]
-
-{ #category : #accessing }
 FileReference >> modificationTime [ 
 	"Returns the last date of modification of self"
 	^ filesystem modificationTimeOf: self path
@@ -599,6 +586,13 @@ FileReference >> uid: uid gid: gid [
 	An id of nil leaves it unchanged."
 
 	^filesystem file: self path uid: uid gid: gid
+]
+
+{ #category : #streams }
+FileReference >> unbufferedBinaryWriteStream [
+	"Answer a binary read/write stream on the receiver"
+
+	^ filesystem binaryWriteStreamOn: self path
 ]
 
 { #category : #versions }

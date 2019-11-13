@@ -11,38 +11,38 @@ Class {
 	#category : #'Glamour-Rubric-Presentations'
 }
 
-{ #category : #'actions browsing' }
-GLMRubricSmalltalkCodePresentation >> browseIt [
+{ #category : #accessing }
+GLMRubricSmalltalkCodePresentation >> browseFullClass [
 
-	self announce: (GLMTextEditorRequest for: #browseIt)
+ 	self announce: (GLMTextEditorRequest for: #browseFullClass)
 ]
 
 { #category : #accessing }
 GLMRubricSmalltalkCodePresentation >> browsingSelectionActions [
 
 	^ { (GLMGenericAction new) 
-				title: 'Browse it';
+				title: 'Browse Full Class';
 				action: [ :aPresentation |
-					aPresentation browseIt  ]; 
+					aPresentation browseFullClass  ]; 
 				shortcut: $b; 
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'Senders of it';
+				title: 'Senders';
 				action: [ :aPresentation |
 					aPresentation sendersOfIt ]; 
 				shortcut: $n; 
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'Implementors of it';
+				title: 'Implementors';
 				action: [ :aPresentation |
 					aPresentation implementorsOfIt ]; 
 				shortcut: $m; 
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'References to it';
+				title: 'References';
 				action: [ :aPresentation |
 					aPresentation referencesToIt ]; 
 				"shortcut: $N; "
@@ -60,7 +60,7 @@ GLMRubricSmalltalkCodePresentation >> browsingSelectionActions [
 				category: 'Code search...';
 				yourself.
 		(GLMGenericAction new) 
-				title: 'Method source with it';
+				title: 'Method source containing selection';
 				action: [ :aPresentation |
 					aPresentation selectLine.
 					self systemNavigation 
@@ -113,40 +113,40 @@ GLMRubricSmalltalkCodePresentation >> evaluateSelectionAndDo: aBlock [
 GLMRubricSmalltalkCodePresentation >> executionSelectionActions [
 
 	^ { 
-		(GLMGenericAction new) 
+		GLMGenericAction new 
 				title: 'Do it';
 				action: [ :aPresentation |
 					aPresentation highlightEvaluateAndDo: [ :result | ] ]; 
 				keymap: PharoShortcuts current doItShortcut; 
 				icon: GLMUIThemeExtraIcons glamorousSpawn;
 				yourself.
-		(GLMGenericAction new) 
+		GLMGenericAction new 
 				title: 'Print it';
 				action: [ :aPresentation |
 					aPresentation printSelection ]; 
 				keymap: PharoShortcuts current printItShortcut; 
 				yourself.
-		(GLMGenericAction new) 
+		GLMGenericAction new 
 				title: 'Inspect it'; 
 				action: [ :aPresentation |
 					aPresentation highlightEvaluateAndDo: [ :result | result inspect ] ]; 
 				keymap: PharoShortcuts current inspectItShortcut; 
 				icon: GLMUIThemeExtraIcons glamorousInspect;
 				yourself.
-		(GLMGenericAction new) 
+		GLMGenericAction new 
 				title: 'Basic Inspect it'; 
 				action: [ :aPresentation |
 					aPresentation highlightEvaluateAndDo: [ :result | result basicInspect ] ]; 
 				shortcut: $I; 
 				icon: GLMUIThemeExtraIcons glamorousInspect;
 				yourself.
-		(GLMGenericAction new) 
+		GLMGenericAction new 
 				title: 'Debug it'; 
 				action: [ :aPresentation |
 					aPresentation debugSelection ]; 
 				shortcut: $D;
 				yourself.
-		(GLMGenericAction new) 
+		GLMGenericAction new 
 				title: 'Profile it'; 
 				action: [ :aPresentation |
 					aPresentation profileSelection ]; 

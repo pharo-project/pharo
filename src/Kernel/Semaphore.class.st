@@ -115,6 +115,25 @@ test is written carefully so that it will result in bytecodes only."
 	^self critical: mutuallyExcludedBlock
 ]
 
+{ #category : #'mutual exclusion' }
+Semaphore >> criticalReleasingOnError: mutuallyExcludedBlock [
+	"This is like #critical: but releasing the lock if there is an exception in the block"	
+	| blockValue caught |
+	caught := false.
+	[
+		caught := true.
+		self wait.
+		blockValue := mutuallyExcludedBlock 
+			on: Exception 
+			do: [ :e | caught ifTrue: [self signal]. 
+				caught := false.
+				e pass.].
+
+	] ensure: [caught ifTrue: [self signal]].
+
+	^blockValue
+]
+
 { #category : #'process termination handling' }
 Semaphore >> handleProcessTerminationOfWaitingContext: suspendedContext [
 

@@ -273,11 +273,6 @@ CustomHelp class >> systemIcon [
 	^self icon
 ]
 
-{ #category : #accessing }
-CustomHelp class >> theme [
-	^ Smalltalk ui theme
-]
-
 { #category : #formatting }
 CustomHelp class >> underlined: aString [
 	"Return Text object with underlined emphasis."

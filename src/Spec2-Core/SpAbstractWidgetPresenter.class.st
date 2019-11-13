@@ -1,5 +1,5 @@
 "
-AbstractBasicWidget is an abstract class for basic widgets
+SpAbstractBasicWidget is an abstract class for basic widgets
 
 I collaborate with
 - ValueHolder to managed some of my variables.
@@ -37,7 +37,8 @@ Class {
 		'#transferBlock => SpObservableSlot',
 		'#color => SpObservableSlot',
 		'#help => SpObservableSlot',
-		'#enabled => SpObservableSlot'
+		'#enabled => SpObservableSlot',
+		'#styles'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -52,6 +53,11 @@ SpAbstractWidgetPresenter class >> adapterName [
 SpAbstractWidgetPresenter class >> defaultSpec [
 	<spec: #default>
 	^ SpAbstractWidgetLayout for: self adapterName
+]
+
+{ #category : #testing }
+SpAbstractWidgetPresenter class >> isAbstract [
+	^ self = SpAbstractWidgetPresenter
 ]
 
 { #category : #'drag and drop' }
@@ -69,6 +75,12 @@ SpAbstractWidgetPresenter >> acceptDroppingMorph: draggedMorph event: event inMo
 
 	^ self acceptDropBlock cull: draggedMorph model model cull: event cull: source cull: source model 
 
+]
+
+{ #category : #api }
+SpAbstractWidgetPresenter >> addStyle: aStyle [
+
+	styles := styles copyWith: aStyle
 ]
 
 { #category : #api }
@@ -125,7 +137,6 @@ SpAbstractWidgetPresenter >> defaultTransferFor: passenger from: source [
 
 { #category : #api }
 SpAbstractWidgetPresenter >> disable [
-	"<api: #do>"
 	"Disable the label"
 	
 	self enabled: false
@@ -163,7 +174,6 @@ SpAbstractWidgetPresenter >> dropEnabled: aBoolean [
 
 { #category : #api }
 SpAbstractWidgetPresenter >> enable [
-	"<api: #do>"
 	"Enable the label"
 	
 	self enabled: true
@@ -209,7 +219,6 @@ SpAbstractWidgetPresenter >> help: aString [
 SpAbstractWidgetPresenter >> initialize [
 	super initialize.
 
-	help := nil.
 	borderWidth := 0.
 	borderColor := Color transparent.
 	enabled := true.
@@ -226,17 +235,32 @@ SpAbstractWidgetPresenter >> initialize [
 	self property: #color whenChangedDo: [ :newColor | self withAdapterDo: [ :w | w update: #color: with: {newColor} ] ].
 	self whenEnabledChangedDo: [ :b | self withAdapterDo: [ :w | w update: #enabled: with: {b} ] ].
 	self property: #dragEnabled whenChangedDo: [ :b | self withWidgetDo: [ :w | w update: #dragEnabled: with: {b} ] ].
-	self property: #dropEnabled whenChangedDo: [ :b | self withWidgetDo: [ :w | w update: #dropEnabled: with: {b} ] ]
+	self property: #dropEnabled whenChangedDo: [ :b | self withWidgetDo: [ :w | w update: #dropEnabled: with: {b} ] ].
+
+	styles := #()
 ]
 
 { #category : #initialization }
-SpAbstractWidgetPresenter >> initializeWidgets [ 
+SpAbstractWidgetPresenter >> initializePresenters [ 
 	"ignore this method since there is no composition in basic widgets"
 ]
 
 { #category : #api }
 SpAbstractWidgetPresenter >> isEnabled [
 	^ enabled
+]
+
+{ #category : #api }
+SpAbstractWidgetPresenter >> removeStyle: aStyle [
+
+	(styles includes: aStyle) ifFalse: [ aStyle ].
+	styles := styles copyWithout: aStyle 
+]
+
+{ #category : #api }
+SpAbstractWidgetPresenter >> styles [ 
+
+	^ styles
 ]
 
 { #category : #'drag and drop' }
@@ -252,6 +276,15 @@ SpAbstractWidgetPresenter >> transferBlock: aBlock [
 { #category : #'drag and drop' }
 SpAbstractWidgetPresenter >> transferFor: passenger from: source [
 	^ self transferBlock value: passenger value: source
+]
+
+{ #category : #'private-traversing' }
+SpAbstractWidgetPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self canTakeKeyboardFocus ifFalse: [ ^ self ].
+	
+	excludes add: self.
+	aBlock value: self
 ]
 
 { #category : #'private-traversing' }

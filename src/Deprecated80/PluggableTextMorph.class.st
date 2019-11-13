@@ -328,8 +328,8 @@ PluggableTextMorph >> borderStyleToUse [
 ]
 
 { #category : #'menu commands' }
-PluggableTextMorph >> browseIt [
-	self handleEdit: [textMorph editor browseIt]
+PluggableTextMorph >> browseFullClass [
+	self handleEdit: [textMorph editor browseFullClass]
 ]
 
 { #category : #settings }

@@ -1,6 +1,6 @@
 Class {
 	#name : #SpListPresenterSingleSelectionTest,
-	#superclass : #SpTestCase,
+	#superclass : #SpTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 
@@ -11,7 +11,6 @@ SpListPresenterSingleSelectionTest >> classToTest [
 
 { #category : #running }
 SpListPresenterSingleSelectionTest >> setUp [
-
 	super setUp.
 
 	presenter

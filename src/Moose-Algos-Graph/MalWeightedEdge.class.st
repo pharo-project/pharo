@@ -1,3 +1,12 @@
+"
+I represent a weighted edge in a graph. 
+
+Public API and Key Messages
+- weight
+ 
+Instance Variables
+	weight: <Number>
+"
 Class {
 	#name : #MalWeightedEdge,
 	#superclass : #MalGraphEdge,
@@ -13,10 +22,14 @@ MalWeightedEdge >> asTuple [
 	^ {from model. to model. weight}
 ]
 
-{ #category : #accessing }
-MalWeightedEdge >> printString [
-
-	^ self from printString, ' -> ', self to printString, ' (', self weight printString, ')'
+{ #category : #printing }
+MalWeightedEdge >> printOn: aStream [
+	self from printOn: aStream.
+	aStream nextPutAll: ' -> '.
+	self to printOn: aStream.
+	aStream nextPutAll: ' ('.
+	self weight printOn: aStream.
+	aStream nextPut: $).
 ]
 
 { #category : #accessing }

@@ -214,13 +214,11 @@ OSWindowAttributes >> initialize [
 	fullscreen := self class defaultFullscreen.
 	title := self class defaultTitle.
 	windowCentered := self class defaultWindowCentered.
-	
+
 	borderless := self class defaultBorderless.
 	resizable := self class defaultResizable.
 	minimized := self class defaultMinimized.
-	maximized := self class defaultMaximized.
-	
-	glAttributes := nil.
+	maximized := self class defaultMaximized
 ]
 
 { #category : #accessing }

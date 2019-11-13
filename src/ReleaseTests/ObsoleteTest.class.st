@@ -3,7 +3,7 @@ Example class for ClassTest
 "
 Class {
 	#name : #ObsoleteTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'classFactory'
 	],
@@ -27,7 +27,7 @@ ObsoleteTest >> tearDown [
 { #category : #tests }
 ObsoleteTest >> testClassObsolete [
 	| aClass |
-	Smalltalk globals at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
+	testingEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
 	aClass := classFactory newClass.
 	
 	self deny: aClass isObsolete.
@@ -70,8 +70,8 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 { #category : #tests }
 ObsoleteTest >> testTraitObsolete [
 	| aClass aTrait |
-	Smalltalk globals at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
-	Smalltalk globals at: #TraitForObsoleteTest ifPresent: [ :tr | tr removeFromSystem ].
+	testingEnvironment at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
+	testingEnvironment at: #TraitForObsoleteTest ifPresent: [ :tr | tr removeFromSystem ].
 	
 	aTrait := classFactory newTrait.
 	aClass := classFactory newClassUsing: aTrait.

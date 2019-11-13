@@ -1,6 +1,6 @@
 Class {
 	#name : #TraitsTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'createdClassesAndTraits',
 		'oldAnnouncer'
@@ -191,7 +191,7 @@ TraitsTestCase >> tearDown [
 	self createdClassesAndTraits
 		do: [ :aClassOrTrait || behaviorName |
 			behaviorName := aClassOrTrait name.
-			Smalltalk globals at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
+			testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
 	createdClassesAndTraits := nil.
 	SystemAnnouncer announcer: oldAnnouncer.
 	super tearDown 

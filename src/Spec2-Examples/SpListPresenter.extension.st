@@ -4,7 +4,7 @@ Extension { #name : #SpListPresenter }
 SpListPresenter class >> example [
 	<sampleInstance>
 	^ self new
-		items: Smalltalk globals allClasses;
+		items: self environment allClasses;
 		openWithSpec;
 		yourself
 ]
@@ -13,7 +13,7 @@ SpListPresenter class >> example [
 SpListPresenter class >> exampleMultipleSelection [
 	<sampleInstance>
 	^ self new
-		items: Smalltalk globals allClasses;
+		items: self environment allClasses;
 		beMultipleSelection;
 		openWithSpec;
 		yourself
@@ -23,7 +23,7 @@ SpListPresenter class >> exampleMultipleSelection [
 SpListPresenter class >> exampleWithHeaderTitle [
 	<sampleInstance>
 	^ self new
-		items: Smalltalk globals allClasses;
+		items: self environment allClasses;
 		headerTitle: 'Title';
 		openWithSpec;
 		yourself

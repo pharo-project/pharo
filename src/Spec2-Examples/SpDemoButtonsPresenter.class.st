@@ -138,13 +138,13 @@ SpDemoButtonsPresenter >> buttonWithShortcut: anObject [
 ]
 
 { #category : #initialization }
-SpDemoButtonsPresenter >> initializePresenter [
+SpDemoButtonsPresenter >> connectPresenters [
 
 	buttonWithShortcut action: [ self inform: 'button with shortcut pressed' ]																																														
 ]
 
 { #category : #initialization }
-SpDemoButtonsPresenter >> initializeWidgets [
+SpDemoButtonsPresenter >> initializePresenters [
 	buttonNormal := self newButton label: 'normal'.
 	buttonDisabled := self newButton
 		label: 'disabled';

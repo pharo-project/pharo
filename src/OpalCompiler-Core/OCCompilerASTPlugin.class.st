@@ -15,8 +15,7 @@ IR
 
 
 These plugins are called <<HERE>>, that is, after semantic analysis before generating the IR.
-They are sorted by #priority and handed a *copy* of the AST.
-
+They are sorted by #priority and handed the AST without making a copy (as plugins might just analyse the AST). If you modify the AST, you have to make a copy before!
 
 
 "
@@ -36,9 +35,7 @@ OCCompilerASTPlugin class >> priority [
 
 { #category : #'instance creation' }
 OCCompilerASTPlugin class >> transform: ast [
-	^self new
-		ast: ast;
-		transform.
+	^self new transform: ast
 ]
 
 { #category : #accessing }
@@ -53,12 +50,13 @@ OCCompilerASTPlugin >> priority [
 
 { #category : #api }
 OCCompilerASTPlugin >> transform [
-	
+	"Plugins override this method. If you modify the AST, make sure to copy it before!"
 	self subclassResponsibility.
 ]
 
 { #category : #api }
 OCCompilerASTPlugin >> transform: anRBMethodNode [
-	"by default do nothing"
-	^ ast := anRBMethodNode.
+	ast := anRBMethodNode.
+	self transform.
+	^ast.
 ]

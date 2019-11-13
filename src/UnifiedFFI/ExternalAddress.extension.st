@@ -8,6 +8,12 @@ ExternalAddress >> adoptAddress: anExternalAddress [
 ]
 
 { #category : #'*UnifiedFFI' }
+ExternalAddress >> asExternalAddress [
+
+	^ self
+]
+
+{ #category : #'*UnifiedFFI' }
 ExternalAddress >> autoRelease [
 	^ self class finalizationRegistry add: self
 ]
@@ -70,7 +76,7 @@ ExternalAddress class >> loadSymbol: moduleSymbol [
 ExternalAddress class >> loadSymbol: moduleSymbol from: moduleNameOrClass [ 
 	^ self 
 		loadSymbol: moduleSymbol 
-		module: moduleNameOrClass asFFILibrary moduleName.
+		module: moduleNameOrClass asFFILibrary libraryName.
 	
 ]
 
@@ -138,6 +144,36 @@ ExternalAddress >> pointer [
 ExternalAddress >> pointerAutoRelease [
 	"Same as #pointer (see its comment for detals), but contents are garbage collected automatically"
 	^ self pointer autoRelease
+]
+
+{ #category : #'*UnifiedFFI' }
+ExternalAddress >> readArrayOf: aType until: aBlock [
+	"Reads an array of aType until aBlock returns true.
+	 this is an util to extract arrays from answers style char ** or int*, etc. 
+	 Example: 
+	
+		someAddress readArrayOf: #uint32 until: [ :each | each isZero ].
+		someAddress readArrayOf: #'void *' until: [ :each | each isNull ].
+	"
+	| finish address array last externalType |
+	
+	"resolve type if needed"
+	externalType := aType isString
+		ifTrue: [ FFIExternalType resolveType: aType ]
+		ifFalse: [ aType ].
+		
+	finish := false.
+	address := self.
+	array := Array new writeStream.
+	[ 
+		last := externalType handle: address at: 1.
+		(finish := (aBlock value: last)) ifFalse: [ 
+			array nextPut: last.
+			address := address + aType typeSize ] ]
+	doWhileFalse: [ 
+		finish ].
+
+	^ array contents
 ]
 
 { #category : #'*UnifiedFFI-Deprecated50' }

@@ -127,13 +127,14 @@ Object class >> howToModifyPrimitives [
 { #category : #'class initialization' }
 Object class >> initialize [
 	"Object initialize"
-	DependentsFields ifNil:[self initializeDependentsFields].
+	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
 { #category : #'class initialization' }
 Object class >> initializeDependentsFields [
-	"Object initialize"
-	DependentsFields := WeakIdentityKeyDictionary new.
+	<script: 'Object initialize'>
+	
+	DependentsFields := WeakIdentityKeyDictionary new
 
 ]
 
@@ -148,13 +149,13 @@ Object class >> newFrom: aSimilarObject [
 
 { #category : #'class initialization' }
 Object class >> reInitializeDependentsFields [
-	"Object reInitializeDependentsFields"
+	<script>
+
 	| oldFields |
 	oldFields := DependentsFields.
 	DependentsFields := WeakIdentityKeyDictionary new.
-	oldFields keysAndValuesDo:[:obj :deps|
-		deps do:[:d| obj addDependent: d]].
-
+	oldFields
+		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
 
 { #category : #'instance creation' }
@@ -655,18 +656,6 @@ Object >> copySameFrom: otherObject [
 	1 to: (self basicSize min: otherObject basicSize) do: [:i |
 		self basicAt: i put: (otherObject basicAt: i)].
 
-]
-
-{ #category : #tracing }
-Object >> crTrace [
-	self crTrace: self printString
-]
-
-{ #category : #tracing }
-Object >> crTrace: aString [
-	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
-	
-	Transcript cr; show: aString.
 ]
 
 { #category : #copying }
@@ -1360,21 +1349,6 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #flagging }
-Object >> logEntry [
-	self traceCr: 'Entered ' , thisContext sender printString
-]
-
-{ #category : #flagging }
-Object >> logExecution [
-	self traceCr: 'Executing ' , thisContext sender printString
-]
-
-{ #category : #flagging }
-Object >> logExit [
-	self traceCr: 'Exited ' , thisContext sender printString
-]
-
 { #category : #printing }
 Object >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all 
@@ -1913,25 +1887,25 @@ Object >> species [
 	^self class
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepAt: millisecondClockValue in: aWindow [
 
 	^ self stepIn: aWindow
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepIn: aWindow [
 
 	^ self step
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepTime [
 	
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> stepTimeIn: aSystemWindow [
 	
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
@@ -2001,37 +1975,6 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 			receiver: aFinalizer
 			selector: aSelector
 			argument: aResourceHandle)
-]
-
-{ #category : #tracing }
-Object >> trace [
-	self trace: self printString
-]
-
-{ #category : #tracing }
-Object >> trace: aString [
-	"Log the argument. Use self trace: instead of Transcript show: "
-	
-	Transcript show: aString
-]
-
-{ #category : #tracing }
-Object >> traceCr [
-	self traceCr: self printString
-]
-
-{ #category : #tracing }
-Object >> traceCr: aString [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr
-]
-
-{ #category : #tracing }
-Object >> traceCrTab: aString [
-	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
-	
-	Transcript show: aString ; cr ; tab
 ]
 
 { #category : #'error handling' }
@@ -2164,7 +2107,7 @@ Object >> veryDeepInner: deepCopier [
 	"avoid to use me we will deprecate it in the future"
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> wantsSteps [
 	"Overridden by morphic classes whose instances want to be stepped,
 	or by model classes who want their morphic views to be stepped."
@@ -2172,7 +2115,7 @@ Object >> wantsSteps [
 	^ false
 ]
 
-{ #category : #'model - stepping' }
+{ #category : #stepping }
 Object >> wantsStepsIn: aSystemWindow [
 	
 	^ self wantsSteps

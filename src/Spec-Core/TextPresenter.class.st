@@ -384,14 +384,6 @@ TextPresenter >> isAboutToStyle [
 	^ self aboutToStyleBlock value
 ]
 
-{ #category : #NOCompletion }
-TextPresenter >> isCodeCompletionAllowed [
-	"<api:#inspect>"
-	"Return if code completion is allowed"
-	
-	^ isCodeCompletionAllowedHolder value
-]
-
 { #category : #api }
 TextPresenter >> isCodeCompletionAllowed: aBoolean [
 	"<api: #boolean getter: #isCodeCompletionAllowed registration: #whenCodeCompletionAllowedChanged:>"

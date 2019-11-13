@@ -82,8 +82,7 @@ AthensTextLine >> heightAndDescent [
 
 { #category : #initialization }
 AthensTextLine >> initialize [
-	commands := tail := nil.
-	width := height := maxAscent := maxDescent := 0.
+	width := height := maxAscent := maxDescent := 0
 ]
 
 { #category : #accessing }

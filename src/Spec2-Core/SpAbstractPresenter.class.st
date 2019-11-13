@@ -41,6 +41,11 @@ SpAbstractPresenter class >> inputTextHeight [
 	^ self defaultFont height + 12
 ]
 
+{ #category : #testing }
+SpAbstractPresenter class >> isAbstract [
+	^ self = SpAbstractPresenter
+]
+
 { #category : #TOREMOVE }
 SpAbstractPresenter class >> labelHeight [
 

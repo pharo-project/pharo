@@ -38,6 +38,12 @@ RBProgramNode >> doSemanticAnalysis [
 ]
 
 { #category : #'*opalcompiler-core' }
+RBProgramNode >> doSemanticAnalysisIn: aClass [
+	self methodNode ifNil: [ ^self ].
+	^ self methodNode doSemanticAnalysisIn: aClass
+]
+
+{ #category : #'*opalcompiler-core' }
 RBProgramNode >> enclosingMethodOrBlockNode [
 	^ self methodOrBlockNode 
 ]

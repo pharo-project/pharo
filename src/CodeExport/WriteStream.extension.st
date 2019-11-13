@@ -2,23 +2,23 @@ Extension { #name : #WriteStream }
 
 { #category : #'*CodeExport' }
 WriteStream >> nextChunkPut: aString [
-	"Append the argument, aString, to the receiver, doubling embedded terminators."
+	"Append the argument, aString, to the receiver, doubling embedded ! terminators and adding a extra one"
  
-	| i remainder terminator | 
-	terminator := $!.
-	remainder := aString asString.
-	[(i := remainder indexOf: terminator) = 0] whileFalse:
-		[self nextPutAll: (remainder copyFrom: 1 to: i).
-		self nextPut: terminator.  "double imbedded terminators"
-		remainder := remainder copyFrom: i+1 to: remainder size].
-	self nextPutAll: remainder. 
-	aString asString includesUnifiedCharacter ifTrue: [
-		self nextPut: terminator.
-		self nextPutAll: ']lang['.
-		aString asString writeLeadingCharRunsOn: self.
+	| string start bangIndex |
+	string := aString asString.
+	start := 1.
+	[ (bangIndex := string indexOf: $! startingAt: start) = 0 ]
+		whileFalse: [
+			self next: bangIndex - start + 1 putAll: string startingAt: start.
+			self nextPut: $!. "double it"
+			start := bangIndex + 1 ].
+	self next: string size - start + 1 putAll: string startingAt: start.
+	string includesUnifiedCharacter ifTrue: [
+		self nextPut: $!; nextPutAll: ']lang['.
+		string writeLeadingCharRunsOn: self.
 	].
-	self nextPut: terminator.
-	self flush.
+	self nextPut: $!. "one extra"
+	self flush
 ]
 
 { #category : #'*CodeExport' }

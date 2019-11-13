@@ -872,12 +872,9 @@ Behavior >> hasMethods [
 
 { #category : #'testing method dictionary' }
 Behavior >> hasSelectorReferringTo: literal [
-	"Answer true if any of my methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
-	thorough "
+	"Answer true if any of my methods access the argument as a literal"
 
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
-		
 ]
 
 { #category : #'testing class hierarchy' }
@@ -945,7 +942,7 @@ Behavior >> initializeSlots: anObject [
 	self classLayout initializeInstance: anObject
 ]
 
-{ #category : #testing }
+{ #category : #'accessing instances and variables' }
 Behavior >> instSize [
 	"Answer the number of named instance variables
 	(as opposed to indexed variables) of the receiver.
@@ -1360,12 +1357,6 @@ Behavior >> nonObsoleteClass [
 	[obsName beginsWith: 'AnObsolete']
 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
 	^ self environment at: obsName asSymbol
-]
-
-{ #category : #accessing }
-Behavior >> numberOfInstanceVariables [
-	^ self instVarNames size
-
 ]
 
 { #category : #initialization }
@@ -1804,16 +1795,7 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 
 { #category : #'testing method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
-	"Answer a set of selectors whose methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
-	thorough "
-	| specialIndex selectors |
-	"for speed we check the special selectors here once per class"
-	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
-	selectors := OrderedCollection new.
-	self selectorsAndMethodsDo: [ :sel :method |
-			(method hasSelector: literal specialSelectorIndex: specialIndex) ifTrue: [selectors add: sel]].
-	^ selectors
+	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : #accessing }
@@ -1832,17 +1814,6 @@ Behavior >> typeOfClass [
 	self isVariable ifTrue: [^#variable].
 	self isEphemeronClass ifTrue: [^#ephemeron].
 	^#normal
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> ultimateSourceCodeAt: selector ifAbsent: aBlock [
-	"Return the source code at selector, deferring to superclass if necessary"
-	^ self sourceCodeAt: selector ifAbsent:
-		[self superclass
-			ifNil:
-				[aBlock value]
-			 ifNotNil:
-				[self superclass ultimateSourceCodeAt: selector ifAbsent: aBlock]]
 ]
 
 { #category : #'user interface' }
@@ -1887,8 +1858,15 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 ]
 
 { #category : #'testing method dictionary' }
-Behavior >> whichSelectorsReferTo: literal [ 
-	^ self thoroughWhichSelectorsReferTo: literal
+Behavior >> whichMethodsReferTo: aLiteral [
+	"Answer methods whose methods directly refers to the argument as a literal"
+
+	^ self methods select: [ :method | method hasLiteral: aLiteral ]
+]
+
+{ #category : #'testing method dictionary' }
+Behavior >> whichSelectorsReferTo: literal [
+	^ (self whichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : #queries }

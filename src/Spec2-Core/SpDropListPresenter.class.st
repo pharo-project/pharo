@@ -50,13 +50,36 @@ SpDropListPresenter >> addItemLabeled: aString do: aBlock icon: anIcon [
 ]
 
 { #category : #api }
+SpDropListPresenter >> display [
+	
+	^ displayBlock
+]
+
+{ #category : #api }
+SpDropListPresenter >> display: aBlock [
+	
+	displayBlock := aBlock 
+
+]
+
+{ #category : #api }
 SpDropListPresenter >> displayBlock [
+	
+	self
+		deprecated: 'Please use #display instead'
+		transformWith: '`@receiver displayBlock' 
+						-> '`@receiver display'.
 	
 	^ displayBlock
 ]
 
 { #category : #api }
 SpDropListPresenter >> displayBlock: aBlock [
+	
+	self
+		deprecated: 'Please use #display: instead'
+		transformWith: '`@receiver displayBlock: `@arg' 
+						-> '`@receiver display: `@arg'.
 	
 	displayBlock := aBlock 
 
@@ -65,8 +88,8 @@ SpDropListPresenter >> displayBlock: aBlock [
 { #category : #api }
 SpDropListPresenter >> displayForItem: anItem [
 	"The order of the arguments may look weird, but then it seems more natural while using the widget"
-	
-	^ self displayBlock cull: anItem model cull: anItem
+
+	^ self display cull: anItem model cull: anItem
 ]
 
 { #category : #api }
@@ -133,20 +156,20 @@ SpDropListPresenter >> initialize [
 { #category : #api }
 SpDropListPresenter >> items: aList [
 	"Populate the drop list with a list of ui specific items"
+
 	"aList is a list of domain specific objects. If you want to specify more precisely the item actions, see #addItemLabeled:do:"
-	"<api: #st getter: #listItems>"
-	
+
 	| dropListItems |
-	dropListItems := aList collect: [ :e | SpDropListItem on: e do: [] ].
+	dropListItems := aList collect: [ :each | SpDropListItem on: each do: [ ] ].
 	model collection: dropListItems.
-	
-	(dropListItems isNotEmpty and: [startsWithSelection and: [ self selection isEmpty ]]) 
-		ifTrue: [ self selectedIndex: 1 ]
+	(dropListItems isNotEmpty
+		and: [ startsWithSelection 
+		and: [ self selection isEmpty ] ])
+		ifTrue: [ self selectIndex: 1 ]
 ]
 
 { #category : #api }
 SpDropListPresenter >> listItems [
-	"<api: #inspect>"
 	"Return the list used to populate the drop list"
 	
 	^ self getList collect: [ :e | e model ].
@@ -154,7 +177,6 @@ SpDropListPresenter >> listItems [
 
 { #category : #api }
 SpDropListPresenter >> listSize [
-	"<api: #inspect>"
 	"Return the size of the list of choices"
 
 	^ self listItems size
@@ -173,30 +195,15 @@ SpDropListPresenter >> resetSelection [
 ]
 
 { #category : #api }
-SpDropListPresenter >> selectedIndex [
-	"<api: #inspect>"
-	"Useless method but it provides a better and more consistent API"
-
-	^ self getIndex
-]
-
-{ #category : #api }
-SpDropListPresenter >> selectedIndex: anInteger [ 
+SpDropListPresenter >> selectIndex: anInteger [ 
 	
 	self selection selectIndex: anInteger.
 	"I execute the block associated with the item"
-	self selection selectedItem value.
+	self selection selectedItem value
 ]
 
 { #category : #api }
-SpDropListPresenter >> selectedItem [
-	"<api: #inspect>"
-
-	^ self selection selectedItem ifNotNil: #model
-]
-
-{ #category : #api }
-SpDropListPresenter >> selectedItem: anItem [ 
+SpDropListPresenter >> selectItem: anItem [ 
 	
 	| realItem |
 	
@@ -205,7 +212,43 @@ SpDropListPresenter >> selectedItem: anItem [
 	realItem := model collection detect: [ :each | each model = anItem ].
 	self selection selectItem: realItem.
 	"I execute the block associated with the item"
-	realItem value.
+	realItem value
+]
+
+{ #category : #api }
+SpDropListPresenter >> selectedIndex [
+	"Useless method but it provides a better and more consistent API"
+
+	^ self getIndex
+]
+
+{ #category : #api }
+SpDropListPresenter >> selectedIndex: anIndex [
+
+	"Set the index of the item you want to be selected"
+	self
+		deprecated: 'Use #selectIndex: instead'
+		transformWith: '`@receiver selectedIndex: `@arg'
+						-> '`@receiver selectIndex: `@arg'.
+	
+	self selectIndex: anIndex
+]
+
+{ #category : #api }
+SpDropListPresenter >> selectedItem [
+	^ self selection selectedItem ifNotNil: #model
+]
+
+{ #category : #api }
+SpDropListPresenter >> selectedItem: anItem [
+	"Set the item you want to be selected"
+
+	self
+		deprecated: 'Use #selectItem: instead'
+		transformWith: '`@receiver selectedItem: `@arg'
+						-> '`@receiver selectItem: `@arg'.
+
+	self selectItem: anItem
 ]
 
 { #category : #api }
@@ -250,7 +293,7 @@ SpDropListPresenter >> whenSelectionChangedDo: aBlock [
 	If you are interested in the items, use whenSelectedItemChanged:
 	If you are interested in the index, use whenSelectionIndexChanged:"
 
-	selection whenChangedDo: aBlock.
+	selection whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

@@ -2,7 +2,7 @@ Extension { #name : #UITheme }
 
 { #category : #'*growl' }
 UITheme >> growlBorderColorFor: aGrowlMorph [
-	^ Color white alpha: 0.5
+	^ Color gray
 ]
 
 { #category : #'*growl' }

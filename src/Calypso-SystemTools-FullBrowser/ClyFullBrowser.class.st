@@ -143,27 +143,6 @@ ClyFullBrowser class >> taskbarIconName [
 	^#smallSystemBrowser
 ]
 
-{ #category : #'world menu' }
-ClyFullBrowser class >> worldMenuOn: aBuilder [ 
-	<worldMenu> 
-	| isDefaultBrowser target targetName |
-	(self environment hasClassNamed: #Nautilus) ifFalse: [^self].
-	
-	isDefaultBrowser := Smalltalk tools browser = self.
-	(isDefaultBrowser and: [ self environment hasClassNamed: #Nautilus ])
-		ifTrue: [ 
-			target := self environment classNamed: #Nautilus.
-			targetName := target name ]
-		ifFalse: [ 
-			target := self.
-			targetName := 'Calypso' ].
-	(aBuilder item: (targetName, ' browser') asSymbol)	
-		order: 0.5;
-		help: targetName, ' browser';
-		icon: (self iconNamed: #nautilus);
-		action: [ target open ]
-]
-
 { #category : #private }
 ClyFullBrowser >> adoptForExtendedClass [
 	| extendingPackages extraGroups |
@@ -780,7 +759,7 @@ ClyFullBrowser >> specifyClassItemNameOn: nameMorph for: classItem [
 	self packageSelection isMultipleSelected ifTrue: [
 		nameMorph contents: (definition printFullNameOf: classItem)].
 	(self isPackagePartOfSelection: definition definingPackage) 
-		ifFalse: [nameMorph color: Smalltalk ui theme classExtensionColor]
+		ifFalse: [nameMorph color: self theme classExtensionColor]
 ]
 
 { #category : #private }
@@ -790,7 +769,7 @@ ClyFullBrowser >> specifyMethodItemNameOn: nameMorph for: methodItem [
 	
 	definition := methodItem	systemDefinition.
 	(self isPackagePartOfSelection: definition definingPackage) ifFalse: [
-		nameMorph color: Smalltalk ui theme classExtensionColor].
+		nameMorph color: self theme classExtensionColor].
 	
 	self classSelection isMultipleSelected ifTrue: [
 		^nameMorph contents: (definition printFullNameOf: methodItem)].

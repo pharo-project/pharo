@@ -39,7 +39,7 @@ ZipArchive class >> compressionStored [
 	^CompressionStored
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 	"Service method to extract all contents of a zip."
 	| directory |

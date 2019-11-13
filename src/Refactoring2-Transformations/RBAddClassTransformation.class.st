@@ -42,7 +42,7 @@ RBAddClassTransformation class >> addClass: aName superclass: aClass subclasses:
 { #category : #'instance creation' }
 RBAddClassTransformation class >> model: aRBSmalltalk addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [
 
-	^ (self new)
+	^ self new
 		model: aRBSmalltalk;
 		addClass: aName
 			superclass: aClass
@@ -92,7 +92,7 @@ RBAddClassTransformation >> preconditions [
 { #category : #executing }
 RBAddClassTransformation >> privateTransform [
 
-	(self model)
+	self model
 		defineClass: ('<1p> subclass: #<2s> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <3p>' 
 			expandMacrosWith: (self model classObjectFor: superclass)
 			with: className

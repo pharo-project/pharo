@@ -238,10 +238,9 @@ DeflateStream >> hashChainLength [
 { #category : #initialization }
 DeflateStream >> initialize [
 	super initialize.
-	blockStart := nil.
 	blockPosition := 0.
 	hashValue := 0.
-	self initializeHashTables.
+	self initializeHashTables
 ]
 
 { #category : #initialization }

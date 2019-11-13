@@ -14,7 +14,8 @@ Class {
 		'cachedAscent',
 		'cachedDescent',
 		'subPixelPositioned',
-		'symbolFont'
+		'symbolFont',
+		'mutex'
 	],
 	#pools : [
 		'FT2Constants',
@@ -383,12 +384,13 @@ FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean su
 		charCode: aCharacter asUnicode asInteger
 		type: ((1+sub) << 32) + aColorValue
 		ifAbsentPut: [
-			FreeTypeGlyphRenderer current
-				glyphOf: aCharacter 
-				colorValue: aColorValue 
-				mono: monoBoolean 
-				subpixelPosition: sub 
-				font: self]
+			self mutex critical: [ 
+				FreeTypeGlyphRenderer current
+					glyphOf: aCharacter 
+					colorValue: aColorValue 
+					mono: monoBoolean 
+					subpixelPosition: sub 
+					font: self]]
 
 
 ]
@@ -664,14 +666,21 @@ FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBool
 		charCode: aCharacter asUnicode asInteger
 		type: (FreeTypeCacheGlyph + sub)
 		ifAbsentPut: [
-			FreeTypeGlyphRenderer current
-				mode41GlyphOf: aCharacter 
-				colorValue: aColorValue 
-				mono: monoBoolean 
-				subpixelPosition: sub 
-				font: self]
+			self mutex critical: [ 
+				FreeTypeGlyphRenderer current
+					mode41GlyphOf: aCharacter 
+					colorValue: aColorValue 
+					mono: monoBoolean 
+					subpixelPosition: sub 
+					font: self]]
 
 
+]
+
+{ #category : #accessing }
+FreeTypeFont >> mutex [
+
+	^ mutex ifNil: [ mutex := Semaphore forMutualExclusion ]
 ]
 
 { #category : #measuring }
@@ -784,18 +793,18 @@ FreeTypeFont >> simulatedItalicSlant [
 { #category : #'glyph lookup' }
 FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	| |
 	^FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: FreeTypeCacheGlyphLCD + sub
 		ifAbsentPut: [
-			FreeTypeGlyphRenderer current
-				subGlyphOf: aCharacter 
-				colorValue: aColorValue 
-				mono: monoBoolean 
-				subpixelPosition: sub 
-				font: self]
+			self mutex criticalReleasingOnError: [ 
+				FreeTypeGlyphRenderer current
+					subGlyphOf: aCharacter 
+					colorValue: aColorValue 
+					mono: monoBoolean 
+					subpixelPosition: sub 
+					font: self]]
 
 
 ]

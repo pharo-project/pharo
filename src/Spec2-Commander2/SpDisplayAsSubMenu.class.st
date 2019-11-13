@@ -4,7 +4,7 @@ I display a command group as a submenu in the MenuPresenter.
 Class {
 	#name : #SpDisplayAsSubMenu,
 	#superclass : #SpCommandGroupDisplayStrategy,
-	#category : #'Spec2-Commander2-Core'
+	#category : #'Spec2-Commander2-Strategies'
 }
 
 { #category : #displaying }

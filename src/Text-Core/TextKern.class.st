@@ -1,5 +1,17 @@
 "
 A TextKern encodes a kerning change applicable over a given range of text.  Positive values of kern spread letters out, negative kern will cause them to overlap more.  Note that kerns other than 0 will display somewhat slower, as kerning is not yet supported in the text scanning primitive. 
+
+-----exemple-------
+| stream |
+stream := TextStream on: (Text new: 100).
+stream 
+	withAttribute: (TextKern  kern: 1) do: [ stream nextPutAll: 'Pharo is cool'];
+	cr;
+	nextPutAll: 'Pharo is cool'; cr;
+	withAttribute: (TextKern kern: -1) do: [stream nextPutAll: 'Pharo is cool'].
+TextMorph new 
+	newContents: stream contents;
+	openInWindow.
 "
 Class {
 	#name : #TextKern,

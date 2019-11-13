@@ -162,7 +162,7 @@ SycRefactoringPreview >> initializeWidgets [
 	table := self newTable.
 	diffPresenter := self newDiff.
 	scopeDropList := self newDropList.
-	
+
 	table
 		addColumn:
 			((SpCheckBoxTableColumn evaluated: [ :x | selectedRefactorings at: x ])
@@ -171,10 +171,10 @@ SycRefactoringPreview >> initializeWidgets [
 				width: 20);
 		addColumn: (SpStringTableColumn evaluated: #name);
 		hideColumnHeaders.
-		
+
 	diffPresenter disable.
-	scopeDropList displayBlock: [ :scope | scope description capitalized ].
-	
+	scopeDropList display: [ :scope | scope description capitalized ].
+
 	self
 		selectectAllCheckBox;
 		setShortcuts;

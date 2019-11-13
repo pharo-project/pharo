@@ -19,7 +19,6 @@ FTExamples class >> example1 [
 			sorted: [ :a :b | a name < b name]));
 		yourself.
 	list openInWindow
-
 ]
 
 { #category : #examples }
@@ -504,6 +503,21 @@ FTExamples class >> exampleOutline2 [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleRowNotHomogeneousList1 [
+	"Show a list with all Object methods"
+	<example>
+	| list |
+
+	list := FTTableMorph new
+		extent: 300@550;
+		beRowNotHomogeneous;
+		dataSource: (FTExampleMethodNotHomogeneousListDataSource for: Object);
+		yourself.
+		
+	^ list openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleSortableList [
 	"Show a list with all Object methods with a header"
 
@@ -597,7 +611,7 @@ FTExamples class >> exampleSortableTable2 [
 				yourself);
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
-				sortableOnProperty: #numberOfInstanceVariables;
+				sortableOnProperty: #instSize;
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;
@@ -631,7 +645,7 @@ FTExamples class >> exampleSortableTable3 [
 				yourself);
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
-				sortableUsing: #numberOfInstanceVariables ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
+				sortableUsing: #instSize ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;

@@ -60,7 +60,7 @@ SpDropListButton >> button [
 
 { #category : #'api-shortcuts' }
 SpDropListButton >> displayBlock: aBlock [
-	self dropList displayBlock: aBlock
+	self dropList display: aBlock
 ]
 
 { #category : #accessing }
@@ -79,7 +79,7 @@ SpDropListButton >> icon: anIcon [
 ]
 
 { #category : #initialization }
-SpDropListButton >> initializeWidgets [
+SpDropListButton >> initializePresenters [
 	dropList := self instantiate: SpDropListPresenter.
 	button := self instantiate: SpButtonPresenter.
 	self focusOrder

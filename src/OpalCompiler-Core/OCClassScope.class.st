@@ -61,13 +61,6 @@ OCClassScope >> lookupVar: name [
 ]
 
 { #category : #lookup }
-OCClassScope >> lookupVar: name inContext: aContext [
-	"I'll lookup a variable in a class. The context does not play any role in here because variables in classes are statically defined"
-
-	^ self lookupVar: name
-]
-
-{ #category : #lookup }
 OCClassScope >> lookupVarForDeclaration: name [
 	^self lookupVar: name
 ]
@@ -81,15 +74,4 @@ OCClassScope >> newMethodScope [
 OCClassScope >> printOn: stream [
 
 	class printOn: stream.
-]
-
-{ #category : #lookup }
-OCClassScope >> variableNamed: name ifAbsent: aBlock [
-	"Return a SemVar for my pool var with this name.  Return nil if none found"
-
-	^(class bindingOf: name asSymbol) ifNotNil: [:assoc | 
-		OCLiteralVariable new 
-			assoc: assoc; 
-			scope: self; 
-			yourself] ifNil: aBlock
 ]

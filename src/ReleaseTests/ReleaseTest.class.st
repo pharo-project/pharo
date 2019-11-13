@@ -3,7 +3,7 @@ I contain tests that validate the integrity of the system.
 "
 Class {
 	#name : #ReleaseTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'ReleaseTests-Release'
 }
 
@@ -89,14 +89,14 @@ ReleaseTest >> knownProcesses [
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
-	Smalltalk globals allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
+	testingEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
 	self assertEmpty: wrong
 ]
 
 { #category : #tests }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
-	wrong := Smalltalk globals associations reject: [ :each | each isKindOf: GlobalVariable ].
+	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
 ]
 
@@ -147,7 +147,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	
 	keyClasses do:	[ :className |
 		self assert: (registeredHandlers includes: className).
-		self assert: (self hasStartUpOrShutDownMethod: (Smalltalk globals at: className)) ].
+		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 	
 	self assert: (registeredHandlers includes: #UIManagerSessionHandler).
 ]
@@ -190,6 +190,13 @@ ReleaseTest >> testNoEmptyPackages [
 	| violating |
 	violating := RPackageOrganizer default packages select: #isEmpty.
 	self assertEmpty: violating
+]
+
+{ #category : #tests }
+ReleaseTest >> testNoNilAssignmentInInitializeMethod [
+	
+	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
+	
 ]
 
 { #category : #tests }

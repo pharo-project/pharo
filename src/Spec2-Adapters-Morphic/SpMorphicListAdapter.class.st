@@ -37,6 +37,7 @@ SpMorphicListAdapter >> backgroundColorFor: anItem at: index [
 { #category : #factory }
 SpMorphicListAdapter >> buildWidget [
 	| datasource |
+	
 	datasource := SpListFastTableDataSource new.
 	datasource model: self model.
 	widget := FTTableMorph new
@@ -53,17 +54,19 @@ SpMorphicListAdapter >> buildWidget [
 		onAnnouncement: FTSelectionChanged send: #selectionChanged: to: self;
 		onAnnouncement: FTStrongSelectionChanged send: #strongSelectionChanged: to: self;
 		yourself.
+
 	self presenter whenModelChangedDo: [ widget refresh ].
 	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
 	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
-	
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
 	self updateItemFilterBlockWith: self itemFilter.
-	
+
 	self configureScrolling.
-	widget bindKeyCombination: Character space toAction: [ self model clickOnSelectedItem ].
+	widget 
+		bindKeyCombination: Character space 
+		toAction: [ self model clickOnSelectedItem ].
 
 	^ widget
 ]
@@ -73,15 +76,18 @@ SpMorphicListAdapter >> hasFilter [
 	^ self widget submorphs anySatisfy: [ :each | each isKindOf: RubTextFieldMorph	"This morph is the explicit filter of the list" ]
 ]
 
+{ #category : #testing }
+SpMorphicListAdapter >> isNonEditableRow: aRow column: aColumn [
+
+	^ (self widget dataSource
+		cellColumn: (self widget columns at: aColumn)
+		row: aRow) submorphs allSatisfy: [ :e | e asReadOnlyMorph == e ]
+]
+
 { #category : #accessing }
 SpMorphicListAdapter >> isShowColumnHeaders [
 	
 	^ widget isShowColumnHeaders 
-]
-
-{ #category : #'widget API' }
-SpMorphicListAdapter >> itemFilter [
-	^ self model itemFilter
 ]
 
 { #category : #'widget API' }
@@ -102,7 +108,7 @@ SpMorphicListAdapter >> newListColumn [
 	^ SpMorphicTableColumn new 
 		model: (SpStringTableColumn
 			title: self presenter headerTitle
-			evaluated: self presenter displayBlock);
+			evaluated: self presenter display);
 		yourself
 ]
 
@@ -176,6 +182,12 @@ SpMorphicListAdapter >> selectIndex: anInteger [
 	widget selectIndex: anInteger
 ]
 
+{ #category : #testing }
+SpMorphicListAdapter >> selectedIndexes [
+	
+	^ widget selectedIndexes
+]
+
 { #category : #factory }
 SpMorphicListAdapter >> selectionChanged: ann [
 	| diff |
@@ -200,15 +212,6 @@ SpMorphicListAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 	self presenter activatesOnDoubleClick
 		ifTrue: [ self presenter
 				doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex ]
-]
-
-{ #category : #factory }
-SpMorphicListAdapter >> updateItemFilterBlockWith: block [
-	^ block
-		ifNotNil: [ widget
-				enableFilter: (SpFTSpecFilter block: block);
-				explicitFunction ]
-		ifNil: [ widget disableFunction ]
 ]
 
 { #category : #events }

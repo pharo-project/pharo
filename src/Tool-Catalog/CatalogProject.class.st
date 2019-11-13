@@ -46,8 +46,8 @@ CatalogProject class >> createRepositoryURLtoNameMappings [
 	repos := Dictionary new.	
 	3 to: SystemVersion current major do: [:v | 
 		repos 	
-			at: ('http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo{1}0/main' format: v asArray)
-			put: ('Pharo{1}.0' format: v asArray)].
+			at: ('http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo{1}0/main' format: {v})
+			put: ('Pharo{1}.0' format: {v})].
 	repos at: 'http://www.squeaksource.com/MetacelloRepository' put: 'Unsorted'.		
 	^repos
  

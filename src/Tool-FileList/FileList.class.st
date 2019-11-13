@@ -259,11 +259,6 @@ FileList class >> taskbarIconName [
 	^#smallOpenIcon
 ]
 
-{ #category : #accessing }
-FileList class >> theme [
-	^ Smalltalk ui theme 
-]
-
 { #category : #'drag\'n\'drop' }
 FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 	| oldEntry destDirectory newEntry response |

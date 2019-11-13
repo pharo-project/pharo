@@ -21,7 +21,7 @@ ContextTempEyeElement class >> host: anObject tempName: aString tempIndex: int [
 
 { #category : #accessing }
 ContextTempEyeElement >> accessorCode [
-	^ '(self namedTempAt: ', self tempIndex printString, ')'
+	^ '(self tempNamed: ', self tempName printString, ')'
 ]
 
 { #category : #accessing }
@@ -31,7 +31,7 @@ ContextTempEyeElement >> label [
 
 { #category : #accessing }
 ContextTempEyeElement >> save: aValue [
-	self host namedTempAt: self tempIndex put: aValue
+	self host tempNamed: self tempName put: aValue
 ]
 
 { #category : #accessing }

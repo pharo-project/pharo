@@ -107,7 +107,10 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	RBRefactoryChangeManager nuke.
 	Smalltalk garbageCollect.
 	Smalltalk cleanOutUndeclared. 
-
+	
+	CompletionSorter register.
+	RubSmalltalkEditor completionEngineClass: CompletionEngine.
+	
 	Author reset.
 
 	Initialized := true.

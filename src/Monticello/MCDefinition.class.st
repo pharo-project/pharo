@@ -43,7 +43,7 @@ MCDefinition >> definition [
 	^ self
 ]
 
-{ #category : #comparing }
+{ #category : #accessing }
 MCDefinition >> description [
 	self subclassResponsibility
 ]

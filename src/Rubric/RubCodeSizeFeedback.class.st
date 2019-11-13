@@ -51,8 +51,8 @@ RubCodeSizeFeedback >> backgroundColor [
 						yourself).
 					((GradientFillStyle
 						ramp:
-							{(0 -> Smalltalk ui theme backgroundColor).
-							(0.3 -> (Smalltalk ui theme backgroundColor alpha: 0.01))})
+							{(0 -> self theme backgroundColor).
+							(0.3 -> (self theme backgroundColor alpha: 0.01))})
 						origin: self bounds left @ (self bounds height / 2) asFloat;
 						direction: self bounds width @ 0;
 						normal: 1 @ 0;

@@ -73,12 +73,14 @@ RubTextFieldMorph >> closeChooser [
 		ifNotNil: [entryCompletion closeChooser]
 ]
 
-{ #category : #configure }
+{ #category : #accessing }
 RubTextFieldMorph >> configureGhostText: aTextArea [
+
+	"Text Input always is in the middle of the text input"
+
 	super configureGhostText: aTextArea.
-	self hasKeyboardFocus
-		ifTrue: [ 
-			aTextArea left: self left]
+	aTextArea center: self scrollBounds center.
+	aTextArea left: self scrollBounds left 
 ]
 
 { #category : #defaults }

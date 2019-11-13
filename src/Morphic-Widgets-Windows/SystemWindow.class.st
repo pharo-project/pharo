@@ -438,8 +438,10 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		action: [ aBuilder model showAbout ];
 		iconName: #smallHelpIcon;
 		withSeparatorAfter.
-	(aBuilder item: #'Change title...')
-		action: [ aBuilder model relabel ];
+	(aBuilder item: #'Change title')
+		action: [ aBuilder model relabel ].
+	(aBuilder item: #'Copy title')
+		action: [ aBuilder model copyTitle ];
 		withSeparatorAfter.
 	(aBuilder item: #'Send to back')
 		action: [ aBuilder model sendToBack ].
@@ -786,6 +788,12 @@ SystemWindow >> collapsedFrame [
 { #category : #drawing }
 SystemWindow >> colorForInsets [
 	^self paneColor colorForInsets
+]
+
+{ #category : #label }
+SystemWindow >> copyTitle [
+	Clipboard clipboardText: self label.
+	self inform: 'Window title copied.'
 ]
 
 { #category : #initialization }

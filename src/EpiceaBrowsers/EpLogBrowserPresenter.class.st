@@ -15,7 +15,6 @@ Class {
 		'selectionDeferrer',
 		'cachedLogEntries',
 		'commentsLog',
-		'monitor',
 		'cachedItems',
 		'showEntryItemMenu',
 		'entryContentPresenter',
@@ -34,15 +33,12 @@ EpLogBrowserPresenter class >> defaultLog [
 { #category : #specs }
 EpLogBrowserPresenter class >> defaultSpec [
 	^ SpPanedLayout newVertical
-		position: 60 percent;
+		position: 0.6;
 		add: #itemsPresenter;
 		add:
 			(SpBoxLayout newVertical
-				add: #toolbarPresenter
-					expand: false
-					fill: false
-					padding: 0;
-				add: #entryContentPresenter;
+				add: #toolbarPresenter expand: false fill: false padding: 2;
+				add: #entryContentPresenter expand: true fill: true padding: 2;
 				yourself);
 		yourself
 ]
@@ -551,33 +547,27 @@ EpLogBrowserPresenter >> initialize [
 ]
 
 { #category : #initialization }
-EpLogBrowserPresenter >> initializePresenter [
-	super initializePresenter.
-	self beHistoryMode
-]
+EpLogBrowserPresenter >> initializePresenters [
 
-{ #category : #initialization }
-EpLogBrowserPresenter >> initializeWidgets [
 	itemsPresenter := self newList.
-	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
-	entryContentPresenter := self newDiff.
-
 	itemsPresenter
 		beMultipleSelection;
-		displayBlock: [ :entryReference | self morphForItemAt: entryReference ];
+		display: [ :entryReference | self morphForItemAt: entryReference ];
 		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
 		contextMenu: [ self menuMorphForSelectedItems ].
 
+	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
 	toolbarPresenter logBrowserPresenter: self.
 
-	entryContentPresenter showOptions: false
+	entryContentPresenter := self newDiff.
+	entryContentPresenter showOptions: false.
+
+	self beHistoryMode.
 ]
 
 { #category : #initialization }
 EpLogBrowserPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter
-		initialExtent: 550 @ 700;
-		title: 'Epicea - Log Browser'
+	aWindowPresenter initialExtent: 550 @ 700
 ]
 
 { #category : #'menu - operations' }
@@ -650,7 +640,7 @@ EpLogBrowserPresenter >> menuMorphForSelectedItems [
 { #category : #accessing }
 EpLogBrowserPresenter >> monitor [
 	
-	^ monitor ifNil: [ EpMonitor current ]
+	^ EpMonitor current
 ]
 
 { #category : #private }

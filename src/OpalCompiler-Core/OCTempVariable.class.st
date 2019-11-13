@@ -1,11 +1,12 @@
 "
-I model temp variables. With Closures, there are two kinds: Copying and those that are stores in a so called temp vector, a heap allocated array that itself is stored in an un-named copying temp variable.
+I model temp variables. With Closures, there are two kinds: Copying and those that are stored in a so called temp vector, a heap allocated array that itself is stored in a copying temp variable.
 "
 Class {
 	#name : #OCTempVariable,
 	#superclass : #OCAbstractLocalVariable,
 	#instVars : [
-		'escaping'
+		'escaping',
+		'index'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -53,6 +54,17 @@ OCTempVariable >> escaping: anObject [
 OCTempVariable >> hash [
 
 	^ name hash bitXor: (usage hash bitXor: scope hash).
+]
+
+{ #category : #debugging }
+OCTempVariable >> indexFromIR [
+	^index ifNil: [index := scope indexFromIRForVarNamed: name]
+]
+
+{ #category : #debugging }
+OCTempVariable >> indexInTempVectorFromIR: aName [
+	"if I am storing  temp vector, return the index of var name"
+	^(scope node irInstruction tempVectorNamed: name) indexForVarNamed: aName
 ]
 
 { #category : #initialization }
@@ -129,18 +141,27 @@ OCTempVariable >> markWrite [
 
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
-	^ aContext tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name)
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
+	^ self readFromLocalContext: definitionContext
 ]
 
 { #category : #debugging }
-OCTempVariable >> searchFromContext: aContext scope: contextScope [
+OCTempVariable >> readFromLocalContext: aContext [
 
-	^ contextScope lookupVar: name inContext: aContext
+	^ aContext tempAt: self indexFromIR
 ]
 
 { #category : #debugging }
 OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
-	^aContext 
-		tempAt: (contextScope outerNotOptimizedScope node irInstruction indexForVarNamed: name) 
-		put: aValue
+
+	| definitionContext |
+	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
+	^self writeFromLocalContext: definitionContext put: aValue
+]
+
+{ #category : #debugging }
+OCTempVariable >> writeFromLocalContext: aContext put: aValue [
+
+	^ aContext tempAt: self indexFromIR put: aValue
 ]

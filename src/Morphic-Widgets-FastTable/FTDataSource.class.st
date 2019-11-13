@@ -126,6 +126,12 @@ FTDataSource >> realElementAt: anIndex [
 ]
 
 { #category : #accessing }
+FTDataSource >> rowHeight: roIndex [
+
+	^ self table rowHeight
+]
+
+{ #category : #accessing }
 FTDataSource >> searchText: aString [
 	"search a text and answers a list of elements indexes matching condition. 
 	 E.g,

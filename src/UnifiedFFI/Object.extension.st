@@ -9,47 +9,47 @@ Object >> calloutAPIClass [
 Object >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
+	self ffiCall: fnSpec library: self ffiLibrary
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary [
+	<ffiCalloutTranslator>
+	
+	self ffiCall: fnSpec library: aLibrary options: #()
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
+	<ffiCalloutTranslator>
+	
+	| ffiLibrary |
+	ffiLibrary := aLibrary asFFILibrary.
+	^ (ffiLibrary calloutAPIClass inUFFIContext: thisContext)
 		convention: self ffiCallingConvention;
-		options: self ffiLibrary uniqueInstance options;
-		function: fnSpec module: self ffiLibrary uniqueInstance
+		options: (ffiLibrary options), callOptions;
+		function: fnSpec library: ffiLibrary
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName [
 	<ffiCalloutTranslator>
 	
-	| ffiLibrary |
-	
-	ffiLibrary := aModuleName asFFILibrary.
-	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: ffiLibrary options;
-		function: fnSpec module: aModuleName
+	self ffiCall: fnSpec library: aModuleName
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 	<ffiCalloutTranslator>
 	
-	| ffiLibrary |
-	
-	ffiLibrary := aModuleName asFFILibrary.	
-	
-	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: (ffiLibrary options), callOptions;
-		function: fnSpec module: aModuleName
+	self ffiCall: fnSpec library: aModuleName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: (self ffiLibrary options), callOptions;
-		function: fnSpec module: self ffiLibrary moduleName
+	self ffiCall: fnSpec library: self ffiLibrary libraryName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -59,7 +59,9 @@ Object >> ffiCallingConvention [
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCalloutIn: aContext [
-	
+	"For backwards compatibility.
+	It receives the context that is performing the ffi callout.
+	This context will be used to know what method to compile and where to restart the execution"
 	^ self calloutAPIClass inContext: aContext
 ]
 

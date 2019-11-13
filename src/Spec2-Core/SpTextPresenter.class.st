@@ -59,7 +59,6 @@ SpTextPresenter >> registerEvents [
 
 { #category : #api }
 SpTextPresenter >> scrollValue [
-	"<api: #inspect>"
 	"Return the current scroll position"
 
 	^ scrollValue

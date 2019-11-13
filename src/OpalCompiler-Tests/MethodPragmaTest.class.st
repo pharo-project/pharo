@@ -60,8 +60,7 @@ MethodPragmaTest >> testAllNamedFromTo [
 	| pragmasCompiled pragmasDetected |
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
 	pragmasDetected := Pragma allNamed: #foo: from: self class to: Object.
-	self assert: pragmasDetected = pragmasCompiled.
-
+	self assert: pragmasDetected equals: pragmasCompiled.
 	pragmasDetected := Pragma allNamed: #foo: from: Object to: Object.
 	self assertEmpty: pragmasDetected
 ]
@@ -120,17 +119,17 @@ MethodPragmaTest >> testAllNamedInSortedUsing [
 { #category : #testing }
 MethodPragmaTest >> testArgumentAt [
 	| pragma |
-	pragma := Pragma keyword: #value:value:value: arguments: #( 3 2 1 ).
-	self assert: (pragma argumentAt: 1) = 3.
-	self assert: (pragma argumentAt: 2) = 2.
-	self assert: (pragma argumentAt: 3) = 1
+	pragma := Pragma selector: #value:value:value: arguments: #(3 2 1).
+	self assert: (pragma argumentAt: 1) equals: 3.
+	self assert: (pragma argumentAt: 2) equals: 2.
+	self assert: (pragma argumentAt: 3) equals: 1
 ]
 
 { #category : #'testing-pragma' }
 MethodPragmaTest >> testArguments [
 	| pragma |
-	pragma := Pragma keyword: #foo: arguments: #( 123 ).
-	self assert: pragma arguments = #( 123 ).
+	pragma := Pragma selector: #foo: arguments: #(123).
+	self assert: pragma arguments equals: #(123)
 ]
 
 { #category : #'testing-compiler' }
@@ -234,11 +233,10 @@ MethodPragmaTest >> testCompileValue [
 { #category : #'testing-pragma' }
 MethodPragmaTest >> testMessage [
 	| pragma message |
-	pragma := Pragma keyword: #foo: arguments: #( 123 ).
+	pragma := Pragma selector: #foo: arguments: #(123).
 	message := pragma message.
-	
-	self assert: message selector = #foo:.
-	self assert: message arguments = #( 123 ).
+	self assert: message selector equals: #foo:.
+	self assert: message arguments equals: #(123)
 ]
 
 { #category : #'testing-method' }
@@ -272,14 +270,12 @@ MethodPragmaTest >> testNoPragma [
 { #category : #testing }
 MethodPragmaTest >> testNumArgs [
 	| pragma |
-	pragma := Pragma keyword: #value arguments: #().
-	self assert: pragma numArgs = 0.
-	
-	pragma := Pragma keyword: #+ arguments: #( 1 ).
-	self assert: pragma numArgs = 1.
-	
-	pragma := Pragma keyword: #value:value: arguments: #( 1 2 ).
-	self assert: pragma numArgs = 2
+	pragma := Pragma selector: #value arguments: #().
+	self assert: pragma numArgs equals: 0.
+	pragma := Pragma selector: #+ arguments: #(1).
+	self assert: pragma numArgs equals: 1.
+	pragma := Pragma selector: #value:value: arguments: #(1 2).
+	self assert: pragma numArgs equals: 2
 ]
 
 { #category : #'testing-primitives' }
@@ -338,19 +334,28 @@ MethodPragmaTest >> testSelector [
 { #category : #testing }
 MethodPragmaTest >> testSendTo [
 	| pragma wasHere |
-	pragma := Pragma keyword: #value:value: arguments: #( 1 2 ).
-	self assert: (pragma sendTo: [ :a :b |
-		self assert: a = 1; assert: b = 2.
-		wasHere := true ]).
+	pragma := Pragma selector: #value:value: arguments: #(1 2).
+	self assert:
+			(pragma
+				sendTo: [ :a :b | 
+					self
+						assert: a equals: 1;
+						assert: b equals: 2.
+					wasHere := true ]).
 	self assert: wasHere
 ]
 
 { #category : #testing }
 MethodPragmaTest >> testWithArgumentsDo [
 	| pragma wasHere |
-	pragma := Pragma keyword: #add:after: arguments: #( 1 2 ).
-	self assert: (pragma withArgumentsDo: [ :a :b |
-		self assert: a = 1; assert: b = 2.
-		wasHere := true ]).
+	pragma := Pragma selector: #add:after: arguments: #(1 2).
+	self
+		assert:
+			(pragma
+				withArgumentsDo: [ :a :b | 
+					self
+						assert: a = 1;
+						assert: b = 2.
+					wasHere := true ]).
 	self assert: wasHere
 ]

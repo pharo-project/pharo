@@ -35,11 +35,23 @@ SlotTest >> testIsReadInMethod [
 	self assert: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
 
+{ #category : #'tests - testing' }
+SlotTest >> testIsReferenced [
+	self assert: (Point slotNamed: #x) isReferenced
+]
+
 { #category : #'tests - read/write' }
 SlotTest >> testIsWrittenInMethod [
 	
 	ivarForTesting := #test.
 	self assert: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
+]
+
+{ #category : #'tests - misc' }
+SlotTest >> testNotFoundSlotRaiseExplicitError [
+	"When a slot is not present in the image, we will try to build the slot with nil. In that case we should return an error."
+
+	self should: [ #test => nil ] raise: SlotNotFound
 ]
 
 { #category : #'tests - read/write' }
@@ -86,9 +98,10 @@ SlotTest >> testRemoveProperty [
 	self assert: ivar properties isNil
 ]
 
-{ #category : #'tests - testing' }
-SlotTest >> testisReferenced [
-	self assert: (Point slotNamed: #x) isReferenced
+{ #category : #'tests - misc' }
+SlotTest >> testSlotUsers [
+	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
+	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
 ]
 
 { #category : #'tests - misc' }
@@ -96,10 +109,4 @@ SlotTest >> testisUsed [
 	self assert: InstanceVariableSlot isUsed.
 	self assert: IndexedSlot isUsed. "subclasses are users"
 	self assert: ProcessLocalSlot isUsed. "references count as uses, too"
-]
-
-{ #category : #'tests - misc' }
-SlotTest >> testslotUsers [
-	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
-	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : #SpAbstractTreeTableAdapterTest,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
+	#superclass : #SpAbstractWidgetAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
@@ -31,7 +31,7 @@ SpAbstractTreeTableAdapterTest >> testChangingRootsUpdateWidget [
 
 	self presenter roots: #(10 11 12).
 	
-	backendForTest assertList: self adapter widget displayItems: #('10' '11' '12').
+	backendForTest assertList: self adapter displayItems: #('10' '11' '12').
 	
 
 ]
@@ -92,7 +92,7 @@ SpAbstractTreeTableAdapterTest >> testShowingColumnDisplayColumn [
 
 	self presenter showColumnHeaders.
 	
-	backendForTest assertHasHeader: self adapter widget
+	backendForTest assertHasHeader: self adapter
 ]
 
 { #category : #running }

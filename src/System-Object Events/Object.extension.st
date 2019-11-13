@@ -7,8 +7,8 @@ Object >> actionForEvent: anEventSelector [
 	| actions |
 	actions := self actionMap
 		at: anEventSelector asSymbol
-		ifAbsent: [nil].
-	actions ifNil: [^nil].
+		ifAbsent: [^nil].
+ 
 	^ actions asMinimalRepresentation
 ]
 

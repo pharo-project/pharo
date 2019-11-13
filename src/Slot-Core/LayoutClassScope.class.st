@@ -176,7 +176,7 @@ LayoutClassScope >> visibleSlots [
 
 { #category : #enumerating }
 LayoutClassScope >> withIndexDo: elementAndIndexBlock [ 
-	"Just like with:do: except that the iteration index supplies the second argument to the block."
+	"Just like do: except that the iteration index supplies the second argument to the block"
 	1 to: self size do:
 		[:index |
 		elementAndIndexBlock

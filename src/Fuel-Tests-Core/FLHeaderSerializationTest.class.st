@@ -49,7 +49,7 @@ FLHeaderSerializationTest >> testPostMaterializationActions [
 	
 	aClass perform: #postLoadMethod.
 	self assert: (aClass perform: #classVariable) = 1.
-	
+	"Cannot replace with testing environment for having clean blockClosure"
 	self serializer addPostMaterializationAction: [  (Smalltalk at: #FuelPostMaterializationTestClassToBeDeleted) perform: #postLoadMethod2  ].
 	self serialize: aClass.
 	self assert: (aClass perform: #classVariable) = 1.
@@ -74,7 +74,7 @@ FLHeaderSerializationTest >> testPreMaterializationActions [
 	
 	aClass perform: #postLoadMethod.
 	self assert: (aClass perform: #classVariable) = 1.
-	
+	"Cannot replace with testing environment for having clean blockClosure"
 	self serializer addPreMaterializationAction: [  (Smalltalk at: #FuelPreMaterializationTestClassToBeDeleted) perform: #postLoadMethod2  ].
 	self serialize: aClass.
 	self assert: (aClass perform: #classVariable) = 1.

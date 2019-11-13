@@ -515,6 +515,17 @@ SortedCollectionTest >> testCollect [
 	
 ]
 
+{ #category : #tests }
+SortedCollectionTest >> testComma [
+	| sortBlock collOne collTwo combined |
+	sortBlock := [ :a :b | a > b ].
+	collOne := (1 to: 5) asSortedCollection: sortBlock.
+	collTwo := (6 to: 10) asSortedCollection: sortBlock.
+	combined := collOne , collTwo.
+	self assert: combined sortBlock equals: sortBlock.
+	self assert: combined asArray equals: (1 to: 10) asArray reverse
+]
+
 { #category : #'tests - basic' }
 SortedCollectionTest >> testCopy [
 		

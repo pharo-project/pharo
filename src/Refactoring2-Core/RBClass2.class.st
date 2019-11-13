@@ -64,7 +64,7 @@ RBClass2 >> classVariableNames [
 { #category : #accessing }
 RBClass2 >> classVariableNames: aCollectionOfStrings [ 
 
-	classVariableNames := (aCollectionOfStrings collect: #asSymbol) asOrderedCollection
+	classVariableNames := (aCollectionOfStrings collect: [:each | each asSymbol]) asOrderedCollection
 ]
 
 { #category : #accessing }
@@ -130,23 +130,23 @@ RBClass2 >> poolDictionaryNames [
 { #category : #accessing }
 RBClass2 >> poolDictionaryNames: aCollectionOfStrings [ 
 
-	poolDictionaryNames := (aCollectionOfStrings collect: #asSymbol) asOrderedCollection
+	poolDictionaryNames := (aCollectionOfStrings collect: [:each | each asSymbol]) asOrderedCollection
 ]
 
 { #category : #private }
 RBClass2 >> privateClassVariableNames [
 
-	(self isDefined and: [classVariableNames isNil]) 
-		ifTrue: [self classVariableNames: self realClass classVarNames].
+	(self isDefined and: [ classVariableNames isNil ]) 
+		ifTrue: [ self classVariableNames: self realClass classVarNames ].
 	^ classVariableNames
 ]
 
 { #category : #private }
 RBClass2 >> privatePoolDictionaryNames [
 
-	(self isDefined and: [poolDictionaryNames isNil]) 
-		ifTrue: [self poolDictionaryNames:
-			(self realClass sharedPools collect: [:each | self realClass environment keyAtValue: each])].
+	(self isDefined and: [ poolDictionaryNames isNil ]) 
+		ifTrue: [ self poolDictionaryNames:
+			(self realClass sharedPools collect: [ :each | self realClass environment keyAtValue: each ])].
 	^ poolDictionaryNames
 ]
 
@@ -177,10 +177,10 @@ RBClass2 >> renameClassVariable: oldName to: newName around: aBlock [
 		put: newName asSymbol.
 		
 	^ self model
-		performChange: (RBRenameClassVariableChange   
-							rename: oldName
-							to: newName
-							in: self)
+		performChange: (changeFactory  
+								renameClassVariable: oldName
+								to: newName
+								in: self)
 		around: aBlock
 ]
 

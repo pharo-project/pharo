@@ -93,6 +93,12 @@ SpTablePresenter >> showColumnHeaders [
 	showColumnHeaders := true
 ]
 
+{ #category : #testing }
+SpTablePresenter >> valueAtColumn: aColumn row: aRow [ 
+
+	^ (columns at: aColumn) readObject: (self model items at: aRow)
+]
+
 { #category : #'api-events' }
 SpTablePresenter >> whenColumnsChangedDo: aBlock [
 	

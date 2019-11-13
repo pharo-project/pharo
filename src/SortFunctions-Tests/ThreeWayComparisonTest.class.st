@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #tests }
+ThreeWayComparisonTest >> testBooleans [
+	self assert: (true threeWayCompareTo: false) equals: 1.
+	self assert: (false threeWayCompareTo: true) equals: -1.
+	self assert: (true threeWayCompareTo: true) equals: 0.
+	self assert: (false threeWayCompareTo: false) equals: 0
+]
+
+{ #category : #tests }
 ThreeWayComparisonTest >> testFloats [
 
 	| a b c d |

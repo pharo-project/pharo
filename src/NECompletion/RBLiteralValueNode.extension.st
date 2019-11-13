@@ -1,16 +1,13 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*NECompletion' }
-RBLiteralValueNode >> completionToken [
-	^ self value asString
+RBLiteralValueNode >> completionEntries [
+	value isSymbol ifFalse: [ ^ #() ].
+	"return all symbols that start with value"
+	^Symbol allSymbols select: [ :each | (each beginsWith: value) and: [each isLiteralSymbol]]
 ]
 
 { #category : #'*NECompletion' }
-RBLiteralValueNode >> narrowWith: aString [
-
- 	self flag: #maybeBug.
-	"This seems to work because we only arrive here with Symbols.
-	It may not work with other kind of literal values"
-	value := aString asSymbol.
-	sourceText := aString
+RBLiteralValueNode >> completionToken [
+	^ self value asString
 ]

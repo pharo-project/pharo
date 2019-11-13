@@ -28,7 +28,7 @@ SpDemoLabelledPresenter >> email [
 ]
 
 { #category : #initialization }
-SpDemoLabelledPresenter >> initializeWidgets [
+SpDemoLabelledPresenter >> initializePresenters [
 	| passwordInput |
 	passwordInput := self newTextInput
 		bePassword;

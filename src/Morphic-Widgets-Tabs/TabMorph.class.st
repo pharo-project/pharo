@@ -597,22 +597,20 @@ TabMorph >> iconRightOffset [
 
 { #category : #initialization }
 TabMorph >> initialize [
-
 	super initialize.
-	
+
 	self changeProportionalLayout.
-	
+
 	state := TabEnabled tab: self.
 	closeable := true.
 	label := self buildLabel: 'tab' withIcon: self defaultIcon.
 	closeIcon := AlphaImageMorph withForm: self class closeIcon scaledByDisplayScaleFactor.
-	morph := nil.
 	actions := OrderedCollection new.
 	retrievingSemaphore := Semaphore new.
-	
+
 	self addLabel.
 	self addIcon.
-	self addActionsToIcon.
+	self addActionsToIcon
 ]
 
 { #category : #accessing }
@@ -699,8 +697,7 @@ TabMorph >> morph: anObject [
 
 { #category : #'event handling' }
 TabMorph >> mouseDown: event [
-
-	self flag: 'ToDo: Add drag'
+	self flag: #pharoTodo. "Add drag"
 ]
 
 { #category : #'icons-actions' }

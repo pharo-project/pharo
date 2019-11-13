@@ -25,7 +25,7 @@ WindowsStore class >> isCaseSensitive [
 
 { #category : #accessing }
 WindowsStore class >> maxFileNameLength [
-	self flag: 'TODO: more tests needed here!'.
+	self flag: #pharoTodo. "More tests needed here!".
 	^ 255
 ]
 

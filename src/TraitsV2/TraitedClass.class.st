@@ -203,10 +203,10 @@ TraitedClass >> isLocalAliasSelector: aSymbol [
 
 { #category : #testing }
 TraitedClass >> isLocalMethodsProtocol: aProtocol [
-
 	"Checks if the protocol has local selectors"
-	aProtocol methods ifEmpty: [ ^true ].
-	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
+
+	aProtocol methodSelectors ifEmpty: [ ^ true ].
+	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
 ]
 
 { #category : #testing }

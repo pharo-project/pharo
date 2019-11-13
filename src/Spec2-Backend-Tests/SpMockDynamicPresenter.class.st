@@ -31,7 +31,7 @@ SpMockDynamicPresenter class >> openWithRebuildBeforeOpening [
 ]
 
 { #category : #initialization }
-SpMockDynamicPresenter >> initializePresenter [
+SpMockDynamicPresenter >> connectPresenters [
 	list
 		whenSelectionChangedDo: [ :sel | 
 			label := self newLabel.
@@ -41,7 +41,7 @@ SpMockDynamicPresenter >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpMockDynamicPresenter >> initializeWidgets [
+SpMockDynamicPresenter >> initializePresenters [
 	list := self newList.
 	label := self newLabel.
 	

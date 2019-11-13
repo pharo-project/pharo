@@ -38,7 +38,12 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 			send: #strongSelectionChanged:
 			to: self.
 
-	tableMorph dataSource: self newDataSource
+	tableMorph dataSource: self newDataSource.
+	
+	self presenter whenItemFilterBlockChangedDo: [ :block | self 
+		updateItemFilterBlockWith: block ].
+	self updateItemFilterBlockWith: self itemFilter.
+
 ]
 
 { #category : #factory }
@@ -54,6 +59,11 @@ SpMorphicTableAdapter >> buildWidget [
 	^ widget
 ]
 
+{ #category : #testing }
+SpMorphicTableAdapter >> columns [
+	^ widget columns
+]
+
 { #category : #factory }
 SpMorphicTableAdapter >> defaultColumn [
 
@@ -64,6 +74,14 @@ SpMorphicTableAdapter >> defaultColumn [
 SpMorphicTableAdapter >> ensureAtLeastOneColumnIn: tableMorph [
 	self model columns ifNotEmpty: [ ^ self ].
 	tableMorph addColumn: (self newColumnFrom: self defaultColumn)
+]
+
+{ #category : #testing }
+SpMorphicTableAdapter >> isNonEditableRow: aRow column: aColumn [
+
+	^ (self widget dataSource
+		cellColumn: (self widget columns at: aColumn)
+		row: aRow) submorphs allSatisfy: [ :e | e asReadOnlyMorph == e ]
 ]
 
 { #category : #testing }
@@ -159,6 +177,12 @@ SpMorphicTableAdapter >> selectIndex: anInteger [
 	(anInteger = 0 and: [ widget selectedIndexes isEmpty ]) ifTrue: [ ^ self ].	
 	(widget selectedIndexes includes: anInteger) ifTrue: [^self].
 	widget selectIndex: anInteger
+]
+
+{ #category : #testing }
+SpMorphicTableAdapter >> selectedIndexes [
+	
+	^ widget selectedIndexes 
 ]
 
 { #category : #factory }
