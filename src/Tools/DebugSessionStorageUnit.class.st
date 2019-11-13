@@ -1,3 +1,6 @@
+"
+Instances of this class are used to store debug sessions by DebugSessionStorage
+"
 Class {
 	#name : #DebugSessionStorageUnit,
 	#superclass : #Object,

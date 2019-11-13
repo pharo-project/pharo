@@ -14,8 +14,8 @@ Class {
 { #category : #query }
 AbstractDebugger class >> beCurrent [
 	self isAbstract ifTrue: [ self error: 'Cannot register an abstract debugger' ].
-
-	Smalltalk tools register: self as: #debugger
+	
+	Debugger mainDebuggerClass: self
 ]
 
 { #category : #'debugger declaration' }

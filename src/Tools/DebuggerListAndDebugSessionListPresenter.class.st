@@ -1,8 +1,8 @@
 "
-Lists all the debuggers available in the image, along with their rank (provided they always return the same rank regardless of the debug session)
+Lists all the debuggers available in the image, along with their rank (provided they always return the same rank regardless of the debug session). Also list all the debug sessions stored in DebugSessionStorage.
 "
 Class {
-	#name : #DebuggerListPresenter,
+	#name : #DebuggerListAndDebugSessionListPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'debuggerList',
@@ -14,11 +14,11 @@ Class {
 }
 
 { #category : #specs }
-DebuggerListPresenter class >> defaultSpec [
+DebuggerListAndDebugSessionListPresenter class >> defaultSpec [
 	| toolBarHeight titleHeight |
 	titleHeight := 20.
 	toolBarHeight := 35.
-	^ SpBoxLayout newHorizontal
+	^ SpPanedLayout newHorizontal
 		add: (SpBoxLayout newVertical
 			add: 'Debuggers' height: titleHeight;
 			add: #debuggerList;
@@ -34,12 +34,12 @@ DebuggerListPresenter class >> defaultSpec [
 ]
 
 { #category : #api }
-DebuggerListPresenter class >> initialExtent [
+DebuggerListAndDebugSessionListPresenter class >> initialExtent [
 	^ 750@300
 ]
 
 { #category : #'world menu' }
-DebuggerListPresenter class >> menuCommandOn: aBuilder [
+DebuggerListAndDebugSessionListPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'List Debuggers and Debug Sessions')
 		parent: #Debugging;
@@ -49,28 +49,30 @@ DebuggerListPresenter class >> menuCommandOn: aBuilder [
 ]
 
 { #category : #api }
-DebuggerListPresenter class >> open [
+DebuggerListAndDebugSessionListPresenter class >> open [
 	<example>
-	| a |
-	a := self new openWithSpec.
-	a window extent: self initialExtent.
-	^ a
+	| windowPresenter presenter |
+	presenter := self new.
+	windowPresenter := presenter openWithSpec.
+	windowPresenter whenClosedDo: presenter getWhenClosedBlock.
+	windowPresenter window extent: self initialExtent.
+	^ windowPresenter
 ]
 
 { #category : #'world menu' }
-DebuggerListPresenter class >> title [
+DebuggerListAndDebugSessionListPresenter class >> title [
 	^ 'Debuggers and Debug Sessions'
 ]
 
 { #category : #helpers }
-DebuggerListPresenter >> compareRank: rank1 to: rank2 [
+DebuggerListAndDebugSessionListPresenter >> compareRank: rank1 to: rank2 [
 	rank1 isInteger ifFalse: [ ^ false ]. "If rank1 is not an integer, (typically a string), then it is smaller than rank2"
 	rank2 isInteger ifFalse: [ ^ true ]. "If rank2 is not an integer, (typically a string), then it is smaller than rank1"
 	^ rank1 >= rank2 "Otherwise, both ranks are int, we return the result of their comparison"
 ]
 
 { #category : #'button action' }
-DebuggerListPresenter >> debugDebugSessionAction [
+DebuggerListAndDebugSessionListPresenter >> debugDebugSessionAction [
 	"Describe the action performed by the 'Debug' button under the Debug Session List.
 	Requires a debug session to be selected in the list of debug sessions, and a debugger to be selected in the list of debuggers. If these conditions are not met, inform the user and stop.
 	If they are met, tell the selected debugger to open the selected debug session"
@@ -83,13 +85,13 @@ DebuggerListPresenter >> debugDebugSessionAction [
 ]
 
 { #category : #helpers }
-DebuggerListPresenter >> getBlockTryingToGetRankOfDebugger [
+DebuggerListAndDebugSessionListPresenter >> getBlockTryingToGetRankOfDebugger [
 	"Returns a block taking a debugger as argument and returning the rank it would give to a nil debug session. If an exception is raised, the debugger really needs the debug session object to give a rank, so the block returns a string saying that. If no exception is raised, it means the debugger did not need an actual debug session object to answer, the block directly return the returned value"
 	^ [ :aDebugger | [aDebugger rankDebugSession: nil] on: Exception do: [ 'Depends on the debug session'] ]
 ]
 
 { #category : #helpers }
-DebuggerListPresenter >> getSortingBlock [
+DebuggerListAndDebugSessionListPresenter >> getSortingBlock [
 	| rankBlock |
 	rankBlock := self getBlockTryingToGetRankOfDebugger.
 	^ [ :aDebuggerClass1 :aDebuggerClass2 |
@@ -100,13 +102,19 @@ DebuggerListPresenter >> getSortingBlock [
 		]
 ]
 
+{ #category : #helpers }
+DebuggerListAndDebugSessionListPresenter >> getWhenClosedBlock [
+	"Returns the block to be executed when the windows containing this presenter is closed by the user"
+	^ [ DebugSessionStorage removeSubscriberOnStorageUpdate: self ]
+]
+
 { #category : #icon }
-DebuggerListPresenter >> iconManager [
+DebuggerListAndDebugSessionListPresenter >> iconManager [
 	^ Smalltalk ui icons.
 ]
 
 { #category : #initialization }
-DebuggerListPresenter >> initializeWidgets [
+DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	| timeOfStorageColumnWidth |
 	timeOfStorageColumnWidth := 115.
 	debugSessionList := self newTable
@@ -125,10 +133,12 @@ DebuggerListPresenter >> initializeWidgets [
 			label: 'Browse';
 			icon: (self iconManager iconNamed: #smallFind);
 			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
+			
+	DebugSessionStorage addSubscriberOnStorageUpdate: self.
 ]
 
 { #category : #helpers }
-DebuggerListPresenter >> makeDebugSessionListToolbar [
+DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 	| toolBar |
 	toolBar := self newToolBar.
 	toolBar addItem: (SpToolBarButton new
@@ -152,7 +162,12 @@ DebuggerListPresenter >> makeDebugSessionListToolbar [
 	^ toolBar
 ]
 
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageUpdate [
+	self refreshDebugSessionList
+]
+
 { #category : #helpers }
-DebuggerListPresenter >> refreshDebugSessionList [
+DebuggerListAndDebugSessionListPresenter >> refreshDebugSessionList [
 	debugSessionList items: DebugSessionStorage storage
 ]
