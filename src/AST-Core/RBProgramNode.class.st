@@ -43,7 +43,7 @@ Class {
 
 { #category : #accessing }
 RBProgramNode class >> formatterClass [
-	^ FormatterClass ifNil: [ RBNullFormatter ] ifNotNil: [ FormatterClass ]
+	^ FormatterClass ifNil: [ RBSimpleFormatter ] ifNotNil: [ FormatterClass ]
 ]
 
 { #category : #accessing }

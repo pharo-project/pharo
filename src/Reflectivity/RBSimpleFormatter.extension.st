@@ -1,7 +1,7 @@
-Extension { #name : #BISimpleFormatter }
+Extension { #name : #RBSimpleFormatter }
 
 { #category : #'*Reflectivity' }
-BISimpleFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
+RBSimpleFormatter >> visitLiteralVariableNode: aLiteralVariableNode [
 	| binding |
 	binding := aLiteralVariableNode binding.
 	self writeString: binding key storeString , ' -> '.
