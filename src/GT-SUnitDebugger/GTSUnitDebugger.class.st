@@ -46,6 +46,11 @@ GTSUnitDebugger class >> lookupStackSize [
 	^ 512
 ]
 
+{ #category : #accessing }
+GTSUnitDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
+	^ super openOn: (self spanNewSessionFrom: aDebugSession) withFullView: aBool andNotification: aString
+]
+
 { #category : #'debugger declaration' }
 GTSUnitDebugger class >> rank [
 	^ 100
@@ -53,8 +58,8 @@ GTSUnitDebugger class >> rank [
 
 { #category : #'debugger declaration' }
 GTSUnitDebugger class >> rankDebugSession: aDebugSession [
-	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is."
-	(self handlesContext: aDebugSession interruptedContext) ifTrue: [ ^ self rank ] ifFalse: [ ^ -1 ]
+	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is. Signal the DebugSessionCannotBeOpenedByThisDebugger exception if this debugger absolutely cannot debug @aDebugSession (for example if this debugger can only handle debug sessions from test executions, and @aDebugSession does not come from a test execution)"
+	(self handlesContext: aDebugSession interruptedContext) ifTrue: [ ^ self rank ] ifFalse: [ DebugSessionCannotBeOpenedByThisDebugger signal ]
 ]
 
 { #category : #'tools registry' }
