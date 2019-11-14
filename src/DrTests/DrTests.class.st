@@ -122,7 +122,7 @@ DrTests class >> defaultSpec [
 { #category : #'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'Dr Test')
+	(aBuilder item: #'Dr Test (preview)')
 		parent: #Tools;
 		action: [ self open ];
 		order: 20;
