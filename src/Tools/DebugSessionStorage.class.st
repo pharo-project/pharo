@@ -13,7 +13,7 @@ DebugSessionStorage class >> addSubscriberOnStorageUpdate: anObject [
 	self subscribersOnStorageUpdate add: anObject
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 DebugSessionStorage class >> clear [
 	<script>
 	"This method should only be used for development purposes. It does not call #terminate on the stored debug sessions, and therefore does not let the debugged process be removed from the system (they will linger on)"

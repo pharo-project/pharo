@@ -26,7 +26,8 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'errorWasInUIProcess'
+		'errorWasInUIProcess',
+		'objectsThatWantToKeepMeAlive'
 	],
 	#classVars : [
 		'LogDebuggerStackToFile'
@@ -244,6 +245,11 @@ DebugSession >> isTestObject: anObject [
 	^ anObject isKindOf: TestCase
 ]
 
+{ #category : #keepAlive }
+DebugSession >> keepAlive: anObjectThatWantsToKeepMeAlive [
+	self objectsThatWantToKeepMeAlive add: anObjectThatWantsToKeepMeAlive
+]
+
 { #category : #logging }
 DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
@@ -260,6 +266,12 @@ DebugSession >> name [
 { #category : #accessing }
 DebugSession >> name: aString [
 	name := aString
+]
+
+{ #category : #accessing }
+DebugSession >> objectsThatWantToKeepMeAlive [
+	objectsThatWantToKeepMeAlive ifNil: [ objectsThatWantToKeepMeAlive := WeakOrderedCollection new ].
+	^ objectsThatWantToKeepMeAlive
 ]
 
 { #category : #context }
@@ -460,6 +472,15 @@ DebugSession >> selectedCodeRangeForContext: selectedContext [
 	^ self pcRangeForContext: selectedContext
 ]
 
+{ #category : #keepAlive }
+DebugSession >> shouldBeKeptAlive [
+	"Counts how many objects are in objectsThatWantToKeepMeAlive. Returns whether there are any such object. The iteration does not use #size or #isEmpty, and guards against nils because objectsThatWantToKeepMeAlive is a WeakOrderedCollection, therefore some contained objects can be set to nil during garbage collection, and #size and #isEmpty do not discount them"
+	| count |
+	count := 0.
+	self objectsThatWantToKeepMeAlive do: [ :anObject | anObject ifNotNil: [ count := count + 1 ] ].
+	^ count ~= 0
+]
+
 { #category : #testing }
 DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	"Return true if all filters match the given context, or false otherwise.
@@ -627,6 +648,11 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	seeing any visible results."
 	
 	^ aProcess stepToSendOrReturn
+]
+
+{ #category : #keepAlive }
+DebugSession >> stopKeepingAlive: anObjectThatNoLongerWantsToKeepMeAlive [
+	self objectsThatWantToKeepMeAlive remove: anObjectThatNoLongerWantsToKeepMeAlive
 ]
 
 { #category : #'debugging actions' }

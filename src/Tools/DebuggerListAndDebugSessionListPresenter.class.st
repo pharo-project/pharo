@@ -116,14 +116,6 @@ DebuggerListAndDebugSessionListPresenter >> iconManager [
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	| timeOfStorageColumnWidth |
-	timeOfStorageColumnWidth := 115.
-	debugSessionList := self newTable
-		addColumn: (SpStringTableColumn title: 'Name' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession name] );
-		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
-	self refreshDebugSessionList.
-	
-	debugSessionListToolBar := self makeDebugSessionListToolbar.
-
 	debuggerList := self newTable
 		addColumn: (SpStringTableColumn title: 'Rank' evaluated: self getBlockTryingToGetRankOfDebugger);
 		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: #yourself);
@@ -133,6 +125,14 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 			label: 'Browse';
 			icon: (self iconManager iconNamed: #smallFind);
 			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
+			
+	timeOfStorageColumnWidth := 115.
+	debugSessionList := self newTable
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession name] );
+		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
+	self refreshDebugSessionList.
+	
+	debugSessionListToolBar := self makeDebugSessionListToolbar.
 			
 	DebugSessionStorage addSubscriberOnStorageUpdate: self.
 ]
