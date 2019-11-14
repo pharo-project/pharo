@@ -50,7 +50,7 @@ Debugger class >> mainDebuggerClass [
 
 { #category : #accessor }
 Debugger class >> mainDebuggerClass: aClass [
-	(self isThisClassADebugger: aClass) ifFalse: [ CannotSetAsMainDebuggerAClassThatIsNotADebuggerClass signal ].
+	(aClass isNil or: [self isThisClassADebugger: aClass]) ifFalse: [ CannotSetAsMainDebuggerAClassThatIsNotADebuggerClass signal ].
 	mainDebuggerClass := aClass
 ]
 
