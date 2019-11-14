@@ -8,7 +8,9 @@ Class {
 		'debuggerList',
 		'debuggerListToolBar',
 		'debugSessionList',
-		'debugSessionListToolBar'
+		'debugSessionListToolBar',
+		'storageLimitLabel',
+		'storageLimitInputField'
 	],
 	#category : #'Tools-Debugger'
 }
@@ -25,7 +27,14 @@ DebuggerListAndDebugSessionListPresenter class >> defaultSpec [
 			add: #debuggerListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
 			yourself);
 		add: (SpBoxLayout newVertical
-			add: 'Debug Sessions' height: titleHeight;
+			add: (SpBoxLayout newHorizontal
+				add: 'Debug Sessions';
+				add: (SpBoxLayout newHorizontal
+					add: #storageLimitLabel width: 80;
+					add: #storageLimitInputField width: 70;
+					yourself);
+				yourself)
+				height: titleHeight;
 			add: #debugSessionList;
 			add: #debugSessionListToolBar withConstraints: [:cstr | cstr height: toolBarHeight];
 			yourself		
@@ -135,6 +144,16 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	self refreshDebugSessionList.
 	
 	debugSessionListToolBar := self makeDebugSessionListToolbar.
+			
+	storageLimitLabel := self newLabel
+		label: 'storage limit:';
+		help: 'Determines the maximum amount of debug sessions to be stored. Oldest debug sessions are terminated first. Debug sessions currently opened in any debugger are never terminated and do not count towards this limit.';
+		yourself.
+	storageLimitInputField := SpNumberInputFieldPresenter new
+		numberType: Integer;
+		minimum: 1;
+		number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive.
+		"whenNumberChangedDo: [ :newNumber | self inform: ('new limit: ', newNumber asString) ]."
 			
 	DebugSessionStorage addSubscriberOnStorageUpdate: self.
 ]
