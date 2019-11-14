@@ -15,7 +15,7 @@ Class {
 DebugSessionStorageUnit class >> newFrom: aDebugSession [
 	^ self new
 		debugSession: aDebugSession;
-		timeOfCreation: Time now;
+		timeOfCreation: DateAndTime now;
 		yourself.
 ]
 

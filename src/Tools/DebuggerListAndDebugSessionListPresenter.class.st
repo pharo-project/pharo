@@ -131,7 +131,7 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	debugSessionList := self newTable
 		addColumn: ((SpStringTableColumn title: 'Refs' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession countObjectsThatWantToKeepMeAlive asString]) width: refsColumnWidth; yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession name] );
-		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
+		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | self printDateAndTime: aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
 	self refreshDebugSessionList.
 	
 	debugSessionListToolBar := self makeDebugSessionListToolbar.
@@ -171,6 +171,13 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageUpdate [
 	self refreshDebugSessionList
+]
+
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> printDateAndTime: aDateAndTime [
+	| d |
+	d := aDateAndTime.
+	^ ' ', d hour asString, ':', d minute asString, ' ', d year asString, '-', d month asString, '-', d dayOfMonth asString.
 ]
 
 { #category : #helpers }
