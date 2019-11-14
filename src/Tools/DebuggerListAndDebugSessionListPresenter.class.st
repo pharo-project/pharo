@@ -28,7 +28,7 @@ DebuggerListAndDebugSessionListPresenter class >> defaultSpec [
 			yourself);
 		add: (SpBoxLayout newVertical
 			add: (SpBoxLayout newHorizontal
-				add: 'Debug Sessions';
+				add: 'Debug Sessions' width: 200;
 				add: (SpBoxLayout newHorizontal
 					add: #storageLimitLabel width: 80;
 					add: #storageLimitInputField width: 70;
