@@ -628,7 +628,7 @@ Number >> raisedTo: aNumber [
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
 		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: 1) signal]
+			ifTrue: [^ Float infinity]
 			ifFalse: [^ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
 ]

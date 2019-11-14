@@ -66,10 +66,11 @@ BoxedFloat64 >> - aNumber [
 BoxedFloat64 >> / aNumber [ 
 	"Primitive. Answer the result of dividing receiver by aNumber.
 	Fail if the argument is not a Float. Essential. See Object documentation
-	whatIsAPrimitive."
+	whatIsAPrimitive.
+	Notice: According to IEEE754 division by zero is infinity, not an error"
 
 	<primitive: 50>
-	aNumber = 0.0 ifTrue: [ ^ ZeroDivide signalWithDividend: self].
+	aNumber = 0.0 ifTrue: [ ^ Float infinity].
 	^aNumber adaptToFloat: self andSend: #/
 ]
 

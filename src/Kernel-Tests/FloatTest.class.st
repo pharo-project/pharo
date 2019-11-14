@@ -111,10 +111,10 @@ FloatTest >> testDivide [
 	self assert: 1.5 / 2.0 equals: 0.75.	
 	self assert: 2.0 / 1 equals: 2.0.
 	
-	self should: [ 2.0 / 0 ] raise: ZeroDivide.
-	self should: [ 2.0 / 0.0 ] raise: ZeroDivide.
-	self should: [ 1.2 / Float negativeZero ] raise: ZeroDivide.
-	self should: [ 1.2 / (1.3 - 1.3) ] raise: ZeroDivide
+	self assert:  2.0 / 0  equals: Float infinity.
+	self assert:  2.0 / 0.0  equals: Float infinity.
+	self assert:  1.2 / Float negativeZero  equals: Float infinity.
+	self assert:  1.2 / (1.3 - 1.3)  equals: Float infinity
 	
 ]
 
@@ -425,7 +425,7 @@ FloatTest >> testReciprocal [
 		assert: -1.0 reciprocal equals: -1.0;
 		assert: -2.0 reciprocal equals: -0.5.
 		
-	self should: [ 0.0 reciprocal ] raise: ZeroDivide
+	self assert:  0.0 reciprocal  equals: Float infinity
 ]
 
 { #category : #'tests - conversion' }
@@ -558,8 +558,8 @@ FloatTest >> testZero1 [
 FloatTest >> testZeroRaisedToNegativePower [
 	"this is a test related to http://bugs.squeak.org/view.php?id=6781"
 	
-	self should: [0.0 raisedTo: -1] raise: ZeroDivide.
-	self should: [0.0 raisedTo: -1.0] raise: ZeroDivide
+	self assert: (0.0 raisedTo: -1) equals: Float infinity.
+	self assert: (0.0 raisedTo: -1.0) equals: Float infinity
 ]
 
 { #category : #'tests - zero behavior' }
