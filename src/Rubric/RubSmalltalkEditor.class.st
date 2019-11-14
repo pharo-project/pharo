@@ -720,6 +720,7 @@ RubSmalltalkEditor >> implementorsOfIt [
 	| aSelector |
 	"self lineSelectAndEmptyCheck: [^ self]."
 	(aSelector := self selectedSelector) ifNil: [^ textArea flash].
+	aSelector isCharacter ifTrue: [^ textArea flash].
 	self implementorsOf: aSelector
 ]
 
