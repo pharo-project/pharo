@@ -115,7 +115,7 @@ DebuggerListAndDebugSessionListPresenter >> iconManager [
 
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
-	| timeOfStorageColumnWidth |
+	| timeOfStorageColumnWidth refsColumnWidth |
 	debuggerList := self newTable
 		addColumn: (SpStringTableColumn title: 'Rank' evaluated: self getBlockTryingToGetRankOfDebugger);
 		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: #yourself);
@@ -127,7 +127,9 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
 			
 	timeOfStorageColumnWidth := 115.
+	refsColumnWidth := 40.
 	debugSessionList := self newTable
+		addColumn: ((SpStringTableColumn title: 'Refs' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession countObjectsThatWantToKeepMeAlive asString]) width: refsColumnWidth; yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession name] );
 		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
 	self refreshDebugSessionList.
@@ -159,6 +161,10 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 			label: 'Terminate All';
 			icon: (self iconManager iconNamed: #glamorousTrash);
 			action: [DebugSessionStorage terminateAll. self refreshDebugSessionList]).
+	toolBar addItem: (SpToolBarButton new
+			label: 'Clean Up';
+			icon: (self iconManager iconNamed: #warning); "Should be a broom icon instead, but I did not find any"
+			action: [ DebugSessionStorage enforceStorageLimit]).
 	^ toolBar
 ]
 
