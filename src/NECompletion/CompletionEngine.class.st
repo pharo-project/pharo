@@ -12,7 +12,6 @@ Class {
 	#name : #CompletionEngine,
 	#superclass : #Object,
 	#instVars : [
-		'model',
 		'menuMorph',
 		'editor',
 		'context',
@@ -76,7 +75,6 @@ CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEdito
 	aParagraphEditor atCompletionPosition 
 		ifFalse: [ ^ self closeMenu ].
 	
-	self setModel: aParagraphEditor model.
 	context narrowWith: aParagraphEditor wordAtCaret.
 	menuMorph narrowCompletion.
 	(context isNil or: [ context hasEntries not])
@@ -92,7 +90,6 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 
 	| keyCharacter controlKeyPressed |
 	self setEditor: anEditor.
-	self setModel: editor model.
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	self isMenuOpen
@@ -221,11 +218,6 @@ CompletionEngine >> menuMorphClass [
 	^ NECMenuMorph
 ]
 
-{ #category : #accessing }
-CompletionEngine >> model [
-	^model
-]
-
 { #category : #keyboard }
 CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 	((NECPreferences smartCharactersWithDoubleSpace includes: left) or: [
@@ -243,25 +235,18 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 
 { #category : #'menu morph' }
 CompletionEngine >> openMenu [
-	^ self openMenuFor: editor.
-]
-
-{ #category : #'menu morph' }
-CompletionEngine >> openMenuFor: aParagraphEditor [ 
 	| theMenu |
 	self stopCompletionDelay.
 	
 	context := self contextClass
 				engine: self
-				class: model selectedClassOrMetaClass 
-				source: aParagraphEditor text string
-				position: aParagraphEditor caret - 1.
-	
-	editor := aParagraphEditor.
+				class: editor model selectedClassOrMetaClass 
+				source: editor text string
+				position: editor caret - 1.
 
 	theMenu := self menuMorphClass
-				controller: self
-				position: (aParagraphEditor selectionPosition: context completionToken).
+				engine: self
+				position: (editor selectionPosition: context completionToken).
 				
 	theMenu isClosed
 		ifFalse: [ menuMorph := theMenu ].
@@ -292,11 +277,6 @@ CompletionEngine >> setEditor: anObject [
 		editor morph ifNotNil: [:m | m announcer unsubscribe: self] ].
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
-]
-
-{ #category : #initialization }
-CompletionEngine >> setModel: aStringHolder [ 
-	model := aStringHolder
 ]
 
 { #category : #keyboard }
