@@ -9,10 +9,16 @@ Class {
 	#name : #DebuggerSelector,
 	#superclass : #Object,
 	#classVars : [
-		'mainDebuggerClass'
+		'mainDebuggerClass',
+		'subscribersOnMainDebuggerClassUpdate'
 	],
 	#category : #'Tools-Debugger'
 }
+
+{ #category : #'publish events' }
+DebuggerSelector class >> addSubscribersOnMainDebuggerClassUpdate: anObject [
+	self subscribersOnMainDebuggerClassUpdate add: anObject
+]
 
 { #category : #initialization }
 DebuggerSelector class >> getDebuggerClasses [
@@ -54,6 +60,16 @@ DebuggerSelector class >> mainDebuggerClass: aClass [
 	mainDebuggerClass := aClass
 ]
 
+{ #category : #'publish events' }
+DebuggerSelector class >> notifySubscribersOfAMainDebuggerClassUpdate [
+	self subscribersOnMainDebuggerClassUpdate do: [ :subscriber_ | subscriber_ ifNotNil: [:subscriber | subscriber onMainDebuggerClassUpdate ]]
+]
+
+{ #category : #'publish events' }
+DebuggerSelector class >> removeSubscribersOnMainDebuggerClassUpdate: anObject [
+	self subscribersOnMainDebuggerClassUpdate remove: anObject
+]
+
 { #category : #'open debugger' }
 DebuggerSelector class >> selectDebuggerAndOpen: aDebugSession withFullView: aBool andNotification: aString [
 	"Open @aDebugSession with the most suitable debugger class in the system. Look at the comments below for the detailed algorithm selecting the most suitable debugger"
@@ -74,6 +90,12 @@ DebuggerSelector class >> selectDebuggerAndOpen: aDebugSession withFullView: aBo
 DebuggerSelector class >> setNoMainDebuggerClass [
 	"Removes the main debugger class if there was any"
 	self mainDebuggerClass: nil
+]
+
+{ #category : #'publish events' }
+DebuggerSelector class >> subscribersOnMainDebuggerClassUpdate [
+	subscribersOnMainDebuggerClassUpdate ifNil: [ subscribersOnMainDebuggerClassUpdate := WeakOrderedCollection new ].
+	^ subscribersOnMainDebuggerClassUpdate
 ]
 
 { #category : #helper }

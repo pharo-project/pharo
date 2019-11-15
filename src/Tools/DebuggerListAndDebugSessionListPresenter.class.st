@@ -74,6 +74,33 @@ DebuggerListAndDebugSessionListPresenter class >> title [
 	^ 'Debuggers and Debug Sessions'
 ]
 
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> addCorrectMainDebuggerButtonToToolBar: aToolBar [
+	debuggerList selectedItems ifNotEmpty: [ :debuggerList_ | (DebuggerSelector mainDebuggerClass == (debuggerList_ at: 1)) ifTrue: [ 
+			"A debugger is selected in the list, and it is the main debugger class, so we add a button allowing the user to remove this debugger from the main debugger class"
+			aToolBar addItem: (SpToolBarButton new
+			label: 'Main Debugger';
+			icon: (self iconManager iconNamed: #checkboxSelected);
+			action: [ DebuggerSelector mainDebuggerClass: nil. self refreshDebuggerList. self refreshDebuggerListToolBar ]
+		).
+		^ self
+	 ]].
+
+	"Otherwise (no debugger is selected, or a debugger is selected and it is not the main debugger class), we add a buttont allowing to set the selected debugger as main debugger"
+	aToolBar addItem: (SpToolBarButton new
+			label: 'Main Debugger';
+			icon: (self iconManager iconNamed: #checkboxUnselected);
+			action: [
+				debuggerList selectedItems ifEmpty: [
+					self inform: 'You need to select a debugger'
+				] ifNotEmpty: [:debuggerList_ |
+					DebuggerSelector mainDebuggerClass: (debuggerList_ at: 1) ].
+					self refreshDebuggerList.
+					self refreshDebuggerListToolBar.
+			]
+		).
+]
+
 { #category : #helpers }
 DebuggerListAndDebugSessionListPresenter >> compareRank: rank1 to: rank2 [
 	rank1 isInteger ifFalse: [ ^ false ]. "If rank1 is not an integer, (typically a string), then it is smaller than rank2"
@@ -92,6 +119,16 @@ DebuggerListAndDebugSessionListPresenter >> debugDebugSessionAction [
 	debuggerClass := debuggerList selectedItems ifEmpty: [ self inform: 'You must select a debugger'. ^ self ] ifNotEmpty: [:selectedItems | selectedItems at: 1].
 	debuggerClass rankDebugSession: debugSession. "Give debuggerClass a chance to signal the DebugSessionCannotBeOpenedByThisDebugger exception if it cannot open debugSession"
 	debuggerClass openOn: debugSession withFullView: true andNotification: nil
+]
+
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> debuggerClassToNameOfDebugger: aDebuggerClass [
+	"Returns the name of @aDebuggerClass, to be displayed in the list of debuggers. If @aDebuggerClass is the main debugger defined in DebuggerSelector, return the name as a Text styled in bold"
+	(aDebuggerClass == DebuggerSelector mainDebuggerClass ) ifTrue: [ 
+		^ aDebuggerClass asString asText allBold; yourself
+	] ifFalse: [ 
+		^ aDebuggerClass asString
+	]
 ]
 
 { #category : #helpers }
@@ -128,13 +165,12 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	| timeOfStorageColumnWidth refsColumnWidth |
 	debuggerList := self newTable
 		addColumn: (SpStringTableColumn title: 'Rank' evaluated: self getBlockTryingToGetRankOfDebugger);
-		addColumn: (SpStringTableColumn title: #DebuggerSelector evaluated: #yourself);
-		items: (DebuggerSelector getDebuggerClasses sort: self getSortingBlock).
-	debuggerListToolBar := self newToolBar
-		addItem: (SpToolBarButton new
-			label: 'Browse';
-			icon: (self iconManager iconNamed: #smallFind);
-			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
+		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: [:debuggerClass | self debuggerClassToNameOfDebugger: debuggerClass]);
+		whenSelectionChangedDo: [self refreshDebuggerListToolBar].
+		"Items are added to this list by #refreshDebuggerList"
+	self refreshDebuggerList.
+	debuggerListToolBar := self newToolBar.
+	self refreshDebuggerListToolBar.
 			
 	timeOfStorageColumnWidth := 115.
 	refsColumnWidth := 40.
@@ -202,6 +238,12 @@ DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageUpdate [
 	self refreshDebugSessionList
 ]
 
+{ #category : #'react to events' }
+DebuggerListAndDebugSessionListPresenter >> onMainDebuggerClassUpdate [
+	self refreshDebuggerList.
+	self refreshDebuggerListToolBar.
+]
+
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> printDateAndTime: aDateAndTime [
 	| d |
@@ -214,15 +256,32 @@ DebuggerListAndDebugSessionListPresenter >> refreshDebugSessionList [
 	debugSessionList items: DebugSessionStorage storage
 ]
 
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> refreshDebuggerList [
+	debuggerList items: (DebuggerSelector getDebuggerClasses sort: self getSortingBlock)
+]
+
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> refreshDebuggerListToolBar [
+	debuggerListToolBar removeAllItems.
+	debuggerListToolBar addItem: (SpToolBarButton new
+			label: 'Browse';
+			icon: (self iconManager iconNamed: #smallFind);
+			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
+	self addCorrectMainDebuggerButtonToToolBar: debuggerListToolBar.
+]
+
 { #category : #announcement }
 DebuggerListAndDebugSessionListPresenter >> setInitialSubscriptions: aBoolean [
 	"If @aBoolean is true, perform the initial subscriptions needed to keep the UI up to date. If it is false, unsubscribe. The point of having both the subscriptions and unsubscriptions in the same method is not to forget to add unsubscription statement in the future when new subscription are added"
 	aBoolean ifTrue: [ 
 		DebugSessionStorage addSubscriberOnStorageUpdate: self.
-		DebugSessionStorage addSubscriberOnStorageLimitUpdate: self
+		DebugSessionStorage addSubscriberOnStorageLimitUpdate: self.
+		DebuggerSelector addSubscribersOnMainDebuggerClassUpdate: self
 	] ifFalse: [ 
 		DebugSessionStorage removeSubscriberOnStorageUpdate: self.
-		DebugSessionStorage removeSubscriberOnStorageLimitUpdate: self
+		DebugSessionStorage removeSubscriberOnStorageLimitUpdate: self.
+		DebuggerSelector removeSubscribersOnMainDebuggerClassUpdate: self
 	]
 ]
 
