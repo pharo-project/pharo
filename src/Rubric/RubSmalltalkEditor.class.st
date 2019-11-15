@@ -1281,7 +1281,6 @@ RubSmalltalkEditor >> textArea: atextArea [
 
 	atextArea setCompletionEngine: self completionEngine.
 	super textArea: atextArea.
-	completionEngine setModel: self model
 ]
 
 { #category : #'menu messages' }
