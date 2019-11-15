@@ -378,6 +378,14 @@ Class >> classVariables [
 	^self classPool associations
 ]
 
+{ #category : #'accessing class hierarchy' }
+Class >> commonSuperclassWith: aClass [
+
+	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
+
+	
+]
+
 { #category : #compiling }
 Class >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
