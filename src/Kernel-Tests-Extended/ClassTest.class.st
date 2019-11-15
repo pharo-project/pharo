@@ -148,6 +148,13 @@ ClassTest >> testClassSide [
 ]
 
 { #category : #tests }
+ClassTest >> testCommonSuperclass [
+	self assert: (OrderedCollection commonSuperclass: Array) equals: SequenceableCollection.
+	self assert: (OrderedCollection commonSuperclass: OrderedCollection) equals: SequenceableCollection.
+	self assert: (ProtoObject commonSuperclass: Object) equals: nil
+]
+
+{ #category : #tests }
 ClassTest >> testCompileAll [
 	ClassTest compileAll
 ]
