@@ -88,7 +88,8 @@ DebugSessionStorage class >> storageLimitForDebugSessionsNotKeptAlive [
 { #category : #accessing }
 DebugSessionStorage class >> storageLimitForDebugSessionsNotKeptAlive: anInteger [
 	(anInteger isInteger not | anInteger <= 0) ifTrue: [ InvalidValueForStorageLimit signal ].
-	storageLimitForDebugSessionsNotKeptAlive := anInteger
+	storageLimitForDebugSessionsNotKeptAlive := anInteger.
+	self notifySubscribersOfAStorageLimitUpdate
 ]
 
 { #category : #accessing }

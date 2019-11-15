@@ -10,7 +10,8 @@ Class {
 		'debugSessionList',
 		'debugSessionListToolBar',
 		'storageLimitLabel',
-		'storageLimitInputField'
+		'storageLimitInputField',
+		'shouldUpdateStorageLimitInputField'
 	],
 	#category : #'Tools-Debugger'
 }
@@ -114,7 +115,7 @@ DebuggerListAndDebugSessionListPresenter >> getSortingBlock [
 { #category : #helpers }
 DebuggerListAndDebugSessionListPresenter >> getWhenClosedBlock [
 	"Returns the block to be executed when the windows containing this presenter is closed by the user"
-	^ [ DebugSessionStorage removeSubscriberOnStorageUpdate: self ]
+	^ [ self setInitialSubscriptions: false ]
 ]
 
 { #category : #icon }
@@ -152,10 +153,10 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	storageLimitInputField := SpNumberInputFieldPresenter new
 		numberType: Integer;
 		minimum: 1;
-		number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive.
-		"whenNumberChangedDo: [ :newNumber | self inform: ('new limit: ', newNumber asString) ]."
+		number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive;
+		whenNumberChangedDo: [ :newNumber | "Disable the automatic refreshing of this value in the UI during the update of the value, to avoid infinite loop" self shouldUpdateStorageLimitInputField: false. DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive: newNumber. self shouldUpdateStorageLimitInputField: true ].
 			
-	self performInitialSubscriptions
+	self setInitialSubscriptions: true
 ]
 
 { #category : #helpers }
@@ -189,18 +190,16 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 
 { #category : #'react to events' }
 DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageLimitUpdate [
-	storageLimitInputField number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive 
+	self shouldUpdateStorageLimitInputField ifTrue: [
+		self shouldUpdateStorageLimitInputField: false. "Deactivate the auto-refreshing while updating the value, to avoid infinite loop"
+		storageLimitInputField number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive.
+		self shouldUpdateStorageLimitInputField: true.
+	]
 ]
 
 { #category : #'react to events' }
 DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageUpdate [
 	self refreshDebugSessionList
-]
-
-{ #category : #announcement }
-DebuggerListAndDebugSessionListPresenter >> performInitialSubscriptions [
-	DebugSessionStorage addSubscriberOnStorageUpdate: self.
-	DebugSessionStorage addSubscriberOnStorageLimitUpdate: self
 ]
 
 { #category : #initialization }
@@ -213,4 +212,27 @@ DebuggerListAndDebugSessionListPresenter >> printDateAndTime: aDateAndTime [
 { #category : #helpers }
 DebuggerListAndDebugSessionListPresenter >> refreshDebugSessionList [
 	debugSessionList items: DebugSessionStorage storage
+]
+
+{ #category : #announcement }
+DebuggerListAndDebugSessionListPresenter >> setInitialSubscriptions: aBoolean [
+	"If @aBoolean is true, perform the initial subscriptions needed to keep the UI up to date. If it is false, unsubscribe. The point of having both the subscriptions and unsubscriptions in the same method is not to forget to add unsubscription statement in the future when new subscription are added"
+	aBoolean ifTrue: [ 
+		DebugSessionStorage addSubscriberOnStorageUpdate: self.
+		DebugSessionStorage addSubscriberOnStorageLimitUpdate: self
+	] ifFalse: [ 
+		DebugSessionStorage removeSubscriberOnStorageUpdate: self.
+		DebugSessionStorage removeSubscriberOnStorageLimitUpdate: self
+	]
+]
+
+{ #category : #accessing }
+DebuggerListAndDebugSessionListPresenter >> shouldUpdateStorageLimitInputField [
+	shouldUpdateStorageLimitInputField ifNil: [ shouldUpdateStorageLimitInputField := true ].
+	^ shouldUpdateStorageLimitInputField
+]
+
+{ #category : #accessing }
+DebuggerListAndDebugSessionListPresenter >> shouldUpdateStorageLimitInputField: aBoolean [
+	shouldUpdateStorageLimitInputField := aBoolean
 ]
