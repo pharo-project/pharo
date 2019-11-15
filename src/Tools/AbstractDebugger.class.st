@@ -15,7 +15,7 @@ Class {
 AbstractDebugger class >> beCurrent [
 	self isAbstract ifTrue: [ self error: 'Cannot register an abstract debugger' ].
 	
-	Debugger mainDebuggerClass: self
+	DebuggerSelector mainDebuggerClass: self
 ]
 
 { #category : #'debugger declaration' }

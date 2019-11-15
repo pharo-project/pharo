@@ -4,12 +4,18 @@ Class {
 	#classVars : [
 		'storage',
 		'storageLimitForDebugSessionsNotKeptAlive',
+		'subscribersOnStorageLimitUpdate',
 		'subscribersOnStorageUpdate'
 	],
 	#category : #'Tools-Debugger'
 }
 
-{ #category : #events }
+{ #category : #'publish events' }
+DebugSessionStorage class >> addSubscriberOnStorageLimitUpdate: anObject [
+	self subscribersOnStorageLimitUpdate add: anObject
+]
+
+{ #category : #'publish events' }
 DebugSessionStorage class >> addSubscriberOnStorageUpdate: anObject [
 	self subscribersOnStorageUpdate add: anObject
 ]
@@ -36,23 +42,33 @@ DebugSessionStorage class >> enforceStorageLimit [
 	
 ]
 
-{ #category : #events }
+{ #category : #'publish events' }
+DebugSessionStorage class >> notifySubscribersOfAStorageLimitUpdate [
+	self subscribersOnStorageLimitUpdate do: [ :subscriber_ | subscriber_ ifNotNil: [:subscriber | subscriber onDebugSessionStorageLimitUpdate ]]
+]
+
+{ #category : #'publish events' }
 DebugSessionStorage class >> notifySubscribersOfAStorageUpdate [
 	self subscribersOnStorageUpdate do: [ :subscriber_ | subscriber_ ifNotNil: [:subscriber | subscriber onDebugSessionStorageUpdate ]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'react to events' }
 DebugSessionStorage class >> onDebugSession: aDebugSession gettingKeptAliveBy: anObject [
 	self notifySubscribersOfAStorageUpdate 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'react to events' }
 DebugSessionStorage class >> onDebugSession: aDebugSession stoppingGettingKeptAliveBy: anObject [
 	self notifySubscribersOfAStorageUpdate.
 	aDebugSession shouldBeKeptAlive ifFalse: [ self enforceStorageLimit ] "If @aDebugSession is no longer kept alive as a result, maybe we are now breaking the storage limit rule and need to enforce it again"
 ]
 
-{ #category : #events }
+{ #category : #'publish events' }
+DebugSessionStorage class >> removeSubscriberOnStorageLimitUpdate: anObject [
+	self subscribersOnStorageLimitUpdate remove: anObject
+]
+
+{ #category : #'publish events' }
 DebugSessionStorage class >> removeSubscriberOnStorageUpdate: anObject [
 	self subscribersOnStorageUpdate remove: anObject
 ]
@@ -80,6 +96,12 @@ DebugSessionStorage class >> storeDebugSession: aDebugSession [
 	self storage add: (DebugSessionStorageUnit newFrom: aDebugSession).
 	aDebugSession addSubscriberToKeepAliveEvents: self.
 	self notifySubscribersOfAStorageUpdate.
+]
+
+{ #category : #accessing }
+DebugSessionStorage class >> subscribersOnStorageLimitUpdate [
+	subscribersOnStorageLimitUpdate ifNil: [ subscribersOnStorageLimitUpdate := WeakOrderedCollection new ].
+	^ subscribersOnStorageLimitUpdate
 ]
 
 { #category : #accessing }

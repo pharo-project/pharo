@@ -127,8 +127,8 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	| timeOfStorageColumnWidth refsColumnWidth |
 	debuggerList := self newTable
 		addColumn: (SpStringTableColumn title: 'Rank' evaluated: self getBlockTryingToGetRankOfDebugger);
-		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: #yourself);
-		items: (Debugger getDebuggerClasses sort: self getSortingBlock).
+		addColumn: (SpStringTableColumn title: #DebuggerSelector evaluated: #yourself);
+		items: (DebuggerSelector getDebuggerClasses sort: self getSortingBlock).
 	debuggerListToolBar := self newToolBar
 		addItem: (SpToolBarButton new
 			label: 'Browse';
@@ -155,7 +155,7 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 		number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive.
 		"whenNumberChangedDo: [ :newNumber | self inform: ('new limit: ', newNumber asString) ]."
 			
-	DebugSessionStorage addSubscriberOnStorageUpdate: self.
+	self performInitialSubscriptions
 ]
 
 { #category : #helpers }
@@ -187,9 +187,20 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 	^ toolBar
 ]
 
-{ #category : #initialization }
+{ #category : #'react to events' }
+DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageLimitUpdate [
+	storageLimitInputField number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive 
+]
+
+{ #category : #'react to events' }
 DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageUpdate [
 	self refreshDebugSessionList
+]
+
+{ #category : #announcement }
+DebuggerListAndDebugSessionListPresenter >> performInitialSubscriptions [
+	DebugSessionStorage addSubscriberOnStorageUpdate: self.
+	DebugSessionStorage addSubscriberOnStorageLimitUpdate: self
 ]
 
 { #category : #initialization }

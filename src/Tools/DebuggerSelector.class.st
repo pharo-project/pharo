@@ -6,7 +6,7 @@ For the conditions a class must satisfy in order to be considered a debugger cla
 If the variable mainDebuggerClass is set to hold a debugger class, it will be used in priority to open debug sessions (unless it cannot open them, in which case we fallback to the default algorithm)
 "
 Class {
-	#name : #Debugger,
+	#name : #DebuggerSelector,
 	#superclass : #Object,
 	#classVars : [
 		'mainDebuggerClass'
@@ -15,12 +15,12 @@ Class {
 }
 
 { #category : #initialization }
-Debugger class >> getDebuggerClasses [
+DebuggerSelector class >> getDebuggerClasses [
 	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) select: [:aClass | self isThisClassADebugger: aClass] yourself.
 ]
 
 { #category : #initialization }
-Debugger class >> isThisClassADebugger: aClass [
+DebuggerSelector class >> isThisClassADebugger: aClass [
 	"Returns whether @aClass implements the required methods to be considered a debugger class. It must:
 	- have a #iAmADebugger method, with the #iAmADebugger pragma
 	- implement all the class methods from class AbstractDebugger that are marked as being subclass responsibility
@@ -44,19 +44,19 @@ Debugger class >> isThisClassADebugger: aClass [
 ]
 
 { #category : #accessor }
-Debugger class >> mainDebuggerClass [
+DebuggerSelector class >> mainDebuggerClass [
 	^ mainDebuggerClass
 ]
 
 { #category : #accessor }
-Debugger class >> mainDebuggerClass: aClass [
+DebuggerSelector class >> mainDebuggerClass: aClass [
 	(aClass isNil or: [self isThisClassADebugger: aClass]) ifFalse: [ CannotSetAsMainDebuggerAClassThatIsNotADebuggerClass signal ].
 	mainDebuggerClass := aClass
 ]
 
 { #category : #'open debugger' }
-Debugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
-	"Open @aDebugSession with the most suitable debugger class in the system. Look at the comments below for the detailed algorithm"
+DebuggerSelector class >> selectDebuggerAndOpen: aDebugSession withFullView: aBool andNotification: aString [
+	"Open @aDebugSession with the most suitable debugger class in the system. Look at the comments below for the detailed algorithm selecting the most suitable debugger"
 	| debuggerClasses |
 	"If a main debugger has been set (variable mainDebuggerClass), we try it first"
 	[(self mainDebuggerClass ifNotNil: [:theMainDebuggerClass | self tryToOpenDebugSession: aDebugSession withDebuggerClass: theMainDebuggerClass withFullView: aBool andNotification: aString ]) ifTrue: [ ^ self "the main debugger class managed to open @aDebugSession. We are done here" ]] on: Exception do: ["Prevent exceptions potentially signalled by the mainDebuggerClass from propagating, to avoid infinite debugger loops"].
@@ -71,13 +71,13 @@ Debugger class >> openOn: aDebugSession withFullView: aBool andNotification: aSt
 ]
 
 { #category : #initialization }
-Debugger class >> setNoMainDebuggerClass [
+DebuggerSelector class >> setNoMainDebuggerClass [
 	"Removes the main debugger class if there was any"
 	self mainDebuggerClass: nil
 ]
 
 { #category : #helper }
-Debugger class >> tryToOpenDebugSession: aDebugSession withDebuggerClass: aDebuggerClass withFullView: aBool andNotification: aString [
+DebuggerSelector class >> tryToOpenDebugSession: aDebugSession withDebuggerClass: aDebuggerClass withFullView: aBool andNotification: aString [
 	"Tries to open @aDebugSession with debugger @aDebuggerClass. If an Error is raised doing so, returns false, otherwise return true"
 	[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. ^ true] on: Error do: [ ^ false ]
 ]
