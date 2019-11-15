@@ -131,6 +131,16 @@ DebuggerListAndDebugSessionListPresenter >> debuggerClassToNameOfDebugger: aDebu
 	]
 ]
 
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> debuggerClassToRankToDisplay: aDebuggerClass [
+	"Returns what should be displayed as the rank of @aDebuggerClass.
+	Since we do not have a debug session to give this debugger, we try with nil. If it answers a rank, we display it, if it raises an exception, we assume it really needed a debug session to give a rank, so we display a string explaining that.
+	In addition, if @aDebuggerClass is the main debugger class (see class DebuggerSelector), then its ranks should be displayed in bold"
+	| result |
+	result := [(aDebuggerClass rankDebugSession: nil) asString] on: Exception do: [ 'Depends on the debug session'].
+	(aDebuggerClass == DebuggerSelector mainDebuggerClass) ifTrue: [ ^ result asText allBold yourself ] ifFalse: [ ^ result ]
+]
+
 { #category : #helpers }
 DebuggerListAndDebugSessionListPresenter >> getBlockTryingToGetRankOfDebugger [
 	"Returns a block taking a debugger as argument and returning the rank it would give to a nil debug session. If an exception is raised, the debugger really needs the debug session object to give a rank, so the block returns a string saying that. If no exception is raised, it means the debugger did not need an actual debug session object to answer, the block directly return the returned value"
@@ -164,7 +174,7 @@ DebuggerListAndDebugSessionListPresenter >> iconManager [
 DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	| timeOfStorageColumnWidth refsColumnWidth |
 	debuggerList := self newTable
-		addColumn: (SpStringTableColumn title: 'Rank' evaluated: self getBlockTryingToGetRankOfDebugger);
+		addColumn: (SpStringTableColumn title: 'Rank' evaluated: [:aDebuggerClass | self debuggerClassToRankToDisplay: aDebuggerClass]);
 		addColumn: (SpStringTableColumn title: 'Debugger' evaluated: [:debuggerClass | self debuggerClassToNameOfDebugger: debuggerClass]);
 		whenSelectionChangedDo: [self refreshDebuggerListToolBar].
 		"Items are added to this list by #refreshDebuggerList"
