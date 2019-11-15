@@ -108,16 +108,6 @@ ZnLogEvent >> printOn: stream [
 	self printContentsOn: stream
 ]
 
-{ #category : #beacon }
-ZnLogEvent >> printOneLineContentsOn: stream [
-	self printContentsOn: stream
-]
-
-{ #category : #beacon }
-ZnLogEvent >> printOneLineOn: stream [
-	self printOn: stream
-]
-
 { #category : #accessing }
 ZnLogEvent >> timestamp [
 	^ timestamp
