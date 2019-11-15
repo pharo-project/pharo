@@ -1,3 +1,0 @@
-accessing
-classInstanceVariableNamesIndex
-	^ classInstanceVariableNamesIndex

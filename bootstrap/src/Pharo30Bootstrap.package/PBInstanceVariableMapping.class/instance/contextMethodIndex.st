@@ -1,3 +1,0 @@
-accessing
-contextMethodIndex
-	^ contextMethodIndex
