@@ -49,7 +49,7 @@ TypingVisitor >> visitBlockNode: aBlockNode [
 			(typeStack top includesKey: name)
 				ifFalse: [ typeStack top at: name put: type2 ]
 				ifTrue: [ type1 := typeStack top at: name. 
-					type1 == type2 ifFalse: [ typeStack top at: name put: (type2 commonSuperclass: type1) ] ] ].
+					type1 == type2 ifFalse: [ typeStack top at: name put: (type2 commonSuperclassWith: type1) ] ] ].
 	aBlockNode propertyAt: #type put: BlockClosure
 ]
 

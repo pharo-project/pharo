@@ -379,7 +379,7 @@ Class >> classVariables [
 ]
 
 { #category : #'accessing class hierarchy' }
-Class >> commonSuperclass: aClass [
+Class >> commonSuperclassWith: aClass [
 
 	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
 
