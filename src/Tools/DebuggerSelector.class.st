@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'publish events' }
-DebuggerSelector class >> addSubscribersOnMainDebuggerClassUpdate: anObject [
+DebuggerSelector class >> addSubscriberOnMainDebuggerClassUpdate: anObject [
 	self subscribersOnMainDebuggerClassUpdate add: anObject
 ]
 
@@ -57,7 +57,8 @@ DebuggerSelector class >> mainDebuggerClass [
 { #category : #accessor }
 DebuggerSelector class >> mainDebuggerClass: aClass [
 	(aClass isNil or: [self isThisClassADebugger: aClass]) ifFalse: [ CannotSetAsMainDebuggerAClassThatIsNotADebuggerClass signal ].
-	mainDebuggerClass := aClass
+	mainDebuggerClass := aClass.
+	self notifySubscribersOfAMainDebuggerClassUpdate
 ]
 
 { #category : #'publish events' }
@@ -66,7 +67,7 @@ DebuggerSelector class >> notifySubscribersOfAMainDebuggerClassUpdate [
 ]
 
 { #category : #'publish events' }
-DebuggerSelector class >> removeSubscribersOnMainDebuggerClassUpdate: anObject [
+DebuggerSelector class >> removeSubscriberOnMainDebuggerClassUpdate: anObject [
 	self subscribersOnMainDebuggerClassUpdate remove: anObject
 ]
 

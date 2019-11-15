@@ -277,11 +277,11 @@ DebuggerListAndDebugSessionListPresenter >> setInitialSubscriptions: aBoolean [
 	aBoolean ifTrue: [ 
 		DebugSessionStorage addSubscriberOnStorageUpdate: self.
 		DebugSessionStorage addSubscriberOnStorageLimitUpdate: self.
-		DebuggerSelector addSubscribersOnMainDebuggerClassUpdate: self
+		DebuggerSelector addSubscriberOnMainDebuggerClassUpdate: self
 	] ifFalse: [ 
 		DebugSessionStorage removeSubscriberOnStorageUpdate: self.
 		DebugSessionStorage removeSubscriberOnStorageLimitUpdate: self.
-		DebuggerSelector removeSubscribersOnMainDebuggerClassUpdate: self
+		DebuggerSelector removeSubscriberOnMainDebuggerClassUpdate: self
 	]
 ]
 
