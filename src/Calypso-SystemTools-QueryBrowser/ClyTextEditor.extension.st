@@ -75,7 +75,7 @@ ClyTextEditor >> referencesToIt [
 
 { #category : #'*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
-	selectedSelector isCharacter ifTrue: [ ^ self ].
+
 	self browser browseReferencesTo: selectedSelector
 ]
 
