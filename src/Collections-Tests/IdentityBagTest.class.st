@@ -38,10 +38,8 @@ IdentityBagTest >> speciesClass [
 IdentityBagTest >> testAsSetWithEqualsElements [
 	| t1 |
 	t1 := self withEqualElements asSet.
-	self withEqualElements
-		do: [:t2 | self assert: (t1 occurrencesOf: t2)
-					= 1].
-	self assert: t1 class = IdentitySet
+	self withEqualElements do: [ :t2 | self assert: (t1 occurrencesOf: t2) equals: 1 ].
+	self assert: t1 class equals: IdentitySet
 ]
 
 { #category : #tests }
@@ -78,10 +76,10 @@ IdentityBagTest >> testIdentity [
 { #category : #'tests - identity adding' }
 IdentityBagTest >> testIdentityAdd [
 	| added |
-	self collection add: self elementToCopy .
+	self collection add: self elementToCopy.
 	self deny: (self collection includes: self equalNotIdenticalElement).
-	
+
 	added := self collection add: self equalNotIdenticalElement.
-	self assert: added == self equalNotIdenticalElement.
+	self assert: added identicalTo: self equalNotIdenticalElement.
 	self assert: (self collection includes: self equalNotIdenticalElement)
 ]

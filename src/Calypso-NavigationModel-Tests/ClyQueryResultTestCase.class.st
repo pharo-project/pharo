@@ -40,8 +40,7 @@ ClyQueryResultTestCase >> setUp [
 
 { #category : #tests }
 ClyQueryResultTestCase >> testComparisonWithAnotherKindOfResult [
-
-	self deny: (queryResult = ClyQueryResult new)
+	self deny: queryResult equals: ClyQueryResult new
 ]
 
 { #category : #tests }
@@ -121,10 +120,10 @@ ClyQueryResultTestCase >> testPreparation [
 	| newQuery newResult |
 	newQuery := self createQuery.
 	newResult := queryResult prepareNewFor: newQuery in: environment.
-	
+
 	self assert: newResult class equals: queryResult class.
-	self deny: newResult == queryResult.
-	self assert: newResult buildingQuery == newQuery.
+	self deny: newResult identicalTo: queryResult.
+	self assert: newResult buildingQuery identicalTo: newQuery.
 	self assert: newResult environment equals: environment.
-	self assert: newResult isProtected.
+	self assert: newResult isProtected
 ]

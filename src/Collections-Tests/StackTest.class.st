@@ -60,46 +60,37 @@ StackTest >> testPop [
 	aStack push: 'a'.
 	aStack push: elem.
 	res := aStack pop.
-	self assert: res = elem.
-	self assert: res == elem.
+	self assert: res equals: elem.
+	self assert: res identicalTo: elem.
 
-	self assert: aStack size = 1.
+	self assert: aStack size equals: 1.
 	aStack pop.
 	self assertEmpty: aStack
 ]
 
 { #category : #tests }
 StackTest >> testPush [
-	
 	| aStack |
 	aStack := Stack new.
 	aStack push: 'a'.
-	self assert: aStack size = 1.	
+	self assert: aStack size equals: 1.
 	aStack push: 'b'.
-	self assert: aStack size = 2.
-	
+	self assert: aStack size equals: 2
 ]
 
 { #category : #tests }
 StackTest >> testSize [
-	
 	| aStack |
 	aStack := Stack new.
-	self assert: aStack size = 0.
+	self assert: aStack size equals: 0.
 	aStack push: 'a'.
-	self assert: aStack size = 1.
+	self assert: aStack size equals: 1.
 	aStack push: 'b'.
-	self assert: aStack size = 2.
+	self assert: aStack size equals: 2.
 	aStack pop.
-	self assert: aStack size = 1.
+	self assert: aStack size equals: 1.
 	aStack pop.
-	self assert: aStack size = 0.
-
- 
-	
-
-
-
+	self assert: aStack size equals: 0
 ]
 
 { #category : #tests }
@@ -109,7 +100,7 @@ StackTest >> testTop [
 	self assertEmpty: aStack.
 	aStack push: 'a'.
 	aStack push: 'b'.
-	self assert: aStack top = 'b'.
-	self assert: aStack top = 'b'.
-	self assert: aStack size = 2
+	self assert: aStack top equals: 'b'.
+	self assert: aStack top equals: 'b'.
+	self assert: aStack size equals: 2
 ]

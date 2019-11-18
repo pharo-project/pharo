@@ -58,27 +58,21 @@ ClyMessageSendersQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyMessageSendersQueryTest >> testComparison [
+	self assert: (ClyMessageSendersQuery of: #message1) equals: (ClyMessageSendersQuery of: #message1).
 
-	self 
-		assert: (ClyMessageSendersQuery of: #message1) 
-		equals: (ClyMessageSendersQuery of: #message1).
-	
-	self 
-		assert: (ClyMessageSendersQuery of: #message1) hash 
-		equals: (ClyMessageSendersQuery of: #message1) hash.
-		
-	self deny: (ClyMessageSendersQuery of: #message1) = (ClyMessageSendersQuery of: #message2)
+	self assert: (ClyMessageSendersQuery of: #message1) hash equals: (ClyMessageSendersQuery of: #message1) hash.
+
+	self deny: (ClyMessageSendersQuery of: #message1) equals: (ClyMessageSendersQuery of: #message2)
 ]
 
 { #category : #tests }
 ClyMessageSendersQueryTest >> testDetectingSpecialSelectorLikeIfTrue [
+	query := ClyMessageSendersQuery of: #ifTrue:.
 
-	query := ClyMessageSendersQuery of: ##ifTrue:.
-	
 	self queryFromScope: ClyMethodScope of: self class >> #senderOfIfTrue.
-	
+
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> #senderOfIfTrue)
+	self assert: resultItems first identicalTo: self class >> #senderOfIfTrue
 ]
 
 { #category : #tests }
@@ -93,13 +87,10 @@ ClyMessageSendersQueryTest >> testFromLocalClassScope [
 
 { #category : #tests }
 ClyMessageSendersQueryTest >> testFromMethodScope [
+	self queryFromScope: ClyMethodScope ofAll: {(self class >> #sender1OfMessage1) . (self class >> #senderOfMessage2)}.
 
-	self 
-		queryFromScope: ClyMethodScope
-		ofAll: { self class >> #sender1OfMessage1. self class >> #senderOfMessage2 }.
-	
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> #sender1OfMessage1)
+	self assert: resultItems first identicalTo: self class >> #sender1OfMessage1
 ]
 
 { #category : #tests }

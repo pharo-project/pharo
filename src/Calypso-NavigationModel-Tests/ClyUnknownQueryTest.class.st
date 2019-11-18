@@ -25,8 +25,7 @@ ClyUnknownQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyUnknownQueryTest >> testCreationUnifiedInstance [
-
-	self assert: query asUnifiedInstance == query
+	self assert: query asUnifiedInstance identicalTo: query
 ]
 
 { #category : #tests }
@@ -38,23 +37,21 @@ ClyUnknownQueryTest >> testDoesNotExecuteAnyQuery [
 { #category : #tests }
 ClyUnknownQueryTest >> testExecution [
 	self executeQuery.
-	
-	self assert: result == ClyUnknownQueryResult instance.
-	self assert: resultItems = #()
+
+	self assert: result identicalTo: ClyUnknownQueryResult instance.
+	self assert: resultItems equals: #()
 ]
 
 { #category : #tests }
 ClyUnknownQueryTest >> testGettingSingletonInstanceFromScratch [
-
 	ClyUnknownQuery reset.
-	
-	self assert: ClyUnknownQuery instance == ClyUnknownQuery instance
+
+	self assert: ClyUnknownQuery instance identicalTo: ClyUnknownQuery instance
 ]
 
 { #category : #tests }
 ClyUnknownQueryTest >> testHasUnknownResultInstance [
-
-	self assert: query requiredResult == ClyUnknownQueryResult instance
+	self assert: query requiredResult identicalTo: ClyUnknownQueryResult instance
 ]
 
 { #category : #tests }

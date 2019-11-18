@@ -22,12 +22,11 @@ ClyMethodVisibilityGroupsTest >> meaningfullObjectToAssert: resultItem [
 
 { #category : #tests }
 ClyMethodVisibilityGroupsTest >> testComparisonWithAnotherHierarchy [
-
 	| queryResult2 |
-	queryResult2 := self createQueryResult. 
+	queryResult2 := self createQueryResult.
 	queryResult2 hierarchy: queryResult hierarchy inverted.
-	
-	self deny: queryResult = queryResult2
+
+	self deny: queryResult equals: queryResult2
 ]
 
 { #category : #tests }

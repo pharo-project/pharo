@@ -28,34 +28,27 @@ ClyConstantMethodQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyConstantMethodQueryTest >> testComparison [
+	self assert: (ClyConstantMethodQuery with: {(self class >> #method1)}) equals: (ClyConstantMethodQuery with: {(self class >> #method1)}).
 
-	self 
-		assert: (ClyConstantMethodQuery with: {self class >> #method1}) 
-		equals: (ClyConstantMethodQuery with: {self class >> #method1}).
-	
-	self 
-		assert: (ClyConstantMethodQuery with: {self class >> #method1}) hash 
-		equals: (ClyConstantMethodQuery with: {self class >> #method1}) hash.
-		
-	self deny: (ClyConstantMethodQuery with: {self class >> #method1}) = (ClyConstantMethodQuery with: {self class >> #method2})
+	self assert: (ClyConstantMethodQuery with: {(self class >> #method1)}) hash equals: (ClyConstantMethodQuery with: {(self class >> #method1)}) hash.
+
+	self deny: (ClyConstantMethodQuery with: {(self class >> #method1)}) equals: (ClyConstantMethodQuery with: {(self class >> #method2)})
 ]
 
 { #category : #tests }
 ClyConstantMethodQueryTest >> testConvertingToAsyncQuery [
-
 	| convertedQuery |
 	convertedQuery := query async.
-	
-	self assert: convertedQuery == query
+
+	self assert: convertedQuery identicalTo: query
 ]
 
 { #category : #tests }
 ClyConstantMethodQueryTest >> testConvertingToSemiAsyncQuery [
-
 	| convertedQuery |
 	convertedQuery := query semiAsync.
-	
-	self assert: convertedQuery == query
+
+	self assert: convertedQuery identicalTo: query
 ]
 
 { #category : #tests }
