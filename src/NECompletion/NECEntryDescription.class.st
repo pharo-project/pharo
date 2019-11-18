@@ -15,7 +15,7 @@ Class {
 { #category : #'instance creation' }
 NECEntryDescription class >> label: firstString [ 
 	^ self new
-		setLabel: firstString
+		label: firstString
 		title: '(unknown)'
 		description: nil
 ]
@@ -23,7 +23,7 @@ NECEntryDescription class >> label: firstString [
 { #category : #'instance creation' }
 NECEntryDescription class >> label: firstString title: secondString description: thirdString [ 
 	^ self new 
-		setLabel: firstString
+		label: firstString
 		title: secondString
 		description: thirdString
 ]
@@ -40,7 +40,7 @@ NECEntryDescription >> label [
 ]
 
 { #category : #initialization }
-NECEntryDescription >> setLabel: firstString title: secondString description: thirdString [ 
+NECEntryDescription >> label: firstString title: secondString description: thirdString [ 
 	label := firstString.
 	title := secondString.
 	description := thirdString
@@ -48,5 +48,5 @@ NECEntryDescription >> setLabel: firstString title: secondString description: th
 
 { #category : #accessing }
 NECEntryDescription >> title [
-^ title
+	^ title
 ]

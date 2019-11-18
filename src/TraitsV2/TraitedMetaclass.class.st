@@ -70,7 +70,7 @@ TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 TraitedMetaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 

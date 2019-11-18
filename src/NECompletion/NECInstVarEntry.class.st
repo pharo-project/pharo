@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-NECInstVarEntry >> label [
-	^ 'instance variable'
+NECInstVarEntry >> hightlightSymbol [
+	^ #instVar
 ]
 
 { #category : #accessing }
-NECInstVarEntry >> type [
-	^ #instVar
+NECInstVarEntry >> label [
+	^ 'instance variable'
 ]

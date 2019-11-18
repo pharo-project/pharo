@@ -389,16 +389,6 @@ RPackage >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> changeRecordForOverriddenMethod: aMethodDefinition [
-	^ SourceFiles
-		changeRecordsFor: aMethodDefinition 
-		detect: [ :protocol | 
-			self 
-				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
-]
-
 { #category : #slices }
 RPackage >> classDefinedSlicesDo: aBlock [
 	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
@@ -987,12 +977,6 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 { #category : #'system compatibility' }
 RPackage >> methodCategoryPrefix [
 	^ '*', self name asLowercase
-]
-
-{ #category : #'system compatibility' }
-RPackage >> methodReferences [
-	
-	^ self methods collect: [:each | each methodReference] thenSelect: [:each| each isValid and: [each isLocalSelector]].
 ]
 
 { #category : #accessing }

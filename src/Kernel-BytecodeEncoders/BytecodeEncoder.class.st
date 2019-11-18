@@ -3,7 +3,7 @@ I am an abstract superclass for different bytecode set encoders.  Subclasses inh
 "
 Class {
 	#name : #BytecodeEncoder,
-	#superclass : #Encoder,
+	#superclass : #Object,
 	#instVars : [
 		'stream',
 		'position',
@@ -57,6 +57,12 @@ BytecodeEncoder class >> nonExtensionPcAt: pc in: method [
 ]
 
 { #category : #'bytecode decoding' }
+BytecodeEncoder class >> quickPrimSpecialConstants [
+	"Note: they are different from the encoder special literals."
+	^ #(true false nil -1 0 1 2) 
+]
+
+{ #category : #'bytecode decoding' }
 BytecodeEncoder class >> specialSelectors [	
 	^ #(#+ #- #< #> #'<=' #'>=' #= #'~=' #* #/ #'\\' #@ #bitShift: #'//' #bitAnd: #bitOr: #at: #at:put: #size #next #nextPut: #atEnd #'==' nil "class" #'~~' #value #value: #do: #new #new: #x #y)
 ]
@@ -66,15 +72,6 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 	"This is the default implementation. Subclasses with inline primitives
 	will need to override."
 	^ 0
-]
-
-{ #category : #temps }
-BytecodeEncoder >> bindAndJuggle: name [
-	"This is used to insert a new temp and reorder temps on editing.
-	 It doesn't really work for closure compilation since we have multiple
-	 locations for temps.  Simply signal a reparse is necessary."
-
-	ReparseAfterSourceEditing signal
 ]
 
 { #category : #temps }

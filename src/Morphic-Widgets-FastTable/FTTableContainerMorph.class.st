@@ -94,7 +94,9 @@ FTTableContainerMorph >> calculateExactVisibleRows [
 
 	| visibleRows |
 	visibleRows := self height / (self table rowHeight + self table intercellSpacing y).
-	^ headerRow ifNotNil: [ visibleRows - 1 ] ifNil: [ visibleRows ]
+	^ headerRow 
+		ifNotNil: [ visibleRows - 1 ] 
+		ifNil: [ visibleRows ]
 ]
 
 { #category : #private }
@@ -411,7 +413,7 @@ FTTableContainerMorph >> updateHeaderRow [
 		columnHeaders at: index put: headerCell.
 		FTDisplayColumn column: each width: columnWidth ].
 	 
-	headerRow := (FTTableRowMorph table: self table)
+	headerRow := (FTTableHeaderRowMorph table: self table)
 		privateOwner: self;
 		addAllMorphs: columnHeaders;
 		yourself

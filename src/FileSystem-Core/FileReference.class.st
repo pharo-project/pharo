@@ -388,12 +388,6 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 ]
 
 { #category : #accessing }
-FileReference >> mimeTypes [
-	"Return the possible mime types for the given path."
-	^ filesystem mimeTypesAt: path
-]
-
-{ #category : #accessing }
 FileReference >> modificationTime [ 
 	"Returns the last date of modification of self"
 	^ filesystem modificationTimeOf: self path

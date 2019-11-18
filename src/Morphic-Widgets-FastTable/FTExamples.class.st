@@ -611,7 +611,7 @@ FTExamples class >> exampleSortableTable2 [
 				yourself);
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
-				sortableOnProperty: #numberOfInstanceVariables;
+				sortableOnProperty: #instSize;
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;
@@ -645,7 +645,7 @@ FTExamples class >> exampleSortableTable3 [
 				yourself);
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
-				sortableUsing: #numberOfInstanceVariables ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
+				sortableUsing: #instSize ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;

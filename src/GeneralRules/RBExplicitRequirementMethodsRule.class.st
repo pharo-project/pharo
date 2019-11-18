@@ -20,36 +20,27 @@ RBExplicitRequirementMethodsRule class >> uniqueIdentifierName [
 
 { #category : #running }
 RBExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock [
-
 	| explicitRequirementMethods |
-	
-	
-	aClass isTrait 
-		ifTrue: [ ^ self ].
-		
+	aClass isTrait ifTrue: [ ^ self ].
+
+	"Maybe the subclasses will define the method, so we should not raise a critic on abstract classes."
+	aClass isAbstract ifTrue: [ ^ self ].
+
 	explicitRequirementMethods := aClass traitComposition allSelectors
-		collect: [ :selector |
-			aClass>>selector ]
-		thenSelect: [ :method |
-			method isRequired and: [ method isSubclassResponsibility not ] ].
-	
+		collect: [ :selector | aClass >> selector ]
+		thenSelect: [ :method | method isRequired and: [ method isSubclassResponsibility not ] ].
+
 	explicitRequirementMethods
-		select: [ :method |
-      		aClass withAllSuperclasses noneSatisfy: [ :superclass |
-				superclass canPerform: method selector ] ]
-		thenDo: [ :method |
-			aCritiqueBlock cull: (
-				(self critiqueFor: aClass)
-  					tinyHint: method selector;
-  					yourself) ]
+		select: [ :method | aClass withAllSuperclasses noneSatisfy: [ :superclass | superclass canPerform: method selector ] ]
+		thenDo: [ :method | 
+			aCritiqueBlock
+				cull:
+					((self critiqueFor: aClass)
+						tinyHint: method selector;
+						yourself) ]
 ]
 
-{ #category : #'as yet unclassified' }
-RBExplicitRequirementMethodsRule >> criticueFor: aClass withMissing: aSelector [
-    ^ (ReMissingMethodCritique for: aClass by: self class: aClass selector: aSelector) beShouldBeImplemented
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 RBExplicitRequirementMethodsRule >> group [
 	^ 'Coding Idiom Violation'
 ]

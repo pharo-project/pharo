@@ -3,13 +3,25 @@ Extension { #name : #Number }
 { #category : #'*Math-Operations-Extensions' }
 Number >> % aNumber [ 
 	"modulo. Remainder defined in terms of //. Answer a Number with the 
-	same sign as aNumber. e.g. 9\\4 = 1, -9\\4 = 3, 9\\-4 = -3, 0.9\\0.4 = 0.1."
+	same sign as aNumber."
+	
+	"9 % 4 >>> 1"
+	"-9 % 4 >>> 3"
+	"9 % -4 >>> -3"
+	
+	
 	^ self \\ aNumber
 ]
 
 { #category : #'*Math-Operations-Extensions' }
 Number >> ** exponent [ 
-	" A shortcut methog for raisedTo: "
+	" A shortcut method for raisedTo: "
+	
+	"2 ** 8 >>> 256"
+	"8 ** 2 >>> 64"
+	"2 ** (1/12) >>> 1.0594630943592953"
+	"2 ** -1 >>> (1/2)"
+	
 	^ self raisedTo: exponent
 ]
 
@@ -175,6 +187,8 @@ Number >> percent [
 Number >> radiansToDegrees [
 	"The receiver is assumed to represent radians. Answer the conversion to 
 	degrees."
+	
+	"Float pi radiansToDegrees >>> 180.0"
 
 	^self asFloat radiansToDegrees
 ]

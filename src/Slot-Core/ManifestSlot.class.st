@@ -11,5 +11,5 @@ ManifestSlot class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSlot class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Settings-Core' #'OpalCompiler-Core')
+	^ #(#'Collections-Streams' #'System-Settings-Core')
 ]

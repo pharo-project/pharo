@@ -97,43 +97,19 @@ RPackageSet >> categoryNames [
 		into: [ :all :each | all, (each classTagCategoryNames asArray) ]
 ]
 
-{ #category : #'system compatibility' }
-RPackageSet >> changeRecordForOverriddenMethod: aMethodDefinition [
-	^ SourceFiles
-		changeRecordsFor: aMethodDefinition 
-		detect: [ :protocol | 
-			self 
-				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
-]
-
 { #category : #accessing }
 RPackageSet >> classes [
-	^classes ifNil: [ classes := self collectFromAllPackages: #definedClasses ]
-]
-
-{ #category : #private }
-RPackageSet >> collectFromAllPackages: selector [
-	^self packages
-		inject: #()
-		into: [ :all :each | all, (each perform: selector) asArray ]
-]
-
-{ #category : #private }
-RPackageSet >> collectFromAllPackages: selector with: anObject [
-	^self packages
-		inject: #()
-		into: [ :all :each | all, (each perform: selector with: anObject) asArray ]
+	^classes ifNil: [ classes := self packages flatCollect: #definedClasses ]
 ]
 
 { #category : #accessing }
 RPackageSet >> definedClasses [
-	^definedClasses ifNil: [ definedClasses := self collectFromAllPackages: #definedClasses ]
+	^definedClasses ifNil: [ definedClasses := self packages flatCollect: #definedClasses ]
 ]
 
 { #category : #'system compatibility' }
 RPackageSet >> extendedClasses [
-	^ self collectFromAllPackages: #extendedClasses
+	^ self packages flatCollect: #extendedClasses
 ]
 
 { #category : #'system compatibility' }
@@ -143,8 +119,9 @@ RPackageSet >> extensionCategoriesForClass: aClass [
 
 { #category : #accessing }
 RPackageSet >> extensionMethods [
-	^extensionMethods ifNil: [
-		extensionMethods := ((self collectFromAllPackages: #extensionMethods) collect: #asRingDefinition) asSet asArray ]
+	^ extensionMethods ifNil: [
+		extensionMethods :=
+		((self packages flatCollect: [ :p | p extensionMethods ] as: Set) collect: #asRingDefinition) asArray ]
 ]
 
 { #category : #testing }
@@ -192,7 +169,7 @@ RPackageSet >> methodCategoryPrefix [
 
 { #category : #accessing }
 RPackageSet >> methods [
-	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: #asRingDefinition ]
+	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) collect: #asRingDefinition ]
 ]
 
 { #category : #accessing }
@@ -207,8 +184,7 @@ RPackageSet >> packages [
 
 { #category : #'system compatibility' }
 RPackageSet >> systemCategories [
-	^systemCategories ifNil: [ systemCategories := (self collectFromAllPackages: #systemCategories) asSet asArray].
-	
+	^ systemCategories ifNil: [ systemCategories := (self packages flatCollect: #systemCategories as: Set) asArray ]
 ]
 
 { #category : #accessing }

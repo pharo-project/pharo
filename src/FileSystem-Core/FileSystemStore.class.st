@@ -384,15 +384,6 @@ FileSystemStore >> isWritable: aPath [
 ]
 
 { #category : #public }
-FileSystemStore >> mimeTypesAt: aPath [
-	| mimeType |
-	mimeType := ZnMimeType 
-						forFilenameExtension: aPath extension 
-						ifAbsent: [  ^ nil ].
-	^ Array with: mimeType
-]
-
-{ #category : #public }
 FileSystemStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
 	^ self 

@@ -17,8 +17,7 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'IDE' with: [spec repository: repository].
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
- 
-		spec package: 'Deprecated70'.
+
 		spec package: 'Deprecated80'.
 		spec package: 'Gofer-UI'.
 	]

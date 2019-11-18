@@ -943,7 +943,9 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
 	^ anArgumentNode isBlockVar
-		ifTrue: [ #blockArg ]
+		ifTrue: [ anArgumentNode parent isBlock
+				ifTrue: [ #blockPatternArg ]
+				ifFalse: [ #blockArg ] ]
 		ifFalse: [ #methodArg ]
 ]
 
@@ -962,23 +964,6 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
 ]
 
 { #category : #private }
-SHRBTextStyler >> parse: aText isMethod: isMethod [
-	|root|
-	
-	isMethod 
-		ifTrue: [
-			[root := RBParser parseFaultyMethod: aText asString.
-			root methodNode methodClass: classOrMetaClass.
-			^root] 
-				on: Error 
-				do: [
-					"Problem: if called with a exprssion, we end here.
-					leads to wrong use by clients. Need to be fixed"
-					^RBParser parseFaultyExpression: aText asString]]
-		ifFalse:[ ^RBParser parseFaultyExpression: aText asString ].
-]
-
-{ #category : #private }
 SHRBTextStyler >> pixelHeight [
 	^ pixelHeight ifNil: [ pixelHeight := (font ifNil: [ TextStyle defaultFont ]) pixelSize ]
 ]
@@ -986,10 +971,12 @@ SHRBTextStyler >> pixelHeight [
 { #category : #private }
 SHRBTextStyler >> privateStyle: aText [
 	| ast |
-	ast := self parse: aText isMethod: self isForWorkspace not.
-	ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
-				forSyntaxHighlighting: true;
-				requestor: workspace).
+	ast := Smalltalk compiler
+		source: aText;
+		noPattern: self isForWorkspace ;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: workspace;
+		parse.				
 	ast doSemanticAnalysisIn: classOrMetaClass.
 	^ self style: aText ast: ast
 ]
@@ -1118,10 +1105,14 @@ SHRBTextStyler >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitBlockNode: aBlockNode [
-	aBlockNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
-	aBlockNode arguments do: [ :argument | self addStyle: #blockPatternArg forNode: argument ].
-	aBlockNode bar ifNotNil: [ :pos | self addStyle: #blockArgsBar from: pos to: pos ].
-	aBlockNode colons do: [ :pos | self addStyle: #blockArgColon from: pos to: pos ].
+	aBlockNode comments
+		do:
+			[ :comment | self addStyle: #comment from: comment start to: comment stop ].
+	aBlockNode arguments do: [ :argument | self visitNode: argument ].
+	aBlockNode bar
+		ifNotNil: [ :pos | self addStyle: #blockArgsBar from: pos to: pos ].
+	aBlockNode colons
+		do: [ :pos | self addStyle: #blockArgColon from: pos to: pos ].
 	self styleOpenBracket: aBlockNode.
 	self visitNode: aBlockNode body.
 	self styleCloseBracket: aBlockNode
@@ -1254,18 +1245,24 @@ SHRBTextStyler >> visitSelfNode: aSelfNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
-	| patternTempStyle |
-	patternTempStyle := self methodOrBlockTempDeclStyleFor: aSequenceNode.
 	self styleTempBars: aSequenceNode.
-	aSequenceNode temporaries
-		do: [ :temporary | self addStyle: patternTempStyle forNode: temporary ].
+	aSequenceNode temporaries do: [ :each | self visitNode: each ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
-	aSequenceNode periods do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
+	aSequenceNode periods
+		do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitSuperNode: aSuperNode [
 	self addStyle: #super forNode: aSuperNode
+]
+
+{ #category : #visiting }
+SHRBTextStyler >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
+	| patternTempStyle |
+	patternTempStyle := self
+		methodOrBlockTempDeclStyleFor: aTemporaryDeclarationNode parent.
+	self addStyle: patternTempStyle forNode: aTemporaryDeclarationNode
 ]
 
 { #category : #visiting }

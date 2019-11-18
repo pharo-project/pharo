@@ -189,6 +189,12 @@ OpalCompiler class >> recompileAll [
 
 ]
 
+{ #category : #public }
+OpalCompiler class >> register [ 
+
+	SmalltalkImage current compilerClass: self
+]
+
 { #category : #overlay }
 OpalCompiler class >> startUsingOverlayForDevelopment [
 	"this method sets up an overlay so we can change the compiler package without breaking the compiler"
@@ -276,6 +282,7 @@ OpalCompiler >> compilationContextClass: aClass [
 OpalCompiler >> compile [
 	| cm |
 	[ 	[	self parse.
+			self transformDoit.
 			self doSemanticAnalysis. 
 			self callPlugins.  
 		] 	on: ReparseAfterSourceEditing 
@@ -609,9 +616,11 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	^self compilationContext noPattern 
+	ast := self compilationContext noPattern 
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
+	ast methodNode compilationContext: self compilationContext.
+	^ast
 ]
 
 { #category : #'public access' }
@@ -666,16 +675,9 @@ OpalCompiler >> parse: textOrStream in: aClass notifying: req [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-	| expression |
-
-	expression := self compilationContext optionParseErrors 
+	^self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
-		ifFalse: [self parserClass parseExpression: source contents].	
-	ast := context 
-		ifNil: [expression asDoit] 
-		ifNotNil: [expression asDoitForContext: context].
-	ast compilationContext: self compilationContext.
-	^ast.
+		ifFalse: [self parserClass parseExpression: source contents]
 ]
 
 { #category : #'public access' }
@@ -686,12 +688,9 @@ OpalCompiler >> parseLiterals: aString [
 { #category : #private }
 OpalCompiler >> parseMethod [
 	
-	ast := self compilationContext optionParseErrors 
+	^self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyMethod: source contents]
-		ifFalse: [self parserClass parseMethod: source contents].
-	ast compilationContext: self compilationContext.
-	^ast.
-
+		ifFalse: [self parserClass parseMethod: source contents]
 ]
 
 { #category : #'public access' }
@@ -731,6 +730,17 @@ OpalCompiler >> requestorScopeClass: aClass [
 { #category : #accessing }
 OpalCompiler >> source: aString [
 	source := aString readStream.
+]
+
+{ #category : #'public access' }
+OpalCompiler >> transformDoit [
+	"if we compile an expression, we wrap it in a method here"
+	self compilationContext noPattern ifFalse: [ ^ast ].
+	ast := context 
+		ifNil: [ast asDoit] 
+		ifNotNil: [ast asDoitForContext: context].
+	"we need to set the compilation context in the new method node"
+	^ast compilationContext: self compilationContext
 ]
 
 { #category : #'old - deprecated' }

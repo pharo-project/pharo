@@ -277,6 +277,20 @@ HandMorph >> copyToPasteBuffer: aMorph [
 
 ]
 
+{ #category : #cursor }
+HandMorph >> currentCursor [
+
+	^ ActiveHand world currentCursor
+]
+
+{ #category : #cursor }
+HandMorph >> currentCursor: aCursor [
+
+	ActiveHand world currentCursor: aCursor.
+		ActiveHand world isCursorOwner ifTrue: [
+			aCursor activateInCursorOwner: ActiveHand world ]
+]
+
 { #category : #accessing }
 HandMorph >> cursorBounds [
 
@@ -984,7 +998,10 @@ HandMorph >> position [
 
 	^temporaryCursor
 		ifNil: [bounds topLeft]
-		ifNotNil: [bounds topLeft - temporaryCursorOffset]
+		ifNotNil: [
+			temporaryCursorOffset 
+				ifNil: [ bounds topLeft ]
+				ifNotNil: [ :anOffset | bounds topLeft - anOffset ] ]
 ]
 
 { #category : #geometry }

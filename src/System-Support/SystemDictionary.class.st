@@ -380,7 +380,7 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 	| oldClass |
 	(oldClass := self at: oldName asSymbol ifAbsent: [ nil ]) 
 		ifNil: [ 
-			self crTrace: 'Class-rename for ' , oldName , ' ignored because ' , oldName , ' does not exist.'.
+			SystemNotification signal: 'Class-rename for ' , oldName , ' ignored because ' , oldName , ' does not exist.'.
 			^ self ].
 	oldClass rename: newName
 ]

@@ -125,6 +125,13 @@ WeakValueDictionaryTest >> testDoesNotIncludeNilAfterGarbageCollection [
 ]
 
 { #category : #tests }
+WeakValueDictionaryTest >> testIncludesKeyAnswerFalseForGarbageCollectedValues [
+	"This test should not be called #testIncludesKey to not override that test of the same name in the superclass."
+
+	self deny: (self dictionaryWithGarbageCollectedValue includesKey: self keyWithGarbageCollectedValue)
+]
+
+{ #category : #tests }
 WeakValueDictionaryTest >> testKeysAndValuesDoWithGarbageCollectedValue [
 
 	self dictionaryWithGarbageCollectedValue keysAndValuesDo: [:key :value | self fail ]

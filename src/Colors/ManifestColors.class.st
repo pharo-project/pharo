@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestColors class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'AST-Core')
+	^ #(#'Collections-Streams')
 ]

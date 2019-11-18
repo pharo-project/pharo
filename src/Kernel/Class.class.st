@@ -23,12 +23,12 @@ Class {
 	#category : #'Kernel-Classes'
 }
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> allSuperclassesFor: aClass cache: cache [ 	
 	^ cache at: aClass ifAbsentPut: [aClass allSuperclasses asArray]
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -43,7 +43,7 @@ Class class >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache 
 			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -51,7 +51,7 @@ Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cach
 				self hasNoSuperclassesOf: soleInstance in: unprocessedClasses cache: cache]
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [ 
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 	
@@ -64,7 +64,7 @@ Class class >> rootsOfTheWorld [
 	^(self environment select: [:each | each isBehavior and: [each superclass isNil]]) asOrderedCollection
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> superclassOrder: classes [
     "Arrange the classes in the collection, classes, in superclass order so the 
     classes can be properly filed in. Do it in sets instead of ordered collections.
@@ -378,6 +378,14 @@ Class >> classVariables [
 	^self classPool associations
 ]
 
+{ #category : #'accessing class hierarchy' }
+Class >> commonSuperclassWith: aClass [
+
+	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
+
+	
+]
+
 { #category : #compiling }
 Class >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
@@ -476,7 +484,7 @@ Class >> deprecationRefactorings [
 
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
-	| copysName class |
+	| copysName class newComment |
 			
 	copysName := aSymbol asSymbol.
 	copysName = self name
@@ -491,6 +499,9 @@ Class >> duplicateClassWithNewName: aSymbol [
 		
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
+	"we copy the comment but with an explanation that it might be out of date"
+	newComment := 'I am a copy of class ', self name, '. This comment is copied from there, and might not be entirely accurate'.
+	class comment: newComment , String cr,  String cr,  self comment.
 	^ class
 ]
 
@@ -808,7 +819,8 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 			ifFalse: [ ^ self ] ].
 	
 	varUserClass 
-		ifNotNil: [self crTrace: self name , ' (' , aString , ' is Undeclared) '.
+		ifNotNil: [
+			NewUndeclaredWarning signal: aString in: self name.
 			Undeclared declare: aSymbol from: self classPool]
 		ifNil: [ self classPool removeKey: aSymbol].
 		

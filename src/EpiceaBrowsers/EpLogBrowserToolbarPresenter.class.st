@@ -9,18 +9,14 @@ Class {
 		'filtersButton',
 		'statusLabel'
 	],
-	#classInstVars : [
-		'refresh'
-	],
 	#category : #'EpiceaBrowsers-UI-Log'
 }
 
 { #category : #specs }
 EpLogBrowserToolbarPresenter class >> defaultSpec [
-	^ SpPanedLayout newHorizontal
-		position: 40 percent;
+	^ SpBoxLayout newHorizontal
 		add: #statusLabel;
-		add: #filtersButton;
+		addLast: #filtersButton;
 		yourself
 ]
 
@@ -41,7 +37,9 @@ EpLogBrowserToolbarPresenter >> beApplyMode [
 EpLogBrowserToolbarPresenter >> beHistoryMode [
 	filtersButton
 		icon: (self iconNamed: #smallFindIcon);
-		action: [ self filtersAction ]
+		action: [
+			logBrowserPresenter filtersSubMenu
+				openWithSpecAt: ActiveHand position ]
 ]
 
 { #category : #accessing }
@@ -52,13 +50,8 @@ EpLogBrowserToolbarPresenter >> beRevertMode [
 		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]
 
-{ #category : #private }
-EpLogBrowserToolbarPresenter >> filtersAction [
-	logBrowserPresenter filtersSubMenu openWithSpecAt: ActiveHand position
-]
-
 { #category : #initialization }
-EpLogBrowserToolbarPresenter >> initializeWidgets [
+EpLogBrowserToolbarPresenter >> initializePresenters [
 	filtersButton := self newButton.
 	statusLabel := self newLabel
 ]

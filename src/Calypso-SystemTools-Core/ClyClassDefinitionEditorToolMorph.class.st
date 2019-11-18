@@ -49,7 +49,7 @@ ClyClassDefinitionEditorToolMorph >> defaultIconName [
 
 { #category : #accessing }
 ClyClassDefinitionEditorToolMorph >> editingText [
-	self flag: #todo.
+	self flag: #pharoTodo.
 	^ editingClass definition
 ]
 

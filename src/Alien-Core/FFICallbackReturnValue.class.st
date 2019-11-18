@@ -45,13 +45,13 @@ FFICallbackReturnValue >> primReturnFromContext: callbackContext "<ContextPart>"
 	self primitiveFailed
 ]
 
-{ #category : #'instance initalization' }
+{ #category : #'instance initialization' }
 FFICallbackReturnValue >> returnDouble: f [
 	self signedLongAt: self typeOffset put: 2.
 	self doubleAt: self valueOffset put: f asFloat
 ]
 
-{ #category : #'instance initalization' }
+{ #category : #'instance initialization' }
 FFICallbackReturnValue >> returnInteger: n [
 	self signedLongAt: self typeOffset put: 0.
 	self signedLongAt: self valueOffset put: n asInteger

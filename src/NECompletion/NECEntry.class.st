@@ -8,7 +8,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'contents',
-		'type',
+		'node',
 		'description'
 	],
 	#category : #'NECompletion-Model'
@@ -19,19 +19,23 @@ NECEntry class >> contents: aString [
 	^ self new setContents: aString
 ]
 
+{ #category : #'instance creation' }
+NECEntry class >> contents: aString node: aNode [
+	^ self new setContents: aString node: aNode
+]
+
 { #category : #operations }
 NECEntry >> <= aECEntry [ 
 	^ contents <= aECEntry contents
 ]
 
 { #category : #'ui related' }
-NECEntry >> browseWith: anECContext [ 
-	| guessType |
-	guessType := self guessTypeWith: anECContext.
-	guessType ifNil: [^ false].
-	self flag: #SmalltalkReference. "Reference to Smalltalk tools"
-	Smalltalk tools browser openOnClass: guessType.
-	^ true
+NECEntry >> browse [
+	| class |
+	"no really correct, we need the class of the node..."
+	class := node methodNode compilationContext getClass.
+	Smalltalk tools browser openOnClass: class.
+	^true
 ]
 
 { #category : #accessing }
@@ -45,9 +49,11 @@ NECEntry >> contents [
 ]
 
 { #category : #'detail information' }
-NECEntry >> createDescriptionWith: anECContext [ 
+NECEntry >> createDescription [
 	| clazz |
-	clazz := self guessTypeWith: anECContext.
+	"no really correct, we need the class of the node..."
+	
+	clazz := node methodNode compilationContext getClass.
 	^ clazz 
 		ifNil: [ NECEntryDescription label: self label ]
 		ifNotNil: 
@@ -58,19 +64,13 @@ NECEntry >> createDescriptionWith: anECContext [
 ]
 
 { #category : #operations }
-NECEntry >> descriptionWith: anECContext [ 
-	description ifNotNil: [ ^ description ].
-	^ description := self createDescriptionWith: anECContext
+NECEntry >> description [
+	^description ifNil: [ description := self createDescription ]
 ]
 
-{ #category : #testing }
-NECEntry >> isLocal [
-	^ false
-]
-
-{ #category : #testing }
-NECEntry >> isSelector [
-	^ false
+{ #category : #accessing }
+NECEntry >> hightlightSymbol [
+	^nil
 ]
 
 { #category : #accessing }
@@ -85,7 +85,7 @@ NECEntry >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: contents;
 		nextPut: $,;
-		nextPutAll: self type;
+		nextPutAll: self hightlightSymbol;
 		nextPut: $)
 ]
 
@@ -95,6 +95,7 @@ NECEntry >> setContents: aString [
 ]
 
 { #category : #accessing }
-NECEntry >> type [
-	^type
+NECEntry >> setContents: aString node: aNode [
+	contents := aString.
+	node := aNode
 ]

@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -76,15 +76,7 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownFileSystemDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#Monticello #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets')
 ]
 
 { #category : #'known dependencies' }
@@ -101,31 +93,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownLocalMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMetacelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Localization' #'Transcript-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -133,7 +101,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization' #'Transcript-Core')
+	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
 ]
 
 { #category : #'known dependencies' }
@@ -149,7 +117,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -157,7 +125,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Definitions-Core' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport)
+	^ #(#'FileSystem-Core' #'System-Changes' #'AST-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -174,7 +142,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -242,7 +210,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
+		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -276,7 +245,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 		BaselineOfTraits corePackages,		
 		BaselineOfDisplay allPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownDisplayDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -293,7 +262,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -338,7 +307,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfDependencyAnalyzer.
 	BaselineOfQualityAssistant.
 	BaselineOfReflectivity.
-	BaselineOfSmartSuggestions.
 	BaselineOfFuzzyMatcher.
 	BaselineOfZodiac.
 	BaselineOfReflectionMirrors.
@@ -346,6 +314,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfBlueInk.
+	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
@@ -368,6 +337,14 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalKernelDependencies [
+
+"
+If you will break or weaken this test, a puppy will die!!! 
+     _ _      _
+    o'')}____//
+     `_/      )
+     (_(_/-(_/
+" 
 	| dependencies |
 	self longTestCase.
 
@@ -393,7 +370,7 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownLocalMonticelloDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -405,7 +382,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	
 	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
 	
-	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies.
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
@@ -425,7 +402,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownMonticelloDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -463,7 +440,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
-		BaselineOfMenuRegistration allPackageNames ).
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -520,6 +498,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
 
 		BaselineOfCommander2 allPackageNames,
 		
@@ -572,7 +551,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfCommander2 allPackageNames,
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
-		BaselineOfMenuRegistration allPackageNames )).
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core) )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]

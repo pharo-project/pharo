@@ -86,7 +86,7 @@ CodeImporter class >> evaluateString: aString [
 
 { #category : #'instance creation' }
 CodeImporter class >> fileNamed: aFileName [
-	^ self new file: (FileStream readOnlyFileNamed: aFileName).
+	^ self new file: (aFileName asFileReference readStream).
 
 ]
 

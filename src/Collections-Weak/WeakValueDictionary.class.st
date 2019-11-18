@@ -71,6 +71,15 @@ WeakValueDictionary >> at: key put: anObject [
 	^ anObject
 ]
 
+{ #category : #testing }
+WeakValueDictionary >> includesKey: key [
+	"Answer whether the receiver has a key equal to the argument and also that the value associated to this key was not garbage collected."
+
+	^ (array at: (self scanFor: key))
+		ifNil: [ false ]
+		ifNotNil: [ :value | value value isNotNil ]
+]
+
 { #category : #private }
 WeakValueDictionary >> rehash [
 	| newSelf |
