@@ -250,7 +250,7 @@ OpalCompiler >> callPlugins [
 	| plugins  |
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [:a :b | a priority > b priority]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast]. 
+	plugins do: [ :each | ast := each transform: ast methodNode]. 
 ]
 
 { #category : #accessing }
@@ -284,7 +284,6 @@ OpalCompiler >> compile [
 	[ 	[	self parse.
 			self transformDoit.
 			self doSemanticAnalysis. 
-			self callPlugins.  
 		] 	on: ReparseAfterSourceEditing 
 			do: 
 			[  	:notification | 
@@ -620,6 +619,7 @@ OpalCompiler >> parse [
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
 	ast methodNode compilationContext: self compilationContext.
+	self callPlugins. 
 	^ast
 ]
 
