@@ -12,25 +12,34 @@ If the variable mainDebuggerClass is set to hold a debugger class, it will be us
 Class {
 	#name : #DebuggerSelector,
 	#superclass : #Object,
-	#classVars : [
+	#instVars : [
 		'mainDebuggerClass',
 		'subscribersOnMainDebuggerClassUpdate'
+	],
+	#classVars : [
+		'singleton'
 	],
 	#category : #'Tools-Debugger'
 }
 
+{ #category : #'instance creation' }
+DebuggerSelector class >> singleton [
+	singleton ifNil: [ singleton := self new ].
+	^ singleton
+]
+
 { #category : #'publish events' }
-DebuggerSelector class >> addSubscriberOnMainDebuggerClassUpdate: anObject [
+DebuggerSelector >> addSubscriberOnMainDebuggerClassUpdate: anObject [
 	self subscribersOnMainDebuggerClassUpdate add: anObject
 ]
 
 { #category : #initialization }
-DebuggerSelector class >> getDebuggerClasses [
+DebuggerSelector >> getDebuggerClasses [
 	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) select: [:aClass | self isThisClassADebugger: aClass] yourself.
 ]
 
 { #category : #initialization }
-DebuggerSelector class >> isThisClassADebugger: aClass [
+DebuggerSelector >> isThisClassADebugger: aClass [
 	"Returns whether @aClass implements the required methods to be considered a debugger class. It must:
 	- have a #iAmADebugger method, with the #iAmADebugger pragma
 	- implement all the class methods from class AbstractDebugger that are marked as being subclass responsibility
@@ -54,29 +63,29 @@ DebuggerSelector class >> isThisClassADebugger: aClass [
 ]
 
 { #category : #accessor }
-DebuggerSelector class >> mainDebuggerClass [
+DebuggerSelector >> mainDebuggerClass [
 	^ mainDebuggerClass
 ]
 
 { #category : #accessor }
-DebuggerSelector class >> mainDebuggerClass: aClass [
+DebuggerSelector >> mainDebuggerClass: aClass [
 	(aClass isNil or: [self isThisClassADebugger: aClass]) ifFalse: [ CannotSetAsMainDebuggerAClassThatIsNotADebuggerClass signal ].
 	mainDebuggerClass := aClass.
 	self notifySubscribersOfAMainDebuggerClassUpdate
 ]
 
 { #category : #'publish events' }
-DebuggerSelector class >> notifySubscribersOfAMainDebuggerClassUpdate [
+DebuggerSelector >> notifySubscribersOfAMainDebuggerClassUpdate [
 	self subscribersOnMainDebuggerClassUpdate do: [ :subscriber_ | subscriber_ ifNotNil: [:subscriber | subscriber onMainDebuggerClassUpdate ]]
 ]
 
 { #category : #'publish events' }
-DebuggerSelector class >> removeSubscriberOnMainDebuggerClassUpdate: anObject [
+DebuggerSelector >> removeSubscriberOnMainDebuggerClassUpdate: anObject [
 	self subscribersOnMainDebuggerClassUpdate remove: anObject ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled" ]
 ]
 
 { #category : #'open debugger' }
-DebuggerSelector class >> selectDebuggerAndOpen: aDebugSession withFullView: aBool andNotification: aString [
+DebuggerSelector >> selectDebuggerAndOpen: aDebugSession withFullView: aBool andNotification: aString [
 	"Open @aDebugSession with the most suitable debugger class in the system. Look at the comments below for the detailed algorithm selecting the most suitable debugger"
 	| debuggerClasses |
 	"If a main debugger has been set (variable mainDebuggerClass), we try it first"
@@ -92,19 +101,19 @@ DebuggerSelector class >> selectDebuggerAndOpen: aDebugSession withFullView: aBo
 ]
 
 { #category : #initialization }
-DebuggerSelector class >> setNoMainDebuggerClass [
+DebuggerSelector >> setNoMainDebuggerClass [
 	"Removes the main debugger class if there was any"
 	self mainDebuggerClass: nil
 ]
 
 { #category : #'publish events' }
-DebuggerSelector class >> subscribersOnMainDebuggerClassUpdate [
+DebuggerSelector >> subscribersOnMainDebuggerClassUpdate [
 	subscribersOnMainDebuggerClassUpdate ifNil: [ subscribersOnMainDebuggerClassUpdate := WeakOrderedCollection new ].
 	^ subscribersOnMainDebuggerClassUpdate
 ]
 
 { #category : #helper }
-DebuggerSelector class >> tryToOpenDebugSession: aDebugSession withDebuggerClass: aDebuggerClass withFullView: aBool andNotification: aString [
+DebuggerSelector >> tryToOpenDebugSession: aDebugSession withDebuggerClass: aDebuggerClass withFullView: aBool andNotification: aString [
 	"Tries to open @aDebugSession with debugger @aDebuggerClass. If an Error is raised doing so, returns false, otherwise return true"
 	[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. ^ true] on: Error do: [ ^ false ]
 ]

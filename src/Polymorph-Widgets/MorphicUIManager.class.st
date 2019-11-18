@@ -299,7 +299,7 @@ MorphicUIManager >> debugProcess: process context: context label: title fullView
 			"schedule debugger in deferred UI message to address
 			redraw problems after opening a debugger e.g. from
 			the testrunner."
-		[ DebuggerSelector selectDebuggerAndOpen: debugSession withFullView: bool andNotification: notificationString.
+		[ DebuggerSelector singleton selectDebuggerAndOpen: debugSession withFullView: bool andNotification: notificationString.
 		] on: Error do: [ :ex | 	debugSession signalDebuggerError: ex] 
 	].
 

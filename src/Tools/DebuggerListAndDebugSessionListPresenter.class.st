@@ -76,12 +76,12 @@ DebuggerListAndDebugSessionListPresenter class >> title [
 
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> addCorrectMainDebuggerButtonToToolBar: aToolBar [
-	debuggerList selectedItems ifNotEmpty: [ :debuggerList_ | (DebuggerSelector mainDebuggerClass == (debuggerList_ at: 1)) ifTrue: [ 
+	debuggerList selectedItems ifNotEmpty: [ :debuggerList_ | (DebuggerSelector singleton mainDebuggerClass == (debuggerList_ at: 1)) ifTrue: [ 
 			"A debugger is selected in the list, and it is the main debugger class, so we add a button allowing the user to remove this debugger from the main debugger class"
 			aToolBar addItem: (SpToolBarButton new
 			label: 'Main Debugger';
 			icon: (self iconManager iconNamed: #checkboxSelected);
-			action: [ DebuggerSelector mainDebuggerClass: nil. self refreshDebuggerList. self refreshDebuggerListToolBar ]
+			action: [ DebuggerSelector singleton mainDebuggerClass: nil. self refreshDebuggerList. self refreshDebuggerListToolBar ]
 		).
 		^ self
 	 ]].
@@ -94,7 +94,7 @@ DebuggerListAndDebugSessionListPresenter >> addCorrectMainDebuggerButtonToToolBa
 				debuggerList selectedItems ifEmpty: [
 					self inform: 'You need to select a debugger'
 				] ifNotEmpty: [:debuggerList_ |
-					DebuggerSelector mainDebuggerClass: (debuggerList_ at: 1) ].
+					DebuggerSelector singleton mainDebuggerClass: (debuggerList_ at: 1) ].
 					self refreshDebuggerList.
 					self refreshDebuggerListToolBar.
 			]
@@ -124,7 +124,7 @@ DebuggerListAndDebugSessionListPresenter >> debugDebugSessionAction [
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> debuggerClassToNameOfDebugger: aDebuggerClass [
 	"Returns the name of @aDebuggerClass, to be displayed in the list of debuggers. If @aDebuggerClass is the main debugger defined in DebuggerSelector, return the name as a Text styled in bold"
-	(aDebuggerClass == DebuggerSelector mainDebuggerClass ) ifTrue: [ 
+	(aDebuggerClass == DebuggerSelector singleton mainDebuggerClass ) ifTrue: [ 
 		^ aDebuggerClass asString asText allBold; yourself
 	] ifFalse: [ 
 		^ aDebuggerClass asString
@@ -138,7 +138,7 @@ DebuggerListAndDebugSessionListPresenter >> debuggerClassToRankToDisplay: aDebug
 	In addition, if @aDebuggerClass is the main debugger class (see class DebuggerSelector), then its ranks should be displayed in bold"
 	| result |
 	result := [(aDebuggerClass rankDebugSession: nil) asString] on: Exception do: [ 'Depends on the debug session'].
-	(aDebuggerClass == DebuggerSelector mainDebuggerClass) ifTrue: [ ^ result asText allBold yourself ] ifFalse: [ ^ result ]
+	(aDebuggerClass == DebuggerSelector singleton mainDebuggerClass) ifTrue: [ ^ result asText allBold yourself ] ifFalse: [ ^ result ]
 ]
 
 { #category : #helpers }
@@ -268,7 +268,7 @@ DebuggerListAndDebugSessionListPresenter >> refreshDebugSessionList [
 
 { #category : #initialization }
 DebuggerListAndDebugSessionListPresenter >> refreshDebuggerList [
-	debuggerList items: (DebuggerSelector getDebuggerClasses sort: self getSortingBlock)
+	debuggerList items: (DebuggerSelector singleton getDebuggerClasses sort: self getSortingBlock)
 ]
 
 { #category : #initialization }
@@ -287,11 +287,11 @@ DebuggerListAndDebugSessionListPresenter >> setInitialSubscriptions: aBoolean [
 	aBoolean ifTrue: [ 
 		DebugSessionStorage singleton addSubscriberOnStorageUpdate: self.
 		DebugSessionStorage singleton addSubscriberOnStorageLimitUpdate: self.
-		DebuggerSelector addSubscriberOnMainDebuggerClassUpdate: self
+		DebuggerSelector singleton addSubscriberOnMainDebuggerClassUpdate: self
 	] ifFalse: [ 
 		DebugSessionStorage singleton removeSubscriberOnStorageUpdate: self.
 		DebugSessionStorage singleton removeSubscriberOnStorageLimitUpdate: self.
-		DebuggerSelector removeSubscriberOnMainDebuggerClassUpdate: self
+		DebuggerSelector singleton removeSubscriberOnMainDebuggerClassUpdate: self
 	]
 ]
 
