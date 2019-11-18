@@ -88,12 +88,12 @@ DebugSessionStorage >> onDebugSession: aDebugSession stoppingGettingKeptAliveBy:
 
 { #category : #'publish events' }
 DebugSessionStorage >> removeSubscriberOnStorageLimitUpdate: anObject [
-	self subscribersOnStorageLimitUpdate remove: anObject
+	self subscribersOnStorageLimitUpdate remove: anObject ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled" ]
 ]
 
 { #category : #'publish events' }
 DebugSessionStorage >> removeSubscriberOnStorageUpdate: anObject [
-	self subscribersOnStorageUpdate remove: anObject
+	self subscribersOnStorageUpdate remove: anObject ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled" ]
 ]
 
 { #category : #accessing }
@@ -118,9 +118,13 @@ DebugSessionStorage >> storageLimitForDebugSessionsNotKeptAlive: anInteger [
 
 { #category : #storage }
 DebugSessionStorage >> storeDebugSession: aDebugSession [
-	self storage add: (DebugSessionStorageUnit newFrom: aDebugSession).
+	| storageUnit |
+	storageUnit := DebugSessionStorageUnit newFrom: aDebugSession.
+	self storage add: storageUnit.
 	aDebugSession addSubscriberToKeepAliveEvents: self.
 	self notifySubscribersOfAStorageUpdate.
+	self enforceStorageLimit.
+	^ storageUnit
 ]
 
 { #category : #accessing }

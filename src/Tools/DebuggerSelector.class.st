@@ -72,7 +72,7 @@ DebuggerSelector class >> notifySubscribersOfAMainDebuggerClassUpdate [
 
 { #category : #'publish events' }
 DebuggerSelector class >> removeSubscriberOnMainDebuggerClassUpdate: anObject [
-	self subscribersOnMainDebuggerClassUpdate remove: anObject
+	self subscribersOnMainDebuggerClassUpdate remove: anObject ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled" ]
 ]
 
 { #category : #'open debugger' }
