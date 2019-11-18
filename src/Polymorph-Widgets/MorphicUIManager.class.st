@@ -289,7 +289,7 @@ MorphicUIManager >> debugProcess: process context: context label: title fullView
 	| debugSession |
 
 	debugSession := process newDebugSessionNamed: title startedAt: context.
-	DebugSessionStorage storeDebugSession: debugSession.
+	DebugSessionStorage singleton storeDebugSession: debugSession.
 	
 	debugSession logStackToFileIfNeeded.
 	debugSession isAboutUIProcess ifTrue: [ 

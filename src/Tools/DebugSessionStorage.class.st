@@ -1,5 +1,6 @@
 "
 I store debug sessions (see class DebugSession) when they are created because an exception was signalled but not caught.
+I implement the singleton design pattern.
 Upon storing a debug session, I wrap it in a new DebugSessionStorageUnit, to also store the time at which the session was stored.
 There is a limit to how many debug sessions I keep, defined by my @storageLimitForDebugSessionsNotKeptAlive variable. Oldest debug sessions are removed first. I always keep debug sessions that are currently open in a debugger (see DebugSession>>#keepAlive:), and they do not count towards the storage limit.
 
@@ -14,27 +15,36 @@ There is a limit to how many debug sessions I keep, defined by my @storageLimitF
 Class {
 	#name : #DebugSessionStorage,
 	#superclass : #Object,
-	#classVars : [
+	#instVars : [
 		'storage',
 		'storageLimitForDebugSessionsNotKeptAlive',
 		'subscribersOnStorageLimitUpdate',
 		'subscribersOnStorageUpdate'
 	],
+	#classVars : [
+		'singleton'
+	],
 	#category : #'Tools-Debugger'
 }
 
+{ #category : #singleton }
+DebugSessionStorage class >> singleton [
+	singleton ifNil: [ singleton := self new ].
+	^ singleton
+]
+
 { #category : #'publish events' }
-DebugSessionStorage class >> addSubscriberOnStorageLimitUpdate: anObject [
+DebugSessionStorage >> addSubscriberOnStorageLimitUpdate: anObject [
 	self subscribersOnStorageLimitUpdate add: anObject
 ]
 
 { #category : #'publish events' }
-DebugSessionStorage class >> addSubscriberOnStorageUpdate: anObject [
+DebugSessionStorage >> addSubscriberOnStorageUpdate: anObject [
 	self subscribersOnStorageUpdate add: anObject
 ]
 
 { #category : #private }
-DebugSessionStorage class >> clear [
+DebugSessionStorage >> clear [
 	<script>
 	"This method should only be used for development purposes. It does not call #terminate on the stored debug sessions, and therefore does not let the debugged process be removed from the system (they will linger on)"
 	self storage removeAll.
@@ -42,7 +52,7 @@ DebugSessionStorage class >> clear [
 ]
 
 { #category : #storage }
-DebugSessionStorage class >> enforceStorageLimit [
+DebugSessionStorage >> enforceStorageLimit [
 	"Terminate stored debug sessions until the limit (defined in the storageLimitForDebugSessionNotKeptAlive variable) is satisfied.
 	Oldest debug sessions are terminated first.
 	Debug sessions that are being kept alive (see DebugSession>>#keepAlive:) are ignored and remain stored regardless. They do not count towards the storage limit."
@@ -56,50 +66,50 @@ DebugSessionStorage class >> enforceStorageLimit [
 ]
 
 { #category : #'publish events' }
-DebugSessionStorage class >> notifySubscribersOfAStorageLimitUpdate [
+DebugSessionStorage >> notifySubscribersOfAStorageLimitUpdate [
 	self subscribersOnStorageLimitUpdate do: [ :subscriber_ | subscriber_ ifNotNil: [:subscriber | subscriber onDebugSessionStorageLimitUpdate ]]
 ]
 
 { #category : #'publish events' }
-DebugSessionStorage class >> notifySubscribersOfAStorageUpdate [
+DebugSessionStorage >> notifySubscribersOfAStorageUpdate [
 	self subscribersOnStorageUpdate do: [ :subscriber_ | subscriber_ ifNotNil: [:subscriber | subscriber onDebugSessionStorageUpdate ]]
 ]
 
 { #category : #'react to events' }
-DebugSessionStorage class >> onDebugSession: aDebugSession gettingKeptAliveBy: anObject [
+DebugSessionStorage >> onDebugSession: aDebugSession gettingKeptAliveBy: anObject [
 	self notifySubscribersOfAStorageUpdate 
 ]
 
 { #category : #'react to events' }
-DebugSessionStorage class >> onDebugSession: aDebugSession stoppingGettingKeptAliveBy: anObject [
+DebugSessionStorage >> onDebugSession: aDebugSession stoppingGettingKeptAliveBy: anObject [
 	self notifySubscribersOfAStorageUpdate.
 	aDebugSession shouldBeKeptAlive ifFalse: [ self enforceStorageLimit ] "If @aDebugSession is no longer kept alive as a result, maybe we are now breaking the storage limit rule and need to enforce it again"
 ]
 
 { #category : #'publish events' }
-DebugSessionStorage class >> removeSubscriberOnStorageLimitUpdate: anObject [
+DebugSessionStorage >> removeSubscriberOnStorageLimitUpdate: anObject [
 	self subscribersOnStorageLimitUpdate remove: anObject
 ]
 
 { #category : #'publish events' }
-DebugSessionStorage class >> removeSubscriberOnStorageUpdate: anObject [
+DebugSessionStorage >> removeSubscriberOnStorageUpdate: anObject [
 	self subscribersOnStorageUpdate remove: anObject
 ]
 
 { #category : #accessing }
-DebugSessionStorage class >> storage [
+DebugSessionStorage >> storage [
 	storage ifNil: [ storage := OrderedCollection new ].
 	^ storage
 ]
 
 { #category : #accessing }
-DebugSessionStorage class >> storageLimitForDebugSessionsNotKeptAlive [
+DebugSessionStorage >> storageLimitForDebugSessionsNotKeptAlive [
 	storageLimitForDebugSessionsNotKeptAlive ifNil: [ storageLimitForDebugSessionsNotKeptAlive := 5 ].
 	^ storageLimitForDebugSessionsNotKeptAlive
 ]
 
 { #category : #accessing }
-DebugSessionStorage class >> storageLimitForDebugSessionsNotKeptAlive: anInteger [
+DebugSessionStorage >> storageLimitForDebugSessionsNotKeptAlive: anInteger [
 	(anInteger isInteger not | anInteger <= 0) ifTrue: [ InvalidValueForStorageLimit signal ].
 	storageLimitForDebugSessionsNotKeptAlive := anInteger.
 	self notifySubscribersOfAStorageLimitUpdate.
@@ -107,39 +117,39 @@ DebugSessionStorage class >> storageLimitForDebugSessionsNotKeptAlive: anInteger
 ]
 
 { #category : #storage }
-DebugSessionStorage class >> storeDebugSession: aDebugSession [
+DebugSessionStorage >> storeDebugSession: aDebugSession [
 	self storage add: (DebugSessionStorageUnit newFrom: aDebugSession).
 	aDebugSession addSubscriberToKeepAliveEvents: self.
 	self notifySubscribersOfAStorageUpdate.
 ]
 
 { #category : #accessing }
-DebugSessionStorage class >> subscribersOnStorageLimitUpdate [
+DebugSessionStorage >> subscribersOnStorageLimitUpdate [
 	subscribersOnStorageLimitUpdate ifNil: [ subscribersOnStorageLimitUpdate := WeakOrderedCollection new ].
 	^ subscribersOnStorageLimitUpdate
 ]
 
 { #category : #accessing }
-DebugSessionStorage class >> subscribersOnStorageUpdate [
+DebugSessionStorage >> subscribersOnStorageUpdate [
 	subscribersOnStorageUpdate ifNil: [ subscribersOnStorageUpdate := WeakOrderedCollection new ].
 	^ subscribersOnStorageUpdate
 ]
 
 { #category : #termination }
-DebugSessionStorage class >> terminate: aDebugSessionStorageUnit [
+DebugSessionStorage >> terminate: aDebugSessionStorageUnit [
 	"See comment of method #_NoNotification:"
 	self terminate_NoNotification: aDebugSessionStorageUnit.
 	self notifySubscribersOfAStorageUpdate 
 ]
 
 { #category : #termination }
-DebugSessionStorage class >> terminateAll [
+DebugSessionStorage >> terminateAll [
 	<script>
 	self storage copy do: [ :aDebugSessionStorageUnit | self terminate: aDebugSessionStorageUnit ]
 ]
 
 { #category : #termination }
-DebugSessionStorage class >> terminate_NoNotification: aDebugSessionStorageUnit [
+DebugSessionStorage >> terminate_NoNotification: aDebugSessionStorageUnit [
 	"Terminating the debug session in addition to removing it from the storage is necessary to ensure the debugged process is destroyed and does not linger in the image"
 	self storage remove: aDebugSessionStorageUnit.
 	aDebugSessionStorageUnit debugSession terminate.

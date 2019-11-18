@@ -199,8 +199,8 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	storageLimitInputField := SpNumberInputFieldPresenter new
 		numberType: Integer;
 		minimum: 1;
-		number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive;
-		whenNumberChangedDo: [ :newNumber | "Disable the automatic refreshing of this value in the UI during the update of the value, to avoid infinite loop" self shouldUpdateStorageLimitInputField: false. DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive: newNumber. self shouldUpdateStorageLimitInputField: true ].
+		number: DebugSessionStorage singleton storageLimitForDebugSessionsNotKeptAlive;
+		whenNumberChangedDo: [ :newNumber | "Disable the automatic refreshing of this value in the UI during the update of the value, to avoid infinite loop" self shouldUpdateStorageLimitInputField: false. DebugSessionStorage singleton storageLimitForDebugSessionsNotKeptAlive: newNumber. self shouldUpdateStorageLimitInputField: true ].
 			
 	self setInitialSubscriptions: true
 ]
@@ -221,16 +221,16 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 	toolBar addItem: (SpToolBarButton new
 		label: 'Terminate';
 		icon: (self iconManager iconNamed: #remotesManagerRemoveRemote);
-		action: [ debugSessionList selectedItems ifNotEmpty: [:selectedItems | DebugSessionStorage terminate: (selectedItems at: 1). self refreshDebugSessionList ] ]
+		action: [ debugSessionList selectedItems ifNotEmpty: [:selectedItems | DebugSessionStorage singleton terminate: (selectedItems at: 1). self refreshDebugSessionList ] ]
 	).
 	toolBar addItem: (SpToolBarButton new
 			label: 'Terminate All';
 			icon: (self iconManager iconNamed: #glamorousTrash);
-			action: [DebugSessionStorage terminateAll. self refreshDebugSessionList]).
+			action: [DebugSessionStorage singleton terminateAll. self refreshDebugSessionList]).
 	toolBar addItem: (SpToolBarButton new
 			label: 'Clean Up';
 			icon: (self iconManager iconNamed: #warning); "Should be a broom icon instead, but I did not find any"
-			action: [ DebugSessionStorage enforceStorageLimit]).
+			action: [ DebugSessionStorage singleton enforceStorageLimit]).
 	^ toolBar
 ]
 
@@ -238,7 +238,7 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 DebuggerListAndDebugSessionListPresenter >> onDebugSessionStorageLimitUpdate [
 	self shouldUpdateStorageLimitInputField ifTrue: [
 		self shouldUpdateStorageLimitInputField: false. "Deactivate the auto-refreshing while updating the value, to avoid infinite loop"
-		storageLimitInputField number: DebugSessionStorage storageLimitForDebugSessionsNotKeptAlive.
+		storageLimitInputField number: DebugSessionStorage singleton storageLimitForDebugSessionsNotKeptAlive.
 		self shouldUpdateStorageLimitInputField: true.
 	]
 ]
@@ -263,7 +263,7 @@ DebuggerListAndDebugSessionListPresenter >> printDateAndTime: aDateAndTime [
 
 { #category : #helpers }
 DebuggerListAndDebugSessionListPresenter >> refreshDebugSessionList [
-	debugSessionList items: DebugSessionStorage storage
+	debugSessionList items: DebugSessionStorage singleton storage
 ]
 
 { #category : #initialization }
@@ -285,12 +285,12 @@ DebuggerListAndDebugSessionListPresenter >> refreshDebuggerListToolBar [
 DebuggerListAndDebugSessionListPresenter >> setInitialSubscriptions: aBoolean [
 	"If @aBoolean is true, perform the initial subscriptions needed to keep the UI up to date. If it is false, unsubscribe. The point of having both the subscriptions and unsubscriptions in the same method is not to forget to add unsubscription statement in the future when new subscription are added"
 	aBoolean ifTrue: [ 
-		DebugSessionStorage addSubscriberOnStorageUpdate: self.
-		DebugSessionStorage addSubscriberOnStorageLimitUpdate: self.
+		DebugSessionStorage singleton addSubscriberOnStorageUpdate: self.
+		DebugSessionStorage singleton addSubscriberOnStorageLimitUpdate: self.
 		DebuggerSelector addSubscriberOnMainDebuggerClassUpdate: self
 	] ifFalse: [ 
-		DebugSessionStorage removeSubscriberOnStorageUpdate: self.
-		DebugSessionStorage removeSubscriberOnStorageLimitUpdate: self.
+		DebugSessionStorage singleton removeSubscriberOnStorageUpdate: self.
+		DebugSessionStorage singleton removeSubscriberOnStorageLimitUpdate: self.
 		DebuggerSelector removeSubscriberOnMainDebuggerClassUpdate: self
 	]
 ]

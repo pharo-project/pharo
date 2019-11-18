@@ -4,6 +4,10 @@ This class is not actually a debugger, but when asked to open on a debug session
 For the conditions a class must satisfy in order to be considered a debugger class, look at the #isThisClassADebugger method.
 
 If the variable mainDebuggerClass is set to hold a debugger class, it will be used in priority to open debug sessions (unless it cannot open them, in which case we fallback to the default algorithm)
+
+# Variables
+- mainDebuggerClass  | a Class
+- subscribersOnMainDebuggerClassUpdate  |  WeakOrderedCollection<Object>
 "
 Class {
 	#name : #DebuggerSelector,
