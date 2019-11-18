@@ -35,7 +35,20 @@ DebuggerSelector >> addSubscriberOnMainDebuggerClassUpdate: anObject [
 
 { #category : #initialization }
 DebuggerSelector >> getDebuggerClasses [
-	^ (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) select: [:aClass | self isThisClassADebugger: aClass] yourself.
+	| result classesWithDummyDebuggerPragma |
+	result := (((PragmaCollector filter: [:prg | prg selector = #'iAmADebugger' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ]) select: [:aClass | self isThisClassADebugger: aClass] yourself.
+	self ignoreDummyDebuggerForTests ifTrue: [ 
+		"If we have to remove dummy debuggers from the list (typically during normal uses of this class), remove all debugger classes that have the #iAmADummyDebuggerForTest pragma from the list. Those dummy debuggers are there for testing purposes"
+		classesWithDummyDebuggerPragma := ((PragmaCollector filter: [:prg | prg selector = #'iAmADummyDebuggerForTest' ]) reset collected) collect: [ :debuggerMethod | debuggerMethod methodClass soleInstance ].	
+		result removeAll: classesWithDummyDebuggerPragma.
+	].
+	^ result
+]
+
+{ #category : #initialization }
+DebuggerSelector >> ignoreDummyDebuggerForTests [
+	"If true, this class will ignore the DummyDebuggerForTests class when selecting a debugger. This is intended to be overriden for testing purposes"
+	^ true
 ]
 
 { #category : #initialization }

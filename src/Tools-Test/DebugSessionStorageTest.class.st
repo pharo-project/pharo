@@ -23,6 +23,7 @@ DebugSessionStorageTest >> createDebugSessionForTesting [
 { #category : #running }
 DebugSessionStorageTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+	super setUp.
 	debugSession := self createDebugSessionForTesting.
 	debugSession2 := self createDebugSessionForTesting.
 	debugSession3 := self createDebugSessionForTesting.

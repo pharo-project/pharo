@@ -29,6 +29,7 @@ DebugSessionDecoratorForTest >> doesNotUnderstand: aMessage [
 
 { #category : #initialization }
 DebugSessionDecoratorForTest >> initialize [
+	super initialize.
 	nbOfTimesTerminateWasCalled := 0
 ]
 
