@@ -290,42 +290,43 @@ GTSpotterStepTest >> tearDown [
 
 { #category : #tests }
 GTSpotterStepTest >> testContextChange [
-	
 	self assertSearch: 'a'.
-	self assert: previousContext text = ''.
+	self assert: previousContext text equals: ''.
 	self denySearch: 'a'.
-	
+
 	self assertSearch: 'ab'.
-	self assert: previousContext text = 'a'.
+	self assert: previousContext text equals: 'a'.
 	self denySearch: 'ab'.
-	
+
 	self assertSearch: 'abc'.
-	self assert: previousContext text = 'ab'.
+	self assert: previousContext text equals: 'ab'.
 	self denySearch: 'abc'.
-	
+
 	self assertSearch: 'ab'.
-	self assert: previousContext text = 'abc'.
+	self assert: previousContext text equals: 'abc'.
 	self denySearch: 'ab'.
-	
+
 	self assertSearch: 'a'.
-	self assert: previousContext text = 'ab'.
+	self assert: previousContext text equals: 'ab'.
 	self denySearch: 'a'.
-	
+
 	self assertSearch: ''.
-	self assert: previousContext text = 'a'.
-	
-	self flag: 'because the decision for triggering a search is made in multiple places, an empty input will always trigger a search - this should be simplified - one place to make the decision GTSpotter>>#setText:from: <-> #Context>>#matches:'.
+	self assert: previousContext text equals: 'a'.
+
+	self
+		flag:
+			'because the decision for triggering a search is made in multiple places, an empty input will always trigger a search - this should be simplified - one place to make the decision GTSpotter>>#setText:from: <-> #Context>>#matches:'.
 	self assertSearch: ''.
-	self assertSearch: ''.
-	
+	self assertSearch: ''
 ]
 
 { #category : #tests }
 GTSpotterStepTest >> testMock [
 	" test the mock setup - the mock objects do exactly the same as the original implementation, but we replace the asynchronous implementation by a synchronous "
-	self assert: spotter class = GTMockSpotter.
-	self assert: spotter newStep class = GTMockSpotterStep.
-	self assert: spotter newStep asyncTask class = GTMockSpotterTask.
+
+	self assert: spotter class equals: GTMockSpotter.
+	self assert: spotter newStep class equals: GTMockSpotterStep.
+	self assert: spotter newStep asyncTask class equals: GTMockSpotterTask
 ]
 
 { #category : #'private-navigation' }

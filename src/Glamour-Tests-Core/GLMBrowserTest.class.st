@@ -41,7 +41,7 @@ GLMBrowserTest >> testHasStatusbar [
 	browser hasStatusbar: true.
 	self assert: browser panes size equals: 1.
 	self assert: browser panes first name equals: GLMBrowser defaultStatusbarPane.
-	self assert: browser statusbarPane == browser panes first
+	self assert: browser statusbarPane identicalTo: browser panes first
 ]
 
 { #category : #tests }
