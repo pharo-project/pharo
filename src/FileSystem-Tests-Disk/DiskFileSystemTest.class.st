@@ -36,7 +36,7 @@ DiskFileSystemTest >> testEntriesHaveAttributes [
 DiskFileSystemTest >> testEqual [
 	| other |
 	other := self createFileSystem.
-	self assert: filesystem = other
+	self assert: filesystem equals: other
 ]
 
 { #category : #tests }

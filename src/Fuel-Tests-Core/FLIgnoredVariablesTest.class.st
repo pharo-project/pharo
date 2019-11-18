@@ -44,7 +44,6 @@ FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 
 { #category : #tests }
 FLIgnoredVariablesTest >> testOneIgnoredVariable [
-
 	| anObject result aClass |
 	aClass := self newClassWithInstanceVariableNames: 'a b c'.
 	aClass class duringTestCompileSilently: 'fuelIgnoredInstanceVariableNames ^#(b)'.
@@ -56,14 +55,13 @@ FLIgnoredVariablesTest >> testOneIgnoredVariable [
 
 	result := self resultOfSerializeAndMaterialize: anObject.
 
-	self assert: $A = (result instVarAt: 1).
-	self assert: nil = (result instVarAt: 2).
-	self assert: $C = (result instVarAt: 3)
+	self assert: $A equals: (result instVarAt: 1).
+	self assert: nil equals: (result instVarAt: 2).
+	self assert: $C equals: (result instVarAt: 3)
 ]
 
 { #category : #tests }
 FLIgnoredVariablesTest >> testTwoIgnoredVariables [
-
 	| anObject result aClass |
 	aClass := self newClassWithInstanceVariableNames: 'a b c'.
 	aClass class duringTestCompileSilently: 'fuelIgnoredInstanceVariableNames ^#(a c)'.
@@ -75,7 +73,7 @@ FLIgnoredVariablesTest >> testTwoIgnoredVariables [
 
 	result := self resultOfSerializeAndMaterialize: anObject.
 
-	self assert: nil = (result instVarAt: 1).
-	self assert: $B = (result instVarAt: 2).
-	self assert: nil = (result instVarAt: 3).
+	self assert: nil equals: (result instVarAt: 1).
+	self assert: $B equals: (result instVarAt: 2).
+	self assert: nil equals: (result instVarAt: 3)
 ]

@@ -49,7 +49,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 	aClass duringTestCompileSilently: 'methodWithClosure  ^ [ 42 ]'.
 	self deny: aClosure method isInstalled.
 	materializedClosure := self materialized.
-	self assert: materializedClosure value = 42
+	self assert: materializedClosure value equals: 42
 ]
 
 { #category : #'tests-change' }
@@ -86,7 +86,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithSelfSend [
 	closure := self class blockClosureWithSelfSend.
 	materializedClosure := self resultOfSerializeAndMaterialize: closure.
 	closure assertWellMaterializedInto: materializedClosure in: self.
-	self assert: materializedClosure value = closure value
+	self assert: materializedClosure value equals: closure value
 ]
 
 { #category : #'tests-clean' }
@@ -95,8 +95,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithTempVariableRead [
 	closure := self class blockClosureWithTempVariableRead.
 	materializedClosure := self resultOfSerializeAndMaterialize: closure.
 	closure assertWellMaterializedInto: materializedClosure in: self.
-	self assert: materializedClosure value = 'TEST'.
-
+	self assert: materializedClosure value equals: 'TEST'
 ]
 
 { #category : #'tests-clean' }
@@ -105,7 +104,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithThreeArguments [
 	closure := [ :a :b :c | a + b + c ].
 	materializedClosure := self resultOfSerializeAndMaterialize: closure.
 	closure assertWellMaterializedInto: materializedClosure in: self.
-	self assert: (materializedClosure value: 1 value: 2 value: 3) = 6
+	self assert: (materializedClosure value: 1 value: 2 value: 3) equals: 6
 ]
 
 { #category : #'tests-clean' }
@@ -114,5 +113,5 @@ FLBlockClosureSerializationTest >> testNestedBlockClosure [
 	closure := [ [ 42 ] ].
 	materializedClosure := self resultOfSerializeAndMaterialize: closure.
 	closure assertWellMaterializedInto: materializedClosure in: self.
-	self assert: materializedClosure value value = 42
+	self assert: materializedClosure value value equals: 42
 ]
