@@ -9,8 +9,10 @@ FileReference >> stonContainSubObjects [
 FileReference >> stonOn: stonWriter [
 	self fileSystem isDiskFileSystem
 		ifTrue: [ | diskFilePath |
-			diskFilePath := String streamContents: [ :out | 
-				filesystem printPath: path on: out ].
+			"in order to get $/ as delimiter and $. as working directory on all platforms"
+			diskFilePath := path isWorkingDirectory
+				ifTrue: [ '.' ]
+				ifFalse: [ path pathString ].
 			stonWriter 
 				writeObject: self 
 				named: STONFileReference stonName 
