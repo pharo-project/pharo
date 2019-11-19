@@ -30,22 +30,33 @@ Class {
 	#name : #DebuggerSelectorForTests,
 	#superclass : #DebuggerSelector,
 	#instVars : [
-		'debuggerSelectionAttempts'
+		'debuggerSelectionAttempts',
+		'debuggerClasses'
 	],
 	#category : #'Tools-Test-Debugger'
 }
 
-{ #category : #'instance creation' }
-DebuggerSelectorForTests class >> newOn: aDebuggerSelector [
-	| instance |
-	instance := self new.
-	instance decoratedDebuggerSelector: aDebuggerSelector.
-	^ instance
+{ #category : #initialization }
+DebuggerSelectorForTests >> debuggerClasses [
+	^ debuggerClasses
+
 ]
 
 { #category : #accessing }
 DebuggerSelectorForTests >> debuggerSelectionAttempts [
 	^ debuggerSelectionAttempts
+]
+
+{ #category : #initialization }
+DebuggerSelectorForTests >> getDebuggerClasses [
+	"The superclass' method, that looks for all debugger classes in the system, is repalced with a simple collection for testing purposes. The tests manually put test debugger classes in the collection, so that they can specify which debugger classes the debuggerSelector that is tested can work with. Otherwise, the tests of DebuggerSelector can be impacted by the presence or absence of regular debugger classes."
+	^ debuggerClasses
+]
+
+{ #category : #initialization }
+DebuggerSelectorForTests >> getDebuggerClassesReal [
+	"Since #getDebuggerClasses is overriden for testing purposes in this class, we need another way to test the normal implementation of #getDebuggerClass"
+	^ super getDebuggerClasses
 ]
 
 { #category : #initialization }
@@ -57,6 +68,7 @@ DebuggerSelectorForTests >> ignoreDummyDebuggerForTests [
 DebuggerSelectorForTests >> initialize [
 	super initialize.
 	debuggerSelectionAttempts := OrderedCollection new.
+	debuggerClasses := OrderedCollection new.
 ]
 
 { #category : #helper }
@@ -66,6 +78,6 @@ DebuggerSelectorForTests >> selectDebuggerAndOpen: a withFullView: b andNotifica
 
 { #category : #helper }
 DebuggerSelectorForTests >> tryToOpenDebugSession: aDebugSession withDebuggerClass: aDebuggerClass withFullView: aBool andNotification: aString [
-	"Tries to open @aDebugSession with debugger @aDebuggerClass. Record this attempt in debuggerSelectionAttempts, with success = true if it succeeded, or success = false if it signaled an exception"
-	[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. self debuggerSelectionAttempts add: (DebuggerSelectionRecordUnit newOnDebuggerClass: aDebuggerClass withSuccess: true). ^ true ] on: Error do: [ self debuggerSelectionAttempts add: (DebuggerSelectionRecordUnit newOnDebuggerClass: aDebuggerClass withSuccess: true). ^false ]
+	"This method is the same as that of the superclass, with the difference that it logs which debuggers this class tried to open in the debuggerSelectionAttempts variable, along with whether the opening succeeded or not"
+	[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. self debuggerSelectionAttempts add: (DebuggerSelectionRecordUnit newOnDebuggerClass: aDebuggerClass withSuccess: true). ^ true ] on: Error do: [ self debuggerSelectionAttempts add: (DebuggerSelectionRecordUnit newOnDebuggerClass: aDebuggerClass withSuccess: false). ^false ]
 ]

@@ -39,7 +39,6 @@ DummyDebuggerForTests_RankZero class >> openOn: aDebugSession withFullView: aBoo
 	The contract is that if a debugger calls #keepAlive:, it should also call #stopKeepingAlive: on @aDebugSession when it closes (passing itself as argument again).
 	The debug session will automatically not be kept alive by this debugger anymore if this debugger gets garbage collected (and DebugSession will only hold a weak reference to this debugger, so it will not prevent its garbage collection)"
 	"Do nothing"
-	self inform: 'Open rank zero'
 ]
 
 { #category : #'debugger declaration' }
