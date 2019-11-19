@@ -61,13 +61,11 @@ DebuggerSelectorForTests >> initialize [
 
 { #category : #helper }
 DebuggerSelectorForTests >> selectDebuggerAndOpen: a withFullView: b andNotification: c [
-	self inform: 'DSFT'.
 	super selectDebuggerAndOpen: a withFullView: b andNotification: c
 ]
 
 { #category : #helper }
 DebuggerSelectorForTests >> tryToOpenDebugSession: aDebugSession withDebuggerClass: aDebuggerClass withFullView: aBool andNotification: aString [
 	"Tries to open @aDebugSession with debugger @aDebuggerClass. Record this attempt in debuggerSelectionAttempts, with success = true if it succeeded, or success = false if it signaled an exception"
-	self inform: 'called'.
 	[aDebuggerClass openOn: aDebugSession withFullView: aBool andNotification: aString. self debuggerSelectionAttempts add: (DebuggerSelectionRecordUnit newOnDebuggerClass: aDebuggerClass withSuccess: true). ^ true ] on: Error do: [ self debuggerSelectionAttempts add: (DebuggerSelectionRecordUnit newOnDebuggerClass: aDebuggerClass withSuccess: true). ^false ]
 ]
