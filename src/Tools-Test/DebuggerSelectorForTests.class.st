@@ -36,6 +36,11 @@ Class {
 	#category : #'Tools-Test-Debugger'
 }
 
+{ #category : #'as yet unclassified' }
+DebuggerSelectorForTests >> clearDebuggerClasses [
+	debuggerClasses := OrderedCollection new
+]
+
 { #category : #initialization }
 DebuggerSelectorForTests >> debuggerClasses [
 	^ debuggerClasses

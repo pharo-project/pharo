@@ -30,7 +30,7 @@ Class {
 	#name : #EventListenerForDebuggerSelectorTest,
 	#superclass : #Object,
 	#instVars : [
-		'nbOfMaonDebuggerClassUpdateEventReceived'
+		'nbOfMainDebuggerClassUpdateEventReceived'
 	],
 	#category : #'Tools-Test-Debugger'
 }
@@ -38,15 +38,15 @@ Class {
 { #category : #'react to events' }
 EventListenerForDebuggerSelectorTest >> initialize [
 	super initialize.
-	nbOfMaonDebuggerClassUpdateEventReceived := 0
+	nbOfMainDebuggerClassUpdateEventReceived := 0
 ]
 
 { #category : #accessing }
-EventListenerForDebuggerSelectorTest >> nbOfMaonDebuggerClassUpdateEventReceived [
-	^ nbOfMaonDebuggerClassUpdateEventReceived
+EventListenerForDebuggerSelectorTest >> nbOfMainDebuggerClassUpdateEventReceived [
+	^ nbOfMainDebuggerClassUpdateEventReceived
 ]
 
 { #category : #'react to events' }
 EventListenerForDebuggerSelectorTest >> onMainDebuggerClassUpdate [
-	nbOfMaonDebuggerClassUpdateEventReceived := nbOfMaonDebuggerClassUpdateEventReceived + 1
+	nbOfMainDebuggerClassUpdateEventReceived := nbOfMainDebuggerClassUpdateEventReceived + 1
 ]
