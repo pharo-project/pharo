@@ -11,13 +11,12 @@ ClyFilteringCritiqueQueryTestCase class >> isAbstract [
 
 { #category : #tests }
 ClyFilteringCritiqueQueryTestCase >> testComparisonWithSimilarQueryBasedOnDifferentBaseCritiqueQuery [
-
 	| query2 |
 	query baseCritiqueQuery: ClyAllBasisCritiqueQuery new.
 	query2 := self createQuery.
 	query2 baseCritiqueQuery: ClyAllMethodCritiqueQuery new.
-	
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]
 
 { #category : #tests }

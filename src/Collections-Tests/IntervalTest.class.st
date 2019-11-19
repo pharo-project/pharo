@@ -313,7 +313,7 @@ IntervalTest >> subCollectionNotIn [
 { #category : #'tests - fixture' }
 IntervalTest >> test0IndexAccessingTest [
 	self accessCollection.
-	self assert: self accessCollection size = 5.
+	self assert: self accessCollection size equals: 5.
 	self subCollectionNotIn.
 	self subCollectionNotIn detect: [ :each | (self accessCollection includes: each) not ] ifNone: [ self assert: false ].
 	self elementNotInForIndexAccessing.
@@ -321,38 +321,30 @@ IntervalTest >> test0IndexAccessingTest [
 	self elementInForIndexAccessing.
 	self assert: (self accessCollection includes: self elementInForIndexAccessing).
 	self collectionOfFloat.
-	self collectionOfFloat do: [ :each | self deny: each class = SmallInteger ]
+	self collectionOfFloat do: [ :each | self deny: each class equals: SmallInteger ]
 ]
 
 { #category : #tests }
 IntervalTest >> testAdd [
-	self assert: (1 to: 10)
-			+ 5
-			= (6 to: 15)
+	self assert: (1 to: 10) + 5 equals: (6 to: 15)
 ]
 
 { #category : #'tests - indexable access' }
 IntervalTest >> testAllButFirstElements [
-
 	| abf col |
 	col := self accessCollection.
 	abf := col allButFirst: 2.
-	1 
-		to: abf size
-		do: [ :i | self assert: (abf at: i) = (col at: i + 2) ].
-	self assert: abf size + 2 = col size
+	1 to: abf size do: [ :i | self assert: (abf at: i) equals: (col at: i + 2) ].
+	self assert: abf size + 2 equals: col size
 ]
 
 { #category : #'tests - indexable access' }
 IntervalTest >> testAllButLastElements [
-
 	| abf col |
 	col := self accessCollection.
 	abf := col allButLast: 2.
-	1 
-		to: abf size
-		do: [ :i | self assert: (abf at: i) = (col at: i) ].
-	self assert: abf size + 2 = col size
+	1 to: abf size do: [ :i | self assert: (abf at: i) equals: (col at: i) ].
+	self assert: abf size + 2 equals: col size
 ]
 
 { #category : #tests }
@@ -371,33 +363,25 @@ IntervalTest >> testAsInterval [
 
 { #category : #tests }
 IntervalTest >> testAt [
-	self assert: ((1 to: 10)
-			at: 1)
-			= 1.
-	self assert: ((1 to: 10)
-			at: 3)
-			= 3.
-	self assert: ((1 to: 10 by: 2)
-			at: 1)
-			= 1.
-	self assert: ((1 to: 10 by: 2)
-			at: 3)
-			= 5
+	self assert: ((1 to: 10) at: 1) equals: 1.
+	self assert: ((1 to: 10) at: 3) equals: 3.
+	self assert: ((1 to: 10 by: 2) at: 1) equals: 1.
+	self assert: ((1 to: 10 by: 2) at: 3) equals: 5
 ]
 
 { #category : #'tests - indexable access' }
 IntervalTest >> testAtWrap [
- 
 	"
 	self assert: (self accessCollection at: 1) = 1.
 	self assert: (self accessCollection at: 2) = 2.
 	"
+
 	| index |
 	index := self accessCollection indexOf: self elementInForIndexAccessing.
-	self assert: (self accessCollection atWrap: index) = self elementInForIndexAccessing.
-	self assert: (self accessCollection atWrap: index + self accessCollection size) = self elementInForIndexAccessing.
-	self assert: (self accessCollection atWrap: index - self accessCollection size) = self elementInForIndexAccessing.
-	self assert: (self accessCollection atWrap: 1 + self accessCollection size) = (self accessCollection at: 1)
+	self assert: (self accessCollection atWrap: index) equals: self elementInForIndexAccessing.
+	self assert: (self accessCollection atWrap: index + self accessCollection size) equals: self elementInForIndexAccessing.
+	self assert: (self accessCollection atWrap: index - self accessCollection size) equals: self elementInForIndexAccessing.
+	self assert: (self accessCollection atWrap: 1 + self accessCollection size) equals: (self accessCollection at: 1)
 ]
 
 { #category : #tests }
@@ -419,53 +403,49 @@ IntervalTest >> testDo [
 
 { #category : #tests }
 IntervalTest >> testEquals [
+	self assert: (3 to: 5) equals: #(3 4 5).
+	self deny: (3 to: 5) equals: #(3 5).
+	self deny: (3 to: 5) equals: #().
 
-	self assert: (3 to: 5) = #(3 4 5).
-	self deny: (3 to: 5) = #(3 5).
-	self deny: (3 to: 5) = #().
-
-	self assert: #(3 4 5) = (3 to: 5).
-	self deny: #(3 5) = (3 to: 5).
-	self deny: #() = (3 to: 5).
+	self assert: #(3 4 5) equals: (3 to: 5).
+	self deny: #(3 5) equals: (3 to: 5).
+	self deny: #() equals: (3 to: 5)
 ]
 
 { #category : #tests }
 IntervalTest >> testEquals2 [
+	self assert: (3 to: 5) equals: #(3 4 5).
+	self deny: (3 to: 5) equals: #(3 5).
+	self deny: (3 to: 5) equals: #().
 
-	self assert: (3 to: 5) = #(3 4 5).
-	self deny: (3 to: 5) = #(3 5).
-	self deny: (3 to: 5) = #().
-
-	self assert: #(3 4 5) = (3 to: 5).
-	self deny: #(3 5) = (3 to: 5).
-	self deny: #() = (3 to: 5).
+	self assert: #(3 4 5) equals: (3 to: 5).
+	self deny: #(3 5) equals: (3 to: 5).
+	self deny: #() equals: (3 to: 5)
 ]
 
 { #category : #tests }
 IntervalTest >> testEquals3 [
-
-	self assert: (3 to: 5 by: 2) first = (3 to: 6 by: 2) first.
-	self assert: (3 to: 5 by: 2) last = (3 to: 6 by: 2) last.
-	self assert: (3 to: 5 by: 2) = (3 to: 6 by: 2).
+	self assert: (3 to: 5 by: 2) first equals: (3 to: 6 by: 2) first.
+	self assert: (3 to: 5 by: 2) last equals: (3 to: 6 by: 2) last.
+	self assert: (3 to: 5 by: 2) equals: (3 to: 6 by: 2)
 ]
 
 { #category : #tests }
 IntervalTest >> testEquals4 [
+	self assert: (3 to: 5 by: 2) equals: #(3 5).
+	self deny: (3 to: 5 by: 2) equals: #(3 4 5).
+	self deny: (3 to: 5 by: 2) equals: #().
 
-	self assert: (3 to: 5 by: 2) = #(3 5).
-	self deny: (3 to: 5 by: 2) = #(3 4 5).
-	self deny: (3 to: 5 by: 2) = #().
-
-	self assert: #(3 5) = (3 to: 5 by: 2).
-	self deny: #(3 4 5) = (3 to: 5 by: 2).
-	self deny: #() = (3 to: 5 by: 2).
+	self assert: #(3 5) equals: (3 to: 5 by: 2).
+	self deny: #(3 4 5) equals: (3 to: 5 by: 2).
+	self deny: #() equals: (3 to: 5 by: 2)
 ]
 
 { #category : #tests }
 IntervalTest >> testExtent [
-	self assert: (1 to: 10) extent = 9.
-	self assert: (1 to: 10 by: 2) extent = 9.
-	self assert: (1 to:-1) extent = -2
+	self assert: (1 to: 10) extent equals: 9.
+	self assert: (1 to: 10 by: 2) extent equals: 9.
+	self assert: (1 to: -1) extent equals: -2
 ]
 
 { #category : #'tests - includes' }
@@ -531,8 +511,8 @@ IntervalTest >> testIndexOfBug6455 [
 	It should work as long as Fuzzy inclusion test feature for Interval of Float is maintained.
 	This is a case when tested element is near ones of actual value, but by default.
 	Code used to work only in the case of close numbers by excess..."
-	
-	self assert: ((0 to: Float pi by: Float pi / 100) indexOf: Float pi * (3/100)) = 4
+
+	self assert: ((0 to: Float pi by: Float pi / 100) indexOf: Float pi * (3 / 100)) equals: 4
 ]
 
 { #category : #tests }
@@ -553,28 +533,29 @@ IntervalTest >> testInfiniteLoopBug6456 [
 { #category : #tests }
 IntervalTest >> testIntervalStoreOn [
 	"this is a test for http://bugs.squeak.org/view.php?id=4378"
-	
+
 	| interval1 interval2 |
 	interval1 := 0 to: 1 by: 0.5s1 squared.
 	interval2 := self class compiler evaluate: interval1 storeString.
-	self assert: interval1 size = interval2 size
+	self assert: interval1 size equals: interval2 size
 ]
 
 { #category : #tests }
 IntervalTest >> testInvalid [
 	"empty, impossible ranges"
-	self assert: (1 to: 0) = #().
-	self assert: (1 to: -1) = #().
-	self assert: (-1 to: -2) = #().
-	self assert: (1 to: 5 by: -1) = #().
-	
-	"always contains only start value."
-	self assert: (1 to: 1) = #(1).
-	self assert: (1 to: 5 by: 10) = #(1).
-	self assert: (1 to: 0 by: -2) = #(1).
 
-   "zero steps are not allowed"
-	self should: [1 to: 1 by: 0] raise: DomainError.
+	self assert: (1 to: 0) equals: #().
+	self assert: (1 to: -1) equals: #().
+	self assert: (-1 to: -2) equals: #().
+	self assert: (1 to: 5 by: -1) equals: #().
+
+	"always contains only start value."
+	self assert: (1 to: 1) equals: #(1).
+	self assert: (1 to: 5 by: 10) equals: #(1).
+	self assert: (1 to: 0 by: -2) equals: #(1).
+
+	"zero steps are not allowed"
+	self should: [ 1 to: 1 by: 0 ] raise: DomainError
 ]
 
 { #category : #tests }
@@ -591,24 +572,20 @@ IntervalTest >> testIsInterval [
 
 { #category : #tests }
 IntervalTest >> testLast [
-
-self assert: (1 to:10) last = 10.
-self assert: (1 to:10 by:2) last = 9 
+	self assert: (1 to: 10) last equals: 10.
+	self assert: (1 to: 10 by: 2) last equals: 9
 ]
 
 { #category : #tests }
 IntervalTest >> testMinus [
-	self assert: (1 to: 10)
-			- 5
-			= (-4 to: 5)
+	self assert: (1 to: 10) - 5 equals: (-4 to: 5)
 ]
 
 { #category : #tests }
 IntervalTest >> testNewFrom [
-
-	self assert: ( (Interval newFrom: (1 to: 1)) = (1 to: 1)).
-	self assert: ( (Interval newFrom: #(1)) = (1 to: 1)).
-	self assert: ( (Interval newFrom: #()) =  ( 1 to: 0)).
+	self assert: (Interval newFrom: (1 to: 1)) equals: (1 to: 1).
+	self assert: (Interval newFrom: #(1)) equals: (1 to: 1).
+	self assert: (Interval newFrom: #()) equals: (1 to: 0)
 ]
 
 { #category : #tests }
@@ -627,28 +604,26 @@ IntervalTest >> testNumericTypes [
 
 { #category : #tests }
 IntervalTest >> testOtherNewFrom [
+	self assert: (Interval newFrom: #(1 2 3)) equals: (1 to: 3).
+	self assert: (Interval newFrom: #(33 5 -23)) equals: (33 to: -23 by: -28).
+	self should: [ Interval newFrom: #(33 5 -22) ] raise: Error.
+	self assert: (#(33 5 -23) as: Interval) equals: (33 to: -23 by: -28).
+	self should: [ #(33 5 -22) as: Interval ] raise: Error.
 
-	self assert: (Interval newFrom: #(1 2 3 )) = (1 to: 3).
-	self assert: (Interval newFrom: #(33  5 -23 )) = (33 to: -23 by: -28).
-	self should: [(Interval newFrom: #(33  5 -22 ))] raise: Error.
-	self assert: (#(33  5 -23) as: Interval) = (33 to: -23 by: -28).
-	self should: [( #(33  5 -22 ) as: Interval)] raise: Error.
-	
-	self assert: ( (-4 to: -12 by: -1) as: Interval) = (-4 to: -12 by: -1).
-	self assert: ( Interval newFrom: (1 to: 1)) = (1 to: 1).
-	self assert: ( Interval newFrom: (1 to: 0)) = (1 to: 0).
-	self assert: (#(1) as: Interval) = (1 to: 1).
-	self assert: (#() as: Interval) = (1 to: 0).
+	self assert: ((-4 to: -12 by: -1) as: Interval) equals: (-4 to: -12 by: -1).
+	self assert: (Interval newFrom: (1 to: 1)) equals: (1 to: 1).
+	self assert: (Interval newFrom: (1 to: 0)) equals: (1 to: 0).
+	self assert: (#(1) as: Interval) equals: (1 to: 1).
+	self assert: (#() as: Interval) equals: (1 to: 0)
 ]
 
 { #category : #tests }
 IntervalTest >> testPermutationsDo [
-
 	| i oc |
-	i := (1.234 to: 4.234).
+	i := 1.234 to: 4.234.
 	oc := OrderedCollection new.
-	i permutationsDo: [:e | oc add: e].
-	self assert: (oc size = i size factorial).
+	i permutationsDo: [ :e | oc add: e ].
+	self assert: oc size equals: i size factorial.
 	^ oc
 ]
 

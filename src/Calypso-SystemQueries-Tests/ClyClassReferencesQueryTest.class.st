@@ -73,17 +73,11 @@ ClyClassReferencesQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyClassReferencesQueryTest >> testComparison [
+	self assert: (ClyClassReferencesQuery to: Point) equals: (ClyClassReferencesQuery to: Point).
 
-	self 
-		assert: (ClyClassReferencesQuery to: Point) 
-		equals: (ClyClassReferencesQuery to: Point).
-	
-	self 
-		assert: (ClyClassReferencesQuery to: Point) hash 
-		equals: (ClyClassReferencesQuery to: Point) hash.
-		
-	self deny: (ClyClassReferencesQuery to: Point)
-					 = (ClyClassReferencesQuery to: Rectangle)
+	self assert: (ClyClassReferencesQuery to: Point) hash equals: (ClyClassReferencesQuery to: Point) hash.
+
+	self deny: (ClyClassReferencesQuery to: Point) equals: (ClyClassReferencesQuery to: Rectangle)
 ]
 
 { #category : #tests }
@@ -96,23 +90,21 @@ ClyClassReferencesQueryTest >> testDescriptionWhenSimpleClassBindingIsUsed [
 
 { #category : #tests }
 ClyClassReferencesQueryTest >> testForGlobalVariable [
-
-	query variableQuery: (ClyConstantQuery returning: {self class environment bindingOf: #Smalltalk}).
+	query variableQuery: (ClyConstantQuery returning: {(self class environment bindingOf: #Smalltalk)}).
 	self queryFromScope: ClyMethodScope of: self class >> #referenceOfSmalltalk.
-	
+
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> #referenceOfSmalltalk)
+	self assert: resultItems first identicalTo: self class >> #referenceOfSmalltalk
 ]
 
 { #category : #tests }
 ClyClassReferencesQueryTest >> testForMetaclass [
-
 	query := ClyClassReferencesQuery to: self referencedClass classSide.
-	
+
 	self queryFromScope: ClyMethodScope of: self class >> #reference1OfClass.
-	
+
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> #reference1OfClass)
+	self assert: resultItems first identicalTo: self class >> #reference1OfClass
 ]
 
 { #category : #tests }
@@ -126,13 +118,10 @@ ClyClassReferencesQueryTest >> testFromClassScope [
 
 { #category : #tests }
 ClyClassReferencesQueryTest >> testFromMethodScope [
+	self queryFromScope: ClyMethodScope ofAll: {(self class >> #reference1OfClass) . (self class >> #referenceOfAnotherClass)}.
 
-	self 
-		queryFromScope: ClyMethodScope
-		ofAll: { self class >> #reference1OfClass. self class >> #referenceOfAnotherClass }.
-	
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> #reference1OfClass)
+	self assert: resultItems first identicalTo: self class >> #reference1OfClass
 ]
 
 { #category : #tests }
@@ -155,12 +144,9 @@ ClyClassReferencesQueryTest >> testFromSystemScope [
 
 { #category : #tests }
 ClyClassReferencesQueryTest >> testShouldFoundClassNameSymbolReference [
+	query variableQuery: (ClyConstantQuery returning: {Number}).
+	self queryFromScope: ClyMethodScope of: self class >> #referenceOfNumberClassByNameSymbol.
 
-	query variableQuery: (ClyConstantQuery returning: { Number }).
-	self 
-		queryFromScope: ClyMethodScope
-		of: self class >> #referenceOfNumberClassByNameSymbol.
-	
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> #referenceOfNumberClassByNameSymbol)
+	self assert: resultItems first identicalTo: self class >> #referenceOfNumberClassByNameSymbol
 ]

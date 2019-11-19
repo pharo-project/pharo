@@ -39,16 +39,11 @@ ClyMessageImplementorsQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyMessageImplementorsQueryTest >> testComparison [
+	self assert: (ClyMessageImplementorsQuery of: #message1) equals: (ClyMessageImplementorsQuery of: #message1).
 
-	self 
-		assert: (ClyMessageImplementorsQuery of: #message1) 
-		equals: (ClyMessageImplementorsQuery of: #message1).
-	
-	self 
-		assert: (ClyMessageImplementorsQuery of: #message1) hash 
-		equals: (ClyMessageImplementorsQuery of: #message1) hash.
-		
-	self deny: (ClyMessageImplementorsQuery of: #message1) = (ClyMessageImplementorsQuery of: #message2)
+	self assert: (ClyMessageImplementorsQuery of: #message1) hash equals: (ClyMessageImplementorsQuery of: #message1) hash.
+
+	self deny: (ClyMessageImplementorsQuery of: #message1) equals: (ClyMessageImplementorsQuery of: #message2)
 ]
 
 { #category : #tests }
@@ -63,13 +58,10 @@ ClyMessageImplementorsQueryTest >> testFromClassScope [
 
 { #category : #tests }
 ClyMessageImplementorsQueryTest >> testFromMethodScope [
-	
-	self 
-		queryFromScope: ClyMethodScope 
-		ofAll: { self class >> self targetSelector. self class >> #messageImplementor2 }.
-	
+	self queryFromScope: ClyMethodScope ofAll: {(self class >> self targetSelector) . (self class >> #messageImplementor2)}.
+
 	self assert: resultItems size equals: 1.
-	self assert: resultItems first == (self class >> self targetSelector)
+	self assert: resultItems first identicalTo: self class >> self targetSelector
 ]
 
 { #category : #tests }

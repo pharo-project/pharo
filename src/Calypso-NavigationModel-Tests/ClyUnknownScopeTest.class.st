@@ -14,43 +14,42 @@ ClyUnknownScopeTest >> testAdoptQuery [
 	| query adoptedQuery |
 	scope := self createSampleScope.
 	query := ClyQueryExampleReturningScopeBasis new.
-	
+
 	adoptedQuery := scope adoptQuery: query.
-	
-	self assert: adoptedQuery == query
+
+	self assert: adoptedQuery identicalTo: query
 ]
 
 { #category : #tests }
 ClyUnknownScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
-	
+
 	convertedScope := scope asScope: ClyScopeExample.
-	
-	self assert: convertedScope == scope
+
+	self assert: convertedScope identicalTo: scope
 ]
 
 { #category : #tests }
 ClyUnknownScopeTest >> testConvertingToNewBasis [
 	scope := self createSampleScope.
-	
-	self assert: (scope withNewBasisObjects: #(newBasis)) == scope.
+
+	self assert: (scope withNewBasisObjects: #(newBasis)) identicalTo: scope.
 	self assert: scope basisObjects isEmpty
 ]
 
 { #category : #tests }
 ClyUnknownScopeTest >> testCreationUnifiedInstance [
 	scope := self createSampleScope.
-	
-	self assert: scope asUnifiedInstance == scope
+
+	self assert: scope asUnifiedInstance identicalTo: scope
 ]
 
 { #category : #tests }
 ClyUnknownScopeTest >> testGettingSingletonInstanceFromScratch [
-
 	ClyUnknownScope reset.
-	
-	self assert: ClyUnknownScope instance == ClyUnknownScope instance
+
+	self assert: ClyUnknownScope instance identicalTo: ClyUnknownScope instance
 ]
 
 { #category : #tests }

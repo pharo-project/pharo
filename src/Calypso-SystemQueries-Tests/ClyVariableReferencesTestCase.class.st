@@ -52,25 +52,24 @@ ClyVariableReferencesTestCase >> targetVarName [
 
 { #category : #tests }
 ClyVariableReferencesTestCase >> testComparison [
+	self
+		assert: (self queryClass of: {(ClyInstanceVariable named: #x definedIn: Point)})
+		equals: (self queryClass of: {(ClyInstanceVariable named: #x definedIn: Point)}).
 
-	self 
-		assert: (self queryClass of: {ClyInstanceVariable named: #x definedIn: Point}) 
-		equals: (self queryClass of: {ClyInstanceVariable named: #x definedIn: Point}).
-	
-	self 
-		assert: (self queryClass of: {ClyInstanceVariable named: #x definedIn: Point}) hash 
-		equals: (self queryClass of: {ClyInstanceVariable named: #x definedIn: Point}) hash.
-			
-	self deny: (self queryClass of: {ClyInstanceVariable named: #x definedIn: Point})
-					 = (self queryClass of: (ClyInstanceVariable named: #y definedIn: Point))
+	self
+		assert: (self queryClass of: {(ClyInstanceVariable named: #x definedIn: Point)}) hash
+		equals: (self queryClass of: {(ClyInstanceVariable named: #x definedIn: Point)}) hash.
+
+	self
+		deny: (self queryClass of: {(ClyInstanceVariable named: #x definedIn: Point)})
+		equals: (self queryClass of: (ClyInstanceVariable named: #y definedIn: Point))
 ]
 
 { #category : #tests }
 ClyVariableReferencesTestCase >> testComparisonToSimilarQueryButWithDifferentVariables [
-
 	| query2 |
 	query2 := self createQuery.
 	query2 variableQuery: (ClyConstantQuery returning: #(someAnotherVar)).
-	
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]

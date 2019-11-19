@@ -52,51 +52,47 @@ ClyQueryTestCase >> testComparisonOfSameQueries [
 
 { #category : #tests }
 ClyQueryTestCase >> testComparisonOfSameQueriesWithDifferentRequestedContent [
-
 	| query2 |
 	query requiredResult: #contentClass1.
 	query2 := self createQuery.
 	query2 requiredResult: #contentClass2.
-		
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]
 
 { #category : #tests }
 ClyQueryTestCase >> testConvertingToAsyncQuery [
-
 	| convertedQuery |
 	convertedQuery := query async.
-	
+
 	self assert: convertedQuery class equals: ClyAsyncQuery.
-	self assert: convertedQuery actualQuery == query.
-	self assert: convertedQuery requiredResult == query requiredResult.
-	self assert: convertedQuery scope == query scope.
+	self assert: convertedQuery actualQuery identicalTo: query.
+	self assert: convertedQuery requiredResult identicalTo: query requiredResult.
+	self assert: convertedQuery scope identicalTo: query scope.
 	self assert: convertedQuery asyncResult class equals: ClyAsyncQueryResult
 ]
 
 { #category : #tests }
 ClyQueryTestCase >> testConvertingToSemiAsyncQuery [
-
 	| convertedQuery |
 	convertedQuery := query semiAsync.
-	
+
 	self assert: convertedQuery class equals: ClyAsyncQuery.
-	self assert: convertedQuery actualQuery == query.
-	self assert: convertedQuery requiredResult == query requiredResult.
-	self assert: convertedQuery scope == query scope.
+	self assert: convertedQuery actualQuery identicalTo: query.
+	self assert: convertedQuery requiredResult identicalTo: query requiredResult.
+	self assert: convertedQuery scope identicalTo: query scope.
 	self assert: convertedQuery asyncResult class equals: ClySemiAsyncQueryResult
 ]
 
 { #category : #tests }
 ClyQueryTestCase >> testConvertingWithNewRequiredResult [
-
 	| newResult convertedQuery |
 	newResult := ClyRawQueryResult new.
 	convertedQuery := query withResult: newResult.
-	
+
 	self assert: convertedQuery class equals: query class.
 	self assert: convertedQuery scope equals: query scope.
-	self assert: convertedQuery requiredResult == newResult
+	self assert: convertedQuery requiredResult identicalTo: newResult
 ]
 
 { #category : #tests }
@@ -149,11 +145,10 @@ ClyQueryTestCase >> testNotBoundToEnvironmentByDefault [
 
 { #category : #tests }
 ClyQueryTestCase >> testPrepareResultForExecution [
-
 	| preparedResult |
 	preparedResult := query prepareNewResult.
-	
+
 	self assert: preparedResult class equals: query requiredResult class.
-	self assert: preparedResult buildingQuery == query.
-	self assert: preparedResult environment == environment.
+	self assert: preparedResult buildingQuery identicalTo: query.
+	self assert: preparedResult environment identicalTo: environment
 ]

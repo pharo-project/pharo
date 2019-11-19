@@ -90,25 +90,14 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithoutSuf
 
 { #category : #tests }
 ClyTestedEnvironmentPluginTest >> testFindingTestCoveringMethod [
-	{((ClyTestedClass >> #one) -> (ClyTestedClassTest >> #testOne)).
-	((ClyTestedClass >> #one:) -> (ClyTestedClassTest >> #testOne)).
-	((ClyTestedClass >> #two) -> (ClyTestedClassTest >> #testTwo)).
-	((ClyTestedClass >> #two:) -> (ClyTestedClassTest >> #testTwo)).
-	((ClyTestedClass >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)).
-	((ClyTestedClass >> #oneTwo:) -> (ClyTestedClassTest >> #testOneTwo)).
-	((ClyTestedClass >> #untestedOne) -> nil).
-	((ClyTestedClass >> #untestedOne:) -> nil).
-	((ClyTestedClass >> #untestedTwo) -> nil).
-	((ClyTestedClass >> #untestedTwo:) -> nil).
-	((ClyTestedClass >> #untestedOne:two:) -> nil).
-	((ClyTestedClass >> #untestedOneTwo:) -> nil).
+	{((ClyTestedClass >> #one) -> (ClyTestedClassTest >> #testOne)) . ((ClyTestedClass >> #one:) -> (ClyTestedClassTest >> #testOne)).
+	((ClyTestedClass >> #two) -> (ClyTestedClassTest >> #testTwo)) . ((ClyTestedClass >> #two:) -> (ClyTestedClassTest >> #testTwo)).
+	((ClyTestedClass >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)) . ((ClyTestedClass >> #oneTwo:) -> (ClyTestedClassTest >> #testOneTwo)).
+	((ClyTestedClass >> #untestedOne) -> nil) . ((ClyTestedClass >> #untestedOne:) -> nil) . ((ClyTestedClass >> #untestedTwo) -> nil).
+	((ClyTestedClass >> #untestedTwo:) -> nil) . ((ClyTestedClass >> #untestedOne:two:) -> nil) . ((ClyTestedClass >> #untestedOneTwo:) -> nil).
 	((ClyTestedClass class >> #one:two:) -> (ClyTestedClassTest >> #testOneTwo)).
-	((ClyTestedClass class >> #untestedOne:two:) -> nil).
-	((ClyTestedClassTest >> #testOne) -> nil).
-	((ClyTestedClassTest >> #testTwo) -> nil).
-	((ClyTestedClassTest >> #testOneTwo) -> nil)}
-		do: [ :each | 
-			self assert: (plugin findTestMethodCovering: each key ifAbsent: nil) == each value ]
+	((ClyTestedClass class >> #untestedOne:two:) -> nil) . ((ClyTestedClassTest >> #testOne) -> nil) . ((ClyTestedClassTest >> #testTwo) -> nil).
+	((ClyTestedClassTest >> #testOneTwo) -> nil)} do: [ :each | self assert: (plugin findTestMethodCovering: each key ifAbsent: nil) identicalTo: each value ]
 ]
 
 { #category : #tests }
@@ -121,8 +110,8 @@ ClyTestedEnvironmentPluginTest >> testNormalizingSelectorForComparison [
 			self assert: (plugin normalizeSelectorForComparison: transformed) equals: transformed.
 
 			"should always return a string copy"
-			self deny: (plugin normalizeSelectorForComparison: original) == original.
-			self deny: (plugin normalizeSelectorForComparison: transformed) == transformed.
+			self deny: (plugin normalizeSelectorForComparison: original) identicalTo: original.
+			self deny: (plugin normalizeSelectorForComparison: transformed) identicalTo: transformed.
 			self deny: (plugin normalizeSelectorForComparison: original) isSymbol.
 			self deny: (plugin normalizeSelectorForComparison: transformed) isSymbol ]
 ]

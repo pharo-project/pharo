@@ -20,15 +20,16 @@ HashTableSizesTest >> testAtLeast [
 			assert: size isInteger;
 			assert: (size isPrime or: [ size odd ]).
 		"it should behave the same as the lower-level #basicAtLeast: it relies on"
-		self assert: size = (HashTableSizes basicAtLeast: limit) ].
+		self assert: size equals: (HashTableSizes basicAtLeast: limit) ].
 
 	-1000.1 to: 1000.1 do: [ :limit | 
 		| size |
 		size := HashTableSizes atLeast: limit.
 		self
-			assert: size > limit; "do not round fractional limits down"
-			assert: size positive;
+			assert: size > limit;
+			"do not round fractional limits down"
+				assert: size positive;
 			assert: size isInteger;
 			assert: (size isPrime or: [ size odd ]);
-			assert: size = (HashTableSizes basicAtLeast: limit) ]
+			assert: size equals: (HashTableSizes basicAtLeast: limit) ]
 ]

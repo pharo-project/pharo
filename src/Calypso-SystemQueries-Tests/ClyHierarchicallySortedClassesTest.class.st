@@ -11,42 +11,38 @@ ClyHierarchicallySortedClassesTest >> createQueryResult [
 
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithAnotherHierarchyType [
-
 	| queryResult2 |
 	queryResult2 := self createQueryResult.
 	queryResult2 hierarchy: #anotherHierarchy.
-	
-	self deny: queryResult = queryResult2
+
+	self deny: queryResult equals: queryResult2
 ]
 
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithAnotherSortFunction [
-
 	| queryResult2 |
 	queryResult2 := queryResult sortedBy: #anotherSortFunction.
-	
-	self deny: queryResult = queryResult2.
-	self deny: queryResult == queryResult2
+
+	self deny: queryResult equals: queryResult2.
+	self deny: queryResult identicalTo: queryResult2
 ]
 
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSameHierarchyAbdSortFunction [
-
 	| queryResult2 |
 	queryResult2 := queryResult sortedBy: queryResult hierarchy sortFunction.
-	
-	self assert: queryResult = queryResult2.
-	self assert: queryResult hash = queryResult2 hash.
+
+	self assert: queryResult equals: queryResult2.
+	self assert: queryResult hash equals: queryResult2 hash
 ]
 
 { #category : #tests }
 ClyHierarchicallySortedClassesTest >> testComparisonWithResultWithSimilarInverseHierarchy [
-
 	| queryResult2 |
 	queryResult2 := self createQueryResult.
 	queryResult2 := queryResult2 withInverseHierarchy.
-	
-	self deny: queryResult = queryResult2
+
+	self deny: queryResult equals: queryResult2
 ]
 
 { #category : #tests }
