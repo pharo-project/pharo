@@ -297,7 +297,7 @@ DebuggerListAndDebugSessionListPresenter >> refreshDebuggerListToolBar [
 	debuggerListToolBar addItem: (SpToolBarButton new
 			label: 'Browse';
 			icon: (self iconManager iconNamed: #smallFind);
-			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]);
+			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse switchToMetaLevelScope: ClyClassSideScope ]]);
 			help: 'Browse the class of the selected debugger'.
 	self addCorrectMainDebuggerButtonToToolBar: debuggerListToolBar.
 ]
