@@ -115,7 +115,8 @@ BaselineOfIDE >> baseline: spec [
 			spec repository: repository; loads: 'traits-tests' ].
 		spec baseline: 'Slot' with: [
 			spec repository: repository; loads: 'slot-tests' ].
-		spec baseline: 'Clap' with: [ spec repository: repository ].
+		spec baseline: 'Clap' with: [ 
+			spec repository: repository; loads: 'development'].
 		spec baseline: 'SUnit' with: [
 			spec repository: repository; loads: 'Tests' ].
 		spec baseline: 'BlueInk' with: [ 
