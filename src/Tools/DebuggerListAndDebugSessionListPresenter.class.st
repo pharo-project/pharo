@@ -81,7 +81,8 @@ DebuggerListAndDebugSessionListPresenter >> addCorrectMainDebuggerButtonToToolBa
 			aToolBar addItem: (SpToolBarButton new
 			label: 'Main Debugger';
 			icon: (self iconManager iconNamed: #checkboxSelected);
-			action: [ DebuggerSelector singleton mainDebuggerClass: nil. self refreshDebuggerList. self refreshDebuggerListToolBar ]
+			action: [ DebuggerSelector singleton setNoMainDebuggerClass. self refreshDebuggerList. self refreshDebuggerListToolBar ];
+			help: 'Set this debugger to no longer be the main debugger'
 		).
 		^ self
 	 ]].
@@ -97,7 +98,8 @@ DebuggerListAndDebugSessionListPresenter >> addCorrectMainDebuggerButtonToToolBa
 					DebuggerSelector singleton mainDebuggerClass: (debuggerList_ at: 1) ].
 					self refreshDebuggerList.
 					self refreshDebuggerListToolBar.
-			]
+			];
+		help: 'Set this debugger to be the main debugger'
 		).
 ]
 
@@ -111,6 +113,17 @@ DebuggerListAndDebugSessionListPresenter >> compareRank: rank1 to: rank2 [
 { #category : #'button action' }
 DebuggerListAndDebugSessionListPresenter >> debugDebugSessionAction [
 	"Describe the action performed by the 'Debug' button under the Debug Session List.
+	Requires a debug session to be selected in the list of debug sessions. If this condition is not met, inform the user and stop.
+	If it is met, select a debugger according to the same algorithm used by the image (see class DebuggerSelector) and debug the selected debug session with it"
+	
+	| debugSession |
+	debugSession := (debugSessionList selectedItems ifEmpty: [ self inform: 'You must selected a Debug Session to debug'. ^ self ] ifNotEmpty: [:selectedItems | selectedItems at: 1]) debugSession.
+	DebuggerSelector singleton selectDebuggerAndOpen: debugSession withFullView: true andNotification: nil.
+]
+
+{ #category : #'button action' }
+DebuggerListAndDebugSessionListPresenter >> debugDebugSessionWithSpecificDebuggerAction [
+	"Describe the action performed by the 'Debug With' button under the Debug Session List.
 	Requires a debug session to be selected in the list of debug sessions, and a debugger to be selected in the list of debuggers. If these conditions are not met, inform the user and stop.
 	If they are met, tell the selected debugger to open the selected debug session"
 	
@@ -194,9 +207,10 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 			
 	storageLimitLabel := self newLabel
 		label: 'storage limit:';
-		help: 'Determines the maximum amount of debug sessions to be stored. Oldest debug sessions are terminated first. Debug sessions currently opened in any debugger are never terminated and do not count towards this limit.';
+		help: self storageLimitHelp;
 		yourself.
 	storageLimitInputField := SpNumberInputFieldPresenter new
+		help: self storageLimitHelp;
 		numberType: Integer;
 		minimum: 1;
 		number: DebugSessionStorage singleton storageLimitForDebugSessionsNotKeptAlive;
@@ -212,25 +226,31 @@ DebuggerListAndDebugSessionListPresenter >> makeDebugSessionListToolbar [
 	toolBar addItem: (SpToolBarButton new
 		label: 'Debug';
 		icon: (self iconManager iconNamed: #glamorousBug);
-		action: [ self debugDebugSessionAction ]
+		action: [ self debugDebugSessionAction ];
+		help: 'Opens the selected debug session with the debugger the image would normally choose to debug it'
+	).
+	toolBar addItem: (SpToolBarButton new
+		label: 'Debug With';
+		icon: (self iconManager iconNamed: #glamorousBug);
+		action: [ self debugDebugSessionWithSpecificDebuggerAction ];
+		help: 'Opens the selected debug session with the selected debugger'
 	).
 	toolBar addItem: (SpToolBarButton new
 			label: 'Inspect';
 			icon: (self iconManager iconNamed: #smallFind);
-			action: [debugSessionList selectedItems ifNotEmpty: [:selectedItems | (selectedItems at: 1) inspect]]).
+			action: [debugSessionList selectedItems ifNotEmpty: [:selectedItems | (selectedItems at: 1) inspect]]);
+			help: 'Inspect the selected debug session'.
 	toolBar addItem: (SpToolBarButton new
 		label: 'Terminate';
 		icon: (self iconManager iconNamed: #remotesManagerRemoveRemote);
-		action: [ debugSessionList selectedItems ifNotEmpty: [:selectedItems | DebugSessionStorage singleton terminate: (selectedItems at: 1). self refreshDebugSessionList ] ]
+		action: [ debugSessionList selectedItems ifNotEmpty: [:selectedItems | DebugSessionStorage singleton terminate: (selectedItems at: 1). self refreshDebugSessionList ] ];
+		help: 'Terminate the selected debug session (and the corresponding process), removing it from the list'
 	).
 	toolBar addItem: (SpToolBarButton new
 			label: 'Terminate All';
 			icon: (self iconManager iconNamed: #glamorousTrash);
-			action: [DebugSessionStorage singleton terminateAll. self refreshDebugSessionList]).
-	toolBar addItem: (SpToolBarButton new
-			label: 'Clean Up';
-			icon: (self iconManager iconNamed: #warning); "Should be a broom icon instead, but I did not find any"
-			action: [ DebugSessionStorage singleton enforceStorageLimit]).
+			action: [DebugSessionStorage singleton terminateAll. self refreshDebugSessionList]);
+			help: 'Terminate all debug sessions'.
 	^ toolBar
 ]
 
@@ -277,7 +297,8 @@ DebuggerListAndDebugSessionListPresenter >> refreshDebuggerListToolBar [
 	debuggerListToolBar addItem: (SpToolBarButton new
 			label: 'Browse';
 			icon: (self iconManager iconNamed: #smallFind);
-			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]).
+			action: [ debuggerList selectedItems ifNotEmpty: [:debuggerList_ | (debuggerList_ at: 1) browse]]);
+			help: 'Browse the class of the selected debugger'.
 	self addCorrectMainDebuggerButtonToToolBar: debuggerListToolBar.
 ]
 
@@ -304,4 +325,9 @@ DebuggerListAndDebugSessionListPresenter >> shouldUpdateStorageLimitInputField [
 { #category : #accessing }
 DebuggerListAndDebugSessionListPresenter >> shouldUpdateStorageLimitInputField: aBoolean [
 	shouldUpdateStorageLimitInputField := aBoolean
+]
+
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> storageLimitHelp [
+	^ 'Determines the maximum number of debug sessions to be stored. Oldest debug sessions are terminated first. Debug sessions currently opened in any debugger are never terminated and do not count towards this limit'
 ]
