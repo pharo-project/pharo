@@ -136,12 +136,12 @@ CompletionContext >> node [
 
 { #category : #parsing }
 CompletionContext >> parseSource [
-	ast := Smalltalk compiler
+	ast := class compiler
 		source: source;
 		noPattern: isWorkspace;
-		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
-	ast doSemanticAnalysisIn: class.
+	ast doSemanticAnalysis.
 	TypingVisitor new visitNode: ast
 ]
 

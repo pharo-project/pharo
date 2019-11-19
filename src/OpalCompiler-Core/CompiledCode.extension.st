@@ -7,9 +7,7 @@ CompiledCode >> ast [
 
 { #category : #'*opalcompiler-core' }
 CompiledCode >> compiler [
-	^self methodClass 
-		ifNil: [Smalltalk compiler] 
-		ifNotNil: [:class | class compiler].
+	^self methodClass compiler
 ]
 
 { #category : #'*opalcompiler-core' }
