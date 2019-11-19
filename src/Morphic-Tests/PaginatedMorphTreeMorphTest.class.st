@@ -16,7 +16,7 @@ PaginatedMorphTreeMorphTest >> testPager [
 	treeMorph buildContents.
 	aWindow addMorph: treeMorph fullFrame: LayoutFrame identity.
 	aWindow open.
-	aModel expandItemPath: { 40 }.
-	self assert: treeMorph pager currentPage == 2.
+	aModel expandItemPath: {40}.
+	self assert: treeMorph pager currentPage identicalTo: 2.
 	aWindow close
 ]
