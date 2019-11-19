@@ -2,6 +2,8 @@ Extension { #name : #ByteArray }
 
 { #category : #'*ston-core' }
 ByteArray class >> fromSton: stonReader [
+	"Use a hex representation"
+	
 	^ self readHexFrom: stonReader parseListSingleton
 ]
 
