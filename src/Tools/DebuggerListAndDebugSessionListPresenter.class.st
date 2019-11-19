@@ -54,7 +54,7 @@ DebuggerListAndDebugSessionListPresenter class >> menuCommandOn: aBuilder [
 	(aBuilder item: #'List Debuggers and Debug Sessions')
 		parent: #Debugging;
 		order: 3;
-		help: 'Shows the list all available debuggers in the image, and all debug sessions';
+		help: 'Shows the list all available debuggers in the image, and all the stored debug sessions. Allows to open stored debug sessions with any debugger';
 		iconName: #glamorousTable;
 		action: [ self open ]
 ]
