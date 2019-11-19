@@ -43,9 +43,8 @@ ContextTest >> testLookupSymbol [
 { #category : #'*Kernel-Tests-Extended' }
 ContextTest >> testSourceNodeExecuted [
 	| sourceNode |
-	
 	sourceNode := thisContext sender sender sourceNodeExecuted.
-	self assert: sourceNode selector = #performTest.
+	self assert: sourceNode selector equals: #performTest
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

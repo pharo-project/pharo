@@ -407,143 +407,107 @@ BlockClosuresTestCase >> testCannotReturn [
 
 { #category : #tests }
 BlockClosuresTestCase >> testContinuationExample1 [
-
-   | array |
-    array := (1 to: 20) asOrderedCollection.
-   self assert: ((self continuationExample1: array) = array)
-  
+	| array |
+	array := (1 to: 20) asOrderedCollection.
+	self assert: (self continuationExample1: array) equals: array
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testContinuationExample2 [
-
-   | array |
-    array := (1 to: 20) asOrderedCollection.
-   self assert: ((self continuationExample2: array) = (array collect: [:x | x * x]))
-  
+	| array |
+	array := (1 to: 20) asOrderedCollection.
+	self assert: (self continuationExample2: array) equals: (array collect: [ :x | x * x ])
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testContinuationExample3 [
-
-   | array |
-    array := (1 to: 20) asOrderedCollection.
-   self assert: ((self continuationExample3: array) = (array collect: [:x | x * x - 10]))
-  
+	| array |
+	array := (1 to: 20) asOrderedCollection.
+	self assert: (self continuationExample3: array) equals: (array collect: [ :x | x * x - 10 ])
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testExample2 [
-
-   self assert: ((self example2: 5) = (1 to: 5) asOrderedCollection)
-  
+	self assert: (self example2: 5) equals: (1 to: 5) asOrderedCollection
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testGpsExample1 [
-
-  | result array |
-
-  array := (1 to: 100) asArray.
-  result := array inject: 0
-              into: [:sum :val | sum + val].
- self assert: ((self gpsExample1: array) = result)
-  
+	| result array |
+	array := (1 to: 100) asArray.
+	result := array inject: 0 into: [ :sum :val | sum + val ].
+	self assert: (self gpsExample1: array) equals: result
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testGpsExample2 [
-
-  | result array |
-
-  "  integer matrix elements should be used for the purpose of this test. " 
-  array := #(#(1 2 3 4 5) #(6 7 8 9 10) #(11 12 13 14 15) #(16 17 18 19 20) #(21 22 23 24 25)).
-  result := array inject: 0
-              into: [:sum :subarray |
-                      sum + (subarray inject: 0
-                                          into: [:s :elem | s + elem])].
- self assert: ((self gpsExample2: array) = result)
-  
+	| result array |
+	"  integer matrix elements should be used for the purpose of this test. "
+	array := #(#(1 2 3 4 5) #(6 7 8 9 10) #(11 12 13 14 15) #(16 17 18 19 20) #(21 22 23 24 25)).
+	result := array inject: 0 into: [ :sum :subarray | sum + (subarray inject: 0 into: [ :s :elem | s + elem ]) ].
+	self assert: (self gpsExample2: array) equals: result
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testNestedLoopsExample1 [
-
-   | arrays result |
-   arrays := OrderedCollection new.
-   arrays add: #(#a #b);
-             add: #(1 2 3 4);
-             add: #('w' 'x' 'y' 'z').
-    result := OrderedCollection new.
-    CollectionCombinator new
-          forArrays:  arrays
-          processWith: [:item |result addLast: item].
-   self assert: ((self nestedLoopsExample: arrays) = result)
-  
+	| arrays result |
+	arrays := OrderedCollection new.
+	arrays
+		add: #(#a #b);
+		add: #(1 2 3 4);
+		add: #('w' 'x' 'y' 'z').
+	result := OrderedCollection new.
+	CollectionCombinator new forArrays: arrays processWith: [ :item | result addLast: item ].
+	self assert: (self nestedLoopsExample: arrays) equals: result
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testReentrantBlock [
-
 	| fib |
-	fib := [:val | 
-		(val <= 0) ifTrue: [self error: 'not a natural number'].
-		(val <= 2) 
-			ifTrue: [1]
-			ifFalse: [(fib value: (val - 1)) + (fib value: (val - 2))]].
+	fib := [ :val | 
+	val <= 0 ifTrue: [ self error: 'not a natural number' ].
+	val <= 2 ifTrue: [ 1 ] ifFalse: [ (fib value: val - 1) + (fib value: val - 2) ] ].
 
-	self 
-		should: [fib value: 0] 
-		raise: self classForTestResult error.
-	self assert: ((fib value: 1) = 1).
-	self assert: ((fib value: 2) = 1).
-	self assert: ((fib value: 3) = 2).
-	self assert: ((fib value: 4) = 3).
-	self assert: ((fib value: 5) = 5).
-	self assert: ((fib value: 6) = 8).
-
+	self should: [ fib value: 0 ] raise: self classForTestResult error.
+	self assert: (fib value: 1) equals: 1.
+	self assert: (fib value: 2) equals: 1.
+	self assert: (fib value: 3) equals: 2.
+	self assert: (fib value: 4) equals: 3.
+	self assert: (fib value: 5) equals: 5.
+	self assert: (fib value: 6) equals: 8
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testReentrantBlockOldEnvironment [
-
 	| fib |
 	fib := self constructFibonacciBlockInDeadFrame.
-	self 
-		should: [fib value: 0] 
-		raise: self classForTestResult error.
-	self assert: ((fib value: 1) = 1).
-	self assert: ((fib value: 2) = 1).
-	self assert: ((fib value: 3) = 2).
-	self assert: ((fib value: 4) = 3).
-	self assert: ((fib value: 5) = 5).
-	self assert: ((fib value: 6) = 8).
-
+	self should: [ fib value: 0 ] raise: self classForTestResult error.
+	self assert: (fib value: 1) equals: 1.
+	self assert: (fib value: 2) equals: 1.
+	self assert: (fib value: 3) equals: 2.
+	self assert: (fib value: 4) equals: 3.
+	self assert: (fib value: 5) equals: 5.
+	self assert: (fib value: 6) equals: 8
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testReentrantBlockOldEnvironmentWithBlockArguement [
-
 	| fib |
 	fib := self constructFibonacciBlockWithBlockArgumentInDeadFrame.
-	self 
-		should: [fib value: 0 value: fib] 
-		raise: self classForTestResult error.
-	self assert: ((fib value: 1 value: fib) = 1).
-	self assert: ((fib value: 2 value: fib) = 1).
-	self assert: ((fib value: 3 value: fib) = 2).
-	self assert: ((fib value: 4 value: fib) = 3).
-	self assert: ((fib value: 5 value: fib) = 5).
-	self assert: ((fib value: 6 value: fib) = 8).
-
+	self should: [ fib value: 0 value: fib ] raise: self classForTestResult error.
+	self assert: (fib value: 1 value: fib) equals: 1.
+	self assert: (fib value: 2 value: fib) equals: 1.
+	self assert: (fib value: 3 value: fib) equals: 2.
+	self assert: (fib value: 4 value: fib) equals: 3.
+	self assert: (fib value: 5 value: fib) equals: 5.
+	self assert: (fib value: 6 value: fib) equals: 8
 ]
 
 { #category : #tests }
 BlockClosuresTestCase >> testSharedClosureEnvironment [
-	|blockArray|
+	| blockArray |
 	blockArray := self constructSharedClosureEnvironmentInDeadFrame.
-	self assert: ((blockArray at: 2) value = 10).
-	self assert: (((blockArray at: 1) value: 5) = 5).
-	self assert: ((blockArray at: 2) value = 5).
-
+	self assert: (blockArray at: 2) value equals: 10.
+	self assert: ((blockArray at: 1) value: 5) equals: 5.
+	self assert: (blockArray at: 2) value equals: 5
 ]

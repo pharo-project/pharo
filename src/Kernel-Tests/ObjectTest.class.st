@@ -10,46 +10,46 @@ Class {
 { #category : #tests }
 ObjectTest >> testAs [
 	| coll1 coll2 |
-	coll1 := { 1 . 2 . 3 }.
+	coll1 := {1 . 2 . 3}.
 	coll2 := coll1 as: OrderedCollection.
-	
+
 	self assert: coll2 equals: (OrderedCollection with: 1 with: 2 with: 3).
-	self deny: coll1 == coll2.
-	
+	self deny: coll1 identicalTo: coll2.
+
 	"If the object has the right type, do nothing."
 	coll2 := coll1 as: Array.
-	self assert: coll1 == coll2
+	self assert: coll1 identicalTo: coll2
 ]
 
 { #category : #tests }
-ObjectTest >> testBecome [	
+ObjectTest >> testBecome [
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
 
 	| pt1 pt2 pt3 |
-	pt1 := 0@0.
+	pt1 := 0 @ 0.
 	pt2 := pt1.
-	pt3 := 100@100.
+	pt3 := 100 @ 100.
 
 	pt1 become: pt3.
-	self assert: pt2 = (100@100).
-	self assert: pt3 = (0@0).
-	self assert: pt1 = (100@100).
+	self assert: pt2 equals: 100 @ 100.
+	self assert: pt3 equals: 0 @ 0.
+	self assert: pt1 equals: 100 @ 100
 ]
 
 { #category : #tests }
-ObjectTest >> testBecomeForward [	
+ObjectTest >> testBecomeForward [
 	"this test should that all the variables pointing to an object are pointing now to another one.
 	Not that this inverse is not true. This kind of become is called oneWayBecome in VW"
 
 	| pt1 pt2 pt3 |
-	pt1 := 0@0.
+	pt1 := 0 @ 0.
 	pt2 := pt1.
-	pt3 := 100@100.
+	pt3 := 100 @ 100.
 	pt1 becomeForward: pt3.
-	self assert: pt2 = (100@100).
-	self assert: pt3 == pt2.
-	self assert: pt1 = (100@100)
+	self assert: pt2 equals: 100 @ 100.
+	self assert: pt3 identicalTo: pt2.
+	self assert: pt1 equals: 100 @ 100
 ]
 
 { #category : #'tests-printing' }
@@ -110,28 +110,28 @@ ObjectTest >> testPrintString [
 
 { #category : #'tests - introspection' }
 ObjectTest >> testReadSlot [
-	self assert: (5@3 readSlot: (Point slotNamed: #x)) = 5
+	self assert: (5 @ 3 readSlot: (Point slotNamed: #x)) equals: 5
 ]
 
 { #category : #'tests - introspection' }
 ObjectTest >> testReadSlotNamed [
-	self assert: (5@3 readSlotNamed: #x) = 5
+	self assert: (5 @ 3 readSlotNamed: #x) equals: 5
 ]
 
 { #category : #'tests - introspection' }
 ObjectTest >> testWriteSlotNamedValue [
 	| object |
-	object := 5@6.
-	
-	self assert: (object writeSlotNamed: #x value: 7) = 7.
-	self assert: object = (7@6).
+	object := 5 @ 6.
+
+	self assert: (object writeSlotNamed: #x value: 7) equals: 7.
+	self assert: object equals: 7 @ 6
 ]
 
 { #category : #'tests - introspection' }
 ObjectTest >> testWriteSlotValue [
 	| object |
-	object := 5@6.
-	
-	self assert: (object writeSlot: (Point slotNamed: #x) value: 7) = 7.
-	self assert: object = (7@6).
+	object := 5 @ 6.
+
+	self assert: (object writeSlot: (Point slotNamed: #x) value: 7) equals: 7.
+	self assert: object equals: 7 @ 6
 ]

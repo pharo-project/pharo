@@ -189,14 +189,15 @@ CompiledMethodTest >> testComparison [
 
 	self assert: method1 equals: method1.
 	self assert: method2 equals: method2.
-	self deny: method1 = method2.
-	self deny: method2 = method1.
-	
-	Object methods do: [ :each |
-		self deny: method1 = each.
-		self deny: each = method1.
-		self deny: method2 = each.
-		self deny: each = method2 ]
+	self deny: method1 equals: method2.
+	self deny: method2 equals: method1.
+
+	Object methods
+		do: [ :each | 
+			self deny: method1 equals: each.
+			self deny: each equals: method1.
+			self deny: method2 equals: each.
+			self deny: each equals: method2 ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -216,15 +217,10 @@ CompiledMethodTest >> testCopy [
 	self assert: method header equals: copy header.
 	self assert: method equals: copy.
 	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method == copy.
-	self assert: method penultimateLiteral method == method.
-	method pragmas do:
-		[:p|
-		self assert: p method == method].
-	copy pragmas do:
-		[:p|
-		self assert: p method == copy]
-
+	self assert: copy penultimateLiteral method identicalTo: copy.
+	self assert: method penultimateLiteral method identicalTo: method.
+	method pragmas do: [ :p | self assert: p method identicalTo: method ].
+	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
 { #category : #tests }
@@ -235,18 +231,13 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 	self assert: method pragmas notEmpty.
 	copy := method copyWithTrailerBytes: method trailer.
 	self assert: (method equivalentTo: copy).
-	self deny: method == copy.
-	self assert: method symbolic equals: copy symbolic. "but their bytecode should be the same"
+	self deny: method identicalTo: copy.
+	self assert: method symbolic equals: copy symbolic.	"but their bytecode should be the same"
 	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method == copy.
-	self assert: method penultimateLiteral method == method.
-	method pragmas do:
-		[:p|
-		self assert: p method == method].
-	copy pragmas do:
-		[:p|
-		self assert: p method == copy]
-
+	self assert: copy penultimateLiteral method identicalTo: copy.
+	self assert: method penultimateLiteral method identicalTo: method.
+	method pragmas do: [ :p | self assert: p method identicalTo: method ].
+	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -266,15 +257,12 @@ CompiledMethodTest >> testEqualityClassSideMethod [
 
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testEqualityInstanceSideMethod [
-   	| method1 method2 |
+	| method1 method2 |
+	method1 := TestCase compiler compile: 'aMethod'.
+	method2 := TestCase compiler compile: 'aMethod'.
 
-	method1 :=  TestCase compiler compile: 'aMethod'.
-	method2 :=  TestCase compiler compile: 'aMethod'.
-
-	self assert: (method1 literalAt: method1 numLiterals) ==  (method2 literalAt: method2 numLiterals).
- 	self assert: method1 equals: method2.
-
-
+	self assert: (method1 literalAt: method1 numLiterals) identicalTo: (method2 literalAt: method2 numLiterals).
+	self assert: method1 equals: method2
 ]
 
 { #category : #'tests - instance variable' }
@@ -397,16 +385,14 @@ CompiledMethodTest >> testMethodClass [
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testOrigin [
 	| regularMethod methodFromTrait |
-
 	"Regular method"
-	regularMethod := Behavior>>#name.
-	
+	regularMethod := Behavior >> #name.
+
 	"Method from a trait without alias "
-	methodFromTrait := Behavior>>#adoptInstance:.
+	methodFromTrait := Behavior >> #adoptInstance:.
 
-	self assert: regularMethod origin == regularMethod originMethod methodClass.
-	self assert: methodFromTrait origin == methodFromTrait originMethod methodClass.
-
+	self assert: regularMethod origin identicalTo: regularMethod originMethod methodClass.
+	self assert: methodFromTrait origin identicalTo: methodFromTrait originMethod methodClass
 ]
 
 { #category : #'tests - performing' }
@@ -470,35 +456,29 @@ CompiledMethodTest >> testReadsSlot [
 
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testSelector [
+	Author
+		useAuthor: 'TUTU_TEST'
+		during: [ | method cls |
+			method := self class >> #returnTrue.
+			self assert: method selector equals: #returnTrue.
 
-	Author useAuthor: 'TUTU_TEST' during: [ 
-		
-		|  method cls |
-		
-		method := (self class)>>#returnTrue.
-		self assert: method selector equals: #returnTrue.
-		
-		"now make an orphaned method. new semantics: return corrent name"	
-		Smalltalk removeClassNamed: #TUTU.
+			"now make an orphaned method. new semantics: return corrent name"
+			Smalltalk removeClassNamed: #TUTU.
 
-		cls := Object subclass: #TUTU
-			instanceVariableNames: ''
-			classVariableNames: ''
-			poolDictionaries: ''
-			category: self categoryNameForTemporaryClasses.
-		
-		cls compile: 'foo ^ 10'.
-		
-		method := cls >> #foo.
-		
-		Smalltalk removeClassNamed: #TUTU.
+			cls := Object
+				subclass: #TUTU
+				instanceVariableNames: ''
+				classVariableNames: ''
+				poolDictionaries: ''
+				category: self categoryNameForTemporaryClasses.
 
-		self assert: method selector = #foo. 
-		
-	].
-	
+			cls compile: 'foo ^ 10'.
 
+			method := cls >> #foo.
 
+			Smalltalk removeClassNamed: #TUTU.
+
+			self assert: method selector equals: #foo ]
 ]
 
 { #category : #'tests - testing' }

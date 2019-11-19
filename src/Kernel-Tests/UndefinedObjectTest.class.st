@@ -89,10 +89,9 @@ UndefinedObjectTest >> testNotNil [
 
 { #category : #'tests - printing' }
 UndefinedObjectTest >> testPrintOn [
-
 	| string |
-	string := String streamContents: [:stream | nil printOn: stream].
-	self assert: (string = 'nil').
+	string := String streamContents: [ :stream | nil printOn: stream ].
+	self assert: string equals: 'nil'
 ]
 
 { #category : #'tests - copying' }
