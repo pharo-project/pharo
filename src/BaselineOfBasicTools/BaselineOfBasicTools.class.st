@@ -56,13 +56,10 @@ BaselineOfBasicTools >> baseline: spec [
 						loads: #('UI' 'Help' 'JenkinsSupport');
 						repository: repository ].
 			spec package: 'Tool-ExternalBrowser'.
-			spec package: 'BlueInk-Core'.
-			spec package: 'BlueInk-Extras'.
 			spec package: 'Tool-ProcessBrowser'.
 			spec package: 'Tool-Profilers'.
 			spec package: 'Tool-SystemReporter'.
 			spec package: 'NECompletion'.
-			spec package: 'Announcements-Help'.
 			spec package: 'Metacello-FileTree'.
 			spec package: 'Metacello-Cypress'.
 			spec package: 'Metacello-ProfStef'.
