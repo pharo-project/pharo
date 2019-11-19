@@ -4,7 +4,7 @@ STONTestUser3 extends STONTestUser but wants nil instance variables to be writte
 Class {
 	#name : #STONTestUser3,
 	#superclass : #STONTestUser,
-	#category : #'STON-Tests-Base'
+	#category : #'STON-Tests-Support'
 }
 
 { #category : #'ston-core' }
@@ -14,7 +14,7 @@ STONTestUser3 class >> stonAllInstVarNames [
 
 { #category : #'ston-core' }
 STONTestUser3 class >> stonName [
-	^ 'TestUser3'
+	^ #TestUser3
 ]
 
 { #category : #'ston-core' }

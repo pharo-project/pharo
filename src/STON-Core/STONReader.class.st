@@ -121,9 +121,11 @@ STONReader >> isSimpleSymbolChar: char [
 
 { #category : #private }
 STONReader >> lookupClass: name [
+	"name is a symbol at this point"
 	Smalltalk globals 
 		at: name 
 		ifPresent: [ :class | ^ class ].
+	"note that classes is an identity dictionary"
 	^ classes 
 		at: name 
 		ifAbsentPut: [
@@ -375,9 +377,27 @@ STONReader >> parseMapDo: block [
 ]
 
 { #category : #parsing }
+STONReader >> parseMapOrListRepresentation [
+	"Parse either a map or list to be used as a representation, not considering it as a referenceable object"
+	readStream atEnd 
+		ifFalse: [ 
+			readStream peek = ${
+				ifTrue: [ | map |
+					map := STON mapClass new.
+					self parseMapDo: [ :key :value |
+						map at: key put: value ].
+					^ map ].
+			readStream peek = $[
+				ifTrue: [ 
+					^ STON listClass streamContents: [ :stream |
+						self parseListDo: [ :each | stream nextPut: each ] ] ] ].
+	self error: 'invalid input'
+]
+
+{ #category : #parsing }
 STONReader >> parseNamedInstVarsFor: anObject [
 	self parseMapDo: [ :instVarName :value |
-		anObject instVarNamed: instVarName put: value ]
+		anObject instVarNamed: instVarName asString put: value ]
 ]
 
 { #category : #'parsing-internal' }
@@ -385,10 +405,16 @@ STONReader >> parseNumber [
 	| negated number |
 	negated := readStream peekFor: $-.
 	number := self parseNumberInteger.
-	(readStream peekFor: $.)
-		ifTrue: [ number := number + self parseNumberFraction ].
-	((readStream peekFor: $e) or: [ readStream peekFor: $E ])
-		ifTrue: [ number := number * self parseNumberExponent ].
+	(readStream peekFor: $/)
+		ifTrue: [ 
+			number := Fraction numerator: number denominator: self parseNumberInteger.
+			(readStream peekFor: $s)
+				ifTrue: [ number := ScaledDecimal newFromNumber: number scale: self parseNumberInteger ] ]
+		ifFalse: [ 
+			(readStream peekFor: $.)
+				ifTrue: [ number := number + self parseNumberFraction ].
+			((readStream peekFor: $e) or: [ readStream peekFor: $E ])
+				ifTrue: [ number := number * self parseNumberExponent ] ].
 	negated
 		ifTrue: [ number := number negated ].
 	self consumeWhitespace.
@@ -553,7 +579,7 @@ STONReader >> processSubObjectsOf: object [
 	^ object
 ]
 
-{ #category : #initialization }
+{ #category : #'initialize-release' }
 STONReader >> reset [
 	unresolvedReferences := 0.
 	objects removeAll

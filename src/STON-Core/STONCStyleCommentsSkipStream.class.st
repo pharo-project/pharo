@@ -29,7 +29,7 @@ Class {
 		'delimiter',
 		'escape'
 	],
-	#category : #'STON-Core-Utilities'
+	#category : #'STON-Core-Reader'
 }
 
 { #category : #'instance creation' }
@@ -190,7 +190,7 @@ STONCStyleCommentsSkipStream >> nextNonCommentChar [
 		ifTrue: [ 
 			^ self handleStringDelimiter: char ].
 	escape := false. 
-	^ (char = $/ and: [ self insideString not ])
+	^ (char = $/ and: [ self insideString not and: [ (stream peek = $/) | (stream peek = $*) ] ])
 		ifTrue: [ 
 			self consumeComment.
 			stream next ]
@@ -233,16 +233,11 @@ STONCStyleCommentsSkipStream >> readInto: collection startingAt: offset count: r
 	Return the number of elements actually read."
 	
 	^ peekedCharacter 
-		ifNil: [ | readCount |
-			[ readCount := self encoder 
-					readInto: collection 
-					startingAt: offset 
-					count: requestedCount 
-					fromStream: stream ]
-				on: ZnByteStringBecameWideString 
-				do: [ :byteStringBecameWideString | 
-					byteStringBecameWideString becomeForward; resume ].
-			readCount ]
+		ifNil: [
+			0 to: requestedCount - 1 do: [ :count | | object |
+				(object := self nextNonCommentChar) ifNil: [ ^ count ].  
+				collection at: offset + count put: object ].
+			^ requestedCount ]
 		ifNotNil: [ 
 			collection at: offset put: peekedCharacter.
 			peekedCharacter := nil.

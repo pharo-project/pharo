@@ -51,6 +51,17 @@ STONWriterTest >> testAssociation [
 ]
 
 { #category : #tests }
+STONWriterTest >> testBag [
+	self 
+		assert: (self serialize: (Bag withAll: #(a a)))
+		equals: 'Bag{#a:2}'.
+	self 
+		assert: (self serialize: Bag new)
+		equals: 'Bag{}'
+
+]
+
+{ #category : #tests }
 STONWriterTest >> testBoolean [
 	self assert: (self serialize: true) = 'true'.
 	self assert: (self serialize: false) = 'false'
@@ -65,6 +76,20 @@ STONWriterTest >> testByteArray [
 { #category : #tests }
 STONWriterTest >> testClass [
 	self assert: (self serialize: Point) = 'Class[#Point]'
+]
+
+{ #category : #tests }
+STONWriterTest >> testColor [
+	self 
+		assert: (self serialize: Color red) 
+		equals: 'Color[#red]'.
+	self 
+		assert: (self serialize: (Color red copy setAlpha: 0.4)) 
+		equals: 'Color{#red:1.0,#green:0.0,#blue:0.0,#alpha:0.4}'.
+	self 
+		assert: (self serialize: Color red lighter lighter) 
+		equals: 'Color{#red:1.0,#green:0.061,#blue:0.061,#alpha:1.0}'.
+
 ]
 
 { #category : #tests }
@@ -83,8 +108,10 @@ STONWriterTest >> testCustomNewline [
 { #category : #tests }
 STONWriterTest >> testDate [
 	| date |
-	date := Date year: 2012 month: 1 day: 1.
-	self assert: (self serialize: date) = 'Date[''2012-01-01'']'
+	date := (Date year: 2012 month: 1 day: 1) translateToUTC.
+	self assert: (self serialize: date) equals: 'Date[''2012-01-01Z'']'.
+	date := (Date year: 2012 month: 1 day: 1) translateTo: 1 hour.
+	self assert: (self serialize: date) equals: 'Date[''2012-01-01+01:00'']'.
 ]
 
 { #category : #tests }
@@ -107,6 +134,15 @@ STONWriterTest >> testDictionaryWithComplexKeys [
 	| collection |
 	collection := STON mapClass new at: true put: 1; at: #(foo) put: 2; yourself.
 	self assert: (#('{true:1,[#foo]:2}' '{[#foo]:2,true:1}') includes: (self serialize: collection))
+]
+
+{ #category : #tests }
+STONWriterTest >> testDiskFile [
+	self assert: (self serialize: 'foo.txt' asFileReference) equals: 'FILE[''foo.txt'']'.
+	self assert: (self serialize: '/tmp/foo.txt' asFileReference) equals: 'FILE[''/tmp/foo.txt'']'.
+	self assert: (self serialize: 'tmp/foo.txt' asFileReference) equals: 'FILE[''tmp/foo.txt'']'.
+	self assert: (self serialize: '/tmp' asFileReference) equals: 'FILE[''/tmp'']'.
+	self assert: (self serialize: '/tmp/' asFileReference) equals: 'FILE[''/tmp'']'.
 ]
 
 { #category : #tests }
@@ -138,10 +174,20 @@ STONWriterTest >> testFloat [
 	self assert: (self serialize: 0.0) = '0.0'.
 	self assert: (self serialize: -1.5) = '-1.5'.
 	self assert: ((self serialize: Float pi) beginsWith:  '3.14159').
-	self assert: ((self serialize: 1/3) beginsWith:  '0.333').
+	self assert: ((self serialize: (1/3) asFloat) beginsWith:  '0.333').
 	self assert: (self serialize: (10 raisedTo: 100) asFloat) = '1.0e100'.
 	self assert: (self serialize: (10 raisedTo: -50) asFloat) = '1.0e-50'.
 	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) = '-1.0e-50'.
+]
+
+{ #category : #tests }
+STONWriterTest >> testFraction [
+	self assert: (self serialize: 1/3) equals: '1/3'.
+	self assert: (self serialize: -1/3) equals: '-1/3'.
+	self assert: (self serialize: 10/100) equals: '1/10'.
+	self assert: (self serialize: 100/10) equals: '10'.
+	self assert: (self serialize: 123/123) equals: '1'.
+	self assert: (self serialize: 100/11) equals: '100/11'.
 ]
 
 { #category : #tests }
@@ -224,6 +270,16 @@ STONWriterTest >> testMap [
 { #category : #tests }
 STONWriterTest >> testMetaclass [
 	self assert: (self serialize: Point class) = 'Metaclass[#Point]'
+]
+
+{ #category : #tests }
+STONWriterTest >> testMimeType [
+	self
+		assert: (self serialize: ZnMimeType applicationJson)
+		equals: 'MimeType[''application/json'']'.
+	self
+		assert: (self serialize: ZnMimeType textPlain)
+		equals: 'MimeType[''text/plain;charset=utf-8'']'.
 ]
 
 { #category : #tests }
@@ -316,6 +372,14 @@ STONWriterTest >> testRestrictedClassesInJsonMode [
 ]
 
 { #category : #tests }
+STONWriterTest >> testScaledDecimal [
+	self assert: (self serialize: 1/3s2) equals: '1/3s2'.
+	self assert: (self serialize: -1/3s2) equals: '-1/3s2'.
+	self assert: (self serialize: 1/3s10) equals: '1/3s10'.
+	self assert: (self serialize: -1/3s10) equals: '-1/3s10'.
+]
+
+{ #category : #tests }
 STONWriterTest >> testString [
 	| string |
 	self assert: (self serialize: 'foo') = '''foo'''.
@@ -356,6 +420,22 @@ STONWriterTest >> testTime [
 	time := Time hour: 6 minute: 30 second: 15 nanoSecond: 123.
 	self assert: (self serialize: time) equals: 'Time[''06:30:15.000000123'']'.
 
+]
+
+{ #category : #tests }
+STONWriterTest >> testURL [
+	self
+		assert: (self serialize: 'https://pharo.org/files/pharo.png' asUrl)
+		equals: 'URL[''https://pharo.org/files/pharo.png'']'.
+	self
+		assert: (self serialize: 'mailto:sven@stfx.eu' asUrl)
+		equals: 'URL[''mailto:sven@stfx.eu'']'.
+	self
+		assert: (self serialize: 'file:///var/log/system.log' asUrl)
+		equals: 'URL[''file:///var/log/system.log'']'.
+	self
+		assert: (self serialize: 'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asUrl)
+		equals: 'URL[''scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag'']'.
 ]
 
 { #category : #tests }

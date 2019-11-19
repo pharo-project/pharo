@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'timestamp'
 	],
-	#category : #'STON-Tests-Base'
+	#category : #'STON-Tests-Support'
 }
 
 { #category : #accessing }

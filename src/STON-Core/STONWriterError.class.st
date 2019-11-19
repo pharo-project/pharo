@@ -4,5 +4,5 @@ STONWriterError is the error/exception signalled by STONWriter when illegal/inco
 Class {
 	#name : #STONWriterError,
 	#superclass : #Error,
-	#category : #'STON-Core-Exceptions'
+	#category : #'STON-Core-Writer'
 }
