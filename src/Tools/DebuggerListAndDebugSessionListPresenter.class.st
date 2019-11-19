@@ -201,7 +201,8 @@ DebuggerListAndDebugSessionListPresenter >> initializeWidgets [
 	debugSessionList := self newTable
 		addColumn: ((SpStringTableColumn title: 'Refs' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession countObjectsThatWantToKeepMeAlive asString]) width: refsColumnWidth; yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: [:aDebugSessionStorageUnit | aDebugSessionStorageUnit debugSession name] );
-		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | self printDateAndTime: aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself ).
+		addColumn: ((SpStringTableColumn title: 'Time of Storage' evaluated: [:aDebugSessionStorageUnit | self printDateAndTime: aDebugSessionStorageUnit timeOfCreation]) width: timeOfStorageColumnWidth; yourself );
+		sortingBlock: [:dbSessionUnitStorage1 :dbSessionUnitStorage2 | self sortDebugSessionUnitStorage: dbSessionUnitStorage1 and: dbSessionUnitStorage2].
 	self refreshDebugSessionList.
 	
 	debugSessionListToolBar := self makeDebugSessionListToolbar.
@@ -326,6 +327,12 @@ DebuggerListAndDebugSessionListPresenter >> shouldUpdateStorageLimitInputField [
 { #category : #accessing }
 DebuggerListAndDebugSessionListPresenter >> shouldUpdateStorageLimitInputField: aBoolean [
 	shouldUpdateStorageLimitInputField := aBoolean
+]
+
+{ #category : #initialization }
+DebuggerListAndDebugSessionListPresenter >> sortDebugSessionUnitStorage: aDebugSessionUnitStorage and: aDebugSessionUnitStorage2 [
+	"Return true if @aDebugSessionUnitStorage has been stored more recently than @aDebugSessionUnitStorage2"
+	^ aDebugSessionUnitStorage timeOfCreation >= aDebugSessionUnitStorage2 timeOfCreation
 ]
 
 { #category : #initialization }
