@@ -126,7 +126,7 @@ GTGenericStackDebugger class >> logFileName: newName [
 
 { #category : #'debugger declaration' }
 GTGenericStackDebugger class >> rank [
-	^ 30
+	^ 70
 ]
 
 { #category : #'debugger declaration' }

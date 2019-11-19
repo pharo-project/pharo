@@ -31,7 +31,7 @@ GTBytecodeDebugger class >> openOn: aDebugSession withFullView: aBool andNotific
 
 { #category : #'debugger declaration' }
 GTBytecodeDebugger class >> rank [
-	^ 20
+	^ 50
 ]
 
 { #category : #'debugger declaration' }

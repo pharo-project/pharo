@@ -1,6 +1,6 @@
 "
 I store debug sessions (see class DebugSession) when they are created because an exception was signalled but not caught.
-I implement the singleton design pattern.
+I implement the singleton design pattern. My singleton can be obtained by executing `DebugSessionStorage singleton`.
 Upon storing a debug session, I wrap it in a new DebugSessionStorageUnit, to also store the time at which the session was stored.
 There is a limit to how many debug sessions I keep, defined by my @storageLimitForDebugSessionsNotKeptAlive variable. Oldest debug sessions are removed first. I always keep debug sessions that are currently open in a debugger (see DebugSession>>#keepAlive:), and they do not count towards the storage limit.
 

@@ -1,9 +1,10 @@
 "
-This class is not actually a debugger, but when asked to open on a debug session, it will look at all the debuggers available in the system and open the best one for the particular DebugSession being opened.
+The purpose of this class is to select ""the best"" debugger to open a debug session (a.k.a. execution that signalled an uncaught exception).
+-> See method #selectDebuggerAndOpen:withFullView:withNotification:
 
-For the conditions a class must satisfy in order to be considered a debugger class, look at the #isThisClassADebugger method.
+This class finds all the debugger classes present in the image with #getDebuggerClasses and the method testing whether a class is a debugger class or not is #isThisClassADebugger.
 
-If the variable mainDebuggerClass is set to hold a debugger class, it will be used in priority to open debug sessions (unless it cannot open them, in which case we fallback to the default algorithm)
+This class implements the singleton design pattern. Its singleton can be obtained by executing `DebuggerSelector singleton`.
 
 # Variables
 - mainDebuggerClass  | a Class
@@ -100,6 +101,7 @@ DebuggerSelector >> removeSubscriberOnMainDebuggerClassUpdate: anObject [
 { #category : #'open debugger' }
 DebuggerSelector >> selectDebuggerAndOpen: aDebugSession withFullView: aBool andNotification: aString [
 	"Open @aDebugSession with the most suitable debugger class in the system. Look at the comments below for the detailed algorithm selecting the most suitable debugger"
+	"The @aBool and @aString arguments do not seem super useful, so you can probably get away with respectively giving true and nil as values for them"
 	| debuggerClasses |
 	"If a main debugger has been set (variable mainDebuggerClass), we try it first"
 	[(self mainDebuggerClass ifNotNil: [:theMainDebuggerClass | self tryToOpenDebugSession: aDebugSession withDebuggerClass: theMainDebuggerClass withFullView: aBool andNotification: aString ]) ifTrue: [ ^ self "the main debugger class managed to open @aDebugSession. We are done here" ]] on: Error do: ["Prevent exceptions potentially signalled by the mainDebuggerClass from propagating, to avoid infinite debugger loops"].
