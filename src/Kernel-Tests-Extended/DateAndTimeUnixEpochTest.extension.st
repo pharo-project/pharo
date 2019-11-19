@@ -10,13 +10,10 @@ DateAndTimeUnixEpochTest >> testAsMonth [
 
 { #category : #'*Kernel-Tests-Extended' }
 DateAndTimeUnixEpochTest >> testAsWeek [
-	self assert: aDateAndTime asWeek = (Week starting: '12-31-1969' asDate). 
-
-
+	self assert: aDateAndTime asWeek equals: (Week starting: '12-31-1969' asDate)
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 DateAndTimeUnixEpochTest >> testAsYear [
-	self assert: aDateAndTime asYear =   (Year starting: '01-01-1970' asDate). 
-
+	self assert: aDateAndTime asYear equals: (Year starting: '01-01-1970' asDate)
 ]

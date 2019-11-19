@@ -54,20 +54,17 @@ BecomeTest >> testBecomeForwardCopyIdentityHash [
 		1. the argument to becomeForward: IS modified to have the sender's identity hash.
 		2. the sender's identity hash is unchanged."
 
- 	| a b identityHashOfA |
-
+	| a b identityHashOfA |
 	a := 'ab' copy.
 	b := 'cd' copy.
 	identityHashOfA := a identityHash.
 
 	a becomeForward: b copyHash: true.
 
-	self 
-		assert: a == b;
+	self
+		assert: a identicalTo: b;
 		assert: a identityHash equals: identityHashOfA;
-		assert: b identityHash equals: identityHashOfA.
-
-
+		assert: b identityHash equals: identityHashOfA
 ]
 
 { #category : #testing }
@@ -76,20 +73,17 @@ BecomeTest >> testBecomeForwardDontCopyIdentityHash [
 		1. the argument to becomeForward: is NOT modified to have the receiver's identity hash.
 		2. the receiver's identity hash is unchanged."
 
- 	| a b identityHashOfB |
-
+	| a b identityHashOfB |
 	a := 'ab' copy.
 	b := 'cd' copy.
 	identityHashOfB := b identityHash.
 
 	a becomeForward: b copyHash: false.
 
-	self 
-		assert: a == b;
+	self
+		assert: a identicalTo: b;
 		assert: a identityHash equals: identityHashOfB;
-		assert: b identityHash equals: identityHashOfB.
-
-
+		assert: b identityHash equals: identityHashOfB
 ]
 
 { #category : #testing }

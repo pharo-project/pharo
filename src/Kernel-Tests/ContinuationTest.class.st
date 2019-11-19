@@ -20,37 +20,55 @@ ContinuationTest >> callcc: aBlock [
 ContinuationTest >> testBlockEscape [
 	| x |
 	tmp := 0.
-	x := [ tmp := tmp + 1. tmp2 value ].
-	self callcc: [ :cc | tmp2 := cc. x value ].
-	tmp2 := [ ].
+	x := [ tmp := tmp + 1.
+	tmp2 value ].
+	self
+		callcc: [ :cc | 
+			tmp2 := cc.
+			x value ].
+	tmp2 := [  ].
 	x value.
-	self assert: tmp = 2
+	self assert: tmp equals: 2
 ]
 
 { #category : #tests }
 ContinuationTest >> testBlockTemps [
 	| y |
-	#(1 2 3) do: [ :i |
-		| x |
-		x := i.
-		tmp ifNil: [ tmp2 := (self callcc: [ :cc | tmp := cc. [ :q | ] ]) ].
-		tmp2 value: x.
-		x := 17 ].
-	y := (self callcc: [ :cc | tmp value: cc. 42 ]).
-	self assert: y = 1
+	#(1 2 3)
+		do: [ :i | 
+			| x |
+			x := i.
+			tmp
+				ifNil: [ tmp2 := self
+						callcc: [ :cc | 
+							tmp := cc.
+							[ :q |  ] ] ].
+			tmp2 value: x.
+			x := 17 ].
+	y := self
+		callcc: [ :cc | 
+			tmp value: cc.
+			42 ].
+	self assert: y equals: 1
 ]
 
 { #category : #tests }
 ContinuationTest >> testBlockVars [
 	| continuation |
 	tmp := 0.
-	tmp := (self callcc: [ :cc | continuation := cc. 0 ]) + tmp.
+	tmp := (self
+		callcc: [ :cc | 
+			continuation := cc.
+			0 ]) + tmp.
 	tmp2
 		ifNotNil: [ tmp2 value ]
-		ifNil: [
-			#(1 2 3) do: [ :i |
-				self callcc: [ :cc | tmp2 := cc. continuation value: i ] ] ].
-	self assert: tmp = 6
+		ifNil: [ #(1 2 3)
+				do: [ :i | 
+					self
+						callcc: [ :cc | 
+							tmp2 := cc.
+							continuation value: i ] ] ].
+	self assert: tmp equals: 6
 ]
 
 { #category : #tests }

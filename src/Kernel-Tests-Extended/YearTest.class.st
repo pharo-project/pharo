@@ -39,19 +39,17 @@ YearTest >> testOffset [
 
 { #category : #tests }
 YearTest >> testPreviousInLeapYear [
-		
 	| leap |
 	leap := Year year: 2008.
-	self assert: leap isLeapYear. 
-	self assert: (Year year: (leap year - 1)) = leap previous 
+	self assert: leap isLeapYear.
+	self assert: (Year year: leap year - 1) equals: leap previous
 ]
 
 { #category : #tests }
 YearTest >> testStart [
-		
 	| yyyy |
 	yyyy := DateAndTime now year.
-	self assert: Year current start = (DateAndTime year: yyyy month: 1 day: 1)
+	self assert: Year current start equals: (DateAndTime year: yyyy month: 1 day: 1)
 ]
 
 { #category : #tests }

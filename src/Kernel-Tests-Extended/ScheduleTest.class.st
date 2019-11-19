@@ -69,63 +69,34 @@ ScheduleTest >> tearDown [
 ScheduleTest >> testBetweenAndDoDisjointWithSchedule [
 	| count |
 	count := 0.
-	aSchedule
-		between: (DateAndTime
-				year: 2004
-				month: 4
-				day: 1)
-		and: (DateAndTime
-				year: 2004
-				month: 4
-				day: 30)
-		do: [:each | count := count + 1].
-	self assert: count = 0
+	aSchedule between: (DateAndTime year: 2004 month: 4 day: 1) and: (DateAndTime year: 2004 month: 4 day: 30) do: [ :each | count := count + 1 ].
+	self assert: count equals: 0
 ]
 
 { #category : #tests }
 ScheduleTest >> testBetweenAndDoIncludedInSchedule [
 	| count |
 	count := 0.
-	aSchedule
-		between: (DateAndTime
-				year: 2003
-				month: 4
-				day: 1)
-		and: (DateAndTime
-				year: 2003
-				month: 4
-				day: 30)
-		do: [:each | count := count + 1].
-	self assert: count = 8
+	aSchedule between: (DateAndTime year: 2003 month: 4 day: 1) and: (DateAndTime year: 2003 month: 4 day: 30) do: [ :each | count := count + 1 ].
+	self assert: count equals: 8
 ]
 
 { #category : #tests }
 ScheduleTest >> testBetweenAndDoOverlappingSchedule [
 	| count |
 	count := 0.
-	aSchedule
-		between: (DateAndTime
-				year: 2002
-				month: 12
-				day: 1)
-		and: (DateAndTime
-				year: 2003
-				month: 1
-				day: 31)
-		do: [:each | count := count + 1].
-	self assert: count = 8
+	aSchedule between: (DateAndTime year: 2002 month: 12 day: 1) and: (DateAndTime year: 2003 month: 1 day: 31) do: [ :each | count := count + 1 ].
+	self assert: count equals: 8
 ]
 
 { #category : #tests }
 ScheduleTest >> testDateAndTimes [
 	| answer |
-	self assert: aSchedule dateAndTimes size  = 104.
-	self assert: aSchedule dateAndTimes first = firstEvent.
+	self assert: aSchedule dateAndTimes size equals: 104.
+	self assert: aSchedule dateAndTimes first equals: firstEvent.
 	answer := true.
-	aSchedule dateAndTimes do: [:each | (each dayOfWeekName = 'Saturday'
-		or: [each dayOfWeekName = 'Sunday']) ifFalse: [^false]].
+	aSchedule dateAndTimes do: [ :each | (each dayOfWeekName = 'Saturday' or: [ each dayOfWeekName = 'Sunday' ]) ifFalse: [ ^ false ] ].
 	self assert: answer
-
 ]
 
 { #category : #tests }
@@ -171,16 +142,13 @@ ScheduleTest >> testExampleFromSwikiPage [
 
 { #category : #tests }
 ScheduleTest >> testFromDateAndTime [
-
 	| oc1 oc2 |
 	oc1 := OrderedCollection new.
 	DateAndTime today to: DateAndTime tomorrow by: 10 hours do: [ :dt | oc1 add: dt ].
 
-	oc2 := { DateAndTime today. 
-			(DateAndTime today + 10 hours). 
-				(DateAndTime today + 20 hours) }.
+	oc2 := {DateAndTime today . (DateAndTime today + 10 hours) . (DateAndTime today + 20 hours)}.
 
-	self assert: (oc1 asArray = oc2)
+	self assert: oc1 asArray equals: oc2
 ]
 
 { #category : #tests }
@@ -208,8 +176,7 @@ ScheduleTest >> testMonotonicity [
 
 { #category : #tests }
 ScheduleTest >> testSchedule [
-	self assert: aSchedule schedule size = 2.
-	self assert: aSchedule schedule first = 1 days.	
-	self assert: aSchedule schedule second = 6 days.
-
+	self assert: aSchedule schedule size equals: 2.
+	self assert: aSchedule schedule first equals: 1 days.
+	self assert: aSchedule schedule second equals: 6 days
 ]

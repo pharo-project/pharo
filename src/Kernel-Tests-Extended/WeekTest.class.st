@@ -78,7 +78,7 @@ WeekTest >> testByWeekNumberInCurrentYear [
 
 { #category : #tests }
 WeekTest >> testDayNames [
-	self assert: (Week dayNames) = #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
+	self assert: Week dayNames equals: #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday)
 ]
 
 { #category : #tests }
@@ -96,38 +96,36 @@ WeekTest >> testEnumerating [
 WeekTest >> testIndexOfDay [
 	| days |
 	days := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
-	
-	days withIndexDo: [:item :index | self assert: (Week indexOfDay: item) = index].
-	
+
+	days withIndexDo: [ :item :index | self assert: (Week indexOfDay: item) equals: index ].
+
 	"This should probably raise an error rather than returning 0."
-	self assert: (Week indexOfDay: 0) = 0.
-	self assert: (Week indexOfDay: 1) = 0.
-	self assert: (Week indexOfDay: 7) = 0.
-	self assert: (Week indexOfDay: 8) = 0.
-	self assert: (Week indexOfDay: #Sunnyday) = 0.
+	self assert: (Week indexOfDay: 0) equals: 0.
+	self assert: (Week indexOfDay: 1) equals: 0.
+	self assert: (Week indexOfDay: 7) equals: 0.
+	self assert: (Week indexOfDay: 8) equals: 0.
+	self assert: (Week indexOfDay: #Sunnyday) equals: 0
 ]
 
 { #category : #tests }
 WeekTest >> testInquiries [
-
 	self
-		assert: week start asDate = '28 June 1998' asDate;
-		assert: week end asDate = '4 July 1998' asDate;
-		assert: week index = 5;
-		assert: week duration = (7 days).
-
+		assert: week start asDate equals: '28 June 1998' asDate;
+		assert: week end asDate equals: '4 July 1998' asDate;
+		assert: week index equals: 5;
+		assert: week duration equals: 7 days
 ]
 
 { #category : #tests }
 WeekTest >> testNameOfDay [
 	| days |
 	days := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
-	
-	days withIndexDo: [:item :index | self assert: (Week nameOfDay: index) = item].
-	
-	self should: [Week nameOfDay: 0] raise: self defaultTestError.
-	self should: [Week nameOfDay: 8] raise: self defaultTestError.
-	self should: [Week nameOfDay: #Sunday] raise: self defaultTestError.
+
+	days withIndexDo: [ :item :index | self assert: (Week nameOfDay: index) equals: item ].
+
+	self should: [ Week nameOfDay: 0 ] raise: self defaultTestError.
+	self should: [ Week nameOfDay: 8 ] raise: self defaultTestError.
+	self should: [ Week nameOfDay: #Sunday ] raise: self defaultTestError
 ]
 
 { #category : #tests }
@@ -144,6 +142,6 @@ WeekTest >> testOffset [
 { #category : #tests }
 WeekTest >> testPreviousNext [
 	self
-		assert: week next = (Week starting: '6 July 1998' asDate);
-		assert: week previous = (Week starting:  '22 June 1998' asDate)
+		assert: week next equals: (Week starting: '6 July 1998' asDate);
+		assert: week previous equals: (Week starting: '22 June 1998' asDate)
 ]
