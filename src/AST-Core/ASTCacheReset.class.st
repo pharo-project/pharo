@@ -1,6 +1,6 @@
 "
-Announcement signaled to tell that the default AST Cache has been reset.
-Tools that want persistant AST annotations can subscribe to this announcement to reinstall annotations.
+An Announcement signalled to tell that the default AST Cache has been reset.
+Tools that want persistent AST annotations can subscribe to this announcement to reinstall annotations.
 "
 Class {
 	#name : #ASTCacheReset,
