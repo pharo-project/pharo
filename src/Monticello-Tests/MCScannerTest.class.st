@@ -21,7 +21,7 @@ MCScannerTest >> test2 [
 
 { #category : #tests }
 MCScannerTest >> test3 [
-	self assert: (MCScanner scan: '(a #b c)' readStream) = #(a #b c)
+	self assert: (MCScanner scan: '(a #b c)' readStream) equals: #(a #b c)
 ]
 
 { #category : #tests }

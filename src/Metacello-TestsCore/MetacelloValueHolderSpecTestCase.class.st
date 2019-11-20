@@ -6,22 +6,22 @@ Class {
 
 { #category : #tests }
 MetacelloValueHolderSpecTestCase >> testValueHolderMergeSpec [
-    | valueHolderA valueHolderB valueHolder |
-    valueHolderA := self valueHolderSpec
-        value: 'an Object';
-        yourself.
-    valueHolderB := self valueHolderSpec
-        value: 1.1;
-        yourself.
-    valueHolder := valueHolderA mergeSpec: valueHolderB.
-    self assert: valueHolder value = 1.1
+	| valueHolderA valueHolderB valueHolder |
+	valueHolderA := self valueHolderSpec
+		value: 'an Object';
+		yourself.
+	valueHolderB := self valueHolderSpec
+		value: 1.1;
+		yourself.
+	valueHolder := valueHolderA mergeSpec: valueHolderB.
+	self assert: valueHolder value equals: 1.1
 ]
 
 { #category : #tests }
 MetacelloValueHolderSpecTestCase >> testValueHolderSpec [
-    | valueHolder |
-    valueHolder := self valueHolderSpec
-        value: 'an Object';
-        yourself.
-    self assert: valueHolder value = 'an Object'
+	| valueHolder |
+	valueHolder := self valueHolderSpec
+		value: 'an Object';
+		yourself.
+	self assert: valueHolder value equals: 'an Object'
 ]

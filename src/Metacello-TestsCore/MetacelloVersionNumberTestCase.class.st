@@ -24,29 +24,27 @@ MetacelloVersionNumberTestCase >> testApproxVersion03 [
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testCollapseZeros [
-
-	self assert: (MetacelloVersionNumber fromString: '1.0-beta.24.0.1') collapseZeros printString = '1-beta.24.0.1'.
-	self assert: (MetacelloVersionNumber fromString: '1.0-beta.24.0.0.1') collapseZeros printString = '1-beta.24.0.0.1'.
-	self assert: (MetacelloVersionNumber fromString: '1.0.0-beta.24.0.0.1') collapseZeros printString = '1-beta.24.0.0.1'.
-
+	self assert: (MetacelloVersionNumber fromString: '1.0-beta.24.0.1') collapseZeros printString equals: '1-beta.24.0.1'.
+	self assert: (MetacelloVersionNumber fromString: '1.0-beta.24.0.0.1') collapseZeros printString equals: '1-beta.24.0.0.1'.
+	self assert: (MetacelloVersionNumber fromString: '1.0.0-beta.24.0.0.1') collapseZeros printString equals: '1-beta.24.0.0.1'
 ]
 
 { #category : #'tests version increment/decrement' }
 MetacelloVersionNumberTestCase >> testIncrementDecrementVersionNumber [
-  | version |
-  super testIncrementDecrementVersionNumber.
-  version := '1' asMetacelloVersionNumber.
-  self assert: version incrementMinorVersionNumber asString = '2'.
-  self assert: version decrementMinorVersionNumber asString = '1'.
-  version := '1.0' asMetacelloVersionNumber.
-  self assert: version incrementMinorVersionNumber asString = '1.1'.
-  self assert: version decrementMinorVersionNumber asString = '1.0'.
-  version := '1.0.0' asMetacelloVersionNumber.
-  self assert: version incrementMinorVersionNumber asString = '1.0.1'.
-  self assert: version decrementMinorVersionNumber asString = '1.0.0'.
-  version := '1.0.0.0' asMetacelloVersionNumber.
-  self assert: version incrementMinorVersionNumber asString = '1.0.0.1'.
-  self assert: version decrementMinorVersionNumber asString = '1.0.0.0'
+	| version |
+	super testIncrementDecrementVersionNumber.
+	version := '1' asMetacelloVersionNumber.
+	self assert: version incrementMinorVersionNumber asString equals: '2'.
+	self assert: version decrementMinorVersionNumber asString equals: '1'.
+	version := '1.0' asMetacelloVersionNumber.
+	self assert: version incrementMinorVersionNumber asString equals: '1.1'.
+	self assert: version decrementMinorVersionNumber asString equals: '1.0'.
+	version := '1.0.0' asMetacelloVersionNumber.
+	self assert: version incrementMinorVersionNumber asString equals: '1.0.1'.
+	self assert: version decrementMinorVersionNumber asString equals: '1.0.0'.
+	version := '1.0.0.0' asMetacelloVersionNumber.
+	self assert: version incrementMinorVersionNumber asString equals: '1.0.0.1'.
+	self assert: version decrementMinorVersionNumber asString equals: '1.0.0.0'
 ]
 
 { #category : #'test matching' }
@@ -145,15 +143,12 @@ MetacelloVersionNumberTestCase >> testVersion09 [
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion10 [
-
 	| x y |
-	self assert: ((x := (({
-		self versionClass fromString: '1.0'.
-		self versionClass fromString: '0.7'.
-		self versionClass fromString: '0.8'.
-		self versionClass fromString: '0.9'.
-		self versionClass fromString: '1.0.1'
-	} sort: [:a :b | a <= b ]) collect: [:each | each versionString ]) asArray) = (y := #( '0.7' '0.8' '0.9' '1.0' '1.0.1')))
+	self
+		assert:
+			(x := (({(self versionClass fromString: '1.0') . (self versionClass fromString: '0.7') . (self versionClass fromString: '0.8').
+			(self versionClass fromString: '0.9') . (self versionClass fromString: '1.0.1')} sort: [ :a :b | a <= b ]) collect: [ :each | each versionString ]) asArray)
+		equals: (y := #('0.7' '0.8' '0.9' '1.0' '1.0.1'))
 ]
 
 { #category : #tests }
@@ -196,14 +191,12 @@ MetacelloVersionNumberTestCase >> testVersion16 [
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion17 [
-
-	self assert: ((self versionClass fromString: '1.0') = (self versionClass fromString: '1.0.0')).
-	self assert: ((self versionClass fromString: '1') = (self versionClass fromString: '1.0')).
-	self assert: ((self versionClass fromString: '1') > (self versionClass fromString: '1-0')).
-	self assert: ((self versionClass fromString: '1') > (self versionClass fromString: '1.0-beta.0')).
-	self assert: ((self versionClass fromString: '1') > (self versionClass fromString: '1-beta.0')).
-	self assert: ((self versionClass fromString: '1') > (self versionClass fromString: '1-beta')).
-
+	self assert: (self versionClass fromString: '1.0') equals: (self versionClass fromString: '1.0.0').
+	self assert: (self versionClass fromString: '1') equals: (self versionClass fromString: '1.0').
+	self assert: (self versionClass fromString: '1') > (self versionClass fromString: '1-0').
+	self assert: (self versionClass fromString: '1') > (self versionClass fromString: '1.0-beta.0').
+	self assert: (self versionClass fromString: '1') > (self versionClass fromString: '1-beta.0').
+	self assert: (self versionClass fromString: '1') > (self versionClass fromString: '1-beta')
 ]
 
 { #category : #tests }
@@ -223,29 +216,21 @@ MetacelloVersionNumberTestCase >> testVersion19 [
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion20 [
-
-	self assert: (MetacelloVersionNumber fromString: '') printString = ''.
-
+	self assert: (MetacelloVersionNumber fromString: '') printString equals: ''
 ]
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion21 [
-
 	self deny: (MetacelloVersionNumber fromString: '') > (MetacelloVersionNumber fromString: '0').
 	self assert: (MetacelloVersionNumber fromString: '') < (MetacelloVersionNumber fromString: '0').
-	self assert: (MetacelloVersionNumber fromString: '') = (MetacelloVersionNumber fromString: '').
-
-
+	self assert: (MetacelloVersionNumber fromString: '') equals: (MetacelloVersionNumber fromString: '')
 ]
 
 { #category : #tests }
 MetacelloVersionNumberTestCase >> testVersion24 [
-
 	self assert: (MetacelloVersionNumber fromString: '3.0.3.-rc.1') ~= (MetacelloVersionNumber fromString: '3.0.0.3-rc.1').
-	self assert: (MetacelloVersionNumber fromString: '1.0.0.1.0.0') = (MetacelloVersionNumber fromString: '1.0.0.1').
-	self assert: (MetacelloVersionNumber fromString: '1.0.0.1') ~= (MetacelloVersionNumber fromString: '1..1').
-
-
+	self assert: (MetacelloVersionNumber fromString: '1.0.0.1.0.0') equals: (MetacelloVersionNumber fromString: '1.0.0.1').
+	self assert: (MetacelloVersionNumber fromString: '1.0.0.1') ~= (MetacelloVersionNumber fromString: '1..1')
 ]
 
 { #category : #private }
