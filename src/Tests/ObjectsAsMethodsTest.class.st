@@ -24,15 +24,13 @@ ObjectsAsMethodsTest >> tearDown [
 
 { #category : #testing }
 ObjectsAsMethodsTest >> testAddNumbers [
-
-	self assert: (self add: 3 with: 4) = 7.
-	self assert: (self perform: #add:with: withArguments: #(3 4)) = 7.
+	self assert: (self add: 3 with: 4) equals: 7.
+	self assert: (self perform: #add:with: withArguments: #(3 4)) equals: 7
 ]
 
 { #category : #testing }
-ObjectsAsMethodsTest >> testAnswer42 [ 
-
-	self assert: self answer42 = 42
+ObjectsAsMethodsTest >> testAnswer42 [
+	self assert: self answer42 equals: 42
 ]
 
 { #category : #testing }

@@ -17,5 +17,5 @@ DAPackageDependencyWrapperTest >> setUp [
 { #category : #tests }
 DAPackageDependencyWrapperTest >> testInitializeFrom [
 	aPDPackageDependencyWrapper := DAPackageDependencyWrapper newWith: packageA.
-	self assert: (aPDPackageDependencyWrapper daPackage = packageA).
+	self assert: aPDPackageDependencyWrapper daPackage equals: packageA
 ]

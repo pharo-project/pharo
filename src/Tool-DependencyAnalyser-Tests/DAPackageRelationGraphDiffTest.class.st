@@ -70,27 +70,26 @@ DAPackageRelationGraphDiffTest >> testMakeDependentPackagesDifferentOnDifferentG
 	newRelationGraph seenPackages first clearDependencies.
 
 	packageRelationGraphDiff make.
-		
-	self assert: (packageRelationGraphDiff dependentPackagesDiffRemoved size = oldSize).
-	self assert: (packageRelationGraphDiff dependentPackagesDiffUnderteminate size = (newRelationGraph seenPackages last dependentPackages size))
-	
+
+	self assert: packageRelationGraphDiff dependentPackagesDiffRemoved size equals: oldSize.
+	self assert: packageRelationGraphDiff dependentPackagesDiffUnderteminate size equals: newRelationGraph seenPackages last dependentPackages size
 ]
 
 { #category : #running }
 DAPackageRelationGraphDiffTest >> testMakePackagesDiffOnDifferentGraph [
 	newRelationGraph removePackage: 'Collections-Abstract'.
 	packageRelationGraphDiff makePackagesDiff.
-	
-	self assert: (packageRelationGraphDiff packagesDiffRemovedSize = 1).
-	self assert: (packageRelationGraphDiff packagesDiffUnderteminateSize = 1).
+
+	self assert: packageRelationGraphDiff packagesDiffRemovedSize equals: 1.
+	self assert: packageRelationGraphDiff packagesDiffUnderteminateSize equals: 1
 ]
 
 { #category : #running }
 DAPackageRelationGraphDiffTest >> testMakePackagesDiffOnSameGraph [
 	packageRelationGraphDiff makePackagesDiff.
-	
-	self assert: (packageRelationGraphDiff packagesDiff size = oldRelationGraph seenPackages size).
-	self assert: (packageRelationGraphDiff packagesDiff allSatisfy: [ :item | item isUnderteminate  ]).
+
+	self assert: packageRelationGraphDiff packagesDiff size equals: oldRelationGraph seenPackages size.
+	self assert: (packageRelationGraphDiff packagesDiff allSatisfy: [ :item | item isUnderteminate ])
 ]
 
 { #category : #running }
@@ -98,24 +97,22 @@ DAPackageRelationGraphDiffTest >> testPackagesDiffToDisplay [
 	| first second |
 	first := newRelationGraph seenPackages first.
 	second := newRelationGraph seenPackages last.
-	
-	first clearDependencies.
-	second dependencies remove: (second dependencies anyOne).
-	
-	packageRelationGraphDiff make.
-	self assert: (packageRelationGraphDiff packagesDiffToDisplay size = 2).
 
+	first clearDependencies.
+	second dependencies remove: second dependencies anyOne.
+
+	packageRelationGraphDiff make.
+	self assert: packageRelationGraphDiff packagesDiffToDisplay size equals: 2
 ]
 
 { #category : #running }
 DAPackageRelationGraphDiffTest >> testPackagesDiffToDisplayBis [
-	| first  |
+	| first |
 	first := newRelationGraph seenPackages first.
 	first clearDependencies.
 	packageRelationGraphDiff make.
-		
-	self assert: (packageRelationGraphDiff packagesDiffToDisplay size = 1).
 
+	self assert: packageRelationGraphDiff packagesDiffToDisplay size equals: 1
 ]
 
 { #category : #running }

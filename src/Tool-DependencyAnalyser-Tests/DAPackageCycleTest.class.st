@@ -65,22 +65,21 @@ DAPackageCycleTest >> testRemoveOutgoingDependencies [
 
 { #category : #tests }
 DAPackageCycleTest >> testReversedCycle [
-	aPDPackageCycle 
-			addPackage: packageA;
-			addPackage: packageB;
-			addPackage: packageC;
-			yourself.
+	aPDPackageCycle
+		addPackage: packageA;
+		addPackage: packageB;
+		addPackage: packageC;
+		yourself.
 	aPDPackageCycle reversedCycle.
-	self assert: ((aPDPackageCycle packageAt: 1) = packageC).
-	self assert: ((aPDPackageCycle packageAt: 2) = packageB).
-	self assert: ((aPDPackageCycle packageAt: 3) = packageA).
-				
+	self assert: (aPDPackageCycle packageAt: 1) equals: packageC.
+	self assert: (aPDPackageCycle packageAt: 2) equals: packageB.
+	self assert: (aPDPackageCycle packageAt: 3) equals: packageA
 ]
 
 { #category : #tests }
 DAPackageCycleTest >> testSizeOfCycles [
-	self assert: aPDPackageCycle size = 0.
-	aPDPackageCycle addPackage: (DAPackage on: (RPackageSet named:'Kernel')).
-	aPDPackageCycle addPackage: (DAPackage on: (RPackageSet named:'Collections-Abstract')).
-	self assert: (aPDPackageCycle size = 2).
+	self assert: aPDPackageCycle size equals: 0.
+	aPDPackageCycle addPackage: (DAPackage on: (RPackageSet named: 'Kernel')).
+	aPDPackageCycle addPackage: (DAPackage on: (RPackageSet named: 'Collections-Abstract')).
+	self assert: aPDPackageCycle size equals: 2
 ]

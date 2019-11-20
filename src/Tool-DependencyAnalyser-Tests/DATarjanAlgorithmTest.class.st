@@ -67,12 +67,11 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 
 { #category : #tests }
 DATarjanAlgorithmTest >> testPush [
-	self assert: (self stackSize = 0).
+	self assert: self stackSize equals: 0.
 	self deny: packageA isInStack.
 	tarjanPackage push: packageA.
-	self assert: (self stackSize = 1).
-	self assert: packageA isInStack.
-	
+	self assert: self stackSize equals: 1.
+	self assert: packageA isInStack
 ]
 
 { #category : #tests }

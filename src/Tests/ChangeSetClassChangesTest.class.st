@@ -121,7 +121,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 ]
 
 { #category : #testing }
-ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [ 
+ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	"Changing the class category for a class should result in a change
 	record being updated in the current change set."
 
@@ -129,7 +129,7 @@ ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
 	no change records pertaining to it in the change set."
 
 	self deny: (Smalltalk hasClassNamed: 'JunkClass').
-	self assert: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) thisName = 'nil'.	"Remove bogus change records created as side effect of preceding assert"
+	self assert: (ChangeSet current changeRecorderFor: (testingEnvironment classNamed: #JunkClass)) thisName equals: 'nil'.	"Remove bogus change records created as side effect of preceding assert"
 	ChangeSet current removeClassChanges: 'nil'.	"Define a class and save its definition"
 	Object
 		subclass: #JunkClass
@@ -240,7 +240,7 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 ChangeSetClassChangesTest >> testInitialChangeSet [
 	"Run this to assure the initial changeset is named. Checks bug found in 3.9 7052."
 
-	self deny: (ChangeSet current printString = 'a ChangeSet named <no name -- garbage?>')
+	self deny: ChangeSet current printString equals: 'a ChangeSet named <no name -- garbage?>'
 ]
 
 { #category : #support }
