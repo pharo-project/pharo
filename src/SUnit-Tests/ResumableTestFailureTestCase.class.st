@@ -79,6 +79,6 @@ ResumableTestFailureTestCase >> testResumable [
 	suite addTest: (self class selector: #okTest).
 	result := suite run.
 	self
-		assert: result failures size = 2;
-		assert: result errors size = 1
+		assert: result failures size equals: 2;
+		assert: result errors size equals: 1
 ]

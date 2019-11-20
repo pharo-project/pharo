@@ -71,7 +71,7 @@ SpecFocusOrderTest >> testRemoveAll [
 				add: button1;
 				add: button2 ]
 			raise: Error;
-		assert: specFocusOrder presenters size == 2;
+		assert: specFocusOrder presenters size identicalTo: 2;
 		shouldnt: [ specFocusOrder removeAll ] raise: Error;
 		assert: specFocusOrder presenters isEmpty
 ]

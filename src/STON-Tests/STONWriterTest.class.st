@@ -43,11 +43,10 @@ STONWriterTest >> serializePretty: anObject [
 
 { #category : #tests }
 STONWriterTest >> testAssociation [
-	self assert: (self serialize: 'foo' -> 1) =  '''foo'':1'.
-	self assert: (self serialize: #bar -> 2) =  '#bar:2'.
-	self assert: (self serialize: 'foo bar' -> #ok) =  '''foo bar'':#ok'.
-	self assert: (self serialize: 123 -> 456) =  '123:456'
-
+	self assert: (self serialize: 'foo' -> 1) equals: '''foo'':1'.
+	self assert: (self serialize: #bar -> 2) equals: '#bar:2'.
+	self assert: (self serialize: 'foo bar' -> #ok) equals: '''foo bar'':#ok'.
+	self assert: (self serialize: 123 -> 456) equals: '123:456'
 ]
 
 { #category : #tests }
@@ -63,19 +62,18 @@ STONWriterTest >> testBag [
 
 { #category : #tests }
 STONWriterTest >> testBoolean [
-	self assert: (self serialize: true) = 'true'.
-	self assert: (self serialize: false) = 'false'
+	self assert: (self serialize: true) equals: 'true'.
+	self assert: (self serialize: false) equals: 'false'
 ]
 
 { #category : #tests }
 STONWriterTest >> testByteArray [
-	self assert: (self serialize: #(1 2 3) asByteArray) = 'ByteArray[''010203'']' 
-
+	self assert: (self serialize: #(1 2 3) asByteArray) equals: 'ByteArray[''010203'']'
 ]
 
 { #category : #tests }
 STONWriterTest >> testClass [
-	self assert: (self serialize: Point) = 'Class[#Point]'
+	self assert: (self serialize: Point) equals: 'Class[#Point]'
 ]
 
 { #category : #tests }
@@ -117,16 +115,26 @@ STONWriterTest >> testDate [
 { #category : #tests }
 STONWriterTest >> testDateAndTime [
 	| dateAndTime |
-	dateAndTime := DateAndTime year: 2012 month: 1 day: 1 hour: 6 minute: 30 second: 15 offset: 1 hour.
-	self assert: (self serialize: dateAndTime) = 'DateAndTime[''2012-01-01T06:30:15+01:00'']'
+	dateAndTime := DateAndTime
+		year: 2012
+		month: 1
+		day: 1
+		hour: 6
+		minute: 30
+		second: 15
+		offset: 1 hour.
+	self assert: (self serialize: dateAndTime) equals: 'DateAndTime[''2012-01-01T06:30:15+01:00'']'
 ]
 
 { #category : #tests }
 STONWriterTest >> testDictionary [
 	| collection |
-	collection := STON mapClass new at: 1 put: 1; at: 2 put: 2; yourself.
-	self assert: (self serialize: collection) = '{1:1,2:2}'.
-	self assert: (self serialize: STON mapClass new) = '{}'.
+	collection := STON mapClass new
+		at: 1 put: 1;
+		at: 2 put: 2;
+		yourself.
+	self assert: (self serialize: collection) equals: '{1:1,2:2}'.
+	self assert: (self serialize: STON mapClass new) equals: '{}'
 ]
 
 { #category : #tests }
@@ -148,14 +156,12 @@ STONWriterTest >> testDiskFile [
 { #category : #tests }
 STONWriterTest >> testDoubleQuotedString [
 	| string |
-	self assert: (self serializeJson: 'foo') = '"foo"'.
-	self assert: (self serializeJson: 'FOO') = '"FOO"'.
-	self assert: (self serializeJson: 'élève en Français') = '"élève en Français"'.
-	string := String withAll: { 
-		$". $'. $\. $/. Character tab. Character cr. Character lf. Character newPage. Character backspace }.
+	self assert: (self serializeJson: 'foo') equals: '"foo"'.
+	self assert: (self serializeJson: 'FOO') equals: '"FOO"'.
+	self assert: (self serializeJson: 'élève en Français') equals: '"élève en Français"'.
+	string := String withAll: {$" . $' . $\ . $/ . Character tab . Character cr . Character lf . Character newPage . Character backspace}.
 	"Note that in JSON mode, double quotes get escaped, and single quotes not"
-	self assert: (self serializeJson: string) equals: '"\"''\\/\t\r\n\f\b"'.
-
+	self assert: (self serializeJson: string) equals: '"\"''\\/\t\r\n\f\b"'
 ]
 
 { #category : #tests }
@@ -170,14 +176,14 @@ STONWriterTest >> testEmptyDictionaryPretty [
 
 { #category : #tests }
 STONWriterTest >> testFloat [
-	self assert: (self serialize: 1.5) = '1.5'.
-	self assert: (self serialize: 0.0) = '0.0'.
-	self assert: (self serialize: -1.5) = '-1.5'.
-	self assert: ((self serialize: Float pi) beginsWith:  '3.14159').
-	self assert: ((self serialize: (1/3) asFloat) beginsWith:  '0.333').
-	self assert: (self serialize: (10 raisedTo: 100) asFloat) = '1.0e100'.
-	self assert: (self serialize: (10 raisedTo: -50) asFloat) = '1.0e-50'.
-	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) = '-1.0e-50'.
+	self assert: (self serialize: 1.5) equals: '1.5'.
+	self assert: (self serialize: 0.0) equals: '0.0'.
+	self assert: (self serialize: -1.5) equals: '-1.5'.
+	self assert: ((self serialize: Float pi) beginsWith: '3.14159').
+	self assert: ((self serialize: (1 / 3) asFloat) beginsWith: '0.333').
+	self assert: (self serialize: (10 raisedTo: 100) asFloat) equals: '1.0e100'.
+	self assert: (self serialize: (10 raisedTo: -50) asFloat) equals: '1.0e-50'.
+	self assert: (self serialize: (10 raisedTo: -50) asFloat negated) equals: '-1.0e-50'
 ]
 
 { #category : #tests }
@@ -193,18 +199,21 @@ STONWriterTest >> testFraction [
 { #category : #tests }
 STONWriterTest >> testIdentityDictionary [
 	| collection |
-	collection := IdentityDictionary new at: 1 put: 1; at: 2 put: 2; yourself.
-	self assert: (self serialize: collection) = 'IdentityDictionary{1:1,2:2}'.
-	self assert: (self serialize: IdentityDictionary new) = 'IdentityDictionary{}'.
+	collection := IdentityDictionary new
+		at: 1 put: 1;
+		at: 2 put: 2;
+		yourself.
+	self assert: (self serialize: collection) equals: 'IdentityDictionary{1:1,2:2}'.
+	self assert: (self serialize: IdentityDictionary new) equals: 'IdentityDictionary{}'
 ]
 
 { #category : #tests }
 STONWriterTest >> testInteger [
-	self assert: (self serialize: 1) = '1'.
-	self assert: (self serialize: 0) = '0'.
-	self assert: (self serialize: -1) = '-1'.
-	self assert: (self serialize: 1234567890) = '1234567890'.
-	self assert: (self serialize: -1234567890) = '-1234567890'
+	self assert: (self serialize: 1) equals: '1'.
+	self assert: (self serialize: 0) equals: '0'.
+	self assert: (self serialize: -1) equals: '-1'.
+	self assert: (self serialize: 1234567890) equals: '1234567890'.
+	self assert: (self serialize: -1234567890) equals: '-1234567890'
 ]
 
 { #category : #tests }
@@ -244,9 +253,9 @@ STONWriterTest >> testKeepingNewLines [
 
 { #category : #tests }
 STONWriterTest >> testList [
-	self assert: (self serialize: (STON listClass withAll: #(1 2 3))) = '[1,2,3]'.
-	self assert: (self serialize: STON listClass new) = '[]'.
-	self assert: (self serialize: (STON listClass withAll: { 1. -1. 0. #foo. 'a b c'. true. false. nil })) = '[1,-1,0,#foo,''a b c'',true,false,nil]'
+	self assert: (self serialize: (STON listClass withAll: #(1 2 3))) equals: '[1,2,3]'.
+	self assert: (self serialize: STON listClass new) equals: '[]'.
+	self assert: (self serialize: (STON listClass withAll: {1 . -1 . 0 . #foo . 'a b c' . true . false . nil})) equals: '[1,-1,0,#foo,''a b c'',true,false,nil]'
 ]
 
 { #category : #tests }
@@ -255,21 +264,19 @@ STONWriterTest >> testMap [
 	(map := STON mapClass new)
 		at: #foo put: 1;
 		at: #bar put: 2.
-	self assert: (self serialize: map) = '{#foo:1,#bar:2}'.
-	self assert: (self serialize: STON mapClass new) = '{}'.
+	self assert: (self serialize: map) equals: '{#foo:1,#bar:2}'.
+	self assert: (self serialize: STON mapClass new) equals: '{}'.
 	map removeAll.
 	map at: 'foo bar' put: #ok.
-	self assert: (self serialize: map) = '{''foo bar'':#ok}'.
+	self assert: (self serialize: map) equals: '{''foo bar'':#ok}'.
 	map removeAll.
 	map at: 123 put: 456.
-	self assert: (self serialize: map) = '{123:456}'.
-
-
+	self assert: (self serialize: map) equals: '{123:456}'
 ]
 
 { #category : #tests }
 STONWriterTest >> testMetaclass [
-	self assert: (self serialize: Point class) = 'Metaclass[#Point]'
+	self assert: (self serialize: Point class) equals: 'Metaclass[#Point]'
 ]
 
 { #category : #tests }
@@ -284,7 +291,7 @@ STONWriterTest >> testMimeType [
 
 { #category : #tests }
 STONWriterTest >> testNil [
-	self assert: (self serialize: nil) = 'nil'
+	self assert: (self serialize: nil) equals: 'nil'
 ]
 
 { #category : #tests }
@@ -307,13 +314,13 @@ STONWriterTest >> testNull [
 STONWriterTest >> testOrderedCollection [
 	| collection |
 	collection := OrderedCollection with: 1 with: 2 with: 3.
-	self assert: (self serialize: collection) = 'OrderedCollection[1,2,3]'.
-	self assert: (self serialize: OrderedCollection new) = 'OrderedCollection[]'.
+	self assert: (self serialize: collection) equals: 'OrderedCollection[1,2,3]'.
+	self assert: (self serialize: OrderedCollection new) equals: 'OrderedCollection[]'
 ]
 
 { #category : #tests }
 STONWriterTest >> testPoint [
-	self assert: (self serialize: 1@2) = 'Point[1,2]'
+	self assert: (self serialize: 1 @ 2) equals: 'Point[1,2]'
 ]
 
 { #category : #tests }
@@ -321,15 +328,15 @@ STONWriterTest >> testReferenceCycle [
 	| array |
 	array := STON listClass with: 1 with: nil.
 	array at: 2 put: array.
-	self assert: (self serialize: array) = '[1,@1]'.
+	self assert: (self serialize: array) equals: '[1,@1]'
 ]
 
 { #category : #tests }
 STONWriterTest >> testReferenceSharing [
 	| array one |
-	one := { #one }.
+	one := {#one}.
 	array := STON listClass with: one with: one with: one.
-	self assert: (self serialize: array) = '[[#one],@2,@2]'.
+	self assert: (self serialize: array) equals: '[[#one],@2,@2]'
 ]
 
 { #category : #tests }
@@ -353,14 +360,15 @@ STONWriterTest >> testReferenceSharingError [
 STONWriterTest >> testReferenceSharingIgnore [
 	| serializer array one |
 	serializer := [ :object | 
-		String streamContents: [ :stream |
-			STON writer 
+	String
+		streamContents: [ :stream | 
+			STON writer
 				on: stream;
-				referencePolicy: #ignore; 
+				referencePolicy: #ignore;
 				nextPut: object ] ].
-	one := { #one }.
+	one := {#one}.
 	array := STON listClass with: one with: one with: one.
-	self assert: (serializer value: array) = '[[#one],[#one],[#one]]'.
+	self assert: (serializer value: array) equals: '[[#one],[#one],[#one]]'
 ]
 
 { #category : #tests }
@@ -382,34 +390,31 @@ STONWriterTest >> testScaledDecimal [
 { #category : #tests }
 STONWriterTest >> testString [
 	| string |
-	self assert: (self serialize: 'foo') = '''foo'''.
-	self assert: (self serialize: 'FOO') = '''FOO'''.
-	self assert: (self serializeAsciiOnly: 'élève en Français') = '''\u00E9l\u00E8ve en Fran\u00E7ais'''.
-	self assert: (self serialize: 'élève en Français') = '''élève en Français'''.
-	string := String withAll: { 
-		$". $'. $\. $/. Character tab. Character cr. Character lf.  Character newPage. Character backspace }.
-	self assert: (self serialize: string) equals: '''"\''\\/\t\r\n\f\b'''.
-
+	self assert: (self serialize: 'foo') equals: '''foo'''.
+	self assert: (self serialize: 'FOO') equals: '''FOO'''.
+	self assert: (self serializeAsciiOnly: 'élève en Français') equals: '''\u00E9l\u00E8ve en Fran\u00E7ais'''.
+	self assert: (self serialize: 'élève en Français') equals: '''élève en Français'''.
+	string := String withAll: {$" . $' . $\ . $/ . Character tab . Character cr . Character lf . Character newPage . Character backspace}.
+	self assert: (self serialize: string) equals: '''"\''\\/\t\r\n\f\b'''
 ]
 
 { #category : #tests }
 STONWriterTest >> testSymbol [
-	self assert: (self serialize: #foo) = '#foo'.
-	self assert: (self serialize: #FOO) = '#FOO'.
-	self assert: (self serialize: #bytes) = '#bytes'.
-	self assert: (self serialize: #'foo.bar') = '#foo.bar'.
-	self assert: (self serialize: #'foo-bar') = '#foo-bar'.
-	self assert: (self serialize: #'foo_bar') = '#foo_bar'.
-	self assert: (self serialize: #'foo/bar') = '#foo/bar'.
-	self assert: (self serialize: #'foo bar') = '#''foo bar'''.
-	self assert: (self serialize: #foo123) = '#foo123'.
+	self assert: (self serialize: #foo) equals: '#foo'.
+	self assert: (self serialize: #FOO) equals: '#FOO'.
+	self assert: (self serialize: #bytes) equals: '#bytes'.
+	self assert: (self serialize: #'foo.bar') equals: '#foo.bar'.
+	self assert: (self serialize: #'foo-bar') equals: '#foo-bar'.
+	self assert: (self serialize: #foo_bar) equals: '#foo_bar'.
+	self assert: (self serialize: #'foo/bar') equals: '#foo/bar'.
+	self assert: (self serialize: #'foo bar') equals: '#''foo bar'''.
+	self assert: (self serialize: #foo123) equals: '#foo123'
 ]
 
 { #category : #tests }
 STONWriterTest >> testSymbolAsString [
-	self assert: (self serializeJson: #foo) = '"foo"'.
-	self assert: (self serializeJson: #'FOO') = '"FOO"'.
-
+	self assert: (self serializeJson: #foo) equals: '"foo"'.
+	self assert: (self serializeJson: #FOO) equals: '"FOO"'
 ]
 
 { #category : #tests }

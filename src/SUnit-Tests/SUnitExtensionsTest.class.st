@@ -112,7 +112,7 @@ SUnitExtensionsTest >> testAssertionFailedInRaiseWithExceptionDo [
 	testResult := testCase run.
 
 	self assert: (testResult failures includes: testCase).
-	self assert: testResult failures size = 1.
+	self assert: testResult failures size equals: 1.
 	self assertEmpty: testResult passed.
 	self assertEmpty: testResult errors
 ]
@@ -156,7 +156,7 @@ SUnitExtensionsTest >> testDifferentExceptionInShouldRaiseWithExceptionDo [
 	self assert: (testResult passed includes: testCase).
 	self assertEmpty: testResult errors.
 	self assertEmpty: testResult failures.
-	self assert: testResult passed size = 1
+	self assert: testResult passed size equals: 1
 ]
 
 { #category : #test }
@@ -166,7 +166,7 @@ SUnitExtensionsTest >> testErrorInRaiseWithExceptionDo [
 	testResult := testCase run.
 
 	self assert: (testResult errors includes: testCase).
-	self assert: testResult errors size = 1.
+	self assert: testResult errors size equals: 1.
 	self assertEmpty: testResult failures.
 	self assertEmpty: testResult passed
 ]
@@ -192,7 +192,7 @@ SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThan [
 	testResult := testCase run.
 
 	self assertEmpty: testResult passed.
-	self assert: testResult failures size = 1.
+	self assert: testResult failures size equals: 1.
 	self assert: (testResult failures includes: testCase).
 	self assertEmpty: testResult errors
 ]
@@ -204,7 +204,7 @@ SUnitExtensionsTest >> testInvalidShouldNotTakeMoreThanMilliseconds [
 	testResult := testCase run.
 
 	self assertEmpty: testResult passed.
-	self assert: testResult failures size = 1.
+	self assert: testResult failures size equals: 1.
 	self assert: (testResult failures includes: testCase).
 	self assertEmpty: testResult errors
 ]
@@ -216,7 +216,7 @@ SUnitExtensionsTest >> testNoExceptionInShouldRaiseWithExceptionDo [
 	testResult := testCase run.
 
 	self assert: (testResult failures includes: testCase).
-	self assert: testResult failures size = 1.
+	self assert: testResult failures size equals: 1.
 	self assertEmpty: testResult passed.
 	self assertEmpty: testResult errors
 ]
@@ -246,7 +246,7 @@ SUnitExtensionsTest >> testShouldFix [
 	testResult := testCase run.
 
 	self assert: (testResult passed includes: testCase).
-	self assert: testResult passed size = 1.
+	self assert: testResult passed size equals: 1.
 	self assertEmpty: testResult failures.
 	self assertEmpty: testResult errors
 ]
@@ -258,7 +258,7 @@ SUnitExtensionsTest >> testShouldRaiseWithExceptionDo [
 	testResult := testCase run.
 
 	self assert: (testResult passed includes: testCase).
-	self assert: testResult passed size = 1.
+	self assert: testResult passed size equals: 1.
 	self assertEmpty: testResult failures.
 	self assertEmpty: testResult errors
 ]
@@ -270,7 +270,7 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThan [
 	testResult := testCase run.
 
 	self assert: (testResult passed includes: testCase).
-	self assert: testResult passed size = 1.
+	self assert: testResult passed size equals: 1.
 	self assertEmpty: testResult failures.
 	self assertEmpty: testResult errors
 ]
@@ -282,7 +282,7 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 	testResult := testCase run.
 
 	self assert: (testResult passed includes: testCase).
-	self assert: testResult passed size = 1.
+	self assert: testResult passed size equals: 1.
 	self assertEmpty: testResult failures.
 	self assertEmpty: testResult errors
 ]

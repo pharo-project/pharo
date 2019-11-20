@@ -35,49 +35,46 @@ SpecInterpreterTest >> testBuildWidgetForWithSpec [
 	| model morph |
 	model := TestingComposablePresenter new.
 	morph := model buildWithSpec: #testingSpec.
-	self assert: morph model == model.
-	self assert: model widget class = RubPluggableTextMorph
+	self assert: morph model identicalTo: model.
+	self assert: model widget class equals: RubPluggableTextMorph
 ]
 
 { #category : #tests }
 SpecInterpreterTest >> testConvertRandomSymbolOfClassToInstance [
-	
 	| symbol instance |
 	symbol := #PluggableListMorph.
-	
+
 	instance := specInterpreter convertSymbolOfClassToInstance: symbol.
-	self assert: (instance class name = symbol)
+	self assert: instance class name equals: symbol
 ]
 
 { #category : #tests }
 SpecInterpreterTest >> testDynamicBuild [
-
 	| model widget1 widget2 widget3 |
 	model := TestingComposablePresenter new.
- 	model openWithSpec close.
+	model openWithSpec close.
 	widget1 := model list widget.
-	
+
 	model openWithSpec close.
 	widget2 := model list widget.
-	
-	self deny: widget1 == widget2.
-	
+
+	self deny: widget1 identicalTo: widget2.
+
 	model list needRebuild: false.
 	model needRebuild: false.
 	model openWithSpec close.
 	widget3 := model list widget.
-	
-	self assert: widget2 == widget3.
+
+	self assert: widget2 identicalTo: widget3.
 	self assert: model needRebuild
 ]
 
 { #category : #tests }
 SpecInterpreterTest >> testInterpretASpecModelMorphAssociation [
-
 	| spec model morph |
 	model := AbstractWidgetPresenter new.
-	spec := {#PluggableListMorph. #model:. #model}.
+	spec := {#PluggableListMorph . #model: . #model}.
 	morph := specInterpreterClass interpretASpec: spec model: model.
-	
-	self assert: (model widget == morph).
+
+	self assert: model widget identicalTo: morph
 ]
