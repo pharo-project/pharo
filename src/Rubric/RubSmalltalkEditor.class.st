@@ -720,6 +720,7 @@ RubSmalltalkEditor >> implementorsOfIt [
 	| aSelector |
 	"self lineSelectAndEmptyCheck: [^ self]."
 	(aSelector := self selectedSelector) ifNil: [^ textArea flash].
+	aSelector isCharacter ifTrue: [^ textArea flash].
 	self implementorsOf: aSelector
 ]
 
@@ -1281,7 +1282,6 @@ RubSmalltalkEditor >> textArea: atextArea [
 
 	atextArea setCompletionEngine: self completionEngine.
 	super textArea: atextArea.
-	completionEngine setModel: self model
 ]
 
 { #category : #'menu messages' }

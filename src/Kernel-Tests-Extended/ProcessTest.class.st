@@ -41,72 +41,84 @@ ProcessTest >> testForkAtHigherPriority [
 
 { #category : #'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerFromProcessItself [
-
 	| error interceptedError process interrupted |
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
 	interrupted := true.
-	process := [ Processor activeProcess on: Error do: [ :err | interceptedError := err ].
-		error signal. interrupted := false ] fork.
-	
-	[process isTerminated] whileFalse: [ Processor yield ].
+	process := [ Processor activeProcess
+		on: Error
+		do: [ :err | interceptedError := err ].
+	error signal.
+	interrupted := false ] fork.
 
-	self assert: interceptedError == error.
-	self assert: interrupted 
+	[ process isTerminated ] whileFalse: [ Processor yield ].
+
+	self assert: interceptedError identicalTo: error.
+	self assert: interrupted
 ]
 
 { #category : #'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerIntoNotRunningProcess [
-
 	| error interceptedError process interrupted |
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
-	interrupted := true.	
-	process := [ error signal. interrupted := false ] newProcess.
-	process on: Error do: [ :err | interceptedError := err ].
+	interrupted := true.
+	process := [ error signal.
+	interrupted := false ] newProcess.
+	process
+		on: Error
+		do: [ :err | interceptedError := err ].
 	process resume.
-	[process isTerminated] whileFalse: [ Processor yield ].
+	[ process isTerminated ] whileFalse: [ Processor yield ].
 
-	self assert: interceptedError == error.
+	self assert: interceptedError identicalTo: error.
 	self assert: interrupted
 ]
 
 { #category : #'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerIntoProcessWithArg [
-
 	| error interceptedError process interrupted processArg |
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
-	interrupted := true.	
-	process := [:arg | processArg := arg. error signal. interrupted := false ] newProcessWith: #(#arg).
-	process on: Error do: [ :err | interceptedError := err ].
+	interrupted := true.
+	process := [ :arg | 
+	processArg := arg.
+	error signal.
+	interrupted := false ] newProcessWith: #(#arg).
+	process
+		on: Error
+		do: [ :err | interceptedError := err ].
 	process resume.
-	[process isTerminated] whileFalse: [ Processor yield ].
+	[ process isTerminated ] whileFalse: [ Processor yield ].
 
-	self assert: interceptedError == error.
+	self assert: interceptedError identicalTo: error.
 	self assert: interrupted.
-	self assert: processArg equals: #arg.
+	self assert: processArg equals: #arg
 ]
 
 { #category : #'tests - exception handlers' }
 ProcessTest >> testInjectingExceptionHandlerIntoRunningProcess [
-
 	| error interceptedError process sema started interrupted |
 	DefaultExecutionEnvironment beActive.
 	error := Error new messageText: 'test error'.
 	sema := Semaphore new.
 	started := false.
 	interrupted := true.
-	process := [started := true. sema wait. error signal. interrupted := false ] newProcess.
+	process := [ started := true.
+	sema wait.
+	error signal.
+	interrupted := false ] newProcess.
 	process resume.
-	[started] whileFalse: [ Processor yield ].
-	
-	process on: Error do: [ :err | interceptedError := err ].
-	
+	[ started ] whileFalse: [ Processor yield ].
+
+	process
+		on: Error
+		do: [ :err | interceptedError := err ].
+
 	sema signal.
-	[process isTerminated] whileFalse: [ Processor yield ].
-	
-	self assert: interceptedError == error.
+	[ process isTerminated ] whileFalse: [ Processor yield ].
+
+	self assert: interceptedError identicalTo: error.
 	self assert: interrupted
 ]
 
@@ -172,8 +184,7 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 
 { #category : #tests }
 ProcessTest >> testIsSelfEvaluating [
-
-	self assert: Processor printString = 'Processor'
+	self assert: Processor printString equals: 'Processor'
 ]
 
 { #category : #'tests - termination' }
@@ -183,21 +194,21 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	started := false.
 	terminationSemaphore := Semaphore new.
 	terminationSemaphore signal.
-	process := [ 
-		started := true.
-		[ terminationSemaphore wait; wait. ] ensure: [
-			terminator := Processor activeProcess.
+	process := [ started := true.
+	[ terminationSemaphore
+		wait;
+		wait ]
+		ensure: [ terminator := Processor activeProcess.
 			unwindChecks value.
-			unwound := true ] 
-	] newProcess.
+			unwound := true ] ] newProcess.
 	process priority: Processor activePriority - 1.
-	
+
 	self assert: process isSuspended.
 	self deny: process isTerminating.
 	self deny: process isTerminated.
 	self deny: started.
 	self deny: unwound.
-	
+
 	process resume.
 	[ terminationSemaphore isSignaled ] whileTrue: [ 50 milliSeconds asDelay wait ].
 	self deny: process isSuspended.
@@ -205,30 +216,29 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	self deny: process isTerminated.
 	self assert: started.
 	self deny: unwound.
-	self deny: terminator == process.
-	
+	self deny: terminator identicalTo: process.
+
 	terminationSemaphore signal.
 	"This will run the #ensure: block and block on the Semaphore."
 	process terminate.
 	"We want these checks to run during unwinding, so we need to cheat a bit."
-	unwindChecks := [
-		self assert: process isSuspended.
-		"We're inside of #terminate."
-		self assert: process isTerminating.
-		"Still unwinding, so not finished."
-		self deny: process isTerminated.
-		self assert: started.
-		"Not unwound yet."
-		self deny: unwound.
-		self assert: terminator == process ].
-	
+	unwindChecks := [ self assert: process isSuspended.
+	"We're inside of #terminate."
+	self assert: process isTerminating.
+	"Still unwinding, so not finished."
+	self deny: process isTerminated.
+	self assert: started.
+	"Not unwound yet."
+	self deny: unwound.
+	self assert: terminator identicalTo: process ].
+
 	[ process isTerminated ] whileFalse: [ 50 milliSeconds asDelay wait ].
 	self assert: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	self assert: started.
 	self assert: unwound.
-	self assert: terminator == process
+	self assert: terminator identicalTo: process
 ]
 
 { #category : #'tests - termination' }
@@ -236,28 +246,26 @@ ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	| process unwound started terminator |
 	unwound := false.
 	started := false.
-	process := [ 
-		started := true.
-		[ Semaphore new wait ] ensure: [
-			terminator := Processor activeProcess.
-			unwound := true ] 
-	] newProcess.
+	process := [ started := true.
+	[ Semaphore new wait ]
+		ensure: [ terminator := Processor activeProcess.
+			unwound := true ] ] newProcess.
 	"This will prevent the process from getting a chance to run.
 	Effectively the pc of suspendedContext will be equal to startpc."
 	process priority: Processor systemBackgroundPriority.
-	
+
 	self assert: process isSuspended.
 	self deny: process isTerminating.
 	self deny: process isTerminated.
 	self deny: started.
 	self deny: unwound.
-	
+
 	process resume.
 	self deny: process isSuspended.
 	self deny: process isTerminating.
 	self deny: process isTerminated.
 	self deny: unwound.
-	
+
 	process terminate.
 	self assert: process isSuspended.
 	self assert: process isTerminating.
@@ -266,7 +274,7 @@ ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	self deny: started.
 	"No unwind blocks were ever activated, so the next two lines can't be true."
 	self deny: unwound.
-	self deny: terminator == process
+	self deny: terminator identicalTo: process
 ]
 
 { #category : #'tests - termination' }
@@ -275,18 +283,16 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	sem := Semaphore new.
 	unwound := false.
 	started := false.
-	process := [ 
-		started := true.
-		[ sem wait ] ensure: [
-		terminator := Processor activeProcess.
-		unwound := true ] 
-	] fork.
+	process := [ started := true.
+	[ sem wait ]
+		ensure: [ terminator := Processor activeProcess.
+			unwound := true ] ] fork.
 	self deny: process isSuspended.
 	self deny: process isTerminating.
 	self deny: process isTerminated.
 	self deny: started.
 	self deny: unwound.
-	
+
 	sem signal.
 	self waitForProcessTermination: process.
 	"#terminate will be sent by the process itself after its context has finished (see BlockClosure>>newProcess)"
@@ -297,7 +303,7 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	"When inside of an unwind context, that unwind context needs run through."
 	self assert: unwound.
 	"A process should terminte itself."
-	self assert: terminator == process
+	self assert: terminator identicalTo: process
 ]
 
 { #category : #'tests - creation' }

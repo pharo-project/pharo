@@ -971,14 +971,13 @@ SHRBTextStyler >> pixelHeight [
 { #category : #private }
 SHRBTextStyler >> privateStyle: aText [
 	| ast |
-	ast := self isForWorkspace 
-		ifFalse: [ RBParser parseFaultyMethod: aText ] 
-		ifTrue: [ RBParser parseFaultyExpression: aText ].
-	
-	ast methodNode compilationContext: (Smalltalk compiler compilationContext
-				parseOptions: #(+ optionParseErrors + optionSkipSemanticWarnings);
-				requestor: workspace).
-	ast doSemanticAnalysisIn: classOrMetaClass.
+	ast := classOrMetaClass compiler
+		source: aText;
+		noPattern: self isForWorkspace ;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: workspace;
+		parse.				
+	ast doSemanticAnalysis.
 	^ self style: aText ast: ast
 ]
 

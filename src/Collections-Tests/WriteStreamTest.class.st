@@ -45,30 +45,27 @@ WriteStreamTest >> stringSize [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureASpace [
-	
 	| stream |
 	stream := self newStream.
 	stream nextPutAll: 'this is a test'.
 	stream ensureASpace.
 	stream nextPutAll: 'for WriteStreamTest'.
-	self assert: stream contents = 'this is a test for WriteStreamTest'.
-	
+	self assert: stream contents equals: 'this is a test for WriteStreamTest'.
+
 	"Manually put a space and verify there are no 2 consecutive spaces"
 	stream := self newStream.
 	stream nextPutAll: 'this is a test '.
 	stream ensureASpace.
 	stream nextPutAll: 'for WriteStreamTest'.
-	self assert: stream contents = 'this is a test for WriteStreamTest'.
+	self assert: stream contents equals: 'this is a test for WriteStreamTest'
 ]
 
 { #category : #tests }
 WriteStreamTest >> testEnsureASpace2 [
-	
 	| stream |
 	stream := self newStream.
 	stream ensureASpace.
-	self assert: stream contents = ' '.
-	
+	self assert: stream contents equals: ' '
 ]
 
 { #category : #tests }
@@ -158,9 +155,9 @@ WriteStreamTest >> testNextPut [
 	self string
 		withIndexDo: [ :each :i | 
 			self
-				assert: (stream nextPut: each) = each;
-				assert: stream position = i;
-				assert: stream contents = (self string first: i) ]
+				assert: (stream nextPut: each) equals: each;
+				assert: stream position equals: i;
+				assert: stream contents equals: (self string first: i) ]
 ]
 
 { #category : #tests }
@@ -168,9 +165,9 @@ WriteStreamTest >> testNextPutAll [
 	| stream |
 	stream := self newStream.
 	self
-		assert: (stream nextPutAll: self string) = self string;
-		assert: stream position = self stringSize;
-		assert: stream contents = self string
+		assert: (stream nextPutAll: self string) equals: self string;
+		assert: stream position equals: self stringSize;
+		assert: stream contents equals: self string
 ]
 
 { #category : #tests }
@@ -179,7 +176,7 @@ WriteStreamTest >> testOn [
 	collection := String new.
 	stream := self streamClass on: collection.
 	self
-		assert: stream originalContents == collection;
+		assert: stream originalContents identicalTo: collection;
 		assert: stream position isZero;
 		assert: stream contents isEmpty;
 		assert: stream size isZero
@@ -188,15 +185,12 @@ WriteStreamTest >> testOn [
 { #category : #tests }
 WriteStreamTest >> testOnFromTo [
 	| stream |
-	stream := self streamClass
-		on: self string , self string
-		from: self stringSize + 1
-		to: self stringSize * 2.
+	stream := self streamClass on: self string , self string from: self stringSize + 1 to: self stringSize * 2.
 	self
-		assert: stream originalContents = (self string, self string);
-		assert: stream position = self stringSize;
-		assert: stream contents = self string;
-		assert: stream size = (self stringSize * 2)
+		assert: stream originalContents equals: self string , self string;
+		assert: stream position equals: self stringSize;
+		assert: stream contents equals: self string;
+		assert: stream size equals: self stringSize * 2
 ]
 
 { #category : #tests }
@@ -206,10 +200,10 @@ WriteStreamTest >> testPosition [
 	stream nextPutAll: self string.
 	0 to: self stringSize do: [ :i | 
 		self
-			assert: stream position = self stringSize;
-			assert: (stream position: i) == stream;
-			assert: stream position = i;
-			assert: stream contents = (self string first: i).
+			assert: stream position equals: self stringSize;
+			assert: (stream position: i) identicalTo: stream;
+			assert: stream position equals: i;
+			assert: stream contents equals: (self string first: i).
 		stream position: self stringSize ].
 	self should: [ stream position: -1 ] raise: Error.
 	self should: [ stream position: self stringSize + 1 ] raise: Error
@@ -220,16 +214,16 @@ WriteStreamTest >> testSetToEnd [
 	| stream |
 	stream := self newStream.
 	self
-		assert: stream setToEnd == stream;
+		assert: stream setToEnd identicalTo: stream;
 		assert: stream position isZero;
 		assert: stream contents isEmpty.
 	stream nextPutAll: self string.
 	self stringSize - 1 to: 0 by: -1 do: [ :i | 
 		stream position: i.
 		self
-			assert: stream setToEnd == stream;
-			assert: stream position = self stringSize;
-			assert: stream contents = self string ]
+			assert: stream setToEnd identicalTo: stream;
+			assert: stream position equals: self stringSize;
+			assert: stream contents equals: self string ]
 ]
 
 { #category : #tests }
@@ -237,27 +231,26 @@ WriteStreamTest >> testWith [
 	"like on: except it starts writing at the end of its argument collection,
 	and the initial position is the collection size and the initial contents
 	is the collection"
+
 	| stream |
 	stream := self streamClass with: self string.
 	self
-		assert: stream originalContents = self string;
-		assert: stream position = self stringSize;
-		assert: stream contents = self string;
-		assert: stream size = self stringSize.
+		assert: stream originalContents equals: self string;
+		assert: stream position equals: self stringSize;
+		assert: stream contents equals: self string;
+		assert: stream size equals: self stringSize
 ]
 
 { #category : #tests }
 WriteStreamTest >> testWithFromTo [
 	"like with: except it paritions its argument collection first using the
 	from:/to: indexes"
+
 	| stream |
-	stream := self streamClass
-		with: self string , self string
-		from: 1
-		to: self stringSize.
+	stream := self streamClass with: self string , self string from: 1 to: self stringSize.
 	self
-		assert: stream originalContents = self string;
-		assert: stream position = self stringSize;
-		assert: stream contents = self string;
-		assert: stream size = self stringSize.
+		assert: stream originalContents equals: self string;
+		assert: stream position equals: self stringSize;
+		assert: stream contents equals: self string;
+		assert: stream size equals: self stringSize
 ]

@@ -23,12 +23,11 @@ ClyTestedClassTest >> testExpectedFailure [
 { #category : #tests }
 ClyTestedClassTest >> testOne [
 	| testedObject |
-
 	testedObject := self newTestedObject.
 	self
 		assert: testedObject one isNil;
-		assert: (testedObject one: #one) == testedObject;
-		assert: testedObject one = #one.
+		assert: (testedObject one: #one) identicalTo: testedObject;
+		assert: testedObject one equals: #one
 ]
 
 { #category : #tests }
@@ -36,23 +35,22 @@ ClyTestedClassTest >> testOneTwo [
 	| testedObject |
 	testedObject := self newTestedObject one: #one two: #two.
 	self
-		assert: testedObject one = #one;
-		assert: testedObject two = #two;
-		assert: (testedObject one: #three two: #four) == testedObject;
-		assert: testedObject one = #three;
-		assert: testedObject two = #four;
-		assert: (testedObject oneTwo: #five) == testedObject;
-		assert: testedObject one = #three;
-		assert: testedObject two = #five
+		assert: testedObject one equals: #one;
+		assert: testedObject two equals: #two;
+		assert: (testedObject one: #three two: #four) identicalTo: testedObject;
+		assert: testedObject one equals: #three;
+		assert: testedObject two equals: #four;
+		assert: (testedObject oneTwo: #five) identicalTo: testedObject;
+		assert: testedObject one equals: #three;
+		assert: testedObject two equals: #five
 ]
 
 { #category : #tests }
 ClyTestedClassTest >> testTwo [
 	| testedObject |
-
 	testedObject := self newTestedObject.
 	self
 		assert: testedObject two isNil;
-		assert: (testedObject two: #two) == testedObject;
-		assert: testedObject two = #two.
+		assert: (testedObject two: #two) identicalTo: testedObject;
+		assert: testedObject two equals: #two
 ]

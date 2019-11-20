@@ -148,6 +148,13 @@ ClassTest >> testClassSide [
 ]
 
 { #category : #tests }
+ClassTest >> testCommonSuperclassWith [
+	self assert: (OrderedCollection commonSuperclassWith: Array) equals: SequenceableCollection.
+	self assert: (OrderedCollection commonSuperclassWith: OrderedCollection) equals: SequenceableCollection.
+	self assert: (ProtoObject commonSuperclassWith: Object) equals: nil
+]
+
+{ #category : #tests }
 ClassTest >> testCompileAll [
 	ClassTest compileAll
 ]
@@ -244,14 +251,14 @@ ClassTest >> testMethodsReferencingClasses [
 ClassTest >> testNewSubclass [
 	| cls |
 	cls := Point newSubclass.
-	self assert: (cls isBehavior).
-	self assert: (cls superclass == Point).
+	self assert: cls isBehavior.
+	self assert: cls superclass identicalTo: Point.
 	self assert: (Point allSubclasses includes: cls).
-	self assert: (cls instVarNames = #()).
-	self assert: (cls category = self unclassifiedCategory).
-	self assert: (cls classVarNames = #()).
-	
-	cls removeFromSystem.
+	self assert: cls instVarNames equals: #().
+	self assert: cls category equals: self unclassifiedCategory.
+	self assert: cls classVarNames equals: #().
+
+	cls removeFromSystem
 ]
 
 { #category : #'tests - file in/out' }
@@ -293,23 +300,23 @@ ClassTest >> testOrdersMetaClassAfterItsClassInstance [
 { #category : #'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInClassUser [
 	"This test shows that a Pool Variable is accessible from the class that declare the Pool usage: here the superclass"
- 
+
 	PoolDefiner initialize.
 	RootClassPoolUser compileAll.
-	
-	self assert: RootClassPoolUser gloups = 42.
-	self assert: RootClassPoolUser author = 'Ducasse'
+
+	self assert: RootClassPoolUser gloups equals: 42.
+	self assert: RootClassPoolUser author equals: 'Ducasse'
 ]
 
 { #category : #'tests - pools' }
 ClassTest >> testPoolVariableAccessibleInSubclassOfClassUser [
 	"This test shows that a Pool Variable is not accessible from a subclass that declare the Pool usage: here SubFlop subclass of Flop and this is a bug. "
- 
+
 	PoolDefiner initialize.
 	SubclassPoolUser compileAll.
-	
-	self assert: SubclassPoolUser gloups = 42.
-	self assert: SubclassPoolUser author = 'Ducasse'
+
+	self assert: SubclassPoolUser gloups equals: 42.
+	self assert: SubclassPoolUser author equals: 'Ducasse'
 ]
 
 { #category : #'tests - navigation' }
@@ -369,34 +376,32 @@ ClassTest >> testSharedPools [
 { #category : #'tests - class creation' }
 ClassTest >> testSubclass [
 	| cls |
-	(testEnvironment includesKey: #SubclassExample)
-		ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
-	
+	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
+
 	self deny: (testEnvironment includesKey: #SubclassExample).
 	cls := Object subclass: #SubclassExample.
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
-	self assert: (testEnvironment at: #SubclassExample) == cls.
+	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.
 	self assert: cls category equals: self unclassifiedCategory.
 	self assert: cls instVarNames equals: #().
-	
+
 	cls removeFromSystem
 ]
 
 { #category : #'tests - class creation' }
 ClassTest >> testSubclassInstanceVariableNames [
 	| cls |
-	(testEnvironment includesKey: #SubclassExample)
-		ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
-	
+	(testEnvironment includesKey: #SubclassExample) ifTrue: [ (testEnvironment at: #SubclassExample) removeFromSystem ].
+
 	self deny: (testEnvironment includesKey: #SubclassExample).
 	cls := Object subclass: #SubclassExample instanceVariableNames: 'x y'.
 	self assert: (testEnvironment includesKey: #SubclassExample).
 
-	self assert: (testEnvironment at: #SubclassExample) == cls.
+	self assert: (testEnvironment at: #SubclassExample) identicalTo: cls.
 	self assert: cls category equals: self unclassifiedCategory.
 	self assert: cls instVarNames equals: #('x' 'y').
-	
+
 	cls removeFromSystem
 ]
 

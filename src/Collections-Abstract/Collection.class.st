@@ -425,7 +425,7 @@ Collection >> collect: collectBlock thenSelect: selectBlock [
 
 { #category : #testing }
 Collection >> contains: aBlock [
-	"VW compatibility"
+	"For compatibility, please use #anySatisfy: instead!"
 	^self anySatisfy: aBlock
 ]
 

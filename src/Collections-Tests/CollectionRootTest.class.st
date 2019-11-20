@@ -129,7 +129,7 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFoundIgnoringTheFoundObjec
 { #category : #'tests - iterate' }
 CollectionRootTest >> testRejectNoReject [
 	| res collection |
-	collection := self collectionWithoutNilElements .
-	res := collection  reject: [ :each | each isNil ].
-	self assert: res size = collection  size
+	collection := self collectionWithoutNilElements.
+	res := collection reject: [ :each | each isNil ].
+	self assert: res size equals: collection size
 ]

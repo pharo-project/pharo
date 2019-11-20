@@ -29,6 +29,7 @@ MCPTest >> testTop [
 	""
 	morph top: newTop.
 	""
-	self assert: morph top = newTop;
-		 assert: morph bounds = newBounds
+	self
+		assert: morph top equals: newTop;
+		assert: morph bounds equals: newBounds
 ]

@@ -616,9 +616,11 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	^self compilationContext noPattern 
+	ast := self compilationContext noPattern 
 		ifTrue: [ self parseExpression ]
 		ifFalse: [ self parseMethod ].
+	ast methodNode compilationContext: self compilationContext.
+	^ast
 ]
 
 { #category : #'public access' }
@@ -673,8 +675,7 @@ OpalCompiler >> parse: textOrStream in: aClass notifying: req [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-
-	^ast := self compilationContext optionParseErrors 
+	^self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
 		ifFalse: [self parserClass parseExpression: source contents]
 ]
@@ -687,12 +688,9 @@ OpalCompiler >> parseLiterals: aString [
 { #category : #private }
 OpalCompiler >> parseMethod [
 	
-	ast := self compilationContext optionParseErrors 
+	^self compilationContext optionParseErrors 
 		ifTrue: [self parserClass parseFaultyMethod: source contents]
-		ifFalse: [self parserClass parseMethod: source contents].
-	ast compilationContext: self compilationContext.
-	^ast.
-
+		ifFalse: [self parserClass parseMethod: source contents]
 ]
 
 { #category : #'public access' }
@@ -741,6 +739,7 @@ OpalCompiler >> transformDoit [
 	ast := context 
 		ifNil: [ast asDoit] 
 		ifNotNil: [ast asDoitForContext: context].
+	"we need to set the compilation context in the new method node"
 	^ast compilationContext: self compilationContext
 ]
 

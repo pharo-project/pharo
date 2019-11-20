@@ -53,15 +53,11 @@ ClyActiveBreakpointsQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyActiveBreakpointsQueryTest >> testComparison [
-	self
-		assert: (ClyActiveBreakpointsQuery new)
-		equals: (ClyActiveBreakpointsQuery new).
-	
-	self
-		assert: (ClyActiveBreakpointsQuery newIncludingHaltsForTesting)
-		equals: (ClyActiveBreakpointsQuery newIncludingHaltsForTesting).
-		
-	self deny: (ClyActiveBreakpointsQuery new) = (ClyActiveBreakpointsQuery newIncludingHaltsForTesting).
+	self assert: ClyActiveBreakpointsQuery new equals: ClyActiveBreakpointsQuery new.
+
+	self assert: ClyActiveBreakpointsQuery newIncludingHaltsForTesting equals: ClyActiveBreakpointsQuery newIncludingHaltsForTesting.
+
+	self deny: ClyActiveBreakpointsQuery new equals: ClyActiveBreakpointsQuery newIncludingHaltsForTesting
 ]
 
 { #category : #tests }

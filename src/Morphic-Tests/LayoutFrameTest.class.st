@@ -34,13 +34,13 @@ LayoutFrameTest >> testIdentity [
 LayoutFrameTest >> testInset [
 	| lf rectangle |
 	lf := LayoutFrame new
-			leftOffset: 10;
-			topOffset: 10;
-			rightOffset: -10;
-			bottomOffset: -10;
-			yourself.
-	rectangle := lf layout: nil in: (50@10 corner: 150@70).
-	self assert: (60@20 corner: 140@60) = rectangle
+		leftOffset: 10;
+		topOffset: 10;
+		rightOffset: -10;
+		bottomOffset: -10;
+		yourself.
+	rectangle := lf layout: nil in: (50 @ 10 corner: 150 @ 70).
+	self assert: (60 @ 20 corner: 140 @ 60) equals: rectangle
 ]
 
 { #category : #tests }
@@ -52,29 +52,29 @@ LayoutFrameTest >> testLeftTopAligned [
 		rightFraction: 0 offset: 60;
 		bottomFraction: 0 offset: 25;
 		yourself.
-	rectangle := lf layout: nil in: (50@10 corner: 150@70).
-	self assert: (60@20 corner: 110@35) = rectangle
+	rectangle := lf layout: nil in: (50 @ 10 corner: 150 @ 70).
+	self assert: (60 @ 20 corner: 110 @ 35) equals: rectangle
 ]
 
 { #category : #tests }
 LayoutFrameTest >> testRightBottomQuadrant [
 	| lf rectangle |
 	lf := LayoutFrame new
-			leftFraction: 1/2 offset: 1;
-			topFraction: 1/2 offset: 1;
-			rightFraction: 1 offset: -2;
-			bottomFraction: 1 offset: -2;
-			yourself.
-	rectangle := lf layout: nil in: (50@10 corner: 150@70).
-	self assert: (101@41 corner: 148@68) = rectangle
+		leftFraction: 1 / 2 offset: 1;
+		topFraction: 1 / 2 offset: 1;
+		rightFraction: 1 offset: -2;
+		bottomFraction: 1 offset: -2;
+		yourself.
+	rectangle := lf layout: nil in: (50 @ 10 corner: 150 @ 70).
+	self assert: (101 @ 41 corner: 148 @ 68) equals: rectangle
 ]
 
 { #category : #tests }
 LayoutFrameTest >> testSpaceFill [
 	| lf rectangle |
 	lf := LayoutFrame identity.
-	rectangle := lf layout: nil in: (50@10 corner: 150@70).
-	self assert: (50@10 corner: 150@70) = rectangle
+	rectangle := lf layout: nil in: (50 @ 10 corner: 150 @ 70).
+	self assert: (50 @ 10 corner: 150 @ 70) equals: rectangle
 ]
 
 { #category : #tests }
@@ -83,13 +83,13 @@ LayoutFrameTest >> testTransform [
 
 	| lf rectangle |
 	lf := LayoutFrame new
-			leftOffset: 10;
-			topOffset: 10;
-			rightOffset: -10;
-			bottomOffset: -10;
-			yourself.
-	rectangle := lf layout: nil in: (50@10 corner: 150@70).
-	self assert: (60@20 corner: 140@60) = rectangle
+		leftOffset: 10;
+		topOffset: 10;
+		rightOffset: -10;
+		bottomOffset: -10;
+		yourself.
+	rectangle := lf layout: nil in: (50 @ 10 corner: 150 @ 70).
+	self assert: (60 @ 20 corner: 140 @ 60) equals: rectangle
 ]
 
 { #category : #tests }
@@ -98,15 +98,15 @@ LayoutFrameTest >> testTransformReturnASubArea [
 
 	| lf rectangle refRectangle |
 	lf := LayoutFrame new
-			leftOffset: 10;
-			topOffset: 10;
-			rightOffset: -10;
-			bottomOffset: -10;
-			yourself.
-	refRectangle := 0@0 extent: 100@200.
+		leftOffset: 10;
+		topOffset: 10;
+		rightOffset: -10;
+		bottomOffset: -10;
+		yourself.
+	refRectangle := 0 @ 0 extent: 100 @ 200.
 	rectangle := lf transform: refRectangle.
-	self assert: rectangle width = 80.
-	self assert: rectangle height = 180.
+	self assert: rectangle width equals: 80.
+	self assert: rectangle height equals: 180
 ]
 
 { #category : #tests }
@@ -115,13 +115,13 @@ LayoutFrameTest >> testTransformReturnEmptyRectangleWhenNotPossibleToPlace [
 
 	| lf rectangle refRectangle |
 	lf := LayoutFrame new
-			leftOffset: 10;
-			topOffset: 10;
-			rightOffset: -10;
-			bottomOffset: -10;
-			yourself.
-	refRectangle := 0@0 extent: 10@10.
+		leftOffset: 10;
+		topOffset: 10;
+		rightOffset: -10;
+		bottomOffset: -10;
+		yourself.
+	refRectangle := 0 @ 0 extent: 10 @ 10.
 	rectangle := lf transform: refRectangle.
-	self assert: rectangle width = 0.
-	self assert: rectangle height = 0.
+	self assert: rectangle width equals: 0.
+	self assert: rectangle height equals: 0
 ]

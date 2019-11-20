@@ -10,7 +10,7 @@ GLMPortTest >> testPanePortTransmissionCallingReceiveIn [
 	originPort := GLMTestPane new port: #originPort.
 	destinationPort := GLMTestPane new port: #destinationPort.
 	self assertEmpty: destinationPort seenTransmissions.
-	transmission := (GLMTransmission new)
+	transmission := GLMTransmission new
 		addActiveOrigin: originPort;
 		destination: destinationPort;
 		transformation: [ :x | x + 1 ].
@@ -18,7 +18,7 @@ GLMPortTest >> testPanePortTransmissionCallingReceiveIn [
 	transmission transmit.
 	self assert: destinationPort seenTransmissions size equals: 1.
 	self assert: destinationPort seenTransmissions first origins first value equals: 41.
-	self assert: destinationPort seenTransmissions first destination == destinationPort.
+	self assert: destinationPort seenTransmissions first destination identicalTo: destinationPort.
 	self assert: destinationPort value equals: 42
 ]
 
@@ -40,24 +40,22 @@ GLMPortTest >> testPortInitializationDoesNotAffectTransmissionPort [
 	| browser count |
 	count := 0.
 	browser := GLMTabulator new.
-	browser
-		column: #one.
-	(browser transmit)
+	browser column: #one.
+	browser transmit
 		fromOutsidePort: #entity;
 		to: #one port: #entity;
 		andShow: [ :a :entity | 
-			a list initialize: [ :pres |  
-				count := count + 1.
-				pres 
-					entity: (1 to: 10) ] ].
+			a list
+				initialize: [ :pres | 
+					count := count + 1.
+					pres entity: (1 to: 10) ] ].
 	self assert: (browser panes first port: #entity) value equals: nil.
 	browser startOn: (1 to: 42).
 	self assert: (browser panes first port: #entity) value equals: (1 to: 42).
-	self assert: count = 1.
+	self assert: count equals: 1.
 	(browser pane port: #entity) value: (1 to: 43).
 	self assert: (browser panes first port: #entity) value equals: (1 to: 43).
-	self assert: count = 2.
-
+	self assert: count equals: 2
 ]
 
 { #category : #tests }

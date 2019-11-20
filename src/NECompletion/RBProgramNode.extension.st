@@ -13,5 +13,7 @@ RBProgramNode >> completionToken [
 { #category : #'*NECompletion' }
 RBProgramNode >> select: aCollection beginningWith: aString [
 	"note: to be inlined into the senders"
-	^ aCollection select: [ :each | each beginsWith: aString asString ]
+	^ aCollection 
+		select: [ :each | each beginsWith: aString asString ]
+		thenCollect: [ :each | NECEntry contents: each node: self ]
 ]

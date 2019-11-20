@@ -28,11 +28,11 @@ ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithDifferentClass [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
 	ann1 declarationSelector: #selector1.
-	
+
 	ann2 := ClassAnnotationExample1 withAnnotatedClass: SubclassWithOnlyInheritedAnnotation.
 	ann2 declarationSelector: #selector1.
-	
-	self deny: ann1 = ann2
+
+	self deny: ann1 equals: ann2
 ]
 
 { #category : #tests }
@@ -40,11 +40,11 @@ ClassAnnotationTest >> testComparisonOfTwoAnnotationsWithDifferentSelector [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithThreeAnnotations.
 	ann1 declarationSelector: #selector1.
-	
+
 	ann2 := ClassAnnotationExample1 withAnnotatedClass: ClassWithThreeAnnotations.
 	ann2 declarationSelector: #selector2.
-	
-	self deny: ann1 = ann2
+
+	self deny: ann1 equals: ann2
 ]
 
 { #category : #tests }
@@ -65,11 +65,11 @@ ClassAnnotationTest >> testComparisonOfTwoDifferentAnnotations [
 	| ann1 ann2 |
 	ann1 := ClassAnnotationExample1 withAnnotatedClass: ClassWithSingleAnnotation.
 	ann1 declarationSelector: #selector1.
-	
+
 	ann2 := ClassAnnotationExample2 withAnnotatedClass: ClassWithSingleAnnotation.
 	ann2 declarationSelector: #selector1.
-	
-	self deny: ann1 = ann2
+
+	self deny: ann1 equals: ann2
 ]
 
 { #category : #tests }
@@ -121,10 +121,10 @@ ClassAnnotationTest >> testGettingAllRedefiningInstances [
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
 	annotation redefineBy: [ annotation priority: -1000 ].
 
-	allRedefining := annotation class redefiningInstances.	
+	allRedefining := annotation class redefiningInstances.
 	self assert: allRedefining size equals: 1.
 	self assert: allRedefining anyOne priority equals: -1000.
-	self assert: allRedefining anyOne == annotation
+	self assert: allRedefining anyOne identicalTo: annotation
 ]
 
 { #category : #tests }
@@ -155,9 +155,9 @@ ClassAnnotationTest >> testGettingRedefinedInstance [
 	| annotation redefinedInstance |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
 	annotation redefineBy: [ annotation priority: -1000 ].
-	
+
 	redefinedInstance := annotation redefinedInstance.
-	self deny: redefinedInstance == annotation.
+	self deny: redefinedInstance identicalTo: annotation.
 	self assert: redefinedInstance priority equals: 0.
 	self assert: redefinedInstance isRedefined
 ]
@@ -167,21 +167,19 @@ ClassAnnotationTest >> testGettingRedefiningInstance [
 	| annotation actual |
 	annotation := ClassWithSingleAnnotation classAnnotations anyOne.
 	annotation redefineBy: [ annotation priority: -1000 ].
-	
+
 	actual := annotation copy redefiningInstance.
-	
-	self assert: actual == annotation
+
+	self assert: actual identicalTo: annotation
 ]
 
 { #category : #tests }
 ClassAnnotationTest >> testGettingSingleAnnotationUsingSelector [
 	| expected actual |
-	
-	expected := ClassWithThreeAnnotations classAnnotations 
-		detect: [ :each | each declarationSelector = #annotationExample2 ].
+	expected := ClassWithThreeAnnotations classAnnotations detect: [ :each | each declarationSelector = #annotationExample2 ].
 	actual := ClassWithThreeAnnotations classAnnotationAt: #annotationExample2.
-	
-	self assert: actual == expected
+
+	self assert: actual identicalTo: expected
 ]
 
 { #category : #tests }
@@ -305,8 +303,8 @@ ClassAnnotationTest >> testRevertingRedefinedInstance [
 	annotation redefineBy: [ annotation priority: -1000 ].
 	revertedAnnotation := annotation revertRedefinedInstance.
 
-	self deny: revertedAnnotation == annotation.	
-	self assert: revertedAnnotation == ClassWithSingleAnnotation classAnnotations anyOne.
+	self deny: revertedAnnotation identicalTo: annotation.
+	self assert: revertedAnnotation identicalTo: ClassWithSingleAnnotation classAnnotations anyOne.
 	self assert: revertedAnnotation priority equals: 0.
 	self deny: revertedAnnotation isRedefined
 ]

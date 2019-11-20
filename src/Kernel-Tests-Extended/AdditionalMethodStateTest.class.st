@@ -37,16 +37,15 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 
 { #category : #tests }
 AdditionalMethodStateTest >> testCopy [
-
 	| copy |
 	copy := amState copy.
 
-	self deny: amState == copy.
-	self assert: amState method == copy method.
-	self assert: amState selector == copy selector.
+	self deny: amState identicalTo: copy.
+	self assert: amState method identicalTo: copy method.
+	self assert: amState selector identicalTo: copy selector.
 
 	self assert: amState pragmas equals: copy pragmas.
 	self assert: amState properties equals: copy properties.
 
-	amState pragmas withIndexDo: [:el :index| self deny: el == (copy pragmas at: index)].
+	amState pragmas withIndexDo: [ :el :index | self deny: el identicalTo: (copy pragmas at: index) ]
 ]

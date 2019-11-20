@@ -2,16 +2,14 @@ Extension { #name : #CompiledMethodTrailerTest }
 
 { #category : #'*Kernel-Tests-Extended' }
 CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
-
 	| trailer newTrailer code |
-	
 	trailer := CompiledMethodTrailer new.
-	
+
 	code := 'foo'.
 	trailer compressSourceCode: code.
 	newTrailer := trailer testEncoding.
-	
-	self assert: (trailer kind == #EmbeddedSourceQCompress ).
+
+	self assert: trailer kind identicalTo: #EmbeddedSourceQCompress.
 	self assert: newTrailer sourceCode equals: code.
 
 	"the last bytecode index must be at 0"
@@ -29,9 +27,9 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 	self assert: newTrailer sourceCode equals: code.'.
 
 	trailer compressSourceCode: code.
-	self assert: (trailer kind == #EmbeddedSourceZip ).
+	self assert: trailer kind identicalTo: #EmbeddedSourceZip.
 	newTrailer := trailer testEncoding.
-	
+
 	self assert: newTrailer sourceCode equals: code.
 	"the last bytecode index must be at 0"
 	self assert: newTrailer endPC equals: 0

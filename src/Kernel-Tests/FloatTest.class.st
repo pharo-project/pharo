@@ -195,27 +195,24 @@ FloatTest >> testInfinity1 [
 
 { #category : #'tests - infinity behavior' }
 FloatTest >> testInfinity2 [
-
-	| i1  i2 |
+	| i1 i2 |
 	i1 := 10000 exp.
 	i2 := 1000000000 exp.
-	i2 := 0 - i2. " this is entirely ok. You can compute with infinite values."
+	i2 := 0 - i2.	" this is entirely ok. You can compute with infinite values."
 
 	self assert: i1 isInfinite & i2 isInfinite & i1 positive & i2 negative.
-	self deny: i1 = i2
-  	"All infinities are signed. Negative infinity is not equal to Infinity"
-
+	self deny: i1 equals: i2
+	"All infinities are signed. Negative infinity is not equal to Infinity"
 ]
 
 { #category : #'tests - conversion' }
 FloatTest >> testIntegerAsFloat [
 	"assert IEEE 754 round to nearest even mode is honoured"
-	
-	self deny: 16r1FFFFFFFFFFFF0801 asFloat = 16r1FFFFFFFFFFFF0800 asFloat. "this test is on 65 bits"
-	self deny: 16r1FFFFFFFFFFFF0802 asFloat = 16r1FFFFFFFFFFFF0800 asFloat. "this test is on 64 bits"
-	self assert: 16r1FFFFFFFFFFF1F800 asFloat equals: 16r1FFFFFFFFFFF20000 asFloat. "nearest even is upper"
-	self assert: 16r1FFFFFFFFFFFF0800 asFloat equals: 16r1FFFFFFFFFFFF0000 asFloat "nearest even is lower"
 
+	self deny: 16r1FFFFFFFFFFFF0801 asFloat equals: 16r1FFFFFFFFFFFF0800 asFloat.	"this test is on 65 bits"
+	self deny: 16r1FFFFFFFFFFFF0802 asFloat equals: 16r1FFFFFFFFFFFF0800 asFloat.	"this test is on 64 bits"
+	self assert: 16r1FFFFFFFFFFF1F800 asFloat equals: 16r1FFFFFFFFFFF20000 asFloat.	"nearest even is upper"
+	self assert: 16r1FFFFFFFFFFFF0800 asFloat equals: 16r1FFFFFFFFFFFF0000 asFloat	"nearest even is lower"
 ]
 
 { #category : #'tests - zero behavior' }
@@ -236,21 +233,16 @@ FloatTest >> testLiteralEqual [
 
 { #category : #'tests - characterization' }
 FloatTest >> testMaxExactInteger [
-
 	self assert: Float maxExactInteger asFloat truncated equals: Float maxExactInteger.
-	0 to: 10000 do: [ :j |
-		self assert: (Float maxExactInteger-j) asFloat truncated equals: (Float maxExactInteger-j) ].
-	self deny: (Float maxExactInteger+1) asFloat truncated = (Float maxExactInteger+1)
-	
+	0 to: 10000 do: [ :j | self assert: (Float maxExactInteger - j) asFloat truncated equals: Float maxExactInteger - j ].
+	self deny: (Float maxExactInteger + 1) asFloat truncated equals: Float maxExactInteger + 1
 ]
 
 { #category : #'tests - NaN behavior' }
 FloatTest >> testNaN1 [
-   
-	self assert: Float nan == Float nan.
-	self deny: Float nan = Float nan
+	self assert: Float nan identicalTo: Float nan.
+	self deny: Float nan equals: Float nan
 	"a NaN is not equal to itself."
-
 ]
 
 { #category : #'tests - NaN behavior' }
@@ -268,10 +260,10 @@ FloatTest >> testNaN2 [
 	nan2 := Float nan copy.
 
 	"test two instances of NaN with the same bit pattern"
-	self deny: nan1 = nan2.
-	self deny: nan1 == nan2.
-	self deny: nan1 = nan1.
-	self assert: nan1 == nan1.
+	self deny: nan1 equals: nan2.
+	self deny: nan1 identicalTo: nan2.
+	self deny: nan1 equals: nan1.
+	self assert: nan1 identicalTo: nan1.
 
 	"change the bit pattern of nan1"
 	self assert: nan1 size equals: 2.
@@ -279,14 +271,13 @@ FloatTest >> testNaN2 [
 	nan1 at: 1 put: (nan1 at: 1) + 999.
 	self assert: nan1 isNaN.
 	self assert: nan2 isNaN.
-	self deny: (nan1 at: 1) = (nan2 at: 1).
+	self deny: (nan1 at: 1) equals: (nan2 at: 1).
 
 	"test two instances of NaN with different bit patterns"
-	self deny: nan1 = nan2.
-	self deny: nan1 == nan2.
-	self deny: nan1 = nan1.
-	self assert: nan1 == nan1
-
+	self deny: nan1 equals: nan2.
+	self deny: nan1 identicalTo: nan2.
+	self deny: nan1 equals: nan1.
+	self assert: nan1 identicalTo: nan1
 ]
 
 { #category : #'tests - NaN behavior' }

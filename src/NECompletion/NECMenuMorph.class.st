@@ -19,11 +19,11 @@ Class {
 		'selected',
 		'firstVisible',
 		'titleStringMorph',
-		'controller',
 		'context',
 		'pageHeight',
 		'detailMorph',
-		'detailPosition'
+		'detailPosition',
+		'engine'
 	],
 	#category : #'NECompletion-View'
 }
@@ -33,19 +33,16 @@ NECMenuMorph class >> backgroundColor [
 	^NECPreferences backgroundColor
 ]
 
-{ #category : #'instance creation' }
-NECMenuMorph class >> controller: aECController position: aPoint [ 
-	| newObject |
-	newObject := self new.
-	newObject setController: aECController position: aPoint.
-	^ newObject
-]
-
 { #category : #preferences }
 NECMenuMorph class >> convertToSHSymbol: aSymbol [
 	^ (SHRBTextStyler new attributesFor: aSymbol) isNotEmpty
 		ifTrue: [ aSymbol ]
 		ifFalse: [ #default ]
+]
+
+{ #category : #'instance creation' }
+NECMenuMorph class >> engine: aCompletionEngine position: aPoint [ 
+	^ self new engine: aCompletionEngine position: aPoint
 ]
 
 { #category : #'help text' }
@@ -240,7 +237,7 @@ NECMenuMorph class >> titleFont [
 { #category : #actions }
 NECMenuMorph >> browse [
 	(self selectedEntry browse)
-		ifTrue: [ controller closeMenu ]
+		ifTrue: [ engine closeMenu ]
 ]
 
 { #category : #actions }
@@ -275,7 +272,7 @@ NECMenuMorph >> currentPage [
 { #category : #private }
 NECMenuMorph >> delete [
 	super delete.
-	controller menuClosed
+	engine menuClosed
 ]
 
 { #category : #drawing }
@@ -412,6 +409,17 @@ NECMenuMorph >> end [
 	self changed.
 ]
 
+{ #category : #initialization }
+NECMenuMorph >> engine: aCompletionEngine position: aPoint [
+	engine := aCompletionEngine.
+	context := engine context.
+	self position: aPoint - (20 @ 0).
+	self narrowCompletion
+		ifFalse: [ ^ self ].
+	self createTitle.
+	self openInWorld
+]
+
 { #category : #private }
 NECMenuMorph >> firstVisible [
 	^firstVisible min: context entryCount
@@ -482,10 +490,10 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 	prefix := context commonPrefix.
 	prefix = context completionToken ifTrue:[^ self insertSelected].
 	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
-	prefix size > controller editor wordAtCaret size
+	prefix size > engine editor wordAtCaret size
 		ifTrue: [ 
 			self insertCompletion: prefix.
-			context narrowWith: controller editor wordAtCaret ].
+			context narrowWith: engine editor wordAtCaret ].
 	^ true
 ]
 
@@ -493,7 +501,7 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 NECMenuMorph >> insertCompletion: aString [
 
 	| caret old pos editor offset|
-	editor := controller editor.
+	editor := engine editor.
 	caret := editor caret.
 	editor selectInvisiblyFrom: caret - context completionToken size to: caret - 1.
 	old := editor selection. 
@@ -542,7 +550,7 @@ NECMenuMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	evt wasHandled: false.
 	self flag: #pharoFixMe "ugly hack".
-	controller editor morph owner owner
+	engine editor morph owner owner
 		takeKeyboardFocus;
 		handleMouseDown: evt.
 	self close.
@@ -664,17 +672,6 @@ NECMenuMorph >> selected: aNumber [
 { #category : #accessing }
 NECMenuMorph >> selectedEntry [
 	^ context entries at: self selected
-]
-
-{ #category : #initialization }
-NECMenuMorph >> setController: aECController position: aPoint [
-	controller := aECController.
-	context := controller context.
-	self position: aPoint - (20 @ 0).
-	self narrowCompletion
-		ifFalse: [ ^ self ].
-	self createTitle.
-	self openInWorld
 ]
 
 { #category : #actions }

@@ -17,27 +17,32 @@ ProtoObjectTest >> testFlag [
 
 { #category : #'tests - testing' }
 ProtoObjectTest >> testIfNil [
-	| object block reachabilityTest|
+	| object block reachabilityTest |
 	reachabilityTest := false.
 	object := ProtoObject new.
-	object ifNil: [reachabilityTest := true ].
-	self assert: (object ifNil: [ nil ]) == object.
+	object ifNil: [ reachabilityTest := true ].
+	self assert: (object ifNil: [ nil ]) identicalTo: object.
 	self assert: reachabilityTest equals: false.
 	"Now the same test without inlining."
 	reachabilityTest := false.
-	block := [ reachabilityTest := true].
+	block := [ reachabilityTest := true ].
 	object ifNil: block.
 	block := [ nil ].
-	self assert: (object ifNil: block) == object.
-	self assert: reachabilityTest equals: false.
+	self assert: (object ifNil: block) identicalTo: object.
+	self assert: reachabilityTest equals: false
 ]
 
 { #category : #'tests - testing' }
 ProtoObjectTest >> testIfNilIfNotNil [
-
 	| object returnValue block notReached1 reached1 notReached2 reached2 reached3 notReached3 reached4 notReached4 |
-	notReached1 := false. reached1 := false. notReached2 := false. reached2 := false.
-	notReached3 := false. reached3 := false. notReached4 := false. reached4 := false.
+	notReached1 := false.
+	reached1 := false.
+	notReached2 := false.
+	reached2 := false.
+	notReached3 := false.
+	reached3 := false.
+	notReached4 := false.
+	reached4 := false.
 	object := ProtoObject new.
 	returnValue := Object new.
 
@@ -50,9 +55,9 @@ ProtoObjectTest >> testIfNilIfNotNil [
 	self assert: reached2 equals: true.
 
 	self assert: (object ifNil: [ false ] ifNotNil: [ :o | o == object ]).
-	self assert: (object ifNil: [ nil ] ifNotNil: [ returnValue ]) == returnValue.
-	self assert: (object ifNil: [ nil ] ifNotNil: [ :o | returnValue ]) == returnValue.
-	
+	self assert: (object ifNil: [ nil ] ifNotNil: [ returnValue ]) identicalTo: returnValue.
+	self assert: (object ifNil: [ nil ] ifNotNil: [ :o | returnValue ]) identicalTo: returnValue.
+
 	"Now the same without inlining."
 	block := [ reached3 := true ].
 	object ifNil: [ notReached3 := true ] ifNotNil: block.
@@ -63,19 +68,18 @@ ProtoObjectTest >> testIfNilIfNotNil [
 	object ifNil: [ notReached4 := true ] ifNotNil: block.
 	self assert: notReached4 equals: false.
 	self assert: reached4 equals: true.
-	
+
 	block := [ :o | o == object ].
 	self assert: (object ifNil: [ false ] ifNotNil: block).
 	block := [ returnValue ].
-	self assert: (object ifNil: [ nil ] ifNotNil: block) = returnValue.
+	self assert: (object ifNil: [ nil ] ifNotNil: block) equals: returnValue.
 	block := [ :o | returnValue ].
-	self assert: (object ifNil: [ nil ] ifNotNil: block) = returnValue
+	self assert: (object ifNil: [ nil ] ifNotNil: block) equals: returnValue
 ]
 
 { #category : #'tests - testing' }
 ProtoObjectTest >> testIfNotNil [
-
-	| object returnValue block reached|
+	| object returnValue block reached |
 	object := ProtoObject new.
 	returnValue := Object new.
 	reached := false.
@@ -85,8 +89,8 @@ ProtoObjectTest >> testIfNotNil [
 	object ifNotNil: [ :o | reached := true ].
 	self assert: reached equals: true.
 	self assert: (object ifNotNil: [ :o | o == object ]).
-	self assert: (object ifNotNil: [ returnValue ]) == returnValue.
-	self assert: (object ifNotNil: [ :o | returnValue ]) == returnValue.	
+	self assert: (object ifNotNil: [ returnValue ]) identicalTo: returnValue.
+	self assert: (object ifNotNil: [ :o | returnValue ]) identicalTo: returnValue.
 	"Now the same without inlining."
 	block := [ reached := true ].
 	object ifNotNil: block.
@@ -98,52 +102,55 @@ ProtoObjectTest >> testIfNotNil [
 	block := [ :o | o == object ].
 	self assert: (object ifNotNil: block).
 	block := [ returnValue ].
-	self assert: (object ifNotNil: block) = returnValue.
+	self assert: (object ifNotNil: block) equals: returnValue.
 	block := [ :o | returnValue ].
-	self assert: (object ifNotNil: block) = returnValue
+	self assert: (object ifNotNil: block) equals: returnValue
 ]
 
 { #category : #'tests - testing' }
 ProtoObjectTest >> testIfNotNilIfNil [
-
-	| object returnValue block reached notReached|
+	| object returnValue block reached notReached |
 	object := ProtoObject new.
 	returnValue := Object new.
-	
-	reached := false. notReached := false.
+
+	reached := false.
+	notReached := false.
 	object ifNotNil: [ reached := true ] ifNil: [ notReached := true ].
 	self assert: reached equals: true.
 	self assert: notReached equals: false.
-	
-	reached := false. notReached := false.
+
+	reached := false.
+	notReached := false.
 	object ifNotNil: [ :o | reached := true ] ifNil: [ notReached := true ].
 	self assert: reached equals: true.
 	self assert: notReached equals: false.
-	
+
 	reached := false.
 	notReached := false.
 	self assert: (object ifNotNil: [ :o | o == object ] ifNil: [ false ]).
-	self assert: (object ifNotNil: [ returnValue ] ifNil: [ false ]) == returnValue.
-	self assert: (object ifNotNil: [ :o | returnValue ] ifNil: [ false ]) == returnValue.
+	self assert: (object ifNotNil: [ returnValue ] ifNil: [ false ]) identicalTo: returnValue.
+	self assert: (object ifNotNil: [ :o | returnValue ] ifNil: [ false ]) identicalTo: returnValue.
 	"Now the same without inlining."
-	reached := false.	notReached := false.
+	reached := false.
+	notReached := false.
 	block := [ reached := true ].
 	object ifNotNil: block ifNil: [ notReached := true ].
 	self assert: reached equals: true.
 	self assert: notReached equals: false.
-	
-	reached := false. notReached := false.	
+
+	reached := false.
+	notReached := false.
 	block := [ :o | reached := true ].
 	object ifNotNil: block ifNil: [ notReached := true ].
 	self assert: reached equals: true.
 	self assert: notReached equals: false.
-	
+
 	block := [ :o | o == object ].
 	self assert: (object ifNotNil: block ifNil: [ false ]).
 	block := [ returnValue ].
-	self assert: (object ifNotNil: block ifNil: [ false ]) == returnValue.
+	self assert: (object ifNotNil: block ifNil: [ false ]) identicalTo: returnValue.
 	block := [ :o | returnValue ].
-	self assert: (object ifNotNil: block ifNil: [ false ]) == returnValue
+	self assert: (object ifNotNil: block ifNil: [ false ]) identicalTo: returnValue
 ]
 
 { #category : #'tests - testing' }

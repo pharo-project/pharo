@@ -4,7 +4,9 @@ Extension { #name : #RBLiteralValueNode }
 RBLiteralValueNode >> completionEntries [
 	value isSymbol ifFalse: [ ^ #() ].
 	"return all symbols that start with value"
-	^Symbol allSymbols select: [ :each | (each beginsWith: value) and: [each isLiteralSymbol]]
+	^Symbol allSymbols 
+		select: [ :each | (each beginsWith: value) and: [each isLiteralSymbol]] 
+		thenCollect: [ :each | NECEntry contents: each node: self ]
 ]
 
 { #category : #'*NECompletion' }

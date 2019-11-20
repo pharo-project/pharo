@@ -9,60 +9,57 @@ Class {
 
 { #category : #tests }
 FLPluggableSubstitutionTest >> testAvoidRecursion [
-
 	| result |
-	self analyzer when: [:x | x < 10 ] substituteBy: [:x | x + 1 ].
+	self analyzer when: [ :x | x < 10 ] substituteBy: [ :x | x + 1 ].
 
 	result := self resultOfSerializeAndMaterialize: 1.
-	
-	self assert: result = 2.
+
+	self assert: result equals: 2
 ]
 
 { #category : #tests }
 FLPluggableSubstitutionTest >> testLowercaseSomeSymbols [
-
 	| result |
-	self analyzer when: [:x | #A = x] substituteBy: [:x | #a].
-	self analyzer when: [:x | #B = x] substituteBy: [:x | #b].
+	self analyzer when: [ :x | #A = x ] substituteBy: [ :x | #a ].
+	self analyzer when: [ :x | #B = x ] substituteBy: [ :x | #b ].
 
 	result := self resultOfSerializeAndMaterialize: #(A B C).
-	
-	self assert: #(a b C) = result.
+
+	self assert: #(a b C) equals: result
 ]
 
 { #category : #tests }
 FLPluggableSubstitutionTest >> testPrivateExcluded [
-
 	| result |
-	self analyzer when: [:x | x isBehavior ] substituteBy: [:x | FLWeakClassMock ].
+	self analyzer when: [ :x | x isBehavior ] substituteBy: [ :x | FLWeakClassMock ].
 
-	result := self resultOfSerializeAndMaterialize: {String new. FLPair}.
-	
-	self assert: result first class == ByteString.
-	self assert: result second == FLWeakClassMock.
+	result := self resultOfSerializeAndMaterialize: {String new . FLPair}.
+
+	self assert: result first class identicalTo: ByteString.
+	self assert: result second identicalTo: FLWeakClassMock
 ]
 
 { #category : #tests }
 FLPluggableSubstitutionTest >> testPrivateExcludedAndWithConflicts [
 	"Tests issue #209"
-	| result |
-	self analyzer when: [:x | FLPair == x ] substituteBy: [:x | FLWeakClassMock ].
 
-	result := self resultOfSerializeAndMaterialize: {FLPair new. FLPair}.
-	
-	self assert: result first class == FLPair.
-	self assert: result second == FLWeakClassMock
+	| result |
+	self analyzer when: [ :x | FLPair == x ] substituteBy: [ :x | FLWeakClassMock ].
+
+	result := self resultOfSerializeAndMaterialize: {FLPair new . FLPair}.
+
+	self assert: result first class identicalTo: FLPair.
+	self assert: result second identicalTo: FLWeakClassMock
 ]
 
 { #category : #tests }
 FLPluggableSubstitutionTest >> testSimple [
-
 	| result |
-	self analyzer when: [:x | x < 0 ] substituteBy: [:x | 0 ].
+	self analyzer when: [ :x | x < 0 ] substituteBy: [ :x | 0 ].
 
 	result := self resultOfSerializeAndMaterialize: -1.
-	
-	self assert: result = 0.
+
+	self assert: result equals: 0
 ]
 
 { #category : #running }
@@ -80,13 +77,12 @@ FLPluggableSubstitutionTest >> testSubstitute: anObject inPresenceOf: anotherObj
 
 { #category : #tests }
 FLPluggableSubstitutionTest >> testSubstituteByItself [
-
 	| result |
-	self analyzer when: [:x | true ] substituteBy: [:x | x ].
+	self analyzer when: [ :x | true ] substituteBy: [ :x | x ].
 
 	result := self resultOfSerializeAndMaterialize: 1.
-	
-	self assert: result = 1.
+
+	self assert: result equals: 1
 ]
 
 { #category : #tests }
@@ -143,10 +139,10 @@ FLPluggableSubstitutionTest >> testUniqueSubstitution [
 	self analyzer when: [ :x | x isNumber ] substituteBy: [ :x | x printString ].
 
 	"This line demonstrates that behavior being tested is not trivial"
-	self deny: 1 printString == 1 printString.
+	self deny: 1 printString identicalTo: 1 printString.
 
 	result := self resultOfSerializeAndMaterialize: (Array with: 1 with: 1).
-	
-	self assert: result first = '1'.	
-	self assert: result first == result second.
+
+	self assert: result first equals: '1'.
+	self assert: result first identicalTo: result second
 ]

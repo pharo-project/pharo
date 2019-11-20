@@ -146,11 +146,11 @@ BMPReadWriterTest >> testBmp16Bit [
 	reader := BMPReadWriter new on: self bmpData16bit readStream.
 	form := reader nextImage.
 	"special black here to compensate for zero-is-transparent effect"
-	self assert: (form colorAt: 7 @ 1) = Color red.
-	self assert: (form colorAt: 1 @ 7) = Color green.
-	self assert: (form colorAt: 7 @ 7) = Color blue.
-	self assert: (form colorAt: 4 @ 4) = Color white.
-	self assert: (form pixelValueAt: 1 @ 1) = 32768
+	self assert: (form colorAt: 7 @ 1) equals: Color red.
+	self assert: (form colorAt: 1 @ 7) equals: Color green.
+	self assert: (form colorAt: 7 @ 7) equals: Color blue.
+	self assert: (form colorAt: 4 @ 4) equals: Color white.
+	self assert: (form pixelValueAt: 1 @ 1) equals: 32768
 ]
 
 { #category : #'tests - reading' }
@@ -158,12 +158,11 @@ BMPReadWriterTest >> testBmp24Bit [
 	| reader form |
 	reader := BMPReadWriter new on: (ReadStream on: self bmpData24bit).
 	form := reader nextImage.
-	self assert: (form colorAt: 7@1) = Color red.
-	self assert: (form colorAt: 1@7) = Color green.
-	self assert: (form colorAt: 7@7) = Color blue.
-	self assert: (form colorAt: 4@4) = Color white.
-	self assert: (form pixelValueAt: 1@1) = 16rFF000001.
-
+	self assert: (form colorAt: 7 @ 1) equals: Color red.
+	self assert: (form colorAt: 1 @ 7) equals: Color green.
+	self assert: (form colorAt: 7 @ 7) equals: Color blue.
+	self assert: (form colorAt: 4 @ 4) equals: Color white.
+	self assert: (form pixelValueAt: 1 @ 1) equals: 16rFF000001
 ]
 
 { #category : #'tests - reading' }
@@ -171,11 +170,11 @@ BMPReadWriterTest >> testBmp32Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData32bit readStream.
 	form := reader nextImage.
-	self assert: (form colorAt: 7 @ 1) = Color red.
-	self assert: (form colorAt: 1 @ 7) = Color green.
-	self assert: (form colorAt: 7 @ 7) = Color blue.
-	self assert: (form colorAt: 4 @ 4) = Color white.
-	self assert: (form pixelValueAt: 1 @ 1) = 4278190080
+	self assert: (form colorAt: 7 @ 1) equals: Color red.
+	self assert: (form colorAt: 1 @ 7) equals: Color green.
+	self assert: (form colorAt: 7 @ 7) equals: Color blue.
+	self assert: (form colorAt: 4 @ 4) equals: Color white.
+	self assert: (form pixelValueAt: 1 @ 1) equals: 4278190080
 ]
 
 { #category : #'tests - reading' }
@@ -183,11 +182,11 @@ BMPReadWriterTest >> testBmp4Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData4bit readStream.
 	form := reader nextImage.
-	self assert: (form colorAt: 1 @ 1) = Color black.
-	self assert: (form colorAt: 7 @ 1) = Color red.
-	self assert: (form colorAt: 1 @ 7) = Color green.
-	self assert: (form colorAt: 7 @ 7) = Color blue.
-	self assert: (form colorAt: 4 @ 4) = Color white
+	self assert: (form colorAt: 1 @ 1) equals: Color black.
+	self assert: (form colorAt: 7 @ 1) equals: Color red.
+	self assert: (form colorAt: 1 @ 7) equals: Color green.
+	self assert: (form colorAt: 7 @ 7) equals: Color blue.
+	self assert: (form colorAt: 4 @ 4) equals: Color white
 ]
 
 { #category : #'tests - reading' }
@@ -195,9 +194,9 @@ BMPReadWriterTest >> testBmp8Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData8bit readStream.
 	form := reader nextImage.
-	self assert: (form colorAt: 1 @ 1) = Color black.
-	self assert: (form colorAt: 7 @ 1) = Color red.
-	self assert: (form colorAt: 1 @ 7) = Color green.
-	self assert: (form colorAt: 7 @ 7) = Color blue.
-	self assert: (form colorAt: 4 @ 4) = Color white
+	self assert: (form colorAt: 1 @ 1) equals: Color black.
+	self assert: (form colorAt: 7 @ 1) equals: Color red.
+	self assert: (form colorAt: 1 @ 7) equals: Color green.
+	self assert: (form colorAt: 7 @ 7) equals: Color blue.
+	self assert: (form colorAt: 4 @ 4) equals: Color white
 ]

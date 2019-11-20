@@ -29,15 +29,14 @@ BlockClosureTest >> testCannotReturn [
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testRunSimulated [
-	self assert: (Context runSimulated: aBlockContext) class = Rectangle.
+	self assert: (Context runSimulated: aBlockContext) class equals: Rectangle
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testSourceNodeOptimized [
-	| block | 
-	block := [ :ctx | [ ctx atEnd ] whileTrue:[1+2 ] ] .
-	self assert: block sourceNode printString = 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'.
-
+	| block |
+	block := [ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ].
+	self assert: block sourceNode printString equals: 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -54,5 +53,5 @@ BlockClosureTest >> testTallyInstructions [
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyMethods [
-	self assert: (Context tallyMethods: aBlockContext) size = 7.
+	self assert: (Context tallyMethods: aBlockContext) size equals: 7
 ]

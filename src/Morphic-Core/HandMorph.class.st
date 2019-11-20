@@ -11,7 +11,6 @@ Class {
 		'keyboardFocus',
 		'eventListeners',
 		'mouseListeners',
-		'keyboardListeners',
 		'mouseClickState',
 		'mouseOverHandler',
 		'lastMouseEvent',
@@ -27,8 +26,6 @@ Class {
 		'lastEventBuffer',
 		'lastKeyScanCode',
 		'combinedChar',
-		'eventSource',
-		'lastSystemEvent',
 		'captureBlock',
 		'recentModifiers'
 	],

@@ -11,12 +11,11 @@ ClyWrapQueryTestCase class >> isAbstract [
 
 { #category : #tests }
 ClyWrapQueryTestCase >> testConvertingWithNewRequiredResultShouldConvertActualQueryToo [
-
 	| newResult convertedQuery |
 	newResult := ClyRawQueryResult new.
 	convertedQuery := query withResult: newResult.
-	
-	self assert: convertedQuery actualQuery requiredResult == newResult
+
+	self assert: convertedQuery actualQuery requiredResult identicalTo: newResult
 ]
 
 { #category : #tests }

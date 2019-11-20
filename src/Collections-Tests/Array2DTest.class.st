@@ -119,10 +119,9 @@ Array2DTest >> testContentsEncodings [
 
 { #category : #'tests - copying' }
 Array2DTest >> testCopy [
-
 	| copyMatrix |
 	copyMatrix := matrix1 copy.
-	self assert: matrix1 = copyMatrix 
+	self assert: matrix1 equals: copyMatrix
 ]
 
 { #category : #'tests - instance creation' }
@@ -147,16 +146,14 @@ Array2DTest >> testDiagonal [
 
 { #category : #'tests - instance creation' }
 Array2DTest >> testIdentity [
-
-	| m  m2 | 
+	| m m2 |
 	m := Array2D new: 3 element: 0.
-	m at: 1 at:1 put: 1.
-	m at: 2 at:2 put: 1.
-	m at: 3 at:3 put: 1.
+	m at: 1 at: 1 put: 1.
+	m at: 2 at: 2 put: 1.
+	m at: 3 at: 3 put: 1.
 	self assert: (m occurrencesOf: 1) equals: 3.
 	m2 := Array2D identity: 3.
-	self assert: (m2 = m).
-
+	self assert: m2 equals: m
 ]
 
 { #category : #'tests - instance creation' }
@@ -181,15 +178,14 @@ Array2DTest >> testIncludes [
 
 { #category : #'tests - arithmetic' }
 Array2DTest >> testMultiply [
-	
 	| result |
-	self	should: [matrix1 preMultiplyByMatrix: (Array2D new: 3)] raise: Error.
+	self should: [ matrix1 preMultiplyByMatrix: (Array2D new: 3) ] raise: Error.
 
 	result := matrix2 preMultiplyByMatrix: matrix1.
-	self assert: (result at: 1 at: 1) = 15.
-	self assert: (result at: 1 at: 2) = 31.
-	self assert: (result at: 2 at: 1) = 22.
-	self assert: (result at: 2 at: 2) = 46
+	self assert: (result at: 1 at: 1) equals: 15.
+	self assert: (result at: 1 at: 2) equals: 31.
+	self assert: (result at: 2 at: 1) equals: 22.
+	self assert: (result at: 2 at: 2) equals: 46
 ]
 
 { #category : #'tests - instance creation' }
@@ -272,9 +268,13 @@ Array2DTest >> testSquaredWithAllElement [
 
 { #category : #'tests - accessing' }
 Array2DTest >> testSwap [
-	matrix1 swap: 1 at: 2 with: 1 at: 1.
-	self assert: (matrix1 at: 1 at: 1) = 3.
-	self assert: (matrix1 at: 1 at: 2) = 1.
+	matrix1
+		swap: 1
+		at: 2
+		with: 1
+		at: 1.
+	self assert: (matrix1 at: 1 at: 1) equals: 3.
+	self assert: (matrix1 at: 1 at: 2) equals: 1
 ]
 
 { #category : #'tests - testing' }
@@ -293,8 +293,7 @@ Array2DTest >> testTabulate [
 Array2DTest >> testTabulateEquals [
 	| m |
 	m := Array2D rows: 3 columns: 2 tabulate: [ :row :column | column * 10 + row ].
-	self assert: (m = matrix23)
-
+	self assert: m equals: matrix23
 ]
 
 { #category : #'tests - accessing' }

@@ -109,8 +109,8 @@ ContextTest >> setUp [
 
 { #category : #tests }
 ContextTest >> testActivateReturnValue [
-	self assert:  ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
-	self assert:  ((aSender activateReturn: aMethodContext value: #()) receiver = aMethodContext).
+	self assert: ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
+	self assert: (aSender activateReturn: aMethodContext value: #()) receiver equals: aMethodContext
 ]
 
 { #category : #tests }
@@ -127,8 +127,8 @@ ContextTest >> testActiveHomeMethodContext [
 
 { #category : #tests }
 ContextTest >> testFindContextSuchThat [
-	self assert: (aMethodContext findContextSuchThat: [:each| true]) printString = aMethodContext printString.
-	self assert: (aMethodContext hasContext: aMethodContext). 
+	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
+	self assert: (aMethodContext hasContext: aMethodContext)
 ]
 
 { #category : #tests }
@@ -161,21 +161,25 @@ ContextTest >> testNonActiveBlockContextHome [
 { #category : #tests }
 ContextTest >> testReturn [
 	"Why am I overriding setUp? Because sender must be thisContext, i.e, testReturn, not setUp."
-	aMethodContext := Context sender: thisContext receiver: aReceiver method: aCompiledMethod arguments: #(). 
-	self assert: (aMethodContext return: 5) = 5.
+
+	aMethodContext := Context
+		sender: thisContext
+		receiver: aReceiver
+		method: aCompiledMethod
+		arguments: #().
+	self assert: (aMethodContext return: 5) equals: 5
 ]
 
 { #category : #tests }
 ContextTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
-	
-	self deny: aMethodContext isDead.
-	self assert: aMethodContext home = aMethodContext.
-	self assert: aMethodContext receiver = aReceiver.
-	self assert: (aMethodContext method isKindOf: CompiledMethod).
-	self assert: aMethodContext method = aCompiledMethod. 
-	self assert: aMethodContext client printString = 'ContextTest>>#testSetUp'.
 
+	self deny: aMethodContext isDead.
+	self assert: aMethodContext home equals: aMethodContext.
+	self assert: aMethodContext receiver equals: aReceiver.
+	self assert: (aMethodContext method isKindOf: CompiledMethod).
+	self assert: aMethodContext method equals: aCompiledMethod.
+	self assert: aMethodContext client printString equals: 'ContextTest>>#testSetUp'
 ]
 
 { #category : #tests }

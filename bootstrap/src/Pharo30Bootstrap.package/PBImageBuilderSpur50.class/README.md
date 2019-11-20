@@ -1,1 +1,0 @@
-I implement the initial image building for Spur VMs. I'm an abstract class. My subclasses implement specifics about 32 and 64 bit images.

@@ -37,6 +37,7 @@ BaselineOfSpec2 >> baseline: spec [
 				package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic' 'ParametrizedTests') ];
 				package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic') ];
 				package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
+				package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 				package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ];
 				
 				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic' 'Spec2-Commander2') ];

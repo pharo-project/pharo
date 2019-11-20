@@ -22,8 +22,8 @@ GLMPaneTest >> testCachedMatchingPresentations [
 	| aPane cachedMatchingPresentations |
 	aPane := GLMPane in: nil.
 	cachedMatchingPresentations := aPane cachedMatchingPresentations.
-	self assert: cachedMatchingPresentations == aPane cachedMatchingPresentations.
-	aPane matchingPresentations "this should refresh cached matching presentations".
+	self assert: cachedMatchingPresentations identicalTo: aPane cachedMatchingPresentations.
+	aPane matchingPresentations.	"this should refresh cached matching presentations"
 	self assert: cachedMatchingPresentations ~~ aPane cachedMatchingPresentations
 ]
 
@@ -133,8 +133,8 @@ GLMPaneTest >> testPorts [
 	self assertEmpty: pane ports.
 	port := pane port: #foo.
 	self assert: pane ports size equals: 1.
-	self assert: pane ports first == port.
-	self assert: (pane port: #foo) == port
+	self assert: pane ports first identicalTo: port.
+	self assert: (pane port: #foo) identicalTo: port
 ]
 
 { #category : #tests }
@@ -161,12 +161,12 @@ GLMPaneTest >> testPresentationAndBrowserConditions [
 	pane addPresentation: presentation3.
 	(pane port: #entity) value: (GLMMultiValue withAll: #(1 2)).
 	self assert: pane matchingPresentations size equals: 2.
-	self assert: pane matchingPresentations first == presentation1.
-	self assert: pane matchingPresentations last == presentation3.
+	self assert: pane matchingPresentations first identicalTo: presentation1.
+	self assert: pane matchingPresentations last identicalTo: presentation3.
 	(pane port: #entity) value: (GLMMultiValue withAll: #(#foo 2)).
 	self assert: pane matchingPresentations size equals: 2.
-	self assert: pane matchingPresentations first == presentation2.
-	self assert: pane matchingPresentations last == presentation3.
+	self assert: pane matchingPresentations first identicalTo: presentation2.
+	self assert: pane matchingPresentations last identicalTo: presentation3.
 	(pane port: #entity) value: (GLMMultiValue withAll: #(nil 2)).
 	self assert: pane matchingPresentations size equals: 1
 ]
@@ -183,12 +183,12 @@ GLMPaneTest >> testPresentationConditions [
 	pane addPresentation: presentation3.
 	(pane port: #entity) value: (GLMMultiValue withAll: #(1 2)).
 	self assert: pane matchingPresentations size equals: 2.
-	self assert: pane matchingPresentations first == presentation1.
-	self assert: pane matchingPresentations last == presentation3.
+	self assert: pane matchingPresentations first identicalTo: presentation1.
+	self assert: pane matchingPresentations last identicalTo: presentation3.
 	(pane port: #entity) value: (GLMMultiValue withAll: #(#foo 2)).
 	self assert: pane matchingPresentations size equals: 2.
-	self assert: pane matchingPresentations first == presentation2.
-	self assert: pane matchingPresentations last == presentation3.
+	self assert: pane matchingPresentations first identicalTo: presentation2.
+	self assert: pane matchingPresentations last identicalTo: presentation3.
 	(pane port: #entity) value: (GLMMultiValue withAll: #(nil 2)).
 	self assert: pane matchingPresentations size equals: 1
 ]
@@ -203,8 +203,8 @@ GLMPaneTest >> testPresentations [
 	pane when: GLMPresentationsChanged do: [ :ann | announcement := ann ].
 	pane addPresentation: presentation.
 	self assert: pane presentations size equals: 1.
-	self assert: pane presentations first == presentation.
-	self assert: presentation pane == pane.
+	self assert: pane presentations first identicalTo: presentation.
+	self assert: presentation pane identicalTo: pane.
 	self assert: announcement notNil
 ]
 
@@ -230,8 +230,8 @@ GLMPaneTest >> testSimplePresentations [
 	pane when: GLMPresentationsChanged do: [ :ann | announcement := ann ].
 	pane addPresentation: presentation.
 	self assert: pane presentations size equals: 1.
-	self assert: pane presentations first == presentation.
-	self assert: presentation pane == pane.
+	self assert: pane presentations first identicalTo: presentation.
+	self assert: presentation pane identicalTo: pane.
 	self assert: announcement notNil
 ]
 

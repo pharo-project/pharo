@@ -70,8 +70,8 @@ FileLocatorTest >> testEqual [
 	| a b |
 	a := FileLocator image.
 	b := FileLocator image.
-	self deny: a == b.
-	self assert: a = b.
+	self deny: a identicalTo: b.
+	self assert: a equals: b
 ]
 
 { #category : #'compatibility tests' }
@@ -158,8 +158,8 @@ FileLocatorTest >> testResolveAbsoluteReference [
 	| result reference |
 	locator := FileLocator image / 'plonk'.
 	reference := FileSystem memory / 'griffle'.
-	result := locator resolve: reference..
-	self assert: result == reference
+	result := locator resolve: reference.
+	self assert: result identicalTo: reference
 ]
 
 { #category : #'resolution tests' }

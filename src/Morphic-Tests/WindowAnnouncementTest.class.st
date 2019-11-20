@@ -20,58 +20,58 @@ WindowAnnouncementTest >> testCollapsing [
 	window := SystemWindow labelled: 'foo'.
 	t := 0.
 	window openInWorld.
-	window announcer when: WindowCollapsed do: [:ann | t := t + 1].
-	self assert: (t = 0).
+	window announcer when: WindowCollapsed do: [ :ann | t := t + 1 ].
+	self assert: t equals: 0.
 	window collapse.
-	self assert: (t = 1).
-
+	self assert: t equals: 1
 ]
 
 { #category : #'tests - window change' }
 WindowAnnouncementTest >> testMoving [
-	| t oldBounds  event |
+	| t oldBounds event |
 	window := SystemWindow labelled: 'foo'.
 	t := 0.
 	event := nil.
 
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowMoved do: [:ann | t := t + 1. event := ann].
+	window announcer
+		when: WindowMoved
+		do: [ :ann | 
+			t := t + 1.
+			event := ann ].
 
-	self assert: (t = 0).
-	self assert: (event isNil).
-	
+	self assert: t equals: 0.
+	self assert: event isNil.
+
 	"We move the window"
-	window position: 50@50.
-	self assert: (t = 1).
-	self assert: (event oldPosition = oldBounds origin).
-	self assert: (event newPosition = (50@50 )).
+	window position: 50 @ 50.
+	self assert: t equals: 1.
+	self assert: event oldPosition equals: oldBounds origin.
+	self assert: event newPosition equals: 50 @ 50.
 
 	"We call position: without moving it actually, nothing should happen"
-	window position: 50@50.
-	self assert: (t = 1).
+	window position: 50 @ 50.
+	self assert: t equals: 1.
 
 	"If we simply resize the window, nothing should happen as well"
-	window extent: 50@60.
-	self assert: (t = 1).
-
-
+	window extent: 50 @ 60.
+	self assert: t equals: 1
 ]
 
 { #category : #'tests - window change' }
 WindowAnnouncementTest >> testResizing [
 	| t oldBounds newBounds |
 	window := SystemWindow labelled: 'foo'.
-	window setProperty: #minimumExtent toValue: 1@1.
+	window setProperty: #minimumExtent toValue: 1 @ 1.
 	t := 0.
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowResizing do: [:ann | t := t + 1].
-	self assert: (t = 0).
-	window extent: 50@60.
+	window announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	self assert: t equals: 0.
+	window extent: 50 @ 60.
 	newBounds := window bounds.
-	self assert: (t = 1).
-
+	self assert: t equals: 1
 ]
 
 { #category : #'tests - window creation and deletion' }
@@ -85,7 +85,7 @@ WindowAnnouncementTest >> testResizingClosing [
 	window minimizeOrRestore.
 
 	"Resizing, moving, deActivation, collapsing "
-	self assert: coll size = 4.
+	self assert: coll size equals: 4.
 	self assert: coll first isResized.
 	self assert: coll second isMoved.
 	self assert: coll third isDeActivated.
@@ -93,7 +93,7 @@ WindowAnnouncementTest >> testResizingClosing [
 
 	window delete.
 
-	self assert: coll size = 5.
+	self assert: coll size equals: 5.
 	self assert: coll fifth isClosed.
 	window := nil
 ]
@@ -103,25 +103,24 @@ WindowAnnouncementTest >> testScrolling [
 	"This test tests the scrolling values of a scrollpane. We create a reeeeeally big (enormous) morph, to be sure its size is bigger than the screen and therefore its enclosing window has scrollbars.
 	When screen sizes become bigger, you should increase the value, or fix morphic, what happens first :).
 	"
+
 	| myMorph pane t |
 	window := SystemWindow labelled: 'foo'.
-	window extent: 300@200.
+	window extent: 300 @ 200.
 	myMorph := Morph new.
-	myMorph extent: 10000000000@1000000000.
+	myMorph extent: 10000000000 @ 1000000000.
 	pane := ScrollPane new.
 	pane scroller addMorph: myMorph.
-	window
-		addMorph: pane
-		fullFrame: LayoutFrame identity.
+	window addMorph: pane fullFrame: LayoutFrame identity.
 	t := 0 @ 0.
 	window openInWorld.
-	window announcer when: WindowScrolling do: [:ann | t := t + ann step ].
+	window announcer when: WindowScrolling do: [ :ann | t := t + ann step ].
 	pane hScrollBarValue: 10.
 	pane vScrollBarValue: 5.
 
 	window delete.
-	
-	self assert: (t = (10 @ 5)).
+
+	self assert: t equals: 10 @ 5.
 	window := nil
 ]
 
@@ -129,50 +128,59 @@ WindowAnnouncementTest >> testScrolling [
 WindowAnnouncementTest >> testWindowCreation [
 	| t oldBounds newBounds |
 	t := 0.
-	self currentWorld announcer when: WindowResizing do: [:ann | t := t + 1].
+	self currentWorld announcer when: WindowResizing do: [ :ann | t := t + 1 ].
 	window := SystemWindow labelled: 'foo'.
-	window setProperty: #minimumExtent toValue: 1@1.
+	window setProperty: #minimumExtent toValue: 1 @ 1.
 	window openInWorld.
 	oldBounds := window bounds.
-	window announcer when: WindowResizing do: [:ann | t := t + 1].
-	self assert: (t = 0).
-	window extent: 50@60.
+	window announcer when: WindowResizing do: [ :ann | t := t + 1 ].
+	self assert: t equals: 0.
+	window extent: 50 @ 60.
 	newBounds := window bounds.
-	self assert: (t = 1).
-
+	self assert: t equals: 1
 ]
 
 { #category : #'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreationAndDeletion [
-	
 	| t newWindowCreated |
 	t := 0.
-	self currentWorld announcer when: WindowOpened do: [:ann | t := t + 1. newWindowCreated := ann window].
-	self currentWorld announcer when: WindowClosed do: [:ann | t := t + 10. newWindowCreated := ann window].
+	self currentWorld announcer
+		when: WindowOpened
+		do: [ :ann | 
+			t := t + 1.
+			newWindowCreated := ann window ].
+	self currentWorld announcer
+		when: WindowClosed
+		do: [ :ann | 
+			t := t + 10.
+			newWindowCreated := ann window ].
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 
-	self assert: (t = 1).
-	self assert: (window == newWindowCreated).
+	self assert: t equals: 1.
+	self assert: window identicalTo: newWindowCreated.
 	window delete.
 
-	self assert: (t = 11).
-	self assert: (window == newWindowCreated).
-
+	self assert: t equals: 11.
+	self assert: window identicalTo: newWindowCreated
 ]
 
 { #category : #'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowLabelling [
 	"Test change of label for a window."
-	
+
 	| labels win |
 	labels := #().
-	self currentWorld announcer when: WindowLabelled do: [:ann | win := ann window. labels := labels copyWith: ann label].
+	self currentWorld announcer
+		when: WindowLabelled
+		do: [ :ann | 
+			win := ann window.
+			labels := labels copyWith: ann label ].
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
-	self assert: win = window.
-	self assert: labels = #('foo').
+	self assert: win equals: window.
+	self assert: labels equals: #('foo').
 	window setLabel: 'bar'.
-	self assert: win = window.
-	self assert: labels = #('foo' 'bar')
+	self assert: win equals: window.
+	self assert: labels equals: #('foo' 'bar')
 ]
