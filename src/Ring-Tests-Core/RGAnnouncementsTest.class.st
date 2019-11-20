@@ -63,20 +63,16 @@ RGAnnouncementsTest >> testAnnouncerSuspendingWithStoring [
 
 { #category : #tests }
 RGAnnouncementsTest >> testBehaviorAdded [
-
-	| env announcements behavior | 
-	
+	| env announcements behavior |
 	env := RGEnvironment new.
 	announcements := OrderedCollection new.
 	env announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
-	
+
 	behavior := env ensureClassNamed: #SomeClass.
 	self assert: announcements size equals: 4.
-	self assert: announcements first classAffected == behavior.
-	
-	self assert: (announcements select: [:each | each classAffected isRingResolved]) size equals: 1.
-	
-	
+	self assert: announcements first classAffected identicalTo: behavior.
+
+	self assert: (announcements select: [ :each | each classAffected isRingResolved ]) size equals: 1
 ]
 
 { #category : #tests }
@@ -183,16 +179,14 @@ RGAnnouncementsTest >> testBehaviorParentRenamed [
 
 { #category : #tests }
 RGAnnouncementsTest >> testDirectAnnouncement [
-
-	| def announcements  |
-	
+	| def announcements |
 	def := RGBehavior new.
 	announcements := OrderedCollection new.
 	def environment announcer when: ClassAdded do: [ :announcement | announcements add: announcement ].
 	def announce: (ClassAdded class: def category: nil).
-	
+
 	self assert: announcements size equals: 1.
-	self assert: (announcements first classAffected == def).
+	self assert: announcements first classAffected identicalTo: def
 ]
 
 { #category : #tests }

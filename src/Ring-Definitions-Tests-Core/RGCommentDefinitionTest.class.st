@@ -9,7 +9,6 @@ Class {
 
 { #category : #testing }
 RGCommentDefinitionTest >> testActiveComment [
-
 	| rgComment |
 	rgComment := RGCommentDefinition realClass: RGClassDefinition.
 	self assert: rgComment isActive.
@@ -19,15 +18,15 @@ RGCommentDefinitionTest >> testActiveComment [
 	rgComment content: ''.
 	"it always reads from the organization and the previous changes was not commited"
 	self assert: rgComment content ~= ''.
-	
+
 	rgComment fromActiveToPassive.
 	self assert: rgComment isPassive.
 	self assert: rgComment sourcePointer isNil.
 	self assert: rgComment content notNil.
 	self assert: rgComment stamp notNil.
 	rgComment content: ''.
-	self assert: rgComment content = ''.
-	
+	self assert: rgComment content equals: ''.
+
 	rgComment := RGCommentDefinition realClass: RGClassDefinition.
 	rgComment fromActiveToHistorical.
 	self assert: rgComment isHistorical.
@@ -65,23 +64,22 @@ RGCommentDefinitionTest >> testCommentWithoutAuthor [
 { #category : #testing }
 RGCommentDefinitionTest >> testNewComment [
 	| newComment |
-	
-	newComment:= RGCommentDefinition new
-						content: 'This is a comment for test';
-						stamp: 'VeronicaUquillas 3/22/2011 14:51';
-						yourself.
-	
+	newComment := RGCommentDefinition new
+		content: 'This is a comment for test';
+		stamp: 'VeronicaUquillas 3/22/2011 14:51';
+		yourself.
+
 	self assert: newComment isComment.
 	self assert: newComment isPassive.
-	self assert: newComment name = #Comment.
+	self assert: newComment name equals: #Comment.
 	self assert: newComment hasStamp.
 	self assert: newComment hasAuthor.
 	self assert: newComment timeStamp notNil.
-	
-	self assert: (newComment author = 'VeronicaUquillas').
-	self assert: (newComment timeStamp = '3/22/2011 14:51' asDateAndTime).
-	self assert: (newComment parent = nil).
-	self assert: (newComment environment = Smalltalk globals).
+
+	self assert: newComment author equals: 'VeronicaUquillas'.
+	self assert: newComment timeStamp equals: '3/22/2011 14:51' asDateAndTime.
+	self assert: newComment parent equals: nil.
+	self assert: newComment environment equals: Smalltalk globals
 ]
 
 { #category : #testing }

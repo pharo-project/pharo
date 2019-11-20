@@ -25,26 +25,22 @@ RGReadOnlyImageBackendTest >> newEnvironment [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testBehavior [
-
 	| env1 point point2 object method |
-	
 	env1 := RGEnvironment new.
 	env1 backend: (RGReadOnlyImageBackend for: env1).
-	
+
 	point := Point asRingMinimalDefinitionIn: env1.
 	"different access method"
 	point2 := env1 ask behaviors detect: [ :each | each name == #Point ].
 	object := Object asRingMinimalDefinitionIn: env1.
-	method := (Point>>#x) asRingMinimalDefinitionIn: env1.
-		
-	self assert: (point == point2).
-	self assert: (point superclass == object).
-	self assert: (point == method parent).
-	
-	self assert: (point unresolvedProperties size) equals: 0.
-	self assert: point ask localMethods size equals: Point localMethods size.
-	
-	
+	method := Point >> #x asRingMinimalDefinitionIn: env1.
+
+	self assert: point identicalTo: point2.
+	self assert: point superclass identicalTo: object.
+	self assert: point identicalTo: method parent.
+
+	self assert: point unresolvedProperties size equals: 0.
+	self assert: point ask localMethods size equals: Point localMethods size
 ]
 
 { #category : #tests }
@@ -111,19 +107,14 @@ RGReadOnlyImageBackendTest >> testClassTrait [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testClassVariable [
-
 	| env classVariable |
-	
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
-	
+
 	classVariable := (UIManager classVariableNamed: #Default) asRingMinimalDefinitionIn: env.
 	self assert: classVariable isClassVariable.
 	self assert: classVariable name equals: #Default.
-	self assert: classVariable parent name = #UIManager.
-
-	
-
+	self assert: classVariable parent name equals: #UIManager
 ]
 
 { #category : #accessing }
@@ -144,16 +135,13 @@ RGReadOnlyImageBackendTest >> testDefaultEnvironmentContent [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testDefinitionsIdentity [
-
 	| env1 |
-	
 	env1 := RGEnvironment new.
 	env1 backend: (RGReadOnlyImageBackend for: env1).
-	
-	self assert: (((Object>>#isRGObject) asRingMinimalDefinitionIn: env1) == ((Object>>#isRGObject) asRingMinimalDefinitionIn: env1)).
-	
-	self assert: (((Object>>#isRGObject) asRingMinimalDefinitionIn: env1) parent
-== ((Object>>#isRGObject) asRingMinimalDefinitionIn: env1) parent).
+
+	self assert: (Object >> #isRGObject asRingMinimalDefinitionIn: env1) identicalTo: (Object >> #isRGObject asRingMinimalDefinitionIn: env1).
+
+	self assert: (Object >> #isRGObject asRingMinimalDefinitionIn: env1) parent identicalTo: (Object >> #isRGObject asRingMinimalDefinitionIn: env1) parent
 ]
 
 { #category : #tests }
@@ -169,16 +157,14 @@ RGReadOnlyImageBackendTest >> testEmptyLayout [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testGlobalVariable [
-
 	| env real globalVariable |
-	
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
-	
-	real := (Smalltalk globals associations detect: [ :each | each key = #Smalltalk ]).
+
+	real := Smalltalk globals associations detect: [ :each | each key = #Smalltalk ].
 	globalVariable := real asRingMinimalDefinitionIn: env.
-	
-	self assert: (globalVariable name = #Smalltalk)
+
+	self assert: globalVariable name equals: #Smalltalk
 ]
 
 { #category : #tests }
@@ -230,50 +216,45 @@ RGReadOnlyImageBackendTest >> testLayouts [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testMethod [
-
 	| env method |
-	
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
-	
-	method := (Point>>#x) asRingMinimalDefinitionIn: env.
-	
+
+	method := Point >> #x asRingMinimalDefinitionIn: env.
+
 	method author notEmpty.
 	method time > DateAndTime new.
 	method time <= DateAndTime now.
-	
+
 	self assert: method selector equals: #x.
-	self assert: (method package isRGObject and: [method package isPackage]).
+	self assert: (method package isRGObject and: [ method package isPackage ]).
 	self assert: method package name equals: 'Kernel'.
-	self assert: (method package == method parent package).
-	self assert: method sourceCode equals: (Point>>#x) sourceCode.	
-	self assert: method ast equals: (Point>>#x) ast.
-		
+	self assert: method package identicalTo: method parent package.
+	self assert: method sourceCode equals: (Point >> #x) sourceCode.
+	self assert: method ast equals: (Point >> #x) ast
 ]
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testProtocols [
-
 	| env1 point method method2 protocol protocol2 |
-	
 	env1 := RGEnvironment new.
 	env1 backend: (RGReadOnlyImageBackend for: env1).
-	
+
 	point := Point asRingMinimalDefinitionIn: env1.
-	self assert: (point protocols notEmpty).
+	self assert: point protocols notEmpty.
 	protocol := point protocols detect: [ :each | each = 'accessing' ].
-	self assert: (protocol isSymbol).
-	
-	method := (Point>>#x) asRingMinimalDefinitionIn: env1.
+	self assert: protocol isSymbol.
+
+	method := Point >> #x asRingMinimalDefinitionIn: env1.
 	protocol := method protocol.
-	method2 := (Point>>#y) asRingMinimalDefinitionIn: env1.
+	method2 := Point >> #y asRingMinimalDefinitionIn: env1.
 	protocol2 := method2 protocol.
-	
-	self assert: (protocol == protocol2).
-	self assert: (protocol isSymbol).
+
+	self assert: protocol identicalTo: protocol2.
+	self assert: protocol isSymbol.
 	self assert: protocol equals: 'accessing'.
-	
-	self should: [ (Protocol name: 'aProtocol') asRingMinimalDefinitionIn: RGEnvironment new ] raise: Error.
+
+	self should: [ (Protocol name: 'aProtocol') asRingMinimalDefinitionIn: RGEnvironment new ] raise: Error
 ]
 
 { #category : #tests }
@@ -296,46 +277,37 @@ RGReadOnlyImageBackendTest >> testSlots [
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testTrait [
-
 	| env trait |
-	
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
-	
+
 	trait := RGTestTrait asRingMinimalDefinitionIn: env.
 	self assert: trait isTrait.
 	self assert: trait isMeta not.
 	self assert: trait name equals: #RGTestTrait.
 	self assert: trait classTrait name equals: 'RGTestTrait classTrait'.
 	self assert: trait category equals: 'Ring-Tests-Core'.
-	self assert: (trait superclass == trait). "cycle, nil in reality"
+	self assert: trait superclass identicalTo: trait.	"cycle, nil in reality"
 	self assert: trait comment content equals: RGTestTrait organization comment.
 	self assert: trait localMethods size equals: RGTestTrait localMethods size.
 	self assert: trait protocols asSortedCollection equals: RGTestTrait protocols asSortedCollection.
 	self assert: trait metaclass name equals: 'RGTestTrait classTrait'.
 	self assert: trait metaclass superclass name equals: 'Trait'.
-	self assert: trait package name equals: 'Ring-Tests-Core'.
-	
-
+	self assert: trait package name equals: 'Ring-Tests-Core'
 ]
 
 { #category : #tests }
 RGReadOnlyImageBackendTest >> testTraitAlias [
-
 	| env traitAlias |
-	
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
-	
-	traitAlias := (MOPTestClassD traitComposition transformations first) asRingMinimalDefinitionIn: env.
+
+	traitAlias := MOPTestClassD traitComposition transformations first asRingMinimalDefinitionIn: env.
 	self assert: traitAlias isTraitAlias.
 	self assert: traitAlias subject name equals: #Trait2.
 	self assert: traitAlias aliases size equals: 1.
-	self assert: traitAlias aliases first key == #c3.
-	self assert: traitAlias aliases first value == #c2.	
-	
-	
-	
+	self assert: traitAlias aliases first key identicalTo: #c3.
+	self assert: traitAlias aliases first value identicalTo: #c2
 ]
 
 { #category : #tests }

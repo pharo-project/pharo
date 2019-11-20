@@ -60,35 +60,31 @@ RGMCTraitCompositionVisitorTest >> testClassTrait [
 
 { #category : #tests }
 RGMCTraitCompositionVisitorTest >> testComplexDefinition [
-
 	| composition result |
-
 	composition := RGTraitComposition unnamed.
 	result := RGTraitCompositionVisitor new parse: 'Trait1 + (Trait2 @ {#a -> #b. #c: -> #d:}) + (Trait3 - {#e. #f:})' for: composition.
-	
+
 	self assert: result isCollection.
 	self assert: (result allSatisfy: #isRGObject).
 	self assert: result size equals: 3.
 
-	self assert: result first isTrait.	
+	self assert: result first isTrait.
 	self assert: result first name equals: #Trait1.
 
 	self assert: result second isTraitAlias.
-	self assert: result second subject isTrait.	
+	self assert: result second subject isTrait.
 	self assert: result second subject name equals: #Trait2.
 	self assert: result second aliases isCollection.
 	self assert: result second aliases size equals: 2.
-	self assert: result second aliases first equals: (#a -> #b).
-	self assert: result second aliases second equals: (#c: -> #d:).
-	
+	self assert: result second aliases first equals: #a -> #b.
+	self assert: result second aliases second equals: #c: -> #d:.
+
 	self assert: result third isTraitExclusion.
 	self assert: result third isRGObject.
-	self assert: result third subject isTrait.	
-	self assert: result third subject name = #Trait3.
+	self assert: result third subject isTrait.
+	self assert: result third subject name equals: #Trait3.
 	self assert: result third exclusions isCollection.
-	self assert: result third exclusions asArray equals: #(#e #f:).
-		
-	
+	self assert: result third exclusions asArray equals: #(#e #f:)
 ]
 
 { #category : #tests }
@@ -111,59 +107,50 @@ RGMCTraitCompositionVisitorTest >> testEmpty [
 
 { #category : #tests }
 RGMCTraitCompositionVisitorTest >> testExclusion [
-
 	| composition result |
-
 	composition := RGTraitComposition unnamed.
 	result := RGTraitCompositionVisitor new parse: 'Trait2 - {#c}' for: composition.
-	
+
 	self assert: result isCollection.
 	self assert: (result allSatisfy: #isTraitExclusion).
 	self assert: (result allSatisfy: #isRGObject).
 	self assert: result size equals: 1.
-	self assert: result first subject isTrait.	
-	self assert: result first subject name = #Trait2.
+	self assert: result first subject isTrait.
+	self assert: result first subject name equals: #Trait2.
 	self assert: result first exclusions isCollection.
-	self assert: result first exclusions asArray equals: #(#c).
-	
+	self assert: result first exclusions asArray equals: #(#c)
 ]
 
 { #category : #tests }
 RGMCTraitCompositionVisitorTest >> testExclusionWithLiteralArray [
-
 	| composition result |
-
 	composition := RGTraitComposition unnamed.
 	result := RGTraitCompositionVisitor new parse: 'Trait2 - #(c)' for: composition.
-	
+
 	self assert: result isCollection.
 	self assert: (result allSatisfy: #isTraitExclusion).
 	self assert: (result allSatisfy: #isRGObject).
 	self assert: result size equals: 1.
-	self assert: result first subject isTrait.	
-	self assert: result first subject name = #Trait2.
+	self assert: result first subject isTrait.
+	self assert: result first subject name equals: #Trait2.
 	self assert: result first exclusions isCollection.
-	self assert: result first exclusions asArray equals: #(#c).
-	
+	self assert: result first exclusions asArray equals: #(#c)
 ]
 
 { #category : #tests }
 RGMCTraitCompositionVisitorTest >> testExclusionWithMultipleExclusions [
-
 	| composition result |
-
 	composition := RGTraitComposition unnamed.
 	result := RGTraitCompositionVisitor new parse: 'Trait2 - {#a. #b:. #c:d:}' for: composition.
-	
+
 	self assert: result isCollection.
 	self assert: (result allSatisfy: #isTraitExclusion).
 	self assert: (result allSatisfy: #isRGObject).
 	self assert: result size equals: 1.
-	self assert: result first subject isTrait.	
-	self assert: result first subject name = #Trait2.
+	self assert: result first subject isTrait.
+	self assert: result first subject name equals: #Trait2.
 	self assert: result first exclusions isCollection.
-	self assert: result first exclusions asArray equals: #(#a #b: #c:d:).
-	
+	self assert: result first exclusions asArray equals: #(#a #b: #c:d:)
 ]
 
 { #category : #tests }

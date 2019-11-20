@@ -11,12 +11,11 @@ Class {
 RGMetaclassDefinitionTest >> testAsMetaclassDefinition [
 	| rgClass class |
 	class := Class class.
-	rgClass:= class asRingDefinition.
-	
-	self assert: (rgClass isRingObject).
-	self assert: (rgClass isClass).  
-	self assert: (rgClass name == #'Class class').  
-	self assert: (rgClass category == class category).
-	self assert: (rgClass classSide == rgClass).
+	rgClass := class asRingDefinition.
 
+	self assert: rgClass isRingObject.
+	self assert: rgClass isClass.
+	self assert: rgClass name identicalTo: #'Class class'.
+	self assert: rgClass category identicalTo: class category.
+	self assert: rgClass classSide identicalTo: rgClass
 ]

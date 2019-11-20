@@ -6,14 +6,11 @@ Class {
 
 { #category : #tests }
 RGGlobalVariableTest >> testGlobalVariableImplicitEnvironment [
-
 	| globalVariable |
-	
 	globalVariable := RGGlobalVariable unnamed.
 	self assert: (globalVariable hasUnresolved: #name).
 	self assert: globalVariable environment ask globalVariables size equals: 1.
-	self assert: (globalVariable environment ask globalVariables anyOne == globalVariable).
-	
+	self assert: globalVariable environment ask globalVariables anyOne identicalTo: globalVariable
 ]
 
 { #category : #tests }

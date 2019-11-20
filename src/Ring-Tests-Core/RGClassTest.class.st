@@ -14,12 +14,10 @@ RGClassTest >> behaviorClass [
 
 { #category : #tests }
 RGClassTest >> testClassSide [
-	
 	| behavior |
 	behavior := RGClass unnamed.
-	self assert: behavior classSide == behavior metaclass. 
-	self assert: behavior metaclass classSide == behavior metaclass. 
-	
+	self assert: behavior classSide identicalTo: behavior metaclass.
+	self assert: behavior metaclass classSide identicalTo: behavior metaclass
 ]
 
 { #category : #tests }
@@ -84,11 +82,9 @@ RGClassTest >> testConversionToTrait [
 
 { #category : #tests }
 RGClassTest >> testCopyForBehaviorDefinitionForClass [
-
 	"test copying for instance variables from RGClass"
-	
+
 	| env aClass copy classVariable1 sharedPool sharedPool2 |
-	
 	env := RGEnvironment new.
 	aClass := env ensureClassNamed: #SomeClass.
 	sharedPool := env ensureClassNamed: #SomePool.
@@ -99,38 +95,38 @@ RGClassTest >> testCopyForBehaviorDefinitionForClass [
 	aClass addSharedPool: sharedPool.
 
 	self assert: aClass sharedPools anyOne name equals: #SomePool.
-		
+
 	copy := aClass copyForBehaviorDefinition.
 
 	classVariable1 name: #ChangedClassVariable1.
 	aClass cleanSharedPools.
 	aClass addSharedPool: sharedPool2.
-	
-	self deny: copy == aClass. 
+
+	self deny: copy identicalTo: aClass.
 	self assert: copy classVarNames asArray equals: #(ClassVariable1).
 	self assert: (copy classVariables allSatisfy: [ :each | each parent == copy ]).
-	
+
 	self assert: copy sharedPools notEmpty.
-	self assert: copy sharedPools anyOne name equals: #SomePool.
+	self assert: copy sharedPools anyOne name equals: #SomePool
 ]
 
 { #category : #tests }
 RGClassTest >> testDefinition [
-
 	| env aClass |
-	
 	env := RGEnvironment new.
-		
+
 	aClass := env ensureClassNamed: 'Object'.
 	aClass superclass: (env ensureClassNamed: 'ProtoObject').
 	aClass package: (env ensurePackageNamed: 'Kernel-Objects').
 	aClass addClassVariable: (RGClassVariable named: #DependentsFields parent: aClass).
-	
-	self assert: aClass definition = 'ProtoObject subclass: #Object
+
+	self
+		assert: aClass definition
+		equals:
+			'ProtoObject subclass: #Object
 	instanceVariableNames: ''''
 	classVariableNames: ''DependentsFields''
 	package: ''Kernel-Objects'''
-
 ]
 
 { #category : #tests }

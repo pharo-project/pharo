@@ -14,12 +14,10 @@ RGTraitTest >> behaviorClass [
 
 { #category : #tests }
 RGTraitTest >> testClassSide [
-	
 	| behavior |
 	behavior := RGTrait unnamed.
-	self assert: behavior classSide == behavior classTrait. 
-	self assert: behavior classTrait classSide == behavior classTrait. 
-	
+	self assert: behavior classSide identicalTo: behavior classTrait.
+	self assert: behavior classTrait classSide identicalTo: behavior classTrait
 ]
 
 { #category : #'as yet unclassified' }
@@ -36,43 +34,40 @@ RGTraitTest >> testEnsureProtocol [
 
 { #category : #tests }
 RGTraitTest >> testNewTrait [
-
-	| trait metaclassTrait comment category package | 
-	
-	trait  := RGTrait unnamed.
-	self assert: (trait isRingResolved).
+	| trait metaclassTrait comment category package |
+	trait := RGTrait unnamed.
+	self assert: trait isRingResolved.
 	self assert: (trait hasUnresolvedAll: #(classTrait comment category package)).
-	self assert: (trait isTrait).
-	self assert: (trait trait == trait).
+	self assert: trait isTrait.
+	self assert: trait trait identicalTo: trait.
 
-	metaclassTrait  := RGMetaclassTrait parent: trait environment.
+	metaclassTrait := RGMetaclassTrait parent: trait environment.
 	trait classTrait: metaclassTrait.
 	self assert: (trait hasResolved: #classTrait).
-	self assert: (trait classTrait == metaclassTrait).
-	self assert: (trait theMetaClass == metaclassTrait).
+	self assert: trait classTrait identicalTo: metaclassTrait.
+	self assert: trait theMetaClass identicalTo: metaclassTrait.
 
-	comment := RGComment parent: metaclassTrait. 
-	self deny: (trait hasComment).
-	trait comment:  comment.
+	comment := RGComment parent: metaclassTrait.
+	self deny: trait hasComment.
+	trait comment: comment.
 	self assert: (trait hasResolved: #comment).
-	self assert: (trait comment == comment).
-	self deny: (trait hasComment). "the comment has no content"
+	self assert: trait comment identicalTo: comment.
+	self deny: trait hasComment.	"the comment has no content"
 	comment content: 'some comment'.
-	self assert: (trait hasComment).
+	self assert: trait hasComment.
 
-	category  := #'SomeCategory'.
+	category := #SomeCategory.
 	trait category: category.
 	self assert: (trait hasResolved: #tags).
-	self assert: (trait category == category).
+	self assert: trait category identicalTo: category.
 
-	package  := RGPackage parent: trait environment.
-	trait package:  package.
+	package := RGPackage parent: trait environment.
+	trait package: package.
 	self assert: (trait hasResolved: #package).
-	self assert: (trait package == package).
-	
+	self assert: trait package identicalTo: package.
+
 	trait classVarNames isEmpty.
-	trait sharedPools isEmpty.
-		
+	trait sharedPools isEmpty
 ]
 
 { #category : #tests }
