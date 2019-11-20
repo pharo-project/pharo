@@ -366,7 +366,8 @@ FileReference >> nextVersion [
 	parent := self parent.
 	nameWithoutExtension := self basename copyUpTo: $..
 	
-	versionNumbers := parent children 
+	"Check for filenames with the assumption it consists at least of basename and a single dot"
+	versionNumbers := (parent childrenMatching: nameWithoutExtension, '.*') 
 				select: [ :f| 
 					(f basename beginsWith: nameWithoutExtension) ]
 				thenCollect: [ :f| 
