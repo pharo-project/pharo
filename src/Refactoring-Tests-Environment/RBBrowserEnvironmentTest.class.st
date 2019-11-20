@@ -268,7 +268,7 @@ RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	wrapper := RBBrowserEnvironmentWrapper onEnvironment: printString.
 	self assert: wrapper numberSelectors equals: printString numberSelectors.
 	self assert: wrapper numberClasses equals: printString numberClasses.
-	self assert: wrapper environment == printString
+	self assert: wrapper environment identicalTo: printString
 ]
 
 { #category : #testing }
@@ -333,13 +333,11 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 	orEnvironment := env1 | env1 not.
 	self assert: (env2 | env1) packages size equals: 1.
 	self universalTestFor: orEnvironment.
-	self assert: orEnvironment numberSelectors 
-				equals: universalEnvironment numberSelectors.
-	self assert: orEnvironment classNames asSortedCollection 
-				equals: universalEnvironment classNames asSortedCollection.
-	self assert: (orEnvironment protocolsFor: Object) 
-				= ((universalEnvironment protocolsFor: Object) reject: [:each| (Object allSelectorsInProtocol: each) isEmpty ])
-
+	self assert: orEnvironment numberSelectors equals: universalEnvironment numberSelectors.
+	self assert: orEnvironment classNames asSortedCollection equals: universalEnvironment classNames asSortedCollection.
+	self
+		assert: (orEnvironment protocolsFor: Object)
+		equals: ((universalEnvironment protocolsFor: Object) reject: [ :each | (Object allSelectorsInProtocol: each) isEmpty ])
 ]
 
 { #category : #'testing-environments' }
@@ -394,16 +392,13 @@ RBBrowserEnvironmentTest >> testRemoveSelectorByAndAndNot [
 { #category : #testing }
 RBBrowserEnvironmentTest >> testSelectMethods [
 	| environment |
-	environment := RBBrowserEnvironment new selectMethods: [:each | false].
+	environment := RBBrowserEnvironment new selectMethods: [ :each | false ].
 	self assert: environment numberSelectors equals: 0.
 	self assert: environment numberClasses equals: 0.
-	environment := RBBrowserEnvironment new selectMethods: [:each | true].
-	self assert: environment numberSelectors 
-				equals: RBBrowserEnvironment new numberSelectors.
-	environment := RBBrowserEnvironment new 
-				selectMethods: [:each | each refersToLiteral: #environment].
-	self assert: environment numberSelectors 
-				= (RBBrowserEnvironment new referencesTo: #environment) numberSelectors
+	environment := RBBrowserEnvironment new selectMethods: [ :each | true ].
+	self assert: environment numberSelectors equals: RBBrowserEnvironment new numberSelectors.
+	environment := RBBrowserEnvironment new selectMethods: [ :each | each refersToLiteral: #environment ].
+	self assert: environment numberSelectors equals: (RBBrowserEnvironment new referencesTo: #environment) numberSelectors
 ]
 
 { #category : #'testing-environments' }
