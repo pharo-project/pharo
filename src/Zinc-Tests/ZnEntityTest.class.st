@@ -12,14 +12,11 @@ ZnEntityTest >> testApplicationUrlEncodingAddAll [
 	data at: 'bar' put: 2 asString.
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	"Asking for the content length will force an internal computation of the representation"
-	self assert: entity contentLength = 0.
+	self assert: entity contentLength equals: 0.
 	entity addAll: data.
 	string := String streamContents: [ :stream | entity writeOn: stream ].
 	self assert: entity contentLength > 0.
-	entity := ZnEntity 
-		readFrom: string readStream 
-		usingType: ZnApplicationFormUrlEncodedEntity designatedMimeType 
-		andLength: string size.
+	entity := ZnEntity readFrom: string readStream usingType: ZnApplicationFormUrlEncodedEntity designatedMimeType andLength: string size.
 	self assert: (entity at: 'foo') equals: '1'.
 	self assert: (entity at: 'bar') equals: '2'
 ]
@@ -27,7 +24,7 @@ ZnEntityTest >> testApplicationUrlEncodingAddAll [
 { #category : #testing }
 ZnEntityTest >> testMultiPartFormDataWriteRead [
 	| input output bytes |
-	input := (ZnMultiPartFormDataEntity new)
+	input := ZnMultiPartFormDataEntity new
 		addPart: (ZnMimePart fieldName: 'extra' value: 'my-extra');
 		addPart: (ZnMimePart fieldName: 'info' value: 'my-info');
 		addPart: (ZnMimePart fieldName: 'file' fileName: 'foo.txt' entity: (ZnEntity text: 'Zinc HTTP Components'));
@@ -37,25 +34,23 @@ ZnEntityTest >> testMultiPartFormDataWriteRead [
 	self assert: (input contentType matches: ZnMimeType multiPartFormData).
 	bytes := ByteArray streamContents: [ :stream | input writeOn: stream ].
 	output := (ZnMultiPartFormDataEntity type: input contentType) readFrom: bytes readStream.
-	self assert: (output partNamed: 'extra') fieldValue = 'my-extra'.
-	self assert: (output partNamed: 'info') fieldValue = 'my-info'.
-	self assert: (output partNamed: 'extra') fieldValueString = 'my-extra'.
-	self assert: (output partNamed: 'info') fieldValueString = 'my-info'.
-	self assert: (output partNamed: 'file') contents = 'Zinc HTTP Components'.
+	self assert: (output partNamed: 'extra') fieldValue equals: 'my-extra'.
+	self assert: (output partNamed: 'info') fieldValue equals: 'my-info'.
+	self assert: (output partNamed: 'extra') fieldValueString equals: 'my-extra'.
+	self assert: (output partNamed: 'info') fieldValueString equals: 'my-info'.
+	self assert: (output partNamed: 'file') contents equals: 'Zinc HTTP Components'.
 	output := (ZnMultiPartFormDataEntity type: input contentType length: input contentLength) readFrom: bytes readStream.
-	self assert: (output partNamed: 'extra') fieldValue = 'my-extra'.
-	self assert: (output partNamed: 'info') fieldValue = 'my-info'.
-	self assert: (output partNamed: 'extra') fieldValueString = 'my-extra'.
-	self assert: (output partNamed: 'info') fieldValueString = 'my-info'.
-	self assert: (output partNamed: 'file') contents = 'Zinc HTTP Components'.
-
-	
+	self assert: (output partNamed: 'extra') fieldValue equals: 'my-extra'.
+	self assert: (output partNamed: 'info') fieldValue equals: 'my-info'.
+	self assert: (output partNamed: 'extra') fieldValueString equals: 'my-extra'.
+	self assert: (output partNamed: 'info') fieldValueString equals: 'my-info'.
+	self assert: (output partNamed: 'file') contents equals: 'Zinc HTTP Components'
 ]
 
 { #category : #testing }
 ZnEntityTest >> testMultiPartFormDataWriteReadBinary [
 	| input output bytes |
-	input := (ZnMultiPartFormDataEntity new)
+	input := ZnMultiPartFormDataEntity new
 		addPart: (ZnMimePart fieldName: 'extra' value: 'my-extra');
 		addPart: (ZnMimePart fieldName: 'info' value: 'my-info');
 		addPart: (ZnMimePart fieldName: 'file' fileName: 'foo.txt' entity: (ZnEntity text: 'Zinc HTTP Components'));
@@ -65,26 +60,23 @@ ZnEntityTest >> testMultiPartFormDataWriteReadBinary [
 	self assert: (input contentType matches: ZnMimeType multiPartFormData).
 	bytes := ByteArray streamContents: [ :stream | input writeOn: stream ].
 	output := ZnEntity readBinaryFrom: bytes readStream usingType: input contentType andLength: bytes size.
-	self assert: (output partNamed: 'extra') fieldValue = 'my-extra' asByteArray.
-	self assert: (output partNamed: 'info') fieldValue = 'my-info' asByteArray.
-	self assert: (output partNamed: 'extra') fieldValueString = 'my-extra'.
-	self assert: (output partNamed: 'info') fieldValueString = 'my-info'.
+	self assert: (output partNamed: 'extra') fieldValue equals: 'my-extra' asByteArray.
+	self assert: (output partNamed: 'info') fieldValue equals: 'my-info' asByteArray.
+	self assert: (output partNamed: 'extra') fieldValueString equals: 'my-extra'.
+	self assert: (output partNamed: 'info') fieldValueString equals: 'my-info'.
 	self deny: (output partNamed: 'file') contents isString.
-	self assert: (output partNamed: 'file') contents = 'Zinc HTTP Components' asByteArray
+	self assert: (output partNamed: 'file') contents equals: 'Zinc HTTP Components' asByteArray
 ]
 
 { #category : #testing }
 ZnEntityTest >> testReading [
 	| contents entity |
 	contents := 'This is a test'.
-	entity := ZnEntity 
-				readFrom: contents asByteArray readStream 
-				usingType: ZnMimeType textPlain 
-				andLength: contents size.
+	entity := ZnEntity readFrom: contents asByteArray readStream usingType: ZnMimeType textPlain andLength: contents size.
 	self assert: entity contents isString.
-	self assert: entity string = contents.
-	self assert: entity contentLength = contents size.
-	self assert: entity contentType = ZnMimeType textPlain 
+	self assert: entity string equals: contents.
+	self assert: entity contentLength equals: contents size.
+	self assert: entity contentType equals: ZnMimeType textPlain
 ]
 
 { #category : #testing }
@@ -117,14 +109,11 @@ ZnEntityTest >> testReadingApplicationFormUrlEncodingNoLength [
 ZnEntityTest >> testReadingBinary [
 	| contents entity |
 	contents := 'This is a test'.
-	entity := ZnEntity 
-				readBinaryFrom: contents asByteArray readStream 
-				usingType: ZnMimeType textPlain 
-				andLength: contents size.
+	entity := ZnEntity readBinaryFrom: contents asByteArray readStream usingType: ZnMimeType textPlain andLength: contents size.
 	self deny: entity contents isString.
-	self assert: entity contents = contents asByteArray.
-	self assert: entity contentLength = contents size.
-	self assert: entity contentType = ZnMimeType textPlain 
+	self assert: entity contents equals: contents asByteArray.
+	self assert: entity contentLength equals: contents size.
+	self assert: entity contentType equals: ZnMimeType textPlain
 ]
 
 { #category : #testing }
@@ -161,36 +150,48 @@ ZnEntityTest >> testStringEntityEncoderInitialization [
 { #category : #testing }
 ZnEntityTest >> testUTF8ReadingDetermined [
 	| string entity bytes |
-	string := String with: $$ with: (16r00A2 asCharacter) with: ( 16r20AC asCharacter) with: (16r024B62 asCharacter).
+	string := String
+		with: $$
+		with: 16r00A2 asCharacter
+		with: 16r20AC asCharacter
+		with: 16r024B62 asCharacter.
 	entity := ZnStringEntity type: ZnMimeType textPlain length: 10.
 	bytes := #(16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4 16rAD 16rA2) asByteArray.
 	entity readFrom: bytes readStream.
-	self assert: entity contentType = ZnMimeType textPlain.
-	self assert: entity contentLength = 10.
-	self assert: entity contents = string
+	self assert: entity contentType equals: ZnMimeType textPlain.
+	self assert: entity contentLength equals: 10.
+	self assert: entity contents equals: string
 ]
 
 { #category : #testing }
 ZnEntityTest >> testUTF8ReadingUndetermined [
 	| string entity bytes |
-	string := String with: $$ with: (16r00A2 asCharacter) with: ( 16r20AC asCharacter) with: (16r024B62 asCharacter).
+	string := String
+		with: $$
+		with: 16r00A2 asCharacter
+		with: 16r20AC asCharacter
+		with: 16r024B62 asCharacter.
 	entity := ZnStringEntity type: ZnMimeType textPlain.
 	bytes := #(16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4 16rAD 16rA2) asByteArray.
 	entity readFrom: bytes readStream.
-	self assert: entity contentType = ZnMimeType textPlain.
-	self assert: entity contentLength = 10.
-	self assert: entity contents = string
+	self assert: entity contentType equals: ZnMimeType textPlain.
+	self assert: entity contentLength equals: 10.
+	self assert: entity contents equals: string
 ]
 
 { #category : #testing }
 ZnEntityTest >> testUTF8Writing [
 	| string entity bytes |
-	string := String with: $$ with: (16r00A2 asCharacter) with: ( 16r20AC asCharacter) with: (16r024B62 asCharacter).
+	string := String
+		with: $$
+		with: 16r00A2 asCharacter
+		with: 16r20AC asCharacter
+		with: 16r024B62 asCharacter.
 	entity := ZnStringEntity text: string.
-	self assert: entity contentType = ZnMimeType textPlain.
-	self assert: entity contentLength = 10.
+	self assert: entity contentType equals: ZnMimeType textPlain.
+	self assert: entity contentLength equals: 10.
 	bytes := ByteArray streamContents: [ :stream | entity writeOn: stream ].
-	self assert: bytes = #(16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4 16rAD 16rA2) asByteArray
+	self assert: bytes equals: #(16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4 16rAD 16rA2) asByteArray
 ]
 
 { #category : #testing }
@@ -217,8 +218,8 @@ ZnEntityTest >> testWritingApplicationUrlEncoding [
 	entity := ZnApplicationFormUrlEncodedEntity new.
 	entity at: 'foo' put: 'bar'.
 	string := String streamContents: [ :stream | entity writeOn: stream ].
-	self assert: string = 'foo=bar'.
-	self assert: entity contentLength = 7
+	self assert: string equals: 'foo=bar'.
+	self assert: entity contentLength equals: 7
 ]
 
 { #category : #testing }
@@ -228,9 +229,8 @@ ZnEntityTest >> testWritingApplicationUrlEncodingWithTextEncodingLatin1 [
 	entity contentType charSet: 'iso-8859-1'.
 	entity at: 'foo' put: (Character value: 246) asString.
 	string := String streamContents: [ :stream | entity writeOn: stream ].
-	self assert: string = 'foo=%F6'.
-	self assert: entity contentLength = 7
-	
+	self assert: string equals: 'foo=%F6'.
+	self assert: entity contentLength equals: 7
 ]
 
 { #category : #testing }
@@ -240,6 +240,6 @@ ZnEntityTest >> testWritingApplicationUrlEncodingWithTextEncodingUtf8 [
 	entity contentType charSet: 'utf-8'.
 	entity at: 'foo' put: (Character value: 246) asString.
 	string := String streamContents: [ :stream | entity writeOn: stream ].
-	self assert: string = 'foo=%C3%B6'.
-	self assert: entity contentLength = 10
+	self assert: string equals: 'foo=%C3%B6'.
+	self assert: entity contentLength equals: 10
 ]

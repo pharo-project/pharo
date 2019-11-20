@@ -9,37 +9,32 @@ ZnRequestTest >> testBasicAuthenticate [
 	| request |
 	request := ZnRequest new.
 	request setBasicAuthenticationUsername: 'user' password: 'secret'.
-	self assert: (request headers at: 'Authorization') = 'Basic dXNlcjpzZWNyZXQ='.
-	self assert: request basicAuthentication asArray equals: #( 'user' 'secret' ).
+	self assert: (request headers at: 'Authorization') equals: 'Basic dXNlcjpzZWNyZXQ='.
+	self assert: request basicAuthentication asArray equals: #('user' 'secret').
 	request setBasicAuthenticationUsername: 'user' password: ''.
-	self assert: (request headers at: 'Authorization') = 'Basic dXNlcjo='.
-	self assert: request basicAuthentication asArray equals: #( 'user' '' ).
+	self assert: (request headers at: 'Authorization') equals: 'Basic dXNlcjo='.
+	self assert: request basicAuthentication asArray equals: #('user' '').
 	request setBasicAuthenticationUsername: 'user' password: ':colons:'.
-	self assert: (request headers at: 'Authorization') = 'Basic dXNlcjo6Y29sb25zOg=='.
-	self assert: request basicAuthentication asArray equals: #( 'user' ':colons:' ).
+	self assert: (request headers at: 'Authorization') equals: 'Basic dXNlcjo6Y29sb25zOg=='.
+	self assert: request basicAuthentication asArray equals: #('user' ':colons:')
 ]
 
 { #category : #testing }
 ZnRequestTest >> testCookiesParsing [
 	| input request cookies testCookie1 testCookie2 |
-	input := 'GET /foo.html HTTP/1.1', String crlf, 
-		'Cookie: testCookie1=123; testCookie2=321', String crlf,
-		'Host: foo.com', String crlf, 
-		'Agent: SUnit', String crlf, 
-		String crlf.
+	input := 'GET /foo.html HTTP/1.1' , String crlf , 'Cookie: testCookie1=123; testCookie2=321' , String crlf , 'Host: foo.com' , String crlf , 'Agent: SUnit'
+		, String crlf , String crlf.
 	request := ZnRequest readFrom: input readStream.
-	
+
 	cookies := request cookies.
 	testCookie1 := cookies detect: [ :each | each name = 'testCookie1' ].
 	testCookie2 := cookies detect: [ :each | each name = 'testCookie2' ].
-	
+
 	self assert: testCookie1 notNil.
-	self assert: testCookie1 value = '123'.	
-	
+	self assert: testCookie1 value equals: '123'.
+
 	self assert: testCookie2 notNil.
-	self assert: testCookie2 value = '321'.	
-
-
+	self assert: testCookie2 value equals: '321'
 ]
 
 { #category : #testing }
@@ -83,16 +78,12 @@ ZnRequestTest >> testMergedFields [
 { #category : #testing }
 ZnRequestTest >> testReading [
 	| input request |
-	input := 'GET /foo.html HTTP/1.1', String crlf, 
-		'Host: foo.com', String crlf, 
-		'Agent: SUnit', String crlf, 
-		String crlf.
+	input := 'GET /foo.html HTTP/1.1' , String crlf , 'Host: foo.com' , String crlf , 'Agent: SUnit' , String crlf , String crlf.
 	request := ZnRequest readFrom: input readStream.
-	self assert: request method = #GET.
+	self assert: request method equals: #GET.
 	self assert: request hasHeaders.
-	self assert: (request headers at: 'Host') = 'foo.com'.
+	self assert: (request headers at: 'Host') equals: 'foo.com'.
 	self assert: request hasEntity not
-
 ]
 
 { #category : #testing }
