@@ -18,11 +18,11 @@ ZnStatusLineTest >> testInitialization [
 { #category : #testing }
 ZnStatusLineTest >> testReading [
 	| statusLine string |
-	string := 'HTTP/1.1 200 OK', String crlf.
+	string := 'HTTP/1.1 200 OK' , String crlf.
 	statusLine := ZnStatusLine readFrom: string readStream.
-	self assert: statusLine code = 200.
-	self assert: statusLine reason = 'OK'.
-	self assert: statusLine version = ZnConstants defaultHTTPVersion 
+	self assert: statusLine code equals: 200.
+	self assert: statusLine reason equals: 'OK'.
+	self assert: statusLine version equals: ZnConstants defaultHTTPVersion
 ]
 
 { #category : #testing }
@@ -61,5 +61,5 @@ ZnStatusLineTest >> testWriting [
 	| statusLine string |
 	statusLine := ZnStatusLine ok.
 	string := String streamContents: [ :stream | statusLine writeOn: stream ].
-	self assert: string = ('HTTP/1.1 200 OK', String crlf)
+	self assert: string equals: 'HTTP/1.1 200 OK' , String crlf
 ]

@@ -9,9 +9,9 @@ ZnResponseTest >> testAbsoluteCreated [
 	| response uri |
 	uri := 'http://www.example.com:8888/something/else/foo.txt'.
 	response := ZnResponse created: uri asZnUrl.
-	self assert: response code = 201.
+	self assert: response code equals: 201.
 	self assert: response hasHeaders.
-	self assert: (response headers at: 'Location') = uri.
+	self assert: (response headers at: 'Location') equals: uri.
 	self assert: response hasEntity.
 	self assert: (response entity contents includesSubstring: uri)
 ]
@@ -21,13 +21,12 @@ ZnResponseTest >> testAbsoluteRedirect [
 	| response uri |
 	uri := 'http://foo.com:8080/something/else/foo.txt?key=123'.
 	response := ZnResponse redirect: uri asZnUrl.
-	self assert: response code = 302.
+	self assert: response code equals: 302.
 	self assert: response isRedirect.
 	self assert: response hasHeaders.
-	self assert: (response headers at: 'Location') = uri.
+	self assert: (response headers at: 'Location') equals: uri.
 	self assert: response hasEntity.
 	self assert: (response entity contents includesSubstring: uri)
-
 ]
 
 { #category : #testing }
@@ -84,9 +83,9 @@ ZnResponseTest >> testCreated [
 	| response uri |
 	uri := '/something/else/foo.txt'.
 	response := ZnResponse created: uri.
-	self assert: response code = 201.
+	self assert: response code equals: 201.
 	self assert: response hasHeaders.
-	self assert: (response headers at: 'Location') = uri.
+	self assert: (response headers at: 'Location') equals: uri.
 	self assert: response hasEntity.
 	self assert: (response entity contents includesSubstring: uri)
 ]
@@ -118,7 +117,7 @@ ZnResponseTest >> testIsError [
 ZnResponseTest >> testNotFound [
 	| response |
 	response := ZnResponse notFound: 'http:///secret.txt'.
-	self assert: response code = 404.
+	self assert: response code equals: 404.
 	self assert: (response headers includesKey: 'Server').
 	self assert: (response headers includesKey: 'Date').
 	self assert: (response entity contents includesSubstring: 'secret.txt')
@@ -129,17 +128,17 @@ ZnResponseTest >> testRedirect [
 	| response uri |
 	uri := '/something/else/foo.txt'.
 	response := ZnResponse redirect: uri.
-	self assert: response code = 302.
-	self assert: response code = 302.
+	self assert: response code equals: 302.
+	self assert: response code equals: 302.
 	self assert: response hasHeaders.
-	self assert: (response headers at: 'Location') = uri.
+	self assert: (response headers at: 'Location') equals: uri.
 	self assert: response hasEntity.
 	self assert: (response entity contents includesSubstring: uri).
 	response := ZnResponse redirect: uri asZnUrl.
-	self assert: response code = 302.
-	self assert: response code = 302.
+	self assert: response code equals: 302.
+	self assert: response code equals: 302.
 	self assert: response hasHeaders.
-	self assert: (response headers at: 'Location') = uri.
+	self assert: (response headers at: 'Location') equals: uri.
 	self assert: response hasEntity.
 	self assert: (response entity contents includesSubstring: uri)
 ]
@@ -151,20 +150,17 @@ ZnResponseTest >> testSlashdotGzipChunked [
 		setConnectionClose;
 		setAcceptEncodingGzip.
 	stream := ZnNetworkingUtils socketStreamToUrl: request url.
-	response := [ 
-  		request writeOn: stream. 
-  		stream flush. 
-  		ZnDefaultCharacterEncoder 
-			value: ZnNullEncoder new
-			during: [ ZnResponse readFrom: stream ] ] ensure: [ stream close ].
+	response := [ request writeOn: stream.
+	stream flush.
+	ZnDefaultCharacterEncoder value: ZnNullEncoder new during: [ ZnResponse readFrom: stream ] ]
+		ensure: [ stream close ].
 	response isRedirect ifTrue: [ ^ self ].
-	self assert: response code = 200.
+	self assert: response code equals: 200.
 	self assert: ((response headers at: 'Content-Type') beginsWith: 'text/html').
-	self assert: (response headers at: 'Content-Encoding' ifAbsent: [ 'gzip' ]) = 'gzip'.
-	self assert: (response headers at: 'Transfer-Encoding' ifAbsent: [ 'chunked' ]) = 'chunked'.
+	self assert: (response headers at: 'Content-Encoding' ifAbsent: [ 'gzip' ]) equals: 'gzip'.
+	self assert: (response headers at: 'Transfer-Encoding' ifAbsent: [ 'chunked' ]) equals: 'chunked'.
 	contents := response entity contents.
 	self assert: ((contents includesSubstring: 'Slashdot') or: [ contents includesSubstring: 'refresh' ])
-
 ]
 
 { #category : #testing }
