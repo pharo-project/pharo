@@ -103,11 +103,10 @@ ClassFactoryForTestCaseTest >> testDuplicateClassWithNewName [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testMultipleClassCreation [
-	5 timesRepeat: [
-		factory newClass].
+	5 timesRepeat: [ factory newClass ].
 	self assert: (SystemNavigation new allClasses includesAll: factory createdClasses).
-	self assert: factory createdClassNames asSet size = 5.
-	self assert: (SystemOrganization listAtCategoryNamed: factory defaultCategory) asSet = factory createdClassNames asSet
+	self assert: factory createdClassNames asSet size equals: 5.
+	self assert: (SystemOrganization listAtCategoryNamed: factory defaultCategory) asSet equals: factory createdClassNames asSet
 ]
 
 { #category : #testing }
@@ -126,16 +125,13 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 
 { #category : #testing }
 ClassFactoryForTestCaseTest >> testSingleClassCreation [
-	|class elementsInCategoryForTest |
-	class := factory 
-		newSubclassOf: Object 
-		instanceVariableNames: 'a b c' 
-		classVariableNames: 'X Y'.
+	| class elementsInCategoryForTest |
+	class := factory newSubclassOf: Object instanceVariableNames: 'a b c' classVariableNames: 'X Y'.
 	self assert: (SystemNavigation new allClasses includes: class).
-	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory. 
-	self assert: elementsInCategoryForTest = {class name}.
-	self assert: class instVarNames = #(a b c).
-	self assert: class classPool keys asSet = #(X Y) asSet
+	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory.
+	self assert: elementsInCategoryForTest equals: {class name}.
+	self assert: class instVarNames equals: #(a b c).
+	self assert: class classPool keys asSet equals: #(X Y) asSet
 ]
 
 { #category : #testing }
@@ -144,7 +140,7 @@ ClassFactoryForTestCaseTest >> testSingleClassFastCreation [
 	class := factory newClass.
 	self assert: (SystemNavigation new allClasses includes: class).
 	elementsInCategoryForTest := SystemOrganization listAtCategoryNamed: factory defaultCategory.
-	self assert: elementsInCategoryForTest = {class name}.
+	self assert: elementsInCategoryForTest equals: {class name}.
 	self assertEmpty: class instVarNames.
 	self assertEmpty: class classPool
 ]
@@ -154,8 +150,8 @@ ClassFactoryForTestCaseTest >> testSingleTraitCreation [
 	| trait |
 	trait := factory newTrait.
 	self assert: (testingEnvironment allTraits includes: trait).
-	self assert: trait traitUsers size = 0.
-	self assert: trait traits size = 0
+	self assert: trait traitUsers size equals: 0.
+	self assert: trait traits size equals: 0
 ]
 
 { #category : #testing }

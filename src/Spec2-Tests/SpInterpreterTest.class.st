@@ -61,7 +61,7 @@ SpInterpreterTest >> testInterpretASpecModelMorphAssociation [
 	model := SpAbstractWidgetPresenter new.
 	spec := {#MenuRegistration . #help: . #icon:}.
 	morph := specInterpreterClass interpretASpec: spec presenter: model.
-	self assert: model adapter == morph
+	self assert: model adapter identicalTo: morph
 ]
 
 { #category : #tests }

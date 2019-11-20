@@ -197,8 +197,9 @@ STONWriteReadTest >> testFloats [
 	floats := STON listClass withAll: ((-10 to: 10) collect: [ :each | each * Float pi ]).
 	serialization := self serialize: floats.
 	materialization := self materialize: serialization.
-	self assert: floats size = materialization size.
-	1 to: floats size do: [:index | | float |
+	self assert: floats size equals: materialization size.
+	1 to: floats size do: [ :index | 
+		| float |
 		float := floats at: index.
 		"Use #closeTo: instead of #= to increase portability"
 		self assert: (float closeTo: (materialization at: index)) ]
@@ -255,17 +256,17 @@ STONWriteReadTest >> testKnownObjects [
 	knownObject := STONTestKnownObject new.
 	"make sure the system of remembering instances works"
 	self assert: (STONTestKnownObject fromId: knownObject id asString) equals: knownObject.
-	self assert: (STONTestKnownObject fromId: knownObject id asString) == knownObject.
+	self assert: (STONTestKnownObject fromId: knownObject id asString) identicalTo: knownObject.
 	"only the id string is serialized"
 	ston := self serialize: knownObject.
 	"upon serialization, objects with known id strings come from the remembered instances"
 	object := self materialize: ston.
 	self assert: object equals: knownObject.
-	self assert: object == knownObject.
+	self assert: object identicalTo: knownObject.
 	"not just the id is equal, but the rest of the object too"
 	self assert: object description equals: knownObject description.
-	
-	STONTestKnownObject resetKnownObjects.
+
+	STONTestKnownObject resetKnownObjects
 ]
 
 { #category : #tests }

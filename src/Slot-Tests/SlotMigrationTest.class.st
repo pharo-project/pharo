@@ -12,29 +12,32 @@ SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
 	"Reproduces fogbugz case 13028"
 
 	"Define original hierarchy"
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			superclass: Object ]. 
 
-	anotherClass := self make: [ :builder |
-		builder 
-			name: self anotherClassName;
-			superclass: aClass ].
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				superclass: Object ].
+
+	anotherClass := self
+		make: [ :builder | 
+			builder
+				name: self anotherClassName;
+				superclass: aClass ].
 
 	self assert: aClass subclasses size equals: 1.
-	self assert: aClass subclasses anyOne == anotherClass.
+	self assert: aClass subclasses anyOne identicalTo: anotherClass.
 
 	"Add a shared variable"
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			superclass: Object;
-			sharedVariablesFromString: 'Var' ]. 
-	
-	self assert: aClass subclasses size equals: 1.
-	self assert: aClass subclasses anyOne == anotherClass
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				superclass: Object;
+				sharedVariablesFromString: 'Var' ].
 
+	self assert: aClass subclasses size equals: 1.
+	self assert: aClass subclasses anyOne identicalTo: anotherClass
 ]
 
 { #category : #tests }
@@ -138,8 +141,8 @@ SlotMigrationTest >> testChangeSuperclass [
 				superclass: aClass ].
 
 	self assert: aClass subclasses size equals: 1.
-	self assert: aClass subclasses anyOne == anotherClass.
-	self assert: anotherClass superclass == aClass.
+	self assert: aClass subclasses anyOne identicalTo: anotherClass.
+	self assert: anotherClass superclass identicalTo: aClass.
 
 	"Change to a new superclass"
 	yetAnotherClass := self
@@ -156,8 +159,8 @@ SlotMigrationTest >> testChangeSuperclass [
 
 	self assertEmpty: aClass subclasses.
 	self assert: yetAnotherClass subclasses size equals: 1.
-	self assert: yetAnotherClass subclasses anyOne == anotherClass.
-	self assert: anotherClass superclass == yetAnotherClass
+	self assert: yetAnotherClass subclasses anyOne identicalTo: anotherClass.
+	self assert: anotherClass superclass identicalTo: yetAnotherClass
 ]
 
 { #category : #tests }
