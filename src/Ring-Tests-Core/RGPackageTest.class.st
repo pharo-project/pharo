@@ -39,30 +39,27 @@ RGPackageTest >> testAddingPackage [
 
 { #category : #testing }
 RGPackageTest >> testCategories [
-	
 	| package env class1 class2 |
-
 	package := RGPackage named: 'SomePackage'.
 	env := package environment.
-		
+
 	class1 := env ensureClassNamed: #Class1.
 	class2 := env ensureClassNamed: #Class2.
-	
+
 	class1 package: package.
 	class2 package: package.
-	
-	self assert: (package categories asArray = #('SomePackage')).
-	
+
+	self assert: package categories asArray equals: #('SomePackage').
+
 	class1 tagWith: #tag1.
 	class2 tagWith: #tag1.
-	
-	self assert: (package categories asArray sorted = #('SomePackage-tag1')).
-	
+
+	self assert: package categories asArray sorted equals: #('SomePackage-tag1').
+
 	class2 untagFrom: #tag1.
 	class2 tagWith: #tag2.
 
-	self assert: (package categories asArray sorted = #('SomePackage-tag1' 'SomePackage-tag2')).
-
+	self assert: package categories asArray sorted equals: #('SomePackage-tag1' 'SomePackage-tag2')
 ]
 
 { #category : #testing }
@@ -161,43 +158,40 @@ RGPackageTest >> testDefinedBehaviorsOfUnresolvedPackages [
 { #category : #'tests - new' }
 RGPackageTest >> testNewPackage [
 	| newPackage |
-	
 	newPackage := RGPackage named: 'Collections-Sequenceable'.
-	
-	self assert: (newPackage isRingResolved).
-	
-	self assert: (newPackage isPackage).
-	self assert: (newPackage name = 'Collections-Sequenceable').
+
+	self assert: newPackage isRingResolved.
+
+	self assert: newPackage isPackage.
+	self assert: newPackage name equals: 'Collections-Sequenceable'.
 
 	newPackage name: 'NewCollections'.
 	self assert: newPackage name equals: 'NewCollections'.
 
-	self assert: (newPackage definedBehaviors isEmpty).
-	self assert: (newPackage extensionMethods isEmpty).
+	self assert: newPackage definedBehaviors isEmpty.
+	self assert: newPackage extensionMethods isEmpty.
 	self assert: (newPackage hasUnresolvedAll: #(#definedBehaviors #extensionMethods)).
-	
+
 	newPackage cleanDefinedBehaviors.
-	
+
 	self assert: (newPackage hasUnresolved: #extensionMethods).
-	self assert: (newPackage definedBehaviors isEmpty).
-	self assert: (newPackage extensionMethods isEmpty).
+	self assert: newPackage definedBehaviors isEmpty.
+	self assert: newPackage extensionMethods isEmpty.
 
 	newPackage cleanExtensionMethods.
 	newPackage cleanTagsForClasses.
 
-	self assert: (newPackage unresolvedProperties isEmpty).
-	self assert: (newPackage definedBehaviors isEmpty).
-	self assert: (newPackage extensionMethods isEmpty).
-	
-	self assert: (newPackage isRingResolved).
-	self assert: (newPackage isRingFullyResolved).
-	self deny: (newPackage isRingFullyUnresolved).
+	self assert: newPackage unresolvedProperties isEmpty.
+	self assert: newPackage definedBehaviors isEmpty.
+	self assert: newPackage extensionMethods isEmpty.
 
-	self assert: (newPackage package = newPackage).
-	
-		self assert: (newPackage traits isEmpty).
-		
+	self assert: newPackage isRingResolved.
+	self assert: newPackage isRingFullyResolved.
+	self deny: newPackage isRingFullyUnresolved.
 
+	self assert: newPackage package equals: newPackage.
+
+	self assert: newPackage traits isEmpty
 ]
 
 { #category : #'tests - new' }
@@ -221,20 +215,17 @@ RGPackageTest >> testResolvingConsistency [
 { #category : #'tests - new' }
 RGPackageTest >> testStubPackage [
 	| env package package2 |
-	
 	env := RGEnvironment new.
-	self assert: (env ask packages size = 0). 
-	
+	self assert: env ask packages size equals: 0.
+
 	package := RGPackage named: 'Collections-Sequenceable'.
 	env := package environment.
-	self assert: (env ask packages size = 1).
-	
-	package2 := RGPackage named: 'Collections-Sequenceable' parent: env.
+	self assert: env ask packages size equals: 1.
+
+	package2 := RGPackage named: 'Collections-Sequenceable' parent: env
 	"self assert: (env ask packages size = 2).
 	env addPackage: package2.
 	self assert: (env ask packages size = 3)."
-	
-
 ]
 
 { #category : #testing }

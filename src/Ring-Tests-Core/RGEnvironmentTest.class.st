@@ -216,16 +216,14 @@ RGEnvironmentTest >> testEnvironmentWithNamespace [
 
 { #category : #tests }
 RGEnvironmentTest >> testFixProtoObjectClassSuperclass [
-
-	| env protoObject class | 
-	
+	| env protoObject class |
 	env := RGEnvironment new.
 	protoObject := env ensureClassNamed: 'ProtoObject'.
 	class := env ensureClassNamed: 'Class'.
 
-	self deny: (protoObject classSide superclass = class).
+	self deny: protoObject classSide superclass equals: class.
 	env fixProtoObjectClassSuperclass.
-	self assert: (protoObject classSide superclass = class).
+	self assert: protoObject classSide superclass equals: class
 ]
 
 { #category : #tests }
@@ -262,27 +260,23 @@ RGEnvironmentTest >> testMerging [
 { #category : #tests }
 RGEnvironmentTest >> testNewEnvironment [
 	| newEnvironment |
-	
 	newEnvironment := RGEnvironment named: 'Testing environment'.
-	
-	self assert: (newEnvironment isRingResolved).
-	
-	self assert: (newEnvironment isEnvironment).
-	self assert: (newEnvironment name = 'Testing environment').
-	self assert: (newEnvironment ask behaviors isEmpty).
-	self assert: (newEnvironment hasResolvedName).
+
+	self assert: newEnvironment isRingResolved.
+
+	self assert: newEnvironment isEnvironment.
+	self assert: newEnvironment name equals: 'Testing environment'.
+	self assert: newEnvironment ask behaviors isEmpty.
+	self assert: newEnvironment hasResolvedName.
 	self assert: (newEnvironment hasUnresolved: #behaviors).
 	self assert: (newEnvironment hasUnresolved: #globalVariables).
-	
+
 	newEnvironment cleanPackages.
 	newEnvironment cleanBehaviors.
 	newEnvironment cleanGlobalVariables.
-	
-	self assert: (newEnvironment unresolvedProperties isEmpty).
-	self assert: (newEnvironment ask packages isEmpty).
 
-		
-
+	self assert: newEnvironment unresolvedProperties isEmpty.
+	self assert: newEnvironment ask packages isEmpty
 ]
 
 { #category : #tests }
@@ -328,83 +322,71 @@ RGEnvironmentTest >> testTraitNamed [
 
 { #category : #tests }
 RGEnvironmentTest >> testUnifyClassTrait [
-
-	| env trait1 trait2 classTrait| 
-	
+	| env trait1 trait2 classTrait |
 	env := RGEnvironment new.
 	trait1 := env ensureTraitNamed: 'SomeTrait1'.
 	trait2 := env ensureTraitNamed: 'SomeTrait2'.
-	
-	self deny: (trait1 classTrait metaclass = trait2 classTrait metaclass).
+
+	self deny: trait1 classTrait metaclass equals: trait2 classTrait metaclass.
 	env unifyClassTrait.
-	self assert: (trait1 classTrait metaclass = trait2 classTrait metaclass).
+	self assert: trait1 classTrait metaclass equals: trait2 classTrait metaclass.
 
 	env := RGEnvironment new.
 	trait1 := env ensureTraitNamed: 'SomeTrait1'.
 	trait2 := env ensureTraitNamed: 'SomeTrait2'.
 	classTrait := env ensureClassNamed: 'ClassTrait'.
-	
-	self deny: (trait1 classTrait metaclass = trait2 classTrait metaclass).
-	self deny: (trait1 classTrait metaclass = classTrait).
+
+	self deny: trait1 classTrait metaclass equals: trait2 classTrait metaclass.
+	self deny: trait1 classTrait metaclass equals: classTrait.
 	env unifyClassTrait.
-	self assert: (trait1 classTrait metaclass = trait2 classTrait metaclass).
-	self assert: (trait1 classTrait metaclass = classTrait).
-
-
+	self assert: trait1 classTrait metaclass equals: trait2 classTrait metaclass.
+	self assert: trait1 classTrait metaclass equals: classTrait
 ]
 
 { #category : #tests }
 RGEnvironmentTest >> testUnifyMetaclass [
-
-	| env class1 class2 metaclass| 
-	
+	| env class1 class2 metaclass |
 	env := RGEnvironment new.
 	class1 := env ensureClassNamed: 'SomeClass1'.
 	class2 := env ensureClassNamed: 'SomeClass2'.
-	
-	self deny: (class1 metaclass metaclass = class2 metaclass metaclass).
+
+	self deny: class1 metaclass metaclass equals: class2 metaclass metaclass.
 	env unifyMetaclass.
-	self assert: (class1 metaclass metaclass = class2 metaclass metaclass).
+	self assert: class1 metaclass metaclass equals: class2 metaclass metaclass.
 
 	env := RGEnvironment new.
 	class1 := env ensureClassNamed: 'SomeClass1'.
 	class2 := env ensureClassNamed: 'SomeClass2'.
 	metaclass := env ensureTraitNamed: 'Metaclass'.
-	
-	self deny: (class1 metaclass metaclass = class2 metaclass metaclass).
-	self deny: (class1 metaclass metaclass = metaclass).
+
+	self deny: class1 metaclass metaclass equals: class2 metaclass metaclass.
+	self deny: class1 metaclass metaclass equals: metaclass.
 	env unifyMetaclass.
-	self assert: (class1 metaclass metaclass = class2 metaclass metaclass).
-	self assert: (class1 metaclass metaclass = metaclass).
-
-
+	self assert: class1 metaclass metaclass equals: class2 metaclass metaclass.
+	self assert: class1 metaclass metaclass equals: metaclass
 ]
 
 { #category : #tests }
 RGEnvironmentTest >> testUnifyTrait [
-
-	| env trait1 trait2 trait| 
-	
+	| env trait1 trait2 trait |
 	env := RGEnvironment new.
 	trait1 := env ensureTraitNamed: 'SomeTrait1'.
 	trait2 := env ensureTraitNamed: 'SomeTrait2'.
-	
-	self deny: (trait1 metaclass = trait2 metaclass).
+
+	self deny: trait1 metaclass equals: trait2 metaclass.
 	env unifyTrait.
-	self assert: (trait1 metaclass = trait2 metaclass).
+	self assert: trait1 metaclass equals: trait2 metaclass.
 
 	env := RGEnvironment new.
 	trait1 := env ensureTraitNamed: 'SomeTrait1'.
 	trait2 := env ensureTraitNamed: 'SomeTrait2'.
 	trait := env ensureClassNamed: 'Trait'.
-	
-	self deny: (trait1 metaclass = trait2 metaclass).
-	self deny: (trait1 metaclass = trait).
+
+	self deny: trait1 metaclass equals: trait2 metaclass.
+	self deny: trait1 metaclass equals: trait.
 	env unifyTrait.
-	self assert: (trait1 metaclass = trait2 metaclass).
-	self assert: (trait1 metaclass = trait).
-
-
+	self assert: trait1 metaclass equals: trait2 metaclass.
+	self assert: trait1 metaclass equals: trait
 ]
 
 { #category : #tests }
