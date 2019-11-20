@@ -251,16 +251,12 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 	self assert: (extensionMethods includes: a2 class >> #classSideMethodDefinedInP3).
 	cpt := 0.
 	package
-		metaclassExtensionSlicesDo: [ :className :listOfSelectors | 
-			(className = a2 name and: [ listOfSelectors includes: #classSideMethodDefinedInP3 ])
-				ifTrue: [ cpt := cpt + 1 ] ].
+		metaclassExtensionSlicesDo: [ :className :listOfSelectors | (className = a2 name and: [ listOfSelectors includes: #classSideMethodDefinedInP3 ]) ifTrue: [ cpt := cpt + 1 ] ].
 	self assert: cpt equals: 1.
 	cpt := 0.
 	package
-		classExtensionSlicesDo: [ :className :listOfSelectors | 
-			(className = a2 name and: [ listOfSelectors includes: #methodDefinedInP3 ])
-				ifTrue: [ cpt := cpt + 1 ] ].
-	self assert: cpt = 1
+		classExtensionSlicesDo: [ :className :listOfSelectors | (className = a2 name and: [ listOfSelectors includes: #methodDefinedInP3 ]) ifTrue: [ cpt := cpt + 1 ] ].
+	self assert: cpt equals: 1
 ]
 
 { #category : #'test situation' }

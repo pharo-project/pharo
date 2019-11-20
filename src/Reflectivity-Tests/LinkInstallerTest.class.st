@@ -60,14 +60,14 @@ LinkInstallerTest >> testCallToSuperWithArgs [
 LinkInstallerTest >> testFindingAnonymousNodes [
 	| link varNode instance objectSpecificVarNode |
 	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
-	
+
 	link := MetaLink new.
 	instance := ReflectivityExamples new.
-	
+
 	varNode link: link forObject: instance.
 	objectSpecificVarNode := link linkInstaller linkToNodesMapper findNodeLike: varNode forObject: instance.
-	
-	self deny: varNode == objectSpecificVarNode.
+
+	self deny: varNode identicalTo: objectSpecificVarNode.
 	self assert: varNode equals: objectSpecificVarNode
 ]
 
@@ -133,14 +133,14 @@ LinkInstallerTest >> testLinkOnRBProgramNode [
 	| link varNode instance objectSpecificVarNode |
 	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
 	link := MetaLink new.
-	
+
 	instance := ReflectivityExamples new.
 	varNode link: link forObject: instance.
 	objectSpecificVarNode := link linkInstaller linkToNodesMapper findNodeLike: varNode forObject: instance.
-	
+
 	self deny: varNode hasMetalink.
 	self assert: objectSpecificVarNode hasMetalink.
-	self assert: objectSpecificVarNode links asArray first == link
+	self assert: objectSpecificVarNode links asArray first identicalTo: link
 ]
 
 { #category : #permalinks }
@@ -255,20 +255,19 @@ LinkInstallerTest >> testMetaLinkOnOneObject [
 { #category : #'links - installing' }
 LinkInstallerTest >> testMetaLinkWithAnonymousClasses [
 	| metalink |
-
 	"We just need to link a MetaLink to an object"
 	metalink := MetaLink new.
 	(obj1 class >> #exampleMethod) ast link: metalink forObject: obj1.
 
 	"One of the 2 objects must have migrated to another class"
 	self assert: obj1 class ~= obj2 class.
-	self assert: obj1 class superclass == ReflectivityExamples.
-	self assert: obj2 class == ReflectivityExamples.
+	self assert: obj1 class superclass identicalTo: ReflectivityExamples.
+	self assert: obj2 class identicalTo: ReflectivityExamples.
 
 	"After removing the link, the object is back to its original class"
 	(obj1 class >> #exampleMethod) ast removeLink: metalink forObject: obj1.
-	self assert: obj1 class == ReflectivityExamples.
-	self assert: obj2 class == ReflectivityExamples
+	self assert: obj1 class identicalTo: ReflectivityExamples.
+	self assert: obj2 class identicalTo: ReflectivityExamples
 ]
 
 { #category : #'links - updating' }
@@ -276,7 +275,7 @@ LinkInstallerTest >> testMethodModified [
 	"When modifying a method for which there was an object specific link,
 	all links must be removed"
 
-	| metalink node |	
+	| metalink node |
 	obj1 compileTemporaryMethods.
 	node := (ReflectivityExamples >> #methodToBeModified) ast allChildren atRandom.
 
@@ -284,14 +283,14 @@ LinkInstallerTest >> testMethodModified [
 	metalink := MetaLink new.
 	node link: metalink forObject: obj1.
 	self assert: obj1 class isAnonymous.
-	
+
 	"Modifyinh the original method should remove all object specific links and
 	migrate back the object to its original class"
-	ReflectivityExamples compile: ('methodToBeModified ^', Time now printString printString).
+	ReflectivityExamples compile: 'methodToBeModified ^' , Time now printString printString.
 	self deny: obj1 class isAnonymous.
-	self assert: obj1 class == ReflectivityExamples.
+	self assert: obj1 class identicalTo: ReflectivityExamples.
 	self deny: metalink hasNodes.
-	self assert: (metalink linkInstaller linkToNodesMapper findNodeLike: node forObject: obj1) isNil. 
+	self assert: (metalink linkInstaller linkToNodesMapper findNodeLike: node forObject: obj1) isNil
 ]
 
 { #category : #'links - updating' }
@@ -299,7 +298,7 @@ LinkInstallerTest >> testMethodRemoved [
 	"When removing a method for which there was an object specific link,
 	all links must be removed"
 
-	| metalink node |	
+	| metalink node |
 	obj1 compileTemporaryMethods.
 	node := (ReflectivityExamples >> #methodToBeRemoved) ast allChildren atRandom.
 
@@ -307,14 +306,14 @@ LinkInstallerTest >> testMethodRemoved [
 	metalink := MetaLink new.
 	node link: metalink forObject: obj1.
 	self assert: obj1 class isAnonymous.
-		
+
 	"Removing the original method should remove all object specific links and
 	migrate back the object to its original class"
 	ReflectivityExamples removeSelector: #methodToBeRemoved.
 	self deny: obj1 class isAnonymous.
-	self assert: obj1 class == ReflectivityExamples.
+	self assert: obj1 class identicalTo: ReflectivityExamples.
 	self deny: metalink hasNodes.
-	self assert: (metalink linkInstaller linkToNodesMapper findNodeLike: node forObject: obj1) isNil. 
+	self assert: (metalink linkInstaller linkToNodesMapper findNodeLike: node forObject: obj1) isNil
 ]
 
 { #category : #permalinks }
@@ -549,17 +548,17 @@ LinkInstallerTest >> testPropagateLinksOnRBProgramNode [
 	link := MetaLink new.
 	link2 := MetaLink new.
 	varNode link: link.
-		
+
 	instance := ReflectivityExamples new.
 	varNode link: link2 forObject: instance.
 	objectSpecificVarNode := link2 linkInstaller linkToNodesMapper findNodeLike: varNode forObject: instance.
 
 	self assert: varNode links size equals: 1.
-	self assert: varNode links asArray first == link.
-	
+	self assert: varNode links asArray first identicalTo: link.
+
 	self assert: objectSpecificVarNode links size equals: 2.
 	self assert: (objectSpecificVarNode links includes: link).
-	self assert: (objectSpecificVarNode links includes: link2).
+	self assert: (objectSpecificVarNode links includes: link2)
 ]
 
 { #category : #'links - updating' }
