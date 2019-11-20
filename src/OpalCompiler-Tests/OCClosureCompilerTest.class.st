@@ -354,62 +354,69 @@ OCClosureCompilerTest >> testInlineBlockCollectionEM1 [
 	| a1 b1 i1 a2 b2 i2 we wb |
 	b1 := OrderedCollection new.
 	i1 := 1.
-	[a1 := i1.
-	 i1 <= 3] whileTrue:
-		[b1 add: [a1].
-		i1 := i1 + 1].
-	b1 := b1 asArray collect: [:b | b value].
+	[ a1 := i1.
+	i1 <= 3 ]
+		whileTrue: [ b1 add: [ a1 ].
+			i1 := i1 + 1 ].
+	b1 := b1 asArray collect: [ :b | b value ].
 	b2 := OrderedCollection new.
 	i2 := 1.
-	we := [a2 := i2. i2 <= 3].
-	wb := [b2 add: [a2]. i2 := i2 + 1].
-	we whileTrue: wb. "defeat optimization"
-	b2 := b2 asArray collect: [:b | b value].
-	self assert: b1 = b2
+	we := [ a2 := i2.
+	i2 <= 3 ].
+	wb := [ b2 add: [ a2 ].
+	i2 := i2 + 1 ].
+	we whileTrue: wb.	"defeat optimization"
+	b2 := b2 asArray collect: [ :b | b value ].
+	self assert: b1 equals: b2
 ]
 
 { #category : #tests }
 OCClosureCompilerTest >> testInlineBlockCollectionLR1 [
 	"Test case from Lukas Renggli"
+
 	| col |
 	col := OrderedCollection new.
 	1 to: 11 do: [ :each | col add: [ each ] ].
-	self assert: (col collect: [ :each | each value ]) asArray = (1 to: 11) asArray
+	self assert: (col collect: [ :each | each value ]) asArray equals: (1 to: 11) asArray
 ]
 
 { #category : #tests }
 OCClosureCompilerTest >> testInlineBlockCollectionLR2 [
 	"Test case from Lukas Renggli"
+
 	| col |
 	col := OrderedCollection new.
-	1 to: 11 do: [ :each | #(1) do: [:ignored| col add: [ each ]] ].
-	self assert: (col collect: [ :each | each value ]) asArray = (1 to: 11) asArray
+	1 to: 11 do: [ :each | #(1) do: [ :ignored | col add: [ each ] ] ].
+	self assert: (col collect: [ :each | each value ]) asArray equals: (1 to: 11) asArray
 ]
 
 { #category : #tests }
 OCClosureCompilerTest >> testInlineBlockCollectionLR3 [
 	| col |
 	col := OrderedCollection new.
-	1 to: 11 do: [ :each | | i | i := each. col add: [ i ]. i := i + 1 ].
-	self assert: (col collect: [ :each | each value ]) asArray = (2 to: 12) asArray
+	1 to: 11 do: [ :each | 
+		| i |
+		i := each.
+		col add: [ i ].
+		i := i + 1 ].
+	self assert: (col collect: [ :each | each value ]) asArray equals: (2 to: 12) asArray
 ]
 
 { #category : #tests }
 OCClosureCompilerTest >> testInlineBlockCollectionSD1 [
 	| a1 b1 a2 b2 |
 	b1 := OrderedCollection new.
-	1 to: 3 do:
-		[:i |
+	1 to: 3 do: [ :i | 
 		a1 := i.
-		b1 add: [a1]].
-	b1 := b1 asArray collect: [:b | b value].
+		b1 add: [ a1 ] ].
+	b1 := b1 asArray collect: [ :b | b value ].
 	b2 := OrderedCollection new.
 	1 to: 3 do:
-		[:i |
+		[ :i | 
 		a2 := i.
-		b2 add: [a2]] yourself. "defeat optimization"
-	b2 := b2 asArray collect: [:b | b value].
-	self assert: b1 = b2
+		b2 add: [ a2 ] ] yourself.	"defeat optimization"
+	b2 := b2 asArray collect: [ :b | b value ].
+	self assert: b1 equals: b2
 ]
 
 { #category : #tests }

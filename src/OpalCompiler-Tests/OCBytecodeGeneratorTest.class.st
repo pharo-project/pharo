@@ -33,8 +33,7 @@ OCBytecodeGeneratorTest >> testBlockReturnTop [
 
 { #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testClosureExample [
-	| cm  |
-	
+	| cm |
 	cm := self newBytecodeGen
 		numArgs: 0;
 		numTemps: 0;
@@ -44,22 +43,20 @@ OCBytecodeGeneratorTest >> testClosureExample [
 		label: #end;
 		returnTop;
 		compiledMethod.
-	
-		
+
+
 	cm methodClass: self class.
 	cm selector: #test.
 
 	self assert: (cm isKindOf: CompiledMethod).
-	self assert: ((cm valueWithReceiver: 2@2 arguments: #()) isKindOf: BlockClosure).
-	self assert: ((cm valueWithReceiver: 2@2 arguments: #()) value = (2@2)).
-	^cm
-	
+	self assert: ((cm valueWithReceiver: 2 @ 2 arguments: #()) isKindOf: BlockClosure).
+	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #()) value equals: 2 @ 2.
+	^ cm
 ]
 
 { #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testExample [
 	| cm |
-	
 	cm := self newBytecodeGen
 		numArgs: 1;
 		numTemps: 1;
@@ -68,7 +65,7 @@ OCBytecodeGeneratorTest >> testExample [
 		send: #>;
 		if: false goto: #else;
 		pushLiteral: 'yes';
-		returnTop ;
+		returnTop;
 		label: #else;
 		pushLiteral: 'no';
 		returnTop;
@@ -77,16 +74,14 @@ OCBytecodeGeneratorTest >> testExample [
 	cm selector: #test.
 
 	self assert: (cm isKindOf: CompiledMethod).
-	self assert: (cm valueWithReceiver: 2@2 arguments: #(1)) = 'no' .
-	self assert: (cm valueWithReceiver: 2@2  arguments: #(3)) = 'yes' .	
-	^cm
-	
+	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(1)) equals: 'no'.
+	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(3)) equals: 'yes'.
+	^ cm
 ]
 
 { #category : #'tests - execution' }
 OCBytecodeGeneratorTest >> testExample2 [
 	| cm |
-	
 	cm := self newBytecodeGen
 		numArgs: 1;
 		numTemps: 1;
@@ -95,17 +90,16 @@ OCBytecodeGeneratorTest >> testExample2 [
 		send: #<;
 		if: false goto: #else;
 		pushLiteral: 'yes';
-		returnTop ;
+		returnTop;
 		label: #else;
 		pushLiteral: 'no';
 		returnTop;
 		compiledMethod.
 
 	self assert: (cm isKindOf: CompiledMethod).
-	self assert: (cm valueWithReceiver: 2@2 arguments: #(1)) = 'no' .
-	self assert: (cm valueWithReceiver: 2@2  arguments: #(3)) = 'yes' .	
-	^cm
-	
+	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(1)) equals: 'no'.
+	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(3)) equals: 'yes'.
+	^ cm
 ]
 
 { #category : #'tests - instructions' }
@@ -212,12 +206,10 @@ OCBytecodeGeneratorTest >> testLabel [
 
 { #category : #helper }
 OCBytecodeGeneratorTest >> testMethod: cm against: string [
-
 	| symbolic |
 	self assert: cm isCompiledMethod.
-	symbolic := String streamContents: [:str | cm longPrintOn: str ].
-	self assert: symbolic = string
-	
+	symbolic := String streamContents: [ :str | cm longPrintOn: str ].
+	self assert: symbolic equals: string
 ]
 
 { #category : #'tests - instructions' }
@@ -534,7 +526,6 @@ OCBytecodeGeneratorTest >> testSendToSuperOf [
 { #category : #'tests - instructions' }
 OCBytecodeGeneratorTest >> testStoreInstVar [
 	| gen cm symbolic |
-	
 	gen := self newBytecodeGen
 		numArgs: 0;
 		numTemps: 0;
@@ -542,13 +533,16 @@ OCBytecodeGeneratorTest >> testStoreInstVar [
 		storeInstVar: 1;
 		returnTop.
 	cm := gen compiledMethod.
-	symbolic := String streamContents: [:str | cm longPrintOn: str ].
+	symbolic := String streamContents: [ :str | cm longPrintOn: str ].
 
-	self assert: gen stackFrameSize = 1.
+	self assert: gen stackFrameSize equals: 1.
 	self assert: cm isCompiledMethod.
-	self assert: symbolic = (Smalltalk vm 
-		for32bit: '13 <76> pushConstant: 1\14 <81 00> storeIntoRcvr: 0\16 <7C> returnTop' withCRs 
-		for64bit: '25 <76> pushConstant: 1\26 <81 00> storeIntoRcvr: 0\28 <7C> returnTop' withCRs)
+	self
+		assert: symbolic
+		equals:
+			(Smalltalk vm
+				for32bit: '13 <76> pushConstant: 1\14 <81 00> storeIntoRcvr: 0\16 <7C> returnTop' withCRs
+				for64bit: '25 <76> pushConstant: 1\26 <81 00> storeIntoRcvr: 0\28 <7C> returnTop' withCRs)
 ]
 
 { #category : #'tests - instructions' }

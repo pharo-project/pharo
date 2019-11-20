@@ -11,7 +11,7 @@ OCScannerTest >> testAmbiguousSelector [
 	and http://bugs.squeak.org/view.php?id=7491"
 
 	'1@-1' parseLiterals.
-	self assert: ('1@-1' parseLiterals at: 2) asString = '@-'
+	self assert: ('1@-1' parseLiterals at: 2) asString equals: '@-'
 ]
 
 { #category : #testing }

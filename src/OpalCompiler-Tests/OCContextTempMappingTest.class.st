@@ -86,56 +86,53 @@ OCContextTempMappingTest >> testAccessingMethodArgFromOptimizedBlockContext [
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingMultipleVariablesInVector [
 	| t1 t2 t3 t4 t5 t6 |
-	
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
-	
+
 	t1 := 1.
 	t2 := 2.
 	t3 := 3.
-	t4 := 4. 
-	t5 := 5 .
+	t4 := 4.
+	t5 := 5.
 	t6 := 6.
-	[t5 := 50.
-	    t6 := 60.
-	    t3 + t4.
-	] value.
-	
-	self assert: t1 == (thisContext tempNamed: 't1').
-	self assert: t2 == (thisContext tempNamed: 't2').
-	self assert: t3 == (thisContext tempNamed: 't3').
-	self assert: t4 == (thisContext tempNamed: 't4').
-	self assert: t5 == (thisContext tempNamed: 't5').
-	self assert: t6 == (thisContext tempNamed: 't6').
+	[ t5 := 50.
+	t6 := 60.
+	t3 + t4 ] value.
+
+	self assert: t1 identicalTo: (thisContext tempNamed: 't1').
+	self assert: t2 identicalTo: (thisContext tempNamed: 't2').
+	self assert: t3 identicalTo: (thisContext tempNamed: 't3').
+	self assert: t4 identicalTo: (thisContext tempNamed: 't4').
+	self assert: t5 identicalTo: (thisContext tempNamed: 't5').
+	self assert: t6 identicalTo: (thisContext tempNamed: 't6')
 ]
 
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingTempsVectorInBlock [
-
 	"Check the source code availability to do not fail on images without sources"
+
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	[ | temp |
-		[ temp := 1.
-		self assert: ((thisContext tempNamed: 'temp') == 1) ] value.
-	] value
+	[ temp := 1.
+	self assert: (thisContext tempNamed: 'temp') identicalTo: 1 ] value ] value
 ]
 
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingTempsVectorInBlock2 [
-
-	|a b r |
-	
+	| a b r |
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
-	
-	a := [ r := 'failure'].
-	[ b :='success'.
-	r := thisContext ] on: Error do: a.
 
-	self assert: r == (r tempNamed: 'r').
-	self assert: (r tempNamed: 'a') == a.
-	self assert: (r tempNamed: 'b') == b.
+	a := [ r := 'failure' ].
+	[ b := 'success'.
+	r := thisContext ]
+		on: Error
+		do: a.
+
+	self assert: r identicalTo: (r tempNamed: 'r').
+	self assert: (r tempNamed: 'a') identicalTo: a.
+	self assert: (r tempNamed: 'b') identicalTo: b
 ]
 
 { #category : #tests }
@@ -157,46 +154,41 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock3 [
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingVariablesInBlock [
 	| theContext |
-
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	[ | t1 |
-		t1 := true.
-		theContext := thisContext.
-		self assert: (thisContext tempNamed: 'theContext') == thisContext.
-		self assert: (theContext tempNamed: 't1').
-	] value
-	
+	t1 := true.
+	theContext := thisContext.
+	self assert: (thisContext tempNamed: 'theContext') identicalTo: thisContext.
+	self assert: (theContext tempNamed: 't1') ] value
 ]
 
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock [
-	
 	"Check the source code availability to do not fail on images without sources"
+
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
-	1 to: 2 do: [ :index | |optimizedTemp|
+	1 to: 2 do: [ :index | 
+		| optimizedTemp |
 		optimizedTemp := index.
-		self assert: (thisContext tempNamed: 'optimizedTemp') == index
-	]
+		self assert: (thisContext tempNamed: 'optimizedTemp') identicalTo: index ]
 ]
 
 { #category : #tests }
 OCContextTempMappingTest >> testAccessingVariablesInOptimizedBlock2 [
-
 	| a b |
-
 	"Check the source code availability to do not fail on images without sources"
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
-	a:=1.
-	b:=2.
-	
-	a < b ifTrue:[ |c|
-		c:=50.
-		self assert: (thisContext tempNamed: 'a') == 1.
-		self assert: (thisContext tempNamed: 'b') == 2.
-		self assert: (thisContext tempNamed: 'c') == 50.
-	].
+	a := 1.
+	b := 2.
+
+	a < b
+		ifTrue: [ | c |
+			c := 50.
+			self assert: (thisContext tempNamed: 'a') identicalTo: 1.
+			self assert: (thisContext tempNamed: 'b') identicalTo: 2.
+			self assert: (thisContext tempNamed: 'c') identicalTo: 50 ]
 ]

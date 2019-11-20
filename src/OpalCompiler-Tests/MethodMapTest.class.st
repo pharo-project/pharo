@@ -39,18 +39,12 @@ MethodMapTest >> parseExpression: aString [
 
 { #category : #'testing - ast mapping' }
 MethodMapTest >> testBlockAndContextSourceNode [
-		
-	|block blockNodeViaContext blockNodeViaClosure |
-
-
-	block := [blockNodeViaContext := thisContext sourceNode].
+	| block blockNodeViaContext blockNodeViaClosure |
+	block := [ blockNodeViaContext := thisContext sourceNode ].
 	block value.
 	blockNodeViaClosure := block sourceNode.
 
-	self assert: blockNodeViaContext == blockNodeViaClosure
-	
-
-
+	self assert: blockNodeViaContext identicalTo: blockNodeViaClosure
 ]
 
 { #category : #'testing - ast mapping' }

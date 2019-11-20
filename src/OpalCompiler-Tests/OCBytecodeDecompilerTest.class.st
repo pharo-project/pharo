@@ -231,7 +231,7 @@ OCBytecodeDecompilerTest >> testDup [
 	ir1 := IRBuilderTest new testDup.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic
 ]
 
@@ -242,7 +242,7 @@ OCBytecodeDecompilerTest >> testInstVar [
 	method := ir1 compiledMethod.
 	ir2 := method decompileIR.
 	method2 := ir2 compiledMethod.
-	self deny: method2 == method.
+	self deny: method2 identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: method2 equals: method
 ]
@@ -253,7 +253,7 @@ OCBytecodeDecompilerTest >> testJumpAheadTo [
 	ir1 := IRBuilderTest new testJumpAheadTo.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod equals: method
 ]
 
@@ -263,7 +263,7 @@ OCBytecodeDecompilerTest >> testJumpAheadToIf [
 	ir1 := IRBuilderTest new testJumpAheadToIf.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -274,7 +274,7 @@ OCBytecodeDecompilerTest >> testJumpBackTo [
 	ir1 := IRBuilderTest new testJumpBackTo.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -285,7 +285,7 @@ OCBytecodeDecompilerTest >> testLiteralArray [
 	ir1 := IRBuilderTest new testLiteralArray.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -296,7 +296,7 @@ OCBytecodeDecompilerTest >> testLiteralBoolean [
 	ir1 := IRBuilderTest new testLiteralBoolean.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -307,7 +307,7 @@ OCBytecodeDecompilerTest >> testLiteralCharacter [
 	ir1 := IRBuilderTest new testLiteralCharacter.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -318,7 +318,7 @@ OCBytecodeDecompilerTest >> testLiteralFloat [
 	ir1 := IRBuilderTest new testLiteralFloat.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -329,7 +329,7 @@ OCBytecodeDecompilerTest >> testLiteralInteger [
 	ir1 := IRBuilderTest new testLiteralInteger.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -340,7 +340,7 @@ OCBytecodeDecompilerTest >> testLiteralNil [
 	ir1 := IRBuilderTest new testLiteralNil.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -351,7 +351,7 @@ OCBytecodeDecompilerTest >> testLiteralString [
 	ir1 := IRBuilderTest new testLiteralString.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -362,7 +362,7 @@ OCBytecodeDecompilerTest >> testLiteralSymbol [
 	ir1 := IRBuilderTest new testLiteralSymbol.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -373,7 +373,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableClass [
 	ir1 := IRBuilderTest new testLiteralVariableClass.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -384,7 +384,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 	ir1 := IRBuilderTest new testLiteralVariableClassVariable.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -395,7 +395,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	ir1 := IRBuilderTest new testLiteralVariableGlobale.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -406,7 +406,7 @@ OCBytecodeDecompilerTest >> testPopTop [
 	ir1 := IRBuilderTest new testPopTop.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -417,7 +417,7 @@ OCBytecodeDecompilerTest >> testPushClosureCopyNoCopied [
 	ir1 := self pushClosureCopyNoCopied.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -428,7 +428,7 @@ OCBytecodeDecompilerTest >> testPushClosureCopyNoCopiedArg [
 	ir1 := self pushClosureCopyNoCopiedArg.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -439,7 +439,7 @@ OCBytecodeDecompilerTest >> testPushClosureCopyOneCopiedArg [
 	ir1 := self pushClosureCopyOneCopiedArg.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -450,7 +450,7 @@ OCBytecodeDecompilerTest >> testPushClosureCopyOneCopiedTemp [
 	ir1 := self pushClosureCopyOneCopiedTemp.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -461,7 +461,7 @@ OCBytecodeDecompilerTest >> testPushConsArray [
 	ir1 := IRBuilderTest new testPushConsArray.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -472,7 +472,7 @@ OCBytecodeDecompilerTest >> testPushConsArray2 [
 	ir1 := IRBuilderTest new testPushConsArray2.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -483,7 +483,7 @@ OCBytecodeDecompilerTest >> testPushSelf [
 	ir1 := IRBuilderTest new testPushSelf.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -494,7 +494,7 @@ OCBytecodeDecompilerTest >> testPushTempArgument [
 	ir1 := IRBuilderTest new testPushTempArgument.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -505,7 +505,7 @@ OCBytecodeDecompilerTest >> testPushTempTemp [
 	ir1 := IRBuilderTest new testPushTempTemp.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -516,7 +516,7 @@ OCBytecodeDecompilerTest >> testPushThisContext [
 	ir1 := IRBuilderTest new testPushThisContext.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -527,7 +527,7 @@ OCBytecodeDecompilerTest >> testRemoteTemp [
 	ir1 := self remoteTemp.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -538,7 +538,7 @@ OCBytecodeDecompilerTest >> testRemoteTempNested [
 	ir1 := self remoteTempNested.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -549,7 +549,7 @@ OCBytecodeDecompilerTest >> testReturnTop [
 	ir1 := IRBuilderTest new testReturnTop.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -560,7 +560,7 @@ OCBytecodeDecompilerTest >> testSendSuper [
 	ir1 := IRBuilderTest new testSendSuper.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -571,7 +571,7 @@ OCBytecodeDecompilerTest >> testStoreIntoVariable [
 	ir1 := IRBuilderTest new testStoreIntoVariable.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
@@ -582,7 +582,7 @@ OCBytecodeDecompilerTest >> testStoreTemp [
 	ir1 := IRBuilderTest new testStoreTemp.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
-	self deny: ir2 compiledMethod == method.
+	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
