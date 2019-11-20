@@ -343,7 +343,7 @@ VirtualMachine >> is64bit [
 
 { #category : #testing }
 VirtualMachine >> isAIOInterrupt [
-	"Answer true. If the vm is capable of being interupted until there is an AIO event. 
+	"Answer true, if the vm is capable of being interupted until there is an AIO event. 
 	 (This means we are going idle until we have something real to process)"
 
 	^ (self getSystemAttribute: 1010) = 'AIO'

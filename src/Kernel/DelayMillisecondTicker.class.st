@@ -38,11 +38,11 @@ DelayMillisecondTicker >> tickAfterMilliseconds: milliseconds [
 
 { #category : #'api-system' }
 DelayMillisecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
-	| nextTick |
+	|nextTick|
 	"Sleep until the active delay is due, or timingSemaphore signalled by DelayScheduler user-api."
 	
 	"We sleep at most 1sec here as a soft busy-loop so that we don't accidentally miss signals."
-	nextTick := self nowTick + (ProcessorScheduler idleTime max: 1000).
+	nextTick := self nowTick + (1"sec" * 1000"msecs").
 	activeDelay ifNotNil: [
 		nextTick := nextTick min: activeDelay resumptionTick ].
 		
@@ -50,4 +50,5 @@ DelayMillisecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activ
 	self primSignal: timingSemaphore atMilliseconds: nextTick.
 	"WARNING! Stepping <Over> the following line may lock the Image. Use <Proceed>."
 	timingSemaphore wait.
+	
 ]
