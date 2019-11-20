@@ -50,16 +50,18 @@ FileStreamTest >> doTestsForReading: count intoBufferWithSize: readSize starting
 { #category : #testing }
 FileStreamTest >> testCachingNextChunkPut [
 	"Ensure that nextChunkPut:/nextChunk works properly on a caching file"
+
 	| file text read filename |
 	filename := 'testCachingNextChunkPut'.
-	[file := FileStream forceNewFileNamed: filename.
+	[ file := FileStream forceNewFileNamed: filename.
 	text := 'this is a chunkful of text'.
 	file nextChunkPut: text.
-	read := [file position: 0; nextChunk] valueWithin: 1 seconds onTimeout:[''].
-	self assert: read = text.
-	] ensure:[
-		file close. 
-		(FileSystem disk workingDirectory / filename) ensureDelete ].
+	read := [ file
+		position: 0;
+		nextChunk ] valueWithin: 1 seconds onTimeout: [ '' ].
+	self assert: read equals: text ]
+		ensure: [ file close.
+			(FileSystem disk workingDirectory / filename) ensureDelete ]
 ]
 
 { #category : #testing }
@@ -72,9 +74,8 @@ FileStreamTest >> testDetectFileDo [
 		do: [ :stream | 
 			self assert: stream notNil.
 			self deny: stream closed.
-			self assert: stream upToEnd = '42']]
-		ensure: [
-			file ensureDelete ].
+			self assert: stream upToEnd equals: '42' ] ]
+		ensure: [ file ensureDelete ]
 ]
 
 { #category : #testing }
@@ -95,16 +96,18 @@ FileStreamTest >> testFileTruncation [
 { #category : #testing }
 FileStreamTest >> testNextChunkOutOfBounds [
 	"Ensure that nextChunkPut:/nextChunk works properly on a caching file"
+
 	| file text read filename |
 	filename := 'testNextChunkOutOfBounds'.
-	[file := FileStream forceNewFileNamed: filename.
+	[ file := FileStream forceNewFileNamed: filename.
 	text := 'this is a chunkful of text'.
 	file nextChunkPut: text.
-	read := [file position: 999999; nextChunk] valueWithin: 1 seconds onTimeout:[nil].
-	self assert: read = ''.
-	] ensure: [ 
-		file close.
-		(FileSystem disk workingDirectory / filename) ensureDelete ].
+	read := [ file
+		position: 999999;
+		nextChunk ] valueWithin: 1 seconds onTimeout: [ nil ].
+	self assert: read equals: '' ]
+		ensure: [ file close.
+			(FileSystem disk workingDirectory / filename) ensureDelete ]
 ]
 
 { #category : #testing }

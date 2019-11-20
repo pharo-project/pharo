@@ -14,10 +14,10 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 
 	"C1 is current superclass of C2"
 	self assert: aC2 m51.
-	self assert: self c2 superclass == self c1.
+	self assert: self c2 superclass identicalTo: self c1.
 	self deny: (self c2 localSelectors includes: #m51).
-	self deny: (self c2 >> #m52) == (self t5 >> #m52). "no sharing!!"
-	
+	self deny: self c2 >> #m52 identicalTo: self t5 >> #m52.	"no sharing!!"
+
 	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
 	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
 	self assert: self c2 localSelectors sorted equals: #(bar foo).
@@ -32,7 +32,7 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 		poolDictionaries: ''
 		category: self c2 category.
 
-	self assert: self c2 superclass == newSuperclass.
+	self assert: self c2 superclass identicalTo: newSuperclass.
 
 	newSuperclass compile: 'foo ^17'.
 	self assert: aC2 m51 equals: 17.
@@ -40,8 +40,8 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 
 	self c2 compile: 'm51 ^19'.
 	self assert: aC2 m51 equals: 19.
-	
-	self deny: (self c2 >> #m52) == (self t5 >> #m52). "no sharing!!"
+
+	self deny: self c2 >> #m52 identicalTo: self t5 >> #m52.	"no sharing!!"
 
 	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
 	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
@@ -57,18 +57,17 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 		category: self c2 category.
 
 	self assert: aC2 m51 equals: 19.
-	self assert: self c2 superclass == self c1.
+	self assert: self c2 superclass identicalTo: self c1.
 	self assert: (self c2 localSelectors includes: #m51).
-	self deny: (self c2 >> #m52) == (self t5 >> #m52). "no sharing!!"
+	self deny: self c2 >> #m52 identicalTo: self t5 >> #m52.	"no sharing!!"
 
 	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
 	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo m51).
+	self assert: self c2 localSelectors sorted equals: #(bar foo m51)
 ]
 
 { #category : #'testing-applying trait composition' }
-TraitPureBehaviorTest >> testClassesWithTraits [	
-
+TraitPureBehaviorTest >> testClassesWithTraits [
 	self assert: (self c1 methodDict includesKey: #foo).
 	self assert: (self c2 methodDict includesKey: #bar).
 	self assert: (self c2 methodDict includesKey: #m51).
@@ -76,11 +75,11 @@ TraitPureBehaviorTest >> testClassesWithTraits [
 	self assert: (self c2 methodDict includesKey: #m13).
 	self assert: (self c2 methodDict includesKey: #m21).
 	self assert: (self c2 methodDict includesKey: #m22).
-	
+
 	self deny: self c1 class hasTraitComposition.
 	self assert: self c2 class hasTraitComposition.
 
-	self assert: (self c2 class traitComposition traits size = 1).
+	self assert: self c2 class traitComposition traits size equals: 1.
 	self assert: (self c2 class traitComposition includesTrait: self t5 classTrait)
 ]
 
@@ -159,16 +158,17 @@ TraitPureBehaviorTest >> testMethodCategoryReorganization [
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testMethodClass [
 	"Test sharing of compiled methods between traits and their users. Methods are installed in exactly one behavior, however, the source pointers of methods are shared (unless sources or changes have been condensed). Verify	that methodClass properties are set correctly."
+
 	| m1 m2 |
 	m1 := self t5 >> #m51.
 	m2 := self c2 >> #m51.
-	
-	self assert: m1 methodClass == self t5.
-	self assert: m2 methodClass == self c2.
-	
-	self deny: m1 == m2.
-	
-	self assert: m1 sourcePointer = m2 sourcePointer.
+
+	self assert: m1 methodClass identicalTo: self t5.
+	self assert: m2 methodClass identicalTo: self c2.
+
+	self deny: m1 identicalTo: m2.
+
+	self assert: m1 sourcePointer equals: m2 sourcePointer
 ]
 
 { #category : #'testing-applying trait composition' }
@@ -177,53 +177,46 @@ TraitPureBehaviorTest >> testOwnMethodsTakePrecedenceOverTraitsMethods [
 	add subtrait t1 which implements m11 as well."
 
 	| trait |
-	trait := self createTraitNamed: #T
-				uses: { }.
+	trait := self createTraitNamed: #T uses: {}.
 	trait compile: 'm11 ^999'.
-	self assert: trait methodDict size = 1.
-	self assert: (trait methodDict at: #m11) sourceCode = 'm11 ^999'.
-	Trait 
-		named: #T
-		uses: self t1
-		package: self class category.
-	self assert: trait methodDict size = 3.
-	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13 )).
-	self assert: (trait methodDict at: #m11) sourceCode = 'm11 ^999'.
-	self assert: (trait methodDict at: #m12) sourceCode = 'm12 ^12'
+	self assert: trait methodDict size equals: 1.
+	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
+	Trait named: #T uses: self t1 package: self class category.
+	self assert: trait methodDict size equals: 3.
+	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13)).
+	self assert: (trait methodDict at: #m11) sourceCode equals: 'm11 ^999'.
+	self assert: (trait methodDict at: #m12) sourceCode equals: 'm12 ^12'
 ]
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraits [
 	| aC2 |
 	aC2 := self c2 new.
-	self assert: self c2 methodDict size = 9.
+	self assert: self c2 methodDict size equals: 9.
 	self t1 compile: 'zork ^false'.
-	self assert: self c2 methodDict size = 10.
+	self assert: self c2 methodDict size equals: 10.
 	self deny: aC2 zork.
 	self t1 removeSelector: #m12.
-	self assert: self c2 methodDict size = 9.
-	self should: [aC2 m12] raise: MessageNotUnderstood.
-	self assert: aC2 m21 = 21.
+	self assert: self c2 methodDict size equals: 9.
+	self should: [ aC2 m12 ] raise: MessageNotUnderstood.
+	self assert: aC2 m21 equals: 21.
 	self t2 compile: 'm21 ^99'.
-	self assert: aC2 m21 = 99
+	self assert: aC2 m21 equals: 99
 ]
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethods [
 	| anObject |
-	anObject := (self 
-				createClassNamed: #AliasTestClass
-				superclass: Object
-				uses: self t6) new.
-	self assert: anObject m22Alias = 22.
+	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t6) new.
+	self assert: anObject m22Alias equals: 22.
 
 	"test update alias method"
 	self t2 compile: 'm22 ^17'.
-	self assert: anObject m22Alias = 17.
+	self assert: anObject m22Alias equals: 17.
 
 	"removing original method should also remove alias method"
 	self t2 removeSelector: #m22.
-	self should: [anObject m22Alias] raise: MessageNotUnderstood
+	self should: [ anObject m22Alias ] raise: MessageNotUnderstood
 ]
 
 { #category : #'testing-applying trait composition' }
@@ -232,14 +225,11 @@ TraitPureBehaviorTest >> testPropagationOfChangesInTraitsToAliasMethodsWhenOrigi
 	the original method is excluded from this user."
 
 	| anObject |
-	anObject := (self 
-				createClassNamed: #AliasTestClass
-				superclass: Object
-				uses: self t1 @ { (#aliasM11 -> #m11) } - { #m11 }) new.
-	self assert: anObject aliasM11 = 11.
+	anObject := (self createClassNamed: #AliasTestClass superclass: Object uses: self t1 @ {(#aliasM11 -> #m11)} - {#m11}) new.
+	self assert: anObject aliasM11 equals: 11.
 	self deny: (anObject class methodDict includesKey: #m11).
 	self t1 compile: 'm11 ^17'.
-	self assert: anObject aliasM11 = 17
+	self assert: anObject aliasM11 equals: 17
 ]
 
 { #category : #'testing-applying trait composition' }
@@ -247,22 +237,16 @@ TraitPureBehaviorTest >> testPropagationWhenTraitCompositionModifications [
 	"Test that the propagation mechanism works when
 	setting new traitCompositions."
 
-	self assert: self c2 methodDict size = 9.	"2 + (3+(3+2))-1"
+	self assert: self c2 methodDict size equals: 9.	"2 + (3+(3+2))-1"
 
 	"removing methods"
-	Trait 
-		named: #T5
-		uses: self t1 + self t2 - { #m21. #m22 }
-		package: self class category.
-	self assert: self c2 methodDict size = 7.
+	Trait named: #T5 uses: self t1 + self t2 - {#m21 . #m22} package: self class category.
+	self assert: self c2 methodDict size equals: 7.
 
 	"adding methods"
-	Trait 
-		named: #T2
-		uses: self t3
-		package: self class category.
-	self assert: self c2 methodDict size = 10.
-	self assert: (self c2 selectors asSet includesAll: #(#m31 #m32 #m33 ))
+	Trait named: #T2 uses: self t3 package: self class category.
+	self assert: self c2 methodDict size equals: 10.
+	self assert: (self c2 selectors asSet includesAll: #(#m31 #m32 #m33))
 ]
 
 { #category : #testing }
@@ -320,17 +304,17 @@ TraitPureBehaviorTest >> testSuperSends [
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testTraitCompositionModifications [
-	self assert: self t6 methodDict size = 6.
-	self assert: (self t6 sourceCodeAt: #m22Alias) asString = 'm22Alias ^22'.
-	
+	self assert: self t6 methodDict size equals: 6.
+	self assert: (self t6 sourceCodeAt: #m22Alias) asString equals: 'm22Alias ^22'.
+
 	self t6 setTraitComposition: self t2 asTraitComposition.
-	self assert: self t6 methodDict size = 2.
+	self assert: self t6 methodDict size equals: 2.
 	self deny: (self t6 methodDict includesKey: #m22Alias).
-	
-	self t6 setTraitComposition: self t1 @ { (#m13Alias -> #m13) } - { #m11. #m12 } + self t2.
-	self assert: self t6 methodDict size = 4.
-	self assert: (self t6 selectors asSet includesAll: #(#m13Alias #m21 #m22 )).
-	self assert: (self t6 sourceCodeAt: #m13Alias) asString = 'm13Alias ^self m12'
+
+	self t6 setTraitComposition: self t1 @ {(#m13Alias -> #m13)} - {#m11 . #m12} + self t2.
+	self assert: self t6 methodDict size equals: 4.
+	self assert: (self t6 selectors asSet includesAll: #(#m13Alias #m21 #m22)).
+	self assert: (self t6 sourceCodeAt: #m13Alias) asString equals: 'm13Alias ^self m12'
 ]
 
 { #category : #'testing-applying trait composition' }
@@ -355,7 +339,7 @@ TraitPureBehaviorTest >> testUpdateWhenLocalMethodRemoved [
 	self t5 compile: 'foo ^123'.
 	self deny: aC2 foo.
 	self c2 removeSelector: #foo.
-	self assert: aC2 foo = 123
+	self assert: aC2 foo equals: 123
 ]
 
 { #category : #testing }
