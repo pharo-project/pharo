@@ -9,11 +9,10 @@ Class {
 
 { #category : #utilities }
 MethodPragmaTest >> assertPragma: aString givesKeyword: aSymbol arguments: anArray [
-	| pragma  |
+	| pragma |
 	pragma := self pragma: aString selector: #zork.
-	self assert: pragma selector = aSymbol.
-	self assert: pragma arguments = anArray.
-
+	self assert: pragma selector equals: aSymbol.
+	self assert: pragma arguments equals: anArray
 ]
 
 { #category : #utilities }

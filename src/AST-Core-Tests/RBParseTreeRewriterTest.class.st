@@ -11,9 +11,9 @@ Class {
 }
 
 { #category : #utilities }
-RBParseTreeRewriterTest >> compare: anObject to: anotherObject [ 
-	self assert: anObject hash = anotherObject hash.
-	self assert: anObject = anotherObject
+RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
+	self assert: anObject hash equals: anotherObject hash.
+	self assert: anObject equals: anotherObject
 ]
 
 { #category : #helpers }

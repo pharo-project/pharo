@@ -17,15 +17,15 @@ MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: m
 { #category : #asserting }
 MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: missingDeps toLoad: unloadableItems extraProvisions: provisions [
 	| order sorter items missing unloadable |
-	items := anArray collect: [:ea | self itemWithSpec: ea].
+	items := anArray collect: [ :ea | self itemWithSpec: ea ].
 	sorter := MCDependencySorter items: items.
 	sorter addExternalProvisions: provisions.
-	order := (sorter orderedItems collect: [:ea | ea name]) asArray.
-	self assert: order = depOrder.
+	order := (sorter orderedItems collect: [ :ea | ea name ]) asArray.
+	self assert: order equals: depOrder.
 	missing := sorter externalRequirements.
-	self assert: missing asSet = missingDeps asSet.
-	unloadable := (sorter itemsWithMissingRequirements collect: [:ea | ea name]) asArray.
-	self assert: unloadable asSet = unloadableItems asSet
+	self assert: missing asSet equals: missingDeps asSet.
+	unloadable := (sorter itemsWithMissingRequirements collect: [ :ea | ea name ]) asArray.
+	self assert: unloadable asSet equals: unloadableItems asSet
 ]
 
 { #category : #building }

@@ -38,7 +38,7 @@ MethodDictionaryTest >> anotherValue [
 
 { #category : #assertions }
 MethodDictionaryTest >> assertPreservesCapacity: oldDictionary comparedTo: rehashedDictionary [
-	self assert: oldDictionary capacity = rehashedDictionary capacity.
+	self assert: oldDictionary capacity equals: rehashedDictionary capacity
 ]
 
 { #category : #assertions }

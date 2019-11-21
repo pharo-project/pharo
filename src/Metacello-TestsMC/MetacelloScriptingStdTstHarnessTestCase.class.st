@@ -126,27 +126,22 @@ MetacelloScriptingStdTstHarnessTestCase >> unloadPackage: packageName [
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> validate: expectedConfigurationClassName expConfigVersion: expectedConfigurationVersion expConfigRepo: expectedConfigurationRepository expBaselineClassName: expectedBaselineClassName expBaselineVersion: expectedBaselineVersion expBaselineRepo: expectedBaselineRepository [
-  MetacelloProjectRegistration registry configurationRegistry
-    at: expectedConfigurationClassName
-    ifPresent: [ :existing | 
-      | spec x |
-      spec := existing configurationProjectSpec.
-      self
-        assert: (x := spec version versionString) = expectedConfigurationVersion.
-      self
-        assert:
-          (spec repositoryDescriptions includes: expectedConfigurationRepository) ]
-    ifAbsent: [ self assert: expectedConfigurationVersion == nil ].
-  MetacelloProjectRegistration registry baselineRegistry
-    at: expectedBaselineClassName
-    ifPresent: [ :existing | 
-      | spec |
-      spec := existing baselineProjectSpec.
-      self assert: spec versionString = expectedBaselineVersion.
-      self
-        assert:
-          (spec repositoryDescriptions includes: expectedBaselineRepository) ]
-    ifAbsent: [ self assert: expectedBaselineVersion == nil ]
+	MetacelloProjectRegistration registry configurationRegistry
+		at: expectedConfigurationClassName
+		ifPresent: [ :existing | 
+			| spec x |
+			spec := existing configurationProjectSpec.
+			self assert: (x := spec version versionString) equals: expectedConfigurationVersion.
+			self assert: (spec repositoryDescriptions includes: expectedConfigurationRepository) ]
+		ifAbsent: [ self assert: expectedConfigurationVersion identicalTo: nil ].
+	MetacelloProjectRegistration registry baselineRegistry
+		at: expectedBaselineClassName
+		ifPresent: [ :existing | 
+			| spec |
+			spec := existing baselineProjectSpec.
+			self assert: spec versionString equals: expectedBaselineVersion.
+			self assert: (spec repositoryDescriptions includes: expectedBaselineRepository) ]
+		ifAbsent: [ self assert: expectedBaselineVersion identicalTo: nil ]
 ]
 
 { #category : #utilities }
@@ -174,12 +169,12 @@ MetacelloScriptingStdTstHarnessTestCase >> verify: packageName loadedFrom: repos
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> verify: packageName version: fileName [
-    | externalCoreWorkingCopy x |
-    externalCoreWorkingCopy := MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ].
-    self assert: (x := externalCoreWorkingCopy ancestors first name) = fileName
+	| externalCoreWorkingCopy x |
+	externalCoreWorkingCopy := MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ].
+	self assert: (x := externalCoreWorkingCopy ancestors first name) equals: fileName
 ]
 
 { #category : #utilities }
 MetacelloScriptingStdTstHarnessTestCase >> verifyPackageNotLoaded: packageName [
-    self assert: (MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ] ifNone: [  ]) == nil
+	self assert: (MCWorkingCopy allManagers detect: [ :wc | wc packageName = packageName ] ifNone: [  ]) identicalTo: nil
 ]

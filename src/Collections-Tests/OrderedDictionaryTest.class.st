@@ -33,10 +33,10 @@ OrderedDictionaryTest >> absentValue [
 { #category : #assertions }
 OrderedDictionaryTest >> assertDictionary: aFirstDictionary doesNotEqual: aSecondDictionary [
 	"Test symmetric inequality"
-	
+
 	self
-		deny: aFirstDictionary = aSecondDictionary;
-		deny: aSecondDictionary = aFirstDictionary
+		deny: aFirstDictionary equals: aSecondDictionary;
+		deny: aSecondDictionary equals: aFirstDictionary
 ]
 
 { #category : #assertions }
@@ -61,51 +61,47 @@ OrderedDictionaryTest >> assertIsArray: anArray withElements: aCollection [
 { #category : #assertions }
 OrderedDictionaryTest >> assertIsDictionary: aFirstDictionary copiedFrom: aSecondDictionary withOrderedAssociations: anAssociationCollection [
 	self
-		deny: aFirstDictionary == aSecondDictionary;
-		deny: aFirstDictionary dictionary == aSecondDictionary dictionary;
-		deny: aFirstDictionary orderedKeys == aSecondDictionary orderedKeys.
+		deny: aFirstDictionary identicalTo: aSecondDictionary;
+		deny: aFirstDictionary dictionary identicalTo: aSecondDictionary dictionary;
+		deny: aFirstDictionary orderedKeys identicalTo: aSecondDictionary orderedKeys.
 
 	"esnure the associations were copied (the keys and values can be shared)"
-	aFirstDictionary associations do: [:each |
-		self deny: (aSecondDictionary associations identityIncludes: each)].
+	aFirstDictionary associations do: [ :each | self deny: (aSecondDictionary associations identityIncludes: each) ].
 
-	self
-		assertIsDictionary: aFirstDictionary
-		withOrderedAssociations: anAssociationCollection.
+	self assertIsDictionary: aFirstDictionary withOrderedAssociations: anAssociationCollection
 ]
 
 { #category : #assertions }
 OrderedDictionaryTest >> assertIsDictionary: anObject withOrderedAssociations: anAssociationCollection [
 	"Tests that anObject is an instance of the correct dictionary class
 	with the specified ordered associations"
+
 	self
-		assert: anObject class == self dictionaryClass;
+		assert: anObject class identicalTo: self dictionaryClass;
 		assert: anObject orderedKeys size >= anAssociationCollection size;
 		assert: anObject associations size equals: anAssociationCollection size.
 
-	anAssociationCollection withIndexDo: [:each :i |
-		self isTestingIdentityDictionary
-			ifTrue: [
-				self
-					assert: (anObject orderedKeys at: i) == each key;
-					assert: (anObject associations at: i) key == each key]
-			ifFalse: [
-				self
-					assert: (anObject orderedKeys at: i) equals: each key;
-					assert: (anObject associations at: i) key equals: each key].
-		self assert: (anObject associations at: i) value equals: each value].
+	anAssociationCollection
+		withIndexDo: [ :each :i | 
+			self isTestingIdentityDictionary
+				ifTrue: [ self
+						assert: (anObject orderedKeys at: i) identicalTo: each key;
+						assert: (anObject associations at: i) key identicalTo: each key ]
+				ifFalse: [ self
+						assert: (anObject orderedKeys at: i) equals: each key;
+						assert: (anObject associations at: i) key equals: each key ].
+			self assert: (anObject associations at: i) value equals: each value ]
 ]
 
 { #category : #assertions }
 OrderedDictionaryTest >> assertIsDictionary: anObject withUnorderedAssociations: anAssociationCollection [
 	"Tests that anObject is an instance of the correct dictionary class
 	with the specified associations, but ignoring the order"
-	
+
 	self
-		assert: anObject class == self dictionaryClass;
+		assert: anObject class identicalTo: self dictionaryClass;
 		assert: anObject size equals: anAssociationCollection size.
-	anAssociationCollection do: [:each |
-		self assert: (anObject includesAssociation: each)].
+	anAssociationCollection do: [ :each | self assert: (anObject includesAssociation: each) ]
 ]
 
 { #category : #assertions }
