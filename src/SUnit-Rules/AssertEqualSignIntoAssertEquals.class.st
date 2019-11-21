@@ -33,13 +33,14 @@ AssertEqualSignIntoAssertEquals >> group [
 { #category : #initialization }
 AssertEqualSignIntoAssertEquals >> initialize [
 	super initialize.
-	self
-		replace: 'self assert: ``@object1 = ``@object2'
-		with: 'self assert: ``@object1 equals: ``@object2'
+	self replace: 'self assert: ``@object1 = ``@object2' with: 'self assert: ``@object1 equals: ``@object2'.
+	self replace: 'self deny: ``@object1 = ``@object2' with: 'self deny: ``@object1 equals: ``@object2'.
+	self replace: 'self assert: ``@object1 == ``@object2' with: 'self assert: ``@object1 identicalTo: ``@object2'.
+	self replace: 'self deny: ``@object1 == ``@object2' with: 'self deny: ``@object1 identicalTo: ``@object2'
 ]
 
 { #category : #accessing }
 AssertEqualSignIntoAssertEquals >> name [
 
-	^ 'Use assert:equals: instead of assert: and ='
+	^ 'Use assert:equals: instead of assert: and = (or deny:/identicalTo: and ==)'
 ]
