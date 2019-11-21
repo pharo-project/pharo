@@ -621,6 +621,12 @@ TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionC
 			
 ]
 
+{ #category : #accessing }
+TestCase >> executionEnvironmentClass [
+
+	^ TestExecutionEnvironment
+]
+
 { #category : #testing }
 TestCase >> expectedFailures [
 	| pragmas |

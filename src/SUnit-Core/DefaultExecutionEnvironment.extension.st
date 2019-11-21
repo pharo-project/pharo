@@ -4,7 +4,7 @@ Extension { #name : #DefaultExecutionEnvironment }
 DefaultExecutionEnvironment >> runTestCase: aTestCase [
 
 	| testEnv |
-	testEnv := TestExecutionEnvironment new.
+	testEnv := aTestCase executionEnvironmentClass new.
 	
 	testEnv beActiveDuring: [
 		testEnv runTestCase: aTestCase]
