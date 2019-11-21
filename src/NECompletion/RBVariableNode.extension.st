@@ -12,7 +12,7 @@ RBVariableNode >> completionEntries [
 	 	(self select: (lookupClass allSlots collect: [ :each | each name ]) beginningWith: self name),
 		(self select: methodNode temporaryNames beginningWith: self name),
 		(self select: methodNode argumentNames beginningWith: self name),
-		(self select: lookupClass allClassVarNames asOrderedCollection beginningWith: self name),
+		(self select: lookupClass allClassVarNames beginningWith: self name),
 		(self select: (lookupClass allSharedPools flatCollect: [ :each | each classVarNames]) beginningWith: self name)
 
 ]
