@@ -14,16 +14,16 @@ Class {
 		'activeProcess'
 	],
 	#classVars : [
-		'BackgroundProcess',
-		'HighIOPriority',
-		'IdleTime',
 		'LowIOPriority',
 		'SystemBackgroundPriority',
-		'SystemRockBottomPriority',
+		'HighIOPriority',
+		'UserSchedulingPriority',
 		'TimingPriority',
-		'UserBackgroundPriority',
+		'IdleTime',
 		'UserInterruptPriority',
-		'UserSchedulingPriority'
+		'BackgroundProcess',
+		'UserBackgroundPriority',
+		'SystemRockBottomPriority'
 	],
 	#category : #'Kernel-Processes'
 }

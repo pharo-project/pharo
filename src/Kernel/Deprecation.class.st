@@ -34,9 +34,9 @@ Class {
 		'condition'
 	],
 	#classVars : [
-		'Active',
 		'Log',
 		'RaiseWarning',
+		'Active',
 		'ShowWarning'
 	],
 	#category : #'Kernel-Exceptions'

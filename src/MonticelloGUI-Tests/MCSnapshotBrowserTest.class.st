@@ -67,7 +67,7 @@ MCSnapshotBrowserTest >> assertButtonOn: aString [
 MCSnapshotBrowserTest >> assertTextIs: aString [
 
 	self 
-		assert: self textMorph text 
+		assert: self textMorph text asString
 		equals: aString
 ]
 

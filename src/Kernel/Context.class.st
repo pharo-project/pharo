@@ -28,8 +28,8 @@ Class {
 	#classVars : [
 		'PrimitiveFailToken',
 		'QuickStep',
-		'SpecialPrimitiveSimulators',
-		'TryNamedPrimitiveTemplateMethod'
+		'TryNamedPrimitiveTemplateMethod',
+		'SpecialPrimitiveSimulators'
 	],
 	#category : #'Kernel-Methods'
 }

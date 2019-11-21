@@ -102,21 +102,13 @@ Metaclass >> classSide [
 	^ self
 ]
 
-{ #category : #'accessing instances and variables' }
-Metaclass >> classVarNames [
-	"Answer the names of the class variables defined in the receiver's instance."
-	
-	^self instanceSide 
-		ifNil: [ #() ]
-		ifNotNil: [ :class | class classVarNames]
-]
-
 { #category : #'class variables' }
 Metaclass >> classVariables [
 	"Answer a set of the names of the class variables defined in the receiver's instance."
-	
-	self instanceSide ifNil: [ ^ Array new].
-	^self instanceSide classVariables
+
+	^ self instanceSide
+		ifNil: [ #() ]
+		ifNotNil: [ :class | class classVariables ]
 ]
 
 { #category : #'file in/out' }

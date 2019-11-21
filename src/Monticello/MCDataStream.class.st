@@ -29,9 +29,9 @@ Class {
 		'basePos'
 	],
 	#classVars : [
-		'ReadSelectors',
+		'WriteSelectors',
 		'TypeMap',
-		'WriteSelectors'
+		'ReadSelectors'
 	],
 	#category : #'Monticello-Storing'
 }

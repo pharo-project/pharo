@@ -59,7 +59,7 @@ RGMCTest >> testClass: aClass [
 	def layout isPointerLayout ifTrue: [ 
 		self assert: (def layout slots collect: #name) equals: aClass instVarNames.].
 	self assert: (def metaclass layout slots collect: #name) equals: aClass class instVarNames.	
-	self assert: (def classVariables collect: #name) equals: aClass classVarNames.	
+	self assert: (def classVariables collect: #name) sorted equals: aClass classVarNames sorted.	
 	self assert: (def sharedPoolNames asArray) equals: aClass sharedPoolNames asArray.	
 	
 	"Monticello class definition still use only class categories, packages are unresolved"

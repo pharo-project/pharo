@@ -331,7 +331,7 @@ Class >> classVarNamed: aString put: anObject [
 Class >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
 
-	^self classPool keys
+	^self classVariables collect: [: each | each name ]
 ]
 
 { #category : #'class variables' }

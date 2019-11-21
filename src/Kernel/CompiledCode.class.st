@@ -28,9 +28,9 @@ Class {
 	#type : #compiledMethod,
 	#classVars : [
 		'LargeFrame',
+		'SmallFrame',
 		'PrimaryBytecodeSetEncoderClass',
-		'SecondaryBytecodeSetEncoderClass',
-		'SmallFrame'
+		'SecondaryBytecodeSetEncoderClass'
 	],
 	#category : #'Kernel-Methods'
 }

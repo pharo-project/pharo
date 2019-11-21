@@ -201,14 +201,14 @@ MCClassDefinition >> classVarNames [
 { #category : #printing }
 MCClassDefinition >> classVariables [
 	^self needsSlotClassDefinition 
-		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
+		ifTrue: [self variablesOfType: #isClassVariable ]
 		ifFalse: [(self classVariablesString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]].
 
 ]
 
 { #category : #printing }
 MCClassDefinition >> classVariablesString [
-	^ self stringForSortedVariablesOfType: #isClassVariable
+	^ self stringForVariablesOfType: #isClassVariable
 ]
 
 { #category : #accessing }
@@ -328,7 +328,7 @@ commentStamp: stampStringOrNil [
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
+	self addVariables: cvarArray ofType: MCClassVariableDefinition.
 	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
 	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
 ]
@@ -356,7 +356,7 @@ commentStamp: stampStringOrNil [
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
 	self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
-	self addVariables: cvarArray asSortedCollection ofType: MCClassVariableDefinition.
+	self addVariables: cvarArray ofType: MCClassVariableDefinition.
 	self addVariables: poolArray asSortedCollection ofType: MCPoolImportDefinition.
 	self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
 ]

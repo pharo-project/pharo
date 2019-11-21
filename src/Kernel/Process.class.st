@@ -32,8 +32,8 @@ Class {
 		'level'
 	],
 	#classVars : [
-		'InheritablePSKeys',
 		'PSKeys',
+		'InheritablePSKeys',
 		'PSKeysSema'
 	],
 	#category : #'Kernel-Processes'

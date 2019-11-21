@@ -16,9 +16,9 @@ Class {
 		'combined'
 	],
 	#classVars : [
-		'Compositions',
 		'Decompositions',
-		'Diacriticals'
+		'Diacriticals',
+		'Compositions'
 	],
 	#category : #'Kernel-BasicObjects'
 }
