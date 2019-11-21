@@ -133,7 +133,7 @@ RGTraitV2Strategy >> classVariableDefinitionString [
 { #category : #'private - backend access' }
 RGTraitV2Strategy >> classVariables [
 
-	^ Array streamContents: [ :str | self classVariablesDo: [ :each | str add: each ] ]
+	^ Array streamContents: [ :str | self classVariablesDo: [ :each | str nextPut: each ] ]
 ]
 
 { #category : #'private - backend access' }
