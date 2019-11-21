@@ -107,8 +107,8 @@ Metaclass >> classVarNames [
 	"Answer the names of the class variables defined in the receiver's instance."
 	
 	^self instanceSide 
-		ifNil: [ Array new ]
-		ifNotNil: [ self instanceSide classVarNames]
+		ifNil: [ #() ]
+		ifNotNil: [ :class | class classVarNames]
 ]
 
 { #category : #'class variables' }

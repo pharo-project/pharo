@@ -138,8 +138,8 @@ RGClassDefinition >> classVarNamed: aString [
 { #category : #'class variables' }
 RGClassDefinition >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
-	
-	^classVariables collect:[ :cvar| cvar name ]
+
+	^ classVariables collect: [ :cvar | cvar name ]
 ]
 
 { #category : #accessing }
