@@ -195,7 +195,7 @@ MCClassDefinition >> classTraitCompositionString [
 
 { #category : #accessing }
 MCClassDefinition >> classVarNames [
-	^self selectVariables: #isClassVariable
+	^(self selectVariables: #isClassVariable) asArray sort
 ]
 
 { #category : #printing }
