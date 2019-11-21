@@ -1,7 +1,7 @@
-Extension { #name : #Object }
+Extension { #name : #ProtoObject }
 
 { #category : #'*OpalCompiler-Core' }
-Object >> mustBeBooleanCompileExpression: context andCache: cache [
+ProtoObject >> mustBeBooleanCompileExpression: context andCache: cache [
 	"Permits to redefine methods inlined by compiler.
 	Take the ast node corresponding to the mustBeBoolean error, compile it on the fly and executes it as a DoIt. Then resume the execution of the context."
 
@@ -34,7 +34,7 @@ Object >> mustBeBooleanCompileExpression: context andCache: cache [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Object >> mustBeBooleanDeOptimizeIn: context [
+ProtoObject >> mustBeBooleanDeOptimizeIn: context [
 	"Permits to redefine methods inlined by compiler.
 	Take the ast node corresponding to the mustBeBoolean error, compile it on the fly and executes it as a DoIt. Then resume the execution of the context.
 	the generated DoIts are cached in the calling method"
