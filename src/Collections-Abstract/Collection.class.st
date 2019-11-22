@@ -712,9 +712,10 @@ Collection >> flatCollect: aBlock as: aCollectionClass [
 	of collection for each element. Equivalent to the lisp's mapcan"
 
 	| col |
-	col := OrderedCollection new: self size.
-	self do: [ :each | col addAll: (aBlock value: each) ].
-	^ aCollectionClass withAll: col 
+	col := OrderedCollection
+		new: self size
+		streamContents: [ :str | self do: [ :each | str nextPutAll: (aBlock value: each) ] ].
+	^ aCollectionClass withAll: col
 ]
 
 { #category : #enumerating }
