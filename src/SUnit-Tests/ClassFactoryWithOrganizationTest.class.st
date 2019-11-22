@@ -17,7 +17,7 @@ ClassFactoryWithOrganizationTest class >> defaultTimeLimit [
 
 { #category : #testing }
 ClassFactoryWithOrganizationTest >> assertEnvironmentOf: aBehavior [
-	self assert: aBehavior environment = self testedEnvironment
+	self assert: aBehavior environment equals: self testedEnvironment
 ]
 
 { #category : #running }

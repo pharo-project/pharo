@@ -69,35 +69,33 @@ MetacelloStackCacheTestCase >> directReturnOfValue [
 
 { #category : #tests }
 MetacelloStackCacheTestCase >> mixedStack [
-
-	^MetacelloPlatform current 
+	^ MetacelloPlatform current
 		stackCacheFor: #mixed
-		at: #key 
-		doing: [:cache | | value |
+		at: #key
+		doing: [ :cache | 
+			| value |
 			value := cache at: #x ifAbsent: [ 0 ].
-			value > 3 ifTrue: [ ^value ].
+			value > 3 ifTrue: [ ^ value ].
 			value := value + 1.
 			cache at: #x put: value.
-			self assert: self directReturnOfValue == 6.
-			self assert: self mixedStackCall == 4.
+			self assert: self directReturnOfValue identicalTo: 6.
+			self assert: self mixedStackCall identicalTo: 4.
 			self mixedStack ]
-
 ]
 
 { #category : #tests }
 MetacelloStackCacheTestCase >> mixedStackCall [
-
-	^MetacelloPlatform current 
+	^ MetacelloPlatform current
 		stackCacheFor: #mixedStack
-		at: #key 
-		doing: [:cache | | value |
+		at: #key
+		doing: [ :cache | 
+			| value |
 			value := cache at: #x ifAbsent: [ 0 ].
-			value > 3 ifTrue: [ ^value ].
+			value > 3 ifTrue: [ ^ value ].
 			value := value + 1.
 			cache at: #x put: value.
-			self assert: self cachedReturnOfValue == 6.
+			self assert: self cachedReturnOfValue identicalTo: 6.
 			self mixedStackCall ]
-
 ]
 
 { #category : #tests }

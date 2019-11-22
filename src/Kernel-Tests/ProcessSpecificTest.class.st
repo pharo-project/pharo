@@ -10,12 +10,12 @@ Class {
 
 { #category : #testing }
 ProcessSpecificTest >> checkDynamic: value [
-	self assert: TestDynamicVariable value = value
+	self assert: TestDynamicVariable value equals: value
 ]
 
 { #category : #testing }
 ProcessSpecificTest >> checkLocal: value [
-	self assert: TestLocalVariable value = value
+	self assert: TestLocalVariable value equals: value
 ]
 
 { #category : #testing }

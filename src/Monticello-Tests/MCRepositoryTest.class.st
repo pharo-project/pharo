@@ -35,7 +35,7 @@ MCRepositoryTest >> assertMissing: aVersionInfo [
 
 { #category : #asserting }
 MCRepositoryTest >> assertVersionInfos: aCollection [
-	self assert: repository allVersionInfos asSet = aCollection asSet
+	self assert: repository allVersionInfos asSet equals: aCollection asSet
 ]
 
 { #category : #'tests-input data' }

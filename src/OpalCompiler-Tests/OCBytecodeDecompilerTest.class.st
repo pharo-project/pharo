@@ -85,69 +85,71 @@ OCBytecodeDecompilerTest >> pushClosureCopyOneCopiedTemp [
 
 { #category : #examples }
 OCBytecodeDecompilerTest >> remoteTemp [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		createTempVectorNamed:#methodVector withVars: #(b);      "b we know will be written to, so make a tempvector entry" 
-		addTemps: #(a);  "we have one real temp"
-		pushLiteral: 1;
+		createTempVectorNamed: #methodVector withVars: #(b);
+		"b we know will be written to, so make a tempvector entry"
+			addTemps: #(a);
+		"we have one real temp"
+			pushLiteral: 1;
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #(#a #methodVector) args: #() jumpTo: #block;
-			pushTemp: #a;                                                                                             "a is just read, so we copy it to the block"
+		pushTemp: #a;
+		"a is just read, so we copy it to the block"
 			pushLiteral: 1;
-			send: #+;
-			storeRemoteTemp: #b inVector: #methodVector;							      "b comes from tempvetor, as we do write to it"
-	     	 	blockReturnTop;
-		jumpAheadTarget: #block;	
+		send: #+;
+		storeRemoteTemp: #b inVector: #methodVector;
+		"b comes from tempvetor, as we do write to it"
+			blockReturnTop;
+		jumpAheadTarget: #block;
 		send: #value;
-		pushRemoteTemp: #b inVector: #methodVector;				
+		pushRemoteTemp: #b inVector: #methodVector;
 		returnTop;
 		ir.
-	
+
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #examples }
 OCBytecodeDecompilerTest >> remoteTempNested [
-
 	| iRMethod aCompiledMethod |
-
 	iRMethod := IRBuilder new
-		createTempVectorNamed:#methodVector withVars: #(b);      "b we know will be written to, so make a tempvector entry" 
-		addTemps: #(a);  "we have one real temp"
-		
-		pushLiteral: 1;
+		createTempVectorNamed: #methodVector withVars: #(b);
+		"b we know will be written to, so make a tempvector entry"
+			addTemps: #(a);
+		"we have one real temp"
+			pushLiteral: 1;
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #(methodVector a) args: #() jumpTo: #block;
-		createTempVectorNamed:#blockVector withVars: #(f);    
-			pushTemp: #a;                                                                                             "a is just read, so we copy it to the block"
-				pushClosureCopyCopiedValues: #(methodVector) args: #()  jumpTo: #block2;
-				pushLiteral: 1;
-				storeRemoteTemp: #b inVector: #methodVector;							      "f comes from tempvetor, as we do write to it"
-				blockReturnTop;		
-				jumpAheadTarget: #block2;	
-			send: #value;
-			send: #+;
-			storeRemoteTemp: #b inVector: #methodVector;							      "b comes from tempvetor, as we do write to it"
-	     	 	blockReturnTop;
-			
-		jumpAheadTarget: #block;	
+		createTempVectorNamed: #blockVector withVars: #(f);
+		pushTemp: #a;
+		"a is just read, so we copy it to the block"
+			pushClosureCopyCopiedValues: #(methodVector) args: #() jumpTo: #block2;
+		pushLiteral: 1;
+		storeRemoteTemp: #b inVector: #methodVector;
+		"f comes from tempvetor, as we do write to it"
+			blockReturnTop;
+		jumpAheadTarget: #block2;
 		send: #value;
-		pushRemoteTemp: #b inVector: #methodVector;				
+		send: #+;
+		storeRemoteTemp: #b inVector: #methodVector;
+		"b comes from tempvetor, as we do write to it"
+			blockReturnTop;
+		jumpAheadTarget: #block;
+		send: #value;
+		pushRemoteTemp: #b inVector: #methodVector;
 		returnTop;
 		ir.
-	
+
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #()) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #running }

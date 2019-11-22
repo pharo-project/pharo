@@ -84,20 +84,12 @@ SUnitExtensionsTest >> shouldFixTest [
 
 { #category : #'real tests' }
 SUnitExtensionsTest >> shouldRaiseWithExceptionDoTest [
-
-	self 
-		should: [ Error signal: '1' ]
-		raise: Error
-		withExceptionDo: [ :anException | self assert: anException messageText = '1' ]
+	self should: [ Error signal: '1' ] raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
 ]
 
 { #category : #'real tests' }
 SUnitExtensionsTest >> shouldRaiseWithSignalDoTest [
-
-	self 
-		should: [ Error signal: '1' ]
-		raise: Error
-		withExceptionDo: [ :anException | self assert: anException messageText = '1' ]
+	self should: [ Error signal: '1' ] raise: Error withExceptionDo: [ :anException | self assert: anException messageText equals: '1' ]
 ]
 
 { #category : #accessing }
@@ -128,7 +120,7 @@ SUnitExtensionsTest >> testAutoAssertFalse [
 
 { #category : #test }
 SUnitExtensionsTest >> testAutoAssertTrue [
-	self assert: 1 = 1.
+	self assert: 1 equals: 1.
 	self assert: true
 ]
 
@@ -143,7 +135,7 @@ SUnitExtensionsTest >> testAutoDenyFalse [
 
 { #category : #test }
 SUnitExtensionsTest >> testAutoDenyTrue [
-	self deny: 1 = 2.
+	self deny: 1 equals: 2.
 	self deny: false
 ]
 

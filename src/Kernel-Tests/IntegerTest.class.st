@@ -9,8 +9,8 @@ Class {
 
 { #category : #private }
 IntegerTest >> assert: a classAndValueEquals: b [
-	self assert: a class = b class.
-	self assert: a = b
+	self assert: a class equals: b class.
+	self assert: a equals: b
 ]
 
 { #category : #'tests - basic' }

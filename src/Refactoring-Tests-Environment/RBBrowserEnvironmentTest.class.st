@@ -43,9 +43,9 @@ RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [
 		addAll: anEnvironment not classNames;
 		yourself.
 	allClassNames := universalEnvironment classNames asSortedCollection.
-	self assert: classNames asSortedCollection = allClassNames.
+	self assert: classNames asSortedCollection equals: allClassNames.
 	self assertEmpty: (anEnvironment & anEnvironment not) classNames.
-	self assert: (anEnvironment | anEnvironment not) classNames asSortedCollection = allClassNames
+	self assert: (anEnvironment | anEnvironment not) classNames asSortedCollection equals: allClassNames
 ]
 
 { #category : #mockup }
@@ -68,11 +68,11 @@ RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> copyFor: aBrowserEnvironment [ 
+RBBrowserEnvironmentTest >> copyFor: aBrowserEnvironment [
 	| newEnvironment |
 	newEnvironment := aBrowserEnvironment copy.
-	self assert: newEnvironment numberSelectors = aBrowserEnvironment numberSelectors.
-	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors = 0
+	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
+	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
 ]
 
 { #category : #private }
@@ -97,10 +97,10 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 	| numberSelectors numberSelectorsNot |
 	numberSelectors := aBrowserEnvironment numberSelectors.
 	numberSelectorsNot := aBrowserEnvironment not numberSelectors.
-	self assert: numberSelectors + numberSelectorsNot = universalEnvironment numberSelectors.
-	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors = 0.
-	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors = numberSelectors.
-	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors = numberSelectors
+	self assert: numberSelectors + numberSelectorsNot equals: universalEnvironment numberSelectors.
+	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors equals: 0.
+	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors equals: numberSelectors.
+	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors equals: numberSelectors
 ]
 
 { #category : #private }
@@ -513,7 +513,7 @@ RBBrowserEnvironmentTest >> uniqueClassesIn: aBrowserEnvironment [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [ 
+RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self labelFor: aBrowserEnvironment.
 	self uniqueClassesIn: aBrowserEnvironment.
 	self numberSelectorsFor: aBrowserEnvironment.
@@ -524,5 +524,5 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self protocolsFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.
-	self assert: aBrowserEnvironment problemCount = 0 = aBrowserEnvironment isEmpty
+	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty
 ]

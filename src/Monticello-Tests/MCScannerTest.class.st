@@ -6,7 +6,7 @@ Class {
 
 { #category : #asserting }
 MCScannerTest >> assertScans: anArray [
-	self assert: (MCScanner scan: anArray printString readStream) = anArray
+	self assert: (MCScanner scan: anArray printString readStream) equals: anArray
 ]
 
 { #category : #tests }

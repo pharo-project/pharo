@@ -487,36 +487,28 @@ FreeTypeCacheTest >> testSingleton [
 { #category : #private }
 FreeTypeCacheTest >> validateCollections: aFreeTypeCache [
 	"check that the fifo list entries match the fontTable dict hierarchy"
+
 	| fontTable fontTableEntries fifo lastLink |
 	fontTable := aFreeTypeCache instVarNamed: #fontTable.
 	fifo := aFreeTypeCache instVarNamed: #fifo.
-	lastLink := (fifo instVarNamed:#lastLink).
+	lastLink := fifo instVarNamed: #lastLink.
 	fontTableEntries := Set new.
-	fontTable keysAndValuesDo:[:k1 :v1 |
-		v1 keysAndValuesDo:[:k2 :v2 |
-			v2 keysAndValuesDo:[:k3 :v3 |
-				fontTableEntries add: v3 ]]].
-	self assert: fifo size = fontTableEntries size.
-	self assert: (fifo asSet = fontTableEntries).
-	self assert: (lastLink isNil or:[lastLink nextLink isNil]) 
-	
-
-	
+	fontTable keysAndValuesDo: [ :k1 :v1 | v1 keysAndValuesDo: [ :k2 :v2 | v2 keysAndValuesDo: [ :k3 :v3 | fontTableEntries add: v3 ] ] ].
+	self assert: fifo size equals: fontTableEntries size.
+	self assert: fifo asSet equals: fontTableEntries.
+	self assert: (lastLink isNil or: [ lastLink nextLink isNil ])
 ]
 
 { #category : #private }
 FreeTypeCacheTest >> validateSizes: aFreeTypeCache [
 	"check that the used, maximumSize, and caches entries are valid"
+
 	| fontTable calcSize max used |
 	fontTable := aFreeTypeCache instVarNamed: #fontTable.
 	used := aFreeTypeCache instVarNamed: #used.
 	max := aFreeTypeCache instVarNamed: #maximumSize.
 	calcSize := 0.
-	fontTable do:[:charCodeTable |
-		charCodeTable do:[:typeTable |
-			typeTable do:[:entry |
-				calcSize := calcSize + (aFreeTypeCache sizeOf: entry object)]]].
-	self assert: calcSize = used.
-	self assert: (max isNil or:[used <= max])
-	
+	fontTable do: [ :charCodeTable | charCodeTable do: [ :typeTable | typeTable do: [ :entry | calcSize := calcSize + (aFreeTypeCache sizeOf: entry object) ] ] ].
+	self assert: calcSize equals: used.
+	self assert: (max isNil or: [ used <= max ])
 ]

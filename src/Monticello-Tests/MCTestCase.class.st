@@ -24,8 +24,7 @@ MCTestCase class >> resources [
 
 { #category : #asserting }
 MCTestCase >> assertPackage: actual matches: expected [
-	self assert: actual = expected
-
+	self assert: actual equals: expected
 ]
 
 { #category : #asserting }
@@ -45,11 +44,10 @@ MCTestCase >> assertVersion: actual matches: expected [
 
 { #category : #asserting }
 MCTestCase >> assertVersionInfo: actual matches: expected [
-	self assert: actual name = expected name.
-	self assert: actual message = expected message.
-	self assert: actual ancestors size = expected ancestors size.
-	actual ancestors with: expected ancestors do: [:a :e | self assertVersionInfo: a matches: e]
-	
+	self assert: actual name equals: expected name.
+	self assert: actual message equals: expected message.
+	self assert: actual ancestors size equals: expected ancestors size.
+	actual ancestors with: expected ancestors do: [ :a :e | self assertVersionInfo: a matches: e ]
 ]
 
 { #category : #compiling }

@@ -94,14 +94,12 @@ ArrayTest >> anotherValue [
 ]
 
 { #category : #asserting }
-ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [ 
+ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
 	self assert: (result class includesBehavior: aClass).
-	result do: 
-		[ :each | 
-		self assert: (aCollection occurrencesOf: each) = (result occurrencesOf: each) ].
-	self assert: result size = aCollection size
+	result do: [ :each | self assert: (aCollection occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: aCollection size
 ]
 
 { #category : #initialization }
