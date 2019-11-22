@@ -166,12 +166,6 @@ Trait >> addUser: aClass [
 	self users add: aClass
 ]
 
-{ #category : #'class variables' }
-Trait >> allClassVarNames [
-	
-	^ #()
-]
-
 { #category : #accessing }
 Trait >> asTraitComposition [
 	^ TaCompositionElement for: self.
