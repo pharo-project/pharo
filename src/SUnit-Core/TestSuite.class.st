@@ -144,7 +144,7 @@ TestSuite >> run: aResult [
 { #category : #running }
 TestSuite >> runTestsInTestingEnvironments: aResult [
 	self setUp.
-	[ self tests
+	[ self allSubtests 
 		do: [ :aTestCase | 
 			CurrentExecutionEnvironment 
 				useTestingDuring: [
