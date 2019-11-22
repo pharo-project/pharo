@@ -108,16 +108,16 @@ Metaclass >> classVarNames [
 	
 	^self instanceSide 
 		ifNil: [ #() ]
-		ifNotNil: [ self instanceSide classVarNames ]
+		ifNotNil: [ :class | class classVarNames ]
 ]
 
 { #category : #'class variables' }
 Metaclass >> classVariables [
-	"Answer the names of the class variables defined in the receiver's instance."
-	
-		^self instanceSide 
-			ifNil: [ ^ #()]
-			ifNotNil: [: class | class classVariables ]
+	"Answer the class variables defined in the receiver's instance."
+
+	^ self instanceSide
+		ifNil: [ ^ #() ]
+		ifNotNil: [ :class | class classVariables ]
 ]
 
 { #category : #'file in/out' }
