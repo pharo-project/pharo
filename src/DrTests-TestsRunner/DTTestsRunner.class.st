@@ -137,12 +137,16 @@ DTTestsRunner >> runSuite: aTestSuite withResult: aResult [
 
 { #category : #private }
 DTTestsRunner >> runTestSuites: testSuites [ 
-	|result|
-	result := TestAsserter classForTestResult new.
-	testSuites
-		do: [:testSuite | self runSuite: testSuite withResult: result ]
-		displayingProgress: 'Running Tests'.
-	^ result
+
+	CurrentExecutionEnvironment 
+		ifAll: (testSuites flatCollect: #allSubtests)
+		shareEnvironmentClassThenUseItDuring: [
+			|result|
+			result := TestAsserter classForTestResult new.
+			testSuites
+				do: [:testSuite | self runSuite: testSuite withResult: result ]
+				displayingProgress: 'Running Tests'.
+			^ result ]
 ]
 
 { #category : #api }

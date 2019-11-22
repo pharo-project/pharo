@@ -40,6 +40,13 @@ TestSuite >> addTests: aCollection [
 	aCollection do: [:eachTest | self addTest: eachTest]
 ]
 
+{ #category : #accessing }
+TestSuite >> allSubtests [
+
+	"return all tests recursively so if the suite contains other suites, return their tests"
+	^ tests flatCollect: [ :each | each allSubtests ]
+]
+
 { #category : #announcements }
 TestSuite >> announceTest: aTest [
 	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest).
@@ -127,21 +134,24 @@ TestSuite >> run [
 
 { #category : #running }
 TestSuite >> run: aResult [
+
+	CurrentExecutionEnvironment 
+		ifAll: self allSubtests 
+		shareEnvironmentClassThenUseItDuring: [ self runTestsInTestingEnvironments: aResult ].
 	
-	self runTestsInOnwEnvironments: aResult
 ]
 
 { #category : #running }
-TestSuite >> runTestsInOnwEnvironments: aResult [
+TestSuite >> runTestsInTestingEnvironments: aResult [
 	self setUp.
 	[ self tests
 		do: [ :aTestCase | 
-			| testEnv |
-			testEnv := aTestCase executionEnvironmentClass new.
-			testEnv beActiveDuring: [
-				aTestCase run: aResult.
-				self announceTest: aTestCase.
-				self changed: aTestCase ] ] 
+			CurrentExecutionEnvironment 
+				useTestingDuring: [
+					aTestCase run: aResult.
+					self announceTest: aTestCase.
+					self changed: aTestCase ] 
+				for: aTestCase ] 
 	] ensure: [ self tearDown ]
 ]
 

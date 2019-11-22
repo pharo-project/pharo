@@ -107,11 +107,15 @@ DTTestCoverage >> runSuite: aTestSuite withResult: aResult [
 
 { #category : #api }
 DTTestCoverage >> runTestSuites: testSuites [
-	| result |
-	result := TestAsserter classForTestResult new.
-	testSuites
-		do: [ :testSuite | self runSuite: testSuite withResult: result ]
-		displayingProgress: 'Running Tests'.
+	
+	CurrentExecutionEnvironment 
+		ifAll: (testSuites flatCollect: #allSubtests)
+		shareEnvironmentClassThenUseItDuring: [
+			| result |
+			result := TestAsserter classForTestResult new.
+			testSuites
+				do: [ :testSuite | self runSuite: testSuite withResult: result ]
+				displayingProgress: 'Running Tests'. ]
 ]
 
 { #category : #api }

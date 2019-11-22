@@ -559,6 +559,12 @@ TestCase >> addDependentToHierachy: anObject [
 	"an empty method. for Composite compability with TestSuite"
 ]
 
+{ #category : #accessing }
+TestCase >> allSubtests [
+
+	^ OrderedCollection with: self
+]
+
 { #category : #events }
 TestCase >> announce: anAnnouncementClass [
 	^ self announce: anAnnouncementClass withResult: nil

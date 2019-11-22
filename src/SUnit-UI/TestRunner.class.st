@@ -893,9 +893,15 @@ TestRunner >> runTest: aTestCase [
 
 { #category : #actions }
 TestRunner >> runTestSuites: testSuites [ 
-	testSuites
-		do: [:testSuite | self runSuite: testSuite]
-		displayingProgress: 'Running Tests'
+
+	CurrentExecutionEnvironment 
+		ifAll: (testSuites flatCollect: #allSubtests)
+		shareEnvironmentClassThenUseItDuring: [
+			testSuites
+				do: [:testSuite | self runSuite: testSuite]
+				displayingProgress: 'Running Tests' ]
+			
+	
 ]
 
 { #category : #'history saving' }
