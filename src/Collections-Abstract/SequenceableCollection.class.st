@@ -987,8 +987,9 @@ SequenceableCollection >> flatCollect: aBlock [
 
 	self isEmpty
 		ifTrue: [ ^ self copy ].
-	^self species streamContents: [ :stream |
-		self do: [ :each | stream nextPutAll: (aBlock value: each) ] ]
+	^self species 
+		new: 0
+		streamContents: [ :stream | self do: [ :each | stream nextPutAll: (aBlock value: each) ] ]
 ]
 
 { #category : #copying }
