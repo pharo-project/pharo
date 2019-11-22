@@ -38,8 +38,7 @@ Class {
 		'maxTimeForTest',
 		'forkedProcesses',
 		'failedProcesses',
-		'testCompleted',
-		'wantsCleanProcesses'
+		'testCompleted'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -123,7 +122,7 @@ TestExecutionEnvironment >> initialize [
 	forkedProcesses := WeakSet new.
 	failedProcesses := OrderedIdentityDictionary new.
 	testCompleted := false.
-	wantsCleanProcesses := true.
+
 ]
 
 { #category : #testing }
