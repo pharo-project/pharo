@@ -2,5 +2,8 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*NECompletion' }
 RBMethodNode >> completionEntries [
-	^ self select: Symbol selectorTable beginningWith: self selector
+	^Symbol selectorTable 
+		select: [ :each | each beginsWith: self selector] 
+		thenCollect: [ :each | NECEntry contents: each node: self ]
+
 ]
