@@ -821,5 +821,5 @@ TestCase >> tearDown [
 
 { #category : #accessing }
 TestCase >> timeLimit: aDuration [
-	^TestExecutionEnvironment maxTimeForTest: aDuration
+	^CurrentExecutionEnvironment value maxTimeForTest: aDuration
 ]

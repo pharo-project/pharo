@@ -127,19 +127,22 @@ TestSuite >> run [
 
 { #category : #running }
 TestSuite >> run: aResult [
-	CurrentExecutionEnvironment runTestsBy: [
-		self runUnmanaged: aResult ]
+	
+	self runTestsInOnwEnvironments: aResult
 ]
 
 { #category : #running }
-TestSuite >> runUnmanaged: aResult [
+TestSuite >> runTestsInOnwEnvironments: aResult [
 	self setUp.
 	[ self tests
-		do: [ :each | 
-			each run: aResult.
-			self announceTest: each.
-			self changed: each ] ]
-		ensure: [ self tearDown ]
+		do: [ :aTestCase | 
+			| testEnv |
+			testEnv := aTestCase executionEnvironmentClass new.
+			testEnv beActiveDuring: [
+				aTestCase run: aResult.
+				self announceTest: aTestCase.
+				self changed: aTestCase ] ] 
+	] ensure: [ self tearDown ]
 ]
 
 { #category : #running }

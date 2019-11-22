@@ -87,10 +87,9 @@ DTCommentToTest >> runSuite: aTestSuite withResult: aResult [
 DTCommentToTest >> runTestSuites: testSuites [
 	| result |
 	result := TestAsserter classForTestResult new.
-	CurrentExecutionEnvironment
-		runTestsBy: [ testSuites
-				do: [ :testSuite | self runSuite: testSuite withResult: result ]
-				displayingProgress: 'Running Tests' ].
+	testSuites
+		do: [ :testSuite | self runSuite: testSuite withResult: result ]
+		displayingProgress: 'Running Tests'.
 	^ result
 ]
 

@@ -9,9 +9,3 @@ DefaultExecutionEnvironment >> runTestCase: aTestCase [
 	testEnv beActiveDuring: [
 		testEnv runTestCase: aTestCase]
 ]
-
-{ #category : #'*SUnit-Core' }
-DefaultExecutionEnvironment >> runTestsBy: aBlock [
-
-	TestExecutionEnvironment new beActiveDuring: aBlock
-]

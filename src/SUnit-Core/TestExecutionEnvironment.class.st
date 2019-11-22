@@ -55,12 +55,6 @@ TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
 ]
 
 { #category : #controlling }
-TestExecutionEnvironment class >> maxTimeForTest: aDuration [
-
-	CurrentExecutionEnvironment value maxTimeForTest: aDuration
-]
-
-{ #category : #controlling }
 TestExecutionEnvironment class >> resetFailures [
 
 	^CurrentExecutionEnvironment value resetFailures
@@ -195,12 +189,6 @@ TestExecutionEnvironment >> runTestCaseSafelly: aTestCase [
 		and be able to debug all background failures together with original error"
 		self checkForkedProcesses. 
 		err pass  ]
-]
-
-{ #category : #controlling }
-TestExecutionEnvironment >> runTestsBy: aBlock [
-
-	aBlock value
 ]
 
 { #category : #accessing }

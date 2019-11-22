@@ -109,10 +109,9 @@ DTTestCoverage >> runSuite: aTestSuite withResult: aResult [
 DTTestCoverage >> runTestSuites: testSuites [
 	| result |
 	result := TestAsserter classForTestResult new.
-	CurrentExecutionEnvironment
-		runTestsBy: [ testSuites
-				do: [ :testSuite | self runSuite: testSuite withResult: result ]
-				displayingProgress: 'Running Tests' ].
+	testSuites
+		do: [ :testSuite | self runSuite: testSuite withResult: result ]
+		displayingProgress: 'Running Tests'.
 ]
 
 { #category : #api }

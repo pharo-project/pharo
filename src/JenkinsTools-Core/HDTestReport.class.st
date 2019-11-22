@@ -169,9 +169,12 @@ HDTestReport >> run [
 
 { #category : #running }
 HDTestReport >> runAll [
-	CurrentExecutionEnvironment runTestsBy: [ 
-		suite tests do: [ :each | each run: self ]
-	]
+ 
+	suite tests do: [ :aTestCase | 
+		| testEnv |
+		testEnv := aTestCase executionEnvironmentClass new.
+		testEnv beActiveDuring: [
+			aTestCase run: self ] ]
 ]
 
 { #category : #running }
