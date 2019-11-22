@@ -2,5 +2,7 @@ Extension { #name : #RBPragmaNode }
 
 { #category : #'*NECompletion' }
 RBPragmaNode >> completionEntries [
-		^ self select: Symbol allSymbols beginningWith: self selector
+	^Symbol allSymbols 
+		select: [ :each | each beginsWith: self selector] 
+		thenCollect: [ :each | NECEntry contents: each node: self ]
 ]

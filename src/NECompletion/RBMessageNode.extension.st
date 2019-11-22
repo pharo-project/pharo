@@ -2,9 +2,14 @@ Extension { #name : #RBMessageNode }
 
 { #category : #'*NECompletion' }
 RBMessageNode >> completionEntries [
-	^(receiver hasProperty: #type)
-		ifTrue: [ self select: (receiver propertyAt: #type) allSelectors beginningWith: self selector ] 	
-		ifFalse: [ self select: Symbol selectorTable beginningWith: self selector ]
+	| selectors |
+	selectors := (receiver hasProperty: #type)
+		ifTrue: [ (receiver propertyAt: #type) allSelectors ] 	
+		ifFalse: [ Symbol selectorTable ].
+		
+	^selectors 
+		select: [ :each | each beginsWith: self selector ] 
+		thenCollect: [ :each | NECSelectorEntry contents: each node: self ]
 ]
 
 { #category : #'*NECompletion' }
