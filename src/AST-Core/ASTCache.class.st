@@ -64,7 +64,9 @@ ASTCache >> at: aCompiledMethod [
 	^ self 
 		at: aCompiledMethod
 		ifAbsentPut: [ 
-			aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass ]
+			aCompiledMethod reflectiveMethod 
+				ifNil: [ aCompiledMethod parseTree doSemanticAnalysisIn: aCompiledMethod methodClass ]
+				ifNotNil: [: rfMethod | rfMethod ast ] ]
 ]
 
 { #category : #initialization }
