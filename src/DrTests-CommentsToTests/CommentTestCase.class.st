@@ -16,9 +16,12 @@ Class {
 	#category : #'DrTests-CommentsToTests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 CommentTestCase class >> comment: stringComment class: aClass selector: aSymbol [
+
 	| result |
+	self flag: #todo.
+	"this method body should be moved on instance side."
 	result := [ Smalltalk compiler evaluate: stringComment ]
 		on: Exception
 		do: [ ^ self errorComment: stringComment class: aClass selector: aSymbol ].
@@ -34,8 +37,10 @@ CommentTestCase class >> comment: stringComment class: aClass selector: aSymbol 
 				yourself ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 CommentTestCase class >> errorComment: stringComment class: aClass selector: aSymbol [
+	self flag: #todo.
+	"this method body should be moved on instance side."
 	^ self new
 		expression: stringComment;
 		setTestSelector: #testError;
@@ -54,6 +59,8 @@ CommentTestCase class >> example [
 
 { #category : #accessing }
 CommentTestCase class >> testSelectors [
+	self flag: #todo.
+	"missing comments. I have no ide what this method is doing."
 	^ super testSelectors \ {#testError . #testIt}
 ]
 
@@ -88,6 +95,8 @@ CommentTestCase >> currentValue: anObject [
 
 { #category : #accessing }
 CommentTestCase >> drTestsBrowse [
+	self flag: #todo.
+	"this should be done via the presenter application and not using a global variable."
 	Smalltalk tools browser openOnClass: classExample  selector: selectorExample
 ]
 
@@ -133,10 +142,10 @@ CommentTestCase >> selectorExample: anObject [
 
 { #category : #accessing }
 CommentTestCase >> testError [
-	self error:'syntax error on the comment'
+	self error: 'syntax error on the comment'
 ]
 
 { #category : #accessing }
 CommentTestCase >> testIt [
-self assert: expectedValue equals: currentValue
+	self assert: expectedValue equals: currentValue
 ]

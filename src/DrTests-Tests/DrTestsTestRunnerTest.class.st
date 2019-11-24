@@ -79,5 +79,5 @@ DrTestsTestRunnerTest >> testSelectedPackagesContainTestCases [
 { #category : #tests }
 DrTestsTestRunnerTest >> testTestResultIsNotEmpty [
 	self
-		deny: (plugin runForConfiguration: conf) testsResult passed isEmpty
+		deny: (plugin runForConfiguration: conf) testResults passed isEmpty
 ]

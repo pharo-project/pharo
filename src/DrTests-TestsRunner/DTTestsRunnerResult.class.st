@@ -54,17 +54,17 @@ DTTestsRunnerResult >> buildTreeForUI [
 		subResults:
 			{DTTreeNode new
 				name: DTTestResultType error pluralName;
-				subResults: (self buildLeavesFrom: self testsResult errors asOrderedCollection type: DTTestResultType error);
+				subResults: (self buildLeavesFrom: self testResults errors asOrderedCollection type: DTTestResultType error);
 				yourself.
 			DTTreeNode new
 				name: DTTestResultType fail pluralName;
-				subResults: (self buildLeavesFrom: self testsResult failures asOrderedCollection type: DTTestResultType fail).
+				subResults: (self buildLeavesFrom: self testResults failures asOrderedCollection type: DTTestResultType fail).
 			DTTreeNode new
 				name: DTTestResultType skipped pluralName;
-				subResults: (self buildLeavesFrom: self testsResult skipped asOrderedCollection type: DTTestResultType skipped).
+				subResults: (self buildLeavesFrom: self testResults skipped asOrderedCollection type: DTTestResultType skipped).
 			DTTreeNode new
 				name: DTTestResultType pass pluralName;
-				subResults: (self buildLeavesFrom: self testsResult passed asOrderedCollection type: DTTestResultType pass)
+				subResults: (self buildLeavesFrom: self testResults passed asOrderedCollection type: DTTestResultType pass)
 		};
 		yourself
 ]
@@ -74,10 +74,10 @@ DTTestsRunnerResult >> buildTreeForUIByClasses [
 	<dTTestRunnerResultTreeNamed: 'Grouped by type of result and classes'>
 
 	| errors failures skipped passed |
-	errors := self buildNodeGroupedByTypeAndClass: self testsResult errors type: DTTestResultType error.
-	failures := self buildNodeGroupedByTypeAndClass: self testsResult failures asOrderedCollection type: DTTestResultType fail.
-	skipped := self buildNodeGroupedByTypeAndClass: self testsResult skipped type: DTTestResultType skipped.
-	passed := self buildNodeGroupedByTypeAndClass: self testsResult passed type: DTTestResultType pass.
+	errors := self buildNodeGroupedByTypeAndClass: self testResults errors type: DTTestResultType error.
+	failures := self buildNodeGroupedByTypeAndClass: self testResults failures asOrderedCollection type: DTTestResultType fail.
+	skipped := self buildNodeGroupedByTypeAndClass: self testResults skipped type: DTTestResultType skipped.
+	passed := self buildNodeGroupedByTypeAndClass: self testResults passed type: DTTestResultType pass.
 	^ DTTreeNode new
 		subResults:
 			{errors.
@@ -92,10 +92,10 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 	<dTTestRunnerResultTreeNamed: 'Grouped by type of result, classes, and protocol'>
 
 	| errors failures skipped passed |
-	errors := self buildNodeGroupedByTypeClassAndProtocol: self testsResult errors type: DTTestResultType error.
-	failures := self buildNodeGroupedByTypeClassAndProtocol: self testsResult failures asOrderedCollection type: DTTestResultType fail.
-	skipped := self buildNodeGroupedByTypeClassAndProtocol: self testsResult skipped type: DTTestResultType skipped.
-	passed := self buildNodeGroupedByTypeClassAndProtocol: self testsResult passed type: DTTestResultType pass.
+	errors := self buildNodeGroupedByTypeClassAndProtocol: self testResults errors type: DTTestResultType error.
+	failures := self buildNodeGroupedByTypeClassAndProtocol: self testResults failures asOrderedCollection type: DTTestResultType fail.
+	skipped := self buildNodeGroupedByTypeClassAndProtocol: self testResults skipped type: DTTestResultType skipped.
+	passed := self buildNodeGroupedByTypeClassAndProtocol: self testResults passed type: DTTestResultType pass.
 	^ DTTreeNode new
 		subResults:
 			{errors.
@@ -119,25 +119,25 @@ DTTestsRunnerResult >> summarizeInfo [
 	^ String
 		streamContents: [ :s | 
 			s
-				print: self testsResult passed size;
+				print: self testResults passed size;
 				<< ' passed';
 				cr;
-				print: self testsResult failures size;
+				print: self testResults failures size;
 				<< ' failures';
 				cr;
-				print: self testsResult errors size;
+				print: self testResults errors size;
 				<< ' errors';
 				cr;
-				print: self testsResult skipped size;
+				print: self testResults skipped size;
 				<< ' skipped' ]
 ]
 
 { #category : #accessing }
-DTTestsRunnerResult >> testsResult [
+DTTestsRunnerResult >> testResults [
 	^ testsResult
 ]
 
 { #category : #accessing }
-DTTestsRunnerResult >> testsResult: anObject [
+DTTestsRunnerResult >> testResults: anObject [
 	testsResult := anObject
 ]
