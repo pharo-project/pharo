@@ -84,7 +84,7 @@ FTTableContainerMorph >> calculateColumnWidths [
 	- return if all fit 
 	  or collect and distribute remaining width.
 	
- 	DanilOsipchuk: the method was adjusted to distribute space starting from startColumnIndex 
+   the method was adjusted to distribute space starting from startColumnIndex 
 	to enable horizontal scrolling when columns do not fit the window,
 	see #columnOrderOfWidthDistribution"
 	
