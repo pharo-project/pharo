@@ -9,6 +9,26 @@ This class implements the singleton design pattern. Its singleton can be obtaine
 # Variables
 - mainDebuggerClass  | a Class
 - subscribersOnMainDebuggerClassUpdate  |  WeakOrderedCollection<Object>
+
+# Long Description
+**The Point**
+The idea of `DebuggerSelector` is to have a generic system for choosing ""the most suitable"" debugger to open a given DebugSession. A system like this is already in place in some fashion, but it is internal to the GTDebugger (you can see it at play when you debug a test: the debugger looks a bit different and shows test-specific information, because it's actually the GTTestDebugger that was opened), so it is not easy to add new non-GT debuggers.
+
+**Short Description**
+`DebuggerSelector` finds all the debugger classes of the system, ask them how they rank the DebugSession to be opened, and opens the DebugSession with the highest-ranking debugger. If this opening fails (because the debugger signals an Error), then `DebuggerSelector` tries to open the DebugSession with the second-highest ranking debugger and so on...
+
+**What is a Debugger class?**
+A debugger class is a class that implements all the methods from the AbstractDebugger class that are marked as SubclassResponsibility. For now, that is:
+- `iAmADebugger`: This method simply needs to contain the `<iAmADebugger>` pragma, and is just there as a marker.
+- `rankDebugSession: aDebugSession`: This method returns the rank of this debugger on the provided DebugSession. If the debugger absolutely cannot open the DebugSession, it should signal the `DebugSessionCannotBeOpenedByThisDebugger` exception. For example, a debugger that is specialised to debug test executions will return a high number if the DebugSession is that of a test execution, and signal the exception if it is not.
+- `openOn: aDebugSession withFullView: aBool andNotification: aString`: This method should open the provided DebugSession in that debugger. It is a good place to call `#keepAlive:` on the DebugSession to ensure it does not get terminated by `DebugSessionStorage` while the debugger is open on it.
+An important point is that debugger classes do not need to inherit from the `AbstractDebugger` class to be considered as debugger classes. They only need to implement the three (class-side) methods detailed above.
+
+**More Details on the Debugger Selection Algorithm**
+The algorithm outlined above gives the main idea. In addition to that:
+- Debugger classes that signal the `DebugSessionCannotBeOpenedByThisDebugger` exception when asked to rank the DebugSession cannot be selected
+- `DebuggerSelector` has a `mainDebuggerClass` variable. If a debugger class is in this variable, `DebuggerSelector` will always attempt to open the DebugSession with it first, and only if that signals an Error will it fall back on the default algorithm. A use for this is to manually set a specific debugger for images in production mode, for example one that only logs the exception in a file but does not open a graphical debugger allowing the user to modify code.
+
 "
 Class {
 	#name : #DebuggerSelector,
