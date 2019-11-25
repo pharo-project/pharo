@@ -11,12 +11,12 @@ Class {
 NECSelectorEntry >> browse [
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: class].
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents].
 	
 	^ self
-		findMethodAndDo: [ :clss :method | 
+		findMethodAndDo: [ :method | 
 			Smalltalk tools browser 
-				openOnClass: clss 
+				openOnClass: method methodClass 
 				selector: method selector. 
 			true ]
 		ifAbsent: [ :selector | 
@@ -31,9 +31,9 @@ NECSelectorEntry >> createDescription [
 	or in the system."
 
 	^ self
-		findMethodAndDo: [:clazz :method | 
+		findMethodAndDo: [:method | 
 			self
-				methodSourceDescription: clazz
+				methodSourceDescription: method methodClass
 				method: method ]
 		ifAbsent: [:selector | self implementorsDescription: selector]
 ]
@@ -50,7 +50,7 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 							ref realClass lookupSelector: ref selector]
 						ifFalse: [^ notfoundBlock value: contents]]
 				ifNotNil: [theClass lookupSelector: contents ]. 
-	^ foundBlock value: result first value: result second
+	^ foundBlock value: result
 ]
 
 { #category : #private }

@@ -5,7 +5,7 @@ In addition tools such as the workspace may turn their bindings into instance of
 "
 Class {
 	#name : #NECLocalEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 

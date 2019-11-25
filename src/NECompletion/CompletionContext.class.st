@@ -59,7 +59,7 @@ CompletionContext >> commonPrefix [
 CompletionContext >> completionAt: aNumber [
 	| entry |
 	
-	entry := (self entries at: aNumber) completion separateKeywords.
+	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
 	^ NECPreferences spaceAfterCompletion 
 		ifTrue: [ entry, ' ' ]
 		ifFalse: [ entry ]
