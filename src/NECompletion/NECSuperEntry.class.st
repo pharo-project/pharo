@@ -3,7 +3,7 @@ I represent super.
 "
 Class {
 	#name : #NECSuperEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 

@@ -281,8 +281,8 @@ NECMenuMorph >> detailMessage [
 	^ String streamContents: [:stream |
 		NECPreferences captureNavigationKeys ifTrue: [
 			stream << (detailMorph
-				ifNil: ['-> open detail']
-				ifNotNil: ['<- close detail']	) ] ]
+				ifNil: ['cmd-> open detail']
+				ifNotNil: ['cmd<- close detail']	) ] ]
 ]
 
 { #category : #accessing }

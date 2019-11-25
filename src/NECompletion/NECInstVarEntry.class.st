@@ -3,7 +3,7 @@ I represent an instance variable.
 "
 Class {
 	#name : #NECInstVarEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 

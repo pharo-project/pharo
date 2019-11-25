@@ -15,13 +15,8 @@ Class {
 }
 
 { #category : #'instance creation' }
-NECEntry class >> contents: aString [ 
-	^ self new setContents: aString
-]
-
-{ #category : #'instance creation' }
 NECEntry class >> contents: aString node: aNode [
-	^ self new setContents: aString node: aNode
+	^ self new contents: aString node: aNode
 ]
 
 { #category : #operations }
@@ -32,15 +27,10 @@ NECEntry >> <= aECEntry [
 { #category : #'ui related' }
 NECEntry >> browse [
 	| class |
-	"no really correct, we need the class of the node..."
-	class := node methodNode compilationContext getClass.
-	Smalltalk tools browser openOnClass: class.
-	^true
-]
-
-{ #category : #accessing }
-NECEntry >> completion [
-	^ self contents asSymbol
+	class := Smalltalk globals at: contents ifAbsent: [ nil ].
+	class
+		ifNotNil: [ Smalltalk tools browser openOnClass: class].
+	^ true
 ]
 
 { #category : #accessing }
@@ -48,12 +38,16 @@ NECEntry >> contents [
 	^contents
 ]
 
+{ #category : #accessing }
+NECEntry >> contents: aString node: aNode [
+	contents := aString.
+	node := aNode
+]
+
 { #category : #'detail information' }
 NECEntry >> createDescription [
 	| clazz |
-	"no really correct, we need the class of the node..."
-	
-	clazz := node methodNode compilationContext getClass.
+	clazz := Smalltalk globals at: contents ifAbsent: [ nil ].
 	^ clazz 
 		ifNil: [ NECEntryDescription label: self label ]
 		ifNotNil: 
@@ -87,15 +81,4 @@ NECEntry >> printOn: aStream [
 		nextPut: $,;
 		nextPutAll: self hightlightSymbol;
 		nextPut: $)
-]
-
-{ #category : #accessing }
-NECEntry >> setContents: aString [ 
-	contents := aString.
-]
-
-{ #category : #accessing }
-NECEntry >> setContents: aString node: aNode [
-	contents := aString.
-	node := aNode
 ]

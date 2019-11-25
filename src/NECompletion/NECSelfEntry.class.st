@@ -3,7 +3,7 @@ I represent self
 "
 Class {
 	#name : #NECSelfEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 
