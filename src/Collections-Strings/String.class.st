@@ -61,13 +61,13 @@ String class >> compare: string1 with: string2 collated: order [
 ]
 
 { #category : #comparing }
-ByteString >> compareWith: aString [
+String >> compareWith: aString [
 	<primitive:158>
 	^ self primitiveFail  
 ]
 
 { #category : #comparing }
-ByteString >> compareWith: aString collated: order [
+String >> compareWith: aString collated: order [
 	<primitive:158>
 	^ self primitiveFail  
 ]
