@@ -585,14 +585,12 @@ Number >> printString [
 { #category : #printing }
 Number >> printStringBase: base [
 	"Return a String representation of this number in base b."
+	"(10 printStringBase: 10) >>> '10'"
+	"(-10 printStringBase: 10) >>> '-10'"
+	"(10 printStringBase: 2) >>> '1010'"
+	"(10 printStringBase: 16) >>> 'A'"
 	
-	"10 printStringBase: 10 >>> '10'"
-	"-10 printStringBase: 10 >>> '-10'"
-	"10 printStringBase: 2 >>> '1010'"
-	"10 printStringBase: 16 >>> 'A'"
-	
-	^ String streamContents:
-		[:strm | self printOn: strm base: base]
+	^ String streamContents: [:strm | self printOn: strm base: base]
 ]
 
 { #category : #arithmetic }
@@ -611,10 +609,10 @@ Number >> quo: aNumber [
 Number >> raisedTo: aNumber [ 
 	"Answer the receiver raised to aNumber."
 	
-	"2 raisedTo: 8 >>> 256"
-	"8 raisedTo: 2 >>> 64"
-	"2 raisedTo: (1/12) >>> 1.0594630943592953"
-	"2 raisedTo: -1 >>> (1/2)"
+	"(2 raisedTo: 8) >>> 256"
+	"(8 raisedTo: 2) >>> 64"
+	"(2 raisedTo: (1/12)) >>> 1.0594630943592953"
+	"(2 raisedTo: -1) >>> (1/2)"
 
 	aNumber isInteger ifTrue: [
 		"Do the special case of integer power"

@@ -19,10 +19,7 @@ False >> & aBoolean [
 { #category : #controlling }
 False >> and: alternativeBlock [ 
 	"Nonevaluating conjunction -- answer with false since the receiver is false."
-	"
-	false and: [ 1 error ]
-	>>> false
-	"
+	"(false and: [ 1 error ])>>> false"
 	
 	^self
 ]
@@ -76,10 +73,7 @@ False >> not [
 { #category : #controlling }
 False >> or: alternativeBlock [ 
 	"Nonevaluating disjunction -- answer value of alternativeBlock."
-	"
-	false or: [ true ]
-	>>> true
-	"
+	" (false or: [ true ] )>>> true "
 	
 	^alternativeBlock value
 ]
@@ -94,10 +88,8 @@ False >> printOn: aStream [
 False >> xor: alternativeBlock [
 	"Nonevaluating conjunction. If the receiver is true, answer the opposite of the 
 	the argument, alternativeBlock; otherwise answer the value of the alternativeBlock."
-	"
-	false xor: [ true ]
-	>>> true
-	"
+	"(false xor: [ true ]) >>> true"
+	
 	^ alternativeBlock value
 ]
 

@@ -61,13 +61,13 @@ Magnitude >> >= aMagnitude [
 
 { #category : #comparing }
 Magnitude >> beBetween: minValue and: maxValue [
-"Answer my value constrained to the interval [minValue ; maxValue]
-I take care of the situation where minValue > maxValue"
- "10 beBetween: 12 and: 20 >>> 12"
- "10 beBetween: 20 and: 12 >>> 12"
- "13 beBetween: 12 and: 20 >>> 13"
- "12 beBetween: 12 and: 20 >>> 12"
- "100 beBetween: 12 and: 20 >>> 20"
+	"Answer my value constrained to the interval [minValue ; maxValue]
+	I take care of the situation where minValue > maxValue"
+	"(10 beBetween: 12 and: 20) >>> 12"
+	"(10 beBetween: 20 and: 12) >>> 12"
+	"(13 beBetween: 12 and: 20) >>> 13"
+	"(12 beBetween: 12 and: 20) >>> 12"
+	"(100 beBetween: 12 and: 20) >>> 20"
  
 	^ minValue <= maxValue 
 		ifTrue: [ (self min: maxValue) max: minValue ]
@@ -111,10 +111,10 @@ Magnitude >> min: aMagnitude [
 
 { #category : #comparing }
 Magnitude >> min: maxValue max: minValue [
-"Take the minimum between self and maxValue, then the maximum with minValue"
-"(10 min: 20 max: 5) >>> 10"
-"(10 min: 20 max: 11) >>> 11"
-"(24 min: 20 max: 5) >>> 10"
+	"Take the minimum between self and maxValue, then the maximum with minValue"
+	"(10 min: 20 max: 5) >>> 10"
+	"(10 min: 20 max: 11) >>> 11"
+	"(24 min: 20 max: 5) >>> 20"
 
 	^ (self min: maxValue) max: minValue
 
