@@ -204,6 +204,18 @@ ByteString >> byteSize [
 ]
 
 { #category : #comparing }
+ByteString >> compareWith: aString [
+	<primitive:158>
+	^ self primitiveFail  
+]
+
+{ #category : #comparing }
+ByteString >> compareWith: aString collated: order [
+	<primitive:158>
+	^ self primitiveFail  
+]
+
+{ #category : #comparing }
 ByteString >> findSubstring: key in: body startingAt: start matchTable: matchTable [
 	
 	^ key findIn: body startingAt: start matchTable: matchTable.
