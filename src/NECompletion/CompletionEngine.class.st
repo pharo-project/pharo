@@ -88,10 +88,11 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	
 	This method would be cleaner if splitted."
 
-	| keyCharacter controlKeyPressed |
+	| keyCharacter controlKeyPressed commandKeyPressed |
 	self setEditor: anEditor.
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
+	commandKeyPressed := aKeyboardEvent commandKeyPressed.
 	self isMenuOpen
 		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
 	(keyCharacter = Character home and: [ self captureNavigationKeys ])
@@ -102,11 +103,11 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 		ifTrue: [ 
 			menuMorph end.
 			^ true ].
-	(keyCharacter = Character arrowRight and: [ self captureNavigationKeys ])
+	(keyCharacter = Character arrowRight and: [commandKeyPressed and: [ self captureNavigationKeys ]])
 		ifTrue: [ 
 			menuMorph showDetail.
 			^ true ].
-	(keyCharacter = Character arrowLeft and: [ self captureNavigationKeys ])
+	(keyCharacter = Character arrowLeft  and: [commandKeyPressed and: [ self captureNavigationKeys ]])
 		ifTrue: [ ^ self leftArrow ].
 	keyCharacter = Character arrowUp
 		ifTrue: [ 

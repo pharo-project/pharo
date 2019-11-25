@@ -1,9 +1,9 @@
 "
-I represent a selector
+I represent a selector of a method
 "
 Class {
 	#name : #NECSelectorEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECSymbolEntry,
 	#category : #'NECompletion-Model'
 }
 
@@ -25,19 +25,6 @@ NECSelectorEntry >> browse [
 			true ]
 ]
 
-{ #category : #'detail information' }
-NECSelectorEntry >> createDescription [
-	"Creates description either from looking up the method in a class,
-	or in the system."
-
-	^ self
-		findMethodAndDo: [:method | 
-			self
-				methodSourceDescription: method methodClass
-				method: method ]
-		ifAbsent: [:selector | self implementorsDescription: selector]
-]
-
 { #category : #private }
 NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [ 
 	| theClass result implementors |
@@ -53,26 +40,6 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	^ foundBlock value: result
 ]
 
-{ #category : #private }
-NECSelectorEntry >> implementorsDescription: aSymbol [ 
-	| implementors output |
-	output := WriteStream on: String new.
-	implementors := self systemNavigation allImplementorsOf: aSymbol.
-	implementors isEmpty ifTrue: 
-		[ ^ NECEntryDescription 
-			label: 'symbol'
-			title: '(no implementors)'
-			description: 'This is just symbol.' ].
-	implementors do: [ :each | 
-		output
-			nextPutAll: each className printString;
-			cr ].
-	^ NECEntryDescription 
-		label: self label
-		title: '(Implementors)'
-		description: output contents
-]
-
 { #category : #accessing }
 NECSelectorEntry >> label [
 	"I return whether the variable is a class or a method."
@@ -81,19 +48,4 @@ NECSelectorEntry >> label [
 		propertyAt: #type 
 		ifPresent:  [ 'method' ] 
 		ifAbsent:  [ 'class' ]
-]
-
-{ #category : #private }
-NECSelectorEntry >> methodSourceDescription: aClass method: aCompiledMethod [ 
-	"I return if it's a class or a method, its class name, and the implementation."
-	| styler styledText |
-	
-	styler := SHRBTextStyler new.
-	styler classOrMetaClass: aClass.
-	styledText := styler styledTextFor: (aCompiledMethod sourceCode) asText.
-	
-	^ NECEntryDescription
-		label: self label
-		title: aClass printString
-		description: styledText
 ]
