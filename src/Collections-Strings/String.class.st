@@ -60,6 +60,18 @@ String class >> compare: string1 with: string2 collated: order [
 
 ]
 
+{ #category : #comparing }
+ByteString >> compareWith: aString [
+	<primitive:158>
+	^ self primitiveFail  
+]
+
+{ #category : #comparing }
+ByteString >> compareWith: aString collated: order [
+	<primitive:158>
+	^ self primitiveFail  
+]
+
 { #category : #'instance creation' }
 String class >> cr [
 	"Answer a string containing a single carriage return character."

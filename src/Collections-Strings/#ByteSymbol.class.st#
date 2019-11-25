@@ -13,7 +13,6 @@ ByteSymbol class >> findFirstInString: aString inSet: inclusionMap startingAt: s
 	^ByteString findFirstInString: aString  inSet: inclusionMap startingAt: start
 ]
 
-
 { #category : #primitives }
 ByteSymbol class >> indexOfAscii: anInteger inString: aString startingAt: start [
 	^ByteString indexOfAscii: anInteger inString: aString startingAt: start
