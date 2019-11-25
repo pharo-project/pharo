@@ -74,10 +74,10 @@ Boolean >> and: alternativeBlock [
 	the argument, alternativeBlock; otherwise answer false without 
 	evaluating the argument."
 	
-	"true and: [true] >>> true"
-	"true and: [false] >>> false"
-	"false and: [true] >>> false"
-	"false and: [false] >>> true"
+	"(true and: [true]) >>> true"
+	"(true and: [false]) >>> false"
+	"(false and: [true]) >>> false"
+	"(false and: [Error signal]) >>> false"
 
 	self subclassResponsibility
 ]
@@ -88,7 +88,7 @@ Boolean >> asBit [
 	
 	"($b > $c) asBit>>> 0"
 	"true asBit >>> 1" 
-	"#(true true false true) inject: 0 into: [ :sum :each | sum + each asBit] >>> 3"
+	"(#(true true false true) inject: 0 into: [ :sum :each | sum + each asBit]) >>> 3"
 	
 	self subclassResponsibility
 ]
@@ -103,9 +103,9 @@ Boolean >> deepCopy [
 Boolean >> eqv: aBoolean [
 	"Answer true if the receiver is equivalent to aBoolean."
 
-	"false eqv: true >>> false"
-	"(1 == 1) eqv: true >>> true"
-	"( 1 > 2)  eqv: false >>> true"
+	"(false eqv: true) >>> false"
+	"((1 == 1) eqv: true) >>> true"
+	"(( 1 > 2)  eqv: false) >>> true"
 
 	^ self == aBoolean
 ]
@@ -118,8 +118,8 @@ Boolean >> ifFalse: alternativeBlock [
 	receiver is nonBoolean. Execution does not actually reach here because 
 	the expression is compiled in-line."
 	
-	"false ifFalse: [ 'This statement is false!' ] >>> 'This statement is false!'" 
-	"true ifFalse: [ 'This statement is false!' ] >>> nil"
+	"(false ifFalse: [ 'This statement is false!' ]) >>> 'This statement is false!'" 
+	"(true ifFalse: [ 'This statement is false!' ]) >>> nil"
 
 	self subclassResponsibility
 ]
@@ -128,8 +128,8 @@ Boolean >> ifFalse: alternativeBlock [
 Boolean >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [ 
 	"Same as ifTrue:ifFalse:."
 	
-	"true ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is true!'"
-	"false ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ]  >>> 'That is false!'"
+	"(true ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ])  >>> 'That is true!'"
+	"(false ifFalse: [ 'That is false!' ] ifTrue: [ 'That is true!' ])  >>> 'That is false!'"
 
 	self subclassResponsibility
 ]
@@ -142,8 +142,8 @@ Boolean >> ifTrue: alternativeBlock [
 	receiver is nonBoolean. Execution does not actually reach here because 
 	the expression is compiled in-line."
 	
-	"true ifTrue: [ 'This statement is true!' ] >>> 'This statement is true!'" 
-	"false ifTrue: [ 'This statement is true!' ] >>> nil"
+	"(true ifTrue: [ 'This statement is true!' ]) >>> 'This statement is true!'" 
+	"(false ifTrue: [ 'This statement is true!' ]) >>> nil"
 
 	self subclassResponsibility
 ]
@@ -156,8 +156,8 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	is a nonBoolean then create an error notification. Execution does not 
 	actually reach here because the expression is compiled in-line."
 	
-	"true ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is true!'"
-	"false ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]  >>> 'That is false!'"
+	"(true ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ]) >>> 'That is true!'"
+	"(false ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ])  >>> 'That is false!'"
 
 	self subclassResponsibility
 ]
@@ -188,10 +188,10 @@ Boolean >> or: alternativeBlock [
 	the argument, alternativeBlock; otherwise answer true without 
 	evaluating the argument."
 	
-	"true or: [true] >>> true"
-	"true or: [false] >>> true"
-	"false or: [true] >>> true"
-	"false or: [false] >>> false"
+	"(true or: [Error signal]) >>> true"
+	"(true or: [false]) >>> true"
+	"(false or: [true]) >>> true"
+	"(false or: [3]) >>> 3"
 
 	self subclassResponsibility
 ]
@@ -219,10 +219,10 @@ Boolean >> xor: alternativeBlock [
 	"Nonevaluating conjunction. If the receiver is true, answer the opposite of the 
 	the argument, alternativeBlock; otherwise answer the value of the alternativeBlock."
 	
-	"true xor: [true] >>> false"
-	"true xor: [false] >>> true"
-	"false xor: [true] >>> true"
-	"false xor: [false] >>> false"
+	"(true xor: [true]) >>> false"
+	"(true xor: [false]) >>> true"
+	"(false xor: [true]) >>> true"
+	"(false xor: [false]) >>> false"
 
 	self subclassResponsibility
 ]
