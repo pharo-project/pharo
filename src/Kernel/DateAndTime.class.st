@@ -282,7 +282,7 @@ DateAndTime >> = other [
 { #category : #converting }
 DateAndTime >> asDate [
     "Convert the receiver in a date object."
-    "(DateAndTime fromString: ' 2019-08-17T13:33:00+02:00') asDate >>> (Date newDay: 17 month: 8 year: 2019)"
+    "(DateAndTime fromString: ' 2019-08-17T13:33:00+02:00') asDate printString >>> (Date newDay: 17 month: 8 year: 2019) printString"
     ^ Date starting: self
 ]
 
