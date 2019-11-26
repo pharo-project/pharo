@@ -4,7 +4,7 @@ Aplhabetical sorting
 Class {
 	#name : #AlphabeticSorter,
 	#superclass : #CompletionSorter,
-	#category : #'NECompletion-New'
+	#category : #'NECompletion-Sorting'
 }
 
 { #category : #description }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'typeStack'
 	],
-	#category : #'NECompletion-New'
+	#category : #'NECompletion-Model'
 }
 
 { #category : #visiting }

@@ -4,5 +4,5 @@ Extension { #name : #RBPragmaNode }
 RBPragmaNode >> completionEntries [
 	^Symbol allSymbols 
 		select: [ :each | each beginsWith: self selector] 
-		thenCollect: [ :each | NECEntry contents: each node: self ]
+		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
 ]

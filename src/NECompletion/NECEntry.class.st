@@ -24,13 +24,9 @@ NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
-{ #category : #'ui related' }
+{ #category : #private }
 NECEntry >> browse [
-	| class |
-	class := Smalltalk globals at: contents ifAbsent: [ nil ].
-	class
-		ifNotNil: [ Smalltalk tools browser openOnClass: class].
-	^ true
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -46,15 +42,7 @@ NECEntry >> contents: aString node: aNode [
 
 { #category : #'detail information' }
 NECEntry >> createDescription [
-	| clazz |
-	clazz := Smalltalk globals at: contents ifAbsent: [ nil ].
-	^ clazz 
-		ifNil: [ NECEntryDescription label: self label ]
-		ifNotNil: 
-			[ NECEntryDescription 
-				label: self label
-				title: clazz printString
-				description: clazz comment ]
+	self subclassResponsibility
 ]
 
 { #category : #operations }

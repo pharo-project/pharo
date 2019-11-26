@@ -11,7 +11,7 @@ Class {
 NECSelectorEntry >> browse [
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents].
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents. ^true].
 	
 	^ self
 		findMethodAndDo: [ :method | 

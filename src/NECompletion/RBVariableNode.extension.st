@@ -56,7 +56,7 @@ RBVariableNode >> poolVarEntriesForClass: lookupClass [
 RBVariableNode >> possibleSelectorEntries [
 	^ Symbol allSymbols
 		select: [ :each | (each beginsWith: self name) and: [ each contents numArgs = 0 ] ]
-		thenCollect: [ :each | NECEntry contents: each node: self ]
+		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
 ]
 
 { #category : #'*NECompletion' }

@@ -116,7 +116,7 @@ Metaclass >> classVariables [
 	"Answer the class variables defined in the receiver's instance."
 
 	^ self instanceSide
-		ifNil: [ ^ #() ]
+		ifNil: [ #() ]
 		ifNotNil: [ :class | class classVariables ]
 ]
 
