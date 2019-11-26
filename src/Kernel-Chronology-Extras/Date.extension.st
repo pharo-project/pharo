@@ -2,14 +2,14 @@ Extension { #name : #Date }
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> addDays: dayCount [ 
-	"(Date year: 2018 month: 9 day: 28) addDays: 3 >>> '1 October 2018'"
+	"((Date year: 2018 month: 9 day: 28) addDays: 3) printString >>> '1 October 2018'"
 
 	^ (self asDateAndTime + (dayCount days)) asDate
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> addMonths: monthCount [ 
-	"(Date year: 2018 month: 9 day: 28) addMonths: 3 >>> '28 December 2018'"
+	"((Date year: 2018 month: 9 day: 28) addMonths: 3) printString>>> '28 December 2018'"
 	
 	|year month maxDaysInMonth day |
 	year := self year + (monthCount + self monthIndex - 1 // 12).
@@ -158,7 +158,7 @@ Date >> mmddyyyy [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> month [
-	"(Date year: 2018 month: 9 day: 28) month >>> 'September 2018'"
+	"(Date year: 2018 month: 9 day: 28) month printString >>> 'September 2018'"
 
 	^ self asMonth
 ]
@@ -203,7 +203,7 @@ Date class >> newDay: dayCount year: yearInteger [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> onNextMonth [
-	"(Date year: 2018 month: 9 day: 28) onNextMonth >>> '28 October 2018'"
+	"(Date year: 2018 month: 9 day: 28) onNextMonth printString >>> '28 October 2018'"
 
 	^ self addMonths: 1
 
@@ -211,7 +211,7 @@ Date >> onNextMonth [
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> onPreviousMonth [
-	"(Date year: 2018 month: 9 day: 28) onPreviousMonth >>> '28 August 2018'"
+	"(Date year: 2018 month: 9 day: 28) onPreviousMonth printString >>> '28 August 2018'"
 
 	^ self addMonths: -1
 
@@ -220,7 +220,7 @@ Date >> onPreviousMonth [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> previous: dayName [ 
 	"Answer the previous date whose weekday name is dayName."
-	"(Date year: 2018 month: 9 day: 28) previous: 'Sunday' >>> '23 September 2018'"
+	"((Date year: 2018 month: 9 day: 28) previous: 'Sunday') printString >>> '23 September 2018'"
 
 	| days |
 	days := 7 + self weekdayIndex - (self class dayOfWeek: dayName) \\ 7.
@@ -312,14 +312,14 @@ Date >> storeOn: aStream [
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> subtractDate: aDate [ 
 	"Answer the number of days between self and aDate"
-	"(Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018' >>> 1"
+	"((Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018') >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 Date >> subtractDays: dayCount [ 
-	"(Date year: 2018 month: 9 day: 28) subtractDays: 1 >>> '27 September 2018'"
+	"((Date year: 2018 month: 9 day: 28) subtractDays: 1) printString >>> '27 September 2018'"
 
 	^ (self asDateAndTime - (dayCount days)) asDate
 ]

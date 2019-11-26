@@ -481,8 +481,8 @@ String >> alike: aString [
 
 { #category : #'finding/searching' }
 String >> allRangesOfSubstring: aSubstring [
-	"'Ab cd ef Ab cd' allRangesOfSubstring: 'cd' >>> {(4 to: 5). (13 to: 14)}"
-	"'Ab cd ef Ab cd' allRangesOfSubstring: 'zz' >>> #()"
+	"('Ab cd ef Ab cd' allRangesOfSubstring: 'cd') >>> {(4 to: 5). (13 to: 14)}"
+	"('Ab cd ef Ab cd' allRangesOfSubstring: 'zz') >>> #()"
 	
 	^ Array streamContents: [:s | | start subSize |
 		start := 1.
@@ -831,9 +831,9 @@ String >> caseSensitiveLessOrEqual: aString [
 { #category : #comparing }
 String >> charactersExactlyMatching: aString [
 	"Do a character-by-character comparison between the receiver and aString.  Return the index of the final character that matched exactly."
-	"'s' charactersExactlyMatching: 'abc' >>> 0"
-	"'fear is the little death that the.' charactersExactlyMatching: 'the' >>> 0"
-	"'fear is the little death that the.' charactersExactlyMatching: 'fear is' >>> 7"
+	"('s' charactersExactlyMatching: 'abc') >>> 0"
+	"('fear is the little death that the.' charactersExactlyMatching: 'the') >>> 0"
+	"('fear is the little death that the.' charactersExactlyMatching: 'fear is') >>> 7"
 	
 	| count |
 	count := self size min: aString size.
@@ -851,9 +851,9 @@ String >> compare: aString [
 		3 - after.
 	The collation sequence is ascii with case differences ignored.
 	To get the effect of a <= b, but ignoring case, use (a compare: b) <= 2."
-	"'aa' compare: 'ab' >>> 1"
-	"'aa' compare: 'aa' >>> 2"
-	"'ab' compare: 'aa' >>> 3"
+	"('aa' compare: 'ab') >>> 1"
+	"('aa' compare: 'aa') >>> 2"
+	"('ab' compare: 'aa') >>> 3"
 	
 	^self compare: aString caseSensitive: false
 ]
@@ -910,7 +910,7 @@ String >> contractTo: smallSize [
 { #category : #copying }
 String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
-	"'ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk' >>> 'zk cd zk ef zk'"
+	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
     | idx |        
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
@@ -1056,7 +1056,7 @@ String >> endsWith: suffix [
 	"Answer whether the tail end of the receiver is the same as suffix.
 	The comparison is case-sensitive."
  
-	"'Elvis' endsWith: 'vis' >>> true"
+	"('Elvis' endsWith: 'vis') >>> true"
 	
 	| extra |
 	extra := self size - suffix size.
@@ -1289,7 +1289,7 @@ String >> findSelector [
 	"'x isSymbol: 33' findSelector >>> #isSymbol:"
 	"'between:and:' findSelector >>> #'between:and:'"
 	"'2 between: 0 and: 4' findSelector >>> #'between:and:'"
-	"'2 between: ( 1 and: 4)' findSelector >>> nil"
+	"'2 between: ( 1 and: 4)' findSelector >>> #between:"
 	"'( 1 and: 4)' findSelector >>> nil"
 	
 	| sel possibleParens |
@@ -1556,8 +1556,8 @@ String >> findWordStart: key startingAt: start [
 { #category : #formatting }
 String >> format: collection [
 	"Format the receiver by interpolating elements from collection, as in the following examples:" 
-	"('Today is {1}.' format: {Date today}) >>> 'Today is 30 August 2019.'"
-	"('Today is {date}.' format: (Dictionary with: #date -> Date today)) >>>  'Today is 30 August 2019.'"
+	"('Five is {1}.' format: { 1 + 4}) >>> 'Five is 5.'"
+	"('Five is {five}.' format: (Dictionary with: #five -> 5)) >>>  'Five is 5.'"
 	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
 	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
 
@@ -1658,7 +1658,7 @@ String >> indexOf: aCharacter startingAt: start [
 	"Return the index of the argument in the receiver, only elements after the start of the element are considered zero if not present."
 	
 	"('abcdf abcedf' indexOf: $a startingAt: 4) >>> 7"
-	"('abddf bcdef' indexOf: $a starting ) >>> 0"
+	"('abddf bcdef' indexOf: $a startingAt: 100 ) >>> 0"
 	
 	(aCharacter isCharacter) ifFalse: [^ 0].
 	^ self class indexOfAscii: aCharacter asciiValue inString: self startingAt: start
@@ -2350,7 +2350,7 @@ String >> substrings [
 	"Answer an array of non-empty substrings from the receiver separated by
 	one or more whitespace characters."
 	
-	"'let us make seperate strings' substrings >>> #('let' 'us' 'make' 'separate' 'strings')"
+	"'let us make seperate strings' substrings >>>  #('let' 'us' 'make' 'seperate' 'strings')"
 
 	^ self substrings: CSSeparators
 ]
@@ -2380,8 +2380,8 @@ String >> substrings: separators [
 { #category : #converting }
 String >> surroundedBy: aString [
 	"Answer the receiver with leading and trailing aString."
-	"'hello' surroundedBy: 'abd' >>> 'abdhelloabd'"
-	"'hello' surroundedBy: ' abd ' >>> ' abd hello abd '"
+	"('hello' surroundedBy: 'abd') >>> 'abdhelloabd'"
+	"('hello' surroundedBy: ' abd ') >>> ' abd hello abd '"
 	
 	^ self class streamContents: [ :s|
 		s nextPutAll: aString.
@@ -2681,7 +2681,7 @@ String >> withSqueakLineEndings [
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
-	"('asa' , String cr , 'asa') withUnixLineEndings at: 4 >>> Character lf"
+	"(('asa' , String cr , 'asa') withUnixLineEndings at: 4) >>> Character lf"
 
 	^ self withLineEndings: String lf
 ]
