@@ -124,12 +124,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: 'Tests' ].
-		"
-		here enlumineurFormatter
-		spec baseline: 'BlueInk' with: [ 
+		
+		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Core' ) ]."
+				loads: #( 'Tests' ) ].
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.

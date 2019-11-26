@@ -55,12 +55,9 @@ BaselineOfBasicTools >> baseline: spec [
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
 		
-		"
-		Here soon the enlumineur formatter
-		spec package: 'BlueInk-Core'.
-		spec package: 'BlueInk-Extras'.
+		"Here soon the enlumineur formatter"
+		spec package: 'EnlumineurFormatter'.
 		
-		"
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
 		spec package: 'Tool-SystemReporter'.
