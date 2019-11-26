@@ -34,7 +34,7 @@ BaselineOfPharoGT >> baseline: spec [
 			
 		spec 
 			group: 'Core' with: #('OpalCompiler-Tools' 	'GT-Inspector' 	'GT-InspectorExtensions-Core'
-				'GT-Playground'	'GT-EventRecorder'	'GT-Spotter'	'GT-Spotter-UI'	'GT-SpotterExtensions-Core'
+				'GT-Playground'	'GT-Spotter'	'GT-Spotter-UI'	'GT-SpotterExtensions-Core'
 				'GT-Debugger' 'GT-BytecodeDebugger'	'GT-SUnitDebugger' 'Calypso-SystemPlugins-Spotter');
 			group: 'Tests' with: #('GT-Tests-Debugger' 	'GT-Tests-Inspector' 	'GT-Tests-Playground' 
 				'GT-Tests-Spotter');
