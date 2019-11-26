@@ -451,8 +451,8 @@ Number >> isZero [
 
 { #category : #'*Kernel-Chronology' }
 Number >> milliSecond [
-	"1 milliSecond >>> 0:00:00:00.001"
-	"1 second + 1 milliSecond >>> 0:00:00:01.001"
+	"1 milliSecond printString >>> '0:00:00:00.001'"
+	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
 	
  	^ self milliSeconds
  
@@ -460,9 +460,9 @@ Number >> milliSecond [
 
 { #category : #'*Kernel-Chronology' }
 Number >> milliSeconds [
- 	
-	"2 milliSeconds >>> 0:00:00:00.002"
-	"1 second + 2 milliSeconds >>> 0:00:00:01.002"
+
+	"2 milliSeconds printString >>> '0:00:00:00.002'"
+	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
 	
  	^ Duration milliSeconds: self
  
@@ -470,9 +470,8 @@ Number >> milliSeconds [
 
 { #category : #'*Kernel-Chronology' }
 Number >> minute [
-
-	"1 minute >>> 0:00:01:00"
-	"1 hour + 1 minute >>> 0:01:01:00"
+	"1 minute printString >>> '0:00:01:00'"
+	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
  
  	^ self minutes
  
@@ -480,18 +479,16 @@ Number >> minute [
 
 { #category : #'*Kernel-Chronology' }
 Number >> minutes [
-
-	"2 minutes >>> 0:00:02:00"
-	"1 hour + 2 minutes >>> 0:01:02:00"
+	"2 minutes printString >>> '0:00:02:00'"
+	"(1 hour + 2 minutes) printString >>> '0:01:02:00'"
  
  	^ Duration minutes: self
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> nanoSecond [
-
-	"1 nanoSecond >>> 0:00:00:00.000000001"
-	"1 milliSecond + 1 nanoSecond >>> 0:00:00:00.001000001"
+	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
+	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
  
  	^ self nanoSeconds
  
@@ -499,9 +496,8 @@ Number >> nanoSecond [
 
 { #category : #'*Kernel-Chronology' }
 Number >> nanoSeconds [
-
-	"2 nanoSeconds >>> 0:00:00:00.000000002"
-	"1 milliSecond + 2 nanoSeconds >>> 0:00:00:00.001000002"
+	"2 nanoSeconds printString >>> '0:00:00:00.000000002'"
+	"(1 milliSecond + 2 nanoSeconds) printString >>> '0:00:00:00.001000002'"
  
  	^ Duration nanoSeconds: self.
 ]
@@ -747,9 +743,8 @@ Number >> rounded [
 
 { #category : #'*Kernel-Chronology' }
 Number >> second [
- 	
-	"1 second >>> 0:00:00:01"
-	"1 minute + 1 second >>> 0:00:01:01"
+	"1 second printString >>> '0:00:00:01'"
+	"(1 minute + 1 second) printString >>> '0:00:01:01'"
 	
  	^ self seconds
  
@@ -758,8 +753,8 @@ Number >> second [
 { #category : #'*Kernel-Chronology' }
 Number >> seconds [
 
-	"2 seconds >>> 0:00:00:02"
-	"1 minute + 2 seconds >>> 0:00:01:02"
+	"2 seconds printString >>> '0:00:00:02'"
+	"(1 minute + 2 seconds) printString >>> '0:00:01:02'"
  
  	^ Duration seconds: self
 ]
