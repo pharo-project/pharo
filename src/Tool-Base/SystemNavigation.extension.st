@@ -452,11 +452,7 @@ SystemNavigation >> confirmRemovalOf: aSelector on: aClass [
 	should be removed, 2 if it should be removed followed by a senders  
 	browse, and 3 if it should not be removed."
 	
-	"Smalltalk systemNavigation confirmRemovalOf: #tearDown on: TestCase>>> 3"
-	"Smalltalk systemNavigation confirmRemovalOf: #prepareToRunAgain on: TestCase >>> 3"
-	
 	| count answer caption allCalls |
-	
 	allCalls := self allCallsOn: aSelector.
 	(count := allCalls size) = 0
 		ifTrue: [^ 1].
