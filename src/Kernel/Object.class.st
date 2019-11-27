@@ -248,7 +248,7 @@ Object >> -> anObject [
 	
 	"Note that key and value can be ANY object."
 	
-	^Association basicNew key: self value: anObject
+	^Association key: self value: anObject
 ]
 
 { #category : #comparing }
