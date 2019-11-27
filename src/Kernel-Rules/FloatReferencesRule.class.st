@@ -52,9 +52,9 @@ FloatReferencesRule >> name [
 { #category : #accessing }
 FloatReferencesRule >> rationale [
 
-	^ 'You should not refference ',
+	^ 'You should not reference ',
 		(self systemClassNames joinUsing: Character space),
-		' as they are there for system purpouses and should not be refferenced directly.'
+		' as they are there for system purpose and should not be referenced directly.'
 ]
 
 { #category : #running }
