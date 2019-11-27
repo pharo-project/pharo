@@ -7,6 +7,24 @@ Class {
 	#category : #'NECompletion-Model'
 }
 
+{ #category : #private }
+NECSymbolEntry >> browse [
+	| class |
+	class := node propertyAt: #type ifAbsent: nil.
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents. ^true].
+	
+	^ self
+		findMethodAndDo: [ :method | 
+			Smalltalk tools browser 
+				openOnClass: method methodClass 
+				selector: method selector. 
+			true ]
+		ifAbsent: [ :selector | 
+			SystemNavigation new 
+				browseAllImplementorsOf: selector.
+			true ]
+]
+
 { #category : #'detail information' }
 NECSymbolEntry >> createDescription [
 	"Creates description either from looking up the method in a class,

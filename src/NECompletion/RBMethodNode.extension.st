@@ -4,6 +4,6 @@ Extension { #name : #RBMethodNode }
 RBMethodNode >> completionEntries [
 	^Symbol selectorTable 
 		select: [ :each | each beginsWith: self selector] 
-		thenCollect: [ :each | NECEntry contents: each node: self ]
+		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
 
 ]

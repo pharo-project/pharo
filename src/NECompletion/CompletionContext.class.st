@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'SorterClass'
 	],
-	#category : #'NECompletion-New'
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
