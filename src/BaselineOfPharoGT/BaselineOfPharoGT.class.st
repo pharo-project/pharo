@@ -7,10 +7,6 @@ Class {
 { #category : #baselines }
 BaselineOfPharoGT >> baseline: spec [
 	<baseline>
-	
-	| repository | 
-	
-	repository := self packageRepositoryURL.	
 
 	spec for: #'common' do: [
 		spec postLoadDoIt: #'postload:package:'.
