@@ -13,6 +13,7 @@ BaselineOfGeneralTests >> baseline: spec [
 		spec 
 			package: 'Debugging-Utils-Tests';
 			package: 'Tests';
+			package: 'AST-Core-Tests';			
 			package: 'RPackage-Tests';
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
 			package: 'System-Installers-Tests' ;

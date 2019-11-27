@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #('Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
 	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'Deprecated80')
 ]
 
@@ -151,7 +151,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #('Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
 	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' 'Deprecated80')
 ]
 
