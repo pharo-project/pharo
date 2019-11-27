@@ -97,7 +97,7 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
 	the formatter should not add a # character but just use the source form."
-	inputSource := '#(#withnumbersign nonumbersign ''string'')'.
+	inputSource := '#( #withnumbersign nonumbersign ''string'' )'.
    literalArrayNode := self parseExpression: inputSource.
 	self assert: literalArrayNode source equals: literalArrayNode formattedCode
 
@@ -109,7 +109,7 @@ RBFormatterTest >> testPreserveLiteralNumberFormat [
 	"Literal numbers can be written in different ways, integer, integer with
 	radix float, fractional constants. The formatter should not change the
 	formatting."
-	inputSource := '#(1 4r33 16r0F 0.02 2e-2 -1)'.
+	inputSource := '#( 1 4r33 16r0F 0.02 2e-2 -1 )'.
    numbersNode := self parseExpression: inputSource.
 	self assert: numbersNode source equals: numbersNode formattedCode
 

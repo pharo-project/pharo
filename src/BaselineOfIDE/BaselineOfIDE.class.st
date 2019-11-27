@@ -65,7 +65,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: BIConfigurableFormatter.
+	RBProgramNode formatterClass: EFFormatter.
 
 	Color flushCache.
 	
