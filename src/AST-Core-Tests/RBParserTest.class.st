@@ -25,7 +25,7 @@ RBParserTest >> exampleClasses [
 		with: self parserClass
 		with: RBScanner
 		with: RBProgramNode
-		with: BIConfigurableFormatter
+		with: RBComment
 ]
 
 { #category : #private }
