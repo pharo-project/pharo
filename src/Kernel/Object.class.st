@@ -768,6 +768,12 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		
 ]
 
+{ #category : #deprecation }
+Object >> deprecationUserExample [
+
+	^(Array with: DeprecatedClassExample) first binding asString
+]
+
 { #category : #displaying }
 Object >> displayString [
 	"While printString is about to give a detailled information about an object, displayString is a message that should return a short string-based representation to be used by list and related UI frameworks. By default, simply return printString.
@@ -1672,6 +1678,12 @@ Object >> putOn: aStream [
 	Return self."
 	
 	aStream nextPut: self
+]
+
+{ #category : #deprecation }
+Object >> readDeprecatedValue [
+	self deprecated: 'This object is deprecated'.
+	^self
 ]
 
 { #category : #reading }
