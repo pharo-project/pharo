@@ -807,7 +807,7 @@ FTExamples class >> exampleTableHorizontalScroll [
 
 	<example>
 	| table |
-	table := FTTableMorph newTrialHorizontalScrollBar
+	table := FTTableMorph newWithHorizontalScrollBar
 		extent: 650 @ 500;
 		addColumn: ((FTColumn id: '#') width: 40);
 		addColumn: ((FTColumn id: 'Name') width: 350);
