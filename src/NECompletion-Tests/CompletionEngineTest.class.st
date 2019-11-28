@@ -2,7 +2,7 @@
 A NECControllerTest is a test class for testing the behavior of NECController
 "
 Class {
-	#name : #CompletionControllerTest,
+	#name : #CompletionEngineTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'controller',
@@ -12,17 +12,17 @@ Class {
 }
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> allSelfClosingCharacters [
+CompletionEngineTest >> allSelfClosingCharacters [
 	^ {'{}' . '[]' . '()' . '<>' . '||' . '""' . ''''''}
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> allSmartCharacters [
+CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> keyboardEventFor: char [
+CompletionEngineTest >> keyboardEventFor: char [
 
 	| event |
 	event := KeyboardEvent new.
@@ -39,28 +39,28 @@ CompletionControllerTest >> keyboardEventFor: char [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> selectAll [
+CompletionEngineTest >> selectAll [
 	editor selectAll 
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> selectAt: anIndex [
+CompletionEngineTest >> selectAt: anIndex [
 	editor selectFrom: anIndex to: anIndex - 1
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> selectFrom: start to: stop [
+CompletionEngineTest >> selectFrom: start to: stop [
 	editor selectFrom: start to: stop
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> setEditorText: aString [
+CompletionEngineTest >> setEditorText: aString [
 	editor selectAll; addString:  aString 
 	
 ]
 
 { #category : #running }
-CompletionControllerTest >> setUp [
+CompletionEngineTest >> setUp [
 	super setUp.
 	
 	editor := RubTextEditor forTextArea: RubTextFieldArea new.
@@ -69,14 +69,14 @@ CompletionControllerTest >> setUp [
 ]
 
 { #category : #running }
-CompletionControllerTest >> tearDown [
+CompletionEngineTest >> tearDown [
 	controller := nil.
 	editor := nil.
 	super tearDown
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartBackspace [
+CompletionEngineTest >> testSmartBackspace [
 	"Pressing backspace inside paired smart characters should remove both of them"
 	self allSmartCharacters
 		do: [ :chars | 
@@ -90,7 +90,7 @@ CompletionControllerTest >> testSmartBackspace [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartBackspaceOutsideSmartCharacters [
+CompletionEngineTest >> testSmartBackspaceOutsideSmartCharacters [
 
 	self setEditorText: '.[];'; selectAll.
 	self selectAt: 2.
@@ -106,7 +106,7 @@ CompletionControllerTest >> testSmartBackspaceOutsideSmartCharacters [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartBackspaceWithSelection [
+CompletionEngineTest >> testSmartBackspaceWithSelection [
 
 	self setEditorText: 'Hello'; selectAll.
 	self assert: controller smartBackspace not description: 'No smartbackspace if selection'.
@@ -119,7 +119,7 @@ CompletionControllerTest >> testSmartBackspaceWithSelection [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartCharacterPairForIfAbsent [
+CompletionEngineTest >> testSmartCharacterPairForIfAbsent [
 
 	"Check leading smart character has matching trailing character - e.g. { and }"
 	self allSmartCharacters do: [ :pairs |
@@ -134,7 +134,7 @@ CompletionControllerTest >> testSmartCharacterPairForIfAbsent [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartCharacterWithEventAndSelection [
+CompletionEngineTest >> testSmartCharacterWithEventAndSelection [
 	"Test we surround selected text with smart characters properly"
 	self
 		setEditorText: ' text ';
@@ -158,7 +158,7 @@ CompletionControllerTest >> testSmartCharacterWithEventAndSelection [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartCharacterWithEventSelfClosing [
+CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
 	self
 		setEditorText: ' ';
 		selectAt: 2.
@@ -183,7 +183,7 @@ CompletionControllerTest >> testSmartCharacterWithEventSelfClosing [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartCharactersOppositeOf [
+CompletionEngineTest >> testSmartCharactersOppositeOf [
 	
 	self allSmartCharacters
 		do: [ :pairs | 
@@ -193,7 +193,7 @@ CompletionControllerTest >> testSmartCharactersOppositeOf [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartCharactersShouldClose [
+CompletionEngineTest >> testSmartCharactersShouldClose [
 	"Some smart characters shouldn't auto close, ohers not"
 	self assert: (controller smartCharacterShouldClose: $() equals: true.
 	self assert: (controller smartCharacterShouldClose: $<) equals: false.
@@ -201,7 +201,7 @@ CompletionControllerTest >> testSmartCharactersShouldClose [
 ]
 
 { #category : #'tests-keyboard' }
-CompletionControllerTest >> testSmartNeedExtraRemoveInForOppositeAt [
+CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAt [
 
 	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).
 	self deny: (controller smartNeedExtraRemoveIn: '(()' for: $( opposite:$) at:2).
