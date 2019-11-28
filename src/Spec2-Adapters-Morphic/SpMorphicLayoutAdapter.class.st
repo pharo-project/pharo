@@ -95,6 +95,22 @@ SpMorphicLayoutAdapter >> layout: aLayout [
 	self applyVisibility
 ]
 
+{ #category : #factory }
+SpMorphicLayoutAdapter >> newPanel [
+
+	^ Morph new 
+		changeTableLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		color: Color transparent;
+		borderColor: Color transparent;
+		clipSubmorphs: true;
+		beSticky "stop being grabbed";
+		borderWidth: 0;
+		extent: 0@0;
+		yourself
+]
+
 { #category : #protocol }
 SpMorphicLayoutAdapter >> takeKeyboardFocus [
 

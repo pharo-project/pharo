@@ -42,8 +42,20 @@ SpMorphicTextAdapter >> buildWidget [
 	
 	self setEditingModeFor: newWidget.
 	
-	self presenter whenTextChangedDo: [ :text | newWidget setText: text ].
-	self presenter whenPlaceholderChangedDo: [ :text | newWidget ghostText: text ].
+	self presenter whenTextChangedDo: [ :text | self setText: text to: newWidget ].
+	self presenter whenPlaceholderChangedDo: [ :text | self setGhostText: text to: newWidget ].
 	
 	^ newWidget
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> setGhostText: text to: aWidget [
+
+	aWidget ghostText: text
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> setText: text to: aWidget [
+
+	aWidget setText: text
 ]

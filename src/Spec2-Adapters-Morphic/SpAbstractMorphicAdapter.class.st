@@ -403,9 +403,7 @@ SpAbstractMorphicAdapter >> styleName [
 { #category : #styling }
 SpAbstractMorphicAdapter >> styleSheet [
 
-	self flag: #TODO. "This needs to be in the application!"
-	^ SpStyle defaultStyleSheet
-	"^ self application styleSheet"
+	^ self application styleSheet
 ]
 
 { #category : #protocol }
