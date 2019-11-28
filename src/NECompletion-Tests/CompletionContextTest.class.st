@@ -19,29 +19,6 @@ CompletionContextTest >> createContextFor: aString at: anInteger [
 ]
 
 { #category : #tests }
-CompletionContextTest >> testCreateModel [
-	| text context |
-	text := 'testIt: aRectangle
-	aRectangle printS'.
-	context := self createContextFor: text at: text size.
-	self assert: context title equals: ''.
-	
-	text := 'testIt: aRectangle
-	1 ad'.
-	context := self createContextFor: text at: text size.
-	self assert: context title equals: 'SmallInteger'.
-
-	text := 'testIt'.
-	context := self createContextFor: text at: text size.
-	self assert: ((context entries collect: #contents) includes: 'testItems').
-
-	text := 'testIt: rect
-	rect is'.
-	context := self createContextFor: text at: text size.
-	self assert: context title equals: ''
-]
-
-{ #category : #tests }
 CompletionContextTest >> testExpressionInIncompleteParanthesis [
 	| text context |
 	text := 'testIt
@@ -49,7 +26,7 @@ CompletionContextTest >> testExpressionInIncompleteParanthesis [
 	context := self 
 		createContextFor: text
 		at: text size.
-	self assert: ((context entries collect: #contents) isEmpty).
+	self assert: ((context entries collect: #contents) includes: #sin).
 ]
 
 { #category : #tests }
@@ -61,6 +38,7 @@ CompletionContextTest >> testReceiverArgument [
 		createContextFor: text
 		at: text size.
 	self assert: ((context entries collect: #contents) includes: #printString).
+	self assert: context title equals: ''.
 	
 	text := 'testIt: rect
 	rect is'.
@@ -68,28 +46,6 @@ CompletionContextTest >> testReceiverArgument [
 		createContextFor: text
 		at: text size.
 	self assert: context title equals: ''
-]
-
-{ #category : #tests }
-CompletionContextTest >> testReceiverCascade [
-	| text context |
-	text := 'testIt
-	| b |
-	b := Stream new.
-	b nextPutA'.
-	context := self createContextFor: text at: text size.
-	self assert: context title equals: ''.
-	
-	text := 'testIt
-	| b |
-	b := Stream new nextPut'.
-	context := self createContextFor: text at: text size.
-	self assert: context title equals: ''.
-	
-	text := 'testIt: aStream
-	aStream nextPut'.
-	context := self createContextFor: text at: text size.
-	self assert: context title equals: ''.
 ]
 
 { #category : #tests }
@@ -179,7 +135,30 @@ CompletionContextTest >> testReceiverGlobalVarNew [
 ]
 
 { #category : #tests }
-CompletionContextTest >> testUntypedSelectorsOnly [
+CompletionContextTest >> testReceiverTemp [
+	| text context |
+	text := 'testIt
+	| b |
+	b := Stream new.
+	b nextPutA'.
+	context := self createContextFor: text at: text size.
+	self assert: context title equals: ''.
+	
+	text := 'testIt
+	| b |
+	b := Stream.
+	b nextPutA'.
+	context := self createContextFor: text at: text size.
+	self assert: context title equals: 'Stream class'.
+	
+	text := 'testIt: aStream
+	aStream nextPut'.
+	context := self createContextFor: text at: text size.
+	self assert: context title equals: ''.
+]
+
+{ #category : #tests }
+CompletionContextTest >> testTempVariable [
 	| text context |
 	text := 'testIt: aRectangle
 	| abs bcs bds |

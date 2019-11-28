@@ -15,7 +15,7 @@ RBVariableNode >> classVarEntriesForClass: lookupClass [
 ]
 
 { #category : #'*NECompletion' }
-RBVariableNode >> completionEntries [
+RBVariableNode >> completionEntries: offset [
 	| methodNode lookupClass |
 	methodNode := self methodNode.
 	lookupClass := methodNode compilationContext getClass.
@@ -28,14 +28,22 @@ RBVariableNode >> completionEntries [
 			nextPutAll: (self slotEntriesForClass: lookupClass);
 			nextPutAll: (self tempEntriesForMethodNode: methodNode);
 			nextPutAll: (self argEntriesForMethodNode: methodNode);
+			nextPutAll: (self entriesSpecialVariables);
 			nextPutAll: (self classVarEntriesForClass: lookupClass);
 			nextPutAll: (self poolVarEntriesForClass: lookupClass) ]
 ]
 
 { #category : #'*NECompletion' }
-RBVariableNode >> completionToken [
+RBVariableNode >> completionToken: offset [
 
 	^ self name
+]
+
+{ #category : #'*NECompletion' }
+RBVariableNode >> entriesSpecialVariables [
+	^ #('self' 'super' 'thisContext' )
+			select: [ :each | each beginsWith: self name ]
+			thenCollect: [ :each | NECSpecialVariableEntry contents: each node: self ]
 ]
 
 { #category : #'*NECompletion' }

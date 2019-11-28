@@ -1,7 +1,7 @@
 Extension { #name : #RBLiteralValueNode }
 
 { #category : #'*NECompletion' }
-RBLiteralValueNode >> completionEntries [
+RBLiteralValueNode >> completionEntries: offset [
 	value isSymbol ifFalse: [ ^ #() ].
 	"return all symbols that start with value"
 	^Symbol allSymbols 
@@ -10,6 +10,6 @@ RBLiteralValueNode >> completionEntries [
 ]
 
 { #category : #'*NECompletion' }
-RBLiteralValueNode >> completionToken [
+RBLiteralValueNode >> completionToken: offset [
 	^ self value asString
 ]
