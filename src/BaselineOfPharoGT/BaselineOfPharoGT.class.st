@@ -16,7 +16,6 @@ BaselineOfPharoGT >> baseline: spec [
 			package: 'GT-Inspector';
 			package: 'GT-InspectorExtensions-Core';
 			package: 'GT-Playground';
-			package: 'GT-EventRecorder';
 			package: 'GT-Spotter';
 			package: 'GT-Spotter-UI';
 			package: 'GT-SpotterExtensions-Core';
@@ -30,11 +29,8 @@ BaselineOfPharoGT >> baseline: spec [
 			package: 'Calypso-SystemPlugins-Spotter'.
 			
 		spec 
-			group: 'Core' with: #('OpalCompiler-Tools' 	'GT-Inspector' 	'GT-InspectorExtensions-Core'
-				'GT-Playground'	'GT-EventRecorder'	'GT-Spotter'	'GT-Spotter-UI'	'GT-SpotterExtensions-Core'
-				'GT-Debugger' 'GT-BytecodeDebugger'	'GT-SUnitDebugger' 'Calypso-SystemPlugins-Spotter');
-			group: 'Tests' with: #('GT-Tests-Debugger' 	'GT-Tests-Inspector' 	'GT-Tests-Playground' 
-				'GT-Tests-Spotter');
+			group: 'Core' with: #('OpalCompiler-Tools' 'GT-Inspector' 'GT-InspectorExtensions-Core' 'GT-Playground' 'GT-Spotter' 'GT-Spotter-UI' 'GT-SpotterExtensions-Core' 'GT-Debugger' 'GT-BytecodeDebugger' 'GT-SUnitDebugger' 'Calypso-SystemPlugins-Spotter');
+			group: 'Tests' with: #('GT-Tests-Debugger' 'GT-Tests-Inspector' 'GT-Tests-Playground' 'GT-Tests-Spotter');
 			group: 'default' with: #('Core' 'Tests') ]
 ]
 

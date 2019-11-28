@@ -18,8 +18,11 @@ BaselineOfPharo >> baseline: spec [
 		spec baseline: 'Calypso' with: [ 
 			spec repository: repository; loads: #('IcebergSupport'). ].
 
+		"Here is the list of deprecated packages not used in the image now."
 		spec package: 'Deprecated80'.
 		spec package: 'Gofer-UI'.
+		spec package: 'GT-EventRecorder'.
+		spec baseline: 'BlueInk' with: [ spec repository: repository ].
 	]
 ]
 
