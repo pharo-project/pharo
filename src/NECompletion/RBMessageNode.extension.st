@@ -1,7 +1,7 @@
 Extension { #name : #RBMessageNode }
 
 { #category : #'*NECompletion' }
-RBMessageNode >> completionEntries [
+RBMessageNode >> completionEntries: offset [
 	| selectors |
 	selectors := (receiver hasProperty: #type)
 		ifTrue: [ (receiver propertyAt: #type) allSelectors ] 	
@@ -13,7 +13,7 @@ RBMessageNode >> completionEntries [
 ]
 
 { #category : #'*NECompletion' }
-RBMessageNode >> completionToken [
+RBMessageNode >> completionToken: offset [
 
 	^ self selector
 ]

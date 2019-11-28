@@ -81,7 +81,7 @@ CompletionContext >> engine: aCompletionEngine class: aClass source: aString pos
 		ifNil: [ false ].
 	self parseSource.
 	node := ast nodeForOffset: position.
-	completionToken := node completionToken
+	completionToken := node completionToken: position
 ]
 
 { #category : #accessing }
@@ -108,7 +108,7 @@ CompletionContext >> hasMessage [
 CompletionContext >> initEntries [
 	| suggestionsList sorter |
 	sorter := self class sorterClass new context: self.
-	suggestionsList := sorter sortCompletionList: node completionEntries.
+	suggestionsList := sorter sortCompletionList: (node completionEntries: position).
 	^ suggestionsList
 ]
 
