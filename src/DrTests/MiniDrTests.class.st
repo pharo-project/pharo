@@ -37,7 +37,7 @@ MiniDrTests >> initializeButtons [
 	startButton
 		label: 'run';
 		icon: (self iconNamed: #smallUpdate);
-		color: (Color named: 'gray').
+		color: (Color gray).
 	switchButton
 		label: 'maxi Dr'
 ]
