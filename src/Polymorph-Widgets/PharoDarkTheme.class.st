@@ -488,6 +488,21 @@ PharoDarkTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 	^ SolidFillStyle color: (Color white alpha: 0.35)
 ]
 
+{ #category : #'fill-styles-buttons' }
+PharoDarkTheme >> testColorError [
+	^ Color red darker darker darker
+]
+
+{ #category : #configure }
+PharoDarkTheme >> testColorFailure [
+	^ Color yellow muchDarker lighter lighter
+]
+
+{ #category : #configure }
+PharoDarkTheme >> testColorPassing [
+	^ Color green muchDarker lighter
+]
+
 { #category : #'accessing colors' }
 PharoDarkTheme >> textColor [
 	^ Color white

@@ -19,17 +19,17 @@ Class {
 
 { #category : #'as yet unclassified' }
 TestResult class >> defaultColorBackGroundForErrorTest [
-	^ Smalltalk ui theme dangerBackgroundColor
+	^ Smalltalk ui theme testColorError
 ]
 
 { #category : #'as yet unclassified' }
 TestResult class >> defaultColorBackGroundForFailureTest [
-	^ Smalltalk ui theme warningBackgroundColor
+	^ Smalltalk ui theme testColorFailure
 ]
 
 { #category : #'as yet unclassified' }
 TestResult class >> defaultColorBackGroundForPassingTest [
-	^ Smalltalk ui theme successBackgroundColor
+	^ Smalltalk ui theme testColorPassing
 ]
 
 { #category : #'as yet unclassified' }
