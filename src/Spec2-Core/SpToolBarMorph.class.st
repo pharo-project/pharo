@@ -55,7 +55,8 @@ SpToolBarMorph >> addItem: aToolbarItem [
 SpToolBarMorph >> addItem: aToolbarItem position: aPosition [
 
 	aPosition addItem: aToolbarItem into: self.
-	self refresh.
+	self width: self width + aToolbarItem width.
+	self refresh
 ]
 
 { #category : #accessing }
@@ -122,7 +123,8 @@ SpToolBarMorph >> initialize [
 		listDirection: #leftToRight;
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
-		color: self color.
+		color: self color;
+		extent: 0@0.
 	
 	self initializePanels
 ]
@@ -160,6 +162,7 @@ SpToolBarMorph >> newPanelMorph [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		cellInset: self class defaultItemSeparation@0;
+		extent: 0@0;
 		color: self color;
 		yourself
 ]
