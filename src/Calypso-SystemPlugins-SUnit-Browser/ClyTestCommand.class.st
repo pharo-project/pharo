@@ -31,15 +31,14 @@ ClyTestCommand >> defaultMenuIcon [
 { #category : #execution }
 ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 
-	| color theme |	
+	| color |	
 	color := Color gray.
-	theme := Smalltalk ui theme.
 	testResult hasPassed
-		ifTrue: [ color := theme successBackgroundColor ].
+		ifTrue: [ color := TestResult defaultColorBackGroundForPassingTest ].
 	testResult hasFailures
-		ifTrue: [ color := theme warningBackgroundColor ].
+		ifTrue: [ color := TestResult defaultColorBackGroundForFailureTest ].
 	testResult hasErrors
-		ifTrue: [ color := theme dangerBackgroundColor].
+		ifTrue: [ color := TestResult defaultColorBackGroundForErrorTest ].
 		
 	GrowlMorph 
 		openWithLabel: message

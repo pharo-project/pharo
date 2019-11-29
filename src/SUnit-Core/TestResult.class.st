@@ -17,6 +17,41 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorBackGroundForErrorTest [
+	^ Smalltalk ui theme dangerBackgroundColor
+]
+
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorBackGroundForFailureTest [
+	^ Smalltalk ui theme warningBackgroundColor
+]
+
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorBackGroundForPassingTest [
+	^ Smalltalk ui theme successBackgroundColor
+]
+
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorText [
+	^ Color black
+]
+
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorTextForErrorTest [
+	^ self defaultColorText
+]
+
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorTextForFailureTest [
+	^ self defaultColorText
+]
+
+{ #category : #'as yet unclassified' }
+TestResult class >> defaultColorTextForPassingTest [
+	^ self defaultColorText
+]
+
 { #category : #exceptions }
 TestResult class >> error [
 	^self exError
