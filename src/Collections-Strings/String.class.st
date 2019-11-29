@@ -895,7 +895,8 @@ String >> compare: string1 with: string2 collated: order [
 	"('a000' asWideString sameAs: (ByteArray with: 97 with: 0 with: 0 with: 0) asString) >>> false"
 	
 	(string1 isByteString and: [string2 isByteString]) ifTrue: [
-		^ string1 compareWith: string2 collated: order].
+		^ (string1 compareWith: string2 collated: order) sign + 2
+	].
      "Primitive does not fail properly right now"
 	^ String compare: string1 with: string2 collated: order
 ]
