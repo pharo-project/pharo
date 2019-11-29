@@ -447,7 +447,7 @@ DrTests >> updatePackagesListLabel [
 DrTests >> updateResultLabel [
 	resultLabel
 		label: 'Results: ■';
-		color: pluginResult color
+		color: pluginResult backgroundColor
 ]
 
 { #category : #api }

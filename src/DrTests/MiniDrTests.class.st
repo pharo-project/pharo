@@ -27,8 +27,8 @@ MiniDrTests >> currentPlugin: anObject [
 ]
 
 { #category : #accessing }
-MiniDrTests >> evaluateColor [
-	^ pluginResult color
+MiniDrTests >> evaluateBackgroundColor [
+	^ pluginResult backgroundColor
 ]
 
 { #category : #initialization }
@@ -82,8 +82,11 @@ MiniDrTests >> title [
 { #category : #accessing }
 MiniDrTests >> updateUI [
 	self withWindowDo: [ :window | window title: self title ].
-	startButton color: self evaluateColor.
-	startButton label: pluginResult summarizeInfo
+	startButton color: self evaluateBackgroundColor.
+	startButton label: pluginResult summarizeInfo.
+	"The next line doesn't work because Spec2 does not handle button label's styles.
+	Should be changed at some point"
+	startButton label makeAllColor: pluginResult textColor.
 ]
 
 { #category : #initialization }

@@ -8,6 +8,10 @@ Class {
 }
 
 { #category : #accessing }
+DTMockPluginResult >> backgroundColor [
+]
+
+{ #category : #accessing }
 DTMockPluginResult >> buildTreeForUI [
 <pragmaForTest: 'for tests'>
 	^ DTTreeNode new

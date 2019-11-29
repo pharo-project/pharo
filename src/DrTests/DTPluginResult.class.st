@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-DTPluginResult >> buildTreeForUI [
-	^ self subclassResponsibility
+DTPluginResult >> backgroundColor [
+	^ Color named: 'gray'
 ]
 
 { #category : #accessing }
-DTPluginResult >> color [
-	^ Color named: 'gray'
+DTPluginResult >> buildTreeForUI [
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -22,6 +22,11 @@ DTPluginResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
 	^ self asString
+]
+
+{ #category : #accessing }
+DTPluginResult >> textColor [
+	^ TestResult defaultColorText
 ]
 
 { #category : #accessing }
