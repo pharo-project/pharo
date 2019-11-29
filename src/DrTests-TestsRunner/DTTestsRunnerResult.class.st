@@ -107,9 +107,9 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 
 { #category : #accessing }
 DTTestsRunnerResult >> color [
-	testsResult errors ifNotEmpty: [ ^ self theme dangerBackgroundColor ].
-	testsResult failures ifNotEmpty: [ ^ self theme warningBackgroundColor ].
-	^ self theme successBackgroundColor
+	testsResult errors ifNotEmpty: [ ^ DTError backgroundColor ].
+	testsResult failures ifNotEmpty: [ ^ DTFail backgroundColor  ].
+	^ DTPass backgroundColor
 ]
 
 { #category : #accessing }

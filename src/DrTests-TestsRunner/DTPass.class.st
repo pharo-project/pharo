@@ -7,6 +7,11 @@ Class {
 	#category : #'DrTests-TestsRunner'
 }
 
+{ #category : #factory }
+DTPass class >> backgroundColor [
+	^ TestResult defaultColorBackGroundForPassingTest
+]
+
 { #category : #testing }
 DTPass >> isPass [
 	<generated>
