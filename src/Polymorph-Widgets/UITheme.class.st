@@ -1749,12 +1749,12 @@ UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noTex
 
 { #category : #'accessing colors' }
 UITheme >> dangerBackgroundColor [
-	^ self dangerTextColor
+	^ self dangerTextColor darker darker
 ]
 
 { #category : #'accessing colors' }
 UITheme >> dangerTextColor [
-	^ Color red lighter lighter lighter lighter lighter lighter lighter
+	^ Color red darker darker
 ]
 
 { #category : #'accessing colors' }
@@ -5489,12 +5489,12 @@ UITheme >> subgroupColorFrom: paneColor [
 
 { #category : #'accessing colors' }
 UITheme >> successBackgroundColor [
-	^ self successTextColor 
+	^ self successTextColor lighter lighter
 ]
 
 { #category : #'accessing colors' }
 UITheme >> successTextColor [
-	^ Color green
+	^ Color r: 0 g: 0.5 b: 0
 ]
 
 { #category : #'border-styles' }
@@ -6030,12 +6030,12 @@ UITheme >> veryLightSelectionColorFor: aMorph [
 
 { #category : #'accessing colors' }
 UITheme >> warningBackgroundColor [
-	^ self warningTextColor 
+	^ Color yellow
 ]
 
 { #category : #'accessing colors' }
 UITheme >> warningTextColor [
-	^ Color yellow darker
+	^ Color yellow muchDarker
 ]
 
 { #category : #'*Polymorph-Widgets-Themes' }
