@@ -222,7 +222,7 @@ try{
 
     //Testing step
     def testers = [:]
-    def architectures = ['32']//, '64']
+    def architectures = ['32', '64']
     def platforms = ['unix', 'osx', 'windows']
     for (arch in architectures) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'
