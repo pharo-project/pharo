@@ -58,7 +58,7 @@ Latin1 class >> isBreakableAt: index in: text [
 
 { #category : #'character classification' }
 Latin1 class >> isCasedLetter: char [
-^ Unicode isCasedLetter: char
+	^ Unicode isCasedLetter: char
 ]
 
 { #category : #'character classification' }
@@ -93,17 +93,17 @@ Latin1 class >> isDecimalDigit: char [
 
 { #category : #'character classification' }
 Latin1 class >> isEnclosingMark: char [
-^ Unicode isEnclosingMark: char
+	^ Unicode isEnclosingMark: char
 ]
 
 { #category : #'character classification' }
 Latin1 class >> isFinalQuote: char [
-^ Unicode isFinalQuote: char
+	^ Unicode isFinalQuote: char
 ]
 
 { #category : #'character classification' }
 Latin1 class >> isFormatOther: char [
-^ Unicode isFormatOther: char
+	^ Unicode isFormatOther: char
 ]
 
 { #category : #'character classification' }
@@ -122,17 +122,17 @@ Latin1 class >> isLetter: char [
 
 { #category : #'character classification' }
 Latin1 class >> isLetterModifier: char [
-^ Unicode isLetterModifier: char
+	^ Unicode isLetterModifier: char
 ]
 
 { #category : #'character classification' }
 Latin1 class >> isLetterNumber: char [
-^ Unicode isLetterNumber: char
+	^ Unicode isLetterNumber: char
 ]
 
 { #category : #'character classification' }
 Latin1 class >> isLineSeparator: char [
-^ Unicode isLineSeparator: char
+	^ Unicode isLineSeparator: char
 ]
 
 { #category : #'character classification' }
