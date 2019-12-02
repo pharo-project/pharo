@@ -409,6 +409,7 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 
 	| preamble stamp tokens stampPosition |
 	stamp := ''.
+	flushChanges ifFalse: [ ^ stamp ].
 	preamble := self sourcedDataAt: sourcePointer.
 	(preamble includesSubstring: sourceDataPointers key)
 		ifTrue: [ 
@@ -433,9 +434,10 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	file setToEnd.
 	file nextPutAll: preamble.
 	position := file position.
-	(ChunkWriteStream on: file) nextChunkPut: aString.
+	(SourceChunkWriteStream on: file) nextChunkPut: aString.
+
+	successBlock cull: (self sourcePointerFromFileIndex: 2 andPosition: position) cull: file.
 
 	self flushChangesFile.
 
-	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)
 ]
