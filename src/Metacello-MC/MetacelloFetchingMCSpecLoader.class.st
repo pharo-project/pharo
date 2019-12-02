@@ -204,7 +204,7 @@ MetacelloFetchingMCSpecLoader >> resolveDependencies: aResolvedReference nearest
     name: dependency versionInfo name
     repository: aResolvedReference repository.
   coll add: reference.
-  SystemNotification signal: ('Fetched dependency -> ' , reference name , ' --- '
+  MetacelloNotification signal: ('Fetched dependency -> ' , reference name , ' --- '
             , reference repository repositoryDescription).
   self resolveDependencies: reference nearest: reference into: coll ].
   retryCount := 0.

@@ -252,16 +252,16 @@ MetacelloPackagesSpec >> sortPackageSpecs: orderedSpecs packageSpec: packageSpec
               groupLoopDetected := true.
               groupLoops add: packageSpec.
               MetacelloNotification signal: ('Package: ' , packageSpec name printString).
-              MetacelloNotification signal: (String tab, 'Raw Requires:').
+              MetacelloNotification signal: ('Raw Requires:') level: 2.
               packageSpec requires
                 do: [ :each | 
-                  MetacelloNotification signal: (String tab, String tab, each asString) ].
+                  MetacelloNotification signal: (each asString) level: 3].
               MetacelloNotification signal: (
                     'Package: ' , packageSpec name printString , ' has a group loop:').
-				  MetacelloNotification signal: (String tab, 'Expanded Requires:').
+				  MetacelloNotification signal: ('Expanded Requires:') level: 2.
               targetSpecNames
                 do: [ :each | 
-                  MetacelloNotification signal: (String tab, String tab, each asString) ] ].
+                  MetacelloNotification signal: (each asString) level: 3] ].
           movePackage := movePackage or: [ packageIndex <= targetIndex ].
           false
             ifTrue: [ 
