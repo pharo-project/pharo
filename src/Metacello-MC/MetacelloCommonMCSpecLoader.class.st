@@ -203,20 +203,13 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
         do: [ :packageLoadDirective | 
           packageLoadDirective resolvedReference == nil
             ifTrue: [ 
-              Transcript
-                cr;
-                tab;
-                show: 'Already Loaded -> ' , packageLoadDirective file ]
+					SystemNotification signal: (String tab, 'Already Loaded -> ' , packageLoadDirective file) ]
             ifFalse: [ 
-              Transcript
-                cr;
-                tab;
-                show:
-                    'Loaded -> ' , packageLoadDirective file , ' --- '
+            		SystemNotification signal: (String tab, 'Loaded -> ' , packageLoadDirective file , ' --- '
                         , packageLoadDirective repository repositoryDescription
                         , ' --- '
                         ,
-                          packageLoadDirective resolvedReference repository description.
+                          packageLoadDirective resolvedReference repository description).
               packageLoadDirective resolvedReference workingCopy repositoryGroup
                 addRepository: packageLoadDirective repository ] ].
       MetacelloPlatform current clearCurrentVersionCache	"pkgLoads do: [:packageLoadDirective | 

@@ -105,13 +105,13 @@ MetacelloMCVersion >> doFetchRequiredFromArray: anArray [
 
 	| oldPolicy oldBypassProgress displayString |
 	displayString := self versionNumber printString, ' of ', self spec projectLabel.
-	Transcript cr; show: 'Fetching ', displayString, '...'.
+	MetacelloNotification signal: ('Fetching ', displayString, '...').
 	oldPolicy := loaderPolicy. 
 	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
 	self loaderPolicy silently ifTrue: [ MetacelloPlatform current bypassProgressBars: true ].
 	[ 	| ans |
 		ans := self fetchRequiredFromArray: anArray.
-		Transcript cr; show: '...finished ', self versionNumber printString.
+		MetacelloNotification signal: ('...finished ', self versionNumber printString).
 		^ans ]
 			ensure: [ 
 				MetacelloPlatform current bypassProgressBars: oldBypassProgress.
@@ -123,7 +123,7 @@ MetacelloMCVersion >> doLoadRequiredFromArray: anArray [
 
 	| displayString oldPolicy oldBypassProgress |
 	displayString := self versionNumber printString, ' of ', self spec projectLabel.
-	Transcript cr; show: 'Loading ', displayString, '...'.
+	MetacelloNotification signal: ('Loading ', displayString, '...').
 	oldPolicy := loaderPolicy. 
 	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
 	self loaderPolicy silently ifTrue: [ MetacelloPlatform current bypassProgressBars: true ].
@@ -132,7 +132,7 @@ MetacelloMCVersion >> doLoadRequiredFromArray: anArray [
 		MetacelloPlatform current
 			do:  [  fetchLoader doLoad ]
 			displaying: 'Loading ', displayString.
-		Transcript cr; show: '...finished ', self versionNumber printString.
+		MetacelloNotification signal: ('...finished ', self versionNumber printString).
 		^fetchLoader ]
 		ensure: [ 
 			MetacelloPlatform current bypassProgressBars: oldBypassProgress.
@@ -144,7 +144,7 @@ MetacelloMCVersion >> doRecordRequiredFromArray: anArray [
 
 	| originalLoader oldPolicy displayString oldBypassProgress |
 	displayString := self versionNumber printString, ' of ', self spec projectLabel.
-	Transcript cr; show: 'Recording ', displayString, '...'.
+	MetacelloNotification signal: ('Recording ', displayString, '...').
 	originalLoader := self versionSpec loader.
 	oldPolicy := loaderPolicy. 
 	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
@@ -153,7 +153,7 @@ MetacelloMCVersion >> doRecordRequiredFromArray: anArray [
 			do:  [ | ans |
 				self versionSpec loader: originalLoader recordingSpecLoader.
 				ans := (self executeLoadFromArray: anArray) copy.
-				Transcript cr; show: '...finished ', self versionNumber printString.
+				MetacelloNotification signal: ('...finished ', self versionNumber printString).
 				^ans ]
 			displaying: 'Recording ', displayString ]
 				ensure: [

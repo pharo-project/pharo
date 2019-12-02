@@ -88,9 +88,7 @@ MetacelloProjectSpecForLoad >> performLoad [
   displayString := 'Project: ' , spec name.
   spec versionString ~~ nil
     ifTrue: [ displayString := displayString , ' ' , spec versionString ].
-  Transcript
-    cr;
-    show: displayString.
+  MetacelloNotification signal: displayString.
   self hasOverride
     ifTrue: [ 
       | override |
