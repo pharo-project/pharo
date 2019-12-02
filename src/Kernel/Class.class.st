@@ -294,9 +294,9 @@ Class >> classInstaller [
 
 { #category : #accessing }
 Class >> classPool [
-	"Answer the dictionary of class variables."
+	"Answer the ordred dictionary of class variables"
 
-	^classPool ifNil: [ classPool := Dictionary new ]
+	^classPool ifNil: [ classPool := OrderedDictionary new ]
 ]
 
 { #category : #accessing }
