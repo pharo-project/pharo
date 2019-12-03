@@ -103,6 +103,14 @@ SourceFileBufferedReadWriteStream >> defaultBufferSize [
 ]
 
 { #category : #writing }
+SourceFileBufferedReadWriteStream >> ensureWrittenPosition: aPosition [
+
+	isDirty ifFalse: [ ^ self ].
+	(self isPositionInBuffer: aPosition)
+		ifTrue: [ self flush ]
+]
+
+{ #category : #writing }
 SourceFileBufferedReadWriteStream >> flush [
 	
 	isDirty ifFalse: [ ^ self ]. 

@@ -286,7 +286,7 @@ SourceFileArray >> readStreamAt: sourcePointer ifPresent: presentBlock ifAbsent:
 { #category : #'private - accessing file streams' }
 SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: presentBlock ifAbsent: absentBlock [
  
-   | queue stream rofa result |
+   | queue stream rofa result file |
        
   	queue := readOnlyQueue.
   	rofa := queue nextOrNil ifNil: [ self createReadOnlyFiles ].
@@ -296,11 +296,15 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
    stream := rofa at: index.
 	stream ifNil: [ ^ absentBlock value ].
 	
-   position > (files at: index) size ifTrue: [ 
+	file := files at: index.
+	
+   position > file size ifTrue: [ 
 		self finishedReading: rofa from: queue. 
 		^ absentBlock value 
 	].
-
+	
+	file ensureWrittenPosition: position.
+	
    stream position: position.
    result := presentBlock value: stream.
        
