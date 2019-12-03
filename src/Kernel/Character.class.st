@@ -13,7 +13,6 @@ Class {
 	#type : #immediate,
 	#classVars : [
 		'CharSet',
-		'CharacterTable',
 		'DigitValues'
 	],
 	#category : #'Kernel-BasicObjects'
@@ -83,13 +82,6 @@ Character class >> characterSet [
 { #category : #initialization }
 Character class >> characterSet: aCharSet [
 	^ CharSet := aCharSet
-]
-
-{ #category : #constants }
-Character class >> characterTable [
-	"Answer the class variable in which unique Characters are stored."
-
-	^CharacterTable
 ]
 
 { #category : #'instance creation' }
