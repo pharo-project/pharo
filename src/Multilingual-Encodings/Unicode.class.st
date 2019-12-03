@@ -519,12 +519,6 @@ Unicode class >> is: char inCategory: cat [
 	^ (GeneralCategory at: index) = cat
 ]
 
-{ #category : #'character classification' }
-Unicode class >> isCasedLetter: char [
-	"There are no Unicode Characters in this Category"
-	^ false
-]
-
 { #category : #'class methods' }
 Unicode class >> isCharset [
 

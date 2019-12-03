@@ -530,16 +530,6 @@ Character >> isArrow [
 ]
 
 { #category : #testing }
-Character >> isCasedLetter [
-	"We are sorry but this method is unclear and will probably be removed.
-	This method only returning false."
-	"$a isCasedLetter >>> false"
-	"$A isCasedLetter >>> false"
-	
-	^ self characterSet isCasedLetter: self
-]
-
-{ #category : #testing }
 Character >> isCharacter [
 
 	^ true

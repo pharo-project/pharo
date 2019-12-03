@@ -65,13 +65,6 @@ UnicodeTest >> setUp [
 ]
 
 { #category : #'tests - categorization' }
-UnicodeTest >> testIsCasedLetter [
-	"The Cased letter category, LC, is empty"
-	self aRandomSelectionOfCharactersDo: [ :ch | 
-		self deny: (Unicode isCasedLetter: ch) ]
-]
-
-{ #category : #'tests - categorization' }
 UnicodeTest >> testIsClosePunctuation [
 	self checkCorrespondanceOf: #isClosePunctuation: and: #Pe
 ]

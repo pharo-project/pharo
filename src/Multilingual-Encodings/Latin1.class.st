@@ -57,11 +57,6 @@ Latin1 class >> isBreakableAt: index in: text [
 ]
 
 { #category : #'character classification' }
-Latin1 class >> isCasedLetter: char [
-	^ Unicode isCasedLetter: char
-]
-
-{ #category : #'character classification' }
 Latin1 class >> isClosePunctuation: char [
 	^ Unicode isClosePunctuation: char
 ]

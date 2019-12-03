@@ -16,12 +16,6 @@ AsciiCharset class >> canBeGlobalVarInitial: aCharacter [
 ]
 
 { #category : #'character classification' }
-AsciiCharset class >> isCasedLetter: char [
-	"There are no ASCII Characters in this Category"
-	^ false
-]
-
-{ #category : #'character classification' }
 AsciiCharset class >> isClosePunctuation: char [
 	^ ')]}' includes: char
 ]
