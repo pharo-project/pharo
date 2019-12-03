@@ -972,7 +972,7 @@ SHRBTextStyler >> pixelHeight [
 SHRBTextStyler >> privateStyle: aText [
 	| ast |
 	ast := classOrMetaClass compiler
-		source: aText;
+		source: aText asString;
 		noPattern: self isForWorkspace ;
 		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
 		requestor: workspace;
