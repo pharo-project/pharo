@@ -390,12 +390,8 @@ CommandLineUIManager >> stdout [
 { #category : #'ui requests' }
 CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
 	
-	Smalltalk logDuring: [:logger |
-		logger cr;
-			nextPutAll: (String new: 79 withAll: $= ); cr;
-			nextPutAll: 'System notification: ';
-			nextPutAll: aNotification messageText; cr;
-			nextPutAll: (String new: 79 withAll: $= ); cr].
+	Smalltalk logStdOutDuring: [:logger |
+		logger cr; nextPutAll: aNotification class name, ': ',  aNotification messageText; cr ].
 	
 	aNotification resume.
 

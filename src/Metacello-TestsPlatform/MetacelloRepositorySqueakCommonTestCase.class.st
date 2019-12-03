@@ -185,9 +185,7 @@ MetacelloRepositorySqueakCommonTestCase >> testFileTreeRepository [
 	self assert: repoSpec type equals: 'filetree'.
 	repo := repoSpec createRepository.
 	self assert: repo class identicalTo: (testingEnvironment at: #MCFileTreeRepository ifAbsent: [  ]).
-	Transcript
-		cr;
-		show: 'testFileTreeRepository: ' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName.
+	MetacelloNotification signal: ('testFileTreeRepository: ' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName).
 	self assert: repo description equals: 'filetree://' , (fileUtils directoryFromPath: 'temp/repo' relativeTo: fileUtils default) fullName ]
 		ensure: [ (fileUtils directoryExists: tempDir) ifTrue: [ fileUtils deleteAll: tempDir ] ]
 ]
