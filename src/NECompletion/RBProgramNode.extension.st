@@ -3,7 +3,7 @@ Extension { #name : #RBProgramNode }
 { #category : #'*NECompletion' }
 RBProgramNode >> completionEntries: offset [
 	"for now we give all selectors as a fallback, maybe we should add variables, too"
-	^Symbol allSelectors 
+	^Symbol selectorTable 
 		select: [ :each | each beginsWith: (self completionToken: offset)] 
 		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
 
