@@ -4,44 +4,42 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #'Spec2-Adapters-Morphic-ComponentList'
+	#category : #'Spec2-Adapters-Morphic-List'
 }
 
 { #category : #accessing }
 SpComponentListFastTableDataSource >> cellColumn: column row: rowIndex [
 	| cell item |
-	item := self model presenters at: rowIndex.
+	
+	item := self elementAt: rowIndex.
 	cell := FTCellMorph new
 		cellInset: 5;
 		yourself.
-	cell addMorphBack: item buildWithSpec.
+	cell addMorphBack: (self widgetFor: item).
+	
 	^ cell
 ]
 
 { #category : #accessing }
 SpComponentListFastTableDataSource >> elementAt: rowIndex [
 
-	^ self listModel at: rowIndex
+	^ self presenters at: rowIndex
 ]
 
 { #category : #accessing }
 SpComponentListFastTableDataSource >> elements [
 
-	^ self model items
+	^ self presenters
 ]
 
 { #category : #accessing }
 SpComponentListFastTableDataSource >> headerColumn: column [
+
 	column id ifNil: [ ^ nil ]. 
 	^ FTCellMorph new 
-		listCentering: #center;
+		listCentering: #left;
 		addMorph: column id asMorph asReadOnlyMorph;
 		yourself
-]
-
-{ #category : #accessing }
-SpComponentListFastTableDataSource >> listModel [
-	^ model model
 ]
 
 { #category : #accessing }
@@ -90,9 +88,23 @@ SpComponentListFastTableDataSource >> newDataSourceMatching: aFTFilter [
 
 { #category : #accessing }
 SpComponentListFastTableDataSource >> numberOfRows [
+
 	^ model
 		ifNil: [ 0 ]
-		ifNotNil: [ model presenters size ]
+		ifNotNil: [ self presenters size ]
+]
+
+{ #category : #accessing }
+SpComponentListFastTableDataSource >> presenters [
+
+	^ self model presenters
+]
+
+{ #category : #accessing }
+SpComponentListFastTableDataSource >> rowHeight: rowIndex [
+
+	rowIndex = 0 ifTrue: [ ^ super rowHeight: rowIndex ].
+	^ (self widgetFor: (self elementAt: rowIndex)) height
 ]
 
 { #category : #accessing }
@@ -111,4 +123,13 @@ SpComponentListFastTableDataSource >> searchText: aString [
 { #category : #'drag and drop' }
 SpComponentListFastTableDataSource >> transferFor: passenger from: aMorph [
     ^(self model transferFor: passenger from: self table) buildWithSpec
+]
+
+{ #category : #private }
+SpComponentListFastTableDataSource >> widgetFor: aPresenter [
+
+	aPresenter adapter ifNotNil: [ :adapter | ^ adapter widget ].
+	^ aPresenter buildWithSpec
+		vResizing: #shrinkWrap;
+		yourself
 ]

@@ -1,5 +1,33 @@
 "
-A WindowPresenter is a spec presenter for a Window
+I'm a spec presenter defining a Window.
+I define common behaviour for windows (like title, extent, position). 
+I can also hold a menuBar, a toolBar and a statusBar.
+
+Tipically you do not use this presenter directly but through a presenter you want to show. 
+When you execute ==aPresenter openWithSpec==, what happens is that a SpWindowPresenter is created. Then the #initializeWindow: method is called and an user can configure its window there.
+
+You can also access your window when your presenter is active by using ==#withWindowDo:==
+
+!! Example 1 
+
+SpPresenter subclass: #MyPresenter.
+
+MyPresenter >> initializeWindow: aWindowPresenter
+
+	aWindowPresenter
+		title: 'Title Example';
+		initialExtent: 800@600.
+
+!! Example 2
+
+| presenter window |
+
+presenter := SpTextPresenter new
+text: self testText;
+yourself.
+window := presenter openWithSpec.
+presenter withWindowDo: [ :w | w title: 'A fancy looking title text' ].
+
 "
 Class {
 	#name : #SpWindowPresenter,
@@ -173,8 +201,10 @@ SpWindowPresenter >> defaultInitialExtent [
 
 { #category : #private }
 SpWindowPresenter >> delete [
+	"DO NOT USE. This will destroy the window and maybe you do not want that :/
+	 I'm keeping this here because of testing."
 
-	self window delete
+	self withAdapterDo: #delete
 ]
 
 { #category : #focus }

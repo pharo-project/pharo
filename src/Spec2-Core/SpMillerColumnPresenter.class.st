@@ -18,12 +18,13 @@ Class {
 	#name : #SpMillerColumnPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'newPresenterBlock'
+		'newPresenterBlock',
+		'columnsWillChangeBlock'
 	],
 	#category : #'Spec2-Core-Miller'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 SpMillerColumnPresenter >> addPresenter: newSubPresenter [
 
 	newSubPresenter whenActivatedDo: [ :selection | 
@@ -32,13 +33,15 @@ SpMillerColumnPresenter >> addPresenter: newSubPresenter [
 	layout add: newSubPresenter
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 SpMillerColumnPresenter >> changeSelection: selection from: aPresenter [
-
 	| selectedPresenterIndex |
+
 	selectedPresenterIndex := self presenters indexOf: aPresenter.
+	columnsWillChangeBlock ifNotNil: [ 
+		columnsWillChangeBlock cull: selectedPresenterIndex ].
 	self resetTo: selectedPresenterIndex.
-	self pushModel: selection.
+	self pushModel: selection
 ]
 
 { #category : #initialization }
@@ -54,13 +57,13 @@ SpMillerColumnPresenter >> initializePresenters [
 	layout := SpMillerLayout newHorizontal
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 SpMillerColumnPresenter >> newPresenterFor: aModel [
 
 	^ newPresenterBlock value: aModel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SpMillerColumnPresenter >> pages [
 	
 	^ layout presenters
@@ -84,7 +87,7 @@ SpMillerColumnPresenter >> pushModel: aModel [
 	self addPresenter: (self newPresenterFor: aModel)
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 SpMillerColumnPresenter >> resetTo: anIndex [
 	"Remove all presenters up to anIndex.
 	0 means to remove all elements."
@@ -136,4 +139,10 @@ SpMillerColumnPresenter >> visiblePages [
 SpMillerColumnPresenter >> visiblePages: aNumber [ 
 
 	layout visiblePages: aNumber
+]
+
+{ #category : #'api-events' }
+SpMillerColumnPresenter >> whenColumnsWillChangeDo: aBlock [
+
+	columnsWillChangeBlock := aBlock
 ]

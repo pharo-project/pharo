@@ -273,7 +273,7 @@ SpAbstractListPresenter >> selectionMode: aMode [
 	
 	selectionMode ifNotNil: [ 
 		selectionMode transferSubscriptionsTo: aMode ].
-	selectionMode := aMode.
+	selectionMode := aMode
 ]
 
 { #category : #api }

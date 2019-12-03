@@ -1,13 +1,13 @@
-Extension { #name : #SpAbstractListPresenter }
+Extension { #name : #SpComponentListPresenter }
 
 { #category : #'*Spec2-Transmission' }
-SpAbstractListPresenter >> defineInputPorts [
+SpComponentListPresenter >> defineInputPorts [
 	
 	^ { SpListItemsPort new }
 ]
 
 { #category : #'*Spec2-Transmission' }
-SpAbstractListPresenter >> defineOutputPorts [
+SpComponentListPresenter >> defineOutputPorts [
 	
 	^ { 
 	SpSelectionPort new. 

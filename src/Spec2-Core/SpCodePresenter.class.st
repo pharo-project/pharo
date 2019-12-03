@@ -11,7 +11,7 @@ Class {
 		'#behavior => SpObservableSlot',
 		'#syntaxHighlight => SpObservableSlot'
 	],
-	#category : #'Spec2-Core-Widgets'
+	#category : #'Spec2-Core-Widgets-Text'
 }
 
 { #category : #specs }

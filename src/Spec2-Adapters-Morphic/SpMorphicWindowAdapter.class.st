@@ -143,6 +143,14 @@ SpMorphicWindowAdapter >> close [
 	self widget ifNotNil: [ :w | w close ].
 ]
 
+{ #category : #'widget API' }
+SpMorphicWindowAdapter >> delete [
+
+	self widgetDo: [ :w | 
+		w delete. 
+		self application windowClosed: self ]
+]
+
 { #category : #protocol }
 SpMorphicWindowAdapter >> extent: aPoint [
 

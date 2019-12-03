@@ -10,7 +10,7 @@ SpTreeTablePresenter >> defineInputPorts [
 SpTreeTablePresenter >> defineOutputPorts [ 
 
 	^ { 
-	SpListSelectionPort new.
+	SpSelectionPort new.
 	SpActivationPort new 
 	}
 ]

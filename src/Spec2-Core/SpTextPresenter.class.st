@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'#scrollValue => SpObservableSlot'
 	],
-	#category : #'Spec2-Core-Widgets'
+	#category : #'Spec2-Core-Widgets-Text'
 }
 
 { #category : #specs }
