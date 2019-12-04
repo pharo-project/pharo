@@ -738,7 +738,7 @@ String >> asUppercase [
 
 { #category : #converting }
 String >> asValidSelector [
-	"Returns a symbol that is a vlida selector: remove any space or forbiddent characters"
+	"Returns a symbol that is a valid selector by removing any space or forbidden characters"
 	"'234znak ::x43 ''åå) _ : 2' asValidSelector >>> #'v234znak:x43:v2'"
 	"'234znak ::x43 åå) :2' asValidSelector >>> #v234znak:x43:v2"
 	
