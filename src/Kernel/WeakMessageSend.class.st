@@ -1,5 +1,5 @@
 "
-Instances of WeakMessageSend encapsulate messages send to objects, like MessageSend. Unlike MessageSend it is not necessarily a valid mesage. A request to value only results in a send if infact it is valid. 
+Instances of WeakMessageSend encapsulate messages send to objects, like MessageSend. Unlike MessageSend it is not necessarily a valid message. A request to value only results in a send if infact it is valid. 
 
 See also MessageSend comments. WeakMessageSend is used primarily for event registration. 
 
