@@ -288,7 +288,11 @@ Character class >> space [
 
 { #category : #'special characters' }
 Character class >> specialCharacters [
-	^'+-/\*~<>=@,%|&?!', {self centeredDot . self divide . self plusOrMinus . self times }
+	^ '+-/\*~<>=@,%|&?!' , (String
+		   with: self centeredDot
+		   with: self divide
+		   with: self plusOrMinus
+		   with: self times)
 ]
 
 { #category : #queries }
