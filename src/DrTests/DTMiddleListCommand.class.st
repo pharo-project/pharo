@@ -1,3 +1,6 @@
+"
+I am an abstract command concerning DrTests' middle list.
+"
 Class {
 	#name : #DTMiddleListCommand,
 	#superclass : #DTCommand,

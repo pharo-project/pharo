@@ -1,3 +1,6 @@
+"
+I browse the item selected in middle list of DrTests.
+"
 Class {
 	#name : #DTBrowseSelectedItem,
 	#superclass : #DTMiddleListCommand,
