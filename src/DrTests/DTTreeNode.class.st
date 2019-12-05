@@ -9,7 +9,8 @@ Class {
 		'name',
 		'subResults',
 		'contextMenuBlock',
-		'subResultsAggregator'
+		'subResultsAggregator',
+		'browseBlock'
 	],
 	#category : #'DrTests-Model'
 }
@@ -27,6 +28,21 @@ DTTreeNode >> acceptVisitor: aDTResultsTreeVisitor [
 ]
 
 { #category : #accessing }
+DTTreeNode >> browseBlock [
+	^ browseBlock
+]
+
+{ #category : #accessing }
+DTTreeNode >> browseBlock: anObject [
+	browseBlock := anObject
+]
+
+{ #category : #testing }
+DTTreeNode >> canBeBrowsed [
+	^ self browseBlock isNotNil
+]
+
+{ #category : #accessing }
 DTTreeNode >> contentForReRun [
 	^ (DTLeavesCollector collectLeavesOf: self) flatCollect: #contentForReRun
 ]
@@ -39,6 +55,16 @@ DTTreeNode >> contextMenuBlock [
 { #category : #accessing }
 DTTreeNode >> contextMenuBlock: anObject [
 	contextMenuBlock := anObject
+]
+
+{ #category : #actions }
+DTTreeNode >> drTestsBrowse [
+	"Browse the tree node according to what is specified by my #browseBlock.
+	 If my #browseBlock is nil, does nothing."
+	self canBeBrowsed
+		ifFalse: [ ^ self ].
+	
+	self browseBlock cull: self
 ]
 
 { #category : #menu }
@@ -61,7 +87,7 @@ DTTreeNode >> initialize [
 	super initialize.
 	self
 		contextMenuBlock: [ :menu | ]. "Does nothing by default."
-	self subResultsAggregator: [ :subRes | (DTLeavesCollector collectLeavesOf: self) size ]
+	self subResultsAggregator: [ :subRes | (DTLeavesCollector collectLeavesOf: self) size ].
 ]
 
 { #category : #accessing }
