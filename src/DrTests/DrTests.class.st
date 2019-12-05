@@ -40,16 +40,24 @@ DrTests class >> beDefaultTestRunner [
 ]
 
 { #category : #commands }
-DrTests class >> buildCommandsGroupWith: presenterIntance forRoot: rootCommandGroup [
+DrTests class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup [
 	rootCommandGroup
-		register: (self buildContextualPackageGroupWith: presenterIntance);
-		register: (self buildResultGroupWith: presenterIntance)
+		register: (self buildContextualPackageGroupWith: presenterInstance);
+		register: (self buildItemsListGroupWith: presenterInstance);
+		register: (self buildResultGroupWith: presenterInstance)
 ]
 
 { #category : #commands }
 DrTests class >> buildContextualPackageGroupWith: presenterIntance [
 	^ (CmCommandGroup named: 'Package menu') asSpecGroup
 		register: (self buildPackageGroupWith: presenterIntance);
+		yourself
+]
+
+{ #category : #commands }
+DrTests class >> buildItemsListGroupWith: presenterInstance [
+	^ (CmCommandGroup named: 'List items menu') asSpecGroup
+		register: (DTBrowseSelectedItem forSpec context: presenterInstance);
 		yourself
 ]
 
@@ -156,6 +164,14 @@ DrTests class >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPlu
 ]
 
 { #category : #actions }
+DrTests >> browseSelectedItem [
+	"Because of DTBrowseSelectedItem>>#canBeExecuted, we know there is a single item in the selection.
+	 Thus, we take the first one and browse it.
+	"
+	self selectedItems first drTestsBrowse
+]
+
+{ #category : #actions }
 DrTests >> browseSelectedResult [
 	self resultSelected drTestsBrowse
 ]
@@ -198,7 +214,8 @@ DrTests >> initializeItemsListAndLabel [
 		sortingBlock: #name ascending;
 		displayBlock: [ :item | item name ];
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
-		beMultipleSelection.
+		beMultipleSelection;
+		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
 ]
