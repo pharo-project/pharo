@@ -157,7 +157,7 @@ DrTests class >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPlu
 
 { #category : #actions }
 DrTests >> browseSelectedResult [
-	self resultSelected content drTestsBrowse
+	self resultSelected drTestsBrowse
 ]
 
 { #category : #private }
