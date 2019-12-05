@@ -2,10 +2,18 @@ Extension { #name : #RBProgramNode }
 
 { #category : #'*NECompletion' }
 RBProgramNode >> completionEntries: offset [
-	"for now we give all selectors as a fallback, maybe we should add variables, too"
-	^Symbol selectorTable 
+	"for now we give all selectors and gloabls as a fallback"
+	| selectors globals |
+	
+	selectors := Symbol selectorTable 
 		select: [ :each | each beginsWith: (self completionToken: offset)] 
-		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
+		thenCollect: [ :each | NECSymbolEntry contents: each node: self ].
+		
+	globals := Smalltalk globals keys 
+			select: [ :each | each beginsWith: (self completionToken: offset)]
+			thenCollect: [ :each | NECGlobalEntry contents: each  node: self ].
+			
+	^ selectors , globals
 
 ]
 
