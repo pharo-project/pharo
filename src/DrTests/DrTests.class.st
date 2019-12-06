@@ -474,14 +474,14 @@ DrTests >> updateStatus: aString [
 
 ]
 
-{ #category : #private }
+{ #category : #updating }
 DrTests >> updateSwitchButton: itemsSelected [
 	currentPlugin allowMiniDrTests
 		ifTrue: [ switchButton enabled: itemsSelected isNotEmpty ]
 		ifFalse: switchButton disable
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 DrTests >> updateUI [
 	self
 		startButtonLabel: self currentPlugin startButtonLabel;
