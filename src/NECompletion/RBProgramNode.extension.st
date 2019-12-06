@@ -13,8 +13,8 @@ RBProgramNode >> completionEntries: offset [
 { #category : #'*NECompletion' }
 RBProgramNode >> completionToken: offset [
 	"fall back: if we are not able to parse to something better, we use the word before the cursor"
-	^self methodNode sourceCode 
-		ifNil: [ ^String new ]
-		ifNotNil: [ :source |  source wordBefore: offset ]
 
+	^ self methodNode sourceCode
+		  ifNil: [ String new ]
+		  ifNotNil: [ :source | source wordBefore: offset ]
 ]
