@@ -65,12 +65,12 @@ AbstractDrTestsUI >> locked: aBoolean [
 		do: [ :subwidget | subwidget enabled: aBoolean ]
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 AbstractDrTestsUI >> runPlugin [
 	self runPluginFor: self testsConfiguration
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 AbstractDrTestsUI >> runPluginFor: aTestsConfiguration [
 	[ self lock.
 	self updateStatus: 'Tests started.'.
