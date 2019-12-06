@@ -439,14 +439,14 @@ DrTests >> updatePackagesListLabel [
 				numberOfItemsSelected: self packagesSelected size)
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateResultLabel [
 	resultLabel
 		label: 'Results: ■';
 		color: pluginResult color
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateResultViewsDropList [
 	| newPragmas |
 	newPragmas := self currentPlugin resultTreeViews.
@@ -462,7 +462,7 @@ DrTests >> updateResultViewsDropList [
 		ifTrue: [ self resultViewsDropList selectIndex: 1 ]
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateStatus: aString [
 	self statusLabel
 		label: ('{1}: {2}' format: { self dateAndTimeString . aString }).
@@ -491,12 +491,12 @@ DrTests >> updateUI [
 	self updateResultViewsDropList
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateWithPluginResult: aPluginResult [
 	aPluginResult ifNotNil: [ self updateWithResults: aPluginResult ]
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateWithResults: results [
 	pluginResult := results.
 	self resultTree: pluginResult buildTreeForUI.
