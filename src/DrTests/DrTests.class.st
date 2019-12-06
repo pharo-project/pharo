@@ -388,7 +388,7 @@ DrTests >> subwidgetsToLock [
 	^ { self packagesList. self itemsList. self resultsList. self startButton }
 ]
 
-{ #category : #'accessing - subwidgets' }
+{ #category : #actions }
 DrTests >> switchUI [
 	super switchUI.
 	(MiniDrTests new
