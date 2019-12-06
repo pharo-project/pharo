@@ -1743,6 +1743,7 @@ String >> isAllAlphaNumerics [
 	"'a3123abc' isAllAlphaNumerics >>> true"
 	"'3123' isAllAlphaNumerics >>> true"
 	"'3,123' isAllAlphaNumerics >>> false"
+	"'a''b' isAllAlphaNumerics >>> false"
 	
 	self do: [:c | c isAlphaNumeric ifFalse: [^ false]].
 	^ true
