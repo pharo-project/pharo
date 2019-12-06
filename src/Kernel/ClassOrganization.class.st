@@ -136,6 +136,13 @@ ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: 
 	oldCategory ifNotNil: [ self notifyOfChangedSelector: selector from: oldCategory to: aProtocolName ]
 ]
 
+{ #category : #cleanup }
+ClassOrganization >> cleanUpCategoriesForClass: aClass [
+	"remove all entries that have no methods"
+	 self allMethodSelectors do: [:each | 
+		(aClass includesSelector: each) ifFalse: [self removeElement: each ]].
+]
+
 { #category : #accessing }
 ClassOrganization >> comment [
 

@@ -27,6 +27,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeAndClass: anOrderedColletion type: 
 			subResults: ((anOrderedColletion groupedBy: #class) associations collect: [ :assoc |
 				DTTreeNode new
 					name: assoc key name;
+					browseBlock: [ assoc key drTestsBrowse ];
 					subResults: (self buildLeavesFrom: assoc value type: testResultType);
 					yourself ]);
 			yourself

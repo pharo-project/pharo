@@ -23,6 +23,11 @@ DTTreeLeaf >> acceptVisitor: aDTResultsTreeVisitor [
 	^ aDTResultsTreeVisitor visitDTTreeLeaf: self
 ]
 
+{ #category : #testing }
+DTTreeLeaf >> canBeBrowsed [
+	^ true
+]
+
 { #category : #accessing }
 DTTreeLeaf >> content [
 	^ content

@@ -229,6 +229,20 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 ]
 
 { #category : #tests }
+T2TraitTest >> testRemovingTraitsUpdatesCategories [
+	| t1 t2 c1 |
+	
+	t1 := self createT1.
+	t2 := self createT2.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.		
+
+	c1 organization allMethodSelectors do: [:each | self assert: (c1 includesSelector: each) ].
+	c1 class organization allMethodSelectors do: [:each | 
+		self assert: (c1 class includesSelector: each) ]
+]
+
+{ #category : #tests }
 T2TraitTest >> testSelectorsWithExplicitOrigin [
 	"Obtain the subset of selectors that are defined either locally or inherited from traits. But, exclude selectors of methods from implicit traits such as TraitedClass"
 	| t1 c1 |
