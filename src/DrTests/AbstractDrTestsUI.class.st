@@ -152,7 +152,7 @@ AbstractDrTestsUI >> updateUI [
 
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 AbstractDrTestsUI >> updateWithResults: results [
 	self subclassResponsibility
 ]
