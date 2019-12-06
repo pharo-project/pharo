@@ -368,7 +368,7 @@ DrTests >> selectAllPackageList [
 	packagesList selectAll
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 DrTests >> selectedItems [
 	^ self itemsList selectedItems
 ]
