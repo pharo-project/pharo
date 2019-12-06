@@ -146,7 +146,7 @@ AbstractDrTestsUI >> updateStatus: aString [
 	"Does nothing on purpose."
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 AbstractDrTestsUI >> updateUI [
 	^ self subclassResponsibility
 
