@@ -10,6 +10,13 @@ You are probably looking for #resultSelected.'.
 ]
 
 { #category : #'*Deprecated80' }
+DrTests >> resultViewsDropList: anObject [
+	self deprecated: 'There is no reason to provide a mutator for this inst. var.
+Going to be removed.'.
+	resultViewsDropList:= anObject 
+]
+
+{ #category : #'*Deprecated80' }
 DrTests >> runPluginMethod: aSymbol [
 	self deprecated: 'Meta-programming should be removed.'.
 	[ self lock.

@@ -353,11 +353,6 @@ DrTests >> resultViewsDropList [
 	^ resultViewsDropList
 ]
 
-{ #category : #'api - subwidgets configuration' }
-DrTests >> resultViewsDropList: anObject [
-	resultViewsDropList:= anObject 
-]
-
 { #category : #'accessing - subwidgets' }
 DrTests >> resultsList [
 	^ resultsList
