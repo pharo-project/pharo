@@ -2,13 +2,13 @@
 I am a segmentmorph intended to implement the visual presentation of a TextBackgroundColor for a text.
 "
 Class {
-	#name : #TextBackgroundColorSegmentMorph,
+	#name : #RubTextBackgroundColorSegmentMorph,
 	#superclass : #RubTextSegmentMorph,
-	#category : #'Text-Core-Utilities'
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #'as yet unclassified' }
-TextBackgroundColorSegmentMorph class >> color: aColor from: start to: stop [ 
+RubTextBackgroundColorSegmentMorph class >> color: aColor from: start to: stop [ 
 	^ self new
 		color: aColor;
 		from: start to: stop; 
@@ -16,6 +16,6 @@ TextBackgroundColorSegmentMorph class >> color: aColor from: start to: stop [
 ]
 
 { #category : #accessing }
-TextBackgroundColorSegmentMorph >> color: aColor [
+RubTextBackgroundColorSegmentMorph >> color: aColor [
 	color := aColor
 ]

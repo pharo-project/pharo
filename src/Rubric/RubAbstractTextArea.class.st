@@ -1204,7 +1204,7 @@ RubAbstractTextArea >> markBackgroundColors [
 			value do: [ :v | 
 					(v isKindOf: TextBackgroundColor)
 						ifTrue: [ self addSegment: 
-							(TextBackgroundColorSegmentMorph
+							(RubTextBackgroundColorSegmentMorph
 								color: v color
 								from: start
 								to: stop+1) ] ] ] 
