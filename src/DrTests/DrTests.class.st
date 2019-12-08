@@ -134,7 +134,7 @@ DrTests class >> menuCommandOn: aBuilder [
 		parent: #Tools;
 		action: [ self open ];
 		order: 20;
-		keyText: 'o, u';
+		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding. For now DrTests is only available as preview."
 		help: 'Let you run and debug SUnit tests.';
 		icon: self taskbarIcon.
 	aBuilder withSeparatorAfter	
@@ -149,9 +149,10 @@ DrTests class >> open [
 
 { #category : #'tools registry' }
 DrTests class >> registerToolsOn: registry [
-
+	"Note: For now, DrTests is only available for preview, thus the following code is commented."
+	
 	"Add DrTests to registry to replace the old test runner." 
-	registry register: self as: #testRunner
+	"registry register: self as: #testRunner"
 ]
 
 { #category : #specs }
