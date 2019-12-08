@@ -14,8 +14,9 @@ Enlumineur enhancements are:
 - new line and more indentation after the opening bracket
 - A dedicated UI was in preparation but should be validated before introduced in Pharo.
 - See package Enlumineur-UI (https://github.com/Ducasse/enlumineur)
-- Now Enlumineur should be improved to be able to reformat the full code of Pharo.
-- The tests are a first step to make sure that we understand what is impacted by a change.
+
+Now Enlumineur should be improved to be able to reformat the full code of Pharo.
+The tests are a first step to make sure that we understand what is impacted by a change.
 "
 Class {
 	#name : #EFFormatter,
