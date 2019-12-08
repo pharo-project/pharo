@@ -2172,6 +2172,12 @@ RubTextEditor >> selectWord [
 									ifTrue: [level := level + 1"entering deeper nest"]]]].
 
 	level > 0 ifTrue: ["in case ran off string end"	here := here + direction].
+	
+	"to avoid selecting boringly the : in block argument: :aSerie will just select aSerie. 
+	Such a boost of editing productivity!!!"	
+	start ifNotNil: [ (self text at: start) = $: ifTrue: [ start := start + 1 ]].
+	
+	
 	direction > 0
 		ifTrue: [self selectFrom: start to: here - 1]
 		ifFalse: [self selectFrom: here + 1 to: stop]
