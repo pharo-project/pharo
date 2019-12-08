@@ -1,14 +1,21 @@
 "
-I'm a new pretty printer for Pharo.
-I started as a copy of the BlueInk pretty printer. To avoid to break everything we clone BIPrettyPrinter and started to evolve 
-and made sure that all the tests are in sync with the implementation. 
+Enlumineur is a replacement of BlueInk pretty printer.
+It was developed by Hugo Lasnier during 6 months internship within RMOD and supervised by S. Ducasse and G. Polito during 2019..
 
-Note that we are nice guys since we implemented 180 tests for the old pretty printer.
-Now such tests can not be systematically applied on Enlumineur this is why we cloned them too. 
+Enlumineur enhancements are:
 
-Pay attention my name should finish with Formatter so that the Settings proposes me to the user along with the other formatters.
-
-
+- systematic test coverage with more than 270 tests
+- full revisiting of settings with description and example
+- no way to break the code by entering a non space character to indent code
+- support for {.....} long list
+- cleaning coupled settings
+- support for to:do: block like statement (multiline arguments)
+- removal of ""traditional parentheses"" what ever it meant.
+- new line and more indentation after the opening bracket
+- A dedicated UI was in preparation but should be validated before introduced in Pharo.
+- See package Enlumineur-UI (https://github.com/Ducasse/enlumineur)
+- Now Enlumineur should be improved to be able to reformat the full code of Pharo.
+- The tests are a first step to make sure that we understand what is impacted by a change.
 "
 Class {
 	#name : #EFFormatter,
