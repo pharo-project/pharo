@@ -339,11 +339,6 @@ DrTests >> pluginsDropList [
 ]
 
 { #category : #accessing }
-DrTests >> resultItemSelected [
-	^ self resultsList ifNil: [ #() ] ifNotNil: #selectedItem
-]
-
-{ #category : #accessing }
 DrTests >> resultSelected [
 	^ self resultsList selectedItem
 ]
@@ -359,25 +354,9 @@ DrTests >> resultViewsDropList [
 	^ resultViewsDropList
 ]
 
-{ #category : #'api - subwidgets configuration' }
-DrTests >> resultViewsDropList: anObject [
-	resultViewsDropList:= anObject 
-]
-
 { #category : #'accessing - subwidgets' }
 DrTests >> resultsList [
 	^ resultsList
-]
-
-{ #category : #api }
-DrTests >> runPluginMethod: aSymbol [
-	self deprecated: 'Meta-programming should be removed.'.
-	[ self lock.
-	self updateStatus: 'Tests started.'.
-	self
-		updateWithResults: (self currentPlugin perform: aSymbol with: self pluginResult).
-	self updateStatus: 'Tests finished.' ]
-		ensure: [ self unlock ]
 ]
 
 { #category : #api }
@@ -385,7 +364,7 @@ DrTests >> selectAllPackageList [
 	packagesList selectAll
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 DrTests >> selectedItems [
 	^ self itemsList selectedItems
 ]
@@ -405,7 +384,7 @@ DrTests >> subwidgetsToLock [
 	^ { self packagesList. self itemsList. self resultsList. self startButton }
 ]
 
-{ #category : #'accessing - subwidgets' }
+{ #category : #actions }
 DrTests >> switchUI [
 	super switchUI.
 	(MiniDrTests new
@@ -461,14 +440,14 @@ DrTests >> updatePackagesListLabel [
 				numberOfItemsSelected: self packagesSelected size)
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateResultLabel [
 	resultLabel
 		label: 'Results: ■';
 		color: pluginResult color
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateResultViewsDropList [
 	| newPragmas |
 	newPragmas := self currentPlugin resultTreeViews.
@@ -484,21 +463,21 @@ DrTests >> updateResultViewsDropList [
 		ifTrue: [ self resultViewsDropList selectIndex: 1 ]
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateStatus: aString [
 	self statusLabel
 		label: ('{1}: {2}' format: { self dateAndTimeString . aString }).
 
 ]
 
-{ #category : #private }
+{ #category : #updating }
 DrTests >> updateSwitchButton: itemsSelected [
 	currentPlugin allowMiniDrTests
 		ifTrue: [ switchButton enabled: itemsSelected isNotEmpty ]
 		ifFalse: switchButton disable
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 DrTests >> updateUI [
 	self
 		startButtonLabel: self currentPlugin startButtonLabel;
@@ -513,12 +492,12 @@ DrTests >> updateUI [
 	self updateResultViewsDropList
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateWithPluginResult: aPluginResult [
 	aPluginResult ifNotNil: [ self updateWithResults: aPluginResult ]
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateWithResults: results [
 	pluginResult := results.
 	self resultTree: pluginResult buildTreeForUI.

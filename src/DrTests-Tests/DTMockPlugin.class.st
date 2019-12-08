@@ -57,7 +57,7 @@ DTMockPlugin >> packagesAvailableForAnalysis [
 
 { #category : #accessing }
 DTMockPlugin >> pragmaForResultTrees [
-^#'pragmaForTest:'
+	^ #'pragmaForTest:'
 ]
 
 { #category : #api }
