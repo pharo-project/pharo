@@ -171,7 +171,8 @@ CatalogProject >> installVersion: aStringOrSymbol [
 
 { #category : #testing }
 CatalogProject >> isAvailableForCurrentPharo [
-	^ self repositoryName = Smalltalk version
+	^ self repositoryName = Smalltalk version 
+		or: [ self repositoryName = SystemVersion current versionWithoutPatch ]
 ]
 
 { #category : #accessing }
