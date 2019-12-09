@@ -16,6 +16,6 @@ DTMockPluginTest >> testResultTreeViews [
 	
 	self assert: treeViews size equals: 2.
 	
-	self assert: treeViews first name equals: 'test result'.
-	self assert: treeViews second name equals: 'test another result'.
+	self assert: treeViews first name equals: 'for tests'.
+	self assert: treeViews second name equals: 'for other tests'.
 ]
