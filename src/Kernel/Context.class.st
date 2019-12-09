@@ -1674,7 +1674,6 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	context := aSender insertSender: (Context
 		contextOn: Error, Halt do: [:ex |
 			error ifNil: [
-				"this is ugly but it fixes the side-effects of not sending an Unhandled error on Halt"
 				error := ex.
 				topContext := thisContext.
 				ex resumeUnchecked: here jump ]
