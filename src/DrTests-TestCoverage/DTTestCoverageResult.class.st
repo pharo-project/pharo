@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 DTTestCoverageResult >> buildTreeForUI [
-	<dTTestCoverageResultTreeNamed: 'List of uncovered methods'>
+	<dtTestCoverageResultTreeNamed: 'List of uncovered methods' order: 1>
 	^ DTTreeNode new
 		subResults:
 			{(DTTreeNode new

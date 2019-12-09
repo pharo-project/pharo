@@ -85,7 +85,7 @@ DTTestsRunner >> label: aString forSuite: aTestSuite [
 
 { #category : #accessing }
 DTTestsRunner >> pragmaForResultTrees [
-	^ #'dTTestRunnerResultTreeNamed:'
+	^ #'dtTestRunnerResultTreeNamed:order:'
 ]
 
 { #category : #private }
