@@ -117,8 +117,8 @@ ReAbstractRule >> asRBRule [
 
 { #category : #running }
 ReAbstractRule >> basicCheck: anEntity [
-
-	^ self subclassResponsibility 
+	"If you end here, you should most likely implement this in a subclass"
+	^ self shouldBeImplemented  
 ]
 
 { #category : #running }

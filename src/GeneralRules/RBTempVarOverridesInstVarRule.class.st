@@ -1,5 +1,5 @@
 "
-Finds methods whose temporary variables override an instance variable. This causes problems if you want to use the instance variable inside the method.
+Finds methods whose arguments or temporary variables ooverride an instance variable. This causes problems if you want to use the instance variable inside the method.
 "
 Class {
 	#name : #RBTempVarOverridesInstVarRule,
@@ -21,26 +21,20 @@ RBTempVarOverridesInstVarRule class >> uniqueIdentifierName [
 
 { #category : #running }
 RBTempVarOverridesInstVarRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	| ivarNames |
-	
+	| ivarNames problemTemps|
 	ivarNames := aMethod methodClass instVarNames.
 	ivarNames ifEmpty: [ ^ self ].
 	
-	(aMethod ast arguments, aMethod ast temporaries)
-		do: [ :node |
-			(ivarNames includes: node name)
-				ifTrue: [ 
-					aCriticBlock cull: (
-						self
-							critiqueFor: aMethod
-							about: node) ] ]
+	problemTemps := ((aMethod ast arguments, aMethod ast temporaries)
+		select: [ :node |ivarNames includes: node name]).
+	problemTemps do: [ :node |
+		aCriticBlock cull: (self critiqueFor: aMethod about: node) ] 
 		
 
 ]
 
 { #category : #'running-helpers' }
 RBTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
-
 	^ (ReTrivialCritique
 		withAnchor: (ReIntervalSourceAnchor
 			entity: aMethod
