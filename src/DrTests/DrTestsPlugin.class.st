@@ -123,7 +123,7 @@ DrTestsPlugin >> resultButtonHelp [
 
 { #category : #accessing }
 DrTestsPlugin >> resultTreeViews [
-	"Return result tree views available
+	"Return result tree views available.
 	 This method might signal a deprecation exception in case it found an old pragma BUT the method itself is
 	 NOT deprecated. Do not remove it.
 	 The code generating the deprecation exception will be removed once we decide to totally remove the old pragmas support.
