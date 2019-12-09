@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 DTMockPluginResult >> buildTreeForUI [
-<pragmaForTest: 'for tests'>
+<pragmaForTest: 'for tests' order: 1>
 	^ DTTreeNode new
 		subResults: {};
 		yourself

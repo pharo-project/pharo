@@ -33,7 +33,7 @@ DTTestsProfiling >> firstListLabel [
 
 { #category : #accessing }
 DTTestsProfiling >> pragmaForResultTrees [
-	^ #'dTTestsProfilingResultTreeNamed:'
+	^ #'drTestsProfilingResultTreeNamed:order:'
 ]
 
 { #category : #api }

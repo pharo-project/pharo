@@ -55,7 +55,7 @@ DTCommentToTest >> packagesAvailableForAnalysis [
 
 { #category : #accessing }
 DTCommentToTest >> pragmaForResultTrees [
-	^ #'dTCommentToTestResultTreeNamed:'
+	^ #'dtCommentToTestResultTreeNamed:order:'
 ]
 
 { #category : #api }

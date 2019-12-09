@@ -19,7 +19,7 @@ Class {
 
 { #category : #accessing }
 DTTestsProfilingResult >> buildTreeForUI [
-	<dTTestsProfilingResultTreeNamed: 'Grouped by type of result'>
+	<dtTestsProfilingResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
 		subResults:
 			{(self buildTreeNode
@@ -71,7 +71,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 
 { #category : #accessing }
 DTTestsProfilingResult >> buildTreeGroupedByClass [
-	<dTTestsProfilingResultTreeNamed: 'Grouped by class'>
+	<dtTestsProfilingResultTreeNamed: 'Grouped by class' order: 2>
 	^ self buildTreeNode
 		subResults: ((self testResults groupedBy: [ :d | d testCase class ]) associations collect: [ :assoc |
 			self buildTreeNode
