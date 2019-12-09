@@ -123,7 +123,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
 	"This test breaks 95% of times"	
 
-	self timeLimit: 10 seconds.
+	self timeLimit: 20 seconds.
 	
 	10 timesRepeat: [  
 		 | sem text canvases blocky |
@@ -164,7 +164,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
 	"This test breaks 95% of times"	
 
-	self timeLimit: 10 seconds.
+	self timeLimit: 20 seconds.
 	
 	10 timesRepeat: [  
 		 | sem text canvases blocky widthAsk |
