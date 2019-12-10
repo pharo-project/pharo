@@ -3,7 +3,7 @@ A RBUsesTrueRuleTest is a test class for testing the behavior of RBUsesTrueRule
 "
 Class {
 	#name : #RBUsesTrueRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

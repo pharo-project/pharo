@@ -3,7 +3,7 @@ A RBSentNotImplementedRuleTest is a test class for testing the behavior of RBSen
 "
 Class {
 	#name : #RBSentNotImplementedRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

@@ -3,7 +3,7 @@ A RBMultiplePeriodsTerminatingStatementRuleTest is a test class for testing the 
 "
 Class {
 	#name : #RBMultiplePeriodsTerminatingStatementRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

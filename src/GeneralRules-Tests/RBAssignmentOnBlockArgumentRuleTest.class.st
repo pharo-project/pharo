@@ -3,7 +3,7 @@ A RBAssignmentOnBlockArgumentRuleTest is a test class for testing the behavior o
 "
 Class {
 	#name : #RBAssignmentOnBlockArgumentRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

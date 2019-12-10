@@ -3,7 +3,7 @@ A RBSelfSentNotImplementedRuleTest is a test class for testing the behavior of R
 "
 Class {
 	#name : #RBSelfSentNotImplementedRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

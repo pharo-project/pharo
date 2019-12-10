@@ -3,7 +3,7 @@ A RBRefersToClassRuleTest is a test class for testing the behavior of RBRefersTo
 "
 Class {
 	#name : #RBRefersToClassRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

@@ -3,7 +3,7 @@ A RBGlobalVariablesUsageTest is a test class for testing the behavior of RBGloba
 "
 Class {
 	#name : #RBGlobalVariablesUsageTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

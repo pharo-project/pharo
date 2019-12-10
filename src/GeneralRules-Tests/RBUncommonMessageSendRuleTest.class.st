@@ -3,7 +3,7 @@ A RBUncommonMessageSendRuleTest is a test class for testing the behavior of RBUn
 "
 Class {
 	#name : #RBUncommonMessageSendRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 

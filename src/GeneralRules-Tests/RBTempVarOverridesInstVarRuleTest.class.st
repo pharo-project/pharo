@@ -3,7 +3,7 @@ A RBTempVarOverridesInstVarRuleTest is a test class for testing the behavior of 
 "
 Class {
 	#name : #RBTempVarOverridesInstVarRuleTest,
-	#superclass : #ReAbstractRuleTestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#instVars : [
 		'dummy1',
 		'dummy2',
