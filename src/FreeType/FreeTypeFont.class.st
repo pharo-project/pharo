@@ -384,14 +384,12 @@ FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean su
 		charCode: aCharacter asUnicode asInteger
 		type: ((1+sub) << 32) + aColorValue
 		ifAbsentPut: [
-			self mutex critical: [ 
-				FreeTypeGlyphRenderer current
-					glyphOf: aCharacter 
-					colorValue: aColorValue 
-					mono: monoBoolean 
-					subpixelPosition: sub 
-					font: self]]
-
+			FreeTypeGlyphRenderer current
+				glyphOf: aCharacter 
+				colorValue: aColorValue 
+				mono: monoBoolean 
+				subpixelPosition: sub 
+				font: self]
 
 ]
 
@@ -666,13 +664,12 @@ FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBool
 		charCode: aCharacter asUnicode asInteger
 		type: (FreeTypeCacheGlyph + sub)
 		ifAbsentPut: [
-			self mutex critical: [ 
-				FreeTypeGlyphRenderer current
-					mode41GlyphOf: aCharacter 
-					colorValue: aColorValue 
-					mono: monoBoolean 
-					subpixelPosition: sub 
-					font: self]]
+			FreeTypeGlyphRenderer current
+				mode41GlyphOf: aCharacter 
+				colorValue: aColorValue 
+				mono: monoBoolean 
+				subpixelPosition: sub 
+				font: self]
 
 
 ]
@@ -797,14 +794,13 @@ FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: FreeTypeCacheGlyphLCD + sub
-		ifAbsentPut: [
-			self mutex criticalReleasingOnError: [ 
-				FreeTypeGlyphRenderer current
-					subGlyphOf: aCharacter 
-					colorValue: aColorValue 
-					mono: monoBoolean 
-					subpixelPosition: sub 
-					font: self]]
+		ifAbsentPut: [ 
+			FreeTypeGlyphRenderer current
+				subGlyphOf: aCharacter 
+				colorValue: aColorValue 
+				mono: monoBoolean 
+				subpixelPosition: sub 
+				font: self]
 
 
 ]

@@ -99,7 +99,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 		ifNotNil:[
 			fifo moveDown: entry.
 			^entry object].
-	v := aBlock value.
+	v := aFreeTypeFont mutex criticalReleasingOnError: aBlock.
 	vSize := self sizeOf: v.
 	(maximumSize notNil and:[vSize > maximumSize]) 
 		ifTrue:[^v].  
