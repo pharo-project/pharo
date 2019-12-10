@@ -22,6 +22,23 @@ RBGlobalVariablesUsage >> basicCheck: aMethod [
 ]
 
 { #category : #running }
+RBGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
+	| problemSends |
+	problemSends := 
+		(aMethod ast allChildren select: [ :node | node isVariable ]) 
+			select: [:varNode | 
+				varNode isGlobal and: [(Smalltalk globals at: varNode name ) isClass not] ].
+	
+	problemSends do: [ :varNode |
+			aCriticBlock cull: (ReTrivialCritique  
+			withAnchor: (ReIntervalSourceAnchor
+				entity: aMethod
+				interval: varNode sourceInterval )
+			by: self
+			hint: varNode name) ]
+]
+
+{ #category : #running }
 RBGlobalVariablesUsage >> group [
 	^ 'Design Flaws'
 ]

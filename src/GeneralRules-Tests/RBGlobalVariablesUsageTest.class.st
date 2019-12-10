@@ -1,0 +1,27 @@
+"
+A RBGlobalVariablesUsageTest is a test class for testing the behavior of RBGlobalVariablesUsage
+"
+Class {
+	#name : #RBGlobalVariablesUsageTest,
+	#superclass : #TestCase,
+	#category : #'GeneralRules-Tests-Migrated'
+}
+
+{ #category : #'test-help' }
+RBGlobalVariablesUsageTest >> foo [
+	"Global variable are stored in Smalltalk globals, and one should avoid them when possible. 
+	Examples are Display and Sensor"
+	Display value.
+	Sensor value.
+]
+
+{ #category : #tests }
+RBGlobalVariablesUsageTest >> testCheckForCritiques [
+	|method critiques|
+ 	method := self class >> #foo.
+ 	critiques := OrderedCollection new.
+ 	RBGlobalVariablesUsage new check: method forCritiquesDo:[:critique | critiques add: critique].
+
+ 	self assert: critiques size equals: 2.
+ 	self assert: critiques second sourceAnchor interval equals: (149 to: 154).
+]

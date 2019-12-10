@@ -26,6 +26,25 @@ ReThemeAccess >> basicCheck: aMethod [
 ]
 
 { #category : #running }
+ReThemeAccess >> check: aMethod forCritiquesDo: aCriticBlock [ 
+	| problemThemes |
+	((aMethod methodClass inheritsFrom: Morph) 
+		or: [aMethod methodClass inheritsFrom: Model]) ifFalse: [ ^ self ].
+		
+	problemThemes := 
+		(aMethod sendNodes select: [ :msgSend | msgSend selector = #theme 
+				and: [msgSend receiver sourceCode withSeparatorsCompacted = 'Smalltalk ui'] ]).
+	
+	problemThemes do: [ :msgSend |
+			aCriticBlock cull: (ReTrivialCritique  
+			withAnchor: (ReIntervalSourceAnchor
+				entity: aMethod
+				interval: (msgSend start to: msgSend stop))
+			by: self
+			hint: msgSend selector asString) ]
+]
+
+{ #category : #running }
 ReThemeAccess >> group [
 	^ 'API Hints'
 ]

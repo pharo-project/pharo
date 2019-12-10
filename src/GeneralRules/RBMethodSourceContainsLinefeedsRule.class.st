@@ -24,6 +24,19 @@ RBMethodSourceContainsLinefeedsRule >> basicCheck: aMethod [
 	^ aMethod sourceCode includes: Character lf
 ]
 
+{ #category : #running }
+RBMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlock [
+	| linefeeds |
+	linefeeds := aMethod sourceCode allRangesOfSubstring: String lf.
+	linefeeds do: [ :lfInterval |
+			aCriticBlock cull: (ReTrivialCritique  
+			withAnchor: (ReIntervalSourceAnchor
+				entity: aMethod
+				interval: lfInterval)
+			by: self
+			hint: 'lf') ]
+]
+
 { #category : #accessing }
 RBMethodSourceContainsLinefeedsRule >> group [
 	^ 'Bugs'

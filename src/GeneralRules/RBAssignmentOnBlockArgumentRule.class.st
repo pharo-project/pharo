@@ -27,8 +27,17 @@ RBAssignmentOnBlockArgumentRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBAssignmentOnBlockArgumentRule >> basicCheck: aMethod [
-	^ (RBFindBlockArgumentAssignment collectAssignments: aMethod ast) isNotEmpty
+RBAssignmentOnBlockArgumentRule >> check: aMethod forCritiquesDo: aCriticBlock [
+	| problemAssignments|
+	problemAssignments := RBFindBlockArgumentAssignment collectAssignments: aMethod ast.
+	
+	problemAssignments do: [ :assignment |
+			aCriticBlock cull: (ReTrivialCritique  
+			withAnchor: (ReIntervalSourceAnchor
+				entity: aMethod
+				interval: assignment sourceInterval)
+			by: self
+			hint: assignment variable sourceCode)]
 ]
 
 { #category : #accessing }
