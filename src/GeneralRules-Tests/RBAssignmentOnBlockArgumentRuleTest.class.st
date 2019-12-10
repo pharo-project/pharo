@@ -3,7 +3,7 @@ A RBAssignmentOnBlockArgumentRuleTest is a test class for testing the behavior o
 "
 Class {
 	#name : #RBAssignmentOnBlockArgumentRuleTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
@@ -19,12 +19,9 @@ RBAssignmentOnBlockArgumentRuleTest >> foo [
 
 { #category : #tests }
 RBAssignmentOnBlockArgumentRuleTest >> testRule [
-	|method critiques|
- 	method := self class >> #foo.
- 	critiques := OrderedCollection new.
- 	RBAssignmentOnBlockArgumentRule new 
-		check: method forCritiquesDo:[:critique | critiques add: critique].
-
+	| critiques|
+ 	critiques := self myCritiquesOnFoo.
+	
  	self assert: critiques size equals: 2.
  	self assert: critiques second sourceAnchor interval equals: (99 to: 106).
 ]

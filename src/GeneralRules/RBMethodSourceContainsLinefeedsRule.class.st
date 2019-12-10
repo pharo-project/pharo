@@ -20,11 +20,6 @@ RBMethodSourceContainsLinefeedsRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBMethodSourceContainsLinefeedsRule >> basicCheck: aMethod [
-	^ aMethod sourceCode includes: Character lf
-]
-
-{ #category : #running }
 RBMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| linefeeds |
 	linefeeds := aMethod sourceCode allRangesOfSubstring: String lf.

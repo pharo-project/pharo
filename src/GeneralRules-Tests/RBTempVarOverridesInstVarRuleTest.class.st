@@ -3,7 +3,7 @@ A RBTempVarOverridesInstVarRuleTest is a test class for testing the behavior of 
 "
 Class {
 	#name : #RBTempVarOverridesInstVarRuleTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#instVars : [
 		'dummy1',
 		'dummy2',
@@ -24,12 +24,8 @@ RBTempVarOverridesInstVarRuleTest >> foo: dummy1 [
 
 { #category : #tests }
 RBTempVarOverridesInstVarRuleTest >> testRule [
-	| method critiques |
-	method := self class >> #foo:.
-	critiques := OrderedCollection new.
-	RBTempVarOverridesInstVarRule new 
-		check: method
-		forCritiquesDo: [ :critique | critiques add: critique ].
+	| critiques |
+	critiques := self myCritiguesOnMethod: self class >> #foo:.
 	self assert: critiques size equals: 2.
 	self assert: critiques second sourceAnchor interval equals: (55 to: 60)
 ]

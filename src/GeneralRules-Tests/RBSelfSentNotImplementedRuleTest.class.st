@@ -3,11 +3,11 @@ A RBSelfSentNotImplementedRuleTest is a test class for testing the behavior of R
 "
 Class {
 	#name : #RBSelfSentNotImplementedRuleTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'test-help' }
 RBSelfSentNotImplementedRuleTest >> foo [
 	"Do not highlight this bar. I am a method used in testCheckForCritiques"
 
@@ -19,12 +19,10 @@ RBSelfSentNotImplementedRuleTest >> foo [
 
 { #category : #tests }
 RBSelfSentNotImplementedRuleTest >> testCheckForCritiques [
-	|method critiques|
-	method := self class >> #foo.
-	critiques := OrderedCollection new.
-	RBSelfSentNotImplementedRule new check: method forCritiquesDo:[:critique | critiques add: critique].
+	| critiques|
+	critiques := self myCritiquesOnFoo .
 	
 	self assert: critiques size equals: 4.
-	self assert: critiques first sourceAnchor interval equals: (86 to: 88).
+	self assert: critiques first sourceAnchor interval equals: (81 to: 88).
 	
 ]

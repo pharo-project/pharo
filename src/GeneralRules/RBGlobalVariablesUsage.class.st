@@ -15,13 +15,6 @@ RBGlobalVariablesUsage class >> checksMethod [
 ]
 
 { #category : #running }
-RBGlobalVariablesUsage >> basicCheck: aMethod [
-	^ (aMethod literals 
-		select: [ :l | l isKindOf: GlobalVariable ]) 
-		  anySatisfy: [ :v | v value isClass not ]
-]
-
-{ #category : #running }
 RBGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemSends |
 	problemSends := 
@@ -30,12 +23,7 @@ RBGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
 				varNode isGlobal and: [(Smalltalk globals at: varNode name ) isClass not] ].
 	
 	problemSends do: [ :varNode |
-			aCriticBlock cull: (ReTrivialCritique  
-			withAnchor: (ReIntervalSourceAnchor
-				entity: aMethod
-				interval: varNode sourceInterval )
-			by: self
-			hint: varNode name) ]
+		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: varNode hint: varNode name)]
 ]
 
 { #category : #running }

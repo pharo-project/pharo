@@ -3,7 +3,7 @@ A RBSentNotImplementedRuleTest is a test class for testing the behavior of RBSen
 "
 Class {
 	#name : #RBSentNotImplementedRuleTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
@@ -18,12 +18,8 @@ RBSentNotImplementedRuleTest >> foo [
 
 { #category : #tests }
 RBSentNotImplementedRuleTest >> testRule [
-	| method critiques |
-	method := self class >> #foo.
-	critiques := OrderedCollection new.
-	RBSentNotImplementedRule new 
-		check: method
-		forCritiquesDo: [ :critique | critiques add: critique ].
+	| critiques |
+	critiques := self myCritiquesOnFoo.
 	self assert: critiques size equals: 3.
-	self assert: critiques first sourceAnchor interval equals: (71 to: 85)
+	self assert: critiques first sourceAnchor interval equals: (68 to: 85)
 ]

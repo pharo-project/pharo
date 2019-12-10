@@ -3,7 +3,7 @@ A RBMethodSourceContainsLinefeedsRuleTest is a test class for testing the behavi
 "
 Class {
 	#name : #RBMethodSourceContainsLinefeedsRuleTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
@@ -18,11 +18,8 @@ RBMethodSourceContainsLinefeedsRuleTest >> foo [
 
 { #category : #tests }
 RBMethodSourceContainsLinefeedsRuleTest >> testRule [
-	|method critiques|
- 	method := self class >> #foo.
- 	critiques := OrderedCollection new.
- 	RBMethodSourceContainsLinefeedsRule new 
-		check: method forCritiquesDo:[:critique | critiques add: critique].
+	| critiques|
+ 	critiques := self myCritiquesOnFoo .
 
  	self assert: critiques size equals: 2.
  	self assert: critiques first sourceAnchor interval equals: (109 to: 109).

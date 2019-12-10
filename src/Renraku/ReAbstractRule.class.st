@@ -160,6 +160,17 @@ ReAbstractRule >> check: anEntity ifNoCritiques: alternativeBlock [
 	^ critiques
 ]
 
+{ #category : #'as yet unclassified' }
+ReAbstractRule >> createTrivialCritiqueOn: method intervalOf: node hint: hint [
+	^ ReTrivialCritique
+		  withAnchor:
+		  (ReIntervalSourceAnchor
+			   entity: method
+			   interval: node sourceInterval)
+		  by: self
+		  hint: hint
+]
+
 { #category : #helpers }
 ReAbstractRule >> critiqueFor: anEntity [
 

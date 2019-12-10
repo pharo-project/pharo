@@ -3,7 +3,7 @@ A RBGlobalVariablesUsageTest is a test class for testing the behavior of RBGloba
 "
 Class {
 	#name : #RBGlobalVariablesUsageTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
@@ -17,10 +17,8 @@ RBGlobalVariablesUsageTest >> foo [
 
 { #category : #tests }
 RBGlobalVariablesUsageTest >> testCheckForCritiques [
-	|method critiques|
- 	method := self class >> #foo.
- 	critiques := OrderedCollection new.
- 	RBGlobalVariablesUsage new check: method forCritiquesDo:[:critique | critiques add: critique].
+	| critiques |
+ 	critiques := self myCritiquesOnFoo.
 
  	self assert: critiques size equals: 2.
  	self assert: critiques second sourceAnchor interval equals: (149 to: 154).

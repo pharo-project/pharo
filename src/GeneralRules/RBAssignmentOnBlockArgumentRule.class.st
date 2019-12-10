@@ -35,12 +35,7 @@ RBAssignmentOnBlockArgumentRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		select: [ :assignment | assignment variable isArg].
 	
 	problemAssignments do: [ :assignment |
-			aCriticBlock cull: (ReTrivialCritique  
-			withAnchor: (ReIntervalSourceAnchor
-				entity: aMethod
-				interval: assignment sourceInterval)
-			by: self
-			hint: assignment variable sourceCode)]
+			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: assignment variable sourceCode)]
 ]
 
 { #category : #accessing }

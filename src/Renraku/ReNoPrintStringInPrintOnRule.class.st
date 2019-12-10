@@ -20,12 +20,6 @@ ReNoPrintStringInPrintOnRule class >> initialize [
 ]
 
 { #category : #running }
-ReNoPrintStringInPrintOnRule >> basicCheck: aMethod [ 
-	^ (aMethod selector = #printOn: and: [ aMethod messages anySatisfy: [ :aMessageSymbol | aMessageSymbol = #printString ] ])
-
-]
-
-{ #category : #running }
 ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemPrintStrings |
 	aMethod selector = #printOn: ifFalse: [ ^self ].
@@ -33,12 +27,10 @@ ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		aMethod sendNodes select: [ :msgSend | msgSend selector = #printString].
 	
 	problemPrintStrings do: [ :msgSend |
-			aCriticBlock cull: (ReTrivialCritique  
-			withAnchor: (ReIntervalSourceAnchor
-				entity: aMethod
-				interval: (msgSend start to: msgSend stop))
-			by: self
-			hint: msgSend selector asString) ]
+			aCriticBlock cull: (self 
+				createTrivialCritiqueOn: aMethod 
+				intervalOf: msgSend 
+				hint: msgSend selector asString )]
 ]
 
 { #category : #accessing }

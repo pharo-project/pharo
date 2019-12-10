@@ -3,7 +3,7 @@ A RBMultiplePeriodsTerminatingStatementRuleTest is a test class for testing the 
 "
 Class {
 	#name : #RBMultiplePeriodsTerminatingStatementRuleTest,
-	#superclass : #TestCase,
+	#superclass : #ReAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
@@ -18,12 +18,8 @@ RBMultiplePeriodsTerminatingStatementRuleTest >> foo [
 
 { #category : #tests }
 RBMultiplePeriodsTerminatingStatementRuleTest >> testRule [
-	| method critiques |
-	method := self class >> #foo.
-	critiques := OrderedCollection new.
-	RBMultiplePeriodsTerminatingStatementRule new 
-		check: method
-		forCritiquesDo: [ :critique | critiques add: critique ].
+	| critiques |
+	critiques := self myCritiquesOnFoo .
 	
 	self assert: critiques size equals: 2.
 	self assert: critiques second sourceAnchor interval equals: (69 to: 71)
