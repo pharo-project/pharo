@@ -50,14 +50,6 @@ SourceFile >> cr [
 ]
 
 { #category : #accessing }
-SourceFile >> ensureWrittenPosition: aPosition [
-
-	self isReadOnly ifTrue: [ ^ self ].
-	
-	stream ensureWrittenPosition: aPosition
-]
-
-{ #category : #accessing }
 SourceFile >> flush [
 
 	(stream isNil or: [ stream isReadOnly ])

@@ -360,29 +360,6 @@ SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
 ]
 
 { #category : #testing }
-SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefering [
-	| fs array |
-	fs := FileSystem memory.
-	array := SourceFileArray new.
-	array
-		changesFileStream:
-			(SourceFile on: 'changes.chunk' potentialLocations: { fs root })
-				tryOpen;
-		sourcesFileStream:
-			(SourceFile on: 'sources.chunk' potentialLocations: { fs root })
-				tryOpen;
-		deferFlushDuring: [ 
-			array
-				writeSource: 'some source'
-				preamble: 'some preamble'
-				onSuccess: [ :arg1 |  ]
-				onFail: [ self fail ] ].
-	self
-		assert: (fs / 'changes.chunk') contents
-		equals: 'some preamblesome source!'
-]
-
-{ #category : #testing }
 SourceFileArrayTest >> testWriteToBufferedStream [
 	| fs array |
 	fs := FileSystem memory.
