@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBMethodSourceContainsLinefeedsRuleTest >> foo [
+RBMethodSourceContainsLinefeedsRuleTest >> sampleMethod [
 	"This method contains two linefeeds which should be carriage returns."
 	"There is one after this line" 7.
 	"Noone here" 9.
@@ -18,16 +18,16 @@ RBMethodSourceContainsLinefeedsRuleTest >> foo [
 
 { #category : #tests }
 RBMethodSourceContainsLinefeedsRuleTest >> testRule [
-	| fooMethod critiques|
-	fooMethod := 'foo
+	| sampleMethod critiques|
+	sampleMethod := 'sampleMethod
 	"This method contains two linefeeds which should be carriage returns."
-	"There is one after this line" 7.
-	"Noone here" 9.
-	"and one here" 8 .
-	"That was it." -1'.
-	self class compile: fooMethod classified: 'test-help'.
- 	critiques := self myCritiquesOnFoo .
+	"There is one after this line" 7.', String lf,
+	'	"Noone here" 9.
+	"and one here" 8 .', String lf,
+	'	"That was it." -1'.
+	self class compile: sampleMethod classified: 'test-help'.
+ 	critiques := self myCritiques .
 
  	self assert: critiques size equals: 2.
- 	self assert: critiques first sourceAnchor interval equals: (111 to: 111).
+ 	self assert: (self sourceAtChritique:  critiques first) equals: String lf.
 ]

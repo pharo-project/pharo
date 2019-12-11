@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBSentNotImplementedRuleTest >> foo [
+RBSentNotImplementedRuleTest >> sampleMethod [ 
 	"this is a comment, so whatShallIDoNow should not highlight"
 	99 whatShallIDoNow.
 	77 andThisIsBogusToo.
@@ -19,7 +19,8 @@ RBSentNotImplementedRuleTest >> foo [
 { #category : #tests }
 RBSentNotImplementedRuleTest >> testRule [
 	| critiques |
-	critiques := self myCritiquesOnFoo.
+	critiques := self myCritiques.
+	
 	self assert: critiques size equals: 3.
-	self assert: critiques first sourceAnchor interval equals: (68 to: 85)
+	self assert: (self sourceAtChritique:  critiques third) equals: '88 whatShallIDoNow'.
 ]

@@ -23,12 +23,17 @@ RBAbstractRuleTestCase >> myCritiguesOnMethod: method [
 ]
 
 { #category : #'as yet unclassified' }
-RBAbstractRuleTestCase >> myCritiquesOnFoo [
+RBAbstractRuleTestCase >> myCritiques [
 	| critiques |
 	critiques := OrderedCollection new.
 	self subjectUnderTest  new 
-		check: (self class >> #foo ) forCritiquesDo:[:critique | critiques add: critique].
+		check: (self class >> #sampleMethod ) forCritiquesDo:[:critique | critiques add: critique].
 	^critiques 
+]
+
+{ #category : #'as yet unclassified' }
+RBAbstractRuleTestCase >> sourceAtChritique: critique [
+	^ critique sourceAnchor in: [ :anchor | anchor entity sourceCode atAll: anchor interval ]
 ]
 
 { #category : #'as yet unclassified' }

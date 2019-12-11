@@ -13,8 +13,8 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'text-help' }
-RBTempVarOverridesInstVarRuleTest >> foo: dummy1 [
+{ #category : #'test-help' }
+RBTempVarOverridesInstVarRuleTest >> sampleMethod: dummy1 [
 	"I override dummy1, dummy2, dummy3  "
 	| dummy2 |
 	dummy2 := [ :dummy3 | dummy4 := dummy1 + dummy3 ].
@@ -25,7 +25,14 @@ RBTempVarOverridesInstVarRuleTest >> foo: dummy1 [
 { #category : #tests }
 RBTempVarOverridesInstVarRuleTest >> testRule [
 	| critiques |
-	critiques := self myCritiguesOnMethod: self class >> #foo:.
+	self class compile: 'sampleMethod: dummy1
+	"I override dummy1, dummy2, dummy3  "
+	| dummy2 |
+	dummy2 := [ :dummy3 | dummy4 := dummy1 + dummy3 ].
+	^ dummy2 value: dummy1.
+	' classified: 'test-help'.
+	critiques := self myCritiguesOnMethod: self class >> #sampleMethod:.
+	
 	self assert: critiques size equals: 2.
-	self assert: critiques second sourceAnchor interval equals: (55 to: 60)
+	self assert: (self sourceAtChritique:  critiques second) equals: 'dummy2'.
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBAssignmentOnBlockArgumentRuleTest >> foo [
+RBAssignmentOnBlockArgumentRuleTest >> sampleMethod [
 	"Assignment to blockArgument is bad - here x"
 	| myBlock |
 	myBlock := [:x :y|
@@ -20,8 +20,15 @@ RBAssignmentOnBlockArgumentRuleTest >> foo [
 { #category : #tests }
 RBAssignmentOnBlockArgumentRuleTest >> testRule [
 	| critiques|
- 	critiques := self myCritiquesOnFoo.
+	self class compile: 'sampleMethod
+	"Assignment to blockArgument is bad - here x"
+	| myBlock |
+	myBlock := [:x :y|
+		x := x+y.
+		y := y+x
+	]' classified: 'test-help'.
+ 	critiques := self myCritiques.
 	
  	self assert: critiques size equals: 2.
- 	self assert: critiques second sourceAnchor interval equals: (99 to: 106).
+ 	self assert: (self sourceAtChritique: critiques second)  equals: 'y := y+x'.
 ]

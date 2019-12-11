@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBMultiplePeriodsTerminatingStatementRuleTest >> foo [
+RBMultiplePeriodsTerminatingStatementRuleTest >> sampleMethod [
 	"I have two periods between statements"
 	2+3.  .
 	{1.2..3}.
@@ -19,8 +19,8 @@ RBMultiplePeriodsTerminatingStatementRuleTest >> foo [
 { #category : #tests }
 RBMultiplePeriodsTerminatingStatementRuleTest >> testRule [
 	| critiques |
-	critiques := self myCritiquesOnFoo .
+	critiques := self myCritiques .
 	
 	self assert: critiques size equals: 2.
-	self assert: critiques second sourceAnchor interval equals: (69 to: 71)
+	self assert: (self sourceAtChritique: critiques first) equals: '.  .'.
 ]

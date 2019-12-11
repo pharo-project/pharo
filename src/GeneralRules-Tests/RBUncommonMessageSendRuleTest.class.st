@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBUncommonMessageSendRuleTest >> foo [
+RBUncommonMessageSendRuleTest >> sampleMethod [
 	"I check that no uncommon method sends occour. For instance using self or true as method names, or method names with capital - like '7 BadSelector'"
 	99 self.
 	3 factorial.
@@ -16,11 +16,10 @@ RBUncommonMessageSendRuleTest >> foo [
 ]
 
 { #category : #tests }
-RBUncommonMessageSendRuleTest >> testCheckForCritiques [
+RBUncommonMessageSendRuleTest >> testRule [
 	| critiques |
-	critiques := self myCritiquesOnFoo.
+	critiques := self myCritiques.
+	
 	self assert: critiques size equals: 2.
-	self
-		assert: critiques first sourceAnchor interval
-		equals: (156 to: 162)
+	self assert: (self sourceAtChritique:  critiques second) equals: '7 BadSelector'.
 ]

@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBSelfSentNotImplementedRuleTest >> foo [
+RBSelfSentNotImplementedRuleTest >> sampleMethod [
 	"Do not highlight this bar. I am a method used in testCheckForCritiques"
 
 	self bar.
@@ -18,11 +18,11 @@ RBSelfSentNotImplementedRuleTest >> foo [
 ]
 
 { #category : #tests }
-RBSelfSentNotImplementedRuleTest >> testCheckForCritiques [
+RBSelfSentNotImplementedRuleTest >> testRule [
 	| critiques|
-	critiques := self myCritiquesOnFoo .
+	critiques := self myCritiques .
 	
 	self assert: critiques size equals: 4.
-	self assert: critiques first sourceAnchor interval equals: (81 to: 88).
+	self assert: (self sourceAtChritique: critiques first) equals: 'self bar'.
 	
 ]

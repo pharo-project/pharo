@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'test-help' }
-RBGlobalVariablesUsageTest >> foo [
+RBGlobalVariablesUsageTest >> sampleMethod [
 	"Global variable are stored in Smalltalk globals, and one should avoid them when possible. 
 	Examples are Display and Sensor"
 	Display value.
@@ -16,10 +16,10 @@ RBGlobalVariablesUsageTest >> foo [
 ]
 
 { #category : #tests }
-RBGlobalVariablesUsageTest >> testCheckForCritiques [
+RBGlobalVariablesUsageTest >> testRule [
 	| critiques |
- 	critiques := self myCritiquesOnFoo.
+ 	critiques := self myCritiques.
 
  	self assert: critiques size equals: 2.
- 	self assert: critiques second sourceAnchor interval equals: (149 to: 154).
+ 	self assert: (self sourceAtChritique: critiques second)  equals: 'Sensor'.
 ]
