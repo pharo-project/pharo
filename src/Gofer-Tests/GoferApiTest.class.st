@@ -170,7 +170,7 @@ GoferApiTest >> testRenggli [
 { #category : #'tests - repositories - options' }
 GoferApiTest >> testRepositoryErrors [
 	gofer
-		url: 'http://pharo-project.org/page-that-will-never-ever-exist';
+		url: 'http://google.com/pharo_official_language_for_android';
 		repository: self monticelloRepository.
 	gofer package: 'GoferFoo'.
 	gofer enableRepositoryErrors.
