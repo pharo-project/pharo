@@ -54,6 +54,9 @@ FFILibrary >> calloutAPIClass [
 { #category : #accessing }
 FFILibrary >> ffiLibrary [
 
+	"This method returns the FFILibrary to use when executing a FFI call.
+	As we are already in a FFILibrary, the ffi call can use myself!"
+
 	^ self
 ]
 
