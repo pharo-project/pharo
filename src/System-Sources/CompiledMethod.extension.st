@@ -20,9 +20,10 @@ CompiledMethod >> putSource: source withPreamble: preambleBlock [
 	SourceFiles 
 		writeSource: source 
 		preamble: (String streamContents: preambleBlock)
-		onSuccess: [ :newSourcePointer :theChangesFileStream |
+		onSuccess: [ :newSourcePointer | 
 			"Method chunk needs a final ! !"
-			(SourceChunkWriteStream on: theChangesFileStream) nextPut: ' '.
+			SourceFiles changesWriteStreamDo: [ :file | 
+				(ChunkWriteStream on: file) nextPut: ' ' ].
 			"Update with new source pointer"
 			self setSourcePointer: newSourcePointer ]
 		onFail: [ 
