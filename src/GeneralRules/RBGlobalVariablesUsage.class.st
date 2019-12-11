@@ -16,8 +16,9 @@ RBGlobalVariablesUsage class >> checksMethod [
 
 { #category : #running }
 RBGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
-	"Beware that ClassVariables respond true to #isGlobal. "
-	| problemSends |
+	"Beware that ClassVariables respond true to #isGlobal. 
+	 The trick with 'ifAbsent:[Object] is basically a way not select ClassVariables (or Pools)"
+	| problemSends  |
 	problemSends := 
 		(aMethod ast allChildren select: [ :node | node isVariable ]) 
 			select: [:varNode | 
