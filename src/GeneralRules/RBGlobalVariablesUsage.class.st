@@ -16,11 +16,12 @@ RBGlobalVariablesUsage class >> checksMethod [
 
 { #category : #running }
 RBGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
+	"Beware that ClassVariables respond true to #isGlobal. "
 	| problemSends |
 	problemSends := 
 		(aMethod ast allChildren select: [ :node | node isVariable ]) 
 			select: [:varNode | 
-				varNode isGlobal and: [(Smalltalk globals at: varNode name ) isClass not] ].
+				varNode isGlobal and: [(Smalltalk globals at: varNode name ifAbsent: [Object]) isClass not] ].
 	
 	problemSends do: [ :varNode |
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: varNode hint: varNode name)]

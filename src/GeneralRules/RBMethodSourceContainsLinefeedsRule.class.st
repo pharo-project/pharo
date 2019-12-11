@@ -23,6 +23,7 @@ RBMethodSourceContainsLinefeedsRule class >> uniqueIdentifierName [
 RBMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| linefeeds |
 	linefeeds := aMethod sourceCode allRangesOfSubstring: String lf.
+	
 	linefeeds do: [ :lfInterval |
 			aCriticBlock cull: (ReTrivialCritique  
 			withAnchor: (ReIntervalSourceAnchor
