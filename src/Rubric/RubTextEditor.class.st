@@ -1477,6 +1477,11 @@ RubTextEditor >> isDisjointFrom: anInterval [
 ]
 
 { #category : #testing }
+RubTextEditor >> isScripting [
+	^ false 
+]
+
+{ #category : #testing }
 RubTextEditor >> isSmalltalkEditor [
 	^ false 
 ]

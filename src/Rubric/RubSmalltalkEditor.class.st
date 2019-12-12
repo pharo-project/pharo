@@ -789,6 +789,11 @@ RubSmalltalkEditor >> isCompletionEnabled [
 ]
 
 { #category : #testing }
+RubSmalltalkEditor >> isScripting [
+	^ self editingMode isScripting
+]
+
+{ #category : #testing }
 RubSmalltalkEditor >> isSmalltalkEditor [
 	^ true 
 ]
