@@ -189,10 +189,9 @@ CompletionEngine >> isMenuOpen [
 
 { #category : #testing }
 CompletionEngine >> isScripting [
-	
-	"demeters law :("
+
 	^ self editor 
-		ifNotNil: [ self editor textArea editingMode isScripting ]
+		ifNotNil: [ self editor isScripting ]
 		ifNil: [ false ]
 ]
 
