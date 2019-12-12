@@ -93,7 +93,7 @@ OCLiteralVariable >> name [
 
 { #category : #reading }
 OCLiteralVariable >> read [
-	^assoc read 
+	^ assoc read 
 ]
 
 { #category : #accessing }
