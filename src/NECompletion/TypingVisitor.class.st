@@ -57,7 +57,7 @@ TypingVisitor >> visitBlockNode: aBlockNode [
 TypingVisitor >> visitGlobalNode: aGlobalNode [
 	aGlobalNode
 		propertyAt: #type
-		put: aGlobalNode binding assoc read class
+		put: aGlobalNode binding read class
 ]
 
 { #category : #visiting }
