@@ -1,7 +1,5 @@
 "
 The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
-
-For security reasons, registry is kept private, and has no accessor like in other implementations
 "
 Class {
 	#name : #Announcer,
@@ -30,8 +28,9 @@ Announcer >> basicSubscribe: subscription [
 
 { #category : #testing }
 Announcer >> handleSubscriberClass: eventClass [
-	self subscriptions ifNil: [ ^ false ].
-	^ self subscriptions handleSubscriberClass: eventClass
+	^ self subscriptions 
+		ifNil: [ false ]
+		ifNotNil: [:subscriptions | subscriptions handleSubscriberClass: eventClass]
 ]
 
 { #category : #testing }
@@ -136,7 +135,8 @@ Announcer >> when: anAnnouncementClass do: aValuable for: aSubscriber [
 Announcer >> when: anAnnouncementClass send: aSelector to: anObject [
 	"Declare that when anAnnouncementClass is raised, anObject should receive the message aSelector.
     When the message expects one argument (eg #fooAnnouncement:) the announcement is passed as argument.
-    When the message expects two arguments (eg #fooAnnouncement:announcer:) both the announcement and the announcer are passed as argument"
+    When the message expects two arguments (eg #fooAnnouncement:announcer:) both the announcement and 
+    the announcer are passed as argument"
 
 	^ self
 		when: anAnnouncementClass
