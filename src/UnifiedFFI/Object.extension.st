@@ -73,7 +73,7 @@ Object >> ffiCalloutIn: aContext [
 { #category : #'*UnifiedFFI' }
 Object >> ffiLibrary [
 	
-	"This method returns the ffiLibrary to use in the Foreing-Function calls performed in this object.
+	"This method returns the ffiLibrary to use in the Foreign-Function calls performed in this object.
 	FFI calls allows Pharo to call functions in other external dynamic linked libraries.
 	
 	See #ffiCall: to see how to perform a FFI call.
