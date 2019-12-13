@@ -6,11 +6,10 @@ Class {
 
 { #category : #tests }
 ContextDebuggingTest >> deadContext [
-	| semaphore context |
-	semaphore := Semaphore new.
-	[ context := thisContext.
-	semaphore signal ] fork.
-	semaphore wait.
+	| process context |
+	process := [  ] newProcess.
+	context := process suspendedContext.
+	context pc: nil.
 	^ context
 ]
 
