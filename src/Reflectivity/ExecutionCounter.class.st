@@ -92,7 +92,7 @@ ExecutionCounter class >> removeFromMethod: aMethod [
 	self allCounters copy do: [ :counter |
 		counter link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ self allCounters remove: counter ] ]
+			ifFound: [ counter uninstall] ]
 ]
 
 { #category : #cleanup }
