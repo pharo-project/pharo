@@ -38,6 +38,30 @@ ExecutionCounterTest >> testCountingAfterReset [
 ]
 
 { #category : #adding }
+ExecutionCounterTest >> testGlobalCounterReferenceAfterInstallation [
+	counter := ExecutionCounter installOn: node.
+	self assert: (ExecutionCounter allCounters includesKey: node).
+	self assert: (ExecutionCounter allCounters at: node) identicalTo: counter.
+	self assert: (counter link methods includes: node methodNode compiledMethod)
+]
+
+{ #category : #removing }
+ExecutionCounterTest >> testGlobalCounterReferenceAfterRemovingFromMethod [
+	counter := ExecutionCounter installOn: node.
+	ExecutionCounter removeFromMethod: node methodNode compiledMethod.
+	self deny: (ExecutionCounter allCounters includesKey: node).
+	self assertEmpty: counter link methods
+]
+
+{ #category : #removing }
+ExecutionCounterTest >> testGlobalCounterReferenceAfterUninstallInstallation [
+	counter := ExecutionCounter installOn: node.
+	counter uninstall.
+	self deny: (ExecutionCounter allCounters includesKey: node).
+	self assertEmpty: counter link methods
+]
+
+{ #category : #adding }
 ExecutionCounterTest >> testInstallCounter [
 	counter := ExecutionCounter installOn: node.
 	self assert: node hasExecutionCounter
