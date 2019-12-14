@@ -129,6 +129,11 @@ ExecutionCounter >> install [
 ]
 
 { #category : #accessing }
+ExecutionCounter >> link [
+	^ link
+]
+
+{ #category : #accessing }
 ExecutionCounter >> node [
 	^ node
 ]
