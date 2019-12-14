@@ -129,9 +129,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'Tests' ) ].
+	
 		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('BlueInk-Core' 'BlueInk-Extras' 'BlueInk-Tests') ].	
-			"did not use the test group because it is load AST-Core-Tests and this is unclear why this is needed"
+ 			spec repository: repository; loads: #('Core') ].	
+		"no idea why this is breaking when we load the tests (that depend on AST-Core-Tests"
+			
 			
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
