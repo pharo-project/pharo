@@ -65,7 +65,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: EFFormatter.
+	RBProgramNode formatterClass: (self class environment at: #BIConfigurableFormatter ifAbsent: [RBSimpleFormatter]).
 
 	Color flushCache.
 	
@@ -129,6 +129,12 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'Tests' ) ].
+	
+		spec baseline: 'BlueInk' with: [ 
+ 			spec repository: repository; loads: #('Core') ].	
+		"no idea why this is breaking when we load the tests (that depend on AST-Core-Tests"
+			
+			
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
