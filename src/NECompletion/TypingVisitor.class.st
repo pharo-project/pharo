@@ -77,7 +77,11 @@ TypingVisitor >> visitSelfNode: aSelfNode [
 
 { #category : #visiting }
 TypingVisitor >> visitSuperNode: aSuperNode [
-	 aSuperNode propertyAt: #type put: aSuperNode methodNode methodClass superclass
+	| class | 
+	class := aSuperNode methodNode methodClass.
+	"the type of super of a Trait is not known"
+	class isTrait ifTrue: [ ^self ].
+	aSuperNode propertyAt: #type put: class superclass
 ]
 
 { #category : #visiting }
