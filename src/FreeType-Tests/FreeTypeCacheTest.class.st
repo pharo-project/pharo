@@ -88,7 +88,6 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 { #category : #tests }
 FreeTypeCacheTest >> testFailedGet [
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
-	self assertEmpty: (cache instVarNamed: #fontTable).
 	self assert: (cache instVarNamed: #used) equals: 0.
 	self validateSizes: cache
 ]
