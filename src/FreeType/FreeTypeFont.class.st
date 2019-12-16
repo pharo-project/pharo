@@ -378,7 +378,6 @@ FreeTypeFont >> getWidthOf: aCharacter [
 { #category : #'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	| |
 	^FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
