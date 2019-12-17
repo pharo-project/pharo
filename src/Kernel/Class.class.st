@@ -491,6 +491,7 @@ Class >> duplicateClassWithNewName: aSymbol [
 		
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
+
 	^ class
 ]
 
