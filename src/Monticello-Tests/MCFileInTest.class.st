@@ -28,16 +28,14 @@ MCFileInTest >> assertFileOutFrom: writerClass canBeFiledInWith: aBlock [
 MCFileInTest >> assertInitializersCalled [
 	| cvar |
 	cvar := self mockClassA cVar.
-	self assert: cvar = #initialized
+	self assert: cvar equals: #initialized
 ]
 
 { #category : #testing }
 MCFileInTest >> assertInitializersOrder [
-
 	| initializationOrder |
 	initializationOrder := self mockClassA initializationOrder.
-	self assert: initializationOrder = 2.	
-
+	self assert: initializationOrder equals: 2
 ]
 
 { #category : #asserting }

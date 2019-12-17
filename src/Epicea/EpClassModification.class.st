@@ -38,6 +38,12 @@ EpClassModification >> behaviorAffectedName [
 ]
 
 { #category : #testing }
+EpClassModification >> hasChanges [
+	^ oldClass definitionSource ~= newClass definitionSource or: [ 
+		oldClass classSide definitionSource ~= newClass classSide definitionSource ]
+]
+
+{ #category : #testing }
 EpClassModification >> hasMetaclassChanges [
 	"FIX should compare metaclasses as a whole"
 

@@ -33,17 +33,11 @@ ClyMethodSourcesQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyMethodSourcesQueryTest >> testComparison [
+	self assert: (ClyMethodSourcesQuery withString: 'test substring') equals: (ClyMethodSourcesQuery withString: 'test ' , 'substring').
 
-	self 
-		assert: (ClyMethodSourcesQuery withString: 'test substring') 
-		equals: (ClyMethodSourcesQuery withString: 'test ', 'substring').
-		
-	self 
-		assert: (ClyMethodSourcesQuery withString: 'test substring') hash
-		equals: (ClyMethodSourcesQuery withString: 'test ', 'substring') hash.
-		
-	self deny: (ClyMethodSourcesQuery withString: 'test substring')
-					 = (ClyMethodSourcesQuery withString: 'another substring')
+	self assert: (ClyMethodSourcesQuery withString: 'test substring') hash equals: (ClyMethodSourcesQuery withString: 'test ' , 'substring') hash.
+
+	self deny: (ClyMethodSourcesQuery withString: 'test substring') equals: (ClyMethodSourcesQuery withString: 'another substring')
 ]
 
 { #category : #tests }

@@ -44,7 +44,7 @@ SpMorphicListAdapter >> buildWidget [
 		dataSource: datasource;
 		hideColumnHeaders;
 		beResizable;
-		columns: {self newListColumn};
+		columns: { self newListColumn };
 		setMultipleSelection: self model isMultipleSelection;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
@@ -191,15 +191,17 @@ SpMorphicListAdapter >> selectedIndexes [
 { #category : #factory }
 SpMorphicListAdapter >> selectionChanged: ann [
 	| diff |
+	
 	self presenter selection isMultipleSelection
-		ifTrue: [ self presenter selection
+		ifTrue: [ 
+			self presenter selection
 				selectIndexes: (ann newSelectedIndexes reject: [ :e | e = 0 ]) ].
 	self presenter selection isMultipleSelection
-		ifFalse: [ self presenter selection
-				selectIndex:
-					(ann newSelectedIndexes
-						ifNotEmpty: [ :indexes | indexes first ]
-						ifEmpty: [ 0 ]) ].
+		ifFalse: [ 
+			self presenter selection
+				selectIndex: (ann newSelectedIndexes
+					ifNotEmpty: [ :indexes | indexes first ]
+					ifEmpty: [ 0 ]) ].
 	diff := ann newSelectedIndexes difference: ann oldSelectedIndexes.
 	(diff notEmpty and: [ self presenter activatesOnSingleClick ])
 		ifTrue: [ self presenter doActivateAtIndex: diff last ].

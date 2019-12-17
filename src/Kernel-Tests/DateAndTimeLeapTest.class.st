@@ -137,9 +137,8 @@ DateAndTimeLeapTest >> testDaysLeftInYear [
 
 { #category : #tests }
 DateAndTimeLeapTest >> testFirstDayOfMonth [
-	self deny: aDateAndTime firstDayOfMonth =  1.
+	self deny: aDateAndTime firstDayOfMonth equals: 1.
 	self assert: aDateAndTime firstDayOfMonth equals: 32
-
 ]
 
 { #category : #tests }

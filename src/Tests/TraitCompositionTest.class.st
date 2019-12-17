@@ -47,32 +47,23 @@ TraitCompositionTest >> testAliasCompositions [
 TraitCompositionTest >> testClassMethodsTakePrecedenceOverTraitsMethods [
 	| keys |
 	keys := Set new.
-	self t4 methodDict bindingsDo: [:each | keys add: each key].
-	self assert: keys size = 6.
-	self 
-		assert: (keys includesAll: #(
-						#m12
-						#m13
-						#m13
-						#m21
-						#m22
-						#m11
-						#m42
-					)).
-	self assert: (self t4 methodDict at: #m11) sourceCode = 'm11 ^41'
+	self t4 methodDict bindingsDo: [ :each | keys add: each key ].
+	self assert: keys size equals: 6.
+	self assert: (keys includesAll: #(#m12 #m13 #m13 #m21 #m22 #m11 #m42)).
+	self assert: (self t4 methodDict at: #m11) sourceCode equals: 'm11 ^41'
 ]
 
 { #category : #'testing-basic' }
 TraitCompositionTest >> testCompositionFromArray [
 	| composition |
-	composition := { (self t1) } asTraitComposition.
+	composition := {self t1} asTraitComposition.
 	self assert: (composition traits includes: self t1).
-	self assert: composition traits size = 1.
+	self assert: composition traits size equals: 1.
 
-	composition := { (self t1). self t2 } asTraitComposition.
+	composition := {self t1 . self t2} asTraitComposition.
 	self assert: (composition traits includes: self t1).
 	self assert: (composition traits includes: self t2).
-	self assert: composition traits size = 2
+	self assert: composition traits size equals: 2
 ]
 
 { #category : #'testing-basic' }
@@ -146,7 +137,7 @@ TraitCompositionTest >> testSum [
 	self assert: (composition traits includes: self t1).
 	self assert: (composition traits includes: self t2).
 	self assert: (composition traits includes: self t3).
-	self assert: composition traits size = 3
+	self assert: composition traits size equals: 3
 ]
 
 { #category : #'testing-basic' }
@@ -156,8 +147,7 @@ TraitCompositionTest >> testSumWithParenthesis [
 	self assert: (composition traits includes: self t1).
 	self assert: (composition traits includes: self t2).
 	self assert: (composition traits includes: self t3).
-	self assert: composition traits size = 3.
-
+	self assert: composition traits size equals: 3
 ]
 
 { #category : #'testing-comparing' }

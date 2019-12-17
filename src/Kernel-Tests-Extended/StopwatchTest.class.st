@@ -45,24 +45,24 @@ StopwatchTest >> setUp [
 StopwatchTest >> testChangingStatus [
 	aStopwatch activate.
 	self assert: aStopwatch isActive.
-	self assert: aStopwatch timespans size = 1.
+	self assert: aStopwatch timespans size equals: 1.
 	aStopwatch suspend.
 	self assert: aStopwatch isSuspended.
-	self assert: aStopwatch timespans size = 1.
+	self assert: aStopwatch timespans size equals: 1.
 	aStopwatch activate.
 	aStopwatch reActivate.
 	self assert: aStopwatch isActive.
-	self assert: aStopwatch timespans size = 3.
+	self assert: aStopwatch timespans size equals: 3.
 	aStopwatch reset.
 	self assert: aStopwatch isSuspended.
-	self assert: aStopwatch timespans size = 0.
+	self assert: aStopwatch timespans size equals: 0
 ]
 
 { #category : #tests }
 StopwatchTest >> testInitialStatus [
 	self assert: aStopwatch isSuspended.
 	self deny: aStopwatch isActive.
-	self assert: aStopwatch duration = 0 seconds
+	self assert: aStopwatch duration equals: 0 seconds
 ]
 
 { #category : #tests }
@@ -73,10 +73,8 @@ StopwatchTest >> testMultipleTimings [
 	aStopwatch activate.
 	aDelay wait.
 	aStopwatch suspend.
-	self assert: aStopwatch timespans size = 2. 
-	self assert: aStopwatch timespans first asDateAndTime <= 
-					aStopwatch timespans last asDateAndTime.
-
+	self assert: aStopwatch timespans size equals: 2.
+	self assert: aStopwatch timespans first asDateAndTime <= aStopwatch timespans last asDateAndTime
 ]
 
 { #category : #tests }
@@ -86,7 +84,7 @@ StopwatchTest >> testNew [
 
 	self
 		assert: sw isSuspended;
-		assert: sw state = #suspended;
+		assert: sw state equals: #suspended;
 		deny: sw isActive;
 		assertEmpty: sw timespans
 ]
@@ -130,43 +128,44 @@ StopwatchTest >> testSingleTiming [
 	aStopwatch activate.
 	aDelay wait.
 	aStopwatch suspend.
-	self assert: aStopwatch timespans size = 1. 
-	self assert: aStopwatch timespans first asDateAndTime >= timeBefore. 
-	self assert: aStopwatch timespans first asDateAndTime <= aStopwatch end.
-
+	self assert: aStopwatch timespans size equals: 1.
+	self assert: aStopwatch timespans first asDateAndTime >= timeBefore.
+	self assert: aStopwatch timespans first asDateAndTime <= aStopwatch end
 ]
 
 { #category : #tests }
 StopwatchTest >> testStartStop [
-
 	| sw t1 t2 t3 t4 |
 	sw := Stopwatch new.
 	t1 := DateAndTime now.
 	(Delay forMilliseconds: 10) wait.
-	sw activate; activate.
+	sw
+		activate;
+		activate.
 	(Delay forMilliseconds: 10) wait.
 	t2 := DateAndTime now.
-	
-	self 
-		deny: (sw isSuspended);
-		assert: (sw isActive);
-		assert: (sw timespans size = 1);
-		assert: (t1 <= sw start);
-		assert: (sw start <= t2).
+
+	self
+		deny: sw isSuspended;
+		assert: sw isActive;
+		assert: sw timespans size equals: 1;
+		assert: t1 <= sw start;
+		assert: sw start <= t2.
 
 	(Delay forMilliseconds: 10) wait.
 	t3 := DateAndTime now.
 	(Delay forMilliseconds: 10) wait.
-	sw suspend; suspend.
+	sw
+		suspend;
+		suspend.
 	(Delay forMilliseconds: 10) wait.
 	t4 := DateAndTime now.
 
-	self 
-		assert: (sw isSuspended);
-		deny: (sw isActive);
-		assert: (sw timespans size = 1);
+	self
+		assert: sw isSuspended;
+		deny: sw isActive;
+		assert: sw timespans size equals: 1;
 		assert: (sw end between: t3 and: t4);
-		assert: (t3 <= sw end);
-		assert: (sw end <= t4).
-
+		assert: t3 <= sw end;
+		assert: sw end <= t4
 ]

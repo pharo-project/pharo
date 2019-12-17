@@ -13,14 +13,13 @@ DTCommentTestConfiguration >> asTestSuite [
 	suite := TestSuite new.
 	suite := TestSuite named: 'Test Generated From Comments'.
 	self items
-		reject: #isAbstract
+		reject: [ :each | each isAbstract ]
 		thenDo: [ :c | 
 			c methods
 				do: [ :m | 
 					(m methodClass compiledMethodAt: m selector) comments
 						do: [ :com | 
 							(com includesSubstring: '>>>')
-								ifTrue: [ suite
-										addTest: (CommentTestCase comment: com class: c selector: m selector) ] ] ] ].
+								ifTrue: [ suite addTest: (CommentTestCase comment: com class: c selector: m selector) ] ] ] ].
 	^ suite
 ]

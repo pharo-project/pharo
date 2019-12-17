@@ -1672,10 +1672,9 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Error do: [:ex |
+		contextOn: Error, Halt do: [:ex |
 			error ifNil: [
-				"this is ugly but it fixes the side-effects of not sending an Unhandled error on Halt"
-				error := (ex isKindOf: UnhandledError) ifTrue: [ ex exception ] ifFalse: [ ex ].
+				error := ex.
 				topContext := thisContext.
 				ex resumeUnchecked: here jump ]
 			ifNotNil: [ ex pass ]]).
@@ -1793,9 +1792,9 @@ Context >> sender [
 
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
-	"For named primitives, the first literal contains a special object that has information of the primitive. Example:
-(StandardFileStream >> #primOpen:writable:) literalAt: 1 ----->>>>   #(#FilePlugin #primitiveFileOpen 0 147).
-In this method we cope such information from one to another one."
+	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
+	"((StandardFileStream >> #primOpen:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
+
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.

@@ -1,3 +1,0 @@
-accessing
-traitMethodDictionaryIndex
-	^ traitMethodDictionaryIndex

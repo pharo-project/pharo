@@ -27,8 +27,8 @@ Class {
 }
 
 { #category : #private }
-NECPreferences class >> availableControllers [
-	^ NECController withAllSubclasses
+NECPreferences class >> availableEngines [
+	^ CompletionEngine withAllSubclasses
 ]
 
 { #category : #accessing }
@@ -129,7 +129,7 @@ NECPreferences class >> initialize [
 	caseSensitive := true.
 	smartCharacters := true.
 	expandPrefixes := true.
-	captureNavigationKeys := false.
+	captureNavigationKeys := true.
 	useEnterToAccept := self defaultUseEnterToAccept.
 	smartCharactersMapping := Dictionary new.
 	smartCharactersMapping
@@ -191,15 +191,15 @@ NECPreferences class >> settingsOn: aBuilder [
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
 					| availableControllers availableSorters |
-					availableControllers := self availableControllers.
+					availableControllers := self availableEngines.
 					availableControllers size > 1
 						ifTrue: [ 
-							(aBuilder pickOne: #completionController)
+							(aBuilder pickOne: #completionEngineClass)
 								order: -1;
-								label: 'Controller';
+								label: 'CompletionEngine';
 								target: RubSmalltalkEditor;
-								getSelector: #completionEngine;
-								setSelector: #completionEngine:;
+								getSelector: #completionEngineClass;
+								setSelector: #completionEngineClass:;
 								domainValues: availableControllers ].
 					availableSorters := self availableSorters.
 					availableSorters size > 1
@@ -207,9 +207,9 @@ NECPreferences class >> settingsOn: aBuilder [
 							(aBuilder pickOne: #completionSorter)
 								order: -1;
 								label: 'Sorter';
-								target: CompletionModel;
-								getSelector: #sorter;
-								setSelector: #sorter:;
+								target: CompletionContext;
+								getSelector: #sorterClass;
+								setSelector: #sorterClass:;
 								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
 						label: 'Background Color'.

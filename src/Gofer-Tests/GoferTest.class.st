@@ -3,7 +3,7 @@ Abstract superclass for Gofer tests
 "
 Class {
 	#name : #GoferTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'gofer'
 	],

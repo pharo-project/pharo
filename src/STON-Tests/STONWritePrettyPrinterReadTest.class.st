@@ -4,7 +4,7 @@ STONWritePrettyPrinterReadTests tests pretty printed serialization followed by m
 Class {
 	#name : #STONWritePrettyPrinterReadTest,
 	#superclass : #STONWriteReadTest,
-	#category : #'STON-Tests-Writer'
+	#category : #'STON-Tests-Write-Read'
 }
 
 { #category : #private }

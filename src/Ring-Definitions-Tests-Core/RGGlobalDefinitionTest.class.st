@@ -10,22 +10,20 @@ Class {
 { #category : #testing }
 RGGlobalDefinitionTest >> testEquality [
 	| global1 global2 |
-	
 	global1 := RGGlobalVariableDefinition named: #Transcript.
 	global2 := RGGlobalVariableDefinition named: #Transcript.
-	self assert: global1 = global2.
-	
+	self assert: global1 equals: global2.
+
 	global2 := RGGlobalVariableDefinition named: #Transcript2.
-	self deny: global1 = global2.
+	self deny: global1 equals: global2
 ]
 
 { #category : #testing }
 RGGlobalDefinitionTest >> testGlobalVariableDefinition [
-	| global  |
-	
-	global:= RGGlobalVariableDefinition named:  #Transcript.
-	self assert: (global isGlobalVariable).
-	self assert: (global parent = Smalltalk globals).
+	| global |
+	global := RGGlobalVariableDefinition named: #Transcript.
+	self assert: global isGlobalVariable.
+	self assert: global parent equals: Smalltalk globals
 ]
 
 { #category : #testing }

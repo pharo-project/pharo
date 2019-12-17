@@ -9,6 +9,10 @@ Class {
 
 { #category : #'stream creation' }
 SequenceableCollection class >> << blockWithArg [
+	"An alias to #streamContents:"
+	
+	"Array << [ :stream | 0 to: 100 by: 25 do: [ :each | stream nextPut: each ] ] >>> #(0 25 50 75 100)"
+	
 	^ self streamContents: blockWithArg
 ]
 
@@ -20,10 +24,18 @@ SequenceableCollection class >> isAbstract [
 
 { #category : #'stream creation' }
 SequenceableCollection class >> new: newSize streamContents: blockWithArg [
+	"A variant of #streamContents: where the initial or even final size is given to optimize memory consumption"
+	
+	"(Array new: 3 streamContents: [ :out | 3 timesRepeat: [ out nextPut: 42 ] ]) >>> #(42 42 42)"
+	
 	| stream |
 	stream := WriteStream on: (self streamSpecies new: newSize).
 	blockWithArg value: stream.
-	^ stream contents
+	"If the write position of stream is at the end of the internal buffer of stream (originalContents),
+	we can return it directly instead of making a copy as contents would do"
+	^ stream position = stream originalContents size
+		ifTrue: [ stream originalContents ]
+		ifFalse: [ stream contents ]
 ]
 
 { #category : #'instance creation' }
@@ -36,24 +48,30 @@ SequenceableCollection class >> ofSize: n [
 
 { #category : #'stream creation' }
 SequenceableCollection class >> streamContents: blockWithArg [
+	"Build an instance of the receiver by writing elements to a stream.
+	More specifically: blockWithArg will be given a WriteStream on an instance of the receiver.
+	Inside blockWithArg you write elements to the stream to build up the collection.
+	At the end, the contents of the stream up to that point will be returned.
+	Note that the underlying collection grows as needed."
+	
+	"(Array streamContents: [ :out | out nextPut: 1; nextPutAll: #(2 3 4); nextPut: 5 ]) >>> #(1 2 3 4 5)"
 
 	^ self new: 100 streamContents: blockWithArg
 ]
 
 { #category : #'stream creation' }
 SequenceableCollection class >> streamContents: blockWithArg limitedTo: sizeLimit [
+	"A variant of #streamContents: with a strict size limit"
+
+	"(String streamContents: [:s | 10 timesRepeat: [s nextPutAll: 'foo']] limitedTo: 9) >>> 'foofoofoo'"
+
 	| stream |
-	stream :=
-		LimitedWriteStream
-			on: (self streamSpecies new: (100 min: sizeLimit))
-			limit: sizeLimit
-			limitBlock: [^ stream contents].
+	stream := LimitedWriteStream
+		on: (self streamSpecies new: (100 min: sizeLimit))
+		limit: sizeLimit
+		limitBlock: [ ^ stream contents ].
 	blockWithArg value: stream.
 	^ stream contents
-"
-String streamContents: [:s | 1000 timesRepeat: [s nextPutAll: 'Junk']] limitedTo: 25
- 'JunkJunkJunkJunkJunkJunkJ'
-"
 ]
 
 { #category : #accessing }
@@ -416,6 +434,17 @@ SequenceableCollection >> beginsWithAnyOf: aCollection [
 ]
 
 { #category : #enumerating }
+SequenceableCollection >> bind: aBlock [ 
+
+	"Extract items from the receiver and use them as argumeents of aBlock. Signal an error
+	(ArgumentsCountMismatch) when the arguments count of aBlock does not match the receiver size." 
+	
+	"(#(1 2 3) bind: [ :first :second :third | first + second + third ]) >>> 6"
+
+	^ aBlock valueWithArguments: self
+]
+
+{ #category : #enumerating }
 SequenceableCollection >> collect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.  
 	Collect the resulting values into a collection like the receiver. Answer  
@@ -514,16 +543,6 @@ SequenceableCollection >> combinationsAt: jj in: aCollection after: nn do: aBloc
 					in: aCollection
 					after: index
 					do: aBlock ] ]
-]
-
-{ #category : #converting }
-SequenceableCollection >> concatenation [
-	|result index|
-
-	result := Array new: (self inject: 0 into: [:sum :each | sum + each size]).
-	index := 0.
-	self do: [:each | each do: [:item | result at: (index := index+1) put: item]].
-	^result
 ]
 
 { #category : #copying }
@@ -966,12 +985,11 @@ SequenceableCollection >> flatCollect: aBlock [
 
 	"(#( (2 -3) #((4 -5)) #(-6)) flatCollect: [ :e | e abs  ]) >>> #(2 3 #(4 5) 6)"
 
-	| stream |
 	self isEmpty
 		ifTrue: [ ^ self copy ].
-	stream := (self species new: 0) writeStream.
-	self do: [ :each | stream nextPutAll: (aBlock value: each) ].
-	^ stream contents
+	^self species 
+		new: 0
+		streamContents: [ :stream | self do: [ :each | stream nextPutAll: (aBlock value: each) ] ]
 ]
 
 { #category : #copying }

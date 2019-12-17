@@ -1,11 +1,16 @@
 "
-STONWriteReadTests test serialization followed by materialization.
+STONWriteReadTests test serialization followed by materialization, these tests first write then read STON.
 "
 Class {
 	#name : #STONWriteReadTest,
 	#superclass : #TestCase,
-	#category : #'STON-Tests-Writer'
+	#category : #'STON-Tests-Write-Read'
 }
+
+{ #category : #private }
+STONWriteReadTest >> environment [
+	^ Smalltalk globals
+]
 
 { #category : #private }
 STONWriteReadTest >> materialize: string [
@@ -82,14 +87,36 @@ STONWriteReadTest >> testCollections [
 		#(1 2 3).
 		OrderedCollection withAll: #(1 2 3).
 		Set withAll: #(1 2 3).
-		IdentitySet withAll: #(1 2 3).
 		Bag withAll: #(1 2 2 3).
 		Dictionary new at: 1 put: 1; at: 2 put: 2; yourself.
-		IdentityDictionary new at: 1 put: 1; at: 2 put: 2; yourself.
 		#[1 2 3].
 		#(1 2 3) asIntegerArray.
 		#(1 2 3) asFloatArray }.
 	self serializeAndMaterialize: collections
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testCollectionsStructured [
+	| collections one two |
+	one := 1@2.
+	two := 2@3.
+	collections := STON listClass withAll: {
+	 	Bag withAll: { one. two. one. two. one }.
+	 	Set withAll: { one. two. one. two. one }.
+	 	OrderedCollection withAll: { one. two. one. two. one }.
+	}.
+	self serializeAndMaterialize: collections
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testColors [
+	| colors |
+	colors := STON listClass withAll: { 
+		Color red.
+		Color red copy setAlpha: 0.4.
+		Color red lighter lighter }.
+	self serializeAndMaterialize: colors
+
 ]
 
 { #category : #tests }
@@ -109,6 +136,19 @@ STONWriteReadTest >> testDatesAndTimes [
 		Date today. 
 		DateAndTime now }.
 	self serializeAndMaterialize: datesAndTimes
+
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testDiskFiles [
+	| diskFiles |
+	diskFiles := STON listClass withAll: { 
+		FileLocator image asFileReference.
+		FileLocator workingDirectory asAbsolute.
+		'foo/bar/readme.txt' asFileReference.
+		'./readme.txt' asFileReference.
+		(FileLocator home / 'foo.txt') asFileReference }.
+	self serializeAndMaterialize: diskFiles
 
 ]
 
@@ -157,11 +197,29 @@ STONWriteReadTest >> testFloats [
 	floats := STON listClass withAll: ((-10 to: 10) collect: [ :each | each * Float pi ]).
 	serialization := self serialize: floats.
 	materialization := self materialize: serialization.
-	self assert: floats size = materialization size.
-	1 to: floats size do: [:index | | float |
+	self assert: floats size equals: materialization size.
+	1 to: floats size do: [ :index | 
+		| float |
 		float := floats at: index.
 		"Use #closeTo: instead of #= to increase portability"
 		self assert: (float closeTo: (materialization at: index)) ]
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testFractions [
+	| fractions |
+	fractions := STON listClass withAll: (-2/3 to: 2/3 by: 1/3).
+	self serializeAndMaterialize: fractions
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testIdentityCollections [
+	| collections |
+	collections := STON listClass withAll: {
+		IdentitySet withAll: #(1 2 3).
+		IdentityDictionary new at: 1 put: 1; at: 2 put: 2; yourself.
+		IdentityBag withAll: { #A. #B. #A. #B. #A } }.
+	self serializeAndMaterialize: collections
 ]
 
 { #category : #tests }
@@ -193,13 +251,42 @@ STONWriteReadTest >> testJsonMode [
 ]
 
 { #category : #tests }
+STONWriteReadTest >> testKnownObjects [
+	| knownObject ston object |
+	knownObject := STONTestKnownObject new.
+	"make sure the system of remembering instances works"
+	self assert: (STONTestKnownObject fromId: knownObject id asString) equals: knownObject.
+	self assert: (STONTestKnownObject fromId: knownObject id asString) identicalTo: knownObject.
+	"only the id string is serialized"
+	ston := self serialize: knownObject.
+	"upon serialization, objects with known id strings come from the remembered instances"
+	object := self materialize: ston.
+	self assert: object equals: knownObject.
+	self assert: object identicalTo: knownObject.
+	"not just the id is equal, but the rest of the object too"
+	self assert: object description equals: knownObject description.
+
+	STONTestKnownObject resetKnownObjects
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testMimeTypes [
+	| mimeTypes |
+	mimeTypes := STON listClass withAll: { 
+		ZnMimeType applicationJson.
+		ZnMimeType textPlain }.
+	self serializeAndMaterialize: mimeTypes
+
+]
+
+{ #category : #tests }
 STONWriteReadTest >> testOrderedDictionary [
 	"OrderedDictionary is special because it does not inherit from Dictionary.
 	It might also not exist in some dialects, where this test could be skipped."
 	
 	| dictionaries orderedDictionaryClass orderedIdentityDictionaryClass |
-	orderedDictionaryClass := Smalltalk at: #OrderedDictionary ifAbsent: [ Dictionary ].
-	orderedIdentityDictionaryClass := Smalltalk at: #OrderedIdentityDictionary ifAbsent: [ IdentityDictionary ].
+	orderedDictionaryClass := self environment at: #OrderedDictionary ifAbsent: [ Dictionary ].
+	orderedIdentityDictionaryClass := self environment at: #OrderedIdentityDictionary ifAbsent: [ IdentityDictionary ].
 	dictionaries := STON listClass withAll: {
 		orderedDictionaryClass new at: 1 put: 1; at: 2 put: 2; yourself.
 		orderedDictionaryClass new at: #a put: 1; at: #b put: -2; at: #c put: 0; yourself.
@@ -218,12 +305,29 @@ STONWriteReadTest >> testPrimitives [
 ]
 
 { #category : #tests }
+STONWriteReadTest >> testScaledDecimals [
+	| fractions |
+	fractions := STON listClass withAll: (-2/3s2 to: 2/3s2 by: 1/3s2).
+	self serializeAndMaterialize: fractions
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testSharedColors [
+	| color1 color2 colors |
+	color1 := Color r: 0.25 g: 0.5 b: 0.75 alpha: 0.4.
+	color2 := Color red.
+	colors := STON listClass withAll: { color1. color2. color2 }.
+	self serializeAndMaterialize: colors
+
+]
+
+{ #category : #tests }
 STONWriteReadTest >> testSmallDictionary [
 	"SmallDictionary is special because it does not inherit from Dictionary.
 	It might also not exist in some dialects, where this test could be skipped."
 	
 	| dictionaries smallDictionaryClass |
-	smallDictionaryClass := Smalltalk at: #SmallDictionary ifAbsent: [ Dictionary ].
+	smallDictionaryClass := self environment at: #SmallDictionary ifAbsent: [ Dictionary ].
 	dictionaries := STON listClass withAll: {
 		smallDictionaryClass new at: 1 put: 1; at: 2 put: 2; yourself.
 		smallDictionaryClass new at: 1 put: 1; at: 2 put: 2; yourself.
@@ -266,10 +370,16 @@ STONWriteReadTest >> testStrings [
 { #category : #tests }
 STONWriteReadTest >> testSymbols [
 	| symbols |
-	self serializeAndMaterialize: #( #bytes #'' ).
+	symbols := #( #bytes #'' #Bytes123 ).
+	self serializeAndMaterialize: symbols.
 	symbols := Collection allSubclasses collect: [ :each | each name ].
-	self serializeAndMaterialize: symbols
-
+	self serializeAndMaterialize: symbols.
+	"simple symbols"
+	symbols := #( #foo123 #'123foo' #'punctuation-_./' #'_Foo' #'/root' #'---' #'.st' ).
+	self serializeAndMaterialize: symbols.
+	"non-simple symbols"
+	symbols := #( #'les-élèves-français' #'euro-€' #'ångström' ).
+	self serializeAndMaterialize: symbols.
 ]
 
 { #category : #tests }
@@ -280,6 +390,18 @@ STONWriteReadTest >> testTextAndRunArray [
 		(Text string: 'I am bold' attribute: TextEmphasis bold), ' and I am normal text'.
 		Text new }.
 	self serializeAndMaterialize: texts
+]
+
+{ #category : #tests }
+STONWriteReadTest >> testURLs [
+	| urls |
+	urls := STON listClass withAll: { 
+		'https://pharo.org/files/pharo.png' asUrl. 
+		'mailto:sven@stfx.eu' asUrl. 
+		'file:///var/log/system.log' asUrl.
+		'scheme://user:password@host:123/var/log/system.log?foo=1&bar#frag' asUrl }.
+	self serializeAndMaterialize: urls
+
 ]
 
 { #category : #tests }

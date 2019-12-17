@@ -103,11 +103,11 @@ FractionTest >> testExactSqrt [
 
 { #category : #'*Kernel-Tests-Extended' }
 FractionTest >> testFloorLog [
-	self assert: (1/100 floorLog: 10) = -2.
-	self assert: (((2 raisedTo: Float emax + 11)/3) floorLog: 10)
-		= ((Float emax + 11)*2 log - 3 log) floor description: 'Fraction>>log should not overflow'.
-	self assert: ((3/(2 raisedTo: Float precision - Float emin)) floorLog: 10)
-		= ((Float emin - Float precision)*2 log + 3 log) floor description: 'Fraction>>log should not underflow'
+	self assert: (1 / 100 floorLog: 10) equals: -2.
+	self assert: ((2 raisedTo: Float emax + 11) / 3 floorLog: 10) = ((Float emax + 11) * 2 log - 3 log) floor description: 'Fraction>>log should not overflow'.
+	self
+		assert: (3 / (2 raisedTo: Float precision - Float emin) floorLog: 10) = ((Float emin - Float precision) * 2 log + 3 log) floor
+		description: 'Fraction>>log should not underflow'
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -115,8 +115,9 @@ FractionTest >> testInexactRaisedTo [
 	"
 	FractionTest new testInexactRaisedTo
 	"
-	self assert: (((1 << 1024 + 1) / (1 << 1024 + 3)) raisedTo: 1/3) = 1.0.
-	self assert: (((1 << 1024 + 1) / (1 << 1024 + 3)) negated raisedTo: 1/3) = -1.0
+
+	self assert: (((1 << 1024) + 1) / ((1 << 1024) + 3) raisedTo: 1 / 3) equals: 1.0.
+	self assert: ((((1 << 1024) + 1) / ((1 << 1024) + 3)) negated raisedTo: 1 / 3) equals: -1.0
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -124,7 +125,8 @@ FractionTest >> testInexactSqrt [
 	"
 	FractionTest new testInexactSqrt
 	"
-	self assert: ((1 << 1024 + 1) / (1 << 1024 + 3)) sqrt = 1.0
+
+	self assert: (((1 << 1024) + 1) / ((1 << 1024) + 3)) sqrt equals: 1.0
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

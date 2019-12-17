@@ -9,7 +9,8 @@ Class {
 		'model',
 		'editingState',
 		'selectionShowing',
-		'morph'
+		'morph',
+		'findReplaceService'
 	],
 	#classVars : [
 		'BlinkingCursor',
@@ -24,7 +25,8 @@ Class {
 	],
 	#classInstVars : [
 		'cmdActions',
-		'shiftCmdActions'
+		'shiftCmdActions',
+		'defaultFindReplaceServiceClass'
 	],
 	#category : #'Text-Edition'
 }
@@ -146,6 +148,12 @@ TextEditor class >> cmdKeysInText [
 { #category : #settings }
 TextEditor class >> cmdKeysInText: aBoolean [
 	CmdKeysInText := aBoolean
+]
+
+{ #category : #shortcuts }
+TextEditor class >> defaultFindReplaceServiceClass [
+
+	^ defaultFindReplaceServiceClass ifNil: [ FindReplaceService ]
 ]
 
 { #category : #settings }
@@ -1277,6 +1285,12 @@ TextEditor >> cut: aKeyboardEvent [
 	^true
 ]
 
+{ #category : #'find-select' }
+TextEditor >> defaultFindReplaceServiceClass [
+
+	^ FindReplaceService
+]
+
 { #category : #'new selection' }
 TextEditor >> deselect [
 	"If the text selection is visible on the screen, reverse its highlight."
@@ -1683,7 +1697,7 @@ TextEditor >> findRegex [
 
 { #category : #'find-select' }
 TextEditor >> findReplaceService [
-	^ FindReplaceService default
+	^ findReplaceService ifNil: [ self defaultFindReplaceServiceClass newFor: self ]
 ]
 
 { #category : #'find-select' }
@@ -2850,7 +2864,7 @@ TextEditor >> setIndices: shiftPressed forward: forward [
 	| indices |
 	indices := Dictionary new.
 	self flag: 'to be reviewed'.
-	(shiftPressed)
+	shiftPressed
 		ifTrue: [
 			indices at: #moving put: self pointIndex.
 			indices at: #fixed put: self markIndex
@@ -2864,7 +2878,7 @@ TextEditor >> setIndices: shiftPressed forward: forward [
 					indices at: #fixed put: self stopIndex.
 				]
 		].
-	^indices
+	^ indices
 ]
 
 { #category : #'menu messages' }

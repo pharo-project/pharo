@@ -1,5 +1,5 @@
 "
-RBAssignmentNode is an AST node for assignment statements
+RBAssignmentNode is an AST node for assignment statements.
 
 Instance Variables:
 	assignment	<Integer>	position of the :=

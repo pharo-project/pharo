@@ -79,13 +79,12 @@ ZipWriteStream class >> printRegressionStats: stats from: fd [
 		ifTrue: [ ^ self ].
 	compressed := stats at: #compressedSize ifAbsent: [ 0 ].
 	numFiles := stats at: #numFiles ifAbsent: [ 0 ].
-	self traceCr: fd fullName.
-	self traceCrTab: 'Files compressed: ' , numFiles asStringWithCommas.
-	self traceCrTab: 'Bytes compressed: ' , raw asStringWithCommas.
-	self
-		traceCrTab:
-			'Avg. compression ratio: '
-				, (compressed / raw asFloat * 100.0 truncateTo: 0.01) asString
+	
+	SystemNotification signal: (String streamContents: [ :aStream |
+		aStream nextPutAll: fd fullName asString; cr.
+		aStream tab; nextPutAll: 'Files compressed: '; nextPutAll: numFiles asStringWithCommas; cr.
+		aStream tab; nextPutAll: 'Bytes compressed: '; nextPutAll: raw asStringWithCommas; cr.
+		aStream tab; nextPutAll: 'Avg. compression ratio: '; nextPutAll: (compressed / raw asFloat * 100.0 truncateTo: 0.01) asString ])
 ]
 
 { #category : #'regression test' }
@@ -159,7 +158,7 @@ ZipWriteStream >> dynamicBlockSizeFor: lTree and: dTree using: blTree and: blFre
 		freq > 0 ifTrue:[
 			treeBits := treeBits + (freq * ((blTree bitLengthAt: i) + addl "addl bits"))]].
 	VerboseLevel > 1 ifTrue:[
-		self trace:'[',  treeBits asString . self trace:' bits for dynamic tree]'].
+		SystemNotification signal: ('[',  treeBits asString, ' bits for dynamic tree]')].
 	bits := bits + treeBits.
 
 	"Compute the size of the compressed block"
@@ -277,8 +276,8 @@ ZipWriteStream >> flushBlock: lastBlock [
 		using: blTree
 		and: blFreq.
 	VerboseLevel > 1
-		ifTrue: [ self
-				traceCr:
+		ifTrue: [ 
+			SystemNotification signal:
 					(String
 						streamContents: [ :stream | 
 							stream
@@ -309,19 +308,19 @@ ZipWriteStream >> flushBlock: lastBlock [
 	bitsRequired := nil.
 	method == #stored
 		ifTrue: [ VerboseLevel > 0
-				ifTrue: [ self trace: 'S' ].
+				ifTrue: [ SystemNotification signal: 'S' ].
 			bitsRequired := storedLength.
 			encoder nextBits: 3 put: (StoredBlock << 1) + lastFlag.
 			self sendStoredBlock ].
 	method == #fixed
 		ifTrue: [ VerboseLevel > 0
-				ifTrue: [ self trace: 'F' ].
+				ifTrue: [ SystemNotification signal: 'F' ].
 			bitsRequired := fixedLength.
 			encoder nextBits: 3 put: (FixedBlock << 1) + lastFlag.
 			self sendFixedBlock ].
 	method == #dynamic
 		ifTrue: [ VerboseLevel > 0
-				ifTrue: [ self trace: 'D' ].
+				ifTrue: [ SystemNotification signal: 'D' ].
 			bitsRequired := dynamicLength.
 			encoder nextBits: 3 put: (DynamicBlock << 1) + lastFlag.
 			self

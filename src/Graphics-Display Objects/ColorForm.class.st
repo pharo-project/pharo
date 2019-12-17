@@ -272,7 +272,7 @@ ColorForm >> flipBy: direction centerAt: aPoint [
 	^newForm 
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ColorForm >> hibernate [
 	"Make myself take up less space. See comment in Form>hibernate."
 
@@ -346,7 +346,7 @@ ColorForm >> pixelValueAt: aPoint [
 
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ColorForm >> readAttributesFrom: aBinaryStream [
 	super readAttributesFrom: aBinaryStream.
 	colors := ColorArray new: (2 raisedTo: depth).
@@ -408,7 +408,7 @@ ColorForm >> setExtent: extent depth: bitsPerPixel [
 
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ColorForm >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.
@@ -436,7 +436,7 @@ ColorForm >> transparentColor: aColor [
 
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ColorForm >> unhibernate [
 	colors ifNotNil:[colors := colors asArray].
 	^super unhibernate.
@@ -455,7 +455,7 @@ ColorForm >> unusedColormapEntry [
 
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ColorForm >> writeAttributesOn: file [
 	| colorArray |
 	super writeAttributesOn: file.

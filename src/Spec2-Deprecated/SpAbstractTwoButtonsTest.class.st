@@ -31,8 +31,8 @@ SpAbstractTwoButtonsTest >> testFirstActionSecondAction [
 { #category : #tests }
 SpAbstractTwoButtonsTest >> testFirstIconSecondIcon [
 	presenter firstIcon: #thumbsUp secondIcon: #thumbsDown.
-	self assert: presenter firstButton icon == (self iconNamed: #thumbsUp).
-	self assert: presenter secondButton icon == (self iconNamed: #thumbsDown)
+	self assert: presenter firstButton icon identicalTo: (self iconNamed: #thumbsUp).
+	self assert: presenter secondButton icon identicalTo: (self iconNamed: #thumbsDown)
 ]
 
 { #category : #tests }

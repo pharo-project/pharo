@@ -3,16 +3,16 @@ I represent an instance variable.
 "
 Class {
 	#name : #NECInstVarEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 
 { #category : #accessing }
-NECInstVarEntry >> label [
-	^ 'instance variable'
+NECInstVarEntry >> hightlightSymbol [
+	^ #instVar
 ]
 
 { #category : #accessing }
-NECInstVarEntry >> type [
-	^ #instVar
+NECInstVarEntry >> label [
+	^ 'instance variable'
 ]

@@ -72,6 +72,44 @@ Form >> readNativeResourceFrom: byteStream [
 		ifFalse: [ img displayOn: self ]
 ]
 
+{ #category : #'*Graphics-Files' }
+Form >> readResourceFrom: aStream [ 
+	"Store a resource representation of the receiver on aStream.
+	Must be specific to the receiver so that no code is filed out."
+
+	| bitsSize msb |
+	(aStream next: 4) asString = self resourceTag 
+		ifFalse: 
+			[aStream position: aStream position - 4.
+			^self readNativeResourceFrom: aStream].
+	width := aStream nextNumber: 4.
+	height := aStream nextNumber: 4.
+	depth := aStream nextNumber: 4.
+	bitsSize := aStream nextNumber: 4.
+	bitsSize = 0 
+		ifFalse: 
+			[bits := aStream next: bitsSize.
+			^self].
+	msb := (aStream nextNumber: 4) = 1.
+	bitsSize := aStream nextNumber: 4.
+	bits := Bitmap new: self bitsSize.
+	(Form 
+		extent: width @ height
+		depth: depth
+		bits: (aStream next: bitsSize * 4)) displayOn: self.
+	msb = EndianDetector isBigEndian 
+		ifFalse: 
+			[Bitmap 
+				swapBytesIn: bits
+				from: 1
+				to: bits size]
+]
+
+{ #category : #'*Graphics-Files' }
+Form >> resourceTag [
+	^'FORM'
+]
+
 { #category : #'*Graphics-Files-FileRegistry' }
 Form class >> serviceImageAsBackground [
 	"Answer a service for setting the desktop background from a given graphical file's contents"
@@ -108,6 +146,24 @@ Form class >> services [
 Form class >> setBackgroundFromImageFileNamed: aFileName [
 
 	(self fromFileNamed: aFileName) setAsBackground
+]
+
+{ #category : #'*Graphics-Files' }
+Form >> storeResourceOn: aStream [
+	"Store a resource representation of the receiver on aStream.
+	Must be specific to the receiver so that no code is filed out."
+	self hibernate.
+	aStream nextPutAll: self resourceTag asByteArray. "tag"
+	aStream nextNumber: 4 put: width.
+	aStream nextNumber: 4 put: height.
+	aStream nextNumber: 4 put: depth.
+	(bits isMemberOf: ByteArray) ifFalse:
+		"must store bitmap"
+		[aStream nextNumber: 4 put: 0. "tag"
+		aStream nextNumber: 4 put: (EndianDetector isBigEndian ifTrue:[1] ifFalse: [0])].
+	aStream nextNumber: 4 put: bits size.
+	aStream nextPutAll: bits.
+
 ]
 
 { #category : #'*Graphics-Files' }

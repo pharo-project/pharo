@@ -55,18 +55,18 @@ DTCommentToTest >> packagesAvailableForAnalysis [
 
 { #category : #accessing }
 DTCommentToTest >> pragmaForResultTrees [
-	^ #'dTCommentToTestResultTreeNamed:'
+	^ #'dtCommentToTestResultTreeNamed:order:'
 ]
 
 { #category : #api }
 DTCommentToTest >> resultButtonHelp [
-	^ 'Browse the test selected in the results list.' translated
+	^ 'Browse the test selected in the result list.'
 ]
 
 { #category : #api }
 DTCommentToTest >> runForConfiguration: aDTpluginConfiguration [
 	^ self pluginResultClass new
-			testsResult: (self runTestSuites: {aDTpluginConfiguration asTestSuite});
+			testResults: (self runTestSuites: {aDTpluginConfiguration asTestSuite});
 			yourself
 ]
 
@@ -101,7 +101,7 @@ DTCommentToTest >> secondListLabel [
 
 { #category : #api }
 DTCommentToTest >> startButtonHelp [
-	^ 'Run tests selected.' translated
+	^ 'Run selected tests.' 
 ]
 
 { #category : #api }

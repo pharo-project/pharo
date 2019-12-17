@@ -166,12 +166,6 @@ Trait >> addUser: aClass [
 	self users add: aClass
 ]
 
-{ #category : #'class variables' }
-Trait >> allClassVarNames [
-	
-	^ #()
-]
-
 { #category : #accessing }
 Trait >> asTraitComposition [
 	^ TaCompositionElement for: self.
@@ -193,7 +187,7 @@ Trait >> classTrait [
 	^ self class
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 Trait >> definition [
 	
 	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
@@ -254,7 +248,7 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 Trait >> oldDefinition [
 
 	^ self definition

@@ -27,7 +27,7 @@ ExampleSetTest >> testAdd [
 { #category : #testing }
 ExampleSetTest >> testGrow [
 	empty addAll: (1 to: 100).
-	self assert: empty size = 100
+	self assert: empty size equals: 100
 ]
 
 { #category : #testing }
@@ -48,10 +48,10 @@ ExampleSetTest >> testIncludes [
 
 { #category : #testing }
 ExampleSetTest >> testOccurrences [
-	self assert: (empty occurrencesOf: 0) = 0.
-	self assert: (full occurrencesOf: 5) = 1.
+	self assert: (empty occurrencesOf: 0) equals: 0.
+	self assert: (full occurrencesOf: 5) equals: 1.
 	full add: 5.
-	self assert: (full occurrencesOf: 5) = 1
+	self assert: (full occurrencesOf: 5) equals: 1
 ]
 
 { #category : #testing }

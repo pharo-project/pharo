@@ -2,7 +2,7 @@ Extension { #name : #TextMethodLink }
 
 { #category : #'*Rubric-Editing-Core' }
 TextMethodLink >> rubActOnClick: anEvent for: target in: aParagraph editor: anEditor [
-	self flag: 'TODO: complete implementation with class'.
+	self flag: #pharoTodo. "Complete implementation with class".
 	
 	browseSenders == anEvent shiftPressed
 		ifTrue: [ anEditor editor implementorsOf: self selector ]

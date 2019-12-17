@@ -21,26 +21,24 @@ CmdCommandActivatorTest >> testConvertingCommandToActivator [
 
 { #category : #tests }
 CmdCommandActivatorTest >> testConvertingToActivator [
-
 	| activator |
 	activator := CmdCommandActivator new.
-	
-	self assert: activator asCommandActivator == activator
+
+	self assert: activator asCommandActivator identicalTo: activator
 ]
 
 { #category : #tests }
 CmdCommandActivatorTest >> testCreationNewForNewCommand [
-
 	| activator newActivator |
 	activator := CmdCommandActivator new.
-	activator 	
+	activator
 		command: #command;
 		context: #context;
 		activationStrategy: #activation.
-	
+
 	newActivator := activator newForCommand: #newCommand.
 
-	self deny: newActivator == activator.
+	self deny: newActivator identicalTo: activator.
 	self assert: newActivator class equals: activator class.
 	self assert: newActivator command equals: #newCommand.
 	self assert: newActivator context equals: #context.

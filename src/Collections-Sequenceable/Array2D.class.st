@@ -179,7 +179,7 @@ Array2D >> = aMatrix [
 					and: [ aMatrix privateContents = contents ] ] ]
 ]
 
-{ #category : #'not implemented' }
+{ #category : #adding }
 Array2D >> add: newObject [
 	self shouldNotImplement
 ]
@@ -405,7 +405,7 @@ Array2D >> diagonal [
 	^ (1 to: (numberOfRows min: numberOfColumns)) collect: [:j | contents at: (i := i + numberOfColumns + 1)]
 ]
 
-{ #category : #'not implemented' }
+{ #category : #enumerating }
 Array2D >> difference: aCollection [
 	"Union is in because the result is always a Set.
 	 Difference and intersection are out because the result is like the receiver,
@@ -525,7 +525,7 @@ Array2D >> indicesInject: start into: aBlock [
 	^ current
 ]
 
-{ #category : #'not implemented' }
+{ #category : #enumerating }
 Array2D >> intersection: aCollection [
 	"Union is in because the result is always a Set.
 	 Difference and intersection are out because the result is like the receiver,
@@ -624,7 +624,7 @@ Array2D >> readStream [
 	^ contents readStream
 ]
 
-{ #category : #'not implemented' }
+{ #category : #enumerating }
 Array2D >> reject: aBlock [
 	self shouldNotImplement
 ]
@@ -670,7 +670,7 @@ Array2D >> rows: rows columns: columns contents: anArray [
 	^self
 ]
 
-{ #category : #'not implemented' }
+{ #category : #enumerating }
 Array2D >> select: aBlock [
 	self shouldNotImplement
 ]

@@ -161,14 +161,14 @@ CiHUAAAAGUlEQVR4XmNgZMQPGBhHvoKRr2DkKxihCgBEmAQBphO0cAAAAABJRU5ErkJggg=='
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> decodeColors: colorsAndFiles depth: requiredDepth [
-	
-	colorsAndFiles do:[:assoc| | bytes color form |
-		color := assoc key.
-		bytes := assoc value base64Decoded.
-		form := PNGReadWriter formFromStream: bytes readStream.
-		self assert: form depth = requiredDepth.
-		self assert: (form pixelValueAt: 1@1) = (color pixelValueForDepth: requiredDepth).
-	].
+	colorsAndFiles
+		do: [ :assoc | 
+			| bytes color form |
+			color := assoc key.
+			bytes := assoc value base64Decoded.
+			form := PNGReadWriter formFromStream: bytes readStream.
+			self assert: form depth equals: requiredDepth.
+			self assert: (form pixelValueAt: 1 @ 1) equals: (color pixelValueForDepth: requiredDepth) ]
 ]
 
 { #category : #helpers }
@@ -218,35 +218,40 @@ PNGReadWriterTest >> drawTransparentStuffOn: aForm [
 { #category : #helpers }
 PNGReadWriterTest >> encodeAndDecode: original [
 	"Make sure that the given form is encoded and decoded correctly"
+
 	| stream bytes decoded |
 	"encode"
 	stream := ByteArray new writeStream.
-	(PNGReadWriter on: stream) nextPutImage: original; close.
+	(PNGReadWriter on: stream)
+		nextPutImage: original;
+		close.
 	bytes := stream contents.
 
 	self writeEncoded: bytes.
 
 	"decode"
 	stream := self readEncoded: bytes.
-	[decoded := (PNGReadWriter new on: stream) nextImage.
+	[ decoded := (PNGReadWriter new on: stream) nextImage.
 	decoded display.
 
 	"compare"
-	self assert: original width = decoded width.
-	self assert: original height = decoded height.
-	self assert: original depth = decoded depth.
-	self assert: original bits = decoded bits.
-	self assert: original class == decoded class.
-	(original isColorForm) ifTrue:[
-		original colors with: decoded colors do:[:c1 :c2| | maxErr |
-			"we must round here due to encoding errors"
-			maxErr := 1. "max. error for 8bit rgb component"
-			self assert: ((c1 red * 255) truncated - (c2 red * 255) truncated) abs <= maxErr.
-			self assert: ((c1 green * 255) truncated - (c2 green * 255) truncated) abs <= maxErr.
-			self assert: ((c1 blue * 255) truncated - (c2 blue * 255) truncated) abs <= maxErr.
-			self assert: ((c1 alpha * 255) truncated - (c2 alpha * 255) truncated) abs <= maxErr.
-		].
-	]] ensure: [ stream close ].
+	self assert: original width equals: decoded width.
+	self assert: original height equals: decoded height.
+	self assert: original depth equals: decoded depth.
+	self assert: original bits equals: decoded bits.
+	self assert: original class identicalTo: decoded class.
+	original isColorForm
+		ifTrue: [ original colors
+				with: decoded colors
+				do: [ :c1 :c2 | 
+					| maxErr |
+					"we must round here due to encoding errors"
+					maxErr := 1.	"max. error for 8bit rgb component"
+					self assert: ((c1 red * 255) truncated - (c2 red * 255) truncated) abs <= maxErr.
+					self assert: ((c1 green * 255) truncated - (c2 green * 255) truncated) abs <= maxErr.
+					self assert: ((c1 blue * 255) truncated - (c2 blue * 255) truncated) abs <= maxErr.
+					self assert: ((c1 alpha * 255) truncated - (c2 alpha * 255) truncated) abs <= maxErr ] ] ]
+		ensure: [ stream close ]
 ]
 
 { #category : #helpers }
@@ -287,23 +292,24 @@ PNGReadWriterTest >> encodeAndDecodeForm: original [
 { #category : #helpers }
 PNGReadWriterTest >> encodeAndDecodeReverse: original [
 	"Make sure that the given form is encoded and decoded correctly"
+
 	| stream bytes decoded reversed |
-	fileName := 'testReverse', original depth printString,'.png'.
-	self assert: original class == Form. "won't work with ColorForm"
+	fileName := 'testReverse' , original depth printString , '.png'.
+	self assert: original class identicalTo: Form.	"won't work with ColorForm"
 	"Switch pixel order"
 	reversed := Form extent: original extent depth: original depth negated.
 	original displayOn: reversed.
-	self assert: original width = reversed width.
-	self assert: original height = reversed height.
-	self assert: original depth = reversed depth.
-	self deny: original nativeDepth = reversed nativeDepth.
-	original depth = 32
-		ifTrue:[self assert: original bits = reversed bits]
-		ifFalse:[self deny: original bits = reversed bits].
+	self assert: original width equals: reversed width.
+	self assert: original height equals: reversed height.
+	self assert: original depth equals: reversed depth.
+	self deny: original nativeDepth equals: reversed nativeDepth.
+	original depth = 32 ifTrue: [ self assert: original bits equals: reversed bits ] ifFalse: [ self deny: original bits equals: reversed bits ].
 
 	"encode"
 	stream := ByteArray new writeStream.
-	(PNGReadWriter on: stream) nextPutImage: reversed; close.
+	(PNGReadWriter on: stream)
+		nextPutImage: reversed;
+		close.
 	bytes := stream contents.
 	self writeEncoded: bytes.
 
@@ -313,22 +319,23 @@ PNGReadWriterTest >> encodeAndDecodeReverse: original [
 	decoded display.
 
 	"compare"
-	self assert: original width = decoded width.
-	self assert: original height = decoded height.
-	self assert: original depth = decoded depth.
-	self assert: original bits = decoded bits.
-	self assert: original class == decoded class.
-	(original isColorForm) ifTrue:[
-		original colors with: decoded colors do:[:c1 :c2| | maxErr |
-			"we must round here due to encoding errors"
-			maxErr := 1. "max. error for 8bit rgb component"
-			self assert: ((c1 red * 255) truncated - (c2 red * 255) truncated) abs <= maxErr.
-			self assert: ((c1 green * 255) truncated - (c2 green * 255) truncated) abs <= maxErr.
-			self assert: ((c1 blue * 255) truncated - (c2 blue * 255) truncated) abs <= maxErr.
-			self assert: ((c1 alpha * 255) truncated - (c2 alpha * 255) truncated) abs <= maxErr.
-		].
-	].
-	self deleteFile.
+	self assert: original width equals: decoded width.
+	self assert: original height equals: decoded height.
+	self assert: original depth equals: decoded depth.
+	self assert: original bits equals: decoded bits.
+	self assert: original class identicalTo: decoded class.
+	original isColorForm
+		ifTrue: [ original colors
+				with: decoded colors
+				do: [ :c1 :c2 | 
+					| maxErr |
+					"we must round here due to encoding errors"
+					maxErr := 1.	"max. error for 8bit rgb component"
+					self assert: ((c1 red * 255) truncated - (c2 red * 255) truncated) abs <= maxErr.
+					self assert: ((c1 green * 255) truncated - (c2 green * 255) truncated) abs <= maxErr.
+					self assert: ((c1 blue * 255) truncated - (c2 blue * 255) truncated) abs <= maxErr.
+					self assert: ((c1 alpha * 255) truncated - (c2 alpha * 255) truncated) abs <= maxErr ] ].
+	self deleteFile
 ]
 
 { #category : #helpers }
@@ -375,16 +382,16 @@ PNGReadWriterTest >> encodeAndDecodeWithError: aStream [
 
 { #category : #'tests - decoding' }
 PNGReadWriterTest >> encodeColors: colorsAndFiles depth: requiredDepth [
-	
-	colorsAndFiles do:[:assoc| | original encoded color ff |
-		color := assoc key.
-		original := assoc value base64Decoded.
-		ff := Form extent: 32@32 depth: requiredDepth.
-		ff fillColor: color.
-		encoded := ByteArray new writeStream.
-		PNGReadWriter putForm: ff onStream: encoded.
-		self assert: (encoded contents = original contents).
-	].
+	colorsAndFiles
+		do: [ :assoc | 
+			| original encoded color ff |
+			color := assoc key.
+			original := assoc value base64Decoded.
+			ff := Form extent: 32 @ 32 depth: requiredDepth.
+			ff fillColor: color.
+			encoded := ByteArray new writeStream.
+			PNGReadWriter putForm: ff onStream: encoded.
+			self assert: encoded contents equals: original contents ]
 ]
 
 { #category : #helpers }

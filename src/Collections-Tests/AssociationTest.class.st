@@ -27,13 +27,10 @@ AssociationTest >> testComparison [
 
 { #category : #tests }
 AssociationTest >> testEquality [
-	
-	self 
+	self
 		assert: a key equals: b key;
-		deny: (a value = b value);
-		deny: (a = b)
-
-
+		deny: a value equals: b value;
+		deny: a equals: b
 ]
 
 { #category : #tests }

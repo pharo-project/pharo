@@ -18,11 +18,20 @@ ReThemeAccess class >> initialize [
 ]
 
 { #category : #running }
-ReThemeAccess >> basicCheck: aMethod [
-	^ ((aMethod methodClass inheritsFrom: Morph) 
-		or: [aMethod methodClass inheritsFrom: Model])
-	and: [aMethod sourceCode matchesRegex: '.*Smalltalk\s+ui\s+theme.*']
-
+ReThemeAccess >> check: aMethod forCritiquesDo: aCriticBlock [ 
+	| problemThemes |
+	((aMethod methodClass inheritsFrom: Morph) 
+		or: [aMethod methodClass inheritsFrom: Model]) ifFalse: [ ^ self ].
+		
+	problemThemes := 
+		(aMethod sendNodes select: [ :msgSend | msgSend selector = #theme 
+				and: [msgSend receiver sourceCode withSeparatorsCompacted = 'Smalltalk ui'] ]).
+	
+	problemThemes do: [ :msgSend |
+			aCriticBlock cull: (self 
+				createTrivialCritiqueOn: aMethod 
+				intervalOf: msgSend 
+				hint: msgSend selector asString) ]
 ]
 
 { #category : #running }

@@ -33,39 +33,30 @@ SizeInMemoryTest >> paddedByteStringSize: numberOfChars [
 SizeInMemoryTest >> testSizeInMemoryCompactClasses [
 	self skip.
 	"One word for the header + one word per instance variable"
-	self assert:  (Association key: 'aKey' value: 23) sizeInMemory = 12.
+	self assert: (Association key: 'aKey' value: 23) sizeInMemory equals: 12.
 
 	"One word for the header + one word per instance variable"
-	self assert:  Rectangle new sizeInMemory = 12.
-
-
+	self assert: Rectangle new sizeInMemory equals: 12
 ]
 
 { #category : #tests }
 SizeInMemoryTest >> testSizeInMemoryLargeInstances [
-
 	"64 bits for the object header + a world per instance variable"
 
 	self
-		assert: Smalltalk allClasses sizeInMemory = (self align64Bits: (self headerSize + (3 * Smalltalk wordSize)));
-		assert:
-			Smalltalk allClasses asArray sizeInMemory
-				=
-					(self align64Bits:(self headerSize + (Smalltalk allClasses asArray size * Smalltalk wordSize)
-						+ self headerSize))
+		assert: Smalltalk allClasses sizeInMemory equals: (self align64Bits: self headerSize + (3 * Smalltalk wordSize));
+		assert: Smalltalk allClasses asArray sizeInMemory
+			equals: (self align64Bits: self headerSize + (Smalltalk allClasses asArray size * Smalltalk wordSize) + self headerSize)
 ]
 
 { #category : #tests }
 SizeInMemoryTest >> testSizeInMemoryNormalClasses [
 	"Two word for the header + one word per instance variable"
-	self assert: Date today sizeInMemory = (self align64Bits:( 2 * Smalltalk wordSize + self headerSize)).
+
+	self assert: Date today sizeInMemory equals: (self align64Bits: 2 * Smalltalk wordSize + self headerSize).
 
 	"Two word for the header + one word per instance variable"
-	self assert: TestCase new sizeInMemory = (self align64Bits:( 2 * Smalltalk wordSize + self headerSize)).
-
-
-
-
+	self assert: TestCase new sizeInMemory equals: (self align64Bits: 2 * Smalltalk wordSize + self headerSize)
 ]
 
 { #category : #tests }

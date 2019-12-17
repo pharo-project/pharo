@@ -10,9 +10,10 @@ Class {
 }
 
 { #category : #asserting }
-ProtocolConventionsTest >> assertProtocol: aCollectionOfSelectors areNotUsedInsteadOf: aProtocolName [
+ProtocolConventionsTest >> assertProtocols: aCollectionOfSelectors areNotUsedInsteadOf: aProtocolName [
 	| violations |
-	violations := self class environment allClasses select: [ :c | c protocols includesAny: aCollectionOfSelectors ].
+	violations := self class environment allClassesAndTraits
+		select: [ :c | (c protocols includesAny: aCollectionOfSelectors) or: [ c class protocols includesAny: aCollectionOfSelectors ] ].
 	self
 		assert: violations isEmpty
 		description: [ 'In the default Pharo images, the protocol #{1} should be used instead of {2}.
@@ -30,6 +31,16 @@ Some classes are violating this convention:
 ]
 
 { #category : #tests }
+ProtocolConventionsTest >> testFileInOutProtocolIsUsed [
+	self assertProtocols: #(#'filein/out' #'fileIn/Out' #'fileIn/out' #'filein/Out') areNotUsedInsteadOf: #'file in/out'
+]
+
+{ #category : #tests }
+ProtocolConventionsTest >> testInstanceCreationProtocolIsUsed [
+	self assertProtocols: #(#'instance-creation') areNotUsedInsteadOf: #'instance creation'
+]
+
+{ #category : #tests }
 ProtocolConventionsTest >> testRemovalProtocolIsUsed [
-	self assertProtocol: #(#remove #removal) areNotUsedInsteadOf: #removing
+	self assertProtocols: #(#remove #removal) areNotUsedInsteadOf: #removing
 ]

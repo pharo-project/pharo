@@ -527,13 +527,11 @@ TimeProfiler >> selectedClass [
 
 { #category : #'accessing-computed' }
 TimeProfiler >> selectedMethodCode [
-	^ self selectedNode 
-		ifNil: [ self helpMessage ]
-		ifNotNil: [ :currNode | 
-			| class selector |
-			class := currNode methodClass.
-			selector := currNode selector.
-			(class ultimateSourceCodeAt: selector ifAbsent: [ 'error' ])]
+	| node method |
+	node := self selectedNode.
+	node ifNil: [ ^ self helpMessage ].
+	method := (node methodClass lookupSelector: node selector) ifNil: [ ^'Method not found' ].
+	^method sourceCode
 ]
 
 { #category : #compiling }

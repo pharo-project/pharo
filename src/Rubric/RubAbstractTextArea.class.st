@@ -107,6 +107,9 @@ Class {
 		'LineNumbersTextColor',
 		'WalkAlongDisplayedLine'
 	],
+	#classInstVars : [
+		'defaultFindReplaceServiceClass'
+	],
 	#category : #'Rubric-Editing-Core'
 }
 
@@ -128,6 +131,18 @@ RubAbstractTextArea class >> caseSensitiveFinds [
 { #category : #settings }
 RubAbstractTextArea class >> caseSensitiveFinds: aBoolean [
 	CaseSensitiveFinds := aBoolean
+]
+
+{ #category : #accessing }
+RubAbstractTextArea class >> defaultFindReplaceServiceClass [
+
+	^ defaultFindReplaceServiceClass ifNil: [ RubFindReplaceService ]
+]
+
+{ #category : #accessing }
+RubAbstractTextArea class >> defaultFindReplaceServiceClass: aClass [
+
+	^ defaultFindReplaceServiceClass := aClass
 ]
 
 { #category : #settings }
@@ -557,7 +572,8 @@ RubAbstractTextArea >> completionPostAction [
 RubAbstractTextArea >> compose [
 
 	self prepareParagraphToCompose.
-	self paragraph compose 
+	self paragraph compose.
+	self markBackgroundColors
 ]
 
 { #category : #composing }
@@ -611,6 +627,12 @@ RubAbstractTextArea >> defaultColor [
 
   	^ self class backgroundColor
 
+]
+
+{ #category : #'event handling' }
+RubAbstractTextArea >> defaultFindReplaceServiceClass [
+
+	^ self class defaultFindReplaceServiceClass
 ]
 
 { #category : #menu }
@@ -814,7 +836,7 @@ RubAbstractTextArea >> findRegex [
 { #category : #'event handling' }
 RubAbstractTextArea >> findReplaceService [
 	^ findReplaceService ifNil: [
-		findReplaceService := RubFindReplaceService new ].
+		findReplaceService := self defaultFindReplaceServiceClass newFor: self].
 ]
 
 { #category : #'find-replace' }
@@ -1173,6 +1195,21 @@ RubAbstractTextArea >> margins: aMargin [
 	margins := m
 ]
 
+{ #category : #composing }
+RubAbstractTextArea >> markBackgroundColors [
+	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
+
+	self text runs
+		withStartStopAndValueDo: [ :start :stop :value | 
+			value do: [ :v | 
+					(v isKindOf: TextBackgroundColor)
+						ifTrue: [ self addSegment: 
+							(RubTextBackgroundColorSegmentMorph
+								color: v color
+								from: start
+								to: stop+1) ] ] ] 
+]
+
 { #category : #'accessing selection' }
 RubAbstractTextArea >> markBlock [
 	^ self editingState markBlock
@@ -1432,6 +1469,7 @@ RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 				ifFalse: [ self updateExtentFromParagraph ] ].
 	self scrollPane ifNotNil: [ :sp | sp textChanged ].
 	self announce: (RubTextChanged from: start to: stop with: aText).
+	self markBackgroundColors .
 
 ]
 

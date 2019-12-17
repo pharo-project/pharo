@@ -30,8 +30,8 @@ ZnUrlTest >> testAsRelativeUrl [
 
 { #category : #testing }
 ZnUrlTest >> testAuthority [
-	self assert: 'http://localhost:8080/foo/bar/doc.txt' asZnUrl authority = 'localhost:8080'.
-	self assert: 'http://www.google.com?q=Smalltalk' asZnUrl authority = 'www.google.com'
+	self assert: 'http://localhost:8080/foo/bar/doc.txt' asZnUrl authority equals: 'localhost:8080'.
+	self assert: 'http://www.google.com?q=Smalltalk' asZnUrl authority equals: 'www.google.com'
 ]
 
 { #category : #testing }
@@ -91,12 +91,11 @@ ZnUrlTest >> testDefaultPortUnknownScheme [
 { #category : #testing }
 ZnUrlTest >> testDefaultScheme [
 	| url |
-	url := ZnUrl fromString: 'www.example.com/foo.html' defaultScheme: #http.  
+	url := ZnUrl fromString: 'www.example.com/foo.html' defaultScheme: #http.
 	self assert: url hasScheme.
-	self assert: url scheme = #http.
-	self assert: url host = 'www.example.com'.
-	self assert: url pathSegments = (OrderedCollection with: 'foo.html')
-	
+	self assert: url scheme equals: #http.
+	self assert: url host equals: 'www.example.com'.
+	self assert: url pathSegments equals: (OrderedCollection with: 'foo.html')
 ]
 
 { #category : #testing }
@@ -107,9 +106,8 @@ ZnUrlTest >> testDefaultSchemeAndPort [
 	self assert: url hasPort not.
 	self assert: url port isNil.
 	self assert: url scheme isNil.
-	self assert: url schemeOrDefault = #http.
-	self assert: url portOrDefault = 80
-	
+	self assert: url schemeOrDefault equals: #http.
+	self assert: url portOrDefault equals: 80
 ]
 
 { #category : #testing }
@@ -118,23 +116,20 @@ ZnUrlTest >> testDefaults [
 	url := '' asZnUrl asZnUrlWithDefaults.
 	self assert: url hasScheme.
 	self assert: url hasPort.
-	self assert: url scheme = #http.
-	self assert: url port = 80
-	
+	self assert: url scheme equals: #http.
+	self assert: url port equals: 80
 ]
 
 { #category : #testing }
 ZnUrlTest >> testEncodedSlash [
-	self assert: 'http://example.com/foo//' asZnUrl pathPrintString = '/foo//'.
-	self assert: 'http://example.com/foo//bar/' asZnUrl pathPrintString = '/foo//bar/'.
-	self assert: 'http://example.com/foo//bar/file.txt' asZnUrl pathPrintString = '/foo//bar/file.txt'.
+	self assert: 'http://example.com/foo//' asZnUrl pathPrintString equals: '/foo//'.
+	self assert: 'http://example.com/foo//bar/' asZnUrl pathPrintString equals: '/foo//bar/'.
+	self assert: 'http://example.com/foo//bar/file.txt' asZnUrl pathPrintString equals: '/foo//bar/file.txt'.
 
-	self assert: 'http://example.com/foo/%2F' asZnUrl pathPrintString = '/foo/%2F'.
-	self assert: 'http://example.com/foo/%2Fbar/' asZnUrl pathPrintString = '/foo/%2Fbar/'.
-	self assert: 'http://example.com/foo/%2F/bar/' asZnUrl pathPrintString = '/foo/%2F/bar/'.
-	self assert: 'http://example.com/foo/%2Ffoo.txt' asZnUrl pathPrintString = '/foo/%2Ffoo.txt'.
-
-
+	self assert: 'http://example.com/foo/%2F' asZnUrl pathPrintString equals: '/foo/%2F'.
+	self assert: 'http://example.com/foo/%2Fbar/' asZnUrl pathPrintString equals: '/foo/%2Fbar/'.
+	self assert: 'http://example.com/foo/%2F/bar/' asZnUrl pathPrintString equals: '/foo/%2F/bar/'.
+	self assert: 'http://example.com/foo/%2Ffoo.txt' asZnUrl pathPrintString equals: '/foo/%2Ffoo.txt'
 ]
 
 { #category : #testing }
@@ -242,13 +237,13 @@ ZnUrlTest >> testParsePathOnly [
 	self assert: url hasHost not.
 	self assert: url hasPort not.
 	self assert: url isAbsolute not.
-	self assert: url pathSegments = (OrderedCollection with: 'images' with: 'foo.png' ).
-	self assert: url firstPathSegment = 'images'.
-	self assert: url lastPathSegment = 'foo.png'.
+	self assert: url pathSegments equals: (OrderedCollection with: 'images' with: 'foo.png').
+	self assert: url firstPathSegment equals: 'images'.
+	self assert: url lastPathSegment equals: 'foo.png'.
 	self assert: url hasQuery.
-	self assert: (url queryAt: 'size') = 'large'.
+	self assert: (url queryAt: 'size') equals: 'large'.
 	self assert: url hasFragment.
-	self assert: url fragment = 'center'  
+	self assert: url fragment equals: 'center'
 ]
 
 { #category : #testing }
@@ -268,21 +263,21 @@ ZnUrlTest >> testParsingEmpty [
 ZnUrlTest >> testParsingEscape [
 	| url |
 	url := ZnUrl fromString: 'http://localhost/foo%62%61%72'.
-	self assert: url firstPathSegment = 'foobar'
+	self assert: url firstPathSegment equals: 'foobar'
 ]
 
 { #category : #testing }
 ZnUrlTest >> testParsingSimple [
 	| url |
 	url := ZnUrl fromString: 'http://www.example.com:8080/foo/bar/baz.txt?x=1&y=2#m1'.
-	self assert: url scheme = #http.
-	self assert: url host = 'www.example.com'.
-	self assert: url port = 8080.
+	self assert: url scheme equals: #http.
+	self assert: url host equals: 'www.example.com'.
+	self assert: url port equals: 8080.
 	self assert: url hasPath.
 	self assert: url isFilePath.
 	self assert: url hasQuery.
 	self assert: url hasFragment.
-	self assert: url fragment = 'm1'
+	self assert: url fragment equals: 'm1'
 ]
 
 { #category : #testing }
@@ -409,21 +404,21 @@ ZnUrlTest >> testPrintingSimple [
 		addPathSegment: 'foo.html';
 		queryAt: 'q' put: '100';
 		fragment: 'mark'.
-	self assert: url authority = 'www.seaside.st:8080'.
+	self assert: url authority equals: 'www.seaside.st:8080'.
 	self assert: url isAbsolute.
 	self assert: url isFilePath.
-	self assert: url printString = 'http://www.seaside.st:8080/example/foo.html?q=100#mark'.
-	self assert: url file = 'foo.html'.
-	self assert: url directory = 'example'.
-	self assert: url pathPrintString = '/example/foo.html'.
-	self assert: url pathQueryFragmentPrintString = '/example/foo.html?q=100#mark'
+	self assert: url printString equals: 'http://www.seaside.st:8080/example/foo.html?q=100#mark'.
+	self assert: url file equals: 'foo.html'.
+	self assert: url directory equals: 'example'.
+	self assert: url pathPrintString equals: '/example/foo.html'.
+	self assert: url pathQueryFragmentPrintString equals: '/example/foo.html?q=100#mark'
 ]
 
 { #category : #testing }
 ZnUrlTest >> testQuery [
 	| url |
 	url := 'http://foo.com/test?q' asZnUrl.
-	self assert: url printString = 'http://foo.com/test?q'
+	self assert: url printString equals: 'http://foo.com/test?q'
 ]
 
 { #category : #testing }
@@ -444,10 +439,9 @@ ZnUrlTest >> testQueryEncoding [
 	url := 'http://www.google.com' asZnUrl.
 	url addPathSegment: 'some encoding here'.
 	url queryAt: 'and some encoding' put: 'here, too#'.
-	self assert: url printString = 'http://www.google.com/some%20encoding%20here?and%20some%20encoding=here,%20too%23'.
-	self assert: url path =  'some encoding here'.
-	self assert: (url queryAt: 'and some encoding') = 'here, too#'
-	
+	self assert: url printString equals: 'http://www.google.com/some%20encoding%20here?and%20some%20encoding=here,%20too%23'.
+	self assert: url path equals: 'some encoding here'.
+	self assert: (url queryAt: 'and some encoding') equals: 'here, too#'
 ]
 
 { #category : #testing }
@@ -473,9 +467,9 @@ ZnUrlTest >> testQueryManipulation [
 	url := 'http://www.google.com/?one=1&two=2' asZnUrl.
 	url queryAt: 'three' put: '3'.
 	url queryRemoveKey: 'one'.
-	self assert: url queryKeys sorted = #(three two).
-	self assert: (url queryAt: 'two') = '2'.
-	self assert: (url queryAt: 'three') = '3'.
+	self assert: url queryKeys sorted equals: #(three two).
+	self assert: (url queryAt: 'two') equals: '2'.
+	self assert: (url queryAt: 'three') equals: '3'.
 	url queryRemoveAll.
 	self deny: url hasQuery
 ]
@@ -486,11 +480,11 @@ ZnUrlTest >> testQueryRemoveAll [
 		do: [ :each | 
 			| url |
 			url := 'http://foo.com/test?name=value' asZnUrl.
-			self deny: url = each asZnUrl.
+			self deny: url equals: each asZnUrl.
 			url queryRemoveAll.
 			self
 				assert: url query isEmpty;
-				assert: url = each asZnUrl ]
+				assert: url equals: each asZnUrl ]
 ]
 
 { #category : #testing }
@@ -563,7 +557,7 @@ ZnUrlTest >> testRelative [
 	url := 'http://api.foo.com:8080' asZnUrl.
 	self assert: url isAbsolute.
 	url parseFrom: '/user/1?format=full'.
-	self assert: url printString = 'http://api.foo.com:8080/user/1?format=full'
+	self assert: url printString equals: 'http://api.foo.com:8080/user/1?format=full'
 ]
 
 { #category : #testing }
@@ -607,7 +601,6 @@ ZnUrlTest >> testWindowsFileUrl [
 { #category : #testing }
 ZnUrlTest >> testWriteUrlPathQueryFragmentOfOn [
 	| string |
-	string := String streamContents: [ :stream |
-		'http://host:7777/foo/bar/doc.txt?x=1#mark' asZnUrl printPathQueryFragmentOn:  stream ].
-	self assert: string = '/foo/bar/doc.txt?x=1#mark'
+	string := String streamContents: [ :stream | 'http://host:7777/foo/bar/doc.txt?x=1#mark' asZnUrl printPathQueryFragmentOn: stream ].
+	self assert: string equals: '/foo/bar/doc.txt?x=1#mark'
 ]

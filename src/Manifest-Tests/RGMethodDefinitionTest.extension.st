@@ -25,23 +25,21 @@ RGMethodDefinitionTest >> testManifestReadOn [
 
 { #category : #'*Manifest-Tests' }
 RGMethodDefinitionTest >> testReadFrom [
-	
 	| st rg |
-	rg := (Point>>#x) asRingDefinition.
-	st := String streamContents: [:s |
-		
-		rg storeOn: s.
-		s contents].
-	self assert: (Object readFrom: st) = rg 
+	rg := (Point >> #x) asRingDefinition.
+	st := String
+		streamContents: [ :s | 
+			rg storeOn: s.
+			s contents ].
+	self assert: (Object readFrom: st) equals: rg
 ]
 
 { #category : #'*Manifest-Tests' }
 RGMethodDefinitionTest >> testStoreOn [
-
 	| st |
-	st := String streamContents: [:s |
-		
-		(Point>>#x) asRingDefinition storeOn: s.
-		s contents].
-	self assert: st = '(RGMethodDefinition className: ''Point'' selector: #x isMetaSide: false)'
+	st := String
+		streamContents: [ :s | 
+			(Point >> #x) asRingDefinition storeOn: s.
+			s contents ].
+	self assert: st equals: '(RGMethodDefinition className: ''Point'' selector: #x isMetaSide: false)'
 ]

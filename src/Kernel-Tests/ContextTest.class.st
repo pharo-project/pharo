@@ -50,52 +50,62 @@ ContextTest class >> returnNonActiveContextOfBlock [
 { #category : #private }
 ContextTest >> privRestartArgBlockTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-	|firstTimeThrough |
-	firstTimeThrough := true.
-	
-	self assert: 30 equals: ([:a | |b| 
-		self assert: 10 = a .
-		self assert: nil == b.
-		b := a + 20. 
-		firstTimeThrough ifTrue: [
-			firstTimeThrough := false.
-			thisContext restart.].
-		b] value: 10)
 
+	| firstTimeThrough |
+	firstTimeThrough := true.
+
+	self
+		assert: 30
+		equals:
+			([ :a | 
+			| b |
+			self assert: 10 equals: a.
+			self assert: nil identicalTo: b.
+			b := a + 20.
+			firstTimeThrough
+				ifTrue: [ firstTimeThrough := false.
+					thisContext restart ].
+			b ] value: 10)
 ]
 
 { #category : #private }
 ContextTest >> privRestartBlockArgsNoRemoteTempsTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-	
-	self assert: 30 equals: ([:a :first | |b| 
-		self assert: 10 = a .
-		self assert: nil == b.
-		b := a + 20. 
-		first ifTrue: [
-			"Cheat and modify one of the args so we will not loop endlessly"
-			 thisContext tempAt: 2 put: false.
-			thisContext restart.].
-		b] value: 10 value: true)
 
+	self
+		assert: 30
+		equals:
+			([ :a :first | 
+			| b |
+			self assert: 10 equals: a.
+			self assert: nil identicalTo: b.
+			b := a + 20.
+			first
+				ifTrue: [ "Cheat and modify one of the args so we will not loop endlessly"
+					thisContext tempAt: 2 put: false.
+					thisContext restart ].
+			b ] value: 10 value: true)
 ]
 
 { #category : #private }
 ContextTest >> privRestartBlockTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-	|a firstTimeThrough |
+
+	| a firstTimeThrough |
 	firstTimeThrough := true.
 	a := 10.
-	
-	self assert: 30 equals: [|b| 
-		self assert: 10 = a .
-		self assert: nil == b.
-		b := a + 20. 
-		firstTimeThrough ifTrue: [
-			firstTimeThrough := false.
-			thisContext restart.].
-		b] value
 
+	self
+		assert: 30
+		equals:
+			[ | b |
+			self assert: 10 equals: a.
+			self assert: nil identicalTo: b.
+			b := a + 20.
+			firstTimeThrough
+				ifTrue: [ firstTimeThrough := false.
+					thisContext restart ].
+			b ] value
 ]
 
 { #category : #running }
@@ -109,8 +119,8 @@ ContextTest >> setUp [
 
 { #category : #tests }
 ContextTest >> testActivateReturnValue [
-	self assert:  ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
-	self assert:  ((aSender activateReturn: aMethodContext value: #()) receiver = aMethodContext).
+	self assert: ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
+	self assert: (aSender activateReturn: aMethodContext value: #()) receiver equals: aMethodContext
 ]
 
 { #category : #tests }
@@ -127,8 +137,8 @@ ContextTest >> testActiveHomeMethodContext [
 
 { #category : #tests }
 ContextTest >> testFindContextSuchThat [
-	self assert: (aMethodContext findContextSuchThat: [:each| true]) printString = aMethodContext printString.
-	self assert: (aMethodContext hasContext: aMethodContext). 
+	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
+	self assert: (aMethodContext hasContext: aMethodContext)
 ]
 
 { #category : #tests }
@@ -161,21 +171,25 @@ ContextTest >> testNonActiveBlockContextHome [
 { #category : #tests }
 ContextTest >> testReturn [
 	"Why am I overriding setUp? Because sender must be thisContext, i.e, testReturn, not setUp."
-	aMethodContext := Context sender: thisContext receiver: aReceiver method: aCompiledMethod arguments: #(). 
-	self assert: (aMethodContext return: 5) = 5.
+
+	aMethodContext := Context
+		sender: thisContext
+		receiver: aReceiver
+		method: aCompiledMethod
+		arguments: #().
+	self assert: (aMethodContext return: 5) equals: 5
 ]
 
 { #category : #tests }
 ContextTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
-	
-	self deny: aMethodContext isDead.
-	self assert: aMethodContext home = aMethodContext.
-	self assert: aMethodContext receiver = aReceiver.
-	self assert: (aMethodContext method isKindOf: CompiledMethod).
-	self assert: aMethodContext method = aCompiledMethod. 
-	self assert: aMethodContext client printString = 'ContextTest>>#testSetUp'.
 
+	self deny: aMethodContext isDead.
+	self assert: aMethodContext home equals: aMethodContext.
+	self assert: aMethodContext receiver equals: aReceiver.
+	self assert: (aMethodContext method isKindOf: CompiledMethod).
+	self assert: aMethodContext method equals: aCompiledMethod.
+	self assert: aMethodContext client printString equals: 'ContextTest>>#testSetUp'
 ]
 
 { #category : #tests }
@@ -185,8 +199,7 @@ ContextTest >> verifyJumpWithSelector: selector [
 	normalStackp := (guineaPig perform: selector) stackPtr.
 	guineaPig beReadOnlyObject.
 	[ readOnlyStackp := (guineaPig perform: selector) stackPtr ]
-		on: ModificationForbidden 
+		on: ModificationForbidden
 		do: [ :ex | ex resumeUnchecked: nil ].
-	self assert: normalStackp = readOnlyStackp.
-	
+	self assert: normalStackp equals: readOnlyStackp
 ]

@@ -1,9 +1,9 @@
 "
-Instances of WeakMessageSend encapsulate message sends to objects, like MessageSend. Unlike MessageSend it is not necessarily a valid mesage.  A request to value only results in a send if infact it is valid. 
+Instances of WeakMessageSend encapsulate messages send to objects, like MessageSend. Unlike MessageSend it is not necessarily a valid message. A request to value only results in a send if infact it is valid. 
 
-See MessageSendComments also. WeakMessageSend is used primarily for event regristration. 
+See also MessageSend comments. WeakMessageSend is used primarily for event registration. 
 
-Unlike MessageSend WeakMessageSend stoes receiver (object receiving the message send) as a the first and only element of its array as opposed to a named ivar.
+Unlike MessageSend, WeakMessageSend store receivers (object receiving the message send) as the first and only element of its array as opposed to a named ivar.
 But like MessageSend, it does have
  selector		Symbol -- message selector
  arguments		Array -- bound arguments

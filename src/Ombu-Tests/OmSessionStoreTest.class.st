@@ -28,7 +28,6 @@ OmSessionStoreTest >> tearDown [
 
 { #category : #tests }
 OmSessionStoreTest >> testResetWithNextStoreNameWithRandomSuffix [
-
 	| aFileReference anotherFileReference |
 	store storeNameStrategy: OmRandomSuffixStrategy new.
 
@@ -36,34 +35,33 @@ OmSessionStoreTest >> testResetWithNextStoreNameWithRandomSuffix [
 	aFileReference := store writingFileReference.
 	store resetWithNextStoreName.
 	anotherFileReference := store writingFileReference.
-	
-	self deny: aFileReference = anotherFileReference
+
+	self deny: aFileReference equals: anotherFileReference
 ]
 
 { #category : #tests }
 OmSessionStoreTest >> testResetWithNextStoreNameWithSequentialSuffix [
 	"The sequencial suffix doesn't change unless the file is created"
-	
+
 	| aFileReference anotherFileReference |
 	store storeNameStrategy: OmSequentialSuffixStrategy new.
-	
+
 	store resetWithNextStoreName.
 	aFileReference := store writingFileReference.
 	store resetWithNextStoreName.
 	anotherFileReference := store writingFileReference.
-	
+
 	self assert: aFileReference equals: anotherFileReference.
-	
+
 	store newEntry: (OmEntry content: 42).
 	store flush.
 	store resetWithNextStoreName.
 	anotherFileReference := store writingFileReference.
-	self deny: aFileReference = anotherFileReference.
+	self deny: aFileReference equals: anotherFileReference
 ]
 
 { #category : #tests }
 OmSessionStoreTest >> testResetWithNextStoreNameWithTimeStampSuffix [
-
 	| aFileReference anotherFileReference |
 	store storeNameStrategy: OmTimeStampSuffixStrategy new.
 
@@ -72,8 +70,8 @@ OmSessionStoreTest >> testResetWithNextStoreNameWithTimeStampSuffix [
 	50 milliSeconds wait.
 	store resetWithNextStoreName.
 	anotherFileReference := store writingFileReference.
-	
-	self deny: aFileReference = anotherFileReference
+
+	self deny: aFileReference equals: anotherFileReference
 ]
 
 { #category : #tests }

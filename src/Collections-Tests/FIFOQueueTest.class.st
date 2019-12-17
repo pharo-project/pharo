@@ -18,9 +18,7 @@ FIFOQueueTest >> newQueue [
 
 { #category : #running }
 FIFOQueueTest >> runValidationTest [
-	| q sema prio pusher feeder
-		feeders r crit done |
-
+	| q sema prio pusher feeder feeders r crit done |
 	r := Random new.
 	q := AtomicSharedQueue new.
 	feeders := OrderedCollection new.
@@ -28,31 +26,32 @@ FIFOQueueTest >> runValidationTest [
 	sema := Semaphore new.
 	crit := Semaphore forMutualExclusion.
 	done := Semaphore new.
-	
+
 	prio := Processor activePriority.
-	pusher := [ sema wait. 1 to: 100 do: [:i | q nextPut: i ]. ].
-	feeder := [ sema wait. 
-		[ q next. 
-		crit critical: [count := count + 1 ]. count < 1000 ] whileTrue. done signal ].
-	
-	10 timesRepeat: [
-		| proc |
-		proc := pusher newProcess priority: prio + (r next * 10) asInteger  - 5.
-		proc resume.
-		proc := feeder newProcess priority: prio + (r next * 10) asInteger  - 10.
-		feeders add: proc. 
-		proc resume.		
-	].
+	pusher := [ sema wait.
+	1 to: 100 do: [ :i | q nextPut: i ] ].
+	feeder := [ sema wait.
+	[ q next.
+	crit critical: [ count := count + 1 ].
+	count < 1000 ] whileTrue.
+	done signal ].
+
+	10
+		timesRepeat: [ | proc |
+			proc := pusher newProcess priority: prio + (r next * 10) asInteger - 5.
+			proc resume.
+			proc := feeder newProcess priority: prio + (r next * 10) asInteger - 10.
+			feeders add: proc.
+			proc resume ].
 
 	" let them run "
 	20 timesRepeat: [ sema signal ].
 	Processor yield.
-	
-	done waitTimeoutSeconds: 10.
-	 
-	feeders do: [:ea | ea terminate ].
-	self assert: (count = 1000 ) 
 
+	done waitTimeoutSeconds: 10.
+
+	feeders do: [ :ea | ea terminate ].
+	self assert: count equals: 1000
 ]
 
 { #category : #running }

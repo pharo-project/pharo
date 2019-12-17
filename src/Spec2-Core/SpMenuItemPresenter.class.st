@@ -139,6 +139,7 @@ SpMenuItemPresenter >> name: aString [
 { #category : #api }
 SpMenuItemPresenter >> performMenuActionWith: aMenuItem [
 	| en |
+
 	en := self isEnabled.
 	en isBlock ifTrue: [ en := en value ].
 	en ifFalse: [ ^ self ].

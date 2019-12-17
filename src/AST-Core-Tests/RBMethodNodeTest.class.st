@@ -64,11 +64,11 @@ RBMethodNodeTest >> testNodeForOffsetAssignment [
 	source := 'method Object := Class'.
 	ast := self parserClass parseMethod: source.
 	foundNode := ast nodeForOffset: 9.
-	self assert: foundNode class == RBVariableNode.
+	self assert: foundNode class identicalTo: RBVariableNode.
 	foundNode := ast nodeForOffset: 14.
-	self assert: foundNode class == RBAssignmentNode.
+	self assert: foundNode class identicalTo: RBAssignmentNode.
 	foundNode := ast nodeForOffset: 19.
-	self assert: foundNode class == RBVariableNode
+	self assert: foundNode class identicalTo: RBVariableNode
 ]
 
 { #category : #tests }
@@ -79,11 +79,11 @@ RBMethodNodeTest >> testNodeForOffsetMessage [
 	source := 'method Object doit: Class'.
 	ast := self parserClass parseMethod: source.
 	foundNode := ast nodeForOffset: 9.
-	self assert: foundNode class == RBVariableNode.
+	self assert: foundNode class identicalTo: RBVariableNode.
 	foundNode := ast nodeForOffset: 14.
-	self assert: foundNode class == RBMessageNode.
+	self assert: foundNode class identicalTo: RBMessageNode.
 	foundNode := ast nodeForOffset: 22.
-	self assert: foundNode class == RBVariableNode
+	self assert: foundNode class identicalTo: RBVariableNode
 ]
 
 { #category : #tests }
@@ -94,7 +94,7 @@ RBMethodNodeTest >> testNodeForOffsetTempDefinition [
 	source := 'method | temp |'.
 	ast := self parserClass parseFaultyMethod: source.
 	foundNode := ast nodeForOffset: 12.
-	self assert: foundNode class == RBVariableNode
+	self assert: foundNode class identicalTo: RBVariableNode
 ]
 
 { #category : #tests }
@@ -105,7 +105,7 @@ RBMethodNodeTest >> testNodeForOffsetVar [
 	source := 'method Object'.
 	ast := self parserClass parseMethod: source.
 	foundNode := ast nodeForOffset: 9.
-	self assert: foundNode class == RBVariableNode
+	self assert: foundNode class identicalTo: RBVariableNode
 ]
 
 { #category : #tests }

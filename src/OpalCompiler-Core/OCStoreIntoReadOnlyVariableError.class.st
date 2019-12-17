@@ -24,6 +24,6 @@ OCStoreIntoReadOnlyVariableError >> description [
 { #category : #signaling }
 OCStoreIntoReadOnlyVariableError >> signal [
 	compilationContext interactive
-		ifFalse: [ ^ self crTrace ].
+		ifFalse: [ ^ SystemNotification signal: self asString ].
 	^ super signal
 ]

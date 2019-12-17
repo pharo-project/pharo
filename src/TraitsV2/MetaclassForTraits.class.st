@@ -41,7 +41,7 @@ MetaclassForTraits >> asTraitComposition [
 	^ TaClassCompositionElement for: self
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 MetaclassForTraits >> definition [
 	^ String streamContents: [ :s | 
 		s nextPutAll: self instanceSide name;

@@ -36,6 +36,12 @@ EpTraitModification >> behaviorAffectedName [
 	^ newTrait name
 ]
 
+{ #category : #testing }
+EpTraitModification >> hasChanges [
+	^ oldTrait definitionSource ~= newTrait definitionSource or: [ 
+		oldTrait classSide definitionSource ~= newTrait classSide definitionSource ]
+]
+
 { #category : #initialize }
 EpTraitModification >> initializeOldTrait: anOldTrait newTrait: aNewTrait [
 

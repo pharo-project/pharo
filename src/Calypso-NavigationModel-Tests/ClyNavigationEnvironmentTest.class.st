@@ -116,26 +116,26 @@ ClyNavigationEnvironmentTest >> testQueryExecutionShouldRemoveOldWeaklyGarbagedC
 
 { #category : #tests }
 ClyNavigationEnvironmentTest >> testQueryExecutionWhenResultWasWeaklyCollectedAsGarbage [
-
 	| cache result result2 query |
 	query := self createQueryFromScopeOf: self class.
 	environment query: query.
-	Smalltalk garbageCollectMost; garbageCollectMost.
+	Smalltalk
+		garbageCollectMost;
+		garbageCollectMost.
 	cache := environment cachedResultOf: query.
 	self assert: cache equals: nil.
-	
+
 	result := environment query: query.
 	self assert: result class equals: ClyRawQueryResult.
 	result2 := environment query: query.
-	self assert: result == result2
+	self assert: result identicalTo: result2
 ]
 
 { #category : #tests }
 ClyNavigationEnvironmentTest >> testQueryResultShouldBeCached [
-
 	| result1 result2 |
 	result1 := environment query: (self createQueryFromScopeOf: self class).
-	result2 := environment query: (self createQueryFromScopeOf: self class).	
-		
-	self assert: result1 == result2
+	result2 := environment query: (self createQueryFromScopeOf: self class).
+
+	self assert: result1 identicalTo: result2
 ]

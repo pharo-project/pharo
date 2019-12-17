@@ -220,7 +220,7 @@ AthensCanvas >> setShape: anObject [
 { #category : #paint }
 AthensCanvas >> setStrokePaint: aPaint [
 	"use paint as stroke paint, note conversion to #asStrokePaintOn:"
-	paint := StrokePaintCache at: aPaint ifAbsentPut: [ (aPaint asAthensPaintOn: self) asStrokePaintOn: self ].
+	paint := (aPaint asAthensPaintOn: self) asStrokePaintOn: self.
 	^ paint
 ]
 

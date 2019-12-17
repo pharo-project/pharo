@@ -23,11 +23,8 @@ MCMczInstallerTest class >> suite [
 
 { #category : #assertions }
 MCMczInstallerTest >> assertDict: dict matchesInfo: info [
-	#(name id message date time author)
-		do: [:sel |  (info perform: sel) ifNotNil: [:i | dict at: sel ifPresent: [:d | self assert: i = d]]].
-	info ancestors 
-			with: (dict at: #ancestors) 
-			do: [:i :d | self assertDict: d matchesInfo: i]
+	#(name id message date time author) do: [ :sel | (info perform: sel) ifNotNil: [ :i | dict at: sel ifPresent: [ :d | self assert: i equals: d ] ] ].
+	info ancestors with: (dict at: #ancestors) do: [ :i :d | self assertDict: d matchesInfo: i ]
 ]
 
 { #category : #assertions }

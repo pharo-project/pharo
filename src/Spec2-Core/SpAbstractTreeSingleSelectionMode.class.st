@@ -50,6 +50,7 @@ SpAbstractTreeSingleSelectionMode >> presenter: aPresenter [
 
 { #category : #selection }
 SpAbstractTreeSingleSelectionMode >> selectPath: aPath [
+
 	self subclassResponsibility
 ]
 
@@ -68,10 +69,28 @@ SpAbstractTreeSingleSelectionMode >> selectedPaths [
 	^ self subclassResponsibility
 ]
 
+{ #category : #accessing }
+SpAbstractTreeSingleSelectionMode >> selectionHolder [
+
+	^ self observablePropertyNamed: #selection
+]
+
+{ #category : #transfert }
+SpAbstractTreeSingleSelectionMode >> transferSubscriptionsTo: anotherSelectionMode [
+
+	self selectionHolder transferSubscriptionsTo: anotherSelectionMode selectionHolder
+]
+
 { #category : #selecting }
 SpAbstractTreeSingleSelectionMode >> unselectAll [
 
 	self clearSelection
+]
+
+{ #category : #selection }
+SpAbstractTreeSingleSelectionMode >> unselectPath: aPath [
+
+	self subclassResponsibility
 ]
 
 { #category : #'api - events' }

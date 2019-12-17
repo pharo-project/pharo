@@ -1,6 +1,6 @@
 Class {
 	#name : #ClassRenameFixTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'previousChangeSet',
 		'testsChangeSet',
@@ -49,12 +49,12 @@ ClassRenameFixTest >> renameClassUsing: aBlock [
 		category: 'ClassRenameFix-GeneradClass'.
 	newClassName := self newUniqueClassName.
 	aBlock value: createdClass value: newClassName.
-	self assert: (Smalltalk globals classNamed: originalName) isNil.
-	self assert: (Smalltalk globals classNamed: newClassName) notNil.
-	foundClasses := Smalltalk globals organization listAtCategoryNamed: 'ClassRenameFix-GeneradClass'.
+	self assert: (testingEnvironment classNamed: originalName) isNil.
+	self assert: (testingEnvironment classNamed: newClassName) notNil.
+	foundClasses := testingEnvironment organization listAtCategoryNamed: 'ClassRenameFix-GeneradClass'.
 	self assert: foundClasses notEmpty.
 	self assert: (foundClasses includes: newClassName).
-	self assert: createdClass name = newClassName
+	self assert: createdClass name equals: newClassName
 ]
 
 { #category : #running }
@@ -92,6 +92,6 @@ ClassRenameFixTest >> testRenameClassUsingClass [
 ClassRenameFixTest >> verifyRenameEvent: aRenamedEvent [
 	| renamedClass |
 	renamedClass := aRenamedEvent classRenamed.
-	self assert: (Smalltalk globals classNamed: newClassName) name = newClassName.
-	self assert: renamedClass name = newClassName
+	self assert: (testingEnvironment classNamed: newClassName) name equals: newClassName.
+	self assert: renamedClass name equals: newClassName
 ]

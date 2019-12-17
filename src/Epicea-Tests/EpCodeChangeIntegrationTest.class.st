@@ -110,6 +110,20 @@ EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
 ]
 
 { #category : #tests }
+EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
+	
+	| modifications |
+	aClass := classFactory newClass.
+	classFactory newSubclassOf: aClass using: {}.
+	aClass addSlot: 'i' asSlot.
+
+	modifications := (self allLogEntriesWith: EpClassModification) collect: #content.
+	self assert: modifications size equals: 1.
+	self assert: modifications first behaviorAffectedName equals: aClass name.
+
+]
+
+{ #category : #tests }
 EpCodeChangeIntegrationTest >> testClassRemoval [
 
 	| className events |
@@ -256,7 +270,6 @@ EpCodeChangeIntegrationTest >> testMethodProtocolChange [
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
-
 	| headBeforeRecompiling |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42'.
@@ -264,8 +277,8 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 	headBeforeRecompiling := monitor log head.
 
 	aClass compile: 'fortyTwo ^42'.
-	
-	self assert: monitor log head == headBeforeRecompiling
+
+	self assert: monitor log head identicalTo: headBeforeRecompiling
 ]
 
 { #category : #tests }

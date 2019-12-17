@@ -56,9 +56,7 @@ ZnMimeTypeTest >> testComparingWithParameters [
 
 { #category : #testing }
 ZnMimeTypeTest >> testCopying [
-
 	| mimeType1 mimeType2 |
-
 	mimeType1 := ZnMimeType textPlain.
 	mimeType2 := ZnMimeType textPlain.
 	self assert: mimeType1 equals: mimeType2.
@@ -67,9 +65,9 @@ ZnMimeTypeTest >> testCopying [
 	self assert: mimeType1 charSet equals: 'utf-8'.
 	mimeType2 charSet: 'latin1'.
 	self assert: mimeType2 charSet equals: 'latin1'.
-	self assert: ( mimeType1 matches: mimeType2 ).
-	self deny: mimeType1 parameters = mimeType2 parameters.
-	self deny: mimeType1 charSet = mimeType2 charSet
+	self assert: (mimeType1 matches: mimeType2).
+	self deny: mimeType1 parameters equals: mimeType2 parameters.
+	self deny: mimeType1 charSet equals: mimeType2 charSet
 ]
 
 { #category : #testing }
@@ -98,14 +96,9 @@ ZnMimeTypeTest >> testIsBinary [
 
 { #category : #testing }
 ZnMimeTypeTest >> testMatches [
-	#(
-		( 'text/plain' 'text/*' )
-		( 'text/plain' '*/*' )
-		( 'text/plain;charset=utf-8' 'text/*' ) 
-		( 'text/plain;charset=utf-8' 'text/plain' )
-		( 'text/plain' 'text/plain;charset=utf-8' )
-		( 'text/plain;charset=utf-8' 'text/plain;charset=ascii' ) ) do: [ :each |
-			self deny: each first asZnMimeType = each second asZnMimeType.
+	#(#('text/plain' 'text/*') #('text/plain' '*/*') #('text/plain;charset=utf-8' 'text/*') #('text/plain;charset=utf-8' 'text/plain') #('text/plain' 'text/plain;charset=utf-8') #('text/plain;charset=utf-8' 'text/plain;charset=ascii'))
+		do: [ :each | 
+			self deny: each first asZnMimeType equals: each second asZnMimeType.
 			self assert: (each first asZnMimeType matches: each second asZnMimeType) ]
 ]
 

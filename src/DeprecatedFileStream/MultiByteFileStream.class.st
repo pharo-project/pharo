@@ -139,7 +139,7 @@ MultiByteFileStream >> bareNext [
 
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 MultiByteFileStream >> basicChunk [
 	"If our buffer in collection contains an chunk with no embedded !'s, nor
 	any non-ascii characters, return that.
@@ -444,7 +444,7 @@ MultiByteFileStream >> next: n innerFor: aString [
 		].
 	].
  
-	^ aString withSqueakLineEndings.
+	^ aString withInternalLineEndings.
 
 ]
 
@@ -457,7 +457,7 @@ MultiByteFileStream >> next: anInteger putAll: aCollection startingAt: startInde
         ^self converter next: anInteger putAll: aCollection startingAt: startIndex toStream: self
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 MultiByteFileStream >> nextChunk [
 	"Answer the contents of the receiver, up to the next terminator
 	character. Doubled terminators indicate an embedded terminator
@@ -519,7 +519,7 @@ MultiByteFileStream >> nextMatchAll: aColl [
 
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 MultiByteFileStream >> nextPreamble [
 	"Assuming that preamble part does not contain ]lang[ tag"
 	self skipSeparators.

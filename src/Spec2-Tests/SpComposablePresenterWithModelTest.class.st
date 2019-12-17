@@ -37,8 +37,8 @@ SpComposablePresenterWithModelTest >> testInstanceCreationWithValueHolder [
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testModelSettingModelToModel [
-
 	"we had a Model, new model is another Model"
+
 	| model model2 presenter |
 	model := SpTestingPointModel x: 1 y: 2.
 	model2 := SpTestingPointModel x: 4 y: 5.
@@ -50,18 +50,15 @@ SpComposablePresenterWithModelTest >> testModelSettingModelToModel [
 	presenter model: model2.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self deny: presenter announcingObject isValueHolder.
-	self assert: presenter announcingObject == model2.
-	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
-
+	self assert: presenter announcingObject identicalTo: model2.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0
 ]
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testModelSettingModelToValueHolder [
-
 	| point model presenter |
-	
 	"we had value holder, new model is a model"
-	point := 40@54.
+	point := 40 @ 54.
 
 	presenter := SpTestingPresenterWithModel on: point.
 	model := SpTestingPointModel x: 1 y: 2.
@@ -72,20 +69,16 @@ SpComposablePresenterWithModelTest >> testModelSettingModelToValueHolder [
 	presenter model: model.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self deny: presenter announcingObject isValueHolder.
-	self assert: presenter announcingObject == model.
-	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
-
-
+	self assert: presenter announcingObject identicalTo: model.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0
 ]
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testModelSettingObjectToModel [
-
 	| point model presenter |
-	
 	"we had a Model, new model is a regular object"
 	model := SpTestingPointModel x: 1 y: 2.
-	point := 40@54.
+	point := 40 @ 54.
 	presenter := SpTestingPresenterWithModel on: model.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self deny: presenter announcingObject isValueHolder.
@@ -94,21 +87,17 @@ SpComposablePresenterWithModelTest >> testModelSettingObjectToModel [
 	presenter model: point.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
-	self assert: presenter model == point.
-	self deny: presenter announcingObject == model.
-	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
-
-
+	self assert: presenter model identicalTo: point.
+	self deny: presenter announcingObject identicalTo: model.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0
 ]
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testModelSettingObjectToValueHolder [
-
 	| point point2 presenter |
-	
 	"we had value holder, new model is a regular object"
-	point := 40@54.
-	point2 := 1@0.
+	point := 40 @ 54.
+	point2 := 1 @ 0.
 	presenter := SpTestingPresenterWithModel on: point.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
@@ -117,17 +106,16 @@ SpComposablePresenterWithModelTest >> testModelSettingObjectToValueHolder [
 	presenter model: point2.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
-	self assert: presenter model == point2.
-	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
-
+	self assert: presenter model identicalTo: point2.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0
 ]
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testModelSettingValueHolderToModel [
-
 	"we had a Model, new model is a value holder"
+
 	| model point valueHolder presenter |
-	point := 1@0.
+	point := 1 @ 0.
 	model := SpTestingPointModel x: 1 y: 2.
 	valueHolder := NewValueHolder value: point.
 	presenter := SpTestingPresenterWithModel on: model.
@@ -138,20 +126,17 @@ SpComposablePresenterWithModelTest >> testModelSettingValueHolderToModel [
 	presenter model: valueHolder.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
-	self assert: presenter announcingObject == valueHolder.
-	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
-
+	self assert: presenter announcingObject identicalTo: valueHolder.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0
 ]
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testModelSettingValueHolderToValueHolder [
-
 	| point point2 valueHolder presenter |
-	
 	"we had value holder, new model is a regular object"
-	point := 40@54.
-	point2 := 1@0.
-	
+	point := 40 @ 54.
+	point2 := 1 @ 0.
+
 	"we had value holder, new model is a value holder"
 	presenter := SpTestingPresenterWithModel on: point.
 	valueHolder := NewValueHolder value: point2.
@@ -162,10 +147,9 @@ SpComposablePresenterWithModelTest >> testModelSettingValueHolderToValueHolder [
 	presenter model: valueHolder.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
-	self assert: presenter model == point2.
-	self assert: presenter announcingObject == valueHolder.
-	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
-
+	self assert: presenter model identicalTo: point2.
+	self assert: presenter announcingObject identicalTo: valueHolder.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0
 ]
 
 { #category : #testing }
@@ -193,33 +177,28 @@ SpComposablePresenterWithModelTest >> testUpdateModel [
 
 { #category : #testing }
 SpComposablePresenterWithModelTest >> testUpdateModelWithValueHolder [
-
 	| aPoint aValueHolder presenter anAnnouncer |
-	
 	"create a point and a value holder that contains it and can react on announcements"
-	aPoint := 40@54.
+	aPoint := 40 @ 54.
 	aValueHolder := NewValueHolder value: aPoint.
-	
-	self assert: (aValueHolder value == aPoint).
+
+	self assert: aValueHolder value identicalTo: aPoint.
 	anAnnouncer := aValueHolder announcer.
-	self assert: (aValueHolder announcer subscriptions subscriptions size) equals: 0. 
-	
+	self assert: aValueHolder announcer subscriptions subscriptions size equals: 0.
+
 	presenter := SpTestingPresenterWithModel on: aValueHolder.
 
-	self assert: (anAnnouncer == aValueHolder announcer).
+	self assert: anAnnouncer identicalTo: aValueHolder announcer.
 	self assert: presenter x text equals: aPoint x asString.
 	self assert: presenter y text equals: aPoint y asString.
-	
+
 	aPoint setX: 1 setY: 2.
-	self assert: (aValueHolder value == aPoint). 
+	self assert: aValueHolder value identicalTo: aPoint.
 	aValueHolder valueChanged.
-	self assert: (anAnnouncer == aValueHolder announcer).
-	
+	self assert: anAnnouncer identicalTo: aValueHolder announcer.
+
 	"the point itself is not subscribed to the presenter"
 
 	self assert: presenter x text equals: aPoint x asString.
-	self assert: presenter y text equals: aPoint y asString.
-	
-	
-	
+	self assert: presenter y text equals: aPoint y asString
 ]

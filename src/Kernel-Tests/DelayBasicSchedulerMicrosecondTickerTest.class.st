@@ -233,22 +233,6 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMultiSchedule [
 ]
 
 { #category : #tests }
-DelayBasicSchedulerMicrosecondTickerTest >> testPerformanceInlined_ifNotNil [
-	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
-	|codeSample|
-	codeSample := [ nil ifNotNil: [ 0 ]].
-	self assert: codeSample sourceNode body statements first isInlined
-]
-
-{ #category : #tests }
-DelayBasicSchedulerMicrosecondTickerTest >> testPerformanceInlined_ifTrue [
-	"For optimal performance, the outer conditionals of #timingPriorityHandleEvent should be inlined"
-	| codeSample x |
-	codeSample := [ x ifTrue: [ 0 ]].
-	self assert: codeSample sourceNode body statements first isInlined
-]
-
-{ #category : #tests }
 DelayBasicSchedulerMicrosecondTickerTest >> testSimpleOneDelay [
 	"
 	Event loop priority takes So it takes priority over following code"

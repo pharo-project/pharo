@@ -94,14 +94,12 @@ ArrayTest >> anotherValue [
 ]
 
 { #category : #asserting }
-ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [ 
+ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
 	self assert: (result class includesBehavior: aClass).
-	result do: 
-		[ :each | 
-		self assert: (aCollection occurrencesOf: each) = (result occurrencesOf: each) ].
-	self assert: result size = aCollection size
+	result do: [ :each | self assert: (aCollection occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: aCollection size
 ]
 
 { #category : #initialization }
@@ -446,7 +444,7 @@ ArrayTest >> setUp [
 	literalArray := #(1 true 3 #four).
 	selfEvaluatingArray := { 1. true. (3/4). String loremIpsum. (2 to: 4) . 5 }.
 	nonSEArray1 := { 1 . Set with: 1 }.
-	nonSEarray2 := { Smalltalk globals associationAt: #Array }.
+	nonSEarray2 := { testingEnvironment associationAt: #Array }.
 	example1 := #(1 2 3 4 5) copy.
 	indexArray:= {2. 3. 4.}.
 	valueArray:={0. 0. 0.}.
@@ -580,56 +578,39 @@ ArrayTest >> testAnySatisfy [
 
 { #category : #'tests - converting' }
 ArrayTest >> testAsArrayKeepsIdentity [
-	 
-	|x y|
+	| x y |
 	x := #(1 2 3 4 5).
 	y := x asArray.
-	self assert: y identityHash = x identityHash
+	self assert: y identityHash equals: x identityHash
 ]
 
 { #category : #'tests - accessing' }
 ArrayTest >> testAtWrap2 [
 	| tabTest |
-	tabTest := #(5 6 8 ).
-	self assert: (tabTest atWrap: 2) = 6.
-	self assert: (tabTest atWrap: 7) = 5.
-	self assert: (tabTest atWrap: 5) = 6.
-	self assert: (tabTest atWrap: 0) = 8.
-	self assert: (tabTest atWrap: 1) = 5.
-	self assert: (tabTest atWrap: -2) = 5
+	tabTest := #(5 6 8).
+	self assert: (tabTest atWrap: 2) equals: 6.
+	self assert: (tabTest atWrap: 7) equals: 5.
+	self assert: (tabTest atWrap: 5) equals: 6.
+	self assert: (tabTest atWrap: 0) equals: 8.
+	self assert: (tabTest atWrap: 1) equals: 5.
+	self assert: (tabTest atWrap: -2) equals: 5
 ]
 
 { #category : #tests }
 ArrayTest >> testCombinations [
-
-	self assert: #(1 2 3) combinations = #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3)).
-	self assert: (1 to: 3) combinations = #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3)).
+	self assert: #(1 2 3) combinations equals: #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3)).
+	self assert: (1 to: 3) combinations equals: #(#(1) #(2) #(3) #(1 2) #(1 3) #(2 3) #(1 2 3))
 ]
 
 { #category : #tests }
 ArrayTest >> testComplexIsSelfEvaluating [
-
 	| complexArray restoredArray |
-	complexArray := {1.
-	true.
-	false.
-	nil.
-	#a.
-	'a'.
-	$a.
-	(Float pi).
-	(Float halfPi).
-	(4 / 5).
-	(Float infinity negated).
-	(1 @ 2).
-	(0 @ 0 extent: 1 @ 1).
-	('hola' -> 0).
-	Object.
-	(Object class)}.
+	complexArray := {1 . true . false . nil . #a . 'a' . $a . Float pi . Float halfPi . (4 / 5) . Float infinity negated . (1 @ 2) . (0 @ 0 extent: 1 @ 1).
+	('hola' -> 0) . Object . Object class}.
 	complexArray := complexArray copyWith: complexArray.
 	self assert: complexArray isSelfEvaluating.
 	restoredArray := self class evaluate: complexArray printString.
-	self assert: restoredArray = complexArray
+	self assert: restoredArray equals: complexArray
 ]
 
 { #category : #'tests - copy' }
@@ -639,33 +620,31 @@ ArrayTest >> testCopyNonEmptyWithoutAllNotIncluded [
 
 { #category : #'tests - iterate' }
 ArrayTest >> testDo [
-
 	| res |
-	res := OrderedCollection new.  
-	self collection do: [:each | res add: each class].
-	self assert: res asArray = self result.
+	res := OrderedCollection new.
+	self collection do: [ :each | res add: each class ].
+	self assert: res asArray equals: self result
 ]
 
 { #category : #'tests - iterate' }
 ArrayTest >> testDo2 [
-
 	| res |
-	res := OrderedCollection new.  
-	self collection do: [:each | res add: each class].
-	self assert: res asArray = self result. 
+	res := OrderedCollection new.
+	self collection do: [ :each | res add: each class ].
+	self assert: res asArray equals: self result
 ]
 
 { #category : #'tests - find binary' }
 ArrayTest >> testFindBinary [
-	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 1 - arg ]) = 1.
-	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 23 - arg ]) = 23.
-	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 11 - arg ]) = 11.
+	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 1 - arg ]) equals: 1.
+	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 23 - arg ]) equals: 23.
+	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 11 - arg ]) equals: 11.
 	self should: [ #(1 3 5 7 11 15 23) findBinary: [ :arg | 8 - arg ] ] raise: NotFound
 ]
 
 { #category : #'tests - find binary' }
 ArrayTest >> testFindBinaryIfNone [
-	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 11 - arg ] ifNone: [ #none ]) = 11.
+	self assert: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 11 - arg ] ifNone: [ #none ]) equals: 11.
 	self should: (#(1 3 5 7 11 15 23) findBinary: [ :arg | 8 - arg ] ifNone: [ #none ]) = #none
 ]
 
@@ -684,10 +663,9 @@ ArrayTest >> testIdentityIncludes [
 
 { #category : #'tests - index access' }
 ArrayTest >> testIdentityIndexOf [
-	
 	| collection element |
 	element := self collectionWithCopyNonIdentical anyOne copy.
-	self deny: self collectionWithCopyNonIdentical anyOne == element.
+	self deny: self collectionWithCopyNonIdentical anyOne identicalTo: element.
 	collection := self collectionWithCopyNonIdentical copyWith: element.
 	self assert: (collection identityIndexOf: element) equals: collection size
 ]
@@ -727,10 +705,10 @@ ArrayTest >> testLiteralEqual [
 
 { #category : #tests }
 ArrayTest >> testNewWithSize [
-	|array|
+	| array |
 	array := Array new: 5.
-	self assert: array size = 5.
-	1 to: 5 do: [:index | self assert: (array at: index) isNil]
+	self assert: array size equals: 5.
+	1 to: 5 do: [ :index | self assert: (array at: index) isNil ]
 ]
 
 { #category : #'tests - occurrencesOf' }
@@ -746,7 +724,7 @@ ArrayTest >> testOccurrencesOf [
 ArrayTest >> testOccurrencesOfEmpty [
 	| result |
 	result := self empty occurrencesOf: self elementInForOccurrences.
-	self assert: result = 0
+	self assert: result equals: 0
 ]
 
 { #category : #'tests - occurrencesOf' }
@@ -759,18 +737,16 @@ ArrayTest >> testOccurrencesOfNotIn [
 
 { #category : #'tests - arithmetic' }
 ArrayTest >> testPremultiply [
-	self assert: example1 +* #(2 ) = #(2 4 6 8 10 ) 
+	self assert: example1 +* #(2) equals: #(2 4 6 8 10)
 ]
 
 { #category : #tests }
 ArrayTest >> testPrinting [
-		
-	self assert: literalArray printString = '#(1 true 3 #four)'.
-	self assert: (literalArray = (self class compiler evaluate: literalArray printString)).
-	self assert: (selfEvaluatingArray = (self class compiler evaluate: selfEvaluatingArray printString)).
-	self assert: nonSEArray1 printString =  'an Array(1 a Set(1))'.
-	self assert: nonSEarray2 printString = '{#Array->Array}'
-
+	self assert: literalArray printString equals: '#(1 true 3 #four)'.
+	self assert: literalArray equals: (self class compiler evaluate: literalArray printString).
+	self assert: selfEvaluatingArray equals: (self class compiler evaluate: selfEvaluatingArray printString).
+	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'.
+	self assert: nonSEarray2 printString equals: '{#Array->Array}'
 ]
 
 { #category : #'tests - arithmetic' }

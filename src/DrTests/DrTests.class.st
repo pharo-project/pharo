@@ -40,16 +40,24 @@ DrTests class >> beDefaultTestRunner [
 ]
 
 { #category : #commands }
-DrTests class >> buildCommandsGroupWith: presenterIntance forRoot: rootCommandGroup [
+DrTests class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup [
 	rootCommandGroup
-		register: (self buildContextualPackageGroupWith: presenterIntance);
-		register: (self buildResultGroupWith: presenterIntance)
+		register: (self buildContextualPackageGroupWith: presenterInstance);
+		register: (self buildItemsListGroupWith: presenterInstance);
+		register: (self buildResultGroupWith: presenterInstance)
 ]
 
 { #category : #commands }
 DrTests class >> buildContextualPackageGroupWith: presenterIntance [
 	^ (CmCommandGroup named: 'Package menu') asSpecGroup
 		register: (self buildPackageGroupWith: presenterIntance);
+		yourself
+]
+
+{ #category : #commands }
+DrTests class >> buildItemsListGroupWith: presenterInstance [
+	^ (CmCommandGroup named: 'List items menu') asSpecGroup
+		register: (DTBrowseSelectedItem forSpec context: presenterInstance);
 		yourself
 ]
 
@@ -122,11 +130,11 @@ DrTests class >> defaultSpec [
 { #category : #'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
 	<worldMenu>
-	(aBuilder item: #'Dr Test')
+	(aBuilder item: #'Dr Test (preview)')
 		parent: #Tools;
 		action: [ self open ];
 		order: 20;
-		keyText: 'o, u';
+		"keyText: 'o, u';" "Note: Removed the shortcut to not clash with SUnitRunner keybinding. For now DrTests is only available as preview."
 		help: 'Let you run and debug SUnit tests.';
 		icon: self taskbarIcon.
 	aBuilder withSeparatorAfter	
@@ -141,9 +149,10 @@ DrTests class >> open [
 
 { #category : #'tools registry' }
 DrTests class >> registerToolsOn: registry [
-
+	"Note: For now, DrTests is only available for preview, thus the following code is commented."
+	
 	"Add DrTests to registry to replace the old test runner." 
-	registry register: self as: #testRunner
+	"registry register: self as: #testRunner"
 ]
 
 { #category : #specs }
@@ -156,8 +165,16 @@ DrTests class >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPlu
 ]
 
 { #category : #actions }
+DrTests >> browseSelectedItem [
+	"Because of DTBrowseSelectedItem>>#canBeExecuted, we know there is a single item in the selection.
+	 Thus, we take the first one and browse it.
+	"
+	self selectedItems first drTestsBrowse
+]
+
+{ #category : #actions }
 DrTests >> browseSelectedResult [
-	self resultSelected content drTestsBrowse
+	self resultSelected drTestsBrowse
 ]
 
 { #category : #private }
@@ -198,7 +215,8 @@ DrTests >> initializeItemsListAndLabel [
 		sortingBlock: #name ascending;
 		displayBlock: [ :item | item name ];
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
-		beMultipleSelection.
+		beMultipleSelection;
+		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
 ]
@@ -321,11 +339,6 @@ DrTests >> pluginsDropList [
 ]
 
 { #category : #accessing }
-DrTests >> resultItemSelected [
-	^ self resultsList ifNil: [ #() ] ifNotNil: #selectedItem
-]
-
-{ #category : #accessing }
 DrTests >> resultSelected [
 	^ self resultsList selectedItem
 ]
@@ -341,25 +354,9 @@ DrTests >> resultViewsDropList [
 	^ resultViewsDropList
 ]
 
-{ #category : #'api - subwidgets configuration' }
-DrTests >> resultViewsDropList: anObject [
-	resultViewsDropList:= anObject 
-]
-
 { #category : #'accessing - subwidgets' }
 DrTests >> resultsList [
 	^ resultsList
-]
-
-{ #category : #api }
-DrTests >> runPluginMethod: aSymbol [
-	self deprecated: 'Meta-programming should be removed.'.
-	[ self lock.
-	self updateStatus: 'Tests started.'.
-	self
-		updateWithResults: (self currentPlugin perform: aSymbol with: self pluginResult).
-	self updateStatus: 'Tests finished.' ]
-		ensure: [ self unlock ]
 ]
 
 { #category : #api }
@@ -367,7 +364,7 @@ DrTests >> selectAllPackageList [
 	packagesList selectAll
 ]
 
-{ #category : #private }
+{ #category : #accessing }
 DrTests >> selectedItems [
 	^ self itemsList selectedItems
 ]
@@ -387,7 +384,7 @@ DrTests >> subwidgetsToLock [
 	^ { self packagesList. self itemsList. self resultsList. self startButton }
 ]
 
-{ #category : #'accessing - subwidgets' }
+{ #category : #actions }
 DrTests >> switchUI [
 	super switchUI.
 	(MiniDrTests new
@@ -443,14 +440,14 @@ DrTests >> updatePackagesListLabel [
 				numberOfItemsSelected: self packagesSelected size)
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateResultLabel [
 	resultLabel
 		label: 'Results: ■';
 		color: pluginResult color
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateResultViewsDropList [
 	| newPragmas |
 	newPragmas := self currentPlugin resultTreeViews.
@@ -466,21 +463,21 @@ DrTests >> updateResultViewsDropList [
 		ifTrue: [ self resultViewsDropList selectIndex: 1 ]
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateStatus: aString [
 	self statusLabel
 		label: ('{1}: {2}' format: { self dateAndTimeString . aString }).
 
 ]
 
-{ #category : #private }
+{ #category : #updating }
 DrTests >> updateSwitchButton: itemsSelected [
 	currentPlugin allowMiniDrTests
 		ifTrue: [ switchButton enabled: itemsSelected isNotEmpty ]
 		ifFalse: switchButton disable
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 DrTests >> updateUI [
 	self
 		startButtonLabel: self currentPlugin startButtonLabel;
@@ -495,12 +492,12 @@ DrTests >> updateUI [
 	self updateResultViewsDropList
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateWithPluginResult: aPluginResult [
 	aPluginResult ifNotNil: [ self updateWithResults: aPluginResult ]
 ]
 
-{ #category : #api }
+{ #category : #updating }
 DrTests >> updateWithResults: results [
 	pluginResult := results.
 	self resultTree: pluginResult buildTreeForUI.

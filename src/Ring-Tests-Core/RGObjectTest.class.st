@@ -21,35 +21,26 @@ RGObjectTest >> testFullCopy [
 
 { #category : #tests }
 RGObjectTest >> testNameAccess [
-	
-	| def | 
-	
+	| def |
 	"we cannot test RGObject directly here"
 	def := RGClass named: #SomeDefinition.
-	self assert: (def asRGDefinition == def).
+	self assert: def asRGDefinition identicalTo: def.
 	self assert: def name equals: #SomeDefinition.
 	self assert: def fullName equals: #SomeDefinition.
 	def name: #NewName.
 	self assert: def name equals: #NewName.
-	self assert: def fullName equals: #NewName.
-	
-	
-	
+	self assert: def fullName equals: #NewName
 ]
 
 { #category : #tests }
 RGObjectTest >> testParent [
-
 	"test link to parent object"
 
-	| def1 def2 | 
-	
+	| def1 def2 |
 	def1 := RGObject new.
 	def2 := RGObject new.
 	def2 pvtParent: def1.
-	self assert: (def2 parent == def1).
-	
-
+	self assert: def2 parent identicalTo: def1
 ]
 
 { #category : #tests }

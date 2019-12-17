@@ -19,8 +19,8 @@ RGNamespaceTest >> testCreatingNamespace [
 		addClass: newClass.
 
 	self assert: newNamespace isNamespace.
-	self assert: (newNamespace packageNamed: #'Collections-Sequenceable') == newPackage.
-	self assert: (newNamespace classNamed: #OrderedCollection) == newClass.
+	self assert: (newNamespace packageNamed: #'Collections-Sequenceable') identicalTo: newPackage.
+	self assert: (newNamespace classNamed: #OrderedCollection) identicalTo: newClass.
 	self assertEmpty: newNamespace methods.
 	self assertEmpty: newNamespace pools.
 	self assertEmpty: newNamespace globalVariables.

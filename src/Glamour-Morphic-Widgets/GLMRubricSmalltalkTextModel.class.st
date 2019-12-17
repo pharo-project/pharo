@@ -111,12 +111,6 @@ GLMRubricSmalltalkTextModel >> shoutAboutToStyle: aPluggableShoutMorph [
 	^ true
 ]
 
-{ #category : #'smartSuggestions - support' }
-GLMRubricSmalltalkTextModel >> sugsContext [
-
-	^ SugsGlamourCodeContext model: self
-]
-
 { #category : #bindings }
 GLMRubricSmalltalkTextModel >> variableBindings [
 	^ variableBindings ifNil: [variableBindings := Dictionary new]

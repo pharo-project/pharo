@@ -23,8 +23,13 @@ CompiledBlock >> hasMethodReturn [
 ]
 
 { #category : #testing }
+CompiledBlock >> hasPragmaNamed: aSymbol [
+	^ false
+]
+
+{ #category : #testing }
 CompiledBlock >> hasSourceCode [
-	^self method hasSourceCode
+	^ self method hasSourceCode
 ]
 
 { #category : #comparing }
@@ -46,6 +51,11 @@ CompiledBlock >> hash [
 
 	"(CompiledMethod>>#hash) hash"
 
+]
+
+{ #category : #testing }
+CompiledBlock >> isCompiledBlock [
+	^ true
 ]
 
 { #category : #testing }

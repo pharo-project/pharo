@@ -163,16 +163,14 @@ WeakAnnouncerTest >> testWeakObject [
 
 { #category : #tests }
 WeakAnnouncerTest >> testWeakSubscription [
-	| obj  subscription |
-
+	| obj subscription |
 	self longTestCase.
-	
+
 	obj := Object new.
-	
-	subscription := 
-		(announcer when: AnnouncementMockA send: #value to: obj) makeWeak.
-		
-	self assert: (obj == subscription subscriber).
+
+	subscription := (announcer when: AnnouncementMockA send: #value to: obj) makeWeak.
+
+	self assert: obj identicalTo: subscription subscriber
 ]
 
 { #category : #tests }

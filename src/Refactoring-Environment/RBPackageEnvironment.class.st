@@ -88,7 +88,7 @@ RBPackageEnvironment >> classesDo: aBlock [
 			enumerated add: each ] ].
 	packages do: [ :package |
 		package classes do: enumerator.
-		package extensionClasses do: enumerator ]
+		package extendedClasses do: enumerator ]
 ]
 
 { #category : #testing }

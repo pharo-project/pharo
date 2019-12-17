@@ -135,21 +135,19 @@ RGMethodTest >> testNewNamedMethod [
 
 { #category : #tests }
 RGMethodTest >> testPackages [
-	
 	| method class |
-
 	" implicit environment "
 	method := RGMethod unnamed.
 
-	self assert: (method parent package == method package).
+	self assert: method parent package identicalTo: method package.
 	self assert: method environment ask packages size equals: 2.
-	
+
 	" adding to existing class definition "
 	class := RGClass unnamed.
 	method := RGMethod parent: class.
 	class addLocalMethod: method.
-	
-	self assert: (method parent package == method package).
+
+	self assert: method parent package identicalTo: method package.
 	self assert: method environment ask packages size equals: 2.
 
 	" adding to existing class definition with package "
@@ -157,35 +155,29 @@ RGMethodTest >> testPackages [
 	method := RGMethod parent: class.
 	class addLocalMethod: method.
 	method package: (RGPackage named: 'SomePackage' parent: method environment).
-	
-	self assert: (method parent package ~~ method package).
-	self assert: method environment ask packages size equals: 3.
 
-	
+	self assert: method parent package ~~ method package.
+	self assert: method environment ask packages size equals: 3
 ]
 
 { #category : #tests }
 RGMethodTest >> testRemovePackage [
-	
 	| method class |
-
 	method := RGMethod unnamed.
 	class := method parent.
-	
-	method package: (RGPackage named: 'SomePackage' parent: method environment).
-	
-	self assert: (method parent package ~~ method package).
-	self assert: method environment ask packages size equals: 3.
-	
-	method package: method parent package. "return it"
 
-	self assert: (method parent package == method package).
+	method package: (RGPackage named: 'SomePackage' parent: method environment).
+
+	self assert: method parent package ~~ method package.
 	self assert: method environment ask packages size equals: 3.
-	
+
+	method package: method parent package.	"return it"
+
+	self assert: method parent package identicalTo: method package.
+	self assert: method environment ask packages size equals: 3.
+
 	method environment removeUnusedPackages.
-	self assert: method environment ask packages size equals: 2.
-	
-	
+	self assert: method environment ask packages size equals: 2
 ]
 
 { #category : #tests }

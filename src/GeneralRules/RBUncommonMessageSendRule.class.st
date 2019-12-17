@@ -1,5 +1,7 @@
 "
 Sending messages with a common literal (e.g. ""Object self"") or an uppercase selector name are usually bugs, introduced through missing statement separators.
+
+Notice, problems of this kind will most likely also cause RBSentNotImplementedRule to be invoked, because one should not use such method names in the first place.
 "
 Class {
 	#name : #RBUncommonMessageSendRule,
@@ -23,8 +25,14 @@ RBUncommonMessageSendRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBUncommonMessageSendRule >> basicCheck: aMethod [
-	^ aMethod messages anySatisfy: [ :each | each isEmpty or: [ each first isUppercase or: [ literalNames includes: each ] ] ]
+RBUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
+	| problemSelectors |
+	problemSelectors := 
+		aMethod sendNodes select: [ :msgSend | 
+			msgSend selector first isUppercase | (self commonLiterals includes: msgSend selector) ].
+	
+	problemSelectors do: [ :msgSend |
+			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString) ]
 ]
 
 { #category : #accessing }

@@ -20,7 +20,7 @@ ZnMagicCookieJarTest >> testAdd [
 	jar := ZnCookieJar new.
 	count := jar cookies size.
 	jar add: (ZnCookie fromString: self cookieString for: 'www.google.com' asZnUrl).
-	self assert: ((jar cookies size) = (count + 1))
+	self assert: jar cookies size equals: count + 1
 ]
 
 { #category : #testing }
@@ -40,6 +40,8 @@ ZnMagicCookieJarTest >> testCookiesForUrl [
 	jar := ZnCookieJar new.
 	c1 := ZnCookie fromString: self cookieString for: 'http://www.google.com' asZnUrl.
 	c2 := ZnCookie fromString: self cookieStringAlt for: 'http://www.pharo-project.org' asZnUrl.
-	jar add: c1; add: c2.
-	self assert: ((jar cookiesForUrl: 'http://www.google.com' asZnUrl) size = 1)
+	jar
+		add: c1;
+		add: c2.
+	self assert: (jar cookiesForUrl: 'http://www.google.com' asZnUrl) size equals: 1
 ]

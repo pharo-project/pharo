@@ -148,8 +148,8 @@ ReadStreamTest >> testUpTo3 [
 	self assert: (stream upTo: $c) equals: 'ab'.
 	self assert: stream next equals: $d.
 	stream := ReadStream on: string from: (string indexOf: $a) to: (string indexOf: $d).
-	self assert: (stream upTo: $e) = 'abcd'.
-	self assert: stream atEnd.
+	self assert: (stream upTo: $e) equals: 'abcd'.
+	self assert: stream atEnd
 ]
 
 { #category : #tests }

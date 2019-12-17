@@ -666,7 +666,7 @@ WorldState >> interCyclePause: milliSecs [
         		ifFalse: [ 0 ]
         		ifTrue: [ lastCycleTime + milliSecs - Time millisecondClockValue ].
  
-      		self flag: 'Issue 14754 - wait2>millisecs is only True for clock rollover. Remove it once DelayScheduler based on microsecondClock - Ben Coman 19.01.2015'.
+      		self flag: 'Issue 14754 - wait2>millisecs is only True for clock rollover. Remove it once delay scheduler is based on microsecondClock - Ben Coman 19.01.2015'.
       		wait2 > milliSecs 
         		ifTrue: [ 0 ]
         		ifFalse: [ wait2 ]. 

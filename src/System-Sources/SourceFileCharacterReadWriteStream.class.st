@@ -48,6 +48,11 @@ SourceFileCharacterReadWriteStream >> cr [
 ]
 
 { #category : #accessing }
+SourceFileCharacterReadWriteStream >> ensureWrittenPosition: aPosition [
+	writeStream wrappedStream ensureWrittenPosition: aPosition
+]
+
+{ #category : #accessing }
 SourceFileCharacterReadWriteStream >> flush [
 
 	writeStream flush
@@ -69,6 +74,12 @@ SourceFileCharacterReadWriteStream >> next [
 SourceFileCharacterReadWriteStream >> next: anInteger [ 
 	
 	^ readStream next: anInteger
+]
+
+{ #category : #accessing }
+SourceFileCharacterReadWriteStream >> next: anInteger putAll: aString startingAt: startIndex [
+
+	^ writeStream next: anInteger putAll: aString startingAt: startIndex
 ]
 
 { #category : #accessing }

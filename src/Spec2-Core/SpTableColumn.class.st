@@ -13,7 +13,8 @@ Class {
 		'title',
 		'evaluation',
 		'expandable',
-		'width'
+		'width',
+		'sortFunction'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -105,10 +106,28 @@ SpTableColumn >> isExpandable [
 	^ expandable and: [ self width isNil ]
 ]
 
+{ #category : #testing }
+SpTableColumn >> isSortable [
+
+	^ self sortFunction notNil
+]
+
 { #category : #accessing }
 SpTableColumn >> readObject: anObject [ 
 
 	^ self evaluation cull: anObject
+]
+
+{ #category : #accessing }
+SpTableColumn >> sortFunction [
+
+	^ sortFunction
+]
+
+{ #category : #accessing }
+SpTableColumn >> sortFunction: aBlock [
+
+	sortFunction := aBlock
 ]
 
 { #category : #accessing }

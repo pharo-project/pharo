@@ -163,9 +163,13 @@ EpMonitor >> behaviorAdded: aClassAddedAnnouncement [
 EpMonitor >> behaviorModified: aClassModifiedClassDefinitionAnnouncement [
 
 	self handleAnyErrorDuring: [
-		aClassModifiedClassDefinitionAnnouncement classAffected isTrait
+		| event |
+		event := aClassModifiedClassDefinitionAnnouncement classAffected isTrait
 			ifTrue: [ self traitModified: aClassModifiedClassDefinitionAnnouncement ]
-			ifFalse: [ self classModified: aClassModifiedClassDefinitionAnnouncement ] ]
+			ifFalse: [ self classModified: aClassModifiedClassDefinitionAnnouncement ].
+
+		event hasChanges ifTrue: [ self addEvent: event ]
+	]
 ]
 
 { #category : #'announcement handling' }
@@ -266,10 +270,9 @@ EpMonitor >> classCommented: anAnnouncement [
 { #category : #'announcement handling' }
 EpMonitor >> classModified: aClassModifiedAnnouncement [
 
-	self addEvent: 
-		(EpClassModification
-			oldClass: aClassModifiedAnnouncement oldClassDefinition
-			newClass: aClassModifiedAnnouncement newClassDefinition)
+	^ EpClassModification
+		oldClass: aClassModifiedAnnouncement oldClassDefinition
+		newClass: aClassModifiedAnnouncement newClassDefinition
 ]
 
 { #category : #'announcement handling' }
@@ -383,7 +386,7 @@ EpMonitor >> handleAnyErrorDuring: aBlock [
 EpMonitor >> handleError: error [
 
 	self debugMode 
-		ifTrue: [ error signal ]
+		ifTrue: [ error pass ]
 		ifFalse: [ 'EpMonitor could not log a change. You can enable debugging with "EpMonitor current debugMode: true".' traceCr ]
 ]
 
@@ -619,9 +622,9 @@ EpMonitor >> traitAdded: aClassAddedAnnouncement [
 { #category : #'announcement handling' }
 EpMonitor >> traitModified: aClassModifiedClassDefinitionAnnouncement [
 
-	self addEvent: (EpTraitModification
+	^ EpTraitModification
 		oldTrait: aClassModifiedClassDefinitionAnnouncement oldClassDefinition
-		newTrait: aClassModifiedClassDefinitionAnnouncement newClassDefinition)
+		newTrait: aClassModifiedClassDefinitionAnnouncement newClassDefinition
 ]
 
 { #category : #'announcement handling' }

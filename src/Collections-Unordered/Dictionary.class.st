@@ -777,10 +777,9 @@ Dictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDic
 { #category : #accessing }
 Dictionary >> values [
 	"Answer a Collection containing the receiver's values."
-	| out |
-	out := (Array new: self size) writeStream.
-	self valuesDo: [:value | out nextPut: value].
-	^ out contents
+	^Array 
+		new: self size 
+		streamContents: [ :out | self valuesDo: [:value | out nextPut: value]]
 ]
 
 { #category : #enumerating }

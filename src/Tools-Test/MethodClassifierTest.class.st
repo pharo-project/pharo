@@ -43,5 +43,5 @@ MethodClassifierTest >> testProtocolForKnownPrefixOfSelector [
 				assert: (classifier protocolForKnownPrefixOfSelector: (prefix , ':more:') asSymbol) equals: protocol.
 
 			"it shouldn't mis-classify 'island' as 'testing' just because it starts with 'is'"
-			self deny: (classifier protocolForKnownPrefixOfSelector: (prefix , 'more') asSymbol) = protocol ]
+			self deny: (classifier protocolForKnownPrefixOfSelector: (prefix , 'more') asSymbol) equals: protocol ]
 ]

@@ -50,6 +50,14 @@ SourceFile >> cr [
 ]
 
 { #category : #accessing }
+SourceFile >> ensureWrittenPosition: aPosition [
+
+	self isReadOnly ifTrue: [ ^ self ].
+	
+	stream ensureWrittenPosition: aPosition
+]
+
+{ #category : #accessing }
 SourceFile >> flush [
 
 	(stream isNil or: [ stream isReadOnly ])
@@ -116,13 +124,20 @@ SourceFile >> next: anInteger [
 	^ stream next: anInteger
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #accessing }
+SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
+
+	stream next: anInteger putAll: aString startingAt: startIndex
+
+]
+
+{ #category : #'file in/out' }
 SourceFile >> nextChunk [
 
 	^ (ChunkReadStream on: stream) next
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 SourceFile >> nextChunkPut: aChunk [
 
 	^ (ChunkWriteStream on: stream) nextPut: aChunk

@@ -7,6 +7,11 @@ Class {
 	#category : #'DrTests-Model'
 }
 
+{ #category : #testing }
+DTAbstractTreeNode >> canBeBrowsed [
+	^ self subclassResponsibility
+]
+
 { #category : #actions }
 DTAbstractTreeNode >> drTestsBrowse [
 	"Actions to perform in order to browse the result.

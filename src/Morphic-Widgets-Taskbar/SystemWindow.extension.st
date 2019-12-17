@@ -159,6 +159,12 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
+		addToggle: 'windows like this' translated
+		target: self
+		selector: #taskbarCloseAllLikeThis
+		getStateSelector: nil
+		enablementSelector: true.
+	submenu
 		addToggle: 'unchanged windows' translated
 		target: self currentWorld
 		selector: #closeAllUnchangedWindows
@@ -182,6 +188,12 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		font: theme menuFont.
 
 	^menu
+]
+
+{ #category : #'*Morphic-Widgets-Taskbar' }
+SystemWindow >> taskbarCloseAllLikeThis [
+
+	(SystemWindow allSubInstances select: [ :w | w model isKindOf: self model class ]) do: [ :w | w delete ].
 ]
 
 { #category : #'*Morphic-Widgets-Taskbar' }

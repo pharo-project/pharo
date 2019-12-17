@@ -3,16 +3,16 @@ I represent a class Variable
 "
 Class {
 	#name : #NECClassVarEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 
 { #category : #accessing }
-NECClassVarEntry >> label [
-	^ 'class variable'
+NECClassVarEntry >> hightlightSymbol [
+	^ #classVar
 ]
 
 { #category : #accessing }
-NECClassVarEntry >> type [
-	^ #classVar
+NECClassVarEntry >> label [
+	^ 'class variable'
 ]

@@ -25,11 +25,11 @@ DAPackageTest >> setUp [
 { #category : #tests }
 DAPackageTest >> testAdd [
 	| aDependency |
-	aDependency := DAPackageDependency from:aPackage to:aSecondPackage.
+	aDependency := DAPackageDependency from: aPackage to: aSecondPackage.
 	aPackage add: aDependency.
-	
-	self assert: ( (aPackage dependencies size) = 2).
-	self assert: ( aPackage dependencies includes: aDependency)
+
+	self assert: aPackage dependencies size equals: 2.
+	self assert: (aPackage dependencies includes: aDependency)
 ]
 
 { #category : #tests }
@@ -47,16 +47,12 @@ DAPackageTest >> testCleardependencies [
 { #category : #tests }
 DAPackageTest >> testDependantPackages [
 	| aCollection |
-	
-	aPackage add: (DAPackageDependency from:aPackage to:packageA).
-	
+	aPackage add: (DAPackageDependency from: aPackage to: packageA).
+
 	aCollection := aPackage dependentPackages.
 	self assert: (aCollection includes: packageA).
 	self assert: (aCollection includes: aSecondPackage).
-	self assert: (aCollection size = 2).
-	
-	
-	
+	self assert: aCollection size equals: 2
 ]
 
 { #category : #tests }
@@ -76,19 +72,12 @@ DAPackageTest >> testDependenciesFrom [
 { #category : #tests }
 DAPackageTest >> testDependenciesSize [
 	| aCompositeDependency |
-	aCompositeDependency := DACompositeDependency
-		from: packageA
-		to: packageB.
-	aCompositeDependency
-		add:
-			(DAInheritanceDependency from:  aPackage to: packageB).
-	aCompositeDependency
-		add:
-			(DAInheritanceDependency from:  aPackage to: packageB).
-	self assert: (aPackage dependenciesSize = 1).
+	aCompositeDependency := DACompositeDependency from: packageA to: packageB.
+	aCompositeDependency add: (DAInheritanceDependency from: aPackage to: packageB).
+	aCompositeDependency add: (DAInheritanceDependency from: aPackage to: packageB).
+	self assert: aPackage dependenciesSize equals: 1.
 	aPackage add: aCompositeDependency.
-	self assert: (aPackage dependenciesSize = 3).
-	
+	self assert: aPackage dependenciesSize equals: 3
 ]
 
 { #category : #running }
@@ -96,7 +85,7 @@ DAPackageTest >> testDependenciesSizeTo [
 	packageA
 		add: (DAInheritanceDependency from: packageA to: packageB);
 		add: (DAInheritanceDependency from: packageA to: packageC).
-	self assert: ((packageA dependenciesSizeTo: packageB )= 1).
+	self assert: (packageA dependenciesSizeTo: packageB) equals: 1
 ]
 
 { #category : #tests }
@@ -115,22 +104,22 @@ DAPackageTest >> testDependentPackages [
 { #category : #tests }
 DAPackageTest >> testDependentPackagesSize [
 	| dependency |
-	self assert: aPackage dependentPackagesSize = 1.
+	self assert: aPackage dependentPackagesSize equals: 1.
 	dependency := DAPackageDependency from: aPackage to: packageA.
 	aPackage add: dependency.
-	self assert: aPackage dependentPackagesSize = 2
+	self assert: aPackage dependentPackagesSize equals: 2
 ]
 
 { #category : #tests }
 DAPackageTest >> testNumberOfDependentPackage [
-	self assert: (aPackage dependentPackagesSize = 1).
+	self assert: aPackage dependentPackagesSize equals: 1.
 	aPackage add: (DAPackageDependency from: aPackage to: packageA).
-	self assert: (aPackage dependentPackagesSize = 2).
+	self assert: aPackage dependentPackagesSize equals: 2
 ]
 
 { #category : #tests }
 DAPackageTest >> testPackageName [
-	self assert:  (packageA packageName = 'A')
+	self assert: packageA packageName equals: 'A'
 ]
 
 { #category : #tests }

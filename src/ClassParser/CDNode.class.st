@@ -17,7 +17,7 @@ Class {
 	#category : #'ClassParser-Model'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 CDNode class >> on: aRBMessageNode [ 
 	
 	^ self new
@@ -166,15 +166,4 @@ CDNode >> start [
 CDNode >> stop [
 	
 	^ originalNode stop
-]
-
-{ #category : #'to be removed once CDNode get subclass of RBProgramNode' }
-CDNode >> suggestions [
-	^SugsSuggestion for: self class
-]
-
-{ #category : #'to be moved to sugs' }
-CDNode >> sugsMenuLabel [
-
-	^ 'CDNode'
 ]

@@ -40,7 +40,7 @@ GLMFinderMorphicTest >> testDefaultFixedSizePanes [
 
 { #category : #tests }
 GLMFinderMorphicTest >> testEmbeddedBrowserRefreshesRendering [
-	| tabulator finder tabulator1 textMorph1 textMorph2 content1 details1 |	
+	| tabulator finder tabulator1 textMorph1 textMorph2 content1 details1 |
 	tabulator := GLMTabulator new.
 	tabulator
 		row: #content;
@@ -63,10 +63,10 @@ GLMFinderMorphicTest >> testEmbeddedBrowserRefreshesRendering [
 	details1 := tabulator1 panes second.
 	(content1 port: #selection) value: 41.
 	textMorph1 := self findWherePresentationIs: details1 presentations first in: window.
-	self assert: textMorph1 model getText = '41'.
+	self assert: textMorph1 model getText equals: '41'.
 	(content1 port: #selection) value: 42.
-	self assert: tabulator1 == finder panes first presentations first.
-	self assert: details1 == tabulator1 panes second.
+	self assert: tabulator1 identicalTo: finder panes first presentations first.
+	self assert: details1 identicalTo: tabulator1 panes second.
 	self assert: details1 presentations first text asString equals: '42'.
 	textMorph2 := self findWherePresentationIs: details1 presentations first in: window.
 	self assert: textMorph2 model getText asString equals: '42'

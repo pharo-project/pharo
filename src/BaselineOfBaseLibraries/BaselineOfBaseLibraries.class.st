@@ -29,5 +29,11 @@ BaselineOfBaseLibraries >> baseline: spec [
 				baseline: 'Beacon'
 				with: [ spec
 						loads: #('CoreTests');
-						repository: repository ] ]
+						repository: repository ].
+
+			spec 
+				baseline: 'Clap' 
+				with: [ spec
+					loads: #('core'); 
+					repository: repository ] ]
 ]

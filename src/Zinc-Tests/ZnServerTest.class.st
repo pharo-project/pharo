@@ -95,24 +95,38 @@ ZnServerTest >> runningOnWindows [
 
 { #category : #testing }
 ZnServerTest >> testAuthorizationFailed [
-	self withServerDo: [ :server | | response |
-		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
-		response := ZnEasy get: (server localUrl addPathSegment: 'echo'; yourself).
-		self assert: (response headers contentType = ZnMimeType textPlain).
-		self assert: (response statusLine code = 401).
-		self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Basic').
-		self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Zinc') ]
+	self
+		withServerDo: [ :server | 
+			| response |
+			server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
+			response := ZnEasy
+				get:
+					(server localUrl
+						addPathSegment: 'echo';
+						yourself).
+			self assert: response headers contentType equals: ZnMimeType textPlain.
+			self assert: response statusLine code equals: 401.
+			self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Basic').
+			self assert: ((response headers at: 'WWW-Authenticate') includesSubstring: 'Zinc') ]
 ]
 
 { #category : #testing }
 ZnServerTest >> testAuthorizationSuccessful [
-	self withServerDo: [ :server | | response |
-		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
-		response := ZnEasy get: (server localUrl addPathSegments: #('echo' 'foo'); yourself) username: 'foo' password: 'secret'.
-		self assert: (response headers contentType = ZnMimeType textPlain).
-		self assert: (response statusLine code = 200).
-		self assert: (response entity string includesSubstring: 'Zinc').
-		self assert: (response entity string includesSubstring: 'foo') ]
+	self
+		withServerDo: [ :server | 
+			| response |
+			server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
+			response := ZnEasy
+				get:
+					(server localUrl
+						addPathSegments: #('echo' 'foo');
+						yourself)
+				username: 'foo'
+				password: 'secret'.
+			self assert: response headers contentType equals: ZnMimeType textPlain.
+			self assert: response statusLine code equals: 200.
+			self assert: (response entity string includesSubstring: 'Zinc').
+			self assert: (response entity string includesSubstring: 'foo') ]
 ]
 
 { #category : #testing }
@@ -134,16 +148,14 @@ ZnServerTest >> testCustomDefaultDelegate [
 { #category : #testing }
 ZnServerTest >> testDefault [
 	| port server initialDefaultServer wasRunning |
-	wasRunning := ZnServer default 
-		ifNil: [ false ] 
-		ifNotNil: [ ZnServer default isRunning ].
+	wasRunning := ZnServer default ifNil: [ false ] ifNotNil: [ ZnServer default isRunning ].
 	initialDefaultServer := ZnServer stopDefault.
 	self assert: ZnServer default isNil.
 	port := self port.
 	server := ZnServer startDefaultOn: port.
 	self assert: ZnServer default notNil.
-	self assert: ZnServer default == server.
-	self assert: ZnServer default port = port.
+	self assert: ZnServer default identicalTo: server.
+	self assert: ZnServer default port equals: port.
 	self assert: ZnServer default isRunning.
 	self assert: (ZnServer managedServers includes: server).
 	ZnServer stopDefault.
@@ -153,52 +165,64 @@ ZnServerTest >> testDefault [
 	server := ZnServer startDefaultOn: port.
 	"Starting the default again is actually a restart"
 	ZnServer startDefaultOn: port.
-	self assert: ZnServer default == server.
+	self assert: ZnServer default identicalTo: server.
 	ZnServer stopDefault.
 	ZnServer adoptAsDefault: initialDefaultServer.
-	self assert: initialDefaultServer == ZnServer default.
+	self assert: initialDefaultServer identicalTo: ZnServer default.
 	wasRunning ifTrue: [ ZnServer default start ]
 ]
 
 { #category : #testing }
 ZnServerTest >> testEcho [
-	self withServerDo: [ :server | | response |
-		response := ZnEasy get: (server localUrl addPathSegments: #('echo' 'foo'); yourself).
-		self assert: (response contentType = ZnMimeType textPlain).
-		self assert: (response statusLine code = 200).
-		self assert: (response entity contents includesSubstring: 'Zinc').
-		self assert: (response entity contents includesSubstring: 'foo').
-		self assert: (response entity contents includesSubstring: server printString) ]
+	self
+		withServerDo: [ :server | 
+			| response |
+			response := ZnEasy
+				get:
+					(server localUrl
+						addPathSegments: #('echo' 'foo');
+						yourself).
+			self assert: response contentType equals: ZnMimeType textPlain.
+			self assert: response statusLine code equals: 200.
+			self assert: (response entity contents includesSubstring: 'Zinc').
+			self assert: (response entity contents includesSubstring: 'foo').
+			self assert: (response entity contents includesSubstring: server printString) ]
 ]
 
 { #category : #testing }
 ZnServerTest >> testEchoBinary [
-	self withServerDo: [ :server | | response entityIn entityOut |
-		server reader: [ :stream | ZnRequest readBinaryFrom: stream ].
-		entityIn := ZnEntity with: 'ABC' type: 'text/plain'.
-		response := ZnEasy put: (server localUrl addPathSegment: 'echo'; yourself)  data: entityIn.
-		self assert: (response contentType = ZnMimeType textPlain).
-		self assert: (response statusLine code = 200).
-		entityOut := ZnEntity with: entityIn string asByteArray type: entityIn contentType.
-		self assert: (response entity contents includesSubstring: entityOut printString) ]
+	self
+		withServerDo: [ :server | 
+			| response entityIn entityOut |
+			server reader: [ :stream | ZnRequest readBinaryFrom: stream ].
+			entityIn := ZnEntity with: 'ABC' type: 'text/plain'.
+			response := ZnEasy
+				put:
+					(server localUrl
+						addPathSegment: 'echo';
+						yourself)
+				data: entityIn.
+			self assert: response contentType equals: ZnMimeType textPlain.
+			self assert: response statusLine code equals: 200.
+			entityOut := ZnEntity with: entityIn string asByteArray type: entityIn contentType.
+			self assert: (response entity contents includesSubstring: entityOut printString) ]
 ]
 
 { #category : #testing }
 ZnServerTest >> testEchoLocalInterface [
 	| server response |
-	(server := ZnServer on: self port)
-		bindingAddress: NetNameResolver loopBackAddress.
-	[ 
-		server start.
-		self 
-			assert: server isRunning & server isListening
-			description: ('Failed to start server on port {1}. Is there one already?' format: { server port }).
-		response := ZnEasy get: (server localUrl addPathSegments: #('echo' 'foo'); yourself).
-		self assert: (response contentType = ZnMimeType textPlain).
-		self assert: (response statusLine code = 200).
-		self assert: (response entity contents includesSubstring: 'Zinc').
-		self assert: (response entity contents includesSubstring: 'foo')
-	]
+	(server := ZnServer on: self port) bindingAddress: NetNameResolver loopBackAddress.
+	[ server start.
+	self assert: server isRunning & server isListening description: ('Failed to start server on port {1}. Is there one already?' format: {server port}).
+	response := ZnEasy
+		get:
+			(server localUrl
+				addPathSegments: #('echo' 'foo');
+				yourself).
+	self assert: response contentType equals: ZnMimeType textPlain.
+	self assert: response statusLine code equals: 200.
+	self assert: (response entity contents includesSubstring: 'Zinc').
+	self assert: (response entity contents includesSubstring: 'foo') ]
 		ensure: [ server stop ]
 ]
 
@@ -322,14 +346,20 @@ ZnServerTest >> testGetConnectionClose [
 
 { #category : #testing }
 ZnServerTest >> testGetUnicodeUtf8 [
-	self withServerDo: [ :server | | response html |
-		response := ZnEasy get: (server localUrl addPathSegment: 'unicode'; yourself).
-		self assert: (response contentType = ZnMimeType textHtml).
-		self assert: (response statusLine code = 200).
-		self assert: response contentType isCharSetUTF8.
-		html := response entity contents.
-		self assert: (html includesSubstring: 'Unicode').
-		0 to: 16r024F do: [ :each | self assert: (html includes: each asCharacter) ] ]
+	self
+		withServerDo: [ :server | 
+			| response html |
+			response := ZnEasy
+				get:
+					(server localUrl
+						addPathSegment: 'unicode';
+						yourself).
+			self assert: response contentType equals: ZnMimeType textHtml.
+			self assert: response statusLine code equals: 200.
+			self assert: response contentType isCharSetUTF8.
+			html := response entity contents.
+			self assert: (html includesSubstring: 'Unicode').
+			0 to: 16r024F do: [ :each | self assert: (html includes: each asCharacter) ] ]
 ]
 
 { #category : #testing }
@@ -366,20 +396,19 @@ ZnServerTest >> testLocalUrl [
 
 { #category : #testing }
 ZnServerTest >> testOSAssignedPort [
-	| server | 
+	| server |
 	server := ZnServer on: 0.
 	self assert: server port equals: 0.
-	[ 
-		| response |
-		server start.
-		self assert: server port > 0. 
-		response := ZnEasy get: server localUrl / #echo / #foo.
-		self assert: (response contentType = ZnMimeType textPlain).
-		self assert: (response statusLine code = 200).
-		self assert: (response entity contents includesSubstring: 'Zinc').
-		self assert: (response entity contents includesSubstring: 'foo').
-		self assert: (response entity contents includesSubstring: server printString) ] 
-			ensure: [ server stop ]
+	[ | response |
+	server start.
+	self assert: server port > 0.
+	response := ZnEasy get: server localUrl / #echo / #foo.
+	self assert: response contentType equals: ZnMimeType textPlain.
+	self assert: response statusLine code equals: 200.
+	self assert: (response entity contents includesSubstring: 'Zinc').
+	self assert: (response entity contents includesSubstring: 'foo').
+	self assert: (response entity contents includesSubstring: server printString) ]
+		ensure: [ server stop ]
 ]
 
 { #category : #testing }
@@ -420,61 +449,70 @@ ZnServerTest >> testRespond [
 
 { #category : #testing }
 ZnServerTest >> testSession [
-	self withServerDo: [ :server | | client sessionId |
-		client := ZnClient new url: (server localUrl addPathSegment: #session); yourself.
-		self assert: client session cookieJar cookies isEmpty.
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		sessionId := client session cookieJar cookies anyOne value.
-		self assert: (client contents includesSubstring: sessionId).
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		self assert: client session cookieJar cookies anyOne value equals: sessionId.
-		self assert: (client contents includesSubstring: sessionId) ]
-
+	self
+		withServerDo: [ :server | 
+			| client sessionId |
+			client := ZnClient new
+				url: (server localUrl addPathSegment: #session);
+				yourself.
+			self assert: client session cookieJar cookies isEmpty.
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size equals: 1.
+			sessionId := client session cookieJar cookies anyOne value.
+			self assert: (client contents includesSubstring: sessionId).
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size equals: 1.
+			self assert: client session cookieJar cookies anyOne value equals: sessionId.
+			self assert: (client contents includesSubstring: sessionId) ]
 ]
 
 { #category : #testing }
 ZnServerTest >> testSessionExpired [
-	self withServerDo: [ :server | | client sessionId |
-		client := ZnClient new url: (server localUrl addPathSegment: #session); yourself.
-		self assert: client session cookieJar cookies isEmpty.
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		sessionId := client session cookieJar cookies anyOne value.
-		self assert: (client contents includesSubstring: sessionId).
-		"Kill the server session as if it was expired"
-		server sessionManager removeSessionWithId: sessionId.
-		"The client still presents the old session id but should get a new one"
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		self deny: client session cookieJar cookies anyOne value = sessionId ]
-
+	self
+		withServerDo: [ :server | 
+			| client sessionId |
+			client := ZnClient new
+				url: (server localUrl addPathSegment: #session);
+				yourself.
+			self assert: client session cookieJar cookies isEmpty.
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size equals: 1.
+			sessionId := client session cookieJar cookies anyOne value.
+			self assert: (client contents includesSubstring: sessionId).
+			"Kill the server session as if it was expired"
+			server sessionManager removeSessionWithId: sessionId.
+			"The client still presents the old session id but should get a new one"
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size equals: 1.
+			self deny: client session cookieJar cookies anyOne value equals: sessionId ]
 ]
 
 { #category : #testing }
 ZnServerTest >> testSessionRoute [
-	self withServerDo: [ :server | | client sessionId |
-		server route: 'r1'.
-		self assert: server route equals: 'r1'.
-		client := ZnClient new url: (server localUrl addPathSegment: #session); yourself.
-		self assert: client session cookieJar cookies isEmpty.
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		sessionId := client session cookieJar cookies anyOne value.
-		self assert: (client contents includesSubstring: sessionId).
-		self assert: (sessionId endsWith: '.r1').
-		client get.
-		self assert: client isSuccess.
-		self assert: client session cookieJar cookies size = 1.
-		self assert: client session cookieJar cookies anyOne value equals: sessionId.
-		self assert: (client contents includesSubstring: sessionId) ]
-
+	self
+		withServerDo: [ :server | 
+			| client sessionId |
+			server route: 'r1'.
+			self assert: server route equals: 'r1'.
+			client := ZnClient new
+				url: (server localUrl addPathSegment: #session);
+				yourself.
+			self assert: client session cookieJar cookies isEmpty.
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size equals: 1.
+			sessionId := client session cookieJar cookies anyOne value.
+			self assert: (client contents includesSubstring: sessionId).
+			self assert: (sessionId endsWith: '.r1').
+			client get.
+			self assert: client isSuccess.
+			self assert: client session cookieJar cookies size equals: 1.
+			self assert: client session cookieJar cookies anyOne value equals: sessionId.
+			self assert: (client contents includesSubstring: sessionId) ]
 ]
 
 { #category : #testing }

@@ -41,6 +41,12 @@ SpMorphicCodeAdapter >> doItReceiver [
 	^ self model doItReceiver
 ]
 
+{ #category : #NOCompletion }
+SpMorphicCodeAdapter >> guessTypeForName: aString [
+
+	^nil
+]
+
 { #category : #private }
 SpMorphicCodeAdapter >> hasSyntaxHighlight [
 	^ self model hasSyntaxHighlight

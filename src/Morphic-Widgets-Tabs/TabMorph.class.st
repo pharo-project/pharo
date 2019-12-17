@@ -697,8 +697,7 @@ TabMorph >> morph: anObject [
 
 { #category : #'event handling' }
 TabMorph >> mouseDown: event [
-
-	self flag: 'ToDo: Add drag'
+	self flag: #pharoTodo. "Add drag"
 ]
 
 { #category : #'icons-actions' }

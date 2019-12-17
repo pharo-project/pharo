@@ -24,26 +24,24 @@ FLGlobalEnvironmentTest >> setUp [
 { #category : #tests }
 FLGlobalEnvironmentTest >> testClassSideCompiledMethod [
 	"Any class-side compiled method should be serialized as global by default. On materialization, it should be found in the global environment, and the bytecodes hash must be the same."
-	
+
 	| classA classB |
 	classA := self newClass.
 	classA class duringTestCompileSilently: 'm  ^ 42'.
 	classB := self newClass.
 	classB class duringTestCompileSilently: 'm    ^    42   '.
-	self assert: (classA class >> #m) bytecodesHash = (classB class >> #m) bytecodesHash.
-	self deny: (classA class >> #m) == (classB class >> #m).
+	self assert: (classA class >> #m) bytecodesHash equals: (classB class >> #m) bytecodesHash.
+	self deny: classA class >> #m identicalTo: classB class >> #m.
 
-	materializationEnvironment 
-		at: classA name
-		put: classB.
+	materializationEnvironment at: classA name put: classB.
 
-	self assert: (self resultOfSerializeAndMaterialize: classA class >> #m) == (classB class >> #m)
+	self assert: (self resultOfSerializeAndMaterialize: classA class >> #m) identicalTo: classB class >> #m
 ]
 
 { #category : #tests }
 FLGlobalEnvironmentTest >> testCompiledMethod [
 	"Any compiled method should be serialized as global by default. On materialization, it should be found in the global environment, and the bytecodes hash must be the same."
-	
+
 	| classA classB |
 	classA := self newClass
 		duringTestCompileSilently: 'm  ^ 42';
@@ -51,14 +49,12 @@ FLGlobalEnvironmentTest >> testCompiledMethod [
 	classB := self newClass
 		duringTestCompileSilently: 'm    ^    42   ';
 		yourself.
-	self assert: (classA >> #m) bytecodesHash = (classB >> #m) bytecodesHash.
-	self deny: (classA >> #m) == (classB >> #m).
+	self assert: (classA >> #m) bytecodesHash equals: (classB >> #m) bytecodesHash.
+	self deny: classA >> #m identicalTo: classB >> #m.
 
-	materializationEnvironment 
-		at: classA name
-		put: classB.
+	materializationEnvironment at: classA name put: classB.
 
-	self assert: (self resultOfSerializeAndMaterialize: classA >> #m) == (classB >> #m)
+	self assert: (self resultOfSerializeAndMaterialize: classA >> #m) identicalTo: classB >> #m
 ]
 
 { #category : #tests }
@@ -118,28 +114,25 @@ FLGlobalEnvironmentTest >> testConsiderCustomGlobalNotFound [
 { #category : #tests }
 FLGlobalEnvironmentTest >> testDontConsiderCustomGlobal [
 	"A custom global variable is not treated as global unless we explicitly specify during serialization."
-	
+
 	| anObject |
 	anObject := Object new.
-	serializationEnvironment 
-		at: #FLGlobalVariableForTesting put: anObject.
-	materializationEnvironment 
+	serializationEnvironment at: #FLGlobalVariableForTesting put: anObject.
+	materializationEnvironment
 		at: #FLGlobalVariableForTesting put: anObject;
 		at: #Object put: Object.
-	
+
 	self deny: (self analyzer globalSymbols includes: #FLGlobalVariableForTesting).
-	self deny: (self resultOfSerializeAndMaterialize: anObject) == anObject
+	self deny: (self resultOfSerializeAndMaterialize: anObject) identicalTo: anObject
 ]
 
 { #category : #tests }
 FLGlobalEnvironmentTest >> testGlobalClass [
 	"A class should be global by default. On materialization, the global symbol should be found in the global environment."
-	
-	materializationEnvironment 
-		at: #Integer 
-		put: FLPerson.
 
-	self assert: (self resultOfSerializeAndMaterialize: Integer) == FLPerson
+	materializationEnvironment at: #Integer put: FLPerson.
+
+	self assert: (self resultOfSerializeAndMaterialize: Integer) identicalTo: FLPerson
 ]
 
 { #category : #tests }
@@ -157,11 +150,9 @@ FLGlobalEnvironmentTest >> testGlobalClassNotFound [
 FLGlobalEnvironmentTest >> testGlobalMetaclass [
 	"A metaclass should be global by default. On materialization, the global symbol should be found in the global environment."
 
-	materializationEnvironment 
-		at: #Integer 
-		put: FLPerson.
+	materializationEnvironment at: #Integer put: FLPerson.
 
-	self assert: (self resultOfSerializeAndMaterialize: Integer class) == FLPerson class
+	self assert: (self resultOfSerializeAndMaterialize: Integer class) identicalTo: FLPerson class
 ]
 
 { #category : #tests }

@@ -3,26 +3,38 @@ A RBRefersToClassRuleTest is a test class for testing the behavior of RBRefersTo
 "
 Class {
 	#name : #RBRefersToClassRuleTest,
-	#superclass : #TestCase,
+	#superclass : #RBAbstractRuleTestCase,
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #helpers }
-RBRefersToClassRuleTest >> newRule [
-	^ RBRefersToClassRule new
+{ #category : #'test-help' }
+RBRefersToClassRuleTest class >> isAbstract [
+	"I can refer to RBRefersToClassRuleTest without error"
+	'It is ok to refert to', RBRefersToClassRuleTest name.
+	^ false 
+]
+
+{ #category : #'test-help' }
+RBRefersToClassRuleTest >> referToClassName [
+	"I refer to my own class by name - RBRefersToClassRuleTest"
+	RBRefersToClassRuleTest name,
+	88,
+	RBRefersToClassRuleTest name
 ]
 
 { #category : #tests }
 RBRefersToClassRuleTest >> testIsAbstractNotDetected [
-	self assertEmpty: (self newRule check: RBAbstractMockToTestRefersToClassRule class>> #isAbstract)
+	| critiques|
+ 	critiques := self myCritiguesOnMethod: self class class >> #isAbstract.
+
+ 	self assert: critiques size equals: 0.
 ]
 
 { #category : #tests }
 RBRefersToClassRuleTest >> testRuleDetectHardCodedClass [
-	self denyEmpty: (self newRule check: RBAbstractMockToTestRefersToClassRule >> #methodHardCodingClass)
-]
+	| critiques|
+ 	critiques := self myCritiguesOnMethod: self class >> #referToClassName.
 
-{ #category : #tests }
-RBRefersToClassRuleTest >> testRuleWithoutHardCodedClass [
-	self assertEmpty: (self newRule check: RBAbstractMockToTestRefersToClassRule >> #methodWithoutCodingClass)
+ 	self assert: critiques size equals: 2.
+ 	self assert: (self sourceAtChritique:  critiques first) equals: 'RBRefersToClassRuleTest'.
 ]

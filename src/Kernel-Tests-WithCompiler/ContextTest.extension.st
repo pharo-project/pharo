@@ -18,21 +18,18 @@ ContextTest >> testSourceNodeOptimizedBlock [
 { #category : #'*Kernel-Tests-WithCompiler' }
 ContextTest >> testTempNamed [
 	| oneTemp context |
-	
 	oneTemp := 1.
-	self assert: (thisContext tempNamed: 'oneTemp') = oneTemp.
-	
-	context := self class contextWithTempForTesting.
-	self assert: (context tempNamed: 'string') = 'test'
+	self assert: (thisContext tempNamed: 'oneTemp') equals: oneTemp.
 
+	context := self class contextWithTempForTesting.
+	self assert: (context tempNamed: 'string') equals: 'test'
 ]
 
 { #category : #'*Kernel-Tests-WithCompiler' }
 ContextTest >> testTempNamedPut [
 	| oneTemp |
-	
 	oneTemp := 1.
-	self assert: (thisContext tempNamed: 'oneTemp') = oneTemp.
+	self assert: (thisContext tempNamed: 'oneTemp') equals: oneTemp.
 	thisContext tempNamed: 'oneTemp' put: 2.
-	self assert: (thisContext tempNamed: 'oneTemp') = 2.
+	self assert: (thisContext tempNamed: 'oneTemp') equals: 2
 ]

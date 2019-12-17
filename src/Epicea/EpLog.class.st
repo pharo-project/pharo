@@ -52,10 +52,16 @@ EpLog class >> newNull [
 ]
 
 { #category : #'instance creation' }
+EpLog class >> newWithEntries: entriesTheOldestFirst [
+	^ self
+		newWithStore: (OmMemoryStore withAllEntries: entriesTheOldestFirst)
+]
+
+{ #category : #'instance creation' }
 EpLog class >> newWithEvents: eventsTheOldestFirst [
 	^ self
 		newWithStore:
-			(OmMemoryStore withAll: eventsTheOldestFirst)
+			(OmMemoryStore withAllContents: eventsTheOldestFirst)
 ]
 
 { #category : #'instance creation' }

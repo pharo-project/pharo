@@ -162,12 +162,12 @@ SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 SourceFileBufferedReadWriteStreamTest >> testWriting [
 	| stringStream bufferedStream |
 	stringStream := ReadWriteStream with: ''.
-	
+
 	bufferedStream := SourceFileBufferedReadWriteStream on: stringStream.
 	0 to: 9 do: [ :each | bufferedStream nextPut: (Character digitValue: each) ].
 	bufferedStream flush.
-	
-	self assert: stringStream contents = '0123456789'
+
+	self assert: stringStream contents equals: '0123456789'
 ]
 
 { #category : #tests }

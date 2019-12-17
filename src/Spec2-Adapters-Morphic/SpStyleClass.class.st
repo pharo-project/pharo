@@ -1,3 +1,7 @@
+"
+I am a style-class, represented by a name. 
+I contain other styles (properties or classes).
+"
 Class {
 	#name : #SpStyleClass,
 	#superclass : #SpStyle,
@@ -8,6 +12,14 @@ Class {
 	],
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
+
+{ #category : #copying }
+SpStyleClass >> , joinStyle [
+
+	^ self class new
+		styles: self styles, joinStyle styles;
+		yourself
+]
 
 { #category : #operations }
 SpStyleClass >> applyTo: aMorph [
@@ -36,7 +48,7 @@ SpStyleClass >> flattenProperties [
 		flattened
 ]
 
-{ #category : #'instance creation' }
+{ #category : #initialization }
 SpStyleClass >> fromSton: stonReader [
 	
 	styles := stonReader parseList
@@ -102,4 +114,10 @@ SpStyleClass >> properties [
 SpStyleClass >> styles [
 
 	^ styles
+]
+
+{ #category : #private }
+SpStyleClass >> styles: aCollection [
+
+	styles := aCollection asArray
 ]

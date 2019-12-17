@@ -204,11 +204,8 @@ MetacelloFetchingMCSpecLoader >> resolveDependencies: aResolvedReference nearest
     name: dependency versionInfo name
     repository: aResolvedReference repository.
   coll add: reference.
-  Transcript
-    cr;
-    show:
-        'Fetched dependency -> ' , reference name , ' --- '
-            , reference repository repositoryDescription.
+  MetacelloNotification signal: ('Fetched dependency -> ' , reference name , ' --- '
+            , reference repository repositoryDescription).
   self resolveDependencies: reference nearest: reference into: coll ].
   retryCount := 0.
   notDone := true.
@@ -217,9 +214,7 @@ MetacelloFetchingMCSpecLoader >> resolveDependencies: aResolvedReference nearest
     whileTrue: [ 
       retryCount > 0
         ifTrue: [ 
-          Transcript
-            cr;
-            show: '...RETRY' ].
+          MetacelloNotification signal: ('...RETRY') ].
       [ 
       "ensure that all resolved references have cached their version while wrapped by error handler"
       aCollection do: [ :each | each version ].
@@ -276,7 +271,5 @@ MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec reference: refere
 	self preLoad: packageSpec.
 	(MetacelloDirective loadPackage: packageSpec externalReference: reference loader: self) addTo: self loadDirective.
 	self postLoad: packageSpec.
-	Transcript
-		cr;
-		show: message
+	MetacelloNotification signal: message
 ]

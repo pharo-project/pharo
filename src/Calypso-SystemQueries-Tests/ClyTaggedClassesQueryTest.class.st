@@ -23,12 +23,11 @@ ClyTaggedClassesQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyTaggedClassesQueryTest >> testComparisonToSimilarQueryWithDifferentTag [
-	
 	| query2 |
 	query2 := self createQuery.
 	query2 tag: #AnotherTag1.
-	
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]
 
 { #category : #tests }

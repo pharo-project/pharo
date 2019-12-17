@@ -449,7 +449,7 @@ SortedCollectionTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	self elementsCopyNonIdenticalWithoutEqualElements
 		detect: [ :each | (self elementsCopyNonIdenticalWithoutEqualElements occurrencesOf: each) > 1 ]
 		ifNone: [ res := false ].
-	self assert: res = false
+	self assert: res equals: false
 ]
 
 { #category : #'tests - basic' }

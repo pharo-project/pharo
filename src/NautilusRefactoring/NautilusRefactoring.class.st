@@ -114,8 +114,19 @@ NautilusRefactoring >> accessorsClassVarFrom: aClass [
 ]
 
 { #category : #'inst var' }
+NautilusRefactoring >> accessorsClassVarNamed: aVariableName from: aClass [
+	self performRefactoringFor: #privateAccessorsClassVarNamed:from: with: aVariableName with: aClass
+]
+
+{ #category : #'inst var' }
 NautilusRefactoring >> accessorsInstVarFrom: aClass [
 	self performRefactoringFor: #privateAccessorsInstVarFrom: with: aClass
+
+]
+
+{ #category : #'inst var' }
+NautilusRefactoring >> accessorsInstVarNamed: aVariableName from: aClass [
+	self performRefactoringFor: #privateAccessorsInstVarNamed:from: with: aVariableName with: aClass
 
 ]
 
@@ -546,6 +557,15 @@ NautilusRefactoring >> privateAccessorsClassVarFrom: aClass [
 			classVariable: true ]
 ]
 
+{ #category : #private }
+NautilusRefactoring >> privateAccessorsClassVarNamed: aVariableName from:  aClass [
+	^ RBCreateAccessorsForVariableRefactoring 
+			model: environment
+			variable: aVariableName
+			class: aClass
+			classVariable: true
+]
+
 { #category : #'private-inst var' }
 NautilusRefactoring >> privateAccessorsInstVarFrom: aClass [
 	^ self class: aClass andInstVariable: [ :class :variable | 
@@ -554,6 +574,15 @@ NautilusRefactoring >> privateAccessorsInstVarFrom: aClass [
 			variable: variable
 			class: class
 			classVariable: false ]
+]
+
+{ #category : #private }
+NautilusRefactoring >> privateAccessorsInstVarNamed: aVariableName from:  aClass [
+	^ RBCreateAccessorsForVariableRefactoring 
+			model: environment
+			variable: aVariableName
+			class: aClass
+			classVariable: false
 ]
 
 { #category : #'private-method' }

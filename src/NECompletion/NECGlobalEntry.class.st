@@ -3,16 +3,16 @@ I represent a global variable.
 "
 Class {
 	#name : #NECGlobalEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 
 { #category : #accessing }
-NECGlobalEntry >> label [
-	^ 'global'
+NECGlobalEntry >> hightlightSymbol [
+	^ #globalVar
 ]
 
 { #category : #accessing }
-NECGlobalEntry >> type [
-	^ #globalVar
+NECGlobalEntry >> label [
+	^ 'global'
 ]

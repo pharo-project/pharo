@@ -40,80 +40,66 @@ TemporaryVariableTest >> testPropertyAtPut [
 
 { #category : #properties }
 TemporaryVariableTest >> testPropertyAtPutPersistent [
-
 	| testValue temp temp2 |
 	testValue := Date today.
 	temp := thisContext method temporaryVariableNamed: #temp.
-	
+
 	temp propertyAt: #testKeySelector put: testValue.
-	self
-		assert: (temp propertyAt: #testKeySelector)
-		equals: testValue.
-		
+	self assert: (temp propertyAt: #testKeySelector) equals: testValue.
+
 	temp2 := thisContext method temporaryVariableNamed: #temp.
-	
-	self
-		assert: (temp2 propertyAt: #testKeySelector)
-		equals: testValue.
-		
-	self assert: temp2 == temp.
-	self deny: thisContext method savedTemps isNil.	
+
+	self assert: (temp2 propertyAt: #testKeySelector) equals: testValue.
+
+	self assert: temp2 identicalTo: temp.
+	self deny: thisContext method savedTemps isNil.
 	temp removeProperty: #testKeySelector.
 	self assert: temp properties isNil.
-	
+
 	self assert: thisContext method savedTemps isNil
 ]
 
 { #category : #properties }
 TemporaryVariableTest >> testPropertyBlockPersistent [
-
 	| testValue temp temp2 block |
 	testValue := Date today.
-	block := [ |t| t:=2].
+	block := [ | t |
+	t := 2 ].
 	temp := block temporaryVariableNamed: #t.
-	
+
 	temp propertyAt: #testKeySelector put: testValue.
-	self
-		assert: (temp propertyAt: #testKeySelector)
-		equals: testValue.
-		
+	self assert: (temp propertyAt: #testKeySelector) equals: testValue.
+
 	temp2 := block temporaryVariableNamed: #t.
-	
-	self
-		assert: (temp2 propertyAt: #testKeySelector)
-		equals: testValue.
-		
-	self assert: temp2 == temp.
-	self deny: block method savedTemps isNil.	
+
+	self assert: (temp2 propertyAt: #testKeySelector) equals: testValue.
+
+	self assert: temp2 identicalTo: temp.
+	self deny: block method savedTemps isNil.
 	temp removeProperty: #testKeySelector.
 	self assert: temp properties isNil.
-	
+
 	self assert: block method savedTemps isNil
 ]
 
 { #category : #properties }
 TemporaryVariableTest >> testPropertyContextPersistent [
-
 	| testValue temp temp2 |
 	testValue := Date today.
 	temp := thisContext temporaryVariableNamed: #temp.
-	
+
 	temp propertyAt: #testKeySelector put: testValue.
-	self
-		assert: (temp propertyAt: #testKeySelector)
-		equals: testValue.
-		
+	self assert: (temp propertyAt: #testKeySelector) equals: testValue.
+
 	temp2 := thisContext temporaryVariableNamed: #temp.
-	
-	self
-		assert: (temp2 propertyAt: #testKeySelector)
-		equals: testValue.
-		
-	self assert: temp2 == temp.
-	self deny: thisContext method savedTemps isNil.	
+
+	self assert: (temp2 propertyAt: #testKeySelector) equals: testValue.
+
+	self assert: temp2 identicalTo: temp.
+	self deny: thisContext method savedTemps isNil.
 	temp removeProperty: #testKeySelector.
 	self assert: temp properties isNil.
-	
+
 	self assert: thisContext method savedTemps isNil
 ]
 
@@ -122,7 +108,7 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class = TemporaryVariable
+	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
 ]
 
 { #category : #tests }

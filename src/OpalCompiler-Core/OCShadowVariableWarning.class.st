@@ -44,9 +44,7 @@ OCShadowVariableWarning >> shadowedVar: aVar [
 
 { #category : #correcting }
 OCShadowVariableWarning >> showWarningOnTranscript [
-	true
-		ifTrue: [ ^ self ].	"turned off by default"
-	self warningMessage crLog
+	SystemNotification signal: self warningMessage
 ]
 
 { #category : #accessing }
