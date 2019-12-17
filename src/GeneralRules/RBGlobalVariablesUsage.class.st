@@ -15,10 +15,17 @@ RBGlobalVariablesUsage class >> checksMethod [
 ]
 
 { #category : #running }
-RBGlobalVariablesUsage >> basicCheck: aMethod [
-	^ (aMethod literals 
-		select: [ :l | l isKindOf: GlobalVariable ]) 
-		  anySatisfy: [ :v | v value isClass not ]
+RBGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
+	"Beware that ClassVariables respond true to #isGlobal. 
+	 The trick with 'ifAbsent:[Object] is basically a way not select ClassVariables (or Pools)"
+	| problemSends  |
+	problemSends := 
+		(aMethod ast allChildren select: [ :node | node isVariable ]) 
+			select: [:varNode | 
+				varNode isGlobal and: [(Smalltalk globals at: varNode name ifAbsent: [Object]) isClass not] ].
+	
+	problemSends do: [ :varNode |
+		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: varNode hint: varNode name)]
 ]
 
 { #category : #running }

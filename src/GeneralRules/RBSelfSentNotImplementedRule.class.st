@@ -27,13 +27,8 @@ RBSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		(aMethod sendNodes select: [ :msgSend | msgSend isSelfSend  | msgSend isSuperSend ]) 
 			reject: [:msgSend | aMethod methodClass canUnderstand: (msgSend selector)].
 	
-	problemSends do: [ :msgSend |.
-			aCriticBlock cull: (ReTrivialCritique  
-			withAnchor: (ReIntervalSourceAnchor
-				entity: aMethod
-				interval: (msgSend keywordsPositions first to: msgSend stop))
-			by: self
-			hint: msgSend selector asString) ]
+	problemSends do: [ :msgSend |
+			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
 ]
 
 { #category : #accessing }

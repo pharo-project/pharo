@@ -1,5 +1,5 @@
 "
-Check for assignments on block arguments.
+Check for assignments on method and block arguments.
 For example:
 
 [:x :y|
@@ -7,6 +7,8 @@ For example:
 	]
 
 The block argument ""x"" should not be written. This is considered bad style. And some compiler may reject that code.
+
+Same for method arguments, you should not write those either.
 "
 Class {
 	#name : #RBAssignmentOnBlockArgumentRule,
@@ -27,8 +29,13 @@ RBAssignmentOnBlockArgumentRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-RBAssignmentOnBlockArgumentRule >> basicCheck: aMethod [
-	^ (RBFindBlockArgumentAssignment collectAssignments: aMethod ast) isNotEmpty
+RBAssignmentOnBlockArgumentRule >> check: aMethod forCritiquesDo: aCriticBlock [
+	| problemAssignments|
+	problemAssignments := aMethod ast assignmentNodes 
+		select: [ :assignment | assignment variable isArg].
+	
+	problemAssignments do: [ :assignment |
+			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: assignment variable sourceCode)]
 ]
 
 { #category : #accessing }

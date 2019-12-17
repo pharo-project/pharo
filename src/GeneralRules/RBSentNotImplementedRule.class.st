@@ -21,17 +21,14 @@ RBSentNotImplementedRule class >> uniqueIdentifierName [
 
 { #category : #running }
 RBSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
-
-	aMethod messages
-		select: [ :each | each isSelectorSymbol not ]
-		thenDo: [ :each |
-			aCriticBlock cull: (ReTrivialCritique
-				withAnchor: (ReSearchStringSourceAnchor
-					entity: aMethod
-					string: each)
-				by: self
-				hint: each) ]
-		
+	| problemSends |
+	problemSends := aMethod sendNodes reject: [ :msgSend | 
+		                msgSend selector isSelectorSymbol ].
+	problemSends do: [ :msgSend | 
+		aCriticBlock cull: (self
+				 createTrivialCritiqueOn: aMethod
+				 intervalOf: msgSend
+				 hint: msgSend selector asString) ]
 ]
 
 { #category : #accessing }

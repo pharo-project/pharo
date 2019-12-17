@@ -1,5 +1,7 @@
 "
-Somewhere in the override hierarchy there is a pragma that tells that this method should explicitly return a value
+Somewhere in the override hierarchy there is a pragma that tells that this method should explicitly return a value.
+
+Currently (2019-12-09) there is no methods in Pharo 8 which use #shouldReturn
 
 "
 Class {
