@@ -52,7 +52,7 @@ HaltTest >> shouldntHaltWhen: aBlock [
 
 { #category : #tests }
 HaltTest >> testContainsHalt [
-	
+	<haltOrBreakpointForTesting> 
 	| annonClass |
 	
 	self 

@@ -9,13 +9,14 @@ Class {
 
 { #category : #'method examples' }
 ClyClassWithProblemMethods >> methodWithHalt [
-	<haltOrBreakpointForTesting>
+	<haltOrBreakpointForTesting> 
 	self halt.
 ]
 
 { #category : #'method examples' }
 ClyClassWithProblemMethods >> methodWithHalt2 [
-	self halt.
+	<haltOrBreakpointForTesting> 
+	self halt
 ]
 
 { #category : #'method examples' }

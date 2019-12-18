@@ -289,8 +289,8 @@ FFIFunctionParser >> returnType: aType [
 
 { #category : #accessing }
 FFIFunctionParser >> setOn: aStreamSource [
-
-	| functionDeclarationArray |
+	<haltOrBreakpointForDevelopment>
+	| functionDeclarationArray | 
 	functionDeclarationArray := aStreamSource isString ifTrue: [ | node |
 			node := RBParser parseExpression: '#(', aStreamSource, ')'.
 			node isLiteralNode ifFalse: [ self halt ].

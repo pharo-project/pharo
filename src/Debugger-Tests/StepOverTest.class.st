@@ -133,6 +133,7 @@ StepOverTest >> testStepOverDoesNotUnderstand [
 { #category : #tests }
 StepOverTest >> testStepOverHalt [
 	"Stepping over a self halt should not raise an unhandled exception"
+	<haltOrBreakpointForTesting> 
 	self settingUpSessionAndProcessAndContextForBlock: [ self halt. ].
 	self shouldnt: [[ session interruptedProcess isTerminated ] whileFalse: [ session stepOver. ]] raise: Exception.
 ]
