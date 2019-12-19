@@ -24,14 +24,16 @@ ClyActiveBreakpointsQueryTest >> installBreakpointInto: aMethod [
 ClyActiveBreakpointsQueryTest >> setUp [
 	super setUp.
 	
-	installedBreakpoints := OrderedCollection new
+	installedBreakpoints := OrderedCollection new.
+	ClyClassWithHalts compile: 'methodWithHalts1 self halt'.
+	ClyClassWithHalts compile: 'methodWithHalts2 self halt'.
 ]
 
 { #category : #running }
 ClyActiveBreakpointsQueryTest >> tearDown [
-	installedBreakpoints do: [ :each | each remove ].
-	installedBreakpoints removeAll.
-	
+	ClyClassWithHalts removeSelector: #methodWithHalts1.
+	ClyClassWithHalts removeSelector: #methodWithHalts2.
+	Breakpoint removeFromMethod: (ClyClassWithBreakpoints >> #methodWithBreakpoints).
 	super tearDown
 ]
 
@@ -53,6 +55,7 @@ ClyActiveBreakpointsQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyActiveBreakpointsQueryTest >> testComparison [
+
 	self assert: ClyActiveBreakpointsQuery new equals: ClyActiveBreakpointsQuery new.
 
 	self assert: ClyActiveBreakpointsQuery newIncludingHaltsForTesting equals: ClyActiveBreakpointsQuery newIncludingHaltsForTesting.
