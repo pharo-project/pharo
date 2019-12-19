@@ -210,7 +210,6 @@ ReflectiveMethod >> metaLinkOptions [
 	#installReflectiveMethod -> #( + optionCompileOnLinkInstallation).
 	#installMethod:-> #( + optionCompileOnLinkInstallation).
 	#installLink: -> #( + optionCompileOnLinkInstallation).
-	#reinstallASTInCache -> #( + optionCompileOnLinkInstallation).
 	#removeLink: -> #( + optionCompileOnLinkInstallation).
 	#selector: -> #( + optionCompileOnLinkInstallation).
 	#run:with:in: -> #( + optionCompileOnLinkInstallation).
@@ -252,11 +251,6 @@ ReflectiveMethod >> recompileAST [
 { #category : #accessing }
 ReflectiveMethod >> reflectiveMethod [
 	^self
-]
-
-{ #category : #'ast cache' }
-ReflectiveMethod >> reinstallASTInCache [
-	ASTCache default at: compiledMethod put: ast
 ]
 
 { #category : #invalidate }
