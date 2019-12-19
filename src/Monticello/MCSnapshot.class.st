@@ -7,7 +7,8 @@ Class {
 	#name : #MCSnapshot,
 	#superclass : #Object,
 	#instVars : [
-		'definitions'
+		'definitions',
+		'classDefinitionCache'
 	],
 	#category : #'Monticello-Base'
 }
@@ -32,6 +33,12 @@ MCSnapshot >> = other [
 ]
 
 { #category : #accessing }
+MCSnapshot >> classDefinitionNamed: aName ifAbsent: aBlock [
+
+	^ classDefinitionCache at: aName ifAbsent: aBlock
+]
+
+{ #category : #accessing }
 MCSnapshot >> definitions [
 	^ definitions
 ]
@@ -43,7 +50,14 @@ MCSnapshot >> hash [
 
 { #category : #initializing }
 MCSnapshot >> initializeWithDefinitions: aCollection [
+	
 	definitions := aCollection.
+	classDefinitionCache := Dictionary new.
+	definitions do: [ :e |
+		e isClassDefinition ifTrue: [ 
+			classDefinitionCache
+				at: e className
+				put: e ] ]
 ]
 
 { #category : #loading }
