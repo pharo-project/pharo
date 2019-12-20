@@ -85,13 +85,6 @@ Character class >> characterSet: aCharSet [
 	^ CharSet := aCharSet
 ]
 
-{ #category : #constants }
-Character class >> characterTable [
-	"Answer the class variable in which unique Characters are stored."
-
-	^CharacterTable
-]
-
 { #category : #'instance creation' }
 Character class >> codePoint: anInteger [ 
 	"Just for ANSI Compliance"	
