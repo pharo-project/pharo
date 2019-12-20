@@ -1423,7 +1423,7 @@ RPackage >> renameTo: aSymbol [
 				do: [ :each | SystemOrganizer default removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
-	self renameManifest: newName.
+	self renameManifest: newName. 
 	self organizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
