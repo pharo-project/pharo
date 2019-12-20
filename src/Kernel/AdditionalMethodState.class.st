@@ -284,6 +284,16 @@ AdditionalMethodState >> postCopy [
 		[:i| self basicAt: i put: (self basicAt: i) shallowCopy]
 ]
 
+{ #category : #enumerating }
+AdditionalMethodState >> pragmaDo: aBlock [
+	
+	1 to: self basicSize do: [ :i | 
+		| propertyOrPragma	"<Association|Pragma>" |
+		propertyOrPragma := self basicAt: i.
+		propertyOrPragma isVariableBinding
+			ifFalse: [ aBlock value: propertyOrPragma ] ]
+]
+
 { #category : #accessing }
 AdditionalMethodState >> pragmas [
 	"Answer the raw messages comprising my pragmas."
