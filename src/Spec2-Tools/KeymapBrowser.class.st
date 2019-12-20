@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'clearFilterButton',
 		'filterField',
-		'kmTable'
+		'kmTable',
+		'contextMenuPresenter'
 	],
 	#category : #'Spec2-Tools-Keymapping'
 }
@@ -95,13 +96,16 @@ KeymapBrowser >> initialExtent [
 
 { #category : #initialization }
 KeymapBrowser >> initializePresenters [
+	self initiliazeContextMenu.
+	
 	kmTable := self newTable.
 	kmTable
 		addColumn: (SpStringTableColumn title: 'Shortcut' evaluated: [ :aKMShortcutDeclaration | aKMShortcutDeclaration realValue shortcut asString ]);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: #shortcutName);
 		addColumn: (SpStringTableColumn title: 'Category' evaluated: #categoryName);
 		beResizable;
-		menu: [ :m :s | self menu: m shifted: s ].
+		contextMenu: contextMenuPresenter.
+		
 	filterField := self newTextInput.
 	filterField
 		removeEntryCompletion;
@@ -112,6 +116,34 @@ KeymapBrowser >> initializePresenters [
 		icon: (self iconNamed: #smallCancelIcon);
 		enabled: false.
 	self collectAllShortcuts
+]
+
+{ #category : #initialization }
+KeymapBrowser >> initiliazeContextMenu [
+	contextMenuPresenter := self newMenu.
+
+	contextMenuPresenter
+		addItem: [ :anItem | 
+			anItem
+				name: 'Refresh';
+				action: [ self collectAllShortcuts ];
+				icon: (self iconNamed: #smallUpdateIcon)].
+
+	contextMenuPresenter
+		addItem: [ :anItem | 
+			anItem
+				name: 'Browse Definition';
+				action: [ self browseDefinitionOfSelectedShortcut ];
+				state: [ self kmTable selection selectedItem isNotNil ];				
+				icon: (self iconNamed: #smallSystemBrowserIcon)].	
+			
+	contextMenuPresenter
+		addItem: [ :anItem | 
+			anItem
+				name: 'Inspect Action';
+				action: [ self inspectActionOfSelectedShortcut ];
+				state: [ self kmTable selection selectedItem isNotNil ];
+				icon: (self iconNamed: #smallInspectItIcon)].	
 ]
 
 { #category : #private }
@@ -130,15 +162,6 @@ KeymapBrowser >> kmTable [
 { #category : #accessing }
 KeymapBrowser >> kmTable: anObject [
 	kmTable := anObject
-]
-
-{ #category : #private }
-KeymapBrowser >> menu: aMenu shifted: aBoolean [
-	(aMenu add: 'Refresh' target: self selector: #collectAllShortcuts) icon: (self iconNamed: #smallUpdateIcon).
-	self kmTable selectedItem ifNil: [ ^ aMenu ].
-	(aMenu add: 'Browse Definition' target: self selector: #browseDefinitionOfSelectedShortcut) icon: (self iconNamed: #smallSystemBrowserIcon).
-	(aMenu add: 'Inspect Action' target: self selector: #inspectActionOfSelectedShortcut) icon: (self iconNamed: #smallInspectItIcon).
-	^ aMenu
 ]
 
 { #category : #private }
