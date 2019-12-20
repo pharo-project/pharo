@@ -5,7 +5,7 @@ A SignalTest is xxxxxxxxx.
 Class {
 	#name : #SignalTest,
 	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests'
+	#category : #'Beacon-Core-Tests-Tests'
 }
 
 { #category : #tests }
