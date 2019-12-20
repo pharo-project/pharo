@@ -1379,7 +1379,7 @@ RPackage >> renameManifest: aPackageName [
 	| newName packageNameOnlyLetters |
 	packageNameOnlyLetters := aPackageName onlyLetters.
 	newName := 'Manifest', packageNameOnlyLetters.
-	self classes detect:[:e| e isManifest] ifFound: [:e| e rename: newName]
+	self classes detect:[:e| e isManifest] ifFound: [:e| e rename: newName].
 ]
 
 { #category : #private }
