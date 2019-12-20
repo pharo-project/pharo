@@ -15,5 +15,6 @@ ClyAllMethodsQuery >> description [
 
 { #category : #testing }
 ClyAllMethodsQuery >> selectsMethod: aMethod [
+
 	^true
 ]
