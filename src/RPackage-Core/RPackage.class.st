@@ -1374,6 +1374,14 @@ RPackage >> renameExtensionsPrefixedWith: oldName to: newName [
 	
 ]
 
+{ #category : #register }
+RPackage >> renameManifest: aPackageName [
+	| newName packageNameOnlyLetters |
+	packageNameOnlyLetters := aPackageName onlyLetters.
+	newName := 'Manifest', packageNameOnlyLetters.
+	self classes detect:[:e| e isManifest] ifFound: [:e| e rename: newName]
+]
+
 { #category : #private }
 RPackage >> renameTagsPrefixedWith: oldName to: newName [
 	| oldPrefix newPrefix |
@@ -1415,6 +1423,7 @@ RPackage >> renameTo: aSymbol [
 				do: [ :each | SystemOrganizer default removeCategory: each ] ].
 	self renameTagsPrefixedWith: oldName to: newName.
 	self renameExtensionsPrefixedWith: oldName to: newName.
+	self renameManifest: newName.
 	self organizer
 		basicUnregisterPackageNamed: oldName;
 		basicRegisterPackage: self.
