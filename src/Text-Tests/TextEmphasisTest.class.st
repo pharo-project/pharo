@@ -27,38 +27,63 @@ TextEmphasisTest >> testAdd [
 ]
 
 { #category : #tests }
-TextEmphasisTest >> testAppendString [
-	"Tests the Text>>prepend: method when appending a String" 
+TextEmphasisTest >> testBold [
+	self assert: TextEmphasis bold equals: 1.
 
-	| receiver argument result expectedResult |
+]
 
-	receiver := 'xxx' asText  
-		addAttribute: TextEmphasis bold from: 1 to: 3.
-	argument := 'yyy'.
-	expectedResult := 'xxxyyy' asText 
-		addAttribute: TextEmphasis bold from: 1 to: 3.
-	result := receiver append: argument.
-	self assert: result == receiver. 
-	self assert: result string equals: expectedResult string.
-	self assert: result runs equals: expectedResult runs
+{ #category : #test }
+TextEmphasisTest >> testDominatedByCmd0 [
+	self assert: TextEmphasis new dominatedByCmd0
 ]
 
 { #category : #tests }
-TextEmphasisTest >> testAppendText [
-	"tests the Text>>prepend: method when appending a Text " 
-	| receiver argument result expectedResult |
+TextEmphasisTest >> testDominates [
+	| text |
+	"self domination"
+	#(#bold #italic  #underlined #narrow #struckOut) do: [ :anEmphasis |
+		self assert: ((TextEmphasis perform: anEmphasis) dominates: (TextEmphasis perform: anEmphasis)) ].
+	"different emphasis can be mixed, no dominant attribute"
+	#(#bold #italic  #underlined #narrow #struckOut) 
+		with: #(#struckOut #underlined  #narrow #italic #bold) 
+		do: [:emph1 :emph2 | self deny: ((TextEmphasis perform: emph1) dominates: (TextEmphasis perform: emph2)) ].
+	"In action"
+	text := 'Pharo is cool' asText.
+	text addAttribute: TextEmphasis bold.
+	"Only one bold at time"
+	text addAttribute: TextEmphasis bold.
+	self assert: (text attributesAt: 1) size equals: 1.
+	self assert: (text attributesAt: 1) first emphasisCode equals: 1.
+	"but can be both bold and underlined"
+	text addAttribute: TextEmphasis underlined.
+	self assert: (text attributesAt: 1) size equals: 2.
+	self assert: (text attributesAt: 1) first emphasisCode equals: 1.
+	self assert: (text attributesAt: 1) second emphasisCode equals: 4.
+	"and even in italic"
+	text addAttribute: TextEmphasis italic.
+	self assert: (text attributesAt: 1) size equals: 3.
+	self assert: (text attributesAt: 1) third emphasisCode equals: 2.
+]
 
-	receiver := 'xxx' asText  
-		addAttribute: TextEmphasis bold from: 1 to: 3.
-	argument := 'yyy' asText
-		addAttribute: TextEmphasis italic from: 1 to: 3.
-	expectedResult := 'xxxyyy' asText 
-		addAttribute: TextEmphasis bold from: 1 to: 3;
-		addAttribute: TextEmphasis italic from: 4 to: 6.
-	result := receiver append: argument.
-	self assert: result == receiver. 
-	self assert: result string equals: expectedResult string.
-	self assert: result runs equals: expectedResult runs
+{ #category : #tests }
+TextEmphasisTest >> testEmphasisCode [
+	| attr |
+	"test each emphasis code value"
+	self assert: TextEmphasis normal emphasisCode equals: 0.
+	self assert: TextEmphasis bold emphasisCode equals: 1.
+	self assert: TextEmphasis italic emphasisCode equals: 2.
+	self assert: TextEmphasis underlined emphasisCode equals: 4.
+	self assert: TextEmphasis narrow emphasisCode equals: 8.
+	self assert: TextEmphasis struckOut emphasisCode equals: 16.
+	"Turn bold to underlined"
+	attr := TextEmphasis bold emphasisCode: 4.
+	self assert: attr equals: 4.
+	"We can add the emphasisCode"
+	attr := TextEmphasis new emphasisCode: 
+		TextEmphasis italic emphasisCode 
+		+ TextEmphasis bold emphasisCode 
+		+ TextEmphasis struckOut  emphasisCode.
+	self assert: attr emphasisCode equals: 2r10011
 ]
 
 { #category : #tests }
@@ -69,39 +94,21 @@ TextEmphasisTest >> testFromCode [
 ]
 
 { #category : #tests }
-TextEmphasisTest >> testPrependString [
-	"Tests the Text>>prepend: method when prepending a String." 
-	| receiver argument result expectedResult |
+TextEmphasisTest >> testItalic [
+	self assert: TextEmphasis italic equals: 2
 
-	receiver := 'xxx' asText  
-		addAttribute: TextEmphasis bold from: 1 to: 3.
-	argument := 'yyy'.
-	expectedResult := 'yyyxxx' asText 
-		addAttribute: TextEmphasis bold from: 4 to: 6.
-	result := receiver prepend: argument.
-	self assert: result == receiver. 
-	self assert: result string equals: expectedResult string.
-	self assert: result runs equals: expectedResult runs
-
-	
 ]
 
 { #category : #tests }
-TextEmphasisTest >> testPrependText [
-	"Tests the Text>>prepend: method when prepending Text" 
-	| receiver argument result expectedResult |
+TextEmphasisTest >> testNarrow [
+	self assert: TextEmphasis narrow  equals: 8
 
-	receiver := 'xxx' asText  
-		addAttribute: TextEmphasis bold from: 1 to: 3.
-	argument := 'yyy' asText 
-		addAttribute: TextEmphasis italic from: 1 to: 3.
-	expectedResult := 'yyyxxx' asText 
-		addAttribute: TextEmphasis italic from: 1 to: 3;
-		addAttribute: TextEmphasis bold from: 4 to: 6.
-	result := receiver prepend: argument.
-	self assert: result == receiver. 
-	self assert: result string equals: expectedResult string.
-	self assert: result runs equals: expectedResult runs
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testNormal [
+	self assert: TextEmphasis normal equals: 0
+
 ]
 
 { #category : #tests }
@@ -111,4 +118,52 @@ TextEmphasisTest >> testRemove [
 	t1 add: TextEmphasis italic.
 	t1 remove: TextEmphasis bold.
 	self assert: t1 = TextEmphasis italic description: 'Removing bold didn''t leave italics'
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testSet [
+	"Not set with normal emphasis..."
+	self deny: TextEmphasis normal set.
+	"...but set for the other emphasis"
+	#(#bold #italic #underlined #narrow #struckOut) do: [ :anEmphasis |
+		self assert: (TextEmphasis perform: anEmphasis) set].
+	"and can be turned off"
+	#(#bold #italic #underlined #narrow #struckOut) do: [ :anEmphasis |
+		| attr |
+		attr := TextEmphasis perform: anEmphasis.
+		attr turnOff.
+		self deny: attr set].
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testStruckOut [
+	self assert: TextEmphasis struckOut equals: 16
+
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testUnderlined [
+	self assert: TextEmphasis underlined equals: 4
+
+]
+
+{ #category : #tests }
+TextEmphasisTest >> testValue [
+	| attr |
+	"asking for the value return the emphasis code"
+	self assert: TextEmphasis normal value equals: 0.
+	self assert: TextEmphasis bold value equals: 1.
+	self assert: TextEmphasis italic value equals: 2.
+	self assert: TextEmphasis underlined value equals: 4.
+	self assert: TextEmphasis narrow value equals: 8.
+	self assert: TextEmphasis struckOut value equals: 16.
+
+	"We can add the emphasisCode, value should respond accordingly"
+	attr := TextEmphasis new emphasisCode: 
+		TextEmphasis italic emphasisCode 
+		+ TextEmphasis bold emphasisCode 
+		+ TextEmphasis struckOut  emphasisCode.
+	self assert: attr value equals: 2r10011.
+	"equality is based on the value"
+	self assert: attr equals: 2r10011
 ]

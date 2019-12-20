@@ -26,6 +26,13 @@ FFIExternalReferenceType class >> objectClass: aClass [
 	^ self new objectClass: aClass
 ]
 
+{ #category : #comparing }
+FFIExternalReferenceType >> = anExternalReferenceType [
+
+	^ (anExternalReferenceType isKindOf: self species)
+		and: [ objectClass = anExternalReferenceType objectClass ]
+]
+
 { #category : #'emitting code' }
 FFIExternalReferenceType >> basicEmitArgument: aBuilder context: aContext [
  	self loader
@@ -98,6 +105,12 @@ FFIExternalReferenceType >> externalTypeAlignment [
 FFIExternalReferenceType >> externalTypeSize [
 	"this is always a pointer"
 	^ self pointerSize
+]
+
+{ #category : #comparing }
+FFIExternalReferenceType >> hash [
+
+	^ objectClass hash
 ]
 
 { #category : #accessing }

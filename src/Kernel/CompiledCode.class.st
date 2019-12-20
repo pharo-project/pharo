@@ -90,7 +90,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^ self ast argumentNames
+	^ self propertyAt: #argumentNames ifAbsent: [ self ast argumentNames ]
 ]
 
 { #category : #converting }
@@ -256,6 +256,11 @@ CompiledCode >> hasLiteralThorough: literal [
 	^ false 
 ]
 
+{ #category : #accessing }
+CompiledCode >> hasPragmaNamed: arg1 [ 
+	^ self subclassResponsibility
+]
+
 { #category : #literals }
 CompiledCode >> hasSelector: selector [ 
 	"Answers true if the method refers to the selector"
@@ -272,6 +277,11 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	^ specialOrNil 
 		ifNil: [ false ] 
 		ifNotNil: [ self scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ]
+]
+
+{ #category : #accessing }
+CompiledCode >> hasSourceCode [
+	^ self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -370,6 +380,16 @@ CompiledCode >> isCollection [
 ]
 
 { #category : #testing }
+CompiledCode >> isCompiledBlock [
+	^ false
+]
+
+{ #category : #testing }
+CompiledCode >> isDoIt [
+	^ false
+]
+
+{ #category : #testing }
 CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
@@ -394,6 +414,11 @@ CompiledCode >> isQuick [
 { #category : #testing }
 CompiledCode >> isRealPrimitive [
 	^self isPrimitive and: [ self isQuick not ]
+]
+
+{ #category : #accessing }
+CompiledCode >> isTestMethod [
+	^ self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -502,8 +527,18 @@ CompiledCode >> longPrintOn: aStream [
 ]
 
 { #category : #accessing }
+CompiledCode >> method [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 CompiledCode >> methodClass [
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> methodNode [
+	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -538,7 +573,7 @@ CompiledCode >> numTemps [
 { #category : #accessing }
 CompiledCode >> numberOfReservedLiterals [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -564,6 +599,21 @@ CompiledCode >> objectAt: index put: value [
 	self primitiveFailed
 ]
 
+{ #category : #accessing }
+CompiledCode >> penultimateLiteral [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> pragmas [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> primitive [
+	^ self subclassResponsibility
+]
+
 { #category : #printing }
 CompiledCode >> primitiveErrorVariableName [
 	"Answer the primitive error code temp name, or nil if none."
@@ -574,6 +624,16 @@ CompiledCode >> primitiveErrorVariableName [
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil
+]
+
+{ #category : #accessing }
+CompiledCode >> properties [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> propertyAt: aString ifAbsent: aFullBlockClosure [
+	^ aFullBlockClosure value
 ]
 
 { #category : #scanning }
@@ -680,6 +740,11 @@ CompiledCode >> scanner [
 	^ InstructionStream on: self
 ]
 
+{ #category : #accessing }
+CompiledCode >> selector [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 CompiledCode >> sendsAnySelectorOf: aCollection [
 	
@@ -725,6 +790,26 @@ CompiledCode >> signFlag [
 	 used by the VM to select an alternate bytecode set."
 
 	^ self header < 0
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceCode [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceNode [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceNodeExecutedForPC: arg1 [ 
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceNodeForPC: arg1 [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #'source code management' }

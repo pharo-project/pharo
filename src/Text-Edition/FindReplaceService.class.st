@@ -14,16 +14,14 @@ Class {
 		'findStartIndex',
 		'isRegex'
 	],
-	#classVars : [
-		'Singleton'
-	],
 	#category : #'Text-Edition'
 }
 
-{ #category : #accessing }
-FindReplaceService class >> default [
-	^ EditorFindReplaceDialogWindow singleton state
+{ #category : #'instance creation' }
+FindReplaceService class >> newFor: textArea [
 
+	"sublasses may use the text area object"
+	^ self new
 ]
 
 { #category : #accessing }
@@ -34,13 +32,13 @@ FindReplaceService >> caseSensitive [
 { #category : #accessing }
 FindReplaceService >> caseSensitive: aBoolean [
 	caseSensitive := aBoolean.
-	self changed: #findPolicy
+	self findPolicyChanged
 ]
 
 { #category : #accessing }
 FindReplaceService >> convertedFindString [
 	| specials |
-	specials := '^$:\+*[](){}'.
+	specials := '^$:\+*[]()?'.
 	^String 
 		streamContents: [:s | self findString 
 			do: [:c | (specials includes: c) ifTrue: [s nextPut:$\].
@@ -55,7 +53,7 @@ FindReplaceService >> entireWordsOnly [
 { #category : #accessing }
 FindReplaceService >> entireWordsOnly: aBoolean [
 	entireWordsOnly := aBoolean.
-	self changed: #findPolicy
+	self findPolicyChanged
 ]
 
 { #category : #services }
@@ -95,9 +93,16 @@ FindReplaceService >> findNextSubstring: aSubstring inTextMorph: aTextMorph [
 
 ]
 
+{ #category : #accessing }
+FindReplaceService >> findPolicyChanged [
+
+	self changed: #findPolicy
+]
+
 { #category : #services }
 FindReplaceService >> findRegex [
 	| s |
+	self regexString ifEmpty: [ ^nil ].
 	s := self entireWordsOnly
 		ifTrue: ['\<', self regexString, '\>']
 		ifFalse: [ self regexString].
@@ -133,7 +138,7 @@ FindReplaceService >> findText [
 { #category : #accessing }
 FindReplaceService >> findText: aStringOrText [
 	findText := aStringOrText asText.
-	self changed: #findPolicy
+	self findPolicyChanged.
 ]
 
 { #category : #accessing }
@@ -160,12 +165,6 @@ FindReplaceService >> findText: aStringOrText isRegex: aBoolean entireWordsOnly:
 ]
 
 { #category : #accessing }
-FindReplaceService >> findTextSilently: aStringOrText [
-	findText := aStringOrText asText.
-	self changed: #findText
-]
-
-{ #category : #accessing }
 FindReplaceService >> isRegex [
 	^ isRegex ifNil: [isRegex := false]
 ]
@@ -173,7 +172,7 @@ FindReplaceService >> isRegex [
 { #category : #accessing }
 FindReplaceService >> isRegex: aBoolean [
 	isRegex := aBoolean.
-	self changed: #findPolicy
+	self findPolicyChanged
 
 ]
 
@@ -211,7 +210,7 @@ FindReplaceService >> replaceText [
 { #category : #accessing }
 FindReplaceService >> replaceText: aStringOrText [
 	replaceText := aStringOrText asString.
-	self changed: #findPolicy
+	self findPolicyChanged
 
 ]
 
@@ -223,7 +222,7 @@ FindReplaceService >> searchBackwards [
 { #category : #accessing }
 FindReplaceService >> searchBackwards: aBoolean [
 	searchBackwards := aBoolean.
-	self changed: #findPolicy
+	self findPolicyChanged
 
 ]
 
@@ -248,7 +247,7 @@ FindReplaceService >> wrapAround [
 { #category : #accessing }
 FindReplaceService >> wrapAround: aBoolean [
 	wrapAround := aBoolean.
-	self changed: #findPolicy
+	self findPolicyChanged
 
 
 ]

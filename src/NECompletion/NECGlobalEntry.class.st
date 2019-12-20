@@ -3,25 +3,16 @@ I represent a global variable.
 "
 Class {
 	#name : #NECGlobalEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECCVariableEntry,
 	#category : #'NECompletion-Model'
 }
 
-{ #category : #operations }
-NECGlobalEntry >> guessTypeWith: anECContext [ 
-	| globalEntry |
-	globalEntry := anECContext globals at: contents ifAbsent: [^ nil].
-	globalEntry isBehavior ifTrue: [^ globalEntry].
-	globalEntry ifNotNil: [^ globalEntry class].
-	^ nil
+{ #category : #accessing }
+NECGlobalEntry >> hightlightSymbol [
+	^ #globalVar
 ]
 
 { #category : #accessing }
 NECGlobalEntry >> label [
 	^ 'global'
-]
-
-{ #category : #accessing }
-NECGlobalEntry >> type [
-	^ #globalVar
 ]

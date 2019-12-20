@@ -9,47 +9,52 @@ Object >> calloutAPIClass [
 Object >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
+	"All the ffiCall: messages are used to perform Foreign-Function calls (FFI calls).
+	FFI calls allows Pharo code to interact with external dynamic linked libraries.
+	Please refer to the booklet about more configuration details
+	or some of the examples on the image LibC / FreeTypeFont / Athens / SDL."
+	
+	self ffiCall: fnSpec library: self ffiLibrary
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary [
+	<ffiCalloutTranslator>
+	
+	self ffiCall: fnSpec library: aLibrary options: #()
+]
+
+{ #category : #'*UnifiedFFI' }
+Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
+	<ffiCalloutTranslator>
+	
+	| ffiLibrary |
+	ffiLibrary := aLibrary asFFILibrary.
+	^ (ffiLibrary calloutAPIClass inUFFIContext: thisContext)
 		convention: self ffiCallingConvention;
-		options: self ffiLibrary uniqueInstance options;
-		function: fnSpec module: self ffiLibrary uniqueInstance
+		options: (ffiLibrary options), callOptions;
+		function: fnSpec library: ffiLibrary
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName [
 	<ffiCalloutTranslator>
 	
-	| ffiLibrary |
-	
-	ffiLibrary := aModuleName asFFILibrary.
-	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: ffiLibrary options;
-		function: fnSpec module: aModuleName
+	self ffiCall: fnSpec library: aModuleName
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 	<ffiCalloutTranslator>
 	
-	| ffiLibrary |
-	
-	ffiLibrary := aModuleName asFFILibrary.	
-	
-	^ (ffiLibrary calloutAPIClass inContext: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: (ffiLibrary options), callOptions;
-		function: fnSpec module: aModuleName
+	self ffiCall: fnSpec library: aModuleName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
 	
-	^ (self ffiCalloutIn: thisContext sender)
-		convention: self ffiCallingConvention;
-		options: (self ffiLibrary options), callOptions;
-		function: fnSpec module: self ffiLibrary moduleName
+	self ffiCall: fnSpec library: self ffiLibrary libraryName options: callOptions
 ]
 
 { #category : #'*UnifiedFFI' }
@@ -59,12 +64,30 @@ Object >> ffiCallingConvention [
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCalloutIn: aContext [
-	
+	"For backwards compatibility.
+	It receives the context that is performing the ffi callout.
+	This context will be used to know what method to compile and where to restart the execution"
 	^ self calloutAPIClass inContext: aContext
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiLibrary [
+	
+	"This method returns the ffiLibrary to use in the Foreign-Function calls performed in this object.
+	FFI calls allows Pharo to call functions in other external dynamic linked libraries.
+	
+	See #ffiCall: to see how to perform a FFI call.
+	Subclasses can redefine this method to use a different FFILibrary class (see class FFILibrary). 
+	A FFILibrary object not only returns the path to the dynamic linked library to use (DLL/SO/DYLIB)
+	but it can also configure different behaviours for the FFI Calls. For example, the backend to use 
+	or how the types are mapped. 
+	
+	This default implementation is kept as backward compatibility. 
+	Its implementation only returns a default configured FFILibrary using the path to the 
+	dynamic library file returned by #ffiLibraryName 
+	
+	New users of FFI should return here a subclass of FFILibrary configured as required by the target 
+	external library to call by FFI"
 		
 	^ self ffiLibraryName asFFILibrary
 ]

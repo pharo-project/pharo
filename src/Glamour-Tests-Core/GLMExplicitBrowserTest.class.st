@@ -8,7 +8,7 @@ Class {
 GLMExplicitBrowserTest >> testAddTransmissionReturn [
 	| transmission |
 	transmission := GLMTransmission new.
-	self assert: (GLMExplicitBrowser new addTransmission: transmission) == transmission
+	self assert: (GLMExplicitBrowser new addTransmission: transmission) identicalTo: transmission
 ]
 
 { #category : #tests }
@@ -107,18 +107,18 @@ GLMExplicitBrowserTest >> testSetup [
 	browser := GLMExplicitBrowser new.
 	pane1 := browser addNewPane.
 	pane2 := browser addNewPane.
-	transmission := (GLMTransmission new)
+	transmission := GLMTransmission new
 		addActiveOrigin: (pane1 port: #selection);
 		destination: (pane2 port: #entity);
 		yourself.
 	browser addTransmission: transmission.
 	self assert: browser panes size equals: 2.
 	self assert: browser transmissions size equals: 1.
-	self assert: browser panes first == pane1.
-	self assert: browser panes last == pane2.
-	self assert: pane1 browser == browser.
-	self assert: pane2 browser == browser.
-	self assert: browser transmissions first == transmission
+	self assert: browser panes first identicalTo: pane1.
+	self assert: browser panes last identicalTo: pane2.
+	self assert: pane1 browser identicalTo: browser.
+	self assert: pane2 browser identicalTo: browser.
+	self assert: browser transmissions first identicalTo: transmission
 ]
 
 { #category : #tests }
@@ -159,7 +159,7 @@ GLMExplicitBrowserTest >> testTransmissionBundle [
 	pane1 addPresentation: GLMPresentation new.
 	pane2 addPresentation: GLMPresentation new.
 	pane3 addPresentation: presentation1.
-	transmission := (GLMTransmission new)
+	transmission := GLMTransmission new
 		ensureReplacePresentationsStrategy;
 		addActiveOrigin: (pane1 port: #selection);
 		addPassiveOrigin: (pane2 port: #selection);
@@ -171,14 +171,14 @@ GLMExplicitBrowserTest >> testTransmissionBundle [
 	browser addPane: pane3.
 	browser addTransmission: transmission.
 	self assert: pane3 presentations size equals: 1.
-	self assert: pane3 presentations first == presentation1.
+	self assert: pane3 presentations first identicalTo: presentation1.
 	pane2 presentations first selection: #foo.
 	self assert: (pane2 port: #selection) seenTransmissions size equals: 1.
 	self assert: (pane3 port: #entity) seenTransmissions size equals: 0.
 	pane1 presentations first selection: #bar.
 	self assert: (pane1 port: #selection) seenTransmissions size equals: 1.
 	self assert: (pane3 port: #entity) seenTransmissions size equals: 1.
-	self assert: (pane3 port: #entity) seenTransmissions last == transmission.
+	self assert: (pane3 port: #entity) seenTransmissions last identicalTo: transmission.
 	self assert: (pane3 port: #entity) value equals: (GLMMultiValue withAll: #(#bar #foo)).
 	self assert: pane3 presentations size equals: 1.
 	self assert: pane3 presentations first rootPrototype equals: presentation2
@@ -191,7 +191,7 @@ GLMExplicitBrowserTest >> testTriggeringConditions [
 	browser pane: GLMTestPane new.
 	pane1 := GLMTestPane new.
 	pane2 := GLMTestPane new.
-	transmission := (GLMTransmission new)
+	transmission := GLMTransmission new
 		addActiveOrigin: (pane1 port: #selection);
 		destination: (pane2 port: #entity);
 		yourself.
@@ -206,7 +206,7 @@ GLMExplicitBrowserTest >> testTriggeringConditions [
 			((pane1 port: #selection) seenTransmissions first isKindOf: 
 					GLMSimpleTransmission). "
 	self assert: (pane2 port: #entity) seenTransmissions size equals: 1.
-	self assert: (pane2 port: #entity) seenTransmissions first == transmission.	"Setting the same value should re-publish but not trigger inner transmissions."
+	self assert: (pane2 port: #entity) seenTransmissions first identicalTo: transmission.	"Setting the same value should re-publish but not trigger inner transmissions."
 	(pane1 port: #selection) value: 12.
 	self assertEmpty: (pane1 port: #selection) seenTransmissions.	"self 
 		assert: 
@@ -216,5 +216,5 @@ GLMExplicitBrowserTest >> testTriggeringConditions [
 			((pane1 port: #selection) seenTransmissions last isKindOf: 
 					GLMSimpleTransmission). "
 	self assert: (pane2 port: #entity) seenTransmissions size equals: 1.
-	self assert: (pane2 port: #entity) seenTransmissions first == transmission
+	self assert: (pane2 port: #entity) seenTransmissions first identicalTo: transmission
 ]

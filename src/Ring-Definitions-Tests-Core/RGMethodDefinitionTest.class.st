@@ -100,213 +100,204 @@ RGMethodDefinitionTest >> testArgumentNamesNonExistingMethodWithSource [
 { #category : #testing }
 RGMethodDefinitionTest >> testAsActive [
 	| newMethod |
-
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''first version''' classified: 'test'.
 	newMethod := (RGMethodDefinitionTest >> #foo) asActiveRingDefinition.
-	self assert: newMethod isActive.	
+	self assert: newMethod isActive.
 	self assert: newMethod sourcePointer notNil.
-	self assert: newMethod sourceCode = newMethod compiledMethod sourceCode.
+	self assert: newMethod sourceCode equals: newMethod compiledMethod sourceCode.
 
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''second version''' classified: 'test'.
-	self assert: newMethod sourceCode = newMethod compiledMethod sourceCode.
-	
+	self assert: newMethod sourceCode equals: newMethod compiledMethod sourceCode.
+
 	newMethod := (Class >> #asRingDefinition) asActiveRingDefinition.
 	newMethod fromActiveToPassive.
 	self assert: newMethod isPassive.
-	self assert: newMethod sourceCode = (Class >> #asRingDefinition) sourceCode.
+	self assert: newMethod sourceCode equals: (Class >> #asRingDefinition) sourceCode.
 	newMethod sourceCode: 'asRingDefinition   ^true'.
 	self assert: newMethod sourceCode ~= (Class >> #asRingDefinition) sourceCode.
-	
+
 	newMethod := (Class >> #asRingDefinition) asActiveRingDefinition.
 	newMethod fromActiveToHistorical.
 	self assert: newMethod isHistorical.
-	self assert: newMethod sourcePointer notNil.
+	self assert: newMethod sourcePointer notNil
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testAsHistorical [
 	| firstVersion secondVersion |
-
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''first version''' classified: 'test'.
 	firstVersion := (RGMethodDefinitionTest >> #foo) asHistoricalRingDefinition.
 	self assert: firstVersion isHistorical.
-	self assert: firstVersion sourceCode = firstVersion compiledMethod sourceCode.
-	self assert: firstVersion stamp = firstVersion compiledMethod timeStamp.
+	self assert: firstVersion sourceCode equals: firstVersion compiledMethod sourceCode.
+	self assert: firstVersion stamp equals: firstVersion compiledMethod timeStamp.
 
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''second version''' classified: 'test'.
 	secondVersion := (RGMethodDefinitionTest >> #foo) asHistoricalRingDefinition.
 	self assert: secondVersion isHistorical.
-	self assert: secondVersion sourceCode = secondVersion compiledMethod sourceCode.
-	self assert: secondVersion stamp = secondVersion compiledMethod timeStamp.
+	self assert: secondVersion sourceCode equals: secondVersion compiledMethod sourceCode.
+	self assert: secondVersion stamp equals: secondVersion compiledMethod timeStamp.
 
-	self deny: firstVersion sourcePointer = secondVersion sourcePointer.
-	self deny: firstVersion sourceCode = secondVersion sourceCode.
+	self deny: firstVersion sourcePointer equals: secondVersion sourcePointer.
+	self deny: firstVersion sourceCode equals: secondVersion sourceCode
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testAsMethodDefinition [
 	| newMethod |
+	newMethod := (OrderedCollection >> #size) asRingDefinition.
 
-	newMethod:= (OrderedCollection >> #size) asRingDefinition.
-	
-	self assert: (newMethod isRingObject).
+	self assert: newMethod isRingObject.
 	self assert: newMethod parent isNil.
-	self assert: (newMethod isMethod).  
-	self assert: (newMethod selector == #size).  
-	self assert: (newMethod protocol notNil).
-	self assert: (newMethod stamp notNil).
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #size.
+	self assert: newMethod protocol notNil.
+	self assert: newMethod stamp notNil
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testAsMethodDefinition2 [
-	
 	| newMethod |
 	newMethod := (Object >> #printOn:) asRingDefinition.
-	self assert:  newMethod protocol = 'printing'.
-	
-	newMethod := (TCloneTest>>#testCopyEmpty) asRingDefinition.
-	self assert:  newMethod protocol = 'tests - copy - clone'.
+	self assert: newMethod protocol equals: 'printing'.
 
-	newMethod := (ArrayTest>>#testCopyEmpty) asRingDefinition.
-	self assert:  newMethod protocol = 'tests - copy - clone'.
-	
-	
+	newMethod := (TCloneTest >> #testCopyEmpty) asRingDefinition.
+	self assert: newMethod protocol equals: 'tests - copy - clone'.
+
+	newMethod := (ArrayTest >> #testCopyEmpty) asRingDefinition.
+	self assert: newMethod protocol equals: 'tests - copy - clone'
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testAsPassive [
 	| newMethod |
-
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''first version''' classified: 'test'.
 	newMethod := (RGMethodDefinitionTest >> #foo) asPassiveRingDefinition.
 	self assert: newMethod isPassive.
-	self assert: newMethod sourceCode = newMethod compiledMethod sourceCode.
+	self assert: newMethod sourceCode equals: newMethod compiledMethod sourceCode.
 
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''second version''' classified: 'test'.
-	self assert: newMethod sourceCode = 'foo	^ ''first version'''.		
-	self assert: newMethod compiledMethod sourceCode = 'foo	^ ''second version'''.
+	self assert: newMethod sourceCode equals: 'foo	^ ''first version'''.
+	self assert: newMethod compiledMethod sourceCode equals: 'foo	^ ''second version'''
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testClassNameSelectorIsMetaSide [
-		
 	| rg |
-	rg := RGMethodDefinition className: 'Point' selector: #x  isMetaSide: false. 	
-	self assert: (rg parentName = 'Point').
-	self assert: (rg parent isKindOf:RGClassDefinition).
-	self assert: (rg selector = #x).
-	self assert: (rg isMetaSide not).
+	rg := RGMethodDefinition className: 'Point' selector: #x isMetaSide: false.
+	self assert: rg parentName equals: 'Point'.
+	self assert: (rg parent isKindOf: RGClassDefinition).
+	self assert: rg selector equals: #x.
+	self assert: rg isMetaSide not
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	| newMethod newClass |
-
 	newMethod := RGMethodDefinition realClass: OrderedCollection selector: 'size'.
-	self assert: (newMethod isMethod).  
-	self assert: (newMethod selector == #size).  
-	self assert: (newMethod protocol notNil).
-	self assert: (newMethod sourceCode notEmpty).
-	self assert: (newMethod stamp notNil).
-	
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #size.
+	self assert: newMethod protocol notNil.
+	self assert: newMethod sourceCode notEmpty.
+	self assert: newMethod stamp notNil.
+
 	newClass := RGClassDefinition named: #OrderedCollection.
 	newMethod := RGMethodDefinition class: newClass selector: 'size'.
-	self assert: (newMethod isMethod).  
-	self assert: (newMethod selector == #size).  
-	self assert: (newMethod protocol isNil).
-	self assert: (newMethod sourceCode isNil).
-	self assert: (newMethod stamp isNil).
-	
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #size.
+	self assert: newMethod protocol isNil.
+	self assert: newMethod sourceCode isNil.
+	self assert: newMethod stamp isNil.
+
 	newMethod := RGMethodDefinition realClass: OrderedCollection classSide selector: #arrayType.
-	self assert: (newMethod isMethod).  
-	self assert: (newMethod selector == #arrayType).  
-	self assert: (newMethod protocol notNil).
-	self assert: (newMethod sourceCode notEmpty).
-	self assert: (newMethod stamp notNil).
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #arrayType.
+	self assert: newMethod protocol notNil.
+	self assert: newMethod sourceCode notEmpty.
+	self assert: newMethod stamp notNil
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testDifferentObjectButSameMethodInSet [
-	
 	| s rgmethod rgmethod2 |
 	s := Set new.
-	rgmethod := (OrderedCollection>>#size) asRingDefinition.
-	s add: rgmethod. 
-	rgmethod2 := (OrderedCollection>>#size) asRingDefinition.
+	rgmethod := (OrderedCollection >> #size) asRingDefinition.
+	s add: rgmethod.
+	rgmethod2 := (OrderedCollection >> #size) asRingDefinition.
 	s add: rgmethod2.
-	
-	self assert: (s size = 1).
+
+	self assert: s size equals: 1.
 	self assert: (s includes: rgmethod).
-	self assert: (s includes: rgmethod2).
-
-
+	self assert: (s includes: rgmethod2)
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testExistingMethodWithClass [
 	| newMethod newClass |
-	
-	newClass:=RGClassDefinition named: #OrderedCollection.
-	newMethod:= (RGMethodDefinition named: #add:)
-					 parent: newClass;
-					protocol: 'adding';
-					sourceCode: 'add: newObject
+	newClass := RGClassDefinition named: #OrderedCollection.
+	newMethod := (RGMethodDefinition named: #add:)
+		parent: newClass;
+		protocol: 'adding';
+		sourceCode:
+			'add: newObject
 									^self addLast: newObject'.
-									
-	self assert: (newMethod isMethod).
-	self assert: (newMethod selector == #add:).
-	self assert: (newMethod isMetaSide not).
-	
-	self assert: (newMethod parent = newClass).
-	self assert: (newMethod parentName == newClass name).
-	
-	self assert: (newMethod parent parent == Smalltalk globals).
-	self assert: (newMethod realClass = OrderedCollection).
-	self assert: (newMethod compiledMethod = (OrderedCollection compiledMethodAt: #add:)).
+
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #add:.
+	self assert: newMethod isMetaSide not.
+
+	self assert: newMethod parent equals: newClass.
+	self assert: newMethod parentName identicalTo: newClass name.
+
+	self assert: newMethod parent parent identicalTo: Smalltalk globals.
+	self assert: newMethod realClass equals: OrderedCollection.
+	self assert: newMethod compiledMethod equals: (OrderedCollection compiledMethodAt: #add:)
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testExistingMethodWithPointer [
 	| newMethod |
-	
-	newMethod:= (OrderedCollection>>#size) asActiveRingDefinition.
-									
-	self assert: (newMethod parent isNil).
-	self assert: (newMethod parentName == #OrderedCollection).
-	self assert: (newMethod sourcePointer notNil).
-	self assert: (newMethod sourceCode notNil).
-	self assert: (newMethod protocol notNil).
-	self assert: (newMethod stamp notNil).
-	self assert: (newMethod isExtension not)
+	newMethod := (OrderedCollection >> #size) asActiveRingDefinition.
+
+	self assert: newMethod parent isNil.
+	self assert: newMethod parentName identicalTo: #OrderedCollection.
+	self assert: newMethod sourcePointer notNil.
+	self assert: newMethod sourceCode notNil.
+	self assert: newMethod protocol notNil.
+	self assert: newMethod stamp notNil.
+	self assert: newMethod isExtension not
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testExistingMethodWithoutClass [
 	"its parent class is not assigned only its name"
+
 	| newMethod |
-	
-	newMethod:= (RGMethodDefinition named: #add:)
-					parentName: #OrderedCollection;
-					selector: #add:; 
-					isMetaSide: false;
-					protocol: 'adding'; 
-					sourceCode: 'add: newObject
+	newMethod := (RGMethodDefinition named: #add:)
+		parentName: #OrderedCollection;
+		selector: #add:;
+		isMetaSide: false;
+		protocol: 'adding';
+		sourceCode:
+			'add: newObject
 									^self addLast: newObject'.
-	
-	self assert: (newMethod isMethod).
-	self assert: (newMethod selector == #add:).
-	self assert: (newMethod isMetaSide not).
-	self assert: (newMethod protocol = #adding).
-	self assert: (newMethod fullName = 'OrderedCollection>>add:').
-	self assert: (newMethod sourceCode = 'add: newObject
-									^self addLast: newObject').
-	self assert: (newMethod hasStamp not).
-	self assert: (newMethod parent isNil).
-	self assert: (newMethod parentName == #OrderedCollection).
-	
-	self assert: (newMethod environment == Smalltalk globals).
-	self assert: (newMethod realClass = OrderedCollection).
-	self assert: (newMethod compiledMethod = (OrderedCollection compiledMethodAt: #add:))
+
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #add:.
+	self assert: newMethod isMetaSide not.
+	self assert: newMethod protocol equals: #adding.
+	self assert: newMethod fullName equals: 'OrderedCollection>>add:'.
+	self
+		assert: newMethod sourceCode
+		equals:
+			'add: newObject
+									^self addLast: newObject'.
+	self assert: newMethod hasStamp not.
+	self assert: newMethod parent isNil.
+	self assert: newMethod parentName identicalTo: #OrderedCollection.
+
+	self assert: newMethod environment identicalTo: Smalltalk globals.
+	self assert: newMethod realClass equals: OrderedCollection.
+	self assert: newMethod compiledMethod equals: (OrderedCollection compiledMethodAt: #add:)
 ]
 
 { #category : #testing }
@@ -393,62 +384,61 @@ RGMethodDefinitionTest >> testMessagesNonExistingMethodWithSource [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testMethodEquality [
-
 	| newMethod newClass |
-	self assert: (OrderedCollection>>#size) asRingDefinition = (OrderedCollection>>#size) asRingDefinition.
-	
-	newMethod := ((OrderedCollection>>#size) asRingDefinition)
-					sourceCode: 'size
+	self assert: (OrderedCollection >> #size) asRingDefinition equals: (OrderedCollection >> #size) asRingDefinition.
+
+	newMethod := (OrderedCollection >> #size) asRingDefinition
+		sourceCode:
+			'size
 						^0'.
-	self assert: ((OrderedCollection>>#size) asRingDefinition = newMethod).
-	
-	newClass:= RGClassDefinition named: #OrderedCollection.
-	newMethod:= (RGMethodDefinition named: #size) parent: newClass.
-	self assert: ((OrderedCollection>>#size) asRingDefinition = newMethod).
-	
-	newMethod:= (RGMethodDefinition named: #size) parent: (SortedCollection asRingDefinition).
-	self deny: ((OrderedCollection>>#size) asRingDefinition = newMethod).
+	self assert: (OrderedCollection >> #size) asRingDefinition equals: newMethod.
+
+	newClass := RGClassDefinition named: #OrderedCollection.
+	newMethod := (RGMethodDefinition named: #size) parent: newClass.
+	self assert: (OrderedCollection >> #size) asRingDefinition equals: newMethod.
+
+	newMethod := (RGMethodDefinition named: #size) parent: SortedCollection asRingDefinition.
+	self deny: (OrderedCollection >> #size) asRingDefinition equals: newMethod
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 	"method does not exist in OrderedCollection"
+
 	| newMethod newClass |
-	
-	newClass:= RGClassDefinition named: #OrderedCollection.
+	newClass := RGClassDefinition named: #OrderedCollection.
 	newClass withMetaclass.
-	
-	newMethod:= (RGMethodDefinition named: #foo) parent: newClass classSide.
-	newMethod sourceCode: 'foo
+
+	newMethod := (RGMethodDefinition named: #foo) parent: newClass classSide.
+	newMethod
+		sourceCode:
+			'foo
 									^true'.
-									
-	self assert: (newMethod isMethod).
-	self assert: (newMethod selector == #foo).
-	self assert: (newMethod isMetaSide).
-	self assert: (newMethod protocol = nil).
-	
-	self assert: (newMethod parent = newClass classSide).
-	self assert: (newMethod parentName = newClass classSide name).
-	
-	self assert: (newMethod environment == Smalltalk globals).
-	self assert: (newMethod realClass = OrderedCollection class).
-	self assert: (newMethod compiledMethod isNil).
+
+	self assert: newMethod isMethod.
+	self assert: newMethod selector identicalTo: #foo.
+	self assert: newMethod isMetaSide.
+	self assert: newMethod protocol equals: nil.
+
+	self assert: newMethod parent equals: newClass classSide.
+	self assert: newMethod parentName equals: newClass classSide name.
+
+	self assert: newMethod environment identicalTo: Smalltalk globals.
+	self assert: newMethod realClass equals: OrderedCollection class.
+	self assert: newMethod compiledMethod isNil
 ]
 
 { #category : #testing }
 RGMethodDefinitionTest >> testSameMethodInSet [
-	
 	| s rgmethod |
 	s := Set new.
-	rgmethod := (OrderedCollection>>#size) asRingDefinition.
-	s add: rgmethod. 
+	rgmethod := (OrderedCollection >> #size) asRingDefinition.
+	s add: rgmethod.
 	self assert: (s includes: rgmethod).
-	
-	s add: rgmethod. 
-	self assert: (s size = 1).
-	self assert: (s includes: rgmethod).
-	
 
+	s add: rgmethod.
+	self assert: s size equals: 1.
+	self assert: (s includes: rgmethod)
 ]
 
 { #category : #testing }

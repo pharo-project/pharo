@@ -13,6 +13,9 @@ Class {
 		'Replacements',
 		'Singleton'
 	],
+	#classInstVars : [
+		'defaultFindReplaceServiceClass'
+	],
 	#category : #'Text-Edition'
 }
 
@@ -21,6 +24,12 @@ EditorFindReplaceDialogWindow class >> cleanUp [
 	Singleton ifNotNil: [ 
 			Singleton close.
 			Singleton := nil ]
+]
+
+{ #category : #accessing }
+EditorFindReplaceDialogWindow class >> defaultFindReplaceServiceClass [
+
+	^ defaultFindReplaceServiceClass ifNil: [ FindReplaceService ]
 ]
 
 { #category : #accessing }
@@ -98,6 +107,12 @@ EditorFindReplaceDialogWindow >> defaultButton [
 		findDeepSubmorphThat: [:m |
 			(m isKindOf: PluggableButtonMorph) and: [m actionSelector = #find]]
 		ifAbsent: [] 
+]
+
+{ #category : #accessing }
+EditorFindReplaceDialogWindow >> defaultFindReplaceServiceClass [
+
+	^ self class defaultFindReplaceServiceClass
 ]
 
 { #category : #'user-interface' }
@@ -422,7 +437,7 @@ EditorFindReplaceDialogWindow >> searchBackwards: aBoolean [
 
 { #category : #accessing }
 EditorFindReplaceDialogWindow >> state [
-	^ state ifNil: [self state: FindReplaceService new]
+	^ state ifNil: [self state: (self defaultFindReplaceServiceClass newFor: self)]
 ]
 
 { #category : #accessing }

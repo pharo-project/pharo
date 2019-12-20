@@ -118,10 +118,11 @@ Behavior >> adoptInstance: anInstance [
 
 { #category : #'accessing instances and variables' }
 Behavior >> allClassVarNames [
-	"Answer a Set of the names of the receiver's and the receiver's ancestor's 
-	class variables."
+	"Answer the names of the receiver's and the receiver's ancestor's class variables."
 
-	^self superclass allClassVarNames
+	^ self superclass
+		ifNil: [ self classVarNames ]
+		ifNotNil: [ :sup | sup allClassVarNames , self classVarNames ]
 ]
 
 { #category : #'accessing instances and variables' }
@@ -601,51 +602,6 @@ Behavior >> compiledMethodAt: selector ifPresent: aBlock ifAbsent: anotherBlock 
 	^ self methodDict at: selector ifPresent: aBlock ifAbsent: anotherBlock
 ]
 
-{ #category : #queries }
-Behavior >> copiedFromSuperclass: method [
-	"Returns the methods that the receiver copied with its ancestors"
-	
-	self allSuperclassesDo: [ :cls|
-		(cls includesSelector: method selector)
-			ifTrue: [ 
-				((cls >> method selector) sourceCode  = method sourceCode)
-					ifTrue: [ ^ {cls >> method selector}]
-					ifFalse: [ ^ #()]]].
-	^ #().
-	
-]
-
-{ #category : #queries }
-Behavior >> copiedMethodsFromSuperclass [
-	"Returns the methods that the receiver copied with its ancestors"
-	
-	| methods |
-	methods := OrderedCollection new.
-	self methodsDo: [ :method|
-		methods addAll:  (self copiedFromSuperclass: method)].
-	^ methods
-]
-
-{ #category : #queries }
-Behavior >> copiesFromSuperclass: method [
-	"Checks whether the receiver copied the argument,  method, from its superclasses"
-	
-	self allSuperclassesDo: [ :cls|
-		(cls includesSelector: method selector)
-			ifTrue: [ ^ (cls >> method selector) sourceCode  = method sourceCode]].
-	^ false
-]
-
-{ #category : #queries }
-Behavior >> copiesMethodsFromSuperclass [
-	"Checks whether the receiver copied some method from its superclass"
-
-	self methodsDo: [ :method|
-		(self copiesFromSuperclass: method)
-			ifTrue: [ ^ true ]].
-	^ false
-]
-
 { #category : #copying }
 Behavior >> deepCopy [
 	"Classes should only be shallowCopied or made anew."
@@ -858,6 +814,7 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 { #category : #testing }
 Behavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
+	"we do not use #anySatisfy: for speed"
 	
 	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
 	^false
@@ -872,12 +829,9 @@ Behavior >> hasMethods [
 
 { #category : #'testing method dictionary' }
 Behavior >> hasSelectorReferringTo: literal [
-	"Answer true if any of my methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
-	thorough "
+	"Answer true if any of my methods access the argument as a literal"
 
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
-		
 ]
 
 { #category : #'testing class hierarchy' }
@@ -945,7 +899,7 @@ Behavior >> initializeSlots: anObject [
 	self classLayout initializeInstance: anObject
 ]
 
-{ #category : #testing }
+{ #category : #'accessing instances and variables' }
 Behavior >> instSize [
 	"Answer the number of named instance variables
 	(as opposed to indexed variables) of the receiver.
@@ -1360,12 +1314,6 @@ Behavior >> nonObsoleteClass [
 	[obsName beginsWith: 'AnObsolete']
 		whileTrue: [obsName := obsName copyFrom: 'AnObsolete' size + 1 to: obsName size].
 	^ self environment at: obsName asSymbol
-]
-
-{ #category : #accessing }
-Behavior >> numberOfInstanceVariables [
-	^ self instVarNames size
-
 ]
 
 { #category : #initialization }
@@ -1804,16 +1752,7 @@ Behavior >> thoroughWhichMethodsReferTo: literal [
 
 { #category : #'testing method dictionary' }
 Behavior >> thoroughWhichSelectorsReferTo: literal [
-	"Answer a set of selectors whose methods access the argument as a 
-	literal. Dives into the compact literal notation, making it slow but 
-	thorough "
-	| specialIndex selectors |
-	"for speed we check the special selectors here once per class"
-	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
-	selectors := OrderedCollection new.
-	self selectorsAndMethodsDo: [ :sel :method |
-			(method hasSelector: literal specialSelectorIndex: specialIndex) ifTrue: [selectors add: sel]].
-	^ selectors
+	^ (self thoroughWhichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : #accessing }
@@ -1832,17 +1771,6 @@ Behavior >> typeOfClass [
 	self isVariable ifTrue: [^#variable].
 	self isEphemeronClass ifTrue: [^#ephemeron].
 	^#normal
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> ultimateSourceCodeAt: selector ifAbsent: aBlock [
-	"Return the source code at selector, deferring to superclass if necessary"
-	^ self sourceCodeAt: selector ifAbsent:
-		[self superclass
-			ifNil:
-				[aBlock value]
-			 ifNotNil:
-				[self superclass ultimateSourceCodeAt: selector ifAbsent: aBlock]]
 ]
 
 { #category : #'user interface' }
@@ -1887,8 +1815,15 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 ]
 
 { #category : #'testing method dictionary' }
-Behavior >> whichSelectorsReferTo: literal [ 
-	^ self thoroughWhichSelectorsReferTo: literal
+Behavior >> whichMethodsReferTo: aLiteral [
+	"Answer methods whose methods directly refers to the argument as a literal"
+
+	^ self methods select: [ :method | method hasLiteral: aLiteral ]
+]
+
+{ #category : #'testing method dictionary' }
+Behavior >> whichSelectorsReferTo: literal [
+	^ (self whichMethodsReferTo: literal) collect: [ :method | method selector ]
 ]
 
 { #category : #queries }

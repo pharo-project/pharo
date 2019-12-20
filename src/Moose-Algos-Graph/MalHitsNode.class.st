@@ -28,20 +28,20 @@ MalHitsNode >> hub: anObject [
 	hub := anObject
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 MalHitsNode >> label [
 
 	^ 'H '
 ]
 
 { #category : #printing }
-MalHitsNode >> printString [
+MalHitsNode >> printOn: aStream [
+	aStream nextPut: $(.
+	self model printOn: aStream.
+	aStream space.
+	self auth printOn: aStream showingDecimalPlaces: 2.
+	aStream space.
+	self hub printOn: aStream showingDecimalPlaces: 2.
+	aStream nextPutAll: ')'.
 
-	^ 	'(',
-		self model printString,
-		' ',
-		(self auth printShowingDecimalPlaces: 2),
-		' ',
-		(self hub printShowingDecimalPlaces: 2),
-		') '
 ]

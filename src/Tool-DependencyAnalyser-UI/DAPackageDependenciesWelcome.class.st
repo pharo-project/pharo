@@ -164,11 +164,11 @@ DAPackageDependenciesWelcome >> initializeButtons [
 	buttonRemovePackage := self newButton
 		help: 'Remove package to browse';
 		label: 'Remove package';
-		icon: (self icon: #deleteIcon).
+		icon: (self iconNamed: #deleteIcon).
 	buttonRemoveAll := self newButton
 		help: 'Remove all selected packages';
 		label: 'Remove all';
-		icon: (self icon: #deleteIcon)
+		icon: (self iconNamed: #deleteIcon)
 ]
 
 { #category : #initialization }

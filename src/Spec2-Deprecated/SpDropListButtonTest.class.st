@@ -1,6 +1,6 @@
 Class {
 	#name : #SpDropListButtonTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Deprecated-Tests'
 }
 

@@ -21,11 +21,11 @@ RadioButtonGroupPresenterTest >> initializeTestedInstance [
 
 { #category : #tests }
 RadioButtonGroupPresenterTest >> testAddRadioButton [
-	self assert: testedInstance buttons size == 0.
+	self assert: testedInstance buttons size identicalTo: 0.
 	testedInstance
 		addRadioButton: radio1;
 		addRadioButton: radio2.
-	self assert: testedInstance buttons size == 2
+	self assert: testedInstance buttons size identicalTo: 2
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ RadioButtonGroupPresenterTest >> testCurrentActivated [
 { #category : #tests }
 RadioButtonGroupPresenterTest >> testDefault [
 	testedInstance addRadioButton: radio1.
-	self assert: radio1 state == false
+	self assert: radio1 state identicalTo: false
 ]
 
 { #category : #tests }
@@ -56,14 +56,14 @@ RadioButtonGroupPresenterTest >> testLinkRadioButton [
 	testedInstance
 		addRadioButton: radio1;
 		addRadioButton: radio2.
-	self assert: radio1 state == false.
-	self assert: radio2 state == false.
+	self assert: radio1 state identicalTo: false.
+	self assert: radio2 state identicalTo: false.
 	radio1 click.
-	self assert: radio1 state == true.
-	self assert: radio2 state == false.
+	self assert: radio1 state identicalTo: true.
+	self assert: radio2 state identicalTo: false.
 	radio2 click.
-	self assert: radio1 state == false.
-	self assert: radio2 state == true
+	self assert: radio1 state identicalTo: false.
+	self assert: radio2 state identicalTo: true
 ]
 
 { #category : #tests }
@@ -72,5 +72,5 @@ RadioButtonGroupPresenterTest >> testRebuildWidget [
 		addRadioButton: radio1;
 		addRadioButton: radio2.
 	self shouldnt: [ testedInstance radio2 ] raise: Error.
-	self assert: testedInstance buttons size == 2
+	self assert: testedInstance buttons size identicalTo: 2
 ]

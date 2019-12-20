@@ -5,17 +5,17 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpMorphicMenuAdapter class >> adaptAsPopup: aComposablePresenter [
+SpMorphicMenuAdapter class >> adaptAsPopup: aPresenter [
 	^ self new
-		adaptAsPopup: aComposablePresenter;
+		adaptAsPopup: aPresenter;
 		yourself
 ]
 
 { #category : #initialization }
-SpMorphicMenuAdapter >> adaptAsPopup: aComposablePresenter [
+SpMorphicMenuAdapter >> adaptAsPopup: aPresenter [
 
-	model := aComposablePresenter.
-	aComposablePresenter addDependent: self.
+	model := aPresenter.
+	aPresenter addDependent: self.
 	widget := self buildWidgetPopup.
 ]
 

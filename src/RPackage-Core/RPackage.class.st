@@ -389,16 +389,6 @@ RPackage >> category: categoryName matches: prefix [
 	^(categoryName at: prefix size + 1 ifAbsent: [ ^true ]) = $-
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> changeRecordForOverriddenMethod: aMethodDefinition [
-	^ SourceFiles
-		changeRecordsFor: aMethodDefinition 
-		detect: [ :protocol | 
-			self 
-				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
-]
-
 { #category : #slices }
 RPackage >> classDefinedSlicesDo: aBlock [
 	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
@@ -491,16 +481,6 @@ RPackage >> classes [
 	
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> classesAndMetaClasses [
-	"Return a Set with all classes and metaclasses belonging to this package"
-	self flag: #stef. "only used by goferCleanUp"
-	^ OrderedCollection new
-		addAll: self definedClasses;
-		addAll: (self definedClasses collect: [:each | each classSide]);
-		yourself.
-]
-
 { #category : #'class tags' }
 RPackage >> classesForClassTag: aSymbol [
 	"Returns the classes tagged using aSymbol"
@@ -517,14 +497,6 @@ RPackage >> classesTaggedWith: aSymbol [
 	This method select all classes which are tagged by given symbol"
 	
 	^(self classTagNamed: aSymbol) classes
-]
-
-{ #category : #'system compatibility' }
-RPackage >> coreCategoriesForClass: aClass [
-
-	self flag: #stef. "only used by goferCleanUp"
-	^ aClass organization categories 
-		reject: [ :cat | self isForeignClassExtension: cat ]
 ]
 
 { #category : #accessing }
@@ -715,12 +687,6 @@ RPackage >> extensionCategoriesForClass: aClass [
 		select: [ :cat | self isYourClassExtension: cat ]
 ]
 
-{ #category : #'system compatibility' }
-RPackage >> extensionClasses [
-	self flag: #stef. "only used by RB and Gofer"
-	^ self extendedClasses
-]
-
 { #category : #accessing }
 RPackage >> extensionMethods [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
@@ -814,16 +780,13 @@ RPackage >> importPackage: anRPackage [
 ]
 
 { #category : #private }
-RPackage >> importProtocol: aProtocol forClass: aClass [ 
-	"import all the methods of a protocol as defined in the receiver." 
-	
-		(aClass organization listAtCategoryNamed: aProtocol)
-			do: [:each | 
-				| aCompiledMethod |
-				aCompiledMethod := (aClass >> each).
-				aCompiledMethod isFromTrait ifFalse: [ self addMethod: aCompiledMethod ]].
-	
-	
+RPackage >> importProtocol: aProtocol forClass: aClass [
+	"import all the methods of a protocol as defined in the receiver."
+
+	(aClass organization listAtCategoryNamed: aProtocol) do: [ :each | 
+		aClass
+			compiledMethodAt: each
+			ifPresent: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ] ]
 ]
 
 { #category : #testing }
@@ -1011,12 +974,6 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 { #category : #'system compatibility' }
 RPackage >> methodCategoryPrefix [
 	^ '*', self name asLowercase
-]
-
-{ #category : #'system compatibility' }
-RPackage >> methodReferences [
-	
-	^ self methods collect: [:each | each methodReference] thenSelect: [:each| each isValid and: [each isLocalSelector]].
 ]
 
 { #category : #accessing }

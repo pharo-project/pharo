@@ -75,75 +75,73 @@ FreeTypeCache class >> startUp: isImageStarting [
 ]
 
 { #category : #'add-remove' }
-FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag [ 
-	| entry charCodeTable typeTable |
-	(charCodeTable := fontTable at: aFreeTypeFont ifAbsent:[])
-		ifNotNil:[
-			(typeTable := charCodeTable at: charCodeInteger ifAbsent:[])
-				ifNotNil:[
-					(entry := typeTable at: typeFlag ifAbsent:[])
-						ifNotNil:[
-							fifo moveDown: entry.
-							^entry object]]].
-	self error: 'Not found'
+FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag [
+
+	^ self
+		atFont: aFreeTypeFont
+		charCode: charCodeInteger
+		type: typeFlag
+		ifAbsentPut: [ self error: 'Not found' ]
 ]
 
 { #category : #'add-remove' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag ifAbsentPut: aBlock [ 
 	| charCodeTable typeTable entry v vSize |
-	
-	charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60].
-	typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10].
-	entry := typeTable at: typeFlag ifAbsent:[].
-	entry 
-		ifNotNil:[
-			fifo moveDown: entry.
-			^entry object].
-	v := aBlock value.
-	vSize := self sizeOf: v.
-	(maximumSize notNil and:[vSize > maximumSize]) 
-		ifTrue:[^v].  
-	used := used + vSize.
-	entry := (self fifoEntryClass new
-		 font: aFreeTypeFont;
-		charCode: charCodeInteger;
-		type: typeFlag;
-		object: v;
-		yourself).
-	typeTable at: typeFlag put: entry.
-	fifo addLast: entry.
-	maximumSize ifNotNil:[self shrinkTo: maximumSize].
-	^v
+
+	aFreeTypeFont mutex criticalReleasingOnError: [  				
+		charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60].
+		typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10].
+		entry := typeTable at: typeFlag ifAbsent:[].
+		entry 
+			ifNotNil:[
+				fifo moveDown: entry.
+				^entry object].
+		v := aBlock value.
+		vSize := self sizeOf: v.
+		(maximumSize notNil and:[vSize > maximumSize]) 
+			ifTrue:[^v].  
+		used := used + vSize.
+		entry := (self fifoEntryClass new
+			 font: aFreeTypeFont;
+			charCode: charCodeInteger;
+			type: typeFlag;
+			object: v;
+			yourself).
+		typeTable at: typeFlag put: entry.
+		fifo addLast: entry.
+		maximumSize ifNotNil:[self shrinkTo: maximumSize].
+		^v ]
 	
 ]
 
 { #category : #'add-remove' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag put: anObject [ 
 	| charCodeTable typeTable anObjectSize oldEntry oldEntrySize entry |
-	
-	anObjectSize := self sizeOf: anObject.
-	(maximumSize notNil and:[anObjectSize > maximumSize]) 
-		ifTrue:[^anObject].  
-	(charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60])
-		ifNotNil:[
-			(typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10])
-				ifNotNil:[
-					oldEntry := typeTable at: typeFlag ifAbsent:[].
-					oldEntrySize := (oldEntry 
-						ifNil:[0] 
-						ifNotNil:[self sizeOf: oldEntry object]). 
-					entry := (self fifoEntryClass new
-						font: aFreeTypeFont;
-						charCode: charCodeInteger;
-						type: typeFlag;
-						object: anObject;
-						yourself).
-					typeTable at: typeFlag put: entry]].
-	used := used + anObjectSize - oldEntrySize.
-	oldEntry ifNotNil: [fifo remove: oldEntry].
-	fifo addLast: entry.
-	maximumSize ifNotNil:[self shrinkTo: maximumSize].
-	^anObject
+
+	aFreeTypeFont mutex criticalReleasingOnError: [  					
+		anObjectSize := self sizeOf: anObject.
+		(maximumSize notNil and:[anObjectSize > maximumSize]) 
+			ifTrue:[^anObject].  
+		(charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60])
+			ifNotNil:[
+				(typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10])
+					ifNotNil:[
+						oldEntry := typeTable at: typeFlag ifAbsent:[].
+						oldEntrySize := (oldEntry 
+							ifNil:[0] 
+							ifNotNil:[self sizeOf: oldEntry object]). 
+						entry := (self fifoEntryClass new
+							font: aFreeTypeFont;
+							charCode: charCodeInteger;
+							type: typeFlag;
+							object: anObject;
+							yourself).
+						typeTable at: typeFlag put: entry]].
+		used := used + anObjectSize - oldEntrySize.
+		oldEntry ifNotNil: [fifo remove: oldEntry].
+		fifo addLast: entry.
+		maximumSize ifNotNil:[self shrinkTo: maximumSize].
+		^anObject]
 	
 ]
 

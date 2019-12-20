@@ -14,7 +14,7 @@ Class {
 	#category : #'Glamour-Morphic-Pager-Brick'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #draging }
 GLMPagerScrollSlidingBrick >> computeScrollValue: aNumber [
 	|newValue delta|
 	
@@ -26,7 +26,7 @@ GLMPagerScrollSlidingBrick >> computeScrollValue: aNumber [
 		ifFalse: [ newValue / delta ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #draging }
 GLMPagerScrollSlidingBrick >> computeWidth [
 
 	^ self pagerModel
@@ -34,7 +34,7 @@ GLMPagerScrollSlidingBrick >> computeWidth [
 		ifNotNil: [ :m | m circleButtonSize * m actualNumberOfVisiblePages ]
 ]
 
-{ #category : #'slider-draging' }
+{ #category : #draging }
 GLMPagerScrollSlidingBrick >> dragResizingLeft: anEvent [
 	| left right |
 	
@@ -46,7 +46,7 @@ GLMPagerScrollSlidingBrick >> dragResizingLeft: anEvent [
 	
 ]
 
-{ #category : #'slider-draging' }
+{ #category : #draging }
 GLMPagerScrollSlidingBrick >> dragResizingRight: anEvent [
 	| left right |
 
@@ -58,7 +58,7 @@ GLMPagerScrollSlidingBrick >> dragResizingRight: anEvent [
 	
 ]
 
-{ #category : #'slider-draging' }
+{ #category : #draging }
 GLMPagerScrollSlidingBrick >> dragSliding: evt [
 	| newLeft value|
 	
@@ -98,7 +98,7 @@ GLMPagerScrollSlidingBrick >> initialize [
 		enable
 ]
 
-{ #category : #'slider-testing' }
+{ #category : #testing }
 GLMPagerScrollSlidingBrick >> isLeftResizingZone: evt [
 	
 	^ (self globalBounds withWidth: resizingZoneWidth) containsPoint: evt position
@@ -106,7 +106,7 @@ GLMPagerScrollSlidingBrick >> isLeftResizingZone: evt [
 	
 ]
 
-{ #category : #'slider-testing' }
+{ #category : #testing }
 GLMPagerScrollSlidingBrick >> isRightResizingZone: evt [
 	|resizingRectangle top left globalBounds|
 	globalBounds := self globalBounds.
@@ -121,13 +121,13 @@ GLMPagerScrollSlidingBrick >> isRightResizingZone: evt [
 	
 ]
 
-{ #category : #'slider-accessing' }
+{ #category : #accessing }
 GLMPagerScrollSlidingBrick >> leftPosition [
 
 	^ leftPosition ifNil: [ leftPosition := 0 ]
 ]
 
-{ #category : #'slider-accessing' }
+{ #category : #accessing }
 GLMPagerScrollSlidingBrick >> leftPosition: anInteger [
 
 	leftPosition := anInteger
@@ -183,7 +183,7 @@ GLMPagerScrollSlidingBrick >> mouseUp: evt [
 		ifTrue: [ self setCursorToResizing: evt ] 
 ]
 
-{ #category : #'slider-scrolling' }
+{ #category : #scrolling }
 GLMPagerScrollSlidingBrick >> moveLeft: left [ "Integer - pixels"
 	"moves scrollbar inside parent to the specified left distance in pixels and notifies all listeners about that"
 	"Highly optimised to not update layout during moving"
@@ -221,13 +221,13 @@ GLMPagerScrollSlidingBrick >> onResized [
 	self setWidthAfterResizing
 ]
 
-{ #category : #'slider-accessing' }
+{ #category : #accessing }
 GLMPagerScrollSlidingBrick >> pagerModel [
 
 	^ pagerModel
 ]
 
-{ #category : #'slider-accessing' }
+{ #category : #accessing }
 GLMPagerScrollSlidingBrick >> pagerModel: anAdapter [
 	
 	pagerModel := anAdapter.
@@ -239,44 +239,44 @@ GLMPagerScrollSlidingBrick >> pagerModel: anAdapter [
 	self width: self computeWidth
 ]
 
-{ #category : #'slider-cursor' }
+{ #category : #cursor }
 GLMPagerScrollSlidingBrick >> resizeCursor [
 
 	^ Cursor resizeForEdge: #left
 ]
 
-{ #category : #'slider-scrolling' }
+{ #category : #scrolling }
 GLMPagerScrollSlidingBrick >> scrollTo: aFloat [ "Float - percentage/100"
 	"scrolls to a specified float number which must be in interval [0.0, 1.0]"
 	self moveLeft: (owner width - self width) * aFloat.
 ]
 
-{ #category : #'slider-scrolling' }
+{ #category : #scrolling }
 GLMPagerScrollSlidingBrick >> scrollTo: aValue smooth: aBoolean [
 	"better to ignore smooth parameter,
 	because animation is not neccessary"
 	self scrollTo: aValue
 ]
 
-{ #category : #'slider-scrolling' }
+{ #category : #scrolling }
 GLMPagerScrollSlidingBrick >> scrollToPane: anIndex smooth: isSmooth [
 
 	self scrollTo: (pagerModel convertIndexToValue: anIndex) smooth: isSmooth.
 ]
 
-{ #category : #'slider-cursor' }
+{ #category : #cursor }
 GLMPagerScrollSlidingBrick >> setCursorToNormal: evt [
 		
 	evt hand showTemporaryCursor: nil
 ]
 
-{ #category : #'slider-cursor' }
+{ #category : #cursor }
 GLMPagerScrollSlidingBrick >> setCursorToResizing: evt [
 	
 	evt hand showTemporaryCursor: self resizeCursor
 ]
 
-{ #category : #'slider-draging' }
+{ #category : #draging }
 GLMPagerScrollSlidingBrick >> setPosition: aPoint [
 	"aPoint x - is my bounds left
 	aPoint y - is my bounds right"
@@ -291,7 +291,7 @@ GLMPagerScrollSlidingBrick >> setPosition: aPoint [
 	self pagerModel notifyScrollerBoundsChanged: aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GLMPagerScrollSlidingBrick >> setWidthAfterResizing [
 	| left right |
 	
@@ -301,7 +301,7 @@ GLMPagerScrollSlidingBrick >> setWidthAfterResizing [
 	self setPosition: left@right
 ]
 
-{ #category : #'slider-scrolling' }
+{ #category : #scrolling }
 GLMPagerScrollSlidingBrick >> synchronizeScrollTo: aValue [
 
 	pagerModel synchronizeScrollTo: aValue.

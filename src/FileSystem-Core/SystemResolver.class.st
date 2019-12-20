@@ -41,36 +41,37 @@ SystemResolver class >> userLocalDirectory: aFileReference [
 
 { #category : #origins }
 SystemResolver >> changes [
+	<origin>
 	^ self image withExtension: Smalltalk changesSuffix
 ]
 
 { #category : #origins }
 SystemResolver >> image [
+	<origin>
 	^ self resolveString: Smalltalk imagePath
 ]
 
 { #category : #origins }
 SystemResolver >> imageDirectory [
+	<origin>
 	^ self image parent
 ]
 
 { #category : #origins }
 SystemResolver >> localDirectory [ 
+	<origin>
 	^ self class userLocalDirectory 
 		ifNil: [ (self imageDirectory / self class defaultLocalDirectoryName) ensureCreateDirectory ]
 ]
 
-{ #category : #resolving }
-SystemResolver >> supportedOrigins [
-	^ #(image imageDirectory changes vmBinary vmDirectory workingDirectory localDirectory)
-]
-
 { #category : #origins }
 SystemResolver >> vmBinary [
+	<origin>
 	^ self resolveString: Smalltalk vm fullPath
 ]
 
 { #category : #origins }
 SystemResolver >> vmDirectory [
+	<origin>
 	^ self resolveString: Smalltalk vm directory
 ]

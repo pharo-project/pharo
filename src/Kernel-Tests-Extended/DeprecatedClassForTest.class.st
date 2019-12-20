@@ -1,3 +1,6 @@
+"
+A test utility class with deprecated methods - to be used in tests to verify that deprecation works
+"
 Class {
 	#name : #DeprecatedClassForTest,
 	#superclass : #Object,

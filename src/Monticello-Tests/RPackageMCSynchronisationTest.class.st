@@ -19,12 +19,12 @@ Class {
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXCategory [
-	Smalltalk globals organization addCategory: 'XXXXX'.
+	testingEnvironment organization addCategory: 'XXXXX'.
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addXMatchCategory [
-	Smalltalk globals organization addCategory: 'XXXXX-YYYY'.
+	testingEnvironment organization addCategory: 'XXXXX-YYYY'.
 ]
 
 { #category : #utilities }
@@ -47,14 +47,14 @@ RPackageMCSynchronisationTest >> addXYZCategory [
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addYCategory [
 
-	Smalltalk globals organization addCategory: 'YYYYY'.
+	testingEnvironment organization addCategory: 'YYYYY'.
 			
 ]
 
 { #category : #utilities }
 RPackageMCSynchronisationTest >> addZCategory [
 
-	Smalltalk globals organization addCategory: 'ZZZZZ'.
+	testingEnvironment organization addCategory: 'ZZZZZ'.
 			
 ]
 

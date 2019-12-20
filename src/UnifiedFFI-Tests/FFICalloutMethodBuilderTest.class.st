@@ -12,7 +12,7 @@ Class {
 
 { #category : #factory }
 FFICalloutMethodBuilderTest >> builder [ 
-	^ (FFICalloutAPI inContext: nil) newBuilder
+	^ (FFICalloutAPI inUFFIContext: nil) newBuilder
 		requestor: FFICalloutMethodBuilderTestRecuestor new;
 		yourself
 ]

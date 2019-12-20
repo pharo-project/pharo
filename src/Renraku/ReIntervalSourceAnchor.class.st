@@ -19,14 +19,6 @@ ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
 		yourself
 ]
 
-{ #category : #'gt-inspector-extension' }
-ReIntervalSourceAnchor >> gtInspectorAnchorIn: composite [
-	<gtInspectorPresentationOrder: 0>
-
-	(super gtInspectorAnchorIn: composite)
-		initialize: [ :p | p selectionInterval: interval ]
-]
-
 { #category : #initialization }
 ReIntervalSourceAnchor >> initializeEnitity: anEntiy interval: anInterval [ 
 	

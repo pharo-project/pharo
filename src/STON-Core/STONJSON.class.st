@@ -35,7 +35,7 @@ For a much more sophisticated JSON parser/writer implementation, have a look at 
 Class {
 	#name : #STONJSON,
 	#superclass : #Object,
-	#category : #'STON-Core-Base'
+	#category : #'STON-Core-Facade'
 }
 
 { #category : #convenience }

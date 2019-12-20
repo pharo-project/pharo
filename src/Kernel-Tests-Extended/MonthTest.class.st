@@ -44,8 +44,7 @@ MonthTest >> tearDown [
 
 { #category : #tests }
 MonthTest >> testConverting [
-
-	self assert: month asDate = '1 July 1998' asDate
+	self assert: month asDate equals: '1 July 1998' asDate
 ]
 
 { #category : #tests }
@@ -58,54 +57,46 @@ MonthTest >> testEnumerating [
 ]
 
 { #category : #tests }
-MonthTest >> testIndexOfMonth [	
-       | m |
-       m := #(#January #February #March #April #May #June #July #August
-#September #October #November #December).
+MonthTest >> testIndexOfMonth [
+	| m |
+	m := #(#January #February #March #April #May #June #July #August #September #October #November #December).
 
-       m withIndexDo: [:item :index | self assert: (Month indexOfMonth:
-item) = index].
+	m withIndexDo: [ :item :index | self assert: (Month indexOfMonth: item) equals: index ].
 
-       self should: [Month indexOfMonth: 1] raise: self defaultTestError.
-       self should: [Month indexOfMonth: #Marsh] raise: self defaultTestError.
-"notice the misspell!!"
-       self should: [Month indexOfMonth: #UnexistingMonth] raise:
- self defaultTestError.
+	self should: [ Month indexOfMonth: 1 ] raise: self defaultTestError.
+	self should: [ Month indexOfMonth: #Marsh ] raise: self defaultTestError.
+	"notice the misspell!!"
+	self should: [ Month indexOfMonth: #UnexistingMonth ] raise: self defaultTestError
 ]
 
 { #category : #tests }
 MonthTest >> testInquiries [
-
-	self 
-		assert: month index = 7;
-		assert: month name = #July;
-		assert: month duration = (31 days).
-
+	self
+		assert: month index equals: 7;
+		assert: month name equals: #July;
+		assert: month duration equals: 31 days
 ]
 
 { #category : #tests }
 MonthTest >> testInstanceCreation [
 	| m1 m2 |
-	m1 := Month starting:  '4 July 1998' asDate.
-	m2 := Month year: 1998 month: #July .
+	m1 := Month starting: '4 July 1998' asDate.
+	m2 := Month year: 1998 month: #July.
 	self
-		assert: month = m1;
-		assert: month = m2
+		assert: month equals: m1;
+		assert: month equals: m2
 ]
 
 { #category : #tests }
 MonthTest >> testNameOfMonth [
+	| m |
+	m := #(#January #February #March #April #May #June #July #August #September #October #November #December).
 
-       | m |
-       m := #(#January #February #March #April #May #June #July #August
-#September #October #November #December).
+	m withIndexDo: [ :item :index | self assert: (Month nameOfMonth: index) equals: item ].
 
-       m withIndexDo: [:item :index | self assert: (Month nameOfMonth:
-index) = item].
-
-       self should: [Month nameOfMonth: 0] raise: self defaultTestError.
-       self should: [Month nameOfMonth: 13] raise: self defaultTestError.
-       self should: [Month nameOfMonth: #January] raise: self defaultTestError.
+	self should: [ Month nameOfMonth: 0 ] raise: self defaultTestError.
+	self should: [ Month nameOfMonth: 13 ] raise: self defaultTestError.
+	self should: [ Month nameOfMonth: #January ] raise: self defaultTestError
 ]
 
 { #category : #tests }
@@ -126,27 +117,20 @@ MonthTest >> testPreviousNext [
 	p := month previous.
 
 	self
-		assert: n year = 1998;
-		assert: n index = 8;
-		assert: p year = 1998;
-		assert: p index = 6.
-
-
+		assert: n year equals: 1998;
+		assert: n index equals: 8;
+		assert: p year equals: 1998;
+		assert: p index equals: 6
 ]
 
 { #category : #tests }
 MonthTest >> testPrinting [
-
-	self 
-		assert: month printString = 'July 1998'.
-
+	self assert: month printString equals: 'July 1998'
 ]
 
 { #category : #tests }
 MonthTest >> testReadFrom [
-
 	| m |
 	m := Month readFrom: 'July 1998' readStream.
-	self 
-		assert: m = month
+	self assert: m equals: month
 ]

@@ -20,8 +20,7 @@ ClassDescriptionTest >> testAllMethodCategoriesIntegratedThrough [
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testAllSlots [
-	self assert: (Context allSlots size = 6).
-	
+	self assert: Context allSlots size equals: 6
 ]
 
 { #category : #'tests - slots' }
@@ -48,13 +47,12 @@ ClassDescriptionTest >> testHasSlotNamed [
 
 { #category : #tests }
 ClassDescriptionTest >> testMethods [
-	self assert: Object methods = Object methodDict values.  
+	self assert: Object methods equals: Object methodDict values
 ]
 
 { #category : #tests }
 ClassDescriptionTest >> testNumberOfMethods [
-	self assert: (Point numberOfMethods = (Point localMethods size + Point class localMethods size)).
-
+	self assert: Point numberOfMethods equals: Point localMethods size + Point class localMethods size
 ]
 
 { #category : #tests }
@@ -67,20 +65,17 @@ ClassDescriptionTest >> testOrganization [
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlotNamed [
-	self assert: ((Point slotNamed: #x) name = #x).
-
+	self assert: (Point slotNamed: #x) name equals: #x
 ]
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlotNames [
-	self assert: (Point slotNames = #(x y)).
-	
+	self assert: Point slotNames equals: #(x y)
 ]
 
 { #category : #'tests - slots' }
 ClassDescriptionTest >> testSlots [
-	self assert: (Context slots size = 4).
-	
+	self assert: Context slots size equals: 4
 ]
 
 { #category : #'tests - instance variables' }

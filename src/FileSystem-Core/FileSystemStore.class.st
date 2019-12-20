@@ -249,7 +249,7 @@ FileSystemStore >> directoryAt: aPath nodesDo: aBlock [
 
 { #category : #public }
 FileSystemStore >> ensureCreateDirectory: aPath [
-	(self isDirectory: aPath) ifTrue: [ ^ self ].
+	((self exists: aPath) and: [ self isDirectory: aPath]) ifTrue: [ ^ self ].
 	self ensureCreateDirectory: aPath parent.
 	self createDirectory: aPath
 ]
@@ -381,15 +381,6 @@ FileSystemStore >> isWritable: aPath [
 		ifPresent: [ :entry | ^ self basicIsWritable: entry ] 
 		ifAbsent: [ ^ false ].
 	
-]
-
-{ #category : #public }
-FileSystemStore >> mimeTypesAt: aPath [
-	| mimeType |
-	mimeType := ZnMimeType 
-						forFilenameExtension: aPath extension 
-						ifAbsent: [  ^ nil ].
-	^ Array with: mimeType
 ]
 
 { #category : #public }

@@ -48,9 +48,7 @@ SpMorphicGridAdapter >> layout: aLayout [
 { #category : #factory }
 SpMorphicGridAdapter >> newPanel [
 
-	^ PanelMorph new 
+	^ super newPanel
 		layoutPolicy: SpMorphicGridLayout new;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
 		yourself
 ]

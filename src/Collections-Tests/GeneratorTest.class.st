@@ -50,23 +50,34 @@ GeneratorTest >> testAtEnd [
 GeneratorTest >> testClose [
 	| generator doEnsure notEnsure |
 	doEnsure := notEnsure := 0.
-	[ generator := Generator on: [ :g |
-		[ g yield: 1; yield: 2 ]
-			ensure: [ doEnsure := doEnsure + 1 ] ].
-	self assert: doEnsure = 0; assert: notEnsure = 0.
-	self assert: generator peek = 1.
-	self assert: doEnsure = 0; assert: notEnsure = 0.
+	[ generator := Generator
+		on: [ :g | 
+			[ g
+				yield: 1;
+				yield: 2 ]
+				ensure: [ doEnsure := doEnsure + 1 ] ].
+	self
+		assert: doEnsure equals: 0;
+		assert: notEnsure equals: 0.
+	self assert: generator peek equals: 1.
+	self
+		assert: doEnsure equals: 0;
+		assert: notEnsure equals: 0.
 	generator close.
-	self assert: doEnsure = 1; assert: notEnsure = 0 ]
+	self
+		assert: doEnsure equals: 1;
+		assert: notEnsure equals: 0 ]
 		ensure: [ notEnsure := notEnsure + 1 ].
-	self assert: doEnsure = 1; assert: notEnsure = 1
+	self
+		assert: doEnsure equals: 1;
+		assert: notEnsure equals: 1
 ]
 
 { #category : #tests }
 GeneratorTest >> testContents [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
-	self assert: generator contents = #(1 2 3)
+	self assert: generator contents equals: #(1 2 3)
 ]
 
 { #category : #tests }
@@ -81,10 +92,13 @@ GeneratorTest >> testEmpty [
 { #category : #tests }
 GeneratorTest >> testEnsure [
 	| generator |
-	generator := Generator on: [ :g |
-		[ g yield: 1; yield: 2 ]
-			ensure: [ g yield: 3 ] ].
-	self assert: generator upToEnd asArray = #( 1 2 3 )
+	generator := Generator
+		on: [ :g | 
+			[ g
+				yield: 1;
+				yield: 2 ]
+				ensure: [ g yield: 3 ] ].
+	self assert: generator upToEnd asArray equals: #(1 2 3)
 ]
 
 { #category : #tests }
@@ -103,16 +117,16 @@ GeneratorTest >> testErrorPropagation [
 GeneratorTest >> testFibonacci [
 	| generator |
 	generator := self fibonacciSequence.
-	self assert: (generator next: 10) asArray = #( 1 1 2 3 5 8 13 21 34 55 )
+	self assert: (generator next: 10) asArray equals: #(1 1 2 3 5 8 13 21 34 55)
 ]
 
 { #category : #tests }
 GeneratorTest >> testNext [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
-	self assert: generator next = 1.
-	self assert: generator next = 2.
-	self assert: generator next = 3.
+	self assert: generator next equals: 1.
+	self assert: generator next equals: 2.
+	self assert: generator next equals: 3.
 	self assert: generator next isNil
 ]
 
@@ -120,47 +134,63 @@ GeneratorTest >> testNext [
 GeneratorTest >> testPeek [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
-	self assert: generator peek = 1.
-	self assert: generator peek = 1.
+	self assert: generator peek equals: 1.
+	self assert: generator peek equals: 1.
 	generator next.
-	self assert: generator peek = 2
+	self assert: generator peek equals: 2
 ]
 
 { #category : #tests }
 GeneratorTest >> testReset [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
-	self assert: generator next = 1.
-	self assert: generator next = 2.
+	self assert: generator next equals: 1.
+	self assert: generator next equals: 2.
 	generator reset.
-	self assert: generator next = 1.
-	self assert: generator next = 2.
-	self assert: generator next = 3.
-	self assert: generator next = nil.
+	self assert: generator next equals: 1.
+	self assert: generator next equals: 2.
+	self assert: generator next equals: 3.
+	self assert: generator next equals: nil.
 	generator reset.
-	self assert: generator next = 1
+	self assert: generator next equals: 1
 ]
 
 { #category : #tests }
 GeneratorTest >> testResetUnwind [
 	"Just like close, just using reset"
+
 	| generator doEnsure notEnsure |
 	doEnsure := notEnsure := 0.
-	[ generator := Generator on: [ :g |
-		[ g yield: 1; yield: 2 ]
-			ensure: [ doEnsure := doEnsure + 1 ] ].
-	self assert: doEnsure = 0; assert: notEnsure = 0.
-	self assert: generator peek = 1.
-	self assert: doEnsure = 0; assert: notEnsure = 0.
+	[ generator := Generator
+		on: [ :g | 
+			[ g
+				yield: 1;
+				yield: 2 ]
+				ensure: [ doEnsure := doEnsure + 1 ] ].
+	self
+		assert: doEnsure equals: 0;
+		assert: notEnsure equals: 0.
+	self assert: generator peek equals: 1.
+	self
+		assert: doEnsure equals: 0;
+		assert: notEnsure equals: 0.
 	generator reset.
-	self assert: doEnsure = 1; assert: notEnsure = 0 ]
+	self
+		assert: doEnsure equals: 1;
+		assert: notEnsure equals: 0 ]
 		ensure: [ notEnsure := notEnsure + 1 ].
-	self assert: doEnsure = 1; assert: notEnsure = 1
+	self
+		assert: doEnsure equals: 1;
+		assert: notEnsure equals: 1
 ]
 
 { #category : #tests }
 GeneratorTest >> testSimple [
 	| generator |
-	generator := Generator on: [ :g | g yield: 1; yield: 2 ].
-	self assert: generator upToEnd asArray = #( 1 2 )
+	generator := Generator
+		on: [ :g | 
+			g
+				yield: 1;
+				yield: 2 ].
+	self assert: generator upToEnd asArray equals: #(1 2)
 ]

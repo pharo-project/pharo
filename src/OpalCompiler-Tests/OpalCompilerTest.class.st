@@ -87,6 +87,19 @@ OpalCompilerTest >> testCompileWithNilClass [
 ]
 
 { #category : #'tests - bindings' }
+OpalCompilerTest >> testCompilerUsingFullBlockClosureHasBlockAsLiteral [
+
+  	| compiler method |
+ 	compiler := Smalltalk compiler.
+ 	compiler compilationContext encoderClass: EncoderForSistaV1.
+ 	compiler compilationContext compilerOptions: #(optionFullBlockClosure).
+
+  	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
+
+  	self assert: method literals second isCompiledBlock 
+]
+
+{ #category : #'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
 	result := Smalltalk compiler

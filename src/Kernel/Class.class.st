@@ -23,12 +23,12 @@ Class {
 	#category : #'Kernel-Classes'
 }
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> allSuperclassesFor: aClass cache: cache [ 	
 	^ cache at: aClass ifAbsentPut: [aClass allSuperclasses asArray]
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -43,7 +43,7 @@ Class class >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache 
 			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -51,7 +51,7 @@ Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cach
 				self hasNoSuperclassesOf: soleInstance in: unprocessedClasses cache: cache]
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [ 
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 	
@@ -64,7 +64,7 @@ Class class >> rootsOfTheWorld [
 	^(self environment select: [:each | each isBehavior and: [each superclass isNil]]) asOrderedCollection
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 Class class >> superclassOrder: classes [
     "Arrange the classes in the collection, classes, in superclass order so the 
     classes can be properly filed in. Do it in sets instead of ordered collections.
@@ -169,21 +169,6 @@ Class >> addSubclass: aSubclass [
 		^ self ].
 	self subclasses do:[:cl| cl == aSubclass ifTrue:[^self]]. "Already my subclass"
 	self subclasses: (subclasses copyWith: aSubclass).
-]
-
-{ #category : #'class variables' }
-Class >> allClassVarNames [
-	"Answer a Set of the names of the receiver's class variables, including those
-	defined in the superclasses of the receiver."
-
-	| aSet |
-	self isRootInEnvironment
-		ifTrue: 
-			[^self classVarNames asSet]  "This is the keys so it is a new Set."
-		ifFalse: 
-			[aSet := self superclass allClassVarNames.
-			aSet addAll: self classVarNames.
-			^aSet]
 ]
 
 { #category : #'class variables' }
@@ -344,7 +329,7 @@ Class >> classVarNamed: aString put: anObject [
 
 { #category : #'class variables' }
 Class >> classVarNames [
-	"Answer a collection of the names of the class variables defined in the receiver."
+	"Answer a collection of the receiver's class variable names."
 
 	^self classPool keys sort
 ]
@@ -376,6 +361,14 @@ Class >> classVariables [
 	"Answer the meta objects of all class variables"
 
 	^self classPool associations
+]
+
+{ #category : #'accessing class hierarchy' }
+Class >> commonSuperclassWith: aClass [
+
+	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
+
+	
 ]
 
 { #category : #compiling }
@@ -476,7 +469,7 @@ Class >> deprecationRefactorings [
 
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
-	| copysName class |
+	| copysName class newComment |
 			
 	copysName := aSymbol asSymbol.
 	copysName = self name
@@ -491,7 +484,8 @@ Class >> duplicateClassWithNewName: aSymbol [
 		
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
-	^ class
+
+  ^ class
 ]
 
 { #category : #organization }
@@ -808,7 +802,8 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 			ifFalse: [ ^ self ] ].
 	
 	varUserClass 
-		ifNotNil: [self crTrace: self name , ' (' , aString , ' is Undeclared) '.
+		ifNotNil: [
+			NewUndeclaredWarning signal: aString in: self name.
 			Undeclared declare: aSymbol from: self classPool]
 		ifNil: [ self classPool removeKey: aSymbol].
 		

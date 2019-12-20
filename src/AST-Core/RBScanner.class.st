@@ -1,5 +1,5 @@
 "
-RBScanner is a stream that returns a sequence of token from the string that it is created on. The tokens know where they came from in the source code and which comments were attached to them.
+RBScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
 
 Instance Variables:
 	buffer	<PositionableStream>	Accumulates the text for the current token.
@@ -216,11 +216,6 @@ RBScanner >> getComments [
 ]
 
 { #category : #testing }
-RBScanner >> isReadable [
-	^true
-]
-
-{ #category : #testing }
 RBScanner >> isSelector [
 	characterType = #binary
 		ifTrue: [ [ characterType = #binary ] whileTrue: [ self step ].
@@ -273,11 +268,6 @@ Binary --> Binary : binary
 Binary --> [*] : eof
 
 @enduml"
-]
-
-{ #category : #testing }
-RBScanner >> isWritable [
-	^false
 ]
 
 { #category : #accessing }
@@ -494,22 +484,6 @@ RBScanner >> scanNumber [
 		start: start
 		stop: stop
 		source: string
-]
-
-{ #category : #'private-scanning' }
-RBScanner >> scanPatternVariable [
-	buffer nextPut: currentCharacter.
-	self step.
-	currentCharacter = ${ 
-		ifTrue: 
-			[self step.
-			^RBPatternBlockToken value: '`{' start: tokenStart].
-	[characterType = #alphabetic] whileFalse: 
-			[characterType = #eof 
-				ifTrue: [ ^ self scanError: 'Meta variable expected'].
-			buffer nextPut: currentCharacter.
-			self step].
-	^self scanIdentifierOrKeyword
 ]
 
 { #category : #'private-scanning' }

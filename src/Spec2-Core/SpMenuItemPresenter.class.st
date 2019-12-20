@@ -119,6 +119,13 @@ SpMenuItemPresenter >> isMenuPresenter [
 	^ true
 ]
 
+{ #category : #accessing }
+SpMenuItemPresenter >> keyText: aString [
+
+	self flag: #TODO. "This is for backward compatibility and needs to be removed!"
+	self shortcut: aString first meta
+]
+
 { #category : #api }
 SpMenuItemPresenter >> name [
 	^ name
@@ -132,6 +139,7 @@ SpMenuItemPresenter >> name: aString [
 { #category : #api }
 SpMenuItemPresenter >> performMenuActionWith: aMenuItem [
 	| en |
+
 	en := self isEnabled.
 	en isBlock ifTrue: [ en := en value ].
 	en ifFalse: [ ^ self ].

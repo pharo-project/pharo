@@ -14,7 +14,7 @@ RGMetatraitDefinitionTest >> testAsClassTraitfinition [
 	rgCTrait := cTrait asRingDefinition.
 	self assert: rgCTrait isRingObject.
 	self assert: rgCTrait isTrait.
-	self assert: rgCTrait name == #'TSortable classTrait'.
-	self assert: rgCTrait category == cTrait category.
-	self assert: rgCTrait classSide == rgCTrait
+	self assert: rgCTrait name identicalTo: #'TSortable classTrait'.
+	self assert: rgCTrait category identicalTo: cTrait category.
+	self assert: rgCTrait classSide identicalTo: rgCTrait
 ]

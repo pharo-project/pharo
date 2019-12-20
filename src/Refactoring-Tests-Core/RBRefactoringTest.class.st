@@ -14,7 +14,7 @@ RBRefactoringTest >> abstractVariableTestData [
 	classes := #(#Bar #Foo) 
 		inject: OrderedCollection new 
 		into: [ :sum :each | 
-			Smalltalk globals at: each ifPresent: [ :class | 
+			testingEnvironment at: each ifPresent: [ :class | 
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.

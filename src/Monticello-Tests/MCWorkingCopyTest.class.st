@@ -15,20 +15,24 @@ Class {
 MCWorkingCopyTest >> assertNameWhenSavingTo: aRepository is: aString [
 	| name |
 	name := nil.
-	[aRepository storeVersion: (workingCopy newVersionIn: aRepository)]
+	[ aRepository storeVersion: (workingCopy newVersionIn: aRepository) ]
 		on: MCVersionNameAndMessageRequest
-		do: [:n | name := n suggestedName. n resume: (Array with: name with: '')].
-	self assert: name = aString
+		do: [ :n | 
+			name := n suggestedName.
+			n resume: (Array with: name with: '') ].
+	self assert: name equals: aString
 ]
 
 { #category : #asserting }
 MCWorkingCopyTest >> assertNumberWhenSavingTo: aRepository is: aNumber [
 	| name |
 	name := nil.
-	[aRepository storeVersion: (workingCopy newVersionIn: aRepository)]
+	[ aRepository storeVersion: (workingCopy newVersionIn: aRepository) ]
 		on: MCVersionNameAndMessageRequest
-		do: [:n | name := n suggestedName. n resume: (Array with: name with: '')].
-	self assert: name = (self packageName, '-', Author fullName, '.', aNumber asString)
+		do: [ :n | 
+			name := n suggestedName.
+			n resume: (Array with: name with: '') ].
+	self assert: name equals: self packageName , '-' , Author fullName , '.' , aNumber asString
 ]
 
 { #category : #actions }
@@ -129,36 +133,35 @@ MCWorkingCopyTest >> testBackport [
 	| inst base final backported ancestry |
 	inst := self mockInstanceA.
 	base := self snapshot.
-	
-	self assert: inst one = 1.
-	
+
+	self assert: inst one equals: 1.
+
 	self change: #one toReturn: 2.
 	self change: #two toReturn: 3.
-	
+
 	final := self snapshot.
-	[workingCopy backportChangesTo: base info]
+	[ workingCopy backportChangesTo: base info ]
 		on: MCChangeSelectionRequest
-		do: [:e | e resume: e patch].
-		
-	self assert: inst one = 2.
-	self assert: inst two = 3.
+		do: [ :e | e resume: e patch ].
+
+	self assert: inst one equals: 2.
+	self assert: inst two equals: 3.
 	ancestry := workingCopy ancestry.
-	self assert: ancestry ancestors size = 1.
-	self assert: ancestry ancestors first = base info.
-	self assert: ancestry stepChildren size = 1.
-	self assert: ancestry stepChildren first = final info.
-	
+	self assert: ancestry ancestors size equals: 1.
+	self assert: ancestry ancestors first equals: base info.
+	self assert: ancestry stepChildren size equals: 1.
+	self assert: ancestry stepChildren first equals: final info.
+
 	backported := self snapshot.
-	[workingCopy backportChangesTo: base info]
+	[ workingCopy backportChangesTo: base info ]
 		on: MCChangeSelectionRequest
-		do: [:e | e resume: e patch].
-		
+		do: [ :e | e resume: e patch ].
+
 	ancestry := workingCopy ancestry.
-	self assert: ancestry ancestors size = 1.
-	self assert: ancestry ancestors first = base info.
-	self assert: ancestry stepChildren size = 1.
-	self assert: ancestry stepChildren first = backported info.
-	
+	self assert: ancestry ancestors size equals: 1.
+	self assert: ancestry ancestors first equals: base info.
+	self assert: ancestry stepChildren size equals: 1.
+	self assert: ancestry stepChildren first equals: backported info
 ]
 
 { #category : #tests }
@@ -183,21 +186,20 @@ MCWorkingCopyTest >> testDoubleRepeatedMerge [
 	self merge: motherA2.
 	self merge: motherB2.
 	inst := self mockInstanceA.
-	self assert: inst a = 'a2'.
-	self assert: inst b = 'b2'.
-	self assert: inst c = 'c1'.
-	self assert: inst d = 'd1'
+	self assert: inst a equals: 'a2'.
+	self assert: inst b equals: 'b2'.
+	self assert: inst c equals: 'c1'.
+	self assert: inst d equals: 'd1'
 ]
 
 { #category : #tests }
 MCWorkingCopyTest >> testMergeIntoImageWithNoChanges [
 	| base revB revA1 |
-
 	self change: #a toReturn: 'a'.
 	base := self snapshot.
 	self change: #b toReturn: 'b'.
 	revB := self snapshot.
-	
+
 	self load: base.
 	self change: #a toReturn: 'a1'.
 	revA1 := self snapshot.
@@ -206,24 +208,21 @@ MCWorkingCopyTest >> testMergeIntoImageWithNoChanges [
 	self snapshot.
 	self merge: revB.
 
-	self assert: (workingCopy ancestors size = 2)
-	
+	self assert: workingCopy ancestors size equals: 2
 ]
 
 { #category : #tests }
 MCWorkingCopyTest >> testMergeIntoUnmodifiedImage [
 	| base revA |
-
 	base := self snapshot.
 	self change: #a toReturn: 'a1'.
 	revA := self snapshot.
-	
+
 	self load: base.
 
 	self merge: revA.
 
-	self assert: (workingCopy ancestors size = 1)
-	
+	self assert: workingCopy ancestors size equals: 1
 ]
 
 { #category : #tests }
@@ -258,15 +257,14 @@ MCWorkingCopyTest >> testOptimizedLoad [
 	inst := self mockInstanceA.
 	base := self snapshot.
 	self change: #one toReturn: 2.
-	self assert: inst one = 2.
+	self assert: inst one equals: 2.
 	diffy := self snapshot asDiffAgainst: base.
 	self deny: diffy canOptimizeLoading.
 	self load: base.
-	self assert: inst one = 1.
+	self assert: inst one equals: 1.
 	self assert: diffy canOptimizeLoading.
 	self load: diffy.
-	self assert: inst one = 2.
-
+	self assert: inst one equals: 2
 ]
 
 { #category : #tests }
@@ -289,80 +287,81 @@ MCWorkingCopyTest >> testRepeatedMerge [
 	self change: #truth toReturn: false.
 	self snapshot.
 	inst := self mockInstanceA.
-	self assert: inst one = 1.
-	self assert: inst two = 2.
+	self assert: inst one equals: 1.
+	self assert: inst two equals: 2.
 	self merge: mother1.
-	self assert: inst one = 2.
-	self assert: inst two = 2.
+	self assert: inst one equals: 2.
+	self assert: inst two equals: 2.
 	self change: #one toReturn: 7.
-	self assert: inst one = 7.
-	self assert: inst two = 2.
+	self assert: inst one equals: 7.
+	self assert: inst two equals: 2.
 	self merge: mother2.
-	self assert: inst one = 7.
-	self assert: inst two = 3
+	self assert: inst one equals: 7.
+	self assert: inst two equals: 3
 ]
 
 { #category : #tests }
 MCWorkingCopyTest >> testRepositoryFallback [
 	| version |
 	version := self snapshot.
-	self assert: (repositoryGroup versionWithInfo: version info) == version.
+	self assert: (repositoryGroup versionWithInfo: version info) identicalTo: version.
 	versions removeKey: version info.
 	versions2 at: version info put: version.
-	self assert: ( repositoryGroup versionWithInfo: version info) == version.
+	self assert: (repositoryGroup versionWithInfo: version info) identicalTo: version.
 	versions2 removeKey: version info.
-	self should: [repositoryGroup versionWithInfo: version info] raise: Error.
+	self should: [ repositoryGroup versionWithInfo: version info ] raise: Error
 ]
 
 { #category : #tests }
 MCWorkingCopyTest >> testSelectiveBackport [
 	| inst base intermediate final |
 	inst := self mockInstanceA.
-	base :=  self snapshot.
-	self assert: inst one = 1.
+	base := self snapshot.
+	self assert: inst one equals: 1.
 	self change: #one toReturn: 2.
 	intermediate := self snapshot.
 	self change: #two toReturn: 3.
 	final := self snapshot.
-	[workingCopy backportChangesTo: base info]
+	[ workingCopy backportChangesTo: base info ]
 		on: MCChangeSelectionRequest
-		do: [:e | | patch selected |
+		do: [ :e | 
+			| patch selected |
 			patch := e patch.
-			selected := patch operations select: [:ea | ea definition selector = #two].
-			e resume: (MCPatch operations: selected)]. 
-	self assert: inst one = 1.
-	self assert: inst two = 3.
-	self assert: workingCopy ancestry ancestors size = 1.
-	self assert: workingCopy ancestry ancestors first = base info.
-	self assert: workingCopy ancestry stepChildren size = 1.
-	self assert: workingCopy ancestry stepChildren first = final info
+			selected := patch operations select: [ :ea | ea definition selector = #two ].
+			e resume: (MCPatch operations: selected) ].
+	self assert: inst one equals: 1.
+	self assert: inst two equals: 3.
+	self assert: workingCopy ancestry ancestors size equals: 1.
+	self assert: workingCopy ancestry ancestors first equals: base info.
+	self assert: workingCopy ancestry stepChildren size equals: 1.
+	self assert: workingCopy ancestry stepChildren first equals: final info
 ]
 
 { #category : #tests }
 MCWorkingCopyTest >> testSimpleMerge [
 	| mother base inst |
 	inst := self mockInstanceA.
-	base :=  self snapshot.
+	base := self snapshot.
 	self change: #one toReturn: 2.
-	mother :=  self snapshot.
+	mother := self snapshot.
 	self load: base.
 	self change: #two toReturn: 3.
 	self snapshot.
-	self assert: inst one = 1.
-	self assert: inst two = 3.
-	
+	self assert: inst one equals: 1.
+	self assert: inst two equals: 3.
+
 	self merge: mother.
-	self assert: inst one = 2.
-	self assert: inst two = 3.
+	self assert: inst one equals: 2.
+	self assert: inst two equals: 3
 ]
 
 { #category : #tests }
 MCWorkingCopyTest >> testSnapshotAndLoad [
 	| base inst |
 	inst := self mockInstanceA.
-	base :=  self snapshot.
+	base := self snapshot.
 	self change: #one toReturn: 2.
-	self assert: inst one = 2.
+	self assert: inst one equals: 2.
 	self load: base.
-	self assert: inst one = 1.
+	self assert: inst one equals: 1
 ]

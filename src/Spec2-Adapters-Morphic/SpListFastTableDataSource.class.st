@@ -15,7 +15,8 @@ SpListFastTableDataSource >> cellColumn: column row: rowIndex [
 	cell := FTCellMorph new
 		cellInset: 5;
 		yourself.
-	(self model iconFor: item) ifNotNil: [ :icon | cell addMorphBack: icon asMorph ].
+	self model hasIcons ifTrue: [ 
+		(self model iconFor: item) ifNotNil: [ :icon | cell addMorphBack: icon asMorph ] ].
 	cell addMorphBack: displayValue asMorph asReadOnlyMorph.
 	^ cell
 ]
@@ -34,9 +35,10 @@ SpListFastTableDataSource >> elements [
 
 { #category : #accessing }
 SpListFastTableDataSource >> headerColumn: column [
+
 	column id ifNil: [ ^ nil ]. 
 	^ FTCellMorph new 
-		listCentering: #center;
+		listCentering: #left;
 		addMorph: column id asMorph asReadOnlyMorph;
 		yourself
 ]

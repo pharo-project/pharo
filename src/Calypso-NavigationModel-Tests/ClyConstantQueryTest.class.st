@@ -13,30 +13,27 @@ ClyConstantQueryTest >> createQuery [
 
 { #category : #tests }
 ClyConstantQueryTest >> testComparisonToSimilarQueryWhichReturningDifferentObjects [
-	
 	| query2 |
 	query2 := self createQuery.
 	query2 resultItems: #(anotherResult).
-	
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]
 
 { #category : #tests }
 ClyConstantQueryTest >> testConvertingToAsyncQuery [
-
 	| convertedQuery |
 	convertedQuery := query async.
-	
-	self assert: convertedQuery == query
+
+	self assert: convertedQuery identicalTo: query
 ]
 
 { #category : #tests }
 ClyConstantQueryTest >> testConvertingToSemiAsyncQuery [
-
 	| convertedQuery |
 	convertedQuery := query semiAsync.
-	
-	self assert: convertedQuery == query
+
+	self assert: convertedQuery identicalTo: query
 ]
 
 { #category : #tests }

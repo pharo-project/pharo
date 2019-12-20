@@ -8,7 +8,10 @@ Class {
 IRPrinterTest >> testDup [
 	| ir |
 	ir := IRBuilderTest new testDup.
-	self assert: ir longPrintString = '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushLiteral: 3
 pushDup
@@ -21,8 +24,10 @@ returnTop
 IRPrinterTest >> testInstVar [
 	| ir |
 	ir := IRBuilderTest new testInstVar.
-	self assert: ir longPrintString = 
- '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushInstVar: 1
 pushInstVar: 2
@@ -35,7 +40,10 @@ returnTop
 IRPrinterTest >> testJumpAheadTo [
 	| ir |
 	ir := IRBuilderTest new testJumpAheadTo.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushLiteral: 2
 pushLiteral: 1
@@ -51,7 +59,10 @@ returnTop
 IRPrinterTest >> testJumpAheadToIf [
 	| ir |
 	ir := IRBuilderTest new testJumpAheadToIf.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 pushLiteral: true
@@ -69,7 +80,10 @@ returnTop
 IRPrinterTest >> testJumpBackTo [
 	| ir |
 	ir := IRBuilderTest new testJumpBackTo.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 pushLiteral: false
@@ -90,8 +104,11 @@ returnTop
 { #category : #testing }
 IRPrinterTest >> testLiteralArray [
 	| ir |
-	ir := IRBuilderTest new testLiteralArray.  
-	self assert: ir longPrintString =  '
+	ir := IRBuilderTest new testLiteralArray.
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 returnLiteral: #(#test 4 #you)
 '
@@ -101,7 +118,10 @@ returnLiteral: #(#test 4 #you)
 IRPrinterTest >> testLiteralVariableClass [
 	| ir |
 	ir := IRBuilderTest new testLiteralVariableClass.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushLiteralVariable: Object
 returnTop
@@ -112,7 +132,10 @@ returnTop
 IRPrinterTest >> testPopTop [
 	| ir |
 	ir := IRBuilderTest new testPopTop.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 pushLiteral: false
@@ -125,7 +148,10 @@ returnTop
 IRPrinterTest >> testPushClosureCopyNoCopied [
 	| ir |
 	ir := IRBuilderTest new testPushClosureCopyNoCopied.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 pushClosureCopyCopiedValues: #() args: #()
@@ -146,7 +172,10 @@ returnTop
 IRPrinterTest >> testPushConsArray [
 	| ir |
 	ir := IRBuilderTest new testPushConsArray.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 pushConsArray: 1
@@ -158,7 +187,10 @@ returnTop
 IRPrinterTest >> testPushNewArray [
 	| ir |
 	ir := IRBuilderTest new testPushNewArray.
-	self assert: ir longPrintString  =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushNewArray: 1
 returnTop
@@ -169,7 +201,10 @@ returnTop
 IRPrinterTest >> testPushSelf [
 	| ir |
 	ir := IRBuilderTest new testPushSelf.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 send: #class
@@ -181,7 +216,10 @@ returnTop
 IRPrinterTest >> testPushTempArgument [
 	| ir |
 	ir := IRBuilderTest new testPushTempArgument.
-	self assert: ir longPrintString = '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushTemp: #a
 pushTemp: #b
@@ -194,7 +232,10 @@ returnTop
 IRPrinterTest >> testPushTempTemp [
 	| ir |
 	ir := IRBuilderTest new testPushTempTemp.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushTemp: #a
 returnTop
@@ -205,7 +246,10 @@ returnTop
 IRPrinterTest >> testPushThisContext [
 	| ir |
 	ir := IRBuilderTest new testPushThisContext.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushThisContext
 send: #receiver
@@ -242,7 +286,10 @@ returnTop
 IRPrinterTest >> testRemoteTempNested [
 	| ir |
 	ir := IRBuilderTest new testRemoteTempNested.
-	self assert: ir longPrintString =   '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 createTempVectorNamed: #methodVector withVars: #(#b)
 pushLiteral: 1
@@ -276,7 +323,10 @@ returnTop
 IRPrinterTest >> testReturnTop [
 	| ir |
 	ir := IRBuilderTest new testReturnTop.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 returnLiteral: false
 '
@@ -286,7 +336,10 @@ returnLiteral: false
 IRPrinterTest >> testSendSuper [
 	| ir |
 	ir := IRBuilderTest new testSendSuper.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushReceiver
 send: #isThisEverCalled toSuperOf: IRBuilderTest
@@ -298,7 +351,10 @@ returnTop
 IRPrinterTest >> testStoreIntoVariable [
 	| ir |
 	ir := IRBuilderTest new testStoreIntoVariable.
-	self assert: ir longPrintString =  '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushLiteral: 4
 storeLiteralVariable: TestToPush
@@ -310,7 +366,10 @@ returnTop
 IRPrinterTest >> testStoreTemp [
 	| ir |
 	ir := IRBuilderTest new testStoreTemp.
-	self assert: ir longPrintString = '
+	self
+		assert: ir longPrintString
+		equals:
+			'
 label: 1
 pushLiteral: 34
 popIntoTemp: #a

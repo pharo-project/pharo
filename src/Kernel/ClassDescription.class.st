@@ -201,13 +201,13 @@ ClassDescription >> classClass [
 	^ self classSide
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
 	^ self classComment: aString stamp: '<historical>'
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> classComment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
@@ -375,7 +375,7 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	self instanceSide classComment: aStringOrText stamp: aStamp.
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
 	self organization commentStamp: changeStamp
 ]
@@ -563,7 +563,7 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 		classified: newCat
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
 
@@ -580,7 +580,7 @@ ClassDescription >> definitionForNautilus [
 	^ self definition
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> definitionWithSlots [
 	"The class definition with a way to specify slots. Shown when the class defines special Slot"
 	
@@ -635,7 +635,7 @@ ClassDescription >> definitionWithSlots [
 	^ stream contents
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> definitionWithoutSlots [
 
 	| poolString stream |
@@ -831,9 +831,9 @@ ClassDescription >> isInstanceSide [
 
 { #category : #testing }
 ClassDescription >> isLocalMethodsProtocol: aProtocol [
-	aProtocol methods ifEmpty: [ ^true ].
-	
-	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
+	aProtocol methodSelectors ifEmpty: [ ^ true ].
+
+	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
 ]
 
 { #category : #testing }
@@ -1005,7 +1005,7 @@ ClassDescription >> obsolete [
 	super obsolete.
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> oldDefinition [
 	"Answer a String that defines the receiver."
 
@@ -1349,13 +1349,6 @@ ClassDescription >> usesPoolVarNamed: aString [
 { #category : #compiling }
 ClassDescription >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
-
-	^ true
-]
-
-{ #category : #compiling }
-ClassDescription >> wantsRecompilationProgressReported [
-	"Answer whether the receiver would like progress of its recompilation reported interactively to the user."
 
 	^ true
 ]

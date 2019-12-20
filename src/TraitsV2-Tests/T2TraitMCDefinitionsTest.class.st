@@ -185,8 +185,8 @@ T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinition [
 
 	t1 := self newTrait: #T1 with: #(a b c) uses: {}.
 	definition2 := t1 asClassDefinition.
-	
-	self deny: definition1 = definition2
+
+	self deny: definition1 equals: definition2
 ]
 
 { #category : #tests }
@@ -194,13 +194,13 @@ T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionInUses [
 	| t1 t2 definition1 definition2 |
 	t1 := self newTrait: #T1 with: #() uses: {}.
 	t2 := self newTrait: #T2 with: #() uses: {}.
-	
+
 	definition1 := t2 asClassDefinition.
 
 	t2 := self newTrait: #T2 with: #() uses: {t1}.
 	definition2 := t2 asClassDefinition.
-	
-	self deny: definition1 = definition2
+
+	self deny: definition1 equals: definition2
 ]
 
 { #category : #tests }
@@ -209,8 +209,8 @@ T2TraitMCDefinitionsTest >> testEqualityOfTraitDefinitionWithDifferentSlotTypes 
 	t1 := self newTrait: #T1 with: #(a) uses: {}.
 	definition1 := t1 asClassDefinition.
 
-	t1 := self newTrait: #T1 with: { #a => PropertySlot } uses: {}.
+	t1 := self newTrait: #T1 with: {(#a => PropertySlot)} uses: {}.
 	definition2 := t1 asClassDefinition.
-	
-	self deny: definition1 = definition2
+
+	self deny: definition1 equals: definition2
 ]

@@ -48,7 +48,7 @@ SpDemoModalPresenter >> button2 [
 ]
 
 { #category : #initialization }
-SpDemoModalPresenter >> initializeWidgets [
+SpDemoModalPresenter >> initializePresenters [
 	button1 := self newButton.
 	button2 := self newButton.
 	

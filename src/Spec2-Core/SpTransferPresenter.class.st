@@ -22,6 +22,11 @@ SpTransferPresenter >> from: aModel [
 	source := aModel
 ]
 
+{ #category : #initialization }
+SpTransferPresenter >> initialize [
+	super initialize.
+]
+
 { #category : #accessing }
 SpTransferPresenter >> passenger [
 	^ passenger

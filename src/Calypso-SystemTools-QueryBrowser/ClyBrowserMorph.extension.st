@@ -24,10 +24,10 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol [
 ClyBrowserMorph >> browseReferencesTo: aSymbol from: anEnvironment [
 	
 	| classBinding |
-	aSymbol first isUppercase ifTrue: [ 
+	aSymbol isSymbol and: [ aSymbol first isUppercase ifTrue: [ 
 		classBinding := anEnvironment bindingOf: aSymbol.
 		classBinding ifNotNil: [ 
-			^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: classBinding)]].
+			^self spawnQueryBrowserOn: (ClyClassReferencesQuery of: classBinding)]]].
 		
 	self browseSendersOf: aSymbol
 ]

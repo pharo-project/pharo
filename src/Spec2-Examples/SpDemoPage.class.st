@@ -56,7 +56,7 @@ SpDemoPage >> exampleTab [
 ]
 
 { #category : #initialization }
-SpDemoPage >> initializeWidgets [
+SpDemoPage >> initializePresenters [
 
 	tabManager := self newNotebook.
 	"tabManager whenTabSelected: [ self updateTitle ]."

@@ -13,14 +13,15 @@ MetalinkChanged >> affectsMethods [
 
 { #category : #'*Calypso-SystemPlugins-Reflectivity-Queries' }
 MetalinkChanged >> affectsMethodsDefinedInClass: aClass [
-
-	^link methods anySatisfy: [ :each | each origin == aClass]
+	^ link methods
+		anySatisfy: [ :each | each methodClass isNotNil and: [ each origin == aClass ] ]
 ]
 
 { #category : #'*Calypso-SystemPlugins-Reflectivity-Queries' }
 MetalinkChanged >> affectsMethodsDefinedInPackage: aPackage [
-
-	^link methods anySatisfy: [ :each | each package == aPackage]
+	^ link methods
+		anySatisfy:
+			[ :each | each methodClass isNotNil and: [ each package == aPackage ] ]
 ]
 
 { #category : #'*Calypso-SystemPlugins-Reflectivity-Queries' }

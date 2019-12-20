@@ -1,6 +1,22 @@
 Extension { #name : #SystemNavigation }
 
 { #category : #'*Tool-Base' }
+SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive [
+	"Answer a SortedCollection of all the methods that contain, in source code, aString as a substring.  Search the class comments also"
+
+	| list addMethod addComment |
+	list := OrderedCollection new.
+	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
+	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
+	self allBehaviorsDo: [:each |
+		each selectorsDo: [:sel | 
+			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive) 
+					ifTrue: [ addMethod value: each value: sel ]].
+			(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
+	^ list 
+]
+
+{ #category : #'*Tool-Base' }
 SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 	"Create and schedule a Message Set browser for all the receiver's methods 
 	or any methods of a subclass/superclass that refer to the instance variable name."
@@ -293,33 +309,16 @@ SystemNavigation >> browseMethodsWithString: aString matchCase: caseSensitive [
 ]
 
 { #category : #'*Tool-Base' }
-SystemNavigation >> browseObsoleteMethodReferences [
+SystemNavigation >> browseObsoleteReferences [
+	<script>
 	"Open a browser on all referenced behaviors that are obsolete"
-
-	"SystemNavigation new browseObsoleteMethodReferences"
+	"SystemNavigation new browseObsoleteReferences"
 
 	| list |
-	list := self obsoleteMethodReferences.
+	list := self methodsReferencingObsoleteClasses.
 	^ self 
 		browseMessageList: list
 		name: 'Method referencing obsoletes'
-		autoSelect: nil
-]
-
-{ #category : #'*Tool-Base' }
-SystemNavigation >> browseObsoleteReferences [  
-	"self new browseObsoleteReferences"
-
-	| references |
-	references := OrderedCollection new.
-	(LookupKey allSubInstances select:
-		[:x | (x value isBehavior and: ['AnOb*' match: x value name]) or:
-		['AnOb*' match: x value class name]]) 
-		do: [:x | references addAll: (self allReferencesTo: x)].
-
-	^ self  
-		browseMessageList: references 
-		name: 'References to Obsolete Classes'
 ]
 
 { #category : #'*Tool-Base' }
@@ -453,11 +452,7 @@ SystemNavigation >> confirmRemovalOf: aSelector on: aClass [
 	should be removed, 2 if it should be removed followed by a senders  
 	browse, and 3 if it should not be removed."
 	
-	"Smalltalk systemNavigation confirmRemovalOf: #tearDown on: TestCase>>> 3"
-	"Smalltalk systemNavigation confirmRemovalOf: #prepareToRunAgain on: TestCase >>> 3"
-	
 	| count answer caption allCalls |
-	
 	allCalls := self allCallsOn: aSelector.
 	(count := allCalls size) = 0
 		ifTrue: [^ 1].

@@ -74,7 +74,7 @@ LargePositiveIntegerTest >> testDigitAt [
 	| lpi |
 	lpi := 114605103402541699037609980192546360895434064385.
 	1 to: 20 do: [:i | | digit |
-		digit := lpi digitAt: i.
+		digit := lpi byteAt: i.
 		self assert: i equals: digit]
 
 ]
@@ -84,7 +84,7 @@ LargePositiveIntegerTest >> testDigitAtPut [
 
 	| lpi |
 	lpi := LargePositiveInteger new: 20.
-	1 to: 20 do: [:i | lpi digitAt: i put: i].
+	1 to: 20 do: [:i | lpi byteAt: i put: i].
 	self assert: 114605103402541699037609980192546360895434064385 equals: lpi
 
 ]
@@ -94,7 +94,7 @@ LargePositiveIntegerTest >> testDigitLength [
 
 	| lpi |
 	lpi := 114605103402541699037609980192546360895434064385.
-	self assert: 20 equals: lpi digitLength
+	self assert: 20 equals: lpi bytesCount
 
 ]
 
@@ -113,10 +113,10 @@ LargePositiveIntegerTest >> testEmptyTemplate [
 LargePositiveIntegerTest >> testNormalize [
 	"Check normalization and conversion to/from SmallInts"
 
-	self assert: ((SmallInteger maxVal + 1 - 1) == SmallInteger maxVal).
-	self assert: (SmallInteger maxVal + 3 - 6) == (SmallInteger maxVal-3).
-	self should: ((SmallInteger minVal - 1 + 1) == SmallInteger minVal).
-	self assert: (SmallInteger minVal - 3 + 6) == (SmallInteger minVal+3).
+	self assert: SmallInteger maxVal + 1 - 1 identicalTo: SmallInteger maxVal.
+	self assert: SmallInteger maxVal + 3 - 6 identicalTo: SmallInteger maxVal - 3.
+	self should: SmallInteger minVal - 1 + 1 == SmallInteger minVal.
+	self assert: SmallInteger minVal - 3 + 6 identicalTo: SmallInteger minVal + 3
 ]
 
 { #category : #tests }
@@ -143,18 +143,18 @@ LargePositiveIntegerTest >> testReplaceFromToWithStartingAt [
 
 	| lpi20 lpi7 |
 	lpi20 := LargePositiveInteger new: 20.
-	1 to: 20 do: [:i | lpi20 digitAt: i put: i].
+	1 to: 20 do: [:i | lpi20 byteAt: i put: i].
 	lpi7 := LargePositiveInteger new: 7.
-	1 to: 7 do: [:i | lpi7 digitAt: i put: 11 - i].
+	1 to: 7 do: [:i | lpi7 byteAt: i put: 11 - i].
 	lpi20 replaceFrom: 6 to: 10 with: lpi7 startingAt: 2.
 	"unmodified digits"
 	(1 to: 5) , (11 to: 20) do: [:e | | digit |
-		digit := lpi20 digitAt: e.
+		digit := lpi20 byteAt: e.
 		self assert: e equals: digit].
 	"replaced digits"
 	6 to: 10 do: [:e | | digit replacementDigit |
-		digit := lpi20 digitAt: e.
-		replacementDigit := lpi7 digitAt: e - 4.
+		digit := lpi20 byteAt: e.
+		replacementDigit := lpi7 byteAt: e - 4.
 		self assert: replacementDigit equals: digit]
 
 ]

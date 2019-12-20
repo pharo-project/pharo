@@ -14,7 +14,8 @@ Class {
 		'cachedAscent',
 		'cachedDescent',
 		'subPixelPositioned',
-		'symbolFont'
+		'symbolFont',
+		'mutex'
 	],
 	#pools : [
 		'FT2Constants',
@@ -377,7 +378,6 @@ FreeTypeFont >> getWidthOf: aCharacter [
 { #category : #'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	| |
 	^FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
@@ -389,7 +389,6 @@ FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean su
 				mono: monoBoolean 
 				subpixelPosition: sub 
 				font: self]
-
 
 ]
 
@@ -674,6 +673,12 @@ FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBool
 
 ]
 
+{ #category : #accessing }
+FreeTypeFont >> mutex [
+
+	^ mutex ifNil: [ mutex := Semaphore forMutualExclusion ]
+]
+
 { #category : #measuring }
 FreeTypeFont >> pixelSize [
 	^pixelSize ifNil:[pixelSize := super pixelSize rounded]
@@ -784,12 +789,11 @@ FreeTypeFont >> simulatedItalicSlant [
 { #category : #'glyph lookup' }
 FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	| |
 	^FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: FreeTypeCacheGlyphLCD + sub
-		ifAbsentPut: [
+		ifAbsentPut: [ 
 			FreeTypeGlyphRenderer current
 				subGlyphOf: aCharacter 
 				colorValue: aColorValue 

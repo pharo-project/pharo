@@ -99,6 +99,7 @@ TextColor >> color: aColor [
 
 { #category : #scanning }
 TextColor >> dominates: other [
+"Only one color attribute on a same portion of text."
 	^ other class == self class
 ]
 

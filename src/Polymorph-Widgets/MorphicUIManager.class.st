@@ -746,6 +746,13 @@ MorphicUIManager >> syntaxErrorNotificationDefaultAction: anException [
 			tool open: (tool syntaxError: anException)]
 ]
 
+{ #category : #'ui requests' }
+MorphicUIManager >> systemNotificationDefaultAction: aNotification [
+
+	aNotification messageText traceCr.
+	aNotification resume.
+]
+
 { #category : #'ui process' }
 MorphicUIManager >> terminateUIProcess [
 	UIProcess suspend; terminate.

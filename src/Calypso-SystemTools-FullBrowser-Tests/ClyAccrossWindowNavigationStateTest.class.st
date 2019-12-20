@@ -37,14 +37,13 @@ ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationHistory [
 
 { #category : #tests }
 ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithPlugins [
-
 	browser addPlugin: ClyStandardBrowserPlugin new.
-	
+
 	self restoreBrowserInstance.
-	
+
 	self assert: browser plugins first browser equals: browser.
 	self assert: browser plugins first class equals: ClyStandardBrowserPlugin.
-	self deny: navigationState browserPlugins first == browser plugins first
+	self deny: navigationState browserPlugins first identicalTo: browser plugins first
 ]
 
 { #category : #tests }

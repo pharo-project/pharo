@@ -13,8 +13,8 @@ MCVersionTest >> assert: aSelector orders: sexpr as: array [
 	| expected |
 	expected := OrderedCollection new.
 	version := self versionFromTree: sexpr.
-	version perform: aSelector with: [:ea | expected add: ea info name].
-	self assert: expected asArray = array
+	version perform: aSelector with: [ :ea | expected add: ea info name ].
+	self assert: expected asArray equals: array
 ]
 
 { #category : #asserting }
@@ -22,12 +22,9 @@ MCVersionTest >> assert: aSelector orders: sexpr as: expected unresolved: unreso
 	| missing |
 	missing := OrderedCollection new.
 	version := self versionFromTree: sexpr.
-	version 
-		perform: aSelector 
-		with: [:ea | visited add: ea info name]
-		with: [:ea | missing add: ea name].
-	self assert: visited asArray = expected.
-	self assert: missing asArray = unresolved.
+	version perform: aSelector with: [ :ea | visited add: ea info name ] with: [ :ea | missing add: ea name ].
+	self assert: visited asArray equals: expected.
+	self assert: missing asArray equals: unresolved
 ]
 
 { #category : #building }

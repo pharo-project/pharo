@@ -33,11 +33,22 @@ SpMenuGroupPresenter class >> adapterName [
 	^ #MenuGroupAdapter
 ]
 
+{ #category : #private }
+SpMenuGroupPresenter >> add: aName target: targetObject selector: aSelector [
+	
+	self flag: #TODO. "This is for compatibility with the old menu builder and needs to be removed!"
+	self addItem: [ :item | 
+		item 
+			name: aName; 
+			action: [ targetObject perform: aSelector ] ].
+	^ self menuItems last
+]
+
 { #category : #api }
 SpMenuGroupPresenter >> addItem: aBlock [
 	| item |
 	
-	item := SpMenuItemPresenter new.
+	item := self instantiate: SpMenuItemPresenter.
 	aBlock value: item.
 	self addMenuItem: item
 ]
@@ -69,6 +80,12 @@ SpMenuGroupPresenter >> buildWithSpecLayout: aSpecLayout [
 	widget := adapter widget.
 	self announce: (SpWidgetBuilt model: self widget: widget).
 	^ widget
+]
+
+{ #category : #testing }
+SpMenuGroupPresenter >> canTakeKeyboardFocus [
+
+	^ false
 ]
 
 { #category : #'api-building' }

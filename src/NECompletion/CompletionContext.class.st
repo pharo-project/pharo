@@ -7,72 +7,156 @@ Class {
 	#instVars : [
 		'source',
 		'position',
-		'theClass',
 		'completionToken',
-		'model',
 		'ast',
-		'node'
+		'node',
+		'isWorkspace',
+		'class',
+		'entries',
+		'editor'
 	],
-	#category : #'NECompletion-New'
+	#classVars : [
+		'SorterClass'
+	],
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
-CompletionContext class >> controller: aNECController class: aClass source: aString position: anInteger [ 
+CompletionContext class >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	^ self new
-		setController: aNECController
+		engine: aCompletionEngine
 		class: aClass
 		source: aString
 		position: anInteger
 ]
 
 { #category : #accessing }
-CompletionContext >> completionToken [
-
-	"here we need to return the name of the var or selector"
-
-	node ifNil: [ ^ '' ].
-	^ completionToken ifNil: [ node completionToken ]
+CompletionContext class >> sorterClass [
+	^ SorterClass
 ]
 
 { #category : #accessing }
-CompletionContext >> createModel [
+CompletionContext class >> sorterClass: aSorter [
+	SorterClass := aSorter
+]
+
+{ #category : #entries }
+CompletionContext >> commonPrefix [
+	"Longest match among the typed text and all menu entries"
+
+ 	| seed matchLengths prefixLength |
+	entries := self entries.
+	seed := entries first contents asString.
+	matchLengths := entries allButFirst
+		collect: [ :entry | seed charactersExactlyMatching: entry contents asString ]
+		thenSelect: [ :e | e >= completionToken size ].
+	prefixLength := matchLengths isEmpty
+		ifTrue: [ 0 ]
+		ifFalse: [ matchLengths min ].
+	^ seed first: prefixLength.
+]
+
+{ #category : #accessing }
+CompletionContext >> completionAt: aNumber [
+	| entry |
+	
+	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
+	^ NECPreferences spaceAfterCompletion 
+		ifTrue: [ entry, ' ' ]
+		ifFalse: [ entry ]
+]
+
+{ #category : #accessing }
+CompletionContext >> completionToken [
+	^ completionToken ifNil: [ ^ ''  ]
+]
+
+{ #category : #'initialize-release' }
+CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
+	class := aClass. 
+	source := aString.
+	position := anInteger.
+	editor := aCompletionEngine editor.
+	
+	isWorkspace:= aCompletionEngine 
+		ifNotNil: [ aCompletionEngine isScripting ]
+		ifNil: [ false ].
 	self parseSource.
 	node := ast nodeForOffset: position.
-  ^ (CompletionModel new node: node) clazz: theClass
+	completionToken := node completionToken: position
 ]
 
 { #category : #accessing }
-CompletionContext >> model [
-    ^model ifNil: [ model := self createModel ]
+CompletionContext >> entries [
+	^entries ifNil: [entries := self initEntries ]
+]
+
+{ #category : #entries }
+CompletionContext >> entryCount [
+	^ self entries size
+]
+
+{ #category : #testing }
+CompletionContext >> hasEntries [
+	^ self entries isEmptyOrNil not
+]
+
+{ #category : #testing }
+CompletionContext >> hasMessage [
+	^ self message notNil
+]
+
+{ #category : #entries }
+CompletionContext >> initEntries [
+	| suggestionsList sorter |
+	sorter := self class sorterClass new context: self.
+	suggestionsList := sorter sortCompletionList: (node completionEntries: position).
+	^ suggestionsList
+]
+
+{ #category : #accessing }
+CompletionContext >> message [
+	^self hasEntries 
+		ifFalse: ['no completions found'] 
+		ifTrue: [nil]
 ]
 
 { #category : #action }
 CompletionContext >> narrowWith: aString [
-	"method borrowed from NECContext to make the completion plugging work"
-	completionToken := aString.
-	model := self createModel.
-	model narrowWith: aString.
+	"we need to re-init if the string is shorter as the user types backspace"
+	(aString size < self completionToken size) ifTrue: [	entries := self initEntries ].
+	"we narrow the entries down"
+	entries := self entries select: [ :each | each contents beginsWith: completionToken ].
+	"and update the completionToken"
+	completionToken := aString
+]
+
+{ #category : #accessing }
+CompletionContext >> node [
+	^ node
 ]
 
 { #category : #parsing }
 CompletionContext >> parseSource [
-
-	ast := theClass
-		ifNil: [ ( RBParser parseFaultyExpression: source ) doSemanticAnalysis ]
-		ifNotNil: [ ( RBParser parseFaultyMethod: source ) doSemanticAnalysisIn: theClass ].
+	ast := class compiler
+		source: source;
+		noPattern: isWorkspace;
+		requestor: editor;
+		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
+		parse.
+	ast doSemanticAnalysis.
 	TypingVisitor new visitNode: ast
 ]
 
 { #category : #accessing }
-CompletionContext >> receiverClass [
-	node isMessage ifFalse: [ ^nil ].
-	^node receiver propertyAt: #type ifAbsent: [ nil ] .
-
+CompletionContext >> position [
+	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
+	^ position
 ]
 
-{ #category : #'initialize-release' }
-CompletionContext >> setController: aECController class: aClass source: aString position: anInteger [ 
-	theClass := aClass. 
-	source := aString.
-	position := anInteger
+{ #category : #accessing }
+CompletionContext >> title [
+	"we only give a title if we know the type of the receiver of a message send"
+	node isMessage ifFalse: [ ^'' ].
+	^node receiver propertyAt: #type ifPresent: #name ifAbsent: ''
 ]

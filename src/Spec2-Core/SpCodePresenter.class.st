@@ -9,10 +9,9 @@ Class {
 		'#doItContext => SpObservableSlot',
 		'#doItReceiver => SpObservableSlot',
 		'#behavior => SpObservableSlot',
-		'#syntaxHighlight => SpObservableSlot',
-		'#contextKeyBindings'
+		'#syntaxHighlight => SpObservableSlot'
 	],
-	#category : #'Spec2-Core-Widgets'
+	#category : #'Spec2-Core-Widgets-Text'
 }
 
 { #category : #specs }
@@ -52,16 +51,40 @@ SpCodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
-{ #category : #'api-shortcuts' }
-SpCodePresenter >> contextKeyBindings [
-
-	^ contextKeyBindings
+{ #category : #private }
+SpCodePresenter >> buildCodeKeyBindings [
+	
+	^ self codeCommandGroup asKMCategory
 ]
 
-{ #category : #'api-shortcuts' }
-SpCodePresenter >> contextKeyBindings: aDictionary [
+{ #category : #private }
+SpCodePresenter >> buildCodeMenu [
+	
+	
+	^ self codeCommandGroup asMenuPresenter
+]
 
-	contextKeyBindings := aDictionary
+{ #category : #private }
+SpCodePresenter >> codeCommandGroup [
+	| group |
+	
+	group := CmCommandGroup forSpec
+		beDisplayedAsGroup;
+		yourself.
+		
+	self flag: #TODO. "This needs to be discoverable (otherwise is not extensible)
+	ot at least, we need to add a plug for extensions"
+	{ 	
+		SpCodeDoItCommand. 
+		SpCodePrintItCommand. 
+		SpCodeInspectItCommand. 
+		SpCodeDebugItCommand. 
+		SpCodeProfileItCommand.
+		SpCodeBrowseItCommand.
+	} do: [ :eachClass | 
+		group register: (eachClass forSpecContext: self) ].
+
+	^ group
 ]
 
 { #category : #'api-doIt' }
@@ -103,15 +126,12 @@ SpCodePresenter >> initialize [
 
 	super initialize.
 	
-	behavior := nil.
-	doItContext := nil.
-	doItReceiver := nil.
 	self withSyntaxHighlight.
 	
 	self registerEventsForStyling.
 	
-	self contextMenu: [ self getMenu ]"self buildCodeMenu".
-	"self contextKeyBindings: self buildCodeKeyBindings"
+	self contextMenu: self buildCodeMenu.
+	self contextKeyBindings: self buildCodeKeyBindings
 ]
 
 { #category : #initialization }

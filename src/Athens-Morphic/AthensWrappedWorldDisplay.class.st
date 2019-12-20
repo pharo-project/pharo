@@ -43,11 +43,9 @@ AthensWrappedWorldDisplay >> extent [
 
 { #category : #initialization }
 AthensWrappedWorldDisplay >> initialize [
-
 	super initialize.
 
-	realDisplay := Display.
-	wrapMorph := nil.
+	realDisplay := Display
 ]
 
 { #category : #accessing }

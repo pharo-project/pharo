@@ -72,7 +72,7 @@ FTExampleClassInfoTableDataSource >> nameColumn: column row: rowIndex [
 { #category : #accessing }
 FTExampleClassInfoTableDataSource >> numberOfInstanceVariablesColumn: column row: rowIndex [
 	^ FTCellMorph new 
-		addMorph: (self elementAt: rowIndex) numberOfInstanceVariables asStringMorph;
+		addMorph: (self elementAt: rowIndex) instSize asStringMorph;
 		yourself
 ]
 

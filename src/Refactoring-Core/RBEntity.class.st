@@ -5,7 +5,8 @@ Class {
 	#name : #RBEntity,
 	#superclass : #Object,
 	#instVars : [
-		'modelFactory'
+		'modelFactory',
+		'changeFactory'
 	],
 	#category : #'Refactoring-Core-Model'
 }
@@ -14,6 +15,7 @@ Class {
 RBEntity >> initialize [ 
 	super initialize.
 	modelFactory := RBClassModelFactory new. 
+	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
 { #category : #initialization }

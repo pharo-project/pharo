@@ -270,7 +270,16 @@ RubScrolledTextMorph >> columnRuler [
 { #category : #configure }
 RubScrolledTextMorph >> configureGhostText: aTextArea [
 	aTextArea width: self scrollBounds width.
-	aTextArea center: self scrollBounds center
+
+	"If the text input is smaller in height than the ghost area 
+	we use the center, if it bigger we can use 0.
+	Using center will calculate a negative top value, that is 
+	required when the ghost is bigger than the input box"	
+			
+	(aTextArea height < self scrollBounds height)
+		ifTrue: [ aTextArea top: self scrollBounds top ]
+		ifFalse: [ aTextArea center: self scrollBounds center.
+					  aTextArea left: self scrollBounds left ] 
 ]
 
 { #category : #'interactive error protocol' }

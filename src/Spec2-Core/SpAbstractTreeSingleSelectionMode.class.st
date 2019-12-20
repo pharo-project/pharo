@@ -38,10 +38,14 @@ SpAbstractTreeSingleSelectionMode >> isEmpty [
 	^ selection isEmpty
 ]
 
-{ #category : #selection }
-SpAbstractTreeSingleSelectionMode >> replaceOtherSelectionMode: anotherSelection [
+{ #category : #accessing }
+SpAbstractTreeSingleSelectionMode >> isMultipleSelection [
+	^ false
+]
 
-	self subclassResponsibility 
+{ #category : #accesing }
+SpAbstractTreeSingleSelectionMode >> presenter: aPresenter [
+	presenter := aPresenter
 ]
 
 { #category : #selection }
@@ -55,14 +59,42 @@ SpAbstractTreeSingleSelectionMode >> selectPaths: pathArray [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+SpAbstractTreeSingleSelectionMode >> selectedItem [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+SpAbstractTreeSingleSelectionMode >> selectedPaths [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+SpAbstractTreeSingleSelectionMode >> selectionHolder [
+
+	^ self observablePropertyNamed: #selection
+]
+
+{ #category : #transfert }
+SpAbstractTreeSingleSelectionMode >> transferSubscriptionsTo: anotherSelectionMode [
+
+	self selectionHolder transferSubscriptionsTo: anotherSelectionMode selectionHolder
+]
+
 { #category : #selecting }
 SpAbstractTreeSingleSelectionMode >> unselectAll [
 
 	self clearSelection
 ]
 
-{ #category : #'API - events' }
-SpAbstractTreeSingleSelectionMode >> whenChangedDo: aBlockClosure [ 
+{ #category : #selection }
+SpAbstractTreeSingleSelectionMode >> unselectPath: aPath [
+
+	self subclassResponsibility
+]
+
+{ #category : #'api - events' }
+SpAbstractTreeSingleSelectionMode >> whenChangedDo: aBlock [ 
 	
-	self property: #selection whenChangedDo: aBlockClosure 
+	self property: #selection whenChangedDo: aBlock 
 ]

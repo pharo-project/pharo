@@ -169,7 +169,7 @@ RBSmalllintTestObject >> fileBlocks [
 
 { #category : #methods }
 RBSmalllintTestObject >> flagged [
-	self flag: 'to do'.
+	self flag: #pharoTodo
 ]
 
 { #category : #methods }

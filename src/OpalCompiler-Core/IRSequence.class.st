@@ -173,11 +173,6 @@ IRSequence >> first [
 ]
 
 { #category : #testing }
-IRSequence >> hasTempVector: aSymbol [
-	^sequence anySatisfy: [:irNode | irNode isTempVector and: [irNode name = aSymbol]].
-]
-
-{ #category : #testing }
 IRSequence >> ifEmpty: aBlock [
 	^sequence ifEmpty: aBlock
 ]

@@ -270,7 +270,7 @@ TransferMorph >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 TransferMorph >> step [
 	self shouldCopy = dragHand shiftPressed
 		ifTrue: [ ^ self ].
@@ -279,7 +279,7 @@ TransferMorph >> step [
 	self updateCopyIcon.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 TransferMorph >> stepTime [
 	^100
 ]

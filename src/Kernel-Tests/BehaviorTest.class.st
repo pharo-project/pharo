@@ -35,9 +35,9 @@ BehaviorTest >> testAllMethods [
 
 { #category : #tests }
 BehaviorTest >> testAllSelectors [
-	self assert: ProtoObject allSelectors asSet = ProtoObject selectors asSet.
-	self assert: Object allSelectors asSet = (Object selectors asSet union: ProtoObject selectors).
-	self assert: (Object allSelectorsBelow: ProtoObject) asSet = (Object selectors) asSet.
+	self assert: ProtoObject allSelectors asSet equals: ProtoObject selectors asSet.
+	self assert: Object allSelectors asSet equals: (Object selectors asSet union: ProtoObject selectors).
+	self assert: (Object allSelectorsBelow: ProtoObject) asSet equals: Object selectors asSet
 ]
 
 { #category : #tests }
@@ -74,14 +74,14 @@ BehaviorTest >> testBehaviornewnewShouldNotCrash [
 
 { #category : #tests }
 BehaviorTest >> testBinding [
-	self assert: Object binding value = Object.
-	self assert: Object binding key = #Object.
-	
-	self assert: Object class binding value = Object class.
-	
+	self assert: Object binding value equals: Object.
+	self assert: Object binding key equals: #Object.
+
+	self assert: Object class binding value equals: Object class.
+
 	"returns nil for Metaclasses... like Encoder>>#associationFor:"
-	
-	self assert: Object class binding key isNil.
+
+	self assert: Object class binding key isNil
 ]
 
 { #category : #tests }
@@ -108,6 +108,13 @@ BehaviorTest >> testIncludesMethod [
 
 	self assert: (Point includesMethod: Point>>#x).
 	self deny: (LookupKey includesMethod: Point>>#x).
+]
+
+{ #category : #metrics }
+BehaviorTest >> testInstSize [
+	self assert: Object instSize equals: 0.
+	self assert: Point instSize equals: 2.
+	self assert: Metaclass instSize equals: 6
 ]
 
 { #category : #tests }
@@ -146,44 +153,34 @@ BehaviorTest >> testIsUsed [
 { #category : #'tests - queries' }
 BehaviorTest >> testMethodsAccessingSlot [
 	| numberViaSlot numberViaIVar |
-	
 	"Check the source code availability to do not fail on images without sources"
-	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
-	
+	(Point >> #x) hasSourceCode ifFalse: [ ^ self ].
+
 	numberViaSlot := (Point methodsAccessingSlot: (Point slotNamed: #x)) size.
 	numberViaIVar := (Point whichSelectorsAccess: 'x') size.
-	self assert: numberViaSlot = numberViaIVar.
+	self assert: numberViaSlot equals: numberViaIVar
 ]
 
 { #category : #'tests - queries' }
 BehaviorTest >> testMethodsReadingSlot [
 	| numberViaSlot numberViaIVar |
-	
 	"Check the source code availability to do not fail on images without sources"
-	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
-	
+	(Point >> #x) hasSourceCode ifFalse: [ ^ self ].
+
 	numberViaSlot := (Point methodsReadingSlot: (Point slotNamed: #x)) size.
 	numberViaIVar := (Point whichSelectorsRead: 'x') size.
-	self assert: numberViaSlot = numberViaIVar.
+	self assert: numberViaSlot equals: numberViaIVar
 ]
 
 { #category : #'tests - queries' }
 BehaviorTest >> testMethodsWritingSlot [
 	| numberViaSlot numberViaIVar |
-	
 	"Check the source code availability to do not fail on images without sources"
-	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+	(Point >> #x) hasSourceCode ifFalse: [ ^ self ].
 
 	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x)) size.
 	numberViaIVar := (Point whichSelectorsStoreInto: 'x') size.
-	self assert: numberViaSlot = numberViaIVar.
-]
-
-{ #category : #metrics }
-BehaviorTest >> testNumberOfInstanceVariables [
-	self assert: Object numberOfInstanceVariables equals: 0.
-	self assert: Point numberOfInstanceVariables equals: 2.
-	self assert: Metaclass numberOfInstanceVariables equals: 1
+	self assert: numberViaSlot equals: numberViaIVar
 ]
 
 { #category : #'tests - properties' }

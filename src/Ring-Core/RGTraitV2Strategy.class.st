@@ -133,10 +133,7 @@ RGTraitV2Strategy >> classVariableDefinitionString [
 { #category : #'private - backend access' }
 RGTraitV2Strategy >> classVariables [
 
-	| allClassVariables |
-	allClassVariables := OrderedCollection new.
-	self classVariablesDo: [ :each | allClassVariables add: each].
-	^ allClassVariables asArray
+	^ Array streamContents: [ :str | self classVariablesDo: [ :each | str nextPut: each ] ]
 ]
 
 { #category : #'private - backend access' }

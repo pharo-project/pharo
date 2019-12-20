@@ -323,6 +323,22 @@ OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 ]
 
 { #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
+
+	| dropEvent |
+	
+	"The OSWindow drop events are generated one-per file (unlike the case the non-headless VM)"
+	
+	dropEvent := DropFilesEvent new 
+				setPosition: self activeHand position
+				contents: 1
+				hand: self activeHand;
+				fileNames: { anEvent filePath }. 
+				
+	^ dropEvent
+]
+
+{ #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"

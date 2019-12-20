@@ -205,12 +205,6 @@ IRMethod >> generateBlock: trailer withScope: scope [
 	^ compiledMethod
 ]
 
-{ #category : #testing }
-IRMethod >> hasTempVector: aSymbol [
-	startSequence withAllSuccessorsDo: [ :seq | (seq hasTempVector: aSymbol) ifTrue: [ ^ true ]].
-	^ false
-]
-
 { #category : #scoping }
 IRMethod >> indexForVarNamed: aName [
 
@@ -345,11 +339,6 @@ IRMethod >> removeEmptyStart [
 
 ]
 
-{ #category : #inlining }
-IRMethod >> removeReturn [
-	self allSequences last removeLast.
-]
-
 { #category : #accessing }
 IRMethod >> sourceInterval [
 	^self sourceNode sourceInterval
@@ -399,6 +388,5 @@ IRMethod >> tempMap [
 
 { #category : #enumerating }
 IRMethod >> tempVectorNamed: aName [
-	
-	^self firstInstructionMatching: [:ir | ir isTempVector and:  [ir name = aName ] ]
+	^startSequence tempVectorNamed: aName
 ]

@@ -48,8 +48,7 @@ ClassOrganization >> allCategories [
 
 { #category : #'backward compatibility' }
 ClassOrganization >> allMethodSelectors [
-	
-	^ protocolOrganizer allMethods
+	^ protocolOrganizer allMethodSelectors
 ]
 
 { #category : #accessing }
@@ -135,6 +134,13 @@ ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: 
 			select: #canBeRemoved)
 			do: [:e | self  removeProtocol: e ] ].
 	oldCategory ifNotNil: [ self notifyOfChangedSelector: selector from: oldCategory to: aProtocolName ]
+]
+
+{ #category : #cleanup }
+ClassOrganization >> cleanUpCategoriesForClass: aClass [
+	"remove all entries that have no methods"
+	 self allMethodSelectors do: [:each | 
+		(aClass includesSelector: each) ifFalse: [self removeElement: each ]].
 ]
 
 { #category : #accessing }
@@ -369,7 +375,7 @@ ClassOrganization >> renameCategory: oldName toBe: newName [
 
 	self notifyOfChangedCategoryFrom: oldName to: newName.
 	"I need to notify also the selector changes, otherwise RPackage will not notice"
-	(self protocolOrganizer protocolNamed: newName) methods 
+	(self protocolOrganizer protocolNamed: newName) methodSelectors 
 		do: [ :each | self notifyOfChangedSelector: each from: oldName to: newName ]
 ]
 

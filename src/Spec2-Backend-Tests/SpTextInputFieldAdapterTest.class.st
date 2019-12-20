@@ -1,20 +1,12 @@
 Class {
 	#name : #SpTextInputFieldAdapterTest,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
+	#superclass : #SpAbstractTextAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
 { #category : #running }
 SpTextInputFieldAdapterTest >> classToTest [
 	^ SpTextInputFieldPresenter
-]
-
-{ #category : #tests }
-SpTextInputFieldAdapterTest >> testChangePlaceholderTextUpdatesPresenter [
-
-	presenter placeholder: 'some text'.
-	
-	self assert: self adapter placeHolderText equals: 'some text'
 ]
 
 { #category : #tests }
@@ -44,13 +36,6 @@ SpTextInputFieldAdapterTest >> testPasswordIsSetInWidget [
 
 	presenter bePassword.
 	self assert: self adapter isPassword
-]
-
-{ #category : #tests }
-SpTextInputFieldAdapterTest >> testPresenterPlaceholderIsSetInWidget [
-
-	presenter placeholder: 'something'.
-	self assert: self adapter placeHolderText equals: 'something'
 ]
 
 { #category : #tests }

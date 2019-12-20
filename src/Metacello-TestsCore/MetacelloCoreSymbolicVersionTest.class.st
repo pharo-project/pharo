@@ -70,48 +70,48 @@ MetacelloCoreSymbolicVersionTest >> stableVersion: spec [
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testBasicBleedingEdgeVersion [
-    | project version expected actual |
-    project := self projectWith: #(#'platformVersion1.x').
-    version := project version: #'bleedingEdge'.
-    expected := 'spec blessing: #''baseline''.
+	| project version expected actual |
+	project := self projectWith: #(#'platformVersion1.x').
+	version := project version: #bleedingEdge.
+	expected := 'spec blessing: #''baseline''.
 spec project: ''Example Project'' with: [
 		spec
 			className: ''MetacelloExampleProjectConfig'';
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'' ].'.
-    actual := version spec printString.
-    self assert: expected = actual
+	actual := version spec printString.
+	self assert: expected equals: actual
 ]
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testBasicStableVersion [
-    | project version expected actual |
-    project := self projectWith: #(#'platformVersion1.x').
-    version := project version: #'stable'.
-    expected := 'spec blessing: #''release''.
+	| project version expected actual |
+	project := self projectWith: #(#'platformVersion1.x').
+	version := project version: #stable.
+	expected := 'spec blessing: #''release''.
 spec project: ''Example Project'' with: [
 		spec
 			className: ''MetacelloExampleProjectConfig'';
 			versionString: ''1.0-baseline'';
 			preLoadDoIt: #''preloadForProject'';
 			postLoadDoIt: #''postloadForProject'' ].'.
-    actual := version spec printString.
-    self assert: expected = actual
+	actual := version spec printString.
+	self assert: expected equals: actual
 ]
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testBleedingEdgeMethod [
-    | project |
-    project := self projectWith: #(#'platformVersion1.x').
-    self assert: (project version: #'bleedingEdge') = project bleedingEdge
+	| project |
+	project := self projectWith: #(#'platformVersion1.x').
+	self assert: (project version: #bleedingEdge) equals: project bleedingEdge
 ]
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testStableVersionMethod [
-    | project |
-    project := self projectWith: #(#'platformVersion1.x').
-    self assert: (project version: #'stable') = project stableVersion
+	| project |
+	project := self projectWith: #(#'platformVersion1.x').
+	self assert: (project version: #stable) equals: project stableVersion
 ]
 
 { #category : #versions }

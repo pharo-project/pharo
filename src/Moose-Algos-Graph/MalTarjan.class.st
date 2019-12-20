@@ -47,7 +47,7 @@ MalTarjan >> nodes [
 	^ nodes values
 ]
 
-{ #category : #accessing }
+{ #category : #'building - graph' }
 MalTarjan >> nodes: aCollection [
 	aCollection do: [ :model |
 		nodes at: model put: (self nodeClass with: model)
@@ -112,8 +112,9 @@ MalTarjan >> traverse: aTarjanNode [
 	self putOnStack: aTarjanNode.
 	self traverseChildrenOf: aTarjanNode.
 	(self isRootNode: aTarjanNode)
-		ifTrue: [ component := OrderedCollection new.	"start new SCC"
-					self popStackAndUpdateCurrentScc: component until: aTarjanNode ]
+		ifFalse: [ ^ self ].
+	component := OrderedCollection new.	"start new SCC"
+	self popStackAndUpdateCurrentScc: component until: aTarjanNode
 ]
 
 { #category : #running }

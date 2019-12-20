@@ -1,6 +1,6 @@
 Class {
 	#name : #SlotClassBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'aClass',
 		'anotherClass',
@@ -94,7 +94,7 @@ SlotClassBuilderTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each | 
-			Smalltalk globals 
+			testingEnvironment
 				at: each 
 				ifPresent: [ :class | class removeFromSystem ]]].
 

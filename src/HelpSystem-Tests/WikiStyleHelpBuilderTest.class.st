@@ -23,13 +23,12 @@ WikiStyleHelpBuilderTest >> setUp [
 
 { #category : #testing }
 WikiStyleHelpBuilderTest >> testDefaultSyntaxAlwaysPier [
-	self assert: builder defaultSyntax == #pier
+	self assert: builder defaultSyntax identicalTo: #pier
 ]
 
 { #category : #testing }
 WikiStyleHelpBuilderTest >> testExtractHelpContentsFromMarkedString [
-	|content|
+	| content |
 	content := builder extractHelpContentFromString: 'outer<help>inner</help>outer'.
-	self assert: content = 'inner'.
-	
+	self assert: content equals: 'inner'
 ]

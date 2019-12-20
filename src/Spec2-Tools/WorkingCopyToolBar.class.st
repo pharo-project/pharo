@@ -66,7 +66,7 @@ WorkingCopyToolBar >> createPackage [
 ]
 
 { #category : #initialization }
-WorkingCopyToolBar >> initializeWidgets [
+WorkingCopyToolBar >> initializePresenters [
 
 	browseButton := self newButton.
 	configButton := self newButton.

@@ -56,15 +56,15 @@ DAPackageCycleDetectorTest >> setUp [
 
 { #category : #tests }
 DAPackageCycleDetectorTest >> testAddCycle [
-	aPackageCycleDetection addCycle: (DAPackageCycle new).
-	self assert: (aPackageCycleDetection cycles size = 1)
+	aPackageCycleDetection addCycle: DAPackageCycle new.
+	self assert: aPackageCycleDetection cycles size equals: 1
 ]
 
 { #category : #tests }
 DAPackageCycleDetectorTest >> testAddVisitedNodes [
 	aPackageCycleDetection initializeVisitedNodes.
 	aPackageCycleDetection addVisitedNodes: packageA.
-	self assert: (aPackageCycleDetection visitedNodes size = 1).
+	self assert: aPackageCycleDetection visitedNodes size equals: 1.
 	self assert: (aPackageCycleDetection visitedNodes includes: packageA)
 ]
 
@@ -75,15 +75,15 @@ DAPackageCycleDetectorTest >> testBuildCycleUntil [
 	packageB bfsParent: packageC.
 	packageC bfsParent: packageD.
 	aPackageCycleDetection buildCycleUntil: packageA.
-	self assert: self cyclesSize = 1.
+	self assert: self cyclesSize equals: 1.
 	aPackageCycleDetection buildCycleUntil: packageA.
 	"cycle already present"
-	self assert: self cyclesSize = 1.
-	cycle := aPackageCycleDetection  cycles first.
+	self assert: self cyclesSize equals: 1.
+	cycle := aPackageCycleDetection cycles first.
 	self assert: (cycle isInCycle: packageA).
-	self assert: (cycle  isInCycle: packageB).
-	self assert: (cycle  isInCycle: packageC).
-	self assert: (cycle  isInCycle: packageD).
+	self assert: (cycle isInCycle: packageB).
+	self assert: (cycle isInCycle: packageC).
+	self assert: (cycle isInCycle: packageD)
 ]
 
 { #category : #tests }
@@ -102,49 +102,54 @@ DAPackageCycleDetectorTest >> testCycleAlreadyFound [
 
 { #category : #tests }
 DAPackageCycleDetectorTest >> testCyclesWith [
-	cycleA addPackage: packageA;
-			addPackage: packageB.
-	
-	cycleB addPackage: packageC;
-			addPackage: packageD;
-			addPackage: packageE.
-	
-	cycleC addPackage: packageA;
-			addPackage: packageE.
-	
-	aPackageCycleDetection addCycle: cycleA;
+	cycleA
+		addPackage: packageA;
+		addPackage: packageB.
+
+	cycleB
+		addPackage: packageC;
+		addPackage: packageD;
+		addPackage: packageE.
+
+	cycleC
+		addPackage: packageA;
+		addPackage: packageE.
+
+	aPackageCycleDetection
+		addCycle: cycleA;
 		addCycle: cycleB;
 		addCycle: cycleC.
-		
-	self assert: ((aPackageCycleDetection cyclesWith: packageA )size = 2).
-	self assert: ((aPackageCycleDetection cyclesWith: packageC )size = 1).
-	self assert: ((aPackageCycleDetection cyclesWith: packageE)size = 2).
-	
+
+	self assert: (aPackageCycleDetection cyclesWith: packageA) size equals: 2.
+	self assert: (aPackageCycleDetection cyclesWith: packageC) size equals: 1.
+	self assert: (aPackageCycleDetection cyclesWith: packageE) size equals: 2
 ]
 
 { #category : #tests }
 DAPackageCycleDetectorTest >> testCyclesWithAtLeast [
 	| aCollectionOfPDPackage |
-	aCollectionOfPDPackage  := OrderedCollection new.
-	aCollectionOfPDPackage 
+	aCollectionOfPDPackage := OrderedCollection new.
+	aCollectionOfPDPackage
 		add: packageA;
 		add: packageB.
 
-	cycleA addPackage: packageA;
-			addPackage: packageB.
-	
-	cycleB addPackage: packageC;
-			addPackage: packageD;
-			addPackage: packageE.
-	
+	cycleA
+		addPackage: packageA;
+		addPackage: packageB.
+
+	cycleB
+		addPackage: packageC;
+		addPackage: packageD;
+		addPackage: packageE.
+
 	cycleC addPackage: packageE.
-	
-	aPackageCycleDetection addCycle: cycleA;
+
+	aPackageCycleDetection
+		addCycle: cycleA;
 		addCycle: cycleB;
 		addCycle: cycleC.
-		
-	self assert: ((aPackageCycleDetection cyclesWithAtLeast: aCollectionOfPDPackage )size = 1).
-	
+
+	self assert: (aPackageCycleDetection cyclesWithAtLeast: aCollectionOfPDPackage) size equals: 1
 ]
 
 { #category : #tests }
@@ -159,27 +164,26 @@ DAPackageCycleDetectorTest >> testDequeue [
 { #category : #tests }
 DAPackageCycleDetectorTest >> testEnqueue [
 	aPackageCycleDetection initializeQueueWith: packageA.
-		self assert: (self queue size = 1).
+	self assert: self queue size equals: 1.
 	aPackageCycleDetection enqueue: packageB.
-	self assert: (self queue size = 2)
-	
+	self assert: self queue size equals: 2
 ]
 
 { #category : #tests }
 DAPackageCycleDetectorTest >> testFindCyclesOne [
 	"we must find 1 cycles in this acyclic graph"
-	
+
 	| aPDPackageRelation anArray |
 	anArray := Array new: 3.
 	anArray at: 1 put: packageA.
 	anArray at: 2 put: packageB.
 	anArray at: 3 put: packageC.
-	(packageA) add: (DAPackageDependency from: (packageA) to: (packageB)).
-	(packageB) add: (DAPackageDependency from: (packageB) to: (packageC)).
-	(packageC) add: (DAPackageDependency from: (packageC) to: (packageA)).
+	packageA add: (DAPackageDependency from: packageA to: packageB).
+	packageB add: (DAPackageDependency from: packageB to: packageC).
+	packageC add: (DAPackageDependency from: packageC to: packageA).
 	aPDPackageRelation := DAPackageRelationGraph onPackages: anArray.
 	aPackageCycleDetection findCycles: aPDPackageRelation.
-	self assert: (aPackageCycleDetection  cycles size = 1).
+	self assert: aPackageCycleDetection cycles size equals: 1
 ]
 
 { #category : #tests }
@@ -187,17 +191,17 @@ DAPackageCycleDetectorTest >> testFindCyclesThreeNodes [
 	| aPDPackageRelation |
 	aPDPackageRelation := self graphWithThreeCycles.
 	aPackageCycleDetection findCycles: aPDPackageRelation.
-	self assert: aPackageCycleDetection cycles size = 3
+	self assert: aPackageCycleDetection cycles size equals: 3
 ]
 
 { #category : #tests }
-DAPackageCycleDetectorTest >> testInitializeQueueWith [	
+DAPackageCycleDetectorTest >> testInitializeQueueWith [
 	| dequeue |
 	aPackageCycleDetection initializeQueueWith: packageA.
 	self assert: self queue isNotNil.
-	self assert: (self queue size = 1).
-	dequeue := aPackageCycleDetection  dequeue.
-	self assert: (dequeue = packageA).
+	self assert: self queue size equals: 1.
+	dequeue := aPackageCycleDetection dequeue.
+	self assert: dequeue equals: packageA
 ]
 
 { #category : #tests }
@@ -216,7 +220,7 @@ DAPackageCycleDetectorTest >> testReset [
 	| aPDPackageRelation |
 	aPDPackageRelation := self graphWithThreeCycles.
 	aPackageCycleDetection findCycles: aPDPackageRelation.
-	self assert: aPackageCycleDetection cycles size = 3.
+	self assert: aPackageCycleDetection cycles size equals: 3.
 	aPackageCycleDetection reset.
 	self assertEmpty: aPackageCycleDetection cycles
 ]

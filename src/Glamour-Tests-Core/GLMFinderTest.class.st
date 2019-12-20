@@ -86,29 +86,29 @@ GLMFinderTest >> testPaneCreation [
 	self assert: browser panes isEmpty.	"Outer entity changed."
 	(browser pane port: #entity) value: #value1.
 	self assert: browser panes size equals: 1.
-	self assert: browser panes first browser == browser.
+	self assert: browser panes first browser identicalTo: browser.
 	self assert: (browser panes first port: #entity) value equals: #value1.
 	self assert: browser panes first presentations size equals: 1.
 	self assert: browser panes first presentations first title equals: 'presentation1'.
 	self assert: browser panes first presentations first ~~ browser transmission transmissionStrategy presentations first.	"First pane selection changed."
 	(browser panes first port: #selection) value: #value2.
 	self assert: browser panes size equals: 2.
-	self assert: browser panes last browser == browser.
+	self assert: browser panes last browser identicalTo: browser.
 	self assert: (browser panes last port: #entity) value equals: #value2.
 	self assert: browser panes last presentations first title equals: 'presentation1'.
 	self assert: browser panes last presentations first ~~ browser transmission transmissionStrategy presentations first.
 	self assert: browser panes last presentations first ~~ browser panes first presentations first.	"Second pane selection changed."
 	(browser panes last port: #selection) value: #value3.
 	self assert: browser panes size equals: 3.
-	self assert: browser panes last browser == browser.
+	self assert: browser panes last browser identicalTo: browser.
 	self assert: (browser panes last port: #entity) value equals: #value3.	"First pane selection changed again."
 	(browser panes first port: #selection) value: #value4.
 	self assert: browser panes size equals: 2.
-	self assert: browser panes last browser == browser.
+	self assert: browser panes last browser identicalTo: browser.
 	self assert: (browser panes last port: #entity) value equals: #value4.	"Outer entity changed again."
 	(browser pane port: #entity) value: #value5.
 	self assert: browser panes size equals: 1.
-	self assert: browser panes last browser == browser.
+	self assert: browser panes last browser identicalTo: browser.
 	self assert: (browser panes last port: #entity) value equals: #value5
 ]
 
@@ -167,7 +167,7 @@ GLMFinderTest >> testPanesHaveDifferentRegistries [
 	self assert: browser panes size equals: 1.
 	(browser panes first port: #selection) value: #value2.
 	self assert: browser panes size equals: 2.
-	self deny: (browser panes first instVarNamed: 'registry') == (browser panes second instVarNamed: 'registry')
+	self deny: (browser panes first instVarNamed: 'registry') identicalTo: (browser panes second instVarNamed: 'registry')
 ]
 
 { #category : #tests }
@@ -211,26 +211,20 @@ GLMFinderTest >> testUnregisterAnnouncementsWhenRemovingPane [
 	self assert: announcer numberOfSubscriptions equals: 1.
 	self assert: announcer glmSubscriptions anyOne announcementClass equals: GLMTestAnnouncement.
 	self assert: announcer glmSubscriptions anyOne subscriber presentation equals: actualFirstPresentation.
-	self assert: announcer glmSubscriptions anyOne subscriber presentation == actualFirstPresentation.
+	self assert: announcer glmSubscriptions anyOne subscriber presentation identicalTo: actualFirstPresentation.
 	(browser panes first port: #selection) value: #value2.
 	browser panes last presentations first registerAnnouncements.
 	actualLastPresentation := browser panes last presentations first.
 	self assert: announcer numberOfSubscriptions equals: 2.
-	self
-		assert: (announcer glmSubscriptions allSatisfy: [ :each | each announcementClass = GLMTestAnnouncement ]).
-	self
-		assert:
-			(announcer glmSubscriptions anySatisfy: [ :each | each subscriber presentation = actualFirstPresentation ]).
-	self
-		assert:
-			(announcer glmSubscriptions
-				anySatisfy: [ :each | each subscriber presentation == actualFirstPresentation ]).
+	self assert: (announcer glmSubscriptions allSatisfy: [ :each | each announcementClass = GLMTestAnnouncement ]).
+	self assert: (announcer glmSubscriptions anySatisfy: [ :each | each subscriber presentation = actualFirstPresentation ]).
+	self assert: (announcer glmSubscriptions anySatisfy: [ :each | each subscriber presentation == actualFirstPresentation ]).
 	(browser panes first port: #selection) value: #value3.
 	actualLastPresentation := browser panes last presentations first.	"because we removed the other pane"
 	self assert: announcer numberOfSubscriptions equals: 1.
 	self assert: announcer glmSubscriptions anyOne announcementClass equals: GLMTestAnnouncement.
 	self assert: announcer glmSubscriptions anyOne subscriber presentation equals: actualFirstPresentation.
-	self assert: announcer glmSubscriptions anyOne subscriber presentation == actualFirstPresentation
+	self assert: announcer glmSubscriptions anyOne subscriber presentation identicalTo: actualFirstPresentation
 ]
 
 { #category : #tests }

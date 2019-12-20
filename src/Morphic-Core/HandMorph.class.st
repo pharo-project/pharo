@@ -11,7 +11,6 @@ Class {
 		'keyboardFocus',
 		'eventListeners',
 		'mouseListeners',
-		'keyboardListeners',
 		'mouseClickState',
 		'mouseOverHandler',
 		'lastMouseEvent',
@@ -27,8 +26,6 @@ Class {
 		'lastEventBuffer',
 		'lastKeyScanCode',
 		'combinedChar',
-		'eventSource',
-		'lastSystemEvent',
 		'captureBlock',
 		'recentModifiers'
 	],
@@ -275,6 +272,20 @@ HandMorph >> copyToPasteBuffer: aMorph [
 		PasteBuffer privateOwner: nil].
 
 
+]
+
+{ #category : #cursor }
+HandMorph >> currentCursor [
+
+	^ ActiveHand world currentCursor
+]
+
+{ #category : #cursor }
+HandMorph >> currentCursor: aCursor [
+
+	ActiveHand world currentCursor: aCursor.
+		ActiveHand world isCursorOwner ifTrue: [
+			aCursor activateInCursorOwner: ActiveHand world ]
 ]
 
 { #category : #accessing }
@@ -750,13 +761,10 @@ HandMorph >> initForEvents [
 HandMorph >> initialize [
 	super initialize.
 	self initForEvents.
-	keyboardFocus := nil.
-	mouseFocus := nil.
-	bounds := 0@0 extent: Cursor normal extent.
+	bounds := 0 @ 0 extent: Cursor normal extent.
 	damageRecorder := DamageRecorder new.
 	cachedCanvasHasHoles := false.
-	temporaryCursor := temporaryCursorOffset := nil.
-	self initForEvents.
+	self initForEvents
 ]
 
 { #category : #initialization }
@@ -987,7 +995,10 @@ HandMorph >> position [
 
 	^temporaryCursor
 		ifNil: [bounds topLeft]
-		ifNotNil: [bounds topLeft - temporaryCursorOffset]
+		ifNotNil: [
+			temporaryCursorOffset 
+				ifNil: [ bounds topLeft ]
+				ifNotNil: [ :anOffset | bounds topLeft - anOffset ] ]
 ]
 
 { #category : #geometry }

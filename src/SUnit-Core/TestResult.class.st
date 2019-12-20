@@ -238,7 +238,7 @@ TestResult >> failures: aSet [
 	failures := aSet
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 TestResult >> fileOutOn: aFileStream [
 	"Write in aFileStream like:
 	3 run, 2 passes, 0 expected failures, 1 failures, 0 errors, 0 unexpected passes

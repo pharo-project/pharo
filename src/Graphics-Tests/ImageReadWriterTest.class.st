@@ -55,6 +55,28 @@ ImageReadWriterTest >> testBmpWriteReadUsingFiles [
 ]
 
 { #category : #tests }
+ImageReadWriterTest >> testCanGetFormOutOfBase64EncodedStringImage [
+	| encodedImage form expextedFrom |
+	encodedImage := PolymorphSystemSettings pharoLogoContents.
+	expextedFrom := self pharoLogoForm.
+	
+	form := Form fromBase64String: encodedImage.
+	
+	self
+		assert: form width 
+		equals: expextedFrom width.
+	self
+		assert: form height 
+		equals: expextedFrom height.
+	self
+		assert: form depth 
+		equals: expextedFrom depth.
+	self
+		assert: form bits
+		equals: self pharoLogoForm bits.
+]
+
+{ #category : #tests }
 ImageReadWriterTest >> testGifWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormDepth8.

@@ -7,11 +7,11 @@ Class {
 { #category : #testing }
 ZnRequestLineTest >> testReading [
 	| requestLine string |
-	string := 'GET /foo/bar/xyz.txt HTTP/1.1', String crlf.
+	string := 'GET /foo/bar/xyz.txt HTTP/1.1' , String crlf.
 	requestLine := ZnRequestLine readFrom: string readStream.
-	self assert: requestLine method = #GET.
-	self assert: requestLine uriPathQueryFragment = '/foo/bar/xyz.txt'.
-	self assert: requestLine version = ZnConstants defaultHTTPVersion 
+	self assert: requestLine method equals: #GET.
+	self assert: requestLine uriPathQueryFragment equals: '/foo/bar/xyz.txt'.
+	self assert: requestLine version equals: ZnConstants defaultHTTPVersion
 ]
 
 { #category : #testing }
@@ -33,5 +33,5 @@ ZnRequestLineTest >> testWriting [
 	| requestLine string |
 	requestLine := ZnRequestLine method: 'GET' uri: '/foo/bar/xyz.txt'.
 	string := String streamContents: [ :stream | requestLine writeOn: stream ].
-	self assert: string = ('GET /foo/bar/xyz.txt HTTP/1.1', String crlf)
+	self assert: string equals: 'GET /foo/bar/xyz.txt HTTP/1.1' , String crlf
 ]

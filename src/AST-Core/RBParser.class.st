@@ -64,7 +64,13 @@ RBParser class >> parseFaultyExpression: aString [
 { #category : #parsing }
 RBParser class >> parseFaultyMethod: aString [
 	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
-	^self parseMethod: aString onError: self errorNodeBlock
+
+	| ast |
+	ast := self parseMethod: aString onError: self errorNodeBlock.
+	"make sure to return a RBMethodNode"
+	^ ast class == RBMethodNode
+		ifFalse: [ RBMethodNode selector: #faulty body: ast asSequenceNode ]
+		ifTrue: [ ast ]
 ]
 
 { #category : #parsing }

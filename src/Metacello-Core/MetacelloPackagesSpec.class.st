@@ -248,47 +248,28 @@ MetacelloPackagesSpec >> sortPackageSpecs: orderedSpecs packageSpec: packageSpec
                 notify:
                   'A group loop has been detected. The package: ' , packageSpec name printString
                     ,
-                      ' requires a group that includes itself. If you resume, the group loop will be ignored and details will be written to the Transcript.'.
+                      ' requires a group that includes itself. If you resume, the group loop will be ignored and details will be written to the system log.'.
               groupLoopDetected := true.
               groupLoops add: packageSpec.
-              Transcript
-                cr;
-                show: 'Package: ' , packageSpec name printString;
-                cr;
-                tab;
-                show: 'Raw Requires:'.
+              MetacelloNotification signal: ('Package: ' , packageSpec name printString).
+              MetacelloNotification signal: ('Raw Requires:') level: 2.
               packageSpec requires
                 do: [ :each | 
-                  Transcript
-                    cr;
-                    tab;
-                    tab;
-                    show: each ].
-              Transcript
-                cr;
-                show:
-                    'Package: ' , packageSpec name printString , ' has a group loop:';
-                cr;
-                tab;
-                show: 'Expanded Requires:'.
+                  MetacelloNotification signal: (each asString) level: 3].
+              MetacelloNotification signal: (
+                    'Package: ' , packageSpec name printString , ' has a group loop:').
+				  MetacelloNotification signal: ('Expanded Requires:') level: 2.
               targetSpecNames
                 do: [ :each | 
-                  Transcript
-                    cr;
-                    tab;
-                    tab;
-                    show: each ] ].
+                  MetacelloNotification signal: (each asString) level: 3] ].
           movePackage := movePackage or: [ packageIndex <= targetIndex ].
           false
             ifTrue: [ 
               "use for debugging non-obvious reference loops"
               packageIndex < targetIndex
                 ifTrue: [ 
-                  Transcript
-                    cr;
-                    show:
-                        'Moving ' , targetPackageOrProjectName , ' from ' , targetIndex printString
-                            , ' to ' , packageIndex printString ] ] ] ].
+                  MetacelloNotification signal: ('Moving ' , targetPackageOrProjectName , ' from ' , targetIndex printString
+                            , ' to ' , packageIndex printString) ] ] ] ].
   groupLoopDetected
     ifTrue: [ 
       "old implementation that does not resolve group names"

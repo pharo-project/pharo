@@ -449,7 +449,7 @@ SortedCollectionTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 	self elementsCopyNonIdenticalWithoutEqualElements
 		detect: [ :each | (self elementsCopyNonIdenticalWithoutEqualElements occurrencesOf: each) > 1 ]
 		ifNone: [ res := false ].
-	self assert: res = false
+	self assert: res equals: false
 ]
 
 { #category : #'tests - basic' }
@@ -513,6 +513,17 @@ SortedCollectionTest >> testCollect [
 	aSortedCollection := (1 to: 5) asSortedCollection.
 	self assert: result equals: (aSortedCollection collect: [:each | each < 4])
 	
+]
+
+{ #category : #tests }
+SortedCollectionTest >> testComma [
+	| sortBlock collOne collTwo combined |
+	sortBlock := [ :a :b | a > b ].
+	collOne := (1 to: 5) asSortedCollection: sortBlock.
+	collTwo := (6 to: 10) asSortedCollection: sortBlock.
+	combined := collOne , collTwo.
+	self assert: combined sortBlock equals: sortBlock.
+	self assert: combined asArray equals: (1 to: 10) asArray reverse
 ]
 
 { #category : #'tests - basic' }

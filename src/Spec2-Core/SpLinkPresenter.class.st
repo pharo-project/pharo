@@ -34,7 +34,7 @@ Class {
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
 		'#label => SpObservableSlot',
-		'#url => SpObservableSlot'
+		'#action => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -42,6 +42,16 @@ Class {
 { #category : #specs }
 SpLinkPresenter class >> adapterName [
 	^ #LinkAdapter
+]
+
+{ #category : #api }
+SpLinkPresenter >> action [
+	^ action
+]
+
+{ #category : #api }
+SpLinkPresenter >> action: aBlock [
+	action := aBlock
 ]
 
 { #category : #initialization }
@@ -58,7 +68,7 @@ SpLinkPresenter >> initialize [
 
 { #category : #api }
 SpLinkPresenter >> label [
-	^ label ifNil: [ self url ]
+	^ label
 ]
 
 { #category : #api }
@@ -67,13 +77,14 @@ SpLinkPresenter >> label: aString [
 ]
 
 { #category : #api }
-SpLinkPresenter >> url [
-	^ url
+SpLinkPresenter >> url: aString [
+	self action: [ WebBrowser openOn: aString ].
+	self label ifNil: [ self label: aString ]
 ]
 
-{ #category : #api }
-SpLinkPresenter >> url: aString [
-	url := aString
+{ #category : #enumerating }
+SpLinkPresenter >> whenActionChangedDo: aBlock [
+	self property: #action whenChangedDo: aBlock
 ]
 
 { #category : #enumerating }

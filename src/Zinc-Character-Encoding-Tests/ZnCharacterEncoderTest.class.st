@@ -142,10 +142,9 @@ ZnCharacterEncoderTest >> testConvencienceMethods [
 	encoder := ZnUTF8Encoder new.
 	string := 'élève en Français'.
 	self assert: (encoder decodeBytes: (encoder encodeString: string)) equals: string.
-	self assert: (encoder encodedByteCountForString: string) = 20.
-	
-	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' ) do: [ :each |
-		self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
+	self assert: (encoder encodedByteCountForString: string) equals: 20.
+
+	#('ccc' 'ççç' 'c' 'ç' 'çc' 'cç') do: [ :each | self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
 ]
 
 { #category : #testing }
@@ -210,17 +209,19 @@ ZnCharacterEncoderTest >> testLatin1Encoder [
 { #category : #testing }
 ZnCharacterEncoderTest >> testLatin2Encoder [
 	"Example characters taken from http://en.wikipedia.org/wiki/Latin2"
-	
+
 	| encoder inputBytes outputBytes inputString outputString |
 	encoder := ZnCharacterEncoder newForEncoding: 'latin2'.
-	inputString := String 
-		with: (16r0154 asCharacter) with: (16r0110 asCharacter) 
-		with: ( 16r0155 asCharacter) with: (16r0111 asCharacter).
+	inputString := String
+		with: 16r0154 asCharacter
+		with: 16r0110 asCharacter
+		with: 16r0155 asCharacter
+		with: 16r0111 asCharacter.
 	inputBytes := #(192 208 224 240) asByteArray.
 	outputBytes := self encodeString: inputString with: encoder.
-	self assert: outputBytes = inputBytes.
+	self assert: outputBytes equals: inputBytes.
 	outputString := self decodeBytes: inputBytes with: encoder.
-	self assert: outputString = inputString 
+	self assert: outputString equals: inputString
 ]
 
 { #category : #testing }
@@ -246,9 +247,9 @@ ZnCharacterEncoderTest >> testNullEncoder [
 	| encoder bytes string |
 	encoder := ZnNullEncoder new.
 	bytes := self encodeString: 'abc' with: encoder.
-	self assert: bytes = #(97 98 99) asByteArray.
+	self assert: bytes equals: #(97 98 99) asByteArray.
 	string := self decodeBytes: #(65 66 67) asByteArray with: encoder.
-	self assert: string = 'ABC' 
+	self assert: string equals: 'ABC'
 ]
 
 { #category : #testing }
@@ -539,15 +540,19 @@ ZnCharacterEncoderTest >> testUTF8ByteOrderMark [
 { #category : #testing }
 ZnCharacterEncoderTest >> testUTF8Encoder [
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
-	
+
 	| encoder inputBytes outputBytes inputString outputString |
 	encoder := ZnUTF8Encoder new.
-	inputString := String with: $$ with: (16r00A2 asCharacter) with: (16r20AC asCharacter) with: (16r024B62 asCharacter).
+	inputString := String
+		with: $$
+		with: 16r00A2 asCharacter
+		with: 16r20AC asCharacter
+		with: 16r024B62 asCharacter.
 	inputBytes := #(16r24 16rC2 16rA2 16rE2 16r82 16rAC 16rF0 16rA4 16rAD 16rA2) asByteArray.
 	outputBytes := self encodeString: inputString with: encoder.
-	self assert: outputBytes = inputBytes.
+	self assert: outputBytes equals: inputBytes.
 	outputString := self decodeBytes: inputBytes with: encoder.
-	self assert: outputString = inputString 
+	self assert: outputString equals: inputString
 ]
 
 { #category : #testing }
@@ -555,19 +560,19 @@ ZnCharacterEncoderTest >> testUTF8EncoderAuto [
 	| encoder inputString bytes outputString |
 	encoder := ZnUTF8Encoder new.
 	inputString := String withAll: ((1 to: 3072) collect: [ :each | Character value: each ]).
-	bytes := self encodeString: inputString with: encoder. 
+	bytes := self encodeString: inputString with: encoder.
 	outputString := self decodeBytes: bytes with: encoder.
-	self assert: inputString = outputString 
+	self assert: inputString equals: outputString
 ]
 
 { #category : #testing }
-ZnCharacterEncoderTest >> testUTF8EncoderByteCount [	
+ZnCharacterEncoderTest >> testUTF8EncoderByteCount [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
-	self assert: (encoder encodedByteCountFor: $$) = 1.
-	self assert: (encoder encodedByteCountFor: (16r00A2 asCharacter)) = 2.
-	self assert: (encoder encodedByteCountFor: (16r20AC asCharacter)) = 3.
-	self assert: (encoder encodedByteCountFor: (16r024B62 asCharacter)) = 4
+	self assert: (encoder encodedByteCountFor: $$) equals: 1.
+	self assert: (encoder encodedByteCountFor: 16r00A2 asCharacter) equals: 2.
+	self assert: (encoder encodedByteCountFor: 16r20AC asCharacter) equals: 3.
+	self assert: (encoder encodedByteCountFor: 16r024B62 asCharacter) equals: 4
 ]
 
 { #category : #testing }

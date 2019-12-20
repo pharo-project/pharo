@@ -1,6 +1,6 @@
 Class {
 	#name : #SpSliderPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 
@@ -19,7 +19,7 @@ SpSliderPresenterTest >> initMinMax [
 SpSliderPresenterTest >> testAbsoluteValue [
 	self initMinMax.
 	presenter absoluteValue: 0.5.
-	self assert: presenter value == 50
+	self assert: presenter value identicalTo: 50
 ]
 
 { #category : #tests }
@@ -34,7 +34,7 @@ SpSliderPresenterTest >> testReset [
 	presenter
 		value: 50;
 		reset.
-	self assert: presenter value == 0
+	self assert: presenter value identicalTo: 0
 ]
 
 { #category : #tests }

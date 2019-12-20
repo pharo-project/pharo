@@ -38,7 +38,7 @@ MethodDictionaryTest >> anotherValue [
 
 { #category : #assertions }
 MethodDictionaryTest >> assertPreservesCapacity: oldDictionary comparedTo: rehashedDictionary [
-	self assert: oldDictionary capacity = rehashedDictionary capacity.
+	self assert: oldDictionary capacity equals: rehashedDictionary capacity
 ]
 
 { #category : #assertions }
@@ -126,10 +126,10 @@ MethodDictionaryTest >> speciesClass [
 MethodDictionaryTest >> testAssociationAtExistantKeyReturnsOkAssociation [
 	| methodSelector association |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
-	association := self class methodDict associationAt: methodSelector ifAbsent: [self error].
-	
-	self assert: association key = methodSelector.
-	self assert: association value = (self class >> methodSelector).
+	association := self class methodDict associationAt: methodSelector ifAbsent: [ self error ].
+
+	self assert: association key equals: methodSelector.
+	self assert: association value equals: self class >> methodSelector
 ]
 
 { #category : #'tests - others' }
@@ -137,9 +137,9 @@ MethodDictionaryTest >> testAssociationAtNonexistantKeyExecutesFailBlock [
 	| methodSelector result error |
 	methodSelector := #inexistant:method:larala:.
 	error := #error.
-	result := self class methodDict associationAt: methodSelector ifAbsent: [error].
-	
-	self assert: result = error.
+	result := self class methodDict associationAt: methodSelector ifAbsent: [ error ].
+
+	self assert: result equals: error
 ]
 
 { #category : #'tests - others' }
@@ -156,9 +156,9 @@ MethodDictionaryTest >> testAssociationsDoGoesOverEntireDictionary [
 MethodDictionaryTest >> testAtExistantKeyReturnsOkCompiledMethod [
 	| methodSelector method |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
-	method := self class methodDict at: methodSelector ifAbsent: [self error].
-	
-	self assert: method class = CompiledMethod.
+	method := self class methodDict at: methodSelector ifAbsent: [ self error ].
+
+	self assert: method class equals: CompiledMethod
 ]
 
 { #category : #'tests - others' }
@@ -166,17 +166,17 @@ MethodDictionaryTest >> testAtNonexistantKeyExecutesFailBlock [
 	| methodSelector result error |
 	methodSelector := #inexistant:method:larala:.
 	error := #error.
-	result := self class methodDict at: methodSelector ifAbsent: [error].
-	
-	self assert: result = error.
+	result := self class methodDict at: methodSelector ifAbsent: [ error ].
+
+	self assert: result equals: error
 ]
 
 { #category : #tests }
 MethodDictionaryTest >> testBehaviorLocalyDefined [
 	"method not acquired from a trait or from its superclass"
-	 
+
 	self assert: (Object methodDict isKindOf: MethodDictionary).
-	self assert: (Object selectors asSortedCollection = Object selectors asSortedCollection).
+	self assert: Object selectors asSortedCollection equals: Object selectors asSortedCollection
 ]
 
 { #category : #'tests - others' }
@@ -185,7 +185,7 @@ MethodDictionaryTest >> testGrowDoublesCapacity [
 	methodDictionary := MethodDictionary new.
 	oldCapacity := methodDictionary capacity.
 	methodDictionary grow.
-	self assert: oldCapacity * 2 = methodDictionary capacity.
+	self assert: oldCapacity * 2 equals: methodDictionary capacity
 ]
 
 { #category : #'tests - others' }
@@ -203,22 +203,22 @@ MethodDictionaryTest >> testIdentityKeyAtExistantValueCopyReturnsFailBlock [
 	| methodSelector result aMethod error |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
 	error := #error.
-	
+
 	aMethod := (self class >> methodSelector) copy.
-	result := self class methodDict keyAtIdentityValue: aMethod ifAbsent: [error].
-	
-	self assert: result = error.
+	result := self class methodDict keyAtIdentityValue: aMethod ifAbsent: [ error ].
+
+	self assert: result equals: error
 ]
 
 { #category : #'tests - others' }
 MethodDictionaryTest >> testIdentityKeyAtExistantValueReturnsOkKey [
 	| methodSelector result aMethod |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
-	
+
 	aMethod := self class >> methodSelector.
-	result := self class methodDict keyAtIdentityValue: aMethod ifAbsent: [self error].
-	
-	self assert: result = methodSelector.
+	result := self class methodDict keyAtIdentityValue: aMethod ifAbsent: [ self error ].
+
+	self assert: result equals: methodSelector
 ]
 
 { #category : #'tests - others' }
@@ -226,10 +226,10 @@ MethodDictionaryTest >> testIdentityKeyAtNonExistantValueReturnsFailBlock [
 	| methodSelector result error |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
 	error := #error.
-	
-	result := self class methodDict keyAtIdentityValue: self ifAbsent: [error].
-	
-	self assert: result = error.
+
+	result := self class methodDict keyAtIdentityValue: self ifAbsent: [ error ].
+
+	self assert: result equals: error
 ]
 
 { #category : #tests }
@@ -243,9 +243,9 @@ MethodDictionaryTest >> testKeyAtExistantValueCopyReturnsOkKey [
 	| methodSelector result aMethod |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
 	aMethod := (self class >> methodSelector) copy.
-	result := self class methodDict keyAtValue: aMethod ifAbsent: [self error].
-	
-	self assert: result = methodSelector.
+	result := self class methodDict keyAtValue: aMethod ifAbsent: [ self error ].
+
+	self assert: result equals: methodSelector
 ]
 
 { #category : #'tests - others' }
@@ -253,9 +253,9 @@ MethodDictionaryTest >> testKeyAtExistantValueReturnsOkKey [
 	| methodSelector result aMethod |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
 	aMethod := self class >> methodSelector.
-	result := self class methodDict keyAtValue: aMethod ifAbsent: [self error].
-	
-	self assert: result = methodSelector.
+	result := self class methodDict keyAtValue: aMethod ifAbsent: [ self error ].
+
+	self assert: result equals: methodSelector
 ]
 
 { #category : #'tests - others' }
@@ -263,17 +263,18 @@ MethodDictionaryTest >> testKeyAtNonexistantValueExecutesFailBlock [
 	| methodSelector result error |
 	methodSelector := #inexistant:method:larala:.
 	error := #error.
-	result := self class methodDict keyAtValue: self ifAbsent: [error].
-	
-	self assert: result = error.
+	result := self class methodDict keyAtValue: self ifAbsent: [ error ].
+
+	self assert: result equals: error
 ]
 
 { #category : #tests }
 MethodDictionaryTest >> testKeyAtValueIfAbsentLocalyDefined [
+	self
+		assert: (self class methodDict keyAtValue: self class >> #testKeyAtValueIfAbsentLocalyDefined ifAbsent: [  ])
+		identicalTo: #testKeyAtValueIfAbsentLocalyDefined.
 
-	self assert: (self class methodDict keyAtValue: (self class >> #testKeyAtValueIfAbsentLocalyDefined) ifAbsent: []) == #testKeyAtValueIfAbsentLocalyDefined.
-	
-	self assert: (self class methodDict keyAtValue: (Object >> #printOn:) ifAbsent: [#notFound]) == #notFound
+	self assert: (self class methodDict keyAtValue: Object >> #printOn: ifAbsent: [ #notFound ]) identicalTo: #notFound
 ]
 
 { #category : #'tests - rehashing' }
@@ -303,8 +304,8 @@ MethodDictionaryTest >> testRemoveAllPreservesCapacity [
 	methodSelector := #testRemoveAllPreservesCapacity.
 	dictionary := MethodDictionary new.
 	dictionary at: methodSelector put: self class >> methodSelector.
-	
+
 	oldSize := dictionary basicSize.
 	dictionary removeAll.
-	self assert: oldSize = dictionary basicSize.
+	self assert: oldSize equals: dictionary basicSize
 ]

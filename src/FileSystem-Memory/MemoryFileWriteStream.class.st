@@ -50,6 +50,12 @@ MemoryFileWriteStream >> isBinary [
 ]
 
 { #category : #writing }
+MemoryFileWriteStream >> next: anInteger putAll: aCollection startingAt: anInteger3 [ 
+	
+	stream next: anInteger putAll: aCollection startingAt: anInteger3 
+]
+
+{ #category : #writing }
 MemoryFileWriteStream >> nextPut: aCollection [
 	^ self stream nextPut: aCollection
 ]
@@ -71,6 +77,12 @@ MemoryFileWriteStream >> position: anInteger [
 	create an error notification."
 
 	stream position: anInteger
+]
+
+{ #category : #reading }
+MemoryFileWriteStream >> readInto: aCollection startingAt: anInteger count: anInteger3 [ 
+
+	^ stream readInto: aCollection startingAt: anInteger count: anInteger3 
 ]
 
 { #category : #positioning }

@@ -150,7 +150,7 @@ ShortIntegerArray >> write: shortInteger bigEndianOn: aStream [
 { #category : #'objects from disk' }
 ShortIntegerArray >> write: shortInteger littleEndianOn: aStream [
 
-	#(2 1 4 3) do: [:digitIndex| aStream nextPut: (shortInteger digitAt: digitIndex) ]
+	#(2 1 4 3) do: [:digitIndex| aStream nextPut: (shortInteger byteAt: digitIndex) ]
 ]
 
 { #category : #'objects from disk' }

@@ -378,14 +378,13 @@ DateAndTimeDosEpochTest >> testToByDo [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testToday [
-	self deny: aDateAndTime = DateAndTime today
-
+	self deny: aDateAndTime equals: DateAndTime today
 ]
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testTommorrow [
-	self assert: (DateAndTime today + 24 hours) equals: (DateAndTime tomorrow).
-	self deny: aDateAndTime = (DateAndTime tomorrow)
+	self assert: DateAndTime today + 24 hours equals: DateAndTime tomorrow.
+	self deny: aDateAndTime equals: DateAndTime tomorrow
 ]
 
 { #category : #tests }
@@ -434,6 +433,5 @@ DateAndTimeDosEpochTest >> testYearMonthDayHourMinuteSecondNanosSecondOffset [
 
 { #category : #tests }
 DateAndTimeDosEpochTest >> testYesterday [
-	self deny: aDateAndTime = DateAndTime yesterday
-
+	self deny: aDateAndTime equals: DateAndTime yesterday
 ]

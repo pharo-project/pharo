@@ -21,15 +21,14 @@ Context >> callPrimitive: primNumber [
 
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
-	| scope var |
-	scope := self sourceNodeExecuted scope.
-	var := scope lookupVar: aSymbol asString.
+	| var |
+	var := (self sourceNodeExecuted scope) lookupVar: aSymbol.
 	"Local variables"
-	(var isKindOf: OCTempVariable) ifTrue: [^ var searchFromContext: self scope: scope].
+	var isTemp ifTrue: [^ self tempNamed: aSymbol].
 	"Instance variables"
-	(var isKindOf: OCSlotVariable) ifTrue: [^ self receiver instVarNamed: aSymbol].
+	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
 	"Class variables and globals"
-	(var isKindOf: OCLiteralVariable) ifTrue: [ ^ var assoc value ].
+	var isGlobal ifTrue: [ ^ var assoc value ].
 	^ nil.
 	
 ]
@@ -45,15 +44,40 @@ Context >> methodReturnConstant: value [
 { #category : #'*Debugging-Core' }
 Context >> namedTempAt: index [
 	"Answer the value of the temp at index in the receiver's sequence of tempNames."
-	^self debuggerMap namedTempAt: index in: self
+	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
+	adds every variable that could be acccessed from a source perspective but might not be"
+	^self tempNamed: (self tempNames at: index)
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> namedTempAt: index put: aValue [
-	"Set the value of the temp at index in the receiver's sequence of tempNames.
-	 (Note that if the value is a copied value it is also set out along the lexical chain,
-	  but alas not in along the lexical chain.)."
-	^self debuggerMap namedTempAt: index put: aValue in: self
+	"Set the value of the temp at index in the receiver's sequence of tempNames"
+	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
+	adds every variable that could be acccessed from a source perspective but might not be"
+	^self tempNamed: (self tempNames at: index) put: aValue
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> pcRange [
+	"return the debug highlight for aPC"
+	^self sourceNodeExecuted debugHighlightRange 
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> pcRangeContextIsActive: contextIsActive [
+ 	"return the debug highlight for aPC"		 
+	| thePC |
+
+  	"make sure we have some usable value (can happen for contexts in the ProcessBrowser"		
+ 	thePC := pc ifNil: [self method endPC].		
+
+  	"When on the top of the stack the pc is pointing to right instruction, but deeper in the stack		
+ 	the pc was already advanced one bytecode, so we need to go back this one bytecode, which		
+ 	can consist of multiple bytes. But on IR, we record the *last* bytecode offset as the offset of		
+ 	the IR instruction, which means we can just go back one"		
+ 	thePC := contextIsActive ifTrue: [thePC] ifFalse: [thePC - 1].		
+
+  	^self method rangeForPC: thePC
 ]
 
 { #category : #'*Debugging-Core' }
@@ -294,14 +318,15 @@ Context >> stepToHome: aContext [
 	
 	[ctxt := ctxt step.
 	error ifNotNil: [
-		"Error was raised, remove inserted above contexts then return signaler context"
-			aContext terminateTo: context sender.  "remove above ensure and handler contexts"
-			^ {ctxt. error}].
+		"remove above inserted ensure and handler contexts"
+		context ifNotNil: [aContext terminateTo: context sender].
+		^ {ctxt. error}].
 	
 	home == ctxt home] whileFalse: [
 		home isDead ifTrue: [^ {ctxt. nil}]
 	].
-
+	"remove above inserted ensure and handler contexts"
+	context ifNotNil: [aContext terminateTo: context sender].
 	^ {ctxt. nil}
 ]
 
@@ -311,9 +336,8 @@ Context >> stepToSendOrReturn [
 	returning a value to the receiver (that is, until switching contexts)."
 
 	| context |
-	[ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ]
+	[ self isDead or: [ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ] ]
 		whileFalse: [
-			self isDead ifTrue: [ ^ self ].
 			context := self step.
 			context == self ifFalse: [
 				"Caused by mustBeBoolean handling"
@@ -358,35 +382,35 @@ Context class >> tallyMethods: aBlock [
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName [
-	"Returns the value of the temporaries, aName."
+	"Returns the value of the temporaries, aName"
 
-	"Implementation notes: temporary initialization in blocks simply uses pushNil to allocate and initialize each temp.  So if one inspects [|a|a:=2] and sends it self method symbolic you get:
-
-	13 <8F 00 00 05> closureNumCopied: 0 numArgs: 0 bytes 17 to 21
-	17 	<73> pushConstant: nil
-	18 	<77> pushConstant: 2
-	19 	<81 40> storeIntoTemp: 0
-	21 	<7D> blockReturn
-	22 <7C> returnTop
-
-	And when we check self asContext pc we get 17, which is *before* the nil is pushed. Therefore we should pay attention when querying a temporary if the temporary allocation was executed."
-
-	| index |
-	index := self tempNames indexOf: aName.
-	^ self namedTempAt: index
+	| scope var |
+	scope := self sourceNodeExecuted scope.
+	var := scope lookupVar: aName.
+	^var readFromContext: self scope: scope.
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
-	^self namedTempAt: (self tempNames indexOf: aName) put: anObject
+	"Assign the value of the temp with name in aContext"
+	
+	| scope var |
+	scope := self sourceNodeExecuted scope.
+	var := scope lookupVar: aName.
+	^var writeFromContext: self scope: scope value: anObject
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNames [
-	"Answer a SequenceableCollection of the names of the receiver's temporary 
-	 variables, which are strings."
-
-	^ self debuggerMap tempNamesForContext: self
+	"Answer all the temp names in scope in aContext starting with the home's first local 
+	(the first argument or first temporary if no arguments).
+	
+	These are all the temps that a programmer could access in the context, but keep in mind
+	that as they might not be accesses here. 
+	In addition, even vars that are accessed in this context could be stored
+	in a temp vector, which itself would be a copied temp that has no name..."
+	
+	^ self sourceNodeExecuted scope allTempNames
 ]
 
 { #category : #'*Debugging-Core' }
@@ -408,10 +432,11 @@ Context >> tempsAndValues [
 	"Return a string of the temporary variabls and their current values"
 	
 	^ String streamContents: [ :aStream |
-		self tempNames doWithIndex: [ :title :index |
-			 aStream nextPutAll: title; nextPut: $:; space; tab.
-			 self print: (self namedTempAt: index) on: aStream.
-			 aStream cr ]].
+		self tempNames 
+			do: [ :name  |
+			 aStream nextPutAll: name; nextPut: $:; space; tab.
+			 self print: (self tempNamed: name) on: aStream]
+			separatedBy: [aStream cr ]]
 ]
 
 { #category : #'*Debugging-Core' }
@@ -419,12 +444,13 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 	"Return a string of the temporary variabls and their current values"
 
 	^ String streamContents: [ :aStream |
-		self tempNames doWithIndex: [ :title :index |
-			indent timesRepeat: [ aStream tab ].
-			aStream nextPutAll: title; nextPut: $:; space; tab.
-			aStream nextPutAll: 
-				((self namedTempAt: index) printStringLimitedTo: (sizeLimit -3 -title size max: 1)).
-			aStream cr ]].
+		self tempNames 
+			do: [ :name |
+				indent timesRepeat: [ aStream tab ].
+				aStream nextPutAll: name; nextPut: $:; space; tab.
+				aStream nextPutAll: 
+					((self tempNamed: name) printStringLimitedTo: (sizeLimit -3 -name size max: 1))]
+			separatedBy: [aStream cr ]]
 ]
 
 { #category : #'*Debugging-Core' }

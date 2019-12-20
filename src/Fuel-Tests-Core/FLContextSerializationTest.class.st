@@ -56,23 +56,21 @@ FLContextSerializationTest >> testContext [
 
 { #category : #tests }
 FLContextSerializationTest >> testContextThisContext [
-
 	| materializedContext context |
 	context := thisContextSample.
 	materializedContext := self resultOfSerializeAndMaterialize: context.
-	
-	self deny:  context == materializedContext.
-	"I cannot compare by = because MethodContext do not implement it and it will finally use the identity."
-	self assert: context pc = materializedContext pc.
-	self assert: context stackPtr = materializedContext stackPtr.
-	self assert: context method = materializedContext method.
-	self assert: context receiver = materializedContext receiver.
-	"I cannot compare by = because MethodContext do not implement it and it will finally use the identity."
-	self deny: context sender ==  materializedContext sender.
-	self assert: context sender pc == materializedContext sender pc.
-	self assert: context sender stackPtr = materializedContext sender stackPtr.
-	"etc...."
 
+	self deny: context identicalTo: materializedContext.
+	"I cannot compare by = because MethodContext do not implement it and it will finally use the identity."
+	self assert: context pc equals: materializedContext pc.
+	self assert: context stackPtr equals: materializedContext stackPtr.
+	self assert: context method equals: materializedContext method.
+	self assert: context receiver equals: materializedContext receiver.
+	"I cannot compare by = because MethodContext do not implement it and it will finally use the identity."
+	self deny: context sender identicalTo: materializedContext sender.
+	self assert: context sender pc identicalTo: materializedContext sender pc.
+	self assert: context sender stackPtr equals: materializedContext sender stackPtr
+	"etc...."
 ]
 
 { #category : #tests }
@@ -109,14 +107,13 @@ FLContextSerializationTest >> testContextWithClosureAndSender [
 { #category : #tests }
 FLContextSerializationTest >> testContextWithClosureContextWithOutPointerTesting [
 	"This test should be improved"
-	| context1  materializedContext1  |
-	context1 := self class blockClosureContextWithOutPointerTesting.
-	self assert: (context1 tempNamed: 'string') = 'test'. 
-	materializedContext1 := self resultOfSerializeAndMaterialize: context1.
-	self assert: (materializedContext1 tempNamed: 'string') = 'test'. 
-	context1 assertWellMaterializedInto: materializedContext1 in: self.
-	
 
+	| context1 materializedContext1 |
+	context1 := self class blockClosureContextWithOutPointerTesting.
+	self assert: (context1 tempNamed: 'string') equals: 'test'.
+	materializedContext1 := self resultOfSerializeAndMaterialize: context1.
+	self assert: (materializedContext1 tempNamed: 'string') equals: 'test'.
+	context1 assertWellMaterializedInto: materializedContext1 in: self
 ]
 
 { #category : #tests }
@@ -164,19 +161,23 @@ FLContextSerializationTest >> testContextWithSender [
 { #category : #tests }
 FLContextSerializationTest >> testContextWithTemp [
 	"This test should be improved"
-	| context1  materializedContext1  |
-	context1 := (Context newForMethod: FLPair >> #methodWithTemp).
-	context1 
-		initializeWith: nil 
-		stackPtr: 1 
-		method: FLPair >> #methodWithTemp 
-		receiver:  (FLPair new right: 4; left: 2) 
+
+	| context1 materializedContext1 |
+	context1 := Context newForMethod: FLPair >> #methodWithTemp.
+	context1
+		initializeWith: nil
+		stackPtr: 1
+		method: FLPair >> #methodWithTemp
+		receiver:
+			(FLPair new
+				right: 4;
+				left: 2)
 		sender: nil.
 	context1 tempNamed: 'string' put: 'capo'.
-	
+
 	materializedContext1 := self resultOfSerializeAndMaterialize: context1.
-	self assert: (materializedContext1 tempNamed: 'string') = 'capo'.
-	context1 assertWellMaterializedInto: materializedContext1 in: self.
+	self assert: (materializedContext1 tempNamed: 'string') equals: 'capo'.
+	context1 assertWellMaterializedInto: materializedContext1 in: self
 ]
 
 { #category : #tests }

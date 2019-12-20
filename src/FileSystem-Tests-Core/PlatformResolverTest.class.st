@@ -14,8 +14,18 @@ PlatformResolverTest >> createResolver [
 
 { #category : #tests }
 PlatformResolverTest >> testCache [
-	| cache |
-	cache := self assertOriginResolves: #cache
+	self assertOriginResolves: #cache
+]
+
+{ #category : #tests }
+PlatformResolverTest >> testCanAddOrigin [
+	[ resolver class
+		compile:
+			'newOriginForTest
+	<origin>
+	^ self home / ''toto'''.
+	self assert: (resolver supportedOrigins includes: #newOriginForTest) ]
+		ensure: [ resolver class compiledMethodAt: #newOriginForTest ifPresent: [ :m | m removeFromSystem ] ]
 ]
 
 { #category : #tests }

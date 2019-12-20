@@ -4,7 +4,7 @@ Reverse alphabetic sorting
 Class {
 	#name : #ReverseAlphabeticSorter,
 	#superclass : #CompletionSorter,
-	#category : #'NECompletion-New'
+	#category : #'NECompletion-Sorting'
 }
 
 { #category : #description }
@@ -13,8 +13,8 @@ ReverseAlphabeticSorter class >> kind [
 	^ 'reverse'
 ]
 
-{ #category : #description }
-ReverseAlphabeticSorter class >> sortCompletionList: aList [
+{ #category : #sorting }
+ReverseAlphabeticSorter >> sortCompletionList: aList [
 
-	^ aList sorted reverse.
+	^ aList asOrderedCollection sort reverse
 ]

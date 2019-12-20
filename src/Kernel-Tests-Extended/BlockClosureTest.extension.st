@@ -29,15 +29,14 @@ BlockClosureTest >> testCannotReturn [
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testRunSimulated [
-	self assert: (Context runSimulated: aBlockContext) class = Rectangle.
+	self assert: (Context runSimulated: aBlockContext) class equals: Rectangle
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testSourceNodeOptimized [
-	| block | 
-	block := [ :ctx | [ ctx atEnd ] whileTrue:[1+2 ] ] .
-	self assert: block sourceNode printString = 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'.
-
+	| block |
+	block := [ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ].
+	self assert: block sourceNode printString equals: 'RBBlockNode([ :ctx | [ ctx atEnd ] whileTrue: [ 1 + 2 ] ])'
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -48,11 +47,11 @@ BlockClosureTest >> testTallyInstructions [
 	
 	"We test class name and not the class because there are multiple versions of the encoders depending on the compiler used."
 	| expectedResult |
-	expectedResult := 27.
+	expectedResult := (aBlockContext method encoderClass = EncoderForSistaV1) ifTrue: [26] ifFalse: [27].
 	self assert: (Context tallyInstructions: aBlockContext ) size equals: expectedResult
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
 BlockClosureTest >> testTallyMethods [
-	self assert: (Context tallyMethods: aBlockContext) size = 7.
+	self assert: (Context tallyMethods: aBlockContext) size equals: 7
 ]

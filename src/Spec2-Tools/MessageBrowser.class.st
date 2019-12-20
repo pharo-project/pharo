@@ -13,7 +13,8 @@ Class {
 	#superclass : #AbstractMessageCentricBrowser,
 	#instVars : [
 		'textModel',
-		'refreshingBlock'
+		'refreshingBlock',
+		'title'
 	],
 	#category : #'Spec2-Tools-Senders'
 }
@@ -151,9 +152,9 @@ MessageBrowser >> autoSelect: aSelector [
 { #category : #initialization }
 MessageBrowser >> buildUpdateTitle [
 	"Trying to have a clean subscription, this method is called in #initialize"
-	
+
 	self updateTitle.
-	textModel text: textModel getText.
+	textModel text: textModel text
 ]
 
 { #category : #announcements }
@@ -166,6 +167,19 @@ MessageBrowser >> classRenamed: anAnnouncement [
 { #category : #private }
 MessageBrowser >> codeFont [
 	^ StandardFonts codeFont
+]
+
+{ #category : #initialization }
+MessageBrowser >> connectPresenters [
+	messageList
+		whenSelectionChangedDo: [ :selection | [ :item | self selectItem: item ] cull: selection selectedItem ];
+		whenModelChangedDo: [ self updateTitle ].
+	textModel acceptBlock: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ]
+]
+
+{ #category : #private }
+MessageBrowser >> defaultTitle [ 
+	^ self class title , ' [' , messageList numberOfElements printString , ']'
 ]
 
 { #category : #'text selection' }
@@ -295,16 +309,8 @@ MessageBrowser >> initializeDropList [
 ]
 
 { #category : #initialization }
-MessageBrowser >> initializePresenter [
-	messageList
-		whenSelectionChangedDo: [ :selection | [ :item | self selectItem: item ] cull: selection selectedItem ];
-		whenModelChangedDo: [ self updateTitle ].
-	textModel acceptBlock: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ]
-]
-
-{ #category : #initialization }
-MessageBrowser >> initializeWidgets [
-	super initializeWidgets.
+MessageBrowser >> initializePresenters [
+	super initializePresenters.
 	textModel := self newCode.
 
 	textModel whenBuiltDo: [ :ann | ann widget font: self codeFont ].
@@ -518,12 +524,9 @@ MessageBrowser >> sortingBlock: aBlock [
 
 { #category : #'text selection' }
 MessageBrowser >> sourceIntervalOf: aSelector in: aMethodNode [
-
-	^ aMethodNode allChildren
-		detect: [ :x | x isMessage and: [ x selector = aSelector ] ]
-		ifFound:
-			[ :senderNode | senderNode keywordsPositions first to: senderNode keywordsPositions last + senderNode keywords last size - 1 ]
-		ifNone: [  #() ]
+    | senderNode |
+    senderNode := aMethodNode allChildren detect: [ :x | x isMessage and: [ x selector = aSelector ] ] ifNone: [ ^ #() ].
+    ^ senderNode keywordsPositions first to: senderNode keywordsPositions last + senderNode keywords last size - 1 
 ]
 
 { #category : #accessing }
@@ -547,7 +550,14 @@ MessageBrowser >> textModel: aModel [
 
 { #category : #private }
 MessageBrowser >> title [
-	^ self class title , ' [' , messageList numberOfElements printString , ']'
+	^ title ifNil: [ self defaultTitle ]
+
+]
+
+{ #category : #private }
+MessageBrowser >> title: aString [ 
+	title := aString.
+	self updateTitle 
 ]
 
 { #category : #accessing }

@@ -148,7 +148,10 @@ FFICallback >> returnOnError [
 
 { #category : #initialization }
 FFICallback >> signature: signature block: aBlock [
-	functionSpec := self newParser parseAnonymousFunction: signature.
+	| parser |
+	parser := self newParser.
+	functionSpec := parser parseAnonymousFunction: signature.
+	functionSpec resolveUsing: parser requestor.
 	block := aBlock.
 
 ]

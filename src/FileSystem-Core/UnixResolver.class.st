@@ -46,11 +46,6 @@ UnixResolver >> preferences [
 	^ self directoryFromEnvVariableNamed: 'XDG_CONFIG_HOME' or: [ self home / '.config' ]
 ]
 
-{ #category : #resolving }
-UnixResolver >> supportedOrigins [
-	^ super supportedOrigins , #( userData )
-]
-
 { #category : #origins }
 UnixResolver >> temp [
 	^ '/tmp' asFileReference
@@ -58,6 +53,7 @@ UnixResolver >> temp [
 
 { #category : #origins }
 UnixResolver >> userData [
+	<origin>
 	^ self directoryFromEnvVariableNamed: 'XDG_DATA_HOME' or: [ self home / '.local' / 'share' ]
 ]
 

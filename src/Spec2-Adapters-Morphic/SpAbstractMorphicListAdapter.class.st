@@ -10,26 +10,39 @@ Class {
 
 { #category : #testing }
 SpAbstractMorphicListAdapter class >> isAbstract [
-
-	^ self == SpAbstractMorphicListAdapter
+	^ self = SpAbstractMorphicListAdapter
 ]
 
 { #category : #scrolling }
 SpAbstractMorphicListAdapter >> configureScrolling [
+	self presenter verticalAlignment whenChangedDo: [ widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
+	self presenter
+		whenDisplayDo: [ widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
+			self scrollingChanged ].
+	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self
+]
 
-	self presenter verticalAlignment whenChangedDo: [ 
-		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
-	self presenter whenDisplayDo: [ 
-		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
-		self scrollingChanged ].
-	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self.
+{ #category : #'widget API' }
+SpAbstractMorphicListAdapter >> itemFilter [
+	^ self model itemFilter
 ]
 
 { #category : #scrolling }
 SpAbstractMorphicListAdapter >> scrollingChanged [
-
 	widget container updateAllRows.
 	self presenter verticalAlignment
 		firstVisibleRowIndex: widget firstVisibleRowIndex;
 		lastVisibleRowIndex: widget lastVisibleRowIndex
+]
+
+{ #category : #factory }
+SpAbstractMorphicListAdapter >> updateItemFilterBlockWith: block [
+
+	^ block
+		ifNotNil: [ 
+			widget
+				enableFilter: (SpFTSpecFilter block: block);
+				explicitFunction ]
+		ifNil: [ 
+			widget disableFunction ]
 ]

@@ -9,5 +9,8 @@ SpTreeTablePresenter >> defineInputPorts [
 { #category : #'*Spec2-Transmission' }
 SpTreeTablePresenter >> defineOutputPorts [ 
 
-	^ { SpListSelectionPort new }
+	^ { 
+	SpSelectionPort new.
+	SpActivationPort new 
+	}
 ]

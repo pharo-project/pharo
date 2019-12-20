@@ -97,16 +97,17 @@ GTSpotterExceptionsTest >> shouldRaise: anErrorClass process: aString origin: an
 	self assertResetExceptions.
 
 	spotter exceptionHandler: exceptionHandler.
-	self assert: spotter exceptionHandler == exceptionHandler.
-	
-	self should: [ self process: aString origin: anOrigin ] 
-		raise: anErrorClass 
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler.
+
+	self
+		should: [ self process: aString origin: anOrigin ]
+		raise: anErrorClass
 		withExceptionDo: [ :exception | 
-			self assert: exception class == anErrorClass.
-			aBlock value: exception. ].
-		
-	self assert: spotter exceptionHandler == exceptionHandler.
-	
+			self assert: exception class identicalTo: anErrorClass.
+			aBlock value: exception ].
+
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler.
+
 	self assertException: anErrorClass
 ]
 
@@ -118,28 +119,30 @@ GTSpotterExceptionsTest >> shouldntRaise: anError process: aString origin: anOri
 { #category : #private }
 GTSpotterExceptionsTest >> shouldntRaise: anError process: aString origin: anOrigin during: exceptionHandler [
 	spotter exceptionHandler: exceptionHandler.
-	self assert: spotter exceptionHandler == exceptionHandler.
-	
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler.
+
 	self shouldnt: [ self process: aString origin: anOrigin ] raise: anError.
-	
-	self assert: spotter exceptionHandler == exceptionHandler.
+
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler
 ]
 
 { #category : #tests }
 GTSpotterExceptionsTest >> testDebuggingExceptionHandlerDuring [
 	| exceptionHandler |
-	
-	self exceptionHandler: (exceptionHandler := GTSpotterDebuggingExceptionHandlerMock new) do: [ 
-		self shouldnt: [ GTCurrentSpotterExceptionHandler value ] raise: Error.
-		self assert: GTCurrentSpotterExceptionHandler value notNil.
-		self assert: GTCurrentSpotterExceptionHandler value == exceptionHandler ].
+	self
+		exceptionHandler: (exceptionHandler := GTSpotterDebuggingExceptionHandlerMock new)
+		do: [ self shouldnt: [ GTCurrentSpotterExceptionHandler value ] raise: Error.
+			self assert: GTCurrentSpotterExceptionHandler value notNil.
+			self assert: GTCurrentSpotterExceptionHandler value identicalTo: exceptionHandler ]
 ]
 
 { #category : #tests }
 GTSpotterExceptionsTest >> testDebuggingExceptionHandlerMock1 [
-	
-	self shouldRaise: AssertionFailure process: 'abc' origin: GTSpotterExceptionMock1 new do: [:e | 
-		self assert: e messageText = GTSpotterExceptionMock1 name ].
+	self
+		shouldRaise: AssertionFailure
+		process: 'abc'
+		origin: GTSpotterExceptionMock1 new
+		do: [ :e | self assert: e messageText equals: GTSpotterExceptionMock1 name ]
 ]
 
 { #category : #tests }
@@ -157,9 +160,11 @@ GTSpotterExceptionsTest >> testDebuggingExceptionHandlerMock3 [
 
 { #category : #tests }
 GTSpotterExceptionsTest >> testDebuggingExceptionHandlerMock4 [
-
-	self shouldRaise: ArithmeticError process: 'abc' origin: GTSpotterExceptionMock4 new do: [:e | 
-		self assert: e messageText = 'Error while filtering' ].
+	self
+		shouldRaise: ArithmeticError
+		process: 'abc'
+		origin: GTSpotterExceptionMock4 new
+		do: [ :e | self assert: e messageText equals: 'Error while filtering' ]
 ]
 
 { #category : #tests }
@@ -173,11 +178,11 @@ GTSpotterExceptionsTest >> testDebuggingExceptionHandlerMock5 [
 { #category : #tests }
 GTSpotterExceptionsTest >> testDeploymentExceptionHandlerDuring [
 	| exceptionHandler |
-	
-	self exceptionHandler: (exceptionHandler := GTSpotterDeploymentExceptionHandlerMock new) do: [ 
-		self shouldnt: [ GTCurrentSpotterExceptionHandler value ] raise: Error.
-		self assert: GTCurrentSpotterExceptionHandler value notNil.
-		self assert: GTCurrentSpotterExceptionHandler value == exceptionHandler ].
+	self
+		exceptionHandler: (exceptionHandler := GTSpotterDeploymentExceptionHandlerMock new)
+		do: [ self shouldnt: [ GTCurrentSpotterExceptionHandler value ] raise: Error.
+			self assert: GTCurrentSpotterExceptionHandler value notNil.
+			self assert: GTCurrentSpotterExceptionHandler value identicalTo: exceptionHandler ]
 ]
 
 { #category : #tests }
@@ -248,13 +253,12 @@ GTSpotterExceptionsTest >> testDeploymentHandleException [
 
 { #category : #tests }
 GTSpotterExceptionsTest >> testDeploymentHandleExceptionMock5 [
-	
 	self assertResetExceptions.
-	self shouldnt: [ 
-		[ 1 / 0 ] on: ZeroDivide do: [ :exception |
-			self assert: (GTSpotterDeploymentExceptionHandlerMock5 new 
-				handleException: exception 
-				do: [ 7 ]) == 7 ] ] raise: ZeroDivide.
+	self
+		shouldnt: [ [ 1 / 0 ]
+				on: ZeroDivide
+				do: [ :exception | self assert: (GTSpotterDeploymentExceptionHandlerMock5 new handleException: exception do: [ 7 ]) identicalTo: 7 ] ]
+		raise: ZeroDivide.
 	self assertException: ZeroDivide
 ]
 

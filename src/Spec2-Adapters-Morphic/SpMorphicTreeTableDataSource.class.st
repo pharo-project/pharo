@@ -6,8 +6,8 @@ I use a builder (MorphicTreeTableCellBuilder) to realise the cell content.
 Class {
 	#name : #SpMorphicTreeTableDataSource,
 	#superclass : #FTTreeDataSource,
-	#traits : 'TSpMorphicTableDataSourceCommons',
-	#classTraits : 'TSpMorphicTableDataSourceCommons classTrait',
+	#traits : 'SpTMorphicTableDataSourceCommons',
+	#classTraits : 'SpTMorphicTableDataSourceCommons classTrait',
 	#category : #'Spec2-Adapters-Morphic-Table'
 }
 
@@ -40,6 +40,12 @@ SpMorphicTreeTableDataSource >> cellColumn: column row: rowIndex [
 SpMorphicTreeTableDataSource >> cellIndentFor: item [ 
 
 	^ item depth * 16
+]
+
+{ #category : #paths }
+SpMorphicTreeTableDataSource >> indexFromPath: anArray [ 
+
+	^ anArray sum
 ]
 
 { #category : #accessing }
@@ -105,4 +111,11 @@ SpMorphicTreeTableDataSource >> rootItem: anItem [
 
 	super rootItem: anItem.
 	self addSourceToRootItem
+]
+
+{ #category : #sorting }
+SpMorphicTreeTableDataSource >> sortElements: aSortFunction [
+
+	unsortedElements ifNil: [ unsortedElements := self rootsItems ].
+	self rootItem data: ((self rootItem children collect: #data) sorted: aSortFunction)
 ]

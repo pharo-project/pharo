@@ -53,17 +53,17 @@ GLMTransmissionTest >> testNoOverrideStrategy [
 	transmission destination: (pane2 port: #port2).
 	transmission addPresentation: GLMPresentation new.
 	self assert: transmission presentations size equals: 1.
-	self assert: transmission destination pane == pane2.
-	self assert: transmission transmissionStrategy transmission == transmission.
+	self assert: transmission destination pane identicalTo: pane2.
+	self assert: transmission transmissionStrategy transmission identicalTo: transmission.
 	(pane1 port: #port1) value: 1.
 	transmission transmit.
 	self assert: pane2 presentations size equals: 1.
 	presentation := pane2 presentations first.
-	self assert: transmission destination pane == pane2.
+	self assert: transmission destination pane identicalTo: pane2.
 	(pane1 port: #port1) value: 2.
 	transmission transmit.
 	self assert: pane2 presentations first rootPrototype equals: presentation rootPrototype.
-	self assert: pane2 presentations first == presentation
+	self assert: pane2 presentations first identicalTo: presentation
 ]
 
 { #category : #tests }

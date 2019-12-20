@@ -81,6 +81,15 @@ SpPickListPresenter >> checkboxFor: anItem [
 	^ associationsItemToWrapper at: anItem ifAbsent: [ nil ]
 ]
 
+{ #category : #initialization }
+SpPickListPresenter >> connectPresenters [
+	labelClickableHolder
+		whenChangedDo:
+			[ :aBoolean | associationsWrapperToItem keysDo: [ :e | e labelClickable: aBoolean ] ].
+	defaultValueHolder
+		whenChangedDo: [ :value | associationsWrapperToItem keysDo: [ :cb | cb state: value ] ]
+]
+
 { #category : #api }
 SpPickListPresenter >> defaultValue [
 
@@ -121,19 +130,9 @@ SpPickListPresenter >> initialize [
 ]
 
 { #category : #initialization }
-SpPickListPresenter >> initializePresenter [
-	labelClickableHolder
-		whenChangedDo:
-			[ :aBoolean | associationsWrapperToItem keysDo: [ :e | e labelClickable: aBoolean ] ].
-	defaultValueHolder
-		whenChangedDo: [ :value | associationsWrapperToItem keysDo: [ :cb | cb state: value ] ]
-]
-
-{ #category : #initialization }
-SpPickListPresenter >> initializeWidgets [
-	
+SpPickListPresenter >> initializePresenters [
 	listPresenter := self newList.
-	listPresenter displayBlock: [ :item | item ].
+	listPresenter display: [ :item | item ].
 	self focusOrder add: listPresenter
 ]
 

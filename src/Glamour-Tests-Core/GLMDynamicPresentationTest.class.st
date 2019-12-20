@@ -12,7 +12,7 @@ GLMDynamicPresentationTest >> testCachedPresentation [
 	dynamic transformation: [ :entity | GLMRubricTextPresentation new ].
 	currentPresentation := dynamic currentPresentation.
 
-	self assert: dynamic cachedPresentation == currentPresentation
+	self assert: dynamic cachedPresentation identicalTo: currentPresentation
 ]
 
 { #category : #tests }
@@ -23,7 +23,7 @@ GLMDynamicPresentationTest >> testDefaultPresentation [
 	dynamic transformation: [ :entity | GLMRubricTextPresentation new ].
 	self assert: dynamic currentPresentation presentations size equals: 1.
 	self assert: (dynamic currentPresentation presentations first isKindOf: GLMRubricTextPresentation).
-	self assert: dynamic currentPresentation pane == dynamic pane
+	self assert: dynamic currentPresentation pane identicalTo: dynamic pane
 ]
 
 { #category : #tests }
@@ -69,15 +69,16 @@ GLMDynamicPresentationTest >> testPresentationInitializationBlock [
 	| dynamic count |
 	count := 0.
 	dynamic := GLMDynamicPresentation new.
-	dynamic transformation: [ :entity | 
-		GLMListPresentation new 
-			initialize: [ :pres | 
-				count := count +1.
-				pres selection: 5 ] ].
+	dynamic
+		transformation: [ :entity | 
+			GLMListPresentation new
+				initialize: [ :pres | 
+					count := count + 1.
+					pres selection: 5 ] ].
 	dynamic entity: (1 to: 42).
-	self assert: count = 0.
-	self assert: (dynamic currentPresentation presentations first selection = 5).
-	self assert: count = 1
+	self assert: count equals: 0.
+	self assert: dynamic currentPresentation presentations first selection equals: 5.
+	self assert: count equals: 1
 ]
 
 { #category : #tests }
@@ -87,5 +88,5 @@ GLMDynamicPresentationTest >> testPresentationTransformation [
 	dynamic entity: 42.
 	dynamic presentationTransformation: [ :some :entity | (1 to: entity) do: [ :each | some text title: each asString ] ].
 	self assert: dynamic currentPresentation presentations size equals: 42.
-	self assert: dynamic currentPresentation pane == dynamic pane
+	self assert: dynamic currentPresentation pane identicalTo: dynamic pane
 ]

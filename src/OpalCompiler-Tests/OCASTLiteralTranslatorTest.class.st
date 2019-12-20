@@ -57,10 +57,9 @@ OCASTLiteralTranslatorTest >> testLiteralIsInLiteralFrame [
 
 { #category : #'testing - literals' }
 OCASTLiteralTranslatorTest >> testLiteralReturnsAlwaysSameLiteral [
-	
 	self compileExample: literalExample.
-	
-	self assert: (self executeMethodOnInstance: method) == (self executeMethodOnInstance: method)
+
+	self assert: (self executeMethodOnInstance: method) identicalTo: (self executeMethodOnInstance: method)
 ]
 
 { #category : #'testing - literals' }

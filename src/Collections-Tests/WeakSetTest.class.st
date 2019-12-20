@@ -22,51 +22,51 @@ WeakSetTest >> classToBeTested [
 { #category : #tests }
 WeakSetTest >> testAddEqualElements [
 	| ws o2 o3 |
-	o2 := 1/2.
+	o2 := 1 / 2.
 	o3 := '123' copy.
 	ws := self classToBeTested new.
 	ws add: o2.
 	ws add: o3.
-	self assert: ws size = 2.
+	self assert: ws size equals: 2.
 	self assert: (ws includes: o2).
 	self assert: (ws includes: o3).
-	
+
 	"inclusion test does use equality, not identity"
 	self assert: (ws includes: o3 copy) description: 'WeakSet is not WeakIdentitySet'.
-	
+
 	"only one copy is added"
 	ws add: o3 copy.
-	self assert: ws size = 2
+	self assert: ws size equals: 2
 ]
 
 { #category : #tests }
 WeakSetTest >> testAddIncludesSizeReclaim [
 	| ws o2 o3 |
-	o2 := 1/2.
+	o2 := 1 / 2.
 	o3 := '123' copy.
 	ws := self classToBeTested new.
 	ws add: o2.
 	ws add: o3.
-	self assert: ws size = 2.
+	self assert: ws size equals: 2.
 	self assert: (ws includes: o2).
 	self assert: (ws includes: o3).
-	
+
 	"inclusion test does use equality, not identity"
 	self assert: (ws includes: o3 copy) description: 'WeakSet are not WeakIdentitySet'.
-	
+
 	"only one copy is added"
 	ws add: o3 copy.
-	self assert: ws size = 2.
-	
+	self assert: ws size equals: 2.
+
 	"reclame objects so that slots of ws are nilled out"
 	o2 := o3 := nil.
 	Smalltalk garbageCollect.
-	self deny: (ws includes: 1/2).
+	self deny: (ws includes: 1 / 2).
 	self deny: (ws includes: '123' copy).
-	
+
 	"fast #size is not updated automatically by dead object reclamation
 	But there is a slowSize trying to tell the truth"
-	self assert: ws slowSize = 0.
+	self assert: ws slowSize equals: 0
 ]
 
 { #category : #tests }
@@ -89,23 +89,20 @@ WeakSetTest >> testAnyOneWhenAllContentsWasGarbaged [
 
 { #category : #tests }
 WeakSetTest >> testAsArray [
-
 	| item set |
-
 	set := self classToBeTested new.
-	
-	self assert: set asArray = #().
-	
+
+	self assert: set asArray equals: #().
+
 	item := Object new.
 	set add: item.
-	
-	self assert: set asArray = { item }.
-	
+
+	self assert: set asArray equals: {item}.
+
 	item := nil.
 	Smalltalk garbageCollect.
-	
-	self assert: set asArray = #()
 
+	self assert: set asArray equals: #()
 ]
 
 { #category : #tests }
@@ -161,41 +158,39 @@ WeakSetTest >> testCollisions [
 
 { #category : #tests }
 WeakSetTest >> testDoAfter [
-	
 	| input weakSet array |
-	input := (1 to: 11) collect: [ :each | each asString asSymbol ]. "Some symbols might be garbage collected without this variable"
+	input := (1 to: 11) collect: [ :each | each asString asSymbol ].	"Some symbols might be garbage collected without this variable"
 	weakSet := self classToBeTested withAll: input.
-	array := weakSet asArray. "Assume that the elements will have the same order as the internal array of the weakset"
-	0 to: array size do: [ :index |
+	array := weakSet asArray.	"Assume that the elements will have the same order as the internal array of the weakset"
+	0 to: array size do: [ :index | 
 		| element result |
 		element := array at: index ifAbsent: nil.
-		result := Array new: weakSet size - index streamContents: [ :stream |
-			weakSet
-				do: [ :each | stream nextPut: each ]
-				after: element ].
-		self assert: result sort = (array allButFirst: index) sort ]
+		result := Array new: weakSet size - index streamContents: [ :stream | weakSet do: [ :each | stream nextPut: each ] after: element ].
+		self assert: result sort equals: (array allButFirst: index) sort ]
 ]
 
 { #category : #tests }
 WeakSetTest >> testDoDontIterateOnReclaimedObjects [
-
 	| ws o1 o2 size |
 	ws := self classToBeTested new.
-	2 to: 20 do: [:i | ws add: 1 / i].
-	
+	2 to: 20 do: [ :i | ws add: 1 / i ].
+
 	o1 := 3.0.
 	o2 := 4.0.
-	ws add: o1; add: o2.
-	
+	ws
+		add: o1;
+		add: o2.
+
 	"Reclaim memory"
 	Smalltalk garbageCollect.
-	
+
 	size := 0.
-	ws do: [:each |
-		size := size + 1.
-		self deny: each isNil].
-	
-	self assert: size = 2
+	ws
+		do: [ :each | 
+			size := size + 1.
+			self deny: each isNil ].
+
+	self assert: size equals: 2
 ]
 
 { #category : #tests }

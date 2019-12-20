@@ -10,28 +10,10 @@ SpTreeMultipleSelectionMode >> isMultipleSelection [
 	^ true
 ]
 
-{ #category : #accessing }
-SpTreeMultipleSelectionMode >> presenter: aTreeTablePresenter [ 
-
-	presenter := aTreeTablePresenter 
-]
-
-{ #category : #selection }
-SpTreeMultipleSelectionMode >> replaceOtherSelectionMode: anotherSelectionMode [
-
-	| originalValueHolder |
-
-	selection := anotherSelectionMode selectedPath.
-	originalValueHolder := anotherSelectionMode observablePropertyNamed: #selection.
-	
-	originalValueHolder announcer subscriptions subscriptions do: [ 
-		self halt.	
-	]
-]
-
 { #category : #selection }
 SpTreeMultipleSelectionMode >> selectPath: aPath [ 
 	
+	aPath ifEmpty: [ ^ self unselectAll ].
 	(selection includes: aPath) ifTrue: [ ^ self ].
 	presenter itemAtPath: aPath ifAbsent: [ ^ self ].
 	
@@ -40,8 +22,14 @@ SpTreeMultipleSelectionMode >> selectPath: aPath [
 
 { #category : #selection }
 SpTreeMultipleSelectionMode >> selectPaths: pathArray [
-	pathArray
-		do: [ :path | presenter itemAtPath: path ifAbsent: [ ^ self ] ].
+
+	(pathArray isEmpty 
+		or: [ 
+			pathArray size = 1 
+			and: [ pathArray first isEmpty] ]) 
+		ifTrue: [ ^ self unselectAll ].
+	pathArray do: [ :path | 
+		presenter itemAtPath: path ifAbsent: [ ^ self ] ].
 	selection := pathArray
 ]
 

@@ -121,9 +121,9 @@ GLMPresentationTest >> testDefaultPane [
 	| presentation pane |
 	presentation := GLMPresentation new.
 	pane := presentation pane.
-	self assert: pane presentations first pane == pane.
-	self assert: pane presentations pane == pane.
-	self assert: pane presentations first == presentation
+	self assert: pane presentations first pane identicalTo: pane.
+	self assert: pane presentations pane identicalTo: pane.
+	self assert: pane presentations first identicalTo: presentation
 ]
 
 { #category : #tests }
@@ -144,14 +144,12 @@ GLMPresentationTest >> testDisplay [
 GLMPresentationTest >> testEntityPortInitialization [
 	| pane presentation |
 	pane := GLMPane named: 'test'.
-	presentation := GLMPresentation new
-		initialize: [ :pres |
-			pres entity: 2  ].
+	presentation := GLMPresentation new initialize: [ :pres | pres entity: 2 ].
 	pane addPresentation: presentation.
-	self assert: presentation entity = nil.
+	self assert: presentation entity equals: nil.
 	presentation initializePresentation.
-	self assert: (pane port: #entity) value = 2.
-	self assert: presentation entity = 2.
+	self assert: (pane port: #entity) value equals: 2.
+	self assert: presentation entity equals: 2
 ]
 
 { #category : #tests }
@@ -265,21 +263,19 @@ GLMPresentationTest >> testOnChangeOfPortAct [
 
 { #category : #tests }
 GLMPresentationTest >> testPresentationInitializationBlock [
-	| pane presentation count|
+	| pane presentation count |
 	count := 0.
 	pane := GLMPane named: 'test'.
-	presentation := GLMPresentation new
-		initialize: [ :pres |
-			(pres pane port: #test)  value: count ].
+	presentation := GLMPresentation new initialize: [ :pres | (pres pane port: #test) value: count ].
 	pane addPresentation: presentation.
-	self assert: (pane port: #test) value = nil.
+	self assert: (pane port: #test) value equals: nil.
 	presentation initializePresentation.
-	self assert: (pane port: #test) value = 0.
-	self assert: (presentation pane port: #test) value = 0.
+	self assert: (pane port: #test) value equals: 0.
+	self assert: (presentation pane port: #test) value equals: 0.
 	count := 1.
 	presentation initializePresentation.
-	self assert: (pane port: #test) value = 1.
-	self assert: (presentation pane port: #test) value = 1.
+	self assert: (pane port: #test) value equals: 1.
+	self assert: (presentation pane port: #test) value equals: 1
 ]
 
 { #category : #tests }
@@ -287,16 +283,13 @@ GLMPresentationTest >> testPresentationInitializationBlockIsCalled [
 	| pane presentation count |
 	count := 0.
 	pane := GLMPane named: 'test'.
-	presentation := GLMPresentation new
-		initialize: [ :pres |
-			count := count + 1 ].
+	presentation := GLMPresentation new initialize: [ :pres | count := count + 1 ].
 	pane addPresentation: presentation.
-	self assert: count = 0.
+	self assert: count equals: 0.
 	presentation initializePresentation.
-	self assert: count = 1.
+	self assert: count equals: 1.
 	presentation initializePresentation.
-	self assert: count = 2.
-
+	self assert: count equals: 2
 ]
 
 { #category : #tests }
@@ -546,7 +539,7 @@ GLMPresentationTest >> testWith [
 	| p presentationInWithBlock |
 	p := GLMPresentation new.
 	p with: [ :thePresentation | presentationInWithBlock := thePresentation ].
-	self assert: presentationInWithBlock == p
+	self assert: presentationInWithBlock identicalTo: p
 ]
 
 { #category : #tests }
@@ -554,7 +547,7 @@ GLMPresentationTest >> testWithBlockPassesTheParentPresentation [
 	| p presentationInWithBlock |
 	p := GLMPresentation new.
 	p with: [ :thePresentation | presentationInWithBlock := thePresentation ].
-	self assert: presentationInWithBlock == p
+	self assert: presentationInWithBlock identicalTo: p
 ]
 
 { #category : #tests }
@@ -562,5 +555,5 @@ GLMPresentationTest >> testWithReturnsTheOriginalPresentation [
 	| p result |
 	p := GLMPresentation new.
 	result := p with: [ :thePresentation | GLMPresentation new ].
-	self assert: result == p
+	self assert: result identicalTo: p
 ]

@@ -678,7 +678,7 @@ ZnClient >> https [
 
 { #category : #options }
 ZnClient >> ifFail: block [
-	"Set the block that I will be execute when the request fails.
+	"Set the block that will be executed if the request fails.
 	The exception of the failure will be passed as argument."
 	
 	self optionAt: #ifFailBlock put: block
@@ -1486,7 +1486,7 @@ ZnClient >> uploadEntityFrom: path [
 	You can then use #put or #post to actually do an upload."
 	
 	| stream type length |
-	stream := ZnFileSystemUtils binaryFileStreamFor: path.
+	stream := ZnFileSystemUtils binaryFileReadStreamFor: path.
 	type := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: path).
 	length := ZnFileSystemUtils fileSizeFor: path.
 	self entity: (ZnStreamingEntity readFrom: stream usingType: type andLength: length)

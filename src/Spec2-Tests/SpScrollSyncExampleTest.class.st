@@ -1,6 +1,6 @@
 Class {
 	#name : #SpScrollSyncExampleTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Examples-Morphic'
 }
 

@@ -1,6 +1,5 @@
 mcPackages := #(
  'ScriptingExtensions'
- 'Text-Core'
  'System-FileRegistry'
  'FileSystem-Memory'
  'Regex-Core'

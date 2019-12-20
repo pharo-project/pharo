@@ -6,6 +6,29 @@ They have to implement the RBRefactoring method #transform.
 
 I have no special precondition.
 
+Here is a sample of a script that will change of the YK* classes of package PrefixOfPackageNames* into ZG*.
+
+[[[ 
+| pkgPrefix newClassPrefix env model |
+pkgPrefix := 'PrefixOfPackageNames'.
+newClassPrefix := 'ZG'.
+env := RBBrowserEnvironment new 
+			forPackageNames: (RPackage organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
+model := (RBClassModelFactory rbNamespace onEnvironment: env) name: 'MyModel'; yourself.
+RBClassRegexRefactoring new
+	model: model;
+	renameClasses; 					""Here I just want a rename no copy""
+	replace: '^YK(.*)$' with: newClassPrefix,'$1';
+  execute.
+]]]
+
+
+
+
+
+
+
+
 "
 Class {
 	#name : #RBRegexRefactoring,
@@ -53,12 +76,22 @@ RBRegexRefactoring >> preconditions [
 
 { #category : #searching }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString [
+	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups.
+	Central method of the regex based refactoring. To be used in collaboration with renameClasses and others
+	
+	RBClassRegexRefactoring new
+		model: model;
+		renameClasses;
+		replace: '^YK(.*)$' with: newClassPrefix,'$1';
+ 		 execute.
+	Check class comment for a full script. 
+	"
 	self replace: aFindString with: aReplaceString ignoreCase: false
 ]
 
 { #category : #searching }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString ignoreCase: aBoolean [
-	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups."
+	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups. See replace:with: comment too."
 	
 	| regex stream |
 	regex := RxParser preferredMatcherClass

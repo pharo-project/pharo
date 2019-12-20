@@ -52,6 +52,22 @@ KMKeyCombinationChoice >> matchesCompletely: anEventBuffer [
 	^ shortcuts anySatisfy: [ :each | each matchesCompletely: anEventBuffer ]
 ]
 
+{ #category : #'accessing platform' }
+KMKeyCombinationChoice >> platformCharacter [
+
+	shortcuts do: [ :each | 
+		each platformCharacter ifNotNil: [ :char | ^ char ] ].
+	^ nil
+]
+
+{ #category : #'accessing platform' }
+KMKeyCombinationChoice >> platformModifier [
+
+	shortcuts do: [ :each | 
+		each platformModifier ifNotNil: [ :mod | ^ mod ] ].
+	^ nil
+]
+
 { #category : #printing }
 KMKeyCombinationChoice >> prettyPrintOn: aStream [
 

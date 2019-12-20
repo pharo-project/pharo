@@ -38,7 +38,7 @@ FTFilterFunction >> filter [
 	table refresh.
 	table deselectAll.
 		
-	self isExplicite
+	self isExplicit
 		ifTrue: [ self resizeWidget ]
 ]
 
@@ -79,7 +79,7 @@ FTFilterFunction >> initializeFilter [
 
 { #category : #'event handling' }
 FTFilterFunction >> keyStroke: anEvent [
-	self isExplicite ifTrue: [ ^false ].
+	self isExplicit ifTrue: [ ^false ].
 	
 	(anEvent keyCharacter = Character escape and: [ initialDataSource isNotNil ])
 		ifTrue: [ ^ self reinitializeTable ].	"If the user escape after a search, he want the full data source again so we reinitialize the table."

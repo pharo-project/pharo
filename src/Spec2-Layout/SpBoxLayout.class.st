@@ -1,3 +1,19 @@
+"
+I'm a layout to show presenters in an ordered box. 
+Box can be horizontal or vertical and presenters will be ordered top to down or left to right following direction decided. 
+The basic message to add presenters is: #add:expand:fill:padding: (see comment there to understand what the arguments can be). 
+To make things easier, I add some basic convenience methods: #add:, #add:expand:
+
+Also, I can add presenters aligned to the bottom in case of vertical layouts or right for horizontal layouts.
+
+Example: 
+
+SpBoxLayout new
+	add: 'Some header' expand: false fill: false padding: 5;
+	add: #content;
+	addLast: 'Some footer' expand: false fill: false padding: 5;
+	yourself
+"
 Class {
 	#name : #SpBoxLayout,
 	#superclass : #SpExecutableLayout,
@@ -43,7 +59,26 @@ SpBoxLayout >> add: aName [
 ]
 
 { #category : #adding }
+SpBoxLayout >> add: aName expand: shouldExpand [
+
+	^ self 
+		add: aName 
+		withConstraints: [ :constraints | 
+			constraints expand: shouldExpand ]
+]
+
+{ #category : #adding }
 SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill padding: aNumber [
+"
+aName 		- the presenter to be added to box
+expand 	- true if the new child is to be given extra space allocated to box . 
+			  The extra space will be divided evenly between all children that use this option
+fill 		- true if space given to child by the expand option is actually allocated to child , 
+			  rather than just padding it. This parameter has no effect if expand is set to false. 
+padding 	- extra space in pixels to put between this child and its neighbors, over and above 
+			  the global amount specified by “spacing” property. If child is a widget at one of 
+			  the reference ends of box , then padding pixels are also put between child and the
+			  reference edge of box"
 
 	self 
 		add: aName 
@@ -52,6 +87,18 @@ SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill padding: aNumber
 				expand: shouldExpand;
 				fill: shouldFill; 
 				padding: aNumber ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> add: aPresenter height: anInteger [ 
+	self add: aPresenter withConstraints: [:constraints | constraints height: anInteger ].
+]
+
+{ #category : #adding }
+SpBoxLayout >> add: aPresenter width: anInteger [
+	self
+		add: aPresenter
+		withConstraints: [ :constraints | constraints width: anInteger ].
 ]
 
 { #category : #adding }
@@ -68,6 +115,15 @@ SpBoxLayout >> addLast: aName [
 	self 
 		addLast: aName 
 		withConstraints: [ :constraints | ]
+]
+
+{ #category : #adding }
+SpBoxLayout >> addLast: aName expand: shouldExpand [
+
+	self 
+		addLast: aName 
+		withConstraints: [ :constraints | 
+			constraints expand: shouldExpand ]
 ]
 
 { #category : #adding }
@@ -176,6 +232,13 @@ SpBoxLayout >> remove: aPresenter [
 
 	children removeKey: aPresenter.
 	adapter ifNotNil: [ :theAdapter | theAdapter remove: aPresenter ]
+]
+
+{ #category : #removing }
+SpBoxLayout >> removeAll [
+
+	children removeAll.
+	adapter ifNotNil: [ :anAdapter | anAdapter removeAll ]
 ]
 
 { #category : #accessing }

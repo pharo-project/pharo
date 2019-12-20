@@ -210,8 +210,7 @@ RGCommentDefinition >> isValid [
 
 { #category : #'to remove as soon as possible' }
 RGCommentDefinition >> methodClass [
-	self flag: 'if comments are mixed with methods use #realClass instead'.
-	^self realClass
+	^ self realClass
 ]
 
 { #category : #accessing }
@@ -231,8 +230,7 @@ RGCommentDefinition >> printOn: aStream [
 
 { #category : #'to remove as soon as possible' }
 RGCommentDefinition >> selector [
-	self flag: 'if comments are mixed with methods use #name instead'.
-	^self name
+	^ self name
 ]
 
 { #category : #'backward compatibility' }

@@ -31,6 +31,12 @@ FFIConst >> emitArgument: aBuilder context: aContext [
 	aBuilder pushLiteral: self value
 ]
 
+{ #category : #unpacking }
+FFIConst >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [ 
+	
+	"Nothing to do here"
+]
+
 { #category : #'emitting code' }
 FFIConst >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [ 
 	self error: 'Literals cannot be used as return'

@@ -130,6 +130,15 @@ DualChangeSorterPresenter >> classMenuFrom: sourcePanel to: destinationPanel [
 		yourself
 ]
 
+{ #category : #initialization }
+DualChangeSorterPresenter >> connectPresenters [
+
+	changeSorterLeft 	whenChangesListChanges: [ self refeshedChangeSet: changeSorterRight ].
+	changeSorterRight	whenChangesListChanges: [ self refeshedChangeSet: changeSorterLeft ].
+
+
+]
+
 { #category : #'menu - change set' }
 DualChangeSorterPresenter >> copyAllFrom: src to: dest [
 
@@ -186,16 +195,7 @@ DualChangeSorterPresenter >> initialize [
 ]
 
 { #category : #initialization }
-DualChangeSorterPresenter >> initializePresenter [
-
-	changeSorterLeft 	whenChangesListChanges: [ self refeshedChangeSet: changeSorterRight ].
-	changeSorterRight	whenChangesListChanges: [ self refeshedChangeSet: changeSorterLeft ].
-
-
-]
-
-{ #category : #initialization }
-DualChangeSorterPresenter >> initializeWidgets [
+DualChangeSorterPresenter >> initializePresenters [
 
 	changeSorterLeft := self instantiate: ChangeSorterPresenter.
 	changeSorterRight := self instantiate: ChangeSorterPresenter.

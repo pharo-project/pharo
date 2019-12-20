@@ -1,6 +1,6 @@
 Class {
 	#name : #TraitsTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'createdClassesAndTraits',
 		'oldAnnouncer'
@@ -19,9 +19,8 @@ TraitsTestCase class >> resources [
 ]
 
 { #category : #utilities }
-TraitsTestCase >> assertPrints: aString like: anotherString [ 
-	self assert: (aString copyWithout: $ )
-		= (anotherString copyWithout: $ )
+TraitsTestCase >> assertPrints: aString like: anotherString [
+	self assert: (aString copyWithout: $ ) equals: (anotherString copyWithout: $ )
 ]
 
 { #category : #accessing }
@@ -191,7 +190,7 @@ TraitsTestCase >> tearDown [
 	self createdClassesAndTraits
 		do: [ :aClassOrTrait || behaviorName |
 			behaviorName := aClassOrTrait name.
-			Smalltalk globals at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
+			testingEnvironment at: behaviorName ifPresent: [ :classOrTrait | classOrTrait removeFromSystem: false ]].
 	createdClassesAndTraits := nil.
 	SystemAnnouncer announcer: oldAnnouncer.
 	super tearDown 

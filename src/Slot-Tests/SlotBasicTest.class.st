@@ -50,14 +50,11 @@ SlotBasicTest >> testAddSharedVariable [
 
 { #category : #'tests-basic' }
 SlotBasicTest >> testBasicClassBuilding [
+	aClass := self make: [ :builder | builder name: self aClassName ].
 
-	aClass := self make: [ :builder |
-		builder name: self aClassName ].
-	
 	self deny: aClass classLayout isNil.
-	self assert: aClass name = self aClassName.
-	self assert: (self class environment at: self aClassName) == aClass
-
+	self assert: aClass name equals: self aClassName.
+	self assert: (self class environment at: self aClassName) identicalTo: aClass
 ]
 
 { #category : #'tests-comments' }

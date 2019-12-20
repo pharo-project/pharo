@@ -34,17 +34,11 @@ ClyClassCommentsQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyClassCommentsQueryTest >> testComparison [
+	self assert: (ClyClassCommentsQuery withString: 'test substring') equals: (ClyClassCommentsQuery withString: 'test ' , 'substring').
 
-	self 
-		assert: (ClyClassCommentsQuery withString: 'test substring') 
-		equals: (ClyClassCommentsQuery withString: 'test ', 'substring').
-		
-	self 
-		assert: (ClyClassCommentsQuery withString: 'test substring') hash
-		equals: (ClyClassCommentsQuery withString: 'test ', 'substring') hash.
-		
-	self deny: (ClyClassCommentsQuery withString: 'test substring')
-					 = (ClyClassCommentsQuery withString: 'another substring')
+	self assert: (ClyClassCommentsQuery withString: 'test substring') hash equals: (ClyClassCommentsQuery withString: 'test ' , 'substring') hash.
+
+	self deny: (ClyClassCommentsQuery withString: 'test substring') equals: (ClyClassCommentsQuery withString: 'another substring')
 ]
 
 { #category : #tests }

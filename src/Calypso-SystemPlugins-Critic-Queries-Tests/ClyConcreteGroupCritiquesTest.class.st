@@ -31,12 +31,11 @@ ClyConcreteGroupCritiquesTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyConcreteGroupCritiquesTest >> testComparisonWithQueryOfAnotherGroup [
-
 	| query2 |
 	query2 := self createQuery.
 	query2 groupName: 'another group'.
-	
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]
 
 { #category : #tests }

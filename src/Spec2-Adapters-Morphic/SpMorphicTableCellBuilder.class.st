@@ -24,12 +24,10 @@ SpMorphicTableCellBuilder >> addCell: anObject column: aTableColumn [
 
 	anObject ifNil: [ ^ self ]. 
 	
-	morph := 	anObject asMorph.
-	aTableColumn isExpandable ifFalse: [ 
-		morph 
-			hResizing: #rigid;
-			width: (aTableColumn width ifNil: [ morph width ]) ].
-	cell addMorphBack: morph.
+	morph := 	anObject asMorph asReadOnlyMorph.
+	self 
+		addCellMorph: morph 
+		column: aTableColumn
 ]
 
 { #category : #private }
@@ -38,6 +36,16 @@ SpMorphicTableCellBuilder >> addCellColumn: aTableColumn [
 	self 
 		addCell: (aTableColumn readObject: self item) 
 		column: aTableColumn
+]
+
+{ #category : #private }
+SpMorphicTableCellBuilder >> addCellMorph: morph column: aTableColumn [
+
+	aTableColumn isExpandable ifFalse: [ 
+		morph 
+			hResizing: #rigid;
+			width: (aTableColumn width ifNil: [ morph width ]) ].
+	cell addMorphBack: morph
 ]
 
 { #category : #accessing }
@@ -78,7 +86,20 @@ SpMorphicTableCellBuilder >> rowIndex: anObject [
 
 { #category : #visiting }
 SpMorphicTableCellBuilder >> visitCheckboxColumn: aTableColumn [
-	self addCellColumn: aTableColumn
+	| presenter |
+	
+	presenter := SpCheckBoxPresenter new
+		state: (aTableColumn readObject: self item);
+		yourself.
+
+	aTableColumn onActivation ifNotNil: [ :valuable | 
+		presenter whenActivatedDo: [ valuable cull: self item ] ].
+	aTableColumn onDesactivation ifNotNil: [ :valuable | 
+		presenter whenDeactivatedDo: [ valuable cull: self item ] ].
+
+	self 
+		addCellMorph: presenter buildWithSpec
+		column: aTableColumn 
 ]
 
 { #category : #visiting }

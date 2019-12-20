@@ -14,8 +14,9 @@ Class {
 	#name : #SpToolBarPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'displayMode',
-		'itemsHolder'
+		'#displayMode => SpObservableSlot',
+		'#leftItems => SpObservableSlot',
+		'#rightItems => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Toolbar'
 }
@@ -45,46 +46,43 @@ SpToolBarPresenter >> addItem: aToolbarItem [
 
 { #category : #adding }
 SpToolBarPresenter >> addItem: aToolbarItem position: aPosition [
-	| wasEmpty |
 	
 	aToolbarItem owner: self.
-	wasEmpty := false.
-	(itemsHolder 
-		at: aPosition
-		ifAbsentPut: [ 
-			wasEmpty := true.
-			OrderedCollection new ])
-		add: aToolbarItem.
-	
-	"Triggering add messages.
- 	 This is horrible, items holder should be a collection not a dictionary and constraints (like
-	 group) should be handled differently"
-	wasEmpty ifFalse: [ 
-		itemsHolder valueChanged: aPosition ]
+	aPosition addItem: aToolbarItem into: self
 ]
 
-{ #category : #accessing }
-SpToolBarPresenter >> allItems [
+{ #category : #adding }
+SpToolBarPresenter >> addItemLeft: aToolBarItem [ 
 	
-	^ self items values flattened
+	aToolBarItem owner: self.
+	leftItems add: aToolBarItem.
+	self notifyPropertyChanged: #leftItems.
+]
+
+{ #category : #adding }
+SpToolBarPresenter >> addItemRight: aToolBarItem [ 
+
+	aToolBarItem owner: self.
+	rightItems add: aToolBarItem.
+	self notifyPropertyChanged: #rightItems.	
 ]
 
 { #category : #accessing }
 SpToolBarPresenter >> beBoth [
 
-	displayMode := SpToolBarDisplayMode modeIconAndLabel
+	self displayMode: SpToolBarDisplayMode modeIconAndLabel
 ]
 
 { #category : #accessing }
 SpToolBarPresenter >> beIcons [
 
-	displayMode := SpToolBarDisplayMode modeIcon
+	self displayMode: SpToolBarDisplayMode modeIcon
 ]
 
 { #category : #accessing }
 SpToolBarPresenter >> beText [
 
-	displayMode := SpToolBarDisplayMode modeLabel
+	self displayMode: SpToolBarDisplayMode modeLabel
 ]
 
 { #category : #accessing }
@@ -93,13 +91,24 @@ SpToolBarPresenter >> displayMode [
 	^ displayMode
 ]
 
+{ #category : #accessing }
+SpToolBarPresenter >> displayMode: aDisplayMode [
+
+	displayMode ifNotNil: [ 
+		self removeStyle: displayMode styleName ].
+	displayMode := aDisplayMode.
+	self addStyle: displayMode styleName
+
+]
+
 { #category : #initialization }
 SpToolBarPresenter >> initialize [
 
 	super initialize.
 	self beBoth.
-	itemsHolder := Dictionary new asValueHolder.
 	
+	leftItems := OrderedCollection new.
+	rightItems := OrderedCollection new.	
 ]
 
 { #category : #testing }
@@ -129,17 +138,61 @@ SpToolBarPresenter >> isEmpty [
 { #category : #accessing }
 SpToolBarPresenter >> itemNamed: aString [ 
 	
-	^ self allItems detect: [ :e | e label = aString ]
+	^ self items detect: [ :e | e label = aString ]
 ]
 
 { #category : #api }
 SpToolBarPresenter >> items [
 
-	^ itemsHolder value
+	^ leftItems , rightItems
+]
+
+{ #category : #accessing }
+SpToolBarPresenter >> leftItems [
+	^ leftItems
 ]
 
 { #category : #testing }
 SpToolBarPresenter >> notEmpty [
 
 	^ self isEmpty not
+]
+
+{ #category : #'private-traversing' }
+SpToolBarPresenter >> presenters [
+
+	^ self items
+]
+
+{ #category : #'private-traversing' }
+SpToolBarPresenter >> presentersInFocusOrder [
+
+	^ self items
+]
+
+{ #category : #removing }
+SpToolBarPresenter >> removeAllItems [
+
+	leftItems := OrderedCollection new.
+	rightItems := OrderedCollection new
+]
+
+{ #category : #accessing }
+SpToolBarPresenter >> rightItems [
+	^ rightItems
+]
+
+{ #category : #'private-traversing' }
+SpToolBarPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self presentersInFocusOrder do: [ :each |
+		each traverseInFocusOrderDo: aBlock excluding: excludes ]
+]
+
+{ #category : #events }
+SpToolBarPresenter >> whenItemsChangeDo: aBlockClosure [ 
+	
+	self 
+		property: #leftItems whenChangedDo: aBlockClosure;
+		property: #rightItems whenChangedDo: aBlockClosure
 ]

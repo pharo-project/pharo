@@ -14,22 +14,19 @@ RGEnvironmentBackendTest >> backendClass [
 
 { #category : #'as yet unclassified' }
 RGEnvironmentBackendTest >> checkHierarchyConsistencyOf: anRGClass [
+	self assert: anRGClass ~~ anRGClass superclass.
+	self assert: anRGClass ~~ anRGClass metaclass.
+	self assert: anRGClass ~~ anRGClass superclass metaclass.
 
-	self assert: (anRGClass ~~ anRGClass superclass).
-	self assert: (anRGClass ~~ anRGClass metaclass).
-	self assert: (anRGClass ~~ anRGClass superclass metaclass).
+	self assert: anRGClass superclass ~~ anRGClass metaclass.
+	self assert: anRGClass superclass ~~ anRGClass superclass metaclass.
+	self assert: anRGClass metaclass ~~ anRGClass superclass metaclass.
 
-	self assert: (anRGClass superclass ~~ anRGClass metaclass).
-	self assert: (anRGClass superclass ~~ anRGClass superclass metaclass).
-	self assert: (anRGClass metaclass ~~ anRGClass superclass metaclass).
+	self assert: anRGClass superclass superclass identicalTo: anRGClass superclass.
+	self assert: anRGClass superclass metaclass identicalTo: anRGClass metaclass superclass.
 
-	self assert: (anRGClass superclass superclass == anRGClass superclass).
-	self assert: (anRGClass superclass metaclass == anRGClass metaclass superclass).
-
-	self assert: (anRGClass superclass metaclass superclass == anRGClass superclass metaclass).
-	self assert: (anRGClass superclass metaclass metaclass == anRGClass superclass metaclass).
-	
-
+	self assert: anRGClass superclass metaclass superclass identicalTo: anRGClass superclass metaclass.
+	self assert: anRGClass superclass metaclass metaclass identicalTo: anRGClass superclass metaclass
 ]
 
 { #category : #tests }
@@ -48,20 +45,15 @@ RGEnvironmentBackendTest >> testAST [
 
 { #category : #tests }
 RGEnvironmentBackendTest >> testCreationOfDefinitions [
-
 	| env1 method |
-	
 	env1 := RGEnvironment new.
-	
+
 	"self should: [ (Object>>#isRingObject) asRingDefinitionIn: env1 ] raise: RGNotFoundError."
-	method := (Object>>#isRGObject) ensureRingDefinitionIn: env1.
-	self assert: method class equals: RGMethod.	
+	method := Object >> #isRGObject ensureRingDefinitionIn: env1.
+	self assert: method class equals: RGMethod.
 	self assert: method selector equals: #isRGObject.
 	self assert: method parent name equals: #Object.
-	self assert: (method environment == env1).
-	
-
-
+	self assert: method environment identicalTo: env1
 ]
 
 { #category : #tests }
@@ -80,15 +72,12 @@ RGEnvironmentBackendTest >> testDefaultEnvironmentContent [
 
 { #category : #tests }
 RGEnvironmentBackendTest >> testDefinitionsIdentity [
-
 	| env1 |
-	
 	env1 := RGEnvironment new.
-	
-	self assert: (((Object>>#isRGObject) ensureRingDefinitionIn: env1) == ((Object>>#isRGObject) ensureRingDefinitionIn: env1)).
-	
-	self assert: (((Object>>#isRGObject) ensureRingDefinitionIn: env1) parent
-== ((Object>>#isRGObject) ensureRingDefinitionIn: env1) parent).
+
+	self assert: (Object >> #isRGObject ensureRingDefinitionIn: env1) identicalTo: (Object >> #isRGObject ensureRingDefinitionIn: env1).
+
+	self assert: (Object >> #isRGObject ensureRingDefinitionIn: env1) parent identicalTo: (Object >> #isRGObject ensureRingDefinitionIn: env1) parent
 ]
 
 { #category : #tests }

@@ -17,7 +17,7 @@ TextLineEndingsTest >> testDecoratedTextConversionCrLF [
 	text addAttribute: TextColor blue from: 4 to: 10.
 	text addAttribute: TextColor red from: 6 to: 9.
 	text addAttribute: TextEmphasis bold.
-	newText := text withSqueakLineEndings.
+	newText := text withInternalLineEndings.
 	self assert: (text size - 1) equals: newText size.
 	self assert: newText size equals: newText runs size.
 	self assert: (newText attributesAt: 6) equals: (text attributesAt: 6).
@@ -32,7 +32,7 @@ TextLineEndingsTest >> testDecoratedTextConversionJustLF [
 	text addAttribute: TextColor blue from: 4 to: 10.
 	text addAttribute: TextColor red from: 6 to: 9.
 	text addAttribute: TextEmphasis bold.
-	newText := text withSqueakLineEndings.
+	newText := text withInternalLineEndings.
 	self assert: (text size) equals: newText size.
 	self assert: newText size equals: newText runs size.
 	self assert: (newText attributesAt: 6) equals: (text attributesAt: 6).
@@ -47,7 +47,7 @@ TextLineEndingsTest >> testDecoratedTextConversionNoLF [
 	text addAttribute: TextColor blue from: 4 to: 10.
 	text addAttribute: TextColor red from: 6 to: 9.
 	text addAttribute: TextEmphasis bold.
-	newText := text withSqueakLineEndings.
+	newText := text withInternalLineEndings.
 	self assert: (text size) equals: newText size.
 	self assert: newText size equals: newText runs size.
 	self assert: (newText attributesAt: 6) equals: (text attributesAt: 6).
@@ -59,7 +59,7 @@ TextLineEndingsTest >> testSimpleTextConversionCrLF [
 
 	| string newText |
 	string := 'This is a test', String crlf, 'of the conversion'.
-	newText := string asText withSqueakLineEndings.
+	newText := string asText withInternalLineEndings.
 	self assert: (string size - 1) equals: newText size.
 	self assert: newText size equals: newText runs size.
 ]
@@ -69,7 +69,7 @@ TextLineEndingsTest >> testSimpleTextConversionJustCR [
 
 	| string newText |
 	string := 'This is a test', String cr, 'of the conversion'.
-	newText := string asText withSqueakLineEndings.
+	newText := string asText withInternalLineEndings.
 	self assert: string size equals: newText size.
 	self assert: newText size equals: newText runs size
 ]
@@ -79,7 +79,7 @@ TextLineEndingsTest >> testSimpleTextConversionJustLF [
 
 	| string newText |
 	string := 'This is a test', String lf, 'of the conversion'.
-	newText := string asText withSqueakLineEndings.
+	newText := string asText withInternalLineEndings.
 	self assert: string size equals: newText size.
 	self assert: newText size equals: newText runs size
 ]
@@ -89,7 +89,7 @@ TextLineEndingsTest >> testStringConversionCrLF [
 
 	| string newString |
 	string := 'This is a test', String crlf, 'of the conversion'.
-	newString := string withSqueakLineEndings.
+	newString := string withInternalLineEndings.
 	self assert: (string size - 1) equals: newString size
 ]
 
@@ -98,7 +98,7 @@ TextLineEndingsTest >> testStringConversionJustLF [
 
 	| string newString |
 	string := 'This is a test', String lf, 'of the conversion'.
-	newString := string withSqueakLineEndings.
+	newString := string withInternalLineEndings.
 	self assert: string size equals: newString size
 ]
 
@@ -107,6 +107,6 @@ TextLineEndingsTest >> testStringConversionNoLF [
 
 	| string newString |
 	string := 'This is a test', String cr, 'of the conversion'.
-	newString := string withSqueakLineEndings.
+	newString := string withInternalLineEndings.
 	self assert: string equals: newString
 ]

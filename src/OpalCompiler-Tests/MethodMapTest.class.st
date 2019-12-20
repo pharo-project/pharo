@@ -39,18 +39,12 @@ MethodMapTest >> parseExpression: aString [
 
 { #category : #'testing - ast mapping' }
 MethodMapTest >> testBlockAndContextSourceNode [
-		
-	|block blockNodeViaContext blockNodeViaClosure |
-
-
-	block := [blockNodeViaContext := thisContext sourceNode].
+	| block blockNodeViaContext blockNodeViaClosure |
+	block := [ blockNodeViaContext := thisContext sourceNode ].
 	block value.
 	blockNodeViaClosure := block sourceNode.
 
-	self assert: blockNodeViaContext == blockNodeViaClosure
-	
-
-
+	self assert: blockNodeViaContext identicalTo: blockNodeViaClosure
 ]
 
 { #category : #'testing - ast mapping' }
@@ -122,9 +116,16 @@ MethodMapTest >> testExampleTempNamedPutCopying [
 
 { #category : #'testing - temp access' }
 MethodMapTest >> testExampleTempNamedPutCopying2 [
-"modifying a copied temp variable will *not* modify the value in the outer context. 
-(See other test case OCClosureCompilerTest>>#testDebuggerTempAccess and notes on fogbugz issue 17702"
-	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying2) equals: 1
+	"modifying a copied temp variable will modify the value in the outer context"
+
+	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying2) equals: 2
+]
+
+{ #category : #'testing - temp access' }
+MethodMapTest >> testExampleTempNamedPutCopying3 [
+	"modifying a copied temp variable will modify the value in the outer context"
+
+	self assert: (self compileAndRunExample: #exampleTempNamedPutCopying3) equals: 2
 ]
 
 { #category : #'testing - temp access' }
@@ -188,58 +189,6 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 	
 	self assert: actual equals: method ast
 
-]
-
-{ #category : #'testing - source mapping' }
-MethodMapTest >> testSimpleSourceMapping [
-	| method range highlight |
-
-	method := Object>>('ha', 'lt') asSymbol.
-
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: (Smalltalk vm for32bit: 23 for64bit: 43).
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals: 'now'.
-
-
-	
-]
-
-{ #category : #'testing - source mapping' }
-MethodMapTest >> testSourceMappingBlock [
-	| method range highlight pcs |
-
-	method := MethodMapExamples>>#exampleTempNamedCopying.
-	
-	"Cannot check for class since those encoders are changing names all the time..."
-	pcs := (Smalltalk vm 
-		for32bit: [
-			(method encoderClass name endsWith: 'SistaV1')
-				ifTrue: [ 41 to: 45 ]
-				ifFalse: [ 42 to: 46 ] ] 
-		for64bit: [
-			(method encoderClass name endsWith: 'SistaV1')
-				ifTrue: [ 73 to: 77 ]
-				ifFalse: [ 74 to: 78 ] ]).		
-	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs first.
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals: 'b'.
-
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs second.
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals: 'a := b'.
-	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs third.
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals:'DebuggerMethodMapOpal'.
-	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs fourth.
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals:'thisContext'.
-	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs fifth.
-	highlight := method sourceCode copyFrom:  range first to: range last.
-	self assert: highlight equals: 'method'.
 ]
 
 { #category : #'testing - temp access' }

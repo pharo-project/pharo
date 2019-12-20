@@ -21,21 +21,19 @@ RegisteredClassAnnotationsTest >> tearDown [
 
 { #category : #tests }
 RegisteredClassAnnotationsTest >> testAreCached [
-
 	| annotations |
 	annotations := ClassAnnotationExample1 registeredInstances.
-	
-	self assert: ClassAnnotationExample1 registeredInstances == annotations
+
+	self assert: ClassAnnotationExample1 registeredInstances identicalTo: annotations
 ]
 
 { #category : #tests }
 RegisteredClassAnnotationsTest >> testAreDifferentForDifferentAnnotationClasses [
-
 	| annotations1 annotations2 |
 	annotations1 := ClassAnnotationExample1 registeredInstances.
 	annotations2 := ClassAnnotationExample2 registeredInstances.
-	
-	self deny: annotations1 = annotations2
+
+	self deny: annotations1 equals: annotations2
 ]
 
 { #category : #tests }

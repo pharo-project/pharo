@@ -3,7 +3,7 @@ SUnit tests for SmalllintManifestChecker
 "
 Class {
 	#name : #SmalllintManifestCheckerTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'checker'
 	],
@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 SmalllintManifestCheckerTest >> cleaningResources [
-	Smalltalk globals
+	testingEnvironment
 		at: #ManifestManifestResourcesTests
 		ifPresent: [ :cl | 
 			cl
@@ -54,22 +54,18 @@ SmalllintManifestCheckerTest >> tearDown [
 
 { #category : #tests }
 SmalllintManifestCheckerTest >> testCriticsOf [
-
 	| rule critiques |
 	rule := ReRuleManager visibleRuleClasses collect: #new.
-	checker 
+	checker
 		rule: rule;
 		environment: self package asEnvironment;
-		run. 
-	
-	critiques := checker criticsOf: GRTemporaryNeitherReadNorWrittenRule new.
-	
-	self assert: critiques size  = 3.
-	self assert: (critiques anySatisfy: [ :each |
-		each sourceAnchor entity = (MFClassB>>#method3)]).
-	self assert: (critiques anySatisfy: [ :each |
-		each sourceAnchor entity = (MFClassA>>#method)]).
+		run.
 
+	critiques := checker criticsOf: GRTemporaryNeitherReadNorWrittenRule new.
+
+	self assert: critiques size equals: 3.
+	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassB >> #method3) ]).
+	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassA >> #method) ])
 ]
 
 { #category : #tests }

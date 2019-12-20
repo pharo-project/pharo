@@ -4,61 +4,17 @@ RubFindReplaceService
 "
 Class {
 	#name : #RubFindReplaceService,
-	#superclass : #Model,
+	#superclass : #FindReplaceService,
 	#instVars : [
-		'findText',
-		'replaceText',
-		'caseSensitive',
-		'entireWordsOnly',
-		'wrapAround',
-		'searchBackwards',
-		'findStartIndex',
-		'isRegex',
 		'dialog',
 		'textAreaHolder'
-	],
-	#classVars : [
-		'Singleton'
 	],
 	#category : #'Rubric-Editing-FindReplaceService'
 }
 
-{ #category : #cleanup }
-RubFindReplaceService class >> cleanUp [
-
-	Singleton := nil
-]
-
-{ #category : #accessing }
-RubFindReplaceService class >> default [
-	^ Singleton ifNil: [ Singleton := self new ]
-
-]
-
-{ #category : #accessing }
-RubFindReplaceService class >> dialog [
-	^ self default dialog
-]
-
 { #category : #accessing }
 RubFindReplaceService >> caseSensitive [
 	^ caseSensitive ifNil: [caseSensitive := RubAbstractTextArea caseSensitiveFinds]
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> caseSensitive: aBoolean [
-	caseSensitive := aBoolean.
-	self findPolicyChanged
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> convertedFindString [
-	| specials |
-	specials := '^$:\+*[]()?'.
-	^String 
-		streamContents: [:s | self findString 
-			do: [:c | (specials includes: c) ifTrue: [s nextPut:$\].
-				s nextPut: c]]
 ]
 
 { #category : #'user-interface' }
@@ -75,17 +31,6 @@ RubFindReplaceService >> dialogIsActiveFor: aTextArea [
 
 	^ (self textArea = aTextArea) and: [ self dialog world notNil ].
 
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> entireWordsOnly [
-	^ entireWordsOnly ifNil: [entireWordsOnly := false]
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> entireWordsOnly: aBoolean [
-	entireWordsOnly := aBoolean.
-	self findPolicyChanged
 ]
 
 { #category : #services }
@@ -141,71 +86,11 @@ RubFindReplaceService >> findPolicyChanged [
 	self textArea whenFindTextChanged: RubFindTextChanged new
 ]
 
-{ #category : #services }
-RubFindReplaceService >> findRegex [
-	| s |
-	self regexString ifEmpty: [ ^nil ].
-	s := self entireWordsOnly
-		ifTrue: ['\<', self regexString, '\>']
-		ifFalse: [ self regexString].
-	[^ self caseSensitive
-			ifTrue: [s asRegex]
-			ifFalse: [s asRegexIgnoringCase]]
-		on: Error 
-		do: [self changed: #regexError. 
-			^ '' asRegex]
-
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findStartIndex [
-	^ findStartIndex
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findStartIndex: anInteger [
-	findStartIndex := anInteger
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findString [
-	^ self findText asString
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findText [
-	^ (findText ifNil: [findText := '' asText. findText]) asString
-]
-
 { #category : #accessing }
 RubFindReplaceService >> findText: aStringOrText [
-	findText := aStringOrText asText.
-	self findPolicyChanged.
+	super findText: aStringOrText.
 	self textArea whenFindTextChanged: RubFindTextChanged new.
 	^ true
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findText: aStringOrText isRegex: aBoolean [
-		self isRegex: aBoolean.
-		self findText: aStringOrText.
-		self replaceText: ''.
-
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findText: aStringOrText isRegex: isReg caseSensitive: isCaseSensitive entireWordsOnly: forEntireWordsOnly [
-		self isRegex: isReg.
-		self findText: aStringOrText.
-		self entireWordsOnly: forEntireWordsOnly.
-		self caseSensitive: isCaseSensitive
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> findText: aStringOrText isRegex: aBoolean entireWordsOnly: forEntireWordsOnly [
-		self isRegex: aBoolean.
-		self findText: aStringOrText.
-		self entireWordsOnly: forEntireWordsOnly
 ]
 
 { #category : #accessing }
@@ -221,18 +106,6 @@ RubFindReplaceService >> initialize [
 	textAreaHolder := WeakArray new: 1 
 ]
 
-{ #category : #accessing }
-RubFindReplaceService >> isRegex [
-	^ isRegex ifNil: [isRegex := false]
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> isRegex: aBoolean [
-	isRegex := aBoolean.
-	self findPolicyChanged
-
-]
-
 { #category : #'user-interface' }
 RubFindReplaceService >> newDialog [
 	| d |
@@ -241,14 +114,6 @@ RubFindReplaceService >> newDialog [
 	d announcer when: MorphDeleted send: #whenDialogDeleted to: self.
 	^ d
 	
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> regexString [
-	^ self isRegex 
-		ifTrue: [self findString]
-		ifFalse: [self convertedFindString]
-
 ]
 
 { #category : #services }
@@ -269,33 +134,10 @@ RubFindReplaceService >> replaceAll [
 ]
 
 { #category : #accessing }
-RubFindReplaceService >> replaceText [
-	^ replaceText ifNil: [replaceText := '']
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> replaceText: aStringOrText [
-	replaceText := aStringOrText asString.
-	self findPolicyChanged
-
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> searchBackwards [
-	^ searchBackwards ifNil: [searchBackwards := false]
-]
-
-{ #category : #accessing }
 RubFindReplaceService >> searchBackwards: aBoolean [
 	searchBackwards := aBoolean.
 	self updateFindStartIndex.
 	self findPolicyChanged
-
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> selectionRegexString [
-	^ self convertedFindString
 
 ]
 
@@ -367,17 +209,4 @@ RubFindReplaceService >> whenTextAreaLostFocus: anAnnounce [
 { #category : #'events handling' }
 RubFindReplaceService >> whenTextAreaSelectionChanged: anAnnouncement [ 
 	self updateFindStartIndex
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> wrapAround [
-	^ wrapAround ifNil: [wrapAround := true]
-]
-
-{ #category : #accessing }
-RubFindReplaceService >> wrapAround: aBoolean [
-	wrapAround := aBoolean.
-	self findPolicyChanged
-
-
 ]

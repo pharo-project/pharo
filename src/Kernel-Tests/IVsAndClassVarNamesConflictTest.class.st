@@ -3,7 +3,7 @@ SUnit tests to tests conflicts for instance variables and class variable names
 "
 Class {
 	#name : #IVsAndClassVarNamesConflictTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'classFactory'
 	],
@@ -34,7 +34,7 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedIn
 	]
 		on: Exception
 		do: [ :ex | ex resume ].
-	self assert: (Smalltalk globals keys includes: class name)
+	self assert: (testingEnvironment keys includes: class name)
 ]
 
 { #category : #tests }
@@ -48,5 +48,5 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingClasseVariabl
 	]
 		on: Exception
 		do: [ :ex | ex resume ].
-	self assert: (Smalltalk globals keys includes: class name)
+	self assert: (testingEnvironment keys includes: class name)
 ]

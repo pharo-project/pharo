@@ -173,7 +173,7 @@ RubSelectorChooserMorph >> setPosition [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 RubSelectorChooserMorph >> step [
 	[requestorPos 
 		ifNil: [requestorPos := requestor owner position]
@@ -187,12 +187,12 @@ RubSelectorChooserMorph >> step [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 RubSelectorChooserMorph >> stepTime [
 	^ 500
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 RubSelectorChooserMorph >> wantsSteps [ 
 	^ requestor notNil
 ]

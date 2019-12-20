@@ -1,8 +1,8 @@
 "
-I am the adapter used to realise a TreeTablePresenter.
+I am the adapter used to realise a SpTreeTablePresenter.
 I will create a tree table (using FTTableMorph), using the columns TableColumn* as definitions.
 
-Is important notice here that most of the row/cell creation happens on MorphicTreeTableDataSource. Check there for some implementation details.
+Is important notice here that most of the row/cell creation happens on SpMorphicTreeTableDataSource. Check there for some implementation details.
 "
 Class {
 	#name : #SpMorphicTreeTableAdapter,
@@ -10,14 +10,26 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Table'
 }
 
+{ #category : #accessing }
+SpMorphicTreeTableAdapter class >> intercellSpacing [
+
+	^ 2@0
+]
+
+{ #category : #initialization }
+SpMorphicTreeTableAdapter >> addFocusRotationKeyBindings [
+	
+	^ super addFocusRotationKeyBindings
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 
-	self model columns do: [ :each | 
+	self presenter columns do: [ :each | 
 		tableMorph addColumn: (self newColumnFrom: each) ].
 	self ensureAtLeastOneColumnIn: tableMorph.
 
-	self model selection isMultipleSelection ifTrue: [  
+	self presenter selection isMultipleSelection ifTrue: [  
 		tableMorph beMultipleSelection ].
 
 	self isShowingColumnHeaders 
@@ -32,22 +44,24 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 	
 	tableMorph dataSource: self newDataSource.
 	
-	self model selection isEmpty 
+	self presenter selection isEmpty 
 		ifFalse: [ self updateSelectionOf: tableMorph ].
 	
-	self model whenSelectionChangedDo: [ self updateSelectionOf: tableMorph ].
-	self model whenRootsChangedDo: [ 
+	self presenter whenSelectionChangedDo: [ 
+		self updateSelectionOf: tableMorph ].
+	
+	self presenter whenRootsChangedDo: [ 
 		tableMorph selectIndexes: #().
 		tableMorph dataSource: self newDataSource ].
 	
-	self model whenShowColumnHeadersChangedDo: [ 	
+	self presenter whenShowColumnHeadersChangedDo: [ 	
 		self isShowingColumnHeaders 
 			ifTrue: [ tableMorph showColumnHeaders ] 
 			ifFalse: [ tableMorph hideColumnHeaders ] ].
 		
-	self model whenColumnsChangedDo: [
+	self presenter whenColumnsChangedDo: [
 		tableMorph columns: #(). 
-		self model columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
+		self presenter columns do: [ :each | tableMorph addColumn: (self newColumnFrom: each) ].
 		tableMorph dataSource: self newDataSource ].
 	
 	tableMorph
@@ -56,20 +70,19 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 			to: self;
 		onAnnouncement: FTStrongSelectionChanged
 			send: #strongSelectionChanged:
-			to: self.
+			to: self
 ]
 
 { #category : #factory }
 SpMorphicTreeTableAdapter >> basicSelectionChanged: ann [
 	| selection |
+	
 	selection := self presenter selection.
 	ann newSelectedIndexes ifEmpty: [ ^ selection unselectAll ].
 	(ann newSelectedIndexes difference: ann oldSelectedIndexes) ifEmpty: [ ^ self ].
 	
-	selection
-		selectPaths:
-			(ann newSelectedIndexes
-				collect: [ :i | self widget dataSource pathFromIndex: i ])
+	selection selectPaths: (ann newSelectedIndexes
+		collect: [ :index | self widget dataSource pathFromIndex: index ])
 ]
 
 { #category : #factory }
@@ -79,6 +92,7 @@ SpMorphicTreeTableAdapter >> buildWidget [
 	tableMorph := FTTableMorph new
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
+		intercellSpacing: self class intercellSpacing;
 		yourself.
 
 	self addModelTo: tableMorph.
@@ -102,6 +116,15 @@ SpMorphicTreeTableAdapter >> defaultColumn [
 SpMorphicTreeTableAdapter >> ensureAtLeastOneColumnIn: tableMorph [
 	self model columns ifNotEmpty: [ ^ self ].
 	tableMorph addColumn: (self newColumnFrom: self defaultColumn)
+]
+
+{ #category : #testing }
+SpMorphicTreeTableAdapter >> isNonEditableRow: aRow column: aColumn [
+
+	^ (self widget dataSource
+		cellColumn: (self widget columns at: aColumn)
+		row: aRow) submorphs 
+		allSatisfy: [ :e | e asReadOnlyMorph == e ]
 ]
 
 { #category : #testing }
@@ -173,6 +196,20 @@ SpMorphicTreeTableAdapter >> selectInto: aFTTableMorph paths: aCollectionOfPaths
 ]
 
 { #category : #accessing }
+SpMorphicTreeTableAdapter >> selectPath: anArray [
+	| index |
+	
+	((anArray isEmpty or: [ anArray first = 0 ]) 
+		and: [ widget selectedIndexes isEmpty ]) 
+		ifTrue: [ ^ self ].
+	index := anArray 
+		ifNotEmpty: [ widget dataSource indexFromPath: anArray ]
+		ifEmpty: [ 0 ].  
+	(widget selectedIndexes includes: index) ifTrue: [ ^ self ].
+	widget selectIndex: index
+]
+
+{ #category : #accessing }
 SpMorphicTreeTableAdapter >> selectedItem [
 	
 	| selectedIndex |
@@ -181,6 +218,12 @@ SpMorphicTreeTableAdapter >> selectedItem [
 	selectedIndex = 0 ifTrue: [ ^ nil ].
 	
 	^ (self widget dataSource elementAt: selectedIndex) data
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableAdapter >> selectedPath [
+	
+	^ self selectedPaths first 
 ]
 
 { #category : #accessing }
@@ -198,9 +241,9 @@ SpMorphicTreeTableAdapter >> selectionChanged: ann [
 
 { #category : #factory }
 SpMorphicTreeTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
-
-	self presenter activatesOnDoubleClick ifFalse: [ ^ self ].	
-	self presenter doubleClickAtIndex: aFTStrongSelectionChanged selectedIndex
+	self presenter activatesOnDoubleClick
+		ifFalse: [ ^ self ].
+	self presenter doubleClickAtPath: self selectedPath
 ]
 
 { #category : #factory }
@@ -228,5 +271,7 @@ SpMorphicTreeTableAdapter >> updateMenu [
 { #category : #selection }
 SpMorphicTreeTableAdapter >> updateSelectionOf: tableMorph [
 	
-	self selectInto: tableMorph paths: self model selection selectedPaths
+	self 
+		selectInto: tableMorph 
+		paths: self model selection selectedPaths
 ]

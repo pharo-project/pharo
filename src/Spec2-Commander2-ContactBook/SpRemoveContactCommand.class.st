@@ -19,7 +19,7 @@ SpRemoveContactCommand >> asSpecCommand [
 ]
 
 { #category : #hooks }
-SpRemoveContactCommand >> canBeRun [
+SpRemoveContactCommand >> canBeExecuted [
 	^ self context isContactSelected
 ]
 
@@ -33,6 +33,7 @@ SpRemoveContactCommand >> execute [
 SpRemoveContactCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'Remove'; "This is the name of the command that will be shown to the user."
-		basicDescription: 'Removes the selected contact from the contact book.' "This is the description of the command that will be shown to the user."
+		name: 'Remove';
+		"This is the name of the command that will be shown to the user."
+			description: 'Removes the selected contact from the contact book.'	"This is the description of the command that will be shown to the user."
 ]

@@ -1,5 +1,5 @@
 "
-I'm the common superclass for all Graphes related algorithms.
+I'm the common superclass for all graphs related algorithms.
 I store edges and nodes and provides convenience methods to add, access and find nodes or edges.
 
 Once configured, send the run message to execute the algorithm.
@@ -9,37 +9,28 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'nodes',
-		'edges'
+		'edges',
+		'nodeSortBlock'
 	],
 	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #private }
-MalGraphAlgorithm >> addEdge: eModel from: source to: target [ 
-
-	| edge sourceNode targetNode unknownNode |
-	unknownNode := false.
-	sourceNode := self 	findNode: (source value: eModel)
-							ifAbsent: [ unknownNode := true ].
-	targetNode := self 	findNode: (target value: eModel)
-							ifAbsent: [ unknownNode := true ].
-
-	unknownNode ifFalse: [
-		self edgeClass ifNil: [
-			sourceNode to: targetNode.
+MalGraphAlgorithm >> addEdge: eModel from: source to: target [
+	| edge sourceNode targetNode |
+	sourceNode := self findNode: (source value: eModel) ifAbsent: [ ^ nil ].
+	targetNode := self findNode: (target value: eModel) ifAbsent: [ ^ nil ].
+	self edgeClass
+		ifNil: [ sourceNode to: targetNode.
 			targetNode from: sourceNode.
-			^ nil
-		] ifNotNil: [
-			edge := self edgeClass with: eModel.
+			^ nil ]
+		ifNotNil: [ edge := self edgeClass with: eModel.
 			sourceNode to: targetNode edge: edge.
 			targetNode from: sourceNode edge: edge.
 			edge from: sourceNode.
 			edge to: targetNode.
-			self edges add: edge.	
-			^ edge
-		]		
-	].
-	^ nil
+			self edges add: edge.
+			^ edge ]
 ]
 
 { #category : #'building - graph' }
@@ -64,6 +55,15 @@ MalGraphAlgorithm >> addNodesFrom: model childrenBlock: childrenBlock [
 		do: [ :child | 
 				self addNodesFrom: child childrenBlock: childrenBlock.
 				self addEdge: { parent model . child } from: #first to: #second ]
+]
+
+{ #category : #testing }
+MalGraphAlgorithm >> canUseSortedNodes [
+	"New implementation of the algos to have better performances to find nodes"
+
+	"If nodes are sorted following this block, the find method will be a lot faster. The block should be set on the run method and the nodes sorted at this moment"
+
+	^ nodeSortBlock isNotNil
 ]
 
 { #category : #configuration }
@@ -93,14 +93,37 @@ MalGraphAlgorithm >> edges: aCollection from: source to: target weight: weightFu
 
 { #category : #'building - graph' }
 MalGraphAlgorithm >> edges: aCollection from: source toAll: targets [
-	aCollection 
-		do: [ :eModel |
-			(targets value: eModel) 
-			do: [:target| 
-					self 
-						addEdge: {source value: eModel . target}
+	aCollection
+		do: [ :eModel | 
+			(targets value: eModel)
+				do: [ :target | 
+					self
+						addEdge:
+							{(source value: eModel).
+							target}
 						from: #first
 						to: #second ] ]
+]
+
+{ #category : #private }
+MalGraphAlgorithm >> ensureNodesAreSorted [
+	"New implementation of the algos to have better performances to find nodes"
+	"If one change is made in the node list, one should call again sortNodes"
+
+	nodeSortBlock ifNotNil: [ ^ self ].
+	self nodeSortBlock: [ :a :b | a model hash <= b model hash ].
+	self sortNodes
+]
+
+{ #category : #private }
+MalGraphAlgorithm >> findBinaryBlock: aModel [
+	"New implementation of the algos to have better performances to find nodes"
+	^ [ :aNode | 
+	aNode model = aModel
+		ifTrue: [ 0 ]
+		ifFalse: [ aModel hash < aNode model hash
+				ifTrue: [ -1 ]
+				ifFalse: [ 1 ] ] ]
 ]
 
 { #category : #accessing }
@@ -110,21 +133,25 @@ MalGraphAlgorithm >> findEdge: aModel [
 
 { #category : #accessing }
 MalGraphAlgorithm >> findNode: aModel [
-	^ self nodes detect: [:aNode | aNode model = aModel ]
+	self canUseSortedNodes
+		ifFalse: [ ^ self nodes detect: [ :aNode | aNode model = aModel ] ].
+	^ self nodes findBinary: (self findBinaryBlock: aModel)
 ]
 
 { #category : #accessing }
 MalGraphAlgorithm >> findNode: aModel ifAbsent: aBlock [
-	^ self nodes 
-		detect: [:node | node model = aModel]
-		ifNone: aBlock
+	self canUseSortedNodes
+		ifFalse: [ ^ self nodes detect: [ :node | node model = aModel ] ifNone: aBlock ].
+^ self nodes
+		findBinary: (self findBinaryBlock: aModel) ifNone: aBlock
 ]
 
 { #category : #accessing }
 MalGraphAlgorithm >> findNode: aModel ifFound: aBlock [
-	^ self nodes 
-		detect: [:node | node model = aModel]
-		ifFound: aBlock
+	self canUseSortedNodes
+		ifFalse: [ ^ self nodes detect: [ :node | node model = aModel ] ifFound: aBlock ].
+	"New implementation of the algos to have better performances to find nodes"
+	self notYetImplemented
 ]
 
 { #category : #accessing }
@@ -144,6 +171,11 @@ MalGraphAlgorithm >> nodeClass [
 ]
 
 { #category : #accessing }
+MalGraphAlgorithm >> nodeSortBlock: aBlockClosure [ 
+	nodeSortBlock := aBlockClosure
+]
+
+{ #category : #accessing }
 MalGraphAlgorithm >> nodes [
 	^ nodes
 ]
@@ -152,6 +184,14 @@ MalGraphAlgorithm >> nodes [
 MalGraphAlgorithm >> nodes: aNodeList [
 	aNodeList 
 		do: [ :model |	self addNodeFor: model ]
+]
+
+{ #category : #adding }
+MalGraphAlgorithm >> nodesFromSet: aSet [
+	"Ensure that the collection do not contains any duplicated item"
+
+	self assert: aSet class == Set.
+	nodes addAll: (aSet collect: [ :aModel | self nodeClass with: aModel ])
 ]
 
 { #category : #private }
@@ -170,4 +210,10 @@ MalGraphAlgorithm >> privateNodes: aCollection [
 MalGraphAlgorithm >> run [
 
 	self subclassResponsibility 
+]
+
+{ #category : #private }
+MalGraphAlgorithm >> sortNodes [
+	self canUseSortedNodes ifFalse: [ ^self ].
+	self nodes sort: nodeSortBlock.
 ]

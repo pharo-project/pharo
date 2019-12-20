@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'streamPosition'
 	],
-	#category : #'STON-Core-Exceptions'
+	#category : #'STON-Core-Reader'
 }
 
 { #category : #'instance creation' }
@@ -25,8 +25,7 @@ STONReaderError >> messageText [
 		ifNil: [ 
 			super messageText ] 
 		ifNotNil: [ :pos | 
-			'At character {1}: {2}' format: 
-				(Array with: streamPosition with: super messageText) ]
+			'At character <1P>: <2P>' expandMacrosWith: pos with: super messageText ]
 ]
 
 { #category : #accessing }

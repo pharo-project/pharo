@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemFileRegistry class >> manuallyResolvedDependencies [
-	^ #(#'System-Localization' #'FileSystem-Core' #'Collections-Abstract')
+	^ #(#'FileSystem-Core' #'Collections-Abstract')
 ]

@@ -20,13 +20,13 @@ LIFOQueueTest >> testBasics [
 	
 	q nextPut: 5.
 	
-	self assert: q next = 5.
+	self assert: q next equals: 5.
 	
 	q nextPut: 10.
 	
-	self assert: q nextOrNil = 10.
+	self assert: q nextOrNil equals: 10.
 	
-	self assert: q nextOrNil == nil
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -38,7 +38,7 @@ LIFOQueueTest >> testContention1 [
 	q nextPut: 10.
 	q nextPut: 5.
 
-	self should: [ q nextOrNil = 5 ].
+	self assert: q nextOrNil equals: 5.
 
 	[ r1 := q next ] fork.
 	[ r2 := q next ] fork.
@@ -47,10 +47,9 @@ LIFOQueueTest >> testContention1 [
 	q nextPut: 10.
 	Processor yield.
 
-	self should: [ r1 = 10 ].
-	self should: [ r2 = 10 ].
-	self should: [ q nextOrNil = nil ].
-
+	self assert: r1 equals: 10.
+	self assert: r2 equals: 10.
+	self assert: q nextOrNil isNil
 ]
 
 { #category : #tests }
@@ -93,6 +92,6 @@ LIFOQueueTest >> testHeavyContention [
 	done waitTimeoutSeconds: 10.
 	 
 	feeders do: [:ea | ea terminate ].
-	self assert: (count = 1000 ).
-	self assert: q nextOrNil == nil
+	self assert: count equals: 1000.
+	self assert: q nextOrNil isNil
 ]

@@ -33,6 +33,12 @@ RubSmalltalkScriptingMode >> parseSource: aString [
 	^RBParser parseFaultyExpression: aString
 ]
 
+{ #category : #shout }
+RubSmalltalkScriptingMode >> updateStyler [
+	super updateStyler.
+	self textArea shoutStyler beForSmalltalkScripting
+]
+
 { #category : #update }
 RubSmalltalkScriptingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.

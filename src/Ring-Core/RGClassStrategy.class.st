@@ -44,7 +44,7 @@ RGClassStrategy >> allClassVariables [
 
 	^ ((self owner superclass == nil) or: [ self owner superclass == self owner]) 
 		ifTrue: [ self classVariables ]
-		ifFalse: [ self owner superclass allClassVariables, classVariables ]
+		ifFalse: [ self owner superclass allClassVariables, self classVariables ]
 ]
 
 { #category : #'private - backend access' }
@@ -119,11 +119,8 @@ RGClassStrategy >> classVariableDefinitionString [
 
 { #category : #'private - backend access' }
 RGClassStrategy >> classVariables [
-
-	| allClassVariables |
-	allClassVariables := OrderedCollection new.
-	self classVariablesDo: [ :each | allClassVariables add: each].
-	^ allClassVariables asArray
+	
+	^ Array streamContents: [ :str | self classVariablesDo: [ :each | str nextPut: each ] ]
 ]
 
 { #category : #'private - backend access' }
