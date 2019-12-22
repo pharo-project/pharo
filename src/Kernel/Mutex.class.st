@@ -25,9 +25,9 @@ Class {
 { #category : #'mutual exclusion' }
 Mutex >> critical: aBlock [
 	"Evaluate aBlock only if the resource represented by the receiver is not already in use by another process. 
-	If it is, wait on the receiver's semaphore until the resource is available. 
-	If the resource is already in use by the current process, execution proceeds. 
-	Answer the result of evaluating the block"
+	If it is, wait until the resource is available. 
+	If the mutex is already used by the current process, execution proceeds. 
+	Answer the block's result."
 	
 	| activeProcess |
 	activeProcess := Processor activeProcess.
