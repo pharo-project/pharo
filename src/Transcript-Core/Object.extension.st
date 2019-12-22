@@ -2,14 +2,14 @@ Extension { #name : #Object }
 
 { #category : #'*Transcript-Core' }
 Object >> crTrace [
-	self crTrace: self printString
+	self crTrace: self
 ]
 
 { #category : #'*Transcript-Core' }
 Object >> crTrace: aString [
 	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
 	
-	Transcript cr; show: aString.
+	Transcript cr; show: aString asString
 ]
 
 { #category : #'*Transcript-Core' }
@@ -29,14 +29,14 @@ Object >> logExit [
 
 { #category : #'*Transcript-Core' }
 Object >> trace [
-	self trace: self printString
+	self trace: self
 ]
 
 { #category : #'*Transcript-Core' }
 Object >> trace: aString [
 	"Log the argument. Use self trace: instead of Transcript show: "
 	
-	Transcript show: aString
+	Transcript show: aString asString
 ]
 
 { #category : #'*Transcript-Core' }
