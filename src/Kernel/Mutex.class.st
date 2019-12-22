@@ -24,14 +24,14 @@ Class {
 
 { #category : #'mutual exclusion' }
 Mutex >> critical: aBlock [
-	"Evaluate aBlock only if the resource represented by the receiver is not already in use by another process. 
+	"Execute aBlock only if the receiver is not already used by another process. 
 	If it is, wait until the resource is available. 
 	If the mutex is already used by the current process, execution proceeds. 
 	Answer the block's result."
 	
 	| activeProcess |
 	activeProcess := Processor activeProcess.
-	activeProcess == owner ifTrue:[^aBlock value].
+	activeProcess == owner ifTrue:[ ^aBlock value ].
 	^ semaphore critical: [
 			owner := activeProcess.
 			aBlock ensure: [ owner := nil ] ].
