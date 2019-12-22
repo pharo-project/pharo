@@ -1,6 +1,13 @@
 "
 A Mutex is a light-weight MUTual EXclusion object being used when two or more processes need to access a shared resource concurrently. A Mutex grants ownership to a single process and will suspend any other process trying to aquire the mutex while in use. Waiting processes are granted access to the mutex in the order the access was requested.
 
+A Mutex is also more robust to nested critical calls.
+For example 
+
+mutex critical: [ mutex critical: [ Trasncript show: 'nested passes through' ] ]
+
+will not deadlock, while a semaphore will. This is why a mutex is also called a recursionLock.
+
 Instance variables:
 	semaphore	<Semaphore>		The (primitive) semaphore used for synchronization.
 	owner		<Process>		The process owning the mutex.
@@ -17,13 +24,17 @@ Class {
 
 { #category : #'mutual exclusion' }
 Mutex >> critical: aBlock [
-	"Evaluate aBlock protected by the receiver."
+	"Evaluate aBlock only if the resource represented by the receiver is not already in use by another process. 
+	If it is, wait on the receiver's semaphore until the resource is available. 
+	If the resource is already in use by the current process, execution proceeds. 
+	Answer the result of evaluating the block"
+	
 	| activeProcess |
 	activeProcess := Processor activeProcess.
 	activeProcess == owner ifTrue:[^aBlock value].
-	^semaphore critical:[
-		owner := activeProcess.
-		aBlock ensure:[owner := nil]].
+	^ semaphore critical: [
+			owner := activeProcess.
+			aBlock ensure: [ owner := nil ] ].
 ]
 
 { #category : #initialization }
