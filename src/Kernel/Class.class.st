@@ -469,23 +469,20 @@ Class >> deprecationRefactorings [
 
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
-	| copysName class newComment |
-			
+	| copysName class |
 	copysName := aSymbol asSymbol.
 	copysName = self name
 		ifTrue: [ ^ self ].
 	(self environment includesKey: copysName)
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
-
-	class := self classInstaller make: [ :builder | 
-		builder 
-			fillFor: self;
-			name: copysName].
-		
+	class := self classInstaller
+		make: [ :builder | 
+			builder
+				fillFor: self;
+				name: copysName ].
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
-
-  ^ class
+	^ class
 ]
 
 { #category : #organization }
