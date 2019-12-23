@@ -19,7 +19,7 @@ unzip master.zip
 mv BootstrapImage-master/* .
 rm -rf BootstrapImage-master
 rm -rf master.zip
-#ressources are not stored as they were, this is a hack to make it work anyway
+"ressources are not stored as they were, this is a hack to make it work anyway"
 
 cd "${BOOTSTRAP_CACHE}"
 #We need the old sources file next to the image because of sources condensation step
