@@ -3,7 +3,7 @@ BUILD_NUMBER = 1
 
 ifeq ($(BOOTSTRAP_ARCH),32)
 	SEEK=24
-else 
+else
 	SEEK=40
 endif
 

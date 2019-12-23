@@ -16,6 +16,10 @@ mkdir -p "${BOOTSTRAP_CACHE}" #required to generate hermes files
 ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 70
 wget --progress=dot:mega https://github.com/hogoww/BootstrapImage/archive/master.zip
 unzip master.zip
+mv BootstrapImage-master/* .
+rm -rf BootstrapImage-master
+rm -rf master.zip
+"ressources are not stored as they were, this is a hack to make it work anyway"
 
 cd "${BOOTSTRAP_CACHE}"
 #We need the old sources file next to the image because of sources condensation step
