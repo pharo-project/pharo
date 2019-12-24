@@ -57,10 +57,15 @@ MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
 
 { #category : #versions }
 MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
+	RPackageOrganizer default packages do: [ :arg | Stdio stdout print: arg name ; crlf ].
+	Stdio stdout crlf crlf.
 
 	^ RPackageOrganizer default packages
 		select: [ :package | package name ~= RPackage defaultPackageName and: [ aBlock value: package ] ]
-		thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
+		thenCollect: [ :rpackage | 
+		rpackage name = #'zinc-resource-meta-core'
+		ifTrue: [ self fileNameForPackageNamed: #'Zinc-Resource-Meta-Core'  ]
+		ifFalse: [ self fileNameForPackageNamed: rpackage name ] ]
 ]
 
 { #category : #bootstrapping }

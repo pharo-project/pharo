@@ -57,10 +57,13 @@ MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
 
 { #category : #versions }
 MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
-	Stdio stdout print: (RPackageOrganizer default packages collect: #name) ; crlf.
+
 	^ RPackageOrganizer default packages
 		select: [ :package | package name ~= RPackage defaultPackageName and: [ aBlock value: package ] ]
-		thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
+		thenCollect: [ :rpackage | "Hack, I don't know where this was added the wrong way"
+		rpackage name = #'zinc-resource-meta-core'
+		ifTrue: [ self fileNameForPackageNamed: #'Zinc-Resource-Meta-Core'  ]
+		ifFalse: [ self fileNameForPackageNamed: rpackage name ] ]
 ]
 
 { #category : #bootstrapping }
@@ -84,11 +87,9 @@ MonticelloBootstrap >> directory: aDirectory [
 MonticelloBootstrap >> fileNameForPackageNamed: name [
 
 	| versionInfos |
-	Stdio stdout print: name; crlf.
 	versionInfos := self localRepository directory files
-		     select: [ :fileName | Stdio stdout print: '-' ; print: (fileName basename copyUpToLast: $-) ;crlf.
-		     	       (fileName basename copyUpToLast: $-) = name ].
-			       Stdio stdout crlf crlf crlf.	
+		     select: [ :fileName | (fileName basename copyUpToLast: $-) = name ].
+
 	versionInfos
 		ifEmpty: [ self error: 'No versionInfo for package: ', name,' in ', self localRepository directory asString ].
 	versionInfos size > 1
