@@ -2102,7 +2102,7 @@ Object >> writeSlotNamed: aName value: anObject [
 ]
 
 { #category : #'process termination handling' }
-Object >> yield [ 
+Object >> yieldProcessor [
 	"Suspend the active process and give back control to the scheduler. It gives a chance to other pending processes to be scheduled."
 	
 	Processor yield
