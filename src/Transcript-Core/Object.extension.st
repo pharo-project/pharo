@@ -34,10 +34,10 @@ Object >> trace [
 ]
 
 { #category : #'*Transcript-Core' }
-Object >> trace: aString [
+Object >> trace: anObject [
 	"Log the argument. Use self trace: instead of Transcript show: "
 	
-	Transcript show: aString asString
+	Transcript show: anObject asString
 ]
 
 { #category : #'*Transcript-Core' }
@@ -46,17 +46,17 @@ Object >> traceCr [
 ]
 
 { #category : #'*Transcript-Core' }
-Object >> traceCr: aString [
+Object >> traceCr: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
-	self trace: aString.
+	self trace: anObject.
 	Transcript cr
 ]
 
 { #category : #'*Transcript-Core' }
-Object >> traceCrTab: aString [
+Object >> traceCrTab: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
-	self trace: aString.
+	self trace: anObject.
 	Transcript cr ; tab
 ]
