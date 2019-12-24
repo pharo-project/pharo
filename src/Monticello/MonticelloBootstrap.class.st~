@@ -84,9 +84,11 @@ MonticelloBootstrap >> directory: aDirectory [
 MonticelloBootstrap >> fileNameForPackageNamed: name [
 
 	| versionInfos |
+	Stdio stdout print: name; crlf.
 	versionInfos := self localRepository directory files
-		select: [ :fileName | (fileName basename copyUpToLast: $-) = name ].
-	
+		     select: [ :fileName | Stdio stdout print: '-' ; print: (fileName basename copyUpToLast: $-) ;crlf.
+		     	       (fileName basename copyUpToLast: $-) = name ].
+			       Stdio stdout crlf crlf crlf.	
 	versionInfos
 		ifEmpty: [ self error: 'No versionInfo for package: ', name,' in ', self localRepository directory asString ].
 	versionInfos size > 1

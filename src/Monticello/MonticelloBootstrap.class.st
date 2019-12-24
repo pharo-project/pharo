@@ -57,7 +57,7 @@ MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
 
 { #category : #versions }
 MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
-
+	Stdio stdout print: (RPackageOrganizer default packages collect: #name) ; crlf.
 	^ RPackageOrganizer default packages
 		select: [ :package | package name ~= RPackage defaultPackageName and: [ aBlock value: package ] ]
 		thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
