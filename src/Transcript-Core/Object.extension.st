@@ -2,14 +2,15 @@ Extension { #name : #Object }
 
 { #category : #'*Transcript-Core' }
 Object >> crTrace [
-	self crTrace: self printString
+	self crTrace: self
 ]
 
 { #category : #'*Transcript-Core' }
 Object >> crTrace: aString [
 	"Log the argument. Use self crTrace: instead of Transcript cr; show: "
 	
-	Transcript cr; show: aString.
+	Transcript cr.
+	self trace: aString
 ]
 
 { #category : #'*Transcript-Core' }
@@ -29,31 +30,33 @@ Object >> logExit [
 
 { #category : #'*Transcript-Core' }
 Object >> trace [
-	self trace: self printString
+	self trace: self
 ]
 
 { #category : #'*Transcript-Core' }
-Object >> trace: aString [
+Object >> trace: anObject [
 	"Log the argument. Use self trace: instead of Transcript show: "
 	
-	Transcript show: aString
+	Transcript show: anObject asString
 ]
 
 { #category : #'*Transcript-Core' }
 Object >> traceCr [
-	self traceCr: self printString
+	self traceCr: self
 ]
 
 { #category : #'*Transcript-Core' }
-Object >> traceCr: aString [
+Object >> traceCr: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
-	Transcript show: aString ; cr
+	self trace: anObject.
+	Transcript cr
 ]
 
 { #category : #'*Transcript-Core' }
-Object >> traceCrTab: aString [
+Object >> traceCrTab: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
-	Transcript show: aString ; cr ; tab
+	self trace: anObject.
+	Transcript cr ; tab
 ]
