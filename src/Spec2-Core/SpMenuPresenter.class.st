@@ -65,7 +65,7 @@ SpMenuPresenter >> addGroup: aBlock [
 	In case of a single group menu you can use #addItem: directly."
 
 	| group |
-	group := SpMenuGroupPresenter new.
+	group := self instantiate: SpMenuGroupPresenter.
 	aBlock value: group.
 	self addMenuGroup: group
 ]
@@ -118,7 +118,7 @@ SpMenuPresenter >> canTakeKeyboardFocus [
 { #category : #accessing }
 SpMenuPresenter >> defaultGroup [
 	^ defaultGroup
-		ifNil: [ defaultGroup := SpMenuGroupPresenter new.
+		ifNil: [ defaultGroup := self instantiate: SpMenuGroupPresenter.
 			self addMenuGroup: defaultGroup.
 			defaultGroup ]
 ]

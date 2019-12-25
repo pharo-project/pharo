@@ -65,12 +65,12 @@ AbstractDrTestsUI >> locked: aBoolean [
 		do: [ :subwidget | subwidget enabled: aBoolean ]
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 AbstractDrTestsUI >> runPlugin [
 	self runPluginFor: self testsConfiguration
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 AbstractDrTestsUI >> runPluginFor: aTestsConfiguration [
 	[ self lock.
 	self updateStatus: 'Tests started.'.
@@ -146,13 +146,13 @@ AbstractDrTestsUI >> updateStatus: aString [
 	"Does nothing on purpose."
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 AbstractDrTestsUI >> updateUI [
 	^ self subclassResponsibility
 
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 AbstractDrTestsUI >> updateWithResults: results [
 	self subclassResponsibility
 ]

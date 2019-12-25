@@ -10,6 +10,9 @@ Class {
 	#superclass : #GLMCompositePresentation,
 	#traits : 'GTBrowsingActions',
 	#classTraits : 'GTBrowsingActions classTrait',
+	#instVars : [
+		'originalSession'
+	],
 	#classVars : [
 		'EnableDebuggerWindowDistinctColor',
 		'EnableStackColoring'
@@ -313,6 +316,16 @@ GTMoldableDebugger >> openOn: anObject [
 		extent: self initialExtent;
 		title: self session name;
 		yourself
+]
+
+{ #category : #accessing }
+GTMoldableDebugger >> originalSession [
+	^ originalSession
+]
+
+{ #category : #accessing }
+GTMoldableDebugger >> originalSession: aDebugSession [
+	originalSession := aDebugSession
 ]
 
 { #category : #building }

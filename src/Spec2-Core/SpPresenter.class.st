@@ -177,7 +177,7 @@ SpPresenter class >> on: aDomainObject [
 		in: #Pharo8."
 		
 	^ self 
-		newApplication: SpNullApplication new 
+		newApplication: SpApplication defaultApplication
 		model: aDomainObject 
 ]
 
@@ -307,6 +307,7 @@ SpPresenter >> applyMenuModel: aMenuModel [
 { #category : #converting }
 SpPresenter >> asPresenter [
 	"This allows to use presenter instances inside layouts directly"
+
 	^ self
 ]
 
@@ -701,6 +702,11 @@ SpPresenter >> newCode [
 ]
 
 { #category : #widgets }
+SpPresenter >> newComponentList [
+	^ self instantiate: SpComponentListPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newDiff [
 	^ self instantiate: SpDiffPresenter
 ]
@@ -799,6 +805,18 @@ SpPresenter >> newProgressBar [
 { #category : #widgets }
 SpPresenter >> newRadioButton [
 	^ self instantiate: SpRadioButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newRichText [
+
+	^ self instantiate: SpRichTextPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newSearchInput [
+
+	^ self instantiate: SpSearchInputFieldPresenter
 ]
 
 { #category : #widgets }
@@ -929,15 +947,6 @@ SpPresenter >> retrieveSpec: aSelector [
 
 	self layout ifNotNil: [ ^ self layout ].
 	^ super retrieveSpec: aSelector
-]
-
-{ #category : #TOMOVE }
-SpPresenter >> setExtentAndBindingTo: widget [
-
-	self flag: #TODO. "This is bad. Extent needs to be 'ensured' at adapter level. 
-	Same for keybindings"
-	self ensureExtentFor: widget.
-	self ensureKeyBindingsFor: widget
 ]
 
 { #category : #'accessing model' }

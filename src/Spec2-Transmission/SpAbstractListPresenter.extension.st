@@ -10,7 +10,7 @@ SpAbstractListPresenter >> defineInputPorts [
 SpAbstractListPresenter >> defineOutputPorts [
 	
 	^ { 
-	SpListSelectionPort new. 
+	SpSelectionPort new. 
 	SpActivationPort new 
 	}
 ]

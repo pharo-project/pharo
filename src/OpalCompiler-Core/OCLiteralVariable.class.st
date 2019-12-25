@@ -91,6 +91,11 @@ OCLiteralVariable >> name [
 	^ assoc name
 ]
 
+{ #category : #reading }
+OCLiteralVariable >> read [
+	^ assoc read 
+]
+
 { #category : #accessing }
 OCLiteralVariable >> value [
 	^assoc value

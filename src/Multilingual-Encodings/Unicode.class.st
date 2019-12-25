@@ -569,6 +569,7 @@ Unicode class >> isDigit: char [
 
 { #category : #'character classification' }
 Unicode class >> isEnclosingMark: char [
+	
 	^ self is: char inCategory: Me
 ]
 

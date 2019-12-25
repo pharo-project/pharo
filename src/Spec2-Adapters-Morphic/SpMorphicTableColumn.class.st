@@ -23,6 +23,12 @@ SpMorphicTableColumn >> id [
 	^ self model title
 ]
 
+{ #category : #testing }
+SpMorphicTableColumn >> isSortable [
+
+	^ self model isSortable
+]
+
 { #category : #accessing }
 SpMorphicTableColumn >> model [
 	^ model
@@ -31,11 +37,19 @@ SpMorphicTableColumn >> model [
 { #category : #accessing }
 SpMorphicTableColumn >> model: anObject [
 
-	model := anObject
+	model := anObject.
+	model isSortable ifTrue: [ 
+		self sortableUsing: model sortFunction ]
 ]
 
 { #category : #accessing }
 SpMorphicTableColumn >> readObject: anObject [ 
 
 	^ self model readObject: anObject
+]
+
+{ #category : #accessing }
+SpMorphicTableColumn >> sortFunction [
+
+	^ self model sortFunction
 ]

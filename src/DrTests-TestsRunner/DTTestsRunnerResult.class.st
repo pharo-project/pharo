@@ -34,6 +34,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeAndClass: anOrderedColletion type: 
 			subResults: ((anOrderedColletion groupedBy: #class) associations collect: [ :assoc |
 				DTTreeNode new
 					name: assoc key name;
+					browseBlock: [ assoc key drTestsBrowse ];
 					subResults: (self buildLeavesFrom: assoc value type: testResultType);
 					yourself ]);
 			yourself
@@ -56,7 +57,7 @@ DTTestsRunnerResult >> buildNodeGroupedByTypeClassAndProtocol: anOrderedColletio
 
 { #category : #accessing }
 DTTestsRunnerResult >> buildTreeForUI [
-	<dTTestRunnerResultTreeNamed: 'Grouped by type of result'>
+	<dtTestRunnerResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
 		subResults:
 			{DTTreeNode new
@@ -78,7 +79,7 @@ DTTestsRunnerResult >> buildTreeForUI [
 
 { #category : #accessing }
 DTTestsRunnerResult >> buildTreeForUIByClasses [
-	<dTTestRunnerResultTreeNamed: 'Grouped by type of result and classes'>
+	<dtTestRunnerResultTreeNamed: 'Grouped by type of result and classes' order: 2>
 
 	| errors failures skipped passed |
 	errors := self buildNodeGroupedByTypeAndClass: self testResults errors type: DTTestResultType error.
@@ -96,7 +97,7 @@ DTTestsRunnerResult >> buildTreeForUIByClasses [
 
 { #category : #accessing }
 DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
-	<dTTestRunnerResultTreeNamed: 'Grouped by type of result, classes, and protocol'>
+	<dtTestRunnerResultTreeNamed: 'Grouped by type of result, classes, and protocol' order: 3>
 
 	| errors failures skipped passed |
 	errors := self buildNodeGroupedByTypeClassAndProtocol: self testResults errors type: DTTestResultType error.

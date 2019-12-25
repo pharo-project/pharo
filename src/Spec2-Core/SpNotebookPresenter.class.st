@@ -90,16 +90,14 @@ SpNotebookPresenter >> resetAllPageContents [
 
 { #category : #accessing }
 SpNotebookPresenter >> selectPage: aPage [
-	"Alias to make code more readable"
 
-	self selectedPage: aPage
+	aPage = self selectedPage ifTrue: [ ^ self ].
+	selectedPage := aPage
 ]
 
 { #category : #accessing }
 SpNotebookPresenter >> selectPageIndex: aNumber [
-	"Alias to make code more readable"
-
-	^ self selectedPageIndex: aNumber
+	self selectPage: (self pages at: aNumber)
 ]
 
 { #category : #accessing }
@@ -111,8 +109,12 @@ SpNotebookPresenter >> selectedPage [
 { #category : #private }
 SpNotebookPresenter >> selectedPage: aPage [
 
-	aPage = self selectedPage ifTrue: [ ^ self ].
-	selectedPage := aPage
+	self 
+		deprecated: 'Use #selectPage: instead' 
+		transformWith: '`@receiver selectedPage: `@statements1'
+				-> '`@receiver selectPage: `@statements1'.
+				
+	self selectPage: aPage
 ]
 
 { #category : #accessing }
@@ -127,8 +129,12 @@ SpNotebookPresenter >> selectedPageIndex [
 
 { #category : #private }
 SpNotebookPresenter >> selectedPageIndex: aNumber [
-
-	self selectedPage: (self pages at: aNumber)
+	self 
+		deprecated: 'Use #selectPageIndex: instead' 
+		transformWith: '`@receiver selectedPageIndex: `@statements1'
+				-> '`@receiver selectPageIndex: `@statements1'.
+				
+	self selectPageIndex: aNumber
 ]
 
 { #category : #'private-traversing' }

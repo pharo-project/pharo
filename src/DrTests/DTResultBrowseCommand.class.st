@@ -7,9 +7,14 @@ Class {
 	#category : #'DrTests-Commands'
 }
 
+{ #category : #testing }
+DTResultBrowseCommand >> canBeExecuted [
+	^ self resultSelected canBeBrowsed
+]
+
 { #category : #hooks }
 DTResultBrowseCommand >> execute [
-	self context browseSelectedResult
+	self drTest browseSelectedResult
 ]
 
 { #category : #hooks }

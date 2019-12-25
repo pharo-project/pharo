@@ -1073,6 +1073,22 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 	] on: Error do: [ :e| "we don't care if the logging to stdout fails..." ].
 ]
 
+{ #category : #miscellaneous }
+SmalltalkImage >> logStdOutDuring: aBlock [
+	| stderr |
+	[
+		"install the line end conversion and force initialize the converter"
+		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
+			on: Stdio out
+			encoding: 'utf8').
+		
+		"reset coloring"
+		stderr nextPut: Character escape; nextPutAll: '[0m'.
+		"rund the loggin block"
+		aBlock value: stderr.
+	] on: Error do: [ :e| "we don't care if the logging to stdout fails..." ].
+]
+
 { #category : #'memory space' }
 SmalltalkImage >> lowSpaceThreshold [ 
 	"Return the low space threshold. When the amount of free memory (after garbage collection) falls below this limit, the system is in serious danger of completely exhausting memory and crashing. This limit should be made high enough to allow the user open a debugger to diagnose a problem or to save the image."

@@ -12,7 +12,8 @@ Class {
 		'node',
 		'isWorkspace',
 		'class',
-		'entries'
+		'entries',
+		'editor'
 	],
 	#classVars : [
 		'SorterClass'
@@ -75,6 +76,7 @@ CompletionContext >> engine: aCompletionEngine class: aClass source: aString pos
 	class := aClass. 
 	source := aString.
 	position := anInteger.
+	editor := aCompletionEngine editor.
 	
 	isWorkspace:= aCompletionEngine 
 		ifNotNil: [ aCompletionEngine isScripting ]
@@ -139,6 +141,7 @@ CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
 		noPattern: isWorkspace;
+		requestor: editor;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	ast doSemanticAnalysis.

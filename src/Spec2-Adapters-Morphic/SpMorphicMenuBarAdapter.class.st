@@ -49,7 +49,7 @@ SpMorphicMenuBarAdapter >> buildButtonFor: item [
 		getState: nil
 		action: #performMenuActionWith:
 		arguments: {widget}
-		getEnabled: #enabled
+		getEnabled: #isEnabled
 		label: (IconicListItem text: item name icon: item icon)
 		help: item description
 ]

@@ -17,8 +17,19 @@ SpMorphicBaseTextAdapter >> accept [
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> accept: aText notifying: aNotifyier [
+	| accept |
 
-	self model accept: aText notifying: aNotifyier
+	accept := self presenter acceptBlock 
+		cull: aText 
+		cull: aNotifyier.
+	accept == false ifTrue: [ ^ false ].
+
+	self presenter text: aText copy.
+	"Raise an announcement"
+	self presenter actionPerformed.
+	self presenter changed: #clearUserEdits.
+	
+	^ true
 ]
 
 { #category : #accessing }

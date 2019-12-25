@@ -678,7 +678,7 @@ ZnClient >> https [
 
 { #category : #options }
 ZnClient >> ifFail: block [
-	"Set the block that I will be execute when the request fails.
+	"Set the block that will be executed if the request fails.
 	The exception of the failure will be passed as argument."
 	
 	self optionAt: #ifFailBlock put: block
