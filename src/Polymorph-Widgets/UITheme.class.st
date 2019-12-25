@@ -5751,21 +5751,6 @@ UITheme >> taskbarThumbnailNormalBorderStyleFor: aWindow [
 ]
 
 { #category : #'accessing colors' }
-UITheme >> testColorError [
-	^ Color red darker darker 
-]
-
-{ #category : #'accessing colors' }
-UITheme >> testColorFailure [
-	^ Color yellow darker darker darker
-]
-
-{ #category : #'accessing colors' }
-UITheme >> testColorPassing [
-	^ Color green darker darker
-]
-
-{ #category : #'accessing colors' }
 UITheme >> textColor [ 
 	^ Color black
 ]
