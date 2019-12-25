@@ -10,13 +10,14 @@ Class {
 { #category : #factory }
 SpMorphicToolBarAdapter >> addModelTo: toolBarMorph [
 
-	toolBarMorph displayMode: self model displayMode. 
-	toolBarMorph height: self model displayMode height.
-	toolBarMorph setBalloonText: self model help.
+	toolBarMorph displayMode: self presenter displayMode. 
+	toolBarMorph height: self presenter displayMode height.
+	toolBarMorph setBalloonText: self presenter help.
 
-	self model whenItemsChangeDo: [self updateItems: toolBarMorph].
+	self presenter whenItemsChangeDo: [ 
+		self updateItems: toolBarMorph ].
 
-	self updateItems: toolBarMorph.
+	self updateItems: toolBarMorph
 ]
 
 { #category : #factory }
@@ -63,15 +64,19 @@ SpMorphicToolBarAdapter >> updateItems: toolBarMorph [
 
 	toolBarMorph clearItems.
 
-	self model leftItems do: [ :each | 
-		toolBarMorph addItemLeft: (self 
-			configureItem: each 
-			morph: each buildWithSpec 
-			toolBar: toolBarMorph) ].
+	self presenter leftItems do: [ :each | 
+		toolBarMorph 
+			addItem: (self 
+				configureItem: each 
+				morph: each buildWithSpec 
+				toolBar: toolBarMorph)
+			position: SpToolBarItemPosition left ].
 
-	self model rightItems do: [ :each | 
-		toolBarMorph addItemRight: (self 
-			configureItem: each 
-			morph: each buildWithSpec 
-			toolBar: toolBarMorph) ]
+	self presenter rightItems do: [ :each | 
+		toolBarMorph 
+			addItem: (self 
+				configureItem: each 
+				morph: each buildWithSpec 
+				toolBar: toolBarMorph)
+			position: SpToolBarItemPosition right ]
 ]

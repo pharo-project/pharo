@@ -8,7 +8,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'backend',
-		'windows'
+		'windows',
+		'properties',
+		'configuration'
 	],
 	#classVars : [
 		'DefaultApplication'
@@ -34,7 +36,7 @@ SpApplication >> adapterBindings [
 	^ self backend adapterBindings
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing backend' }
 SpApplication >> backend [
 
 	^ backend ifNil: [ 
@@ -46,6 +48,12 @@ SpApplication >> backend [
 SpApplication >> close [
 	
 	self windows copy do: #close
+]
+
+{ #category : #'accessing backend' }
+SpApplication >> configuration [
+
+	^ configuration
 ]
 
 { #category : #'as yet unclassified' }
@@ -153,6 +161,68 @@ SpApplication >> openModal: aPresenter withSpecLayout: aSpecLayout [
 		using: SpModalWindowPresenter
 ]
 
+{ #category : #'accessing properties' }
+SpApplication >> properties [
+
+	^ properties ifNil: [ properties := SmallDictionary new ]
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey [
+
+	^ self properties at: aKey
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey ifAbsent: aBlock [
+
+	^ self properties 
+		at: aKey
+		ifAbsent: aBlock
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey ifAbsentPut: aBlock [
+
+	^ self properties 
+		at: aKey
+		ifAbsentPut: aBlock
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey ifPresent: aBlock [
+
+	^ self properties
+		at: aKey 
+		ifPresent: aBlock
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey ifPresent: aBlock ifAbsent: absentBlock [
+
+	^ self properties
+		at: aKey 
+		ifPresent: aBlock
+		ifAbsent: absentBlock
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey ifPresent: aBlock ifAbsentPut: absentBlock [
+
+	^ self properties
+		at: aKey 
+		ifPresent: aBlock
+		ifAbsentPut: absentBlock
+]
+
+{ #category : #'accessing properties' }
+SpApplication >> propertyAt: aKey put: aValue [
+
+	^ self properties 
+		at: aKey
+		put: aValue
+]
+
 { #category : #running }
 SpApplication >> run [ 
 
@@ -176,16 +246,17 @@ SpApplication >> start [
 	"Override this to start your app"
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing backend' }
 SpApplication >> useBackend: aName [
 
 	backend := SpApplicationBackend findBackendNamed: aName
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing backend' }
 SpApplication >> useBackend: aName with: aConfiguration [
 
 	self useBackend: aName.
+	configuration := aConfiguration.
 	aConfiguration configure: self
 ]
 

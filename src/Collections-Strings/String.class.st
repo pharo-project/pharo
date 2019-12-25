@@ -738,7 +738,7 @@ String >> asUppercase [
 
 { #category : #converting }
 String >> asValidSelector [
-	"Returns a symbol that is a vlida selector: remove any space or forbiddent characters"
+	"Returns a symbol that is a valid selector by removing any space or forbidden characters"
 	"'234znak ::x43 ''åå) _ : 2' asValidSelector >>> #'v234znak:x43:v2'"
 	"'234znak ::x43 åå) :2' asValidSelector >>> #v234znak:x43:v2"
 	
@@ -1743,6 +1743,7 @@ String >> isAllAlphaNumerics [
 	"'a3123abc' isAllAlphaNumerics >>> true"
 	"'3123' isAllAlphaNumerics >>> true"
 	"'3,123' isAllAlphaNumerics >>> false"
+	"'a''b' isAllAlphaNumerics >>> false"
 	
 	self do: [:c | c isAlphaNumeric ifFalse: [^ false]].
 	^ true
@@ -2031,23 +2032,23 @@ String >> match: text [
 	"Answer whether text matches the pattern in this string.
 	Matching ignores upper/lower case differences.
 	Where this string contains #, text may contain any character.
-	Where this string contains *, text may contain any sequence of characters.
-	'*'			match: 'zort' true
-	'*baz'		match: 'mobaz' true
-	'*baz'		match: 'mobazo' false
-	'*baz*'		match: 'mobazo' true
-	'*baz*'		match: 'mozo' false
-	'foo*'		match: 'foozo' true
-	'foo*'		match: 'bozo' false
-	'foo*baz'	match: 'foo23baz' true
-	'foo*baz'	match: 'foobaz' true
-	'foo*baz'	match: 'foo23bazo' false
-	'foo'		match: 'Foo' true
-	'foo*baz*zort' match: 'foobazort' false
-	'foo*baz*zort' match: 'foobazzort' false
-	'*foo#zort'	match: 'afoo3zortthenfoo3zort' true
-	'*foo*zort'	match: 'afoodezortorfoo3zort' true
-"
+	Where this string contains *, text may contain any sequence of characters."
+	
+	"('*' match: 'zort') >>> true"
+	"('*baz' match: 'mobaz') >>> true"
+	"('*baz' match: 'mobazo') >>>false"
+	"('*baz*' match: 'mobazo') >>> true"
+	"('*baz*' match: 'mozo') >>> false"
+	"('foo*' match: 'foozo') >>> true"
+	"('foo*' match: 'bozo') >>> false"
+	"('foo*baz' match: 'foo23baz') >>> true"
+	"('foo*baz' match: 'foobaz') >>> true"
+	"('foo*baz' match: 'foo23bazo') >>> false"
+	"('foo' match: 'Foo') >>> true"
+	"('foo*baz*zort' match: 'foobazort') >>> false"
+	"('foo*baz*zort' match: 'foobazzort') >>> false"
+	"('*foo#zort' match: 'afoo3zortthenfoo3zort') >>> true"
+	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
 	^ self startingAt: 1 match: text startingAt: 1
 ]
@@ -2649,26 +2650,25 @@ String >> withNoLineLongerThan: aNumber [
 
 { #category : #converting }
 String >> withSeparatorsCompacted [
-	"Return a copy of the receiver with each sequence of whitespace (separator) 
-	characters replaced by a single space character"
+    "Returns a copy of the receiver with each sequence of whitespace (separator) 
+    characters replaced by a single space character"
+    "' test ' withSeparatorsCompacted >>> ' test '"
+    "' test  test' withSeparatorsCompacted >>> ' test test'"
+    "'test  test      ' withSeparatorsCompacted >>> 'test test '"
 
-	self isEmpty ifTrue: [ ^ self ].
-	^ self class new: self size streamContents: [:stream | 
-		| lastBlank |
-		lastBlank := false.
-		self do: [ :eachChar | 
-			lastBlank 
-				ifTrue: [
-					(lastBlank := eachChar isSeparator)
-						ifFalse: [ stream nextPut: eachChar ] ] 
-				ifFalse: [
-					(lastBlank := eachChar isSeparator)
-						ifTrue: [ stream nextPut: $  ]
-						ifFalse: [ stream nextPut: eachChar ] ] ] ]
-
-	"' test ' withSeparatorsCompacted"
-	"' test test' withSeparatorsCompacted"
-	"'test  test		 ' withSeparatorsCompacted"
+    self isEmpty ifTrue: [ ^ self ].
+    ^ self class new: self size streamContents: [:stream | 
+        | lastBlank |
+        lastBlank := false.
+        self do: [ :eachChar | 
+            lastBlank 
+                ifTrue: [
+                    (lastBlank := eachChar isSeparator)
+                        ifFalse: [ stream nextPut: eachChar ] ] 
+                ifFalse: [
+                    (lastBlank := eachChar isSeparator)
+                        ifTrue: [ stream nextPut: $  ]
+                        ifFalse: [ stream nextPut: eachChar ] ] ] ]
 ]
 
 { #category : #formatting }

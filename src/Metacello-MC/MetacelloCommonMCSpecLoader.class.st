@@ -169,7 +169,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			resolvedReference workingCopy repositoryGroup addRepository: aPackageLoadDirective repository.
-			SystemNotification signal:
+			MetacelloNotification signal:
 					'Loaded -> ' , resolvedReference name , ' --- '
 						, aPackageLoadDirective repository repositoryDescription , ' --- '
 						, resolvedReference repository description
@@ -195,7 +195,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
               goferLoad addResolved: resolvedReference.
               answers addAll: packageLoadDirective spec answers.
               packageLoadDirective resolvedReference: resolvedReference ] ].
-     SystemNotification signal: 'Starting atomic load'.
+     MetacelloNotification signal: 'Starting atomic load'.
       loadBlock := [ 
       "pkgLoads do: [:packageLoadDirective |  mcLoader preLoad: packageLoadDirective spec ]."
       goferLoad execute.
@@ -203,20 +203,13 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
         do: [ :packageLoadDirective | 
           packageLoadDirective resolvedReference == nil
             ifTrue: [ 
-              Transcript
-                cr;
-                tab;
-                show: 'Already Loaded -> ' , packageLoadDirective file ]
+					MetacelloNotification signal: ('Already Loaded -> ' , packageLoadDirective file) level: 2]
             ifFalse: [ 
-              Transcript
-                cr;
-                tab;
-                show:
-                    'Loaded -> ' , packageLoadDirective file , ' --- '
+            		MetacelloNotification signal: ('Loaded -> ' , packageLoadDirective file , ' --- '
                         , packageLoadDirective repository repositoryDescription
                         , ' --- '
                         ,
-                          packageLoadDirective resolvedReference repository description.
+                          packageLoadDirective resolvedReference repository description) level: 2.
               packageLoadDirective resolvedReference workingCopy repositoryGroup
                 addRepository: packageLoadDirective repository ] ].
       MetacelloPlatform current clearCurrentVersionCache	"pkgLoads do: [:packageLoadDirective | 
@@ -225,7 +218,7 @@ MetacelloCommonMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
       answers notEmpty
         ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
         ifFalse: [ loadBlock value ].
-      SystemNotification signal: 'Finished atomic load' ]
+      MetacelloNotification signal: 'Finished atomic load' ]
     displaying: 'Atomic Load...'
 ]
 
@@ -365,7 +358,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
         whileTrue: [ 
             retryCount > 0
                 ifTrue: [ 
-                    SystemNotification signal: '...RETRY->' , packageSpec file ].
+                    MetacelloNotification signal: '...RETRY->' , packageSpec file ].
             references := [ self resolvePackageSpecReferences: packageSpec gofer: gofer ]
                 on: Error , GoferRepositoryError
                 do: [ :ex | 
@@ -376,7 +369,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
                             (ex isKindOf: GoferRepositoryError)
                                 ifTrue: [ 
                                     "ignore repository errors at this point, in case an alternate repository is in the list "
-                                   SystemNotification signal: 'gofer repository error: ' , ex description printString , '...ignoring'.
+                                   MetacelloNotification signal: 'gofer repository error: ' , ex description printString , '...ignoring'.
                                     repositoryError := ex.
                                     ex resume: #() ]
                                 ifFalse: [ ex pass ] ].
@@ -384,7 +377,7 @@ MetacelloCommonMCSpecLoader >> retryingResolvePackageSpecReferences: packageSpec
             retryCount := retryCount + 1 ].
     references isEmpty
         ifTrue: [ 
-            SystemNotification signal: '...FAILED->' , packageSpec file.
+            MetacelloNotification signal: '...FAILED->' , packageSpec file.
             (MetacelloPackageSpecResolutionError new
                 packageSpec: packageSpec;
                 repositories: gofer repositories;

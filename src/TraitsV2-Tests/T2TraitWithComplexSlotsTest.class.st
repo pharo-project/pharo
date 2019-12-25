@@ -66,6 +66,31 @@ T2TraitWithComplexSlotsTest >> testTraitWithComplexSlot [
 ]
 
 { #category : #'instance creation' }
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAddClassSlot [
+	| t1 c1 |
+	self createSlotClass.
+	t1 := self newTrait: #T1 with: { #ivar }.
+	c1 := self newClass: #C1 with: { #aSlot } uses: { t1 }.
+	self assert: (c1 traitComposition includesTrait: t1).
+	c1 addClassSlot:  #ivar2 => InstanceVariableSlot.
+	self assert: c1 instVarNames equals: #( aSlot ivar ).
+	self assert: c1 class instVarNames equals: #( ivar2 ).
+	self assert: (c1 traitComposition includesTrait: t1)
+]
+
+{ #category : #'instance creation' }
+T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAddSlot [
+	| t1 c1 |
+	self createSlotClass.
+	t1 := self newTrait: #T1 with: { #ivar }.
+	c1 := self newClass: #C1 with: { #aSlot } uses: { t1 }.
+	self assert: (c1 traitComposition includesTrait: t1).
+	c1 addSlot: #ivar2 => InstanceVariableSlot.
+	self assert: c1 instVarNames equals: #( aSlot ivar2 ivar ).
+	self assert: (c1 traitComposition includesTrait: t1)
+]
+
+{ #category : #'instance creation' }
 T2TraitWithComplexSlotsTest >> testTraitWithComplexSlotAfter [
 	| t1 c1 obj |
 	

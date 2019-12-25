@@ -357,3 +357,9 @@ SystemVersion >> version [
 	
 	^self shortVersionString
 ]
+
+{ #category : #accessing }
+SystemVersion >> versionWithoutPatch [
+	
+	^ self type , (self majorMinor: '.')
+]

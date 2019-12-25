@@ -64,7 +64,7 @@ DTTestCoverage >> itemsToBeAnalysedFor: packagesSelected [
 
 { #category : #accessing }
 DTTestCoverage >> pragmaForResultTrees [
-	^ #'dTTestCoverageResultTreeNamed:'
+	^ #'dtTestCoverageResultTreeNamed:order:'
 ]
 
 { #category : #api }

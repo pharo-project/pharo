@@ -527,15 +527,14 @@ STILL UNDER CONSTRUCTION: Open your browsers on the class MetacelloProjectRefTut
 { #category : #doits }
 MetacelloTutorialConfig >> postloadForCore: loader package: packageSpec [
 
-	Transcript cr; 
-		show: '#postloadForCore executed, Loader: ', loader printString, 
-			' spec: ', packageSpec printString.
+	MetacelloNotification signal: ('#postloadForCore executed, Loader: ', loader printString, 
+			' spec: ', packageSpec printString).
 ]
 
 { #category : #doits }
 MetacelloTutorialConfig >> preloadForCore [
 
-	Transcript cr; show: '#preloadForCore executed'.
+	MetacelloNotification signal: '#preloadForCore executed'.
 ]
 
 { #category : #accessing }

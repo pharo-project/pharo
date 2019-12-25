@@ -45,6 +45,12 @@ SpLabelPresenter >> defaultColor [
 	^ self theme textColor
 ]
 
+{ #category : #initialization }
+SpLabelPresenter >> defineInputPorts [
+
+	^ { SpLabelPort new }
+]
+
 { #category : #api }
 SpLabelPresenter >> emphasis [
 	^ emphasis

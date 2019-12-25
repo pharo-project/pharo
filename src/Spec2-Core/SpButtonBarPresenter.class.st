@@ -54,9 +54,11 @@ SpButtonBarPresenter >> items [
 
 { #category : #api }
 SpButtonBarPresenter >> items: aCollectionOfButtonPresenters [
+
 	items := OrderedCollection new asValueHolder.
-	items addAll: aCollectionOfButtonPresenters .
-^ self
+	aCollectionOfButtonPresenters 
+		do: [ :each | each owner: self ].
+	items addAll: aCollectionOfButtonPresenters
 ]
 
 { #category : #accessing }

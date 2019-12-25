@@ -15,7 +15,6 @@ AsciiCharsetTest >> classUnderTest [
 
 { #category : #'generated tests' }
 AsciiCharsetTest >> testIsCasedLetter [
-
 	"Exhaustively check that the charset under test behaves like Unicode"
 
 	| charset |

@@ -48,7 +48,7 @@ SpMenuGroupPresenter >> add: aName target: targetObject selector: aSelector [
 SpMenuGroupPresenter >> addItem: aBlock [
 	| item |
 	
-	item := SpMenuItemPresenter new.
+	item := self instantiate: SpMenuItemPresenter.
 	aBlock value: item.
 	self addMenuItem: item
 ]

@@ -149,19 +149,6 @@ SpMorphicBoxAdapter >> newHorizontal [
 ]
 
 { #category : #factory }
-SpMorphicBoxAdapter >> newPanel [
-
-	^ PanelMorph new 
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		extent: 0@0;
-		color: Color transparent;
-		borderColor: Color transparent;
-		yourself
-]
-
-{ #category : #factory }
 SpMorphicBoxAdapter >> newVertical [
 
 	^ self newPanel 

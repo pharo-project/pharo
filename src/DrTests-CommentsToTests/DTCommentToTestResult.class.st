@@ -16,7 +16,7 @@ Class {
 
 { #category : #accessing }
 DTCommentToTestResult >> buildTreeForUI [
-	<dTCommentToTestResultTreeNamed: 'Grouped by type of result'>
+	<dtCommentToTestResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
 		subResults:
 			{(DTTreeNode new

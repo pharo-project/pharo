@@ -21,21 +21,19 @@ RBSelfSentNotImplementedRule class >> uniqueIdentifierName [
 
 { #category : #running }
 RBSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
-
-	aMethod methodClass isTrait ifTrue: [ ^ self ].	
-
-	(aMethod selfMessages reject: [ :each | (aMethod methodClass allSelectors includes: each) ]),
-	(aMethod superMessages select: [ :each |
-		aMethod methodClass superclass isNil or: [
-		(aMethod methodClass superclass canUnderstand: each) not ] ]) 
-
-	ifNotEmpty: [ :messages | messages do: [ :message |
-			aCriticBlock cull: (ReTrivialCritique
-			withAnchor: (ReSearchStringSourceAnchor
+	| problemSends |
+	aMethod methodClass isTrait ifTrue: [ ^ self ].
+	problemSends := 
+		(aMethod sendNodes select: [ :msgSend | msgSend isSelfSend  | msgSend isSuperSend ]) 
+			reject: [:msgSend | aMethod methodClass canUnderstand: (msgSend selector)].
+	
+	problemSends do: [ :msgSend |.
+			aCriticBlock cull: (ReTrivialCritique  
+			withAnchor: (ReIntervalSourceAnchor
 				entity: aMethod
-				string: message)
+				interval: (msgSend keywordsPositions first to: msgSend stop))
 			by: self
-			hint: message) ] ]
+			hint: msgSend selector asString) ]
 ]
 
 { #category : #accessing }

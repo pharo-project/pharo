@@ -4,5 +4,5 @@ Extension { #name : #UITheme }
 UITheme >> modalBackdropColor [
 	self flag: #pharoTodo. "This method should probably be moved to Pharo later."
 
-	^ Color black alpha: 0.7
+	^ Color black alpha: 0.2
 ]

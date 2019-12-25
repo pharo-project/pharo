@@ -87,7 +87,7 @@ MetacelloVersionLoadDirective >> loadPostloadDirective: aPostloadDirective [
 					(Array 
 						with: aPostloadDirective loader 
 						with: aPostloadDirective spec) ].
-			Transcript cr; show: 'Evaluated -> ', aPostloadDirective spec label, ' >> ', aPostloadDirective spec postLoadDoIt value asString]
+			MetacelloNotification signal: ('Evaluated -> ', aPostloadDirective spec label, ' >> ', aPostloadDirective spec postLoadDoIt value asString)]
 ]
 
 { #category : #loading }
@@ -100,7 +100,7 @@ MetacelloVersionLoadDirective >> loadPreloadDirective: aPreloadDirective [
 					(Array 
 						with: aPreloadDirective loader 
 						with: aPreloadDirective spec) ].
-			Transcript cr; show: 'Evaluated -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString]
+			MetacelloNotification signal: ('Evaluated -> ', aPreloadDirective spec label, ' >> ', aPreloadDirective spec preLoadDoIt value asString)]
 ]
 
 { #category : #actions }
