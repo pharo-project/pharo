@@ -25,11 +25,6 @@ DrTestsUITest >> setUp [
 ]
 
 { #category : #tests }
-DrTestsUITest >> testBrowseButton [
-	
-]
-
-{ #category : #tests }
 DrTestsUITest >> testClickButtonRunCallsPluginRun [
 	drTestsUI pluginsDropList selectedItem: DTMockPlugin.
 	drTestsUI startButton performAction.
