@@ -32,9 +32,8 @@ SystemResolverTest >> setUp [
 { #category : #running }
 SystemResolverTest >> tearDown [ 
 	
-	super tearDown.
 	self resetToOriginalUserLocalDirectory.
-	
+	super tearDown.	
 ]
 
 { #category : #testing }
