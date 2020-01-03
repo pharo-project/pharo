@@ -341,7 +341,7 @@ Catalog projects can be browsed online:
 
 ', (self url: 'http://catalog.pharo.org'), '
 
-You can also a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
+You can also find a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
 
 ', (self url: 'http://smalltalkhub.com/list'), '
 
