@@ -219,7 +219,7 @@ WelcomeHelp class >> gettingHelp [
 - The "Pharo Users" mailing list: 
 	', (self url: 'http://lists.pharo.org/mailman/listinfo/pharo-users_lists.pharo.org'), '
 - The "Pharo Discord channel": 
-	', 	(self url: 'http://discord.gg/Sj2rhxn'), '
+	', 	(self url: 'https://discord.gg/QewZMZa'), '
 - The "Pharo IRC Channel": 
 	', (self url: 'irc.freenode.net, #pharo channel '), '
 
