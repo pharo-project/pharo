@@ -38,6 +38,6 @@ ClyMetalinkCommand class >> methodEditorLeftBarMenuActivation [
 ClyMetalinkCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
-	^SycSourceCodeMenuActivation 
+	^SycDebuggingMenuActivation 
 		byItemOf: ClyMetalinkMenuGroup order: self contextMenuOrder for: ClyMethodSourceCodeContext
 ]
