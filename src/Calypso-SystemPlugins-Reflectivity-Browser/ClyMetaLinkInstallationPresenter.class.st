@@ -43,7 +43,10 @@ ClyMetaLinkInstallationPresenter class >> openUninstallerOnNode: aSourceNode [
 ClyMetaLinkInstallationPresenter >> allRelevantMetaLinks [
 	| baseLinks |
 	baseLinks := self isForMetaLinkInstallation
-		             ifTrue: [ MetaLink allInstances ]
+		             ifTrue: [ "This is temporary, I should have put a comment.
+The idea would be to add an explicit option at the metalink level, so that only the ones that are ''installable through the menu'' would appear.
+But we need to think about how to do that exactly." 
+			             MetaLink allInstances ]
 		             ifFalse: [ sourceNode links ].
 	^ baseLinks reject: [ :link | 
 		  link metaObject == Break or: [ 
