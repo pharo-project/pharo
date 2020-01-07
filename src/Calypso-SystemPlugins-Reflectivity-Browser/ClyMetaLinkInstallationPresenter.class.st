@@ -1,3 +1,8 @@
+"
+I present a list of available metalink for a given ast node to be installed or uninstalled.
+The presenter can be in install mode or uninstall mode, see class methods.
+The list of links for a node is either all the instances of metalinks from the system when in install mode or all node currently installed on that node.
+"
 Class {
 	#name : #ClyMetaLinkInstallationPresenter,
 	#superclass : #SpPresenter,
