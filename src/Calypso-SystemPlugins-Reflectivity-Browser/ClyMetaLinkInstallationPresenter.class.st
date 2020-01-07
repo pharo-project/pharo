@@ -60,7 +60,7 @@ ClyMetaLinkInstallationPresenter >> close [
 { #category : #initialization }
 ClyMetaLinkInstallationPresenter >> initializePresenter [
 	list := self newList.
-	list items: MetaLink allInstances.
+	list items: self allRelevantMetaLinks.
 	toolBar := self newToolBar.
 	self toolbarButtons do: [ :button | toolBar addItem: button ]
 ]
