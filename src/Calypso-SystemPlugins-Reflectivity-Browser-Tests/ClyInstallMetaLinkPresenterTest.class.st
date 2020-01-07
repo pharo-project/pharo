@@ -5,7 +5,10 @@ Class {
 		'presenter',
 		'node',
 		'metalink',
-		'metalink2'
+		'metalink2',
+		'breakpoint',
+		'executionCounter',
+		'watchpoint'
 	],
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Tests-Metalinks'
 }
@@ -28,7 +31,13 @@ ClyInstallMetaLinkPresenterTest >> setUp [
 	node propertyAt: #links put: OrderedCollection new.
 	metalink := MetaLink new.
 	metalink2 := MetaLink new.
-	node links add: metalink
+	breakpoint := MetaLink new metaObject: Break; yourself.
+	executionCounter := MetaLink new metaObject: ExecutionCounter new; yourself.
+	watchpoint := MetaLink new metaObject: Watchpoint new; yourself.
+	node links add: metalink.
+	node links add: breakpoint.
+	node links add: executionCounter.
+	node links add: watchpoint
 ]
 
 { #category : #running }
@@ -41,7 +50,8 @@ ClyInstallMetaLinkPresenterTest >> testRelevantMetalinksForInstallation [
 	|links|
 	links := self presenterForMetalinkInstallation allRelevantMetaLinks.
 	self assert: links size >= 2.
-	self assertCollection: links includesAll: { metalink. metalink2 }
+	self assertCollection: links includesAll: { metalink. metalink2 }.
+	self denyCollection: links includesAll: { breakpoint. watchpoint. executionCounter  }.
 	
 ]
 
