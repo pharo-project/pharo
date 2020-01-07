@@ -30,12 +30,12 @@ ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: f
 ]
 
 { #category : #opening }
-ClyMetaLinkInstallationPresenter class >> openInstallOnNode: aSourceNode [
+ClyMetaLinkInstallationPresenter class >> openInstallerOnNode: aSourceNode [
 	(self onNode: aSourceNode forInstallation: true) openWithSpec
 ]
 
 { #category : #opening }
-ClyMetaLinkInstallationPresenter class >> openUninstallOnNode: aSourceNode [
+ClyMetaLinkInstallationPresenter class >> openUninstallerOnNode: aSourceNode [
 	(self onNode: aSourceNode forInstallation: false) openWithSpec
 ]
 

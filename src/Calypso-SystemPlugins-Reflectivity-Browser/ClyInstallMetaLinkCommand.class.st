@@ -25,5 +25,5 @@ ClyInstallMetaLinkCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyInstallMetaLinkCommand >> execute [
-	ClyMetaLinkInstallationPresenter openInstallOnNode: sourceNode
+	ClyMetaLinkInstallationPresenter openInstallerOnNode: sourceNode
 ]

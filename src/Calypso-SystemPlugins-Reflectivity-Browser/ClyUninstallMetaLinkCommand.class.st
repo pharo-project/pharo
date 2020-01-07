@@ -27,5 +27,5 @@ ClyUninstallMetaLinkCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyUninstallMetaLinkCommand >> execute [
-	ClyMetaLinkInstallationPresenter openUninstallOnNode: sourceNode
+	ClyMetaLinkInstallationPresenter openUninstallerOnNode: sourceNode
 ]
