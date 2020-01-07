@@ -342,9 +342,12 @@ AthensCairoSurface class >> primImage: aFormat width: aWidth height: aHeight [
 
 { #category : #private }
 AthensCairoSurface class >> primImageFromData: data width: width height: height pitch: stride [
+	
+	"CAIRO_FORMAT_ARGB32 -> 0"
+	
 	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_for_data (
 		void *data,
-		CAIRO_FORMAT_ARGB32,
+		0,
 		int width,
 		int height,
 		int stride) )
