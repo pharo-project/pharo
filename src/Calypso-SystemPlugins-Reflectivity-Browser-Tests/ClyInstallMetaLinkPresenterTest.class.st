@@ -34,7 +34,7 @@ ClyInstallMetaLinkPresenterTest >> presenterForMetalinkUninstallation [
 
 { #category : #running }
 ClyInstallMetaLinkPresenterTest >> setUp [
-	"Hooks that subclasses may override to define the fixture of test."
+	super setUp.
 	MetaLink uninstallAll.
 	node := RBTemporaryNode named: 'test'.
 	metalink := MetaLink new.
@@ -50,6 +50,7 @@ ClyInstallMetaLinkPresenterTest >> setUp [
 ClyInstallMetaLinkPresenterTest >> tearDown [
 	metalink uninstall.
 	metalink2 uninstall.
+	super tearDown
 ]
 
 { #category : #tests }
