@@ -2,7 +2,6 @@ Class {
 	#name : #ClyInstallMetaLinkPresenterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'presenter',
 		'node',
 		'metalink',
 		'metalink2',
@@ -12,6 +11,16 @@ Class {
 	],
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Tests-Metalinks'
 }
+
+{ #category : #'helper methods' }
+ClyInstallMetaLinkPresenterTest >> dummyMethod [
+	self
+]
+
+{ #category : #'helper methods' }
+ClyInstallMetaLinkPresenterTest >> nodeInRealMethod [
+	^(self class >> #dummyMethod) ast statements first
+]
 
 { #category : #running }
 ClyInstallMetaLinkPresenterTest >> presenterForMetalinkInstallation [
@@ -28,21 +37,43 @@ ClyInstallMetaLinkPresenterTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	MetaLink uninstallAll.
 	node := RBTemporaryNode named: 'test'.
-	node propertyAt: #links put: OrderedCollection new.
 	metalink := MetaLink new.
 	metalink2 := MetaLink new.
 	breakpoint := MetaLink new metaObject: Break; yourself.
 	executionCounter := MetaLink new metaObject: ExecutionCounter new; yourself.
 	watchpoint := MetaLink new metaObject: Watchpoint new; yourself.
-	node links add: metalink.
-	node links add: breakpoint.
-	node links add: executionCounter.
-	node links add: watchpoint
+	node propertyAt: #links put: {metalink. breakpoint. executionCounter. watchpoint} asOrderedCollection 
+	
 ]
 
 { #category : #running }
 ClyInstallMetaLinkPresenterTest >> tearDown [
-	MetaLink uninstallAll
+	metalink uninstall.
+	metalink2 uninstall.
+]
+
+{ #category : #tests }
+ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
+	|presenter list|
+	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
+	list := presenter instVarNamed: #list.
+	list clickItem: 1.
+	self deny: self nodeInRealMethod hasLinks.
+	presenter installSelectedMetalink.
+	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
+]
+
+{ #category : #tests }
+ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
+	|presenter list|
+	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
+	list := presenter instVarNamed: #list.
+	list clickItem: 1.	
+	self deny: self nodeInRealMethod hasLinks.
+	presenter toolbarButtons first execute.
+	self assert: self nodeInRealMethod hasLinks.
+	self assert: self nodeInRealMethod links asArray first identicalTo: list items first 
 ]
 
 { #category : #tests }
@@ -83,4 +114,28 @@ ClyInstallMetaLinkPresenterTest >> testToolbarButtonsForMetalinkUninstallation [
 	toolbarButtons := self presenterForMetalinkUninstallation toolbarButtons.
 	self assert: toolbarButtons first label equals: 'Uninstall'.
 	self assert: toolbarButtons last label equals: 'Cancel'.
+]
+
+{ #category : #tests }
+ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalink [
+	|presenter list|
+	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
+	list := presenter instVarNamed: #list.
+	list clickItem: 1.
+	self nodeInRealMethod link: list items first.
+	self assert: self nodeInRealMethod hasLinks.
+	presenter uninstallSelectedMetalink.
+	self deny: self nodeInRealMethod hasLinks
+]
+
+{ #category : #tests }
+ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
+	|presenter list|
+	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
+	list := presenter instVarNamed: #list.
+	list clickItem: 1.
+	self nodeInRealMethod link: list items first.
+	self assert: self nodeInRealMethod hasLinks.
+	presenter toolbarButtons first execute.
+	self deny: self nodeInRealMethod hasLinks
 ]
