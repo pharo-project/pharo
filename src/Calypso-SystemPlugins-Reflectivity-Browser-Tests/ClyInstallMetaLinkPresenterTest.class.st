@@ -57,7 +57,7 @@ ClyInstallMetaLinkPresenterTest >> tearDown [
 ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
 	|presenter list|
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
-	list := presenter instVarNamed: #list.
+	list := presenter metalinkList.
 	list clickItem: 1.
 	self deny: self nodeInRealMethod hasLinks.
 	presenter installSelectedMetalink.
@@ -69,7 +69,7 @@ ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalink [
 ClyInstallMetaLinkPresenterTest >> testInstallSelectedMetalinkActionButton [
 	|presenter list|
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  true.
-	list := presenter instVarNamed: #list.
+	list := presenter metalinkList.
 	list clickItem: 1.	
 	self deny: self nodeInRealMethod hasLinks.
 	presenter toolbarButtons first execute.
@@ -122,7 +122,7 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalink [
 	|presenter list|
 	self nodeInRealMethod link: metalink.
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
-	list := presenter instVarNamed: #list.
+	list := presenter metalinkList.
 	list clickItem: 1.
 	self assert: self nodeInRealMethod hasLinks.
 	presenter uninstallSelectedMetalink.
@@ -134,7 +134,7 @@ ClyInstallMetaLinkPresenterTest >> testUninstallSelectedMetalinkActionButton [
 	|presenter list|
 	self nodeInRealMethod link: metalink.
 	presenter := ClyMetaLinkInstallationPresenter onNode: self nodeInRealMethod forInstallation:  false.
-	list := presenter instVarNamed: #list.
+	list := presenter metalinkList.
 	list clickItem: 1.	
 	self assert: self nodeInRealMethod hasLinks.
 	presenter toolbarButtons first execute.
