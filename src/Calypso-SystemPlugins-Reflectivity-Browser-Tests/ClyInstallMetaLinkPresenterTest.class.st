@@ -15,12 +15,12 @@ Class {
 
 { #category : #running }
 ClyInstallMetaLinkPresenterTest >> presenterForMetalinkInstallation [
-	^ClyInstallMetaLinkPresenter onNode: node forInstallation:  true
+	^ClyMetaLinkInstallationPresenter onNode: node forInstallation:  true
 ]
 
 { #category : #running }
 ClyInstallMetaLinkPresenterTest >> presenterForMetalinkUninstallation [
-	^ ClyInstallMetaLinkPresenter onNode: node forInstallation: false
+	^ ClyMetaLinkInstallationPresenter onNode: node forInstallation: false
 ]
 
 { #category : #running }

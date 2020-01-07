@@ -1,5 +1,5 @@
 Class {
-	#name : #ClyInstallMetaLinkPresenter,
+	#name : #ClyMetaLinkInstallationPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'sourceNode',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #specs }
-ClyInstallMetaLinkPresenter class >> defaultSpec [
+ClyMetaLinkInstallationPresenter class >> defaultSpec [
 	^ SpBoxLayout newVertical
 		  add: #toolBar
 		  expand: false
@@ -22,7 +22,7 @@ ClyInstallMetaLinkPresenter class >> defaultSpec [
 ]
 
 { #category : #'instance creation' }
-ClyInstallMetaLinkPresenter class >> onNode: aSourceNode forInstallation: forInstallation [
+ClyMetaLinkInstallationPresenter class >> onNode: aSourceNode forInstallation: forInstallation [
 	^ self basicNew
 		  sourceNode: aSourceNode;
 		  isForMetaLinkInstallation: forInstallation;
@@ -30,17 +30,17 @@ ClyInstallMetaLinkPresenter class >> onNode: aSourceNode forInstallation: forIns
 ]
 
 { #category : #opening }
-ClyInstallMetaLinkPresenter class >> openInstallOnNode: aSourceNode [
+ClyMetaLinkInstallationPresenter class >> openInstallOnNode: aSourceNode [
 	(self onNode: aSourceNode forInstallation: true) openWithSpec
 ]
 
 { #category : #opening }
-ClyInstallMetaLinkPresenter class >> openUninstallOnNode: aSourceNode [
+ClyMetaLinkInstallationPresenter class >> openUninstallOnNode: aSourceNode [
 	(self onNode: aSourceNode forInstallation: false) openWithSpec
 ]
 
 { #category : #accessing }
-ClyInstallMetaLinkPresenter >> allRelevantMetaLinks [
+ClyMetaLinkInstallationPresenter >> allRelevantMetaLinks [
 	| baseLinks |
 	baseLinks := self isForMetaLinkInstallation
 		             ifTrue: [ MetaLink allInstances ]
@@ -53,12 +53,12 @@ ClyInstallMetaLinkPresenter >> allRelevantMetaLinks [
 ]
 
 { #category : #initialization }
-ClyInstallMetaLinkPresenter >> close [
+ClyMetaLinkInstallationPresenter >> close [
 	self withWindowDo: #close
 ]
 
 { #category : #initialization }
-ClyInstallMetaLinkPresenter >> initializePresenter [
+ClyMetaLinkInstallationPresenter >> initializePresenter [
 	list := self newList.
 	list items: MetaLink allInstances.
 	toolBar := self newToolBar.
@@ -66,29 +66,29 @@ ClyInstallMetaLinkPresenter >> initializePresenter [
 ]
 
 { #category : #installation }
-ClyInstallMetaLinkPresenter >> installSelectedMetalink [
+ClyMetaLinkInstallationPresenter >> installSelectedMetalink [
 	list selection selectedItem ifNotNil: [ :metalink | 
 		sourceNode link: metalink ].
 	self close
 ]
 
 { #category : #testing }
-ClyInstallMetaLinkPresenter >> isForMetaLinkInstallation [
+ClyMetaLinkInstallationPresenter >> isForMetaLinkInstallation [
 	^isForMetaLinkInstallation ifNil:[isForMetaLinkInstallation := true]
 ]
 
 { #category : #accessing }
-ClyInstallMetaLinkPresenter >> isForMetaLinkInstallation: anObject [
+ClyMetaLinkInstallationPresenter >> isForMetaLinkInstallation: anObject [
 	isForMetaLinkInstallation := anObject
 ]
 
 { #category : #accessing }
-ClyInstallMetaLinkPresenter >> sourceNode: anObject [
+ClyMetaLinkInstallationPresenter >> sourceNode: anObject [
 	sourceNode := anObject
 ]
 
 { #category : #accessing }
-ClyInstallMetaLinkPresenter >> toolbarButtons [
+ClyMetaLinkInstallationPresenter >> toolbarButtons [
 	| buttons |
 	buttons := OrderedCollection new.
 	buttons add: (self isForMetaLinkInstallation
@@ -116,7 +116,7 @@ ClyInstallMetaLinkPresenter >> toolbarButtons [
 ]
 
 { #category : #installation }
-ClyInstallMetaLinkPresenter >> uninstallSelectedMetalink [
+ClyMetaLinkInstallationPresenter >> uninstallSelectedMetalink [
 	list selection selectedItem ifNotNil: [ :metalink | 
 		sourceNode removeLink: metalink ].
 	self close
