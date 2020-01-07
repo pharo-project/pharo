@@ -3,7 +3,7 @@ I am a command to remove all watchpoints from given method or source node
 "
 Class {
 	#name : #ClyRemoveWatchpointCommand,
-	#superclass : #ClyRemoveMetalinkCommand,
+	#superclass : #ClyRemoveDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 
@@ -19,7 +19,7 @@ ClyRemoveWatchpointCommand class >> contextMenuOrder [
 ]
 
 { #category : #execution }
-ClyRemoveWatchpointCommand >> metalinkManagerClass [
+ClyRemoveWatchpointCommand >> handlerClass [
 	^Watchpoint
 ]
 

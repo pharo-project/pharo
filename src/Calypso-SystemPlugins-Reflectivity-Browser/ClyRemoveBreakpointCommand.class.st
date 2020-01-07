@@ -3,7 +3,7 @@ I am a command to remove all breakpoints from given method or source node
 "
 Class {
 	#name : #ClyRemoveBreakpointCommand,
-	#superclass : #ClyRemoveMetalinkCommand,
+	#superclass : #ClyRemoveDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
 }
 
@@ -19,7 +19,7 @@ ClyRemoveBreakpointCommand class >> contextMenuOrder [
 ]
 
 { #category : #execution }
-ClyRemoveBreakpointCommand >> metalinkManagerClass [
+ClyRemoveBreakpointCommand >> handlerClass [
 	^Breakpoint
 ]
 
