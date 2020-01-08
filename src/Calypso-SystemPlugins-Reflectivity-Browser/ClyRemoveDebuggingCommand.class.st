@@ -26,6 +26,11 @@ ClyRemoveDebuggingCommand class >> methodBrowserTableIconActivation [
 	^ClyTableIconCommandActivation priority: 900 for: ClyMethod asCalypsoItemContext
 ]
 
+{ #category : #execution }
+ClyRemoveDebuggingCommand >> debuggingToolClass [
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 ClyRemoveDebuggingCommand >> defaultMenuIconName [
 	^#smallCancel
@@ -33,17 +38,12 @@ ClyRemoveDebuggingCommand >> defaultMenuIconName [
 
 { #category : #accessing }
 ClyRemoveDebuggingCommand >> defaultMenuItemName [ 
-	^'Remove ', self handlerClass name asLowercase
+	^'Remove ', self debuggingToolClass name asLowercase
 ]
 
 { #category : #execution }
 ClyRemoveDebuggingCommand >> execute [
 	
 	sourceNode nodesWithLinks do: [:each | 
-		self handlerClass removeFrom: each]
-]
-
-{ #category : #execution }
-ClyRemoveDebuggingCommand >> handlerClass [
-	self subclassResponsibility 
+		self debuggingToolClass removeFrom: each]
 ]

@@ -19,7 +19,7 @@ ClyRemoveWatchpointCommand class >> contextMenuOrder [
 ]
 
 { #category : #execution }
-ClyRemoveWatchpointCommand >> handlerClass [
+ClyRemoveWatchpointCommand >> debuggingToolClass [
 	^Watchpoint
 ]
 

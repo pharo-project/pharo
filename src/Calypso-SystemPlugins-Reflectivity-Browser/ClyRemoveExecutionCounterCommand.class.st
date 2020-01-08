@@ -33,17 +33,17 @@ ClyRemoveExecutionCounterCommand >> currentCallsCount [
 	^sourceNode counter count
 ]
 
+{ #category : #execution }
+ClyRemoveExecutionCounterCommand >> debuggingToolClass [
+	^ExecutionCounter
+]
+
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> defaultMenuItemName [
 	
 	^sourceNode hasExecutionCounter 
 		ifTrue: [ 'Remove counter (', self currentCallsCount asString, ')']
 	 	ifFalse: [ 'Remove counter' ]
-]
-
-{ #category : #execution }
-ClyRemoveExecutionCounterCommand >> handlerClass [
-	^ExecutionCounter
 ]
 
 { #category : #'table decoration' }

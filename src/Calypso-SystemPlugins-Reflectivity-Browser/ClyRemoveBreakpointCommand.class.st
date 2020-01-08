@@ -19,7 +19,7 @@ ClyRemoveBreakpointCommand class >> contextMenuOrder [
 ]
 
 { #category : #execution }
-ClyRemoveBreakpointCommand >> handlerClass [
+ClyRemoveBreakpointCommand >> debuggingToolClass [
 	^Breakpoint
 ]
 
