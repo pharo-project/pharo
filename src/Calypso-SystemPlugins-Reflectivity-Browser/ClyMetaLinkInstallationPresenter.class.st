@@ -73,6 +73,12 @@ ClyMetaLinkInstallationPresenter >> initializePresenter [
 	self toolbarButtons do: [ :button | toolBar addItem: button ]
 ]
 
+{ #category : #initialization }
+ClyMetaLinkInstallationPresenter >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
+	aWindowPresenter title: sourceNode printString
+]
+
 { #category : #installation }
 ClyMetaLinkInstallationPresenter >> installSelectedMetalink [
 	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink | 
