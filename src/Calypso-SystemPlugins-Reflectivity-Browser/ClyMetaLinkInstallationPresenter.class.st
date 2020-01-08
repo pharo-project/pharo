@@ -10,7 +10,7 @@ Class {
 		'sourceNode',
 		'toolBar',
 		'isForMetaLinkInstallation',
-		'metalinkList'
+		'metalinkListPresenter'
 	],
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
 }
@@ -22,7 +22,7 @@ ClyMetaLinkInstallationPresenter class >> defaultSpec [
 		  expand: false
 		  fill: false
 		  padding: 0;
-		  add: #metalinkList;
+		  add: #metalinkListPresenter;
 		  yourself
 ]
 
@@ -67,15 +67,15 @@ ClyMetaLinkInstallationPresenter >> close [
 
 { #category : #initialization }
 ClyMetaLinkInstallationPresenter >> initializePresenter [
-	metalinkList := self newList.
-	metalinkList items: self allRelevantMetaLinks.
+	metalinkListPresenter := self newList.
+	metalinkListPresenter items: self allRelevantMetaLinks.
 	toolBar := self newToolBar.
 	self toolbarButtons do: [ :button | toolBar addItem: button ]
 ]
 
 { #category : #installation }
 ClyMetaLinkInstallationPresenter >> installSelectedMetalink [
-	metalinkList selection selectedItem ifNotNil: [ :metalink | 
+	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink | 
 		sourceNode link: metalink ].
 	self close
 ]
@@ -91,8 +91,8 @@ ClyMetaLinkInstallationPresenter >> isForMetaLinkInstallation: anObject [
 ]
 
 { #category : #accessing }
-ClyMetaLinkInstallationPresenter >> metalinkList [
-	^ metalinkList
+ClyMetaLinkInstallationPresenter >> metalinkListPresenter [
+	^ metalinkListPresenter
 ]
 
 { #category : #accessing }
@@ -130,7 +130,7 @@ ClyMetaLinkInstallationPresenter >> toolbarButtons [
 
 { #category : #installation }
 ClyMetaLinkInstallationPresenter >> uninstallSelectedMetalink [
-	metalinkList selection selectedItem ifNotNil: [ :metalink | 
+	metalinkListPresenter selection selectedItem ifNotNil: [ :metalink | 
 		sourceNode removeLink: metalink ].
 	self close
 ]
