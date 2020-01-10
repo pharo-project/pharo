@@ -29,7 +29,7 @@ PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
 			(aBuilder pickOne: #uiThemeClass)
 				label: 'User interface theme';
 				target: self;
-				default: UITheme standardThemeClass;
+				default: PharoDarkTheme;
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
@@ -95,11 +95,13 @@ PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [
 				 description: 'If true, then more settings will be available in order to define the desktop background color gradient';
 				 noOrdering;
 				with: [(aBuilder setting: #desktopGradientFillColor) label: 'Other color';
-						 description: 'This is the second color of your gradient (the first one is given by the "Color" setting'.
+						default: PharoDarkTheme current desktopColor;
+						description: 'This is the second color of your gradient (the first one is given by the "Color" setting'.
 					(aBuilder pickOne: #desktopGradientDirection) label: 'Direction';
-						 domainValues: {#Horizontal. #Vertical. #Radial}.
+						default: #Vertical;
+						domainValues: {#Horizontal. #Vertical. #Radial}.
 					(aBuilder pickOne: #desktopGradientOrigin) label: 'Origin';
-						 domainValues: {
+						domainValues: {
 							'Top left' translated -> #topLeft. 
 							'Top' translated -> #topCenter. 
 							'Top right' translated -> #topRight. 
@@ -218,6 +220,7 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 			(aBuilder setting: #showDesktopLogo)
 				label: 'Show logo' ;
 				description: 'If true, then a logo if shown on the top left of the desktop' ;
+				default: true;
 				with: [
 					(aBuilder setting: #desktopLogoFileName)
 						type: #FilePathEncoder;

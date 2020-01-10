@@ -37,8 +37,13 @@ StoredSettingsFactory >> from: aSettingNode [
 { #category : #building }
 StoredSettingsFactory >> fromSettingNodes: aCollectionOfSettingNodes [ 
 	storedSettings := OrderedCollection new.
-	aCollectionOfSettingNodes do: [ :eachSettingNode |
-		(self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
+	
+	aCollectionOfSettingNodes 
+		select: [ :eachSettingNode | 
+			eachSettingNode item hasValue and: [ eachSettingNode item hasDefaultValue not ] ] 
+		thenDo: [ :eachSettingNode |
+			(self from: eachSettingNode) ifNotNil: [ :aStoredNode | storedSettings add: aStoredNode ] ].
+	
 	^ storedSettings
 ]
 

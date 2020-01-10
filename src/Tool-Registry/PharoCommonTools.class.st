@@ -55,6 +55,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						getSelector: #inspectorTool;
 						setSelector: #inspectorTool:;
+						default: GTInspector;
 						label: 'Inspector';
 						domainValues: Smalltalk tools recentInspectorTools ];
 		with: [ 

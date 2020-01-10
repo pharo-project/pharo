@@ -98,6 +98,7 @@ SourceCodeFonts class >> settingsOn: aBuilder [
 		iconName: #smallConfigurationIcon;
 		label: 'Source Code Fonts';
 		description: 'Use Source Code Pro Fonts';
+		default: SourceCodeFonts;
 		precondition: [ FT2Library current isAvailable not ];
 		dialog: [ self fontSourceCodeRow ]
 ]
