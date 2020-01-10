@@ -145,11 +145,14 @@ Is this really what you want to do?') asText
 	oldClass
 		ifNil: [ classCompiler := self defaultClassCompiler ]
 		ifNotNil: [ classCompiler := oldClass superclass subclassDefinerClass new ].
-	class := classCompiler
+	
+	[class := classCompiler
 		source: aString;
 		requestor: aController;
 		logged: true;
-		evaluate.
+		evaluate] on: OCUndeclaredVariableWarning do: [ 
+			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
+			self inform: 'Undeclared Variable in Class Definition' . ^nil ].
 	^ class isBehavior
 		ifTrue: [ class ]
 		ifFalse: [ nil ]
