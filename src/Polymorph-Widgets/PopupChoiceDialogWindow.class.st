@@ -11,7 +11,8 @@ Class {
 		'choicesMorph',
 		'choiceMenus',
 		'filter',
-		'filterMorph'
+		'filterMorph',
+		'updatingFilter'
 	],
 	#category : #'Polymorph-Widgets-Windows'
 }
@@ -134,9 +135,14 @@ PopupChoiceDialogWindow >> filter [
 { #category : #accessing }
 PopupChoiceDialogWindow >> filter: aString [
 	"Set the value of filter, used to match the valid choices."
+	
 
 	filter := aString.
-	self changed: #filter.
+
+	updatingFilter ifFalse: [
+		updatingFilter := true.
+		[ self changed: #filter ]
+	  	ensure: [ updatingFilter := false ] ].
 	self filterMorph ifNil: [^self].
 	(self choiceMenus ifNil: [^self]) do: [:embeddedMenu |
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
@@ -144,7 +150,7 @@ PopupChoiceDialogWindow >> filter: aString [
 		embeddedMenu selectMatch: self filter asLowercase].
 	self filterMorph hasKeyboardFocus ifFalse: [
 		self activeHand newKeyboardFocus: self filterMorph.
-		self filterMorph selectFrom: filter size + 1 to: filter size + 1]
+		self filterMorph selectFrom: filter size + 1 to: filter size + 1 ]
 ]
 
 { #category : #accessing }
@@ -183,6 +189,7 @@ PopupChoiceDialogWindow >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
+	updatingFilter := false.
 	self
 		labels: #();
 		lines: #();
