@@ -18,6 +18,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		iconName: #smallConfigurationIcon;
 		type: #Label;
 		label: 'Free type';
+		default: 'Free type fonts are not available';
 		precondition: [ FT2Library current isAvailable not ];
 		parent: #appearance;
 		order: 3;
@@ -25,6 +26,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 			'Free type fonts are not available probably because the FT2 plugin is not installed. Check your VM installation'.
 	(aBuilder setting: #loadFt2Library)
 		target: self;
+		default: true;
 		dialog: [ self ft2LibraryVersion ];
 		iconName: #smallConfigurationIcon;
 		label: 'Use Free type';
@@ -44,6 +46,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 			(aBuilder setting: #updateFontsAtImageStartup)
 				order: 1;
 				target: FreeTypeSettings;
+				default: false;
 				label: 'Update fonts at startup';
 				description: 'If true, then the available font list is recomputed at each startup'.
 			(aBuilder group: #advancedSettings)
@@ -84,10 +87,10 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 					(aBuilder range: #glyphContrast)
 						target: FreeTypeSettings;
 						targetSelector: #current;
+						default: 55.0;
 						label: 'Glyph contrast';
 						description:
 							'Change the contrast level for glyphs. This is an integer between 1 and 100' ;
-						default: 50;
 						range: (0 to: 100 by: 10) ] ]
 ]
 

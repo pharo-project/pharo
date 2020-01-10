@@ -50,6 +50,7 @@ CommandLineUIManager class >> uiSettingsOn: aBuilder [
 		with: [
 			(aBuilder setting: #snapshotErrorImage)
 				label: 'Snapshot before quitting' ;
+				default: false;
 				target: CommandLineUIManager;
 				description: 'On unhandled exception, save a new version of the image before quitting']
 ]

@@ -14,6 +14,7 @@ GTDebuggerSystemSettings class >> debugSettingsOn: aBuilder [
 	(aBuilder setting: #enableStackColoring)
 		label: 'Color the stack';
 		target: GTGenericStackDebugger;
+		default: false;
 		parent: #debugging;
 		description:
 				'When true, the stack context are colored based on their relationship with the selected context.'.
@@ -21,6 +22,7 @@ GTDebuggerSystemSettings class >> debugSettingsOn: aBuilder [
 	(aBuilder setting: #enableDebuggerWindowDistinctColor)
 		label: 'Color the window';
 		target: GTGenericStackDebugger;
+		default: false;
 		parent: #debugging;
 		description:
 				'When true, the window border is colored with red to make it distinct from other windows.'.
