@@ -92,8 +92,8 @@ PragmaSetting >> asString [
 { #category : #'user interface' }
 PragmaSetting >> chooseFileDirectory [
 	| result |
-	result := self theme chooseDirectoryIn: self currentWorld title: 'Choose a file' path: nil.
-	result ifNotNil: [ self realValue: result fullName ].
+	result := self theme chooseDirectoryIn: self currentWorld title: 'Choose a directory' path: nil.
+	result ifNotNil: [ self realValue: result  ].
 ]
 
 { #category : #'user interface' }

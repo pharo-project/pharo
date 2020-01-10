@@ -35,8 +35,10 @@ SystemResolver class >> userLocalDirectory [
 ]
 
 { #category : #accessing }
-SystemResolver class >> userLocalDirectory: aFileReference [
-	UserLocalDirectory := aFileReference
+SystemResolver class >> userLocalDirectory: aFileReferenceOrPathName [
+	|aDirReference| 
+	aDirReference := aFileReferenceOrPathName asFileReference.
+	aDirReference isDirectory ifTrue: [UserLocalDirectory := aDirReference ]
 ]
 
 { #category : #origins }
