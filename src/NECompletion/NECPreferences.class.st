@@ -187,6 +187,7 @@ NECPreferences class >> settingsOn: aBuilder [
 		target: self;
 		parentName: #codeBrowsing;
 		selector: #enabled;
+		default: true;
 		iconName: #smallConfigurationIcon;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
@@ -212,25 +213,32 @@ NECPreferences class >> settingsOn: aBuilder [
 								setSelector: #sorterClass:;
 								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
+						default: Color veryDarkGray;
 						label: 'Background Color'.
 					(aBuilder setting: #expandPrefixes)
+						default: true;
 						label: 'Complete common prefixes using TAB in the suggested completions'.
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.
 					(aBuilder setting: #captureNavigationKeys)
+						default: true;
 						label: 'Use navigation keys for extended completion functionality'.
 					(aBuilder setting: #caseSensitive)
 						label: 'Case Sensitive';
+						default: true;
 						description: 'Decide if you want eCompletion to be case sensitive or not.'.
 					(aBuilder setting: #smartCharacters)
 						label: 'Smart Characters';
+						default: true;
 						description: 'Decide if you want eCompletion to use smart characters, e.g, to automatically close brackets.'.
 					(aBuilder setting: #smartCharactersWithSingleSpace)
 						label: 'Smart Characters with Single Space';
+						default: '';
 				 		description: 'Enumerate the characters which are automatically inserted with a single space in between.'.
 					(aBuilder setting: #smartCharactersWithDoubleSpace) 
 						label: 'Smart Characters with Double Space';
+						default: '[]{}';
 				 		description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
 					(aBuilder setting: #popupShowAutomatic)
 						default: self defaultPopupShowAutomatic;

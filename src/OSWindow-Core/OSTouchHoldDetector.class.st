@@ -39,6 +39,7 @@ OSTouchHoldDetector class >> maxDistanceTravelledSettingsOn: aBuilder [
 	(aBuilder setting: #maxDistanceTravelled)
 		target: self;
 		label: 'Detection area (%)';
+		default: 0.02;
 		description:
 				'The area to consider the finger to be still';
 		parent: #holdGesture
@@ -68,6 +69,7 @@ OSTouchHoldDetector class >> waitingTimeSettingsOn: aBuilder [
 	(aBuilder setting: #waitingTime)
 		target: self;
 		label: 'Time to hold (ms)';
+		default: 1000;
 		description:
 				'How long does a finger has to stay on the screen to be considered as holding';
 		parent: #holdGesture

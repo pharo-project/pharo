@@ -22,6 +22,7 @@ RBProgramNode class >> settingsOn: aBuilder [
 		target: RBProgramNode ;
 		domainValues: self formatters; 
 		label: 'Default Formatter';
+		order: 0;
 		default: BIConfigurableFormatter;
 		description: 'To set the default code formatter.';
 		parent: #codeFormatters

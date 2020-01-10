@@ -328,7 +328,7 @@ BIConfigurableFormatter class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #blueInkFormatter)
 		target: self;
-		parent: #codeBrowsing;
+		parent: #codeFormatters;
 		label: 'BlueInk Pretty Printing';
 		description: 'Settings related to the formatter';
 		with:

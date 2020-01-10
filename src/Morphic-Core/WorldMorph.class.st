@@ -80,6 +80,7 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 	(aBuilder range: #displayScaleFactor)
 		parent: #appearance;
 		order: 3;
+		default: 1;
 		label: 'Display scale factor';
 		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
