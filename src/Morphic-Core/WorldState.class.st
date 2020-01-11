@@ -473,7 +473,7 @@ WorldState >> displayWorldSafely: aWorld [
 			[errCtx notNil and:[(errCtx receiver isMorph) not]] 
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
-			errCtx ifNil:[^self handleFatalDrawingError: err].
+			errCtx ifNil:[^self handleFatalDrawingError: err description].
 			errMorph := errCtx receiver.
 			"If the morph causing the problem has already the #drawError flag set,
 			then search for the next morph above in the caller chain."

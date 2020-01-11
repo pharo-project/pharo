@@ -87,9 +87,9 @@ Semaphore >> critical: mutuallyExcludedBlock ifError: errorBlock [
 	| blockValue hasError errMsg errRcvr |
 	hasError := false.
 	self critical:[
-		blockValue := mutuallyExcludedBlock ifError: [ :msg :rcvr|
+		blockValue := mutuallyExcludedBlock ifError: [ :err :rcvr|
 			hasError := true.
-			errMsg := msg.
+			errMsg := err description.
 			errRcvr := rcvr
 		].
 	].

@@ -336,13 +336,13 @@ BlockClosure >> ifError: errorHandlerBlock [
 	"Examples:
 		[1 whatsUpDoc] ifError: [:err :rcvr | 'huh?'].
 		[1 / 0] ifError: [:err :rcvr |
-			'ZeroDivide' = err
+			ZeroDivide = err class
 				ifTrue: [Float infinity]
 				ifFalse: [self error: err]]
 "
 
 	^ self on: Error do: [:ex |
-		errorHandlerBlock cull: ex description cull: ex receiver]
+		errorHandlerBlock cull: ex cull: ex receiver]
 ]
 
 { #category : #accessing }
