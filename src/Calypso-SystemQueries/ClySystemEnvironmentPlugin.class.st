@@ -46,7 +46,7 @@ ClySystemEnvironmentPlugin class >> enableSlowPlugins [
 
 { #category : #testing }
 ClySystemEnvironmentPlugin class >> isAbstract [
-	^self = ClySystemEnvironmentPlugin 
+	^self == ClySystemEnvironmentPlugin 
 ]
 
 { #category : #testing }

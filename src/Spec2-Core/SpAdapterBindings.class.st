@@ -15,7 +15,7 @@ Class {
 { #category : #testing }
 SpAdapterBindings class >> isAbstract [ 
 
-	^ self name = #SpAdapterBindings
+	^ self == SpAdapterBindings
 ]
 
 { #category : #initialize }

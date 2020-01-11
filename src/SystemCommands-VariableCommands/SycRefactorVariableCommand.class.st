@@ -28,7 +28,7 @@ SycRefactorVariableCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 SycRefactorVariableCommand class >> isAbstract [
-	^self = SycRefactorVariableCommand 
+	^self == SycRefactorVariableCommand 
 ]
 
 { #category : #execution }

@@ -36,7 +36,7 @@ SycMessageCommand class >> forMethods: methods [
 
 { #category : #testing }
 SycMessageCommand class >> isAbstract [
-	^self = SycMessageCommand
+	^self == SycMessageCommand
 ]
 
 { #category : #accessing }

@@ -35,7 +35,7 @@ ClyCritiqueCommand class >> criticTableIconActivation [
 
 { #category : #testing }
 ClyCritiqueCommand class >> isAbstract [
-	^self = ClyCritiqueCommand 
+	^ self == ClyCritiqueCommand 
 ]
 
 { #category : #accessing }

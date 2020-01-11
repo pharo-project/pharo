@@ -20,7 +20,7 @@ Class {
 { #category : #testing }
 AbstractKeymappingTest class >> isAbstract [
 
-	^self name = #AbstractKeymappingTest
+	^self == AbstractKeymappingTest
 ]
 
 { #category : #utilities }

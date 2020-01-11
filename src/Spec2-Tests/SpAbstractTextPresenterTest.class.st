@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 SpAbstractTextPresenterTest class >> isAbstract [
-	^ self = SpAbstractTextPresenterTest
+	^ self == SpAbstractTextPresenterTest
 ]
 
 { #category : #testing }

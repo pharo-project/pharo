@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 ClyBrowserCommand class >> isAbstract [
-	^self = ClyBrowserCommand 
+	^ self == ClyBrowserCommand 
 ]
 
 { #category : #accessing }

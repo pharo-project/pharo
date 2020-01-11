@@ -13,7 +13,7 @@ Class {
 { #category : #testing }
 CollectionRootTest class >> isAbstract [
 
-	^ self name = #CollectionRootTest
+	^ self == CollectionRootTest
 ]
 
 { #category : #requirements }

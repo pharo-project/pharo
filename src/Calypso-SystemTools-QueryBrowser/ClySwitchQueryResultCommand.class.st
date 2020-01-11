@@ -14,7 +14,7 @@ Class {
 
 { #category : #testing }
 ClySwitchQueryResultCommand class >> isAbstract [
-	^self = ClySwitchQueryResultCommand 
+	^self == ClySwitchQueryResultCommand 
 ]
 
 { #category : #activation }

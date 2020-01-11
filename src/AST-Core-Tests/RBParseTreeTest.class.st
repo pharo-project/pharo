@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 RBParseTreeTest class >> isAbstract [ 
 
-	^self name = #RBParseTreeTest
+	^self == RBParseTreeTest
 ]
 
 { #category : #helpers }

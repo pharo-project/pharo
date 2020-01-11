@@ -25,7 +25,7 @@ ClyAddBreakpointCommand class >> contextMenuOrder [
 
 { #category : #testing }
 ClyAddBreakpointCommand class >> isAbstract [
-	^self = ClyAddBreakpointCommand
+	^ self == ClyAddBreakpointCommand
 ]
 
 { #category : #execution }

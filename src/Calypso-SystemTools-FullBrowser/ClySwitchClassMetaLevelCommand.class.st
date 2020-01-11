@@ -29,7 +29,7 @@ ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
 
 { #category : #testing }
 ClySwitchClassMetaLevelCommand class >> isAbstract [
-	^self = ClySwitchClassMetaLevelCommand 
+	^self == ClySwitchClassMetaLevelCommand 
 ]
 
 { #category : #activation }

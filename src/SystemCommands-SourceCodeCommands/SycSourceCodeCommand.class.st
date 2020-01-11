@@ -19,7 +19,7 @@ Class {
 
 { #category : #testing }
 SycSourceCodeCommand class >> isAbstract [
-	^self = SycSourceCodeCommand 
+	^self == SycSourceCodeCommand 
 ]
 
 { #category : #'instance creation' }

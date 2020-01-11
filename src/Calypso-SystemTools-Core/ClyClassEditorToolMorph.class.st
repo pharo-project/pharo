@@ -27,7 +27,7 @@ ClyClassEditorToolMorph class >> classTabActivation [
 
 { #category : #testing }
 ClyClassEditorToolMorph class >> isAbstract [
-	^self = ClyClassEditorToolMorph 
+	^ self == ClyClassEditorToolMorph 
 ]
 
 { #category : #testing }

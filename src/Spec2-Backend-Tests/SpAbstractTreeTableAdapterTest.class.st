@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 SpAbstractTreeTableAdapterTest class >> isAbstract [ 
 	
-	^ self = SpAbstractTreeTableAdapterTest
+	^ self == SpAbstractTreeTableAdapterTest
 ]
 
 { #category : #accessing }

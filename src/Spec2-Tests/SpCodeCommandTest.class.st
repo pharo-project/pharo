@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 SpCodeCommandTest class >> isAbstract [
 
-	^ self = SpCodeCommandTest
+	^ self == SpCodeCommandTest
 ]
 
 { #category : #testing }

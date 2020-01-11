@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 SycMethodRepackagingCommand class >> isAbstract [
-	^self = SycMethodRepackagingCommand 
+	^self == SycMethodRepackagingCommand 
 ]
 
 { #category : #execution }

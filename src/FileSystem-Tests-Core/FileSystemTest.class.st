@@ -21,7 +21,7 @@ FileSystemTest class >> defaultTimeLimit [
 
 { #category : #testing }
 FileSystemTest class >> isAbstract [
-	^ self name = #FileSystemTest
+	^ self == FileSystemTest
 ]
 
 { #category : #accessing }

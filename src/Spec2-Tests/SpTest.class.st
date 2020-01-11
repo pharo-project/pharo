@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 SpTest class >> isAbstract [
-	^ self = SpTest
+	^ self == SpTest
 ]
 
 { #category : #assertions }

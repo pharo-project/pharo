@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 SpAbstractSelectionModeTest class >> isAbstract [
-	^ self = SpAbstractSelectionModeTest
+	^ self == SpAbstractSelectionModeTest
 ]
 
 { #category : #testing }

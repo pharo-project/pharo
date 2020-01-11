@@ -20,7 +20,7 @@ Class {
 
 { #category : #testing }
 CmdOpenContextMenuCommand class >> isAbstract [
-	^self = CmdOpenContextMenuCommand 
+	^self == CmdOpenContextMenuCommand 
 ]
 
 { #category : #execution }

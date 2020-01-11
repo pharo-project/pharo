@@ -94,7 +94,7 @@ ClyEnvironmentPlugin class >> initialize [
 
 { #category : #testing }
 ClyEnvironmentPlugin class >> isAbstract [
-	^self = ClyEnvironmentPlugin 
+	^ self == ClyEnvironmentPlugin 
 ]
 
 { #category : #testing }

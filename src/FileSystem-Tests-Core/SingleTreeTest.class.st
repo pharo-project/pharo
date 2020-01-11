@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 SingleTreeTest class >> isAbstract [
-	^ self name = #SingleTreeTest
+	^ self == SingleTreeTest
 ]
 
 { #category : #running }

@@ -57,7 +57,7 @@ SpAbstractWidgetPresenter class >> defaultSpec [
 
 { #category : #testing }
 SpAbstractWidgetPresenter class >> isAbstract [
-	^ self = SpAbstractWidgetPresenter
+	^ self == SpAbstractWidgetPresenter
 ]
 
 { #category : #'drag and drop' }

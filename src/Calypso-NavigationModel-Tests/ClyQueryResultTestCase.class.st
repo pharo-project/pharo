@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 ClyQueryResultTestCase class >> isAbstract [
-	^self = ClyQueryResultTestCase
+	^self == ClyQueryResultTestCase
 ]
 
 { #category : #running }

@@ -25,7 +25,7 @@ ClyRunTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aBrowser
 
 { #category : #testing }
 ClyRunTestsFromMethodDataSourceCommand class >> isAbstract [
-	^self = ClyRunTestsFromMethodDataSourceCommand 
+	^self == ClyRunTestsFromMethodDataSourceCommand 
 ]
 
 { #category : #activation }

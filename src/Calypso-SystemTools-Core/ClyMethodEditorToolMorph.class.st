@@ -35,7 +35,7 @@ Class {
 
 { #category : #testing }
 ClyMethodEditorToolMorph class >> isAbstract [
-	^self = ClyMethodEditorToolMorph 
+	^self == ClyMethodEditorToolMorph 
 ]
 
 { #category : #accessing }

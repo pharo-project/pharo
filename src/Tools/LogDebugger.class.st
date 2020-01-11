@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 LogDebugger class >> isAbstract [
-	^ self = LogDebugger
+	^ self == LogDebugger
 ]
 
 { #category : #'opening api' }

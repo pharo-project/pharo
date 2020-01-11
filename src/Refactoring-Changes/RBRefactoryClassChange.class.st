@@ -16,7 +16,7 @@ Class {
 
 { #category : #testing }
 RBRefactoryClassChange class >> isAbstract [ 
-	^self name = #RBRefactoryClassChange
+	^self == RBRefactoryClassChange
 ]
 
 { #category : #comparing }

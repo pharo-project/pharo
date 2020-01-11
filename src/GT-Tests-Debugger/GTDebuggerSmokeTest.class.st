@@ -11,7 +11,7 @@ Class {
 
 { #category : #testing }
 GTDebuggerSmokeTest class >> isAbstract [
-	^ self name = #GTDebuggerSmokeTest
+	^ self == GTDebuggerSmokeTest
 ]
 
 { #category : #asserting }

@@ -9,5 +9,5 @@ Class {
 
 { #category : #'as yet unclassified' }
 ClySortFunctionTestCase class >> isAbstract [
-	^self = ClySortFunctionTestCase
+	^self == ClySortFunctionTestCase
 ]

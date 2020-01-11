@@ -13,7 +13,7 @@ Class {
 
 { #category : #private }
 PaAbstractExampleTest class >> isAbstract [
-	^ self name = #PaAbstractExampleTest
+	^ self == PaAbstractExampleTest
 ]
 
 { #category : #accessing }

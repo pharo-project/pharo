@@ -28,7 +28,7 @@ SycMethodCommand class >> for: methods [
 
 { #category : #testing }
 SycMethodCommand class >> isAbstract [
-	^self = SycMethodCommand 
+	^self == SycMethodCommand 
 ]
 
 { #category : #accessing }

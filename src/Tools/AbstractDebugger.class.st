@@ -20,7 +20,7 @@ AbstractDebugger class >> beCurrent [
 
 { #category : #testing }
 AbstractDebugger class >> isAbstract [
-	^ self = AbstractDebugger
+	^ self == AbstractDebugger
 ]
 
 { #category : #'opening api' }

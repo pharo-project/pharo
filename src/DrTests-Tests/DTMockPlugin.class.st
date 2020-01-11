@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 DTMockPlugin class >> isAbstract [
-	^ self = DTMockPlugin
+	^ self == DTMockPlugin
 ]
 
 { #category : #'api - accessing' }

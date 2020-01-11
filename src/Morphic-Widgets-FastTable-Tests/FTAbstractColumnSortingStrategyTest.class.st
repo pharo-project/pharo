@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 FTAbstractColumnSortingStrategyTest class >> isAbstract [
-	^ self = FTAbstractColumnSortingStrategyTest
+	^ self == FTAbstractColumnSortingStrategyTest
 ]
 
 { #category : #testing }

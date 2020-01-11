@@ -64,7 +64,7 @@ CommandLineHandler class >> description [
 
 { #category : #accessing }
 CommandLineHandler class >> isAbstract [
-	^ self = CommandLineHandler
+	^ self == CommandLineHandler
 ]
 
 { #category : #'handler selection' }

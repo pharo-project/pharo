@@ -15,7 +15,7 @@ ClyMetalinkCommand class >> contextMenuOrder [
 
 { #category : #testing }
 ClyMetalinkCommand class >> isAbstract [
-	^self = ClyMetalinkCommand 
+	^self == ClyMetalinkCommand 
 ]
 
 { #category : #activation }

@@ -16,7 +16,7 @@ Class {
 
 { #category : #testing }
 ClyRemoveMetalinkCommand class >> isAbstract [
-	^self = ClyRemoveMetalinkCommand 
+	^self == ClyRemoveMetalinkCommand 
 ]
 
 { #category : #activation }

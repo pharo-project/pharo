@@ -43,7 +43,7 @@ ClyMethodEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 
 { #category : #testing }
 ClyMethodEditorCommand class >> isAbstract [
-	^self = ClyMethodEditorCommand 
+	^self == ClyMethodEditorCommand 
 ]
 
 { #category : #activation }

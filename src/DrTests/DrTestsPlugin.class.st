@@ -21,7 +21,7 @@ DrTestsPlugin class >> availablePlugins [
 { #category : #testing }
 DrTestsPlugin class >> isAbstract [
 	"Should return true if the plugin is abstract and should not be instantiated."
-	^ self = DrTestsPlugin
+	^ self == DrTestsPlugin
 ]
 
 { #category : #'api - accessing' }

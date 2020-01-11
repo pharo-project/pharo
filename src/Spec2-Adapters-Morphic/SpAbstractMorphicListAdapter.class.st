@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 SpAbstractMorphicListAdapter class >> isAbstract [
-	^ self = SpAbstractMorphicListAdapter
+	^ self == SpAbstractMorphicListAdapter
 ]
 
 { #category : #scrolling }

@@ -29,7 +29,7 @@ Class {
 
 { #category : #testing }
 SpAbstractFormButtonPresenter class >> isAbstract [
-	^ self = SpAbstractFormButtonPresenter
+	^ self == SpAbstractFormButtonPresenter
 ]
 
 { #category : #api }

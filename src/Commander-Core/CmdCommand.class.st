@@ -122,7 +122,7 @@ CmdCommand class >> defaultMenuItemName [
 
 { #category : #testing }
 CmdCommand class >> isAbstract [
-	^self = CmdCommand 
+	^self == CmdCommand 
 ]
 
 { #category : #execution }

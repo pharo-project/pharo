@@ -17,7 +17,7 @@ Class {
 
 { #category : #testing }
 ClySwitchTraitHierarchyModeCommand class >> isAbstract [
-	^self = ClySwitchTraitHierarchyModeCommand 
+	^self == ClySwitchTraitHierarchyModeCommand 
 ]
 
 { #category : #execution }

@@ -33,7 +33,7 @@ Class {
 
 { #category : #testing }
 FTFunctionWithField class >> isAbstract [
-	^ self = FTFunctionWithField
+	^ self == FTFunctionWithField
 ]
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 CmdRootOfCommandExamples class >> isAbstract [
-	^self = CmdRootOfCommandExamples 
+	^self == CmdRootOfCommandExamples 
 ]
 
 { #category : #execution }

@@ -13,7 +13,7 @@ Class {
 
 { #category : #testing }
 FTSelectionModeStrategyTest class >> isAbstract [
-	^ self = FTSelectionModeStrategyTest
+	^ self == FTSelectionModeStrategyTest
 ]
 
 { #category : #testing }

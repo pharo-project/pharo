@@ -14,7 +14,7 @@ Class {
 
 { #category : #testing }
 GlobalIdentifierPersistenceTest class >> isAbstract [
-	^ self name = GlobalIdentifierPersistenceTest name
+	^ self == GlobalIdentifierPersistenceTest
 ]
 
 { #category : #accessing }

@@ -42,7 +42,7 @@ EmbeddedFreeTypeFontFontDescription class >> installFontsIn: provider [
 
 { #category : #testing }
 EmbeddedFreeTypeFontFontDescription class >> isAbstract [ 
-	^self name = #EmbeddedFreeTypeFontFontDescription 
+	^self == EmbeddedFreeTypeFontFontDescription 
 	
 ]
 
