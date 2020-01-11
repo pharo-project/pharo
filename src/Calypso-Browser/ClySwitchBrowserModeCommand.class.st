@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 ClySwitchBrowserModeCommand class >> isAbstract [
-	^self = ClySwitchBrowserModeCommand 
+	^self == ClySwitchBrowserModeCommand 
 ]
 
 { #category : #execution }

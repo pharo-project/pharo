@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 AbstractEnumerationVisitorTest class >> isAbstract [
-	^ self name = #AbstractEnumerationVisitorTest
+	^ self == AbstractEnumerationVisitorTest
 ]
 
 { #category : #utilities }

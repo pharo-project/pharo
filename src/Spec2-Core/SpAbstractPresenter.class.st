@@ -43,7 +43,7 @@ SpAbstractPresenter class >> inputTextHeight [
 
 { #category : #testing }
 SpAbstractPresenter class >> isAbstract [
-	^ self = SpAbstractPresenter
+	^ self == SpAbstractPresenter
 ]
 
 { #category : #TOREMOVE }

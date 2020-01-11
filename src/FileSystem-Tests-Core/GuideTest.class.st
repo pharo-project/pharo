@@ -13,7 +13,7 @@ Class {
 
 { #category : #testing }
 GuideTest class >> isAbstract [
-	^ self name = #GuideTest
+	^ self == GuideTest
 ]
 
 { #category : #asserting }

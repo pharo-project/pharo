@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 RBRefactoringBrowserTest class >> isAbstract [
-	^ self name = #RBRefactoringBrowserTest
+	^ self == RBRefactoringBrowserTest
 ]
 
 { #category : #private }

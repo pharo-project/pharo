@@ -20,7 +20,7 @@ Class {
 
 { #category : #testing }
 SpAbstractTextPresenter class >> isAbstract [
-	^ self = SpAbstractTextPresenter
+	^ self == SpAbstractTextPresenter
 ]
 
 { #category : #api }

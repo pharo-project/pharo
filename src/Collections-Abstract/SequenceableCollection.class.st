@@ -19,7 +19,7 @@ SequenceableCollection class >> << blockWithArg [
 { #category : #testing }
 SequenceableCollection class >> isAbstract [
 
-	^self name = #SequenceableCollection
+	^self == SequenceableCollection
 ]
 
 { #category : #'stream creation' }

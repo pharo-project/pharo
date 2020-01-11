@@ -33,7 +33,7 @@ ClyBrowserNavigationCommand class >> defaultShortcut [
 
 { #category : #testing }
 ClyBrowserNavigationCommand class >> isAbstract [
-	^self = ClyBrowserNavigationCommand
+	^ self == ClyBrowserNavigationCommand
 ]
 
 { #category : #activation }

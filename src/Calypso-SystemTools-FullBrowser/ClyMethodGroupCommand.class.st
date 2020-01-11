@@ -22,7 +22,7 @@ ClyMethodGroupCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 ClyMethodGroupCommand class >> isAbstract [
-	^self = ClyMethodGroupCommand 
+	^self == ClyMethodGroupCommand 
 ]
 
 { #category : #accessing }

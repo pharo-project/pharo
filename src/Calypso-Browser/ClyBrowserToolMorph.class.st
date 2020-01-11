@@ -149,7 +149,7 @@ ClyBrowserToolMorph class >> for: aBrowser inContext: aBrowserContext [
 
 { #category : #testing }
 ClyBrowserToolMorph class >> isAbstract [
-	^self = ClyBrowserToolMorph
+	^ self == ClyBrowserToolMorph
 ]
 
 { #category : #testing }

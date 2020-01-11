@@ -16,7 +16,7 @@ Class {
 
 { #category : #testing }
 SpSmokeTest class >> isAbstract [
-	^ self name = #SpSmokeTest
+	^ self == SpSmokeTest
 ]
 
 { #category : #testing }

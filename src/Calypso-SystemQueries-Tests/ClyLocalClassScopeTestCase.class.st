@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyLocalClassScopeTestCase class >> isAbstract [
-	^self = ClyLocalClassScopeTestCase
+	^self == ClyLocalClassScopeTestCase
 ]
 
 { #category : #tests }

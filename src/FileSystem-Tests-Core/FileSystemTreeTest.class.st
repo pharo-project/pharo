@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 FileSystemTreeTest class >> isAbstract [
-	^ self name = #FileSystemTreeTest
+	^ self == FileSystemTreeTest
 ]
 
 { #category : #running }

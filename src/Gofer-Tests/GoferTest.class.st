@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 GoferTest class >> isAbstract [
-	^ self name = #GoferTest
+	^ self == GoferTest
 ]
 
 { #category : #testing }

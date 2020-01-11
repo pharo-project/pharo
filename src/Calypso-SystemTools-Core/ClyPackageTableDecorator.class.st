@@ -19,5 +19,5 @@ ClyPackageTableDecorator class >> decorationStrategy [
 
 { #category : #testing }
 ClyPackageTableDecorator class >> isAbstract [
-	^self = ClyPackageTableDecorator 
+	^self == ClyPackageTableDecorator 
 ]

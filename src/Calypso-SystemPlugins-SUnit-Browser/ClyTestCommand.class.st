@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 ClyTestCommand class >> isAbstract [
-	^self = ClyTestCommand 
+	^self == ClyTestCommand 
 ]
 
 { #category : #execution }

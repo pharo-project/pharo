@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 ClyNavigationEnvironmentTestCase class >> isAbstract [
-	^self = ClyNavigationEnvironmentTestCase 
+	^self == ClyNavigationEnvironmentTestCase 
 ]
 
 { #category : #running }

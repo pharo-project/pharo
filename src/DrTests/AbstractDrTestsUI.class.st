@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 AbstractDrTestsUI class >> isAbstract [
-	^ AbstractDrTestsUI = self
+	^ self == AbstractDrTestsUI
 ]
 
 { #category : #accessing }

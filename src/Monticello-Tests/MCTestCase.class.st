@@ -9,7 +9,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 MCTestCase class >> isAbstract [
-	^ self = MCTestCase
+	^ self == MCTestCase
 ]
 
 { #category : #testing }

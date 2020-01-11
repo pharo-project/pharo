@@ -6,5 +6,5 @@ Class {
 
 { #category : #testing }
 ClyStringPatternTestCase class >> isAbstract [
-	^self = ClyStringPatternTestCase
+	^self == ClyStringPatternTestCase
 ]

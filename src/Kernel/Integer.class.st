@@ -42,7 +42,7 @@ Integer class >> byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4 [
 { #category : #testing }
 Integer class >> isAbstract [
 
-	^self name = #Integer
+	^self == Integer
 ]
 
 { #category : #'instance creation' }

@@ -59,7 +59,7 @@ HashedCollection class >> empty [
 { #category : #testing }
 HashedCollection class >> isAbstract [
 
-	^self name = #HashedCollection
+	^self == HashedCollection
 ]
 
 { #category : #'instance creation' }

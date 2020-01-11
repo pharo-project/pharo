@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ArrayedCollection class >> isAbstract [
 
-	^self name = #ArrayedCollection
+	^self == ArrayedCollection
 ]
 
 { #category : #'instance creation' }

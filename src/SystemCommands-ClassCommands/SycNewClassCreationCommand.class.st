@@ -18,7 +18,7 @@ Class {
 
 { #category : #testing }
 SycNewClassCreationCommand class >> isAbstract [
-	^self = SycNewClassCreationCommand 
+	^self == SycNewClassCreationCommand 
 ]
 
 { #category : #execution }

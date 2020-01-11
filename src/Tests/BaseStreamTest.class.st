@@ -6,7 +6,8 @@ Class {
 
 { #category : #testing }
 BaseStreamTest class >> isAbstract [
-	^ self = BaseStreamTest.
+
+	^self == BaseStreamTest.
 ]
 
 { #category : #testing }

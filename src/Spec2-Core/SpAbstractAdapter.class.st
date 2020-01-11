@@ -50,7 +50,7 @@ SpAbstractAdapter class >> allAdapters [
 
 { #category : #testing }
 SpAbstractAdapter class >> isAbstract [
-	^ self = SpAbstractAdapter
+	^ self == SpAbstractAdapter
 ]
 
 { #category : #accessing }

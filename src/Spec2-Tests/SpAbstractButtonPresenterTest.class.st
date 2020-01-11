@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 SpAbstractButtonPresenterTest class >> isAbstract [
 
-	^ super isAbstract or: [ self = SpAbstractButtonPresenterTest ]
+	^ super isAbstract or: [ self == SpAbstractButtonPresenterTest ]
 ]
 
 { #category : #tests }

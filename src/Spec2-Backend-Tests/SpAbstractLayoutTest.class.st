@@ -11,7 +11,7 @@ Class {
 
 { #category : #testing }
 SpAbstractLayoutTest class >> isAbstract [ 
-	^ self = SpAbstractLayoutTest
+	^ self == SpAbstractLayoutTest
 ]
 
 { #category : #testing }

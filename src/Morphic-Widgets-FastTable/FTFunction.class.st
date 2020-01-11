@@ -42,7 +42,7 @@ Class {
 
 { #category : #testing }
 FTFunction class >> isAbstract [
-	^ self = FTFunction
+	^ self == FTFunction
 ]
 
 { #category : #'instance creation' }

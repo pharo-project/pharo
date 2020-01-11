@@ -30,7 +30,7 @@ SycChangeMessageSignatureCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 SycChangeMessageSignatureCommand class >> isAbstract [
-	^self = SycChangeMessageSignatureCommand 
+	^self == SycChangeMessageSignatureCommand 
 ]
 
 { #category : #execution }

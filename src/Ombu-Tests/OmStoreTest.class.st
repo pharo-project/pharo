@@ -15,7 +15,7 @@ Class {
 
 { #category : #testing }
 OmStoreTest class >> isAbstract [
-	^ self name = #OmStoreTest
+	^ self == OmStoreTest
 ]
 
 { #category : #running }

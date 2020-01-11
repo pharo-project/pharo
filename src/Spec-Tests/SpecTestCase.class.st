@@ -20,7 +20,7 @@ Class {
 
 { #category : #testing }
 SpecTestCase class >> isAbstract [
-	^ self name = #SpecTestCase
+	^ self == SpecTestCase
 ]
 
 { #category : #testing }

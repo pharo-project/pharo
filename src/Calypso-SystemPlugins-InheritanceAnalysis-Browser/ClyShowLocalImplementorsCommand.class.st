@@ -27,7 +27,7 @@ Class {
 
 { #category : #testing }
 ClyShowLocalImplementorsCommand class >> isAbstract [
-	^self = ClyShowLocalImplementorsCommand 
+	^self == ClyShowLocalImplementorsCommand 
 ]
 
 { #category : #execution }

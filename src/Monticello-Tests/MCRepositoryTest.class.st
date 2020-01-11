@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 MCRepositoryTest class >> isAbstract [
-	^ self = MCRepositoryTest
+	^ self == MCRepositoryTest
 ]
 
 { #category : #actions }

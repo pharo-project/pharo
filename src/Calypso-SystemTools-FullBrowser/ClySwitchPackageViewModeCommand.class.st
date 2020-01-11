@@ -40,7 +40,7 @@ ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation3 [
 
 { #category : #testing }
 ClySwitchPackageViewModeCommand class >> isAbstract [
-	^self = ClySwitchPackageViewModeCommand 
+	^self == ClySwitchPackageViewModeCommand 
 ]
 
 { #category : #activation }

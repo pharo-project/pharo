@@ -6,7 +6,7 @@ Class {
 
 { #category : #testing }
 ClyClassGroupProviderTestCase class >> isAbstract [
-	^self = ClyClassGroupProviderTestCase 
+	^ self == ClyClassGroupProviderTestCase 
 ]
 
 { #category : #running }

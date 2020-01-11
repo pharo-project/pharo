@@ -13,5 +13,5 @@ CmdAbstractCommandExample class >> activationExample1 [
 
 { #category : #testing }
 CmdAbstractCommandExample class >> isAbstract [
-	^self = CmdAbstractCommandExample 
+	^self == CmdAbstractCommandExample 
 ]

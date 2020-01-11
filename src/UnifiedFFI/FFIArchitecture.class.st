@@ -19,7 +19,7 @@ FFIArchitecture class >> forCurrentArchitecture [
 { #category : #testing }
 FFIArchitecture class >> isAbstract [ 
 
-	^self name = #FFIArchitecture
+	^self == FFIArchitecture
 ]
 
 { #category : #testing }

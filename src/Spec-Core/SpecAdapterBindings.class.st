@@ -15,7 +15,7 @@ Class {
 { #category : #testing }
 SpecAdapterBindings class >> isAbstract [ 
 
-	^ self name = #SpecAdapterBindings
+	^ self == SpecAdapterBindings
 ]
 
 { #category : #initialize }

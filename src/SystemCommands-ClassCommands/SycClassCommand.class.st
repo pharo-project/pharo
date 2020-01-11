@@ -22,7 +22,7 @@ SycClassCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : #testing }
 SycClassCommand class >> isAbstract [
-	^self = SycClassCommand 
+	^self == SycClassCommand 
 ]
 
 { #category : #accessing }

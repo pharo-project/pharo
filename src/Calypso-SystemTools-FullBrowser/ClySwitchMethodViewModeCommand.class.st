@@ -26,7 +26,7 @@ ClySwitchMethodViewModeCommand class >> fullBrowserToolbarActivation [
 
 { #category : #testing }
 ClySwitchMethodViewModeCommand class >> isAbstract [
-	^self = ClySwitchMethodViewModeCommand 
+	^self == ClySwitchMethodViewModeCommand 
 ]
 
 { #category : #accessing }

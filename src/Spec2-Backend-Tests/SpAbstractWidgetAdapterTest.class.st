@@ -7,7 +7,7 @@ Class {
 { #category : #testing }
 SpAbstractWidgetAdapterTest class >> isAbstract [ 
 
-	^ self name = #SpAbstractWidgetAdapterTest 
+	^ self == SpAbstractWidgetAdapterTest 
 ]
 
 { #category : #running }
