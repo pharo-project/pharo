@@ -463,7 +463,7 @@ WorldState >> displayWorld: aWorld submorphs: submorphs [
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
-	[aWorld displayWorld] ifError: [:err :rcvr |
+	[aWorld displayWorld] ifError: [:err |
 		"Handle a drawing error"
 		| errCtx errMorph |
 		errCtx := thisContext.
@@ -481,7 +481,7 @@ WorldState >> displayWorldSafely: aWorld [
 		] whileTrue.
 		errMorph setProperty: #errorOnDraw toValue: true.
 		"Install the old error handler, so we can re-raise the error"
-		rcvr error: err.
+		err signal.
 	].
 ]
 
