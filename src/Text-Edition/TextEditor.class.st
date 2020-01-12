@@ -188,6 +188,7 @@ TextEditor class >> editingSettingsOn: aBuilder [
 			(aBuilder setting: #selectionTextColor)
 				target: UITheme;
 				targetSelector: #currentSettings;
+				default: Color black;
 				label: 'Selection text color';
 				description: 'The color of the selection text'.
 			(aBuilder setting: #useSelectionBar)
@@ -202,23 +203,28 @@ TextEditor class >> editingSettingsOn: aBuilder [
 						label: 'Selection bar color'].
 			(aBuilder setting: #useSecondarySelection)
 				target: TextEditor;
+				default: true;
 				label: 'Use the secondary selection';
 				with: [
 					(aBuilder setting: #secondarySelectionTextColor)
 						target: UITheme;
 						targetSelector: #currentSettings;
+						default: Color white;
 						label: 'Secondary selection text color'].
 			(aBuilder setting: #useFindReplaceSelection)
 				target: TextEditor;
+				default: true;
 				label: 'Use the find and replace selection';
 				with: [
 					(aBuilder setting: #findReplaceSelectionColor)
 						target: UITheme;
 						targetSelector: #currentSettings;
+						default: (Color r: 1.0 g: 0.6001955034213099 b: 0.0 alpha: 0.4);
 						label: 'Find replace selection color'.
 					(aBuilder setting: #findReplaceSelectionTextColor)
 						target: UITheme;
 						targetSelector: #currentSettings;
+						default: Color black;
 						label: 'Find replace selection text color'].
 			(aBuilder setting: #caseSensitiveFinds) 
 				label: 'Case sensitive search';
