@@ -67,7 +67,7 @@ SHStyleElement >> = otherObject [
 	^ self species = otherObject species
 		and: [ tokens = otherObject tokens
 				and:
-					[ color = otherObject color and: [ self emphasis = otherObject emphasis ] ] ]
+					[ self color = otherObject color and: [ self emphasis = otherObject emphasis ] ] ]
 ]
 
 { #category : #accessing }
