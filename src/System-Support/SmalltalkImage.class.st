@@ -1076,17 +1076,20 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 { #category : #miscellaneous }
 SmalltalkImage >> logStdOutDuring: aBlock [
 	| stderr |
-	[
-		"install the line end conversion and force initialize the converter"
-		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
-			on: Stdio out
-			encoding: 'utf8').
-		
-		"reset coloring"
-		stderr nextPut: Character escape; nextPutAll: '[0m'.
-		"rund the loggin block"
-		aBlock value: stderr.
-	] on: Error do: [ :e| "we don't care if the logging to stdout fails..." ].
+	"install the line end conversion and force initialize the converter"
+	stderr := ZnNewLineWriterStream
+		on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
+
+	"reset coloring"
+	stderr
+		nextPut: Character escape;
+		nextPutAll: '[0m'.
+	"rund the loggin block"
+	
+	[aBlock value: stderr.] 
+		on: Error do: [ "If the block fails we don't do nothing. This can lead to recursive errors" ].
+
+	stderr flush; close.
 ]
 
 { #category : #'memory space' }
