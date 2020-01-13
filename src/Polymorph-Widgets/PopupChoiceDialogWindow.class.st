@@ -139,6 +139,9 @@ PopupChoiceDialogWindow >> filter: aString [
 
 	filter := aString.
 
+	"As this method is called during the update of the list,
+	and the list is updated after filtering it. 
+	We have to ensure that the list is not updating and generating a recursive call"
 	updatingFilter ifFalse: [
 		updatingFilter := true.
 		[ self changed: #filter ]
