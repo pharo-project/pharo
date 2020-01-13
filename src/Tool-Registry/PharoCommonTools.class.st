@@ -77,6 +77,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Messagelist';
+						default: (Smalltalk at: #ClyOldMessageBrowserAdapter);
 						domainValues: Smalltalk tools recentMessageListTools ];
 		with: [ 
 					(aBuilder pickOne: #versionBrowserTool)
