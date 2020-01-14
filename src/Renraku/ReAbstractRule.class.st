@@ -1,7 +1,18 @@
 "
-I an the root of all quality rules rules.
+I am the root of all quality rules rules.
 
-If you want to learn about the features of rules or how to create your own, please read:
+Each rule should provide a short name string returned from the #name method. You also have to override the #rationale method to return a detailed description about the rule. You may also put the rationale in the class comment, as by default #rationale method returns the comment of the rule's class.
+
+The class-side methods #checksMethod, #checksClass, #checksPackage and #checksNode return true if the rule checks methods, classes or traits, packages and AST nodes respectively. Tools will pass entities of the specified type to the rule for checking. 
+
+To check the rule, while there is a default implementation which relies on #basicCheck: and creates an instance of ReTrivialCritique, it is advised to override the #check:forCritiquesDo: method. 
+
+It's a good idea to assign your rule to a specific group. For this override the #group method and return string with the name of the group. While you can use any name you want, maybe you would like to put your rule into one of the existing groups: API Change, API Hints, Architectural, Bugs, Coding Idiom Violation, Design Flaws, Optimization, Potential Bugs, Rubric, SUnit, Style, Unclassified rules.
+
+You can also specify the severity of your rue by returning one of: #information, #warning, or #error symbols from the #severity method.
+
+
+If you want to learn more about the features of rules or how to create your own, please read:
 
 RenrakuRuleHelp readInHelpBrowser
 "
@@ -133,7 +144,8 @@ ReAbstractRule >> check: anEntity [
 
 { #category : #running }
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock [
-
+	"Accepts an entity and a block which could be evaluated for each detected critique
+	aCriticBlock may accept one argument: the critique object"
 	(self basicCheck: anEntity)
 		ifTrue: [ aCriticBlock cull: (self critiqueFor: anEntity) ]
 ]

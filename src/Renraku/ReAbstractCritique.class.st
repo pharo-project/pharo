@@ -1,7 +1,12 @@
 "
-I am an abstract critic class.
+I am an abstract critique class.
 
-My subclasses should define whether they provide a selection interval, or refactory change
+A critique links a quality rule to a source code target. It is the main unit that should be used to provide information to the user.
+
+I specialize the ReProperty class by extracting information from the rule that reported the violation. 
+The #title is extracted from the rule's #name, the #icon based on the rule's #severity and a #description is provided based on the rule's #rationale.
+
+The reference to the critized entity is established through ReSourceAnchor.
 "
 Class {
 	#name : #ReAbstractCritique,
