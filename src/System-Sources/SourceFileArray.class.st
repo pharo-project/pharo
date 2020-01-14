@@ -313,9 +313,10 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
 	"If the file has been flushed, I am discarding the readonly stream's buffer.
 	This is to avoid a problem where the readOnly buffer is missing data that was in 
 	the writer buffer."	
-	(file ensureWrittenPosition: position)
-		ifTrue: [
-			stream discardBuffer].
+	file ensureWrittenPosition: position.
+
+	"I am discarding the buffer of the readonly stream, because if not is out-of-sync."
+	stream discardBuffer.
 	
    stream position: position.
    result := presentBlock value: stream.
