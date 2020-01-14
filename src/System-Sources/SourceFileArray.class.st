@@ -287,7 +287,14 @@ SourceFileArray >> readStreamAt: sourcePointer ifPresent: presentBlock ifAbsent:
 SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: presentBlock ifAbsent: absentBlock [
  
    | queue stream rofa result file |
-       
+   
+	"This method is really ugly. 
+	It uses different readers over the same file that is beeing writing. 
+	This can lead to buffer problems. 
+	This should be rethougth to a better way.
+	
+	Maybe an unification of all the accesses using the same buffer could be nice."
+    
   	queue := readOnlyQueue.
   	rofa := queue nextOrNil ifNil: [ self createReadOnlyFiles ].
        
@@ -302,8 +309,13 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
 		self finishedReading: rofa from: queue. 
 		^ absentBlock value 
 	].
-	
-	file ensureWrittenPosition: position.
+
+	"If the file has been flushed, I am discarding the readonly stream's buffer.
+	This is to avoid a problem where the readOnly buffer is missing data that was in 
+	the writer buffer."	
+	(file ensureWrittenPosition: position)
+		ifTrue: [
+			stream discardBuffer].
 	
    stream position: position.
    result := presentBlock value: stream.
