@@ -9,41 +9,41 @@ It is a class which manages target type of metalinks. For example Breakpoint or 
 It should return order in context menu
 "
 Class {
-	#name : #ClyRemoveMetalinkCommand,
-	#superclass : #ClyMetalinkCommand,
+	#name : #ClyRemoveDebuggingCommand,
+	#superclass : #ClyDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Commands'
 }
 
 { #category : #testing }
-ClyRemoveMetalinkCommand class >> isAbstract [
-	^self = ClyRemoveMetalinkCommand 
+ClyRemoveDebuggingCommand class >> isAbstract [
+	^self = ClyRemoveDebuggingCommand 
 ]
 
 { #category : #activation }
-ClyRemoveMetalinkCommand class >> methodBrowserTableIconActivation [
+ClyRemoveDebuggingCommand class >> methodBrowserTableIconActivation [
 	<classAnnotation>
 	
 	^ClyTableIconCommandActivation priority: 900 for: ClyMethod asCalypsoItemContext
 ]
 
+{ #category : #execution }
+ClyRemoveDebuggingCommand >> debuggingToolClass [
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
-ClyRemoveMetalinkCommand >> defaultMenuIconName [
+ClyRemoveDebuggingCommand >> defaultMenuIconName [
 	^#smallCancel
 ]
 
 { #category : #accessing }
-ClyRemoveMetalinkCommand >> defaultMenuItemName [ 
-	^'Remove ', self metalinkManagerClass name asLowercase
+ClyRemoveDebuggingCommand >> defaultMenuItemName [ 
+	^'Remove ', self debuggingToolClass name asLowercase
 ]
 
 { #category : #execution }
-ClyRemoveMetalinkCommand >> execute [
+ClyRemoveDebuggingCommand >> execute [
 	
 	sourceNode nodesWithLinks do: [:each | 
-		self metalinkManagerClass removeFrom: each]
-]
-
-{ #category : #execution }
-ClyRemoveMetalinkCommand >> metalinkManagerClass [
-	self subclassResponsibility 
+		self debuggingToolClass removeFrom: each]
 ]
