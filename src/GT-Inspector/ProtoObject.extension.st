@@ -59,7 +59,7 @@ ProtoObject >> gtInspectorPresentationsFromPragmas: aCollection In: composite in
 		do: [ :eachPragma | 
 			eachPragma methodSelector numArgs = 0
 				ifTrue: [ | presentationSource |
-					presentationSource := self perform: eachPragma selector.
+					presentationSource := self perform: eachPragma methodSelector.
 					presentationSource glmPresentation
 						cull: composite
 						cull: aGTInspector
