@@ -1079,17 +1079,11 @@ SmalltalkImage >> logStdOutDuring: aBlock [
 	"install the line end conversion and force initialize the converter"
 	stderr := ZnNewLineWriterStream
 		on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
-
-	"reset coloring"
-	stderr
-		nextPut: Character escape;
-		nextPutAll: '[0m'.
-	"rund the loggin block"
 	
 	[aBlock value: stderr.] 
 		on: Error do: [ "If the block fails we don't do nothing. This can lead to recursive errors" ].
 
-	stderr flush; close.
+	stderr flush.
 ]
 
 { #category : #'memory space' }
