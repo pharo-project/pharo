@@ -18,28 +18,26 @@ ContinuationTest >> callcc: aBlock [
 
 { #category : #'as yet unclassified' }
 ContinuationTest >> intersect: aLinkedList with: aCollection [
-	| vl |
-	vl := aLinkedList
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ aLinkedList firstLink ].
-	^ LinkedList new
-		add: (self intersectValueLink: vl with: aCollection);
-		yourself
+	^ aLinkedList
+		ifNotEmpty: [ | list |
+			list := LinkedList new.
+			(self intersectValueLink: aLinkedList firstLink with: aCollection)
+				ifNotNil: [ :link | list add: link ].
+			list ]
 ]
 
 { #category : #'as yet unclassified' }
 ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 	^ aValueLink
-		ifNotNil: [ | v nl rest |
+		ifNotNil: [ | v nl |
 			v := aValueLink value.
-			nl := aValueLink nextLink.
-			rest := self intersectValueLink: nl with: anotherSet.
+			nl := self intersectValueLink: aValueLink nextLink with: anotherSet.
 			(anotherSet includes: v)
 				ifTrue: [ ValueLink new
 						value: v;
-						nextLink: rest;
+						nextLink: nl;
 						yourself ]
-				ifFalse: [ rest ] ]
+				ifFalse: [ nl ] ]
 ]
 
 { #category : #tests }
@@ -104,7 +102,13 @@ ContinuationTest >> testIntersectWith [
 			(self
 				intersect: (LinkedList with: #apple with: #banana with: #avocado)
 				with: (LinkedList with: 1 with: 2 with: #apple))
-		equals: (LinkedList with: #apple)
+		equals: (LinkedList with: #apple).
+	self
+		assert: (self intersect: ((1 to: 10) as: LinkedList) with: (9 to: 20))
+		equals: (9 to: 10).
+	self
+		assert: (self intersect: ((1 to: 10) as: LinkedList) with: (11 to: 20))
+		equals: {}
 ]
 
 { #category : #tests }
