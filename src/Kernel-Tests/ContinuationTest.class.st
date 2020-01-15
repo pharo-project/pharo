@@ -27,6 +27,59 @@ ContinuationTest >> intersect: aLinkedList with: aCollection [
 ]
 
 { #category : #'as yet unclassified' }
+ContinuationTest >> intersect: aLinkedList with: aCollection continuation: hop [
+	^ aCollection
+		ifEmpty: [ hop value: aCollection ]
+		ifNotEmpty: [ aLinkedList
+				ifNotEmpty: [ | list |
+					list := LinkedList new.
+					(self intersectValueLink: aLinkedList firstLink with: aCollection)
+						ifNotNil: [ :link | list add: link ].
+					list ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersect: aSet withAll: sets [
+	^ sets
+		ifEmpty: [ aSet ]
+		ifNotEmpty: [ self
+				intersect: aSet
+				with: (self intersect: sets first withAll: sets allButFirst) ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
+	^ aSet
+		ifEmpty: [ hop value: aSet ]
+		ifNotEmpty: [ sets
+				ifEmpty: [ aSet ]
+				ifNotEmpty: [ self
+						intersect: aSet
+						with:
+							(self
+								intersect: sets first
+								withAll: sets allButFirst
+								continuation: hop) ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersectAll: sets [
+	^ sets
+		ifNotEmpty: [ self intersect: sets first withAll: sets allButFirst ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersectAllWithCC: sets [
+	^ self
+		callcc: [ :cc | 
+			sets
+				ifNotEmpty: [ self
+						intersect: sets first
+						withAll: sets allButFirst
+						continuation: cc ] ]
+]
+
+{ #category : #'as yet unclassified' }
 ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 	^ aValueLink
 		ifNotNil: [ | v nl |
@@ -38,6 +91,33 @@ ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 						nextLink: nl;
 						yourself ]
 				ifFalse: [ nl ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
+	^ aSet
+		ifEmpty: [ hop value: aSet ]
+		ifNotEmpty: [ sets
+				ifEmpty: [ aSet ]
+				ifNotEmpty: [ self
+						intersect: aSet
+						with:
+							(self
+								intersectWithCC: sets first
+								withAll: sets allButFirst
+								continuation: hop)
+						continuation: hop ] ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersectWithCCAllWithCC: sets [
+	^ self
+		callcc: [ :cc | 
+			sets
+				ifNotEmpty: [ self
+						intersectWithCC: sets first
+						withAll: sets allButFirst
+						continuation: cc ] ]
 ]
 
 { #category : #tests }
@@ -93,6 +173,54 @@ ContinuationTest >> testBlockVars [
 							tmp2 := cc.
 							continuation value: i ] ] ].
 	self assert: tmp equals: 6
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> testIntersectAll [
+	self
+		assert:
+			(self
+				intersectAll:
+					{(LinkedList with: 3 with: #mangos with: #and).
+					(LinkedList with: 3 with: #kiwis with: #and).
+					(LinkedList with: 3 with: #hamburges)})
+		equals: {3}.
+	self
+		assert:
+			(self
+				intersectAll:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					(LinkedList with: #no with: #food with: #and).
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}.
+	self
+		assert:
+			(self
+				intersectAll:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					LinkedList new.
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}.
+	self
+		assert:
+			(self
+				intersectAllWithCC:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					LinkedList new.
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}.
+	self
+		assert:
+			(self
+				intersectWithCCAllWithCC:
+					{(LinkedList with: 3 with: #steaks with: #and).
+					(LinkedList with: #no with: #food with: #and).
+					(LinkedList with: #three with: #baked with: #potatoes).
+					(LinkedList with: 3 with: #diet with: #hamburges)})
+		equals: {}
 ]
 
 { #category : #'as yet unclassified' }
