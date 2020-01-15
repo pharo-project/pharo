@@ -139,6 +139,36 @@ ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
 						ifTrue: [ out value: v ] ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+ContinuationTest >> remove: anObj uptoLast: aLinkedList [
+	^ aLinkedList
+		ifNotEmpty: [ | vl |
+			vl := self
+				callcc: [ :skip | 
+					self
+						remove: anObj
+						uptoLastValueLink: aLinkedList firstLink
+						continuation: skip ].
+			LinkedList with: vl ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> remove: anObj uptoLastValueLink: aValueLink continuation: skip [
+	^ aValueLink
+		ifNotNil: [ | v nl |
+			v := aValueLink value.
+			nl := self
+				remove: anObj
+				uptoLastValueLink: aValueLink nextLink
+				continuation: skip.
+			anObj = v
+				ifTrue: [ skip value: nl ]
+				ifFalse: [ ValueLink new
+						value: v;
+						nextLink: nl;
+						yourself ] ]
+]
+
 { #category : #tests }
 ContinuationTest >> testBlockEscape [
 	| x |
@@ -305,6 +335,48 @@ ContinuationTest >> testReentrant [
 	self assert: assoc value ~= 5.
 	assoc value = 4
 		ifFalse: [ assoc key value: assoc ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> testRemoveUptoLast [
+	self
+		assert:
+			(self
+				remove: #cookies
+				uptoLast:
+					(LinkedList new
+						add: #cookies;
+						add: #chocolate;
+						add: #mints;
+						add: #caramel;
+						add: #delight;
+						add: #ginger;
+						add: #snaps;
+						add: #desserts;
+						add: #chocolate;
+						add: #mousse;
+						add: #vanilla;
+						add: #ice;
+						add: #cream;
+						add: #German;
+						add: #chocolate;
+						add: #cake;
+						add: #more;
+						add: #cookies;
+						"from this down to the last should be kept in the result
+						because the previous #cookies is the last one #cookies in the list."
+							add: #gingerbreadman;
+						add: #chocolate;
+						add: #chip;
+						add: #brownies;
+						yourself))
+		equals:
+			(LinkedList new
+				add: #gingerbreadman;
+				add: #chocolate;
+				add: #chip;
+				add: #brownies;
+				yourself)
 ]
 
 { #category : #tests }
