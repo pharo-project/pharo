@@ -80,7 +80,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	PharoDarkTheme beCurrent.
+	PharoLightTheme beCurrent.
 	
 	SDL_Event initialize.
 	
