@@ -1,4 +1,10 @@
 "
+I keep information about the critiques that exist on certain entities.
+I'm invoked usually as follows:
+	
+	Point critiques
+	(Point >> #degrees) critiques
+	
 I contain some functionality shared between code entities
 "
 Class {
