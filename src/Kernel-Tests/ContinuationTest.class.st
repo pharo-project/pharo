@@ -120,6 +120,25 @@ ContinuationTest >> intersectWithCCAllWithCC: sets [
 						continuation: cc ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+ContinuationTest >> leftmost: aBlock tree: aTree [
+	^ self
+		callcc: [ :skip | self leftmost: aBlock tree: aTree continuation: skip ]
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
+	^ aTree
+		ifNotNil: [ | v |
+			v := aTree value.
+			v class = ValueLink
+				ifTrue: [ self
+						leftmost: aBlock tree: v continuation: out;
+						leftmost: aBlock tree: aTree nextLink continuation: out ]
+				ifFalse: [ (aBlock value: v)
+						ifTrue: [ out value: v ] ] ]
+]
+
 { #category : #tests }
 ContinuationTest >> testBlockEscape [
 	| x |
@@ -237,6 +256,36 @@ ContinuationTest >> testIntersectWith [
 	self
 		assert: (self intersect: ((1 to: 10) as: LinkedList) with: (11 to: 20))
 		equals: {}
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> testLeftmost [
+	| tree |
+	"`tree` corresponds to the sexp '(((a)) 4 (1))"
+	tree := ValueLink new
+		value:
+			(ValueLink new
+				value:
+					(ValueLink new
+						value: #a;
+						yourself);
+				yourself);
+		nextLink:
+			(ValueLink new
+				value: 4;
+				nextLink:
+					(ValueLink new
+						value:
+							(ValueLink new
+								value: 1;
+								yourself);
+						yourself);
+				yourself);
+		yourself.
+	self assert: (self leftmost: #isSymbol tree: tree) equals: #a.
+	self assert: (self leftmost: #isInteger tree: tree) equals: 4.
+	self assert: (self leftmost: #isNil tree: tree) equals: nil.
+	self assert: (self leftmost: [ :v | v = 5 ] tree: tree) equals: nil
 ]
 
 { #category : #tests }
