@@ -16,7 +16,7 @@ ContinuationTest >> callcc: aBlock [
 	^ Continuation currentDo: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> intersect: aLinkedList with: aCollection [
 	^ aLinkedList
 		ifNotEmpty: [ | list |
@@ -26,16 +26,11 @@ ContinuationTest >> intersect: aLinkedList with: aCollection [
 			list ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> intersect: aLinkedList with: aCollection continuation: hop [
 	^ aCollection
 		ifEmpty: [ hop value: aCollection ]
-		ifNotEmpty: [ aLinkedList
-				ifNotEmpty: [ | list |
-					list := LinkedList new.
-					(self intersectValueLink: aLinkedList firstLink with: aCollection)
-						ifNotNil: [ :link | list add: link ].
-					list ] ]
+		ifNotEmpty: [ self intersect: aLinkedList with: aCollection ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -47,7 +42,7 @@ ContinuationTest >> intersect: aSet withAll: sets [
 				with: (self intersect: sets first withAll: sets allButFirst) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
 	^ aSet
 		ifEmpty: [ hop value: aSet ]
@@ -68,29 +63,25 @@ ContinuationTest >> intersectAll: sets [
 		ifNotEmpty: [ self intersect: sets first withAll: sets allButFirst ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> intersectAllWithCC: sets [
-	^ self
-		callcc: [ :cc | 
-			sets
-				ifNotEmpty: [ self
-						intersect: sets first
-						withAll: sets allButFirst
-						continuation: cc ] ]
+	^ sets
+		ifNotEmpty: [ Continuation
+				currentDo:
+					[ :cc | self intersect: sets first withAll: sets allButFirst continuation: cc ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
 	^ aValueLink
-		ifNotNil: [ | v nl |
-			v := aValueLink value.
-			nl := self intersectValueLink: aValueLink nextLink with: anotherSet.
-			(anotherSet includes: v)
-				ifTrue: [ ValueLink new
-						value: v;
-						nextLink: nl;
-						yourself ]
-				ifFalse: [ nl ] ]
+		ifNotNil: [ | car cdr |
+			car := aValueLink value.
+			cdr := self
+				intersectValueLink: aValueLink nextLink
+				with: anotherSet.
+			(anotherSet includes: car)
+				ifTrue: [ car ~~> cdr ]
+				ifFalse: [ cdr ] ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -109,12 +100,12 @@ ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 						continuation: hop ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> intersectWithCCAllWithCC: sets [
-	^ self
-		callcc: [ :cc | 
-			sets
-				ifNotEmpty: [ self
+	^ sets
+		ifNotEmpty: [ Continuation
+				currentDo: [ :cc | 
+					self
 						intersectWithCC: sets first
 						withAll: sets allButFirst
 						continuation: cc ] ]
@@ -126,17 +117,17 @@ ContinuationTest >> leftmost: aBlock tree: aTree [
 		callcc: [ :skip | self leftmost: aBlock tree: aTree continuation: skip ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
 	^ aTree
-		ifNotNil: [ | v |
-			v := aTree value.
-			v class = ValueLink
+		ifNotNil: [ | car |
+			car := aTree value.
+			car class = ValueLink
 				ifTrue: [ self
-						leftmost: aBlock tree: v continuation: out;
+						leftmost: aBlock tree: car continuation: out;
 						leftmost: aBlock tree: aTree nextLink continuation: out ]
-				ifFalse: [ (aBlock value: v)
-						ifTrue: [ out value: v ] ] ]
+				ifFalse: [ (aBlock value: car)
+						ifTrue: [ out value: car ] ] ]
 ]
 
 { #category : #printing }
@@ -186,35 +177,30 @@ ContinuationTest >> remove: anObj oneStar: aTree [
 ContinuationTest >> remove: anObj oneStar: aTree sentinel: aSymbol continuation: oh [
 	^ aTree
 		ifNil: [ oh value: aSymbol ]
-		ifNotNil: [ | v nl naturalRecursion |
-			v := aTree value.
-			nl := aTree nextLink.
-			naturalRecursion := [ ValueLink new
-				value: v;
-				nextLink:
-					(self
-						remove: anObj
-						oneStar: nl
-						sentinel: aSymbol
-						continuation: oh);
-				yourself ].
-			v class = ValueLink
-				ifTrue: [ | car |
-					car := self
-						callcc: [ :ooh | 
+		ifNotNil: [ | car cdr naturalRecursion |
+			car := aTree value.
+			cdr := aTree nextLink.
+			naturalRecursion := [ | newCdr |
+			newCdr := self
+				remove: anObj
+				oneStar: cdr
+				sentinel: aSymbol
+				continuation: oh.
+			car ~~> newCdr ].
+			car class = ValueLink
+				ifTrue: [ | newCar |
+					newCar := Continuation
+						currentDo: [ :ooh | 
 							self
 								remove: anObj
-								oneStar: v
+								oneStar: car
 								sentinel: aSymbol
 								continuation: ooh ].
-					car = aSymbol
+					newCar = aSymbol
 						ifTrue: naturalRecursion
-						ifFalse: [ ValueLink new
-								value: car;
-								nextLink: nl;
-								yourself ] ]
-				ifFalse: [ anObj = v
-						ifTrue: [ nl ]
+						ifFalse: [ newCar ~~> cdr ] ]
+				ifFalse: [ anObj = car
+						ifTrue: [ cdr ]
 						ifFalse: naturalRecursion ] ]
 ]
 
@@ -229,54 +215,52 @@ ContinuationTest >> remove: anObj oneStarWithTry: aTree [
 ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 	^ aTree
 		ifNil: [ oh value: #absent ]
-		ifNotNil: [ | v nl naturalRecursion |
-			v := aTree value.
-			nl := aTree nextLink.
-			naturalRecursion := [ ValueLink new
-				value: v;
-				nextLink: (self remove: anObj oneStarWithTry: nl continuation: oh);
-				yourself ].
-			v class = ValueLink
+		ifNotNil: [ | car cdr naturalRecursion |
+			car := aTree value.
+			cdr := aTree nextLink.
+			naturalRecursion := [ | newCdr |
+			newCdr := self remove: anObj oneStarWithTry: cdr continuation: oh.
+			car ~~> newCdr ].
+			car class = ValueLink
 				ifTrue: [ Continuation
 						try: [ :ooh | 
-							ValueLink new
-								value: (self remove: anObj oneStarWithTry: v continuation: ooh);
-								nextLink: nl;
-								yourself ]
+							| newCar |
+							newCar := self
+								remove: anObj
+								oneStarWithTry: car
+								continuation: ooh.
+							newCar ~~> cdr ]
 						otherwise: naturalRecursion ]
-				ifFalse: [ anObj = v
-						ifTrue: [ nl ]
+				ifFalse: [ anObj = car
+						ifTrue: [ cdr ]
 						ifFalse: naturalRecursion ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> remove: anObj uptoLast: aLinkedList [
 	^ aLinkedList
-		ifNotEmpty: [ | vl |
-			vl := self
-				callcc: [ :skip | 
+		ifNotEmpty: [ | valueLink |
+			valueLink := Continuation
+				currentDo: [ :skip | 
 					self
 						remove: anObj
 						uptoLastValueLink: aLinkedList firstLink
 						continuation: skip ].
-			LinkedList with: vl ]
+			LinkedList with: valueLink ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> remove: anObj uptoLastValueLink: aValueLink continuation: skip [
 	^ aValueLink
-		ifNotNil: [ | v nl |
-			v := aValueLink value.
-			nl := self
+		ifNotNil: [ | car cdr |
+			car := aValueLink value.
+			cdr := self
 				remove: anObj
 				uptoLastValueLink: aValueLink nextLink
 				continuation: skip.
-			anObj = v
-				ifTrue: [ skip value: nl ]
-				ifFalse: [ ValueLink new
-						value: v;
-						nextLink: nl;
-						yourself ] ]
+			anObj = car
+				ifTrue: [ skip value: cdr ]
+				ifFalse: [ car ~~> cdr ] ]
 ]
 
 { #category : #tests }
@@ -398,30 +382,11 @@ ContinuationTest >> testIntersectWith [
 		equals: {}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #removing }
 ContinuationTest >> testLeftmost [
 	| tree |
-	"`tree` corresponds to the sexp '(((a)) 4 (1))"
-	tree := ValueLink new
-		value:
-			(ValueLink new
-				value:
-					(ValueLink new
-						value: #a;
-						yourself);
-				yourself);
-		nextLink:
-			(ValueLink new
-				value: 4;
-				nextLink:
-					(ValueLink new
-						value:
-							(ValueLink new
-								value: 1;
-								yourself);
-						yourself);
-				yourself);
-		yourself.
+	tree := #a ~~> nil ~~> nil ~~> (4 ~~> (1 ~~> nil ~~> nil)).
+	self assert: (self printStringOfTree: tree) equals: '(((#a)) 4 (1))'.
 	self assert: (self leftmost: #isSymbol tree: tree) equals: #a.
 	self assert: (self leftmost: #isInteger tree: tree) equals: 4.
 	self assert: (self leftmost: #isNil tree: tree) equals: nil.
@@ -450,79 +415,16 @@ ContinuationTest >> testReentrant [
 { #category : #removing }
 ContinuationTest >> testRemoveOneStar [
 	| tree1 tree2 |
-	tree1 := ValueLink new
-		value:
-			(ValueLink new
-				value: #Swedish;
-				nextLink:
-					(ValueLink new
-						value: #rye;
-						yourself);
-				yourself);
-		nextLink:
-			(ValueLink new
-				value:
-					(ValueLink new
-						value: #French;
-						nextLink:
-							(ValueLink new
-								value:
-									(ValueLink new
-										value: #mustard;
-										nextLink:
-											(ValueLink new
-												value: #salad;
-												nextLink:
-													(ValueLink new
-														value: #turkey;
-														yourself);
-												yourself);
-										yourself);
-								yourself);
-						yourself);
-				nextLink:
-					(ValueLink new
-						value: #salad;
-						yourself);
-				yourself);
-		yourself.
-	tree2 := ValueLink new
-		value:
-			(ValueLink new
-				value: #pasta;
-				nextLink:
-					(ValueLink new
-						value: #meat;
-						yourself);
-				yourself);
-		nextLink:
-			(ValueLink new
-				value: #pasta;
-				nextLink:
-					(ValueLink new
-						value:
-							(ValueLink new
-								value: #noodles;
-								nextLink:
-									(ValueLink new
-										value: #meat;
-										nextLink:
-											(ValueLink new
-												value: #sauce;
-												yourself);
-										yourself);
-								yourself);
-						nextLink:
-							(ValueLink new
-								value: #meat;
-								nextLink:
-									(ValueLink new
-										value: #tomatoes;
-										yourself);
-								yourself);
-						yourself);
-				yourself);
-		yourself.
+	tree1 := #Swedish ~~> (#rye ~~> nil)
+		~~>
+			(#French ~~> (#mustard ~~> (#salad ~~> (#turkey ~~> nil)) ~~> nil)
+				~~> (#salad ~~> nil)).
+	tree2 := #pasta ~~> (#meat ~~> nil)
+		~~>
+			(#pasta
+				~~>
+					(#noodles ~~> (#meat ~~> (#sauce ~~> nil))
+						~~> (#meat ~~> (#tomatoes ~~> nil)))).
 	self
 		assert: (self printStringOfTree: tree1)
 		equals: '((#Swedish #rye) (#French (#mustard #salad #turkey)) #salad)'.

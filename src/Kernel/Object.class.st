@@ -2133,3 +2133,11 @@ Object >> ~= anObject [
 
 	^self = anObject == false
 ]
+
+{ #category : #associating }
+Object >> ~~> aCdr [
+	^ ValueLink basicNew
+		value: self;
+		nextLink: aCdr;
+		yourself
+]
