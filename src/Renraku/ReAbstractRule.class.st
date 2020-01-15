@@ -12,6 +12,20 @@ It's a good idea to assign your rule to a specific group. For this override the 
 You can also specify the severity of your rue by returning one of: #information, #warning, or #error symbols from the #severity method.
 
 
+
+It is fairly easy to run your rule and obtain the results. Just create an instance of it an send it the #check: message with the entity you want to check. The result is a collection of critiques. For example inspecting
+
+	RBExcessiveMethodsRule new check: Object
+
+should give you a collection with one critique (because the Object class always has many methods ;) ). Go on click on the critique item and inspect it. You will see that there is a special ""description"" tab. This is the power of critique objects, they can present themselves in a different way. Guess what: you can even visualize the critique if needed.
+
+
+To have quality assistant (and maybe other tools) pick up your changes you have to reset the cache. Do this by going to System > Settings > Code Browsing > QualityAssistant > Renraku > Rule Cache
+and pressing the reset button. Or simply executing  ReRuleManager reset
+
+
+When you load complete rules into the system, the cache will be reset automatically. But as you are creating a new rule and it is in the incomplete state you have to reset the cache once you are ready.
+
 If you want to learn more about the features of rules or how to create your own, please read:
 
 RenrakuRuleHelp readInHelpBrowser
@@ -136,7 +150,6 @@ ReAbstractRule >> basicCheck: anEntity [
 ReAbstractRule >> check: anEntity [
 
 	| critiques |
-	
 	critiques := OrderedCollection new.
 	self check: anEntity forCritiquesDo: [ :critique | critiques add: critique ].
 	^ critiques
