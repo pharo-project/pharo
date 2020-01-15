@@ -2422,6 +2422,12 @@ UITheme >> initializeForms [
 
 ]
 
+{ #category : #testing }
+UITheme >> isLightTheme [
+
+	^true
+]
+
 { #category : #'label-styles' }
 UITheme >> labelDisabledColorFor: aLabel [
 	"Answer the color to use for a label when disabled."

@@ -111,9 +111,12 @@ ReAbstractCritique >> change [
 
 { #category : #accessing }
 ReAbstractCritique >> color [
-
+	| errorColor |
+	errorColor := Smalltalk ui theme isLightTheme 
+							ifTrue: [ Color pink ]
+							ifFalse: [ Color red ].
 	^ ({
-	#error -> Color pink.
+	#error -> errorColor.
 	#warning -> Color yellow.
 	#information -> Color blue
 	 } asDictionary at: rule severity ifAbsent: [ super color ]) alpha: 0.1

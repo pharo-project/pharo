@@ -270,6 +270,12 @@ PharoDarkTheme >> initialize [
 	self settings preferGradientFill: false.
 ]
 
+{ #category : #testing }
+PharoDarkTheme >> isLightTheme [
+
+	^false
+]
+
 { #category : #'accessing colors' }
 PharoDarkTheme >> lessConspicuousColorFrom: aColor [
 
