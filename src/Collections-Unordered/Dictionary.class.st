@@ -334,6 +334,21 @@ Dictionary >> at: key put: anObject [
 ]
 
 { #category : #accessing }
+Dictionary >> at: key update: updateBlock [ 
+	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
+	self at: key update: updateBlock initial: [ self errorKeyNotFound: key ].
+]
+
+{ #category : #accessing }
+Dictionary >> at: key update: updateBlock initial: initObjectOrValue [
+	| index |
+	index := self findElementOrNil: key.
+	(array at: index)
+		ifNil: [ self atNewIndex: index put: key -> initObjectOrValue value]
+		ifNotNil: [ :assoc | assoc value: (updateBlock value: assoc value) ]
+]
+
+{ #category : #accessing }
 Dictionary >> bindingOf: varName [
 	^self associationAt: varName ifAbsent:[nil]
 ]
