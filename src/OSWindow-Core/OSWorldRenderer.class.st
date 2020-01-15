@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'driver',
 		'osWindow',
-		'display'
+		'display',
+		'windowCloseAction'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -167,10 +168,21 @@ OSWorldRenderer >> fullscreenMode: aValue [
 	self checkForNewScreenSize.
 ]
 
+{ #category : #events }
+OSWorldRenderer >> handleOSWindowCloseEvent: event [
+	windowCloseAction value
+]
+
 { #category : #accessing }
 OSWorldRenderer >> icon: aForm [ 
 
 	osWindow icon: aForm
+]
+
+{ #category : #activation }
+OSWorldRenderer >> initialize [
+	super initialize.
+	windowCloseAction := [ self currentWorld defer: [WorldState quitSession] ].
 ]
 
 { #category : #initialization }
@@ -188,6 +200,16 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 	driver := OSWindowDriver current.
 	
 	^ driver
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> windowCloseAction [
+	^ windowCloseAction
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> windowCloseAction: anObject [
+	windowCloseAction := anObject
 ]
 
 { #category : #initialization }
