@@ -98,6 +98,18 @@ ContinuationTest >> testSimpleCallCC [
 	self assert: x
 ]
 
+{ #category : #'as yet unclassified' }
+ContinuationTest >> testSimpleStoreCallCC [
+	| x continuation |
+	continuation := self callcc: #yourself.
+	x := false.
+	continuation = true
+		ifTrue: [ x := true ]
+		ifFalse: [ continuation value: true.
+			self error: 'This message shouldn''t be sent, ever.' ].
+	self assert: x
+]
+
 { #category : #tests }
 ContinuationTest >> testSimplestCallCC [
 	| x |
