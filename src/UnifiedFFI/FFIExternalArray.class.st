@@ -10,7 +10,7 @@ Class {
 		'type',
 		'size'
 	],
-	#category : #'UnifiedFFI-Types'
+	#category : #'UnifiedFFI-Deprecated'
 }
 
 { #category : #converting }
