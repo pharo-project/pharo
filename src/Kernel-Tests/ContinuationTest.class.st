@@ -16,7 +16,7 @@ ContinuationTest >> callcc: aBlock [
 	^ Continuation currentDo: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersect: aSet withAll: sets [
 	^ sets
 		ifEmpty: [ aSet ]
@@ -25,7 +25,7 @@ ContinuationTest >> intersect: aSet withAll: sets [
 				withCollection: (self intersect: sets first withAll: sets allButFirst) ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
 	^ aSet
 		ifEmpty: [ hop value: aSet ]
@@ -40,7 +40,7 @@ ContinuationTest >> intersect: aSet withAll: sets continuation: hop [
 								continuation: hop) ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersect: aLinkedList withCollection: aCollection [
 	^ aLinkedList
 		ifNotEmpty: [ (self
@@ -50,20 +50,20 @@ ContinuationTest >> intersect: aLinkedList withCollection: aCollection [
 				ifNotNil: [ :link | LinkedList with: link ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersect: aLinkedList withCollection: aCollection continuation: hop [
 	^ aCollection
 		ifEmpty: [ hop value: aCollection ]
 		ifNotEmpty: [ self intersect: aLinkedList withCollection: aCollection ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersectAll: sets [
 	^ sets
 		ifNotEmpty: [ self intersect: sets first withAll: sets allButFirst ]
 ]
 
-{ #category : #removing }
+{ #category : #functions }
 ContinuationTest >> intersectAllWithCC: sets [
 	^ sets
 		ifNotEmpty: [ Continuation
@@ -71,7 +71,7 @@ ContinuationTest >> intersectAllWithCC: sets [
 					[ :cc | self intersect: sets first withAll: sets allButFirst continuation: cc ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersectValueLink: aValueLink withCollection: anotherSet [
 	^ aValueLink
 		ifNotNil: [ | car cdr |
@@ -84,7 +84,7 @@ ContinuationTest >> intersectValueLink: aValueLink withCollection: anotherSet [
 				ifFalse: [ cdr ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 	^ aSet
 		ifEmpty: [ hop value: aSet ]
@@ -100,7 +100,7 @@ ContinuationTest >> intersectWithCC: aSet withAll: sets continuation: hop [
 						continuation: hop ] ]
 ]
 
-{ #category : #removing }
+{ #category : #functions }
 ContinuationTest >> intersectWithCCAllWithCC: sets [
 	^ sets
 		ifNotEmpty: [ Continuation
@@ -111,13 +111,13 @@ ContinuationTest >> intersectWithCCAllWithCC: sets [
 						continuation: cc ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> leftmost: aBlock tree: aTree [
 	^ self
 		callcc: [ :skip | self leftmost: aBlock tree: aTree continuation: skip ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> leftmost: aBlock tree: aTree continuation: out [
 	^ (aTree isNotNil and: [ aTree isMemberOf: ValueLink ])
 		ifTrue: [ | car |
@@ -136,7 +136,7 @@ ContinuationTest >> printStringOfTree: aValueLink [
 		streamContents: [ :aStream | self printStringOfTree: aValueLink onStream: aStream ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 ContinuationTest >> printStringOfTree: aValueLink onStream: aStream [
 	aStream nextPut: $(.
 	(aValueLink isMemberOf: Link)
@@ -158,7 +158,7 @@ ContinuationTest >> printStringOfTree: aValueLink onStream: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #removing }
+{ #category : #functions }
 ContinuationTest >> remove: anObj oneStar: aTree [
 	| newTree sentinel |
 	sentinel := #absent.
@@ -174,7 +174,7 @@ ContinuationTest >> remove: anObj oneStar: aTree [
 		ifFalse: [ newTree ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> remove: anObj oneStar: aTree sentinel: aSymbol continuation: oh [
 	^ aTree
 		ifNil: [ oh value: aSymbol ]
@@ -205,14 +205,14 @@ ContinuationTest >> remove: anObj oneStar: aTree sentinel: aSymbol continuation:
 						ifFalse: naturalRecursion ] ]
 ]
 
-{ #category : #removing }
+{ #category : #functions }
 ContinuationTest >> remove: anObj oneStarWithTry: aTree [
 	^ Continuation
 		try: [ :oh | self remove: anObj oneStarWithTry: aTree continuation: oh ]
 		otherwise: [ aTree ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #functions }
 ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 	^ aTree
 		ifNil: [ oh value: #absent ]
@@ -237,7 +237,7 @@ ContinuationTest >> remove: anObj oneStarWithTry: aTree continuation: oh [
 						ifFalse: naturalRecursion ] ]
 ]
 
-{ #category : #removing }
+{ #category : #functions }
 ContinuationTest >> remove: anObj uptoLast: aLinkedList [
 	^ aLinkedList
 		ifNotEmpty: [ | valueLink |
@@ -250,7 +250,7 @@ ContinuationTest >> remove: anObj uptoLast: aLinkedList [
 			LinkedList with: valueLink ]
 ]
 
-{ #category : #removing }
+{ #category : #functions }
 ContinuationTest >> remove: anObj uptoLastValueLink: aValueLink continuation: skip [
 	^ aValueLink
 		ifNotNil: [ | car cdr |
@@ -319,7 +319,7 @@ ContinuationTest >> testBlockVars [
 	self assert: tmp equals: 6
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContinuationTest >> testIntersectAll [
 	self
 		assert:
@@ -367,7 +367,7 @@ ContinuationTest >> testIntersectAll [
 		equals: {}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContinuationTest >> testIntersectWith [
 	self
 		assert:
@@ -389,7 +389,7 @@ ContinuationTest >> testIntersectWith [
 		equals: {}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContinuationTest >> testLeftmost [
 	| tree |
 	tree := #a ~~> nil ~~> nil
@@ -423,7 +423,7 @@ ContinuationTest >> testReentrant [
 		ifFalse: [ assoc key value: assoc ]
 ]
 
-{ #category : #removing }
+{ #category : #tests }
 ContinuationTest >> testRemoveOneStar [
 	| tree1 tree2 |
 	tree1 := #Swedish ~~> (#rye ~~> nil)
@@ -456,7 +456,7 @@ ContinuationTest >> testRemoveOneStar [
 		equals: '((#pasta) #pasta (#noodles #meat #sauce) #meat #tomatoes)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContinuationTest >> testRemoveUptoLast [
 	self
 		assert:
@@ -506,7 +506,7 @@ ContinuationTest >> testSimpleCallCC [
 	self assert: x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContinuationTest >> testSimpleStoreCallCC [
 	| x continuation |
 	continuation := self callcc: #yourself.
@@ -525,7 +525,7 @@ ContinuationTest >> testSimplestCallCC [
 	self assert: x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 ContinuationTest >> testTwoInARow [
 	| tree1 tree2 |
 	tree1 := #solid ~~> (#food ~~> nil ~~> (Link new ~~> nil))
