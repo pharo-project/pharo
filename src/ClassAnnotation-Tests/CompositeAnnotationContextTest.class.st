@@ -1,7 +1,7 @@
 Class {
 	#name : #CompositeAnnotationContextTest,
 	#superclass : #TestCase,
-	#category : #'ClassAnnotation-Tests'
+	#category : #'ClassAnnotation-Tests-Base'
 }
 
 { #category : #tests }
