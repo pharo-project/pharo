@@ -16,6 +16,32 @@ ContinuationTest >> callcc: aBlock [
 	^ Continuation currentDo: aBlock
 ]
 
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersect: aLinkedList with: aCollection [
+	| vl |
+	vl := aLinkedList
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ aLinkedList firstLink ].
+	^ LinkedList new
+		add: (self intersectValueLink: vl with: aCollection);
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> intersectValueLink: aValueLink with: anotherSet [
+	^ aValueLink
+		ifNotNil: [ | v nl rest |
+			v := aValueLink value.
+			nl := aValueLink nextLink.
+			rest := self intersectValueLink: nl with: anotherSet.
+			(anotherSet includes: v)
+				ifTrue: [ ValueLink new
+						value: v;
+						nextLink: rest;
+						yourself ]
+				ifFalse: [ rest ] ]
+]
+
 { #category : #tests }
 ContinuationTest >> testBlockEscape [
 	| x |
@@ -69,6 +95,16 @@ ContinuationTest >> testBlockVars [
 							tmp2 := cc.
 							continuation value: i ] ] ].
 	self assert: tmp equals: 6
+]
+
+{ #category : #'as yet unclassified' }
+ContinuationTest >> testIntersectWith [
+	self
+		assert:
+			(self
+				intersect: (LinkedList with: #apple with: #banana with: #avocado)
+				with: (LinkedList with: 1 with: 2 with: #apple))
+		equals: (LinkedList with: #apple)
 ]
 
 { #category : #tests }
