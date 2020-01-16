@@ -45,9 +45,9 @@ FFITypeDeclaration >> defaultReturnOnError [
 ]
 
 { #category : #'emitting code' }
-FFITypeDeclaration >> emitReturn: anIRBuilder resultTempVar: aString context: aContext [
+FFITypeDeclaration >> emitReturn: anIRBuilder resultTempVar: aString context: aContext inCallout: aCallout [
 	
-	^ resolvedType emitReturn: anIRBuilder resultTempVar: aString context: aContext
+	^ resolvedType emitReturn: anIRBuilder resultTempVar: aString context: aContext inCallout: aCallout
 ]
 
 { #category : #accessing }

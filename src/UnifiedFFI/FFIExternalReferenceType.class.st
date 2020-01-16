@@ -42,6 +42,15 @@ FFIExternalReferenceType >> basicEmitArgument: aBuilder context: aContext [
 		instVarName: self instanceVariableName
 ]
 
+{ #category : #'emitting code' }
+FFIExternalReferenceType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
+ 	self loader
+		emitArgument: aBuilder 
+		context: aContext 
+		objectClass: self objectClass	
+		instVarName: self instanceVariableName
+]
+
 { #category : #private }
 FFIExternalReferenceType >> basicHandle: aHandle at: index [
 	^ self objectClass fromHandle: (aHandle pointerAt: index)

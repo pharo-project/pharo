@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'emitting code' }
-FFICallbackType >> basicEmitArgument: aBuilder context: aContext [
+FFICallbackType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
 
  	self loader emitArgument: aBuilder context: aContext.
 
