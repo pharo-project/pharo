@@ -319,7 +319,8 @@ OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 	
-	self currentWorld defer: [WorldState quitSession].
+	morphicWorld worldState worldRenderer handleOSWindowCloseEvent: anEvent
+
 ]
 
 { #category : #visiting }
