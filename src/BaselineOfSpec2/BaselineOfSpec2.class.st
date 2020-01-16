@@ -15,7 +15,7 @@ BaselineOfSpec2 >> baseline: spec [
 			spec
 				package: 'Spec2-Core' with: [ spec requires: #('Spec2-Layout' 'Spec2-Transmission' 'Spec2-Commands') ];
 				package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Help';
+				"package: 'Spec2-Help';"
 				package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
 				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic' 'Spec2-Commander2') ];
 				package: 'Spec2-ObservableSlot';
