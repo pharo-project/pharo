@@ -219,7 +219,7 @@ WelcomeHelp class >> gettingHelp [
 - The "Pharo Users" mailing list: 
 	', (self url: 'http://lists.pharo.org/mailman/listinfo/pharo-users_lists.pharo.org'), '
 - The "Pharo Discord channel": 
-	', 	(self url: 'http://discord.gg/Sj2rhxn'), '
+	', 	(self url: 'https://discord.gg/QewZMZa'), '
 - The "Pharo IRC Channel": 
 	', (self url: 'irc.freenode.net, #pharo channel '), '
 
@@ -341,7 +341,7 @@ Catalog projects can be browsed online:
 
 ', (self url: 'http://catalog.pharo.org'), '
 
-You can also a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
+You can also find a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
 
 ', (self url: 'http://smalltalkhub.com/list'), '
 

@@ -12,9 +12,7 @@ ReTestClassNotInPackageWithTestEndingNameTest >> testBasicCheck [
 		assert: (testClass critiques anySatisfy: [ :critic | critic rule class = ReTestClassNotInPackageWithTestEndingName ]).
 	
 	"move to correct package"
-	validTestPackage moveClass: testClass 
-		fromPackage: testPackage 
-		toTag: (RPackageTag package: testPackage name: #whatever).
+	validTestPackage importClass: testClass.
 	
 	self
 		assert: (testClass critiques noneSatisfy: [ :critic | critic rule class = ReTestClassNotInPackageWithTestEndingName ])

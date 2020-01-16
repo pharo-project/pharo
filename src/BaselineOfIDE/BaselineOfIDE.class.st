@@ -80,7 +80,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	PharoDarkTheme beCurrent.
+	PharoLightTheme beCurrent.
 	
 	SDL_Event initialize.
 	
@@ -190,7 +190,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.2';
+		repository: 'github://pharo-vcs/iceberg:v1.6.3';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

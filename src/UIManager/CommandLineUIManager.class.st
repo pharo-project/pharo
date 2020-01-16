@@ -391,7 +391,10 @@ CommandLineUIManager >> stdout [
 CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
 	
 	Smalltalk logStdOutDuring: [:logger |
-		logger cr; nextPutAll: aNotification class name, ': ',  aNotification messageText; cr ].
+		logger nextPutAll: aNotification class name;
+				 nextPutAll: ': ';  
+				 nextPutAll: aNotification messageText; 
+				 cr ].
 	
 	aNotification resume.
 
