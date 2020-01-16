@@ -23,9 +23,10 @@ BaselineOfEnlumineurFormatter >> baseline: spec [
 		
 		spec
 			group: 'Core' with: #('EnlumineurFormatter');
-			group: 'Tests' with: #('EnlumineurFormatter-Tests');
-			group: 'UI' with: #('EnlumineurFormatterUI' 'EnlumineurFormatterUI-Tests');
-			group: 'All' with: #('Core' 'Tests' 'UI')
+			group: 'Tests' with: #('Core' 'EnlumineurFormatter-Tests');
+			group: 'UI' with: #('Core' 'EnlumineurFormatterUI');
+			group: 'UI-Tests' with: #('Tests' 'EnlumineurFormatterUI-Tests');
+			group: 'All' with: #('Core' 'Tests' 'UI' 'UI-Tests')
 		
 		]
 ]

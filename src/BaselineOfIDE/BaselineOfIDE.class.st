@@ -108,33 +108,35 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: 'shift-tests' ].
+
 		spec baseline: 'Traits' with: [ 
 			spec
 				repository: repository;
 				loads: 'traits-tests' ].
+
 		spec baseline: 'Slot' with: [ 
 			spec
 				repository: repository;
 				loads: 'slot-tests' ].
+
 		spec baseline: 'Clap' with: [ 
 			spec
 				repository: repository;
 				loads: 'development' ].
+
 		spec baseline: 'SUnit' with: [ 
 			spec
 				repository: repository;
 				loads: 'Tests' ].
 		
+		spec baseline: 'BlueInk' with: [ 
+ 			spec repository: repository; loads: #('Core') ].				
+
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Tests' ) ].
-	
-		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('Core') ].	
-		"no idea why this is breaking when we load the tests (that depend on AST-Core-Tests"
-			
-			
+				loads: #( 'Tests' 'UI-Tests' ) ].
+				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
