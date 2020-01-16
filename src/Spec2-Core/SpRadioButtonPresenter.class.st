@@ -22,7 +22,8 @@ Class {
 	#name : #SpRadioButtonPresenter,
 	#superclass : #SpAbstractFormButtonPresenter,
 	#instVars : [
-		'associatedRadioButtons'
+		'associatedRadioButtons',
+		'initialStateSet'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -46,14 +47,15 @@ SpRadioButtonPresenter >> associatedRadioButtons [
 
 { #category : #'associated buttons' }
 SpRadioButtonPresenter >> associatedRadioButtons: aCollection [ 
-	
 	| allElements |
-		
-	allElements := { self } , aCollection.
-	allElements do: [ :e | e basicAssociatedRadioButtons: allElements ].
 	
-	self state: true.
-	aCollection do: [ :e | e state: false ]
+	"pass group to all members"	
+	allElements := { self }, aCollection.
+	allElements do: [ :each | 
+		each basicAssociatedRadioButtons: allElements ].
+	
+	"self state: true."
+	aCollection do: [ :each | each state: false ]
 ]
 
 { #category : #private }
@@ -62,18 +64,35 @@ SpRadioButtonPresenter >> basicAssociatedRadioButtons: aCollection [
 	associatedRadioButtons := aCollection copyWithout: self
 ]
 
+{ #category : #accessing }
+SpRadioButtonPresenter >> initialStateNotSet [
+	"Setting this value to the first radio button will cause the entire group to be unset 
+	 on first display. This will be ignored if sent to other than the own containing the 
+	 associated buttons"
+
+	initialStateSet := false
+]
+
 { #category : #initialization }
 SpRadioButtonPresenter >> initialize [
 
 	super initialize.
 	state := true.
+	initialStateSet := true.
 	associatedRadioButtons := #()
+]
+
+{ #category : #testing }
+SpRadioButtonPresenter >> isInitialStateSet [
+
+	^ initialStateSet
 ]
 
 { #category : #accessing }
 SpRadioButtonPresenter >> state: aValue [
 
-	(associatedRadioButtons noneSatisfy: [ :e | e state ])
+	(aValue not 
+		and: [ associatedRadioButtons noneSatisfy: [ :e | e state ] ])
 		ifTrue: [ 
 			"If I am the only one in true, I cannot be unselected" 
 			^ self ].
@@ -82,5 +101,5 @@ SpRadioButtonPresenter >> state: aValue [
 	
 	aValue ifTrue: [ 
 		associatedRadioButtons 
-			do: [ :e | e state: false ]].
+			do: [ :e | e state: false ] ].
 ]

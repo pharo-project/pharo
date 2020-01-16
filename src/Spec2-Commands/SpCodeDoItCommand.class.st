@@ -4,6 +4,11 @@ Class {
 	#category : #'Spec2-Commands-Code'
 }
 
+{ #category : #defaults }
+SpCodeDoItCommand class >> defaultIconName [
+	^#smallDoIt 
+]
+
 { #category : #default }
 SpCodeDoItCommand class >> defaultName [
 

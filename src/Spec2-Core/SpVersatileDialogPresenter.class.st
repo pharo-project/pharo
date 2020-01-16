@@ -18,8 +18,8 @@ I have:
 Class {
 	#name : #SpVersatileDialogPresenter,
 	#superclass : #SpDynamicPresenter,
-	#traits : 'TSpDynamicPresenter',
-	#classTraits : 'TSpDynamicPresenter classTrait',
+	#traits : 'SpTDynamicPresenter',
+	#classTraits : 'SpTDynamicPresenter classTrait',
 	#instVars : [
 		'mainMessage',
 		'mainIcon',

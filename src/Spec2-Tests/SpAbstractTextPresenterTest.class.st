@@ -36,10 +36,10 @@ SpAbstractTextPresenterTest >> testClearContent [
 SpAbstractTextPresenterTest >> testClearSelection [
 	self initializationText.
 	self openInstance.
-	presenter selection: (1 to: 10).
-	self assert: presenter selection equals: (1 to: 10).
+	presenter selectionInterval: (1 to: 10).
+	self assert: presenter selectionInterval equals: (1 to: 10).
 	presenter clearSelection.
-	self assert: presenter selection isEmpty
+	self assert: presenter selectionInterval isEmpty
 ]
 
 { #category : #tests }
@@ -69,5 +69,5 @@ SpAbstractTextPresenterTest >> testSelectAll [
 	self initializationText.
 	self openInstance.
 	presenter selectAll.
-	self assert: presenter selection equals: (1 to: 15)
+	self assert: presenter selectionInterval equals: (1 to: 15)
 ]

@@ -6,8 +6,6 @@ I'll collect the actions via pragmas and create button presenters for them.
 Class {
 	#name : #GTSpecPreDebugActionsPresenter,
 	#superclass : #SpPresenter,
-	#traits : 'TSpDynamicPresenter',
-	#classTraits : 'TSpDynamicPresenter classTrait',
 	#category : #'GT-Debugger-UI'
 }
 

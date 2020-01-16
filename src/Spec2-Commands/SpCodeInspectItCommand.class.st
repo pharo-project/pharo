@@ -4,6 +4,11 @@ Class {
 	#category : #'Spec2-Commands-Code'
 }
 
+{ #category : #defaults }
+SpCodeInspectItCommand class >> defaultIconName [
+	^#smallInspectIt
+]
+
 { #category : #default }
 SpCodeInspectItCommand class >> defaultName [
 

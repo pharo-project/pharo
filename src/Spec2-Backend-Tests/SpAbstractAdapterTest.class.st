@@ -22,7 +22,7 @@ SpAbstractAdapterTest class >> testParameters [
 		forSelector: #specInitializationStrategy
 			addOptions: { [ SpInitializationStrategy beforeTest ]. [ SpInitializationStrategy afterTest ] };
 		forSelector: #backendForTest
-			addOptions: SpAbstractBackendForTest allSubclasses;
+			addOptions: { SpMorphicBackendForTest };
 		yourself
 ]
 

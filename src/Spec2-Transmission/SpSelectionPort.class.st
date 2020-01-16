@@ -20,5 +20,5 @@ SpSelectionPort >> attachTransmission: aTransmission [
 	self destinationPresenter whenSelectionChangedDo: [ :selection | 
 		self 
 			transmitWith: aTransmission 
-			value: selection selectedItem ]
+			value: selection transmission ]
 ]

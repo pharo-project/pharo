@@ -1,8 +1,8 @@
 Class {
 	#name : #SpMockMenu,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#realMenu',
 		'#shown => SpObservableSlot'

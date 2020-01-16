@@ -9,8 +9,8 @@ self example
 Class {
 	#name : #SpTreeTablePresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#traits : 'TSpHaveWrappingScrollBars + SpTContextMenu',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait + SpTContextMenu classTrait',
+	#traits : 'SpTHaveWrappingScrollBars + SpTContextMenu + SpTSearchable',
+	#classTraits : 'SpTHaveWrappingScrollBars classTrait + SpTContextMenu classTrait + SpTSearchable classTrait',
 	#instVars : [
 		'#columns => SpObservableSlot',
 		'#showColumnHeaders => SpObservableSlot',
@@ -147,6 +147,7 @@ SpTreeTablePresenter >> hideColumnHeaders [
 { #category : #initialization }
 SpTreeTablePresenter >> initialize [
 	super initialize.
+	self initializeTSearchable.
 
 	self withScrollBars.
 	
@@ -231,6 +232,24 @@ SpTreeTablePresenter >> roots: aCollection [
 	self selection clearSelection
 ]
 
+{ #category : #private }
+SpTreeTablePresenter >> searchValueOf: item [ 
+
+	^ item asString
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> selectItem: anItem [
+
+	self selection selectItem: anItem
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> selectItems: aListOfItem [
+
+	self selection selectItems: aListOfItem
+]
+
 { #category : #api }
 SpTreeTablePresenter >> selectPath: aPath [
 
@@ -246,6 +265,12 @@ SpTreeTablePresenter >> selectPaths: pathArray [
 SpTreeTablePresenter >> selectedItem [
 	
 	^ self selection selectedItem
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> selectedItems [
+	
+	^ self selection selectedItems
 ]
 
 { #category : #accessing }
@@ -272,6 +297,12 @@ SpTreeTablePresenter >> showColumnHeaders [
 SpTreeTablePresenter >> unselectAll [ 
 
 	self selection unselectAll
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> unselectItem: anItem [
+
+	self selection unselectItem: anItem
 ]
 
 { #category : #api }
@@ -307,6 +338,12 @@ SpTreeTablePresenter >> whenMultiSelectionChangedDo: aBlockClosure [
 SpTreeTablePresenter >> whenRootsChangedDo: aBlockClosure [ 
 
 	self property: #roots whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+SpTreeTablePresenter >> whenSearchChangedDo: aBlock [
+
+	self property: #searchEnabled whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

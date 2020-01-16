@@ -23,8 +23,8 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SpProgressBarProgressing,
 	#superclass : #SpProgressBarState,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#refreshDelay',
 		'#progression',

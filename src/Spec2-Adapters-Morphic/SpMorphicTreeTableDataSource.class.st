@@ -11,6 +11,24 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Table'
 }
 
+{ #category : #'search strategies' }
+SpMorphicTreeTableDataSource class >> allItemsStrategy [
+
+	^ SpMorphicAllItemsStrategy
+]
+
+{ #category : #'search strategies' }
+SpMorphicTreeTableDataSource class >> defaultStrategy [
+
+	^ SpMorphicVisibleItemsStrategy
+]
+
+{ #category : #'search strategies' }
+SpMorphicTreeTableDataSource class >> rootsOnlyStrategy [
+
+	^ SpMorphicRootItemsStrategy
+]
+
 { #category : #accessing }
 SpMorphicTreeTableDataSource >> allShownItems [
 
@@ -113,9 +131,24 @@ SpMorphicTreeTableDataSource >> rootItem: anItem [
 	self addSourceToRootItem
 ]
 
+{ #category : #accessing }
+SpMorphicTreeTableDataSource >> searchText: aString [
+
+	^ (self class perform: (self searchStrategy, 'Strategy') asSymbol) 
+		searchWith: aString 
+		dataSource: self
+]
+
 { #category : #sorting }
 SpMorphicTreeTableDataSource >> sortElements: aSortFunction [
 
 	unsortedElements ifNil: [ unsortedElements := self rootsItems ].
 	self rootItem data: ((self rootItem children collect: #data) sorted: aSortFunction)
+]
+
+{ #category : #accessing }
+SpMorphicTreeTableDataSource >> toString: anItem [
+	"Override me if you expect something else."
+
+	^ super toString: anItem data
 ]

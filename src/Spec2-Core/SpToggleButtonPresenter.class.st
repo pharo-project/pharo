@@ -2,7 +2,8 @@ Class {
 	#name : #SpToggleButtonPresenter,
 	#superclass : #SpAbstractFormButtonPresenter,
 	#instVars : [
-		'#action => SpObservableSlot'
+		'#action => SpObservableSlot',
+		'#icon => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -28,12 +29,30 @@ SpToggleButtonPresenter >> action [
 { #category : #initialization }
 SpToggleButtonPresenter >> action: aBlock [
 	
-	^ action := aBlock
+	action := aBlock
+]
+
+{ #category : #accessing }
+SpToggleButtonPresenter >> icon [
+
+	^ icon
+]
+
+{ #category : #accessing }
+SpToggleButtonPresenter >> icon: anIcon [
+
+	icon := anIcon
 ]
 
 { #category : #initialization }
 SpToggleButtonPresenter >> initialize [
 
 	super initialize.
-	action := [  ]
+	action := [ ]
+]
+
+{ #category : #'api-events' }
+SpToggleButtonPresenter >> whenIconChangedDo: aBlock [
+
+	self property: #icon whenChangedDo: aBlock
 ]

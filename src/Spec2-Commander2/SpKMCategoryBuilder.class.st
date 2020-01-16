@@ -32,5 +32,7 @@ SpKMCategoryBuilder >> visitCommand: aCmCommand [
 
 	kmCategory addKeymapEntry: (KMKeymap
 		shortcut: aCmCommand shortcutKey
-		action: [ aCmCommand execute ])
+		action: [ 
+			aCmCommand canBeExecuted 
+				ifTrue: [ aCmCommand execute ] ])
 ]
