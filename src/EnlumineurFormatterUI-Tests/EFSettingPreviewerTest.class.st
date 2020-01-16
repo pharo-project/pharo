@@ -32,11 +32,13 @@ EFSettingPreviewerTest >> selectPackageNamed: aName fromUI: biChooseMethod [
 { #category : #running }
 EFSettingPreviewerTest >> setUp [
     biSettingPreviewer := EFSettingPreviewer2 new.
+	 biSettingPreviewer formaterPrettyPrinter: EFFormatter new.
     biSettingPreviewer methodProvider: EFForTestMethodProvider
 ]
 
 { #category : #running }
 EFSettingPreviewerTest >> tearDown [ 
+	biSettingPreviewer unregisterAnnouncement.
 	biSettingPreviewer delete.
 	biSettingPreviewer application close.
 	super tearDown
@@ -266,20 +268,20 @@ EFSettingPreviewerTest >> testWhenSaveAModifiedMethodShouldAppearOnlyOnceInMetho
 
 { #category : #initialization }
 EFSettingPreviewerTest >> testWhenSettingsDropListSelectionShouldFormatedTextChanged [
-    | textChanged |
+	| textChanged |
 	textChanged := false.
-    self
-        deny: biSettingPreviewer settingsDropList selectedItem selector
-        equals: #testConfigIdentStringTabulation.
- 	biSettingPreviewer formatedTextPresenter whenTextChangedDo: [ textChanged := true ].   
+	self
+		assert: biSettingPreviewer settingsDropList selectedItem selector
+		equals: #testConfigIdentStringTabulation.
+	biSettingPreviewer formatedTextPresenter
+		whenTextChangedDo: [ textChanged := true ].
 	biSettingPreviewer settingsDropList
-        selectedIndex:
-            (biSettingPreviewer settingsDropList listItems
-                indexOf:
-                    biSettingPreviewer methodProvider class
-                        >> #testConfigIdentStringTabulation).
-    self
-        assert: textChanged
+		selectIndex:
+			(biSettingPreviewer settingsDropList listItems
+				indexOf:
+					biSettingPreviewer methodProvider class
+						>> #testConfigIdentStringTabulation).
+	self assert: textChanged
 ]
 
 { #category : #initialization }
