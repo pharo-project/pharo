@@ -130,7 +130,7 @@ BaselineOfIDE >> baseline: spec [
 				loads: 'Tests' ].
 		
 		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('Core') ].				
+ 			spec repository: repository; loads: #('Tests') ].				
 
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
