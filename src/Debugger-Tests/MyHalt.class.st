@@ -1,7 +1,10 @@
+"
+A custom exception used in halts
+"
 Class {
 	#name : #MyHalt,
 	#superclass : #Exception,
-	#category : #'Debugger-Tests'
+	#category : #'Debugger-Tests-Exceptions'
 }
 
 { #category : #accessing }

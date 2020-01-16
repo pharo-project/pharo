@@ -10,7 +10,7 @@ Class {
 		'session',
 		'process'
 	],
-	#category : #'Debugger-Tests'
+	#category : #'Debugger-Tests-Base'
 }
 
 { #category : #utilities }

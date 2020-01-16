@@ -1,7 +1,7 @@
 Class {
 	#name : #AssignmentAndLiteralDebuggerTest,
 	#superclass : #DebuggerTest,
-	#category : #'Debugger-Tests'
+	#category : #'Debugger-Tests-Base'
 }
 
 { #category : #running }
