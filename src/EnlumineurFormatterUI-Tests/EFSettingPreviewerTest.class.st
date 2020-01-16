@@ -31,9 +31,11 @@ EFSettingPreviewerTest >> selectPackageNamed: aName fromUI: biChooseMethod [
 
 { #category : #running }
 EFSettingPreviewerTest >> setUp [
-    biSettingPreviewer := EFSettingPreviewer2 new.
-	 biSettingPreviewer formaterPrettyPrinter: EFFormatter new.
-    biSettingPreviewer methodProvider: EFForTestMethodProvider
+	
+	super setUp.
+	biSettingPreviewer := EFSettingPreviewer2 new.
+	biSettingPreviewer formaterPrettyPrinter: EFFormatter new.
+	biSettingPreviewer methodProvider: EFForTestMethodProvider
 ]
 
 { #category : #running }
@@ -172,6 +174,10 @@ EFSettingPreviewerTest >> testWhenAddingAStteingSettingDropListShouldBeSetAtTheN
 
 { #category : #initialization }
 EFSettingPreviewerTest >> testWhenClickOnRemoveSettingButtonShouldRemoveItFromSettingDropListAndFromProvideMethodClass [
+	
+	"This test has side effects."
+	self skip. 
+
 	[ 
 	| stream |
 	stream := ReadWriteStream with: OrderedCollection new.
@@ -288,10 +294,10 @@ EFSettingPreviewerTest >> testWhenSettingsDropListSelectionShouldFormatedTextCha
 EFSettingPreviewerTest >> testWhenSettingsDropListSelectionShouldPrettyPrinterContextChanged [
 	| streamA streamB |
 	self
-		deny: biSettingPreviewer settingsDropList selectedItem selector
+		assert: biSettingPreviewer settingsDropList selectedItem selector
 		equals: #testConfigIdentStringTabulation.
 	biSettingPreviewer settingsDropList
-		selectedIndex:
+		selectIndex:
 			(biSettingPreviewer settingsDropList listItems
 				indexOf:
 					biSettingPreviewer methodProvider class
