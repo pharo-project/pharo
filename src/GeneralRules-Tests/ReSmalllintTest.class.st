@@ -160,7 +160,7 @@ ReSmalllintTest >> objectClassSelectorFor: aTestSelector [
 { #category : #private }
 ReSmalllintTest >> ruleClassFor: aTestSelector [
 	^ self classNamed:
-		('RB',
+		('Re',
 		(aTestSelector asString allButFirst: 4), "'test' size"
 		'Rule') asSymbol.
 ]

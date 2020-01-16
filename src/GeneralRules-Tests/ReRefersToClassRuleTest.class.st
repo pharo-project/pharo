@@ -36,5 +36,5 @@ ReRefersToClassRuleTest >> testRuleDetectHardCodedClass [
  	critiques := self myCritiguesOnMethod: self class >> #referToClassName.
 
  	self assert: critiques size equals: 2.
- 	self assert: (self sourceAtChritique:  critiques first) equals: 'RBRefersToClassRuleTest'.
+ 	self assert: (self sourceAtChritique:  critiques first) equals: ReRefersToClassRuleTest name asString.
 ]
