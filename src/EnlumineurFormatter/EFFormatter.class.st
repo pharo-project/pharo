@@ -414,6 +414,7 @@ EFFormatter class >> settingsAlignBlockBrackets: aBuilder [
 
 	(aBuilder setting: #lineUpBlockBrackets)
 		label: 'Align block brackets';
+		default: false;
 		description: 'Place a new line before closing a multiline block.
 This gives a C-like syntax in Pharo .
 
@@ -436,6 +437,7 @@ EFFormatter class >> settingsCommentCloseToStatement: aBuilder [
 	
 	(aBuilder setting: #formatCommentCloseToStatements)
 		label: 'Place comment close to expression';
+		default: true;
 		description: 'This setting places a comment close to an expression before the separator. 
 	
 When formatCommentCloseToStatements is set to true
@@ -462,6 +464,7 @@ aBoolean
 EFFormatter class >> settingsIndentsForKeywords: aBuilder [ 
 	
 	(aBuilder setting: #indentsForKeywords)
+		default: 1;
 		label: 'Indents for keywords';
 		description: 'Number of indentations before each keyword of a multiline message. 
 For example:
@@ -476,6 +479,7 @@ EFFormatter class >> settingsKeepBlockInMessage: aBuilder [
 	
 	(aBuilder setting: #keepBlockInMessage)
 		label: 'Keep block in message';
+		default: true;
 		description: 'Keep the begining of the block on the line of the message
 
 When keepBlockInMessage is true: 
@@ -498,6 +502,7 @@ EFFormatter class >> settingsMaxLineLength: aBuilder [
 
 	(aBuilder setting: #maxLineLength)
 		label: 'Max line length';
+		default: 70;
 		description: 'Set the maximum possible length of a line.
 For example:
 1 + 2 + 3 + 4
@@ -510,6 +515,7 @@ EFFormatter class >> settingsMethodSignatureOnMultipleLines: aBuilder [
 
 	(aBuilder setting: #methodSignatureOnMultipleLines)
 		label: 'Method signature on multiple lines';
+		default: false;
 		description: 'Write a multiline method signature on multiple lines only if set to true.
 Pay attention the fact that a method signature is considered multilined depends of the setting selectorAndArgumentCombinedMaxSize).
 
@@ -526,6 +532,7 @@ EFFormatter class >> settingsMinimumNewLinesBetweenStatements: aBuilder [
 
 	(aBuilder setting: #minimumNewLinesBetweenStatements)
 		label: 'Minimum new lines between statements';
+		default: 1;
 		description: 'Set the number of new lines between each statement. Its value is usually 0 or 1.
 
 The following is obtained by setting minimumNewLinesBetweenStatements to 2.
@@ -542,6 +549,7 @@ EFFormatter class >> settingsMultiLineMessages: aBuilder [
 
 	(aBuilder setting: #multiLineMessages)
 		label: 'Multi line messages';
+		default: '#(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)';
 		description: 'An array containing all the messages that should be written on multiple lines.
 		
 Example:
@@ -556,6 +564,7 @@ EFFormatter class >> settingsNewLineAfterCascade: aBuilder [
 
 	(aBuilder setting: #newLineAfterCascade)
 		label: 'New line after cascade';
+		default: true;
 		description: 'To add to a new line after each message in a cascade.
 
 When newLineAfterCascade is set to false.
@@ -577,6 +586,7 @@ EFFormatter class >> settingsNewLineBeforeFirstCascade: aBuilder [
 
 	(aBuilder setting: #newLineBeforeFirstCascade)
 		label: 'New line before cascade';
+		default: true;
 		description: 'To add a new line before the messages participating in a cascade.
 
 When newLineBeforeFirstCascade set to false
@@ -599,6 +609,7 @@ EFFormatter class >> settingsNewLineBeforeFirstKeyword: aBuilder [
 
 	(aBuilder setting: #newLineBeforeFirstKeyword)
 		label: 'New line before first keyword';
+		default: true;
 		description: 'To add a new line before the first keyword parameter of a message. This can be useful combined with other settings.
 
 When newLineBeforeFirstKeyword is set to true
@@ -619,6 +630,7 @@ EFFormatter class >> settingsNewLinesAfterMethodComment: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodComment)
 		label: 'New lines after method comment';
+		default: 2;
 		description: 'Set the number of new lines after the comment of a method.
 		
 When numberOfNewLinesAfterMethodComment is set to 2
@@ -635,6 +647,7 @@ EFFormatter class >> settingsNewLinesAfterMethodSignature: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignature)
 		label: 'New lines after method signature';
+		default: 1;
 		description: 'To set the number of new lines directly after the method signature.
 When numberOfNewLinesAfterMethodSignature is set to 2 new lines
 
@@ -649,6 +662,7 @@ EFFormatter class >> settingsNewLinesAfterTemporaries: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterTemporaries)
 		label: 'New lines after temporaries';
+		default: 1;
 		description: 'To set the number of new lines after the temporaries declaration.
 
 For example setting numberOfNewLinesAfterTemporaries to 2 produces
@@ -664,6 +678,7 @@ EFFormatter class >> settingsNumberOfArgumentsForMultiLine: aBuilder [
 	
 	(aBuilder setting: #numberOfArgumentsForMultiLine)
 		label: 'Number of arguments for multiLine';
+		default: 4;		
 		description: 'To set the number of argument that a message must have to be considered as a multiline message. 
 
 For example when set to 2 we obtain
@@ -679,6 +694,7 @@ EFFormatter class >> settingsNumberOfSpacesInIndent:aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInIndent)
 		label: 'Number of spaces in indent';
+		default: 3;
 		description: 'Set the number of spaces representing an indentation if indentStyle is set to space.
 
 The following is the result for 5.
@@ -733,6 +749,7 @@ EFFormatter class >> settingsOneLineMessages: aBuilder [
 
 	(aBuilder setting: #oneLineMessages)
 		label: 'One line messages';
+		default: '#(#to: #to:do: #to:by: #to:by:do:)';
 		description: 'All the messages listed in this setting will be formatted on one single line. 
 		
 If we include #todo: in the oneLineMessages we get 
@@ -745,6 +762,7 @@ EFFormatter class >> settingsPeriodsAtEndOfBlock: aBuilder [
 
 	(aBuilder setting: #periodsAtEndOfBlock)
 		label: 'Period at end of block body';
+		default: false;
 		description: 'This settings puts a period after the last expression of a block.
 
 Example: when set to true
@@ -759,6 +777,7 @@ EFFormatter class >> settingsPeriodsAtEndOfMethod: aBuilder [
 
 	(aBuilder setting: #periodsAtEndOfMethod)
 		label: 'Period at end of method';
+		default: false;
 		description: 'This setting puts a period after the last expression of a method.
 		
 For example: when set to true
@@ -774,6 +793,7 @@ EFFormatter class >> settingsRetainBlankLinesBeforeComments: aBuilder [
 
 	(aBuilder setting: #retainBlankLinesBeforeComments)
 		label: 'Retain blank lines before comments';
+		default: true;
 		description: 'Keep blank lines which are before comments. 
 
 For example, when set to true the formatter will not change the following
@@ -791,6 +811,7 @@ EFFormatter class >> settingsRetainBlankLinesBetweenStatements: aBuilder [
 
 	(aBuilder setting: #retainBlankLinesBetweenStatements)
 		label: 'Retain blank lines between statements';
+		default: false;
 		description: 'Keep blank lines which are between statements.
 		
 For example: when set to true the formatter will not change the following: 
@@ -809,6 +830,7 @@ EFFormatter class >> settingsSelectorAndArgumentCombinedMaxSize: aBuilder [
 
 	(aBuilder setting: #selectorAndArgumentCombinedMaxSize)
 		label: 'Selector and argument combined in method signature max size';
+		default: 40;
 		description: 'the maximum length a selector and his argument can be before the message is considered multiline
 		(depends of the setting methodSignatureOnMultipleLines 
 		which will write the message on multiple lines only if is set to true)
@@ -825,6 +847,7 @@ EFFormatter class >> settingsSpacesAfterCaretSymbolInReturn: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesAfterCaretSymbolInReturn)
 		label: 'Spaces following caret symbol in return';
+		default: 1;
 		description: 'Number of spaces expressed that is put just after the caret (^) of a return expression. 
 For example: ^   self is the result for 3 spaces'.
 ]
@@ -845,6 +868,7 @@ EFFormatter class >> settingsSpacesInsideArray: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInsideArray)
 		label: 'Spaces inside arrays #( here ) or { there }';
+		default: 1;
 		description: 'Set the number of spaces after the opening and before the closing symbols of an array.
 		
 For example, we get the following wehn set to 3 spaces: 
@@ -858,6 +882,7 @@ EFFormatter class >> settingsSpacesInsideBlocks: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInsideBlock)
 		label: 'Spaces inside blocks [ here ]';
+		default: 1;
 		description: 'Set the number of spaces after the opening and before the closing brackets.
 
 For example, when set to 3 spaces we get
@@ -869,6 +894,7 @@ EFFormatter class >> settingsSpacesInsideParentheses: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInsideParentheses)
 		label: 'Spaces inside parentheses ( here )';
+		default: 0;
 		description: 'Sets the number of spaces after the opening and before the closing parentheses.
 For example: (   1 + 2   ) is the result for 3 spaces'
 ]
@@ -878,6 +904,7 @@ EFFormatter class >> settingsUseBasicCommentFormat: aBuilder [
 
 	(aBuilder setting: #useBasicCommentFormat)
 		label: 'Use basic comment format';
+		default: true;
 		description: 'Leave the comment unchanged and do not resize comment.'
 ]
 

@@ -35,6 +35,7 @@ EpSettings class >> lostEventsDetectorEnabledSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #lostEventsDetectorEnabled)
 		label: 'Detect lost events on start-up';
+		default: true;
 		description: 'Check if current Epicea log has events that were not applied in this image (useful for recovegin changes when the image crashed)';
 		parent: #epicea;
 		target: self.
@@ -58,6 +59,7 @@ EpSettings class >> monitorEnabledSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #monitorEnabled)
 		label: 'Monitor enabled';
+		default: true;
 		description: 'The Epicea Monitor listens events in the system such as class added and method modified, and records them to the current Epicea log.';
 		parent: #epicea;
 		target: self.
@@ -107,6 +109,7 @@ EpSettings class >> writingDeferDurationSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #writingDeferDuration)
 		label: 'Writing defer duration';
+		default: 250;
 		description: 'Time to wait before write. When Epicea listens new events, it does not write them immediately. Instead, the new events are buffered until there were not new events during the time specified by this setting. The goal is to optimize I/O operations by batching them. 
 		
 Consecuences of a high defer duration: 

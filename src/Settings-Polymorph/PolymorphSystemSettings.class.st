@@ -29,7 +29,7 @@ PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
 			(aBuilder pickOne: #uiThemeClass)
 				label: 'User interface theme';
 				target: self;
-				default: UITheme standardThemeClass;
+				default: PharoDarkTheme;
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
@@ -91,15 +91,19 @@ PolymorphSystemSettings class >> desktopColor: aColor [
 PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [ 
 	(aBuilder setting: #desktopColor) label: 'Color';
 		 description: 'This is the only color of your desktop if no gradient is used. If you make use of a gradient, then this color is the first one of the gradient';
+		 default: PharoDarkTheme current desktopColor;
 		with: [(aBuilder setting: #useDesktopGradientFill) label: 'Gradient';
-				 description: 'If true, then more settings will be available in order to define the desktop background color gradient';
-				 noOrdering;
+				description: 'If true, then more settings will be available in order to define the desktop background color gradient';
+				noOrdering;
+				default: false;
 				with: [(aBuilder setting: #desktopGradientFillColor) label: 'Other color';
-						 description: 'This is the second color of your gradient (the first one is given by the "Color" setting'.
+						default: PharoDarkTheme current desktopColor;
+						description: 'This is the second color of your gradient (the first one is given by the "Color" setting'.
 					(aBuilder pickOne: #desktopGradientDirection) label: 'Direction';
-						 domainValues: {#Horizontal. #Vertical. #Radial}.
+						default: #Vertical;
+						domainValues: {#Horizontal. #Vertical. #Radial}.
 					(aBuilder pickOne: #desktopGradientOrigin) label: 'Origin';
-						 domainValues: {
+						domainValues: {
 							'Top left' translated -> #topLeft. 
 							'Top' translated -> #topCenter. 
 							'Top right' translated -> #topRight. 
@@ -218,14 +222,17 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 			(aBuilder setting: #showDesktopLogo)
 				label: 'Show logo' ;
 				description: 'If true, then a logo if shown on the top left of the desktop' ;
+				default: true;
 				with: [
 					(aBuilder setting: #desktopLogoFileName)
 						type: #FilePathEncoder;
+						default: '';
 						description: 'The path of an image file for your own logo, the default pharo logo is used if empty.' ;
 						label: 'Logo image file name'].
 			self desktopColorSettingsOn: aBuilder.
 			(aBuilder setting: #desktopImageFileName)
 				type: #FilePathEncoder;
+				default: '';
 				description: 'The path of an image file which will be imported as a form and displayed as your desktop background';
 				label: 'Desktop background image file name';
 			with: [
@@ -253,14 +260,17 @@ PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 			(aBuilder setting: #cycleHalosBothDirections)
 				label: 'Cycle both directions';
 				target: Morph;
+				default: false;
 				description: 'By default, halos only cycle from front-most submorph to parent (shift key down). This setting enables halos to also cycle from top-level morph down through the submorphs (no shift key)'.
 			(aBuilder setting: #haloEnclosesFullBounds)
 				label: 'Encloses fullbounds';
+				default: false;
 				target: HaloMorph;
 				description: 'If true, halos will enclose the full bounds of the target Morph, rather than just the bounds'.
 			(aBuilder setting: #showBoundsInHalo)
 				label: 'Exhibits bounds' ;
 				target: HaloMorph;
+				default: false;
 				description: 'If true, halos will include a fine rectangle around the bounds of the target morph.'
 		]
 ]
@@ -277,21 +287,27 @@ PolymorphSystemSettings class >> morphicMenuSettingsOn: aBuilder [
 		with: [
 			(aBuilder setting: #preferGradientFill)
 				label: 'Gradient filling' ;
+				default: false;
 				description: 'If true, then menus will have a gradient look' .
 			(aBuilder setting: #flatMenu)
 				label: 'Flat appearance' ;
+				default: true;
 				description: 'If true, then menu will without 3D like borders.' .
 			(aBuilder setting: #autoMenuColor)
 				label: 'Computed color' ;
+				default: false;
 				description: 'If true, then the menu color will be computed from world dressing.' .
 			(aBuilder setting: #menuColor)
 				label: 'Menu color';
+				default: Color veryDarkGray;
 				description: 'The menu color to use if it is not computed automatically (see the ''Computed color'' setting)' .
 			(aBuilder setting: #menuSelectionColor)
 				label: 'Menu selection color' ;
+				default: (Color r: 0.38025415444770283 g: 0.6383186705767351 b: 0.8817204301075269 alpha: 1.0);
 				description: 'The background color of a selected menu item' .
 			(aBuilder setting: #menuSelectionTextColor)
 				description: 'The text color of a selected menu item' ;
+				default: Color black;
 				label: 'Menu selection text color' .
 		]
 ]
@@ -308,27 +324,33 @@ PolymorphSystemSettings class >> morphicSettingsOn: aBuilder [
 			self morphicHaloSettingsOn: aBuilder.
 			(aBuilder setting: #keyboardFocusOnMouseDown)
 				label: 'Keyboard focus on mouse down';
+				default: true;
 				target: MorphicModel;
 				description: 'When enabled the mouse button must be clicked within a morph for it to take the keyboard focus.' .
 			(aBuilder setting: #mouseOverForKeyboardFocus)
 				label: 'Lose keyboard focus when mouse leave';
 				target: MorphicModel;
+				default: false;
 				description: 'When true, the mouse must be over a text or list pane in morphic for keystrokes to be felt, and when the mouse is out over the desktop, the so-called desktop-command-keys, such as cmd-b and cmd-R, are honored.  When false, list panes and text panes in morphic remain sensitive to keystrokes even after the mouse is no longer over the pane.' .
 			(aBuilder setting: #balloonHelpEnabled)
 				label: 'Balloon Tooltips'; 
 				description: 'If true, tooltips are shown when leaving the cursor on top of a graphic element';
+				default: true;
 				target: UITheme;
 				targetSelector: #currentSettings.
 			(aBuilder setting: #editableStringMorph)
 				label: 'String morphs are editable';
 				target: StringMorph;
+				default: false;
 				description: 'If true, editing on StringMorph is possible if the shift key is pressed while selecting the morphs.' .
 			(aBuilder setting: #defaultYellowButtonMenuEnabled)
 				label: 'Show default action click menu';
 				target: Morph;
+				default: false;
 				description: 'If true, populate an action click menu (default context menu).'.
 			(aBuilder setting: #easySelectingWorld)
 				label: 'Easy selection';
+				default: false;
 				target: WorldState;
 				description: 'If true, select multiple Morphs in the world by dragging a selection box around them.']
 ]
@@ -343,25 +365,30 @@ PolymorphSystemSettings class >> morphicWindowsSettingsOn: aBuilder [
 			(aBuilder setting: #preferRoundCorner)
 				target: UITheme;
 				targetSelector: #currentSettings;
+				default: false;
 				label: 'Rounded corners';
 				description: 'If true, then windows, menu and other popups will have their corners rounded.'.
 			(aBuilder range: #fullscreenMargin) 
 						target: SystemWindow;
+						default: 0;
 						label: 'Fullscreen margin';
 						description: 'Specify the amount of space that is let around a windows when it''s opened fullscreen';
 						range: (-5 to: 100).
 			(aBuilder setting: #fadedBackgroundWindows)
 				target: UITheme;
 				targetSelector: #currentSettings;
+				default: false;
 				label: 'Fade background windows';
 				description: 'If true then, background windows appear more "washed out" to distinguish from the active window'.
 			(aBuilder setting: #fastDragging)
 				target: UITheme;
 				targetSelector: #currentSettings;
 				label: 'Fast dragging';
+				default: false;
 				description: 'If true, window drag will be done by dragging an outline of the window instead of the whole window. It is very convenient on a slow machine' .
 			(aBuilder range: #textEntryFieldMinimumWidth)
 				label: 'Text entry dialog width';
+				default: 450;
 				target: TextEntryDialogWindow;
 				selector: #minimumWidth;
 				range: (100 to: 800);
@@ -928,11 +955,13 @@ PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
 	(aBuilder setting: #soundEnabled)
 		label: 'Sound'; 
 		target: SoundSystem;
+		default: false;
 		noOrdering;
 		with: [
 			(aBuilder setting: #useThemeSounds)
 				label: 'Use theme sounds';
 				target: SoundTheme; 
+				default: true;
 				with: [
 					(aBuilder pickOne: #soundThemeClass)
 						label: 'Sound theme' ;
@@ -995,6 +1024,7 @@ PolymorphSystemSettings class >> windowPositionStrategySettingsOn: aBuilder [
 		label: 'Window position strategy';
 		parent: #windows;
 		target: RealEstateAgent;
+		default: #cascadeFor:initialExtent:world:;
 		domainValues: {'Reverse Stagger' -> #staggerFor:initialExtent:world:. 'Cascade' -> #cascadeFor:initialExtent:world:. 'Standard' -> #standardFor:initialExtent:world:};
 		description: 'If Reversed Stagger, windows are placed in free space,
 if Cascade, windows are placed in cascade based on current active window or based on cursor position.' .

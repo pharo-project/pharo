@@ -58,6 +58,7 @@ RBRefactoryChangeManager class >> settingsOn: aBuilder [
 		with: [ 
 					(aBuilder setting: #undoSize)
 						target: self;
+						default: 20;
 						label: 'Undo size';
 						parentName: #refactoring ]
 ]

@@ -59,6 +59,7 @@ PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #shouldShowWorldMenu)
 		target: self;
+		default: true;
 		parent: #morphic;
 		label: 'Show world menu';
 		description: 'Whether the World''s world menu should be shown or not on a click in the World.'

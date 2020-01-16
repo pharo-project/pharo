@@ -328,55 +328,78 @@ BIConfigurableFormatter class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #blueInkFormatter)
 		target: self;
-		parent: #codeBrowsing;
+		parent: #codeFormatters;
 		label: 'BlueInk Pretty Printing';
 		description: 'Settings related to the formatter';
 		with:
 				[ 
-			(aBuilder setting: #formatCommentWithStatements) label: 'Format comment with statements'.
-			(aBuilder setting: #indentString) label: 'Indent string'.
-			(aBuilder setting: #indentsForKeywords) label: 'Indents for keywords'.
+			(aBuilder setting: #formatCommentWithStatements) 
+				default: true; label: 'Format comment with statements'.
+			(aBuilder setting: #indentString) 
+				default: Character tab asString; label: 'Indent string'.
+			(aBuilder setting: #indentsForKeywords) 
+				default: 1; label: 'Indents for keywords'.
 			(aBuilder setting: #keepBlockInMessage)
+				default: true;
 				label: 'Keep block in message';
 				description: (BIFormatSettingsExample >> #keepBlockInMessageExample) sourceCode.
 			(aBuilder setting: #lineUpBlockBrackets)
+				default: false;
 				label: 'Line up block brackets';
 				description: (BIFormatSettingsExample >> #lineUpBlockBracketsExample) sourceCode.
 			(aBuilder setting: #methodSignatureOnMultipleLines)
+				default: false;
 				label: 'Method signature on multiple lines'.
-			(aBuilder setting: #oneLineMessages) label: 'One line messages'.
-			(aBuilder setting: #multiLineMessages) label: 'Multi line messages'.
+			(aBuilder setting: #oneLineMessages) 
+				default: '#(#to: #to:do: #to:by: #to:by:do:)';
+				label: 'One line messages'.
+			(aBuilder setting: #multiLineMessages) 
+				default: '#(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)';
+				label: 'Multi line messages'.
 			(aBuilder setting: #minimumNewLinesBetweenStatements)
+				default: 1;
 				label: 'Minimum new lines between statements'.
 			(aBuilder setting: #newLineAfterCascade)
 				label: 'New line after cascade';
+				default: true;
 				description: (BIFormatSettingsExample >> #newLineAfterCascadeExample) sourceCode.
 			(aBuilder setting: #newLineBeforeFirstCascade)
 				label: 'New line before first cascade';
+				default: true;
 				description: (BIFormatSettingsExample >> #newLineBeforeFirstCascadeExample) sourceCode.
 			(aBuilder setting: #newLineBeforeFirstKeyword)
 				label: 'New line before first keyword';
+				default: false;
 				description: (BIFormatSettingsExample >> #newLineBeforeFirstKeywordExample) sourceCode.
-			(aBuilder setting: #newLinesAfterMethodComment) label: 'New lines after method comment'.
-			(aBuilder setting: #newLinesAfterMethodPattern) label: 'New lines after method pattern'.
-			(aBuilder setting: #newLinesAfterTemporaries) label: 'New lines after temporaries'.
+			(aBuilder setting: #newLinesAfterMethodComment) default: 2; label: 'New lines after method comment'.
+			(aBuilder setting: #newLinesAfterMethodPattern) default: 1; label: 'New lines after method pattern'.
+			(aBuilder setting: #newLinesAfterTemporaries)  default: 1; label: 'New lines after temporaries'.
 			(aBuilder setting: #numberOfArgumentsForMultiLine)
+				default: 4;
 				label: 'Number of arguments for multi line'.
-			(aBuilder setting: #periodsAsTerminators) label: 'Periods as terminators'.
-			(aBuilder setting: #periodsAtEndOfBlock) label: 'Periods at end of block'.
-			(aBuilder setting: #periodsAtEndOfMethod) label: 'Periods at end of method'.
+			(aBuilder setting: #periodsAsTerminators) default: false; label: 'Periods as terminators'.
+			(aBuilder setting: #periodsAtEndOfBlock) default: false; label: 'Periods at end of block'.
+			(aBuilder setting: #periodsAtEndOfMethod) default: false; label: 'Periods at end of method'.
 			(aBuilder setting: #retainBlankLinesBeforeComments)
+				default: true; 
 				label: 'Retain blank lines before comments'.
 			(aBuilder setting: #retainBlankLinesBetweenStatements)
+				default: false;
 				label: 'Retain blank lines between statements'.
 			(aBuilder setting: #selectorAndArgumentCombinedMaxSize)
+				default: 40;			
 				label: 'Selector and argument combined in method signature max size'.
-			(aBuilder setting: #stringFollowingReturn) label: 'String following return'.
-			(aBuilder setting: #stringInsideBlocks) label: 'String inside blocks'.
-			(aBuilder setting: #stringInsideParentheses) label: 'String inside parentheses'.
-			(aBuilder setting: #traditionalBinaryPrecedenceArray) label: 'Traditional binary precedence'.
-			(aBuilder setting: #useBasicCommentFormat) label: 'Use basic comment format'.
+			(aBuilder setting: #stringFollowingReturn) default: ' '; label: 'String following return'.
+			(aBuilder setting: #stringInsideBlocks)  default: ' '; label: 'String inside blocks'.
+			(aBuilder setting: #stringInsideParentheses)  default: ''; label: 'String inside parentheses'.
+			(aBuilder setting: #traditionalBinaryPrecedenceArray) 
+				default: '#(#($| $& $?) #($= $~ $< $>) #($- $+) #($* $/ $% $\) #($@))';
+				label: 'Traditional binary precedence'.
+			(aBuilder setting: #useBasicCommentFormat) 
+				default: true;
+				label: 'Use basic comment format'.
 			(aBuilder setting: #useTraditionalBinaryPrecedenceForParentheses)
+				default: true;
 				label: 'Use traditional binary precedence for parentheses' ]
 ]
 

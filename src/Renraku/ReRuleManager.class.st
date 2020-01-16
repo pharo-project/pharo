@@ -171,6 +171,7 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 					(aBuilder setting: rule enabledSettingID)
 					selector: #enabled;
 					target: rule;
+					default: true;
 					label: inst name;
 					description: inst rationale ] ]
 ]

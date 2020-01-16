@@ -159,6 +159,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		parent: #appearance;
 		order: 2;
 		label: 'Icon Set';
+		default: (ThemeIcons named: 'idea11');
 		target: self;
 		dialog: [ self createSettingRow ]
 ]
@@ -187,6 +188,13 @@ ThemeIcons class >> uiFetchPacks [
 { #category : #settings }
 ThemeIcons class >> wrapIconPack: aPack [
 	^ aPack name
+]
+
+{ #category : #comparing }
+ThemeIcons >> = anotherObject [
+
+	^ self species = anotherObject species
+		and: [ self name = anotherObject name ]
 ]
 
 { #category : #accessing }
@@ -261,6 +269,12 @@ ThemeIcons >> form16x16FromContents: aByteArray [
 { #category : #testing }
 ThemeIcons >> hasIcons [
 	^ self icons notEmpty
+]
+
+{ #category : #comparing }
+ThemeIcons >> hash [ 
+	
+	^ self name hash
 ]
 
 { #category : #accessing }

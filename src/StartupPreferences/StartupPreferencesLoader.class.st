@@ -182,6 +182,7 @@ StartupPreferencesLoader class >> startupPreferencesSettingsOn: aBuilder [
 	(aBuilder setting: #allowStartupScript)
 		label: 'Allow the preferences to be loaded at startup';
 		parent: #pharoSystem;
+		default: true;
 		target: self;
 		description: 'If true, the preferences will be loaded' .
 ]

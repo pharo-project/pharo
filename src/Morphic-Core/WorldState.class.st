@@ -287,6 +287,7 @@ WorldState class >> worldMenuSettingOn: aBuilder [
 		label: 'World menu pragma';
 		ghostHelp: 'worldMenu';
 		parent: #morphic;
+		default: 'worldMenu';
 		target: self;
 		description: 'Define whitch pragma should be used to build the world menu. To disable the world menu, leave this input empty.'
 ]
