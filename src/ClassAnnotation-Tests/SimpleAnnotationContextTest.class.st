@@ -1,7 +1,7 @@
 Class {
 	#name : #SimpleAnnotationContextTest,
 	#superclass : #TestCase,
-	#category : #'ClassAnnotation-Tests'
+	#category : #'ClassAnnotation-Tests-Base'
 }
 
 { #category : #tests }
