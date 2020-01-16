@@ -53,7 +53,23 @@ Class {
 { #category : #initialization }
 EFContext >> configureMultiLineMessages [
 
-	multiLineMessages := #(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)
+	multiLineMessages := self defaultMultiLineMessages
+]
+
+{ #category : #initialization }
+EFContext >> configureOneLineMessages [
+	oneLineMessages := self defaultOneLineMessages
+]
+
+{ #category : #initialization }
+EFContext >> defaultMultiLineMessages [
+
+	^ #(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)
+]
+
+{ #category : #initialization }
+EFContext >> defaultOneLineMessages [
+  ^#(#to: #to:do: #to:by: #to:by:do:)
 ]
 
 { #category : #accessing }
@@ -112,37 +128,37 @@ EFContext >> indentsForKeywords: anInteger [
 
 { #category : #initialization }
 EFContext >> initialize [
-	super initialize.
-	self useBasicCommentFormat: true.
-	self formatCommentCloseToStatements: true.
-	indentsForKeywords := 1.
-	keepBlockInMessage := true.
-	lineUpBlockBrackets := false.
-	maxLineLength := 70.
-	methodSignatureOnMultipleLines := false.
-	minimumNewLinesBetweenStatements := 1.
-	self configureMultiLineMessages.
-	newLineAfterCascade := true.
-	newLineBeforeFirstCascade := true.
-	newLineBeforeFirstKeyword := true.
-	numberOfNewLinesAfterMethodComment := 2.
-	newLinesAfterMethodSignature := 1.
-	newLinesAfterTemporaries := 1.
-	numberOfArgumentsForMultiLine := 4.
-	oneLineMessages := #(#to: #to:do: #to:by: #to:by:do:).
-	self periodAtEndOfBlock: false.
-	self periodAtEndOfMethod: false.
-	self retainBlankLinesBetweenStatements: false.
-	self retainBlankLinesBeforeComments: true.
-	self selectorAndArgumentCombinedMaxSize: 40.
-	self numberOfSpacesInsideBlock: 1.
-	self numberOfSpacesInsideParentheses: 0.
-	self numberOfSpacesAfterCaretSymbolInReturn: 1.
-	self indentStyle: #tabulation.
-	self numberOfSpacesInIndent: 3.
-	self numberOfSpacesBeforeDotInDynamicArray: 0.
-	self indentExtraSpaces: 0.
-	self numberOfSpacesInsideArray: 1
+  super initialize.
+  self useBasicCommentFormat: true.
+  self formatCommentCloseToStatements: true.
+  indentsForKeywords := 1.
+  keepBlockInMessage := true.
+  lineUpBlockBrackets := false.
+  maxLineLength := 70.
+  methodSignatureOnMultipleLines := false.
+  minimumNewLinesBetweenStatements := 1.
+  self configureMultiLineMessages.
+  newLineAfterCascade := true.
+  newLineBeforeFirstCascade := true.
+  newLineBeforeFirstKeyword := true.
+  numberOfNewLinesAfterMethodComment := 2.
+  newLinesAfterMethodSignature := 1.
+  newLinesAfterTemporaries := 1.
+  numberOfArgumentsForMultiLine := 4.
+  self configureOneLineMessages.
+  self periodAtEndOfBlock: false.
+  self periodAtEndOfMethod: false.
+  self retainBlankLinesBetweenStatements: false.
+  self retainBlankLinesBeforeComments: true.
+  self selectorAndArgumentCombinedMaxSize: 40.
+  self numberOfSpacesInsideBlock: 1.
+  self numberOfSpacesInsideParentheses: 0.
+  self numberOfSpacesAfterCaretSymbolInReturn: 1.
+  self indentStyle: #tabulation.
+  self numberOfSpacesInIndent: 3.
+  self numberOfSpacesBeforeDotInDynamicArray: 0.
+  self indentExtraSpaces: 0.
+  self numberOfSpacesInsideArray: 1
 ]
 
 { #category : #accessing }
@@ -415,7 +431,7 @@ EFContext >> selectorAndArgumentCombinedMaxSize: anInteger [
 ]
 
 { #category : #accessing }
-EFContext >> spacesAfterCaretSymbolInReturn [
+EFContext >> spacesAfterCaretSymbolInReturnString [
 	^ spacesAfterCaretSymbolInReturn
 ]
 
@@ -430,12 +446,12 @@ EFContext >> spacesInsideArray [
 ]
 
 { #category : #accessing }
-EFContext >> spacesInsideBlocks [
+EFContext >> spacesInsideBlocksString [
 	^ spacesInsideBlocks
 ]
 
 { #category : #accessing }
-EFContext >> spacesInsideParentheses [
+EFContext >> spacesInsideParenthesesString [
 	^ spacesInsideParentheses
 ]
 

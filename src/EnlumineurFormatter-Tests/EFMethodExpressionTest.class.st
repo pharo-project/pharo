@@ -260,7 +260,7 @@ EFMethodExpressionTest >> spaceIndentConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testBasic [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethod <pragma> "aComment" body'.
@@ -273,7 +273,7 @@ EFMethodExpressionTest >> testBasic [
 	body'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testBasic2 [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethod <pragma1> <pragma2> "aComment1" "aComment2"  body'.
@@ -288,7 +288,7 @@ EFMethodExpressionTest >> testBasic2 [
 	body'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testBasicSpaceIndent [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethod <pragma> "aComment" body'.
@@ -301,7 +301,7 @@ EFMethodExpressionTest >> testBasicSpaceIndent [
           body'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testBigMethod [
 	| expr source |
 	expr := RBParser parseMethod: 
@@ -330,7 +330,7 @@ EFMethodExpressionTest >> testBigMethod [
 		]'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testCommentBasicFormat [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "   aComment   "'.
@@ -342,7 +342,7 @@ EFMethodExpressionTest >> testCommentBasicFormat [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testCommentNotBasicFormat [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "   aComment   "'.
@@ -354,7 +354,7 @@ EFMethodExpressionTest >> testCommentNotBasicFormat [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testFormatBody [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode a:=1'.
@@ -365,7 +365,7 @@ EFMethodExpressionTest >> testFormatBody [
 	a := 1'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testIndentCascade [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode	Transcript cr; show: ''foo'';	cr. Transcript cr;cr'.
@@ -382,7 +382,27 @@ EFMethodExpressionTest >> testIndentCascade [
 		cr'
 ]
 
-{ #category : #test }
+{ #category : #tests }
+EFMethodExpressionTest >> testMethodWithMessageArgument [
+	| expr source |
+	expr := RBParser parseMethod: 
+'aMethod
+
+	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
+	'.
+	configurationSelector := #bigMethodeConfiguration.
+	source := self formatter format: expr.
+	self assert: source equals:
+'aMethod
+	1 to: 10 do: [:i | 
+		Transcript
+			show: i;
+			cr;
+			cr
+		]'
+]
+
+{ #category : #tests }
 EFMethodExpressionTest >> testNewLinesAfterComment [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "aComment"'.
@@ -395,7 +415,7 @@ EFMethodExpressionTest >> testNewLinesAfterComment [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNewLinesAfterComment2 [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
@@ -410,7 +430,7 @@ EFMethodExpressionTest >> testNewLinesAfterComment2 [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode"aComment""anotherComment"'.
@@ -423,7 +443,7 @@ EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
@@ -436,7 +456,7 @@ EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNoNewLinesAfterComment [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "aComment"'.
@@ -449,7 +469,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterComment [
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "aComment""anotherComment"'.
@@ -462,7 +482,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode'.
@@ -473,7 +493,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
@@ -485,7 +505,7 @@ EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode'.
@@ -496,7 +516,7 @@ EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testPragma [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode <pragma>'.
@@ -508,7 +528,7 @@ EFMethodExpressionTest >> testPragma [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode:arg1 foo:arg2'.
@@ -519,7 +539,7 @@ EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testSignatureOnMultipleLines [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode: arg1 foo:arg2'.
@@ -531,7 +551,7 @@ EFMethodExpressionTest >> testSignatureOnMultipleLines [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testSignatureWithArgument [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode:arg'.
@@ -542,7 +562,7 @@ EFMethodExpressionTest >> testSignatureWithArgument [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testSignatureWithoutArgument [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode'.
@@ -553,7 +573,7 @@ EFMethodExpressionTest >> testSignatureWithoutArgument [
 	'
 ]
 
-{ #category : #test }
+{ #category : #tests }
 EFMethodExpressionTest >> testTwoNewLinesAfterSignature [
 	| expr source |
 	expr := RBParser parseMethod: 'aMethode'.
