@@ -9,9 +9,9 @@ Class {
 
 { #category : #utils }
 EFForTestMethodProvider class >> contentRemovable [
-	^ 'BIPrettyPrinterContext {
+
+^ 'EFContext {
 	#formatCommentWithStatements : true,
-	#indentString : ''-'',
 	#indentsForKeywords : 1,
 	#keepBlockInMessage : true,
 	#lineUpBlockBrackets : false,
@@ -29,9 +29,7 @@ EFForTestMethodProvider class >> contentRemovable [
 	],
 	#newLineAfterCascade : true,
 	#newLineBeforeFirstCascade : true,
-	#newLineBeforeFirstKeyword : false,
-	#newLinesAfterMethodComment : 2,
-	#newLinesAfterMethodPattern : 1,
+	#newLineBeforeFirstKeyword : true,
 	#newLinesAfterTemporaries : 1,
 	#numberOfArgumentsForMultiLine : 4,
 	#oneLineMessages : [
@@ -40,52 +38,37 @@ EFForTestMethodProvider class >> contentRemovable [
 		#''to:by:'',
 		#''to:by:do:''
 	],
-	#periodsAtEndOfBlock : false,
-	#periodsAtEndOfMethod : false,
 	#retainBlankLinesBetweenStatements : false,
 	#retainBlankLinesBeforeComments : true,
-	#stringFollowingReturn : '' '',
-	#stringInsideBlocks : '' '',
-	#stringInsideParentheses : '''',
-	#useTraditionalBinaryPrecedenceForParentheses : true,
 	#selectorAndArgumentCombinedMaxSize : 40,
 	#useBasicCommentFormat : true,
-	#traditionalBinaryPrecedenceArray : [
-		[
-			Character [ ''|'' ],
-			Character [ ''&'' ],
-			Character [ ''?'' ]
-		],
-		[
-			Character [ ''='' ],
-			Character [ ''~'' ],
-			Character [ ''<'' ],
-			Character [ ''>'' ]
-		],
-		[
-			Character [ ''-'' ],
-			Character [ ''+'' ]
-		],
-		[
-			Character [ ''*'' ],
-			Character [ ''/'' ],
-			Character [ ''%'' ],
-			Character [ ''\\'' ]
-		],
-		[
-			Character [ ''@'' ]
-		]
-	]
+	#numberOfSpacesInsideBlock : 1,
+	#numberOfSpacesInsideParentheses : 0,
+	#numberOfSpacesAfterCaretSymbolInReturn : 1,
+	#numberOfSpacesInIndent : 3,
+	#spacesAfterCaretSymbolInReturn : '' '',
+	#spacesInsideBlocks : '' '',
+	#indentStyle : #tabulation,
+	#indentString : ''\t'',
+	#spacesInsideParentheses : '''',
+	#indentExtraSpaces : '''',
+	#spacesInsideArray : '' '',
+	#numberOfSpacesInsideArray : 1,
+	#numberOfSpacesBeforeDotInDynamicArray : 0,
+	#spacesBeforeDotInDynamicArray : '''',
+	#numberOfNewLinesAfterMethodComment : 2,
+	#newLinesAfterMethodSignature : 1,
+	#periodAtEndOfMethod : false,
+	#periodAtEndOfBlock : false
 }'
 ]
 
 { #category : #settings }
 EFForTestMethodProvider class >> testConfigIdentStringTabulation [
-	^ 'BIPrettyPrinterContext {
-	#formatCommentWithStatements : false,
-	#indentString : ''\t'',
+	^ 'EFContext {
+	#formatCommentWithStatements : true,
 	#indentsForKeywords : 1,
-	#keepBlockInMessage : false,
+	#keepBlockInMessage : true,
 	#lineUpBlockBrackets : false,
 	#maxLineLength : 70,
 	#methodSignatureOnMultipleLines : false,
@@ -99,11 +82,9 @@ EFForTestMethodProvider class >> testConfigIdentStringTabulation [
 		#''ensure:'',
 		#''ifCurtailed:''
 	],
-	#newLineAfterCascade : false,
+	#newLineAfterCascade : true,
 	#newLineBeforeFirstCascade : true,
-	#newLineBeforeFirstKeyword : false,
-	#newLinesAfterMethodComment : 2,
-	#newLinesAfterMethodPattern : 1,
+	#newLineBeforeFirstKeyword : true,
 	#newLinesAfterTemporaries : 1,
 	#numberOfArgumentsForMultiLine : 4,
 	#oneLineMessages : [
@@ -112,48 +93,34 @@ EFForTestMethodProvider class >> testConfigIdentStringTabulation [
 		#''to:by:'',
 		#''to:by:do:''
 	],
-	#periodsAtEndOfBlock : false,
-	#periodsAtEndOfMethod : false,
 	#retainBlankLinesBetweenStatements : false,
 	#retainBlankLinesBeforeComments : true,
-	#stringFollowingReturn : '' '',
-	#stringInsideBlocks : '' '',
-	#stringInsideParentheses : '''',
-	#useTraditionalBinaryPrecedenceForParentheses : true,
 	#selectorAndArgumentCombinedMaxSize : 40,
 	#useBasicCommentFormat : true,
-	#traditionalBinaryPrecedenceArray : [
-		[
-			Character [ ''|'' ],
-			Character [ ''&'' ],
-			Character [ ''?'' ]
-		],
-		[
-			Character [ ''='' ],
-			Character [ ''~'' ],
-			Character [ ''<'' ],
-			Character [ ''>'' ]
-		],
-		[
-			Character [ ''-'' ],
-			Character [ ''+'' ]
-		],
-		[
-			Character [ ''*'' ],
-			Character [ ''/'' ],
-			Character [ ''%'' ],
-			Character [ ''\\'' ]
-		],
-		[
-			Character [ ''@'' ]
-		]
-	]
+	#numberOfSpacesInsideBlock : 1,
+	#numberOfSpacesInsideParentheses : 0,
+	#numberOfSpacesAfterCaretSymbolInReturn : 1,
+	#numberOfSpacesInIndent : 3,
+	#spacesAfterCaretSymbolInReturn : '' '',
+	#spacesInsideBlocks : '' '',
+	#indentStyle : #tabulation,
+	#indentString : ''\t'',
+	#spacesInsideParentheses : '''',
+	#indentExtraSpaces : '''',
+	#spacesInsideArray : '' '',
+	#numberOfSpacesInsideArray : 1,
+	#numberOfSpacesBeforeDotInDynamicArray : 0,
+	#spacesBeforeDotInDynamicArray : '''',
+	#numberOfNewLinesAfterMethodComment : 2,
+	#newLinesAfterMethodSignature : 1,
+	#periodAtEndOfMethod : false,
+	#periodAtEndOfBlock : false
 }'
 ]
 
 { #category : #settings }
 EFForTestMethodProvider class >> textConfigIdentStringFourSpace [
-	^ 'BIPrettyPrinterContext {
+	^ 'EFContext {
 	#formatCommentWithStatements : true,
 	#indentString : ''    '',
 	#indentsForKeywords : 1,

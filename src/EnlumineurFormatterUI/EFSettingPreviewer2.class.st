@@ -307,15 +307,13 @@ EFSettingPreviewer2 >> actionRemoveSettingButton [
 				ifNil: [ self inform: 'please select a confguration' ]
 				ifNotNil: [ :selectedItem | 
 					selectedItem removeFromSystem.
-					settingsDropList selectedIndex: 1.
+					settingsDropList selectIndex: 1.
 					settingsDropList
 						items:
 							(settingsDropList listItems
 								remove: selectedItem;
-								yourself)
-					].
-			isSettingModification := false
-			]
+								yourself) ].
+			isSettingModification := false ]
 ]
 
 { #category : #'initialization-actions' }
@@ -612,7 +610,7 @@ EFSettingPreviewer2 >> setupSettingsTree [
 
 { #category : #'system-Announcement' }
 EFSettingPreviewer2 >> unregisterAnnouncement [
-SystemAnnouncer uniqueInstance unsubscribe: self  
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #'system-Announcement' }

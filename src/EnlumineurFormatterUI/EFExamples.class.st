@@ -166,7 +166,7 @@ EFExamples class >> empty [
 
 { #category : #settings }
 EFExamples class >> emptyOneLineMessages [
-	^ 'BIEnlumineurContext {
+	^ 'EFContext {
 	#formatCommentWithStatements : true,
 	#indentsForKeywords : 1,
 	#keepBlockInMessage : true,

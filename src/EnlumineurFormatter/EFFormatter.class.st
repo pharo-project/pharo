@@ -756,7 +756,7 @@ EFFormatter class >> settingsOneLineMessages: aBuilder [
 
 	(aBuilder setting: #oneLineMessages)
 		label: 'One line messages';
-		default: '#(#to: #to:do: #to:by: #to:by:do:)';
+		default: #(#to: #to:do: #to:by: #to:by:do:);
 		description: 'All the messages listed in this setting will be formatted on one single line. 
 		
 If we include #todo: in the oneLineMessages we get 
