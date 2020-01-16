@@ -540,7 +540,6 @@ SettingBrowser >> keyStroke: anEvent from: aTreeMorph [
 
 { #category : #menu }
 SettingBrowser >> loadSettings [
-	1halt.
 	self treeHolder updateSettingNodes.
 	self inform: 'Settings has been updated from the disk.'
 ]
@@ -761,7 +760,6 @@ SettingBrowser >> statusViewIn: aMorph [
 
 { #category : #menu }
 SettingBrowser >> storeSettings [
-	1halt.
 	self treeHolder storeSettingNodes.
 	self inform: 'Settings has been stored on the disk.'
 ]
