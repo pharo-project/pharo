@@ -1,7 +1,7 @@
 Class {
 	#name : #ReSmalllintTest,
 	#superclass : #TestCase,
-	#category : #'GeneralRules-Tests'
+	#category : #'GeneralRules-Tests-Migrated'
 }
 
 { #category : #accessing }

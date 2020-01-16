@@ -2,13 +2,13 @@
 There is something wrong in the method as you have variables that are either nor read or not written (or both).
 "
 Class {
-	#name : #GRTemporaryNeitherReadNorWrittenRule,
+	#name : #ReTemporaryNeitherReadNorWrittenRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #running }
-GRTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
+ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isSequence ifTrue: [ 
 		aNode temporaries do: [ :temp |
 			self
@@ -18,7 +18,7 @@ GRTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 ]
 
 { #category : #running }
-GRTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements [
+ReTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements [
 	| isRead isWritten |
 	isRead := isWritten := false.
 	statements do: [ :statement | 
@@ -32,17 +32,17 @@ GRTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements 
 ]
 
 { #category : #running }
-GRTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements forCritiquesDo: aBlock [
+ReTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements forCritiquesDo: aBlock [
 	(self checkTemp: aTemp followedBy: statements) ifFalse: [ 
 		aBlock cull: (self critiqueFor: aTemp) ]
 ]
 
 { #category : #accessing }
-GRTemporaryNeitherReadNorWrittenRule >> group [
+ReTemporaryNeitherReadNorWrittenRule >> group [
 	^ 'Optimization'
 ]
 
 { #category : #accessing }
-GRTemporaryNeitherReadNorWrittenRule >> name [
+ReTemporaryNeitherReadNorWrittenRule >> name [
 	^ 'Temporary variables not read or not written'
 ]

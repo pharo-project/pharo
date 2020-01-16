@@ -2,18 +2,18 @@
 Class and pool variable names should start with an uppercase letter.
 "
 Class {
-	#name : #GRClassVariableCapitalizationRule,
+	#name : #ReClassVariableCapitalizationRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #'testing-interest' }
-GRClassVariableCapitalizationRule class >> checksClass [
+ReClassVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
 { #category : #running }
-GRClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
+ReClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass isMeta ifTrue: [ ^ self ].
 	aClass classVarNames, aClass sharedPoolNames
 		select: [ :each | each first isLowercase ]
@@ -23,7 +23,7 @@ GRClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock 
 ]
 
 { #category : #'running-helpers' }
-GRClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
+ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |
 	crit := ReRefactoringCritique
@@ -44,11 +44,11 @@ GRClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 ]
 
 { #category : #accessing }
-GRClassVariableCapitalizationRule >> group [
+ReClassVariableCapitalizationRule >> group [
 	^ 'Style'
 ]
 
 { #category : #accessing }
-GRClassVariableCapitalizationRule >> name [
+ReClassVariableCapitalizationRule >> name [
 	^ 'Class (or pool) variable not capitalized'
 ]

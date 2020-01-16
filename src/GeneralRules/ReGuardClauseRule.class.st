@@ -21,7 +21,7 @@ foo
 Class {
 	#name : #ReGuardClauseRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

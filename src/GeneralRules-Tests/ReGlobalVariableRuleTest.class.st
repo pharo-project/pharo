@@ -1,7 +1,7 @@
 Class {
 	#name : #ReGlobalVariableRuleTest,
 	#superclass : #TestCase,
-	#category : #'GeneralRules-Tests'
+	#category : #'GeneralRules-Tests-Migrated'
 }
 
 { #category : #tests }

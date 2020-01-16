@@ -2,19 +2,19 @@
 If a variable is only assigned a single literal value then that variable is either nil or that literal value. If the variable is always initialized with that literal value, then you could replace each variable reference with a message send to get the value. If the variable can also be nil, then you might want to replace that variable with another that stores true or false depending on whether the old variable had been assigned.
 "
 Class {
-	#name : #GRVariableAssignedLiteralRule,
+	#name : #ReVariableAssignedLiteralRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #'testing-interest' }
-GRVariableAssignedLiteralRule class >> checksClass [
+ReVariableAssignedLiteralRule class >> checksClass [
 
 	^ true
 ]
 
 { #category : #running }
-GRVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
+ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 	aClass slots do: [ :slot | 
 		self
@@ -24,7 +24,7 @@ GRVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 ]
 
 { #category : #'running-helpers' }
-GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCriticBlock [
+ReVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCriticBlock [
 	| theMethod |
 
 	theMethod := nil.
@@ -46,7 +46,7 @@ GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCritic
 ]
 
 { #category : #'running-helpers' }
-GRVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
+ReVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |
 	crit := ReTrivialCritique
@@ -61,12 +61,12 @@ GRVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
 ]
 
 { #category : #accessing }
-GRVariableAssignedLiteralRule >> group [
+ReVariableAssignedLiteralRule >> group [
 	^ 'Design Flaws'
 ]
 
 { #category : #'running-helpers' }
-GRVariableAssignedLiteralRule >> matchMethod: aCompiledMethod with: aVarName [
+ReVariableAssignedLiteralRule >> matchMethod: aCompiledMethod with: aVarName [
 
 	^ ((self matcherFor: aVarName) 
 		executeTree: aCompiledMethod ast
@@ -74,7 +74,7 @@ GRVariableAssignedLiteralRule >> matchMethod: aCompiledMethod with: aVarName [
 ]
 
 { #category : #'running-helpers' }
-GRVariableAssignedLiteralRule >> matcherFor: aVarName [
+ReVariableAssignedLiteralRule >> matcherFor: aVarName [
 
 
 	^ RBParseTreeSearcher new 
@@ -85,6 +85,6 @@ GRVariableAssignedLiteralRule >> matcherFor: aVarName [
 ]
 
 { #category : #accessing }
-GRVariableAssignedLiteralRule >> name [
+ReVariableAssignedLiteralRule >> name [
 	^ 'Variable is only assigned a single literal value'
 ]

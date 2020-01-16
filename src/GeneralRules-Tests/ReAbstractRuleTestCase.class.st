@@ -1,7 +1,7 @@
 Class {
 	#name : #ReAbstractRuleTestCase,
 	#superclass : #TestCase,
-	#category : #'GeneralRules-Tests'
+	#category : #'GeneralRules-Tests-Migrated'
 }
 
 { #category : #'test-support' }

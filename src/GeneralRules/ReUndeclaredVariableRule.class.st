@@ -2,34 +2,34 @@
 You are referencing a variable that is not declared anywhere. There is no temp, instance var, class var, or a global variable that can be bound to by this reference. Most likely you got into this state by writing an entirely correct code, but then the variable was removed.
 "
 Class {
-	#name : #GRUndeclaredVariableRule,
+	#name : #ReUndeclaredVariableRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #running }
-GRUndeclaredVariableRule >> basicCheck: aNode [
+ReUndeclaredVariableRule >> basicCheck: aNode [
 	^ aNode isVariable and: [ aNode isUndeclared ]
 ]
 
 { #category : #helpers }
-GRUndeclaredVariableRule >> critiqueFor: aNode [
+ReUndeclaredVariableRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		tinyHint: aNode name;
 		yourself
 ]
 
 { #category : #accessing }
-GRUndeclaredVariableRule >> group [
+ReUndeclaredVariableRule >> group [
 	^ 'Bugs'
 ]
 
 { #category : #accessing }
-GRUndeclaredVariableRule >> name [
+ReUndeclaredVariableRule >> name [
 	^ 'References an undeclared variable'
 ]
 
 { #category : #accessing }
-GRUndeclaredVariableRule >> severity [
+ReUndeclaredVariableRule >> severity [
 	^ #error
 ]

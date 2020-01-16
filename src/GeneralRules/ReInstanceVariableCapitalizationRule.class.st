@@ -2,18 +2,18 @@
 Instance variable names on the instance- and class-side should start with a lowercase letter.
 "
 Class {
-	#name : #GRInstanceVariableCapitalizationRule,
+	#name : #ReInstanceVariableCapitalizationRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #'testing-interest' }
-GRInstanceVariableCapitalizationRule class >> checksClass [
+ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
 { #category : #running }
-GRInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
+ReInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 	
 	aClass instVarNames
 		select: [ :each | each first isUppercase ]
@@ -23,7 +23,7 @@ GRInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlo
 ]
 
 { #category : #'running-helpers' }
-GRInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
+ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 
 	| crit |
 	crit := ReRefactoringCritique
@@ -44,11 +44,11 @@ GRInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 ]
 
 { #category : #accessing }
-GRInstanceVariableCapitalizationRule >> group [
+ReInstanceVariableCapitalizationRule >> group [
 	^ 'Style'
 ]
 
 { #category : #accessing }
-GRInstanceVariableCapitalizationRule >> name [
+ReInstanceVariableCapitalizationRule >> name [
 	^ 'Instance variable capitalized'
 ]

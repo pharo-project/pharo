@@ -2,37 +2,37 @@
 Temporary and argument variable names should start with a lowercase letter.
 "
 Class {
-	#name : #GRTemporaryVariableCapitalizationRule,
+	#name : #ReTemporaryVariableCapitalizationRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #running }
-GRTemporaryVariableCapitalizationRule >> basicCheck: aNode [
+ReTemporaryVariableCapitalizationRule >> basicCheck: aNode [
 	^ (self checkIsVariableWithParent: aNode) and: [ ((self checkIsArgumentDefinition: aNode) or: [ self checkIsTempDefinition: aNode ]) and: [ aNode name first isUppercase ] ]
 ]
 
 { #category : #'running-helpers' }
-GRTemporaryVariableCapitalizationRule >> checkIsArgumentDefinition: aNode [
+ReTemporaryVariableCapitalizationRule >> checkIsArgumentDefinition: aNode [
 
 	^ aNode isArgument and: [ aNode parent isMethod ]
 ]
 
 { #category : #'running-helpers' }
-GRTemporaryVariableCapitalizationRule >> checkIsTempDefinition: aNode [
+ReTemporaryVariableCapitalizationRule >> checkIsTempDefinition: aNode [
 
 	^ aNode isTemp and: [ aNode parent isSequence ]
 ]
 
 { #category : #'running-helpers' }
-GRTemporaryVariableCapitalizationRule >> checkIsVariableWithParent: aNode [
+ReTemporaryVariableCapitalizationRule >> checkIsVariableWithParent: aNode [
 
 	^ aNode isVariable and: [
 	  aNode parent isNotNil ]
 ]
 
 { #category : #helpers }
-GRTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
+ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 	| crit |
 
 	crit := ReRefactoringCritique
@@ -52,11 +52,11 @@ GRTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 ]
 
 { #category : #accessing }
-GRTemporaryVariableCapitalizationRule >> group [
+ReTemporaryVariableCapitalizationRule >> group [
 	^ 'Style'
 ]
 
 { #category : #accessing }
-GRTemporaryVariableCapitalizationRule >> name [
+ReTemporaryVariableCapitalizationRule >> name [
 	^ 'Temporary variable (or parameter) capitalized'
 ]
