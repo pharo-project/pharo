@@ -61,7 +61,7 @@ SmalllintManifestCheckerTest >> testCriticsOf [
 		environment: self package asEnvironment;
 		run.
 
-	critiques := checker criticsOf: GRTemporaryNeitherReadNorWrittenRule new.
+	critiques := checker criticsOf: ReTemporaryNeitherReadNorWrittenRule new.
 
 	self assert: critiques size equals: 3.
 	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassB >> #method3) ]).
@@ -110,8 +110,8 @@ SmalllintManifestCheckerTest >> testToDoOf [
 		environment: self package asEnvironment;
 		run.
 		
-	self assert: (( checker toDoOf: GRTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
+	self assert: (( checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each sourceAnchor entity = (MFClassB>>#method3)]).
-	self deny: (( checker toDoOf: GRTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
+	self deny: (( checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each  sourceAnchor entity = (MFClassB>>#method2)]).
 ]
