@@ -499,11 +499,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
 
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
 		BaselineOfSpec2 allPackageNames,
 	
-
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfParametrizedTests allPackageNames))
