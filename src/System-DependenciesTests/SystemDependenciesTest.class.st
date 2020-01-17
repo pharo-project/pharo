@@ -208,7 +208,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
@@ -546,7 +546,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfCommander2 allPackageNames,
+		BaselineOfCommander2 deepPackagesOfGroupNamed: #default,
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
