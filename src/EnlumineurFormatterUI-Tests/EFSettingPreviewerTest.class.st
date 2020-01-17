@@ -278,7 +278,7 @@ EFSettingPreviewerTest >> testWhenSettingsDropListSelectionShouldFormatedTextCha
 	textChanged := false.
 	self
 		assert: biSettingPreviewer settingsDropList selectedItem selector
-		equals: #testConfigIdentStringTabulation.
+		equals: #textConfigIdentStringFourSpace.
 	biSettingPreviewer formatedTextPresenter
 		whenTextChangedDo: [ textChanged := true ].
 	biSettingPreviewer settingsDropList
@@ -295,7 +295,7 @@ EFSettingPreviewerTest >> testWhenSettingsDropListSelectionShouldPrettyPrinterCo
 	| streamA streamB |
 	self
 		assert: biSettingPreviewer settingsDropList selectedItem selector
-		equals: #testConfigIdentStringTabulation.
+		equals: #textConfigIdentStringFourSpace.
 	biSettingPreviewer settingsDropList
 		selectIndex:
 			(biSettingPreviewer settingsDropList listItems
