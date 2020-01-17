@@ -25,6 +25,17 @@ ReEndTrueFalseRule class >> uniqueIdentifierName [
 	^'EndTrueFalseRule'
 ]
 
+{ #category : #hooks }
+ReEndTrueFalseRule >> afterCheck: aNode mappings: mappingDict [
+	"after a node was match you can do a post-validation here on the node and the dictionalry of wildcars with matched nodes as values"
+
+	^ mappingDict
+		ifNil: [ | statement |
+			statement := aNode arguments first body statements last.
+			( statement isVariable and: [ statement = aNode arguments last body statements last ] ) not] 
+		ifNotNil: [ true ]
+]
+
 { #category : #accessing }
 ReEndTrueFalseRule >> group [
 	^ 'Optimization'
