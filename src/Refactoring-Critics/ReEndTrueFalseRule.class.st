@@ -13,29 +13,28 @@ test
 	ifFalse: [ self baz ]
 "
 Class {
-	#name : #RBEndTrueFalseRule,
-	#superclass : #RBParseTreeLintRule,
+	#name : #ReEndTrueFalseRule,
+	#superclass : #ReNodeMatchRule,
 	#category : #'Refactoring-Critics-ParseTreeRules'
 }
 
 { #category : #accessing }
-RBEndTrueFalseRule class >> uniqueIdentifierName [
+ReEndTrueFalseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 	
 	^'EndTrueFalseRule'
 ]
 
 { #category : #accessing }
-RBEndTrueFalseRule >> group [
+ReEndTrueFalseRule >> group [
 	^ 'Optimization'
 ]
 
 { #category : #initialization }
-RBEndTrueFalseRule >> initialize [
+ReEndTrueFalseRule >> initialize [
 
 	super initialize.
-	self matcher
-		matchesAnyOf:
+	self matchesAny:
 			#('`@object 
 				ifTrue: [| `@temps1 | `@.Statements1. `.Statement] 
 				ifFalse: [| `@temps2 | `@.Statements2. `.Statement]' '`@object 
@@ -45,30 +44,19 @@ RBEndTrueFalseRule >> initialize [
 				ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' '`@object 
 				ifFalse: [| `@temps1 | `.Statement. `@.Statements1] 
 				ifTrue: [| `@temps2 | `.Statement. `@.Statement2]')
-		do: [ :node :answer | 
-			answer
-				ifNil: [ | statement |
-
-					statement := node arguments first body statements last.
-					( statement isVariable and: [ statement = node arguments last body statements last ] )
-						ifFalse: [ node ]
-						ifTrue: [ nil ]
-					]
-				ifNotNil: [ answer ]
-			]
 ]
 
 { #category : #accessing }
-RBEndTrueFalseRule >> name [
+ReEndTrueFalseRule >> name [
 	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
 
 { #category : #accessing }
-RBEndTrueFalseRule >> rationale [
+ReEndTrueFalseRule >> rationale [
 	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
 ]
 
 { #category : #accessing }
-RBEndTrueFalseRule >> severity [
+ReEndTrueFalseRule >> severity [
 	^ #information
 ]
