@@ -55,6 +55,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						getSelector: #inspectorTool;
 						setSelector: #inspectorTool:;
+						default: (Smalltalk at: #GTInspector);
 						label: 'Inspector';
 						domainValues: Smalltalk tools recentInspectorTools ];
 		with: [ 
@@ -64,6 +65,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						getSelector: #workspaceTool;
 						setSelector: #workspaceTool:;
 						label: 'Workspace';
+						default: (Smalltalk at: #GTPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
 		with: [ 
 					(aBuilder pickOne: #debuggerTool)
@@ -76,6 +78,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Messagelist';
+						default: (Smalltalk at: #ClyOldMessageBrowserAdapter);
 						domainValues: Smalltalk tools recentMessageListTools ];
 		with: [ 
 					(aBuilder pickOne: #versionBrowserTool)
@@ -88,6 +91,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Filelist';
+						default: (Smalltalk at: #FileList);
 						domainValues: Smalltalk tools recentFileListTools];
 		with: [ 
 					(aBuilder pickOne: #changeSorterTool)
