@@ -4,13 +4,17 @@ I keep properties like
 
 - name -> The font name 
 - size -> The font size
+- bold -> (boolean) font is bold
+- italic -> (boolean) font is italic
 "
 Class {
 	#name : #SpStyleFont,
 	#superclass : #SpStyleProperty,
 	#instVars : [
 		'name',
-		'size'
+		'size',
+		'italic',
+		'bold'
 	],
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
@@ -31,12 +35,52 @@ SpStyleFont >> applyTo: aMorph [
 	aMorph font: self definedFont
 ]
 
+{ #category : #accessing }
+SpStyleFont >> bold [
+	^ bold
+]
+
+{ #category : #accessing }
+SpStyleFont >> bold: anObject [
+	bold := anObject
+]
+
 { #category : #operations }
 SpStyleFont >> definedFont [
+	| definedFont |
 
-	^ LogicalFont
+	definedFont := LogicalFont
 		familyName: self name 
-		pointSize: self size
+		pointSize: self size.
+		
+	self isItalic ifTrue: [ definedFont forceItalicOrOblique ].
+	self isBold ifTrue: [ definedFont forceBold ].
+
+	^ definedFont
+]
+
+{ #category : #initialization }
+SpStyleFont >> isBold [
+	"property may be nil, we verify with strict comparisson"
+	
+	^ bold == true 
+]
+
+{ #category : #initialization }
+SpStyleFont >> isItalic [
+	"property may be nil, we verify with strict comparisson"
+	
+	^ italic == true 
+]
+
+{ #category : #accessing }
+SpStyleFont >> italic [
+	^ italic
+]
+
+{ #category : #accessing }
+SpStyleFont >> italic: anObject [
+	italic := anObject
 ]
 
 { #category : #accessing }

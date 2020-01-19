@@ -112,6 +112,12 @@ SpMorphicWindowAdapter >> askOkToClose [
 	^ self model askOkToClose
 ]
 
+{ #category : #protocol }
+SpMorphicWindowAdapter >> beep [ 
+	
+	widget flash
+]
+
 { #category : #factory }
 SpMorphicWindowAdapter >> buildWidget [
 

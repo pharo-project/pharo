@@ -19,6 +19,17 @@ SpComponentListPresenter >> addPresenter: aPresenter [
 	self model add: aPresenter
 ]
 
+{ #category : #private }
+SpComponentListPresenter >> doActivateAtIndex: index [
+	
+	"Activate only if there is an item at that position"
+	self presenters at: index ifAbsent: [ ^ self ].
+	
+	activationBlock cull: ((SpSingleSelectionMode on: self)
+		basicSelectIndex: index;
+		yourself)
+]
+
 { #category : #testing }
 SpComponentListPresenter >> includes: aPresenter [
  

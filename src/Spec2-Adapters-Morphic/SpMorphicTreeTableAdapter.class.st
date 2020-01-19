@@ -39,6 +39,10 @@ SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 	self isResizable 
 		ifTrue: [ tableMorph beResizable ] 
 		ifFalse: [ tableMorph beNotResizable ].
+		
+	self isSearchEnabled
+		ifTrue: [ tableMorph enableSearch ]
+		ifFalse: [ tableMorph disableFunction ].
 
 	tableMorph setBalloonText: self model help.
 	
@@ -129,12 +133,20 @@ SpMorphicTreeTableAdapter >> isNonEditableRow: aRow column: aColumn [
 
 { #category : #testing }
 SpMorphicTreeTableAdapter >> isResizable [
-	^ self model isResizable
+
+	^ self presenter isResizable
+]
+
+{ #category : #testing }
+SpMorphicTreeTableAdapter >> isSearchEnabled [
+
+	^ self presenter isSearchEnabled
 ]
 
 { #category : #testing }
 SpMorphicTreeTableAdapter >> isShowingColumnHeaders [
-	^ self model isShowingColumnHeaders
+
+	^ self presenter isShowingColumnHeaders
 ]
 
 { #category : #'private factory' }

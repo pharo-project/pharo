@@ -56,9 +56,10 @@ SpApplication >> configuration [
 	^ configuration
 ]
 
-{ #category : #'as yet unclassified' }
-SpApplication >> defer: aBlockClosure [ 
-	self backend defer: aBlockClosure.
+{ #category : #accessing }
+SpApplication >> defer: aBlock [
+
+	self backend defer: aBlock
 ]
 
 { #category : #windows }

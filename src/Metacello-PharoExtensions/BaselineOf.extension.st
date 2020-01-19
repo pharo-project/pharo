@@ -7,6 +7,22 @@ BaselineOf class >> allPackageNames [
 ]
 
 { #category : #'*Metacello-PharoExtensions' }
+BaselineOf class >> deepPackagesOfGroupNamed: aName [
+	"Traverses the group tree to collect packages"
+	| allGroups group |
+	
+	allGroups := self version groups.
+	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
+
+	^ (group includes
+		collect: [ :each | 
+			(allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
+				ifTrue: [ self deepPackagesOfGroupNamed: each ]
+				ifFalse: [ { each } ] ])
+		flattened
+]
+
+{ #category : #'*Metacello-PharoExtensions' }
 BaselineOf >> packageRepository [
 
 	" Tries to determine a repository from which the baseline is being loaded. Useful for 

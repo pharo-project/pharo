@@ -4,6 +4,11 @@ Class {
 	#category : #'Spec2-Commands-Code'
 }
 
+{ #category : #defaults }
+SpCodeDebugItCommand class >> defaultIconName [
+	^#smallDebug
+]
+
 { #category : #default }
 SpCodeDebugItCommand class >> defaultName [ 
 

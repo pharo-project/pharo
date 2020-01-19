@@ -4,6 +4,11 @@ Class {
 	#category : #'Spec2-Commands-Code'
 }
 
+{ #category : #defaults }
+SpCodePrintItCommand class >> defaultIconName [
+	^#smallPrintIt
+]
+
 { #category : #default }
 SpCodePrintItCommand class >> defaultName [
 

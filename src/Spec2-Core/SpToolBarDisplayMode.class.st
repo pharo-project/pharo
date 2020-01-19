@@ -48,6 +48,16 @@ SpToolBarDisplayMode >> configureButton: aButton item: aToolbarItem [
 	self subclassResponsibility
 ]
 
+{ #category : #configuring }
+SpToolBarDisplayMode >> configureDropList: aSpDropListMorph item: aSpDropListPresenter [ 
+	self flag: 'TODO: maybe customize the drop list to have a better look''n feel'.
+]
+
+{ #category : #configuring }
+SpToolBarDisplayMode >> configureMorph: aMorph item: itemPresenter [
+	aMorph configureWith: self item: itemPresenter
+]
+
 { #category : #accessing }
 SpToolBarDisplayMode >> extent [
 	^ self subclassResponsibility

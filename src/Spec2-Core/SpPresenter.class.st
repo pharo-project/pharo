@@ -412,9 +412,10 @@ SpPresenter >> defaultWindowPresenterClass [
 	^ SpWindowPresenter
 ]
 
-{ #category : #'as yet unclassified' }
-SpPresenter >> defer: aBlockClosure [ 
-	self application defer: aBlockClosure
+{ #category : #accessing }
+SpPresenter >> defer: aBlock [
+
+	self application defer: aBlock
 ]
 
 { #category : #private }
@@ -844,6 +845,12 @@ SpPresenter >> newText [
 { #category : #widgets }
 SpPresenter >> newTextInput [
 	^ self instantiate: SpTextInputFieldPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToggleButton [
+
+	^ self instantiate: SpToggleButtonPresenter
 ]
 
 { #category : #widgets }

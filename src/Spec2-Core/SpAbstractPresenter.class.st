@@ -5,8 +5,8 @@ I define common behaviours for widget presenters and also for composable present
 Class {
 	#name : #SpAbstractPresenter,
 	#superclass : #Model,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#owner',
 		'#adapter',

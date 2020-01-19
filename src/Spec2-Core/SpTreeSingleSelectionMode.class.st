@@ -1,16 +1,30 @@
 Class {
 	#name : #SpTreeSingleSelectionMode,
-	#superclass : #SpAbstractTreeSingleSelectionMode,
+	#superclass : #SpAbstractTreeSelectionMode,
 	#category : #'Spec2-Core-Widgets-Tree'
 }
 
+{ #category : #selection }
+SpTreeSingleSelectionMode >> clearSelection [
+
+	selection := #()
+]
+
+{ #category : #selection }
+SpTreeSingleSelectionMode >> itemNotFoundAction [
+	self clearSelection
+]
+
 { #category : #accessing }
 SpTreeSingleSelectionMode >> selectPath: aPath [
-	"If the path is out of range, keep the selection."
+	"Check comment in my superclass to know how to use selectPath:"
 
+	"If the path is out of range, keep the selection."
 	aPath ifEmpty: [ ^ self unselectAll ].
-	presenter itemAtPath: aPath ifAbsent: [ ^ self ].
-	selection := aPath
+	presenter 
+		itemAtPath: aPath 
+		ifAbsent: [ ^ self ].
+	selection := aPath.
 
 ]
 
@@ -41,7 +55,7 @@ SpTreeSingleSelectionMode >> selectedPaths [
 	^ { selection }
 ]
 
-{ #category : #accessing }
+{ #category : #selecting }
 SpTreeSingleSelectionMode >> unselectPath: aPath [
 	"If the path is out of range, keep the selection."
 	selection = aPath ifFalse: [ ^ self ].

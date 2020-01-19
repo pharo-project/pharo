@@ -9,11 +9,18 @@ Class {
 
 { #category : #factory }
 SpMorphicRadioButtonAdapter >> buildWidget [
-	
 	| radioButton |
 
+	self presenter isInitialStateSet ifFalse: [ 
+		"initial state is false, set all associated buttons to false too"
+		self presenter property: #state rawValue: false.
+		self presenter associatedRadioButtons do: [ :each |
+			each property: #state rawValue: false ] ].
+
 	radioButton := CheckboxMorph new
-		on: self selected: #state changeSelected: #state:;
+		on: self 
+			selected: #state 
+			changeSelected: #state:;
 		getEnabledSelector: #enabled;
 		label: self label;
 		labelClickable: self labelClickable;
@@ -27,6 +34,7 @@ SpMorphicRadioButtonAdapter >> buildWidget [
 		
 	self presenter whenLabelChangedDo: [ :newLabel | radioButton label: newLabel ].
 	self presenter whenChangedDo: [ radioButton updateSelection ].
+
 	^ radioButton
 ]
 
@@ -39,23 +47,23 @@ SpMorphicRadioButtonAdapter >> clicked [
 { #category : #'widget API' }
 SpMorphicRadioButtonAdapter >> label [
 
-	^ self model label
+	^ self presenter label
 ]
 
 { #category : #'widget API' }
 SpMorphicRadioButtonAdapter >> labelClickable [
 
-	^ self model labelClickable
+	^ self presenter labelClickable
 ]
 
 { #category : #'widget API' }
 SpMorphicRadioButtonAdapter >> state [
 
-	^ self model state
+	^ self presenter state
 ]
 
 { #category : #'widget API' }
 SpMorphicRadioButtonAdapter >> state: aBoolean [
 
-	^ self model state: aBoolean
+	^ self presenter state: aBoolean
 ]

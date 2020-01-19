@@ -7,8 +7,8 @@ In particular, I contain a presenterProvider, a block who's responsibility is to
 Class {
 	#name : #SpNotebookPage,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#owner',
 		'#title => SpObservableSlot',

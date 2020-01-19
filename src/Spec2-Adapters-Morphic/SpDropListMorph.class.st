@@ -10,6 +10,11 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Support'
 }
 
+{ #category : #configuring }
+SpDropListMorph >> configureWith: displayModel item: itemPresenter [ 
+	displayModel configureDropList: self item: itemPresenter
+]
+
 { #category : #private }
 SpDropListMorph >> currentIcon [
 

@@ -7,41 +7,68 @@ Class {
 { #category : #baseline }
 BaselineOfSpec2 >> baseline: spec [
 	<baseline>
-	| repository |
-	repository := self packageRepositoryURL.
 	spec
 		for: #common
-		do: [ "Dependencies"
-			spec baseline: 'ParametrizedTests' with: [ spec repository: repository ].
-			spec baseline: 'Commander2' with: [ spec repository: repository ].
+		do: [ self commander2: spec.
 
 			"Packages"
 			spec
 				package: 'Spec2-Core' with: [ spec requires: #('Spec2-Layout' 'Spec2-Transmission' 'Spec2-Commands') ];
 				package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
+				"package: 'Spec2-Help';"
 				package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
-				package: 'Spec2-Inspector' with: [ spec requires: #('Spec2-Core') ];
+				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic' 'Spec2-Commander2') ];
 				package: 'Spec2-ObservableSlot';
 				package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
 				package: 'Spec2-Transmission';
 				package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('Spec2-Core') ];
 				package: 'Spec2-Adapters-Stub' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Inspector') ];
+				package: 'Spec2-Examples';
 				package: 'Spec2-Interactions' with: [ spec requires: #('Spec2-Core') ];
-				package: 'Spec2-Commander2' with: [ spec requires: #('Commander2' 'Spec2-Core' 'Spec2-Interactions') ];
+				package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions' 'Commander2') ];
 				package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
 				package: 'Spec2-Commander2-ContactBook' with: [ spec requires: #('Spec2-Commander2') ];
 				package: 'Spec2-Commander2-ContactBook-Extensions' with: [ spec requires: #('Spec2-Commander2-ContactBook') ];
 				package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples') ];
-				package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Backend-Tests') ];
-				package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic' 'ParametrizedTests') ];
-				package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic') ];
+				package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+				package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
+				package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Backend-Tests') ]].
+
+	spec
+		for: #'pharo7.x'
+		do: [ "Dependencies for Pharo7"
+			self parametrizedTests: spec.
+
+			spec
+				baseline: 'Commander'
+				with: [ spec
+						repository: 'github://pharo-ide/Commander:v0.8.1/src';
+						loads: #('Commander-Spec2-Compatibility') ].
+
+			spec
+				package: 'Spec2-Pharo7To8Compatibility';
+				package: 'Spec2-Backend-Tests' with: [ spec requires: #('ParametrizedTests' 'Spec2-Adapters-Morphic') ];
+				package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('ParametrizedTests' 'Spec2-Adapters-Morphic') ];
+				package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples' 'ParametrizedTests') ] ].
+	spec
+		for: #'pharo8.x'
+		do: [ spec
 				package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
 				package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 				package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ];
-				
-				package: 'Spec2-Deprecated' with: [ spec requires: #('Spec2-Tests' 'Spec2-Adapters-Morphic' 'Spec2-Commander2') ];
 				package: 'Spec2-Deprecated-Tools' with: [ spec requires: #('Spec2-Deprecated' 'Spec2-Tools') ] ]
+]
+
+{ #category : #dependencies }
+BaselineOfSpec2 >> commander2: spec [
+	spec
+		baseline: 'Commander2'
+		with: [ spec repository: 'github://pharo-spec/Commander2:v2.1.x/src' ]
+]
+
+{ #category : #dependencies }
+BaselineOfSpec2 >> parametrizedTests: spec [
+	spec baseline: 'ParametrizedTests' with: [ spec repository: 'github://tesonep/ParametrizedTests/src' ]
 ]
 
 { #category : #accessing }
