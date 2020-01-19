@@ -48,6 +48,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						getSelector: #browserTool;
 						setSelector: #browserTool:;
 						label: 'Systembrowser';
+						default: (Smalltalk at: #ClyFullBrowser);
 						domainValues: Smalltalk tools recentBrowserTools ];
 		with: [ 
 					(aBuilder pickOne: #inspectorTool)
