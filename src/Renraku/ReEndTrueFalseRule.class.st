@@ -15,7 +15,7 @@ test
 Class {
 	#name : #ReEndTrueFalseRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #'Refactoring-Critics-ParseTreeRules'
+	#category : #'Renraku-Rules'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Checks for ifTrue: or ifFalse: conditions at end of methods that have two or mor
 Class {
 	#name : #ReGuardingClauseRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #'Refactoring-Critics-ParseTreeRules'
+	#category : #'Renraku-Rules'
 }
 
 { #category : #accessing }
