@@ -1,7 +1,7 @@
 Class {
 	#name : #StepOverTest,
 	#superclass : #DebuggerTest,
-	#category : #'Debugger-Tests'
+	#category : #'Debugger-Tests-Base'
 }
 
 { #category : #helper }
