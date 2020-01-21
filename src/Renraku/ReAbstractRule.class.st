@@ -93,6 +93,16 @@ ReAbstractRule class >> identifierMinorVersionNumber [
 	^ 1
 ]
 
+{ #category : #manifest }
+ReAbstractRule class >> isBeginnerRule [
+	^ false
+]
+
+{ #category : #manifest }
+ReAbstractRule class >> isDefaultRule [
+	^ true
+]
+
 { #category : #testing }
 ReAbstractRule class >> isUsed [
 	"all my sublasses are used"
