@@ -208,12 +208,20 @@ ReRuleManager class >> rulesProfile: aSelector [
 
 { #category : #acccessing }
 ReRuleManager class >> setBeginnerProfile [
-	Halt now.
+
+	self visibleRuleClasses 
+		select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
+		thenDo: [ :rule | rule enabled: rule isBeginnerRule ].
+	self reset
 ]
 
 { #category : #acccessing }
 ReRuleManager class >> setDefaultProfile [
-	Halt now.
+
+	self visibleRuleClasses 
+		select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
+		thenDo: [ :rule | rule enabled: rule isDefaultRule ].
+	self reset
 ]
 
 { #category : #'event subscriptions' }
