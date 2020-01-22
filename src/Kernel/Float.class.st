@@ -297,9 +297,6 @@ Float >> absPrintExactlyOn: aStream base: base [
 	by using exact integer arithmetic."
 
 	| fBase significand exp baseExpEstimate be be1 r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 fixedFormat decPointCount |
-	self isInfinite ifTrue: [
-			aStream nextPutAll: 'Float infinity'.
-			^ self].
 	fBase := base asFloat.
 	significand := self significandAsInteger.
 	roundingIncludesLimits := significand even.
@@ -385,7 +382,6 @@ Float >> absPrintInexactlyOn: aStream base: base [
 	about 3 lsbs of accuracy compared to an exact conversion."
 
 	| significantBits fBase exp baseExpEstimate r s mPlus mMinus scale d tc1 tc2 fixedFormat decPointCount |
-	self isInfinite ifTrue: [aStream nextPutAll: 'Float infinity'. ^ self].
 	significantBits := 50.  "approximately 3 lsb's of accuracy loss during conversion"
 	fBase := base asFloat.
 	exp := self exponent.
