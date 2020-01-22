@@ -129,10 +129,13 @@ def bootstrapImage(){
   
   // We run the whole process in 64 bits all the time. 
   // The 32 bits process is only run when a PR is integrated
+  
+  def architectures
+  
   if(isDevelopmentBranch()){
-	  def architectures = ['32', '64']
+	  architectures = ['32', '64']
   }else{
-	  def architectures = ['64']
+	  architectures = ['64']
   }
   
   for (arch in architectures) {
