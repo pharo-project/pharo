@@ -223,7 +223,17 @@ try{
 
     //Testing step
     def testers = [:]
-    def architectures = ['32', '64']
+    // We run the whole process in 64 bits all the time. 
+    // The 32 bits process is only run when a PR is integrated
+  
+    def architectures
+  
+    if(isDevelopmentBranch()){
+  	  architectures = ['32', '64']
+    }else{
+  	  architectures = ['64']
+    }
+
     def platforms = ['unix', 'osx', 'windows']
     for (arch in architectures) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'
