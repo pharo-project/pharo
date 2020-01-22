@@ -149,17 +149,7 @@ def bootstrapImage(){
       shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
       stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
     }
-  
-        if (architecture == "32") {
-        stage ("Convert Image - 32->64") {
-          dir("conversion") {
-            shell "cp ../bootstrap-cache/*.zip ."
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ../bootstrap/scripts/transform_32_into_64.sh"
-            shell "mv *-64bit-*.zip ../bootstrap-cache"
-          }
-        }
-      }
-  
+    
       if( isDevelopmentBranch() ) {
         stage("Upload to files.pharo.org") {
           dir("bootstrap-cache") {
