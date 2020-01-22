@@ -470,7 +470,7 @@ String >> alike: aString [
 	| i j k minSize bonus |
 	minSize := (j := self size) min: (k := aString size).
 	bonus := (j - k) abs < 2 ifTrue: [ 1 ] ifFalse: [ 0 ].
-	i := 1.
+	i := 1. 
 	[(i <= minSize) and: [((self at: i) asInteger bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
 		whileTrue: [ i := i + 1 ].
 	[(j > 0) and: [(k > 0) and:
