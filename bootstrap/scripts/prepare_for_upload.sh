@@ -31,22 +31,9 @@ if [ $(is_release_build) == 1 ]; then
 	cp "${FULL_IMAGE_NAME}" stable-${ARCH}.zip
 fi
 
-for f in ${PHARO_NAME_PREFIX}*-32bit-*.zip; do
+for f in ${PHARO_NAME_PREFIX}*-${ARCH}bit-*.zip; do
 	#If it is not base image
-	BITNESS=32bit
-	if [[ "$f" != "${FULL_IMAGE_NAME}" ]]; then
-		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 3)
-		mv "$f" ${PHARO_NAME_PREFIX}-${IMAGE_KIND}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
-	else
-		mv "$f" ${PHARO_NAME_PREFIX}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
-	fi
-done
-
-for f in ${PHARO_NAME_PREFIX}*-64bit-*.zip; do
-	#If it is not base image
-	BITNESS=64bit
-	echo $f
-	echo ${FULL_IMAGE_NAME}
+	BITNESS=${ARCH}bit
 	if [[ "$f" != "${FULL_IMAGE_NAME}" ]]; then
 		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 3)
 		mv "$f" ${PHARO_NAME_PREFIX}-${IMAGE_KIND}.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
