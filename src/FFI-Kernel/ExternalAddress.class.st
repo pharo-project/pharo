@@ -30,11 +30,6 @@ ExternalAddress class >> gcallocate: byteSize [
 	^externalAddress
 ]
 
-{ #category : #'class initialization' }
-ExternalAddress class >> initialize [
-	wordSize := Smalltalk wordSize
-]
-
 { #category : #'instance creation' }
 ExternalAddress class >> loadSymbol: moduleSymbol module: module [ 
 	<primitive: 'primitiveLoadSymbolFromModule' module: 'SqueakFFIPrims'>
@@ -44,13 +39,13 @@ ExternalAddress class >> loadSymbol: moduleSymbol module: module [
 { #category : #'instance creation' }
 ExternalAddress class >> new [
 	"External addresses are either four or eight bytes long."
-	^super new: wordSize
+	^super new: self wordSize
 ]
 
 { #category : #'instance creation' }
 ExternalAddress class >> new: n [
 	"Only create ExternalAddresses of the right size."
-	^n = wordSize
+	^n = self wordSize
 		ifTrue: [super new: n]
 		ifFalse: [self shouldNotImplement]
 ]
@@ -66,7 +61,7 @@ ExternalAddress class >> startUp: resuming [
 
 { #category : #accessing }
 ExternalAddress class >> wordSize [
-	^wordSize
+	^wordSize ifNil: [ wordSize := Smalltalk wordSize ]
 ]
 
 { #category : #arithmetic }
