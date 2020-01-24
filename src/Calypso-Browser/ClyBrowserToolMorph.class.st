@@ -189,6 +189,30 @@ ClyBrowserToolMorph >> addDecorator: aBrowserToolDecorator [
 	decorators add: aBrowserToolDecorator
 ]
 
+{ #category : #building }
+ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [ 
+	| menu |
+	
+	menu := CmdMenu activatedBy: ClyBrowserTabCommandActivation.
+	menu buildInContext: context.
+	
+	containerTab := ClyNotebookPageMorph 
+		newLabel: self defaultTitle
+		icon: self defaultIcon
+		provider: [ self buildPageAndDecorate ].
+	containerTab beClosable.
+	"
+		actions: menu buildBrowserTabActions.
+	"
+	containerTab model: self.
+	
+	aNotebook 
+		addPage: containerTab 
+		label: containerTab labelMorph.
+	
+	^ containerTab
+]
+
 { #category : #testing }
 ClyBrowserToolMorph >> allowsDifferentActivationPriority [
 	^true
@@ -201,6 +225,12 @@ ClyBrowserToolMorph >> applyDecorations [
 
 { #category : #controlling }
 ClyBrowserToolMorph >> attachToSystem [
+]
+
+{ #category : #'as yet unclassified' }
+ClyBrowserToolMorph >> backgroundColor [
+	
+	^ containerTab backgroundColor
 ]
 
 { #category : #testing }
@@ -240,6 +270,17 @@ ClyBrowserToolMorph >> build [
 { #category : #building }
 ClyBrowserToolMorph >> buildAndDecorate [
 	self isBuilt ifTrue: [ ^self ] "somehow tab manager can call building process multiple times".
+	self setUpParametersFromModel.
+	self decorateContainerTab.
+	self build. 
+	self buildStatusBar.
+	self applyDecorations.
+	self attachToSystem
+]
+
+{ #category : #building }
+ClyBrowserToolMorph >> buildPageAndDecorate [
+
 	self setUpParametersFromModel.
 	self decorateContainerTab.
 	self build. 
@@ -298,17 +339,18 @@ ClyBrowserToolMorph >> copyForBrowserStateSnapshot [
 { #category : #building }
 ClyBrowserToolMorph >> createTab [
 	| menu |
+	
 	menu := CmdMenu activatedBy: ClyBrowserTabCommandActivation.
 	menu buildInContext: context.
 	
 	containerTab := TabMorph
 		label: self defaultTitle
 		icon: self defaultIcon
-		retrievingBlock: [self buildAndDecorate]
+		retrievingBlock: [ self buildAndDecorate ]
 		actions: menu buildBrowserTabActions.
 	
 	containerTab model: self.
-	^containerTab
+	^ containerTab
 ]
 
 { #category : #building }
@@ -382,8 +424,12 @@ ClyBrowserToolMorph >> initialize [
 
 { #category : #testing }
 ClyBrowserToolMorph >> isBuilt [
-	containerTab ifNil: [ ^false ].
-	^containerTab morph == self
+	containerTab ifNil: [ ^ false ].
+	self flag: #TODO. "This patch is to ensure compatibility while working. 
+	Ensure to remove later."
+	(containerTab respondsTo: #isRendered) ifTrue: [ 
+		 ^ containerTab isRenderer ].
+	^ containerTab morph == self
 ]
 
 { #category : #testing }
@@ -489,6 +535,7 @@ ClyBrowserToolMorph >> selectAsMainTab [
 
 { #category : #initialization }
 ClyBrowserToolMorph >> setUpDefaultIcon [
+
 	containerTab icon: self defaultIcon
 ]
 
@@ -550,11 +597,12 @@ ClyBrowserToolMorph >> waitBuildCompletion [
 
 { #category : #testing }
 ClyBrowserToolMorph >> wantsStayInDifferentContext [
-	self isBuilt ifFalse: [ ^false ].
+	self isBuilt ifFalse: [ ^ false ].
 	self hasUnacceptedEdits ifTrue: [ ^true ].
 	self isTabSelected & self isExtraSelectionRequested ifTrue: [ ^true ].
 	self belongsToRemovedBrowserContext ifTrue: [ ^false ].
-	^isManagedByUser
+	
+	^ isManagedByUser
 ]
 
 { #category : #controlling }
@@ -567,6 +615,7 @@ ClyBrowserToolMorph >> warnUserAboutChangedContext [
 
 { #category : #controlling }
 ClyBrowserToolMorph >> warnUserAboutDifferentContext [
+
 	containerTab icon: (self iconNamed: #uncommentedClass)
 ]
 
