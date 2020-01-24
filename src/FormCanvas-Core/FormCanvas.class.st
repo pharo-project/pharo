@@ -11,9 +11,7 @@ Class {
 		'port',
 		'transform',
 		'colorTransform',
-		'engine',
-		'aaLevel',
-		'deferred'
+		'engine'
 	],
 	#classVars : [
 		'TranslucentPatterns'
@@ -159,7 +157,7 @@ FormCanvas >> depth [
 
 ]
 
-{ #category : #'Morphic-Base-Balloon' }
+{ #category : #'private - balloon engine' }
 FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderColor [
 	"Draw the oval defined by the given rectangle"
 
@@ -188,7 +186,7 @@ FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWid
 		transform: transform.
 ]
 
-{ #category : #'balloon drawing' }
+{ #category : #'private - balloon engine' }
 FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: borderColor [
 	"Draw a rectangle"
 
@@ -264,15 +262,15 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port clipRect: portRect.
 ]
 
-{ #category : #accessing }
+{ #category : #'private - balloon engine' }
 FormCanvas >> ensuredEngine [
 	engine ifNil:[
 		engine := BalloonEngine new.
-		engine aaLevel: (aaLevel ifNil: [1]).
+		engine aaLevel: 1.
 		engine bitBlt: port.
 		engine destOffset: origin.
 		engine clipRect: clipRect.
-		engine deferred: (deferred ifNil: [false]).
+		engine deferred: false.
 		engine].
 	engine colorTransform: colorTransform.
 	engine edgeTransform: (transform ifNil: [MatrixTransform2x3 identity]).
@@ -463,13 +461,6 @@ FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 
 ]
 
-{ #category : #initialization }
-FormCanvas >> initialize [
-	super initialize.
-	aaLevel := 1.
-	deferred := false.
-]
-
 { #category : #testing }
 FormCanvas >> isVisible: aRectangle [
 	"Optimization"
@@ -561,7 +552,7 @@ FormCanvas >> reset [
 	self shadowColor: nil.
 ]
 
-{ #category : #'Morphic-Base-Balloon' }
+{ #category : #'private - balloon engine' }
 FormCanvas >> resetEngine [
 	engine := nil.
 ]
