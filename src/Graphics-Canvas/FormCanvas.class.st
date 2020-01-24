@@ -8,7 +8,12 @@ Class {
 		'origin',
 		'clipRect',
 		'form',
-		'port'
+		'port',
+		'transform',
+		'colorTransform',
+		'engine',
+		'aaLevel',
+		'deferred'
 	],
 	#classVars : [
 		'TranslucentPatterns'
@@ -95,22 +100,6 @@ FormCanvas >> allocateForm: extentPoint [
 	^form allocateForm: extentPoint
 ]
 
-{ #category : #'drawing-ovals' }
-FormCanvas >> balloonFillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
-
-	self asBalloonCanvas
-		fillOval: aRectangle
-		fillStyle: aFillStyle
-		borderWidth: bw
-		borderColor: bc
-]
-
-{ #category : #'Morphic-Base-Balloon' }
-FormCanvas >> balloonFillRectangle: aRectangle fillStyle: aFillStyle [
-
-	self asBalloonCanvas fillRectangle: aRectangle basicFillStyle: aFillStyle
-]
-
 { #category : #'drawing-support' }
 FormCanvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
@@ -170,6 +159,18 @@ FormCanvas >> depth [
 
 ]
 
+{ #category : #'Morphic-Base-Balloon' }
+FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderColor [
+	"Draw the oval defined by the given rectangle"
+
+	self ensuredEngine
+		drawOval: r
+		fill: c
+		borderWidth: borderWidth
+		borderColor: borderColor
+		transform: transform.
+]
+
 { #category : #'drawing-polygons' }
 FormCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
 	"Generalize for the BalloonCanvas"
@@ -177,13 +178,26 @@ FormCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: b
 ]
 
 { #category : #'drawing-polygons' }
-FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: bw borderColor: bc [
-	"Use a BalloonCanvas"
-	self asBalloonCanvas 
-		drawPolygon: vertices asArray
-		fillStyle: aFillStyle
-		borderWidth: bw 
-		borderColor: bc
+FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWidth borderColor: borderColor [
+
+	self ensuredEngine
+		drawPolygon: (vertices copyWith: vertices first) asArray
+		fill: aFillStyle
+		borderWidth: borderWidth
+		borderColor: borderColor
+		transform: transform.
+]
+
+{ #category : #'balloon drawing' }
+FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: borderColor [
+	"Draw a rectangle"
+
+	self ensuredEngine
+		drawRectangle: r
+		fill: c
+		borderWidth: borderWidth
+		borderColor: borderColor
+		transform: transform.
 ]
 
 { #category : #'drawing-text' }
@@ -251,6 +265,22 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 ]
 
 { #category : #accessing }
+FormCanvas >> ensuredEngine [
+	engine ifNil:[
+		engine := BalloonEngine new.
+		"engine := BalloonDebugEngine new"
+		engine aaLevel: (aaLevel ifNil: [1]).
+		engine bitBlt: port.
+		engine destOffset: origin.
+		engine clipRect: clipRect.
+		engine deferred: (deferred ifNil: [false]).
+		engine].
+	engine colorTransform: colorTransform.
+	engine edgeTransform: (transform ifNil: [MatrixTransform2x3 identity]).
+	^engine
+]
+
+{ #category : #accessing }
 FormCanvas >> extent [
 
 	^ form extent
@@ -293,7 +323,12 @@ FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderC
 	(aFillStyle isSolidFill) ifTrue:[
 		^self fillOval: aRectangle color: aFillStyle asColor borderWidth: bw borderColor: bc].
 	"Use a BalloonCanvas instead"
-	self balloonFillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc
+
+	self drawOval: (aRectangle insetBy: bw // 2)
+			color: aFillStyle 
+			borderWidth: bw
+			borderColor: bc
+
 ]
 
 { #category : #'drawing-rectangles' }
@@ -316,14 +351,23 @@ FormCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 				"Can use an InfiniteForm"
 				^self fillRectangle: aRectangle color: (InfiniteForm with: pattern)].
 	].
-	"Use a BalloonCanvas instead"
-	self balloonFillRectangle: aRectangle fillStyle: aFillStyle.
+	
+	^self drawRectangle: aRectangle
+			color: aFillStyle
+			borderWidth: 0
+			borderColor: nil
 ]
 
 { #category : #initialization }
 FormCanvas >> finish [
 	"If there are any pending operations on the receiver complete them. Do not return before all modifications have taken effect."
 	form finish
+]
+
+{ #category : #copying }
+FormCanvas >> flush [
+	"Force all pending primitives onscreen"
+	engine ifNotNil:[engine flush].
 ]
 
 { #category : #other }
@@ -420,6 +464,13 @@ FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 
 ]
 
+{ #category : #initialization }
+FormCanvas >> initialize [
+	super initialize.
+	aaLevel := 1.
+	deferred := false.
+]
+
 { #category : #testing }
 FormCanvas >> isVisible: aRectangle [
 	"Optimization"
@@ -462,8 +513,24 @@ FormCanvas >> paragraph: para bounds: bounds color: c [
 FormCanvas >> postCopy [
 	"The copy share same underlying Form but with its own grafPort."
 
+	self flush.
 	super postCopy.
-	self resetGrafPort
+	self resetGrafPort.
+	self resetEngine
+]
+
+{ #category : #'drawing-rectangles' }
+FormCanvas >> preserveStateDuring: aBlock [
+	| state result |
+	state := BalloonState new.
+	state transform: transform.
+	state colorTransform: colorTransform.
+	state aaLevel: self aaLevel.
+	result := aBlock value: self.
+	transform := state transform.
+	colorTransform := state colorTransform.
+	self aaLevel: state aaLevel.
+	^result
 ]
 
 { #category : #printing }
@@ -501,18 +568,17 @@ FormCanvas >> privateWarp: aForm transform: aTransform at: extraOffset sourceRec
 	warp warpBits
 ]
 
-{ #category : #drawing }
-FormCanvas >> render: anObject [
-	"Do some 3D operations with the object if possible"
-	^self asBalloonCanvas render: anObject
-]
-
 { #category : #initialization }
 FormCanvas >> reset [
 
 	origin := 0@0.							"origin of the top-left corner of this cavas"
 	clipRect := (0@0 corner: 10000@10000).		"default clipping rectangle"
 	self shadowColor: nil.
+]
+
+{ #category : #'Morphic-Base-Balloon' }
+FormCanvas >> resetEngine [
+	engine := nil.
 ]
 
 { #category : #private }
