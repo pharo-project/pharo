@@ -29,7 +29,7 @@ PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
 			(aBuilder pickOne: #uiThemeClass)
 				label: 'User interface theme';
 				target: self;
-				default: PharoDarkTheme;
+				default: (Smalltalk at: #PharoLightTheme);
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
@@ -299,7 +299,7 @@ PolymorphSystemSettings class >> morphicMenuSettingsOn: aBuilder [
 				description: 'If true, then the menu color will be computed from world dressing.' .
 			(aBuilder setting: #menuColor)
 				label: 'Menu color';
-				default: Color veryDarkGray;
+				default: (Color r: 0.823069403714565 g: 0.823069403714565 b: 0.823069403714565 alpha: 1.0);
 				description: 'The menu color to use if it is not computed automatically (see the ''Computed color'' setting)' .
 			(aBuilder setting: #menuSelectionColor)
 				label: 'Menu selection color' ;
