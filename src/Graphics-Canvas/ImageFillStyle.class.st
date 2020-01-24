@@ -9,7 +9,7 @@ Class {
 		'extent',
 		'offset'
 	],
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #'as yet unclassified' }

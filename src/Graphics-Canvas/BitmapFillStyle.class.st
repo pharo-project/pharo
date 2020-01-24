@@ -12,7 +12,7 @@ Class {
 		'form',
 		'tileFlag'
 	],
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #'instance creation' }

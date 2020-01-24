@@ -12,7 +12,7 @@ Class {
 		'color',
 		'pixelValue32'
 	],
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 		'origin',
 		'extent'
 	],
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #comparing }

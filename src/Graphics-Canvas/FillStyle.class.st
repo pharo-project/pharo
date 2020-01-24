@@ -4,7 +4,7 @@ FillStyle is an abstract base class for fills in the BalloonEngine.
 Class {
 	#name : #FillStyle,
 	#superclass : #Object,
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #converting }
@@ -12,7 +12,7 @@ FillStyle >> asColor [
 	^self subclassResponsibility 
 ]
 
-{ #category : #'*Balloon' }
+{ #category : #'as yet unclassified' }
 FillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
 	

@@ -4,7 +4,7 @@ Gradient fill style that uses proper alpha-aware interpolation.
 Class {
 	#name : #InterpolatedGradientFillStyle,
 	#superclass : #GradientFillStyle,
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #'as yet unclassified' }

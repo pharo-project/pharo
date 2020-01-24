@@ -14,7 +14,7 @@ Class {
 		'direction',
 		'normal'
 	],
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #comparing }

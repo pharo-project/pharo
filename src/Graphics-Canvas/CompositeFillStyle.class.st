@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fillStyles'
 	],
-	#category : #'Balloon-Fills'
+	#category : #'Graphics-Canvas-Fills'
 }
 
 { #category : #build }
@@ -15,13 +15,6 @@ CompositeFillStyle class >> fillStyles: aCollection [
 	"Answer a new instance of the receiver with the specfied fill styles."
 
 	^self new fillStyles: aCollection
-]
-
-{ #category : #adding }
-CompositeFillStyle >> addFillStyleMenuItems: aMenu hand: aHand from: aMorph [
-	"Add the items for changing the current fill style of the receiver"
-	aMenu add: 'change origin' target: self selector: #changeOriginIn:event: argument: aMorph.
-	aMenu add: 'change orientation' target: self selector: #changeOrientationIn:event: argument: aMorph.
 ]
 
 { #category : #converting }
@@ -32,29 +25,6 @@ CompositeFillStyle >> asColor [
 	^self fillStyles
 		ifEmpty: [Color transparent]
 		ifNotEmpty: [self fillStyles last asColor]
-]
-
-{ #category : #action }
-CompositeFillStyle >> changeOrientationIn: aMorph event: evt [
-	"Interactively change the origin of the receiver"
-	| handle |
-	handle := HandleMorph new forEachPointDo:[:pt|
-		self direction: pt - self origin.
-		self normal: nil.
-		aMorph changed].
-	evt hand attachMorph: handle.
-	handle startStepping.
-]
-
-{ #category : #action }
-CompositeFillStyle >> changeOriginIn: aMorph event: evt [
-	"Interactively change the origin of the receiver"
-	| handle |
-	handle := HandleMorph new forEachPointDo:[:pt|
-		self origin: pt.
-		aMorph changed].
-	evt hand attachMorph: handle.
-	handle startStepping.
 ]
 
 { #category : #accessing }
