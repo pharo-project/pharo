@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shortIntegerArray'
 	],
-	#category : #'Balloon-Tests-Collections'
+	#category : #'FormCanvas-Tests'
 }
 
 { #category : #running }

@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'via'
 	],
-	#category : #'Balloon-Geometry'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #'instance creation' }

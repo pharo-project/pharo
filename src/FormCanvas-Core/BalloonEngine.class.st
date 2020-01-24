@@ -29,7 +29,7 @@ Class {
 	#pools : [
 		'BalloonEngineConstants'
 	],
-	#category : #'Balloon-Engine'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #private }

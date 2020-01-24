@@ -5,7 +5,7 @@ Class {
 	#name : #BalloonBuffer,
 	#superclass : #Object,
 	#type : #words,
-	#category : #'Balloon-Engine'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #'instance creation' }

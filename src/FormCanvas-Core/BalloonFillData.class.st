@@ -12,7 +12,7 @@ Class {
 		'source',
 		'destForm'
 	],
-	#category : #'Balloon-Simulation'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #computing }

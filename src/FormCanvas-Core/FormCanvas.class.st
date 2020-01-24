@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'TranslucentPatterns'
 	],
-	#category : #'Graphics-Canvas-Canvases'
+	#category : #'FormCanvas-Core-Canvas'
 }
 
 { #category : #caching }

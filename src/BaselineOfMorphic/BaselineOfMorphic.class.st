@@ -48,10 +48,8 @@ BaselineOfMorphic >> baseline: spec [
 			spec repository: repository; loads: #('Core') ].
 
 		spec package: 'System-Localization'.
-		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Clipboard'.
 		
-		spec package: 'Balloon'.
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
@@ -105,7 +103,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Settings-Polymorph'.
 		spec package: 'Settings-System'.
 
-		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings-Core'.

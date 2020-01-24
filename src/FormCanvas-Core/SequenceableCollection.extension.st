@@ -1,6 +1,6 @@
 Extension { #name : #SequenceableCollection }
 
-{ #category : #'*Balloon' }
+{ #category : #'*FormCanvas-Core' }
 SequenceableCollection >> asPointArray [
 	"Answer an PointArray whose elements are the elements of the receiver, in 
 	the same order."

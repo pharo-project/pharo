@@ -7,7 +7,7 @@ Class {
 	#type : #words,
 	#traits : 'TPointAccess',
 	#classTraits : 'TPointAccess classTrait',
-	#category : #'Balloon-Collections'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #'instance creation' }

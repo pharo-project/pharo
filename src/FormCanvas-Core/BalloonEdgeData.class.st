@@ -19,7 +19,7 @@ Class {
 		'lines',
 		'source'
 	],
-	#category : #'Balloon-Simulation'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #accessing }

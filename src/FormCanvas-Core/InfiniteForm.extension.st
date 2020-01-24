@@ -1,6 +1,6 @@
 Extension { #name : #InfiniteForm }
 
-{ #category : #'*Balloon' }
+{ #category : #'*FormCanvas-Core' }
 InfiniteForm >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
 	

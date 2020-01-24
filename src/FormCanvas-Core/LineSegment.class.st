@@ -13,7 +13,7 @@ Class {
 		'start',
 		'end'
 	],
-	#category : #'Balloon-Geometry'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #'instance creation' }

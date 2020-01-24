@@ -28,7 +28,7 @@ Class {
 		'lineFills',
 		'fillStyles'
 	],
-	#category : #'Balloon-Geometry'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #'instance creation' }

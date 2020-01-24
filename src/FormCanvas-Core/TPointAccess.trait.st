@@ -4,7 +4,7 @@ Initially used by PointArray & ShortPointArray
 "
 Trait {
 	#name : #TPointAccess,
-	#category : #'Balloon-Collections'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #accessing }

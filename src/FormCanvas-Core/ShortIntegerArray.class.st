@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'LastSaveOrder'
 	],
-	#category : #'Balloon-Collections'
+	#category : #'FormCanvas-Core-BalloonEngine'
 }
 
 { #category : #'initialize-release' }
