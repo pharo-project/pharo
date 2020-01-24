@@ -493,7 +493,6 @@ BalloonEngine >> drawOval: rect fill: fillStyle borderWidth: borderWidth borderC
 { #category : #drawing }
 BalloonEngine >> drawPolygon: points fill: fillStyle borderWidth: borderWidth borderColor: borderFill transform: aTransform [
 	| fills |
-	aTransform traceCr.
 	self edgeTransform: aTransform.
 	self resetIfNeeded.
 	fills := self registerFill: fillStyle and: borderFill.
@@ -679,9 +678,7 @@ BalloonEngine >> primAddOvalFrom: start to: end fillIndex: fillIndex borderWidth
 { #category : #'primitives-adding' }
 BalloonEngine >> primAddPolygon: points segments: nSegments fill: fillStyle lineWidth: lineWidth lineFill: lineFill [
 	<primitive: 'primitiveAddPolygon' module: 'B2DPlugin'>
-	|r |
-	r := self primGetFailureReason.
-	(self canProceedAfter: r) ifTrue:[
+	(self canProceedAfter: self primGetFailureReason) ifTrue:[
 		^self primAddPolygon: points segments: nSegments fill: fillStyle lineWidth: lineWidth lineFill: lineFill
 	].
 	^self primitiveFailed
