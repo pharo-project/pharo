@@ -173,18 +173,6 @@ ColorMappingCanvas >> paragraph: paragraph bounds: bounds color: c [
 		color: (self mapColor: c)
 ]
 
-{ #category : #'drawing-support' }
-ColorMappingCanvas >> preserveStateDuring: aBlock [
-	"Preserve the full canvas state during the execution of aBlock"
-	| oldCanvas result |
-	oldCanvas := myCanvas.
-	result := myCanvas preserveStateDuring:[:newCanvas|
-		myCanvas := newCanvas.
-		aBlock value: self].
-	myCanvas := oldCanvas.
-	^result
-]
-
 { #category : #initialization }
 ColorMappingCanvas >> reset [
 	myCanvas reset.

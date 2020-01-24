@@ -268,7 +268,6 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 FormCanvas >> ensuredEngine [
 	engine ifNil:[
 		engine := BalloonEngine new.
-		"engine := BalloonDebugEngine new"
 		engine aaLevel: (aaLevel ifNil: [1]).
 		engine bitBlt: port.
 		engine destOffset: origin.
@@ -517,20 +516,6 @@ FormCanvas >> postCopy [
 	super postCopy.
 	self resetGrafPort.
 	self resetEngine
-]
-
-{ #category : #'drawing-rectangles' }
-FormCanvas >> preserveStateDuring: aBlock [
-	| state result |
-	state := BalloonState new.
-	state transform: transform.
-	state colorTransform: colorTransform.
-	state aaLevel: self aaLevel.
-	result := aBlock value: self.
-	transform := state transform.
-	colorTransform := state colorTransform.
-	self aaLevel: state aaLevel.
-	^result
 ]
 
 { #category : #printing }
