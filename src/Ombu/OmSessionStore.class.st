@@ -16,7 +16,8 @@ Class {
 	],
 	#classInstVars : [
 		'storeNameStrategy',
-		'defaultBaseLocator'
+		'defaultBaseLocator',
+		'registry'
 	],
 	#category : #'Ombu-Stores'
 }
@@ -39,7 +40,9 @@ OmSessionStore class >> initialize [
 	"
 	self initialize
 	"
-	SessionManager default registerUserClassNamed: self name
+	registry := WeakSet new: 5.
+	SessionManager default registerUserClassNamed: self name.
+
 
 ]
 
@@ -57,11 +60,16 @@ OmSessionStore class >> newWithBaseLocator: aBaseDirectory [
 		yourself
 ]
 
-{ #category : #'system startup' }
-OmSessionStore class >> startUp [
-	"The #store accessor refreshes each instance since it will discover that the Session changed"
+{ #category : #initialization }
+OmSessionStore class >> register: aSessionStore [
 
-	self allInstancesDo: #store 
+	registry add: aSessionStore 
+]
+
+{ #category : #initialization }
+OmSessionStore class >> startUp [ 
+
+	registry do: [ :each | each store ]
 ]
 
 { #category : #accessing }
@@ -156,6 +164,8 @@ OmSessionStore >> initializeWithBaseLocator: aDirectoryFileLocator [
 	baseLocator := aDirectoryFileLocator.
 	self store. "Force initialization"
 	headReference := self store headReference.
+	
+	self class register: self.
 
 ]
 

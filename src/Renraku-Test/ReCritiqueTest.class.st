@@ -35,7 +35,7 @@ ReCritiqueTest >> testBan1 [
 ReCritiqueTest >> testDescription [
 	| rule critic |
 	
-	rule := (RBLintRule allSubclasses select: #isVisible)	 anyOne new.
+	rule := (ReAbstractRule allSubclasses select: #isVisible) anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
 	
 	self assert: critic description equals: rule rationale
@@ -45,7 +45,7 @@ ReCritiqueTest >> testDescription [
 ReCritiqueTest >> testRule [
 	| rule critic |
 	
-	rule := (RBLintRule allSubclasses select: #isVisible)	 anyOne new.
+	rule := (ReAbstractRule allSubclasses select: #isVisible)	 anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
 	
 	self assert: critic rule equals: rule
@@ -55,7 +55,7 @@ ReCritiqueTest >> testRule [
 ReCritiqueTest >> testTarget [
 	| rule critic |
 	
-	rule := (RBLintRule allSubclasses select: #isVisible)	 anyOne new.
+	rule := (ReAbstractRule allSubclasses select: #isVisible)	 anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
 	
 	self assert: critic sourceAnchor entity equals: thisContext method
@@ -65,7 +65,7 @@ ReCritiqueTest >> testTarget [
 ReCritiqueTest >> testTitle [
 	| rule critic |
 	
-	rule := (RBLintRule allSubclasses select: #isVisible)	 anyOne new.
+	rule := (ReAbstractRule allSubclasses select: #isVisible)	 anyOne new.
 	critic := ReAbstractCritique for: thisContext method by: rule.
 	
 	self assert: critic title equals: rule name

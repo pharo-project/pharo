@@ -213,7 +213,10 @@ NECPreferences class >> settingsOn: aBuilder [
 								setSelector: #sorterClass:;
 								domainValues: availableSorters ].
 					(aBuilder setting: #backgroundColor)
-						default: Color veryDarkGray;
+						default: (Color 
+							r: 0.823069403714565 
+							g: 0.823069403714565 
+							b: 0.823069403714565 alpha: 1.0);
 						label: 'Background Color'.
 					(aBuilder setting: #expandPrefixes)
 						default: true;

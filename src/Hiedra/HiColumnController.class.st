@@ -12,23 +12,11 @@ Class {
 		'renderer',
 		'formByPageIndex',
 		'pageSize',
-		'cellMorphByRowIndex'
+		'cellMorphByRowIndex',
+		'session'
 	],
 	#category : #'Hiedra-UI'
 }
-
-{ #category : #'system startup' }
-HiColumnController class >> initialize [
-	SessionManager default registerGuiClassNamed: self name
-]
-
-{ #category : #'system startup' }
-HiColumnController class >> startUp: isImageStarting [
-	"Reset all instances on startup since the cached pages (athens forms) don't work in a new session."
-
-	isImageStarting
-		ifTrue: [ self allInstancesDo: #reset ]
-]
 
 { #category : #private }
 HiColumnController >> cellBoundsForRow: rowIndex inPage: pageIndex [
@@ -47,6 +35,8 @@ HiColumnController >> cellMorphAtRow: rowIndex [
 	"Answer a Morph that corresponds to a row index. The height of such Morph is given by renderer's rowHeight and the width is given by the ruler's numberOfColumns and the renderer's cellWidth.
 	This is an important method of this class, that the table widget will use to fill each Hiedra column's cell."
 
+	self checkSession.
+
 	^ cellMorphByRowIndex at: rowIndex ifAbsent: [ self newCellMorphForRow: rowIndex ]
 ]
 
@@ -58,7 +48,16 @@ HiColumnController >> cellMorphAtValue: aValue [
 ]
 
 { #category : #private }
+HiColumnController >> checkSession [
+
+	session == Smalltalk session 
+		ifFalse: [ self reset ]
+]
+
+{ #category : #private }
 HiColumnController >> formAtPage: pageIndex [
+
+	self checkSession.
 
 	^ formByPageIndex
 		at: pageIndex
@@ -74,6 +73,7 @@ HiColumnController >> initialize [
 	super initialize.
 	renderer := HiSimpleRenderer new.
 	pageSize := 30.
+	session := Smalltalk session.
 	self reset.
 ]
 

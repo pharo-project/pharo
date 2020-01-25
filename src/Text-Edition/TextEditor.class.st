@@ -209,7 +209,7 @@ TextEditor class >> editingSettingsOn: aBuilder [
 					(aBuilder setting: #secondarySelectionTextColor)
 						target: UITheme;
 						targetSelector: #currentSettings;
-						default: Color white;
+						default: Color black;
 						label: 'Secondary selection text color'].
 			(aBuilder setting: #useFindReplaceSelection)
 				target: TextEditor;
