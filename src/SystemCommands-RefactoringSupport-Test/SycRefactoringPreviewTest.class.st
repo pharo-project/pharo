@@ -53,7 +53,7 @@ SycRefactoringPreviewTest >> testDoubleClickAnTableItemShouldChangeTheValueAssoc
 { #category : #tests }
 SycRefactoringPreviewTest >> testDropListChangeShouldChangeTableItems [
 	self initializeForInitializeTest.
-	sycRefactoringPreview scopeDropList selectedIndex: 2.
+	sycRefactoringPreview scopeDropList selectIndex: 2.
 	self assertCollection: sycRefactoringPreview table items hasSameElements: {'banane' . 'Tournai Triple'}
 ]
 
