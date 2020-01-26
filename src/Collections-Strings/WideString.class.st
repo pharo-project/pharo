@@ -56,7 +56,7 @@ WideString class >> fromString: aString [
 ]
 
 { #category : #converting }
-WideString >> asByteArray [
+WideString >> asByteArray [ 
 	"Convert to a ByteArray with the ascii values of the string."
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
