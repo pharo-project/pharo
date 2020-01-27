@@ -107,7 +107,7 @@ ClyNotebookManager >> focusActiveTab [
 	activeTab := self selectedTools detectMax: [ :each | 
 		self activationPriorityOf: each ].
 		
-	activeTab ifNotNil: [ activeTab takeKeyboardFocus]
+	activeTab ifNotNil: [ self tabMorph page: activeTab ]
 ]
 
 { #category : #initialization }
@@ -120,6 +120,7 @@ ClyNotebookManager >> initialize [
 	shouldSkipCurrentDesiredSelection := false.
 	updatingStarted := false.
 	tabMorph := SpNotebookMorph new.
+	"tabMorph pageMorphs: (SortedCollection sortBlock: [ :a :b | a model tabOrder <= b model tabOrder ])."
 	tabMorph announcer
 		when: SpNotebookPageChanged 
 		send: #pageChanged: 
