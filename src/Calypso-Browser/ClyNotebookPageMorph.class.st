@@ -1,3 +1,7 @@
+"
+I am a page on a calypso notebook.
+I define a different kind of header (icon, label, close) plus some actions on it.
+"
 Class {
 	#name : #ClyNotebookPageMorph,
 	#superclass : #SpNotebookPageMorph,
