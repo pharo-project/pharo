@@ -12,21 +12,21 @@ PharoCriticRules class >> pharoHardLintRules [
 	"These rules are used by the CI monkey to check code before its integration into Pharo"
 	^ { 
 		RBUndeclaredReferenceRule.
-		RBDefinesEqualNotHashRule.
-		RBEquivalentSuperclassMethodsRule.
-		RBJustSendsSuperRule.
-		RBSubclassResponsibilityNotDefinedRule.
+		ReDefinesEqualNotHashRule.
+		ReEquivalentSuperclassMethodsRule.
+		ReJustSendsSuperRule.
+		ReSubclassResponsibilityNotDefinedRule.
 		"RBTempVarOverridesInstVarRule. gotta wait for a fix"
 		RBVariableNotDefinedRule.
-		RBEqualNotUsedRule.
+		ReEqualNotUsedRule.
 		RBOnlyReadOrWrittenTemporaryRule.
-		RBPrecedenceRule.
+		RePrecedenceRule.
 		OldSendsDeprecatedMethodToGlobalRule.
-		RBSizeCheckRule.
-		RBUnconditionalRecursionRule.
-		RBUnoptimizedToDoRule.
-		RBBetweenAndRule.
-		RBCodeCruftLeftInMethodsRule.
+		ReSizeCheckRule.
+		ReUnconditionalRecursionRule.
+		ReUnoptimizedToDoRule.
+		ReBetweenAndRule.
+		ReCodeCruftLeftInMethodsRule.
 		RBPharoBootstrapRule
 	}
 ]

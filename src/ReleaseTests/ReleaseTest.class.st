@@ -104,7 +104,7 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
-	self assertValidLintRule: RBExplicitRequirementMethodsRule new
+	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 	
 ]
 
@@ -163,7 +163,7 @@ ReleaseTest >> testLayoutIntegrity [
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
-	self assertValidLintRule: RBLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
+	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
 ]
 
 { #category : #tests }
