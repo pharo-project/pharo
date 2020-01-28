@@ -41,12 +41,12 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'browser',
+		'tabMorph',
 		'tools',
 		'updatingStarted',
 		'selectionPriorities',
 		'desiredSelection',
-		'shouldSkipCurrentDesiredSelection',
-		'tabMorph'
+		'shouldSkipCurrentDesiredSelection'
 	],
 	#category : #'Calypso-Browser-Tabs'
 }
@@ -83,7 +83,7 @@ ClyNotebookManager >> addTool: aBrowserTool [
 	tools add: aBrowserTool.
 	"tab build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting for tool if needed"
 	aBrowserTool width: tabMorph width.
-	tab := aBrowserTool addNotebookPageOn: self tabMorph.
+	tab := aBrowserTool addNotebookPageOn: tabMorph.
 	self flag: #TODO. "This needs to be added to the tab morph"
 	"self tabMorph pages sort: [ :a :b | a model tabOrder <= b model tabOrder ]."
 	self flag: #TODO.
@@ -145,7 +145,7 @@ ClyNotebookManager >> focusActiveTab [
 	activeTab := self selectedTools detectMax: [ :each | 
 		self activationPriorityOf: each ].
 		
-	activeTab ifNotNil: [ self tabMorph page: activeTab ]
+	activeTab ifNotNil: [ tabMorph page: activeTab ]
 ]
 
 { #category : #initialization }
@@ -208,8 +208,8 @@ ClyNotebookManager >> pageChanged: ann [
 ClyNotebookManager >> removeTool: aTool [
 
 	self flag: #TODO. "Why sometimes is not there?"
-	(self tabMorph pages includes: aTool containerTab)
-		ifTrue: [ self tabMorph removePage: aTool containerTab ].
+	(tabMorph pages includes: aTool containerTab)
+		ifTrue: [ tabMorph removePage: aTool containerTab ].
 	self tabDeleted: aTool containerTab
 ]
 
@@ -286,7 +286,7 @@ ClyNotebookManager >> selectMainTool [
 	mainTool := desiredTools detectMax: [ :each | 
 		self activationPriorityOf: each ].
 	
-	self tabMorph page: mainTool containerTab.
+	tabMorph page: mainTool containerTab.
 	
 	^ mainTool
 ]
@@ -294,7 +294,7 @@ ClyNotebookManager >> selectMainTool [
 { #category : #accessing }
 ClyNotebookManager >> selectedTools [
 
-	^ self tabMorph page
+	^ tabMorph page
 		ifNotNil: [ :aPage | { aPage } ]
 		ifNil: [ #() ]
 ]
@@ -354,13 +354,7 @@ ClyNotebookManager >> tabMorph [
 	^ tabMorph
 ]
 
-{ #category : #accessing }
-ClyNotebookManager >> tabMorph: anObject [
-
-	tabMorph := anObject
-]
-
-{ #category : #initialization }
+{ #category : #private }
 ClyNotebookManager >> tabOrderOf: anObject [
 
 	^ anObject model 

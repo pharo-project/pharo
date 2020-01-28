@@ -33,6 +33,18 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 	self updatePresenter
 ]
 
+{ #category : #accessing }
+ClyNotebookPageHeaderPresenter >> markDirty: aBoolean [ 
+	| shownLabel |
+
+	shownLabel := titleLabel label.
+	aBoolean 
+		ifTrue: [ titleLabel label: '*', shownLabel ]
+		ifFalse: [ 
+			(shownLabel beginsWith: '*')
+				ifTrue: [  titleLabel label: shownLabel allButFirst ] ]
+]
+
 { #category : #'accessing model' }
 ClyNotebookPageHeaderPresenter >> setModelBeforeInitialization: aPageMorph [
 

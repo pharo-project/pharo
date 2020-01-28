@@ -1,6 +1,14 @@
 Extension { #name : #CmdMenuGroup }
 
 { #category : #'*Calypso-Browser' }
+CmdMenuGroup >> buildBrowserNotebookActions [
+
+	self isActive ifFalse: [ ^#()] .
+	
+	^contents flatCollect: [ :each | each buildBrowserNotebookActions ]
+]
+
+{ #category : #'*Calypso-Browser' }
 CmdMenuGroup >> buildBrowserTabActions [
 
 	self isActive ifFalse: [ ^#()].

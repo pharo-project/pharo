@@ -10,7 +10,8 @@ Class {
 		'icon',
 		'labelPresenter',
 		'closable',
-		'label'
+		'label',
+		'actions'
 	],
 	#category : #'Calypso-Browser-Tabs'
 }
@@ -25,13 +26,25 @@ ClyNotebookPageMorph class >> newLabel: aString icon: anIcon provider: aBlock [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+ClyNotebookPageMorph >> actions [
+
+	^ actions
+]
+
+{ #category : #accessing }
+ClyNotebookPageMorph >> actions: aCollection [
+
+	actions := aCollection
+]
+
+{ #category : #accessing }
 ClyNotebookPageMorph >> backgroundColor [
 
 	^ Color transparent
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClyNotebookPageMorph >> beClosable [
 
 	closable := true.
@@ -81,4 +94,10 @@ ClyNotebookPageMorph >> label [
 ClyNotebookPageMorph >> label: aString [
 
 	label := aString
+]
+
+{ #category : #accessing }
+ClyNotebookPageMorph >> markDirty: aBoolean [
+
+	labelPresenter markDirty: aBoolean
 ]

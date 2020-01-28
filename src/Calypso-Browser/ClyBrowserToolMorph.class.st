@@ -201,9 +201,7 @@ ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
 		icon: self defaultIcon
 		provider: [ self buildPageAndDecorate ].
 	containerTab beClosable.
-	"
-		actions: menu buildBrowserTabActions.
-	"
+	containerTab actions: menu buildBrowserNotebookActions.
 	containerTab model: self.
 	
 	aNotebook 
@@ -527,10 +525,9 @@ ClyBrowserToolMorph >> selectAsExtraTab [
 
 { #category : #controlling }
 ClyBrowserToolMorph >> selectAsMainTab [
-	containerTab selected: true.
-	
-	"this is hack to fix blinking during tabs activation"
-	(browser tabManager tabMorph instVarNamed: #contentsWrapper) color: self activeColor
+
+	containerTab selected: true
+
 ]
 
 { #category : #initialization }
@@ -574,20 +571,11 @@ ClyBrowserToolMorph >> update [
 
 { #category : #controlling }
 ClyBrowserToolMorph >> updateDirtyState [
-
-	| currentLabel |
-	self hasUnacceptedEdits == isDirty ifTrue: [ ^self].
-
-	"we want escape getting label from actual model because it simplified things 
-	and in remote scenario it will not make any request to server"
-	currentLabel := containerTab label morph contents.
 	
+	self hasUnacceptedEdits == isDirty ifTrue: [ ^ self ].
+
 	isDirty := self hasUnacceptedEdits.
-	isDirty 
-		ifTrue: [ containerTab label: '*', currentLabel]
-		ifFalse: [ 
-			(currentLabel beginsWith: '*') ifTrue: [ 
-					containerTab label: currentLabel allButFirst ]]
+	containerTab markDirty: isDirty
 ]
 
 { #category : #controlling }
