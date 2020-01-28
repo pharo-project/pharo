@@ -471,7 +471,8 @@ ClyBrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 
 { #category : #testing }
 ClyBrowserToolMorph >> isTabSelected [
-	^containerTab selected
+
+	^ containerTab owner selectedTab = containerTab
 ]
 
 { #category : #controlling }
@@ -588,7 +589,7 @@ ClyBrowserToolMorph >> wantsStayInDifferentContext [
 
 	self isBuilt ifFalse: [ ^ false ].
 	self hasUnacceptedEdits ifTrue: [ ^ true ].
-	self isTabSelected & self isExtraSelectionRequested ifTrue: [ ^ true ].
+	(self isTabSelected and: [ self isExtraSelectionRequested ]) ifTrue: [ ^ true ].
 	self belongsToRemovedBrowserContext ifTrue: [ ^ false ].
 	
 	^ isManagedByUser

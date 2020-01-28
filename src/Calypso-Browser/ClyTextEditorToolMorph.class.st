@@ -344,7 +344,8 @@ ClyTextEditorToolMorph >> update [
 
 { #category : #testing }
 ClyTextEditorToolMorph >> wantsStayInDifferentContext [
-	^super wantsStayInDifferentContext | applyingChanges
+
+	^ applyingChanges or: [ super wantsStayInDifferentContext ]
 ]
 
 { #category : #testing }

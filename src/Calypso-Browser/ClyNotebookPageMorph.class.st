@@ -97,7 +97,12 @@ ClyNotebookPageMorph >> label: aString [
 ]
 
 { #category : #accessing }
-ClyNotebookPageMorph >> markDirty: aBoolean [
+ClyNotebookPageMorph >> markDirty: dirty [
 
-	labelPresenter markDirty: aBoolean
+	dirty
+		ifTrue: [ self label: '*', self label ]
+		ifFalse: [ 
+			(self label beginsWith: '*')
+				ifTrue: [  self label: self label allButFirst ] ].
+	labelPresenter updatePresenter
 ]
