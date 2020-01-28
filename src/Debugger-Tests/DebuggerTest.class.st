@@ -34,9 +34,13 @@ DebuggerTest >> setUp [
 
 { #category : #utilities }
 DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
-	context := aBlock asContext.
-	process := Process 
-	    forContext: context 
-	    priority: Processor userInterruptPriority.
+	process := Process
+		forContext: 
+			[aBlock value.
+			Processor terminateActive] asContext
+		priority: Processor userInterruptPriority.
+	[process step closure == aBlock] whileFalse.
+	process step.
+	context := process suspendedContext.
 	session:= process newDebugSessionNamed: 'test session' startedAt: context.
 ]

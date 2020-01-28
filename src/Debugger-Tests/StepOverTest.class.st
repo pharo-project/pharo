@@ -71,6 +71,19 @@ StepOverTest >> testErrorSignalledDuringStepOverShouldBeCaught [
 ]
 
 { #category : #tests }
+StepOverTest >> testSimulatedProcessIsInCorrectState [
+	"This test verifies that simulated process is created correctly using given block.
+	Step over should execute first block instruction when it is correct"
+	| executed |
+	executed := false.
+	self settingUpSessionAndProcessAndContextForBlock: [executed := true ].
+	
+	session stepOver.
+	
+	self assert: executed
+]
+
+{ #category : #tests }
 StepOverTest >> testStepOver [
 	"Stepping over a message node brings the execution to the next node in the same method."
 	| node |
