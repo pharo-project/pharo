@@ -59,13 +59,13 @@ ClyNotebookManager class >> of: aBrowser [
 
 { #category : #private }
 ClyNotebookManager >> activationPriorityOf: aBrowserTool [
-	
 	| priority |
-	aBrowserTool belongsToCurrentBrowserContext ifFalse: [ 
-		^aBrowserTool activationPriorityInNonActiveContext].
+
+	aBrowserTool belongsToCurrentBrowserContext 
+		ifFalse: [ ^ aBrowserTool activationPriorityInNonActiveContext ].
 	
 	priority := self overridenPriorityOf: aBrowserTool.
-	^(desiredSelection includes: aBrowserTool class)
+	^ (desiredSelection includes: aBrowserTool class)
 		ifTrue: [ priority * 1000 ]
 		ifFalse: [ priority ]
 ]
@@ -73,7 +73,7 @@ ClyNotebookManager >> activationPriorityOf: aBrowserTool [
 { #category : #accessing }
 ClyNotebookManager >> activeStatusBar [
 
-	^self selectedTools first statusBar
+	^ self selectedTools first statusBar
 ]
 
 { #category : #private }

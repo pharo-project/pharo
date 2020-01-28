@@ -426,7 +426,7 @@ ClyBrowserToolMorph >> isBuilt [
 	self flag: #TODO. "This patch is to ensure compatibility while working. 
 	Ensure to remove later."
 	(containerTab respondsTo: #isRendered) ifTrue: [ 
-		 ^ containerTab isRenderer ].
+		 ^ containerTab isRendered ].
 	^ containerTab morph == self
 ]
 
@@ -585,10 +585,11 @@ ClyBrowserToolMorph >> waitBuildCompletion [
 
 { #category : #testing }
 ClyBrowserToolMorph >> wantsStayInDifferentContext [
+
 	self isBuilt ifFalse: [ ^ false ].
-	self hasUnacceptedEdits ifTrue: [ ^true ].
-	self isTabSelected & self isExtraSelectionRequested ifTrue: [ ^true ].
-	self belongsToRemovedBrowserContext ifTrue: [ ^false ].
+	self hasUnacceptedEdits ifTrue: [ ^ true ].
+	self isTabSelected & self isExtraSelectionRequested ifTrue: [ ^ true ].
+	self belongsToRemovedBrowserContext ifTrue: [ ^ false ].
 	
 	^ isManagedByUser
 ]
