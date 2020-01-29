@@ -62,7 +62,7 @@ ClyNotebookMorph >> newToolbarMorph [
 		cellPositioning: #center;
 		changeTableLayout;
 		listDirection:#leftToRight;
-		cellInset: 3;
+		cellInset: 4;
 		yourself 
 ]
 

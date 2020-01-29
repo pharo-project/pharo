@@ -471,8 +471,11 @@ ClyBrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 
 { #category : #testing }
 ClyBrowserToolMorph >> isTabSelected [
-
-	^ containerTab owner selectedTab = containerTab
+	| selectedTab |
+	
+	selectedTab := containerTab owner
+		ifNotNil: [ :aMorph | aMorph selectedTab ].
+	^ selectedTab = containerTab
 ]
 
 { #category : #controlling }

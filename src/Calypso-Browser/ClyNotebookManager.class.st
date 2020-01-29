@@ -253,7 +253,7 @@ ClyNotebookManager >> restoreBrowserState: aBrowserState [
 		thenSelect: #notNil.
 		
 	existingTools ifEmpty: [ ^ self ].
-	existingTools first selectAsMainTab.
+	self tabMorph page: existingTools first.
 	existingTools allButFirstDo: [ :each | each selectAsExtraTab ]
 ]
 
