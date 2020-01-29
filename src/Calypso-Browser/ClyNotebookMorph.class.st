@@ -38,7 +38,8 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 ClyNotebookMorph >> initialize [
 
 	toolbarMorph := self newToolbarMorph.
-	super initialize
+	super initialize.
+	
 ]
 
 { #category : #private }
@@ -50,13 +51,21 @@ ClyNotebookMorph >> newHeaderMorph [
 		borderWidth: 0
 ]
 
+{ #category : #factory }
+ClyNotebookMorph >> newTabSelectorMorph [
+
+	^ super newTabSelectorMorph
+		color: self theme baseColor;
+		yourself
+]
+
 { #category : #private }
 ClyNotebookMorph >> newToolbarMorph [
 
 	^ SpNotebookPanelMorph new
 		fillStyle: (SolidFillStyle color: Color transparent);
 		borderWidth: 2;
-		borderColor: Color transparent;
+		borderColor: self theme baseColor;
 		vResizing: #spaceFill;
 		hResizing: #shrinkWrap;
 		cellPositioning: #center;
