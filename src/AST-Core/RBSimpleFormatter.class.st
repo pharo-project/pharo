@@ -1,6 +1,7 @@
 "
 I'm a simple formatter that prints nodes (without using source code).
- I'm useful when AST are programmatically assembled. 
+I'm useful when AST are programmatically assembled. 
+
 I could be improved, but the goal is to get the information is a more or less ok form.
 
 "
@@ -10,7 +11,6 @@ Class {
 	#instVars : [
 		'codeStream',
 		'indent',
-		'lookaheadCode',
 		'originalSource',
 		'lineStart'
 	],
@@ -248,16 +248,6 @@ RBSimpleFormatter >> formatTemporariesFor: aSequenceNode [
 ]
 
 { #category : #private }
-RBSimpleFormatter >> formattedSourceFor: aNode [
-	^ lookaheadCode
-		at: aNode
-		ifAbsentPut: [ 
-			self class new
-				indent: 1;
-				format: aNode ]
-]
-
-{ #category : #private }
 RBSimpleFormatter >> handleLineForArgument: anArgument [
 
   self 
@@ -298,7 +288,6 @@ RBSimpleFormatter >> initialize [
 	super initialize.
 	lineStart := 0.
 	self indent: 0.
-	lookaheadCode := IdentityDictionary new.
 	codeStream := (String new: 256) writeStream
 	
 ]
@@ -478,8 +467,6 @@ RBSimpleFormatter >> visitMethodNode: aMethodNode [
 { #category : #visiting }
 RBSimpleFormatter >> visitNode: aNode [
 	| needsParenthesis |
-	(lookaheadCode includesKey: aNode)
-		ifTrue: [ ^ self writeString: (lookaheadCode at: aNode) ].
 	needsParenthesis := self needsParenthesisFor: aNode.
 	self
 		bracketWith:
