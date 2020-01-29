@@ -9,9 +9,9 @@ Class {
 		'title',
 		'icon',
 		'labelPresenter',
-		'closable',
 		'label',
-		'actions'
+		'actions',
+		'closeable'
 	],
 	#category : #'Calypso-Browser-Tabs'
 }
@@ -45,9 +45,9 @@ ClyNotebookPageMorph >> backgroundColor [
 ]
 
 { #category : #accessing }
-ClyNotebookPageMorph >> beClosable [
+ClyNotebookPageMorph >> beCloseable [
 
-	closable := true.
+	closeable := true.
 	labelPresenter updatePresenter
 ]
 
@@ -68,7 +68,7 @@ ClyNotebookPageMorph >> icon: anIcon [
 ClyNotebookPageMorph >> initialize [
 
 	super initialize.
-	closable := false.
+	closeable := false.
 	labelPresenter := ClyNotebookPageHeaderPresenter on: self.
 	self flag: #TODO. "I'm hardcoding this width because I need to keep this sizes consistent. 
 	But this is not good, think a better way."
@@ -79,9 +79,9 @@ ClyNotebookPageMorph >> initialize [
 ]
 
 { #category : #testing }
-ClyNotebookPageMorph >> isClosable [
+ClyNotebookPageMorph >> isCloseable [
 
-	^ closable
+	^ closeable
 ]
 
 { #category : #accessing }
@@ -105,4 +105,17 @@ ClyNotebookPageMorph >> markDirty: dirty [
 			(self label beginsWith: '*')
 				ifTrue: [  self label: self label allButFirst ] ].
 	labelPresenter updatePresenter
+]
+
+{ #category : #'events handling' }
+ClyNotebookPageMorph >> onClose: aBlock [
+
+	labelPresenter onClose: aBlock.
+	self beCloseable
+]
+
+{ #category : #'events handling' }
+ClyNotebookPageMorph >> onDoubleClick: aBlock [
+
+	labelPresenter onDoubleClick: aBlock
 ]

@@ -84,16 +84,9 @@ ClyNotebookManager >> addTool: aBrowserTool [
 	"tab build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting for tool if needed"
 	aBrowserTool width: tabMorph width.
 	tab := aBrowserTool addNotebookPageOn: tabMorph.
-	self flag: #TODO. "This needs to be added to the tab morph"
-	"self tabMorph pages sort: [ :a :b | a model tabOrder <= b model tabOrder ]."
-	self flag: #TODO.
-	"tab when: #tabDeleted send: #tabDeleted: to: self.
-	tab when: #tabSelected send: #tabSelected: to: self.
-	tab on: #doubleClick send: #toggleFullWindowTabs to: browser.
-	""Following code is required to fix the problem 
-	when doubleClick handler of tab label disables event processing by its parent, TabMorph""
-	tab label on: #mouseDown send: #mouseDown: to: tab.
-	tab label on: #mouseUp send: #mouseUp: to: tab."
+	tab 
+		onClose: [ self closeTab: tab ];
+		onDoubleClick: [ browser toggleFullWindowTabs ]
 ]
 
 { #category : #updating }
@@ -135,6 +128,14 @@ ClyNotebookManager >> buildToolsOn: toolsList for: aBrowserContext [
 			tool := strategy createToolFor: browser inContext: aBrowserContext.
 			browser decorateTool: tool.
 			toolsList add: tool ]
+]
+
+{ #category : #private }
+ClyNotebookManager >> closeTab: tab [
+	
+	tab model okToClose ifFalse: [ ^ self ].
+	self tabMorph removePage: tab.
+	self tabDeleted: tab
 ]
 
 { #category : #accessing }

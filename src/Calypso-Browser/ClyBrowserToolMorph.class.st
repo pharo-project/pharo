@@ -200,7 +200,7 @@ ClyBrowserToolMorph >> addNotebookPageOn: aNotebook [
 		newLabel: self defaultTitle
 		icon: self defaultIcon
 		provider: [ self buildPageAndDecorate ].
-	containerTab beClosable.
+	containerTab beCloseable.
 	containerTab actions: menu buildBrowserNotebookActions.
 	containerTab model: self.
 	
