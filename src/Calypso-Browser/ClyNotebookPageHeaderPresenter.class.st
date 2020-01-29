@@ -5,7 +5,8 @@ Class {
 		'pageMorph',
 		'iconImage',
 		'titleLabel',
-		'closeImage'
+		'closeImage',
+		'closeAction'
 	],
 	#category : #'Calypso-Browser-Tabs'
 }
@@ -21,6 +22,13 @@ ClyNotebookPageHeaderPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #'event processing' }
+ClyNotebookPageHeaderPresenter >> doClose [
+
+	closeAction ifNil: [ ^ self ].
+	closeAction cull: self
+]
+
 { #category : #initialization }
 ClyNotebookPageHeaderPresenter >> initializePresenters [
 
@@ -31,6 +39,12 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 	closeImage := self newImage.
 	
 	self updatePresenter
+]
+
+{ #category : #'event handling' }
+ClyNotebookPageHeaderPresenter >> onClose: aBlock [ 
+
+	closeAction := aBlock
 ]
 
 { #category : #'accessing model' }
@@ -44,7 +58,7 @@ ClyNotebookPageHeaderPresenter >> updatePresenter [
 
 	iconImage image: pageMorph icon.
 	titleLabel label: pageMorph label.
-	closeImage image: (pageMorph isClosable
-		ifTrue: [ self iconNamed: #glamorousClose ]
-		ifFalse: [ nil ])
+	pageMorph isClosable
+		ifTrue: [ closeImage show ]
+		ifFalse: [ closeImage hide ]
 ]

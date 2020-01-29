@@ -96,6 +96,26 @@ ClyNotebookManager >> addTool: aBrowserTool [
 	tab label on: #mouseUp send: #mouseUp: to: tab."
 ]
 
+{ #category : #updating }
+ClyNotebookManager >> basicUpdateTools [
+	| newTools selectedTools currentTools needsNewSelection selectedIndex |
+
+	newTools := OrderedCollection new.
+	selectedIndex := self tabMorph selectedPageIndex.	
+	browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each ].
+	needsNewSelection := self requiresNewDesiredSelection.
+	selectedTools := self selectedTools.
+	currentTools := tools copy.
+	self updateTabsWith: newTools.
+	(needsNewSelection or: [ tools ~= currentTools ]) ifTrue: [ 
+		self restoreSelectedTools: selectedTools.
+		"if we are still in same tab, but we needs to restore tools, we need also to 
+		 force the refresh of the current tab (because sending #selectPageIndex: will 
+		 not refresh it."
+		selectedIndex = self tabMorph selectedPageIndex 
+			ifTrue: [ self tabMorph updatePageIndex: selectedIndex ] ]
+]
+
 { #category : #accessing }
 ClyNotebookManager >> browser [
 	^ browser
@@ -393,16 +413,9 @@ ClyNotebookManager >> updateTabsWith: newTools [
 
 { #category : #updating }
 ClyNotebookManager >> updateTools [
-	| newTools selectedTools currentTools needsNewSelection |
 	
 	self updateToolsBy: [
-		newTools := OrderedCollection new.	
-		browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each ].
-		needsNewSelection := self requiresNewDesiredSelection.
-		selectedTools := self selectedTools.
-		currentTools := tools copy.
-		self updateTabsWith: newTools.
-		tools ~= currentTools | needsNewSelection ifTrue: [ self restoreSelectedTools: selectedTools ] ]
+		self basicUpdateTools ]
 ]
 
 { #category : #private }

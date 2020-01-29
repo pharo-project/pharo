@@ -26,6 +26,7 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 		vResizing: #spaceFill.
 	self pages add: aMorph.
 	aMorph privateOwner: self.
+	
 	index := self pages indexOf: aMorph.
 	self tabSelectorMorph tabs 
 		add: (self tabSelectorMorph newLabelMorph: aStringOrMorph) 

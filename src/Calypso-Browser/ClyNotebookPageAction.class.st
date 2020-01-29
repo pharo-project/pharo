@@ -56,7 +56,6 @@ ClyNotebookPageAction >> icon: aForm [
 ClyNotebookPageAction >> initialize [
 
 	super initialize.
-
 	icon := ImageMorph new
 ]
 
