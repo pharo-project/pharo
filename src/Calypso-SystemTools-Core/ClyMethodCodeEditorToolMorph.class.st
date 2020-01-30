@@ -122,7 +122,7 @@ ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 	title := editingMethod selector.
 
 	editingMethod origin isClassSide ifTrue: [ 
-		title := title asText allBold asStringMorph ].
+		title := title asText allBold ].
 
 	containerTab label: title
 ]

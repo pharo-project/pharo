@@ -38,8 +38,7 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 ClyNotebookMorph >> initialize [
 
 	toolbarMorph := self newToolbarMorph.
-	super initialize.
-	
+	super initialize
 ]
 
 { #category : #private }

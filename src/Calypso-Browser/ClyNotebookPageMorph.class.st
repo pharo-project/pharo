@@ -91,9 +91,9 @@ ClyNotebookPageMorph >> label [
 ]
 
 { #category : #accessing }
-ClyNotebookPageMorph >> label: aString [
+ClyNotebookPageMorph >> label: aStringOrText [
 
-	label := aString
+	label := aStringOrText
 ]
 
 { #category : #accessing }
