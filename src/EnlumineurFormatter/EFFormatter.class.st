@@ -971,7 +971,7 @@ EFFormatter >> areArgumentsTooLong: anArray [
 
 { #category : #private }
 EFFormatter >> basicFormatCommentFor: aComment [
-	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop).
+	codeStream nextPutAll: aComment contents
 ]
 
 { #category : #private }
@@ -1157,7 +1157,6 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 { #category : #'private-formatting' }
 EFFormatter >> formatBlockCommentFor: aBlockNode [
-  originalSource ifNil: [ ^ self ].
   aBlockNode comments do: [:each |  self basicFormatCommentFor: each.
         (self isNonEmptySingleLineBlock: aBlockNode) ifTrue: [ self space ] ]
 ]
@@ -1174,7 +1173,6 @@ EFFormatter >> formatCommentCloseToStatements: aBoolean [
 
 { #category : #'private-formatting' }
 EFFormatter >> formatCommentsFor: aNode [
-  originalSource ifNil: [ ^ self ].
   aNode comments do: [:each |  self basicFormatCommentFor: each ]
 ]
 
@@ -1199,9 +1197,7 @@ EFFormatter >> formatMethodBodyFor: aMethodNode [
 
 { #category : #'private-formatting' }
 EFFormatter >> formatMethodCommentFor: aMethodNode [
-  originalSource ifNil: [ ^ self ].
-  aMethodNode comments 
-		do: [:each |  
+  aMethodNode comments do: [:each |  
 				self useBasicCommentFormat 
 					ifTrue: [ self basicFormatCommentFor: each ] 
 					ifFalse: [ self resizeCommentFor: each startingAt: 0 ].
@@ -1296,7 +1292,6 @@ EFFormatter >> formatSingleArrayElement: aRBNode [
 
 { #category : #'private-formatting' }
 EFFormatter >> formatStatementCommentsFor: aStatementNode [
-	originalSource ifNil: [ ^ self ].
 	self formatCommentCloseToStatements
 		ifFalse: [ ^ self ].
 	aStatementNode statementComments
