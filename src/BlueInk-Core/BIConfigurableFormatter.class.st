@@ -489,7 +489,7 @@ BIConfigurableFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 
 { #category : #private }
 BIConfigurableFormatter >> basicFormatCommentFor: aComment [
-	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop).
+	codeStream nextPutAll: aComment contents
 ]
 
 { #category : #private }
@@ -579,7 +579,6 @@ BIConfigurableFormatter >> formatBlockArgumentsFor: aBlockNode [
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatBlockCommentFor: aBlockNode [
 
-	originalSource ifNil: [ ^ self ].
 	aBlockNode comments
 		do: [ :each | 
 			self basicFormatCommentFor: each.
@@ -603,7 +602,6 @@ BIConfigurableFormatter >> formatCommentWithStatements: aBoolean [
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatCommentsFor: aNode [
 
-	originalSource ifNil: [ ^ self ].
 	aNode comments
 		do: [ :each | 
 			self basicFormatCommentFor: each.
@@ -641,7 +639,6 @@ BIConfigurableFormatter >> formatMethodBodyFor: aMethodNode [
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatMethodCommentFor: aMethodNode [
 
-	originalSource ifNil: [ ^ self ].
 	aMethodNode comments
 		do: [ :each | 
 			self useBasicCommentFormat
@@ -735,7 +732,6 @@ BIConfigurableFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 { #category : #'private-formatting' }
 BIConfigurableFormatter >> formatStatementCommentsFor: aStatementNode [
 
-	originalSource ifNil: [ ^ self ].
 	self formatCommentWithStatements
 		ifFalse: [ ^ self ].
 	aStatementNode statementComments
