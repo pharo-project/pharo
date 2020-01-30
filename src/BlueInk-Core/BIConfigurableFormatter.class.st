@@ -489,7 +489,10 @@ BIConfigurableFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 
 { #category : #private }
 BIConfigurableFormatter >> basicFormatCommentFor: aComment [
-	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop).
+	codeStream
+		nextPut: $";
+		nextPutAll: aComment contents;
+		nextPut: $"
 ]
 
 { #category : #private }
