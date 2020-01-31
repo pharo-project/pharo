@@ -25,6 +25,6 @@ SpCodeDebugItCommand class >> defaultShortcutKey [
 
 { #category : #execution }
 SpCodeDebugItCommand >> execute [
-
-	'OK' crLog
+	self flag: 'TODO'.
+	'OK' crTrace
 ]

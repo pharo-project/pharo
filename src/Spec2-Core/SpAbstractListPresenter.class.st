@@ -127,6 +127,13 @@ SpAbstractListPresenter >> itemAt: anInteger [
 	^ self model at: anInteger
 ]
 
+{ #category : #private }
+SpAbstractListPresenter >> itemAtPath: anArray [
+	"This is to provide polymorphism with SpTreeTablePresentrer"
+
+	^ self listElementAt: anArray first
+]
+
 { #category : #api }
 SpAbstractListPresenter >> itemFilter [
 	^ itemFilter

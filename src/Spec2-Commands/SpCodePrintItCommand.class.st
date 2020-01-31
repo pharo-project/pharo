@@ -36,11 +36,11 @@ SpCodePrintItCommand >> execute [
 { #category : #private }
 SpCodePrintItCommand >> printObject: anObject [
 	| printString |
-	
 	printString := [ anObject printString ]
 		on: Error
 		do: [ '<error in printString: try ''Inspect it'' to debug>' ].
-	self afterSelectionInsertAndSelect: (self toPrintableString: printString)
+	self context
+		insertAndSelectAfterCurrentSelection: (self toPrintableString: printString)
 ]
 
 { #category : #private }

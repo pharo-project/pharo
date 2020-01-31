@@ -1,27 +1,27 @@
 "
-I'm a base command to be used on code presenter. 
+I'm a base command to be used on spec 2 presenters. 
 My children will define actions that can be executed as part of the Pharo System. 
-Operations like ""do it"", ""print it"" will be implemented by extending me. 
+
 "
 Class {
-	#name : #SpCodeCommand,
+	#name : #SpToolCommand,
 	#superclass : #CmCommand,
-	#category : #'Spec2-Commands-Code'
+	#category : #'Spec2-Commands-Presenters'
 }
 
 { #category : #defaults }
-SpCodeCommand class >> defaultIconName [
+SpToolCommand class >> defaultIconName [
 	^nil
 ]
 
 { #category : #defaults }
-SpCodeCommand class >> defaultShortcutKey [
+SpToolCommand class >> defaultShortcutKey [
 
 	^ nil
 ]
 
 { #category : #converting }
-SpCodeCommand >> asSpecCommand [
+SpToolCommand >> asSpecCommand [
 	| command |
 	command := super asSpecCommand.
 	self shortcutKey ifNotNil: [ :key | command shortcutKey: key ].
@@ -31,12 +31,12 @@ SpCodeCommand >> asSpecCommand [
 ]
 
 { #category : #accessing }
-SpCodeCommand >> defaultIconName [
+SpToolCommand >> defaultIconName [
 	^self class defaultIconName
 ]
 
 { #category : #accessing }
-SpCodeCommand >> shortcutKey [
+SpToolCommand >> shortcutKey [
 
 	^ self class defaultShortcutKey
 ]

@@ -206,6 +206,14 @@ SpAbstractTextPresenter >> insert: aString at: positionIndex [
 ]
 
 { #category : #api }
+SpAbstractTextPresenter >> insertAndSelectAfterCurrentSelection: aString [
+	| selectionInterval |
+	selectionInterval := self selectionInterval.
+	self insert: aString at: selectionInterval last + 1.
+	self selectionInterval: (selectionInterval last + 1 to: selectionInterval last + aString size)
+]
+
+{ #category : #api }
 SpAbstractTextPresenter >> isForSmalltalkCode [
 
 	"self 
@@ -294,6 +302,13 @@ SpAbstractTextPresenter >> selectLine [
 SpAbstractTextPresenter >> selectedClassOrMetaClass [
 
 	^ self behavior
+]
+
+{ #category : #api }
+SpAbstractTextPresenter >> selectedText [ 
+	|selectionInterval|
+	selectionInterval := self selectionInterval ifEmpty: [ ^'' ].
+	^self text copyFrom: selectionInterval first to: selectionInterval last
 ]
 
 { #category : #api }

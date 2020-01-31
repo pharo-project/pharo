@@ -45,6 +45,12 @@ SpStringTableColumn >> isEditable [
 	^ editable
 ]
 
+{ #category : #testing }
+SpStringTableColumn >> isSortable [
+	
+	^ true
+]
+
 { #category : #accessing }
 SpStringTableColumn >> onAcceptEdition: aBlock [
 
