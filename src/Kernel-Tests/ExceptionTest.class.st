@@ -392,6 +392,7 @@ ExceptionTest >> testUnhandledErrorWhenNoHandlers [
 	executed := false.
 	semaphore := Semaphore new.
 	[[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]. semaphore signal] fork.
+	"we should not wait forever in case of wrong behaviour (general test timeout is disabled in #runCaseManaged)"
 	semaphore wait: 2 seconds.
 	self assert: executed
 ]
