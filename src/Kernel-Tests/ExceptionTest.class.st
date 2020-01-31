@@ -381,6 +381,7 @@ ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
 			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 		] on: ZeroDivide do: [:z | z pass]
 		. semaphore signal] fork.
+	"we should not wait forever in case of wrong behaviour (general test timeout is disabled in #runCaseManaged)"
 	semaphore wait: 2 seconds.
 	self assert: executed
 ]
