@@ -152,21 +152,22 @@ ClyNotebookManager >> desiredSelection [
 { #category : #accessing }
 ClyNotebookManager >> desiredSelection: toolClasses [
 	| currentSelection |
+
 	desiredSelection := toolClasses asIdentitySet.
 	shouldSkipCurrentDesiredSelection ifFalse: [ 
 		currentSelection := self selectedTools collect: [ :each | each class ].
-		desiredSelection addAll: currentSelection].
+		desiredSelection addAll: currentSelection ].
 	shouldSkipCurrentDesiredSelection := false "it is one time option" 
 ]
 
 { #category : #'focus management' }
 ClyNotebookManager >> focusActiveTab [
-	| activeTab |
+	| activeTool |
 
-	activeTab := self selectedTools detectMax: [ :each | 
+	activeTool := self selectedTools detectMax: [ :each | 
 		self activationPriorityOf: each ].
 		
-	activeTab ifNotNil: [ tabMorph page: activeTab ]
+	activeTool ifNotNil: [ tabMorph page: activeTool containerTab ]
 ]
 
 { #category : #initialization }
@@ -396,7 +397,7 @@ ClyNotebookManager >> tools: anObject [
 { #category : #updating }
 ClyNotebookManager >> updateTabsWith: newTools [
 	| toRemove toInstall |
-	
+
 	toRemove := OrderedCollection withAll: tools.
 	toInstall := OrderedCollection new.
 	newTools do: [ :new | 
@@ -414,8 +415,8 @@ ClyNotebookManager >> updateTabsWith: newTools [
 
 { #category : #updating }
 ClyNotebookManager >> updateTools [
-	
-	self updateToolsBy: [
+
+	self updateToolsBy: [ 
 		self basicUpdateTools ]
 ]
 
