@@ -20,7 +20,14 @@ CairoLibrary >> unix32LibraryName [
 	Packages such as snapcraft can also change the path.
 	Look in a number of known locations, or LD_LIBRARY_PATH."
 
-	^ FFIUnix32LibraryFinder findLibrary: 'libcairo.so.2'
+	(#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib'),
+			((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'))
+		do: [ :path | 
+			| libraryPath |
+			libraryPath := path asFileReference / 'libcairo.so.2'.
+			libraryPath exists
+				ifTrue: [ ^ libraryPath fullName ] ].
+	self error: 'Cannot locate cairo library. Please check if it installed on your system'
 ]
 
 { #category : #'accessing platform' }
@@ -30,7 +37,14 @@ CairoLibrary >> unix64LibraryName [
 	Packages such as snapcraft can also change the path.
 	Look in a number of known locations, or LD_LIBRARY_PATH."
 
-	^ FFIUnix64LibraryFinder findLibrary: 'libcairo.so.2'
+	(#('/lib/x86_64-linux-gnu' '/usr/lib'),
+			((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'))
+		do: [ :path | 
+			| libraryPath |
+			libraryPath := path asFileReference / 'libcairo.so.2'.
+			libraryPath exists
+				ifTrue: [ ^ libraryPath fullName ] ].
+	self error: 'Cannot locate cairo library. Please check if it installed on your system'
 ]
 
 { #category : #'accessing platform' }

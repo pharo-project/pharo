@@ -479,7 +479,11 @@ DrTests >> updateSwitchButton: itemsSelected [
 
 { #category : #updating }
 DrTests >> updateUI [
-	super updateUI.
+	self
+		startButtonLabel: self currentPlugin startButtonLabel;
+		startButtonHelp: self currentPlugin startButtonHelp;
+		updateStatus: self currentPlugin pluginName , ' plugin is ready to work!' translated.
+	self withWindowDo: [ :window | window title: self title ].
 	self packagesList resetFilter.
 	self updatePackagesList.
 	self resultTree: DTTreeNode empty.

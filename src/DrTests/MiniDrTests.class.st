@@ -81,7 +81,7 @@ MiniDrTests >> title [
 
 { #category : #accessing }
 MiniDrTests >> updateUI [
-	super updateUI.
+	self withWindowDo: [ :window | window title: self title ].
 	startButton color: self evaluateColor.
 	startButton label: pluginResult summarizeInfo
 ]

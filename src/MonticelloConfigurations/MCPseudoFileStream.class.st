@@ -3,7 +3,7 @@ A pseudo file stream which can be used for updates.
 "
 Class {
 	#name : #MCPseudoFileStream,
-	#superclass : #RWBinaryOrTextStream,
+	#superclass : #AnObsoleteRWBinaryOrTextStream,
 	#instVars : [
 		'localName'
 	],

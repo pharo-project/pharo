@@ -142,7 +142,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
-		spec package: 'DeprecatedFileStream'.
 
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.

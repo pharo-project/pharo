@@ -11,6 +11,7 @@ Class {
 	#instVars : [
 		'codeStream',
 		'indent',
+		'originalSource',
 		'lineStart'
 	],
 	#classVars : [
@@ -58,10 +59,8 @@ RBSimpleFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 
 { #category : #private }
 RBSimpleFormatter >> basicFormatCommentFor: aComment [
-	codeStream
-		nextPut: $";
-		nextPutAll: aComment contents;
-		nextPut: $"
+
+	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop)
 ]
 
 { #category : #private }
@@ -85,6 +84,7 @@ RBSimpleFormatter >> codeStream: anObject [
 
 { #category : #'public interface' }
 RBSimpleFormatter >> format: aParseTree [
+	originalSource := aParseTree source.
 	self visitNode: aParseTree.
 	^ codeStream contents
 ]
@@ -127,7 +127,9 @@ RBSimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 { #category : #'private-formatting' }
 RBSimpleFormatter >> formatCommentsFor: aNode [
 
-	aNode comments do: [ :each | 
+	originalSource ifNil: [ ^ self ].
+	aNode comments
+		do: [ :each | 
 			self
 				basicFormatCommentFor: each;
 				newLine
@@ -148,7 +150,9 @@ RBSimpleFormatter >> formatMethodBodyFor: aMethodNode [
 { #category : #'private-formatting' }
 RBSimpleFormatter >> formatMethodCommentFor: aNode [
 
-	aNode comments do: [ :each | 
+	originalSource ifNil: [ ^ self ].
+	aNode comments
+		do: [ :each | 
 			self
 				basicFormatCommentFor: each;
 				newLine
@@ -216,7 +220,9 @@ RBSimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 { #category : #'private-formatting' }
 RBSimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 
-	aStatementNode statementComments do: [ :each | 
+	originalSource ifNil: [ ^ self ].
+	aStatementNode statementComments
+		do: [ :each | 
 			self
 				newLine;
 				basicFormatCommentFor: each

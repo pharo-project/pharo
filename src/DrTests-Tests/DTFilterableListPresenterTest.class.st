@@ -20,18 +20,10 @@ DTFilterableListPresenterTest >> setUp [
 ]
 
 { #category : #test }
-DTFilterableListPresenterTest >> testFilterStrings [
-	filterableList filterTextInput text: 'foo|bar'.
+DTFilterableListPresenterTest >> testFilterString [
+	filterableList filterTextInput text: 'foo'.
 	
-	self assertCollection: filterableList filterStrings hasSameElements: #('foo*' 'bar*').
-	
-	filterableList filterTextInput text: '|bar'.
-	
-	self assertCollection: filterableList filterStrings hasSameElements: #('bar*').
-	
-	filterableList filterTextInput text: 'foo|'.
-	
-	self assertCollection: filterableList filterStrings hasSameElements: #('foo*').
+	self assert: filterableList filterString equals: '*foo*'
 ]
 
 { #category : #tests }
@@ -42,11 +34,7 @@ DTFilterableListPresenterTest >> testFilterWorks [
 	filterableList filterTextInput text: '2'.
 	
 	self assertCollection: filterableList allItems equals: (1 to: 20).
-	self assertCollection: filterableList visibleItems equals: #(2 20).
-	
-	filterableList filterTextInput text: ''.
-	
-	self assertCollection: filterableList allItems equals: filterableList visibleItems. "We want to show everything if no filter is written."
+	self assertCollection: filterableList visibleItems equals: #(2 12 20).
 ]
 
 { #category : #running }
