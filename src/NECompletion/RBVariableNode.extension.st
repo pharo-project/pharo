@@ -35,7 +35,6 @@ RBVariableNode >> completionEntries: offset [
 
 { #category : #'*NECompletion' }
 RBVariableNode >> completionToken: offset [
-
 	^ self name
 ]
 
