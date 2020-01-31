@@ -379,9 +379,10 @@ ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
 	semaphore := Semaphore new.
 	[ [ 
 			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
-		] on: ZeroDivide do: [:z | z pass]
-		. semaphore signal] fork.
-	"we should not wait forever in case of wrong behaviour (general test timeout is disabled in #runCaseManaged)"
+		] on: ZeroDivide do: [:z | z pass].
+		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
 	semaphore wait: 2 seconds.
 	self assert: executed
 ]
@@ -391,8 +392,27 @@ ExceptionTest >> testUnhandledErrorWhenNoHandlers [
 	| executed semaphore |
 	executed := false.
 	semaphore := Semaphore new.
-	[[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]. semaphore signal] fork.
-	"we should not wait forever in case of wrong behaviour (general test timeout is disabled in #runCaseManaged)"
+	[
+		[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]. 
+		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
+	semaphore wait: 2 seconds.
+	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
+	| executed semaphore |
+	executed := false.
+	semaphore := Semaphore new.
+	[ [ [  
+				[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+			] on: ZeroDivide do: [:z | z pass]
+		] on: ZeroDivide do: [:z | z pass].
+		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
 	semaphore wait: 2 seconds.
 	self assert: executed
 ]
