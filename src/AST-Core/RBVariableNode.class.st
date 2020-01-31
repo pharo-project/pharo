@@ -93,13 +93,28 @@ RBVariableNode >> initialize [
 ]
 
 { #category : #testing }
+RBVariableNode >> isArg [
+	^ false
+]
+
+{ #category : #testing }
 RBVariableNode >> isDefinition [
 	^self parent isSequence and: [ self parent defines: name ]
 ]
 
 { #category : #testing }
+RBVariableNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
 RBVariableNode >> isImmediateNode [
 	^true
+]
+
+{ #category : #testing }
+RBVariableNode >> isInstance [
+	^ false
 ]
 
 { #category : #testing }
@@ -121,6 +136,16 @@ RBVariableNode >> isSuper [
 	since we do not control this."
 	
 	^ self name = 'super'
+]
+
+{ #category : #testing }
+RBVariableNode >> isTemp [
+	^ false
+]
+
+{ #category : #testing }
+RBVariableNode >> isThisContextNode [
+	^ false
 ]
 
 { #category : #testing }
