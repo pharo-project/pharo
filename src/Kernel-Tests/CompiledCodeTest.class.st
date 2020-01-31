@@ -35,7 +35,7 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 ]
 
 { #category : #accessing }
-CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotIsInMethodPropertiesKey [
+CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodPropertiesKey [
 	
 	[ self compiledMethod1 propertyAt: #Once put: true.
 	self deny: (self compiledMethod1 hasLiteralThorough: #Absent) ]
