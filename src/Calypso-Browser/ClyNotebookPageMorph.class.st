@@ -119,3 +119,10 @@ ClyNotebookPageMorph >> onDoubleClick: aBlock [
 
 	labelPresenter onDoubleClick: aBlock
 ]
+
+{ #category : #accessing }
+ClyNotebookPageMorph >> themeChanged [
+
+	super themeChanged.
+	self actions do: [ :each | each themeChanged ]
+]

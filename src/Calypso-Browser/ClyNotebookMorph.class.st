@@ -88,8 +88,8 @@ ClyNotebookMorph >> themeChanged [
 		fillStyle: (SolidFillStyle color: self theme baseColor);
 		borderColor: self theme baseColor.
 	self tabSelectorMorph
-		color: self theme baseColor
-	
+		color: self theme baseColor.
+	self pages do: [ :each | each themeChanged ]
 ]
 
 { #category : #accessing }
