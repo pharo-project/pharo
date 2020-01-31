@@ -32,6 +32,15 @@ OpalCompilerTest >> testArrayEvaluateWithBindings [
 ]
 
 { #category : #'tests - bindings' }
+OpalCompilerTest >> testArrayEvaluateWithBindingsReadGlobal [
+| result |
+	result := Smalltalk compiler
+	bindings: {(#a -> 3)};
+	evaluate: 'OrderedCollection'.
+	self assert: result equals: OrderedCollection
+]
+
+{ #category : #'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
