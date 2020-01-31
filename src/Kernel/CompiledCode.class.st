@@ -78,6 +78,12 @@ CompiledCode >> accessesSlot: aSlot [
 ]
 
 { #category : #literals }
+CompiledCode >> additionalMethodStateRefersToLitteral: literal [
+	^ self penultimateLiteral isMethodProperties
+		and: [ self penultimateLiteral hasLiteralThorough: literal ]
+]
+
+{ #category : #literals }
 CompiledCode >> allLiterals [
 	"Answer an Array of the literals referenced by the receiver.	
 	 including superclass + selector/properties"
@@ -245,8 +251,9 @@ CompiledCode >> hasLiteralThorough: literal [
 	"Answer true if any literal in this method is literal,
 	even if embedded in array structure."
 
-	(self penultimateLiteral isMethodProperties
-	 and: [self penultimateLiteral hasLiteralThorough: literal]) ifTrue:[^true].
+	(self additionalMethodStateRefersToLitteral: literal)
+		ifTrue: [ ^ true ].
+		
 	2 to: self numLiterals - 1 "exclude header and methodClass or outerCode"
 	   do:[:index | | lit |
 		(((lit := self objectAt: index) literalEqual: literal)
@@ -465,11 +472,16 @@ CompiledCode >> literals [
 ]
 
 { #category : #literals }
+CompiledCode >> literalsAt: anIndex [
+	"All literals are shifted of one slot. First slot is the method header"
+	^ self objectAt: anIndex + 1
+]
+
+{ #category : #literals }
 CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
 	1 to: self numLiterals do:
-		[:index |
-		aBlock value: (self objectAt: index + 1)]
+		[:index | aBlock value: (self literalAt: index)]
 ]
 
 { #category : #scanning }
