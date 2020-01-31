@@ -62,7 +62,7 @@ ClyNotebookMorph >> newTabSelectorMorph [
 ClyNotebookMorph >> newToolbarMorph [
 
 	^ SpNotebookPanelMorph new
-		fillStyle: (SolidFillStyle color: Color transparent);
+		fillStyle: (SolidFillStyle color: self theme baseColor);
 		borderWidth: 2;
 		borderColor: self theme baseColor;
 		vResizing: #spaceFill;
