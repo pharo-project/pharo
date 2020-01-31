@@ -64,3 +64,22 @@ ClyNotebookPageActionButtonMorph >> icon: anObject [
 	
 	icon := anObject
 ]
+
+{ #category : #theme }
+ClyNotebookPageActionButtonMorph >> themeChanged [
+	| baseColor |
+
+	super themeChanged.
+
+	baseColor := self theme baseColor.
+	self activeDisabledNotOverUpFillStyle: (self theme buttonDisabledFillStyleFor: self).
+	self activeEnabledNotOverUpFillStyle: baseColor.
+	self passiveEnabledNotOverUpFillStyle: baseColor.
+	self passiveDisabledNotOverUpFillStyle: baseColor.
+	self
+		activeEnabledOverUpFillStyle: (self theme buttonMouseOverFillStyleFor: self);
+		passiveEnabledOverUpFillStyle: (self theme buttonMouseOverFillStyleFor: self);
+		activeEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self);
+		passiveEnabledOverDownFillStyle: (self theme buttonPressedFillStyleFor: self)
+	
+]

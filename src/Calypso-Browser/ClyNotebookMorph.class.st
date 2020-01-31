@@ -80,6 +80,18 @@ ClyNotebookMorph >> postAddPage: aPage [
 	self addActions: aPage actions
 ]
 
+{ #category : #theme }
+ClyNotebookMorph >> themeChanged [
+
+	super themeChanged.
+	self toolbarMorph 
+		fillStyle: (SolidFillStyle color: self theme baseColor);
+		borderColor: self theme baseColor.
+	self tabSelectorMorph
+		color: self theme baseColor
+	
+]
+
 { #category : #accessing }
 ClyNotebookMorph >> toolbarMorph [
 
