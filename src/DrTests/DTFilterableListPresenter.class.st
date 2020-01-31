@@ -59,11 +59,17 @@ DTFilterableListPresenter >> filterList [
 	"Filters the list according to the filterTextInput."
 
 	self unselectAll.
+	self filterStrings
+		ifEmpty: [ 
+			self listPresenter
+				items: initialItems.
+			^ self ].
 	self listPresenter
 		items:
 			(initialItems
-				select:
-					[ :each | self filterStrings anySatisfy: [ :any | any match: (self listPresenter display value: each) ] ])
+				select: [ :each | 
+					self filterStrings
+						anySatisfy: [ :any | any match: (self listPresenter display value: each) ] ])
 ]
 
 { #category : #accessing }
