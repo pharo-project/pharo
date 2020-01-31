@@ -125,7 +125,7 @@ RBVariableNode >> isSuper [
 
 { #category : #testing }
 RBVariableNode >> isVariable [
-	^true
+	^ true
 ]
 
 { #category : #testing }
@@ -152,7 +152,7 @@ RBVariableNode >> named: aName start: aPosition [
 
 { #category : #testing }
 RBVariableNode >> needsParenthesis [
-	^false
+	^ false
 ]
 
 { #category : #accessing }

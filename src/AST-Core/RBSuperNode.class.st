@@ -21,7 +21,6 @@ RBSuperNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #testing }
 RBSuperNode >> isSelfOrSuper [
-
 	^ true
 ]
 

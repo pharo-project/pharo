@@ -16,5 +16,5 @@ RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #testing }
 RBInstanceVariableNode >> isInstance [
-	^true
+	^ true
 ]

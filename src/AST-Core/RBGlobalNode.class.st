@@ -22,5 +22,5 @@ RBGlobalNode >> acceptVisitor: aProgramNodeVisitor [
 
 { #category : #testing }
 RBGlobalNode >> isGlobal [
-	^true
+	^ true
 ]
