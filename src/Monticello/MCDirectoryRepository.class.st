@@ -15,8 +15,7 @@ Class {
 
 { #category : #accessing }
 MCDirectoryRepository class >> defaultDirectoryName [
-	^ DefaultDirectoryName ifNil: [
-		DefaultDirectoryName :=  FileSystem workingDirectory fullName].
+	^ DefaultDirectoryName ifNil: [ FileSystem workingDirectory fullName].
 ]
 
 { #category : #accessing }

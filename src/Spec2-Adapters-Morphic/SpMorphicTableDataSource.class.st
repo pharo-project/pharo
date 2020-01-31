@@ -32,3 +32,21 @@ SpMorphicTableDataSource >> elements [
 		ifNotNil: #items
 		ifNil: [ #() ]
 ]
+
+{ #category : #testing }
+SpMorphicTableDataSource >> isMatch: anObject pattern: aString [
+	| text |
+	
+	text := (self toString: anObject) trimBoth asLowercase.
+	^ text beginsWith: aString
+]
+
+{ #category : #accessing }
+SpMorphicTableDataSource >> searchText: aString [
+	
+	aString isEmptyOrNil ifTrue: [ ^ #() ].
+	^ Array streamContents: [ :stream |
+		self elements withIndexDo: [ :each :index |
+			(self model performSearch: each matching: aString)
+				ifTrue: [ stream nextPut: index ] ] ]
+]

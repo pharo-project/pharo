@@ -6,26 +6,29 @@ Class {
 
 { #category : #factory }
 SpMorphicToggleButtonAdapter >> buildWidget [
-
 	| checkButton |
+
 	checkButton := PluggableToggleButtonMorph
-							on: self 
-							getState: #state
-							action:  #toggleAction:
-							label: #label 
-							menu: nil. 	
+		on: self 
+		getState: #state
+		action:  #toggleAction:
+		label: #label 
+		menu: nil. 	
 	
 	checkButton 
-			label:	self label; 
-			hResizing: #spaceFill; 
-			vResizing: #shrinkWrap; 
-			setBalloonText: self help;
-			getEnabledSelector: #enabled;
-			dragEnabled: self dragEnabled;
-			dropEnabled: self dropEnabled.
+		icon: self icon;
+		label:	 self label; 
+		hResizing: #spaceFill; 
+		vResizing: #shrinkWrap; 
+		setBalloonText: self help;
+		getEnabledSelector: #enabled;
+		dragEnabled: self dragEnabled;
+		dropEnabled: self dropEnabled.
 			
 	self presenter whenLabelChangedDo: [ :newLabel | checkButton label: newLabel ].
+	self presenter whenIconChangedDo: [ checkButton icon: self icon ].
 	self presenter whenChangedDo: [ checkButton pressed: self model state ].
+
 	^ checkButton
 ]
 
@@ -43,9 +46,15 @@ SpMorphicToggleButtonAdapter >> helpText [
 ]
 
 { #category : #'widget API' }
+SpMorphicToggleButtonAdapter >> icon [
+	
+	^ self presenter icon
+]
+
+{ #category : #'widget API' }
 SpMorphicToggleButtonAdapter >> label [
 	
-	^ self model label
+	^ self presenter label
 ]
 
 { #category : #'widget API' }

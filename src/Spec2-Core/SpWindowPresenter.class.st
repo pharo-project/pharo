@@ -141,6 +141,12 @@ SpWindowPresenter >> basicBuildWithSpecLayout: presenterSpecLayout [
 	^ widget
 ]
 
+{ #category : #api }
+SpWindowPresenter >> beep [ 
+	
+	self adapter beep
+]
+
 { #category : #'private building' }
 SpWindowPresenter >> buildWindowWithLayout: windowSpecLayout presenterLayout: presenterSpecLayout [
 

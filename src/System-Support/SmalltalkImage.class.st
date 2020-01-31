@@ -1076,17 +1076,14 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 { #category : #miscellaneous }
 SmalltalkImage >> logStdOutDuring: aBlock [
 	| stderr |
-	[
-		"install the line end conversion and force initialize the converter"
-		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
-			on: Stdio out
-			encoding: 'utf8').
-		
-		"reset coloring"
-		stderr nextPut: Character escape; nextPutAll: '[0m'.
-		"rund the loggin block"
-		aBlock value: stderr.
-	] on: Error do: [ :e| "we don't care if the logging to stdout fails..." ].
+	"install the line end conversion and force initialize the converter"
+	stderr := ZnNewLineWriterStream
+		on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
+	
+	[aBlock value: stderr.] 
+		on: Error do: [ "If the block fails we don't do nothing. This can lead to recursive errors" ].
+
+	stderr flush.
 ]
 
 { #category : #'memory space' }
@@ -1158,7 +1155,7 @@ SmalltalkImage >> memoryHogs [
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
     "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo8.x' #'pharo8.0.x')
+   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x')
 ]
 
 { #category : #'special objects' }

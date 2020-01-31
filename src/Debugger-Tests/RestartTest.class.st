@@ -1,7 +1,7 @@
 Class {
 	#name : #RestartTest,
 	#superclass : #DebuggerTest,
-	#category : #'Debugger-Tests'
+	#category : #'Debugger-Tests-Base'
 }
 
 { #category : #tests }
@@ -26,7 +26,6 @@ RestartTest >> testStepRestartAndRestepTopContext [
 	"
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
-	session stepInto.
 	session stepInto.
 	session stepInto.
 	"Check that the execution is at the 'a:=1' node of method stepA2"

@@ -44,7 +44,7 @@ SpMorphicComponentListAdapter >> isNonEditableRow: aRow column: aColumn [
 { #category : #factory }
 SpMorphicComponentListAdapter >> newDataSource [
 	
-	^ SpComponentListFastTableDataSource new
+	^ SpComponentListDataSource new
 		model: self presenter;
 		yourself
 ]

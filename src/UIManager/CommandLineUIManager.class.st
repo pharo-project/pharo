@@ -50,6 +50,7 @@ CommandLineUIManager class >> uiSettingsOn: aBuilder [
 		with: [
 			(aBuilder setting: #snapshotErrorImage)
 				label: 'Snapshot before quitting' ;
+				default: false;
 				target: CommandLineUIManager;
 				description: 'On unhandled exception, save a new version of the image before quitting']
 ]
@@ -391,7 +392,10 @@ CommandLineUIManager >> stdout [
 CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
 	
 	Smalltalk logStdOutDuring: [:logger |
-		logger cr; nextPutAll: aNotification class name, ': ',  aNotification messageText; cr ].
+		logger nextPutAll: aNotification class name;
+				 nextPutAll: ': ';  
+				 nextPutAll: aNotification messageText; 
+				 cr ].
 	
 	aNotification resume.
 

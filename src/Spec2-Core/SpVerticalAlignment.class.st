@@ -1,8 +1,8 @@
 Class {
 	#name : #SpVerticalAlignment,
 	#superclass : #SpAbstractPresenter,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#firstVisibleRowIndex',
 		'#lastVisibleRowIndex',

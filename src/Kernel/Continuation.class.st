@@ -38,6 +38,46 @@ Continuation class >> fromContext: aStack [
 	^self new initializeFromContext: aStack
 ]
 
+{ #category : #'instance creation' }
+Continuation class >> try: tryBlock or: orBlock or: orrBlock otherwise: elseBlock [
+	^ self
+		try: tryBlock
+		otherwise: [ :res | 
+			self
+				try: [ :cont | orBlock cull: cont cull: res ]
+				or: orrBlock
+				otherwise: [ :rr :r | elseBlock cull: rr cull: r cull: res ] ]
+]
+
+{ #category : #'instance creation' }
+Continuation class >> try: tryBlock or: orBlock otherwise: elseBlock [
+	"	^ self
+		currentDo: [ :success | 
+			| localResult localResult1 |
+			localResult := self
+				currentDo: [ :local | success value: (tryBlock value: local) ].
+			localResult1 := self
+				currentDo: [ :local | success value: (orBlock cull: local cull: localResult) ].
+			elseBlock cull: localResult1 cull: localResult ]"
+
+	^ self
+		try: tryBlock
+		otherwise: [ :res | 
+			self
+				try: [ :cont | orBlock cull: cont cull: res ]
+				otherwise: [ :lastRes | elseBlock cull: lastRes cull: res ] ]
+]
+
+{ #category : #'instance creation' }
+Continuation class >> try: tryBlock otherwise: elseBlock [
+	^ self
+		currentDo: [ :success | 
+			| localResult |
+			localResult := self
+				currentDo: [ :local | success value: (tryBlock value: local) ].
+			elseBlock cull: localResult ]
+]
+
 { #category : #private }
 Continuation >> initializeFromContext: aContext [
 	| valueStream context |

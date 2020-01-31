@@ -477,16 +477,29 @@ MetaLink >> permaLinkFor: aClassOrObject option: option instanceSpecific: instan
 	^ permaLink
 ]
 
-{ #category : #'link api' }
+{ #category : #printing }
 MetaLink >> printString [
-	|ws|
+	| ws keywords |
 	ws := WriteStream on: String new.
-	ws nextPutAll: (self control ifNil:['']).
+	ws nextPutAll: 'Link'.
+	ws space.
+	ws nextPutAll: (self control ifNil: [ '' ]).
 	ws space.
 	ws nextPutAll: metaObject printString.
 	ws space.
-	ws nextPutAll: selector asString.
-	^ws contents
+	selector isKeyword ifFalse: [ 
+		ws nextPutAll: selector asString.
+		^ ws contents ].
+	keywords := selector separateKeywords splitOn: '  '.
+	(arguments isEmpty or: [ keywords size ~= arguments size ]) ifTrue: [ 
+		ws nextPutAll: 'Error: wrong number of arguments'.
+		^ ws contents ].
+	keywords with: arguments do: [ :keyword :argument | 
+		ws nextPutAll: keyword.
+		ws space.
+		ws nextPutAll: argument printString.
+		ws space ].
+	^ ws contents
 ]
 
 { #category : #private }

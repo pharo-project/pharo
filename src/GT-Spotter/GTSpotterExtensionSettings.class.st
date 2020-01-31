@@ -51,9 +51,18 @@ GTSpotterExtensionSettings class >> catalogSettingsOn: aBuilder [
 										target: self;
 										label: (self spotterExtensionTitleOf: each);
 										description: each sourceCode;
-										default: true ] ] ]
+										default: (self defaultStateOf: each) ] ] ]
 				]
 				
+]
+
+{ #category : #settings }
+GTSpotterExtensionSettings class >> defaultStateOf: aMethod [
+
+	"I return the default state of a given spotter extension, so the settings can be correctly created"
+	"All methods are active but "
+	
+	^ (aMethod methodClass = Object and: [ aMethod selector = #spotterRePropertiesFor: ]) not
 ]
 
 { #category : #settings }

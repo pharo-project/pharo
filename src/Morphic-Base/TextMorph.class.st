@@ -1055,7 +1055,6 @@ TextMorph >> justified [
 TextMorph >> keyStroke: evt [
 	"Handle a keystroke event."
 
-	self traceCr: 'TextMorph'.
 	self basicKeyStroke: evt
 ]
 

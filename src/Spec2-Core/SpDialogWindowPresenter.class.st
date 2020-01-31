@@ -8,7 +8,8 @@ Class {
 		'buttons',
 		'okAction',
 		'cancelAction',
-		'cancelled'
+		'cancelled',
+		'defaultButton'
 	],
 	#category : #'Spec2-Core-Support'
 }
@@ -19,15 +20,40 @@ SpDialogWindowPresenter class >> adapterName [
 	^ #DialogWindowAdapter
 ]
 
+{ #category : #private }
+SpDialogWindowPresenter >> addButton: aButtonPresenter [
+
+	buttons add: aButtonPresenter.
+	^ aButtonPresenter
+]
+
 { #category : #accessing }
 SpDialogWindowPresenter >> addButton: aString do: aBlock [
 	"Adds button logic to dialog."
 	
-	^ buttons add: (SpButtonPresenter new 
+	^ self addButton: (SpButtonPresenter new 
 		owner: self;
 		label: aString;
 		action: [ aBlock cull: self ];
 		yourself)
+]
+
+{ #category : #private }
+SpDialogWindowPresenter >> addDefaultButton: aButtonPresenter [
+	"Adds button logic to dialog."
+	
+	defaultButton := self addButton: aButtonPresenter.
+	defaultButton addStyle: 'default'.
+	^ defaultButton
+]
+
+{ #category : #accessing }
+SpDialogWindowPresenter >> addDefaultButton: aString do: aBlock [
+	"Adds button logic to dialog."
+	
+	defaultButton := self addButton: aString do: aBlock.
+	defaultButton addStyle: 'default'.
+	^ defaultButton
 ]
 
 { #category : #accessing }
@@ -66,6 +92,13 @@ SpDialogWindowPresenter >> cancelAction: aBlock [
 SpDialogWindowPresenter >> cancelled [
 
 	^ cancelled
+]
+
+{ #category : #private }
+SpDialogWindowPresenter >> executeDefaultAction [
+
+	defaultButton ifNil: [ ^ self ].
+	defaultButton action cull: self
 ]
 
 { #category : #initialization }

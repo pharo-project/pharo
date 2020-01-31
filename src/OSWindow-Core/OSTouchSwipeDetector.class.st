@@ -34,6 +34,7 @@ OSTouchSwipeDetector class >> minDistToBorderSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #minDistToBorder)
 		target: self;
+		default: 0.1;
 		label: 'Minimal distance of the fingers to a border (%)';
 		description:
 				'The distance, in percentage of the screen, that fingers needs to be close to a border to trigger a swipe';
@@ -46,6 +47,7 @@ OSTouchSwipeDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 	(aBuilder setting: #minDistanceBeforeDetection)
 		target: self;
 		label: 'Minimal fingers distance crossed (%)';
+		default: 0.05;		
 		description:
 				'The distance, in percentage of the screen, that both fingers needs to travel before event detection';
 		parent: #swipeGesture

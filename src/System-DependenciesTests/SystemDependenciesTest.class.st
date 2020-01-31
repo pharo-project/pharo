@@ -208,7 +208,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
@@ -281,7 +281,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
-	BaselineOfCommander2.
 	BaselineOfSpec2.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
@@ -317,6 +316,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
+	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
 	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
 
 	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
@@ -499,11 +499,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
 
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
 		BaselineOfSpec2 allPackageNames,
 	
-
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfParametrizedTests allPackageNames))
@@ -547,7 +546,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,

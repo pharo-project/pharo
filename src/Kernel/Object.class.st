@@ -2133,3 +2133,29 @@ Object >> ~= anObject [
 
 	^self = anObject == false
 ]
+
+{ #category : #associating }
+Object >> ~~> aValueLinkOrNil [
+	"Answer a ValueLink between self and aValueLinkOrNil.
+	This message allows the receiver to be inserted in a chain of objects, terminated by nil."
+
+	"Code of ValueLink>>#nextLink: and ValueLink>>#value: are inline here for speed."
+
+	"
+	1 ~~> nil
+	>>> ValueLink new value: 1; yourself
+
+	(1 ~~> 'one') value
+	>>> 1
+
+	(1 ~~> nil) nextLink
+	>>> nil
+	
+	Note that `value` can be ANY object; on the other hand, `nextLink` should be either another 
+	ValueLink object or nil."
+
+	^ ValueLink basicNew
+		value: self;
+		nextLink: aValueLinkOrNil;
+		yourself
+]

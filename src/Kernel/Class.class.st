@@ -469,24 +469,19 @@ Class >> deprecationRefactorings [
 
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
-	| copysName class newComment |
-			
+	| copysName class |
 	copysName := aSymbol asSymbol.
 	copysName = self name
 		ifTrue: [ ^ self ].
 	(self environment includesKey: copysName)
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
-
-	class := self classInstaller make: [ :builder | 
-		builder 
-			fillFor: self;
-			name: copysName].
-		
+	class := self classInstaller
+		make: [ :builder | 
+			builder
+				fillFor: self;
+				name: copysName ].
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
-	"we copy the comment but with an explanation that it might be out of date"
-	newComment := 'I am a copy of class ', self name, '. This comment is copied from there, and might not be entirely accurate'.
-	class comment: newComment , String cr,  String cr,  self comment.
 	^ class
 ]
 

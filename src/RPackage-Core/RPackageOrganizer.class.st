@@ -879,7 +879,7 @@ RPackageOrganizer >> reportBogusBehaviorOf: aSelector [
 { #category : #private }
 RPackageOrganizer >> reportExtraRemovalOf: aClass [
 
-	self traceCr:  'The class ',  aClass name printString, 'is removed twice'.
+	self traceCr: 'The class ', aClass name printString , ' is removed twice'
 ]
 
 { #category : #'public registration' }

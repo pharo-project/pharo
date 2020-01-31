@@ -20,9 +20,8 @@ SpTextPresenterTest >> testInsertAt [
 
 { #category : #tests }
 SpTextPresenterTest >> testSelectLine [
-
 	self initializationText.
 	self openInstance.
 	presenter selectLine.
-	self assert: presenter selection equals: (1 to: 15)
+	self assert: presenter selectionInterval equals: (1 to: 15)
 ]

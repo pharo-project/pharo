@@ -38,11 +38,12 @@ SpMorphicListAdapter >> backgroundColorFor: anItem at: index [
 SpMorphicListAdapter >> buildWidget [
 	| datasource |
 	
-	datasource := SpListFastTableDataSource new.
+	datasource := SpMorphicListDataSource new.
 	datasource model: self model.
 	widget := FTTableMorph new
 		dataSource: datasource;
 		hideColumnHeaders;
+		enableSearch;
 		beResizable;
 		columns: { self newListColumn };
 		setMultipleSelection: self model isMultipleSelection;
@@ -58,6 +59,7 @@ SpMorphicListAdapter >> buildWidget [
 	self presenter whenModelChangedDo: [ widget refresh ].
 	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
 	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
+	self presenter whenSearchChangedDo: [ self updateSearch ].
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
@@ -73,7 +75,8 @@ SpMorphicListAdapter >> buildWidget [
 
 { #category : #emulating }
 SpMorphicListAdapter >> hasFilter [
-	^ self widget submorphs anySatisfy: [ :each | each isKindOf: RubTextFieldMorph	"This morph is the explicit filter of the list" ]
+
+	^ self widget hasFilter
 ]
 
 { #category : #testing }

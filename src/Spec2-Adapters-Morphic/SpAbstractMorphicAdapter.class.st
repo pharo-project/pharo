@@ -423,6 +423,18 @@ SpAbstractMorphicAdapter >> transferFor: passenger from: source [
 	^ (self transferBlock cull: passenger cull: self model) buildWithSpec
 ]
 
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> type: aString [
+
+	aString do: [ :each | 
+		self 
+			keyPressed: each asciiValue 
+			shift: each isUppercase
+			meta: false 
+			control: false 
+			option: false ]
+]
+
 { #category : #protocol }
 SpAbstractMorphicAdapter >> useProportionalLayout [
 

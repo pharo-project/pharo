@@ -9,6 +9,14 @@ Class {
 	#category : #'Commander2-Commands'
 }
 
+{ #category : #'instance creation' }
+CmAbstractCommand class >> forContext: anObject [
+	"Creates a new command with anObject as context."
+	^ self new
+		context: anObject;
+		yourself
+]
+
 { #category : #visiting }
 CmAbstractCommand >> acceptVisitor: aCmCommandOrGroup [
 	^ aCmCommandOrGroup visitCommand: self

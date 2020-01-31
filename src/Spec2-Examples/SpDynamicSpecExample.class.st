@@ -8,8 +8,8 @@ self exampleString
 Class {
 	#name : #SpDynamicSpecExample,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#ui',
 		'#object => SpObservableSlot'

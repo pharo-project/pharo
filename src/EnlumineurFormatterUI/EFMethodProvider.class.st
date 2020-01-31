@@ -15,7 +15,7 @@ Class {
 
 { #category : #settings }
 EFMethodProvider class >> myConfigTest2 [
-	^ 'BIPrettyPrinterContext {
+	^ 'EFContext {
 	#formatCommentWithStatements : false,
 	#indentString : ''\t'',
 	#indentsForKeywords : 1,

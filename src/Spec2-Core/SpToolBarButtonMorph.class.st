@@ -37,6 +37,11 @@ SpToolBarButtonMorph >> badgeTextColor [
 	^ self theme badgeTextColor
 ]
 
+{ #category : #configuring }
+SpToolBarButtonMorph >> configureWith: displayModel item: itemPresenter [
+	displayModel configureButton: self item: itemPresenter
+]
+
 { #category : #accessing }
 SpToolBarButtonMorph >> drawBadgeOn: aCanvas [
 	| badgeString badgeBounds textBounds textWidth textHeight width |

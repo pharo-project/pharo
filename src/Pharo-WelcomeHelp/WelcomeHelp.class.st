@@ -19,145 +19,94 @@ WelcomeHelp class >> changeLog [
 	^ HelpTopic 
 		title: 'Changelog'
 		contents: (self heading: 'Changelog highlights'),
-'- Pharo development moved to Github and Pharo is now bootstrapped
-- 64-bit VM for Windows as a technical preview
-- Introduction of a modular implementation of Stateful traits (see user documentation ',(self url: 'https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/Traits.md'),')
-- Replacement of Nautilus by Calypso System Browser (',(self url: 'https://github.com/pharo-ide/Calypso'),') 
-- A new version of Iceberg (',(self url: 'https://github.com/pharo-vcs/Iceberg'),') with a new interface more user-friendly
-- Migration of Streams to the Zinc streams implementation that is more modular'
+'- mature 64-bit VM for Windows
+- alternative headless VM (preview)
+  - a virtual machine without integrated support of GUI
+  - the user interface is managed by Pharo code directly which brings more flexibility
+  - full backwards compatibility with the old windows management
+  - threaded FFI with callbacks support
+- better system performance
+- many more tests
+- the new generation of Spec UI building framework (preview)
+- new tests management tool called DrTests (preview)
+- new code completion engine'
 , 
-(self subheading: 'Revolutionary kernel changes'), 
-'- Pharo is now bootstrapped
-- Modular stateful traits
-- Traits flattening in kernel packages
-- New sources file for every bootstrapped version, empty changes
-- New class builder
-- Binary packages loading (Hermes)
-- Use of Zinc streams as default streams 
-  - migration guideline: ',(self url: 'https://github.com/pharo-open-documentation/pharo-wiki/blob/master/Migration/MigrationToPharo7.md')
-, 
- (self subheading: 'Infrastructure changes'), 
-'- Switch to GitHub
-- Tonel code format 
-- Update building infrastructure to Jenkins 2'
+(self subheading: 'Infrastructure changes'), 
+'- system performance testing on the CI Infrastructure changes
+- all VM sources managed by Git Infrastructure changes
+- intensive VM testing Infrastructure changes
+- bootstrap process documentation improved'
+,
+(self subheading: 'Git support (Iceberg)'), 
+'- enhanced projects and repositories management.
+- improved merging
+- more exposed settings
+- faster loading and comparison for projects with big packages.
+- closer integration with Calypso
+- fixes in Tonel format support'
 , 
 (self subheading: 'Code management'), 
-'- Introduction of Calypso, the new system browser
-  - New navigation model    
-  - Faster UI
-  - Tabs toolbar instead of single source code panel
-  - Explicit commands (e.g., add new method) instead of duplicated menu and shortcuts
-  - Extendable by plugins
-  - Suitable for the remote scenario
-  - "Dynamic protocols", supporting multiple tags per method
-  - No longer requires star convention for class extension
-  - Visibility option for inherited methods
-  - Variable view as the special mode for method group view.
-  - Better keyboard navigation
-  - And many more improvements'
-, 
-(self subheading: 'Iceberg'), 
-'- A new friendly user interface
-- Simplification of solving problems with repositories
-- Workflow simplification
-- Better GitHub, BitBucket, GitLab support
-- Improved code merging and comparisons
-- New code serialization format (Tonel)
-- Repositories metadata
-- Documentation
-- Better error handling, tags support
-- Improved Iceberg-Metacello integration
-- Credentials store'
-, 
-(self subheading: 'Cleanups'), 
-'- Remove Nautilus
-- Remove UpdateStream
-- Remove all Configurations
-- Remove ShoreLine-Report
-- Remove TxText
-- Remove PluggableTabBarMorph
-- Remove the old Compiler
-- Remove Watery theme
-- Remove Versionner
-- Remove Komitter
-- Remove LegacyWeakSubscription
-- Continue on deprecation of FileStream
-- Dead code cleanups
-- Code organization cleanups
-- Unify categorization of common methods
-- Cleanups of object inspection protocol
-- Start Ring deprecation
-- Better structure of packages
-- Add more package comments'
-, 
-(self subheading: 'Updates'), 
-'- Zinc
-- Epicea
-- FFI
-- Metacello
-- Fuel'
-, 
-(self subheading: 'New projects'), 
-'- Integration of Calypso
-- Integration of WebBrowser, a utility to open the default web browser of the user on an URL
-- Integration of ReferenceFinder to find reference paths between objects to help find memory leaks
-- Integration of Hermes, a binary code loader for Pharo''s bootstrap
-- Integration of Refactoring 2, a re-architecture of the Refactoring project
-- Integration of Commander, a project to implement Command design pattern
-- Integration of ClassAnnotation, a reusable mechanism for first-class annotations in Pharo'
-, 
-(self subheading: 'Spec'), 
-'- Renamed ComposableModel into ComposablePresenter and changed the suffix of all subclasses
-- New calendar presenter 
-- Spec-Demo (Under Help menu entry)
-- Improved Spec linking to domain models'
-, 
-(self subheading: 'Look & Feel'), 
-'- Uses the white theme by default
-- Improves themes switching
-- Uses a Main menu bar to make Pharo more standard to other applications
-- Improvement of the design of the Taskbar
-- New window management shortcuts
-- Better support of fallback bitmap fonts
-- Improved Inspector refreshing
-- Spotter is now looking for opened windows
-- Support for display scale factor
-- FastTable improvements'
-, 
-(self subheading: 'VM interface'), 
-'- 64-bit VM for windows as a technical preview
-- DoubleWord and DoubleByte arrays
-- Added EncoderForSistaV1
-- Added read-only literals support
-- Improvements and fixes for 64-bit support
-- Fixes for FullBlockClosure
-- Support of the new bytecode set
-- Uses FFI to bridge Pharo with FreeType'
+'- new code completion engine
+- Calypso (system browser)
+  - suggestions for class definitions
+  - more refactorings
+- safer deprecation
+- better pool dictionaries support in Dependency analyzer
+- cursors, shared pools and variables inspectors
+- Enlumineur (preview) - new code formatter
+- better syntax highlighter performance
+- branch coloring support in Hiedra'
 , 
 (self subheading: 'Reflectivity'), 
-'- Breakpoint improvements
-- Introduction of Breakpoint browser (under the Debugging menu bar entry)
-- Test coverage using metalinks
-- Reflectivity and metalink improvements'
+'- more slots examples (HistorySlot…)
+- better slots integration
+- Reflectivity-Tools refactoring'
 , 
-(self subheading: 'Other'), 
-'- The logic of the Finder was rewritten
-- Startup now running in a fresh process
-- Better pin messages
-- NewValueHolder and Model API unification
-- Better separation of working and image directories
-- SortFunctions are now composable
-- Better OSWindow support
-- Converted rules to the Renraku architecture
-- Class and method comment improvements
-- Extensible Playground (pageActionOrder:)
-- Optional password management for command line handlers
-- System dependencies tests
-- Unified way to obtain package manifests		
+(self subheading: 'UI building framework (Spec)'), 
+'- introduction of Spec 2 (as preview)
+- better support of multiple backends (Morphic, Gtk…)
+- simplified implementation
+- better layouts
+- easier testing
+- applications management'
+, 
+(self subheading: 'Look & Feel'), 
+'- the dark theme as default
+- fonts corruption fixes
+- more settings for production images
+- copy windows title command'
+, 
+(self subheading: 'FFI and VM Interface'), 
+'- UFFI
+  - better support of literals
+  - more types implemented
+  - supports of ThreadedFFI backend
+- OSWindow
+  - improved events and windows management
+  - world rendering in different backends
+  - more capable backends setting
+- File Attributes Plugin
+  - new file systems properties interface'
+, 
+(self subheading: 'New projects'), 
+'- DrTests (preview) - tests management tool with plugins support
+- Clap - Command line argument parser
+- Beacon - logging engine
+- SUnit-Visitor - standardized way to visit test suites
+- Spec 2 (preview) - UI building framework with multiple backends
+- Commander 2 (preview) - advanced command pattern implementation'
+, 
+(self subheading: 'Performance'), 
+'- faster Collections implementation
+- speed-up of system queries and sources access
+- faster Spotter searches
+- better class building performance
+- SSD friendly read-write streams
+- faster Athens, examples improvements		
 		
-You can see the Pharo 7.0 changelog at: 
+You can see the Pharo 8.0 changelog at: 
 
-', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo70ChangeLogs.md')
+', (self url: 'https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo80ChangeLogs.md')
 
 ]
 
@@ -219,7 +168,7 @@ WelcomeHelp class >> gettingHelp [
 - The "Pharo Users" mailing list: 
 	', (self url: 'http://lists.pharo.org/mailman/listinfo/pharo-users_lists.pharo.org'), '
 - The "Pharo Discord channel": 
-	', 	(self url: 'http://discord.gg/Sj2rhxn'), '
+	', 	(self url: 'https://discord.gg/QewZMZa'), '
 - The "Pharo IRC Channel": 
 	', (self url: 'irc.freenode.net, #pharo channel '), '
 
@@ -341,7 +290,7 @@ Catalog projects can be browsed online:
 
 ', (self url: 'http://catalog.pharo.org'), '
 
-You can also a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
+You can also find a rough list (not very friendly) of many packages available stored in smalltalkhub repository:
 
 ', (self url: 'http://smalltalkhub.com/list'), '
 

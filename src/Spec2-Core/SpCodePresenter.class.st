@@ -115,6 +115,23 @@ SpCodePresenter >> doItReceiver: anObject [
 	doItReceiver := anObject
 ]
 
+{ #category : #navigation }
+SpCodePresenter >> findClassFrom: aString [
+	| ast |
+	ast := RBParser parseExpression: aString onError: [ ^ nil ].
+	ast
+		nodesDo: [ :node | 
+			(node isVariable and: [ node name first isUppercase ])
+				ifTrue: [ (self class environment classNamed: node name)
+						ifNotNil: [ :aClass | ^ aClass ] ] ].
+	^ nil
+]
+
+{ #category : #navigation }
+SpCodePresenter >> findClassFromSelection [
+	^ self findClassFrom: self selectionOrLine trimmed
+]
+
 { #category : #testing }
 SpCodePresenter >> hasSyntaxHighlight [
 
@@ -147,6 +164,14 @@ SpCodePresenter >> selectedBehavior [
 
 	self flag: #TODO. "What this is need for?"
 	^ self behavior
+]
+
+{ #category : #navigation }
+SpCodePresenter >> selectionOrLine [
+	^ self selection
+		ifEmpty: [ self
+				selectLine;
+				selection ]
 ]
 
 { #category : #accessing }

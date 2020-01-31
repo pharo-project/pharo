@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #defaults }
+SpCodeCommand class >> defaultIconName [
+	^nil
+]
+
+{ #category : #defaults }
 SpCodeCommand class >> defaultShortcutKey [
 
 	^ nil
@@ -18,12 +23,16 @@ SpCodeCommand class >> defaultShortcutKey [
 { #category : #converting }
 SpCodeCommand >> asSpecCommand [
 	| command |
-
 	command := super asSpecCommand.
-	self shortcutKey 
-		ifNotNil: [ :key | command shortcutKey: key ].
-
+	self shortcutKey ifNotNil: [ :key | command shortcutKey: key ].
+	self defaultIconName
+		ifNotNil: [ :iconName | command iconName: iconName ].
 	^ command
+]
+
+{ #category : #accessing }
+SpCodeCommand >> defaultIconName [
+	^self class defaultIconName
 ]
 
 { #category : #accessing }

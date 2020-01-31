@@ -190,46 +190,60 @@ SHPreferences class >> settingsOn: aBuilder [
 		parentName: #codeBrowsing;
 		description: 'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
 		selector: #enabled;
+		default: true;
 		iconName: #smallConfigurationIcon;
 		with: [
 			(aBuilder setting: #selectorPatternsStyle) 
 				label: 'Selector Patterns';
+				default: (SHStyleElement emphasis: #bold tokens: #(#patternKeyword #patternBinary #patternUnary));
 				description: 'Selector patterns in method pane'.
-			(aBuilder setting: #errorStyle) 
+			(aBuilder setting: #errorStyle)			 
+				default: (SHStyleElement color: Color red tokens: #(#invalid #excessCode #undefinedKeyword #undefinedBinary #undefinedUnary #undefinedIdentifier));
 				label: 'Syntactic error';
 				description: 'Invalid and undefined code' .
 			(aBuilder setting: #argsStyle) 
 				label: 'Parameters';
+				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#patternArg #methodArg #blockPatternArg #blockArg #argument));
 				description: 'Parameters in patterns, message sends, and blocks' .
 			(aBuilder setting: #commentStyle) 
 				label: 'Comments';
+				default: (SHStyleElement color: (Color r: 0.4203323558162268 g: 0.4203323558162268 b: 0.4203323558162268 alpha: 1.0) tokens: #(#comment #unfinishedComment));
 				description: 'Comments in code pane' .
 			(aBuilder setting: #defaultStyle) 
 				label: 'Default' ;
+				default: (SHStyleElement color: Color black tokens: #(#default));
 				description: 'Default style' .
 			(aBuilder setting: #globalVarStyle) 
 				label: 'Global variables' ;
+				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#globalVar #poolConstant));
 				description: 'References to global variables, including classes' .
 			(aBuilder setting: #instanceVarStyle) 
 				label: 'Instance/class variables' ;
+				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#instVar #classVar));
 				description: 'References to instance and class variables' .
 			(aBuilder setting: #messageSendsStyle) 
+				default: (SHStyleElement color: Color black tokens: #(#keyword #binary #unary #incompleteKeyword #incompleteBinary #incompleteUnary));
 				label: 'Message sends' ;
 				description: 'Message sends' .
 			(aBuilder setting: #primitiveOrModuleStyle) 
 				label: 'Primitive or module' ;
+				default: (SHStyleElement color: (Color r: 0.0 g: 0.5004887585532747 b: 0.0 alpha: 1.0) tokens: #(#primitive #externalFunctionCallingConvention #module #externalCallType #externalCallTypePointerIndicator #primitiveOrExternalCallStart #primitiveOrExternalCallEnd));
 				description: 'Primitive or module' .
 			(aBuilder setting: #primitiveTypesStyle) 
 				label: 'Primitive types';
+				default: (SHStyleElement color: (Color r: 0.5004887585532747 g: 0.0 b: 0.0 alpha: 1.0) tokens: #(#'$' #character #integer #number #- #symbol #stringSymbol #literalArray #string #unfinishedString));
 				description: 'Literal data' .
 			(aBuilder setting: #reservedWordsStyle) 
 				label: 'Reserved words';
+				default: (SHStyleElement color: (Color r: 0.0 g: 0.5004887585532747 b: 0.5004887585532747 alpha: 1.0) tokens: #(#self #super #true #false #nil #thisContext));
 				description: 'Reserved words of the Smalltalk language' .
 			(aBuilder setting: #syntaxStyle) 
 				label: 'Syntax';
+				default: (SHStyleElement tokens: #(#assignment #ansiAssignment #literal #return #blockArgColon #leftParenthesis #rightParenthesis #leftParenthesis1 #rightParenthesis1 #leftParenthesis2 #rightParenthesis2 #leftParenthesis3 #rightParenthesis3 #leftParenthesis4 #rightParenthesis4 #leftParenthesis5 #rightParenthesis5 #leftParenthesis6 #rightParenthesis6 #leftParenthesis7 #rightParenthesis7 #blockStart #blockEnd #blockStart1 #blockEnd1 #blockStart2 #blockEnd2 #blockStart3 #blockEnd3 #blockStart4 #blockEnd4 #blockStart5 #blockEnd5 #blockStart6 #blockEnd6 #blockStart7 #blockEnd7 #arrayStart #arrayEnd #arrayStart1 #arrayEnd1 #byteArrayStart #byteArrayEnd #byteArrayStart1 #byteArrayEnd1 #leftBrace #rightBrace #cascadeSeparator #statementSeparator #methodTempBar #blockTempBar #blockArgsBar));
 				description: 'Any other syntactic element' .
 			(aBuilder setting: #variableStyle) 
 				label: 'Variable';
+				default: (SHStyleElement color: (Color r: 0.0 g: 0.0 b: 0.5004887585532747 alpha: 1.0) tokens: #(#blockTempVar #blockPatternTempVar #workspaceVar #tempVar #patternTempVar #incompleteIdentifier));
 				description: 'Temporary variable'  ]
 ]
 

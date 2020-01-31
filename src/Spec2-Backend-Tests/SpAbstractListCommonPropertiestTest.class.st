@@ -66,3 +66,13 @@ SpAbstractListCommonPropertiestTest >> testSingleClickActivatesRowInSingleClickA
 	
 	self assert: activated.
 ]
+
+{ #category : #tests }
+SpAbstractListCommonPropertiestTest >> testTypePerformsSearch [
+
+	self presenter selection selectIndex: 1. "10"
+	self adapter type: '2'. 
+	self 
+		assert: self presenter selection selectedIndex 
+		equals: 2 "20"
+]

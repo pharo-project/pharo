@@ -1,3 +1,6 @@
+"
+I implement multiple selection mode (my users can select multiple element of list or table)
+"
 Class {
 	#name : #SpMultipleSelectionMode,
 	#superclass : #SpAbstractSelectionMode,

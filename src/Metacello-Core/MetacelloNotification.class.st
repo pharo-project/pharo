@@ -8,10 +8,6 @@ Class {
 }
 
 { #category : #exceptioninstantiator }
-MetacelloNotification class >> signal: as [
-]
-
-{ #category : #exceptioninstantiator }
 MetacelloNotification class >> signal: message level: aLevel [
 	"Signal the occurrence of an exceptional condition with a specified textual description."
 	

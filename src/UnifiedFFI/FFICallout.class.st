@@ -25,7 +25,8 @@ Class {
 		'methodArgs',
 		'receiver',
 		'method',
-		'resolutionMode'
+		'resolutionMode',
+		'stringEncodingStrategy'
 	],
 	#classVars : [
 		'TypeAliases'
@@ -162,6 +163,12 @@ FFICallout >> initialize [
 	options := Dictionary new.
 ]
 
+{ #category : #configuration }
+FFICallout >> isMandatoryStringEncoding [
+
+	^ self optionAt: #optStringEncodingMandatory
+]
+
 { #category : #testing }
 FFICallout >> isStrict [
 
@@ -199,7 +206,6 @@ FFICallout >> loaderForArgNamed: argName indirectIndex: anIndex [
 { #category : #'argument loaders' }
 FFICallout >> loaderFromMethodArgsNamed: argName [
 	| index |
-
 	methodArgs ifNil: [ ^ nil ].
 	index := methodArgs indexOf: argName ifAbsent: [ nil ].
 	^ index ifNotNil: [ 
@@ -329,6 +335,27 @@ FFICallout >> resolveExternalType: anObject [
 	^ (self resolveType: anObject) externalType 
 ]
 
+{ #category : #configuration }
+FFICallout >> resolveStringEncodingStrategy [
+
+	| encodingOptions |
+	encodingOptions := (self options associations
+		select: [ :e | (e key beginsWith: 'optStringEncoding') and: [ e value ] ]
+		thenCollect: [ :e | e key allButFirst: 'optStringEncoding' size ]) asSet.
+	
+	"Do not take into account optStringEncodingMandatory as an encoding"
+	encodingOptions remove: 'Mandatory' ifAbsent: [  ].
+	
+	encodingOptions size > 1 ifTrue: [ self error: 'Conflicting string encoding options' ].
+	
+	(self isMandatoryStringEncoding and: [ encodingOptions isEmpty ])
+		ifTrue: [ self error: 'String encoding option not specified' ].
+	
+	^ encodingOptions isEmpty
+		ifTrue: [ FFILegacyStringEncodingStrategy new ]
+		ifFalse: [ FFIStringEncodingStrategy forEncoding: encodingOptions anyOne ]
+]
+
 { #category : #accessing }
 FFICallout >> resolveType: aTypeName [
 	" a type name could be
@@ -379,6 +406,19 @@ FFICallout >> sender: aSenderContext [
 	self receiver: aSenderContext receiver.
 	self assert: (methodArgs size = nArgs).
 
+]
+
+{ #category : #configuration }
+FFICallout >> stringEncodingStrategy [
+
+	^ stringEncodingStrategy ifNil: [ 
+		stringEncodingStrategy := self resolveStringEncodingStrategy ]
+]
+
+{ #category : #configuration }
+FFICallout >> stringEncodingStrategy: aStringEncodingStrategy [
+
+	stringEncodingStrategy := aStringEncodingStrategy
 ]
 
 { #category : #private }

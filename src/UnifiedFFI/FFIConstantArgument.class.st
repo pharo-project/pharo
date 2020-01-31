@@ -36,12 +36,6 @@ FFIConstantArgument >> asOldArraySpec [
 ]
 
 { #category : #'emitting code' }
-FFIConstantArgument >> emitArgument: aBuilder context: aContext [
-	
-	self loader emitArgument: aBuilder context: aContext
-]
-
-{ #category : #'emitting code' }
 FFIConstantArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	
 	self shouldNotImplement
@@ -64,17 +58,17 @@ FFIConstantArgument >> initialize [
 FFIConstantArgument >> resolveUsing: aResolver [
 
 	value = false ifTrue: [ 
-		loader := FFIConst value: 0 type: (aResolver resolveType: #bool).
+		loader := FFILiteralArgument value: 0 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
 	value = true ifTrue: [ 
-		loader := FFIConst value: 1 type: (aResolver resolveType: #bool).
+		loader := FFILiteralArgument value: 1 type: (aResolver resolveType: #bool).
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
 	(value isNil or: [ value = 'NULL' ]) ifTrue: [ 
-		loader := FFIConst value: ExternalAddress null type: (aResolver resolveType: #'void *').
+		loader := FFILiteralArgument value: ExternalAddress null type: (aResolver resolveType: #'void *').
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
@@ -82,7 +76,7 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		loader := resolvedType := type resolveUsing: aResolver forArgument: self.
 		loader loader: FFISelfArgument new.
 		^ self ].
-	loader := FFIConst value: value.
+	loader := FFILiteralArgument value: value.
 	resolvedType := type resolveUsing: aResolver forArgument: self.
 	resolvedType loader: loader.
 ]

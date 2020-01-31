@@ -1,3 +1,7 @@
+"
+I am an abstract class representing a call-out argument, having a value and a type.
+See my subclasses for the concrete kind of arguments.
+"
 Class {
 	#name : #FFIFunctionArgument,
 	#superclass : #Object,
@@ -19,6 +23,12 @@ FFIFunctionArgument >> asOldArraySpec [
 FFIFunctionArgument >> defaultReturnOnError [
 
 	^ self resolvedType defaultReturnOnError
+]
+
+{ #category : #'emitting code' }
+FFIFunctionArgument >> emitArgument: anIRBuilder context: aContext inCallout: aCallout [
+
+	self resolvedType emitArgument: anIRBuilder context: aContext inCallout: aCallout
 ]
 
 { #category : #resolution }

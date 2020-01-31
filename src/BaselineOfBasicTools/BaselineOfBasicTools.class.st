@@ -54,9 +54,14 @@ BaselineOfBasicTools >> baseline: spec [
 				loads: #( 'UI' 'Help' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
-		
-		"Here soon the enlumineur formatter"
-		spec package: 'EnlumineurFormatter'.
+		spec package: 'BlueInk-Core'.
+		spec package: 'BlueInk-Extras'.
+
+		spec 
+			baseline: 'EnlumineurFormatter' with: [ 
+				spec
+					loads: 'UI';
+					repository: repository ].
 		
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.

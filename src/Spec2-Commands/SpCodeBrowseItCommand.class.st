@@ -1,13 +1,18 @@
 Class {
 	#name : #SpCodeBrowseItCommand,
-	#superclass : #SpCodeSelectionCommand,
+	#superclass : #SpCodeBrowsingCommand,
 	#category : #'Spec2-Commands-Code'
 }
 
 { #category : #default }
+SpCodeBrowseItCommand class >> defaultIconName [
+	^#smallSystemBrowser
+]
+
+{ #category : #default }
 SpCodeBrowseItCommand class >> defaultName [
 
-	^ 'Browse Full Class'
+	^ 'Browse it'
 ]
 
 { #category : #default }

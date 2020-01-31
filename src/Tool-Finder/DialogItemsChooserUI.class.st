@@ -71,8 +71,10 @@ DialogItemsChooserUI class >> dialogItemsChooserSettingsOn: aBuilder [
 		description: 'Settings related to the Dialog Window for choosing elements among a list';
 			with: [
 				(aBuilder setting: #alreadySearchedUnselectedItemsListMaxSize)
+					default: 15;
 					label: 'Number of the Unselected Items in History'.
 				(aBuilder setting: #alreadySearchedSelectedItemsListMaxSize)
+					default: 15;
 					label: 'Number of the Selected Items in History']
 ]
 
