@@ -3,7 +3,7 @@ I am a command to install watchpoint into the given method or source node
 "
 Class {
 	#name : #ClyAddWatchpointCommand,
-	#superclass : #ClyMetalinkCommand,
+	#superclass : #ClyDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 

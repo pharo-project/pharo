@@ -35,7 +35,7 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 	self presenter whenShowColumnHeadersChangedDo: [ :showColumns |
 		self refreshShowColumnHeaders ].
 
-	self presenter whenModelChangedDo: [ widget refresh ].
+	self presenter whenModelChangedDo: [ self refreshModel ].
 	self presenter whenColumnsChangedDo: [ self refreshColumnsInWidget ].
 	
 	tableMorph setBalloonText: self help.
@@ -142,6 +142,13 @@ SpMorphicTableAdapter >> refreshColumnsInWidget [
 SpMorphicTableAdapter >> refreshList [
 
 	^ self widget refresh
+]
+
+{ #category : #refreshing }
+SpMorphicTableAdapter >> refreshModel [
+
+	widget dataSource resetElements.
+	widget refresh
 ]
 
 { #category : #factory }

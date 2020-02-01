@@ -8,7 +8,7 @@ Class {
 		'surface',
 		'drawBlock'
 	],
-	#category : #'Spec2-Adapters-Morphic-Notebook'
+	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
 { #category : #accessing }
