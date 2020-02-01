@@ -24,13 +24,9 @@ AbstractDrTestsUI >> currentPlugin [
 AbstractDrTestsUI >> currentPlugin: anObject [
 	"If a plugin was set before, unsubscribe first."
 
-	currentPlugin ifNotNil: [ currentPlugin announcer unsubscribe: self ].
+	currentPlugin ifNotNil: [ currentPlugin unconfigureUI: self ].
 	currentPlugin := anObject.
-	currentPlugin announcer
-		when: DTStatusUpdate
-		send: #handlePluginStatusUpdate:
-		to: self.
-	self updateUI
+	currentPlugin configureUI: self
 ]
 
 { #category : #'announcement handling' }
@@ -148,8 +144,7 @@ AbstractDrTestsUI >> updateStatus: aString [
 
 { #category : #updating }
 AbstractDrTestsUI >> updateUI [
-	^ self subclassResponsibility
-
+	self withWindowDo: [ :window | window title: self title ]
 ]
 
 { #category : #updating }

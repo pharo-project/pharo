@@ -28,9 +28,10 @@ SpMorphicTableDataSource >> cellColumn: column row: rowIndex [
 { #category : #accessing }
 SpMorphicTableDataSource >> elements [ 
 	
-	^ self model 
-		ifNotNil: #items
-		ifNil: [ #() ]
+	^ elements ifNil: [
+		self model 
+			ifNotNil: #items
+			ifNil: [ #() ] ]
 ]
 
 { #category : #testing }
@@ -39,6 +40,12 @@ SpMorphicTableDataSource >> isMatch: anObject pattern: aString [
 	
 	text := (self toString: anObject) trimBoth asLowercase.
 	^ text beginsWith: aString
+]
+
+{ #category : #accessing }
+SpMorphicTableDataSource >> resetElements [
+
+	elements := nil
 ]
 
 { #category : #accessing }

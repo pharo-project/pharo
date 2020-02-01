@@ -1,6 +1,6 @@
 Class {
 	#name : #SpAcceptChangesCommand,
-	#superclass : #SpCodeCommand,
+	#superclass : #SpToolCommand,
 	#category : #'Spec2-Commands-Code'
 }
 

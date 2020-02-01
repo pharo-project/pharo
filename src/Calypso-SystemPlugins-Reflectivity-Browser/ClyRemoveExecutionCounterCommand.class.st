@@ -3,7 +3,7 @@ I am a command to remove execution counters from given method of node
 "
 Class {
 	#name : #ClyRemoveExecutionCounterCommand,
-	#superclass : #ClyRemoveMetalinkCommand,
+	#superclass : #ClyRemoveDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 
@@ -33,17 +33,17 @@ ClyRemoveExecutionCounterCommand >> currentCallsCount [
 	^sourceNode counter count
 ]
 
+{ #category : #execution }
+ClyRemoveExecutionCounterCommand >> debuggingToolClass [
+	^ExecutionCounter
+]
+
 { #category : #accessing }
 ClyRemoveExecutionCounterCommand >> defaultMenuItemName [
 	
 	^sourceNode hasExecutionCounter 
 		ifTrue: [ 'Remove counter (', self currentCallsCount asString, ')']
 	 	ifFalse: [ 'Remove counter' ]
-]
-
-{ #category : #execution }
-ClyRemoveExecutionCounterCommand >> metalinkManagerClass [
-	^ExecutionCounter
 ]
 
 { #category : #'table decoration' }

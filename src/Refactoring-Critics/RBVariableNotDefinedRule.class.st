@@ -10,14 +10,14 @@ Class {
 { #category : #testing }
 RBVariableNotDefinedRule class >> isVisible [
 
-	self flag: 'The functionality was moved to GRUndeclaredVariableRule, but as this rule is used by Monkey, and Monkey is not using Renraku model yet, the rule is hidden'.
+	self flag: 'The functionality was moved to ReUndeclaredVariableRule, but as this rule is used by Monkey, and Monkey is not using Renraku model yet, the rule is hidden'.
 	^ false
 ]
 
 { #category : #'instance creation' }
 RBVariableNotDefinedRule class >> new [
 	
-	^ GRUndeclaredVariableRule asRBRule
+	^ ReUndeclaredVariableRule asRBRule
 ]
 
 { #category : #accessing }

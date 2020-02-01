@@ -31,7 +31,7 @@ CompositeAnnotationContext class >> with: contextCollection [
 
 { #category : #converting }
 CompositeAnnotationContext >> , anAnnotationContext [
-	^ CompositeAnnotationContext with: (parts copyWith: anAnnotationContext asAnnotationContext)
+	^ self class with: (parts copyWith: anAnnotationContext asAnnotationContext)
 ]
 
 { #category : #comparing }
