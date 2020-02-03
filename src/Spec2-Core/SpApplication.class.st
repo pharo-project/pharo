@@ -68,7 +68,7 @@ SpApplication class >> example1 [
 	
 	"You want to subclass SpApplication to create your app"
 	app := SpApplication new.
-	app useBackend: #Gtk.
+	app useBackend: #Morphic.
 	app run
 ]
 
@@ -79,8 +79,8 @@ SpApplication class >> example2 [
 	
 	"You want to subclass SpApplication to create your app"
 	app := SpApplication new.
-	"You want to subclass SpGtkConfiguration to create your own cofiguration"
-	app useBackend: #Gtk with: SpGtkConfiguration new.
+	"You want to subclass SpApplicationConfiguration to create your own cofiguration"
+	app useBackend: #Gtk with: SpApplicationConfiguration new.
 	app run
 ]
 
