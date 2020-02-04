@@ -971,6 +971,7 @@ SHRBTextStyler >> pixelHeight [
 { #category : #private }
 SHRBTextStyler >> privateStyle: aText [
 	| ast |
+	aText ifEmpty: [ ^ self ].
 	ast := classOrMetaClass compiler
 		source: aText asString;
 		noPattern: self isForWorkspace ;
@@ -1014,6 +1015,7 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
+	aText ifEmpty: [ ^ self ].
 	text := aText.	
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
