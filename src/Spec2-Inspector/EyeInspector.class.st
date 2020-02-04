@@ -321,10 +321,12 @@ EyeInspector >> printTimeout [
 EyeInspector >> refresh [
 	"refresh the object in the inspector, updating his modified instance variables"
 
-	description hasUnacceptedEdits 
-		ifTrue: [  ^ self ].
-	description getSelection size = 0 
-		ifTrue: [ self refreshDescription; updateList ]
+	description hasUnacceptedEdits
+		ifTrue: [ ^ self ].
+	description selectionInterval size = 0
+		ifTrue: [ self
+				refreshDescription;
+				updateList ]
 ]
 
 { #category : #'event-handling' }
@@ -468,7 +470,7 @@ EyeInspector >> updateList [
 		ifTrue: [ ^ self ].
 	"first reset the items to make sure we don't interfere with the display block"
 	"self list items: #()."
-	self list displayBlock: [ :eyeElement | self labelFor: eyeElement ].
+	self list display: [ :eyeElement | self labelFor: eyeElement ].
 	self list items: elements.
 
 	"handle when last item of list is removed"

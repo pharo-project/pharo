@@ -655,7 +655,7 @@ CompiledMethod >> isTaggedWith: aSymbol [
 { #category : #'source code management' }
 CompiledMethod >> linesOfCode [
 	"An approximate measure of lines of code.
-	Includes comments, but excludes empty lines."
+	Includes method's name and comments, but excludes empty lines."
 	| lines |
 	lines := 0.
 	self sourceCode lineIndicesDo: [:start :endWithoutDelimiters :end |

@@ -64,11 +64,13 @@ SpDemoNotebookPresenter >> dynamicPage [
 SpDemoNotebookPresenter >> initializePresenters [
 	notebook := self newNotebook.
 	checkbox := self newCheckBox.
-
 	notebook
 		addPage: self objectClassPage;
-		addPage: self objectInspectorPage;
-		addPage: self browserPage
+		addPage: self browserPage.
+
+	self class methods
+		select: [ :aMethod | aMethod isExtension and: [ aMethod selector endsWith: 'Page' ] ]
+		thenDo: [ :aMethod | notebook addPage: (self perform: aMethod selector ) ]
 ]
 
 { #category : #pages }
