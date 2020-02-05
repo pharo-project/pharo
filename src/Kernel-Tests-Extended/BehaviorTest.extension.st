@@ -8,11 +8,11 @@ BehaviorTest >> testAllReferencesTo [
 	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
 		
 	result := SystemNavigation new allReferencesTo: #printOn:.
-	result do: [ :each | self assert: (each compiledMethod hasLiteralThorough: #printOn:) ].
+	result do: [ :each | self assert: (each compiledMethod refersToLiteral: #printOn:) ].
 	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
 	
 	result := SystemNavigation new allReferencesTo: #+.
-	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod hasLiteralThorough: #+ ]) ].
+	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod refersToLiteral: #+ ]) ].
 	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ])
 ]
 
