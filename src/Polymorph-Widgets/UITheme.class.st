@@ -1754,7 +1754,7 @@ UITheme >> dangerBackgroundColor [
 
 { #category : #'accessing colors' }
 UITheme >> dangerTextColor [
-	^ Color red
+	^ Color red darker darker
 ]
 
 { #category : #'accessing colors' }
