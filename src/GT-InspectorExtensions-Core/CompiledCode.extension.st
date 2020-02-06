@@ -76,18 +76,6 @@ CompiledCode >> gtInspectorPragmasIn: composite [
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }
-CompiledCode >> gtInspectorSourceIn: composite [
-	<gtInspectorPresentationOrder: 30>
-	^ composite pharoMethod
-		title: 'Source';
-		smalltalkClass: [ self methodClass ];
-		display: [ self sourceCode ];
-		act: [ self browse ]
-			icon: GLMUIThemeExtraIcons glamorousBrowse
-			entitled: 'Browse'
-]
-
-{ #category : #'*GT-InspectorExtensions-Core' }
 CompiledCode >> gtInspectorVariableNodesIn: aCollection [
 
 	aCollection addAll: (self literals collectWithIndex: [ :aLiteral :anIndex | 
