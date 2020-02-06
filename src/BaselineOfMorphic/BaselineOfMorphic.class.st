@@ -48,10 +48,8 @@ BaselineOfMorphic >> baseline: spec [
 			spec repository: repository; loads: #('Core') ].
 
 		spec package: 'System-Localization'.
-		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Clipboard'.
 		
-		spec package: 'Balloon'.
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
@@ -105,7 +103,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Settings-Polymorph'.
 		spec package: 'Settings-System'.
 
-		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings-Core'.
@@ -124,7 +121,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
-		spec package: 'System-OSEnvironments'.
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
@@ -305,7 +301,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
-	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
+	#(ProgressBarMorph BalloonEngineConstants BalloonEngine 
 	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
 	FT2Types FT2FFILibrary
 	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 

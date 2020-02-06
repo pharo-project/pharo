@@ -471,10 +471,10 @@ String >> alike: aString [
 	minSize := (j := self size) min: (k := aString size).
 	bonus := (j - k) abs < 2 ifTrue: [ 1 ] ifFalse: [ 0 ].
 	i := 1.
-	[(i <= minSize) and: [((super at: i) bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
+	[(i <= minSize) and: [((self at: i) asInteger bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
 		whileTrue: [ i := i + 1 ].
 	[(j > 0) and: [(k > 0) and:
-		[((super at: j) bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
+		[((self at: j) asInteger bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
 			whileTrue: [ j := j - 1.  k := k - 1. ].
 	^ i - 1 + self size - j + bonus
 ]
@@ -500,12 +500,7 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	| b |
-	b := ByteArray new: self byteSize.
-	1 to: self size * 4 do: [:i |
-		b at: i put: (self byteAt: i)].
-	^ b
-
+	self subclassResponsibility 
 ]
 
 { #category : #converting }
@@ -520,7 +515,7 @@ String >> asCamelCase [
 	"Convert to CamelCase, i.e, remove spaces, and convert starting lowercase to uppercase."
    "'A man, a plan, a canal, panama' asCamelCase >>> 'AMan,APlan,ACanal,Panama'"
  	"'Here 123should % be 6 the name6 of the method' asCamelCase  >>> 'Here123should%Be6TheName6OfTheMethod'"
-		^ self class streamContents: [:stream |
+		^ self species streamContents: [:stream |
                self substrings do: [:sub |
                        stream nextPutAll: sub capitalized]]
 ]
@@ -604,7 +599,7 @@ String >> asFourCode [
 String >> asHTMLString [
 	"substitute the < & > into HTML compliant elements"
 	"'<a>' asHTMLString"
-	^ self class new: self size streamContents: [ :s| 
+	^ self species new: self size streamContents: [ :s| 
 		self do: [:c | s nextPutAll: c asHTMLString ]]
 
 ]
@@ -613,7 +608,7 @@ String >> asHTMLString [
 String >> asHex [
 	"'A' asHex >>> '16r41'"
 	"'AA' asHex >>> '16r4116r41'"
-	^ self class new: self size * 4 streamContents: [ :stream |
+	^ self species new: self size * 4 streamContents: [ :stream |
 		self do: [ :ch | stream nextPutAll: ch hex ]]
 ]
 
@@ -915,7 +910,7 @@ String >> copyReplaceAll: oldSubstring with: newSubstring [
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
-    ^ self class new: self size streamContents: [ :stream | | foundIdx |
+    ^ self species new: self size streamContents: [ :stream | | foundIdx |
         [ (foundIdx := self findString: oldSubstring startingAt: idx) isZero ] whileFalse: [ 
             stream 
                 next: (foundIdx - idx) putAll: self startingAt: idx;
@@ -1155,7 +1150,7 @@ String >> expandMacrosWithArguments: anArray [
 	"('<1?success:is error>' expandMacrosWith: false) >>> 'is error'"
 	
 	| readStream char index |
-	^ self class
+	^ self species
 		new: self size
 		streamContents:
 			[ :newStream | 
@@ -1299,7 +1294,7 @@ String >> findSelector [
 	(sel includes: $:) ifTrue:
 		[sel := sel copyReplaceAll: ':' with: ': '.	"for the style (aa max:bb) with no space"
 		possibleParens := sel findTokens: Character separators.
-		sel := self class streamContents:
+		sel := self species streamContents:
 			[:s | | level | level := 0.
 			possibleParens do:
 				[:token | | n |
@@ -1561,7 +1556,7 @@ String >> format: collection [
 	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
 	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
 
-	^ self class
+	^ self species
 		new: self size
 		streamContents: [ :result | 
 			| stream |
@@ -1876,7 +1871,7 @@ String >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"('*' join: #('WWWWW' 'W  EW' 'zzzz')) >>> 'WWWWW*W  EW*zzzz'"
 	
-	^ self class new: (aCollection size * self size) streamContents: [:stream | 
+	^ self species new: (aCollection size * self size) streamContents: [:stream | 
 			aCollection
 				do: [:each | stream nextPutAll: each asString] 
 				separatedBy: [stream nextPutAll: self]]
@@ -2158,7 +2153,7 @@ String >> repeat: aNumber [
 
 	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
 	
-	^ self class 
+	^ self species 
 		new: self size * aNumber 
 		streamContents: [ :stringStream |
 			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ].
@@ -2384,7 +2379,7 @@ String >> surroundedBy: aString [
 	"('hello' surroundedBy: 'abd') >>> 'abdhelloabd'"
 	"('hello' surroundedBy: ' abd ') >>> ' abd hello abd '"
 	
-	^ self class streamContents: [ :s|
+	^ self species streamContents: [ :s|
 		s nextPutAll: aString.
 		s nextPutAll: self.
 		s nextPutAll: aString ].
@@ -2483,7 +2478,7 @@ String >> trimLeft: aLeftBlock right: aRightBlock [
 String >> trimLineSpaces [
 	"Trim the spaces from the right side of each line. Useful for code"
 	
-	^ self class streamContents: [ :str |
+	^ self species streamContents: [ :str |
 		self lines 
 			do: [ :line | str nextPutAll: line trimRight]
 			separatedBy: [str cr]]
@@ -2624,7 +2619,7 @@ String >> withLineEndings: lineEndingString [
 String >> withNoLineLongerThan: aNumber [
 	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
 	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
-	^self class
+	^self species
 		new: self size * (aNumber + 1) // aNumber "provision for supplementary line breaks"
 		streamContents: [ :stream |
 			self lineIndicesDo: [ :start :endWithoutDelimiters :end |
@@ -2657,7 +2652,7 @@ String >> withSeparatorsCompacted [
     "'test  test      ' withSeparatorsCompacted >>> 'test test '"
 
     self isEmpty ifTrue: [ ^ self ].
-    ^ self class new: self size streamContents: [:stream | 
+    ^ self species new: self size streamContents: [:stream | 
         | lastBlank |
         lastBlank := false.
         self do: [ :eachChar | 

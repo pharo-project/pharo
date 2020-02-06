@@ -1754,7 +1754,7 @@ UITheme >> dangerBackgroundColor [
 
 { #category : #'accessing colors' }
 UITheme >> dangerTextColor [
-	^ Color red
+	^ Color red darker darker
 ]
 
 { #category : #'accessing colors' }
@@ -5319,6 +5319,13 @@ UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 
 	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
 
+]
+
+{ #category : #'accessing colors' }
+UITheme >> selectedItemListTextColor [
+	"Answer the color for the selected item in a list text."
+
+	^ self textColor
 ]
 
 { #category : #'accessing colors' }

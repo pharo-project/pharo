@@ -99,7 +99,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 
 	^ self allBehaviors
 		select: [ :class | class includesSelector: aSelector ]
-		thenCollect: [ :class | (class >> aSelector) methodReference ]
+		thenCollect: [ :class | class >> aSelector ]
 ]
 
 { #category : #query }
@@ -116,7 +116,7 @@ SystemNavigation >> allMethodsSelect: aBlock [
 	aCollection := OrderedCollection new.
 	self allBehaviorsDo: [:class | 
 		class	selectorsAndMethodsDo: [:sel :m | 
-			(aBlock value: m) ifTrue: [aCollection add: (class>>sel) methodReference]]].
+			(aBlock value: m) ifTrue: [aCollection add: class>>sel]]].
 	^ aCollection
 ]
 
@@ -159,8 +159,7 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	^ self allBehaviors flatCollect: [ :class | 
-			(class thoroughWhichMethodsReferTo: aLiteral) collect: [ :method | method methodReference ] ]
+	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
 ]
 
 { #category : #query }
@@ -177,10 +176,9 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 
 { #category : #query }
 SystemNavigation >> allReferencesToBinding: aVariablesBinding [
-	"Answer all the methods that refer to aVariableBinding, do not go into netsted Arrays"
+	"Answer all the methods that refer to aVariableBinding, do not go into nested Arrays"
 
-	^ self allBehaviors flatCollect: [ :class | 
-			(class whichMethodsReferTo: aVariablesBinding) collect: [ :method | method methodReference ] ]
+	^ self allBehaviors flatCollect: [ :class | class whichMethodsReferTo: aVariablesBinding ]
 ]
 
 { #category : #'message sends' }

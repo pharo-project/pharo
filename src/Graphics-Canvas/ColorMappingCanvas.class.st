@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'myCanvas'
 	],
-	#category : #'Graphics-Canvas'
+	#category : #'Graphics-Canvas-Canvases'
 }
 
 { #category : #'instance creation' }
@@ -171,18 +171,6 @@ ColorMappingCanvas >> paragraph: paragraph bounds: bounds color: c [
 		paragraph: paragraph
 		bounds: bounds
 		color: (self mapColor: c)
-]
-
-{ #category : #'drawing-support' }
-ColorMappingCanvas >> preserveStateDuring: aBlock [
-	"Preserve the full canvas state during the execution of aBlock"
-	| oldCanvas result |
-	oldCanvas := myCanvas.
-	result := myCanvas preserveStateDuring:[:newCanvas|
-		myCanvas := newCanvas.
-		aBlock value: self].
-	myCanvas := oldCanvas.
-	^result
 ]
 
 { #category : #initialization }

@@ -35,11 +35,12 @@ BaselineOfUnifiedFFI >> baseline: spec [
 			"unified ffi"
 			package: 'UnifiedFFI' with: [ spec requires: #('Alien-Core') ];
 			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
-			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ].
+			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ];
+			package: 'System-OSEnvironments' with: [ spec requires: #('UnifiedFFI') ].
 			
 		spec 
 			group: 'default' with: #('core' 'legacy');
-			group: 'minimal' with: #('UnifiedFFI');
+			group: 'minimal' with: #('UnifiedFFI' 'System-OSEnvironments');
 			group: 'core' with: #('minimal' 'UnifiedFFI-Tests');
 			group: 'legacy' with: #('UnifiedFFI-Legacy') ]
 ]
