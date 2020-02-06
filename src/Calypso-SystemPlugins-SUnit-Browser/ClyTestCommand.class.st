@@ -34,11 +34,11 @@ ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 	| color |	
 	color := Color gray.
 	testResult hasPassed
-		ifTrue: [ color := Color green ].
+		ifTrue: [ color := TestResult defaultColorBackGroundForPassingTest ].
 	testResult hasFailures
-		ifTrue: [ color := Color yellow ].
+		ifTrue: [ color := TestResult defaultColorBackGroundForFailureTest ].
 	testResult hasErrors
-		ifTrue: [ color := Color red ].
+		ifTrue: [ color := TestResult defaultColorBackGroundForErrorTest ].
 		
 	GrowlMorph 
 		openWithLabel: message

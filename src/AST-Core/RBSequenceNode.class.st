@@ -176,7 +176,7 @@ RBSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
-	node := RBReturnNode value: (RBVariableNode named: 'self').
+	node := RBReturnNode value: (RBSelfNode new).
 	^ self addNode: node
 ]
 

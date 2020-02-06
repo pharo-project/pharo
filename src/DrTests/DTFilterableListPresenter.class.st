@@ -59,19 +59,24 @@ DTFilterableListPresenter >> filterList [
 	"Filters the list according to the filterTextInput."
 
 	self unselectAll.
+	self filterStrings
+		ifEmpty: [ 
+			self listPresenter
+				items: initialItems.
+			^ self ].
 	self listPresenter
 		items:
 			(initialItems
-				select:
-					[ :each | self filterString match: (self listPresenter display value: each) ])
+				select: [ :each | 
+					self filterStrings
+						anySatisfy: [ :any | any match: (self listPresenter display value: each) ] ])
 ]
 
 { #category : #accessing }
-DTFilterableListPresenter >> filterString [
-	^ String streamContents: [ :stream |
-		stream nextPut: $*.
-		stream nextPutAll: self filterTextInput text.
-		stream nextPut: $* ]
+DTFilterableListPresenter >> filterStrings [
+	^ (self filterTextInput text splitOn: $|)
+		reject: #isEmpty
+		thenCollect: [ :pattern | pattern , '*' ]
 ]
 
 { #category : #accessing }
@@ -102,6 +107,7 @@ DTFilterableListPresenter >> initializeWidgets [
 	filterTextInput := self newTextInput
 								placeholder: 'Filter...';
 								whenTextChangedDo: [ self filterList ];
+								autoAccept: true;
 								yourself
 ]
 

@@ -407,6 +407,19 @@ FloatTest >> testReadFromManyDigits [
 	self assert: (Number readFrom: s2) equals: 1 
 ]
 
+{ #category : #'tests - conversion' }
+FloatTest >> testReadingTooLargeExponents [
+	self assert: (Float readFrom: '7.5e333') equals: Float infinity.
+	self assert: (Float readFrom: '7.5e-333') equals: Float zero.
+	self assert: (Float readFrom: '-7.5e333') equals: Float infinity negated.
+	self assert: (Float readFrom: '-7.5e-333') equals: Float zero.
+
+	self assert: (Float readFrom: '7.5e3333') equals: Float infinity.
+	self assert: (Float readFrom: '7.5e-3333') equals: Float zero.
+	self assert: (Float readFrom: '-7.5e3333') equals: Float infinity negated.
+	self assert: (Float readFrom: '-7.5e-3333') equals: Float zero.
+]
+
 { #category : #'tests - NaN behavior' }
 FloatTest >> testReciprocal [
 

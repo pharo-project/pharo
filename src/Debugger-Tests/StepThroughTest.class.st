@@ -47,7 +47,6 @@ StepThroughTest >> testStepThrough [
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 	session stepInto.
 	session stepInto.
-	session stepInto.
 	"Reached node 'self evalBlockThenReturnOne: [self stepA2]' of method stepA1"
 	"Checking that the execution is indeed at this node"
 	self assert: (session interruptedContext method) equals: (self class>>#stepA1).
@@ -71,7 +70,6 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
 	session stepInto.
-	session stepInto.
 	"Reached node 'self stepB2' of method stepB1"
 	self assert: session interruptedContext method equals: self class>>#stepB1.
 	session stepOver.
@@ -84,7 +82,6 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	
 	"Set up the debugged execution again"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
-	session stepInto.
 	session stepInto.
 	"Reached node 'self stepB2' of method stepB1"
 	self assert: session interruptedContext method equals: self class>>#stepB1.

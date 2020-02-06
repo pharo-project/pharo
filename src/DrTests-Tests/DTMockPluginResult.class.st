@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #accessing }
+DTMockPluginResult >> backgroundColor [
+  " Backgournd color, although untested is used by updateResultLabel, which is called after a test suite is runned "
+  " It is untested, so we return a random color"
+  ^ Color black
+]
+
+{ #category : #accessing }
 DTMockPluginResult >> buildAnotherTreeForUI [
 	<pragmaForTest: 'for other tests' order: 2>
 	^ DTTreeNode new

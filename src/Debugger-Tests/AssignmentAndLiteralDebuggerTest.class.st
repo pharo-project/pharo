@@ -20,7 +20,7 @@ AssignmentAndLiteralDebuggerTest >> testInterruptedContextEqualsSuspendedContext
 
 { #category : #tests }
 AssignmentAndLiteralDebuggerTest >> testNewDebugSession [
-	self assert: context size equals: 0.
+	self assert: context size equals: 1.
 	self assert: session interruptedContext equals: context.
 ]
 

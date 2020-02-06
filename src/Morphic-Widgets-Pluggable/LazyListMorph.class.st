@@ -47,11 +47,12 @@ LazyListMorph >> bottomVisibleRowForCanvas: aCanvas [
 ]
 
 { #category : #'row management' }
-LazyListMorph >> colorForRow: row [ 
+LazyListMorph >> colorForRow: row [
 	"Answer the color for the row text."
+
 	^ (self isRowSelected: row )
-		ifTrue: [ self theme selectionTextColor ]
-		ifFalse: [ self color ]
+		ifTrue: [ self theme selectedItemListTextColor  ]
+		ifFalse: [ self theme listTextColor ]
 ]
 
 { #category : #'row management' }

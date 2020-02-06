@@ -32,6 +32,9 @@ SpStyle class >> createDefaultStyleSheet [
 			Draw { #color: Color{ #rgb: 622413393 } },
 			Font { #name: "Lucida Grande", #size: 10 }
 		],
+		.fixed [ 
+			Geometry { #hResizing: false, #width: 100 }
+		],
 		.dim [
 			Draw { #color : Color{ #rgb: 708480675 } }
 		]
@@ -85,7 +88,7 @@ SpStyle class >> createDefaultStyleSheet [
 	],
 	.code [
 		Font { #name : "Source Code Pro", #size : 10 }
-	]
+	] 
 ]
 '
 ]

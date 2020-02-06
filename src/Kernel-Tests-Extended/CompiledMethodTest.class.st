@@ -96,6 +96,137 @@ CompiledMethodTest >> deprecatedMethod6 [
 CompiledMethodTest >> deprecatedMethod7 [
 ]
 
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locComplex [
+
+	"A multiline
+	comment"
+	
+"Non-indented Comment"
+	
+	| a b |
+	a := 1.
+	b :=
+	a + 2.
+	
+	10 timesRepeat: [ 
+		"Comment inside a block"
+		#(1 2 3) collect: [ :each |
+			| c |
+			c := each + b.
+			c "Comment at the end of a line" ] ].
+	
+
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineInTheEnd [
+	| a |
+	a := 1.
+	^ a
+
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineInTheMiddle [
+	| a |
+	a := 1.
+
+	^ a
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineWithTabInTheEnd [
+	| a |
+	a := 1.
+	^ a
+	
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineWithTabInTheMiddle [
+	| a |
+	a := 1.
+	
+	^ a
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyMethod [
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyMethodWithNewline [
+
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyMethodWithNewlineAndTab [
+	
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineComment [
+	^ 1
+	"Multiline
+	comment"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineCommentWithoutWhitespace [
+	^ 1
+"Multiline
+comment
+without
+whitespaces"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineMethodComment [
+	"Multiline
+	comments"
+	^ 1
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineMethodCommentWithoutWhitespace [
+"Comment"
+	^ 1
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSimple [
+	| a b c |
+	a := 1.
+	b := a + 2.
+	c := b * 3.
+	^ 1 / c
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineComment [
+	^ 1
+	"Comment"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineCommentWithoutWhitespace [
+	^ 1
+"Comment"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineMethodComment [
+	"Comment"
+	^ 1
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineMethodCommentWithoutWhitespace [
+"Comment"
+	^ 1
+]
+
 { #category : #examples }
 CompiledMethodTest >> nonAbstractMethod [
 	"I am not an abstract method"
@@ -349,6 +480,125 @@ CompiledMethodTest >> testIsQuick [
 	self deny: (method isQuick).
 
 	
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeAllInOne [
+	| method |
+	method := self class >> #locComplex.
+	self assert: method linesOfCode equals: 14.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineInTheEnd [
+	| method |
+	method := self class >> #locEmptyLineInTheEnd.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineInTheMiddle [
+	| method |
+	method := self class >> #locEmptyLineInTheMiddle.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineWithTabInTheEnd [
+	| method |
+	method := self class >> #locEmptyLineWithTabInTheEnd.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineWithTabInTheMiddle [
+	| method |
+	method := self class >> #locEmptyLineWithTabInTheMiddle.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyMethod [
+	| method |
+	method := self class >> #locEmptyMethod.
+	self assert: method linesOfCode equals: 1.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyMethodWithNewline [
+	| method |
+	method := self class >> #locEmptyMethodWithNewline.
+	self assert: method linesOfCode equals: 1.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyMethodWithNewlineAndTab [
+	| method |
+	method := self class >> #locEmptyMethodWithNewlineAndTab.
+	self assert: method linesOfCode equals: 1.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineComment [
+	| method |
+	method := self class >> #locMultilineComment.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locMultilineCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 6.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineMethodComment [
+	| method |
+	method := self class >> #locMultilineMethodComment.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineMethodCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locMultilineMethodCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSimpleCase [
+	| method |
+	method := self class >> #locSimple.
+	self assert: method linesOfCode equals: 6.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineComment [
+	| method |
+	method := self class >> #locSingleLineComment.
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locSingleLineCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineMethodComment [
+	| method |
+	method := self class >> #locSingleLineMethodComment .
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineMethodCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locSingleLineMethodCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 3.
 ]
 
 { #category : #'tests - literals' }

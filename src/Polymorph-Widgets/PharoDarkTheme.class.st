@@ -183,10 +183,10 @@ PharoDarkTheme >> controlButtonNormalFillStyleFor: aButton [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> dangerTextColor [
-	^ Color
-		r: 239
-		g: 83
-		b: 80
+	^ Color 
+		r: 239	
+		g: 83	
+		b: 80	
 		range: 255
 ]
 
@@ -377,7 +377,7 @@ PharoDarkTheme >> spotlightWindowColor [
 
 { #category : #'accessing colors' }
 PharoDarkTheme >> successTextColor [
-	^ Color green darker darker darker
+	^ Color green darker darker darker 
 ]
 
 { #category : #'fill-styles-taskbar' }

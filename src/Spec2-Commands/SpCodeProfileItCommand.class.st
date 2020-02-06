@@ -17,6 +17,6 @@ SpCodeProfileItCommand class >> defaultName [
 
 { #category : #execution }
 SpCodeProfileItCommand >> execute [
-
+	self flag: 'TODO'.
 	'OK' crLog
 ]

@@ -64,30 +64,16 @@ SpDemoNotebookPresenter >> dynamicPage [
 SpDemoNotebookPresenter >> initializePresenters [
 	notebook := self newNotebook.
 	checkbox := self newCheckBox.
-
 	notebook
 		addPage: self objectClassPage;
-		addPage: self objectInspectorPage;
-		addPage: self browserPage
+		addPage: self browserPage.
+
+	self class methods
+		select: [ :aMethod | aMethod isExtension and: [ aMethod selector endsWith: 'Page' ] ]
+		thenDo: [ :aMethod | notebook addPage: (self perform: aMethod selector ) ]
 ]
 
 { #category : #pages }
 SpDemoNotebookPresenter >> objectClassPage [
 	^ SpNotebookPage title: 'Object class' icon: (self iconNamed: #nautilusIcon) provider: [ MessageBrowser new messages: Object methods ]
-]
-
-{ #category : #pages }
-SpDemoNotebookPresenter >> objectInspectorPage [
-
-	^ SpNotebookPage
-		title: 'Object inspector'
-		icon: (self iconNamed: #nautilusIcon)
-		provider: [
-			self flag: #TODO. "Since EyeInspector was moved out Spec2 package, do not 
-			 reference it directly to not generate an explicit dependency. Dependency 
-			 is there, though... maybe is better to think in another example?"
-			(self class environment at: #EyeInspector) new
-				inspect: Object;
-				yourself ]
-		layoutSpec: #inspectorSpec
 ]

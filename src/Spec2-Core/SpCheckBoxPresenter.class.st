@@ -23,6 +23,17 @@ SpCheckBoxPresenter class >> adapterName [
 	^ #CheckBoxAdapter
 ]
 
+{ #category : #example }
+SpCheckBoxPresenter class >> example [ 
+
+	self new 
+		label: 'Example';
+		state: false;
+		whenActivatedDo: [ UIManager default defer: [ self inform: 'Activated' ] ];
+		whenDeactivatedDo: [ UIManager default defer: [ self inform: 'Deactivated' ] ];
+		openWithSpec
+]
+
 { #category : #specs }
 SpCheckBoxPresenter class >> title [
 

@@ -1690,6 +1690,11 @@ Object >> readSlotNamed: aName [
 	^(self class slotNamed: aName) read: self
 ]
 
+{ #category : #testing }
+Object >> refersToLiteral: aLitteral [
+	^ self literalEqual: aLitteral
+]
+
 { #category : #dependencies }
 Object >> release [
 	"Remove references to objects that may refer to the receiver. This message 
