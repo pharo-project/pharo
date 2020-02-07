@@ -190,20 +190,23 @@ Exception >> messageText: signalerText [
 { #category : #handling }
 Exception >> outer [
 	"Evaluate the enclosing exception action and return to here instead of signal if it resumes (see #resumeUnchecked:)."
-
-	| prevOuterContext |
+	| prevOuterContext currentHandler |
 	self isResumable 
 		ifTrue: [
 			prevOuterContext := outerContext. "required and accessed in resumeUnchecked:"
 			outerContext := thisContext contextTag ].
-	self pass.
+	currentHandler := handlerContext.
+	[self pass] ensure: [handlerContext := currentHandler].
 ]
 
 { #category : #handling }
 Exception >> pass [
 	"Yield control to the enclosing exception action for the receiver."
 
-	handlerContext nextHandlerContext handleSignal: self
+	| nextHandler |
+	nextHandler := handlerContext nextHandlerContext.
+	handlerContext := nil.
+	nextHandler handleSignal: self
 ]
 
 { #category : #printing }
@@ -232,8 +235,7 @@ Exception >> receiver [
 { #category : #handling }
 Exception >> resignalAs: replacementException [
 	"Signal an alternative exception in place of the receiver."
-	
-	^ replacementException signalIn: signalContext
+	signalContext resumeEvaluating: [replacementException signal]
 ]
 
 { #category : #handling }
