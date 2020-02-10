@@ -22,26 +22,6 @@ LayoutAbstractScope >> allSlotsReverseDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-LayoutAbstractScope >> atName: aName [
-	^ self atName: aName ifAbsent: [ SlotNotFound signalForName: aName ].
-]
-
-{ #category : #accessing }
-LayoutAbstractScope >> atName: aName ifAbsent: aBlock [
-	self allSlotsDo: [ :slot | 
-		slot name == aName ifTrue: [ ^ slot ]].
-	^ aBlock value
-]
-
-{ #category : #accessing }
-LayoutAbstractScope >> atName: aName ifFound: foundBlock ifNone: exceptionBlock [
-	self allSlotsDo: [ :slot | 
-		slot name == aName ifTrue: [ ^ foundBlock cull: slot ]].
-	^ exceptionBlock value
-	
-]
-
 { #category : #extending }
 LayoutAbstractScope >> extend [
 	^ self extend: { }
@@ -131,6 +111,21 @@ LayoutAbstractScope >> ownFieldSize [
 { #category : #reshaping }
 LayoutAbstractScope >> rebase: originalScope to: newScope [
 	self error: 'Should not happen'
+]
+
+{ #category : #accessing }
+LayoutAbstractScope >> resolveSlot: aName [
+	^ self 
+		resolveSlot: aName 
+		ifFound: [:slot | slot ] 
+		ifNone: [ SlotNotFound signalForName: aName ].
+]
+
+{ #category : #accessing }
+LayoutAbstractScope >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
+	self allSlotsDo: [ :slot | 
+		slot name == aName ifTrue: [ ^ foundBlock cull: slot ]].
+	^ exceptionBlock value
 ]
 
 { #category : #accessing }
