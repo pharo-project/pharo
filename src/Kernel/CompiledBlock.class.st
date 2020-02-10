@@ -148,3 +148,8 @@ CompiledBlock >> selector [
 CompiledBlock >> sourceCode [
 	^ self outerCode sourceCode
 ]
+
+{ #category : #'source code management' }
+CompiledBlock >> sourcePointer [
+	^self outerCode sourcePointer
+]
