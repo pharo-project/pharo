@@ -455,7 +455,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifFalse: [ #'Make unclosable' ]
 		ifTrue: [ #'Make closable' ].
 	(aBuilder item: closableLabel)
-		action: [ "aBuilder model perform: closableLabel asCamelCase uncapitalized "
+		action: [ 
 			(closableLabel = #'Make unclosable')
 				ifTrue: [ aBuilder model makeUnclosable ] 
 				ifFalse:[ aBuilder model makeClosable] ].
