@@ -422,54 +422,6 @@ SystemWindow class >> wakeUpTopWindowUponStartup [
 				[TopWindow model modelWakeUpIn: TopWindow]]]
 ]
 
-{ #category : #'menu items' }
-SystemWindow class >> windowMenuOn: aBuilder [
-	"To inject your custom items in a specific place, note that each item increases in order by 1. For example, if you wanted your item to be the second item, you could give it an #order: 1.5"
-
-	<windowMenu>
-	| closableLabel draggableLabel maximizeLabel |
-	(aBuilder item: #Close)
-		order: 1.0;
-		action: [ aBuilder model closeBoxHit ];
-		iconName: #windowCloseForm;
-		enabledBlock: [ aBuilder model allowedToClose ];
-		withSeparatorAfter.
-	(aBuilder item: #About)
-		action: [ aBuilder model showAbout ];
-		iconName: #smallHelpIcon;
-		withSeparatorAfter.
-	(aBuilder item: #'Change title')
-		action: [ aBuilder model relabel ].
-	(aBuilder item: #'Copy title')
-		action: [ aBuilder model copyTitle ];
-		withSeparatorAfter.
-	(aBuilder item: #'Send to back')
-		action: [ aBuilder model sendToBack ].
-	(aBuilder item: #'Make next-to-topmost')
-		action: [ aBuilder model makeSecondTopmost ];
-		withSeparatorAfter.
-	(aBuilder item: #'Create window group')
-		action: [ aBuilder model createWindowGroup ];
-		withSeparatorAfter.
-	closableLabel := aBuilder model mustNotClose
-		ifFalse: [ #'Make unclosable' ]
-		ifTrue: [ #'Make closable' ].
-	(aBuilder item: closableLabel)
-		action: [ aBuilder model perform: closableLabel asCamelCase uncapitalized ].
-	draggableLabel := aBuilder model isSticky
-		ifTrue: [ #'Make draggable' ]
-		ifFalse: [ #'Make undraggable' ].
-	(aBuilder item: draggableLabel)
-		action: [ aBuilder model toggleStickiness ];
-		withSeparatorAfter.
-	maximizeLabel := aBuilder model isMaximized
-		ifTrue: [ #Restore ]
-		ifFalse: [ #Maximize ].
-	(aBuilder item: maximizeLabel)
-		action: [ aBuilder model expandBoxHit ];
-		iconName: #windowMaximizeForm
-]
-
 { #category : #'top window' }
 SystemWindow class >> windowsIn: aWorld satisfying: windowBlock [
 	| windows |
@@ -704,6 +656,12 @@ SystemWindow >> boxExtent [
 	
 	label ifNil: [^(14 @ 14) * self displayScaleFactor].
 	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)  
+]
+
+{ #category : #controls }
+SystemWindow >> buildWindowMenu [
+  
+	^ self menu.
 ]
 
 { #category : #testing }
@@ -1265,10 +1223,13 @@ SystemWindow >> maximumExtent: aPoint [
 	^ self setProperty: #maximumExtent toValue: aPoint
 ]
 
-{ #category : #'menu building' }
-SystemWindow >> menuBuilder [
+{ #category : #api }
+SystemWindow >> menu [
 
-	^ menuBuilder ifNil: [ menuBuilder := PragmaMenuBuilder pragmaKeyword: self discoveredMenuPragmaKeyword model: self ].
+	| aMenu |
+	aMenu := MenuMorph new.
+	self windowMenuOn: aMenu.
+	^ aMenu
 ]
 
 { #category : #'resize/collapse' }
@@ -1932,4 +1893,49 @@ SystemWindow >> wantsYellowButtonMenu [
 { #category : #label }
 SystemWindow >> widthOfFullLabelText [
 	^StandardFonts windowTitleFont widthOfString: labelString
+]
+
+{ #category : #'menu items' }
+SystemWindow >> windowMenuOn: aMenuMorph [
+
+	| closableLabel draggableLabel maximizeLabel |
+	
+	(aMenuMorph add: #Close target: self selector: #closeBoxHit iconName: #windowCloseForm)
+		enabled: self allowedToClose.
+		
+	aMenuMorph addSeparator.	
+	
+	aMenuMorph add: #About target: self selector: #showAbout iconName: #smallHelpIcon.
+	aMenuMorph addSeparator.	
+
+	aMenuMorph add: #'Change title' target: self selector: #relabel.
+	aMenuMorph add: #'Copy title' target: self selector: #copyTitle.
+	aMenuMorph addSeparator.	
+
+	aMenuMorph add: #'Send to back' target: self selector: #sendToBack.
+	aMenuMorph add: #'Make next-to-topmost' target: self selector: #makeSecondTopmost.
+	aMenuMorph addSeparator.	
+
+	aMenuMorph add: #'Create window group' target: self selector: #createWindowGroup.
+	aMenuMorph addSeparator.	
+
+	closableLabel := self mustNotClose
+		ifFalse: [ #'Make unclosable' ]
+		ifTrue: [ #'Make closable' ].
+
+	aMenuMorph add: closableLabel target: self selector: closableLabel asCamelCase uncapitalized.
+
+	draggableLabel := self isSticky
+		ifTrue: [ #'Make draggable' ]
+		ifFalse: [ #'Make undraggable' ].
+
+	aMenuMorph add: draggableLabel target: self selector: #toggleStickiness.
+	aMenuMorph addSeparator.	
+
+	maximizeLabel := self isMaximized
+		ifTrue: [ #Restore ]
+		ifFalse: [ #Maximize ].
+
+	aMenuMorph add: maximizeLabel target: self selector: #expandBoxHit iconName: #windowMaximizeForm.
+
 ]
