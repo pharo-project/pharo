@@ -78,6 +78,12 @@ ClassDescriptionTest >> testSlots [
 	self assert: Context slots size equals: 4
 ]
 
+{ #category : #tests }
+ClassDescriptionTest >> testWhichCategoryIncludesSelector [
+	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing comment'.
+	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil.
+]
+
 { #category : #'tests - instance variables' }
 ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
 	self assert: (Point classThatDefinesInstVarNamed: 'x') equals: Point.
