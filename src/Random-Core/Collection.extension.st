@@ -31,6 +31,4 @@ Collection >> atRandom: aGenerator [
 	self do: [:each |
 		index = rand ifTrue: [^each].
 		index := index + 1].
-	^ self errorEmptyCollection
-
 ]
