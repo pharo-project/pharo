@@ -178,12 +178,12 @@ PointerLayout >> postCopy [
 
 { #category : #accessing }
 PointerLayout >> resolveSlot: aName [
-	^ slotScope atName: aName
+	^ slotScope resolveSlot: aName
 ]
 
 { #category : #accessing }
 PointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
-	^ slotScope atName: aName ifFound: foundBlock ifNone: noneBlock
+	^ slotScope resolveSlot: aName ifFound: foundBlock ifNone: noneBlock
 ]
 
 { #category : #testing }
