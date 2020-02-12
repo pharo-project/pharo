@@ -353,16 +353,6 @@ ExceptionTest >> testSimpleResume [
 ]
 
 { #category : #'tests - exceptiontester' }
-ExceptionTest >> testSimpleRetry [
-	self assertSuccess: (ExceptionTester new runTest: #simpleRetryTest ) 
-]
-
-{ #category : #'tests - exceptiontester' }
-ExceptionTest >> testSimpleRetryUsing [
-	self assertSuccess: (ExceptionTester new runTest: #simpleRetryUsingTest ) 
-]
-
-{ #category : #'tests - exceptiontester' }
 ExceptionTest >> testSimpleReturn [
 	self assertSuccess: (ExceptionTester new runTest: #simpleReturnTest ) 
 ]

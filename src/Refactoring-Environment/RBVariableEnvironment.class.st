@@ -57,7 +57,7 @@ RBVariableEnvironment class >> on: anEnvironment referencesToInstanceVariable: a
 	(aClass whichClassDefinesInstVar: aString) withAllSubclassesDo: 
 			[:cls | 
 			((cls whichSelectorsRead: aString) isEmpty not 
-				or: [(cls whichSelectorsStoreInto: aString) isEmpty not]) 
+				or: [(cls whichSelectorsWrite: aString) isEmpty not]) 
 					ifTrue: [newEnv addClass: cls instanceVariable: aString]].
 	^newEnv
 ]
@@ -70,7 +70,7 @@ RBVariableEnvironment class >> on: anEnvironment writersOfInstanceVariable: aStr
 				yourself.
 	(aClass whichClassDefinesInstVar: aString) withAllSubclassesDo: 
 			[:cls | 
-			(cls whichSelectorsStoreInto: aString) isEmpty
+			(cls whichSelectorsWrite: aString) isEmpty
 				ifFalse: [newEnv addClass: cls instanceVariableWriter: aString]].
 	^newEnv
 ]
@@ -278,7 +278,7 @@ RBVariableEnvironment >> environmentForInstanceVariable: aString in: aClass [
 			[:each | 
 			isWriter 
 				ifTrue: 
-					[(each whichSelectorsStoreInto: aString) 
+					[(each whichSelectorsWrite: aString) 
 						do: [:sel | selectorEnvironment addClass: each selector: sel]].
 			isReader 
 				ifTrue: 
@@ -348,7 +348,7 @@ RBVariableEnvironment >> instanceVariableSelectorsFor: aClass [
 	| selectors |
 	selectors := Set new.
 	#(#instanceVariables #instanceVariableReaders #instanceVariableWriters) 
-		with: #(#whichSelectorsAccess: #whichSelectorsRead: #whichSelectorsStoreInto:)
+		with: #(#whichSelectorsAccess: #whichSelectorsRead: #whichSelectorsWrite:)
 		do: [:var :sel | 
 			| instVars |
 			instVars := Set new.
