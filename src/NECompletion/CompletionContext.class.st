@@ -110,10 +110,7 @@ CompletionContext >> hasMessage [
 
 { #category : #entries }
 CompletionContext >> initEntries [
-	| suggestionsList sorter |
-	sorter := self class sorterClass new context: self.
-	suggestionsList := sorter sortCompletionList: (node completionEntries: position).
-	^ suggestionsList
+	^ sorter sortCompletionList: (node completionEntries: position) asOrderedCollection
 ]
 
 { #category : #accessing }
