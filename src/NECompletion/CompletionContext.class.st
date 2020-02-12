@@ -13,7 +13,8 @@ Class {
 		'isWorkspace',
 		'class',
 		'entries',
-		'editor'
+		'editor',
+		'sorter'
 	],
 	#classVars : [
 		'SorterClass'
@@ -77,6 +78,7 @@ CompletionContext >> engine: aCompletionEngine class: aClass source: aString pos
 	source := aString.
 	position := anInteger.
 	editor := aCompletionEngine editor.
+	sorter := self class sorterClass new context: self.
 	
 	isWorkspace:= aCompletionEngine 
 		ifNotNil: [ aCompletionEngine isScripting ]
@@ -152,6 +154,12 @@ CompletionContext >> parseSource [
 CompletionContext >> position [
 	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
 	^ position
+]
+
+{ #category : #accessing }
+CompletionContext >> sorter: anObject [
+	"this allows tests to change the sorter"
+	sorter := anObject
 ]
 
 { #category : #accessing }
