@@ -1280,7 +1280,7 @@ Collection >> union: aCollection [
 { #category : #enumerating }
 Collection >> withIndexDo: elementAndIndexBlock [
 	"Just like do: except that the iteration index supplies the second argument to the block"
-	"Support Set enumeration with a counter, even though not ordered"
+	"Support collection enumeration with a counter, even though not ordered"
 	| index |
 	index := 0.
 	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
