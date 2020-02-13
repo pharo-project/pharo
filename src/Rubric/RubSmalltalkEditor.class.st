@@ -357,7 +357,10 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionEngine [
-	^ completionEngine
+
+	^ completionEngine ifNil: [
+		self completionEngine: CompletionEngineClass new.
+		completionEngine ]
 ]
 
 { #category : #'completion engine' }
@@ -735,8 +738,7 @@ RubSmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 { #category : #initialization }
 RubSmalltalkEditor >> initialize [
 	super initialize.
-	notificationStrategy := RubTextInsertionStrategy new editor: self.
-	CompletionEngineClass ifNotNil: [self completionEngine: CompletionEngineClass new]
+	notificationStrategy := RubTextInsertionStrategy new editor: self
 ]
 
 { #category : #keymapping }
