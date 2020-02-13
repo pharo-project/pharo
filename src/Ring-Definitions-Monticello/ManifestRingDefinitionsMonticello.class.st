@@ -2,12 +2,12 @@
 Deprecated ring extensions for Monticello.
 "
 Class {
-	#name : #ManifestRingMonticello,
+	#name : #ManifestRingDefinitionsMonticello,
 	#superclass : #PackageManifest,
 	#category : #'Ring-Definitions-Monticello-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
-ManifestRingMonticello class >> manuallyResolvedDependencies [
+ManifestRingDefinitionsMonticello class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'Collections-Abstract')
 ]
