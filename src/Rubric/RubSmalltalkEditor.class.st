@@ -359,8 +359,9 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 RubSmalltalkEditor >> completionEngine [
 
 	^ completionEngine ifNil: [
-		self completionEngine: CompletionEngineClass new.
-		completionEngine ]
+		CompletionEngineClass ifNotNil: [
+			self completionEngine: CompletionEngineClass new.
+			completionEngine ] ]
 ]
 
 { #category : #'completion engine' }
