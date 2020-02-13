@@ -2,12 +2,12 @@
 Implementation for a new value holder
 "
 Class {
-	#name : #ManifestNewValueHolder,
+	#name : #ManifestNewValueHolderCore,
 	#superclass : #PackageManifest,
 	#category : #'NewValueHolder-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
-ManifestNewValueHolder class >> manuallyResolvedDependencies [
+ManifestNewValueHolderCore class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
