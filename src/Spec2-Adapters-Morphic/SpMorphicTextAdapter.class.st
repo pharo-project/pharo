@@ -41,8 +41,6 @@ SpMorphicTextAdapter >> buildWidget [
 		yourself.
 	
 	self setEditingModeFor: newWidget.
-	self presenter completionEngine ifNotNil: [ :engine | newWidget completionEngine: engine ].
-	self presenter whenCompletionEngineChangedDo: [ :engine | newWidget completionEngine: engine ].
 	self presenter whenTextChangedDo: [ :text | self setText: text to: newWidget ].
 	self presenter whenPlaceholderChangedDo: [ :text | self setGhostText: text to: newWidget ].
 	
