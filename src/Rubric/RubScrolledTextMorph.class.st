@@ -267,6 +267,12 @@ RubScrolledTextMorph >> columnRuler [
 	^ self rulerNamed: #column
 ]
 
+{ #category : #accessing }
+RubScrolledTextMorph >> completionEngine: aCompletionEngine [
+	
+	self textArea editor completionEngine: aCompletionEngine
+]
+
 { #category : #configure }
 RubScrolledTextMorph >> configureGhostText: aTextArea [
 	aTextArea width: self scrollBounds width.
