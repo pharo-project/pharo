@@ -244,7 +244,7 @@ RubSmalltalkEditorTest >> selection: anInterval [
 	selection := anInterval
 ]
 
-{ #category : #'tests-completion' }
+{ #category : #running }
 RubSmalltalkEditorTest >> setUp [
 
 	super setUp.
@@ -261,7 +261,7 @@ RubSmalltalkEditorTest >> source: aString [
 	source := aString
 ]
 
-{ #category : #'tests-completion' }
+{ #category : #running }
 RubSmalltalkEditorTest >> tearDown [
 
 	RubSmalltalkEditor completionEngineClass: currentCompletion.
