@@ -9,7 +9,8 @@ Class {
 		'#doItContext => SpObservableSlot',
 		'#doItReceiver => SpObservableSlot',
 		'#behavior => SpObservableSlot',
-		'#syntaxHighlight => SpObservableSlot'
+		'#syntaxHighlight => SpObservableSlot',
+		'#completionEngine => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Text'
 }
@@ -116,6 +117,18 @@ SpCodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
+{ #category : #accessing }
+SpCodePresenter >> completionEngine [
+
+	^ completionEngine
+]
+
+{ #category : #api }
+SpCodePresenter >> completionEngine: aCompletionEngine [
+
+	completionEngine := aCompletionEngine
+]
+
 { #category : #'api-doIt' }
 SpCodePresenter >> doItContext [
 
@@ -215,6 +228,13 @@ SpCodePresenter >> whenBehaviorChangedDo: aBlock [
 	self 
 		property: #behavior 
 		whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpCodePresenter >> whenCompletionEngineChangedDo: aBlock [
+	"Set a block to perform when the syntax highlight is enabled/disabled"
+
+	self property: #completionEngine whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
