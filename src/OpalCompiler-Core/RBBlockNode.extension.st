@@ -60,14 +60,6 @@ RBBlockNode >> owningScope [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBBlockNode >> sourceNodeExecutedForPC: anInteger [
-	self methodNode ir.
-	(self hasProperty: #ir) ifTrue: [ "FullBlockClosure"
-		^(self ir fullBlockInstructionForPC: anInteger) sourceNodeExecuted ].
-	^ self methodNode sourceNodeExecutedForPC: anInteger
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> sourceNodeForPC: anInteger [ 
 	self methodNode ir.
 	(self hasProperty: #ir) ifTrue: [ "FullBlockClosure"
