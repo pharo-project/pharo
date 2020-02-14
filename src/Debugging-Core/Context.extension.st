@@ -22,7 +22,7 @@ Context >> callPrimitive: primNumber [
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
 	| var |
-	var := (self sourceNodeExecuted scope) lookupVar: aSymbol.
+	var := self sourceNode scope lookupVar: aSymbol.
 	"Local variables"
 	var isTemp ifTrue: [^ self tempNamed: aSymbol].
 	"Instance variables"
@@ -55,12 +55,6 @@ Context >> namedTempAt: index put: aValue [
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be"
 	^self tempNamed: (self tempNames at: index) put: aValue
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> pcRange [
-	"return the debug highlight for aPC"
-	^self sourceNodeExecuted debugHighlightRange 
 ]
 
 { #category : #'*Debugging-Core' }
@@ -385,7 +379,7 @@ Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
 	| scope var |
-	scope := self sourceNodeExecuted scope.
+	scope := self sourceNode scope.
 	var := scope lookupVar: aName.
 	^var readFromContext: self scope: scope.
 ]
@@ -395,7 +389,7 @@ Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
 	| scope var |
-	scope := self sourceNodeExecuted scope.
+	scope := self sourceNode scope.
 	var := scope lookupVar: aName.
 	^var writeFromContext: self scope: scope value: anObject
 ]
@@ -410,7 +404,7 @@ Context >> tempNames [
 	In addition, even vars that are accessed in this context could be stored
 	in a temp vector, which itself would be a copied temp that has no name..."
 	
-	^ self sourceNodeExecuted scope allTempNames
+	^ self sourceNode scope allTempNames
 ]
 
 { #category : #'*Debugging-Core' }
