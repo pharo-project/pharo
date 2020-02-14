@@ -298,6 +298,11 @@ Metaclass >> removeSubclass: aClass [
 ]
 
 { #category : #'pool variables' }
+Metaclass >> sharedPoolNames [
+	^#()
+]
+
+{ #category : #'pool variables' }
 Metaclass >> sharedPools [
 	^OrderedCollection new.
 ]
