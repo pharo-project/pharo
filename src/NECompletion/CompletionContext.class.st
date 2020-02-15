@@ -67,11 +67,6 @@ CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
 ]
 
-{ #category : #accessing }
-CompletionContext >> editor [
-	^ engine editor
-]
-
 { #category : #'initialize-release' }
 CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	class := aClass. 
@@ -147,7 +142,6 @@ CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
 		noPattern: self isWorkspace;
-		requestor: self editor;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	ast doSemanticAnalysis.
