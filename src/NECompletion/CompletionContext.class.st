@@ -60,6 +60,7 @@ CompletionContext >> engine [
 CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	class := aClass. 
 	source := aString.
+	position := anInteger.
 	engine := aCompletionEngine.
 	sorter := self class sorterClass new context: self.	
 	self parseSource.
