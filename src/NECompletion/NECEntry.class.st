@@ -32,9 +32,7 @@ NECEntry >> activateOn: aCompletionContext [
 	entryContents := (NECPreferences spaceAfterCompletion
 				ifTrue: [ entryContents , ' ' ]
 				ifFalse: [ entryContents ]).
-	aCompletionContext engine
-		insertString: entryContents
-		atInterval: self replacementInterval
+	aCompletionContext replaceCompletionWith: entryContents
 ]
 
 { #category : #private }
@@ -82,10 +80,4 @@ NECEntry >> printOn: aStream [
 		nextPut: $,;
 		nextPutAll: self hightlightSymbol;
 		nextPut: $)
-]
-
-{ #category : #operations }
-NECEntry >> replacementInterval [
-
-	^ node sourceInterval
 ]

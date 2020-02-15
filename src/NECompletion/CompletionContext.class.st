@@ -131,6 +131,12 @@ CompletionContext >> parseSource [
 	TypingVisitor new visitNode: ast
 ]
 
+{ #category : #replacement }
+CompletionContext >> replaceCompletionWith: aString [
+	
+	engine replaceCompletionWith: aString
+]
+
 { #category : #accessing }
 CompletionContext >> sorter: anObject [
 	"this allows tests to change the sorter"
