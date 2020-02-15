@@ -308,15 +308,15 @@ NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 
 { #category : #drawing }
 NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
-	| symbol font type string preString highlightRectangle |
+	| necEntry font type string preString highlightRectangle |
 	
-	symbol := context entries at: index.
-	string := symbol contents.
+	necEntry := context entries at: index.
+	string := necEntry contents.
 	preString := string asLowercase findString: context completionToken asLowercase.
 	preString := preString <= 0
 		ifFalse: [ string first: preString - 1 ]
 		ifTrue: [ String empty ].
-	type := symbol hightlightSymbol.
+	type := necEntry hightlightSymbol.
 	font := self selectFont: type.
 	index = self selected
 		ifTrue: [ 
