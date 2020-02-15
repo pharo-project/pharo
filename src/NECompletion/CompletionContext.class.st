@@ -40,7 +40,7 @@ CompletionContext class >> sorterClass: aSorter [
 	SorterClass := aSorter
 ]
 
-{ #category : #accessing }
+{ #category : #entries }
 CompletionContext >> activateEntryAt: anIndex [
 
 	(self entries at: anIndex) activateOn: self
