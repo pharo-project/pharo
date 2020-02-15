@@ -12,6 +12,7 @@ Class {
 	#name : #CompletionEngine,
 	#superclass : #Object,
 	#instVars : [
+		'contextClass',
 		'menuMorph',
 		'editor',
 		'context',
@@ -59,7 +60,13 @@ CompletionEngine >> context [
 
 { #category : #private }
 CompletionEngine >> contextClass [
-	^self class contextClass
+	
+	^ contextClass ifNil: [ self class contextClass ]
+]
+
+{ #category : #accessing }
+CompletionEngine >> contextClass: aClass [ 
+	contextClass := aClass
 ]
 
 { #category : #accessing }
