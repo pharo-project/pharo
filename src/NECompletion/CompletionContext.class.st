@@ -67,6 +67,11 @@ CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
 ]
 
+{ #category : #accessing }
+CompletionContext >> engine [
+	^ engine
+]
+
 { #category : #'initialize-release' }
 CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	class := aClass. 
@@ -146,12 +151,6 @@ CompletionContext >> parseSource [
 CompletionContext >> position [
 	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
 	^ position
-]
-
-{ #category : #accessing }
-CompletionContext >> replaceCompletionWith: aString [
-	
-	engine replaceCompletionWith: aString
 ]
 
 { #category : #accessing }

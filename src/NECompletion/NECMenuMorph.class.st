@@ -480,24 +480,6 @@ NECMenuMorph >> initialize [
 ]
 
 { #category : #actions }
-NECMenuMorph >> insertCommonPrefixOrSelected [
-	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
-
-	| prefix |
-	context hasEntries ifFalse: [^ false].
-	context entries size = 1
-		ifTrue: [ ^ self insertSelected ].
-	prefix := context commonPrefix.
-	prefix = context completionToken ifTrue:[^ self insertSelected].
-	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
-	prefix size > engine editor wordAtCaret size
-		ifTrue: [ 
-			context replaceCompletionWith: prefix.
-			context narrowWith: engine editor wordAtCaret ].
-	^ true
-]
-
-{ #category : #actions }
 NECMenuMorph >> insertSelected [
 	context hasEntries ifFalse: [^ false].
 	context activateEntryAt: self selected.

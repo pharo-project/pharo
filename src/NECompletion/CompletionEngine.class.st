@@ -138,13 +138,8 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 				ifTrue: [ ^ true ] ].
 	keyCharacter = Character tab
 		ifTrue: [ 
-			NECPreferences expandPrefixes
-				ifFalse: [ 
-					menuMorph insertSelected
-						ifTrue: [ ^ true ] ]
-				ifTrue: [ 
-					menuMorph insertCommonPrefixOrSelected
-						ifTrue: [ ^ true ] ] ].
+			menuMorph insertSelected
+						ifTrue: [ ^ true ] ].
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
