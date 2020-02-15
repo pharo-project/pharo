@@ -46,22 +46,6 @@ CompletionContext >> activateEntryAt: anIndex [
 	(self entries at: anIndex) activateOn: self
 ]
 
-{ #category : #entries }
-CompletionContext >> commonPrefix [
-	"Longest match among the typed text and all menu entries"
-
- 	| seed matchLengths prefixLength |
-	entries := self entries.
-	seed := entries first contents asString.
-	matchLengths := entries allButFirst
-		collect: [ :entry | seed charactersExactlyMatching: entry contents asString ]
-		thenSelect: [ :e | e >= completionToken size ].
-	prefixLength := matchLengths isEmpty
-		ifTrue: [ 0 ]
-		ifFalse: [ matchLengths min ].
-	^ seed first: prefixLength.
-]
-
 { #category : #accessing }
 CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
@@ -145,12 +129,6 @@ CompletionContext >> parseSource [
 		parse.
 	ast doSemanticAnalysis.
 	TypingVisitor new visitNode: ast
-]
-
-{ #category : #accessing }
-CompletionContext >> position [
-	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
-	^ position
 ]
 
 { #category : #accessing }
