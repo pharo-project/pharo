@@ -86,3 +86,11 @@ NECSymbolEntry >> methodSourceDescription: aClass method: aCompiledMethod [
 		title: aClass printString
 		description: styledText
 ]
+
+{ #category : #operations }
+NECSymbolEntry >> replacementInterval [
+
+	| start |
+	start := node keywordsPositions first.
+	^ start to: (start + node selector size - 1)
+]
