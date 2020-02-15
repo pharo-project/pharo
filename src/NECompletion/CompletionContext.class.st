@@ -41,6 +41,12 @@ CompletionContext class >> sorterClass: aSorter [
 	SorterClass := aSorter
 ]
 
+{ #category : #accessing }
+CompletionContext >> activateEntryAt: anIndex [
+
+	(self entries at: anIndex) activateOn: self
+]
+
 { #category : #entries }
 CompletionContext >> commonPrefix [
 	"Longest match among the typed text and all menu entries"
@@ -55,16 +61,6 @@ CompletionContext >> commonPrefix [
 		ifTrue: [ 0 ]
 		ifFalse: [ matchLengths min ].
 	^ seed first: prefixLength.
-]
-
-{ #category : #accessing }
-CompletionContext >> completionAt: aNumber [
-	| entry |
-	
-	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECPreferences spaceAfterCompletion 
-		ifTrue: [ entry, ' ' ]
-		ifFalse: [ entry ]
 ]
 
 { #category : #accessing }
@@ -111,6 +107,22 @@ CompletionContext >> hasMessage [
 { #category : #entries }
 CompletionContext >> initEntries [
 	^ sorter sortCompletionList: (node completionEntries: position) asOrderedCollection
+]
+
+{ #category : #accessing }
+CompletionContext >> insertCompletion: aString [
+
+	| caret old pos offset|
+	caret := editor caret.
+	editor selectInvisiblyFrom: caret - self completionToken size to: caret - 1.
+	old := editor selection. 
+	editor replaceSelectionWith: aString.
+	offset := NECPreferences spaceAfterCompletion
+				ifTrue: [ 1 ]
+				ifFalse: [ 0 ].
+	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
+	editor selectAt: pos.
+	editor morph invalidRect: editor morph bounds
 ]
 
 { #category : #accessing }

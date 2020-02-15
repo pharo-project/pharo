@@ -24,6 +24,18 @@ NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
+{ #category : #operations }
+NECEntry >> activateOn: aCompletionContext [
+
+	| entryContents |
+	entryContents := self contents asSymbol separateKeywords.
+	aCompletionContext
+		insertCompletion:
+			(NECPreferences spaceAfterCompletion
+				ifTrue: [ entryContents , ' ' ]
+				ifFalse: [ entryContents ])
+]
+
 { #category : #private }
 NECEntry >> browse [
 	self subclassResponsibility

@@ -492,32 +492,15 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
 	prefix size > engine editor wordAtCaret size
 		ifTrue: [ 
-			self insertCompletion: prefix.
+			context insertCompletion: prefix.
 			context narrowWith: engine editor wordAtCaret ].
 	^ true
 ]
 
 { #category : #actions }
-NECMenuMorph >> insertCompletion: aString [
-
-	| caret old pos editor offset|
-	editor := engine editor.
-	caret := editor caret.
-	editor selectInvisiblyFrom: caret - context completionToken size to: caret - 1.
-	old := editor selection. 
-	editor replaceSelectionWith: aString.
-	offset := NECPreferences spaceAfterCompletion
-				ifTrue: [ 1 ]
-				ifFalse: [ 0 ].
-	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
-	editor selectAt: pos.
-	editor morph invalidRect: editor morph bounds
-]
-
-{ #category : #actions }
 NECMenuMorph >> insertSelected [
 	context hasEntries ifFalse: [^ false].
-	self insertCompletion: (context completionAt: self selected).
+	context activateEntryAt: self selected.
 	self delete.
 	^ true
 ]
