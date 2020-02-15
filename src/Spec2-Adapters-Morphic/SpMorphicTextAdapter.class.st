@@ -41,7 +41,6 @@ SpMorphicTextAdapter >> buildWidget [
 		yourself.
 	
 	self setEditingModeFor: newWidget.
-	
 	self presenter whenTextChangedDo: [ :text | self setText: text to: newWidget ].
 	self presenter whenPlaceholderChangedDo: [ :text | self setGhostText: text to: newWidget ].
 	

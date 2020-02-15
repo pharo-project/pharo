@@ -1532,14 +1532,6 @@ Behavior >> setFormat: aFormatInstanceDescription [
 
 ]
 
-{ #category : #accessing }
-Behavior >> sharedPoolNames [
-	^ self sharedPools collect: [:ea |
-		ea isObsolete
-			ifTrue: [ ea name ]
-			ifFalse: [ self environment keyAtIdentityValue: ea ] ]
-]
-
 { #category : #testing }
 Behavior >> shouldNotBeRedefined [
 	"Answer if the receiver should not be redefined.

@@ -51,7 +51,7 @@ Context >> sourceNode [
 { #category : #'*OpalCompiler-Core' }
 Context >> sourceNodeExecuted [
 	"When down in the stack, I return the node that executed"
-	^ (method sourceNodeExecutedForPC: self executedPC) 
+	^ (method sourceNodeForPC: self executedPC) 
 	"Uncomment the following once the pc->AST mapping is fixed"
 	"^ (method sourceNodeForPC: (previousPc ifNil: [ self startpc ])) "
 ]

@@ -402,13 +402,6 @@ IRInstruction >> sourceNode: parseNode [
 	
 ]
 
-{ #category : #mapping }
-IRInstruction >> sourceNodeExecuted [
-
-	^ self sourceNode
-	
-]
-
 { #category : #accessing }
 IRInstruction >> successorSequences [
 	"sent to last instruction in sequence which is expected to be a jump and return instruction"

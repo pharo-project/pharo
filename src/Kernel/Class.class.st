@@ -924,6 +924,14 @@ Class >> setName: aSymbol [
 	name := aSymbol.
 ]
 
+{ #category : #accessing }
+Class >> sharedPoolNames [
+	^ self sharedPools collect: [:ea |
+		ea isObsolete
+			ifTrue: [ ea name ]
+			ifFalse: [ self environment keyAtIdentityValue: ea ] ]
+]
+
 { #category : #'pool variables' }
 Class >> sharedPoolOfVarNamed: aString [
 	"Returns the SharedPool or nil from which the pool variable named aString is coming from."

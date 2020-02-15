@@ -147,3 +147,28 @@ ClassDescriptionTest >> testprintSubclassesOnLevelFilterNil [
 	ExampleForTest1 printSubclassesOn: stream level: 1 filter: nil.
 	self assert: result equals: expected
 ]
+
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testwhichSelectorsAccess [
+	self assert: ((Point whichSelectorsAccess: #y) includes: #y).
+	self deny: ((Point whichSelectorsAccess: #y) includes: #x).
+	self assert: ((Point whichSelectorsAccess: #x) includes: #setX:setY:).
+	
+	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty)
+]
+
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testwhichSelectorsRead [
+	self assert: ((Point whichSelectorsRead: #y) includes: #y).
+	self deny: ((Point whichSelectorsRead: #y) includes: #x).
+	
+	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty)
+]
+
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testwhichSelectorsWrite [
+	self assert: ((Point whichSelectorsWrite: #x) includes: #setX:setY:).
+	self deny: ((Point whichSelectorsWrite: #x) includes: #x).
+	
+	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty).
+]
