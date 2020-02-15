@@ -183,6 +183,20 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	^ false
 ]
 
+{ #category : #accessing }
+CompletionEngine >> insertString: aString atInterval: anInterval [
+	"Main API with the completion context.
+	Insert aString at anInterval.
+	Replace any content within that position.
+	The completion context uses this API to insert text into the text editor"
+	self editor
+		selectInvisiblyFrom: anInterval first
+		to: anInterval last.
+	self editor replaceSelectionWith: aString.
+	self editor selectAt: anInterval first + aString size.
+	self editor morph invalidRect: self editor morph bounds
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds.

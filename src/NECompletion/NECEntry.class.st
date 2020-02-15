@@ -29,11 +29,12 @@ NECEntry >> activateOn: aCompletionContext [
 
 	| entryContents |
 	entryContents := self contents asSymbol separateKeywords.
-	aCompletionContext
-		replaceCompletionWith:
-			(NECPreferences spaceAfterCompletion
+	entryContents := (NECPreferences spaceAfterCompletion
 				ifTrue: [ entryContents , ' ' ]
-				ifFalse: [ entryContents ])
+				ifFalse: [ entryContents ]).
+	aCompletionContext engine
+		insertString: entryContents
+		atInterval: node sourceInterval
 ]
 
 { #category : #private }
