@@ -10,7 +10,6 @@ Class {
 		'completionToken',
 		'ast',
 		'node',
-		'isWorkspace',
 		'class',
 		'entries',
 		'sorter',
@@ -79,11 +78,7 @@ CompletionContext >> engine: aCompletionEngine class: aClass source: aString pos
 	source := aString.
 	position := anInteger.
 	engine := aCompletionEngine.
-	sorter := self class sorterClass new context: self.
-	
-	isWorkspace:= aCompletionEngine 
-		ifNotNil: [ aCompletionEngine isScripting ]
-		ifNil: [ false ].
+	sorter := self class sorterClass new context: self.	
 	self parseSource.
 	node := ast nodeForOffset: position.
 	completionToken := node completionToken: position
@@ -132,6 +127,11 @@ CompletionContext >> insertCompletion: aString [
 		self editor morph bounds
 ]
 
+{ #category : #parsing }
+CompletionContext >> isWorkspace [
+	^ engine notNil and: [ engine isScripting ]
+]
+
 { #category : #accessing }
 CompletionContext >> message [
 	^self hasEntries 
@@ -158,7 +158,7 @@ CompletionContext >> node [
 CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
-		noPattern: isWorkspace;
+		noPattern: self isWorkspace;
 		requestor: self editor;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
