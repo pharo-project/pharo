@@ -13,8 +13,8 @@ Class {
 		'isWorkspace',
 		'class',
 		'entries',
-		'editor',
-		'sorter'
+		'sorter',
+		'engine'
 	],
 	#classVars : [
 		'SorterClass'
@@ -68,12 +68,17 @@ CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
 ]
 
+{ #category : #accessing }
+CompletionContext >> editor [
+	^ engine editor
+]
+
 { #category : #'initialize-release' }
 CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	class := aClass. 
 	source := aString.
 	position := anInteger.
-	editor := aCompletionEngine editor.
+	engine := aCompletionEngine.
 	sorter := self class sorterClass new context: self.
 	
 	isWorkspace:= aCompletionEngine 
@@ -111,18 +116,20 @@ CompletionContext >> initEntries [
 
 { #category : #accessing }
 CompletionContext >> insertCompletion: aString [
-
-	| caret old pos offset|
-	caret := editor caret.
-	editor selectInvisiblyFrom: caret - self completionToken size to: caret - 1.
-	old := editor selection. 
-	editor replaceSelectionWith: aString.
+	| caret old pos offset |
+	caret := self editor caret.
+	self editor
+		selectInvisiblyFrom: caret - self completionToken size
+		to: caret - 1.
+	old := self editor selection.
+	self editor replaceSelectionWith: aString.
 	offset := NECPreferences spaceAfterCompletion
-				ifTrue: [ 1 ]
-				ifFalse: [ 0 ].
+		ifTrue: [ 1 ]
+		ifFalse: [ 0 ].
 	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
-	editor selectAt: pos.
-	editor morph invalidRect: editor morph bounds
+	self editor selectAt: pos.
+	self editor morph invalidRect:
+		self editor morph bounds
 ]
 
 { #category : #accessing }
@@ -152,7 +159,7 @@ CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
 		noPattern: isWorkspace;
-		requestor: editor;
+		requestor: self editor;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	ast doSemanticAnalysis.
