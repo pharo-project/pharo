@@ -259,7 +259,11 @@ CompletionEngine >> openMenu [
 
 { #category : #accessing }
 CompletionEngine >> replaceCompletionWith: aString [
-	| caret old pos offset |
+	"Main API with the completion context.
+	Replace the current completion token (as it was extracted by the completion context) by aString.
+	The completion context uses this API to insert text into the text editor"
+
+	| caret old pos offset |	
 	caret := self editor caret.
 	self editor
 		selectInvisiblyFrom: caret - context completionToken size
