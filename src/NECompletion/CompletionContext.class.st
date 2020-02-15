@@ -111,20 +111,8 @@ CompletionContext >> initEntries [
 
 { #category : #accessing }
 CompletionContext >> insertCompletion: aString [
-	| caret old pos offset |
-	caret := self editor caret.
-	self editor
-		selectInvisiblyFrom: caret - self completionToken size
-		to: caret - 1.
-	old := self editor selection.
-	self editor replaceSelectionWith: aString.
-	offset := NECPreferences spaceAfterCompletion
-		ifTrue: [ 1 ]
-		ifFalse: [ 0 ].
-	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
-	self editor selectAt: pos.
-	self editor morph invalidRect:
-		self editor morph bounds
+	
+	engine insertCompletion: aString
 ]
 
 { #category : #parsing }

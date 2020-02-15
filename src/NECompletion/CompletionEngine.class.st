@@ -176,6 +176,23 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	^ false
 ]
 
+{ #category : #accessing }
+CompletionEngine >> insertCompletion: aString [
+	| caret old pos offset |
+	caret := self editor caret.
+	self editor
+		selectInvisiblyFrom: caret - context completionToken size
+		to: caret - 1.
+	old := self editor selection.
+	self editor replaceSelectionWith: aString.
+	offset := NECPreferences spaceAfterCompletion
+		ifTrue: [ 1 ]
+		ifFalse: [ 0 ].
+	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
+	self editor selectAt: pos.
+	self editor morph invalidRect: self editor morph bounds
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds.
