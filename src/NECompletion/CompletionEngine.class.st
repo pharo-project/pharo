@@ -273,27 +273,6 @@ CompletionEngine >> openMenu [
 		ifTrue: [ ^self closeMenu ].
 ]
 
-{ #category : #accessing }
-CompletionEngine >> replaceCompletionWith: aString [
-	"Main API with the completion context.
-	Replace the current completion token (as it was extracted by the completion context) by aString.
-	The completion context uses this API to insert text into the text editor"
-
-	| caret old pos offset |	
-	caret := self editor caret.
-	self editor
-		selectInvisiblyFrom: caret - context completionToken size
-		to: caret - 1.
-	old := self editor selection.
-	self editor replaceSelectionWith: aString.
-	offset := NECPreferences spaceAfterCompletion
-		ifTrue: [ 1 ]
-		ifFalse: [ 0 ].
-	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
-	self editor selectAt: pos.
-	self editor morph invalidRect: self editor morph bounds
-]
-
 { #category : #private }
 CompletionEngine >> resetCompletionDelay [
 	"Open the popup after 100ms and only after certain characters"
