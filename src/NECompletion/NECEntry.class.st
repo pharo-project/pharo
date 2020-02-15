@@ -30,7 +30,7 @@ NECEntry >> activateOn: aCompletionContext [
 	| entryContents |
 	entryContents := self contents asSymbol separateKeywords.
 	aCompletionContext
-		insertCompletion:
+		replaceCompletionWith:
 			(NECPreferences spaceAfterCompletion
 				ifTrue: [ entryContents , ' ' ]
 				ifFalse: [ entryContents ])

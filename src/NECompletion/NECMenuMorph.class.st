@@ -492,7 +492,7 @@ NECMenuMorph >> insertCommonPrefixOrSelected [
 	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
 	prefix size > engine editor wordAtCaret size
 		ifTrue: [ 
-			context insertCompletion: prefix.
+			context replaceCompletionWith: prefix.
 			context narrowWith: engine editor wordAtCaret ].
 	^ true
 ]

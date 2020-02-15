@@ -104,12 +104,6 @@ CompletionContext >> initEntries [
 	^ sorter sortCompletionList: (node completionEntries: position) asOrderedCollection
 ]
 
-{ #category : #accessing }
-CompletionContext >> insertCompletion: aString [
-	
-	engine insertCompletion: aString
-]
-
 { #category : #parsing }
 CompletionContext >> isWorkspace [
 	^ engine notNil and: [ engine isScripting ]
@@ -152,6 +146,12 @@ CompletionContext >> parseSource [
 CompletionContext >> position [
 	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
 	^ position
+]
+
+{ #category : #accessing }
+CompletionContext >> replaceCompletionWith: aString [
+	
+	engine replaceCompletionWith: aString
 ]
 
 { #category : #accessing }
