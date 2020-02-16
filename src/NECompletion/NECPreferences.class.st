@@ -28,7 +28,7 @@ Class {
 
 { #category : #private }
 NECPreferences class >> availableEngines [
-	^ CompletionEngine withAllSubclasses
+	^ AbstractCompletionEngine allSubclasses
 ]
 
 { #category : #accessing }
