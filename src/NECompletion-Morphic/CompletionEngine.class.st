@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'ContextClass'
 	],
-	#category : #'NECompletion-View'
+	#category : #'NECompletion-Morphic'
 }
 
 { #category : #accessing }

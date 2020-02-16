@@ -25,7 +25,7 @@ Class {
 		'detailPosition',
 		'engine'
 	],
-	#category : #'NECompletion-View'
+	#category : #'NECompletion-Morphic'
 }
 
 { #category : #'preferences-colors' }

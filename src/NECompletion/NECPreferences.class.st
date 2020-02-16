@@ -23,7 +23,7 @@ Class {
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace'
 	],
-	#category : #'NECompletion-Model'
+	#category : #'NECompletion-Preferences'
 }
 
 { #category : #private }
