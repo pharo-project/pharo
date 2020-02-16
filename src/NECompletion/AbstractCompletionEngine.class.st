@@ -1,13 +1,10 @@
 "
-replaceTokenInEditorWith: aString
+I am an abstract class defining the main interface of a completion engine.
 
-	""Main API with the completion context.
-	Replace the current completion token where the caret is by aString.
-	aString may contain a keyword selector string where each keyword is separated by two spaces (between:  and:)
-	After replacing, set the caret after the first keyword.
-	The completion context uses this API to insert text into the text editor""
-	
-	self subclassResponsibility
+- A completion engine is subscribed to a widget and receives events to provide completion.
+- Then, when the completion engine decides to accept an element of the completion, the completion engine knows how to modify the underlying text widget.
+
+I'm also used by the NECPreferences to detect the available engines in the system by checking my subclasses. It is important that I'm here, so there are no circular dependencies between the Morphic specific Completion engine and the abstract backend.
 "
 Class {
 	#name : #AbstractCompletionEngine,
