@@ -274,23 +274,30 @@ CompletionEngine >> openMenu [
 ]
 
 { #category : #replacement }
-CompletionEngine >> replaceCompletionWith: aString [
+CompletionEngine >> replaceTokenInEditorWith: aString [
 	"Main API with the completion context.
 	Replace the current completion token (as it was extracted by the completion context) by aString.
+	aString may contain a keyword selector string where each keyword is separated by two spaces (between:  and:)
+	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| caret old pos offset |	
+	| caret old positionAfterFirstKeyword offset firstKeyword |
+	"Try to correctly replace the current token in the word.
+	The code editor should be able to do it by himself"
 	caret := self editor caret.
 	self editor
 		selectInvisiblyFrom: caret - context completionToken size
 		to: caret - 1.
 	old := self editor selection.
 	self editor replaceSelectionWith: aString.
+	
 	offset := NECPreferences spaceAfterCompletion
 		ifTrue: [ 1 ]
 		ifFalse: [ 0 ].
-	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
-	self editor selectAt: pos.
+	firstKeyword := (aString copyUpTo: $ ) size.
+	positionAfterFirstKeyword := caret + firstKeyword + offset - old size.
+	self editor selectAt: positionAfterFirstKeyword.
+	
 	self editor morph invalidRect: self editor morph bounds
 ]
 

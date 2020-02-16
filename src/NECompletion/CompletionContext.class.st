@@ -132,9 +132,9 @@ CompletionContext >> parseSource [
 ]
 
 { #category : #replacement }
-CompletionContext >> replaceCompletionWith: aString [
+CompletionContext >> replaceTokenInEditorWith: aString [
 	
-	engine replaceCompletionWith: aString
+	engine replaceTokenInEditorWith: aString
 ]
 
 { #category : #accessing }
