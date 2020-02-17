@@ -25,7 +25,7 @@ Class {
 		'detailPosition',
 		'engine'
 	],
-	#category : #'NECompletion-View'
+	#category : #'NECompletion-Morphic'
 }
 
 { #category : #'preferences-colors' }
@@ -308,15 +308,15 @@ NECMenuMorph >> drawBottomScrollArrowOn: aCanvas [
 
 { #category : #drawing }
 NECMenuMorph >> drawLine: index on: aCanvas rectangle: rectangle [
-	| symbol font type string preString highlightRectangle |
+	| necEntry font type string preString highlightRectangle |
 	
-	symbol := context entries at: index.
-	string := symbol contents.
+	necEntry := context entries at: index.
+	string := necEntry contents.
 	preString := string asLowercase findString: context completionToken asLowercase.
 	preString := preString <= 0
 		ifFalse: [ string first: preString - 1 ]
 		ifTrue: [ String empty ].
-	type := symbol hightlightSymbol.
+	type := necEntry hightlightSymbol.
 	font := self selectFont: type.
 	index = self selected
 		ifTrue: [ 
@@ -480,44 +480,9 @@ NECMenuMorph >> initialize [
 ]
 
 { #category : #actions }
-NECMenuMorph >> insertCommonPrefixOrSelected [
-	"Return value: true if the user input has been handled, regardless of whether a prefix was inserted"
-
-	| prefix |
-	context hasEntries ifFalse: [^ false].
-	context entries size = 1
-		ifTrue: [ ^ self insertSelected ].
-	prefix := context commonPrefix.
-	prefix = context completionToken ifTrue:[^ self insertSelected].
-	self flag: 'Pending issue 7308, "controller editor wordAtCaret" below should be changed to "context completionToken"'.
-	prefix size > engine editor wordAtCaret size
-		ifTrue: [ 
-			self insertCompletion: prefix.
-			context narrowWith: engine editor wordAtCaret ].
-	^ true
-]
-
-{ #category : #actions }
-NECMenuMorph >> insertCompletion: aString [
-
-	| caret old pos editor offset|
-	editor := engine editor.
-	caret := editor caret.
-	editor selectInvisiblyFrom: caret - context completionToken size to: caret - 1.
-	old := editor selection. 
-	editor replaceSelectionWith: aString.
-	offset := NECPreferences spaceAfterCompletion
-				ifTrue: [ 1 ]
-				ifFalse: [ 0 ].
-	pos := caret + (aString copyUpTo: $ ) size + offset - old size.
-	editor selectAt: pos.
-	editor morph invalidRect: editor morph bounds
-]
-
-{ #category : #actions }
 NECMenuMorph >> insertSelected [
 	context hasEntries ifFalse: [^ false].
-	self insertCompletion: (context completionAt: self selected).
+	context activateEntryAt: self selected.
 	self delete.
 	^ true
 ]

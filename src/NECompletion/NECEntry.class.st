@@ -24,6 +24,18 @@ NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
+{ #category : #operations }
+NECEntry >> activateOn: aCompletionContext [
+
+	| entryContents |
+	"By default insert the contents of the entry instead of the token in the text editor"
+	entryContents := self contents asSymbol separateKeywords.
+	entryContents := (NECPreferences spaceAfterCompletion
+				ifTrue: [ entryContents , ' ' ]
+				ifFalse: [ entryContents ]).
+	aCompletionContext replaceTokenInEditorWith: entryContents
+]
+
 { #category : #private }
 NECEntry >> browse [
 	self subclassResponsibility
