@@ -162,7 +162,7 @@ ClassDescriptionTest >> testwhichSelectorsRead [
 	self assert: ((Point whichSelectorsRead: #y) includes: #y).
 	self deny: ((Point whichSelectorsRead: #y) includes: #x).
 	
-	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty)
+	self assert: ((Point whichSelectorsRead: #doesNotExist) isEmpty)
 ]
 
 { #category : #'tests - instance variables' }
@@ -170,5 +170,5 @@ ClassDescriptionTest >> testwhichSelectorsWrite [
 	self assert: ((Point whichSelectorsWrite: #x) includes: #setX:setY:).
 	self deny: ((Point whichSelectorsWrite: #x) includes: #x).
 	
-	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty).
+	self assert: ((Point whichSelectorsWrite: #doesNotExist) isEmpty).
 ]
