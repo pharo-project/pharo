@@ -782,16 +782,6 @@ SequenceableCollection >> do: aBlock without: anItem [
 		[:index | anItem = (self at: index) ifFalse:[aBlock value: (self at: index)]]
 ]
 
-{ #category : #enumerating }
-SequenceableCollection >> doWithIndex: elementAndIndexBlock [
-	"Just like do: except that the iteration index supplies the second argument to the block"
-	"Use the new version with consistent naming"
-
-	"(Array streamContents: [:stream | #(11 22 13) doWithIndex: [ :each :i | stream nextPut: (each * each + i)]]) >>> #(122 486 172)"
-
-	^ self withIndexDo: elementAndIndexBlock
-]
-
 { #category : #accessing }
 SequenceableCollection >> eighth [
 	"Answer the eighth element of the receiver.
