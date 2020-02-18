@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'combinations'
 	],
-	#category : #'Refactoring-Core'
+	#category : #'Refactoring-Core-Base'
 }
 
 { #category : #accessing }

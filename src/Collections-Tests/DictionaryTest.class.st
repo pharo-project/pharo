@@ -393,6 +393,29 @@ DictionaryTest >> testAsSet [
 ]
 
 { #category : #tests }
+DictionaryTest >> testAtUpdate [
+	| dict |
+	dict := {2->10. 100->5} asDictionary.
+	dict at: 2 update: [ :v | v+10 ].
+	self assert: (dict at: 2) equals: 20.
+	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound .
+	
+	
+	
+]
+
+{ #category : #tests }
+DictionaryTest >> testAtUpdateInitial [
+	| dict |
+	dict := {2->10. 100->5} asDictionary.
+	dict at: 5 update: [ :v | v+1 ] initial: [17].
+	dict at: 2 update: [ :v | v+10 ] initial: [0].
+	self assert: (dict at: 5) equals: 17.
+	self assert: (dict at: 2) equals: 20
+	
+]
+
+{ #category : #tests }
 DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 	"Tests that other dictionaries and their classes respond to the messages
 	in the public protocols (ignoring extensions, private, printing, copying,

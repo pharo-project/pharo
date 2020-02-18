@@ -176,10 +176,11 @@ BehaviorTest >> testMethodsReadingSlot [
 BehaviorTest >> testMethodsWritingSlot [
 	| numberViaSlot numberViaIVar |
 	"Check the source code availability to do not fail on images without sources"
-	(Point >> #x) hasSourceCode ifFalse: [ ^ self ].
-
-	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x)) size.
-	numberViaIVar := (Point whichSelectorsStoreInto: 'x') size.
+	(Point >> #x) hasSourceCode
+		ifFalse: [ ^ self ].
+	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x))
+		size.
+	numberViaIVar := (Point whichSelectorsWrite: 'x') size.
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 

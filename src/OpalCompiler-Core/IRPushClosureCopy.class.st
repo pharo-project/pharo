@@ -103,11 +103,6 @@ IRPushClosureCopy >> numArgs: aSmallInteger [
 	numArgs := aSmallInteger
 ]
 
-{ #category : #mapping }
-IRPushClosureCopy >> sourceNodeExecuted [
-	^self sourceNode parent
-]
-
 { #category : #accessing }
 IRPushClosureCopy >> successorSequences [
 

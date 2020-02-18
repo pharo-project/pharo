@@ -9,7 +9,7 @@ Class {
 		'temporaries',
 		'difference'
 	],
-	#category : #'Refactoring-Core'
+	#category : #'Refactoring-Core-Base'
 }
 
 { #category : #accessing }
