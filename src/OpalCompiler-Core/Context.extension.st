@@ -44,8 +44,13 @@ Context >> isReturnAt: aPC [
 
 { #category : #'*OpalCompiler-Core' }
 Context >> sourceNode [
-	"Return the source node of the method or the block of this context"
-	^ self sourceNodeExecuted enclosingMethodOrBlockNode
+	"Return the source node of the method or the block of this context. 
+	Note: we can not just use the startPC to find the node as this ignores optimized blocks.
+	We instead get the executed PC and then go up to the sourceNode of the block or method. 
+	For the topmost context, sourceNodeExecuted is off by one but that is not a problem as 
+	we still end up getting the node we want (via the bytecode that created it)"
+
+	^ self sourceNodeExecuted methodOrBlockNode
 ]
 
 { #category : #'*OpalCompiler-Core' }
