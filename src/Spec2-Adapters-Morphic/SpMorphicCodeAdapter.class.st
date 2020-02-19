@@ -18,6 +18,9 @@ SpMorphicCodeAdapter >> buildWidget [
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
 		self setEditingModeFor: newWidget ].
 	
+	self presenter completionEngine ifNotNil: [ :engine | newWidget completionEngine: engine ].
+	self presenter whenCompletionEngineChangedDo: [ :engine | newWidget completionEngine: engine ].
+	
 	^ newWidget
 ]
 

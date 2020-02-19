@@ -816,11 +816,6 @@ CompiledCode >> sourceNode [
 ]
 
 { #category : #accessing }
-CompiledCode >> sourceNodeExecutedForPC: arg1 [ 
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 CompiledCode >> sourceNodeForPC: arg1 [ 
 	^ self subclassResponsibility
 ]

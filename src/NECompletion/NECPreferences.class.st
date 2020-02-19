@@ -23,12 +23,12 @@ Class {
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace'
 	],
-	#category : #'NECompletion-Model'
+	#category : #'NECompletion-Preferences'
 }
 
 { #category : #private }
 NECPreferences class >> availableEngines [
-	^ CompletionEngine withAllSubclasses
+	^ AbstractCompletionEngine allSubclasses
 ]
 
 { #category : #accessing }
@@ -218,9 +218,6 @@ NECPreferences class >> settingsOn: aBuilder [
 							g: 0.823069403714565 
 							b: 0.823069403714565 alpha: 1.0);
 						label: 'Background Color'.
-					(aBuilder setting: #expandPrefixes)
-						default: true;
-						label: 'Complete common prefixes using TAB in the suggested completions'.
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.

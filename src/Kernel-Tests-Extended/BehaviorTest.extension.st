@@ -15,9 +15,3 @@ BehaviorTest >> testAllReferencesTo [
 	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod refersToLiteral: #+ ]) ].
 	self assert: (result anySatisfy: [ :each | each methodClass = self class and: [ each selector = #testAllReferencesTo ] ])
 ]
-
-{ #category : #'*Kernel-Tests-Extended' }
-BehaviorTest >> testWhichSelectorsAccess [
-	self assert: ((Point whichSelectorsAccess: 'x') includes: #x).
-	self deny:  ((Point whichSelectorsAccess: 'y') includes: #x).
-]

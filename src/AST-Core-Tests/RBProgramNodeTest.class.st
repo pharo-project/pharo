@@ -221,22 +221,22 @@ RBProgramNodeTest >> testRemovePropertyIfAbsent [
 
 { #category : #'testing-replacing' }
 RBProgramNodeTest >> testReplaceAssignment [
-	| tree |
+	| tree expectedTree |
 	tree := self parseMethod: 'run sum := 2 + 2'.
+	expectedTree := self parseMethod: 'run multpppp := 2 * 2'.
+	
 	tree body statements first replaceWith: (self parseExpression: 'multpppp := 2 * 2').
-	self assert: tree newSource
-		  equals: 'run
-	multpppp := 2 * 2'
+	self assert: tree equals: expectedTree.
 ]
 
 { #category : #'testing-replacing' }
 RBProgramNodeTest >> testReplaceBlock [
-	| tree |
+	| tree expectedTree |
 	tree := self parseMethod: 'run self foo ifNil: [ ^ true ]'.
+	expectedTree := self parseMethod: 'run self foo ifNil: [ ^ false ]'.
+	
 	tree body statements first arguments first replaceWith: (self parseExpression: '[ ^ false ]').
-	self assert: tree newSource
-		  equals: 'run
-	self foo ifNil: [ ^ false ]'
+	self assert: tree  equals: expectedTree
 ]
 
 { #category : #'testing-replacing' }

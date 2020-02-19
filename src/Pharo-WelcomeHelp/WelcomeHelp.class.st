@@ -230,7 +230,7 @@ WelcomeHelp class >> openForRelease [
 		ifFound: [ :oldWindow | oldWindow delete ].
 	browser := self open.
 	window := browser dependents detect: findBlock.
-	window extent: 700@400.
+	window extent: 700@500.
 	window center: Display extent / 2
 ]
 

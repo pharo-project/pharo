@@ -33,7 +33,7 @@ Class {
 		'requestor',
 		'failBlock'
 	],
-	#category : #NumberParser
+	#category : #'NumberParser-Base'
 }
 
 { #category : #testing }
@@ -99,14 +99,14 @@ NumberParser class >> squeezeNumberOutOfString: stringOrStream onError: errorBlo
 
 { #category : #accessing }
 NumberParser >> allowPlusSign [
-	"return a boolean indicating if plus sign is allowed or not"
+	"Return a boolean indicating if plus sign is allowed or not"
 
 	^false
 ]
 
 { #category : #accessing }
 NumberParser >> allowPlusSignInExponent [
-	"return a boolean indicating if plus sign is allowed or not in exponent"
+	"Return a boolean indicating if plus sign is allowed or not in exponent"
 
 	^self allowPlusSign
 ]
@@ -157,7 +157,7 @@ NumberParser >> makeFloatFromMantissa: m exponent: k base: aRadix [
 
 { #category : #'parsing-private' }
 NumberParser >> makeIntegerOrScaledIntegerOrFloat [
-	"at this point, there is no digit, nor fractionPart.
+	"At this point, there is no digit, nor fractionPart.
 	maybe it can be a scaled decimal with fraction omitted...
 	integer with negative exponent can be floats not fractions"
 	
@@ -175,7 +175,7 @@ NumberParser >> makeIntegerOrScaledIntegerOrFloat [
 
 { #category : #'parsing-private' }
 NumberParser >> makeScaledDecimalWithNumberOfNonZeroFractionDigits: numberOfNonZeroFractionDigits andNumberOfTrailingZeroInFractionPart: numberOfTrailingZeroInFractionPart [
-	"at this point integerPart fractionPart and scale have been read out (in inst var).
+	"At this point integerPart fractionPart and scale have been read out (in inst var).
 	Form a ScaledDecimal.
 	Care of eliminating trailing zeroes from the fractionPart"
 	
@@ -298,8 +298,8 @@ NumberParser >> nextLargeIntegerBase: aRadix nPackets: nPackets [
 
 { #category : #'parsing-public' }
 NumberParser >> nextNumber [
-	"main method for reading a number.
-	This one can read Float Integer and ScaledDecimal"
+	"Main method for reading a number.
+	 This one can read Float Integer and ScaledDecimal"
 	
 	| numberOfTrailingZeroInIntegerPart |
 	base := 10.
@@ -443,7 +443,7 @@ NumberParser >> on: aStringOrStream [
 { #category : #'parsing-private' }
 NumberParser >> peekSignIsMinus [
 	"Peek an optional sign from sourceStream.
-	Answer true if it is minus sign"
+	 Answer true if it is minus sign"
 
 	| isMinus |
 	isMinus := sourceStream peekFor: $-.
@@ -453,11 +453,10 @@ NumberParser >> peekSignIsMinus [
 
 { #category : #'parsing-private' }
 NumberParser >> readExponent [
-	"read the exponent if any (stored in instVar).
-	Answer true if found, answer false if none.
-	If exponent letter is not followed by a digit,
-	this is not considered as an error.
-	Exponent are always read in base 10."
+	"Read the exponent if any (stored in instVar).
+	 Answer true if found, answer false if none.
+	 If exponent letter is not followed by a digit, this is not considered as an error.
+  	 Exponent are always read in base 10."
 
 	| eneg epos |
 	exponent := 0.
@@ -496,7 +495,7 @@ NumberParser >> readNamedFloatOrFail [
 
 { #category : #'parsing-private' }
 NumberParser >> readNumberWithFractionPartNumberOfTrailingZeroInIntegerPart: numberOfTrailingZeroInIntegerPart [
-	"at this stage, sign integerPart and a decimal point have been read.
+	"At this stage, sign integerPart and a decimal point have been read.
 	try and form a number with a fractionPart"
 	
 	| numberOfNonZeroFractionDigits numberOfTrailingZeroInFractionPart mantissa value |

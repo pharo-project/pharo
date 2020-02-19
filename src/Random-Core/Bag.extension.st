@@ -7,12 +7,10 @@ Bag >> atRandom: aGenerator [
 	this instead of #atRandom for better uniformity of random numbers because 
 	only you use the generator. Causes an error if self has no elements."
 
-	| rand index |
+	| index |
  	self emptyCheck.
- 	rand := aGenerator nextInt: self size.
+ 	index := aGenerator nextInt: self size.
  	"overwritten to use a faster enumeration"
- 	index := 0.
  	self doWithOccurrences: [ :key :count | 
- 		index := index + count.
- 		rand <= index ifTrue: [ ^ key ] ]
+ 		(index := index - count) <= 0 ifTrue: [ ^key ] ]
 ]

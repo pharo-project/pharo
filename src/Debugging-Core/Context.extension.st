@@ -22,7 +22,7 @@ Context >> callPrimitive: primNumber [
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
 	| var |
-	var := (self sourceNodeExecuted scope) lookupVar: aSymbol.
+	var := self sourceNode scope lookupVar: aSymbol.
 	"Local variables"
 	var isTemp ifTrue: [^ self tempNamed: aSymbol].
 	"Instance variables"
@@ -58,12 +58,6 @@ Context >> namedTempAt: index put: aValue [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> pcRange [
-	"return the debug highlight for aPC"
-	^self sourceNodeExecuted debugHighlightRange 
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> pcRangeContextIsActive: contextIsActive [
  	"return the debug highlight for aPC"		 
 	| thePC |
@@ -78,26 +72,6 @@ Context >> pcRangeContextIsActive: contextIsActive [
  	thePC := contextIsActive ifTrue: [thePC] ifFalse: [thePC - 1].		
 
   	^self method rangeForPC: thePC
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> previousPcWithCorrectMapping [
-	"Answer a pc inside the enclosing block or mathod that is correctly mapped to an AST node"
-	"This is an ugly and temporary fix for Pharo 3. 
-	Must be removed as soon as mappings are fixed"
-	| neighborPC |
-	neighborPC := self isDead 
-		ifTrue: [ self startpc ]
-		ifFalse: [ self previousPc ifNil: [self startpc]].
-	"There is a pushLiteral: nil bytecode for each temps in a block. 
-	There is a 'pushTemp:' bytecode for each copied value of a block.
-	These bytecodes are not mapped to any IR.
-	We skip both"
-	[ self isPushLiteralNil: neighborPC ] whileTrue: [ neighborPC := neighborPC + 1 ].
-	[ self isPushTemp: neighborPC ] whileTrue: [ neighborPC := neighborPC + 1 ].
-	"The block return ir instruction is mapped to the block instead of the sequence AST node. So we go just before it"
-	(self isBlockReturn: neighborPC) ifTrue: [ neighborPC := neighborPC - 1 ].
-	^ neighborPC
 ]
 
 { #category : #'*Debugging-Core' }
@@ -385,7 +359,7 @@ Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
 	| scope var |
-	scope := self sourceNodeExecuted scope.
+	scope := self sourceNode scope.
 	var := scope lookupVar: aName.
 	^var readFromContext: self scope: scope.
 ]
@@ -395,7 +369,7 @@ Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
 	| scope var |
-	scope := self sourceNodeExecuted scope.
+	scope := self sourceNode scope.
 	var := scope lookupVar: aName.
 	^var writeFromContext: self scope: scope value: anObject
 ]
@@ -410,7 +384,7 @@ Context >> tempNames [
 	In addition, even vars that are accessed in this context could be stored
 	in a temp vector, which itself would be a copied temp that has no name..."
 	
-	^ self sourceNodeExecuted scope allTempNames
+	^ self sourceNode scope allTempNames
 ]
 
 { #category : #'*Debugging-Core' }

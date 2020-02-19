@@ -10,8 +10,9 @@ The completion occurs in specific character position. The editor is responsible 
 "
 Class {
 	#name : #CompletionEngine,
-	#superclass : #Object,
+	#superclass : #AbstractCompletionEngine,
 	#instVars : [
+		'contextClass',
 		'menuMorph',
 		'editor',
 		'context',
@@ -21,7 +22,7 @@ Class {
 	#classVars : [
 		'ContextClass'
 	],
-	#category : #'NECompletion-View'
+	#category : #'NECompletion-Morphic'
 }
 
 { #category : #accessing }
@@ -59,7 +60,13 @@ CompletionEngine >> context [
 
 { #category : #private }
 CompletionEngine >> contextClass [
-	^self class contextClass
+	
+	^ contextClass ifNil: [ self class contextClass ]
+]
+
+{ #category : #accessing }
+CompletionEngine >> contextClass: aClass [ 
+	contextClass := aClass
 ]
 
 { #category : #accessing }
@@ -131,13 +138,8 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 				ifTrue: [ ^ true ] ].
 	keyCharacter = Character tab
 		ifTrue: [ 
-			NECPreferences expandPrefixes
-				ifFalse: [ 
-					menuMorph insertSelected
-						ifTrue: [ ^ true ] ]
-				ifTrue: [ 
-					menuMorph insertCommonPrefixOrSelected
-						ifTrue: [ ^ true ] ] ].
+			menuMorph insertSelected
+						ifTrue: [ ^ true ] ].
 	keyCharacter = Character backspace
 		ifTrue: [ 
 			editor isCaretBehindChar
@@ -255,6 +257,34 @@ CompletionEngine >> openMenu [
 	
 	(context isNil or: [ context hasEntries not ])
 		ifTrue: [ ^self closeMenu ].
+]
+
+{ #category : #replacement }
+CompletionEngine >> replaceTokenInEditorWith: aString [
+	"Main API with the completion context.
+	Replace the current completion token (as it was extracted by the completion context) by aString.
+	aString may contain a keyword selector string where each keyword is separated by two spaces (between:  and:)
+	After replacing, set the caret after the first keyword.
+	The completion context uses this API to insert text into the text editor"
+
+	| caret old positionAfterFirstKeyword offset firstKeyword |
+	"Try to correctly replace the current token in the word.
+	The code editor should be able to do it by himself"
+	caret := self editor caret.
+	self editor
+		selectInvisiblyFrom: caret - context completionToken size
+		to: caret - 1.
+	old := self editor selection.
+	self editor replaceSelectionWith: aString.
+	
+	offset := NECPreferences spaceAfterCompletion
+		ifTrue: [ 1 ]
+		ifFalse: [ 0 ].
+	firstKeyword := (aString copyUpTo: $ ) size.
+	positionAfterFirstKeyword := caret + firstKeyword + offset - old size.
+	self editor selectAt: positionAfterFirstKeyword.
+	
+	self editor morph invalidRect: self editor morph bounds
 ]
 
 { #category : #private }
