@@ -81,6 +81,17 @@ ExternalAddress >> + offset [
 	^bytes asExternalPointer
 ]
 
+{ #category : #comparing }
+ExternalAddress >> = other [
+
+	self == other ifTrue: [ ^ true ].
+	self species == other species ifFalse: [ ^ false ].
+	1 to: self size do: [ :index | 
+		(self at: index) = (other at: index) ifFalse: [ ^ false ] ].
+	
+	^ true
+]
+
 { #category : #private }
 ExternalAddress >> asByteArrayPointer [
 	"Answer a ByteArray containing a copy of pointer to the contents of the receiver."
