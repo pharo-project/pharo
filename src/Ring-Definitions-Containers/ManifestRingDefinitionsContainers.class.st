@@ -2,12 +2,12 @@
 Deprecated package for Ring Core containerss
 "
 Class {
-	#name : #ManifestRingCoreContainers,
+	#name : #ManifestRingDefinitionsContainers,
 	#superclass : #PackageManifest,
 	#category : #'Ring-Definitions-Containers-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
-ManifestRingCoreContainers class >> manuallyResolvedDependencies [
+ManifestRingDefinitionsContainers class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'Collections-Abstract' #'Collections-Strings' #'System-Support')
 ]
