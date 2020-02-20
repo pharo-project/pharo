@@ -1,9 +1,24 @@
 Extension { #name : #ContextTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
+ContextTest >> testScopeOptimizedBlock [
+	"When asking for the scope of a block that is not there at runtime, we nevertheless what to 
+	get the corresponding scope of the optimized block"
+	
+	| scope method |
+	
+	method := Smalltalk compiler
+							  class: Object;
+							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext scope ]'.
+	scope := method valueWithReceiver: nil arguments: #(). 
+	
+	self assert: scope class equals: OCOptimizedBlockScope .
+]
+
+{ #category : #'*Kernel-Tests-WithCompiler' }
 ContextTest >> testSourceNodeOptimizedBlock [
 	"When asking for the sourceNode of a block that is not there at runtime, we nevertheless what to 
-	get the corresponding ASTnode of the inlined Block"
+	get the corresponding ASTnode of the ASTNode that created thisContext, the method in this case"
 	
 	| sourceNode method |
 	
@@ -12,7 +27,7 @@ ContextTest >> testSourceNodeOptimizedBlock [
 							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext sourceNode ]'.
 	sourceNode := method valueWithReceiver: nil arguments: #(). 
 	
-	self assert: sourceNode isBlock.
+	self assert: sourceNode isMethod.
 ]
 
 { #category : #'*Kernel-Tests-WithCompiler' }
