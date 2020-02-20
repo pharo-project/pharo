@@ -63,7 +63,7 @@ Context >> pcRangeContextIsActive: contextIsActive [
 	| thePC |
 
   	"make sure we have some usable value (can happen for contexts in the ProcessBrowser"		
- 	thePC := pc ifNil: [self method endPC].		
+ 	thePC := self isDead ifTrue: [self endPC] ifFalse: [pc].
 
   	"When on the top of the stack the pc is pointing to right instruction, but deeper in the stack		
  	the pc was already advanced one bytecode, so we need to go back this one bytecode, which		
