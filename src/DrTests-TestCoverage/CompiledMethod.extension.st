@@ -2,5 +2,5 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*DrTests-TestCoverage' }
 CompiledMethod >> drTestsName [
-	^ self selector asString
+	^ self methodClass asString, '>>#', self selector asString
 ]
