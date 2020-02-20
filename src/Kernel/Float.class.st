@@ -840,6 +840,11 @@ Float >> deepCopy [
 ]
 
 { #category : #'mathematical functions' }
+Float >> exponent [
+	^ self subclassResponsibility
+]
+
+{ #category : #'mathematical functions' }
 Float >> floorLog: radix [
 	"Answer the floor of the log base radix of the receiver.
 	The result may be off by one due to rounding errors, except in base 2."
@@ -1117,6 +1122,11 @@ Float >> storeOn: aStream base: base [
 				ifFalse: [self > 0.0
 						ifTrue: [aStream nextPutAll: 'Float infinity']
 						ifFalse: [aStream nextPutAll: 'Float infinity negated']]]
+]
+
+{ #category : #'mathematical functions' }
+Float >> timesTwoPower: anInteger [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #copying }
