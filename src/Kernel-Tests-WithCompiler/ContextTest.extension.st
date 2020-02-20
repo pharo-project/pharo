@@ -5,14 +5,14 @@ ContextTest >> testScopeOptimizedBlock [
 	"When asking for the scope of a block that is not there at runtime, we nevertheless what to 
 	get the corresponding scope of the optimized block"
 	
-	| scope method |
+	| astScope method |
 	
 	method := Smalltalk compiler
 							  class: Object;
-							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext scope ]'.
-	scope := method valueWithReceiver: nil arguments: #(). 
+							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext astScope ]'.
+	astScope := method valueWithReceiver: nil arguments: #(). 
 	
-	self assert: scope class equals: OCOptimizedBlockScope .
+	self assert: astScope class equals: OCOptimizedBlockScope .
 ]
 
 { #category : #'*Kernel-Tests-WithCompiler' }
