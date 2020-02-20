@@ -2,12 +2,12 @@
 Primary package for Transcript related implementation
 "
 Class {
-	#name : #ManifestTranscript,
+	#name : #ManifestTranscriptCore,
 	#superclass : #PackageManifest,
 	#category : #'Transcript-Core-Manifest'
 }
 
 { #category : #'meta-data - dependency analyser' }
-ManifestTranscript class >> manuallyResolvedDependencies [
+ManifestTranscriptCore class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'System-Support')
 ]
