@@ -44,11 +44,6 @@ RBProgramNode >> doSemanticAnalysisIn: aClass [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBProgramNode >> enclosingMethodOrBlockNode [
-	^ self methodOrBlockNode 
-]
-
-{ #category : #'*opalcompiler-core' }
 RBProgramNode >> irInstruction [
 	^ self methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
 ]
