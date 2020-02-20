@@ -1,6 +1,17 @@
 Extension { #name : #Context }
 
 { #category : #'*OpalCompiler-Core' }
+Context >> astScope [
+	"Return the scope of the method or the block of this context. 
+	Note: we can not just use #sourceNode as this ignores optimized blocks.
+	We instead use sourceNodeExecuted and then get the the block or methodnode on the AST level.
+	For the topmost context, sourceNodeExecuted is off by one but that is not a problem as 
+	we still end up getting the scope  we want"
+
+	^ self sourceNodeExecuted methodOrBlockNode scope
+]
+
+{ #category : #'*OpalCompiler-Core' }
 Context >> executedPC [
 	"If this context is already perform message send and waiting return 
 	then executed PC is previous one. So we start analazing with previous PC.
@@ -44,19 +55,15 @@ Context >> isReturnAt: aPC [
 
 { #category : #'*OpalCompiler-Core' }
 Context >> sourceNode [
-	"Return the source node of the method or the block of this context. 
-	Note: we can not just use the startPC to find the node as this ignores optimized blocks.
-	We instead get the executed PC and then go up to the sourceNode of the block or method. 
-	For the topmost context, sourceNodeExecuted is off by one but that is not a problem as 
-	we still end up getting the node we want (via the bytecode that created it)"
+	"Return the source node that created the method or the block of this context"
 
-	^ self sourceNodeExecuted methodOrBlockNode
+	^ closureOrNil
+		ifNil: [ self method sourceNode ]
+		ifNotNil: [ closureOrNil sourceNode ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 Context >> sourceNodeExecuted [
 	"When down in the stack, I return the node that executed"
-	^ (method sourceNodeForPC: self executedPC) 
-	"Uncomment the following once the pc->AST mapping is fixed"
-	"^ (method sourceNodeForPC: (previousPc ifNil: [ self startpc ])) "
+	^ method sourceNodeForPC: self executedPC
 ]
