@@ -1,10 +1,5 @@
 Extension { #name : #RBBlockNode }
 
-{ #category : #'*opalcompiler-core' }
-RBBlockNode >> enclosingMethodOrBlockNode [
-	^ parent ifNotNil: [ parent methodOrBlockNode ]
-]
-
 { #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir [
 
