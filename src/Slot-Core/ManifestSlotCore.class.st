@@ -1,15 +1,18 @@
+"
+Core package for Slot support
+"
 Class {
-	#name : #ManifestSlot,
+	#name : #ManifestSlotCore,
 	#superclass : #PackageManifest,
 	#category : #'Slot-Core-Manifest'
 }
 
 { #category : #'as yet unclassified' }
-ManifestSlot class >> ignoredDependencies [
+ManifestSlotCore class >> ignoredDependencies [
 	^ #(#'System-Settings-Core')
 ]
 
 { #category : #'meta-data - dependency analyser' }
-ManifestSlot class >> manuallyResolvedDependencies [
+ManifestSlotCore class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams' #'System-Settings-Core')
 ]
