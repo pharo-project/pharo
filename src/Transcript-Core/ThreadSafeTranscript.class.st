@@ -240,14 +240,13 @@ ThreadSafeTranscript >> stepGlobal [
 		stepContents := ''.
 		self changed: #clearText.
 	].
-	deferredEndEntry ifTrue: 
-	[	deferredEndEntry := false.  	
-		self critical: 
-		[	stepContents := stream contents.
-			stream resetContents.	
-		].
-		self changed: #appendEntry.	
+	deferredEndEntry ifFalse: [ ^self]. 
+	deferredEndEntry := false.  	
+	self critical: 
+	[	stepContents := stream contents.
+		stream resetContents.	
 	].
+	self changed: #appendEntry.	
 	
 ]
 
