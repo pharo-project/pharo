@@ -16,6 +16,15 @@ CmdCommand >> browserTabActionIcon [
 ]
 
 { #category : #'*Calypso-Browser' }
+CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
+	
+	^ { ClyNotebookPageActionButtonMorph forAction: (ClyNotebookPageAction 
+		action: [ aCommandActivator executeCommand ]
+		icon: self browserTabActionIcon
+		label: aCommandActivator commandDescription) }
+]
+
+{ #category : #'*Calypso-Browser' }
 CmdCommand >> buildBrowserTabActionsUsing: aCommandActivator [
 
 	^{
