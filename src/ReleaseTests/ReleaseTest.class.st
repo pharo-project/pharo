@@ -171,8 +171,7 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 	"Make sure package name and manifest name are in synch"
 	
 	|manifestClasses actualManifestNames expectedManifestNames |
-	manifestClasses := Smalltalk allClasses select: [:each |
-								(each name beginsWith: 'Manifest') ].
+	manifestClasses := self class environment allClasses select: [:each | each isManifest ].
 	actualManifestNames := (manifestClasses collect: [:each | each name ]) sorted.
 	expectedManifestNames := manifestClasses 
 										collect: [:each | TheManifestBuilder manifestClassNameFor: each package name ].
