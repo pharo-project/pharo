@@ -17,7 +17,7 @@ InstructionStream >> atEnd [
 
 { #category : #'*Debugging-Core' }
 InstructionStream >> debuggerMap [
-	^self method debuggerMap
+	^self deprecated: 'call the methods on Context and directly!'
 ]
 
 { #category : #'*Debugging-Core' }

@@ -43,7 +43,7 @@ CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 
 { #category : #'*Debugging-Core' }
 CompiledCode >> debuggerMap [
-	^self compilerClass debuggerMethodMapForMethod: self.
+	^self deprecated: 'call the methods on Context and directly!'
 ]
 
 { #category : #'*Debugging-Core' }
