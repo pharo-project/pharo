@@ -1,7 +1,7 @@
 Class {
 	#name : #SourceFileBufferedReadWriteStreamTest,
 	#superclass : #TestCase,
-	#category : #Tests
+	#category : #'Tests-Streams'
 }
 
 { #category : #tests }
