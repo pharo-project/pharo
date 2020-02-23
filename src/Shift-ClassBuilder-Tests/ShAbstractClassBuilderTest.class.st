@@ -8,8 +8,13 @@ Class {
 		'result',
 		'builder'
 	],
-	#category : #'Shift-ClassBuilder-Tests'
+	#category : #'Shift-ClassBuilder-Tests-Base'
 }
+
+{ #category : #testing }
+ShAbstractClassBuilderTest class >> isAbstract [ 
+	^self == ShAbstractClassBuilderTest 
+]
 
 { #category : #validation }
 ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
