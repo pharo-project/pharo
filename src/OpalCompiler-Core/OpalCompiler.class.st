@@ -27,7 +27,7 @@ This returns a CompiledMethod.
 "
 Class {
 	#name : #OpalCompiler,
-	#superclass : #AbstractCompiler,
+	#superclass : #Object,
 	#instVars : [
 		'ast',
 		'source',
