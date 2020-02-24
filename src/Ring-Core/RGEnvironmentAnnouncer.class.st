@@ -116,7 +116,7 @@ RGEnvironmentAnnouncer >> methodAdded: aMethod [
 RGEnvironmentAnnouncer >> methodRemoved: aMethod [ 
 
 	"TODO:"
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: nil origin: nil)
+	self announce: (MethodRemoved methodRemoved: aMethod protocol: aMethod protocol origin: aMethod parent)
 ]
 
 { #category : #accessing }
