@@ -13,7 +13,7 @@ Class {
 
 { #category : #testing }
 ShAbstractClassBuilderTest class >> isAbstract [ 
-	^self == ShAbstractClassBuilderTest 
+	^ self == ShAbstractClassBuilderTest 
 ]
 
 { #category : #validation }
