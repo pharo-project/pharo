@@ -90,6 +90,12 @@ RGEnvironment >> classNames [
 ]
 
 { #category : #'*Calypso-Ring' }
+RGEnvironment >> defineClass: aString withController: anObject [ 
+	^ self compileANewClassFrom: aString notifying: nil startingFrom: nil
+
+]
+
+{ #category : #'*Calypso-Ring' }
 RGEnvironment >> nonClassNames [
 
 	"TODO:"
