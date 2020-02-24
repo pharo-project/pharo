@@ -6,7 +6,7 @@ RGBehavior >> sourceCodeAt: aSymbol [
 	| method |
 	method :=  self localMethodNamed: aSymbol 
 						 ifAbsent: [ self error: 'Selector #', aSymbol asString, ' not found in RGClass "', self name, '"' ].
-	^ method first sourceCode 
+	^ method sourceCode 
 ]
 
 { #category : #'*Refactoring-Core' }
