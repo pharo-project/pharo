@@ -26,6 +26,15 @@ RGEnvironment >> at: aSymbol [
 ]
 
 { #category : #'*Calypso-Ring' }
+RGEnvironment >> at: aString ifAbsent: aBlockClosure [ 
+	| association |
+	association := self bindingOf: aString.
+	^ association 
+		ifNotNil: [ association value ]
+		ifNil: aBlockClosure
+]
+
+{ #category : #'*Calypso-Ring' }
 RGEnvironment >> bindings [
 
 	"TODO:"
