@@ -13,24 +13,15 @@ Context >> astScope [
 
 { #category : #'*OpalCompiler-Core' }
 Context >> executedPC [
-	"If this context is already perform message send and waiting return 
-	then executed PC is previous one. So we start analazing with previous PC.
-	If there was no sends yet then we just need current pc corrected by push operations.
-	Also we should skip block returns which surround following send"
-	| executedPC |
-	self isDead ifTrue: [ ^self startpc ].
-	executedPC := self previousPc ifNil: [self startpc].
+	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back 
+	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last* 
+	bytecode offset as the offset of the IR instruction, which means we can just go back one"		
+			
+	"if we are at the start, return the startpc"		
+	(pc == self startpc) ifTrue: [ ^self startpc ].
 	
-	(self isReturnAt: executedPC) ifTrue: [ executedPC := executedPC + 1 ].	
-	"There is a pushLiteral: nil bytecode for each temps in a block. 
-	There is a 'pushTemp:' bytecode for each copied value of a block.
-	These bytecodes are not mapped to any IR.
-	We skip both"
-	[ self isPushLiteralNil: executedPC ] whileTrue: [ executedPC := executedPC + 1 ].
-	[ self isPushTemp: executedPC ] whileTrue: [ executedPC := executedPC + 1 ].
-
-	(self  isReturnAt: executedPC) ifTrue: [ executedPC := executedPC + 1 ].
-	^ executedPC
+	"we need to guard for dead contexts (pc is nil)"
+	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1].
 ]
 
 { #category : #'*OpalCompiler-Core' }
