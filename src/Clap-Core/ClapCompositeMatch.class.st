@@ -18,52 +18,34 @@ ClapCompositeMatch >> addChild: aSubExpression [
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> at: aSpec [
-	^ self
-		at: aSpec
-		ifAbsent: [ ClapImplicit of: aSpec in: self ]
+ClapCompositeMatch >> at: identifierOrSpec [
+	^ self at: identifierOrSpec
+		ifAbsent: [
+			specification at: identifierOrSpec
+				ifPresent: [ :spec | ClapImplicit of: spec in: self ]
+				ifAbsent: [ self notYetImplemented ] ]
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> at: aSpec ifAbsent: absentBlock [
+ClapCompositeMatch >> at: identifierOrSpec ifAbsent: absentBlock [
 	^ children
-		detect: [ :child | child specification = aSpec ]
+		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		ifNone: absentBlock
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> at: aSpec ifFound: foundBlock [
+ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock [
 	^ children
-		detect: [ :child | child specification = aSpec ]
+		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		ifFound: foundBlock
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> at: aSpec ifFound: foundBlock ifAbsent: absentBlock [
+ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock ifAbsent: absentBlock [
 	^ children
-		detect: [ :child | child specification = aSpec ]
+		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		ifFound: foundBlock
 		ifNone: absentBlock
-]
-
-{ #category : #'accessing - children' }
-ClapCompositeMatch >> atName: canonicalName [
-	^ self at: (specification atName: canonicalName)
-]
-
-{ #category : #'accessing - children' }
-ClapCompositeMatch >> atName: canonicalName ifFound: foundBlock [
-	^ self
-		at: (specification atName: canonicalName)
-		ifFound: foundBlock
-]
-
-{ #category : #'accessing - children' }
-ClapCompositeMatch >> atName: canonicalName ifFound: foundBlock ifAbsent: absentBlock [
-	^ self
-		at: (specification atName: canonicalName)
-		ifFound: foundBlock
-		ifAbsent: absentBlock
 ]
 
 { #category : #matching }
@@ -89,13 +71,8 @@ ClapCompositeMatch >> flags [
 ]
 
 { #category : #testing }
-ClapCompositeMatch >> includesMatchNamed: canonicalName [
-	^ children anySatisfy: [ :arg | arg specification canonicalName = canonicalName ]
-]
-
-{ #category : #testing }
-ClapCompositeMatch >> includesMatchOf: aSpec [
-	^ children anySatisfy: [ :arg | arg specification = aSpec ]
+ClapCompositeMatch >> includesMatchOf: identifierOrSpec [
+	^ children anySatisfy: [ :arg | arg isMatchOf: identifierOrSpec ]
 ]
 
 { #category : #initialization }
@@ -121,40 +98,21 @@ ClapCompositeMatch >> matchedSubcommand: foundBlock ifNone: noneBlock [
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> occurrencesNamed: canonicalName [
-	^ self occurrencesOf: (specification atName: canonicalName)
+ClapCompositeMatch >> occurrencesOf: identifierOrSpec [
+	^ children select: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 ]
 
 { #category : #enumerating }
-ClapCompositeMatch >> occurrencesNamed: canonicalName collect: aBlock [
-	^ self
-		occurrencesOf: (specification atName: canonicalName)
-		collect: aBlock
-]
-
-{ #category : #enumerating }
-ClapCompositeMatch >> occurrencesNamed: canonicalName do: aBlock [
-	^ self
-		occurrencesOf: (specification atName: canonicalName)
-		do: aBlock
-]
-
-{ #category : #'accessing - children' }
-ClapCompositeMatch >> occurrencesOf: aSpec [
-	^ children select: [ :child | child specification = aSpec ]
-]
-
-{ #category : #enumerating }
-ClapCompositeMatch >> occurrencesOf: aSpec collect: aBlock [
+ClapCompositeMatch >> occurrencesOf: identifierOrSpec collect: aBlock [
 	^ children
-		select: [ :child | child specification = aSpec ]
+		select: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		thenCollect: aBlock
 ]
 
 { #category : #enumerating }
-ClapCompositeMatch >> occurrencesOf: aSpec do: aBlock [
+ClapCompositeMatch >> occurrencesOf: identifierOrSpec do: aBlock [
 	^ children
-		select: [ :child | child specification = aSpec ]
+		select: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		thenDo: aBlock
 ]
 

@@ -9,6 +9,7 @@ Class {
 
 { #category : #accessing }
 ClapMismatch >> at: aSpec [
+self flag: 'identifierOrSpec?'.
 	^ ClapImplicit of: aSpec in: self
 ]
 
@@ -31,9 +32,15 @@ ClapMismatch >> isValid [
 { #category : #printing }
 ClapMismatch >> printDetailsOn: aStream [
 	aStream
-		nextPutAll: word;
-		nextPutAll: ' ≠ ';
-		print: specification
+		print: specification;
+		nextPutAll: ' mismatched'.
+	word
+		ifNil: [ aStream nextPutAll: ' (nothing to match)' ]
+		ifNotNil: [
+			aStream
+				nextPutAll: ' word ''';
+				nextPutAll: word;
+				nextPutAll: '''' ]
 ]
 
 { #category : #adding }
