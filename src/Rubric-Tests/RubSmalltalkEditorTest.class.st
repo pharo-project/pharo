@@ -9,7 +9,7 @@ Class {
 		'selection',
 		'currentCompletion'
 	],
-	#category : #'Rubric-Tests'
+	#category : #'Rubric-Tests-Base'
 }
 
 { #category : #assertions }
