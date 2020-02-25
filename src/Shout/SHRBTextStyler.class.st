@@ -64,8 +64,8 @@ SHRBTextStyler class >> blueStyleTable [
 	"
 	<styleTable: 'Blue'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -197,8 +197,8 @@ SHRBTextStyler class >> darkStyleTable [
 	"
 	<styleTable: 'Dark'>
 
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
 			(excessCode 							'FF8A80')
@@ -391,8 +391,8 @@ SHRBTextStyler class >> solarizedStyleTable [
 	"
 	<styleTable: 'Solarized'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
 			(excessCode 							red)
@@ -540,8 +540,8 @@ SHRBTextStyler class >> tangoStyleTable [
 	"
 	<styleTable: 'Tango'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -684,8 +684,8 @@ SHRBTextStyler class >> vintageStyleTable [
 	"
 	<styleTable: 'Vintage'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
