@@ -32,13 +32,6 @@ LookupKey >> = aLookupKey [
 		ifFalse: [^false]
 ]
 
-{ #category : #testing }
-LookupKey >> hasLiteral: literal [
-	^ self key == literal
-		or: [ self value == literal
-				or: [ self value isArray and: [ self value hasLiteral: literal ] ] ]
-]
-
 { #category : #comparing }
 LookupKey >> hash [
 	"Hash is reimplemented because = is implemented."
