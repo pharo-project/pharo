@@ -136,6 +136,13 @@ ClyCriticDecorator >> prepare [
 
 { #category : #controlling }
 ClyCriticDecorator >> refreshCritiques [
+
+	"Big literal methods (who are containing big strings ot byte arrays) should not
+	 run critiques (not needed, and very time consuming)"
+	(self analyzedObject isCompiledMethod 
+		and: [ self analyzedObject isBigLiteralMethod ])
+		ifTrue: [ ^ self ].
+
 	browserTool decorateByCritic: self.
 	
 	criticView dataSource isEmpty 
