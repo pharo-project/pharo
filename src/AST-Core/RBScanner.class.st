@@ -449,16 +449,18 @@ RBScanner >> scanLiteralCharacter [
 
 { #category : #'private-scanning' }
 RBScanner >> scanLiteralString [
-
-	self step.
-
-	[ currentCharacter ifNil: [ ^ self scanError: 'Unmatched '' in string literal.' ].
-	currentCharacter = $' and: [ self step ~= $' ]
-	]
-		whileFalse: [ buffer nextPut: currentCharacter.
-			self step
-			].
-	^ RBLiteralToken value: buffer contents start: tokenStart stop: self previousStepPosition
+	| string |
+	[string := stream upTo: $'.
+	stream peekBack = $' ifFalse: [ ^self scanError: 'test scan literal' ].
+	
+	self step = $'] whileTrue: [ 
+		buffer nextPutAll: string; nextPut: $'.
+		string := ''].
+	
+	buffer position = 0 ifFalse: [ 		
+		buffer nextPutAll: string.
+		string := buffer contents].	
+	^RBLiteralToken value: string start: tokenStart stop: self previousStepPosition
 ]
 
 { #category : #'private-scanning' }
