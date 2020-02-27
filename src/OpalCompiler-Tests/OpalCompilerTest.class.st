@@ -32,6 +32,15 @@ OpalCompilerTest >> testArrayEvaluateWithBindings [
 ]
 
 { #category : #'tests - bindings' }
+OpalCompilerTest >> testArrayEvaluateWithBindingsReadGlobal [
+| result |
+	result := Smalltalk compiler
+	bindings: {(#a -> 3)};
+	evaluate: 'OrderedCollection'.
+	self assert: result equals: OrderedCollection
+]
+
+{ #category : #'tests - bindings' }
 OpalCompilerTest >> testArrayEvaluateWithBindingsWithUppercaseName [
 	| result |
 	result := Smalltalk compiler
@@ -84,6 +93,19 @@ OpalCompilerTest >> testCompileWithNilClass [
 	| method |
 	method := Smalltalk compiler compile: 'tst 1+2'.
 	self assert: method methodClass equals: UndefinedObject.
+]
+
+{ #category : #'tests - bindings' }
+OpalCompilerTest >> testCompilerUsingFullBlockClosureHasBlockAsLiteral [
+
+  	| compiler method |
+ 	compiler := Smalltalk compiler.
+ 	compiler compilationContext encoderClass: EncoderForSistaV1.
+ 	compiler compilationContext compilerOptions: #(optionFullBlockClosure).
+
+  	method := compiler compile: 'test #(1 2 3) do: [:e | e + 1]'.
+
+  	self assert: method literals second isCompiledBlock 
 ]
 
 { #category : #'tests - bindings' }

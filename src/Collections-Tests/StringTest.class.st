@@ -525,11 +525,10 @@ StringTest >> testAsString [
 
 { #category : #tests }
 StringTest >> testAsSymbol [
-
-	self assert: 'hel','lo' asSymbol equals: #'hello'.
+	self assert: 'hel' , 'lo' asSymbol equals: #hello.
 	self assert: 'é è à ô ü' asSymbol equals: #'é è à ô ü'.
 	self assert: '' asSymbol equals: #''.
-	self assert: ('test' asSymbol) == #'test' 
+	self assert: 'test' asSymbol identicalTo: #test
 ]
 
 { #category : #tests }
@@ -571,16 +570,15 @@ StringTest >> testBeginsWithEmptyCaseSensitive [
 
 { #category : #'tests - converting' }
 StringTest >> testCapitalized [
-
-	| uc lc empty |		
+	| uc lc empty |
 	uc := 'MElViN'.
 	lc := 'mElViN'.
 	empty := ' '.
 	self assert: lc capitalized equals: uc.
 	self assert: uc capitalized equals: uc.
 	"the string gets copied"
-	self deny: uc capitalized == uc.
-	self deny: empty capitalized == empty.
+	self deny: uc capitalized identicalTo: uc.
+	self deny: empty capitalized identicalTo: empty
 ]
 
 { #category : #tests }
@@ -1889,16 +1887,15 @@ StringTest >> testTrimmed [
 
 { #category : #'tests - converting' }
 StringTest >> testUncapitalized [
-
-	| uc lc empty |		
+	| uc lc empty |
 	uc := 'MElViN'.
 	lc := 'mElViN'.
 	empty := ' '.
-	self assert:  uc uncapitalized equals: lc.
+	self assert: uc uncapitalized equals: lc.
 	self assert: lc uncapitalized equals: lc.
 	"the string gets copied"
-	self deny: lc uncapitalized == lc.
-	self deny: empty uncapitalized == empty.
+	self deny: lc uncapitalized identicalTo: lc.
+	self deny: empty uncapitalized identicalTo: empty
 ]
 
 { #category : #'tests - converting' }
@@ -1930,16 +1927,36 @@ StringTest >> testWithBlanksCondensed [
 
 { #category : #'tests - converting' }
 StringTest >> testWithFirstCharacterDownshifted [
-
-	| uc lc empty |		
+	| uc lc empty |
 	uc := 'MElViN'.
 	lc := 'mElViN'.
 	empty := ' '.
 	self assert: uc uncapitalized equals: lc.
 	self assert: lc uncapitalized equals: lc.
 	"the string gets copied"
-	self deny: lc uncapitalized == lc.
-	self deny: empty uncapitalized == empty.
+	self deny: lc uncapitalized identicalTo: lc.
+	self deny: empty uncapitalized identicalTo: empty
+]
+
+{ #category : #'tests - internet' }
+StringTest >> testWithInternalLineEndings [
+
+	{
+		'abc' -> 'abc'.
+		'abc', String cr -> ('abc', String cr).
+		'abc', String lf -> ('abc', String cr).
+		'abc', String crlf -> ('abc', String cr).
+		String cr, 'abc' -> (String cr, 'abc').
+		String lf, 'abc' -> (String cr, 'abc').
+		String crlf, 'abc' -> (String cr, 'abc').
+		'abc', String cr, String cr, 'abc' -> ('abc', String cr, String cr, 'abc').
+		'abc', String lf, String lf, 'abc' -> ('abc', String cr, String cr, 'abc').
+		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
+		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
+		(WideString with: 403 asCharacter with: Character lf) -> (WideString with: 403 asCharacter with: Character cr).
+	} do: [ :each |
+		self assert: each key withInternalLineEndings equals: each value ]
 ]
 
 { #category : #'tests - internet' }
@@ -1992,28 +2009,9 @@ StringTest >> testWithSeparatorsCompacted [
 ]
 
 { #category : #'tests - internet' }
-StringTest >> testWithSqueakLineEndings [
-
-	{
-		'abc' -> 'abc'.
-		'abc', String cr -> ('abc', String cr).
-		'abc', String lf -> ('abc', String cr).
-		'abc', String crlf -> ('abc', String cr).
-		String cr, 'abc' -> (String cr, 'abc').
-		String lf, 'abc' -> (String cr, 'abc').
-		String crlf, 'abc' -> (String cr, 'abc').
-		'abc', String cr, String cr, 'abc' -> ('abc', String cr, String cr, 'abc').
-		'abc', String lf, String lf, 'abc' -> ('abc', String cr, String cr, 'abc').
-		'abc', String crlf, String crlf, 'abc' -> ('abc', String cr, String cr, 'abc').
-		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
-		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String cr, 'abc', String cr, String cr, 'abc', String cr).
-	} do: [ :each |
-		self assert: each key withSqueakLineEndings equals: each value ]
-]
-
-{ #category : #'tests - internet' }
 StringTest >> testWithUnixLineEndings [
 
+	| original newString |
 	{
 		'abc' -> 'abc'.
 		'abc', String cr -> ('abc', String lf).
@@ -2027,8 +2025,15 @@ StringTest >> testWithUnixLineEndings [
 		'abc', String crlf, String crlf, 'abc' -> ('abc', String lf, String lf, 'abc').
 		String cr, 'abc', String cr, String crlf, 'abc', String lf -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
 		String lf, 'abc', String lf, String crlf, 'abc', String cr -> (String lf, 'abc', String lf, String lf, 'abc', String lf).
+		(WideString with: 403 asCharacter with: Character cr) -> (WideString with: 403 asCharacter with: Character lf).
 	} do: [ :each |
-		self assert: each key withUnixLineEndings equals: each value ]
+		self assert: each key withUnixLineEndings equals: each value ].
+	
+	original :='asa' , String cr , 'asa'.
+	self assert: (original at: 4) equals: Character cr.
+	newString := original withUnixLineEndings.
+	self assert: (original at: 4) equals: Character cr.
+	self assert: (newString at: 4) equals: Character lf.
 ]
 
 { #category : #'tests - converting' }

@@ -80,7 +80,7 @@ RBRenameClassTest >> testModelRenameSequenceClass [
 RBRenameClassTest >> testRenameClass [
 	| refactoring class |
 	refactoring := RBRenameClassRefactoring 
-				rename: (Smalltalk at: ('RBClass' , 'ToRename') asSymbol)
+				rename: (testingEnvironment at: ('RBClass' , 'ToRename') asSymbol)
 				to: 'RBNew' , 'ClassName' asSymbol.
 	self executeRefactoring: refactoring.
 	self 

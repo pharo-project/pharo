@@ -45,7 +45,7 @@ AthensSurfaceExamples class >> draw2Strings [
 		can pathTransform translateBy: advance.
 		can drawString: 'in mind.'].
 	
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
+	surf asMorph openInWindow.
 ]
 
 { #category : #examples }
@@ -189,7 +189,7 @@ AthensSurfaceExamples class >> example10 [
 		can setStrokePaint: Color red.
 		can draw ].
 		
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
+	surf asMorph openInWindow.
 
 ]
 
@@ -239,11 +239,11 @@ AthensSurfaceExamples class >> example3 [
 			can pathTransform restoreAfter: [
 				can pathTransform rotateByDegrees: i*5.
 				can pathTransform scaleBy: (1 - (i/2000)).
-				can drawShape: path ].
-			
-			Display getCanvas drawImage: surf asForm  at: 0@0. 
+				can drawShape: path ].			
 		]	
-	]
+	].
+
+	surf asMorph openInWindow. 
 
 ]
 
@@ -258,7 +258,7 @@ AthensSurfaceExamples class >> example3stroke [
 		(can setStrokePaint: Color blue) width: 1.
 
 		can pathTransform translateX: 200 Y: 200.	
-		can pathTransform scaleBy: 1.
+		can pathTransform scaleBy: 5.
 
 		path := can createPath: [:pathbuilder |
 				pathbuilder 
@@ -273,10 +273,11 @@ AthensSurfaceExamples class >> example3stroke [
 				can pathTransform rotateByDegrees: i*5.
 				can pathTransform scaleBy: (1- ( i/2000)).
 				can drawShape: path.
-			].
-			Display getCanvas drawImage: surf asForm  at: 0@0 
+			]
 		]	
-	]
+	].
+
+	surf asMorph openInWindow. 
 
 ]
 
@@ -302,7 +303,9 @@ AthensSurfaceExamples class >> example4 [
 		can pathTransform translateX: 5 Y: 5.
 		can drawShape: path.
 	].
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
+
+	surf asMorph openInWindow. 
+
 ]
 
 { #category : #examples }
@@ -335,7 +338,7 @@ AthensSurfaceExamples class >> example5 [
 			])
 	].
 
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
+	surf asMorph openInWindow. 
 ]
 
 { #category : #examples }
@@ -363,7 +366,7 @@ AthensSurfaceExamples class >> example6 [
 		can pathTransform translateX: 50 Y: 50; rotateByDegrees: 30.
 		can drawShape: (0@0 corner: 50@50) ].
 
-	Display getCanvas drawImage: surf asForm  at: 0@0
+		surf asMorph openInWindow
 
 ]
 
@@ -389,7 +392,7 @@ AthensSurfaceExamples class >> example6point1 [
 
 		can drawShape: (0@0 corner: 50@50) ].
 
-	Display getCanvas drawImage: surf asForm at: 0@0
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -417,7 +420,7 @@ AthensSurfaceExamples class >> example6stroke [
 		can pathTransform translateX: 50 Y: 50.
 		can drawShape: (0@0 corner: 50@50) ].
 
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -439,7 +442,6 @@ AthensSurfaceExamples class >> example7 [
 	surf drawDuring: [:can |
 
 		1 to: 10000 do: [:i |
-			surf clear.
 
 			can pathTransform loadIdentity.
 
@@ -450,10 +452,10 @@ AthensSurfaceExamples class >> example7 [
 		
 			can pathTransform translateX: 50 Y: 50.
 			can drawShape: (0@0 corner: 50@50).
-
-			Display getCanvas drawImage: surf asForm at: 0@0
+			
 		].		
-	]
+	].
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -473,9 +475,9 @@ AthensSurfaceExamples class >> example8 [
 			can pathTransform loadIdentity.
 			can setPaint: paint.
 
-			can drawShape: (0@0 corner: 200@200).
-		
-			Display getCanvas drawImage: surf asForm  at: 0@0 ]
+			can drawShape: (0@0 corner: 200@200)].
+
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -493,13 +495,11 @@ AthensSurfaceExamples class >> example9 [
 	paint := surf createFormPaint: f.
 	
 	surf drawDuring: [:can |
-
 		can 
 			setPaint: paint;
-			drawShape: (0@0 corner: 100@200).
-		
-		Display getCanvas drawImage: surf asForm  at: 0@0 ]
+			drawShape: (0@0 corner: 100@200)].
 
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -521,7 +521,8 @@ AthensSurfaceExamples class >> exampleClip [
 			can drawShape: (0@0 corner: 100@ 100).
 		]
 	].
-	Display getCanvas drawImage: surf asForm at: 0@0
+
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -549,7 +550,8 @@ AthensSurfaceExamples class >> exampleDrawForm [
 
 		can pathTransform translateX: 30 Y: 30. 
 		can draw ].
-	Display getCanvas drawImage: surf asForm  at: 0@0
+	
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -571,7 +573,7 @@ AthensSurfaceExamples class >> exampleDrawForm2 [
 		can paintTransform scaleBy: 3; rotateByDegrees: 30.
 		can draw ].
 	
-	Display getCanvas drawImage: surf asForm  at: 0@0
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -595,7 +597,7 @@ AthensSurfaceExamples class >> exampleDrawText [
 		can pathTransform translateX: 0 Y: (font getPreciseAscent).
 		can drawString: 'Hello Athens!' ].
 	
-	Display getCanvas drawImage: surf asForm at: 0@0
+	surf asMorph openInWindow
 
 ]
 
@@ -604,8 +606,7 @@ AthensSurfaceExamples class >> exampleStrokeRect [
 	"Draw a frame rectangle, rotate & transform it in a loop"
 
 	| surf |
-	surf := self newSurface: 400@400.
-	
+	surf := self newSurface: 500@500.	
 	surf drawDuring: [:can | 	
 		can pathTransform translateX: 200 Y: 200.	
 		can pathTransform scaleBy: 8.
@@ -615,11 +616,11 @@ AthensSurfaceExamples class >> exampleStrokeRect [
 			can pathTransform restoreAfter: [
 				can pathTransform rotateByDegrees: i*5.
 				can pathTransform scaleBy: (1- ( i/2000)).
-				surf clear.
-				can drawShape: (0@0 corner: 25@25) ].
-			Display getCanvas drawImage: 	surf asForm  at: 0@0. 
+				can drawShape: (0@0 corner: 25@25). ].
 		]	
-	]
+	].
+
+	surf asMorph openInWindow
 ]
 
 { #category : #examples }
@@ -632,7 +633,7 @@ AthensSurfaceExamples class >> exampleUseForm [
 	form getCanvas fillRectangle: (20@20 corner: 50@50)  color: (Color blue).
 	
 	surf := AthensCairoSurface fromForm: form.
-	Display getCanvas drawImage: surf asForm  at: 0@0
+	surf asMorph openInWindow
 
 ]
 
@@ -659,14 +660,6 @@ AthensSurfaceExamples class >> openViewOn: aBlock [
 { #category : #'surface management' }
 AthensSurfaceExamples >> createSurface: anExtent [
 	^ self class newSurface: anExtent
-]
-
-{ #category : #initialization }
-AthensSurfaceExamples >> initialize [
-
-	super initialize.
-
-	renderBlock := nil.
 ]
 
 { #category : #accessing }

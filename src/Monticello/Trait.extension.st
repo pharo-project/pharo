@@ -7,8 +7,8 @@ Trait >> asClassDefinition [
 			name: self name
 			traitComposition: self traitCompositionString
 			category: self category 
-			instVarNames: self instVarNames
-			classInstVarNames: self classSide slotNames
+			instVarNames: (self localSlots collect: #name)
+			classInstVarNames: (self class localSlots collect: #name)
 			comment: self organization classComment asString
 			commentStamp: self organization commentStamp ].
 		

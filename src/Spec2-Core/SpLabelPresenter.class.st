@@ -34,9 +34,21 @@ SpLabelPresenter class >> title [
 	^ 'Label presenter'
 ]
 
+{ #category : #testing }
+SpLabelPresenter >> canTakeKeyboardFocus [
+
+	^ false
+]
+
 { #category : #initialization }
 SpLabelPresenter >> defaultColor [
 	^ self theme textColor
+]
+
+{ #category : #initialization }
+SpLabelPresenter >> defineInputPorts [
+
+	^ { SpLabelPort new }
 ]
 
 { #category : #api }

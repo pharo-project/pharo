@@ -108,5 +108,19 @@ Object >> spotterProcessorsFor: aSpotterStep pragma: aPragma [
 			aSpotterStep exceptionHandler
 				handleException: exception
 				do: [ ('[Spotter] Exception while collecting processors for <'
-						, self class name , '>: ' , exception asString) logCr ] ]
+						, self class name , '>: ' , exception asString) traceCr ] ]
+]
+
+{ #category : #'*GT-Spotter' }
+Object >> spotterRePropertiesFor: aStep [
+	<spotterOrder: 0>
+	
+	ReSettings spotterPlugin ifFalse: [ ^ self ].
+	
+	aStep listProcessor
+		title: 'Renraku Properties';
+		items: [ self externalProperties asArray ];
+		itemName: #title;
+		itemIcon: #icon;
+		filter: GTFilterSubstring
 ]

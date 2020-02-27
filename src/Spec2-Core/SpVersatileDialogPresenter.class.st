@@ -18,8 +18,8 @@ I have:
 Class {
 	#name : #SpVersatileDialogPresenter,
 	#superclass : #SpDynamicPresenter,
-	#traits : 'TSpDynamicPresenter',
-	#classTraits : 'TSpDynamicPresenter classTrait',
+	#traits : 'SpTDynamicPresenter',
+	#classTraits : 'SpTDynamicPresenter classTrait',
 	#instVars : [
 		'mainMessage',
 		'mainIcon',
@@ -60,7 +60,7 @@ SpVersatileDialogPresenter class >> example1 [
 		footnoteArea: 'This operation can be very dangerous.';
 		openModalWithSpec.
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr.
+	dialog result traceCr.
 
 	self inform: dialog moreOptionsArea state asString
 ]
@@ -78,7 +78,7 @@ SpVersatileDialogPresenter class >> example2 [
 		yourself.
 
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #specs }
@@ -99,7 +99,7 @@ SpVersatileDialogPresenter class >> example3 [
 	dialog openModalWithSpec.
 
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #specs }
@@ -115,7 +115,7 @@ SpVersatileDialogPresenter class >> example4 [
 	dialog openModalWithSpec.
 
 	dialog withWindowDo: [ :w | w title: 'Select number' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #specs }
@@ -137,7 +137,7 @@ SpVersatileDialogPresenter class >> example5 [
 	dialog openModalWithSpec.
 
 	dialog withWindowDo: [ :w | w title: 'Confirmation' ].
-	dialog result logCr
+	dialog result traceCr
 ]
 
 { #category : #api }
@@ -167,6 +167,19 @@ SpVersatileDialogPresenter >> buttonAt: id [
 SpVersatileDialogPresenter >> buttons [
 
 	^ buttons
+]
+
+{ #category : #initialization }
+SpVersatileDialogPresenter >> connectPresenters [ 
+
+	super connectPresenters.
+	
+	moreOptionsButton action: [ 
+		moreOptionsVisible := moreOptionsVisible not.
+		self needRebuild: false.
+		self buildWithSpec ].
+	
+
 ]
 
 { #category : #accessing }
@@ -222,13 +235,10 @@ SpVersatileDialogPresenter >> footnoteIcon: aForm [
 
 { #category : #initialization }
 SpVersatileDialogPresenter >> initialize [
-
 	super initialize.
-	
-	moreOptionsVisible := false.
-	buttons := OrderedDictionary new.
-	result := nil.
 
+	moreOptionsVisible := false.
+	buttons := OrderedDictionary new
 ]
 
 { #category : #initialization }
@@ -237,20 +247,7 @@ SpVersatileDialogPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 ]
 
 { #category : #initialization }
-SpVersatileDialogPresenter >> initializePresenter [ 
-
-	super initializePresenter.
-	
-	moreOptionsButton action: [ 
-		moreOptionsVisible := moreOptionsVisible not.
-		self needRebuild: false.
-		self buildWithSpec ].
-	
-
-]
-
-{ #category : #initialization }
-SpVersatileDialogPresenter >> initializeWidgets [ 
+SpVersatileDialogPresenter >> initializePresenters [ 
 
 	moreOptionsText := 'More options' asText.
 	lessOptionsText := 'Less options' asText.

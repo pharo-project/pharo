@@ -1,5 +1,5 @@
 Class {
 	#name : #GTSpotterA1,
-	#superclass : #TestCase,
+	#superclass : #Object,
 	#category : #'GT-Tests-Spotter'
 }

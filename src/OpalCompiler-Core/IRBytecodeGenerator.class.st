@@ -117,10 +117,11 @@ IRBytecodeGenerator >> addPragma: aPragma [
 { #category : #results }
 IRBytecodeGenerator >> addProperties: cm [
 	"set the properties of cm according to properties saved"
-	properties ifNotNil: [
-		cm penultimateLiteral: properties.
-		properties  method: cm.
-		properties  pragmas do: [:each | each setMethod: cm] ].
+
+	properties
+		ifNotNil: [ cm penultimateLiteral: properties.
+			properties method: cm.
+			properties pragmas do: [ :each | each method: cm ] ]
 ]
 
 { #category : #accessing }
@@ -162,6 +163,11 @@ IRBytecodeGenerator >> closureFrom: fromSeqId to: toSeqId copyNumCopiedValues: n
 	to := seqOrder at: toSeqId ifAbsent: [ ^ self ].	"not done yet"
 	distance := (from + 1 to: to - 1) inject: 0 into: [ :size :i | size + (seqBytes at: (orderSeq at: i)) size ].
 	encoder genPushClosureCopyNumCopiedValues: numCopied numArgs: numArgs2 jumpSize: distance. 
+]
+
+{ #category : #accessing }
+IRBytecodeGenerator >> compilationContext [
+	^ compilationContext ifNil: [compilationContext := CompilationContext default]
 ]
 
 { #category : #accessing }
@@ -211,7 +217,7 @@ IRBytecodeGenerator >> compiledMethodWith: trailer [
 IRBytecodeGenerator >> compiledMethodWith: trailer header: header literals: lits [
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
-	cmClass := compilationContext productionEnvironment at: #CompiledMethod ifAbsent: [ CompiledMethod ].
+	cmClass := self compilationContext productionEnvironment at: #CompiledMethod ifAbsent: [ CompiledMethod ].
 	cm := trailer createMethod: self bytecodes size class: cmClass header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
@@ -361,8 +367,7 @@ IRBytecodeGenerator >> initialize [
 	additionalLiterals := OCLiteralSet new.
 	forceLongForm := false.
 	"starting label in case one is not provided by client"
-	self label: self newDummySeqId.
-	compilationContext := CompilationContext default.
+	self label: self newDummySeqId
 	
 
 	

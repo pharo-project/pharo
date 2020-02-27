@@ -3,7 +3,7 @@ Benchmark for window processing
 "
 Class {
 	#name : #OSWindowBench,
-	#superclass : #TestCase,
+	#superclass : #Object,
 	#category : #'OSWindow-Tests-Benchmarks'
 }
 

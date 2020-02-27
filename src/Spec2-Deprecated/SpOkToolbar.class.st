@@ -43,19 +43,19 @@ SpOkToolbar >> cancel [
 ]
 
 { #category : #initialization }
+SpOkToolbar >> connectPresenters [
+
+	okButton action: self okActionBlock
+]
+
+{ #category : #initialization }
 SpOkToolbar >> initialize [
 	super initialize.
 	okAction := [ true ]
 ]
 
 { #category : #initialization }
-SpOkToolbar >> initializePresenter [
-
-	okButton action: self okActionBlock
-]
-
-{ #category : #initialization }
-SpOkToolbar >> initializeWidgets [
+SpOkToolbar >> initializePresenters [
 	
 	
 	okButton := self newButton.

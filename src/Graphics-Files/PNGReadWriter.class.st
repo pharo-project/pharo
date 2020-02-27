@@ -487,7 +487,7 @@ PNGReadWriter >> copyPixelsRGB: y [
 			[i := 1.
 			1 to: width do:
 				[ :x |
-				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue digitAt: k) ~= (thisScanline at: i + 6 - k)]])
+				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) ~= (thisScanline at: i + 6 - k)]])
 					ifTrue:
 						[pixel
 							at: 3 put: (thisScanline at: i);
@@ -535,7 +535,7 @@ PNGReadWriter >> copyPixelsRGB: y at: startX by: incX [
 			xx := startX+1.
 			1 to: loopsToDo do:
 				[ :j |
-				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue digitAt: k) ~= (thisScanline at: i + 6 - k)]])
+				(transparentPixelValue == nil or: [(1 to: 6) anySatisfy: [:k | (transparentPixelValue byteAt: k) ~= (thisScanline at: i + 6 - k)]])
 					ifTrue:
 						[pixel
 							at: 3 put: (thisScanline at: i);
@@ -768,40 +768,30 @@ PNGReadWriter >> nextImage [
 	transparentPixelValue := nil.
 	unknownChunks := Set new.
 	stream skip: 8.
-	[stream atEnd] whileFalse: [self processNextChunk].
+	[ stream atEnd ] whileFalse: [ self processNextChunk ].
 	"Set up our form"
-	palette ifNotNil: 
-			["Dump the palette if it's the same as our standard palette"
-
-			palette = (StandardColors copyFrom: 1 to: palette size) 
-				ifTrue: [palette := nil]].
-	(depth <= 8 and: [palette notNil]) 
-		ifTrue: 
-			[form := ColorForm extent: width @ height depth: depth.
-			form colors: palette]
-		ifFalse: [form := Form extent: width @ height depth: depth].
-	backColor ifNotNil: [form fillColor: backColor].
- 	idatChunkStream 
- 		ifNil: [ self error: 'image data is missing' ]
- 		ifNotNil: [ self processIDATChunk ].
-	unknownChunks isEmpty 
-		ifFalse: 
-			["Transcript show: ' ',unknownChunks asSortedCollection asArray printString."].
-	self debugging 
-		ifTrue: 
-			[Transcript
-				cr;
-				show: 'form = ' , form printString.
-			Transcript
-				cr;
-				show: 'colorType = ' , colorType printString.
-			Transcript
-				cr;
-				show: 'interlaceMethod = ' , interlaceMethod printString.
-			Transcript
-				cr;
-				show: 'filters = ' , filtersSeen sortedCounts asArray printString].
-	^form
+	palette
+		ifNotNil: [ "Dump the palette if it's the same as our standard palette"
+			palette = (StandardColors copyFrom: 1 to: palette size)
+				ifTrue: [ palette := nil ] ].
+	(depth <= 8 and: [ palette notNil ])
+		ifTrue: [ form := ColorForm extent: width @ height depth: depth.
+			form colors: palette ]
+		ifFalse: [ form := Form extent: width @ height depth: depth ].
+	backColor ifNotNil: [ form fillColor: backColor ].
+	idatChunkStream
+		ifNil: [ self error: 'image data is missing' ]
+		ifNotNil: [ self processIDATChunk ].
+	unknownChunks isEmpty
+		ifFalse:
+			[ "Transcript show: ' ',unknownChunks asSortedCollection asArray printString." ].
+	self debugging
+		ifTrue: [ self crTrace: 'form = ' , form printString.
+			self crTrace: 'colorType = ' , colorType printString.
+			self crTrace: 'interlaceMethod = ' , interlaceMethod printString.
+			self
+				crTrace: 'filters = ' , filtersSeen sortedCounts asArray printString ].
+	^ form
 ]
 
 { #category : #writing }
@@ -1061,51 +1051,43 @@ PNGReadWriter >> processNextChunk [
 PNGReadWriter >> processNonInterlaced [
 	| z filter temp copyMethod debug |
 	debug := self debugging.
-	copyMethod := #(
-		#copyPixelsGray:
-		nil
-		#copyPixelsRGB:
-		#copyPixelsIndexed:
-		#copyPixelsGrayAlpha:
-		nil
-		#copyPixelsRGBA:
-	) at: colorType + 1.
- 	debug ifTrue: [ Transcript cr; nextPutAll: 'NI chunk size='; print: idatChunkStream position ].
- 	z := ZLibReadStream 
- 		on: idatChunkStream originalContents
- 		from: 1
- 		to: idatChunkStream position.
+	copyMethod := #(#copyPixelsGray: nil #copyPixelsRGB: #copyPixelsIndexed: #copyPixelsGrayAlpha: nil #copyPixelsRGBA:)
+		at: colorType + 1.
+	debug
+		ifTrue: [ self
+				crTrace:
+					('NI chunk size=<1s>' expandMacrosWith: idatChunkStream position) ].
+	z := ZLibReadStream
+		on: idatChunkStream originalContents
+		from: 1
+		to: idatChunkStream position.
 	prevScanline := ByteArray new: bytesPerScanline.
 	thisScanline := ByteArray new: bytesPerScanline.
-	0 
-		to: height - 1
-		do: 
-			[ :y | 
-			filter := z next.
-			debug ifTrue: [ filtersSeen add: filter ].
-			thisScanline := z 
-				next: bytesPerScanline
-				into: thisScanline
-				startingAt: 1.
-			(debug and: [ thisScanline size < bytesPerScanline ]) ifTrue: 
-				[ Transcript
-					nextPutAll: ('wanted {1} but only got {2}' format: {  bytesPerScanline. (thisScanline size)  });
-					cr ].
-			filter = 0 ifFalse: 
-				[ self 
-					filterScanline: filter
-					count: bytesPerScanline ].
-			self 
-				perform: copyMethod
-				with: y.
-			temp := prevScanline.
-			prevScanline := thisScanline.
-			thisScanline := temp ].
-	z atEnd ifFalse: [ self error: 'Unexpected data' ].
-	debug ifTrue: 
-		[ Transcript
-			nextPutAll: ' compressed size=';
-			print: z position ]
+	0 to: height - 1 do: [ :y | 
+		filter := z next.
+		debug
+			ifTrue: [ filtersSeen add: filter ].
+		thisScanline := z
+			next: bytesPerScanline
+			into: thisScanline
+			startingAt: 1.
+		(debug and: [ thisScanline size < bytesPerScanline ])
+			ifTrue: [ self
+					traceCr:
+						('wanted {1} but only got {2}'
+							format:
+								{bytesPerScanline.
+								thisScanline size}) ].
+		filter = 0
+			ifFalse: [ self filterScanline: filter count: bytesPerScanline ].
+		self perform: copyMethod with: y.
+		temp := prevScanline.
+		prevScanline := thisScanline.
+		thisScanline := temp ].
+	z atEnd
+		ifFalse: [ self error: 'Unexpected data' ].
+	debug
+		ifTrue: [ self trace: ' compressed size=' , z position asString ]
 ]
 
 { #category : #chunks }
@@ -1217,39 +1199,36 @@ PNGReadWriter >> updateCrc: oldCrc from: start to: stop in: aCollection [
 ]
 
 { #category : #writing }
-PNGReadWriter >> writeChunk: crcStream [ 
+PNGReadWriter >> writeChunk: crcStream [
 	| bytes length crc debug |
 	debug := self debugging.
 	bytes := crcStream originalContents.
 	length := crcStream position.
-	crc := self 
+	crc := self
 		updateCrc: 4294967295
 		from: 1
 		to: length
 		in: bytes.
 	crc := crc bitXor: 4294967295.
-	debug ifTrue: 
-		[ Transcript
-			cr;
-			print: stream position;
-			space;
-			nextPutAll: (bytes 
-					copyFrom: 1
-					to: 4) asString;
-			nextPutAll: ' len=';
-			print: length;
-			nextPutAll: ' crc=0x';
-			nextPutAll: crc printStringHex ].
+	debug
+		ifTrue: [ self
+				crTrace:
+					(String
+						streamContents: [ :stream | 
+							stream
+								cr;
+								print: stream position;
+								space;
+								nextPutAll: (bytes copyFrom: 1 to: 4) asString;
+								nextPutAll: ' len=';
+								print: length;
+								nextPutAll: ' crc=0x';
+								nextPutAll: crc printStringHex ]) ].
 	self nextLongPut: length - 4.	"exclude chunk name"
-	stream 
-		next: length
-		putAll: bytes
-		startingAt: 1.
+	stream next: length putAll: bytes startingAt: 1.
 	self nextLongPut: crc.
-	debug ifTrue: 
-		[ Transcript
-			nextPutAll: ' afterPos=';
-			print: stream position ].
+	debug
+		ifTrue: [ self crTrace: ' afterPos=' , stream position asString ].
 	crcStream resetToStart
 ]
 
@@ -1259,21 +1238,21 @@ PNGReadWriter >> writeFileSignature [
 ]
 
 { #category : #writing }
-PNGReadWriter >> writeIDATChunkOn: aStream [ 
+PNGReadWriter >> writeIDATChunkOn: aStream [
 	"Write the IDAT chunk"
+
 	| z |
 	aStream nextPutAll: 'IDAT' asByteArray.
 	z := ZLibWriteStream on: aStream.
-	form depth <= 8 
+	form depth <= 8
 		ifTrue: [ self writeType3DataOn: z ]
 		ifFalse: [ self writeType6DataOn: z ].
-	self debugging ifTrue: 
-		[ Transcript
-			cr;
-			nextPutAll: 'compressed size=';
-			print: aStream position;
-			nextPutAll: ' uncompressed size=';
-			print: z position ]
+	self debugging
+		ifTrue: [ self
+				crTrace:
+					('compressed size=<1s> uncompressed size=<2s>'
+						expandMacrosWith: aStream position
+						with: z position) ]
 ]
 
 { #category : #writing }

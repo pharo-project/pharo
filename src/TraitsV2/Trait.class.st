@@ -27,6 +27,23 @@ Class {
 	#category : #'TraitsV2-Base'
 }
 
+{ #category : #private }
+Trait class >> configureBuilder: builder withName: aName traitComposition: aTraitCompositionOrCollection slots: someSlots packageName: aPackageName [
+
+	^ builder
+		name: aName;
+		superclass: nil;
+		metaSuperclass: self;
+		metaclassClass: MetaclassForTraits;
+		slots: someSlots;
+		sharedVariables: '';
+		sharedPools: '';
+		category: aPackageName;
+		traitComposition: aTraitCompositionOrCollection asTraitComposition;
+		classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
+		classSlots: #()
+]
+
 { #category : #'instance creation' }
 Trait class >> named: aSymbol [
 	^ self named: aSymbol uses: {} package: 'Unclassified'
@@ -103,26 +120,18 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 ]
 
 { #category : #'instance creation' }
-Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [ 
-
+Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots package: aPackageName env: anEnvironment [
 	| trait |
-	trait:= self classInstaller
+	trait := self classInstaller
 		make: [ :builder | 
-			builder
-				name: aName;
-				superclass: nil;
-				metaSuperclass: self;
-				slots: someSlots;
-				sharedVariables: '';
-				sharedPools: '';
-				category: aPackageName;
-				traitComposition: aTraitCompositionOrCollection asTraitComposition;
-				classTraitComposition: aTraitCompositionOrCollection asTraitComposition classComposition;
-				classSlots: #() ].
-			
+			self
+				configureBuilder: builder
+				withName: aName
+				traitComposition: aTraitCompositionOrCollection
+				slots: someSlots
+				packageName: aPackageName ].
 	self assert: [ trait class class = MetaclassForTraits ].
 	self assert: [ trait class superclass = Trait ].
-	
 	^ trait
 ]
 
@@ -157,12 +166,6 @@ Trait >> addUser: aClass [
 	self users add: aClass
 ]
 
-{ #category : #'class variables' }
-Trait >> allClassVarNames [
-	
-	^ #()
-]
-
 { #category : #accessing }
 Trait >> asTraitComposition [
 	^ TaCompositionElement for: self.
@@ -184,7 +187,7 @@ Trait >> classTrait [
 	^ self class
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 Trait >> definition [
 	
 	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
@@ -245,7 +248,7 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 Trait >> oldDefinition [
 
 	^ self definition

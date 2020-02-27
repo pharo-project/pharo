@@ -7,14 +7,16 @@ In particular, I contain a presenterProvider, a block who's responsibility is to
 Class {
 	#name : #SpNotebookPage,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#owner',
 		'#title => SpObservableSlot',
 		'#icon => SpObservableSlot',
 		'#layoutSpec => SpObservableSlot',
-		'#presenterProvider'
+		'#presenterProvider',
+		'#retrievedBlock',
+		'#activePresenter => WeakSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Tab'
 }
@@ -47,6 +49,13 @@ SpNotebookPage class >> title: aString provider: aBlock [
 		title: aString;
 		presenterProvider: aBlock;
 		yourself
+]
+
+{ #category : #accessing }
+SpNotebookPage >> activePresenter [
+	"This is the current active presenter fot this page"
+	
+	^ activePresenter
 ]
 
 { #category : #accessing }
@@ -121,8 +130,12 @@ SpNotebookPage >> resetContent [
 
 { #category : #accessing }
 SpNotebookPage >> retrievePresenter [
+	"refresh all the time, because content may have change"
 
-	^ self presenterProvider value
+	activePresenter := self presenterProvider value.
+	retrievedBlock ifNotNil: [ 
+		retrievedBlock cull: activePresenter ].
+	^ activePresenter
 ]
 
 { #category : #accessing }
@@ -135,4 +148,10 @@ SpNotebookPage >> title [
 SpNotebookPage >> title: aString [
 
 	title := aString
+]
+
+{ #category : #events }
+SpNotebookPage >> whenRetrievedDo: aBlock [ 
+
+	retrievedBlock := aBlock
 ]

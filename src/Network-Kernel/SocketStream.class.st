@@ -81,13 +81,12 @@ SocketStream class >> finger: userName [
 
 	| addr s |
 	addr := NetNameResolver promptUserForHostAddress.
-	s := SocketStream openConnectionToHost: addr port: 79.  "finger port number"
-	Transcript show: '---------- Connecting ----------'; cr.
+	s := SocketStream openConnectionToHost: addr port: 79.	"finger port number"
+	self traceCr: '---------- Connecting ----------'.
 	s sendCommand: userName.
-	Transcript show: s nextLineCrLf.
+	self trace: s nextLineCrLf.
 	s close.
-	Transcript show: '---------- Connection Closed ----------'; cr; endEntry.
-
+	self traceCr: '---------- Connection Closed ----------'
 ]
 
 { #category : #'instance creation' }

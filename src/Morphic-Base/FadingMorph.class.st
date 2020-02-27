@@ -109,13 +109,13 @@ FadingMorph >> rejectsEvent: anEvent [
 	^(anEvent isMouse and: [ anEvent isMouseDown ]) or: [ super rejectsEvent: anEvent ]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #initialization }
 FadingMorph >> resetAlpha [
 
 	alpha := 1.0
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 FadingMorph >> step [
 
 	alpha <= fadingFactor ifTrue: [ ^self delete ].
@@ -128,13 +128,13 @@ FadingMorph >> step [
 	
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 FadingMorph >> stepTime [
 
 	^100
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 FadingMorph >> wantsSteps [
 	^true
 ]

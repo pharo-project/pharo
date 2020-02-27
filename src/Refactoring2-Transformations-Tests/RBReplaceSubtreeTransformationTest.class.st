@@ -103,6 +103,6 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 	class := transformation model classNamed: #RBReplaceSubtreeTransformationTest.
 	self assert: (class directlyDefinesMethod: #testRefactoring).
 	self assert: (class parseTreeFor: #testRefactoring) body statements size equals: 6.
-	self assert: (((class parseTreeFor: #testRefactoring) body statements at: 5) sourceCode
+	self assert: ((((class parseTreeFor: #testRefactoring) body statements at: 5) sourceCode withBlanksCondensed copyReplaceAll: String cr with: ' ')
 		includesSubstring: 'assert: (class parseTreeFor: #selector:from:) body statements size = 2').
 ]

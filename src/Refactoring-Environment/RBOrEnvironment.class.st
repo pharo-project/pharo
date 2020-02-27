@@ -49,8 +49,8 @@ RBOrEnvironment >> includesCategory: aCategory [
 RBOrEnvironment >> includesClass: aClass [
 	(environment includesClass: aClass) ifTrue: [ ^ true ].
 	(orEnvironment includesClass: aClass) ifTrue: [ ^ true ].
-	(environment selectorsForClass: aClass) isEmpty ifFalse: [ ^ true ].
-	(orEnvironment selectorsForClass: aClass) isEmpty ifFalse: [ ^ true ].
+	(environment selectorsForClass: aClass) ifNotEmpty: [ ^ true ].
+	(orEnvironment selectorsForClass: aClass) ifNotEmpty: [ ^ true ].
 	^ false
 ]
 

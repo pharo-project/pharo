@@ -194,12 +194,10 @@ RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass 
 			(isClassVar
 				ifTrue: [ definingClass classSide withAllSubclasses ]
 				ifFalse: [ #() ])
-		detect: [ :each | 
+		anySatisfy: [ :each | 
 			((isClassVar
 				ifTrue: [ each whichSelectorsReferToClassVariable: aString ]
 				ifFalse: [ each whichSelectorsReferToInstanceVariable: aString ])
-				detect:
-					[ :sel | self checkClass: each selector: sel using: matcher ]
-				ifNone: [ nil ]) notNil ]
-		ifNone: [ nil ]) notNil
+				anySatisfy:
+					[ :sel | self checkClass: each selector: sel using: matcher ]) ])
 ]

@@ -80,6 +80,7 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 	(aBuilder range: #displayScaleFactor)
 		parent: #appearance;
 		order: 3;
+		default: 1;
 		label: 'Display scale factor';
 		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
 		target: self;
@@ -111,6 +112,11 @@ WorldMorph class >> removeExtraWorld: aWorld [
 	ExtraWorldList := self extraWorldList copyWithout: aWorld.
 	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
 	
+]
+
+{ #category : #cursor }
+WorldMorph >> activateCursor: aCursor [
+     aCursor beCursor
 ]
 
 { #category : #operations }
@@ -187,6 +193,28 @@ WorldMorph >> announcer [
 { #category : #cursor }
 WorldMorph >> beCursorOwner [
 	self class cursorOwnerWorld: self
+]
+
+{ #category : #initialization }
+WorldMorph >> becomeActiveDuring: aBlock [
+	"Make the receiver the ActiveWorld during the evaluation of aBlock.
+	Note that this method does deliberately *not* use #ensure: to prevent
+	re-installation of the world on project switches."
+
+	| priorWorld priorHand priorEvent |
+	priorWorld := ActiveWorld.
+	priorHand := ActiveHand.
+	priorEvent := ActiveEvent.
+	ActiveWorld := self.
+	ActiveHand := self hands first.	"default"
+	ActiveEvent := nil.	"not in event cycle"
+	aBlock
+		on: Error
+		do: [ :ex | 
+			ActiveWorld := priorWorld.
+			ActiveEvent := priorEvent.
+			ActiveHand := priorHand.
+			ex pass ]
 ]
 
 { #category : #'meta-actions' }
@@ -342,6 +370,13 @@ WorldMorph >> fullRepaintNeeded [
 
 ]
 
+{ #category : #'event handling' }
+WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
+
+	self currentWorld worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
+	
+]
+
 { #category : #'world state' }
 WorldMorph >> haloMorphs [
 
@@ -370,9 +405,11 @@ WorldMorph >> initialize [
 	worldState := WorldState new.
  	super initialize.
 	
+	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self.	
+	
 	"subscribe to the tools registry to update the world menu when needed"
 	Smalltalk tools whenToolRegistered: [ :tool :toolName | WorldState defaultWorldMenu ].
-	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ]
+	Smalltalk tools whenToolUnregistered: [ :tool :toolName | WorldState defaultWorldMenu ].
 ]
 
 { #category : #'change reporting' }

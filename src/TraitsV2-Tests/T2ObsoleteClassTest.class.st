@@ -4,7 +4,7 @@ Unit test for trait handling when classes are removed
 Class {
 	#name : #T2ObsoleteClassTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #tests }

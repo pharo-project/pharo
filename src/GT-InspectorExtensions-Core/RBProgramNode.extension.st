@@ -3,10 +3,9 @@ Extension { #name : #RBProgramNode }
 { #category : #'*GT-InspectorExtensions-Core' }
 RBProgramNode >> gtInspectorASTDumpIn: composite [
 	<gtInspectorPresentationOrder: 50>
-	
 	^ composite pharoMethod
 		title: [ 'AST Dump' translated ];
-		display: [ (RBParser parseExpression: self dump) formattedCode ]
+		display: [ (self parserClass parseExpression: self dump) formattedCode ]
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }
@@ -29,4 +28,9 @@ RBProgramNode >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 	^ (GTSimpleRBTreeBrowser new treeIn: composite)
 		title: [ 'Tree' translated ]
+]
+
+{ #category : #'*GT-InspectorExtensions-Core' }
+RBProgramNode >> parserClass [
+	^ RBParser
 ]

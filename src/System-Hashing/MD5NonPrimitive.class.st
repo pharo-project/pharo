@@ -25,7 +25,7 @@ Class {
 
 { #category : #'class initialization' }
 MD5NonPrimitive class >> initialize [
-	"MD5 initialize"
+	"MD5NonPrimitive initialize"
 	"Obscure fact: those magic hex numbers that are hard to type in correctly are
 	actually the result of a simple trigonometric function and are therefore
 	easier to compute than proofread.  Laziness is sometimes a virtue."

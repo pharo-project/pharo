@@ -1,21 +1,15 @@
 Class {
 	#name : #CompositeAnnotationContextTest,
 	#superclass : #TestCase,
-	#category : #'ClassAnnotation-Tests'
+	#category : #'ClassAnnotation-Tests-Base'
 }
 
 { #category : #tests }
 CompositeAnnotationContextTest >> testComparison [
-	
-	self 
-		assert: Object asAnnotationContext, Array asAnnotationContext 
-		equals: Object asAnnotationContext, Array asAnnotationContext. 
-	self 
-		assert: (Object asAnnotationContext, Array asAnnotationContext) hash 
-		equals: (Object asAnnotationContext, Array asAnnotationContext) hash.
-	
-	self deny: (Object asAnnotationContext, Array asAnnotationContext)
-						=  (Object asAnnotationContext, String asAnnotationContext)
+	self assert: Object asAnnotationContext , Array asAnnotationContext equals: Object asAnnotationContext , Array asAnnotationContext.
+	self assert: (Object asAnnotationContext , Array asAnnotationContext) hash equals: (Object asAnnotationContext , Array asAnnotationContext) hash.
+
+	self deny: Object asAnnotationContext , Array asAnnotationContext equals: Object asAnnotationContext , String asAnnotationContext
 ]
 
 { #category : #tests }

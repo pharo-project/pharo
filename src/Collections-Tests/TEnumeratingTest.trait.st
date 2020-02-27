@@ -49,7 +49,13 @@ TEnumeratingTest >> testFlatCollectAs [
 
 	self 
 		assert: (self simpleCollection flatCollect: [ :x | { x }, { x } ] as: IdentitySet) 
-		equals: self simpleCollection asIdentitySet
+		equals: self simpleCollection asIdentitySet.
+	self
+		assert: (#(foo bar baz) flatCollect: #yourself as: String)
+		equals: 'foobarbaz'.
+	self 
+		assert: (#(#(1 2) #(4 3)) flatCollect: #yourself as: Array)
+		equals: #(1 2 4 3)
 ]
 
 { #category : #'tests - enumerating' }

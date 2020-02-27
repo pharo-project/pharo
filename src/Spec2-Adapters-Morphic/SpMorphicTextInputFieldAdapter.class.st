@@ -3,7 +3,7 @@ I am the adapter used to bridge a TextInputFieldPresenter and a PluggableTextFie
 "
 Class {
 	#name : #SpMorphicTextInputFieldAdapter,
-	#superclass : #SpMorphicTextAdapter,
+	#superclass : #SpMorphicBaseTextAdapter,
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
@@ -29,8 +29,12 @@ SpMorphicTextInputFieldAdapter >> acceptOnCR [
 { #category : #factory }
 SpMorphicTextInputFieldAdapter >> buildWidget [
 	| newWidget |
+	
 	self flag: #pharo7.	"When support for P7 will be dropped, remove this compatibility hack."
-	newWidget := ((self class environment at: #SpRubTextFieldMorph ifAbsent: [ RubTextFieldMorph ]) on: self)
+	newWidget := ((self class environment 
+			at: #SpRubTextFieldMorph 
+			ifAbsent: [ RubTextFieldMorph ]) 
+			on: self)
 		getTextSelector: #getText;
 		setTextSelector: #accept:notifying:;
 		getSelectionSelector: #readSelection;
@@ -81,22 +85,6 @@ SpMorphicTextInputFieldAdapter >> entryCompletion [
 SpMorphicTextInputFieldAdapter >> isPassword [
 	
 	^ self widget font isKindOf: FixedFaceFont
-]
-
-{ #category : #accessing }
-SpMorphicTextInputFieldAdapter >> placeHolderText [
-	
-	^ widget ghostText 
-]
-
-{ #category : #'widget API' }
-SpMorphicTextInputFieldAdapter >> placeholder [
-	^ self model placeholder
-]
-
-{ #category : #'widget API' }
-SpMorphicTextInputFieldAdapter >> placeholder: aText [
-	^ self model placeholder: aText
 ]
 
 { #category : #accessing }

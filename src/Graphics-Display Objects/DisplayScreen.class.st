@@ -35,13 +35,9 @@ DisplayScreen class >> actualScreenDepth [
 { #category : #accessing }
 DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
-	
-	"The method should be modified to use currentWorld, but the dependency is not possible.
-	We have to remodularize it."
-	self flag: #todo.
-	
-	ActiveWorld ifNil: [ ^ 0@0 ].
-	^ ActiveWorld actualScreenSize
+
+	self flag: #pharoTodo. "The method should be modified to use currentWorld, but the dependency is not possible. We have to remodularize it."
+	^ ActiveWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
 ]
 
 { #category : #'display box access' }
@@ -186,13 +182,6 @@ DisplayScreen >> beDisplay [
 
 	<primitive: 102>
 	self primitiveFailed
-]
-
-{ #category : #other }
-DisplayScreen >> boundingBox [
-
-	ActiveWorld ifNil: [ ^ 0@0 corner: 0@0 ].
-	^ ActiveWorld bounds
 ]
 
 { #category : #deferring }
@@ -342,8 +331,9 @@ DisplayScreen >> fullscreen [
 { #category : #'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	self currentWorld worldState worldRenderer fullscreenMode: (LastScreenModeSelected := aBoolean)
-	
+	SystemAnnouncer uniqueInstance announce: (FullscreenAnnouncement new 
+		displayScreen: self;
+		fullscreen: (LastScreenModeSelected := aBoolean))
 ]
 
 { #category : #other }

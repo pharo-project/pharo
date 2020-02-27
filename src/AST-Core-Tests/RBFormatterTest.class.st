@@ -17,17 +17,16 @@ RBFormatterTest >> formatClass: aClass [
 RBFormatterTest >> formatClass: aClass selector: aSymbol [
 	| source tree1 tree2 |
 	source := aClass sourceCodeAt: aSymbol.
-	tree1 := RBParser parseMethod: source.
-	tree2 := RBParser
-		parseMethod:
-			(self formatterClass new format: tree1)
+	tree1 := self parserClass parseMethod: source.
+	tree2 := self parserClass
+		parseMethod: (self formatterClass new format: tree1)
 		onError: [ :err :pos | self assert: false ].
 	self assert: tree1 equals: tree2
 ]
 
 { #category : #private }
 RBFormatterTest >> formatterClass [
-  ^BISimpleFormatter
+  ^RBSimpleFormatter
 ]
 
 { #category : #testing }
@@ -35,7 +34,7 @@ RBFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
 		do: [ :each | 
 			| class |
-			class := Smalltalk globals classNamed: each.
+			class := testingEnvironment classNamed: each.
 			self
 				formatClass: class;
 				formatClass: class class ]

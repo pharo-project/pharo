@@ -311,17 +311,32 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitUnknownEvent: anEvent [
-	Transcript
-		show: 'Unknown event: ';
-		show: anEvent data printString;
-		cr
+	self
+		traceCr: ('Unknown event: <1s>' expandMacrosWith: anEvent data printString)
 ]
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 	
-	self currentWorld defer: [WorldState quitSession].
+	morphicWorld worldState worldRenderer handleOSWindowCloseEvent: anEvent
+
+]
+
+{ #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
+
+	| dropEvent |
+	
+	"The OSWindow drop events are generated one-per file (unlike the case the non-headless VM)"
+	
+	dropEvent := DropFilesEvent new 
+				setPosition: self activeHand position
+				contents: 1
+				hand: self activeHand;
+				fileNames: { anEvent filePath }. 
+				
+	^ dropEvent
 ]
 
 { #category : #visiting }

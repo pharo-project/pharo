@@ -40,7 +40,7 @@ SystemAnnouncer class >> restoreAllNotifications [
 	
 	| collector |
 	self reset.
-	collector := PragmaCollector filter: [ :pragma | pragma keyword = #systemEventRegistration ].
+	collector := PragmaCollector filter: [ :pragma | pragma selector = #systemEventRegistration ].
 	collector reset.
 	collector do: [ :pragma |
 		pragma methodClass instanceSide perform: pragma methodSelector ]

@@ -1,5 +1,17 @@
 "
-A doIt action on a text. When the text is clicked the text is seen as source code and evaluated
+A doIt action on a text. When the text is clicked the text is seen as source code and evaluated (Not really true as both 
+the portion of text and its DoIt attribute need to hold the same string)
+
+| stream |
+stream := TextStream on: (Text new: 100).
+stream 
+	withAttribute: (TextDoIt evalString: 'Smalltalk tools browser open')
+	do: [ stream nextPutAll: 'Some action...' ].
+TextMorph new 
+	newContents: stream contents;
+	openInWindow .
+
+
 "
 Class {
 	#name : #TextDoIt,
@@ -46,10 +58,4 @@ TextDoIt >> evalString: str [
 { #category : #accessing }
 TextDoIt >> info [
 	^ evalString
-]
-
-{ #category : #styling }
-TextDoIt >> writeScanOn: strm [
-
-	strm nextPut: $d; nextPutAll: evalString; nextPutAll: ';;'
 ]

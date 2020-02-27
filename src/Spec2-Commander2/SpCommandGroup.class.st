@@ -7,24 +7,16 @@ Basically, I add:
 "
 Class {
 	#name : #SpCommandGroup,
-	#superclass : #CmCommandGroupDecorator,
-	#instVars : [
-		'displayStrategy',
-		'isRoot',
-		'icon'
-	],
+	#superclass : #CmUICommandGroup,
 	#category : #'Spec2-Commander2-Core'
 }
 
-{ #category : #default }
-SpCommandGroup class >> defaultDisplayStrategy [
+{ #category : #converting }
+SpCommandGroup >> asKMCategory [
 
-	^ SpDisplayAsSubMenu new
-]
-
-{ #category : #default }
-SpCommandGroup class >> defaultIconName [
-	^ #blank
+	^ SpKMCategoryBuilder new
+		visit: self;
+		kmCategory	
 ]
 
 { #category : #converting }
@@ -64,14 +56,14 @@ SpCommandGroup >> asMenuPresenterWith: aBlock [
 ]
 
 { #category : #converting }
-SpCommandGroup >> asToolBarPresenter [
+SpCommandGroup >> asToolbarPresenter [
 	^ SpToolBarPresenterBuilder new
 		visit: self;
 		toolbarPresenter
 ]
 
 { #category : #converting }
-SpCommandGroup >> asToolBarPresenterWith: aBlock [
+SpCommandGroup >> asToolbarPresenterWith: aBlock [
 	| builder |
 	
 	builder := SpToolBarPresenterBuilder new.
@@ -79,21 +71,6 @@ SpCommandGroup >> asToolBarPresenterWith: aBlock [
 	^ builder
 		visit: self;
 		toolbarPresenter
-]
-
-{ #category : #configuring }
-SpCommandGroup >> beDisplayedAsGroup [
-	self displayStrategy: SpDisplayAsGroup new
-]
-
-{ #category : #configuring }
-SpCommandGroup >> beDisplayedAsSubMenu [
-	self displayStrategy: SpDisplayAsSubMenu new
-]
-
-{ #category : #configuring }
-SpCommandGroup >> beRoot [
-	self isRoot: true.
 ]
 
 { #category : #displaying }
@@ -105,56 +82,9 @@ SpCommandGroup >> displayIn: aMenuPresenter do: aBlock [
 		do: aBlock
 ]
 
-{ #category : #accessing }
-SpCommandGroup >> displayStrategy [
-	^ displayStrategy
-]
-
-{ #category : #accessing }
-SpCommandGroup >> displayStrategy: anObject [
-	displayStrategy := anObject
-]
-
-{ #category : #accessing }
-SpCommandGroup >> icon [ 
-
-	^ icon
-]
-
-{ #category : #accessing }
-SpCommandGroup >> icon: anIcon [
-
-	icon := anIcon
-]
-
-{ #category : #accessing }
-SpCommandGroup >> iconName: aSymbol [
-
-
-	self icon: (self iconNamed: aSymbol)
-]
-
-{ #category : #initialization }
-SpCommandGroup >> initialize [
-
-	super initialize.
-	self displayStrategy: self class defaultDisplayStrategy.
-	self isRoot: false
-]
-
 { #category : #'shortcuts installation' }
 SpCommandGroup >> installShortcutsIn: aPresenter [ 
 	SpShortcutInstaller new
 		presenter: aPresenter;
 		visit: self
-]
-
-{ #category : #accessing }
-SpCommandGroup >> isRoot [
-	^ isRoot
-]
-
-{ #category : #accessing }
-SpCommandGroup >> isRoot: anObject [
-	isRoot := anObject
 ]

@@ -26,9 +26,10 @@ FFIConst class >> value: anObject type: aType [
 		yourself
 ]
 
-{ #category : #'emitting code' }
-FFIConst >> emitArgument: aBuilder context: aContext [ 
-	aBuilder pushLiteral: self value
+{ #category : #unpacking }
+FFIConst >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [ 
+	
+	"Nothing to do here"
 ]
 
 { #category : #'emitting code' }

@@ -16,7 +16,7 @@ Class {
 		'greenSlider',
 		'blueSlider'
 	],
-	#category : #'Spec-PolyWidgets-RGB'
+	#category : #'Spec-PolyWidgets-Support'
 }
 
 { #category : #specs }
@@ -29,6 +29,18 @@ RGBSliders class >> defaultSpec [
 				add: #greenSlider;
 				add: #blueSlider ];
 		yourself
+]
+
+{ #category : #example }
+RGBSliders class >> example [
+	<sampleInstance>
+	| example |
+	example := self new.
+	example
+		title: 'RGBSliders example';
+		extent: 300 @ 200;
+		openDialogWithSpec.
+	^ example
 ]
 
 { #category : #accessing }

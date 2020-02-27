@@ -562,9 +562,9 @@ RBBrowserEnvironment >> selectMethods: aBlock [
 { #category : #accessing }
 RBBrowserEnvironment >> selectionIntervalFor: aString [ 
 	| interval |
-	self searchStrings isEmpty ifTrue: [^nil].
+	self searchStrings ifEmpty: [^nil].
 	interval := self selectionParseTreeIntervalFor: aString.
-	interval notNil ifTrue: [^interval].
+	interval ifNotNil: [^interval].
 	self searchStrings do: 
 			[:each | 
 			| search index |
@@ -588,7 +588,7 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 		each isSymbol 
 			ifTrue: [
 				tree := RBParseTreeSearcher buildSelectorTree: each.
-				tree notNil ifTrue: [ matcher matchesTree: tree do: answerBlock ] ]
+				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
 				tree := RBVariableNode named: each.
 				matcher

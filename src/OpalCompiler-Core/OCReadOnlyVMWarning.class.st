@@ -9,15 +9,15 @@ Class {
 
 { #category : #initialization }
 OCReadOnlyVMWarning >> defaultAction [
-	^ self resume: (compilationContext interactive
-		ifTrue: [ 
-			OCSemanticError new
-				node: node;
-				compilationContext: compilationContext;
-				messageText: self messageText;
-				signal ]
-		ifFalse: [ 
-			Transcript crShow: self messageText ])
+	^ self
+		resume:
+			(compilationContext interactive
+				ifTrue: [ OCSemanticError new
+						node: node;
+						compilationContext: compilationContext;
+						messageText: self messageText;
+						signal ]
+				ifFalse: [ SystemNotification signal: self messageText ])
 ]
 
 { #category : #initialization }

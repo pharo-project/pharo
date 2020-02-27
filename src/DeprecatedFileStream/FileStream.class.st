@@ -390,6 +390,13 @@ FileStream class >> oldFileOrNoneNamed: fileName [
 ]
 
 { #category : #'instance creation' }
+FileStream class >> onHandle: aFileSystemHandle [
+	^ self concreteStream new
+		open: aFileSystemHandle fullName
+		forWrite: aFileSystemHandle isWritable
+]
+
+{ #category : #'instance creation' }
 FileStream class >> readOnlyFileNamed: fileName [ 
 	^ self concreteStream readOnlyFileNamed: (self fullName: fileName)
 ]

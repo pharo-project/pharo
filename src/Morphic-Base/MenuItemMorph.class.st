@@ -28,7 +28,11 @@ Class {
 		'keyText'
 	],
 	#classVars : [
-		'SubMenuMarker'
+		'BottomArrow',
+		'LeftArrow',
+		'SubMenuBottomArrow',
+		'SubMenuMarker',
+		'UpArrow'
 	],
 	#category : #'Morphic-Base-Menus'
 }
@@ -42,7 +46,11 @@ MenuItemMorph class >> initialize [
 		extent: 5@9
 		fromArray: #(2147483648 3221225472 3758096384 4026531840 4160749568 4026531840 3758096384 3221225472 2147483648)
 		offset: 0@0.
-	SubMenuMarker := ColorForm mappingWhiteToTransparentFrom: f.
+
+	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
+	BottomArrow := SubMenuMarker rotateBy: 90.
+	LeftArrow := SubMenuMarker rotateBy: 180.
+	UpArrow := SubMenuMarker rotateBy: 270.
 
 ]
 
@@ -131,8 +139,8 @@ MenuItemMorph >> arguments: aCollection [
 
 { #category : #private }
 MenuItemMorph >> bottomArrow [
-	^ ColorForm
-		mappingWhiteToTransparentFrom: ((SubMenuMarker rotateBy: 90) asFormOfDepth:8)
+
+	^ BottomArrow
 ]
 
 { #category : #accessing }
@@ -385,20 +393,18 @@ MenuItemMorph >> iconForm [
 { #category : #initialization }
 MenuItemMorph >> initialize [
 	"initialize the state of the receiver"
+
 	super initialize.
 	""
-	
+
 	contents := ''.
 	hasFocus := false.
 	isEnabled := true.
-	subMenu := nil.
 	isSelected := false.
-	target := nil.
-	selector := nil.
-	arguments := nil.
 	font := StandardFonts menuFont.
-	self hResizing: #spaceFill;
-		 vResizing: #shrinkWrap
+	self
+		hResizing: #spaceFill;
+		vResizing: #shrinkWrap
 ]
 
 { #category : #events }
@@ -482,8 +488,8 @@ MenuItemMorph >> keyText: anObject [
 
 { #category : #private }
 MenuItemMorph >> leftArrow [
-	^ ColorForm
-		mappingWhiteToTransparentFrom: ((SubMenuMarker rotateBy: 180)asFormOfDepth: 8)
+
+	^ LeftArrow
 ]
 
 { #category : #drawing }
@@ -527,7 +533,8 @@ MenuItemMorph >> minWidth [
 MenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
 
-	evt shiftPressed ifTrue: [^ super mouseDown: evt].  "enable label editing"
+	(evt shiftPressed and: [ self isEditable ])
+		ifTrue: [^ super mouseDown: evt].  "enable label editing"
 	evt hand newMouseFocus: owner. "Redirect to menu for valid transitions"
 	owner selectItem: self event: evt. 
 
@@ -625,9 +632,9 @@ MenuItemMorph >> select: evt [
 MenuItemMorph >> selectionFillStyle [
 	"answer the fill style to use with the receiver is the selected  
 	element"
-	Display depth <= 2 ifTrue: [^ Color gray].
-	^ self theme settings menuSelectionColor.
 
+	Display depth <= 2 ifTrue: [ ^ Color gray ].
+	^ self theme menuSelectionColor
 ]
 
 { #category : #private }
@@ -707,8 +714,8 @@ MenuItemMorph >> themeChanged [
 
 { #category : #private }
 MenuItemMorph >> upArrow [
-	^ ColorForm
-		mappingWhiteToTransparentFrom: ((SubMenuMarker rotateBy: 270)asFormOfDepth: 8)
+
+	^ UpArrow
 ]
 
 { #category : #copying }

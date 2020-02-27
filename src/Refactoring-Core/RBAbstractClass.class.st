@@ -388,8 +388,7 @@ RBAbstractClass >> instanceVariableNames: aCollectionOfStrings [
 
 { #category : #testing }
 RBAbstractClass >> isAbstract [
-	(self whichSelectorsReferToSymbol: #subclassResponsibility) isEmpty 
-		ifFalse: [^true].
+	(self whichSelectorsReferToSymbol: #subclassResponsibility) ifNotEmpty: [^true].
 	model allReferencesToClass: self do: [:each | ^false].
 	^true
 ]
@@ -547,8 +546,7 @@ RBAbstractClass >> selectors [
 	self isDefined 
 		ifTrue: 
 			[selectors addAll: self realClass selectors.
-			removedMethods notNil 
-				ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
+			removedMethods ifNotNil: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
 	^selectors
 ]
 
@@ -606,9 +604,9 @@ RBAbstractClass >> superclass [
 
 { #category : #private }
 RBAbstractClass >> superclass: aRBClass [ 
-	self superclass notNil ifTrue: [self superclass removeSubclass: self].
+	self superclass ifNotNil: [self superclass removeSubclass: self].
 	superclass := aRBClass.
-	superclass notNil ifTrue: [superclass addSubclass: self].
+	superclass ifNotNil: [superclass addSubclass: self].
 ]
 
 { #category : #'accessing - deprecated' }

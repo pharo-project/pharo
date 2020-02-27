@@ -185,11 +185,6 @@ DictionaryTest >> expectedElementByDetect [
 ]
 
 { #category : #requirements }
-DictionaryTest >> expectedSizeAfterReject [
-	self flag: 'what should this return?'
-]
-
-{ #category : #requirements }
 DictionaryTest >> indexInNonEmpty [
 	"Return an index key between bounds of 'nonEmpty'"
 
@@ -346,10 +341,11 @@ DictionaryTest >> testAdd [
 	dict add: #b -> 2.
 	self assert: (dict at: #a) = 1.
 	self assert: (dict at: #b) = 2"
+
 	| dictionary result |
 	dictionary := self nonEmptyDict.
 	result := dictionary add: self associationWithKeyNotInToAdd.
-	self assert: result = self associationWithKeyNotInToAdd
+	self assert: result equals: self associationWithKeyNotInToAdd
 ]
 
 { #category : #'tests - adding' }
@@ -358,8 +354,8 @@ DictionaryTest >> testAddWithKeyAlreadyIn [
 	dictionary := self nonEmptyDict.
 	association := self associationWithKeyNotInToAdd.
 	result := dictionary add: association.
-	self assert: result = association.
-	self assert: (dictionary at: association key) = association value
+	self assert: result equals: association.
+	self assert: (dictionary at: association key) equals: association value
 ]
 
 { #category : #'tests - adding' }
@@ -368,8 +364,8 @@ DictionaryTest >> testAddWithKeyNotIn [
 	dictionary := self nonEmptyDict.
 	association := self associationWithKeyNotInToAdd.
 	result := dictionary add: association.
-	self assert: result = association.
-	self assert: (dictionary at: association key) = association value
+	self assert: result equals: association.
+	self assert: (dictionary at: association key) equals: association value
 ]
 
 { #category : #tests }
@@ -394,6 +390,29 @@ DictionaryTest >> testAsSet [
 		assert: (assoc0 copy ~= assoc1) ==> (aSet size > 1)
 		description:
   			'When adding two different elements, the set size should be greater than one'
+]
+
+{ #category : #tests }
+DictionaryTest >> testAtUpdate [
+	| dict |
+	dict := {2->10. 100->5} asDictionary.
+	dict at: 2 update: [ :v | v+10 ].
+	self assert: (dict at: 2) equals: 20.
+	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound .
+	
+	
+	
+]
+
+{ #category : #tests }
+DictionaryTest >> testAtUpdateInitial [
+	| dict |
+	dict := {2->10. 100->5} asDictionary.
+	dict at: 5 update: [ :v | v+1 ] initial: [17].
+	dict at: 2 update: [ :v | v+10 ] initial: [0].
+	self assert: (dict at: 5) equals: 17.
+	self assert: (dict at: 2) equals: 20
+	
 ]
 
 { #category : #tests }
@@ -472,16 +491,15 @@ DictionaryTest >> testIncludeAssociation [
 DictionaryTest >> testIncludes [
 	| o1 o2 newDict |
 	self assert: (nonEmptyDict includes: self element).
-	
+
 	o1 := 2 @ 3.
 	o2 := 2 @ 3.
-	self deny: (o1 == o2).
-	self assert: (o1 = o2).
+	self deny: o1 identicalTo: o2.
+	self assert: o1 equals: o2.
 	newDict := self collectionClass new.
 	newDict at: #a put: o1.
-	
-	self assert: (newDict includes: o2).
 
+	self assert: (newDict includes: o2)
 ]
 
 { #category : #'tests - testing' }
@@ -506,18 +524,12 @@ DictionaryTest >> testIncludesAssociationNoValue [
 
 { #category : #'tests - testing' }
 DictionaryTest >> testIncludesAssociationWithValue [
-
 	| association dictionary |
-	
 	association := Association key: #key value: 1.
 	dictionary := self collectionClass new.
 	dictionary add: association.
-	
-	self assert: (dictionary at: #key) = 1
 
-	
-	
-	
+	self assert: (dictionary at: #key) equals: 1
 ]
 
 { #category : #'tests - includes' }
@@ -571,7 +583,7 @@ DictionaryTest >> testKeyAtValueIfAbsent [
 
 { #category : #'tests - testing' }
 DictionaryTest >> testKeyForIdentity [
-	self assert: (nonEmptyDict keyForIdentity: 30) = #b.
+	self assert: (nonEmptyDict keyForIdentity: 30) equals: #b.
 
 	"The value 20 is associated to two different associations"
 	self assert: (#(a c) includes: (nonEmptyDict keyForIdentity: self elementTwiceIn))
@@ -581,8 +593,8 @@ DictionaryTest >> testKeyForIdentity [
 DictionaryTest >> testNew [
 	| d |
 	d := self classToBeTested new: 10.
-	self assert: d size = 0.
-	
+	self assert: d size equals: 0
+
 	"Why 14? Mysterious"
 	"self assert: d capacity = 14"
 ]
@@ -590,14 +602,12 @@ DictionaryTest >> testNew [
 { #category : #'tests - new' }
 DictionaryTest >> testNewFrom [
 	| assocs |
+	self assert: (self classToBeTested newFrom: {}) equals: self emptyDict.
 
-	self assert: (self classToBeTested newFrom: {}) = self emptyDict.
+	self assert: (self classToBeTested newFrom: nonEmptyDict copy) equals: self nonEmptyDict.
 
-	self assert: (self classToBeTested newFrom: nonEmptyDict copy) = self nonEmptyDict.
-
-	assocs := self nonEmptyDict associations collect: [:each | each copy].
-	self assert: (self classToBeTested newFrom: assocs) = self nonEmptyDict.
-
+	assocs := self nonEmptyDict associations collect: [ :each | each copy ].
+	self assert: (self classToBeTested newFrom: assocs) equals: self nonEmptyDict
 ]
 
 { #category : #'tests - new' }
@@ -627,17 +637,18 @@ DictionaryTest >> testNewFromKeysAndValues2 [
 { #category : #'tests - new' }
 DictionaryTest >> testNewFromPairs [
 	| assocs pairs |
-
 	assocs := self nonEmptyDict associations.
 	pairs := OrderedCollection new.
-	assocs do: [:each |
-		pairs
-			add: each key;
-			add: each value].
-	0 to: pairs size do: [:i | | dictFromPairs dictFromAssocs |
+	assocs
+		do: [ :each | 
+			pairs
+				add: each key;
+				add: each value ].
+	0 to: pairs size do: [ :i | 
+		| dictFromPairs dictFromAssocs |
 		dictFromPairs := self classToBeTested newFromPairs: (pairs copyFrom: 1 to: i).
 		dictFromAssocs := self classToBeTested newFrom: (assocs copyFrom: 1 to: (i / 2) floor).
-		self assert: dictFromPairs = dictFromAssocs].
+		self assert: dictFromPairs equals: dictFromAssocs ]
 ]
 
 { #category : #tests }
@@ -679,33 +690,35 @@ DictionaryTest >> testOccurrencesOf [
 
 { #category : #'tests - comparing' }
 DictionaryTest >> testOtherDictionaryEquality [
-	self otherDictionaryClasses do: [:each | | nonEmptyDict2 |
-		nonEmptyDict2 := each new.
-		self deny: self empty = nonEmptyDict2.
-		self deny: nonEmptyDict2 = self empty.
+	self otherDictionaryClasses
+		do: [ :each | 
+			| nonEmptyDict2 |
+			nonEmptyDict2 := each new.
+			self deny: self empty equals: nonEmptyDict2.
+			self deny: nonEmptyDict2 equals: self empty.
 
-		self nonEmptyDict keysAndValuesDo: [:key :value | nonEmptyDict2 at: key put: value].
-		self deny: self nonEmptyDict = nonEmptyDict2.
-		self deny: nonEmptyDict2 = self nonEmptyDict]
+			self nonEmptyDict keysAndValuesDo: [ :key :value | nonEmptyDict2 at: key put: value ].
+			self deny: self nonEmptyDict equals: nonEmptyDict2.
+			self deny: nonEmptyDict2 equals: self nonEmptyDict ]
 ]
 
 { #category : #tests }
 DictionaryTest >> testRemoveAll [
-	"Allows one to remove all elements of a collection" 
-	
+	"Allows one to remove all elements of a collection"
+
 	| dict1 dict2 s2 |
 	dict1 := self collectionClass new.
-	dict1 
-		at: #a put:1 ; 
-		at: #b put: 2. 
-		
+	dict1
+		at: #a put: 1;
+		at: #b put: 2.
+
 	dict2 := dict1 copy.
 	s2 := dict2 size.
-	
+
 	dict1 removeAll.
-	
-	self assert: dict1 size = 0.
-	self assert: dict2 size = s2 description: 'the copy has not been modified'.
+
+	self assert: dict1 size equals: 0.
+	self assert: dict2 size = s2 description: 'the copy has not been modified'
 ]
 
 { #category : #tests }

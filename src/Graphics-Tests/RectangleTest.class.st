@@ -38,16 +38,15 @@ RectangleTest >> testARectangleIntersectsWithItself [
 
 { #category : #tests }
 RectangleTest >> testAnEmptyRectangleHasNoArea [
-	self assert: emptyRectangle area = 0
+	self assert: emptyRectangle area equals: 0
 ]
 
 { #category : #'tests - accessing' }
 RectangleTest >> testArea [
-
-	self assert: (0 @ 0 corner: 5 @ 5) area = 25.
-	self assert: (2 @ 3 corner: 10 @ 8) area = 40.
-	self assert: (5 @ 5 corner: 6 @ 6) area = 1.
-	self assert: (-1 @ -2 corner: 2 @ 1) area = 9.
+	self assert: (0 @ 0 corner: 5 @ 5) area equals: 25.
+	self assert: (2 @ 3 corner: 10 @ 8) area equals: 40.
+	self assert: (5 @ 5 corner: 6 @ 6) area equals: 1.
+	self assert: (-1 @ -2 corner: 2 @ 1) area equals: 9
 ]
 
 { #category : #tests }
@@ -112,81 +111,77 @@ RectangleTest >> testAreasOutside2 [
 
 { #category : #'tests - accessing' }
 RectangleTest >> testBottom [
-|rect|
-rect:=(0 @ 0 corner: 20 @ 20) bottom:10.
-self assert: rect bottom = 10.
+	| rect |
+	rect := (0 @ 0 corner: 20 @ 20) bottom: 10.
+	self assert: rect bottom equals: 10
 ]
 
 { #category : #tests }
-RectangleTest >> testCenter [ 
+RectangleTest >> testCenter [
 	| r1 c |
-	r1 := 0@0 extent: 10@20.
+	r1 := 0 @ 0 extent: 10 @ 20.
 	c := r1 center.
 	self assert: (r1 containsPoint: c) description: 'the center is inside the rectangle'.
-	self assert: (r1 topLeft distanceTo: c) = (r1 bottomRight distanceTo: c).
-	self assert: (r1 bottomLeft distanceTo: c) = (r1 topRight distanceTo: c).
-	self assert: (r1 topLeft distanceTo: c) = (r1 bottomLeft distanceTo: c).
-	self assert: (r1 translateBy: -20@10) center = (c translateBy: -20@10) description: 'the center is translated with the rectangle'
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomRight distanceTo: c).
+	self assert: (r1 bottomLeft distanceTo: c) equals: (r1 topRight distanceTo: c).
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomLeft distanceTo: c).
+	self assert: (r1 translateBy: -20 @ 10) center = (c translateBy: -20 @ 10) description: 'the center is translated with the rectangle'
 ]
 
 { #category : #tests }
 RectangleTest >> testCenterEmpty [
-
-      | r1 c |
-      r1 := 30@10 corner: 10@20.
-		"does not create an empty rectangle"
-      c := r1 center.
-      self assert: (r1 containsPoint: c) description: 'A rectangle contain its center.'.
-      self assert: (r1 topLeft distanceTo: c) = (r1 bottomRight distanceTo: c).
-      self assert: (r1 bottomLeft distanceTo: c) = (r1 topRight distanceTo: c).
-      self assert: (r1 topLeft distanceTo: c) = (r1 bottomLeft distanceTo: c).
-      self assert: (r1 translateBy: -20@10) center = (c translateBy: -20@10) description: 'the center is translated with the rectangle'.
+	| r1 c |
+	r1 := 30 @ 10 corner: 10 @ 20.
+	"does not create an empty rectangle"
+	c := r1 center.
+	self assert: (r1 containsPoint: c) description: 'A rectangle contain its center.'.
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomRight distanceTo: c).
+	self assert: (r1 bottomLeft distanceTo: c) equals: (r1 topRight distanceTo: c).
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomLeft distanceTo: c).
+	self assert: (r1 translateBy: -20 @ 10) center = (c translateBy: -20 @ 10) description: 'the center is translated with the rectangle'
 ]
 
 { #category : #tests }
 RectangleTest >> testCenterEmpty2 [
-
-      | r1 c |
-      r1 := 0@0 corner: 0@0.
-		"does not create an empty rectangle"
-      c := r1 center.
-      self deny: (r1 containsPoint: c) description: 'An empty rectangle does not contain its center.'.
-      self assert: (r1 topLeft distanceTo: c) = (r1 bottomRight distanceTo: c).
-      self assert: (r1 bottomLeft distanceTo: c) = (r1 topRight distanceTo: c).
-      self assert: (r1 topLeft distanceTo: c) = (r1 bottomLeft distanceTo: c).
-      self assert: (r1 translateBy: -20@10) center = (c translateBy: -20@10) description: 'the center is translated with the rectangle'.
+	| r1 c |
+	r1 := 0 @ 0 corner: 0 @ 0.
+	"does not create an empty rectangle"
+	c := r1 center.
+	self deny: (r1 containsPoint: c) description: 'An empty rectangle does not contain its center.'.
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomRight distanceTo: c).
+	self assert: (r1 bottomLeft distanceTo: c) equals: (r1 topRight distanceTo: c).
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomLeft distanceTo: c).
+	self assert: (r1 translateBy: -20 @ 10) center = (c translateBy: -20 @ 10) description: 'the center is translated with the rectangle'
 ]
 
 { #category : #tests }
 RectangleTest >> testCenterEmptyBasedOnPointPoint [
-
-      | r1 c |
-		r1 := Rectangle point: 30@10 point: 10@20.
-		"does not create an empty rectangle"
-      c := r1 center.
-      self assert: (r1 containsPoint: c) description: 'A rectangle contain its center.'.
-      self assert: (r1 topLeft distanceTo: c) = (r1 bottomRight distanceTo: c).
-      self assert: (r1 bottomLeft distanceTo: c) = (r1 topRight distanceTo: c).
-      self assert: (r1 topLeft distanceTo: c) = (r1 bottomLeft distanceTo: c).
-      self assert: (r1 translateBy: -20@10) center = (c translateBy: -20@10) description: 'the center is translated with the rectangle'.
+	| r1 c |
+	r1 := Rectangle point: 30 @ 10 point: 10 @ 20.
+	"does not create an empty rectangle"
+	c := r1 center.
+	self assert: (r1 containsPoint: c) description: 'A rectangle contain its center.'.
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomRight distanceTo: c).
+	self assert: (r1 bottomLeft distanceTo: c) equals: (r1 topRight distanceTo: c).
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomLeft distanceTo: c).
+	self assert: (r1 translateBy: -20 @ 10) center = (c translateBy: -20 @ 10) description: 'the center is translated with the rectangle'
 ]
 
 { #category : #tests }
 RectangleTest >> testFlip [
-
 	| r1 c r1Horiz r1Vert |
-   r1 := 30@10 corner: 10@20.
-   c := 5@5.
-   r1Horiz := r1 flipBy: #horizontal centerAt: c.
-   r1Vert := r1 flipBy: #vertical centerAt: c.
+	r1 := 30 @ 10 corner: 10 @ 20.
+	c := 5 @ 5.
+	r1Horiz := r1 flipBy: #horizontal centerAt: c.
+	r1Vert := r1 flipBy: #vertical centerAt: c.
 
-   self assert: r1 area = r1Horiz area description: 'flip preserves area'.
-   self assert: r1 area = r1Vert area description: 'flip preserves area'.
+	self assert: r1 area = r1Horiz area description: 'flip preserves area'.
+	self assert: r1 area = r1Vert area description: 'flip preserves area'.
 
- 	self assert: r1 extent = r1Horiz extent description: 'flip preserves extent'.
+	self assert: r1 extent = r1Horiz extent description: 'flip preserves extent'.
 	self assert: r1 extent = r1Vert extent description: 'flip preserves extent'.
-	self assert:  (r1 flipBy: #horizontal centerAt: r1 center) = r1.
-	self assert:  (r1 flipBy: #vertical centerAt: r1 center) = r1
+	self assert: (r1 flipBy: #horizontal centerAt: r1 center) equals: r1.
+	self assert: (r1 flipBy: #vertical centerAt: r1 center) equals: r1
 ]
 
 { #category : #'tests - transforming' }
@@ -200,117 +195,171 @@ RectangleTest >> testFlipByCenterAt [
 ]
 
 { #category : #tests }
-RectangleTest >> testInsettingByNumberShouldWork [
+RectangleTest >> testFloatCenter [ 
+	| r1 c |
+	r1 := 0@0 extent: 11@21.
+	c := r1 floatCenter.
+	self assert: (r1 containsPoint: c) description: 'the center is inside the rectangle'.
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomRight distanceTo: c).
+	self assert: (r1 bottomLeft distanceTo: c) equals: (r1 topRight distanceTo: c).
+	self assert: (r1 topLeft distanceTo: c) equals: (r1 bottomLeft distanceTo: c).
+	self assert: (r1 translateBy: -20@10) floatCenter = (c translateBy: -20@10) description: 'the center is translated with the rectangle'
+]
 
+{ #category : #tests }
+RectangleTest >> testFloatCenterExtent [
+	| r1 c |
+	r1 := Rectangle 
+		floatCenter: 1.3@1.3
+		extent: 4.4 asPoint.
+	c := r1 floatCenter.
+	self
+		assert: (c closeTo: 1.3@1.3);
+		assert: (r1 topLeft distanceTo: c) 
+			equals: (r1 bottomRight distanceTo: c);
+		assert: (r1 bottomLeft distanceTo: c) 
+			equals: (r1 topRight distanceTo: c);
+		assert: (r1 topLeft distanceTo: c)
+			equals: (r1 bottomLeft distanceTo: c);
+		assert: ((r1 translateBy: -20@10) floatCenter closeTo: (c translateBy: -20@10))
+			description: 'the center is translated with the rectangle'
+]
+
+{ #category : #tests }
+RectangleTest >> testInsettingByNumberShouldWork [
 	| rec1 rec2 |
-	rec1 := 0@0 extent: 100@200.
+	rec1 := 0 @ 0 extent: 100 @ 200.
 	rec2 := rec1 insetBy: 30.
-	
-	self assert: rec2 height = 140. 
-	self assert: rec2 width = 40. 
-	
-	rec1 := 0@0 extent: 100@200.
+
+	self assert: rec2 height equals: 140.
+	self assert: rec2 width equals: 40.
+
+	rec1 := 0 @ 0 extent: 100 @ 200.
 	rec2 := rec1 insetBy: 50.
-	
-	self assert: rec2 height = 100. 
-	self assert: rec2 width = 0. 
-	
+
+	self assert: rec2 height equals: 100.
+	self assert: rec2 width equals: 0
 ]
 
 { #category : #tests }
 RectangleTest >> testInsettingByRectangleShouldNotProduceNegativeRectangle [
-
 	| rec1 rec2 |
-	rec1 := 0@0 extent: 100@200.
-	rec2 := rec1 insetBy: (1@2 rectangle: 5@10).
-	
-	self assert: rec2 left = 1. 
-	self assert: rec2 right = 95. 
-	self assert: rec2 top = 2. 
-	self assert: rec2 bottom = 190. 
-	
-	
-	rec1 := 0@0 extent: 100@200.
-	rec2 := rec1 insetBy: (46@2 rectangle: 55@10).
-	
-	self assert: rec2 left = 46. 
-	self assert: rec2 right = 46. 
-	self assert: rec2 top = 2. 
-	self assert: rec2 bottom = 190. 
-	
-	rec1 := 0@0 extent: 100@200.
-	rec2 := rec1 insetBy: (46@2 rectangle: 55@10).
-	
-	self assert: rec2 left = 46. 
-	self assert: rec2 right = 46. 
-	self assert: rec2 top = 2. 
-	self assert: rec2 bottom = 190. 
-	
-	rec1 := 0@0 extent: 100@200.
-	rec2 := rec1 insetBy: (1@102 rectangle: 5@105).
-	
-	self assert: rec2 left = 1. 
-	self assert: rec2 right = 95. 
-	self assert: rec2 top = 102. 
-	self assert: rec2 bottom = 102. 
+	rec1 := 0 @ 0 extent: 100 @ 200.
+	rec2 := rec1 insetBy: (1 @ 2 rectangle: 5 @ 10).
 
+	self assert: rec2 left equals: 1.
+	self assert: rec2 right equals: 95.
+	self assert: rec2 top equals: 2.
+	self assert: rec2 bottom equals: 190.
+
+
+	rec1 := 0 @ 0 extent: 100 @ 200.
+	rec2 := rec1 insetBy: (46 @ 2 rectangle: 55 @ 10).
+
+	self assert: rec2 left equals: 46.
+	self assert: rec2 right equals: 46.
+	self assert: rec2 top equals: 2.
+	self assert: rec2 bottom equals: 190.
+
+	rec1 := 0 @ 0 extent: 100 @ 200.
+	rec2 := rec1 insetBy: (46 @ 2 rectangle: 55 @ 10).
+
+	self assert: rec2 left equals: 46.
+	self assert: rec2 right equals: 46.
+	self assert: rec2 top equals: 2.
+	self assert: rec2 bottom equals: 190.
+
+	rec1 := 0 @ 0 extent: 100 @ 200.
+	rec2 := rec1 insetBy: (1 @ 102 rectangle: 5 @ 105).
+
+	self assert: rec2 left equals: 1.
+	self assert: rec2 right equals: 95.
+	self assert: rec2 top equals: 102.
+	self assert: rec2 bottom equals: 102
 ]
 
 { #category : #tests }
 RectangleTest >> testInsettingLargerThanRectangleExtentShouldNotProduceNegativeExtent [
-
 	| rec1 rec2 |
-	rec1 := 0@0 extent: 100@100.
-	rec2 := rec1 insetBy: 200@200.
-	
-	self assert: rec2 height >= 0. 
-	self assert: rec2 width >= 0. 
-	
-	rec1 := 0@0 extent: 100@100.
-	rec2 := rec1 insetBy: 50@50.
+	rec1 := 0 @ 0 extent: 100 @ 100.
+	rec2 := rec1 insetBy: 200 @ 200.
+
+	self assert: rec2 height >= 0.
+	self assert: rec2 width >= 0.
+
+	rec1 := 0 @ 0 extent: 100 @ 100.
+	rec2 := rec1 insetBy: 50 @ 50.
 	"because insetBy: reduces from both sides"
-	self assert: rec2 height = 0. 
-	self assert: rec2 width = 0. 
+	self assert: rec2 height equals: 0.
+	self assert: rec2 width equals: 0
 ]
 
 { #category : #tests }
 RectangleTest >> testInsettingSmallerThanRectangleExtentShouldProduceCorrectExtent [
-
 	| rec1 rec2 |
-	rec1 := 0@0 extent: 100@100.
-	rec2 := rec1 insetBy: 40@40.
-	
-	self assert: rec2 height = 20. 
-	self assert: rec2 width = 20. 
+	rec1 := 0 @ 0 extent: 100 @ 100.
+	rec2 := rec1 insetBy: 40 @ 40.
+
+	self assert: rec2 height equals: 20.
+	self assert: rec2 width equals: 20
 ]
 
 { #category : #'tests - accessing' }
 RectangleTest >> testLeft [
-|rect|
-rect:=(0 @ 0 corner: 20 @ 20) left:10.
-self assert: rect left = 10.
+	| rect |
+	rect := (0 @ 0 corner: 20 @ 20) left: 10.
+	self assert: rect left equals: 10
 ]
 
 { #category : #tests }
 RectangleTest >> testMergingDisjointRectangles [
-
 	| aCollection merge |
 	aCollection := OrderedCollection new.
-	aCollection add: (Rectangle left: -10 right: 0 top: -10 bottom: 0).
-	aCollection add: (Rectangle left: 0 right: 10 top: 0 bottom: 10).
+	aCollection
+		add:
+			(Rectangle
+				left: -10
+				right: 0
+				top: -10
+				bottom: 0).
+	aCollection
+		add:
+			(Rectangle
+				left: 0
+				right: 10
+				top: 0
+				bottom: 10).
 	merge := Rectangle merging: aCollection.
-	self assert: merge = (Rectangle left: -10 right: 10 top: -10 bottom: 10).
+	self
+		assert: merge
+		equals:
+			(Rectangle
+				left: -10
+				right: 10
+				top: -10
+				bottom: 10)
 ]
 
 { #category : #tests }
 RectangleTest >> testMergingNestedRectanglesReturnTheContainer [
-
 	| aCollection merge |
 	aCollection := OrderedCollection new.
-	aCollection add: (Rectangle left: 1 right: 10 top: 1 bottom: 10).
-	aCollection add: (Rectangle left: 4 right: 5 top: 4 bottom: 5).
+	aCollection
+		add:
+			(Rectangle
+				left: 1
+				right: 10
+				top: 1
+				bottom: 10).
+	aCollection
+		add:
+			(Rectangle
+				left: 4
+				right: 5
+				top: 4
+				bottom: 5).
 	merge := Rectangle merging: aCollection.
-	self assert: merge = aCollection first.
+	self assert: merge equals: aCollection first
 ]
 
 { #category : #tests }
@@ -319,7 +368,7 @@ RectangleTest >> testMergingOneRectangleReturnsThisRectangle [
 	aCollection := OrderedCollection new.
 	aCollection add: rectangle1.
 	mergingRectangle := Rectangle merging: aCollection.
-	self assert: mergingRectangle = aCollection first
+	self assert: mergingRectangle equals: aCollection first
 ]
 
 { #category : #tests }
@@ -327,47 +376,86 @@ RectangleTest >> testMergingOverlappingRectangles [
 	| aCollection merge |
 	aCollection := OrderedCollection new.
 	aCollection
-		add: (Rectangle
+		add:
+			(Rectangle
 				left: 5
 				right: 10
 				top: 0
 				bottom: 15);
-		
-		add: (Rectangle
+		add:
+			(Rectangle
 				left: 0
 				right: 15
 				top: 5
 				bottom: 10).
 	merge := Rectangle merging: aCollection.
-	self assert: merge
-			= (Rectangle
-					left: 0
-					right: 15
-					top: 0
-					bottom: 15)
+	self
+		assert: merge
+		equals:
+			(Rectangle
+				left: 0
+				right: 15
+				top: 0
+				bottom: 15)
 ]
 
 { #category : #tests }
 RectangleTest >> testMergingOverlappingRects [
-
 	| coll merge |
 	coll := OrderedCollection new.
-	coll add: (Rectangle left: 5 right: 10 top: 0 bottom: 15).
-	coll add: (Rectangle left: 0 right: 15 top: 5 bottom: 10).
+	coll
+		add:
+			(Rectangle
+				left: 5
+				right: 10
+				top: 0
+				bottom: 15).
+	coll
+		add:
+			(Rectangle
+				left: 0
+				right: 15
+				top: 5
+				bottom: 10).
 	merge := Rectangle merging: coll.
-	self assert: merge = (Rectangle left: 0 right: 15 top: 0 bottom: 15).
+	self
+		assert: merge
+		equals:
+			(Rectangle
+				left: 0
+				right: 15
+				top: 0
+				bottom: 15)
 ]
 
 { #category : #tests }
 RectangleTest >> testMergingTwoRectangles [
-
 	| coll merge |
 	coll := OrderedCollection new.
-	coll add: (Rectangle left: 1 right: 1 top: 1 bottom: 1).
-	coll add: (Rectangle left: 10 right: 10 top: 10 bottom: 10).
+	coll
+		add:
+			(Rectangle
+				left: 1
+				right: 1
+				top: 1
+				bottom: 1).
+	coll
+		add:
+			(Rectangle
+				left: 10
+				right: 10
+				top: 10
+				bottom: 10).
 
 	merge := Rectangle merging: coll.
-	self assert: merge = (Rectangle left: 1 right: 10 top: 1 bottom: 10).
+	self
+		assert: merge
+		equals:
+			(Rectangle
+				left: 1
+				right: 10
+				top: 1
+				bottom: 10)
 ]
 
 { #category : #'tests - rectangle functions' }
@@ -402,10 +490,9 @@ RectangleTest >> testPointPointConstructorIsSymmetrical [
 
 { #category : #tests }
 RectangleTest >> testRectangleWithNegativeExtentShouldHaveZeroExtent [
-	
-	self assert: (Rectangle origin: 10@10 extent: -5@ -5) extent = (0@0).
-	self assert: (Rectangle origin: 10@10 extent: -5@ -5) origin = (10@10).
-		self assert: (Rectangle origin: 10@10 extent: 50@ 60) extent = (50@60).
+	self assert: (Rectangle origin: 10 @ 10 extent: -5 @ -5) extent equals: 0 @ 0.
+	self assert: (Rectangle origin: 10 @ 10 extent: -5 @ -5) origin equals: 10 @ 10.
+	self assert: (Rectangle origin: 10 @ 10 extent: 50 @ 60) extent equals: 50 @ 60
 ]
 
 { #category : #tests }
@@ -419,52 +506,55 @@ RectangleTest >> testRectanglesWithSameOriginIntersect [
 
 { #category : #'tests - accessing' }
 RectangleTest >> testRight [
-|rect|
-rect:=(0 @ 0 corner: 20 @ 20) right:10.
-self assert: rect right = 10.
+	| rect |
+	rect := (0 @ 0 corner: 20 @ 20) right: 10.
+	self assert: rect right equals: 10
 ]
 
 { #category : #tests }
 RectangleTest >> testRotateBy [
 	| rect |
-	
-	rect := Rectangle left:0  right:6  top:4  bottom:2. 
+	rect := Rectangle
+		left: 0
+		right: 6
+		top: 4
+		bottom: 2.
 
-	self assert: (rect rotateBy:#left centerAt:0@0) left = 2.
-	self assert: (rect rotateBy:#left centerAt:0@0) right = 4.
-	self assert: (rect rotateBy:#left centerAt:0@0) top = -6.
-	self assert: (rect rotateBy:#left centerAt:0@0) bottom = 0.
-	
-	self assert: (rect rotateBy:#right centerAt:0@0) left = -4.
-	self assert: (rect rotateBy:#right centerAt:0@0) right = -2.
-	self assert: (rect rotateBy:#right centerAt:0@0) top = 0.
-	self assert: (rect rotateBy:#right centerAt:0@0) bottom = 6.
-	
-	self assert: (rect rotateBy:#pi centerAt:0@0) left = -6.
-	self assert: (rect rotateBy:#pi centerAt:0@0) right = 0.
-	self assert: (rect rotateBy:#pi centerAt:0@0) top = -4.
-	self assert: (rect rotateBy:#pi centerAt:0@0) bottom = -2.
+	self assert: (rect rotateBy: #left centerAt: 0 @ 0) left equals: 2.
+	self assert: (rect rotateBy: #left centerAt: 0 @ 0) right equals: 4.
+	self assert: (rect rotateBy: #left centerAt: 0 @ 0) top equals: -6.
+	self assert: (rect rotateBy: #left centerAt: 0 @ 0) bottom equals: 0.
+
+	self assert: (rect rotateBy: #right centerAt: 0 @ 0) left equals: -4.
+	self assert: (rect rotateBy: #right centerAt: 0 @ 0) right equals: -2.
+	self assert: (rect rotateBy: #right centerAt: 0 @ 0) top equals: 0.
+	self assert: (rect rotateBy: #right centerAt: 0 @ 0) bottom equals: 6.
+
+	self assert: (rect rotateBy: #pi centerAt: 0 @ 0) left equals: -6.
+	self assert: (rect rotateBy: #pi centerAt: 0 @ 0) right equals: 0.
+	self assert: (rect rotateBy: #pi centerAt: 0 @ 0) top equals: -4.
+	self assert: (rect rotateBy: #pi centerAt: 0 @ 0) bottom equals: -2
 ]
 
 { #category : #tests }
 RectangleTest >> testScaleBy [
 	| rect |
-	rect:= (2@2 corner: 6@4). 
-	
-	self assert: (rect scaleBy: 2) left = 4.
-	self assert: (rect scaleBy: 2) right = 12.
-	self assert: (rect scaleBy: 2) top = 4.
-	self assert: (rect scaleBy: 2) bottom = 8.
-	
-	self assert: (rect scaleBy: (1/2)) left = 1.
-	self assert: (rect scaleBy: (1/2)) right = 3.
-	self assert: (rect scaleBy: (1/2)) top = 1.
-	self assert: (rect scaleBy: (1/2)) bottom = 2.
-	
-	self assert: (rect scaleBy: 0) left = 0.
-	self assert: (rect scaleBy: 0) right = 0.
-	self assert: (rect scaleBy: 0) top = 0.
-	self assert: (rect scaleBy: 0) bottom = 0.
+	rect := 2 @ 2 corner: 6 @ 4.
+
+	self assert: (rect scaleBy: 2) left equals: 4.
+	self assert: (rect scaleBy: 2) right equals: 12.
+	self assert: (rect scaleBy: 2) top equals: 4.
+	self assert: (rect scaleBy: 2) bottom equals: 8.
+
+	self assert: (rect scaleBy: 1 / 2) left equals: 1.
+	self assert: (rect scaleBy: 1 / 2) right equals: 3.
+	self assert: (rect scaleBy: 1 / 2) top equals: 1.
+	self assert: (rect scaleBy: 1 / 2) bottom equals: 2.
+
+	self assert: (rect scaleBy: 0) left equals: 0.
+	self assert: (rect scaleBy: 0) right equals: 0.
+	self assert: (rect scaleBy: 0) top equals: 0.
+	self assert: (rect scaleBy: 0) bottom equals: 0
 ]
 
 { #category : #tests }
@@ -497,31 +587,31 @@ RectangleTest >> testStoreOn [
 	| assoc assoc2 |
 	assoc := (0 @ 0 extent: 1 @ 1) -> 0.
 	assoc2 := self class compiler evaluate: assoc storeString.
-	self assert: assoc key = assoc2 key.
-	self assert: assoc value = assoc2 value
+	self assert: assoc key equals: assoc2 key.
+	self assert: assoc value equals: assoc2 value
 ]
 
 { #category : #'tests - accessing' }
 RectangleTest >> testTop [
-|rect|
-rect:=(0 @ 0 corner: 20 @ 20) top:10.
-self assert: rect top = 10.
+	| rect |
+	rect := (0 @ 0 corner: 20 @ 20) top: 10.
+	self assert: rect top equals: 10
 ]
 
 { #category : #tests }
 RectangleTest >> testTranslateBy [
 	| rect |
-	rect:= (2@2 corner: 6@4).
-	
-	self assert: (rect translateBy:2) left = 4.
-	self assert: (rect translateBy:2) right = 8.
-	self assert: (rect translateBy:2) top = 4.
-	self assert: (rect translateBy:2) bottom = 6.
-	
-	self assert: (rect translateBy:(2 negated)) left = 0.
-	self assert: (rect translateBy:(2 negated)) right = 4.
-	self assert: (rect translateBy:(2 negated)) top = 0.
-	self assert: (rect translateBy:(2 negated)) bottom = 2.
+	rect := 2 @ 2 corner: 6 @ 4.
+
+	self assert: (rect translateBy: 2) left equals: 4.
+	self assert: (rect translateBy: 2) right equals: 8.
+	self assert: (rect translateBy: 2) top equals: 4.
+	self assert: (rect translateBy: 2) bottom equals: 6.
+
+	self assert: (rect translateBy: 2 negated) left equals: 0.
+	self assert: (rect translateBy: 2 negated) right equals: 4.
+	self assert: (rect translateBy: 2 negated) top equals: 0.
+	self assert: (rect translateBy: 2 negated) bottom equals: 2
 ]
 
 { #category : #tests }
@@ -546,17 +636,16 @@ RectangleTest >> testTwoRectanglesWithAnAdjascentCornerDoNotIntersect [
 
 { #category : #'tests - rectangle functions' }
 RectangleTest >> testWithBottom [
-
 	| r |
 	r := Rectangle new.
-	r := (0 @ 0) corner: (5 @ 5).
-	self assert: (r withBottom: 7) = ((0 @ 0) corner: (5 @ 7)).
-	self assert: (r withBottom: 3) = ((0 @ 0) corner: (5 @ 3)).
+	r := 0 @ 0 corner: 5 @ 5.
+	self assert: (r withBottom: 7) equals: (0 @ 0 corner: 5 @ 7).
+	self assert: (r withBottom: 3) equals: (0 @ 0 corner: 5 @ 3).
 
 	r := Rectangle new.
-	r := (-5 @ -10) corner: (-2 @ -3).
-	self assert: (r withBottom: -2) = ((-5 @ -10) corner: (-2 @ -2)).
-	self assert: (r withBottom: 5) = ((-5 @ -10) corner: (-2 @ 5)).
+	r := -5 @ -10 corner: -2 @ -3.
+	self assert: (r withBottom: -2) equals: (-5 @ -10 corner: -2 @ -2).
+	self assert: (r withBottom: 5) equals: (-5 @ -10 corner: -2 @ 5)
 ]
 
 { #category : #tests }
@@ -582,12 +671,11 @@ RectangleTest >> testWithBottomDoesNotProduceInvalidRectangle [
 
 { #category : #'tests - rectangle functions' }
 RectangleTest >> testWithHeight [
-
 	| r |
 	r := Rectangle new.
 	r := 1 @ 2 corner: 5 @ 5.
-	self assert: (r withHeight: 7) = (1 @ 2 corner: 5 @ 9).
-	self assert: (r withHeight: 3) = (1 @ 2 corner: 5 @ 5).
+	self assert: (r withHeight: 7) equals: (1 @ 2 corner: 5 @ 9).
+	self assert: (r withHeight: 3) equals: (1 @ 2 corner: 5 @ 5)
 ]
 
 { #category : #tests }
@@ -636,12 +724,11 @@ RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [
 
 { #category : #'tests - rectangle functions' }
 RectangleTest >> testWithTop [
-
 	| r |
 	r := Rectangle new.
 	r := 0 @ 0 corner: 5 @ 5.
-	self assert: (r withTop: -2) = (0 @ -2 corner: 5 @ 5).
-	self assert: (r withTop: 3) = (0 @ 3 corner: 5 @ 5).
+	self assert: (r withTop: -2) equals: (0 @ -2 corner: 5 @ 5).
+	self assert: (r withTop: 3) equals: (0 @ 3 corner: 5 @ 5)
 ]
 
 { #category : #tests }
@@ -667,10 +754,9 @@ RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [
 
 { #category : #'tests - rectangle functions' }
 RectangleTest >> testWithWidth [
-
 	| r |
 	r := Rectangle new.
 	r := 1 @ 2 corner: 5 @ 5.
-	self assert: (r withWidth: 7) = (1 @ 2 corner: 8 @ 5).
-	self assert: (r withWidth: 3) = (1 @ 2 corner: 4 @ 5).
+	self assert: (r withWidth: 7) equals: (1 @ 2 corner: 8 @ 5).
+	self assert: (r withWidth: 3) equals: (1 @ 2 corner: 4 @ 5)
 ]

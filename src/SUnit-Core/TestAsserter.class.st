@@ -377,6 +377,15 @@ TestAsserter >> denyCollection: actualCollection equals: expectedCollection [
 ]
 
 { #category : #asserting }
+TestAsserter >> denyCollection: actual hasSameElements: expected [
+	"Deny that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
+
+	self
+		deny: ((actual difference: expected) isEmpty and: [ (expected difference: actual) isEmpty ])
+		description: 'Given collections match!'
+]
+
+{ #category : #asserting }
 TestAsserter >> denyCollection: actualCollection includesAll: subcollection [
 	"Raises an AssertionFailure if actualCollection INCLUDES all the elements of expectedCollection (by negating result of #includesAll: message).
 	 I also provide a specialized message for the AssertionFailure in case I fail.

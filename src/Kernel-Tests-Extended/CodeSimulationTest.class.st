@@ -22,7 +22,7 @@ CodeSimulationTest >> methodWithError [
 
 { #category : #tests }
 CodeSimulationTest >> methodWithTranscript [
-	Transcript show: 'something'
+	self trace: 'something'
 ]
 
 { #category : #tests }
@@ -43,64 +43,67 @@ CodeSimulationTest >> testError [
 { #category : #'tests - primitives' }
 CodeSimulationTest >> testErrorCodeNotFound [
 	| ctx result resultSimu |
-	
 	self skip.
-	
+
 	Smalltalk vm isRunningCog ifFalse: [ ^ self ].
-	
+
 	result := self veryBasicAt: 1.
-		
-	ctx := Context 
+
+	ctx := Context
 		sender: nil
 		receiver: nil
-		method: (Object>>#at: )
+		method: Object >> #at:
 		arguments: #(10).
-	
-	resultSimu := ctx 
+
+	resultSimu := ctx
 		push: nil;
 		push: 500;
-		doPrimitive: 117  method:  (self class>>#veryBasicAt:) receiver: self args: #(999).
-		
-	self assert: resultSimu isArray.	
-	self assert: Context  primitiveFailToken first == resultSimu first.
-	self assert: result equals: resultSimu second.
+		doPrimitive: 117
+			method: self class >> #veryBasicAt:
+			receiver: self
+			args: #(999).
+
+	self assert: resultSimu isArray.
+	self assert: Context primitiveFailToken first identicalTo: resultSimu first.
+	self assert: result equals: resultSimu second
 ]
 
 { #category : #'tests - primitives' }
 CodeSimulationTest >> testErrorCodeNotFoundIndexed [
 	| ctx result resultSimu |
-	
-	Smalltalk vm isRunningCog ifFalse: [^self].
-	
+	Smalltalk vm isRunningCog ifFalse: [ ^ self ].
+
 	result := self indexedBasicAt: 100.
-		
-	ctx := Context 
+
+	ctx := Context
 		sender: nil
 		receiver: nil
-		method: (Object>>#at: )
+		method: Object >> #at:
 		arguments: #(10).
-	
-	resultSimu := ctx 
+
+	resultSimu := ctx
 		push: nil;
 		push: 500;
-		doPrimitive: 60  method:  (self class>>#indexedBasicAt:) receiver: self args: #(100).
-		
-	self assert: resultSimu isArray.	
+		doPrimitive: 60
+			method: self class >> #indexedBasicAt:
+			receiver: self
+			args: #(100).
+
+	self assert: resultSimu isArray.
 	self assert: resultSimu size equals: 2.
-	self assert: Context  primitiveFailToken first == resultSimu first.
-	self assert: result equals: resultSimu second.
+	self assert: Context primitiveFailToken first identicalTo: resultSimu first.
+	self assert: result equals: resultSimu second
 ]
 
 { #category : #'tests - primitives' }
 CodeSimulationTest >> testErrorToken [
 	| token1 token2 |
-	
 	token1 := Context primitiveFailToken.
 	token2 := Context primitiveFailTokenFor: 100.
 
-	self assert: token1 first == token2 first.
+	self assert: token1 first identicalTo: token2 first.
 	self assert: token1 second isNil.
-	self assert: token2 second equals: 100.
+	self assert: token2 second equals: 100
 ]
 
 { #category : #tests }

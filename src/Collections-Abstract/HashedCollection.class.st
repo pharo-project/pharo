@@ -1,5 +1,5 @@
 "
-I am an abstract collection of objects that implement hash and equality in a consitent way. This means that whenever two objects are equal, their hashes have to be equal too. If two objects are equal then I can only store one of them. Hashes are expected to be integers (preferably SmallIntegers). I also expect that the objects contained by me do not change their hashes. If that happens, hash invariants have to be re-established, which can be done by #rehash.
+I am an abstract collection of objects that implement hash and equality in a consistent way. This means that whenever two objects are equal, their hashes have to be equal too. If two objects are equal then I can only store one of them. Hashes are expected to be integers (preferably SmallIntegers). I also expect that the objects contained by me do not change their hashes. If that happens, hash invariants have to be re-established, which can be done by #rehash.
 
 Since I'm abstract, no instances of me should exist. My subclasses should implement #scanFor:, #fixCollisionsFrom: and #noCheckNoGrowFillFrom:.
 
@@ -138,14 +138,6 @@ HashedCollection >> compact [
 	| newCapacity |
 	newCapacity := HashTableSizes atLeast: tally * 4 // 3.
 	self growTo: newCapacity
-]
-
-{ #category : #enumerating }
-HashedCollection >> doWithIndex: aBlock2 [
-	"Support Set enumeration with a counter, even though not ordered"
-	| index |
-	index := 0.
-	self do: [:item | aBlock2 value: item value: (index := index+1)]
 ]
 
 { #category : #private }

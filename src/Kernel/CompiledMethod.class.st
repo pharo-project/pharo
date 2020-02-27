@@ -450,7 +450,7 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
-	^ self pragmas anySatisfy: [ :pragma | pragma keyword = aSymbol ]
+	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
 ]
 
 { #category : #testing }
@@ -518,6 +518,8 @@ CompiledMethod >> isConflict [
 { #category : #testing }
 CompiledMethod >> isDeprecated [
 	"Object selectorsInProtocol: #deprecation"
+	self methodClass isDeprecated ifTrue: [ ^ true ].
+
 	(self
 		sendsAnySelectorOf:
 			#(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
@@ -595,6 +597,8 @@ CompiledMethod >> isProvided: marker [
 
 { #category : #testing }
 CompiledMethod >> isRequired [
+	"A method is required if it is a method declaring a subclass responsibility or an explicit requirement. This mean the method needs to be overriden (in case of subclass reponsibility) or implemented (in case of explicit requirement)."
+
 	^ self isRequired: self markerOrNil
 ]
 
@@ -651,7 +655,7 @@ CompiledMethod >> isTaggedWith: aSymbol [
 { #category : #'source code management' }
 CompiledMethod >> linesOfCode [
 	"An approximate measure of lines of code.
-	Includes comments, but excludes empty lines."
+	Includes method's name and comments, but excludes empty lines."
 	| lines |
 	lines := 0.
 	self sourceCode lineIndicesDo: [:start :endWithoutDelimiters :end |
@@ -732,10 +736,10 @@ CompiledMethod >> postCopy [
 	| penultimateLiteral |
 	(penultimateLiteral := self penultimateLiteral) isMethodProperties ifTrue:
 		[self penultimateLiteral: (penultimateLiteral copy
-									setMethod: self;
+									method: self;
 									yourself).
 		 self penultimateLiteral pragmas do:
-			[:p| p setMethod: self]]
+			[:p| p method: self]]
 
 ]
 

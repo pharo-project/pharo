@@ -31,21 +31,23 @@ SpTextFieldExample class >> title [
 	^ 'Text Field Example'
 ]
 
+{ #category : #initialization }
+SpTextFieldExample >> connectPresenters [
+	textField
+		acceptBlock:
+			[ :text | self class environment
+				at: text asSymbol
+				ifPresent: [ :class | methodBrowser messages: class methods ]
+				ifAbsent: [ methodBrowser messages: #() ] ]
+]
+
 { #category : #api }
 SpTextFieldExample >> initialExtent [
 	^ 900@550
 ]
 
 { #category : #initialization }
-SpTextFieldExample >> initializePresenter [
-	
-	textField acceptBlock: [:text | Smalltalk globals at: text asSymbol
-								ifPresent: [:class | methodBrowser messages: class methods ]
-								ifAbsent: [ methodBrowser messages: #() ]]
-]
-
-{ #category : #initialization }
-SpTextFieldExample >> initializeWidgets [
+SpTextFieldExample >> initializePresenters [
 	methodBrowser := self instantiate: MessageBrowser.
 
 	textField := self newTextInput.

@@ -1477,6 +1477,11 @@ RubTextEditor >> isDisjointFrom: anInterval [
 ]
 
 { #category : #testing }
+RubTextEditor >> isScripting [
+	^ false 
+]
+
+{ #category : #testing }
 RubTextEditor >> isSmalltalkEditor [
 	^ false 
 ]
@@ -1994,11 +1999,8 @@ RubTextEditor >> saveContentsInFile [
 	suggestedName ifNil: [suggestedName := labelToUse , '.text'].
 	fileName := UIManager default request: 'File name?'
 				initialAnswer: suggestedName.
-	fileName isEmptyOrNil 
-		ifFalse: 
-			[(FileStream newFileNamed: fileName)
-				nextPutAll: stringToSave;
-				close]
+	fileName isEmptyOrNil
+		ifFalse: [ fileName asFileReference writeStreamDo: [ :out | out nextPutAll: stringToSave ] ]
 ]
 
 { #category : #scrolling }
@@ -2175,6 +2177,12 @@ RubTextEditor >> selectWord [
 									ifTrue: [level := level + 1"entering deeper nest"]]]].
 
 	level > 0 ifTrue: ["in case ran off string end"	here := here + direction].
+	
+	"to avoid selecting boringly the : in block argument: :aSerie will just select aSerie. 
+	Such a boost of editing productivity!!!"	
+	start ifNotNil: [ (self text at: start) = $: ifTrue: [ start := start + 1 ]].
+	
+	
 	direction > 0
 		ifTrue: [self selectFrom: start to: here - 1]
 		ifFalse: [self selectFrom: here + 1 to: stop]

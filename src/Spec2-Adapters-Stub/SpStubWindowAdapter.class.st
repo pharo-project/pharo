@@ -21,6 +21,10 @@ SpStubWindowAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aSpec [
 ]
 
 { #category : #factory }
+SpStubWindowAdapter >> beep [
+]
+
+{ #category : #factory }
 SpStubWindowAdapter >> buildWidget [
 
 	^ SpStubWindowView new

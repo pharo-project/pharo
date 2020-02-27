@@ -1,19 +1,19 @@
 "
-ComposablePresenter is an abstract class which represent a applicative presenter made to be composed with other ComposablePresenter
+SpPresenter is an abstract class which represent a applicative presenter made to be composed with other SpPresenter
 
-Most often, I am used to display other subclasses of ComposablePresenter or subclasses of AbstractWidgetPresenter.
+Most often, I am used to display other subclasses of SpPresenter or subclasses of SpAbstractWidgetPresenter.
 
 I collaborate with 
--  ValueHolder to managed some of my variables.
+- ValueHolder to managed some of my variables.
 - SpecFocusOrder when no focusOrder are specified.
 - SpecLayout
 - WindowPresenter or DialogWindowPresenter to display myself.
 
-A new subclass of ComposablePresenter must at least define initializeWidgets and defaultSpec on the class side.
+A new subclass of SpPresenter must at least define initializeWidgets and defaultSpec on the class side.
 
 I provide the following methods
 - aboutText: set the text displayed in the About.
-- title: set the title of the window.
+- initializeWindow: to set the title, and other information related to the window.
 - extent: set the initial size of the window, alternative possibility is define again initialExtent, it must be called before have displayed the widget. 
 - focusOrder: set an instance what manage the order of focus of the keyboard navigation.
 - bindKeyCombination:toAction: create a shortcut on keyboard what perform the block of the  action.
@@ -25,7 +25,7 @@ On my class side, I provide methods returning standard height and width for some
 todo
 - announce:
 - applyMenuModel: and neglectMenuModel:
-- keyStrokeForNextFocus: , giveFocusToNextFrom: and takeKeyboardFocus
+- keyStrokeForNextFocus:, giveFocusToNextFrom: and takeKeyboardFocus
 - ensureExtentFor:
 - hide
 - needRebuild
@@ -36,13 +36,13 @@ todo
 Window
 =======
 
-- openWithSpec instantiate a WindowPresenter using the lookup to found the layout to use.
-- openDialogWithSpec instanciate a DialogWindowPresenter using the lookup to found the layout to use.
+- openWithSpec instantiates a WindowPresenter using the lookup to found the layout to use.
+- openDialogWithSpec instanciates a DialogWindowPresenter using the lookup to found the layout to use.
 Their variants openWithSpec: and openDialogWithSpec:  use the layout parameter.
 
 These methods can be useful to manage the window
-- isDisplayed return true if the window of the widget is displayed
-- hasWindow return true if the widget have a window
+- isDisplayed returns true if the window of the widget is displayed
+- hasWindow returns true if the widget have a window
 - centered to center the window in the world.
 - delete to delete the window.
 
@@ -89,7 +89,7 @@ Class {
 	#instVars : [
 		'#application',
 		'#focusOrder',
-		'#additionalKeyBindings',
+		'#contextKeyBindings',
 		'#windowIcon => SpObservableSlot',
 		'#aboutText => SpObservableSlot',
 		'#askOkToClose => SpObservableSlot',
@@ -97,9 +97,7 @@ Class {
 		'#additionalSubpresentersMap',
 		'#layout',
 		'#visible => SpObservableSlot',
-		'#extent => SpObservableSlot',
-		'#keyStrokesForNextFocus => SpObservableSlot',
-		'#keyStrokesForPreviousFocus => SpObservableSlot'
+		'#extent => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Base'
 }
@@ -113,6 +111,21 @@ SpPresenter class >> defaultSpec [
 { #category : #accessing }
 SpPresenter class >> iconNamed: aSymbol [
 	^ Smalltalk ui icons iconNamed: aSymbol
+]
+
+{ #category : #'labelled-presenters' }
+SpPresenter class >> iconWidth [
+	^ 24
+]
+
+{ #category : #testing }
+SpPresenter class >> isAbstract [
+	^ self = SpPresenter
+]
+
+{ #category : #'labelled-presenters' }
+SpPresenter class >> labelWidth [
+	^ 100
 ]
 
 { #category : #'instance creation' }
@@ -159,12 +172,12 @@ SpPresenter class >> newApplication: anApplication owner: anOwningPresenter mode
 SpPresenter class >> on: aDomainObject [
 
 	"self 
-		deprecated: 'ComposablePresenters are instantiated in the context of an application!' 
+		deprecated: 'SpPresenters are instantiated in the context of an application!' 
 		on: '2019-02-26' 
 		in: #Pharo8."
 		
 	^ self 
-		newApplication: SpNullApplication new 
+		newApplication: SpApplication defaultApplication
 		model: aDomainObject 
 ]
 
@@ -187,7 +200,7 @@ SpPresenter class >> title [
 { #category : #TOREMOVE }
 SpPresenter >> aboutText [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -210,14 +223,6 @@ SpPresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
 ]
 
-{ #category : #'api-shortcuts' }
-SpPresenter >> additionalKeyBindings [
-
-	self flag: #TODO. "Think is... not all presenters can have keybindings. Why are we
-	putting this functionality here and not in a trait?"
-	^ additionalKeyBindings
-]
-
 { #category : #TOREMOVE }
 SpPresenter >> additionalSubpresentersMap [
 
@@ -238,21 +243,33 @@ SpPresenter >> allPresenters [
 	^ allPresenters
 ]
 
+{ #category : #private }
+SpPresenter >> allPresentersInFocusOrder [
+	| allPresenters |
+
+	allPresenters := OrderedCollection new.
+	self traverseInFocusOrderDo: [ :each |
+		allPresenters add: each  ].
+	^ allPresenters
+]
+
 { #category : #api }
 SpPresenter >> announce: anAnnouncement [
 
 	self announcer announce: anAnnouncement
 ]
 
-{ #category : #events }
+{ #category : #'api-events' }
 SpPresenter >> announceDisplayed [
-
 	"When using a VersatileDialogPresenter the adapter is nil.
 	We do not know if that is a correct behaviour"
-	self announcer announce: (SpWidgetDisplayed new
-		presenter: self;
-		widget: (adapter ifNotNil: [ adapter widget]);
-		yourself).
+
+	self announcer
+		announce:
+			(SpWidgetDisplayed new
+				presenter: self;
+				widget: (adapter ifNotNil: [ adapter widget ]);
+				yourself)
 ]
 
 { #category : #accessing }
@@ -290,13 +307,14 @@ SpPresenter >> applyMenuModel: aMenuModel [
 { #category : #converting }
 SpPresenter >> asPresenter [
 	"This allows to use presenter instances inside layouts directly"
+
 	^ self
 ]
 
 { #category : #TOREMOVE }
 SpPresenter >> askOkToClose [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -319,10 +337,18 @@ SpPresenter >> basicBuildAdapterWithSpecLayout: aSpecLayout [
 { #category : #'api-shortcuts' }
 SpPresenter >> bindKeyCombination: aShortcut toAction: aBlock [
 
-	additionalKeyBindings ifNil: [ additionalKeyBindings := Dictionary new ].
-	additionalKeyBindings at: aShortcut put: aBlock.
+	contextKeyBindings ifNil: [ contextKeyBindings := KMCategory new ].
+	contextKeyBindings addKeymapEntry: (KMKeymap
+		shortcut: aShortcut
+		action: aBlock).
 	self withAdapterDo: [ :anAdapter | 
 		anAdapter bindKeyCombination: aShortcut toAction: aBlock ]
+]
+
+{ #category : #testing }
+SpPresenter >> canTakeKeyboardFocus [
+
+	^ true
 ]
 
 { #category : #'api-window' }
@@ -345,6 +371,26 @@ SpPresenter >> centeredRelativeTo: aModel [
 		w centeredRelativeTo: aModel ]
 ]
 
+{ #category : #initialization }
+SpPresenter >> connectPresenters [
+	"The method connectPresenters defines the interactions between the dif- ferent widgets. By connecting the behaviors of the different widgets it speci- fies the overall presentation, i.e., how the overall UI responds to interactions by the user. Usually this method consists of specifications of actions to per- form when a certain event is received by a widget. The whole interaction flow of the UI then emerges from the propagation of those events."
+]
+
+{ #category : #'api-shortcuts' }
+SpPresenter >> contextKeyBindings [
+	"contextKeyBindings stores a KMCategory with keybindings for this presenter"
+
+	self flag: #TODO. "Think is... not all presenters can have keybindings. Why are we
+	putting this functionality here and not in a trait?"
+	^ contextKeyBindings
+]
+
+{ #category : #'api-shortcuts' }
+SpPresenter >> contextKeyBindings: aKMCategory [
+
+	contextKeyBindings := aKMCategory
+]
+
 { #category : #private }
 SpPresenter >> createInstanceFor: aClassSymbol [
 	"Retrieve the class corresponding to aClassSymbol using the bindings, then create a new instance of theis class"
@@ -364,6 +410,12 @@ SpPresenter >> defaultSpec [
 SpPresenter >> defaultWindowPresenterClass [
 
 	^ SpWindowPresenter
+]
+
+{ #category : #accessing }
+SpPresenter >> defer: aBlock [
+
+	self application defer: aBlock
 ]
 
 { #category : #private }
@@ -393,29 +445,6 @@ SpPresenter >> ensureExtentFor: widget [
 	
 ]
 
-{ #category : #'private-focus' }
-SpPresenter >> ensureKeyBindingsFor: aWidget [
-
-	self registerKeyStrokesForNextFor: aWidget.
-	self registerKeyStrokesForPreviousFor: aWidget.
-	
-	self additionalKeyBindings associationsDo: [:association | aWidget bindKeyCombination: association key toAction: association value ]
-]
-
-{ #category : #'api-focus' }
-SpPresenter >> eventKeyStrokesForNextFocus [
-	"String describing the keystroke to perform to jump to the next widget"
-
-	^ keyStrokesForNextFocus
-]
-
-{ #category : #'api-focus' }
-SpPresenter >> eventKeyStrokesForPreviousFocus [
-	"String describing the keystroke to perform to jump to the previous widget"
-
-	^ keyStrokesForPreviousFocus
-]
-
 { #category : #TOMOVE }
 SpPresenter >> extent [
 	^ extent
@@ -437,45 +466,21 @@ SpPresenter >> focusOrder: anObject [
 	^ focusOrder := anObject
 ]
 
-{ #category : #'private-focus' }
-SpPresenter >> giveFocusToNextFrom: aModel [
-	| focus |
-	
-	focus := self focusOrder.
-	^ true
+{ #category : #'GTInspector-Extensions' }
+SpPresenter >> gtInspectorPreviewIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	self adapter ifNotNil: [ :w | w gtInspectorPreviewIn: composite ]
 ]
 
-{ #category : #'private-focus' }
-SpPresenter >> giveFocusToPreviousFrom: aModel [ 
-	| focus |
-	
-	focus := self focusOrder.
-
-	(focus includes: aModel)
-		ifTrue: [
-			| index previous |
-			index := (focus indexOf: aModel) - 1.
-			(index > 0)
-				ifTrue: [
-					previous := focus at: index.
-					previous takeLastKeyboardFocus.
-					^ true ]].
-
-	^ owner 
-		ifNil: [ " I loop "
-			| next |
-			next := focus at: focus size ifAbsent: [ ^ false ].
-			next takeLastKeyboardFocus.
-			true]
-		ifNotNil: [ 
-			owner giveFocusToPreviousFrom: self.
-			true ]
-]
-
-{ #category : #'private-focus' }
-SpPresenter >> handlesKeyboard: evt [
-
-	^ true
+{ #category : #'GTInspector-Extensions' }
+SpPresenter >> gtInspectorSubPresentersIn: composite [
+	<gtInspectorPresentationOrder: 20>
+	composite tree
+		title: 'Sub presenters';
+		rootsExpanded;
+		display: [ :each | {each} ];
+		children: [ :each | each presenters ];
+		when: [ :each | each presenters isNotEmpty ]
 ]
 
 { #category : #api }
@@ -494,7 +499,7 @@ SpPresenter >> iconNamed: aSymbol [
 SpPresenter >> initialExtent [
 	
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -509,7 +514,6 @@ SpPresenter >> initialize [
 	super initialize.
 
 	visible := true.
-	additionalSubpresentersMap := nil.
 
 	self initializePrivateAnnouncer.
 	self initializePrivateValueHolders.
@@ -519,17 +523,25 @@ SpPresenter >> initialize [
 
 { #category : #initialization }
 SpPresenter >> initializePresenter [
-	"Used to specify the subwidgets, and/or to bind them together"
-
-	"By default, do not do anything"
+	"Now, presenters should implement #connectPresenters instead."
 
 	self property: #extent whenChangedDo: [ :ex | self withAdapterDo: [ :widget | (widget respondsTo: #extent:) ifTrue: [ widget extent: ex ] ] ]
 ]
 
+{ #category : #initialization }
+SpPresenter >> initializePresenters [
+	"The method initializePresenters instantiates, saves in instance vari- ables, and partially configures the different widgets that will be part of the UI.
+	In general the initializePresenters method should follow the pattern:
+		• widget instantiation
+		• widget configuration specification
+		• specification of focus order"
+
+	"self subclassResponsibility"
+]
+
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateAnnouncements [
-	self property: #keyStrokesForNextFocus whenChangedDo: [ self registerKeyStrokesForNextFor: self widget ].
-	self property: #keyStrokesForPreviousFocus whenChangedDo: [ self registerKeyStrokesForPreviousFor: self widget ].
+
 	self property: #titleHolder whenChangedDo: [ self updateTitle ]
 ]
 
@@ -542,25 +554,25 @@ SpPresenter >> initializePrivateAnnouncer [
 
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateHooks [
-
+	self flag: #todo. "We should remove later #initializeWidgets and #initializePresenter."
 	self initializeWidgets.
+	self initializePresenters.
 	self initializePresenter.
+	self connectPresenters.
 	self updatePresenter.
 
 ]
 
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateValueHolders [
-	self keyStrokeForNextFocus: KMNoShortcut new.
-	self keyStrokeForPreviousFocus: KMNoShortcut new.
+
 	askOkToClose := false.
 	titleHolder := self class title
 ]
 
 { #category : #initialization }
 SpPresenter >> initializeWidgets [
-	
-	self subclassResponsibility
+	"Now, presenters should implement #initializePresenters instead."
 ]
 
 { #category : #initialization }
@@ -581,20 +593,20 @@ SpPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #'instance creation' }
-SpPresenter >> instantiate: aComposablePresenterClass [
-	"Instantiate a ComposablePresenter subclass and set its instance owner"
-	^ aComposablePresenterClass owner: self
+SpPresenter >> instantiate: aPresenterClass [
+	"Instantiate a SpPresenter subclass and set its instance owner"
+	^ aPresenterClass owner: self
 ]
 
 { #category : #'instance creation' }
-SpPresenter >> instantiate: aComposablePresenterClass on: aModel [
-	"Instantiate a ComposablePresenter subclass and set its instance owner and model"
-	^ aComposablePresenterClass owner: self on: aModel
+SpPresenter >> instantiate: aPresenterClass on: aModel [
+	"Instantiate a SpPresenter subclass and set its instance owner and model"
+	^ aPresenterClass owner: self on: aModel
 ]
 
 { #category : #'instance creation' }
 SpPresenter >> instantiatePresenters: aCollectionOfPairs [
-	"instantiatePresenters: is legacy code in ComposablePresenter and must not be used. It will be deprecated and removed."
+	"instantiatePresenters: is legacy code in SpPresenter and must not be used. It will be deprecated and removed."
 
 	"Used to instantiate multiple sub widget at once. Take aCollectionOfPairs where each odd element is an inst var name and each even element is a class name, create an instance from the class name and store it into the inst var"
 
@@ -611,11 +623,10 @@ SpPresenter >> instantiatePresenters: aCollectionOfPairs [
 
 { #category : #api }
 SpPresenter >> isBuilt [
-	
 	^ self isDisplayed
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpPresenter >> isDisplayed [
 	"Return true if the widget is currently displayed on screen"
 	
@@ -626,35 +637,33 @@ SpPresenter >> isDisplayed [
 ]
 
 { #category : #testing }
+SpPresenter >> isRoot [
+
+	self withWindowDo: [ :w |
+		^ w presenter = self ].
+	^ false
+]
+
+{ #category : #testing }
 SpPresenter >> isVisible [
 	
 	^ visible value
-]
-
-{ #category : #'api-focus' }
-SpPresenter >> keyStrokeForNextFocus: aKMShortcut [
-	self keyStrokesForNextFocus: {aKMShortcut}
-]
-
-{ #category : #'api-focus' }
-SpPresenter >> keyStrokeForPreviousFocus: aKMShortcut [
-	self keyStrokesForPreviousFocus: {aKMShortcut}
-]
-
-{ #category : #'api-focus' }
-SpPresenter >> keyStrokesForNextFocus: aCollection [
-	keyStrokesForNextFocus := aCollection
-]
-
-{ #category : #'api-focus' }
-SpPresenter >> keyStrokesForPreviousFocus: aCollection [
-	keyStrokesForPreviousFocus := aCollection
 ]
 
 { #category : #accessing }
 SpPresenter >> layout [
 
 	^ layout
+]
+
+{ #category : #private }
+SpPresenter >> layoutPresenters [
+
+	layout ifNil: [ ^ self presenters ].
+	
+	^ layout deepPresenters
+		select: [ :each | each isSymbol ]
+		thenCollect: [ :each | self presenterAt: each ]
 ]
 
 { #category : #'window menu' }
@@ -691,6 +700,11 @@ SpPresenter >> newCheckBox [
 { #category : #widgets }
 SpPresenter >> newCode [
 	^ self instantiate: SpCodePresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newComponentList [
+	^ self instantiate: SpComponentListPresenter
 ]
 
 { #category : #widgets }
@@ -750,6 +764,12 @@ SpPresenter >> newMenuBar [
 ]
 
 { #category : #widgets }
+SpPresenter >> newMenuButton [
+
+	^ self instantiate: SpMenuButtonPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newMorph [
 
 	^ self instantiate: SpMorphPresenter
@@ -789,8 +809,26 @@ SpPresenter >> newRadioButton [
 ]
 
 { #category : #widgets }
+SpPresenter >> newRichText [
+
+	^ self instantiate: SpRichTextPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newSearchInput [
+
+	^ self instantiate: SpSearchInputFieldPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newSlider [
 	^ self instantiate: SpSliderPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newStatusBar [
+
+	^ self instantiate: SpStatusBarPresenter
 ]
 
 { #category : #widgets }
@@ -807,6 +845,12 @@ SpPresenter >> newText [
 { #category : #widgets }
 SpPresenter >> newTextInput [
 	^ self instantiate: SpTextInputFieldPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToggleButton [
+
+	^ self instantiate: SpToggleButtonPresenter
 ]
 
 { #category : #widgets }
@@ -856,12 +900,12 @@ SpPresenter >> presenterAt: aName ifAbsent: aBlock [
 
 { #category : #'private-traversing' }
 SpPresenter >> presenters [
-	| allPresenters |
+	| presenters |
 
-	allPresenters := OrderedCollection new.
+	presenters := OrderedCollection new.
 	self presentersDo: [ :each | 
-		allPresenters add: each ].
-	^ allPresenters
+		presenters add: each ].
+	^ presenters
 ]
 
 { #category : #'private-traversing' }
@@ -875,28 +919,18 @@ SpPresenter >> presentersDo: aBlock [
 				aBlock value: var ] ]
 ]
 
-{ #category : #'private-focus' }
-SpPresenter >> registerKeyStrokesForNextFor: aWidget [
+{ #category : #private }
+SpPresenter >> presentersInFocusOrder [
 
-	aWidget ifNil: [ ^ self ].
-	
-	self eventKeyStrokesForNextFocus do: [:each |
-		aWidget bindKeyCombination: each toAction: [ self giveFocusToNextFrom: self ] ]
-]
-
-{ #category : #'private-focus' }
-SpPresenter >> registerKeyStrokesForPreviousFor: aWidget [
-
-	aWidget ifNil: [ ^ self ].
-	
-	self eventKeyStrokesForPreviousFocus do: [:each |
-		aWidget bindKeyCombination: each toAction: [ self giveFocusToPreviousFrom: self ] ]
+	^ focusOrder ifNil: [ 
+		self layoutPresenters
+			select: [ :each | each isVisible and: [ each canTakeKeyboardFocus ] ] ]
 ]
 
 { #category : #'api-shortcuts' }
 SpPresenter >> removeKeyCombination: aShortcut [
 
-	self additionalKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
+	self contextKeyBindings removeKey: aShortcut ifAbsent: [ ^ self ].
 	self withAdapterDo: [ :anAdapter | 
 		anAdapter removeKeyCombination: aShortcut ]
 ]
@@ -922,15 +956,6 @@ SpPresenter >> retrieveSpec: aSelector [
 	^ super retrieveSpec: aSelector
 ]
 
-{ #category : #TOMOVE }
-SpPresenter >> setExtentAndBindingTo: widget [
-
-	self flag: #TODO. "This is bad. Extent needs to be 'ensured' at adapter level. 
-	Same for keybindings"
-	self ensureExtentFor: widget.
-	self ensureKeyBindingsFor: widget
-]
-
 { #category : #'accessing model' }
 SpPresenter >> setModel: aDomainObject [
 
@@ -949,25 +974,17 @@ SpPresenter >> show [
 	visible := true
 ]
 
-{ #category : #'private-focus' }
+{ #category : #'api-focus' }
 SpPresenter >> takeKeyboardFocus [
 
-	self focusOrder ifNotEmpty:[:focus | ^ focus first takeKeyboardFocus ].
-	^ self changed: #takeKeyboardFocus with: #()
-]
-
-{ #category : #'private-focus' }
-SpPresenter >> takeLastKeyboardFocus [
-
-	self focusOrder
-		ifEmpty: [ self takeKeyboardFocus ]
-		ifNotEmpty: [:focus | focus last takeKeyboardFocus ].
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter takeKeyboardFocus ]
 ]
 
 { #category : #TOREMOVE }
 SpPresenter >> title [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.
@@ -981,6 +998,25 @@ SpPresenter >> title [
 SpPresenter >> toolName [
 
 	^ self class toolName
+]
+
+{ #category : #'private-traversing' }
+SpPresenter >> traverseInFocusOrderDo: aBlock [
+
+	self 
+		traverseInFocusOrderDo: aBlock 
+		excluding: Set new
+]
+
+{ #category : #'private-traversing' }
+SpPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	"(excludes includes: self) ifTrue: [ ^ self ]. 
+	excludes add: self.
+	aBlock value: self."
+
+	self presentersInFocusOrder do: [ :each |
+		each traverseInFocusOrderDo: aBlock excluding: excludes ]
 ]
 
 { #category : #'private-traversing' }
@@ -1027,19 +1063,17 @@ SpPresenter >> visibleIf: aValuable [
 	visible := aValuable
 ]
 
-{ #category : #events }
-SpPresenter >> whenDisplayDo: aBlockClosure [ 
-
-	self announcer 
-		when: SpWidgetDisplayed
-		do: aBlockClosure
+{ #category : #'api-events' }
+SpPresenter >> whenDisplayDo: aBlockClosure [
+	self announcer when: SpWidgetDisplayed do: aBlockClosure
 ]
 
 { #category : #'api-events' }
 SpPresenter >> whenShortcutsChanged: aBlock [
 	"Set a block to value when the shortcuts block has changed"
 	
-	self additionalKeyBindings whenChangedDo: aBlock
+	self deprecated: 'This event does not has sense in Spec2'.
+
 ]
 
 { #category : #'api-events' }
@@ -1061,7 +1095,7 @@ SpPresenter >> whenWindowChanged: aBlock [
 { #category : #TOREMOVE }
 SpPresenter >> windowIcon [
 	"DO NOT USE
-	With Spec 2, ComposablePresenter was refactored to move all window management to WindowPresenter.
+	With Spec 2, SpPresenter was refactored to move all window management to WindowPresenter.
 	From now on, if you want to interact with a window you need to:
 	- Implement #initializeWindow: method (#initializeDialog: for dialogs) to manage window elements before the presenter is opened
 	- Use the method #window or #withWindowDo: to interact with windows after it has been opened.

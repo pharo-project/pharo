@@ -17,13 +17,25 @@ CDTraitCompositionBuilder >> buildFrom: aNode [
 
 { #category : #visiting }
 CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [ 
+	| parent argumentName |
+	self flag: #todo. 
+	"It needs to be refactored. I do not know how it was supposed to be handle properly.
+	Here is workaround to fix issue with empty #uses section"
+	parent := aRBArrayNode parent.
+	parent isMessage ifTrue: [ 
+		argumentName := parent keywords at: (parent arguments indexOf: aRBArrayNode).
+		argumentName = #uses: ifTrue: [ 
+			aRBArrayNode statements ifEmpty: [ 
+				^CDTraitCompositionSequenceNode new 
+					sequence: #();
+					originalNode: aRBArrayNode;
+					yourself].
+			self error: 'Is not supported yet']].
 	
-	^ aRBArrayNode statements collect: [ :each | 
+	^aRBArrayNode statements collect: [ :each | 
 		each isLiteralNode
 			ifTrue: [ each value ]
 			ifFalse: [ each receiver value -> each arguments first value ] ]
-		
-		
 ]
 
 { #category : #visiting }

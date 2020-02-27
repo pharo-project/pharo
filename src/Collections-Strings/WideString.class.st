@@ -56,6 +56,19 @@ WideString class >> fromString: aString [
 ]
 
 { #category : #converting }
+WideString >> asByteArray [ 
+	"Convert to a ByteArray with the ascii values of the string."
+	"'a' asByteArray >>> #[97]"
+	"'A' asByteArray >>> #[65]"
+	"'ABA' asByteArray >>> #[65 66 65]"
+	| b |
+	b := ByteArray new: self byteSize.
+	1 to: self size * 4 do: [:i |
+		b at: i put: (self byteAt: i)].
+	^ b
+]
+
+{ #category : #converting }
 WideString >> asFourCode [
 
 	| result |
@@ -132,7 +145,7 @@ WideString >> byteAt: index [
 	| d r |
 	d := (index + 3) // 4.
 	r := (index - 1) \\ 4 + 1.
-	^ (self wordAt: d) digitAt: ((4 - r) + 1).
+	^ (self wordAt: d) byteAt: ((4 - r) + 1).
 
 ]
 

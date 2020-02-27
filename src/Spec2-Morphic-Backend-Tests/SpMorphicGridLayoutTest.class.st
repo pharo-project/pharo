@@ -67,13 +67,24 @@ SpMorphicGridLayoutTest >> style [
 
 { #category : #private }
 SpMorphicGridLayoutTest >> styleExtent: aPoint [
+	| rootStyle |
 
-	^ SpMorphicStyleSheet new 
-		propertyAt: #extent put: (SpMorphicStyleSheetExtent 
-			newExtent: aPoint
-			hResizing: true 
-			vResizing: true);
-		yourself
+	rootStyle := (SpStyleSTONReader fromString: ('
+.application [ Geometry \{ #width: {1}, #height: {2} \} ]'
+	format: { aPoint x. aPoint y })).
+	
+	^ SpMorphStyle newStyles: rootStyle flattenClasses
+]
+
+{ #category : #private }
+SpMorphicGridLayoutTest >> styleMinExtent: aPoint [
+	| rootStyle |
+
+	rootStyle := (SpStyleSTONReader fromString: ('
+.application [ Geometry \{ #minWidth: {1}, #minHeight: {2} \} ]'
+	format: { aPoint x. aPoint y })).
+	
+	^ SpMorphStyle newStyles: rootStyle flattenClasses
 ]
 
 { #category : #tests }
@@ -102,15 +113,17 @@ SpMorphicGridLayoutTest >> testBasicLayout [
 ]
 
 { #category : #tests }
-SpMorphicGridLayoutTest >> testBorderWidth [
+SpMorphicGridLayoutTest >> testBorderWidthHomogeneous [
 	"
-	---------------
-	| 5 | 5  | 5  |
-	---------------
-	| 5 | 50 | 50 |
-	---------------
-	| 5 | 50 | 50 |
-	---------------
+	+---+----+----+---+
+	| 5 | 5  | 5  | 5 |
+	+---+----+----+---+
+	| 5 | 45 | 45 | 5 |
+	+---+----+----+---+
+	| 5 | 45 | 45 | 5 |
+	+---+----+----+---+
+	| 5 | 5  | 5  | 5 |
+	+---+----+----+---+
 	"
 	| layout |
 	
@@ -119,7 +132,40 @@ SpMorphicGridLayoutTest >> testBorderWidth [
 	self place: label2 at: 1@2.
 	self place: morph2 at: 2@2.
 	
-	(layout := self newLayout) layout borderWidth: 5.
+	(layout := self newLayout) layout 
+		beColumnHomogeneous;
+		beRowHomogeneous;
+		borderWidth: 5.
+	layout layout: panel in: (0@0 corner: 100@100).
+	
+	self assert: label1 bounds equals: (5@5 corner: 50@50).
+	self assert: morph1 bounds equals: (50@5 corner: 95@50).
+	self assert: label2 bounds equals: (5@50 corner: 50@95).
+	self assert: morph2 bounds equals: (50@50 corner: 95@95)
+]
+
+{ #category : #tests }
+SpMorphicGridLayoutTest >> testBorderWidthNotHomogeneous [
+	"
+	+---+----+----+
+	| 5 | 5  | 5  |
+	+---+----+----+
+	| 5 | 50 | 50 |
+	+---+----+----+
+	| 5 | 50 | 50 | 
+	+---+----+----+
+	"
+	| layout |
+	
+	self place: label1 at: 1@1.
+	self place: morph1 at: 2@1.
+	self place: label2 at: 1@2.
+	self place: morph2 at: 2@2.
+	
+	(layout := self newLayout) layout
+		beRowNotHomogeneous; 
+		beColumnNotHomogeneous;
+		borderWidth: 5.
 	layout layout: panel in: (0@0 corner: 100@100).
 	
 	self assert: label1 bounds equals: (5@5 corner: 55@25).
@@ -143,7 +189,6 @@ SpMorphicGridLayoutTest >> testColumnHomogeneousDiferentRowsAndColumns [
 	-------------------------	
 	"
 	| layout |
-	self skip. "This test is broken for now. In the end it should work but it's not yet the case."
 	
 	self place: label1 at: 1@1.
 	self place: morph1 at: 2@2.
@@ -151,9 +196,9 @@ SpMorphicGridLayoutTest >> testColumnHomogeneousDiferentRowsAndColumns [
 	self place: morph2 at: 4@4.
 			
 	layout := self newLayout.
-	layout layout columnHomogeneous: true.
-	"make one column width to 100 (it should force all columns to 100, instead 50)"
-	(self styleExtent: 100@20) applyTo: label2.
+	layout layout beColumnHomogeneous.
+	"make one column width to 100 (it should force all columns to 100, instead 25)"
+	(self styleMinExtent: 100@20) applyTo: label2.
 	
 	layout layout: panel in: (0@0 corner: 100@100).
 	
@@ -186,12 +231,12 @@ SpMorphicGridLayoutTest >> testColumnNotHomogeneousDiferentRowsAndColumns [
 	self place: morph2 at: 4@4.
 	
 	layout := self newLayout.
-	layout layout columnHomogeneous: false.
+	layout layout beColumnNotHomogeneous.
 	"make columns differ, to make each column different"
-	label1 width: 30.
-	morph1 width: 40.
-	label2 width: 50.
-	morph2 width: 60.
+	(self styleExtent: 30@20) applyTo: label1.
+	(self styleExtent: 40@20) applyTo: morph1.
+	(self styleExtent: 50@20) applyTo: label2.
+	(self styleExtent: 60@20) applyTo: morph2.
 	
 	layout layout: panel in: (0@0 corner: 100@100).
 	
@@ -204,7 +249,7 @@ SpMorphicGridLayoutTest >> testColumnNotHomogeneousDiferentRowsAndColumns [
 
 { #category : #tests }
 SpMorphicGridLayoutTest >> testColumnNotHomogeneousPairedRowsAndColumns [
-	"Paired elements in a rows and columns
+	"Paired elements in rows and columns
 	
 	-----------
 	| 50 | 60 |
@@ -214,7 +259,6 @@ SpMorphicGridLayoutTest >> testColumnNotHomogeneousPairedRowsAndColumns [
 	
 	"
 	| layout |
-	self skip. "This test is broken for now. In the end it should work but it's not yet the case."
 	
 	self place: label1 at: 1@1.
 	self place: morph1 at: 2@1.
@@ -222,19 +266,19 @@ SpMorphicGridLayoutTest >> testColumnNotHomogeneousPairedRowsAndColumns [
 	self place: morph2 at: 2@2.
 	
 	layout := self newLayout.
-	layout layout columnHomogeneous: false.
+	layout layout beColumnNotHomogeneous.
 	"make columns differ, to make each column different"
-	label1 width: 30.
-	morph1 width: 40.
-	label2 width: 50.
-	morph2 width: 60.
+	(self styleExtent: 30@20) applyTo: label1.
+	(self styleExtent: 50@20) applyTo: morph1.
+	(self styleExtent: 40@20) applyTo: label2.
+	(self styleExtent: 60@20) applyTo: morph2.
 	
 	layout layout: panel in: (0@0 corner: 100@100).
 	
-	self assert: label1 bounds equals: (0@0 corner: 50@20).
-	self assert: morph1 bounds equals: (50@0 corner: 110@20).	
-	self assert: label2 bounds equals: (0@20 corner: 50@40).
-	self assert: morph2 bounds equals: (50@20 corner: 110@40)
+	self assert: label1 bounds equals: (0@0 corner: 40@20).
+	self assert: morph1 bounds equals: (40@0 corner: 100@20).	
+	self assert: label2 bounds equals: (0@20 corner: 40@40).
+	self assert: morph2 bounds equals: (40@20 corner: 100@40)
 
 ]
 
@@ -268,7 +312,6 @@ SpMorphicGridLayoutTest >> testLayoutIn [
 	"This is a meta-test that tries all the others (just to have access to all tests while seeing 
 	 the class. Yes, I know that means all tests are executed twice in CI, but they are fast :)"
 
-	self skip. "This test is broken for now. In the end it should work but it's not yet the case."
 	(self class localSelectors 
 		reject: [ :each | each = #testLayoutIn ])
 		select: [ :each | each beginsWith: 'test' ]
@@ -316,7 +359,6 @@ SpMorphicGridLayoutTest >> testSpanColumn [
 	--------------------
 	"
 	| layout |
-	self skip. "This test is broken for now. In the end it should work but it's not yet the case."
 	
 	self place: label1 at: 1@1.
 	self place: morph1 at: 2@1.
@@ -344,7 +386,7 @@ SpMorphicGridLayoutTest >> testSpanRow [
 	--------------------
 	"
 	| layout |
-	self skip. "This test is broken for now. In the end it should work but it's not yet the case."
+	
 	self place: label1 at: 1@1.
 	self place: morph1 at: 2@1 span: 1@2.
 	self place: label2 at: 1@2.

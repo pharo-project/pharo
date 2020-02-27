@@ -53,6 +53,18 @@ SystemNavigationTest >> tearDown [
 	
 ]
 
+{ #category : #test }
+SystemNavigationTest >> testAllClassesImplementing [
+	| implementingClasses |
+	implementingClasses := self systemNavigationToTest
+		allClassesImplementing: #isSymbol.
+	self
+		assertCollection: implementingClasses
+		hasSameElements:
+			{Object.
+			Symbol}
+]
+
 { #category : #testing }
 SystemNavigationTest >> testAllExistingProtocolsFor [
 
@@ -85,52 +97,25 @@ SystemNavigationTest >> testAllSendersOfASelector [
 ]
 
 { #category : #testing }
-SystemNavigationTest >> testAllSendersOfReturnsExistingMethods [
-	"Non-regression test for
-	http://code.google.com/p/pharo/issues/detail?id=2593 "
-	| senders |
-	senders := self systemNavigationToTest allSendersOf: #methodsFor:.
-	senders
-		do: [:aReference | self
-				assert: (aReference actualClass canUnderstand: aReference selector)]
-]
-
-{ #category : #testing }
-SystemNavigationTest >> testIsMessageSentInSystemAnswersMethodReference [
-	| classesSendingMessage sentMessageSelector anyOne |
-	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [self classFactory newClassInCategory: #One].
-	5 timesRepeat: [self classFactory newClassInCategory: #Two].
-	classesSendingMessage := (self classFactory createdClasses asArray first: 2), (self classFactory createdClasses asArray last: 3).
-	classesSendingMessage do: [:class|	
-		class compileSilently: 'meth self ', sentMessageSelector].
-	anyOne :=(self systemNavigationToTest allSendersOf: sentMessageSelector) anyOne.
-
-	self assert: (anyOne isKindOf: RGMethodDefinition) 
-]
-
-{ #category : #testing }
 SystemNavigationTest >> testIsMessageSentInSystemWithClassesActuallySendngTheMessage [
-	| classesSendingMessage sentMessageSelector|
+	| classesSendingMessage sentMessageSelector |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [self classFactory newClassInCategory: #One].
-	5 timesRepeat: [self classFactory newClassInCategory: #Two].
-	classesSendingMessage := (self classFactory createdClasses asArray first: 2), (self classFactory createdClasses asArray last: 3).
-	classesSendingMessage do: [:class|	
-		class compileSilently: 'meth self ', sentMessageSelector].
-	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size = 5
+	5 timesRepeat: [ self classFactory newClassInCategory: #One ].
+	5 timesRepeat: [ self classFactory newClassInCategory: #Two ].
+	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
+	classesSendingMessage do: [ :class | class compileSilently: 'meth self ' , sentMessageSelector ].
+	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
 ]
 
 { #category : #testing }
 SystemNavigationTest >> testIsMessageSentInSystemWithTheSelectorInsideAnArray [
 	| classesSendingMessage sentMessageSelector |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
-	5 timesRepeat: [self classFactory newClassInCategory: #One].
-	5 timesRepeat: [self classFactory newClassInCategory: #Two].
-	classesSendingMessage := (self classFactory createdClasses asArray first: 2), (self classFactory createdClasses asArray last: 3).
-	classesSendingMessage do: [:class|	
-		class compileSilently: 'meth ^#(a b ', sentMessageSelector, ' c)'].
-	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size = 5
+	5 timesRepeat: [ self classFactory newClassInCategory: #One ].
+	5 timesRepeat: [ self classFactory newClassInCategory: #Two ].
+	classesSendingMessage := (self classFactory createdClasses asArray first: 2) , (self classFactory createdClasses asArray last: 3).
+	classesSendingMessage do: [ :class | class compileSilently: 'meth ^#(a b ' , sentMessageSelector , ' c)' ].
+	self assert: (self systemNavigationToTest allSendersOf: sentMessageSelector) size equals: 5
 ]
 
 { #category : #testing }

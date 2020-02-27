@@ -1,8 +1,8 @@
 "
-RBMethodNode is the node that that represents AST of a Smalltalk method.
+RBMethodNode is the node that represents AST of a Smalltalk method.
 
 Some properties aren't known to the parser creating this Object. For example, the scope value isn't known by parsing the code but only after doing a
-semantic analysis. Likewise the compilation context isn't needed until we try to do the semantic analysis. 
+semantic analysis. Likewise, the compilation context isn't needed until we try to do the semantic analysis. 
 
 Instance Variables:
 	arguments	<SequenceableCollection of: RBVariableNode>	the arguments to the method
@@ -309,23 +309,20 @@ RBMethodNode >> equalTo: anObject withMapping: aDictionary [
 
 { #category : #'tree accessing' }
 RBMethodNode >> extractSubtreeWith: aSourceCode [
-
 	| extractedTree |
-	extractedTree := RBParser parseExpression: aSourceCode onError: [ :string :pos | ^ nil ].
+	extractedTree := self parserClass
+		parseExpression: aSourceCode
+		onError: [ :string :pos | ^ nil ].
 	extractedTree ifNil: [ ^ nil ].
-	
-	(extractedTree isSequence 
-	and: [extractedTree statements isEmpty]) ifTrue: [ ^ nil ].
-	
-	extractedTree := (extractedTree isSequence "or: [aTree isReturn]")
-		ifTrue: [ RBParseTreeSearcher 
-					 treeMatchingStatements: aSourceCode
-					 in: self ]
-		ifFalse: [ RBParseTreeSearcher
-					  treeMatching: aSourceCode
-					  in: self ].
-			
-	^ extractedTree ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]
+	(extractedTree isSequence and: [ extractedTree statements isEmpty ])
+		ifTrue: [ ^ nil ].
+	extractedTree := extractedTree isSequence
+		ifTrue:
+			[ RBParseTreeSearcher treeMatchingStatements: aSourceCode in: self ]
+		ifFalse:
+			[ RBParseTreeSearcher treeMatching: aSourceCode in: self ].	"or: [aTree isReturn]"
+	^ extractedTree
+		ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]
 ]
 
 { #category : #accessing }
@@ -481,12 +478,6 @@ RBMethodNode >> methodOrBlockNode [
 	"^ self"
 ]
 
-{ #category : #completion }
-RBMethodNode >> narrowWith: aString [
-
-	self selector: aString asSymbol
-]
-
 { #category : #accessing }
 RBMethodNode >> newSource [
 	replacements ifNil: [^self formattedCode].
@@ -575,19 +566,21 @@ RBMethodNode >> reformatSource [
 	| stream newSource newTree |
 	stream := (String new: source size + 100) writeStream.
 	stream
-		nextPutAll: (source
-			copyFrom: (replacements
-				inject: 1
-				into: [ :sum :each | 
-					stream
-						nextPutAll: (source copyFrom: sum to: each startPosition - 1);
-						nextPutAll: (each string).
-					each stopPosition + 1 ])
-			to: source size).
+		nextPutAll:
+			(source
+				copyFrom:
+					(replacements
+						inject: 1
+						into: [ :sum :each | 
+							stream
+								nextPutAll: (source copyFrom: sum to: each startPosition - 1);
+								nextPutAll: each string.
+							each stopPosition + 1 ])
+				to: source size).
 	newSource := stream contents.
-	newTree :=  RBParser parseFaultyMethod: newSource.
+	newTree := self parserClass parseFaultyMethod: newSource.
 	self = newTree
-		ifFalse: [ ^ self formattedCode].
+		ifFalse: [ ^ self formattedCode ].
 	^ newSource
 ]
 

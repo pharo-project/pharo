@@ -96,6 +96,137 @@ CompiledMethodTest >> deprecatedMethod6 [
 CompiledMethodTest >> deprecatedMethod7 [
 ]
 
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locComplex [
+
+	"A multiline
+	comment"
+	
+"Non-indented Comment"
+	
+	| a b |
+	a := 1.
+	b :=
+	a + 2.
+	
+	10 timesRepeat: [ 
+		"Comment inside a block"
+		#(1 2 3) collect: [ :each |
+			| c |
+			c := each + b.
+			c "Comment at the end of a line" ] ].
+	
+
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineInTheEnd [
+	| a |
+	a := 1.
+	^ a
+
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineInTheMiddle [
+	| a |
+	a := 1.
+
+	^ a
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineWithTabInTheEnd [
+	| a |
+	a := 1.
+	^ a
+	
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyLineWithTabInTheMiddle [
+	| a |
+	a := 1.
+	
+	^ a
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyMethod [
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyMethodWithNewline [
+
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locEmptyMethodWithNewlineAndTab [
+	
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineComment [
+	^ 1
+	"Multiline
+	comment"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineCommentWithoutWhitespace [
+	^ 1
+"Multiline
+comment
+without
+whitespaces"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineMethodComment [
+	"Multiline
+	comments"
+	^ 1
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locMultilineMethodCommentWithoutWhitespace [
+"Comment"
+	^ 1
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSimple [
+	| a b c |
+	a := 1.
+	b := a + 2.
+	c := b * 3.
+	^ 1 / c
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineComment [
+	^ 1
+	"Comment"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineCommentWithoutWhitespace [
+	^ 1
+"Comment"
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineMethodComment [
+	"Comment"
+	^ 1
+]
+
+{ #category : #'examples - linesofcode' }
+CompiledMethodTest >> locSingleLineMethodCommentWithoutWhitespace [
+"Comment"
+	^ 1
+]
+
 { #category : #examples }
 CompiledMethodTest >> nonAbstractMethod [
 	"I am not an abstract method"
@@ -169,9 +300,15 @@ CompiledMethodTest >> testBytecode [
 
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testComments [
+	"I am the first comment to be found in this test"
 	self
-		assert: (CompiledMethod >> #comments) comments first
-		equals: 'Answer a string representing the comments in the method. Return an empty collection if the method''s source code does not contain a comment.'.
+		assert: (CompiledMethodTest >> #testComments) comments first 
+	"And I am the second comment to be found in this test"
+		equals: 'I am the first comment to be found in this test'.
+	self
+		assert: (CompiledMethodTest >> #testComments) comments second
+		equals: 'And I am the second comment to be found in this test'.
+	"Next test assumes #compiledMethod has no comment..."
 	self assert: (CompiledMethod >> #compiledMethod) comments isEmpty
 ]
 
@@ -183,14 +320,15 @@ CompiledMethodTest >> testComparison [
 
 	self assert: method1 equals: method1.
 	self assert: method2 equals: method2.
-	self deny: method1 = method2.
-	self deny: method2 = method1.
-	
-	Object methods do: [ :each |
-		self deny: method1 = each.
-		self deny: each = method1.
-		self deny: method2 = each.
-		self deny: each = method2 ]
+	self deny: method1 equals: method2.
+	self deny: method2 equals: method1.
+
+	Object methods
+		do: [ :each | 
+			self deny: method1 equals: each.
+			self deny: each equals: method1.
+			self deny: method2 equals: each.
+			self deny: each equals: method2 ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -210,15 +348,10 @@ CompiledMethodTest >> testCopy [
 	self assert: method header equals: copy header.
 	self assert: method equals: copy.
 	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method == copy.
-	self assert: method penultimateLiteral method == method.
-	method pragmas do:
-		[:p|
-		self assert: p method == method].
-	copy pragmas do:
-		[:p|
-		self assert: p method == copy]
-
+	self assert: copy penultimateLiteral method identicalTo: copy.
+	self assert: method penultimateLiteral method identicalTo: method.
+	method pragmas do: [ :p | self assert: p method identicalTo: method ].
+	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
 { #category : #tests }
@@ -229,18 +362,13 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 	self assert: method pragmas notEmpty.
 	copy := method copyWithTrailerBytes: method trailer.
 	self assert: (method equivalentTo: copy).
-	self deny: method == copy.
-	self assert: method symbolic equals: copy symbolic. "but their bytecode should be the same"
+	self deny: method identicalTo: copy.
+	self assert: method symbolic equals: copy symbolic.	"but their bytecode should be the same"
 	self assert: method ~~ copy.
-	self assert: copy penultimateLiteral method == copy.
-	self assert: method penultimateLiteral method == method.
-	method pragmas do:
-		[:p|
-		self assert: p method == method].
-	copy pragmas do:
-		[:p|
-		self assert: p method == copy]
-
+	self assert: copy penultimateLiteral method identicalTo: copy.
+	self assert: method penultimateLiteral method identicalTo: method.
+	method pragmas do: [ :p | self assert: p method identicalTo: method ].
+	copy pragmas do: [ :p | self assert: p method identicalTo: copy ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -260,15 +388,12 @@ CompiledMethodTest >> testEqualityClassSideMethod [
 
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testEqualityInstanceSideMethod [
-   	| method1 method2 |
+	| method1 method2 |
+	method1 := TestCase compiler compile: 'aMethod'.
+	method2 := TestCase compiler compile: 'aMethod'.
 
-	method1 :=  TestCase compiler compile: 'aMethod'.
-	method2 :=  TestCase compiler compile: 'aMethod'.
-
-	self assert: (method1 literalAt: method1 numLiterals) ==  (method2 literalAt: method2 numLiterals).
- 	self assert: method1 equals: method2.
-
-
+	self assert: (method1 literalAt: method1 numLiterals) identicalTo: (method2 literalAt: method2 numLiterals).
+	self assert: method1 equals: method2
 ]
 
 { #category : #'tests - instance variable' }
@@ -309,13 +434,13 @@ CompiledMethodTest >> testIsAbstract [
 { #category : #'tests - testing' }
 CompiledMethodTest >> testIsDeprecated [
 	| deprecatedSelectors |
-	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4 deprecatedMethod5 deprecatedMethod6 deprecatedMethod7)
-		asSet.
-	self class
-		selectorsDo: [ :each | 
-			(deprecatedSelectors includes: each)
-				ifTrue: [ self assert: (self class >> each) isDeprecated ]
-				ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
+	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4 deprecatedMethod5 deprecatedMethod6 deprecatedMethod7).
+	self class selectorsDo: [ :each |
+		(deprecatedSelectors includes: each)
+			ifTrue: [ self assert: (self class >> each) isDeprecated ]
+			ifFalse: [ self deny: (self class >> each) isDeprecated ] ].
+
+	DeprecatedClassForTest selectorsDo: [ :each | self assert: (DeprecatedClassForTest >> each) isDeprecated ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -357,6 +482,125 @@ CompiledMethodTest >> testIsQuick [
 	
 ]
 
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeAllInOne [
+	| method |
+	method := self class >> #locComplex.
+	self assert: method linesOfCode equals: 14.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineInTheEnd [
+	| method |
+	method := self class >> #locEmptyLineInTheEnd.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineInTheMiddle [
+	| method |
+	method := self class >> #locEmptyLineInTheMiddle.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineWithTabInTheEnd [
+	| method |
+	method := self class >> #locEmptyLineWithTabInTheEnd.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyLineWithTabInTheMiddle [
+	| method |
+	method := self class >> #locEmptyLineWithTabInTheMiddle.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyMethod [
+	| method |
+	method := self class >> #locEmptyMethod.
+	self assert: method linesOfCode equals: 1.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyMethodWithNewline [
+	| method |
+	method := self class >> #locEmptyMethodWithNewline.
+	self assert: method linesOfCode equals: 1.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeEmptyMethodWithNewlineAndTab [
+	| method |
+	method := self class >> #locEmptyMethodWithNewlineAndTab.
+	self assert: method linesOfCode equals: 1.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineComment [
+	| method |
+	method := self class >> #locMultilineComment.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locMultilineCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 6.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineMethodComment [
+	| method |
+	method := self class >> #locMultilineMethodComment.
+	self assert: method linesOfCode equals: 4.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeMultilineMethodCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locMultilineMethodCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSimpleCase [
+	| method |
+	method := self class >> #locSimple.
+	self assert: method linesOfCode equals: 6.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineComment [
+	| method |
+	method := self class >> #locSingleLineComment.
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locSingleLineCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineMethodComment [
+	| method |
+	method := self class >> #locSingleLineMethodComment .
+	self assert: method linesOfCode equals: 3.
+]
+
+{ #category : #'tests - linesofcode' }
+CompiledMethodTest >> testLinesOfCodeSingleLineMethodCommentWithoutWhitespace [
+	| method |
+	method := self class >> #locSingleLineMethodCommentWithoutWhitespace.
+	self assert: method linesOfCode equals: 3.
+]
+
 { #category : #'tests - literals' }
 CompiledMethodTest >> testLiterals [
 	"#literals should not expose implementation hack that the last two literals are 
@@ -391,16 +635,14 @@ CompiledMethodTest >> testMethodClass [
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testOrigin [
 	| regularMethod methodFromTrait |
-
 	"Regular method"
-	regularMethod := Behavior>>#name.
-	
+	regularMethod := Behavior >> #name.
+
 	"Method from a trait without alias "
-	methodFromTrait := Behavior>>#adoptInstance:.
+	methodFromTrait := Behavior >> #adoptInstance:.
 
-	self assert: regularMethod origin == regularMethod originMethod methodClass.
-	self assert: methodFromTrait origin == methodFromTrait originMethod methodClass.
-
+	self assert: regularMethod origin identicalTo: regularMethod originMethod methodClass.
+	self assert: methodFromTrait origin identicalTo: methodFromTrait originMethod methodClass
 ]
 
 { #category : #'tests - performing' }
@@ -431,21 +673,21 @@ CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 CompiledMethodTest >> testReadsField [		
 	| method |
 	method := self class compiledMethodAt: #readX.
-	self assert: (method readsField: 3).
+	self assert: (method readsField: 4).
 	
 	method := self class compiledMethodAt: #readXandY.
-	self assert: (method readsField: 4).
+	self assert: (method readsField: 5).
 	
 	
 	"read is not write"
 	method := self class compiledMethodAt: #writeX.
-	self deny: (method readsField: 3).
+	self deny: (method readsField: 4).
 	
 	method := self class compiledMethodAt: #writeXandY.
-	self deny: (method readsField: 3).
+	self deny: (method readsField: 4).
 	
 	method := self class compiledMethodAt: #writeXandY.
-	self deny: (method readsField: 4)
+	self deny: (method readsField: 5)
 ]
 
 { #category : #'tests - slots' }
@@ -464,35 +706,29 @@ CompiledMethodTest >> testReadsSlot [
 
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testSelector [
+	Author
+		useAuthor: 'TUTU_TEST'
+		during: [ | method cls |
+			method := self class >> #returnTrue.
+			self assert: method selector equals: #returnTrue.
 
-	Author useAuthor: 'TUTU_TEST' during: [ 
-		
-		|  method cls |
-		
-		method := (self class)>>#returnTrue.
-		self assert: method selector equals: #returnTrue.
-		
-		"now make an orphaned method. new semantics: return corrent name"	
-		Smalltalk removeClassNamed: #TUTU.
+			"now make an orphaned method. new semantics: return corrent name"
+			Smalltalk removeClassNamed: #TUTU.
 
-		cls := Object subclass: #TUTU
-			instanceVariableNames: ''
-			classVariableNames: ''
-			poolDictionaries: ''
-			category: self categoryNameForTemporaryClasses.
-		
-		cls compile: 'foo ^ 10'.
-		
-		method := cls >> #foo.
-		
-		Smalltalk removeClassNamed: #TUTU.
+			cls := Object
+				subclass: #TUTU
+				instanceVariableNames: ''
+				classVariableNames: ''
+				poolDictionaries: ''
+				category: self categoryNameForTemporaryClasses.
 
-		self assert: method selector = #foo. 
-		
-	].
-	
+			cls compile: 'foo ^ 10'.
 
+			method := cls >> #foo.
 
+			Smalltalk removeClassNamed: #TUTU.
+
+			self assert: method selector equals: #foo ]
 ]
 
 { #category : #'tests - testing' }
@@ -520,24 +756,24 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 CompiledMethodTest >> testWritesField [	
 	| method |
 	method := self class compiledMethodAt: #writeX.
-	self assert: (method writesField: 3).
-	
-	method := self class compiledMethodAt: #writeXandY.
-	self assert: (method writesField: 3).
+	self assert: (method writesField: 4).
 	
 	method := self class compiledMethodAt: #writeXandY.
 	self assert: (method writesField: 4).
 	
+	method := self class compiledMethodAt: #writeXandY.
+	self assert: (method writesField: 5).
+	
 	"write is not read"
 	
 	method := self class compiledMethodAt: #readX.
-	self deny: (method writesField: 3).
-	
-	method := self class compiledMethodAt: #readXandY.
-	self deny: (method writesField: 3).
+	self deny: (method writesField: 4).
 	
 	method := self class compiledMethodAt: #readXandY.
 	self deny: (method writesField: 4).
+	
+	method := self class compiledMethodAt: #readXandY.
+	self deny: (method writesField: 5).
 ]
 
 { #category : #'tests - slots' }

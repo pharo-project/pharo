@@ -42,9 +42,8 @@ UUIDPrimitivesTest >> testCreationEquality [
 	uuid2 := UUID new.
 	self assert: uuid1 equals: uuid1.
 	self assert: uuid2 equals: uuid2.
-	self deny: uuid1 = uuid2.
-	self deny: uuid1 hash = uuid2 hash
-
+	self deny: uuid1 equals: uuid2.
+	self deny: uuid1 hash equals: uuid2 hash
 ]
 
 { #category : #tests }
@@ -131,15 +130,14 @@ UUIDPrimitivesTest >> testDuplicationsKinda [
 
 { #category : #tests }
 UUIDPrimitivesTest >> testOrder [
-	
-	100 timesRepeat:
-		[ | uuid1 uuid2 |uuid1 := UUID new.
-		uuid2 := UUID new.
-		(uuid1 asString last: 12) = (uuid2 asString last: 12) ifTrue:
-			[self assert: uuid1 < uuid2.
-			 self assert: uuid2 > uuid1.
-			 self deny: uuid1 = uuid2 ]]
-
+	100
+		timesRepeat: [ | uuid1 uuid2 |
+			uuid1 := UUID new.
+			uuid2 := UUID new.
+			(uuid1 asString last: 12) = (uuid2 asString last: 12)
+				ifTrue: [ self assert: uuid1 < uuid2.
+					self assert: uuid2 > uuid1.
+					self deny: uuid1 equals: uuid2 ] ]
 ]
 
 { #category : #tests }

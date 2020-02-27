@@ -18,11 +18,6 @@ SpecSplitterHorizontal class >> commands: commands [
 		yourself
 ]
 
-{ #category : #protocol }
-SpecSplitterHorizontal >> arguments [
-	^ {(self commands identityIndexOf: self)}
-]
-
 { #category : #accessing }
 SpecSplitterHorizontal >> commands [
 	
@@ -35,15 +30,21 @@ SpecSplitterHorizontal >> commands: anObject [
 	commands := anObject
 ]
 
+{ #category : #protocol }
+SpecSplitterHorizontal >> generateArguments [
+	| index |
+
+	index := self commands identityIndexOf: self.
+
+	self arguments: { index }
+]
+
 { #category : #initialization }
 SpecSplitterHorizontal >> initialize [
-
 	super initialize.
 
 	selector := #newHSplitterAt:.
-	layoutFrame  := (0@0 corner: 0@0) asSpecLayoutFrame 
-							bottomOffset: 1.
-	commands := nil.
+	layoutFrame := (0 @ 0 corner: 0 @ 0) asSpecLayoutFrame bottomOffset: 1
 ]
 
 { #category : #testing }

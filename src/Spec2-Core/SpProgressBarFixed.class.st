@@ -19,8 +19,8 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : #SpProgressBarFixed,
 	#superclass : #SpProgressBarState,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#value => SpObservableSlot'
 	],

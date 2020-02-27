@@ -37,7 +37,7 @@ ClapContext class >> defaultRoot [
 
 { #category : #accessing }
 ClapContext class >> pragmaCommands [
-	^ (PragmaCollector filter: [:prg | prg keyword = 'commandline']) reset
+	^ (PragmaCollector filter: [:prg | prg selector = 'commandline']) reset
 		collect: [ :pragma |
 			| theClass theSelector |
 			theClass := pragma method methodClass.

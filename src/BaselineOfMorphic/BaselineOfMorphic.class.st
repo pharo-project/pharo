@@ -44,23 +44,17 @@ BaselineOfMorphic >> baseline: spec [
 			baseline: 'MorphicCore' with: [spec repository: repository];
 			baseline: 'MenuRegistration' with: [spec repository: repository].
 
+		spec baseline: 'Fuel' with: [ 
+			spec repository: repository; loads: #('Core') ].
+
 		spec package: 'System-Localization'.
-		spec package: 'Collections-DoubleLinkedList'.
-		spec package: 'Text-Core'.
 		spec package: 'System-Clipboard'.
 		
-		spec package: 'Balloon'.
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
-		spec package: 'Fuel-Core'.
-		spec package: 'Fuel-Platform-Core'.
-		spec package: 'Fuel-Platform-Pharo-Core'.
-		spec package: 'Fuel-Platform-Pharo-07'.
-
-		spec package: 'Fonts-Abstract'.
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
@@ -109,11 +103,13 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Settings-Polymorph'.
 		spec package: 'Settings-System'.
 
-		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings-Core'.
 		spec package: 'System-Settings-Browser'.
+		"the following package is listed here to be after Setting core 
+		however conceptually it could be placed somewhere else."
+		spec package: 'Formatter-Settings'.
 		spec package: 'System-Sound'.
 		
 		spec package: 'Text-Diff'.
@@ -125,7 +121,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
-		spec package: 'System-OSEnvironments'.
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
@@ -280,7 +275,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	'Starting postload action' logCr.
+	SystemNotification signal: 'Starting postload action'.
 
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
@@ -306,7 +301,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
-	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
+	#(ProgressBarMorph BalloonEngineConstants BalloonEngine 
 	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
 	FT2Types FT2FFILibrary
 	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
@@ -333,7 +328,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	World displayWorldSafely.
 
 	UIManager default uiProcess resume.
-	PharoDarkTheme beCurrent.
+	PharoLightTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 
@@ -353,7 +348,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Smalltalk cleanOutUndeclared.
 
-	#(#AbstractFont #BalloonMorph #CP1253TextConverter #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GB2312 #GradientFillStyle #GreekEnvironment #ISO88597TextConverter #IconicButton #JISX0208 #JapaneseEnvironment #KOI8RTextConverter #KSX1001 #KoreanEnvironment #LogicalFont #LucidaGrandeRegular #OSEnvironment #RussianEnvironment #ScrollBar #SimplifiedChineseEnvironment "#SourceCodeProRegular #SourceSansProRegular" #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
+	#(#AbstractFont #BalloonMorph #CP1253TextConverter #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GB2312 #GradientFillStyle #GreekEnvironment #ISO88597TextConverter #IconicButton #JISX0208 #JapaneseEnvironment #KOI8RTextConverter #KMLog #KSX1001 #KoreanEnvironment #LogicalFont #LucidaGrandeRegular #OSEnvironment #RussianEnvironment #ScrollBar #SimplifiedChineseEnvironment "#SourceCodeProRegular #SourceSansProRegular" #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
 
 	array := Smalltalk specialObjectsArray copy.
@@ -374,7 +369,7 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	'Starting preload action' logCr.
+	SystemNotification signal: 'Starting preload action'.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.

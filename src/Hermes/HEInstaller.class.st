@@ -274,6 +274,6 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 HEInstaller >> validateNoNewUndeclared [
 	self reportNewUndeclareds: self createdUndeclared.
 	
-	('[Hermes] Remaining Undeclared variables in the system: '
-		, Undeclared keys printString) logCr
+	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
+		, Undeclared keys printString)
 ]

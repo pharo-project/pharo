@@ -52,15 +52,15 @@ FLSortedCollectionSerializationTest >> testSortedCollection [
 	self assert: x ~= y"
 
 	| aSortBlock aSortedCollection materialized |
-	aSortBlock := [:a :b | a >= b ].
+	aSortBlock := [ :a :b | a >= b ].
 	aSortedCollection := SortedCollection sortBlock: aSortBlock.
 
 	materialized := self resultOfSerializeAndMaterialize: aSortedCollection.
 	self assert: aSortedCollection sortBlock ~~ materialized sortBlock.
 
 	materialized addAll: #(2 1 3).
-	aSortedCollection addAll: #(2 1 3).	
-	self assert: aSortedCollection asArray = materialized asArray.
+	aSortedCollection addAll: #(2 1 3).
+	self assert: aSortedCollection asArray equals: materialized asArray
 ]
 
 { #category : #tests }
@@ -97,15 +97,15 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableRefe
 
 	| aSortedCollection materialized |
 	ClassVariableForTesting := false.
-	
+
 	aSortedCollection := self class sortedCollectionForTestingWithClassVariable.
 	materialized := self resultOfSerializeAndMaterialize: aSortedCollection.
 	ClassVariableForTesting := true.
 	materialized addAll: #(2 3 1).
 	aSortedCollection addAll: #(2 3 1).
-	
-	aSortedCollection sortBlock assertWellMaterializedInto:  materialized sortBlock in: self.
-	self assert: aSortedCollection asArray = materialized asArray.
+
+	aSortedCollection sortBlock assertWellMaterializedInto: materialized sortBlock in: self.
+	self assert: aSortedCollection asArray equals: materialized asArray
 ]
 
 { #category : #tests }
@@ -120,13 +120,13 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithInstanceVariableR
 	| aSortedCollection materialized |
 	instanceVariableForTesting := false.
 	aSortedCollection := self sortedBlockClosureWithInstanceVariable.
-	
+
 	materialized := self resultOfSerializeAndMaterialize: aSortedCollection.
 	materialized addAll: #(2 3 1).
 	aSortedCollection addAll: #(2 3 1).
-	
-	self assert: aSortedCollection asArray = materialized asArray.
-	self assert: aSortedCollection asArray = #(3 2 1)
+
+	self assert: aSortedCollection asArray equals: materialized asArray.
+	self assert: aSortedCollection asArray equals: #(3 2 1)
 ]
 
 { #category : #tests }
@@ -150,5 +150,5 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithInstanceVariableR
 	aSortedCollection addAll: #(2 3 1).
 
 	"IMPORTANT: Unfortunatly there is nothing we can do to solve this problem. The sortBlock was serialized with a method context with different values."
-	self deny: aSortedCollection asArray = materialized asArray.
+	self deny: aSortedCollection asArray equals: materialized asArray
 ]

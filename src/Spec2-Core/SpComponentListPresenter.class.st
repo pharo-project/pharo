@@ -1,13 +1,10 @@
 "
-I am a list of components ( Widgets :) )
+I am a list of components (Presenters)
 "
 Class {
 	#name : #SpComponentListPresenter,
-	#superclass : #SpAbstractWidgetPresenter,
-	#instVars : [
-		'#presenters => SpObservableSlot'
-	],
-	#category : #'Spec2-Core-Widgets'
+	#superclass : #SpAbstractListPresenter,
+	#category : #'Spec2-Core-Widgets-Table'
 }
 
 { #category : #specs }
@@ -17,23 +14,57 @@ SpComponentListPresenter class >> adapterName [
 
 { #category : #initialization }
 SpComponentListPresenter >> addPresenter: aPresenter [
-	presenters add: aPresenter.
-	self notifyPropertyChanged: #presenters
+	
+	aPresenter owner: self.
+	self model add: aPresenter
 ]
 
-{ #category : #initialization }
-SpComponentListPresenter >> initialize [
+{ #category : #private }
+SpComponentListPresenter >> doActivateAtIndex: index [
+	
+	"Activate only if there is an item at that position"
+	self presenters at: index ifAbsent: [ ^ self ].
+	
+	activationBlock cull: ((SpSingleSelectionMode on: self)
+		basicSelectIndex: index;
+		yourself)
+]
 
-	super initialize.
-	presenters := OrderedCollection new
+{ #category : #testing }
+SpComponentListPresenter >> includes: aPresenter [
+ 
+	^ self presenters includes: aPresenter  
+]
+
+{ #category : #testing }
+SpComponentListPresenter >> isEmpty [
+
+	^ self presenters isEmpty
+]
+
+{ #category : #accessor }
+SpComponentListPresenter >> items: aCollection [ 
+	
+	^ super items: (aCollection collect: [ :each | 
+		each asPresenter
+			owner: self;
+			yourself ])
 ]
 
 { #category : #accessor }
 SpComponentListPresenter >> presenters [
-	^ presenters
+
+	^ self items
 ]
 
 { #category : #initialization }
 SpComponentListPresenter >> presenters: aCollection [
-	presenters := aCollection
+
+	self items: aCollection
+]
+
+{ #category : #event }
+SpComponentListPresenter >> whenPresentersChangedDo: aBlock [
+	
+	self whenModelChangedDo: aBlock
 ]

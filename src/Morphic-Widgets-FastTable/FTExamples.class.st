@@ -19,7 +19,6 @@ FTExamples class >> example1 [
 			sorted: [ :a :b | a name < b name]));
 		yourself.
 	list openInWindow
-
 ]
 
 { #category : #examples }
@@ -349,7 +348,7 @@ FTExamples class >> exampleList3 [
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndex: 42;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crTrace ];
 		yourself.
 
 	^ list openInWindow
@@ -370,10 +369,12 @@ FTExamples class >> exampleList4 [
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndex: 42;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged
+			do: [ :ann | ('row selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged
+			do:
+				[ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		yourself.
-
 	^ list openInWindow
 ]
 
@@ -393,8 +394,8 @@ FTExamples class >> exampleList5 [
 		dataSource: (FTExampleMethodListDataSource for: Object);
 		selectIndexes: #(42 43);
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		yourself.
 
@@ -420,8 +421,11 @@ FTExamples class >> exampleListWithExplicitFilterAndActionButton [
 	| list |
 	list := FTTableMorph new
 		extent: 300 @ 300;
-		dataSource: (FTExampleDataSource elements: (Smalltalk allClassesAndTraits sorted: [ :a :b | a name < b name ]));
-		enableFilterWithAction: [ :dataSource :searchPattern | Transcript crShow: searchPattern ] named: 'Show';
+		dataSource:
+			(FTExampleDataSource
+				elements: (Smalltalk allClassesAndTraits sorted: [ :a :b | a name < b name ]));
+		enableFilterWithAction: [ :dataSource :searchPattern | self crTrace: searchPattern ]
+			named: 'Show';
 		yourself.
 	list openInWindow
 ]
@@ -499,6 +503,21 @@ FTExamples class >> exampleOutline2 [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleRowNotHomogeneousList1 [
+	"Show a list with all Object methods"
+	<example>
+	| list |
+
+	list := FTTableMorph new
+		extent: 300@550;
+		beRowNotHomogeneous;
+		dataSource: (FTExampleMethodNotHomogeneousListDataSource for: Object);
+		yourself.
+		
+	^ list openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleSortableList [
 	"Show a list with all Object methods with a header"
 
@@ -560,8 +579,8 @@ FTExamples class >> exampleSortableTable1 [
 		dataSource: (FTExampleMethodTableDataSource for: Object);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -592,7 +611,7 @@ FTExamples class >> exampleSortableTable2 [
 				yourself);
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
-				sortableOnProperty: #numberOfInstanceVariables;
+				sortableOnProperty: #instSize;
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;
@@ -626,7 +645,7 @@ FTExamples class >> exampleSortableTable3 [
 				yourself);
 		addColumn:
 			((FTColumn id: 'Number of instance variables')
-				sortableUsing: #numberOfInstanceVariables ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
+				sortableUsing: #instSize ascending , #name ascending; "Sort by number of inst var, if the same, sort by name."
 				yourself);
 		dataSource: FTExampleClassInfoTableDataSource new;
 		selectFirst;
@@ -670,8 +689,8 @@ FTExamples class >> exampleTable1 [
 		dataSource: (FTExampleMethodTableDataSource for: Object);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -694,8 +713,8 @@ FTExamples class >> exampleTable2 [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -720,8 +739,8 @@ FTExamples class >> exampleTable3 [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -748,8 +767,8 @@ FTExamples class >> exampleTable4 [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		beResizable;
 		yourself.
@@ -788,7 +807,7 @@ FTExamples class >> exampleTableHorizontalScroll [
 
 	<example>
 	| table |
-	table := FTTableMorph newTrialHorizontalScrollBar
+	table := FTTableMorph newWithHorizontalScrollBar
 		extent: 650 @ 500;
 		addColumn: ((FTColumn id: '#') width: 40);
 		addColumn: ((FTColumn id: 'Name') width: 350);
@@ -798,8 +817,8 @@ FTExamples class >> exampleTableHorizontalScroll [
 		dataSource: (FTExampleMethodTableDataSource for: Morph);
 		selectFirst;
 		showFirstSelection;
-		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crLog ];
-		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crLog ];
+		onAnnouncement: FTSelectionChanged do: [ :ann | ('rows selected: ' , ann newSelectedIndexes asString) crTrace ];
+		onAnnouncement: FTStrongSelectionChanged do: [ :ann | ('double-click on row: ' , ann selectedIndex asString) crTrace ];
 		beMultipleSelection;
 		yourself.
 

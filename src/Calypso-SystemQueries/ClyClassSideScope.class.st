@@ -16,3 +16,11 @@ ClyClassSideScope class >> defaultName [
 ClyClassSideScope class >> metaLevelOf: aClass [
 	^aClass classSide
 ]
+
+{ #category : #queries }
+ClyClassSideScope >> methodsDo: aBlock [
+
+	self classesDo: [ :eachClass | 
+		self metaLevelsOf: eachClass do: [ :concreteMetaLevelClass |
+			concreteMetaLevelClass visibleMethods do: aBlock ] ]
+]

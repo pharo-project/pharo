@@ -28,8 +28,7 @@ RBBasicLintRule >> filteredResult [
 	- Otherwise return the unfiltered environment."
 
 	| filter |
-	result isEmpty
-		ifTrue: [ ^ result ].
+	result ifEmpty: [ ^ result ].
 	filter := RBPragmaEnvironment
 		onEnvironment: RBBrowserEnvironment new
 		keywords: #( lint: lint:rationale: lint:rationale:author: lint:author: ignoreLintRule: ignoreLintRule:rationale: ignoreLintRule:rationale:author: ignoreLintRule:author: ).

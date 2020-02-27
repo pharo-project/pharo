@@ -27,18 +27,30 @@ MetacelloTutorialConfig class >> ensureMetacello [
 	"Bootstrap Gofer (if necessary), bootstrap ConfigurationOfMetacello (using old Gofer API), then load the latest 
 	version of Metacello itself."
 
-	Smalltalk at: #MetacelloProject ifAbsent: [
-		Smalltalk at: #Gofer ifAbsent: [
-			"Current version of Gofer from which to bootstrap - as of 1.0-beta.15"
-			self bootstrapPackage: 'Gofer-lr.83' from: 'http://seaside.gemstone.com/ss/metacello' ].
-		Smalltalk at: #Gofer ifPresent: [:goferClass | | gofer |
-			gofer := goferClass new
-				url: 'http://seaside.gemstone.com/ss/metacello';
-				yourself.
-			[ gofer addPackage: 'ConfigurationOfMetacello' ] on: Warning do: [:ex | ex resume ].
-			gofer load ].
-		"load 'default' group of Metacello"
-		(Smalltalk at: #ConfigurationOfMetacello) perform: #load ]
+	| env |
+	env := self environment.
+	env
+		at: #MetacelloProject
+		ifAbsent: [ env
+				at: #Gofer
+				ifAbsent:
+					[ "Current version of Gofer from which to bootstrap - as of 1.0-beta.15"
+					self
+						bootstrapPackage: 'Gofer-lr.83'
+						from: 'http://seaside.gemstone.com/ss/metacello' ].
+			env
+				at: #Gofer
+				ifPresent: [ :goferClass | 
+					| gofer |
+					gofer := goferClass new
+						url: 'http://seaside.gemstone.com/ss/metacello';
+						yourself.
+					[ gofer addPackage: 'ConfigurationOfMetacello' ]
+						on: Warning
+						do: [ :ex | ex resume ].
+					gofer load ].
+			"load 'default' group of Metacello"
+			(env at: #ConfigurationOfMetacello) perform: #load ]
 ]
 
 { #category : #'metacello tool support' }
@@ -515,15 +527,14 @@ STILL UNDER CONSTRUCTION: Open your browsers on the class MetacelloProjectRefTut
 { #category : #doits }
 MetacelloTutorialConfig >> postloadForCore: loader package: packageSpec [
 
-	Transcript cr; 
-		show: '#postloadForCore executed, Loader: ', loader printString, 
-			' spec: ', packageSpec printString.
+	MetacelloNotification signal: ('#postloadForCore executed, Loader: ', loader printString, 
+			' spec: ', packageSpec printString).
 ]
 
 { #category : #doits }
 MetacelloTutorialConfig >> preloadForCore [
 
-	Transcript cr; show: '#preloadForCore executed'.
+	MetacelloNotification signal: '#preloadForCore executed'.
 ]
 
 { #category : #accessing }

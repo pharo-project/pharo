@@ -47,25 +47,8 @@ SpDemoListsPresenter class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #defaults }
-SpDemoListsPresenter >> iconFor: class [
-	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
-		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
-			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
-			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
-	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
-	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
-		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
-			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
-			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
-			^ self iconNamed: #testNotRunIcon ].
-	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
-	^ class systemIcon
-]
-
 { #category : #initialization }
-SpDemoListsPresenter >> initializePresenter [
+SpDemoListsPresenter >> connectPresenters [
 	list1
 		whenSelectionChangedDo: [ :selection | 
 			[ :elem | 
@@ -96,8 +79,25 @@ SpDemoListsPresenter >> initializePresenter [
 				cull: selection selectedItem ]
 ]
 
+{ #category : #defaults }
+SpDemoListsPresenter >> iconFor: class [
+	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
+		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
+			^ self iconNamed: #testNotRunIcon ].
+	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+	((class includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ])) and: [ class isAbstract not ])
+		ifTrue: [ class hasPassedTest ifTrue: [ ^ self iconNamed: #testGreenIcon ].
+			class hasFailedTest ifTrue: [ ^ self iconNamed: #testYellowIcon ].
+			class hasErrorTest ifTrue: [ ^ self iconNamed: #testRedIcon ].
+			^ self iconNamed: #testNotRunIcon ].
+	class organization classComment ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
+	^ class systemIcon
+]
+
 { #category : #initialization }
-SpDemoListsPresenter >> initializeWidgets [
+SpDemoListsPresenter >> initializePresenters [
 	list1 := self newList.
 	list2 := self newList.
 	list3 := self newList.
@@ -132,7 +132,7 @@ SpDemoListsPresenter >> list1 [
 { #category : #menu }
 SpDemoListsPresenter >> list1Menu [
 	^ self newMenu
-		addTitle: 'Context menu example';
+		title: 'Context menu example';
 		addGroup: [ :aGroup | 
 			aGroup
 				addItem: [ :anItem | 
@@ -140,7 +140,7 @@ SpDemoListsPresenter >> list1Menu [
 						name: 'Print in transcript';
 						shortcut: $p meta;
 						description: 'Print the selected class on Transcript';
-						action: [ list1 selectedItem logCr ] ];
+						action: [ list1 selectedItem traceCr ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Browse';
@@ -156,28 +156,28 @@ SpDemoListsPresenter >> list1Menu [
 										addItem: [ :item | 
 											item
 												name: 'Print number of methods';
-												action: [ list1 selectedItem methods size logCr ] ];
+												action: [ list1 selectedItem methods size traceCr ] ];
 										addItem: [ :item | 
 											item
 												name: 'Print number of variables';
-												action: [ list1 selectedItem instanceVariables size logCr ] ] ]) ] ];
+												action: [ list1 selectedItem instanceVariables size traceCr ] ] ]) ] ];
 		addGroup: [ :aGroup | 
 			aGroup
 				addItem: [ :anItem | 
 					anItem
 						name: 'Item showing only if item a odd number of letters';
 						visibleIf: [ list1 selectedItem printString size odd ];
-						action: [ list1 selectedItem logCr ] ];
+						action: [ list1 selectedItem traceCr ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Disabled in second group';
 						disable;
-						action: [ list1 selectedItem logCr ] ];
+						action: [ list1 selectedItem traceCr ] ];
 				addItem: [ :anItem | 
 					anItem
 						name: 'Disabled if class begins with A';
 						enabled: [ list1 selectedItem printString first ~= $A ];
-						action: [ list1 selectedItem logCr ] ] ]
+						action: [ list1 selectedItem traceCr ] ] ]
 ]
 
 { #category : #accessing }

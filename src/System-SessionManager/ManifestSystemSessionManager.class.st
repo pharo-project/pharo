@@ -1,3 +1,6 @@
+"
+Image session management
+"
 Class {
 	#name : #ManifestSystemSessionManager,
 	#superclass : #PackageManifest,
@@ -6,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestSystemSessionManager class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Support') 
+	^ #(#'System-Support') 
 ]

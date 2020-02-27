@@ -37,15 +37,6 @@ VirtualMachine >> allocationsBetweenGC: anInteger [
 ]
 
 { #category : #accessing }
-VirtualMachine >> binary [
-	"Answer the a file reference to the virtual machine binary."
-	"SmalltalkImage current vmBinary"
-
-	^ FileLocator vmBinary
-
-]
-
-{ #category : #accessing }
 VirtualMachine >> buildDate [			
 	"Return a String reflecting the build date of the VM"
 	"Smalltalk buildDate"
@@ -342,11 +333,19 @@ VirtualMachine >> is64bit [
 ]
 
 { #category : #testing }
+VirtualMachine >> isAIOInterrupt [
+	"Answer true, if the vm is capable of being interupted until there is an AIO event. 
+	 (This means we are going idle until we have something real to process)"
+
+	^ (self getSystemAttribute: 1010) = 'AIO'
+]
+
+{ #category : #testing }
 VirtualMachine >> isPharoVM [
 	"Answers if this VM is a valid PharoVM (made with our sources)"
 	| version |
 	
-	self flag: #todo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
+	self flag: #pharoTodo. "We need a certain way of identify PharoVM, but in the mean time this ensures "
 	version := self version.
 	^ (version beginsWith: 'PharoVM')
 		or: [ 
@@ -373,6 +372,13 @@ VirtualMachine >> isRunningCogit [
 	 (vmParameterAt: 46 is the size of the machine code zone)"
 
 	^[(self parameterAt: 46) > 0] on: Error do:[:ex| ex return: false]
+]
+
+{ #category : #testing }
+VirtualMachine >> isRunningInWorkerThread [
+	"Answers whether the vm is running on worker thread ot not"
+
+	^ (self getSystemAttribute: 1011) = 'WORKER_THREAD'
 ]
 
 { #category : #testing }
@@ -454,10 +460,9 @@ VirtualMachine >> maxExternalSemaphores: aSize [
 	self maxExternalSemaphores ifNil: [ ^ 0 ].
 	
 	[ self maxExternalSemaphoresSilently: aSize.
-	self
-		crTrace: 'WARNING: Had to increase size of semaphore signal handling table due to many external objects concurrently in use';
-		crTrace: 'You should increase this size at startup using #maxExternalSemaphoresSilently:';
-		crTrace: 'Current table size: ' , self maxExternalSemaphores printString ] forkAt: Processor userBackgroundPriority.
+	SystemNotification signal: ('WARNING: Had to increase size of semaphore signal handling table due to many external objects concurrently in use', String cr,
+		'You should increase this size at startup using #maxExternalSemaphoresSilently:', String cr,
+		'Current table size: ' , self maxExternalSemaphores printString) ] forkAt: Processor userBackgroundPriority.
 	
 	self error: 'Not enough space for external objects, set a larger size at startup!'.
 	^ self maxExternalSemaphores
@@ -689,7 +694,7 @@ VirtualMachine >> platformSourceVersion [
 	"Smalltalk vm platformSourceVersion"
 
 	<primitive: 'primitivePlatformSourceVersion'>
-	self notify: 'This virtual machine does not support the optional primitive #primitivePlatformSourceVersion' translated.
+	self notify: 'This virtual machine does not support the optional primitive #primitivePlatformSourceVersion'.
 	^''
 ]
 
@@ -1033,7 +1038,7 @@ VirtualMachine >> versionLabel [
 	"Smalltalk vm versionLabel"
 
 	<primitive: 'primitiveVMVersion'>
-	self notify: 'This virtual machine does not support the optional primitive #primitiveVMVersion' translated.
+	self notify: 'This virtual machine does not support the optional primitive #primitiveVMVersion'.
 	^''
 ]
 

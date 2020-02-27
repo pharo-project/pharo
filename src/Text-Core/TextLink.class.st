@@ -94,8 +94,7 @@ TextLink >> validate: specString [
 
 	| list first mid last |
 	list := specString findTokens: ' 	.|'.
-	list isEmpty
-		ifTrue: [ ^ nil ].
+	list ifEmpty: [ ^ nil ].
 	last := list last.
 	last first isUppercase
 		ifTrue: [ 
@@ -117,10 +116,4 @@ TextLink >> validate: specString [
 				ifFalse: [ ^ nil ] ]
 		ifFalse: [ '' ].	"OK if method name is not interned -- may not be defined yet"
 	^ first , ' ' , mid , last
-]
-
-{ #category : #styling }
-TextLink >> writeScanOn: strm [
-
-	strm nextPut: $L; nextPutAll: classAndMethod; nextPut: $;
 ]

@@ -66,10 +66,12 @@ Win32Environment >> getEnvVariable: aVariableName bufferSize: aSize ifAbsent: aB
 	return := OSPlatform current getEnvironmentVariable: name into: buffer size: aSize + 1.
 	
 	"From MSDN: If the function fails, the return value is zero. If the specified environment variable was not found in the environment block, GetLastError returns ERROR_ENVVAR_NOT_FOUND."
-	return = 0 ifTrue: [ 
-		OSPlatform current lastError = "ERROR_ENVVAR_NOT_FOUND" 16r000000CB
+	return = 0 ifTrue: [ | lastErrCode |
+		lastErrCode := OSPlatform current lastError.
+		lastErrCode = 0 ifTrue: [ ^ String new ].
+		lastErrCode = "ERROR_ENVVAR_NOT_FOUND" 16r000000CB
 			ifTrue: [ ^ aBlock value ]
-			ifFalse: [ self error: 'An error occurred while fetching environment variable ', aVariableName asString ] ].
+			ifFalse: [ self error: 'Error ', lastErrCode printString, ' occurred while fetching environment variable ', aVariableName asString ] ].
 	
 	"From MSDN: If lpBuffer is not large enough to hold the data, the return value is the buffer size, in characters,
 	required to hold the string and its terminating null character and the contents of lpBuffer are undefined."

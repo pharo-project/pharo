@@ -40,3 +40,25 @@ ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 	expected := ClyClass1FromP1 localMethods collect: #selector.
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
+
+{ #category : #tests }
+ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClass [
+	| expected |
+	scope := ClyInstanceSideScope of: ClyClassWithTraits.
+	
+	scope methodsDo: [ :each | result add: each selector ].
+	
+	expected := ClyClassWithTraits methods collect: #selector.
+	self assert: result sorted asArray equals: expected sorted asArray
+]
+
+{ #category : #tests }
+ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClassClasSide [
+	| expected |
+	scope := ClyInstanceSideScope of: ClyClassWithTraits classSide.
+	
+	scope methodsDo: [ :each | result add: each selector ].
+	
+	expected := ClyClassWithTraits methods collect: #selector.
+	self assert: result sorted asArray equals: expected sorted asArray
+]

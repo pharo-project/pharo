@@ -4,7 +4,7 @@ STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: a
 Class {
 	#name : #STONTestUser2,
 	#superclass : #STONTestUser,
-	#category : #'STON-Tests-Base'
+	#category : #'STON-Tests-Support'
 }
 
 { #category : #'ston-core' }

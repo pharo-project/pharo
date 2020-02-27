@@ -89,7 +89,7 @@ SpDemoDynamicMemoryGamePresenter >> hiddenIcon [
 ]
 
 { #category : #initialization }
-SpDemoDynamicMemoryGamePresenter >> initializeWidgets [
+SpDemoDynamicMemoryGamePresenter >> initializePresenters [
 	dynamicPresenter := self newNullPresenter.
 
 	differentCardsCountSlider := self newSlider.

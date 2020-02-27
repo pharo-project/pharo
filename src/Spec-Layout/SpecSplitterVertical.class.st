@@ -18,11 +18,6 @@ SpecSplitterVertical class >> commands: commands [
 		yourself
 ]
 
-{ #category : #protocol }
-SpecSplitterVertical >> arguments [
-	^ {(self commands identityIndexOf: self)}
-]
-
 { #category : #accessing }
 SpecSplitterVertical >> commands [
 	
@@ -35,15 +30,21 @@ SpecSplitterVertical >> commands: anObject [
 	commands := anObject
 ]
 
+{ #category : #protocol }
+SpecSplitterVertical >> generateArguments [
+	| index |
+
+	index := self commands identityIndexOf: self.
+
+	self arguments: { index }
+]
+
 { #category : #initialization }
 SpecSplitterVertical >> initialize [
-
 	super initialize.
 
 	selector := #newVSplitterAt:.
-	layoutFrame := ((0@0 corner: 0@0) asSpecLayoutFrame 
-							rightOffset: 1).
-	commands := nil.
+	layoutFrame := (0 @ 0 corner: 0 @ 0) asSpecLayoutFrame rightOffset: 1
 ]
 
 { #category : #testing }

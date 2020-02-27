@@ -15,8 +15,7 @@ HelpTopicListItemWrapperTest >> defaultTestClass [
 
 { #category : #testing }
 HelpTopicListItemWrapperTest >> testDisplayLabel [
-	|instance|
+	| instance |
 	instance := self defaultTestClass with: (HelpTopic named: 'My Topic').
-	self assert: instance asString = 'My Topic'
-	
+	self assert: instance asString equals: 'My Topic'
 ]

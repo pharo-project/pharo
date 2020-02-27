@@ -101,7 +101,6 @@ BorderedMorph >> removeCornerGrips [
 
 { #category : #'*Morphic-Widgets-Windows' }
 BorderedMorph >> removePaneSplitters [
-
 	self splitters do: [:each | each delete]
 ]
 

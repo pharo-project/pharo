@@ -247,7 +247,7 @@ scaleX := myBox width asFloat / viewedMorphBox width.
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ThumbnailMorph >> step [
 	"Optimization: Don't redraw if we're viewing some kind of SketchMorph and its rotated Form hasn't changed."
 
@@ -258,7 +258,7 @@ ThumbnailMorph >> step [
 
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 ThumbnailMorph >> stepTime [ 
 	"Adjust my step time to the time it takes drawing my referent"
 	drawTime ifNil:[^ 250].

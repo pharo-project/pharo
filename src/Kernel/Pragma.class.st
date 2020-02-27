@@ -26,14 +26,18 @@ Class {
 { #category : #finding }
 Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass [
 	"Answer a collection of all pragmas found in methods of all classes between aSubClass and aSuperClass (inclusive) whose keyword is aSymbol."
-	
-	^ Array streamContents: [ :stream |
-		aSubClass withAllSuperclassesDo: [ :class |
-			self withPragmasIn: class do:  [ :pragma |
-				pragma keyword = aSymbol
-					ifTrue: [ stream nextPut: pragma ] ].
-			aSuperClass = class
-				ifTrue: [ ^ stream contents ] ] ].
+
+	^ Array
+		streamContents: [ :stream | 
+			aSubClass
+				withAllSuperclassesDo: [ :class | 
+					self
+						withPragmasIn: class
+						do: [ :pragma | 
+							pragma selector = aSymbol
+								ifTrue: [ stream nextPut: pragma ] ].
+					aSuperClass = class
+						ifTrue: [ ^ stream contents ] ] ]
 ]
 
 { #category : #finding }
@@ -52,11 +56,11 @@ Pragma class >> allNamed: aSymbol from: aSubClass to: aSuperClass sortedUsing: a
 
 { #category : #finding }
 Pragma class >> allNamed: aSymbol in: aClass [
-	"Answer a collection of all pragmas found in methods of aClass whose keyword is aSymbol."
+	"Answer a collection of all pragmas found in methods of aClass whose selector is aSymbol."
 	
 	^ Array streamContents: [ :stream |
 		self withPragmasIn: aClass do: [ :pragma |
-			pragma keyword = aSymbol
+			pragma selector = aSymbol
 				ifTrue: [ stream nextPut: pragma ] ] ].
 ]
 
@@ -77,18 +81,18 @@ Pragma class >> allNamed: aSymbol in: aClass sortedUsing: aSortBlock [
 { #category : #'instance creation' }
 Pragma class >> for: aMethod selector: aSelector arguments: anArray [
 	^self new
-		setMethod: aMethod;
-		setKeyword: aSelector;
-		setArguments: anArray;
+		method: aMethod;
+		selector: aSelector;
+		arguments: anArray;
 		yourself
 ]
 
 { #category : #private }
-Pragma class >> keyword: aSymbol arguments: anArray [
+Pragma class >> selector: aSymbol arguments: anArray [
 	^ self new
-		setKeyword: aSymbol;
-		setArguments: anArray;
-		yourself.
+		selector: aSymbol;
+		arguments: anArray;
+		yourself
 ]
 
 { #category : #private }
@@ -104,7 +108,7 @@ Pragma >> = aPragma [
 
 	self method = aPragma method ifFalse: [^false].
 	self method selector = aPragma method selector ifFalse: [ ^false ].
-	self keyword = aPragma keyword ifFalse: [^false].
+	self selector = aPragma selector ifFalse: [^false].
 	self arguments = aPragma arguments ifFalse: [^false].
 
 	^true.
@@ -122,6 +126,27 @@ Pragma >> argumentAt: anInteger [
 	"Answer one of the arguments of the pragma."
 	
 	^ self arguments at: anInteger.
+]
+
+{ #category : #'accessing-pragma' }
+Pragma >> argumentNamed: aSymbol [
+	"Answer the argument of the pragma after the keyword given as parameter.
+	If none, raise an error."
+
+	^ self argumentNamed: aSymbol ifNone: [ self error: 'No argument of this name.' ]
+]
+
+{ #category : #'accessing-pragma' }
+Pragma >> argumentNamed: aSymbol ifNone: aBlockClosure [
+	"Answer the argument of the pragma after the keyword given as parameter.
+	If none, return the result of the block given as parameter.
+	
+	I am more readable than #argumentAt: but also slower."
+
+	^ self argumentAt:
+		(self selector keywords
+			indexOf: aSymbol asMutator
+			ifAbsent: [ ^ aBlockClosure value])
 ]
 
 { #category : #'accessing-pragma' }
@@ -155,7 +180,7 @@ Pragma >> hash [
 
 	| hash |
 
-	hash := self method hash bitXor: self keyword hash.
+	hash := self method hash bitXor: self selector hash.
 	1 to: self basicSize do: [:index | hash := hash bitXor: (self basicAt: index) hash].
 
 	^hash.
@@ -166,12 +191,6 @@ Pragma >> key [
 	"Answer the keyword of the pragma (the selector of its message pattern).
 	 This accessor provides polymorphism with Associations used for properties."
 	^self selector
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> keyword [
-	"to be deprecated for #selector"
-	^ self selector
 ]
 
 { #category : #accessing }
@@ -218,10 +237,10 @@ Pragma >> numArgs [
 { #category : #printing }
 Pragma >> printOn: aStream [
 	aStream nextPut: $<.
-	self keyword precedence = 1
-		ifTrue: [ aStream nextPutAll: self keyword ]
+	self selector precedence = 1
+		ifTrue: [ aStream nextPutAll: self selector ]
 		ifFalse: [
-			self keyword keywords with: self arguments do: [ :key :arg |
+			self selector keywords with: self arguments do: [ :key :arg |
 				aStream nextPutAll: key; space; print: arg; space ].
 			aStream skip: -1 ].
 	aStream nextPut: $>.
@@ -244,25 +263,7 @@ Pragma >> selector: aSymbol [
 Pragma >> sendTo: anObject [
 	"Send the pragma keyword together with its arguments to anObject and answer the result."
 	
-	^ anObject perform: self keyword withArguments: self arguments
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> setArguments: anArray [
-	"to be deprecated for #arguments:"
-	arguments := anArray
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> setKeyword: aSymbol [
-	"to be deprecated for #selector:"
-	self selector: aSymbol
-]
-
-{ #category : #'to be deprecated' }
-Pragma >> setMethod: aCompiledMethod [
-	"to be deprecated for #method:"
-	method := aCompiledMethod
+	^ anObject perform: self selector withArguments: self arguments
 ]
 
 { #category : #processing }

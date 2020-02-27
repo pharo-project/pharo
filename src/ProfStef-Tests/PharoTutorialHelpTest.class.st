@@ -17,8 +17,8 @@ PharoTutorialHelpTest >> testCreateATutorial [
 	| helpTopic |
 	helpTopic := PharoTutorialHelp createATutorial.
 	self assert: helpTopic notNil.
-	self assert: helpTopic class == HelpTopic.
-	self assert: helpTopic title = 'Create a tutorial'
+	self assert: helpTopic class identicalTo: HelpTopic.
+	self assert: helpTopic title equals: 'Create a tutorial'
 ]
 
 { #category : #tests }
@@ -26,16 +26,16 @@ PharoTutorialHelpTest >> testIntroduction [
 	| helpTopic |
 	helpTopic := PharoTutorialHelp introduction.
 	self assert: helpTopic notNil.
-	self assert: helpTopic class == HelpTopic.
-	self assert: helpTopic title = 'Introduction'
+	self assert: helpTopic class identicalTo: HelpTopic.
+	self assert: helpTopic title equals: 'Introduction'
 ]
 
 { #category : #tests }
 PharoTutorialHelpTest >> testListOfTutorials [
 	| helpTopic |
-	helpTopic  := PharoTutorialHelp listOfTutorials.
-	self assert: (helpTopic notNil).
-	self assert: (helpTopic title =  'List of tutorials'  )
+	helpTopic := PharoTutorialHelp listOfTutorials.
+	self assert: helpTopic notNil.
+	self assert: helpTopic title equals: 'List of tutorials'
 ]
 
 { #category : #tests }

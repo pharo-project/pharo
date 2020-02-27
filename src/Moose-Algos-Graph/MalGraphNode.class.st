@@ -10,7 +10,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 MalGraphNode class >> with: aModel [
 
 	^ self new model: aModel
@@ -43,9 +43,7 @@ MalGraphNode >> model: aModel [
 
 { #category : #printing }
 MalGraphNode >> printOn: stream [
-
-	stream 
-		nextPutAll: self label.
+	stream nextPutAll: self label.
 	model printOn: stream
 ]
 

@@ -11,11 +11,10 @@ ClySortedQueryResultTest >> createQueryResult [
 
 { #category : #tests }
 ClySortedQueryResultTest >> testComparisonWithSortedResultBasedOnAnotherFunction [
-
 	| queryResult2 |
 	queryResult2 := ClySortedQueryResult using: #someAspect ascending.
-	
-	self deny: (queryResult = queryResult2)
+
+	self deny: queryResult equals: queryResult2
 ]
 
 { #category : #tests }

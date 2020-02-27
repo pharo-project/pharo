@@ -39,13 +39,13 @@ ZipArchive class >> compressionStored [
 	^CompressionStored
 ]
 
-{ #category : #'fileIn/Out' }
-ZipArchive class >> extractAllIn: aFileName [
+{ #category : #'file in/out' }
+ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 	"Service method to extract all contents of a zip."
 	| directory |
-	directory := (UIManager default chooseDirectoryFrom: aFileName asFileReference) ifNil: [^ self].
+	directory := (UIManager default chooseDirectoryFrom: aFileReferenceOrFileName asFileReference) ifNil: [^ self].
 	^ (self new) 
-		readFrom: aFileName;
+		readFrom: aFileReferenceOrFileName;
 		extractAllTo: directory.
 ]
 
@@ -241,11 +241,11 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 ]
 
 { #category : #reading }
-ZipArchive >> readFrom: aStreamOrFileName [
+ZipArchive >> readFrom: aStreamOrFile [
 	| stream name eocdPosition |
-	stream := aStreamOrFileName isStream
-		ifTrue: [ name := aStreamOrFileName printString. aStreamOrFileName ]
-		ifFalse: [ File openForReadFileNamed: (name := aStreamOrFileName asFileReference fullName) ].
+	stream := aStreamOrFile isStream
+		ifTrue: [ name := aStreamOrFile printString. aStreamOrFile ]
+		ifFalse: [ name := aStreamOrFile asFileReference fullName. aStreamOrFile asFileReference binaryReadStream ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].
 	self readEndOfCentralDirectoryFrom: stream.
@@ -330,53 +330,24 @@ ZipArchive >> writeTo: stream [
 { #category : #writing }
 ZipArchive >> writeTo: stream prepending: aString [
 	stream nextPutAll: aString.
-	members do: [ :member |
-		member writeTo: stream.
-		member endRead.
-	].
-	writeCentralDirectoryOffset := stream position.
-	self writeCentralDirectoryTo: stream
-	
+	self writeTo: stream
 ]
 
 { #category : #writing }
-ZipArchive >> writeTo: stream prependingFileNamed: aFileName [
-	| prepended buffer |
-	prepended := File openForReadFileNamed: aFileName.
+ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
+	
+	aFileReferenceOrFileName asFileReference binaryReadStreamDo: [ :prepended | | buffer |
 	buffer := ByteArray new: (prepended size min: 32768).
-	[ prepended atEnd ] whileFalse: [ | bytesRead |
-		bytesRead := prepended readInto: buffer startingAt: 1 count: buffer size.
-		stream next: bytesRead putAll: buffer startingAt: 1
-	].
-	members do: [ :member |
-		member writeTo: stream.
-		member endRead.
-	].
-	writeCentralDirectoryOffset := stream position.
-	self writeCentralDirectoryTo: stream
+	[ prepended atEnd ]
+		whileFalse: [ | bytesRead |
+			bytesRead := prepended
+				readInto: buffer
+				startingAt: 1
+				count: buffer size.
+			stream next: bytesRead putAll: buffer startingAt: 1 ].
+		 ].
 	
-]
-
-{ #category : #writing }
-ZipArchive >> writeToFileNamed: aFileName prepending: aString [
-	
-	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^ ZipArchiveError signal: (aFileName, ' is needed by one or more members in this archive') ].
-	
-	(File named: aFileName)
-		writeStreamDo: [ :stream | self writeTo: stream prepending: aString ]	
-]
-
-{ #category : #writing }
-ZipArchive >> writeToFileNamed: aFileName prependingFileNamed: anotherFileName [
-	
-	"Catch attempts to overwrite existing zip file"
-	(self canWriteToFileNamed: aFileName)
-		ifFalse: [ ^ZipArchiveError signal: (aFileName, ' is needed by one or more members in this archive') ].
-	
-	(File named: aFileName)
-		writeStreamDo: [ :stream | self writeTo: stream prependingFileNamed: anotherFileName ]	
+	self writeTo: stream
 ]
 
 { #category : #accessing }

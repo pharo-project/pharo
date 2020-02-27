@@ -66,12 +66,12 @@ DAPackageDependencyTest >> testContainsOnlyExtensionDependency [
 DAPackageDependencyTest >> testDependenciesFrom [
 	| aCompositeDependency |
 	aCompositeDependency := DACompositeDependency from: packageA to: packageB.
-		aCompositeDependency
+	aCompositeDependency
 		add: (self referenceDependency: String);
 		add: (self referenceDependency: Object);
 		add: (self referenceDependency: String);
 		add: (self inheritanceDependency: Stack).
-	self assert: ((aCompositeDependency referenceDependenciesFrom: String) size = 2).
+	self assert: (aCompositeDependency referenceDependenciesFrom: String) size equals: 2
 ]
 
 { #category : #tests }
@@ -81,31 +81,25 @@ DAPackageDependencyTest >> testDependenciesSize [
 	aCompositeDependency
 		add: (DAInheritanceDependency from: packageA to: packageB);
 		add: (DAInheritanceDependency from: packageA to: packageB).
-	self assert: aCompositeDependency extensionDependenciesSize = 0.
+	self assert: aCompositeDependency extensionDependenciesSize equals: 0.
 	aCompositeDependency add: (DAExtensionDependency from: packageA to: packageB).
-	self assert: aCompositeDependency extensionDependenciesSize = 1
+	self assert: aCompositeDependency extensionDependenciesSize equals: 1
 ]
 
 { #category : #tests }
 DAPackageDependencyTest >> testDependenciesWithoutExtensionDependency [
 	| aCompositeDependency |
-	aCompositeDependency := DACompositeDependency
-		from: (packageA)
-		to: (packageB).
+	aCompositeDependency := DACompositeDependency from: packageA to: packageB.
 	aCompositeDependency
-		add:
-			(DAInheritanceDependency from: (packageA) to: (packageB));
-		add:
-			(DAInheritanceDependency from: (packageA) to: (packageB));
-		add:
-			(DAExtensionDependency from: (packageA) to: (packageB)).
-	self assert: (aCompositeDependency dependenciesWithoutExtensionDependency size = 2).
-		
+		add: (DAInheritanceDependency from: packageA to: packageB);
+		add: (DAInheritanceDependency from: packageA to: packageB);
+		add: (DAExtensionDependency from: packageA to: packageB).
+	self assert: aCompositeDependency dependenciesWithoutExtensionDependency size equals: 2
 ]
 
 { #category : #tests }
 DAPackageDependencyTest >> testEquals [
-	self assert: (aPackageDependency = aPackageDependency)
+	self assert: aPackageDependency equals: aPackageDependency
 ]
 
 { #category : #tests }
@@ -140,18 +134,18 @@ DAPackageDependencyTest >> testReferenceDependencies [
 		add: (self referenceDependency: String);
 		add: (self referenceDependency: Object);
 		add: (DAInheritanceDependency from: packageA to: packageB).
-		
-	self assert: (aCompositeDependency referenceDependencies size = 2).
+
+	self assert: aCompositeDependency referenceDependencies size equals: 2
 ]
 
 { #category : #tests }
 DAPackageDependencyTest >> testReferenceDependenciesFrom [
 	| aCompositeDependency |
 	aCompositeDependency := DACompositeDependency from: packageA to: packageB.
-		aCompositeDependency
+	aCompositeDependency
 		add: (self referenceDependency: String);
 		add: (self referenceDependency: Object);
 		add: (self referenceDependency: String).
-		
-	self assert: ((aCompositeDependency referenceDependenciesFrom: String) size = 2).
+
+	self assert: (aCompositeDependency referenceDependenciesFrom: String) size equals: 2
 ]

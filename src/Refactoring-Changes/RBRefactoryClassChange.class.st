@@ -95,6 +95,11 @@ RBRefactoryClassChange >> methodSourceFor: aSymbol [
 		ifTrue: [ self changeClass sourceCodeAt: aSymbol ]
 ]
 
+{ #category : #accessing }
+RBRefactoryClassChange >> parserClass [
+	^ RBParser
+]
+
 { #category : #private }
 RBRefactoryClassChange >> primitiveExecute [
 	^ self subclassResponsibility

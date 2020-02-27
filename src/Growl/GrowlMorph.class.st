@@ -66,7 +66,7 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 			(aBuilder pickOne: #position)
 				label: 'Popup position';
 				target: self;
-				default: #topRight;
+				default: #bottomLeft;
 				order: 2;
 				domainValues: self growlPositionChoices.]
 ]
@@ -276,7 +276,7 @@ GrowlMorph >> handlesMouseDown: evt [
 { #category : #initialization }
 GrowlMorph >> initialize [
 	super initialize.
- 	self  borderStyle: BorderStyle thinGray.
+ 	self  borderStyle: (BorderStyle color: self defaultBorderColor width: 1).
 	
 	self setProperty: #autoFitContents toValue: false.
  
@@ -369,7 +369,7 @@ GrowlMorph >> resetVanishTimer [
 	self resetAlpha.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 GrowlMorph >> step [
 
 	(self containsPoint: ActiveHand position) ifTrue: [
@@ -379,7 +379,7 @@ GrowlMorph >> step [
 	self alpha: self alpha - 0.05.
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 GrowlMorph >> stepTime [
 	^ 100
 ]
@@ -491,7 +491,7 @@ GrowlMorph >> vanishDelay: aDuration [
 	self resetVanishTimer
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 GrowlMorph >> wantsSteps [
 	^ true
 ]

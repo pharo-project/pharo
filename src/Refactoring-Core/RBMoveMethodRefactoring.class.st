@@ -116,7 +116,7 @@ RBMoveMethodRefactoring >> checkForSuperReferences [
 RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 	| varNames |
 	varNames := parseTree allDefinedVariables.
-	selfVariableName notNil ifTrue: [varNames add: selfVariableName].
+	selfVariableName ifNotNil: [varNames add: selfVariableName].
 	varNames do: 
 			[:name | 
 			moveToClasses do: 
@@ -196,8 +196,7 @@ RBMoveMethodRefactoring >> getClassesForInstanceVariable [
 	typer := RBRefactoryTyper newFor: self model.
 	typer runOn: definingClass.
 	types := typer typesFor: variable.
-	types isEmpty
-		ifTrue: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
+	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: ( typer guessTypesFor: variable ).
 	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
@@ -208,8 +207,7 @@ RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 	| types |
 
 	types := RBRefactoryTyper typesFor: variable in: parseTree model: self model.
-	types isEmpty
-		ifTrue: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
+	types ifEmpty: [ types := OrderedCollection with: ( self model classNamed: #Object ) ].
 	moveToClasses := self selectVariableTypesFrom: types selected: types.
 	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
@@ -222,8 +220,7 @@ RBMoveMethodRefactoring >> getClassesToMoveTo [
 			[self isMovingToInstVar 
 				ifTrue: [self getClassesForInstanceVariable]
 				ifFalse: [self getClassForGlobalOrClassVariable]].
-	moveToClasses isEmpty 
-		ifTrue: [self refactoringFailure: 'No classes selected, method not moved.']
+	moveToClasses ifEmpty: [self refactoringFailure: 'No classes selected, method not moved.']
 ]
 
 { #category : #preconditions }
@@ -252,8 +249,7 @@ RBMoveMethodRefactoring >> getNewMethodName [
 	alreadyDefined := moveToClasses
 		detect: [ :each | each hierarchyDefinesMethod: newSelector ]
 		ifNone: [ nil ].
-	alreadyDefined notNil
-		ifTrue: [ self
+	alreadyDefined ifNotNil: [ self
 				refactoringWarning:
 					( '<1s> is already defined by <2p> or a super/subclass<n>Try another?'
 						expandMacrosWith: newSelector

@@ -38,6 +38,13 @@ TaAliasMethod >> aliases: anObject [
 	aliases := anObject
 ]
 
+{ #category : #'transforming selectors' }
+TaAliasMethod >> changesSourceCode: aSelector [ 
+	
+	^ self hasAliasForNew: aSelector
+
+]
+
 { #category : #validation }
 TaAliasMethod >> checkAssociations [
 	"I check the validity of the associations used for aliasing"

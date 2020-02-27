@@ -19,7 +19,7 @@ SlotBasicTest >> testAddClassSlotAndMigrate [
 			builder classSlots: #(a b) ].
 	
 	self assert: (classModified instVarNamed: #a) equals: $A.
-	self assert: (classModified instVarNamed: #b) isNil.
+	self assert: (classModified instVarNamed: #b) isNil
 ]
 
 { #category : #'tests-shared pools' }
@@ -31,7 +31,7 @@ SlotBasicTest >> testAddSharedPool [
 	aClass := self make: [ :builder | 
 		builder sharedPools: 'TestSharedPool' ].
 	
-	self assert: (aClass sharedPools includes: TestSharedPool).
+	self assert: (aClass sharedPools includes: TestSharedPool)
 
 ]
 
@@ -44,20 +44,17 @@ SlotBasicTest >> testAddSharedVariable [
 	aClass := self make: [ :builder | 
 		builder sharedVariablesFromString: 'Var' ].
 	
-	self assert: aClass classVarNames equals: #(Var).
+	self assert: aClass classVarNames equals: #(Var)
 
 ]
 
 { #category : #'tests-basic' }
 SlotBasicTest >> testBasicClassBuilding [
+	aClass := self make: [ :builder | builder name: self aClassName ].
 
-	aClass := self make: [ :builder |
-		builder name: self aClassName ].
-	
 	self deny: aClass classLayout isNil.
-	self assert: aClass name = self aClassName.
-	self assert: (self class environment at: self aClassName) == aClass.
-
+	self assert: aClass name equals: self aClassName.
+	self assert: (self class environment at: self aClassName) identicalTo: aClass
 ]
 
 { #category : #'tests-comments' }
@@ -68,8 +65,8 @@ SlotBasicTest >> testClassWithComment [
 			name: self aClassName;
 			comment: 'A class Comment' ].
 	
-	self assert: aClass name = self aClassName.
-	self assert: aClass comment = 'A class Comment'.
+	self assert: aClass name equals: self aClassName.
+	self assert: aClass comment equals: 'A class Comment'
 	
 
 ]
@@ -82,9 +79,9 @@ SlotBasicTest >> testClassWithCommentAndStamp [
 			name: self aClassName;
 			comment: 'A class Comment' stamp: (Object>>#halt) stamp ].
 	
-	self assert: aClass name = self aClassName.
-	self assert: aClass comment = 'A class Comment'.
-	self assert: aClass organization commentStamp = (Object>>#halt) stamp.
+	self assert: aClass name equals: self aClassName.
+	self assert: aClass comment equals: 'A class Comment'.
+	self assert: aClass organization commentStamp equals: (Object>>#halt) stamp
 	
 
 ]
@@ -96,7 +93,7 @@ SlotBasicTest >> testNewCompiledMethodClass [
 	self deny: aClass isPointers.
 	self deny: aClass isFixed.
 	self assert: aClass isBytes.
-	self deny: aClass isWeak.
+	self deny: aClass isWeak
 ]
 
 { #category : #'tests-basic' }
@@ -115,7 +112,7 @@ SlotBasicTest >> testNewPointerClassWithSlots [
 		andSlots: { #id. #name }.
 	
 	self assert: (aClass instVarNames includes: 'id').
-	self assert: (aClass instVarNames includes: 'name').
+	self assert: (aClass instVarNames includes: 'name')
 ]
 
 { #category : #'tests-basic' }
@@ -125,7 +122,7 @@ SlotBasicTest >> testNewVariableByteClass [
 	self deny: aClass isPointers.
 	self deny: aClass isFixed.
 	self assert: aClass isBytes.
-	self assert: aClass isVariable.
+	self assert: aClass isVariable
 ]
 
 { #category : #'tests-basic' }
@@ -135,7 +132,7 @@ SlotBasicTest >> testNewVariableWordClass [
 	self deny: aClass isPointers.
 	self deny: aClass isFixed.
 	self assert: aClass isWords.
-	self assert: aClass isVariable.
+	self assert: aClass isVariable
 ]
 
 { #category : #'tests-basic' }
@@ -145,7 +142,7 @@ SlotBasicTest >> testNewWeakClass [
 	self assert: aClass isPointers.
 	self deny: aClass isFixed.
 	self assert: aClass isWords.
-	self assert: aClass isWeak.
+	self assert: aClass isWeak
 ]
 
 { #category : #'tests-class slots' }
@@ -213,7 +210,7 @@ SlotBasicTest >> testSwitchClassSlotAndMigrate [
 	
 	"The methods were migrated"
 	self assert: classModified a equals: $A.
-	self assert: classModified b equals: $B.
+	self assert: classModified b equals: $B
 
 ]
 
@@ -225,7 +222,7 @@ SlotBasicTest >> testWithClassSlots [
 	
 	self assert: aClass class instVarNames equals: #(a).	
 	aClass instVarNamed: #a put: $A.
-	self assert: (aClass instVarNamed: #a) equals: $A.
+	self assert: (aClass instVarNamed: #a) equals: $A
 ]
 
 { #category : #'tests-shared pools' }
@@ -236,7 +233,7 @@ SlotBasicTest >> testWithSharedPool [
 	aClass class compile: 'one ^One'.
 	
 	self assert: (aClass sharedPools includes: TestSharedPool).
-	self assert: aClass one = 1.
+	self assert: aClass one equals: 1
 ]
 
 { #category : #'tests-shared variables' }
@@ -251,7 +248,7 @@ SlotBasicTest >> testWithSharedVariable [
 	aClass var: true.
 	
 	self assert: aClass classVarNames equals: #(Var).
-	self assert: aClass var.
+	self assert: aClass var
 ]
 
 { #category : #'tests-class slots' }

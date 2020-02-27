@@ -13,5 +13,12 @@ Class {
 
 { #category : #specs }
 TableContainerPresenter class >> adapterName [
-	^ #TableContainerAdapter
+	^ #MorphicTableContainerAdapter
+]
+
+{ #category : #specs }
+TableContainerPresenter class >> defaultSpec [
+	<spec>
+	^ #(MorphicTableContainerAdapter
+		adapt: #(model))
 ]

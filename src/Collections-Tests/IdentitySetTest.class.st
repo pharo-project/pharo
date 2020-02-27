@@ -41,19 +41,18 @@ IdentitySetTest >> testGrowWithNil [
 { #category : #'tests - identity' }
 IdentitySetTest >> testIdentity [
 	| identitySet aString anOtherString |
-	
 	aString := 'hello'.
 	anOtherString := aString copy.
-	
+
 	self assert: aString equals: anOtherString.
-	self deny: aString == anOtherString.
-	
-	identitySet := self classToBeTested  new.
+	self deny: aString identicalTo: anOtherString.
+
+	identitySet := self classToBeTested new.
 	identitySet add: aString.
-	
+
 	self assert: (identitySet occurrencesOf: aString) equals: 1.
 	self assert: (identitySet occurrencesOf: anOtherString) equals: 0.
-	
+
 	self assert: (identitySet includes: aString).
-	self deny: (identitySet includes: anOtherString) equals: 0.
+	self deny: (identitySet includes: anOtherString) equals: 0
 ]

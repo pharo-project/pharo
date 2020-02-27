@@ -770,19 +770,17 @@ Context >> findContextSuchThat: testBlock [
 
 { #category : #'private-exceptions' }
 Context >> findNextHandlerContext [
-
-	"Return the next handler marked context, returning nil if there is none.  Search starts with self and proceeds up to nil."
-
-	| context |
-
+	"Return the next handler marked context, returning nil if there is none.  
+	Search starts with self and proceeds up to nil."
+	| context searchStartContext |
 	context := self findNextHandlerOrSignalingContext.
 	context ifNil: [ ^ nil ].
-	context isHandlerContext
-		ifTrue: [ ^ context ].	"If it isn't a handler context, it must be a signaling context.
+	context isHandlerContext ifTrue: [ ^ context ].	
+	"If it isn't a handler context, it must be a signaling context.
 	When we reach a signaling context we must skip over any handlers
-	that might be on the stack between the signaling context and the handler
-	context for that signal."
-	^ context exception privHandlerContext nextHandlerContext
+	that might be on the stack between the signaling context and the handler context for that signal"
+	searchStartContext := context exception privHandlerContext ifNil: [ context ].
+	^searchStartContext nextHandlerContext
 ]
 
 { #category : #'private-exceptions' }
@@ -1620,6 +1618,29 @@ Context >> resume: value through: firstUnwindContext [
 ]
 
 { #category : #controlling }
+Context >> resumeEvaluating: aBlock [
+	"Unwind thisContext to self and resume with aBlock value as result of last send.  
+	Execute unwind blocks when unwinding.  
+	ASSUMES self is a sender of thisContext"
+	| context unwindBlock |
+	self isDead ifTrue: [self cannotReturn: aBlock value to: self].
+	context := thisContext.
+	[
+		context := context findNextUnwindContextUpTo: self.
+		context isNil
+	] whileFalse: [	
+		context unwindComplete ifNil:[
+			context unwindComplete: true.
+			unwindBlock := context unwindBlock.
+			thisContext terminateTo: context.
+			unwindBlock value]
+	].
+	thisContext terminateTo: self.
+	^aBlock value
+
+]
+
+{ #category : #controlling }
 Context >> return [
 	"Unwind until my sender is on top"
 
@@ -1672,10 +1693,9 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Insert ensure and exception handler contexts under aSender"
 	error := nil.
 	context := aSender insertSender: (Context
-		contextOn: Error do: [:ex |
+		contextOn: Error, Halt do: [:ex |
 			error ifNil: [
-				"this is ugly but it fixes the side-effects of not sending an Unhandled error on Halt"
-				error := (ex isKindOf: UnhandledError) ifTrue: [ ex exception ] ifFalse: [ ex ].
+				error := ex.
 				topContext := thisContext.
 				ex resumeUnchecked: here jump ]
 			ifNotNil: [ ex pass ]]).
@@ -1793,9 +1813,9 @@ Context >> sender [
 
 { #category : #private }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
-	"For named primitives, the first literal contains a special object that has information of the primitive. Example:
-(StandardFileStream >> #primOpen:writable:) literalAt: 1 ----->>>>   #(#FilePlugin #primitiveFileOpen 0 147).
-In this method we cope such information from one to another one."
+	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."
+	"((StandardFileStream >> #primOpen:writable:) literalAt: 1) >>> #(#FilePlugin #primitiveFileOpen 0 0)"
+
 	| spec |	
 	spec := toMethod literalAt: 1.	
 	spec replaceFrom: 1 to: spec size with: (fromMethod literalAt: 1) startingAt: 1.

@@ -110,6 +110,20 @@ EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
 ]
 
 { #category : #tests }
+EpCodeChangeIntegrationTest >> testClassModificationWithHierarchy [
+	
+	| modifications |
+	aClass := classFactory newClass.
+	classFactory newSubclassOf: aClass using: {}.
+	aClass addSlot: 'i' asSlot.
+
+	modifications := (self allLogEntriesWith: EpClassModification) collect: #content.
+	self assert: modifications size equals: 1.
+	self assert: modifications first behaviorAffectedName equals: aClass name.
+
+]
+
+{ #category : #tests }
 EpCodeChangeIntegrationTest >> testClassRemoval [
 
 	| className events |
@@ -122,6 +136,22 @@ EpCodeChangeIntegrationTest >> testClassRemoval [
 	"It shouldn't begin with AnObsolete"
 	self assert: events anyOne behaviorAffectedName equals: className.
 
+]
+
+{ #category : #tests }
+EpCodeChangeIntegrationTest >> testClassRemovalWithMethods [
+
+	| events category |
+	aClass := classFactory newClass.
+	category := aClass category.
+	1 to: 7 do: [:index |
+		aClass compile: 'inst', index asString.
+		aClass classSide compile: 'class', index asString ].
+	aClass removeFromSystem.
+	
+	events := self allLogEventsWith: EpMethodRemoval.
+	self assert: events size equals: 14.
+	self assert: (events allSatisfy: [ :each | each affectedPackageName = category ])
 ]
 
 { #category : #tests }
@@ -240,7 +270,6 @@ EpCodeChangeIntegrationTest >> testMethodProtocolChange [
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
-
 	| headBeforeRecompiling |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42'.
@@ -248,8 +277,8 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 	headBeforeRecompiling := monitor log head.
 
 	aClass compile: 'fortyTwo ^42'.
-	
-	self assert: monitor log head == headBeforeRecompiling
+
+	self assert: monitor log head identicalTo: headBeforeRecompiling
 ]
 
 { #category : #tests }

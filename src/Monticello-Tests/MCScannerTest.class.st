@@ -6,7 +6,7 @@ Class {
 
 { #category : #asserting }
 MCScannerTest >> assertScans: anArray [
-	self assert: (MCScanner scan: anArray printString readStream) = anArray
+	self assert: (MCScanner scan: anArray printString readStream) equals: anArray
 ]
 
 { #category : #tests }
@@ -21,7 +21,7 @@ MCScannerTest >> test2 [
 
 { #category : #tests }
 MCScannerTest >> test3 [
-	self assert: (MCScanner scan: '(a #b c)' readStream) = #(a #b c)
+	self assert: (MCScanner scan: '(a #b c)' readStream) equals: #(a #b c)
 ]
 
 { #category : #tests }

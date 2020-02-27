@@ -31,8 +31,8 @@ MethodBrowser class >> defaultSpec2 [
 ^{ #Panel.
 		#changeTableLayout.
 		#listDirection:. 	#bottomToTop.
-		#addMorph:. 		{#presenter. #listModel.}.
-		#addMorph:. 		{#presenter. #textModel.}.
+		#addMorph:. 		{#model. #listModel.}.
+		#addMorph:. 		{#model. #textModel.}.
 		#vResizing:.		 #spaceFill.
 		#hResizing:.		 #spaceFill.}
 ]
@@ -73,20 +73,20 @@ MethodBrowser >> displayBlock: aBlock [
 
 { #category : #initialization }
 MethodBrowser >> initializePresenter [
-	listModel
-		whenSelectionChangedDo: [ :selection | 
-			selection isEmpty
-				ifTrue: [ textModel text: ''.
-					textModel behavior: nil.
-					toolbarModel method: nil ]
-				ifFalse: [ | m |
-					m := selection selectedItem. 
-					textModel text: m sourceCode.
-					textModel behavior: m methodClass.
-					toolbarModel method: m ] ].
-	self acceptBlock: [ :t | self listModel selectedItem inspect ].
-	self
-		wrapWith: [ :item | item methodClass name , '>>#' , item selector ]
+
+	listModel whenSelectedItemChanged: [:selection |
+		selection
+			ifNil: [
+				textModel text: ''.
+				textModel behavior: nil.
+				toolbarModel method: nil ]
+			ifNotNil: [:m | 
+				textModel text: m sourceCode.
+				textModel behavior: m methodClass.
+				toolbarModel method: m ]].
+	
+	self acceptBlock: [:t | self listModel selectedItem inspect ].
+	self wrapWith: [:item | item methodClass name,'>>#', item selector ].
 ]
 
 { #category : #initialization }
@@ -97,7 +97,8 @@ MethodBrowser >> initializeWidgets [
 	self focusOrder
 		add: listModel;
 		add: toolbarModel;
-		add: textModel
+		add: textModel.
+	textModel aboutToStyle: true
 ]
 
 { #category : #accessing }

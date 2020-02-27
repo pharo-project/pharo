@@ -50,7 +50,7 @@ UUID class >> fromString36: aString [
 	| object num |
 	object := self nilUUID.
 	num := Integer readFrom: aString asUppercase readStream base: 36.
-	1 to: 16 do: [:i | object at: i put: (num digitAt: i)].
+	1 to: 16 do: [:i | object at: i put: (num byteAt: i)].
 	^object
 ]
 

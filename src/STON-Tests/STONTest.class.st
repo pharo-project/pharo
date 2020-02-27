@@ -5,7 +5,7 @@ STONTests tests the API offered by STON.
 Class {
 	#name : #STONTest,
 	#superclass : #TestCase,
-	#category : #'STON-Tests-Base'
+	#category : #'STON-Tests-Facade'
 }
 
 { #category : #utilities }
@@ -52,8 +52,8 @@ STONTest class >> write: object toFileNamed: path [
 { #category : #tests }
 STONTest >> testFromString [
 	| object |
-	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
-	self assert: (STON fromString: '[1,0,-1,true,false,nil]') = object
+	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
+	self assert: (STON fromString: '[1,0,-1,true,false,nil]') equals: object
 ]
 
 { #category : #tests }
@@ -69,9 +69,9 @@ STONTest >> testFromStringWithComments [
 STONTest >> testPrettyPrinting [
 	| object |
 	object := STONTestUser dummy.
-	self assert: (STON fromString: (STON toStringPretty: object)) = object.
+	self assert: (STON fromString: (STON toStringPretty: object)) equals: object.
 	object := STONTestDomainObject dummy.
-	self assert: (STON fromString: (STON toStringPretty: object)) = object
+	self assert: (STON fromString: (STON toStringPretty: object)) equals: object
 ]
 
 { #category : #tests }
@@ -97,17 +97,17 @@ STONTest >> testRoomExitCycles [
 	self assert: (object second at: #name) equals: 'Room 2'.
 	self assert: ((object first at: #exit) at: #name) equals: 'Exit 1'.
 	self assert: ((object second at: #exit) at: #name) equals: 'Exit 2'.
-	self assert: ((object first at: #exit) at: #origin) == object first.
-	self assert: ((object first at: #exit) at: #destination) == object second.
-	self assert: ((object second at: #exit) at: #origin) == object second.
-	self assert: ((object second at: #exit) at: #destination) == object first.
-	"Try writing again the parse model" 
+	self assert: ((object first at: #exit) at: #origin) identicalTo: object first.
+	self assert: ((object first at: #exit) at: #destination) identicalTo: object second.
+	self assert: ((object second at: #exit) at: #origin) identicalTo: object second.
+	self assert: ((object second at: #exit) at: #destination) identicalTo: object first.
+	"Try writing again the parse model"
 	self assert: (STON toString: object) equals: ston
 ]
 
 { #category : #tests }
 STONTest >> testToString [
 	| object |
-	object := STON listClass withAll: { 1. 0. -1. true. false. nil }.
-	self assert: (STON toString: object) = '[1,0,-1,true,false,nil]'
+	object := STON listClass withAll: {1 . 0 . -1 . true . false . nil}.
+	self assert: (STON toString: object) equals: '[1,0,-1,true,false,nil]'
 ]

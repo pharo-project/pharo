@@ -18,14 +18,14 @@ SpExamples class >> bookName [
 SpExamples class >> firstExample [
 	^HelpTopic 
 		title: 'A first example: ModelList'
-		contents: 'Creating a specific UI always starts with the subclassing of ComposablePresenter. Each sub widget is stored into an instance variable of the newly created class. All the code presented here is already in the image so you can simply do: 
+		contents: 'Creating a specific UI always starts with the subclassing of SpPresenter. Each sub widget is stored into an instance variable of the newly created class. All the code presented here is already in the image so you can simply do: 
 		
 	ModelList browse
 
-And follow the tutorial while browsing the code. So let''s subclass ComposablePresenter.
+And follow the tutorial while browsing the code. So let''s subclass SpPresenter.
 
 
-	ComposablePresenter subclass: #ModelList
+	SpPresenter subclass: #ModelList
 	instanceVariableNames: ''list''
 	classVariableNames: ''
 	category: ''Spec-Examples''		
@@ -116,9 +116,9 @@ SpExamples class >> secondExample [
 		a list
 		a label.
 
-So again, we start by subclassing ComposablePresenter:
+So again, we start by subclassing SpPresenter
 
-	ComposablePresenter subclass: #ProtocolList
+	SpPresenter subclass: #ProtocolList
 	instanceVariableNames: ''label protocols''
 	classVariableNames: ''
 	category: ''Spec-Examples''

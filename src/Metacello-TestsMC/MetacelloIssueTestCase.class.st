@@ -1,6 +1,6 @@
 Class {
 	#name : #MetacelloIssueTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'gofer',
 		'initialWorkingCopyList'
@@ -38,7 +38,7 @@ MetacelloIssueTestCase >> project [
 
 { #category : #accessing }
 MetacelloIssueTestCase >> projectClass [
-    ^ Smalltalk at: self projectName asSymbol
+    ^ testingEnvironment at: self projectName asSymbol
 ]
 
 { #category : #accessing }
@@ -77,10 +77,10 @@ MetacelloIssueTestCase >> setUp [
   gofer := Gofer new.
   gofer disablePackageCache.
   gofer repository: repo.
-  Smalltalk at: #'Metacello_Gofer_Test_Repository' put: repo.
+  testingEnvironment at: #'Metacello_Gofer_Test_Repository' put: repo.
   repo := self configurationRepository.
   gofer repository: repo.
-  Smalltalk at: #'Metacello_Configuration_Test_Repository' put: repo.
+  testingEnvironment at: #'Metacello_Configuration_Test_Repository' put: repo.
   initialWorkingCopyList := MCWorkingCopy allManagers
     collect: [ :each | each packageName ]
 ]
@@ -97,21 +97,18 @@ MetacelloIssueTestCase >> tearDown [
     ifTrue: [ aGofer metacelloUnload ].
   MCRepositoryGroup default
     removeIdenticalRepository:
-        (Smalltalk globals at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
+        (testingEnvironment at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
     removeIdenticalRepository:
-        (Smalltalk globals at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
+        (testingEnvironment at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
     yourself.
-  Smalltalk globals removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  Smalltalk globals removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
+  testingEnvironment removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
+  testingEnvironment removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
   finalWorkingCopyList := MCWorkingCopy allManagers
     collect: [ :each | each packageName ].
   diff := finalWorkingCopyList difference: initialWorkingCopyList.
   diff
     do: [ :leak | 
-      Transcript
-        cr;
-        show:
-            'leaked package from ' , self printString , ' -> ' , leak printString ].
+      MetacelloNotification signal: ('leaked package from ' , self printString , ' -> ' , leak printString) ].
   self assert: diff isEmpty.
   super tearDown
 ]

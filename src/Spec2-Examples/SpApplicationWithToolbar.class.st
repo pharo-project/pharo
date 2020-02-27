@@ -42,7 +42,7 @@ SpApplicationWithToolbar >> addItemTo: aGroup [
 ]
 
 { #category : #initialization }
-SpApplicationWithToolbar >> initializeWidgets [
+SpApplicationWithToolbar >> initializePresenters [
 	menu := self newMenuBar
 		addGroup: [ :group | 
 			group

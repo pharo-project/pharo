@@ -60,7 +60,10 @@ SmalltalkImage class >> cleanUp [
 
 { #category : #settings }
 SmalltalkImage class >> compilerClass [
-	^CompilerClass
+
+	^CompilerClass ifNil: [ 
+		"use OpalCompiler as the fallback compiler if installed"
+		self class environment at: #OpalCompiler ifAbsent: [ nil ] ]
 ]
 
 { #category : #settings }
@@ -217,6 +220,13 @@ SmalltalkImage >> at: key ifPresent: aBlock [
 ]
 
 { #category : #'to clean later' }
+SmalltalkImage >> at: key ifPresent: aBlock ifAbsent: anotherBlock [
+	"Lookup the given key in the globals. If it is present, answer the value of evaluating the given block with the value associated with the key. Otherwise answer the value of the second block."
+
+	^ globals at: key ifPresent: aBlock ifAbsent: anotherBlock
+]
+
+{ #category : #'to clean later' }
 SmalltalkImage >> at: aKey put: anObject [ 
 	"Set the global at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
@@ -303,14 +313,6 @@ SmalltalkImage >> changeImagePathTo: aString [
 ]
 
 { #category : #'image, changes name' }
-SmalltalkImage >> changesFile [
-	"Answer the file containing the current changes."
-
-	^ FileLocator changes
-
-]
-
-{ #category : #'image, changes name' }
 SmalltalkImage >> changesName [
 	"Answer the name for the changes file corresponding to the image file name."
 	"Smalltalk changesName"
@@ -324,8 +326,8 @@ SmalltalkImage >> changesSuffix [
 ]
 
 { #category : #'class and trait names' }
-SmalltalkImage >> classNamed: className [ 
-	^globals classOrTraitNamed: className.
+SmalltalkImage >> classNamed: className [
+	^ globals classOrTraitNamed: className
 ]
 
 { #category : #'class and trait names' }
@@ -454,9 +456,15 @@ SmalltalkImage >> compiler [
 		environment: self globals
 ]
 
-{ #category : #compiler }
+{ #category : #accessing }
 SmalltalkImage >> compilerClass [
-	^CompilerClass ifNil: [CompilerClass := OpalCompiler].
+	^ self class compilerClass
+]
+
+{ #category : #accessing }
+SmalltalkImage >> compilerClass: aClass [
+
+	self class compilerClass: aClass
 ]
 
 { #category : #'memory space' }
@@ -715,14 +723,14 @@ SmalltalkImage >> getFileNameFromUser [
 
 	| givenName strippedName imageFile changesFile |
 	givenName := UIManager default
-		request: 'New File Name?' translated
+		request: 'New File Name?'
 		initialAnswer: (self imageFile basename copyUpToLast:  Path extensionDelimiter).
 	strippedName := self stripImageExtensionFrom: givenName.
 	strippedName isEmptyOrNil ifTrue: [^nil].
 	imageFile := self fileForImageNamed: strippedName.
 	changesFile := self fileForChangesNamed: strippedName.
 	((imageFile exists or: [changesFile exists]) and:
-		[(self confirm: ('{1} already exists. Overwrite?' translated format: {strippedName})) not])
+		[(self confirm: ('{1} already exists. Overwrite?' format: {strippedName})) not])
 			ifTrue: [^nil].
 	^strippedName
 ]
@@ -783,12 +791,6 @@ SmalltalkImage >> imageDirectory [
 	^ self imagePath asFileReference parent
 ]
 
-{ #category : #'image, changes name' }
-SmalltalkImage >> imageFile [
-
-	^ FileLocator image
-]
-
 { #category : #image }
 SmalltalkImage >> imageFormatVersion [
 	"Answer an integer identifying the type of image. The image version number may
@@ -799,7 +801,7 @@ SmalltalkImage >> imageFormatVersion [
 	"Smalltalk image imageFormatVersion"
 
 	<primitive: 'primitiveImageFormatVersion'>
-	self notify: 'This virtual machine does not support the optional primitive #primitiveImageFormatVersion' translated.
+	self notify: 'This virtual machine does not support the optional primitive #primitiveImageFormatVersion'.
 	^''
 ]
 
@@ -1078,6 +1080,19 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 	] on: Error do: [ :e| "we don't care if the logging to stdout fails..." ].
 ]
 
+{ #category : #miscellaneous }
+SmalltalkImage >> logStdOutDuring: aBlock [
+	| stderr |
+	"install the line end conversion and force initialize the converter"
+	stderr := ZnNewLineWriterStream
+		on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
+	
+	[aBlock value: stderr.] 
+		on: Error do: [ "If the block fails we don't do nothing. This can lead to recursive errors" ].
+
+	stderr flush.
+]
+
 { #category : #'memory space' }
 SmalltalkImage >> lowSpaceThreshold [ 
 	"Return the low space threshold. When the amount of free memory (after garbage collection) falls below this limit, the system is in serious danger of completely exhausting memory and crashing. This limit should be made high enough to allow the user open a debugger to diagnose a problem or to save the image."
@@ -1147,7 +1162,7 @@ SmalltalkImage >> memoryHogs [
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
     "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo8.x' #'pharo8.0.x')
+   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x')
 ]
 
 { #category : #'special objects' }
@@ -1417,14 +1432,12 @@ SmalltalkImage >> privSaveImageWithCleanup [
 	[
 		self snapshot: true andQuit: true.
 	] ifError: [:e |
-		| rep |
-		rep := FileStream forceNewFileNamed: 'PharoDebug.log'.
-		rep nextPutAll: 'Error:'; cr.
-		rep nextPutAll: e asString; cr.
-  		rep nextPutAll: thisContext stack size asString.
- 	  	thisContext stack copy withIndexDo: [:stck :i |
-			[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []].
-		rep close. 
+		'PharoDebug.log' asFileReference ensureDelete; writeStreamDo: [ :rep |
+			rep nextPutAll: 'Error:'; cr.
+			rep nextPutAll: e asString; cr.
+	  		rep nextPutAll: thisContext stack size asString.
+	 	  	thisContext stack copy withIndexDo: [:stck :i |
+				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []]]. 
 		Smalltalk exitFailure ]
 ]
 
@@ -1504,7 +1517,7 @@ SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
 					oldCodeString := cls sourceCodeAt: selector.
 					(oldCodeString includes: Character lf)
 						ifTrue: [
-							newCodeString := oldCodeString withSqueakLineEndings.
+							newCodeString := oldCodeString withInternalLineEndings.
 							nameString := cls name , '>>' , selector.
 							((cls compiledMethodAt: selector) hasLiteralSuchThat: [ :lit | lit asString includes: Character lf ])
 								ifTrue: [(authors at: 'OK')

@@ -64,7 +64,7 @@ SystemNavigation >> allClassesDo: aBlock [
 { #category : #query }
 SystemNavigation >> allClassesImplementing: aSelector [  
 	"Answer all classes that implement the message aSelector."
-	^self allBehaviors collect: [:class | class includesSelector: aSelector]
+	^self allBehaviors select: [:class | class includesSelector: aSelector]
 ]
 
 { #category : #query }
@@ -99,7 +99,7 @@ SystemNavigation >> allImplementorsOf: aSelector [
 
 	^ self allBehaviors
 		select: [ :class | class includesSelector: aSelector ]
-		thenCollect: [ :class | (class >> aSelector) methodReference ]
+		thenCollect: [ :class | class >> aSelector ]
 ]
 
 { #category : #query }
@@ -116,24 +116,8 @@ SystemNavigation >> allMethodsSelect: aBlock [
 	aCollection := OrderedCollection new.
 	self allBehaviorsDo: [:class | 
 		class	selectorsAndMethodsDo: [:sel :m | 
-			(aBlock value: m) ifTrue: [aCollection add: (class>>sel) methodReference]]].
+			(aBlock value: m) ifTrue: [aCollection add: class>>sel]]].
 	^ aCollection
-]
-
-{ #category : #query }
-SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive [
-	"Answer a SortedCollection of all the methods that contain, in source code, aString as a substring.  Search the class comments also"
-
-	| list addMethod addComment |
-	list := OrderedCollection new.
-	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
-	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
-	self allBehaviorsDo: [:each |
-		each selectorsDo: [:sel | 
-			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive) 
-					ifTrue: [ addMethod value: each value: sel ]].
-			(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
-	^ list 
 ]
 
 { #category : #query }
@@ -175,8 +159,7 @@ SystemNavigation >> allPrimitiveMethods [
 SystemNavigation >> allReferencesTo: aLiteral [
 	"Answer all the methods that refer to aLiteral even deeply embedded in literal array."
 
-	^ self allBehaviors flatCollect: [ :class | 
-			(class thoroughWhichMethodsReferTo: aLiteral) collect: [ :method | method methodReference ] ]
+	^ self allBehaviors flatCollect: [ :class | class thoroughWhichMethodsReferTo: aLiteral]
 ]
 
 { #category : #query }
@@ -189,6 +172,13 @@ SystemNavigation >> allReferencesTo: aLiteral do: aBlock [
 		symbol
 			ifFalse: [ class withMethodsReferTo: aLiteral do: aBlock ]
 			ifTrue: [ class withThorougMethodsReferTo: aLiteral do: aBlock ] ]
+]
+
+{ #category : #query }
+SystemNavigation >> allReferencesToBinding: aVariablesBinding [
+	"Answer all the methods that refer to aVariableBinding, do not go into nested Arrays"
+
+	^ self allBehaviors flatCollect: [ :class | class whichMethodsReferTo: aVariablesBinding ]
 ]
 
 { #category : #'message sends' }
@@ -315,6 +305,26 @@ SystemNavigation >> isUnsentMessage: selector [
 		noneSatisfy: [ :behavior | behavior thoroughHasSelectorReferringTo: selector ]
 ]
 
+{ #category : #'identifying obsoletes' }
+SystemNavigation >> methodsReferencingObsoleteClasses [
+	"Returns all methods that reference obsolete behaviors"
+	
+	| obsClasses |
+	obsClasses := self obsoleteBehaviors.
+	
+	^Array streamContents: [ :methods |
+		obsClasses keysAndValuesDo: 
+			[ :index :each | | obsRefs | 
+			obsRefs := each pointersToExcept: obsClasses.
+			obsRefs do: [ :ref | 
+				"Figure out if it may be a global"
+				(ref isVariableBinding and: [ref key isString	"or Symbol"]) 
+					ifTrue: [
+						(ref pointersTo) do: [ :meth | 
+							meth isCompiledMethod
+								ifTrue: [methods nextPut: meth]]]]]]
+]
+
 { #category : #query }
 SystemNavigation >> methodsWithUnboundGlobals [
 	"This says that for any global, it should match either the class's notion of what bindingOf: the key is, or bindingOf: should be nil and the binding should be in Undeclared. If the class answers a different binding through bindingOf: or answers no binding and the binding is not in Undeclared then the variable in the method is wrong.
@@ -328,7 +338,7 @@ SystemNavigation >> methodsWithUnboundGlobals [
 			[:l|
 			l isVariableBinding
 			and: [l key isSymbol "avoid class-side methodClass literals"
-			and: [ (l value isKindOf: Slot) not
+			and: [ (l isKindOf: AdditionalBinding) not
 			and: [(m methodClass classBindingOf: l key)
 					ifNil: [(Undeclared associationAt: l key ifAbsent: []) ~~ l]
 					ifNotNil: [:b| b ~~ l]]]]]]
@@ -380,25 +390,4 @@ Smalltalk browseAllSelect:
 			ifTrue: [found := true]].
 	found]
 "
-]
-
-{ #category : #'identifying obsoletes' }
-SystemNavigation >> obsoleteMethodReferences [
-	"Returns all referenced behaviors that are obsolete"
-	"self new obsoleteMethodReferences"
-	
-	| obsClasses references |
-	references := Array new writeStream.
-	obsClasses := self obsoleteBehaviors.
-	obsClasses keysAndValuesDo: 
-		[ :index :each | | obsRefs | 
-			obsRefs := each pointersToExcept: obsClasses.
-			obsRefs do: [ :ref | 
-				"Figure out if it may be a global"
-				(ref isVariableBinding and: [ref key isString	"or Symbol"]) 
-					ifTrue: [
-						(ref pointersTo) do: [ :meth | 
-							meth isCompiledMethod
-								ifTrue: [references nextPut: meth]]]]].
-	^ references contents
 ]

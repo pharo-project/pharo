@@ -1,4 +1,0 @@
-versioning
-updateNumber
-
-	^ nil

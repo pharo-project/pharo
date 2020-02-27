@@ -15,6 +15,6 @@ SpMockPesenterWithoutGetter class >> defaultSpec [
 ]
 
 { #category : #initialization }
-SpMockPesenterWithoutGetter >> initializeWidgets [
+SpMockPesenterWithoutGetter >> initializePresenters [
 	buttonPresenter := self newButton
 ]

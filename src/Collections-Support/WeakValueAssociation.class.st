@@ -28,11 +28,11 @@ WeakValueAssociation >> key: aKey value: anObject [
 
 { #category : #evaluating }
 WeakValueAssociation >> value [
-	^self at: 1
+	^ self at: 1
 ]
 
 { #category : #accessing }
-WeakValueAssociation >> value: anObject [ 
+WeakValueAssociation >> value: anObject [
 	"Store the argument, anObject, as the value of the receiver."
 
 	self at: 1 put: anObject

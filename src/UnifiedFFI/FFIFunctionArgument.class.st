@@ -1,124 +1,75 @@
 "
-I'm an abstract class to implement the pushing strategy for method arguments. 
-My children define different pushing strategies for the valid types or argument (usually an atomic type object, and external object or a ""self"" instruction)
+I am an abstract class representing a call-out argument, having a value and a type.
+See my subclasses for the concrete kind of arguments.
 "
 Class {
 	#name : #FFIFunctionArgument,
 	#superclass : #Object,
+	#instVars : [
+		'loader',
+		'resolvedType',
+		'type'
+	],
 	#category : #'UnifiedFFI-Arguments'
 }
 
-{ #category : #'private emitting code' }
-FFIFunctionArgument >> addUnpack: aBuilder fromArity: arity [
-	aBuilder
-		pushTemp: self rolledPointerTempName;
-		pushLiteral: arity;
-		send: #unpackFromArity:;
-		send: #adoptAddress:;
-		popTop
-]
+{ #category : #resolution }
+FFIFunctionArgument >> asOldArraySpec [
 
-{ #category : #'emitting code' }
-FFIFunctionArgument >> emitArgument: aBuilder context: aContext [
 	self subclassResponsibility
 ]
 
-{ #category : #'emitting code' }
-FFIFunctionArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
-	self subclassResponsibility
-]
+{ #category : #accessing }
+FFIFunctionArgument >> defaultReturnOnError [
 
-{ #category : #'private emitting code' }
-FFIFunctionArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
-	"Emit access to calling variable (changes depending on the type)."
-	self subclassResponsibility
+	^ self resolvedType defaultReturnOnError
 ]
 
 { #category : #'emitting code' }
-FFIFunctionArgument >> emitHandleArityUnpack: aBuilder type: aType context: aContext objectClass: objectClass instVarName: aName [
-	"This a special kind of arity-unpacking, that works with FFIConstantHandleType"
+FFIFunctionArgument >> emitArgument: anIRBuilder context: aContext inCallout: aCallout [
 
-	aType needsArityUnpacking ifFalse: [ ^ self ].
+	self resolvedType emitArgument: anIRBuilder context: aContext inCallout: aCallout
+]
+
+{ #category : #resolution }
+FFIFunctionArgument >> emitReturnArgument: anIRBuilder context: aContext [
+
+	self resolvedType
+		emitReturnArgument: anIRBuilder
+		context: aContext
+]
+
+{ #category : #accessing }
+FFIFunctionArgument >> externalTypeWithArity [
 	
-	"Push accessing variable (this change depending on the argument type)"
-	self 
-		emitArgumentVariableAccesingPart: aBuilder 
-		context: aContext 
-		objectClass: objectClass 
-		instVarName: aName.
-	"Unpack argument"
-	aBuilder
-		pushTemp: self rolledPointerTempName;
-		pushLiteral: aType pointerArity;
-		send: #unpackHandleFromArity:.
-	"Send assignment"
-	aBuilder send: #instVarAt:put:.
-	"... and return top"
-	aBuilder popTop.
+	^ self resolvedType externalTypeWithArity
 ]
 
-{ #category : #'emitting code' }
-FFIFunctionArgument >> emitPointerArityPack: aBuilder context: aContext arity: arity [
-	"I take into account complex arities (like **, ***). 
-	 I'm called right after argument marshaling which means it is already in top of the stack"
-	^ self 
-		emitPointerArityPack: aBuilder 
-		context: aContext 
-		arity: arity
-		selector: #packToArity:
+{ #category : #accessing }
+FFIFunctionArgument >> loader [
+	
+	^ loader
 ]
 
-{ #category : #'emitting code' }
-FFIFunctionArgument >> emitPointerArityPack: aBuilder context: aContext arity: arity selector: aSelector [
-	"I take into account complex arities (like **, ***). 
-	 I'm called right after argument marshaling which means it is already in top of the stack"
-	| ptrName |
-	ptrName := self rolledPointerTempName.
-	aBuilder 
-		addTemp: ptrName;
-		pushLiteral: arity;
-		send: aSelector;
-		storeTemp: ptrName
-]
+{ #category : #resolution }
+FFIFunctionArgument >> resolveUsing: aResolver [
 
-{ #category : #'private emitting code' }
-FFIFunctionArgument >> emitPointerArityUnpack: aBuilder context: aContext arity: arity [
-	self emitArgument: aBuilder context: aContext.
-	self addUnpack: aBuilder fromArity: arity
-]
-
-{ #category : #'private emitting code' }
-FFIFunctionArgument >> emitPointerArityUnpack: aBuilder context: aContext objectClass: objectClass instVarName: aName arity: arity [
-	self emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName.
-	self addUnpack: aBuilder fromArity: arity
-]
-
-{ #category : #'emitting code' }
-FFIFunctionArgument >> emitPointerArityUnpack: aBuilder type: aType context: aContext [
-	aType needsArityUnpacking ifFalse: [ ^ self ].
-	self 
-		emitPointerArityUnpack: aBuilder 
-		context: aContext 
-		arity: aType pointerArity
-]
-
-{ #category : #'emitting code' }
-FFIFunctionArgument >> emitPointerArityUnpack: aBuilder type: aType context: aContext objectClass: objectClass instVarName: aName [
-	aType needsArityUnpacking ifFalse: [ ^ self ].
-	self 
-		emitPointerArityUnpack: aBuilder 
-		context: aContext 
-		objectClass: objectClass 
-		instVarName: aName
-		arity: aType pointerArity
-]
-
-{ #category : #private }
-FFIFunctionArgument >> rolledPointerTempName [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
-FFIFunctionArgument >> rolledPointerTempNameFor: aString [
-	^ ('_ptr_', aString) asSymbol
+{ #category : #accessing }
+FFIFunctionArgument >> resolvedType [
+	
+	^ resolvedType
+]
+
+{ #category : #accessing }
+FFIFunctionArgument >> type [
+	
+	^ type
+]
+
+{ #category : #accessing }
+FFIFunctionArgument >> type: anObject [
+	type := anObject
 ]

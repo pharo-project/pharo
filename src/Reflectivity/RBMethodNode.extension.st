@@ -30,7 +30,7 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 	(self pragmas
 		select: [ :pragma | pragma selector == #metaLinkOptions: ])
 		do:
-			[ :pragma | (pragma asPragma setKeyword: #parseOptions:) sendTo: options ].
+			[ :pragma | (pragma asPragma selector: #parseOptions:) sendTo: options ].
 	^ options
 ]
 

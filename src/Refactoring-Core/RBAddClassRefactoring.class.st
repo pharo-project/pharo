@@ -62,7 +62,7 @@ RBAddClassRefactoring >> preconditions [
 	^cond & (RBCondition isValidClassName: className) 
 		& (RBCondition isGlobal: className in: self model) not 
 			& (RBCondition isSymbol: category) 
-			& ((RBCondition withBlock: [category isEmpty not]) 
+			& ((RBCondition withBlock: [category isNotEmpty ]) 
 					errorMacro: 'Invalid category name')
 ]
 

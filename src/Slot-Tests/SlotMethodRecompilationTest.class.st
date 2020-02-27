@@ -30,7 +30,7 @@ SlotMethodRecompilationTest >> setUp [
 	super setUp.
 	class := self make: [ :builder |
 		builder traitComposition: TOne ].
-	class compile: 'm1'.
+	class compile: 'm1'
 	
 ]
 
@@ -39,32 +39,29 @@ SlotMethodRecompilationTest >> testClassReshapeShouldKeepClassBinding [
 	"Check that when a class is reshaped, the recompilation of the methods gives correct class bindings (in the literal array of the methods)"
 
 	self reshapeClass.
-	self assert: self methodBinding == class binding
+	self assert: self methodBinding identicalTo: class binding
 ]
 
 { #category : #tests }
 SlotMethodRecompilationTest >> testClassReshapeShouldKeepClassBindingForTraitMethods [
 	"A method should have the same binding than its class even if it come from a trait"
+
 	self reshapeClass.
-	self assert: (self traitMethodBinding == class binding).
-	
-	
+	self assert: self traitMethodBinding identicalTo: class binding
 ]
 
 { #category : #tests }
 SlotMethodRecompilationTest >> testMethodClassBindingShouldBeClassBinding [
 	"A method should have the same binding than its class"
-	self assert: (self methodBinding == class binding).
-	
-	
+
+	self assert: self methodBinding identicalTo: class binding
 ]
 
 { #category : #tests }
 SlotMethodRecompilationTest >> testTraitMethodClassBindingShouldBeClassBinding [
 	"A method should have the same binding than its class even if it come from a trait"
-	self assert: (self traitMethodBinding == class binding).
-	
-	
+
+	self assert: self traitMethodBinding identicalTo: class binding
 ]
 
 { #category : #accessing }

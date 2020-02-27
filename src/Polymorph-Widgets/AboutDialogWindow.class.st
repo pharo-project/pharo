@@ -25,7 +25,7 @@ AboutDialogWindow class >> openForPharo [
 	text
 		linesDo: [ :l | 
 			width := width
-				max: (Smalltalk ui theme textFont widthOfStringOrText: l) ].
+				max: (self theme textFont widthOfStringOrText: l) ].
 	dialog := self new entryText: text.
 	dialog iconMorph image: (self iconNamed: #pharoIcon).
 	dialog title: 'About Pharo'.

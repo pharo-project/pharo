@@ -5,9 +5,9 @@ Class {
 	#name : #EpLogBrowserToolbarPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'filtersButtonPresenter',
 		'logBrowserPresenter',
-		'statusLabelPresenter'
+		'filtersButton',
+		'statusLabel'
 	],
 	#category : #'EpiceaBrowsers-UI-Log'
 }
@@ -15,75 +15,45 @@ Class {
 { #category : #specs }
 EpLogBrowserToolbarPresenter class >> defaultSpec [
 	^ SpBoxLayout newHorizontal
-		add: #statusLabelPresenter;
-		add: #filtersButtonPresenter withConstraints: [ :constraints | constraints width: 150 ];
+		add: #statusLabel;
+		addLast: #filtersButton;
 		yourself
 ]
 
 { #category : #private }
 EpLogBrowserToolbarPresenter >> activeFiltersString [
-
-	^ 'Filters (', self logBrowserPresenter filters size asString, ')'
-
+	^ 'Filters (' , logBrowserPresenter filters size asString , ')'
 ]
 
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beApplyMode [
-
-	self filtersButtonPresenter
+	filtersButton
 		icon: (self iconNamed: #smallRedoIcon);
 		label: 'Confirm All Changes';
-		action: [ self logBrowserPresenter applyAllChangesAndCloseWindow ].
-
+		action: [ logBrowserPresenter applyAllChangesAndCloseWindow ]
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 EpLogBrowserToolbarPresenter >> beHistoryMode [
-
-	self filtersButtonPresenter
+	filtersButton
 		icon: (self iconNamed: #smallFindIcon);
-		action: [ self filtersAction ]
-
+		action: [
+			logBrowserPresenter filtersSubMenu
+				openWithSpecAt: ActiveHand position ]
 ]
 
 { #category : #accessing }
 EpLogBrowserToolbarPresenter >> beRevertMode [
-
-	self filtersButtonPresenter
+	filtersButton
 		icon: (self iconNamed: #smallUndoIcon);
 		label: 'Confirm All Changes';
-		action: [ self logBrowserPresenter revertAllChangesAndCloseWindow ].
-
-]
-
-{ #category : #private }
-EpLogBrowserToolbarPresenter >> filtersAction [
-
-	self logBrowserPresenter filtersSubMenu openWithSpecAt: ActiveHand position
-
-]
-
-{ #category : #accessing }
-EpLogBrowserToolbarPresenter >> filtersButtonPresenter [
-
-	^ filtersButtonPresenter
+		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]
 
 { #category : #initialization }
-EpLogBrowserToolbarPresenter >> initializePresenter [
-	"See be* methods"
-
-]
-
-{ #category : #initialization }
-EpLogBrowserToolbarPresenter >> initializeWidgets [
-	filtersButtonPresenter := self newButton.
-	statusLabelPresenter := self newLabel
-]
-
-{ #category : #accessing }
-EpLogBrowserToolbarPresenter >> logBrowserPresenter [
-	^ logBrowserPresenter
+EpLogBrowserToolbarPresenter >> initializePresenters [
+	filtersButton := self newButton.
+	statusLabel := self newLabel
 ]
 
 { #category : #accessing }
@@ -93,33 +63,25 @@ EpLogBrowserToolbarPresenter >> logBrowserPresenter: anObject [
 
 { #category : #refreshing }
 EpLogBrowserToolbarPresenter >> refresh [
-
-	self filtersButtonPresenter label: self activeFiltersString.
-	self statusLabelPresenter label: self statusString.
-]
-
-{ #category : #accessing }
-EpLogBrowserToolbarPresenter >> statusLabelPresenter [
-
-	^ statusLabelPresenter
+	filtersButton label: self activeFiltersString.
+	statusLabel label: self statusString
 ]
 
 { #category : #refreshing }
 EpLogBrowserToolbarPresenter >> statusString [
+	^ String
+		streamContents: [ :stream | 
+			| filtered total |
+			filtered := logBrowserPresenter filteredEntriesCount.
+			total := logBrowserPresenter totalEntriesCount.
 
-	^ String streamContents: [:stream |
-		| filtered total |
-		filtered := self logBrowserPresenter filteredEntriesCount.
-		total := self logBrowserPresenter totalEntriesCount.
-		
-		stream
-			print: filtered;
-			nextPutAll: ' events'.
-	
-		filtered = total ifFalse: [
 			stream
-				nextPutAll: ' (';
-				print: total;
-				nextPutAll: ' total)' ].
-		]
+				print: filtered;
+				nextPutAll: ' events'.
+
+			filtered = total
+				ifFalse: [ stream
+						nextPutAll: ' (';
+						print: total;
+						nextPutAll: ' total)' ] ]
 ]

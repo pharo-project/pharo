@@ -104,34 +104,37 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 			(aBuilder setting: #defaultFont)
 				order: 1;
 				description: 'The default text font' ;
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				dialog: (MessageSend receiver: self selector: #resetAllFontToDefaultButton);
 				label: 'Default'.
 			(aBuilder setting: #codeFont) 
 				description: 'The standard code font' ;
+				default: (LogicalFont familyName: 'Source Code Pro' pointSize: 10);
 				label: 'Code'.
 			(aBuilder setting: #listFont)
 				description: 'The standard list font' ;
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				label: 'List'.
 			(aBuilder setting: #menuFont)
 				description: 'The standard menu font' ;
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				label: 'Menu' .
 			(aBuilder setting: #buttonFont)
 				description: 'The standard button font' ;
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10);
 				label: 'Button' .
 			(aBuilder setting: #windowTitleFont)
 				description: 'The standard window title font' ;
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 11);
 				label: 'Window title' .
 			(aBuilder setting: #balloonFont)
 				description: 'The standard balloon-help font' ;
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
 				label: 'Balloon-help' .
 			(aBuilder setting: #haloFont)
+				default: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9);
 				description: 'The morphic halo font' ;
 				label: 'Morphic halo' ]
 				
 				
-]
-
-{ #category : #fonts }
-GraphicFontSettings class >> theme [ 
-	^ Smalltalk ui theme
 ]

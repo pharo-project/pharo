@@ -90,7 +90,7 @@ RBCreateCascadeRefactoring >> findReceiverNode [
 RBCreateCascadeRefactoring >> findSequenceNode [
 	"Find the sequence to be combined."
 
-	sequenceNode := RBParser
+	sequenceNode := self parserClass
 		parseExpression: self selectedSource
 		onError: [ :msg :pos | self refactoringFailure: 'Invalid source to rewrite' ].
 	(sequenceNode isSequence and: [ sequenceNode statements size > 1 ])

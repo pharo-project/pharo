@@ -10,12 +10,6 @@ Class {
 	#category : #'Spec-MorphicAdapters-Support'
 }
 
-{ #category : #private }
-SpecDropListMorph >> currentIcon [
-
-	^ currentIcon
-]
-
 { #category : #protocol }
 SpecDropListMorph >> getIconFor: anItem [
 

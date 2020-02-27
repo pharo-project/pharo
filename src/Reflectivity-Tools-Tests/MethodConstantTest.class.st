@@ -26,22 +26,20 @@ MethodConstantTest >> sumOfTwoConsts: firstBlock and: secondBlock [
 
 { #category : #tests }
 MethodConstantTest >> testAPIFromBlock [
-
 	| constInitialResult constSecondResult |
-	constInitialResult := self constFromBlock: [DateAndTime now].
+	constInitialResult := self constFromBlock: [ DateAndTime now ].
 	constSecondResult := self constFromBlock: nil.
-	
-	self assert: constSecondResult == constInitialResult
+
+	self assert: constSecondResult identicalTo: constInitialResult
 ]
 
 { #category : #tests }
 MethodConstantTest >> testAPIFromMessageSendReceiver [
-
 	| constInitialResult constSecondResult |
 	constInitialResult := self constFromReceiverExpression.
 	constSecondResult := self constFromReceiverExpression.
-	
-	self assert: constSecondResult == constInitialResult
+
+	self assert: constSecondResult identicalTo: constInitialResult
 ]
 
 { #category : #tests }
@@ -68,11 +66,10 @@ MethodConstantTest >> testTwoConstsInSameMethod [
 
 { #category : #tests }
 MethodConstantTest >> testUsingConstJustInSameMethod [
-
 	| values |
-	self skip. "not working for the first call: would need on stack replacement"
+	self skip.	"not working for the first call: would need on stack replacement"
 	values := OrderedCollection new.
 	2 timesRepeat: [ values add: DateAndTime now asMethodConstant ].
-	
-	self assert: values first == values last
+
+	self assert: values first identicalTo: values last
 ]

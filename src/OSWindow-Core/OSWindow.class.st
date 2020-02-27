@@ -150,23 +150,20 @@ OSWindow >> createWindow [
 { #category : #'dispatching events' }
 OSWindow >> deliverEvent: anEvent [
 	"TODO..."
-	
-	TraceEvents == true ifTrue: [ Transcript show: anEvent; cr ].
-		
-	eventHandler ifNotNil: [ 
-		eventHandler handleEvent: anEvent ].
-	anEvent performDefaultAction 
 
+	TraceEvents == true
+		ifTrue: [ self traceCr: anEvent ].
+	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
+	anEvent performDefaultAction
 ]
 
 { #category : #'dispatching events' }
 OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	"TODO..."
-	
-	TraceEvents == true ifTrue: [ Transcript show: aGlobalEvent; cr ].
-	eventHandler ifNotNil: [ 
-		eventHandler handleEvent: aGlobalEvent ].
 
+	TraceEvents == true
+		ifTrue: [ self traceCr: aGlobalEvent ].
+	eventHandler ifNotNil: [ eventHandler handleEvent: aGlobalEvent ]
 ]
 
 { #category : #private }

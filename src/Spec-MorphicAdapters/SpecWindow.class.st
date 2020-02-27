@@ -15,19 +15,14 @@ SpecWindow >> aboutText [
 	^ self model aboutText
 ]
 
-{ #category : #closing }
-SpecWindow >> allowedToClose [
+{ #category : #controls }
+SpecWindow >> close [
 
-	super allowedToClose ifFalse: [ ^ false ].
-	^ self model askOkToClose 
-		ifTrue: [ self model requestWindowClose ]
-		ifFalse: [ true ].
-]
-
-{ #category : #testing }
-SpecWindow >> hasWidget: aMorph [ 
-	
-	^ self allMorphs includes: aMorph
+	self model ifNotNil: [ :aModel |
+		aModel askOkToClose
+			ifTrue: [ self okToChange ifFalse: [ ^ self ] ] ].
+		
+	super close
 ]
 
 { #category : #updating }

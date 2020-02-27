@@ -132,23 +132,34 @@ RBExtractMethodTest >> testExtractMethodThatNeedsTemporaryVariable [
 
 { #category : #tests }
 RBExtractMethodTest >> testExtractWithRenamingOfParameters [
-	| refactoring class|
-	refactoring := RBExtractMethodRefactoring
-		extract: (78 to: 197)
-		from: #displayName
-		in: RBLintRuleTestData.
+	| refactoring class |
+	refactoring := RBExtractMethodRefactoring extract: (78 to: 197) from: #displayName in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
-	refactoring parameterMap: (Dictionary new at: #nameStream put: #newParameter; yourself ).
+	refactoring
+		parameterMap:
+			(Dictionary new
+				at: #nameStream put: #newParameter;
+				yourself).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 
- 	self assert: (class parseTreeFor: #displayName) = (self parseMethod: 'displayName
+	self
+		assert: (class parseTreeFor: #displayName)
+		equals:
+			(self
+				parseMethod:
+					'displayName
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
 	self foo: nameStream.
 	^nameStream contents').
 	"Extracted method with renamed parameters"
-	self assert: (class parseTreeFor: #foo:) = (self parseMethod: 'foo: newParameter 	newParameter nextPutAll: self name;
+	self
+		assert: (class parseTreeFor: #foo:)
+		equals:
+			(self
+				parseMethod:
+					'foo: newParameter 	newParameter nextPutAll: self name;
 		nextPutAll: '' (''.
 	self problemCount printOn: newParameter.
 	newParameter nextPut: $).')

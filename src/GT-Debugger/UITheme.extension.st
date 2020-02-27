@@ -15,7 +15,7 @@ UITheme >> samePackageContextStyleFor: aContext [
 { #category : #'*GT-Debugger' }
 UITheme >> styleContext: aContext from: aDebugger [
 
-	(aDebugger selectedContext == aContext) ifTrue: [ ^ {TextColor color: Smalltalk ui theme textColor}  ].
+	(aDebugger selectedContext == aContext) ifTrue: [ ^ {TextColor color: self theme textColor}  ].
 
 	(aContext receiver class = aDebugger selectedContext receiver class)
 		ifTrue: [ ^ self sameClassContextStyleFor: aContext ].

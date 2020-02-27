@@ -16,6 +16,12 @@ SpMorphicBackend >> adapterBindingsClass [
 	^ SpMorphicAdapterBindings
 ]
 
+{ #category : #accessing }
+SpMorphicBackend >> defer: aBlock [
+
+	UIManager default defer: aBlock
+]
+
 { #category : #'private notifying' }
 SpMorphicBackend >> notifyError: aSpecNotification [
 	GrowlMorph

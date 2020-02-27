@@ -26,7 +26,7 @@ Class {
 		'bytes',
 		'boolean'
 	],
-	#category : #'STON-Tests-Base'
+	#category : #'STON-Tests-Support'
 }
 
 { #category : #'instance creation' }

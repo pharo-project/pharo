@@ -1,7 +1,32 @@
 "
-I an the root of all quality rules rules.
+I am the root of all quality rules rules.
 
-If you want to learn about the features of rules or how to create your own, please read:
+Each rule should provide a short name string returned from the #name method. You also have to override the #rationale method to return a detailed description about the rule. You may also put the rationale in the class comment, as by default #rationale method returns the comment of the rule's class.
+
+The class-side methods #checksMethod, #checksClass, #checksPackage and #checksNode return true if the rule checks methods, classes or traits, packages and AST nodes respectively. Tools will pass entities of the specified type to the rule for checking. 
+
+To check the rule, while there is a default implementation which relies on #basicCheck: and creates an instance of ReTrivialCritique, it is advised to override the #check:forCritiquesDo: method. 
+
+It's a good idea to assign your rule to a specific group. For this override the #group method and return string with the name of the group. While you can use any name you want, maybe you would like to put your rule into one of the existing groups: API Change, API Hints, Architectural, Bugs, Coding Idiom Violation, Design Flaws, Optimization, Potential Bugs, Rubric, SUnit, Style, Unclassified rules.
+
+You can also specify the severity of your rue by returning one of: #information, #warning, or #error symbols from the #severity method.
+
+
+
+It is fairly easy to run your rule and obtain the results. Just create an instance of it an send it the #check: message with the entity you want to check. The result is a collection of critiques. For example inspecting
+
+	RBExcessiveMethodsRule new check: Object
+
+should give you a collection with one critique (because the Object class always has many methods ;) ). Go on click on the critique item and inspect it. You will see that there is a special ""description"" tab. This is the power of critique objects, they can present themselves in a different way. Guess what: you can even visualize the critique if needed.
+
+
+To have quality assistant (and maybe other tools) pick up your changes you have to reset the cache. Do this by going to System > Settings > Code Browsing > QualityAssistant > Renraku > Rule Cache
+and pressing the reset button. Or simply executing  ReRuleManager reset
+
+
+When you load complete rules into the system, the cache will be reset automatically. But as you are creating a new rule and it is in the incomplete state you have to reset the cache once you are ready.
+
+If you want to learn more about the features of rules or how to create your own, please read:
 
 RenrakuRuleHelp readInHelpBrowser
 "
@@ -68,6 +93,16 @@ ReAbstractRule class >> identifierMinorVersionNumber [
 	^ 1
 ]
 
+{ #category : #manifest }
+ReAbstractRule class >> isBeginnerRule [
+	^ false
+]
+
+{ #category : #manifest }
+ReAbstractRule class >> isDefaultRule [
+	^ true
+]
+
 { #category : #testing }
 ReAbstractRule class >> isUsed [
 	"all my sublasses are used"
@@ -117,15 +152,14 @@ ReAbstractRule >> asRBRule [
 
 { #category : #running }
 ReAbstractRule >> basicCheck: anEntity [
-
-	^ self subclassResponsibility 
+	"If you end here, you should most likely implement this in a subclass"
+	^ self shouldBeImplemented  
 ]
 
 { #category : #running }
 ReAbstractRule >> check: anEntity [
 
 	| critiques |
-	
 	critiques := OrderedCollection new.
 	self check: anEntity forCritiquesDo: [ :critique | critiques add: critique ].
 	^ critiques
@@ -133,7 +167,8 @@ ReAbstractRule >> check: anEntity [
 
 { #category : #running }
 ReAbstractRule >> check: anEntity forCritiquesDo: aCriticBlock [
-
+	"Accepts an entity and a block which could be evaluated for each detected critique
+	aCriticBlock may accept one argument: the critique object"
 	(self basicCheck: anEntity)
 		ifTrue: [ aCriticBlock cull: (self critiqueFor: anEntity) ]
 ]
@@ -158,6 +193,17 @@ ReAbstractRule >> check: anEntity ifNoCritiques: alternativeBlock [
 	critiques := OrderedCollection new.
 	self check: anEntity forCritiquesDo: [ :critique | critiques add: critique ] ifNone: alternativeBlock.
 	^ critiques
+]
+
+{ #category : #'as yet unclassified' }
+ReAbstractRule >> createTrivialCritiqueOn: method intervalOf: node hint: hint [
+	^ ReTrivialCritique
+		  withAnchor:
+		  (ReIntervalSourceAnchor
+			   entity: method
+			   interval: node sourceInterval)
+		  by: self
+		  hint: hint
 ]
 
 { #category : #helpers }

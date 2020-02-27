@@ -328,8 +328,8 @@ PluggableTextMorph >> borderStyleToUse [
 ]
 
 { #category : #'menu commands' }
-PluggableTextMorph >> browseIt [
-	self handleEdit: [textMorph editor browseIt]
+PluggableTextMorph >> browseFullClass [
+	self handleEdit: [textMorph editor browseFullClass]
 ]
 
 { #category : #settings }
@@ -1077,7 +1077,7 @@ PluggableTextMorph >> referencesToIt [
 	self handleEdit: [textMorph editor referencesToIt]
 ]
 
-{ #category : #scrolling }
+{ #category : #actions }
 PluggableTextMorph >> registerScrollChanges: aSelector [
 
 	self announcer 

@@ -21,12 +21,17 @@ UnixResolver >> cache [
 
 { #category : #origins }
 UnixResolver >> desktop [
-	^ (self xdgUserDir: 'DESKTOP') ifNil: [ self home / 'Desktop' ]
+	^ (self xdgUserDir: 'DESKTOP') ifNil: [ super desktop ]
 ]
 
 { #category : #origins }
 UnixResolver >> documents [
-	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ self home / 'Documents' ]
+	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ super documents ]
+]
+
+{ #category : #origins }
+UnixResolver >> downloads [
+	^ (self xdgUserDir: 'DOWNLOADS') ifNil: [ super downloads ]
 ]
 
 { #category : #origins }
@@ -41,11 +46,6 @@ UnixResolver >> preferences [
 	^ self directoryFromEnvVariableNamed: 'XDG_CONFIG_HOME' or: [ self home / '.config' ]
 ]
 
-{ #category : #resolving }
-UnixResolver >> supportedOrigins [
-	^ super supportedOrigins , #( userData )
-]
-
 { #category : #origins }
 UnixResolver >> temp [
 	^ '/tmp' asFileReference
@@ -53,6 +53,7 @@ UnixResolver >> temp [
 
 { #category : #origins }
 UnixResolver >> userData [
+	<origin>
 	^ self directoryFromEnvVariableNamed: 'XDG_DATA_HOME' or: [ self home / '.local' / 'share' ]
 ]
 

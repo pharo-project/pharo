@@ -78,6 +78,12 @@ CompiledCode >> accessesSlot: aSlot [
 ]
 
 { #category : #literals }
+CompiledCode >> additionalMethodStateRefersToLitteral: literal [
+	^ self penultimateLiteral isMethodProperties
+		and: [ self penultimateLiteral refersToLiteral: literal ]
+]
+
+{ #category : #literals }
 CompiledCode >> allLiterals [
 	"Answer an Array of the literals referenced by the receiver.	
 	 including superclass + selector/properties"
@@ -90,7 +96,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^ self ast argumentNames
+	^ self propertyAt: #argumentNames ifAbsent: [ self ast argumentNames ]
 ]
 
 { #category : #converting }
@@ -241,19 +247,18 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 ]
 
 { #category : #literals }
-CompiledCode >> hasLiteralThorough: literal [
-	"Answer true if any literal in this method is literal,
-	even if embedded in array structure."
+CompiledCode >> hasLiteralThorough: aLiteral [
+	self 
+		deprecated: 'Use #refersToLiteral: instead.' 
+		on: '31 January 2020'
+		in: #Pharo9
+		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
+	^ self refersToLiteral: aLiteral
+]
 
-	(self penultimateLiteral isMethodProperties
-	 and: [self penultimateLiteral hasLiteralThorough: literal]) ifTrue:[^true].
-	2 to: self numLiterals - 1 "exclude header and methodClass or outerCode"
-	   do:[:index | | lit |
-		(((lit := self objectAt: index) literalEqual: literal)
-		 or: [lit isArray and: [lit hasLiteral: literal]]) ifTrue:
-			[^ true].
-		(lit isMemberOf: CompiledBlock) ifTrue: [ (lit hasLiteralThorough: literal) ifTrue: [ ^true ] ] ].
-	^ false 
+{ #category : #accessing }
+CompiledCode >> hasPragmaNamed: arg1 [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -268,10 +273,15 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	 If you don't know what's a special selector, use #hasSelector:.
 	 If you do, you may call this method directly to avoid recomputing 
 	 the special selector index all the time."
-	 (self hasLiteralThorough: selector) ifTrue: [ ^ true ].
+	 (self refersToLiteral: selector) ifTrue: [ ^ true ].
 	^ specialOrNil 
 		ifNil: [ false ] 
 		ifNotNil: [ self scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ]
+]
+
+{ #category : #accessing }
+CompiledCode >> hasSourceCode [
+	^ self subclassResponsibility
 ]
 
 { #category : #comparing }
@@ -370,6 +380,16 @@ CompiledCode >> isCollection [
 ]
 
 { #category : #testing }
+CompiledCode >> isCompiledBlock [
+	^ false
+]
+
+{ #category : #testing }
+CompiledCode >> isDoIt [
+	^ false
+]
+
+{ #category : #testing }
 CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
@@ -394,6 +414,11 @@ CompiledCode >> isQuick [
 { #category : #testing }
 CompiledCode >> isRealPrimitive [
 	^self isPrimitive and: [ self isQuick not ]
+]
+
+{ #category : #accessing }
+CompiledCode >> isTestMethod [
+	^ self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -440,11 +465,16 @@ CompiledCode >> literals [
 ]
 
 { #category : #literals }
+CompiledCode >> literalsAt: anIndex [
+	"All literals are shifted of one slot. First slot is the method header"
+	^ self objectAt: anIndex + 1
+]
+
+{ #category : #literals }
 CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
 	1 to: self numLiterals do:
-		[:index |
-		aBlock value: (self objectAt: index + 1)]
+		[:index | aBlock value: (self literalAt: index)]
 ]
 
 { #category : #scanning }
@@ -501,6 +531,21 @@ CompiledCode >> longPrintOn: aStream [
 
 ]
 
+{ #category : #accessing }
+CompiledCode >> method [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> methodClass [
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> methodNode [
+	^ self subclassResponsibility
+]
+
 { #category : #initialization }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
@@ -533,7 +578,7 @@ CompiledCode >> numTemps [
 { #category : #accessing }
 CompiledCode >> numberOfReservedLiterals [
 
-	self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #literals }
@@ -559,16 +604,41 @@ CompiledCode >> objectAt: index put: value [
 	self primitiveFailed
 ]
 
+{ #category : #accessing }
+CompiledCode >> penultimateLiteral [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> pragmas [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> primitive [
+	^ self subclassResponsibility
+]
+
 { #category : #printing }
 CompiledCode >> primitiveErrorVariableName [
 	"Answer the primitive error code temp name, or nil if none."
 	self isPrimitive ifTrue:
 		[self pragmas do:
 			[:pragma| | kwds ecIndex |
-			((kwds := pragma keyword keywords) first = 'primitive:'
+			((kwds := pragma selector keywords) first = 'primitive:'
 			and: [(ecIndex := kwds indexOf: 'error:') > 0]) ifTrue:
 				[^pragma argumentAt: ecIndex]]].
 	^nil
+]
+
+{ #category : #accessing }
+CompiledCode >> properties [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> propertyAt: aString ifAbsent: aFullBlockClosure [
+	^ aFullBlockClosure value
 ]
 
 { #category : #scanning }
@@ -611,12 +681,20 @@ CompiledCode >> referredInstVars [
 ]
 
 { #category : #literals }
-CompiledCode >> refersToLiteral: aLiteral [ 
-	"Answer true if any literal in this method is literal, even if embedded in array structure or within its pragmas."
-	"only iterate to numLiterals - 1, as the last has the classBinding and the last-but-one needs special treatment"
-	
-	"to deprecate: use hasLiteralThorough:"
-	^ self hasLiteralThorough: aLiteral.
+CompiledCode >> refersToLiteral: aLiteral [
+	"Answer true if any literal in this method is literal,
+	even if embedded in array structure."
+
+	(self additionalMethodStateRefersToLitteral: aLiteral)
+		ifTrue: [ ^ true ].
+
+	"exclude selector or additional method state (penultimate slot) 
+	and methodClass or outerCode (last slot)"
+	1 to: self numLiterals - 2 do: [ :index | 
+		((self literalAt: index) refersToLiteral: aLiteral)
+			ifTrue: [ ^ true ] ].
+
+	^ false
 ]
 
 { #category : #comparing }
@@ -675,6 +753,11 @@ CompiledCode >> scanner [
 	^ InstructionStream on: self
 ]
 
+{ #category : #accessing }
+CompiledCode >> selector [
+	^ self subclassResponsibility
+]
+
 { #category : #testing }
 CompiledCode >> sendsAnySelectorOf: aCollection [
 	
@@ -720,6 +803,21 @@ CompiledCode >> signFlag [
 	 used by the VM to select an alternate bytecode set."
 
 	^ self header < 0
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceCode [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceNode [
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+CompiledCode >> sourceNodeForPC: arg1 [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #'source code management' }

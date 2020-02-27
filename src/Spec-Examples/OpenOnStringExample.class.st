@@ -92,7 +92,7 @@ OpenOnStringExample >> initialize: aString [
 { #category : #initialization }
 OpenOnStringExample >> initializePresenter [
 	button action: [ input text: textToReset ].
-	input whenTextChangedDo: [ :text | label label: text ].
+	input whenTextChanged: [:text | label label: text].
 	check
 		whenActivatedDo: [ self needRebuild: false.
 			self buildWithSpecLayout: self class defaultSpec ];

@@ -141,11 +141,10 @@ OmFileStoreTest >> testLoadFromCorruptFile4 [
 	store flush.
 	
 	"Override first characters"
-	stream := store fileReference binaryReadWriteStream.
+	stream := store fileReference binaryWriteStream.
 	[
-		(ZnCharacterReadWriteStream on: stream encoding: 'utf8')
-			upToAll: '41';
-			skip: -1;
+		(ZnCharacterWriteStream on: stream encoding: 'utf8')
+			position: 50;
 			nextPutAll: '**'.
 			
 		"Apparently, in Linux it can randomly fail if not explicitly flush"

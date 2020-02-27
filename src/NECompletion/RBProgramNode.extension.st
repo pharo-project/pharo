@@ -1,18 +1,27 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*NECompletion' }
-RBProgramNode >> completionToken [
-	^ String empty
+RBProgramNode >> completionEntries: offset [
+	"for now we give all selectors and gloabls as a fallback"
+	| selectors globals |
+	self methodNode sourceCode ifNil: [ ^#() ].
+	selectors := Symbol selectorTable 
+		select: [ :each | each beginsWith: (self completionToken: offset)] 
+		thenCollect: [ :each | NECSymbolEntry contents: each node: self ].
+		
+	globals := Smalltalk globals keys 
+			select: [ :each | each beginsWith: (self completionToken: offset)]
+			thenCollect: [ :each | NECGlobalEntry contents: each  node: self ].
+			
+	^ selectors , globals
+
 ]
 
 { #category : #'*NECompletion' }
-RBProgramNode >> narrowWith: aString [
+RBProgramNode >> completionToken: offset [
+	"fall back: if we are not able to parse to something better, we use the word before the cursor"
 
- 	"Do nothing"
-]
-
-{ #category : #'*NECompletion' }
-RBProgramNode >> typeForCompletionIfAbsent: aBlock [
-
- 	^ self propertyAt: #type ifAbsent: [ ^ aBlock value ]
+	^ self methodNode sourceCode
+		  ifNil: [ String new ]
+		  ifNotNil: [ :source | source wordBefore: offset ]
 ]

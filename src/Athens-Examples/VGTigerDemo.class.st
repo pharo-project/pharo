@@ -3,9 +3,18 @@ self runDemo
 "
 Class {
 	#name : #VGTigerDemo,
-	#superclass : #Object,
+	#superclass : #StandardWindow,
 	#instVars : [
-		'surface'
+		'surface',
+		'paths',
+		'rotationSpeed',
+		'rotation',
+		'extent',
+		'scale',
+		'translation',
+		'time',
+		'frames',
+		'zoom'
 	],
 	#category : #'Athens-Examples-Demos'
 }
@@ -2092,63 +2101,71 @@ VGTigerDemo >> convertPathData2 [
 	^ paths
 ]
 
-{ #category : #initialization }
-VGTigerDemo >> initialize [ 
-	surface := AthensCairoSurface extent: 400@400.
-	
+{ #category : #run }
+VGTigerDemo >> drawOn: aCanvas [
+
+	super drawOn: aCanvas.
+	aCanvas drawImage: surface asForm at: self bounds origin + (10@self labelArea height).
+
+
 ]
 
-{ #category : #run }
-VGTigerDemo >> runDemo [
-	| paths extent rotation scale translation rotationSpeed time frames zoom |
+{ #category : #initialization }
+VGTigerDemo >> initialize [ 
+
+	super initialize.
+	surface := AthensCairoSurface extent: 400@400.
 	
 	paths := self convertPathData2.
-
 	rotationSpeed := 1.
 	rotation := 0.
 	extent := surface extent.
 	scale := extent x / self class tigerMaxY.
-	translation := 0@0.
-
-	time := Time millisecondClockValue.
+	translation := 0 @ 0.
 	frames := 0.
-	[ Sensor anyButtonPressed ] whileFalse: [
-		
-		rotation := rotation + rotationSpeed.
-		frames := frames + 1.
 
-		zoom := (frames/100) sin abs .
-		
-		surface 
+	self title: 'VGTigerDemo'.
 
-			drawDuring: [:can |
+]
 
-				can pathTransform 
-					loadIdentity. 
-					
-				can 
-					setPaint: Color white;
-					drawShape: (0@0 corner: surface extent).
-					
-				can pathTransform 
-					translateX: (0.5 * (extent x - (self class tigerMaxX * scale*zoom))) Y: extent y / -12.0 ;
-					scaleBy: scale*zoom ;
+{ #category : #run }
+VGTigerDemo >> runDemo [
 
-					translateX: (self class tigerMaxX * 0.5) Y: (self class tigerMaxY * 0.5 );
-					scaleBy: 0.8;
-					rotateByDegrees: rotation;
-					translateX: (self class tigerMaxX * -0.5) Y: (self class tigerMaxY * -0.5 ).
+	self open.
+	self extent: 400@400.	
+	self startStepping.
+]
 
-				paths do: [:each | each renderOn: can ].
+{ #category : #run }
+VGTigerDemo >> step [ 
 
-			].
-			"display it"
-			Display getCanvas drawImage: surface asForm  at: 0@0 
-	].
-
-	self currentWorld invalidRect: (self currentWorld bounds).
-	time := Time millisecondClockValue - time.
+	rotation := rotation + rotationSpeed.
+	frames := frames + 1.
+	zoom := (frames / 100) sin abs.
 	
-	Transcript show: 'Total rendering time: ', time asString,  ' ms, total frames: ' , frames asString ; cr;
-		show: ' FPS: ' , (1000*frames/time) asFloat asString
+	surface
+			drawDuring: [ :can | 
+				can pathTransform loadIdentity.
+					can
+						setPaint: Color white;
+						drawShape: (0 @ 0 corner: surface extent).
+					can pathTransform
+						translateX: 0.5 * (extent x - (self class tigerMaxX * scale * zoom))
+							Y: extent y / -12.0;
+						scaleBy: scale * zoom;
+						translateX: self class tigerMaxX * 0.5
+							Y: self class tigerMaxY * 0.5;
+						scaleBy: 0.8;
+						rotateByDegrees: rotation;
+						translateX: self class tigerMaxX * -0.5
+							Y: self class tigerMaxY * -0.5.
+					paths do: [ :each | each renderOn: can ] ].
+
+	self changed
+]
+
+{ #category : #run }
+VGTigerDemo >> stepTime [ 
+
+	^ 50
 ]

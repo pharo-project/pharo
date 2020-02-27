@@ -1,6 +1,6 @@
 Class {
 	#name : #SpDropListAdapterTest,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
+	#superclass : #SpAbstractWidgetAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
@@ -19,14 +19,12 @@ SpDropListAdapterTest >> initializeTestedInstance [
 
 { #category : #accessing }
 SpDropListAdapterTest >> testAddingIconsShowTheIcon [
+	#(pharo add book) do: [ :each | self presenter addItemLabeled: each do: [  ] icon: (self iconNamed: each) ].
 
-	#(pharo add book) do: [ :each |
-		self presenter addItemLabeled: each do: [] icon: (self iconNamed: each)].
-
-	self presenter selectedItem: #pharo.
+	self presenter selectItem: #pharo.
 
 	self assert: self adapter selectedIndexes equals: #(4).
-	backendForTest assertIcon: self adapter displayedIcon equals: (self iconNamed: #pharo). 
+	backendForTest assertIcon: self adapter displayedIcon equals: (self iconNamed: #pharo)
 ]
 
 { #category : #accessing }
@@ -37,41 +35,34 @@ SpDropListAdapterTest >> testDoesNotShowIcons [
 
 { #category : #accessing }
 SpDropListAdapterTest >> testRemovingIconsAfterAddingThem [
+	#(pharo add book) do: [ :each | self presenter addItemLabeled: each do: [  ] icon: (self iconNamed: each) ].
 
-	#(pharo add book) do: [ :each |
-		self presenter addItemLabeled: each do: [] icon: (self iconNamed: each)].
-
-	self presenter selectedItem: nil.
+	self presenter selectItem: nil.
 	self presenter model removeAll.
 
-	#(pharo add book) do: [ :each |
-		self presenter addItemLabeled: each do: [] icon: nil].
+	#(pharo add book) do: [ :each | self presenter addItemLabeled: each do: [  ] icon: nil ].
 
 	self assert: self adapter selectedIndexes equals: #(1).
-	backendForTest assertIcon: self adapter displayedIcon equals: nil. 
+	backendForTest assertIcon: self adapter displayedIcon equals: nil
 ]
 
 { #category : #accessing }
 SpDropListAdapterTest >> testResetingSelectionResetsSelection [
+	self presenter selectItem: 10.
 
-	self presenter selectedItem: 10.
-	
 	self presenter resetSelection.
 
 	self assert: self presenter selectedItem equals: nil.
-	self assert: self adapter selectedIndexes isEmpty.
-	
+	self assert: self adapter selectedIndexes isEmpty
 ]
 
 { #category : #accessing }
 SpDropListAdapterTest >> testSelectingASecondElementSelectsIt [
-
-	self presenter selectedItem: 10.
-	self presenter selectedItem: 20.
+	self presenter selectItem: 10.
+	self presenter selectItem: 20.
 
 	self assert: self presenter selectedItem equals: 20.
-	self assert: self adapter selectedIndexes equals: #(2).
-	
+	self assert: self adapter selectedIndexes equals: #(2)
 ]
 
 { #category : #accessing }
@@ -86,24 +77,25 @@ SpDropListAdapterTest >> testSelectingAnElementInWidgetUpdatePresenter [
 
 { #category : #accessing }
 SpDropListAdapterTest >> testSelectingAnElementSelectsIt [
-
-	self presenter selectedItem: 10.
+	self presenter selectItem: 10.
 
 	self assert: self presenter selectedItem equals: 10.
-	self assert: self adapter selectedIndexes equals: #(1).
-	
+	self assert: self adapter selectedIndexes equals: #(1)
 ]
 
 { #category : #accessing }
 SpDropListAdapterTest >> testSelectionExecutesBlock [
-
 	| selected |
+	self presenter
+		dropListItems:
+			(#(10 20 30)
+				collect: [ :e | 
+					SpDropListItem
+						on: e
+						do: [ selected := e ] ]).
 
-	self presenter dropListItems: (#(10 20 30) 
-		collect: [ :e | SpDropListItem on: e do: [ selected := e ] ]).
-
-	self presenter selectedItem: 20.
-	self assert: selected equals: 20	
+	self presenter selectItem: 20.
+	self assert: selected equals: 20
 ]
 
 { #category : #accessing }
@@ -117,19 +109,17 @@ SpDropListAdapterTest >> testSelectionStartsSelectingFirst [
 { #category : #accessing }
 SpDropListAdapterTest >> testSettingNilResetsGeneratesEvent [
 	| changed |
-	self presenter selectedItem: 10.
+	self presenter selectItem: 10.
 	self presenter whenSelectionChangedDo: [ changed := true ].
-	self presenter selectedItem: nil.
+	self presenter selectItem: nil.
 	self assert: changed
 ]
 
 { #category : #accessing }
 SpDropListAdapterTest >> testSettingNilResetsSelection [
-
-	self presenter selectedItem: 10.
-	self presenter selectedItem: nil.
+	self presenter selectItem: 10.
+	self presenter selectItem: nil.
 
 	self assert: self presenter selectedItem equals: nil.
-	self assert: self adapter selectedIndexes isEmpty.
-	
+	self assert: self adapter selectedIndexes isEmpty
 ]

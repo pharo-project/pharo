@@ -1,3 +1,6 @@
+"
+I implement single selection mode (my users can select just one element of list or table)
+"
 Class {
 	#name : #SpSingleSelectionMode,
 	#superclass : #SpAbstractSelectionMode,
@@ -102,6 +105,6 @@ SpSingleSelectionMode >> unselectIndex: anInteger [
 ]
 
 { #category : #events }
-SpSingleSelectionMode >> whenChangedDo: aBlockClosure [
-	self property: #selectedIndex whenChangedDo: [ aBlockClosure cull: self ]
+SpSingleSelectionMode >> whenChangedDo: aBlock [
+	self property: #selectedIndex whenChangedDo: [ aBlock cull: self ]
 ]

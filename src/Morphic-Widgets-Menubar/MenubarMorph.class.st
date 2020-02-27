@@ -58,6 +58,7 @@ MenubarMorph class >> menubarSettingOn: aBuilder [
 		target: self;
 		parent: #morphic;
 		label: 'Show menubar';
+		default: true;
 		description: 'Whether the world''s menubar should be shown or not.'
 ]
 

@@ -1,6 +1,6 @@
 Class {
 	#name : #RBParseTreeTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'AST-Core-Tests-Parser'
 }
 
@@ -11,30 +11,31 @@ RBParseTreeTest class >> isAbstract [
 ]
 
 { #category : #helpers }
-RBParseTreeTest >> parseExpression: aString [ 
-
-	^ RBParser parseExpression: aString
+RBParseTreeTest >> parseExpression: aString [
+	^ self parserClass parseExpression: aString
 ]
 
 { #category : #helpers }
-RBParseTreeTest >> parseFaultyExpression: aString [ 
-
-	^ RBParser parseFaultyExpression: aString
+RBParseTreeTest >> parseFaultyExpression: aString [
+	^ self parserClass parseFaultyExpression: aString
 ]
 
 { #category : #private }
 RBParseTreeTest >> parseFaultyMethod: text [
-	^RBParser parseFaultyMethod: text.
+	^ self parserClass parseFaultyMethod: text
 ]
 
 { #category : #helpers }
-RBParseTreeTest >> parseMethod: aString [ 
-
-	^ RBParser parseMethod: aString
+RBParseTreeTest >> parseMethod: aString [
+	^ self parserClass parseMethod: aString
 ]
 
 { #category : #helpers }
-RBParseTreeTest >> parseRewriteMethod: aString [ 
+RBParseTreeTest >> parseRewriteMethod: aString [
+	^ self parserClass parseRewriteMethod: aString
+]
 
-	^ RBParser parseRewriteMethod: aString
+{ #category : #helpers }
+RBParseTreeTest >> parserClass [
+	^ RBParser
 ]

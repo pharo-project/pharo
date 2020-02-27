@@ -18,16 +18,6 @@ MacOSResolver >> cache [
 ]
 
 { #category : #origins }
-MacOSResolver >> desktop [
-	^ self home / 'Desktop'
-]
-
-{ #category : #origins }
-MacOSResolver >> documents [
-	^ self home / 'Documents'
-]
-
-{ #category : #origins }
 MacOSResolver >> home [
 	^ self directoryFromEnvVariableNamed: 'HOME'
 ]
@@ -42,18 +32,15 @@ MacOSResolver >> preferences [
 	^ self home / 'Library' / 'Preferences'
 ]
 
-{ #category : #resolving }
-MacOSResolver >> supportedOrigins [
-	^ super supportedOrigins , #(userApplicationSupport systemApplicationSupport systemLibrary userLibrary)
-]
-
 { #category : #origins }
 MacOSResolver >> systemApplicationSupport [
+	<origin>
 	^ self systemLibrary / 'Application Support'
 ]
 
 { #category : #origins }
 MacOSResolver >> systemLibrary [
+	<origin>
 	^  FileSystem disk root / 'Library'
 ]
 
@@ -64,10 +51,12 @@ MacOSResolver >> temp [
 
 { #category : #origins }
 MacOSResolver >> userApplicationSupport [
+	<origin>
 	^self userLibrary / 'Application Support'
 ]
 
 { #category : #origins }
 MacOSResolver >> userLibrary [
+	<origin>
 	^  self home / 'Library'
 ]

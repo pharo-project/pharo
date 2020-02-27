@@ -58,9 +58,9 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
-
+	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' 'Glamour-Morphic-Widgets' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout #'Tool-Catalog' 'ParametrizedTests')
+	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'Deprecated80')
 ]
 
 { #category : #'known dependencies' }
@@ -68,7 +68,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -76,23 +76,16 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownFileSystemDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#Monticello #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'Transcript-Core' #'Zinc-Resource-Meta-Core')
+	^ #(#'Graphics-Canvas' #'Graphics-Files' #'Polymorph-Widgets')
 ]
 
 { #category : #'known dependencies' }
 SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
-
-	^ #()
+	
+	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
+	^ #(Deprecated80)
 ]
 
 { #category : #'known dependencies' }
@@ -100,31 +93,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownLocalMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMetacelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'Fonts-Abstract' #'SUnit-Core' #'System-Localization' #'Transcript-Core')
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMonticelloDependencies [
-
-	"ideally this list should be empty"	
-
-	^ #(#'System-Localization' #'Transcript-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -132,7 +101,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization' #'Transcript-Core')
+	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard')
 ]
 
 { #category : #'known dependencies' }
@@ -148,7 +117,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -156,7 +125,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Deprecated-Core-Kernel' #'System-Changes' #'System-Localization' #Jobs #'AST-Core' #'Collections-Arithmetic' #'Transcript-Core' #CodeImport)
+	^ #(#'FileSystem-Core' #'System-Changes' #'AST-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -173,7 +142,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'Transcript-Core')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : #'known dependencies' }
@@ -181,8 +150,9 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #'Glamour-Morphic-Widgets' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
+	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
+	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
+	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' 'Deprecated80')
 ]
 
 { #category : #utilities }
@@ -202,7 +172,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
-	  BaselineOfMetacello allPackageNames
+	  (BaselineOfMetacello packagesOfGroupNamed: 'Core')
 ]
 
 { #category : #accessing }
@@ -238,9 +208,10 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
+		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -274,7 +245,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 		BaselineOfTraits corePackages,		
 		BaselineOfDisplay allPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownDisplayDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -291,7 +262,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfPharoBootstrap fileSystemPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -310,7 +281,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
-	BaselineOfCommander2.
 	BaselineOfSpec2.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
@@ -318,9 +288,35 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfUI.
 	BaselineOfUnifiedFFI.
 	BaselineOfClassAnnotation.
-	BaselineOfSystemCommands } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+	BaselineOfSystemCommands.
+	BaselineOfClassParser.
+	BaselineOfRefactoring2.
+	BaselineOfReferenceFinder.
+	BaselineOfSortFunctions.
+	BaselineOfGeneralTests.
+	BaselineOfMisc.
+	BaselineOfEpicea.
+	BaselineOfCatalog.
+	BaselineOfRefactoring.
+	BaselineOfOSWindow.
+	BaselineOfQA.
+	BaselineOfPharoGlamour.
+	BaselineOfPharoGT.
+	BaselineOfManifest.
+	BaselineOfDependencyAnalyzer.
+	BaselineOfQualityAssistant.
+	BaselineOfReflectivity.
+	BaselineOfFuzzyMatcher.
+	BaselineOfZodiac.
+	BaselineOfReflectionMirrors.
+	BaselineOfGeneralHelp.
+	BaselineOfShout.
+	BaselineOfKernelTests.
+	BaselineOfFuel.
+	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
+	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
 	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
 
 	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
@@ -328,6 +324,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  (self packagesOfGroupNamed: 'CoreBrowser' on: BaselineOfCalypso ).
 	packages := packages ,  (self packagesOfGroupNamed: 'CoreEnvironment' on: BaselineOfCalypso ).
 	packages := packages ,  #('Calypso-SystemTools-Core').
+	packages := packages ,  (BaselineOfMetacello packagesOfGroupNamed: 'Tests').
+	
 
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
@@ -338,6 +336,14 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 
 { #category : #tests }
 SystemDependenciesTest >> testExternalKernelDependencies [
+
+"
+If you will break or weaken this test, a puppy will die!!! 
+     _ _      _
+    o'')}____//
+     `_/      )
+     (_(_/-(_/
+" 
 	| dependencies |
 	self longTestCase.
 
@@ -363,7 +369,7 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 		BaselineOfMonticello corePackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownLocalMonticelloDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -375,7 +381,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	
 	dependencies := self externalDependendiesOf: self metacelloPackageNames, BaselineOfTraits corePackages.
 	
-	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies.
+	self assert: dependencies isEmpty
 ]
 
 { #category : #tests }
@@ -395,7 +401,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 	
-	self assertCollection: dependencies hasSameElements: self knownMonticelloDependencies.
+	self assert: dependencies isEmpty.
 ]
 
 { #category : #tests }
@@ -433,7 +439,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
-		BaselineOfMenuRegistration allPackageNames ).
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -490,12 +497,12 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
 
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
 		BaselineOfSpec2 allPackageNames,
 	
-
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfParametrizedTests allPackageNames))
@@ -539,10 +546,11 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
-		BaselineOfMenuRegistration allPackageNames )).
+		BaselineOfMenuRegistration allPackageNames,
+		(BaselineOfFuel packagesOfGroupNamed: #Core) )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]

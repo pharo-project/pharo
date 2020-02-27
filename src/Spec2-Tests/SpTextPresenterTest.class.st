@@ -1,6 +1,6 @@
 Class {
 	#name : #SpTextPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpAbstractTextPresenterTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 
@@ -9,39 +9,19 @@ SpTextPresenterTest >> classToTest [
 	^ SpTextPresenter
 ]
 
-{ #category : #running }
-SpTextPresenterTest >> initializationText [
-	presenter text: 'Text for tests.'
-]
-
 { #category : #tests }
-SpTextPresenterTest >> testClearSelection [
-	self initializationText.
-	self openInstance.
-	presenter setSelection: (1 to: 10).
-	self assert: presenter getSelection equals: (1 to: 10).
-	presenter clearSelection.
-	self assert: presenter getSelection isEmpty
-]
-
-{ #category : #tests }
-SpTextPresenterTest >> testContextMenu [
-	| menu changed |
+SpTextPresenterTest >> testInsertAt [
 	
-	self assert: presenter contextMenu isNil.
-	menu := SpMenuPresenter new.
-	changed := false.
-	presenter whenMenuChangedDo: [ 
-		changed := true. ].
-	presenter contextMenu: menu.
-	self assert: presenter contextMenu equals: menu.
-	self assert: changed
+	self initializationText.
+	self openInstance.
+	presenter insert: 'insertion ' at: 9.
+	self assert: presenter text equals: 'Text for insertion tests.'
 ]
 
 { #category : #tests }
-SpTextPresenterTest >> testSelectAll [
+SpTextPresenterTest >> testSelectLine [
 	self initializationText.
 	self openInstance.
-	presenter selectAll.
-	self assert: presenter getSelection equals: (1 to: 15)
+	presenter selectLine.
+	self assert: presenter selectionInterval equals: (1 to: 15)
 ]

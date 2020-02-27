@@ -10,7 +10,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #printing }
+{ #category : #accessing }
 MalWeightedHitsNode >> label [
 
 	^ 'WH '

@@ -7,5 +7,7 @@ ClassDescription >> tagsForAllMethods [
 	| allProtocols |
 	allProtocols := self organization protocols reject: [ :each | each name = Protocol unclassified | each isExtensionProtocol ].
 
-	^ allProtocols select: [ :each | each methods anySatisfy: [ :method | self selectors includes: method ] ] thenCollect: #name
+	^ allProtocols
+		select: [ :protocol | protocol methodSelectors ifEmpty: [ true ] ifNotEmpty: [ :methods | methods anySatisfy: [ :method | self selectors includes: method ] ] ]
+		thenCollect: #name
 ]

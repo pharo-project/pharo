@@ -45,7 +45,7 @@ UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	| unlimitedSlots |
 	super installingIn: aClass.
 	
-	"we reuse a baselot if it is already there, if not, we add it"
+	"we reuse a baseSlot if it is already there, if not, we add it"
 	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
 	aClass classLayout 
 		resolveSlot: #'_ivarArrayBaseSlot'   
@@ -54,7 +54,7 @@ UnlimitedInstanceVariableSlot >> installingIn: aClass [
 	
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].
-	offset := unlimitedSlots indexOf: self.
+	offset := unlimitedSlots indexOf: self
 
 ]
 

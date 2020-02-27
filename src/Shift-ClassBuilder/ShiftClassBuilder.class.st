@@ -82,7 +82,7 @@ ShiftClassBuilder >> build [
 
 	self builderEnhancer afterMethodsCompiled: self.
 	
-	self installSlots.
+	self installSlotsAndVariables.
 	
 	^ newClass
 ]
@@ -322,9 +322,11 @@ ShiftClassBuilder >> initialize [
 ]
 
 { #category : #building }
-ShiftClassBuilder >> installSlots [
+ShiftClassBuilder >> installSlotsAndVariables [
+	"notify all the variables so they can react to being installed in a class"
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass class classLayout slots do: [ :each | each installingIn: newClass class ].
+	newClass classVariables do: [ :each | each installingIn: newClass ].
 
 ]
 

@@ -26,7 +26,9 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'errorWasInUIProcess'
+		'errorWasInUIProcess',
+		'objectsThatWantToKeepMeAlive',
+		'subscribersToKeepAliveEvents'
 	],
 	#classVars : [
 		'LogDebuggerStackToFile'
@@ -100,6 +102,11 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 		detectUIProcess
 ]
 
+{ #category : #keepAlive }
+DebugSession >> addSubscriberToKeepAliveEvents: aNewSubscriber [
+	self subscribersToKeepAliveEvents add: aNewSubscriber
+]
+
 { #category : #'debugging actions' }
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
@@ -118,6 +125,17 @@ DebugSession >> context [
 DebugSession >> contextChanged [
 
 	self triggerEvent: #contextChanged
+]
+
+{ #category : #keepAlive }
+DebugSession >> countObjectsThatWantToKeepMeAlive [
+	"Count how many objects are in objectsThatWantToKeepMeAlive. This method does not use #size or #isEmpty, and the iteration guards against nils because objectsThatWantToKeepMeAlive is a WeakOrderedCollection, therefore some contained objects can be set to nil during garbage collection, and #size and #isEmpty do not discount them"
+
+	| count |
+	count := 0.
+	self objectsThatWantToKeepMeAlive do: [ :anObject | 
+		anObject ifNotNil: [ count := count + 1 ] ].
+	^ count
 ]
 
 { #category : #accessing }
@@ -228,8 +246,7 @@ DebugSession >> isInterruptedContextDoesNotUnderstand [
 
 { #category : #context }
 DebugSession >> isLatestContext: aContext [
-
-	^ interruptedProcess suspendedContext == aContext
+  	^ interruptedProcess suspendedContext == aContext
 ]
 
 { #category : #testing }
@@ -243,6 +260,16 @@ DebugSession >> isTestObject: anObject [
 
 	"I'm not sure this is the best way to doit because it creates a coupling with TestCase, but due that SUnit is part of the core I think it is not bad after all - Hernan'"
 	^ anObject isKindOf: TestCase
+]
+
+{ #category : #keepAlive }
+DebugSession >> keepAlive: anObjectThatWantsToKeepMeAlive [
+	self objectsThatWantToKeepMeAlive add: anObjectThatWantsToKeepMeAlive.
+	self subscribersToKeepAliveEvents do: [ :subscriber_ | 
+		subscriber_ ifNotNil: [ :subscriber | 
+			subscriber
+				onDebugSession: self
+				gettingKeptAliveBy: anObjectThatWantsToKeepMeAlive ] ] "Notify subscribers"
 ]
 
 { #category : #logging }
@@ -263,20 +290,21 @@ DebugSession >> name: aString [
 	name := aString
 ]
 
+{ #category : #accessing }
+DebugSession >> objectsThatWantToKeepMeAlive [
+	objectsThatWantToKeepMeAlive ifNil: [ 
+		objectsThatWantToKeepMeAlive := WeakOrderedCollection new ].
+	^ objectsThatWantToKeepMeAlive
+]
+
 { #category : #context }
 DebugSession >> pcRangeForContext: aContext [
-
 	"Answer the indices in the source code for the method corresponding to 
 	aContext's program counter value."
 
-	aContext
-		ifNil: [ self terminate ]
-		ifNotNil: [ aContext isDead
-				ifTrue: [ ^ 1 to: 0 ].
-			^ aContext debuggerMap
-				rangeForPC: aContext pc
-				contextIsActiveContext: ( self isLatestContext: aContext )
-			]
+	(aContext isNil or: [ aContext isDead ])
+		ifTrue: [ ^ 1 to: 0 ].
+	^ aContext pcRangeContextIsActive: (self isLatestContext: aContext)
 ]
 
 { #category : #'debugging actions' }
@@ -340,6 +368,11 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	the editor can still be unaccepted. "
 	self installAlarm: #contextChanged.
 	^ true
+]
+
+{ #category : #keepAlive }
+DebugSession >> removeSubscriberToKeepAliveEvents: aCurrentSubscriber [
+	self subscribersToKeepAliveEvents remove: aCurrentSubscriber
 ]
 
 { #category : #'debugging actions' }
@@ -426,29 +459,6 @@ DebugSession >> returnValue: anObject from: aContext [
 	self contextChanged 
 ]
 
-{ #category : #'debugging actions' }
-DebugSession >> returnValueFrom: aContext [
-	"Force a return of a given value to the previous context!"
-
-	| previous expression value |
-	self flag: 'should be called only on the selected context'.	
-	self flag: 'remove me'.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
-	
-	expression := UIManager default request: 'Enter expression for return value:'.
-	value := self class compiler
-					source: expression;
-			context: aContext;
-			receiver: aContext receiver;
-			evaluate.
-				
-	previous := aContext sender.
-	"self resetContext: previous."
-	interruptedProcess popTo: previous value: value.
-	self updateContextTo: previous.
-	self contextChanged 
-]
-
 { #category : #evaluating }
 DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 	"this method is typically to be used after a hot compilation of a method from the stack.
@@ -488,6 +498,13 @@ DebugSession >> runToSelection: selectionInterval inContext: aContext [
 DebugSession >> selectedCodeRangeForContext: selectedContext [
 
 	^ self pcRangeForContext: selectedContext
+]
+
+{ #category : #keepAlive }
+DebugSession >> shouldBeKeptAlive [
+	"Returns whether there is at least one object that wants to keep this debug session alive"
+
+	^ self countObjectsThatWantToKeepMeAlive ~= 0
 ]
 
 { #category : #testing }
@@ -657,6 +674,26 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	seeing any visible results."
 	
 	^ aProcess stepToSendOrReturn
+]
+
+{ #category : #keepAlive }
+DebugSession >> stopKeepingAlive: anObjectThatNoLongerWantsToKeepMeAlive [
+	self objectsThatWantToKeepMeAlive
+		remove: anObjectThatNoLongerWantsToKeepMeAlive
+		ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled"
+			 ].
+	self subscribersToKeepAliveEvents do: [ :subscriber_ | 
+		subscriber_ ifNotNil: [ :subscriber | 
+			subscriber
+				onDebugSession: self
+				stoppingGettingKeptAliveBy: anObjectThatNoLongerWantsToKeepMeAlive ] ] "Notify subscribers"
+]
+
+{ #category : #accessing }
+DebugSession >> subscribersToKeepAliveEvents [
+	subscribersToKeepAliveEvents ifNil: [ 
+		subscribersToKeepAliveEvents := WeakOrderedCollection new ].
+	^ subscribersToKeepAliveEvents
 ]
 
 { #category : #'debugging actions' }

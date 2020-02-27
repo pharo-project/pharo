@@ -3,7 +3,7 @@ I am a command to install execution counter into given method or source node
 "
 Class {
 	#name : #ClyAddExecutionCounterCommand,
-	#superclass : #ClyMetalinkCommand,
+	#superclass : #ClyDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-ExecutionCounters'
 }
 

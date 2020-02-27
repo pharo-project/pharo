@@ -152,7 +152,7 @@ RBRefactoryTestDataApp >> demoMethodWithDuplicates [
 	^ answer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #test }
 RBRefactoryTestDataApp >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1. 
 	self do: arg2.
@@ -442,6 +442,27 @@ RBRefactoryTestDataApp >> renameThisMethod: anArg [
 	^self
 ]
 
+{ #category : #rendering }
+RBRefactoryTestDataApp >> renderContentOn: html [
+	html
+		form: [ html text: 'Name:'.
+			html textInput on: #name of: self contact.
+			
+			
+			html break.
+			html text: 'Email address:'.
+			html textInput on: #emailAddress of: self contact.
+			
+			html break.
+			html text: 'Example:'.
+			
+			html textInput on: #example of: self contact.
+			html break.].
+	html text: 'Last:'.
+			html textInput on: #last of: self contact.
+					html break.
+]
+
 { #category : #lint }
 RBRefactoryTestDataApp >> returnInEnsure [
 	[self error: 'asdf'] ensure: [^4]
@@ -529,6 +550,13 @@ RBRefactoryTestDataApp >> testMethod [
 RBRefactoryTestDataApp >> testMethod1 [
 	^self testMethod1 
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))
+]
+
+{ #category : #rendering }
+RBRefactoryTestDataApp >> textInput: html name: aString symbol: aSymbol [
+	html text: aString.
+	html textInput on: aSymbol of: self contact.
+	html break
 ]
 
 { #category : #lint }

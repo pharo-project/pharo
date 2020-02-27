@@ -85,13 +85,6 @@ Character class >> characterSet: aCharSet [
 	^ CharSet := aCharSet
 ]
 
-{ #category : #constants }
-Character class >> characterTable [
-	"Answer the class variable in which unique Characters are stored."
-
-	^CharacterTable
-]
-
 { #category : #'instance creation' }
 Character class >> codePoint: anInteger [ 
 	"Just for ANSI Compliance"	
@@ -128,11 +121,6 @@ Character class >> delete [
 	^ self value: 127
 ]
 
-{ #category : #'special characters' }
-Character class >> devide [
-	^self codePoint: 247
-]
-
 { #category : #'instance creation' }
 Character class >> digitValue: x [ 
 	"Answer the Character whose digit value is x. For example,
@@ -141,6 +129,11 @@ Character class >> digitValue: x [
 	| n |
 	n := x asInteger.
 	^self value: (n < 10 ifTrue: [n + 48] ifFalse: [n + 55])
+]
+
+{ #category : #'special characters' }
+Character class >> divide [
+	^self codePoint: 247
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -288,14 +281,18 @@ Character class >> space [
 
 { #category : #'special characters' }
 Character class >> specialCharacters [
-	^'+-/\*~<>=@,%|&?!', {self centeredDot . self devide . self plusOrMinus . self times }
+	^ '+-/\*~<>=@,%|&?!' , (String
+		   with: self centeredDot
+		   with: self divide
+		   with: self plusOrMinus
+		   with: self times)
 ]
 
 { #category : #queries }
 Character class >> supportsNonASCII [
 
-	^ (Smalltalk globals includesKey: #Unicode) and: [ 
-		((Smalltalk globals at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
+	^ (self environment includesKey: #Unicode) and: [ 
+		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
 ]
 
 { #category : #'accessing untypeable characters' }
@@ -425,7 +422,7 @@ Character >> basicIdentityHash [
 ]
 
 { #category : #converting }
-Character >> basicSqueakToIso [
+Character >> basicPharoToIso [
 	| tmp1 |
 	self asInteger < 128
 		ifTrue: [ ^ self ].
@@ -438,16 +435,12 @@ Character >> basicSqueakToIso [
 
 { #category : #testing }
 Character >> canBeGlobalVarInitial [
-
-	^ self characterSet canBeGlobalVarInitial: self.
-
+	^ self characterSet canBeGlobalVarInitial: self 
 ]
 
 { #category : #testing }
 Character >> canBeNonGlobalVarInitial [
-
-	^ self characterSet canBeNonGlobalVarInitial: self.
-
+  ^ self characterSet canBeNonGlobalVarInitial: self
 ]
 
 { #category : #accessing }
@@ -518,8 +511,13 @@ Character >> hexDigitValue [
 { #category : #testing }
 Character >> isAlphaNumeric [
 	"Answer whether the receiver is a letter or a digit."
+	"$a isAlphaNumeric >>> true"
+	"$A isAlphaNumeric >>> true"
+	"$' isAlphaNumeric >>> false"
+	"$1 isAlphaNumeric >>> true"
+	"Character space isAlphaNumeric >>> false"
 
-	^self isLetter or: [self isDigit]
+	^ self isLetter or: [ self isDigit ]
 ]
 
 { #category : #testing }
@@ -530,118 +528,186 @@ Character >> isArrow [
 
 { #category : #testing }
 Character >> isCasedLetter [
-^ self characterSet isCasedLetter: self
+	"We are sorry but this method is unclear and will probably be removed.
+	This method only returning false."
+	"$a isCasedLetter >>> false"
+	"$A isCasedLetter >>> false"
+	
+	^ self characterSet isCasedLetter: self
 ]
 
 { #category : #testing }
 Character >> isCharacter [
 
-	^ true.
+	^ true
 
 ]
 
 { #category : #testing }
 Character >> isClosePunctuation [
-^ self characterSet isClosePunctuation: self
+	"Return whether the receiver is one of these characters:  )]}"
+	"$a isClosePunctuation >>> false"
+	"$( isClosePunctuation >>> false"
+	"$) isClosePunctuation >>> true"
+	"$] isClosePunctuation >>> true"
+	"$} isClosePunctuation >>> true"
+	
+	^ self characterSet isClosePunctuation: self
 ]
 
 { #category : #testing }
 Character >> isConnectorPunctuation [
-^ self characterSet isConnectorPunctuation: self
+	"Return whether the receiver is one of these characters:   _"
+	"$_ isConnectorPunctuation >>> true"
+	"$( isConnectorPunctuation >>> false"
+	"$) isConnectorPunctuation >>> false"
+	"$> isConnectorPunctuation >>> false"
+	"$} isConnectorPunctuation >>> false"
+	
+	^ self characterSet isConnectorPunctuation: self
 ]
 
 { #category : #testing }
 Character >> isControlOther [
-
-	^ self characterSet isControlOther: self.
+	"Return whether the receiver is one of these characters: backspace, delete, escape, arrowUp, arrowLeft, arrowDown, arrowRight, pageUp, pageDown, end, home, nbsp, insert"
+	"Character delete isControlOther >>> true"
+	"Character backspace isControlOther >>> true"
+	"Character space isControlOther >>> false"
+	"Character home isControlOther >>> true"
+	"Character pageUp isControlOther >>> true"
+	"Character arrowDown isControlOther >>> true"
+	"Character end isControlOther >>> true"
+	
+	"$) isControlOther >>> false"
+	"$> isControlOther >>> false"
+	"$} isControlOther >>> false"
+	
+	^ self characterSet isControlOther: self
 
 ]
 
 { #category : #testing }
 Character >> isCurrencySymbol [
-^ self characterSet isCurrencySymbol: self
+	"Return whether the receiver is one of these characters:   $ and euro"
+	"$$ isCurrencySymbol >>> true"
+	"Character euro isCurrencySymbol >>> true"
+	"$} isControlOther >>> false"
+	
+	^ self characterSet isCurrencySymbol: self
 ]
 
 { #category : #testing }
 Character >> isDashPunctuation [
-^ self characterSet isDashPunctuation: self
+	"Return whether the receiver is one of these characters:   $-"
+	"$- isDashPunctuation >>> true"
+	"$_ isDashPunctuation >>> false"
+	
+	^ self characterSet isDashPunctuation: self
 ]
 
 { #category : #testing }
 Character >> isDecimalDigit [
-^ self characterSet isDecimalDigit: self
+	"Return whether the receiver is a digit."
+	"$1 isDecimalDigit >>> true"
+	"$0 isDecimalDigit >>> true"
+
+	^ self characterSet isDecimalDigit: self
 ]
 
 { #category : #testing }
 Character >> isDigit [
-
-	^ self characterSet isDigit: self.
+	"Return whether the receiver is a digit."
+	"$1 isDigit >>> true"
+	"$0 isDigit >>> true"
+	
+	^ self characterSet isDigit: self
 
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isEnclosingMark [
-^ self characterSet isEnclosingMark: self
+	"Return whether the receiver is ... one of these https://www.compart.com/en/unicode/category/Me"
+	"$' isEnclosingMark >>> false"
+	
+	
+	^ self characterSet isEnclosingMark: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isFinalQuote [
-^ self characterSet isFinalQuote: self
+	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pf"
+	"$' isFinalQuote >>> false"
+	
+	^ self characterSet isFinalQuote: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isFormatOther [
-^ self characterSet isFormatOther: self
+	"Return whether the receiver in this category: https://www.compart.com/en/unicode/category/Cf"
+	^ self characterSet isFormatOther: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isInitialQuote [
-^ self characterSet isInitialQuote: self
+	"Return whether the receiver is https://www.compart.com/en/unicode/category/Pi"
+	"$' isInitialQuote >>> false"
+	
+	^ self characterSet isInitialQuote: self
 ]
 
 { #category : #testing }
 Character >> isLetter [
+	"Return whether the receiver is a letter."
+	"$a isLetter >>> true"
+	"$é isLetter >>> true"
+	"$A isLetter >>> true"
 
-	^ self characterSet isLetter: self.
+	^ self characterSet isLetter: self
 
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isLetterModifier [
-^ self characterSet isLetterModifier: self
+	"Return whether the receiver is https://www.compart.com/en/unicode/category/Lm"
+	
+	^ self characterSet isLetterModifier: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isLetterNumber [
-^ self characterSet isLetterNumber: self
+	"Return whether the receiver is part of https://www.compart.com/en/unicode/category/Nl"
+	^ self characterSet isLetterNumber: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing unicode' }
 Character >> isLineSeparator [
-^ self characterSet isLineSeparator: self
+	"Return whether the receiver is https://www.compart.com/en/unicode/category/Zl"
+	
+	^ self characterSet isLineSeparator: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing kind' }
 Character >> isLiteral [
 
-	^true
+	^ true
 ]
 
 { #category : #testing }
 Character >> isLowercase [
 
-	^ self characterSet isLowercase: self.
+	^ self characterSet isLowercase: self
 
 ]
 
 { #category : #testing }
 Character >> isMathSymbol [
-^ self characterSet isMathSymbol: self
+	^ self characterSet isMathSymbol: self
 ]
 
 { #category : #testing }
 Character >> isModifierSymbol [
-^ self characterSet isModifierSymbol: self
+
+	^ self characterSet isModifierSymbol: self
 ]
 
 { #category : #testing }
@@ -649,7 +715,7 @@ Character >> isNonspacingMark [
 ^ self characterSet isNonspacingMark: self
 ]
 
-{ #category : #testing }
+{ #category : #'testing kind' }
 Character >> isOctetCharacter [
 	^ self asInteger < 256
 ]
@@ -691,8 +757,9 @@ Character >> isPrivateOther [
 
 { #category : #testing }
 Character >> isSafeForHTTP [
-	"whether a character is 'safe', or needs to be escaped when used, eg, in a URL"
-	"[GG]  See http://www.faqs.org/rfcs/rfc1738.html. ~ is unsafe and has been removed"
+	"Return whether a character is 'safe', or needs to be escaped when used, eg, in a URL"
+	"See http://www.faqs.org/rfcs/rfc1738.html. ~ is unsafe and has been removed"
+	
 	^ self charCode < 128
 		and: [self isAlphaNumeric
 				or: ['.-_' includes: (Character value: self charCode)]]
@@ -706,6 +773,8 @@ Character >> isSeparator [
 	"Character cr isSeparator >>> true"
 	"Character newPage isSeparator >>> true"
 	"Character tab isSeparator >>> true"
+	"$' isSeparator >>> false"
+	
 	| in |
 	^ (in := self asInteger) == 32 or: [ in == 13 or: [ in == 9 or: [ in == 10 or: [ in == 12 ] ] ] ]
 ]
@@ -722,7 +791,7 @@ Character >> isSpacingCombiningMark [
 
 { #category : #testing }
 Character >> isSpecial [
-	"Answer whether the receiver is one of the special characters"
+	"Answer whether the receiver is one of the special characters: i.e., +-/\*~<>=@,%|&?! and a couple of others."
 
 	^ self class specialCharacters includes: self
 
@@ -741,7 +810,7 @@ Character >> isTitlecaseLetter [
 { #category : #testing }
 Character >> isUppercase [
 
-	^ self characterSet isUppercase: self.
+	^ self characterSet isUppercase: self
 
 ]
 
@@ -800,7 +869,7 @@ Character >> shallowCopy [
 	^self
 ]
 
-{ #category : #testing }
+{ #category : #'testing kind' }
 Character >> shouldBePrintedAsLiteral [
 	^ self asInteger between: 33 and: 255
 ]
@@ -839,7 +908,11 @@ Character >> to: other [
 { #category : #testing }
 Character >> tokenish [
 	"Answer whether the receiver is a valid token-character -- letter, digit, underscore, or colon."
-
+	"$' tokenish >>> false"
+	"$: tokenish >>> true"
+	"${ tokenish >>> false"
+	"Character space tokenish >>> false"
+	
 	^ self isLetter or: [ self isDigit or: [ self = $_ or: [ self = $: ] ] ]
 ]
 

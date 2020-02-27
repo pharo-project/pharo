@@ -20,5 +20,5 @@ InputEventLog >> filter: aBlock [
 InputEventLog >> handleEvent: anEvent [
 
 	(filterBlock isNil or: [ filterBlock value: anEvent ])
-		ifTrue: [ anEvent asString logCr ]
+		ifTrue: [ SystemNotification signal: anEvent asString ]
 ]

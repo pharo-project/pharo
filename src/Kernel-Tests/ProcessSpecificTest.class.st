@@ -10,12 +10,12 @@ Class {
 
 { #category : #testing }
 ProcessSpecificTest >> checkDynamic: value [
-	self assert: TestDynamicVariable value = value
+	self assert: TestDynamicVariable value equals: value
 ]
 
 { #category : #testing }
 ProcessSpecificTest >> checkLocal: value [
-	self assert: TestLocalVariable value = value
+	self assert: TestLocalVariable value equals: value
 ]
 
 { #category : #testing }
@@ -63,18 +63,12 @@ ProcessSpecificTest >> testDynamicVariable [
 { #category : #testing }
 ProcessSpecificTest >> testDynamicVariableAccessFromDifferentProcess [
 	| process sem result |
-	
 	sem := Semaphore new.
-	process := [  
-		TestDynamicVariable 
-			value: 123 
-			during: [ sem wait ] ] fork.
+	process := [ TestDynamicVariable value: 123 during: [ sem wait ] ] fork.
 	Processor yield.
-	Processor activeProcess 
-		evaluate: [  result := TestDynamicVariable value ] 
-		onBehalfOf: process.
+	Processor activeProcess evaluate: [ result := TestDynamicVariable value ] onBehalfOf: process.
 	sem signal.
-	self assert: result = 123
+	self assert: result equals: 123
 ]
 
 { #category : #testing }

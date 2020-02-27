@@ -62,7 +62,7 @@ FLEncoder >> encodeInt24: aSmallInteger [
 	pos := aSmallInteger < 0
 		ifTrue: [((0-aSmallInteger) bitXor: 16rFFFFFF) + 1]
 		ifFalse: [aSmallInteger].
-	1 to: 3 do: [:i | stream nextPut: (pos digitAt: 4-i)].
+	1 to: 3 do: [:i | stream nextPut: (pos byteAt: 4-i)].
 
 ]
 
@@ -73,14 +73,14 @@ FLEncoder >> encodeInt32: aSmallInteger [
 	pos := aSmallInteger < 0
 		ifTrue: [(0-aSmallInteger) bitInvert32 + 1]
 		ifFalse: [aSmallInteger].
-	1 to: 4 do: [:i | stream nextPut: (pos digitAt: 5-i)].
+	1 to: 4 do: [:i | stream nextPut: (pos byteAt: 5-i)].
 
 ]
 
 { #category : #encoding }
 FLEncoder >> encodePositiveInteger: anInteger [
 	"Append to the receiver an Integer as the next 4 bytes."
-	1 to: 4 do: [:i | stream nextPut: (anInteger digitAt: 4+1-i)].
+	1 to: 4 do: [:i | stream nextPut: (anInteger byteAt: 4+1-i)].
 ]
 
 { #category : #encoding }
@@ -108,10 +108,10 @@ FLEncoder >> encodeString: aString [
 	(length := aString size) < 192
 		ifTrue: [stream nextPut: length]
 		ifFalse: 
-			[stream nextPut: (length digitAt: 4)+192.
-			stream nextPut: (length digitAt: 3).
-			stream nextPut: (length digitAt: 2).
-			stream nextPut: (length digitAt: 1)].
+			[stream nextPut: (length byteAt: 4)+192.
+			stream nextPut: (length byteAt: 3).
+			stream nextPut: (length byteAt: 2).
+			stream nextPut: (length byteAt: 1)].
 	stream nextBytesPutAll: aString.
 ]
 
@@ -222,7 +222,7 @@ FLEncoder >> objectCount: aNumber [
 	objectCount := aNumber.
 	objectsIndexes := FLLargeIdentityDictionary new.
 	substitutionIndexes := FLLargeIdentityDictionary new.
-	indexStream := FLIndexStream on: stream digits: aNumber digitLength
+	indexStream := FLIndexStream on: stream digits: aNumber bytesCount
 ]
 
 { #category : #accessing }

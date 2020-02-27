@@ -12,9 +12,9 @@ SharedPoolTest >> testmethodsAccessingPoolVariables [
 	| result |
 	result := ChronologyConstants methodsAccessingPoolVariables.
 	"we find accesses to the vars of the shared pool"
-	self assert: (result includes: (Duration>>#asNanoSeconds) methodReference).
+	self assert: (result includes: Duration>>#asNanoSeconds).
 	"but we do not include references to the pool itself"
-	self deny: (result includes: (ClassTest>>#testSharedPoolOfVarNamed) methodReference)
+	self deny: (result includes: ClassTest>>#testSharedPoolOfVarNamed)
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
@@ -22,8 +22,7 @@ SharedPoolTest >> testusingMethods [
 	| result |
 	result := ChronologyConstants usingMethods.
 	"we find accesses to the vars of the shared pool"
-	self assert: (result includes: (Duration>>#asNanoSeconds) methodReference).
+	self assert: (result includes: Duration>>#asNanoSeconds).
 	"and we find references to the pool itself"
-	self assert: (result includes: (ClassTest>>#testSharedPoolOfVarNamed) methodReference)
-		 
+	self assert: (result includes: ClassTest>>#testSharedPoolOfVarNamed)
 ]

@@ -46,6 +46,7 @@ ShortcutReminder class >> settingsOn: aBuilder [
 	(aBuilder setting: #'Shortcut Reminder') 
 		target: self;
 		parent: #appearance;
+		default: true;
 		description: 'Shortcut reminder is a reminding tool which pops up when a menu entry which includes a keyboard shortcut is invoked by the mouse instead';
 		selector: #enabled;
 		iconName: #smallConfigurationIcon;
@@ -121,6 +122,7 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		target: self;
 		label: 'Position in World';
 		description: 'Select one of the positons available to specify where the shortcut notification morph will be shown';
+		default: #bottomLeft;
 		domainValues: self positions.
 		
 	(aBuilder pickOne: #textSize) 

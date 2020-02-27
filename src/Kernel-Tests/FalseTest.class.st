@@ -28,15 +28,12 @@ FalseTest >> testAsBit [
 
 { #category : #'tests - controlling' }
 FalseTest >> testIfFalse [
-	
-	self assert: ((false ifFalse: ['alternativeBlock']) = 'alternativeBlock'). 
+	self assert: (false ifFalse: [ 'alternativeBlock' ]) equals: 'alternativeBlock'
 ]
 
 { #category : #'tests - controlling' }
 FalseTest >> testIfFalseIfTrue [
-
-	self assert: (false ifFalse: ['falseAlternativeBlock'] 
-                      ifTrue: ['trueAlternativeBlock']) = 'falseAlternativeBlock'. 
+	self assert: (false ifFalse: [ 'falseAlternativeBlock' ] ifTrue: [ 'trueAlternativeBlock' ]) equals: 'falseAlternativeBlock'
 ]
 
 { #category : #'tests - controlling' }
@@ -49,9 +46,7 @@ FalseTest >> testIfTrue [
 
 { #category : #'tests - controlling' }
 FalseTest >> testIfTrueIfFalse [
-
-	self assert: (false ifTrue: ['trueAlternativeBlock'] 
-                      ifFalse: ['falseAlternativeBlock']) = 'falseAlternativeBlock'. 
+	self assert: (false ifTrue: [ 'trueAlternativeBlock' ] ifFalse: [ 'falseAlternativeBlock' ]) equals: 'falseAlternativeBlock'
 ]
 
 { #category : #'tests - instance creation' }
@@ -75,20 +70,18 @@ FalseTest >> testOR [
 
 { #category : #'tests - controlling' }
 FalseTest >> testOr [
-
-	self assert: (false or: ['alternativeBlock']) = 'alternativeBlock'.
+	self assert: (false or: [ 'alternativeBlock' ]) equals: 'alternativeBlock'
 ]
 
 { #category : #'tests - printing' }
 FalseTest >> testPrintOn [
-
-	self assert: (String streamContents: [:stream | false printOn: stream]) = 'false'. 
+	self assert: (String streamContents: [ :stream | false printOn: stream ]) equals: 'false'
 ]
 
 { #category : #'tests - logical operations' }
 FalseTest >> testXor [
-	self assert: (false xor: true) = true.
-	self assert: (false xor: false) = false.
-	self assert: (false xor: [true]) = true.
-	self assert: (false xor: [false]) = false.
+	self assert: (false xor: true) equals: true.
+	self assert: (false xor: false) equals: false.
+	self assert: (false xor: [ true ]) equals: true.
+	self assert: (false xor: [ false ]) equals: false
 ]

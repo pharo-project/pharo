@@ -67,7 +67,8 @@ LiteralVariable >> definingClass [
 
 { #category : #printing }
 LiteralVariable >> definitionString [
-	^String streamContents: [:aStream | aStream << '#' << self name << ' => '; << self class name].
+	"Every subclass that adds state must redefine either this method or #printOn:"
+	^ self printString
 ]
 
 { #category : #'code generation' }
@@ -101,6 +102,11 @@ LiteralVariable >> hasProperty: aKey [
 	^self properties 
 		ifNil: [false]
 		ifNotNil: [:prop | prop includesKey: aKey]
+]
+
+{ #category : #'class building' }
+LiteralVariable >> installingIn: aClass [
+	"I am called by the class builder. This way a class variable can change the class it is installed in"
 ]
 
 { #category : #testing }
@@ -219,7 +225,7 @@ LiteralVariable >> removeProperty: propName ifAbsent: aBlock [
 
 { #category : #queries }
 LiteralVariable >> usingMethods [
-	^SystemNavigation new allReferencesTo: self
+	^SystemNavigation new allReferencesToBinding: self
 ]
 
 { #category : #'meta-object-protocol' }

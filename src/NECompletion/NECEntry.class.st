@@ -8,20 +8,15 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'contents',
-		'type',
+		'node',
 		'description'
 	],
 	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
-NECEntry class >> contents: aString [ 
-	^ self new setContents: aString
-]
-
-{ #category : #'instance creation' }
-NECEntry class >> contents: aString type: aSymbol [
-	^ self new setContents: aString type: aSymbol
+NECEntry class >> contents: aString node: aNode [
+	^ self new contents: aString node: aNode
 ]
 
 { #category : #operations }
@@ -29,19 +24,21 @@ NECEntry >> <= aECEntry [
 	^ contents <= aECEntry contents
 ]
 
-{ #category : #'ui related' }
-NECEntry >> browseWith: anECContext [ 
-	| guessType |
-	guessType := self guessTypeWith: anECContext.
-	guessType ifNil: [^ false].
-	self flag: #SmalltalkReference. "Reference to Smalltalk tools"
-	Smalltalk tools browser openOnClass: guessType.
-	^ true
+{ #category : #operations }
+NECEntry >> activateOn: aCompletionContext [
+
+	| entryContents |
+	"By default insert the contents of the entry instead of the token in the text editor"
+	entryContents := self contents asSymbol separateKeywords.
+	entryContents := (NECPreferences spaceAfterCompletion
+				ifTrue: [ entryContents , ' ' ]
+				ifFalse: [ entryContents ]).
+	aCompletionContext replaceTokenInEditorWith: entryContents
 ]
 
-{ #category : #accessing }
-NECEntry >> completion [
-	^ self contents asSymbol
+{ #category : #private }
+NECEntry >> browse [
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -49,43 +46,25 @@ NECEntry >> contents [
 	^contents
 ]
 
+{ #category : #accessing }
+NECEntry >> contents: aString node: aNode [
+	contents := aString.
+	node := aNode
+]
+
 { #category : #'detail information' }
-NECEntry >> createDescriptionWith: anECContext [ 
-	| clazz |
-	clazz := self guessTypeWith: anECContext.
-	^ clazz 
-		ifNil: [ NECEntryDescription label: self label ]
-		ifNotNil: 
-			[ NECEntryDescription 
-				label: self label
-				title: clazz printString
-				description: clazz comment ]
+NECEntry >> createDescription [
+	self subclassResponsibility
 ]
 
 { #category : #operations }
-NECEntry >> descriptionWith: anECContext [ 
-	description ifNotNil: [ ^ description ].
-	^ description := self createDescriptionWith: anECContext
+NECEntry >> description [
+	^description ifNil: [ description := self createDescription ]
 ]
 
-{ #category : #operations }
-NECEntry >> guessTypeWith: anECContext [ 
-	^ nil
-]
-
-{ #category : #testing }
-NECEntry >> isInstance [
-	^ false
-]
-
-{ #category : #testing }
-NECEntry >> isLocal [
-	^ false
-]
-
-{ #category : #testing }
-NECEntry >> isSelector [
-	^ false
+{ #category : #accessing }
+NECEntry >> hightlightSymbol [
+	^nil
 ]
 
 { #category : #accessing }
@@ -100,22 +79,6 @@ NECEntry >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: contents;
 		nextPut: $,;
-		nextPutAll: self type;
+		nextPutAll: self hightlightSymbol;
 		nextPut: $)
-]
-
-{ #category : #accessing }
-NECEntry >> setContents: aString [ 
-	contents := aString.
-]
-
-{ #category : #accessing }
-NECEntry >> setContents: aString type: aSymbol [ 
-	contents := aString.
-	type := aSymbol
-]
-
-{ #category : #accessing }
-NECEntry >> type [
-	^type
 ]

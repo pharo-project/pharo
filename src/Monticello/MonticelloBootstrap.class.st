@@ -70,7 +70,7 @@ MonticelloBootstrap >> createWorkingCopies [
 	This is achieved by creating an instance of a working copy and snapshotting it. This generates and registers the working copy automatically."
 	(RPackageOrganizer default packageNames) asSortedCollection do: [:packageName |
 		packageName = RPackage defaultPackageName ifFalse: [
-			('Creating Snapshot of: ', packageName) logCr.
+			SystemNotification signal: ('Creating Snapshot of: ', packageName).
 			(MCWorkingCopy forPackage: (MCPackage named: packageName)) snapshot ] ]
 ]
 
@@ -136,12 +136,12 @@ MonticelloBootstrap >> loadPackageNamed: aName [
 { #category : #bootstrapping }
 MonticelloBootstrap >> loadPackageVersion: aFileName [
 	
-	[ 	('Loading ', aFileName asString) logCr.
+	[ 	SystemNotification signal: ('Loading ', aFileName asString).
 		"Use snapshot install instead of load to force loading.
 		Otherwise monticello finds no changes and does not load anything."
 		(self localRepository loadVersionFromFileNamed: aFileName) load.
 	] on: MCMergeOrLoadWarning do: [:warning |
-		('Warning: ', warning messageText asString) logCr.
+		SystemNotification signal: ('Warning: ', warning messageText asString).
 		warning resume: true ]
 ]
 

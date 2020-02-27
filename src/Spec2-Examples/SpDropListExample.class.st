@@ -20,14 +20,16 @@ Class {
 
 { #category : #specs }
 SpDropListExample class >> defaultSpec [
-	^ SpColumnLayout composed
-		newRow: [ :r | 
-			r
+	^ SpBoxLayout newVertical
+		add:
+			(SpBoxLayout newHorizontal
 				add: #uniformDropList;
-				add: #heterogeneousDropList ]
+				add: #heterogeneousDropList;
+				yourself)
 			height: self toolbarHeight;
-		newRow: [ :r | r add: #disabledDropList ] height: self toolbarHeight;
-		newRow: [ :r | r add: #container ] yourself
+		add: #disabledDropList height: self toolbarHeight;
+		add: #container;
+		yourself
 ]
 
 { #category : #example }
@@ -45,53 +47,50 @@ SpDropListExample class >> title [
 
 { #category : #accessing }
 SpDropListExample >> container [
+	^ container
+]
 
-	^ container asSpAdapter
+{ #category : #initialization }
+SpDropListExample >> containerMorph [
+	^ container morph
 ]
 
 { #category : #accessing }
 SpDropListExample >> disabledDropList [
-
 	^ disabledDropList
 ]
 
 { #category : #accessing }
 SpDropListExample >> heterogeneousDropList [
-
-	^ heterogeneousDropList.
+	^ heterogeneousDropList
 ]
 
 { #category : #initialization }
-SpDropListExample >> initialize [
-
-	container := PanelMorph new.
-	self instantiateMorphs.
-	
-	container
-		changeTableLayout;
-		listDirection: #bottomToLeft.
-	
-	super initialize.
-]
-
-{ #category : #initialization }
-SpDropListExample >> initializeWidgets [
+SpDropListExample >> initializePresenters [
 	uniformDropList := self newDropList.
 	heterogeneousDropList := self newDropList.
-	(disabledDropList := self newDropList)
+	container := self newMorph.
+	disabledDropList := self newDropList.
+	container morph: PanelMorph new.
+	self instantiateMorphs.
+	self containerMorph
+		changeTableLayout;
+		listDirection: #bottomToLeft.
+	disabledDropList
 		items: #('Disabled' 'Two' 'Three');
-		displayBlock: [ :each | each ];
+		display: [ :each | each ];
 		disable.
 	uniformDropList
 		items:
 			{morph1.
 			morph2.
 			morph3};
-		displayBlock: [ :m | m color name capitalized , ' morph' ];
+		display: [ :m | m color name capitalized , ' morph' ];
 		iconBlock: [ :e | self iconNamed: #testGreenIcon ];
 		whenSelectedItemChangedDo: [ :m | 
-			container removeAllMorphs.
-			container addMorph: m ].
+			self containerMorph
+				removeAllMorphs;
+				addMorph: m ].
 	heterogeneousDropList
 		addItemLabeled: 'Open workspace'
 			do: [ Smalltalk tools workspace open ]
@@ -104,7 +103,7 @@ SpDropListExample >> initializeWidgets [
 	heterogeneousDropList setSelectedIndex: 1.
 	same for:
 	heterogeneousDropList setIndex: 1"
-	uniformDropList selectedIndex: 1.
+	uniformDropList selectIndex: 1.
 	self setFocus
 ]
 

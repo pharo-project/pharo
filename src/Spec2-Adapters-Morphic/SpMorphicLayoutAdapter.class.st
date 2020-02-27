@@ -30,6 +30,13 @@ SpMorphicLayoutAdapter >> addConstraits: constraints toChild: childMorph [
 ]
 
 { #category : #initialization }
+SpMorphicLayoutAdapter >> addKeyBindingsTo: aMorph [
+	"This is called before the layout actually exists. 
+	 Skipping it."
+	
+]
+
+{ #category : #initialization }
 SpMorphicLayoutAdapter >> applyStyle: aMorph [
 	"layouts do not have style to apply"
 ]
@@ -86,4 +93,27 @@ SpMorphicLayoutAdapter >> layout: aLayout [
 	"Basic apply visibility to the widget.
 	This call is here because layouts and widgets work differently"
 	self applyVisibility
+]
+
+{ #category : #factory }
+SpMorphicLayoutAdapter >> newPanel [
+
+	^ Morph new 
+		changeTableLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		color: Color transparent;
+		borderColor: Color transparent;
+		clipSubmorphs: true;
+		beSticky "stop being grabbed";
+		borderWidth: 0;
+		extent: 0@0;
+		yourself
+]
+
+{ #category : #protocol }
+SpMorphicLayoutAdapter >> takeKeyboardFocus [
+
+	self presenter presentersInFocusOrder 
+		ifNotEmpty: [ :presenters | presenters first takeKeyboardFocus ]
 ]

@@ -11,33 +11,34 @@ Class {
 }
 
 { #category : #utilities }
-RBParseTreeRewriterTest >> compare: anObject to: anotherObject [ 
-	self assert: anObject hash = anotherObject hash.
-	self assert: anObject = anotherObject
+RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
+	self assert: anObject hash equals: anotherObject hash.
+	self assert: anObject equals: anotherObject
 ]
 
 { #category : #helpers }
 RBParseTreeRewriterTest >> parseExpression: aString [
-
-	^ RBParser parseExpression: aString
+	^ self parserClass parseExpression: aString
 ]
 
 { #category : #helpers }
 RBParseTreeRewriterTest >> parseMethod: aString [
-
-	^ RBParser parseMethod: aString
+	^ self parserClass parseMethod: aString
 ]
 
 { #category : #helpers }
-RBParseTreeRewriterTest >> parseRewriteExpression: aString [ 
-
-	^ RBParser parseRewriteExpression: aString
+RBParseTreeRewriterTest >> parseRewriteExpression: aString [
+	^ self parserClass parseRewriteExpression: aString
 ]
 
 { #category : #helpers }
-RBParseTreeRewriterTest >> parseRewriteMethod: aString [ 
+RBParseTreeRewriterTest >> parseRewriteMethod: aString [
+	^ self parserClass parseRewriteMethod: aString
+]
 
-	^ RBParser parseRewriteMethod: aString
+{ #category : #helpers }
+RBParseTreeRewriterTest >> parserClass [
+	^ RBParser
 ]
 
 { #category : #running }
@@ -331,7 +332,7 @@ RBParseTreeRewriterTest >> testRewrites [
 
 { #category : #setup }
 RBParseTreeRewriterTest >> treeToBeRewritten [
-	^ RBParser
+	^ self parserClass
 		parseMethod:
 			'method: asdf
 	<primitive: 1>

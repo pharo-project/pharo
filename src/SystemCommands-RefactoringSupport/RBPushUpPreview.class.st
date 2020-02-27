@@ -71,7 +71,8 @@ RBPushUpPreview >> classes [
 { #category : #initialization }
 RBPushUpPreview >> initializeDropList [
 	classDropList := self newDropList.
-	classDropList displayBlock: [ :scope | scope name ];
+	classDropList
+		display: [ :scope | scope name ];
 		iconBlock: [ :e | e systemIcon ]
 ]
 

@@ -1,14 +1,13 @@
 Class {
 	#name : #SpAbstractListPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#traits : 'TSpHaveWrappingScrollBars',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
+	#traits : 'SpTHaveWrappingScrollBars + SpTContextMenu',
+	#classTraits : 'SpTHaveWrappingScrollBars classTrait + SpTContextMenu classTrait',
 	#instVars : [
 		'#selectionMode',
 		'#activationBlock',
 		'#activateOnSingleClick',
 		'#model',
-		'#contextMenu => SpObservableSlot',
 		'#itemFilter => SpObservableSlot',
 		'#verticalAlignment'
 	],
@@ -66,20 +65,6 @@ SpAbstractListPresenter >> clickItem: anInteger [
 ]
 
 { #category : #api }
-SpAbstractListPresenter >> contextMenu [
-	"Return the block used to defined the menu"
-
-	^ contextMenu
-]
-
-{ #category : #api }
-SpAbstractListPresenter >> contextMenu: aValuable [
-	"Set the block used to defined the menu"
-
-	contextMenu := aValuable
-]
-
-{ #category : #api }
 SpAbstractListPresenter >> disableFilter [
 	self itemFilter: nil
 ]
@@ -120,7 +105,7 @@ SpAbstractListPresenter >> initialize [
 	
 	activationBlock := [ ].
 	verticalAlignment := SpVerticalAlignment new.
-	
+
 	self withScrollBars.
 	self model: 	self newEmptyModel.
 
@@ -140,6 +125,13 @@ SpAbstractListPresenter >> isMultipleSelection [
 SpAbstractListPresenter >> itemAt: anInteger [ 
 	
 	^ self model at: anInteger
+]
+
+{ #category : #private }
+SpAbstractListPresenter >> itemAtPath: anArray [
+	"This is to provide polymorphism with SpTreeTablePresentrer"
+
+	^ self listElementAt: anArray first
 ]
 
 { #category : #api }
@@ -185,8 +177,6 @@ SpAbstractListPresenter >> listElementAt: anIndex ifAbsent: aBlock [
 
 { #category : #api }
 SpAbstractListPresenter >> listSize [
-	"<api: #inspect>"
-
 	"Return the size of the list"
 
 	^ self model size
@@ -256,8 +246,6 @@ SpAbstractListPresenter >> selectItems: aCollection [
 
 { #category : #api }
 SpAbstractListPresenter >> selectedItems [
-	"<api: #inspect>"
-
 	"Return all the selected items in the case of a multiple selection list"
 
 	^ self selectedItemsAtIndexes: self selection selectedIndexes
@@ -292,7 +280,7 @@ SpAbstractListPresenter >> selectionMode: aMode [
 	
 	selectionMode ifNotNil: [ 
 		selectionMode transferSubscriptionsTo: aMode ].
-	selectionMode := aMode.
+	selectionMode := aMode
 ]
 
 { #category : #api }
@@ -323,34 +311,33 @@ SpAbstractListPresenter >> unselectItem: anInteger [
 	self selection unselectItem: anInteger
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 SpAbstractListPresenter >> verticalAlignment [
-
 	^ verticalAlignment
 ]
 
 { #category : #'api-events' }
-SpAbstractListPresenter >> whenActivatedDo: aBlockClosure [ 
+SpAbstractListPresenter >> whenActivatedDo: aBlock [ 
 	
-	activationBlock := aBlockClosure.
+	activationBlock := aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractListPresenter >> whenItemFilterBlockChangedDo: aBlock [
+
 	self property: #itemFilter whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
-SpAbstractListPresenter >> whenMenuChangedDo: aBlock [
-	"Set a block to value when the menu block has changed"
-
-	self property: #contextMenu whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpAbstractListPresenter >> whenModelChangedDo: aBlock [
 
 	model whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpAbstractListPresenter >> whenSearchChangedDo: aBlock [
+
+	self property: #searchEnabled whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

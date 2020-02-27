@@ -1,6 +1,6 @@
 Class {
 	#name : #IRBuilderTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#classVars : [
 		'TestToPush'
 	],
@@ -55,8 +55,7 @@ IRBuilderTest >> testDup [
 
 { #category : #testing }
 IRBuilderTest >> testInstVar [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushInstVar: 1;
 		pushInstVar: 2;
@@ -66,15 +65,12 @@ IRBuilderTest >> testInstVar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: (3@4) arguments: #() ) = 7).
-	^iRMethod
-	
-	
+	self assert: (aCompiledMethod valueWithReceiver: 3 @ 4 arguments: #()) equals: 7.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testJumpAheadTo [
-
 	| iRMethod aCompiledMethod iRBuilder |
 	iRBuilder := IRBuilder new.
 	iRMethod := iRBuilder
@@ -83,16 +79,15 @@ IRBuilderTest >> testJumpAheadTo [
 		send: #+;
 		jumpAheadTo: #end;
 		pushLiteral: 3;
-		jumpAheadTarget: #end;	
+		jumpAheadTarget: #end;
 		returnTop;
 		ir.
 
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #())  = 3.
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 3.
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -140,19 +135,16 @@ IRBuilderTest >> testJumpBackTo [
 
 { #category : #testing }
 IRBuilderTest >> testLiteralArray [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: #(test 4 you); 	
+		pushLiteral: #(test 4 you);
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = #(test 4 you)).
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: #(test 4 you).
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -174,19 +166,16 @@ IRBuilderTest >> testLiteralBoolean [
 
 { #category : #testing }
 IRBuilderTest >> testLiteralCharacter [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: $e; 	
+		pushLiteral: $e;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = $e).
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: $e.
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -208,19 +197,16 @@ IRBuilderTest >> testLiteralFloat [
 
 { #category : #testing }
 IRBuilderTest >> testLiteralInteger [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: 2; 	
+		pushLiteral: 2;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -242,91 +228,77 @@ IRBuilderTest >> testLiteralNil [
 
 { #category : #testing }
 IRBuilderTest >> testLiteralString [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: 'hello'; 	
+		pushLiteral: 'hello';
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 'hello').
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 'hello'.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testLiteralSymbol [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteral: #you; 	
+		pushLiteral: #you;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = #you).
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: #you.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testLiteralVariableClass [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: Object binding;	
+		pushLiteralVariable: Object binding;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = Object).
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Object.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testLiteralVariableClassVariable [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: (DateAndTime bindingOf: #LocalTimeZone); 	
+		pushLiteralVariable: (DateAndTime bindingOf: #LocalTimeZone);
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = DateAndTime localTimeZone).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: DateAndTime localTimeZone.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testLiteralVariableGlobale [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		pushLiteralVariable: (Smalltalk globals associationAt: #Smalltalk);	
+		pushLiteralVariable: (testingEnvironment associationAt: #Smalltalk);
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = Smalltalk).
-	^iRMethod
-
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Smalltalk.
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -349,7 +321,6 @@ IRBuilderTest >> testPopTop [
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyNoCopied [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushReceiver;
@@ -357,22 +328,20 @@ IRBuilderTest >> testPushClosureCopyNoCopied [
 		pushLiteral: 1;
 		pushLiteral: 2;
 		send: #+;
-	      blockReturnTop;
-		jumpAheadTarget: #block;	
+		blockReturnTop;
+		jumpAheadTarget: #block;
 		send: #value;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 3).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 3.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyNoCopiedArg [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushReceiver;
@@ -380,8 +349,8 @@ IRBuilderTest >> testPushClosureCopyNoCopiedArg [
 		pushLiteral: 1;
 		pushTemp: #d;
 		send: #+;
-	      blockReturnTop;
-		jumpAheadTarget: #block;	
+		blockReturnTop;
+		jumpAheadTarget: #block;
 		pushLiteral: 1;
 		send: #value:;
 		returnTop;
@@ -389,14 +358,12 @@ IRBuilderTest >> testPushClosureCopyNoCopiedArg [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyNoCopiedArgNamed [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushReceiver;
@@ -404,8 +371,8 @@ IRBuilderTest >> testPushClosureCopyNoCopiedArgNamed [
 		pushLiteral: 1;
 		pushTemp: #d;
 		send: #+;
-	      blockReturnTop;
-		jumpAheadTarget: #block;	
+		blockReturnTop;
+		jumpAheadTarget: #block;
 		pushLiteral: 1;
 		send: #value:;
 		returnTop;
@@ -413,14 +380,12 @@ IRBuilderTest >> testPushClosureCopyNoCopiedArgNamed [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopied [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		addTemps: #(c a);
@@ -431,20 +396,19 @@ IRBuilderTest >> testPushClosureCopyOneCopied [
 		pushClosureCopyCopiedValues: #(a) args: #() jumpTo: #block;
 		pushTemp: #a;
 		blockReturnTop;
-		jumpAheadTarget: #block;	
+		jumpAheadTarget: #block;
 		send: #value;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 1).
-	^iRMethod
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 1.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopiedArg [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		addTemps: #(c a);
@@ -457,7 +421,7 @@ IRBuilderTest >> testPushClosureCopyOneCopiedArg [
 		pushTemp: #d;
 		send: #+;
 		blockReturnTop;
-		jumpAheadTarget: #block;	
+		jumpAheadTarget: #block;
 		pushLiteral: 1;
 		send: #value:;
 		returnTop;
@@ -465,14 +429,12 @@ IRBuilderTest >> testPushClosureCopyOneCopiedArg [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopiedTemp [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		addTemps: #(c a);
@@ -481,29 +443,28 @@ IRBuilderTest >> testPushClosureCopyOneCopiedTemp [
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #(a) args: #() jumpTo: #block;
-		addTemps: #(d);  "the temp"
-		pushTemp: #a;
+		addTemps: #(d);
+		"the temp"
+			pushTemp: #a;
 		pushLiteral: 1;
 		send: #+;
-		storeTemp:  #d;
+		storeTemp: #d;
 		popTop;
 		pushTemp: #d;
 		blockReturnTop;
-		jumpAheadTarget: #block;	
+		jumpAheadTarget: #block;
 		send: #value;
 		returnTop;
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testPushClosureCopyOneCopiedTempArg [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		addTemps: #(c a);
@@ -512,15 +473,16 @@ IRBuilderTest >> testPushClosureCopyOneCopiedTempArg [
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #(a) args: #(e) jumpTo: #block;
-		addTemps: #(d);  "the temp"
-		pushTemp: #a;
+		addTemps: #(d);
+		"the temp"
+			pushTemp: #a;
 		pushTemp: #e;
 		send: #+;
-		storeTemp:  #d;
+		storeTemp: #d;
 		popTop;
 		pushTemp: #d;
 		blockReturnTop;
-		jumpAheadTarget: #block;	
+		jumpAheadTarget: #block;
 		pushLiteral: 1;
 		send: #value:;
 		returnTop;
@@ -528,14 +490,12 @@ IRBuilderTest >> testPushClosureCopyOneCopiedTempArg [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testPushConsArray [
-
 	| iRMethod aCompiledMethod receiver |
 	iRMethod := IRBuilder new
 		pushReceiver;
@@ -544,18 +504,16 @@ IRBuilderTest >> testPushConsArray [
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
-	
-	receiver :=  (5@8).
+
+	receiver := 5 @ 8.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: receiver arguments: #()) first == receiver).
-	^iRMethod
-
+	self assert: (aCompiledMethod valueWithReceiver: receiver arguments: #()) first identicalTo: receiver.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testPushConsArray2 [
-
 	| iRMethod aCompiledMethod receiver |
 	iRMethod := IRBuilder new
 		pushLiteral: 'hi!';
@@ -564,13 +522,12 @@ IRBuilderTest >> testPushConsArray2 [
 		ir.
 
 	aCompiledMethod := iRMethod compiledMethod.
-	
-	receiver :=  (5@8).
+
+	receiver := 5 @ 8.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (((aCompiledMethod valueWithReceiver: receiver arguments: #()))= #('hi!')).
-	^iRMethod
-
+	self assert: (aCompiledMethod valueWithReceiver: receiver arguments: #()) equals: #('hi!').
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -595,7 +552,6 @@ IRBuilderTest >> testPushNewArray [
 
 { #category : #testing }
 IRBuilderTest >> testPushSelf [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushReceiver;
@@ -607,15 +563,13 @@ IRBuilderTest >> testPushSelf [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) == UndefinedObject).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) identicalTo: UndefinedObject.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testPushTempArgument [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		numArgs: 2;
 		addTemps: #(a b);
@@ -629,9 +583,8 @@ IRBuilderTest >> testPushTempArgument [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #(2 8) ) = 10).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #(2 8)) equals: 10.
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -655,8 +608,7 @@ IRBuilderTest >> testPushTempTemp [
 
 { #category : #testing }
 IRBuilderTest >> testPushThisContext [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushThisContext;
 		send: #receiver;
@@ -665,107 +617,108 @@ IRBuilderTest >> testPushThisContext [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: 5 arguments: #() ) = 5).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: 5 arguments: #()) equals: 5.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testRemoteTemp [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		addTemps: #(a c);  "we have one real temp"
-		createTempVectorNamed:#methodVector withVars: #(b);      "b we know will be written to, so make a tempvector entry" 
-		pushLiteral: 1;
+		addTemps: #(a c);
+		"we have one real temp"
+			createTempVectorNamed: #methodVector withVars: #(b);
+		"b we know will be written to, so make a tempvector entry"
+			pushLiteral: 1;
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #(#a #c #methodVector) args: #() jumpTo: #block;
-			pushTemp: #a;                                                                                             "a is just read, so we copy it to the block"
+		pushTemp: #a;
+		"a is just read, so we copy it to the block"
 			pushLiteral: 1;
-			send: #+;
-			storeRemoteTemp: #b inVector: #methodVector;							      "b comes from tempvetor, as we do write to it"
-	     	 	blockReturnTop;
-		jumpAheadTarget: #block;	
+		send: #+;
+		storeRemoteTemp: #b inVector: #methodVector;
+		"b comes from tempvetor, as we do write to it"
+			blockReturnTop;
+		jumpAheadTarget: #block;
 		send: #value;
-		pushRemoteTemp: #b inVector: #methodVector;				
+		pushRemoteTemp: #b inVector: #methodVector;
 		returnTop;
 		ir.
-	
+
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testRemoteTempNested [
-
 	| iRMethod aCompiledMethod |
-
-		iRMethod := IRBuilder new
-		addTemps: #(a);  "we have one real temp"
-		createTempVectorNamed:#methodVector withVars: #(b);      "b we know will be written to, so make a tempvector entry" 
-		pushLiteral: 1;
+	iRMethod := IRBuilder new
+		addTemps: #(a);
+		"we have one real temp"
+			createTempVectorNamed: #methodVector withVars: #(b);
+		"b we know will be written to, so make a tempvector entry"
+			pushLiteral: 1;
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #(methodVector a) args: #() jumpTo: #block;
-		createTempVectorNamed:#blockVector withVars: #(f);    
-			pushTemp: #a;                                                                                             "a is just read, so we copy it to the block"
-				pushClosureCopyCopiedValues: #(methodVector) args: #() jumpTo: #block2;
-				pushLiteral: 1;
-				storeRemoteTemp: #b inVector: #methodVector;							      "f comes from tempvetor, as we do write to it"
-				blockReturnTop;		
-				jumpAheadTarget: #block2;	
-			send: #value;
-			send: #+;
-			storeRemoteTemp: #b inVector: #methodVector;							      "b comes from tempvetor, as we do write to it"
-	     	 	blockReturnTop;
-			
-		jumpAheadTarget: #block;	
+		createTempVectorNamed: #blockVector withVars: #(f);
+		pushTemp: #a;
+		"a is just read, so we copy it to the block"
+			pushClosureCopyCopiedValues: #(methodVector) args: #() jumpTo: #block2;
+		pushLiteral: 1;
+		storeRemoteTemp: #b inVector: #methodVector;
+		"f comes from tempvetor, as we do write to it"
+			blockReturnTop;
+		jumpAheadTarget: #block2;
 		send: #value;
-		pushRemoteTemp: #b inVector: #methodVector;				
+		send: #+;
+		storeRemoteTemp: #b inVector: #methodVector;
+		"b comes from tempvetor, as we do write to it"
+			blockReturnTop;
+		jumpAheadTarget: #block;
+		send: #value;
+		pushRemoteTemp: #b inVector: #methodVector;
 		returnTop;
 		ir.
-	
+
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #()) = 2).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	^ iRMethod
 ]
 
 { #category : #'testing - blocks' }
 IRBuilderTest >> testRemoteTempShadowed [
-
 	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
-		addTemps: #(a);  "we have one real temp"
-		pushLiteral: 1;
+		addTemps: #(a);
+		"we have one real temp"
+			pushLiteral: 1;
 		storeTemp: #a;
 		popTop;
 		pushClosureCopyCopiedValues: #() args: #() jumpTo: #block;
-			addTemps: #(a);
-			pushTemp: #a;                                                                                             "a shadows the outer one"
+		addTemps: #(a);
+		pushTemp: #a;
+		"a shadows the outer one"
 			send: #isNil;
-	     	 	blockReturnTop;
-		jumpAheadTarget: #block;	
+		blockReturnTop;
+		jumpAheadTarget: #block;
 		send: #value;
 		returnTop;
 		ir.
-	
+
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = true).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: true.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testReturnInstVar [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushInstVar: 1;
 		returnTop;
@@ -773,10 +726,8 @@ IRBuilderTest >> testReturnInstVar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: (3@4) arguments: #() ) = 3).
-	^iRMethod
-	
-	
+	self assert: (aCompiledMethod valueWithReceiver: 3 @ 4 arguments: #()) equals: 3.
+	^ iRMethod
 ]
 
 { #category : #testing }
@@ -816,8 +767,7 @@ IRBuilderTest >> testSendSuper [
 
 { #category : #testing }
 IRBuilderTest >> testStoreIntoVariable [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushLiteral: 4;
 		storeIntoLiteralVariable: (self class bindingOf: #TestToPush);
@@ -828,17 +778,15 @@ IRBuilderTest >> testStoreIntoVariable [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-      aCompiledMethod valueWithReceiver: nil arguments: #().
-	self assert: (self class testToPush = 4).
+	aCompiledMethod valueWithReceiver: nil arguments: #().
+	self assert: self class testToPush equals: 4.
 	self class testToPush: nil.
-	^iRMethod
-	
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testStoreIvar [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushLiteral: 34;
 		storeInstVar: 2;
@@ -847,15 +795,13 @@ IRBuilderTest >> testStoreIvar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: self arguments: #() ) = 34).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: self arguments: #()) equals: 34.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testStorePopIntoVariable [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushLiteral: 4;
 		storeIntoLiteralVariable: (self class bindingOf: #TestToPush);
@@ -868,17 +814,15 @@ IRBuilderTest >> testStorePopIntoVariable [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-      aCompiledMethod valueWithReceiver: nil arguments: #().
-	self assert: (self class testToPush = 4).
+	aCompiledMethod valueWithReceiver: nil arguments: #().
+	self assert: self class testToPush equals: 4.
 	self class testToPush: nil.
-	^iRMethod
-	
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testStorePopIvar [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		pushLiteral: 34;
 		storeInstVar: 2;
@@ -889,15 +833,13 @@ IRBuilderTest >> testStorePopIvar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: self arguments: #() ) = 34).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: self arguments: #()) equals: 34.
+	^ iRMethod
 ]
 
 { #category : #testing }
 IRBuilderTest >> testStoreTemp [
-
-	| iRMethod aCompiledMethod  |
+	| iRMethod aCompiledMethod |
 	iRMethod := IRBuilder new
 		addTemps: #(a);
 		pushLiteral: 34;
@@ -909,7 +851,6 @@ IRBuilderTest >> testStoreTemp [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) = 34).
-	^iRMethod
-	
+	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 34.
+	^ iRMethod
 ]

@@ -59,6 +59,7 @@ PasteUpMorph class >> shouldShowWorldMenuSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #shouldShowWorldMenu)
 		target: self;
+		default: true;
 		parent: #morphic;
 		label: 'Show world menu';
 		description: 'Whether the World''s world menu should be shown or not on a click in the World.'
@@ -177,27 +178,6 @@ PasteUpMorph >> backgroundMorph: aMorph [
 		ifNotNil: [ aMorph bounds: self bounds.
 			self addMorphBack: aMorph
 			]
-]
-
-{ #category : #initialization }
-PasteUpMorph >> becomeActiveDuring: aBlock [
-	"Make the receiver the ActiveWorld during the evaluation of aBlock.
-	Note that this method does deliberately *not* use #ensure: to prevent
-	re-installation of the world on project switches."
-	| priorWorld priorHand priorEvent |
-	priorWorld := ActiveWorld.
-	priorHand := ActiveHand.
-	priorEvent := ActiveEvent.
-	ActiveWorld := self.
-	ActiveHand := self hands first. "default"
-	ActiveEvent := nil. "not in event cycle"
-	aBlock
-		on: Error
-		do: [:ex | 
-			ActiveWorld := priorWorld.
-			ActiveEvent := priorEvent.
-			ActiveHand := priorHand.
-			ex pass]
 ]
 
 { #category : #viewing }
@@ -461,7 +441,7 @@ PasteUpMorph >> dropFiles: anEvent [
 	numFiles := anEvent contents.
 	1 to: numFiles do: [ :i | 
 		| aFileReference handler |
-		aFileReference := FileReference requestDropReference: i.
+		aFileReference := anEvent requestDropReference: i.
 		handler := ExternalDropHandler
 			lookupExternalDropHandler: aFileReference.
 		handler

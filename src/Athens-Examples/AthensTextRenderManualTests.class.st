@@ -54,7 +54,7 @@ AthensTextRenderManualTests class >> test2 [
 	t := self testText. 
 	t addAttribute: (AthensTextBackground new color: (Color green alpha: 0.3 )) from: 1 to: 267.
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-	surf := self surfaceClass extent: Display extent.
+	surf := self surfaceClass extent: 500@300.
 	surf drawDuring: [ :canvas | 
 		canvas setPaint: (Color white).
 		canvas drawShape: (0@0 corner: 500@300).
@@ -64,7 +64,8 @@ AthensTextRenderManualTests class >> test2 [
 		canvas pathTransform rotateByDegrees: 0.
 		c renderOn: canvas
 	].
-	Display getCanvas translucentImage: surf asForm at: 0@0
+
+	surf asMorph openInWindow
 ]
 
 { #category : #tests }
@@ -75,7 +76,7 @@ AthensTextRenderManualTests class >> test3 [
 	t := 'qW' asText.
 	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Arial' pointSize: 8)).
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-	surf := self surfaceClass extent: Display extent.
+	surf := self surfaceClass extent: 500@500.
 	surf drawDuring: [ :canvas | 
 		canvas setPaint: (Color yellow alpha: 0.5).
 		canvas drawShape: (0@0 corner: 300@300).
@@ -89,7 +90,7 @@ AthensTextRenderManualTests class >> test3 [
 			canvas pathTransform translateBy: 0 @11.
 		].
 	].
-	Display getCanvas translucentImage: surf asForm at: 100@100
+	surf asMorph openInWindow
 
 
 ]
@@ -103,7 +104,7 @@ AthensTextRenderManualTests class >> test4 [
 	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Tahoma' pointSize: 10)).
 	t addAttribute: (TextColor new color: Color red) from: 3 to: 10.
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-	surf := self surfaceClass extent: Display extent.
+	surf := self surfaceClass extent: 500@500.
 	surf drawDuring: [ :canvas | 
 		canvas setPaint: (Color yellow alpha: 0.5).
 		canvas drawShape: (0@0 corner: 300@300).
@@ -113,7 +114,7 @@ AthensTextRenderManualTests class >> test4 [
 			canvas pathTransform translateBy: 0.1@10.
 		]
 	].
-	Display getCanvas translucentImage: surf asForm at: 100@100
+	surf asMorph openInWindow
 
 
 ]
@@ -126,7 +127,7 @@ AthensTextRenderManualTests class >> test5 [
 	t := 'U' asText.
 	t addAttribute: (TextFontReference toFont: (LogicalFont familyName: 'Tahoma' pointSize: 10)).
 	c := AthensTextComposer scan: t for: AthensTextScanner new.
-	surf := self surfaceClass extent: Display extent.
+	surf := self surfaceClass extent: 500@500.
 	surf drawDuring: [ :canvas | 
 		canvas setPaint: (Color yellow alpha: 0.5).
 		canvas drawShape: (0@0 corner: 300@300).
@@ -136,7 +137,7 @@ AthensTextRenderManualTests class >> test5 [
 			canvas pathTransform translateBy: 10@0.1.
 		]
 	].
-	Display getCanvas translucentImage: surf asForm at: 100@100
+	surf asMorph openInWindow
 
 
 ]
@@ -145,8 +146,8 @@ AthensTextRenderManualTests class >> test5 [
 AthensTextRenderManualTests class >> testBlitting [
 	<example>
 	
-	| fnt form blt |
-	fnt := LogicalFont familyName: 'Arial' pointSize: 24.
+	| fnt form blt dstForm |
+	fnt := LogicalFont familyName: 'Source Sans Pro' pointSize: 50.
 
 	form := fnt realFont
 		glyphOf: $W
@@ -154,7 +155,8 @@ AthensTextRenderManualTests class >> testBlitting [
 				colorValue: 1
 				subpixelPosition: 0.
 
-	blt := BitBlt toForm: Display.
+	dstForm := Form extent: 300@300 depth: 32.
+	blt := BitBlt toForm: dstForm.
 	
 	blt 
 		sourceForm: form;
@@ -168,7 +170,8 @@ AthensTextRenderManualTests class >> testBlitting [
 		alpha: 255
 		gammaTable:  FreeTypeSettings current gammaTable
 		ungammaTable: FreeTypeSettings current gammaInverseTable.
-	Display forceToScreen.
+	
+	dstForm asMorph openInWindow
 	
 
 	
@@ -224,17 +227,17 @@ AthensTextRenderManualTests class >> testWindow [
 AthensTextRenderManualTests class >> testWindowRender [
 	<example>
 	
-	| surf |
-	surf := self surfaceClass extent: Display extent.
+	| surf win |
+	win := self testWindow.
+	surf := self surfaceClass extent: win extent.
+	win position: 0@0.
 
 	surf drawDuring: [ :canvas | 
-		
 		canvas pathTransform scaleBy: 1.
-		canvas fullDrawMorph: self testWindow.
-
+		canvas fullDrawMorph: win.
 	].
 
-	Display getCanvas translucentImage: surf asForm at: 0@0
+	surf asMorph openInWindow
 
 
 ]

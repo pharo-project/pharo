@@ -115,20 +115,20 @@ MetacelloLoadingMCSpecLoader >> latestPackage: aString fromRepository: repositor
 
 { #category : #private }
 MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
-
 	MetacelloPlatform current
 		do: [ | loadBlock goferLoad answers resolvedReference repo |
-
-			resolvedReference := self resolvePackageSpec: packageSpec gofer: gofer.
-			resolvedReference ifNil: [ "Package version already loaded into image" ^ self ].
+			resolvedReference := self
+				resolvePackageSpec: packageSpec
+				gofer: gofer.
+			resolvedReference
+				ifNil: [ "Package version already loaded into image" ^ self ].
 			loadBlock := [ self preLoad: packageSpec.
 			goferLoad := MetacelloGoferLoad on: MetacelloGofer new.
 			goferLoad addResolved: resolvedReference.
 			goferLoad execute.
 			MetacelloPlatform current clearCurrentVersionCache.
-			self postLoad: packageSpec
-			].
-			( answers := packageSpec answers ) notEmpty
+			self postLoad: packageSpec ].
+			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			repo := resolvedReference repository.
@@ -136,16 +136,13 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 				ifTrue: [ repo := self loaderPolicy repositoryMap
 						at: resolvedReference name
 						ifAbsent: [ resolvedReference repository ].
-					resolvedReference workingCopy repositoryGroup addRepository: repo
-					]
-				ifFalse:
-					[ resolvedReference workingCopy repositoryGroup addRepository: resolvedReference repository ].
-			Transcript
-				cr;
-				show:
-					'Loaded -> ' , resolvedReference name , ' --- ' , repo repositoryDescription , ' --- '
-						, resolvedReference repository description
-			]
+					resolvedReference workingCopy repositoryGroup addRepository: repo ]
+				ifFalse: [ resolvedReference workingCopy repositoryGroup
+						addRepository: resolvedReference repository ].
+			MetacelloNotification signal:
+					'Loaded -> ' , resolvedReference name , ' --- '
+						, repo repositoryDescription , ' --- '
+						, resolvedReference repository description ]
 		displaying: 'Loading ' , packageSpec file
 ]
 

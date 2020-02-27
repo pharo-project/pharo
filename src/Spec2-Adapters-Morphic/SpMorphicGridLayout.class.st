@@ -55,17 +55,25 @@ SpMorphicGridLayout >> calculateExtentFor: aMorph constraint: constraint computa
 { #category : #private }
 SpMorphicGridLayout >> calculateHeightFor: aMorph base: aNumber [
 
-	self isRowHomogeneous ifTrue: [ ^ aNumber ].
+	"self isRowHomogeneous ifTrue: [ ^ aNumber ].
 	aMorph vResizing = #spaceFill ifTrue: [ ^ aNumber ].
-	^ aMorph height
+	^ aMorph height"
+	^ aNumber
 ]
 
 { #category : #private }
 SpMorphicGridLayout >> calculateWidthFor: aMorph base: aNumber [
 
-	self isColumnHomogeneous ifTrue: [ ^ aNumber ].
+	"self isColumnHomogeneous ifTrue: [ ^ aNumber ].
 	aMorph hResizing = #spaceFill ifTrue: [ ^ aNumber ].
-	^ aMorph width
+	^ aMorph width"
+	^ aNumber
+]
+
+{ #category : #accessing }
+SpMorphicGridLayout >> columnConstraintsAt: aNumber [
+ 
+	^ layout columnConstraintsAt: aNumber
 ]
 
 { #category : #accessing }

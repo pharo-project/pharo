@@ -43,19 +43,27 @@ ClyCommitMCPackageCommand >> defaultMenuItemName [
 { #category : #execution }
 ClyCommitMCPackageCommand >> execute [
 	| repoBrowser commitBrowser repos targetRepo |
-	repoBrowser := self class environment at: #IceTipRepositoriesBrowser ifAbsent: [ 
-		^ self inform: 'Iceberg 0.7 and higher is required'].
-	commitBrowser := self class environment at: #IceTipCommitBrowser ifAbsent: [ 
-		^ self inform: 'Iceberg 0.7 and higher is required'].
-	packages ifEmpty: [ ^repoBrowser new openWithSpec ].
-	
-	repos := IceRepository registry select: [ :repo | 
-		packages anySatisfy: [:each | repo includesPackageNamed: each name ]].
-	repos ifEmpty: [ ^self inform: 'Selected packages are not managed by Iceberg'].
-	targetRepo := repos size = 1 ifTrue: [ repos first ] ifFalse: [ 
-		UIManager default 
-			chooseFrom: (repos collect: #name) values: repos title: 'Choose repository'].
-	targetRepo ifNil: [ ^self ]. 
-			
+	repoBrowser := self class environment at: #IceTipRepositoriesBrowser ifAbsent: [ ^ self inform: 'Iceberg 0.7 and higher is required' ].
+	commitBrowser := self class environment at: #IceTipCommitBrowser ifAbsent: [ ^ self inform: 'Iceberg 0.7 and higher is required' ].
+	packages ifEmpty: [ ^ repoBrowser new openWithSpec ].
+	repos := IceRepository registry select: [ :repo | packages anySatisfy: [ :each | repo includesPackageNamed: each name ] ].
+	repos ifEmpty: [ ^ self inform: 'Selected packages are not managed by Iceberg' ].
+	targetRepo := repos size = 1 ifTrue: [ repos first ] ifFalse: [ UIManager default chooseFrom: (repos collect: #name) values: repos title: 'Choose repository' ].
+	targetRepo ifNil: [ ^ self ].
+	(targetRepo isMissing or: [ targetRepo isCodeMissing or: [ targetRepo isDetached or: [ targetRepo hasUnbornProject ] ] ])
+		ifTrue: [ UIManager default
+				alert:
+					'The ' , targetRepo name
+						,
+							' repository is not operational to commit.
+Causes can be:
+- The local repository is missing
+- The code directory is missing
+- The project is in detached head state
+- Metadatas are missing.
+
+You can fix this problem using the Iceberg tool.'
+				title: 'Error'.
+			^ self ].
 	(commitBrowser onRepository: targetRepo) openWithSpec
 ]

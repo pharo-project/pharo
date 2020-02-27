@@ -40,6 +40,11 @@ CDClassDefinitionParser >> beMetaclassDefinition [
 	classDefinition := CDMetaclassDefinitionNode new
 ]
 
+{ #category : #'private class factory' }
+CDClassDefinitionParser >> classNameNodeClass [
+	^ CDClassNameNode
+]
+
 { #category : #accessing }
 CDClassDefinitionParser >> classVariableNames: aNode [ 
 	
@@ -52,7 +57,7 @@ CDClassDefinitionParser >> classVariableNames: aNode [
 			CDSharedVariableNode
 				node: aNode
 				name: slotName
-				typeName: 'ClassVariableSlot'
+				slotClassName: 'ClassVariableSlot'
 				start: start
 				stop: start + slotName size ].
 	classDefinition sharedSlots: slotNodes
@@ -81,17 +86,14 @@ CDClassDefinitionParser >> parse: aString [
 ]
 
 { #category : #parsing }
-CDClassDefinitionParser >> parseClassName: aNode [ 
-	
+CDClassDefinitionParser >> parseClassName: aNode [
 	| className superclassNode |
 	className := (aNode isVariable
 		ifTrue: [ aNode name ]
 		ifFalse: [ aNode value ]) asSymbol.
-		
-	superclassNode := CDClassNameNode new
+	superclassNode := self classNameNodeClass new
 		originalNode: aNode;
-		className: className. 
-		
+		className: className.
 	classDefinition className: className astNode: superclassNode
 ]
 
@@ -108,12 +110,14 @@ CDClassDefinitionParser >> parseInstanceVariablesFromNode: aNode [
 	instanceVariablesString := aNode value.
 	slots := instanceVariablesString substrings.
 	slotNodes := slots
-		collect: [ :slotName | | start |
-			start := aNode start + (instanceVariablesString findString: slotName).
-			CDSlotNode
+		collect: [ :slotName | 
+			| start |
+			start := aNode start
+				+ (instanceVariablesString findString: slotName).
+			self slotNodeClass
 				node: aNode
 				name: slotName
-				typeName: 'InstanceVariableSlot'
+				slotClassName: #InstanceVariableSlot
 				start: start
 				stop: start + slotName size ].
 	classDefinition slots: slotNodes
@@ -125,9 +129,10 @@ CDClassDefinitionParser >> parsePoolDictionariesFromNode: aNode [
 	sharedPoolString := aNode value.
 	shareds := sharedPoolString substrings.
 	sharedPoolNodes := shareds
-		collect: [ :slotName | | start |
+		collect: [ :slotName | 
+			| start |
 			start := aNode start + (sharedPoolString findString: slotName).
-			CDSharedPoolNode
+			self sharedPoolNodeClass
 				node: aNode
 				name: slotName
 				start: start
@@ -175,20 +180,59 @@ CDClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
-	
-	aRBMessageNode selector = '=>' ifTrue: [ | slot |
-		slot := CDSlotNode
-			node: aRBMessageNode
-			name: aRBMessageNode receiver value
-			typeName: aRBMessageNode arguments first name
-			start: aRBMessageNode start
-			stop: aRBMessageNode stop.
-		classDefinition addSlot: slot.
-		^ self
-	].
+	"what ugly method! Pay attention start and stop should be tested and probably adjusted!"
 
-	"If we are here we did not recognize the slot syntax"
-	self halt.
+	"when a slot is just 'inst'"
+	aRBMessageNode isLiteralNode
+		ifTrue: [ | slot |
+			slot := self slotNodeClass
+				node: aRBMessageNode
+				name: aRBMessageNode value
+				slotClassName: #InstanceVariableSlot
+				initializationMessage: self slotInitializationNodeClass new
+				start: aRBMessageNode start
+				stop: aRBMessageNode stop.
+			classDefinition addSlot: slot.
+			^ self ].
+	
+	aRBMessageNode selector = '=>' 
+		ifTrue: [  
+		aRBMessageNode arguments first isMessage
+		
+		ifFalse: [  
+			"when a slot is just 'inst' => InstanceVariableSlot."
+			aRBMessageNode arguments first isGlobal
+				ifTrue: [ | slot |
+					slot := self slotNodeClass
+						node: aRBMessageNode
+						name: aRBMessageNode receiver value
+						slotClassName: aRBMessageNode arguments first name
+						initializationMessage: self slotInitializationNodeClass new
+						start: aRBMessageNode start
+						stop: aRBMessageNode stop.
+						classDefinition addSlot: slot.
+				^ self ].
+				"we will have to do something for example if we have 
+				#x => 2"
+				]
+			ifTrue: [  
+				
+				"when a slot is 'inst' => (InstanceVariableSlot default: 5)."
+				| slot slotDefNode |
+				slotDefNode := aRBMessageNode.
+				slot := self slotNodeClass
+					node: aRBMessageNode
+					name: slotDefNode receiver value
+					slotClassName: slotDefNode arguments first receiver name
+					initializationMessage:
+						(self slotInitializationNodeClass
+							selectorParts: aRBMessageNode arguments first selectorParts
+							argumentParts: aRBMessageNode arguments first arguments)
+					start: aRBMessageNode start
+					stop: aRBMessageNode stop.
+				classDefinition addSlot: slot.
+				^ self ]
+		]
 ]
 
 { #category : #parsing }
@@ -200,26 +244,23 @@ CDClassDefinitionParser >> parseSlotsNodesFromArrayNode: aRBArrayNode [
 
 { #category : #parsing }
 CDClassDefinitionParser >> parseSuperclassNode: aSuperclassNode [
-
 	| aSuperclassName superclassNode |
-	
 	aSuperclassName := (aSuperclassNode isLiteralNode
 		ifTrue: [ aSuperclassNode value asString ]
 		ifFalse: [ aSuperclassNode name ]) asSymbol.
-	
-	superclassNode := CDClassNameNode new
+	superclassNode := self classNameNodeClass new
 		originalNode: aSuperclassNode;
-		className: aSuperclassName. 
-
-	classDefinition superclassName: aSuperclassName astNode: superclassNode
+		className: aSuperclassName.
+	classDefinition
+		superclassName: aSuperclassName
+		astNode: superclassNode
 ]
 
 { #category : #parsing }
 CDClassDefinitionParser >> parseTraitDefinitionFromNode: aNode [
 	
 	| traitComposition |
-	traitComposition := CDTraitCompositionBuilder new
-		buildFrom: aNode.	
+	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.	
 	classDefinition traitDefinition: traitComposition.
 ]
 
@@ -231,17 +272,28 @@ CDClassDefinitionParser >> setAdequateClassDefinitionFrom: expressionTree [
 		ifFalse: [ self beMetaclassDefinition ]
 ]
 
+{ #category : #'private class factory' }
+CDClassDefinitionParser >> sharedPoolNodeClass [
+	^ CDSharedPoolNode
+]
+
+{ #category : #'private class factory' }
+CDClassDefinitionParser >> slotInitializationNodeClass [
+
+	^ RBSlotInitializationNode 
+]
+
+{ #category : #'private class factory' }
+CDClassDefinitionParser >> slotNodeClass [
+	^ CDSlotNode
+]
+
 { #category : #parsing }
 CDClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 
 	(self isInstanceSideDefinition: aRBMessageNode)
-		ifTrue: [ "instance "
-			self parseSuperclassNode: aRBMessageNode receiver.
-			 ]
-		ifFalse: [ "metaclass" 
-			self parseClassName: aRBMessageNode receiver receiver
-			].
-	
+		ifTrue: [ self parseSuperclassNode: aRBMessageNode receiver ]
+		ifFalse: [ self parseClassName: aRBMessageNode receiver receiver ].
 	
 	aRBMessageNode selectorParts
 		with: aRBMessageNode arguments

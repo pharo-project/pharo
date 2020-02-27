@@ -67,7 +67,7 @@ SlotTraitsTest >> testModifyClassTraitComposition [
 
 { #category : #tests }
 SlotTraitsTest >> testModifyTraitComposition [
-	"Tests that when modifing the trait composition, the old methods are removed from the method dictionary, and the new ones are added."
+	"Tests that when modifying the trait composition, the old methods are removed from the method dictionary, and the new ones are added."
 
 	self make: [ :builder | builder traitComposition: TOne ].
 
@@ -76,7 +76,7 @@ SlotTraitsTest >> testModifyTraitComposition [
 	self assertEmpty: TOne traitUsers.
 	self assertEmpty: TOne classTrait traitUsers.
 	self assert: TTwo traitUsers asArray equals: {aClass}.
-	"self assertEmpty: TTwo classTrait traitUsers ."
+	"self assertEmpty: TTwo classTrait traitUsers."
 	aClass classLayout checkIntegrity.
 
 	self deny: (aClass canUnderstand: #one).
@@ -205,7 +205,7 @@ SlotTraitsTest >> testTraitUsersAfterMetaclassReshape [
 	self deny: (aClass canUnderstand: #one).
 	self assert: (anotherClass canUnderstand: #one).
 	self deny: (aClass class canUnderstand: #two).
-	self assert: (anotherClass class canUnderstand: #two).
+	self assert: (anotherClass class canUnderstand: #two)
 
 
 ]

@@ -31,6 +31,21 @@ UITheme class >> allThemeClasses [
 		a themeName <= b themeName]
 ]
 
+{ #category : #accessing }
+UITheme class >> baseColor [
+	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+UITheme class >> basePassiveBackgroundColor [ 
+	^ self subclassResponsibility 
+]
+
+{ #category : #accessing }
+UITheme class >> baseSelectionColor [ 
+	^ self subclassResponsibility 
+]
+
 { #category : #query }
 UITheme class >> beCurrent [
 	"Make a new instance of the receiver be the current theme."
@@ -56,7 +71,7 @@ UITheme class >> cleanUp [
 { #category : #accessing }
 UITheme class >> current [
 	"Answer the current ui theme.
-	WARNING: Direct access to this method is ill-adviced, use Smalltalk ui theme instead."
+	WARNING: Direct access to this method is ill-adviced, use self theme instead."
 
 	^Current ifNil: [
 		Current := PharoLightTheme newDefault.
@@ -92,17 +107,15 @@ UITheme class >> current: aUITheme [
 ]
 
 { #category : #accessing }
-UITheme class >> currentAnimationSettings [
-	"Answer the current ui theme settings."
-
-	^ self currentSettings animationSettings
-]
-
-{ #category : #accessing }
 UITheme class >> currentSettings [
 	"Answer the current ui theme settings."
 
 	^ self current settings
+]
+
+{ #category : #accessing }
+UITheme class >> darkBaseColor [
+	self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -145,8 +158,12 @@ UITheme class >> isCurrent [
 
 { #category : #accessing }
 UITheme class >> lightBaseColor [
+	self subclassResponsibility 
+]
 
-	^ Color white
+{ #category : #accessing }
+UITheme class >> lightSelectionColor [ 
+	^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -204,6 +221,11 @@ UITheme class >> resetDefaultSettings [
 	self defaultSettings: nil
 ]
 
+{ #category : #initialization }
+UITheme class >> setPreferredPreferences [ 
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 UITheme class >> standardThemeClass [
 	^ PharoLightTheme 
@@ -214,6 +236,11 @@ UITheme class >> themeName [
 	"Answer the friendly name of the theme."
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+UITheme class >> veryLightSelectionColor [ 
+	^ self subclassResponsibility 
 ]
 
 { #category : #services }
@@ -255,6 +282,11 @@ UITheme >> alertSound [
 	"Answer the alert sound."
 
 	^self soundTheme alertSound
+]
+
+{ #category : #accessing }
+UITheme >> animationSettings [
+	^ self settings animationSettings
 ]
 
 { #category : #accessing }
@@ -1722,7 +1754,7 @@ UITheme >> dangerBackgroundColor [
 
 { #category : #'accessing colors' }
 UITheme >> dangerTextColor [
-	^ Color red
+	^ Color red darker darker
 ]
 
 { #category : #'accessing colors' }
@@ -2223,6 +2255,11 @@ UITheme >> fadeCheckboxWhenDisabled [
 ]
 
 { #category : #accessing }
+UITheme >> fadedBackgroundWindows [
+	^ self settings fadedBackgroundWindows
+]
+
+{ #category : #accessing }
 UITheme >> flatMenu [
 	^ self settings flatMenu
 ]
@@ -2622,7 +2659,7 @@ UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
 
 	Display depth <= 2
 		ifTrue: [ ^ Color gray ].
-	preferenced := self settings menuSelectionColor.
+	preferenced := self menuSelectionColor.
 	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
 	self preferGradientFill
 		ifFalse: [ ^ baseColor ].
@@ -2653,6 +2690,11 @@ UITheme >> menuPinForm [
 	"Answer the form to use for the pin button of a menu."
 
 	^ self iconNamed: #menuPinForm
+]
+
+{ #category : #'accessing colors' }
+UITheme >> menuSelectionColor [
+	^ self settings menuSelectionColor
 ]
 
 { #category : #'accessing colors' }
@@ -2708,7 +2750,7 @@ UITheme >> menubarFillStyleFor: aMenubar [
 
 { #category : #'fill-styles-menubar' }
 UITheme >> menubarItemSelectionFillStyleFor: aMenubarItem [
-	^ self settings menuSelectionColor
+	^ self menuSelectionColor
 ]
 
 { #category : #'fill-styles-menubar' }
@@ -4659,6 +4701,11 @@ UITheme >> normalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [
 		radial: false
 ]
 
+{ #category : #accessing }
+UITheme >> numberOfStepsForAnimations [
+	^ self animationSettings numberOfSteps
+]
+
 { #category : #cursor }
 UITheme >> overTextCursorFor: aTextMorph [
 	"Answer the pointer cursor when over an active text 
@@ -4670,10 +4717,10 @@ UITheme >> overTextCursorFor: aTextMorph [
 { #category : #'fill-styles' }
 UITheme >> paneColorFor: aWindow [
 	"Answer the pane color that should be used."
-	
-	^self settings fadedBackgroundWindows
-		ifTrue: [aWindow fillStyleToUse asColor]
-		ifFalse: [(self windowActiveFillStyleFor: aWindow) asColor]
+
+	^ (self fadedBackgroundWindows
+		ifTrue: [ aWindow fillStyleToUse ]
+		ifFalse: [ self windowActiveFillStyleFor: aWindow ]) asColor
 ]
 
 { #category : #services }
@@ -5275,6 +5322,13 @@ UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 ]
 
 { #category : #'accessing colors' }
+UITheme >> selectedItemListTextColor [
+	"Answer the color for the selected item in a list text."
+
+	^ self textColor
+]
+
+{ #category : #'accessing colors' }
 UITheme >> selectionBarColor [
 
 	^ self settings selectionBarColor
@@ -5347,6 +5401,11 @@ UITheme >> shStyleTable [
 UITheme >> shStyleTableName [
 
 	^ #blueStyleTable
+]
+
+{ #category : #testing }
+UITheme >> shouldUseAnimations [
+	^ self animationSettings useAnimation
 ]
 
 { #category : #'border-styles' }
@@ -5918,6 +5977,11 @@ UITheme >> urlColor [
 	^ Color fromHexString: '03A9F4'
 ]
 
+{ #category : #accessing }
+UITheme >> useAnimation: aBoolean [
+	^ self animationSettings useAnimation: aBoolean
+]
+
 { #category : #'fill-styles-scrollbars' }
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
@@ -6173,9 +6237,9 @@ UITheme >> windowInactiveFillStyleFor: aWindow [
 UITheme >> windowInactiveLabelFillStyleFor: aWindow [
 	"Return the window inactive label fillStyle for the given window."
 	
-	^self settings fadedBackgroundWindows
-		ifTrue: [aWindow paneColorToUse alphaMixed: 0.6 with: Color black]
-		ifFalse: [self windowActiveLabelFillStyleFor: aWindow]
+	^ self fadedBackgroundWindows
+		ifTrue: [ aWindow paneColorToUse alphaMixed: 0.6 with: Color black ]
+		ifFalse: [ self windowActiveLabelFillStyleFor: aWindow ]
 ]
 
 { #category : #'fill-styles' }

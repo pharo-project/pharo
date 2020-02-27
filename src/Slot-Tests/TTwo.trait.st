@@ -6,7 +6,7 @@ Trait {
 	#category : #'Slot-Tests-Data'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TTwo >> two [
 	^ 2
 ]

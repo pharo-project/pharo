@@ -51,86 +51,74 @@ ZnStaticFileServerDelegateTest >> tearDown [
 
 { #category : #tests }
 ZnStaticFileServerDelegateTest >> testBasicGet [
-	self withServerDo: [ :server | | client |
-		(client := ZnClient new) 
-			beOneShot;
-			url: server localUrl;
-			addPath: #('local-files' 'small.html');
-			get.
-		self assert: client isSuccess.
-		self assert: client response contentType = ZnMimeType textHtml.
-		self assert: client contents equals: self smallHtml.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
-			equals: (ZnFileSystemUtils modificationTimeFor: 'small.html') asUTC.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
-		self 
-			assert: (client response headers at: 'Cache-Control')
-			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
+	self
+		withServerDo: [ :server | 
+			| client |
+			(client := ZnClient new)
+				beOneShot;
+				url: server localUrl;
+				addPath: #('local-files' 'small.html');
+				get.
+			self assert: client isSuccess.
+			self assert: client response contentType equals: ZnMimeType textHtml.
+			self assert: client contents equals: self smallHtml.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'small.html') asUTC.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
 { #category : #tests }
 ZnStaticFileServerDelegateTest >> testBasicGetLarge [
-	self withServerDo: [ :server | | client |
-		(client := ZnClient new) 
-			beOneShot;
-			url: server localUrl;
-			addPath: #('local-files' 'large.html');
-			get.
-		self assert: client isSuccess.
-		self assert: client response contentType = ZnMimeType textHtml.
-		self assert: client contents equals: self largeHtml.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
-			equals: (ZnFileSystemUtils modificationTimeFor: 'large.html') asUTC.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
-		self 
-			assert: (client response headers at: 'Cache-Control')
-			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
+	self
+		withServerDo: [ :server | 
+			| client |
+			(client := ZnClient new)
+				beOneShot;
+				url: server localUrl;
+				addPath: #('local-files' 'large.html');
+				get.
+			self assert: client isSuccess.
+			self assert: client response contentType equals: ZnMimeType textHtml.
+			self assert: client contents equals: self largeHtml.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'large.html') asUTC.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
 { #category : #tests }
 ZnStaticFileServerDelegateTest >> testBasicGetWide [
-	self withServerDo: [ :server | | client |
-		(client := ZnClient new) 
-			beOneShot;
-			url: server localUrl;
-			addPath: #('local-files' 'wide.html');
-			get.
-		self assert: client isSuccess.
-		self assert: client response contentType = ZnMimeType textHtml.
-		self assert: client contents equals: self wideHtml.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
-			equals: (ZnFileSystemUtils modificationTimeFor: 'large.html') asUTC.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
-		self 
-			assert: (client response headers at: 'Cache-Control')
-			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
+	self
+		withServerDo: [ :server | 
+			| client |
+			(client := ZnClient new)
+				beOneShot;
+				url: server localUrl;
+				addPath: #('local-files' 'wide.html');
+				get.
+			self assert: client isSuccess.
+			self assert: client response contentType equals: ZnMimeType textHtml.
+			self assert: client contents equals: self wideHtml.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'large.html') asUTC.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
 { #category : #tests }
 ZnStaticFileServerDelegateTest >> testBasicHead [
-	self withServerDo: [ :server | | client |
-		(client := ZnClient new) 
-			beOneShot;
-			url: server localUrl;
-			addPath: #('local-files' 'small.html');
-			head.
-		self assert: client isSuccess.
-		self assert: client response contentType = ZnMimeType textHtml.
-		self deny: client response hasEntity.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date'))
-			equals: (ZnFileSystemUtils modificationTimeFor: 'small.html') asUTC.
-		self 
-			assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
-		self 
-			assert: (client response headers at: 'Cache-Control')
-			equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
+	self
+		withServerDo: [ :server | 
+			| client |
+			(client := ZnClient new)
+				beOneShot;
+				url: server localUrl;
+				addPath: #('local-files' 'small.html');
+				head.
+			self assert: client isSuccess.
+			self assert: client response contentType equals: ZnMimeType textHtml.
+			self deny: client response hasEntity.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Modification-Date')) equals: (ZnFileSystemUtils modificationTimeFor: 'small.html') asUTC.
+			self assert: (ZnUtils parseHttpDate: (client response headers at: 'Expires')) > (DateAndTime now + 10 days).
+			self assert: (client response headers at: 'Cache-Control') equals: (server delegate maxAgeFor: ZnMimeType textHtml) ]
 ]
 
 { #category : #tests }

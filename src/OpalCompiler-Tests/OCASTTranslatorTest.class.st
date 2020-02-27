@@ -185,38 +185,25 @@ OCASTTranslatorTest >> testExample: aSelector withArguments: arguments [
 { #category : #'testing - primitives' }
 OCASTTranslatorTest >> testExamplePrimitiveErrorCode [
 	| method ast ir newMethod |
-	method := (OCOpalExamples>>#examplePrimitiveErrorCode).
+	method := OCOpalExamples >> #examplePrimitiveErrorCode.
 	ast := method parseTree.
 	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
 
 	newMethod := ir compiledMethod.
-	self assert: method primitive = newMethod primitive. 
-
-	
-
-	
-	
-
-	
+	self assert: method primitive equals: newMethod primitive
 ]
 
 { #category : #'testing - primitives' }
 OCASTTranslatorTest >> testExamplePrimitiveErrorCodeModule [
 	| method ast ir newMethod |
-	method := (OCOpalExamples>>#examplePrimitiveErrorCodeModule).
+	method := OCOpalExamples >> #examplePrimitiveErrorCodeModule.
 	ast := method parseTree.
 	ir := (ast doSemanticAnalysisIn: OCOpalExamples) ir.
 
 	newMethod := ir compiledMethod.
-	
-	self assert: method primitive = newMethod primitive. 
-	self assert: method pragmas printString  = newMethod pragmas printString
-	
 
-	
-	
-
-	
+	self assert: method primitive equals: newMethod primitive.
+	self assert: method pragmas printString equals: newMethod pragmas printString
 ]
 
 { #category : #'testing - primitives' }

@@ -1,5 +1,5 @@
 "
-A source anchor has a refference to the actual class, method, or other entity that is criticized. An anchor also has a #providesInterval method that returns a boolean indicating if the anchor provides a selection interval to the actual source of the critique. The interval can be accessed through the #interval method
+A source anchor has a refference to the actual class, method, or other entity that is criticized. An anchor also has a #providesInterval method that returns a boolean indicating if the anchor provides a selection interval to the actual source of the critique. The interval can be accessed through the #interval method.
 "
 Class {
 	#name : #ReSourceAnchor,
@@ -20,13 +20,6 @@ ReSourceAnchor class >> entity: anEntity [
 { #category : #accessing }
 ReSourceAnchor >> entity [
 	^ self sourceEntity
-]
-
-{ #category : #'gt-inspector-extension' }
-ReSourceAnchor >> gtInspectorAnchorIn: composite [
-	<gtInspectorPresentationOrder: 0>
-
-	^ sourceEntity glmCritiqueSourceIn: composite
 ]
 
 { #category : #initialization }

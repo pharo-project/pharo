@@ -18,20 +18,18 @@ Class {
 { #category : #specs }
 SpRadioButtonExample class >> defaultSpec [
 	^ SpBoxLayout newVertical
-		add:
-			(SpBoxLayout newHorizontal
-				add: #button1;
-				add: #button2;
-				add: #button3;
-				yourself)
-			withConstraints: [ :c | c height: self toolbarHeight ];
-		add: #label withConstraints: [ :c | c height: self labelHeight ];
+		add: (SpBoxLayout newVertical
+				add: #button1 expand: false;
+				add: #button2 expand: false;
+				add: #button3 expand: false;
+				yourself);
+		add: #label expand: false;
 		yourself
 ]
 
 { #category : #example }
 SpRadioButtonExample class >> example [
-	<sampleInstance>
+
 	^ self new openWithSpec
 ]
 
@@ -42,7 +40,7 @@ SpRadioButtonExample class >> title [
 ]
 
 { #category : #initialization }
-SpRadioButtonExample >> initializePresenter [
+SpRadioButtonExample >> connectPresenters [
 	button1 whenActivatedDo: [ self updateLabel ].
 	button1 whenDeactivatedDo: [ self updateLabel ].
 
@@ -52,28 +50,19 @@ SpRadioButtonExample >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpRadioButtonExample >> initializeWidgets [
+SpRadioButtonExample >> initializePresenters [
+
 	button1 := self newRadioButton.
 	button2 := self newRadioButton.
 	button3 := self newRadioButton.
 	label := self newLabel.
-
-	button1 associatedRadioButtons: {button2 . button3}.
+	button1 associatedRadioButtons: { button2. button3 }.
 
 	button1 label: 'Button 1'.
 	button2 label: 'Button 2'.
 	button3 label: 'Button 3'.
 
 	self updateLabel.
-	self setFocus
-]
-
-{ #category : #initialization }
-SpRadioButtonExample >> setFocus [
-	self focusOrder
-		add: button1;
-		add: button2;
-		add: button3
 ]
 
 { #category : #updating }

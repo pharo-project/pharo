@@ -66,7 +66,7 @@ ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
 					ifTrue: [:sym | externalType := ExternalType structTypeNamed: sym].
 			].
 			externalType == nil ifTrue:[
-				Transcript show: '(' , fieldType , ' is void)'.
+				self trace: '(' , fieldType , ' is void)'.
 				externalType := ExternalType void.
 			].
 			isPointerField ifTrue: [externalType := externalType asPointerType: self pointerSize]].

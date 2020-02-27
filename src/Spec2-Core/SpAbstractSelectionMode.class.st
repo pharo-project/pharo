@@ -1,8 +1,24 @@
+"
+I am a base selection mode. 
+My children will define selection styles (single, multiple) and realise the different selecting logic. 
+
+I can : 
+
+- selectItem/selectItems
+- selectIndex/selectIndexes
+- selectAll
+
+Also, I can retrieve 
+
+- selectedItems
+- selectedIndexes
+
+"
 Class {
 	#name : #SpAbstractSelectionMode,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'widget'
 	],
@@ -129,7 +145,7 @@ SpAbstractSelectionMode >> unselectItem: anInteger [
 ]
 
 { #category : #events }
-SpAbstractSelectionMode >> whenChangedDo: aBlockClosure [ 
+SpAbstractSelectionMode >> whenChangedDo: aBlock [ 
 	
 	self subclassResponsibility
 ]

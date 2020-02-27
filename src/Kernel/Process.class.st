@@ -96,8 +96,7 @@ Process class >> forContext: aContext priority: anInteger [
 Process class >> psKeysSema [
 	"Isolate handling of class variable"
 
-	PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ].
-	^PSKeysSema
+	^PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ]
 ]
 
 { #category : #'process specific' }

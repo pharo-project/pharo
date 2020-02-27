@@ -94,6 +94,7 @@ Slot class >> slotSetting: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showSlotClassDefinition) 
 		label: 'Class Template with Slots';
+		default: false;
 		description: 'If checked then browsers show always the slot class definition';
 		parent: #codeBrowsing; 
 		target: self
@@ -130,6 +131,13 @@ Slot >> addSlotInitToInitialize: aClass [
 	Author 
 		useAuthor: 'Generated' 
 		during: [ aClass compile: source classified: 'initialization' ]
+]
+
+{ #category : #'class building' }
+Slot >> asClassVariable [
+	self
+		error:
+			'Slots can not be used to define Class Variables, you need to create a LiteralVariable subclass instead'
 ]
 
 { #category : #converting }
@@ -197,7 +205,7 @@ Slot >> ensureProperties [
 ]
 
 { #category : #private }
-Slot >> ensureSlotIniatializationFor: aClass [
+Slot >> ensureSlotInitializationFor: aClass [
 	self ensureInitalizeMethodExists: aClass. 
 	self addSlotInitToInitialize: aClass.
 ]
@@ -240,7 +248,7 @@ Slot >> initialize: instance [
 { #category : #'class building' }
 Slot >> installingIn: aClass [
 	"I am called by the class builder. This way a Slot can change the class it is installed in"
-	self wantsInitalization ifTrue: [ self ensureSlotIniatializationFor: aClass ].
+	self wantsInitialization ifTrue: [ self ensureSlotInitializationFor: aClass ].
 ]
 
 { #category : #testing }
@@ -441,7 +449,7 @@ Slot >> usingMethods [
 ]
 
 { #category : #'meta-object-protocol' }
-Slot >> wantsInitalization [
+Slot >> wantsInitialization [
 	"if a slot wants to enable instance initalization, return true here"
 	^false
 ]

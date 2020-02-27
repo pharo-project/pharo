@@ -13,6 +13,12 @@ Class {
 	#category : #'Kernel-Tests-Pragmas'
 }
 
+{ #category : #helper }
+PragmaTest >> methodWithPragma [
+	<testPragmaArg1: #toto arg2: 2 arg3: true>
+	
+]
+
 { #category : #running }
 PragmaTest >> setUp [
 	super setUp.
@@ -24,42 +30,61 @@ PragmaTest >> setUp [
 ]
 
 { #category : #tests }
+PragmaTest >> testArgumentAt [
+	| pragma |
+	pragma := (self class >> #methodWithPragma) pragmas anyOne.
+	self assert: (pragma argumentAt: 1) equals: #toto.
+	self assert: (pragma argumentAt: 2) equals: 2.
+	self assert: (pragma argumentAt: 3)
+]
+
+{ #category : #tests }
+PragmaTest >> testArgumentNamed [
+	| pragma |
+	pragma := (self class >> #methodWithPragma) pragmas anyOne.
+	self assert: (pragma argumentNamed: #testPragmaArg1) equals: #toto.
+	self assert: (pragma argumentNamed: #arg2) equals: 2.
+	self assert: (pragma argumentNamed: #arg3).
+	self should: [ pragma argumentNamed: #nonExisting ] raise: Error
+]
+
+{ #category : #tests }
+PragmaTest >> testArgumentNamedIfNone [
+	| pragma |
+	pragma := (self class >> #methodWithPragma) pragmas anyOne.
+	self assert: (pragma argumentNamed: #arg3 ifNone: [ false ]).
+	self deny: (pragma argumentNamed: #nonExisting ifNone: [ false ])
+]
+
+{ #category : #tests }
 PragmaTest >> testCopy [
-
 	| copy |
-
 	copy := atPragma copy.
 
-	self deny: atPragma == copy.
-	self assert: atPragma method == copy method.
-	self assert: atPragma keyword == copy keyword.
-	self assert: atPragma arguments == copy arguments.
+	self deny: atPragma identicalTo: copy.
+	self assert: atPragma method identicalTo: copy method.
+	self assert: atPragma selector identicalTo: copy selector.
+	self assert: atPragma arguments identicalTo: copy arguments
 ]
 
 { #category : #tests }
 PragmaTest >> testEqual [
+	self assert: atPragma equals: atPragma.
+	self assert: atPragma equals: anotherAtPragma.
+	self assert: anotherAtPragma equals: atPragma.
+	self assert: atPragma equals: anotherAtPragma.
+	self assert: anotherAtPragma equals: yetAnotherAtPragma.
+	self assert: yetAnotherAtPragma equals: atPragma.
 
-	self assert: atPragma = atPragma.		"Reflexivity"
-
-	self assert: atPragma = anotherAtPragma.		"Simmetry"
-	self assert: anotherAtPragma = atPragma.
-
-	self assert: atPragma = anotherAtPragma.		"Transitivity"
-	self assert: anotherAtPragma = yetAnotherAtPragma.
-	self assert: yetAnotherAtPragma = atPragma.
-
-	self deny: atPragma = atPutPragma.
+	self deny: atPragma equals: atPutPragma
 ]
 
 { #category : #tests }
 PragmaTest >> testHash [
-
-	self assert: atPragma hash = atPragma hash.
-
-	self assert: atPragma hash = anotherAtPragma hash.
-	self assert: anotherAtPragma hash = atPragma hash.
-
-	self assert: atPragma hash = anotherAtPragma hash.
-	self assert: anotherAtPragma hash = yetAnotherAtPragma hash.
-	self assert: yetAnotherAtPragma hash = atPragma hash.
+	self assert: atPragma hash equals: atPragma hash.
+	self assert: atPragma hash equals: anotherAtPragma hash.
+	self assert: anotherAtPragma hash equals: atPragma hash.
+	self assert: atPragma hash equals: anotherAtPragma hash.
+	self assert: anotherAtPragma hash equals: yetAnotherAtPragma hash.
+	self assert: yetAnotherAtPragma hash equals: atPragma hash
 ]

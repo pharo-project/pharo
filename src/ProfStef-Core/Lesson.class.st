@@ -1,5 +1,6 @@
 "
-See class side messages #welcome, #doingVSPrinting....
+A lesson is a simple data object holding a name and an associated text that will be displayed by
+the tutorialPlayer. 
 
 "
 Class {

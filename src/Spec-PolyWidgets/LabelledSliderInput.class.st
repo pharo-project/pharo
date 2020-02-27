@@ -14,6 +14,21 @@ Class {
 	#category : #'Spec-PolyWidgets-Labelled'
 }
 
+{ #category : #example }
+LabelledSliderInput class >> example [
+	<sampleInstance>
+	| example |
+	example := self new
+		min: 0;
+		max: 250;
+		autoAccept: true;
+		value: 120;
+		extent: 400 @ 50;
+		title: 'LabelledSliderInput example';
+		openWithSpec.
+	^ example
+]
+
 { #category : #'api-shortcuts' }
 LabelledSliderInput >> absoluteValue [
 	^ self sliderInput absoluteValue

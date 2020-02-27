@@ -12,7 +12,7 @@ RelationSlotTest >> testDefinition [
 	s1 := ToManyRelationSlot named: #people inverse: #x inClass: #SlotExamplePerson.
 	s2 := #people => ToManyRelationSlot inverse: #x inClass: #SlotExamplePerson.
 	
-	self assert: s1 = s2.
+	self assert: s1 equals: s2.
 	self assert: s1 hasInverse 
 
 ]
@@ -25,7 +25,7 @@ RelationSlotTest >> testDefinitionWithClass [
 	s1 := #people => ToManyRelationSlot inverse: #x inClass: #SlotExamplePerson.
 	s2 := #people => ToManyRelationSlot inverse: #x inClass: SlotExamplePerson.
 	
-	self assert: s1 = s2.
+	self assert: s1 equals: s2.
 	self assert: s1 hasInverse 
 
 ]
@@ -47,18 +47,15 @@ RelationSlotTest >> testEquals [
 	s1 := ToManyRelationSlot named: #slot inverse: #x inClass: #SlotExamplePerson.
 	s2 := ToManyRelationSlot named: #slot inverse: #x inClass: #SlotExamplePerson.
 	
-	self assert: s1 = s2.
-	self assert: s1 hash = s2 hash.
+	self assert: s1 equals: s2.
+	self assert: s1 hash equals: s2 hash
 ]
 
 { #category : #tests }
 RelationSlotTest >> testNotEquals [
-
 	| s1 s2 |
-	
 	s1 := ToManyRelationSlot named: #slot inverse: #x inClass: #SlotExamplePerson.
 	s2 := ToManyRelationSlot named: #slot inverse: #y inClass: #SlotExamplePerson.
-	
-	self deny: s1 = s2.
 
+	self deny: s1 equals: s2
 ]

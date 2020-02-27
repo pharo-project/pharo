@@ -1,11 +1,40 @@
 "
-A WindowPresenter is a spec presenter for a Window
+I'm a spec presenter defining a Window.
+I define common behaviour for windows (like title, extent, position). 
+I can also hold a menuBar, a toolBar and a statusBar.
+
+Tipically you do not use this presenter directly but through a presenter you want to show. 
+When you execute ==aPresenter openWithSpec==, what happens is that a SpWindowPresenter is created. Then the #initializeWindow: method is called and an user can configure its window there.
+
+You can also access your window when your presenter is active by using ==#withWindowDo:==
+
+!! Example 1 
+
+SpPresenter subclass: #MyPresenter.
+
+MyPresenter >> initializeWindow: aWindowPresenter
+
+	aWindowPresenter
+		title: 'Title Example';
+		initialExtent: 800@600.
+
+!! Example 2
+
+| presenter window |
+
+presenter := SpTextPresenter new
+text: self testText;
+yourself.
+window := presenter openWithSpec.
+presenter withWindowDo: [ :w | w title: 'A fancy looking title text' ].
+
 "
 Class {
 	#name : #SpWindowPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
 		'#presenter => SpObservableSlot',
+		'#initialPosition => SpObservableSlot',
 		'#initialExtent => SpObservableSlot',
 		'#isResizeable => SpObservableSlot',
 		'#menu => SpObservableSlot',
@@ -112,6 +141,12 @@ SpWindowPresenter >> basicBuildWithSpecLayout: presenterSpecLayout [
 	^ widget
 ]
 
+{ #category : #api }
+SpWindowPresenter >> beep [ 
+	
+	self adapter beep
+]
+
 { #category : #'private building' }
 SpWindowPresenter >> buildWindowWithLayout: windowSpecLayout presenterLayout: presenterSpecLayout [
 
@@ -172,20 +207,16 @@ SpWindowPresenter >> defaultInitialExtent [
 
 { #category : #private }
 SpWindowPresenter >> delete [
+	"DO NOT USE. This will destroy the window and maybe you do not want that :/
+	 I'm keeping this here because of testing."
 
-	self window delete
+	self withAdapterDo: #delete
 ]
 
 { #category : #focus }
 SpWindowPresenter >> giveFocusToNextFrom: aModel [ 
 
 	^ self presenter giveFocusToNextFrom: aModel
-]
-
-{ #category : #focus }
-SpWindowPresenter >> giveFocusToPreviousFrom: aModel [ 
-
-	^ self presenter giveFocusToPreviousFrom: aModel 
 ]
 
 { #category : #testing }
@@ -208,10 +239,8 @@ SpWindowPresenter >> hasStatusBar [
 ]
 
 { #category : #testing }
-SpWindowPresenter >> hasToolBar [
-	
-	^ self toolBar notNil
-	and: [ self toolBar notEmpty ]
+SpWindowPresenter >> hasToolbar [
+	^ self toolBar notNil and: [ self toolBar notEmpty ]
 ]
 
 { #category : #api }
@@ -222,6 +251,18 @@ SpWindowPresenter >> initialExtent [
 { #category : #api }
 SpWindowPresenter >> initialExtent: anExtent [
 	initialExtent := anExtent
+]
+
+{ #category : #api }
+SpWindowPresenter >> initialPosition [
+
+	^ initialPosition
+]
+
+{ #category : #api }
+SpWindowPresenter >> initialPosition: aPoint [
+
+	initialPosition := aPoint
 ]
 
 { #category : #initialization }
@@ -336,13 +377,10 @@ SpWindowPresenter >> okToChange [
 
 { #category : #private }
 SpWindowPresenter >> openWithSpecLayout: aSpec [
-
 	self buildWithSpecLayout: aSpec.
 	self changed: #open with: #().
-	
 	self allPresenters do: [ :each | each announceDisplayed ].
-
-	self updateTitle.
+	self updateTitle
 ]
 
 { #category : #accessing }
@@ -412,10 +450,19 @@ SpWindowPresenter >> toolBar: aToolbarPresenter [
 ]
 
 { #category : #'private-traversing' }
-SpWindowPresenter >> traversePresentersDo: aBlock excluding: excludes [
+SpWindowPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
 
+	"I am not focusable (not with tab)"
+	self presenter 
+		traverseInFocusOrderDo: aBlock 
+		excluding: excludes
+]
+
+{ #category : #'private-traversing' }
+SpWindowPresenter >> traversePresentersDo: aBlock excluding: excludes [
+	
 	super traversePresentersDo: aBlock excluding: excludes.
-	presenter traversePresentersDo: aBlock excluding: excludes.
+	presenter traversePresentersDo: aBlock excluding: excludes
 ]
 
 { #category : #api }
@@ -437,12 +484,34 @@ SpWindowPresenter >> updateTitle [
 
 { #category : #'api-events' }
 SpWindowPresenter >> whenClosedDo: aBlock [
-	self property: #isClosed whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
+	
+	self 
+		property: #isClosed 
+		whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
 ]
 
 { #category : #'api-events' }
 SpWindowPresenter >> whenOpenedDo: aBlock [
-	self property: #isClosed whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+
+	self 
+		property: #isClosed 
+		whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+]
+
+{ #category : #'api-events' }
+SpWindowPresenter >> whenResizingDo: aBlock [
+	
+	self announcer 
+		when: WindowResizing
+		do: aBlock
+]
+
+{ #category : #'api-events' }
+SpWindowPresenter >> whenWillCloseDo: aBlock [
+	
+	self announcer 
+		when: SpWindowWillClose
+		do: aBlock
 ]
 
 { #category : #accessing }

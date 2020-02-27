@@ -12,23 +12,23 @@ Class {
 
 { #category : #'tests - converting' }
 WideStringTest >> testAsInteger [
-	self assert: '1796exportFixes-tkMX' asWideString asInteger = 1796.
+	self assert: '1796exportFixes-tkMX' asWideString asInteger equals: 1796.
 	self assert: 'donald' asWideString asInteger isNil.
-	self assert: 'abc234def567' asWideString asInteger = 234.
-	self assert: '-94' asWideString asInteger = -94.
-	self assert: 'foo-bar-92' asWideString asInteger = -92.
+	self assert: 'abc234def567' asWideString asInteger equals: 234.
+	self assert: '-94' asWideString asInteger equals: -94.
+	self assert: 'foo-bar-92' asWideString asInteger equals: -92.
 
-	self assert: '1796exportFixes-tkMX' asWideString asSignedInteger = 1796.
+	self assert: '1796exportFixes-tkMX' asWideString asSignedInteger equals: 1796.
 	self assert: 'donald' asWideString asSignedInteger isNil.
-	self assert: 'abc234def567' asWideString asSignedInteger = 234.
-	self assert: '-94' asWideString asSignedInteger = -94.
-	self assert: 'foo-bar-92' asWideString asSignedInteger = -92.
+	self assert: 'abc234def567' asWideString asSignedInteger equals: 234.
+	self assert: '-94' asWideString asSignedInteger equals: -94.
+	self assert: 'foo-bar-92' asWideString asSignedInteger equals: -92.
 
-	self assert: '1796exportFixes-tkMX' asWideString asUnsignedInteger = 1796.
+	self assert: '1796exportFixes-tkMX' asWideString asUnsignedInteger equals: 1796.
 	self assert: 'donald' asWideString asUnsignedInteger isNil.
-	self assert: 'abc234def567' asWideString asUnsignedInteger = 234.
-	self assert: '-94' asWideString asUnsignedInteger = 94.
-	self assert: 'foo-bar-92' asWideString asUnsignedInteger = 92
+	self assert: 'abc234def567' asWideString asUnsignedInteger equals: 234.
+	self assert: '-94' asWideString asUnsignedInteger equals: 94.
+	self assert: 'foo-bar-92' asWideString asUnsignedInteger equals: 92
 ]
 
 { #category : #testing }
@@ -63,73 +63,71 @@ WideStringTest >> testBeginsWith [
 { #category : #'tests - match' }
 WideStringTest >> testCharactersExactlyMatching [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-	
-	self assert: ('abc' charactersExactlyMatching: 'abc') = 3.
-	self assert: ('abd' charactersExactlyMatching: 'abc') = 2.
-	self assert: ('abc' charactersExactlyMatching: 'abc' asWideString) = 3.
-	self assert: ('abd' charactersExactlyMatching: 'abc' asWideString) = 2.
-	self assert: ('abc' asWideString charactersExactlyMatching: 'abc') = 3.
-	self assert: ('abd' asWideString charactersExactlyMatching: 'abc') = 2.
-	self assert: ('abc' asWideString charactersExactlyMatching: 'abc' asWideString) = 3.
-	self assert: ('abd' asWideString charactersExactlyMatching: 'abc' asWideString)= 2.
-	self assert: ('abc' charactersExactlyMatching: 'ABC') = 0.
 
-
+	self assert: ('abc' charactersExactlyMatching: 'abc') equals: 3.
+	self assert: ('abd' charactersExactlyMatching: 'abc') equals: 2.
+	self assert: ('abc' charactersExactlyMatching: 'abc' asWideString) equals: 3.
+	self assert: ('abd' charactersExactlyMatching: 'abc' asWideString) equals: 2.
+	self assert: ('abc' asWideString charactersExactlyMatching: 'abc') equals: 3.
+	self assert: ('abd' asWideString charactersExactlyMatching: 'abc') equals: 2.
+	self assert: ('abc' asWideString charactersExactlyMatching: 'abc' asWideString) equals: 3.
+	self assert: ('abd' asWideString charactersExactlyMatching: 'abc' asWideString) equals: 2.
+	self assert: ('abc' charactersExactlyMatching: 'ABC') equals: 0
 ]
 
 { #category : #'tests - compare' }
 WideStringTest >> testCompare [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-	
-	self assert: ('abc' compare: 'abc') = 2.
-	self assert: ('abc' compare: 'abd') = 1.
-	self assert: ('abd' compare: 'abc') = 3.
-	self assert: ('abc' compare: 'abC') = 2.
-	self assert: ('abc' compare: 'abD') = 1.
-	self assert: ('abd' compare: 'abC') = 3.
-	self assert: ('aBc' compare: 'abC') = 2.
-	self assert: ('aBc' compare: 'abD') = 1.
-	self assert: ('aDd' compare: 'abC') = 3.
-	
-	
-	self assert: ('abc' compare: 'abc' asWideString) = 2.
-	self assert: ('abc' compare: 'abd' asWideString) = 1.
-	self assert: ('abd' compare: 'abc' asWideString) = 3.
-	self assert: ('abc' compare: 'abC' asWideString) = 2.
-	self assert: ('abc' compare: 'abD' asWideString) = 1.
-	self assert: ('abd' compare: 'abC' asWideString) = 3.
-	self assert: ('aBc' compare: 'abC' asWideString) = 2.
-	self assert: ('aBc' compare: 'abD' asWideString) = 1.
-	self assert: ('aDd' compare: 'abC' asWideString) = 3.
-	
-	self assert: ('abc' asWideString compare: 'abc') = 2.
-	self assert: ('abc' asWideString compare: 'abd') = 1.
-	self assert: ('abd' asWideString compare: 'abc') = 3.
-	self assert: ('abc' asWideString compare: 'abC') = 2.
-	self assert: ('abc' asWideString compare: 'abD') = 1.
-	self assert: ('abd' asWideString compare: 'abC') = 3.
-	self assert: ('aBc' asWideString compare: 'abC') = 2.
-	self assert: ('aBc' asWideString compare: 'abD') = 1.
-	self assert: ('aDd' asWideString compare: 'abC') = 3.
-	
-	self assert: ('abc' asWideString compare: 'abc' asWideString) = 2.
-	self assert: ('abc' asWideString compare: 'abd' asWideString) = 1.
-	self assert: ('abd' asWideString compare: 'abc' asWideString) = 3.
-	self assert: ('abc' asWideString compare: 'abC' asWideString) = 2.
-	self assert: ('abc' asWideString compare: 'abD' asWideString) = 1.
-	self assert: ('abd' asWideString compare: 'abC' asWideString) = 3.
-	self assert: ('aBc' asWideString compare: 'abC' asWideString) = 2.
-	self assert: ('aBc' asWideString compare: 'abD' asWideString) = 1.
-	self assert: ('aDd' asWideString compare: 'abC' asWideString) = 3.
-	
-	self assert: ('abc' compare: 'abc' caseSensitive: true) = 2.
-	self assert: ('abc' compare: 'abC' caseSensitive: false) = 2.
-	self assert: ('abc' compare: 'abc' asWideString caseSensitive: true) = 2.
-	self assert: ('abc' compare: 'abC' asWideString caseSensitive: false) = 2.
-	self assert: ('abc' asWideString compare: 'abc' caseSensitive: true) = 2.
-	self assert: ('abc' asWideString compare: 'abC' caseSensitive: false) = 2.
-	self assert: ('abc' asWideString compare: 'abc' asWideString caseSensitive: true) = 2.
-	self assert: ('abc' asWideString compare: 'abC' asWideString caseSensitive: false) = 2.
+
+	self assert: ('abc' compare: 'abc') equals: 2.
+	self assert: ('abc' compare: 'abd') equals: 1.
+	self assert: ('abd' compare: 'abc') equals: 3.
+	self assert: ('abc' compare: 'abC') equals: 2.
+	self assert: ('abc' compare: 'abD') equals: 1.
+	self assert: ('abd' compare: 'abC') equals: 3.
+	self assert: ('aBc' compare: 'abC') equals: 2.
+	self assert: ('aBc' compare: 'abD') equals: 1.
+	self assert: ('aDd' compare: 'abC') equals: 3.
+
+
+	self assert: ('abc' compare: 'abc' asWideString) equals: 2.
+	self assert: ('abc' compare: 'abd' asWideString) equals: 1.
+	self assert: ('abd' compare: 'abc' asWideString) equals: 3.
+	self assert: ('abc' compare: 'abC' asWideString) equals: 2.
+	self assert: ('abc' compare: 'abD' asWideString) equals: 1.
+	self assert: ('abd' compare: 'abC' asWideString) equals: 3.
+	self assert: ('aBc' compare: 'abC' asWideString) equals: 2.
+	self assert: ('aBc' compare: 'abD' asWideString) equals: 1.
+	self assert: ('aDd' compare: 'abC' asWideString) equals: 3.
+
+	self assert: ('abc' asWideString compare: 'abc') equals: 2.
+	self assert: ('abc' asWideString compare: 'abd') equals: 1.
+	self assert: ('abd' asWideString compare: 'abc') equals: 3.
+	self assert: ('abc' asWideString compare: 'abC') equals: 2.
+	self assert: ('abc' asWideString compare: 'abD') equals: 1.
+	self assert: ('abd' asWideString compare: 'abC') equals: 3.
+	self assert: ('aBc' asWideString compare: 'abC') equals: 2.
+	self assert: ('aBc' asWideString compare: 'abD') equals: 1.
+	self assert: ('aDd' asWideString compare: 'abC') equals: 3.
+
+	self assert: ('abc' asWideString compare: 'abc' asWideString) equals: 2.
+	self assert: ('abc' asWideString compare: 'abd' asWideString) equals: 1.
+	self assert: ('abd' asWideString compare: 'abc' asWideString) equals: 3.
+	self assert: ('abc' asWideString compare: 'abC' asWideString) equals: 2.
+	self assert: ('abc' asWideString compare: 'abD' asWideString) equals: 1.
+	self assert: ('abd' asWideString compare: 'abC' asWideString) equals: 3.
+	self assert: ('aBc' asWideString compare: 'abC' asWideString) equals: 2.
+	self assert: ('aBc' asWideString compare: 'abD' asWideString) equals: 1.
+	self assert: ('aDd' asWideString compare: 'abC' asWideString) equals: 3.
+
+	self assert: ('abc' compare: 'abc' caseSensitive: true) equals: 2.
+	self assert: ('abc' compare: 'abC' caseSensitive: false) equals: 2.
+	self assert: ('abc' compare: 'abc' asWideString caseSensitive: true) equals: 2.
+	self assert: ('abc' compare: 'abC' asWideString caseSensitive: false) equals: 2.
+	self assert: ('abc' asWideString compare: 'abc' caseSensitive: true) equals: 2.
+	self assert: ('abc' asWideString compare: 'abC' caseSensitive: false) equals: 2.
+	self assert: ('abc' asWideString compare: 'abc' asWideString caseSensitive: true) equals: 2.
+	self assert: ('abc' asWideString compare: 'abC' asWideString caseSensitive: false) equals: 2
 ]
 
 { #category : #'tests - endswith' }
@@ -150,50 +148,50 @@ WideStringTest >> testEndsWith [
 { #category : #'tests - compare' }
 WideStringTest >> testEqual [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
-	
-	self assert: 'abc' = 'abc'.
-	self assert: 'abc' = 'abc' asWideString.
-	self assert: 'abc' asWideString = 'abc'.
-	self assert: 'abc' asWideString = 'abc' asWideString.
+
+	self assert: 'abc' equals: 'abc'.
+	self assert: 'abc' equals: 'abc' asWideString.
+	self assert: 'abc' asWideString equals: 'abc'.
+	self assert: 'abc' asWideString equals: 'abc' asWideString.
 	self assert: ('abc' = 'ABC') not.
 	self assert: ('abc' = 'ABC' asWideString) not.
 	self assert: ('abc' asWideString = 'ABC') not.
-	self assert: ('abc' asWideString = 'abc' asWideString).
-	self assert: ( #[97 0 0 0] asString ~= 'a000' asWideString).
-	self assert: ('a000' asWideString ~=  #[97 0 0 0] asString).
+	self assert: 'abc' asWideString equals: 'abc' asWideString.
+	self assert: #[97 0 0 0] asString ~= 'a000' asWideString.
+	self assert: 'a000' asWideString ~= #[97 0 0 0] asString
 ]
 
 { #category : #'tests - substrings' }
 WideStringTest >> testFindSubstring [
 	"This is related to http://bugs.squeak.org/view.php?id=6366
 	finding substring in a WideString was broken because matchTable are byte-wise"
-	
+
 	| ws1 ws2 |
-	
-	self assert: ('abcd' findString: 'bc' startingAt: 1) = 2.
-	self assert: ('abcd' asWideString findString: 'bc' startingAt: 1) = 2.
-	self assert: ('abcd' findString: 'bc' asWideString startingAt: 1) = 2.
-	self assert: ('abcd' asWideString findString: 'bc' asWideString startingAt: 1) = 2.
-	
+	self assert: ('abcd' findString: 'bc' startingAt: 1) equals: 2.
+	self assert: ('abcd' asWideString findString: 'bc' startingAt: 1) equals: 2.
+	self assert: ('abcd' findString: 'bc' asWideString startingAt: 1) equals: 2.
+	self assert: ('abcd' asWideString findString: 'bc' asWideString startingAt: 1) equals: 2.
+
 	ws1 := 'A' , (WideString with: (Unicode value: 530)) , 'BCD'.
-	self assert: (ws1 findString: 'bc' startingAt: 1 caseSensitive: true) = 0.
-	self assert: (ws1 findString: 'bc' startingAt: 1 caseSensitive: false) = 3.
-	
+	self assert: (ws1 findString: 'bc' startingAt: 1 caseSensitive: true) equals: 0.
+	self assert: (ws1 findString: 'bc' startingAt: 1 caseSensitive: false) equals: 3.
+
 	ws2 := (WideString with: (Unicode value: 530)) , 'b'.
-	self assert: (ws1 findString: ws2 startingAt: 1 caseSensitive: true) = 0.
-	self assert: (ws1 findString: ws2 startingAt: 1 caseSensitive: false) = 2.
-	
-	self assert: ('abc' findString: ws2 startingAt: 1 caseSensitive: true) = 0.
-	self assert: ('abc' findString: ws2 startingAt: 1 caseSensitive: false) = 0.
+	self assert: (ws1 findString: ws2 startingAt: 1 caseSensitive: true) equals: 0.
+	self assert: (ws1 findString: ws2 startingAt: 1 caseSensitive: false) equals: 2.
+
+	self assert: ('abc' findString: ws2 startingAt: 1 caseSensitive: true) equals: 0.
+	self assert: ('abc' findString: ws2 startingAt: 1 caseSensitive: false) equals: 0
 ]
 
 { #category : #testing }
 WideStringTest >> testIsAsciiString [
 	"Non-regression for https://pharo.manuscript.com/f/cases/15232 "
-	self assert: '' asWideString isAsciiString = true.
-	self assert: 'abcdefGHIJKL 98765,./@#%$' asWideString isAsciiString = true.
 
-	self assert: 'éÀ' asWideString isAsciiString = false.
+	self assert: '' asWideString isAsciiString equals: true.
+	self assert: 'abcdefGHIJKL 98765,./@#%$' asWideString isAsciiString equals: true.
+
+	self assert: 'éÀ' asWideString isAsciiString equals: false
 ]
 
 { #category : #'tests - match' }
@@ -299,12 +297,16 @@ WideStringTest >> testSameAs [
 { #category : #'tests - substrings' }
 WideStringTest >> testSubstrings [
 	"this is related to http://bugs.squeak.org/view.php?id=6367"
-	
+
 	| w1 w2 |
-	w1 := WideString with: 401 asCharacter with: $a with: 402 asCharacter with: $b.
+	w1 := WideString
+		with: 401 asCharacter
+		with: $a
+		with: 402 asCharacter
+		with: $b.
 	w2 := WideString with: 403 asCharacter with: 404 asCharacter.
 
-	self assert: w1 substrings first = w1.
-	self assert: (w1 , ' ' , w2) substrings size = 2.
-	self assert: (w1 , ' ' , w2) substrings last = w2.
+	self assert: w1 substrings first equals: w1.
+	self assert: (w1 , ' ' , w2) substrings size equals: 2.
+	self assert: (w1 , ' ' , w2) substrings last equals: w2
 ]

@@ -3,7 +3,7 @@ Abstract superclass for monticello tests
 "
 Class {
 	#name : #MCTestCase,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Monticello-Tests-Base'
 }
 
@@ -24,8 +24,7 @@ MCTestCase class >> resources [
 
 { #category : #asserting }
 MCTestCase >> assertPackage: actual matches: expected [
-	self assert: actual = expected
-
+	self assert: actual equals: expected
 ]
 
 { #category : #asserting }
@@ -45,11 +44,10 @@ MCTestCase >> assertVersion: actual matches: expected [
 
 { #category : #asserting }
 MCTestCase >> assertVersionInfo: actual matches: expected [
-	self assert: actual name = expected name.
-	self assert: actual message = expected message.
-	self assert: actual ancestors size = expected ancestors size.
-	actual ancestors with: expected ancestors do: [:a :e | self assertVersionInfo: a matches: e]
-	
+	self assert: actual name equals: expected name.
+	self assert: actual message equals: expected message.
+	self assert: actual ancestors size equals: expected ancestors size.
+	actual ancestors with: expected ancestors do: [ :a :e | self assertVersionInfo: a matches: e ]
 ]
 
 { #category : #compiling }
@@ -97,12 +95,12 @@ MCTestCase >> mockClass: className super: superclassName [
 
 { #category : #mocks }
 MCTestCase >> mockClassA [
-	^ Smalltalk globals at: #MCMockClassA
+	^ testingEnvironment at: #MCMockClassA
 ]
 
 { #category : #mocks }
 MCTestCase >> mockClassB [
-	^ Smalltalk globals at: #MCMockClassB
+	^ testingEnvironment at: #MCMockClassB
 ]
 
 { #category : #mocks }

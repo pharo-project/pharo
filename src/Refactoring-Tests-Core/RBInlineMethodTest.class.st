@@ -239,7 +239,7 @@ RBInlineMethodTest >> testModelInlineRecursiveMethod [
 				inline: (15 to: 23)
 				inMethod: #foo
 				forClass: class.
-	self executeRefactoring: refactoring.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	self 
 		assert: (class parseTreeFor: #foo) equals: (self 
 						parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')

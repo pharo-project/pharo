@@ -1,5 +1,16 @@
 "
-I provide synchronized communication of a single bit of information (a ""signal"") between Processes. A signal is sent by sending the message signal and received by sending the message wait. If no signal has been sent when a wait message is sent, the sending Process will be suspended until a signal is sent.
+I'm a traditional semaphore, i.e., an elementary but important abstraction for process synchronisation. Using semaphores, concurrent processes are synchronized using wait and signal messages. If no signal has been sent when a wait message is sent, the sending process is suspended until a signal is sent. The suspended process is added to a semaphore waiting list of processes, and when a signal is received by the semaphore, waiting processes are scheduled. 
+
+From an abstract implementation explanation, I'm basically a queue with an excess signals count, which is a non-negative integer. 
+- On instance creation, a new semaphore is empty and has a zero excess signals count.
+- When a process waits on a semaphore (result of sending the message wait to the semaphore that is 'busy'), if the semaphore's excess signals count is non-zero, then the excess signal count is decremented, and the process proceeds. If the semaphore has a zero excess signals count then the process is unscheduled and added to the end of the semaphore waiting list, after any other processes that are were already queued on the semaphore.
+- When a semaphore is signaled, and if there are waiting processes on the semaphore waiting list, the first process is removed from it and added to the runnable processes in the scheduler. If the semaphore waiting list is empty, its excess signals count is simply incremented (it is often said that the semaphore is prearmed).
+
+A semaphore created for mutual exclusion is empty and has an excess signals count of one.
+
+Implementation note.
+While conceptually a semaphore has a list and a counter of excess signals. At the implementation level, the class Semaphore inherits from the class LinkedList, so the waiting process list is 'directly' in the semaphore itself. Since Process inherits from the class Link, elements that can be added to linked list and to the semaphore directly without being wrapped by an linked list element object.
+This is a design simplification for the virtual machine.
 "
 Class {
 	#name : #Semaphore,
@@ -113,6 +124,25 @@ test is written carefully so that it will result in bytecodes only."
 			Evaluate the alternative block and answer its result."
 			^alternativeBlock value ].
 	^self critical: mutuallyExcludedBlock
+]
+
+{ #category : #'mutual exclusion' }
+Semaphore >> criticalReleasingOnError: mutuallyExcludedBlock [
+	"This is like #critical: but releasing the lock if there is an exception in the block"	
+	| blockValue caught |
+	caught := false.
+	[
+		caught := true.
+		self wait.
+		blockValue := mutuallyExcludedBlock 
+			on: Exception 
+			do: [ :e | caught ifTrue: [self signal]. 
+				caught := false.
+				e pass.].
+
+	] ensure: [caught ifTrue: [self signal]].
+
+	^blockValue
 ]
 
 { #category : #'process termination handling' }

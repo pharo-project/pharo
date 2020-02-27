@@ -42,7 +42,7 @@ TimeProfiler class >> example [
 { #category : #examples }
 TimeProfiler class >> exampleOnBlock [
 
-	TimeProfiler onBlock: [ 20 timesRepeat: [Transcript show: 100 factorial printString]]
+	TimeProfiler onBlock: [ 20 timesRepeat: [self trace: 100 factorial printString]]
 ]
 
 { #category : #opening }
@@ -527,13 +527,11 @@ TimeProfiler >> selectedClass [
 
 { #category : #'accessing-computed' }
 TimeProfiler >> selectedMethodCode [
-	^ self selectedNode 
-		ifNil: [ self helpMessage ]
-		ifNotNil: [ :currNode | 
-			| class selector |
-			class := currNode methodClass.
-			selector := currNode selector.
-			(class ultimateSourceCodeAt: selector ifAbsent: [ 'error' ])]
+	| node method |
+	node := self selectedNode.
+	node ifNil: [ ^ self helpMessage ].
+	method := (node methodClass lookupSelector: node selector) ifNil: [ ^'Method not found' ].
+	^method sourceCode
 ]
 
 { #category : #compiling }
@@ -686,7 +684,7 @@ TimeProfiler >> time [
 { #category : #'UI specific' }
 TimeProfiler >> toolBarOn: aWindow [
 	| uiTheme toolBar |
-	uiTheme := Smalltalk ui theme.
+	uiTheme :=self theme.
 	toolBar := toolBar := aWindow
 		newToolbar:
 			{((uiTheme
@@ -769,7 +767,7 @@ TimeProfiler >> treeMorph [
 		treeLineDashes: {5. 1};
 		lineColorBlock: [:node | {Color gray. Color orange. Color brown. Color magenta. Color blue} at: ((node level \\ 5) + 1)];
 		doubleClickSelector: #browseItem;
-		rowColorForEven: Smalltalk ui theme lightBackgroundColor;
+		rowColorForEven: self theme lightBackgroundColor;
 		yourself
 
 ]

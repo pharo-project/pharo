@@ -5,7 +5,31 @@ As my name sais, I can place my elements in a grid, following some constraints:
 - a position is mandatory
 - a span can be added if desired
 
+A grid layout is tipically used while doing ""form-like"" presenters, for example, we can 
+do something like this: 
 
+	--------------------------
+	| Name:      | ######### |
+	--------------------------
+	| Password:  | ######### |
+	--------------------------
+	|       [Accept] [Cancel]| 
+	--------------------------
+
+You can achieve this in several ways, but a simple one would be: 
+
+SpecGridLayout new 
+	add: 'Name:' 			at: 1@1;
+	add: #nameText 			at: 2@1
+	add: 'Password:' 		at: 1@2;
+	add: #passwordText 	at: 2@2;
+	add: (SpecBoxLayout newHorizontal
+			addLast: #acceptButton;
+			addLast: #cancelButton;
+			yourself)
+		at: 1@3 
+		span: 2@1;
+	yourself
 "
 Class {
 	#name : #SpGridLayout,
@@ -99,12 +123,6 @@ SpGridLayout >> borderWidth [
 { #category : #accessing }
 SpGridLayout >> borderWidth: anObject [
 	borderWidth := anObject
-]
-
-{ #category : #accessing }
-SpGridLayout >> children [
-
-	^ children
 ]
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ Class {
 	#category : #'Spec2-Core-Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : #private }
 SpNotification class >> dispatchErrorTo: aNotificationCenter message: aString [ 
 
 	^ self new 
@@ -22,13 +22,31 @@ SpNotification class >> dispatchErrorTo: aNotificationCenter message: aString [
 		dispatchTo: aNotificationCenter
 ]
 
-{ #category : #'instance creation' }
+{ #category : #private }
 SpNotification class >> dispatchInfoTo: aNotificationCenter message: aString [ 
 
 	^ self new 
 		beInfo;
 		message: aString;
 		dispatchTo: aNotificationCenter
+]
+
+{ #category : #'instance creation' }
+SpNotification class >> newError: aString [
+
+	^ self new 
+		beError;
+		message: aString;
+		yourself
+]
+
+{ #category : #'instance creation' }
+SpNotification class >> newInfo: aString [
+
+	^ self new 
+		beInfo;
+		message: aString;
+		yourself
 ]
 
 { #category : #accessing }

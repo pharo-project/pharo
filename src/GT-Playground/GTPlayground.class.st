@@ -76,7 +76,8 @@ GTPlayground class >> extentSettingsOn: aBuilder [
 		target: self;
 		parent: #gt;
 		getSelector: #preferredWidth;
-		setSelector: #preferredWidth:; 
+		setSelector: #preferredWidth:;
+		default: 600; 
 		label: 'Playground width';
 		description: 'The preferred width of new Playground windows'.
 	(aBuilder setting: #GTPlaygroundPreferredHeight)
@@ -84,6 +85,7 @@ GTPlayground class >> extentSettingsOn: aBuilder [
 		parent: #gt;
 		getSelector: #preferredHeight;
 		setSelector: #preferredHeight:; 
+		default: 400;
 		label: 'Playground height';
 		description: 'The preferred height of new Playground windows'.
 	(aBuilder setting: #GTPlaygroundRememberPreferredExtent)
@@ -92,6 +94,7 @@ GTPlayground class >> extentSettingsOn: aBuilder [
 		getSelector: #rememberPreferredExtent;
 		setSelector: #rememberPreferredExtent:; 
 		label: 'Remember extent of Playground';
+		default: true;
 		description: 'Enable or disable remembering of the extent of Playground windows on resize. When the preference is true, resizing a Playground window will affect the preferred width and height of future Playground windows'.
 	
 
@@ -261,16 +264,20 @@ GTPlayground class >> settingsOn: aBuilder [
 		getSelector: #isGTPlaygroundEnabled;
 		setSelector: #setGTPlaygroundEnabledStatus:; 
 		label: 'GTPlayground';
+		default: true;
 		description: 'Enable or disable the GTPlayground.'.
 	(aBuilder setting: #cacheDirectory)
 		parent: #gt;
+		default: true;
 		type: #Directory;
+		default: GTPlayBook defaultCacheDirectory;
 		target: GTPlayBook;
 		description: 'The path to the local Playground cache that stores all Playground scripts in ph files';
 		label: 'Local Playground cache directory'.
 	(aBuilder setting: #stashDirectory)
 		parent: #gt;
 		type: #Directory;
+		default: (FileLocator localDirectory / 'play-cache') resolve;
 		target: GTPlayBook;
 		description: 'The path to the local Playground stash that stores all named Playground scripts in ph files';
 		label: 'Local Playground stash directory'

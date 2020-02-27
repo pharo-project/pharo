@@ -31,39 +31,37 @@ YearMonthWeekTest >> tearDown [
 
 { #category : #tests }
 YearMonthWeekTest >> testDaysInMonth [
-	self assert: (Month daysInMonth: 2 forYear: 2000) = 29.
-	self assert: (Month daysInMonth: 2 forYear: 2001) = 28.
-	self assert: (Month  daysInMonth: 2 forYear: 2004) = 29.
-	self assert: (Month  daysInMonth: 2 forYear: 2100) = 28.
-	
-	self assert: (Month  daysInMonth: 'January' forYear: 2003) = 31.
-	self assert: (Month  daysInMonth: 'February' forYear: 2003) = 28.
-	self assert: (Month  daysInMonth: 'March' forYear: 2003) = 31.
-	self assert: (Month  daysInMonth: 'April' forYear: 2003) = 30.
-	self assert: (Month  daysInMonth: 'May' forYear: 2003) = 31.
-	self assert: (Month  daysInMonth: 'June' forYear: 2003) = 30.
-	self assert: (Month  daysInMonth: 'July' forYear: 2003) = 31.
-	self assert: (Month  daysInMonth: 'August' forYear: 2003) = 31.
-	self assert: (Month  daysInMonth: 'September' forYear: 2003) = 30.
-	self assert: (Month  daysInMonth: 'October' forYear: 2003) = 31.
-	self assert: (Month  daysInMonth: 'November' forYear: 2003) = 30.
-	self assert: (Month  daysInMonth: 'December' forYear: 2003) = 31.
+	self assert: (Month daysInMonth: 2 forYear: 2000) equals: 29.
+	self assert: (Month daysInMonth: 2 forYear: 2001) equals: 28.
+	self assert: (Month daysInMonth: 2 forYear: 2004) equals: 29.
+	self assert: (Month daysInMonth: 2 forYear: 2100) equals: 28.
+
+	self assert: (Month daysInMonth: 'January' forYear: 2003) equals: 31.
+	self assert: (Month daysInMonth: 'February' forYear: 2003) equals: 28.
+	self assert: (Month daysInMonth: 'March' forYear: 2003) equals: 31.
+	self assert: (Month daysInMonth: 'April' forYear: 2003) equals: 30.
+	self assert: (Month daysInMonth: 'May' forYear: 2003) equals: 31.
+	self assert: (Month daysInMonth: 'June' forYear: 2003) equals: 30.
+	self assert: (Month daysInMonth: 'July' forYear: 2003) equals: 31.
+	self assert: (Month daysInMonth: 'August' forYear: 2003) equals: 31.
+	self assert: (Month daysInMonth: 'September' forYear: 2003) equals: 30.
+	self assert: (Month daysInMonth: 'October' forYear: 2003) equals: 31.
+	self assert: (Month daysInMonth: 'November' forYear: 2003) equals: 30.
+	self assert: (Month daysInMonth: 'December' forYear: 2003) equals: 31
 ]
 
 { #category : #tests }
 YearMonthWeekTest >> testDaysInYear [
-	self assert: (Year daysInYear: 2000) = 366.
-	self assert: (Year daysInYear: 2001) = 365.
-	self assert: (Year daysInYear: 2004) = 366.
-	self assert: (Year daysInYear: 2100) = 365.
-	self assert: (Year daysInYear: 2003) = 365.
+	self assert: (Year daysInYear: 2000) equals: 366.
+	self assert: (Year daysInYear: 2001) equals: 365.
+	self assert: (Year daysInYear: 2004) equals: 366.
+	self assert: (Year daysInYear: 2100) equals: 365.
+	self assert: (Year daysInYear: 2003) equals: 365
 ]
 
 { #category : #tests }
 YearMonthWeekTest >> testIndexOfDay [
-	self assert: (Week indexOfDay: 'Friday') = 6.
-
-
+	self assert: (Week indexOfDay: 'Friday') equals: 6
 ]
 
 { #category : #tests }
@@ -85,11 +83,9 @@ YearMonthWeekTest >> testMonthPrintOn [
 { #category : #tests }
 YearMonthWeekTest >> testStartDay [
 	Week startDay: 'Wednesday'.
-	self assert: Week startDay = 'Wednesday'.
+	self assert: Week startDay equals: 'Wednesday'.
 	Week startDay: 'Thursday'.
-	self assert: Week startDay = 'Thursday'.
-
-
+	self assert: Week startDay equals: 'Thursday'
 ]
 
 { #category : #tests }
@@ -99,7 +95,7 @@ YearMonthWeekTest >> testWeekPrintOn [
 	cs := 'a Week starting: 1900-12-30T00:00:00+00:00'.
 	rw := String new writeStream.
 	aWeek printOn: rw.
-	self assert: rw contents = cs
+	self assert: rw contents equals: cs
 ]
 
 { #category : #tests }

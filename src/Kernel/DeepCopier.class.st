@@ -69,8 +69,6 @@ DeepCopier >> basicCheckClass: aClass [
 DeepCopier >> checkAllClasses [
 
 	| warnings |
-	self checkBasicClasses.
-
 	warnings := ((self systemNavigation allClassesImplementing: #veryDeepInner:),
 		(self systemNavigation allClassesImplementing: #veryDeepCopyWith:)) flatCollect: [ :aClass |
 			 self basicCheckClass: aClass ].
@@ -79,26 +77,14 @@ DeepCopier >> checkAllClasses [
 ]
 
 { #category : #checking }
-DeepCopier >> checkBasicClasses [
-	"Check that no indexes of instance vars have changed in certain classes.  If you get an error in this method, an implementation of veryDeepCopyWith: needs to be updated.  The idea is to catch a change while it is still in the system of the programmer who made it.  
-	DeepCopier new checkAllClasses"
-	Object instSize = 0 ifFalse: [ self error: 'Many implementers of veryDeepCopyWith: are out of date' ].
-
-
-
-]
-
-{ #category : #checking }
 DeepCopier >> checkClass: aClass [
-
-	| warnings |
-	self checkBasicClasses.
-	warnings := self basicCheckClass: aClass.
-	warnings ifNotEmpty: [
-		Warning new
-			messageText: 'VeryDeepCopy out of sync in some classes. Some classes contain veryDeepCopyWith: or veryDeepInner: methods that are not in sync with their instance variables. Check the exception #tag for a list of them';
-			tag: warnings;
-			signal ]
+	(self basicCheckClass: aClass)
+		ifNotEmpty: [ :warnings | 
+			Warning new
+				messageText:
+					'VeryDeepCopy out of sync in some classes. Some classes contain veryDeepCopyWith: or veryDeepInner: methods that are not in sync with their instance variables. Check the exception #tag for a list of them';
+				tag: warnings;
+				signal ]
 ]
 
 { #category : #'like fullCopy' }
@@ -107,20 +93,22 @@ DeepCopier >> checkDeep [
 (Please do not remove this method.)
 	DeepCopier new checkDeep 	"
 
-	Transcript
-		cr;
-		show: 'Instance variables shared with the original object when it is copied'.
-	(self systemNavigation allClassesImplementing: #veryDeepInner:) do: 
-		[:aClass | | mm |
-		(mm := aClass instVarNames size) > 0 ifTrue:
-			[aClass instSize - mm + 1 to: aClass instSize do: 
-				[:index | 
-				((aClass compiledMethodAt: #veryDeepInner:) writesField: index) ifFalse: 
-					[Transcript
-						cr;
-						show: aClass name;
-						space;
-						show: (aClass allInstVarNames at: index)]]]]
+	<script: 'DeepCopier new checkDeep'>
+	Warning signal:
+			(String
+				streamContents: [ :stream | 
+					stream
+						nextPutAll: 'Instance variables shared with the original object when it is copied'.
+					(self systemNavigation allClassesImplementing: #veryDeepInner:)
+						do: [ :aClass | 
+							| mm |
+							(mm := aClass instVarNames size) > 0
+								ifTrue: [ aClass instSize - mm + 1 to: aClass instSize do: [ :index | 
+										((aClass compiledMethodAt: #veryDeepInner:) writesField: index)
+											ifFalse: [ stream cr; tab.
+												aClass name printOn: stream.
+												stream space.
+												(aClass allInstVarNames at: index) printOn: stream ] ] ] ] ])
 ]
 
 { #category : #checking }

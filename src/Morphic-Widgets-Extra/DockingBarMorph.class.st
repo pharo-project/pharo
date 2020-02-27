@@ -455,8 +455,6 @@ DockingBarMorph >> initialize [
 
 	super initialize.
 	""
-	selectedItem := nil.
-	activeSubMenu := nil.
 	fillsOwner := true.
 	avoidVisibleBordersAtEdge := true.
 	autoGradient := self wantsGradientByDefault.
@@ -767,19 +765,19 @@ DockingBarMorph >> updateColor [
 { #category : #'private - layout' }
 DockingBarMorph >> updateExtent [
 	"private - update the receiver's extent"
+
 	| margin usedHeight |
 	self fullBounds.
-	self fillsOwner
-		ifFalse: [^ self].
-	margin := self avoidVisibleBordersAtEdge
-				ifTrue: [self borderWidth * 2]
-				ifFalse: [0].
-	self isHorizontal
-		ifTrue: [self width: self owner width + margin].
-	self isVertical
-		ifTrue: [
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top #bottom ).
-			self height: self owner height + margin - usedHeight]
+	self fillsOwner ifFalse: [ ^ self ].
+	
+	"Nil check because there is probably a race condition here making the CI fail a lot."
+	self owner
+		ifNotNil: [ :anOwner | 
+			margin := self avoidVisibleBordersAtEdge ifTrue: [ self borderWidth * 2 ] ifFalse: [ 0 ].
+			self isHorizontal ifTrue: [ self width: anOwner width + margin ].
+			self isVertical
+				ifTrue: [ usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top #bottom).
+					self height: anOwner height + margin - usedHeight ] ]
 ]
 
 { #category : #'private - layout' }
@@ -804,37 +802,35 @@ DockingBarMorph >> updatePosition [
 	"private - update the receiver's position.
 	Fixed so as not to keep changing position!
 	(called twice if adhereing)"
-	
-	| edgeSymbol margin |
-	edgeSymbol := self edgeToAdhereTo.
-	edgeSymbol == #none
-		ifTrue: [self
-				perform: (edgeSymbol , ':') asSymbol
-				with: (self owner perform: edgeSymbol)].
-	""
-	margin := self avoidVisibleBordersAtEdge
-				ifTrue: [self borderWidth asPoint]
-				ifFalse: [0 asPoint].
-	""
-	self isAdheringToTop
-		ifTrue: [| usedHeight | 
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top ).
-			self topLeft: self owner topLeft - margin + (0 @ usedHeight)].
-	self isAdheringToBottom
-		ifTrue: [| usedHeight | 
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#bottom ).
-			self bottomLeft: self owner bottomLeft + (-1 @ 1 * margin) - (0 @ usedHeight)].
-	""
-	self isAdheringToLeft
-		ifTrue: [| usedHeight usedWidth | 
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top ).
-			usedWidth := self usedWidthByPredominantDockingBarsOfChastes: #(#left ).
-			self topLeft: self owner topLeft - margin + (usedWidth @ usedHeight)].
-	self isAdheringToRight
-		ifTrue: [| usedHeight usedWidth | 
-			usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top ).
-			usedWidth := self usedWidthByPredominantDockingBarsOfChastes: #(#right ).
-			self topRight: self owner topRight + (1 @ -1 * margin) + (usedWidth negated @ usedHeight)]
+
+	self owner
+		ifNotNil: [ :anOwner | 
+			| edgeSymbol margin usedHeight |
+			edgeSymbol := self edgeToAdhereTo.
+			edgeSymbol == #none
+				ifTrue: [ self perform: (edgeSymbol , ':') asSymbol with: (anOwner perform: edgeSymbol) ].
+
+			margin := (self avoidVisibleBordersAtEdge ifTrue: [ self borderWidth ] ifFalse: [ 0 ]) asPoint.
+
+			self isAdheringToTop
+				ifTrue: [ usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top).
+					self topLeft: anOwner topLeft - margin + (0 @ usedHeight) ].
+
+			self isAdheringToBottom
+				ifTrue: [ usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#bottom).
+					self bottomLeft: anOwner bottomLeft + (-1 @ 1 * margin) - (0 @ usedHeight) ].
+
+			self isAdheringToLeft
+				ifTrue: [ | usedWidth |
+					usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top).
+					usedWidth := self usedWidthByPredominantDockingBarsOfChastes: #(#left).
+					self topLeft: anOwner topLeft - margin + (usedWidth @ usedHeight) ].
+
+			self isAdheringToRight
+				ifTrue: [ | usedWidth |
+					usedHeight := self usedHeightByPredominantDockingBarsOfChastes: #(#top).
+					usedWidth := self usedWidthByPredominantDockingBarsOfChastes: #(#right).
+					self topRight: anOwner topRight + (1 @ -1 * margin) + (usedWidth negated @ usedHeight) ] ]
 ]
 
 { #category : #'private - accessing' }

@@ -4,6 +4,6 @@ Only stub object, no real view is displayed.
 "
 Class {
 	#name : #SpecStubDiffView,
-	#superclass : #SpecStubView,
+	#superclass : #SpecStubViews,
 	#category : #'Spec-StubAdapter-Views'
 }

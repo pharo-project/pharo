@@ -1,5 +1,8 @@
 "
-I'm an external property of some entity. I have a source anchor to it…
+I'm an external property of some entity related to a piece of code.
+
+I define a basic interface of a #title and an #icon that can be used to display it in a user interface
+I also have a source anchor with a reference to the actual class, method, or other source code entity that I am related to.
 "
 Class {
 	#name : #ReProperty,
@@ -25,17 +28,6 @@ ReProperty >> color [
 { #category : #accessing }
 ReProperty >> entity [
 	^ self sourceAnchor entity
-]
-
-{ #category : #actions }
-ReProperty >> gtInspectorActions [
-	^ (self actions collect: [ :act | 
-		GLMGenericAction new
-			action: [ act actOnCritic: self ofEntity: self sourceAnchor entity ];
-		icon: act icon;
-		title: act description;
-		yourself ]),
-	super gtInspectorActions
 ]
 
 { #category : #accessing }

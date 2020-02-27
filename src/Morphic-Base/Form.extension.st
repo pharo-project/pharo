@@ -28,6 +28,13 @@ Form >> iconOrThumbnailOfSize: aNumberOrPoint [
 ]
 
 { #category : #'*Morphic-Base' }
+Form >> scaledByDisplayScaleFactor [
+	
+	^ self scaledToSize: self extent * self currentWorld displayScaleFactor.
+
+]
+
+{ #category : #'*Morphic-Base' }
 Form >> scaledIntoFormOfSize: aNumberOrPoint [ 
 	"Scale and center the receiver into a form of a given size"
 

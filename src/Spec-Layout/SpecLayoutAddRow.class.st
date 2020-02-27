@@ -19,9 +19,11 @@ SpecLayoutAddRow class >> block: aBlock layoutFrame: aLayoutFrame [
 
 { #category : #'instance creation' }
 SpecLayoutAddRow >> block: aBlock layoutFrame: aLayoutFrame [
+
 	| row |
 	row := SpecRowLayout composed.
 	aBlock value: row.
-	subwidget := row.
-	self layoutFrame: aLayoutFrame
+	subwidget := row asArray.
+	self layoutFrame: aLayoutFrame.
+	self generateArguments
 ]

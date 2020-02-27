@@ -39,8 +39,8 @@ InstanceVariableSlot class >> resetIvarSlots [
 InstanceVariableSlot >> definitionString [
 	"non special globals are defined by the symbol"
 	^self needsFullDefinition
-		ifTrue: [super definitionString]
-		ifFalse: [self name printString]
+		ifTrue: [ super definitionString ]
+		ifFalse: [ self name printString ]
 
 ]
 
@@ -53,7 +53,7 @@ InstanceVariableSlot >> emitStore: methodBuilder [
 { #category : #'code generation' }
 InstanceVariableSlot >> emitValue: methodBuilder [
 	"emit the bytecode to push ivar"
-	methodBuilder pushInstVar: index.
+	methodBuilder pushInstVar: index
 
 ]
 
@@ -74,8 +74,8 @@ InstanceVariableSlot >> isWrittenIn: aCompiledCode [
 
 { #category : #testing }
 InstanceVariableSlot >> needsFullDefinition [
-	"I am just a backward compatible ivar slot and can use simple definitons.
-	 Note: my subclasses need full definitons"
+	"I am just a backward compatible ivar slot and can use simple definitions.
+	 Note: my subclasses need full definitions"
 
 	^ self class ~= InstanceVariableSlot
 ]

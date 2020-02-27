@@ -25,14 +25,14 @@ BaselineOfMonticello >> baseline: spec [
 
 	spec for: #common do: [
 		spec 
-			package: 'Ring-Deprecated-Core-Kernel';
-			package: 'Ring-Deprecated-Core-Containers';
-			package: 'Ring-Deprecated-ChunkImporter';
+			package: 'Ring-Definitions-Core';
+			package: 'Ring-Definitions-Containers';
+			package: 'Ring-OldChunkImporter';
 			package: 'Zinc-Resource-Meta-Core';
 			package: 'System-Changes';
 			package: 'Compression';
 			package: 'Monticello';
-			package: 'Ring-Deprecated-Monticello';
+			package: 'Ring-Definitions-Monticello';
 			package: 'System-Model';
 			
 			package: 'Network-Kernel';
@@ -43,7 +43,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Zinc-FileSystem';
 			package: 'Zodiac-Core'.
 		spec 
-			group: 'Core' with: #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'Compression' 'Monticello' 'Ring-Deprecated-Monticello' 'System-Model');
+			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zinc-FileSystem' 'Zodiac-Core' );
 
 			group: 'default' with: #('Core' 'RemoteRepositories' ). ].		

@@ -9,8 +9,8 @@ Class {
 
 { #category : #private }
 FractionTest >> assert: a classAndValueEquals: b [
-	self assert: a class = b class.
-	self assert: a = b
+	self assert: a class equals: b class.
+	self assert: a equals: b
 ]
 
 { #category : #'tests - conversions' }
@@ -130,96 +130,94 @@ FractionTest >> testAsSmallerPowerOfTwo [
 
 { #category : #'tests - conversions' }
 FractionTest >> testCeiling [
-	self assert: (3 / 2) ceiling = 2.
-	self assert: (-3 / 2) ceiling = -1.
+	self assert: (3 / 2) ceiling equals: 2.
+	self assert: (-3 / 2) ceiling equals: -1
 ]
 
 { #category : #'tests - conversions' }
 FractionTest >> testFloor [
-	self assert: (3 / 2) floor = 1.
-	self assert: (-3 / 2) floor = -2.
+	self assert: (3 / 2) floor equals: 1.
+	self assert: (-3 / 2) floor equals: -2
 ]
 
 { #category : #'tests - printing' }
 FractionTest >> testFractionPrinting [
+	self assert: (353 / 359) printString equals: '(353/359)'.
+	self assert: (2 / 3 printStringBase: 2) equals: '(10/11)'.
+	self assert: (2 / 3 storeStringBase: 2) equals: '(2r10/2r11)'.
+	self assert: (5 / 7 printStringBase: 3) equals: '(12/21)'.
+	self assert: (5 / 7 storeStringBase: 3) equals: '(3r12/3r21)'.
+	self assert: (11 / 13 printStringBase: 4) equals: '(23/31)'.
+	self assert: (11 / 13 storeStringBase: 4) equals: '(4r23/4r31)'.
+	self assert: (17 / 19 printStringBase: 5) equals: '(32/34)'.
+	self assert: (17 / 19 storeStringBase: 5) equals: '(5r32/5r34)'.
+	self assert: (23 / 29 printStringBase: 6) equals: '(35/45)'.
+	self assert: (23 / 29 storeStringBase: 6) equals: '(6r35/6r45)'.
+	self assert: (31 / 37 printStringBase: 7) equals: '(43/52)'.
+	self assert: (31 / 37 storeStringBase: 7) equals: '(7r43/7r52)'.
+	self assert: (41 / 43 printStringBase: 8) equals: '(51/53)'.
+	self assert: (41 / 43 storeStringBase: 8) equals: '(8r51/8r53)'.
+	self assert: (47 / 53 printStringBase: 9) equals: '(52/58)'.
+	self assert: (47 / 53 storeStringBase: 9) equals: '(9r52/9r58)'.
+	self assert: (59 / 61 printStringBase: 10) equals: '(59/61)'.
+	self assert: (59 / 61 storeStringBase: 10) equals: '(59/61)'.
+	self assert: (67 / 71 printStringBase: 11) equals: '(61/65)'.
+	self assert: (67 / 71 storeStringBase: 11) equals: '(11r61/11r65)'.
+	self assert: (73 / 79 printStringBase: 12) equals: '(61/67)'.
+	self assert: (73 / 79 storeStringBase: 12) equals: '(12r61/12r67)'.
+	self assert: (83 / 89 printStringBase: 13) equals: '(65/6B)'.
+	self assert: (83 / 89 storeStringBase: 13) equals: '(13r65/13r6B)'.
+	self assert: (97 / 101 printStringBase: 14) equals: '(6D/73)'.
+	self assert: (97 / 101 storeStringBase: 14) equals: '(14r6D/14r73)'.
+	self assert: (103 / 107 printStringBase: 15) equals: '(6D/72)'.
+	self assert: (103 / 107 storeStringBase: 15) equals: '(15r6D/15r72)'.
+	self assert: (109 / 113 printStringBase: 16) equals: '(6D/71)'.
+	self assert: (109 / 113 storeStringBase: 16) equals: '(16r6D/16r71)'.
+	self assert: (127 / 131 printStringBase: 17) equals: '(78/7C)'.
+	self assert: (127 / 131 storeStringBase: 17) equals: '(17r78/17r7C)'.
+	self assert: (137 / 139 printStringBase: 18) equals: '(7B/7D)'.
+	self assert: (137 / 139 storeStringBase: 18) equals: '(18r7B/18r7D)'.
+	self assert: (149 / 151 printStringBase: 19) equals: '(7G/7I)'.
+	self assert: (149 / 151 storeStringBase: 19) equals: '(19r7G/19r7I)'.
+	self assert: (157 / 163 printStringBase: 20) equals: '(7H/83)'.
+	self assert: (157 / 163 storeStringBase: 20) equals: '(20r7H/20r83)'.
+	self assert: (167 / 173 printStringBase: 21) equals: '(7K/85)'.
+	self assert: (167 / 173 storeStringBase: 21) equals: '(21r7K/21r85)'.
+	self assert: (179 / 181 printStringBase: 22) equals: '(83/85)'.
+	self assert: (179 / 181 storeStringBase: 22) equals: '(22r83/22r85)'.
+	self assert: (191 / 193 printStringBase: 23) equals: '(87/89)'.
+	self assert: (191 / 193 storeStringBase: 23) equals: '(23r87/23r89)'.
+	self assert: (197 / 199 printStringBase: 24) equals: '(85/87)'.
+	self assert: (197 / 199 storeStringBase: 24) equals: '(24r85/24r87)'.
+	self assert: (211 / 223 printStringBase: 25) equals: '(8B/8N)'.
+	self assert: (211 / 223 storeStringBase: 25) equals: '(25r8B/25r8N)'.
+	self assert: (227 / 229 printStringBase: 26) equals: '(8J/8L)'.
+	self assert: (227 / 229 storeStringBase: 26) equals: '(26r8J/26r8L)'.
+	self assert: (233 / 239 printStringBase: 27) equals: '(8H/8N)'.
+	self assert: (233 / 239 storeStringBase: 27) equals: '(27r8H/27r8N)'.
+	self assert: (241 / 251 printStringBase: 28) equals: '(8H/8R)'.
+	self assert: (241 / 251 storeStringBase: 28) equals: '(28r8H/28r8R)'.
+	self assert: (257 / 263 printStringBase: 29) equals: '(8P/92)'.
+	self assert: (257 / 263 storeStringBase: 29) equals: '(29r8P/29r92)'.
+	self assert: (269 / 271 printStringBase: 30) equals: '(8T/91)'.
+	self assert: (269 / 271 storeStringBase: 30) equals: '(30r8T/30r91)'.
+	self assert: (277 / 281 printStringBase: 31) equals: '(8T/92)'.
+	self assert: (277 / 281 storeStringBase: 31) equals: '(31r8T/31r92)'.
+	self assert: (283 / 293 printStringBase: 32) equals: '(8R/95)'.
+	self assert: (283 / 293 storeStringBase: 32) equals: '(32r8R/32r95)'.
+	self assert: (307 / 311 printStringBase: 33) equals: '(9A/9E)'.
+	self assert: (307 / 311 storeStringBase: 33) equals: '(33r9A/33r9E)'.
+	self assert: (313 / 317 printStringBase: 34) equals: '(97/9B)'.
+	self assert: (313 / 317 storeStringBase: 34) equals: '(34r97/34r9B)'.
+	self assert: (331 / 337 printStringBase: 35) equals: '(9G/9M)'.
+	self assert: (331 / 337 storeStringBase: 35) equals: '(35r9G/35r9M)'.
+	self assert: (347 / 349 printStringBase: 36) equals: '(9N/9P)'.
+	self assert: (347 / 349 storeStringBase: 36) equals: '(36r9N/36r9P)'.
 
-	self assert: (353/359) printString = '(353/359)'.
-	self assert: ((2/3) printStringBase: 2) = '(10/11)'.
-	self assert: ((2/3) storeStringBase: 2) = '(2r10/2r11)'.
-	self assert: ((5/7) printStringBase: 3) = '(12/21)'.
-	self assert: ((5/7) storeStringBase: 3) = '(3r12/3r21)'.
-	self assert: ((11/13) printStringBase: 4) = '(23/31)'.
-	self assert: ((11/13) storeStringBase: 4) = '(4r23/4r31)'.
-	self assert: ((17/19) printStringBase: 5) = '(32/34)'.
-	self assert: ((17/19) storeStringBase: 5) = '(5r32/5r34)'.
-	self assert: ((23/29) printStringBase: 6) = '(35/45)'.
-	self assert: ((23/29) storeStringBase: 6) = '(6r35/6r45)'.
-	self assert: ((31/37) printStringBase: 7) = '(43/52)'.
-	self assert: ((31/37) storeStringBase: 7) = '(7r43/7r52)'.
-	self assert: ((41/43) printStringBase: 8) = '(51/53)'.
-	self assert: ((41/43) storeStringBase: 8) = '(8r51/8r53)'.
-	self assert: ((47/53) printStringBase: 9) = '(52/58)'.
-	self assert: ((47/53) storeStringBase: 9) = '(9r52/9r58)'.
-	self assert: ((59/61) printStringBase: 10) = '(59/61)'.
-	self assert: ((59/61) storeStringBase: 10) = '(59/61)'.
-	self assert: ((67/71) printStringBase: 11) = '(61/65)'.
-	self assert: ((67/71) storeStringBase: 11) = '(11r61/11r65)'.
-	self assert: ((73/79) printStringBase: 12) = '(61/67)'.
-	self assert: ((73/79) storeStringBase: 12) = '(12r61/12r67)'.
-	self assert: ((83/89) printStringBase: 13) = '(65/6B)'.
-	self assert: ((83/89) storeStringBase: 13) = '(13r65/13r6B)'.
-	self assert: ((97/101) printStringBase: 14) = '(6D/73)'.
-	self assert: ((97/101) storeStringBase: 14) = '(14r6D/14r73)'.
-	self assert: ((103/107) printStringBase: 15) = '(6D/72)'.
-	self assert: ((103/107) storeStringBase: 15) = '(15r6D/15r72)'.
-	self assert: ((109/113) printStringBase: 16) = '(6D/71)'.
-	self assert: ((109/113) storeStringBase: 16) = '(16r6D/16r71)'.
-	self assert: ((127/131) printStringBase: 17) = '(78/7C)'.
-	self assert: ((127/131) storeStringBase: 17) = '(17r78/17r7C)'.
-	self assert: ((137/139) printStringBase: 18) = '(7B/7D)'.
-	self assert: ((137/139) storeStringBase: 18) = '(18r7B/18r7D)'.
-	self assert: ((149/151) printStringBase: 19) = '(7G/7I)'.
-	self assert: ((149/151) storeStringBase: 19) = '(19r7G/19r7I)'.
-	self assert: ((157/163) printStringBase: 20) = '(7H/83)'.
-	self assert: ((157/163) storeStringBase: 20) = '(20r7H/20r83)'.
-	self assert: ((167/173) printStringBase: 21) = '(7K/85)'.
-	self assert: ((167/173) storeStringBase: 21) = '(21r7K/21r85)'.
-	self assert: ((179/181) printStringBase: 22) = '(83/85)'.
-	self assert: ((179/181) storeStringBase: 22) = '(22r83/22r85)'.
-	self assert: ((191/193) printStringBase: 23) = '(87/89)'.
-	self assert: ((191/193) storeStringBase: 23) = '(23r87/23r89)'.
-	self assert: ((197/199) printStringBase: 24) = '(85/87)'.
-	self assert: ((197/199) storeStringBase: 24) = '(24r85/24r87)'.
-	self assert: ((211/223) printStringBase: 25) = '(8B/8N)'.
-	self assert: ((211/223) storeStringBase: 25) = '(25r8B/25r8N)'.
-	self assert: ((227/229) printStringBase: 26) = '(8J/8L)'.
-	self assert: ((227/229) storeStringBase: 26) = '(26r8J/26r8L)'.
-	self assert: ((233/239) printStringBase: 27) = '(8H/8N)'.
-	self assert: ((233/239) storeStringBase: 27) = '(27r8H/27r8N)'.
-	self assert: ((241/251) printStringBase: 28) = '(8H/8R)'.
-	self assert: ((241/251) storeStringBase: 28) = '(28r8H/28r8R)'.
-	self assert: ((257/263) printStringBase: 29) = '(8P/92)'.
-	self assert: ((257/263) storeStringBase: 29) = '(29r8P/29r92)'.
-	self assert: ((269/271) printStringBase: 30) = '(8T/91)'.
-	self assert: ((269/271) storeStringBase: 30) = '(30r8T/30r91)'.
-	self assert: ((277/281) printStringBase: 31) = '(8T/92)'.
-	self assert: ((277/281) storeStringBase: 31) = '(31r8T/31r92)'.
-	self assert: ((283/293) printStringBase: 32) = '(8R/95)'.
-	self assert: ((283/293) storeStringBase: 32) = '(32r8R/32r95)'.
-	self assert: ((307/311) printStringBase: 33) = '(9A/9E)'.
-	self assert: ((307/311) storeStringBase: 33) = '(33r9A/33r9E)'.
-	self assert: ((313/317) printStringBase: 34) = '(97/9B)'.
-	self assert: ((313/317) storeStringBase: 34) = '(34r97/34r9B)'.
-	self assert: ((331/337) printStringBase: 35) = '(9G/9M)'.
-	self assert: ((331/337) storeStringBase: 35) = '(35r9G/35r9M)'.
-	self assert: ((347/349) printStringBase: 36) = '(9N/9P)'.
-	self assert: ((347/349) storeStringBase: 36) = '(36r9N/36r9P)'.
-
-	self assert: ((-2/3) printStringBase: 2) = '(-10/11)'.
-	self assert: ((-2/3) storeStringBase: 2) = '(-2r10/2r11)'.
-	self assert: ((5 / -7) printStringBase: 3) = '(-12/21)'.
-	self assert: ((5 / -7) storeStringBase: 3) = '(-3r12/3r21)'.
-
+	self assert: (-2 / 3 printStringBase: 2) equals: '(-10/11)'.
+	self assert: (-2 / 3 storeStringBase: 2) equals: '(-2r10/2r11)'.
+	self assert: (5 / -7 printStringBase: 3) equals: '(-12/21)'.
+	self assert: (5 / -7 storeStringBase: 3) equals: '(-3r12/3r21)'
 ]
 
 { #category : #'tests - conversions' }
@@ -276,24 +274,23 @@ FractionTest >> testReadFrom [
 
 { #category : #'tests - sinuses' }
 FractionTest >> testReciprocal [
-
-	self 
-		assert: (1/2) reciprocal = 2;
-		assert: (3/4) reciprocal = (4/3);
-		assert: (-1/3) reciprocal = -3;
-		assert: (-3/5) reciprocal = (-5/3)
+	self
+		assert: (1 / 2) reciprocal equals: 2;
+		assert: (3 / 4) reciprocal equals: 4 / 3;
+		assert: (-1 / 3) reciprocal equals: -3;
+		assert: (-3 / 5) reciprocal equals: -5 / 3
 ]
 
 { #category : #'tests - conversions' }
 FractionTest >> testRounded [
-	self assert: (4 / 5) rounded = 1.
-	self assert: (6 / 5) rounded = 1.
-	self assert: (-4 / 5) rounded = -1.
-	self assert: (-6 / 5) rounded = -1.
-	
+	self assert: (4 / 5) rounded equals: 1.
+	self assert: (6 / 5) rounded equals: 1.
+	self assert: (-4 / 5) rounded equals: -1.
+	self assert: (-6 / 5) rounded equals: -1.
+
 	"In case of tie, round to upper magnitude"
-	self assert: (3 / 2) rounded = 2.
-	self assert: (-3 / 2) rounded = -2.
+	self assert: (3 / 2) rounded equals: 2.
+	self assert: (-3 / 2) rounded equals: -2
 ]
 
 { #category : #'tests - rounding' }
@@ -304,6 +301,6 @@ FractionTest >> testRounding [
 
 { #category : #'tests - conversions' }
 FractionTest >> testTruncated [
-	self assert: (3 / 2) truncated = 1.
-	self assert: (-3 / 2) truncated = -1.
+	self assert: (3 / 2) truncated equals: 1.
+	self assert: (-3 / 2) truncated equals: -1
 ]

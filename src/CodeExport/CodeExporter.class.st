@@ -36,5 +36,5 @@ CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReferen
 						cr;
 						cr;
 						nextPutAll: 'Click to open location' ])
-		actionOnClick: [ aFileReference openInNativeBrowser ]
+		actionOnClick: [ aFileReference openInOSFileBrowser ]
 ]

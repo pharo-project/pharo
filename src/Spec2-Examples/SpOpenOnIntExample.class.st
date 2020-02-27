@@ -42,12 +42,7 @@ SpOpenOnIntExample class >> new: anInteger [
 ]
 
 { #category : #initialization }
-SpOpenOnIntExample >> initialize: anInteger [
-	text label: anInteger asString
-]
-
-{ #category : #initialization }
-SpOpenOnIntExample >> initializePresenter [
+SpOpenOnIntExample >> connectPresenters [
 	minus
 		action: [ | currentValue |
 			currentValue := text label asInteger.
@@ -59,7 +54,12 @@ SpOpenOnIntExample >> initializePresenter [
 ]
 
 { #category : #initialization }
-SpOpenOnIntExample >> initializeWidgets [
+SpOpenOnIntExample >> initialize: anInteger [
+	text label: anInteger asString
+]
+
+{ #category : #initialization }
+SpOpenOnIntExample >> initializePresenters [
 	text := self instantiate: SpLabelPresenter.
 	plus := self instantiate: SpButtonPresenter.
 	minus := self instantiate: SpButtonPresenter.

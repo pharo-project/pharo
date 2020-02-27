@@ -1,6 +1,6 @@
 Class {
 	#name : #SpTextFieldExampleTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Examples'
 }
 

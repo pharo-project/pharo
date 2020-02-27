@@ -37,6 +37,7 @@ Class {
 { #category : #testing }
 Random class >> bucketTest: randy [
 	"Execute this:   Random bucketTest: Random new"
+
 	" A quick-and-dirty bucket test. Prints nbuckets values on the
 Transcript.
 	  Each should be 'near' the value of ntries. Any run with any value
@@ -51,17 +52,25 @@ more; go get coffee.
 		1029 1011 1025 1016 997 1019 991 954 968 999 991
 		978 1035 995 988 1038 1009 988 993 976
 "
+
+	<script: 'Random bucketTest: Random new'>
 	| nbuckets buckets ntrys |
 	nbuckets := 20.
 	buckets := Array new: nbuckets.
 	buckets atAllPut: 0.
-	ntrys :=  100.
-	ntrys*nbuckets timesRepeat: [ | slot |
-		slot := (randy next * nbuckets) floor + 1.
-		buckets at: slot put: (buckets at: slot) + 1 ].
-	Transcript cr.
-	1 to: nbuckets do: [ :nb |
-		Transcript show: (buckets at: nb) printString, ' ' ]
+	ntrys := 100.
+	ntrys * nbuckets
+		timesRepeat: [ | slot |
+			slot := (randy next * nbuckets) floor + 1.
+			buckets at: slot put: (buckets at: slot) + 1 ].
+	self
+		trace:
+			(String
+				streamContents: [ :stream | 
+					stream cr.
+					1 to: nbuckets do: [ :nb | 
+						(buckets at: nb) printOn: stream.
+						stream space ] ])
 ]
 
 { #category : #'instance creation' }
@@ -103,7 +112,7 @@ Random >> nextInt: anInteger [
 	Handle large numbers too (for cryptography)."
 
 	anInteger strictlyPositive ifFalse: [ self error: 'Range must be positive' ].
-	anInteger asFloat isInfinite
+	anInteger asFloat isInfinite "are we outside the range of float? - use fraction"
 		ifTrue: [^(self privateNextValue asFraction * anInteger) truncated + 1].
 	^ (self privateNextValue * anInteger) truncated + 1
 ]

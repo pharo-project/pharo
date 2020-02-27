@@ -30,7 +30,7 @@ SettingNode >> <= other [
 
 { #category : #accessing }
 SettingNode >> allChildren [
-	^ self model childrenOf: self.
+	^ self model childrenOf: self
 
 ]
 
@@ -226,7 +226,7 @@ SettingNode >> parentName [
 
 { #category : #accessing }
 SettingNode >> parentName: aSymbol [
-	parentName := aSymbol.
+	parentName := aSymbol
 	
 ]
 

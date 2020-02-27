@@ -217,8 +217,7 @@ DateTest >> testDuration [
 
 { #category : #tests }
 DateTest >> testEqual [
-
-	self assert: january23rd2004 = 'January 23, 2004' asDate.
+	self assert: january23rd2004 equals: 'January 23, 2004' asDate
 ]
 
 { #category : #tests }

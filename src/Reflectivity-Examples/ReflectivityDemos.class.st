@@ -37,7 +37,7 @@ ReflectivityDemos >> demoSelfSendLogging [
 	theClass := SpDemoNotebookPresenter.
 	Link := MetaLink new
 		metaObject: [ :context :object | context sender receiver == object
-				ifTrue: [ context crLog ] ];
+				ifTrue: [ context crTrace ] ];
 		selector: #value:value:;
 		option: #(+optionCompileOnLinkInstallation);
 		arguments: #(context object);

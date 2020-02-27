@@ -1,25 +1,27 @@
 Extension { #name : #Context }
 
 { #category : #'*OpalCompiler-Core' }
-Context >> executedPC [
-	"If this context is already perform message send and waiting return 
-	then executed PC is previous one. So we start analazing with previous PC.
-	If there was no sends yet then we just need current pc corrected by push operations.
-	Also we should skip block returns which surround following send"
-	| executedPC |
-	self isDead ifTrue: [ ^self startpc ].
-	executedPC := self previousPc ifNil: [self startpc].
-	
-	(self isReturnAt: executedPC) ifTrue: [ executedPC := executedPC + 1 ].	
-	"There is a pushLiteral: nil bytecode for each temps in a block. 
-	There is a 'pushTemp:' bytecode for each copied value of a block.
-	These bytecodes are not mapped to any IR.
-	We skip both"
-	[ self isPushLiteralNil: executedPC ] whileTrue: [ executedPC := executedPC + 1 ].
-	[ self isPushTemp: executedPC ] whileTrue: [ executedPC := executedPC + 1 ].
+Context >> astScope [
+	"Return the scope of the method or the block of this context. 
+	Note: we can not just use #sourceNode as this ignores optimized blocks.
+	We instead use sourceNodeExecuted and then get the the block or methodnode on the AST level.
+	For the topmost context, sourceNodeExecuted is off by one but that is not a problem as 
+	we still end up getting the scope  we want"
 
-	(self  isReturnAt: executedPC) ifTrue: [ executedPC := executedPC + 1 ].
-	^ executedPC
+	^ self sourceNodeExecuted methodOrBlockNode scope
+]
+
+{ #category : #'*OpalCompiler-Core' }
+Context >> executedPC [
+	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back 
+	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last* 
+	bytecode offset as the offset of the IR instruction, which means we can just go back one"		
+			
+	"if we are at the start, return the startpc"		
+	(pc == self startpc) ifTrue: [ ^self startpc ].
+	
+	"we need to guard for dead contexts (pc is nil)"
+	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1].
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -43,37 +45,16 @@ Context >> isReturnAt: aPC [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-Context >> neighborPCWithCorrectMapping [
-	"Answer a pc inside the enclosing block or mathod that is correctly mapped to an AST node"
-	"This is an ugly and temporary fix for Pharo 3. 
-	Must be removed as soon as mappings are fixed"
-	| neighborPC |
-	neighborPC := self isDead 
-		ifTrue: [ self startpc ]
-		ifFalse: [ pc ].
-	"There is a pushLiteral: nil bytecode for each temps in a block. 
-	There is a 'pushTemp:' bytecode for each copied value of a block.
-	These bytecodes are not mapped to any IR.
-	We skip both"
-	[ self isPushLiteralNil: neighborPC ] whileTrue: [ neighborPC := neighborPC + 1 ].
-	[ self isPushTemp: neighborPC ] whileTrue: [ neighborPC := neighborPC + 1 ].
-	"The block return ir instruction is mapped to the block instead of the sequence AST node. So we go just before it"
-	(self isBlockReturn: neighborPC) ifTrue: [ neighborPC := neighborPC - 1 ].
-	^ neighborPC
-]
-
-{ #category : #'*OpalCompiler-Core' }
 Context >> sourceNode [
-	"Return the source node of the method or the block corresponding to the receiver"
-	^ (method sourceNodeForPC: self neighborPCWithCorrectMapping) enclosingMethodOrBlockNode
-	"Uncomment the following once the pc->AST mapping is fixed"
-	"^ (method sourceNodeForPC: (pc ifNil: [ self startpc ])) enclosingMethodOrBlockNode"
+	"Return the source node that created the method or the block of this context"
+
+	^ closureOrNil
+		ifNil: [ self method sourceNode ]
+		ifNotNil: [ closureOrNil sourceNode ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 Context >> sourceNodeExecuted [
 	"When down in the stack, I return the node that executed"
-	^ (method sourceNodeExecutedForPC: self executedPC) 
-	"Uncomment the following once the pc->AST mapping is fixed"
-	"^ (method sourceNodeForPC: (previousPc ifNil: [ self startpc ])) "
+	^ method sourceNodeForPC: self executedPC
 ]

@@ -3,7 +3,7 @@ I contain tests that validate the integrity of the system.
 "
 Class {
 	#name : #ReleaseTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'ReleaseTests-Release'
 }
 
@@ -89,14 +89,14 @@ ReleaseTest >> knownProcesses [
 ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
-	Smalltalk globals allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
+	testingEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
 	self assertEmpty: wrong
 ]
 
 { #category : #tests }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
-	wrong := Smalltalk globals associations reject: [ :each | each isKindOf: GlobalVariable ].
+	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
 	self assertEmpty: wrong
 ]
 
@@ -104,7 +104,7 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
-	self assertValidLintRule: RBExplicitRequirementMethodsRule new
+	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 	
 ]
 
@@ -147,7 +147,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	
 	keyClasses do:	[ :className |
 		self assert: (registeredHandlers includes: className).
-		self assert: (self hasStartUpOrShutDownMethod: (Smalltalk globals at: className)) ].
+		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 	
 	self assert: (registeredHandlers includes: #UIManagerSessionHandler).
 ]
@@ -163,7 +163,7 @@ ReleaseTest >> testLayoutIntegrity [
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
-	self assertValidLintRule: RBLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
+	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
 ]
 
 { #category : #tests }
@@ -190,6 +190,13 @@ ReleaseTest >> testNoEmptyPackages [
 	| violating |
 	violating := RPackageOrganizer default packages select: #isEmpty.
 	self assertEmpty: violating
+]
+
+{ #category : #tests }
+ReleaseTest >> testNoNilAssignmentInInitializeMethod [
+	
+	self assertValidLintRule: ReNoNilAssignationInInitializeRule new
+	
 ]
 
 { #category : #tests }
@@ -222,6 +229,18 @@ ReleaseTest >> testPharoVersionFileExists [
 	self
 		assert: pharoVersionFile readStream contents trimBoth
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
+]
+
+{ #category : #'tests - packages - manifests' }
+ReleaseTest >> testProperManifestClasses [
+
+	|manifests|
+	manifests := self class environment allClasses select: [:each | each isManifest ].
+	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
+	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ]).
+
+
+ 
 ]
 
 { #category : #'tests - rpackage' }
@@ -262,6 +281,12 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache FT2Handle) 
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
+]
+
+{ #category : #tests }
+ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
+	self assertValidLintRule: ReTestClassNameShouldEndWithTest new
+	
 ]
 
 { #category : #'tests - rpackage' }

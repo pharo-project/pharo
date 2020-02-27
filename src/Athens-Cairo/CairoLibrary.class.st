@@ -9,52 +9,38 @@ Class {
 }
 
 { #category : #'accessing platform' }
-CairoLibrary >> macModuleName [
+CairoLibrary >> macLibraryName [
 	^ 'libcairo.2.dylib'
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> unix32ModuleName [
+CairoLibrary >> unix32LibraryName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
 	Packages such as snapcraft can also change the path.
 	Look in a number of known locations, or LD_LIBRARY_PATH."
 
-	(#('/usr/lib/i386-linux-gnu' '/usr/lib32' '/usr/lib'),
-			((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'))
-		do: [ :path | 
-			| libraryPath |
-			libraryPath := path asFileReference / 'libcairo.so.2'.
-			libraryPath exists
-				ifTrue: [ ^ libraryPath fullName ] ].
-	self error: 'Cannot locate cairo library. Please check if it installed on your system'
+	^ FFIUnix32LibraryFinder findLibrary: 'libcairo.so.2'
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> unix64ModuleName [
+CairoLibrary >> unix64LibraryName [
 	"On different flavors of linux the path to library may differ
 	depending on OS distro or whether system is 32 or 64 bit.
 	Packages such as snapcraft can also change the path.
 	Look in a number of known locations, or LD_LIBRARY_PATH."
 
-	(#('/lib/x86_64-linux-gnu' '/usr/lib'),
-			((OSEnvironment current at: 'LD_LIBRARY_PATH' ifAbsent: [ '' ]) substrings: ':'))
-		do: [ :path | 
-			| libraryPath |
-			libraryPath := path asFileReference / 'libcairo.so.2'.
-			libraryPath exists
-				ifTrue: [ ^ libraryPath fullName ] ].
-	self error: 'Cannot locate cairo library. Please check if it installed on your system'
+	^ FFIUnix64LibraryFinder findLibrary: 'libcairo.so.2'
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> unixModuleName [
+CairoLibrary >> unixLibraryName [
 	"Backward compatibility"
-	^ self unix32ModuleName
+	^ self unix32LibraryName
 		
 ]
 
 { #category : #'accessing platform' }
-CairoLibrary >> win32ModuleName [ 
+CairoLibrary >> win32LibraryName [ 
 	^ 'libcairo-2.dll'
 ]

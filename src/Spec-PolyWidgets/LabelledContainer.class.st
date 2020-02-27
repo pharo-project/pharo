@@ -16,8 +16,30 @@ Class {
 		'label',
 		'subwidget'
 	],
-	#category : #'Spec-PolyWidgets-Labelled'
+	#category : #'Spec-PolyWidgets-Elementary'
 }
+
+{ #category : #example }
+LabelledContainer class >> abstractExample [
+	| example |
+	example := self new.
+	example
+		title: self name asString , ' example';
+		label: 'I am a label'.
+	^ example
+]
+
+{ #category : #example }
+LabelledContainer class >> example [
+	<sampleInstance>
+	| example |
+	example := self abstractExample.
+	example content: ButtonPresenter.
+	example subwidget
+		label: 'I am a button'.
+	example openDialogWithSpec.
+	^ example
+]
 
 { #category : #specs }
 LabelledContainer class >> labelBottom [

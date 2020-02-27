@@ -59,10 +59,8 @@ SystemProgressMorph class >> enable [
 
 { #category : #'job subscription' }
 SystemProgressMorph class >> endJob: aJobEnd [
-	| bars |
 	self flag: #pharoFixMe.	"camillo I need help"
-	bars := self uniqueInstance bars.
-	bars isEmpty ifFalse: [ self uniqueInstance close: bars last ]
+	self uniqueInstance bars ifNotEmpty: [ :bars | self uniqueInstance close: bars last ]
 ]
 
 { #category : #examples }
@@ -144,6 +142,7 @@ SystemProgressMorph class >> settingOn: aBuilder [
 				target: self;
 				getSelector: #verticalPosition;
 				setSelector: #verticalPosition:;
+				default: 0;
 				label: 'Vertical progress indicator position';
 				domainValues: {'bottom'->1. 'middle'->0.5. 'top'->0}]
 ]

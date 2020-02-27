@@ -29,7 +29,6 @@ Class {
 		'astTranslatorClass',
 		'bytecodeGeneratorClass',
 		'compiledMethodTrailer',
-		'forSyntaxHighlighting',
 		'encoderClass',
 		'astTransformPlugins',
 		'requestorScopeClass',
@@ -280,6 +279,16 @@ CompilationContext class >> optionReadOnlyLiterals: aBoolean [
 	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
 ]
 
+{ #category : #'options - settings API' }
+CompilationContext class >> optionSkipSemanticWarnings [
+	^ self readDefaultOption: #optionSkipSemanticWarnings
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionSkipSemanticWarnings: aBoolean [
+	^ self writeDefaultOption: #optionSkipSemanticWarnings value: aBoolean
+]
+
 { #category : #options }
 CompilationContext class >> optionsDescription [
 	"Default options are held by DefaultOptions class variable.
@@ -305,6 +314,8 @@ CompilationContext class >> optionsDescription [
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code')
+	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
+		
 	) 
 ]
 
@@ -425,16 +436,6 @@ CompilationContext >> failBlock [
 { #category : #accessing }
 CompilationContext >> failBlock: anObject [
 	failBlock := anObject
-]
-
-{ #category : #accessing }
-CompilationContext >> forSyntaxHighlighting [
-	^ forSyntaxHighlighting ifNil: [ ^false ]
-]
-
-{ #category : #accessing }
-CompilationContext >> forSyntaxHighlighting: aBoolean [
-	forSyntaxHighlighting := aBoolean
 ]
 
 { #category : #accessing }
@@ -565,6 +566,11 @@ CompilationContext >> optionParseErrors [
 CompilationContext >> optionReadOnlyLiterals [
 	^ options includes: #optionReadOnlyLiterals
 
+]
+
+{ #category : #options }
+CompilationContext >> optionSkipSemanticWarnings [
+	^ options includes: #optionSkipSemanticWarnings
 ]
 
 { #category : #options }

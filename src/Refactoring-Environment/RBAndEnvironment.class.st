@@ -50,7 +50,7 @@ RBAndEnvironment >> definesClass: aClass [
 
 { #category : #testing }
 RBAndEnvironment >> includesCategory: aCategory [ 
-	^(self classNamesFor: aCategory) isEmpty not
+	^(self classNamesFor: aCategory) isNotEmpty
 ]
 
 { #category : #testing }
@@ -102,7 +102,7 @@ RBAndEnvironment >> problemCount [
 RBAndEnvironment >> selectionIntervalFor: aString [ 
 	| interval |
 	interval := super selectionIntervalFor: aString.
-	interval notNil ifTrue: [^interval].
+	interval ifNotNil: [^interval].
 	^andedEnvironment selectionIntervalFor: aString
 
 ]

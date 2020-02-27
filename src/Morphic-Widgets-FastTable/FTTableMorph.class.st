@@ -19,6 +19,11 @@ You can disable this with the method #disableSearch.
 But you also have the possibility to make your FastTable filterable with the method #enableFilter. But search and filter cannot be use in the same time.
 
 I manage different kind of selections through a strategy design pattern. For example I have a strategy to manage simple or multiple selection and I have a strategy to manage cell or row selection.
+
+Horizontal scrolling being a new feature is not enabled by default. Use #newWithHorizontalScrollBar or set horizontalScrollBar var to anything at early initialization stage (before #initializeScrollBars where it is being checked)
+
+
+
 "
 Class {
 	#name : #FTTableMorph,
@@ -43,7 +48,6 @@ Class {
 		'needToggleAtMouseUp',
 		'function',
 		'resizable',
-		'trialHSB',
 		'selectionModeStrategy'
 	],
 	#category : #'Morphic-Widgets-FastTable'
@@ -94,10 +98,10 @@ FTTableMorph class >> defaultSelectionColor [
 ]
 
 { #category : #temporary }
-FTTableMorph class >> newTrialHorizontalScrollBar [
-	"This method just temporary to guard new changes from hurtingtools durign development"
+FTTableMorph class >> newWithHorizontalScrollBar [
+	"This method is temporary to introduce horisontal scrolling gradually"
 	"See GTExamples class >> exampleTableHorizontalScroll"
-	^self basicNew initializeTrialHorizontalScrollBar
+	^self basicNew initializeWithHorizontalScrollBar
 ]
 
 { #category : #'drag and drop' }
@@ -193,6 +197,20 @@ FTTableMorph >> beResizable [
 ]
 
 { #category : #accessing }
+FTTableMorph >> beRowNotHomogeneous [
+	"by default, tables have homogeneous row heigths, taken from rowHeight variable. 
+	 We can switch to variable size by sending this message. 
+	 The resulting table will be less effcicient than the first, but probably not in a way users 
+	 can notice"
+	| oldContainer |
+
+	oldContainer := container.
+	container := FTTableContainerRowNotHomogeneousMorph new.
+	self replaceSubmorph: oldContainer by: container.
+	self resizeAllSubviews
+]
+
+{ #category : #accessing }
 FTTableMorph >> beRowSelection [
 	self selectionModeStrategy: (FTRowSelectionModeStrategy table: self)
 ]
@@ -274,7 +292,7 @@ FTTableMorph >> deselectAll [
 FTTableMorph >> disableFunction [
 	"Disabling it just sets the funtion to nil, so I can safely skip it in #keyStrokeSearch:"
 
-	function isExplicite
+	function isExplicit
 		ifTrue: [ function disable.
 			self resizeAllSubviews	"This is call because now the container will take all the available space." ].
 	function := FTNilFunction table: self
@@ -488,7 +506,7 @@ FTTableMorph >> horizontalScrollBar [
 
 { #category : #private }
 FTTableMorph >> horizontalScrollBarHeight [
-	^trialHSB 
+	^horizontalScrollBar 
 		ifNil: [ 0 ] 
 		ifNotNil: [ 
 			self isHorizontalScrollBarVisible ifFalse: [ ^ 0 ].
@@ -498,9 +516,8 @@ FTTableMorph >> horizontalScrollBarHeight [
 
 { #category : #private }
 FTTableMorph >> horizontalScrollBarValue: aNumber [
-	trialHSB ifNotNil: [ 
-		self inform: 'FTTableMorph>>#horizontalScrollBarValue: ', aNumber printString , String cr, 
-			'Does nothing yet.' , String cr, 'Need some advise here.'
+	horizontalScrollBar ifNotNil: [ 
+	self container adjustToHorizontalScrollBarValue: aNumber.
 	].
 ]
 
@@ -563,7 +580,9 @@ FTTableMorph >> initializeScrollBars [
 		yourself.
 	self addMorph: verticalScrollBar.
 
-	trialHSB ifNotNil: [ 	
+	"introducing horizontal scrolling gradually: 
+	enable the feature only when the var is set during initialization"
+	horizontalScrollBar ifNotNil: [ 	
 		horizontalScrollBar := ScrollBar new 
 			model: self; 
 			setValueSelector: #horizontalScrollBarValue:;
@@ -579,8 +598,8 @@ FTTableMorph >> initializeSelectedIndexes [
 ]
 
 { #category : #initialization }
-FTTableMorph >> initializeTrialHorizontalScrollBar [
-	trialHSB := true.
+FTTableMorph >> initializeWithHorizontalScrollBar [
+	horizontalScrollBar := true.
 	self initialize.
 ]
 
@@ -599,7 +618,7 @@ FTTableMorph >> intercellSpacing: aNumberOrPoint [
 
 { #category : #private }
 FTTableMorph >> isHorizontalScrollBarVisible [
-	^trialHSB 
+	^horizontalScrollBar 
 		ifNil: [ false ] 
 		ifNotNil: [ 
 			self horizontalScrollBar owner isNotNil.
@@ -849,6 +868,7 @@ FTTableMorph >> recalculateVerticalScrollBar [
 	 
 	visibleRows := self container calculateExactVisibleRows.	
 	numberOfRows := self dataSource numberOfRows.
+	numberOfRows = 0 ifTrue: [ ^self ].
 	interval := (visibleRows / numberOfRows) asFloat.
 	delta := 1/numberOfRows.
 	pageDelta := ((visibleRows-1) floor)*delta.
@@ -881,7 +901,7 @@ FTTableMorph >> refresh [
 	self ensureAtLeastOneColumn.
 	self recalculateVerticalScrollBar.
 	self verticalScrollBar changed.
-	trialHSB ifNotNil: [ self horizontalScrollBar changed ].
+	horizontalScrollBar ifNotNil: [ self horizontalScrollBar changed ].
 	self container changed
 	
 ]
@@ -896,7 +916,7 @@ FTTableMorph >> resetPosition [
 	"Resets all values to original value"
 	showIndex := 0.
 	self verticalScrollBar value: 0.
-	trialHSB ifNotNil: [	self horizontalScrollBar value: 0 ].
+	horizontalScrollBar ifNotNil: [	self horizontalScrollBar value: 0 ].
 	self container setNeedsRefreshExposedRows.
 	self container updateExposedRows.
 ]
@@ -904,7 +924,7 @@ FTTableMorph >> resetPosition [
 { #category : #private }
 FTTableMorph >> resizeAllSubviews [
 	self resizeVerticalScrollBar.
-	trialHSB ifNotNil: [ self resizeHorizontalScrollBar ].
+	horizontalScrollBar ifNotNil: [ self resizeHorizontalScrollBar ].
 	"if we resized scrollbar, we need to recalculate it because values change (and now visibility 
 	 can be toggled, shown items can change, etc.)"
 	self recalculateVerticalScrollBar.
@@ -912,7 +932,7 @@ FTTableMorph >> resizeAllSubviews [
 	self container setNeedsRefreshExposedRows.
 	self container updateExposedRows.
 	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: showIndex).
-	function isExplicite
+	function isExplicit
 		ifTrue: [ function resizeWidget ]
 ]
 
@@ -924,7 +944,7 @@ FTTableMorph >> resizeContainer [
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
-			(function isExplicite
+			(function isExplicit
 				ifTrue: [ function resizeContainerFrom: topLeft to: bottomRight ]
 				ifFalse: [ topLeft corner: bottomRight ])
 ]
@@ -932,7 +952,7 @@ FTTableMorph >> resizeContainer [
 { #category : #private }
 FTTableMorph >> resizeHorizontalScrollBar [
 	| width height corner |
-	trialHSB ifNotNil: [ 
+	horizontalScrollBar ifNotNil: [ 
 		width := self bounds width - (self borderWidth * 2) - self verticalScrollBarWidth.
 		height := self scrollBarThickness.
 		corner := self bounds bottomLeft - ((width + self borderWidth)@(0 - self borderWidth)).

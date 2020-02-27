@@ -7,7 +7,7 @@ Class {
 { #category : #public }
 GTSpotterExceptionHandler >> handleException: anException [
 	^ self handleException: anException do: [ 
-		('[Spotter] Exception: ', anException asString) logCr ]
+		('[Spotter] Exception: ', anException asString) traceCr ]
 ]
 
 { #category : #public }
@@ -32,5 +32,5 @@ GTSpotterExceptionHandler >> handleExceptionsDuring: aBlock [
 
 { #category : #private }
 GTSpotterExceptionHandler >> handleFatalException: anException [
-	('[Spotter] Fatal Exception: ', anException asString) logCr
+	('[Spotter] Fatal Exception: ', anException asString) traceCr
 ]

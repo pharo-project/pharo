@@ -73,9 +73,9 @@ RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 ]
 
 { #category : #refactoring }
-RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [ 
+RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute.
-	RBParser parseExpression: aRefactoring storeString
+	self parserClass parseExpression: aRefactoring storeString
 ]
 
 { #category : #initialization }
@@ -137,7 +137,7 @@ RBRenameInstanceVariableRefactoring >> renameAccessors: anObject [
 { #category : #transforming }
 RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 	| methods senders |
-	methods := (class allSelectors select: [ :each | ((class methodFor: each) = nil) not ] thenCollect: [ :each | each ])
+	methods := (class allSelectors select: [ :each | (class methodFor: each) isNotNil ] thenCollect: [ :each | each ])
 		asOrderedCollection.
 	senders := (methods
 		select: [ :each | (class methodFor: each) source includesSubstring: variableName asString ]

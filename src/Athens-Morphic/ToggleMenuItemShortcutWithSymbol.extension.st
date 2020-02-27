@@ -26,5 +26,8 @@ ToggleMenuItemShortcutWithSymbol >> drawOnAthensCanvas: aCanvas [
 			from: 1
 			in: (0@0 corner: keyBounds corner);
 		yourself.
-	aCanvas asCanvasWrapper paragraph: paragraph bounds: keyBounds color: self owner color
+	aCanvas asCanvasWrapper 
+		paragraph: paragraph 
+		bounds: keyBounds 
+		color: self color
 ]

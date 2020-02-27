@@ -6,7 +6,7 @@
 "
 Class {
 	#name : #MetacelloScriptingTestCase,
-	#superclass : #MetacelloScriptingStdTstHarness,
+	#superclass : #MetacelloScriptingStdTstHarnessTestCase,
 	#instVars : [
 		'externalRepository',
 		'mczConfigurationRepository',
@@ -60,17 +60,17 @@ MetacelloScriptingTestCase >> setUpRepositories [
   configurationRepository := MetacelloScriptingResource current
     configurationRepository.
   externalRepository := MetacelloScriptingResource current externalRepository.
-  Smalltalk
+  testingEnvironment
     at: 'Metacello_Configuration_Test_Repository' asSymbol
     put: externalRepository.
   monticelloRepository := MetacelloMonticelloResource current
     monticelloRepository.
-  Smalltalk
+  testingEnvironment
     at: 'Metacello_Gofer_Test_Repository' asSymbol
     put: monticelloRepository.
   mczConfigurationRepository := MetacelloConfigurationResource current
     monticelloRepository.
-  Smalltalk
+  testingEnvironment
     at: 'Metacello_MczConfiguration_Test_Repository' asSymbol
     put: mczConfigurationRepository
 ]
@@ -93,9 +93,9 @@ MetacelloScriptingTestCase >> tearDownRepositories [
     ifTrue: [ MetacelloPlatform current recursiveDelete: externalDirectory ].
   sampleDirectory exists
     ifTrue: [ MetacelloPlatform current recursiveDelete: sampleDirectory ].
-  Smalltalk globals removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
-  Smalltalk globals removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  Smalltalk globals
+  testingEnvironment removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
+  testingEnvironment removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
+  testingEnvironment
     removeKey: #'Metacello_MczConfiguration_Test_Repository'
     ifAbsent: [  ].
   MCRepositoryGroup default

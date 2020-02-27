@@ -1804,15 +1804,16 @@ MorphTreeMorph >> selectionColor [
 MorphTreeMorph >> selectionColor: aColor [
 	"Set the colour for selected items."
 
-	| w |
+	| window |
 	aColor
-		ifNil: [self removeProperty: #selectionColor]
-		ifNotNil: [self setProperty: #selectionColor toValue: aColor].
-	w := self ownerThatIsA: SystemWindow.
-	self selectionColorToUse: (
-		(self theme settings fadedBackgroundWindows not or: [w isNil or: [w isActive]])
-			ifTrue: [aColor]
-			ifFalse: [self theme unfocusedSelectionColor])
+		ifNil: [ self removeProperty: #selectionColor ]
+		ifNotNil: [ self setProperty: #selectionColor toValue: aColor ].
+
+	window := self ownerThatIsA: SystemWindow.
+
+	self selectionColorToUse: ((self theme fadedBackgroundWindows not or: [ window isNil or: [ window isActive ] ])
+		ifTrue: [ aColor ]
+		ifFalse: [ self theme unfocusedSelectionColor ])
 ]
 
 { #category : #selection }

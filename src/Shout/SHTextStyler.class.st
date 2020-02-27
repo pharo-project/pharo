@@ -64,6 +64,7 @@ SHTextStyler >> privateStyle: aText [
 
 { #category : #styling }
 SHTextStyler >> style: aText [
+	aText ifEmpty: [ ^ self ].
 	self terminateBackgroundStylingProcess.
 	stylingEnabled
 		ifFalse: [ ^ self ].
@@ -74,6 +75,7 @@ SHTextStyler >> style: aText [
 
 { #category : #styling }
 SHTextStyler >> styleInBackgroundProcess: aText [
+	aText ifEmpty: [ ^ self ].
 	self terminateBackgroundStylingProcess.
 	stylingEnabled ifFalse: [ ^ self ].
 	text := aText copy.

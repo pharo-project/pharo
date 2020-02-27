@@ -85,7 +85,7 @@ HermesCommandLineHandler >> processFile: file [
 	"It loads the package and installs it in the image"
 	| installer reader readPackage |
 	installer := self createInstaller.
-	('[Hermes] Reading ' , file) logCr.
+	SystemNotification signal: ('[Hermes] Reading ' , file).
 
 	reader := HEBinaryReader new
 		stream: (File named: file) readStream;
@@ -93,7 +93,7 @@ HermesCommandLineHandler >> processFile: file [
 
 	readPackage := HEPackage readFrom: reader.
 
-	('[Hermes] Installing ' , file) logCr.
+	SystemNotification signal: ('[Hermes] Installing ' , file).
 	installer installPackage: readPackage
 ]
 

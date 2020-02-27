@@ -22,8 +22,8 @@ MCMethodDefinitionTest >> ownPackage [
 MCMethodDefinitionTest >> setUp [
 	super setUp.
 	extensionPackage := (MCWorkingCopy forPackage: (MCPackage named: 'FooBarBaz')).
-	navigation := (Smalltalk hasClassNamed: #SystemNavigation)
-		ifTrue: [ (Smalltalk globals at: #SystemNavigation) new ]
+	navigation := (testingEnvironment hasClassNamed: #SystemNavigation)
+		ifTrue: [ (testingEnvironment at: #SystemNavigation) new ]
 		ifFalse: [ Smalltalk ].
 	isModified := self ownPackage modified
 ]
@@ -113,11 +113,10 @@ MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 	self class compile: 'override ^ 4' classified: self mockOverrideMethodCategory.
 	definition := (RGMethodDefinition realClass: self class selector: #override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
-	self assert: self override = 4.
+	self assert: self override equals: 4.
 	definition unload.
-	self assert: self override = 2.
-	self assert: (RGMethodDefinition realClass: self class selector: #override) category = '*foobarbaz'.
-	
+	self assert: self override equals: 2.
+	self assert: (RGMethodDefinition realClass: self class selector: #override) category equals: '*foobarbaz'
 ]
 
 { #category : #testing }
@@ -127,8 +126,8 @@ MCMethodDefinitionTest >> testRevertOldMethod [
 	definition := (RGMethodDefinition realClass: Object selector: #yourself) asMCMethodDefinition.
 	changeRecord := definition overridenMethodOrNil.
 	self assert: changeRecord notNil.
-	self assert: changeRecord category = 'accessing'.
-	changeRecord fileIn.
+	self assert: changeRecord category equals: 'accessing'.
+	changeRecord fileIn
 ]
 
 { #category : #testing }
@@ -137,9 +136,8 @@ MCMethodDefinitionTest >> testRevertOverrideMethod [
 	self class compile: 'override ^ 2' classified: self mockOverrideMethodCategory.
 	definition := (RGMethodDefinition realClass: self class selector: #override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
-	self assert: self override = 2.
+	self assert: self override equals: 2.
 	definition unload.
-	self assert: self override = 1.
-	self assert: (RGMethodDefinition realClass: self class selector: #override) category = 'mocks'.
-	
+	self assert: self override equals: 1.
+	self assert: (RGMethodDefinition realClass: self class selector: #override) category equals: 'mocks'
 ]

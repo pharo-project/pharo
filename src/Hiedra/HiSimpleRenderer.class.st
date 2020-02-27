@@ -267,9 +267,7 @@ HiSimpleRenderer >> initialize [
 	arrowSize := linkWidth * 0.75.
 
 	"Important: the user must set the height of rows (integers worked better than a floats)"
-	rowHeight := nil.
-	cellWidth := linkWidth * 3.
-
+	cellWidth := linkWidth * 3
 ]
 
 { #category : #accessing }

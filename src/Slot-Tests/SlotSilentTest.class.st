@@ -32,7 +32,7 @@ SlotSilentTest >> compileAccessorsFor: aSlot [
 			nextPutAll: ':= anObject.'.
 		].
 	aClass compile: readerString classified: 'accessing'.
-	aClass compile: writerString classified: 'accessing'.
+	aClass compile: writerString classified: 'accessing'
 ]
 
 { #category : #running }

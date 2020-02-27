@@ -1,5 +1,6 @@
 "
-A TextFontChange encodes a font change applicable over a given range of text.  The font number is interpreted relative to the textStyle governing display of this text.
+A TextFontChange encodes a font change applicable over a given range of text.  
+The font number is interpreted relative to the textStyle governing display of this text.
 "
 Class {
 	#name : #TextFontChange,
@@ -84,11 +85,4 @@ TextFontChange >> hash [
 TextFontChange >> printOn: strm [
 	super printOn: strm.
 	strm nextPutAll: ' font: '; print: fontNumber
-]
-
-{ #category : #utilities }
-TextFontChange >> writeScanOn: strm [
-
-	strm nextPut: $f.
-	fontNumber printOn: strm.
 ]

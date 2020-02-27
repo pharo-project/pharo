@@ -55,31 +55,41 @@ DebugSystemSettings class >> debugSettingsOn: aBuilder [
 				description: 'How deprecation are handled' ;
 				target: Deprecation;
 				with: [
+					(aBuilder setting: #activateTransformations)
+						label: 'Performs automatic transformations on deprecated methods' ;
+						default: true;
+						description: 'If true, then the caller will be rewritten for each deprecated method invocation' .
 					(aBuilder setting: #raiseWarning)
 						label: 'Raise a blocking dialog' ;
+						default: true;
 						description: 'If true, then a dialog is popup for each deprecated method invocation' .
 					(aBuilder setting: #showWarning)
 						label: 'Transcript message';
+						default: true;
 						description: 'If true, then a message is send to the Transcript for each deprecated method invocation'].
 			
 			(aBuilder setting: #cmdDotEnabled)
 				label: 'Enable cmd-dot interrupt key';
 				target: UserInterruptHandler;
+				default: true;
 				description: 'If true, it allows the user to stop currently running process by opening-up a debugger'.
 			
 			(aBuilder setting: #cpuWatcherEnabled)
 				label: 'Process browser monitors CPU usage';
 				target: CPUWatcher;
+				default: false;
 				description: 'If true, Pharo processes will be monitored for CPU usage. If they take too much CPU, you will get a notification menu that will allow you to debug, resume, or terminate the process' .
 			
 			(aBuilder setting: #debugShowDamage)
 				label: 'Flash damaged morphic region';
 				target: WorldState;
+				default: false;
 				description: 'If true, every changed region of the morphic display will be flashed black before updating.' .
 			
 			(aBuilder setting: #logDebuggerStackToFile)
 				label: 'Write message to debug log file when fall into debugger';
 				target: DebugSession;
+				default: true;
 				description: 'If true, whenever you fall into a debugger a summary of its stack will be written to a file named'.
 			
 			"(aBuilder setting: #restartAlsoProceeds)
@@ -90,6 +100,7 @@ DebugSystemSettings class >> debugSettingsOn: aBuilder [
 			(aBuilder setting: #logFileName)
 				label: 'Log file name' ;
 				target: Smalltalk;
+				default: 'PharoDebug.log';
 				description: 'A name of the file, which will be used for logging all errors and notifications' 
 		]
 ]

@@ -201,13 +201,13 @@ ClassDescription >> classClass [
 	^ self classSide
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
 	^ self classComment: aString stamp: '<historical>'
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> classComment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
@@ -375,7 +375,7 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 	self instanceSide classComment: aStringOrText stamp: aStamp.
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
 	self organization commentStamp: changeStamp
 ]
@@ -563,7 +563,7 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 		classified: newCat
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
 
@@ -580,7 +580,7 @@ ClassDescription >> definitionForNautilus [
 	^ self definition
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> definitionWithSlots [
 	"The class definition with a way to specify slots. Shown when the class defines special Slot"
 	
@@ -635,7 +635,7 @@ ClassDescription >> definitionWithSlots [
 	^ stream contents
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> definitionWithoutSlots [
 
 	| poolString stream |
@@ -775,7 +775,7 @@ ClassDescription >> instVarMappingFrom: oldClass [
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
 
-	^self localSlots collect: [ :each | each name ]
+	^self slots collect: [ :each | each name ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -815,6 +815,11 @@ ClassDescription >> isClassSide [
 	^self == self classSide
 ]
 
+{ #category : #testing }
+ClassDescription >> isDeprecated [
+	^ self package isDeprecated
+]
+
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
@@ -826,9 +831,9 @@ ClassDescription >> isInstanceSide [
 
 { #category : #testing }
 ClassDescription >> isLocalMethodsProtocol: aProtocol [
-	aProtocol methods ifEmpty: [ ^true ].
-	
-	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
+	aProtocol methodSelectors ifEmpty: [ ^ true ].
+
+	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
 ]
 
 { #category : #testing }
@@ -901,7 +906,7 @@ ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSi
 			oldInstance class
 				slotNamed: newSlot name
 				ifFound: [ :oldSlot | 
-					newSlot wantsInitalization ifTrue: [ self initializeSlots: new ].
+					newSlot wantsInitialization ifTrue: [ self initializeSlots: new ].
 					value := oldSlot read: oldInstance.
 					newSlot write: value to: new ] ].
 	variable
@@ -1000,7 +1005,7 @@ ClassDescription >> obsolete [
 	super obsolete.
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 ClassDescription >> oldDefinition [
 	"Answer a String that defines the receiver."
 
@@ -1348,66 +1353,50 @@ ClassDescription >> wantsChangeSetLogging [
 	^ true
 ]
 
-{ #category : #compiling }
-ClassDescription >> wantsRecompilationProgressReported [
-	"Answer whether the receiver would like progress of its recompilation reported interactively to the user."
-
-	^ true
-]
-
 { #category : #organization }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [ 
 	"Answer the category of the argument, aSelector, in the organization of 
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	(self includesSelector: aSelector)
-		ifTrue: [^ self organization categoryOfElement: aSelector]
-		ifFalse: [^nil]
+	^self organization categoryOfElement: aSelector
 ]
 
 { #category : #queries }
 ClassDescription >> whichSelectorsAccess: instVarName [
-	"Answer a set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
+	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
 
-	^self
+	^ self
 		slotNamed: instVarName
-		ifFound: [ :slot | 
-			self selectors
-				select: [ :sel | slot isAccessedIn: self>>sel ] ]
-		ifNone: [  #() ]
-]
-
-{ #category : #queries }
-ClassDescription >> whichSelectorsAssign: instVarName [ 
-	self
-		deprecated: 'Please use #whichSelectorsStoreInto: instead'
-		transformWith: '`@receiver whichSelectorsAssign: `@statements' 
-						-> '`@receiver whichSelectorsStoreInto: `@statements'.
-	^self whichSelectorsStoreInto: instVarName
+		ifFound: [ :slot | self selectors select: [ :sel | slot isAccessedIn: self>>sel ] ]
+		ifNone: [ #() ]
 ]
 
 { #category : #queries }
 ClassDescription >> whichSelectorsRead: instVarName [
-	"Answer a Set of selectors whose methods read the argument, 
-	instVarName, as a named instance variable."
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable."
 
 	^ self
 		slotNamed: instVarName
-		ifFound:
-			[ :slot | self selectors select: [ :sel | slot isReadIn: self >> sel ] ]
+		ifFound: [ :slot | self selectors select: [ :sel | slot isReadIn: self >> sel ] ]
 		ifNone: [ #() ]
 ]
 
 { #category : #queries }
 ClassDescription >> whichSelectorsStoreInto: instVarName [
-	"Answer a Set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
+	self
+		deprecated: 'Please use #whichSelectorsWrite: instead'
+		transformWith: '`@receiver whichSelectorsStoreInto: `@statements' 
+						-> '`@receiver whichSelectorsWrite: `@statements'.
+	^self whichSelectorsWrite: instVarName
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsWrite: instVarName [
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
 
 	^ self
 		slotNamed: instVarName
-		ifFound:
-			[ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
+		ifFound: [ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
 		ifNone: [ #() ]
 ]
 

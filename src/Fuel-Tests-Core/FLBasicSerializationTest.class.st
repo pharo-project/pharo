@@ -64,12 +64,11 @@ FLBasicSerializationTest >> testBag [
 	bag add: 20.
 	bag add: 30.
 	bag add: 30.
-	
+
 	materialized := self resultOfSerializeAndMaterialize: bag.
-	self assert:  bag ~~ materialized.
-	self assert: bag = materialized.
-	self assert: materialized size = 4.
-	
+	self assert: bag ~~ materialized.
+	self assert: bag equals: materialized.
+	self assert: materialized size equals: 4
 ]
 
 { #category : #'tests-collections' }
@@ -86,12 +85,9 @@ FLBasicSerializationTest >> testBitmap [
 	bitmap at: 2 put: 5674.
 	bitmap at: 3 put: 8978.
 	materialized := self resultOfSerializeAndMaterialize: bitmap.
-	self assert: (materialized at: 1) = 4324.
-	self assert: (materialized at: 2) = 5674.
-	self assert: (materialized at: 3) = 8978.	
-
-
-
+	self assert: (materialized at: 1) equals: 4324.
+	self assert: (materialized at: 2) equals: 5674.
+	self assert: (materialized at: 3) equals: 8978
 ]
 
 { #category : #'tests-collections' }
@@ -161,9 +157,9 @@ FLBasicSerializationTest >> testConsiderCustomGlobal [
 
 	aPerson := FLPerson new.
 	[ 
-		Smalltalk globals at: globalKey put: aPerson.
+		testingEnvironment at: globalKey put: aPerson.
 		self assertSerializationIdentityOf: aPerson.
-	] ensure: [ Smalltalk globals removeKey: globalKey ]
+	] ensure: [ testingEnvironment removeKey: globalKey ]
 
 ]
 
@@ -179,12 +175,12 @@ FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 
 	aPerson := FLPerson new.	
 	[ 
-		Smalltalk globals at: aWideSymbol put: aPerson.
+		testingEnvironment at: aWideSymbol put: aPerson.
 		self
 			shouldnt: [ self resultOfSerializeAndMaterialize: aPerson ]
 			raise: Error
 	] ensure: [ 
-		Smalltalk globals removeKey: aWideSymbol ].
+		testingEnvironment removeKey: aWideSymbol ].
 
 ]
 
@@ -202,57 +198,54 @@ FLBasicSerializationTest >> testCyclicIdentitySet [
 
 { #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicLink [
-
 	| a materializedA |
 	a := Link new.
 	a nextLink: a.
-	
+
 	materializedA := self resultOfSerializeAndMaterialize: a.
 
 	"We can't check using the equality of the links because hangs ad infinitum. So we only check that the structure is right."
-	self assert: materializedA nextLink == materializedA
+	self assert: materializedA nextLink identicalTo: materializedA
 ]
 
 { #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicLinks [
-
 	| a b c materializedA |
 	a := Link new.
 	b := Link new.
 	c := Link new.
-	
+
 	a nextLink: b.
 	b nextLink: c.
 	c nextLink: a.
-	
+
 	materializedA := self resultOfSerializeAndMaterialize: a.
 
 	"We can't check using the equality of the links because hangs ad infinitum. So we only check that the structure is right."
-	self assert: materializedA nextLink nextLink nextLink == materializedA.
-	self deny: materializedA nextLink == materializedA.
-	self deny: materializedA nextLink nextLink == materializedA.
+	self assert: materializedA nextLink nextLink nextLink identicalTo: materializedA.
+	self deny: materializedA nextLink identicalTo: materializedA.
+	self deny: materializedA nextLink nextLink identicalTo: materializedA
 ]
 
 { #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicLinksInArray [
-
 	| a b c materializedA materialized |
 	a := Link new.
 	b := Link new.
 	c := Link new.
-	
+
 	a nextLink: b.
 	b nextLink: c.
 	c nextLink: a.
-	
+
 	materialized := self resultOfSerializeAndMaterialize: (Array with: a with: b with: c).
 	materializedA := materialized first.
 
 	"We can't check using the equality of the links because hangs ad infinitum. So we only check that the structure is right."
-	self assert: materialized size = 3.
-	self assert: materializedA nextLink nextLink nextLink == materializedA.
-	self deny: materializedA nextLink == materializedA.
-	self deny: materializedA nextLink nextLink == materializedA.
+	self assert: materialized size equals: 3.
+	self assert: materializedA nextLink nextLink nextLink identicalTo: materializedA.
+	self deny: materializedA nextLink identicalTo: materializedA.
+	self deny: materializedA nextLink nextLink identicalTo: materializedA
 ]
 
 { #category : #tests }
@@ -338,17 +331,14 @@ FLBasicSerializationTest >> testDictionary [
 { #category : #'tests-globals' }
 FLBasicSerializationTest >> testDontConsiderCustomGlobal [
 	"A custom global variable is not treated as global by Fuel, unless we explicitly specify this."
-	
+
 	| aPerson globalName |
-	
 	aPerson := FLPerson new.
 	globalName := #FLGlobalVariableForTesting.
-	
-	[ 
-		Smalltalk globals at: globalName put: aPerson.
-		self deny: (self resultOfSerializeAndMaterialize: aPerson) == aPerson 
-	] ensure: [ Smalltalk globals removeKey: globalName ]. 
 
+	[ testingEnvironment at: globalName put: aPerson.
+	self deny: (self resultOfSerializeAndMaterialize: aPerson) identicalTo: aPerson ]
+		ensure: [ testingEnvironment removeKey: globalName ]
 ]
 
 { #category : #tests }
@@ -404,19 +394,16 @@ FLBasicSerializationTest >> testExceptions [
 
 { #category : #'tests-fuelAfterMaterialization' }
 FLBasicSerializationTest >> testExecuteAfterMaterialization [
-
 	| anObject result aClass |
-	aClass := 
-		self newClass
-			addInstVarNamed: 'a';
-			duringTestCompileSilently: 'fuelAfterMaterialization a := #A';
-			yourself.
+	aClass := self newClass
+		addInstVarNamed: 'a';
+		duringTestCompileSilently: 'fuelAfterMaterialization a := #A';
+		yourself.
 	anObject := aClass new.
 
 	result := self resultOfSerializeAndMaterialize: anObject.
 
-	self assert: #A = (result instVarNamed: 'a').
-
+	self assert: #A equals: (result instVarNamed: 'a')
 ]
 
 { #category : #tests }
@@ -614,17 +601,16 @@ FLBasicSerializationTest >> testPoint [
 
 { #category : #'tests-streams' }
 FLBasicSerializationTest >> testReadStream [
-
 	| aReadStream materialized |
 	aReadStream := ReadStream on: 'A'.
 
 	materialized := self resultOfSerializeAndMaterialize: aReadStream.
-	
-	self assert: $A = aReadStream next.
+
+	self assert: $A equals: aReadStream next.
 
 	self deny: materialized atEnd.
-	self assert: $A = materialized next.
-	self assert: materialized atEnd.
+	self assert: $A equals: materialized next.
+	self assert: materialized atEnd
 ]
 
 { #category : #tests }
@@ -637,32 +623,31 @@ FLBasicSerializationTest >> testRectangle [
 
 { #category : #'tests-cycles' }
 FLBasicSerializationTest >> testRecursiveArray [
-
 	| arr materialized |
 	arr := Array new: 3.
 	arr at: 1 put: 10.
 	arr at: 2 put: 20.
 	arr at: 3 put: arr.
-	
+
 	materialized := self resultOfSerializeAndMaterialize: arr.
 
 	"We can't check using the equality of the links because hangs ad infinitum. So we only check that the structure is right."
-	self assert: materialized first = 10.
-	self assert: materialized second = 20.
-	self assert: materialized third == materialized.
+	self assert: materialized first equals: 10.
+	self assert: materialized second equals: 20.
+	self assert: materialized third identicalTo: materialized
 ]
 
 { #category : #'tests-strings' }
 FLBasicSerializationTest >> testRemoteString [
 	"Tests that the materialized RemoteString has *the same* location on file."
 
-	| aRemoteString materializedRemoteString |	
+	| aRemoteString materializedRemoteString |
 	aRemoteString := SourceFiles remoteStringAt: thisContext method sourcePointer.
 
 	materializedRemoteString := self resultOfSerializeAndMaterialize: aRemoteString.
 
-	self assert: aRemoteString string = materializedRemoteString string.
-	self assert: aRemoteString sourcePointer == materializedRemoteString sourcePointer.
+	self assert: aRemoteString string equals: materializedRemoteString string.
+	self assert: aRemoteString sourcePointer identicalTo: materializedRemoteString sourcePointer
 ]
 
 { #category : #'tests-collections' }
@@ -693,19 +678,19 @@ FLBasicSerializationTest >> testSet [
 	set add: 20.
 	set add: 30.
 	set add: 30.
-	
+
 	materialized := self resultOfSerializeAndMaterialize: set.
-	self assert: set = materialized.
-	self assert: materialized size = 3.
+	self assert: set equals: materialized.
+	self assert: materialized size equals: 3.
 	self assert: (materialized includes: 10).
 	self assert: (materialized includes: 20).
-	self assert: (materialized includes: 30).	
+	self assert: (materialized includes: 30)
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetElement [
 
-	self assertSerializationEqualityOf: (SetElement with: 3)
+	self assertSerializationEqualityOf: (CollectionElement with: 3)
 ]
 
 { #category : #'tests-collections-Pharo1.3' }
@@ -717,7 +702,7 @@ FLBasicSerializationTest >> testSetWithNil [
 { #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetWithSetElement [
 
-	self assertSerializationEqualityOf: (Set with: (SetElement with: 3))
+	self assertSerializationEqualityOf: (Set with: (CollectionElement with: 3))
 ]
 
 { #category : #tests }
@@ -729,13 +714,11 @@ FLBasicSerializationTest >> testSharedReferences [
 	array := Array with: point1 with: point2.
 
 	materialized := self resultOfSerializeAndMaterialize: array.
-	self assert: array = materialized.
-	self 
-		assert: materialized first x == materialized second y 
+	self assert: array equals: materialized.
+	self
+		assert: materialized first x == materialized second y
 		description: 'An object that is referenced twice by the graph must not be duplicated when materialized'.
-	self 
-		deny: materialized first y == materialized second x 
-		description: 'Two (non-literal) objects must maintain different identity even if they are equal'
+	self deny: materialized first y == materialized second x description: 'Two (non-literal) objects must maintain different identity even if they are equal'
 ]
 
 { #category : #'tests-numbers' }
@@ -834,14 +817,14 @@ FLBasicSerializationTest >> testUUID [
 
 { #category : #tests }
 FLBasicSerializationTest >> testWideAndByteCharacters [
-    "Since wide and byte characters are represented in the same class, this case is prone to fail."
-	
-	| materialized aByteCharacter aWideCharacter|
+	"Since wide and byte characters are represented in the same class, this case is prone to fail."
+
+	| materialized aByteCharacter aWideCharacter |
 	aWideCharacter := Character value: 12345.
 	aByteCharacter := $a.
-	materialized := self resultOfSerializeAndMaterialize: (Array with: aWideCharacter with: aByteCharacter ).
-	self assert: materialized first = aWideCharacter.
-	self assert: materialized second == aByteCharacter.
+	materialized := self resultOfSerializeAndMaterialize: (Array with: aWideCharacter with: aByteCharacter).
+	self assert: materialized first equals: aWideCharacter.
+	self assert: materialized second identicalTo: aByteCharacter
 ]
 
 { #category : #'tests-strings' }
@@ -864,11 +847,11 @@ FLBasicSerializationTest >> testWideStringClassName [
 		yourself.
 	class := Class new setName: className; yourself.
 	[
-		Smalltalk globals at: class name put: class.
+		testingEnvironment at: class name put: class.
 		self
 			shouldnt: [ self resultOfSerializeAndMaterialize: class ]
 			raise: Error
-	] ensure:[ Smalltalk globals removeKey: class name ]
+	] ensure:[ testingEnvironment removeKey: class name ]
 ]
 
 { #category : #'tests-strings' }
@@ -877,19 +860,14 @@ FLBasicSerializationTest >> testWideStringGlobal [
 	global := 'Foox' asWideString
 		at: 4 put: (Character value: 265);
 		yourself.
-	globalValue := global, 'value'.
-	[
-		Smalltalk globals
-			at: global
-			put: globalValue.
-		self analyzer considerGlobal: global.
+	globalValue := global , 'value'.
+	[ testingEnvironment at: global put: globalValue.
+	self analyzer considerGlobal: global.
 
-		self
-			shouldnt: [ self serialize: 'bar' -> globalValue ]
-			raise: Error.
-		self assert: self materialized class equals: Association.
-		self assert: self materialized value == global
-	] ensure: [ Smalltalk globals removeKey: global ]
+	self shouldnt: [ self serialize: 'bar' -> globalValue ] raise: Error.
+	self assert: self materialized class equals: Association.
+	self assert: self materialized value identicalTo: global ]
+		ensure: [ testingEnvironment removeKey: global ]
 ]
 
 { #category : #'tests-collections' }
@@ -900,17 +878,15 @@ FLBasicSerializationTest >> testWordArray [
 
 { #category : #'tests-streams' }
 FLBasicSerializationTest >> testWriteStream [
-
 	| aWriteStream materialized |
 	aWriteStream := WriteStream on: (ByteArray new: 1).
 
 	materialized := self resultOfSerializeAndMaterialize: aWriteStream.
-	
+
 	aWriteStream nextPut: 1.
-	self assert: 1 = aWriteStream size.
+	self assert: 1 equals: aWriteStream size.
 
-	self assert: 0 = materialized size.
+	self assert: 0 equals: materialized size.
 	materialized nextPut: 2.
-	self assert: (Array with: 2) = materialized contents asArray.
-
+	self assert: (Array with: 2) equals: materialized contents asArray
 ]

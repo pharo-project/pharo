@@ -11,14 +11,13 @@ ClyClassHierarchyScopeTestCase class >> isAbstract [
 
 { #category : #tests }
 ClyClassHierarchyScopeTestCase >> testComparisonWithSimilarScopeButWithDifferentMetaLevelScope [
-
 	| scope2 |
 	scope := self createSampleScope.
 	scope2 := self createSampleScope.
-	
-	self deny: scope localScopeClass = ClyInstanceSideScope.
+
+	self deny: scope localScopeClass equals: ClyInstanceSideScope.
 	scope2 localScopeClass: ClyInstanceSideScope.
-	self deny: scope = scope2
+	self deny: scope equals: scope2
 ]
 
 { #category : #tests }
@@ -55,10 +54,10 @@ ClyClassHierarchyScopeTestCase >> testConvertingToInheritingScope [
 ClyClassHierarchyScopeTestCase >> testConvertingToNewMetaLevel [
 	| convertedScope |
 	scope := self createSampleScope.
-	self deny: scope localScopeClass = ClyInstanceSideScope.
-	
+	self deny: scope localScopeClass equals: ClyInstanceSideScope.
+
 	convertedScope := scope withMetaLevel: ClyInstanceSideScope.
-	
+
 	self assert: convertedScope class equals: scope class.
 	self assert: convertedScope localScopeClass equals: ClyInstanceSideScope.
 	self assert: convertedScope basisObjects equals: scope basisObjects.

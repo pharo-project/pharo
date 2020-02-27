@@ -112,7 +112,7 @@ RBPushDownPreview >> initializeWidgets [
 
 { #category : #accessing }
 RBPushDownPreview >> methods [
-	^ class methods
+	^ class methods sort: [ :a :b | a asString < b asString ]
 ]
 
 { #category : #initialization }

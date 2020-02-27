@@ -99,8 +99,7 @@ OCASTSemanticAnalyzer >> scope: aSemScope [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
-	compilationContext forSyntaxHighlighting
-		ifTrue: [ ^ self ].
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 		
 	^ OCStoreIntoReadOnlyVariableError new
 		node: variableNode;
@@ -111,8 +110,7 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
-	compilationContext forSyntaxHighlighting
-		ifTrue: [ ^ self ].
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
 	^ OCStoreIntoSpecialVariableError new
 		node: variableNode;
 		compilationContext: compilationContext;
@@ -122,7 +120,7 @@ OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
-	compilationContext forSyntaxHighlighting 
+	compilationContext optionSkipSemanticWarnings
 		ifTrue: [ ^OCUndeclaredVariable new name: variableNode name ].
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
@@ -144,7 +142,7 @@ OCASTSemanticAnalyzer >> unusedVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> variable: variableNode shadows: semVar [
-
+	compilationContext optionSkipSemanticWarnings ifTrue: [ ^semVar ].
 	^ OCShadowVariableWarning new
 		node: variableNode;
 		shadowedVar: semVar;

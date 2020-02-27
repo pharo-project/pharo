@@ -24,8 +24,8 @@ todo
 Class {
 	#name : #SpDynamicPresenter,
 	#superclass : #SpPresenter,
-	#traits : 'TSpDynamicPresenter',
-	#classTraits : 'TSpDynamicPresenter classTrait',
+	#traits : 'SpTDynamicPresenter',
+	#classTraits : 'SpTDynamicPresenter classTrait',
 	#category : #'Spec2-Core-Base'
 }
 
@@ -43,7 +43,7 @@ SpDynamicPresenter >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #initialization }
-SpDynamicPresenter >> initializeWidgets [
+SpDynamicPresenter >> initializePresenters [
 ]
 
 { #category : #'instance creation' }

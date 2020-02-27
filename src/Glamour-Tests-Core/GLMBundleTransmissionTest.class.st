@@ -78,12 +78,12 @@ GLMBundleTransmissionTest >> testPresentations [
 	transmission := GLMTransmission new ensureReplacePresentationsStrategy.
 	transmission
 		addActiveOrigin:
-			((GLMSimplePort new)
+			(GLMSimplePort new
 				name: #port1;
 				value: 1).
 	transmission
 		addPassiveOrigin:
-			((GLMSimplePort new)
+			(GLMSimplePort new
 				name: #port2;
 				value: 2).
 	transmission destination: (GLMSimplePort new name: #port3).
@@ -94,9 +94,9 @@ GLMBundleTransmissionTest >> testPresentations [
 	transmission transmissionStrategy addPresentation: presentation2.
 	transmission transmissionStrategy addPresentation: presentation3.	"Test correct setup"
 	self assert: transmission transmissionStrategy presentations size equals: 3.
-	self assert: (transmission transmissionStrategy presentations at: 1) title = presentation1 title.
-	self assert: (transmission transmissionStrategy presentations at: 2) title = presentation2 title.
-	self assert: (transmission transmissionStrategy presentations at: 3) title = presentation3 title.
+	self assert: (transmission transmissionStrategy presentations at: 1) title equals: presentation1 title.
+	self assert: (transmission transmissionStrategy presentations at: 2) title equals: presentation2 title.
+	self assert: (transmission transmissionStrategy presentations at: 3) title equals: presentation3 title.
 	self assert: (transmission transmissionStrategy presentations at: 1) ~~ presentation1.
 	self assert: (transmission transmissionStrategy presentations at: 2) ~~ presentation2.
 	self assert: (transmission transmissionStrategy presentations at: 3) ~~ presentation3

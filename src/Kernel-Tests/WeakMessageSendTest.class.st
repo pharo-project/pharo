@@ -81,13 +81,8 @@ WeakMessageSendTest >> testReceiverWithGC [
 
 { #category : #tests }
 WeakMessageSendTest >> testTwoArguments [
-
 	| m |
-	m := WeakMessageSend
-		receiver: Array
-		selector: #with:with:
-		arguments: { 1 . 2 }.
+	m := WeakMessageSend receiver: Array selector: #with:with: arguments: {1 . 2}.
 	Smalltalk garbageCollectMost.
-	self assert: (m value = { 1 . 2 }).
-
+	self assert: m value equals: {1 . 2}
 ]

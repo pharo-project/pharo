@@ -9,17 +9,17 @@ self example
 Class {
 	#name : #SpTreeTablePresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#traits : 'TSpHaveWrappingScrollBars',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
+	#traits : 'SpTHaveWrappingScrollBars + SpTContextMenu + SpTSearchable',
+	#classTraits : 'SpTHaveWrappingScrollBars classTrait + SpTContextMenu classTrait + SpTSearchable classTrait',
 	#instVars : [
 		'#columns => SpObservableSlot',
 		'#showColumnHeaders => SpObservableSlot',
 		'#isResizable => SpObservableSlot',
-		'#selection => SpObservableSlot',
-		'#doubleClickAction => SpObservableSlot',
 		'#roots => SpObservableSlot',
+		'#selectionMode',
 		'#childrenBlock',
-		'#contextMenu => SpObservableSlot'
+		'#activationBlock',
+		'#activateOnSingleClick'
 	],
 	#category : #'Spec2-Core-Widgets-Tree'
 }
@@ -31,19 +31,38 @@ SpTreeTablePresenter class >> adapterName [
 ]
 
 { #category : #api }
+SpTreeTablePresenter >> activateOnDoubleClick [
+	
+	activateOnSingleClick := false
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> activateOnSingleClick [
+	
+	activateOnSingleClick := true
+]
+
+{ #category : #testing }
+SpTreeTablePresenter >> activatesOnDoubleClick [
+	
+	^ activateOnSingleClick not
+]
+
+{ #category : #testing }
+SpTreeTablePresenter >> activatesOnSingleClick [
+	
+	^ activateOnSingleClick
+]
+
+{ #category : #api }
 SpTreeTablePresenter >> addColumn: aColumn [
 	columns := self columns copyWith: aColumn
 ]
 
-{ #category : #'selection mode' }
+{ #category : #api }
 SpTreeTablePresenter >> beMultipleSelection [
-	| newSelectionMode |
-	
-	newSelectionMode := (SpTreeMultipleSelectionMode on: self)
-		copyFrom: selection;
-		yourself.
-	
-	selection := newSelectionMode.
+
+	self selectionMode: (SpTreeMultipleSelectionMode on: self)
 ]
 
 { #category : #api }
@@ -54,6 +73,12 @@ SpTreeTablePresenter >> beNotResizable [
 { #category : #api }
 SpTreeTablePresenter >> beResizable [
 	self isResizable: true
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> beSingleSelection [
+	
+	self selectionMode: (SpTreeSingleSelectionMode on: self)
 ]
 
 { #category : #private }
@@ -74,6 +99,15 @@ SpTreeTablePresenter >> childrenFor: anObject [
 	^ self children value: anObject
 ]
 
+{ #category : #simulation }
+SpTreeTablePresenter >> clickAtPath: aPath [
+
+	self selectPath: aPath.
+
+	activateOnSingleClick ifFalse: [ ^ self ].
+	self doActivateAtPath: aPath
+]
+
 { #category : #accessing }
 SpTreeTablePresenter >> columns [
 	^ columns
@@ -84,35 +118,24 @@ SpTreeTablePresenter >> columns: aCollection [
 	columns := aCollection
 ]
 
-{ #category : #api }
-SpTreeTablePresenter >> contextMenu [
-	^ contextMenu
-]
+{ #category : #simulation }
+SpTreeTablePresenter >> doActivateAtPath: aPath [
+	"Activate only if there is an item at that position"
 
-{ #category : #api }
-SpTreeTablePresenter >> contextMenu: aValuable [
-	"Set the block used to defined the menu"
-	
-	contextMenu := aValuable
-]
-
-{ #category : #private }
-SpTreeTablePresenter >> doubleClickAction [
-
-	^ doubleClickAction
-]
-
-{ #category : #'api-events' }
-SpTreeTablePresenter >> doubleClickAction: aBlockClosure [ 
-	
-	doubleClickAction := aBlockClosure
+	self itemAtPath: aPath ifAbsent: [ ^ self ].
+	activationBlock
+		cull:
+			((SpTreeSingleSelectionMode on: self)
+				selectPath: aPath;
+				yourself)
 ]
 
 { #category : #simulation }
-SpTreeTablePresenter >> doubleClickAtIndex: anInteger [ 
+SpTreeTablePresenter >> doubleClickAtPath: aPath [
+	self selectPath: aPath.
 	
-	self selectedIndex: anInteger.
-	doubleClickAction cull: anInteger
+	activateOnSingleClick ifTrue: [ ^ self ].
+	self doActivateAtPath: aPath
 ]
 
 { #category : #api }
@@ -124,23 +147,29 @@ SpTreeTablePresenter >> hideColumnHeaders [
 { #category : #initialization }
 SpTreeTablePresenter >> initialize [
 	super initialize.
+	self initializeTSearchable.
 
 	self withScrollBars.
+	
+	activationBlock := [ ].
+	
 	showColumnHeaders := true.
 	columns := #().
 	isResizable := false.
-	selection := SpTreeSingleSelectionMode on: self.
 	childrenBlock := [ :item | #() ].
 	roots := #().
+
+	self beSingleSelection.
+	self activateOnDoubleClick.
 	self registerEvents
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 SpTreeTablePresenter >> isResizable [
 	^ isResizable
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpTreeTablePresenter >> isResizable: aBoolean [
 	isResizable := aBoolean
 ]
@@ -185,7 +214,9 @@ SpTreeTablePresenter >> itemAtPath: anArray ifAbsent: aBlock [
 
 { #category : #initialization }
 SpTreeTablePresenter >> registerEvents [
-	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
+
+	self whenMenuChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter updateMenu ] ]
 ]
 
 { #category : #accessing }
@@ -199,6 +230,24 @@ SpTreeTablePresenter >> roots: aCollection [
 
 	roots := aCollection.
 	self selection clearSelection
+]
+
+{ #category : #private }
+SpTreeTablePresenter >> searchValueOf: item [ 
+
+	^ item asString
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> selectItem: anItem [
+
+	self selection selectItem: anItem
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> selectItems: aListOfItem [
+
+	self selection selectItems: aListOfItem
 ]
 
 { #category : #api }
@@ -218,10 +267,24 @@ SpTreeTablePresenter >> selectedItem [
 	^ self selection selectedItem
 ]
 
+{ #category : #api }
+SpTreeTablePresenter >> selectedItems [
+	
+	^ self selection selectedItems
+]
+
 { #category : #accessing }
 SpTreeTablePresenter >> selection [
 	
-	^ selection value
+	^ selectionMode value
+]
+
+{ #category : #private }
+SpTreeTablePresenter >> selectionMode: aMode [
+	
+	selectionMode ifNotNil: [ 
+		selectionMode transferSubscriptionsTo: aMode ].
+	selectionMode := aMode
 ]
 
 { #category : #api }
@@ -236,6 +299,24 @@ SpTreeTablePresenter >> unselectAll [
 	self selection unselectAll
 ]
 
+{ #category : #api }
+SpTreeTablePresenter >> unselectItem: anItem [
+
+	self selection unselectItem: anItem
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> unselectPath: aPath [
+
+	self selection unselectPath: aPath
+]
+
+{ #category : #'api-events' }
+SpTreeTablePresenter >> whenActivatedDo: aBlock [
+
+	activationBlock := aBlock
+]
+
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenColumnsChangedDo: aBlockClosure [
 	self property: #columns whenChangedDo: aBlockClosure
@@ -247,17 +328,10 @@ SpTreeTablePresenter >> whenIsResizableChangedDo: aBlock [
 	self property: #isResizable whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
-SpTreeTablePresenter >> whenMenuChangedDo: aBlock [
-	"Set a block to value when the menu block has changed"
-
-	self property: #contextMenu whenChangedDo: aBlock
-]
-
 { #category : #accessing }
 SpTreeTablePresenter >> whenMultiSelectionChangedDo: aBlockClosure [ 
 	
-	selection whenChangedDo: aBlockClosure 
+	selectionMode whenChangedDo: aBlockClosure 
 ]
 
 { #category : #'api-events' }
@@ -269,19 +343,19 @@ SpTreeTablePresenter >> whenRootsChangedDo: aBlockClosure [
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedIndexChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection first ]
+	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection first ]
 ]
 
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedItemChangedDo: aBlockClosure [ 
 	
-	self whenSelectionChangedDo: [ :aSelection | aBlockClosure cull: aSelection second ]
+	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection second ]
 ]
 
 { #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectionChangedDo: aBlock [ 
 	
-	self selection whenChangedDo: [ aBlock cull: selection ]
+	self selection whenChangedDo: [ aBlock cull: selectionMode ]
 ]
 
 { #category : #'api-events' }

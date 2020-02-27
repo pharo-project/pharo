@@ -65,6 +65,7 @@ GTInspector class >> extentSettingsOn: aBuilder [
 	(aBuilder setting: #GTInspectorPreferredWidth)
 		target: self;
 		parent: #gt;
+		default: 600;
 		getSelector: #preferredWidth;
 		setSelector: #preferredWidth:; 
 		label: 'Inspector width';
@@ -72,6 +73,7 @@ GTInspector class >> extentSettingsOn: aBuilder [
 	(aBuilder setting: #GTInspectorPreferredHeight)
 		target: self;
 		parent: #gt;
+		default: 400;
 		getSelector: #preferredHeight;
 		setSelector: #preferredHeight:; 
 		label: 'Inspector height';
@@ -80,7 +82,8 @@ GTInspector class >> extentSettingsOn: aBuilder [
 		target: self;
 		parent: #gt;
 		getSelector: #rememberPreferredExtent;
-		setSelector: #rememberPreferredExtent:; 
+		setSelector: #rememberPreferredExtent:;
+		default: true; 
 		label: 'Remember extent of Inspector';
 		description: 'Enable or disable remembering of the extent of Inspector windows on resize. When the preference is true, resizing a Inspector window will affect the preferred width and height of future Inspector windows'
 
@@ -258,18 +261,21 @@ GTInspector class >> settingsOn: aBuilder [
 			(aBuilder setting: #numberOfInspectorPanes)
 				target: self; 
 				label: 'Number of inspector panes';
+				default: 2;
 		 		description: 'Specifies the maximum number of panes that are visible at every moment in a Glamorous Inspector.'.
 			(aBuilder setting: #GTInspectorStatus)
 				target: self;
 				getSelector: #isGTInspectorEnabled;
 				setSelector: #setGTInspectorEnabledStatus:; 
 				label: 'GTInspector';
+				default: true;
 		 		description: 'Enable or disable the GTInspector.'.
 			(aBuilder setting: #EnabledStepRefreshStatus)
 				target: self;
 				getSelector: #isStepRefreshEnabled;
 				setSelector: #setEnabledStepRefreshStatus:; 
 				label: 'GTInspector Step Refresh';
+				default: true;
 		 		description: 'Enable or disable the automatic refresh in GTInspector that uses a busy update loop (based on the stepping mechanism from Morphic).']
 ]
 

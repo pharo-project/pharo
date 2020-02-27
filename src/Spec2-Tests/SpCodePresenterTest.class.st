@@ -12,8 +12,12 @@ SpCodePresenterTest >> classToTest [
 
 { #category : #tests }
 SpCodePresenterTest >> testContextKeyBindings [
-	self skip.
-	self assert: presenter contextKeyBindings notNil
+	| contextKeyBindings |
+	
+	contextKeyBindings := presenter contextKeyBindings.
+	self assert: contextKeyBindings notNil.
+	self assert: (contextKeyBindings isKindOf: KMCategory).
+	
 ]
 
 { #category : #tests }
@@ -28,6 +32,26 @@ SpCodePresenterTest >> testContextMenu [
 	presenter contextMenu: menu.
 	self assert: presenter contextMenu equals: menu.
 	self assert: changed
+]
+
+{ #category : #tests }
+SpCodePresenterTest >> testFindClassFrom [
+
+	self assert: (presenter findClassFrom: '') equals: nil.
+	self assert: (presenter findClassFrom: 'Object') equals: Object.
+	self assert: (presenter findClassFrom: 'Object.') equals: Object.
+	self assert: (presenter findClassFrom: '.Object.') equals: Object.
+	self
+		assert: (presenter findClassFrom: 'somethingBefore := 42.Object')
+		equals: Object.
+	self
+		assert:
+			(presenter
+				findClassFrom: 'somethingBefore := 42.Object. somethingAfter := 11')
+		equals: Object.
+	self
+		assert: (presenter findClassFrom: 'NonExistingClass.Object.')
+		equals: Object
 ]
 
 { #category : #tests }

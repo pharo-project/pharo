@@ -4,8 +4,6 @@ This a wrapper around inspectors for diving. It is used in the case where the in
 Class {
 	#name : #EyeInspectorNavigator,
 	#superclass : #SpPresenter,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
 	#instVars : [
 		'#inspector => SpObservableSlot',
 		'#history',
@@ -306,12 +304,12 @@ EyeInspectorNavigator >> setRefreshedToTrue [
 	canBeRefreshed := true
 ]
 
-{ #category : #initialization }
+{ #category : #stepping }
 EyeInspectorNavigator >> step [
 	self inspector step.
 ]
 
-{ #category : #initialization }
+{ #category : #stepping }
 EyeInspectorNavigator >> stepTime [
 	^ 1500
 ]

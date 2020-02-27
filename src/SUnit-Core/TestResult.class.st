@@ -18,6 +18,46 @@ Class {
 }
 
 { #category : #exceptions }
+TestResult class >> currentTheme [
+	^ Smalltalk ui theme
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorBackGroundForErrorTest [
+	^ self currentTheme testColorError
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorBackGroundForFailureTest [
+	^ self currentTheme testColorFailure
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorBackGroundForPassingTest [
+	^ self currentTheme testColorPassing
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorText [
+	^ Color black
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorTextForErrorTest [
+	^ self defaultColorText
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorTextForFailureTest [
+	^ self defaultColorText
+]
+
+{ #category : #'default-color' }
+TestResult class >> defaultColorTextForPassingTest [
+	^ self defaultColorText
+]
+
+{ #category : #exceptions }
 TestResult class >> error [
 	^self exError
 ]
@@ -238,7 +278,7 @@ TestResult >> failures: aSet [
 	failures := aSet
 ]
 
-{ #category : #'filein/out' }
+{ #category : #'file in/out' }
 TestResult >> fileOutOn: aFileStream [
 	"Write in aFileStream like:
 	3 run, 2 passes, 0 expected failures, 1 failures, 0 errors, 0 unexpected passes

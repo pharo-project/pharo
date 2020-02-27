@@ -16,6 +16,8 @@ BaselineOfAthens >> baseline: spec [
 	spec
 		for: #common
 		do: [ 
+			spec postLoadDoIt: #'postload:package:'.
+
 			"Inter packages dependencies are now added but it is missing some dependencies on other projects such as Morphic for Athens-Morphic"
 			"Dependencies"
 			self
@@ -43,6 +45,12 @@ BaselineOfAthens >> baseline: spec [
 { #category : #baseline }
 BaselineOfAthens >> display: spec [
 	spec baseline: 'Display' with: [ spec repository: self repository ]
+]
+
+{ #category : #baseline }
+BaselineOfAthens >> postload: loader package: packageSpec [
+
+	AthensCanvas initialize.
 ]
 
 { #category : #accessing }

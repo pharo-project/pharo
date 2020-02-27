@@ -10,7 +10,7 @@ SpComposablePresenterWithModelTest >> testInstanceCreation [
 	| aPoint presenter |
 	
 	aPoint := 40@54.
-	presenter := SpTestingComposablePresenterWithModel on: aPoint.
+	presenter := SpTestingPresenterWithModel on: aPoint.
 	
 	self assert: presenter model equals: aPoint.
 	self deny: (aPoint dependents includes: presenter).
@@ -26,7 +26,7 @@ SpComposablePresenterWithModelTest >> testInstanceCreationWithValueHolder [
 	
 	point := (40@54).
 	valueHolder := point asValueHolder.
-	presenter := SpTestingComposablePresenterWithModel on: valueHolder.
+	presenter := SpTestingPresenterWithModel on: valueHolder.
 	
 	self assert: presenter model equals: point.
 	
@@ -42,7 +42,7 @@ SpComposablePresenterWithModelTest >> testModelSettingModelToModel [
 	| model model2 presenter |
 	model := SpTestingPointModel x: 1 y: 2.
 	model2 := SpTestingPointModel x: 4 y: 5.
-	presenter := SpTestingComposablePresenterWithModel on: model.
+	presenter := SpTestingPresenterWithModel on: model.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self deny: presenter announcingObject isValueHolder.
 	self assert: model2 isSpAnnouncingObject.
@@ -63,7 +63,7 @@ SpComposablePresenterWithModelTest >> testModelSettingModelToValueHolder [
 	"we had value holder, new model is a model"
 	point := 40@54.
 
-	presenter := SpTestingComposablePresenterWithModel on: point.
+	presenter := SpTestingPresenterWithModel on: point.
 	model := SpTestingPointModel x: 1 y: 2.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
@@ -86,7 +86,7 @@ SpComposablePresenterWithModelTest >> testModelSettingObjectToModel [
 	"we had a Model, new model is a regular object"
 	model := SpTestingPointModel x: 1 y: 2.
 	point := 40@54.
-	presenter := SpTestingComposablePresenterWithModel on: model.
+	presenter := SpTestingPresenterWithModel on: model.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self deny: presenter announcingObject isValueHolder.
 	self deny: point isSpAnnouncingObject.
@@ -109,7 +109,7 @@ SpComposablePresenterWithModelTest >> testModelSettingObjectToValueHolder [
 	"we had value holder, new model is a regular object"
 	point := 40@54.
 	point2 := 1@0.
-	presenter := SpTestingComposablePresenterWithModel on: point.
+	presenter := SpTestingPresenterWithModel on: point.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
 	self deny: point2 isSpAnnouncingObject.
@@ -130,7 +130,7 @@ SpComposablePresenterWithModelTest >> testModelSettingValueHolderToModel [
 	point := 1@0.
 	model := SpTestingPointModel x: 1 y: 2.
 	valueHolder := NewValueHolder value: point.
-	presenter := SpTestingComposablePresenterWithModel on: model.
+	presenter := SpTestingPresenterWithModel on: model.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self deny: presenter announcingObject isValueHolder.
 	self assert: valueHolder isSpAnnouncingObject.
@@ -153,7 +153,7 @@ SpComposablePresenterWithModelTest >> testModelSettingValueHolderToValueHolder [
 	point2 := 1@0.
 	
 	"we had value holder, new model is a value holder"
-	presenter := SpTestingComposablePresenterWithModel on: point.
+	presenter := SpTestingPresenterWithModel on: point.
 	valueHolder := NewValueHolder value: point2.
 	self assert: presenter announcingObject isSpAnnouncingObject.
 	self assert: presenter announcingObject isValueHolder.
@@ -174,7 +174,7 @@ SpComposablePresenterWithModelTest >> testUpdateModel [
 	| aPoint presenter |
 	
 	aPoint := SpTestingPointModel x: 40 y: 54.
-	presenter := SpTestingComposablePresenterWithModel on: aPoint.
+	presenter := SpTestingPresenterWithModel on: aPoint.
 	
 	self assert: presenter x text equals: aPoint x asString.
 	self assert: presenter y text equals: aPoint y asString.
@@ -204,7 +204,7 @@ SpComposablePresenterWithModelTest >> testUpdateModelWithValueHolder [
 	anAnnouncer := aValueHolder announcer.
 	self assert: (aValueHolder announcer subscriptions subscriptions size) equals: 0. 
 	
-	presenter := SpTestingComposablePresenterWithModel on: aValueHolder.
+	presenter := SpTestingPresenterWithModel on: aValueHolder.
 
 	self assert: (anAnnouncer == aValueHolder announcer).
 	self assert: presenter x text equals: aPoint x asString.

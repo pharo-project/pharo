@@ -64,7 +64,7 @@ FLPlatform class >> extensionPragmas [
 			self class withAllSuperclassesDo: [ :class |
 				stop ifFalse: [
 					Pragma withPragmasIn: class do:  [ :pragma |
-						(pragma keyword = selector and: [
+						(pragma selector = selector and: [
 							"don't collect overridden methods"
 							(pragmas includesKey: pragma selector) not ]) ifTrue: [
 								pragmas

@@ -43,7 +43,7 @@ BaseSlot >> isVisible [
 ]
 
 { #category : #'meta-object-protocol' }
-BaseSlot >> wantsInitalization [
+BaseSlot >> wantsInitialization [
 	"we need to call the initialize to set the default value for the base slot"
 	^true
 ]

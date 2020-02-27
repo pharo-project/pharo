@@ -66,7 +66,9 @@ RenrakuCritiqueDesignHelp class >> hierarchy [
 	^ HelpTopic
 		title: 'Class Hierarchy'
 		contents: 
-'ReAbstractCritique is the root of the critiques hierarchy.'
+'ReAbstractCritique is the root of the critiques hierarchy.
+
+ReAbstractCritique inherits from ReProperty which represents an external property of some entity related to a piece of code. It defines a basic interface of a title an and an icon that can be used to display it in a user interface. It also has a source anchor pointing the piece of code.'
 ]
 
 { #category : #accessing }

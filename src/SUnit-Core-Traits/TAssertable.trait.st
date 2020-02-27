@@ -195,6 +195,15 @@ TAssertable >> denyCollection: actual equals: expected [
 ]
 
 { #category : #asserting }
+TAssertable >> denyCollection: actual hasSameElements: expected [
+	"Deny that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
+
+	self
+		deny: ((actual difference: expected) isEmpty and: [ (expected difference: actual) isEmpty ])
+		description: 'Given collections match!'
+]
+
+{ #category : #asserting }
 TAssertable >> denyEmpty: aCollection [
 	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
 ]

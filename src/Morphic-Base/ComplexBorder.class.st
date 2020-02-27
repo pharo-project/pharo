@@ -293,7 +293,7 @@ ComplexBorder >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	"Now get the fill style appropriate for the given direction"
 	fill := self fillStyleForDirection: dir.
 	"And draw..."
-	aCanvas asBalloonCanvas transformBy: tfm
+	aCanvas transformBy: tfm
 		during: 
 			[:cc | 
 			cc drawPolygon: { 
@@ -326,14 +326,14 @@ false ifTrue:[
 	fill origin: fsOrigin; 
 		direction: fsDirection rounded; "NOTE: This is a bug in the balloon engine!!!"
 		normal: nil.
-	aCanvas asBalloonCanvas drawPolygon: endsArray fillStyle: fill.
+	aCanvas drawPolygon: endsArray fillStyle: fill.
 ] ifFalse:[
 	"Transform the points rather than the fills"
 	tfm := (MatrixTransform2x3 new) a11: cos; a12: sin; a21: sin negated; a22: cos.
 	"Install the start point offset"
 	tfm offset: startPoint.
 	points := endsArray collect:[:pt| tfm invertPoint: pt].
-	aCanvas asBalloonCanvas transformBy: tfm during:[:cc|
+	aCanvas transformBy: tfm during:[:cc|
 		cc drawPolygon: points fillStyle: fill.
 	].
 ].
@@ -363,7 +363,7 @@ ComplexBorder >> fillStyleForDirection: direction [
 ComplexBorder >> framePolygon: vertices on: aCanvas [
 	| dir1 dir2 dir3 nrm1 nrm2 nrm3 point1 point2 point3 
 	 cross1 cross2 pointA pointB pointC pointD w p1 p2 p3 p4 balloon ends pointE pointF |
-	balloon := aCanvas asBalloonCanvas.
+	balloon := aCanvas.
 	balloon == aCanvas ifFalse:[balloon deferred: true].
 	ends := Array new: 6.
 	w := width * 0.5.

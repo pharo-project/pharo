@@ -282,47 +282,43 @@ SymbolTest >> subCollectionNotIn [
 
 { #category : #tests }
 SymbolTest >> testAsMutator [
-
-	self assert: #x asMutator = #x:.
+	self assert: #x asMutator equals: #x:.
 	"return receiver if it is already a mutator"
-	self assert: #x: asMutator = #x:.
+	self assert: #x: asMutator equals: #x:.
 	self assert: #x asMutator isSymbol
-	
 ]
 
 { #category : #tests }
 SymbolTest >> testCapitalized [
-
-	| uc lc |		
+	| uc lc |
 	uc := #MElViN.
 	lc := #mElViN.
-	self assert:  lc capitalized = uc.
-	self assert: uc capitalized = uc.
-
+	self assert: lc capitalized equals: uc.
+	self assert: uc capitalized equals: uc
 ]
 
 { #category : #tests }
 SymbolTest >> testConcatenationIsSymbol [
 	"Concatenating 2 symbols results in another symbol"
+
 	self assert: (#foo , #bar) isSymbol.
-	self assert: (#foo , #bar) == #foobar.
-	
+	self assert: #foo , #bar identicalTo: #foobar.
+
 	"Concatenating the empty Symbol does not change a Symbol"
-	self assert: (#foo , emptySymbol) == #foo.
-	self assert: (emptySymbol , #foo) == #foo.
-	
+	self assert: #foo , emptySymbol identicalTo: #foo.
+	self assert: emptySymbol , #foo identicalTo: #foo.
+
 	"Strings and Symbols can still be mixed, the receiver determines the result type"
 	"Symbol receiver gives Symbol result"
 	self assert: (#foo , 'bar') isSymbol.
-	self assert: (#foo , 'bar') == #foobar.
+	self assert: #foo , 'bar' identicalTo: #foobar.
 	"String receiver gives String result"
 	self assert: ('foo' , #bar) isString.
-	self assert: ('foo' , #bar) = 'foobar'.
+	self assert: 'foo' , #bar equals: 'foobar'.
 	"Strings and Symbols still compare content-wise"
-	self assert: ('foo' , #bar) = #foobar.
+	self assert: 'foo' , #bar equals: #foobar.
 	"But Strings and Symbols are not identical"
-	self deny: ('foo' , #bar) == #foobar.
-
+	self deny: 'foo' , #bar identicalTo: #foobar
 ]
 
 { #category : #'tests - copy' }
@@ -333,10 +329,10 @@ SymbolTest >> testCopyNonEmptyWithoutAllNotIncluded [
 { #category : #'tests - copy' }
 SymbolTest >> testCopyNotSame [
 	"There is only one symbol, the copy is the same"
-	
-	| copy | 
+
+	| copy |
 	copy := self nonEmpty copy.
-	self assert: copy  == self nonEmpty.
+	self assert: copy identicalTo: self nonEmpty
 ]
 
 { #category : #tests }
@@ -375,136 +371,131 @@ SymbolTest >> testNew [
 
 { #category : #tests }
 SymbolTest >> testNumArgs2 [
-    "TODO: need to be extended to support shrinking and for selectors like #+ " 
-	
-	self assert: (#test numArgs: 0) = #test.
-	self assert: (#test numArgs: 1) = #test:.
-	self assert: (#test numArgs: 2) = #test:with:.
-	self assert: (#test numArgs: 3) = #test:with:with:.
-	
+	"TODO: need to be extended to support shrinking and for selectors like #+ "
 
-	self assert: (#test: numArgs: 0) = #test:.
-	self assert: (#test: numArgs: 1) = #test:.
-	self assert: (#test: numArgs: 2) = #test:with:.
-	self assert: (#test: numArgs: 3) = #test:with:with:.
-	
-	self assert: (#test:with: numArgs: 0) = #test:with:.
-	self assert: (#test:with: numArgs: 1) = #test:with:.
-	self assert: (#test:with: numArgs: 2) = #test:with:.
-	self assert: (#test:with: numArgs: 3) = #test:with:with:.
-	self assert: (#test:with: numArgs: 4) = #test:with:with:with:.
-	
-	self assert: (#test:with:with: numArgs: 0) = #test:with:with:.
-	self assert: (#test:with:with: numArgs: 1) = #test:with:with:.
-	self assert: (#test:with:with: numArgs: 2) = #test:with:with:.
-	self assert: (#test:with:with: numArgs: 3) = #test:with:with:.
-	self assert: (#test:with:with: numArgs: 4) = #test:with:with:with:.
+	self assert: (#test numArgs: 0) equals: #test.
+	self assert: (#test numArgs: 1) equals: #test:.
+	self assert: (#test numArgs: 2) equals: #test:with:.
+	self assert: (#test numArgs: 3) equals: #test:with:with:.
+
+
+	self assert: (#test: numArgs: 0) equals: #test:.
+	self assert: (#test: numArgs: 1) equals: #test:.
+	self assert: (#test: numArgs: 2) equals: #test:with:.
+	self assert: (#test: numArgs: 3) equals: #test:with:with:.
+
+	self assert: (#test:with: numArgs: 0) equals: #test:with:.
+	self assert: (#test:with: numArgs: 1) equals: #test:with:.
+	self assert: (#test:with: numArgs: 2) equals: #test:with:.
+	self assert: (#test:with: numArgs: 3) equals: #test:with:with:.
+	self assert: (#test:with: numArgs: 4) equals: #test:with:with:with:.
+
+	self assert: (#test:with:with: numArgs: 0) equals: #test:with:with:.
+	self assert: (#test:with:with: numArgs: 1) equals: #test:with:with:.
+	self assert: (#test:with:with: numArgs: 2) equals: #test:with:with:.
+	self assert: (#test:with:with: numArgs: 3) equals: #test:with:with:.
+	self assert: (#test:with:with: numArgs: 4) equals: #test:with:with:with:
 ]
 
 { #category : #tests }
 SymbolTest >> testNumArgsBinary [
-	self assert: ('-' numArgs = 1).
-	self assert: ('++' numArgs = 1).
-	self assert: ('*&@' numArgs = 1).
-	
-	self assert: (' ++' numArgs = -1).
-	self assert: ('+ +' numArgs = -1).
-	self assert: ('++ ' numArgs = -1).
+	self assert: '-' numArgs equals: 1.
+	self assert: '++' numArgs equals: 1.
+	self assert: '*&@' numArgs equals: 1.
 
-	self assert: ('_++' numArgs = -1).
-	self assert: ('+_+' numArgs = -1).
-	self assert: ('++_' numArgs = -1).
-	
-	self assert: ('1' numArgs = -1).
-	self assert: ('*a' numArgs = -1)
+	self assert: ' ++' numArgs equals: -1.
+	self assert: '+ +' numArgs equals: -1.
+	self assert: '++ ' numArgs equals: -1.
+
+	self assert: '_++' numArgs equals: -1.
+	self assert: '+_+' numArgs equals: -1.
+	self assert: '++_' numArgs equals: -1.
+
+	self assert: '1' numArgs equals: -1.
+	self assert: '*a' numArgs equals: -1
 ]
 
 { #category : #tests }
 SymbolTest >> testNumArgsKeyword1 [
-	self assert: ('name:' numArgs = 1).
+	self assert: 'name:' numArgs equals: 1.
 
-	self assert: ('name_:' numArgs = 1).
-	self assert: ('_name:' numArgs = 1).
-	self assert: ('na_me:' numArgs = 1).
+	self assert: 'name_:' numArgs equals: 1.
+	self assert: '_name:' numArgs equals: 1.
+	self assert: 'na_me:' numArgs equals: 1.
 
-	self assert: ('name: ' numArgs = -1).
-	self assert: (' name:' numArgs = -1).
-	self assert: ('na me:' numArgs = -1).
-	
-	self assert: ('name+:' numArgs = -1).
-	self assert: ('+name:' numArgs = -1).
-	self assert: ('na+me:' numArgs = -1).
-	
-	self assert: ('name123:' numArgs = 1).
-	self assert: ('na123me:' numArgs = 1).
-	self assert: ('123name:' numArgs = -1)
+	self assert: 'name: ' numArgs equals: -1.
+	self assert: ' name:' numArgs equals: -1.
+	self assert: 'na me:' numArgs equals: -1.
+
+	self assert: 'name+:' numArgs equals: -1.
+	self assert: '+name:' numArgs equals: -1.
+	self assert: 'na+me:' numArgs equals: -1.
+
+	self assert: 'name123:' numArgs equals: 1.
+	self assert: 'na123me:' numArgs equals: 1.
+	self assert: '123name:' numArgs equals: -1
 ]
 
 { #category : #tests }
 SymbolTest >> testNumArgsKeyword2 [
-	self assert: ('name:with:' numArgs = 2).
+	self assert: 'name:with:' numArgs equals: 2.
 
-	self assert: ('_name:with:' numArgs = 2).
-	self assert: ('na_me:with:' numArgs = 2).
-	self assert: ('name_:with:' numArgs = 2).
-	
-	self assert: ('name:_with:' numArgs = 2).
-	self assert: ('name:wi_th:' numArgs = 2).
-	self assert: ('name:with_:' numArgs = 2).
-	
-	self assert: ('name:with: ' numArgs = -1).
-	self assert: ('name: with:' numArgs = -1).
-	self assert: (' name:with:' numArgs = -1).
-	
-	self assert: ('name+:with:' numArgs = -1).
-	self assert: ('+name:with:' numArgs = -1).
-	self assert: ('na+me:with:' numArgs = -1).
-	
-	self assert: ('123name:with:' numArgs = -1).
-	self assert: ('name123:with:' numArgs = 2).
-	self assert: ('name:123with:' numArgs = -1).
-	self assert: ('name:with123:' numArgs = 2)
+	self assert: '_name:with:' numArgs equals: 2.
+	self assert: 'na_me:with:' numArgs equals: 2.
+	self assert: 'name_:with:' numArgs equals: 2.
+
+	self assert: 'name:_with:' numArgs equals: 2.
+	self assert: 'name:wi_th:' numArgs equals: 2.
+	self assert: 'name:with_:' numArgs equals: 2.
+
+	self assert: 'name:with: ' numArgs equals: -1.
+	self assert: 'name: with:' numArgs equals: -1.
+	self assert: ' name:with:' numArgs equals: -1.
+
+	self assert: 'name+:with:' numArgs equals: -1.
+	self assert: '+name:with:' numArgs equals: -1.
+	self assert: 'na+me:with:' numArgs equals: -1.
+
+	self assert: '123name:with:' numArgs equals: -1.
+	self assert: 'name123:with:' numArgs equals: 2.
+	self assert: 'name:123with:' numArgs equals: -1.
+	self assert: 'name:with123:' numArgs equals: 2
 ]
 
 { #category : #tests }
 SymbolTest >> testNumArgsUnary [
-	self assert: ('name' numArgs = 0).
+	self assert: 'name' numArgs equals: 0.
 
-	self assert: ('name_' numArgs = 0).
-	self assert: ('_name' numArgs = 0).
-	self assert: ('na_me' numArgs = 0).
+	self assert: 'name_' numArgs equals: 0.
+	self assert: '_name' numArgs equals: 0.
+	self assert: 'na_me' numArgs equals: 0.
 
-	self assert: ('name ' numArgs = -1).
-	self assert: (' name' numArgs = -1).
-	self assert: ('na me' numArgs = -1).
-	
-	self assert: ('name+' numArgs = -1).
-	self assert: ('+name' numArgs = -1).
-	self assert: ('na+me' numArgs = -1).
-	
-	self assert: ('name123' numArgs = 0).
-	self assert: ('na123me' numArgs = 0).
-	self assert: ('123name' numArgs = -1)
+	self assert: 'name ' numArgs equals: -1.
+	self assert: ' name' numArgs equals: -1.
+	self assert: 'na me' numArgs equals: -1.
+
+	self assert: 'name+' numArgs equals: -1.
+	self assert: '+name' numArgs equals: -1.
+	self assert: 'na+me' numArgs equals: -1.
+
+	self assert: 'name123' numArgs equals: 0.
+	self assert: 'na123me' numArgs equals: 0.
+	self assert: '123name' numArgs equals: -1
 ]
 
 { #category : #tests }
 SymbolTest >> testReadFrom [
-
-	self expectedBehavior do: [:association |
-		self assert: (association key value == association value)]
+	self expectedBehavior do: [ :association | self assert: association key value identicalTo: association value ]
 ]
 
 { #category : #tests }
 SymbolTest >> testUncapitalized [
-
-	| uc lc empty |		
+	| uc lc empty |
 	uc := #MElViN.
 	lc := #mElViN.
 	empty := #' '.
-	self assert:  uc uncapitalized = lc.
-	self assert: lc uncapitalized = lc.
-	
-
+	self assert: uc uncapitalized equals: lc.
+	self assert: lc uncapitalized equals: lc
 ]
 
 { #category : #requirements }

@@ -224,7 +224,7 @@ BalloonMorph >> setTarget: aMorph [
 	(target := aMorph) ifNotNil: [offsetFromTarget := self position - target position]
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : #stepping }
 BalloonMorph >> step [
 	"Move with target."
 
@@ -232,7 +232,7 @@ BalloonMorph >> step [
 
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 BalloonMorph >> stepTime [
 	^ 0  "every cycle"
 ]

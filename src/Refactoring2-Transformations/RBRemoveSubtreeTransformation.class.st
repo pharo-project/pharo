@@ -54,23 +54,23 @@ RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
 
 { #category : #preconditions }
 RBRemoveSubtreeTransformation >> preconditions [
-
 	^ (RBCondition definesSelector: selector in: self definingClass)
-		& (RBCondition withBlock: [ 
-			| tree |
-			tree := RBParser
+		&
+			(RBCondition
+				withBlock: [ | tree |
+					tree := self parserClass
 						parseExpression: sourceCode
-						onError: [ :string :pos | 
-							self refactoringError: 'Invalid source to extract - ', string ].
-			tree ifNil: [self refactoringError: 'Invalid source to extract - ', sourceCode ].
-			(tree isSequence and: [tree statements isEmpty]) 
-				ifTrue: [self refactoringError: 'Selected code to extract is empty' ].
-				
-			tree := ((self definingClass parseTreeFor: selector)
-							extractSubtreeWith: sourceCode)
-				ifNil: [ self refactoringError: 'Could not extract code from method ', selector ]. 
-			true ])
-
+						onError:
+							[ :string :pos | self refactoringError: 'Invalid source to extract - ' , string ].
+					tree
+						ifNil: [ self refactoringError: 'Invalid source to extract - ' , sourceCode ].
+					(tree isSequence and: [ tree statements isEmpty ])
+						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
+					tree := ((self definingClass parseTreeFor: selector)
+						extractSubtreeWith: sourceCode)
+						ifNil: [ self
+								refactoringError: 'Could not extract code from method ' , selector ].
+					true ])
 ]
 
 { #category : #executing }
@@ -97,15 +97,17 @@ RBRemoveSubtreeTransformation >> privateTransform [
 
 { #category : #private }
 RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
-
-	^ [ RBParseTreeRewriter 
-			replaceStatements: aTree formattedCode
-		 	with: '' in: aMethodTree
-			onInterval: aTree sourceInterval ]
-		on: Error do: [ RBParseTreeRewriter 
-					 replace: aTree formattedCode
-					 with: '' in: aMethodTree
-					 onInterval: aTree sourceInterval ]
+	^ [ self parseTreeRewriterClass
+		replaceStatements: aTree formattedCode
+		with: ''
+		in: aMethodTree
+		onInterval: aTree sourceInterval ]
+		on: Error
+		do: [ self parseTreeRewriterClass
+				replace: aTree formattedCode
+				with: ''
+				in: aMethodTree
+				onInterval: aTree sourceInterval ]
 ]
 
 { #category : #printing }

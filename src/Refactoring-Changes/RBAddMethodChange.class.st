@@ -142,7 +142,9 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 
 { #category : #private }
 RBAddMethodChange >> parseTree [
-	^ RBParser parseMethod: self source onError: [ :str :pos | ^ nil ]
+	^ self parserClass
+		parseMethod: self source
+		onError: [ :str :pos | ^ nil ]
 ]
 
 { #category : #private }
@@ -192,11 +194,9 @@ RBAddMethodChange >> protocols: aCollectionOrString [
 
 { #category : #accessing }
 RBAddMethodChange >> selector [
-
 	selector
-		ifNil: [ selector := RBParser parseMethodPattern: source.
-			selector ifNil: [ selector := #unknown ]
-			].
+		ifNil: [ selector := self parserClass parseMethodPattern: source.
+			selector ifNil: [ selector := #unknown ] ].
 	^ selector
 ]
 

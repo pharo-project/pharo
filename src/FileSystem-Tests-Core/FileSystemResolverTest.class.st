@@ -12,7 +12,7 @@ Class {
 
 { #category : #testing }
 FileSystemResolverTest class >> isAbstract [
-	^ self name = #FileSystemResolverTest
+	^ self = FileSystemResolverTest
 ]
 
 { #category : #asserting }

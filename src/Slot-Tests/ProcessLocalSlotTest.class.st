@@ -24,7 +24,7 @@ ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
 	
 	instance := aClass new.
 	instance slot1: #test.
-	self assert: (instance instVarNamed: #slot1) value equals: #test.
+	self assert: (instance instVarNamed: #slot1) value equals: #test
 ]
 
 { #category : #tests }
@@ -55,7 +55,7 @@ ProcessLocalSlotTest >> testWriteAndReadCompiled [
 	self assert: object slot1 equals: 3.
 	"inside another process it it nil"
 	[ self assert: object slot1 equals: nil. ] fork.
-	self assert: object slot1 equals: 3.
+	self assert: object slot1 equals: 3
 ]
 
 { #category : #tests }
@@ -70,5 +70,5 @@ ProcessLocalSlotTest >> testWriteAndReadReflective [
 	self assert: (slot read: object) equals: 3.
 	"inside another process it it nil"
 	[ self assert: (slot read: object) equals: nil. ] fork.
-	self assert: (slot read: object) equals: 3.
+	self assert: (slot read: object) equals: 3
 ]

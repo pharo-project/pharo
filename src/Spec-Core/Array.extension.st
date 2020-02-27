@@ -1,14 +1,6 @@
 Extension { #name : #Array }
 
 { #category : #'*Spec-Core' }
-Array >> asSpecLayout [
-
-	^ SpecLegacyArrayLayout new
-		array: self;
-		yourself
-]
-
-{ #category : #'*Spec-Core' }
 Array >> generateSpec [
 	| str spec |
 	str := self readStream.	

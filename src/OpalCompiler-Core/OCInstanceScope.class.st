@@ -61,15 +61,6 @@ OCInstanceScope >> lookupVar: name [
 ]
 
 { #category : #lookup }
-OCInstanceScope >> lookupVar: name inContext: aContext [
-	"Return a ScopeVar for my inst var with this name.  Return nil if none found"
-
-	name = 'self' ifTrue: [^ selfVar].
-	name = 'super' ifTrue: [^ superVar].
-	^ vars at: name ifAbsent: [self outerScope lookupVar: name inContext: aContext ]
-]
-
-{ #category : #lookup }
 OCInstanceScope >> lookupVarForDeclaration: name [
 	"Return a ScopeVar for my inst var with this name.  Return nil if none found"
 	name = 'self' ifTrue: [^ selfVar].
@@ -93,13 +84,4 @@ OCInstanceScope >> slots: slotCollection [
 				scope: self;
 				yourself)].
 
-]
-
-{ #category : #lookup }
-OCInstanceScope >> variableNamed: name ifAbsent: aBlock [
-	"Return a ScopeVar for my inst var with this name.  Return nil if none found"
-
-	name = 'self' ifTrue: [^ selfVar].
-	name = 'super' ifTrue: [^ superVar].
-	^ vars at: name ifAbsent: aBlock
 ]

@@ -5,8 +5,8 @@ I define common behaviours for widget presenters and also for composable present
 Class {
 	#name : #SpAbstractPresenter,
 	#superclass : #Model,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#owner',
 		'#adapter',
@@ -39,6 +39,11 @@ SpAbstractPresenter class >> defaultFont [
 SpAbstractPresenter class >> inputTextHeight [
 
 	^ self defaultFont height + 12
+]
+
+{ #category : #testing }
+SpAbstractPresenter class >> isAbstract [
+	^ self = SpAbstractPresenter
 ]
 
 { #category : #TOREMOVE }

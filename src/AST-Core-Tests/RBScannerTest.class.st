@@ -92,6 +92,20 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
 		raise: SyntaxErrorNotification
 ]
 
+{ #category : #tests }
+RBScannerTest >> testScanTokens [
+	| inp exp |
+	inp := 'Object subclass: #NameOfSubclass'.
+	exp := {'Object'.
+	'subclass:'.
+	#NameOfSubclass asString}.
+	self assert: (RBScanner scanTokens: inp) equals: exp.
+	inp := 'classVariableNames: '''' "ha ha"
+package: ''UndefinedClasses-Experiment'.
+	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
+	self assert: (RBScanner scanTokens: inp) equals: exp
+]
+
 { #category : #utilities }
 RBScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
 	self assert: scannedToken isError.

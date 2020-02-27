@@ -219,7 +219,12 @@ SettingBrowser class >> browse: aCollectionOfKeywords [
 
 { #category : #'private helpers' }
 SettingBrowser class >> currentNodeList [
-	^ (SettingTree new  acceptableKeywords: self settingsKeywords) nodeList
+	^ self currentTree nodeList
+]
+
+{ #category : #'private helpers' }
+SettingBrowser class >> currentTree [
+	^ SettingTree new acceptableKeywords: self settingsKeywords
 ]
 
 { #category : #opening }
@@ -280,7 +285,7 @@ SettingBrowser class >> searchedTextList [
 
 { #category : #accessing }
 SettingBrowser class >> settingsKeywords [ 
-	^ ((PragmaCollector new filter: [:prg | prg keyword = #settingPragmaProcessor]) reset) collect: [:p | p method selector].
+	^ ((PragmaCollector new filter: [:prg | prg selector = #settingPragmaProcessor]) reset) collect: [:p | p method selector].
 
 ]
 
@@ -854,7 +859,7 @@ SettingBrowser >> treeMorphIn: aMorph [
 		doubleClickSelector: #doubleClick;
 		rowInset: 6;
 		columnInset: 6;
-		rowColorForEven: Smalltalk ui theme lightBackgroundColor;
+		rowColorForEven: self theme lightBackgroundColor;
 		yourself.
 	^ treeMorph buildContents
 ]

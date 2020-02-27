@@ -25,13 +25,12 @@ ClyPackageExtensionMethodsQueryTest >> testCheckIfEmpty [
 
 { #category : #tests }
 ClyPackageExtensionMethodsQueryTest >> testComparisonToSimilarQueryButWithDifferentPackage [
-
 	| query2 |
 	query package: Object package.
 	query2 := self createQuery.
 	query2 package: String package.
-	
-	self deny: query = query2
+
+	self deny: query equals: query2
 ]
 
 { #category : #tests }

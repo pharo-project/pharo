@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestRPackageCore class >> manuallyResolvedDependencies [
-	^ #(#'Ring-Deprecated-Core-Kernel' #UIManager #'System-Sources')
+	^ #(#UIManager)
 ]

@@ -75,11 +75,8 @@ SpMorphicPanedAdapter >> newHorizontal [
 { #category : #factory }
 SpMorphicPanedAdapter >> newPanel [
 
-	^ PanelMorph new 
+	^ super newPanel
 		layoutPolicy: SpMorphicPanedLayout new;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		color: Color transparent;
 		yourself
 ]
 

@@ -50,22 +50,22 @@ MalHal >> nodeClass [
 
 { #category : #running }
 MalHal >> run [
-	self runTarjan.
+	super run.
 	self initializeHal.
 	self mainLoop
 ]
 
-{ #category : #running }
-MalHal >> runTarjan [
-	super run
-]
-
 { #category : #logging }
 MalHal >> showLevels [
-
-	self hierarchyLevels keysAndValuesDo: [ :k :v |
-			Transcript show: k.
-			v do: [ :n | Transcript show: ' ' ; show: n ].
-			Transcript cr
-		]
+	^ String
+		streamContents: [ :s | 
+			self hierarchyLevels
+				keysAndValuesDo: [ :k :v | 
+					s print: k.
+					v
+						do: [ :n | 
+							s
+								space;
+								print: n ].
+					s cr ] ]
 ]

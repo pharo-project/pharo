@@ -34,12 +34,25 @@ Class {
 		'condition'
 	],
 	#classVars : [
+		'Active',
 		'Log',
 		'RaiseWarning',
 		'ShowWarning'
 	],
 	#category : #'Kernel-Exceptions'
 }
+
+{ #category : #logging }
+Deprecation class >> activateTransformations [
+
+	^ Active ifNil: [ Active := true ]
+]
+
+{ #category : #logging }
+Deprecation class >> activateTransformations: aBoolean [
+
+	Active := aBoolean
+]
 
 { #category : #logging }
 Deprecation class >> deprecationsWhile: aBlock [
@@ -151,18 +164,24 @@ Deprecation >> hash [
 	^(context ifNil: [explanationString]) hash
 ]
 
-{ #category : #handling }
+{ #category : #private }
 Deprecation >> logTranscript [
-	self showWarning 
-		ifTrue: [Transcript nextPutAll: self messageText; cr; flush].
+	self showWarning
+		ifTrue: [ DeprecationPerformedNotification signal: self messageText ]
 ]
 
 { #category : #accessing }
 Deprecation >> messageText [
-	"Return an exception's message text."
-
-	^ 'The method ', self deprecatedMethodName, ' called from ', self sendingMethodName ,' has been deprecated.
-', explanationString
+	^String streamContents: [ :str |
+		self shouldTransform ifTrue: [ 
+			str nextPutAll:  'Automatic deprecation code rewrite: '].
+		str 
+			nextPutAll: 'The method ';
+			nextPutAll: self deprecatedMethodName;
+			nextPutAll: ' called from ';
+			nextPutAll: self sendingMethodName;
+			nextPutAll: ' has been deprecated. ';
+		 	nextPutAll: explanationString]
 ]
 
 { #category : #settings }
@@ -187,8 +206,9 @@ Deprecation >> sendingMethodName [
 
 { #category : #handling }
 Deprecation >> shouldTransform [
-	^ self raiseWarning  "when desprecations are disables, we do not want to transform, either"
-		and: [ condition isNil or: [ condition cull: self ] ]
+	self class activateTransformations ifFalse: [ ^false  ].
+	(condition isNil or: [ condition cull: self ]) ifFalse: [ ^false ].
+	^rule isNotNil
 ]
 
 { #category : #settings }
@@ -197,24 +217,34 @@ Deprecation >> showWarning [
 ]
 
 { #category : #handling }
+Deprecation >> signal [
+	| pragma |
+	(context method hasPragmaNamed: #transform:to:) ifFalse: [ ^super signal ].
+
+	pragma := context method pragmaAt: #transform:to:.
+	self rule: pragma arguments first -> pragma arguments second.
+	self transform
+]
+
+{ #category : #handling }
 Deprecation >> transform [
 	| node rewriteRule aMethod |
-	self shouldTransform ifFalse: [ ^ self ].
+	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender method.
 	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
 	node := self contextOfSender sourceNodeExecuted.
-	rewriteRule := self rewriterClass new 
-		replace: rule key with: rule value.
-	(rewriteRule executeTree: node)
-		ifFalse: [ ^ self ].
-	node replaceWith: rewriteRule tree. 
-	Author 
-		useAuthor: 'AutoDeprecationRefactoring'
-		during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
-	Log 
-		ifNotNil: [:log | log add: self].
-	self logTranscript
+	RecursionStopper during: [
+		rewriteRule := self rewriterClass new 
+			replace: rule key with: rule value.
+		(rewriteRule executeTree: node)
+			ifFalse: [ ^ self signal ].
+		node replaceWith: rewriteRule tree. 
+		Author 
+			useAuthor: 'AutoDeprecationRefactoring'
+			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
+		Log  ifNotNil: [:log | log add: self].
+		self logTranscript]
 ]
 
 { #category : #accessing }

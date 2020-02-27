@@ -1,5 +1,7 @@
 "
 I am a regex refactoring replacing method sources.
+
+See comment of superclass for a nice script to be adapated to method sources.
 "
 Class {
 	#name : #RBSourceRegexRefactoring,
@@ -9,13 +11,14 @@ Class {
 
 { #category : #private }
 RBSourceRegexRefactoring >> parseMethod: aString [
-	^ [ RBParser parseMethod: aString ]
-		on: Error do: [ :err | nil ]
+	^ [ self parserClass parseMethod: aString ]
+		on: Error
+		do: [ :err | nil ]
 ]
 
 { #category : #private }
 RBSourceRegexRefactoring >> parseSelector: aSelector [
-	^ [ RBParser parseMethodPattern: aSelector ]
+	^ [ self parserClass parseMethodPattern: aSelector ]
 		on: Error
 		do: [ nil ]
 ]

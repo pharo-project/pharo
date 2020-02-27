@@ -47,7 +47,7 @@ ApplicationWithToolbar >> addItemTo: aGroup [
 
 { #category : #initialization }
 ApplicationWithToolbar >> initializeWidgets [
-	menu := self newMenuBar
+	menu := MenuPresenter new
 		addGroup: [ :group | 
 			group
 				addItem: [ :item | 
@@ -58,21 +58,21 @@ ApplicationWithToolbar >> initializeWidgets [
 			group
 				addItem: [ :item | 
 					item
-						name: '';
+						name: nil;
 						description: 'Open file';
 						icon: (self iconNamed: #openIcon);
 						action: [ self inform: 'Open File' ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: '';
+						name: nil;
 						description: 'Save File';
 						icon: (self iconNamed: #smallSaveIcon);
 						action: [ self inform: 'Save File' ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: '';
+						name: nil;
 						description: 'Print file';
 						icon: (self iconNamed: #smallPrintIcon);
 						action: [ self inform: 'Print file' ] ] ];
@@ -80,14 +80,14 @@ ApplicationWithToolbar >> initializeWidgets [
 			group
 				addItem: [ :item | 
 					item
-						name: '';
+						name: nil;
 						description: 'Undo';
 						icon: (self iconNamed: #smallUndoIcon);
 						action: [ self inform: 'Undo' ] ].
 			group
 				addItem: [ :item | 
 					item
-						name: '';
+						name: nil;
 						description: 'Redo';
 						icon: (self iconNamed: #smallRedoIcon);
 						action: [ self inform: 'Redo' ] ] ];
@@ -95,9 +95,9 @@ ApplicationWithToolbar >> initializeWidgets [
 			group
 				addItem: [ :item | 
 					item
-						name: '';
+						name: nil;
 						description: 'Add menu item';
-						icon: (self iconNamed: #add);
+						icon: (self iconNamed:  #add);
 						action: [ self addItemTo: group ] ] ].
 	menu applyTo: self.
 	text := self newText.
@@ -110,33 +110,34 @@ ApplicationWithToolbar >> menu [
 ]
 
 { #category : #initialization }
-ApplicationWithToolbar >> subMenu [
-	^ self newMenu
-		addItem: [ :item | 
-			item
-				name: 'Open';
-				icon: (self iconNamed: #openIcon);
-				shortcut: $o meta;
-				action: [ self inform: 'Open' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Save';
-				icon: (self iconNamed: #smallSaveIcon);
-				shortcut: $s meta;
-				action: [ self inform: 'Save' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Print';
-				shortcut: $p meta;
-				icon: (self iconNamed: #smallPrintIcon);
-				action: [ self inform: 'Print' ] ];
-		addItem: [ :item | 
-			item
-				name: 'Kill';
-				shortcut: $k meta;
-				icon: (self iconNamed: #smallCancelIcon);
-				action: [ self inform: 'Kill' ] ];
-		yourself
+ApplicationWithToolbar >> subMenu [ 
+
+	^ MenuPresenter new
+		addGroup: [ :group |
+			group addItem: [ :item |
+				item
+					name: 'Open';
+					icon: (self iconNamed: #openIcon);
+					shortcut: $o meta;
+					action: [ self inform: 'Open' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Save';
+					icon: (self iconNamed: #smallSaveIcon);
+					shortcut: $s meta;
+					action: [ self inform: 'Save' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Print';
+					shortcut: $p meta;
+					icon: (self iconNamed: #smallPrintIcon);
+					action: [ self inform: 'Print' ] ].
+			group addItem: [ :item |
+				item 
+					name: 'Kill';
+					shortcut: $k meta;
+					icon: (self iconNamed: #smallCancelIcon);
+					action: [ self inform: 'Kill' ] ] ]
 ]
 
 { #category : #accessing }

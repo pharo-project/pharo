@@ -42,6 +42,7 @@ TextStream >> nextPutAll: aCollection [
 
 { #category : #private }
 TextStream >> withAttribute: att do: strmBlock [
+"Add text to the stream with a block and apply its text attribute"
 	| pos1 val |
 	pos1 := self position.
 	val := strmBlock value.
@@ -51,6 +52,7 @@ TextStream >> withAttribute: att do: strmBlock [
 
 { #category : #private }
 TextStream >> withAttributes: attributes do: streamBlock [ 
+"Add text to the stream with a block and apply its text attributes (in collection)"
 	| pos1 val |
 	pos1 := self position.
 	val := streamBlock value.

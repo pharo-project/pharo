@@ -418,9 +418,16 @@ Symbol >> asAnnouncement [
 
 { #category : #converting }
 Symbol >> asMutator [
-	"Return a setter message from a getter message. For example,
-	#name asMutator returns #name:
-	return self if it is already a setter"
+	"Return a setter message from a getter message.
+	Return self if it is already a setter. 
+	Pay attention the implementation should be improved to return valid selector."
+	
+	"#name asMutator >>> #name:"
+	"#name: asMutator >>> #name:"
+
+	"#_ asMutator >>> #_:"
+	"#foo:: asMutator >>> #'foo::'"
+	
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol
 ]

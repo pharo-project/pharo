@@ -49,7 +49,7 @@ SlotExampleMovie >> director: aPerson [
 { #category : #initialization }
 SlotExampleMovie >> initialize [
 	super initialize.
-	self class initializeSlots: self.
+	self class initializeSlots: self
 ]
 
 { #category : #accessing }

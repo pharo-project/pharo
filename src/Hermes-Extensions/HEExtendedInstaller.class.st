@@ -60,7 +60,7 @@ HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
 		ifNotEmpty: [ message := 'New Undeclared created... check dependencies: ', newUndeclareds keys printString.
 			failOnUndeclared
 				ifTrue: [ self error: message ]
-				ifFalse: [ message logCr ] ]
+				ifFalse: [ SystemNotification signal: message ] ]
 ]
 
 { #category : #'validating existance' }

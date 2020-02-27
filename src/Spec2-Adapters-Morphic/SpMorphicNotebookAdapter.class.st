@@ -13,16 +13,24 @@ SpMorphicNotebookAdapter class >> cellInset [
 	^ 3
 ]
 
+{ #category : #initialization }
+SpMorphicNotebookAdapter >> addFocusRotationKeyBindings [
+
+	self widget tabSelectorMorph
+		bindKeyCombination: Character tab asKeyCombination 
+			toAction: [ self focusNext ];
+		bindKeyCombination: Character tab shift asKeyCombination 
+			toAction: [ self focusPrevious ]
+]
+
 { #category : #factory }
 SpMorphicNotebookAdapter >> addModelTo: aNotebook [
 	self model pages ifEmpty: [ ^ self ].
 	self model pages
-		do: [ :each | 
-			"Since I do not have the page added, I need to take it from the list. 
-		 But I know this will be the last added :)"
-			self addPage: each to: aNotebook ].
+		do: [ :each | "Since I do not have the page added, I need to take it from the list. 
+		 But I know this will be the last added :)" self addPage: each to: aNotebook ].
 	"force first page to be drawn"
-	self model selectedPage ifNil: [ self model selectedPageIndex: 1 ].
+	self model selectedPage ifNil: [ self model selectPageIndex: 1 ].
 	aNotebook selectedPageIndex: self model selectedPageIndex.
 	aNotebook announcer when: SpNotebookPageChanged send: #pageChanged: to: self
 ]
@@ -30,18 +38,22 @@ SpMorphicNotebookAdapter >> addModelTo: aNotebook [
 { #category : #factory }
 SpMorphicNotebookAdapter >> addPage: each to: aNotebook [
 
-	aNotebook addLazyPage: [ self buildContentForPage: each ] label: (self buildLabelForPage: each).
-	"Since I do not have the page added, I need to take it from the list. But I know this will be the last added :)"
+	aNotebook 
+		addLazyPage: [ self buildContentForPage: each ] 
+		label: (self buildLabelForPage: each).
+	"Since I do not have the page added, I need to take it from the list. But I know 
+	 this will be the last added :)"
 	aNotebook pages last model: each
 ]
 
 { #category : #factory }
 SpMorphicNotebookAdapter >> buildContentForPage: aPage [
-	^ aPage retrievePresenter
-		ifNotNil: [ :presenter |
-			aPage layoutSpec
-				ifNil: [ presenter buildWithSpec ]
-				ifNotNil: [ :spec | presenter buildWithSpec: spec ] ]
+
+	^ aPage retrievePresenter ifNotNil: [ :presenter |
+		presenter owner: self presenter.
+		aPage layoutSpec
+			ifNil: [ presenter buildWithSpec ]
+			ifNotNil: [ :spec | presenter buildWithSpec: spec ] ]
 ]
 
 { #category : #factory }
@@ -85,12 +97,18 @@ SpMorphicNotebookAdapter >> buildWidget [
 
 { #category : #private }
 SpMorphicNotebookAdapter >> pageChanged: ann [
-	self model selectedPage: ann page model
+	self model selectPage: ann page model
 ]
 
 { #category : #updating }
 SpMorphicNotebookAdapter >> selectPage: aPage [
 	self widgetDo: [ :w | w page: (w pageWithModel: aPage) ]
+]
+
+{ #category : #protocol }
+SpMorphicNotebookAdapter >> takeKeyboardFocus [
+
+	self widget tabSelectorMorph takeKeyboardFocus
 ]
 
 { #category : #updating }

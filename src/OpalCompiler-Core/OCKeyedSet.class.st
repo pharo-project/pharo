@@ -81,7 +81,7 @@ OCKeyedSet >> collect: aBlock [
 
 	| newSet |
 	newSet := Set new: self size.
-	array do: [:each | each ifNotNil: [newSet add: (aBlock value: each enclosedSetElement)]].
+	array do: [:each | each ifNotNil: [newSet add: (aBlock value: each enclosedElement)]].
 	^ newSet
 ]
 

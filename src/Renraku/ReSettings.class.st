@@ -39,6 +39,7 @@ ReSettings class >> inspectorPlugginSettingsOn: aBuilder [
 	(aBuilder setting: #inspectorPluggin)
 		order: 5; 
 		target: self;
+		default: false;
 		label: 'Inspector Plugin';
 		description: 'Enable GTInspector plugin which shows a tab with number of critiques and allows to inspect them.';
 		parent: #qualityAssistant.
@@ -87,15 +88,10 @@ ReSettings class >> showErrorsSettingsOn: aBuilder [
 	(aBuilder setting: #showErrors)
 		target: self;
 		order: 5;
+		default: false;
 		label: 'Show errors (dev. only!)';
 		description: 'Signal errors that happen during critique-checking (and related). This should be used by developers.';
 		parent: #qualityAssistant.
-]
-
-{ #category : #properties }
-ReSettings class >> spotterExtMethods [
-	^ GTSpotter spotterExtendingMethods select: [ :m |
-		m compiledMethod package = #Renraku asPackage ]
 ]
 
 { #category : #'settings-accessing' }

@@ -31,7 +31,7 @@ SettingTree class >> acceptableKeywords: aCollectionOfStrings [
 
 { #category : #accessing }
 SettingTree >> acceptableKeywords: keywords [
-	self collector filter: [:prg | prg methodClass isMeta and: [keywords includes: prg keyword]].
+	self collector filter: [:prg | prg methodClass isMeta and: [keywords includes: prg selector]].
 	nodeList := nil.
 	self collector reset.
 
@@ -182,11 +182,6 @@ SettingTree >> sortBlock [
 { #category : #persistence }
 SettingTree >> storeSettingNodes [
 	self persistence storeSettingNodes
-]
-
-{ #category : #theme }
-SettingTree >> theme [
-	^ Smalltalk ui theme
 ]
 
 { #category : #querying }

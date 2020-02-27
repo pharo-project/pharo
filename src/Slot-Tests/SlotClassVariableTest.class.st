@@ -16,7 +16,7 @@ SlotClassVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
 	class1 class addSlot: (AccessorInstanceVariableSlot named: #foo).
 
 	self assert: (class1 class canUnderstand: #foo).
-	self assert: (class1 class canUnderstand: #foo:).
+	self assert: (class1 class canUnderstand: #foo:)
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 			name: self anotherClassName;
 			superclass: class1;
 			sharedVariablesFromString: 'ASharedVariable' ].
-	self assert: class1 subclasses equals: { class2 }.
+	self assert: class1 subclasses equals: { class2 }
 
 ]
 
@@ -66,7 +66,7 @@ SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
 
 	self assert: class1 class slots size equals: 1.
 	self assert: (class1 class slots at:1) name equals: #Foo.
-	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot.
+	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot
 
 ]
 
@@ -79,10 +79,7 @@ SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 			name: self aClassName;
 			superclass: Object ].
 		
-	class1 addSlot: (InitializedSlot new 
-		name: #defaultValue;
-		default: 42;
-		yourself).
+	class1 addSlot: WriteOnceSlot new.
 
 	self assert: class1 slots size equals: 1.
 
@@ -101,10 +98,9 @@ SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHie
 		builder
 			name: self aClassName;
 			superclass: Object;
-			slots: { 
-				InitializedSlot new 
-					name: #defaultValue;
-					default: 42;
+			slots: {
+				WriteOnceSlot new
+					name: #foo;
 					yourself } ].
 
 	self assert: class1 slots size equals: 1.
@@ -115,9 +111,8 @@ SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHie
 			name: self anotherClassName;
 			superclass: class1;
 			slots: { 
-				InitializedSlot new 
-					name: #otherDefaultValue;
-					default: 42;
+				WriteOnceSlot new
+					name: #bar;
 					yourself } ].
 
 	self assert: class2 slots size equals: 1.

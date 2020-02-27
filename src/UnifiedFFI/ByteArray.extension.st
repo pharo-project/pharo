@@ -45,6 +45,25 @@ ByteArray >> packToArity: arity [
 ]
 
 { #category : #'*UnifiedFFI' }
+ByteArray >> platformBitAt: byteOffset [
+
+	^ self 
+		integerAt: byteOffset 
+		size: FFIArchitecture forCurrentArchitecture bitTypeSize 
+		signed: true
+]
+
+{ #category : #'*UnifiedFFI' }
+ByteArray >> platformBitAt: byteOffset put: value [
+	
+	self 
+		integerAt: byteOffset
+		put: value
+		size: FFIArchitecture forCurrentArchitecture bitTypeSize
+		signed: true
+]
+
+{ #category : #'*UnifiedFFI' }
 ByteArray >> platformLongAt: byteOffset [
 	^ self 
 		integerAt: byteOffset 
@@ -75,6 +94,25 @@ ByteArray >> platformSizeTAt: byteOffset put: value [
 		integerAt: byteOffset
 		put: value
 		size: FFIArchitecture forCurrentArchitecture sizeTTypeSize
+		signed: false
+]
+
+{ #category : #'*UnifiedFFI' }
+ByteArray >> platformUnsignedBitAt: byteOffset [
+
+	^ self 
+		integerAt: byteOffset 
+		size: FFIArchitecture forCurrentArchitecture bitTypeSize 
+		signed: false
+]
+
+{ #category : #'*UnifiedFFI' }
+ByteArray >> platformUnsignedBitAt: byteOffset put: value [
+	
+	self 
+		integerAt: byteOffset
+		put: value
+		size: FFIArchitecture forCurrentArchitecture bitTypeSize
 		signed: false
 ]
 

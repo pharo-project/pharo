@@ -188,20 +188,13 @@ AdditionalMethodState >> hasLiteralSuchThat: aBlock [
 ]
 
 { #category : #testing }
-AdditionalMethodState >> hasLiteralThorough: literal [
-	"Answer true if any literal in these properties is literal,
-	 even if embedded in array structure."
-	1 to: self basicSize do: [:i |
-		| propertyOrPragma "<Association|Pragma>" |
-		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
-			ifTrue: [propertyOrPragma key == literal
-					or: [propertyOrPragma value == literal
-					or: [propertyOrPragma value isArray
-						and: [propertyOrPragma value hasLiteral: literal]]]]
-			ifFalse: [propertyOrPragma hasLiteral: literal]) ifTrue:
-			[^true]].
-	^false
+AdditionalMethodState >> hasLiteralThorough: aLiteral [
+	self 
+		deprecated: 'Use #refersToLiteral: instead.' 
+		on: '31 January 2020'
+		in: #Pharo9
+		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
+	^ self refersToLiteral: aLiteral
 ]
 
 { #category : #testing }
@@ -257,7 +250,7 @@ AdditionalMethodState >> keysAndValuesDo: aBlock [
 		| propertyOrPragma "<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) isVariableBinding
 			ifTrue: [aBlock value: propertyOrPragma key value: propertyOrPragma value]
-			ifFalse: [aBlock value: propertyOrPragma keyword value: propertyOrPragma]]
+			ifFalse: [aBlock value: propertyOrPragma selector value: propertyOrPragma]]
 ]
 
 { #category : #accessing }
@@ -282,6 +275,16 @@ AdditionalMethodState >> postCopy [
 	"After copying we must duplicate any associations and pragmas so they don't end up being shared."
 	1 to: self basicSize do:
 		[:i| self basicAt: i put: (self basicAt: i) shallowCopy]
+]
+
+{ #category : #enumerating }
+AdditionalMethodState >> pragmaDo: aBlock [
+	
+	1 to: self basicSize do: [ :i | 
+		| propertyOrPragma	"<Association|Pragma>" |
+		propertyOrPragma := self basicAt: i.
+		propertyOrPragma isVariableBinding
+			ifFalse: [ aBlock value: propertyOrPragma ] ]
 ]
 
 { #category : #accessing }
@@ -357,6 +360,14 @@ AdditionalMethodState >> propertyValueAt: aKey ifAbsent: aBlock [
 	^self propertyAt: aKey ifAbsent: aBlock
 ]
 
+{ #category : #testing }
+AdditionalMethodState >> refersToLiteral: literal [
+	"Answer true if any literal in these properties is literal, even if embedded in array structure."
+	1 to: self basicSize do: [:i |
+		((self basicAt: i) hasLiteral: literal) ifTrue: [^true]].
+	^false
+]
+
 { #category : #properties }
 AdditionalMethodState >> removeKey: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."
@@ -373,7 +384,7 @@ AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 		propertyOrPragma := self basicAt: i.
 		(propertyOrPragma isVariableBinding
 				ifTrue: [propertyOrPragma key]
-				ifFalse: [propertyOrPragma keyword])
+				ifFalse: [propertyOrPragma selector])
 			== aKey ifTrue:
 			[^method removeProperty: aKey]].
 	^aBlock value
@@ -392,8 +403,8 @@ AdditionalMethodState >> selector: aSymbol [
 { #category : #accessing }
 AdditionalMethodState >> setMethod: aMethod [
 	method := aMethod.
-	1 to: self basicSize do:
-		[:i| | propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifFalse:
-			[propertyOrPragma setMethod: aMethod]]
+	1 to: self basicSize do: [ :i | 
+		| propertyOrPragma	"<Association|Pragma>" |
+		(propertyOrPragma := self basicAt: i) isVariableBinding
+			ifFalse: [ propertyOrPragma method: aMethod ] ]
 ]

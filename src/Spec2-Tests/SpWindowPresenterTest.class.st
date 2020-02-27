@@ -1,7 +1,7 @@
 Class {
 	#name : #SpWindowPresenterTest,
-	#superclass : #SpTestCase,
-	#category : #'Spec2-Tests'
+	#superclass : #SpTest,
+	#category : #'Spec2-Tests-Core'
 }
 
 { #category : #running }
@@ -12,34 +12,36 @@ SpWindowPresenterTest >> classToTest [
 
 { #category : #running }
 SpWindowPresenterTest >> initializeTestedInstance [
-
-	presenter presenter: SpLabelPresenter new.
+	presenter presenter: SpLabelPresenter new
 ]
 
-{ #category : #tests }
+{ #category : #running }
 SpWindowPresenterTest >> openInstance [
-
 	window ifNil: [ window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec ]
 ]
 
 { #category : #tests }
-SpWindowPresenterTest >> testIsClosed [
+SpWindowPresenterTest >> testInitialPosition [
+	presenter initialPosition: 100 @ 100.
+	self openInstance.
+	self assert: window adapter widget position equals: 100 @ 100
+]
 
+{ #category : #tests }
+SpWindowPresenterTest >> testIsClosed [
 	self assert: presenter isClosed.
-	window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec.
+	self openInstance.
 	self deny: presenter isClosed.
 	presenter close.
 	self assert: presenter isClosed
-	
 ]
 
 { #category : #tests }
 SpWindowPresenterTest >> testWhenClosedDo [
 	| closed |
-
 	closed := false.
 	presenter whenClosedDo: [ closed := true ].
-	window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec.
+	self openInstance.
 	presenter close.
 	self assert: closed
 ]
@@ -47,10 +49,22 @@ SpWindowPresenterTest >> testWhenClosedDo [
 { #category : #tests }
 SpWindowPresenterTest >> testWhenOpenedDo [
 	| opened |
-
 	opened := false.
 	presenter whenOpenedDo: [ opened := true ].
-	window := presenter openWithSpecLayout: SpLabelPresenter defaultSpec.
+	self openInstance.
 	self assert: opened
+]
 
+{ #category : #tests }
+SpWindowPresenterTest >> testWhenWillCloseDo [
+	| willClose closed |
+
+	willClose := false.
+	closed := false.
+	presenter whenWillCloseDo: [ willClose := true ].
+	presenter whenClosedDo: [ closed := willClose ].
+	self openInstance.
+	presenter close.
+	self assert: willClose.
+	self assert: closed
 ]

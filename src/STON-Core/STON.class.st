@@ -135,6 +135,8 @@ S y n t a x
 	  uppercase-alpha-char alphanumeric-char
 	number
 	  int
+	  int denominator
+	  int denominator scale
 	  int frac
 	  int exp
 	  int frac exp
@@ -143,6 +145,10 @@ S y n t a x
 	  digit1-9 digits 
 	  - digit
 	  - digit1-9 digits
+	denominator
+	  / digits
+	scale
+	  s digits
 	frac
 	  . digits
 	exp
@@ -162,7 +168,7 @@ S y n t a x
 Class {
 	#name : #STON,
 	#superclass : #Object,
-	#category : #'STON-Core-Base'
+	#category : #'STON-Core-Facade'
 }
 
 { #category : #accessing }

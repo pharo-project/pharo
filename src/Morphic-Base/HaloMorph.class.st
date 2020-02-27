@@ -805,6 +805,7 @@ HaloMorph >> doGrow: evt with: growHandle [
 	"Called while the mouse is down in the grow handle"
 
 	| newExtent extentToUse scale |
+	growingOrRotating ifFalse: [ ^self ].
 	evt hand obtainHalo: self.
 	newExtent := (target pointFromWorld: (evt cursorPoint - positionOffset)) - target topLeft.
 	evt shiftPressed ifTrue: [
@@ -850,6 +851,8 @@ HaloMorph >> doRot: evt with: rotHandle [
 	"Update the rotation of my target if it is rotatable.  Keep the relevant command object up to date."
 
 	| degrees |
+	
+	growingOrRotating ifFalse: [^self].
 	evt hand obtainHalo: self.
 	degrees := (evt cursorPoint - (target pointInWorld: target referencePosition)) degrees.
 	degrees := degrees - angleOffset degrees.
@@ -872,6 +875,7 @@ HaloMorph >> doRot: evt with: rotHandle [
 HaloMorph >> doScale: evt with: scaleHandle [
 	"Update the scale of my target if it is scalable."
 	| newHandlePos colorToUse |
+	growingOrRotating ifFalse: [ ^self ].
 	evt hand obtainHalo: self.
 	newHandlePos := evt cursorPoint - (scaleHandle extent // 2).
 	target scaleToMatch: newHandlePos.
@@ -963,13 +967,10 @@ HaloMorph >> handlerForBlueButtonDown: anEvent [
 
 { #category : #initialization }
 HaloMorph >> initialize [
-	"initialize the state of the receiver"
 	super initialize.
 
 	growingOrRotating := false.
-	self borderStyle: (SimpleBorder
-		width: 2
-		color: self theme settings menuSelectionColor)
+	self borderStyle: (SimpleBorder width: 2 color: self theme menuSelectionColor)
 ]
 
 { #category : #accessing }
@@ -979,7 +980,7 @@ HaloMorph >> innerTarget [
 
 ]
 
-{ #category : #stepping }
+{ #category : #'halos and balloon help' }
 HaloMorph >> localHaloBoundsFor: aMorph [
 	"aMorph may be in the hand and perhaps not in our world"
 
@@ -1290,6 +1291,7 @@ HaloMorph >> startGrow: evt with: growHandle [
 	"Initialize resizing of my target.  Launch a command representing it, to support Undo"
 
 	| botRt |
+	growingOrRotating := true.
 	self obtainHaloForEvent: evt andRemoveAllHandlesBut: growHandle.
 	botRt := target point: target bottomRight in: owner.
 	positionOffset := (self world viewBox containsPoint: botRt)
@@ -1350,7 +1352,7 @@ HaloMorph >> step [
 	self bounds: newBounds
 ]
 
-{ #category : #testing }
+{ #category : #stepping }
 HaloMorph >> stepTime [
 
 	^ 0  "every cycle"

@@ -17,7 +17,7 @@ RBOnlyReadOrWrittenTemporaryRule class >> isVisible [
 { #category : #'as yet unclassified' }
 RBOnlyReadOrWrittenTemporaryRule class >> new [
 	
-	^ GRTemporaryNeitherReadNorWrittenRule asRBRule 
+	^ ReTemporaryNeitherReadNorWrittenRule asRBRule 
 ]
 
 { #category : #accessing }

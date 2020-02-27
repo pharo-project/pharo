@@ -761,11 +761,6 @@ FinderUI >> initialExtent [
 { #category : #initialization }
 FinderUI >> initialize [
 	super initialize.
-	finder := nil.
-	forceSearch := nil.
-	searchingTextArea := nil.
-	sourceTextArea := nil.
-	useRegExCheckbox := nil.
 	wrapBlockOrSelector := [ :i | i asString ]
 ]
 
@@ -961,6 +956,12 @@ FinderUI >> searchingTextArea [
 { #category : #accessing }
 FinderUI >> selectedClass [
 	^ self finder selectedClass
+]
+
+{ #category : #accessing }
+FinderUI >> selectedClassOrMetaClass [
+
+	^ self selectedClass
 ]
 
 { #category : #accessing }

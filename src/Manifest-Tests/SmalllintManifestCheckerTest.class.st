@@ -3,7 +3,7 @@ SUnit tests for SmalllintManifestChecker
 "
 Class {
 	#name : #SmalllintManifestCheckerTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'checker'
 	],
@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 SmalllintManifestCheckerTest >> cleaningResources [
-	Smalltalk globals
+	testingEnvironment
 		at: #ManifestManifestResourcesTests
 		ifPresent: [ :cl | 
 			cl
@@ -32,14 +32,14 @@ SmalllintManifestCheckerTest >> setUp [
 	super setUp.
 	self cleaningResources.
 	bm := TheManifestBuilder of: MFClassA.
-	bm installFalsePositiveOf: RBCodeCruftLeftInMethodsRule uniqueIdentifierName version: 1.
-	bm addFalsePositive: MFClassB >> #method3 of: RBCodeCruftLeftInMethodsRule uniqueIdentifierName version: 1.
-	bm installToDoOf: GRTemporaryNeitherReadNorWrittenRule uniqueIdentifierName version: 1.
+	bm installFalsePositiveOf: ReCodeCruftLeftInMethodsRule uniqueIdentifierName version: 1.
+	bm addFalsePositive: MFClassB >> #method3 of: ReCodeCruftLeftInMethodsRule uniqueIdentifierName version: 1.
+	bm installToDoOf: ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName version: 1.
 	bm
 		addAllToDo:
 			{(MFClassB >> #method3).
 			(MFClassA >> #method)}
-		of: GRTemporaryNeitherReadNorWrittenRule uniqueIdentifierName
+		of: ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName
 		version: 1.
 	checker := ReSmalllintChecker new
 ]
@@ -54,22 +54,18 @@ SmalllintManifestCheckerTest >> tearDown [
 
 { #category : #tests }
 SmalllintManifestCheckerTest >> testCriticsOf [
-
 	| rule critiques |
 	rule := ReRuleManager visibleRuleClasses collect: #new.
-	checker 
+	checker
 		rule: rule;
 		environment: self package asEnvironment;
-		run. 
-	
-	critiques := checker criticsOf: GRTemporaryNeitherReadNorWrittenRule new.
-	
-	self assert: critiques size  = 3.
-	self assert: (critiques anySatisfy: [ :each |
-		each sourceAnchor entity = (MFClassB>>#method3)]).
-	self assert: (critiques anySatisfy: [ :each |
-		each sourceAnchor entity = (MFClassA>>#method)]).
+		run.
 
+	critiques := checker criticsOf: ReTemporaryNeitherReadNorWrittenRule new.
+
+	self assert: critiques size equals: 3.
+	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassB >> #method3) ]).
+	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassA >> #method) ])
 ]
 
 { #category : #tests }
@@ -82,8 +78,8 @@ SmalllintManifestCheckerTest >> testIsFalsePositive [
 		environment: self package asEnvironment;
 		run.  
 		
-	self assert: (checker isFalsePositive:  (MFClassB>>#method3) forRuleId: (RBCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
-	self deny: (checker isFalsePositive:  (MFClassA>>#method) forRuleId: (RBCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
+	self assert: (checker isFalsePositive:  (MFClassB>>#method3) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
+	self deny: (checker isFalsePositive:  (MFClassA>>#method) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
 
 
 ]
@@ -92,14 +88,14 @@ SmalllintManifestCheckerTest >> testIsFalsePositive [
 SmalllintManifestCheckerTest >> testIsToDo [
 
 	| rule |
-	rule  := ReRuleManager visibleRuleClasses collect: #new.
+	rule  := ReRuleManager visibleRuleClasses collect: [ :each | each new ].
 	checker
 		rule: rule;
 		environment: self package asEnvironment;
 		run.
 	
-	self assert: (checker isToDo:  (MFClassB>>#method3) forRuleId: (GRTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
-	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (GRTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
+	self assert: (checker isToDo:  (MFClassB>>#method3) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
+	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (ReTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
 
 
 ]
@@ -114,8 +110,8 @@ SmalllintManifestCheckerTest >> testToDoOf [
 		environment: self package asEnvironment;
 		run.
 		
-	self assert: (( checker toDoOf: GRTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
+	self assert: (( checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each sourceAnchor entity = (MFClassB>>#method3)]).
-	self deny: (( checker toDoOf: GRTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
+	self deny: (( checker toDoOf: ReTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each  sourceAnchor entity = (MFClassB>>#method2)]).
 ]

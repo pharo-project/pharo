@@ -1,6 +1,6 @@
 Class {
 	#name : #SpTabManagerPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#instVars : [
 		'redTab'
 	],

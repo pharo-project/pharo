@@ -240,8 +240,8 @@ SelectionMorph >> defaultBorderColor [
 { #category : #initialization }
 SelectionMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
-	^ (self theme settings menuSelectionColor) alpha: 0.08
 
+	^ self theme menuSelectionColor alpha: 0.08
 ]
 
 { #category : #'submorphs-add/remove' }

@@ -437,11 +437,7 @@ BlockClosure >> numArgs [
 { #category : #'error handling' }
 BlockClosure >> numArgsError: numArgsForInvocation [
 
-	| printNArgs |
-	printNArgs := [:n| n printString, ' argument', (n = 1 ifTrue: [''] ifFalse:['s'])]. 
-	self error: 
-			'This block accepts ', (printNArgs value: numArgs), 
-			', but was called with ', (printNArgs value: numArgsForInvocation), '.'
+	ArgumentsCountMismatch signalExpectedArgumentsCount: numArgs calledArgumentsCount: numArgsForInvocation 
 ]
 
 { #category : #accessing }
@@ -556,7 +552,7 @@ BlockClosure >> printOn: aStream [
 
 	aStream nextPutAll: ((self method hasSourceCode
 		or: [ "There is a decompiler"
-			Smalltalk globals includesKey: #FBDDecompiler ])
+			self class environment includesKey: #FBDDecompiler ])
 				ifTrue: [ self sourceNode formattedCode ]
 				ifFalse: [ 'aBlockClosure(no source code or decompiler available)' ])
 ]
@@ -587,6 +583,16 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	ans := self value.
 	(testBlock value: ans) ifTrue: [ Smalltalk garbageCollect. ans := self value ].
 	^ans
+]
+
+{ #category : #evaluating }
+BlockClosure >> rfvalueNoContextSwitch [
+	"same as valueNoContextSwitch, for recursion stopping metalinks"
+	<primitive: 221>
+	<metaLinkOptions: #( + optionDisabledLink)>
+	numArgs ~= 0 ifTrue:
+		[self numArgsError: 0].
+	self primitiveFailed
 ]
 
 { #category : #'debugger access' }

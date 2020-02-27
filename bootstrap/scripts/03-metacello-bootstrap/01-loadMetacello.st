@@ -1,10 +1,9 @@
 mcPackages := #(
  'ScriptingExtensions'
- 'Text-Core'
  'System-FileRegistry'
  'FileSystem-Memory'
  'Regex-Core'
- 'Ring-Deprecated-Core-Containers'
+ 'Ring-Definitions-Containers'
  'StartupPreferences'
  'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'

@@ -412,9 +412,7 @@ MCGitBasedNetworkRepository >> flushCache [
 	[ localRepository flushCache ]
 	on: Error
 	do: [ :ex | 
-		Transcript
-			cr;
-			show: 'Error for: ' , self description printString , ' during flushCache: ', ex description printString ].
+		SystemNotification signal: 'Error for: ' , self description printString , ' during flushCache: ', ex description printString ].
 	self class flushDownloadCache.
 	
 	directory := self calculateRepositoryDirectory.

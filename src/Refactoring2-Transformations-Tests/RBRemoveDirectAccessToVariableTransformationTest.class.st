@@ -27,7 +27,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 			equals: (self parseMethod: 'initialize self nuke. self undoSize: 20').
 	self assert: (class theNonMetaClass parseTreeFor: #addUndo:) 
 			equals: (self parseMethod: 'addUndo: aRefactoringChange
-				undo addLast: aRefactoringChange.
+				undo push: aRefactoringChange.
 				undo size > self class undoSize
 					ifTrue: [ undo removeFirst ].
 				redo := OrderedCollection new')
@@ -136,7 +136,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testRefactoring [
 	self assert: (class parseTreeFor: #initialize) 
 		equals: (self parseMethod: 'initialize
 			super initialize.
-			changes := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
+			changes := changeFactory compositeRefactoryChange.
 			self environment: RBBrowserEnvironment new.
 			newClasses := IdentityDictionary new.
 			changedClasses := IdentityDictionary new.

@@ -132,7 +132,7 @@ Cursor class >> crossHair [
 Cursor class >> currentCursor [
 	"Answer the instance of Cursor that is the one currently displayed."
 
-	^ ActiveHand ifNotNil: [ActiveHand world currentCursor] ifNil: [ CurrentCursor ]
+	^ ActiveHand ifNotNil: [ActiveHand currentCursor] ifNil: [ CurrentCursor ]
 ]
 
 { #category : #'current cursor' }
@@ -140,15 +140,10 @@ Cursor class >> currentCursor: aCursor [
 	"Make the instance of cursor, aCursor, be the current cursor. Display it."
 
 	ActiveHand ifNotNil: [
-		ActiveHand world currentCursor: aCursor.
-		ActiveHand world isCursorOwner ifTrue: [
-			aCursor activateInCursorOwner: ActiveHand world
-		].
-		^ self
-	].
+		ActiveHand currentCursor: aCursor.
+		^ self ].
 
-	CurrentCursor := aCursor.
-	"aCursor beCursor"
+	CurrentCursor := aCursor	
 ]
 
 { #category : #constants }
@@ -1036,7 +1031,7 @@ Cursor class >> write [
 
 { #category : #primitives }
 Cursor >> activateInCursorOwner: aCursorOwner [
-	^ aCursorOwner activateCursor: self
+	^ self beCursor
 ]
 
 { #category : #converting }

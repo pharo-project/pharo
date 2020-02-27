@@ -186,19 +186,19 @@ WriteBarrierTest >> testMutateIVObject [
 	| guineaPig |
 	guineaPig := MessageSend new.
 	guineaPig beReadOnlyObject.
-	[ guineaPig receiver: 1 ] 
-		on: ModificationForbidden 
+	[ guineaPig receiver: 1 ]
+		on: ModificationForbidden
 		do: [ :modification | "Surely a NoModification error" ].
 	guineaPig
 		beWritableObject;
 		selector: #+;
 		beReadOnlyObject.
-	[ guineaPig arguments: #(2) ] 
-		on: ModificationForbidden 
-		do: [  :modification |"Surely a NoModification error" ].
+	[ guineaPig arguments: #(2) ]
+		on: ModificationForbidden
+		do: [ :modification | "Surely a NoModification error" ].
 	self assert: guineaPig receiver isNil.
 	self assert: guineaPig arguments isNil.
-	self assert: guineaPig selector == #+.
+	self assert: guineaPig selector identicalTo: #+
 ]
 
 { #category : #'tests - object' }
@@ -235,11 +235,13 @@ WriteBarrierTest >> testMutateObjectInstVarShouldCatchRightFailure [
 	| guineaPig failure |
 	guineaPig := MessageSend new.
 	guineaPig beReadOnlyObject.
-	failure := [ guineaPig receiver: #test ] on: ModificationForbidden do: [:err | err].
+	failure := [ guineaPig receiver: #test ]
+		on: ModificationForbidden
+		do: [ :err | err ].
 
-	self assert: failure object == guineaPig.
+	self assert: failure object identicalTo: guineaPig.
 	self assert: failure newValue equals: #test.
-	self assert: failure fieldIndex equals: 1.
+	self assert: failure fieldIndex equals: 1
 ]
 
 { #category : #'tests - object' }
@@ -315,22 +317,23 @@ WriteBarrierTest >> testMutateObjectLastInstVarWithManyVars [
 { #category : #'tests - object' }
 WriteBarrierTest >> testMutateVariableObject [
 	| guineaPigs |
-	guineaPigs := {#[1 2 3] . #(1 2 3) }.
-	guineaPigs do: [ :guineaPig | 
-		guineaPig beReadOnlyObject.
-		[guineaPig at: 1 put: 4] 
-			on: ModificationForbidden  
-			do: [ "Surely a NoModification error" ].
-		guineaPig
-			beWritableObject;
-			at: 2 put:  5;
-			beReadOnlyObject.
-		[guineaPig at: 3 put: 6] 
-			on: ModificationForbidden  
-			do: [ "Surely a NoModification error" ].
-		self assert: guineaPig first = 1.
-		self assert: guineaPig second = 5.
-		self assert: guineaPig third = 3 ]
+	guineaPigs := {#[1 2 3] . #(1 2 3)}.
+	guineaPigs
+		do: [ :guineaPig | 
+			guineaPig beReadOnlyObject.
+			[ guineaPig at: 1 put: 4 ]
+				on: ModificationForbidden
+				do: [ "Surely a NoModification error" ].
+			guineaPig
+				beWritableObject;
+				at: 2 put: 5;
+				beReadOnlyObject.
+			[ guineaPig at: 3 put: 6 ]
+				on: ModificationForbidden
+				do: [ "Surely a NoModification error" ].
+			self assert: guineaPig first equals: 1.
+			self assert: guineaPig second equals: 5.
+			self assert: guineaPig third equals: 3 ]
 ]
 
 { #category : #'tests - object' }

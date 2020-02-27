@@ -39,7 +39,7 @@ SpAbstractMorphicAdapter >> adapt: aPresenter [
 
 	super adapt: aPresenter.
 	self addSettingsTo: self widget.
-	self widget ifNotNil: [ self applyVisibility ].
+	self addKeyBindingsTo: self widget.
 	self flag: #TODO. "this should be here, but is interfering with old layouts reason why 
 	 I'm moving it to MorphicLayoutAdapter >> #applyStyle:to:"
 	"self applyStyle: self widget."
@@ -51,11 +51,43 @@ SpAbstractMorphicAdapter >> add: anAdapter [
 ]
 
 { #category : #initialization }
-SpAbstractMorphicAdapter >> addSettingsTo: aMorph [
-	
+SpAbstractMorphicAdapter >> addFocusRotationKeyBindings [
+
+	self presenter canTakeKeyboardFocus ifFalse: [ ^ self ].
+
+	self 
+		bindKeyCombination: Character tab asKeyCombination 
+		toAction: [ self focusNext ]. 
+	self
+		bindKeyCombination: Character tab shift asKeyCombination 
+		toAction: [ self focusPrevious ]
 ]
 
 { #category : #initialization }
+SpAbstractMorphicAdapter >> addKeyBindingsTo: aMorph [
+
+	self addFocusRotationKeyBindings.
+	self presenter contextKeyBindings ifNotNil: [ :aCategory | 
+		aCategory allEntries keymaps do: [ :each |
+			self 
+				bindKeyCombination: each shortcut 
+				toAction: each action ] ]
+]
+
+{ #category : #initialization }
+SpAbstractMorphicAdapter >> addSettingsTo: aMorph [
+	
+	self widget ifNotNil: [ 
+		self applyVisibility ]
+]
+
+{ #category : #accessing }
+SpAbstractMorphicAdapter >> application [ 
+
+	^ self presenter application
+]
+
+{ #category : #styling }
 SpAbstractMorphicAdapter >> applyStyle: morph [
 	"this will apply general properties to the built morph"
 	
@@ -67,8 +99,7 @@ SpAbstractMorphicAdapter >> applyVisibility [
 	
 	"It may happen that some presenters use generic adapters and they do not have an associated presenter.
 	In that case, do not manage visibility..."
-	self presenter ifNil: [ 
-		^ self ].
+	self presenter ifNil: [ ^ self ].
 
 	self widget visible: self presenter isVisible.
 	self presenter whenVisibleChangedDo: [ :visible |
@@ -81,7 +112,9 @@ SpAbstractMorphicAdapter >> applyVisibility [
 SpAbstractMorphicAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 	self widgetDo: [ :w | 
-		w bindKeyCombination: aShortcut toAction: aBlock ]
+		w 
+			bindKeyCombination: aShortcut 
+			toAction: aBlock ]
 ]
 
 { #category : #protocol }
@@ -201,6 +234,35 @@ SpAbstractMorphicAdapter >> enabled: aBoolean [
 SpAbstractMorphicAdapter >> extent [
 
 	^ self widget extent
+]
+
+{ #category : #'focus handling' }
+SpAbstractMorphicAdapter >> focusNext [
+	
+	self presenter withWindowDo: [ :window | | presenters |
+		presenters := window allPresentersInFocusOrder.
+		(presenters 
+			after: self presenter
+			ifAbsent: [ presenters first ])
+			takeKeyboardFocus ]
+]
+
+{ #category : #'focus handling' }
+SpAbstractMorphicAdapter >> focusPrevious [
+	
+	self presenter withWindowDo: [ :window | | presenters |
+		presenters := window allPresentersInFocusOrder.
+		(presenters 
+			before: self presenter
+			ifAbsent: [ presenters last ])
+			takeKeyboardFocus ]
+]
+
+{ #category : #'as yet unclassified' }
+SpAbstractMorphicAdapter >> gtInspectorPreviewIn: composite [
+	<gtInspectorPresentationOrder: 30>
+	
+	self widgetDo: [ :w | w gtInspectorMorphIn: composite ]
 ]
 
 { #category : #protocol }
@@ -323,25 +385,31 @@ SpAbstractMorphicAdapter >> show [
 	self widgetDo: #show
 ]
 
-{ #category : #accessing }
+{ #category : #styling }
 SpAbstractMorphicAdapter >> style [
-	"i.e. ButtonAdapter = Button"
-	
-	^ self styleAt: self styleName
+
+	^ SpMorphStyle 
+		fromStylesheet: self styleSheet 
+		adapter: self
 ]
 
-{ #category : #accessing }
-SpAbstractMorphicAdapter >> styleAt: aName [
-	"i.e. ButtonAdapter = Button"
-	
-	^ SpMorphicStyleSheet current atClass: aName
-]
-
-{ #category : #accessing }
+{ #category : #styling }
 SpAbstractMorphicAdapter >> styleName [
-	"i.e. ButtonAdapter = Button"
+	"i.e. SpButtonAdapter = button"
 	
-	^ ((self className withoutPrefix: 'SpMorphic') allButLast: 7) asSymbol
+	^ ((self className withoutPrefix: 'SpMorphic') allButLast: 7) uncapitalized
+]
+
+{ #category : #styling }
+SpAbstractMorphicAdapter >> styleSheet [
+
+	^ self application styleSheet
+]
+
+{ #category : #protocol }
+SpAbstractMorphicAdapter >> takeKeyboardFocus [
+	
+	self widget ifNotNil: [ :w | w takeKeyboardFocus ]
 ]
 
 { #category : #'drag and drop' }
@@ -353,6 +421,18 @@ SpAbstractMorphicAdapter >> transferBlock [
 { #category : #'drag and drop - private' }
 SpAbstractMorphicAdapter >> transferFor: passenger from: source [
 	^ (self transferBlock cull: passenger cull: self model) buildWithSpec
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> type: aString [
+
+	aString do: [ :each | 
+		self 
+			keyPressed: each asciiValue 
+			shift: each isUppercase
+			meta: false 
+			control: false 
+			option: false ]
 ]
 
 { #category : #protocol }

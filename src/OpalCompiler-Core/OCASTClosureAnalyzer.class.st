@@ -25,6 +25,14 @@ OCASTClosureAnalyzer >> doRemotes [
 	
 ]
 
+{ #category : #variables }
+OCASTClosureAnalyzer >> lookupAndFixBinding: aVariableNode [
+	| var |
+	var := scope lookupVar: aVariableNode name.
+	aVariableNode binding: var.
+	^var
+]
+
 { #category : #visiting }
 OCASTClosureAnalyzer >> visitArgumentNode: aVariableNode [
 
@@ -38,6 +46,7 @@ OCASTClosureAnalyzer >> visitBlockNode: aBlockNode [
 	scope := aBlockNode scope.	
 	self doRemotes; doCopying.
 	self visitNode: aBlockNode body.
+	aBlockNode temporaries do: [ :each | self lookupAndFixBinding: each ].
 	scope := scope popScope.
 ]
 
@@ -48,6 +57,7 @@ OCASTClosureAnalyzer >> visitMethodNode: aMethodNode [
 	scope := aMethodNode scope.	
 	self doRemotes; doCopying.
 	self visitNode: aMethodNode body.
+	aMethodNode temporaries do: [ :each | self lookupAndFixBinding: each ]
 ]
 
 { #category : #visiting }
@@ -57,8 +67,9 @@ OCASTClosureAnalyzer >> visitVariableNode: aVariableNode [
 	| var |
 	aVariableNode adaptToSemanticNode.
 	aVariableNode isTemp ifFalse: [^self].
-	var := scope lookupVar: aVariableNode name.
-	aVariableNode binding: var.
-	var isTempVectorTemp ifTrue: [scope addCopyingTempToAllScopesUpToDefVector: var vectorName].
+	var := self lookupAndFixBinding: aVariableNode.
+	var isTempVectorTemp ifTrue: [ | vectorVar |
+		vectorVar := scope lookupVar: var vectorName.
+		scope addCopyingTempToAllScopesUpToDefTemp: vectorVar].
 	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var].
 ]

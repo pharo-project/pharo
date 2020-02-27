@@ -3,14 +3,14 @@ SUnit tests for Job class
 "
 Class {
 	#name : #JobTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Jobs-Tests-Base'
 }
 
 { #category : #running }
 JobTest >> tearDown [
 
-	Smalltalk globals at: #SystemProgressMorph ifPresent: [:spm | 
+	testingEnvironment at: #SystemProgressMorph ifPresent: [:spm | 
 		spm uniqueInstance bars do: [ :e | e close ]].
 	super tearDown
 ]
@@ -33,15 +33,12 @@ JobTest >> testChildJob [
 
 { #category : #tests }
 JobTest >> testCurrentJob [
-	
-	[ :job |
-		[ :job2 |
-			self assert: Job current == job2.
-			self deny: Job current == job.
-			] asJob run.
-	
-		self assert: Job current == job.
-		] asJob run
+	[ :job | 
+	[ :job2 | 
+	self assert: Job current identicalTo: job2.
+	self deny: Job current identicalTo: job ] asJob run.
+
+	self assert: Job current identicalTo: job ] asJob run
 ]
 
 { #category : #tests }
@@ -64,40 +61,35 @@ JobTest >> testJobAnnouncements [
 
 { #category : #tests }
 JobTest >> testLookupJob [
-	
 	[ :job | 
-		[ :job2 | | noneFound result |
+	[ :job2 | 
+	| noneFound result |
+	noneFound := false.
+	result := job2 lookup: [ :aJob | aJob == job2 ] ifNone: [ noneFound := true ].
+	self assert: result identicalTo: job2.
+	self deny: noneFound.
 
-			noneFound := false.
-			result := job2 lookup: [ :aJob | aJob == job2 ] ifNone: [ noneFound := true ].
-			self assert: result == job2.
-			self deny: noneFound.
-			
-			result := job2 lookup: [ :aJob | aJob == job ] ifNone: [ noneFound := true ].
-			self assert: result == job.
-			self deny: noneFound.
+	result := job2 lookup: [ :aJob | aJob == job ] ifNone: [ noneFound := true ].
+	self assert: result identicalTo: job.
+	self deny: noneFound.
 
-			result := job lookup: [ :aJob | aJob == job2 ] ifNone: [ noneFound := true. 42 ].
-			self assert: result equals: 42.
-			self assert: noneFound.
+	result := job
+		lookup: [ :aJob | aJob == job2 ]
+		ifNone: [ noneFound := true.
+			42 ].
+	self assert: result equals: 42.
+	self assert: noneFound ] asJob run.
 
-			] asJob run.
-	
-		self assert: Job current == job.
-		] asJob run
+	self assert: Job current identicalTo: job ] asJob run
 ]
 
 { #category : #tests }
 JobTest >> testOwner [
-	
-	[ :job |
-		self assert: job owner == self.
-		[ :job2 |
-			self assert: job owner == self.
-			self assert: job2 owner == self.
- 		] asJob run.
-	] asJob run
-
+	[ :job | 
+	self assert: job owner identicalTo: self.
+	[ :job2 | 
+	self assert: job owner identicalTo: self.
+	self assert: job2 owner identicalTo: self ] asJob run ] asJob run
 ]
 
 { #category : #tests }

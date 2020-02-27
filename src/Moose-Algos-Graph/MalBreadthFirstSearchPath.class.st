@@ -12,7 +12,7 @@ Class {
 	#category : #'Moose-Algos-Graph'
 }
 
-{ #category : #accessing }
+{ #category : #configuration }
 MalBreadthFirstSearchPath >> edgeClass [
 
 	^ MalGraphEdge 
@@ -28,7 +28,7 @@ MalBreadthFirstSearchPath >> end: aDijsktraNode [
 	end := aDijsktraNode
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 MalBreadthFirstSearchPath >> nodeClass [
 
 	^ MalBfsNode 

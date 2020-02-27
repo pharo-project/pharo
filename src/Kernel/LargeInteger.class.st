@@ -191,31 +191,31 @@ LargeInteger >> asFloat [
 			"An even mantissa with a single excess bit immediately following would be truncated.
 			But this would not be correct if above shift has truncated some extra bits.
 			Check this case, and round excess bits upper manually."
-			((mantissa digitAt: 1) = 2r01000000 and: [self anyBitOfMagnitudeFrom: 1 to: shift])
+			((mantissa byteAt: 1) = 2r01000000 and: [self anyBitOfMagnitudeFrom: 1 to: shift])
 				ifTrue: [mantissa := mantissa + 1]]
 		ifFalse:
 			[mantissa := self.
 			shift := 0].
 
 	"There will be a single inexact round off at last iteration"
-	result := (mantissa digitAt: (n := mantissa digitLength)) asFloat.
+	result := (mantissa byteAt: (n := mantissa bytesCount)) asFloat.
 	[(n := n - 1) > 0] whileTrue: [
-		result := 256.0 * result + (mantissa digitAt: n) asFloat].
+		result := 256.0 * result + (mantissa byteAt: n) asFloat].
 	^result timesTwoPower: shift.
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> digitAt: index [ 
+LargeInteger >> byteAt: index [ 
 	"Primitive. Answer the value of an indexable field in the receiver.   LargePositiveInteger uses bytes of base two number, and each is a 'digit' base 256.  Fail if the argument (the index) is not an Integer or is out of bounds. Essential.  See Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
-	self digitLength < index
+	self bytesCount < index
 		ifTrue: [^0]
 		ifFalse: [^super at: index]
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> digitAt: index put: value [ 
+LargeInteger >> byteAt: index put: value [ 
 	"Primitive. Store the second argument (value) in the indexable field of 
 	the receiver indicated by index. Fail if the value is negative or is larger 
 	than 255. Fail if the index is not an Integer or is out of bounds. Answer 
@@ -227,7 +227,7 @@ LargeInteger >> digitAt: index put: value [
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> digitLength [
+LargeInteger >> bytesCount [
 	"Primitive. Answer the number of indexable fields in the receiver. This 
 	value is the same as the largest legal subscript. Essential. See Object 
 	documentation whatIsAPrimitive."
@@ -238,7 +238,7 @@ LargeInteger >> digitLength [
 
 { #category : #comparing }
 LargeInteger >> hash [
-	^ self digitLength <= 8
+	^ self bytesCount <= 8
 		ifTrue: [ self ]
 		ifFalse: [ ByteArray hashBytes: self startingWith: self species hash ]
 ]
@@ -257,8 +257,8 @@ LargeInteger >> highBitOfMagnitude [
 	This method is used for LargeNegativeIntegers as well,  
 	since LargeIntegers are sign/magnitude."
 	| realLength lastDigit |
-	realLength := self digitLength.
-	[(lastDigit := self digitAt: realLength) = 0]
+	realLength := self bytesCount.
+	[(lastDigit := self byteAt: realLength) = 0]
 		whileTrue: [(realLength := realLength - 1) = 0 ifTrue: [^ 0]].
 	^ lastDigit highBitOfPositiveReceiver + (8 * (realLength - 1))
 ]

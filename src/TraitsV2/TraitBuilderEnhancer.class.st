@@ -34,6 +34,10 @@ TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 { #category : #'class modifications' }
 TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
 
+	"we need to remove the categories leftover after removing Traits"
+	aBuilder newClass organization cleanUpCategoriesForClass: aBuilder newClass.
+	aBuilder newClass class organization cleanUpCategoriesForClass: aBuilder newClass class.
+	
 	(self isTraitedMetaclass: aBuilder)
 		ifFalse: [ ^ self ].
 
@@ -151,7 +155,8 @@ TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 	
 	aBuilder traitComposition: aClass traitComposition.
 	aBuilder classTraitComposition: aClass class traitComposition.
-
+	
+	aBuilder metaclassClass: aClass class class.
 ]
 
 { #category : #migrating }

@@ -22,7 +22,8 @@ FTExampleMethodListDataSource class >> for: aClass [
 ]
 
 { #category : #accessing }
-FTExampleMethodListDataSource >> cellColumn: column row: rowIndex [ 
+FTExampleMethodListDataSource >> cellColumn: column row: rowIndex [
+ 
 	^ FTCellMorph new
 		cellInset: 5;
 		addMorphBack: (self iconFor: rowIndex) asMorph;

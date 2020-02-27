@@ -1,6 +1,6 @@
 Class {
 	#name : #SpVersatileDialogPresenterTest,
-	#superclass : #SpSmokeTestCase,
+	#superclass : #SpSmokeTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 

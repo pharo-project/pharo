@@ -23,6 +23,11 @@ PackageManifest class >> ignoredDependencies [
 	^ #(#'System-Settings-Core')
 ]
 
+{ #category : #deprecation }
+PackageManifest class >> isDeprecated [
+	^ false
+]
+
 { #category : #testing }
 PackageManifest class >> isManifest [
 	^ (self = PackageManifest) not

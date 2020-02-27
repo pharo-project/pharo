@@ -12,7 +12,7 @@ OCMethodScope >> isMethodScope [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : #scope }
 OCMethodScope >> methodScope [
 
 	^ self

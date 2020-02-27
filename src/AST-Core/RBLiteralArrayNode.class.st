@@ -1,5 +1,5 @@
 "
-A RBLiteralArrayNode is an AST node that represents literal arrays and literal byte arrays.
+An RBLiteralArrayNode is an AST node that represents literal arrays #(1 2 3) and literal byte arrays #[ 1 2 3 ].
 
 Instance Variables
 	contents: <Array of: RBLiteralNode> literal nodes of the array

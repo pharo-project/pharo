@@ -73,7 +73,7 @@ DelayNullScheduler >> startTimerEventLoop [
 
 { #category : #'system-api' }
 DelayNullScheduler >> startUp [
-	self log: 'WARNING! Delay scheduler is NOT RUNNING!'.
+	Warning signal: 'Delay scheduler is NOT RUNNING!'.
 	
 	"To get delays working again, go to System > Settings > System > Delay scheduler. "
  

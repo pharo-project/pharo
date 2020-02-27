@@ -354,8 +354,8 @@ Metacello class >> scriptExecutorClass [
 
 { #category : #private }
 Metacello class >> scriptExecutorClass: anExecutorSpec [
-    Smalltalk at: anExecutorSpec key ifAbsent: [ ConfigurationOf ensureMetacello: anExecutorSpec value ].
-    ^ Smalltalk at: anExecutorSpec key
+    self environment at: anExecutorSpec key ifAbsent: [ ConfigurationOf ensureMetacello: anExecutorSpec value ].
+    ^ self environment at: anExecutorSpec key
 ]
 
 { #category : #private }
@@ -601,9 +601,7 @@ Metacello >> onWarning: aBlock [
 Metacello >> onWarningLog [
   self
     onWarning: [ :ex | 
-      Transcript
-        cr;
-        show: ex description.
+      MetacelloNotification signal: ex description.
       ex resume ]
 ]
 

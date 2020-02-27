@@ -53,7 +53,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 		put: (NonInteractiveTranscript stdout install).
 	Float initialize.
 
-	SetElement initialize.
+	CollectionElement initialize.
 	ExternalSemaphoreTable initialize.
 	Collection initialize.
 	CompiledMethod initialize.
@@ -68,10 +68,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Smalltalk sourceFileVersionString: 'PharoV60'.
 	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk imagePath. "set the default value"
 	SourceFiles := SourceFileArray new.
-	
-	"Create the ASTCache and add it to the startup list"
-	ASTCache initialize.
-	
+		
 	Color initialize.
 	InstructionStream initialize.
 	SmallInteger initialize.
@@ -92,12 +89,13 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 { #category : #'public api' }
 PharoBootstrapInitialization class >> initializeFileSystem [
-
-	(Smalltalk at: #FileLocator) initialize.
-	(Smalltalk at: #DiskStore) initialize.
-	(Smalltalk at: #FileHandle) initialize.
-	(Smalltalk at: #MultiByteFileStream) initialize.
-	(Smalltalk at: #File) initialize
+	| env |
+	env := self environment.
+	(env at: #FileLocator) initialize.
+	(env at: #DiskStore) initialize.
+	(env at: #FileHandle) initialize.
+	(env at: #MultiByteFileStream) initialize.
+	(env at: #File) initialize
 ]
 
 { #category : #'public api' }

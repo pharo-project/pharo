@@ -23,13 +23,15 @@ PlatformResolver class >> platformName [
 PlatformResolver class >> primitiveGetUntrustedUserDirectory [
 	<primitive: 'primitiveGetUntrustedUserDirectory' module: 'SecurityPlugin'>
 	self primitiveFailed.
-	self flag: 'use a more decent way to get a path in the users home directory'.
+	self flag: #pharoFixMe. "use a more decent way to get a path in the users home directory"
 ]
 
 { #category : #origins }
 PlatformResolver >> cache [
 	"Operating Systems often define standard locations for a personal cache directory. The cache directory is a user-specific non-essential (cached) place where data should be written."
-	self subclassResponsibility
+
+	<origin>
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
@@ -39,7 +41,7 @@ PlatformResolver >> cantFindOriginError [
 
 { #category : #origins }
 PlatformResolver >> desktop [
-	^ self subclassResponsibility
+	^ self home / 'Desktop'
 ]
 
 { #category : #private }
@@ -60,26 +62,32 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 
 { #category : #origins }
 PlatformResolver >> documents [
-	^ self subclassResponsibility
+	<origin>
+	^ self home / 'Documents'
+]
+
+{ #category : #origins }
+PlatformResolver >> downloads [
+	<origin>
+	^ self home / 'Downloads'
 ]
 
 { #category : #origins }
 PlatformResolver >> home [
+	<origin>
 	^ self subclassResponsibility
 ]
 
 { #category : #origins }
 PlatformResolver >> preferences [
+	<origin>
 	^ self subclassResponsibility
-]
-
-{ #category : #resolving }
-PlatformResolver >> supportedOrigins [
-	^ #(home desktop documents preferences cache temp)
 ]
 
 { #category : #origins }
 PlatformResolver >> temp [
 	"Where to put files that are not supposed to last long"
-	^ self subclassResponsibility 
+
+	<origin>
+	^ self subclassResponsibility
 ]

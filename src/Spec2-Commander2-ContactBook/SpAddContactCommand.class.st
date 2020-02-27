@@ -37,6 +37,7 @@ SpAddContactCommand >> execute [
 SpAddContactCommand >> initialize [
 	super initialize.
 	self
-		basicName: 'New contact'; "This is the name of the command that will be shown to the user."
-		basicDescription: 'Creates a new contact and add it to the contact book.' "This is the description of the command that will be shown to the user."
+		name: 'New contact';
+		"This is the name of the command that will be shown to the user."
+			description: 'Creates a new contact and add it to the contact book.'	"This is the description of the command that will be shown to the user."
 ]

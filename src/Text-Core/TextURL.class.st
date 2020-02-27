@@ -1,5 +1,9 @@
 "
 I'm a text attribute used to encode an URL.
+
+TextMorph new 
+	newContents: ('Visit Pharo' asText addAttribute: (TextURL new url: 'http://pharo.org')) ;
+	openInWindow.
 "
 Class {
 	#name : #TextURL,
@@ -20,8 +24,6 @@ TextURL class >> scanFrom: strm [
 { #category : #evaluating }
 TextURL >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 	self notify: 'Please configure the actOnClickBlock to invoke the computation you need. In Pharo by default there is no external web browser'.
-	"a possible implementation could be:
-		 Smalltalk tools webBrowser openOnUrl: url."
 
 ]
 
@@ -42,10 +44,4 @@ TextURL >> info [
 { #category : #accessing }
 TextURL >> url: aString [
 	url := aString
-]
-
-{ #category : #styling }
-TextURL >> writeScanOn: strm [
-
-	strm nextPut: $R; nextPutAll: url; nextPut: $;
 ]

@@ -15,7 +15,7 @@ SpTheHeartOfSpec class >> bookName [
 ]
 
 { #category : #pages }
-SpTheHeartOfSpec class >> initializePresenter [
+SpTheHeartOfSpec class >> connectPresenters [
 	^HelpTopic
 		title: 'The initializePresenter method'
 		contents: 'This method takes care of the interactions between the different widgets. By linking the behavior of the different widgets it specifies the overall presentation, i.e. how the overall UI responds to interactions by the user. Usually this method consists of specifications of actions to perform when a certain event is received by a widget. From the propagation of those events the whole interaction flow of the UI emerges. In Spec, the different UI models are contained in value holders, and the event mechanism relies on the announcements of these value holders to manage the interactions between widgets. 
@@ -23,7 +23,7 @@ Value holders provide a single method whenChangedDo: that is used to register a 
 ]
 
 { #category : #pages }
-SpTheHeartOfSpec class >> initializeWidgets [
+SpTheHeartOfSpec class >> initializePresenters [
 	^HelpTopic
 		title: 'The initializeWidgets method'
 		contents: 'This method is used to instantiate the models for the different widgets that will be part of the UI and store them in their respective instance variables. Instantiation of the models will in turn result in the instantiation and initialization of the different widgets that make up the UI. Consequently, configuration and default values of each widget are specified here as well, which is why this method is called initializeWidgets. This focus in this method is to specify what the widgets will look like and what their self-contained behavior is. 
@@ -55,13 +55,13 @@ SpTheHeartOfSpec class >> intro [
 		title: 'The Heart of Spec'
 		contents: 'All user interfaces in Spec are constructed through the composition of existing user interfaces. To define a user interface, it is sufficient to define the model of the user interface. The UI elements that correspond to this model are instantiated by Spec, depending on the underlying UI framework. 
 		
-It is the composition of this model and these UI elements that makes up the resulting widget that is shown to the user, i.e. the resulting user interface. Hence, since all UIs are constructed through composition of other UIs, and it is sufficient to define the model to define the UI, the root class of all UIs is named ComposablePresenter. So, to define a new user interface, a subclass of ComposablePresenter needs to be created.
+It is the composition of this model and these UI elements that makes up the resulting widget that is shown to the user, i.e. the resulting user interface. Hence, since all UIs are constructed through composition of other UIs, and it is sufficient to define the model to define the UI, the root class of all UIs is named SpPresenter. So, to define a new user interface, a subclass of SpPresenter needs to be created.
 
 Spec is inspired by the MVP pattern. It is built around three axes that materialize themselves as the following three methods: 
 
-ComposablePresenter>>#initializeWidgets
-ComposablePresenter>>#initializePresenter
-ComposablePresenter class>>#defaultSpec. 
+SpPresenter>>#initializeWidgets
+SpPresenter>>#initializePresenter
+SpPresenter class>>#defaultSpec. 
 	
 These methods are hence typically found in the model for each user interface. In the following topics we describe the responsibility for each method, i.e. how these three work together to build the overall UI.'
 ]
@@ -97,7 +97,7 @@ Specifying this method is mandatory, as without it the UI would show no widgets 
 
 { #category : #accessing }
 SpTheHeartOfSpec class >> pages [
-	^#(intro initializeWidgets widgetInstantiation initializePresenter layouts)
+	^#(intro #initializePresenters widgetInstantiation #connectPresenters layouts)
 ]
 
 { #category : #pages }
@@ -111,7 +111,7 @@ Through the use of an creation method or through the use of the instantiate: met
 for example newButton creates a button widget, and newList creates a list widget. 
 The complete list of available widget creation methods can be found in the class Composable-Model in the protocol widgets. 
 
-Considering the second option, to reuse any composite widgets, i.e. a subclass of ComposablePresenter, the widget needs to be initialized using the instantiate: method. For example, to reuse a Message-Browser widget, the code is:
+Considering the second option, to reuse any composite widgets, i.e. a subclass of SpPresenter, the widget needs to be initialized using the instantiate: method. For example, to reuse a Message-Browser widget, the code is:
 
 	self instantiate: MessageBrowser.'
 ]

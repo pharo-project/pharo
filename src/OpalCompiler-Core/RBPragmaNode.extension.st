@@ -2,7 +2,9 @@ Extension { #name : #RBPragmaNode }
 
 { #category : #'*opalcompiler-core' }
 RBPragmaNode >> asPragma [
-	^ Pragma keyword: selector arguments: (arguments collect: [ :each | each value ]) asArray
+	^ Pragma
+		selector: selector
+		arguments: (arguments collect: [ :each | each value ]) asArray
 ]
 
 { #category : #'*opalcompiler-core' }

@@ -354,6 +354,26 @@ SmallDictionary >> at: key put: value [
 ]
 
 { #category : #accessing }
+SmallDictionary >> at: key update: updateBlock [ 
+	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
+	self at: key update: updateBlock initial: [ self errorKeyNotFound: key ].
+]
+
+{ #category : #accessing }
+SmallDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
+	"I am used to update the value at a given key. The updateBlock is passed 
+	the existing value, and the result of the block is stored back.
+	If the key does not exist, store the value of the initBlocktOrValue.
+	initBlocktOrValue can be a block in case the initial value is expencive to compute.
+	I use findElementOrNil: to avoid looking up the key twice."
+	| index |
+	index := self findIndexForKey: key.
+	(index = 0)
+		ifTrue:  [ self at: key put: initBlocktOrValue value]
+		ifFalse: [ (values at: index) in: [ :val | values at: index put: (updateBlock value: val) ] ]
+]
+
+{ #category : #accessing }
 SmallDictionary >> bindingOf: varName [
 	^self associationAt: varName ifAbsent:[nil]
 ]
@@ -756,12 +776,9 @@ SmallDictionary >> storeOn: aStream [
 { #category : #accessing }
 SmallDictionary >> values [
 	"Answer a Collection containing the receiver's values."
-	"^ values copyFrom: 1 to: size."
-	
-| out |
-	out := (Array new: self size) writeStream.
-	self valuesDo: [:value | out nextPut: value].
-	^ out contents
+	^Array 
+		new: self size 
+		streamContents: [ :out | self valuesDo: [:value | out nextPut: value]]
 ]
 
 { #category : #enumerating }

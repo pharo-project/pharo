@@ -99,7 +99,7 @@ CatalogBrowser >> buildContextMenuOn: aList [
 	| col |
 	col := (PragmaCollector new
 		filter:
-			[ :prg | prg keyword = #contextMenu and: [ prg methodClass = self class ] ])
+			[ :prg | prg selector = #contextMenu and: [ prg methodClass = self class ] ])
 		reset.
 	"the pragma menu builder is probably doing a better job than this code but it was unclear"
 	(col collected
@@ -110,7 +110,7 @@ CatalogBrowser >> buildContextMenuOn: aList [
 { #category : #'private - utilities' }
 CatalogBrowser >> buildMenuOn: aList [
 	| col |
-	col := (PragmaCollector filter: [ :prg | prg keyword = #menuOrder: and: [ prg methodClass = self class ] ]) reset.
+	col := (PragmaCollector filter: [ :prg | prg selector = #menuOrder: and: [ prg methodClass = self class ] ]) reset.
 	col collected sort: [ :a :b | (a argumentAt: 1) <= (b argumentAt: 1) ].
 	col do: [ :each | self perform: each methodSelector with: aList ]
 ]
@@ -166,7 +166,7 @@ Do you want to continue (installation could fail)?' format: { aProject name. Sma
 		aProject installStableVersion.
 		aBlock value ]
 	on: Error do: [ :e | 
-		e logCr.
+		e traceCr.
 		self inform: 'There was an error while trying to install ', aProject name, '. Installation was cancelled.' ]
 ]
 
@@ -194,7 +194,7 @@ CatalogBrowser >> loadConfiguration: aProject onSuccess: aBlock [
 		aProject loadConfiguration.
 		aBlock value ] 
 	on: Error do: [ :e | 
-		e logCr.
+		e traceCr.
 		self inform: 'There was an error while trying to load ', aProject name, '. Loading was cancelled.' ]
 ]
 
@@ -253,7 +253,7 @@ CatalogBrowser >> refresh [
 		informUser: 'Refreshing catalog (invalidating cache)...'
 		during: [ self provider reset ] ]
 	on: Error do: [ :e |
-		e crLog.
+		e crTrace.
 		self inform: 'I cannot refresh catalog list. Please review your internet connection and try again!' ]
 ]
 

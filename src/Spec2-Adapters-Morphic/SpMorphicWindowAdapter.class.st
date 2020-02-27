@@ -24,7 +24,10 @@ SpMorphicWindowAdapter >> aboutTitle [
 
 { #category : #private }
 SpMorphicWindowAdapter >> add: containerMorph toWindow: aSpecWindow [
-	aSpecWindow addMorph: containerMorph fullFrame: LayoutFrame identity
+
+	aSpecWindow 
+		addMorph: containerMorph 
+		fullFrame: LayoutFrame identity
 ]
 
 { #category : #private }
@@ -36,7 +39,7 @@ SpMorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 
 	"add all decorations (menu, toolbar and statusbar)"
 	self model hasMenu ifTrue: [ self addMenuTo: containerMorph ].
-	self model hasToolBar ifTrue: [ self addToolBarTo: containerMorph ].
+	self model hasToolbar ifTrue: [ self addToolBarTo: containerMorph ].
 	containerMorph addMorphBack: aMorph.
 	aMorph
 		hResizing: #spaceFill;
@@ -44,6 +47,12 @@ SpMorphicWindowAdapter >> addContent: aMorph toWindow: aSpecWindow [
 	self model hasStatusBar ifTrue: [ self addStatusBarTo: containerMorph ].
 	
 	self add: containerMorph toWindow: aSpecWindow
+]
+
+{ #category : #initialization }
+SpMorphicWindowAdapter >> addFocusRotationKeyBindings [
+	"Windows should not process keybindings (because then the active widget will not get 
+	 the event"
 ]
 
 { #category : #private }
@@ -66,8 +75,10 @@ SpMorphicWindowAdapter >> addModelItemsToWindowMenu: aMenu [
 { #category : #protocol }
 SpMorphicWindowAdapter >> addPresenterIn: widgetToBuild withSpecLayout: aSpec [
 
-	self model initialExtent ifNotNil: [ :extent | 
-		widgetToBuild extent: extent ].
+	self model initialPosition 
+		ifNotNil: [ :position | widgetToBuild position: position ].
+	self model initialExtent 
+		ifNotNil: [ :extent | widgetToBuild extent: extent ].
 	self 
 		addContent: (self model presenter buildWithSpecLayout: aSpec) 
 		toWindow: widgetToBuild
@@ -101,12 +112,19 @@ SpMorphicWindowAdapter >> askOkToClose [
 	^ self model askOkToClose
 ]
 
+{ #category : #protocol }
+SpMorphicWindowAdapter >> beep [ 
+	
+	widget flash
+]
+
 { #category : #factory }
 SpMorphicWindowAdapter >> buildWidget [
 
 	^ SpWindow new
 		model: model;
 		isResizeable: self isResizeable;
+		in: [ :this | self subscribeToAnnouncements: this ];
 		yourself
 ]
 
@@ -129,6 +147,14 @@ SpMorphicWindowAdapter >> centered [
 SpMorphicWindowAdapter >> close [
 
 	self widget ifNotNil: [ :w | w close ].
+]
+
+{ #category : #'widget API' }
+SpMorphicWindowAdapter >> delete [
+
+	self widgetDo: [ :w | 
+		w delete. 
+		self application windowClosed: self ]
 ]
 
 { #category : #protocol }
@@ -193,11 +219,11 @@ SpMorphicWindowAdapter >> okToChange [
 SpMorphicWindowAdapter >> open [
 
 	self model isCentered 
-		ifTrue: [ 
-			self centered.
-			self widget openAsIs ]
-		ifFalse: [ 
-			self widget openInWorld ].
+		ifTrue: [ self centered ].
+		
+	self model initialPosition 
+		ifNotNil: [ self widget openAsIs ]
+		ifNil: [ self widget openInWorld ].
 	
 	self windowIsOpening
 ]
@@ -211,6 +237,14 @@ SpMorphicWindowAdapter >> rebuildWithSpecLayout: aSpec [
 	sub allButLast do: [:e | self model window addMorphBack: e ].
 	self model addPresenterIn: self widget withSpecLayout: aSpec.
 	self widget model: self
+]
+
+{ #category : #factory }
+SpMorphicWindowAdapter >> subscribeToAnnouncements: aWindow [
+
+	aWindow announcer 
+		when: SpWindowWillClose send: #announce: to: self presenter announcer;
+		when: WindowResizing send: #announce: to: self presenter announcer
 ]
 
 { #category : #icons }

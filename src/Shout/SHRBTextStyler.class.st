@@ -64,8 +64,8 @@ SHRBTextStyler class >> blueStyleTable [
 	"
 	<styleTable: 'Blue'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -197,8 +197,8 @@ SHRBTextStyler class >> darkStyleTable [
 	"
 	<styleTable: 'Dark'>
 
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
 			(excessCode 							'FF8A80')
@@ -391,8 +391,8 @@ SHRBTextStyler class >> solarizedStyleTable [
 	"
 	<styleTable: 'Solarized'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
 			(excessCode 							red)
@@ -540,8 +540,8 @@ SHRBTextStyler class >> tangoStyleTable [
 	"
 	<styleTable: 'Tango'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -684,8 +684,8 @@ SHRBTextStyler class >> vintageStyleTable [
 	"
 	<styleTable: 'Vintage'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -943,7 +943,9 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
 	^ anArgumentNode isBlockVar
-		ifTrue: [ #blockArg ]
+		ifTrue: [ anArgumentNode parent isBlock
+				ifTrue: [ #blockPatternArg ]
+				ifFalse: [ #blockArg ] ]
 		ifFalse: [ #methodArg ]
 ]
 
@@ -962,36 +964,22 @@ SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
 ]
 
 { #category : #private }
-SHRBTextStyler >> parse: aText isMethod: isMethod [
-	|root|
-	
-	isMethod 
-		ifTrue: [
-			[root := RBParser parseFaultyMethod: aText asString.
-			root methodNode methodClass: classOrMetaClass.
-			^root] 
-				on: Error 
-				do: [^RBParser parseFaultyExpression: aText asString]]
-		ifFalse:[ ^RBParser parseFaultyExpression: aText asString ].
-]
-
-{ #category : #private }
 SHRBTextStyler >> pixelHeight [
 	^ pixelHeight ifNil: [ pixelHeight := (font ifNil: [ TextStyle defaultFont ]) pixelSize ]
 ]
 
 { #category : #private }
-SHRBTextStyler >> privateStyle: aText [ 
-    | ast |
-
-    ast := self parse: aText isMethod: self isForWorkspace not.
-    ast methodNode compilationContext: (Smalltalk compiler compilationContextClass new
-            class: (classOrMetaClass ifNil: [UndefinedObject]);
-				forSyntaxHighlighting: true;
-            requestor: workspace).
-    ast doSemanticAnalysis.
-    self style: aText ast: ast.
-    ^ aText
+SHRBTextStyler >> privateStyle: aText [
+	| ast |
+	aText ifEmpty: [ ^ self ].
+	ast := classOrMetaClass compiler
+		source: aText asString;
+		noPattern: self isForWorkspace ;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		requestor: workspace;
+		parse.				
+	ast doSemanticAnalysis.
+	^ self style: aText ast: ast
 ]
 
 { #category : #private }
@@ -1027,12 +1015,13 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
+	aText ifEmpty: [ ^ self ].
 	text := aText.	
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
 	parentheseLevel:=0.
 	ast acceptVisitor: self.
-	aText runs: (RunArray newFrom: charAttr)	
+	^aText runs: (RunArray newFrom: charAttr)	
 
 ]
 
@@ -1118,10 +1107,14 @@ SHRBTextStyler >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitBlockNode: aBlockNode [
-	aBlockNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
-	aBlockNode arguments do: [ :argument | self addStyle: #blockPatternArg forNode: argument ].
-	aBlockNode bar ifNotNil: [ :pos | self addStyle: #blockArgsBar from: pos to: pos ].
-	aBlockNode colons do: [ :pos | self addStyle: #blockArgColon from: pos to: pos ].
+	aBlockNode comments
+		do:
+			[ :comment | self addStyle: #comment from: comment start to: comment stop ].
+	aBlockNode arguments do: [ :argument | self visitNode: argument ].
+	aBlockNode bar
+		ifNotNil: [ :pos | self addStyle: #blockArgsBar from: pos to: pos ].
+	aBlockNode colons
+		do: [ :pos | self addStyle: #blockArgColon from: pos to: pos ].
 	self styleOpenBracket: aBlockNode.
 	self visitNode: aBlockNode body.
 	self styleCloseBracket: aBlockNode
@@ -1151,12 +1144,22 @@ at once, but for ordinary literal arrays, style every node"
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
-	| value |
+	| value link |
 	value := aLiteralValueNode value.
-	self 
-		addStyle: (self literalStyleSymbol: value)
-		attribute: (TextClassLink class: value class)
-		forNode: aLiteralValueNode
+	
+	
+	"We can have 3 different kind of links from a literal: 
+	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
+	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
+	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
+	link := value isSymbol
+		ifTrue: [
+			self class environment
+				at: value
+				ifPresent: [ :class | TextClassLink class: class ]
+				ifAbsent: [ TextMethodLink selector: value ] ]
+		ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
@@ -1254,18 +1257,24 @@ SHRBTextStyler >> visitSelfNode: aSelfNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitSequenceNode: aSequenceNode [
-	| patternTempStyle |
-	patternTempStyle := self methodOrBlockTempDeclStyleFor: aSequenceNode.
 	self styleTempBars: aSequenceNode.
-	aSequenceNode temporaries
-		do: [ :temporary | self addStyle: patternTempStyle forNode: temporary ].
+	aSequenceNode temporaries do: [ :each | self visitNode: each ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
-	aSequenceNode periods do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
+	aSequenceNode periods
+		do: [ :pos | self addStyle: #statementSeparator from: pos to: pos ]
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitSuperNode: aSuperNode [
 	self addStyle: #super forNode: aSuperNode
+]
+
+{ #category : #visiting }
+SHRBTextStyler >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
+	| patternTempStyle |
+	patternTempStyle := self
+		methodOrBlockTempDeclStyleFor: aTemporaryDeclarationNode parent.
+	self addStyle: patternTempStyle forNode: aTemporaryDeclarationNode
 ]
 
 { #category : #visiting }

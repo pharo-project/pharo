@@ -1,5 +1,16 @@
 "
-create a hanging indent. 
+An attribute to indent text at the left.
+
+------exemple------
+| stream |
+stream := TextStream on: (Text new: 100).
+stream 
+	withAttribute: (TextIndent tabs: 1) do: [ stream nextPutAll: 'Pharo is cool'];
+	cr;
+	withAttribute: (TextIndent tabs: 2) do: [stream nextPutAll: 'Smalltalk is cool'].
+TextMorph new 
+	newContents: stream contents;
+	openInWindow.
 "
 Class {
 	#name : #TextIndent,

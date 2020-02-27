@@ -20,12 +20,29 @@ Class {
 	#category : #'Spec-PolyWidgets-Elementary'
 }
 
+{ #category : #example }
+SliderInput class >> example [
+	<sampleInstance>
+	| example |
+	example := self new
+		min: 0;
+		max: 250;
+		autoAccept: true;
+		value: 120;
+		extent: 400 @ 50;
+		title: 'SliderInput example';
+		openWithSpec.
+	^ example
+]
+
 { #category : #specs }
 SliderInput class >> sliderBottom [
 	<spec>
-	^ SpecBoxLayout newVertical
-		add: #input withConstraints: [ :constraints | constraints height: self buttonHeight ];
-		add: #slider;
+	^ SpecLayout composed
+		newColumn: [ :column | 
+			column
+				add: #input origin: 0 @ 0 corner: 1 @ 0.15;
+				add: #slider origin: 0 @ 0.15 corner: 1 @ 1 ];
 		yourself
 ]
 
@@ -54,9 +71,11 @@ SliderInput class >> sliderRight [
 { #category : #specs }
 SliderInput class >> sliderTop [
 	<spec>
-	^ SpecBoxLayout newVertical
-		add: #slider;
-		add: #input withConstraints: [ :constraints | constraints height: self buttonHeight ];
+	^ SpecLayout composed
+		newColumn: [ :column | 
+			column
+				add: #slider origin: 0 @ 0 corner: 1 @ 0.85;
+				add: #input origin: 0 @ 0.85 corner: 1 @ 1 ];
 		yourself
 ]
 
@@ -76,11 +95,11 @@ SliderInput >> initializePresenter [
 	slider
 		whenValueChangedDo: [ :sliderValue | 
 			| inputValue |
-			inputValue := input text asNumber.	" ifNotNil: [ :text | text asNumber ]"
+			inputValue := input text asNumber. " ifNotNil: [ :text | text asNumber ]"
 			sliderValue == inputValue
 				ifFalse: [ input text: sliderValue asString ] ].
 	input
-		whenTextChangedDo: [ :text | 
+		whenTextChanged: [ :text | 
 			| inputValue |
 			inputValue := text asNumber.
 			slider value == inputValue

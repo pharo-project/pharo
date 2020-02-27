@@ -2,8 +2,7 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*Slot-Core' }
 CompiledMethod >> hasTemporaryVariableNamed: aName [
-	^(self tempNames includes: aName)
-	
+	^ self tempNames includes: aName
 ]
 
 { #category : #'*Slot-Core' }

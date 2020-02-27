@@ -119,7 +119,7 @@ RunArray class >> scanFrom: strm [
 		char == $f ifTrue: [attrList add: 
 			(TextFontChange new fontNumber: (Integer readFrom: strm ifFail: [0]))].
 		char == $F ifTrue: [attrList add: (TextFontReference toFont: 
-			(Smalltalk at: #StrikeFont ifPresent: [:sf | sf familyName: (strm upTo: $#) size: (Integer readFrom: strm ifFail: [0])]))].
+			(self environment at: #StrikeFont ifPresent: [:sf | sf familyName: (strm upTo: $#) size: (Integer readFrom: strm ifFail: [0])]))].
 		char == $b ifTrue: [attrList add: (TextEmphasis bold)].
 		char == $i ifTrue: [attrList add: (TextEmphasis italic)].
 		char == $u ifTrue: [attrList add: (TextEmphasis underlined)].
@@ -780,17 +780,4 @@ RunArray >> writeOn: aStream [
 		[:x |
 		aStream nextWordPut: (runs at: x).
 		aStream nextWordPut: (values at: x)]
-]
-
-{ #category : #printing }
-RunArray >> writeScanOn: strm [
-	"Write out the format used for text runs in source files. (14 50 312)f1,f1b,f1LInteger +;i"
-
-	strm nextPut: $(.
-	runs do: [:rr | rr printOn: strm. strm space].
-	strm skip: -1; nextPut: $).
-	values do: [:vv |
-		vv do: [:att | att writeScanOn: strm].
-		strm nextPut: $,].
-	strm skip: -1. "trailing comma"
 ]

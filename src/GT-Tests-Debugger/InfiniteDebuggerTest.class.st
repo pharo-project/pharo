@@ -15,7 +15,7 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	| preWindow debugButton debugWindow overButton process |
 	<expectedFailure>
 	
-	process := [ TestClassForTestingDebugger debug: #bla ] forkAt: 41.
+	process := [ TestClassForTestingDebuggerTest debug: #bla ] forkAt: 41.
 
 	1000 milliSecond asDelay wait.
 	self currentWorld doOneCycle.

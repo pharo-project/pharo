@@ -8,7 +8,6 @@ Class {
 	#name : #EpUnifiedBrowserPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'monitorLog',
 		'refreshDeferrer',
 		'logPresenter',
 		'logNodesPresenter'
@@ -16,7 +15,7 @@ Class {
 	#category : #'EpiceaBrowsers-UI-Unified'
 }
 
-{ #category : #accessing }
+{ #category : #specs }
 EpUnifiedBrowserPresenter class >> defaultSpec [
 	^ SpPanedLayout newHorizontal
 		position: 40 percent;
@@ -27,7 +26,7 @@ EpUnifiedBrowserPresenter class >> defaultSpec [
 
 { #category : #'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
-
+	<script>
 	^ self new
 		refresh;
 		openWithSpec;
@@ -38,12 +37,6 @@ EpUnifiedBrowserPresenter class >> open [
 EpUnifiedBrowserPresenter class >> taskbarIconName [
 
 	^ #recoverLostChangesIcon
-]
-
-{ #category : #specs }
-EpUnifiedBrowserPresenter class >> title [
-
-	^ 'Epicea - Code Changes'
 ]
 
 { #category : #accessing }
@@ -58,100 +51,91 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 		order: 401
 ]
 
-{ #category : #api }
-EpUnifiedBrowserPresenter >> initialExtent [ 
-	^ 950 @ 650
+{ #category : #refreshing }
+EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
+	^ selection selectedItems
+		ifEmpty: [ EpLog newNull ]
+		ifNotEmpty: [ :items | 
+			| entries |
+			"Needed to reverse the selected logs to have the expected order (as user)."
+			entries := items reversed flatCollect: [:each | each log entries ].
+			EpLog newWithEntries: entries ].
+
+
 ]
 
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializePresenter [
 	super initializePresenter.
-	self logNodesPresenter logNodesTreePresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelected: selection selectedItem ].
+	logNodesPresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelection: selection ].
+	self initializeRefreshOnSessionUpdate.
+	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
+]
+
+{ #category : #initialization }
+EpUnifiedBrowserPresenter >> initializePresenters [
+	logPresenter := self instantiate: EpLogBrowserPresenter.
+
+	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
+	logNodesPresenter whenSelectionChangedDo: [ :selection |
+		self refreshWithLogSelection: selection ].
+
 	self initializeRefreshOnSessionUpdate.
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
 
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
-
-	| updatesAnnouncer |
-	updatesAnnouncer := EpMonitor current sessionStore announcer.
-
-	updatesAnnouncer weak
-		when: OmSessionStoreUpdated
-		send: #refresh
-		to: self.
-
-	self whenWindowChanged: [ :windowModel | 
-		windowModel whenClosedDo: [ 
-			updatesAnnouncer unsubscribe: self ] ].
+	self updatesAnnouncer weak when: OmSessionStoreUpdated send: #refresh to: self
 ]
 
 { #category : #initialization }
-EpUnifiedBrowserPresenter >> initializeWidgets [
-	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
-	logPresenter := self instantiate: EpLogBrowserPresenter
+EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter
+		title: 'Epicea - Code Changes';
+		initialExtent: 950 @ 650;
+		whenClosedDo: [ self updatesAnnouncer unsubscribe: self ]
 ]
 
 { #category : #initialization }
 EpUnifiedBrowserPresenter >> initializeWorkaroundToRefreshOnMonitorLogAnnouncement [
+	refreshDeferrer := OmDeferrer send: #refreshIfMonitorLogSelected to: self after: 500 milliSeconds.
 
-	monitorLog := EpMonitor current log.
-	refreshDeferrer := OmDeferrer 
-		send: #refreshIfMonitorLogSelected
-		to: self
-		after: 500 milliSeconds.
+	self monitorLogAnnouncer weak when: EpEntryAdded send: #schedule to: refreshDeferrer.
 
-	monitorLog announcer weak
-		when: EpEntryAdded
-		send: #schedule
-		to: refreshDeferrer.
-
-	self whenWindowChanged: [ :windowModel | 
-		windowModel whenClosedDo: [ 
-			monitorLog announcer unsubscribe: refreshDeferrer ] ].
+	self whenWindowChanged: [ :windowModel |
+		windowModel whenClosedDo: [
+			self monitorLogAnnouncer unsubscribe: refreshDeferrer ] ]
 ]
 
-{ #category : #accessing }
-EpUnifiedBrowserPresenter >> logNodesPresenter [
-	^ logNodesPresenter
-]
-
-{ #category : #accessing }
-EpUnifiedBrowserPresenter >> logPresenter [
-	^ logPresenter
+{ #category : #initialization }
+EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
+	^ EpMonitor current log announcer
 ]
 
 { #category : #refreshing }
 EpUnifiedBrowserPresenter >> refresh [
-
-	self logNodesPresenter refresh.
+	logNodesPresenter refresh
 ]
 
 { #category : #refreshing }
 EpUnifiedBrowserPresenter >> refreshIfMonitorLogSelected [
 	"See initializeWorkaroundToRefreshOnMonitorLogAnnouncement"
 
-	| item |
-	item := self logNodesPresenter logNodesTreePresenter selectedItem.
-	item ifNil: [ ^ self ].	"Nothing to refresh"
-	item content isMonitor
-		ifFalse: [ ^ self ].	"Monitor log isn't selected"
-	self logPresenter refresh
+	(logNodesPresenter selectedLogNodes anySatisfy: [ :item | item isMonitor ])
+		ifTrue: [ logPresenter refresh ]
 ]
 
 { #category : #refreshing }
-EpUnifiedBrowserPresenter >> refreshWithLogSelected: item [
+EpUnifiedBrowserPresenter >> refreshWithLogSelection: selection [
 
-	| freshLog |
-	freshLog := item
-		ifNil: [ EpLog newNull ]
-		ifNotNil: [ item log ].
-	
-	self logPresenter
-		theLog: freshLog;
-		removeAllFilters;
+	logPresenter
+		theLog: (self freshLogFromSelection: selection);
 		refresh;
-		cleanEntryContentModel.
+		cleanEntryContent
+]
 
+{ #category : #initialization }
+EpUnifiedBrowserPresenter >> updatesAnnouncer [
+	^ EpMonitor current sessionStore announcer
 ]

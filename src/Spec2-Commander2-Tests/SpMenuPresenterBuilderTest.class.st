@@ -15,26 +15,30 @@ Class {
 SpMenuPresenterBuilderTest >> setUp [
 	super setUp.
 	menuBuilder := SpMenuPresenterBuilder new.
-	
 	commandsGroup := (CmCommandGroup named: 'root') asSpecGroup beRoot
-							register: (CmBlockCommand new
-											basicName: 'c1';
-											block: [ ];
-											yourself) asSpecCommand;
-							register: ((CmCommandGroup named: 'sub1') asSpecGroup
-											register: (CmBlockCommand new
-															basicName: 'c2';
-															block: [ ];
-															yourself) asSpecCommand;
-											register: (CmBlockCommand new
-															basicName: 'c3';
-															block: [ ];
-															yourself) asSpecCommand);
-							register: (CmBlockCommand new
-											basicName: 'c4';
-											block: [ ];
-											yourself) asSpecCommand;
-							yourself.
+		register:
+			(CmBlockCommand new
+				name: 'c1';
+				block: [  ];
+				yourself) asSpecCommand;
+		register:
+			((CmCommandGroup named: 'sub1') asSpecGroup
+				register:
+					(CmBlockCommand new
+						name: 'c2';
+						block: [  ];
+						yourself) asSpecCommand;
+				register:
+					(CmBlockCommand new
+						name: 'c3';
+						block: [  ];
+						yourself) asSpecCommand);
+		register:
+			(CmBlockCommand new
+				name: 'c4';
+				block: [  ];
+				yourself) asSpecCommand;
+		yourself
 ]
 
 { #category : #test }
@@ -42,53 +46,51 @@ SpMenuPresenterBuilderTest >> testVisitCommand [
 	| menuItem evaluationResult |
 	evaluationResult := nil.
 	self assert: menuBuilder menuPresenter defaultGroup menuItems isEmpty.
-	
 	(CmBlockCommand new
-		basicName: 'c';
-		basicDescription: 'desc';
+		name: 'c';
+		description: 'desc';
 		context: [ 41 ];
 		block: [ :x | evaluationResult := x + 1 ];
 		yourself) asSpecCommand acceptVisitor: menuBuilder.
-		
-	self assert: menuBuilder menuPresenter defaultGroup menuItems size equals: 1.
+	self
+		assert: menuBuilder menuPresenter defaultGroup menuItems size
+		equals: 1.
 	menuItem := menuBuilder menuPresenter defaultGroup menuItems first.
 	self assert: menuItem class equals: SpMenuItemPresenter.
 	self assert: menuItem name equals: 'c'.
 	self assert: menuItem description equals: 'desc'.
-	
 	self assert: evaluationResult isNil.
 	menuItem action value.
-	self assert: evaluationResult equals: 42.
+	self assert: evaluationResult equals: 42
 ]
 
 { #category : #test }
 SpMenuPresenterBuilderTest >> testVisitCommandThatCantBeRunWithDisableStrategy [
 	self assert: menuBuilder menuPresenter defaultGroup menuItems isEmpty.
-	
 	(CmBlockCommand new
-		basicName: 'c';
-		basicDescription: 'desc';
+		name: 'c';
+		description: 'desc';
 		context: [ 41 ];
-		canBeRunBlock: [ :x | x = 42 ];
+		canBeExecutedBlock: [ :x | x = 42 ];
 		block: [ :x | 42 ];
 		yourself) asSpecCommand acceptVisitor: menuBuilder.
-		
-	self assert: menuBuilder menuPresenter defaultGroup menuItems size equals: 1.
+	self
+		assert: menuBuilder menuPresenter defaultGroup menuItems size
+		equals: 1
 ]
 
 { #category : #test }
 SpMenuPresenterBuilderTest >> testVisitCommandThatCantBeRunWithHideStrategy [
 	self assert: menuBuilder menuPresenter defaultGroup menuItems isEmpty.
-	
 	(CmBlockCommand new
-		basicName: 'c';
-		basicDescription: 'desc';
+		name: 'c';
+		description: 'desc';
 		context: [ 41 ];
-		canBeRunBlock: [ :x | x = 42 ];
+		canBeExecutedBlock: [ :x | x = 42 ];
 		block: [ :x | 42 ];
-		yourself) asSpecCommand beHiddenWhenCantBeRun acceptVisitor: menuBuilder.
-		
-	self assert: menuBuilder menuPresenter defaultGroup menuItems isEmpty.
+		yourself) asSpecCommand beHiddenWhenCantBeRun
+		acceptVisitor: menuBuilder.
+	self assert: menuBuilder menuPresenter defaultGroup menuItems isEmpty
 ]
 
 { #category : #test }

@@ -72,11 +72,11 @@ OCPragmaTest >> methodSinglePragma [
 
 { #category : #testing }
 OCPragmaTest >> testDoublePragma [
-	| aRBMethode |	
+	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodDoublePragma.
-	
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:).
-	self assert: (aRBMethode compiledMethod pragmas second keyword = #hello:)
+
+	self assert: aRBMethode compiledMethod pragmas first selector equals: #hello:.
+	self assert: aRBMethode compiledMethod pragmas second selector equals: #hello:
 ]
 
 { #category : #testing }
@@ -95,73 +95,63 @@ OCPragmaTest >> testNoPragma [
 
 { #category : #testing }
 OCPragmaTest >> testPragmaAfterBeforTemp [
-	
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodPragmaAfterBeforTemps.
 
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:).
-	self assert: (aRBMethode compiledMethod pragmas second keyword = #world:)
-	
+	self assert: aRBMethode compiledMethod pragmas first selector equals: #hello:.
+	self assert: aRBMethode compiledMethod pragmas second selector equals: #world:
 ]
 
 { #category : #testing }
 OCPragmaTest >> testPragmaTwoParam [
- 
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodPragmaTwoParam.
 
 
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:by:)
-	
+	self assert: aRBMethode compiledMethod pragmas first selector equals: #hello:by:
 ]
 
 { #category : #testing }
 OCPragmaTest >> testPragmaUnarayMessage [
 	| aRBMethode |
-
 	aRBMethode := OpalCompiler new parse: self methodPragmaUnarayMessage.
-	
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello)
+
+	self assert: aRBMethode compiledMethod pragmas first selector equals: #hello
 ]
 
 { #category : #testing }
 OCPragmaTest >> testPrimitiveNumber [
 	| aRBMethode |
-
 	aRBMethode := OpalCompiler new parse: self methodPrimitive.
-	self assert: (aRBMethode compiledMethod primitive = 4)
+	self assert: aRBMethode compiledMethod primitive equals: 4
 ]
 
 { #category : #testing }
 OCPragmaTest >> testPrimitivePragmaNumber [
 	| aRBMethode |
-
 	aRBMethode := OpalCompiler new parse: self methodPrimitivePragma.
-	self assert: (aRBMethode compiledMethod primitive = 4)
+	self assert: aRBMethode compiledMethod primitive equals: 4
 ]
 
 { #category : #testing }
 OCPragmaTest >> testPrimitiveString [
 	| aRBMethode |
-
 	aRBMethode := OpalCompiler new parse: self methodPrimitiveString.
-	
-	self assert: (aRBMethode compiledMethod primitive = 117)
+
+	self assert: aRBMethode compiledMethod primitive equals: 117
 ]
 
 { #category : #testing }
 OCPragmaTest >> testPrimitiveStringModule [
 	| aRBMethode |
-
 	aRBMethode := OpalCompiler new parse: self methodPrimitiveStringModule.
-	
-	self assert: (aRBMethode compiledMethod primitive = 117)
+
+	self assert: aRBMethode compiledMethod primitive equals: 117
 ]
 
 { #category : #testing }
 OCPragmaTest >> testSinglePragma [
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodSinglePragma.
-	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:)
-	
+	self assert: aRBMethode compiledMethod pragmas first selector equals: #hello:
 ]

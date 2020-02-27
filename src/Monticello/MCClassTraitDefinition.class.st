@@ -27,16 +27,15 @@ MCClassTraitDefinition class >> baseTraitName: aString classTraitComposition: cl
 
 { #category : #comparing }
 MCClassTraitDefinition >> = aDefinition [
-	^ (super = aDefinition)
-		and: [baseTrait = aDefinition baseTrait
-		and: [self classTraitCompositionString = aDefinition classTraitCompositionString]]
-
-
+	^ super = aDefinition
+		and: [ baseTrait = aDefinition baseTrait
+		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
+		and: [ category = aDefinition category ] ] ]
 ]
 
 { #category : #visiting }
 MCClassTraitDefinition >> accept: aVisitor [
-	^ aVisitor visitClassTraitDefinition: self.
+	^ aVisitor visitClassTraitDefinition: self
 ]
 
 { #category : #accessing }
@@ -47,9 +46,10 @@ MCClassTraitDefinition >> baseTrait [
 
 { #category : #accessing }
 MCClassTraitDefinition >> category [
-	^ category ifNil: [(Smalltalk classOrTraitNamed: self baseTrait)
-							ifNotNil: [:bTrait | bTrait category]
-							ifNil: [self error: 'Can''t detect the category']] 
+	^ category ifNil: [
+		(Smalltalk classOrTraitNamed: self baseTrait)
+			ifNotNil: [ :bTrait | bTrait category ]
+			ifNil: [ self error: 'Can''t detect the category' ] ]
 ]
 
 { #category : #accessing }
@@ -66,9 +66,7 @@ MCClassTraitDefinition >> classTraitComposition [
 
 { #category : #accessing }
 MCClassTraitDefinition >> classTraitCompositionString [
-	^self classTraitComposition ifNil: ['{}'].
-
-
+	^ self classTraitComposition ifNil: [ '{}' ]
 ]
 
 { #category : #accessing }
@@ -80,9 +78,7 @@ MCClassTraitDefinition >> definitionString [
 
 { #category : #accessing }
 MCClassTraitDefinition >> description [
-	^Array
-		with: baseTrait
-		with: classTraitComposition
+	^ Array with: baseTrait with: classTraitComposition
 ]
 
 { #category : #comparing }
@@ -90,14 +86,14 @@ MCClassTraitDefinition >> hash [
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
-	^hash
-
+	category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
+	^ hash
 ]
 
 { #category : #initialization }
 MCClassTraitDefinition >> initializeWithBaseTraitName: aTraitName classTraitComposition: aString [
 	baseTrait := aTraitName.
-	classTraitComposition := aString.
+	classTraitComposition := aString
 ]
 
 { #category : #initialization }
@@ -145,7 +141,7 @@ MCClassTraitDefinition >> source [
 	^self definitionString
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 MCClassTraitDefinition >> summary [
 	^self baseTrait , ' classTrait'
 

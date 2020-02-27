@@ -42,6 +42,11 @@ CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 ]
 
 { #category : #'*Debugging-Core' }
+CompiledCode >> debuggerMap [
+	^self compilerClass debuggerMethodMapForMethod: self.
+]
+
+{ #category : #'*Debugging-Core' }
 CompiledCode >> hasInstVarRef [
 	self localHasInstVarRef ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb hasInstVarRef ]
@@ -95,6 +100,12 @@ CompiledCode >> pcPreviousTo: pc [
 		[prevPc := scanner pc.
 		 scanner interpretNextInstructionFor: client].
 	^prevPc
+]
+
+{ #category : #'*Debugging-Core' }
+CompiledCode >> rangeForPC: aPC [	
+ 	"return which code to hightlight in the debugger"		
+ 	^(self sourceNodeForPC: aPC) debugHighlightRange
 ]
 
 { #category : #'*Debugging-Core' }

@@ -38,7 +38,7 @@ ZnLogEvent class >> initialize [
 { #category : #convenience }
 ZnLogEvent class >> logToTranscript [
 	self stopLoggingToTranscript.
-	^ self announcer when: ZnLogEvent do: [ :event | Transcript crShow: event ].
+	^ self announcer when: ZnLogEvent do: [ :event | self crTrace: event ].
 ]
 
 { #category : #accessing }
@@ -106,16 +106,6 @@ ZnLogEvent >> printOn: stream [
 	stream space.
 	id \\ 1000 printOn: stream base: 10 length: 3 padded: true.
 	self printContentsOn: stream
-]
-
-{ #category : #beacon }
-ZnLogEvent >> printOneLineContentsOn: stream [
-	self printContentsOn: stream
-]
-
-{ #category : #beacon }
-ZnLogEvent >> printOneLineOn: stream [
-	self printOn: stream
 ]
 
 { #category : #accessing }

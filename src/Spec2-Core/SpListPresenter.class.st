@@ -41,6 +41,8 @@ todo
 Class {
 	#name : #SpListPresenter,
 	#superclass : #SpAbstractListPresenter,
+	#traits : 'SpTSearchable',
+	#classTraits : 'SpTSearchable classTrait',
 	#instVars : [
 		'#allowToSelect => SpObservableSlot',
 		'#autoDeselect => SpObservableSlot',
@@ -66,18 +68,32 @@ SpListPresenter class >> title [
 { #category : #private }
 SpListPresenter >> clickOnSelectedItem [
 	| item |
-	
-	item := self selectedItem.
+	item := self selection selectedItem.
 	(item notNil and: [ item respondsTo: #click ])
 		ifTrue: [ ^ item click ]
 		ifFalse: [ ^ false ]
 ]
 
 { #category : #api }
+SpListPresenter >> display [
+
+	^ display
+]
+
+{ #category : #api }
+SpListPresenter >> display: aBlock [
+
+	display := aBlock
+]
+
+{ #category : #api }
 SpListPresenter >> displayBlock [
 	"Return the one argument block used to wrap your domain specific items.
 	The block should return something that can be displayed in a list - like a String or a Text"
-
+	self
+		deprecated: 'Please use #display instead'
+		transformWith: '`@receiver displayBlock' 
+						-> '`@receiver display'.
 	^ display
 ]
 
@@ -85,6 +101,13 @@ SpListPresenter >> displayBlock [
 SpListPresenter >> displayBlock: aBlock [
 	"Set the one argument block used to wrap your domain specific items.
 	The block should return something that can be displayed in a list - like a String or a Text"
+
+	"Return the one argument block used to wrap your domain specific items.
+	The block should return something that can be displayed in a list - like a String or a Text"
+	self
+		deprecated: 'Please use #display: instead'
+		transformWith: '`@receiver displayBlock: `@arg' 
+						-> '`@receiver display: `@arg'.
 
 	display := aBlock
 ]
@@ -97,12 +120,18 @@ SpListPresenter >> displayValueAt: anIndex [
 { #category : #'adapter-api' }
 SpListPresenter >> displayValueOf: anObject [
 
-	^ self displayBlock value: anObject
+	^ self display value: anObject
 ]
 
 { #category : #testing }
 SpListPresenter >> hasHeaderTitle [
 	^ headerTitle isEmptyOrNil not
+]
+
+{ #category : #testing }
+SpListPresenter >> hasIcons [
+
+	^ self icons notNil
 ]
 
 { #category : #accessing }
@@ -141,12 +170,12 @@ SpListPresenter >> icons: aBlock [
 
 { #category : #initialization }
 SpListPresenter >> initialize [
+
 	super initialize.
+	self initializeTSearchable.
 	autoDeselect := true.
 	allowToSelect := true.
-	display := [ :object | object asStringOrText ].
-	icon := [ :item | nil ].
-	self bindKeyCombination: Character space toAction: [ self clickOnSelectedItem ]
+	display := [ :object | object asStringOrText ]
 ]
 
 { #category : #private }

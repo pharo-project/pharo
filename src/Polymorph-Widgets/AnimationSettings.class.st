@@ -45,7 +45,7 @@ AnimationSettings >> numberOfSteps: anInteger [
 
 { #category : #accessing }
 AnimationSettings >> useAnimation [
-	^ useAnimation ifNil: [useAnimation := false]
+	^ useAnimation ifNil: [ useAnimation := false ]
 ]
 
 { #category : #accessing }

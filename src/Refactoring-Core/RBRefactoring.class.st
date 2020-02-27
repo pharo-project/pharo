@@ -122,7 +122,7 @@ RBRefactoring >> changes [
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
 	| parseTree |
 	parseTree := aRBClass parseTreeFor: aSelector.
-	parseTree notNil ifTrue: [aMatcher executeTree: parseTree].
+	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
 ]
 
@@ -223,7 +223,7 @@ RBRefactoring >> defaultEnvironment [
 { #category : #transforming }
 RBRefactoring >> execute [
 	self primitiveExecute.
-	RBRefactoryChangeManager instance performChange: self changes.
+	RBRefactoryChangeManager instance performChange: self changes; addUndoPointer: 1
 ]
 
 { #category : #transforming }
@@ -275,6 +275,11 @@ RBRefactoring >> parseTreeSearcher [
 { #category : #transforming }
 RBRefactoring >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
+]
+
+{ #category : #refactoring }
+RBRefactoring >> parserClass [
+	^ RBParser
 ]
 
 { #category : #transforming }

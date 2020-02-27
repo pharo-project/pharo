@@ -30,6 +30,14 @@ ExceptionTest >> assertSuccess: anExceptionTester [
 	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded'].
 ]
 
+{ #category : #private }
+ExceptionTest >> runCaseManaged [
+	"We should disable TestEnvironment to avoid any logic for unhandled errors from background processes.
+	Some tests fork processes to ensure clean no handlers (SUnit catches errors for example)"
+	
+	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleOuterPass [
 	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 
@@ -196,7 +204,7 @@ ExceptionTest >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
 		assert: result isNil.	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - exceptiontester' }
 ExceptionTest >> testNoTimeout [
 	self assertSuccess: (ExceptionTester new runTest: #simpleNoTimeoutTest ) 
 ]
@@ -228,6 +236,30 @@ ExceptionTest >> testNonResumablePass [
 
 ]
 
+{ #category : #'tests - resignal' }
+ExceptionTest >> testResignalAs [
+
+	| answer |
+	answer := [
+		[3 zork]
+			on: ZeroDivide
+			do: [:ex | ex return: 5]
+	] on: Error do: [:ex | ex resignalAs: ZeroDivide].
+	self assert: answer == 5
+]
+
+{ #category : #'tests - resignal' }
+ExceptionTest >> testResignalAsUnwinds [
+
+	| unwound answer |
+	unwound := false.
+	answer := [
+		[3 zork]
+			on: ZeroDivide do: [:ex | self assert: unwound.  ex return: 5]
+	] on: Error do: [:ex | [ex resignalAs: ZeroDivide] ifCurtailed: [unwound := true]].
+	self assert: answer == 5
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testResumableFallOffTheEndHandler [
 	self assertSuccess: (ExceptionTester new runTest: #resumableFallOffTheEndHandler ) 
@@ -240,19 +272,20 @@ ExceptionTest >> testResumableOuter [
 	result := [Notification signal. 4] 
 		on: Notification 
 		do: [:ex | ex outer. ex return: 5].
-	self assert: result = 5
+	self assert: result equals: 5
 
 ]
 
 { #category : #'tests - outer' }
 ExceptionTest >> testResumablePass [
-
 	| result |
-	result := [Notification signal. 4] 
-		on: Notification 
-		do: [:ex | ex pass. ex return: 5].
-	self assert: result = 4
-
+	result := [ Notification signal.
+	4 ]
+		on: Notification
+		do: [ :ex | 
+			ex pass.
+			ex return: 5 ].
+	self assert: result equals: 4
 ]
 
 { #category : #'tests - exceptiontester' }
@@ -324,7 +357,52 @@ ExceptionTest >> testSimpleReturn [
 	self assertSuccess: (ExceptionTester new runTest: #simpleReturnTest ) 
 ]
 
-{ #category : #tests }
+{ #category : #'tests - exceptiontester' }
 ExceptionTest >> testTimeoutWithZeroDuration [
 	self assertSuccess: (ExceptionTester new runTest: #simpleTimeoutWithZeroDurationTest ) 
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
+	| executed semaphore |
+	executed := false.
+	semaphore := Semaphore new.
+	[ [ 
+			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+		] on: ZeroDivide do: [:z | z pass].
+		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
+	semaphore wait: 2 seconds.
+	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenNoHandlers [
+	| executed semaphore |
+	executed := false.
+	semaphore := Semaphore new.
+	[
+		[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]. 
+		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
+	semaphore wait: 2 seconds.
+	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
+	| executed semaphore |
+	executed := false.
+	semaphore := Semaphore new.
+	[ [ [  
+				[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+			] on: ZeroDivide do: [:z | z pass]
+		] on: ZeroDivide do: [:z | z pass].
+		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
+	semaphore wait: 2 seconds.
+	self assert: executed
 ]

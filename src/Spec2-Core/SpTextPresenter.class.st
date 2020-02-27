@@ -20,12 +20,12 @@ I provide the following methods
 Class {
 	#name : #SpTextPresenter,
 	#superclass : #SpAbstractTextPresenter,
-	#traits : 'TSpHaveWrappingScrollBars',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
+	#traits : 'SpTHaveWrappingScrollBars',
+	#classTraits : 'SpTHaveWrappingScrollBars classTrait',
 	#instVars : [
 		'#scrollValue => SpObservableSlot'
 	],
-	#category : #'Spec2-Core-Widgets'
+	#category : #'Spec2-Core-Widgets-Text'
 }
 
 { #category : #specs }
@@ -59,7 +59,6 @@ SpTextPresenter >> registerEvents [
 
 { #category : #api }
 SpTextPresenter >> scrollValue [
-	"<api: #inspect>"
 	"Return the current scroll position"
 
 	^ scrollValue

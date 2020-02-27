@@ -1,4 +1,0 @@
-stubs
-loadedClassNames
-	
-	^ environment keys

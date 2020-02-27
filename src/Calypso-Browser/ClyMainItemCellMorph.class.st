@@ -158,7 +158,7 @@ ClyMainItemCellMorph >> collapsedButton [
 		target: item;
 		actionSelector: #expand;
 		arguments: {};
-		labelGraphic: Smalltalk ui theme treeUnexpandedForm;
+		labelGraphic: self theme treeUnexpandedForm;
 		color: Color transparent;
 		helpText: 'Expand Item';
 		borderWidth: 0
@@ -211,15 +211,10 @@ ClyMainItemCellMorph >> expandedButton [
 		target: item;
 		actionSelector: #collapse;
 		arguments: {};
-		labelGraphic: Smalltalk ui theme treeExpandedForm;
+		labelGraphic: self theme treeExpandedForm;
 		color: Color transparent;
 		helpText: 'Unexpand Item';
 		borderWidth: 0
-]
-
-{ #category : #accessing }
-ClyMainItemCellMorph >> iconNamed: aString [ 
-	^Smalltalk ui icons iconNamed: aString
 ]
 
 { #category : #initialization }

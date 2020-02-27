@@ -38,8 +38,7 @@ RBMoveVariableDefinitionRefactoring class >> model: aRBSmalltalk bindTight: anIn
 { #category : #transforming }
 RBMoveVariableDefinitionRefactoring >> checkNodes: sequenceNodes [ 
 	(sequenceNodes 
-		detect: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]
-		ifNone: [nil]) notNil 
+		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each]) 
 		ifTrue: [^false].
 	sequenceNodes do: 
 			[:each | 

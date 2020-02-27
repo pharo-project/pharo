@@ -171,6 +171,13 @@ ClyTabManager >> initialize [
 		vResizing: #spaceFill
 ]
 
+{ #category : #accessing }
+ClyTabManager >> morph [
+	"for compatibility"
+
+	^ self tabMorph
+]
+
 { #category : #'event handling' }
 ClyTabManager >> okToChange [
 

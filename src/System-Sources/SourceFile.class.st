@@ -49,6 +49,20 @@ SourceFile >> cr [
 	stream cr
 ]
 
+{ #category : #buffering }
+SourceFile >> discardBuffer [
+
+	stream wrappedStream discardBuffer
+]
+
+{ #category : #accessing }
+SourceFile >> ensureWrittenPosition: aPosition [
+
+	self isReadOnly ifTrue: [ ^ false ].
+	
+	^ stream ensureWrittenPosition: aPosition
+]
+
 { #category : #accessing }
 SourceFile >> flush [
 
@@ -116,13 +130,20 @@ SourceFile >> next: anInteger [
 	^ stream next: anInteger
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #accessing }
+SourceFile >> next: anInteger putAll: aString startingAt: startIndex [
+
+	stream next: anInteger putAll: aString startingAt: startIndex
+
+]
+
+{ #category : #'file in/out' }
 SourceFile >> nextChunk [
 
 	^ (ChunkReadStream on: stream) next
 ]
 
-{ #category : #'fileIn/Out' }
+{ #category : #'file in/out' }
 SourceFile >> nextChunkPut: aChunk [
 
 	^ (ChunkWriteStream on: stream) nextPut: aChunk
@@ -244,8 +265,8 @@ SourceFile >> tryOpenReadOnly: readOnly [
 	readOnly ifFalse: [
 		potentialLocations
 			do: [ :each | 
-				[ stream := ZnCharacterReadWriteStream
-					on: (each asFileReference / basename) binaryReadWriteStream
+				[ stream := SourceFileCharacterReadWriteStream
+					on: (SourceFileBufferedReadWriteStream on:(each asFileReference / basename) unbufferedBinaryWriteStream)
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 

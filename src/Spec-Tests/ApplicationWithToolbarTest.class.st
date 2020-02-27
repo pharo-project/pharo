@@ -1,6 +1,6 @@
 Class {
 	#name : #ApplicationWithToolbarTest,
-	#superclass : #SpecSmokeTestCase,
+	#superclass : #SpecTestCase,
 	#category : #'Spec-Tests-Examples'
 }
 

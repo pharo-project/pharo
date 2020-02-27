@@ -5,10 +5,8 @@ Class {
 	#name : #DialogWindowPresenter,
 	#superclass : #WindowPresenter,
 	#instVars : [
-		'buttons',
-		'okAction',
-		'cancelAction',
-		'cancelled'
+		'contents',
+		'toolbar'
 	],
 	#category : #'Spec-Core-Support'
 }
@@ -19,117 +17,92 @@ DialogWindowPresenter class >> adapterName [
 	^ #DialogWindowAdapter
 ]
 
-{ #category : #accessing }
-DialogWindowPresenter >> addButton: aString do: aBlock [
-	"Adds button logic to dialog."
+{ #category : #specs }
+DialogWindowPresenter class >> defaultSpec [
+	<spec>
 	
-	^ buttons add: (ButtonPresenter new 
-		owner: self;
-		label: aString;
-		action: [ aBlock cull: self ];
-		yourself)
+	^ #(DialogWindowAdapter
+		adapt: #(model))
 ]
 
-{ #category : #accessing }
-DialogWindowPresenter >> beCancel [
-
-	cancelled := true
-]
-
-{ #category : #accessing }
-DialogWindowPresenter >> beOk [
-
-	cancelled := false
-]
-
-{ #category : #accessing }
-DialogWindowPresenter >> buttons [ 
-	"buttons is an ordered dictionary that matches labels with actions. 
-	 Default action will always be the last one."
+{ #category : #private }
+DialogWindowPresenter >> buildWithSpecLayout: aSpec [
+	"Build the widget using the spec name provided as argument"
+	| widget |
 	
-	^ buttons 
-]
+	(self spec notNil and: [ self needRebuild not ])
+		ifTrue: [ widget := self spec instance ]
+		ifFalse: [ 
+			contents := self model buildWithSpecLayout: aSpec.
+			widget := self privateAdapterFromModel: self withSpec: self defaultSpecSelector.
+			contents := nil ].
 
-{ #category : #api }
-DialogWindowPresenter >> cancelAction [
-
-	^ cancelAction
+	self extent ifNotNil: [:ex | 
+		(widget respondsTo: #extent:)
+			ifTrue: [ widget extent: ex ]].
+		
+	^ widget
 ]
 
 { #category : #api }
 DialogWindowPresenter >> cancelAction: aBlock [
 
-	cancelAction := aBlock
+	^ self changed: #cancelAction: with: { aBlock }
 ]
 
 { #category : #api }
 DialogWindowPresenter >> cancelled [
 
-	^ cancelled
+	^ self toolbar cancelled
+]
+
+{ #category : #accessing }
+DialogWindowPresenter >> contents [
+
+	^ contents
 ]
 
 { #category : #initialization }
 DialogWindowPresenter >> initialize [
 
 	super initialize.
-	buttons := OrderedCollection new.
-	cancelled := true.
-	self initializeDefaultActions
-]
 
-{ #category : #initialization }
-DialogWindowPresenter >> initializeDefaultActions [
-	"default ok/cancel actions. 
-	 this is just for backwards compatibility"
-	self okAction: [ 
-		cancelled := false.
-		self close ].
-	self cancelAction: [ 
-		cancelled := true.
-		self close ]
-]
-
-{ #category : #initialization }
-DialogWindowPresenter >> initializeWindow [
-		
-	super initializeWindow.
-	self presenter initializeDialogWindow: self
-]
-
-{ #category : #testing }
-DialogWindowPresenter >> isCancelled [
-
-	^ cancelled
-]
-
-{ #category : #testing }
-DialogWindowPresenter >> isDialog [
-
-	^ true
-]
-
-{ #category : #testing }
-DialogWindowPresenter >> isOk [
-
-	^ self isCancelled not
+	toolbar := OkCancelToolbar new asValueHolder.
+	toolbar whenChangedDo: [ :t | self changed: #toolbar: with: { t } ]
 ]
 
 { #category : #api }
 DialogWindowPresenter >> okAction: aBlock [
 
-	okAction := aBlock
+	^ self changed: #okAction: with: { aBlock }
+]
+
+{ #category : #api }
+DialogWindowPresenter >> okButtonEnabled: aBoolean [
+
+	self changed: #okButtonEnabled: with: { aBoolean }
+]
+
+{ #category : #api }
+DialogWindowPresenter >> toolbar [
+
+	^ toolbar value
+]
+
+{ #category : #api }
+DialogWindowPresenter >> toolbar: aBar [
+
+	toolbar value: aBar
 ]
 
 { #category : #api }
 DialogWindowPresenter >> triggerCancelAction [
 
-	cancelAction ifNil: [ ^ self ].
-	cancelAction cull: self
+	self changed: #triggerCancelAction with: #()
 ]
 
 { #category : #api }
 DialogWindowPresenter >> triggerOkAction [
 
-	okAction ifNil: [ ^ self ].
-	okAction cull: self
+	self changed: #triggerOkAction with: #()
 ]

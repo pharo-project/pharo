@@ -51,7 +51,7 @@ GTSpotterProcessor >> continueFilterInContext: aSpotterContext [
 		do: [ :exception | 
 			self exceptionHandler 
 				handleException: exception 
-				do: [ ('[Spotter] Exception in continuing processor <', self title asString, '>: ', exception asString) logCr ] ]
+				do: [ ('[Spotter] Exception in continuing processor <', self title asString, '>: ', exception asString) traceCr ] ]
 ]
 
 { #category : #private }
@@ -80,7 +80,7 @@ GTSpotterProcessor >> filterInContext: aSpotterContext [
 		do: [ :exception | 
 			self exceptionHandler 
 				handleException: exception 
-				do: [ ('[Spotter] Exception in processor <', self title asString, '>: ', exception asString) logCr ] ]
+				do: [ ('[Spotter] Exception in processor <', self title asString, '>: ', exception asString) traceCr ] ]
 ]
 
 { #category : #printing }

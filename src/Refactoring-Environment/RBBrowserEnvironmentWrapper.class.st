@@ -99,9 +99,8 @@ RBBrowserEnvironmentWrapper >> rootEnvironment [
 RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [ 
 	| interval |
 	interval := super selectionIntervalFor: aString.
-	^interval notNil 
-		ifTrue: [interval]
-		ifFalse: [environment selectionIntervalFor: aString]
+	^interval ifNotNil: [interval]
+		ifNil: [environment selectionIntervalFor: aString]
 ]
 
 { #category : #printing }

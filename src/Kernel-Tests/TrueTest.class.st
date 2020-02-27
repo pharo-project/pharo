@@ -16,8 +16,7 @@ TrueTest >> testAND [
 
 { #category : #'tests - controlling' }
 TrueTest >> testAnd [
-	
-	self assert: ((true and: ['alternativeBlock']) = 'alternativeBlock'). 
+	self assert: (true and: [ 'alternativeBlock' ]) equals: 'alternativeBlock'
 ]
 
 { #category : #'tests - converting' }
@@ -34,22 +33,17 @@ TrueTest >> testIfFalse [
 
 { #category : #'tests - controlling' }
 TrueTest >> testIfFalseIfTrue [
-
-	self assert: (true ifFalse: ['falseAlternativeBlock'] 
-                      ifTrue: ['trueAlternativeBlock']) = 'trueAlternativeBlock'. 
+	self assert: (true ifFalse: [ 'falseAlternativeBlock' ] ifTrue: [ 'trueAlternativeBlock' ]) equals: 'trueAlternativeBlock'
 ]
 
 { #category : #'tests - controlling' }
 TrueTest >> testIfTrue [
-
-	self assert: ((true ifTrue: ['alternativeBlock']) = 'alternativeBlock'). 
+	self assert: (true ifTrue: [ 'alternativeBlock' ]) equals: 'alternativeBlock'
 ]
 
 { #category : #'tests - controlling' }
 TrueTest >> testIfTrueIfFalse [
-
-	self assert: (true ifTrue: ['trueAlternativeBlock'] 
-                      ifFalse: ['falseAlternativeBlock']) = 'trueAlternativeBlock'. 
+	self assert: (true ifTrue: [ 'trueAlternativeBlock' ] ifFalse: [ 'falseAlternativeBlock' ]) equals: 'trueAlternativeBlock'
 ]
 
 { #category : #'tests - instance creation' }
@@ -79,14 +73,13 @@ TrueTest >> testOr [
 
 { #category : #'tests - printing' }
 TrueTest >> testPrintOn [
-
-	self assert: (String streamContents: [:stream | true printOn: stream]) = 'true'. 
+	self assert: (String streamContents: [ :stream | true printOn: stream ]) equals: 'true'
 ]
 
 { #category : #'tests - logical operations' }
 TrueTest >> testXor [
-	self assert: (true xor: true) = false.
-	self assert: (true xor: false) = true.
-	self assert: (true xor: [true]) = false.
-	self assert: (true xor: [false]) = true.
+	self assert: (true xor: true) equals: false.
+	self assert: (true xor: false) equals: true.
+	self assert: (true xor: [ true ]) equals: false.
+	self assert: (true xor: [ false ]) equals: true
 ]

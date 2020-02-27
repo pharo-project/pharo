@@ -13,8 +13,7 @@ RBPullUpInstanceVariableRefactoring >> preconditions [
 			[(class hierarchyDefinesInstanceVariable: variableName) 
 				ifFalse: [self refactoringFailure: 'No subclass defines ' , variableName].
 			(class subclasses 
-				detect: [:each | (each directlyDefinesInstanceVariable: variableName) not]
-				ifNone: [nil]) notNil 
+				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not]) 
 				ifTrue: 
 					[self 
 						refactoringWarning: 'Not all subclasses have an instance variable named ' 

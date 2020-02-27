@@ -14,14 +14,14 @@ The #start and #stop methods are used to find the source that corresponds to thi
 
 The #acceptVisitor: method is used by RBProgramNodeVisitors (the visitor pattern). This will also require updating all the RBProgramNodeVisitors so that they know of the new node.
 
-The #isFaulty method is used to distinguish between valid nodes and nodes created from invalid source Smalltalk code. For example, code parsed with RBParsers #parseFaultyExpression: or #parseFaultyMethod:.
+The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with RBParsers #parseFaultyExpression: or #parseFaultyMethod:.
 
 Subclasses might also want to redefine match:inContext: and copyInContext: to do parse tree searching and replacing.
 
 Subclasses that contain other nodes should override equalTo:withMapping: to compare nodes while ignoring renaming temporary variables, and children that returns a collection of our children nodes.
 
 Instance Variables:
-	properties	<Dictionary of: Symbol -> Object>	A set of properties set to this node, for example every node can have the Property #comment to attach the method comment or the comment of the code line this node represents. Other classes or tools may add more type of properties, for example, the reflectivity support adds properties for managing Metalinks. 
+	properties	<Dictionary of: Symbol -> Object>	A set of properties set to this node, for example every node can have the Property #comment to attach the method comment or the comment of the code line this node represents. Other classes or tools may add more type of properties; for example, the reflectivity support adds properties for managing Metalinks. 
 	parent	<RBProgramNode>	the node we're contained in
 
 Class Variables:
@@ -43,7 +43,7 @@ Class {
 
 { #category : #accessing }
 RBProgramNode class >> formatterClass [
-	^ FormatterClass ifNil: [ RBNullFormatter ] ifNotNil: [ FormatterClass ]
+	^ FormatterClass ifNil: [ RBSimpleFormatter ] ifNotNil: [ FormatterClass ]
 ]
 
 { #category : #accessing }
@@ -116,6 +116,13 @@ RBProgramNode >> allTemporaryVariables [
 			vars
 				addAll: each allTemporaryVariables;
 				yourself]
+]
+
+{ #category : #accessing }
+RBProgramNode >> allVariables [
+	"Return all the variables in subnodes"
+
+	^ self allChildren select: [ :each | each isVariable ]
 ]
 
 { #category : #accessing }
@@ -428,7 +435,8 @@ RBProgramNode >> isEvaluatedFirst [
 
 { #category : #testing }
 RBProgramNode >> isFaulty [
-	self subclassResponsibility
+	"return true if the AST contains a RBParseErrorNode"
+	^false
 ]
 
 { #category : #deprecated }

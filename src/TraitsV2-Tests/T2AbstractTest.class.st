@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'createdClasses'
 	],
-	#category : #'TraitsV2-Tests-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #'instance creation' }
@@ -62,8 +62,8 @@ T2AbstractTest >> setUp [
 
 { #category : #running }
 T2AbstractTest >> tearDown [
-	createdClasses reverse do:#removeFromSystem.
+	createdClasses reverseDo: #removeFromSystem.
 	createdClasses := nil.
-	
-	super tearDown.
+
+	super tearDown
 ]

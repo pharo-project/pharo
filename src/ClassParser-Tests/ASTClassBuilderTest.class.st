@@ -245,6 +245,52 @@ ASTClassBuilderTest >> testCreateNormalClassWithTraitComposition [
 	self assert: (class isComposedBy: TIncludesWithIdentityCheckTest).
 ]
 
+{ #category : #NormalClass }
+ASTClassBuilderTest >> testCreateTraitUsingAnotherSingleTrait [
+
+   | ast class |
+
+	ast := CDClassDefinitionParser parse: 'Trait named: #TTestTrait
+															uses: TOccurrencesTest'.
+	class := ShiftClassBuilder new
+		buildEnvironment: self environment;
+		buildFromAST: ast;
+		build.
+	
+	self assert: (class isComposedBy: TOccurrencesTest).
+]
+
+{ #category : #NormalClass }
+ASTClassBuilderTest >> testCreateTraitUsingAnotherTraitComposition [
+
+   | ast class |
+
+	ast := CDClassDefinitionParser parse: 'Trait named: #TTestTrait
+															uses: TOccurrencesTest + TAddForUniquenessTest'.
+	class := ShiftClassBuilder new
+		buildEnvironment: self environment;
+		buildFromAST: ast;
+		build.
+	
+	self assert: (class isComposedBy: TOccurrencesTest).
+	self assert: (class isComposedBy: TAddForUniquenessTest).
+]
+
+{ #category : #NormalClass }
+ASTClassBuilderTest >> testCreateTraitWithoutOtherTraits [
+
+   | ast class |
+
+	ast := CDClassDefinitionParser parse: 'Trait named: #TTestTrait
+															uses: {}'.
+	class := ShiftClassBuilder new
+		buildEnvironment: self environment;
+		buildFromAST: ast;
+		build.
+		
+	self assert: class traits isEmpty
+]
+
 { #category : #running }
 ASTClassBuilderTest >> testCreateVariableByteClassNamed [
 

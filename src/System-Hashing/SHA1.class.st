@@ -132,14 +132,14 @@ SHA1 >> hashInteger: aPositiveInteger [
 	aPositiveInteger highBit <= 512 ifFalse: [ self error: 'integer cannot exceed 512 bits' ].
 	buffer := ByteArray new: 64.
 	dstIndex := 0.
-	aPositiveInteger digitLength 
+	aPositiveInteger bytesCount 
 		to: 1
 		by: -1
 		do: 
 			[ :i | 
 			buffer 
 				at: (dstIndex := dstIndex + 1)
-				put: (aPositiveInteger digitAt: i) ].
+				put: (aPositiveInteger byteAt: i) ].
 
 	"process that one block"
 	self processBuffer: buffer.
@@ -161,14 +161,14 @@ SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [
 	"pad integer with zeros"
 	buffer := ByteArray new: 64.
 	dstIndex := 0.
-	aPositiveInteger digitLength 
+	aPositiveInteger bytesCount 
 		to: 1
 		by: -1
 		do: 
 			[ :i | 
 			buffer 
 				at: (dstIndex := dstIndex + 1)
-				put: (aPositiveInteger digitAt: i) ].
+				put: (aPositiveInteger byteAt: i) ].
 
 	"process that one block"
 	self processBuffer: buffer.

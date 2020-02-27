@@ -15,9 +15,7 @@ ClyDeprecationEnvironmentPlugin >> collectMethodGroupProviders [
 
 { #category : #'item decoration' }
 ClyDeprecationEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
-
-	((aClass respondsTo: #isDeprecated) and: [aClass isDeprecated]) 
-		ifTrue: [ anItem markWith: ClyDeprecatedItemTag]
+	aClass isDeprecated ifTrue: [ anItem markWith: ClyDeprecatedItemTag ]
 ]
 
 { #category : #'item decoration' }
@@ -29,7 +27,5 @@ ClyDeprecationEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod
 
 { #category : #'item decoration' }
 ClyDeprecationEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
-
-	((aPackage respondsTo: #isDeprecated) and: [aPackage isDeprecated]) 
-		ifTrue: [ anItem markWith: ClyDeprecatedItemTag]
+	aPackage isDeprecated ifTrue: [ anItem markWith: ClyDeprecatedItemTag ]
 ]

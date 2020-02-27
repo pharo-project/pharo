@@ -18,27 +18,30 @@ Class {
 	#name : #SpMillerColumnPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'newPresenterBlock'
+		'newPresenterBlock',
+		'columnsWillChangeBlock'
 	],
 	#category : #'Spec2-Core-Miller'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 SpMillerColumnPresenter >> addPresenter: newSubPresenter [
 
 	newSubPresenter whenActivatedDo: [ :selection | 
-			self changeSelection: selection selectedItem from: newSubPresenter ].
+		self changeSelection: selection selectedItem from: newSubPresenter ].
 	newSubPresenter owner: self.
-	layout add: newSubPresenter.
+	layout add: newSubPresenter
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 SpMillerColumnPresenter >> changeSelection: selection from: aPresenter [
-
 	| selectedPresenterIndex |
+
 	selectedPresenterIndex := self presenters indexOf: aPresenter.
+	columnsWillChangeBlock ifNotNil: [ 
+		columnsWillChangeBlock cull: selectedPresenterIndex ].
 	self resetTo: selectedPresenterIndex.
-	self pushModel: selection.
+	self pushModel: selection
 ]
 
 { #category : #initialization }
@@ -49,15 +52,21 @@ SpMillerColumnPresenter >> initialize [
 ]
 
 { #category : #initialization }
-SpMillerColumnPresenter >> initializeWidgets [
+SpMillerColumnPresenter >> initializePresenters [
 	
-	layout := SpBoxLayout newHorizontal
+	layout := SpMillerLayout newHorizontal
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 SpMillerColumnPresenter >> newPresenterFor: aModel [
 
 	^ newPresenterBlock value: aModel
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> pages [
+	
+	^ layout presenters
 ]
 
 { #category : #accessing }
@@ -78,7 +87,7 @@ SpMillerColumnPresenter >> pushModel: aModel [
 	self addPresenter: (self newPresenterFor: aModel)
 ]
 
-{ #category : #initialization }
+{ #category : #private }
 SpMillerColumnPresenter >> resetTo: anIndex [
 	"Remove all presenters up to anIndex.
 	0 means to remove all elements."
@@ -97,4 +106,43 @@ SpMillerColumnPresenter >> setRootModel: aModel [
 SpMillerColumnPresenter >> size [
 
 	^ self presenters size
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> spacing [
+
+	^ layout spacing
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> spacing: aNumber [
+
+	layout spacing: aNumber
+]
+
+{ #category : #'private-traversing' }
+SpMillerColumnPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	self pages do: [ :each | 
+		each 
+			traverseInFocusOrderDo: aBlock 
+			excluding: excludes ]
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> visiblePages [ 
+
+	^ layout visiblePages
+]
+
+{ #category : #accessing }
+SpMillerColumnPresenter >> visiblePages: aNumber [ 
+
+	layout visiblePages: aNumber
+]
+
+{ #category : #'api-events' }
+SpMillerColumnPresenter >> whenColumnsWillChangeDo: aBlock [
+
+	columnsWillChangeBlock := aBlock
 ]

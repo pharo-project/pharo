@@ -40,6 +40,24 @@ FFIArchitecture class >> uniqueInstance [
 ]
 
 { #category : #types }
+FFIArchitecture >> bitTypeAlignment [
+
+	^ 1
+]
+
+{ #category : #types }
+FFIArchitecture >> bitTypeSize [
+
+	^ self externalBitType byteSize
+]
+
+{ #category : #types }
+FFIArchitecture >> externalBitType [
+
+	^ ExternalType signedByte
+]
+
+{ #category : #types }
 FFIArchitecture >> externalLongType [
 	^ ExternalType long
 ]
@@ -47,6 +65,12 @@ FFIArchitecture >> externalLongType [
 { #category : #types }
 FFIArchitecture >> externalSizeTType [
 	^ ExternalType ulong
+]
+
+{ #category : #types }
+FFIArchitecture >> externalUBitType [
+
+	^ ExternalType unsignedByte
 ]
 
 { #category : #types }

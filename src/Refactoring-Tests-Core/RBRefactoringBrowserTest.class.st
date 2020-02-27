@@ -1,6 +1,6 @@
 Class {
 	#name : #RBRefactoringBrowserTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#category : #'Refactoring-Tests-Core'
 }
 
@@ -10,9 +10,9 @@ RBRefactoringBrowserTest class >> isAbstract [
 ]
 
 { #category : #private }
-RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [ 
+RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
 	aRefactoring primitiveExecute.
-	RBParser parseExpression: aRefactoring storeString
+	self parserClass parseExpression: aRefactoring storeString
 ]
 
 { #category : #private }
@@ -22,14 +22,17 @@ RBRefactoringBrowserTest >> objectClassVariable [
 
 { #category : #helpers }
 RBRefactoringBrowserTest >> parseExpression: aString [
-
-	^ RBParser parseExpression: aString
+	^ self parserClass parseExpression: aString
 ]
 
 { #category : #helpers }
-RBRefactoringBrowserTest >> parseMethod: aString [ 
+RBRefactoringBrowserTest >> parseMethod: aString [
+	^ self parserClass parseMethod: aString
+]
 
-	^ RBParser parseMethod: aString
+{ #category : #private }
+RBRefactoringBrowserTest >> parserClass [
+	^ RBParser
 ]
 
 { #category : #private }

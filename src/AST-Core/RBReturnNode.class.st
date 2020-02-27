@@ -71,11 +71,9 @@ RBReturnNode >> hash [
 
 { #category : #initialization }
 RBReturnNode >> initialize [
-
 	super initialize.
 
-	return := 0.
-	value := nil.
+	return := 0
 ]
 
 { #category : #testing }
@@ -108,7 +106,7 @@ RBReturnNode >> removeNode: aNode [
 
 { #category : #replacing }
 RBReturnNode >> replaceNode: aNode withNode: anotherNode [ 
-	value == aNode ifTrue: [self value: anotherNode]
+	value == aNode ifTrue: [ self value: anotherNode ]
 ]
 
 { #category : #'accessing-token' }
@@ -122,14 +120,14 @@ RBReturnNode >> return: anInteger [
 ]
 
 { #category : #initialization }
-RBReturnNode >> return: returnInteger value: aValueNode [ 
+RBReturnNode >> return: returnInteger value: anExpression [ 
 	return := returnInteger.
-	self value: aValueNode
+	self value: anExpression
 ]
 
 { #category : #accessing }
 RBReturnNode >> start [
-	^return
+	^ return
 ]
 
 { #category : #accessing }
@@ -145,11 +143,11 @@ RBReturnNode >> stop: anInteger [
 
 { #category : #evaluating }
 RBReturnNode >> value [
-	^value
+	^ value
 ]
 
 { #category : #accessing }
-RBReturnNode >> value: valueNode [ 
-	value := valueNode.
+RBReturnNode >> value: anExpression [ 
+	value := anExpression.
 	value parent: self
 ]

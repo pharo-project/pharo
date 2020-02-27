@@ -1,5 +1,5 @@
 "
-RBScanner is a stream that returns a sequence of token from the string that it is created on. The tokens know where they came from in the source code and which comments were attached to them.
+RBScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
 
 Instance Variables:
 	buffer	<PositionableStream>	Accumulates the text for the current token.
@@ -95,15 +95,12 @@ RBScanner class >> initializeUnderscore [
 ]
 
 { #category : #testing }
-RBScanner class >> isSelector: aSymbol [ 
-	| scanner token |
+RBScanner class >> isSelector: aSymbol [
+	| scanner |
 	scanner := self basicNew.
 	scanner on: (ReadStream on: aSymbol asString).
 	scanner step.
-	token := scanner scanAnySymbol.
-	token isLiteralToken ifFalse: [^false].
-	token value isEmpty ifTrue: [^false].
-	^scanner atEnd
+	^ scanner isSelector
 ]
 
 { #category : #testing }
@@ -151,6 +148,13 @@ RBScanner class >> on: aStream errorBlock: aBlock [
 { #category : #accessing }
 RBScanner class >> patternVariableCharacter [
 	^ PatternVariableCharacter
+]
+
+{ #category : #'public api' }
+RBScanner class >> scanTokens: aStringOrStream [
+	| scanner |
+	scanner := self on: aStringOrStream readStream.
+	^scanner contents collect:[ :t | t value ]
 ]
 
 { #category : #testing }
@@ -212,13 +216,58 @@ RBScanner >> getComments [
 ]
 
 { #category : #testing }
-RBScanner >> isReadable [
-	^true
+RBScanner >> isSelector [
+	characterType = #binary
+		ifTrue: [ [ characterType = #binary ] whileTrue: [ self step ].
+			^ characterType = #eof ].
+	characterType ~= #alphabetic
+		ifTrue: [ ^ false ].
+	^ self isSelectorNonBinary
 ]
 
 { #category : #testing }
-RBScanner >> isWritable [
-	^false
+RBScanner >> isSelectorNonBinary [
+	"inspect the next line and view as morph"
+
+	"ZnEasy getPng: 'http://www.plantuml.com/plantuml/png/RO-n2i8m48RtUugRXRn0XzBg98wEuX2R4mlNHE8LwTkRL4Xxa2cNx_z2_ki-OgFC4mF8A4nu9QP1GeJRuOx6j7WSlOqBDlXOXy9xVhzipy5Joco-m0vfeoQuP9n2cjFp8PygRJ7_qo259m2ide8REliBBTyGNQa16p9LGUUw1C1_uThk9TBrEl9kdlW7'"
+
+	| state |
+	state := #alphaAlone.
+	[ characterType = #alphabetic ]
+		whileTrue: [ state = #colon
+				ifTrue: [ state := #inKeyword ].
+			self scanName.
+			characterType = #eof
+				ifTrue: [ ^ state = #alphaAlone ].
+			currentCharacter = $:
+				ifTrue: [ state := #colon.
+					self step ] ].
+	characterType = #eof
+		ifTrue: [ ^ state = #colon ].
+	^ false
+
+	"Diagram by:
+@startuml
+
+title Selector
+[*] --> Binary : binary
+[*] --> AlphaAlone : alpha
+AlphaAlone --> AlphaAlone: alpha
+AlphaAlone -d-> Colon : colon
+AlphaAlone -> [*] : eof
+
+
+Colon -> [*] : eof
+Colon -> InKeyword : alpha
+
+InKeyword --> InKeyword : alpha
+InKeyword --> Colon : colon
+
+
+Binary --> Binary : binary
+Binary --> [*] : eof
+
+@enduml"
 ]
 
 { #category : #accessing }
@@ -435,22 +484,6 @@ RBScanner >> scanNumber [
 		start: start
 		stop: stop
 		source: string
-]
-
-{ #category : #'private-scanning' }
-RBScanner >> scanPatternVariable [
-	buffer nextPut: currentCharacter.
-	self step.
-	currentCharacter = ${ 
-		ifTrue: 
-			[self step.
-			^RBPatternBlockToken value: '`{' start: tokenStart].
-	[characterType = #alphabetic] whileFalse: 
-			[characterType = #eof 
-				ifTrue: [ ^ self scanError: 'Meta variable expected'].
-			buffer nextPut: currentCharacter.
-			self step].
-	^self scanIdentifierOrKeyword
 ]
 
 { #category : #'private-scanning' }

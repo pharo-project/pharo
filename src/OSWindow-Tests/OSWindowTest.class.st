@@ -21,16 +21,12 @@ OSWindowTest >> testCreatingWindow [
 
 { #category : #tests }
 OSWindowTest >> testNewWindowDefaults [
-
 	| window |
-	
 	window := OSWindow newWithNullDriver.
 
-	[	self assert: (window isValid).
-		self assert: window extent = OSWindowAttributes defaultExtent
-	] ensure: [ window destroy ]
-		
-	
+	[ self assert: window isValid.
+	self assert: window extent equals: OSWindowAttributes defaultExtent ]
+		ensure: [ window destroy ]
 ]
 
 { #category : #tests }

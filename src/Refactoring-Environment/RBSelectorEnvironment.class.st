@@ -218,7 +218,7 @@ RBSelectorEnvironment >> includesCategory: aCategory [
 
 { #category : #testing }
 RBSelectorEnvironment >> includesClass: aClass [ 
-	^(self privateSelectorsForClass: aClass) isEmpty not 
+	^(self privateSelectorsForClass: aClass) isNotEmpty 
 		and: [super includesClass: aClass]
 ]
 

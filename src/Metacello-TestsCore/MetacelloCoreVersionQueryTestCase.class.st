@@ -86,53 +86,53 @@ MetacelloCoreVersionQueryTestCase >> projectWith: projectAttributes [
 
 { #category : #tests }
 MetacelloCoreVersionQueryTestCase >> testBaseline10Groups [
-    | project version expected list |
-    project := self project.
-    version := project version: '1.0-baseline'.
-    expected := #('Core' 'Tests' 'Recursive').
-    list := version groups.
-    self assert: list size = expected size.
-    list do: [ :pkg | self assert: (expected includes: pkg name) ]
+	| project version expected list |
+	project := self project.
+	version := project version: '1.0-baseline'.
+	expected := #('Core' 'Tests' 'Recursive').
+	list := version groups.
+	self assert: list size equals: expected size.
+	list do: [ :pkg | self assert: (expected includes: pkg name) ]
 ]
 
 { #category : #tests }
 MetacelloCoreVersionQueryTestCase >> testBaseline10Projects [
-    | project version expected list |
-    project := self project.
-    version := project version: '1.0-baseline'.
-    expected := #('UTF8').
-    list := version projects.
-    self assert: list size = expected size.
-    list do: [ :pkg | self assert: (expected includes: pkg name) ]
+	| project version expected list |
+	project := self project.
+	version := project version: '1.0-baseline'.
+	expected := #('UTF8').
+	list := version projects.
+	self assert: list size equals: expected size.
+	list do: [ :pkg | self assert: (expected includes: pkg name) ]
 ]
 
 { #category : #tests }
 MetacelloCoreVersionQueryTestCase >> testBaseline10ResolveToLoadableSpecs01 [
-    | project version expected list |
-    project := self project.
-    version := project version: '1.0-baseline'.
-    expected := #('UTF8').
-    list := version resolveToLoadableSpecs: #('UTF8').
-    self assert: list size = expected size.
-    list do: [ :pkg | self assert: (expected includes: pkg name) ].
-    expected := #('UTF8').
-    list := version resolveToLoadableSpecs: #('Recursive').
-    self assert: list size = expected size.
-    list do: [ :pkg | self assert: (expected includes: pkg name) ]
+	| project version expected list |
+	project := self project.
+	version := project version: '1.0-baseline'.
+	expected := #('UTF8').
+	list := version resolveToLoadableSpecs: #('UTF8').
+	self assert: list size equals: expected size.
+	list do: [ :pkg | self assert: (expected includes: pkg name) ].
+	expected := #('UTF8').
+	list := version resolveToLoadableSpecs: #('Recursive').
+	self assert: list size equals: expected size.
+	list do: [ :pkg | self assert: (expected includes: pkg name) ]
 ]
 
 { #category : #tests }
 MetacelloCoreVersionQueryTestCase >> testDifference [
-    | project expected fromVersionString toVersionString report actual |
-    project := self project.
-    fromVersionString := '1.1-baseline'.
-    toVersionString := '2.0-baseline'.
-    report := (project version: fromVersionString) difference: (project version: toVersionString).
-    report
-        from: fromVersionString;
-        to: toVersionString;
-        configuration: 'Test Configuration'.
-    expected := 'Test Configuration ''1.1-baseline'' to ''2.0-baseline''
+	| project expected fromVersionString toVersionString report actual |
+	project := self project.
+	fromVersionString := '1.1-baseline'.
+	toVersionString := '2.0-baseline'.
+	report := (project version: fromVersionString) difference: (project version: toVersionString).
+	report
+		from: fromVersionString;
+		to: toVersionString;
+		configuration: 'Test Configuration'.
+	expected := 'Test Configuration ''1.1-baseline'' to ''2.0-baseline''
 	Additions:
 		UTF9
 			'''' to ''1.0-baseline''
@@ -143,6 +143,6 @@ MetacelloCoreVersionQueryTestCase >> testDifference [
 		UTF7
 			''1.0-baseline'' to ''''
 '.
-    actual := report printString.
-    self assert: expected = actual
+	actual := report printString.
+	self assert: expected equals: actual
 ]

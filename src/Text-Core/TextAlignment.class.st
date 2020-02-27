@@ -1,16 +1,28 @@
 "
 I'm a Text attribute that tells how content should be aligned.
 
+----- exemple 1 ---------------
 TextMorph new 
-  newContents: (Text streamContents: [:aStream| 
-										aStream
- 											nextPutAll: 'Left flush' asText; 
-											cr;
-											nextPutAll: ('Centered' asText addAttribute: TextAlignment centered); 
- 											cr;
-											nextPutAll: ('Right flush' asText addAttribute: TextAlignment rightFlush); 
- 											cr ]);
-  openInWindowLabeled: 'TextAlignment demo'
+	newContents: (Text streamContents: [:aStream| 
+		aStream
+			nextPutAll: 'Left flush' asText; 
+			cr;
+			nextPutAll: ('Centered' asText addAttribute: TextAlignment centered); 
+ 			cr;
+			nextPutAll: ('Right flush' asText addAttribute: TextAlignment rightFlush); 
+ 			cr ]);
+  	openInWindowLabeled: 'TextAlignment demo'
+----- exemple 2 ---------------
+| stream |
+stream := TextStream on: (Text new: 100).
+stream 
+	nextPutAll:  'Pharo';	cr;
+	withAttribute: TextAlignment centered do:  [stream nextPutAll: 'is' ];  cr;
+	withAttribute: TextAlignment rightFlush  do: [ stream nextPutAll: 'cool ']; cr;
+	withAttribute: TextAlignment justified  do: [ stream nextPutAll: 'because it is both an interactive programming enviornment and a reflexive programming language.' ].
+TextMorph new 
+	newContents: stream contents;
+	openInWindow .
 "
 Class {
 	#name : #TextAlignment,
@@ -75,11 +87,4 @@ TextAlignment >> dominates: other [
 TextAlignment >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^ alignment hash
-]
-
-{ #category : #utilities }
-TextAlignment >> writeScanOn: strm [
-
-	strm nextPut: $a.
-	alignment printOn: strm.
 ]

@@ -1,8 +1,8 @@
 Class {
 	#name : #SpTimeline,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#ticks => SpObservableSlot',
 		'#highestValue',
@@ -14,11 +14,13 @@ Class {
 
 { #category : #'tick management' }
 SpTimeline >> fastForward [
-	ticks := highestValue.
+
+	ticks := highestValue
 ]
 
 { #category : #initialization }
 SpTimeline >> initialize [
+
 	self class initializeSlots: self.
 	super initialize.
 	ticks := 0.
@@ -29,11 +31,13 @@ SpTimeline >> initialize [
 
 { #category : #'tick management' }
 SpTimeline >> rewind [ 
-	ticks := lowestValue.
+
+	ticks := lowestValue
 ]
 
 { #category : #initialization }
 SpTimeline >> stepBy: aNumber [
+
 	stepBy := aNumber
 ]
 
@@ -44,17 +48,20 @@ SpTimeline >> tick [
 
 { #category : #accessing }
 SpTimeline >> ticks [
+
 	^ ticks
 ]
 
 { #category : #accessing }
 SpTimeline >> ticks: anAmount [ 
+
 	ticks := anAmount.
-	highestValue := anAmount max: highestValue . 
-	lowestValue := anAmount min: lowestValue.
+	highestValue := anAmount max: highestValue.
+	lowestValue := anAmount min: lowestValue
 ]
 
 { #category : #initialization }
 SpTimeline >> whenTickDo: aBlock [
+
 	self property: #ticks whenChangedDo: aBlock
 ]

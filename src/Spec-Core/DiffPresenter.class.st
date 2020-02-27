@@ -30,6 +30,43 @@ DiffPresenter class >> adapterName [
 	^ #DiffAdapter
 ]
 
+{ #category : #specs }
+DiffPresenter class >> defaultSpec [
+	<spec>
+	
+	^ #(MorphicDiffAdapter
+		adapt: #(model))
+]
+
+{ #category : #example }
+DiffPresenter class >> exampleWithOptions [
+	"
+	self exampleWithOptions
+	"
+	<sampleInstance>
+	^ self new
+		showOptions: true;
+		leftText: (True >> #and:) sourceCode;
+		rightText: (True >> #or:) sourceCode;
+		contextClass: True;
+		openWithSpec
+]
+
+{ #category : #example }
+DiffPresenter class >> exampleWithoutOptions [
+	"
+	self exampleWithoutOptions
+	"
+	<sampleInstance>
+	
+	^ self new
+		showOptions: false;
+		leftText: 'Old text';
+		rightText: 'New text';
+		openWithSpec
+
+]
+
 { #category : #'undo-redo' }
 DiffPresenter >> clearUndoManager [
 	"The diff presenter does not allow edition, it does not have undo history. But this message is added to have polimorphism in the Message Browser"

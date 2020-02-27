@@ -13,10 +13,10 @@ SpMorphicTabAdapter class >> isDeprecated [
 ]
 
 { #category : #initialization }
-SpMorphicTabAdapter >> adapt: aComposablePresenter [
-	widget := self buildWidgetWith: aComposablePresenter.
-	aComposablePresenter addDependent: widget.
-	self bindModel: aComposablePresenter andWidget: widget
+SpMorphicTabAdapter >> adapt: aPresenter [
+	widget := self buildWidgetWith: aPresenter.
+	aPresenter addDependent: widget.
+	self bindModel: aPresenter andWidget: widget
 ]
 
 { #category : #updating }

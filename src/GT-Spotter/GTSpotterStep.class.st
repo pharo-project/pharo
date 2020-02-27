@@ -416,7 +416,7 @@ GTSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 		do: [ :exception | 
 			self exceptionHandler 
 				handleException: exception 
-				do: [ ('[Spotter] Exception in process: ', exception asString) logCr ] ]
+				do: [ ('[Spotter] Exception in process: ', exception asString) traceCr ] ]
 ]
 
 { #category : #selecting }

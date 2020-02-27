@@ -2,7 +2,7 @@ Extension { #name : #TextMethodLink }
 
 { #category : #'*Text-Edition' }
 TextMethodLink >> actOnClick: anEvent for: target in: aParagraph editor: anEditor [
-	self flag: 'TODO: complete implementation with class'.
+	self flag: #pharoTodo. "Complete implementation with class".
 	
 	browseSenders == anEvent shiftPressed
 		ifTrue: [ anEditor implementorsOf: self selector ]

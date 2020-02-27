@@ -11,22 +11,11 @@ Class {
 	#name : #OSWindowWorldMorph,
 	#superclass : #WorldMorph,
 	#instVars : [
-		'display',
 		'closeCallback',
-		'isResizeable',
-		'osWindow'
+		'isResizeable'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
-
-{ #category : #accessing }
-OSWindowWorldMorph >> actualScreenSize [
-
-	^ [ self osWindow extent ]
-		on: Error do: [ :e | 
-			"if window was destroyed, we will have an error."
-			0@0 ]
-]
 
 { #category : #adding }
 OSWindowWorldMorph >> addMorph: aMorph frame: rectangle [
@@ -51,20 +40,8 @@ OSWindowWorldMorph >> closeCallback: anObject [
 OSWindowWorldMorph >> delete [
 	closeCallback value.
 	self class removeExtraWorld: self.
-	osWindow destroy.
+	worldState worldRenderer deactivate.
 	super delete
-]
-
-{ #category : #accessing }
-OSWindowWorldMorph >> display [
-	self updateDisplay.
-	^ display
-]
-
-{ #category : #'session management' }
-OSWindowWorldMorph >> displayArea [
-
-	^ Rectangle origin: 0@0 corner: osWindow extent
 ]
 
 { #category : #initialization }
@@ -73,7 +50,6 @@ OSWindowWorldMorph >> initialize [
 	self color: Color veryLightGray.
 	isResizeable := true.
 	self extent: 640@480.
-	worldState := OSWindowWorldState new.
 	self addHand: HandMorph new.
 	
 ]
@@ -90,7 +66,8 @@ OSWindowWorldMorph >> isResizeable: anObject [
 
 { #category : #'instance creation' }
 OSWindowWorldMorph >> open [
-	self osWindow.
+	self worldState worldRenderer: ((OSWorldRenderer forWorld: self)
+		windowCloseAction: [self osWindowCloseButtonPressed]).
 	self changed.
 	self class addExtraWorld: self.
 ]
@@ -106,62 +83,6 @@ OSWindowWorldMorph >> osWindowCloseButtonPressed [
 ]
 
 { #category : #accessing }
-OSWindowWorldMorph >> osWindowRenderer [
-	^ self osWindow renderer ifNil: [
-		self osWindow newFormRenderer: self display.
-		self osWindow renderer
-	].
-	
-]
-
-{ #category : #'session management' }
-OSWindowWorldMorph >> recreateOSWindow [
-	| attributes driver | 
-	attributes := OSWindowAttributes new.
-	attributes
-		extent: self extent;
-		title: Smalltalk shortImageName;
-		icon: (self iconNamed: #pharoIcon);
-		resizable: isResizeable.
-	self updateDisplay.
-	driver := self pickMostSuitableWindowDriver.
-	attributes preferableDriver: driver.
-	osWindow := OSWindow createWithAttributes: attributes eventHandler: (OSWindowMorphicEventHandler for: self)
-]
-
-{ #category : #'world state' }
-OSWindowWorldMorph >> restoreMorphicDisplay [
-
-	self
-		extent: self display extent;
-		viewBox: self display boundingBox;
-		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
-		resizeBackgroundMorph;
-		submorphsDo: [ :each | each displayExtentChanged ];
-		fullRepaintNeeded.
-		
-	self defer: [Cursor normal show].
-		
-	self layoutChanged.
-
-]
-
-{ #category : #accessing }
 OSWindowWorldMorph >> title: aTitle [
-	self flag: 'ToDo'
-]
-
-{ #category : #private }
-OSWindowWorldMorph >> updateDisplay [
-
-	display
-		ifNil: [ display := Form extent: self extent depth: 32.
-			worldState display: display
-			]
-]
-
-{ #category : #accessing }
-OSWindowWorldMorph >> worldState [
-
-	^ worldState 
+	"self flag: 'ToDo'"
 ]

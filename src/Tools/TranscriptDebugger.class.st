@@ -9,5 +9,5 @@ Class {
 
 { #category : #'opening api' }
 TranscriptDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
-	Transcript logCr: (self messageToPrintFrom: aDebugSession)
+	self traceCr: (self messageToPrintFrom: aDebugSession)
 ]

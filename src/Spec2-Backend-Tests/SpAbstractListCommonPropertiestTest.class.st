@@ -1,6 +1,6 @@
 Class {
 	#name : #SpAbstractListCommonPropertiestTest,
-	#superclass : #SpAbstractWidgetAdapterTestCase,
+	#superclass : #SpAbstractWidgetAdapterTest,
 	#category : #'Spec2-Backend-Tests'
 }
 
@@ -20,7 +20,7 @@ SpAbstractListCommonPropertiestTest >> testChangeListInPresenterUpdatesWidget [
 
 	self presenter items: #( '1' '2' '3').
 
-	backendForTest assertList: self widget displayItems: #('1' '2' '3')
+	backendForTest assertList: self adapter displayItems: #('1' '2' '3')
 ]
 
 { #category : #running }
@@ -31,17 +31,16 @@ SpAbstractListCommonPropertiestTest >> testDoubleClickActivatesRowInDoubleClickA
 	self presenter activateOnDoubleClick.
 	self presenter whenActivatedDo: [ activated := true ].
 	
-	backendForTest doubleClickFirstRowAndColumn: self widget.
+	backendForTest doubleClickFirstRowAndColumn: self adapter.
 		
 	self assert: activated
 ]
 
-{ #category : #'tests-scrolling' }
+{ #category : #'tests - scrolling' }
 SpAbstractListCommonPropertiestTest >> testFirstVisibleRowIsInitiallyFirstRow [
-
 	presenter items: (1 to: 500).
 	self openInstance.
-	self assert: presenter verticalAlignment firstVisibleRowIndex equals: 1.
+	self assert: presenter verticalAlignment firstVisibleRowIndex equals: 1
 ]
 
 { #category : #tests }
@@ -54,57 +53,6 @@ SpAbstractListCommonPropertiestTest >> testRightClickShowsMenu [
 	self assert: menu shown
 ]
 
-{ #category : #'tests-scrolling' }
-SpAbstractListCommonPropertiestTest >> testScrollDownToNonExistingIndexScrollsBottomToLastIndex [
-
-	presenter items: (1 to: 500).
-	presenter verticalAlignment desiredVisibleRow: 600.
-
-	"Force opening the spec instance here.
-	We want to test that once open we can change the state"
-	self openInstance.
-
-	self assert: presenter verticalAlignment lastVisibleRowIndex equals: 500
-]
-
-{ #category : #'tests-scrolling' }
-SpAbstractListCommonPropertiestTest >> testScrollDownToPosteriorIndexScrollsBottomToIndex [
-
-	presenter items: (1 to: 500).
-	presenter verticalAlignment desiredVisibleRow: 100.
-
-	"Force opening the spec instance here.
-	We want to test that once open we can change the state"
-	self openInstance.
-	
-	"Some backends will show entirely row 100 and a part of the next row, so row 101 is also a valid answer"
-	self assert: (presenter verticalAlignment lastVisibleRowIndex between: 100 and: 101).
-]
-
-{ #category : #'tests-scrolling' }
-SpAbstractListCommonPropertiestTest >> testScrollUpToNegativeIndexScrollsTopToFirstIndex [
-
-	presenter items: (1 to: 500).
-	presenter verticalAlignment desiredVisibleRow: 100.
-	self openInstance.
-
-	presenter verticalAlignment desiredVisibleRow: -1.
-	
-	self assert: presenter verticalAlignment firstVisibleRowIndex equals: 1.
-]
-
-{ #category : #'tests-scrolling' }
-SpAbstractListCommonPropertiestTest >> testScrollUpToPreviousIndexScrollsTopToIndex [
-
-	presenter items: (1 to: 500).
-	presenter verticalAlignment desiredVisibleRow: 100.
-	self openInstance.
-
-	presenter verticalAlignment desiredVisibleRow: 50.
-	
-	self assert: presenter verticalAlignment firstVisibleRowIndex equals: 50.
-]
-
 { #category : #running }
 SpAbstractListCommonPropertiestTest >> testSingleClickActivatesRowInSingleClickActivationMode [
 
@@ -114,7 +62,17 @@ SpAbstractListCommonPropertiestTest >> testSingleClickActivatesRowInSingleClickA
 		activateOnSingleClick;
 		whenActivatedDo: [ activated := true ].
 
-	backendForTest clickFirstRowAndColumn: self widget.
+	backendForTest clickFirstRowAndColumn: self adapter.
 	
 	self assert: activated.
+]
+
+{ #category : #tests }
+SpAbstractListCommonPropertiestTest >> testTypePerformsSearch [
+
+	self presenter selection selectIndex: 1. "10"
+	self adapter type: '2'. 
+	self 
+		assert: self presenter selection selectedIndex 
+		equals: 2 "20"
 ]

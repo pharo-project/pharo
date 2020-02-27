@@ -8,9 +8,9 @@ CompiledMethod >> ast [
 
 { #category : #'*AST-Core' }
 CompiledMethod >> comments [
-	"Answer a string representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
+	"Answer a collection of strings representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
 
-	^ self ast comments collect: [ :comment | comment contents ]
+	^ self ast allChildren flatCollect: [:el| el comments collect: [:c| c contents]]
 ]
 
 { #category : #'*AST-Core' }
@@ -23,8 +23,8 @@ CompiledMethod >> firstComment [
 { #category : #'*AST-Core' }
 CompiledMethod >> parseTree [
 	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
-	^(RBParser 
-		parseMethod: self sourceCode 
-		onError: [ :msg :pos | 
-			^ self decompile ]) methodClass: self methodClass.
+	^self methodClass compiler 
+		source: self sourceCode;
+		failBlock: [^ self decompile ];
+		parse
 ]

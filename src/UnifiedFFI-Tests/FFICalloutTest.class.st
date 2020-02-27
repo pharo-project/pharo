@@ -14,8 +14,8 @@ Class {
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg [ 
 
-	self assert: type class equals: typeClass.
-	self assert: type pointerArity equals: ptrArity.
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType pointerArity equals: ptrArity.
 	self assert: type loader class equals: FFIMethodArgument.
 	self assert: type loader argName equals: arg 
 ]
@@ -23,29 +23,68 @@ FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass arity: ptrArity value: anObject [ 
 
-	self assert: type class equals: typeClass.
-	self assert: type pointerArity equals: ptrArity.
-	self assert: type loader class equals: FFIValueArgument.
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType pointerArity equals: ptrArity.
+	self assert: type loader class equals: FFIConst.
 	self assert: type loader value equals: anObject 
 ]
 
 { #category : #private }
 FFICalloutTest >> checkType: type class: typeClass value: const [
-	self assert: type class equals: typeClass.
+	self assert: type resolvedType class equals: typeClass.
 	self assert: type value equals: const
 ]
 
 { #category : #private }
 FFICalloutTest >> checkTypeSelf: type class: typeClass arity: ptrArity [ 
 
-	self assert: type class equals: typeClass.
-	self assert: type pointerArity equals: ptrArity.
+	self assert: type resolvedType class equals: typeClass.
+	self assert: type resolvedType pointerArity equals: ptrArity.
 	self assert: type loader class equals: FFISelfArgument.
+]
+
+{ #category : #private }
+FFICalloutTest >> checkUntypedClassVariable: aFFIConstantArgument class: aTypeClass value: aValue [ 
+	
+	self assert: aFFIConstantArgument resolvedType class equals: aTypeClass.
+	self assert: aFFIConstantArgument resolvedType value equals: aValue.
+]
+
+{ #category : #private }
+FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeClass arity: anInteger value: aValue [
+
+	self assert: aFFIConstantArgument resolvedType class equals: aTypeClass.
+	self assert: aFFIConstantArgument resolvedType pointerArity equals: anInteger.
+	self assert: aFFIConstantArgument loader value equals: aValue.
+]
+
+{ #category : #private }
+FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeClass value: aValue [
+	
+	self checkUntypedConstantType: aFFIConstantArgument class: aTypeClass arity: 0 value: aValue
 ]
 
 { #category : #binding }
 FFICalloutTest >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
+]
+
+{ #category : #tests }
+FFICalloutTest >> testBeNonStrictTurnsOptionOff [
+	|generator|
+	generator := FFICallout new.
+	
+	generator beNonStrict.
+	self deny: generator isStrict
+]
+
+{ #category : #tests }
+FFICalloutTest >> testBeStrictTurnsOptionOn [
+	|generator|
+	generator := FFICallout new.
+	
+	generator beStrict.
+	self assert: generator isStrict
 ]
 
 { #category : #tests }
@@ -62,10 +101,10 @@ FFICalloutTest >> testBuildingFnSpec [
 		methodArgs: #(arg1 arg2 arg3 arg11 arg12);
 		namedFnSpec: #( long* fn (int self ,  String arg1, void**arg2, TYPEVAR arg1, char arg3, 0, (ulong)42, nil, NULL, true, false , CLASSVAR, ExternalAddress arg11, ByteArray arg12 ) ).
 
-
+	generator fnSpec resolveUsing: generator.
 	type := generator fnSpec returnType.
-	self assert: type class equals: FFILong.	
-	self assert: type pointerArity equals: 1.
+	self assert: type resolvedType class equals: FFILong.	
+	self assert: type resolvedType pointerArity equals: 1.
 	
 	self assert: (generator fnSpec arguments size) equals: 14.
 	s := generator fnSpec arguments readStream.
@@ -75,13 +114,13 @@ FFICalloutTest >> testBuildingFnSpec [
 "void**arg2"		self checkType: s next class: FFIVoid arity: 2 argument: 'arg2'.
 "TYPEVAR arg1"	self checkType: s next class: FFILong arity: 0 argument: 'arg1'.
 "char arg3"		self checkType: s next class: FFICharacterType arity: 0 argument: 'arg3'.
-"0"					self checkType: s next class: FFIConst value: 0.
-"(ulong)42"		self checkType: s next class: FFIConst value: 42.
-"nil"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
-"NULL"				self checkType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
-"true"				self checkType: s next class: FFIConst value: 1.
-"false"			self checkType: s next class: FFIConst value: 0.
-"CLASSVAR"		self checkType: s next class: FFIConst value: 100.
+"0"					self checkType: s next class: FFIUInt32 value: 0.
+"(ulong)42"		self checkType: s next class: FFIULong value: 42.
+"nil"				self checkUntypedConstantType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
+"NULL"				self checkUntypedConstantType: s next class: FFIVoid arity: 1 value: ExternalAddress null.
+"true"				self checkUntypedConstantType: s next class: FFIBool value: 1.
+"false"			self checkUntypedConstantType: s next class: FFIBool value: 0.
+"CLASSVAR"		self checkUntypedClassVariable: s next class: FFIConst value: 100.
 "ExternalAddress"	self checkType: s next class: FFIOop arity: 0 argument: 'arg11'.
 "ByteArray" 			self checkType: s next class: FFIOop arity: 0 argument: 'arg12'.
 ]
@@ -106,4 +145,22 @@ FFICalloutTest >> testParseOptions [
 	self deny: (generator optionAt: #optEncoding)
 	
 	
+]
+
+{ #category : #tests }
+FFICalloutTest >> testStrictModeOptionOff [
+	|generator|
+	generator := FFICallout new.
+	
+	generator parseOptions: #(- optStrict ).
+	self deny: generator isStrict
+]
+
+{ #category : #tests }
+FFICalloutTest >> testStrictModeOptionOn [
+	|generator|
+	generator := FFICallout new.
+	
+	generator parseOptions: #(+ optStrict ).
+	self assert: generator isStrict
 ]

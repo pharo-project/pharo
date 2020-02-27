@@ -1,3 +1,6 @@
+"
+I implement multiple selection mode (my users can select multiple element of list or table)
+"
 Class {
 	#name : #SpMultipleSelectionMode,
 	#superclass : #SpAbstractSelectionMode,
@@ -108,6 +111,6 @@ SpMultipleSelectionMode >> unselectIndex: anIndex [
 ]
 
 { #category : #events }
-SpMultipleSelectionMode >> whenChangedDo: aBlockClosure [
-	self property: #selectedIndexes whenChangedDo: [ aBlockClosure cull: self ]
+SpMultipleSelectionMode >> whenChangedDo: aBlock [
+	self property: #selectedIndexes whenChangedDo: [ aBlock cull: self ]
 ]

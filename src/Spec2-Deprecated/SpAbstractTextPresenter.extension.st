@@ -1,8 +1,7 @@
 Extension { #name : #SpAbstractTextPresenter }
 
 { #category : #'*Spec2-Deprecated' }
-SpAbstractTextPresenter >> aboutToStyle: aBoolean [	
-	"<api: #boolean getter: #isAboutToStyle registration: #whenAboutToStyleChanged:>"
+SpAbstractTextPresenter >> aboutToStyle: aBoolean [
 	"Set if the text zone must be styled"
 	
 	self 
@@ -14,7 +13,6 @@ SpAbstractTextPresenter >> aboutToStyle: aBoolean [
 { #category : #'*Spec2-Deprecated' }
 SpAbstractTextPresenter >> aboutToStyleBlock [
 	"Return the block used to know if the text must be styled"	
-	"<api:#inspect>"
 
 	self 
 		deprecated: 'This has been moved to specific presenters' 
@@ -25,7 +23,6 @@ SpAbstractTextPresenter >> aboutToStyleBlock [
 
 { #category : #'*Spec2-Deprecated' }
 SpAbstractTextPresenter >> aboutToStyleBlock: aBlockReturningABoolean [
-	"<api: #block getter: #aboutToStyleBlock registration: #whenAboutToStyleBlockChanged:>"
 	"Set the block used to know if the text must be styled.
 	The block must return a boolean"
 

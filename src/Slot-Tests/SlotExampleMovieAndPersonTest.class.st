@@ -21,7 +21,7 @@ SlotExampleMovieAndPersonTest >> testAddActors [
 	self assert: p2 actedInMovies anyOne equals: m1.
 	
 	m2 addActor: p2.
-	self assert: p2 actedInMovies size equals: 2.
+	self assert: p2 actedInMovies size equals: 2
 
 ]
 
@@ -81,7 +81,7 @@ SlotExampleMovieAndPersonTest >> testAddMovieDirectorTwice [
 	person directedMovies add: movie; add: movie.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.
-	self assert: person directedMovies anyOne equals: movie.
+	self assert: person directedMovies anyOne equals: movie
 ]
 
 { #category : #tests }
@@ -162,7 +162,7 @@ SlotExampleMovieAndPersonTest >> testSetMovieDirector [
 	movie director: person.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.
-	self assert: person directedMovies anyOne equals: movie.
+	self assert: person directedMovies anyOne equals: movie
 ]
 
 { #category : #tests }
@@ -187,5 +187,5 @@ SlotExampleMovieAndPersonTest >> testSetMovieDirectorTwice [
 	movie director: person; director: person.
 	self assert: movie director equals: person.
 	self assert: person directedMovies size equals: 1.
-	self assert: person directedMovies anyOne equals: movie.
+	self assert: person directedMovies anyOne equals: movie
 ]

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'driver',
 		'osWindow',
-		'display'
+		'display',
+		'windowCloseAction'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -130,12 +131,12 @@ OSWorldRenderer >> doActivate [
 
 	| attributes initialExtent |
 	
-	initialExtent := world worldState realWindowExtent ifNil: [1500@1000].
+	initialExtent := world worldState realWindowExtent ifNil: [976@665].
 
 	attributes := OSWindowAttributes new.
 	attributes
 		extent: initialExtent;
-		title: Smalltalk shortImageName;
+		title: Smalltalk image imageFile fullName;
 		windowCentered:true;
 		icon: (self iconNamed: #pharoBig).
 
@@ -167,10 +168,21 @@ OSWorldRenderer >> fullscreenMode: aValue [
 	self checkForNewScreenSize.
 ]
 
+{ #category : #events }
+OSWorldRenderer >> handleOSWindowCloseEvent: event [
+	windowCloseAction value
+]
+
 { #category : #accessing }
 OSWorldRenderer >> icon: aForm [ 
 
 	osWindow icon: aForm
+]
+
+{ #category : #activation }
+OSWorldRenderer >> initialize [
+	super initialize.
+	windowCloseAction := [ self currentWorld defer: [WorldState quitSession] ].
 ]
 
 { #category : #initialization }
@@ -188,6 +200,16 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 	driver := OSWindowDriver current.
 	
 	^ driver
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> windowCloseAction [
+	^ windowCloseAction
+]
+
+{ #category : #accessing }
+OSWorldRenderer >> windowCloseAction: anObject [
+	windowCloseAction := anObject
 ]
 
 { #category : #initialization }

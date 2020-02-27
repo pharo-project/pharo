@@ -3,7 +3,7 @@ CompilerTest is a holder for SUnit test of Compiler
 "
 Class {
 	#name : #OCCompilerTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'errorMessage',
 		'errorLocation',
@@ -59,14 +59,14 @@ OCCompilerTest >> runCase [
 { #category : #running }
 OCCompilerTest >> setUp [
 	super setUp.
-	Smalltalk globals at: #OCCompilerTestTestVar put: MockForCompilation.
+	testingEnvironment at: #OCCompilerTestTestVar put: MockForCompilation.
 	
 	
 ]
 
 { #category : #running }
 OCCompilerTest >> tearDown [
-	Smalltalk globals removeKey: #OCCompilerTestTestVar.
+	testingEnvironment removeKey: #OCCompilerTestTestVar.
 	super tearDown
 ]
 
@@ -85,9 +85,9 @@ OCCompilerTest >> testAssignmentOfClassNameBinding [
 	text := 'temp | | MockForCompilation := nil'.
 
 	self
-		compileWithFailBlock: [ self assert: errorMessage = 'Cannot store into ->'.
-			self assert: errorLocation = 10.
-			self assert: errorSource contents = 'temp | | MockForCompilation := nil'.
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Cannot store into ->'.
+			self assert: errorLocation equals: 10.
+			self assert: errorSource contents equals: 'temp | | MockForCompilation := nil'.
 			^ nil ].
 	self fail
 ]
@@ -112,16 +112,14 @@ OCCompilerTest >> testInBlockArgumentInstanceVariableShadowing [
 	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp [:var1 | ]'.
-	
-	self compile.
-	
-	self flag: 'display menu instead of going into failblock'.
-	
-	self assert: (errorMessage = 'Name already defined ->').
-				self assert: (errorLocation = 8).
-				self assert: (errorSource contents = 'temp [:var1 | ]').
-				
 
+	self compile.
+
+	self flag: 'display menu instead of going into failblock'.
+
+	self assert: errorMessage equals: 'Name already defined ->'.
+	self assert: errorLocation equals: 8.
+	self assert: errorSource contents equals: 'temp [:var1 | ]'
 ]
 
 { #category : #'test shadowing' }
@@ -130,13 +128,12 @@ OCCompilerTest >> testInBlockTempArgumentShadowing [
 	self initializeErrorMessage.
 	text := 'temp [:temp | |temp|]'.
 
-	self compileWithFailBlock: [
-				self assert: (errorMessage = 'Name already defined ->').
-				self assert: (errorLocation = 16).
-				self assert: (errorSource contents = 'temp [:temp | |temp|]').
-						^nil].
-	self fail.
-
+	self
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
+			self assert: errorLocation equals: 16.
+			self assert: errorSource contents equals: 'temp [:temp | |temp|]'.
+			^ nil ].
+	self fail
 ]
 
 { #category : #'test shadowing' }
@@ -145,47 +142,40 @@ OCCompilerTest >> testInBlockTempInstanceVariableShadowing [
 	self initializeErrorMessage.
 	text := 'temp [:temp | |var1|]'.
 
-	self compileWithFailBlock: [
-				self assert: (errorMessage = 'Name already defined ->').
-				self assert: (errorLocation = 16).
-				self assert: (errorSource contents = 'temp [:temp | |var1|]').
-				^nil].
-	self fail.
+	self
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
+			self assert: errorLocation equals: 16.
+			self assert: errorSource contents equals: 'temp [:temp | |var1|]'.
+			^ nil ].
+	self fail
 ]
 
 { #category : #'test shadowing' }
 OCCompilerTest >> testInBlockTempShadowing [
-
 	interactive := true.
 	self initializeErrorMessage.
 	text := 'temp |var2| [:temp| |var2|]'.
 
-	self compileWithFailBlock: [
-				self assert: (errorMessage = 'Name already defined ->').
-				self assert: (errorLocation = 22).
-				self assert: (errorSource contents = 'temp |var2| [:temp| |var2|]').
-				^nil].
-	self fail.
-
-
-
+	self
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
+			self assert: errorLocation equals: 22.
+			self assert: errorSource contents equals: 'temp |var2| [:temp| |var2|]'.
+			^ nil ].
+	self fail
 ]
 
 { #category : #'test shadowing' }
 OCCompilerTest >> testInstanceVariableShadowing [
-
 	interactive := true.
 	self initializeErrorMessage.
 	text := 'var1 |var1|'.
 
-	self compileWithFailBlock: [
-					self assert: (errorMessage = 'Name already defined ->').
-					self assert: (errorLocation = 7).
-					self assert: (errorSource contents = 'var1 |var1|').
-					^nil].
-	self fail.
-
-
+	self
+		compileWithFailBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
+			self assert: errorLocation equals: 7.
+			self assert: errorSource contents equals: 'var1 |var1|'.
+			^ nil ].
+	self fail
 ]
 
 { #category : #literals }
@@ -395,71 +385,67 @@ OCCompilerTest >> testNotInteractiveSiblingBlocksTempShadowing [
 
 { #category : #'test shadowing' }
 OCCompilerTest >> testReservedNameAsBlockArgumentShadowing [
-	
 	interactive := true.
-	#( 'self' 'super' 'thisContext' 'true' 'false' 'nil' ) do: [ :each |
-		self initializeErrorMessage.
-		[ :exit | 
-			OpalCompiler new 
+	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
+		do: [ :each | 
+			self initializeErrorMessage.
+			[ :exit | 
+			OpalCompiler new
 				source: 'temp ^ [ :' , each , ' | ^ ' , each , ' ]';
 				class: MockForCompilation;
 				requestor: self;
 				failBlock: [ exit value ];
 				compile.
 			self fail ] valueWithExit.
-		self assert: ((errorMessage = 'Variable name expected ->' )or: [ errorMessage =  'Name already defined ->' ]).
-		self assert: errorLocation = 11 ]
+			self assert: (errorMessage = 'Variable name expected ->' or: [ errorMessage = 'Name already defined ->' ]).
+			self assert: errorLocation equals: 11 ]
 ]
 
 { #category : #'test shadowing' }
 OCCompilerTest >> testReservedNameAsMethodArgumentShadowing [
-
 	interactive := true.
-	#( 'self' 'super' 'thisContext' 'true' 'false' 'nil' ) do: [ :each |
-		self initializeErrorMessage.
-		[ :exit | 
-			OpalCompiler new 
+	#('self' 'super' 'thisContext' 'true' 'false' 'nil')
+		do: [ :each | 
+			self initializeErrorMessage.
+			[ :exit | 
+			OpalCompiler new
 				source: 'temp: ' , each , ' ^ ' , each;
-				class:  MockForCompilation;
+				class: MockForCompilation;
 				requestor: self;
 				failBlock: [ exit value ];
 				compile.
 			self fail ] valueWithExit.
-		self assert: ((errorMessage = 'Variable name expected ->' )or: [ errorMessage =  'Name already defined ->' ]).
-		self assert: errorLocation = 7 ]
+			self assert: (errorMessage = 'Variable name expected ->' or: [ errorMessage = 'Name already defined ->' ]).
+			self assert: errorLocation equals: 7 ]
 ]
 
 { #category : #literals }
 OCCompilerTest >> testScaledDecimalLiterals [
 	"Equal ScaledDecimal with different scales should use different slots
 	This is related to http://bugs.squeak.org/view.php?id=6797"
-	
+
 	"This correctly works when evaluated separately"
-	self deny: (Smalltalk compiler evaluate: '0.5s1') scale = (Smalltalk compiler evaluate: '0.5s2') scale.
-	
+
+	self deny: (Smalltalk compiler evaluate: '0.5s1') scale equals: (Smalltalk compiler evaluate: '0.5s2') scale.
+
 	"But not when evaluated together if literal reduction is too agressive"
-	self deny: (Smalltalk compiler evaluate: '0.5s1 scale =  0.5s2 scale').
+	self deny: (Smalltalk compiler evaluate: '0.5s1 scale =  0.5s2 scale')
 ]
 
 { #category : #'test shadowing' }
 OCCompilerTest >> testSiblingBlocksInstanceVariableShadowing [
-
 	interactive := true.
 	self initializeErrorMessage.
-	
+
 	OpalCompiler new
 		source: 'temp [:temp | ].[:temp | |var1|]';
 		class: MockForCompilation;
 		requestor: self;
-		failBlock: [
-				self assert: (errorMessage = 'Name already defined ->').
-				self assert: (errorLocation = 27).
-				^nil];
+		failBlock: [ self assert: errorMessage equals: 'Name already defined ->'.
+			self assert: errorLocation equals: 27.
+			^ nil ];
 		compile.
-	self fail.
-
-
-	
+	self fail
 ]
 
 { #category : #'test shadowing' }

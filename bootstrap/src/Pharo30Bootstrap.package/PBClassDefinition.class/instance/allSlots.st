@@ -1,4 +1,0 @@
-accessing
-allSlots
-	
-	^ classDefinition allSlots

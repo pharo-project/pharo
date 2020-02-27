@@ -1,6 +1,14 @@
 Extension { #name : #Morph }
 
 { #category : #'*Spec2-Deprecated' }
+Morph >> asSpAdapter [
+	self deprecated: 'Instead of #asSpAdapter you should use a SpMorphPresenter'.
+	^ (SpBindings value 
+		adapterClass: #GenericAdapter)
+		morph: self
+]
+
+{ #category : #'*Spec2-Deprecated' }
 Morph >> spSetModal: aSystemWindow [
 	|area mySysWin keyboardFocus|
 

@@ -20,6 +20,11 @@ TestingComposablePresenter class >> defaultSpec [
 ]
 
 { #category : #specs }
+TestingComposablePresenter class >> testingSpec [
+	^ {#RubPluggableTextMorph. #model:. #model. }
+]
+
+{ #category : #specs }
 TestingComposablePresenter class >> title [
 
 	^ 'You should not see me !'

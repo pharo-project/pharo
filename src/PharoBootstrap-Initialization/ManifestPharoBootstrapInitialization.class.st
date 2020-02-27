@@ -14,7 +14,7 @@ ManifestPharoBootstrapInitialization class >> ignoredDependencies [
 
 { #category : #'meta-data - dependency analyser' }
 ManifestPharoBootstrapInitialization class >> manuallyResolvedDependencies [
-	^ #(#'System-Finalization' #'SUnit-Core')
+	^ #(#'System-Finalization')
 ]
 
 { #category : #'meta-data - dependency analyser' }

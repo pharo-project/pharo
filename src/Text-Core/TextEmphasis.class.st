@@ -87,7 +87,7 @@ TextEmphasis >> dominates: other [
 		and: [emphasisCode = other emphasisCode]
 ]
 
-{ #category : #styling }
+{ #category : #accessing }
 TextEmphasis >> emphasisCode [
 	^ emphasisCode
 ]
@@ -128,19 +128,9 @@ TextEmphasis >> turnOff [
 	setMode := false
 ]
 
-{ #category : #styling }
+{ #category : #accessing }
 TextEmphasis >> value [
 	"a synonym for empahasisCode, to make me polymorphic with Numbers"
 	
 	^ emphasisCode
-]
-
-{ #category : #styling }
-TextEmphasis >> writeScanOn: strm [
-
-	emphasisCode = 1 ifTrue: [strm nextPut: $b].
-	emphasisCode = 2 ifTrue: [strm nextPut: $i].
-	emphasisCode = 0 ifTrue: [strm nextPut: $n].
-	emphasisCode = 16 ifTrue: [strm nextPut: $=].
-	emphasisCode = 4 ifTrue: [strm nextPut: $u].
 ]

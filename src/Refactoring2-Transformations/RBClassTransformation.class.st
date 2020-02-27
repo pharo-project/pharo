@@ -6,7 +6,8 @@ Class {
 	#superclass : #RBTransformation,
 	#instVars : [
 		'className',
-		'class'
+		'class',
+		'environment'
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }
@@ -16,7 +17,7 @@ RBClassTransformation >> className [
 
 	^ className ifNil: [ 
 		UIManager default
-			chooseOrRequestFrom: (Smalltalk globals allClasses collect: #name)
+			chooseOrRequestFrom: (self environment allClasses collect: #name)
 			title: 'Class name was not defined to perform ', self class baseClass name,
 					 '. Please select a class to resume this transformation.' ]
 ]
@@ -33,6 +34,22 @@ RBClassTransformation >> definingClass [
 	^ class ifNil: [ 
 		class := self model 
 					classObjectFor: self className ]
+]
+
+{ #category : #accessing }
+RBClassTransformation >> environment [
+	^ environment
+]
+
+{ #category : #accessing }
+RBClassTransformation >> environment: anObject [
+	environment := anObject
+]
+
+{ #category : #initialization }
+RBClassTransformation >> initialize [ 
+	super initialize.
+	environment := Smalltalk globals
 ]
 
 { #category : #preconditions }

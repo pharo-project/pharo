@@ -95,7 +95,7 @@ SlotErrorsTest >> testDangerousClassesConditions [
 	specialObjectsArrayItem := (Smalltalk specialObjectsArray select: [ :x | x isClass ]) anyOne name.
 
 	self assert: (DangerousClassNotifier shouldNotBeRedefined: #ProtoObject).
-	self assert: (DangerousClassNotifier shouldNotBeRedefined: specialObjectsArrayItem). 
+	self assert: (DangerousClassNotifier shouldNotBeRedefined: specialObjectsArrayItem)
 ]
 
 { #category : #tests }
@@ -127,8 +127,7 @@ SlotErrorsTest >> testDangerousClassesEnabling [
 	savedExistingSystemSetting 
 		ifTrue: [ DangerousClassNotifier enable ]
 		ifFalse: [ DangerousClassNotifier disable ].
-	self assert: DangerousClassNotifier enabled equals: savedExistingSystemSetting.
-
+	self assert: DangerousClassNotifier enabled equals: savedExistingSystemSetting
 ]
 
 { #category : #tests }

@@ -3,7 +3,7 @@ Unit test for RBBrowserEnvironment
 "
 Class {
 	#name : #RBBrowserEnvironmentTest,
-	#superclass : #TestCase,
+	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
 		'universalEnvironment'
 	],
@@ -43,9 +43,9 @@ RBBrowserEnvironmentTest >> classNamesFor: anEnvironment [
 		addAll: anEnvironment not classNames;
 		yourself.
 	allClassNames := universalEnvironment classNames asSortedCollection.
-	self assert: classNames asSortedCollection = allClassNames.
+	self assert: classNames asSortedCollection equals: allClassNames.
 	self assertEmpty: (anEnvironment & anEnvironment not) classNames.
-	self assert: (anEnvironment | anEnvironment not) classNames asSortedCollection = allClassNames
+	self assert: (anEnvironment | anEnvironment not) classNames asSortedCollection equals: allClassNames
 ]
 
 { #category : #mockup }
@@ -68,11 +68,11 @@ RBBrowserEnvironmentTest >> classesFor: aBrowserEnvironment [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> copyFor: aBrowserEnvironment [ 
+RBBrowserEnvironmentTest >> copyFor: aBrowserEnvironment [
 	| newEnvironment |
 	newEnvironment := aBrowserEnvironment copy.
-	self assert: newEnvironment numberSelectors = aBrowserEnvironment numberSelectors.
-	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors = 0
+	self assert: newEnvironment numberSelectors equals: aBrowserEnvironment numberSelectors.
+	self assert: (newEnvironment not & aBrowserEnvironment) numberSelectors equals: 0
 ]
 
 { #category : #private }
@@ -80,7 +80,7 @@ RBBrowserEnvironmentTest >> keysFor: aBrowserEnvironment [
 	| allKeys |
 	allKeys := IdentitySet withAll: aBrowserEnvironment keys.
 	allKeys addAll: aBrowserEnvironment not keys.
-	allKeys removeAll: Smalltalk globals keys.
+	allKeys removeAll: testingEnvironment keys.
 	self assertEmpty: allKeys
 ]
 
@@ -97,10 +97,10 @@ RBBrowserEnvironmentTest >> numberSelectorsFor: aBrowserEnvironment [
 	| numberSelectors numberSelectorsNot |
 	numberSelectors := aBrowserEnvironment numberSelectors.
 	numberSelectorsNot := aBrowserEnvironment not numberSelectors.
-	self assert: numberSelectors + numberSelectorsNot = universalEnvironment numberSelectors.
-	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors = 0.
-	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors = numberSelectors.
-	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors = numberSelectors
+	self assert: numberSelectors + numberSelectorsNot equals: universalEnvironment numberSelectors.
+	self assert: (aBrowserEnvironment & aBrowserEnvironment not) numberSelectors equals: 0.
+	self assert: (universalEnvironment & aBrowserEnvironment) numberSelectors equals: numberSelectors.
+	self assert: (aBrowserEnvironment & universalEnvironment) numberSelectors equals: numberSelectors
 ]
 
 { #category : #private }
@@ -268,7 +268,7 @@ RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	wrapper := RBBrowserEnvironmentWrapper onEnvironment: printString.
 	self assert: wrapper numberSelectors equals: printString numberSelectors.
 	self assert: wrapper numberClasses equals: printString numberClasses.
-	self assert: wrapper environment == printString
+	self assert: wrapper environment identicalTo: printString
 ]
 
 { #category : #testing }
@@ -333,13 +333,11 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 	orEnvironment := env1 | env1 not.
 	self assert: (env2 | env1) packages size equals: 1.
 	self universalTestFor: orEnvironment.
-	self assert: orEnvironment numberSelectors 
-				equals: universalEnvironment numberSelectors.
-	self assert: orEnvironment classNames asSortedCollection 
-				equals: universalEnvironment classNames asSortedCollection.
-	self assert: (orEnvironment protocolsFor: Object) 
-				= ((universalEnvironment protocolsFor: Object) reject: [:each| (Object allSelectorsInProtocol: each) isEmpty ])
-
+	self assert: orEnvironment numberSelectors equals: universalEnvironment numberSelectors.
+	self assert: orEnvironment classNames asSortedCollection equals: universalEnvironment classNames asSortedCollection.
+	self
+		assert: (orEnvironment protocolsFor: Object)
+		equals: ((universalEnvironment protocolsFor: Object) reject: [ :each | (Object allSelectorsInProtocol: each) isEmpty ])
 ]
 
 { #category : #'testing-environments' }
@@ -394,16 +392,13 @@ RBBrowserEnvironmentTest >> testRemoveSelectorByAndAndNot [
 { #category : #testing }
 RBBrowserEnvironmentTest >> testSelectMethods [
 	| environment |
-	environment := RBBrowserEnvironment new selectMethods: [:each | false].
+	environment := RBBrowserEnvironment new selectMethods: [ :each | false ].
 	self assert: environment numberSelectors equals: 0.
 	self assert: environment numberClasses equals: 0.
-	environment := RBBrowserEnvironment new selectMethods: [:each | true].
-	self assert: environment numberSelectors 
-				equals: RBBrowserEnvironment new numberSelectors.
-	environment := RBBrowserEnvironment new 
-				selectMethods: [:each | each refersToLiteral: #environment].
-	self assert: environment numberSelectors 
-				= (RBBrowserEnvironment new referencesTo: #environment) numberSelectors
+	environment := RBBrowserEnvironment new selectMethods: [ :each | true ].
+	self assert: environment numberSelectors equals: RBBrowserEnvironment new numberSelectors.
+	environment := RBBrowserEnvironment new selectMethods: [ :each | each refersToLiteral: #environment ].
+	self assert: environment numberSelectors equals: (RBBrowserEnvironment new referencesTo: #environment) numberSelectors
 ]
 
 { #category : #'testing-environments' }
@@ -518,7 +513,7 @@ RBBrowserEnvironmentTest >> uniqueClassesIn: aBrowserEnvironment [
 ]
 
 { #category : #private }
-RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [ 
+RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self labelFor: aBrowserEnvironment.
 	self uniqueClassesIn: aBrowserEnvironment.
 	self numberSelectorsFor: aBrowserEnvironment.
@@ -529,5 +524,5 @@ RBBrowserEnvironmentTest >> universalTestFor: aBrowserEnvironment [
 	self protocolsFor: aBrowserEnvironment.
 	self classesFor: aBrowserEnvironment.
 	self keysFor: aBrowserEnvironment.
-	self assert: aBrowserEnvironment problemCount = 0 = aBrowserEnvironment isEmpty
+	self assert: aBrowserEnvironment problemCount = 0 equals: aBrowserEnvironment isEmpty
 ]

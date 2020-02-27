@@ -66,6 +66,13 @@ RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #accessing }
+RBMessageNode >> argumentPartStrings [
+	"Return a collection of string representing the code of the argument."
+	^ arguments collect: [ :each | each formattedCode asString 
+			"strangely enough literal formatted code is not a string" ]  
+]
+
+{ #category : #accessing }
 RBMessageNode >> arguments [
 	^arguments ifNil: [#()] ifNotNil: [arguments]
 ]
@@ -402,6 +409,26 @@ RBMessageNode >> selector: aSelector [
 ]
 
 { #category : #accessing }
+RBMessageNode >> selectorAndArgumentNames [
+	"Returns the selector and argument names portion of a method as a string"
+
+	^ self arguments
+		ifEmpty: [ self keywords first ]
+		ifNotEmpty: [
+			(String streamContents: [ :st | 
+				self selectorParts
+			 		with: self arguments 
+					do: [:sel :arg | 
+							st 
+								<< sel asString;
+								<< ' ';
+								<< arg formattedCode;
+								<< ' ']]) allButLast ]
+								
+					
+]
+
+{ #category : #accessing }
 RBMessageNode >> selectorInterval [
 	| positions |
 	positions := self keywordsIntervals. 
@@ -410,7 +437,9 @@ RBMessageNode >> selectorInterval [
 
 { #category : #accessing }
 RBMessageNode >> selectorParts [
-	^ self keywords collect: #asSymbol.
+	"Returns a collection containing all the selector composing a message"
+	
+	^ self keywords collect: [ :each | each asSymbol]
 ]
 
 { #category : #accessing }

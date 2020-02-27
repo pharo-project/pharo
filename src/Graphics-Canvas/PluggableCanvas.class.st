@@ -4,26 +4,12 @@ An abstract canvas which modifies the behavior of an underlying canvas in some w
 Class {
 	#name : #PluggableCanvas,
 	#superclass : #Canvas,
-	#category : #'Graphics-Canvas'
+	#category : #'Graphics-Canvas-Canvases'
 }
 
 { #category : #private }
 PluggableCanvas >> apply: aBlock [
 	"evaluate aBlock with a canvas to do a drawing command on.  See implementors for examples"
-]
-
-{ #category : #'canvas methods' }
-PluggableCanvas >> balloonFillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
-
-	self apply: [ :c | 
-		c balloonFillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc
-	]
-]
-
-{ #category : #'canvas methods' }
-PluggableCanvas >> balloonFillRectangle: aRectangle fillStyle: aFillStyle [
-
-	self apply: [ :c | c balloonFillRectangle: aRectangle fillStyle: aFillStyle ]
 ]
 
 { #category : #'drawing-support' }
@@ -87,7 +73,12 @@ PluggableCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw bo
 	(aFillStyle isSolidFill) ifTrue:[
 		^self fillOval: aRectangle color: aFillStyle asColor borderWidth: bw borderColor: bc].
 	"Use a BalloonCanvas instead"
-	self balloonFillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc
+	
+	self apply: [ :c | 
+		c drawOval: (aRectangle insetBy: bw // 2)
+			color: aFillStyle 
+			borderWidth: bw
+			borderColor: bc ]
 ]
 
 { #category : #'drawing-rectangles' }
@@ -110,9 +101,13 @@ PluggableCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 				"Can use an InfiniteForm"
 				^self fillRectangle: aRectangle color: (InfiniteForm with: pattern)].
 	].
-	"Use a BalloonCanvas instead"
-	self balloonFillRectangle: aRectangle fillStyle: aFillStyle.
 
+	self apply: [ :c | 
+		c drawRectangle: aRectangle
+			color: aFillStyle
+			borderWidth: 0
+			borderColor: nil ]
+	
 ]
 
 { #category : #initialization }

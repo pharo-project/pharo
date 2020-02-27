@@ -20,6 +20,18 @@ LabelledTextInput class >> defaultSpec [
 	^ super labelLeft
 ]
 
+{ #category : #example }
+LabelledTextInput class >> example [
+	<sampleInstance>
+	| example |
+	example := self abstractExample.
+	example input ghostText: 'Tilt'.
+example
+		extent: 400 @ 50;
+		openWithSpec.
+	^ example
+]
+
 { #category : #'api-shortcuts' }
 LabelledTextInput >> acceptBlock: aBlockWithOneArgument [
 	^ self input acceptBlock: aBlockWithOneArgument
@@ -50,6 +62,11 @@ LabelledTextInput >> entryCompletion: anEntryCompletion [
 	^self input entryCompletion: anEntryCompletion
 ]
 
+{ #category : #'api-shortcuts' }
+LabelledTextInput >> ghostText: aText [
+	^self input ghostText: aText
+]
+
 { #category : #initialization }
 LabelledTextInput >> initializeWidgets [
 	super initializeWidgets.
@@ -59,11 +76,6 @@ LabelledTextInput >> initializeWidgets [
 { #category : #accessing }
 LabelledTextInput >> input [
 	^ self subwidget
-]
-
-{ #category : #'api-shortcuts' }
-LabelledTextInput >> placeholder: aText [
-	^ self input placeholder: aText
 ]
 
 { #category : #'api-shortcuts' }

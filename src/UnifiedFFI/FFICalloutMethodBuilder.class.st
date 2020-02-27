@@ -10,8 +10,8 @@ Class {
 		'requestor',
 		'sender',
 		'signature',
-		'module',
-		'functionResolutionStrategies'
+		'functionResolutionStrategies',
+		'library'
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -26,6 +26,12 @@ FFICalloutMethodBuilder class >> calloutAPI: aCalloutAPI [
 { #category : #accessing }
 FFICalloutMethodBuilder >> addFunctionResolveStrategy: aStrategy [
 	functionResolutionStrategies add: aStrategy
+]
+
+{ #category : #private }
+FFICalloutMethodBuilder >> argumentNames [
+
+	^ self method argumentNames
 ]
 
 { #category : #building }
@@ -66,7 +72,7 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 	
 	externalFunction := ExternalLibraryFunction
 		name: functionSpec functionName
-		module: self moduleName
+		module: self libraryName
 		callType: self callType
 		returnType: functionSpec returnType externalTypeWithArity
 		argumentTypes: (functionSpec arguments collect: #externalTypeWithArity).
@@ -91,30 +97,36 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 		ifNotNil: [ properties := sender methodProperties copy.
 			properties method: nil.
 			builder properties: properties ].
+
 	builder
-		numArgs: self method argumentNames size;
-		addTemps: (self method argumentNames copyWith: #result).
+		numArgs: self argumentNames size;
+		addTemps: (self argumentNames copyWith: #result).
 
 	"Builds a method call"
 	"save ffi call as literal"
 	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"
-	functionSpec arguments do: [ :each | each emitArgument: builder context: sender ].
+	functionSpec arguments do: [ :each | each emitArgument: builder context: sender inCallout: self requestor ].
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.
 	"send call and store into result"
 	builder send: #invokeWithArguments:.
 	functionSpec arguments do: [ :each | each emitReturnArgument: builder context: sender ].
 	"convert in case return type needs it. And return reseult"
-	^ functionSpec returnType emitReturn: builder resultTempVar: #result context: sender
+	^ functionSpec returnType
+		emitReturn: builder
+		resultTempVar: #result
+		context: sender
+		inCallout: self requestor
 ]
 
 { #category : #private }
 FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	| ir |
+	functionSpec resolveUsing: self requestor.
 	ir := IRBuilder buildIR: [ :builder | 
 		self generateFFICallout: builder spec: functionSpec ].
-	^ ir generate: self method trailer
+	^ ir generate: self methodTrailer
 ]
 
 { #category : #initialization }
@@ -131,29 +143,35 @@ FFICalloutMethodBuilder >> initializeCalloutAPI: aCalloutAPI [
 ]
 
 { #category : #accessing }
+FFICalloutMethodBuilder >> library [
+	^ library
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> library: aLibrary [
+	"A module can be a string with a path to the library or a reference to a class who is child 
+	 of FFILibrary.
+	 Example: 'libc' or LibC"
+	library := aLibrary
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> libraryName [
+	"Answer the module name, who can come from a string with the path to the module or a 
+	 reference to a class who is child of FFILibrary"
+	self library ifNil: [ ^ nil ].
+	^ self library asFFILibrary libraryName
+]
+
+{ #category : #accessing }
 FFICalloutMethodBuilder >> method [
 	^ self sender method
 ]
 
 { #category : #accessing }
-FFICalloutMethodBuilder >> module [ 
-	^ module
-]
-
-{ #category : #accessing }
-FFICalloutMethodBuilder >> module: moduleNameOrLibraryClass [ 
-	"A module can be a string with a path to the library or a reference to a class who is child 
-	 of FFILibrary.
-	 Example: 'libc' or LibC"
-	module := moduleNameOrLibraryClass
-]
-
-{ #category : #accessing }
-FFICalloutMethodBuilder >> moduleName [
-	"Answer the module name, who can come from a string with the path to the module or a 
-	 reference to a class who is child of FFILibrary"
-	self module ifNil: [ ^ nil ].
-	^ self module asFFILibrary moduleName
+FFICalloutMethodBuilder >> methodTrailer [
+	
+	^ self method trailer
 ]
 
 { #category : #private }

@@ -76,7 +76,7 @@ ConfigurationOf class >> bootstrapMetacelloFrom: repositoryUrl [
   self ensureGoferVersion: 'Gofer-Core-lr.115' repositoryUrl: repositoryUrl.
   #('Metacello-Core-dkh.678' 'Metacello-MC-dkh.674')
     do: [ :pkg | self bootstrapPackage: pkg from: repositoryUrl ].
-  platformPkg := Smalltalk
+  platformPkg := self environment
     at: #'SystemVersion'
     ifPresent: [ :cl | 
       | versionString |
@@ -114,84 +114,84 @@ ConfigurationOf class >> bootstrapPackage: aString from: aPath [
 
 { #category : #private }
 ConfigurationOf class >> ensureGoferVersion: goferVersion repositoryUrl: repositoryUrl [
-    "load the p=file goferVersion if Gofer isn't loaded or an earlier version of Gofer is currently loaded"
+	"load the p=file goferVersion if Gofer isn't loaded or an earlier version of Gofer is currently loaded"
 
-    | goferVersionNumber wc pName |
-    (Smalltalk at: #'Gofer' ifAbsent: [  ]) == nil
-        ifTrue: [ ^ self bootstrapPackage: goferVersion from: repositoryUrl ].
-    goferVersionNumber := (goferVersion copyAfterLast: $.) asNumber.
-    wc := [ ((Smalltalk at: #'GoferPackageReference') name: 'Gofer') workingCopy ]
-        on: Error
-        do: [ :ex | ex return: ((Smalltalk at: #'GoferPackageReference') name: 'Gofer-Core') workingCopy ].
-    pName := wc ancestry ancestors first name.
-    (pName copyAfterLast: $.) asNumber <= goferVersionNumber
-        ifTrue: [ self bootstrapPackage: goferVersion from: repositoryUrl ]
+	| goferVersionNumber wc pName env |
+	env := self environment.
+	(env at: #Gofer ifAbsent: [  ]) == nil
+		ifTrue: [ ^ self bootstrapPackage: goferVersion from: repositoryUrl ].
+	goferVersionNumber := (goferVersion copyAfterLast: $.) asNumber.
+	wc := [ ((env at: #GoferPackageReference) name: 'Gofer') workingCopy ]
+		on: Error
+		do: [ :ex | 
+			ex
+				return: ((env at: #GoferPackageReference) name: 'Gofer-Core') workingCopy ].
+	pName := wc ancestry ancestors first name.
+	(pName copyAfterLast: $.) asNumber <= goferVersionNumber
+		ifTrue: [ self bootstrapPackage: goferVersion from: repositoryUrl ]
 ]
 
 { #category : #private }
 ConfigurationOf class >> ensureMetacello [
-    "Bootstrap Metacello and load the 'botstrap' group"
+    "Bootstrap Metacello and load the 'bootstrap' group"
 
     self ensureMetacello: #('batch')
 ]
 
 { #category : #private }
 ConfigurationOf class >> ensureMetacello: loadList [
-  "Bootstrap Metacello, retry using alternate repository, if primary repository is not accessible"
+	"Bootstrap Metacello, retry using alternate repository, if primary repository is not accessible"
 
-  Smalltalk
-    at: #'MetacelloProject'
-    ifAbsent: [ 
-      | version error gofer |
-      (Array
-        with: 'http://smalltalkhub.com/mc/dkh/metacello/main'
-        with: 'http://seaside.gemtalksystems.com/ss/metacello')
-        do: [ :repositoryUrl | 
-          "bootstrap Metacello"
-          [ 
-          self bootstrapMetacelloFrom: repositoryUrl.
-          Smalltalk
-            at: #'ConfigurationOfMetacello'
-            ifAbsent: [ 
-              self
-                retry: [ 
-                  gofer := (Smalltalk at: #'Gofer') new.
-                  gofer
-                    perform: #'url:' with: repositoryUrl;
-                    perform: #'package:' with: 'ConfigurationOfMetacello';
-                    perform: #'load' ] ].
-          version := (Smalltalk at: #'ConfigurationOfMetacello') project
-            version: #'previewBootstrap'.
-          version load: loadList.
-          self
-            retry: [ 
-              gofer := (Smalltalk at: #'Gofer') new.
-              Smalltalk
-                at: #'ConfigurationOfMetacelloPreview'
-                ifAbsent: [ 
-                  gofer
-                    perform: #'url:' with: repositoryUrl;
-                    perform: #'package:'
-                      with: 'ConfigurationOfMetacelloPreview';
-                    perform: #'load' ] ].
-          version := (Smalltalk at: #'ConfigurationOfMetacelloPreview') project
-            version: #'stable'.	"load latest from GitHub"
-          version load: loadList.
-          ^ self ]
-            on: Error
-            do: [ :ex | 
-              error := ex.
-              Transcript
-                cr;
-                show: 'failed ensureMetacello using ';
-                show: repositoryUrl printString;
-                show: ' : ';
-                show: ex description printString;
-                show: '...retrying'.	"try again"
-              ex return: nil ] ].	"shouldn't get here unless the load failed ... throw an error"
-      self
-        error:
-          'retry with alternate repository failed: ' , error description printString ]
+	| env |
+	env := self environment.
+	env
+		at: #MetacelloProject
+		ifAbsent: [ | version error gofer |
+			(Array
+				with: 'http://smalltalkhub.com/mc/dkh/metacello/main'
+				with: 'http://seaside.gemtalksystems.com/ss/metacello')
+				do: [ :repositoryUrl | 
+					"bootstrap Metacello"
+					[ self bootstrapMetacelloFrom: repositoryUrl.
+					env
+						at: #ConfigurationOfMetacello
+						ifAbsent: [ self
+								retry: [ gofer := (env at: #Gofer) new.
+									gofer
+										perform: #url: with: repositoryUrl;
+										perform: #package: with: 'ConfigurationOfMetacello';
+										perform: #load ] ].
+					version := (env at: #ConfigurationOfMetacello)
+						project version: #previewBootstrap.
+					version load: loadList.
+					self
+						retry: [ gofer := (env at: #Gofer) new.
+							env
+								at: #ConfigurationOfMetacelloPreview
+								ifAbsent: [ gofer
+										perform: #url: with: repositoryUrl;
+										perform: #package: with: 'ConfigurationOfMetacelloPreview';
+										perform: #load ] ].
+					version := (env at: #ConfigurationOfMetacelloPreview)
+						project version: #stable.	"load latest from GitHub"
+					version load: loadList.
+					^ self ]
+						on: Error
+						do: [ :ex | 
+							error := ex.
+							MetacelloNotification signal:
+									(String
+										streamContents: [ :stream | 
+											stream nextPutAll: 'failed ensureMetacello using '.
+											repositoryUrl printOn: stream.
+											stream nextPutAll: ' : '.
+											ex description printOn: stream.
+											stream nextPutAll: '...retrying' ]).	"try again"
+							ex return: nil ] ].	"shouldn't get here unless the load failed ... throw an error"
+			self
+				error:
+					'retry with alternate repository failed: '
+						, error description printString ]
 ]
 
 { #category : #accessing }
@@ -207,31 +207,19 @@ ConfigurationOf class >> retry: aBlock [
 
 { #category : #private }
 ConfigurationOf class >> retry: aBlock retryCount: retryCount [
-    | count |
-    count := 1.
-    [ true ]
-        whileTrue: [ 
-            [ 
-            aBlock value.
-            ^ self ]
-                on: Error
-                do: [ :ex | 
-                    count < retryCount
-                        ifTrue: [ 
-                            Transcript
-                                cr;
-                                show: 'RETRYING AFTER:';
-                                cr;
-                                show: ex description printString.
-                            (Delay forSeconds: 5) wait ]
-                        ifFalse: [ 
-                            Transcript
-                                cr;
-                                show: 'FAILED RETRYING:';
-                                cr;
-                                show: ex description printString.
-                            ex pass ] ].
-            count := count + 1 ]
+	| count |
+	count := 1.
+	[ true ]
+		whileTrue: [ [ aBlock value.
+			^ self ]
+				on: Error
+				do: [ :ex | 
+					count < retryCount
+						ifTrue: [ MetacelloNotification signal: 'RETRYING AFTER: ', String cr, ex description.
+							(Delay forSeconds: 5) wait ]
+						ifFalse: [ MetacelloNotification signal: 'FAILED RETRYING:', String cr, ex description.
+							ex pass ] ].
+			count := count + 1 ]
 ]
 
 { #category : #'unloading Metacello' }
@@ -260,7 +248,7 @@ ConfigurationOf class >> validate [
 
 	<apiDocumentation>
 	self ensureMetacello.
-	^ ((Smalltalk at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
+	^ ((self environment at: #MetacelloToolBox) validateConfiguration: self debug: #() recurse: false) inspect
 ]
 
 { #category : #defaults }

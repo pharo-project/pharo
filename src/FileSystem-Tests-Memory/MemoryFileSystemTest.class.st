@@ -134,6 +134,19 @@ MemoryFileSystemTest >> testDirectoryMoveToRename [
 ]
 
 { #category : #tests }
+MemoryFileSystemTest >> testEnsureCreateFileDoesNotOverwriteExistingContent [
+	| file |
+	file := filesystem root / 'a.txt'.
+	file writeStreamDo: [ :s | s nextPutAll: 'ok' ].
+	self assert: file contents equals: 'ok'.
+	
+	file ensureCreateFile.
+
+	self assert: file contents equals: 'ok'.
+
+]
+
+{ #category : #tests }
 MemoryFileSystemTest >> testIsMemoryFileSystem [
 	self assert: filesystem isMemoryFileSystem.
 	

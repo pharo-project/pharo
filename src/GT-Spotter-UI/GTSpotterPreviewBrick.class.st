@@ -41,7 +41,7 @@ GTSpotterPreviewBrick >> defaultNotAvailableText [
 { #category : #updating }
 GTSpotterPreviewBrick >> handleException: exception forComposite: composite [ 
 
-	('[Spotter] Exception while building the preview content: ', exception asString) logCr.
+	('[Spotter] Exception while building the preview content: ', exception asString) traceCr.
 	composite removeAllBricks.
 ]
 
