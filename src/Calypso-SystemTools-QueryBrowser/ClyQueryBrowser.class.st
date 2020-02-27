@@ -262,12 +262,6 @@ ClyQueryBrowser >> newWindowTitle [
 	^title
 ]
 
-{ #category : #'opening/closing' }
-ClyQueryBrowser >> openAnotherBrowser: aBrowser [
-	(aBrowser isKindOf: ClyQueryBrowser)
-		ifTrue: [ aBrowser openInWindow: self window]
-		ifFalse: [ aBrowser open ]
-]
 
 { #category : #initialization }
 ClyQueryBrowser >> packageNameOf: aBrowserItem [
