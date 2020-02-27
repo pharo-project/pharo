@@ -504,7 +504,9 @@ ClyBrowserMorph >> open [
 
 { #category : #'opening/closing' }
 ClyBrowserMorph >> openAnotherBrowser: aBrowser [
-	aBrowser open
+	"If embedded into a grouped-window environment, openInWindow: groupwindow.. "
+	(self window ownerThatIsA: GroupWindowMorph) ifNil: [^ aBrowser open ].
+	aBrowser openInWindow: self window.
 ]
 
 { #category : #'opening/closing' }
