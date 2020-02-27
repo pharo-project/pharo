@@ -450,8 +450,11 @@ RBScanner >> scanLiteralCharacter [
 { #category : #'private-scanning' }
 RBScanner >> scanLiteralString [
 	| string |
-	[string := stream upTo: $'.
-	stream peekBack = $' ifFalse: [^ self scanError: 'Unmatched '' in string literal.'].
+	[stream atEnd ifTrue: [^ self scanError: 'Unmatched '' in string literal.'].
+	string := stream upTo: $'.
+	stream peekBack = $' ifFalse: [
+		buffer nextPutAll: string.
+		^ self scanError: 'Unmatched '' in string literal.'].
 	
 	self step = $'] whileTrue: [ 
 		buffer nextPutAll: string; nextPut: $'.
