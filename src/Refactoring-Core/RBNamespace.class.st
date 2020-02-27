@@ -439,6 +439,17 @@ RBNamespace >> removeClass: aRBClass [
 	self removeClassNamed: aRBClass name
 ]
 
+{ #category : #'private-changes' }
+RBNamespace >> removeClassKeepingSubclassesNamed: aSymbol [ 
+	removedClasses
+		add: aSymbol;
+		add: aSymbol , ' class'.
+	newClasses removeKey: aSymbol ifAbsent: [].
+	changedClasses removeKey: aSymbol ifAbsent: [].
+	self flushCaches.
+	^changes removeClassNamed: aSymbol
+]
+
 { #category : #changes }
 RBNamespace >> removeClassNamed: aSymbol [ 
 	(self classNamed: aSymbol) subclasses 
