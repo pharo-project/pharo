@@ -160,7 +160,9 @@ OrderedCollection class >> streamSpecies [
 
 { #category : #adding }
 OrderedCollection >> add: newObject [
-
+	"Add a new object at the end of the collection"
+	"((OrderedCollection new add: 42; yourself) add: 43; yourself) asArray >>> #(42 43)"
+	
 	^self addLast: newObject
 ]
 
@@ -260,8 +262,12 @@ OrderedCollection >> addLast: newObject [
 
 { #category : #converting }
 OrderedCollection >> asArray [
-	"Convert an OrderedCollection into an Array"
+	"Convert an OrderedCollection into an Array."
 	"#(a b c) asOrderedCollection asArray >>> #(a b c)"
+	"OrderedCollection new class >>> OrderedCollection"
+	"OrderedCollection new asArray class >>> Array"
+	"(OrderedCollection new add: 42; add: 43; yourself) asArray >>> #(42 43)"
+	
 	^ (Array new: self size) replaceFrom: 1 to: self size with: array startingAt: firstIndex.
 ]
 
