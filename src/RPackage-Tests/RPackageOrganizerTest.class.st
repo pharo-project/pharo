@@ -390,6 +390,46 @@ RPackageOrganizerTest >> testRegisteredPackagesEndingWithAString [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testRegisteredPackagesIncludingWithAString [
+	| p1 p2 p3 |
+	p1 := self createNewPackageNamed: 'Package1'.
+	p2 := self createNewPackageNamed: 'Package2'.
+	p3 := self createNewPackageNamed: 'Package3'.
+
+	self packageOrganizer registerPackage: p1.
+	self packageOrganizer registerPackage: p2.
+	self packageOrganizer registerPackage: p3.
+	self assert: self packageOrganizer packageNames size equals: 4.
+
+	self assert: (self packageOrganizer includingWith: 'age2') size equals: 1.
+	self assert: (self packageOrganizer includingWith: 'Pack') size equals: 4.
+
+
+]
+
+{ #category : #tests }
+RPackageOrganizerTest >> testRegisteredPackagesMatchingWithAPattern [
+	| p1 p2 p3 |
+	p1 := self createNewPackageNamed: 'Package1'.
+	p2 := self createNewPackageNamed: 'Package2'.
+	p3 := self createNewPackageNamed: 'Package3'.
+
+	self packageOrganizer registerPackage: p1.
+	self packageOrganizer registerPackage: p2.
+	self packageOrganizer registerPackage: p3.
+	self assert: self packageOrganizer packageNames size equals: 4.
+
+	self assert: (self packageOrganizer matching: '*age1') size equals: 1.
+	self assert: (self packageOrganizer matching: 'Pack*') size equals: 3.
+	self assert: (self packageOrganizer matching: '*age*') size equals: 4.
+	self assert: (self packageOrganizer matching: 'Pack#ge1') size equals: 1.
+	self assert: (self packageOrganizer matching: '*age#') size equals: 3.
+
+
+
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testRegisteredPackagesStartingWithAString [
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.

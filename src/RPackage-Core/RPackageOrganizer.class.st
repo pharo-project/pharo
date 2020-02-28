@@ -476,6 +476,13 @@ RPackageOrganizer >> includesPackageNamed: aSymbol [
 	^ packages includesKey:  aSymbol asSymbol
 ]
 
+{ #category : #queries }
+RPackageOrganizer >> includingWith: aString [
+	"Return list of packages whose names includes the argument as Substring"
+	
+	^ packages select: [ :p | p name includesSubstring: aString ]
+]
+
 { #category : #initialization }
 RPackageOrganizer >> initialize [
 	super initialize.
@@ -538,6 +545,13 @@ RPackageOrganizer >> initializeMethodsFor: aBehavior [
 			 (eachProtocol methodSelectors 
 				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
 				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
+]
+
+{ #category : #queries }
+RPackageOrganizer >> matching: aPatternString [
+	"Return the list of packages whose names match the argument."
+	
+	^ self packages select: [ :p | aPatternString match: p name  ]
 ]
 
 { #category : #accessing }
