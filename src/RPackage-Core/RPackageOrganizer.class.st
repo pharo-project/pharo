@@ -340,6 +340,13 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName
 ]
 
+{ #category : #queries }
+RPackageOrganizer >> endingWith: aString [
+	"Return list of packages whose names end with the argument"
+	
+	^ self packages select: [ :p | p name endsWith: aString ]
+]
+
 { #category : #'private registration' }
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	"A new package is now available and declared in the receiver."
@@ -886,6 +893,13 @@ RPackageOrganizer >> reportExtraRemovalOf: aClass [
 RPackageOrganizer >> signalPackageExists: aPackageName [
 
 	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
+]
+
+{ #category : #queries }
+RPackageOrganizer >> startingWith: aString [
+	"Return list of packages whose names begin with the argument"
+	
+	^ self packages select: [ :p | p name beginsWith: aString ]
 ]
 
 { #category : #private }
