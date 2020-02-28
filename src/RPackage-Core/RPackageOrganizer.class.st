@@ -347,6 +347,13 @@ RPackageOrganizer >> endingWith: aString [
 	^ self packages select: [ :p | p name endsWith: aString ]
 ]
 
+{ #category : #queries }
+RPackageOrganizer >> endingWithDigit [
+	"Return list of packages whose names end with a Digit"
+	
+	^ self packages select: [ :p | p name endsWithDigit ]
+]
+
 { #category : #'private registration' }
 RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	"A new package is now available and declared in the receiver."
@@ -914,6 +921,13 @@ RPackageOrganizer >> startingWith: aString [
 	"Return list of packages whose names begin with the argument"
 	
 	^ self packages select: [ :p | p name beginsWith: aString ]
+]
+
+{ #category : #queries }
+RPackageOrganizer >> startingWithDigit [
+	"Return list of packages whose names start with a Digit"
+	
+	^ self packages select: [ :p | p name startsWithDigit ]
 ]
 
 { #category : #private }

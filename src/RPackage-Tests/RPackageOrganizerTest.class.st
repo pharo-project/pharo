@@ -373,6 +373,22 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 ]
 
 { #category : #tests }
+RPackageOrganizerTest >> testRegisteredPackagesEndingWithADigit [
+	| p1 p2 p3 |
+	p1 := self createNewPackageNamed: '1Package'.
+	p2 := self createNewPackageNamed: 'Package2'.
+	p3 := self createNewPackageNamed: '3Package'.
+
+	self packageOrganizer registerPackage: p1.
+	self packageOrganizer registerPackage: p2.
+	self packageOrganizer registerPackage: p3.
+	self assert: self packageOrganizer packageNames size equals: 4.
+
+	self assert: (self packageOrganizer endingWithDigit) size equals: 1
+
+]
+
+{ #category : #tests }
 RPackageOrganizerTest >> testRegisteredPackagesEndingWithAString [
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
@@ -426,6 +442,22 @@ RPackageOrganizerTest >> testRegisteredPackagesMatchingWithAPattern [
 	self assert: (self packageOrganizer matching: '*age#') size equals: 3.
 
 
+
+]
+
+{ #category : #tests }
+RPackageOrganizerTest >> testRegisteredPackagesStartingWithADigit [
+	| p1 p2 p3 |
+	p1 := self createNewPackageNamed: '1Package'.
+	p2 := self createNewPackageNamed: 'Package2'.
+	p3 := self createNewPackageNamed: '3Package'.
+
+	self packageOrganizer registerPackage: p1.
+	self packageOrganizer registerPackage: p2.
+	self packageOrganizer registerPackage: p3.
+	self assert: self packageOrganizer packageNames size equals: 4.
+
+	self assert: (self packageOrganizer startingWithDigit) size equals: 2
 
 ]
 
