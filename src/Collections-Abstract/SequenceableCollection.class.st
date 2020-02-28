@@ -113,6 +113,7 @@ SequenceableCollection >> @ aCollection [
 SequenceableCollection >> after: target [
 	"Answer the element after target.  Raise an error if target is not
 	in the receiver, or if there are no elements after it."
+	"(#(a b c d) after: #b) >>> #c"
 
 	^ self after: target ifAbsent: [self errorNotFound: target]
 ]
@@ -122,6 +123,8 @@ SequenceableCollection >> after: target ifAbsent: exceptionBlock [
 	"Answer the element after target.  Answer the result of evaluation
 	the exceptionBlock if target is not in the receiver, or if there are 
 	no elements after it."
+	"(#(a b c d) after: #b ifAbsent: #z) >>> #c"
+	"(#(a b c d) after: #x ifAbsent: #z) >>> #z"
 
 	| index |
 	index := self indexOf: target.
@@ -133,7 +136,8 @@ SequenceableCollection >> after: target ifAbsent: exceptionBlock [
 { #category : #accessing }
 SequenceableCollection >> allButFirst [
 	"Answer a copy of the receiver containing all but the first
-	element. Raise an error if there are not enough elements."
+	element. Raise an error if there are not enough elements."	
+	"#(a b c) allButFirst >>> #(b c)"
 
 	^ self allButFirst: 1
 ]
@@ -142,7 +146,9 @@ SequenceableCollection >> allButFirst [
 SequenceableCollection >> allButFirst: n [
 	"Answer a copy of the receiver containing all but the first n
 	elements. Raise an error if there are not enough elements."
-	"#(a b c) allButFirst >>> #(b c)"
+	"(#(a b c d) allButFirst: 2) >>> #(c d)"
+	"(#(a b c d) allButFirst: 3) >>> #(d)"
+	
 	^ self copyFrom: n + 1 to: self size
 ]
 
@@ -161,6 +167,7 @@ SequenceableCollection >> allButFirstDo: aBlock [
 SequenceableCollection >> allButLast [
 	"Answer a copy of the receiver containing all but the last
 	element. Raise an error if there are not enough elements."
+	"#(a b c d) allButLast >>> #(a b c)"
 
 	^ self allButLast: 1
 ]
@@ -169,6 +176,8 @@ SequenceableCollection >> allButLast [
 SequenceableCollection >> allButLast: n [
 	"Answer a copy of the receiver containing all but the last n
 	elements. Raise an error if there are not enough elements."
+	"(#(a b c d) allButLast: 2) >>> #(a b)"
+	"(#(a b c d) allButLast: 3) >>> #(a)"
 
 	^ self copyFrom: 1 to: self size - n
 ]
@@ -299,6 +308,8 @@ SequenceableCollection >> asWordArray [
 SequenceableCollection >> at: index ifAbsent: exceptionBlock [ 
 	"Answer the element at my position index. If I do not contain an element 
 	at index, answer the result of evaluating the argument, exceptionBlock."
+	"(#(a b c d) at: 3 ifAbsent: #z) >>> #c"
+	"(#(a b c d) at: 5 ifAbsent: #z) >>> #z"
 
 	(index between: 1 and: self size) ifTrue: [^ self at: index].
 	^ exceptionBlock value
@@ -306,6 +317,9 @@ SequenceableCollection >> at: index ifAbsent: exceptionBlock [
 
 { #category : #accessing }
 SequenceableCollection >> at: index incrementBy: value [
+	"(#(1 2 3 4) at: 3 incrementBy: 2) >>> 5"
+	"(#(1 2 3 4) at: 2 incrementBy: 2) >>> 4"
+	
 	^self at: index put: (self at: index) + value
 ]
 
@@ -326,6 +340,7 @@ SequenceableCollection >> atAll: indexArray [
 { #category : #accessing }
 SequenceableCollection >> atAll: aCollection put: anObject [ 
 	"Put anObject at every index specified by the elements of aCollection."
+	"(#(x y z) atAll: #(1 3) put: #e; yourself) >>> #(e y e)"
 
 	aCollection do: [:index | self at: index put: anObject].
 	^ anObject
@@ -335,6 +350,7 @@ SequenceableCollection >> atAll: aCollection put: anObject [
 SequenceableCollection >> atAll: indexArray putAll: valueArray [
 	"Store the elements of valueArray into the slots
 	of this collection selected by indexArray."
+	"(#(x y z) atAll: #(1 3) putAll: #(a e); yourself) >>> #(a y e)"
 
 	indexArray with: valueArray do: [:index :value | self at: index put: value].
 	^ valueArray
@@ -343,6 +359,7 @@ SequenceableCollection >> atAll: indexArray putAll: valueArray [
 { #category : #accessing }
 SequenceableCollection >> atAllPut: anObject [ 
 	"Put anObject at every one of the receiver's indices."
+	"(#(x y z) atAllPut: #a) >>> #(a a a)"
 
 	| size |
 	(size := self size) > 26 "first method faster from 27 accesses and on"
@@ -354,6 +371,8 @@ SequenceableCollection >> atAllPut: anObject [
 SequenceableCollection >> atLast: indexFromEnd [
 	"Return element at indexFromEnd from the last position.
 	 atLast: 1, returns the last element"
+	"(#(x y z) atLast: 1) >>> #z"
+	"(#(x y z) atLast: 2) >>> #y"
 
 	^ self atLast: indexFromEnd ifAbsent: [self error: 'index out of range']
 ]
@@ -362,6 +381,8 @@ SequenceableCollection >> atLast: indexFromEnd [
 SequenceableCollection >> atLast: indexFromEnd ifAbsent: block [
 	"Return element at indexFromEnd from the last position.
 	 atLast: 1 ifAbsent: [] returns the last element"
+	"(#(x y z) atLast: 1 ifAbsent: #a) >>> #z"
+	"(#(x y z) atLast: 4 ifAbsent: #a) >>> #a"
 
 	^ self at: self size + 1 - indexFromEnd ifAbsent: block
 ]
@@ -370,6 +391,7 @@ SequenceableCollection >> atLast: indexFromEnd ifAbsent: block [
 SequenceableCollection >> atLast: indexFromEnd put: obj [
 	"Set the element at indexFromEnd from the last position.
 	 atLast: 1 put: obj, sets the last element"
+	"(#(x y z) atLast: 2 put: #e; yourself) >>> #(x e z)"
 
 	^ self at: self size + 1 - indexFromEnd put: obj
 ]
@@ -378,6 +400,9 @@ SequenceableCollection >> atLast: indexFromEnd put: obj [
 SequenceableCollection >> atPin: index [ 
 	"Return the index'th element of me if possible.
 	Return the first or last element if index is out of bounds."
+	"(#(w x y z) atPin: 2) >>> #x"
+	"(#(w x y z) atPin: 4) >>> #z"
+	"(#(w x y z) atPin: 8) >>> #z"
 
 	index < 1 ifTrue: [^ self first].
 	index > self size ifTrue: [^ self last].
@@ -401,6 +426,9 @@ SequenceableCollection >> atWrap: index put: value [
 	"Store value into the index'th element of the receiver.  If index is out
 	of bounds, let it wrap around from the end to the beginning until it 
 	is in bounds. Answer value."
+	"(#(11 22 33) asOrderedCollection atWrap: 2 put: 0; yourself) >>> #(11 0 33)"
+   "(#(11 22 33) asOrderedCollection atWrap: 4 put: 0; yourself) >>> #(0 22 33)"
+   "(#(11 22 33) asOrderedCollection atWrap: 6 put: 0; yourself) >>> #(11 22 0)"
 
 	^ self at: index  - 1 \\ self size + 1 put: value
 ]
@@ -410,6 +438,8 @@ SequenceableCollection >> before: target [
 	"Answer the receiver's element immediately before target. Raise an
 	error if target is not an element of the receiver, or if there are no 
 	elements before it (i.e. it is the first element)."
+	"(#(11 22 33) before: 22) >>> 11"
+	"(#(11 22 33) before: 33) >>> 22"
 
 	^ self before: target ifAbsent: [self errorNotFound: target]
 ]
@@ -419,6 +449,8 @@ SequenceableCollection >> before: target ifAbsent: exceptionBlock [
 	"Answer the receiver's element immediately before target. Answer
 	the result of evaluating the exceptionBlock if target is not an element
 	of the receiver, or if there are no elements before it."
+	"(#(11 22 33) before: 22 ifAbsent: 55) >>> 11"
+	"(#(11 22 33) before: 44 ifAbsent: 55) >>> 55"
 
 	| index |
 	index := self indexOf: target.
@@ -786,6 +818,7 @@ SequenceableCollection >> do: aBlock without: anItem [
 SequenceableCollection >> eighth [
 	"Answer the eighth element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h ) eighth  >>> #h"
 
 	^ self at: 8
 ]
@@ -817,6 +850,7 @@ SequenceableCollection >> errorOutOfBounds [
 SequenceableCollection >> fifth [
 	"Answer the fifth element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h ) fifth >>> #e"
 
 	^ self at: 5
 ]
@@ -990,6 +1024,7 @@ SequenceableCollection >> findLast: aBlock [
 { #category : #accessing }
 SequenceableCollection >> first [
 	"Answer the first element of the receiver"
+	"#(a b c d e f g h ) first >>> #a"
 
 	^ self at: 1
 ]
@@ -998,6 +1033,7 @@ SequenceableCollection >> first [
 SequenceableCollection >> first: n [
 	"Answer the first n elements of the receiver.
 	Raise an error if there are not enough elements."
+	"(#(a b c d e f g h ) first: 3) >>> #(a b c)"
 
 	^ self copyFrom: 1 to: n
 ]
@@ -1055,6 +1091,7 @@ SequenceableCollection >> forceTo: length paddingWith: elem [
 SequenceableCollection >> fourth [
 	"Answer the fourth element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h ) fourth >>> #d"
 
 	^ self at: 4
 ]
@@ -1073,6 +1110,7 @@ SequenceableCollection >> from: startIndex to: endIndex put: anObject [
 	"Put anObject in all indexes between startIndex 
 	and endIndex. Very fast. Faster than to:do: for
 	more than 26 positions. Answer anObject"
+	"(#(a b c d e) from: 3 to: 4 put: #x; yourself) >>> #(a b x x e)"
 
 	| written toWrite thisWrite |
 
@@ -1177,6 +1215,8 @@ SequenceableCollection >> hash [
 SequenceableCollection >> identityIndexOf: anElement [ 
 	"Answer the index of anElement within the receiver. If the receiver does 
 	not contain anElement, answer 0."
+	"(#(a b c d e) identityIndexOf: #c) >>> 3"
+	"(#(a b c d e) identityIndexOf: #x) >>> 0"
 
 	^self identityIndexOf: anElement ifAbsent: [0]
 ]
@@ -1186,6 +1226,9 @@ SequenceableCollection >> identityIndexOf: anElement ifAbsent: exceptionBlock [
 	"Answer the index of anElement within the receiver. If the receiver does 
 	not contain anElement, answer the result of evaluating the argument, 
 	exceptionBlock."
+	"(#(a b c d e) identityIndexOf: #c ifAbsent: 7) >>> 3"
+	"(#(a b c d e) identityIndexOf: #x ifAbsent: 7) >>> 7"
+	
 	1 to: self size do:
 		[:i | (self at: i) == anElement ifTrue: [^ i]].
 	^ exceptionBlock value
@@ -1202,6 +1245,8 @@ SequenceableCollection >> includes: anObject [
 SequenceableCollection >> indexOf: anElement [
 	"Answer the index of the first occurrence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer 0."
+	"(#(a b c d e) indexOf: #c) >>> 3"
+	"(#(a b c d e) indexOf: #x) >>> 0"
 
 	^ self indexOf: anElement ifAbsent: 0
 ]
@@ -1211,6 +1256,8 @@ SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock [
 	"Answer the index of the first occurence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the 
 	result of evaluating the argument, exceptionBlock."
+	"(#(a b c d e) indexOf: #c ifAbsent: 7) >>> 3"
+	"(#(a b c d e) indexOf: #x ifAbsent: 7) >>> 7"
 
 	^ self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock
 ]
@@ -1218,6 +1265,8 @@ SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock [
 { #category : #accessing }
 SequenceableCollection >> indexOf: anElement startingAt: start [
        "Answer the index of the first occurence of anElement after start within the receiver. If the receiver does not contain anElement, answer 0."
+	"(#(a b c d e) indexOf: #c startingAt: 2) >>> 3" 
+	"(#(a b c d e) indexOf: #c startingAt: 4) >>> 0"
 
 	^self indexOf: anElement startingAt: start ifAbsent: 0
 ]
@@ -1227,6 +1276,8 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 	"Answer the index of the first occurence of anElement after start
 	within the receiver. If the receiver does not contain anElement, 
 	answer the 	result of evaluating the argument, exceptionBlock."
+	"(#(a b c d e) indexOf: #c startingAt: 2 ifAbsent: 7) >>> 3" 
+	"(#(a b c d e) indexOf: #c startingAt: 4 ifAbsent: 7) >>> 7"
 
 	start to: self size do:
 		[:index |
@@ -1238,6 +1289,8 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 SequenceableCollection >> indexOfAnyOf: aCollection [
 	"Answer the index of the first occurence of any element included in aCollection within the receiver.
 	If the receiver does not contain anElement, answer zero, which is an invalid index."
+	"(#(a b c d e) indexOfAnyOf: #(x y c)) >>> 3"
+	"(#(a b c d e) indexOfAnyOf: #(x y z)) >>> 0"
 
 	^self indexOfAnyOf: aCollection startingAt: 1 ifAbsent: [0]
 ]
@@ -1246,6 +1299,8 @@ SequenceableCollection >> indexOfAnyOf: aCollection [
 SequenceableCollection >> indexOfAnyOf: aCollection ifAbsent: exceptionBlock [
 	"Answer the index of the first occurence of any element included in aCollection within the receiver.
 	If the receiver does not contain anElement, answer the result of evaluating the argument, exceptionBlock."
+	"(#(a b c d e) indexOfAnyOf: #(x y c) ifAbsent: 7) >>> 3"
+	"(#(a b c d e) indexOfAnyOf: #(x y z) ifAbsent: 7) >>> 7"
 
 	^self indexOfAnyOf: aCollection startingAt: 1 ifAbsent: exceptionBlock
 ]
@@ -1254,6 +1309,8 @@ SequenceableCollection >> indexOfAnyOf: aCollection ifAbsent: exceptionBlock [
 SequenceableCollection >> indexOfAnyOf: aCollection startingAt: start [
 	"Answer the index of the first occurence of any element included in aCollection after start within the receiver.
 	If the receiver does not contain anElement, answer zero, which is an invalid index."
+	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 2) >>> 3"
+	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 4) >>> 0"
 
 	^self indexOfAnyOf: aCollection startingAt: start ifAbsent: [0]
 ]
@@ -1263,6 +1320,8 @@ SequenceableCollection >> indexOfAnyOf: aCollection startingAt: start ifAbsent: 
 	"Answer the index of the first occurence of any element included in aCollection after start within the receiver.
 	If the receiver does not contain anElement, answer the result of evaluating the argument, exceptionBlock.
 	Note: it is user responsibility to provide aCollection that behaves relatevily fast when asked for includes: (like a Set)"
+	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 2 ifAbsent: 7) >>> 3"
+	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 4 ifAbsent: 7) >>> 7"
 
 	start to: self size do:
 		[:index |
@@ -1276,6 +1335,8 @@ SequenceableCollection >> indexOfSubCollection: aSubCollection startingAt: anInd
 	equals the first element of aSubCollection, and the next elements equal 
 	the rest of the elements of aSubCollection. Begin the search at element 
 	anIndex of the receiver. If no such match is found, answer 0."
+	"(#(a b c d e) indexOfSubCollection: #(c d) startingAt: 2) >>> 3"
+	"(#(a b c d e) indexOfSubCollection: #(c d) startingAt: 4) >>> 0"
 
 	^self
 		indexOfSubCollection: aSubCollection
@@ -1290,6 +1351,9 @@ SequenceableCollection >> indexOfSubCollection: sub startingAt: start ifAbsent: 
 	the rest of the elements of sub. Begin the search at element 
 	start of the receiver. If no such match is found, answer the result of 
 	evaluating argument, exceptionBlock."
+	"(#(a b c d e) indexOfSubCollection: #(c d) startingAt: 2 ifAbsent: 7) >>> 3"
+	"(#(a b c d e) indexOfSubCollection: #(c d) startingAt: 4 ifAbsent: 7) >>> 7"
+	
 	| first index |
 	sub isEmpty ifTrue: [^ exceptionBlock value].
 	first := sub first.
@@ -1391,6 +1455,7 @@ SequenceableCollection >> keysAndValuesDo: aBlock [
 { #category : #accessing }
 SequenceableCollection >> last [
 	"Answer the last element of the receiver"
+	"#(a b c d e) last >>> #e"
 
 	^ self at: self size
 ]
@@ -1399,6 +1464,8 @@ SequenceableCollection >> last [
 SequenceableCollection >> last: n [
 	"Answer the last n elements of the receiver.  
 	Raise an error if there are not enough elements."
+	"(#(a b c d e) last: 2) >>> #(d e)"
+	"(#(a b c d e) last: 3) >>> #(c d e)"
 
 	| size |
 	size := self size.
@@ -1409,6 +1476,8 @@ SequenceableCollection >> last: n [
 SequenceableCollection >> lastIndexOf: anElement [
 	"Answer the index of the last occurence of anElement within the 
 	receiver. If the receiver does not contain anElement, answer 0."
+	"(#(a b a d a) lastIndexOf: #a) >>> 5"
+	"(#(a b a d e) lastIndexOf: #a) >>> 3"
 
 	^ self lastIndexOf: anElement startingAt: self size ifAbsent: [0]
 ]
@@ -1418,6 +1487,9 @@ SequenceableCollection >> lastIndexOf: anElement ifAbsent: exceptionBlock [
 	"Answer the index of the last occurence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
+	"(#(a b a d a) lastIndexOf: #a ifAbsent: 7) >>> 5"
+	"(#(a b a d e) lastIndexOf: #c ifAbsent: 7) >>> 7"
+	
 	^self lastIndexOf: anElement startingAt: self size ifAbsent: exceptionBlock
 ]
 
@@ -1426,6 +1498,8 @@ SequenceableCollection >> lastIndexOf: anElement startingAt: lastIndex ifAbsent:
 	"Answer the index of the last occurence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
+	"(#(a b a d a) lastIndexOf: #a startingAt: 1 ifAbsent: 7) >>> 1"
+	"(#(e b a d e) lastIndexOf: #a startingAt: 4 ifAbsent: 7) >>> 3"
 
 	lastIndex to: 1 by: -1 do:
 		[:index |
@@ -1438,6 +1512,7 @@ SequenceableCollection >> lastIndexOfAnyOf: aCollection startingAt: lastIndex if
 	"Answer the index of the last occurence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
+	"(#(a b a d a) lastIndexOfAnyOf: #(a b) startingAt: 1 ifAbsent: 7) >>> 1"
 
 	lastIndex to: 1 by: -1 do:
 		[:index |
@@ -1513,6 +1588,9 @@ SequenceableCollection >> mergeSortFrom: first to: last src: src dst: dst by: aB
 { #category : #accessing }
 SequenceableCollection >> middle [
 	"Answer the middle element of the receiver."
+	"#(a b c d e) middle >>> #c"
+	"#(a b c d) middle >>> #c"
+	
 	^ self at: self size // 2 + 1
 ]
 
@@ -1526,6 +1604,7 @@ SequenceableCollection >> nextToLast [
 SequenceableCollection >> ninth [
 	"Answer the ninth element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h i) ninth >>> #i"
 
 	^ self at: 9
 ]
@@ -1816,6 +1895,8 @@ SequenceableCollection >> replace: aBlock [
 { #category : #accessing }
 SequenceableCollection >> replaceAll: oldObject with: newObject [ 
 	"Replace all occurences of oldObject with newObject"
+	"(#(a b a d a) replaceAll: #a with: #e) >>> #(e b e d e)"
+	
 	| index |
 	index := self
 				indexOf: oldObject
@@ -1835,6 +1916,7 @@ SequenceableCollection >> replaceFrom: start to: stop with: replacement [
 	"This destructively replaces elements from start to stop in the receiver. 
 	Answer the receiver itself. Use copyReplaceFrom:to:with: for 
 	insertion/deletion which may alter the size of the result."
+	"(#(a b c d e) replaceFrom: 3 to: 4 with: #(x y)) >>> #(a b x y e)"
 
 	replacement size = (stop - start + 1)
 		ifFalse: [self error: 'Size of replacement doesnt match'].
@@ -1919,6 +2001,7 @@ SequenceableCollection >> reversed [
 SequenceableCollection >> second [
 	"Answer the second element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h i) second >>> #b"
 
 	^ self at: 2
 ]
@@ -1965,6 +2048,7 @@ SequenceableCollection >> select: selectBock thenDo: aBlock [
 SequenceableCollection >> seventh [
 	"Answer the seventh element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h i) seventh >>> #g"
 
 	^ self at: 7
 ]
@@ -1991,12 +2075,16 @@ SequenceableCollection >> shuffled [
 SequenceableCollection >> sixth [
 	"Answer the sixth element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h i) sixth >>> #f"
 
 	^ self at: 6
 ]
 
 { #category : #accessing }
 SequenceableCollection >> size [
+	"#(a b c d e) size >>> 5"
+	"#(x y z) size >>> 3"
+	
 	^ self subclassResponsibility
 ]
 
@@ -2090,6 +2178,7 @@ SequenceableCollection >> splitOn: splitter indicesDo: aBlock [
 { #category : #accessing }
 SequenceableCollection >> swap: oneIndex with: anotherIndex [ 
 	"Move the element at oneIndex to anotherIndex, and vice-versa."
+	"(#(a b c d e) swap: 5 with: 1) >>> #(e b c d a)"
 
 	| element |
 	element := self at: oneIndex.
@@ -2101,6 +2190,7 @@ SequenceableCollection >> swap: oneIndex with: anotherIndex [
 SequenceableCollection >> third [
 	"Answer the third element of the receiver.
 	Raise an error if there are not enough elements."
+	"#(a b c d e f g h i) third >>> #c"
 
 	^ self at: 3
 ]
