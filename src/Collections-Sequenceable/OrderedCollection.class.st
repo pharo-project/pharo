@@ -160,7 +160,9 @@ OrderedCollection class >> streamSpecies [
 
 { #category : #adding }
 OrderedCollection >> add: newObject [
-
+	"Add a new object at the end of the collection"
+	"((OrderedCollection new add: 42; yourself) add: 43; yourself) asArray >>> #(42 43)"
+	
 	^self addLast: newObject
 ]
 
@@ -260,6 +262,13 @@ OrderedCollection >> addLast: newObject [
 
 { #category : #converting }
 OrderedCollection >> asArray [
+	"Convert an OrderedCollection as an array.
+	This method is useful when using executable comments because arrays are supported by the Pharo syntax"
+	
+	"OrderedCollection new class >>> OrderedCollection"
+	"OrderedCollection new asArray class >>> Array"
+	"(OrderedCollection new add: 42; add: 43; yourself) asArray >>> #(42 43)"
+	
 	^ (Array new: self size) replaceFrom: 1 to: self size with: array startingAt: firstIndex.
 ]
 
