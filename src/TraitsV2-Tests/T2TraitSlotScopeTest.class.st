@@ -44,7 +44,7 @@ T2TraitSlotScopeTest >> testSubClassAndAddComplexTraitAfter [
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 
-	c2 := self newClass: #C1 with: #(aSlot otherSlot) uses: t1 + t2.
+	c2 := self newClass: #C2 with: #(aSlot otherSlot) uses: t1 + t2.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
@@ -64,8 +64,6 @@ T2TraitSlotScopeTest >> testSubClassAndAddTraitAfter [
 		uses: {}.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
-
-	c2 := self newClass: #C1 with: #(aSlot otherSlot) uses: t1.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
@@ -127,8 +125,6 @@ T2TraitSlotScopeTest >> testSubClassWithComplexTraitsAfterModificationOfParent [
 		with: #(otherSlot)
 		uses: t2.
 
-	c2 := self newClass: #C1 with: #(aSlot otherSlot) uses: t2.
-
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
 ]
@@ -187,8 +183,6 @@ T2TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 		superclass: c1
 		with: #(otherSlot)
 		uses: t2.
-
-	c2 := self newClass: #C1 with: #(aSlot otherSlot) uses: t2.
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
 	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
