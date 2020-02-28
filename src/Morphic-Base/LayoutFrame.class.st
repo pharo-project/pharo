@@ -269,23 +269,18 @@ LayoutFrame >> printOnForHelpingMigration: aStream [
 	aStream
 		nextPutAll: '(' ;
 		nextPutAll: self className;
-		nextPutAll: ' identity';
-		nextPutAll: String cr;
+		nextPutAll: ' identity'; cr;
 		nextPutAll: 'topOffset: ';
-		print: self topOffset;
-		nextPutAll: String cr;
+		print: self topOffset; cr;
 		nextPutAll: 'bottomFraction: ';
-		print: self bottomFraction;
-		nextPutAll: String cr;
+		print: self bottomFraction; cr;
 		nextPutAll: 'bottomOffset: ';
-		print: self bottomOffset;
-		nextPutAll: String cr;
+		print: self bottomOffset; cr;
 		nextPutAll: 'leftOffset: ';
-		print: self leftOffset;
-		nextPutAll: String cr;
+		print: self leftOffset; cr;
 		nextPutAll: 'rightOffset: ';
 		print: self rightOffset;
-		nextPutAll: ')'
+		nextPutAll: ') '
 ]
 
 { #category : #accessing }
