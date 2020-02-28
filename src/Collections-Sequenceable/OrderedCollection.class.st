@@ -260,6 +260,8 @@ OrderedCollection >> addLast: newObject [
 
 { #category : #converting }
 OrderedCollection >> asArray [
+	"Convert an OrderedCollection into an Array"
+	"#(a b c) asOrderedCollection asArray >>> #(a b c)"
 	^ (Array new: self size) replaceFrom: 1 to: self size with: array startingAt: firstIndex.
 ]
 
@@ -274,7 +276,8 @@ OrderedCollection >> asOrderedCollection [
 OrderedCollection >> at: anInteger [
 	"Answer my element at index anInteger. at: is used by a knowledgeable
 	client to access an existing element"
-
+	"((OrderedCollection new add: 34; yourself) at: 1) >>> 34"
+	
 	| index |
 	anInteger < 1
 		ifTrue: [ self errorSubscriptBounds: anInteger ].
@@ -796,13 +799,14 @@ OrderedCollection >> reverseDo: aBlock [
 { #category : #converting }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
+	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
 	| newCol |
 	newCol := self species new.
 	self reverseDo:
 		[:elem | newCol addLast: elem].
 	^ newCol
 
-"#(2 3 4 'fred') reversed"
+
 ]
 
 { #category : #enumerating }
