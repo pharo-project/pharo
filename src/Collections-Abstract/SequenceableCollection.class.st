@@ -2055,12 +2055,15 @@ SequenceableCollection >> seventh [
 
 { #category : #shuffling }
 SequenceableCollection >> shuffle [
+	"Modify the receiver shuffling its elements."
+	
 	^ self shuffleBy: Random new
 ]
 
 { #category : #shuffling }
 SequenceableCollection >> shuffleBy: aRandom [
 	"Durstenfeld's version of the Fisher-Yates shuffle"
+	"#(1 2 3 4 5) shuffleBy: (Random seed: 42) >>> #(2 5 4 3 1)"
 
 	self size to: 2 by: -1 do: [ :i | 
 		self swap: i with: (aRandom nextInt: i) ]
