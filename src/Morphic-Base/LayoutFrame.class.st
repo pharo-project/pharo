@@ -267,6 +267,30 @@ LayoutFrame >> printOn: aStream [
 		nextPutAll: 'px ) '
 ]
 
+{ #category : #printing }
+LayoutFrame >> printOnForHelpingMigration: aStream [
+	aStream
+		nextPutAll: '(' ;
+		nextPutAll: self className;
+		nextPutAll: ' identity';
+		nextPutAll: String cr;
+		nextPutAll: 'topOffset: ';
+		print: self topOffset;
+		nextPutAll: String cr;
+		nextPutAll: 'bottomFraction: ';
+		print: self bottomFraction;
+		nextPutAll: String cr;
+		nextPutAll: 'bottomOffset: ';
+		print: self bottomOffset;
+		nextPutAll: String cr;
+		nextPutAll: 'leftOffset: ';
+		print: self leftOffset;
+		nextPutAll: String cr;
+		nextPutAll: 'rightOffset: ';
+		print: self rightOffset;
+		nextPutAll: ')'
+]
+
 { #category : #accessing }
 LayoutFrame >> rightFraction [
 	^rightFraction
