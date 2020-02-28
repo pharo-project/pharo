@@ -1313,6 +1313,8 @@ SequenceableCollection >> isSequenceable [
 SequenceableCollection >> isSorted [
 	"Return true if the receiver is sorted by the given criterion.
 	Optimization for isSortedBy: [:a :b | a <= b]."
+	"#(1 2 3) isSorted >>> true"
+	"#(1 2 3 0) isSorted >>> false"
 
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
@@ -1328,6 +1330,8 @@ SequenceableCollection >> isSorted [
 { #category : #sorting }
 SequenceableCollection >> isSortedBy: aBlock [
 	"Return true if the receiver is sorted by the given criterion."
+	"(#(1 2 3) isSortedBy: [:a :b | a <= b ]) >>> true"
+	"(#(1 2 3) isSortedBy: [:a :b | a >= b ]) >>> false"
 
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
@@ -1484,6 +1488,7 @@ SequenceableCollection >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	phases copy data back and forth between the receiver and this copy.
 	The recursion is set up so that the final merge is performed into the
 	receiver, resulting in the receiver being completely sorted."
+	"(#(a b z d i l) mergeSortFrom: 3 to: 5 by: [ :a :b | a<=b ]) >>> #(a b d i z l)"
 
 	self size <= 1 ifTrue: [^ self].  "nothing to do"
 	startIndex = stopIndex ifTrue: [^ self].
@@ -1971,6 +1976,9 @@ SequenceableCollection >> seventh [
 
 { #category : #shuffling }
 SequenceableCollection >> shuffle [
+	"Returns the same list but with the elements in different positions.
+	This method use Random class as random generator"
+	
 	^ self shuffleBy: Random new
 ]
 
@@ -2003,7 +2011,9 @@ SequenceableCollection >> size [
 { #category : #sorting }
 SequenceableCollection >> sort [
 	"Sort this collection into ascending order using the '<=' operator."
-
+	"#(8 5 3 9) sort >>> #(3 5 8 9)"
+	"#(a b z d) sort >>> #(a b d z)"
+	
 	self sort: [:a :b | a <= b]
 ]
 
@@ -2011,6 +2021,8 @@ SequenceableCollection >> sort [
 SequenceableCollection >> sort: aSortBlock [ 
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
+	"(#(3 9 1) sort: [:a :b | a <= b ]) >>> #(1 3 9)"
+	"(#(3 9 1) sort: [:a :b | a >= b ]) >>> #(9 3 1)"
 
 	self
 		mergeSortFrom: 1
@@ -2022,6 +2034,8 @@ SequenceableCollection >> sort: aSortBlock [
 SequenceableCollection >> sorted [
 	"Return a new sequenceable collection which contains the same elements as self but its 
 elements are sorted in ascending order using the #'<=' operator."
+	"#(8 5 3 9) sorted >>> #(3 5 8 9)"
+	"#(a b z d) sorted >>> #(a b d z)"
 	
 	^self sorted: [ :a :b| a <= b ]
 ]
@@ -2032,6 +2046,8 @@ SequenceableCollection >> sorted: aSortBlockOrNil [
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if 
 the first element should preceed the second one. If aSortBlock is nil then <= is used for 
 comparison."
+	"(#(3 9 1) sorted: [:a :b | a <= b ]) >>> #(1 3 9)"
+	"(#(3 9 1) sorted: [:a :b | a >= b ]) >>> #(9 3 1)"
 	
 	^self copy sort: aSortBlockOrNil
 ]
