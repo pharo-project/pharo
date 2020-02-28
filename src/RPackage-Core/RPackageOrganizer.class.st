@@ -342,14 +342,14 @@ RPackageOrganizer >> defineUnpackagedClassesPackage [
 
 { #category : #queries }
 RPackageOrganizer >> endingWith: aString [
-	"Return list of packages whose names end with the argument"
+	"Return list of packages whose names end with the argument."
 	
 	^ self packages select: [ :p | p name endsWith: aString ]
 ]
 
 { #category : #queries }
 RPackageOrganizer >> endingWithDigit [
-	"Return list of packages whose names end with a Digit"
+	"Return list of packages whose names end with a Digit."
 	
 	^ self packages select: [ :p | p name endsWithDigit ]
 ]
@@ -485,7 +485,7 @@ RPackageOrganizer >> includesPackageNamed: aSymbol [
 
 { #category : #queries }
 RPackageOrganizer >> includingWith: aString [
-	"Return list of packages whose names includes the argument as Substring"
+	"Return list of packages whose names includes the argument as Substring."
 	
 	^ packages select: [ :p | p name includesSubstring: aString ]
 ]
@@ -918,14 +918,14 @@ RPackageOrganizer >> signalPackageExists: aPackageName [
 
 { #category : #queries }
 RPackageOrganizer >> startingWith: aString [
-	"Return list of packages whose names begin with the argument"
+	"Return list of packages whose names begin with the argument."
 	
 	^ self packages select: [ :p | p name beginsWith: aString ]
 ]
 
 { #category : #queries }
 RPackageOrganizer >> startingWithDigit [
-	"Return list of packages whose names start with a Digit"
+	"Return list of packages whose names start with a Digit."
 	
 	^ self packages select: [ :p | p name startsWithDigit ]
 ]
