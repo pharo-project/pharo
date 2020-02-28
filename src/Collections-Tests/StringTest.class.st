@@ -701,6 +701,22 @@ StringTest >> testCopyReplaceAllWithAsTokens [
 	self assert: ('éèàôü éèàôüt éèàôü' copyReplaceAll: ' ' with:  'ß' asTokens: false) equals: 'éèàôüßéèàôütßéèàôü'.
 ]
 
+{ #category : #'tests - copying' }
+StringTest >> testCopyUpToSubstring [ 
+
+	self assert: ('abcdef' copyUpToSubstring: '') equals: ''.
+	self assert: ('abcdef' copyUpToSubstring: 'a') equals: ''.
+	self assert: ('abcdef' copyUpToSubstring: 'b') equals: 'a'.
+	self assert: ('abcdef' copyUpToSubstring: 'de') equals: 'abc'.
+	self assert: ('abcdef' copyUpToSubstring: 'ef') equals: 'abcd'.
+	self assert: ('abcdef' copyUpToSubstring: 'f') equals: 'abcde'.
+	self assert: ('abcdef' copyUpToSubstring: 'fg') equals: 'abcdef'.
+	self assert: ('' copyUpToSubstring: 'abc') equals: ''.
+	self assert: ('abcdef' copyUpToSubstring: 'g') equals: 'abcdef'.
+	self assert: ('abcdef' copyUpToSubstring: 'gh') equals: 'abcdef'.
+
+]
+
 { #category : #'tests - comparing' }
 StringTest >> testCorrectAgainst [
 
