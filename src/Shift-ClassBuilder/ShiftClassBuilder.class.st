@@ -31,7 +31,8 @@ Class {
 		'changeComparers',
 		'changes',
 		'metaSuperclass',
-		'superclassResolver'
+		'superclassResolver',
+		'inRemake'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -69,6 +70,13 @@ ShiftClassBuilder >> build [
 	self compareWithOldClass.
 
 	self layoutDefinition copySlotsIfUsedIn: oldClass.
+
+	"If this is the first build, when building a class. 
+	We need to check if there is no conflicts with existing subclasses. 
+	If we are in a remake, it have been done when building the superclass modified before."
+		
+	self isInRemake 
+		ifFalse: [ self layoutDefinition validate ].
 
 	self createMetaclass.
 	self createClass.
@@ -318,7 +326,8 @@ ShiftClassBuilder >> initialize [
 	changeComparers := OrderedCollection new.
 	changes := Set new.
 	
-	category := 'Unclassified'
+	category := 'Unclassified'.
+	inRemake := false.
 ]
 
 { #category : #building }
@@ -331,6 +340,14 @@ ShiftClassBuilder >> installSlotsAndVariables [
 ]
 
 { #category : #accessing }
+ShiftClassBuilder >> isInRemake [
+	
+	"If the builder is in remake (when propagating changes to subclasses)"
+	
+	^ inRemake 
+]
+
+{ #category : #accessing }
 ShiftClassBuilder >> layoutClass: aLayoutClass [
 	self layoutDefinition layoutClass: aLayoutClass.
 ]
@@ -338,6 +355,12 @@ ShiftClassBuilder >> layoutClass: aLayoutClass [
 { #category : #accessing }
 ShiftClassBuilder >> layoutDefinition [
 	^ layoutDefinition
+]
+
+{ #category : #accessing }
+ShiftClassBuilder >> markIsInRemake [
+	
+	inRemake := true
 ]
 
 { #category : #accessing }
