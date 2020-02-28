@@ -64,8 +64,8 @@ SHRBTextStyler class >> blueStyleTable [
 	"
 	<styleTable: 'Blue'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -197,8 +197,8 @@ SHRBTextStyler class >> darkStyleTable [
 	"
 	<styleTable: 'Dark'>
 
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
 			(excessCode 							'FF8A80')
@@ -391,8 +391,8 @@ SHRBTextStyler class >> solarizedStyleTable [
 	"
 	<styleTable: 'Solarized'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
 			(excessCode 							red)
@@ -540,8 +540,8 @@ SHRBTextStyler class >> tangoStyleTable [
 	"
 	<styleTable: 'Tango'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -684,8 +684,8 @@ SHRBTextStyler class >> vintageStyleTable [
 	"
 	<styleTable: 'Vintage'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -1144,12 +1144,22 @@ at once, but for ordinary literal arrays, style every node"
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
-	| value |
+	| value link |
 	value := aLiteralValueNode value.
-	self 
-		addStyle: (self literalStyleSymbol: value)
-		attribute: (TextClassLink class: value class)
-		forNode: aLiteralValueNode
+	
+	
+	"We can have 3 different kind of links from a literal: 
+	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
+	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
+	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
+	link := value isSymbol
+		ifTrue: [
+			self class environment
+				at: value
+				ifPresent: [ :class | TextClassLink class: class ]
+				ifAbsent: [ TextMethodLink selector: value ] ]
+		ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }

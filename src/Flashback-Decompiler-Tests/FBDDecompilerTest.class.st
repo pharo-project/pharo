@@ -50,7 +50,6 @@ FBDDecompilerTest >> decompileThenRecompile: originalMethod [
 
 { #category : #accessing }
 FBDDecompilerTest >> exampleClass [
-	<sampleInstance>
 	^ FBDExamples 
 ]
 

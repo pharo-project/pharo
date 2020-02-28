@@ -4,7 +4,7 @@ Unit test for trait conflict scenarios
 Class {
 	#name : #T2TraitWithConflictsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #tests }

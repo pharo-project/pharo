@@ -231,6 +231,18 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
+{ #category : #'tests - packages - manifests' }
+ReleaseTest >> testProperManifestClasses [
+
+	|manifests|
+	manifests := self class environment allClasses select: [:each | each isManifest ].
+	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
+	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ]).
+
+
+ 
+]
+
 { #category : #'tests - rpackage' }
 ReleaseTest >> testRPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"

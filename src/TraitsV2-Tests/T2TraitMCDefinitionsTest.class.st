@@ -4,7 +4,7 @@ Unit test for correct handling of MC class definitions
 Class {
 	#name : #T2TraitMCDefinitionsTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #tests }
