@@ -1,7 +1,7 @@
 "
 I define a transformation frame relative to some rectangle. I'm basic data structure used for graphics.
 
-Do not use fractions: fractionsOrNil offsets: offsetsOrNil or frations: fractionsOrNil if you do not have already  the rectangles that should be passed as arguments. 
+Do not use fractions: fractionsOrNil offsets: offsetsOrNil or frations: fractionsOrNil if you do not have already the rectangles that should be passed as arguments.
 
 If you are creating the rectangles representing the numbers you need, better use the accessors. For example like this.  
 
@@ -12,10 +12,7 @@ If you are creating the rectangles representing the numbers you need, better use
 			leftOffset: -1;
 			rightOffset: 1)	
 
-
-
-
-
+Use printOnForHelpingMigration: if you want to inspect the object.
 
 Instance variables:
 	leftFraction 
