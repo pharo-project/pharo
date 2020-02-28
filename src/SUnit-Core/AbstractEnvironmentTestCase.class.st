@@ -12,7 +12,7 @@ AbstractEnvironmentTestCase >> environmentOfTest [
 	^ testingEnvironment
 ]
 
-{ #category : #private }
+{ #category : #running }
 AbstractEnvironmentTestCase >> setUp [
 	super setUp.
 	testingEnvironment := Smalltalk globals.
