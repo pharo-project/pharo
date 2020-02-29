@@ -549,12 +549,7 @@ BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copie
 
 { #category : #printing }
 BlockClosure >> printOn: aStream [
-
-	aStream nextPutAll: ((self method hasSourceCode
-		or: [ "There is a decompiler"
-			self class environment includesKey: #FBDDecompiler ])
-				ifTrue: [ self sourceNode formattedCode ]
-				ifFalse: [ 'aBlockClosure(no source code or decompiler available)' ])
+	^ aStream nextPutAll: (self method ast sourceNodeForPC: self endPC) sourceCode 
 ]
 
 { #category : #accessing }
