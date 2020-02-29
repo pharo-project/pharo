@@ -449,16 +449,31 @@ RBScanner >> scanLiteralCharacter [
 
 { #category : #'private-scanning' }
 RBScanner >> scanLiteralString [
-
-	self step.
-
-	[ currentCharacter ifNil: [ ^ self scanError: 'Unmatched '' in string literal.' ].
-	currentCharacter = $' and: [ self step ~= $' ]
-	]
-		whileFalse: [ buffer nextPut: currentCharacter.
-			self step
-			].
-	^ RBLiteralToken value: buffer contents start: tokenStart stop: self previousStepPosition
+	| string |
+	[stream atEnd ifTrue: [
+		self step. "to handle eof"
+		^ self scanError: 'Unmatched '' in string literal.'].
+	string := stream upTo: $'. 
+	stream peekBack = $' ifFalse: [ 
+		"the peek logic here is because #upTo: does not tell if given char was found"
+		buffer nextPutAll: string.
+		self step. "to handle eof"
+		^ self scanError: 'Unmatched '' in string literal.'].
+	
+	self step = $'] whileTrue: [ 
+		buffer nextPutAll: string; nextPut: $'.
+		string := ''].
+	
+	buffer position = 0 ifFalse: [ 		
+		buffer nextPutAll: string.
+		string := buffer contents].	
+	
+	"It's possible to use a plain Text for parsing.
+	In that case string here could be a Text instance but literal value must be a String"	
+	^RBLiteralToken 
+		value: string asString 
+		start: tokenStart 
+		stop: self previousStepPosition
 ]
 
 { #category : #'private-scanning' }
