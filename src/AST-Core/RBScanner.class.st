@@ -151,7 +151,18 @@ RBScanner class >> patternVariableCharacter [
 ]
 
 { #category : #'public api' }
+RBScanner class >> scanTokenObjects: aStringOrStream [
+	"Return the tokens objects."
+	
+	| scanner |
+	scanner := self on: aStringOrStream readStream.
+	^ scanner contents
+]
+
+{ #category : #'public api' }
 RBScanner class >> scanTokens: aStringOrStream [
+	"Return the tokens (and not the scanner token objects)."
+	
 	| scanner |
 	scanner := self on: aStringOrStream readStream.
 	^scanner contents collect:[ :t | t value ]
