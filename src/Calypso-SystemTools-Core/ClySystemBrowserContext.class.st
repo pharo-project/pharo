@@ -54,6 +54,11 @@ ClySystemBrowserContext >> confirmUnusedClasses: variables [
 ]
 
 { #category : #'user requests' }
+ClySystemBrowserContext >> confirmUnusedClassesExceptInheritance: variables [
+	^tool confirmUnusedClassesExceptInheritance: variables
+]
+
+{ #category : #'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariables: variables [
 	^tool confirmUnusedVariables: variables
 ]
