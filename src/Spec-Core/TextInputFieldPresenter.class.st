@@ -190,6 +190,12 @@ TextInputFieldPresenter >> removeEntryCompletion [
 	self entryCompletion: nil
 ]
 
+{ #category : #'api-events' }
+TextInputFieldPresenter >> text [ 
+	
+	^ self getText asString
+]
+
 { #category : #accessing }
 TextInputFieldPresenter >> textHolder [
 
