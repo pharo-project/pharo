@@ -282,7 +282,11 @@ OrderedCollection >> asOrderedCollection [
 { #category : #accessing }
 OrderedCollection >> at: anInteger [
 	"Answer my element at index anInteger. at: is used by a knowledgeable
-	client to access an existing element"
+	client to access an existing element."
+
+	"(#(40 41 42) at: 1) >>> 40"
+	"(#(40 41 42) at: 2) >>> 41"
+	"(#(40 41 42) at: 3) >>> 42"
 
 	| index |
 	anInteger < 1
@@ -324,6 +328,9 @@ OrderedCollection >> at: anInteger put: anObject [
 OrderedCollection >> capacity [
 	"Answer the current capacity of the receiver."
 
+	"OrderedCollection new capacity >>> 10"
+	"(OrderedCollection new addAll: (1 to: 15); yourself) capacity >>> 20"
+	
 	^ array size
 ]
 
@@ -333,6 +340,9 @@ OrderedCollection >> collect: aBlock [
 	resulting values into a collection that is like me. Answer the new 
 	collection. Override superclass in order to use addLast:, not at:put:."
 
+	"(#(1 2 3) asOrderedCollection collect: [ :v | v * 10 ]) asArray >>> #(10 20 30)"
+	"(#(1 2 3) asOrderedCollection collect: [ :v | 10 ]) asArray >>> #(10 10 10)"
+	
 	| newCollection |
 	newCollection := self species new: self size.
 	firstIndex to: lastIndex do:
@@ -561,6 +571,9 @@ OrderedCollection >> join: aCollection [
 OrderedCollection >> makeRoomAtFirst [
 	"Make some empty slots at the front of the array. If we have more than 50% free space, then just move the elements, so that the first 50% of the slots are free, otherwise add new free slots to the front by growing. Precondition: firstIndex = 1"
 	
+	"#(1 2 3) asOrderedCollection capacity >>> 3"
+	"#(1 2 3) asOrderedCollection makeRoomAtFirst capacity >>> 6"
+	
 	| tally newFirstIndex newLastIndex |
 	tally := self size.
 	tally * 2 >= array size ifTrue: [ ^self growAtFirst ].
@@ -696,9 +709,12 @@ OrderedCollection >> removeAt: index [
 
 { #category : #removing }
 OrderedCollection >> removeDuplicates [
-	| iterator |
 	"Remove the copies of elements, but keep the same order"
 	
+	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
+	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
+
+	| iterator |
 	self ifEmpty: [ ^ self ].
 	iterator := 1.
 	[ iterator <= self size ]
