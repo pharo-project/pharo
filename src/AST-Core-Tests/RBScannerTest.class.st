@@ -9,7 +9,7 @@ Class {
 
 { #category : #initialize }
 RBScannerTest >> buildScannerForText: source [
-	^ self parserClass on: (ReadStream on: source)
+	^ self parserClass on: source readStream
 ]
 
 { #category : #initialize }
