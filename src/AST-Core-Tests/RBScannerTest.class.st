@@ -9,11 +9,11 @@ Class {
 
 { #category : #initialize }
 RBScannerTest >> buildScannerForText: source [
-	^ self parserClass on: (ReadStream on: source)
+	^ self scannerClass on: source readStream
 ]
 
 { #category : #initialize }
-RBScannerTest >> parserClass [
+RBScannerTest >> scannerClass [
 	^ RBScanner
 ]
 
@@ -104,7 +104,7 @@ RBScannerTest >> testScanTokenObjects1 [
 	exp := {'Object'.
 	'subclass:'.
 	#NameOfSubclass asString}.
-	self assert: ((self parserClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp.
+	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp.
 	
 ]
 
@@ -114,7 +114,7 @@ RBScannerTest >> testScanTokenObjects2 [
 	inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
 	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
-	self assert: ((self parserClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
+	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 
 { #category : #'tests - creation api' }
@@ -124,7 +124,7 @@ RBScannerTest >> testScanTokens1 [
 	exp := {'Object'.
 	'subclass:'.
 	#NameOfSubclass asString}.
-	self assert: (self parserClass scanTokens: inp) equals: exp.
+	self assert: (self scannerClass scanTokens: inp) equals: exp.
 	
 ]
 
@@ -134,7 +134,7 @@ RBScannerTest >> testScanTokens2 [
 	inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
 	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
-	self assert: (RBScanner scanTokens: inp) equals: exp
+	self assert: (self scannerClass scanTokens: inp) equals: exp
 ]
 
 { #category : #utilities }
