@@ -7,7 +7,7 @@ Class {
 	#category : #'GeneralRules-Tests-Migrated'
 }
 
-{ #category : #'test-help' }
+{ #category : #running }
 ReTestCaseShouldNotUseInitializeTest >> tearDown [ 
 
 	self class removeSelector: #initialize.
