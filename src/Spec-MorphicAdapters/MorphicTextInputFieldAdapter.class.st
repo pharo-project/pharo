@@ -48,6 +48,8 @@ MorphicTextInputFieldAdapter >> buildWidget [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		acceptOnCR: self acceptOnCR.
+	
+	self model whenTextChanged: [ plu setText: self model getText].
 		
 	^ plu
 ]
