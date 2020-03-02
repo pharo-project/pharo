@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 NoUnusedTemporaryVariablesLeftTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 2 minute
 ]
 
 { #category : #running }
