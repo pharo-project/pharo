@@ -293,7 +293,7 @@ BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	method replaceFrom: start to: method size with: copy startingAt: start.
 	
 	self deny: method hasSourceCode.
-	self assert: nil method asString = [ 1 + 1 ] asString.
+	self assert: nil method asString equals: [ 1 + 1 ] asString.
 	method removeFromSystem.
 ]
 
