@@ -4,6 +4,12 @@ Class {
 	#category : #'Hiedra-Tests-Model'
 }
 
+{ #category : #accessing }
+HiExamplesTest class >> defaultTimeLimit [ 
+
+	^ 30 seconds
+]
+
 { #category : #tests }
 HiExamplesTest >> exampleMethods [ 
 	^ (((RPackage organizer packages
@@ -19,8 +25,10 @@ HiExamplesTest >> testAllExamples [
 	| exampleMethods |
 	exampleMethods := self exampleMethods.
 	self deny: exampleMethods isEmpty.
-	exampleMethods do: [ :each | 
+	
+	exampleMethods do: [ :each | | anExample |
 		self
-			shouldnt: [ each methodClass instanceSide perform: each selector ]
-			raise: Error ]
+			shouldnt: [ anExample := each methodClass instanceSide perform: each selector ]
+			raise: Error.
+		anExample ifNotNil: [ anExample close ] ]
 ]
