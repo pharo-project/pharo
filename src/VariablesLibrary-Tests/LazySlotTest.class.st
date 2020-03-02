@@ -24,10 +24,10 @@ LazySlotTest >> testLazySlotPrint [
 	| slot |
 	slot := #mySlot => LazySlot default: 5 .
 	self assert: slot printString equals: '#mySlot => LazySlot default: 5'.
-	slot := #mySlot => LazySlot default: [5].
+	slot := #mySlot => LazySlot default: [ 5 ].
 	self assert: slot printString equals: '#mySlot => LazySlot default: [ 5 ]'.
 	"if the default is really a block"
-	slot := #mySlot => LazySlot default: [5].
+	slot := #mySlot => LazySlot default: [ 5 ].
 	self assert: slot printString equals: '#mySlot => LazySlot default: [ 5 ]' 
 ]
 
