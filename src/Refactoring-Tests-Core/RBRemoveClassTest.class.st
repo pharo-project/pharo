@@ -52,5 +52,5 @@ RBRemoveClassTest >> testRemoveEmptySuperclass [
 	refactoring := RBRemoveClassRefactoring classNames: (Array with: ('RBFoo' , 'LintRuleTestData1') asSymbol).
 	self executeRefactoring: refactoring.
 	self assert: (refactoring model classNamed: ('RBFoo' , 'LintRuleTestData1') asSymbol) isNil.
-	self assert: (refactoring model classNamed: #RBTransformationRuleTestData1) superclass equals: (refactoring model classNamed: #RBLintRuleTestData)
+	self assert: (refactoring model classNamed: ('RBTransformation' , 'RuleTestData1') asSymbol) superclass equals: (refactoring model classNamed: #RBLintRuleTestData)
 ]
