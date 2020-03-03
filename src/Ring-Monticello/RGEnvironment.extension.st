@@ -18,8 +18,7 @@ RGEnvironment >> writeIntoFileTree: aMCFileTreeRepository [
 
 { #category : #'*Ring-Monticello' }
 RGEnvironment >> writeIntoTonel: aFileReference [
-
-	(self ask packages select: #isRingResolved) do: [ :aPackage |
+	(self ask packages select: [ :package | package isRingResolved and: package isEmpty not ]) do: [ :aPackage |
 		| aSnapshot info aVersion |
 		aSnapshot := aPackage asMCSnapshot.
 
