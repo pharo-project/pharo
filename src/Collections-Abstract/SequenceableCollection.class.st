@@ -1332,6 +1332,8 @@ SequenceableCollection >> isSortedBy: aBlock [
 	"Return true if the receiver is sorted by the given criterion."
 	"(#(1 2 3) isSortedBy: [:a :b | a <= b ]) >>> true"
 	"(#(1 2 3) isSortedBy: [:a :b | a >= b ]) >>> false"
+	"(#(xa xc xz xb xy) isSortedBy: #last ascending) >>> false"
+	"(#(xa xb xc xy xz) isSortedBy: #last ascending) >>> true"
 
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
@@ -2023,6 +2025,7 @@ SequenceableCollection >> sort: aSortBlock [
 	and return true if the first element should preceed the second one."
 	"(#(3 9 1) sort: [:a :b | a <= b ]) >>> #(1 3 9)"
 	"(#(3 9 1) sort: [:a :b | a >= b ]) >>> #(9 3 1)"
+	"(#(xa xc xz xb xy) sort: #last ascending) >>> #(xa xb xc xy xz)"
 
 	self
 		mergeSortFrom: 1
@@ -2048,6 +2051,7 @@ the first element should preceed the second one. If aSortBlock is nil then <= is
 comparison."
 	"(#(3 9 1) sorted: [:a :b | a <= b ]) >>> #(1 3 9)"
 	"(#(3 9 1) sorted: [:a :b | a >= b ]) >>> #(9 3 1)"
+	"(#(xa xc xz xb xy) sorted: #last ascending) >>> #(xa xb xc xy xz)"
 	
 	^self copy sort: aSortBlockOrNil
 ]
