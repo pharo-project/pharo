@@ -23,8 +23,7 @@ MetacelloAbstractPackageSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 { #category : #querying }
 MetacelloAbstractPackageSpec >> answers [
 
-	answers ifNil: [ answers := #() ].
-	^answers
+	^answers ifNil: [ answers := #() ].
 ]
 
 { #category : #accessing }
