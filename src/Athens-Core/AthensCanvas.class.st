@@ -18,8 +18,7 @@ Class {
 		'paintMode'
 	],
 	#classVars : [
-		'PaintCache',
-		'StrokePaintCache'
+		'PaintCache'
 	],
 	#category : #'Athens-Core-Base'
 }
@@ -45,7 +44,6 @@ AthensCanvas class >> on: aSurface [
 { #category : #private }
 AthensCanvas class >> reset [
 
-	StrokePaintCache := LRUCache new maximumWeight: 100.
 	PaintCache := LRUCache new maximumWeight: 100.
 
 ]
