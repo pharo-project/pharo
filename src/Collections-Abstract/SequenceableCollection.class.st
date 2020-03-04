@@ -2020,7 +2020,7 @@ SequenceableCollection >> select: aBlock [
 	"(#(1 2 3 4) select: [:each | each > 2 ]) >>> #(3 4)"
 	
 	| each |
-	^ self class new: self size streamContents: [ :stream|
+	^ self species new: self size streamContents: [ :stream|
 		1 to: self size do: [ :index |
 			(aBlock value: (each := self at: index))
 				ifTrue: [ stream nextPut: each ]]]
