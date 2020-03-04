@@ -193,19 +193,15 @@ the receiver are empty. Otherwise returns false"
 { #category : #positioning }
 PositionableStream >> match: subCollection [ 
 	"Set the access position of the receiver to be past the next occurrence of the subCollection. Answer whether subCollection is found.  No wildcards, and case does matter."
-	| pattern startMatch |
+	| pattern |
 	pattern := subCollection readStream.
-	startMatch := nil.
-	[ pattern atEnd ] whileFalse: 
-		[ self atEnd ifTrue: [ ^ false ].
-		self next = pattern next 
-			ifTrue: [ pattern position = 1 ifTrue: [ startMatch := self position ] ]
-			ifFalse: 
-				[ pattern position: 0.
-				startMatch ifNotNil: 
-					[ self position: startMatch.
-					startMatch := nil ] ] ].
-	^ true
+	[ self atEnd or: [pattern atEnd] ] whileFalse: 
+		[self skip: pattern position negated.
+		pattern setToStart. 
+		(self skipTo: pattern next) ifFalse: [ ^false ].
+		[pattern atEnd not and: [self next = pattern peek]] whileTrue: [pattern next]
+	].
+	^ pattern atEnd
 ]
 
 { #category : #accessing }
@@ -623,6 +619,13 @@ PositionableStream >> setToEnd [
 	"Set the position of the receiver to the end of the sequence of objects."
 
 	position := readLimit
+]
+
+{ #category : #positioning }
+PositionableStream >> setToStart [
+	"Set the position of the receiver to the start of the sequence of objects."
+
+	self reset
 ]
 
 { #category : #positioning }
