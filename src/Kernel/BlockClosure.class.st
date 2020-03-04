@@ -549,7 +549,7 @@ BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copie
 
 { #category : #printing }
 BlockClosure >> printOn: aStream [
-	aStream nextPutAll: (self method ast sourceNodeForPC: self endPC) sourceCode 
+	aStream nextPutAll: self sourceNode sourceCode 
 ]
 
 { #category : #accessing }
