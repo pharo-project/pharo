@@ -639,6 +639,13 @@ EncoderForSistaV1 class >> literalIndexOfBytecodeAt: pc in: aCompiledMethod [
 	^nil
 ]
 
+{ #category : #accessing }
+EncoderForSistaV1 class >> literalMethodBytecodes [
+	"#[32 92] means pushConstant: x, returnTop" 
+	
+	^ #[32 92] 
+]
+
 { #category : #'compiled method support' }
 EncoderForSistaV1 class >> markerOrNilFor: aMethod [
 	"What is a marker method?  It is method with body like 
