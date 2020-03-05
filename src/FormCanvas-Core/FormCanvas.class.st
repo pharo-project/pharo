@@ -178,7 +178,9 @@ FormCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: b
 { #category : #'drawing-polygons' }
 FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWidth borderColor: borderColor [
 
-	self ensuredEngine
+	| canvasCopy |
+	canvasCopy := (FormCanvas on: form) setOrigin: origin clipRect: clipRect.
+	canvasCopy ensuredEngine
 		drawPolygon: (vertices copyWith: vertices first) asArray
 		fill: aFillStyle
 		borderWidth: borderWidth

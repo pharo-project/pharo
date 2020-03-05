@@ -83,6 +83,11 @@ RubTextFieldMorph >> configureGhostText: aTextArea [
 	aTextArea left: self scrollBounds left 
 ]
 
+{ #category : #compatibility }
+RubTextFieldMorph >> cursorEnd: aKeyboardEvent [ 
+	^ self textMorph editor cursorEnd: aKeyboardEvent 
+]
+
 { #category : #defaults }
 RubTextFieldMorph >> defaultGhostTextMorph [
 	^ super defaultGhostTextMorph beNotWrapped 

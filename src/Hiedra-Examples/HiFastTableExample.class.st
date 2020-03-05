@@ -12,17 +12,17 @@ Class {
 
 { #category : #examples }
 HiFastTableExample class >> example2870IcebergCommits [
-	self openExample: #iceberg_v1_5_6
+	^ self openExample: #iceberg_v1_5_6
 ]
 
 { #category : #examples }
 HiFastTableExample class >> example493PharoCommits [
-	self openExample: #pharo_v60507
+	^ self openExample: #pharo_v60507
 ]
 
 { #category : #examples }
 HiFastTableExample class >> example60RandomCommits [
-	self openExample: #randomlyGenerated
+	^ self openExample: #randomlyGenerated
 ]
 
 { #category : #examples }
@@ -42,7 +42,8 @@ HiFastTableExample class >> openExample: selector [
 	
 	dataSource elements: commits.
 	
-	table openInWindowLabeled: ('Hiedra in FastTable - {1} - {2} elements' format: {selector. commits size})
+	^ table openInWindowLabeled: ('Hiedra in FastTable - {1} - {2} elements' format: {selector. commits size}).
+
 ]
 
 { #category : #accessing }

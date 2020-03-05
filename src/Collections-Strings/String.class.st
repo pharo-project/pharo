@@ -963,6 +963,17 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	
 ]
 
+{ #category : #copying }
+String >> copyUpToSubstring: aSubstring [
+
+	aSubstring ifEmpty: [ 
+		"preserve compatiblity with `readStream upToAll:`"
+		^ String new ].
+	
+	^ (self findString: aSubstring)
+		in: [ :index | index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ] ]
+]
+
 { #category : #converting }
 String >> correctAgainst: wordList [
 	"Correct the receiver: assume it is a misspelled word and return the (maximum of five) nearest words in the wordList.  Depends on the scoring scheme of alike:"

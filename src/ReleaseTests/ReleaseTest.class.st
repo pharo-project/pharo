@@ -167,6 +167,18 @@ ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 ]
 
 { #category : #tests }
+ReleaseTest >> testManifestNamesAccordingToPackageNames [
+	"Make sure package name and manifest name are in synch"
+	
+	|manifestClasses actualManifestNames expectedManifestNames |
+	manifestClasses := self class environment allClasses select: [:each | each isManifest ].
+	actualManifestNames := (manifestClasses collect: [:each | each name ]) sorted.
+	expectedManifestNames := manifestClasses 
+										collect: [:each | TheManifestBuilder manifestClassNameFor: each package name ].
+	self assert: actualManifestNames equals: expectedManifestNames 
+]
+
+{ #category : #tests }
 ReleaseTest >> testMethodsWithUnboundGlobals [
 	| methodsWithUnboundGlobals |
 	"Ensure the environment is clean"
