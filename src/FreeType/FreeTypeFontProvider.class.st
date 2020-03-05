@@ -326,6 +326,11 @@ FreeTypeFontProvider >> guessWindowsFontFolderPath [
 			
 ]
 
+{ #category : #'file paths' }
+FreeTypeFontProvider >> imageRelativeFontFolder [
+  ^SmalltalkImage current imageDirectory asFileReference / 'Fonts'
+]
+
 { #category : #initialization }
 FreeTypeFontProvider >> initialize [
 	super initialize.
@@ -368,11 +373,11 @@ FreeTypeFontProvider >> platformAbsoluteDirectories [
 	^ {}
 ]
 
-{ #category : #'file paths' }
+{ #category : #'font families' }
 FreeTypeFontProvider >> platformImageRelativeDirectories [
 	
 	| directory |
-	directory :=  Smalltalk imagePath asFileReference / 'Fonts'.
+	directory := self imageRelativeFontFolder.
 	directory exists
 		ifTrue: [ ^ { directory } ].
 	^ #()

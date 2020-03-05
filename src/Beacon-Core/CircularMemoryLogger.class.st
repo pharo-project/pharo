@@ -94,6 +94,14 @@ CircularMemoryLogger >> basicLoopCount: anInteger [
 	loopCount := anInteger
 ]
 
+{ #category : #'ston persistence' }
+CircularMemoryLogger >> basicRecordings: aCollection [
+	"Set the receiver's recordings.
+	This is normally only used when loading saved instances from file"
+
+	recordings := aCollection
+]
+
 { #category : #initialize }
 CircularMemoryLogger >> basicReset [
 	"it simply removes all recordings without
