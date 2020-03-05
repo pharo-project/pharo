@@ -6,8 +6,7 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'aBlockContext',
-		'contextOfaBlockContext',
-		'methodReturnBlock'
+		'contextOfaBlockContext'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -18,36 +17,11 @@ BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 	^[ ^resultObject ] 
 ]
 
-{ #category : #'tests - printing' }
-BlockClosureTest >> methodReturnBlock [.
-	^ methodReturnBlock 
-]
-
-{ #category : #'tests - printing' }
-BlockClosureTest >> removeSourceCodeFromMethod: method [
-	| copy start |
-	copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
-	start := method endPC + 1.
-	method replaceFrom: start to: method size with: copy startingAt: start.
-	
-]
-
 { #category : #running }
 BlockClosureTest >> setUp [
 	super setUp.
 	aBlockContext := [100@100 corner: 200@200].
 	contextOfaBlockContext := thisContext.
-]
-
-{ #category : #'tests - printing' }
-BlockClosureTest >> setUpMethodThatReturnsBlock [
-	UndefinedObject compile: 'method ^ [1 + 1]'.
-	methodReturnBlock := UndefinedObject >> #method.
-]
-
-{ #category : #'tests - printing' }
-BlockClosureTest >> tearDownMethodThatReturnsBlock [
-	methodReturnBlock removeFromSystem
 ]
 
 { #category : #'tests - evaluating' }
@@ -308,51 +282,20 @@ BlockClosureTest >> testPrintOn [
 ]
 
 { #category : #'tests - printing' }
-BlockClosureTest >> testPrintOnBlockDefinedInMethodWithSourceCodeUsesTheFormatter [
-	| formatterClass reached metalink block |
-	self setUpMethodThatReturnsBlock.
-	
-	reached := false.
-	
-	metalink := MetaLink new metaObject: [ reached := true ].
-	formatterClass := RBProgramNode formatterClass.
-	"installing the metalink"
-	(formatterClass >> #format:) ast link: metalink.
-	
-	[	
-		self assert: methodReturnBlock hasSourceCode. 
-		block := (methodReturnBlock valueWithReceiver: nil arguments:  #()).
-		block asString.
-		self deny: reached.
-		
-		"We reinstall the method because the original ast is cached"
-		self tearDownMethodThatReturnsBlock.
-		self setUpMethodThatReturnsBlock.
-		
-		self removeSourceCodeFromMethod: methodReturnBlock.
-		self deny: methodReturnBlock hasSourceCode. 
-		block := (methodReturnBlock valueWithReceiver: nil arguments:  #()).
-		block asString.
-		self assert: reached.
-	] 
-	ensure: [ 
-		metalink uninstall. 
-		self tearDownMethodThatReturnsBlock ]
-	
-]
-
-{ #category : #'tests - printing' }
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
-	| block |
-	self setUpMethodThatReturnsBlock. 
-	[ 
-		self removeSourceCodeFromMethod: methodReturnBlock.
-		self deny: methodReturnBlock hasSourceCode.
-		block := methodReturnBlock valueWithReceiver: nil arguments: #().
-		self assert: block asString 
-		  	  equals: [ 1 + 1 ] asString.
-	] 
-	ensure: [ self tearDownMethodThatReturnsBlock ]
+	| method copy start block |
+	"Generating method with source code"
+	UndefinedObject compile: 'method ^ [1 + 2]'.
+	method := UndefinedObject >> #method.
+	["Removing the source code of method"
+		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
+		start := method endPC + 1.
+		method replaceFrom: start to: method size with: copy startingAt: start.
+		block := nil method.
+		
+		self deny: method hasSourceCode.
+		self assert: block asString equals: [ 1 + 2 ] asString.
+	] ensure: [ method removeFromSystem ]
 ]
 
 { #category : #tests }
