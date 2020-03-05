@@ -23,6 +23,12 @@ TimeMeasuringTest >> initialize [
 	shouldProfile := false.
 ]
 
+{ #category : #private }
+TimeMeasuringTest >> instanceVariablesToKeep [
+
+	^ super instanceVariablesToKeep , #(shouldProfile)
+]
+
 { #category : #performance }
 TimeMeasuringTest >> measure: measuredBlock [ 
 	shouldProfile 

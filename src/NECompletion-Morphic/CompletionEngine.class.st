@@ -69,6 +69,18 @@ CompletionEngine >> contextClass: aClass [
 	contextClass := aClass
 ]
 
+{ #category : #'menu morph' }
+CompletionEngine >> createContext [
+	
+	| class |
+	class := editor model ifNotNil: [ :model | model selectedClassOrMetaClass ].
+	^ self contextClass
+		engine: self
+		class: class
+		source: editor text string
+		position: editor caret - 1
+]
+
 { #category : #accessing }
 CompletionEngine >> editor [
 	^ editor
@@ -237,17 +249,10 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 
 { #category : #'menu morph' }
 CompletionEngine >> openMenu [
-	| theMenu class |
+	| theMenu |
 	self stopCompletionDelay.
 	
-	class := editor model ifNotNil: [ :model | model selectedClassOrMetaClass ].
-	
-	context := self contextClass
-				engine: self
-				class: class
-				source: editor text string
-				position: editor caret - 1.
-
+	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
 				position: (editor selectionPosition: context completionToken).
