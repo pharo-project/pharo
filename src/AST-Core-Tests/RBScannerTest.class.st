@@ -9,7 +9,12 @@ Class {
 
 { #category : #initialize }
 RBScannerTest >> buildScannerForText: source [
-	^RBScanner on: (ReadStream on: source)
+	^ self scannerClass on: source readStream
+]
+
+{ #category : #initialize }
+RBScannerTest >> scannerClass [
+	^ RBScanner
 ]
 
 { #category : #tests }
@@ -92,18 +97,44 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
 		raise: SyntaxErrorNotification
 ]
 
-{ #category : #tests }
-RBScannerTest >> testScanTokens [
+{ #category : #'tests - creation api' }
+RBScannerTest >> testScanTokenObjects1 [
 	| inp exp |
 	inp := 'Object subclass: #NameOfSubclass'.
 	exp := {'Object'.
 	'subclass:'.
 	#NameOfSubclass asString}.
-	self assert: (RBScanner scanTokens: inp) equals: exp.
+	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp.
+	
+]
+
+{ #category : #'tests - creation api' }
+RBScannerTest >> testScanTokenObjects2 [
+	| inp exp |
 	inp := 'classVariableNames: '''' "ha ha"
 package: ''UndefinedClasses-Experiment'.
 	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
-	self assert: (RBScanner scanTokens: inp) equals: exp
+	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
+]
+
+{ #category : #'tests - creation api' }
+RBScannerTest >> testScanTokens1 [
+	| inp exp |
+	inp := 'Object subclass: #NameOfSubclass'.
+	exp := {'Object'.
+	'subclass:'.
+	#NameOfSubclass asString}.
+	self assert: (self scannerClass scanTokens: inp) equals: exp.
+	
+]
+
+{ #category : #'tests - creation api' }
+RBScannerTest >> testScanTokens2 [
+	| inp exp |
+	inp := 'classVariableNames: '''' "ha ha"
+package: ''UndefinedClasses-Experiment'.
+	exp := {'classVariableNames:' . '' . 'package:' . 'UndefinedClasses-Experiment'}.
+	self assert: (self scannerClass scanTokens: inp) equals: exp
 ]
 
 { #category : #utilities }
