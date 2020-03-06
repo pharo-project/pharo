@@ -341,6 +341,9 @@ BlockClosure >> ifError: errorHandlerBlock [
 				ifFalse: [self error: err]]
 "
 
+	(errorHandlerBlock argumentCount > 1) ifTrue: [ 
+		self deprecated: 'Error handler no longer accepts more than one argument' ].
+
 	^ self on: Error do: [:ex |
 		errorHandlerBlock cull: ex]
 ]
