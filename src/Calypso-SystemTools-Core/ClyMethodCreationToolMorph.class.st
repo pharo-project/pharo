@@ -69,11 +69,12 @@ ClyMethodCreationToolMorph >> belongsToCurrentBrowserContext [
 { #category : #initialization }
 ClyMethodCreationToolMorph >> decorateContainerTab [
 	| title |
+	
 	super decorateContainerTab.
 	
-	browser metaLevelScope == ClyClassSideScope ifFalse: [ ^self].
+	browser metaLevelScope == ClyClassSideScope ifFalse: [ ^ self ].
 	 
-	title := self defaultTitle asText allBold asStringMorph. 
+	title := self defaultTitle asText allBold. 
 	containerTab label: title
 ]
 

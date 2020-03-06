@@ -1,8 +1,8 @@
 Class {
 	#name : #SpAbstractListPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
-	#traits : 'TSpHaveWrappingScrollBars + SpTContextMenu',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait + SpTContextMenu classTrait',
+	#traits : 'SpTHaveWrappingScrollBars + SpTContextMenu',
+	#classTraits : 'SpTHaveWrappingScrollBars classTrait + SpTContextMenu classTrait',
 	#instVars : [
 		'#selectionMode',
 		'#activationBlock',
@@ -105,7 +105,7 @@ SpAbstractListPresenter >> initialize [
 	
 	activationBlock := [ ].
 	verticalAlignment := SpVerticalAlignment new.
-	
+
 	self withScrollBars.
 	self model: 	self newEmptyModel.
 
@@ -125,6 +125,13 @@ SpAbstractListPresenter >> isMultipleSelection [
 SpAbstractListPresenter >> itemAt: anInteger [ 
 	
 	^ self model at: anInteger
+]
+
+{ #category : #private }
+SpAbstractListPresenter >> itemAtPath: anArray [
+	"This is to provide polymorphism with SpTreeTablePresentrer"
+
+	^ self listElementAt: anArray first
 ]
 
 { #category : #api }
@@ -317,6 +324,7 @@ SpAbstractListPresenter >> whenActivatedDo: aBlock [
 
 { #category : #'api-events' }
 SpAbstractListPresenter >> whenItemFilterBlockChangedDo: aBlock [
+
 	self property: #itemFilter whenChangedDo: aBlock
 ]
 
@@ -324,6 +332,12 @@ SpAbstractListPresenter >> whenItemFilterBlockChangedDo: aBlock [
 SpAbstractListPresenter >> whenModelChangedDo: aBlock [
 
 	model whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpAbstractListPresenter >> whenSearchChangedDo: aBlock [
+
+	self property: #searchEnabled whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

@@ -23,9 +23,17 @@ SpStyle class >> createDefaultStyleSheet [
 	Geometry { #height: 25 },
 	.label [
 		Geometry { #hResizing: true },
+		.headerError [Draw { #color:  Color{ #red: 1, #green: 0, #blue: 0, #alpha: 1}}  ],
+		.headerSuccess [Draw { #color: Color{ #red: 0, #green: 1, #blue: 0, #alpha: 1}}  ],
+		.header [ 
+			Draw { #color: Color{ #rgb: 622413393 }},
+			Font { #name: "Lucida Grande", #size: 10, #bold: true } ],
 		.shortcut [ 
 			Draw { #color: Color{ #rgb: 622413393 } },
 			Font { #name: "Lucida Grande", #size: 10 }
+		],
+		.fixed [ 
+			Geometry { #hResizing: false, #width: 100 }
 		],
 		.dim [
 			Draw { #color : Color{ #rgb: 708480675 } }
@@ -35,7 +43,10 @@ SpStyle class >> createDefaultStyleSheet [
 		Geometry { #hResizing: true }		
 	],
 	.button [  
-		Geometry { #width: 100 }
+		Geometry { #width: 100 },
+		.small [
+		   Geometry { #width: 26 }
+		]
 	],
 	.checkBox [  
 		Geometry { #hResizing: true }
@@ -77,7 +88,7 @@ SpStyle class >> createDefaultStyleSheet [
 	],
 	.code [
 		Font { #name : "Source Code Pro", #size : 10 }
-	]
+	] 
 ]
 '
 ]

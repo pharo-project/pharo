@@ -394,7 +394,7 @@ OCBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 { #category : #tests }
 OCBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralVariableGlobale.
+	ir1 := IRBuilderTest new setUp; testLiteralVariableGlobale.
 	method := ir1 compiledMethod.
 	ir2 := IRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.

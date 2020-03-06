@@ -37,6 +37,7 @@ OSTouchOneFingerDoubleTapDetector class >> doubleTouchSpeedSettingsOn: aBuilder 
 	(aBuilder setting: #doubleTouchSpeed)
 		target: self;
 		label: 'Max time between tap (ms)';
+		default: 700;
 		description:
 				'The time between two touch to send double touch (in milliseconds)';
 		parent: #doubleTapGesture
@@ -65,6 +66,7 @@ OSTouchOneFingerDoubleTapDetector class >> maxDistanceSettingsOn: aBuilder [
 	(aBuilder setting: #maxDistance)
 		target: self;
 		label: 'Max distance between tap (%)';
+		default: 0.05;
 		description:
 				'The distance tolerance to send double touch event (in percentage of the window)';
 		parent: #doubleTapGesture

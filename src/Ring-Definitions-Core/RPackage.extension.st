@@ -14,9 +14,3 @@ RPackage >> changeRecordForOverriddenMethod: aMethodDefinition [
 				includesMethodCategory: protocol 
 				ofClass: aMethodDefinition actualClass ]
 ]
-
-{ #category : #'*Ring-Definitions-Core' }
-RPackage >> methodReferences [
-	
-	^ self methods collect: [:each | each methodReference] thenSelect: [:each| each isValid and: [each isLocalSelector]].
-]

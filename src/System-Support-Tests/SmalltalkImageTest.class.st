@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #'tests-arguments' }
+SmalltalkImageTest >> testAtIfPresentIfAbsent [
+	| image |
+	image := SmalltalkImage current.
+	self assert: (image at: self class name asSymbol ifPresent: [ :c | true ] ifAbsent: [ false ]).
+	self deny: (image at: #ImprobableClassNameForTest124029 ifPresent: [ :c | true ] ifAbsent: [ false ])
+]
+
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractAllKinds [
 	| args extract keys |
 	args := #('ArgWithoutMinus1' '-ArgWithMinus1' 'ArgWithoutMinus2' 'ArgWithoutMinus3' '-ArgWithMinus2').

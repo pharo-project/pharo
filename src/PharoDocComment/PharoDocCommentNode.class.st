@@ -70,6 +70,7 @@ PharoDocCommentNode class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #docCommentEnabled)
 		target: self;
+		default: true;
 		description:
 			'Allow styled and executable example expressions within method comments. 
 		Example: 

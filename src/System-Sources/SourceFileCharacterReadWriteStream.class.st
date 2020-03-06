@@ -49,7 +49,7 @@ SourceFileCharacterReadWriteStream >> cr [
 
 { #category : #accessing }
 SourceFileCharacterReadWriteStream >> ensureWrittenPosition: aPosition [
-	writeStream wrappedStream ensureWrittenPosition: aPosition
+	^ writeStream wrappedStream ensureWrittenPosition: aPosition
 ]
 
 { #category : #accessing }

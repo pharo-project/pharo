@@ -41,6 +41,8 @@ todo
 Class {
 	#name : #SpListPresenter,
 	#superclass : #SpAbstractListPresenter,
+	#traits : 'SpTSearchable',
+	#classTraits : 'SpTSearchable classTrait',
 	#instVars : [
 		'#allowToSelect => SpObservableSlot',
 		'#autoDeselect => SpObservableSlot',
@@ -168,7 +170,9 @@ SpListPresenter >> icons: aBlock [
 
 { #category : #initialization }
 SpListPresenter >> initialize [
+
 	super initialize.
+	self initializeTSearchable.
 	autoDeselect := true.
 	allowToSelect := true.
 	display := [ :object | object asStringOrText ]

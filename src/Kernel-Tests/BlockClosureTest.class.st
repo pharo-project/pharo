@@ -280,6 +280,23 @@ BlockClosureTest >> testPrintOn [
 	self assert: [ 1 + 2 ] printString equals: '[ 1 + 2 ]'
 ]
 
+{ #category : #'tests - printing' }
+BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
+	| method copy start block |
+	"Generating method with source code"
+	UndefinedObject compile: 'method ^ [1 + 2]'.
+	method := UndefinedObject >> #method.
+	["Removing the source code of method"
+		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
+		start := method endPC + 1.
+		method replaceFrom: start to: method size with: copy startingAt: start.
+		block := nil method.
+		
+		self deny: method hasSourceCode.
+		self assert: block asString equals: [ 1 + 2 ] asString.
+	] ensure: [ method removeFromSystem ]
+]
+
 { #category : #tests }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"

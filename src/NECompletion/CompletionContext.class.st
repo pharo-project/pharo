@@ -10,10 +10,10 @@ Class {
 		'completionToken',
 		'ast',
 		'node',
-		'isWorkspace',
 		'class',
 		'entries',
-		'editor'
+		'sorter',
+		'engine'
 	],
 	#classVars : [
 		'SorterClass'
@@ -41,29 +41,9 @@ CompletionContext class >> sorterClass: aSorter [
 ]
 
 { #category : #entries }
-CompletionContext >> commonPrefix [
-	"Longest match among the typed text and all menu entries"
+CompletionContext >> activateEntryAt: anIndex [
 
- 	| seed matchLengths prefixLength |
-	entries := self entries.
-	seed := entries first contents asString.
-	matchLengths := entries allButFirst
-		collect: [ :entry | seed charactersExactlyMatching: entry contents asString ]
-		thenSelect: [ :e | e >= completionToken size ].
-	prefixLength := matchLengths isEmpty
-		ifTrue: [ 0 ]
-		ifFalse: [ matchLengths min ].
-	^ seed first: prefixLength.
-]
-
-{ #category : #accessing }
-CompletionContext >> completionAt: aNumber [
-	| entry |
-	
-	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECPreferences spaceAfterCompletion 
-		ifTrue: [ entry, ' ' ]
-		ifFalse: [ entry ]
+	(self entries at: anIndex) activateOn: self
 ]
 
 { #category : #accessing }
@@ -71,16 +51,18 @@ CompletionContext >> completionToken [
 	^ completionToken ifNil: [ ^ ''  ]
 ]
 
+{ #category : #accessing }
+CompletionContext >> engine [
+	^ engine
+]
+
 { #category : #'initialize-release' }
 CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [ 
 	class := aClass. 
 	source := aString.
 	position := anInteger.
-	editor := aCompletionEngine editor.
-	
-	isWorkspace:= aCompletionEngine 
-		ifNotNil: [ aCompletionEngine isScripting ]
-		ifNil: [ false ].
+	engine := aCompletionEngine.
+	sorter := self class sorterClass new context: self.	
 	self parseSource.
 	node := ast nodeForOffset: position.
 	completionToken := node completionToken: position
@@ -108,10 +90,12 @@ CompletionContext >> hasMessage [
 
 { #category : #entries }
 CompletionContext >> initEntries [
-	| suggestionsList sorter |
-	sorter := self class sorterClass new context: self.
-	suggestionsList := sorter sortCompletionList: (node completionEntries: position).
-	^ suggestionsList
+	^ sorter sortCompletionList: (node completionEntries: position) asOrderedCollection
+]
+
+{ #category : #parsing }
+CompletionContext >> isWorkspace [
+	^ engine notNil and: [ engine isScripting ]
 ]
 
 { #category : #accessing }
@@ -140,18 +124,23 @@ CompletionContext >> node [
 CompletionContext >> parseSource [
 	ast := class compiler
 		source: source;
-		noPattern: isWorkspace;
-		requestor: editor;
+		noPattern: self isWorkspace;
 		options: #(+ optionParseErrors + optionSkipSemanticWarnings);
 		parse.
 	ast doSemanticAnalysis.
 	TypingVisitor new visitNode: ast
 ]
 
+{ #category : #replacement }
+CompletionContext >> replaceTokenInEditorWith: aString [
+	
+	engine replaceTokenInEditorWith: aString
+]
+
 { #category : #accessing }
-CompletionContext >> position [
-	"not used outside of the instance creation method, but we make it available so sorter plugins could use it"
-	^ position
+CompletionContext >> sorter: anObject [
+	"this allows tests to change the sorter"
+	sorter := anObject
 ]
 
 { #category : #accessing }

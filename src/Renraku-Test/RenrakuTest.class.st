@@ -13,7 +13,7 @@ RenrakuTest >> testAsClassRuleTransformation [
 			#', self class name, ' asClass').
 	
 	critique := asClassMethod critiques detect: [ :crit |
-		crit rule class = AsClassRule ].
+		crit rule class = ReAsClassRule ].
 	
 	self assert: critique change class equals: RBAddMethodChange.
 	self assert: (critique change source includesSubstring: 'self class environment at:')
@@ -78,22 +78,22 @@ RenrakuTest >> testBanForPackage [
 RenrakuTest >> testNoClassComment [
 		
 	self assert: (testClass critiques anySatisfy: [ :critic |
-		critic rule class = RBNoClassCommentRule ]).
+		critic rule class = ReNoClassCommentRule ]).
 	
 	testClass comment: 'Now I have a comment'.
 	
 	self assert: (testClass critiques noneSatisfy: [ :critic |
-		critic rule class = RBNoClassCommentRule ]).
+		critic rule class = ReNoClassCommentRule ]).
 ]
 
 { #category : #tests }
 RenrakuTest >> testUnclassifiedMethod [
 
 	self assert: (testMethod critiques anySatisfy: [ :critic |
-		critic rule class = RBUnclassifiedMethodsRule ]).
+		critic rule class = ReUnclassifiedMethodsRule ]).
 	
 	testMethod protocol: 'some protocol'.
 	
 	self assert: (testMethod critiques noneSatisfy: [ :critic |
-		critic rule class = RBUnclassifiedMethodsRule ]).
+		critic rule class = ReUnclassifiedMethodsRule ]).
 ]

@@ -549,14 +549,13 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 
 { #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
-	| ir method newMethod instance |
+	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileModificationAfterNotInlined) parseTree generate.
-	instance := OCOpalExamples new.
-
+	
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
-	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleWhileModificationAfterNotInlined
+	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals: OCOpalExamples new exampleWhileModificationAfterNotInlined
 ]
 
 { #category : #'tests-blocks-optimized' }
@@ -573,38 +572,35 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 
 { #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined [
-	| ir method newMethod instance |
+	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileModificationBeforeNotInlined) parseTree generate.
-	instance := OCOpalExamples new.
 
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
-	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleWhileModificationBeforeNotInlined
+	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals:  OCOpalExamples new exampleWhileModificationBeforeNotInlined
 ]
 
 { #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
-	| ir method newMethod instance |
+	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileWithTemp) parseTree generate.
-	instance := OCOpalExamples new.
 
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
-	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleWhileWithTemp
+	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals: OCOpalExamples new exampleWhileWithTemp
 ]
 
 { #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
-	| ir method newMethod instance |
+	| ir method newMethod |
 	method := (OCOpalExamples >> #exampleWhileWithTempNotInlined) parseTree generate.
-	instance := OCOpalExamples new.
 
 	ir := IRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
-	self assert: (newMethod valueWithReceiver: instance arguments: #()) equals: instance exampleWhileWithTempNotInlined
+	self assert: (newMethod valueWithReceiver: OCOpalExamples new arguments: #()) equals: OCOpalExamples new exampleWhileWithTempNotInlined
 ]
 
 { #category : #'tests-variables' }

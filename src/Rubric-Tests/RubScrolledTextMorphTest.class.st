@@ -1,7 +1,7 @@
 Class {
 	#name : #RubScrolledTextMorphTest,
 	#superclass : #TestCase,
-	#category : #'Rubric-Tests'
+	#category : #'Rubric-Tests-Base'
 }
 
 { #category : #tests }

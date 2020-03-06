@@ -80,7 +80,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	PharoDarkTheme beCurrent.
+	PharoLightTheme beCurrent.
 	
 	SDL_Event initialize.
 	
@@ -108,33 +108,35 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: 'shift-tests' ].
+
 		spec baseline: 'Traits' with: [ 
 			spec
 				repository: repository;
 				loads: 'traits-tests' ].
+
 		spec baseline: 'Slot' with: [ 
 			spec
 				repository: repository;
 				loads: 'slot-tests' ].
+
 		spec baseline: 'Clap' with: [ 
 			spec
 				repository: repository;
 				loads: 'development' ].
+
 		spec baseline: 'SUnit' with: [ 
 			spec
 				repository: repository;
 				loads: 'Tests' ].
 		
+		spec baseline: 'BlueInk' with: [ 
+ 			spec repository: repository; loads: #('Tests') ].				
+
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Tests' ) ].
-	
-		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('Core') ].	
-		"no idea why this is breaking when we load the tests (that depend on AST-Core-Tests"
-			
-			
+				loads: #( 'Tests' 'UI-Tests' ) ].
+				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
@@ -190,7 +192,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.3';
+		repository: 'github://pharo-vcs/iceberg:v1.6.6';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

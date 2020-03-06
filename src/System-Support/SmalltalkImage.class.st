@@ -220,6 +220,13 @@ SmalltalkImage >> at: key ifPresent: aBlock [
 ]
 
 { #category : #'to clean later' }
+SmalltalkImage >> at: key ifPresent: aBlock ifAbsent: anotherBlock [
+	"Lookup the given key in the globals. If it is present, answer the value of evaluating the given block with the value associated with the key. Otherwise answer the value of the second block."
+
+	^ globals at: key ifPresent: aBlock ifAbsent: anotherBlock
+]
+
+{ #category : #'to clean later' }
 SmalltalkImage >> at: aKey put: anObject [ 
 	"Set the global at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
@@ -319,8 +326,8 @@ SmalltalkImage >> changesSuffix [
 ]
 
 { #category : #'class and trait names' }
-SmalltalkImage >> classNamed: className [ 
-	^globals classOrTraitNamed: className.
+SmalltalkImage >> classNamed: className [
+	^ globals classOrTraitNamed: className
 ]
 
 { #category : #'class and trait names' }
@@ -449,12 +456,12 @@ SmalltalkImage >> compiler [
 		environment: self globals
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 SmalltalkImage >> compilerClass [
 	^ self class compilerClass
 ]
 
-{ #category : #acccessing }
+{ #category : #accessing }
 SmalltalkImage >> compilerClass: aClass [
 
 	self class compilerClass: aClass
@@ -1076,17 +1083,14 @@ SmalltalkImage >> logStdErrorDuring: aBlock [
 { #category : #miscellaneous }
 SmalltalkImage >> logStdOutDuring: aBlock [
 	| stderr |
-	[
-		"install the line end conversion and force initialize the converter"
-		stderr := ZnNewLineWriterStream on: (ZnCharacterWriteStream
-			on: Stdio out
-			encoding: 'utf8').
-		
-		"reset coloring"
-		stderr nextPut: Character escape; nextPutAll: '[0m'.
-		"rund the loggin block"
-		aBlock value: stderr.
-	] on: Error do: [ :e| "we don't care if the logging to stdout fails..." ].
+	"install the line end conversion and force initialize the converter"
+	stderr := ZnNewLineWriterStream
+		on: (ZnCharacterWriteStream on: Stdio stdout encoding: 'utf8').
+	
+	[aBlock value: stderr.] 
+		on: Error do: [ "If the block fails we don't do nothing. This can lead to recursive errors" ].
+
+	stderr flush.
 ]
 
 { #category : #'memory space' }
@@ -1158,7 +1162,7 @@ SmalltalkImage >> memoryHogs [
 SmalltalkImage >> metacelloPlatformAttributes [
     "Returns the tags for the conditional platform loading in Metacello. Pay attention the order is important: from most  to least general." 
     "For release integrators, we should not have #'pharo1.3x' **and** #'pharo1.4.x'"
-   ^ #(#squeakCommon #pharo #'pharo8.x' #'pharo8.0.x')
+   ^ #(#squeakCommon #pharo #'pharo9.x' #'pharo9.0.x')
 ]
 
 { #category : #'special objects' }

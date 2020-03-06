@@ -287,7 +287,7 @@ Float >> abs [
 { #category : #printing }
 Float >> absPrintExactlyOn: aStream base: base [
 	"Print my value on a stream in the given base.  Assumes that my value is strictly
-	positive; negative numbers, zero, and NaNs have already been handled elsewhere.
+	positive; negative numbers, zero, NaNs and infinite numbers have already been handled elsewhere.
 	Based upon the algorithm outlined in:
 	Robert G. Burger and R. Kent Dybvig
 	Printing Floating Point Numbers Quickly and Accurately
@@ -297,9 +297,6 @@ Float >> absPrintExactlyOn: aStream base: base [
 	by using exact integer arithmetic."
 
 	| fBase significand exp baseExpEstimate be be1 r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 fixedFormat decPointCount |
-	self isInfinite ifTrue: [
-			aStream nextPutAll: 'Float infinity'.
-			^ self].
 	fBase := base asFloat.
 	significand := self significandAsInteger.
 	roundingIncludesLimits := significand even.
@@ -375,7 +372,7 @@ Float >> absPrintExactlyOn: aStream base: base [
 { #category : #printing }
 Float >> absPrintInexactlyOn: aStream base: base [
 	"Print my value on a stream in the given base.  Assumes that my value is strictly
-	positive; negative numbers, zero, and NaNs have already been handled elsewhere.
+	positive; negative numbers, zero, NaNs and infinite numbers have already been handled elsewhere.
 	Based upon the algorithm outlined in:
 	Robert G. Burger and R. Kent Dybvig
 	Printing Floating Point Numbers Quickly and Accurately
@@ -385,7 +382,6 @@ Float >> absPrintInexactlyOn: aStream base: base [
 	about 3 lsbs of accuracy compared to an exact conversion."
 
 	| significantBits fBase exp baseExpEstimate r s mPlus mMinus scale d tc1 tc2 fixedFormat decPointCount |
-	self isInfinite ifTrue: [aStream nextPutAll: 'Float infinity'. ^ self].
 	significantBits := 50.  "approximately 3 lsb's of accuracy loss during conversion"
 	fBase := base asFloat.
 	exp := self exponent.
@@ -840,6 +836,11 @@ Float >> deepCopy [
 ]
 
 { #category : #'mathematical functions' }
+Float >> exponent [
+	^ self subclassResponsibility
+]
+
+{ #category : #'mathematical functions' }
 Float >> floorLog: radix [
 	"Answer the floor of the log base radix of the receiver.
 	The result may be off by one due to rounding errors, except in base 2."
@@ -1117,6 +1118,11 @@ Float >> storeOn: aStream base: base [
 				ifFalse: [self > 0.0
 						ifTrue: [aStream nextPutAll: 'Float infinity']
 						ifFalse: [aStream nextPutAll: 'Float infinity negated']]]
+]
+
+{ #category : #'mathematical functions' }
+Float >> timesTwoPower: anInteger [ 
+	^ self subclassResponsibility
 ]
 
 { #category : #copying }

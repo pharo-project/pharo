@@ -1,6 +1,7 @@
 "
 I'm a simple formatter that prints nodes (without using source code).
- I'm useful when AST are programmatically assembled. 
+I'm useful when AST are programmatically assembled. 
+
 I could be improved, but the goal is to get the information is a more or less ok form.
 
 "
@@ -10,8 +11,6 @@ Class {
 	#instVars : [
 		'codeStream',
 		'indent',
-		'lookaheadCode',
-		'originalSource',
 		'lineStart'
 	],
 	#classVars : [
@@ -59,8 +58,10 @@ RBSimpleFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 
 { #category : #private }
 RBSimpleFormatter >> basicFormatCommentFor: aComment [
-
-	codeStream nextPutAll: (originalSource copyFrom: aComment start to: aComment stop)
+	codeStream
+		nextPut: $";
+		nextPutAll: aComment contents;
+		nextPut: $"
 ]
 
 { #category : #private }
@@ -84,7 +85,6 @@ RBSimpleFormatter >> codeStream: anObject [
 
 { #category : #'public interface' }
 RBSimpleFormatter >> format: aParseTree [
-	originalSource := aParseTree source.
 	self visitNode: aParseTree.
 	^ codeStream contents
 ]
@@ -127,9 +127,7 @@ RBSimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 { #category : #'private-formatting' }
 RBSimpleFormatter >> formatCommentsFor: aNode [
 
-	originalSource ifNil: [ ^ self ].
-	aNode comments
-		do: [ :each | 
+	aNode comments do: [ :each | 
 			self
 				basicFormatCommentFor: each;
 				newLine
@@ -150,9 +148,7 @@ RBSimpleFormatter >> formatMethodBodyFor: aMethodNode [
 { #category : #'private-formatting' }
 RBSimpleFormatter >> formatMethodCommentFor: aNode [
 
-	originalSource ifNil: [ ^ self ].
-	aNode comments
-		do: [ :each | 
+	aNode comments do: [ :each | 
 			self
 				basicFormatCommentFor: each;
 				newLine
@@ -220,9 +216,7 @@ RBSimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 { #category : #'private-formatting' }
 RBSimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 
-	originalSource ifNil: [ ^ self ].
-	aStatementNode statementComments
-		do: [ :each | 
+	aStatementNode statementComments do: [ :each | 
 			self
 				newLine;
 				basicFormatCommentFor: each
@@ -245,16 +239,6 @@ RBSimpleFormatter >> formatTemporariesFor: aSequenceNode [
 						formatStatementCommentsFor: each;
 						space ]].
 	self newLine.
-]
-
-{ #category : #private }
-RBSimpleFormatter >> formattedSourceFor: aNode [
-	^ lookaheadCode
-		at: aNode
-		ifAbsentPut: [ 
-			self class new
-				indent: 1;
-				format: aNode ]
 ]
 
 { #category : #private }
@@ -298,7 +282,6 @@ RBSimpleFormatter >> initialize [
 	super initialize.
 	lineStart := 0.
 	self indent: 0.
-	lookaheadCode := IdentityDictionary new.
 	codeStream := (String new: 256) writeStream
 	
 ]
@@ -478,8 +461,6 @@ RBSimpleFormatter >> visitMethodNode: aMethodNode [
 { #category : #visiting }
 RBSimpleFormatter >> visitNode: aNode [
 	| needsParenthesis |
-	(lookaheadCode includesKey: aNode)
-		ifTrue: [ ^ self writeString: (lookaheadCode at: aNode) ].
 	needsParenthesis := self needsParenthesisFor: aNode.
 	self
 		bracketWith:

@@ -1,3 +1,6 @@
+"
+I implement single selection mode (my users can select just one element of list or table)
+"
 Class {
 	#name : #SpSingleSelectionMode,
 	#superclass : #SpAbstractSelectionMode,

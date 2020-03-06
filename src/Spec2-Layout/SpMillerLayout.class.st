@@ -5,8 +5,8 @@ Since I am intended to be used dinamically (adding/removing components on demand
 Class {
 	#name : #SpMillerLayout,
 	#superclass : #SpExecutableLayout,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#direction',
 		'#spacing',

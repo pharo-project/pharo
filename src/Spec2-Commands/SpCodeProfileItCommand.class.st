@@ -4,6 +4,11 @@ Class {
 	#category : #'Spec2-Commands-Code'
 }
 
+{ #category : #defaults }
+SpCodeProfileItCommand class >> defaultIconName [
+	^#smallProfile 
+]
+
 { #category : #default }
 SpCodeProfileItCommand class >> defaultName [
 
@@ -12,6 +17,6 @@ SpCodeProfileItCommand class >> defaultName [
 
 { #category : #execution }
 SpCodeProfileItCommand >> execute [
-
+	self flag: 'TODO'.
 	'OK' crLog
 ]

@@ -35,7 +35,7 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 	self presenter whenShowColumnHeadersChangedDo: [ :showColumns |
 		self refreshShowColumnHeaders ].
 
-	self presenter whenModelChangedDo: [ widget refresh ].
+	self presenter whenModelChangedDo: [ self refreshModel ].
 	self presenter whenColumnsChangedDo: [ self refreshColumnsInWidget ].
 	
 	tableMorph setBalloonText: self help.
@@ -52,8 +52,10 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 
 	tableMorph dataSource: self newDataSource.
 	
-	self presenter whenItemFilterBlockChangedDo: [ :block | self 
-		updateItemFilterBlockWith: block ].
+	self presenter whenItemFilterBlockChangedDo: [ :block | 
+		self updateItemFilterBlockWith: block ].
+	self presenter whenSearchChangedDo: [ 
+		self updateSearch ].
 	self updateItemFilterBlockWith: self itemFilter
 ]
 
@@ -140,6 +142,13 @@ SpMorphicTableAdapter >> refreshColumnsInWidget [
 SpMorphicTableAdapter >> refreshList [
 
 	^ self widget refresh
+]
+
+{ #category : #refreshing }
+SpMorphicTableAdapter >> refreshModel [
+
+	widget dataSource resetElements.
+	widget refresh
 ]
 
 { #category : #factory }

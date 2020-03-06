@@ -349,11 +349,13 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 		parent: #codeEditing;
 		with: [ (aBuilder setting: #backgroundColor)
 				target: self;
+				default: Color white;
 				description: 'The default editor background color';
 				label: 'Background'.
 			(aBuilder setting: #textColor)
 				target: self;
 				description: 'The default editor text color';
+				default: Color black;
 				label: 'Text color'.
 			(aBuilder group: #LineNumbers)
 				target: self;
@@ -361,18 +363,22 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 				description: 'line numbers settings';
 				with: [ (aBuilder setting: #lineNumbersFont)
 						target: self;
+						default: (TextStyle default fontOfPointSize: 7);
 						description: 'Font used for line numbers';
 						label: 'Line numbers font'.
 					(aBuilder setting: #lineNumbersTextColor)
 						target: self;
+						default: Color veryDarkGray;
 						description: 'Color used for line numbers';
 						label: 'Line numbers color'.
 					(aBuilder setting: #lineNumbersBackgroundColor)
 						target: self;
+						default: (Color r: 0.9198435972629521 g: 0.9198435972629521 b: 0.9198435972629521 alpha: 1.0);
 						description: 'Color used for line numbers background';
 						label: 'Line numbers background color' ].
 			(aBuilder setting: #highlightMessageSend)
 				target: self;
+				default: true;
 				description: 'In a Smalltalk text editor, highlight message sends on mouse over with shift key pressed.';
 				label: 'Highlight Message Send' ]
 ]

@@ -214,7 +214,7 @@ MethodMapTest >> testThisContextSourceNode [
 { #category : #'testing - ast mapping' }
 MethodMapTest >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
+	"we get the method node as this is what created the context"
 	inlinedBlockSourceNode := self inlinedBlockSourceNode.
-	self assert: (inlinedBlockSourceNode isKindOf: RBBlockNode).
-	self assert: inlinedBlockSourceNode equals: (self parseExpression: '[ :i | ^ thisContext sourceNode ]')
+	self assert: (inlinedBlockSourceNode isKindOf: RBMethodNode).
 ]

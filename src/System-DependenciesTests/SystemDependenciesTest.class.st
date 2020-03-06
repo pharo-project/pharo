@@ -58,9 +58,8 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
-	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'Deprecated80')
+	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
+	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests')
 ]
 
 { #category : #'known dependencies' }
@@ -84,8 +83,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #(Deprecated80)
+	^ #()
 ]
 
 { #category : #'known dependencies' }
@@ -150,9 +148,8 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	self flag: #todo. "The Deprecated80 dependency should soon vanish. This is just the time we finish Spec migration."
-	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' "Those are added for the development of Spec2 and should probably be removed"
-	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' 'Deprecated80')
+	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
+	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
 ]
 
 { #category : #utilities }
@@ -208,7 +205,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
-		{ BaselineOfCommander2 name }, BaselineOfCommander2 allPackageNames,
+		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
@@ -281,7 +278,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSpec.
-	BaselineOfCommander2.
 	BaselineOfSpec2.
 	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
@@ -317,6 +313,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
+	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
 	packages := packages , { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
 
 	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
@@ -499,11 +496,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
 
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
 		BaselineOfSpec2 allPackageNames,
 	
-
 		"Tests"
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfParametrizedTests allPackageNames))
@@ -547,7 +543,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
-		BaselineOfCommander2 allPackageNames,
+		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,

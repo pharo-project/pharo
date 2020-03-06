@@ -33,11 +33,12 @@ ClyClassDefinitionEditorToolMorph >> createTextContext [
 { #category : #building }
 ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	| title |
+	
 	super decorateContainerTab.
 	title := editingClass name.
 
 	editingClass isClassSide ifTrue: [ 
-		title := title asText allBold asStringMorph ].
+		title := title asText allBold ].
 
 	containerTab label: title
 ]

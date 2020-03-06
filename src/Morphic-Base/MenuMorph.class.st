@@ -294,6 +294,19 @@ MenuMorph >> add: aLabelString target: target selector: aSymbol argumentList: ar
 ]
 
 { #category : #construction }
+MenuMorph >> add: aLabelString target: anObject selector: aSymbol iconName: iconName [
+	"Append a menu item with the given label and the iconName. If the item is selected, it will send the given selector to the target object."
+
+	^ (self
+		add: aLabelString
+		target: anObject
+		selector: aSymbol
+		argumentList: EmptyArray)
+		icon: (self iconNamed: iconName);
+		yourself
+]
+
+{ #category : #construction }
 MenuMorph >> addAllFrom: aMenuMorph [
 	"This is a fast add..."
 	
@@ -388,6 +401,12 @@ MenuMorph >> addMenuItem: anItem [
 	self addMorphBack: anItem.
 	^ anItem
 
+]
+
+{ #category : #utils }
+MenuMorph >> addSeparator [
+	
+	self addMenuItem: MenuLineMorph new
 ]
 
 { #category : #'construction-UIManager' }

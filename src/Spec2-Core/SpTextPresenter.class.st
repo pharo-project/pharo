@@ -20,8 +20,8 @@ I provide the following methods
 Class {
 	#name : #SpTextPresenter,
 	#superclass : #SpAbstractTextPresenter,
-	#traits : 'TSpHaveWrappingScrollBars',
-	#classTraits : 'TSpHaveWrappingScrollBars classTrait',
+	#traits : 'SpTHaveWrappingScrollBars',
+	#classTraits : 'SpTHaveWrappingScrollBars classTrait',
 	#instVars : [
 		'#scrollValue => SpObservableSlot'
 	],

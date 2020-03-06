@@ -195,6 +195,12 @@ SettingDeclaration >> hasDefault [
 	^ default ~~ UniqueObject
 ]
 
+{ #category : #testing }
+SettingDeclaration >> hasDefaultValue [
+		
+	^ self preferenceValue = self defaultValue 
+]
+
 { #category : #'user interface' }
 SettingDeclaration >> hasEditableList [
 	^ (self realValue isKindOf: Boolean) not

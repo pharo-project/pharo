@@ -44,5 +44,13 @@ SpAbstractMorphicListAdapter >> updateItemFilterBlockWith: block [
 				enableFilter: (SpFTSpecFilter block: block);
 				explicitFunction ]
 		ifNil: [ 
-			widget disableFunction ]
+			self updateSearch ]
+]
+
+{ #category : #factory }
+SpAbstractMorphicListAdapter >> updateSearch [
+
+	self presenter isSearchEnabled
+		ifTrue: [ widget enableSearch ]
+		ifFalse: [ widget disableFunction ]
 ]

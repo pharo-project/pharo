@@ -15,6 +15,13 @@ Class {
 	#category : #'DrTests-TestsRunner'
 }
 
+{ #category : #accessing }
+DTTestsRunnerResult >> backgroundColor [
+	testsResult errors ifNotEmpty: [ ^ DTError backgroundColor ].
+	testsResult failures ifNotEmpty: [ ^ DTFail backgroundColor  ].
+	^ DTPass backgroundColor
+]
+
 { #category : #'tree building' }
 DTTestsRunnerResult >> buildLeavesFrom: aCollection type: testResultType [
 	^ aCollection collect: [ :t | DTTestLeaf content: t type: testResultType ]
@@ -107,13 +114,6 @@ DTTestsRunnerResult >> buildTreeForUIByClassesAndProtocol [
 ]
 
 { #category : #accessing }
-DTTestsRunnerResult >> color [
-	testsResult errors ifNotEmpty: [ ^ self theme dangerBackgroundColor ].
-	testsResult failures ifNotEmpty: [ ^ self theme warningBackgroundColor ].
-	^ self theme successBackgroundColor
-]
-
-{ #category : #accessing }
 DTTestsRunnerResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
@@ -141,4 +141,11 @@ DTTestsRunnerResult >> testResults [
 { #category : #accessing }
 DTTestsRunnerResult >> testResults: anObject [
 	testsResult := anObject
+]
+
+{ #category : #accessing }
+DTTestsRunnerResult >> textColor [
+	testsResult errors ifNotEmpty: [ ^ DTError textColor ].
+	testsResult failures ifNotEmpty: [ ^ DTFail textColor  ].
+	^ DTPass textColor
 ]

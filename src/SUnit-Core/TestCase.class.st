@@ -214,6 +214,7 @@ TestCase class >> defaultTimeLimitSettingOn: aBuilder [
 	(aBuilder setting: #defaultTimeLimitSecs)
 		target: self;
 		parent: #pharoSystem ;
+		default: 10.0;
 		label: 'Default time limit for tests (secs)' ;
 		description: 'Detault time limit in seconds for test execution'
 ]

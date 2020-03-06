@@ -27,6 +27,30 @@ SpToolBarPresenter class >> adapterName [
 	^ #ToolBarAdapter
 ]
 
+{ #category : #example }
+SpToolBarPresenter class >> example [ 
+
+
+	self new 
+		addItem: (SpToolBarButton new 
+			icon: (self iconNamed: #smallOk);
+			action: [ UIManager default defer: [ self inform: 'Pressed' ] ];
+			yourself);
+		"addItem: (SpToolBarLabel new
+			contents: 'Label';
+			yourself);
+		addItem: (SpToolBarToggleButton new
+			icon: (self iconNamed: #smallOk);
+			action: [ :value | UIManager default defer: [ self inform: value asString ] ];
+			yourself);
+		addItem: (SpToolBarOptionButton new
+			icon: (self iconNamed: #smallOk);
+			action: [ :value | UIManager default defer: [ self inform: value asString ] ];
+			yourself);"
+		openWithSpec
+			
+]
+
 { #category : #convenience }
 SpToolBarPresenter >> addButtonLabel: aLabel iconNamed: anIconName help: aHelpString action: aBlock [
 

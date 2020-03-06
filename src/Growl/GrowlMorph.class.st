@@ -66,7 +66,7 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 			(aBuilder pickOne: #position)
 				label: 'Popup position';
 				target: self;
-				default: #topRight;
+				default: #bottomLeft;
 				order: 2;
 				domainValues: self growlPositionChoices.]
 ]

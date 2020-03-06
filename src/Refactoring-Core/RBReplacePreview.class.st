@@ -19,7 +19,7 @@ Class {
 		'replaceAllAction',
 		'cancelAction'
 	],
-	#category : #'Refactoring-Core'
+	#category : #'Refactoring-Core-Base'
 }
 
 { #category : #initialization }

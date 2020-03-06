@@ -6,7 +6,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 
 	| list addMethod addComment |
 	list := OrderedCollection new.
-	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel) methodReference].									
+	addMethod := [ :mrClass :mrSel | list add: (mrClass>>mrSel)].									
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].										
 	self allBehaviorsDo: [:each |
 		each selectorsDo: [:sel | 
@@ -25,8 +25,7 @@ SystemNavigation >> browseAllAccessesTo: instVarName from: aClass [
 
 	| methods slot |
 	slot := aClass slotNamed: instVarName.
-	methods := (aClass allMethodsAccessingSlot: slot) 
-		collect: [:meth | meth methodReference].
+	methods := aClass allMethodsAccessingSlot: slot.
 	
 	^ self
 		browseMessageList: methods
@@ -121,8 +120,7 @@ SystemNavigation >> browseAllStoresInto: instVarName from: aClass [
 
 	| methods slot |
 	slot := aClass slotNamed: instVarName.
-	methods := (aClass allMethodsWritingSlot: slot) 
-		collect: [:meth | meth methodReference].
+	methods := aClass allMethodsWritingSlot: slot.
 	
 	^ self
 		browseMessageList: methods
@@ -493,12 +491,12 @@ SystemNavigation >> methodHierarchyBrowserForClass: aClass selector: sel [
 
 	aClass allSuperclasses reverseDo: [:cl |
 		(cl includesSelector: sel) ifTrue: [
-			list addLast: (cl>>sel) methodReference]].
+			list addLast: (cl>>sel)]].
 	aClass allSubclassesDo: [:cl | 
 		(cl includesSelector: sel) ifTrue: [
-			list addLast: (cl>>sel) methodReference ]].
+			list addLast: (cl>>sel) ]].
 
-	list addLast: (aClass>>sel) methodReference.
+	list addLast: (aClass>>sel).
 	^ self browseMessageList: list name: 'Inheritance of ' , sel
 
 

@@ -38,7 +38,7 @@ SpMorphicToolBarAdapter >> configureItem: itemModel morph: itemMorph toolBar: to
 		width: toolBarMorph toolbarItemSize.
 	
 	toolBarMorph displayMode 
-		configureButton: itemMorph 
+		configureMorph: itemMorph 
 		item: itemModel.
 		
 	^ itemMorph

@@ -28,6 +28,7 @@ JobProgressBarMorph class >> interruptionSetting: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #isInterruptable) 
 		label: 'Make progress bar interuptable';
+		default: true;
 		description: 'When enabled, add a button to progress bars to interupt the action when clicked.';
 		parent: #progress; 
 		target: self;

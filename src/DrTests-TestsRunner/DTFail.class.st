@@ -7,6 +7,11 @@ Class {
 	#category : #'DrTests-TestsRunner'
 }
 
+{ #category : #factory }
+DTFail class >> backgroundColor [
+	^ TestResult defaultColorBackGroundForFailureTest
+]
+
 { #category : #testing }
 DTFail >> isFail [
 	<generated>

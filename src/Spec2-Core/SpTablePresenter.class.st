@@ -8,6 +8,8 @@ self example
 Class {
 	#name : #SpTablePresenter,
 	#superclass : #SpAbstractListPresenter,
+	#traits : 'SpTSearchable',
+	#classTraits : 'SpTSearchable classTrait',
 	#instVars : [
 		'#columns => SpObservableSlot',
 		'#showColumnHeaders => SpObservableSlot',
@@ -66,6 +68,7 @@ SpTablePresenter >> hideColumnHeaders [
 SpTablePresenter >> initialize [ 
 
 	super initialize.
+	self initializeTSearchable.
 	showColumnHeaders := true.
 	columns := #().
 	isResizable := false
@@ -85,6 +88,12 @@ SpTablePresenter >> isResizable: aBoolean [
 SpTablePresenter >> isShowingColumnHeaders [
 
 	^ showColumnHeaders
+]
+
+{ #category : #private }
+SpTablePresenter >> searchValueOf: anObject [
+	
+	^ anObject asString
 ]
 
 { #category : #api }
