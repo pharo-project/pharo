@@ -20,7 +20,8 @@ SpTMorphicTableDataSourceCommons >> headerColumn: column [
 			on: #click 
 			send: #sortByColumn:event:morph:
 			to: self
-			withValue: column) ].
+			withValue: column).
+	column sortingIcon ifNotNil: [ :icon | headerMorph addMorph: icon ] ].
 
 	^ headerMorph
 ]

@@ -37,9 +37,9 @@ CmCommand class >> forSpec [
 { #category : #'*Spec2-Commander2' }
 CmCommand class >> forSpecContext: anObject [
 
-	^ self forSpec 
+	^ self new 
 	context: anObject;
-	yourself
+	asSpecCommand
 ]
 
 { #category : #'*Spec2-Commander2' }

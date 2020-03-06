@@ -77,8 +77,8 @@ SpAbstractMorphicAdapter >> addKeyBindingsTo: aMorph [
 { #category : #initialization }
 SpAbstractMorphicAdapter >> addSettingsTo: aMorph [
 	
-	self widget ifNotNil: [ 
-		self applyVisibility ]
+	self widget ifNil: [ ^ self ].
+	self applyVisibility
 ]
 
 { #category : #accessing }

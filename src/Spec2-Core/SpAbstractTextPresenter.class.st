@@ -103,7 +103,14 @@ SpAbstractTextPresenter >> clearSelection [
 { #category : #'undo-redo' }
 SpAbstractTextPresenter >> clearUndoManager [
 
-	self withAdapterDo: #clearUndoManager
+	self withAdapterDo: [ :anAdapter | anAdapter clearUndoManager ]
+]
+
+{ #category : #api }
+SpAbstractTextPresenter >> cursorPositionIndex [
+	
+	^self withAdapterDo: [ :anAdapter |
+		anAdapter cursorPositionIndex ]
 ]
 
 { #category : #api }
@@ -134,18 +141,6 @@ SpAbstractTextPresenter >> getMenu [
 	^ (PragmaMenuBuilder
 		pragmaKeyword: self textArea editingModeClass menuKeyword
 		model: self adapter) menu
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> getSelection [
-	"Get the text selection"
-	
-	self 
-		deprecated: 'Use #selection instead.' 
-		transformWith: '`@receiver getSelection' 
-		            -> '`@receiver selection'.
-		
-	^ self selection
 ]
 
 { #category : #api }
@@ -312,24 +307,6 @@ SpAbstractTextPresenter >> selectedText [
 ]
 
 { #category : #api }
-SpAbstractTextPresenter >> selection [
-	self
-		deprecated:
-			'#selection was used to return an interval, and did not convey the correct meaning. Use #selectionInterval instead.'
-		transformWith: '`@receiver selection' -> '`@receiver selectionInterval'.
-	^ self selectionInterval
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> selection: anInterval [
-	self
-		deprecated:
-			'#selection: was used to set an interval, and did not convey the correct meaning. Use #selectionInterval: instead.'
-		transformWith: '`@receiver selection: `@arg' -> '`@receiver selectionInterval: `@arg'.
-	self selectionInterval: anInterval
-]
-
-{ #category : #api }
 SpAbstractTextPresenter >> selectionInterval [
 	"Get the text selection interval.
 	 I will update the selection from adapter first"
@@ -344,18 +321,6 @@ SpAbstractTextPresenter >> selectionInterval: anInterval [
 	"Set the text selection interval without changing the readSelectionBlock"
 
 	selection := anInterval
-]
-
-{ #category : #api }
-SpAbstractTextPresenter >> setSelection: anInterval [
-	"Set the text selection without changing the readSelectionBlock"
-
-	self 
-		deprecated: 'Use #selection: instead.' 
-		transformWith: '`@receiver setSelection: `@statement' 
-		            -> '`@receiver selection: `@statement'.
-
-	self selection: anInterval
 ]
 
 { #category : #api }

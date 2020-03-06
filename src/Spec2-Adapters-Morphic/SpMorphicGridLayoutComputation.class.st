@@ -342,5 +342,7 @@ SpMorphicGridLayoutComputation >> rowPositions [
 { #category : #private }
 SpMorphicGridLayoutComputation >> styleOf: aMorph [ 
 
-	^ aMorph valueOfProperty: #style
+	^ aMorph 
+		valueOfProperty: #style
+		ifAbsent: [ SpMorphStyle newStyles: #() ]
 ]

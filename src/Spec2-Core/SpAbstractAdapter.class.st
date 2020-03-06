@@ -151,6 +151,12 @@ SpAbstractAdapter >> removeSubWidgets [
 	self subclassResponsibility
 ]
 
+{ #category : #'as yet unclassified' }
+SpAbstractAdapter >> replaceLayoutWith: aLayout [
+	
+	
+]
+
 { #category : #emulating }
 SpAbstractAdapter >> rightClicked [
 

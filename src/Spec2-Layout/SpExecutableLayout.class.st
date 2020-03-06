@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'children',
 		'selector',
-		'adapter'
+		'adapter',
+		'announcer'
 	],
 	#category : #'Spec2-Layout-Base'
 }
@@ -18,10 +19,35 @@ SpExecutableLayout >> adapterName [
 { #category : #accessing }
 SpExecutableLayout >> add: aName withConstraints: aBlock [
 	| constraints |
-
 	constraints := self constraintsClass new.
 	aBlock value: constraints.
 	children at: aName put: constraints
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> announceChildAdded: aChildPresenter [
+
+	self presenter ifNotNil: [
+		self announcer announce: (SpChildrenAdded new
+			parent: self presenter;
+			child: aChildPresenter;
+			yourself)].
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> announceChildRemoved: aChildPresenter [
+
+	self presenter ifNotNil: [
+		self announcer announce: (SpChildrenRemoved new
+			parent: self presenter;
+			child: aChildPresenter;
+			yourself)].
+]
+
+{ #category : #adding }
+SpExecutableLayout >> announcer [
+
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #converting }
@@ -34,6 +60,14 @@ SpExecutableLayout >> asArray [
 SpExecutableLayout >> asSpLayout [
 	
 	^ self
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> basicAdd: aName withConstraints: aBlock [
+	| constraints |
+	constraints := self constraintsClass new.
+	aBlock value: constraints.
+	children at: aName put: constraints
 ]
 
 { #category : #building }
@@ -68,13 +102,19 @@ SpExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
 { #category : #accessing }
 SpExecutableLayout >> children [
 
-	^ children
+	^ children keys
 ]
 
 { #category : #private }
 SpExecutableLayout >> constraintsClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> constraintsFor: aPresenter [
+
+	^ children at: aPresenter
 ]
 
 { #category : #accessing }
@@ -97,6 +137,12 @@ SpExecutableLayout >> initialize [
 ]
 
 { #category : #testing }
+SpExecutableLayout >> isEmpty [
+
+	^ children isEmpty
+]
+
+{ #category : #testing }
 SpExecutableLayout >> isExecutable [
 
 	^ true
@@ -106,6 +152,12 @@ SpExecutableLayout >> isExecutable [
 SpExecutableLayout >> isSpLayout [
 
 	^ true
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> presenter [
+
+	^ adapter ifNotNil: [ adapter presenter ]
 ]
 
 { #category : #accessing }
@@ -155,4 +207,20 @@ SpExecutableLayout >> traversePresentersDo: aBlock [
 	self 
 		traversePresentersDo: aBlock 
 		excluding: Set new
+]
+
+{ #category : #adding }
+SpExecutableLayout >> whenChildrenAddedDo: aBlock [
+
+	self announcer
+		when: SpChildrenAdded
+		do: aBlock
+]
+
+{ #category : #adding }
+SpExecutableLayout >> whenChildrenRemovedDo: aBlock [
+
+	self announcer
+		when: SpChildrenRemoved
+		do: aBlock
 ]

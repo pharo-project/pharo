@@ -19,7 +19,8 @@ Class {
 		'#selectionMode',
 		'#childrenBlock',
 		'#activationBlock',
-		'#activateOnSingleClick'
+		'#activateOnSingleClick',
+		'#lazilyComputeChildren'
 	],
 	#category : #'Spec2-Core-Widgets-Tree'
 }
@@ -158,6 +159,7 @@ SpTreeTablePresenter >> initialize [
 	isResizable := false.
 	childrenBlock := [ :item | #() ].
 	roots := #().
+	lazilyComputeChildren := false.
 
 	self beSingleSelection.
 	self activateOnDoubleClick.
@@ -210,6 +212,18 @@ SpTreeTablePresenter >> itemAtPath: anArray ifAbsent: aBlock [
 	^ [ self itemAtPath: anArray ]
 		on: SubscriptOutOfBounds
 		do: [ aBlock value ]
+]
+
+{ #category : #api }
+SpTreeTablePresenter >> lazilyComputeChildren [
+	"When we compute lazily the children, we will show in all cases the expand arrow even if there is no children until we open this children."
+
+	lazilyComputeChildren := true
+]
+
+{ #category : #accessing }
+SpTreeTablePresenter >> lazilyComputeChildren: aBoolean [
+	lazilyComputeChildren := aBoolean
 ]
 
 { #category : #initialization }
@@ -287,6 +301,11 @@ SpTreeTablePresenter >> selectionMode: aMode [
 	selectionMode := aMode
 ]
 
+{ #category : #testing }
+SpTreeTablePresenter >> shouldLazilyComputeChildren [
+	^ lazilyComputeChildren
+]
+
 { #category : #api }
 SpTreeTablePresenter >> showColumnHeaders [
 
@@ -338,6 +357,12 @@ SpTreeTablePresenter >> whenMultiSelectionChangedDo: aBlockClosure [
 SpTreeTablePresenter >> whenRootsChangedDo: aBlockClosure [ 
 
 	self property: #roots whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+SpTreeTablePresenter >> whenSearchChangedDo: aBlock [
+
+	self property: #searchEnabled whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

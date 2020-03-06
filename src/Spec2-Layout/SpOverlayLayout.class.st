@@ -1,6 +1,10 @@
 Class {
 	#name : #SpOverlayLayout,
 	#superclass : #SpExecutableLayout,
+	#instVars : [
+		'singleChild',
+		'overlays'
+	],
 	#category : #'Spec2-Layout-Overlay'
 }
 
@@ -11,15 +15,48 @@ SpOverlayLayout >> adapterName [
 ]
 
 { #category : #accessing }
-SpOverlayLayout >> add: aName [
-
+SpOverlayLayout >> addOverlay: aPresenter [
+	
 	self
-		add: aName 
-		withConstraints: [ :constraints | ]
+		add: aPresenter
+		withConstraints: [ :constraints | constraints beOverlay ].
+	overlays add: aPresenter.
+	self announceChildAdded: aPresenter
+]
+
+{ #category : #accessing }
+SpOverlayLayout >> child: aPresenter [
+
+	singleChild ifNotNil: [ self remove: singleChild ].
+	self
+		add: aPresenter
+		withConstraints: [ :constraints | ].
+	singleChild := aPresenter.
+	self announceChildAdded: aPresenter
 ]
 
 { #category : #private }
 SpOverlayLayout >> constraintsClass [
 	
 	^ SpOverlayConstraints
+]
+
+{ #category : #accessing }
+SpOverlayLayout >> initialize [
+	super initialize.
+	overlays := OrderedCollection new
+]
+
+{ #category : #accessing }
+SpOverlayLayout >> presenter [
+
+	^ adapter ifNotNil: [ adapter presenter ]
+]
+
+{ #category : #accessing }
+SpOverlayLayout >> remove: aPresenter [
+	
+	children removeKey: aPresenter.
+	singleChild := nil.
+	self announceChildRemoved: aPresenter
 ]

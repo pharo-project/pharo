@@ -188,6 +188,13 @@ SpMorphicWindowAdapter >> isResizeable: aBoolean [
 ]
 
 { #category : #'spec protocol' }
+SpMorphicWindowAdapter >> isTopWindow [
+
+	self widgetDo: [ :w | ^ w isTopWindow ].
+	^ false
+]
+
+{ #category : #'spec protocol' }
 SpMorphicWindowAdapter >> maximize [
 
 	self widgetDo: [ :w | w maximize ]

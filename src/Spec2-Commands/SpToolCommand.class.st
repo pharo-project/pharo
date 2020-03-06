@@ -20,6 +20,15 @@ SpToolCommand class >> defaultShortcutKey [
 	^ nil
 ]
 
+{ #category : #default }
+SpToolCommand class >> shortName [
+	"For menus some commands can implement this helper to provide shorter names.
+	Example: default name = 'Browse Command', short name = 'command'.
+	It is intended to be accessed through a menu 'browse' then  'command' instead of directly 'browse command'"
+
+	^ self defaultName
+]
+
 { #category : #converting }
 SpToolCommand >> asSpecCommand [
 	| command |
