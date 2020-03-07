@@ -178,101 +178,67 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 	(aBuilder shortcut: #windowTopLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopLeftShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topLeft corner: max center)]
+		do: [ :target | target tileTopLeft]
 		description: 'Move the window to the top left corner of the display'.
 
 	(aBuilder shortcut: #windowLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowLeftShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topLeft corner: max bottomCenter)]
+		do: [ :target | target tileLeft ]
 		description: 'Move the window to the left half of the display'.
 	
 	(aBuilder shortcut: #windowBottomLeft)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomLeftShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max leftCenter corner: max bottomCenter)]
+		do: [ :target | target tileBottomLeft ]
 		description: 'Move the window to the bottom left corner of the display'.
 
 	(aBuilder shortcut: #windowTop)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topLeft corner: max rightCenter)]
+		do: [ :target | target tileTop ]
 		description: 'Move the window to the top half of the display'.
 
 	(aBuilder shortcut: #windowTopRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowTopRightShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topCenter corner: max rightCenter)]
+		do: [ :target | target tileTopRight ]
 		description: 'Move the window to the top right corner of the display'.
 
 	(aBuilder shortcut: #windowRight)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowRightShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max topCenter corner: max corner)]
+		do: [ :target | target tileRight ]
 		description: 'Move the window to the right half of the display'.
 
 	(aBuilder shortcut: #windowRightBottom)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowRightBottomShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max center corner: max corner)]
+		do: [ :target | target tileBottomRight ]
 		description: 'Move the window to the right bottom corner of the display'.
 
 	(aBuilder shortcut: #windowBottom)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowBottomShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: (max leftCenter corner: max corner)]
+		do: [ :target | target tileBottom ]
 		description: 'Move the window to the bottom half of the display'.
 
 	(aBuilder shortcut: #windowMaximize)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMaximizeShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target bounds: max]
+		do: [ :target | target tileFull ]
 		description: 'Maximize the window'.
 
 	(aBuilder shortcut: #windowMinimize)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowMinimizeShortcut
-		do: [ :target | 
-			| max |
-			max := RealEstateAgent maximumUsableArea.
-			target minimize]
+		do: [ :target | target minimize]
 		description: 'Miminimze the window'.
 
 	(aBuilder shortcut: #windowCenter)
 		category: #WindowShortcuts
 		default: PharoShortcuts current windowCenterShortcut
-		do: [ :target | 
-			| max initial |
-			max := RealEstateAgent maximumUsableArea.
-			initial :=  target initialExtent.
-			target bounds: ((max center - (initial/2)) extent: initial )]
+		do: [ :target | target tileCenter]
 		description: 'Center the window with a default extent'.
 
 ]
@@ -407,6 +373,89 @@ SystemWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallWindowIcon
+]
+
+{ #category : #'menu items - tiling' }
+SystemWindow class >> tilingMenuItemsOn: aBuilder [
+
+	<windowMenu>
+		
+	(aBuilder item: #tileLeft)
+		action: [ :target | target tileLeft ];
+		label: 'Left';
+		parent: #Tile;
+		icon: (self iconNamed: #blank); 
+		order: 1;
+		help: 'Move the window to the left half of the display'.
+
+	(aBuilder item: #tileRight)
+		action: [ :target | target tileRight ];
+		label: 'Right';
+		parent: #Tile;
+		help: 'Move the window to the right half of the display'.
+
+	(aBuilder item: #tileTop)
+		action: [ :target | target tileTop ];
+		label: 'Top';
+		parent: #Tile;
+		help: 'Move the window to the top half of the display'.
+
+	(aBuilder item: #tileBottom)
+		action: [ :target | target tileBottom ];
+		label: 'Bottom';
+		parent: #Tile;
+		help: 'Move the window to the bottom half of the display'.
+
+	(aBuilder item: #tileTopLeft)
+		action: [ :target | target tileTopLeft ];
+		label: 'Top left';
+		parent: #Tile;
+		help: 'Move the window to the top left corner of the display'.
+		
+	(aBuilder item: #tileTopRight)
+		action: [ :target | target tileTopRight ];
+		label: 'Top right';
+		parent: #Tile;
+		help: 'Move the window to the top right corner of the display'.
+
+	(aBuilder item: #tileBottomLeft)
+		action: [ :target | target tileBottomLeft ];
+		label: 'Bottom left';
+		parent: #Tile;
+		help: 'Move the window to the bottom left corner of the display'.
+
+	(aBuilder item: #tileBottomRight)
+		action: [ :target | target tileBottomRight ];
+		label: 'Bottom right';
+		parent: #Tile;
+		help: 'Move the window to the right bottom corner of the display'.
+
+	(aBuilder item: #tileFull)
+		action: [ :target | target tileFull ];
+		label: 'Full';
+		parent: #Tile;
+		help: 'Maximize the window'.
+
+	(aBuilder item: #tileCenter)
+		action: [ :target | target tileCenter ];
+		label: 'Center';
+		parent: #Tile;
+		help: 'Center the window with a default extent'.
+
+
+
+
+
+
+]
+
+{ #category : #'menu items - tiling' }
+SystemWindow class >> tilingMenuOn: aBuilder [
+
+	<windowMenu>
+
+	(aBuilder item: #Tile)
+		order: 10.5.
 ]
 
 { #category : #'top window' }
