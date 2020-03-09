@@ -20,7 +20,8 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Transmission';
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Adapters-Stub' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Examples';
+			"Spec-Examples will extend the help tool, which in boostrap will be loaded a lot later."
+			"package: 'Spec2-Examples';"
 			package: 'Spec2-Interactions' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions' 'Commander2') ];
 			package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
