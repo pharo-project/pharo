@@ -392,6 +392,17 @@ FreeTypeFontProvider >> platformVMRelativeDirectories [
 ]
 
 { #category : #'loading and updating' }
+FreeTypeFontProvider >> prepareForRelease [
+
+	"When releasing an image, we should only include the embedded fonts"
+
+	self initialize.
+	self updateEmbeddedFreeTypeFonts
+
+
+]
+
+{ #category : #'loading and updating' }
 FreeTypeFontProvider >> prepareForUpdating [
 	
 	tempFileInfos := fileInfos. "tempFileInfos will be used during update"
