@@ -107,7 +107,8 @@ Class {
 		'classPackageMapping',
 		'packages',
 		'classExtendingPackagesMapping',
-		'debuggingName'
+		'debuggingName',
+		'packageNames'
 	],
 	#classInstVars : [
 		'default'
@@ -213,6 +214,15 @@ RPackageOrganizer >> addMethod: method [
 	rPackage addMethod: method
 ]
 
+{ #category : #'package-names-cache' }
+RPackageOrganizer >> addPackageNameToCache: aPackageName [
+
+	packageNames ifNil: [ ^ self ].
+	
+	packageNames add: aPackageName
+
+]
+
 { #category : #'system integration' }
 RPackageOrganizer >> announcer [ 
 	^SystemAnnouncer uniqueInstance private
@@ -264,6 +274,8 @@ RPackageOrganizer >> basicRegisterPackage: aPackage [
 	self class environment at: #MCWorkingCopy ifPresent: [ :wc |
 		wc forPackage: ((self class environment at: #MCPackage) named: aPackage name)].
 	
+	self addPackageNameToCache: aPackage name asSymbol.
+	
 	^ aPackage
 ]
 
@@ -280,6 +292,8 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	self class environment at: #MCWorkingCopy ifPresent: [ 
 		aPackage mcPackage 
 			ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ]].
+		
+	self removePackageNameFromCache: aPackage name asSymbol
 ]
 
 { #category : #'private registration' }
@@ -692,14 +706,16 @@ RPackageOrganizer >> packageNamedIgnoreCase: aSymbol ifAbsent: aBlock [
 	^ aBlock value.
 ]
 
-{ #category : #accessing }
-RPackageOrganizer >> packageNames [
-	^ packages keys
+{ #category : #'package-names-cache' }
+RPackageOrganizer >> packageNames [ 
+
+	^ packageNames ifNil: [ packageNames := packages keys asSortedCollection ]
 ]
 
-{ #category : #accessing }
+{ #category : #'package-names-cache' }
 RPackageOrganizer >> packageNamesDo: aBlock [
-	^ packages keysDo: aBlock
+
+	^ self packageNames do: aBlock
 ]
 
 { #category : #'package access from class' }
@@ -845,6 +861,14 @@ RPackageOrganizer >> registerPackageNamed: aString [
 	^ self 
 		packageNamed: aString asSymbol
 		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
+]
+
+{ #category : #'package-names-cache' }
+RPackageOrganizer >> removePackageNameFromCache: aPackageName [
+
+	packageNames ifNil: [ ^ self ].	
+	packageNames remove: aPackageName
+
 ]
 
 { #category : #'system integration' }
