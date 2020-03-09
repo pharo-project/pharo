@@ -126,6 +126,13 @@ WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 [
 		ifFalse: [ self value: arg1 value: arg2 value: arg3 ]
 ]
 
+{ #category : #evaluating }
+WeakMessageSend >> cull: arg1 cull: arg2 cull: arg3 cull: arg4 [
+	^ selector numArgs < 4 
+		ifTrue: [ self cull: arg1 cull: arg2 cull: arg3 ]
+		ifFalse: [ self value: arg1 value: arg2 value: arg3 value: arg4 ]
+]
+
 { #category : #private }
 WeakMessageSend >> ensureArguments [
 	"Return true if my arguments haven't gone away"
@@ -342,6 +349,23 @@ WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 [
 		with: anObject1
 		with: anObject2
 		with: anObject3
+]
+
+{ #category : #evaluating }
+WeakMessageSend >> value: anObject1 value: anObject2 value: anObject3 value: anObject4 [
+
+	| strongReceiver |
+	
+	strongReceiver := self receiver.
+
+	(self ensureReceiver: strongReceiver) ifFalse: [ ^ nil ].
+	
+	^ strongReceiver
+		perform: selector 
+		with: anObject1
+		with: anObject2
+		with: anObject3
+		with: anObject4 
 ]
 
 { #category : #evaluating }
