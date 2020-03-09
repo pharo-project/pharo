@@ -13,15 +13,12 @@ BaselineOfSpec2 >> baseline: spec [
 		spec
 			package: 'Spec2-Core' with: [ spec requires: #('Spec2-Layout' 'Spec2-Transmission' 'Spec2-Commands') ];
 			package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
-			package: 'Spec2-Help';
 			package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
 			package: 'Spec2-ObservableSlot';
 			package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
 			package: 'Spec2-Transmission';
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Adapters-Stub' with: [ spec requires: #('Spec2-Core') ];
-			"Spec-Examples will extend the help tool, which in boostrap will be loaded a lot later."
-			"package: 'Spec2-Examples';"
 			package: 'Spec2-Interactions' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Commander2' with: [ spec requires: #('Spec2-Core' 'Spec2-Interactions' 'Commander2') ];
 			package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
@@ -30,7 +27,11 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples') ];
 			package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
 			package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
-			package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Backend-Tests') ] ].
+			package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Backend-Tests');
+			package: 'Spec2-Examples'.
+			"This will extend the help tool, which in boostrap will be loaded a lot later."
+			"package: 'Spec2-Help';"
+			 ] ].
 		
 	spec for: #'pharo8.x' do: [
 		spec
