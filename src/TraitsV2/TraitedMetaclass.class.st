@@ -145,7 +145,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 { #category : #testing }
 TraitedMetaclass >> hasTraitComposition [
 	
-	^ self traitComposition isEmpty not
+	^ self traitComposition isEmpty not 
 ]
 
 { #category : #'testing method dictionary' }
