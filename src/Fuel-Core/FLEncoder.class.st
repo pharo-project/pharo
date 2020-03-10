@@ -56,31 +56,32 @@ FLEncoder >> encodeClusterClass: aClusterClass [
 ]
 
 { #category : #encoding }
-FLEncoder >> encodeInt24: aSmallInteger [ 
+FLEncoder >> encodeInt24: aSmallInteger [
 	"Write a signed integer to the next 4 bytes"
+
 	| pos |
 	pos := aSmallInteger < 0
-		ifTrue: [((0-aSmallInteger) bitXor: 16rFFFFFF) + 1]
-		ifFalse: [aSmallInteger].
-	1 to: 3 do: [:i | stream nextPut: (pos byteAt: 4-i)].
-
+		ifTrue: [ (0 - aSmallInteger bitXor: 16rFFFFFF) + 1 ]
+		ifFalse: [ aSmallInteger ].
+	1 to: 3 do: [ :i | stream nextPut: (pos byteAt: 4 - i) ]
 ]
 
 { #category : #encoding }
-FLEncoder >> encodeInt32: aSmallInteger [ 
+FLEncoder >> encodeInt32: aSmallInteger [
 	"Write a signed integer to the next 4 bytes"
+
 	| pos |
 	pos := aSmallInteger < 0
-		ifTrue: [(0-aSmallInteger) bitInvert32 + 1]
-		ifFalse: [aSmallInteger].
-	1 to: 4 do: [:i | stream nextPut: (pos byteAt: 5-i)].
-
+		ifTrue: [ (0 - aSmallInteger) bitInvert32 + 1 ]
+		ifFalse: [ aSmallInteger ].
+	1 to: 4 do: [ :i | stream nextPut: (pos byteAt: 5 - i) ]
 ]
 
 { #category : #encoding }
 FLEncoder >> encodePositiveInteger: anInteger [
 	"Append to the receiver an Integer as the next 4 bytes."
-	1 to: 4 do: [:i | stream nextPut: (anInteger byteAt: 4+1-i)].
+
+	1 to: 4 do: [ :i | stream nextPut: (anInteger byteAt: 4 + 1 - i) ]
 ]
 
 { #category : #encoding }
@@ -106,13 +107,12 @@ FLEncoder >> encodeReferenceToClusterObjectClass: aClass [
 FLEncoder >> encodeString: aString [
 	| length |
 	(length := aString size) < 192
-		ifTrue: [stream nextPut: length]
-		ifFalse: 
-			[stream nextPut: (length byteAt: 4)+192.
+		ifTrue: [ stream nextPut: length ]
+		ifFalse: [ stream nextPut: (length byteAt: 4) + 192.
 			stream nextPut: (length byteAt: 3).
 			stream nextPut: (length byteAt: 2).
-			stream nextPut: (length byteAt: 1)].
-	stream nextBytesPutAll: aString.
+			stream nextPut: (length byteAt: 1) ].
+	stream nextBytesPutAll: aString
 ]
 
 { #category : #encoding }
@@ -218,7 +218,6 @@ FLEncoder >> objectCount [
 
 { #category : #accessing }
 FLEncoder >> objectCount: aNumber [
-
 	objectCount := aNumber.
 	objectsIndexes := FLLargeIdentityDictionary new.
 	substitutionIndexes := FLLargeIdentityDictionary new.

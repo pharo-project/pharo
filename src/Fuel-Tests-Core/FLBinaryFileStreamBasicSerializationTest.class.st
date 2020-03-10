@@ -1,12 +1,12 @@
 Class {
-	#name : #FLStandardFileStreamSerializationTest,
+	#name : #FLBinaryFileStreamBasicSerializationTest,
 	#superclass : #FLBasicSerializationTest,
 	#category : #'Fuel-Tests-Core-Base'
 }
 
 { #category : #running }
-FLStandardFileStreamSerializationTest >> setUp [
+FLBinaryFileStreamBasicSerializationTest >> setUp [
 	super setUp.
-	self useStandardFileStream
+	self useBinaryFileStream
 
 ]
