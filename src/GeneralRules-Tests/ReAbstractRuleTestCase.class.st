@@ -14,20 +14,29 @@ ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
 ]
 
 { #category : #'test-support' }
-ReAbstractRuleTestCase >> myCritiguesOnMethod: method [
-	| critiques |
-	critiques := OrderedCollection new.
-	self subjectUnderTest  new 
-		check: method forCritiquesDo:[:critique | critiques add: critique].
-	^critiques 
-]
-
-{ #category : #'test-support' }
 ReAbstractRuleTestCase >> myCritiques [
 	| critiques |
 	critiques := OrderedCollection new.
 	self subjectUnderTest  new 
 		check: (self class >> #sampleMethod ) forCritiquesDo:[:critique | critiques add: critique].
+	^critiques 
+]
+
+{ #category : #'test-support' }
+ReAbstractRuleTestCase >> myCritiquesOnClass: aClass [
+	| critiques |
+	critiques := OrderedCollection new.
+	self subjectUnderTest  new 
+		check: aClass forCritiquesDo:[:critique | critiques add: critique].
+	^critiques 
+]
+
+{ #category : #'test-support' }
+ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
+	| critiques |
+	critiques := OrderedCollection new.
+	self subjectUnderTest  new 
+		check: method forCritiquesDo:[:critique | critiques add: critique].
 	^critiques 
 ]
 

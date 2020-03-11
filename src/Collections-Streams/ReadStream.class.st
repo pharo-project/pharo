@@ -90,6 +90,17 @@ ReadStream >> size [
 ]
 
 { #category : #accessing }
+ReadStream >> skipTo: anObject [
+	"fast version using indexOf:"
+	| end |
+	end := collection indexOf: anObject startingAt: position+1 ifAbsent: [ 0 ].
+
+	^(end = 0 or: [end > readLimit]) 
+		ifTrue: [ self setToEnd. false ]
+		ifFalse: [ position := end. true]
+]
+
+{ #category : #accessing }
 ReadStream >> upTo: anObject [
 	"fast version using indexOf:"
 	| start end |

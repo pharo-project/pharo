@@ -1377,6 +1377,8 @@ SequenceableCollection >> isSequenceable [
 SequenceableCollection >> isSorted [
 	"Return true if the receiver is sorted by the given criterion.
 	Optimization for isSortedBy: [:a :b | a <= b]."
+	"#(1 2 3) isSorted >>> true"
+	"#(1 2 3 0) isSorted >>> false"
 
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
@@ -1392,6 +1394,10 @@ SequenceableCollection >> isSorted [
 { #category : #sorting }
 SequenceableCollection >> isSortedBy: aBlock [
 	"Return true if the receiver is sorted by the given criterion."
+	"(#(1 2 3) isSortedBy: [:a :b | a <= b ]) >>> true"
+	"(#(1 2 3) isSortedBy: [:a :b | a >= b ]) >>> false"
+	"(#(xa xc xz xb xy) isSortedBy: #last ascending) >>> false"
+	"(#(xa xb xc xy xz) isSortedBy: #last ascending) >>> true"
 
 	| lastElm elm |
 	self isEmpty ifTrue: [^ true].
@@ -1559,6 +1565,7 @@ SequenceableCollection >> mergeSortFrom: startIndex to: stopIndex by: aBlock [
 	phases copy data back and forth between the receiver and this copy.
 	The recursion is set up so that the final merge is performed into the
 	receiver, resulting in the receiver being completely sorted."
+	"(#(a b z d i l) mergeSortFrom: 3 to: 5 by: [ :a :b | a<=b ]) >>> #(a b d i z l)"
 
 	self size <= 1 ifTrue: [^ self].  "nothing to do"
 	startIndex = stopIndex ifTrue: [^ self].
@@ -2013,7 +2020,7 @@ SequenceableCollection >> select: aBlock [
 	"(#(1 2 3 4) select: [:each | each > 2 ]) >>> #(3 4)"
 	
 	| each |
-	^ self class new: self size streamContents: [ :stream|
+	^ self species new: self size streamContents: [ :stream|
 		1 to: self size do: [ :index |
 			(aBlock value: (each := self at: index))
 				ifTrue: [ stream nextPut: each ]]]
@@ -2055,12 +2062,16 @@ SequenceableCollection >> seventh [
 
 { #category : #shuffling }
 SequenceableCollection >> shuffle [
+	"Modify the receiver but with its elements in random positions.
+	This method use Random class as random generator"
+	
 	^ self shuffleBy: Random new
 ]
 
 { #category : #shuffling }
 SequenceableCollection >> shuffleBy: aRandom [
 	"Durstenfeld's version of the Fisher-Yates shuffle"
+	"#(1 2 3 4 5) shuffleBy: (Random seed: 42) >>> #(2 5 4 3 1)"
 
 	self size to: 2 by: -1 do: [ :i | 
 		self swap: i with: (aRandom nextInt: i) ]
@@ -2091,7 +2102,9 @@ SequenceableCollection >> size [
 { #category : #sorting }
 SequenceableCollection >> sort [
 	"Sort this collection into ascending order using the '<=' operator."
-
+	"#(8 5 3 9) sort >>> #(3 5 8 9)"
+	"#(a b z d) sort >>> #(a b d z)"
+	
 	self sort: [:a :b | a <= b]
 ]
 
@@ -2099,6 +2112,9 @@ SequenceableCollection >> sort [
 SequenceableCollection >> sort: aSortBlock [ 
 	"Sort this array using aSortBlock. The block should take two arguments
 	and return true if the first element should preceed the second one."
+	"(#(3 9 1) sort: [:a :b | a <= b ]) >>> #(1 3 9)"
+	"(#(3 9 1) sort: [:a :b | a >= b ]) >>> #(9 3 1)"
+	"(#(xa xc xz xb xy) sort: #last ascending) >>> #(xa xb xc xy xz)"
 
 	self
 		mergeSortFrom: 1
@@ -2110,6 +2126,8 @@ SequenceableCollection >> sort: aSortBlock [
 SequenceableCollection >> sorted [
 	"Return a new sequenceable collection which contains the same elements as self but its 
 elements are sorted in ascending order using the #'<=' operator."
+	"#(8 5 3 9) sorted >>> #(3 5 8 9)"
+	"#(a b z d) sorted >>> #(a b d z)"
 	
 	^self sorted: [ :a :b| a <= b ]
 ]
@@ -2120,6 +2138,9 @@ SequenceableCollection >> sorted: aSortBlockOrNil [
 elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if 
 the first element should preceed the second one. If aSortBlock is nil then <= is used for 
 comparison."
+	"(#(3 9 1) sorted: [:a :b | a <= b ]) >>> #(1 3 9)"
+	"(#(3 9 1) sorted: [:a :b | a >= b ]) >>> #(9 3 1)"
+	"(#(xa xc xz xb xy) sorted: #last ascending) >>> #(xa xb xc xy xz)"
 	
 	^self copy sort: aSortBlockOrNil
 ]

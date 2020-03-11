@@ -98,7 +98,10 @@ ImageCleaner >> cleanUpForRelease [
 		garbageCollect;
 		cleanOutUndeclared; 
 		fixObsoleteReferences;
-		cleanUp: true except: #() confirming: false.	
+		cleanUp: true except: #() confirming: false.
+		
+	FreeTypeFontProvider current prepareForRelease.	
+	
 	HashedCollection rehashAll.		
 	Author reset
 ]

@@ -293,6 +293,7 @@ ShiftClassInstaller >> remake: aClass [
 		make: [ :anotherBuilder | 
 			anotherBuilder fillFor: aClass.
 			anotherBuilder buildEnvironment: builder buildEnvironment.
+			anotherBuilder markIsInRemake.
 			builder propagateChangesTo: anotherBuilder ]
 ]
 

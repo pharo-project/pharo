@@ -31,7 +31,7 @@ ReTempVarOverridesInstVarRuleTest >> testRule [
 	dummy2 := [ :dummy3 | dummy4 := dummy1 + dummy3 ].
 	^ dummy2 value: dummy1.
 	' classified: 'test-help'.
-	critiques := self myCritiguesOnMethod: self class >> #sampleMethod:.
+	critiques := self myCritiquesOnMethod: self class >> #sampleMethod:.
 	
 	self assert: critiques size equals: 2.
 	self assert: (self sourceAtChritique:  critiques second) equals: 'dummy2'.

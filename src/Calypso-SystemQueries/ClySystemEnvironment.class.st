@@ -148,7 +148,9 @@ Is this really what you want to do?') asText
 		source: aString;
 		requestor: aController;
 		logged: true;
-		evaluate] on: OCUndeclaredVariableWarning do: [ 
+		evaluate] on: OCUndeclaredVariableWarning do: [ :ex | 
+			"we are only interested in class definitions"
+			ex compilationContext noPattern ifFalse: [ex pass ].
  			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
  			self inform: 'Undeclared Variable in Class Definition' . ^nil ].
 	^ class isBehavior

@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 NoUnusedTemporaryVariablesLeftTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 2 minute
 ]
 
 { #category : #running }
@@ -23,8 +23,9 @@ NoUnusedTemporaryVariablesLeftTest >> tearDown [
 NoUnusedTemporaryVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 	"Fail if there are methods who have unused temporary variables"
 	| found validExceptions remaining |
-	found := (SystemNavigation default allBehaviors flatCollect: #localMethods)
-		select: [ :m | m ast temporaries anySatisfy: [ :x | x binding isUnused ] ].
+	found := SystemNavigation default allMethodsSelect: [ :m | 
+		((m numTemps - m numArgs) > 0) and: [  
+		m ast temporaries anySatisfy: [ :x | x binding isUnused ] ] ].
 	
 	"No other exceptions beside the ones mentioned here should be allowed"	
 	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2}.	

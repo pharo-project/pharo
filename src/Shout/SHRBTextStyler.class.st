@@ -18,7 +18,8 @@ Class {
 	],
 	#classInstVars : [
 		'styleTable',
-		'textAttributesByPixelHeight'
+		'textAttributesByPixelHeight',
+		'formatIncompleteIdentifiers'
 	],
 	#category : #'Shout-Styling'
 }
@@ -336,6 +337,18 @@ SHRBTextStyler class >> defaultStyleTable [
  	^ self blueStyleTable
 ]
 
+{ #category : #styles }
+SHRBTextStyler class >> formatIncompleteIdentifiers [
+
+	^ formatIncompleteIdentifiers ifNil: [ formatIncompleteIdentifiers := true ]
+]
+
+{ #category : #styles }
+SHRBTextStyler class >> formatIncompleteIdentifiers: aValue [
+
+	formatIncompleteIdentifiers := aValue
+]
+
 { #category : #attributes }
 SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [ 
 	| d |
@@ -377,6 +390,20 @@ SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [
 SHRBTextStyler class >> initialize [
 	styleTable := nil.
 	textAttributesByPixelHeight := nil.
+]
+
+{ #category : #styles }
+SHRBTextStyler class >> settingsOn: aBuilder [ 
+	<systemsettings>
+	
+	(aBuilder setting: #formatIncompleteIdentifiers) 
+		target: self;
+		default: true;
+		order: 1;
+		label: 'Format Incomplete Identifiers';
+		parentName: #'Syntax Highlighting';
+		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recomended for big images, as it traverse all the image to get the information'
+
 ]
 
 { #category : #styles }
@@ -911,6 +938,16 @@ SHRBTextStyler >> font: aFont [
 	font := aFont
 ]
 
+{ #category : #visiting }
+SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
+	^ (self class formatIncompleteIdentifiers
+		and: [ (Symbol
+						selectorThatStartsCaseSensitive: aMessageNode selector asString
+						skipping: nil) isNotNil ])
+			ifTrue: [ #incompleteKeyword ]
+			ifFalse: [ #undefinedKeyword ]
+]
+
 { #category : #accessing }
 SHRBTextStyler >> isForWorkspace [
 	^ isForWorkspace ifNil: [ workspace notNil ]
@@ -989,7 +1026,10 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode isTemp ifTrue: [ ^#tempVar].
 	aVariableNode isGlobal ifTrue: [ ^#globalVar].
 	aVariableNode isInstance ifTrue: [ ^#instVar]. 
-	aVariableNode hasIncompleteIdentifier ifTrue:[ ^#incompleteIdentifier].
+	
+	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
+		ifTrue:[ ^#incompleteIdentifier] .
+
 	^#invalid.
 ]
 
@@ -1164,17 +1204,15 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
-
 	| style link |
-
 	style := #keyword.
-	( Symbol findInternedSelector: aMessageNode selector asString )
-		ifNil: [ style := ( Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil )
-				ifNil: [ #undefinedKeyword ]
-				ifNotNil: [ #incompleteKeyword ]
-			].
+	
+	(Symbol findInternedSelector: aMessageNode selector asString)
+		ifNil:[ style := self formatIncompleteSelector: aMessageNode ].
+		
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
+	
 	aMessageNode selectorParts
 		with: aMessageNode keywordsPositions
 		do: [ :keyword :position | 
@@ -1182,10 +1220,11 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 				addStyle: style
 				attribute: link
 				from: position
-				to: position + keyword size - 1
-			].
-	( aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ] )
+				to: position + keyword size - 1 ].
+	
+	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
+	
 	aMessageNode arguments do: [ :each | self visitNode: each ].
 	self styleCloseParenthese: aMessageNode
 ]

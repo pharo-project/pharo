@@ -13,27 +13,27 @@ Class {
 	#category : #'Manifest-Core-Base'
 }
 
-{ #category : #utilities }
+{ #category : #accessing }
 TheManifestBuilder class >> allManifestClasses [
 
 	^ PackageManifest subclasses
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> falsePositiveBeginningTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of false positive for a rule"
 	
 	^ 'rule'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> falsePositiveEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of false positive for a rule"
 	
 	^ 'FalsePositive'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> falsePositiveMiddleTag [
 	"the string that identifies uniquely the middle of a selector who give  the set of false positive for a rule"
 	
@@ -55,15 +55,29 @@ TheManifestBuilder class >> hasPackageNamed: aPackageName [
 	
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - manifest' }
 TheManifestBuilder class >> manifestClassComment [
 	
 	^ 'I store metadata for this package. These meta data are used by other tools such as the SmalllintManifestChecker and the critics Browser'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - manifest' }
+TheManifestBuilder class >> manifestClassNameFor: aPackageName [
+	"Returns a symbol representing a suitable name for a Manifest class for the given package"
+	
+	^(self manifestTag, (aPackageName select: [:each | each isAlphaNumeric ])) asSymbol
+]
+
+{ #category : #'accessing - manifest' }
+TheManifestBuilder class >> manifestClassPrefix [
+	"Return a string that serves as a prefix for Manifest classes (identifies uniquely the beginning of a Manifest class name)"
+	
+	^ 'Manifest'
+]
+
+{ #category : #'accessing - manifest' }
 TheManifestBuilder class >> manifestTag [
-	"the string that identifies uniquely the beginning of a Manifest class name"
+	"Return a string that serves as a tag within a package for Manifest classes"
 	
 	^ 'Manifest'
 ]
@@ -90,42 +104,42 @@ TheManifestBuilder class >> ofPackageNamed: aPackageName [
 	^ builder
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> rejectClassesTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of rejected classes"
 	
 	^ 'rejectClasses'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> rejectRulesTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of rejected rules"
 	
 	^ 'rejectRules'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> toDoBeginningTag [
 	"the string that identifies uniquely the beginning of a selector who give  the set of TODO for a rule"
 	
 	^ 'rule'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> toDoEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of TODO for a rule"
 	
 	^ 'TODO'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> toDoMiddleTag [
 	"the string that identifies uniquely the middle of a selector who give  the set of TODO for a rule"
 	
 	^ 'V'
 ]
 
-{ #category : #utilities }
+{ #category : #'accessing - tags' }
 TheManifestBuilder class >> truePositiveEndTag [
 	"the string that identifies uniquely the end of a selector who give  the set of false positive for a rule"
 	
@@ -331,15 +345,15 @@ TheManifestBuilder >> containsTruePositive: aItem onRule: ruleId version: versio
 
 { #category : #manifest }
 TheManifestBuilder >> createManifestNamed: packageName [
-	|tag|
-	tag := self class manifestTag.
-	manifestClass := PackageManifest subclass: (tag, packageName onlyLetters) asSymbol
-			instanceVariableNames: ''
-			classVariableNames: ''
-			poolDictionaries: ''
-			package: packageName.
+	 
+	manifestClass := PackageManifest 
+							subclass: (self class manifestClassNameFor: packageName) 
+							instanceVariableNames: ''
+							classVariableNames: ''
+							poolDictionaries: ''
+							package: packageName.
 	manifestClass 
-		tagWith: tag;
+		tagWith: self class manifestTag;
 		comment: self class manifestClassComment.
 	^ manifestClass
 ]

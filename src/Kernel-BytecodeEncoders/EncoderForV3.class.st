@@ -47,6 +47,13 @@ Class {
 	#category : #'Kernel-BytecodeEncoders'
 }
 
+{ #category : #accessing }
+EncoderForV3 class >> literalMethodBytecodes [
+	"#[32 124] means pushConstant: x, returnTop" 
+	
+	^ #[32 124] 
+]
+
 { #category : #'compiled method support' }
 EncoderForV3 class >> supportsClosures [
 	"Answer if the instruction set supports closures (contains
