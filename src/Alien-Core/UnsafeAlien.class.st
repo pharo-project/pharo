@@ -77,6 +77,12 @@ UnsafeAlien class >> initialize [
 ]
 
 { #category : #accessing }
+UnsafeAlien >> nonPointerObject: anObject [
+
+	nonPointerObject := anObject
+]
+
+{ #category : #accessing }
 UnsafeAlien >> object [
 	^nonPointerObject
 ]
