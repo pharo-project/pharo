@@ -632,6 +632,16 @@ CompiledMethodTest >> testMethodClass [
 	self assert: method methodClass equals: cls
 ]
 
+{ #category : #'as yet unclassified' }
+CompiledMethodTest >> testMethodsThatHaveOnlyDifferentSelectorsShouldBeDifferent [
+	| method1 method2 |
+	method1 := TestCase compiler compile: 'aMethod'.
+	method2 := TestCase compiler compile: 'aMethod2'.
+
+	self assert: (method1 literalAt: method1 numLiterals) identicalTo: (method2 literalAt: method2 numLiterals).
+	self deny: method1 equals: method2
+]
+
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testOrigin [
 	| regularMethod methodFromTrait |
