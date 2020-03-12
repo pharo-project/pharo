@@ -19,7 +19,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-Installers-Tests' ;
 			package: 'MonticelloMocks';
 			package: 'Fuel-Tests-Core';
-			package: 'Fuel-Platform-Pharo-Tests'	;
 			package: 'Balloon-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
