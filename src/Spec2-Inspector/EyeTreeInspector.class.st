@@ -71,11 +71,15 @@ EyeTreeInspector >> initializeShortcuts [
 ]
 
 { #category : #menu }
-EyeTreeInspector >> inspectionMenu: aMenu [
-	self hasSelectedObject ifFalse: [ ^ aMenu ].
-	self inspectionSubMenu: aMenu.
-	self selectedElement inspectionMenu: aMenu.
-	^aMenu.
+EyeTreeInspector >> inspectionMenu [
+	| menuPresenter |
+
+	self hasSelectedObject ifFalse: [ ^ nil ].
+	menuPresenter := SpMenuPresenter new.
+	self inspectionSubMenu: menuPresenter.
+	self selectedElement inspectionMenu: menuPresenter.
+
+	^ menuPresenter
 ]
 
 { #category : #api }
@@ -131,15 +135,20 @@ EyeTreeInspector >> takeKeyboardFocus [
 
 { #category : #accessing }
 EyeTreeInspector >> tree [
-	^ tree
-		ifNil: [ tree := self instantiate: SpTreePresenter.
-			tree whenBuiltDo: [ self initializeShortcuts ].
-			tree
-				whenSelectedItemChanged: [ :item | item ifNotNil: [ self elementChanged ] ];
-				childrenBlock: [ :anObject | self childrenFor: anObject ];
-				iconBlock: [ :treeNode | self iconFor: treeNode ];
-				displayBlock: [ :anObject | self labelFor: anObject ];
-				menu: [ :menu | self inspectionMenu: menu ];
-				doubleClick: [ self diveInto: self selectedObject ];
-				yourself ]
+
+	^ tree ifNil: [ 
+		tree := self newTreeTable
+			addColumn: (SpCompositeTableColumn new 
+				title: 'Instance'; 
+				addColumn: ((SpImageTableColumn evaluated: [ :node | self iconFor: node ])
+					width: 20;
+					yourself);
+				addColumn: (SpStringTableColumn evaluated: [ :node | self labelFor: node ]);
+				yourself);
+			children: [ :node | self childrenFor: node ];
+			"menu: [ :menu | self inspectionMenu: menu ];"
+			whenSelectedItemChangedDo: [ :item | item ifNotNil: [ self elementChanged ] ];
+			whenActivatedDo: [ self diveInto: self selectedObject ];
+			whenBuiltDo: [ self initializeShortcuts ];
+			yourself ]
 ]
