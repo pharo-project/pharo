@@ -725,8 +725,10 @@ CompiledCode >> sameLiteralsAs: method [
 							ifTrue: [ 
 								"properties"
 								"don't create properties if they don't exist"
-								(literal1 isSymbol and: [ literal2 isSymbol ]) ifFalse: [
-									(self properties analogousCodeTo: method properties) ifFalse: [ ^false ] ] ]
+								(literal1 isSymbol and: [ literal2 isSymbol ]) 
+									ifTrue: [ ^ false ]
+									ifFalse: [
+										(self properties analogousCodeTo: method properties) ifFalse: [ ^false ] ] ]
 							ifFalse: [ ^ false ] ] ] ].
 	"Class side methods have non unique (nil -> a Metaclass) as literal and cannot be compared equal"
 	literal1 := self literalAt: numLits.
