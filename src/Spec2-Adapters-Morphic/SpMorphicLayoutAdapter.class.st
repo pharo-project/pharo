@@ -87,6 +87,18 @@ SpMorphicLayoutAdapter >> buildWithSpec: aString [
 	^ self buildWithSpec
 ]
 
+{ #category : #accessing }
+SpMorphicLayoutAdapter >> children [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+SpMorphicLayoutAdapter >> isEmpty [
+
+	^ self children isEmpty
+]
+
 { #category : #'as yet unclassified' }
 SpMorphicLayoutAdapter >> layout: aLayout [
 
@@ -109,6 +121,22 @@ SpMorphicLayoutAdapter >> newPanel [
 		borderWidth: 0;
 		extent: 0@0;
 		yourself
+]
+
+{ #category : #initialization }
+SpMorphicLayoutAdapter >> replaceLayoutWith: aLayout [ 
+	| oldAdapter |
+
+	self widget owner ifNil: [ ^ self ].
+
+	oldAdapter := self.
+	self model adapter: (aLayout
+		buildAdapterFor: self model
+		bindings: self model application adapterBindings).
+		
+	oldAdapter widget owner 
+		replaceSubmorph: oldAdapter widget  
+		by: self model adapter widget
 ]
 
 { #category : #protocol }

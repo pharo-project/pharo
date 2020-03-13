@@ -193,7 +193,7 @@ SpAbstractListPresenter >> model: aModel [
 	
 	model := aModel.
 	model whenChangedDo: [ 
-		self withAdapterDo: #refreshList ]
+		self withAdapterDo: [ :anAdapter | anAdapter refreshList ] ]
 ]
 
 { #category : #private }
@@ -204,8 +204,11 @@ SpAbstractListPresenter >> newEmptyModel [
 
 { #category : #initialization }
 SpAbstractListPresenter >> registerEvents [
-	self whenSelectionModeChangedDo: [ :selection | self withAdapterDo: #refreshWidgetSelection ].
-	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
+
+	self whenSelectionModeChangedDo: [ :selection | 
+		self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetSelection ] ].
+	self whenMenuChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter updateMenu ] ]
 ]
 
 { #category : #simulation }

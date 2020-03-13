@@ -14,12 +14,6 @@ SpMorphPresenter class >> adapterName [
 ]
 
 { #category : #initialization }
-SpMorphPresenter >> defineInputPorts [
-
-	^ { SpMorphPort new }
-]
-
-{ #category : #initialization }
 SpMorphPresenter >> initialize [
 	super initialize.
 ]

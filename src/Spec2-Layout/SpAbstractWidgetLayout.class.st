@@ -4,7 +4,7 @@ I am a layout used for AbstractWidgetPresenters. I will manage all presenter tha
 Examples
 --------------------
 
-	SpecAbstractWidgetLayout for: #ListAdapter
+	SpAbstractWidgetLayout for: #ListAdapter
  
 Internal Representation and Key Implementation Points.
 --------------------
@@ -66,7 +66,8 @@ SpAbstractWidgetLayout >> buildAdapterFor: aPresenter bindings: adapterBindings 
 
 	^ aPresenter needRebuild
 		ifTrue: [ self adapt: aPresenter bindings: adapterBindings ]
-		ifFalse: [ aPresenter needRebuild: true.
+		ifFalse: [ 
+			aPresenter needRebuild: true.
 			aPresenter adapter
 				ifNil: [ self adapt: aPresenter bindings: adapterBindings ]
 				ifNotNil: [ :adapter | 

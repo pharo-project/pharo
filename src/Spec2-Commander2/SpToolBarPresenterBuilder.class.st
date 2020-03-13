@@ -31,11 +31,6 @@ SpToolBarPresenterBuilder >> toolbarPresenter: anObject [
 { #category : #visiting }
 SpToolBarPresenterBuilder >> visitCommand: aCmCommandEntry [
 	aCmCommandEntry positionStrategy
-		addButton: (SpToolBarButton new
-						label: aCmCommandEntry name;
-						help: aCmCommandEntry description;
-						icon: aCmCommandEntry icon;
-						action: [ aCmCommandEntry execute ];
-						yourself)
+		addButton: aCmCommandEntry buildPresenter
 		toToolbar: self toolbarPresenter
 ]

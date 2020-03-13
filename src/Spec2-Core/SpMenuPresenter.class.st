@@ -106,7 +106,7 @@ SpMenuPresenter >> autoRefresh: aBoolean [
 { #category : #api }
 SpMenuPresenter >> buildWithSpecAsPopup [
 
-	^ self buildWithSpec: #popup
+	^ self buildWithSpec
 ]
 
 { #category : #testing }

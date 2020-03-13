@@ -72,6 +72,80 @@ SpCommandTest >> testAsButtonPresenterExecutesOnClick [
 ]
 
 { #category : #test }
+SpCommandTest >> testConfigureAsButton [
+	| button |
+	command := (CmBlockCommand new
+		name: 'foo';
+		description: 'bar';
+		block: [ 42 ];
+		yourself) asSpecCommand.
+		
+	button := command
+					configureAsButton;
+					buildPresenter.
+	
+	self assert: button class equals: SpButtonPresenter.
+	self assert: button label equals: command name.
+	self assert: button help equals: command description.
+	self assert: button icon isNil.
+	self assert: button action value equals: command execute
+]
+
+{ #category : #test }
+SpCommandTest >> testConfigureAsButtonWithIcon [
+	| button |
+	command := CmCommand forSpec
+					iconName: #arrowUp;
+					yourself.
+		
+	button := command
+					configureAsButton;
+					buildPresenter.
+					
+	self assert: button icon equals: command icon
+]
+
+{ #category : #test }
+SpCommandTest >> testConfigureAsToolBarButton [
+	| button |
+	command := (CmBlockCommand new
+		name: 'foo';
+		description: 'bar';
+		block: [ 42 ];
+		yourself) asSpecCommand.
+		
+	button := command
+					configureAsToolBarButton;
+					buildPresenter.
+	
+	self assert: button class equals: SpToolBarButton.
+	self assert: button label equals: command name.
+	self assert: button help equals: command description.
+	self assert: button icon isNil.
+	self assert: button action value equals: command execute
+]
+
+{ #category : #test }
+SpCommandTest >> testConfigureAsToolBarToggleButton [
+	| button |
+	command := (CmBlockCommand new
+		name: 'foo';
+		description: 'bar';
+		block: [ 42 ];
+		yourself) asSpecCommand.
+		
+	button := command
+					configureAsToolBarToggleButton;
+					buildPresenter.
+	
+	self assert: button class equals: SpToolBarToggleButton.
+	self assert: button label equals: command name.
+	self assert: button help equals: command description.
+	self assert: button icon isNil.
+	self assert: button action value equals: command execute
+]
+
+{ #category : #test }
 SpCommandTest >> testHasIcon [
 	self deny: command hasIcon.
 	

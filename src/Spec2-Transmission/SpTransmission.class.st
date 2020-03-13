@@ -51,12 +51,7 @@ SpTransmission >> do: aBlock [
 
 { #category : #private }
 SpTransmission >> from: aPresenter [
-	self fromPort: aPresenter outputPortDefault
-]
-
-{ #category : #script }
-SpTransmission >> from: aPresenter port: aSymbol [
-	self fromPort: (aPresenter outputPortNamed: aSymbol)
+	self fromPort: aPresenter defaultOutputPort
 ]
 
 { #category : #actions }
@@ -148,13 +143,7 @@ SpTransmission >> preTransmission: aValuable [
 { #category : #private }
 SpTransmission >> to: aPresenter [
 
-	self toPort: aPresenter inputPortDefault
-]
-
-{ #category : #script }
-SpTransmission >> to: aPresenter port: aSymbol [
-
-	self toPort: (aPresenter inputPortNamed: aSymbol)
+	self toPort: aPresenter defaultInputPort
 ]
 
 { #category : #accessing }
