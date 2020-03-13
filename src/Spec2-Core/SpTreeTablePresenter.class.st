@@ -360,12 +360,6 @@ SpTreeTablePresenter >> whenRootsChangedDo: aBlockClosure [
 ]
 
 { #category : #'api-events' }
-SpTreeTablePresenter >> whenSearchChangedDo: aBlock [
-
-	self property: #searchEnabled whenChangedDo: aBlock
-]
-
-{ #category : #'api-events' }
 SpTreeTablePresenter >> whenSelectedIndexChangedDo: aBlockClosure [ 
 	
 	self whenSelectionChangedDo: [ :selection | aBlockClosure cull: selection first ]
