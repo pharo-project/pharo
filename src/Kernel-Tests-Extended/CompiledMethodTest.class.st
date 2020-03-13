@@ -632,7 +632,7 @@ CompiledMethodTest >> testMethodClass [
 	self assert: method methodClass equals: cls
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'tests - comparing' }
 CompiledMethodTest >> testMethodsThatHaveOnlyDifferentSelectorsShouldBeDifferent [
 	| method1 method2 |
 	method1 := TestCase compiler compile: 'aMethod'.
