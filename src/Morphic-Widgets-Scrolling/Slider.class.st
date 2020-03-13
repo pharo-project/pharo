@@ -7,7 +7,8 @@ Class {
 		'setValueSelector',
 		'sliderShadow',
 		'sliderColor',
-		'descending'
+		'descending',
+		'dragging'
 	],
 	#category : #'Morphic-Widgets-Scrolling'
 }
@@ -64,6 +65,16 @@ Slider >> descending: aBoolean [
 	self value: value
 ]
 
+{ #category : #access }
+Slider >> dragging [
+	^ dragging.
+]
+
+{ #category : #access }
+Slider >> dragging: aBoolean [
+	dragging := aBoolean.
+]
+
 { #category : #geometry }
 Slider >> extent: newExtent [
 	newExtent = bounds extent ifTrue: [^ self].
@@ -80,6 +91,7 @@ Slider >> initialize [
 	super initialize.
 	value := 0.0.
 	descending := false.
+	dragging := false.
 	self initializeSlider
 ]
 
@@ -110,19 +122,20 @@ Slider >> initializeSlider [
 Slider >> mouseDownInSlider: event [ 
 
 	slider borderStyle style == #raised
-		ifTrue: [slider borderColor: #inset].
+		ifTrue: [slider borderColor: #inset. self dragging: true].
 	
 	sliderShadow color: self sliderShadowColor.
 	sliderShadow cornerStyle: slider cornerStyle.
 	sliderShadow bounds: slider bounds.
-	sliderShadow show
+	sliderShadow show.
+	
 ]
 
 { #category : #'other events' }
 Slider >> mouseUpInSlider: event [ 
 
 	slider borderStyle style == #inset
-		ifTrue: [slider borderColor: #raised].
+		ifTrue: [slider borderColor: #raised. self dragging: false].
 	
 	sliderShadow hide
 ]
@@ -140,9 +153,9 @@ Slider >> roomToMove [
 { #category : #scrolling }
 Slider >> scrollAbsolute: event [
 	| r p |
-	"There is no state variable, but we know it's draggin the slider by it color if the style is not #inset there nothing to do."
-	slider borderStyle style == #inset
-		ifFalse: [ ^ self ].
+	"If I'm not dragging I will do nothing."
+	self dragging ifFalse: [ ^ self ].
+
 	r := self roomToMove.
 	bounds isWide
 		ifTrue: [ r width = 0
