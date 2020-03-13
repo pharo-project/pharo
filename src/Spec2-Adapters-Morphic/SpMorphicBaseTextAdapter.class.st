@@ -96,6 +96,13 @@ SpMorphicBaseTextAdapter >> codePaneMenu: aMenu shifted: shifted [
 		during: [ menuPresenter value buildWithSpec ]
 ]
 
+{ #category : #'spec protocol' }
+SpMorphicBaseTextAdapter >> cursorPositionIndex [
+
+	self widgetDo: [:w| ^w textArea editor pointIndex]
+
+]
+
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> font: aFont [
 	self widgetDo: [ :w | w font: aFont ]

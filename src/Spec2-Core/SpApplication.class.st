@@ -68,7 +68,7 @@ SpApplication class >> example1 [
 	
 	"You want to subclass SpApplication to create your app"
 	app := SpApplication new.
-	app useBackend: #Morphic.
+	app useBackend: #Gtk.
 	app run
 ]
 
@@ -79,12 +79,12 @@ SpApplication class >> example2 [
 	
 	"You want to subclass SpApplication to create your app"
 	app := SpApplication new.
-	"You want to subclass SpApplicationConfiguration to create your own cofiguration"
+	"You want to subclass SpGtkConfiguration to create your own cofiguration"
 	app useBackend: #Gtk with: SpApplicationConfiguration new.
 	app run
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpApplication >> adapterBindings [
 	
 	^ self backend adapterBindings
@@ -110,9 +110,9 @@ SpApplication >> configuration [
 	^ configuration
 ]
 
-{ #category : #accessing }
+{ #category : #ui }
 SpApplication >> defer: aBlock [
-
+	"doInUIThread: ?"
 	self backend defer: aBlock
 ]
 
@@ -299,6 +299,14 @@ SpApplication >> selectFileTitle: aString [
 { #category : #running }
 SpApplication >> start [ 
 	"Override this to start your app"
+]
+
+{ #category : #accessing }
+SpApplication >> topWindow [
+
+	^ self windows 
+		detect: [ :each | each isTopWindow ]
+		ifNone: [ nil ]
 ]
 
 { #category : #'accessing backend' }

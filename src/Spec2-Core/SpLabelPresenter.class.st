@@ -1,22 +1,18 @@
 "
-A LabelPresenter is a spec presenter for Labels.
-See AbstractWidgetPresenter
+I'm a LabelPresenter, made to add labels to spec components.
 
-self example
+! SpLabelPresenter 
+A label presenter displays smalls (or medium) amounts of text.
 
-I provide the following variables and their accessors
-- label is the text displayed that I display.
+Examples:
+> self example
 
-I am specializing defaultColor to change the color of my text.
-
-todo
-- emphasis
+NOTE: In the future, it should be possible to attach another widget to a label, but for now it is not implementes.
 "
 Class {
 	#name : #SpLabelPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'#emphasis',
 		'#label => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets'
@@ -26,6 +22,15 @@ Class {
 SpLabelPresenter class >> adapterName [
 
 	^ #LabelAdapter
+]
+
+{ #category : #example }
+SpLabelPresenter class >> example [
+	"This example opens a spec window with a label."
+
+	^ SpLabelPresenter new
+		label: 'Label example';
+		openWithSpec.
 ]
 
 { #category : #specs }
@@ -42,28 +47,9 @@ SpLabelPresenter >> canTakeKeyboardFocus [
 
 { #category : #initialization }
 SpLabelPresenter >> defaultColor [
+
+	self flag: #TOREMOVE. "This needs to be removed"
 	^ self theme textColor
-]
-
-{ #category : #initialization }
-SpLabelPresenter >> defineInputPorts [
-
-	^ { SpLabelPort new }
-]
-
-{ #category : #api }
-SpLabelPresenter >> emphasis [
-	^ emphasis
-]
-
-{ #category : #api }
-SpLabelPresenter >> emphasis: anEmphasis [
-	"accepts a symbol or an array of symbols: #bold, #italic, #underline, #narrow, #struck"
-
-	emphasis := anEmphasis isSymbol
-		ifTrue: [ {anEmphasis} ]
-		ifFalse: [ anEmphasis ].
-	self changed: #emphasis: with: {emphasis}
 ]
 
 { #category : #initialization }
@@ -71,7 +57,6 @@ SpLabelPresenter >> initialize [
 	super initialize.
 
 	label := ''.
-	emphasis := #().
 	self whenLabelChangedDo: [ self changed: #getText ]
 ]
 

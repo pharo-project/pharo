@@ -110,9 +110,15 @@ SpMorphicBoxAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel 
 ]
 
 { #category : #accessing }
+SpMorphicBoxAdapter >> children [
+
+	^ widget submorphs first submorphs, widget submorphs second submorphs
+]
+
+{ #category : #accessing }
 SpMorphicBoxAdapter >> childrenWidgets [
 	
-	^ widget submorphs first submorphs, widget submorphs second submorphs
+	^ self children
 ]
 
 { #category : #factory }
@@ -128,6 +134,14 @@ SpMorphicBoxAdapter >> layout: aLayout [
 		widget submorphs do: [ :each |
 			each cellInset: aLayout spacing ].
 		"widget homogeneous: aLayout isHomogeneous" ].
+
+	aLayout whenChildrenAddedDo: [ :ann |
+		self
+			add: ann child
+			constraints: (aLayout constraintsFor: ann child) ].
+	
+	aLayout whenChildrenRemovedDo: [ :ann |
+		self remove: ann child ].
 	
 	super layout: aLayout
 ]
@@ -176,8 +190,8 @@ SpMorphicBoxAdapter >> newWrapMorph [
 
 { #category : #accessing }
 SpMorphicBoxAdapter >> remove: aPresenter [
-	| morph |
 
+	| morph |
 	morph := aPresenter adapter widget.	
 	widget submorphs first removeMorph: morph.
 	widget submorphs second removeMorph: morph.

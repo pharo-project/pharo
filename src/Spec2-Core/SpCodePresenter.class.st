@@ -123,7 +123,7 @@ SpCodePresenter >> completionEngine [
 	^ completionEngine
 ]
 
-{ #category : #api }
+{ #category : #accessing }
 SpCodePresenter >> completionEngine: aCompletionEngine [
 
 	completionEngine := aCompletionEngine
@@ -233,7 +233,7 @@ SpCodePresenter >> whenBehaviorChangedDo: aBlock [
 { #category : #'api-events' }
 SpCodePresenter >> whenCompletionEngineChangedDo: aBlock [
 	"Set a block to perform when the syntax highlight is enabled/disabled"
-
+	
 	self property: #completionEngine whenChangedDo: aBlock
 ]
 

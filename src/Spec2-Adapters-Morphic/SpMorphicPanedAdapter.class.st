@@ -6,12 +6,13 @@ Class {
 	#name : #SpMorphicPanedAdapter,
 	#superclass : #SpMorphicLayoutAdapter,
 	#instVars : [
-		'layout'
+		'layout',
+		'children'
 	],
 	#category : #'Spec2-Adapters-Morphic-Layout'
 }
 
-{ #category : #private }
+{ #category : #'adding/removing' }
 SpMorphicPanedAdapter >> addConstraits: constraints toChild: childMorph [
 	"adds constraits by child"
 	| theMorph |
@@ -23,18 +24,19 @@ SpMorphicPanedAdapter >> addConstraits: constraints toChild: childMorph [
 	^ theMorph 
 ]
 
-{ #category : #private }
+{ #category : #'adding/removing' }
 SpMorphicPanedAdapter >> addSplitterIn: aPanel for: childMorph [
 
 	aPanel submorphs size = 1 ifFalse: [ ^ self ].
 	aPanel addMorphBack: self direction newSplitter
 ]
 
-{ #category : #private }
+{ #category : #'adding/removing' }
 SpMorphicPanedAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel [
 	| childMorph |
 
 	childMorph := self buildMorph: aPresenter constraints: constraints.	
+	children add: childMorph.
 	aPanel addMorphBack: childMorph.
 	self addSplitterIn: aPanel for: childMorph.
 	
@@ -42,9 +44,21 @@ SpMorphicPanedAdapter >> basicAdd: aPresenter constraints: constraints to: aPane
 ]
 
 { #category : #accessing }
+SpMorphicPanedAdapter >> children [
+
+	^ children
+]
+
+{ #category : #accessing }
 SpMorphicPanedAdapter >> direction [
 
 	^ self layout direction
+]
+
+{ #category : #initialization }
+SpMorphicPanedAdapter >> initialize [
+	super initialize.
+	children := OrderedCollection new.
 ]
 
 { #category : #accessing }
@@ -60,6 +74,15 @@ SpMorphicPanedAdapter >> layout: aLayout [
 		ifNil: [ widget := aLayout direction newWidgetOn: self.
 			widget layoutPolicy position: aLayout position.
 			self selector: self splitterNewSelector ].
+
+	layout whenChildrenAddedDo: [ :ann |
+		self 
+			basicAdd: ann child
+			constraints: (layout constraintsFor: ann child) 
+			to: widget ].
+		
+	layout whenChildrenRemovedDo: [ :ann |
+		self removeChild: ann child ].
 
 	super layout: aLayout
 ]
@@ -86,6 +109,15 @@ SpMorphicPanedAdapter >> newVertical [
 	^ self newPanel 
 		listDirection: #topToBottom;
 		yourself	
+]
+
+{ #category : #'adding/removing' }
+SpMorphicPanedAdapter >> removeChild: aPresenter [
+	
+	| morph |
+	morph := aPresenter adapter widget.
+	children remove: morph.
+	widget removeMorph: morph
 ]
 
 { #category : #private }

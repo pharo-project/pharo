@@ -41,7 +41,8 @@ Class {
 		'rowConstraints',
 		'columnConstraints',
 		'columnHomogeneous',
-		'rowHomogeneous'
+		'rowHomogeneous',
+		'childrenByPosition'
 	],
 	#category : #'Spec2-Layout-Grid'
 }
@@ -82,12 +83,24 @@ SpGridLayout >> add: aName at: aPoint [
 { #category : #adding }
 SpGridLayout >> add: aName at: aPoint span: spanPoint [
 
+	childrenByPosition at: aPoint ifPresent: [ :e |
+		"Remove element at the same position"
+		self remove: e ].
+
 	^ self 
 		add: aName 
 		withConstraints: [ :constraints |
 			constraints 
 				position: aPoint;
 				span: spanPoint ]
+]
+
+{ #category : #adding }
+SpGridLayout >> add: aChild withConstraints: aBlock [
+
+	super add: aChild withConstraints: aBlock.
+	childrenByPosition at: (children at: aChild) position put: aChild.
+	self announceChildAdded: aChild.
 ]
 
 { #category : #accessing }
@@ -123,6 +136,12 @@ SpGridLayout >> borderWidth [
 { #category : #accessing }
 SpGridLayout >> borderWidth: anObject [
 	borderWidth := anObject
+]
+
+{ #category : #accessing }
+SpGridLayout >> children [
+
+	^ children
 ]
 
 { #category : #accessing }
@@ -174,6 +193,7 @@ SpGridLayout >> initialize [
 	self beRowHomogeneous.
 	columnConstraints := Dictionary new.
 	rowConstraints := Dictionary new.
+	childrenByPosition := Dictionary new.
 ]
 
 { #category : #testing }
@@ -184,6 +204,13 @@ SpGridLayout >> isColumnHomogeneous [
 { #category : #testing }
 SpGridLayout >> isRowHomogeneous [
 	^ rowHomogeneous
+]
+
+{ #category : #removing }
+SpGridLayout >> remove: aPresenter [
+
+	children removeKey: aPresenter.
+	self announceChildRemoved: aPresenter
 ]
 
 { #category : #accessing }

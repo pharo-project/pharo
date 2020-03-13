@@ -11,10 +11,10 @@ Class {
 SpMorphicToolBarButtonAdapter >> buildWidget [
 	| button |
 	
-	button := (SpToolBarButtonMorph
-			on: self model
+	button := (self morphClass
+			on: self presenter
 			getState: nil 
-			action:  #execute)
+			action: #execute)
 		helpText: self model help;
 		beIconTop;
 		hResizing: #rigid;
@@ -25,4 +25,10 @@ SpMorphicToolBarButtonAdapter >> buildWidget [
 		yourself.
 		
 	^ button
+]
+
+{ #category : #factory }
+SpMorphicToolBarButtonAdapter >> morphClass [
+
+	^ SpToolBarButtonMorph
 ]

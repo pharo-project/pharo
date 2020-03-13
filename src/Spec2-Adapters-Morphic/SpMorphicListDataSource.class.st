@@ -33,6 +33,12 @@ SpMorphicListDataSource >> elements [
 	^ self model items
 ]
 
+{ #category : #testing }
+SpMorphicListDataSource >> hasElementAt: index [ 
+	
+	^ self model model hasElementAt: index
+]
+
 { #category : #accessing }
 SpMorphicListDataSource >> headerColumn: column [
 

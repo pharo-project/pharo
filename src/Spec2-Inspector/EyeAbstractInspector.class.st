@@ -42,6 +42,14 @@ EyeAbstractInspector >> close [
 	"Override in sublcasses for special actions"
 ]
 
+{ #category : #initialization }
+EyeAbstractInspector >> connectPresenters [
+
+	self property: #object whenChangedDo: [ self objectChanged ].
+	text whenBuiltDo: [ :w | self text behavior: self object class ].
+	self initializeShortcuts
+]
+
 { #category : #accessing }
 EyeAbstractInspector >> customMenuActions [
 	^ customMenuActions ifNil: [ customMenuActions := [  ] ]
@@ -77,20 +85,14 @@ EyeAbstractInspector >> initialize [
 ]
 
 { #category : #initialization }
-EyeAbstractInspector >> initializePresenter [
-	self property: #object whenChangedDo: [ self objectChanged ].
-	text whenBuiltDo: [ :w | self text behavior: self object class ].
-	self initializeShortcuts
+EyeAbstractInspector >> initializePresenters [
+
+	text := self newCode
 ]
 
 { #category : #initialization }
 EyeAbstractInspector >> initializeShortcuts [
 	"override to add custom shortcuts to your model"
-]
-
-{ #category : #initialization }
-EyeAbstractInspector >> initializeWidgets [
-	text := self newCode
 ]
 
 { #category : #accessing }
@@ -100,14 +102,16 @@ EyeAbstractInspector >> inspect: anObject [
 ]
 
 { #category : #menu }
-EyeAbstractInspector >> inspectionMenu: aMenu [
-	| menuModel |
-	self hasSelectedObject ifFalse: [ ^ aMenu ].
-	menuModel := self newMenu.
-	self inspectionSubMenu: menuModel.
-	self selectedElement inspectionMenu: menuModel.
-	aMenu addAllMorphs: (menuModel buildWithSpec: #popup) items.
-	^aMenu
+EyeAbstractInspector >> inspectionMenu [
+	| menuPresenter |
+	
+	self hasSelectedObject ifFalse: [ ^ nil ].
+	
+	menuPresenter := self newMenu.
+	self inspectionSubMenu: menuPresenter.
+	self selectedElement inspectionMenu: menuPresenter.
+	
+	^ menuPresenter
 ]
 
 { #category : #menu }

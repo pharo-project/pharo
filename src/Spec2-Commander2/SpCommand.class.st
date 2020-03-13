@@ -11,21 +11,61 @@ Basically, I add:
 Class {
 	#name : #SpCommand,
 	#superclass : #CmUICommand,
+	#instVars : [
+		'buildPresenterBlock'
+	],
 	#category : #'Spec2-Commander2-Core'
 }
 
 { #category : #converting }
 SpCommand >> asButtonPresenter [
 	self flag: #TODO. "Needs to use inform user display strategy when available, no other available strategy can be used in this context. See issue #705"
-	^ SpButtonPresenter new
-		label: self name;
-		help: self description;
-		in: [ :button |
-			self hasIcon
-				ifTrue: [ button iconName: self iconName ] ];
-		action: [ self execute ]
-		yourself
-		
+	self configureAsButton.
+	^ self buildPresenter
+]
+
+{ #category : #'presenter building' }
+SpCommand >> buildPresenter [
+	^ self buildPresenterBlock value: self
+]
+
+{ #category : #accessing }
+SpCommand >> buildPresenterBlock [
+	^ buildPresenterBlock
+]
+
+{ #category : #accessing }
+SpCommand >> buildPresenterBlock: anObject [
+	buildPresenterBlock := anObject
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsButton [
+	self configureAsButtonOfClass: SpButtonPresenter
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsButtonOfClass: aButtonClass [
+	self
+		buildPresenterBlock: [ :specCommand | 
+			aButtonClass new
+				label: specCommand name;
+				help: specCommand description;
+				in: [ :button | 
+					specCommand hasIcon
+						ifTrue: [ button icon: specCommand icon ] ];
+				action: [ specCommand execute ];
+				yourself ]
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsToolBarButton [
+	self configureAsButtonOfClass: SpToolBarButton
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsToolBarToggleButton [
+	self configureAsButtonOfClass: SpToolBarToggleButton
 ]
 
 { #category : #displaying }
@@ -35,4 +75,10 @@ SpCommand >> displayIn: aMenuGroupOrPresenter do: aBlock [
 		display: self 
 		in: aMenuGroupOrPresenter 
 		do: aBlock
+]
+
+{ #category : #initialization }
+SpCommand >> initialize [
+	super initialize.
+	self configureAsToolBarButton
 ]

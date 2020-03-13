@@ -15,6 +15,7 @@ SpMorphicCodeAdapter >> buildWidget [
 	| newWidget |
 	
 	newWidget := super buildWidget.
+	
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
 		self setEditingModeFor: newWidget ].
 	

@@ -106,17 +106,6 @@ SpNotebookPresenter >> selectedPage [
 	^ selectedPage
 ]
 
-{ #category : #private }
-SpNotebookPresenter >> selectedPage: aPage [
-
-	self 
-		deprecated: 'Use #selectPage: instead' 
-		transformWith: '`@receiver selectedPage: `@statements1'
-				-> '`@receiver selectPage: `@statements1'.
-				
-	self selectPage: aPage
-]
-
 { #category : #accessing }
 SpNotebookPresenter >> selectedPageIndex [
 	| page |
@@ -125,16 +114,6 @@ SpNotebookPresenter >> selectedPageIndex [
 	page ifNil: [ ^ 0 ].
 	
 	^ self pages indexOf: page
-]
-
-{ #category : #private }
-SpNotebookPresenter >> selectedPageIndex: aNumber [
-	self 
-		deprecated: 'Use #selectPageIndex: instead' 
-		transformWith: '`@receiver selectedPageIndex: `@statements1'
-				-> '`@receiver selectPageIndex: `@statements1'.
-				
-	self selectPageIndex: aNumber
 ]
 
 { #category : #'private-traversing' }

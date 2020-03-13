@@ -5,15 +5,9 @@ Class {
 }
 
 { #category : #running }
-SpTreeTableAdapterSingleColumnMultiSelectionTest >> initializeTestedInstance [ 
-
-	presenter
-		addColumn: (SpStringTableColumn title: 'Value' evaluated: #printString);
-		hideColumnHeaders;	
-		beMultipleSelection;
-		roots: #(1 2 3);
-		children: [ :aNumber | { aNumber * 2. aNumber * 3. aNumber * 10 } ].
-
+SpTreeTableAdapterSingleColumnMultiSelectionTest >> initializeTestedInstance [
+	super initializeTestedInstance.
+	presenter beMultipleSelection
 ]
 
 { #category : #running }

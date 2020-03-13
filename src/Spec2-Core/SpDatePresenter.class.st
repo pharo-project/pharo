@@ -26,13 +26,12 @@ Class {
 
 { #category : #specs }
 SpDatePresenter class >> defaultSpec [
-	^ SpLayout composed
-		newRow: [ :row | 
-			row
-				add: #dateModel;
-				add: #chooseDateButton width: 50 ]
-			height: 25;
+
+	^ SpBoxLayout newHorizontal
+		add: #dateModel;
+		add: #chooseDateButton expand: false;
 		yourself
+		
 ]
 
 { #category : #private }
@@ -90,31 +89,6 @@ SpDatePresenter >> display [
 { #category : #api }
 SpDatePresenter >> display: aBlock [
 	"Set the one argument block used to transfrom your date into a string"
-
-	displayBlock := aBlock
-]
-
-{ #category : #api }
-SpDatePresenter >> displayBlock [
-	"Return the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
-
-	self
-		deprecated: 'Please use #display instead'
-		transformWith: '`@receiver displayBlock' 
-						-> '`@receiver display'.
-	
-	^ displayBlock
-]
-
-{ #category : #api }
-SpDatePresenter >> displayBlock: aBlock [
-	"Set the one argument block used to transfrom your date into a string"
-
-	self
-		deprecated: 'Please use #display: instead'
-		transformWith: '`@receiver displayBlock: `@arg' 
-						-> '`@receiver display: `@arg'.
 
 	displayBlock := aBlock
 ]
