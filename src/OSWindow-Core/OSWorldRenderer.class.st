@@ -44,12 +44,6 @@ OSWorldRenderer >> canvas [
 ]
 
 { #category : #initialization }
-OSWorldRenderer >> canvas: x [
-
-	self flag: #jajaja
-]
-
-{ #category : #initialization }
 OSWorldRenderer >> checkForNewScreenSize [
 
 	(display isNil or: [display extent = self actualScreenSize]) 

@@ -39,11 +39,6 @@ NullWorldRenderer >> canvas [
 	^ nil
 ]
 
-{ #category : #accessing }
-NullWorldRenderer >> canvas: x [ 
-
-]
-
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
 
