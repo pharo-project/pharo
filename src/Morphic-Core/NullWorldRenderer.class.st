@@ -72,3 +72,9 @@ NullWorldRenderer >> icon: aForm [
 
 	"Do nothing, a null world rendered has no window, so no icon either"
 ]
+
+{ #category : #rendering }
+NullWorldRenderer >> updateDamage: rectangles [
+
+	"Do nothing"
+]
