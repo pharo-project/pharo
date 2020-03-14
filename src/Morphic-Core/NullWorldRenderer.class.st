@@ -33,12 +33,6 @@ NullWorldRenderer >> actualScreenSize [
 	^ 240@120
 ]
 
-{ #category : #accessing }
-NullWorldRenderer >> canvas [
-
-	^ nil
-]
-
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
 
