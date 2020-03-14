@@ -121,8 +121,8 @@ OSWorldRenderer >> doActivate [
 OSWorldRenderer >> drawDuring: aBlock [
 
 	osWindow ifNil: [ ^ self ].
-	self osWindowRenderer deferUpdatesWhile: [  
-		aBlock value: self canvas.
+	self osWindowRenderer deferUpdatesWhile: [
+		self osWindowRenderer drawDuring: aBlock
 	].	
 ]
 
