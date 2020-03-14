@@ -38,12 +38,6 @@ OSWorldRenderer >> actualScreenSize [
 ]
 
 { #category : #initialization }
-OSWorldRenderer >> canvas [ 
-
-	^ self osWindowRenderer getCanvas
-]
-
-{ #category : #initialization }
 OSWorldRenderer >> checkForNewScreenSize [
 
 	(display isNil or: [display extent = self actualScreenSize]) 
