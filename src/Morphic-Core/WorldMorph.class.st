@@ -312,7 +312,7 @@ WorldMorph >> displayScaleFactor [
 { #category : #'world state' }
 WorldMorph >> displayWorld [
 
-	worldState displayWorld: self submorphs: submorphs
+	worldState displayWorld: self
 ]
 
 { #category : #'world state' }
