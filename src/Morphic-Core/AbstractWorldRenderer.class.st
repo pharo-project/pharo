@@ -91,6 +91,12 @@ AbstractWorldRenderer >> deactivate [
 	self subclassResponsibility 
 ]
 
+{ #category : #operations }
+AbstractWorldRenderer >> deferUpdates: aBoolean [
+
+	^ false
+]
+
 { #category : #rendering }
 AbstractWorldRenderer >> deferUpdatesDuring: aBlock [
 

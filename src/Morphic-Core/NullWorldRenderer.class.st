@@ -48,12 +48,6 @@ NullWorldRenderer >> checkForNewScreenSize [
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : #operations }
-NullWorldRenderer >> deferUpdates: aValue [
-
-	^ aValue value
-]
-
 { #category : #activation }
 NullWorldRenderer >> doActivate [
 ]

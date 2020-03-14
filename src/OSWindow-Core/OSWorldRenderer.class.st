@@ -70,12 +70,6 @@ OSWorldRenderer >> deactivate [
 	
 ]
 
-{ #category : #initialization }
-OSWorldRenderer >> deferUpdates: aBoolean [
-
-	^ false
-]
-
 { #category : #operations }
 OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
