@@ -359,14 +359,6 @@ WorldState >> canvas [
 	^ self worldRenderer canvas
 ]
 
-{ #category : #canvas }
-WorldState >> canvas: x [ 
-	self worldRenderer canvas: x.
-	damageRecorder 
-		ifNil: [damageRecorder := DamageRecorder new]
-		ifNotNil: [damageRecorder doFullRepaint]
-]
-
 { #category : #'update cycle' }
 WorldState >> checkIfUpdateNeeded [
 
@@ -677,6 +669,14 @@ WorldState >> interCyclePause: milliSecs [
 
 	lastCycleTime := Time millisecondClockValue.
 	CanSurrenderToOS := true.
+]
+
+{ #category : #canvas }
+WorldState >> invalidate [
+	self worldRenderer invalidate.
+	damageRecorder 
+		ifNil: [damageRecorder := DamageRecorder new]
+		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
 { #category : #hands }

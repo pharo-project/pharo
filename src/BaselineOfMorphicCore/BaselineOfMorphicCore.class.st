@@ -104,7 +104,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	Display newDepth: 32.
 
-	(world instVarNamed: #worldState) canvas: nil.
+	(world instVarNamed: #worldState) invalidate.
 
 	hand instVarNamed: #targetOffset put: 0@0.
 

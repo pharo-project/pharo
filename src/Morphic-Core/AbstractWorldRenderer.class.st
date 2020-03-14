@@ -158,6 +158,12 @@ AbstractWorldRenderer >> initialize [
 	alreadyActivated := false
 ]
 
+{ #category : #rendering }
+AbstractWorldRenderer >> invalidate [
+	"Invalidate the entire render"
+	"Each subclass should define me properly"
+]
+
 { #category : #operations }
 AbstractWorldRenderer >> restoreMorphicDisplay [ 
 

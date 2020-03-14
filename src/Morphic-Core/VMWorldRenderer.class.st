@@ -183,6 +183,12 @@ VMWorldRenderer >> icon: aForm [
 	"
 ]
 
+{ #category : #rendering }
+VMWorldRenderer >> invalidate [
+
+	self canvas: nil
+]
+
 { #category : #operations }
 VMWorldRenderer >> updateDamage: allDamage [
 	
