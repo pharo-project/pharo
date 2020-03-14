@@ -353,12 +353,6 @@ WorldState >> alarms [
 	^alarms ifNil: [alarms := Heap sortBlock: self alarmSortBlock]
 ]
 
-{ #category : #canvas }
-WorldState >> canvas [
-
-	^ self worldRenderer canvas
-]
-
 { #category : #'update cycle' }
 WorldState >> checkIfUpdateNeeded [
 

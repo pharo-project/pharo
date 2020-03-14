@@ -226,12 +226,6 @@ WorldMorph >> buildMetaMenu: evt [
 
 ]
 
-{ #category : #'project state' }
-WorldMorph >> canvas [
-
-	^ worldState canvas
-]
-
 { #category : #stepping }
 WorldMorph >> cleanseStepList [
 	"Remove morphs from the step list that are not in this World."
@@ -533,16 +527,6 @@ WorldMorph >> runLocalStepMethods [
 WorldMorph >> runStepMethods [
 
 	worldState runStepMethodsIn: self
-
-]
-
-{ #category : #'world state' }
-WorldMorph >> sleep [
-
-	worldState canvas ifNil: [^ self  "already called (clean this up)"].
-	Cursor normal show.	"restore the normal cursor"
-	worldState invalidate.		"free my canvas to save space"
-	self fullReleaseCachedState
 
 ]
 
