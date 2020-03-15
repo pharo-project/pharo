@@ -451,7 +451,7 @@ RPackageOrganizer >> hasRegistered [
 	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RPackageOrganizer >> includesPackage: aPackage [
 	"Answer whether the receiver get a package as registered."
 	^ self includesPackageNamed: aPackage name
@@ -463,10 +463,17 @@ RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RPackageOrganizer >> includesPackageNamed: aSymbol [
 	"Answer whether the receiver get a package named aSymbol as registered."
 	^ packages includesKey:  aSymbol asSymbol
+]
+
+{ #category : #'private testing' }
+RPackageOrganizer >> includingWith: aString [
+	"Return packages whose names includes the argument"
+	
+	^ self packages select: [ :p | p name includesSubstring: aString ]
 ]
 
 { #category : #initialization }
@@ -531,6 +538,14 @@ RPackageOrganizer >> initializeMethodsFor: aBehavior [
 			 (eachProtocol methodSelectors 
 				select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ])
 				do: [ :eachSelector | package addMethod: (aBehavior >> eachSelector) ] ]
+]
+
+{ #category : #accessing }
+RPackageOrganizer >> matching: aPatternString [
+    "Return the list of packages whose names match the argument."
+
+	^ self packages select: [ :p | aPatternString match: p name  ]
+
 ]
 
 { #category : #accessing }
@@ -886,6 +901,13 @@ RPackageOrganizer >> reportExtraRemovalOf: aClass [
 RPackageOrganizer >> signalPackageExists: aPackageName [
 
 	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
+]
+
+{ #category : #accessing }
+RPackageOrganizer >> startingWith: aString [
+	"Return the packages whose names starts with the given argument."
+	
+	^ self packages select: [ :p | p name beginsWith: aString ]
 ]
 
 { #category : #private }
