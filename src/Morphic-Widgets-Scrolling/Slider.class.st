@@ -7,7 +7,8 @@ Class {
 		'setValueSelector',
 		'sliderShadow',
 		'sliderColor',
-		'descending'
+		'descending',
+		'dragging'
 	],
 	#category : #'Morphic-Widgets-Scrolling'
 }
@@ -64,6 +65,16 @@ Slider >> descending: aBoolean [
 	self value: value
 ]
 
+{ #category : #access }
+Slider >> dragging [
+	^ dragging.
+]
+
+{ #category : #access }
+Slider >> dragging: aBoolean [
+	dragging := aBoolean.
+]
+
 { #category : #geometry }
 Slider >> extent: newExtent [
 	newExtent = bounds extent ifTrue: [^ self].
@@ -80,6 +91,7 @@ Slider >> initialize [
 	super initialize.
 	value := 0.0.
 	descending := false.
+	dragging := false.
 	self initializeSlider
 ]
 
@@ -107,24 +119,30 @@ Slider >> initializeSlider [
 ]
 
 { #category : #'other events' }
-Slider >> mouseDownInSlider: event [ 
-
-	slider borderStyle style == #raised
-		ifTrue: [slider borderColor: #inset].
+Slider >> mouseDownInSlider: event [
+	"When mouse down I start dragging, and change the border colors and show a shadow
+	on the original position."
+		
+	slider borderColor: #inset.
 	
 	sliderShadow color: self sliderShadowColor.
 	sliderShadow cornerStyle: slider cornerStyle.
 	sliderShadow bounds: slider bounds.
-	sliderShadow show
+	sliderShadow show.
+	
+	self dragging: true
 ]
 
 { #category : #'other events' }
-Slider >> mouseUpInSlider: event [ 
+Slider >> mouseUpInSlider: event [
+	"When mouse up, the dragging ends and the color is reseted to it's orignal
+	value and the shadow of original position is hidden."
 
-	slider borderStyle style == #inset
-		ifTrue: [slider borderColor: #raised].
+	slider borderColor: #raised.
+				
+	sliderShadow hide.
 	
-	sliderShadow hide
+	self dragging: false.
 ]
 
 { #category : #access }
@@ -140,20 +158,27 @@ Slider >> roomToMove [
 { #category : #scrolling }
 Slider >> scrollAbsolute: event [
 	| r p |
+	"If I'm not dragging I will do nothing."
+	self dragging ifFalse: [ ^ self ].
+
 	r := self roomToMove.
 	bounds isWide
-		ifTrue: [r width = 0 ifTrue: [^ self]]
-		ifFalse: [r height = 0 ifTrue: [^ self]].
+		ifTrue: [ r width = 0
+				ifTrue: [ ^ self ] ]
+		ifFalse: [ r height = 0
+				ifTrue: [ ^ self ] ].
 	p := event targetPoint adhereTo: r.
 	self descending
-		ifFalse:
-			[self setValue: (bounds isWide 
-				ifTrue: [(p x - r left) asFloat / r width]
-				ifFalse: [(p y - r top) asFloat / r height])]
-		ifTrue:
-			[self setValue: (bounds isWide
-				ifTrue: [(r right - p x) asFloat / r width]
-				ifFalse:	[(r bottom - p y) asFloat / r height])]
+		ifFalse: [ self
+				setValue:
+					(bounds isWide
+						ifTrue: [ (p x - r left) asFloat / r width ]
+						ifFalse: [ (p y - r top) asFloat / r height ]) ]
+		ifTrue: [ self
+				setValue:
+					(bounds isWide
+						ifTrue: [ (r right - p x) asFloat / r width ]
+						ifFalse: [ (r bottom - p y) asFloat / r height ]) ]
 ]
 
 { #category : #initialization }
