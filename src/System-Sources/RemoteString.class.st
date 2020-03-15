@@ -1,7 +1,7 @@
 "
 My instances provide an external file reference to a piece of text.  It may be the sourceCode of a method, or the class comments of a class.
 
-The 'changes' file or 'file-in' file usually has a chunk that is just the source string of a method:
+The 'changes' file or 'file-in' file usually have a chunk that is just the source string of a method:
 
 max: aNumber
 	^ self > aNumber ifTrue: [self] ifFalse: [aNumber]!
