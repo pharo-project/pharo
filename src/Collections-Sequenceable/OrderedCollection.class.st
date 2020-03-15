@@ -262,9 +262,8 @@ OrderedCollection >> addLast: newObject [
 
 { #category : #converting }
 OrderedCollection >> asArray [
-	"Convert an OrderedCollection as an array.
-	This method is useful when using executable comments because arrays are supported by the Pharo syntax"
-	
+	"Convert an OrderedCollection into an Array."
+	"#(a b c) asOrderedCollection asArray >>> #(a b c)"
 	"OrderedCollection new class >>> OrderedCollection"
 	"OrderedCollection new asArray class >>> Array"
 	"(OrderedCollection new add: 42; add: 43; yourself) asArray >>> #(42 43)"
@@ -283,10 +282,10 @@ OrderedCollection >> asOrderedCollection [
 OrderedCollection >> at: anInteger [
 	"Answer my element at index anInteger. at: is used by a knowledgeable
 	client to access an existing element."
-
-	"(#(40 41 42) at: 1) >>> 40"
-	"(#(40 41 42) at: 2) >>> 41"
-	"(#(40 41 42) at: 3) >>> 42"
+	"((OrderedCollection new add: 34; yourself) at: 1) >>> 34"
+	"(#(40 41 42) asOrderedCollection at: 1) >>> 40"
+	"(#(40 41 42) asOrderedCollection at: 2) >>> 41"
+	"(#(40 41 42) asOrderedCollection at: 3) >>> 42"
 
 	| index |
 	anInteger < 1
@@ -821,13 +820,14 @@ OrderedCollection >> reverseDo: aBlock [
 { #category : #converting }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
+	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
 	| newCol |
 	newCol := self species new.
 	self reverseDo:
 		[:elem | newCol addLast: elem].
 	^ newCol
 
-"#(2 3 4 'fred') reversed"
+
 ]
 
 { #category : #enumerating }
