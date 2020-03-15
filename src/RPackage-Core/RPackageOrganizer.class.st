@@ -259,6 +259,9 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 					initializeExtensionsFor: eachBehavior classSide 
 					protocol: eachProtocol ] ]
 		displayingProgress: 'Importing extensions'.
+	
+	"I reset the cache of names"
+	packageNames := nil.
 ]
 
 { #category : #'private registration' }
@@ -302,7 +305,9 @@ RPackageOrganizer >> basicUnregisterPackageNamed: aSymbolName [
 	
 	packages
 		removeKey: aSymbolName asSymbol
-		ifAbsent: [ ]
+		ifAbsent: [ ].
+	
+	self removePackageNameFromCache: aSymbolName asSymbol
 	
 ]
 
@@ -362,7 +367,10 @@ RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 	
 	package := packages 
 		at: aSymbol asSymbol 
-		ifAbsentPut: [ self packageClass named: aSymbol ].
+		ifAbsentPut: [ 
+			"I add the package to the packageName cache"
+			self addPackageNameToCache: aSymbol asSymbol.
+			self packageClass named: aSymbol ].
 		
 	package extendedClasses do: [ :extendedClass|
 			self registerExtendingPackage: package forClass: extendedClass].
@@ -867,7 +875,7 @@ RPackageOrganizer >> registerPackageNamed: aString [
 RPackageOrganizer >> removePackageNameFromCache: aPackageName [
 
 	packageNames ifNil: [ ^ self ].	
-	packageNames remove: aPackageName
+	packageNames remove: aPackageName ifAbsent: [  ]
 
 ]
 
@@ -878,6 +886,9 @@ RPackageOrganizer >> renamePackage: rPackage from: oldName to: newName [
 	rPackage name: newName. 
 	
 	"we update the organizer"
+	self removePackageNameFromCache: oldName.
+	self addPackageNameToCache: newName.
+	
 	packages 
 		at: newName 
 		put: rPackage.
