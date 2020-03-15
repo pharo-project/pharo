@@ -14,16 +14,21 @@ Class {
 { #category : #'building suites' }
 StringLineEndingsTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		forSelector: #targetLineEnding addOptions: {String cr . String lf . String crlf};
-		forSelector: #originLineEnding addOptions: {String cr . String lf . String crlf};
-		forSelector: #templateString addOptions: {'I am a String{1}'. '{1}I am a String' . 'I am a{1}String'. '{1}I am{1}a String{1}'};
-		
-		
-		
+		forSelector: #targetLineEnding
+			addOptions:
+			{String cr.
+			String lf.
+			String crlf};
+		forSelector: #originLineEnding
+			addOptions:
+			{String cr.
+			String lf.
+			String crlf};
+		forSelector: #templateString
+			addOptions:
+			{'I am a String{1}' . '{1}I am a String' . 'I am a{1}String'.
+			'{1}I am{1}a String{1}'};
 		yourself
-		
-	
- 
 ]
 
 { #category : #running }
@@ -31,7 +36,7 @@ StringLineEndingsTest >> newTestingSubject [
 	^ templateString format: {originLineEnding}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 StringLineEndingsTest >> originLineEnding: aString [ 
 	originLineEnding := aString
 ]
@@ -44,7 +49,7 @@ StringLineEndingsTest >> setUp [
 	testingSubjectWithTargetLineEnding := testingSubjectWithOriginLineEnding withLineEndings: targetLineEnding.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 StringLineEndingsTest >> targetLineEnding: aString [ 
 	targetLineEnding := aString
 ]
@@ -54,7 +59,7 @@ StringLineEndingsTest >> templateString: aString [
 	templateString := aString
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 StringLineEndingsTest >> testLineEndinglessStringShouldBeEquals [
 	| originWithoutLineEnding targetWithoutLineEnding |
 	originWithoutLineEnding := testingSubjectWithOriginLineEnding
@@ -64,15 +69,16 @@ StringLineEndingsTest >> testLineEndinglessStringShouldBeEquals [
 	self assert: originWithoutLineEnding equals: targetWithoutLineEnding
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 StringLineEndingsTest >> testOriginStringCanBeProducedFromTargetStringAndOriginalLineEnding [
+	
+	" This test is for testing that we can tranform a string with certain line ending to a another line ending, and then transform it back to the original line ending. "
 	
 	| testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding |
 	testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding := testingSubjectWithTargetLineEnding withLineEndings: originLineEnding .
 	self assert: testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding equals: testingSubjectWithOriginLineEnding 
 	
-	" transformedString := 'I'm a string <<lf>>' withLineEnding: <<cr>> 
-	>>> assert: I'm a string <<cr>> (transformedString) equals: I'm a string <<cr>> ( subjectWithOriginLineEnding )"
+	
 ]
 
 { #category : #tests }
