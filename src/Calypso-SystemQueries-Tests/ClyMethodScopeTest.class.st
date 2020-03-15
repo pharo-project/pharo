@@ -34,5 +34,5 @@ ClyMethodScopeTest >> testMethodsEnumeration [
 		
 	scope methodsDo: [ :each | result add: each ].
 	
-	self assert: result asArray equals: scope basisObjects asArray
+	self assertCollection: result asArray hasSameElements: scope basisObjects
 ]
