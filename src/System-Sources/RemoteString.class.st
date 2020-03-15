@@ -1,12 +1,16 @@
 "
 My instances provide an external file reference to a piece of text.  It may be the sourceCode of a method, or the class comments of a class.
+I can return either a String or a Text.
 
-The 'changes' file or 'file-in' file usually have a chunk that is just the source string of a method:
+In a source file (sources, changes, fileouts) we store chunks of code.
+It is usually to store the source string of a method for example.
 
 max: aNumber
 	^ self > aNumber ifTrue: [self] ifFalse: [aNumber]!
-
-I can return either a String or a Text. A chunck of code is followed by a second chunk (beginning with ]style[) containing style information. The encoding is like this:
+ 
+Some chunks are styled (they have parts in bold, or font color...).
+When a chunk is styled, it is followed by a second chunk (prefixed with something like ]sytle[), and specifying the style.
+The encoding is as follows:
 
 max: aNumber
 	^ self > aNumber ifTrue: [self] ifFalse: [aNumber]!
