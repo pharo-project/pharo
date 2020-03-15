@@ -226,12 +226,6 @@ WorldMorph >> buildMetaMenu: evt [
 
 ]
 
-{ #category : #'project state' }
-WorldMorph >> canvas [
-
-	^ worldState canvas
-]
-
 { #category : #stepping }
 WorldMorph >> cleanseStepList [
 	"Remove morphs from the step list that are not in this World."
@@ -312,7 +306,7 @@ WorldMorph >> displayScaleFactor [
 { #category : #'world state' }
 WorldMorph >> displayWorld [
 
-	worldState displayWorld: self submorphs: submorphs
+	worldState displayWorld: self
 ]
 
 { #category : #'world state' }
@@ -345,9 +339,8 @@ WorldMorph >> doOneSubCycle [
 { #category : #geometry }
 WorldMorph >> extent: aPoint [
 	super extent: aPoint.
-	worldState viewBox
-		ifNotNil: [ 
-			worldState canvas: nil ]
+	worldState viewBox ifNotNil: [ 
+		worldState invalidate ]
 ]
 
 { #category : #'project state' }
@@ -537,16 +530,6 @@ WorldMorph >> runStepMethods [
 
 ]
 
-{ #category : #'world state' }
-WorldMorph >> sleep [
-
-	worldState canvas ifNil: [^ self  "already called (clean this up)"].
-	Cursor normal show.	"restore the normal cursor"
-	worldState canvas: nil.		"free my canvas to save space"
-	self fullReleaseCachedState
-
-]
-
 { #category : #stepping }
 WorldMorph >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	worldState startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime.
@@ -604,7 +587,7 @@ WorldMorph >> viewBox: newViewBox [
 	"I am now displayed within newViewBox; react."
 
 	(self viewBox isNil or: [ self viewBox extent ~= newViewBox extent ])
-		ifTrue: [ worldState canvas: nil ].
+		ifTrue: [ worldState invalidate ].
 
 	super viewBox: newViewBox.
 	worldState handsDo: [ :hand | hand releaseKeyboardFocus ].

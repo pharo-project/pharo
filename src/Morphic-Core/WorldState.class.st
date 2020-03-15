@@ -353,20 +353,6 @@ WorldState >> alarms [
 	^alarms ifNil: [alarms := Heap sortBlock: self alarmSortBlock]
 ]
 
-{ #category : #canvas }
-WorldState >> canvas [
-
-	^ self worldRenderer canvas
-]
-
-{ #category : #canvas }
-WorldState >> canvas: x [ 
-	self worldRenderer canvas: x.
-	damageRecorder 
-		ifNil: [damageRecorder := DamageRecorder new]
-		ifNotNil: [damageRecorder doFullRepaint]
-]
-
 { #category : #'update cycle' }
 WorldState >> checkIfUpdateNeeded [
 
@@ -454,10 +440,10 @@ WorldState >> discoveredMenuTitle [
 ]
 
 { #category : #'update cycle' }
-WorldState >> displayWorld: aWorld submorphs: submorphs [
+WorldState >> displayWorld: aWorld [
 	"Update this world's display."
 
-	worldRenderer displayWorldState: self ofWorld: aWorld submorphs: submorphs
+	worldRenderer displayWorldState: self ofWorld: aWorld
 ]
 
 { #category : #'update cycle' }
@@ -677,6 +663,14 @@ WorldState >> interCyclePause: milliSecs [
 
 	lastCycleTime := Time millisecondClockValue.
 	CanSurrenderToOS := true.
+]
+
+{ #category : #canvas }
+WorldState >> invalidate [
+	self worldRenderer invalidate.
+	damageRecorder 
+		ifNil: [damageRecorder := DamageRecorder new]
+		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
 { #category : #hands }

@@ -371,7 +371,10 @@ FormCanvas >> flush [
 
 { #category : #other }
 FormCanvas >> flushDisplay [
-		Display deferUpdates: false; forceDisplayUpdate.
+	
+	Display
+		deferUpdates: false;
+		forceDisplayUpdate.
 ]
 
 { #category : #other }
