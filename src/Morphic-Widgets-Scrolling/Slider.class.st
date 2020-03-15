@@ -122,7 +122,13 @@ Slider >> initializeSlider [
 Slider >> mouseDownInSlider: event [
 	"When mouse down I start dragging, and change the border colors and show a shadow
 	on the original position."
-		
+	
+	"If already dragging don't update."
+	"Be aware that this situation is difficult to reproduce, but you can if start dragging
+	and the use a key combination to change the selected OS Windows (not morphic) without
+	releasing the mouse and finally make a mousedown in the slider again."
+	dragging ifTrue:[^self].
+	
 	slider borderColor: #inset.
 	
 	sliderShadow color: self sliderShadowColor.
@@ -137,6 +143,12 @@ Slider >> mouseDownInSlider: event [
 Slider >> mouseUpInSlider: event [
 	"When mouse up, the dragging ends and the color is reseted to it's orignal
 	value and the shadow of original position is hidden."
+	
+	"If it's not dragging, there's nothing to do."
+	"To reproduce this, press mouse down outside the slider, then move to
+	the slider and release the mouse."
+	
+	dragging ifFalse:[^self].
 
 	slider borderColor: #raised.
 				
