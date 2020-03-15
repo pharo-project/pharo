@@ -119,25 +119,30 @@ Slider >> initializeSlider [
 ]
 
 { #category : #'other events' }
-Slider >> mouseDownInSlider: event [ 
-
-	slider borderStyle style == #raised
-		ifTrue: [slider borderColor: #inset. self dragging: true].
+Slider >> mouseDownInSlider: event [
+	"When mouse down I start dragging, and change the border colors and show a shadow
+	on the original position."
+		
+	slider borderColor: #inset.
 	
 	sliderShadow color: self sliderShadowColor.
 	sliderShadow cornerStyle: slider cornerStyle.
 	sliderShadow bounds: slider bounds.
 	sliderShadow show.
 	
+	self dragging: true
 ]
 
 { #category : #'other events' }
-Slider >> mouseUpInSlider: event [ 
+Slider >> mouseUpInSlider: event [
+	"When mouse up, the dragging ends and the color is reseted to it's orignal
+	value and the shadow of original position is hidden."
 
-	slider borderStyle style == #inset
-		ifTrue: [slider borderColor: #raised. self dragging: false].
+	slider borderColor: #raised.
+				
+	sliderShadow hide.
 	
-	sliderShadow hide
+	self dragging: false.
 ]
 
 { #category : #access }
