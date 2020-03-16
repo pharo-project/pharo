@@ -132,9 +132,17 @@ ZnHTTPSTest >> testGetPharoVersion [
 	self runningOnWindowsInriaCI ifTrue: [ ^ self ].
 	
 	versionName := SystemVersion current versionWithoutPatch.
-	
-	url := 'https://ci.inria.fr/pharo-ci-jenkins2/job/Test%20pending%20pull%20request%20and%20branch%20Pipeline/job/{version}/api/xml?xpath=/*/fullDisplayName' format: { #version -> versionName } asDictionary.
 
+	url := ZnUrl new 
+		scheme: #https;
+		host: 'ci.inria.fr';
+		addPathSegments: #('pharo-ci-jenkins2' 'job' 
+			'Test pending pull request and branch Pipeline' 'job');
+		addPathSegment: versionName;
+		addPathSegments: #('api' 'xml');
+		queryAt: 'xpath' add: '/*/fullDisplayName';
+		yourself.
+	
 	lastBuildVersion := ZnClient new
 		beOneShot;
 		get: url.
