@@ -72,6 +72,15 @@ ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock ifAbsent: abse
 		ifAbsent: absentBlock
 ]
 
+{ #category : #accessing }
+ClapParameterized >> atName: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name'
+			-> '`@receiver at: `@name'.
+	^ self at: aName
+]
+
 { #category : #testing }
 ClapParameterized >> hasAlias: aString [
 	^ aString = self canonicalName or: [ self aliases includes: aString ]

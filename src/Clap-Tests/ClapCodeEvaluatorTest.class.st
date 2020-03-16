@@ -12,7 +12,7 @@ ClapCodeEvaluatorTest >> testEvaluateAliasMultipleArguments [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: '''ByteString SmallInteger''' , String lf
+		equals: '''ByteString SmallInteger''' , self lineEnding
 ]
 
 { #category : #tests }
@@ -22,7 +22,7 @@ ClapCodeEvaluatorTest >> testEvaluateAliasSingleArgument [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: 'SmallInteger' , String lf
+		equals: 'SmallInteger' , self lineEnding
 ]
 
 { #category : #tests }
@@ -34,5 +34,5 @@ ClapCodeEvaluatorTest >> testEvaluatePipeIn [
 	"self assertSuccess."
 	self
 		assert: self outputString
-		equals: 'Metaclass' , String lf
+		equals: 'Metaclass' , self lineEnding
 ]

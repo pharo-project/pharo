@@ -11,7 +11,7 @@ ClapPharoVersionTest >> testDefaultFormat [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current imageVersionString , String lf
+		equals: SystemVersion current imageVersionString , self lineEnding
 ]
 
 { #category : #tests }
@@ -21,7 +21,7 @@ ClapPharoVersionTest >> testFullFormat [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current imageVersionString , String lf
+		equals: SystemVersion current imageVersionString , self lineEnding
 ]
 
 { #category : #tests }
@@ -31,7 +31,7 @@ ClapPharoVersionTest >> testHashFormat [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current commitHash , String lf
+		equals: SystemVersion current commitHash , self lineEnding
 ]
 
 { #category : #tests }
@@ -51,7 +51,7 @@ ClapPharoVersionTest >> testLicenseFormat [
 	self assertSuccess.
 	self
 		assert: self outputString trim
-		equals: (Smalltalk licenseString withLineEndings: String lf)
+		equals: (Smalltalk licenseString withLineEndings: self lineEnding)
 ]
 
 { #category : #tests }
@@ -79,7 +79,7 @@ ClapPharoVersionTest >> testNumericFormat [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current highestUpdate printString , String lf
+		equals: SystemVersion current highestUpdate printString , self lineEnding
 ]
 
 { #category : #tests }
@@ -89,7 +89,7 @@ ClapPharoVersionTest >> testReleaseFormat [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: SystemVersion current shortVersionString , String lf
+		equals: SystemVersion current shortVersionString , self lineEnding
 ]
 
 { #category : #tests }
@@ -99,5 +99,5 @@ ClapPharoVersionTest >> testVmFormat [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: (Smalltalk vm version withLineEndings: String lf)
+		equals: (Smalltalk vm version withLineEndings: self lineEnding)
 ]

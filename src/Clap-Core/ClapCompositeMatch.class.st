@@ -34,6 +34,24 @@ ClapCompositeMatch >> at: identifierOrSpec ifAbsent: absentBlock [
 ]
 
 { #category : #'accessing - children' }
+ClapCompositeMatch >> at: aSpec ifFound: foundBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver at: `@spec ifFound: `@foundBlock'
+			-> '`@receiver at: `@spec ifPresent: `@block'.
+	^ self at: aSpec ifPresent: foundBlock
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> at: aSpec ifFound: foundBlock ifAbsent: absentBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver at: `@spec ifFound: `@foundBlock ifAbsent: `@absentBlock'
+			-> '`@receiver at: `@spec ifPresent: `@block ifAbsent: `@absentBlock'.
+	^ self at: aSpec ifPresent: foundBlock ifAbsent: absentBlock
+]
+
+{ #category : #'accessing - children' }
 ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock [
 	^ children
 		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
@@ -46,6 +64,33 @@ ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock ifAbsent: absen
 		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		ifFound: foundBlock
 		ifNone: absentBlock
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> atName: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name'
+			-> '`@receiver at: `@name'.
+	^ self at: aName
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> atName: aName ifFound: aBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name ifFound: `@block'
+			-> '`@receiver at: `@name ifPresent: `@block'.
+	^ self at: aName ifPresent: aBlock
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> atName: aName ifFound: foundBlock ifAbsent: absentBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name ifFound: `@foundBlock ifAbsent: `@absentBlock'
+			-> '`@receiver at: `@name ifPresent: `@block ifAbsent: `@absentBlock'.
+	^ self at: aName ifPresent: foundBlock ifAbsent: absentBlock
 ]
 
 { #category : #matching }
@@ -68,6 +113,15 @@ ClapCompositeMatch >> detectMatchOn: aStream ifFound: foundBlock ifNone: noneBlo
 { #category : #'accessing - children' }
 ClapCompositeMatch >> flags [
 	^ children select: [ :each | specification flags includes: each specification ]
+]
+
+{ #category : #testing }
+ClapCompositeMatch >> includesMatchNamed: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver includesMatchNamed: `@name'
+			-> '`@receiver includesMatchOf: `@name'.
+	 ^ self includesMatchOf: aName
 ]
 
 { #category : #testing }
@@ -95,6 +149,33 @@ ClapCompositeMatch >> matchedSubcommand: foundBlock ifNone: noneBlock [
 		detect: [ :child | specification subcommands includes: child specification ]
 		ifFound: [ :cmdMatch | foundBlock cull: cmdMatch ]
 		ifNone: noneBlock
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> occurrencesNamed: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver occurrencesNamed: `@name'
+			-> '`@receiver occurrencesOf: `@name'.
+	^ self occurrencesOf: aName
+]
+
+{ #category : #enumerating }
+ClapCompositeMatch >> occurrencesNamed: aName collect: aBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver occurrencesNamed: `@name collect: `@block'
+			-> '`@receiver occurrencesOf: `@name collect: `@block'.
+	^ self occurrencesOf: aName collect: aBlock
+]
+
+{ #category : #enumerating }
+ClapCompositeMatch >> occurrencesNamed: aName do: aBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver occurrencesNamed: `@name do: `@block'
+			-> '`@receiver occurrencesOf: `@name do: `@block'.
+	^ self occurrencesOf: aName do: aBlock
 ]
 
 { #category : #'accessing - children' }

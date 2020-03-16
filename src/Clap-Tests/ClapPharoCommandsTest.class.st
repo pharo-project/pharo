@@ -22,6 +22,11 @@ ClapPharoCommandsTest >> assertSuccess [
 	self assert: context exitStatus equals: 0
 ]
 
+{ #category : #'tests - fixture' }
+ClapPharoCommandsTest >> lineEnding [
+	^ OSPlatform current lineEnding
+]
+
 { #category : #accessing }
 ClapPharoCommandsTest >> outputString [
 	^ context stdio stdout contents utf8Decoded

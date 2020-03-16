@@ -11,7 +11,7 @@ ClapHelloTest >> testHello [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: 'hello, world.' , String lf
+		equals: 'hello, world.' , self lineEnding
 ]
 
 { #category : #tests }
@@ -28,7 +28,7 @@ ClapHelloTest >> testHelloFrench [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: 'bonjour, tout le monde.' , String lf
+		equals: 'bonjour, tout le monde.' , self lineEnding
 ]
 
 { #category : #tests }
@@ -38,7 +38,7 @@ ClapHelloTest >> testHelloShoutingLong [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: 'HELLO, WORLD!' , String lf
+		equals: 'HELLO, WORLD!' , self lineEnding
 ]
 
 { #category : #tests }
@@ -48,7 +48,7 @@ ClapHelloTest >> testHelloShoutingShort [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: 'HELLO, WORLD!' , String lf
+		equals: 'HELLO, WORLD!' , self lineEnding
 ]
 
 { #category : #tests }
@@ -58,7 +58,7 @@ ClapHelloTest >> testHelloSomeone [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: 'hello, someone.' , String lf
+		equals: 'hello, someone.' , self lineEnding
 ]
 
 { #category : #tests }
@@ -68,7 +68,7 @@ ClapHelloTest >> testHelloWhisperingLong [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: '(hello, world)' , String lf
+		equals: '(hello, world)' , self lineEnding
 ]
 
 { #category : #tests }
@@ -78,5 +78,5 @@ ClapHelloTest >> testHelloWhisperingShort [
 	self assertSuccess.
 	self
 		assert: self outputString
-		equals: '(hello, world)' , String lf
+		equals: '(hello, world)' , self lineEnding
 ]
