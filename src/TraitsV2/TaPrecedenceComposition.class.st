@@ -28,6 +28,8 @@ TaPrecedenceComposition >> copyWithoutTrait: aTrait [
 
 	newMembers := members collect: [ :e | e copyWithoutTrait: aTrait ] thenReject: #isEmpty.
 
+	newMembers ifEmpty: [ ^ (self class withAll: newMembers) ].
+
 	^ (self class withAll: newMembers)
 		preferedTrait: (preferedTrait copyWithoutTrait: aTrait);
 		yourself
