@@ -451,9 +451,10 @@ RPackageOrganizer >> hasRegistered [
 	^ (actionSequence isNil not) and: [(MCWorkingCopy myDependents includes: self)]"
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RPackageOrganizer >> includesPackage: aPackage [
 	"Answer whether the receiver get a package as registered."
+	
 	^ self includesPackageNamed: aPackage name
 ]
 
@@ -463,14 +464,15 @@ RPackageOrganizer >> includesPackageBackPointerForClass: aClass [
 	^ classPackageMapping includesKey: aClass instanceSide name asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RPackageOrganizer >> includesPackageNamed: aSymbol [
 	"Answer whether the receiver get a package named aSymbol as registered."
+	
 	^ packages includesKey:  aSymbol asSymbol
 ]
 
 { #category : #'private testing' }
-RPackageOrganizer >> includingWith: aString [
+RPackageOrganizer >> includingPackageWith: aString [
 	"Return packages whose names includes the argument"
 	
 	^ self packages select: [ :p | p name includesSubstring: aString ]
@@ -733,6 +735,13 @@ RPackageOrganizer >> packageOfClassNamed: aName [
 ]
 
 { #category : #accessing }
+RPackageOrganizer >> packageStartingWith: aString [
+	"Return the packages whose names starts with the given argument."
+	
+	^ self packages select: [ :p | p name beginsWith: aString ]
+]
+
+{ #category : #accessing }
 RPackageOrganizer >> packages [
 	
 	^ packages values
@@ -901,13 +910,6 @@ RPackageOrganizer >> reportExtraRemovalOf: aClass [
 RPackageOrganizer >> signalPackageExists: aPackageName [
 
 	RPackageConflictError signal: ('A package named {1} already exists' format: {aPackageName})
-]
-
-{ #category : #accessing }
-RPackageOrganizer >> startingWith: aString [
-	"Return the packages whose names starts with the given argument."
-	
-	^ self packages select: [ :p | p name beginsWith: aString ]
 ]
 
 { #category : #private }

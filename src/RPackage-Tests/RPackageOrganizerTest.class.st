@@ -285,15 +285,15 @@ RPackageOrganizerTest >> testFullUnregistration [
 { #category : #test }
 RPackageOrganizerTest >> testIncludesPackage [
 
-	| p1 P22|
+	| p1 p22|
 	p1 := self createNewPackageNamed: 'P1'.
-	P22 := self createNewPackageNamed: 'P22'.
+	p22 := self createNewPackageNamed: 'P22'.
  	self packageOrganizer registerPackage: p1.
 	p1 addClassDefinition: Point.
 	p1 addMethod: Point>>#x.
 	p1 addMethod: Point class>>#x:y:. 
 	self assert: (self packageOrganizer includesPackage: p1) equals: true.
-	self assert: (self packageOrganizer includesPackage: P22) equals: false.
+	self assert: (self packageOrganizer includesPackage: p22) equals: false.
 ]
 
 { #category : #test }
@@ -310,7 +310,8 @@ RPackageOrganizerTest >> testIncludesPackageNamed [
 ]
 
 { #category : #test }
-RPackageOrganizerTest >> testIncludingWith [
+RPackageOrganizerTest >> testIncludingPackageWith [
+	
 	|refactoringCore refactoringCritics refactoringChanges refactoringEnvironment|
 	refactoringCore := self createNewPackageNamed: 'RefactoringCore'.
 	refactoringCritics := self createNewPackageNamed: 'RefactoringCritics'.
@@ -322,8 +323,8 @@ RPackageOrganizerTest >> testIncludingWith [
 	self packageOrganizer registerPackage: refactoringChanges. 
 	self packageOrganizer registerPackage: refactoringEnvironment.
 	
-	self assert: (self packageOrganizer includingWith: 'Refactoring') equals: {refactoringCore. refactoringEnvironment. refactoringChanges. refactoringCritics }.
-	self assert: (self packageOrganizer includingWith: 'AST') equals: #().
+	self assert: (self packageOrganizer includingPackageWith: 'Refactoring') equals: {refactoringCore. refactoringEnvironment. refactoringChanges. refactoringCritics }.
+	self assert: (self packageOrganizer includingPackageWith: 'AST') equals: #().
 ]
 
 { #category : #test }
@@ -343,6 +344,24 @@ RPackageOrganizerTest >> testMatching [
 	self assert: (self packageOrganizer matching: 'Refactoring*') equals: {refactoringCore. refactoringEnvironment. refactoringChanges. refactoringCritics }.
 	self assert: (self packageOrganizer matching: '*Critics') equals: {refactoringCritics}.
 	self assert: (self packageOrganizer matching: 'AST*') equals: #().
+]
+
+{ #category : #test }
+RPackageOrganizerTest >> testPackageStartingWith [
+
+	|refactoringCore refactoringCritics refactoringChanges refactoringEnvironment|
+	refactoringCore := self createNewPackageNamed: 'RefactoringCore'.
+	refactoringCritics := self createNewPackageNamed: 'RefactoringCritics'.
+	refactoringChanges := self createNewPackageNamed: 'RefactoringChanges'.
+	refactoringEnvironment := self createNewPackageNamed: 'RefactoringEnvironment'.
+	
+	self packageOrganizer registerPackage: refactoringCore.
+	self packageOrganizer registerPackage: refactoringCritics.
+	self packageOrganizer registerPackage: refactoringChanges. 
+	self packageOrganizer registerPackage: refactoringEnvironment.
+	
+	self assert: (self packageOrganizer packageStartingWith: 'Refactoring') equals: {refactoringCore. refactoringEnvironment. refactoringChanges. refactoringCritics }.
+	self assert: (self packageOrganizer matching: 'Critics') equals: #().
 ]
 
 { #category : #tests }
@@ -458,24 +477,6 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 	
 	self assert: (class organization categories includes: #bar).
 	self deny: (class organization categories includes: #foo).	
-]
-
-{ #category : #test }
-RPackageOrganizerTest >> testStartingWith [
-
-	|refactoringCore refactoringCritics refactoringChanges refactoringEnvironment|
-	refactoringCore := self createNewPackageNamed: 'RefactoringCore'.
-	refactoringCritics := self createNewPackageNamed: 'RefactoringCritics'.
-	refactoringChanges := self createNewPackageNamed: 'RefactoringChanges'.
-	refactoringEnvironment := self createNewPackageNamed: 'RefactoringEnvironment'.
-	
-	self packageOrganizer registerPackage: refactoringCore.
-	self packageOrganizer registerPackage: refactoringCritics.
-	self packageOrganizer registerPackage: refactoringChanges. 
-	self packageOrganizer registerPackage: refactoringEnvironment.
-	
-	self assert: (self packageOrganizer startingWith: 'Refactoring') equals: {refactoringCore. refactoringEnvironment. refactoringChanges. refactoringCritics }.
-	self assert: (self packageOrganizer matching: 'Critics') equals: #().
 ]
 
 { #category : #tests }
