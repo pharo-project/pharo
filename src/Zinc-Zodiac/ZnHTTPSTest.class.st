@@ -126,16 +126,18 @@ ZnHTTPSTest >> testGForceInria [
 
 { #category : #testing }
 ZnHTTPSTest >> testGetPharoVersion [
-	| client lastBuildVersion version |
+	| lastBuildVersion version url versionName |
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	self runningOnWindowsInriaCI ifTrue: [ ^ self ].
-	lastBuildVersion := (client := ZnClient new)
+	
+	versionName := SystemVersion current versionWithoutPatch.
+	
+	url := 'https://ci.inria.fr/pharo-ci-jenkins2/job/Test%20pending%20pull%20request%20and%20branch%20Pipeline/job/{version}/api/xml?xpath=/*/fullDisplayName' format: { #version -> versionName } asDictionary.
+
+	lastBuildVersion := ZnClient new
 		beOneShot;
-		get: 'https://ci.inria.fr/pharo/job/Pharo-6.0/lastSuccessfulBuild/api/xml?xpath=/*/fullDisplayName'.
-	self assert: client isSuccess.
-	self assert: (client response contentType matches: ZnMimeType applicationXml).
-	self assert: client response contentLength > 0.
+		get: url.
 	self assert: lastBuildVersion notNil.
 	self assert: lastBuildVersion isString.
 	self assert: lastBuildVersion size > 0.
