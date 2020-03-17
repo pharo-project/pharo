@@ -176,6 +176,7 @@ RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 		ifFalse: [ ^ self ].
 	anEvent isMouseDown
 		ifFalse: [ ^ self ].
+	editor ifNil: [ ^ self ].
 	(editor boundsInWorld containsPoint: anEvent position)
 		ifFalse: [ self closeEditor ]
 ]
@@ -229,7 +230,8 @@ RubFloatingEditorBuilder >> openEditorWithContents: aText thenDo: aBlock [
 
 { #category : #'announcement handling' }
 RubFloatingEditorBuilder >> whenEditorDeleted: anAnnouncement [
-	anAnnouncement morph activeHand removeEventListener: self.
+	anAnnouncement morph activeHand ifNotNil: [ :hand | 
+		hand removeEventListener: self ].
 	anAnnouncement morph announcer unsubscribe: self.
 	editor := nil
 ]

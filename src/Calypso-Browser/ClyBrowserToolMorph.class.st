@@ -449,7 +449,7 @@ ClyBrowserToolMorph >> isExtraSelectionRequested [
 	"Following mouse logic ensures that we are under condition when mouseDown+cmd was produced.
 	(it should be simple #meta modifier. But we don't have it"
 	| lastEvent |
-	lastEvent := self activeHand lastEvent.
+	lastEvent := (self activeHand ifNil: [ ^ false ])lastEvent.
 	^ lastEvent isMouse and: [ lastEvent isMouseDown 
 		and: [lastEvent commandKeyPressed or: [ lastEvent controlKeyPressed ]]]
 ]
