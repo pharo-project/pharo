@@ -11,12 +11,6 @@ PasteUpMorph >> dragThroughOnDesktop: evt [
 ]
 
 { #category : #'*Morphic-Base' }
-PasteUpMorph >> drawingClass [
-
-	^ ImageMorph
-]
-
-{ #category : #'*Morphic-Base' }
 PasteUpMorph >> makeAScreenshot [
 	| filePrefix |
 	filePrefix := 'PharoScreenshot'.

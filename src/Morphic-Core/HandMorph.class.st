@@ -44,13 +44,6 @@ Class {
 	#category : #'Morphic-Core-Kernel'
 }
 
-{ #category : #utilities }
-HandMorph class >> attach: aMorph [
-	"Attach aMorph the current world's primary hand."
-
-	self currentWorld primaryHand attachMorph: aMorph
-]
-
 { #category : #cleanup }
 HandMorph class >> cleanUp [
 	"Called from ImageCleaner>>cleanUpForRelease --> SmalltalkImage>>cleanUp:except:confirming:"
