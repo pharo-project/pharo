@@ -155,7 +155,7 @@ EFSettingPreviewer2 class >> defaultSpec [
 { #category : #settings }
 EFSettingPreviewer2 class >> dialogOpenBIPreviewer [
 	^ Smalltalk ui theme
-		newRowIn: World
+		newRowIn: self
 		for:
 			{(Smalltalk ui theme buttonLabelForText: 'Open Setting Previewer ').
 			self buildOpenBIInspectorButton}

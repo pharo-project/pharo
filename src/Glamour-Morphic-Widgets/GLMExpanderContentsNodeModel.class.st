@@ -26,7 +26,7 @@ GLMExpanderContentsNodeModel >> elementColumn [
 		borderStyle: (UITheme current buttonSelectedBorderStyleFor: morph).
 
 	row := OrderedCollection with: morph.
-	^ UITheme current newRowIn: self currentWorld for: row
+	^ UITheme current newRowIn: self for: row
 ]
 
 { #category : #accessing }

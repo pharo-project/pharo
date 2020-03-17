@@ -20,7 +20,7 @@ SourceCodeFonts class >> defaultFontName [
 { #category : #accessing }
 SourceCodeFonts class >> fontButton: aString size: size [ 
 	^ (Smalltalk ui theme 
-		newButtonIn: self currentWorld
+		newButtonIn: self
 			for: self
 			getState: nil 
 			action: #setSourceCodeFonts:	
@@ -42,7 +42,7 @@ SourceCodeFonts class >> fontSourceCodeRow [
 	| theme |
 	
 	theme := Smalltalk ui theme.
-	^ theme newRowIn: self currentWorld for: {
+	^ theme newRowIn: self for: {
 		theme buttonLabelForText: 'Predefined styles: ' translated.
 		self fontButton: 'Small' size: self sizeSmall.
 		self fontButton: 'Medium' size: self sizeMedium.

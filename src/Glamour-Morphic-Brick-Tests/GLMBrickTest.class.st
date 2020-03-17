@@ -65,6 +65,12 @@ GLMBrickTest >> assertWidthDirty: aBrick [
 	self assert: aBrick wrappedBounds isWidthClean not
 ]
 
+{ #category : #defaults }
+GLMBrickTest >> displayScaleFactor [
+
+	^ self currentWorld displayScaleFactor
+]
+
 { #category : #'instance creation' }
 GLMBrickTest >> markFullyClean: aBrick [ 
 
@@ -138,7 +144,7 @@ GLMBrickTest >> staticExtent [
 { #category : #defaults }
 GLMBrickTest >> staticHeight [
 
-	^ 100 * self currentWorld displayScaleFactor
+	^ 100 * self displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -150,19 +156,19 @@ GLMBrickTest >> staticSmallExtent [
 { #category : #defaults }
 GLMBrickTest >> staticSmallHeight [
 
-	^ 50 * self currentWorld displayScaleFactor
+	^ 50 * self displayScaleFactor
 ]
 
 { #category : #defaults }
 GLMBrickTest >> staticSmallWidth [
 
-	^ 50 * self currentWorld displayScaleFactor
+	^ 50 * self displayScaleFactor
 ]
 
 { #category : #defaults }
 GLMBrickTest >> staticWidth [
 
-	^ 100 * self currentWorld displayScaleFactor
+	^ 100 * self displayScaleFactor
 ]
 
 { #category : #'tests-layouter' }
