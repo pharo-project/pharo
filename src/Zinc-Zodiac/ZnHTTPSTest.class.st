@@ -131,7 +131,7 @@ ZnHTTPSTest >> testGetPharoVersion [
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	self runningOnWindowsInriaCI ifTrue: [ ^ self ].
 	
-	versionName := SystemVersion current versionWithoutPatch.
+	versionName := SystemVersion current type , SystemVersion current dottedMajorMinor.
 
 	url := ZnUrl new 
 		scheme: #https;
