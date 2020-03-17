@@ -109,7 +109,6 @@ GLMPrintPopper >> openFromRubric: aMorph withResult: anObject [
 			aMorph editor atEndOfLineInsertAndSelect: string.
 			aMorph takeKeyboardFocus ].
 	inspectButton addUpAction: [ anObject inspect ].
-	self
-		openInWorld;
-		takeKeyboardFocus
+	self openInWorld.
+	textMorph takeKeyboardFocus
 ]
