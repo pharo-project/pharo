@@ -199,7 +199,7 @@ WorldMorph >> becomeActiveDuring: aBlock [
 	Note that this method does deliberately *not* use #ensure: to prevent
 	re-installation of the world on project switches."
 
-	| priorWorld priorEvent |
+	| priorWorld |
 	priorWorld := ActiveWorld.
 	ActiveWorld := self.
 	aBlock
