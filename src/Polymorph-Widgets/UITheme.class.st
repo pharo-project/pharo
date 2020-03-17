@@ -10,7 +10,8 @@ Class {
 		'forms',
 		'soundTheme',
 		'focusIndicator',
-		'windowActiveDropShadowStyle'
+		'windowActiveDropShadowStyle',
+		'useScrollbarThumbShadow'
 	],
 	#classVars : [
 		'Builder',
@@ -197,7 +198,8 @@ UITheme class >> newDefaultSettings [
 		autoSelectionColor: false;
 		preferRoundCorner: false;
 		fadedBackgroundWindows: false;
-		flatMenu: true
+		flatMenu: true;
+		useScrollbarThumbShadow: false
 ]
 
 { #category : #accessing }
@@ -5986,8 +5988,19 @@ UITheme >> useAnimation: aBoolean [
 UITheme >> useScrollbarThumbShadow [
 	"Answer whether a shadow morph should be displayed when
 	dragging a scrollbar thumb."
+	
+	"If for some reason it's nil, reinitialice to 'false'."
+	
+	useScrollbarThumbShadow ifNil:[useScrollbarThumbShadow:=false].
 
-	^false
+	^useScrollbarThumbShadow
+]
+
+{ #category : #'fill-styles-scrollbars' }
+UITheme >> useScrollbarThumbShadow: aBoolean [
+	"Sets whether the scrollbar must show a shadow of the original position before dragging."
+
+	useScrollbarThumbShadow := aBoolean.
 ]
 
 { #category : #scrollbars }
