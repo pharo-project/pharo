@@ -300,12 +300,8 @@ HandMorph >> cursorBounds [
 
 { #category : #'event handling' }
 HandMorph >> cursorPoint [
-	"Implemented for allowing embedded worlds in an event cycle to query a hand's position and get it in its coordinates. The same can be achieved by #point:from: but this is simply much more convenient since it will look as if the hand is in the lower world."
 
-	| pos |
-	pos := self position.
-	(self currentWorld isNil or: [self currentWorld == owner]) ifTrue: [^pos].
-	^self currentWorld point: pos from: owner
+	^ self position
 ]
 
 { #category : #'balloon help' }
@@ -609,7 +605,7 @@ HandMorph >> grabMorph: aMorph [
 	"Grab the given morph (i.e., add it to this hand and remove it from its current owner) without changing its position. This is used to pick up a morph under the hand's current position, versus attachMorph: which is used to pick up a morph that may not be near this hand."
 	
 	| grabbed |
-	aMorph = self currentWorld ifTrue: [^ self].
+	aMorph = self world ifTrue: [^ self].
 	self releaseMouseFocus.
 	grabbed := aMorph aboutToBeGrabbedBy: self.
 	grabbed ifNil: [^self].

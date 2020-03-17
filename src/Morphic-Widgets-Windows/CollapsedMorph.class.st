@@ -63,7 +63,7 @@ CollapsedMorph >> collapseOrExpand [
 			labelString ifNotNil: [uncollapsedMorph setNameTo: labelString].
 			mustNotClose := false.	"We're not closing but expanding"
 			self delete.
-			(aWorld := self currentWorld) addMorphFront: uncollapsedMorph.
+			(aWorld := self world) addMorphFront: uncollapsedMorph.
 			aWorld startSteppingSubmorphsOf: uncollapsedMorph]
 		ifFalse:
 			[super collapseOrExpand]

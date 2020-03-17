@@ -366,7 +366,7 @@ WorldMorph >> fullRepaintNeeded [
 { #category : #'event handling' }
 WorldMorph >> fullscreenChanged: fullscreenAnnouncement [
 
-	self currentWorld worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
+	self worldState worldRenderer fullscreenMode: fullscreenAnnouncement fullscreen
 	
 ]
 
