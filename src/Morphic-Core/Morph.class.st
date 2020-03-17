@@ -6789,7 +6789,7 @@ Morph >> yellowButtonActivity: shiftState [
 				ifNil: [^ false].
 			outerOwner == self
 				ifFalse: [^ outerOwner yellowButtonActivity: shiftState]].
-	menu := self buildYellowButtonMenu: ActiveHand.
+	menu := self buildYellowButtonMenu: self activeHand.
 	menu
 		addTitle: self externalName
 		icon: (self iconOrThumbnailOfSize: 28).
