@@ -1534,7 +1534,7 @@ PluggableListMorph >> startDrag: evt [
 	evt hand hasSubmorphs ifTrue: [^ self]. 
 	self dragEnabled ifFalse: [^ self].
 	"Here I ensure at least one element is selected "
-	ActiveHand anyButtonPressed ifFalse: [ ^self ].
+	self activeHand anyButtonPressed ifFalse: [ ^self ].
 			
 	draggedItem := self getListItem: (self mouseDownRow ifNil: [ self lastNonZeroIndex ]).
 	draggedItem ifNil: [ ^ self ].

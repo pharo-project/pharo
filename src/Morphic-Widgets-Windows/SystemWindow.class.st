@@ -1575,7 +1575,7 @@ SystemWindow >> privateBePassive [
 	self isInWorld ifFalse: [ ^self ].
 	
 	self 
-	rememberKeyboardFocus: ActiveHand keyboardFocus;
+	rememberKeyboardFocus: self activeHand keyboardFocus;
 	passivate;
 	announceDeActivated
 
