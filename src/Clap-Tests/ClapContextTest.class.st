@@ -2,8 +2,7 @@ Class {
 	#name : #ClapContextTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'context',
-		'hello'
+		'context'
 	],
 	#category : #'Clap-Tests-Integration'
 }
@@ -11,8 +10,7 @@ Class {
 { #category : #running }
 ClapContextTest >> setUp [
 	super setUp.
-	hello := ClapCommandLineExamples hello.
-	context := ClapContext specification: hello
+	context := ClapContext specification: ClapCommandLineExamples hello
 ]
 
 { #category : #running }
