@@ -33,7 +33,7 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 MorphicUIManager >> activate [
 
 	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
-	Cursor currentCursor: Cursor currentCursor.
+	World currentCursor: World currentCursor.
 		
 	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
 	WorldMorph extraWorldList do: #restoreMorphicDisplay.

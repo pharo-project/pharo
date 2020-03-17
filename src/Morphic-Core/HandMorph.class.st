@@ -881,11 +881,11 @@ HandMorph >> needsToBeDrawn [
 				]])
 		ifTrue: [
 			"using the software cursor; hide the hardware one"
-			Cursor blank isCurrent ifFalse: [Cursor blank show].
+			self currentCursor == Cursor blank ifFalse: [Cursor blank show].
 			^ true].
 	"Switch from one hardware cursor to another, if needed."
 	cursor := hardwareCursor ifNil: [Cursor normal].
-	cursor isCurrent ifFalse: [cursor show].
+	self currentCursor == cursor ifFalse: [cursor show].
 	^ false
 
 ]
@@ -1210,7 +1210,7 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 						extent: savedPatch extent + self shadowOffset)
 				from: self.
 			cursor := hardwareCursor ifNil: [Cursor normal].
-			cursor isCurrent ifFalse: [cursor show].	"show hardware cursor"
+			self currentCursor == cursor ifFalse: [cursor show].	"show hardware cursor"
 			savedPatch := nil]
 ]
 
