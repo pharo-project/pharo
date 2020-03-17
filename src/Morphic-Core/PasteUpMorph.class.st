@@ -665,7 +665,7 @@ PasteUpMorph >> invokeWorldMenu: evt [
 
 { #category : #'world menu' }
 PasteUpMorph >> invokeWorldMenuFromEscapeKey [
-	self invokeWorldMenu: ActiveEvent
+	self invokeWorldMenu: self activeHand lastEvent
 ]
 
 { #category : #cursor }

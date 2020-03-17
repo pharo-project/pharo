@@ -1036,9 +1036,11 @@ HandMorph >> processEventsFromQueue: anEventQueue [
 
 	| evt evtBuf type hadAny |
 
-	ActiveEvent
-		ifNotNil: [ "Meaning that we were invoked from within an event response.
-		Make sure z-order is up to date" self mouseOverHandler processMouseOver: lastMouseEvent ].
+	self lastEvent ifNotNil: [
+		"Meaning that we were invoked from within an event response.
+		Make sure z-order is up to date"
+		self mouseOverHandler processMouseOver: lastMouseEvent ].
+
 	hadAny := false.
 	[ anEventQueue isNotNil and: [ ( evtBuf := anEventQueue nextEvent ) isNotNil ] ]
 		whileTrue: [ evt := nil.	"for unknown event types"

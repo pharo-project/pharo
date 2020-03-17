@@ -1544,7 +1544,7 @@ Morph >> buildYellowButtonMenu: aHand [
 	"build the morph menu for the yellow button"
 	| menu |
 	menu := UIManager default newMenuIn: self for: self.
-	self addNestedYellowButtonItemsTo: menu event: ActiveEvent.
+	self addNestedYellowButtonItemsTo: menu event: self activeHand lastEvent.
 	^ menu
 ]
 
@@ -5336,7 +5336,7 @@ Morph >> resistsRemovalString [
 Morph >> resizeFromMenu [
 	"Commence an interaction that will resize the receiver"
 
-	self resizeMorph: ActiveEvent
+	self resizeMorph: self activeHand lastEvent
 ]
 
 { #category : #'debug and other' }
