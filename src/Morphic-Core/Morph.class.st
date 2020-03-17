@@ -2116,9 +2116,11 @@ Morph >> delete [
 	new owner be nil."
 	
 	self removeHalo.
-	self activeHand 
-		releaseKeyboardFocus: self;
-		releaseMouseFocus: self.
+	self activeHand ifNotNil: [ :hand |
+		hand
+			releaseKeyboardFocus: self;
+			releaseMouseFocus: self.
+	].
 	owner ifNotNil:[ 
 		self privateDelete.
 		self announceDeleted.
