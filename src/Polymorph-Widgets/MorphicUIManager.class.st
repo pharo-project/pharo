@@ -432,7 +432,6 @@ MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
 	| preemptedProcess projectProcess debugSession |
 	ActiveWorld := self currentWorld. "reinstall active globals"
 	self currentWorld primaryHand interrupted.
-	ActiveEvent := nil.
 
 	projectProcess := self uiProcess.	"we still need the accessor for a while"
 	preemptedProcess := theInterruptedProcess ifNil: [Processor preemptedProcess].

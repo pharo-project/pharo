@@ -1256,9 +1256,7 @@ HandMorph >> sendEvent: anEvent focus: focusHolder clear: aBlock [
 	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
 	| result |
 	focusHolder ifNotNil:[^self sendFocusEvent: anEvent to: focusHolder clear: aBlock].
-	ActiveEvent := anEvent.
 	result := owner processEvent: anEvent.
-	ActiveEvent := nil.
 	^result
 ]
 
@@ -1268,7 +1266,6 @@ HandMorph >> sendFocusEvent: anEvent to: focusHolder clear: aBlock [
 	| result w |
 	w := focusHolder world ifNil:[^ aBlock value].
 	w becomeActiveDuring:[
-		ActiveEvent := anEvent.
 		result := focusHolder handleFocusEvent: 
 			(anEvent transformedBy: (focusHolder transformedFrom: self)).
 	].

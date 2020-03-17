@@ -48,7 +48,6 @@ WorldMorph >> install [
 	owner := nil.	"since we may have been inside another world previously"
 	ActiveWorld := self.
 	World := self.
-	ActiveEvent := nil.
 	submorphs do: [ :ss | ss owner ifNil: [ ss privateOwner: self ] ].	"Transcript that was in outPointers and then got deleted."
 	self viewBox: Display boundingBox.
 	Sensor flushAllButDandDEvents.
@@ -85,7 +84,6 @@ WorldMorph >> installForUIProcessReinstall [
 	SystemWindow noteTopWindowIn: self.
 	World  := self.
 	ActiveWorld := self.
-	ActiveEvent := nil.
 	worldState handsDo: [ :h | h releaseCachedState ].
 	Sensor startUp.
 	self class startUp.

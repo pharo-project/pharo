@@ -201,14 +201,11 @@ WorldMorph >> becomeActiveDuring: aBlock [
 
 	| priorWorld priorEvent |
 	priorWorld := ActiveWorld.
-	priorEvent := ActiveEvent.
 	ActiveWorld := self.
-	ActiveEvent := nil.	"not in event cycle"
 	aBlock
 		on: Error
 		do: [ :ex | 
 			ActiveWorld := priorWorld.
-			ActiveEvent := priorEvent.
 			ex pass ]
 ]
 

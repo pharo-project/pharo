@@ -55,7 +55,7 @@ Object >> asTextMorph [
 { #category : #'*Morphic-Base' }
 Object >> currentEvent [
 	"Answer the current Morphic event.  This method never returns nil."
-	^ActiveEvent ifNil:[self currentHand lastEvent]
+	^ self currentHand lastEvent
 ]
 
 { #category : #'*Morphic-Base' }
