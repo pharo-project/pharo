@@ -5734,7 +5734,7 @@ Morph >> simulateKeyStroke: aCharacter [
 				position: 0@0 
 				keyValue: aCharacter charCode 
 				charCode: aCharacter charCode
-				hand: ActiveHand 
+				hand: self activeHand 
 				stamp: 0.
 	self keyStroke: event
 ]
