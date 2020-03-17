@@ -333,7 +333,7 @@ Morph >> tabKey: event [
 Morph >> takeKeyboardFocus [
 	"Make the receiver the keyboard focus for the active hand."
 
-	self activeHand ifNotNil: [ :hand | hand newKeyboardFocus: self]
+	self activeHand newKeyboardFocus: self
 ]
 
 { #category : #'*Polymorph-Widgets' }
