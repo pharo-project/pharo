@@ -55,8 +55,7 @@ GLMEmptyPopupBrick >> addCloserListener [
 		description: [ 'Closer must not be nil' ].
 	
 	self closer popup: self.
-	self activeHand ifNotNil: [ :hand | 
-		hand addEventListener: self closer ]
+	self activeHand addEventListener: self closer
 ]
 
 { #category : #accessing }
@@ -404,8 +403,7 @@ GLMEmptyPopupBrick >> removeCloserListener [
 		assert: [ self closer isNotNil ]
 		description: [ 'Closer must not be nil' ].
 	
-	self activeHand ifNotNil: [ :hand |
-		hand removeEventListener: self closer ].
+	self activeHand removeEventListener: self closer.
 	self closer popup: nil
 ]
 
