@@ -1335,7 +1335,7 @@ MenuMorph >> positionAt: aPoint relativeTo: aMenuItem inWorld: aWorld [
 
 	"Make sure that the menu fits in the world."
 	delta := self bounds amountToTranslateWithin:
-		(aWorld worldBounds withHeight: ((aWorld worldBounds height - 18) max: (self activeHand position y) + 1)).
+		(aWorld worldBounds withHeight: ((aWorld worldBounds height - 18) max: (aWorld activeHand position y) + 1)).
 	delta = (0 @ 0) ifFalse: [self position: self position + delta]
 ]
 
