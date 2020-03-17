@@ -1,12 +1,6 @@
 Extension { #name : #Rectangle }
 
 { #category : #'*Morphic-Base' }
-Rectangle class >> activeHand [
-
-	^ ActiveHand
-]
-
-{ #category : #'*Morphic-Base' }
 Rectangle >> asLayoutFrame [
 	"Answer an instance of LayoutFrame which uses fractions from receiver "
 	
@@ -35,32 +29,41 @@ Rectangle class >> fromUser [
 	designate the top left and bottom right corners. The gridding for user 
 	selection is 1@1."
 
-	^self fromUser: 1 @ 1
+	^ self fromUser: 1 @ 1
 ]
 
 { #category : #'*Morphic-Base' }
 Rectangle class >> fromUser: gridPoint [ 
+
+	^ self fromUser: gridPoint inWorld: World
+]
+
+{ #category : #'*Morphic-Base' }
+Rectangle class >> fromUser: gridPoint inWorld: aWorld [
 	"Answer a Rectangle that is determined by having the user 
 	designate the top left and bottom right corners. 
 	The cursor reamins linked with the sensor, but
 	the outline is kept gridded."
 	| originRect |
-	self activeHand showTemporaryCursor: Cursor origin.
+	aWorld activeHand showTemporaryCursor: Cursor origin.
 
-	originRect :=  ((self activeHand cursorPoint grid: gridPoint) extent: 0 @ 0) 
-					newRectFrom: [ :f :pt | (pt grid: gridPoint) extent: 0 @ 0 ].
+	originRect :=  ((aWorld activeHand cursorPoint grid: gridPoint) extent: 0 @ 0) 
+					newRectFrom: [ :f :pt | (pt grid: gridPoint) extent: 0 @ 0 ]
+					inWorld: aWorld.
 					
-	self activeHand showTemporaryCursor: Cursor bottomRight.
+	aWorld activeHand showTemporaryCursor: Cursor bottomRight.
 
-	^  originRect newRectFrom: [ :f :pt | f origin corner: (pt grid: gridPoint) ]
+	^  originRect
+			newRectFrom: [ :f :pt | f origin corner: (pt grid: gridPoint) ]
+			inWorld: aWorld
 ]
 
 { #category : #'*Morphic-Base' }
-Rectangle >> newRectButtonPressedDo: newRectBlock [ 
+Rectangle >> newRectButtonPressedDo: newRectBlock inWorld: aWorld [
 	"Track the outline of a new rectangle until mouse button changes. newFrameBlock produces each new rectangle from the previous. Only tracks while mouse is down."
 	| rect newRect buttonNow hand |
 	
-	hand := self currentWorld activeHand.
+	hand := aWorld activeHand.
 	
 	buttonNow := hand anyButtonPressed.
 	rect := self.
@@ -80,18 +83,18 @@ Rectangle >> newRectButtonPressedDo: newRectBlock [
 		].
 	
 	self drawReverseFrame: rect.
-	self currentWorld activeHand
+	aWorld activeHand
 		newMouseFocus: nil;
 		showTemporaryCursor: nil.
 	^ rect
 ]
 
 { #category : #'*Morphic-Base' }
-Rectangle >> newRectFrom: newRectBlock [ 
+Rectangle >> newRectFrom: newRectBlock inWorld: aWorld [
 	"Track the outline of a new rectangle until mouse button changes. newFrameBlock produces each new rectangle from the previous"
 	| rect newRect buttonStart buttonNow  hand |
 
-	hand := self currentWorld activeHand.
+	hand := aWorld activeHand.
 	
 	buttonStart := buttonNow := hand anyButtonPressed.
 	rect := self.
