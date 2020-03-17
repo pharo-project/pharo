@@ -1082,7 +1082,7 @@ Cursor >> printOn: aStream [
 { #category : #displaying }
 Cursor >> show [
 	"Make the hardware's mouse cursor look like the receiver"
-	self currentWorld currentCursor: self
+	self currentWorld activeHand currentCursor: self
 ]
 
 { #category : #displaying }
