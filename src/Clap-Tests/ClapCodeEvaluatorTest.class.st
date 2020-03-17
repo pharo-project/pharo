@@ -31,7 +31,7 @@ ClapCodeEvaluatorTest >> testEvaluatePipeIn [
 		setStdio: (ClapPluggableStdio onByteArraysWithInput: 'Object class class class class');
 		execute.
 	
-	"self assertSuccess."
+	self assertSuccess.
 	self
 		assert: self outputString
 		equals: 'Metaclass' , self lineEnding

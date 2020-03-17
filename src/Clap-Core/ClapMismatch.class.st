@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-ClapMismatch >> at: aSpec [
-self flag: 'identifierOrSpec?'.
-	^ ClapImplicit of: aSpec in: self
+ClapMismatch >> at: identifierOrSpec [
+	^ specification at: identifierOrSpec
+		ifPresent: [ :spec | ClapImplicit of: spec in: self ]
 ]
 
 { #category : #matching }
