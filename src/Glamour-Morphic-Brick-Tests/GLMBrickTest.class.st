@@ -68,7 +68,7 @@ GLMBrickTest >> assertWidthDirty: aBrick [
 { #category : #defaults }
 GLMBrickTest >> displayScaleFactor [
 
-	^ self currentWorld displayScaleFactor
+	^ 1 "Scale factor for test"
 ]
 
 { #category : #'instance creation' }
