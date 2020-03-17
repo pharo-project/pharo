@@ -56,7 +56,7 @@ TransferMorph class >> withPassenger: anObject from: source [
 TransferMorph class >> withPassenger: anObject from: source hand: dragHand [
 	| hand |
 	
-	hand := (dragHand ifNil:[ ActiveHand ]).
+	hand := dragHand.
 	
 	^ self new
 		passenger: anObject;

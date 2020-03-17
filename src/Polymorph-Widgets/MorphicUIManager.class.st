@@ -430,10 +430,8 @@ Here are some suggestions:
 MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
 	"Create a Notifier on the active scheduling process with the given label."
 	| preemptedProcess projectProcess debugSession |
-	ActiveHand ifNotNil:[ActiveHand interrupted].
 	ActiveWorld := self currentWorld. "reinstall active globals"
-	ActiveHand := self currentWorld primaryHand.
-	ActiveHand interrupted. "make sure this one's interrupted too"
+	self currentWorld primaryHand interrupted.
 	ActiveEvent := nil.
 
 	projectProcess := self uiProcess.	"we still need the accessor for a while"

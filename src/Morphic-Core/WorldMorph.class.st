@@ -91,13 +91,11 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 { #category : #'initialize-release' }
 WorldMorph class >> doOneCycle [
 	self extraWorldList do: [:world |
-		ActiveHand := world activeHand.
 		world doOneCycle.
 	].
 
 	(self currentWorld isNotNil and: [(self extraWorldList includes: self currentWorld) not]) ifTrue: [
 		self currentWorld doOneCycle.
-		ActiveHand := self currentWorld activeHand
 	]
 ]
 
@@ -201,19 +199,16 @@ WorldMorph >> becomeActiveDuring: aBlock [
 	Note that this method does deliberately *not* use #ensure: to prevent
 	re-installation of the world on project switches."
 
-	| priorWorld priorHand priorEvent |
+	| priorWorld priorEvent |
 	priorWorld := ActiveWorld.
-	priorHand := ActiveHand.
 	priorEvent := ActiveEvent.
 	ActiveWorld := self.
-	ActiveHand := self hands first.	"default"
 	ActiveEvent := nil.	"not in event cycle"
 	aBlock
 		on: Error
 		do: [ :ex | 
 			ActiveWorld := priorWorld.
 			ActiveEvent := priorEvent.
-			ActiveHand := priorHand.
 			ex pass ]
 ]
 

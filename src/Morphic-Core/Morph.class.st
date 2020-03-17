@@ -230,8 +230,8 @@ Morph >> actionMap [
 { #category : #structure }
 Morph >> activeHand [
 	| world |
-   world := self world ifNil: [^ ActiveHand ].
-   ^ world activeHand ifNil: [ ^ ActiveHand  ]
+   world := self world ifNil: [^ nil ].
+   ^ world activeHand
 ]
 
 { #category : #menus }

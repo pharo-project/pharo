@@ -55,7 +55,6 @@ HandMorph class >> attach: aMorph [
 HandMorph class >> cleanUp [
 	"Called from ImageCleaner>>cleanUpForRelease --> SmalltalkImage>>cleanUp:except:confirming:"
 	self logEventStatsStop.
-	ActiveHand resetClickState.
 
 
 ]
@@ -278,15 +277,15 @@ HandMorph >> copyToPasteBuffer: aMorph [
 { #category : #cursor }
 HandMorph >> currentCursor [
 
-	^ ActiveHand world currentCursor
+	^ self world currentCursor
 ]
 
 { #category : #cursor }
 HandMorph >> currentCursor: aCursor [
 
-	ActiveHand world currentCursor: aCursor.
-		ActiveHand world isCursorOwner ifTrue: [
-			aCursor activateInCursorOwner: ActiveHand world ]
+	self world currentCursor: aCursor.
+	self world isCursorOwner ifTrue: [
+		aCursor activateInCursorOwner: self world ]
 ]
 
 { #category : #accessing }
@@ -1267,7 +1266,6 @@ HandMorph >> sendFocusEvent: anEvent to: focusHolder clear: aBlock [
 	| result w |
 	w := focusHolder world ifNil:[^ aBlock value].
 	w becomeActiveDuring:[
-		ActiveHand := self.
 		ActiveEvent := anEvent.
 		result := focusHolder handleFocusEvent: 
 			(anEvent transformedBy: (focusHolder transformedFrom: self)).
