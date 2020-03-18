@@ -342,12 +342,22 @@ HDTestReport >> writeError: error stack: stack [
 
 { #category : #private }
 HDTestReport >> writeException: error stack: stack [
-
-	stream 
-		nextPutAll: (self encode: error class name); 
-		nextPutAll: '" message="'; nextPutAll: (self encode: (error messageText ifNil: [ error description ])); 
-		nextPutAll: '">'; 
-		nextPutAll: (self encode: stack).
+	| encodedErrorName encodedErrorDescription |
+	encodedErrorName := self encode: error class name.
+	encodedErrorDescription := self
+		encode: (error messageText ifNil: [ error description ]).
+	stream
+		nextPutAll: encodedErrorName;
+		nextPutAll: '" message="';
+		nextPutAll: encodedErrorDescription;
+		nextPutAll: '">';
+		lf;
+		nextPutAll: encodedErrorName;
+		lf.
+	encodedErrorDescription ifNotEmpty: [ 
+		stream nextPutAll: encodedErrorDescription;
+		lf ].
+	stream nextPutAll: (self encode: stack)
 ]
 
 { #category : #private }

@@ -119,7 +119,6 @@ RubFloatingEditorBuilder >> buildEditor [
 	editor
 		autoAccept: autoAccept;
 		setTextWith: self initialContents.
-	self currentWorld activeHand addEventListener: self.
 	editor announcer
 		when: MorphLostFocus send: #whenEditorLostFocus: to: self;
 		when: RubTextAccepted send: #whenTextAccepted: to: self;
@@ -177,6 +176,7 @@ RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 		ifFalse: [ ^ self ].
 	anEvent isMouseDown
 		ifFalse: [ ^ self ].
+	editor ifNil: [ ^ self ].
 	(editor boundsInWorld containsPoint: anEvent position)
 		ifFalse: [ self closeEditor ]
 ]
@@ -230,7 +230,6 @@ RubFloatingEditorBuilder >> openEditorWithContents: aText thenDo: aBlock [
 
 { #category : #'announcement handling' }
 RubFloatingEditorBuilder >> whenEditorDeleted: anAnnouncement [
-	anAnnouncement morph activeHand removeEventListener: self.
 	anAnnouncement morph announcer unsubscribe: self.
 	editor := nil
 ]

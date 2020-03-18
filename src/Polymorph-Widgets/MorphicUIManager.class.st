@@ -33,7 +33,7 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 MorphicUIManager >> activate [
 
 	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
-	Cursor currentCursor: Cursor currentCursor.
+	World currentCursor: World currentCursor.
 		
 	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
 	WorldMorph extraWorldList do: #restoreMorphicDisplay.
@@ -430,11 +430,8 @@ Here are some suggestions:
 MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
 	"Create a Notifier on the active scheduling process with the given label."
 	| preemptedProcess projectProcess debugSession |
-	ActiveHand ifNotNil:[ActiveHand interrupted].
 	ActiveWorld := self currentWorld. "reinstall active globals"
-	ActiveHand := self currentWorld primaryHand.
-	ActiveHand interrupted. "make sure this one's interrupted too"
-	ActiveEvent := nil.
+	self currentWorld primaryHand interrupted.
 
 	projectProcess := self uiProcess.	"we still need the accessor for a while"
 	preemptedProcess := theInterruptedProcess ifNil: [Processor preemptedProcess].

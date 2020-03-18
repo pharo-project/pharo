@@ -17,7 +17,7 @@ Class {
 { #category : #'refactoring support' }
 ClySystemEnvironmentScope >> asRBEnvironment [
 
-	^RBBrowserEnvironment new
+	^self environment asRBEnvironment
 ]
 
 { #category : #queries }

@@ -206,7 +206,7 @@ PragmaSetting >> icon: aForm [
 PragmaSetting >> inputMorphFor: aContainer [ 
 	^ self inputWidget
 		ifNotNil: [:iw | 
-			( self theme newRowIn: self currentWorld for: {iw})
+			( self theme newRowIn: self for: {iw})
 				 clipSubmorphs: true;
 				 hResizing: #shrinkWrap;
 				 cellInset: 0;

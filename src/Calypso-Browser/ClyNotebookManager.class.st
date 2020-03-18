@@ -271,7 +271,7 @@ ClyNotebookManager >> restoreSelectedTools: selectedTools [
 		ifFalse: [ 
 			"To allow multiple selected tabs by cmd+click on table"
 			mainTool isExtraSelectionRequested 
-				ifTrue: [ extraTools copyWith: mainTool ] ].
+				ifTrue: [ extraTools := extraTools copyWith: mainTool ] ].
 	(tools copyWithout: mainTool) do: [ :currentTool | 
 		"Generally if previously selected extra tab is found in new tools then it should be selected.
 		Other tools should be deselected"

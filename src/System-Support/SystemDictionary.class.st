@@ -170,6 +170,16 @@ SystemDictionary >> classOrTraitNamed: aString [
                                ifTrue: [ global classSide ]]]
 ]
 
+{ #category : #removing }
+SystemDictionary >> defineClass: aDefinition withController: aController [
+
+	^ self class compiler
+		source: aDefinition;
+		requestor: aController;
+		logged: true;
+		evaluate
+]
+
 { #category : #accessing }
 SystemDictionary >> environment [
 	"for conversion from SmalltalkImage to SystemDictionary"

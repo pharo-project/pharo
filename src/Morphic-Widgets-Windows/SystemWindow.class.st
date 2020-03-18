@@ -1468,7 +1468,6 @@ SystemWindow >> offerWindowMenu [
 
 { #category : #'open/close' }
 SystemWindow >> openModal [
-
 	self openInWorld.
 	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
 ]
@@ -1610,7 +1609,7 @@ SystemWindow >> privateBePassive [
 	self isInWorld ifFalse: [ ^self ].
 	
 	self 
-	rememberKeyboardFocus: ActiveHand keyboardFocus;
+	rememberKeyboardFocus: self activeHand keyboardFocus;
 	passivate;
 	announceDeActivated
 

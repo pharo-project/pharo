@@ -2292,7 +2292,7 @@ TextEditor >> offerFontMenu: aKeyboardEvent [
 { #category : #deprecated }
 TextEditor >> offerMenuFromEsc: aKeyboardEvent [
 	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	ActiveEvent shiftPressed 
+ 	morph activeHand lastEvent shiftPressed 
 		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
 	^ false 	
 ]
@@ -2447,7 +2447,7 @@ TextEditor >> processKeyStroke: aKeyboardEvent [
 TextEditor >> raiseContextMenu: aKeyboardEvent [
 
 	(morph respondsTo: #editView)
-		ifTrue: [ ^ morph editView yellowButtonActivity: ActiveEvent shiftPressed].
+		ifTrue: [ ^ morph editView yellowButtonActivity: morph activeHand lastEvent shiftPressed].
 	^ true
 ]
 

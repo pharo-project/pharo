@@ -18,6 +18,12 @@ SpMockMenu >> initialize [
 	shown := false
 ]
 
+{ #category : #owner }
+SpMockMenu >> privateOwner: aRubEditingArea [ 
+	
+	"Nothing"
+]
+
 { #category : #accessing }
 SpMockMenu >> realMenu [
 	^ realMenu

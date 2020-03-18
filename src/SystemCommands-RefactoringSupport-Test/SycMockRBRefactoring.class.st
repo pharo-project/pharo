@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+SycMockRBRefactoring >> environment [
+	^ self
+]
+
+{ #category : #accessing }
 SycMockRBRefactoring >> environment: anEnvironement [
 	^ self
 ]
@@ -12,6 +17,11 @@ SycMockRBRefactoring >> environment: anEnvironement [
 { #category : #accessing }
 SycMockRBRefactoring >> model [
 	^ self
+]
+
+{ #category : #accessing }
+SycMockRBRefactoring >> model: aRBNamespace [ 
+	^ self 	
 ]
 
 { #category : #accessing }

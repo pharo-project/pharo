@@ -152,7 +152,6 @@ GTSpotterMorph >> initialize [
 	"setting custom brick themer for the whole spotter"
 	self themer: self themer spotterThemer themer.
 	
-	self initializeListeners.
 	self themer spotterThemer spotterStyleFor: self.
 	
 	self breadcrumbBrick: self newBreadcrumbBrick.
@@ -383,6 +382,12 @@ GTSpotterMorph >> stepScrollPageDown [
 GTSpotterMorph >> stepScrollPageUp [
 
 	self spotterModel currentStep announcer announce: (GTSpotterScrollPageUp new)
+]
+
+{ #category : #'events-processing' }
+GTSpotterMorph >> takeKeyboardFocus [
+
+	self paneBrick takeKeyboardFocus
 ]
 
 { #category : #actions }
