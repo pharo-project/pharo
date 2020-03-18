@@ -229,6 +229,89 @@ Slider >> setValueSelector: aSymbol [
 	setValueSelector := aSymbol
 ]
 
+{ #category : #simulating }
+Slider >> simulateScrollAbsolute: aPointStart to: aPointEnd [
+"Simulates a mouse moving from a given point to a destinationpoint"
+	| event |
+	event := MouseMoveEvent  new 
+				setType: #mouseMove  
+				startPoint: aPointStart 
+				endPoint: aPointEnd 
+				trail: nil
+				buttons: 0
+				hand: ActiveHand 
+				stamp: 0.
+	self scrollAbsolute:  event
+]
+
+{ #category : #simulating }
+Slider >> simulateSliderMiddleMouseDown [ 
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)
+	into the Slider"
+	self simulateSliderMouseDownWith: MouseEvent blueButton.
+]
+
+{ #category : #simulating }
+Slider >> simulateSliderMiddleMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)
+	into the Slider"
+	self simulateSliderMouseUpWith: MouseEvent blueButton.
+]
+
+{ #category : #simulating }
+Slider >> simulateSliderMouseDown [ 
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)
+	into the Slider"
+	self simulateSliderMouseDownWith: MouseEvent redButton.
+]
+
+{ #category : #access }
+Slider >> simulateSliderMouseDownWith: buttons [
+	"Simulate mouse button down into the slider with a given button"
+	
+		slider activeHand handleEvent: (MouseButtonEvent new 
+			setType: #mouseDown
+			position: (slider pointInWorld: slider center) "Some Morphs report local coords"
+			which:  buttons
+			buttons: buttons
+			hand: slider activeHand
+			stamp: Time millisecondClockValue)
+]
+
+{ #category : #simulating }
+Slider >> simulateSliderMouseUp [ 
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)
+	into the Slider"
+	self simulateSliderMouseUpWith: MouseEvent redButton.
+]
+
+{ #category : #access }
+Slider >> simulateSliderMouseUpWith: buttons [
+	"Simulate mouse button up into the slider with a given button"
+	
+		slider activeHand handleEvent: (MouseButtonEvent new 
+			setType: #mouseUp
+			position: (slider pointInWorld: slider center) "Some Morphs report local coords"
+			which:  buttons
+			buttons: buttons
+			hand: slider activeHand
+			stamp: Time millisecondClockValue)
+]
+
+{ #category : #simulating }
+Slider >> simulateSliderRightMouseDown [ 
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)
+	into the Slider"
+	self simulateSliderMouseDownWith: MouseEvent yellowButton.
+]
+
+{ #category : #simulating }
+Slider >> simulateSliderRightMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)
+	into the Slider"
+	self simulateSliderMouseUpWith: MouseEvent yellowButton.
+]
+
 { #category : #access }
 Slider >> sliderColor [
 	"color scheme for the whole slider widget"
