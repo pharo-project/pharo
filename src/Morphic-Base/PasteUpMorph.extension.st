@@ -11,12 +11,6 @@ PasteUpMorph >> dragThroughOnDesktop: evt [
 ]
 
 { #category : #'*Morphic-Base' }
-PasteUpMorph >> drawingClass [
-
-	^ ImageMorph
-]
-
-{ #category : #'*Morphic-Base' }
 PasteUpMorph >> makeAScreenshot [
 	| filePrefix |
 	filePrefix := 'PharoScreenshot'.
@@ -27,7 +21,7 @@ PasteUpMorph >> makeAScreenshot [
 		title: 'Make a screenshot')
 		ifNotNil: [ :choice | 
 			| form name |
-			form := choice = #world ifTrue: [ self currentWorld imageForm ] ifFalse: [ Form fromUser ].
+			form := choice = #world ifTrue: [ self world imageForm ] ifFalse: [ Form fromUser ].
 			name := (FileSystem workingDirectory / filePrefix , 'png') nextVersion.
 			PNGReadWriter putForm: form onFileNamed: (FileSystem workingDirectory / filePrefix , 'png') nextVersion.
 			UIManager default

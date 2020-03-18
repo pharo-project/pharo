@@ -1435,7 +1435,7 @@ SystemWindow >> openAsIsIn: aWorld [
 	
 	self announceOpened.
 	
-	self currentWorld announcer 
+	self world announcer 
 		announce: (WindowOpened new
 						window: self;
 						yourself).
