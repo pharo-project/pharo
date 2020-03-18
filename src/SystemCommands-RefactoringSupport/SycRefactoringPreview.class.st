@@ -258,7 +258,7 @@ SycRefactoringPreview >> updateTablePresenter [
 	| aCompositeChange anEnvironment |
 	anEnvironment := changes
 		ifEmpty: [ nil ]
-		ifNotEmpty: [ (changes at: 1) model environment ].
+		ifNotEmpty: [ changes anyOne model environment ].
 	aCompositeChange := RBCompositeRefactoryChange new onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 	table items: (aCompositeChange whatToDisplayIn: self).
