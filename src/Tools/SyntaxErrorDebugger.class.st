@@ -49,7 +49,8 @@ SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxError [
 				menu: #codePaneMenu:shifted:)
 		frame: (0 @ 0.15 corner: 1 @ 1).
 	aSyntaxError addDependant: window.
-	^ window openInWorldExtent: 380 @ 220
+	window extent: 380 @ 220.
+	^ window openInWorld
 ]
 
 { #category : #'instance creation' }

@@ -490,13 +490,6 @@ SystemWindow class >> windowsIn: aWorld satisfying: windowBlock [
 	^ windows
 ]
 
-{ #category : #opening }
-SystemWindow >> aboutToOpenInWorld: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
-	self playOpenSound.
-]
-
 { #category : #activation }
 SystemWindow >> activate [
 	"Activate the owner too."
@@ -1474,47 +1467,6 @@ SystemWindow >> offerWindowMenu [
 ]
 
 { #category : #'open/close' }
-SystemWindow >> openAsIs [
-	^self openAsIsIn: self currentWorld
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openAsIsIn: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop.
-	Play the open sound if the preference is enabled."
-	
-	self playOpenSound.
-	aWorld addMorph: self.
-	self activate.
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
-	
-	self currentWorld announcer 
-		announce: (WindowOpened new
-						window: self;
-						yourself).
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld extent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self
-		position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft;
-		extent: extent.
-	^self openAsIsIn: aWorld
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorldExtent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-
-	self openInWorld: self currentWorld extent: extent
-]
-
-{ #category : #'open/close' }
 SystemWindow >> openModal [
 
 	self openInWorld.
@@ -1633,6 +1585,16 @@ SystemWindow >> postOpenInWorld: aWorld [
 
 	self activate.
 	super postOpenInWorld: aWorld
+]
+
+{ #category : #opening }
+SystemWindow >> preOpenInWorld: aWorld [
+	"This msg and its callees result in the window being activeOnlyOnTop"
+	self bounds: (RealEstateAgent
+		initialFrameFor: self
+		initialExtent: self initialExtent
+		world: aWorld).
+	self playOpenSound.
 ]
 
 { #category : #printing }

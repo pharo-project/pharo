@@ -124,11 +124,11 @@ ClyAccrossWindowNavigationState >> restoreBrowserWindow [
 		ifNil: [
 			window isInWorld 
 				ifTrue: [ window comeToFront; activate]
-			 	ifFalse: [window openAsIs ]]
+			 	ifFalse: [window openInWorld ] ]
 		ifNotNil: [ 
 			windowGroup isInWorld 
 				ifTrue: [ windowGroup window comeToFront ]
-				ifFalse: [ windowGroup window openAsIs ].
+				ifFalse: [ windowGroup window openInWorld ].
 			windowGroup activateWindow: window]
 ]
 

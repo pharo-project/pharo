@@ -88,7 +88,8 @@ RubFloatingEditorBuilder class >> exampleEditableStringMorph [
 			event shiftPressed
 				ifTrue: [ edBuilder openEditorWithContents: stringMorph contents ] ].
 	(pane embeddedInMorphicWindowLabeled: 'Editable sm example')
-		openInWorldExtent: (stringMorph extent translateBy:  30 @ 30)
+		extent: (stringMorph extent translateBy:  30 @ 30);
+		openInWorld
 ]
 
 { #category : #accessing }

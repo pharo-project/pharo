@@ -204,16 +204,6 @@ Morph >> aboutToBeGrabbedBy: aHand [
 	^self "Grab me"
 ]
 
-{ #category : #opening }
-Morph >> aboutToOpenInWorld: aWorld [
-	"Interact with a world to decide how to position myself.
-	By default, I choose the visible area of the world.
-	Subclasses may choose different strategies or even calculate their bounds.
-	"
-	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
-		[self position: aWorld visibleClearArea origin].
-]
-
 { #category : #layout }
 Morph >> acceptDroppingMorph: aMorph event: evt [
 	"This message is sent when a morph is dropped onto a morph that has agreed to accept the dropped morph by responding 'true' to the wantsDroppedMorph:Event: message. This default implementation just adds the given morph to the receiver."
@@ -2256,6 +2246,12 @@ Morph >> doLayoutIn: layoutBounds [
 	box := self outerBounds.
 	box = priorBounds 
 		ifFalse: [self invalidRect: (priorBounds quickMerge: box)]
+]
+
+{ #category : #opening }
+Morph >> doOpenInWorld: aWorld [
+
+	aWorld addMorph: self
 ]
 
 { #category : #'submorphs-accessing' }
@@ -4535,8 +4531,8 @@ Morph >> openInWorld [
 
 { #category : #opening }
 Morph >> openInWorld: aWorld [
-	self aboutToOpenInWorld: aWorld.
-	aWorld addMorph: self.
+	self preOpenInWorld: aWorld.
+	self doOpenInWorld: aWorld.
 	self postOpenInWorld: aWorld.
 	self announceOpened.
 ]
@@ -4777,6 +4773,16 @@ Morph >> potentialTargetsAt: aPoint [
 	^ realOwner
 		morphsAt: aPoint
 		
+]
+
+{ #category : #opening }
+Morph >> preOpenInWorld: aWorld [
+	"Interact with a world to decide how to position myself.
+	By default, I choose the visible area of the world.
+	Subclasses may choose different strategies or even calculate their bounds.
+	"
+	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
+		[self position: aWorld visibleClearArea origin].
 ]
 
 { #category : #'halos and balloon help' }
