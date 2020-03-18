@@ -5722,13 +5722,13 @@ Morph >> simplySetVisible: aBoolean [
 	self visible: aBoolean
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateClick [
 
 	self simulateClickWith: MouseEvent redButton.
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateClickWith: buttons [
 	"Did you know there's #simulateClick (left), #simulateMiddleClick, and #simulateRightClick?
 	buttons - look at MouseEvent's class-side for button types"
@@ -5745,7 +5745,7 @@ Morph >> simulateClickWith: buttons [
 			stamp: Time millisecondClockValue) ].
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateClickWith: buttons position: position [
 	"Did you know there's #simulateClick (left), #simulateMiddleClick, and #simulateRightClick?
 	buttons - look at MouseEvent's class-side for button types"
@@ -5764,7 +5764,7 @@ Morph >> simulateClickWith: buttons position: position [
 			stamp: Time millisecondClockValue) ].
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateKeyStroke: aCharacter [
 	| event |
 
@@ -5779,37 +5779,37 @@ Morph >> simulateKeyStroke: aCharacter [
 	self keyStroke: event
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateKeyStrokes: aString [
 
 	aString do: [:c | self simulateKeyStroke: c ].
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMiddleClick [
 
 	self simulateClickWith: MouseEvent blueButton.
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMiddleMouseDown [ 
 	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseDownWith: MouseEvent blueButton .
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMiddleMouseUp [ 
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseUpWith: MouseEvent blueButton .
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMouseDown [ 
 	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseDownWith: MouseEvent redButton.
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMouseDownWith: buttons [
 	"Simulate mouse button down with a given button"
 	
@@ -5822,7 +5822,7 @@ Morph >> simulateMouseDownWith: buttons [
 			stamp: Time millisecondClockValue)
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMouseMove: aPointStart to: aPointEnd [
 "Simulates a mouse moving from a given point to a destinationpoint"
 	| event |
@@ -5837,13 +5837,13 @@ Morph >> simulateMouseMove: aPointStart to: aPointEnd [
 	self mouseMove: event
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMouseUp [ 
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseUpWith: MouseEvent redButton.
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateMouseUpWith: buttons [
 	"Simulate mouse button up with a given button"
 	
@@ -5856,19 +5856,19 @@ Morph >> simulateMouseUpWith: buttons [
 			stamp: Time millisecondClockValue)
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateRightClick [
 
 	self simulateClickWith: MouseEvent yellowButton.
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateRightMouseDown [ 
 	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseDownWith: MouseEvent yellowButton .
 ]
 
-{ #category : #simulating }
+{ #category : #'event testing' }
 Morph >> simulateRightMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseUpWith: MouseEvent yellowButton .
