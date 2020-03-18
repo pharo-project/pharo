@@ -2106,13 +2106,6 @@ Object >> writeSlotNamed: aName value: anObject [
 	^(self class slotNamed: aName) write: anObject to: self
 ]
 
-{ #category : #'process termination handling' }
-Object >> yieldProcessor [
-	"Suspend the active process and give back control to the scheduler. It gives a chance to other pending processes to be scheduled."
-	
-	Processor yield
-]
-
 { #category : #accessing }
 Object >> yourself [
 	"Answer self. The message yourself deserves a bit of explanation.
