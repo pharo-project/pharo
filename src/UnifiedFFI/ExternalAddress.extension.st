@@ -155,25 +155,25 @@ ExternalAddress >> readArrayOf: aType until: aBlock [
 		someAddress readArrayOf: #uint32 until: [ :each | each isZero ].
 		someAddress readArrayOf: #'void *' until: [ :each | each isNull ].
 	"
-	| finish address array last externalType |
-	
+
+	| externalType |
 	"resolve type if needed"
 	externalType := aType isString
 		ifTrue: [ FFIExternalType resolveType: aType ]
 		ifFalse: [ aType ].
-		
-	finish := false.
-	address := self.
-	array := Array new writeStream.
-	[ 
-		last := externalType handle: address at: 1.
-		(finish := (aBlock value: last)) ifFalse: [ 
-			array nextPut: last.
-			address := address + aType typeSize ] ]
-	doWhileFalse: [ 
-		finish ].
 
-	^ array contents
+	"then build the array"
+	^ Array
+		streamContents: [ :array | 
+			| address last count |
+			address := self.
+			count := 0.
+			[ address isNull
+				or: [ last := externalType handle: address at: 1.
+					count := count + 1.
+					aBlock cull: last cull: count ] ]
+				whileFalse: [ array nextPut: last.
+					address := address + externalType typeSize ] ]
 ]
 
 { #category : #'*UnifiedFFI-Deprecated50' }
