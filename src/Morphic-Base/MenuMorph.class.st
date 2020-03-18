@@ -46,7 +46,7 @@ MenuMorph class >> chooseFrom: aList lines: linesArray title: queryString [
 		menu add: (aList at: i) asString target: [:v| result := v] selector: #value: argument: i.
 		(linesArray includes: i) ifTrue: [menu addLine]].
 	
-	menu invokeAt: ActiveHand position in: self currentWorld allowKeyboard: true.
+	menu invokeModal.
 	^result
 ]
 
@@ -71,7 +71,7 @@ MenuMorph class >> chooseFrom: aList values: valueList lines: linesArray title: 
 		menu add: (aList at: i) asString target: [:v| result := v] selector: #value: argument: (valueList at: i).
 		(linesArray includes: i) ifTrue:[menu addLine]].
 
-	menu invokeAt: ActiveHand position in: self currentWorld allowKeyboard: true.
+	menu invokeModal.
 	^result
 ]
 
@@ -129,10 +129,7 @@ MenuMorph class >> confirm: queryString trueChoice: trueChoice falseChoice: fals
 		target: aBlock
 		selector: #value:
 		argument: false.
-	[ menu
-		invokeAt: ActiveHand position
-		in: self currentWorld
-		allowKeyboard: true.
+	[ menu invokeModal.
 	result isNil ] whileTrue.
 	^ result
 ]
@@ -919,7 +916,6 @@ MenuMorph >> invokeModal [
 	^ self
 		invokeAt: ActiveHand position
 		in: self currentWorld
-		allowKeyboard: self menuKeyboardControl.
 ]
 
 { #category : #testing }
