@@ -118,7 +118,6 @@ RubFloatingEditorBuilder >> buildEditor [
 	editor
 		autoAccept: autoAccept;
 		setTextWith: self initialContents.
-	self currentWorld activeHand addEventListener: self.
 	editor announcer
 		when: MorphLostFocus send: #whenEditorLostFocus: to: self;
 		when: RubTextAccepted send: #whenTextAccepted: to: self;
@@ -230,8 +229,6 @@ RubFloatingEditorBuilder >> openEditorWithContents: aText thenDo: aBlock [
 
 { #category : #'announcement handling' }
 RubFloatingEditorBuilder >> whenEditorDeleted: anAnnouncement [
-	anAnnouncement morph activeHand ifNotNil: [ :hand | 
-		hand removeEventListener: self ].
 	anAnnouncement morph announcer unsubscribe: self.
 	editor := nil
 ]

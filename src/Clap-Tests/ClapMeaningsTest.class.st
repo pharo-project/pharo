@@ -7,8 +7,8 @@ Class {
 { #category : #tests }
 ClapMeaningsTest >> testArgFlagBasicMeaning [
 	| flag match |
-	flag := (ClapFlag withName: 'foo')
-		add: (ClapPositional withName: 'bar').
+	flag := (ClapFlag id: #foo)
+		add: (ClapPositional id: #bar).
 
 	match := flag match: #('--foo' 'whatever').
 	
@@ -19,9 +19,9 @@ ClapMeaningsTest >> testArgFlagBasicMeaning [
 { #category : #tests }
 ClapMeaningsTest >> testArgFlagCollectionMeaning [
 	| flag match |
-	flag := (ClapFlag withName: 'foo')
-		add: ((ClapPositional withName: 'bar') implicitMeaning: [ #nobar ]);
-		add: ((ClapPositional withName: 'baz') implicitMeaning: [ #nobaz ]);
+	flag := (ClapFlag id: #foo)
+		add: ((ClapPositional id: #bar) implicitMeaning: [ #nobar ]);
+		add: ((ClapPositional id: #baz) implicitMeaning: [ #nobaz ]);
 		meaningCollection.
 	match := flag match: #('--foo' 'whatever 1' 'whatever 2').
 	self assert: match value asArray equals: #('whatever 1' 'whatever 2').
@@ -34,8 +34,8 @@ ClapMeaningsTest >> testArgFlagCollectionMeaning [
 { #category : #tests }
 ClapMeaningsTest >> testArgFlagScalarMeaning [
 	| flag match |
-	flag := (ClapFlag withName: 'foo')
-		add: ((ClapPositional withName: 'bar') implicitMeaning: [ 'oops' ]);
+	flag := (ClapFlag id: #foo)
+		add: ((ClapPositional id: #bar) implicitMeaning: [ 'oops' ]);
 		meaningScalar.
 	match := flag match: #('--foo' 'whatever').
 	self assert: match value equals: 'whatever'.
@@ -48,7 +48,7 @@ ClapMeaningsTest >> testArgFlagScalarMeaning [
 { #category : #tests }
 ClapMeaningsTest >> testSimpleFlagBasicMeaning [
 	| flag match |
-	flag := ClapFlag withName: 'foo'.
+	flag := ClapFlag id: #foo.
 
 	match := flag match: #('--foo').
 	

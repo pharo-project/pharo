@@ -1069,7 +1069,7 @@ FileList >> openImageInWindow [
 	self reference streamWritable: false do: [ :stream|
 		image := Form fromBinaryStream: stream].
 	
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]
 
 { #category : #initialization }

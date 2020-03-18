@@ -1231,8 +1231,8 @@ Morph >> beUnsticky [
 
 { #category : #'user interface' }
 Morph >> becomeModal [
-	self currentWorld
-		ifNotNil: [self currentWorld modalWindow: self]
+
+	self world modalWindow: self
 ]
 
 { #category : #'base-widgets' }
@@ -4522,9 +4522,9 @@ Morph >> openInHand [
 
 { #category : #display }
 Morph >> openInWorld [
-        "Add this morph to the world."
-
-        self openInWorld: self currentWorld
+	
+	"Add this morph to the current world."
+	self openInWorld: self currentWorld
 ]
 
 { #category : #initialize }
@@ -4780,14 +4780,14 @@ Morph >> preferredDuplicationHandleSelector [
 { #category : #'event handling' }
 Morph >> preferredKeyboardBounds [
 
-	^ self bounds: self bounds in: self currentWorld.
+	^ self bounds: self bounds in: self world
 
 ]
 
 { #category : #'event handling' }
 Morph >> preferredKeyboardPosition [
 
-	^ (self bounds: self bounds in: self currentWorld) topLeft.
+	^ self preferredKeyboardBounds topLeft.
 
 ]
 

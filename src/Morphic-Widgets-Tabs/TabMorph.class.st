@@ -85,7 +85,7 @@ TabMorph class >> closeOverIconContents [
 
 { #category : #accessing }
 TabMorph class >> defaultHeight [
-	^ 22 * self currentWorld displayScaleFactor 
+	^ 22
 ]
 
 { #category : #initialize }

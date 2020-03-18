@@ -11,7 +11,8 @@ ClapPositionalTest >> classToTest [
 
 { #category : #tests }
 ClapPositionalTest >> testMatches [
-	| argv match |
+	| subject argv match |
+	subject := self namedSubject.
 	argv := { 'bar'. #remainder } readStream.
 	
 	match := subject matchOn: argv.

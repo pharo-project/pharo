@@ -931,5 +931,5 @@ MailMessage >> viewImageInBody [
 	| stream image |
 	stream := self body contentStream.
 	image := Form fromBinaryStream: stream.
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]

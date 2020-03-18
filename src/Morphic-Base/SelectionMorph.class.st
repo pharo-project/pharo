@@ -374,7 +374,7 @@ SelectionMorph >> duplicate [
 	"Make a duplicate of the receiver and havbe the hand grab it"
 
 	selectedItems :=  selectedItems collect: #duplicate.
-	selectedItems reverseDo: [:m | (owner ifNil: [self currentWorld]) addMorph: m].
+	selectedItems reverseDo: [:m | (owner ifNil: [self world]) addMorph: m].
 	dupLoc := self position.
 	self activeHand grabMorph: self.
 	

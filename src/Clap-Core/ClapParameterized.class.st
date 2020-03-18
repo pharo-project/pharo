@@ -5,6 +5,7 @@ Class {
 	#name : #ClapParameterized,
 	#superclass : #ClapParameter,
 	#instVars : [
+		'parameters',
 		'positionals',
 		'aliases'
 	],
@@ -18,6 +19,10 @@ ClapParameterized class >> isAbstract [
 
 { #category : #adding }
 ClapParameterized >> add: aParameter [
+	parameters
+		at: aParameter identifier
+		ifPresent: [ :param | self signalIdentifierConflictOf: aParameter with: param ]
+		ifAbsentPut: aParameter.
 	^ aParameter addTo: self
 ]
 
@@ -42,10 +47,38 @@ ClapParameterized >> aliases: aCollection [
 ]
 
 { #category : #accessing }
-ClapParameterized >> atName: specName [
-	^ self
-		positionalNamed: specName
-		ifNone: [ nil ]
+ClapParameterized >> at: identifierOrSpec [
+	^ parameters at: identifierOrSpec asClapIdentifier
+]
+
+{ #category : #accessing }
+ClapParameterized >> at: identifierOrSpec ifAbsent: absentBlock [
+	^ parameters at: identifierOrSpec asClapIdentifier
+		ifAbsent: absentBlock
+]
+
+{ #category : #accessing }
+ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock [
+	^ parameters
+		at: identifierOrSpec asClapIdentifier
+		ifPresent: presentBlock
+]
+
+{ #category : #accessing }
+ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock ifAbsent: absentBlock [
+	^ parameters
+		at: identifierOrSpec asClapIdentifier
+		ifPresent: presentBlock
+		ifAbsent: absentBlock
+]
+
+{ #category : #accessing }
+ClapParameterized >> atName: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name'
+			-> '`@receiver at: `@name'.
+	^ self at: aName
 ]
 
 { #category : #testing }
@@ -57,6 +90,7 @@ ClapParameterized >> hasAlias: aString [
 { #category : #initialization }
 ClapParameterized >> initialize [
 	super initialize.
+	parameters := OrderedDictionary new.
 	positionals := OrderedCollection new.
 	aliases := #()
 ]
@@ -72,13 +106,11 @@ ClapParameterized >> parametersDo: aBlock [
 ]
 
 { #category : #accessing }
-ClapParameterized >> positionalNamed: specName ifNone: aBlock [
-	^ positionals
-		detect: [ :arg | arg canonicalName = specName ]
-		ifNone: aBlock
-]
-
-{ #category : #accessing }
 ClapParameterized >> positionals [
 	^ positionals
+]
+
+{ #category : #private }
+ClapParameterized >> signalIdentifierConflictOf: newParameter with: currentParameter [
+	Error signal: 'Identifier conflict (' , newParameter identifier , ')'
 ]
