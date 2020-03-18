@@ -105,8 +105,8 @@ OSVMWindowHandle >> screenDepth [
 { #category : #accessing }
 OSVMWindowHandle >> setMouseCursor: cursorWithMask [
 
-	Cursor currentCursor == cursorWithMask ifFalse: [  
-		Cursor currentCursor: cursorWithMask ].
+	World currentCursor == cursorWithMask ifFalse: [  
+		World currentCursor: cursorWithMask ].
 ]
 
 { #category : #accessing }

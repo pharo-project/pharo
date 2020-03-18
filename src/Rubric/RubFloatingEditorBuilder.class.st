@@ -175,6 +175,7 @@ RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 		ifFalse: [ ^ self ].
 	anEvent isMouseDown
 		ifFalse: [ ^ self ].
+	editor ifNil: [ ^ self ].
 	(editor boundsInWorld containsPoint: anEvent position)
 		ifFalse: [ self closeEditor ]
 ]

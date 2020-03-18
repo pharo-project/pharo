@@ -48,7 +48,6 @@ Class {
 HandMorph class >> cleanUp [
 	"Called from ImageCleaner>>cleanUpForRelease --> SmalltalkImage>>cleanUp:except:confirming:"
 	self logEventStatsStop.
-	ActiveHand resetClickState.
 
 
 ]
@@ -271,15 +270,15 @@ HandMorph >> copyToPasteBuffer: aMorph [
 { #category : #cursor }
 HandMorph >> currentCursor [
 
-	^ ActiveHand world currentCursor
+	^ self world currentCursor
 ]
 
 { #category : #cursor }
 HandMorph >> currentCursor: aCursor [
 
-	ActiveHand world currentCursor: aCursor.
-		ActiveHand world isCursorOwner ifTrue: [
-			aCursor activateInCursorOwner: ActiveHand world ]
+	self world currentCursor: aCursor.
+	self world isCursorOwner ifTrue: [
+		aCursor activateInCursorOwner: self world ]
 ]
 
 { #category : #accessing }
@@ -870,11 +869,11 @@ HandMorph >> needsToBeDrawn [
 				]])
 		ifTrue: [
 			"using the software cursor; hide the hardware one"
-			Cursor blank isCurrent ifFalse: [Cursor blank show].
+			self currentCursor == Cursor blank ifFalse: [Cursor blank show].
 			^ true].
 	"Switch from one hardware cursor to another, if needed."
 	cursor := hardwareCursor ifNil: [Cursor normal].
-	cursor isCurrent ifFalse: [cursor show].
+	self currentCursor == cursor ifFalse: [cursor show].
 	^ false
 
 ]
@@ -1026,9 +1025,11 @@ HandMorph >> processEventsFromQueue: anEventQueue [
 
 	| evt evtBuf type hadAny |
 
-	ActiveEvent
-		ifNotNil: [ "Meaning that we were invoked from within an event response.
-		Make sure z-order is up to date" self mouseOverHandler processMouseOver: lastMouseEvent ].
+	self lastEvent ifNotNil: [
+		"Meaning that we were invoked from within an event response.
+		Make sure z-order is up to date"
+		self mouseOverHandler processMouseOver: lastMouseEvent ].
+
 	hadAny := false.
 	[ anEventQueue isNotNil and: [ ( evtBuf := anEventQueue nextEvent ) isNotNil ] ]
 		whileTrue: [ evt := nil.	"for unknown event types"
@@ -1199,7 +1200,7 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 						extent: savedPatch extent + self shadowOffset)
 				from: self.
 			cursor := hardwareCursor ifNil: [Cursor normal].
-			cursor isCurrent ifFalse: [cursor show].	"show hardware cursor"
+			self currentCursor == cursor ifFalse: [cursor show].	"show hardware cursor"
 			savedPatch := nil]
 ]
 
@@ -1244,9 +1245,7 @@ HandMorph >> sendEvent: anEvent focus: focusHolder clear: aBlock [
 	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
 	| result |
 	focusHolder ifNotNil:[^self sendFocusEvent: anEvent to: focusHolder clear: aBlock].
-	ActiveEvent := anEvent.
 	result := owner processEvent: anEvent.
-	ActiveEvent := nil.
 	^result
 ]
 
@@ -1256,8 +1255,6 @@ HandMorph >> sendFocusEvent: anEvent to: focusHolder clear: aBlock [
 	| result w |
 	w := focusHolder world ifNil:[^ aBlock value].
 	w becomeActiveDuring:[
-		ActiveHand := self.
-		ActiveEvent := anEvent.
 		result := focusHolder handleFocusEvent: 
 			(anEvent transformedBy: (focusHolder transformedFrom: self)).
 	].

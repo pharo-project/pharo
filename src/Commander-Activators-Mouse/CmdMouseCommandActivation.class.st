@@ -137,8 +137,8 @@ CmdMouseCommandActivation >> initialize [
 { #category : #testing }
 CmdMouseCommandActivation >> isActiveInContext: aToolContext [
 	| mouseEvent |
-	mouseEvent := ActiveHand lastEvent.
-	
+	mouseEvent := aToolContext currentWorld activeHand lastEvent.
+
 	^(self matchesEvent: mouseEvent)
 		and: [super isActiveInContext: aToolContext]
 ]

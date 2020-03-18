@@ -2147,6 +2147,7 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 		ifFalse: [ ^ false ].	
 	(self getMenu: shiftKeyState)
 		ifNotNil: [ :menu|
+			menu privateOwner: self.
 			menu setInvokingView: self editor.
 			menu invokeModal. 
 			self changed.

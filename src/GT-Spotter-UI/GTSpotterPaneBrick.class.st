@@ -119,3 +119,9 @@ GTSpotterPaneBrick >> spotterModel: aSpotter [
 	self arrowBrick spotterModel: aSpotter.
 	self previewBrick spotterModel: aSpotter
 ]
+
+{ #category : #protocol }
+GTSpotterPaneBrick >> takeKeyboardFocus [
+
+	self contentsBrick takeKeyboardFocus
+]

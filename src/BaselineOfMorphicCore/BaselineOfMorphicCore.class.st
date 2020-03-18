@@ -75,12 +75,10 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	world instVarNamed: #worldState put: WorldState new.
 	hand := HandMorph new.
 	world addHand: hand.
-	world activeHand.
+	world activeHand: hand.
 
 	Smalltalk at: #World put: world.
 	Smalltalk at: #ActiveWorld put: world.
-	Smalltalk at: #ActiveHand put: hand.
-	Smalltalk at: #ActiveEvent put: nil.
 
 	world viewBox: Display boundingBox.
 

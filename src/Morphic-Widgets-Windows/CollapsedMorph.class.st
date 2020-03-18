@@ -77,7 +77,7 @@ CollapsedMorph >> uncollapseToHand [
 	nakedMorph setProperty: #collapsedPosition toValue: self position.
 	mustNotClose := false.  "so the delete will succeed"
 	self delete.
-	ActiveHand attachMorph: nakedMorph
+	self activeHand attachMorph: nakedMorph
 ]
 
 { #category : #'resize/collapse' }

@@ -230,8 +230,8 @@ Morph >> actionMap [
 { #category : #structure }
 Morph >> activeHand [
 	| world |
-   world := self world ifNil: [^ ActiveHand ].
-   ^ world activeHand ifNil: [ ^ ActiveHand  ]
+   world := self world ifNil: [^ nil ].
+   ^ world activeHand
 ]
 
 { #category : #menus }
@@ -1544,7 +1544,7 @@ Morph >> buildYellowButtonMenu: aHand [
 	"build the morph menu for the yellow button"
 	| menu |
 	menu := UIManager default newMenuIn: self for: self.
-	self addNestedYellowButtonItemsTo: menu event: ActiveEvent.
+	self addNestedYellowButtonItemsTo: menu event: self activeHand lastEvent.
 	^ menu
 ]
 
@@ -2116,9 +2116,11 @@ Morph >> delete [
 	new owner be nil."
 	
 	self removeHalo.
-	self activeHand 
-		releaseKeyboardFocus: self;
-		releaseMouseFocus: self.
+	self activeHand ifNotNil: [ :hand |
+		hand
+			releaseKeyboardFocus: self;
+			releaseMouseFocus: self.
+	].
 	owner ifNotNil:[ 
 		self privateDelete.
 		self announceDeleted.
@@ -2216,11 +2218,13 @@ Morph >> doFastReframe: ptName [
 
 	| newBounds |
 	"For fast display, only higlight the rectangle during loop"
-	newBounds := self boundsInWorld newRectButtonPressedDo: [:rectangle :cursorPoint | 
-		rectangle
-			withSideOrCorner: ptName
-			setToPoint: cursorPoint
-			minExtent: self minimumExtent].
+	newBounds := self boundsInWorld
+		newRectButtonPressedDo: [:rectangle :cursorPoint | 
+			rectangle
+				withSideOrCorner: ptName
+				setToPoint: cursorPoint
+				minExtent: self minimumExtent
+		] inWorld: self world.
 	Display deferUpdatesIn: Display boundingBox while: [
 		self bounds: newBounds].
 
@@ -5332,7 +5336,7 @@ Morph >> resistsRemovalString [
 Morph >> resizeFromMenu [
 	"Commence an interaction that will resize the receiver"
 
-	self resizeMorph: ActiveEvent
+	self resizeMorph: self activeHand lastEvent
 ]
 
 { #category : #'debug and other' }
@@ -5732,7 +5736,7 @@ Morph >> simulateKeyStroke: aCharacter [
 				position: 0@0 
 				keyValue: aCharacter charCode 
 				charCode: aCharacter charCode
-				hand: ActiveHand 
+				hand: self activeHand 
 				stamp: 0.
 	self keyStroke: event
 ]
@@ -6787,7 +6791,7 @@ Morph >> yellowButtonActivity: shiftState [
 				ifNil: [^ false].
 			outerOwner == self
 				ifFalse: [^ outerOwner yellowButtonActivity: shiftState]].
-	menu := self buildYellowButtonMenu: ActiveHand.
+	menu := self buildYellowButtonMenu: self activeHand.
 	menu
 		addTitle: self externalName
 		icon: (self iconOrThumbnailOfSize: 28).
