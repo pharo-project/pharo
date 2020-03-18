@@ -256,10 +256,13 @@ SycRefactoringPreview >> updateChanges [
 { #category : #update }
 SycRefactoringPreview >> updateTablePresenter [
 	| aCompositeChange |
+	
+	changes ifEmpty: [ self error: 'No changes to apply' ].
+	
 	aCompositeChange := RBCompositeRefactoryChange new.
-	aCompositeChange onSystemDictionary: 
-		(changes at:1 ifAbsent: [ self error: 'No changes to apply' ]) model environment. 
+	aCompositeChange onSystemDictionary: (changes at:1) model environment. 
 	changes do: [ :each | aCompositeChange addChange: each ].
+	
 	table
 		items: (aCompositeChange whatToDisplayIn: self).
 	table items ifNotEmpty: [ 
