@@ -1131,7 +1131,7 @@ SystemWindow >> icon [
 SystemWindow >> initialExtent [
 	^ (self model respondsTo: #initialExtent)
 		ifTrue: [self model initialExtent]
-		ifFalse: [RealEstateAgent standardWindowExtent]
+		ifFalse: [ self extent ]
 ]
 
 { #category : #initialization }
