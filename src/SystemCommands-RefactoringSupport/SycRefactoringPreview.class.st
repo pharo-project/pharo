@@ -128,7 +128,7 @@ SycRefactoringPreview >> generateChanges [
 	changes := command asRefactorings.
 	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each | 
-		each model environment: rbEnvironment.
+		each model: ( RBClassModelFactory rbNamespace onEnvironment: rbEnvironment ).
 		each primitiveExecute ]
 ]
 
@@ -253,13 +253,17 @@ SycRefactoringPreview >> updateChanges [
 	self selectectAllCheckBox
 ]
 
-{ #category : #update }
+{ #category : #'as yet unclassified' }
 SycRefactoringPreview >> updateTablePresenter [
-	| aCompositeChange |
-	aCompositeChange := RBCompositeRefactoryChange new.
+	| aCompositeChange anEnvironment |
+	"We get the environment to apply the changes from any element in the changes instance variable"
+	anEnvironment := changes
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ changes anyOne model environment ].
+	aCompositeChange := RBCompositeRefactoryChange new onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
-	table
-		items: (aCompositeChange whatToDisplayIn: self).
-	table items ifNotEmpty: [ table selectIndex: 1.
-		existsChanges := true ]
+	table items: (aCompositeChange whatToDisplayIn: self).
+	table items
+		ifNotEmpty: [ table selectIndex: 1.
+			existsChanges := true ]
 ]

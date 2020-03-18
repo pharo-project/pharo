@@ -176,6 +176,11 @@ ClyNavigationEnvironment >> announceChangesOf: aQueryResult [
 	updateStrategy announceChangesOf: aQueryResult
 ]
 
+{ #category : #converting }
+ClyNavigationEnvironment >> asRBEnvironment [ 
+	^ self system environment
+]
+
 { #category : #'system subscription' }
 ClyNavigationEnvironment >> attachToSystem [
 	system subscribe: self.
