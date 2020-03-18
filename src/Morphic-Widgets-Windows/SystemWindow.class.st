@@ -490,6 +490,13 @@ SystemWindow class >> windowsIn: aWorld satisfying: windowBlock [
 	^ windows
 ]
 
+{ #category : #opening }
+SystemWindow >> aboutToOpenInWorld: aWorld [
+	"This msg and its callees result in the window being activeOnlyOnTop"
+	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
+	self playOpenSound.
+]
+
 { #category : #activation }
 SystemWindow >> activate [
 	"Activate the owner too."
@@ -628,6 +635,16 @@ SystemWindow >> announceDeActivated [
 			window: self; 
 			yourself
 	).
+]
+
+{ #category : #announcement }
+SystemWindow >> announceOpened [
+
+	super announceOpened.
+	self currentWorld announcer
+		announce: (WindowOpened new
+						window: self;
+						yourself).
 ]
 
 { #category : #initialization }
@@ -1482,17 +1499,11 @@ SystemWindow >> openAsIsIn: aWorld [
 ]
 
 { #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
-	^self openAsIsIn: aWorld.
-
-]
-
-{ #category : #'open/close' }
 SystemWindow >> openInWorld: aWorld extent: extent [
 	"This msg and its callees result in the window being activeOnlyOnTop"
-	self position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft; extent: extent.
+	self
+		position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft;
+		extent: extent.
 	^self openAsIsIn: aWorld
 ]
 
@@ -1615,6 +1626,13 @@ SystemWindow >> positionSubmorphs [
 	super positionSubmorphs.
 	self submorphsDo:
 		[:aMorph | aMorph positionSubmorphs]
+]
+
+{ #category : #opening }
+SystemWindow >> postOpenInWorld: aWorld [
+
+	self activate.
+	super postOpenInWorld: aWorld
 ]
 
 { #category : #printing }

@@ -204,6 +204,16 @@ Morph >> aboutToBeGrabbedBy: aHand [
 	^self "Grab me"
 ]
 
+{ #category : #opening }
+Morph >> aboutToOpenInWorld: aWorld [
+	"Interact with a world to decide how to position myself.
+	By default, I choose the visible area of the world.
+	Subclasses may choose different strategies or even calculate their bounds.
+	"
+	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
+		[self position: aWorld visibleClearArea origin].
+]
+
 { #category : #layout }
 Morph >> acceptDroppingMorph: aMorph event: evt [
 	"This message is sent when a morph is dropped onto a morph that has agreed to accept the dropped morph by responding 'true' to the wantsDroppedMorph:Event: message. This default implementation just adds the given morph to the receiver."
@@ -4518,19 +4528,16 @@ Morph >> openInHand [
 
 { #category : #display }
 Morph >> openInWorld [
-        "Add this morph to the world."
-
-        self openInWorld: self currentWorld
+	
+	"Add this morph to the world."
+	self openInWorld: self currentWorld
 ]
 
-{ #category : #initialize }
+{ #category : #opening }
 Morph >> openInWorld: aWorld [
-	"Add this morph to the requested World."
-	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
-		[self position: aWorld visibleClearArea origin].
+	self aboutToOpenInWorld: aWorld.
 	aWorld addMorph: self.
-	aWorld startSteppingSubmorphsOf: self.
-	
+	self postOpenInWorld: aWorld.
 	self announceOpened.
 ]
 
@@ -4734,6 +4741,12 @@ Morph >> positionInWorld [
 Morph >> positionSubmorphs [
 	self submorphsDo:
 		[:aMorph | aMorph snapToEdgeIfAppropriate]
+]
+
+{ #category : #opening }
+Morph >> postOpenInWorld: aWorld [
+
+	aWorld startSteppingSubmorphsOf: self
 ]
 
 { #category : #'meta-actions' }
