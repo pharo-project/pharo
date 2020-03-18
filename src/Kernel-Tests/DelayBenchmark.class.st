@@ -62,7 +62,7 @@ DelayBenchmark >> bench [
 						, String space.
 			self
 				trace: 'ExitCount: ' , (ExitCount // sampleSetSeeds size) printString.
-			self currentWorld doOneCycle	"since we are a higher priority would prevent transcript showing" ].
+			MorphicRenderLoop new doOneCycle "since we are a higher priority would prevent transcript showing" ].
 	completed signal ] forkAt: Processor userSchedulingPriority + 2.	"To avoid UI loop influencing result"
 	completed wait
 ]

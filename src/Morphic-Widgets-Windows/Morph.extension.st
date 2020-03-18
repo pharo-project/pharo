@@ -172,9 +172,7 @@ Morph >> openModal: aSystemWindow [
 		
 		self activeHand mouseFocus: aWidget.
 		
-		[aWidget world notNil] whileTrue: [
-			aWidget outermostWorldMorph doOneCycle
-		]
+		MorphicRenderLoop new doOneCycleWhile: [ aWidget isInWorld ]
 		
 	] ensure: [
 		mySysWin modalUnlockFrom: aSystemWindow.

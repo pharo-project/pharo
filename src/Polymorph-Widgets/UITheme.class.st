@@ -4947,8 +4947,7 @@ UITheme >> resizerGripNormalFillStyleFor: aResizer [
 { #category : #services }
 UITheme >> runModal: aWidget [
 	
-	[aWidget world notNil] whileTrue: [
-		aWidget outermostWorldMorph doOneCycle]
+	MorphicRenderLoop new doOneCycleWhile: [ aWidget isInWorld ]
 ]
 
 { #category : #scrollbars }

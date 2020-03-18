@@ -234,7 +234,7 @@ HandMorph >> captureEventsUntil: aBlock [
 	captureBlock := [:evt | release := aBlock value: evt ].
 	
 	[
-		[ self world doOneCycle. release ] whileFalse.
+		MorphicRenderLoop new doOneCycleWhile: [ release not ].
 	] ensure: [
 		captureBlock := nil.
 	]
