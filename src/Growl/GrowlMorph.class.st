@@ -350,11 +350,10 @@ GrowlMorph >> nextColorStep: aColor [
 	^ aColor alpha: self alpha
 ]
 
-{ #category : #display }
-GrowlMorph >> openInWorld [
+{ #category : #opening }
+GrowlMorph >> preOpenInWorld: aWorld [
 
-	self position: self unoccupiedPosition.
-	^super openInWorld
+	self position: self unoccupiedPosition
 ]
 
 { #category : #internal }

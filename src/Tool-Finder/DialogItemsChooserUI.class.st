@@ -445,14 +445,12 @@ DialogItemsChooserUI >> okButtonState [
 	^false
 ]
 
-{ #category : #display }
-DialogItemsChooserUI >> openInWorld [
+{ #category : #opening }
+DialogItemsChooserUI >> preOpenInWorld: aWorld [
 
-	super openInWorld.
 	self width: 500.
 	self height: 400.
 	self centering
-
 ]
 
 { #category : #'buttons creations' }

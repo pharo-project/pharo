@@ -4522,7 +4522,7 @@ Morph >> openInHand [
 	self currentHand attachMorph: self
 ]
 
-{ #category : #display }
+{ #category : #opening }
 Morph >> openInWorld [
 	
 	"Add this morph to the world."
