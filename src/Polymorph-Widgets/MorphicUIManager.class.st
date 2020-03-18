@@ -598,14 +598,6 @@ MorphicUIManager >> openComparisonFrom: targetMethodSource
 ]
 
 { #category : #private }
-MorphicUIManager >> openModal: aSystemWindow [ 
-	"Open the given window at an available position with modality.
-	Answer the system window."
-	
-	^self modalMorph openModal: aSystemWindow
-]
-
-{ #category : #private }
 MorphicUIManager >> openPolymorphComparisonFrom: targetMethodSource
 					to: originalMethodSource
 					belongingTo: aClass

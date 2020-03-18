@@ -163,17 +163,9 @@ Morph >> openModal: aSystemWindow [
 	aSystemWindow position = (0@0) ifTrue: [
 			aSystemWindow position: self activeHand position - (aSystemWindow extent // 2)
 	].
-	aSystemWindow bounds: (aSystemWindow bounds translatedToBeWithin: area).
-	
+	aSystemWindow bounds: (aSystemWindow bounds translatedToBeWithin: area).	
 	[  
-		|aWidget| 
-		
-		aWidget := aSystemWindow openAsIs.
-		
-		self activeHand mouseFocus: aWidget.
-		
-		MorphicRenderLoop new doOneCycleWhile: [ aWidget isInWorld ]
-		
+		aSystemWindow openModal.
 	] ensure: [
 		mySysWin modalUnlockFrom: aSystemWindow.
 		self activeHand newKeyboardFocus: keyboardFocus
