@@ -253,20 +253,17 @@ SycRefactoringPreview >> updateChanges [
 	self selectectAllCheckBox
 ]
 
-{ #category : #update }
+{ #category : #'as yet unclassified' }
 SycRefactoringPreview >> updateTablePresenter [
 	| aCompositeChange anEnvironment |
-	
-	anEnvironment := changes ifEmpty: [ nil ]
-				  					 ifNotEmpty: [ (changes at:1) model environment ].
-	
+	anEnvironment := changes
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ (changes at: 1) model environment ].
 	aCompositeChange := RBCompositeRefactoryChange new.
-	aCompositeChange onSystemDictionary: anEnvironment. 
+	aCompositeChange onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
-	
-	table
-		items: (aCompositeChange whatToDisplayIn: self).
-	table items ifNotEmpty: [ 
-		table selectIndex: 1.
-		existsChanges := true ]
+	table items: (aCompositeChange whatToDisplayIn: self).
+	table items
+		ifNotEmpty: [ table selectIndex: 1.
+			existsChanges := true ]
 ]
