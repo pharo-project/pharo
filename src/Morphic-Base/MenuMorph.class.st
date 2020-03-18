@@ -885,7 +885,7 @@ MenuMorph >> invokeAt: aPoint in: aWorld allowKeyboard: aBoolean [
 	originalFocusHolder := aWorld primaryHand keyboardFocus.
 	self popUpAt: aPoint forHand: aWorld primaryHand in: aWorld allowKeyboard: aBoolean.
 	w := aWorld outermostWorldMorph. "containing hand"
-	[self isInWorld] whileTrue: [w doOneSubCycle].
+	[self isInWorld] whileTrue: [w doOneCycle].
 	self delete.
 	self restoreFocus: originalFocusHolder in: aWorld.
 	^ selectedItem ifNotNil: [selectedItem target]
@@ -936,7 +936,7 @@ MenuMorph >> invokeModalAt: aPoint in: aWorld allowKeyboard: aBoolean [
 	self popUpAt: aPoint forHand: aWorld primaryHand in: aWorld allowKeyboard: aBoolean.
 	self isModalInvokationDone: false.
 	w := aWorld outermostWorldMorph. "containing hand"
-	[self isInWorld and: [ self isModalInvokationDone not ] ] whileTrue: [w doOneSubCycle].
+	[self isInWorld and: [ self isModalInvokationDone not ] ] whileTrue: [w doOneCycle].
 	self delete.
 	self restoreFocus: originalFocusHolder in: aWorld.
 	^ self modalSelection
