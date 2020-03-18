@@ -1007,8 +1007,7 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 	d extent: d initialExtent.
 	d announcer when: ColorChanged do: [:ann | 
 		aBlock value: ann newColor].
-	d openInHand.
-	self runModal: d.
+	d openModal.
 	
 	newColor := d  cancelled
 		ifTrue: [aColor]
@@ -4942,12 +4941,6 @@ UITheme >> resizerGripNormalFillStyleFor: aResizer [
 	non transparent to draw as normal."
 	
 	^Color transparent
-]
-
-{ #category : #services }
-UITheme >> runModal: aWidget [
-	
-	MorphicRenderLoop new doOneCycleWhile: [ aWidget isInWorld ]
 ]
 
 { #category : #scrollbars }

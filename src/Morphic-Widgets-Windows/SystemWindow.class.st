@@ -1468,7 +1468,7 @@ SystemWindow >> openInWorldExtent: extent [
 SystemWindow >> openModal [
 
 	self openInWorld.
-	self theme runModal: self.
+	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
 ]
 
 { #category : #panes }
