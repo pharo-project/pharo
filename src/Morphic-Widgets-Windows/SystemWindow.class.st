@@ -1329,6 +1329,45 @@ SystemWindow >> minimizeOrRestore [
 	self announce: windowEvent.
 ]
 
+{ #category : #'modal-windows' }
+SystemWindow >> modalChild [
+	"Answer the modal child of the receiver, if any."
+
+	^self valueOfProperty: #modalChild
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalLockTo: aSystemWindow [
+	"Lock the receiver as a modal owner of the given window."
+
+	aSystemWindow setProperty: #modalOwner toValue: self.
+	self setProperty: #modalChild toValue: aSystemWindow.
+	
+	closeBox ifNotNil: [ 
+		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
+		closeBox enabled: false
+	].
+
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalOwner [
+	"Answer the modal owner of the receiver, if any."
+
+	^self valueOfProperty: #modalOwner
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalUnlockFrom: aSystemWindow [
+	"Unlock the receiver as a modal owner of the given window."
+
+	aSystemWindow removeProperty: #modalOwner.
+	self removeProperty: #modalChild.
+	closeBox ifNotNil: [:cl | cl enabled: (self valueOfProperty: #preModalCloseEnabled ifAbsent: [true])].
+	self removeProperty: #preModalCloseEnabled.
+	self activate
+]
+
 { #category : #events }
 SystemWindow >> mouseDown: evt [
 	"Changed to properly process the mouse down event if passing to
@@ -1469,6 +1508,22 @@ SystemWindow >> openModal [
 
 	self openInWorld.
 	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
+SystemWindow >> openModal: aSystemWindow [
+	"Open the given window locking the receiver until it is dismissed.
+	Answer the system window.
+	Restore the original keyboard focus when closed."
+
+	| keyboardFocus |
+	
+	keyboardFocus := self activeHand keyboardFocus.
+	self modalLockTo: aSystemWindow.
+	[ aSystemWindow openModal ] ensure: [
+		self modalUnlockFrom: aSystemWindow.
+		self activeHand newKeyboardFocus: keyboardFocus ].
+	^aSystemWindow
 ]
 
 { #category : #panes }

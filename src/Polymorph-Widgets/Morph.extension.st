@@ -155,13 +155,6 @@ Morph >> minExtent [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-Morph >> modalUnlockFrom: aSystemWindow [
-	"Unlock the receiver as a modal owner of the given window."
-
-	self unlock
-]
-
-{ #category : #'*Polymorph-Widgets' }
 Morph >> myDependents [
 	"Improved performance dependents."
 	

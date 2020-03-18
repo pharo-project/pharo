@@ -66,13 +66,6 @@ Morph >> isWindowActive: aSystemWindow [
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
-Morph >> modalLockTo: aSystemWindow [
-	"Lock the receiver as a modal owner of the given window."
-
-	self lock
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
 Morph >> nextMorphAcrossInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its next sibling or owner's next sibling etc."
@@ -144,37 +137,6 @@ Morph >> openInWindowLabeled: aString inWorld: aWorld [
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
-Morph >> openModal: aSystemWindow [
-	"Open the given window locking the receiver until it is dismissed.
-	Answer the system window.
-	Restore the original keyboard focus when closed."
-
-	|area mySysWin keyboardFocus|
-	
-	keyboardFocus := self activeHand keyboardFocus.
-	
-	mySysWin := self isSystemWindow ifTrue: [self] ifFalse: [self ownerThatIsA: SystemWindow].
-	mySysWin ifNil: [mySysWin := self].
-	mySysWin modalLockTo: aSystemWindow.
-	
-	area := RealEstateAgent maximumUsableArea.
-	
-	aSystemWindow extent: aSystemWindow initialExtent.
-	aSystemWindow position = (0@0) ifTrue: [
-			aSystemWindow position: self activeHand position - (aSystemWindow extent // 2)
-	].
-	aSystemWindow bounds: (aSystemWindow bounds translatedToBeWithin: area).	
-	[  
-		aSystemWindow openModal.
-	] ensure: [
-		mySysWin modalUnlockFrom: aSystemWindow.
-		self activeHand newKeyboardFocus: keyboardFocus
-	].
-
-	^aSystemWindow
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
 Morph >> previousMorphInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its previous sibling's last submorph (recursive)
@@ -213,4 +175,22 @@ Morph >> window [
 	"Answer the receiver's window."
 
 	^self ownerThatIsA: SystemWindow
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
+Morph >> wrappedInWindow [
+	"Changed to include the inset margin in the bound calculation."
+
+	| window extent |
+	window := SystemWindow new.
+	window 
+		addMorph: self frame: (0@0 extent: 1@1);
+		updatePaneColors.
+	" calculate extent after adding in case any size related attributes were changed.  Use
+	fullBounds in order to trigger re-layout of layout morphs"
+	extent := self fullBounds extent + 
+			(window borderWidth@window labelHeight) + window borderWidth +
+			(window class borderWidth * 2 @ (window class borderWidth + 1)). "include inset margin"
+	window extent: extent.
+	^ window
 ]
