@@ -340,9 +340,7 @@ MCTool >> showLabelled: labelString [
 { #category : #'morphic ui' }
 MCTool >> showModally [
 	modal := true.
-	self window openInWorldExtent: 400 @ 400.
-	self setDefaultFocus.
-	MorphicRenderLoop new doOneCycleWhile: [ self window isInWorld ].
+	self window openModal.
 	morph := nil.
 	^ modalValue
 ]

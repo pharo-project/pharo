@@ -467,7 +467,7 @@ MorphicUIManager >> merge: merger informing: aString [
 	window := mergeMorph newWindow
 		title: aString;
 		yourself.
-	self modalMorph openModal: window.
+	window openModal.
 	^ mergeMorph merged
 ]
 

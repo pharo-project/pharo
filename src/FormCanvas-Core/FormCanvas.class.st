@@ -166,7 +166,7 @@ FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderC
 		fill: c
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: transform.
+		transform: self transform.
 ]
 
 { #category : #'drawing-polygons' }
@@ -185,7 +185,7 @@ FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWid
 		fill: aFillStyle
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: transform.
+		transform: self transform.
 ]
 
 { #category : #'private - balloon engine' }
@@ -197,7 +197,7 @@ FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: bo
 		fill: c
 		borderWidth: borderWidth
 		borderColor: borderColor
-		transform: transform.
+		transform: self transform.
 ]
 
 { #category : #'drawing-text' }
@@ -275,7 +275,7 @@ FormCanvas >> ensuredEngine [
 		engine deferred: false.
 		engine].
 	engine colorTransform: colorTransform.
-	engine edgeTransform: (transform ifNil: [MatrixTransform2x3 identity]).
+	engine edgeTransform: self transform.
 	^engine
 ]
 
@@ -706,6 +706,12 @@ FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aCol
 	port stencil: stencilForm
 		at: aPoint + origin
 		sourceRect: sourceRect.
+]
+
+{ #category : #'private - balloon engine' }
+FormCanvas >> transform [
+
+	^ (transform ifNil: [AthensAffineTransform new])
 ]
 
 { #category : #'drawing-support' }

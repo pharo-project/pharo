@@ -84,7 +84,7 @@ TickDialogWindow >> choose [
 { #category : #display }
 TickDialogWindow >> chooseFromOwner: aMorph [
 
-	aMorph openModal: self.
+	self openModal.
 	^ resultStorage
 ]
 

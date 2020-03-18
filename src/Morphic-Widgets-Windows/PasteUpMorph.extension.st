@@ -114,16 +114,6 @@ PasteUpMorph >> nextWindow [
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
-PasteUpMorph >> openModal: aSystemWindow [
-	"Open the given window locking the receiver until it is dismissed.
-	Set the pane color to match the current theme.
-	Answer the system window."
-	
-	aSystemWindow setWindowColor: self theme windowColor.
-	^ super openModal: aSystemWindow
-]
-
-{ #category : #'*Morphic-Widgets-Windows' }
 PasteUpMorph >> previousWindow [
 	"Answer the previous window to navigate to."
 
