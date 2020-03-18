@@ -255,12 +255,13 @@ SycRefactoringPreview >> updateChanges [
 
 { #category : #update }
 SycRefactoringPreview >> updateTablePresenter [
-	| aCompositeChange |
+	| aCompositeChange anEnvironment |
 	
-	changes ifEmpty: [ self error: 'No changes to apply' ].
+	anEnvironment := changes ifEmpty: [ nil ]
+				  					 ifNotEmpty: [ (changes at:1) model environment ].
 	
 	aCompositeChange := RBCompositeRefactoryChange new.
-	aCompositeChange onSystemDictionary: (changes at:1) model environment. 
+	aCompositeChange onSystemDictionary: anEnvironment. 
 	changes do: [ :each | aCompositeChange addChange: each ].
 	
 	table
