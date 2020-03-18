@@ -15,7 +15,8 @@ Class {
 		'stayUp',
 		'popUpOwner',
 		'activeSubMenu',
-		'titleMorph'
+		'titleMorph',
+		'selection'
 	],
 	#classVars : [
 		'CloseBoxImage',
@@ -879,15 +880,17 @@ MenuMorph >> invokeAt: aPoint in: aWorld [
 
 { #category : #invoking }
 MenuMorph >> invokeAt: aPoint in: aWorld allowKeyboard: aBoolean [
-	"Add this menu to the given world centered at the given point. Wait for the user to make a selection and answer it. The selection value returned is an integer in keeping with PopUpMenu, if the menu is converted from an MVC-style menu."
-	"Details: This is invoked synchronously from the caller. In order to keep processing inputs and updating the screen while waiting for the user to respond, this method has its own version of the World's event loop." 
+	"Add this menu to the given world centered at the given point. Wait for the user to make a selection and answer it."
+	"Details: This is invoked synchronously from the caller.
+	In order to keep processing inputs and updating the screen while waiting for the user to respond,
+	this method has its own version of the World's event loop." 
 	| originalFocusHolder |
 	originalFocusHolder := aWorld primaryHand keyboardFocus.
 	self popUpAt: aPoint forHand: aWorld primaryHand in: aWorld allowKeyboard: aBoolean.
 	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ].
 	self delete.
 	self restoreFocus: originalFocusHolder in: aWorld.
-	^ selectedItem ifNotNil: [selectedItem target]
+	^ selection ifNil: [ selectedItem ifNotNil: [selectedItem target] ]
 
 ]
 
@@ -897,13 +900,11 @@ MenuMorph >> invokeMetaMenu: evt [
 	^super invokeMetaMenu: evt
 ]
 
-{ #category : #'modal control' }
+{ #category : #invoking }
 MenuMorph >> invokeModal [
 	"Invoke this menu and don't return until the user has chosen a value.
-	See example below on how to use modal menu morphs."
-	^ self invokeModal: self menuKeyboardControl
-
-	"Example:
+	See example below on how to use modal menu morphs.
+	Example:
 	| menu sub entry |
 	menu := MenuMorph new.
 	1 to: 3 do: [:i |
@@ -913,48 +914,17 @@ MenuMorph >> invokeModal [
 		#('Item A' 'Item B' 'Item C')  do:[:subEntry|
 			sub add: subEntry target: menu 
 				selector: #modalSelection: argument: {entry. subEntry}]].
-	menu invokeModal.
-"
+	menu invokeModal."
 
-
-]
-
-{ #category : #'modal control' }
-MenuMorph >> invokeModal: allowKeyboardControl [
-	"Invoke this menu and don't return until the user has chosen a value.  If the allowKeyboarControl boolean is true, permit keyboard control of the menu"
-
-	^ self invokeModalAt: ActiveHand position in: self currentWorld allowKeyboard: allowKeyboardControl
-]
-
-{ #category : #'modal control' }
-MenuMorph >> invokeModalAt: aPoint in: aWorld allowKeyboard: aBoolean [
-	"Invoke this menu and don't return until the user has chosen a value.
-	See senders of this method for finding out how to use modal menu morphs."
-	| originalFocusHolder |
-	originalFocusHolder := aWorld primaryHand keyboardFocus.
-	self popUpAt: aPoint forHand: aWorld primaryHand in: aWorld allowKeyboard: aBoolean.
-	self isModalInvokationDone: false.
-	MorphicRenderLoop new doOneCycleWhile: [
-		self isInWorld and: [ self isModalInvokationDone not ] ].
-	self delete.
-	self restoreFocus: originalFocusHolder in: aWorld.
-	^ self modalSelection
+	^ self
+		invokeAt: ActiveHand position
+		in: self currentWorld
+		allowKeyboard: self menuKeyboardControl.
 ]
 
 { #category : #testing }
 MenuMorph >> isMenuMorph [
 	^ true
-]
-
-{ #category : #'modal control' }
-MenuMorph >> isModalInvokationDone [
-	^self valueOfProperty: #isModalInvokationDone ifAbsent:[false]
-]
-
-{ #category : #'modal control' }
-MenuMorph >> isModalInvokationDone: aBool [
-	self setProperty: #isModalInvokationDone toValue: aBool
-
 ]
 
 { #category : #accessing }
@@ -1104,13 +1074,13 @@ MenuMorph >> menuItems [
 
 { #category : #'modal control' }
 MenuMorph >> modalSelection [
-	^self valueOfProperty: #modalSelection ifAbsent:[nil]
+	^ selection
 ]
 
 { #category : #'modal control' }
 MenuMorph >> modalSelection: anObject [
-	self setProperty: #modalSelection toValue: anObject.
-	self isModalInvokationDone: true
+	selection := anObject.
+	self deleteIfPopUp
 ]
 
 { #category : #private }

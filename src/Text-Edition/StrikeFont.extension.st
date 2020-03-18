@@ -42,7 +42,7 @@ StrikeFont class >> fromUser: priorFont allowKeyboard: aBoolean [
 			add: label
 			subMenu: ptMenu ].
 	spec := fontMenu 
-		invokeModalAt: ActiveHand position
+		invokeAt: ActiveHand position
 		in: self currentWorld
 		allowKeyboard: aBoolean.
 	spec ifNil: [ ^ nil ].

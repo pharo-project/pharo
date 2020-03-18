@@ -45,7 +45,6 @@ SpMorphicModalWindowAdapter >> open [
 
 	self widget
 		toggleStickiness;
-		openCenteredInWorld.
-
-	MorphicRenderLoop new doOneCycleWhile: [ self widget isInWorld ]
+		center: self currentWorld clearArea center;
+		openModal
 ]
