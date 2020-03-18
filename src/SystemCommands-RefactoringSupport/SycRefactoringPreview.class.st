@@ -256,6 +256,7 @@ SycRefactoringPreview >> updateChanges [
 { #category : #'as yet unclassified' }
 SycRefactoringPreview >> updateTablePresenter [
 	| aCompositeChange anEnvironment |
+	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := changes
 		ifEmpty: [ nil ]
 		ifNotEmpty: [ changes anyOne model environment ].
