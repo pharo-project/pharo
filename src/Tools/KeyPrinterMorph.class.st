@@ -20,6 +20,12 @@ KeyPrinterMorph class >> open [
 	self new openInWorld
 ]
 
+{ #category : #display }
+KeyPrinterMorph >> defaultLabel [
+
+	^ 'KeyPrinter (click/activate and press a key)'
+]
+
 { #category : #'event handling' }
 KeyPrinterMorph >> handlesKeyboard: evt [
 	^ true
@@ -42,9 +48,7 @@ KeyPrinterMorph >> mouseDown: event [
 ]
 
 { #category : #display }
-KeyPrinterMorph >> openInWorld [
+KeyPrinterMorph >> preOpenInWorld: aWorld [
 
-	self
-		extent: 400@200; 
-		openInWindowLabeled: 'KeyPrinter (click/activate and press a key)'
+	self extent: 400@200
 ]

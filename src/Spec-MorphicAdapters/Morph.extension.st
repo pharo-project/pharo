@@ -44,13 +44,11 @@ Morph >> setModal: aSystemWindow [
 				position: self activeHand position - (aSystemWindow extent // 2)].
 	aSystemWindow
 		bounds: (aSystemWindow bounds translatedToBeWithin: area).
-	[ |aWidget | 
-	aWidget := aSystemWindow.
-	[aWidget world notNil] whileTrue: [
-		aWidget outermostWorldMorph doOneCycle]]
-		ensure: [mySysWin modalUnlockFrom: aSystemWindow.
-				self activeHand newKeyboardFocus: keyboardFocus].
-	^aSystemWindow
+	[  MorphicRenderLoop new doOneCycleWhile: [ aSystemWindow isInWorld ] ]
+		ensure: [
+			mySysWin modalUnlockFrom: aSystemWindow.
+			self activeHand newKeyboardFocus: keyboardFocus].
+	^ aSystemWindow
 ]
 
 { #category : #'*Spec-MorphicAdapters' }

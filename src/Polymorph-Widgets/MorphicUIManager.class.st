@@ -464,7 +464,7 @@ MorphicUIManager >> merge: merger informing: aString [
 	window := mergeMorph newWindow
 		title: aString;
 		yourself.
-	self modalMorph openModal: window.
+	window openModal.
 	^ mergeMorph merged
 ]
 
@@ -595,14 +595,6 @@ MorphicUIManager >> openComparisonFrom: targetMethodSource
 ]
 
 { #category : #private }
-MorphicUIManager >> openModal: aSystemWindow [ 
-	"Open the given window at an available position with modality.
-	Answer the system window."
-	
-	^self modalMorph openModal: aSystemWindow
-]
-
-{ #category : #private }
 MorphicUIManager >> openPolymorphComparisonFrom: targetMethodSource
 					to: originalMethodSource
 					belongingTo: aClass
@@ -729,7 +721,7 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 MorphicUIManager >> spawnNewProcess [
 
 	UIProcess := [
-		[WorldMorph doOneCycle.  Processor yield.  false] whileFalse: [].
+		MorphicRenderLoop new doOneCycleWhile: [ true ]
 	] newProcess priority: Processor userSchedulingPriority.
 	UIProcess name: 'Morphic UI Process'.
 	UIProcess resume

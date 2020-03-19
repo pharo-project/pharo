@@ -102,7 +102,7 @@ ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: re
 	self showItemsOf: aQuery.
 	self title: dialogTitle.
 
-	browser openModal: self.
+	browser window openModal: self.
 
 	^["Following two lines should prevent special condition 
 	when filter background process modifies current table data source.

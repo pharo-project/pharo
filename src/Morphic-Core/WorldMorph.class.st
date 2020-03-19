@@ -321,13 +321,6 @@ WorldMorph >> doOneCycleNow [
 
 ]
 
-{ #category : #'world state' }
-WorldMorph >> doOneSubCycle [
-	"Like doOneCycle, but preserves activeHand."
-
-	worldState doOneSubCycleFor: self
-]
-
 { #category : #geometry }
 WorldMorph >> extent: aPoint [
 	super extent: aPoint.
