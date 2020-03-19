@@ -227,8 +227,10 @@ SpMorphicWindowAdapter >> open [
 
 	self model isCentered 
 		ifTrue: [ self centered ].
-		
+	
 	self widget openInWorld.
+	self model initialPosition ifNotNil: [
+		self widget position: self model initialPosition ].
 	
 	self windowIsOpening
 ]
