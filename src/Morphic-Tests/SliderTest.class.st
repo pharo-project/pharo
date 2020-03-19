@@ -8,7 +8,7 @@ Class {
 	#category : #'Morphic-Tests-Widgets'
 }
 
-{ #category : #tests }
+{ #category : #helpers }
 SliderTest >> assertSameValueAfter: aBlock [
 
 	| oldValue |
@@ -19,7 +19,7 @@ SliderTest >> assertSameValueAfter: aBlock [
 	self assert: aSlider value equals: oldValue
 ]
 
-{ #category : #tests }
+{ #category : #helpers }
 SliderTest >> createSlider [
 
 	^ Slider new
@@ -27,7 +27,7 @@ SliderTest >> createSlider [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : #running }
 SliderTest >> setUp [
 
 	super setUp.
@@ -35,7 +35,7 @@ SliderTest >> setUp [
 	window := aSlider openInWindow.
 ]
 
-{ #category : #tests }
+{ #category : #running }
 SliderTest >> tearDown [
 
 	window close.
