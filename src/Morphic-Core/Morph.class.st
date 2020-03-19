@@ -5834,13 +5834,13 @@ Morph >> simulateMouseDown [
 Morph >> simulateMouseDownWith: buttons [
 	"Simulate mouse button down with a given button"
 	
-		self activeHand handleEvent: (MouseButtonEvent new 
-			setType: #mouseDown
-			position: (self pointInWorld: self center) "Some Morphs report local coords"
-			which:  buttons
-			buttons: buttons
-			hand: self activeHand
-			stamp: Time millisecondClockValue)
+	self handleEvent: (MouseButtonEvent new 
+		setType: #mouseDown
+		position: (self pointInWorld: self center) "Some Morphs report local coords"
+		which:  buttons
+		buttons: buttons
+		hand: self activeHand
+		stamp: Time millisecondClockValue)
 ]
 
 { #category : #'event testing' }
@@ -5868,13 +5868,13 @@ Morph >> simulateMouseUp [
 Morph >> simulateMouseUpWith: buttons [
 	"Simulate mouse button up with a given button"
 	
-		self activeHand handleEvent: (MouseButtonEvent new 
-			setType: #mouseUp
-			position: (self pointInWorld: self center) "Some Morphs report local coords"
-			which:  buttons
-			buttons: buttons
-			hand: self activeHand
-			stamp: Time millisecondClockValue)
+	self handleEvent: (MouseButtonEvent new 
+		setType: #mouseUp
+		position: (self pointInWorld: self center) "Some Morphs report local coords"
+		which:  buttons
+		buttons: buttons
+		hand: self activeHand
+		stamp: Time millisecondClockValue)
 ]
 
 { #category : #'event testing' }
