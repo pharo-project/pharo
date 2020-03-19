@@ -98,7 +98,7 @@ OSPlatform >> current [
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPath [
 	"We MUST decode raw bytes to support non-Ascii characters"
-	^ self currentWorkingDirectoryRawPath decodeWith: self environment defaultEncoding
+	^ self currentWorkingDirectoryRawPath decodeWith: self defaultEncoding
 ]
 
 { #category : #accessing }
