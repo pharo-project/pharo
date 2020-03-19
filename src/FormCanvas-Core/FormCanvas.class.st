@@ -711,7 +711,7 @@ FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aCol
 { #category : #'private - balloon engine' }
 FormCanvas >> transform [
 
-	^ (transform ifNil: [AthensAffineTransform new])
+	^ (transform ifNil: [MatrixTransform2x3 identity])
 ]
 
 { #category : #'drawing-support' }
