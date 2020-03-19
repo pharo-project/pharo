@@ -4,6 +4,12 @@ Class {
 	#category : #'Morphic-Core-Kernel'
 }
 
+{ #category : #'deferred message' }
+MorphicRenderLoop >> defer: aValuable [
+
+	WorldState addDeferredUIMessage: aValuable
+]
+
 { #category : #'initialize-release' }
 MorphicRenderLoop >> doOneCycle [
 

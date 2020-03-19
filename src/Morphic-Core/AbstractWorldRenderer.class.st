@@ -20,18 +20,13 @@ AbstractWorldRenderer class >> detectCorrectOneforWorld: aWorld [
 
 	| aRenderer |
 
-	aWorld isMainWorld ifTrue:[
-		MainWorldRenderer ifNotNil: [ ^ MainWorldRenderer ]	
-	].
+	MainWorldRenderer ifNotNil: [ ^ MainWorldRenderer ].
 
 	(self allSubclasses sorted: [ :a :b | a priority > b priority ])
 		detect: [ :aClass | aClass isApplicableFor: aWorld ]
 		ifFound: [ :aClass | aRenderer := aClass forWorld: aWorld ].
 		
-	aWorld isMainWorld 
-		ifTrue:[ ^ MainWorldRenderer := aRenderer ]
-		ifFalse: [ ^ aRenderer ].
-	
+	^ MainWorldRenderer := aRenderer
 ]
 
 { #category : #accessing }

@@ -322,14 +322,10 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default terminateUIProcess.
 	MorphicUIManager new spawnNewProcess.
 	Display newDepth: 32.
-	World displayWorldSafely.
+	
 	UIManager default: MorphicUIManager new.
-
-	World displayWorldSafely.
-
 	UIManager default uiProcess resume.
 	PharoLightTheme beCurrent.
-	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 
 	GraphicFontSettings setFontsToStyleNamed: #small.

@@ -37,7 +37,7 @@ DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
 
 	self flag: #pharoTodo. "The method should be modified to use currentWorld, but the dependency is not possible. We have to remodularize it."
-	^ ActiveWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
+	^ self currentWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
 ]
 
 { #category : #'display box access' }

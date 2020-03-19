@@ -87,7 +87,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	InputEventSensor installMouseDecodeTable.
 
 	(Smalltalk at: #Sensor) flushAllButDandDEvents.
-	world world handsDo: [:h | h initForEvents].
+	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
 
 	MorphicCoreUIManager new spawnNewProcess.
@@ -97,7 +97,7 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	world displayWorldSafely.
 	UIManager default uiProcess resume.
 
-	World cleanseOtherworldlySteppers.
+	world cleanseOtherworldlySteppers.
 	ExternalDropHandler resetRegisteredHandlers.
 
 	Display newDepth: 32.

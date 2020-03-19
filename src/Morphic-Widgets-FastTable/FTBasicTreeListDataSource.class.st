@@ -140,7 +140,7 @@ FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
 	| ds ft |
 
 	ds := FTBasicTreeListDataSource new 
-		root: World;
+		root: self currentWorld;
 		children: [ :item | item submorphs ];
 		expand: 2;
 		display: [ :item :cell | cell addMorphBack: item printString asMorph ];

@@ -35,7 +35,7 @@ Rectangle class >> fromUser [
 { #category : #'*Morphic-Base' }
 Rectangle class >> fromUser: gridPoint [ 
 
-	^ self fromUser: gridPoint inWorld: World
+	^ self fromUser: gridPoint inWorld: self currentWorld
 ]
 
 { #category : #'*Morphic-Base' }
