@@ -126,6 +126,12 @@ OSPlatform >> currentWorkingDirectoryRawPath [
 ]
 
 { #category : #accessing }
+OSPlatform >> defaultEncoding [
+
+	^ ZnCharacterEncoder utf8
+]
+
+{ #category : #accessing }
 OSPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation"
 	 ^self subclassResponsibility 
