@@ -26,6 +26,11 @@ WinPlatform >> accept: aVisitor [
 ]
 
 { #category : #accessing }
+WinPlatform >> currentWorkingDirectoryPath [
+	^ self currentWorkingDirectoryRawPath
+]
+
+{ #category : #accessing }
 WinPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
 	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
 	
