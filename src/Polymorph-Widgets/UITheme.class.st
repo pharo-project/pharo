@@ -198,8 +198,7 @@ UITheme class >> newDefaultSettings [
 		autoSelectionColor: false;
 		preferRoundCorner: false;
 		fadedBackgroundWindows: false;
-		flatMenu: true;
-		useScrollbarThumbShadow: false
+		flatMenu: true
 ]
 
 { #category : #accessing }
