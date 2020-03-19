@@ -371,7 +371,7 @@ GrowlMorph >> resetVanishTimer [
 { #category : #stepping }
 GrowlMorph >> step [
 
-	(self containsPoint: ActiveHand position) ifTrue: [
+	(self containsPoint: self activeHand position) ifTrue: [
 		self resetAlpha.
 		^ self].
 	vanishTime ifNotNil: [DateAndTime now < vanishTime ifTrue: [^self]].

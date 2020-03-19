@@ -69,7 +69,6 @@ GLMPopper >> originMorphFor: aMorph [
 GLMPopper >> updateWithString: string from: aMorph [
 	textMorph textArea
 		updateTextWith: string;
-		takeKeyboardFocus;
 		on: Character escape do: [ 
 			self delete.
 			aMorph textArea removeHighlightSegment.

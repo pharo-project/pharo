@@ -54,7 +54,7 @@ Form class >> openImageInWindow: fullName [
 	
 	| image |
 	image := self fromFileNamed: fullName.
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]
 
 { #category : #'*Graphics-Files' }

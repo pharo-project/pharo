@@ -14,22 +14,26 @@ ClassListNodeExample >> browseItem [
 
 { #category : #menu }
 ClassListNodeExample >> classButton [
-	^ ( self theme 
-				newButtonIn: self currentWorld
-				for: self
-				getState: nil
-				action: #browseItem
-				arguments: {}
-				getEnabled: #enabled
-				getLabel: nil
-				help: 'Open a browser on ' translated , self item name)
-				label: (self theme windowLabelForText: (self item name) , '...');
-				yourself
+	^ (self theme 
+		newButtonIn: self
+		for: self
+		getState: nil
+		action: #browseItem
+		arguments: {}
+		getEnabled: #enabled
+		getLabel: nil
+		help: 'Open a browser on ' translated , self item name)
+			label: (self theme windowLabelForText: (self item name) , '...');
+			yourself
 ]
 
 { #category : #menu }
 ClassListNodeExample >> commentText [
-	^ ( self theme  newTextIn: self currentWorld text: self item comment) unlock; wrapFlag: true; yourself
+
+	^ (self theme newTextIn: self text: self item comment)
+		unlock;
+		wrapFlag: true;
+		yourself
 ]
 
 { #category : #accessing }

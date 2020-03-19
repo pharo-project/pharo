@@ -225,11 +225,11 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 	those morphs that are not really in the world"
 	"Utilities cleanseOtherworldlySteppers"
 	| old delta |
-	old := self currentWorld stepListSize.
-	self currentWorld steppingMorphsNotInWorld
+	old := self world stepListSize.
+	self world steppingMorphsNotInWorld
 		do: [:m | m delete].
-	self currentWorld cleanseStepList.
-	(delta := old - self currentWorld stepListSize) > 0
+	self world cleanseStepList.
+	(delta := old - self world stepListSize) > 0
 		ifTrue: [ self crTrace: delta asString , ' morphs removed from steplist' ]
 ]
 
@@ -241,7 +241,7 @@ PasteUpMorph >> closeAllUnchangedWindows [
 
 { #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllWindowsDiscardingChanges [
-	self currentWorld systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
+	self world systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
 ]
 
 { #category : #'Morphic-Base-Windows' }
@@ -657,7 +657,7 @@ PasteUpMorph >> invokeWorldMenu: evt [
 
 { #category : #'world menu' }
 PasteUpMorph >> invokeWorldMenuFromEscapeKey [
-	self invokeWorldMenu: ActiveEvent
+	self invokeWorldMenu: self activeHand lastEvent
 ]
 
 { #category : #cursor }
@@ -893,7 +893,7 @@ PasteUpMorph >> resizeToFitString [
 { #category : #'world state' }
 PasteUpMorph >> restoreDisplay [
 
-	self currentWorld restoreMorphicDisplay.	"I don't actually expect this to be called"
+	self world restoreMorphicDisplay.	"I don't actually expect this to be called"
 ]
 
 { #category : #'world state' }
@@ -970,7 +970,7 @@ PasteUpMorph >> toggleResizeToFit [
 PasteUpMorph >> useRoundedCorners [
 	"Somewhat special cased because we do have to fill Display for this"
 	super useRoundedCorners.
-	self == self currentWorld ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
+	self == self world ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
 ]
 
 { #category : #'project state' }

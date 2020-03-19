@@ -382,7 +382,7 @@ UITheme >> borderColor [
 
 { #category : #accessing }
 UITheme >> borderWidth [
-	^ 1 * self currentWorld displayScaleFactor
+	^ 1 * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -557,7 +557,7 @@ UITheme >> buttonMiddleRightForm [
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
 	
-	^ 18 * self currentWorld displayScaleFactor
+	^ 18 * self displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -1933,6 +1933,12 @@ UITheme >> disabledTextColor [
 ]
 
 { #category : #accessing }
+UITheme >> displayScaleFactor [
+	
+	^ self currentWorld displayScaleFactor
+]
+
+{ #category : #accessing }
 UITheme >> dockingBarBorderWidth [ 
 	^ 0
 ]
@@ -2549,7 +2555,7 @@ UITheme >> menuBorderColor [
 
 { #category : #accessing }
 UITheme >> menuBorderWidth [ 
-	^  self settings menuBorderWidth
+	^  self settings menuBorderWidth * self displayScaleFactor
 ]
 
 { #category : #'label-styles' }
@@ -5011,7 +5017,7 @@ UITheme >> scrollbarMinimumThumbThickness [
 	"Answer the minumum width or height of a scrollbar thumb 
 	as appropriate to its orientation."
 	
-	^15 * self currentWorld displayScaleFactor
+	^15 * self displayScaleFactor
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5238,7 +5244,7 @@ UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
 	
-	^13 * self currentWorld displayScaleFactor
+	^13 * self displayScaleFactor
 ]
 
 { #category : #'fill-styles' }
@@ -5349,7 +5355,7 @@ UITheme >> setSystemProgressMorphDefaultParameters: aProgressMorph [
 	aProgressMorph color: self settings derivedMenuColor.
 	self settings preferRoundCorner
 		ifTrue: [aProgressMorph useRoundedCorners].
-	aProgressMorph borderWidth: self menuBorderWidth.
+	aProgressMorph borderWidth: self menuBorderWidth * self displayScaleFactor.
 	aProgressMorph borderColor: self menuBorderColor.
 	aProgressMorph updateColor.
 ]
@@ -6109,7 +6115,7 @@ UITheme >> windowActiveTitleFillStyleFor: aWindow [
 { #category : #defaults }
 UITheme >> windowBorderWidthFor: aWindow [
 
-	^ 4 * self currentWorld displayScaleFactor
+	^ 4 * self displayScaleFactor
 ]
 
 { #category : #defaults }

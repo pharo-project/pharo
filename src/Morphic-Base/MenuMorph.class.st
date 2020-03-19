@@ -763,8 +763,8 @@ MenuMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 
-	(ActiveHand notNil
-			and: [ActiveHand keyboardFocus == self
+	(self activeHand notNil
+			and: [ self activeHand keyboardFocus == self
 					and: [self rootMenu hasProperty: #hasUsedKeyboard]])
 		ifTrue: [
 			aCanvas
@@ -912,9 +912,9 @@ MenuMorph >> invokeModal [
 			sub add: subEntry target: menu 
 				selector: #modalSelection: argument: {entry. subEntry}]].
 	menu invokeModal."
-
-	^ self
-		invokeAt: ActiveHand position
+	
+  ^ self
+		invokeAt: self activeHand position
 		in: self currentWorld
 ]
 
@@ -1228,7 +1228,7 @@ MenuMorph >> popUpEvent: evt in: aWorld [
 	"Present this menu in response to the given event."
 
 	| aHand aPosition |
-	aHand := evt ifNotNil: [evt hand] ifNil: [ActiveHand].
+	aHand := evt ifNotNil: [evt hand] ifNil: [ self activeHand ].
 	aPosition := aHand position truncated.
 	^ self popUpAt: aPosition forHand: aHand in: aWorld
 
@@ -1262,7 +1262,7 @@ MenuMorph >> popUpInWorld: aWorld [
 MenuMorph >> popUpNoKeyboard [
 	"Present this menu in the current World, *not* allowing keyboard input into the menu"
 
-	^ self popUpAt: ActiveHand position forHand: ActiveHand in: self currentWorld allowKeyboard: false
+	^ self popUpAt: self activeHand position forHand: self activeHand in: self currentWorld allowKeyboard: false
 ]
 
 { #category : #accessing }
@@ -1300,7 +1300,7 @@ MenuMorph >> positionAt: aPoint relativeTo: aMenuItem inWorld: aWorld [
 
 	"Make sure that the menu fits in the world."
 	delta := self bounds amountToTranslateWithin:
-		(aWorld worldBounds withHeight: ((aWorld worldBounds height - 18) max: (ActiveHand position y) + 1)).
+		(aWorld worldBounds withHeight: ((aWorld worldBounds height - 18) max: (aWorld activeHand position y) + 1)).
 	delta = (0 @ 0) ifFalse: [self position: self position + delta]
 ]
 

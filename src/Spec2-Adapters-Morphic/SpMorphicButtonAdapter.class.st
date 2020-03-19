@@ -169,7 +169,7 @@ SpMorphicButtonAdapter >> showSubMenu: aMenu [
 		popUpAdjacentTo: { 
 			self widget bounds bottomLeft.
 			self widget bounds bottomRight }
-		forHand: ActiveHand
+		forHand: self widget activeHand
 		from: self widget.
 	subMenuWidget popUpOwner: self
 ]

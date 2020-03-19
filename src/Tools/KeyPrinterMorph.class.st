@@ -44,7 +44,7 @@ KeyPrinterMorph >> keyDown: anEvent [
 { #category : #'event handling' }
 KeyPrinterMorph >> mouseDown: event [ 
 	super mouseDown: event.
-	self currentWorld activeHand newKeyboardFocus: self
+	self activeHand newKeyboardFocus: self
 ]
 
 { #category : #display }

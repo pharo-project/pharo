@@ -1205,6 +1205,11 @@ RGBehavior >> usedTraits [
 	^ self traitComposition usedTraits
 ]
 
+{ #category : #accessing }
+RGBehavior >> users [
+	^ #()
+]
+
 { #category : #slots }
 RGBehavior >> usesSpecialSlot [
 	"return true if we define something else than InstanceVariableSlots"

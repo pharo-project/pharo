@@ -27,10 +27,10 @@ GLMPharoScriptMorphicTest >> testExplicitAcceptDoesNotAffectTextPort [
 
 	textMorph := self find: RubScrolledTextMorph in: window.
 	textMorph simulateClick.
-	self simulateKeyStrokes: '4'.
+	self simulateKeyStrokes: '4' inWorld: textMorph world.
 	self assert: (composite pane port: #text) value equals: '1234'.
-	self simulateKeyStroke: $s meta.
-	self simulateKeyStrokes: '56'.
+	self simulateKeyStroke: $s meta inWorld: textMorph world.
+	self simulateKeyStrokes: '56' inWorld: textMorph world.
 	self assert: (composite pane port: #text) value equals: '123456'
 ]
 
