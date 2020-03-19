@@ -27,7 +27,7 @@ WinPlatform >> accept: aVisitor [
 
 { #category : #accessing }
 WinPlatform >> currentWorkingDirectoryPath [
-	^ self currentWorkingDirectoryRawPath
+	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
 ]
 
 { #category : #accessing }

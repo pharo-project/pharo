@@ -118,7 +118,7 @@ OSPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryRawPath [
-	"This method calls the method getPwdViaFFI with arugement of a buffer size. 
+	"This method calls the method getPwdViaFFI with argument of a buffer size. 
 	By default it uses the defaultMaximumPathLength of each subclass as the buffer size.
 	We return a raw byte array that should be decoded with the proper encoding."
 	^ (self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength) asByteArray
