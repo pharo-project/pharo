@@ -231,85 +231,59 @@ Slider >> setValueSelector: aSymbol [
 
 { #category : #'event testing' }
 Slider >> simulateScrollAbsolute: aPointStart to: aPointEnd [
-"Simulates a mouse moving from a given point to a destinationpoint"
+	"Simulates a mouse moving from a given point to a destinationpoint"
 	| event |
 	event := MouseMoveEvent  new 
-				setType: #mouseMove  
-				startPoint: aPointStart 
-				endPoint: aPointEnd 
-				trail: nil
-				buttons: 0
-				hand: ActiveHand 
-				stamp: 0.
+		setType: #mouseMove  
+		startPoint: aPointStart 
+		endPoint: aPointEnd 
+		trail: nil
+		buttons: 0
+		hand: self currentHand
+		stamp: 0.
 	self scrollAbsolute:  event
 ]
 
 { #category : #'event testing' }
-Slider >> simulateSliderMiddleMouseDown [ 
-	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)
-	into the Slider"
-	self simulateSliderMouseDownWith: MouseEvent blueButton.
+Slider >> simulateSliderMiddleMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent blueButton
 ]
 
 { #category : #'event testing' }
 Slider >> simulateSliderMiddleMouseUp [
-	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)
-	into the Slider"
-	self simulateSliderMouseUpWith: MouseEvent blueButton.
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent blueButton
 ]
 
 { #category : #'event testing' }
-Slider >> simulateSliderMouseDown [ 
-	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)
-	into the Slider"
-	self simulateSliderMouseDownWith: MouseEvent redButton.
+Slider >> simulateSliderMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent redButton
 ]
 
 { #category : #'event testing' }
-Slider >> simulateSliderMouseDownWith: buttons [
-	"Simulate mouse button down into the slider with a given button"
-	
-		slider activeHand handleEvent: (MouseButtonEvent new 
-			setType: #mouseDown
-			position: (slider pointInWorld: slider center) "Some Morphs report local coords"
-			which:  buttons
-			buttons: buttons
-			hand: slider activeHand
-			stamp: Time millisecondClockValue)
+Slider >> simulateSliderMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent redButton
 ]
 
 { #category : #'event testing' }
-Slider >> simulateSliderMouseUp [ 
-	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)
-	into the Slider"
-	self simulateSliderMouseUpWith: MouseEvent redButton.
-]
+Slider >> simulateSliderRightMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
-{ #category : #'event testing' }
-Slider >> simulateSliderMouseUpWith: buttons [
-	"Simulate mouse button up into the slider with a given button"
-	
-		slider activeHand handleEvent: (MouseButtonEvent new 
-			setType: #mouseUp
-			position: (slider pointInWorld: slider center) "Some Morphs report local coords"
-			which:  buttons
-			buttons: buttons
-			hand: slider activeHand
-			stamp: Time millisecondClockValue)
-]
-
-{ #category : #'event testing' }
-Slider >> simulateSliderRightMouseDown [ 
-	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)
-	into the Slider"
-	self simulateSliderMouseDownWith: MouseEvent yellowButton.
+	slider simulateMouseDownWith: MouseEvent yellowButton
 ]
 
 { #category : #'event testing' }
 Slider >> simulateSliderRightMouseUp [
-	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)
-	into the Slider"
-	self simulateSliderMouseUpWith: MouseEvent yellowButton.
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent yellowButton
 ]
 
 { #category : #access }

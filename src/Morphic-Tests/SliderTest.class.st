@@ -1,80 +1,145 @@
 Class {
 	#name : #SliderTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'aSlider',
+		'window'
+	],
 	#category : #'Morphic-Tests-Widgets'
 }
 
 { #category : #tests }
-SliderTest >> testDragSlider [
+SliderTest >> assertSameValueAfter: aBlock [
+
+	| oldValue |
+	oldValue := aSlider value.
 	
-	| aSlider window| 
+	aBlock value.
 	
-	"Create an Slider for the test"
-	aSlider := Slider new.
-aSlider extent: 240@16.
-window:=aSlider openInWindow .
-
-"Verify that now is not dragging"
-self assert: aSlider dragging equals: false.
-
-aSlider simulateSliderMouseDown.
-
-"Verify that now is dragging"
-self assert: aSlider dragging equals: true.
-
-"Verify that the value is 0"
-self assert: aSlider value equals: 0.
-
-"Do the scrolling (mouse move)"
-aSlider 
-	simulateScrollAbsolute: aSlider bounds origin 
-	to: aSlider bounds corner.
-"Then release mouse button"
-aSlider simulateSliderMouseUp.
-"Verify that value is nor 1.0"
-self assert: aSlider value equals: 1.
-"Verify that now is not dragging"
-self assert: aSlider dragging equals: false.
-window close.
-
+	self assert: aSlider value equals: oldValue
 ]
 
 { #category : #tests }
-SliderTest >> testNoDragSlider [
-	
-	| aSlider window| 
-	
-	"Create an Slider for the test"
-	aSlider := Slider new.
-aSlider extent: 240@16.
-window:=aSlider openInWindow .
+SliderTest >> createSlider [
 
-"Verify that now is not dragging"
-self assert: aSlider dragging equals: false.
+	^ Slider new
+		extent: 240 @ 16;
+		yourself
+]
 
-aSlider simulateSliderMouseDown.
+{ #category : #tests }
+SliderTest >> setUp [
 
-"Verify that now is dragging"
-self assert: aSlider dragging equals: true.
+	super setUp.
+	aSlider := self createSlider.
+	window := aSlider openInWindow.
+]
 
-"Then release mouse button"
-aSlider simulateSliderMouseUp.
+{ #category : #tests }
+SliderTest >> tearDown [
 
-"Verify that now is not dragging"
-self assert: aSlider dragging equals: false.
+	window close.
+	super tearDown.
+]
 
-"Verify that the value is 0"
-self assert: aSlider value equals: 0.
+{ #category : #tests }
+SliderTest >> testDragSlider [
 
-"Do the scrolling (mouse move)"
-aSlider 
-	simulateScrollAbsolute: aSlider bounds origin 
-	to: aSlider bounds corner.
+	aSlider simulateSliderMouseDown.
 
-"Verify that value is (still) 0"
-self assert: aSlider value equals: 0.
-"Verify that is not dragging"
-self assert: aSlider dragging equals: false.
-window close.
+	"Verify that now is dragging"
+	self assert: aSlider dragging equals: true.
 
+	"Verify that the value is 0"
+	self assert: aSlider value equals: 0.
+
+	"Do the scrolling (mouse move)"
+	aSlider
+		simulateScrollAbsolute: aSlider bounds origin
+		to: aSlider bounds corner.
+	"Then release mouse button"
+	aSlider simulateSliderMouseUp.
+	"Verify that value is nor 1.0"
+	self assert: aSlider value equals: 1.
+	"Verify that now is not dragging"
+	self assert: aSlider dragging equals: false.
+]
+
+{ #category : #tests }
+SliderTest >> testDraggingModifiesValue [
+
+	aSlider simulateSliderMouseDown.
+	aSlider
+		simulateScrollAbsolute: aSlider bounds origin
+		to: aSlider bounds corner.
+
+	self assert: aSlider value equals: 1
+]
+
+{ #category : #tests }
+SliderTest >> testDraggingSeveralTimesModifiesValueSeveralTimes [
+
+	aSlider simulateSliderMouseDown.
+	aSlider
+		simulateScrollAbsolute: aSlider bounds origin
+		to: aSlider bounds corner.
+	aSlider
+		simulateScrollAbsolute: aSlider bounds corner
+		to: aSlider bounds origin.
+
+	self assert: aSlider value equals: 0
+]
+
+{ #category : #tests }
+SliderTest >> testMouseMoveWithoutDraggingDoesNotModifyValue [
+
+	self assertSameValueAfter: [
+		aSlider
+			simulateScrollAbsolute: aSlider bounds origin
+			to: aSlider bounds corner ]
+]
+
+{ #category : #tests }
+SliderTest >> testMouseMoveWithoutDraggingDoesNotStartDrag [
+
+	aSlider
+		simulateScrollAbsolute: aSlider bounds origin
+		to: aSlider bounds corner.
+
+	"Verify that is not dragging"
+	self assert: aSlider dragging equals: false.
+]
+
+{ #category : #tests }
+SliderTest >> testNewSliderIsNotDragging [
+
+	self deny: aSlider dragging
+]
+
+{ #category : #tests }
+SliderTest >> testNewSliderValueIsZero [
+
+	self assert: aSlider value equals: 0
+]
+
+{ #category : #tests }
+SliderTest >> testSliderMouseDownDoesNotModifyValue [
+
+	self assertSameValueAfter: [ aSlider simulateSliderMouseDown ]
+]
+
+{ #category : #tests }
+SliderTest >> testSliderMouseDownMakesItDrag [
+
+	aSlider simulateSliderMouseDown.
+	self assert: aSlider dragging
+]
+
+{ #category : #tests }
+SliderTest >> testSliderMouseUpReleaseDrag [
+
+	self assertSameValueAfter: [ 
+		aSlider simulateSliderMouseDown.
+		aSlider simulateSliderMouseUp.
+	]
 ]
