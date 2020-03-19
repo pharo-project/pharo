@@ -5774,7 +5774,7 @@ Morph >> simulateKeyStroke: aCharacter [
 				position: 0@0 
 				keyValue: aCharacter charCode 
 				charCode: aCharacter charCode
-				hand: ActiveHand 
+				hand: self activeHand  
 				stamp: 0.
 	self keyStroke: event
 ]
@@ -5832,7 +5832,7 @@ Morph >> simulateMouseMove: aPointStart to: aPointEnd [
 				endPoint: aPointEnd 
 				trail: nil
 				buttons: 0
-				hand: ActiveHand 
+				hand: self activeHand  
 				stamp: 0.
 	self mouseMove: event
 ]
