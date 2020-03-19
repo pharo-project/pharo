@@ -61,8 +61,7 @@ DelayBenchmark >> bench [
 					'EnterCount: ' , (EnterCount // sampleSetSeeds size) printString
 						, String space.
 			self
-				trace: 'ExitCount: ' , (ExitCount // sampleSetSeeds size) printString.
-			MorphicRenderLoop new doOneCycle "since we are a higher priority would prevent transcript showing" ].
+				trace: 'ExitCount: ' , (ExitCount // sampleSetSeeds size) printString ].
 	completed signal ] forkAt: Processor userSchedulingPriority + 2.	"To avoid UI loop influencing result"
 	completed wait
 ]
