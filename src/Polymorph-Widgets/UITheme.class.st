@@ -248,12 +248,14 @@ UITheme class >> veryLightSelectionColor [
 UITheme >> abortIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of an error dialog (true) with the given label and title."
 
+	| window |
 	self abortSound play.
-	^(aThemedMorph openModal: (
-		(ErrorDialogWindow newWithTheme: aThemedMorph theme)
-			textFont: self textFont;
-			title: aString;
-			text: aStringOrText)) cancelled not
+	window := (ErrorDialogWindow newWithTheme: aThemedMorph theme)
+		textFont: self textFont;
+		title: aString;
+		text: aStringOrText.
+	window openModal.
+	^ window cancelled not
 ]
 
 { #category : #sounds }
@@ -274,7 +276,7 @@ UITheme >> alertIn: aThemedMorph text: aStringOrText title: aString configure: a
 		title: aString;
 		text: aStringOrText.
 	aBlock value: dialog.
-	aThemedMorph openModal: dialog.
+	dialog openModal.
 	^dialog cancelled not
 ]
 
@@ -381,7 +383,7 @@ UITheme >> borderColor [
 
 { #category : #accessing }
 UITheme >> borderWidth [
-	^ 1 * self currentWorld displayScaleFactor
+	^ 1 * self displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -556,7 +558,7 @@ UITheme >> buttonMiddleRightForm [
 UITheme >> buttonMinHeight [
 	"Answer the minumum height of a button for this theme."
 	
-	^ 18 * self currentWorld displayScaleFactor
+	^ 18 * self displayScaleFactor
 ]
 
 { #category : #defaults }
@@ -852,7 +854,7 @@ UITheme >> centeredAlertIn: aThemedMorph text: aStringOrText title: aString conf
 	aBlock value: dialog.
 	dialog left: ((self currentWorld width / 2) - (dialog width /2)).
 	dialog top: ((self currentWorld height / 2) - (dialog height /2)).
-	aThemedMorph openModal: dialog.
+	dialog openModal.
 	^ dialog cancelled not
 ]
 
@@ -988,13 +990,12 @@ UITheme >> checkboxUnselectedForm [
 UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor [
 	"Answer the result of a color selector dialog with the given title and initial color."
 
-	|d|
-	d := aThemedMorph openModal: (
-		(ColorSelectorDialogWindow newWithTheme: aThemedMorph theme)
-			title: aString;
-			selectedColor: aColor).
-	^d  cancelled
-		ifFalse: [d selectedColor]
+	|dialog|
+	dialog := (ColorSelectorDialogWindow newWithTheme: aThemedMorph theme)
+		title: aString;
+		selectedColor: aColor.
+	dialog openModal.
+	^ dialog cancelled ifFalse: [ dialog selectedColor ]
 ]
 
 { #category : #services }
@@ -1008,8 +1009,7 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 	d extent: d initialExtent.
 	d announcer when: ColorChanged do: [:ann | 
 		aBlock value: ann newColor].
-	d openInHand.
-	self runModal: d.
+	d openModal.
 	
 	newColor := d  cancelled
 		ifTrue: [aColor]
@@ -1022,24 +1022,23 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	"Answer the result of a file dialog with the given title, choosing directories only."
 
-	| fd |
-	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
+	| dialog |
+	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		answerDirectory.
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
+	path ifNotNil: [ dialog selectPath: path ].
+	^ dialog openModal answer
 ]
 
 { #category : #services }
 UITheme >> chooseDropListIn: aThemedMorph text: aStringOrText title: aString list: aList [
 	"Answer the result of a drop list chooser with the given label, title and list."
 
-	^(aThemedMorph openModal: (
-		(ChooseDropListDialogWindow newWithTheme: aThemedMorph theme)
+	^((ChooseDropListDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
 			text: aStringOrText;
-			list: aList)) selectedItem
+			list: aList) openModal selectedItem
 ]
 
 { #category : #services }
@@ -1048,18 +1047,18 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 	path and preview type.
 	Answer nil or a filename."
 
-	| fd pathFileReference |
+	| dialog pathFileReference |
 	pathFileReference := path asFileReference.
-	fd := FileDialogWindow basicNew
+	dialog := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		fileNameText: pathFileReference basename;
 		initialize;
 		title: title;
 		answerPathName.	
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: pathFileReference pathString ].
-	^ (aThemedMorph openModal: fd) answer ifNotNil: #asFileReference
+	exts ifNotNil: [ dialog validExtensions: exts ].
+	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
+	^ dialog openModal answer ifNotNil: #asFileReference
 ]
 
 { #category : #services }
@@ -1067,16 +1066,16 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 	"Answer the result of a file open dialog with the given title, extensions path and preview type.
 	Answer nil or a filename."
 
-	| fd |
-	fd := FileDialogWindow basicNew
+	| dialog |
+	dialog := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerFileEntry.
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ dialog validExtensions: exts ].
+	path ifNotNil: [ dialog selectPath: path ].
+	^ dialog openModal answer
 ]
 
 { #category : #services }
@@ -1084,32 +1083,31 @@ UITheme >> chooseFileNameIn: aThemedMorph title: title extensions: exts path: pa
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	path and preview type.
 	Answer nil or a filename."
-	| fd |
+	| dialog |
 	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	fd := FileDialogWindow basicNew
+	dialog := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerFileName.
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ dialog validExtensions: exts ].
+	path ifNotNil: [ dialog selectPath: path ].
+	^ dialog openModal answer
 ]
 
 { #category : #services }
 UITheme >> chooseFontIn: aThemedMorph title: aString font: aFont [
 	"Answer the result of a font selector dialog with the given title and initial font."
 
-	|d|
-	d := aThemedMorph openModal: (
-		Cursor wait showWhile: [
-			self newFontSelector
-				basicTheme: aThemedMorph theme;
-				title: aString;
-				selectedFont: aFont]).
-	^d  cancelled
-		ifFalse: [d selectedFont]
+	| dialog |
+	dialog :=  Cursor wait showWhile: [
+		self newFontSelector
+			basicTheme: aThemedMorph theme;
+			title: aString;
+			selectedFont: aFont].
+	dialog openModal.
+	^ dialog cancelled ifFalse: [dialog selectedFont]
 ]
 
 { #category : #services }
@@ -1118,15 +1116,15 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 	path and preview type.
 	Answer nil or a filename."
 
-	| fd pathFileReference |
+	| dialog pathFileReference |
 	pathFileReference := path asFileReference.
-	fd := (FileDialogWindow newWithTheme: aThemedMorph theme)
+	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
 		title: title;
 		fileNameText: pathFileReference basename;
 		answerSaveFile.
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ dialog validExtensions: exts ].
+	path ifNotNil: [ dialog selectPath: path ].
+	^ dialog openModal answer
 ]
 
 { #category : #services }
@@ -1135,17 +1133,17 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title extensions: exts path
 	path and preview type.
 	Answer nil or a full filename."
 
-	| fd |
+	| dialog |
 	self deprecated: 'Use UIManager default chooseExistingFileReference:extensions:path:preview:. instead.' on: '26 October 2018' in: #Pharo7.
-	fd := FileDialogWindow basicNew
+	dialog := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerPathName.
-	exts ifNotNil: [ fd validExtensions: exts ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
+	exts ifNotNil: [ dialog validExtensions: exts ].
+	path ifNotNil: [ dialog selectPath: path ].
+	^ dialog openModal answer
 ]
 
 { #category : #services }
@@ -1154,48 +1152,48 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 	path and preview type.
 	Answer nil or a filename."
 
-	| fd |
-	fd := FileDialogWindow basicNew
+	| dialog |
+	dialog := FileDialogWindow basicNew
 		basicTheme: aThemedMorph theme;
 		previewType: preview;
 		initialize;
 		title: title;
 		answerPathName.
 	patterns
-		ifNotNil: [ fd
+		ifNotNil: [ dialog
 				fileSelectionBlock: [ :de | 
-					(fd defaultFileSelectionBlock value: de)
+					(dialog defaultFileSelectionBlock value: de)
 						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
-	path ifNotNil: [ fd selectPath: path ].
-	^ (aThemedMorph openModal: fd) answer
+	path ifNotNil: [ dialog selectPath: path ].
+	^ dialog openModal answer
 ]
 
 { #category : #services }
 UITheme >> chooseIn: aThemedMorph title: title labels: labels values: values lines: lines [
 	"Answer the result of a popup choice with the given title, labels, values and lines."
 
-	| pd |
-	pd := (PopupChoiceDialogWindow newWithTheme: aThemedMorph theme)
+	| dialog |
+	dialog := (PopupChoiceDialogWindow newWithTheme: aThemedMorph theme)
 		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
 		labels: labels;
 		lines: (lines ifNil: [#()]);
 		model: values.
-	^(aThemedMorph openModal: pd) choice
+	^ dialog openModal choice
 ]
 
 { #category : #services }
 UITheme >> chooseIn: aThemedMorph title: title message: aMessage labels: labels values: values lines: lines [
 	"Answer the result of a popup choice with the given title, labels, values and lines."
 
-	|pd|
-	pd := (PopupChoiceDialogWindowWithMessage newWithTheme: aThemedMorph theme)
+	|dialog|
+	dialog := (PopupChoiceDialogWindowWithMessage newWithTheme: aThemedMorph theme)
 		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
 		textFont: self textFont;
 		message: aMessage;
 		labels: labels;
 		lines: (lines ifNil: [#()]);
 		model: values.
-	^(aThemedMorph openModal: pd) choice
+	^dialog openModal choice
 ]
 
 { #category : #services }
@@ -1208,7 +1206,7 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 		labels: labels;
 		lines: (lines ifNil: [#()]);
 		model: values.
-	choice := (aThemedMorph openModal: dialog) choice.
+	choice := dialog openModal choice.
 	dialog cancelled ifTrue: [ ^nil ].
 	choice 
 		ifNotNil: [ ^choice ]
@@ -1723,15 +1721,14 @@ UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noTex
 	defaultOption should be one of true, false or nil to set the default button."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(CustomQuestionDialogWindow newWithTheme: aThemedMorph theme)
+	^((CustomQuestionDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
 			text: labelText;
 			yesText: yesText help: nil;
 			noText: noText help: nil;
 			cancelText: cancelText help: nil;
-			default: defaultOption)) answer
+			default: defaultOption) openModal answer
 ]
 
 { #category : #services }
@@ -1739,13 +1736,12 @@ UITheme >> customQuestionIn: aThemedMorph text: labelText yesText: yesText noTex
 	"Answer the result of a question dialog with the given label, button labels and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(CustomQuestionDialogWindow newWithTheme: aThemedMorph theme)
+	^((CustomQuestionDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
 			text: labelText;
 			yesText: yesText help: nil;
-			noText: noText help: nil)) answer
+			noText: noText help: nil) dialog answer
 ]
 
 { #category : #'accessing colors' }
@@ -1811,11 +1807,10 @@ UITheme >> denyIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of an deny dialog (true) with the given label and title."
 
 	self denySound play.
-	^(aThemedMorph openModal: (
-		(DenyDialogWindow newWithTheme: aThemedMorph theme)
+	^((DenyDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
-			text: aStringOrText)) cancelled not
+			text: aStringOrText) openModal cancelled not
 ]
 
 { #category : #sounds }
@@ -1936,6 +1931,12 @@ UITheme >> disabledItemStyle [
 { #category : #'accessing colors' }
 UITheme >> disabledTextColor [ 
 	^ self disabledColor
+]
+
+{ #category : #accessing }
+UITheme >> displayScaleFactor [
+	
+	^ self currentWorld displayScaleFactor
 ]
 
 { #category : #accessing }
@@ -2214,11 +2215,11 @@ UITheme >> enterOrRequestIn: aThemedMorph title: title labels: labels values: va
 		labels: labels;
 		lines: (lines ifNil: [#()]);
 		model: values.
-	choice := (aThemedMorph openModal: dialog) choice.
+	choice := dialog openModal choice.
 	dialog cancelled ifTrue: [ ^nil ].
-	choice 
-		ifNotNil: [ ^choice ]
-		ifNil: [ ^dialog filterValue ]
+	^ choice
+		ifNotNil: [ choice ]
+		ifNil: [ dialog filterValue ]
 ]
 
 { #category : #'basic-colors' }
@@ -2535,11 +2536,10 @@ UITheme >> longMessageIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of a (potentially long) message dialog (true) with the given label and title."
 
 	self messageSound play.
-	^(aThemedMorph openModal: (
-		(LongMessageDialogWindow newWithTheme: aThemedMorph theme)
+	^((LongMessageDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
-			text: aStringOrText)) cancelled not
+			text: aStringOrText) openModal cancelled not
 ]
 
 { #category : #defaults }
@@ -2556,7 +2556,7 @@ UITheme >> menuBorderColor [
 
 { #category : #accessing }
 UITheme >> menuBorderWidth [ 
-	^  self settings menuBorderWidth
+	^  self settings menuBorderWidth * self displayScaleFactor
 ]
 
 { #category : #'label-styles' }
@@ -2764,11 +2764,10 @@ UITheme >> messageIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of a message dialog (true) with the given label and title."
 
 	self messageSound play.
-	^(aThemedMorph openModal: (
-		(MessageDialogWindow newWithTheme: aThemedMorph theme)
+	^((MessageDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
-			text: aStringOrText)) cancelled not
+			text: aStringOrText) openModal cancelled not
 ]
 
 { #category : #sounds }
@@ -4729,12 +4728,11 @@ UITheme >> passwordEntryIn: aThemedMorph text: aStringOrText title: aString entr
 	"Answer the result of a password entry dialog (a string or nil if cancelled)
 	with the given label and title."
 
-	^(aThemedMorph openModal: (
-		(PasswordDialogWindow newWithTheme: aThemedMorph theme)
+	^((PasswordDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
 			text: aStringOrText;
-			entryText: defaultEntryText)) entryText
+			entryText: defaultEntryText) openModal entryText
 ]
 
 { #category : #'basic-colors' }
@@ -4770,11 +4768,10 @@ UITheme >> proceedIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of a proceed dialog with the given label and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(ProceedDialogWindow newWithTheme: aThemedMorph theme)
+	^((ProceedDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
-			text: aStringOrText)) cancelled not
+			text: aStringOrText) openModal cancelled not
 ]
 
 { #category : #'border-styles' }
@@ -4823,11 +4820,10 @@ UITheme >> questionIn: aThemedMorph text: aStringOrText title: aString [
 	"Answer the result of a question dialog with the given label and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(QuestionDialogWindow newWithTheme: aThemedMorph theme)
+	^((QuestionDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
-			text: aStringOrText)) answer
+			text: aStringOrText) openModal answer
 ]
 
 { #category : #sounds }
@@ -4842,11 +4838,10 @@ UITheme >> questionWithoutCancelIn: aThemedMorph text: aStringOrText title: aStr
 	"Answer the result of a question dialog with the given label and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(QuestionWithoutCancelDialogWindow newWithTheme: aThemedMorph theme)
+	^((QuestionWithoutCancelDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
-			text: aStringOrText)) answer
+			text: aStringOrText) openModal answer
 ]
 
 { #category : #'border-styles-buttons' }
@@ -4945,13 +4940,6 @@ UITheme >> resizerGripNormalFillStyleFor: aResizer [
 	^Color transparent
 ]
 
-{ #category : #services }
-UITheme >> runModal: aWidget [
-	
-	[aWidget world notNil] whileTrue: [
-		aWidget outermostWorldMorph doOneCycle]
-]
-
 { #category : #scrollbars }
 UITheme >> scrollBarButtonArrowVertices: aRectangle [ 
 	^ self verticesForComplexArrow: aRectangle
@@ -5030,7 +5018,7 @@ UITheme >> scrollbarMinimumThumbThickness [
 	"Answer the minumum width or height of a scrollbar thumb 
 	as appropriate to its orientation."
 	
-	^15 * self currentWorld displayScaleFactor
+	^15 * self displayScaleFactor
 ]
 
 { #category : #'border-styles-scrollbars' }
@@ -5257,7 +5245,7 @@ UITheme >> scrollbarThickness [
 	"Answer the width or height of a scrollbar as appropriate to
 	its orientation."
 	
-	^13 * self currentWorld displayScaleFactor
+	^13 * self displayScaleFactor
 ]
 
 { #category : #'fill-styles' }
@@ -5368,7 +5356,7 @@ UITheme >> setSystemProgressMorphDefaultParameters: aProgressMorph [
 	aProgressMorph color: self settings derivedMenuColor.
 	self settings preferRoundCorner
 		ifTrue: [aProgressMorph useRoundedCorners].
-	aProgressMorph borderWidth: self menuBorderWidth.
+	aProgressMorph borderWidth: self menuBorderWidth * self displayScaleFactor.
 	aProgressMorph borderColor: self menuBorderColor.
 	aProgressMorph updateColor.
 ]
@@ -5801,13 +5789,12 @@ UITheme >> textEditorIn: aThemedMorph text: aStringOrText title: aString entryTe
 	with the given label and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(TextEditorDialogWindow newWithTheme: aThemedMorph theme)
+	^((TextEditorDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
 			text: aStringOrText;
 			entryText: defaultEntryText;
-			entryHeight: entryHeight)) entryText
+			entryHeight: entryHeight) openModal entryText
 ]
 
 { #category : #'border-styles' }
@@ -5837,12 +5824,11 @@ UITheme >> textEntryIn: aThemedMorph text: aStringOrText title: aString entryTex
 	with the given label and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		TextEntryDialogWindow new
+	^(TextEntryDialogWindow new
 			textFont: self textFont;
 			title: aString;
 			text: aStringOrText;
-			entryText: defaultEntryText)) entryText
+			entryText: defaultEntryText) openModal entryText
 ]
 
 { #category : #services }
@@ -5851,13 +5837,12 @@ UITheme >> textEntryIn: aThemedMorph text: aStringOrText title: aString entryTex
 	with the given label and title."
 
 	self questionSound play.
-	^(aThemedMorph openModal: (
-		(TextEntryDialogWindow newWithTheme: aThemedMorph theme)
+	^((TextEntryDialogWindow newWithTheme: aThemedMorph theme)
 			textFont: self textFont;
 			title: aString;
 			text: aStringOrText;
 			entryText: defaultEntryText;
-			entryCompletion: anEntryCompletion)) entryText
+			entryCompletion: anEntryCompletion) openModal entryText
 ]
 
 { #category : #'border-styles' }
@@ -6142,7 +6127,7 @@ UITheme >> windowActiveTitleFillStyleFor: aWindow [
 { #category : #defaults }
 UITheme >> windowBorderWidthFor: aWindow [
 
-	^ 4 * self currentWorld displayScaleFactor
+	^ 4 * self displayScaleFactor
 ]
 
 { #category : #defaults }

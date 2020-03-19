@@ -299,7 +299,6 @@ WorldState >> activeHand [
 
 { #category : #hands }
 WorldState >> activeHand: aHand [
-	ActiveHand := aHand.
 	activeHand := aHand
 ]
 
@@ -507,16 +506,6 @@ WorldState >> doOneCycleNowFor: aWorld [
 
 	aWorld runStepMethods.		"there are currently some variations here"
 	self displayWorldSafely: aWorld.
-]
-
-{ #category : #'update cycle' }
-WorldState >> doOneSubCycleFor: aWorld [
-	"Like doOneCycle, but preserves activeHand."
-
-	| currentHand |
-	currentHand := self activeHand.
-	self doOneCycleFor: aWorld.
-	self activeHand: currentHand.
 ]
 
 { #category : #'update cycle' }
@@ -744,8 +733,6 @@ WorldState >> removeHand: aHandMorph [
 	(hands includes: aHandMorph) ifFalse: [^self].
 	hands := hands copyWithout: aHandMorph.
 	activeHand == aHandMorph ifTrue: [activeHand := nil].
-	ActiveHand == aHandMorph ifTrue: [ActiveHand := nil].
-
 ]
 
 { #category : #canvas }

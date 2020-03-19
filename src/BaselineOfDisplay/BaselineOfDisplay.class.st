@@ -67,7 +67,6 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	Smalltalk globals at: #Display put: display.
 	display beDisplay.
 
-	Cursor classPool at: #CurrentCursor put: Cursor new.
 	Cursor webLink. "set the webLink cursor shape"
 					
 	Cursor initialize.

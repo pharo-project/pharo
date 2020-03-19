@@ -7,6 +7,7 @@ Class {
 	#name : #ClapParameter,
 	#superclass : #Object,
 	#instVars : [
+		'identifier',
 		'canonicalName',
 		'description',
 		'multiple',
@@ -22,28 +23,53 @@ ClapParameter class >> basicMeaning [
 	^ [ :match | match ]
 ]
 
+{ #category : #'instance creation' }
+ClapParameter class >> id: anIdentifier [
+	^ self new
+		identifier: anIdentifier asSymbol;
+		yourself
+]
+
 { #category : #testing }
 ClapParameter class >> isAbstract [
 	^ self == ClapParameter
 ]
 
 { #category : #'instance creation' }
-ClapParameter class >> withName: aString [ 
-	^ self new
-		canonicalName: aString;
-		yourself
+ClapParameter class >> withName: nameOrIdentifier [
+	self
+		deprecated: 'Instanciate with #id: instead (passing a unique identifier), then use #canonicalName: to set the user-facing command name, if necessary.'
+		transformWith: '`@receiver withName: `@arg'
+			-> '`@receiver id: `@arg'.
+	^ self id: nameOrIdentifier
 ]
 
 { #category : #activating }
 ClapParameter >> activateWith: arguments [
 	"Convenience method for activating in an interactive context"
-	^ (ClapContext specification: self)
-		activateWith: arguments
+	^ (self activationWith: arguments) execute
+]
+
+{ #category : #activating }
+ClapParameter >> activation [
+	^ ClapContext specification: self
+]
+
+{ #category : #activating }
+ClapParameter >> activationWith: arguments [
+	^ self activation
+		arguments: arguments;
+		yourself
 ]
 
 { #category : #adding }
 ClapParameter >> addTo: parentParameter [
 	^ self subclassResponsibility
+]
+
+{ #category : #converting }
+ClapParameter >> asClapIdentifier [
+	^ self identifier
 ]
 
 { #category : #accessing }
@@ -64,12 +90,12 @@ ClapParameter >> canMatchWith: word [
 
 { #category : #accessing }
 ClapParameter >> canonicalName [
-	^ canonicalName
+	^ canonicalName ifNil: [ self identifier asString ]
 ]
 
 { #category : #initialization }
-ClapParameter >> canonicalName: aString [ 
-	canonicalName := aString
+ClapParameter >> canonicalName: aName [
+	canonicalName := aName asString
 ]
 
 { #category : #accessing }
@@ -80,6 +106,21 @@ ClapParameter >> description [
 { #category : #initialization }
 ClapParameter >> description: aString [
 	description := aString
+]
+
+{ #category : #accessing }
+ClapParameter >> identifier [
+	^ identifier
+]
+
+{ #category : #initialization }
+ClapParameter >> identifier: anIdentifier [
+	identifier := anIdentifier
+]
+
+{ #category : #testing }
+ClapParameter >> identifiesClapParameter: aParameter [
+	^ self == aParameter
 ]
 
 { #category : #accessing }

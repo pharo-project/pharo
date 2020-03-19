@@ -153,11 +153,7 @@ GTSpotterHeaderBrick >> searchField [
 GTSpotterHeaderBrick >> searchField: aBrick [
 
 	searchField := aBrick.
-	
-	self themer spotterThemer searchFieldStyleFor: searchField.
-	
-	searchField morph takeKeyboardFocus.
-	
+	self themer spotterThemer searchFieldStyleFor: searchField.	
 	self addBrickBack: searchField
 ]
 
@@ -200,4 +196,11 @@ GTSpotterHeaderBrick >> spotterModel: aModel [
 	
 	self spotterModel announcer when: GTSpotterRevealHints send: #onRevealHints to: self.
 	self spotterModel announcer when: GTSpotterHideHints send: #onHideHints to: self.
+]
+
+{ #category : #'event handling' }
+GTSpotterHeaderBrick >> takeKeyboardFocus [
+	
+	searchField morph takeKeyboardFocus
+
 ]

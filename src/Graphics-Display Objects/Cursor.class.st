@@ -32,7 +32,6 @@ Class {
 		'BottomRightCursor',
 		'CornerCursor',
 		'CrossHairCursor',
-		'CurrentCursor',
 		'DownCursor',
 		'MarkerCursor',
 		'MenuCursor',
@@ -126,24 +125,6 @@ Cursor class >> crossHair [
 	"Answer the instance of me that is the shape of a cross."
 
 	^CrossHairCursor
-]
-
-{ #category : #'current cursor' }
-Cursor class >> currentCursor [
-	"Answer the instance of Cursor that is the one currently displayed."
-
-	^ ActiveHand ifNotNil: [ActiveHand currentCursor] ifNil: [ CurrentCursor ]
-]
-
-{ #category : #'current cursor' }
-Cursor class >> currentCursor: aCursor [ 
-	"Make the instance of cursor, aCursor, be the current cursor. Display it."
-
-	ActiveHand ifNotNil: [
-		ActiveHand currentCursor: aCursor.
-		^ self ].
-
-	CurrentCursor := aCursor	
 ]
 
 { #category : #constants }
@@ -1067,11 +1048,6 @@ Cursor >> hasMask [
 	^false
 ]
 
-{ #category : #testing }
-Cursor >> isCurrent [
-	^ self class currentCursor == self 
-]
-
 { #category : #primitives }
 Cursor >> primitiveBeCursor [
 	"Primitive. Tell the interpreter to use the receiver as the current cursor 
@@ -1106,15 +1082,14 @@ Cursor >> printOn: aStream [
 { #category : #displaying }
 Cursor >> show [
 	"Make the hardware's mouse cursor look like the receiver"
-
-	self class currentCursor: self
+	self currentWorld activeHand currentCursor: self
 ]
 
 { #category : #displaying }
 Cursor >> showWhile: aBlock [ 
 	"While evaluating the argument, aBlock, make the receiver be the cursor shape."
 	| oldcursor |
-	oldcursor := self class currentCursor.
+	oldcursor := self currentWorld currentCursor.
 	self show.
 	^aBlock ensure: [oldcursor show]
 

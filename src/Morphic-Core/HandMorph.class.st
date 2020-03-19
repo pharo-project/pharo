@@ -44,18 +44,10 @@ Class {
 	#category : #'Morphic-Core-Kernel'
 }
 
-{ #category : #utilities }
-HandMorph class >> attach: aMorph [
-	"Attach aMorph the current world's primary hand."
-
-	self currentWorld primaryHand attachMorph: aMorph
-]
-
 { #category : #cleanup }
 HandMorph class >> cleanUp [
 	"Called from ImageCleaner>>cleanUpForRelease --> SmalltalkImage>>cleanUp:except:confirming:"
 	self logEventStatsStop.
-	ActiveHand resetClickState.
 
 
 ]
@@ -234,7 +226,7 @@ HandMorph >> captureEventsUntil: aBlock [
 	captureBlock := [:evt | release := aBlock value: evt ].
 	
 	[
-		[ self world doOneCycle. release ] whileFalse.
+		MorphicRenderLoop new doOneCycleWhile: [ release not ].
 	] ensure: [
 		captureBlock := nil.
 	]
@@ -278,15 +270,15 @@ HandMorph >> copyToPasteBuffer: aMorph [
 { #category : #cursor }
 HandMorph >> currentCursor [
 
-	^ ActiveHand world currentCursor
+	^ self world currentCursor
 ]
 
 { #category : #cursor }
 HandMorph >> currentCursor: aCursor [
 
-	ActiveHand world currentCursor: aCursor.
-		ActiveHand world isCursorOwner ifTrue: [
-			aCursor activateInCursorOwner: ActiveHand world ]
+	self world currentCursor: aCursor.
+	self world isCursorOwner ifTrue: [
+		aCursor activateInCursorOwner: self world ]
 ]
 
 { #category : #accessing }
@@ -300,12 +292,8 @@ HandMorph >> cursorBounds [
 
 { #category : #'event handling' }
 HandMorph >> cursorPoint [
-	"Implemented for allowing embedded worlds in an event cycle to query a hand's position and get it in its coordinates. The same can be achieved by #point:from: but this is simply much more convenient since it will look as if the hand is in the lower world."
 
-	| pos |
-	pos := self position.
-	(self currentWorld isNil or: [self currentWorld == owner]) ifTrue: [^pos].
-	^self currentWorld point: pos from: owner
+	^ self position
 ]
 
 { #category : #'balloon help' }
@@ -609,7 +597,7 @@ HandMorph >> grabMorph: aMorph [
 	"Grab the given morph (i.e., add it to this hand and remove it from its current owner) without changing its position. This is used to pick up a morph under the hand's current position, versus attachMorph: which is used to pick up a morph that may not be near this hand."
 	
 	| grabbed |
-	aMorph = self currentWorld ifTrue: [^ self].
+	aMorph = self world ifTrue: [^ self].
 	self releaseMouseFocus.
 	grabbed := aMorph aboutToBeGrabbedBy: self.
 	grabbed ifNil: [^self].
@@ -881,11 +869,11 @@ HandMorph >> needsToBeDrawn [
 				]])
 		ifTrue: [
 			"using the software cursor; hide the hardware one"
-			Cursor blank isCurrent ifFalse: [Cursor blank show].
+			self currentCursor == Cursor blank ifFalse: [Cursor blank show].
 			^ true].
 	"Switch from one hardware cursor to another, if needed."
 	cursor := hardwareCursor ifNil: [Cursor normal].
-	cursor isCurrent ifFalse: [cursor show].
+	self currentCursor == cursor ifFalse: [cursor show].
 	^ false
 
 ]
@@ -1037,9 +1025,11 @@ HandMorph >> processEventsFromQueue: anEventQueue [
 
 	| evt evtBuf type hadAny |
 
-	ActiveEvent
-		ifNotNil: [ "Meaning that we were invoked from within an event response.
-		Make sure z-order is up to date" self mouseOverHandler processMouseOver: lastMouseEvent ].
+	self lastEvent ifNotNil: [
+		"Meaning that we were invoked from within an event response.
+		Make sure z-order is up to date"
+		self mouseOverHandler processMouseOver: lastMouseEvent ].
+
 	hadAny := false.
 	[ anEventQueue isNotNil and: [ ( evtBuf := anEventQueue nextEvent ) isNotNil ] ]
 		whileTrue: [ evt := nil.	"for unknown event types"
@@ -1210,7 +1200,7 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 						extent: savedPatch extent + self shadowOffset)
 				from: self.
 			cursor := hardwareCursor ifNil: [Cursor normal].
-			cursor isCurrent ifFalse: [cursor show].	"show hardware cursor"
+			self currentCursor == cursor ifFalse: [cursor show].	"show hardware cursor"
 			savedPatch := nil]
 ]
 
@@ -1255,9 +1245,7 @@ HandMorph >> sendEvent: anEvent focus: focusHolder clear: aBlock [
 	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
 	| result |
 	focusHolder ifNotNil:[^self sendFocusEvent: anEvent to: focusHolder clear: aBlock].
-	ActiveEvent := anEvent.
 	result := owner processEvent: anEvent.
-	ActiveEvent := nil.
 	^result
 ]
 
@@ -1267,8 +1255,6 @@ HandMorph >> sendFocusEvent: anEvent to: focusHolder clear: aBlock [
 	| result w |
 	w := focusHolder world ifNil:[^ aBlock value].
 	w becomeActiveDuring:[
-		ActiveHand := self.
-		ActiveEvent := anEvent.
 		result := focusHolder handleFocusEvent: 
 			(anEvent transformedBy: (focusHolder transformedFrom: self)).
 	].

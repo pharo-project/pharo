@@ -18,52 +18,79 @@ ClapCompositeMatch >> addChild: aSubExpression [
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> at: aSpec [
-	^ self
-		at: aSpec
-		ifAbsent: [ ClapImplicit of: aSpec in: self ]
+ClapCompositeMatch >> at: identifierOrSpec [
+	^ self at: identifierOrSpec
+		ifAbsent: [
+			specification at: identifierOrSpec
+				ifPresent: [ :spec | ClapImplicit of: spec in: self ]
+				ifAbsent: [ self notYetImplemented ] ]
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> at: aSpec ifAbsent: absentBlock [
+ClapCompositeMatch >> at: identifierOrSpec ifAbsent: absentBlock [
 	^ children
-		detect: [ :child | child specification = aSpec ]
+		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		ifNone: absentBlock
 ]
 
 { #category : #'accessing - children' }
 ClapCompositeMatch >> at: aSpec ifFound: foundBlock [
-	^ children
-		detect: [ :child | child specification = aSpec ]
-		ifFound: foundBlock
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver at: `@spec ifFound: `@foundBlock'
+			-> '`@receiver at: `@spec ifPresent: `@block'.
+	^ self at: aSpec ifPresent: foundBlock
 ]
 
 { #category : #'accessing - children' }
 ClapCompositeMatch >> at: aSpec ifFound: foundBlock ifAbsent: absentBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver at: `@spec ifFound: `@foundBlock ifAbsent: `@absentBlock'
+			-> '`@receiver at: `@spec ifPresent: `@block ifAbsent: `@absentBlock'.
+	^ self at: aSpec ifPresent: foundBlock ifAbsent: absentBlock
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock [
 	^ children
-		detect: [ :child | child specification = aSpec ]
+		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
+		ifFound: foundBlock
+]
+
+{ #category : #'accessing - children' }
+ClapCompositeMatch >> at: identifierOrSpec ifPresent: foundBlock ifAbsent: absentBlock [
+	^ children
+		detect: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		ifFound: foundBlock
 		ifNone: absentBlock
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> atName: canonicalName [
-	^ self at: (specification atName: canonicalName)
+ClapCompositeMatch >> atName: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name'
+			-> '`@receiver at: `@name'.
+	^ self at: aName
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> atName: canonicalName ifFound: foundBlock [
-	^ self
-		at: (specification atName: canonicalName)
-		ifFound: foundBlock
+ClapCompositeMatch >> atName: aName ifFound: aBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name ifFound: `@block'
+			-> '`@receiver at: `@name ifPresent: `@block'.
+	^ self at: aName ifPresent: aBlock
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> atName: canonicalName ifFound: foundBlock ifAbsent: absentBlock [
-	^ self
-		at: (specification atName: canonicalName)
-		ifFound: foundBlock
-		ifAbsent: absentBlock
+ClapCompositeMatch >> atName: aName ifFound: foundBlock ifAbsent: absentBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver atName: `@name ifFound: `@foundBlock ifAbsent: `@absentBlock'
+			-> '`@receiver at: `@name ifPresent: `@block ifAbsent: `@absentBlock'.
+	^ self at: aName ifPresent: foundBlock ifAbsent: absentBlock
 ]
 
 { #category : #matching }
@@ -89,13 +116,17 @@ ClapCompositeMatch >> flags [
 ]
 
 { #category : #testing }
-ClapCompositeMatch >> includesMatchNamed: canonicalName [
-	^ children anySatisfy: [ :arg | arg specification canonicalName = canonicalName ]
+ClapCompositeMatch >> includesMatchNamed: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver includesMatchNamed: `@name'
+			-> '`@receiver includesMatchOf: `@name'.
+	 ^ self includesMatchOf: aName
 ]
 
 { #category : #testing }
-ClapCompositeMatch >> includesMatchOf: aSpec [
-	^ children anySatisfy: [ :arg | arg specification = aSpec ]
+ClapCompositeMatch >> includesMatchOf: identifierOrSpec [
+	^ children anySatisfy: [ :arg | arg isMatchOf: identifierOrSpec ]
 ]
 
 { #category : #initialization }
@@ -121,40 +152,48 @@ ClapCompositeMatch >> matchedSubcommand: foundBlock ifNone: noneBlock [
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> occurrencesNamed: canonicalName [
-	^ self occurrencesOf: (specification atName: canonicalName)
+ClapCompositeMatch >> occurrencesNamed: aName [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver occurrencesNamed: `@name'
+			-> '`@receiver occurrencesOf: `@name'.
+	^ self occurrencesOf: aName
 ]
 
 { #category : #enumerating }
-ClapCompositeMatch >> occurrencesNamed: canonicalName collect: aBlock [
-	^ self
-		occurrencesOf: (specification atName: canonicalName)
-		collect: aBlock
+ClapCompositeMatch >> occurrencesNamed: aName collect: aBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver occurrencesNamed: `@name collect: `@block'
+			-> '`@receiver occurrencesOf: `@name collect: `@block'.
+	^ self occurrencesOf: aName collect: aBlock
 ]
 
 { #category : #enumerating }
-ClapCompositeMatch >> occurrencesNamed: canonicalName do: aBlock [
-	^ self
-		occurrencesOf: (specification atName: canonicalName)
-		do: aBlock
+ClapCompositeMatch >> occurrencesNamed: aName do: aBlock [
+	self
+		deprecated: 'Querying by name or specification has been unified.'
+		transformWith: '`@receiver occurrencesNamed: `@name do: `@block'
+			-> '`@receiver occurrencesOf: `@name do: `@block'.
+	^ self occurrencesOf: aName do: aBlock
 ]
 
 { #category : #'accessing - children' }
-ClapCompositeMatch >> occurrencesOf: aSpec [
-	^ children select: [ :child | child specification = aSpec ]
+ClapCompositeMatch >> occurrencesOf: identifierOrSpec [
+	^ children select: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 ]
 
 { #category : #enumerating }
-ClapCompositeMatch >> occurrencesOf: aSpec collect: aBlock [
+ClapCompositeMatch >> occurrencesOf: identifierOrSpec collect: aBlock [
 	^ children
-		select: [ :child | child specification = aSpec ]
+		select: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		thenCollect: aBlock
 ]
 
 { #category : #enumerating }
-ClapCompositeMatch >> occurrencesOf: aSpec do: aBlock [
+ClapCompositeMatch >> occurrencesOf: identifierOrSpec do: aBlock [
 	^ children
-		select: [ :child | child specification = aSpec ]
+		select: [ :child | identifierOrSpec identifiesClapParameter: child specification ]
 		thenDo: aBlock
 ]
 

@@ -104,7 +104,7 @@ TGLMFastTableColumnsRenderer >> rowMorphForColumn: aColumn item: anItem withInde
 			node: (self dataFromPresentationItem: anItem)
 			withIndex: aRowIndex ).
 		
-	^ Smalltalk ui theme newRowIn: self currentWorld for: rowElements
+	^ Smalltalk ui theme newRowIn: self for: rowElements
 ]
 
 { #category : #'accessing - cache' }

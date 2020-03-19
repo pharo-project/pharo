@@ -39,7 +39,10 @@ GTSpotterDropDownMorph >> spotterModel [
 GTSpotterDropDownMorph >> spotterModel: aModel [ 
 	spotterModel := aModel.
 	
-	spotterModel steps do: [ :each | self pushPane: (self buildPane: each) ].
+	spotterModel steps do: [ :each | | pane |
+		pane := self buildPane: each.
+		self pushPane: pane.
+		pane initializeListeners ].
 	
 	spotterModel announcer when: GTSpotterStepAdded send: #onStepAdded: to: self.
 ]

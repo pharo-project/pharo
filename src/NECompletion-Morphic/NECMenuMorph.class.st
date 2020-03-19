@@ -642,8 +642,7 @@ NECMenuMorph >> selectedEntry [
 { #category : #actions }
 NECMenuMorph >> show [
 	self resize.
-	self activeHand 
-		newMouseFocus: self.
+	self activeHand ifNotNil: [ :hand | hand newMouseFocus: self ].
 	self changed.
 ]
 

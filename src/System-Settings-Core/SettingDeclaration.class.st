@@ -270,14 +270,14 @@ SettingDeclaration >> inputWidget [
 		  ifTrue: [inputWidget model ifNil: [inputWidget model: self]]].
 	xtraDialogWidget 
 		ifNotNil: [inputWidget := inputWidget ifNil: [xtraDialogWidget] 
-			ifNotNil: [ self theme  newRowIn: self currentWorld for: {inputWidget. xtraDialogWidget}]].
+			ifNotNil: [ self theme  newRowIn: self for: {inputWidget. xtraDialogWidget}]].
 	^ inputWidget 
 ]
 
 { #category : #'user interface' }
 SettingDeclaration >> inputWidgetForBoolean [
 	^  self theme  
-			newCheckboxIn: self currentWorld
+			newCheckboxIn: self
 			for: self
 			getSelected: #realValue
 			setSelected: #realValue:
@@ -290,7 +290,7 @@ SettingDeclaration >> inputWidgetForBoolean [
 SettingDeclaration >> inputWidgetForColor [
 	^ (  
 	 self theme 
-		newColorChooserIn: self currentWorld
+		newColorChooserIn: self
 		for: self
 		getColor: #realValue
 		setColor: #realValue:
@@ -323,7 +323,7 @@ SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 		width: 450;
 		wantsFrameAdornments: true.
 	button := self theme
-		newButtonIn: self currentWorld
+		newButtonIn: self
 		for: self
 		getState: nil
 		action: aSymbol
@@ -334,7 +334,7 @@ SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 				image: (self iconNamed: #smallOpenIcon))
 		help: 'Open directory chooser dialog' translated.
 	^ self theme
-		newRowIn: self currentWorld
+		newRowIn: self
 		for:
 			{list.
 			button}
@@ -342,8 +342,8 @@ SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 
 { #category : #'user interface' }
 SettingDeclaration >> inputWidgetForFont [
-	^ (  self theme 
-		newButtonIn: self currentWorld
+	^ (self theme 
+		newButtonIn: self
 		for: self
 		getState: nil 
 		action: #getFont
@@ -357,7 +357,7 @@ SettingDeclaration >> inputWidgetForFont [
 { #category : #'user interface' }
 SettingDeclaration >> inputWidgetForLabel [
 	| widget |
-	widget := self theme newLabelIn: self currentWorld for: self label: '' getEnabled: nil.
+	widget := self theme newLabelIn: self for: self label: '' getEnabled: nil.
 	widget getTextSelector: #preferenceValue.
 	widget width: 450.
 	^ widget
@@ -373,7 +373,7 @@ SettingDeclaration >> inputWidgetForNumber [
 SettingDeclaration >> inputWidgetForPassword [
 	| widget |
 	widget :=  self theme  
-				newTextEntryIn: self currentWorld
+				newTextEntryIn: self
 				for: self
 				get: #realValue
 				set: #realValue:

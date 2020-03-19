@@ -15,9 +15,8 @@ Commands registered in the system (returned from a class-side method with the <c
 "
 Class {
 	#name : #ClapCommandLineExamples,
-	#superclass : #Object,
+	#superclass : #ClapApplication,
 	#instVars : [
-		'arguments',
 		'outStream'
 	],
 	#category : #'Clap-Examples'
@@ -27,102 +26,93 @@ Class {
 ClapCommandLineExamples class >> git [
 	"A dummy command (no behavior besides help) to demonstrate nested subcommand and as a test subject for the documenter.
 	<commandline> pragma omitted, because doesn't really make sense to make it available outside the image."
-	^ (ClapCommand withName: 'git')
+	^ (ClapCommand id: 'git')
 		description: 'The stupid content tracker';
 		add: ClapCommand forHelp;
-		add: ((ClapCommand withName: 'add')
+		add: ((ClapCommand id: 'add')
 			description: 'Add file contents to the index');
-		add: ((ClapCommand withName: 'branch')
+		add: ((ClapCommand id: 'branch')
 			description: 'List, create, or delete branches');
-		add: ((ClapCommand withName: 'clone')
+		add: ((ClapCommand id: 'clone')
 			description: 'Clone a repository into a new directory');
-		add: ((ClapCommand withName: 'commit')
+		add: ((ClapCommand id: 'commit')
 			description: 'Record changes to the repository');
-		add: ((ClapCommand withName: 'init')
+		add: ((ClapCommand id: 'init')
 			description: 'Create an empty Git repository or reinitialize an existing one');
-		add: ((ClapCommand withName: 'remote')
+		add: ((ClapCommand id: 'remote')
 			description: 'Manage set of tracked repositories';
-			add: (ClapCommand withName: 'add');
-			add: (ClapCommand withName: 'remove');
-			add: (ClapCommand withName: 'set-url');
+			add: (ClapCommand id: 'add');
+			add: (ClapCommand id: 'remove');
+			add: (ClapCommand id: 'set-url');
 			yourself);
-		add: ((ClapCommand withName: 'status')
+		add: ((ClapCommand id: 'status')
 			description: 'Show the working tree status');
 		yourself
 ]
 
 { #category : #'command line' }
 ClapCommandLineExamples class >> hello [
-	"The usual Hello-World example, demonstrating a Clap command with a couple options."
+	"The usual Hello-World example, demonstrating a Clap command with a couple features."
 
 	<commandline>
-	^ (ClapCommand withName: 'hello')
+	^ (ClapCommand id: #hello)
 		description: 'Provides greetings';
 		add: ClapFlag forHelp;
-		add: ((ClapFlag withName: 'whisper') description: 'Greet discretely');
-		add: ((ClapFlag withName: 'shout') description: 'Greet loudly');
+		add: ((ClapFlag id: #whisper) description: 'Greet discretely');
+		add: ((ClapFlag id: #shout) description: 'Greet loudly');
 		add:
-			((ClapFlag withName: 'language')
+			((ClapFlag id: #language)
 				description: 'Select language of greeting';
-				add: ((ClapPositional withName: 'langCode')
+				add: ((ClapPositional id: #langCode)
 					meaning: [ :pos | pos word asSymbol ];
-					implicitMeaning: [ #en ]);
-				meaning: [ :flag | (flag atName: 'langCode') value ]);
+					implicitMeaning: [ :arg :app | app defaultLanguage ]);
+				meaning: [ :flag :app | (flag at: #langCode) value: app ]);
 		add:
-			((ClapPositional withName: 'who')
+			((ClapPositional id: #who)
 				description: 'Recipient of the greetings';
 				multiple: true;
-				implicitMeaning: [ 'world' ]);
+				implicitMeaning: [ :arg :app | app defaultRecipient ]);
 		meaning: [ :args | 
-			args
-				atName: 'help'
-				ifFound: [ :help | 
-					help
-						value;
-						exitSuccess ].
-			(self with: args) sayHello ]
-]
-
-{ #category : #'instance creation' }
-ClapCommandLineExamples class >> with: arguments [
-	^ self new
-		setArguments: arguments;
-		yourself
+			args at: #helpFlag ifPresent: [ :help | 
+				help value; exitSuccess ].
+			(self with: args) execute ]
 ]
 
 { #category : #'accessing - private' }
-ClapCommandLineExamples >> argumentAt: argumentName [
-	^ (arguments atName: argumentName) value
+ClapCommandLineExamples >> argumentAt: identifier [
+	^ (arguments at: identifier) value: self
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 ClapCommandLineExamples >> defaultLanguage [
 	^ #en
 ]
 
+{ #category : #accessing }
+ClapCommandLineExamples >> defaultRecipient [
+	^ self
+		translationFor: self language
+		from: self translatedRecipients
+
+]
+
 { #category : #running }
+ClapCommandLineExamples >> execute [
+	self sayHello
+
+]
+
+{ #category : #accessing }
 ClapCommandLineExamples >> greeting [
-	| langs |
-	langs := self greetingTranslations.
-	^ langs at: self language
-		ifAbsent: [ langs at: self defaultLanguage ]
+	^ self
+		translationFor: self language
+		from: self translatedGreetings
+
 ]
 
-{ #category : #running }
-ClapCommandLineExamples >> greetingTranslations [
-	^ {
-		#en -> 'hello'.
-		#eo -> 'saluton'.
-		#es -> 'hola'.
-		#fr -> 'bonjour'.
-		#uk -> 'pryvit'.
-		#pt -> 'olá'
-	} asDictionary
-]
-
-{ #category : #running }
+{ #category : #accessing }
 ClapCommandLineExamples >> language [
-	^ self argumentAt: 'language'
+	^ self argumentAt: #language
 ]
 
 { #category : #'accessing - private' }
@@ -132,7 +122,7 @@ ClapCommandLineExamples >> outStream [
 
 { #category : #accessing }
 ClapCommandLineExamples >> recipients [
-	^ (arguments atName: 'who') allOccurrencesCollect: #value
+	^ (arguments at: #who) allOccurrencesCollect: [ :arg | arg value: self ]
 ]
 
 { #category : #running }
@@ -149,14 +139,41 @@ ClapCommandLineExamples >> sayHelloOn: aStream [
 			lf ]
 ]
 
-{ #category : #initialization }
-ClapCommandLineExamples >> setArguments: args [
-	arguments := args
-]
-
 { #category : #accessing }
 ClapCommandLineExamples >> shouting [
-	^ self argumentAt: 'shout'
+	^ self argumentAt: #shout
+]
+
+{ #category : #running }
+ClapCommandLineExamples >> translatedGreetings [
+	^ {
+		#de -> 'hallo'.
+		#en -> 'hello'.
+		#eo -> 'saluton'.
+		#es -> 'hola'.
+		#fr -> 'bonjour'.
+		#uk -> 'pryvit'.
+		#pt -> 'olá'.
+	} asDictionary
+]
+
+{ #category : #running }
+ClapCommandLineExamples >> translatedRecipients [
+	^ {
+		#de -> 'welt'.
+		#en -> 'world'.
+		#eo -> 'mondo'.
+		#es -> 'mundo'.
+		#fr -> 'tout le monde'.
+		#uk -> 'svit'.
+		#pt -> 'mundo'.
+	} asDictionary
+]
+
+{ #category : #running }
+ClapCommandLineExamples >> translationFor: lang from: translations [
+	^ translations at: self language
+		ifAbsent: [ translations at: self defaultLanguage ]
 ]
 
 { #category : #running }
@@ -169,5 +186,5 @@ ClapCommandLineExamples >> voice: aString [
 
 { #category : #accessing }
 ClapCommandLineExamples >> whispering [
-	^ self argumentAt: 'whisper'
+	^ self argumentAt: #whisper
 ]
