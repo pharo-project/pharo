@@ -32,10 +32,10 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 { #category : #private }
 MorphicUIManager >> activate [
 
-	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
-	World currentCursor: World currentCursor.
+	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: self currentWorld).
+	self currentWorld currentCursor: self currentWorld currentCursor.
 		
-	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
+	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
 	WorldMorph extraWorldList do: #restoreMorphicDisplay.
 
 	activeTranscript 
@@ -277,7 +277,7 @@ MorphicUIManager >> deactivate [
 	self triggerEvent: #aboutToLeaveWorld.
 	WorldMorph extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].	
 	
-	World worldState worldRenderer: (NullWorldRenderer forWorld: World).
+	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld).
 ]
 
 { #category : #debug }

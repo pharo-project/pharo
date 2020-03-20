@@ -28,18 +28,18 @@ SpDemoActionBarPresenter >> initializePresenters [
 			label: 'Add'; 
 			icon: (self iconNamed: #smallOk);
 			help: 'Add.';
-			action: [ World defer: [ self inform: 'Add' ] ];
+			action: [ MorphicRenderLoop new defer: [ self inform: 'Add' ] ];
 			yourself);
 		add: (self newButton
 			label: 'Remove'; 
 			icon: (self iconNamed: #smallCancel);
 			help: 'Remove.';
-			action: [ World defer: [ self inform: 'Remove' ] ];
+			action: [ MorphicRenderLoop new defer: [ self inform: 'Remove' ] ];
 			yourself);
 		addLast: (self newButton
 			label: 'Other'; 
 			help: 'Other.';
-			action: [ World defer: [ self inform: 'Other' ] ];
+			action: [ MorphicRenderLoop new defer: [ self inform: 'Other' ] ];
 			yourself);
 		yourself.
 

@@ -413,12 +413,6 @@ WorldMorph >> isEasySelecting [
 	^ worldState isEasySelecting
 ]
 
-{ #category : #testing }
-WorldMorph >> isMainWorld [
-
-	^ World == self 
-]
-
 { #category : #'project state' }
 WorldMorph >> isStepping: aMorph [
 	^ worldState isStepping: aMorph

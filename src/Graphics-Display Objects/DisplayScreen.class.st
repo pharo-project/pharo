@@ -37,7 +37,7 @@ DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
 
 	self flag: #pharoTodo. "The method should be modified to use currentWorld, but the dependency is not possible. We have to remodularize it."
-	^ ActiveWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
+	^ self currentWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
 ]
 
 { #category : #'display box access' }
@@ -109,7 +109,7 @@ DisplayScreen class >> initialize [
 	| display |
 	display := self new.
 	display
-		setExtent: self actualScreenSize
+		setExtent: 0@0
 		depth: 32. 
 	Smalltalk globals at: #Display put: display.
 	display beDisplay.
