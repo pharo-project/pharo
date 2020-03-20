@@ -8,8 +8,9 @@ Class {
 	#category : #'EpiceaBrowsers-Tests-Filters'
 }
 
-{ #category : #tests }
+{ #category : #running }
 EpHasImpactFilterTest >> setUp [
+	super setUp.
 	classFactory := ClassFactoryForTestCase new.
 	impactFilter := EpImpactCodeChangeFilter new
 		environment: self class environment;
@@ -17,9 +18,10 @@ EpHasImpactFilterTest >> setUp [
 
 ]
 
-{ #category : #tests }
+{ #category : #running }
 EpHasImpactFilterTest >> tearDown [
-	classFactory cleanUp
+	classFactory cleanUp.
+	super tearDown.
 ]
 
 { #category : #tests }
