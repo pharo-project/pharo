@@ -10,12 +10,11 @@ Class {
 
 { #category : #helpers }
 SliderTest >> assertSameValueAfter: aBlock [
+	"I get the value on the slider, execute a block and then assert the value of the slider remains the same"
 
 	| oldValue |
 	oldValue := aSlider value.
-	
 	aBlock value.
-	
 	self assert: aSlider value equals: oldValue
 ]
 
