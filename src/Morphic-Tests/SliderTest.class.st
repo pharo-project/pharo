@@ -83,7 +83,7 @@ SliderTest >> testMouseMoveWithoutDraggingDoesNotStartDrag [
 		to: aSlider bounds corner.
 
 	"Verify that is not dragging"
-	self assert: aSlider dragging equals: false.
+	self deny: aSlider dragging
 ]
 
 { #category : #tests }
