@@ -109,7 +109,7 @@ DisplayScreen class >> initialize [
 	| display |
 	display := self new.
 	display
-		setExtent: self actualScreenSize
+		setExtent: 0@0
 		depth: 32. 
 	Smalltalk globals at: #Display put: display.
 	display beDisplay.
