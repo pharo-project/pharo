@@ -229,6 +229,63 @@ Slider >> setValueSelector: aSymbol [
 	setValueSelector := aSymbol
 ]
 
+{ #category : #'event testing' }
+Slider >> simulateScrollAbsolute: aPointStart to: aPointEnd [
+	"Simulates a mouse moving from a given point to a destinationpoint"
+	| event |
+	event := MouseMoveEvent  new 
+		setType: #mouseMove  
+		startPoint: aPointStart 
+		endPoint: aPointEnd 
+		trail: nil
+		buttons: 0
+		hand: self currentHand
+		stamp: 0.
+	self scrollAbsolute:  event
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMiddleMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent blueButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMiddleMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent blueButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent redButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent redButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderRightMouseDown [
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseDownWith: MouseEvent yellowButton
+]
+
+{ #category : #'event testing' }
+Slider >> simulateSliderRightMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
+
+	slider simulateMouseUpWith: MouseEvent yellowButton
+]
+
 { #category : #access }
 Slider >> sliderColor [
 	"color scheme for the whole slider widget"
