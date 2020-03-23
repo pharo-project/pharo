@@ -26,6 +26,11 @@ WinPlatform >> accept: aVisitor [
 ]
 
 { #category : #accessing }
+WinPlatform >> currentWorkingDirectoryPath [
+	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
+]
+
+{ #category : #accessing }
 WinPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
 	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
 	
@@ -39,6 +44,14 @@ WinPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	buffer := Win32WideString new: aBufferSize.
 	self currentWorkingDirectoryPathWithBuffer: buffer.
 	^ buffer asString
+]
+
+{ #category : #accessing }
+WinPlatform >> defaultEncoding [
+
+	"Windows encoding is managed directly by Win32WideString class.
+	See Win32WideString class comment for more details."
+	self shouldNotImplement 
 ]
 
 { #category : #accessing }

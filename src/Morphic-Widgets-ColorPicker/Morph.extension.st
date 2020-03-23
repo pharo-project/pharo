@@ -7,7 +7,7 @@ Morph >> changeColor [
 	dialog := ColorSelectorDialogWindow new
 		title: 'Choose color';
 		selectedColor: self color.
-	self openModal: dialog.
+	dialog openModal.
 	dialog cancelled
 		ifFalse: [self fillStyle: dialog selectedColor]
 	

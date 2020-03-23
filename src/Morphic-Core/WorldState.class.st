@@ -509,16 +509,6 @@ WorldState >> doOneCycleNowFor: aWorld [
 ]
 
 { #category : #'update cycle' }
-WorldState >> doOneSubCycleFor: aWorld [
-	"Like doOneCycle, but preserves activeHand."
-
-	| currentHand |
-	currentHand := self activeHand.
-	self doOneCycleFor: aWorld.
-	self activeHand: currentHand.
-]
-
-{ #category : #'update cycle' }
 WorldState >> drawWorld: aWorld submorphs: submorphs invalidAreasOn: aCanvas [ 
 	"Redraw the damaged areas of the given canvas and clear the damage list. Return a collection of the areas that
 were redrawn."

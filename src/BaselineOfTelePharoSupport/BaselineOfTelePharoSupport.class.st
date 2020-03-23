@@ -5,11 +5,11 @@ To load the TelePharo into the minimal image you first need to load the Tonel su
 The other repositories use Tonel format so you need to load the Tonel support in a separate step. Use the correct version of Tonel. 
 See BaselineOfIceberg>>#tonel:
 
-./pharo minimal.image eval --save ""Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.13'; load: 'core'""
+./pharo minimal.image eval --save ""Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.16'; load: 'core'""
 
 Load this baseline:
 
-./pharo minimal.image eval --save ""Metacello new baseline: 'TelePharoSupport';repository: 'github://pharo-project/pharo:Pharo8.0/src'; load""
+./pharo minimal.image eval --save ""Metacello new baseline: 'TelePharoSupport';repository: 'github://pharo-project/pharo:Pharo9.0/src'; load""
 
 Load the TelePharo 
 

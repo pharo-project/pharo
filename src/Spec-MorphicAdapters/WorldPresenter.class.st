@@ -17,13 +17,13 @@ WorldPresenter class >> defaultSpec [
 	<spec>
 	
 	self setUpWorld.
-	^ World asSpecAdapter
+	^ self currentWorld asSpecAdapter
 ]
 
 { #category : #private }
 WorldPresenter class >> setUpWorld [
-	World changeProportionalLayout.
-	World submorphs do: [:e | e delete ].
+	self currentWorld changeProportionalLayout.
+	self currentWorld submorphs do: [:e | e delete ].
  	(self environment at: #PolymorphSystemSettings) 
 		perform: #desktopColor: 
 		with: self theme backgroundColor.
@@ -55,13 +55,13 @@ WorldPresenter >> addModelIn: container withSpecLayout: aSpec [
 { #category : #factory }
 WorldPresenter >> buildWidget [
 
-	^ World asSpecAdapter
+	^ self currentWorld asSpecAdapter
 ]
 
 { #category : #private }
 WorldPresenter >> defaultInitialExtent [
 	
-	^ World extent
+	^ self currentWorld extent
 ]
 
 { #category : #api }

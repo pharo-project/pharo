@@ -600,14 +600,6 @@ PasteUpMorph >> griddingString [
 		, 'use gridding' translated
 ]
 
-{ #category : #recategorized }
-PasteUpMorph >> handlerForMouseDown: anEvent [
-	"If we have a modal dialog then answer nil otherwise as usual.."
-	
-	^(self hasProperty: #submorphLockStates)
-		ifFalse: [super handlerForMouseDown: anEvent]
-]
-
 { #category : #'event handling' }
 PasteUpMorph >> handlesKeyboard: evt [
 	^ true "handle all not handled events"

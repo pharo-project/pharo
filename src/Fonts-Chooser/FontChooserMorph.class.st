@@ -365,7 +365,7 @@ FontChooserMorph >> okButtonClicked [
 { #category : #'open/close' }
 FontChooserMorph >> open [
 
-	^ self createWindow openAsIsIn: self currentWorld.
+	^ self createWindow openInWorld.
 ]
 
 { #category : #'interface building' }

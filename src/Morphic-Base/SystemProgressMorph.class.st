@@ -295,13 +295,11 @@ SystemProgressMorph >> morphicLayerNumber [
 
 ]
 
-{ #category : #display }
-SystemProgressMorph >> openInWorld [
+{ #category : #opening }
+SystemProgressMorph >> preOpenInWorld: aWorld [
 
-	super openInWorld.
 	self width: 200.
-	self resize.
-	
+	self resize.	
 ]
 
 { #category : #updating }

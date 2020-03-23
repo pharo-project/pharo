@@ -159,8 +159,7 @@ GLMWatcherWindow >> morphicLayerNumber [
 ]
 
 { #category : #display }
-GLMWatcherWindow >> openInWorld [
-	super openInWorld.
+GLMWatcherWindow >> postOpenInWorld: aWorld [
 	isOpen := true.
 
 ]

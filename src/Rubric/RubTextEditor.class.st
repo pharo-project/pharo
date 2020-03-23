@@ -447,13 +447,11 @@ RubTextEditor >> changeTextFont [
 		forceCursorVisibleWhile: [ 
 			| hadFocus |
 			hadFocus := textArea hasFocus.
-			textArea
-				openModal:
-					(FontChooser
-						openWithWindowTitle: 'Choose a Font'
-						for: self
-						setSelector: #applyTextFont:
-						getSelector: self fontToUse).
+			(FontChooser
+				openWithWindowTitle: 'Choose a Font'
+				for: self
+				setSelector: #applyTextFont:
+				getSelector: self fontToUse) openModal.
 			hadFocus
 				ifTrue: [ textArea takeKeyboardFocus ] ]
 ]

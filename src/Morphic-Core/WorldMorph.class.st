@@ -321,13 +321,6 @@ WorldMorph >> doOneCycleNow [
 
 ]
 
-{ #category : #'world state' }
-WorldMorph >> doOneSubCycle [
-	"Like doOneCycle, but preserves activeHand."
-
-	worldState doOneSubCycleFor: self
-]
-
 { #category : #geometry }
 WorldMorph >> extent: aPoint [
 	super extent: aPoint.
@@ -418,12 +411,6 @@ WorldMorph >> isEasySelecting [
 	predicate. Selection can always be forced by using the shift
 	before mouse down."
 	^ worldState isEasySelecting
-]
-
-{ #category : #testing }
-WorldMorph >> isMainWorld [
-
-	^ World == self 
 ]
 
 { #category : #'project state' }

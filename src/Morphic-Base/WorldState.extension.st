@@ -33,11 +33,15 @@ WorldState >> menuBuilder [
 
 { #category : #'*Morphic-Base' }
 WorldState class >> startMessageTally [
+
 	(self confirm: 'MessageTally will start now,
 and stop when the cursor goes
 to the top of the screen' translated) 
-		ifTrue: [TimeProfiler spyAllOn: [[self currentWorld activeHand position y > 0] 
-					whileTrue: [self currentWorld doOneCycle]]]
+		ifFalse: [ ^ self ].
+
+	TimeProfiler spyAllOn: [
+		MorphicRenderLoop new doOneCycleWhile: [ 
+			self currentWorld activeHand position y > 0 ] ]
 ]
 
 { #category : #'*Morphic-Base' }
@@ -61,9 +65,11 @@ WorldState class >> startThenBrowseMessageTally [
 	
 	(self confirm: 'MessageTally the UI process until the
 mouse pointer goes to the top of the screen')
-		ifTrue: [TimeProfiler
-				onBlock: [[self currentWorld activeHand position y > 10]
-						whileTrue: [self currentWorld doOneCycle]]]
+		ifFalse: [ ^ self ].
+
+	TimeProfiler onBlock: [
+		MorphicRenderLoop new doOneCycleWhile: [ 
+			self currentWorld activeHand position y > 10 ] ]
 ]
 
 { #category : #'*Morphic-Base' }

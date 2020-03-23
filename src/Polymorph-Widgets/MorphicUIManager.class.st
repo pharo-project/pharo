@@ -32,10 +32,10 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 { #category : #private }
 MorphicUIManager >> activate [
 
-	World worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: World).
-	World currentCursor: World currentCursor.
+	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneforWorld: self currentWorld).
+	self currentWorld currentCursor: self currentWorld currentCursor.
 		
-	WorldMorph currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
+	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
 	WorldMorph extraWorldList do: #restoreMorphicDisplay.
 
 	activeTranscript 
@@ -277,7 +277,7 @@ MorphicUIManager >> deactivate [
 	self triggerEvent: #aboutToLeaveWorld.
 	WorldMorph extraWorldList do: [:world | world triggerEvent: #aboutToLeaveWorld ].	
 	
-	World worldState worldRenderer: (NullWorldRenderer forWorld: World).
+	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld).
 ]
 
 { #category : #debug }
@@ -464,7 +464,7 @@ MorphicUIManager >> merge: merger informing: aString [
 	window := mergeMorph newWindow
 		title: aString;
 		yourself.
-	self modalMorph openModal: window.
+	window openModal.
 	^ mergeMorph merged
 ]
 
@@ -595,14 +595,6 @@ MorphicUIManager >> openComparisonFrom: targetMethodSource
 ]
 
 { #category : #private }
-MorphicUIManager >> openModal: aSystemWindow [ 
-	"Open the given window at an available position with modality.
-	Answer the system window."
-	
-	^self modalMorph openModal: aSystemWindow
-]
-
-{ #category : #private }
 MorphicUIManager >> openPolymorphComparisonFrom: targetMethodSource
 					to: originalMethodSource
 					belongingTo: aClass
@@ -729,7 +721,7 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 MorphicUIManager >> spawnNewProcess [
 
 	UIProcess := [
-		[WorldMorph doOneCycle.  Processor yield.  false] whileFalse: [].
+		MorphicRenderLoop new doOneCycleWhile: [ true ]
 	] newProcess priority: Processor userSchedulingPriority.
 	UIProcess name: 'Morphic UI Process'.
 	UIProcess resume

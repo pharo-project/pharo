@@ -59,7 +59,7 @@ WidgetExamples class >> colorControls [
 					help: 'This is a hue-saturation-volume-alpha selector')
 					minHeight: 184; minWidth: 184)});
 		model: nil.
-	builder openModal: dialog
+	dialog openModal
 ]
 
 { #category : #examples }
@@ -144,7 +144,7 @@ WidgetExamples class >> exampleBasicControls [
 						getText: #value setText: #value:) disable)}})
 			vResizing: #spaceFill);
 		model: nil.
-	builder openModal: dialog
+	dialog openModal
 ]
 
 { #category : #examples }
@@ -171,7 +171,7 @@ WidgetExamples class >> exampleColorControls [
 					help: 'This is a hue-saturation-volume-alpha selector')
 					minHeight: 184; minWidth: 184)});
 		model: nil.
-	builder openModal: dialog
+	dialog openModal
 ]
 
 { #category : #examples }
@@ -274,7 +274,7 @@ WidgetExamples class >> exampleGroups [
 														help: 'This is a checkbox'))}))})})
 				vResizing: #spaceFill);
 		model: nil.
-	builder openModal: dialog
+	dialog openModal
 ]
 
 { #category : #examples }
@@ -343,7 +343,7 @@ WidgetExamples class >> exampleOtherControls [
 				cellInset: 0;
 				borderStyle: (BorderStyle inset baseColor: dialog paneColor; width: 1))});
 		model: nil.
-	builder openModal: dialog
+	dialog openModal
 ]
 
 { #category : #examples }

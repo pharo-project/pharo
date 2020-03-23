@@ -630,6 +630,16 @@ SystemWindow >> announceDeActivated [
 	).
 ]
 
+{ #category : #announcement }
+SystemWindow >> announceOpened [
+
+	super announceOpened.
+	self currentWorld announcer
+		announce: (WindowOpened new
+						window: self;
+						yourself).
+]
+
 { #category : #initialization }
 SystemWindow >> applyModelExtent [
 	self extent: model initialExtent 
@@ -1121,7 +1131,7 @@ SystemWindow >> icon [
 SystemWindow >> initialExtent [
 	^ (self model respondsTo: #initialExtent)
 		ifTrue: [self model initialExtent]
-		ifFalse: [RealEstateAgent standardWindowExtent]
+		ifFalse: [ self extent ]
 ]
 
 { #category : #initialization }
@@ -1329,6 +1339,45 @@ SystemWindow >> minimizeOrRestore [
 	self announce: windowEvent.
 ]
 
+{ #category : #'modal-windows' }
+SystemWindow >> modalChild [
+	"Answer the modal child of the receiver, if any."
+
+	^self valueOfProperty: #modalChild
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalLockTo: aSystemWindow [
+	"Lock the receiver as a modal owner of the given window."
+
+	aSystemWindow setProperty: #modalOwner toValue: self.
+	self setProperty: #modalChild toValue: aSystemWindow.
+	
+	closeBox ifNotNil: [ 
+		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
+		closeBox enabled: false
+	].
+
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalOwner [
+	"Answer the modal owner of the receiver, if any."
+
+	^self valueOfProperty: #modalOwner
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalUnlockFrom: aSystemWindow [
+	"Unlock the receiver as a modal owner of the given window."
+
+	aSystemWindow removeProperty: #modalOwner.
+	self removeProperty: #modalChild.
+	closeBox ifNotNil: [:cl | cl enabled: (self valueOfProperty: #preModalCloseEnabled ifAbsent: [true])].
+	self removeProperty: #preModalCloseEnabled.
+	self activate
+]
+
 { #category : #events }
 SystemWindow >> mouseDown: evt [
 	"Changed to properly process the mouse down event if passing to
@@ -1418,57 +1467,25 @@ SystemWindow >> offerWindowMenu [
 ]
 
 { #category : #'open/close' }
-SystemWindow >> openAsIs [
-	^self openAsIsIn: self currentWorld
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openAsIsIn: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop.
-	Play the open sound if the preference is enabled."
-	
-	self playOpenSound.
-	aWorld addMorph: self.
-	self activate.
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
-	
-	self world announcer 
-		announce: (WindowOpened new
-						window: self;
-						yourself).
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
-	^self openAsIsIn: aWorld.
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld extent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft; extent: extent.
-	^self openAsIsIn: aWorld
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorldExtent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-
-	self openInWorld: self currentWorld extent: extent
-]
-
-{ #category : #'open/close' }
 SystemWindow >> openModal [
-
 	self openInWorld.
-	self theme runModal: self.
+	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
+SystemWindow >> openModal: aSystemWindow [
+	"Open the given window locking the receiver until it is dismissed.
+	Answer the system window.
+	Restore the original keyboard focus when closed."
+
+	| keyboardFocus |
+	
+	keyboardFocus := self activeHand keyboardFocus.
+	self modalLockTo: aSystemWindow.
+	[ aSystemWindow openModal ] ensure: [
+		self modalUnlockFrom: aSystemWindow.
+		self activeHand newKeyboardFocus: keyboardFocus ].
+	^aSystemWindow
 ]
 
 { #category : #panes }
@@ -1560,6 +1577,23 @@ SystemWindow >> positionSubmorphs [
 	super positionSubmorphs.
 	self submorphsDo:
 		[:aMorph | aMorph positionSubmorphs]
+]
+
+{ #category : #opening }
+SystemWindow >> postOpenInWorld: aWorld [
+
+	self activate.
+	super postOpenInWorld: aWorld
+]
+
+{ #category : #opening }
+SystemWindow >> preOpenInWorld: aWorld [
+	"This msg and its callees result in the window being activeOnlyOnTop"
+	self bounds: (RealEstateAgent
+		initialFrameFor: self
+		initialExtent: self initialExtent
+		world: aWorld).
+	self playOpenSound.
 ]
 
 { #category : #printing }

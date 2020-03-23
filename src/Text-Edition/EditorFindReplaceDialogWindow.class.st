@@ -369,7 +369,7 @@ EditorFindReplaceDialogWindow >> on: aTextView [
 
 { #category : #action }
 EditorFindReplaceDialogWindow >> open [
-	self openAsIsIn: self currentWorld.
+	self openInWorld.
 	self extent: self extent.
 	self activate
 
