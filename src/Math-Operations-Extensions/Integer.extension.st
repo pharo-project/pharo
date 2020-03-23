@@ -80,9 +80,41 @@ Integer >> decimalDigitAt: anExponent [
 Integer >> factorial [
 	"Answer the factorial of the receiver."
 
-	self = 0 ifTrue: [^ 1].
-	self > 0 ifTrue: [^ self * (self - 1) factorial].
-	self error: 'Not valid for negative integers'
+	"The factorial on n is defined as: n * (n-1)*(n-2)*... while n>0. Factorial of 0 is 1.
+	We also know Factorial of 1 and 2 are themselves.
+	
+	This implementation uses a 2-partition algorithm.
+	
+	Without verbose detail:
+	
+	If'm an even number,some optimization can be applied:
+	Instead of doing all multiplication we can halving the number of multiplication regrouping terms, so:
+	n*(n-1)*(n-2)*....*3*2*1
+	can be rearranged as:
+	(n*1)*((n-1)*2)*((n-2)*3)*...
+	And the use the fact n is even to rewrite in a more efficient way.
+	If I'm an odd number then compute for n-1 and multily by n.
+	"
+
+	| nex nexnext acc |
+	"Guar for know cases (0,1,2,error)"
+	self < 3
+		ifTrue: [ ^ self < 0
+				ifTrue: [ self error: 'Not valid for negative integers' ]
+				ifFalse: [ self > 0
+						ifTrue: [ ^ self ]
+						ifFalse: [ ^ 1 ] ] ].
+	acc := 2.
+	nex := 2.
+	nexnext := 10.
+	
+	self // 2 - 1
+		timesRepeat: [ nex := nex + nexnext.
+			nexnext := nexnext + 8.
+			acc := acc * nex ].
+	self odd
+		ifTrue: [ acc := acc * self ].
+	^ acc
 ]
 
 { #category : #'*Math-Operations-Extensions' }
