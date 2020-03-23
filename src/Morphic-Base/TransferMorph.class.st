@@ -43,27 +43,17 @@ TransferMorph class >> initialize [
 ]
 
 { #category : #'instance creation' }
-TransferMorph class >> withPassenger: anObject [ 
-	^ self withPassenger: anObject from: nil
-]
-
-{ #category : #'instance creation' }
-TransferMorph class >> withPassenger: anObject from: source [ 
-	^self withPassenger: anObject from: source hand: nil
+TransferMorph class >> withPassenger: anObject from: source [
+	^self withPassenger: anObject from: source hand: source currentHand
 ]
 
 { #category : #'instance creation' }
 TransferMorph class >> withPassenger: anObject from: source hand: dragHand [
-	| hand |
-	
-	hand := dragHand.
-	
 	^ self new
 		passenger: anObject;
 		source: source;
-		"If the client hasn't provided a hand use the currently active hand"
-		dragHand: hand;
-		shouldCopy: hand shiftPressed;
+		dragHand: dragHand;
+		shouldCopy: dragHand shiftPressed;
 		position: source positionInWorld;
 		yourself
 ]
