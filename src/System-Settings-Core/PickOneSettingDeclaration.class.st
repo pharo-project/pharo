@@ -52,7 +52,7 @@ PickOneSettingDeclaration >> inputWidget [
 	| widget row |
 	row := self theme newRowIn: self for: {
 				widget := (self theme 
-						newDropListIn: self
+						newDropListIn: self currentWorld
 						for: self
 						list: #domainValuesLabels
 						getSelected: #index
