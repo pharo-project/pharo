@@ -23,6 +23,9 @@ HiExamplesTest >> exampleMethods [
 { #category : #tests }
 HiExamplesTest >> testAllExamples [
 	| exampleMethods |
+	
+	self timeLimit: 30 seconds.
+	
 	exampleMethods := self exampleMethods.
 	self deny: exampleMethods isEmpty.
 	
