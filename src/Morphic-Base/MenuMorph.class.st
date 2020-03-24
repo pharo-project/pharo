@@ -914,7 +914,7 @@ MenuMorph >> invokeModal [
 	menu invokeModal."
 	
   ^ self
-		invokeAt: self activeHand position
+		invokeAt: self currentWorld activeHand position
 		in: self currentWorld
 ]
 
