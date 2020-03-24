@@ -86,6 +86,8 @@ BaselineOfIDE >> additionalInitialization [
 	
 	HiRulerBuilderTest initialize.
 	
+	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
+	
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
