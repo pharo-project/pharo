@@ -298,7 +298,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	self loadBitmapSourcePro.
 	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
-
+	
 	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
 	#(ProgressBarMorph BalloonEngineConstants BalloonEngine 
@@ -316,6 +316,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
 	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer
 	) do: [:each | (Smalltalk globals at: each) initialize. ].
+
+	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
 
 	BalloonMorph setBalloonColorTo: Color yellow.
 

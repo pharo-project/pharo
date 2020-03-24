@@ -35,8 +35,7 @@ LogicalFontManager class >> current [
 { #category : #'instance creation' }
 LogicalFontManager class >> defaultCurrent [
 	^self new
-		addFontProvider: FreeTypeFontProvider current;
-		yourself
+
 ]
 
 { #category : #accessing }
