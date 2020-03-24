@@ -97,6 +97,8 @@ VMWorldRenderer >> deferUpdates: aValue [
 { #category : #operations }
 VMWorldRenderer >> deferUpdatesDuring: aBlock [
 
+	| previousDeferredUpdateMode |
+	previousDeferredUpdateMode := deferredUpdateMode.
 	[deferredUpdateMode := (self doDeferredUpdatingFor: world)
 		ifTrue: [ VMDisplayDeferredUpdateMode new ]
 		ifFalse: [ self assuredCanvas. VMDisplayDirectUpdateMode new ].
@@ -104,7 +106,7 @@ VMWorldRenderer >> deferUpdatesDuring: aBlock [
 	aBlock value
 	
 	] ensure: [ 
-		deferredUpdateMode := nil.
+		deferredUpdateMode := previousDeferredUpdateMode.
 		self deferUpdates: false.
 		self forceDisplayUpdate ]
 ]
