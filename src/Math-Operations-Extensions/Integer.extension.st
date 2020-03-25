@@ -85,6 +85,8 @@ Integer >> factorial [
 	
 	This implementation uses a 2-partition algorithm.
 	
+	For a recursive (but slower) implementation see 'slowfactorial'
+	
 	Without verbose detail:
 	
 	If'm an even number,some optimization can be applied:
@@ -95,15 +97,24 @@ Integer >> factorial [
 	And the use the fact n is even to rewrite in a more efficient way.
 	If I'm an odd number then compute for n-1 and multily by n.
 	"
+	
+	"Example of usages:"
+	
+	"0 factorial >>> 1"
+	"1 factorial >>> 1"
+	"2 factorial >>> 2"
+	"3 factorial >>> 6"
+	"4 factorial >>> 24"
+	"5 factorial >>> 120"
 
 	| nex nexnext acc |
-	"Guar for know cases (0,1,2,error)"
+	"Guard for know cases (0,1,2,error)"
 	self < 3
 		ifTrue: [ ^ self < 0
 				ifTrue: [ self error: 'Not valid for negative integers' ]
 				ifFalse: [ self > 0
-						ifTrue: [ ^ self ]
-						ifFalse: [ ^ 1 ] ] ].
+						ifTrue: [ self ]
+						ifFalse: [ 1 ] ] ].
 	acc := 2.
 	nex := 2.
 	nexnext := 10.
@@ -586,6 +597,30 @@ Integer >> slidingLeftRightRaisedTo: n modulo: m [
 					pow := pow * (oddPowersOfSelf at: index + 1) \\ m].
 			k := k - 1].
 	^pow
+]
+
+{ #category : #'*Math-Operations-Extensions' }
+Integer >> slowfactorial [
+	"Answer the factorial of the receiver."
+	
+	"This implementation is recursive and very canonical.
+	This implementation is intended for demo purposes, but for better performance
+	another version 'factorial' is provided."
+	
+	"Example of usages:"
+	
+	"0 slowfactorial >>> 1"
+	"1 slowfactorial >>> 1"
+	"2 slowfactorial >>> 2"
+	"3 slowfactorial >>> 6"
+	"4 slowfactorial >>> 24"
+	"5 slowfactorial >>> 120"
+
+	self = 0
+		ifTrue: [ ^ 1 ].
+	self > 0
+		ifTrue: [ ^ self * (self - 1) factorial ].
+	self error: 'Not valid for negative integers'
 ]
 
 { #category : #'*Math-Operations-Extensions' }

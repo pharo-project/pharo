@@ -382,6 +382,12 @@ IntegerTest >> testEven [
 	
 ]
 
+{ #category : #'tests - bitLogic' }
+IntegerTest >> testFactorial [	
+	"Compare fast implementarion with existing one for the first 1000 positive integers plus zero"
+	0 to: 1000 do: [ :idx | self assert: idx factorial equals: idx slowfactorial]
+]
+
 { #category : #'tests - printing' }
 IntegerTest >> testHex [
 	self assert: 0 hex equals: '16r0'.
@@ -1099,6 +1105,18 @@ IntegerTest >> testReciprocalModulo [
 IntegerTest >> testRounding [
  
 	self assert: (5 round: 2) equals: 5
+]
+
+{ #category : #'tests - bitLogic' }
+IntegerTest >> testSlowFactorial [
+
+	"Check some know values"
+	self assert: 0 slowfactorial equals: 1.
+	self assert: 1 slowfactorial equals: 1.
+	self assert: 2 slowfactorial equals: 2.
+	self assert: 3 slowfactorial equals: 6.
+	self assert: 4 slowfactorial equals: 24.
+	self assert: 5 slowfactorial equals: 120.
 ]
 
 { #category : #'tests - printing' }
