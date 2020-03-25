@@ -92,6 +92,9 @@ BaselineOfIDE >> additionalInitialization [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
 	
+	"Making HeuristicCompletion the default completion engine"
+	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
+	
 	self loadIceberg.	
 	self makeCalypsoDefaultBrowser.
 ]
@@ -187,6 +190,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'Catalog' with: [ spec repository: repository ].
+		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 
