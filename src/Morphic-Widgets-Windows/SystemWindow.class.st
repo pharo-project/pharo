@@ -1326,12 +1326,17 @@ SystemWindow >> maximumExtent: aPoint [
 { #category : #api }
 SystemWindow >> menu [
 
-	| aMenuBuilder |
-	aMenuBuilder := (PragmaMenuBuilder pragmaKeyword: self discoveredMenuPragmaKeyword model: self)
-		menuSpec;
-		yourself.
-				
-	^ aMenuBuilder menu
+	| aMenuBuilder res |
+
+	aMenuBuilder := BlockMenuBuilder owner: self.
+	aMenuBuilder model: self.
+	aMenuBuilder buildingBlock: [ :aBuilder |
+		self class windowMenuOn: aMenuBuilder.
+		self class tilingMenuOn: aBuilder.
+		self class tilingMenuItemsOn: aBuilder ].
+	aMenuBuilder menuSpec.
+	res := aMenuBuilder menu.
+	^ res.
 ]
 
 { #category : #'resize/collapse' }
