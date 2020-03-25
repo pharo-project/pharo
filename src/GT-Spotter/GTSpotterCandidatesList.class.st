@@ -280,11 +280,25 @@ GTSpotterCandidatesList >> privateAddCandidate: aCandidateLink weightedInNotFull
 		ifTrue: [  ] ]
 ]
 
+{ #category : #notifying }
+GTSpotterCandidatesList >> processorEnded: aProcessor [
+
+	(self processors noneSatisfy: [ :e | e isRunning ])
+		ifTrue: [ self announcer announce: GTSpotterQueryEnded new ] 
+	
+]
+
 { #category : #accessing }
 GTSpotterCandidatesList >> processorLinksMap [
 
 	^ processorLinksMap ifNil: [ processorLinksMap := Dictionary new ]
 	
+]
+
+{ #category : #notifying }
+GTSpotterCandidatesList >> processorStarted: aProcessor [
+	
+	self announcer announce: GTSpotterQueryStarted new.
 ]
 
 { #category : #accessing }

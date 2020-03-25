@@ -20,6 +20,12 @@ GTSpotterMorph >> actDueTo: anEventType [
 		self spotterModel currentStep actDueTo: anEventType ]
 ]
 
+{ #category : #private }
+GTSpotterMorph >> addProcessorKeyBinding: aProcessor [
+
+	processorKeyBindings at: aProcessor keyBinding put: aProcessor
+]
+
 { #category : #accessing }
 GTSpotterMorph >> autoHide [
 
@@ -30,6 +36,12 @@ GTSpotterMorph >> autoHide [
 GTSpotterMorph >> autoHide: aBoolean [
 
 	autoHide := aBoolean
+]
+
+{ #category : #'event handling' }
+GTSpotterMorph >> bindKeyCombination: keyCombination ofProcessor: aProcessor toAction: action [
+	self addProcessorKeyBinding: aProcessor.
+	self kmDispatcher bindKeyCombination: keyCombination toAction: action
 ]
 
 { #category : #initialization }
@@ -128,11 +140,7 @@ GTSpotterMorph >> handleProcessorKeyBindings [
 	self processorKeyBindingsDo: [
 		self spotterModel currentStep ifNotNil: [ 
 			self spotterModel currentStep processors do: [ :processor | 
-				processor keyBinding ifNotNil: [ 
-					| keyCombination |
-					keyCombination := processor keyBinding asKeyCombination.
-					processorKeyBindings at: keyCombination put: processor.
-					self kmDispatcher bindKeyCombination: keyCombination toAction: [ self onKeyProcessor: processor ] ] ] ] ]
+				processor installKeymappingsOn: self ]]]
 ]
 
 { #category : #'event handling' }
@@ -287,7 +295,8 @@ GTSpotterMorph >> paneBrick: aBrick [
 		
 	self themer spotterThemer spotterPaneStyleFor: paneBrick.
 
-	self addBrickBack: paneBrick
+	self addBrickBack: paneBrick.
+
 ]
 
 { #category : #private }
@@ -350,6 +359,15 @@ GTSpotterMorph >> spotterModel: aSpotter [
 	spotterModel announcer when: GTSpotterExitAnnouncement send: #closeSpotter to: self.
 	spotterModel announcer when: GTSpotterShowPreview send: #onShowPreview to: self.
 	spotterModel announcer when: GTSpotterHidePreview send: #onHidePreview to: self.
+	spotterModel announcer 
+		when: GTSpotterQueryStarted 
+		send: #showSpinner 
+		to: self paneBrick contentsBrick headerBrick.
+
+	spotterModel announcer 
+		when: GTSpotterQueryEnded 
+		send: #hideSpinner 
+		to: self paneBrick contentsBrick headerBrick.
 	
 	self breadcrumbBrick spotterModel: spotterModel.
 	self paneBrick spotterModel: spotterModel.
@@ -401,4 +419,14 @@ GTSpotterMorph >> unsubscribeListeners [
 
 	self activeHand removeEventListener: self.
 	Morph announcer unsubscribe: self.
+]
+
+{ #category : #actions }
+GTSpotterMorph >> updateText: aString [
+
+	| searchField |
+	searchField := paneBrick contentsBrick headerBrick searchField.
+	searchField
+		text: aString;
+		selectFrom: aString size + 1 to: aString size 
 ]

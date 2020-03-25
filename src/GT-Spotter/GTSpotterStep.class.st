@@ -85,10 +85,7 @@ GTSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext do: aBlock [
 			aSpotterContext text: (aSpotterContext text copyReplaceAll: categoryQuery with: '').
 			categoryQueryPrefix := categoryQuery allButFirst asLowercase.
 			self processors 
-				select: [ :each | 
-					self 
-						processor: each 
-						isRelevantForQuery: categoryQueryPrefix ]
+				select: [ :each | each isRelevantForQuery: categoryQueryPrefix ]
 				thenDo: aBlock ]
 		ifNone: [ 
 			self processors do: aBlock ]
@@ -120,6 +117,8 @@ GTSpotterStep >> candidates [
 		candidates announcer when: GTSpotterCandidateAdded send: #onCandidateAdded to: self.
 		candidates announcer when: GTSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
 		candidates announcer when: GTSpotterAllCandidatesRemoved do: [ self deselect ].
+		candidates announcer when: GTSpotterQueryStarted send: #propagateEvent: to: self.
+		candidates announcer when: GTSpotterQueryEnded send: #propagateEvent: to: self.
 		candidates ]
 ]
 
@@ -375,15 +374,6 @@ GTSpotterStep >> processContext: aSpotterContext [
 		self relevantProcessorsProcess: aSpotterContext  ]
 ]
 
-{ #category : #private }
-GTSpotterStep >> processor: aProcessor isRelevantForQuery: aString [
-	| trimmedProcessorTitle |
-	trimmedProcessorTitle := aProcessor title asLowercase 
-										copyReplaceAll: String space
-										with: ''.
-	^ trimmedProcessorTitle beginsWith: aString
-]
-
 { #category : #accessing }
 GTSpotterStep >> processors [
 
@@ -407,6 +397,14 @@ GTSpotterStep >> processors: aCollection [
 GTSpotterStep >> processorsFilter [
 
 	^ self spotter processorsFilter
+]
+
+{ #category : #'event processing' }
+GTSpotterStep >> propagateEvent: ann [ 
+
+	self announcer announce: ann
+
+	
 ]
 
 { #category : #private }
@@ -532,7 +530,6 @@ GTSpotterStep >> selectedCategory [
 	"Return a category processor that produced a currently selected candidate.
 	Note: Since selected link can not be accessed if there is no selected one,
 	always check #hasSelected before using me"
-	<return: #GTSpotterProcessor>
 	
 	^ self selected processor
 ]

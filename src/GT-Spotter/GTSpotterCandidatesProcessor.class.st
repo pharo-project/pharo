@@ -3,12 +3,12 @@ This processor adds the ability of computing and caching all possible candidates
 "
 Class {
 	#name : #GTSpotterCandidatesProcessor,
-	#superclass : #GTSpotterProcessor,
+	#superclass : #GTSpotterPragmaBasedProcessor,
 	#instVars : [
 		'origin',
 		'allCandidates'
 	],
-	#category : #'GT-Spotter-Processors'
+	#category : #'GT-Spotter-Processors-with-pragmas'
 }
 
 { #category : #'instance creation' }
@@ -95,6 +95,13 @@ GTSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	super prepareProcessorInContext: aContext.
 	
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
+]
+
+{ #category : #'as yet unclassified' }
+GTSpotterCandidatesProcessor >> render: anObject [
+	^ GTSpotterItemBrick new
+		icon: (self itemIconFor: anObject);
+		text: (self itemNameFor: anObject)
 ]
 
 { #category : #accessing }
