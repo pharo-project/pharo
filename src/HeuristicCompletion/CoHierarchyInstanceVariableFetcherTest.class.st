@@ -4,7 +4,7 @@ Class {
 	#category : #'HeuristicCompletion-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 CoHierarchyInstanceVariableFetcherTest >> setUp [
 
 	super setUp.

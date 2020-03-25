@@ -64,7 +64,7 @@ CoBasicCompletionTest >> innerASTNode [
 	^ nodeInsideABlock
 ]
 
-{ #category : #tests }
+{ #category : #running }
 CoBasicCompletionTest >> setUp [
 
 	super setUp.

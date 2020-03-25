@@ -7,7 +7,7 @@ Class {
 	#category : #'HeuristicCompletion-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 CoResultSetTest >> setUp [
 
 	super setUp.

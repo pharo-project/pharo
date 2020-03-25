@@ -201,6 +201,7 @@ NECPreferences class >> settingsOn: aBuilder [
 								target: RubSmalltalkEditor;
 								getSelector: #completionEngineClass;
 								setSelector: #completionEngineClass:;
+								default: (Smalltalk at: #CoCompletionEngine);
 								domainValues: availableControllers ].
 					availableSorters := self availableSorters.
 					availableSorters size > 1

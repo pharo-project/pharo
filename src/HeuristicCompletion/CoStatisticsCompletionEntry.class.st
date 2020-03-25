@@ -25,7 +25,7 @@ CoStatisticsCompletionEntry class >> on: aNECEntry [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 CoStatisticsCompletionEntry >> = anEntry [
  
 	^ self contents = anEntry contents
@@ -50,7 +50,7 @@ CoStatisticsCompletionEntry >> contents [
 	^ necEntry contents
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 CoStatisticsCompletionEntry >> hash [
  
 	^ self contents hash

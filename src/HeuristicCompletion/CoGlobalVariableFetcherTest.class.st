@@ -4,7 +4,7 @@ Class {
 	#category : #'HeuristicCompletion-Tests'
 }
 
-{ #category : #tests }
+{ #category : #running }
 CoGlobalVariableFetcherTest >> setUp [
 
 	super setUp.
