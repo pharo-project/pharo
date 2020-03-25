@@ -48,10 +48,8 @@ BaselineOfMorphic >> baseline: spec [
 			spec repository: repository; loads: #('Core') ].
 
 		spec package: 'System-Localization'.
-		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Clipboard'.
 		
-		spec package: 'Balloon'.
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'FileSystem-Zip'.
@@ -105,7 +103,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Settings-Polymorph'.
 		spec package: 'Settings-System'.
 
-		spec package: 'System-Caching'.
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings-Core'.
@@ -124,7 +121,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
-		spec package: 'System-OSEnvironments'.
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
@@ -302,10 +298,10 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	self loadBitmapSourcePro.
 	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
-
+	
 	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
-	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
+	#(ProgressBarMorph BalloonEngineConstants BalloonEngine 
 	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
 	FT2Types FT2FFILibrary
 	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
@@ -321,19 +317,17 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer
 	) do: [:each | (Smalltalk globals at: each) initialize. ].
 
+	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
+
 	BalloonMorph setBalloonColorTo: Color yellow.
 
 	UIManager default terminateUIProcess.
 	MorphicUIManager new spawnNewProcess.
 	Display newDepth: 32.
-	World displayWorldSafely.
+	
 	UIManager default: MorphicUIManager new.
-
-	World displayWorldSafely.
-
 	UIManager default uiProcess resume.
-	PharoDarkTheme beCurrent.
-	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
+	PharoLightTheme beCurrent.
 	self cleanUpAfterMorphicInitialization.
 
 	GraphicFontSettings setFontsToStyleNamed: #small.

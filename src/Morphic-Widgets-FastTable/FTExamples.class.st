@@ -456,6 +456,21 @@ FTExamples class >> exampleListWithExplicitSearch [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleListWithGenerator [
+	"Show a list with all Object methods"
+	<example>
+	<sampleInstance>
+	| list |
+
+	list := FTTableMorph new
+		extent: 300@550;
+		dataSource: (FTExampleMethodListGeneratorDataSource for: Object);
+		yourself.
+		
+	^ list openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleListWithHeader [
 	"Show a list with all Object methods with a header"
 
@@ -807,7 +822,7 @@ FTExamples class >> exampleTableHorizontalScroll [
 
 	<example>
 	| table |
-	table := FTTableMorph newTrialHorizontalScrollBar
+	table := FTTableMorph newWithHorizontalScrollBar
 		extent: 650 @ 500;
 		addColumn: ((FTColumn id: '#') width: 40);
 		addColumn: ((FTColumn id: 'Name') width: 350);

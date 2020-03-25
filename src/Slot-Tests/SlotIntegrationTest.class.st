@@ -118,32 +118,33 @@ SlotIntegrationTest >> testAddInstVarNamedClassInterface [
 { #category : #tests }
 SlotIntegrationTest >> testAddInstVarNamedWithTrait [
 	"Add instance variables using the builder interface"
-	
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			traitComposition: TOne;
-			slots: #( x )
-		].
+
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				traitComposition: TOne;
+				slots: #(x) ].
 	self assertTraitIntegrity.
 	self assert: aClass instVarNames equals: #(x).
-	
-	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+
+	self assert: TOne traitUsers asArray equals: {aClass}.
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1.
 
-	aClass :=  self make: [ :builder |
-		builder 
-			name: self aClassName;
-			traitComposition: TOne;
-			slots: #( x y )].
-		
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				traitComposition: TOne;
+				slots: #(x y) ].
+
 	self assertTraitIntegrity.
-	self assert: aClass instVarNames = #(x y).
-	
-	self assert: TOne traitUsers asArray equals: { aClass }.
-	
+	self assert: aClass instVarNames equals: #(x y).
+
+	self assert: TOne traitUsers asArray equals: {aClass}.
+
 	self assert: (aClass canUnderstand: #one).
 	self assert: aClass new one equals: 1
 ]
@@ -180,18 +181,17 @@ SlotIntegrationTest >> testAddInstVarNamedWithTrait2 [
 
 { #category : #tests }
 SlotIntegrationTest >> testAnonymousSubclass [
-	
-	aClass := self make: [ :builder |
-		builder 
-			name: self aClassName;
-			slots: #(x)
-		].
+	aClass := self
+		make: [ :builder | 
+			builder
+				name: self aClassName;
+				slots: #(x) ].
 
 	anotherClass := aClass newAnonymousSubclass.
-	self deny: anotherClass == aClass.
+	self deny: anotherClass identicalTo: aClass.
 	self assert: anotherClass isBehavior.
-	self assert: anotherClass superclass == aClass.
-	self deny: anotherClass name = aClass name.
+	self assert: anotherClass superclass identicalTo: aClass.
+	self deny: anotherClass name equals: aClass name.
 	self assert: anotherClass allInstVarNames equals: #(x)
 ]
 

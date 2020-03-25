@@ -18,7 +18,7 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	process := [ TestClassForTestingDebuggerTest debug: #bla ] forkAt: 41.
 
 	1000 milliSecond asDelay wait.
-	self currentWorld doOneCycle.
+	MorphicRenderLoop new doOneCycle.
 	preWindow := (self currentWorld allMorphs
 		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of ' ] ])
 		first.
@@ -28,7 +28,7 @@ InfiniteDebuggerTest >> testTestInfinitDebugger [
 	preWindow := nil.
 	debugButton := nil.
 	100 milliSecond asDelay wait.
-	self currentWorld doOneCycle.
+	MorphicRenderLoop new doOneCycle.
 	debugWindow := (self currentWorld allMorphs
 		select: [ :e | (e isKindOf: SystemWindow) and: [ e label beginsWith: 'Instance of Test' ] ])
 		first.

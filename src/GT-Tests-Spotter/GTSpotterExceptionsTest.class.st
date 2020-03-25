@@ -97,16 +97,17 @@ GTSpotterExceptionsTest >> shouldRaise: anErrorClass process: aString origin: an
 	self assertResetExceptions.
 
 	spotter exceptionHandler: exceptionHandler.
-	self assert: spotter exceptionHandler == exceptionHandler.
-	
-	self should: [ self process: aString origin: anOrigin ] 
-		raise: anErrorClass 
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler.
+
+	self
+		should: [ self process: aString origin: anOrigin ]
+		raise: anErrorClass
 		withExceptionDo: [ :exception | 
-			self assert: exception class == anErrorClass.
-			aBlock value: exception. ].
-		
-	self assert: spotter exceptionHandler == exceptionHandler.
-	
+			self assert: exception class identicalTo: anErrorClass.
+			aBlock value: exception ].
+
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler.
+
 	self assertException: anErrorClass
 ]
 
@@ -118,11 +119,11 @@ GTSpotterExceptionsTest >> shouldntRaise: anError process: aString origin: anOri
 { #category : #private }
 GTSpotterExceptionsTest >> shouldntRaise: anError process: aString origin: anOrigin during: exceptionHandler [
 	spotter exceptionHandler: exceptionHandler.
-	self assert: spotter exceptionHandler == exceptionHandler.
-	
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler.
+
 	self shouldnt: [ self process: aString origin: anOrigin ] raise: anError.
-	
-	self assert: spotter exceptionHandler == exceptionHandler.
+
+	self assert: spotter exceptionHandler identicalTo: exceptionHandler
 ]
 
 { #category : #tests }

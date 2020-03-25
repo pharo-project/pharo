@@ -129,10 +129,7 @@ MetacelloMCProject >> projectPackage [
       repo := mgr repositoryGroup repositories
         detect: [ :each | each ~~ MetacelloPlatform current defaultPackageCache ]
         ifNone: [ 
-          Transcript
-            cr;
-            show:
-                'Using cache repository for ' , self label , ' project package'.
+          MetacelloNotification signal: ('Using cache repository for ' , self label , ' project package').
           MetacelloPlatform current defaultPackageCache ].
       pkgSpec repository: (repo asRepositorySpecFor: self).
       ^ pkgSpec ].

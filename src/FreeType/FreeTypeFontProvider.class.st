@@ -309,6 +309,18 @@ FreeTypeFontProvider >> getWindowsFontFolderPath [
 ]
 
 { #category : #'file paths' }
+FreeTypeFontProvider >> getWindowsLocalPaths [
+	
+	"This values should be read from the repository in the key 
+	HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Fonts
+	However, things happened and we don't have support of the registry in the base image.
+	So this is the best alternative... or not...??  "
+
+	^ {(FileLocator home / 'AppData' / 'Local' / 'Microsoft' / 'Windows' / 'Fonts').
+	(FileLocator home / 'AppData' / 'Roaming' / 'Microsoft' / 'Windows' / 'Fonts')}
+]
+
+{ #category : #'file paths' }
 FreeTypeFontProvider >> guessWindowsFontFolderPath [
 	"Guess the location of the Windows font folder"
 	| possibilities |
@@ -324,6 +336,11 @@ FreeTypeFontProvider >> guessWindowsFontFolderPath [
 	
 		 	
 			
+]
+
+{ #category : #'file paths' }
+FreeTypeFontProvider >> imageRelativeFontFolder [
+  ^SmalltalkImage current imageDirectory asFileReference / 'Fonts'
 ]
 
 { #category : #initialization }
@@ -368,11 +385,11 @@ FreeTypeFontProvider >> platformAbsoluteDirectories [
 	^ {}
 ]
 
-{ #category : #'file paths' }
+{ #category : #'font families' }
 FreeTypeFontProvider >> platformImageRelativeDirectories [
 	
 	| directory |
-	directory :=  Smalltalk imagePath asFileReference / 'Fonts'.
+	directory := self imageRelativeFontFolder.
 	directory exists
 		ifTrue: [ ^ { directory } ].
 	^ #()
@@ -384,6 +401,17 @@ FreeTypeFontProvider >> platformVMRelativeDirectories [
   directory := Smalltalk vm directory asFileReference / 'Fonts'.
   directory exists ifTrue: [ ^{directory} ].
   ^#()
+]
+
+{ #category : #'loading and updating' }
+FreeTypeFontProvider >> prepareForRelease [
+
+	"When releasing an image, we should only include the embedded fonts"
+
+	self initialize.
+	self updateEmbeddedFreeTypeFonts
+
+
 ]
 
 { #category : #'loading and updating' }
@@ -574,11 +602,20 @@ FreeTypeFontProvider >> validCachedInfoFor: aFile index: i [
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> winFontDirectories [
-	| directory |
-	directory := self getWindowsFontFolderPath.
-	directory ifNil: [ ^ #() ].
-	directory := directory asFileReference.
-	directory exists 
-		ifTrue: [ ^ { directory }].
-	^ #()
+	| results |
+	
+	results := OrderedCollection new.
+	
+	self getWindowsFontFolderPath
+		ifNotNil: [ :aString | | directory |
+				directory := aString asFileReference.
+				directory exists 
+					ifTrue: [ results add: directory ]].
+	
+	self getWindowsLocalPaths
+		do: [ :directory | 
+				directory exists 
+					ifTrue: [ results add: directory ]].
+		
+	^ results
 ]

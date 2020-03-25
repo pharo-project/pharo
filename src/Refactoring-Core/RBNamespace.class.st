@@ -52,8 +52,9 @@ Class {
 
 { #category : #'instance creation' }
 RBNamespace class >> onEnvironment: aBrowserEnvironment [ 
-	^(self new)
+	^self basicNew
 		environment: aBrowserEnvironment;
+		initialize;
 		yourself
 ]
 
@@ -248,12 +249,8 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className |
 	className := aBehavior instanceSide name.
-	nonMeta := (modelFactory rbClass existingNamed: className)
-				model: self;
-				yourself.
-	meta := (modelFactory rbMetaclass existingNamed: className)
-				model: self;
-				yourself.
+	nonMeta := modelFactory rbClass existingNamed: className model: self.
+	meta := modelFactory rbMetaclass existingNamed: className model: self.
 	^changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
@@ -300,7 +297,7 @@ RBNamespace >> description: aString [
 
 { #category : #accessing }
 RBNamespace >> environment [
-	^environment
+	^ environment ifNil: [ environment := RBBrowserEnvironment new].
 ]
 
 { #category : #accessing }
@@ -343,8 +340,7 @@ RBNamespace >> includesGlobal: aSymbol [
 { #category : #initialization }
 RBNamespace >> initialize [
 	super initialize.
-	changes := changeFactory compositeRefactoryChange.
-	environment := RBBrowserEnvironment new.
+	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
 	newClasses := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
 	removedClasses := Set new.
@@ -437,6 +433,17 @@ RBNamespace >> privateRootClasses [
 { #category : #changes }
 RBNamespace >> removeClass: aRBClass [ 
 	self removeClassNamed: aRBClass name
+]
+
+{ #category : #'private-changes' }
+RBNamespace >> removeClassKeepingSubclassesNamed: aSymbol [ 
+	removedClasses
+		add: aSymbol;
+		add: aSymbol , ' class'.
+	newClasses removeKey: aSymbol ifAbsent: [].
+	changedClasses removeKey: aSymbol ifAbsent: [].
+	self flushCaches.
+	^changes removeClassNamed: aSymbol
 ]
 
 { #category : #changes }

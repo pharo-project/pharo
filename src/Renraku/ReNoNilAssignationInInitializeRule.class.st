@@ -13,12 +13,16 @@ ReNoNilAssignationInInitializeRule class >> checksMethod [
 ]
 
 { #category : #running }
-ReNoNilAssignationInInitializeRule >> basicCheck: aMethod [
-	(aMethod selector = #initialize and: [ aMethod methodClass isInstanceSide ]) ifFalse: [ ^ false ].
+ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBlock [
+	| problemAssigments|
+	(aMethod selector = #initialize and: [ aMethod methodClass isInstanceSide ]) ifFalse: [ ^ self ].
 
-	aMethod ast assignmentNodes detect: [ :assignment | assignment value value isNil ] ifFound: [ ^ true ].
+	problemAssigments := aMethod ast assignmentNodes select: [ :assignment | assignment value value isNil ].
+	
+	problemAssigments do: [ :assignment | 
+			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: 'nil').
+		 ]
 
-	^ false
 ]
 
 { #category : #accessing }

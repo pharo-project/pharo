@@ -142,6 +142,7 @@ SystemProgressMorph class >> settingOn: aBuilder [
 				target: self;
 				getSelector: #verticalPosition;
 				setSelector: #verticalPosition:;
+				default: 0;
 				label: 'Vertical progress indicator position';
 				domainValues: {'bottom'->1. 'middle'->0.5. 'top'->0}]
 ]
@@ -294,13 +295,11 @@ SystemProgressMorph >> morphicLayerNumber [
 
 ]
 
-{ #category : #display }
-SystemProgressMorph >> openInWorld [
+{ #category : #opening }
+SystemProgressMorph >> preOpenInWorld: aWorld [
 
-	super openInWorld.
 	self width: 200.
-	self resize.
-	
+	self resize.	
 ]
 
 { #category : #updating }

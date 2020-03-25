@@ -27,8 +27,8 @@ ClyClassSideScopeTest >> testClassEnumeration [
 	scope classesDo: [ :each | result add: each ].
 	
 	self
-		assert: result asArray
-		equals: {ClyClass1FromP1 classSide. ClyClass2FromP1 classSide}
+		assertCollection: result asArray
+		hasSameElements: {ClyClass1FromP1 classSide. ClyClass2FromP1 classSide}
 ]
 
 { #category : #tests }
@@ -51,7 +51,7 @@ ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 	scope methodsDo: [ :each | result add: each selector ].
 	
 	expected := ClyClass1FromP1 classSide localMethods collect: #selector.
-	self assert: result sorted asArray equals: expected sorted asArray
+	self assertCollection: result sorted asArray equals: expected sorted
 ]
 
 { #category : #tests }
@@ -62,5 +62,27 @@ ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 	scope methodsDo: [ :each | result add: each selector ].
 	
 	expected := ClyClass1FromP1 classSide localMethods collect: #selector.
+	self assert: result sorted asArray equals: expected sorted asArray
+]
+
+{ #category : #tests }
+ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClass [
+	| expected |
+	scope := ClyClassSideScope of: ClyClassWithTraits.
+	
+	scope methodsDo: [ :each | result add: each selector ].
+	
+	expected := ClyClassWithTraits class methods reject: [ :e | e origin = TraitedClass ] thenCollect: #selector.
+	self assert: result sorted asArray equals: expected sorted asArray
+]
+
+{ #category : #tests }
+ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClassClassSide [
+	| expected |
+	scope := ClyClassSideScope of: ClyClassWithTraits classSide.
+	
+	scope methodsDo: [ :each | result add: each selector ].
+	
+	expected := ClyClassWithTraits class methods reject: [ :e | e origin = TraitedClass ] thenCollect: #selector.
 	self assert: result sorted asArray equals: expected sorted asArray
 ]

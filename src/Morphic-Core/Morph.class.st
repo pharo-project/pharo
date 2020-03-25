@@ -230,8 +230,8 @@ Morph >> actionMap [
 { #category : #structure }
 Morph >> activeHand [
 	| world |
-   world := self world ifNil: [^ ActiveHand ].
-   ^ world activeHand ifNil: [ ^ ActiveHand  ]
+   world := self world ifNil: [^ nil ].
+   ^ world activeHand
 ]
 
 { #category : #menus }
@@ -1231,8 +1231,8 @@ Morph >> beUnsticky [
 
 { #category : #'user interface' }
 Morph >> becomeModal [
-	self currentWorld
-		ifNotNil: [self currentWorld modalWindow: self]
+
+	self world modalWindow: self
 ]
 
 { #category : #'base-widgets' }
@@ -1544,7 +1544,7 @@ Morph >> buildYellowButtonMenu: aHand [
 	"build the morph menu for the yellow button"
 	| menu |
 	menu := UIManager default newMenuIn: self for: self.
-	self addNestedYellowButtonItemsTo: menu event: ActiveEvent.
+	self addNestedYellowButtonItemsTo: menu event: self activeHand lastEvent.
 	^ menu
 ]
 
@@ -2116,9 +2116,11 @@ Morph >> delete [
 	new owner be nil."
 	
 	self removeHalo.
-	self activeHand 
-		releaseKeyboardFocus: self;
-		releaseMouseFocus: self.
+	self activeHand ifNotNil: [ :hand |
+		hand
+			releaseKeyboardFocus: self;
+			releaseMouseFocus: self.
+	].
 	owner ifNotNil:[ 
 		self privateDelete.
 		self announceDeleted.
@@ -2216,11 +2218,13 @@ Morph >> doFastReframe: ptName [
 
 	| newBounds |
 	"For fast display, only higlight the rectangle during loop"
-	newBounds := self boundsInWorld newRectButtonPressedDo: [:rectangle :cursorPoint | 
-		rectangle
-			withSideOrCorner: ptName
-			setToPoint: cursorPoint
-			minExtent: self minimumExtent].
+	newBounds := self boundsInWorld
+		newRectButtonPressedDo: [:rectangle :cursorPoint | 
+			rectangle
+				withSideOrCorner: ptName
+				setToPoint: cursorPoint
+				minExtent: self minimumExtent
+		] inWorld: self world.
 	Display deferUpdatesIn: Display boundingBox while: [
 		self bounds: newBounds].
 
@@ -2246,6 +2250,12 @@ Morph >> doLayoutIn: layoutBounds [
 	box := self outerBounds.
 	box = priorBounds 
 		ifFalse: [self invalidRect: (priorBounds quickMerge: box)]
+]
+
+{ #category : #opening }
+Morph >> doOpenInWorld: aWorld [
+
+	aWorld addMorph: self
 ]
 
 { #category : #'submorphs-accessing' }
@@ -4516,21 +4526,16 @@ Morph >> openInHand [
 	self currentHand attachMorph: self
 ]
 
-{ #category : #display }
+{ #category : #opening }
 Morph >> openInWorld [
-        "Add this morph to the world."
-
-        self openInWorld: self currentWorld
+	self openInWorld: self currentWorld
 ]
 
-{ #category : #initialize }
+{ #category : #opening }
 Morph >> openInWorld: aWorld [
-	"Add this morph to the requested World."
-	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
-		[self position: aWorld visibleClearArea origin].
-	aWorld addMorph: self.
-	aWorld startSteppingSubmorphsOf: self.
-	
+	self preOpenInWorld: aWorld.
+	self doOpenInWorld: aWorld.
+	self postOpenInWorld: aWorld.
 	self announceOpened.
 ]
 
@@ -4736,6 +4741,12 @@ Morph >> positionSubmorphs [
 		[:aMorph | aMorph snapToEdgeIfAppropriate]
 ]
 
+{ #category : #opening }
+Morph >> postOpenInWorld: aWorld [
+
+	aWorld startSteppingSubmorphsOf: self
+]
+
 { #category : #'meta-actions' }
 Morph >> potentialEmbeddingTargets [
 	"Return the potential targets for embedding the receiver"
@@ -4766,6 +4777,16 @@ Morph >> potentialTargetsAt: aPoint [
 		
 ]
 
+{ #category : #opening }
+Morph >> preOpenInWorld: aWorld [
+	"Interact with a world to decide how to position myself.
+	By default, I choose the visible area of the world.
+	Subclasses may choose different strategies or even calculate their bounds.
+	"
+	(aWorld visibleClearArea origin ~= (0@0) and: [self position = (0@0)]) ifTrue:
+		[self position: aWorld visibleClearArea origin].
+]
+
 { #category : #'halos and balloon help' }
 Morph >> preferredDuplicationHandleSelector [
 	"Answer the selector, either #addMakeSiblingHandle: or addDupHandle:, to be offered as the default in a halo open on me"
@@ -4776,14 +4797,14 @@ Morph >> preferredDuplicationHandleSelector [
 { #category : #'event handling' }
 Morph >> preferredKeyboardBounds [
 
-	^ self bounds: self bounds in: self currentWorld.
+	^ self bounds: self bounds in: self world
 
 ]
 
 { #category : #'event handling' }
 Morph >> preferredKeyboardPosition [
 
-	^ (self bounds: self bounds in: self currentWorld) topLeft.
+	^ self preferredKeyboardBounds topLeft.
 
 ]
 
@@ -5332,7 +5353,7 @@ Morph >> resistsRemovalString [
 Morph >> resizeFromMenu [
 	"Commence an interaction that will resize the receiver"
 
-	self resizeMorph: ActiveEvent
+	self resizeMorph: self activeHand lastEvent
 ]
 
 { #category : #'debug and other' }
@@ -5723,6 +5744,48 @@ Morph >> simplySetVisible: aBoolean [
 ]
 
 { #category : #'event testing' }
+Morph >> simulateClick [
+
+	self simulateClickWith: MouseEvent redButton.
+]
+
+{ #category : #'event testing' }
+Morph >> simulateClickWith: buttons [
+	"Did you know there's #simulateClick (left), #simulateMiddleClick, and #simulateRightClick?
+	buttons - look at MouseEvent's class-side for button types"
+
+	| noButtons |
+	noButtons := 0.
+	{ #mouseDown->buttons. #mouseUp->noButtons } do: [ :type |
+		self activeHand handleEvent: (MouseButtonEvent new 
+			setType: type key
+			position: (self pointInWorld: self center) "Some Morphs report local coords"
+			which: (noButtons bitXor: buttons)
+			buttons: type value
+			hand: self activeHand
+			stamp: Time millisecondClockValue) ].
+]
+
+{ #category : #'event testing' }
+Morph >> simulateClickWith: buttons position: position [
+	"Did you know there's #simulateClick (left), #simulateMiddleClick, and #simulateRightClick?
+	buttons - look at MouseEvent's class-side for button types"
+
+	| noButtons hand |
+	noButtons := 0.
+	hand := HandMorph new mouseFocus: self; yourself.
+	hand privateOwner: self.
+	{ #mouseDown->buttons. #mouseUp->noButtons } do: [ :type |
+		hand handleEvent: (MouseButtonEvent new 
+			setType: type key
+			position: position "Some Morphs report local coords"
+			which: (noButtons bitXor: buttons)
+			buttons: type value
+			hand: hand
+			stamp: Time millisecondClockValue) ].
+]
+
+{ #category : #'event testing' }
 Morph >> simulateKeyStroke: aCharacter [
 	| event |
 
@@ -5732,7 +5795,7 @@ Morph >> simulateKeyStroke: aCharacter [
 				position: 0@0 
 				keyValue: aCharacter charCode 
 				charCode: aCharacter charCode
-				hand: ActiveHand 
+				hand: self activeHand 
 				stamp: 0.
 	self keyStroke: event
 ]
@@ -5741,6 +5804,95 @@ Morph >> simulateKeyStroke: aCharacter [
 Morph >> simulateKeyStrokes: aString [
 
 	aString do: [:c | self simulateKeyStroke: c ].
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMiddleClick [
+
+	self simulateClickWith: MouseEvent blueButton.
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMiddleMouseDown [ 
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)"
+	self simulateMouseDownWith: MouseEvent blueButton .
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMiddleMouseUp [ 
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
+	self simulateMouseUpWith: MouseEvent blueButton .
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMouseDown [ 
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)"
+	self simulateMouseDownWith: MouseEvent redButton.
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMouseDownWith: buttons [
+	"Simulate mouse button down with a given button"
+	
+	self handleEvent: (MouseButtonEvent new 
+		setType: #mouseDown
+		position: (self pointInWorld: self center) "Some Morphs report local coords"
+		which:  buttons
+		buttons: buttons
+		hand: self activeHand
+		stamp: Time millisecondClockValue)
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMouseMove: aPointStart to: aPointEnd [
+"Simulates a mouse moving from a given point to a destinationpoint"
+	| event |
+	event := MouseMoveEvent  new 
+				setType: #mouseMove  
+				startPoint: aPointStart 
+				endPoint: aPointEnd 
+				trail: nil
+				buttons: 0
+				hand: self activeHand  
+				stamp: 0.
+	self mouseMove: event
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMouseUp [ 
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
+	self simulateMouseUpWith: MouseEvent redButton.
+]
+
+{ #category : #'event testing' }
+Morph >> simulateMouseUpWith: buttons [
+	"Simulate mouse button up with a given button"
+	
+	self handleEvent: (MouseButtonEvent new 
+		setType: #mouseUp
+		position: (self pointInWorld: self center) "Some Morphs report local coords"
+		which:  buttons
+		buttons: buttons
+		hand: self activeHand
+		stamp: Time millisecondClockValue)
+]
+
+{ #category : #'event testing' }
+Morph >> simulateRightClick [
+
+	self simulateClickWith: MouseEvent yellowButton.
+]
+
+{ #category : #'event testing' }
+Morph >> simulateRightMouseDown [ 
+	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right)"
+	self simulateMouseDownWith: MouseEvent yellowButton .
+]
+
+{ #category : #'event testing' }
+Morph >> simulateRightMouseUp [
+	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
+	self simulateMouseUpWith: MouseEvent yellowButton .
 ]
 
 { #category : #'dropping/grabbing' }
@@ -6787,7 +6939,7 @@ Morph >> yellowButtonActivity: shiftState [
 				ifNil: [^ false].
 			outerOwner == self
 				ifFalse: [^ outerOwner yellowButtonActivity: shiftState]].
-	menu := self buildYellowButtonMenu: ActiveHand.
+	menu := self buildYellowButtonMenu: self activeHand.
 	menu
 		addTitle: self externalName
 		icon: (self iconOrThumbnailOfSize: 28).

@@ -1,5 +1,5 @@
 "
-RBScanner is a stream that returns a sequence of token from the string that it is created on. The tokens know where they came from in the source code and which comments were attached to them.
+RBScanner is a stream that returns a sequence of tokens from the string. The tokens know where they came from in the source code and which comments were attached to them.
 
 Instance Variables:
 	buffer	<PositionableStream>	Accumulates the text for the current token.
@@ -151,7 +151,18 @@ RBScanner class >> patternVariableCharacter [
 ]
 
 { #category : #'public api' }
+RBScanner class >> scanTokenObjects: aStringOrStream [
+	"Return the tokens objects."
+	
+	| scanner |
+	scanner := self on: aStringOrStream readStream.
+	^ scanner contents
+]
+
+{ #category : #'public api' }
 RBScanner class >> scanTokens: aStringOrStream [
+	"Return the tokens (and not the scanner token objects)."
+	
 	| scanner |
 	scanner := self on: aStringOrStream readStream.
 	^scanner contents collect:[ :t | t value ]
@@ -216,11 +227,6 @@ RBScanner >> getComments [
 ]
 
 { #category : #testing }
-RBScanner >> isReadable [
-	^true
-]
-
-{ #category : #testing }
 RBScanner >> isSelector [
 	characterType = #binary
 		ifTrue: [ [ characterType = #binary ] whileTrue: [ self step ].
@@ -273,11 +279,6 @@ Binary --> Binary : binary
 Binary --> [*] : eof
 
 @enduml"
-]
-
-{ #category : #testing }
-RBScanner >> isWritable [
-	^false
 ]
 
 { #category : #accessing }
@@ -459,16 +460,31 @@ RBScanner >> scanLiteralCharacter [
 
 { #category : #'private-scanning' }
 RBScanner >> scanLiteralString [
-
-	self step.
-
-	[ currentCharacter ifNil: [ ^ self scanError: 'Unmatched '' in string literal.' ].
-	currentCharacter = $' and: [ self step ~= $' ]
-	]
-		whileFalse: [ buffer nextPut: currentCharacter.
-			self step
-			].
-	^ RBLiteralToken value: buffer contents start: tokenStart stop: self previousStepPosition
+	| string |
+	[stream atEnd ifTrue: [
+		self step. "to handle eof"
+		^ self scanError: 'Unmatched '' in string literal.'].
+	string := stream upTo: $'. 
+	stream peekBack = $' ifFalse: [ 
+		"the peek logic here is because #upTo: does not tell if given char was found"
+		buffer nextPutAll: string.
+		self step. "to handle eof"
+		^ self scanError: 'Unmatched '' in string literal.'].
+	
+	self step = $'] whileTrue: [ 
+		buffer nextPutAll: string; nextPut: $'.
+		string := ''].
+	
+	buffer position = 0 ifFalse: [ 		
+		buffer nextPutAll: string.
+		string := buffer contents].	
+	
+	"It's possible to use a plain Text for parsing.
+	In that case string here could be a Text instance but literal value must be a String"	
+	^RBLiteralToken 
+		value: string asString 
+		start: tokenStart 
+		stop: self previousStepPosition
 ]
 
 { #category : #'private-scanning' }
@@ -494,22 +510,6 @@ RBScanner >> scanNumber [
 		start: start
 		stop: stop
 		source: string
-]
-
-{ #category : #'private-scanning' }
-RBScanner >> scanPatternVariable [
-	buffer nextPut: currentCharacter.
-	self step.
-	currentCharacter = ${ 
-		ifTrue: 
-			[self step.
-			^RBPatternBlockToken value: '`{' start: tokenStart].
-	[characterType = #alphabetic] whileFalse: 
-			[characterType = #eof 
-				ifTrue: [ ^ self scanError: 'Meta variable expected'].
-			buffer nextPut: currentCharacter.
-			self step].
-	^self scanIdentifierOrKeyword
 ]
 
 { #category : #'private-scanning' }

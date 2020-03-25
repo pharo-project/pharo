@@ -119,6 +119,43 @@ SpMorphStyleTest >> testFromStylesheetAdapter [
 ]
 
 { #category : #tests }
+SpMorphStyleTest >> testNestedStyles [
+	| lookup labelAdapter styleSheet |
+
+	styleSheet := (SpStyleSTONReader fromString: '
+.application [
+	.label [
+		Geometry { #width: 21 },
+		.nested [ 
+			Geometry { #width: 42 },
+			.deepNested [ 
+				Geometry { #width: 84 } ] ] ] ]').
+
+	"No nesting"
+	labelAdapter := SpLabelPresenter new 
+		buildWithSpec;
+		adapter.
+	lookup := SpMorphStyle fromStylesheet: styleSheet adapter: labelAdapter.
+	self assert: lookup width equals: 21.
+
+	"nesting"			
+	labelAdapter := SpLabelPresenter new 
+		addStyle: 'nested';
+		buildWithSpec;
+		adapter.
+	lookup := SpMorphStyle fromStylesheet: styleSheet adapter: labelAdapter.
+	self assert: lookup width equals: 42.
+	
+	"deep-nesting"			
+	labelAdapter := SpLabelPresenter new 
+		addStyle: 'nested.deepNested';
+		buildWithSpec;
+		adapter.
+	lookup := SpMorphStyle fromStylesheet: styleSheet adapter: labelAdapter.
+	self assert: lookup width equals: 84
+]
+
+{ #category : #tests }
 SpMorphStyleTest >> testSimpleLookup [
 	"this should answer the width defined in the only level"
 	| styleResolver |

@@ -24,13 +24,9 @@ AbstractDrTestsUI >> currentPlugin [
 AbstractDrTestsUI >> currentPlugin: anObject [
 	"If a plugin was set before, unsubscribe first."
 
-	currentPlugin ifNotNil: [ currentPlugin announcer unsubscribe: self ].
+	currentPlugin ifNotNil: [ currentPlugin unconfigureUI: self ].
 	currentPlugin := anObject.
-	currentPlugin announcer
-		when: DTStatusUpdate
-		send: #handlePluginStatusUpdate:
-		to: self.
-	self updateUI
+	currentPlugin configureUI: self
 ]
 
 { #category : #'announcement handling' }
@@ -65,12 +61,12 @@ AbstractDrTestsUI >> locked: aBoolean [
 		do: [ :subwidget | subwidget enabled: aBoolean ]
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 AbstractDrTestsUI >> runPlugin [
 	self runPluginFor: self testsConfiguration
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 AbstractDrTestsUI >> runPluginFor: aTestsConfiguration [
 	[ self lock.
 	self updateStatus: 'Tests started.'.
@@ -146,13 +142,12 @@ AbstractDrTestsUI >> updateStatus: aString [
 	"Does nothing on purpose."
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 AbstractDrTestsUI >> updateUI [
-	^ self subclassResponsibility
-
+	self withWindowDo: [ :window | window title: self title ]
 ]
 
-{ #category : #initialization }
+{ #category : #updating }
 AbstractDrTestsUI >> updateWithResults: results [
 	self subclassResponsibility
 ]

@@ -7,7 +7,7 @@ My subclasses should implement single method:
 "
 Class {
 	#name : #ClyAddBreakpointCommand,
-	#superclass : #ClyMetalinkCommand,
+	#superclass : #ClyDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
 }
 

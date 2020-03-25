@@ -34,6 +34,12 @@ SpMorphicGridAdapter >> basicAdd: aPresenter constraints: constraints to: aPanel
 	^ childMorph	
 ]
 
+{ #category : #accessing }
+SpMorphicGridAdapter >> children [
+	
+	^ widget submorphs
+]
+
 { #category : #factory }
 SpMorphicGridAdapter >> layout: aLayout [
 	"build of widget was differed up to here (to know what is the direction)"
@@ -41,6 +47,14 @@ SpMorphicGridAdapter >> layout: aLayout [
 	widget ifNil: [ 
 		widget := self newPanel.
 		widget layoutPolicy layout: aLayout ].
+	
+	aLayout whenChildrenAddedDo: [ :ann |
+		self
+			add: ann child
+			constraints: (aLayout constraintsFor: ann child) ].
+	
+	aLayout whenChildrenRemovedDo: [ :ann |
+		self remove: ann child ].
 
 	super layout: aLayout
 ]
@@ -48,9 +62,15 @@ SpMorphicGridAdapter >> layout: aLayout [
 { #category : #factory }
 SpMorphicGridAdapter >> newPanel [
 
-	^ PanelMorph new 
+	^ super newPanel
 		layoutPolicy: SpMorphicGridLayout new;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
 		yourself
+]
+
+{ #category : #removing }
+SpMorphicGridAdapter >> remove: aPresenter [
+
+	| morph |
+	morph := aPresenter adapter widget.
+	widget removeMorph: morph
 ]

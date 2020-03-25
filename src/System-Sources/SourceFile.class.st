@@ -49,6 +49,20 @@ SourceFile >> cr [
 	stream cr
 ]
 
+{ #category : #buffering }
+SourceFile >> discardBuffer [
+
+	stream wrappedStream discardBuffer
+]
+
+{ #category : #accessing }
+SourceFile >> ensureWrittenPosition: aPosition [
+
+	self isReadOnly ifTrue: [ ^ false ].
+	
+	^ stream ensureWrittenPosition: aPosition
+]
+
 { #category : #accessing }
 SourceFile >> flush [
 

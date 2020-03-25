@@ -23,7 +23,9 @@ GTSpotterGlobalShortcut class >> openGlobalSpotter [
 		extent: (self currentWorld width / 2.4 @ (self currentWorld height / 1.6)) asIntegerPoint;
 		spotterModel: spotterModel;
 		doLayout;
-		openCenteredInWorld.
+		openCenteredInWorld;
+		initializeListeners;
+		takeKeyboardFocus.
 		
 	spotterModel class markOpened.
 ]

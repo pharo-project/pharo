@@ -66,12 +66,12 @@ MetacelloCoreIssue125TestCase >> projectWith: projectAttributes [
 
 { #category : #tests }
 MetacelloCoreIssue125TestCase >> testForDoListAtrribute1Active [
-  "https://github.com/dalehenrich/metacello-work/issues/125"
+	"https://github.com/dalehenrich/metacello-work/issues/125"
 
-  | project version expected actual |
-  project := self projectWith: #(#'attribute1').
-  version := project version: '3.0-baseline'.
-  expected := 'spec blessing: #''baseline''.
+	| project version expected actual |
+	project := self projectWith: #(#attribute1).
+	version := project version: '3.0-baseline'.
+	expected := 'spec blessing: #''baseline''.
 spec preLoadDoIt: #''preloadForCore''.
 spec postLoadDoIt: #''postloadForCore:package:''.
 spec 
@@ -92,18 +92,18 @@ spec
 spec 
 	group: ''Core'' with: #(''Example Project'' );
 	group: ''Core'' with: #(''Extra Project'' ).'.
-  actual := version spec printString.
-  self assert: expected = actual
+	actual := version spec printString.
+	self assert: expected equals: actual
 ]
 
 { #category : #tests }
 MetacelloCoreIssue125TestCase >> testForDoListAtrribute2Active [
-  "https://github.com/dalehenrich/metacello-work/issues/125"
+	"https://github.com/dalehenrich/metacello-work/issues/125"
 
-  | project version expected actual |
-  project := self projectWith: #(#'attribute2').
-  version := project version: '3.0-baseline'.
-  expected := 'spec blessing: #''baseline''.
+	| project version expected actual |
+	project := self projectWith: #(#attribute2).
+	version := project version: '3.0-baseline'.
+	expected := 'spec blessing: #''baseline''.
 spec preLoadDoIt: #''preloadForCore''.
 spec postLoadDoIt: #''postloadForCore:package:''.
 spec 
@@ -124,18 +124,18 @@ spec
 spec 
 	group: ''Core'' with: #(''Example Project'' );
 	group: ''Core'' with: #(''Extra Project'' ).'.
-  actual := version spec printString.
-  self assert: expected = actual
+	actual := version spec printString.
+	self assert: expected equals: actual
 ]
 
 { #category : #tests }
 MetacelloCoreIssue125TestCase >> testForDoListAttribute1Atrribute2Active [
-  "https://github.com/dalehenrich/metacello-work/issues/125"
+	"https://github.com/dalehenrich/metacello-work/issues/125"
 
-  | project version expected actual |
-  project := self projectWith: #(#'attribute1' #'attribute2').
-  version := project version: '3.0-baseline'.
-  expected := 'spec blessing: #''baseline''.
+	| project version expected actual |
+	project := self projectWith: #(#attribute1 #attribute2).
+	version := project version: '3.0-baseline'.
+	expected := 'spec blessing: #''baseline''.
 spec preLoadDoIt: #''preloadForCore''.
 spec postLoadDoIt: #''postloadForCore:package:''.
 spec 
@@ -164,18 +164,18 @@ spec
 	group: ''Core'' with: #(''Example Project'' );
 	group: ''Core'' with: #(''Extra Project'' );
 	group: ''Core'' with: #(''Extra Project'' ).'.
-  actual := version spec printString.
-  self assert: expected = actual
+	actual := version spec printString.
+	self assert: expected equals: actual
 ]
 
 { #category : #tests }
 MetacelloCoreIssue125TestCase >> testForDoListNotActive [
-  "https://github.com/dalehenrich/metacello-work/issues/125"
+	"https://github.com/dalehenrich/metacello-work/issues/125"
 
-  | project version expected actual |
-  project := self projectWith: #().
-  version := project version: '3.0-baseline'.
-  expected := 'spec blessing: #''baseline''.
+	| project version expected actual |
+	project := self projectWith: #().
+	version := project version: '3.0-baseline'.
+	expected := 'spec blessing: #''baseline''.
 spec preLoadDoIt: #''preloadForCore''.
 spec postLoadDoIt: #''postloadForCore:package:''.
 spec project: ''Example Project'' with: [
@@ -186,6 +186,6 @@ spec project: ''Example Project'' with: [
 			postLoadDoIt: #''postloadForProject'';
 			loads: #(''core'' ) ].
 spec group: ''Core'' with: #(''Example Project'' ).'.
-  actual := version spec printString.
-  self assert: expected = actual
+	actual := version spec printString.
+	self assert: expected equals: actual
 ]

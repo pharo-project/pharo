@@ -406,11 +406,16 @@ PluggableSliderMorph >> setValue: newValue [
 	"Called internally for propagation to model."
 
 	|scaled|
+	"First, set the value"
 	value := newValue.
-	self scaledValue: (scaled := self scaledValue).
+	"Second, scaledValue gets the scaled-value based on the value"
+	scaled := self scaledValue.
+	"Third, setting the scaled value, sets the value based on quantum steps (if needed)"
+	self scaledValue: scaled.
+	"Propagate throught the model"
 	self model ifNotNil: [
 		self setValueSelector ifNotNil: [:sel |
-			self model perform: sel with: scaled]]
+			self model perform: sel with: value ]]
 ]
 
 { #category : #accessing }

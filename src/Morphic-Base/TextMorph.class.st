@@ -1055,7 +1055,6 @@ TextMorph >> justified [
 TextMorph >> keyStroke: evt [
 	"Handle a keystroke event."
 
-	self traceCr: 'TextMorph'.
 	self basicKeyStroke: evt
 ]
 
@@ -1362,14 +1361,11 @@ TextMorph >> predecessorChanged [
 TextMorph >> preferredKeyboardPosition [
 
 	| default rects |
-	default  := (self bounds: self bounds in: self currentWorld) topLeft.
+	default  := super preferredKeyboardPosition.
 	paragraph ifNil: [^ default].
 	rects := paragraph selectionRects.
 	rects size = 0 ifTrue: [^ default].
 	^ rects first topLeft.
-
-	"^ (self bounds: self bounds in: World) topLeft."
-
 ]
 
 { #category : #geometry }

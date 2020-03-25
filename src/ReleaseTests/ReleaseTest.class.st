@@ -104,7 +104,7 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
-	self assertValidLintRule: RBExplicitRequirementMethodsRule new
+	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 	
 ]
 
@@ -163,7 +163,19 @@ ReleaseTest >> testLayoutIntegrity [
 ReleaseTest >> testLocalMethodsOfTheClassShouldNotBeRepeatedInItsTraits [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
-	self assertValidLintRule: RBLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
+	self assertValidLintRule: ReLocalMethodsSameThanTraitRule new withExceptions: #(RBSmalllintTestLocalMethodsSameThanTraitObject).
+]
+
+{ #category : #tests }
+ReleaseTest >> testManifestNamesAccordingToPackageNames [
+	"Make sure package name and manifest name are in synch"
+	
+	|manifestClasses actualManifestNames expectedManifestNames |
+	manifestClasses := self class environment allClasses select: [:each | each isManifest ].
+	actualManifestNames := (manifestClasses collect: [:each | each name ]) sorted.
+	expectedManifestNames := manifestClasses 
+										collect: [:each | TheManifestBuilder manifestClassNameFor: each package name ].
+	self assert: actualManifestNames equals: expectedManifestNames 
 ]
 
 { #category : #tests }
@@ -229,6 +241,18 @@ ReleaseTest >> testPharoVersionFileExists [
 	self
 		assert: pharoVersionFile readStream contents trimBoth
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
+]
+
+{ #category : #'tests - packages - manifests' }
+ReleaseTest >> testProperManifestClasses [
+
+	|manifests|
+	manifests := self class environment allClasses select: [:each | each isManifest ].
+	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
+	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ]).
+
+
+ 
 ]
 
 { #category : #'tests - rpackage' }

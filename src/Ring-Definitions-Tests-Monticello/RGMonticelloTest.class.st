@@ -9,29 +9,26 @@ Class {
 
 { #category : #testing }
 RGMonticelloTest >> testAsMCMethodDefinition [
-	
 	| ringMethod mcMethod |
-	
-	ringMethod := (OrderedCollection>>#size) asActiveRingDefinition.
+	ringMethod := (OrderedCollection >> #size) asActiveRingDefinition.
 	mcMethod := ringMethod asMCMethodDefinition.
-	
-	self assert: ringMethod = mcMethod asRingDefinition.
-	self assert: mcMethod className = #OrderedCollection.
+
+	self assert: ringMethod equals: mcMethod asRingDefinition.
+	self assert: mcMethod className equals: #OrderedCollection.
 	self deny: mcMethod classIsMeta.
-	self assert: mcMethod selector = #size.
-	self assert: mcMethod category = #accessing.
-	self assert: mcMethod source = (OrderedCollection>>#size) sourceCode
+	self assert: mcMethod selector equals: #size.
+	self assert: mcMethod category equals: #accessing.
+	self assert: mcMethod source equals: (OrderedCollection >> #size) sourceCode
 ]
 
 { #category : #testing }
 RGMonticelloTest >> testConvertingMCClassDefinition [
 	| mcClass ringClass |
-	
 	mcClass := OrderedCollection asClassDefinition.
 	ringClass := mcClass asRingDefinition.
-	
-	self assert: (ringClass isClass).
-	self assert: (ringClass classSide realClass = OrderedCollection class).
+
+	self assert: ringClass isClass.
+	self assert: ringClass classSide realClass equals: OrderedCollection class.
 	self assert: (ringClass isSameRevisionAs: OrderedCollection asRingDefinition).
 	self deny: (ringClass isSameRevisionAs: SortedCollection asRingDefinition)
 ]
@@ -63,12 +60,11 @@ RGMonticelloTest >> testConvertingMCOrganizationDefinition [
 { #category : #testing }
 RGMonticelloTest >> testConvertingMCTraitDefinition [
 	| mcClass ringClass |
-	
 	mcClass := TSortable asClassDefinition.
 	ringClass := mcClass asRingDefinition.
-	
-	self assert: (ringClass isTrait).
-	self assert: (ringClass classSide realClass = TSortable classSide).
+
+	self assert: ringClass isTrait.
+	self assert: ringClass classSide realClass equals: TSortable classSide.
 	self assert: (ringClass isSameRevisionAs: TSortable asRingDefinition).
 	self deny: (ringClass isSameRevisionAs: TAssertable asRingDefinition)
 ]

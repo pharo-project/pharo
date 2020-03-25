@@ -94,14 +94,12 @@ ArrayTest >> anotherValue [
 ]
 
 { #category : #asserting }
-ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [ 
+ArrayTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
 	self assert: (result class includesBehavior: aClass).
-	result do: 
-		[ :each | 
-		self assert: (aCollection occurrencesOf: each) = (result occurrencesOf: each) ].
-	self assert: result size = aCollection size
+	result do: [ :each | self assert: (aCollection occurrencesOf: each) equals: (result occurrencesOf: each) ].
+	self assert: result size equals: aCollection size
 ]
 
 { #category : #initialization }
@@ -749,6 +747,38 @@ ArrayTest >> testPrinting [
 	self assert: selfEvaluatingArray equals: (self class compiler evaluate: selfEvaluatingArray printString).
 	self assert: nonSEArray1 printString equals: 'an Array(1 a Set(1))'.
 	self assert: nonSEarray2 printString equals: '{#Array->Array}'
+]
+
+{ #category : #'tests - shuffling' }
+ArrayTest >> testShuffleBy [
+
+	| base random shuffleByResult |
+	base := #(1 2 3 4 5).
+	random := (Random seed: 42).
+	shuffleByResult := #(2 5 4 3 1).
+	
+	self assert: ((base shuffleBy: random) hasEqualElements: shuffleByResult).
+	
+]
+
+{ #category : #'tests - shuffling' }
+ArrayTest >> testShuffleChangeOrder [
+
+	| array shuffled |
+	array := #( 1 2 3 4 5).
+	shuffled := array copy shuffle.
+	array do: [ :e | self assert: (shuffled includes: e) ]
+	
+]
+
+{ #category : #'tests - shuffling' }
+ArrayTest >> testShuffleModifyTheReceiver [
+
+	| array shuffled |
+	array := #( 1 2 3 4 5).
+	shuffled := array shuffle.
+	self assert: array == shuffled. 
+	
 ]
 
 { #category : #'tests - arithmetic' }

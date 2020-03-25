@@ -1358,54 +1358,45 @@ ClassDescription >> whichCategoryIncludesSelector: aSelector [
 	"Answer the category of the argument, aSelector, in the organization of 
 	the receiver, or answer nil if the receiver does not inlcude this selector."
 
-	(self includesSelector: aSelector)
-		ifTrue: [^ self organization categoryOfElement: aSelector]
-		ifFalse: [^nil]
+	^self organization categoryOfElement: aSelector
 ]
 
 { #category : #queries }
 ClassDescription >> whichSelectorsAccess: instVarName [
-	"Answer a set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
+	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
 
-	^self
+	^ self
 		slotNamed: instVarName
-		ifFound: [ :slot | 
-			self selectors
-				select: [ :sel | slot isAccessedIn: self>>sel ] ]
-		ifNone: [  #() ]
-]
-
-{ #category : #queries }
-ClassDescription >> whichSelectorsAssign: instVarName [ 
-	self
-		deprecated: 'Please use #whichSelectorsStoreInto: instead'
-		transformWith: '`@receiver whichSelectorsAssign: `@statements' 
-						-> '`@receiver whichSelectorsStoreInto: `@statements'.
-	^self whichSelectorsStoreInto: instVarName
+		ifFound: [ :slot | self selectors select: [ :sel | slot isAccessedIn: self>>sel ] ]
+		ifNone: [ #() ]
 ]
 
 { #category : #queries }
 ClassDescription >> whichSelectorsRead: instVarName [
-	"Answer a Set of selectors whose methods read the argument, 
-	instVarName, as a named instance variable."
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable."
 
 	^ self
 		slotNamed: instVarName
-		ifFound:
-			[ :slot | self selectors select: [ :sel | slot isReadIn: self >> sel ] ]
+		ifFound: [ :slot | self selectors select: [ :sel | slot isReadIn: self >> sel ] ]
 		ifNone: [ #() ]
 ]
 
 { #category : #queries }
 ClassDescription >> whichSelectorsStoreInto: instVarName [
-	"Answer a Set of selectors whose methods access the argument, 
-	instVarName, as a named instance variable."
+	self
+		deprecated: 'Please use #whichSelectorsWrite: instead'
+		transformWith: '`@receiver whichSelectorsStoreInto: `@statements' 
+						-> '`@receiver whichSelectorsWrite: `@statements'.
+	^self whichSelectorsWrite: instVarName
+]
+
+{ #category : #queries }
+ClassDescription >> whichSelectorsWrite: instVarName [
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
 
 	^ self
 		slotNamed: instVarName
-		ifFound:
-			[ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
+		ifFound: [ :slot | self selectors select: [ :sel | slot isWrittenIn: self >> sel ] ]
 		ifNone: [ #() ]
 ]
 

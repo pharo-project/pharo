@@ -1,8 +1,8 @@
 Class {
 	#name : #SpCollectionListModel,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#announcer',
 		'#collection',
@@ -63,6 +63,12 @@ SpCollectionListModel >> collection: anObject [
 	self announcer announce: (ValueChanged 
 		oldValue: oldValue 
 		newValue: collection)
+]
+
+{ #category : #testing }
+SpCollectionListModel >> hasElementAt: index [
+
+	^ self size >= index
 ]
 
 { #category : #accessing }

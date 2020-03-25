@@ -286,8 +286,15 @@ SourceFileArray >> readStreamAt: sourcePointer ifPresent: presentBlock ifAbsent:
 { #category : #'private - accessing file streams' }
 SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: presentBlock ifAbsent: absentBlock [
  
-   | queue stream rofa result |
-       
+   | queue stream rofa result file |
+   
+	"This method is really ugly. 
+	It uses different readers over the same file that is beeing writing. 
+	This can lead to buffer problems. 
+	This should be rethougth to a better way.
+	
+	Maybe an unification of all the accesses using the same buffer could be nice."
+    
   	queue := readOnlyQueue.
   	rofa := queue nextOrNil ifNil: [ self createReadOnlyFiles ].
        
@@ -296,11 +303,21 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
    stream := rofa at: index.
 	stream ifNil: [ ^ absentBlock value ].
 	
-   position > (files at: index) size ifTrue: [ 
+	file := files at: index.
+	
+   position > file size ifTrue: [ 
 		self finishedReading: rofa from: queue. 
 		^ absentBlock value 
 	].
 
+	"If the file has been flushed, I am discarding the readonly stream's buffer.
+	This is to avoid a problem where the readOnly buffer is missing data that was in 
+	the writer buffer."	
+	file ensureWrittenPosition: position.
+
+	"I am discarding the buffer of the readonly stream, because if not is out-of-sync."
+	stream discardBuffer.
+	
    stream position: position.
    result := presentBlock value: stream.
        
@@ -409,6 +426,7 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 
 	| preamble stamp tokens stampPosition |
 	stamp := ''.
+	flushChanges ifFalse: [ ^ stamp ].
 	preamble := self sourcedDataAt: sourcePointer.
 	(preamble includesSubstring: sourceDataPointers key)
 		ifTrue: [ 
@@ -433,9 +451,10 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	file setToEnd.
 	file nextPutAll: preamble.
 	position := file position.
-	(ChunkWriteStream on: file) nextChunkPut: aString.
+	(SourceChunkWriteStream on: file) nextChunkPut: aString.
+
+	successBlock cull: (self sourcePointerFromFileIndex: 2 andPosition: position) cull: file.
 
 	self flushChangesFile.
 
-	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)
 ]

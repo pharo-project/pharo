@@ -9,11 +9,10 @@ Class {
 
 { #category : #tests }
 OSWindowAttributesTest >> testDefaults [
-
 	| attributes |
-	attributes := OSWindowAttributes new.	
-	self assert: attributes position = attributes class defaultPosition.
-	self assert: attributes extent = attributes class defaultExtent.
-	self assert: attributes fullscreen  = attributes class defaultFullscreen.
-	self assert: attributes title = attributes class defaultTitle
+	attributes := OSWindowAttributes new.
+	self assert: attributes position equals: attributes class defaultPosition.
+	self assert: attributes extent equals: attributes class defaultExtent.
+	self assert: attributes fullscreen equals: attributes class defaultFullscreen.
+	self assert: attributes title equals: attributes class defaultTitle
 ]

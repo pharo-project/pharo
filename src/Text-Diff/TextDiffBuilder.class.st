@@ -71,10 +71,12 @@ TextDiffBuilder class >> differatorSettingsOn: aBuilder [
 			(aBuilder setting: #ignoreLineEndings) 
 				label: 'Ignore line endings';
 				target: self;
+				default: true;
 		 		description: 'When selected, line ending differences will be ignored ' ];
 		with: [  
 		(aBuilder setting: #diffsWithPrettyPrint)
 				target: self;	
+				default: false;
 				label: 'Pretty print differences' ;
 				description: 'If true, displays of source code differences will be pretty-printed first' 
 		]

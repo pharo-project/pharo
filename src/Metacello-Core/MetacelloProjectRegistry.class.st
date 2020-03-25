@@ -189,12 +189,9 @@ MetacelloProjectRegistry >> registerProjectRegistration: aMetacelloProjectRegist
         ifPresent: [ :existing | 
           (existing configurationProjectSpec registrationsCompareEqual: spec)
             ifFalse: [ 
-              Transcript
-                cr;
-                show:
-                    'REGISTRATION OF INCOMPATABLE PROJECTS: ' , existing printString
+              MetacelloNotification signal: ('REGISTRATION OF INCOMPATABLE PROJECTS: ' , existing printString
                         , ' REPLACED BY '
-                        , aMetacelloProjectRegistration printString ] ].
+                        , aMetacelloProjectRegistration printString) ] ].
       spec versionOrNil
         ifNotNil: [ :version | 
           "resolve symbolic versions for loaded projects"
@@ -213,12 +210,9 @@ MetacelloProjectRegistry >> registerProjectRegistration: aMetacelloProjectRegist
         ifPresent: [ :existing | 
           (existing baselineProjectSpec registrationsCompareEqual: spec)
             ifFalse: [ 
-              Transcript
-                cr;
-                show:
-                    'REGISTRATION OF INCOMPATABLE PROJECTS: ' , existing printString
+              MetacelloNotification signal: ('REGISTRATION OF INCOMPATABLE PROJECTS: ' , existing printString
                         , ' REPLACED BY '
-                        , aMetacelloProjectRegistration printString ] ].
+                        , aMetacelloProjectRegistration printString) ] ].
       (aMetacelloProjectRegistration respondsTo: #'versionInfo')
         ifTrue: [ 
           aMetacelloProjectRegistration versionInfo

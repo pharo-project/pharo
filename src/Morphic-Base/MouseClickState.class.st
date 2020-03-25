@@ -124,8 +124,8 @@ MouseClickState >> handleEvent: evt from: aHand [
 			firstClickUp := evt copy.
 			clickState := #firstClickUp.
 			"If timedOut or the client's not interested in dbl clicks get outta here"
-			self click.
 			aHand handleEvent: firstClickUp.
+			self click.
 			^false].
 		isDrag ifTrue:["drag start"
 			self doubleClickTimeout. "***"

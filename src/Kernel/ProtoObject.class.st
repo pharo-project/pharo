@@ -212,6 +212,42 @@ ProtoObject >> modificationForbiddenFor: selector value: value [
 
 ]
 
+{ #category : #'block support' }
+ProtoObject >> mustBeBoolean [
+	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
+	^ Boolean mustBeBooleanDeOptimize
+		ifTrue: [ self mustBeBooleanDeOptimizeIn: thisContext sender  ]
+		ifFalse: [ self mustBeBooleanIn: thisContext sender ]
+]
+
+{ #category : #'block support' }
+ProtoObject >> mustBeBooleanIn: context [
+	"context is the where the non-boolean error occurred. Rewind context to before jump then raise error."
+	
+	"Some constructs are optimized in the compiler :
+	#whileTrue:
+	#whileFalse:
+	#ifTrue:
+	#ifFalse:
+	#ifTrue:ifFalse:
+	#ifFalse:ifTrue:
+	So you cannot by default use them on non boolean objects."
+	
+	"If you really need to use optimized constructs, you can enable Opal compiler and do one of the following :
+		- recompile your method with the pragma : <compilerOptions: #(+ optIlineNone)>
+		- recompile your class with the method : MyClass class>>compiler 
+			^ super compiler options: #(+ optIlineNone)
+		- enable the option mustBeBooleanDeOptimize to call mustBeBooleanDeOptimizeIn: instead of this method "
+
+	| proceedValue |
+	
+	context skipBackBeforeJump.
+	proceedValue := NonBooleanReceiver new
+		object: self;
+		signal: 'proceed for truth.'.
+	^ proceedValue ~~ false
+]
+
 { #category : #'memory scanning' }
 ProtoObject >> nextInstance [
 	"Primitive. Answer the next instance after the receiver in the 

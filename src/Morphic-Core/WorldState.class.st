@@ -287,6 +287,7 @@ WorldState class >> worldMenuSettingOn: aBuilder [
 		label: 'World menu pragma';
 		ghostHelp: 'worldMenu';
 		parent: #morphic;
+		default: 'worldMenu';
 		target: self;
 		description: 'Define whitch pragma should be used to build the world menu. To disable the world menu, leave this input empty.'
 ]
@@ -298,7 +299,6 @@ WorldState >> activeHand [
 
 { #category : #hands }
 WorldState >> activeHand: aHand [
-	ActiveHand := aHand.
 	activeHand := aHand
 ]
 
@@ -350,20 +350,6 @@ WorldState >> alarmSortBlock [
 WorldState >> alarms [
 
 	^alarms ifNil: [alarms := Heap sortBlock: self alarmSortBlock]
-]
-
-{ #category : #canvas }
-WorldState >> canvas [
-
-	^ self worldRenderer canvas
-]
-
-{ #category : #canvas }
-WorldState >> canvas: x [ 
-	self worldRenderer canvas: x.
-	damageRecorder 
-		ifNil: [damageRecorder := DamageRecorder new]
-		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
 { #category : #'update cycle' }
@@ -453,10 +439,10 @@ WorldState >> discoveredMenuTitle [
 ]
 
 { #category : #'update cycle' }
-WorldState >> displayWorld: aWorld submorphs: submorphs [
+WorldState >> displayWorld: aWorld [
 	"Update this world's display."
 
-	worldRenderer displayWorldState: self ofWorld: aWorld submorphs: submorphs
+	worldRenderer displayWorldState: self ofWorld: aWorld
 ]
 
 { #category : #'update cycle' }
@@ -520,16 +506,6 @@ WorldState >> doOneCycleNowFor: aWorld [
 
 	aWorld runStepMethods.		"there are currently some variations here"
 	self displayWorldSafely: aWorld.
-]
-
-{ #category : #'update cycle' }
-WorldState >> doOneSubCycleFor: aWorld [
-	"Like doOneCycle, but preserves activeHand."
-
-	| currentHand |
-	currentHand := self activeHand.
-	self doOneCycleFor: aWorld.
-	self activeHand: currentHand.
 ]
 
 { #category : #'update cycle' }
@@ -678,6 +654,14 @@ WorldState >> interCyclePause: milliSecs [
 	CanSurrenderToOS := true.
 ]
 
+{ #category : #canvas }
+WorldState >> invalidate [
+	self worldRenderer invalidate.
+	damageRecorder 
+		ifNil: [damageRecorder := DamageRecorder new]
+		ifNotNil: [damageRecorder doFullRepaint]
+]
+
 { #category : #hands }
 WorldState >> is: hand overlappingDamagedAreaIn: damageList [
 	| handBounds |
@@ -749,8 +733,6 @@ WorldState >> removeHand: aHandMorph [
 	(hands includes: aHandMorph) ifFalse: [^self].
 	hands := hands copyWithout: aHandMorph.
 	activeHand == aHandMorph ifTrue: [activeHand := nil].
-	ActiveHand == aHandMorph ifTrue: [ActiveHand := nil].
-
 ]
 
 { #category : #canvas }

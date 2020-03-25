@@ -112,6 +112,12 @@ SpMorphicWindowAdapter >> askOkToClose [
 	^ self model askOkToClose
 ]
 
+{ #category : #protocol }
+SpMorphicWindowAdapter >> beep [ 
+	
+	widget flash
+]
+
 { #category : #factory }
 SpMorphicWindowAdapter >> buildWidget [
 
@@ -143,6 +149,14 @@ SpMorphicWindowAdapter >> close [
 	self widget ifNotNil: [ :w | w close ].
 ]
 
+{ #category : #'widget API' }
+SpMorphicWindowAdapter >> delete [
+
+	self widgetDo: [ :w | 
+		w delete. 
+		self application windowClosed: self ]
+]
+
 { #category : #protocol }
 SpMorphicWindowAdapter >> extent: aPoint [
 
@@ -171,6 +185,13 @@ SpMorphicWindowAdapter >> isResizeable [
 SpMorphicWindowAdapter >> isResizeable: aBoolean [
 
 	^ self widgetDo: [ :w | w isResizeable: aBoolean ]
+]
+
+{ #category : #'spec protocol' }
+SpMorphicWindowAdapter >> isTopWindow [
+
+	self widgetDo: [ :w | ^ w isTopWindow ].
+	^ false
 ]
 
 { #category : #'spec protocol' }
@@ -206,10 +227,10 @@ SpMorphicWindowAdapter >> open [
 
 	self model isCentered 
 		ifTrue: [ self centered ].
-		
-	self model initialPosition 
-		ifNotNil: [ self widget openAsIs ]
-		ifNil: [ self widget openInWorld ].
+	
+	self widget openInWorld.
+	self model initialPosition ifNotNil: [
+		self widget position: self model initialPosition ].
 	
 	self windowIsOpening
 ]

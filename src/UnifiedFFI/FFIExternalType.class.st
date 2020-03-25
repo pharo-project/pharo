@@ -100,8 +100,8 @@ FFIExternalType class >> sizeOf: aTypeName [
 ]
 
 { #category : #'emitting code' }
-FFIExternalType >> basicEmitArgument: aBuilder context: aContext [
-	self loader 
+FFIExternalType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
+	self loader
 		emitArgument: aBuilder 
 		context: aContext
 ]
@@ -142,8 +142,8 @@ FFIExternalType >> defaultReturnOnError [
 ]
 
 { #category : #'emitting code' }
-FFIExternalType >> emitArgument: aBuilder context: aContext [ 
-	self basicEmitArgument: aBuilder context: aContext.
+FFIExternalType >> emitArgument: aBuilder context: aContext inCallout: aCallout [
+	self basicEmitArgument: aBuilder context: aContext inCallout: aCallout.
 	self needsArityPacking 
 		ifTrue: [ self  emitPointerArityRoll: aBuilder context: aContext ]
 ]
@@ -164,6 +164,12 @@ FFIExternalType >> emitPointerArityRoll: aBuilder context: aContext [
 { #category : #'emitting code' }
 FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [ 
 	^ aBuilder returnTop	
+]
+
+{ #category : #'emitting code' }
+FFIExternalType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
+	
+	^ self emitReturn: aBuilder resultTempVar: resultVar context: aContext 
 ]
 
 { #category : #'emitting code' }

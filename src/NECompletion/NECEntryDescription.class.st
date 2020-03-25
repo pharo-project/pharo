@@ -30,8 +30,8 @@ NECEntryDescription class >> label: firstString title: secondString description:
 
 { #category : #accessing }
 NECEntryDescription >> description [
-(	description isNil or:[description isEmpty]) ifTrue:[^'-'].
-	^ description
+  (description isNil or: [ description isEmpty ]) ifTrue: [ ^'-' ].
+  ^description
 ]
 
 { #category : #accessing }

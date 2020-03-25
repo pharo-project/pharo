@@ -76,57 +76,56 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRaisesClassRepackaged
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInTheBestMatchPackage [
 	"test that when we recategorize a class, the new package in which it is defined include it"
-	
-	|XPackage  YPackage class|
+
+	| XPackage YPackage class |
 	self addXCategory.
 	self addXMatchCategory.
 	self addYCategory.
-	
+
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	
-	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
-	
-	class category: 'XXXXX-YYYY'.
-	self assert: (self organizer packageOf: class) = XPackage. 
-	self deny: (self organizer packageOf: class) = YPackage.
 
+	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
+
+	class category: 'XXXXX-YYYY'.
+	self assert: (self organizer packageOf: class) equals: XPackage.
+	self deny: (self organizer packageOf: class) equals: YPackage
 ]
 
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInTheExactMatchPackage [
 	"test that when we recategorize a class, the new package in which it is defined include it"
-	
-	|XPackage YPackage class|
+
+	| XPackage YPackage class |
 	self addXCategory.
 	self addXMatchCategory.
 	self addYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
-	
+
 	class category: 'XXXXX'.
-	
-	self assert: (self organizer packageOf: class) = XPackage. 
-	self deny: (self organizer packageOf: class) = YPackage.		
+
+	self assert: (self organizer packageOf: class) equals: XPackage.
+	self deny: (self organizer packageOf: class) equals: YPackage
 ]
 
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassInTheMatchingPackage [
 	"test that when we recategorize a class, the new package in which it is defined include it"
-	
-	|XPackage YPackage class|
+
+	| XPackage YPackage class |
 	self addXCategory.
 	self addYCategory.
-	
+
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
-	
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'YYYYY'.
-	
+
 	class category: 'XXXXX'.
-	self deny: (self organizer packageOf: class) = YPackage. 
-	self assert: (self organizer packageOf: class) = XPackage.
+	self deny: (self organizer packageOf: class) equals: YPackage.
+	self assert: (self organizer packageOf: class) equals: XPackage
 ]
 
 { #category : #'tests - recategorizing class' }
@@ -249,19 +248,19 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassWithUnexistingPackageNameRegisterTheClassInANewPackage [
 	"test that when we recategorize a class in category not yet registered in RPackage, a new rPackage is created with the class inside"
-	
-	|XPackage YPackage class|
+
+	| XPackage YPackage class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
-	
+
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self assert: (self organizer packageOf: class) = XPackage. 
-	
+	self assert: (self organizer packageOf: class) equals: XPackage.
+
 	class category: 'YYYYY'.
 	YPackage := self organizer packageNamed: #YYYYY.
-	
-	self assert: (self organizer packageOf: class) equals: YPackage. 
-	self deny: (self organizer packageOf: class) = XPackage.
+
+	self assert: (self organizer packageOf: class) equals: YPackage.
+	self deny: (self organizer packageOf: class) equals: XPackage
 ]
 
 { #category : #'tests - removing classes' }
@@ -420,16 +419,16 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackageMapping [
 	"test that when we rename a class, the classPackage dictionary of the organizer is updated with the new name, so that we can access the package when specifying the new name"
-	
+
 	| XPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' inCategory: 'XXXXX'.
-	
+
 	class rename: 'RPackageNewStubClass'.
-	
-	self assert: ((self organizer packageOfClassNamed: 'RPackageNewStubClass' asSymbol) = XPackage). 
-	self assert: ((self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) = nil).
+
+	self assert: (self organizer packageOfClassNamed: 'RPackageNewStubClass' asSymbol) equals: XPackage.
+	self assert: (self organizer packageOfClassNamed: 'RPackageOldStubClass' asSymbol) equals: nil
 ]
 
 { #category : #'tests - operations on protocols' }
@@ -449,17 +448,17 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtoc
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoesNothing [
 	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
-	
-	|XPackage class| 
+
+	| XPackage class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.  
+	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
 	class organization addCategory: 'accessing' before: nil.
-	
+
 	self assert: (XPackage includesClass: class).
 	self assert: (XPackage includesDefinedSelector: #newMethod ofClass: class).
-	self assert: (XPackage extensionMethods size = 0).
+	self assert: XPackage extensionMethods size equals: 0
 ]
 
 { #category : #'tests - operations on protocols' }

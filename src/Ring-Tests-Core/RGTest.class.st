@@ -17,24 +17,21 @@ RGTest >> checkClassesConsistency: object1 and: object2 [
 
 { #category : #utilities }
 RGTest >> checkHierarchyConsistencyOf: anRGClass [
-
 	"prove that all relations between class, superclass, metaclass and superclass metaclass are consistent"
 
-	self assert: (anRGClass ~~ anRGClass superclass).
-	self assert: (anRGClass ~~ anRGClass metaclass).
-	self assert: (anRGClass ~~ anRGClass superclass metaclass).
+	self assert: anRGClass ~~ anRGClass superclass.
+	self assert: anRGClass ~~ anRGClass metaclass.
+	self assert: anRGClass ~~ anRGClass superclass metaclass.
 
-	self assert: (anRGClass superclass ~~ anRGClass metaclass).
-	self assert: (anRGClass superclass ~~ anRGClass superclass metaclass).
-	self assert: (anRGClass metaclass ~~ anRGClass superclass metaclass).
+	self assert: anRGClass superclass ~~ anRGClass metaclass.
+	self assert: anRGClass superclass ~~ anRGClass superclass metaclass.
+	self assert: anRGClass metaclass ~~ anRGClass superclass metaclass.
 
-	self assert: (anRGClass superclass superclass == anRGClass superclass).
-	self assert: (anRGClass superclass metaclass == anRGClass metaclass superclass).
+	self assert: anRGClass superclass superclass identicalTo: anRGClass superclass.
+	self assert: anRGClass superclass metaclass identicalTo: anRGClass metaclass superclass.
 
-	self assert: (anRGClass superclass metaclass superclass == anRGClass superclass metaclass).
-	self assert: (anRGClass superclass metaclass metaclass == anRGClass superclass metaclass).
-	
-
+	self assert: anRGClass superclass metaclass superclass identicalTo: anRGClass superclass metaclass.
+	self assert: anRGClass superclass metaclass metaclass identicalTo: anRGClass superclass metaclass
 ]
 
 { #category : #utilities }
@@ -58,20 +55,14 @@ RGTest >> checkImplicitSingleClassEnvironmentOf: anRGClass [
 
 { #category : #utilities }
 RGTest >> checkImplicitSingleTraitEnvironmentOf: anRGTrait [
-	
 	self assert: anRGTrait environment ask behaviors size equals: 10.
 	self assert: anRGTrait environment ask packages size equals: 5.
 
 	self checkHierarchyConsistencyOf: anRGTrait metaclass.
-	
-	self assert: (anRGTrait ~~ anRGTrait classTrait).
-	self assert: (anRGTrait superclass == anRGTrait superclass).
-	self assert: (anRGTrait classTrait superclass == anRGTrait classTrait superclass).
-	
-	
-	
-	
 
+	self assert: anRGTrait ~~ anRGTrait classTrait.
+	self assert: anRGTrait superclass identicalTo: anRGTrait superclass.
+	self assert: anRGTrait classTrait superclass identicalTo: anRGTrait classTrait superclass
 ]
 
 { #category : #tests }

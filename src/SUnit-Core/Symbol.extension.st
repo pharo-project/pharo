@@ -6,7 +6,7 @@ Symbol >> asTestSelector [
 	"Converts a method selector into a test selector in form of #testOriginalSelector"
 
 	"#+ asTestSelector >>> #testPlus"
-	"#+-<> asTestSelector >>> #testBackslashPlusMinusLessThanGreaterThan"
+	"#+-<> asTestSelector >>>  #testPlusMinusLessThanGreaterThan"
 	"#message asTestSelector  >>> #testMessage"
 	"#mySelector asTestSelector >>> #testMySelector"
 	"#at:putNext: asTestSelector >>> #testAtPutNext"

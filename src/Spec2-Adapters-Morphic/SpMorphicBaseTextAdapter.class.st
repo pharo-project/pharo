@@ -17,8 +17,19 @@ SpMorphicBaseTextAdapter >> accept [
 
 { #category : #'widget API' }
 SpMorphicBaseTextAdapter >> accept: aText notifying: aNotifyier [
+	| accept |
 
-	self model accept: aText notifying: aNotifyier
+	accept := self presenter acceptBlock 
+		cull: aText 
+		cull: aNotifyier.
+	accept == false ifTrue: [ ^ false ].
+
+	self presenter text: aText copy.
+	"Raise an announcement"
+	self presenter actionPerformed.
+	self presenter changed: #clearUserEdits.
+	
+	^ true
 ]
 
 { #category : #accessing }
@@ -83,6 +94,13 @@ SpMorphicBaseTextAdapter >> codePaneMenu: aMenu shifted: shifted [
 	^ SpBindings
 		value: self model application adapterBindings
 		during: [ menuPresenter value buildWithSpec ]
+]
+
+{ #category : #'spec protocol' }
+SpMorphicBaseTextAdapter >> cursorPositionIndex [
+
+	self widgetDo: [:w| ^w textArea editor pointIndex]
+
 ]
 
 { #category : #'widget API' }

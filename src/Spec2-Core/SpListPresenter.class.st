@@ -41,6 +41,8 @@ todo
 Class {
 	#name : #SpListPresenter,
 	#superclass : #SpAbstractListPresenter,
+	#traits : 'SpTSearchable',
+	#classTraits : 'SpTSearchable classTrait',
 	#instVars : [
 		'#allowToSelect => SpObservableSlot',
 		'#autoDeselect => SpObservableSlot',
@@ -80,32 +82,6 @@ SpListPresenter >> display [
 
 { #category : #api }
 SpListPresenter >> display: aBlock [
-
-	display := aBlock
-]
-
-{ #category : #api }
-SpListPresenter >> displayBlock [
-	"Return the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
-	self
-		deprecated: 'Please use #display instead'
-		transformWith: '`@receiver displayBlock' 
-						-> '`@receiver display'.
-	^ display
-]
-
-{ #category : #api }
-SpListPresenter >> displayBlock: aBlock [
-	"Set the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
-
-	"Return the one argument block used to wrap your domain specific items.
-	The block should return something that can be displayed in a list - like a String or a Text"
-	self
-		deprecated: 'Please use #display: instead'
-		transformWith: '`@receiver displayBlock: `@arg' 
-						-> '`@receiver display: `@arg'.
 
 	display := aBlock
 ]
@@ -168,7 +144,9 @@ SpListPresenter >> icons: aBlock [
 
 { #category : #initialization }
 SpListPresenter >> initialize [
+
 	super initialize.
+	self initializeTSearchable.
 	autoDeselect := true.
 	allowToSelect := true.
 	display := [ :object | object asStringOrText ]
@@ -183,9 +161,15 @@ SpListPresenter >> prepareForFilteredDataSourceWith: items [
 SpListPresenter >> registerEvents [
 	super registerEvents.
 	"Do not use whenAutoDeselectChangedDo: to avoid the deprecation warning."
-	self property: #autoDeselect whenChangedDo: [ :aBoolean | self changed: #autoDeselect: with: {aBoolean} ].
-	self whenDisplayBlockChangedDo: [ self withAdapterDo: #refreshWidgetList ].
-	self property: #headerTitle whenChangedDo: [ self withAdapterDo: #refreshWidgetHeaderTitle ]
+	self 
+		property: #autoDeselect 
+		whenChangedDo: [ :aBoolean | self changed: #autoDeselect: with: {aBoolean} ].
+	self whenDisplayBlockChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetList ] ].
+	self 
+		property: #headerTitle 
+		whenChangedDo: [ 
+			self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetHeaderTitle ] ]
 ]
 
 { #category : #private }
@@ -203,7 +187,7 @@ SpListPresenter >> resetSortingBlock [
 { #category : #api }
 SpListPresenter >> updateList [
 
-	self withAdapterDo: #refreshWidgetList.
+	self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetList ].
 	self unselectAll
 ]
 

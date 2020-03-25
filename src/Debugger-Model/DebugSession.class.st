@@ -26,61 +26,15 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'errorWasInUIProcess'
+		'errorWasInUIProcess',
+		'objectsThatWantToKeepMeAlive',
+		'subscribersToKeepAliveEvents'
 	],
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
 	#category : #'Debugger-Model-Base'
 }
-
-{ #category : #'actions registration' }
-DebugSession class >> debuggingActionsForPragma: aSymbol for: aDebugger [
-	^ (DebugAction allSubclasses reject: [ :each | each hasAbstractMethods ])
-		inject: OrderedCollection new
-		into: [ :currentActions :aClass | 
-			currentActions
-				addAll: (self debuggingActionsFromClass: aClass forPragma: aSymbol forDebugger: aDebugger);
-				yourself ]
-]
-
-{ #category : #'actions registration' }
-DebugSession class >> debuggingActionsForPragmas: aSymbolsCollection for: aDebugger [
-	self flag: 'split me'.
-	^ (((aSymbolsCollection 
-		inject: OrderedCollection new
-		into: [ :currentActions :aSymbol | 
-			currentActions 
-				addAll: (self debuggingActionsForPragma: aSymbol for: aDebugger);
-				yourself ]) 
-					select: [ :aDebugAction | 
-						aDebugAction appliesToDebugger: aDebugger ]) 
-					collect: [ :aDebugAction | 
-						aDebugAction
-							forDebugger: aDebugger;
-							yourself ]) 
-					sort: [ :action1 :action2 | 
-						action1 order < action2 order ]
-]
-
-{ #category : #'actions registration' }
-DebugSession class >> debuggingActionsFromClass: aClass forPragma: aSymbol forDebugger: aDebugger [
-	| pragmas actions |
-	pragmas := Pragma
-		allNamed: aSymbol
-		from: aClass class
-		to: aClass class.
-	actions := OrderedCollection new.
-	pragmas
-		do: [ :aPragma | 
-			actions
-				addAll:
-					((aPragma methodClass soleInstance
-						perform: aPragma methodSelector
-						withEnoughArguments: {aDebugger}) asOrderedCollection
-						collect: [ :each | each asDebugAction ]) ].
-	^ actions
-]
 
 { #category : #settings }
 DebugSession class >> logDebuggerStackToFile [
@@ -98,6 +52,11 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 		name: aString;
 		process: aProcess context: aContext;
 		detectUIProcess
+]
+
+{ #category : #keepAlive }
+DebugSession >> addSubscriberToKeepAliveEvents: aNewSubscriber [
+	self subscribersToKeepAliveEvents add: aNewSubscriber
 ]
 
 { #category : #'debugging actions' }
@@ -118,6 +77,17 @@ DebugSession >> context [
 DebugSession >> contextChanged [
 
 	self triggerEvent: #contextChanged
+]
+
+{ #category : #keepAlive }
+DebugSession >> countObjectsThatWantToKeepMeAlive [
+	"Count how many objects are in objectsThatWantToKeepMeAlive. This method does not use #size or #isEmpty, and the iteration guards against nils because objectsThatWantToKeepMeAlive is a WeakOrderedCollection, therefore some contained objects can be set to nil during garbage collection, and #size and #isEmpty do not discount them"
+
+	| count |
+	count := 0.
+	self objectsThatWantToKeepMeAlive do: [ :anObject | 
+		anObject ifNotNil: [ count := count + 1 ] ].
+	^ count
 ]
 
 { #category : #accessing }
@@ -244,6 +214,16 @@ DebugSession >> isTestObject: anObject [
 	^ anObject isKindOf: TestCase
 ]
 
+{ #category : #keepAlive }
+DebugSession >> keepAlive: anObjectThatWantsToKeepMeAlive [
+	self objectsThatWantToKeepMeAlive add: anObjectThatWantsToKeepMeAlive.
+	self subscribersToKeepAliveEvents do: [ :subscriber_ | 
+		subscriber_ ifNotNil: [ :subscriber | 
+			subscriber
+				onDebugSession: self
+				gettingKeptAliveBy: anObjectThatWantsToKeepMeAlive ] ] "Notify subscribers"
+]
+
 { #category : #logging }
 DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
@@ -260,6 +240,13 @@ DebugSession >> name [
 { #category : #accessing }
 DebugSession >> name: aString [
 	name := aString
+]
+
+{ #category : #accessing }
+DebugSession >> objectsThatWantToKeepMeAlive [
+	objectsThatWantToKeepMeAlive ifNil: [ 
+		objectsThatWantToKeepMeAlive := WeakOrderedCollection new ].
+	^ objectsThatWantToKeepMeAlive
 ]
 
 { #category : #context }
@@ -333,6 +320,11 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	the editor can still be unaccepted. "
 	self installAlarm: #contextChanged.
 	^ true
+]
+
+{ #category : #keepAlive }
+DebugSession >> removeSubscriberToKeepAliveEvents: aCurrentSubscriber [
+	self subscribersToKeepAliveEvents remove: aCurrentSubscriber
 ]
 
 { #category : #'debugging actions' }
@@ -458,6 +450,13 @@ DebugSession >> runToSelection: selectionInterval inContext: aContext [
 DebugSession >> selectedCodeRangeForContext: selectedContext [
 
 	^ self pcRangeForContext: selectedContext
+]
+
+{ #category : #keepAlive }
+DebugSession >> shouldBeKeptAlive [
+	"Returns whether there is at least one object that wants to keep this debug session alive"
+
+	^ self countObjectsThatWantToKeepMeAlive ~= 0
 ]
 
 { #category : #testing }
@@ -627,6 +626,26 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	seeing any visible results."
 	
 	^ aProcess stepToSendOrReturn
+]
+
+{ #category : #keepAlive }
+DebugSession >> stopKeepingAlive: anObjectThatNoLongerWantsToKeepMeAlive [
+	self objectsThatWantToKeepMeAlive
+		remove: anObjectThatNoLongerWantsToKeepMeAlive
+		ifAbsent: [ "It's a weak collection, its elements can be nilled by the garbage collector at any time if they are not referenced elsewhere, so it can happen not to find the object to remove because it has already been nilled"
+			 ].
+	self subscribersToKeepAliveEvents do: [ :subscriber_ | 
+		subscriber_ ifNotNil: [ :subscriber | 
+			subscriber
+				onDebugSession: self
+				stoppingGettingKeptAliveBy: anObjectThatNoLongerWantsToKeepMeAlive ] ] "Notify subscribers"
+]
+
+{ #category : #accessing }
+DebugSession >> subscribersToKeepAliveEvents [
+	subscribersToKeepAliveEvents ifNil: [ 
+		subscribersToKeepAliveEvents := WeakOrderedCollection new ].
+	^ subscribersToKeepAliveEvents
 ]
 
 { #category : #'debugging actions' }

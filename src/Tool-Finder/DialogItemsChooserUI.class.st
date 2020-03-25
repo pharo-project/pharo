@@ -71,8 +71,10 @@ DialogItemsChooserUI class >> dialogItemsChooserSettingsOn: aBuilder [
 		description: 'Settings related to the Dialog Window for choosing elements among a list';
 			with: [
 				(aBuilder setting: #alreadySearchedUnselectedItemsListMaxSize)
+					default: 15;
 					label: 'Number of the Unselected Items in History'.
 				(aBuilder setting: #alreadySearchedSelectedItemsListMaxSize)
+					default: 15;
 					label: 'Number of the Selected Items in History']
 ]
 
@@ -340,8 +342,8 @@ DialogItemsChooserUI >> cancelButtonState [
 
 { #category : #display }
 DialogItemsChooserUI >> centering [
-	self left: ((self currentWorld width / 2) - (self width /2)) rounded.
-	self top: ((self currentWorld height / 2) - (self height /2)) rounded
+	self left: ((self world width / 2) - (self width /2)) rounded.
+	self top: ((self world height / 2) - (self height /2)) rounded
 ]
 
 { #category : #accessing }
@@ -443,14 +445,12 @@ DialogItemsChooserUI >> okButtonState [
 	^false
 ]
 
-{ #category : #display }
-DialogItemsChooserUI >> openInWorld [
+{ #category : #opening }
+DialogItemsChooserUI >> preOpenInWorld: aWorld [
 
-	super openInWorld.
 	self width: 500.
 	self height: 400.
 	self centering
-
 ]
 
 { #category : #'buttons creations' }

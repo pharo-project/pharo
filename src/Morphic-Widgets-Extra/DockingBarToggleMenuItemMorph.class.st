@@ -91,7 +91,9 @@ DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRecta
 DockingBarToggleMenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
 
-	evt shiftPressed ifTrue: [^ super mouseDown: evt].  "enable label editing"
+	(evt shiftPressed and: [self isEditable ]) 
+		ifTrue: [ ^ super mouseDown: evt ].  "enable label editing"
+
 	isSelected
 		ifTrue: [
 			evt hand newMouseFocus: nil.

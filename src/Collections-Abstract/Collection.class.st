@@ -645,6 +645,13 @@ Collection >> do: aBlock without: anItem [
 	^ self do: [:each | anItem = each ifFalse: [aBlock value: each]]
 ]
 
+{ #category : #enumerating }
+Collection >> doWithIndex: elementAndIndexBlock [
+	"Use the new version with consistent naming"
+
+	^ self withIndexDo: elementAndIndexBlock
+]
+
 { #category : #private }
 Collection >> emptyCheck [
 
@@ -1268,6 +1275,15 @@ Collection >> union: aCollection [
 	| set |
 	set := self asSet addAll: aCollection; yourself.
 	^ self species withAll: set asArray
+]
+
+{ #category : #enumerating }
+Collection >> withIndexDo: elementAndIndexBlock [
+	"Just like do: except that the iteration index supplies the second argument to the block"
+	"Support collection enumeration with a counter, even though not ordered"
+	| index |
+	index := 0.
+	self do: [:item | elementAndIndexBlock value: item value: (index := index+1)]
 ]
 
 { #category : #deprecated }

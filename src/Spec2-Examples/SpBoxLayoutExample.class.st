@@ -1,8 +1,8 @@
 Class {
 	#name : #SpBoxLayoutExample,
 	#superclass : #SpPresenter,
-	#traits : 'TSpDynamicPresenter',
-	#classTraits : 'TSpDynamicPresenter classTrait',
+	#traits : 'SpTDynamicPresenter',
+	#classTraits : 'SpTDynamicPresenter classTrait',
 	#instVars : [
 		'element11',
 		'element21',

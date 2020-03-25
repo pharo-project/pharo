@@ -1,5 +1,33 @@
 "
-A WindowPresenter is a spec presenter for a Window
+I'm a spec presenter defining a Window.
+I define common behaviour for windows (like title, extent, position). 
+I can also hold a menuBar, a toolBar and a statusBar.
+
+Tipically you do not use this presenter directly but through a presenter you want to show. 
+When you execute ==aPresenter openWithSpec==, what happens is that a SpWindowPresenter is created. Then the #initializeWindow: method is called and an user can configure its window there.
+
+You can also access your window when your presenter is active by using ==#withWindowDo:==
+
+!! Example 1 
+
+SpPresenter subclass: #MyPresenter.
+
+MyPresenter >> initializeWindow: aWindowPresenter
+
+	aWindowPresenter
+		title: 'Title Example';
+		initialExtent: 800@600.
+
+!! Example 2
+
+| presenter window |
+
+presenter := SpTextPresenter new
+text: self testText;
+yourself.
+window := presenter openWithSpec.
+presenter withWindowDo: [ :w | w title: 'A fancy looking title text' ].
+
 "
 Class {
 	#name : #SpWindowPresenter,
@@ -80,9 +108,8 @@ SpWindowPresenter >> addPresenterIn: widget withSpecLayout: aSpec [
 	
 	self presenter ifNil: [ ^ self ].
 	self initializeWindow.
-	self 
-		changed: #addPresenterIn:withSpecLayout:
-		with: { widget. aSpec }
+	self withAdapterDo: [ :anAdapter |
+		anAdapter addPresenterIn: widget withSpecLayout: aSpec ]
 ]
 
 { #category : #api }
@@ -111,6 +138,12 @@ SpWindowPresenter >> basicBuildWithSpecLayout: presenterSpecLayout [
 			widget := self widget ].
 	
 	^ widget
+]
+
+{ #category : #api }
+SpWindowPresenter >> beep [ 
+	
+	self adapter beep
 ]
 
 { #category : #'private building' }
@@ -156,6 +189,12 @@ SpWindowPresenter >> centeredRelativeTo: aModel [
 ]
 
 { #category : #api }
+SpWindowPresenter >> centeredRelativeToTopWindow [
+
+	self centeredRelativeTo: self application topWindow
+]
+
+{ #category : #api }
 SpWindowPresenter >> close [
 
 	"Only manage closing if the presenter is really open"
@@ -173,8 +212,10 @@ SpWindowPresenter >> defaultInitialExtent [
 
 { #category : #private }
 SpWindowPresenter >> delete [
+	"DO NOT USE. This will destroy the window and maybe you do not want that :/
+	 I'm keeping this here because of testing."
 
-	self window delete
+	self withAdapterDo: [ :anAdapter | anAdapter delete ]
 ]
 
 { #category : #focus }
@@ -291,6 +332,16 @@ SpWindowPresenter >> isResizeable: aBoolean [
 ]
 
 { #category : #testing }
+SpWindowPresenter >> isTopWindow [
+	"answers true if this si the active window (the one that has the focus)"
+	
+	self withAdapterDo: [ :anAdapter | 
+		^ anAdapter isTopWindow ].
+
+	^ false
+]
+
+{ #category : #testing }
 SpWindowPresenter >> isWindowPresenter [
 
 	^ true
@@ -299,7 +350,7 @@ SpWindowPresenter >> isWindowPresenter [
 { #category : #api }
 SpWindowPresenter >> maximize [
 
-	self changed: #maximize with: #()
+	self withAdapterDo: [ :anAdapter | anAdapter maximize ]
 ]
 
 { #category : #api }
@@ -316,7 +367,7 @@ SpWindowPresenter >> menu: aMenuPresenter [
 { #category : #api }
 SpWindowPresenter >> minimize [
 
-	self changed: #minimize with: #()
+	self withAdapterDo: [ :anAdapter | anAdapter minimize ]
 ]
 
 { #category : #notifying }

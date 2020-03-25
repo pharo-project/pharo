@@ -1,6 +1,9 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*NECompletion' }
-RBMethodNode >> completionEntries [
-	^ self select: Symbol selectorTable beginningWith: self selector
+RBMethodNode >> completionEntries: offset [
+	^Symbol selectorTable 
+		select: [ :each | each beginsWith: self selector] 
+		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
+
 ]

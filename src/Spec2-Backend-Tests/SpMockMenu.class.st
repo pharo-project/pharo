@@ -1,8 +1,8 @@
 Class {
 	#name : #SpMockMenu,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#realMenu',
 		'#shown => SpObservableSlot'
@@ -16,6 +16,12 @@ SpMockMenu >> initialize [
 	self class initializeSlots: self.
 	super initialize.
 	shown := false
+]
+
+{ #category : #owner }
+SpMockMenu >> privateOwner: aRubEditingArea [ 
+	
+	"Nothing"
 ]
 
 { #category : #accessing }

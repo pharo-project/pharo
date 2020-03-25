@@ -47,11 +47,14 @@ KeymapBrowser class >> taskbarIconName [
 { #category : #private }
 KeymapBrowser >> browseDefinitionOfSelectedShortcut [
 	| selection action class selector |
-	selection := self kmTable selectedItem ifNil: [ ^ self ].
+	selection := self kmTable selection selectedItem ifNil: [ ^ self ].
 	action := selection realValue keymap action ifNil: [ ^ self ].
 	class := action method methodClass.
 	selector := action method selector.
-	Smalltalk tools browser openOnClass: class selector: selector highlight: selection shortcutName
+	Smalltalk tools browser
+		openOnClass: class
+		selector: selector
+		highlight: selection shortcutName
 ]
 
 { #category : #accessing }
@@ -116,8 +119,8 @@ KeymapBrowser >> initializePresenters [
 
 { #category : #private }
 KeymapBrowser >> inspectActionOfSelectedShortcut [
-	| selection action   |
-	selection := self kmTable selectedItem ifNil: [ ^ self ].
+	| selection action |
+	selection := self kmTable selection selectedItem ifNil: [ ^ self ].
 	action := selection realValue keymap ifNil: [ ^ self ].
 	action inspect
 ]
@@ -134,10 +137,19 @@ KeymapBrowser >> kmTable: anObject [
 
 { #category : #private }
 KeymapBrowser >> menu: aMenu shifted: aBoolean [
-	(aMenu add: 'Refresh' target: self selector: #collectAllShortcuts) icon: (self iconNamed: #smallUpdateIcon).
-	self kmTable selectedItem ifNil: [ ^ aMenu ].
-	(aMenu add: 'Browse Definition' target: self selector: #browseDefinitionOfSelectedShortcut) icon: (self iconNamed: #smallSystemBrowserIcon).
-	(aMenu add: 'Inspect Action' target: self selector: #inspectActionOfSelectedShortcut) icon: (self iconNamed: #smallInspectItIcon).
+	(aMenu add: 'Refresh' target: self selector: #collectAllShortcuts)
+		icon: (self iconNamed: #smallUpdateIcon).
+	self kmTable selection selectedItem ifNil: [ ^ aMenu ].
+	(aMenu
+		add: 'Browse Definition'
+		target: self
+		selector: #browseDefinitionOfSelectedShortcut)
+		icon: (self iconNamed: #smallSystemBrowserIcon).
+	(aMenu
+		add: 'Inspect Action'
+		target: self
+		selector: #inspectActionOfSelectedShortcut)
+		icon: (self iconNamed: #smallInspectItIcon).
 	^ aMenu
 ]
 

@@ -49,12 +49,7 @@ ReflectiveMethod >> compiledMethod: aCompiledMethod [
 
 	compiledMethod := aCompiledMethod.
 	class := aCompiledMethod methodClass.
-	ast := compiledMethod ast.
-	
-	SystemAnnouncer uniqueInstance weak 
-		when: ASTCacheReset 
-		send: #reinstallASTInCache 
-		to: self
+	ast := compiledMethod ast
 ]
 
 { #category : #invalidate }
@@ -215,7 +210,6 @@ ReflectiveMethod >> metaLinkOptions [
 	#installReflectiveMethod -> #( + optionCompileOnLinkInstallation).
 	#installMethod:-> #( + optionCompileOnLinkInstallation).
 	#installLink: -> #( + optionCompileOnLinkInstallation).
-	#reinstallASTInCache -> #( + optionCompileOnLinkInstallation).
 	#removeLink: -> #( + optionCompileOnLinkInstallation).
 	#selector: -> #( + optionCompileOnLinkInstallation).
 	#run:with:in: -> #( + optionCompileOnLinkInstallation).
@@ -257,11 +251,6 @@ ReflectiveMethod >> recompileAST [
 { #category : #accessing }
 ReflectiveMethod >> reflectiveMethod [
 	^self
-]
-
-{ #category : #'ast cache' }
-ReflectiveMethod >> reinstallASTInCache [
-	ASTCache default at: compiledMethod put: ast
 ]
 
 { #category : #invalidate }

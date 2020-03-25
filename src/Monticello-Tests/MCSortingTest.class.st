@@ -46,19 +46,12 @@ MCSortingTest >> sortKeyFor: aDefinition [
 
 { #category : #tests }
 MCSortingTest >> testConsistentSorting [
-	| definitions shuffledAndSorted|
-	definitions :=
-		{self methodNamed: #a class: #A meta: false.
-		self methodNamed: #a class: #A meta: true.
-		self methodNamed: #a class: #B meta: false.
-		self methodNamed: #b class: #A meta: false.
-		self methodNamed: #b class: #B meta: false.
-		self classNamed: #A.
-		self classNamed: #B}.
-	shuffledAndSorted :=
-		(1 to: 100) collect: [:ea | self sortDefinitions: definitions shuffled].
-	self assert: shuffledAndSorted asSet size = 1.
-
+	| definitions shuffledAndSorted |
+	definitions := {(self methodNamed: #a class: #A meta: false) . (self methodNamed: #a class: #A meta: true).
+	(self methodNamed: #a class: #B meta: false) . (self methodNamed: #b class: #A meta: false) . (self methodNamed: #b class: #B meta: false).
+	(self classNamed: #A) . (self classNamed: #B)}.
+	shuffledAndSorted := (1 to: 100) collect: [ :ea | self sortDefinitions: definitions shuffled ].
+	self assert: shuffledAndSorted asSet size equals: 1
 ]
 
 { #category : #tests }
@@ -74,6 +67,5 @@ MCSortingTest >> testSortOrder [
 	bB := self methodNamed: #b class: #B meta: false.
 	A := self classNamed: #A.
 	B := self classNamed: #B.
-	self assert: (self sortDefinitions: {aA. aAm. cAm. aB. bAm. bA. bB. A. cA. B})
-					= {A. aAm. bAm. cAm. aA. bA. cA. B. aB.  bB}
+	self assert: (self sortDefinitions: {aA . aAm . cAm . aB . bAm . bA . bB . A . cA . B}) equals: {A . aAm . bAm . cAm . aA . bA . cA . B . aB . bB}
 ]

@@ -95,12 +95,18 @@ Class {
 		'#askOkToClose => SpObservableSlot',
 		'#titleHolder => SpObservableSlot',
 		'#additionalSubpresentersMap',
-		'#layout',
+		'#layout => SpObservableSlot',
 		'#visible => SpObservableSlot',
 		'#extent => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Base'
 }
+
+{ #category : #accessing }
+SpPresenter class >> currentApplication [ 
+
+	^ SpApplication defaultApplication
+]
 
 { #category : #specs }
 SpPresenter class >> defaultSpec [
@@ -171,13 +177,8 @@ SpPresenter class >> newApplication: anApplication owner: anOwningPresenter mode
 { #category : #'instance creation' }
 SpPresenter class >> on: aDomainObject [
 
-	"self 
-		deprecated: 'SpPresenters are instantiated in the context of an application!' 
-		on: '2019-02-26' 
-		in: #Pharo8."
-		
 	^ self 
-		newApplication: SpNullApplication new 
+		newApplication: self currentApplication
 		model: aDomainObject 
 ]
 
@@ -307,6 +308,7 @@ SpPresenter >> applyMenuModel: aMenuModel [
 { #category : #converting }
 SpPresenter >> asPresenter [
 	"This allows to use presenter instances inside layouts directly"
+
 	^ self
 ]
 
@@ -326,11 +328,9 @@ SpPresenter >> askOkToClose [
 { #category : #'private building' }
 SpPresenter >> basicBuildAdapterWithSpecLayout: aSpecLayout [
 
-	self flag: #TODO. "We will keep the layout used to build to allow recalculations 
-	 and other operations. But maybe this should be part of the adapter and not the presenter."
-	layout := aSpecLayout.
-	^ super basicBuildAdapterWithSpecLayout: aSpecLayout.
-
+	layout == aSpecLayout 
+		ifFalse: [ layout := aSpecLayout ].
+	^ super basicBuildAdapterWithSpecLayout: aSpecLayout
 ]
 
 { #category : #'api-shortcuts' }
@@ -411,9 +411,10 @@ SpPresenter >> defaultWindowPresenterClass [
 	^ SpWindowPresenter
 ]
 
-{ #category : #'as yet unclassified' }
-SpPresenter >> defer: aBlockClosure [ 
-	self application defer: aBlockClosure
+{ #category : #accessing }
+SpPresenter >> defer: aBlock [
+
+	self application defer: aBlock
 ]
 
 { #category : #private }
@@ -523,7 +524,12 @@ SpPresenter >> initialize [
 SpPresenter >> initializePresenter [
 	"Now, presenters should implement #connectPresenters instead."
 
-	self property: #extent whenChangedDo: [ :ex | self withAdapterDo: [ :widget | (widget respondsTo: #extent:) ifTrue: [ widget extent: ex ] ] ]
+	self 
+		property: #extent 
+		whenChangedDo: [ :ex | 
+			self withAdapterDo: [ :widget | 
+				(widget respondsTo: #extent:) 
+					ifTrue: [ widget extent: ex ] ] ]
 ]
 
 { #category : #initialization }
@@ -540,7 +546,8 @@ SpPresenter >> initializePresenters [
 { #category : #'initialization - private' }
 SpPresenter >> initializePrivateAnnouncements [
 
-	self property: #titleHolder whenChangedDo: [ self updateTitle ]
+	self property: #titleHolder whenChangedDo: [ self updateTitle ].
+	self property: #layout whenChangedDo: [ :newLayout | self replaceLayoutWith: newLayout ]
 ]
 
 { #category : #'initialization - private' }
@@ -654,6 +661,12 @@ SpPresenter >> layout [
 	^ layout
 ]
 
+{ #category : #api }
+SpPresenter >> layout: aLayout [
+
+	layout := aLayout
+]
+
 { #category : #private }
 SpPresenter >> layoutPresenters [
 
@@ -698,6 +711,11 @@ SpPresenter >> newCheckBox [
 { #category : #widgets }
 SpPresenter >> newCode [
 	^ self instantiate: SpCodePresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newComponentList [
+	^ self instantiate: SpComponentListPresenter
 ]
 
 { #category : #widgets }
@@ -802,6 +820,18 @@ SpPresenter >> newRadioButton [
 ]
 
 { #category : #widgets }
+SpPresenter >> newRichText [
+
+	^ self instantiate: SpRichTextPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newSearchInput [
+
+	^ self instantiate: SpSearchInputFieldPresenter
+]
+
+{ #category : #widgets }
 SpPresenter >> newSlider [
 	^ self instantiate: SpSliderPresenter
 ]
@@ -826,6 +856,12 @@ SpPresenter >> newText [
 { #category : #widgets }
 SpPresenter >> newTextInput [
 	^ self instantiate: SpTextInputFieldPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToggleButton [
+
+	^ self instantiate: SpToggleButtonPresenter
 ]
 
 { #category : #widgets }
@@ -910,6 +946,13 @@ SpPresenter >> removeKeyCombination: aShortcut [
 		anAdapter removeKeyCombination: aShortcut ]
 ]
 
+{ #category : #private }
+SpPresenter >> replaceLayoutWith: aLayout [
+
+	self withAdapterDo: [ :anAdapter |
+		anAdapter replaceLayoutWith: aLayout ]
+]
+
 { #category : #'api-window' }
 SpPresenter >> requestWindowClose [
 
@@ -929,15 +972,6 @@ SpPresenter >> retrieveSpec: aSelector [
 
 	self layout ifNotNil: [ ^ self layout ].
 	^ super retrieveSpec: aSelector
-]
-
-{ #category : #TOMOVE }
-SpPresenter >> setExtentAndBindingTo: widget [
-
-	self flag: #TODO. "This is bad. Extent needs to be 'ensured' at adapter level. 
-	Same for keybindings"
-	self ensureExtentFor: widget.
-	self ensureKeyBindingsFor: widget
 ]
 
 { #category : #'accessing model' }
@@ -1034,7 +1068,7 @@ SpPresenter >> update [
 SpPresenter >> updatePresenter [
 ]
 
-{ #category : #api }
+{ #category : #TOMOVE }
 SpPresenter >> updateTitle [
 
 	self flag: #TODO. "To move to WindowPresenter"
@@ -1050,14 +1084,6 @@ SpPresenter >> visibleIf: aValuable [
 { #category : #'api-events' }
 SpPresenter >> whenDisplayDo: aBlockClosure [
 	self announcer when: SpWidgetDisplayed do: aBlockClosure
-]
-
-{ #category : #'api-events' }
-SpPresenter >> whenShortcutsChanged: aBlock [
-	"Set a block to value when the shortcuts block has changed"
-	
-	self deprecated: 'This event does not has sense in Spec2'.
-
 ]
 
 { #category : #'api-events' }

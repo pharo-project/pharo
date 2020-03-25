@@ -9,15 +9,14 @@ Class {
 
 { #category : #tests }
 SystemOrganizerTest >> testDefault [
-	
-	self assert: (SystemOrganizer default == self class environment organization).
+	self assert: SystemOrganizer default identicalTo: self class environment organization
 ]
 
 { #category : #tests }
 SystemOrganizerTest >> testDefaultEnvironment [
 	"When no environment is specified, point to the default one"
-	
-	self assert: (SystemOrganizer new  environment == Smalltalk globals)
+
+	self assert: SystemOrganizer new environment identicalTo: Smalltalk globals
 ]
 
 { #category : #tests }

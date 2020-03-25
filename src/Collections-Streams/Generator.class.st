@@ -98,7 +98,7 @@ Generator class >> somePrimes [
 Generator >> atEnd [
 	"Answer whether the receiver can access any more objects."
 
-	^ continue isNil
+	^ continue isNil or: [ continue isDead ]
 ]
 
 { #category : #'open/close' }

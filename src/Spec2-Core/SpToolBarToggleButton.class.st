@@ -32,7 +32,9 @@ SpToolBarToggleButton >> beUnselected [
 SpToolBarToggleButton >> execute: state [
 
 	self setSelection: state.
-	self action cull: state cull: self
+	self action 
+		cull: state 
+		cull: self
 ]
 
 { #category : #initialization }

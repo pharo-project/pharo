@@ -4,7 +4,7 @@ Unit test for trait handling
 Class {
 	#name : #T2TraitTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #tests }
@@ -226,6 +226,20 @@ T2TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	self deny: (c1 class includesSelector: #traits).
 	self assert: (c2 class includesSelector: #traits).
 	
+]
+
+{ #category : #tests }
+T2TraitTest >> testRemovingTraitsUpdatesCategories [
+	| t1 t2 c1 |
+	
+	t1 := self createT1.
+	t2 := self createT2.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: t1 + t2.
+	c1 := self newClass: #C1 with: 'g h' asSlotCollection uses: {}.		
+
+	c1 organization allMethodSelectors do: [:each | self assert: (c1 includesSelector: each) ].
+	c1 class organization allMethodSelectors do: [:each | 
+		self assert: (c1 class includesSelector: each) ]
 ]
 
 { #category : #tests }

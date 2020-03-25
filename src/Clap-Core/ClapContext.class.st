@@ -16,28 +16,40 @@ Class {
 		'stdio',
 		'match',
 		'leftovers',
-		'session'
+		'session',
+		'exitException'
 	],
 	#category : #'Clap-Core-Activation'
 }
 
 { #category : #accessing }
 ClapContext class >> defaultRoot [
-	^ (ClapRoot withName: 'clap')
+	^ (ClapRoot id: #clap)
 		description: 'Entry point for commands implemented with Clap';
 		add: ClapFlag forHelp;
 		add: ClapCommand forHelp;
+
+		add: ((ClapFlag id: #save)
+			description: 'Save the image after the command terminates');
+		add: ((ClapFlag id: #noSave)
+			description: 'Do not save the image even if the command is stateful');
+		add: ((ClapFlag id: #rename)
+			description: 'Rename the image as <NAME> before running the command';
+			add: (ClapPositional id: #NAME));
+
+		add: ((ClapFlag id: #keepAlive)
+			description: 'Keep the image running after the command terminates');
+
 		meaning: [ :args |
-			args atName: 'help' ifFound: [ :help |
+			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			args validateAll ];
 		yourself
-	"setup default flags, omnipresent subcommands & basic meanings here"
 ]
 
 { #category : #accessing }
 ClapContext class >> pragmaCommands [
-	^ (PragmaCollector filter: [:prg | prg selector = 'commandline']) reset
+	^ (PragmaCollector filter: [:prg | prg selector = #commandline]) reset
 		collect: [ :pragma |
 			| theClass theSelector |
 			theClass := pragma method methodClass.
@@ -56,23 +68,6 @@ ClapContext class >> withAll: commandCandidates [
 { #category : #'instance creation' }
 ClapContext class >> withPragmaCommands [ 
 	^ self withAll: self pragmaCommands
-]
-
-{ #category : #activation }
-ClapContext >> activateWith: args [
-	^ self
-		activateWith: args
-		onExit: [ :exit | self handleExit: exit ]
-]
-
-{ #category : #activation }
-ClapContext >> activateWith: args onExit: exitBlock [
-	^ [ self
-			rememberSession;
-			interpret: args
-	]
-	on: Exit
-	do: exitBlock
 ]
 
 { #category : #validation }
@@ -116,6 +111,11 @@ ClapContext >> context [
 	^ self
 ]
 
+{ #category : #streams }
+ClapContext >> defaultStdio [
+	^ ClapPluggableStdio onByteArrays
+]
+
 { #category : #matching }
 ClapContext >> doMatch [
 	| args |
@@ -131,6 +131,31 @@ ClapContext >> documenter [
 	^ ClapDocumenter on: self stdout
 ]
 
+{ #category : #activation }
+ClapContext >> execute [
+	^ self executeToExit: [ :exc | self handleExit: exc ]
+]
+
+{ #category : #activation }
+ClapContext >> executeToExit: exitBlock [
+	^ [
+		self rememberSession;
+			ifMatch: [ :m | 
+				m value: self.
+				self exitSuccess ]
+			ifMismatch: [ self noneMatched ]
+	]
+		on: Exit
+		do: [ :exception |
+			exitException := exception.
+			exitBlock value: self exitException ]
+]
+
+{ #category : #accessing }
+ClapContext >> exit [
+	^ self exitSuccess
+]
+
 { #category : #running }
 ClapContext >> exit: status [
 	^ (Exit status: status) signal
@@ -141,6 +166,11 @@ ClapContext >> exit: status message: message [
 	^ (Exit status: status) signal: message
 ]
 
+{ #category : #accessing }
+ClapContext >> exitException [
+	^ exitException
+]
+
 { #category : #running }
 ClapContext >> exitFailure [
 	^ Exit signalFailure
@@ -149,6 +179,11 @@ ClapContext >> exitFailure [
 { #category : #running }
 ClapContext >> exitFailure: message [
 	^ Exit signalFailure: message
+]
+
+{ #category : #accessing }
+ClapContext >> exitStatus [
+	^ exitException status
 ]
 
 { #category : #running }
@@ -167,9 +202,6 @@ ClapContext >> handleExit: exit [
 
 	self shouldObeyExit
 		ifTrue: [ exit pass ]
-		ifFalse: [
-			exit isSuccess
-				ifFalse: [ exit resignalAs: (Error new messageText: exit messageText) ] ]
 ]
 
 { #category : #activation }
@@ -189,15 +221,6 @@ ClapContext >> ifMatch: matchBlock ifMismatch: failBlock [
 ClapContext >> initialize [
 	arguments := #().
 	obeyingExits := false
-]
-
-{ #category : #activation }
-ClapContext >> interpret: argumentsSequence [
-	^ self arguments: argumentsSequence;
-		ifMatch: [ :matched |
-			matched value: self.
-			self exitSuccess ]
-		ifMismatch: [ self noneMatched ]
 ]
 
 { #category : #accessing }
@@ -230,6 +253,11 @@ ClapContext >> rememberSession [
 	session := Smalltalk session
 ]
 
+{ #category : #initialization }
+ClapContext >> setStdio: anStdio [
+	stdio := anStdio
+]
+
 { #category : #testing }
 ClapContext >> shouldObeyExit [
 	^ obeyingExits and: [ Smalltalk isInteractive not ]
@@ -260,7 +288,7 @@ ClapContext >> stdinEncoded: anEncoding [
 
 { #category : #streams }
 ClapContext >> stdio [
-	^ stdio ifNil: [ Stdio ]
+	^ stdio ifNil: [ stdio := self defaultStdio ]
 ]
 
 { #category : #streams }

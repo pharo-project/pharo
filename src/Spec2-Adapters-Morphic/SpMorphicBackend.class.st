@@ -16,9 +16,10 @@ SpMorphicBackend >> adapterBindingsClass [
 	^ SpMorphicAdapterBindings
 ]
 
-{ #category : #'as yet unclassified' }
-SpMorphicBackend >> defer: aBlockClosure [ 
-	UIManager default defer: aBlockClosure.
+{ #category : #accessing }
+SpMorphicBackend >> defer: aBlock [
+
+	UIManager default defer: aBlock
 ]
 
 { #category : #'private notifying' }

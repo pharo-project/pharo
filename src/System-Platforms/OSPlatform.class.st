@@ -97,24 +97,38 @@ OSPlatform >> current [
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPath [
-	"This method calls the method getPwdViaFFI with arugement of a buffer size. By default it uses the defaultMaximumPathLength of each subclass as the buffer size."
-	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
-
+	"We MUST decode raw bytes to support non-Ascii characters"
+	^ self currentWorkingDirectoryRawPath decodeWith: self defaultEncoding
 ]
 
 { #category : #accessing }
-OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
+OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteArray [
 	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
 	
-	^ (self getPwdViaFFI: aByteString size: aByteString size) 
-		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
+	^ (self getPwdViaFFI: aByteArray size: aByteArray size) 
+		ifNil:[ self error: 'Insufficient buffer size to read current working directory: ' , aByteArray size asString]
 ]
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	| buffer |
-	buffer := ByteString new: aBufferSize.
+	buffer := ByteArray new: aBufferSize.
 	^ self currentWorkingDirectoryPathWithBuffer: buffer
+]
+
+{ #category : #accessing }
+OSPlatform >> currentWorkingDirectoryRawPath [
+	"This method calls the method getPwdViaFFI with argument of a buffer size. 
+	By default it uses the defaultMaximumPathLength of each subclass as the buffer size.
+	We return a raw byte array that should be decoded with the proper encoding."
+	^ (self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength) asByteArray
+
+]
+
+{ #category : #accessing }
+OSPlatform >> defaultEncoding [
+
+	^ ZnCharacterEncoder utf8
 ]
 
 { #category : #accessing }

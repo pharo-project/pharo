@@ -1,5 +1,5 @@
 "
-I'm an scanned error.
+I'm a scanned error.
 I can have multiple causes.
 "
 Class {

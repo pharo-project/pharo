@@ -1,14 +1,10 @@
 "
-I am a list of components ( Widgets :) )
+I am a list of components (Presenters)
 "
 Class {
 	#name : #SpComponentListPresenter,
-	#superclass : #SpAbstractWidgetPresenter,
-	#instVars : [
-		'#presenters => SpObservableSlot',
-		'#presentersChangedBlock'
-	],
-	#category : #'Spec2-Core-Widgets'
+	#superclass : #SpAbstractListPresenter,
+	#category : #'Spec2-Core-Widgets-Table'
 }
 
 { #category : #specs }
@@ -20,41 +16,55 @@ SpComponentListPresenter class >> adapterName [
 SpComponentListPresenter >> addPresenter: aPresenter [
 	
 	aPresenter owner: self.
-	presenters add: aPresenter.
-	self notifyPropertyChanged: #presenters
+	self model add: aPresenter
+]
+
+{ #category : #private }
+SpComponentListPresenter >> doActivateAtIndex: index [
+	
+	"Activate only if there is an item at that position"
+	self presenters at: index ifAbsent: [ ^ self ].
+	
+	activationBlock cull: ((SpSingleSelectionMode on: self)
+		basicSelectIndex: index;
+		yourself)
 ]
 
 { #category : #testing }
-SpComponentListPresenter >> includes: aPresenter [ 
-	^ presenters includes: aPresenter  
-]
-
-{ #category : #initialization }
-SpComponentListPresenter >> initialize [
-
-	super initialize.
-	presenters := OrderedCollection new
+SpComponentListPresenter >> includes: aPresenter [
+ 
+	^ self presenters includes: aPresenter  
 ]
 
 { #category : #testing }
 SpComponentListPresenter >> isEmpty [
-	^ presenters isEmpty
+
+	^ self presenters isEmpty
+]
+
+{ #category : #accessor }
+SpComponentListPresenter >> items: aCollection [ 
+	
+	^ super items: (aCollection collect: [ :each | 
+		each asPresenter
+			owner: self;
+			yourself ])
 ]
 
 { #category : #accessor }
 SpComponentListPresenter >> presenters [
-	^ presenters
+
+	^ self items
 ]
 
 { #category : #initialization }
 SpComponentListPresenter >> presenters: aCollection [
 
-	aCollection do: [ :each | each owner: self ].
-	presenters := aCollection
+	self items: aCollection
 ]
 
 { #category : #event }
-SpComponentListPresenter >> whenPresentersChangedDo: aBlockClosure [ 
+SpComponentListPresenter >> whenPresentersChangedDo: aBlock [
 	
-	self property: #presenters whenChangedDo: aBlockClosure 
+	self whenModelChangedDo: aBlock
 ]

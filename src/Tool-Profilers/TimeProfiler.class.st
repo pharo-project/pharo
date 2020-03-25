@@ -688,7 +688,7 @@ TimeProfiler >> toolBarOn: aWindow [
 	toolBar := toolBar := aWindow
 		newToolbar:
 			{((uiTheme
-				newButtonIn: self currentWorld
+				newButtonIn: self
 				for: self
 				getState: nil
 				action: #profileIt
@@ -698,7 +698,7 @@ TimeProfiler >> toolBarOn: aWindow [
 				help: nil)
 				label:
 					(uiTheme
-						newRowIn: self currentWorld
+						newRowIn: self
 						for:
 							{(AlphaImageMorph new
 								image: (self iconNamed: #smallDoItIcon)).
@@ -739,7 +739,7 @@ TimeProfiler >> toolBarOn: aWindow [
 			aWindow newToolSpacer.
 			aWindow newToolSpacer.
 			(uiTheme
-				newCheckboxIn: self currentWorld
+				newCheckboxIn: self
 				for: self
 				getSelected: #reportOtherProcesses
 				setSelected: #reportOtherProcesses:

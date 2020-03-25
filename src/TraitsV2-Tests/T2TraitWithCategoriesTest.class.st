@@ -4,7 +4,7 @@ Unit test for categorization of traits
 Class {
 	#name : #T2TraitWithCategoriesTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #tests }

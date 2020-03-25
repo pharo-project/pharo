@@ -48,6 +48,11 @@ SourceFileCharacterReadWriteStream >> cr [
 ]
 
 { #category : #accessing }
+SourceFileCharacterReadWriteStream >> ensureWrittenPosition: aPosition [
+	^ writeStream wrappedStream ensureWrittenPosition: aPosition
+]
+
+{ #category : #accessing }
 SourceFileCharacterReadWriteStream >> flush [
 
 	writeStream flush

@@ -4,7 +4,9 @@ Extension { #name : #SpAbstractTextPresenter }
 SpAbstractTextPresenter >> pendingText [
 	"Return the current pending text"
 
-	self withAdapterDo: [ :adpt | adpt isMorphicAdapter ifTrue: [ ^ adpt pendingText ] ].
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter isMorphicAdapter ifTrue: [ 
+			^ anAdapter pendingText ] ].
 	^ self getText
 ]
 
@@ -12,6 +14,8 @@ SpAbstractTextPresenter >> pendingText [
 SpAbstractTextPresenter >> pendingText: aText [
 	"Set the pending text. Do no accept it"
 
-	self withAdapterDo: [ :adpt | adpt isMorphicAdapter ifTrue: [ ^ adpt pendingText: aText ] ].
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter isMorphicAdapter 
+			ifTrue: [ ^ anAdapter pendingText: aText ] ].
 	self text: aText
 ]

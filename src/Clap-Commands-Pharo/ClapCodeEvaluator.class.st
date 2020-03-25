@@ -3,25 +3,22 @@ I evaluate code passed via standard input or as arguments from the command line.
 "
 Class {
 	#name : #ClapCodeEvaluator,
-	#superclass : #Object,
-	#instVars : [
-		'arguments'
-	],
+	#superclass : #ClapPharoApplication,
 	#category : #'Clap-Commands-Pharo'
 }
 
 { #category : #'command line' }
 ClapCodeEvaluator class >> evaluate [
 	<commandline>
-	^ (ClapCommand withName: 'evaluate')
+	^ (ClapCommand id: #evaluate)
 		aliases: #('eval');
 		description: 'Print the result of a Pharo expression';
 		add: ClapFlag forHelp;
-		add: ((ClapFlag withName: 'save')
+		add: ((ClapFlag id: #save)
 			description: 'Save the image after evaluation');
-		add: ((ClapFlag withName: 'no-quit')
+		add: ((ClapFlag id: #keepAlive)
 			description: 'Keep image running');
-		add:	((ClapPositional withName: 'EXPR')
+		add:	((ClapPositional id: #EXPR)
 			description: 'The expression to evaluate, joining successive arguments with spaces (if omitted, read the expression from stdin)';
 			multiple: true;
 			meaning: [ :match | "let's copy all the bytes, twice, because the VM assumes some 8-bit encoding…"
@@ -29,20 +26,8 @@ ClapCodeEvaluator class >> evaluate [
 			implicitMeaning: [ :match | "in the absence of an explicit argument, read from standard input"
 				match context stdin upToEnd ]);
 		meaning: [ :args | 
-			args	atName: 'help' ifFound: [ :help | help value; exitSuccess ].
+			args	at: #helpFlag ifPresent: [ :help | help value; exitSuccess ].
 			(self with: args) execute ]
-]
-
-{ #category : #'instance creation' }
-ClapCodeEvaluator class >> with: arguments [
-	^ self new
-		setArguments: arguments;
-		yourself
-]
-
-{ #category : #execution }
-ClapCodeEvaluator >> context [
-	^ arguments context
 ]
 
 { #category : #execution }
@@ -55,17 +40,7 @@ ClapCodeEvaluator >> execute [
 
 ]
 
-{ #category : #execution }
-ClapCodeEvaluator >> outputStreamDo: aBlock [
-	aBlock value: self context stdout
-]
-
-{ #category : #initialization }
-ClapCodeEvaluator >> setArguments: args [
-	arguments := args
-]
-
-{ #category : #initialization }
+{ #category : #accessing }
 ClapCodeEvaluator >> source [
-	^ (arguments atName: 'EXPR') value
+	^ (arguments at: #EXPR) value
 ]

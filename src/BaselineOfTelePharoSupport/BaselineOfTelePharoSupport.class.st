@@ -3,7 +3,7 @@ This baseline is used to load the basic support needed for remote image browsing
 
 Load this baseline:
 
-./pharo minimal.image eval --save ""Metacello new baseline: 'TelePharoSupport';repository: 'github://pharo-project/pharo:Pharo8.0/src'; load""
+./pharo minimal.image eval --save ""Metacello new baseline: 'TelePharoSupport';repository: 'github://pharo-project/pharo:Pharo9.0/src'; load""
 
 Load the TelePharo 
 

@@ -6,33 +6,25 @@ Class {
 
 { #category : #tests }
 RGClassStrategyTest >> testCategory [
-
 	| aClass |
-	
 	aClass := RGClass named: #SomeClass.
 	aClass category: 'SomeCategory'.
-	self assert: aClass category = 'SomeCategory'
-
+	self assert: aClass category equals: 'SomeCategory'
 ]
 
 { #category : #tests }
 RGClassStrategyTest >> testComment [
-
 	| aClass aComment |
-	
 	aClass := RGClass named: #SomeClass.
 	aComment := RGComment parent: aClass.
 	aClass comment: aComment.
-	
-	self assert: (aClass comment == aComment).
 
+	self assert: aClass comment identicalTo: aComment
 ]
 
 { #category : #tests }
 RGClassStrategyTest >> testCopying [
-
 	| env class classVariable1 classVariable2 copy |
-
 	class := RGClass unnamed.
 	env := class environment.
 
@@ -41,24 +33,23 @@ RGClassStrategyTest >> testCopying [
 
 	class addClassVariable: classVariable1.
 	self assert: class behaviorStrategy classVariables size equals: 1.
-	self assert: (class classVariables allSatisfy: [ :each | each parent == class]).
+	self assert: (class classVariables allSatisfy: [ :each | each parent == class ]).
 
 	copy := class copyForBehaviorDefinition.
 	class behaviorStrategy classVariables.
 
-	self deny: (copy == class).
-	self assert: (copy behaviorStrategy owner == copy).
-	self deny: (class behaviorStrategy == copy behaviorStrategy).
-	self deny: ((class behaviorStrategy instVarNamed: #classVariables) == (copy behaviorStrategy instVarNamed: #classVariables)).
-	self deny: (class behaviorStrategy owner == copy behaviorStrategy owner).
-	self assert: (class behaviorStrategy owner == class).
-	self assert: (copy behaviorStrategy owner == copy).
-	self assert: (class classVariables allSatisfy: [ :each | each parent == class]).
+	self deny: copy identicalTo: class.
+	self assert: copy behaviorStrategy owner identicalTo: copy.
+	self deny: class behaviorStrategy identicalTo: copy behaviorStrategy.
+	self deny: (class behaviorStrategy instVarNamed: #classVariables) identicalTo: (copy behaviorStrategy instVarNamed: #classVariables).
+	self deny: class behaviorStrategy owner identicalTo: copy behaviorStrategy owner.
+	self assert: class behaviorStrategy owner identicalTo: class.
+	self assert: copy behaviorStrategy owner identicalTo: copy.
+	self assert: (class classVariables allSatisfy: [ :each | each parent == class ]).
 	self assert: class classVariables size equals: copy classVariables size.
-	self deny: ((class classVariables first) == (copy classVariables first)).
+	self deny: class classVariables first identicalTo: copy classVariables first.
 
-	self assert: class behaviorStrategy classVariables size equals: 1.
-
+	self assert: class behaviorStrategy classVariables size equals: 1
 ]
 
 { #category : #tests }
@@ -133,14 +124,12 @@ RGClassStrategyTest >> testKind [
 
 { #category : #tests }
 RGClassStrategyTest >> testPackage [
-
 	| aClass aPackage |
-	
 	aClass := RGClass named: #SomeClass.
 	aPackage := aClass environment ensurePackageNamed: 'Package'.
-	
+
 	aClass package: aPackage.
-	self assert: (aClass package == aPackage).
+	self assert: aClass package identicalTo: aPackage
 ]
 
 { #category : #tests }

@@ -1,5 +1,5 @@
 "
-ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then answer is set to true, and the modified tree can be retrieved by the #tree method.
+ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 
 Here is a little script to rewrite a self halt into self dormantHalt. 
@@ -14,7 +14,7 @@ Here is a little script to rewrite a self halt into self dormantHalt.
 Note how do we get the transformed code. You can access the rewritten tree as follows:
 rewriter tree.
 
-Now here is a full script showing how to compile the method back 
+Now here is a full script showing how to compile the method back. 
 
    | rewriter ok method |
 	rewriter := RBParseTreeRewriter new.
@@ -35,7 +35,7 @@ Have a look at the users of deprecated:
 		deprecated: 'Please use #isPinnedInMemory instead'
 		transformWith: '`@receiver isPinned' -> '`@receiver isPinnedInMemory'.
 
-You can also have a look at the ParseTreeRewriterTest class
+You can also have a look at the ParseTreeRewriterTest class.
 
 
 Instance Variables:

@@ -38,13 +38,14 @@ SpMorphicListAdapter >> backgroundColorFor: anItem at: index [
 SpMorphicListAdapter >> buildWidget [
 	| datasource |
 	
-	datasource := SpListFastTableDataSource new.
+	datasource := SpMorphicListDataSource new.
 	datasource model: self model.
 	widget := FTTableMorph new
 		dataSource: datasource;
 		hideColumnHeaders;
+		enableSearch;
 		beResizable;
-		columns: {self newListColumn};
+		columns: { self newListColumn };
 		setMultipleSelection: self model isMultipleSelection;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
@@ -58,6 +59,7 @@ SpMorphicListAdapter >> buildWidget [
 	self presenter whenModelChangedDo: [ widget refresh ].
 	self presenter whenSelectionChangedDo: [ self refreshWidgetSelection ].
 	self presenter selection whenChangedDo: [ self refreshWidgetSelection ].
+	self presenter whenSearchChangedDo: [ self updateSearch ].
 	self refreshWidgetHeaderTitle.
 	self refreshWidgetSelection.
 	self presenter whenItemFilterBlockChangedDo: [ :block | self updateItemFilterBlockWith: block ].
@@ -73,7 +75,8 @@ SpMorphicListAdapter >> buildWidget [
 
 { #category : #emulating }
 SpMorphicListAdapter >> hasFilter [
-	^ self widget submorphs anySatisfy: [ :each | each isKindOf: RubTextFieldMorph	"This morph is the explicit filter of the list" ]
+
+	^ self widget hasFilter
 ]
 
 { #category : #testing }
@@ -191,15 +194,17 @@ SpMorphicListAdapter >> selectedIndexes [
 { #category : #factory }
 SpMorphicListAdapter >> selectionChanged: ann [
 	| diff |
+	
 	self presenter selection isMultipleSelection
-		ifTrue: [ self presenter selection
+		ifTrue: [ 
+			self presenter selection
 				selectIndexes: (ann newSelectedIndexes reject: [ :e | e = 0 ]) ].
 	self presenter selection isMultipleSelection
-		ifFalse: [ self presenter selection
-				selectIndex:
-					(ann newSelectedIndexes
-						ifNotEmpty: [ :indexes | indexes first ]
-						ifEmpty: [ 0 ]) ].
+		ifFalse: [ 
+			self presenter selection
+				selectIndex: (ann newSelectedIndexes
+					ifNotEmpty: [ :indexes | indexes first ]
+					ifEmpty: [ 0 ]) ].
 	diff := ann newSelectedIndexes difference: ann oldSelectedIndexes.
 	(diff notEmpty and: [ self presenter activatesOnSingleClick ])
 		ifTrue: [ self presenter doActivateAtIndex: diff last ].

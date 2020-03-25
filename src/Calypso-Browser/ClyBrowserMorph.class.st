@@ -396,7 +396,7 @@ ClyBrowserMorph >> initializeNavigationViews [
 { #category : #initialization }
 ClyBrowserMorph >> initializeToolsPanel [
 	toolbar := ClyToolbarMorph of: self.
-	tabManager := ClyTabManager of: self.
+	tabManager := ClyNotebookManager of: self.
 	
 	toolPanel := PanelMorph new.
 	toolPanel name: 'tools panel'. 

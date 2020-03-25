@@ -17,7 +17,6 @@ Class {
 		'canvas',
 		'advance',
 		'originalFont',
-		'cache',
 		'fontExtents',
 		'glyphExtents'
 	],
@@ -155,7 +154,6 @@ CairoFreetypeFontRenderer >> glyphsOf: aString from: start to: end [
 CairoFreetypeFontRenderer >> initialize [ 
 	utfConverter := CairoUTF8Converter new.
 	advance := 0@0.
-	cache := CairoBackendCache soleInstance.
 	glyphExtents := CairoTextExtents new.
 ]
 

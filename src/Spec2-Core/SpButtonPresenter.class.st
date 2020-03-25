@@ -1,14 +1,18 @@
 "
-A ButtonPresenter is an applicative presenter which handle a basic button.
-See AbstractWidgetPresenter
+I am a ButtonPresenter is an applicative presenter which handle a basic button.
 
-self example
+! SpButtonPresenter
+A button who executes an =action= when pressed.
 
-I provide the following variables and their accessors
+A button provides 
 - action is the action performed when I am clicked.
 - icon is the icon displayed on me.
 - label is the text displayed on me.
-- state is a boolean representing if I am highlighted, it is false by default and it is reversed while clicking.
+
+Examples:
+> self example
+
+
 "
 Class {
 	#name : #SpButtonPresenter,
@@ -100,8 +104,11 @@ SpButtonPresenter >> initialize [
 
 	self whenFontChangedDo: [ self changed: #font ].
 	self whenStateChangedDo: [ self changed: #state ].
-	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ].
-	self property: #askBeforeChanging whenChangedDo: [ :newValue | self changed: {#askBeforeChanging: . newValue} ].
+	self whenMenuChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter updateMenu ] ].
+	self 
+		property: #askBeforeChanging 
+		whenChangedDo: [ :newValue | self changed: {#askBeforeChanging: . newValue} ].
 	self
 		property: #shortcut
 		whenChangedDo: [ :newShortcut :oldShortcut | 
@@ -110,28 +117,6 @@ SpButtonPresenter >> initialize [
 			self changed: #label ].
 
 	self color: nil
-]
-
-{ #category : #api }
-SpButtonPresenter >> menu [
-
-	self 
-		deprecated: 'Use #contextMenu instead.' 
-		transformWith: '`@receiver menu' 
-						-> '`@receiver contextMenu'.
-
-	^ self contextMenu
-]
-
-{ #category : #api }
-SpButtonPresenter >> menu: aMenu [
-
-	self 
-		deprecated: 'Use #contextMenu instead.' 
-		transformWith: '`@receiver menu: `@argument' 
-						-> '`@receiver contextMenu: `@argument'.
-		
-	self contextMenu: aMenu
 ]
 
 { #category : #morphic }
@@ -166,7 +151,7 @@ SpButtonPresenter >> shortcut: aShortcut [
 { #category : #private }
 SpButtonPresenter >> shortcutCharacter [
 
-	^ self shortcut ifNotNil: [ :s | s spCurrentCharacter ]
+	^ self shortcut ifNotNil: [ :s | s platformCharacter ]
 ]
 
 { #category : #morphic }

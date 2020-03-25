@@ -603,10 +603,10 @@ SmallInteger >> printStringBase: b [
 	For SmallIntegers, it is more efficient to print directly in a String,
 	rather than using a Stream like super."
 	
-	"10 printStringBase: 10 >>> '10'"
-	"-10 printStringBase: 10 >>> '-10'"
-	"10 printStringBase: 2 >>> '1010'"
-	"10 printStringBase: 16 >>> 'A'"
+	"(10 printStringBase: 10) >>> '10'"
+	"(-10 printStringBase: 10) >>> '-10'"
+	"(10 printStringBase: 2) >>> '1010'"
+	"(10 printStringBase: 16) >>> 'A'"
 	
 	self < 0
 		ifTrue: [^ '-'

@@ -219,7 +219,12 @@ SettingBrowser class >> browse: aCollectionOfKeywords [
 
 { #category : #'private helpers' }
 SettingBrowser class >> currentNodeList [
-	^ (SettingTree new  acceptableKeywords: self settingsKeywords) nodeList
+	^ self currentTree nodeList
+]
+
+{ #category : #'private helpers' }
+SettingBrowser class >> currentTree [
+	^ SettingTree new acceptableKeywords: self settingsKeywords
 ]
 
 { #category : #opening }

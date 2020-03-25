@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'context'
 	],
-	#category : #'NECompletion-New'
+	#category : #'NECompletion-Sorting'
 }
 
 { #category : #description }

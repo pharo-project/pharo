@@ -59,9 +59,9 @@ DTTestsRunner >> handleReRunResult: rerunnedResult forConfiguration: aDTRerunCon
 	| oldResult |
 	oldResult := self
 		removeTests: aDTRerunConfiguration configurationToRun items
-		from: aDTRerunConfiguration previousResult testsResult.
+		from: aDTRerunConfiguration previousResult testResults.
 	^ self pluginResultClass new
-		testsResult: (self joinTestResult: oldResult with: rerunnedResult testsResult);
+		testResults: (self joinTestResult: oldResult with: rerunnedResult testResults);
 		yourself
 ]
 
@@ -85,7 +85,7 @@ DTTestsRunner >> label: aString forSuite: aTestSuite [
 
 { #category : #accessing }
 DTTestsRunner >> pragmaForResultTrees [
-	^ #'dTTestRunnerResultTreeNamed:'
+	^ #'dtTestRunnerResultTreeNamed:order:'
 ]
 
 { #category : #private }
@@ -115,7 +115,7 @@ DTTestsRunner >> resultButtonHelp [
 DTTestsRunner >> runForConfiguration: aDTpluginConfiguration [
 	| results |
 	results := self pluginResultClass new
-		testsResult: (self runTestSuites: { aDTpluginConfiguration asTestSuite });
+		testResults: (self runTestSuites: { aDTpluginConfiguration asTestSuite });
 		yourself.
 	^ aDTpluginConfiguration handleResults: results for: self
 ]

@@ -118,10 +118,11 @@ Behavior >> adoptInstance: anInstance [
 
 { #category : #'accessing instances and variables' }
 Behavior >> allClassVarNames [
-	"Answer a Set of the names of the receiver's and the receiver's ancestor's 
-	class variables."
+	"Answer the names of the receiver's and the receiver's ancestor's class variables."
 
-	^self superclass allClassVarNames
+	^ self superclass
+		ifNil: [ self classVarNames ]
+		ifNotNil: [ :sup | sup allClassVarNames , self classVarNames ]
 ]
 
 { #category : #'accessing instances and variables' }
@@ -1529,14 +1530,6 @@ Behavior >> setFormat: aFormatInstanceDescription [
 	format := aFormatInstanceDescription
 
 
-]
-
-{ #category : #accessing }
-Behavior >> sharedPoolNames [
-	^ self sharedPools collect: [:ea |
-		ea isObsolete
-			ifTrue: [ ea name ]
-			ifFalse: [ self environment keyAtIdentityValue: ea ] ]
 ]
 
 { #category : #testing }

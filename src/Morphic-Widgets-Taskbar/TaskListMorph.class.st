@@ -49,6 +49,7 @@ TaskListMorph class >> taskListSettingOn: aBuilder [
 	(aBuilder setting: #keepTaskListOpen)
 		label: 'Keep task list open';
 		description: 'Whether the tasklist is closed (and the selected window activated) when the command key is released';
+		default: false;
 		parent: #morphic;
 		selector: #keepOpen;
 		target: self.
@@ -84,6 +85,13 @@ TaskListMorph >> defaultPreviewExtent [
 	"Answer the default extent of the preview holder."
 
 	^(320@320) scaledByDisplayScaleFactor
+]
+
+{ #category : #'open/close' }
+TaskListMorph >> doOpenInWorld: aWorld [
+	"Update the layout after opening."
+
+	aWorld addMorphCentered: self
 ]
 
 { #category : #running }
@@ -194,24 +202,25 @@ TaskListMorph >> newTasksMorph [
 ]
 
 { #category : #'open/close' }
-TaskListMorph >> openAsIs [
-	"Open in the world."
-	
-	self openAsIsIn: self currentWorld
+TaskListMorph >> openInWorld: aWorld [
+
+	super openInWorld: aWorld.	
+	self wantsKeyboardFocus
+		ifTrue: [self takeKeyboardFocus]
 ]
 
 { #category : #'open/close' }
-TaskListMorph >> openAsIsIn: aWorld [
+TaskListMorph >> postOpenInWorld: aWorld [
 	"Update the layout after opening."
 
-	aWorld addMorphCentered: self.
 	self allMorphs do: [:m | m layoutChanged].
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
-	
-	self wantsKeyboardFocus
-		ifTrue: [self takeKeyboardFocus]
+	super postOpenInWorld: aWorld
+]
+
+{ #category : #'open/close' }
+TaskListMorph >> preOpenInWorld: aWorld [
+
+	"Do nothing"
 ]
 
 { #category : #accessing }

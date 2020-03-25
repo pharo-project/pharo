@@ -9,15 +9,81 @@ Class {
 		'#doItContext => SpObservableSlot',
 		'#doItReceiver => SpObservableSlot',
 		'#behavior => SpObservableSlot',
-		'#syntaxHighlight => SpObservableSlot'
+		'#syntaxHighlight => SpObservableSlot',
+		'#completionEngine => SpObservableSlot'
 	],
-	#category : #'Spec2-Core-Widgets'
+	#category : #'Spec2-Core-Widgets-Text'
 }
 
 { #category : #specs }
 SpCodePresenter class >> adapterName [
 
 	^ #CodeAdapter
+]
+
+{ #category : #commands }
+SpCodePresenter class >> buildCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
+	aCmCommandsGroup beDisplayedAsGroup.
+	aCmCommandsGroup
+		register: (self codeSelectionActionCommandsGroupWith: presenter).
+	aCmCommandsGroup
+		register: (self codeNavigationCommandsGroupWith: presenter).
+	aCmCommandsGroup register: (self codeEditionCommandsGroupWith: presenter).
+	aCmCommandsGroup register: (self codeAcceptCommandsGroupWith: presenter)
+]
+
+{ #category : #commands }
+SpCodePresenter class >> codeAcceptCommandsGroupWith: presenter [
+	| group |
+	group := (CmCommandGroup named: 'Accept commands') asSpecGroup.
+	group
+		description: 'Accept or cancel changes.';
+		beDisplayedAsGroup.
+	group register: (SpAcceptChangesCommand forSpecContext: presenter).
+	group register: (SpCancelChangesCommand forSpecContext: presenter).
+	^ group
+]
+
+{ #category : #commands }
+SpCodePresenter class >> codeEditionCommandsGroupWith: presenter [
+	| group |
+	group := (CmCommandGroup named: 'Selection edition commands') asSpecGroup.
+	group	description: 'Edit code selection.';
+		beDisplayedAsGroup.
+	SpCodeEditionCommand
+		allSubclassesDo: [ :cmdClass | group register: (cmdClass forSpecContext: presenter) ].
+	^ group
+]
+
+{ #category : #commands }
+SpCodePresenter class >> codeNavigationCommandsGroupWith: presenter [
+	| group |
+	group := (CmCommandGroup named: 'Selection search commands') asSpecGroup.
+	group
+		description: 'Search the system from code selection.';
+		beDisplayedAsGroup.
+	group register: (SpBrowseClassCommand forSpecContext: [presenter findClassFromSelection]).	
+	{ 
+		SpBrowseImplementorsCommand.
+		SpBrowseSendersCommand.
+		SpBrowseMethodReferencesCommand.	
+		SpBrowseMethodsContainingStringCommand.
+	 } 
+		do:[:navCmdClass|	group register: (navCmdClass forSpecContext: [presenter selectedText])].
+	^ group
+]
+
+{ #category : #commands }
+SpCodePresenter class >> codeSelectionActionCommandsGroupWith: presenter [
+	| group |
+	group := (CmCommandGroup named: 'Selection action commands')
+		asSpecGroup.
+	group
+		description: 'Actions on code selection.';
+		beDisplayedAsGroup.
+	SpCodeSelectionCommand allSubclasses
+		do: [ :cmdClass | group register: (cmdClass forSpecContext: presenter) ].
+	^ group
 ]
 
 { #category : #examples }
@@ -51,40 +117,16 @@ SpCodePresenter >> behavior: aClass [
 	behavior := aClass
 ]
 
-{ #category : #private }
-SpCodePresenter >> buildCodeKeyBindings [
-	
-	^ self codeCommandGroup asKMCategory
+{ #category : #accessing }
+SpCodePresenter >> completionEngine [
+
+	^ completionEngine
 ]
 
-{ #category : #private }
-SpCodePresenter >> buildCodeMenu [
-	
-	
-	^ self codeCommandGroup asMenuPresenter
-]
+{ #category : #accessing }
+SpCodePresenter >> completionEngine: aCompletionEngine [
 
-{ #category : #private }
-SpCodePresenter >> codeCommandGroup [
-	| group |
-	
-	group := CmCommandGroup forSpec
-		beDisplayedAsGroup;
-		yourself.
-		
-	self flag: #TODO. "This needs to be discoverable (otherwise is not extensible)
-	ot at least, we need to add a plug for extensions"
-	{ 	
-		SpCodeDoItCommand. 
-		SpCodePrintItCommand. 
-		SpCodeInspectItCommand. 
-		SpCodeDebugItCommand. 
-		SpCodeProfileItCommand.
-		SpCodeBrowseItCommand.
-	} do: [ :eachClass | 
-		group register: (eachClass forSpecContext: self) ].
-
-	^ group
+	completionEngine := aCompletionEngine
 ]
 
 { #category : #'api-doIt' }
@@ -115,6 +157,23 @@ SpCodePresenter >> doItReceiver: anObject [
 	doItReceiver := anObject
 ]
 
+{ #category : #navigation }
+SpCodePresenter >> findClassFrom: aString [
+	| ast |
+	ast := RBParser parseExpression: aString onError: [ ^ nil ].
+	ast
+		nodesDo: [ :node | 
+			(node isVariable and: [ node name first isUppercase ])
+				ifTrue: [ (self class environment classNamed: node name)
+						ifNotNil: [ :aClass | ^ aClass ] ] ].
+	^ nil
+]
+
+{ #category : #navigation }
+SpCodePresenter >> findClassFromSelection [
+	^ self findClassFrom: self selectedText trimmed
+]
+
 { #category : #testing }
 SpCodePresenter >> hasSyntaxHighlight [
 
@@ -130,8 +189,8 @@ SpCodePresenter >> initialize [
 	
 	self registerEventsForStyling.
 	
-	self contextMenu: self buildCodeMenu.
-	self contextKeyBindings: self buildCodeKeyBindings
+	self contextMenu: [self rootCommandsGroup asMenuPresenter].
+	self contextKeyBindings: self rootCommandsGroup asKMCategory
 ]
 
 { #category : #initialization }
@@ -149,6 +208,14 @@ SpCodePresenter >> selectedBehavior [
 	^ self behavior
 ]
 
+{ #category : #navigation }
+SpCodePresenter >> selectionOrLine [
+	^ self selectedText
+		ifEmpty: [ self
+				selectLine;
+				selectedText ]
+]
+
 { #category : #accessing }
 SpCodePresenter >> syntaxHighlight: aBoolean [
 	syntaxHighlight := aBoolean 
@@ -161,6 +228,13 @@ SpCodePresenter >> whenBehaviorChangedDo: aBlock [
 	self 
 		property: #behavior 
 		whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpCodePresenter >> whenCompletionEngineChangedDo: aBlock [
+	"Set a block to perform when the syntax highlight is enabled/disabled"
+	
+	self property: #completionEngine whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

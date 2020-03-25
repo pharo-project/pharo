@@ -19,9 +19,8 @@ TraitsTestCase class >> resources [
 ]
 
 { #category : #utilities }
-TraitsTestCase >> assertPrints: aString like: anotherString [ 
-	self assert: (aString copyWithout: $ )
-		= (anotherString copyWithout: $ )
+TraitsTestCase >> assertPrints: aString like: anotherString [
+	self assert: (aString copyWithout: $ ) equals: (anotherString copyWithout: $ )
 ]
 
 { #category : #accessing }

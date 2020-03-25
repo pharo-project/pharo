@@ -66,6 +66,11 @@ ClySystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 	^ClySystemEnvironmentScope of: self in: aNavigationEnvironment named: name
 ]
 
+{ #category : #converting }
+ClySystemEnvironment >> asRBEnvironment [
+	^ self environment asRBEnvironment
+]
+
 { #category : #'class management' }
 ClySystemEnvironment >> bindingOf: aSymbol [
 	^globals bindingOf: aSymbol
@@ -140,16 +145,19 @@ Is this really what you want to do?') asText
 						makeBoldFrom: 1
 						to: newClassName size))
 				ifFalse: [ ^ nil ] ].
-	"ar 8/29/1999: Use oldClass superclass for defining oldClass
-	since oldClass superclass knows the definerClass of oldClass."
+	"Use oldClass superclass for defining oldClass since oldClass superclass knows the definerClass of oldClass."
 	oldClass
 		ifNil: [ classCompiler := self defaultClassCompiler ]
 		ifNotNil: [ classCompiler := oldClass superclass subclassDefinerClass new ].
-	class := classCompiler
+	[class := classCompiler
 		source: aString;
 		requestor: aController;
 		logged: true;
-		evaluate.
+		evaluate] on: OCUndeclaredVariableWarning do: [ :ex | 
+			"we are only interested in class definitions"
+			ex compilationContext noPattern ifFalse: [ex pass ].
+ 			"Undeclared Vars should not lead to the standard dialog to define them but instead should not accept"
+ 			self inform: 'Undeclared Variable in Class Definition' . ^nil ].
 	^ class isBehavior
 		ifTrue: [ class ]
 		ifFalse: [ nil ]
@@ -168,6 +176,11 @@ ClySystemEnvironment >> defaultClassCompiler [
 { #category : #'package management' }
 ClySystemEnvironment >> ensureExistAndRegisterPackageNamed: packageName [
 	^packageOrganizer ensureExistAndRegisterPackageNamed: packageName
+]
+
+{ #category : #accessing }
+ClySystemEnvironment >> environment [
+	^ RBBrowserEnvironment new
 ]
 
 { #category : #accessing }

@@ -1,6 +1,13 @@
 Extension { #name : #CmdMenu }
 
 { #category : #'*Calypso-Browser' }
+CmdMenu >> buildBrowserNotebookActions [
+
+	^ rootGroup buildBrowserNotebookActions
+
+]
+
+{ #category : #'*Calypso-Browser' }
 CmdMenu >> buildBrowserTabActions [
 
 	^rootGroup buildBrowserTabActions

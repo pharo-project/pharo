@@ -10,13 +10,9 @@ Basically, I add:
 "
 Class {
 	#name : #SpCommand,
-	#superclass : #CmCommandDecorator,
+	#superclass : #CmUICommand,
 	#instVars : [
-		'iconProvider',
-		'iconName',
-		'shortcutKey',
-		'displayStrategy',
-		'positionStrategy'
+		'buildPresenterBlock'
 	],
 	#category : #'Spec2-Commander2-Core'
 }
@@ -24,135 +20,65 @@ Class {
 { #category : #converting }
 SpCommand >> asButtonPresenter [
 	self flag: #TODO. "Needs to use inform user display strategy when available, no other available strategy can be used in this context. See issue #705"
-	^ SpButtonPresenter new
-		label: self name;
-		help: self description;
-		in: [ :button |
-			self hasIcon
-				ifTrue: [ button iconName: self iconName ] ];
-		action: [ self execute ]
-		yourself
-		
+	self configureAsButton.
+	^ self buildPresenter
 ]
 
-{ #category : #configuring }
-SpCommand >> beDisabledWhenCantBeRun [
-	self displayStrategy: SpDisableWhenCantBeRun new
+{ #category : #'presenter building' }
+SpCommand >> buildPresenter [
+	^ self buildPresenterBlock value: self
 ]
 
-{ #category : #configuring }
-SpCommand >> beDisplayedOnLeftSide [
-	positionStrategy := SpLeftPositionStrategy new
+{ #category : #accessing }
+SpCommand >> buildPresenterBlock [
+	^ buildPresenterBlock
 ]
 
-{ #category : #configuring }
-SpCommand >> beDisplayedOnRightSide [
-	positionStrategy := SpRightPositionStrategy new
+{ #category : #accessing }
+SpCommand >> buildPresenterBlock: anObject [
+	buildPresenterBlock := anObject
 ]
 
-{ #category : #configuring }
-SpCommand >> beHiddenWhenCantBeRun [
-	self displayStrategy: SpHideWhenCantBeRun new
+{ #category : #'presenter building' }
+SpCommand >> configureAsButton [
+	self configureAsButtonOfClass: SpButtonPresenter
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsButtonOfClass: aButtonClass [
+	self
+		buildPresenterBlock: [ :specCommand | 
+			aButtonClass new
+				label: specCommand name;
+				help: specCommand description;
+				in: [ :button | 
+					specCommand hasIcon
+						ifTrue: [ button icon: specCommand icon ] ];
+				action: [ specCommand execute ];
+				yourself ]
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsToolBarButton [
+	self configureAsButtonOfClass: SpToolBarButton
+]
+
+{ #category : #'presenter building' }
+SpCommand >> configureAsToolBarToggleButton [
+	self configureAsButtonOfClass: SpToolBarToggleButton
 ]
 
 { #category : #displaying }
 SpCommand >> displayIn: aMenuGroupOrPresenter do: aBlock [
-	self displayStrategy display: self in: aMenuGroupOrPresenter do: aBlock
-]
 
-{ #category : #accessing }
-SpCommand >> displayStrategy [
-	^ displayStrategy
-]
-
-{ #category : #accessing }
-SpCommand >> displayStrategy: anObject [
-	displayStrategy := anObject
-]
-
-{ #category : #hooks }
-SpCommand >> execute [
-	[ super execute ]
-		on: SpInteractionError
-		do: [ :notificationOrError | notificationOrError actForSpec ]
-]
-
-{ #category : #testing }
-SpCommand >> hasIcon [
-
-	^ self iconName isNotNil
-]
-
-{ #category : #testing }
-SpCommand >> hasShortcutKey [
-
-	^ shortcutKey isNotNil
-]
-
-{ #category : #accessing }
-SpCommand >> icon [
-	self iconName ifNil: [ ^ nil ].
-	
-	^ self iconNamed: self iconName
-]
-
-{ #category : #accessing }
-SpCommand >> iconName [
-	^ iconName
-]
-
-{ #category : #accessing }
-SpCommand >> iconName: aSymbol [ 
-	iconName := aSymbol
-]
-
-{ #category : #configuring }
-SpCommand >> iconName: aString from: anIconProvider [ 
-	self iconProvider: anIconProvider.
-	self iconName: aString.
-]
-
-{ #category : #accessing }
-SpCommand >> iconNamed: aSymbol [
-	^ self iconProvider iconNamed: aSymbol
-]
-
-{ #category : #accessing }
-SpCommand >> iconProvider [
-	^ iconProvider ifNil: [ iconProvider := Smalltalk ui icons ]
-]
-
-{ #category : #accessing }
-SpCommand >> iconProvider: anObject [
-	iconProvider := anObject
+	self displayStrategy 
+		display: self 
+		in: aMenuGroupOrPresenter 
+		do: aBlock
 ]
 
 { #category : #initialization }
-SpCommand >> initialize [ 
-
+SpCommand >> initialize [
 	super initialize.
-	self beDisabledWhenCantBeRun.
-	self beDisplayedOnLeftSide
-]
-
-{ #category : #accessing }
-SpCommand >> positionStrategy [
-	^ positionStrategy
-]
-
-{ #category : #printing }
-SpCommand >> printOn: stream [ 
-
-	super printOn: stream.
-	stream << '(' << self name << ')'
-]
-
-{ #category : #accessing }
-SpCommand >> shortcutKey [
-	^ shortcutKey ifNil: [ CmNoShortcutIsDefined signalCommand: self ]
-]
-
-{ #category : #accessing }
-SpCommand >> shortcutKey: aString [
- 	shortcutKey := aString 
+	self configureAsToolBarButton
 ]

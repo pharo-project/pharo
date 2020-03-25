@@ -30,12 +30,6 @@ FFIVariableArgument >> asOldArraySpec [
 	^ { name . nil . type name . type arity }
 ]
 
-{ #category : #'emitting code' }
-FFIVariableArgument >> emitArgument: anIRBuilder context: aContext [
-
-	self resolvedType emitArgument: anIRBuilder context: aContext.
-]
-
 { #category : #accessing }
 FFIVariableArgument >> name [
 	^ name

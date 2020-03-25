@@ -104,15 +104,13 @@ EyePointerExplorer >> title [
 { #category : #accessing }
 EyePointerExplorer >> tree [
 	^ tree ifNil: [ 
-		tree := self instantiate: SpTreePresenter.
-		tree whenBuiltDo: [ self initializeShortcuts ].
-		tree 
-			whenSelectedItemChanged: [ :item | item ifNotNil: [ self text doItReceiver: item value ]];	
-			displayBlock:  [ :anObject | self labelFor: anObject ];
-			menu:          [ :menu |  self inspectionMenu: menu ];
-			hasChildrenBlock: [ :o | true  ];
-			childrenBlock: [ :anObject | self childrenFor: anObject ];
-			yourself]
+		tree := self newTreeTable
+			addColumn: (SpStringTableColumn evaluated: [ :node | self labelFor: node ]);
+			"menu:          [ :menu |  self inspectionMenu: menu ];"
+			children: [ :node | self childrenFor: node ];
+			whenSelectedItemChanged: [ :item | item ifNotNil: [ self text doItReceiver: item value ] ];	
+			whenBuiltDo: [ self initializeShortcuts ];
+			yourself ]
 ]
 
 { #category : #accessing }

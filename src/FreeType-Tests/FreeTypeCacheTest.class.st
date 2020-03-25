@@ -88,7 +88,6 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 { #category : #tests }
 FreeTypeCacheTest >> testFailedGet [
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
-	self assertEmpty: (cache instVarNamed: #fontTable).
 	self assert: (cache instVarNamed: #used) equals: 0.
 	self validateSizes: cache
 ]
@@ -123,7 +122,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
 	"This test breaks 95% of times"	
 
-	self timeLimit: 10 seconds.
+	self timeLimit: 20 seconds.
 	
 	10 timesRepeat: [  
 		 | sem text canvases blocky |
@@ -159,6 +158,54 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 ]
 
 { #category : #tests }
+FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
+
+	"This test is weak because it depends in the rendering of Morphic and Rubrik"
+	"This test breaks 95% of times"	
+
+	self timeLimit: 20 seconds.
+	
+	10 timesRepeat: [  
+		 | sem text canvases blocky widthAsk |
+
+		sem := Semaphore new.
+		text := (String loremIpsum: 25*1024).
+		FreeTypeCache current removeAll.
+		canvases := OrderedCollection new.
+
+		widthAsk := [
+			1 to: text size do: [ :i | StandardFonts codeFont widthOf: (text at: i). i % 50 = 0 ifTrue: [ Processor yield ]].
+			sem signal ].
+
+			
+		blocky := [  | canvas |
+			canvas := FormCanvas extent: 1000@1000.
+			canvases add: canvas.
+			(RubScrolledTextMorph new)
+					setText: text;
+					font: StandardFonts codeFont;
+					bounds: (0@0 corner: canvas form extent);
+					fullDrawOn: canvas.
+			sem signal ].
+			
+		blocky forkAt: 39.
+		blocky forkAt: 39.
+		blocky forkAt: 39.
+		widthAsk forkAt: 39.
+		
+		sem 
+			wait;
+			wait;
+			wait;
+			wait.	
+			
+		self assert: (((canvases at:1) form bits = (canvases at:2) form bits) and: [ ((canvases at:2) form bits = (canvases at:3) form bits) ]) 
+	].
+
+
+]
+
+{ #category : #tests }
 FreeTypeCacheTest >> testInstanceInitialization [
 	self assert: (cache instVarNamed: #maximumSize) equals: FreeTypeCache defaultMaximumSize.
 	self assert: (cache instVarNamed: #used) equals: 0.
@@ -175,14 +222,14 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
-		ifAbsentPut: font1XGlyph.
+		ifAbsentPut: [font1XGlyph].
 	self validateSizes: cache.
 	self validateCollections: cache.
 	cache
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
-		ifAbsentPut: font1XGlyph.
+		ifAbsentPut: [font1XGlyph].
 	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
@@ -487,36 +534,28 @@ FreeTypeCacheTest >> testSingleton [
 { #category : #private }
 FreeTypeCacheTest >> validateCollections: aFreeTypeCache [
 	"check that the fifo list entries match the fontTable dict hierarchy"
+
 	| fontTable fontTableEntries fifo lastLink |
 	fontTable := aFreeTypeCache instVarNamed: #fontTable.
 	fifo := aFreeTypeCache instVarNamed: #fifo.
-	lastLink := (fifo instVarNamed:#lastLink).
+	lastLink := fifo instVarNamed: #lastLink.
 	fontTableEntries := Set new.
-	fontTable keysAndValuesDo:[:k1 :v1 |
-		v1 keysAndValuesDo:[:k2 :v2 |
-			v2 keysAndValuesDo:[:k3 :v3 |
-				fontTableEntries add: v3 ]]].
-	self assert: fifo size = fontTableEntries size.
-	self assert: (fifo asSet = fontTableEntries).
-	self assert: (lastLink isNil or:[lastLink nextLink isNil]) 
-	
-
-	
+	fontTable keysAndValuesDo: [ :k1 :v1 | v1 keysAndValuesDo: [ :k2 :v2 | v2 keysAndValuesDo: [ :k3 :v3 | fontTableEntries add: v3 ] ] ].
+	self assert: fifo size equals: fontTableEntries size.
+	self assert: fifo asSet equals: fontTableEntries.
+	self assert: (lastLink isNil or: [ lastLink nextLink isNil ])
 ]
 
 { #category : #private }
 FreeTypeCacheTest >> validateSizes: aFreeTypeCache [
 	"check that the used, maximumSize, and caches entries are valid"
+
 	| fontTable calcSize max used |
 	fontTable := aFreeTypeCache instVarNamed: #fontTable.
 	used := aFreeTypeCache instVarNamed: #used.
 	max := aFreeTypeCache instVarNamed: #maximumSize.
 	calcSize := 0.
-	fontTable do:[:charCodeTable |
-		charCodeTable do:[:typeTable |
-			typeTable do:[:entry |
-				calcSize := calcSize + (aFreeTypeCache sizeOf: entry object)]]].
-	self assert: calcSize = used.
-	self assert: (max isNil or:[used <= max])
-	
+	fontTable do: [ :charCodeTable | charCodeTable do: [ :typeTable | typeTable do: [ :entry | calcSize := calcSize + (aFreeTypeCache sizeOf: entry object) ] ] ].
+	self assert: calcSize equals: used.
+	self assert: (max isNil or: [ used <= max ])
 ]

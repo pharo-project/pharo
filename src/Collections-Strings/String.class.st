@@ -471,18 +471,18 @@ String >> alike: aString [
 	minSize := (j := self size) min: (k := aString size).
 	bonus := (j - k) abs < 2 ifTrue: [ 1 ] ifFalse: [ 0 ].
 	i := 1.
-	[(i <= minSize) and: [((super at: i) bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
+	[(i <= minSize) and: [((self at: i) asInteger bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
 		whileTrue: [ i := i + 1 ].
 	[(j > 0) and: [(k > 0) and:
-		[((super at: j) bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
+		[((self at: j) asInteger bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
 			whileTrue: [ j := j - 1.  k := k - 1. ].
 	^ i - 1 + self size - j + bonus
 ]
 
 { #category : #'finding/searching' }
 String >> allRangesOfSubstring: aSubstring [
-	"'Ab cd ef Ab cd' allRangesOfSubstring: 'cd' >>> {(4 to: 5). (13 to: 14)}"
-	"'Ab cd ef Ab cd' allRangesOfSubstring: 'zz' >>> #()"
+	"('Ab cd ef Ab cd' allRangesOfSubstring: 'cd') >>> {(4 to: 5). (13 to: 14)}"
+	"('Ab cd ef Ab cd' allRangesOfSubstring: 'zz') >>> #()"
 	
 	^ Array streamContents: [:s | | start subSize |
 		start := 1.
@@ -500,12 +500,7 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	| b |
-	b := ByteArray new: self byteSize.
-	1 to: self size * 4 do: [:i |
-		b at: i put: (self byteAt: i)].
-	^ b
-
+	self subclassResponsibility 
 ]
 
 { #category : #converting }
@@ -520,7 +515,7 @@ String >> asCamelCase [
 	"Convert to CamelCase, i.e, remove spaces, and convert starting lowercase to uppercase."
    "'A man, a plan, a canal, panama' asCamelCase >>> 'AMan,APlan,ACanal,Panama'"
  	"'Here 123should % be 6 the name6 of the method' asCamelCase  >>> 'Here123should%Be6TheName6OfTheMethod'"
-		^ self class streamContents: [:stream |
+		^ self species streamContents: [:stream |
                self substrings do: [:sub |
                        stream nextPutAll: sub capitalized]]
 ]
@@ -604,7 +599,7 @@ String >> asFourCode [
 String >> asHTMLString [
 	"substitute the < & > into HTML compliant elements"
 	"'<a>' asHTMLString"
-	^ self class new: self size streamContents: [ :s| 
+	^ self species new: self size streamContents: [ :s| 
 		self do: [:c | s nextPutAll: c asHTMLString ]]
 
 ]
@@ -613,7 +608,7 @@ String >> asHTMLString [
 String >> asHex [
 	"'A' asHex >>> '16r41'"
 	"'AA' asHex >>> '16r4116r41'"
-	^ self class new: self size * 4 streamContents: [ :stream |
+	^ self species new: self size * 4 streamContents: [ :stream |
 		self do: [ :ch | stream nextPutAll: ch hex ]]
 ]
 
@@ -738,7 +733,7 @@ String >> asUppercase [
 
 { #category : #converting }
 String >> asValidSelector [
-	"Returns a symbol that is a vlida selector: remove any space or forbiddent characters"
+	"Returns a symbol that is a valid selector by removing any space or forbidden characters"
 	"'234znak ::x43 ''åå) _ : 2' asValidSelector >>> #'v234znak:x43:v2'"
 	"'234znak ::x43 åå) :2' asValidSelector >>> #v234znak:x43:v2"
 	
@@ -831,9 +826,9 @@ String >> caseSensitiveLessOrEqual: aString [
 { #category : #comparing }
 String >> charactersExactlyMatching: aString [
 	"Do a character-by-character comparison between the receiver and aString.  Return the index of the final character that matched exactly."
-	"'s' charactersExactlyMatching: 'abc' >>> 0"
-	"'fear is the little death that the.' charactersExactlyMatching: 'the' >>> 0"
-	"'fear is the little death that the.' charactersExactlyMatching: 'fear is' >>> 7"
+	"('s' charactersExactlyMatching: 'abc') >>> 0"
+	"('fear is the little death that the.' charactersExactlyMatching: 'the') >>> 0"
+	"('fear is the little death that the.' charactersExactlyMatching: 'fear is') >>> 7"
 	
 	| count |
 	count := self size min: aString size.
@@ -851,9 +846,9 @@ String >> compare: aString [
 		3 - after.
 	The collation sequence is ascii with case differences ignored.
 	To get the effect of a <= b, but ignoring case, use (a compare: b) <= 2."
-	"'aa' compare: 'ab' >>> 1"
-	"'aa' compare: 'aa' >>> 2"
-	"'ab' compare: 'aa' >>> 3"
+	"('aa' compare: 'ab') >>> 1"
+	"('aa' compare: 'aa') >>> 2"
+	"('ab' compare: 'aa') >>> 3"
 	
 	^self compare: aString caseSensitive: false
 ]
@@ -910,12 +905,12 @@ String >> contractTo: smallSize [
 { #category : #copying }
 String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
-	"'ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk' >>> 'zk cd zk ef zk'"
+	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
     | idx |        
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
-    ^ self class new: self size streamContents: [ :stream | | foundIdx |
+    ^ self species new: self size streamContents: [ :stream | | foundIdx |
         [ (foundIdx := self findString: oldSubstring startingAt: idx) isZero ] whileFalse: [ 
             stream 
                 next: (foundIdx - idx) putAll: self startingAt: idx;
@@ -966,6 +961,17 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	
 	^ self copyReplaceAll: oldSubstring with: newSubstring asTokens: true
 	
+]
+
+{ #category : #copying }
+String >> copyUpToSubstring: aSubstring [
+
+	aSubstring ifEmpty: [ 
+		"preserve compatiblity with `readStream upToAll:`"
+		^ String new ].
+	
+	^ (self findString: aSubstring)
+		in: [ :index | index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ] ]
 ]
 
 { #category : #converting }
@@ -1056,7 +1062,7 @@ String >> endsWith: suffix [
 	"Answer whether the tail end of the receiver is the same as suffix.
 	The comparison is case-sensitive."
  
-	"'Elvis' endsWith: 'vis' >>> true"
+	"('Elvis' endsWith: 'vis') >>> true"
 	
 	| extra |
 	extra := self size - suffix size.
@@ -1155,7 +1161,7 @@ String >> expandMacrosWithArguments: anArray [
 	"('<1?success:is error>' expandMacrosWith: false) >>> 'is error'"
 	
 	| readStream char index |
-	^ self class
+	^ self species
 		new: self size
 		streamContents:
 			[ :newStream | 
@@ -1289,7 +1295,7 @@ String >> findSelector [
 	"'x isSymbol: 33' findSelector >>> #isSymbol:"
 	"'between:and:' findSelector >>> #'between:and:'"
 	"'2 between: 0 and: 4' findSelector >>> #'between:and:'"
-	"'2 between: ( 1 and: 4)' findSelector >>> nil"
+	"'2 between: ( 1 and: 4)' findSelector >>> #between:"
 	"'( 1 and: 4)' findSelector >>> nil"
 	
 	| sel possibleParens |
@@ -1299,7 +1305,7 @@ String >> findSelector [
 	(sel includes: $:) ifTrue:
 		[sel := sel copyReplaceAll: ':' with: ': '.	"for the style (aa max:bb) with no space"
 		possibleParens := sel findTokens: Character separators.
-		sel := self class streamContents:
+		sel := self species streamContents:
 			[:s | | level | level := 0.
 			possibleParens do:
 				[:token | | n |
@@ -1556,12 +1562,12 @@ String >> findWordStart: key startingAt: start [
 { #category : #formatting }
 String >> format: collection [
 	"Format the receiver by interpolating elements from collection, as in the following examples:" 
-	"('Today is {1}.' format: {Date today}) >>> 'Today is 30 August 2019.'"
-	"('Today is {date}.' format: (Dictionary with: #date -> Date today)) >>>  'Today is 30 August 2019.'"
+	"('Five is {1}.' format: { 1 + 4}) >>> 'Five is 5.'"
+	"('Five is {five}.' format: (Dictionary with: #five -> 5)) >>>  'Five is 5.'"
 	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
 	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
 
-	^ self class
+	^ self species
 		new: self size
 		streamContents: [ :result | 
 			| stream |
@@ -1658,7 +1664,7 @@ String >> indexOf: aCharacter startingAt: start [
 	"Return the index of the argument in the receiver, only elements after the start of the element are considered zero if not present."
 	
 	"('abcdf abcedf' indexOf: $a startingAt: 4) >>> 7"
-	"('abddf bcdef' indexOf: $a starting ) >>> 0"
+	"('abddf bcdef' indexOf: $a startingAt: 100 ) >>> 0"
 	
 	(aCharacter isCharacter) ifFalse: [^ 0].
 	^ self class indexOfAscii: aCharacter asciiValue inString: self startingAt: start
@@ -1743,6 +1749,7 @@ String >> isAllAlphaNumerics [
 	"'a3123abc' isAllAlphaNumerics >>> true"
 	"'3123' isAllAlphaNumerics >>> true"
 	"'3,123' isAllAlphaNumerics >>> false"
+	"'a''b' isAllAlphaNumerics >>> false"
 	
 	self do: [:c | c isAlphaNumeric ifFalse: [^ false]].
 	^ true
@@ -1875,7 +1882,7 @@ String >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"('*' join: #('WWWWW' 'W  EW' 'zzzz')) >>> 'WWWWW*W  EW*zzzz'"
 	
-	^ self class new: (aCollection size * self size) streamContents: [:stream | 
+	^ self species new: (aCollection size * self size) streamContents: [:stream | 
 			aCollection
 				do: [:each | stream nextPutAll: each asString] 
 				separatedBy: [stream nextPutAll: self]]
@@ -2031,23 +2038,23 @@ String >> match: text [
 	"Answer whether text matches the pattern in this string.
 	Matching ignores upper/lower case differences.
 	Where this string contains #, text may contain any character.
-	Where this string contains *, text may contain any sequence of characters.
-	'*'			match: 'zort' true
-	'*baz'		match: 'mobaz' true
-	'*baz'		match: 'mobazo' false
-	'*baz*'		match: 'mobazo' true
-	'*baz*'		match: 'mozo' false
-	'foo*'		match: 'foozo' true
-	'foo*'		match: 'bozo' false
-	'foo*baz'	match: 'foo23baz' true
-	'foo*baz'	match: 'foobaz' true
-	'foo*baz'	match: 'foo23bazo' false
-	'foo'		match: 'Foo' true
-	'foo*baz*zort' match: 'foobazort' false
-	'foo*baz*zort' match: 'foobazzort' false
-	'*foo#zort'	match: 'afoo3zortthenfoo3zort' true
-	'*foo*zort'	match: 'afoodezortorfoo3zort' true
-"
+	Where this string contains *, text may contain any sequence of characters."
+	
+	"('*' match: 'zort') >>> true"
+	"('*baz' match: 'mobaz') >>> true"
+	"('*baz' match: 'mobazo') >>>false"
+	"('*baz*' match: 'mobazo') >>> true"
+	"('*baz*' match: 'mozo') >>> false"
+	"('foo*' match: 'foozo') >>> true"
+	"('foo*' match: 'bozo') >>> false"
+	"('foo*baz' match: 'foo23baz') >>> true"
+	"('foo*baz' match: 'foobaz') >>> true"
+	"('foo*baz' match: 'foo23bazo') >>> false"
+	"('foo' match: 'Foo') >>> true"
+	"('foo*baz*zort' match: 'foobazort') >>> false"
+	"('foo*baz*zort' match: 'foobazzort') >>> false"
+	"('*foo#zort' match: 'afoo3zortthenfoo3zort') >>> true"
+	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
 	^ self startingAt: 1 match: text startingAt: 1
 ]
@@ -2157,7 +2164,7 @@ String >> repeat: aNumber [
 
 	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
 	
-	^ self class 
+	^ self species 
 		new: self size * aNumber 
 		streamContents: [ :stringStream |
 			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ].
@@ -2350,7 +2357,7 @@ String >> substrings [
 	"Answer an array of non-empty substrings from the receiver separated by
 	one or more whitespace characters."
 	
-	"'let us make seperate strings' substrings >>> #('let' 'us' 'make' 'separate' 'strings')"
+	"'let us make seperate strings' substrings >>>  #('let' 'us' 'make' 'seperate' 'strings')"
 
 	^ self substrings: CSSeparators
 ]
@@ -2380,10 +2387,10 @@ String >> substrings: separators [
 { #category : #converting }
 String >> surroundedBy: aString [
 	"Answer the receiver with leading and trailing aString."
-	"'hello' surroundedBy: 'abd' >>> 'abdhelloabd'"
-	"'hello' surroundedBy: ' abd ' >>> ' abd hello abd '"
+	"('hello' surroundedBy: 'abd') >>> 'abdhelloabd'"
+	"('hello' surroundedBy: ' abd ') >>> ' abd hello abd '"
 	
-	^ self class streamContents: [ :s|
+	^ self species streamContents: [ :s|
 		s nextPutAll: aString.
 		s nextPutAll: self.
 		s nextPutAll: aString ].
@@ -2482,7 +2489,7 @@ String >> trimLeft: aLeftBlock right: aRightBlock [
 String >> trimLineSpaces [
 	"Trim the spaces from the right side of each line. Useful for code"
 	
-	^ self class streamContents: [ :str |
+	^ self species streamContents: [ :str |
 		self lines 
 			do: [ :line | str nextPutAll: line trimRight]
 			separatedBy: [str cr]]
@@ -2623,7 +2630,7 @@ String >> withLineEndings: lineEndingString [
 String >> withNoLineLongerThan: aNumber [
 	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
 	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
-	^self class
+	^self species
 		new: self size * (aNumber + 1) // aNumber "provision for supplementary line breaks"
 		streamContents: [ :stream |
 			self lineIndicesDo: [ :start :endWithoutDelimiters :end |
@@ -2649,26 +2656,25 @@ String >> withNoLineLongerThan: aNumber [
 
 { #category : #converting }
 String >> withSeparatorsCompacted [
-	"Return a copy of the receiver with each sequence of whitespace (separator) 
-	characters replaced by a single space character"
+    "Returns a copy of the receiver with each sequence of whitespace (separator) 
+    characters replaced by a single space character"
+    "' test ' withSeparatorsCompacted >>> ' test '"
+    "' test  test' withSeparatorsCompacted >>> ' test test'"
+    "'test  test      ' withSeparatorsCompacted >>> 'test test '"
 
-	self isEmpty ifTrue: [ ^ self ].
-	^ self class new: self size streamContents: [:stream | 
-		| lastBlank |
-		lastBlank := false.
-		self do: [ :eachChar | 
-			lastBlank 
-				ifTrue: [
-					(lastBlank := eachChar isSeparator)
-						ifFalse: [ stream nextPut: eachChar ] ] 
-				ifFalse: [
-					(lastBlank := eachChar isSeparator)
-						ifTrue: [ stream nextPut: $  ]
-						ifFalse: [ stream nextPut: eachChar ] ] ] ]
-
-	"' test ' withSeparatorsCompacted"
-	"' test test' withSeparatorsCompacted"
-	"'test  test		 ' withSeparatorsCompacted"
+    self isEmpty ifTrue: [ ^ self ].
+    ^ self species new: self size streamContents: [:stream | 
+        | lastBlank |
+        lastBlank := false.
+        self do: [ :eachChar | 
+            lastBlank 
+                ifTrue: [
+                    (lastBlank := eachChar isSeparator)
+                        ifFalse: [ stream nextPut: eachChar ] ] 
+                ifFalse: [
+                    (lastBlank := eachChar isSeparator)
+                        ifTrue: [ stream nextPut: $  ]
+                        ifFalse: [ stream nextPut: eachChar ] ] ] ]
 ]
 
 { #category : #formatting }
@@ -2681,7 +2687,7 @@ String >> withSqueakLineEndings [
 { #category : #'platform conventions' }
 String >> withUnixLineEndings [
 	"Answer a new instance where all occurrences of CRLF and LF are substituted with LF."
-	"('asa' , String cr , 'asa') withUnixLineEndings at: 4 >>> Character lf"
+	"(('asa' , String cr , 'asa') withUnixLineEndings at: 4) >>> Character lf"
 
 	^ self withLineEndings: String lf
 ]

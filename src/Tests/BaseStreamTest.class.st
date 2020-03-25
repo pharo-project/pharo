@@ -32,14 +32,10 @@ BaseStreamTest >> testFileNamed [
 	fileName := self testFileName.
 	testString := 'testString'.
 	"When"
-	[self baseStreamType
-		fileNamed: fileName
-		do: [:streamType | streamType nextPut: testString].
+	[ self baseStreamType fileNamed: fileName do: [ :streamType | streamType nextPut: testString ].
 	"Then"
-	self baseStreamType
-		fileNamed: fileName
-		do: [:streamType | self assert: streamType next = testString]]
-		ensure: [ (FileSystem disk workingDirectory / fileName) ensureDelete ].
+	self baseStreamType fileNamed: fileName do: [ :streamType | self assert: streamType next equals: testString ] ]
+		ensure: [ (FileSystem disk workingDirectory / fileName) ensureDelete ]
 ]
 
 { #category : #testing }
@@ -49,12 +45,10 @@ BaseStreamTest >> testReadOnlyFileNamed [
 	fileName := self testFileName.
 	testString := 'testString'.
 	"When"
-	[self baseStreamType
-		fileNamed: fileName
-		do: [:streamType | streamType nextPut: testString].
+	[ self baseStreamType fileNamed: fileName do: [ :streamType | streamType nextPut: testString ].
 	"Then"
 	file := self baseStreamType readOnlyFileNamed: fileName.
-	self assert: file next = testString.
-	file close]
+	self assert: file next equals: testString.
+	file close ]
 		ensure: [ fileName asFileReference delete ]
 ]

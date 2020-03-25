@@ -15,8 +15,12 @@ SpMorphicCodeAdapter >> buildWidget [
 	| newWidget |
 	
 	newWidget := super buildWidget.
+	
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
 		self setEditingModeFor: newWidget ].
+	
+	self presenter completionEngine ifNotNil: [ :engine | newWidget completionEngine: engine ].
+	self presenter whenCompletionEngineChangedDo: [ :engine | newWidget completionEngine: engine ].
 	
 	^ newWidget
 ]
@@ -39,6 +43,12 @@ SpMorphicCodeAdapter >> doItContext [
 SpMorphicCodeAdapter >> doItReceiver [
 
 	^ self model doItReceiver
+]
+
+{ #category : #NOCompletion }
+SpMorphicCodeAdapter >> guessTypeForName: aString [
+
+	^nil
 ]
 
 { #category : #private }

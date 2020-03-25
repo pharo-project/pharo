@@ -1296,11 +1296,11 @@ PluggableListMorph >> selectAll [
 PluggableListMorph >> selectSearchedElement [
 
 	self searchedElement ifNotNil: [: index |	
-			 ActiveEvent commandKeyPressed	ifFalse: [ self resetListSelectionSilently ].
-			self changeModelSelection: index.
-			self isMultipleSelection
-				ifTrue: [ self listSelectionAt: index put: true ].
-			self vScrollValue: ((index-1)/self getListSize) ]
+		self activeHand lastEvent commandKeyPressed	ifFalse: [ self resetListSelectionSilently ].
+		self changeModelSelection: index.
+		self isMultipleSelection
+			ifTrue: [ self listSelectionAt: index put: true ].
+		self vScrollValue: ((index-1)/self getListSize) ]
 ]
 
 { #category : #selection }
@@ -1470,9 +1470,9 @@ PluggableListMorph >> specialKeyPressed: anEvent [
 	keyString := anEvent keyString.
 	keyString = '<escape>'
 		ifTrue: [" escape key"
-			^ ActiveEvent shiftPressed
+			^ self activeHand lastEvent shiftPressed
 				ifTrue:
-					[self currentWorld invokeWorldMenuFromEscapeKey]
+					[self world invokeWorldMenuFromEscapeKey]
 				ifFalse:[ 
 					(self yellowButtonActivity: false) 
 						ifTrue: [ ^ self ]]].
@@ -1534,7 +1534,7 @@ PluggableListMorph >> startDrag: evt [
 	evt hand hasSubmorphs ifTrue: [^ self]. 
 	self dragEnabled ifFalse: [^ self].
 	"Here I ensure at least one element is selected "
-	ActiveHand anyButtonPressed ifFalse: [ ^self ].
+	self activeHand anyButtonPressed ifFalse: [ ^self ].
 			
 	draggedItem := self getListItem: (self mouseDownRow ifNil: [ self lastNonZeroIndex ]).
 	draggedItem ifNil: [ ^ self ].

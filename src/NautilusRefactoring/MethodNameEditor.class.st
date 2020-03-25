@@ -23,7 +23,7 @@ MethodNameEditor class >> on: aMethodName [
 
 { #category : #'instance creation' }
 MethodNameEditor class >> openOn: aMethodName [
-	^ UITheme builder openModal: (self on: aMethodName)
+	^ (self on: aMethodName) openModal
 ]
 
 { #category : #grips }

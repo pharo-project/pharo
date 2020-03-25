@@ -108,10 +108,7 @@ MetacelloIssueTestCase >> tearDown [
   diff := finalWorkingCopyList difference: initialWorkingCopyList.
   diff
     do: [ :leak | 
-      Transcript
-        cr;
-        show:
-            'leaked package from ' , self printString , ' -> ' , leak printString ].
+      MetacelloNotification signal: ('leaked package from ' , self printString , ' -> ' , leak printString) ].
   self assert: diff isEmpty.
   super tearDown
 ]

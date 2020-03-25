@@ -77,8 +77,8 @@ SpAbstractMorphicAdapter >> addKeyBindingsTo: aMorph [
 { #category : #initialization }
 SpAbstractMorphicAdapter >> addSettingsTo: aMorph [
 	
-	self widget ifNotNil: [ 
-		self applyVisibility ]
+	self widget ifNil: [ ^ self ].
+	self applyVisibility
 ]
 
 { #category : #accessing }
@@ -403,9 +403,7 @@ SpAbstractMorphicAdapter >> styleName [
 { #category : #styling }
 SpAbstractMorphicAdapter >> styleSheet [
 
-	self flag: #TODO. "This needs to be in the application!"
-	^ SpStyle defaultStyleSheet
-	"^ self application styleSheet"
+	^ self application styleSheet
 ]
 
 { #category : #protocol }
@@ -423,6 +421,18 @@ SpAbstractMorphicAdapter >> transferBlock [
 { #category : #'drag and drop - private' }
 SpAbstractMorphicAdapter >> transferFor: passenger from: source [
 	^ (self transferBlock cull: passenger cull: self model) buildWithSpec
+]
+
+{ #category : #emulating }
+SpAbstractMorphicAdapter >> type: aString [
+
+	aString do: [ :each | 
+		self 
+			keyPressed: each asciiValue 
+			shift: each isUppercase
+			meta: false 
+			control: false 
+			option: false ]
 ]
 
 { #category : #protocol }

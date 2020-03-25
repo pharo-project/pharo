@@ -9,11 +9,10 @@ Class {
 
 { #category : #utilities }
 MethodPragmaTest >> assertPragma: aString givesKeyword: aSymbol arguments: anArray [
-	| pragma  |
+	| pragma |
 	pragma := self pragma: aString selector: #zork.
-	self assert: pragma selector = aSymbol.
-	self assert: pragma arguments = anArray.
-
+	self assert: pragma selector equals: aSymbol.
+	self assert: pragma arguments equals: anArray
 ]
 
 { #category : #utilities }
@@ -69,20 +68,24 @@ MethodPragmaTest >> testAllNamedFromTo [
 MethodPragmaTest >> testAllNamedFromToSortedByArgument [
 	| pragmasCompiled pragmasDetected |
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
-	pragmasDetected := Pragma allNamed: #foo: from: self class to: Object sortedByArgument: 1.
-	self assert: pragmasDetected = (pragmasCompiled 
-		sort: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
+	pragmasDetected := Pragma
+		allNamed: #foo:
+		from: self class
+		to: Object
+		sortedByArgument: 1.
+	self assert: pragmasDetected equals: (pragmasCompiled sort: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
 ]
 
 { #category : #'testing-finding' }
 MethodPragmaTest >> testAllNamedFromToSortedUsing [
 	| pragmasCompiled pragmasDetected |
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
-	pragmasDetected := Pragma 
-		allNamed: #foo: from: self class to: Object 
+	pragmasDetected := Pragma
+		allNamed: #foo:
+		from: self class
+		to: Object
 		sortedUsing: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ].
-	self assert: pragmasDetected = (pragmasCompiled 
-		sort: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ]).
+	self assert: pragmasDetected equals: (pragmasCompiled sort: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ])
 ]
 
 { #category : #'testing-finding' }
@@ -90,7 +93,7 @@ MethodPragmaTest >> testAllNamedIn [
 	| pragmasCompiled pragmasDetected |
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
 	pragmasDetected := Pragma allNamed: #foo: in: self class.
-	self assert: pragmasDetected = pragmasCompiled.
+	self assert: pragmasDetected equals: pragmasCompiled.
 
 	pragmasDetected := Pragma allNamed: #foo: in: Object.
 	self assertEmpty: pragmasDetected
@@ -101,19 +104,15 @@ MethodPragmaTest >> testAllNamedInSortedByArgument [
 	| pragmasCompiled pragmasDetected |
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
 	pragmasDetected := Pragma allNamed: #foo: in: self class sortedByArgument: 1.
-	self assert: pragmasDetected = (pragmasCompiled 
-		sort: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
+	self assert: pragmasDetected equals: (pragmasCompiled sort: [ :a :b | (a argumentAt: 1) < (b argumentAt: 1) ])
 ]
 
 { #category : #'testing-finding' }
 MethodPragmaTest >> testAllNamedInSortedUsing [
 	| pragmasCompiled pragmasDetected |
 	pragmasCompiled := self pragma: #foo: selector: #bar times: 5.
-	pragmasDetected := Pragma 
-		allNamed: #foo: in: self class 
-		sortedUsing: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ].
-	self assert: pragmasDetected = (pragmasCompiled 
-		sort: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ]).
+	pragmasDetected := Pragma allNamed: #foo: in: self class sortedUsing: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ].
+	self assert: pragmasDetected equals: (pragmasCompiled sort: [ :a :b | (a argumentAt: 1) > (b argumentAt: 1) ])
 ]
 
 { #category : #testing }
@@ -243,28 +242,28 @@ MethodPragmaTest >> testMessage [
 MethodPragmaTest >> testMethod [
 	| pragma |
 	pragma := self pragma: 'foo' selector: #bar.
-	self assert: pragma method == (self class >> #bar).
+	self assert: pragma method identicalTo: self class >> #bar
 ]
 
 { #category : #'testing-method' }
 MethodPragmaTest >> testMethodClass [
 	| pragma |
 	pragma := self pragma: 'foo' selector: #bar.
-	self assert: pragma methodClass == self class.
+	self assert: pragma methodClass identicalTo: self class
 ]
 
 { #category : #'testing-method' }
 MethodPragmaTest >> testMethodSelector [
 	| pragma |
 	pragma := self pragma: 'foo' selector: #bar.
-	self assert: pragma methodSelector == #bar.
+	self assert: pragma methodSelector identicalTo: #bar
 ]
 
 { #category : #'testing-compiled' }
 MethodPragmaTest >> testNoPragma [
 	| method |
 	method := self compile: '' selector: #foo.
-	self assert: method pragmas = #().
+	self assert: method pragmas equals: #()
 ]
 
 { #category : #testing }
@@ -281,9 +280,9 @@ MethodPragmaTest >> testNumArgs [
 { #category : #'testing-primitives' }
 MethodPragmaTest >> testPrimitiveIndexed1 [
 	"This test useses the #instVarAt: primitive."
-	
+
 	self compile: '<primitive: 74> ^ #inst' selector: #inst.
-	self assert: self inst = #inst.
+	self assert: self inst equals: #inst
 ]
 
 { #category : #'testing-primitives' }
@@ -291,7 +290,7 @@ MethodPragmaTest >> testPrimitiveIndexed2 [
 	"This test useses the #identityHash primitive."
 
 	self compile: '<primitive: 75> ^ #idHash' selector: #idHash.
-	self assert: self idHash = self basicIdentityHash.
+	self assert: self idHash equals: self basicIdentityHash
 ]
 
 { #category : #'testing-primitives' }
@@ -327,8 +326,8 @@ MethodPragmaTest >> testPrimitiveNamedErrorCode2 [
 { #category : #'testing-pragma' }
 MethodPragmaTest >> testSelector [
 	| pragma |
-	pragma := Pragma selector: #foo: arguments: #( 123 ).
-	self assert: pragma selector = #foo:.
+	pragma := Pragma selector: #foo: arguments: #(123).
+	self assert: pragma selector equals: #foo:
 ]
 
 { #category : #testing }
@@ -354,8 +353,8 @@ MethodPragmaTest >> testWithArgumentsDo [
 			(pragma
 				withArgumentsDo: [ :a :b | 
 					self
-						assert: a = 1;
-						assert: b = 2.
+						assert: a equals: 1;
+						assert: b equals: 2.
 					wasHere := true ]).
 	self assert: wasHere
 ]

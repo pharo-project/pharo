@@ -27,25 +27,24 @@ SpMorphicNotebookAdapter >> addFocusRotationKeyBindings [
 SpMorphicNotebookAdapter >> addModelTo: aNotebook [
 	self model pages ifEmpty: [ ^ self ].
 	self model pages
-		do: [ :each | 
-			"Since I do not have the page added, I need to take it from the list. 
-		 But I know this will be the last added :)"
-			self addPage: each to: aNotebook ].
+		do: [ :each | "Since I do not have the page added, I need to take it from the list. 
+		 But I know this will be the last added :)" self addPage: each to: aNotebook ].
 	"force first page to be drawn"
-	self model selectedPage ifNil: [ self model selectedPageIndex: 1 ].
+	self model selectedPage ifNil: [ self model selectPageIndex: 1 ].
 	aNotebook selectedPageIndex: self model selectedPageIndex.
 	aNotebook announcer when: SpNotebookPageChanged send: #pageChanged: to: self
 ]
 
 { #category : #factory }
-SpMorphicNotebookAdapter >> addPage: each to: aNotebook [
+SpMorphicNotebookAdapter >> addPage: aNotebookPage to: aNotebook [
 
 	aNotebook 
-		addLazyPage: [ self buildContentForPage: each ] 
-		label: (self buildLabelForPage: each).
+		addLazyPage: [ self buildContentForPage: aNotebookPage ] 
+		label: (self buildLabelForPage: aNotebookPage)
+		collapsable: aNotebookPage isCloseable.
 	"Since I do not have the page added, I need to take it from the list. But I know 
 	 this will be the last added :)"
-	aNotebook pages last model: each
+	aNotebook pages last model: aNotebookPage
 ]
 
 { #category : #factory }
@@ -99,7 +98,7 @@ SpMorphicNotebookAdapter >> buildWidget [
 
 { #category : #private }
 SpMorphicNotebookAdapter >> pageChanged: ann [
-	self model selectedPage: ann page model
+	self model selectPage: ann page model
 ]
 
 { #category : #updating }

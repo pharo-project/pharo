@@ -13,8 +13,7 @@ Class {
 	#superclass : #AbstractMessageCentricBrowser,
 	#instVars : [
 		'textModel',
-		'refreshingBlock',
-		'title'
+		'refreshingBlock'
 	],
 	#category : #'Spec2-Tools-Senders'
 }
@@ -175,11 +174,6 @@ MessageBrowser >> connectPresenters [
 		whenSelectionChangedDo: [ :selection | [ :item | self selectItem: item ] cull: selection selectedItem ];
 		whenModelChangedDo: [ self updateTitle ].
 	textModel acceptBlock: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ]
-]
-
-{ #category : #private }
-MessageBrowser >> defaultTitle [ 
-	^ self class title , ' [' , messageList numberOfElements printString , ']'
 ]
 
 { #category : #'text selection' }
@@ -550,14 +544,7 @@ MessageBrowser >> textModel: aModel [
 
 { #category : #private }
 MessageBrowser >> title [
-	^ title ifNil: [ self defaultTitle ]
-
-]
-
-{ #category : #private }
-MessageBrowser >> title: aString [ 
-	title := aString.
-	self updateTitle 
+	^ self class title , ' [' , messageList numberOfElements printString , ']'
 ]
 
 { #category : #accessing }

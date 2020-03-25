@@ -13,13 +13,14 @@ BaselineOfGeneralTests >> baseline: spec [
 		spec 
 			package: 'Debugging-Utils-Tests';
 			package: 'Tests';
+			package: 'AST-Core-Tests';			
 			package: 'RPackage-Tests';
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
 			package: 'System-Installers-Tests' ;
 			package: 'MonticelloMocks';
 			package: 'Fuel-Tests-Core';
 			package: 'Fuel-Platform-Pharo-Core-Tests'	;
-			package: 'Balloon-Tests';
+			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'ConfigurationCommandLineHandler-Tests';

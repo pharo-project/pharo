@@ -24,6 +24,12 @@ FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext [
 ]
 
 { #category : #'emitting code' }
+FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext inCallout: aCallout [
+	
+	self emitArgument: aBuilder context: aContext
+]
+
+{ #category : #'emitting code' }
 FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	self subclassResponsibility
 ]

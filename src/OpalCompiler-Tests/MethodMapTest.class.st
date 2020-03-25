@@ -39,18 +39,12 @@ MethodMapTest >> parseExpression: aString [
 
 { #category : #'testing - ast mapping' }
 MethodMapTest >> testBlockAndContextSourceNode [
-		
-	|block blockNodeViaContext blockNodeViaClosure |
-
-
-	block := [blockNodeViaContext := thisContext sourceNode].
+	| block blockNodeViaContext blockNodeViaClosure |
+	block := [ blockNodeViaContext := thisContext sourceNode ].
 	block value.
 	blockNodeViaClosure := block sourceNode.
 
-	self assert: blockNodeViaContext == blockNodeViaClosure
-	
-
-
+	self assert: blockNodeViaContext identicalTo: blockNodeViaClosure
 ]
 
 { #category : #'testing - ast mapping' }
@@ -220,7 +214,7 @@ MethodMapTest >> testThisContextSourceNode [
 { #category : #'testing - ast mapping' }
 MethodMapTest >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
+	"we get the method node as this is what created the context"
 	inlinedBlockSourceNode := self inlinedBlockSourceNode.
-	self assert: (inlinedBlockSourceNode isKindOf: RBBlockNode).
-	self assert: inlinedBlockSourceNode equals: (self parseExpression: '[ :i | ^ thisContext sourceNode ]')
+	self assert: (inlinedBlockSourceNode isKindOf: RBMethodNode).
 ]

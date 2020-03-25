@@ -171,7 +171,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 		yourself.
 	
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil.
+	argument loader emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 0 }.
 ]
@@ -198,7 +198,7 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 		yourself.
 	
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil.
+	argument loader emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 1}.
 ]
@@ -226,7 +226,7 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader 
 		yourself.
 	
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil.
+	argument loader emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . ExternalAddress null}.
 ]
@@ -254,7 +254,7 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 		yourself.
 	
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil.
+	argument loader emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . ExternalAddress null }.
 ]
@@ -279,7 +279,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfOfExternalObjectShouldSetCon
 		yourself.
 	
 	argument resolveUsing: resolver.
-	argument loader emitArgument: self context: context.
+	argument loader emitArgument: self context: context inCallout: nil.
 
 	self assert: stack pop equals: #(#ivar 1).
 ]
@@ -331,7 +331,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfStringShouldSetConstantLoade
 		yourself.
 
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil.
+	argument loader emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 'self' }.
 ]
@@ -362,7 +362,7 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 		yourself.
 	
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil.
+	argument loader emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 1 }.
 ]

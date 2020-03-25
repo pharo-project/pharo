@@ -8,8 +8,13 @@ Class {
 		'result',
 		'builder'
 	],
-	#category : #'Shift-ClassBuilder-Tests'
+	#category : #'Shift-ClassBuilder-Tests-Base'
 }
+
+{ #category : #testing }
+ShAbstractClassBuilderTest class >> isAbstract [ 
+	^ self == ShAbstractClassBuilderTest 
+]
 
 { #category : #validation }
 ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
@@ -21,7 +26,7 @@ ShAbstractClassBuilderTest >> doValidateMethods: selectors on: class [
 	selectors
 		do: [ :selector | 
 			self assert: (class canUnderstand: selector).
-			self assert: (class >> selector) classBinding value == class ]
+			self assert: (class >> selector) classBinding value identicalTo: class ]
 ]
 
 { #category : #running }
@@ -63,11 +68,10 @@ ShAbstractClassBuilderTest >> validateResult [
 	| obj |
 	self assert: result isClass.
 	self assert: result class isMeta.
-	
+
 	obj := result new.
 	self assert: obj isNotNil.
-	self assert: obj class == result
-
+	self assert: obj class identicalTo: result
 ]
 
 { #category : #validation }
@@ -101,5 +105,5 @@ ShAbstractClassBuilderTest >> validateSlots: allSlots [
 
 { #category : #'private validating' }
 ShAbstractClassBuilderTest >> validateSuperclass: aSuperclass [
-	self assert: result superclass == aSuperclass
+	self assert: result superclass identicalTo: aSuperclass
 ]

@@ -316,14 +316,6 @@ OSSDL2WindowHandle >> releaseMouse [
 	SDL2 setRelativeMouseMode: false
 ]
 
-{ #category : #private }
-OSSDL2WindowHandle >> resetKeyboardFocus [
-		
-	ActiveHand ifNil: [ ^ self ].
-	lastKeyboardFocus := ActiveHand keyboardFocus.
-	ActiveHand keyboardFocus: nil
-]
-
 { #category : #accessing }
 OSSDL2WindowHandle >> resizable [
 	^ handle getFlags anyMask: SDL_WINDOW_RESIZABLE
@@ -338,19 +330,6 @@ OSSDL2WindowHandle >> resizable: aBoolean [
 OSSDL2WindowHandle >> restore [
 
 	handle restore
-]
-
-{ #category : #private }
-OSSDL2WindowHandle >> restoreKeyboardFocus [
-
-	(handle isNil 
-		or: [ lastKeyboardFocus isNil 
-		or: [ ActiveHand isNil ] ])
-		ifTrue: [ ^ self ].
-	
-	[ ActiveHand keyboardFocus: lastKeyboardFocus ]
-	ensure: [ 
-		lastKeyboardFocus := nil ]
 ]
 
 { #category : #'window management' }
@@ -536,10 +515,8 @@ OSSDL2WindowHandle >> visitWindowEvent: windowEvent [
 	windowEvent event = SDL_WINDOWEVENT_LEAVE ifTrue: [ 
 		^ (OSWindowMouseLeaveEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_FOCUS_GAINED ifTrue: [ 
-		self restoreKeyboardFocus.
 		^ (OSWindowFocusInEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_FOCUS_LOST ifTrue: [ 
-		self resetKeyboardFocus.		
 		^ (OSWindowFocusOutEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_MAXIMIZED ifTrue: [ 
 		^ (OSWindowMaximizedEvent for: osWindow) deliver ].

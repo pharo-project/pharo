@@ -7,11 +7,7 @@ Class {
 { #category : #testing }
 ZnEntityReaderTest >> testChunked [
 	| input headers reader entity |
-	input := '3', String crlf,
-		'con', String crlf,
-		'8', String crlf,
-		'sequence', String crlf,
-		'0', String crlf, String crlf.
+	input := '3' , String crlf , 'con' , String crlf , '8' , String crlf , 'sequence' , String crlf , '0' , String crlf , String crlf.
 	(headers := ZnHeaders new)
 		at: 'Content-Type' put: 'text/plain';
 		at: 'Transfer-Encoding' put: 'chunked'.
@@ -19,19 +15,13 @@ ZnEntityReaderTest >> testChunked [
 		headers: headers;
 		stream: input asByteArray readStream.
 	entity := reader readEntity.
-	self assert: entity contents = 'consequence'
+	self assert: entity contents equals: 'consequence'
 ]
 
 { #category : #testing }
 ZnEntityReaderTest >> testChunkedWithExtraHeaders [
 	| input headers reader entity |
-	input := '3', String crlf,
-		'con', String crlf,
-		'8', String crlf,
-		'sequence', String crlf,
-		'0', String crlf, 
-		'X-Foo:bar', String crlf, 
-		String crlf.
+	input := '3' , String crlf , 'con' , String crlf , '8' , String crlf , 'sequence' , String crlf , '0' , String crlf , 'X-Foo:bar' , String crlf , String crlf.
 	(headers := ZnHeaders new)
 		at: 'Content-Type' put: 'text/plain';
 		at: 'Transfer-Encoding' put: 'chunked'.
@@ -39,8 +29,8 @@ ZnEntityReaderTest >> testChunkedWithExtraHeaders [
 		headers: headers;
 		stream: input asByteArray readStream.
 	entity := reader readEntity.
-	self assert: entity contents = 'consequence'.
-	self assert: (headers at: 'X-Foo') = 'bar'
+	self assert: entity contents equals: 'consequence'.
+	self assert: (headers at: 'X-Foo') equals: 'bar'
 ]
 
 { #category : #testing }
@@ -55,9 +45,9 @@ ZnEntityReaderTest >> testReadStreaming [
 		stream: data readStream;
 		streaming.
 	entity := reader readEntity.
-	self assert: entity contentType = ZnMimeType applicationOctetStream.
-	self assert: entity contentLength = data size.
-	self assert: entity contents = data
+	self assert: entity contentType equals: ZnMimeType applicationOctetStream.
+	self assert: entity contentLength equals: data size.
+	self assert: entity contents equals: data
 ]
 
 { #category : #testing }
@@ -72,8 +62,8 @@ ZnEntityReaderTest >> testReadStreamingWriting [
 		stream: data readStream;
 		streaming.
 	entity := reader readEntity.
-	self assert: entity contentType = ZnMimeType applicationOctetStream.
-	self assert: entity contentLength = data size.
+	self assert: entity contentType equals: ZnMimeType applicationOctetStream.
+	self assert: entity contentLength equals: data size.
 	output := ByteArray streamContents: [ :stream | entity writeOn: stream ].
-	self assert: output = data
+	self assert: output equals: data
 ]

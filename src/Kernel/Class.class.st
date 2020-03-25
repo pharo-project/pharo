@@ -172,21 +172,6 @@ Class >> addSubclass: aSubclass [
 ]
 
 { #category : #'class variables' }
-Class >> allClassVarNames [
-	"Answer a Set of the names of the receiver's class variables, including those
-	defined in the superclasses of the receiver."
-
-	| aSet |
-	self isRootInEnvironment
-		ifTrue: 
-			[^self classVarNames asSet]  "This is the keys so it is a new Set."
-		ifFalse: 
-			[aSet := self superclass allClassVarNames.
-			aSet addAll: self classVarNames.
-			^aSet]
-]
-
-{ #category : #'class variables' }
 Class >> allClassVariables [
 	"Answer the meta objects of all class variables of the class and its superclass"
 
@@ -344,7 +329,7 @@ Class >> classVarNamed: aString put: anObject [
 
 { #category : #'class variables' }
 Class >> classVarNames [
-	"Answer a collection of the names of the class variables defined in the receiver."
+	"Answer a collection of the receiver's class variable names."
 
 	^self classPool keys sort
 ]
@@ -380,10 +365,8 @@ Class >> classVariables [
 
 { #category : #'accessing class hierarchy' }
 Class >> commonSuperclassWith: aClass [
-
-	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
-
-	
+	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
+	^ self withAllSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
 ]
 
 { #category : #compiling }
@@ -484,24 +467,19 @@ Class >> deprecationRefactorings [
 
 { #category : #copying }
 Class >> duplicateClassWithNewName: aSymbol [
-	| copysName class newComment |
-			
+	| copysName class |
 	copysName := aSymbol asSymbol.
 	copysName = self name
 		ifTrue: [ ^ self ].
 	(self environment includesKey: copysName)
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
-
-	class := self classInstaller make: [ :builder | 
-		builder 
-			fillFor: self;
-			name: copysName].
-		
+	class := self classInstaller
+		make: [ :builder | 
+			builder
+				fillFor: self;
+				name: copysName ].
 	class copyAllCategoriesFrom: self.
 	class class copyAllCategoriesFrom: self class.
-	"we copy the comment but with an explanation that it might be out of date"
-	newComment := 'I am a copy of class ', self name, '. This comment is copied from there, and might not be entirely accurate'.
-	class comment: newComment , String cr,  String cr,  self comment.
 	^ class
 ]
 
@@ -944,6 +922,14 @@ from Undeclared. Check them after this change.'].
 Class >> setName: aSymbol [
 
 	name := aSymbol.
+]
+
+{ #category : #accessing }
+Class >> sharedPoolNames [
+	^ self sharedPools collect: [:ea |
+		ea isObsolete
+			ifTrue: [ ea name ]
+			ifFalse: [ self environment keyAtIdentityValue: ea ] ]
 ]
 
 { #category : #'pool variables' }

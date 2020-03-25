@@ -7,6 +7,11 @@ Class {
 	#category : #'DrTests-TestsRunner'
 }
 
+{ #category : #factory }
+DTSkipped class >> backgroundColor [
+	^ TestResult defaultColorBackGroundForPassingTest
+]
+
 { #category : #testing }
 DTSkipped >> isSkipped [
 	<generated>

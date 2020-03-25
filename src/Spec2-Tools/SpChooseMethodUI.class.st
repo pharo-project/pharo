@@ -227,9 +227,11 @@ SpChooseMethodUI >> protocolList [
 SpChooseMethodUI >> protocolListAction [
 	protocolList
 		transmitTo: methodList
-		transform:
-			[ :selectedProtocol | selectedProtocol
-				ifNotNil: [ (selectedProtocol methods collect: [ :methodSelector | self methodNamed: methodSelector ]) asOrderedCollection ]
+		transform: [ :selectedProtocol | 
+			selectedProtocol
+				ifNotNil: [ (selectedProtocol methodSelectors
+						collect: [ :methodSelector | self methodNamed: methodSelector ])
+						asOrderedCollection ]
 				ifNil: [ #() ] ]
 		postTransmission: [ :methodPresenter | methodPresenter selectIndex: 1 ]
 ]

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'typeStack'
 	],
-	#category : #'NECompletion-New'
+	#category : #'NECompletion-Model'
 }
 
 { #category : #visiting }
@@ -57,7 +57,7 @@ TypingVisitor >> visitBlockNode: aBlockNode [
 TypingVisitor >> visitGlobalNode: aGlobalNode [
 	aGlobalNode
 		propertyAt: #type
-		put: aGlobalNode binding assoc read class
+		put: aGlobalNode binding read class
 ]
 
 { #category : #visiting }
@@ -77,7 +77,11 @@ TypingVisitor >> visitSelfNode: aSelfNode [
 
 { #category : #visiting }
 TypingVisitor >> visitSuperNode: aSuperNode [
-	 aSuperNode propertyAt: #type put: aSuperNode methodNode methodClass superclass
+	| class | 
+	class := aSuperNode methodNode methodClass.
+	"the type of super of a Trait is not known"
+	class isTrait ifTrue: [ ^self ].
+	aSuperNode propertyAt: #type put: class superclass
 ]
 
 { #category : #visiting }

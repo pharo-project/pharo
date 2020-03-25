@@ -62,13 +62,12 @@ OmSessionStoreNameStrategyTest >> tearDown [
 
 { #category : #tests }
 OmSessionStoreNameStrategyTest >> testWithExistingFile [
-
 	self createFileWith: 'existing'.
 
 	name := strategy nextTo: 'existing' in: self directory.
-	
+
 	self assert: name isString.
-	self deny: name = 'existing'.
+	self deny: name equals: 'existing'.
 	self deny: (self fileReferenceWith: name) exists
 ]
 

@@ -1,13 +1,13 @@
 Extension { #name : #TestCase }
 
 { #category : #'*SUnit-Support-UITesting' }
-TestCase >> simulateKeyStroke: aCharacterOrShortcut [
+TestCase >> simulateKeyStroke: aCharacterOrShortcut inWorld: aWorld [
 
-	ActiveHand simulateKeyStroke: aCharacterOrShortcut.
+	aWorld activeHand simulateKeyStroke: aCharacterOrShortcut.
 ]
 
 { #category : #'*SUnit-Support-UITesting' }
-TestCase >> simulateKeyStrokes: aString [ 
+TestCase >> simulateKeyStrokes: aString inWorld: aWorld [
 
-	ActiveHand simulateKeyStrokes: aString.
+	aWorld activeHand simulateKeyStrokes: aString.
 ]

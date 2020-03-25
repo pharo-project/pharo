@@ -268,7 +268,7 @@ MCSnapshotBrowserTest >> testComment [
 
 { #category : #testing }
 MCSnapshotBrowserTest >> testFourColumns [
-	self assert: self listMorphs size = 4.
+	self assert: self listMorphs size equals: 4
 ]
 
 { #category : #testing }

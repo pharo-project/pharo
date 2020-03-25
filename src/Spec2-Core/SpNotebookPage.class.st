@@ -7,13 +7,14 @@ In particular, I contain a presenterProvider, a block who's responsibility is to
 Class {
 	#name : #SpNotebookPage,
 	#superclass : #Object,
-	#traits : 'TSpObservable',
-	#classTraits : 'TSpObservable classTrait',
+	#traits : 'SpTObservable',
+	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
 		'#owner',
 		'#title => SpObservableSlot',
 		'#icon => SpObservableSlot',
 		'#layoutSpec => SpObservableSlot',
+		'#closeable',
 		'#presenterProvider',
 		'#retrievedBlock',
 		'#activePresenter => WeakSlot'
@@ -59,6 +60,12 @@ SpNotebookPage >> activePresenter [
 ]
 
 { #category : #accessing }
+SpNotebookPage >> beCloseable [
+
+	closeable := true
+]
+
+{ #category : #accessing }
 SpNotebookPage >> icon [
 	^ icon
 ]
@@ -74,8 +81,16 @@ SpNotebookPage >> initialize [
 	self class initializeSlots: self.
 	super initialize.
 	
+	closeable := false.
+	
 	self property: #title whenChangedDo: [ self pageTitleChanged ].
 	self property: #icon whenChangedDo: [ self pageTitleChanged ]
+]
+
+{ #category : #testing }
+SpNotebookPage >> isCloseable [
+
+	^ closeable
 ]
 
 { #category : #accessing }

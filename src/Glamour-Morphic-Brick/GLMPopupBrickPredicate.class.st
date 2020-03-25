@@ -14,3 +14,10 @@ GLMPopupBrickPredicate >> popup: aPopupBrick event: anEvent [
 
 	self subclassResponsibility
 ]
+
+{ #category : #predicate }
+GLMPopupBrickPredicate >> popupLostFocus: aPopup [ 
+
+	"Do nothing by default. Hook for subclasses"
+	^ false
+]

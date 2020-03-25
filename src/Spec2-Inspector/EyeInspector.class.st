@@ -147,6 +147,17 @@ EyeInspector >> canDiscardEdits [
 	^ true
 ]
 
+{ #category : #initialization }
+EyeInspector >> connectPresenters [
+	"initialize the event handlings"
+
+	super connectPresenters.
+	description
+		whenTextIsAcceptedDo: [ :newText | 
+			self saveElement: newText.
+			self refreshDescription ]
+]
+
 { #category : #actions }
 EyeInspector >> copySelectedItemAccessorCode [
 	self hasSelectedObject
@@ -200,14 +211,10 @@ EyeInspector >> generateElements [
 ]
 
 { #category : #initialization }
-EyeInspector >> initializePresenter [
-	"initialize the event handlings"
+EyeInspector >> initializePresenters [
 
-	super initializePresenter.
-	description
-		whenTextIsAcceptedDo: [ :newText | 
-			self saveElement: newText.
-			self refreshDescription ]
+	super initializePresenters.
+	description := self newCode
 ]
 
 { #category : #initialization }
@@ -216,12 +223,6 @@ EyeInspector >> initializeShortcuts [
 	self shortCuts keysAndValuesDo: [ :key :value |
 		self list bindKeyCombination: key toAction: value ]
 
-]
-
-{ #category : #initialization }
-EyeInspector >> initializeWidgets [
-	super initializeWidgets.
-	description := self newText
 ]
 
 { #category : #inspecting }
@@ -234,10 +235,10 @@ EyeInspector >> inspect: anObject [
 ]
 
 { #category : #menu }
-EyeInspector >> inspectionMenu: aMenu [
-	self hasSelectedObject ifFalse: [ ^ aMenu ].
-	^ super inspectionMenu: aMenu.
-	
+EyeInspector >> inspectionMenu [
+
+	self hasSelectedObject ifFalse: [ ^ nil ].
+	^ super inspectionMenu
 ]
 
 { #category : #'event-handling' }
@@ -321,10 +322,12 @@ EyeInspector >> printTimeout [
 EyeInspector >> refresh [
 	"refresh the object in the inspector, updating his modified instance variables"
 
-	description hasUnacceptedEdits 
-		ifTrue: [  ^ self ].
-	description getSelection size = 0 
-		ifTrue: [ self refreshDescription; updateList ]
+	description hasUnacceptedEdits
+		ifTrue: [ ^ self ].
+	description selectionInterval size = 0
+		ifTrue: [ self
+				refreshDescription;
+				updateList ]
 ]
 
 { #category : #'event-handling' }
@@ -468,7 +471,7 @@ EyeInspector >> updateList [
 		ifTrue: [ ^ self ].
 	"first reset the items to make sure we don't interfere with the display block"
 	"self list items: #()."
-	self list displayBlock: [ :eyeElement | self labelFor: eyeElement ].
+	self list display: [ :eyeElement | self labelFor: eyeElement ].
 	self list items: elements.
 
 	"handle when last item of list is removed"
@@ -477,7 +480,7 @@ EyeInspector >> updateList [
 
 	"handle when selected dictionary key is removed"
 	self list selectIndex: self list selection selectedIndex.
-	self list menu: [ :aMenu | self inspectionMenu: aMenu ]
+	self list contextMenu: [ self inspectionMenu ]
 ]
 
 { #category : #list }

@@ -166,11 +166,6 @@ RBMethodNode >> rewriteTempsForContext: aContext [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-RBMethodNode >> sourceNodeExecutedForPC: anInteger [
-	^(self ir instructionForPC: anInteger) sourceNodeExecuted
-]
-
-{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^(self ir instructionForPC: anInteger) sourceNode
 ]

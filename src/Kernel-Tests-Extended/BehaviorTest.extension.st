@@ -5,19 +5,13 @@ BehaviorTest >> testAllReferencesTo [
 	| result |
 	result := SystemNavigation new allReferencesTo: Point binding.
 	result do: [ :each | self assert: (each compiledMethod hasLiteral: Point binding) ].
-	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
+	self assert: (result anySatisfy: [ :each | each methodClass = self class and: [ each selector = #testAllReferencesTo ] ]).
 		
 	result := SystemNavigation new allReferencesTo: #printOn:.
-	result do: [ :each | self assert: (each compiledMethod hasLiteralThorough: #printOn:) ].
-	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
+	result do: [ :each | self assert: (each compiledMethod refersToLiteral: #printOn:) ].
+	self assert: (result anySatisfy: [ :each | each methodClass = self class and: [ each selector = #testAllReferencesTo ] ]).
 	
 	result := SystemNavigation new allReferencesTo: #+.
-	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod hasLiteralThorough: #+ ]) ].
-	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ])
-]
-
-{ #category : #'*Kernel-Tests-Extended' }
-BehaviorTest >> testWhichSelectorsAccess [
-	self assert: ((Point whichSelectorsAccess: 'x') includes: #x).
-	self deny:  ((Point whichSelectorsAccess: 'y') includes: #x).
+	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod refersToLiteral: #+ ]) ].
+	self assert: (result anySatisfy: [ :each | each methodClass = self class and: [ each selector = #testAllReferencesTo ] ])
 ]

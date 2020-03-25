@@ -780,16 +780,13 @@ RPackage >> importPackage: anRPackage [
 ]
 
 { #category : #private }
-RPackage >> importProtocol: aProtocol forClass: aClass [ 
-	"import all the methods of a protocol as defined in the receiver." 
-	
-		(aClass organization listAtCategoryNamed: aProtocol)
-			do: [:each | 
-				| aCompiledMethod |
-				aCompiledMethod := (aClass >> each).
-				aCompiledMethod isFromTrait ifFalse: [ self addMethod: aCompiledMethod ]].
-	
-	
+RPackage >> importProtocol: aProtocol forClass: aClass [
+	"import all the methods of a protocol as defined in the receiver."
+
+	(aClass organization listAtCategoryNamed: aProtocol) do: [ :each | 
+		aClass
+			compiledMethodAt: each
+			ifPresent: [ :method | method isFromTrait ifFalse: [ self addMethod: method ] ] ]
 ]
 
 { #category : #testing }

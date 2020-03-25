@@ -17,13 +17,26 @@ ShClassInstallerTest >> newClass: className slots: slots [
 ]
 
 { #category : #'instance creation' }
+ShClassInstallerTest >> newClass: className slots: slots metaclassSlots: metaclassSlots [
+	
+	^ self newClass: className superclass: Object  slots: slots metaclassSlots: metaclassSlots
+]
+
+{ #category : #'instance creation' }
 ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots [
+	
+	^ self newClass: className superclass: aSuperclass  slots: slots metaclassSlots: #()
+]
+
+{ #category : #'instance creation' }
+ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots metaclassSlots: metaclassSlots [
 	^ ShiftClassInstaller
 		make: [ :builder | 
 			builder
 				name: className;
 				superclass: aSuperclass;
 				slots: slots;
+				classSlots: metaclassSlots;
 				sharedVariables: '';
 				sharedPools: '';
 				category: 'Shift-ClassInstaller-Tests' ]
@@ -204,6 +217,35 @@ ShClassInstallerTest >> testDuplicatedInstanceVariable [
 	self fail ]
 		on: DuplicatedSlotName
 		do: [ :ex | self deny: ex isResumable ]
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclass [
+	superClass := self newClass: #ShCITestClass1 slots: #().
+	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #(aSlot).
+
+	[ superClass := self newClass: #ShCITestClass1 slots: #(aSlot).
+	self fail ]
+		on: DuplicatedSlotName
+		do: [ :ex | self deny: ex isResumable ].
+		
+	self deny: ((superClass slots collect: [:e | e name]) includes: 'aSlot')
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
+	superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #().
+	
+	newClass := self 
+		newClass: #ShCITestClass2 superclass: superClass 
+		slots: #() metaclassSlots: #(aSlot).
+
+	[ superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #(aSlot).
+	self fail ]
+		on: DuplicatedSlotName
+		do: [ :ex | self deny: ex isResumable ].
+		
+	self deny: ((superClass class slots collect: [:e | e name]) includes: 'aSlot')
 ]
 
 { #category : #tests }

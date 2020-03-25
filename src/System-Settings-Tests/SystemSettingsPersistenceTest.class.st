@@ -74,6 +74,20 @@ SystemSettingsPersistenceTest >> testAllStoredSettings [
 ]
 
 { #category : #tests }
+SystemSettingsPersistenceTest >> testDefaultImageDoesNotStoreAnySetting [
+	| nodesToStore |
+	"An image with all default values should not save any setting.
+	The settings only should be saved if changed from default value"
+
+	Author
+		useAuthor: ''
+		during: [ 
+			nodesToStore := StoredSettingsFactory new fromSettingNodes: SettingBrowser currentTree nodeList ].
+
+	self assertCollection: nodesToStore hasSameElements: #()
+]
+
+{ #category : #tests }
 SystemSettingsPersistenceTest >> testRealValueModification [
 	self booleanSettingNode realValue: false.
 	self rangeSettingNode realValue: 55.

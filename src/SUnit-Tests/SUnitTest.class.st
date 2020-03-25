@@ -186,7 +186,7 @@ SUnitTest >> testDefects [
 	suite addTest: (error := self class selector: #error).
 	suite addTest: (failure := self class selector: #fail).
 	result := suite run.
-	self assert: result defects asArray = (Array with: error with: failure).
+	self assert: result defects asArray equals: (Array with: error with: failure).
 	self
 		assertForTestResult: result
 		runCount: 2
@@ -285,7 +285,7 @@ SUnitTest >> testExpectedFailure [
 
 { #category : #testing }
 SUnitTest >> testExpectedFailureDetection [
-	self assert: self expectedFailures size = 2.
+	self assert: self expectedFailures size equals: 2.
 	self assert: (self expectedFailures includesAll: #(expectedFailureFails expectedFailurePasses))
 ]
 

@@ -25,13 +25,8 @@ DrTestsUITest >> setUp [
 ]
 
 { #category : #tests }
-DrTestsUITest >> testBrowseButton [
-	
-]
-
-{ #category : #tests }
 DrTestsUITest >> testClickButtonRunCallsPluginRun [
-	drTestsUI pluginsDropList selectedItem: DTMockPlugin.
+	drTestsUI pluginsDropList selectItem: DTMockPlugin.
 	drTestsUI startButton performAction.
 	self assert: drTestsUI currentPlugin hasBeenRun
 ]
@@ -127,21 +122,22 @@ DrTestsUITest >> testSelectingPackageWillUpdateTheClassesList [
 
 { #category : #tests }
 DrTestsUITest >> testSelectingPluginWillUpdateCurrentPluginInstanceVariable [
-	drTestsUI pluginsDropList selectedItem: plugin2.
+	drTestsUI pluginsDropList selectItem: plugin2.
 	self assert: drTestsUI currentPlugin class equals: plugin2
 ]
 
 { #category : #tests }
 DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
-	drTestsUI pluginsDropList selectedItem: plugin2.
+	drTestsUI pluginsDropList selectItem: plugin2.
 	self
 		assertCollection: drTestsUI packagesList items
-		hasSameElements: drTestsUI currentPlugin packagesAvailableForAnalysis
+		hasSameElements:
+		drTestsUI currentPlugin packagesAvailableForAnalysis
 ]
 
 { #category : #tests }
 DrTestsUITest >> testSelectingPluginWillUpdateWindowTitle [
-	drTestsUI pluginsDropList selectedItem: plugin2.
+	drTestsUI pluginsDropList selectItem: plugin2.
 	self
 		assert: drTestsUI title
 		equals: 'Dr Tests - ' , drTestsUI currentPlugin pluginName

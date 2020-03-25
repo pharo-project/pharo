@@ -242,13 +242,13 @@ Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"the code of Association>>#key:value: is inline here for speed"
 	"The following example creates an association whose key is number 1 and value string 'one'."
-	"(1 -> 'one') >>> 1 -> 'one'"
+
 	"(1 -> 'one') key >>> 1"
 	"(1 -> 'one') value >>> 'one'"
 	
 	"Note that key and value can be ANY object."
 	
-	^Association basicNew key: self value: anObject
+	^Association key: self value: anObject
 ]
 
 { #category : #comparing }
@@ -1400,42 +1400,6 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
 ]
 
-{ #category : #'block support' }
-Object >> mustBeBoolean [
-	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
-	^ Boolean mustBeBooleanDeOptimize
-		ifTrue: [ self mustBeBooleanDeOptimizeIn: thisContext sender  ]
-		ifFalse: [ self mustBeBooleanIn: thisContext sender ]
-]
-
-{ #category : #'block support' }
-Object >> mustBeBooleanIn: context [
-	"context is the where the non-boolean error occurred. Rewind context to before jump then raise error."
-	
-	"Some constructs are optimized in the compiler :
-	#whileTrue:
-	#whileFalse:
-	#ifTrue:
-	#ifFalse:
-	#ifTrue:ifFalse:
-	#ifFalse:ifTrue:
-	So you cannot by default use them on non boolean objects."
-	
-	"If you really need to use optimized constructs, you can enable Opal compiler and do one of the following :
-		- recompile your method with the pragma : <compilerOptions: #(+ optIlineNone)>
-		- recompile your class with the method : MyClass class>>compiler 
-			^ super compiler options: #(+ optIlineNone)
-		- enable the option mustBeBooleanDeOptimize to call mustBeBooleanDeOptimizeIn: instead of this method "
-
-	| proceedValue |
-	
-	context skipBackBeforeJump.
-	proceedValue := NonBooleanReceiver new
-		object: self;
-		signal: 'proceed for truth.'.
-	^ proceedValue ~~ false
-]
-
 { #category : #dependencies }
 Object >> myDependents [
 	"Private. Answer a list of all the receiver's dependents."
@@ -1724,6 +1688,11 @@ Object >> readSlot: aSlot [
 { #category : #introspection }
 Object >> readSlotNamed: aName [
 	^(self class slotNamed: aName) read: self
+]
+
+{ #category : #testing }
+Object >> refersToLiteral: aLitteral [
+	^ self literalEqual: aLitteral
 ]
 
 { #category : #dependencies }
@@ -2168,4 +2137,30 @@ Object >> ~= anObject [
 	same object."
 
 	^self = anObject == false
+]
+
+{ #category : #associating }
+Object >> ~~> aValueLinkOrNil [
+	"Answer a ValueLink between self and aValueLinkOrNil.
+	This message allows the receiver to be inserted in a chain of objects, terminated by nil."
+
+	"Code of ValueLink>>#nextLink: and ValueLink>>#value: are inline here for speed."
+
+	"
+	1 ~~> nil
+	>>> ValueLink new value: 1; yourself
+
+	(1 ~~> 'one') value
+	>>> 1
+
+	(1 ~~> nil) nextLink
+	>>> nil
+	
+	Note that `value` can be ANY object; on the other hand, `nextLink` should be either another 
+	ValueLink object or nil."
+
+	^ ValueLink basicNew
+		value: self;
+		nextLink: aValueLinkOrNil;
+		yourself
 ]

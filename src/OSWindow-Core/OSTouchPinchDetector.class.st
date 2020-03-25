@@ -37,6 +37,7 @@ OSTouchPinchDetector class >> maxDistanceBetweenFingersLineSettingsOn: aBuilder 
 	(aBuilder setting: #maxDistanceBetweenFingersLine)
 		target: self;
 		label: 'Max distance between fingers lines (%)';
+		default: 0.2;
 		description:
 				'The maximum distance between the two lines formed by the fingers';
 		parent: #pinchGesture
@@ -48,6 +49,7 @@ OSTouchPinchDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 	(aBuilder setting: #minDistanceBeforeDetection)
 		target: self;
 		label: 'Minimal fingers distance crossed (%)';
+		default: 0.05;
 		description:
 				'The distance, in percentage of the screen, that a finger of both fingers needs to travel before event detection';
 		parent: #pinchGesture

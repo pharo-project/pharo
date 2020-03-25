@@ -92,7 +92,7 @@ ExecutionCounter class >> removeFromMethod: aMethod [
 	self allCounters copy do: [ :counter |
 		counter link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ self allCounters remove: counter ] ]
+			ifFound: [ counter uninstall] ]
 ]
 
 { #category : #cleanup }
@@ -126,6 +126,11 @@ ExecutionCounter >> install [
 				optionAnnounce: true.
 	node link: link.
 	self class allCounters at: node put: self.
+]
+
+{ #category : #accessing }
+ExecutionCounter >> link [
+	^ link
 ]
 
 { #category : #accessing }

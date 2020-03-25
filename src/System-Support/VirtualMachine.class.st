@@ -333,6 +333,14 @@ VirtualMachine >> is64bit [
 ]
 
 { #category : #testing }
+VirtualMachine >> isAIOInterrupt [
+	"Answer true, if the vm is capable of being interupted until there is an AIO event. 
+	 (This means we are going idle until we have something real to process)"
+
+	^ (self getSystemAttribute: 1010) = 'AIO'
+]
+
+{ #category : #testing }
 VirtualMachine >> isPharoVM [
 	"Answers if this VM is a valid PharoVM (made with our sources)"
 	| version |
@@ -364,6 +372,13 @@ VirtualMachine >> isRunningCogit [
 	 (vmParameterAt: 46 is the size of the machine code zone)"
 
 	^[(self parameterAt: 46) > 0] on: Error do:[:ex| ex return: false]
+]
+
+{ #category : #testing }
+VirtualMachine >> isRunningInWorkerThread [
+	"Answers whether the vm is running on worker thread ot not"
+
+	^ (self getSystemAttribute: 1011) = 'WORKER_THREAD'
 ]
 
 { #category : #testing }

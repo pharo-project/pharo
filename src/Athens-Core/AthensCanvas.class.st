@@ -18,8 +18,7 @@ Class {
 		'paintMode'
 	],
 	#classVars : [
-		'PaintCache',
-		'StrokePaintCache'
+		'PaintCache'
 	],
 	#category : #'Athens-Core-Base'
 }
@@ -45,7 +44,6 @@ AthensCanvas class >> on: aSurface [
 { #category : #private }
 AthensCanvas class >> reset [
 
-	StrokePaintCache := LRUCache new maximumWeight: 100.
 	PaintCache := LRUCache new maximumWeight: 100.
 
 ]
@@ -220,7 +218,7 @@ AthensCanvas >> setShape: anObject [
 { #category : #paint }
 AthensCanvas >> setStrokePaint: aPaint [
 	"use paint as stroke paint, note conversion to #asStrokePaintOn:"
-	paint := StrokePaintCache at: aPaint ifAbsentPut: [ (aPaint asAthensPaintOn: self) asStrokePaintOn: self ].
+	paint := (aPaint asAthensPaintOn: self) asStrokePaintOn: self.
 	^ paint
 ]
 

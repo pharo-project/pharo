@@ -90,29 +90,20 @@ SpNotebookPresenter >> resetAllPageContents [
 
 { #category : #accessing }
 SpNotebookPresenter >> selectPage: aPage [
-	"Alias to make code more readable"
 
-	self selectedPage: aPage
+	aPage = self selectedPage ifTrue: [ ^ self ].
+	selectedPage := aPage
 ]
 
 { #category : #accessing }
 SpNotebookPresenter >> selectPageIndex: aNumber [
-	"Alias to make code more readable"
-
-	^ self selectedPageIndex: aNumber
+	self selectPage: (self pages at: aNumber)
 ]
 
 { #category : #accessing }
 SpNotebookPresenter >> selectedPage [
 
 	^ selectedPage
-]
-
-{ #category : #private }
-SpNotebookPresenter >> selectedPage: aPage [
-
-	aPage = self selectedPage ifTrue: [ ^ self ].
-	selectedPage := aPage
 ]
 
 { #category : #accessing }
@@ -123,12 +114,6 @@ SpNotebookPresenter >> selectedPageIndex [
 	page ifNil: [ ^ 0 ].
 	
 	^ self pages indexOf: page
-]
-
-{ #category : #private }
-SpNotebookPresenter >> selectedPageIndex: aNumber [
-
-	self selectedPage: (self pages at: aNumber)
 ]
 
 { #category : #'private-traversing' }

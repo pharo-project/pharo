@@ -455,7 +455,10 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		ifFalse: [ #'Make unclosable' ]
 		ifTrue: [ #'Make closable' ].
 	(aBuilder item: closableLabel)
-		action: [ aBuilder model perform: closableLabel asCamelCase uncapitalized ].
+		action: [ 
+			(closableLabel = #'Make unclosable')
+				ifTrue: [ aBuilder model makeUnclosable ] 
+				ifFalse:[ aBuilder model makeClosable] ].
 	draggableLabel := aBuilder model isSticky
 		ifTrue: [ #'Make draggable' ]
 		ifFalse: [ #'Make undraggable' ].
@@ -627,6 +630,16 @@ SystemWindow >> announceDeActivated [
 	).
 ]
 
+{ #category : #announcement }
+SystemWindow >> announceOpened [
+
+	super announceOpened.
+	self currentWorld announcer
+		announce: (WindowOpened new
+						window: self;
+						yourself).
+]
+
 { #category : #initialization }
 SystemWindow >> applyModelExtent [
 	self extent: model initialExtent 
@@ -704,6 +717,12 @@ SystemWindow >> boxExtent [
 	
 	label ifNil: [^(14 @ 14) * self displayScaleFactor].
 	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)  
+]
+
+{ #category : #controls }
+SystemWindow >> buildWindowMenu [
+  
+	^ self menu.
 ]
 
 { #category : #testing }
@@ -1112,7 +1131,7 @@ SystemWindow >> icon [
 SystemWindow >> initialExtent [
 	^ (self model respondsTo: #initialExtent)
 		ifTrue: [self model initialExtent]
-		ifFalse: [RealEstateAgent standardWindowExtent]
+		ifFalse: [ self extent ]
 ]
 
 { #category : #initialization }
@@ -1265,10 +1284,13 @@ SystemWindow >> maximumExtent: aPoint [
 	^ self setProperty: #maximumExtent toValue: aPoint
 ]
 
-{ #category : #'menu building' }
-SystemWindow >> menuBuilder [
+{ #category : #api }
+SystemWindow >> menu [
 
-	^ menuBuilder ifNil: [ menuBuilder := PragmaMenuBuilder pragmaKeyword: self discoveredMenuPragmaKeyword model: self ].
+	| aMenu |
+	aMenu := MenuMorph new.
+	self windowMenuOn: aMenu.
+	^ aMenu
 ]
 
 { #category : #'resize/collapse' }
@@ -1315,6 +1337,45 @@ SystemWindow >> minimizeOrRestore [
 
 	windowEvent window: self.
 	self announce: windowEvent.
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalChild [
+	"Answer the modal child of the receiver, if any."
+
+	^self valueOfProperty: #modalChild
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalLockTo: aSystemWindow [
+	"Lock the receiver as a modal owner of the given window."
+
+	aSystemWindow setProperty: #modalOwner toValue: self.
+	self setProperty: #modalChild toValue: aSystemWindow.
+	
+	closeBox ifNotNil: [ 
+		self setProperty: #preModalCloseEnabled toValue: closeBox enabled.
+		closeBox enabled: false
+	].
+
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalOwner [
+	"Answer the modal owner of the receiver, if any."
+
+	^self valueOfProperty: #modalOwner
+]
+
+{ #category : #'modal-windows' }
+SystemWindow >> modalUnlockFrom: aSystemWindow [
+	"Unlock the receiver as a modal owner of the given window."
+
+	aSystemWindow removeProperty: #modalOwner.
+	self removeProperty: #modalChild.
+	closeBox ifNotNil: [:cl | cl enabled: (self valueOfProperty: #preModalCloseEnabled ifAbsent: [true])].
+	self removeProperty: #preModalCloseEnabled.
+	self activate
 ]
 
 { #category : #events }
@@ -1406,57 +1467,25 @@ SystemWindow >> offerWindowMenu [
 ]
 
 { #category : #'open/close' }
-SystemWindow >> openAsIs [
-	^self openAsIsIn: self currentWorld
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openAsIsIn: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop.
-	Play the open sound if the preference is enabled."
-	
-	self playOpenSound.
-	aWorld addMorph: self.
-	self activate.
-	aWorld startSteppingSubmorphsOf: self.
-	
-	self announceOpened.
-	
-	self currentWorld announcer 
-		announce: (WindowOpened new
-						window: self;
-						yourself).
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
-	^self openAsIsIn: aWorld.
-
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorld: aWorld extent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-	self position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft; extent: extent.
-	^self openAsIsIn: aWorld
-]
-
-{ #category : #'open/close' }
-SystemWindow >> openInWorldExtent: extent [
-	"This msg and its callees result in the window being activeOnlyOnTop"
-
-	self openInWorld: self currentWorld extent: extent
-]
-
-{ #category : #'open/close' }
 SystemWindow >> openModal [
-
 	self openInWorld.
-	self theme runModal: self.
+	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
+]
+
+{ #category : #'*Morphic-Widgets-Windows' }
+SystemWindow >> openModal: aSystemWindow [
+	"Open the given window locking the receiver until it is dismissed.
+	Answer the system window.
+	Restore the original keyboard focus when closed."
+
+	| keyboardFocus |
+	
+	keyboardFocus := self activeHand keyboardFocus.
+	self modalLockTo: aSystemWindow.
+	[ aSystemWindow openModal ] ensure: [
+		self modalUnlockFrom: aSystemWindow.
+		self activeHand newKeyboardFocus: keyboardFocus ].
+	^aSystemWindow
 ]
 
 { #category : #panes }
@@ -1550,6 +1579,23 @@ SystemWindow >> positionSubmorphs [
 		[:aMorph | aMorph positionSubmorphs]
 ]
 
+{ #category : #opening }
+SystemWindow >> postOpenInWorld: aWorld [
+
+	self activate.
+	super postOpenInWorld: aWorld
+]
+
+{ #category : #opening }
+SystemWindow >> preOpenInWorld: aWorld [
+	"This msg and its callees result in the window being activeOnlyOnTop"
+	self bounds: (RealEstateAgent
+		initialFrameFor: self
+		initialExtent: self initialExtent
+		world: aWorld).
+	self playOpenSound.
+]
+
 { #category : #printing }
 SystemWindow >> printOn: aStream [
 
@@ -1563,7 +1609,7 @@ SystemWindow >> privateBePassive [
 	self isInWorld ifFalse: [ ^self ].
 	
 	self 
-	rememberKeyboardFocus: ActiveHand keyboardFocus;
+	rememberKeyboardFocus: self activeHand keyboardFocus;
 	passivate;
 	announceDeActivated
 
@@ -1932,4 +1978,49 @@ SystemWindow >> wantsYellowButtonMenu [
 { #category : #label }
 SystemWindow >> widthOfFullLabelText [
 	^StandardFonts windowTitleFont widthOfString: labelString
+]
+
+{ #category : #'menu items' }
+SystemWindow >> windowMenuOn: aMenuMorph [
+
+	| closableLabel draggableLabel maximizeLabel |
+	
+	(aMenuMorph add: #Close target: self selector: #closeBoxHit iconName: #windowCloseForm)
+		enabled: self allowedToClose.
+		
+	aMenuMorph addSeparator.	
+	
+	aMenuMorph add: #About target: self selector: #showAbout iconName: #smallHelpIcon.
+	aMenuMorph addSeparator.	
+
+	aMenuMorph add: #'Change title' target: self selector: #relabel.
+	aMenuMorph add: #'Copy title' target: self selector: #copyTitle.
+	aMenuMorph addSeparator.	
+
+	aMenuMorph add: #'Send to back' target: self selector: #sendToBack.
+	aMenuMorph add: #'Make next-to-topmost' target: self selector: #makeSecondTopmost.
+	aMenuMorph addSeparator.	
+
+	aMenuMorph add: #'Create window group' target: self selector: #createWindowGroup.
+	aMenuMorph addSeparator.	
+
+	closableLabel := self mustNotClose
+		ifFalse: [ #'Make unclosable' ]
+		ifTrue: [ #'Make closable' ].
+
+	aMenuMorph add: closableLabel target: self selector: closableLabel asCamelCase uncapitalized.
+
+	draggableLabel := self isSticky
+		ifTrue: [ #'Make draggable' ]
+		ifFalse: [ #'Make undraggable' ].
+
+	aMenuMorph add: draggableLabel target: self selector: #toggleStickiness.
+	aMenuMorph addSeparator.	
+
+	maximizeLabel := self isMaximized
+		ifTrue: [ #Restore ]
+		ifFalse: [ #Maximize ].
+
+	aMenuMorph add: maximizeLabel target: self selector: #expandBoxHit iconName: #windowMaximizeForm.
+
 ]

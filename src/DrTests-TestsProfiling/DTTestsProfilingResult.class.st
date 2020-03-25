@@ -19,13 +19,13 @@ Class {
 
 { #category : #accessing }
 DTTestsProfilingResult >> buildTreeForUI [
-	<dTTestsProfilingResultTreeNamed: 'Grouped by type of result'>
+	<dtTestsProfilingResultTreeNamed: 'Grouped by type of result' order: 1>
 	^ DTTreeNode new
 		subResults:
 			{(self buildTreeNode
 				name: 'Errors';
 				subResults:
-					((self testsResult
+					((self testResults
 						select:
 							[ :testCaseToTimeTaken | testCaseToTimeTaken testResult errors isNotEmpty ])
 						collect: [ :testCaseToTimeTaken | 
@@ -36,7 +36,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 			(self buildTreeNode
 				name: 'Failures';
 				subResults:
-					((self testsResult
+					((self testResults
 						select:
 							[ :testCaseToTimeTaken | testCaseToTimeTaken testResult failures isNotEmpty ])
 						collect: [ :testCaseToTimeTaken | 
@@ -47,7 +47,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 			(self buildTreeNode
 				name: 'Skipped tests';
 				subResults:
-					((self testsResult
+					((self testResults
 						select:
 							[ :testCaseToTimeTaken | testCaseToTimeTaken testResult skipped isNotEmpty ])
 						collect: [ :testCaseToTimeTaken | 
@@ -58,7 +58,7 @@ DTTestsProfilingResult >> buildTreeForUI [
 			(self buildTreeNode
 				name: 'Passed tests';
 				subResults:
-					((self testsResult
+					((self testResults
 						select:
 							[ :testProfilerResult | testProfilerResult testResult passed isNotEmpty ])
 						collect: [ :testCaseToTimeTaken | 
@@ -71,9 +71,9 @@ DTTestsProfilingResult >> buildTreeForUI [
 
 { #category : #accessing }
 DTTestsProfilingResult >> buildTreeGroupedByClass [
-	<dTTestsProfilingResultTreeNamed: 'Grouped by class'>
+	<dtTestsProfilingResultTreeNamed: 'Grouped by class' order: 2>
 	^ self buildTreeNode
-		subResults: ((self testsResult groupedBy: [ :d | d testCase class ]) associations collect: [ :assoc |
+		subResults: ((self testResults groupedBy: [ :d | d testCase class ]) associations collect: [ :assoc |
 			self buildTreeNode
 					name: assoc key name;
 					subResults: (assoc value collect: [ :t | DTTreeLeaf content: t ]);
@@ -94,11 +94,11 @@ DTTestsProfilingResult >> buildTreeNode [
 ]
 
 { #category : #accessing }
-DTTestsProfilingResult >> testsResult [
+DTTestsProfilingResult >> testResults [
 	^ testsResult
 ]
 
 { #category : #accessing }
-DTTestsProfilingResult >> testsResult: anObject [
+DTTestsProfilingResult >> testResults: anObject [
 	testsResult := anObject
 ]

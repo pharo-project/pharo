@@ -87,12 +87,56 @@ SpMorphicLayoutAdapter >> buildWithSpec: aString [
 	^ self buildWithSpec
 ]
 
+{ #category : #accessing }
+SpMorphicLayoutAdapter >> children [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+SpMorphicLayoutAdapter >> isEmpty [
+
+	^ self children isEmpty
+]
+
 { #category : #'as yet unclassified' }
 SpMorphicLayoutAdapter >> layout: aLayout [
 
 	"Basic apply visibility to the widget.
 	This call is here because layouts and widgets work differently"
 	self applyVisibility
+]
+
+{ #category : #factory }
+SpMorphicLayoutAdapter >> newPanel [
+
+	^ Morph new 
+		changeTableLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		color: Color transparent;
+		borderColor: Color transparent;
+		clipSubmorphs: true;
+		beSticky "stop being grabbed";
+		borderWidth: 0;
+		extent: 0@0;
+		yourself
+]
+
+{ #category : #initialization }
+SpMorphicLayoutAdapter >> replaceLayoutWith: aLayout [ 
+	| oldAdapter |
+
+	self widget owner ifNil: [ ^ self ].
+
+	oldAdapter := self.
+	self model adapter: (aLayout
+		buildAdapterFor: self model
+		bindings: self model application adapterBindings).
+		
+	oldAdapter widget owner 
+		replaceSubmorph: oldAdapter widget  
+		by: self model adapter widget
 ]
 
 { #category : #protocol }

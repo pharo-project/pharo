@@ -79,8 +79,8 @@ FTFilterFunctionWithAction >> initializeActionButtonNamed: aString [
 FTFilterFunctionWithAction >> resizeButton [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
-	bottomRight := (table bounds right - table verticalScrollBarWidth) @ table bottom.
-	topLeft := (bottomRight x - actionButton width) @ (table bounds bottom - self fieldHeigh).
+	bottomRight := (table bounds right - table verticalScrollBarWidth) @ (table bottom - table horizontalScrollBarHeight).
+	topLeft := (bottomRight x - actionButton width) @ (table bounds bottom - self fieldHeigh - table horizontalScrollBarHeight).
 	actionButton bounds: (topLeft corner: bottomRight)
 ]
 
@@ -88,9 +88,9 @@ FTFilterFunctionWithAction >> resizeButton [
 FTFilterFunctionWithAction >> resizeField [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
-	topLeft := table bounds left @ (table bounds bottom - self fieldHeigh).
+	topLeft := table bounds left @ (table bounds bottom - self fieldHeigh - table horizontalScrollBarHeight).
 	bottomRight := (table bounds right - table verticalScrollBarWidth - (actionButton width + 5))
-		@ table bottom.
+		@ (table bottom - table horizontalScrollBarHeight).
 	field bounds: (topLeft corner: bottomRight)
 ]
 

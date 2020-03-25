@@ -31,6 +31,13 @@ EyeInspectorToolBar class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #initialization }
+EyeInspectorToolBar >> connectPresenters [
+
+	inspectorChoice whenSelectedItemChangedDo: [ :inspectorType | 
+		self preventUpdatesDuring: [ self inspectorType: inspectorType ] ]
+]
+
 { #category : #accessing }
 EyeInspectorToolBar >> history [
 	^ self inspectorWrapper history
@@ -43,25 +50,22 @@ EyeInspectorToolBar >> initialize [
 ]
 
 { #category : #initialization }
-EyeInspectorToolBar >> initializePresenter [
-	inspectorChoice whenSelectedItemChanged: [ :inspectorType | self preventUpdatesDuring: [ self inspectorType: inspectorType ] ]
-]
+EyeInspectorToolBar >> initializePresenters [
 
-{ #category : #initialization }
-EyeInspectorToolBar >> initializeWidgets [
 	inspectorChoice := self newDropList.
 	previousButton := self newButton.
 	nextButton := self newButton.
-
 	previousButton
 		label: '<';
-		action: [ self inspectorWrapper inspectPrevious.
+		action: [ 
+			self inspectorWrapper inspectPrevious.
 			self update ].
 	nextButton
 		label: '>';
-		action: [ self inspectorWrapper inspectNext.
+		action: [ 
+			self inspectorWrapper inspectNext.
 			self update ].
-	inspectorChoice displayBlock: [ :label | label ]
+	inspectorChoice display: [ :label | label ]
 ]
 
 { #category : #accessing }

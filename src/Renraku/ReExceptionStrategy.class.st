@@ -30,6 +30,7 @@ ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 		label: 'Exception handling strategy';
 		target: self;
 		parent: #qualityAssistant;
+		default: ReLogExceptionStrategy;
 		description: self settingDescription;
 		domainValues: (
 			self allSubclasses collect: [ :c |

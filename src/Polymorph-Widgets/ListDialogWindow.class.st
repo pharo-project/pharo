@@ -136,7 +136,7 @@ ListDialogWindow >> cancel [
 { #category : #'instance creation' }
 ListDialogWindow >> chooseFromOwner: aMorph [
 
-	aMorph openModal: self.
+	self openModal.
 	^ self answer
 ]
 

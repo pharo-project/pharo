@@ -447,13 +447,11 @@ RubTextEditor >> changeTextFont [
 		forceCursorVisibleWhile: [ 
 			| hadFocus |
 			hadFocus := textArea hasFocus.
-			textArea
-				openModal:
-					(FontChooser
-						openWithWindowTitle: 'Choose a Font'
-						for: self
-						setSelector: #applyTextFont:
-						getSelector: self fontToUse).
+			(FontChooser
+				openWithWindowTitle: 'Choose a Font'
+				for: self
+				setSelector: #applyTextFont:
+				getSelector: self fontToUse) openModal.
 			hadFocus
 				ifTrue: [ textArea takeKeyboardFocus ] ]
 ]
@@ -1477,6 +1475,11 @@ RubTextEditor >> isDisjointFrom: anInterval [
 ]
 
 { #category : #testing }
+RubTextEditor >> isScripting [
+	^ false 
+]
+
+{ #category : #testing }
 RubTextEditor >> isSmalltalkEditor [
 	^ false 
 ]
@@ -1699,7 +1702,7 @@ RubTextEditor >> offerFontMenu: aKeyboardEvent [
 { #category : #deprecated }
 RubTextEditor >> offerMenuFromEsc: aKeyboardEvent [
 	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	ActiveEvent shiftPressed 
+ 	textArea activeHand lastEvent shiftPressed 
 		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
 	^ false 	
 ]
@@ -1818,7 +1821,7 @@ RubTextEditor >> previousWord: position [
 { #category : #'nonediting/nontyping keys' }
 RubTextEditor >> raiseContextMenu: aKeyboardEvent [
 
-	^ textArea yellowButtonActivity: ActiveEvent shiftPressed
+	^ textArea yellowButtonActivity: textArea activeHand lastEvent shiftPressed
 ]
 
 { #category : #'accessing-selection' }
@@ -2172,6 +2175,12 @@ RubTextEditor >> selectWord [
 									ifTrue: [level := level + 1"entering deeper nest"]]]].
 
 	level > 0 ifTrue: ["in case ran off string end"	here := here + direction].
+	
+	"to avoid selecting boringly the : in block argument: :aSerie will just select aSerie. 
+	Such a boost of editing productivity!!!"	
+	start ifNotNil: [ (self text at: start) = $: ifTrue: [ start := start + 1 ]].
+	
+	
 	direction > 0
 		ifTrue: [self selectFrom: start to: here - 1]
 		ifFalse: [self selectFrom: here + 1 to: stop]

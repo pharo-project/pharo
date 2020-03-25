@@ -15,11 +15,18 @@ SpAbstractMorphicListAdapter class >> isAbstract [
 
 { #category : #scrolling }
 SpAbstractMorphicListAdapter >> configureScrolling [
-	self presenter verticalAlignment whenChangedDo: [ widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
-	self presenter
-		whenDisplayDo: [ widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
-			self scrollingChanged ].
-	widget onAnnouncement: FTScrollingChanged send: #scrollingChanged to: self
+
+	self presenter verticalAlignment whenChangedDo: [ 
+			widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
+	
+	self presenter whenDisplayDo: [ 
+		widget scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
+		self scrollingChanged ].
+	
+	widget 
+		onAnnouncement: FTScrollingChanged 
+		send: #scrollingChanged 
+		to: self
 ]
 
 { #category : #'widget API' }
@@ -44,5 +51,13 @@ SpAbstractMorphicListAdapter >> updateItemFilterBlockWith: block [
 				enableFilter: (SpFTSpecFilter block: block);
 				explicitFunction ]
 		ifNil: [ 
-			widget disableFunction ]
+			self updateSearch ]
+]
+
+{ #category : #factory }
+SpAbstractMorphicListAdapter >> updateSearch [
+
+	self presenter isSearchEnabled
+		ifTrue: [ widget enableSearch ]
+		ifFalse: [ widget disableFunction ]
 ]

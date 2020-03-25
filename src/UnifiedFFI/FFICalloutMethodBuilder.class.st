@@ -28,6 +28,12 @@ FFICalloutMethodBuilder >> addFunctionResolveStrategy: aStrategy [
 	functionResolutionStrategies add: aStrategy
 ]
 
+{ #category : #private }
+FFICalloutMethodBuilder >> argumentNames [
+
+	^ self method argumentNames
+]
+
 { #category : #building }
 FFICalloutMethodBuilder >> build: aBlock [ 
 	aBlock value: self.
@@ -91,22 +97,27 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 		ifNotNil: [ properties := sender methodProperties copy.
 			properties method: nil.
 			builder properties: properties ].
+
 	builder
-		numArgs: self method argumentNames size;
-		addTemps: (self method argumentNames copyWith: #result).
+		numArgs: self argumentNames size;
+		addTemps: (self argumentNames copyWith: #result).
 
 	"Builds a method call"
 	"save ffi call as literal"
 	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"
-	functionSpec arguments do: [ :each | each emitArgument: builder context: sender ].
+	functionSpec arguments do: [ :each | each emitArgument: builder context: sender inCallout: self requestor ].
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.
 	"send call and store into result"
 	builder send: #invokeWithArguments:.
 	functionSpec arguments do: [ :each | each emitReturnArgument: builder context: sender ].
 	"convert in case return type needs it. And return reseult"
-	^ functionSpec returnType emitReturn: builder resultTempVar: #result context: sender
+	^ functionSpec returnType
+		emitReturn: builder
+		resultTempVar: #result
+		context: sender
+		inCallout: self requestor
 ]
 
 { #category : #private }
@@ -115,7 +126,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	functionSpec resolveUsing: self requestor.
 	ir := IRBuilder buildIR: [ :builder | 
 		self generateFFICallout: builder spec: functionSpec ].
-	^ ir generate: self method trailer
+	^ ir generate: self methodTrailer
 ]
 
 { #category : #initialization }
@@ -155,6 +166,12 @@ FFICalloutMethodBuilder >> libraryName [
 { #category : #accessing }
 FFICalloutMethodBuilder >> method [
 	^ self sender method
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilder >> methodTrailer [
+	
+	^ self method trailer
 ]
 
 { #category : #private }

@@ -19,7 +19,7 @@ SliderPresenterTest >> initMinMax [
 SliderPresenterTest >> testAbsoluteValue [
 	self initMinMax.
 	testedInstance absoluteValue: 0.5.
-	self assert: testedInstance value == 50
+	self assert: testedInstance value identicalTo: 50
 ]
 
 { #category : #tests }
@@ -28,5 +28,5 @@ SliderPresenterTest >> testReset [
 	testedInstance
 		value: 50;
 		reset.
-	self assert: testedInstance value == 0
+	self assert: testedInstance value identicalTo: 0
 ]

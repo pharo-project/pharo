@@ -104,12 +104,11 @@ spec
 
 { #category : #testing }
 MetacelloReferenceTestCase >> testReferenceConfig [
-
 	| spec map string expected |
 	spec := (MetacelloReferenceConfig project version: '1.0-baseline') spec.
 	map := spec packages map.
 	string := self conditionResult: (map at: 'Example-AddOn') printString.
-   	expected := 'spec 
+	expected := 'spec 
 	name: ''Example-AddOn'';
 	requires: #(''Example-Core'' ''UI Support'' );
 	includes: #(''Example-UI'' );
@@ -118,18 +117,24 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 	repository: ''http://www.example.com/or'' username: ''foo'' password: ''bar'';
 	preLoadDoIt: #''preloadForAddOn'';
 	postLoadDoIt: #''postloadForAddOn''.'.
-	self assert: string = expected.
+	self assert: string equals: expected.
 
 	string := (map at: 'Example-Core') printString.
-  	self assert: string = 'spec name: ''Example-Core'''.
-	
+	self assert: string equals: 'spec name: ''Example-Core'''.
+
 	string := (map at: 'Example-TestsUI') printString.
-  	self assert: string =  'spec 
+	self
+		assert: string
+		equals:
+			'spec 
 	name: ''Example-TestsUI'';
 	requires: #(''Example-UI'' ).'.
 
 	string := (map at: 'UI Support') printString.
-  	self assert: string = 'spec 
+	self
+		assert: string
+		equals:
+			'spec 
 	name: ''UI Support'';
 	projectReference: [
 		spec
@@ -137,22 +142,19 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 			versionString: ''1.0.1'';
 			operator: #''>='';
 			loads: #(''UI-Core'' ''UI-Tests'' );
-			repository: ''http://www.example.com/r'' username: ''foo'' password: ''bar'' ].'.
-
+			repository: ''http://www.example.com/r'' username: ''foo'' password: ''bar'' ].'
 ]
 
 { #category : #testing }
 MetacelloReferenceTestCase >> testReferenceConfigPrintString [
-
 	| version string expected x y |
 	version := MetacelloReferenceConfig project version: '1.0-baseline'.
 	string := self conditionResult: version spec printString.
 	expected := self expectedPrintString.
-	1 to: string size do: [: i |
+	1 to: string size do: [ :i | 
 		(i > expected size or: [ (string at: i) ~= (expected at: i) ])
-			ifTrue: [ 
-				x := string copyFrom: ((i- 25) max: 1) to: ((i + 25) min: string size).
-				y := expected copyFrom: (((i- 25) max: 1) min: expected size) to: ((i + 25) min: expected size).
-				(Array with: x with: y) "halt" ]].
-	self assert: string = expected
+			ifTrue: [ x := string copyFrom: (i - 25 max: 1) to: (i + 25 min: string size).
+				y := expected copyFrom: ((i - 25 max: 1) min: expected size) to: (i + 25 min: expected size).
+				Array with: x with: y	"halt" ] ].
+	self assert: string equals: expected
 ]

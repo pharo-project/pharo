@@ -1,11 +1,6 @@
 Extension { #name : #FormCanvas }
 
 { #category : #'*Morphic-Base' }
-FormCanvas >> asBalloonCanvas [
-	^(BalloonCanvas on: form) setOrigin: origin clipRect: clipRect
-]
-
-{ #category : #'*Morphic-Base' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex autoBoundAt: aPoint font: fontOrNil color: c [
 
 	| font textStyle portRect bounds character width carriageReturn lineWidth lineHeight |

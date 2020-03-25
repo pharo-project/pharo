@@ -1,9 +1,9 @@
 "
-I represent a selector
+I represent a selector of a method
 "
 Class {
 	#name : #NECSelectorEntry,
-	#superclass : #NECEntry,
+	#superclass : #NECSymbolEntry,
 	#category : #'NECompletion-Model'
 }
 
@@ -11,31 +11,18 @@ Class {
 NECSelectorEntry >> browse [
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
-	class ifNil: [ SystemNavigation new browseAllImplementorsOf: class].
+	class ifNil: [ SystemNavigation new browseAllImplementorsOf: contents. ^true].
 	
 	^ self
-		findMethodAndDo: [ :clss :method | 
+		findMethodAndDo: [ :method | 
 			Smalltalk tools browser 
-				openOnClass: clss 
+				openOnClass: method methodClass 
 				selector: method selector. 
 			true ]
 		ifAbsent: [ :selector | 
 			SystemNavigation new 
 				browseAllImplementorsOf: selector.
 			true ]
-]
-
-{ #category : #'detail information' }
-NECSelectorEntry >> createDescription [
-	"Creates description either from looking up the method in a class,
-	or in the system."
-
-	^ self
-		findMethodAndDo: [:clazz :method | 
-			self
-				methodSourceDescription: clazz
-				method: method ]
-		ifAbsent: [:selector | self implementorsDescription: selector]
 ]
 
 { #category : #private }
@@ -50,27 +37,7 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 							ref realClass lookupSelector: ref selector]
 						ifFalse: [^ notfoundBlock value: contents]]
 				ifNotNil: [theClass lookupSelector: contents ]. 
-	^ foundBlock value: result first value: result second
-]
-
-{ #category : #private }
-NECSelectorEntry >> implementorsDescription: aSymbol [ 
-	| implementors output |
-	output := WriteStream on: String new.
-	implementors := self systemNavigation allImplementorsOf: aSymbol.
-	implementors isEmpty ifTrue: 
-		[ ^ NECEntryDescription 
-			label: 'symbol'
-			title: '(no implementors)'
-			description: 'This is just symbol.' ].
-	implementors do: [ :each | 
-		output
-			nextPutAll: each className printString;
-			cr ].
-	^ NECEntryDescription 
-		label: self label
-		title: '(Implementors)'
-		description: output contents
+	^ foundBlock value: result
 ]
 
 { #category : #accessing }
@@ -81,19 +48,4 @@ NECSelectorEntry >> label [
 		propertyAt: #type 
 		ifPresent:  [ 'method' ] 
 		ifAbsent:  [ 'class' ]
-]
-
-{ #category : #private }
-NECSelectorEntry >> methodSourceDescription: aClass method: aCompiledMethod [ 
-	"I return if it's a class or a method, its class name, and the implementation."
-	| styler styledText |
-	
-	styler := SHRBTextStyler new.
-	styler classOrMetaClass: aClass.
-	styledText := styler styledTextFor: (aCompiledMethod sourceCode) asText.
-	
-	^ NECEntryDescription
-		label: self label
-		title: aClass printString
-		description: styledText
 ]

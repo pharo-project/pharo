@@ -9,6 +9,11 @@ Object >> calloutAPIClass [
 Object >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 	
+	"All the ffiCall: messages are used to perform Foreign-Function calls (FFI calls).
+	FFI calls allows Pharo code to interact with external dynamic linked libraries.
+	Please refer to the booklet about more configuration details
+	or some of the examples on the image LibC / FreeTypeFont / Athens / SDL."
+	
 	self ffiCall: fnSpec library: self ffiLibrary
 ]
 
@@ -67,6 +72,22 @@ Object >> ffiCalloutIn: aContext [
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiLibrary [
+	
+	"This method returns the ffiLibrary to use in the Foreign-Function calls performed in this object.
+	FFI calls allows Pharo to call functions in other external dynamic linked libraries.
+	
+	See #ffiCall: to see how to perform a FFI call.
+	Subclasses can redefine this method to use a different FFILibrary class (see class FFILibrary). 
+	A FFILibrary object not only returns the path to the dynamic linked library to use (DLL/SO/DYLIB)
+	but it can also configure different behaviours for the FFI Calls. For example, the backend to use 
+	or how the types are mapped. 
+	
+	This default implementation is kept as backward compatibility. 
+	Its implementation only returns a default configured FFILibrary using the path to the 
+	dynamic library file returned by #ffiLibraryName 
+	
+	New users of FFI should return here a subclass of FFILibrary configured as required by the target 
+	external library to call by FFI"
 		
 	^ self ffiLibraryName asFFILibrary
 ]

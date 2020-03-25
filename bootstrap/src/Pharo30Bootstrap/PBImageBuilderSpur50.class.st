@@ -508,6 +508,7 @@ PBImageBuilderSpur50 >> writeSnapshot: imageFileName ofTransformedImage: spurHea
 				ifFalse: [ex pass]]."
 	sim := spurHeap coInterpreter.
 	sim bootstrapping: true.
+	spurHeap segmentManager prepareForSnapshot.
 	spurHeap
 		setEndOfMemory: spurHeap endOfMemory + spurHeap bridgeSize. "hack; initializeInterpreter: cuts it back by bridgeSize"
 	sim initializeInterpreter: 0;

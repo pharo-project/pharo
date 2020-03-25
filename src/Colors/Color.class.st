@@ -1043,7 +1043,7 @@ Color >> asColor [
 { #category : #conversions }
 Color >> asColorref [
 	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
-	"(Color red asColorref) >>> 229"
+	"(Color red asColorref) >>> 255"
 	"(Color white asColorref) >>>  16777215"
 	
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
@@ -1052,7 +1052,7 @@ Color >> asColorref [
 { #category : #conversions }
 Color >> asHexString [
 	"Return a string representing the receiver in HEX (i.e., 6 elements in 16 basis)"
-	"(Color red asHexString) >>> 'E50000'"
+	"(Color red asHexString) >>> 'FF0000'"
 	| s |
 	s := '000000' copy.
 	s at: 1 put: (Character digitValue: ((rgb bitShift: -6 - RedShift) bitAnd: 15)).

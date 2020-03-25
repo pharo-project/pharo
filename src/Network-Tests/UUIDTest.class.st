@@ -13,16 +13,15 @@ UUIDTest >> testBasic [
 	uuid := UUID new.
 	self assert: uuid size equals: 16.
 	self deny: uuid isNilUUID.
-	self deny: uuid = UUID new
+	self deny: uuid equals: UUID new
 ]
 
 { #category : #testing }
 UUIDTest >> testComparison [
-	|a b|
-	
+	| a b |
 	a := UUID fromString: '0608b9dc-02e4-4dd0-9f8a-ea45160df641'.
 	b := UUID fromString: 'e85ae7ba-3ca3-4bae-9f62-cc2ce51c525e'.
-	
+
 	self assert: a equals: a copy.
 	self assert: a <= a copy.
 	self assert: a >= a copy.
@@ -33,9 +32,9 @@ UUIDTest >> testComparison [
 	self assert: a <= b.
 	self assert: b > a.
 	self assert: b >= a.
-	
-	self deny: (a > b) = (b > a).
-	self deny: (a >= b) = (b >= a)
+
+	self deny: a > b equals: b > a.
+	self deny: a >= b equals: b >= a
 ]
 
 { #category : #testing }
