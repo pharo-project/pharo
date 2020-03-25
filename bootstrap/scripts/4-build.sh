@@ -193,7 +193,7 @@ zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 echo "[Metacello] Bootstrapping Metacello"
 ${VM} "${MC_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${METACELLO_IMAGE_NAME}
 ${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.16';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
+${VM} "${METACELLO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.16';onWarning: [ :e | Error signal: e messageText in: e signalerContext ]; load: 'core'"
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
