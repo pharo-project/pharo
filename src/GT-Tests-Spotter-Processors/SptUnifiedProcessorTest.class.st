@@ -52,15 +52,15 @@ SptUnifiedProcessorTest >> testFindThisMethodAfterAddingText [
 { #category : #tests }
 SptUnifiedProcessorTest >> testFindThisPackage [
 
-	self runForText: 'gt-spotter-processors-tests'.
+	self runForText: 'gt-tests-spotter-processors'.
 	self assertResultsIncludes: SptUnifiedProcessorTest package
 ]
 
 { #category : #tests }
 SptUnifiedProcessorTest >> testFindThisPackageAfterAddingText [
 
-	self runForText: 'gt-spo'.
-	self runForText: 'gt-spotter-processors-tests'.
+	self runForText: 'gt-tests-spo'.
+	self runForText: 'gt-tests-spotter-processors'.
 
 	self assertResultsIncludes: SptUnifiedProcessorTest package
 	
@@ -70,7 +70,7 @@ SptUnifiedProcessorTest >> testFindThisPackageAfterAddingText [
 { #category : #tests }
 SptUnifiedProcessorTest >> testFindThisPackageWithCategory [
 
-	self runForText: '#Packages gt-spotter-processors-tests'.
+	self runForText: '#Packages gt-tests-spotter-processors'.
 	self assertResultsIncludes: SptUnifiedProcessorTest package
 ]
 

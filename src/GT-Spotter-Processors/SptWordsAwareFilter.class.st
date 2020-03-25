@@ -19,7 +19,7 @@ Class {
 SptWordsAwareFilter >> filteringText: aString [
 
 	| firstWord otherWords |
-	words := (aString substrings: ' :')
+	words := (aString substrings: ' :-')
 		flatCollect: [ :each | each splitCamelCase  ].
 	
 	firstWord := words first.

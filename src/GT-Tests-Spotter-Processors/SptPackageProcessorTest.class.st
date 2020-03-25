@@ -13,15 +13,15 @@ SptPackageProcessorTest >> processor [
 { #category : #tests }
 SptPackageProcessorTest >> testFindThisPackage [
 
-	self runForText: 'gt-spotter-new-tests'.
+	self runForText: 'gt-tests-spotter-processors'.
 	self assertResultsIncludes: self class package
 ]
 
 { #category : #tests }
 SptPackageProcessorTest >> testFindThisPackageAfterAddingText [
 
-	self runForText: 'gt-spo'.
-	self runForText: 'gt-spotter-new-tests'.
+	self runForText: 'gt-tests-spo'.
+	self runForText: 'gt-tests-spotter-processors'.
 
 	self assertResultsIncludes: self class package
 	
