@@ -5314,7 +5314,7 @@ UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 UITheme >> selectedItemListTextColor [
 	"Answer the color for the selected item in a list text."
 
-	^ self textColor
+	^ self textColor 
 ]
 
 { #category : #'accessing colors' }
