@@ -1,5 +1,5 @@
 "
-I am a result set builder that builds heuristics using statistic support
+I am a result set builder that builds heuristics using statistic support.
 "
 Class {
 	#name : #CoStatisticsASTHeuristicsResultSetBuilder,

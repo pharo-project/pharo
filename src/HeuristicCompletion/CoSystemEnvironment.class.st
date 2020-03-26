@@ -1,6 +1,6 @@
 "
 I represent an environment for the completion.
-I know a system dictionary, and can be initialized with for example, Smalltalk globals.
+I know a system dictionary and can be initialized with, for example, Smalltalk globals.
 "
 Class {
 	#name : #CoSystemEnvironment,

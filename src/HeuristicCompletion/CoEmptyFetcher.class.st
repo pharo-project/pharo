@@ -1,5 +1,5 @@
 "
-By default I do not nothing. I'm the NullObject of the fetcher hierarchy.
+By default, I do nothing. I'm the NullObject of the fetcher hierarchy.
 "
 Class {
 	#name : #CoEmptyFetcher,

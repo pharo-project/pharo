@@ -1,10 +1,10 @@
 "
-I am the an AST based heuristics builder.
+I am an AST based heuristics builder.
 
 When building the complishon, I build the AST from the source in the context, and get the current node from the context position.
 Then I do a double dispatch on the current node and from it
 1) I decide what fetchers to create
-2) I extract the currently typed text and set is as initial filter
+2) I extract the currently typed text and set is as an initial filter
 "
 Class {
 	#name : #CoASTHeuristicsResultSetBuilder,

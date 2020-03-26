@@ -1,5 +1,5 @@
 "
-I am a null fetcher heuristic, returning an empty fetcher
+I am a null fetcher heuristic, returning an empty fetcher.
 "
 Class {
 	#name : #CoNullFetcherHeuristic,

@@ -2,7 +2,7 @@
 I am an adaptor between the Morphic text morphs supporting completion and Complishon.
 I contain a complishonBuilder that is used to create a complishon.
 
-See my superclass for details
+See my superclass for details.
 "
 Class {
 	#name : #CoCompletionEngine,

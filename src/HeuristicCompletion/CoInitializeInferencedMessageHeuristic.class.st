@@ -1,5 +1,5 @@
 "
-I am an heuristic using depth-bound type inference to type variables.
+I am a heuristic using depth-bound type inference to type variables.
 I autocomplete messages in the hierarchy of the found types.
 "
 Class {

@@ -1,5 +1,5 @@
 "
-I implement an heuristic for global variables accessible in the completion environment.
+I implement a heuristic for global variables accessible in the completion environment.
 
 See my superclass for details.
 "
