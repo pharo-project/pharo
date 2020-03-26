@@ -1,6 +1,6 @@
 "
-I implement an heuristic for messages sent to literals.
-If there is a literal as receiver, create a fetcher for messages of its class.
+I implement a heuristic for messages sent to literals.
+If there is a literal as a receiver, create a fetcher for messages of its class.
 
 See my superclass for details.
 "

@@ -1,5 +1,5 @@
 "
-I implement an heuristic for self message sends.
+I implement a heuristic for self message sends.
 I provide a fetcher for messages for the hierarchy of self class superclass.
 
 See my superclass for details.

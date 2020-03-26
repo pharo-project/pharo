@@ -1,6 +1,6 @@
 "
-I am an heuristic builder.
-I am composed with several small heuristics and generate a chain of responsibility from them in the right order.
+I am a heuristic builder.
+I am composed of several small heuristics and generate a chain of responsibility from them in the right order.
 
 For example, given a list of heuristics:
 
@@ -14,7 +14,7 @@ I create the following chain:
 
 CoSelfMessageHeuristic -next-> CoSuperMessageHeuristic -next-> CoInitializeInferencedMessageHeuristic
 	
-I am used also as a hook, that can be redefined in subclasses and build heuristics differently.
+I am also used as a hook, that can be redefined in subclasses and build heuristics differently.
 "
 Class {
 	#name : #CoHeuristicBuilder,

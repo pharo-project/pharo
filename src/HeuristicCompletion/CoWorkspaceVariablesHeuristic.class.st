@@ -1,5 +1,5 @@
 "
-I implement an heuristic for variables in a workspace/playground.
+I implement a heuristic for variables in a workspace/playground.
 
 See my superclass for details.
 "

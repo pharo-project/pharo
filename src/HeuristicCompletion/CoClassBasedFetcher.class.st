@@ -5,7 +5,7 @@ My subclasses will, for example, fetch a class' class variables, messages implem
 I am explicitly created with the superclass I will look into.
 This allows other combinators to act upon me.
 - I define #onSuperclass that creates a copy of myself but acting on my superclass.
-- I define #forHierarchy that decorates myself with a HierarchyComplishonFetcher that makes a search for the entire hierarchy.
+- I define #forHierarchy that decorates myself with a HierarchyComplishonFetcher that does a search for the entire hierarchy.
 "
 Class {
 	#name : #CoClassBasedFetcher,

@@ -1,5 +1,5 @@
 "
-I am an heuristic that autocompletes messages based on a session vocabulary.
+I am a heuristic that autocompletes messages based on a session vocabulary.
 "
 Class {
 	#name : #CoSessionMessagesHeuristic,

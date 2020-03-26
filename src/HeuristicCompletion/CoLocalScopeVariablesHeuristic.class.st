@@ -1,5 +1,5 @@
 "
-I implement an heuristic for local variables accessible from the current AST node.
+I implement a heuristic for local variables accessible from the current AST node.
 
 See my superclass for details.
 "
