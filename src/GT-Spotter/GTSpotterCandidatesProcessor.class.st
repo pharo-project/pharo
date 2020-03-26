@@ -97,7 +97,7 @@ GTSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 GTSpotterCandidatesProcessor >> render: anObject [
 	^ GTSpotterItemBrick new
 		icon: (self itemIconFor: anObject);

@@ -196,7 +196,7 @@ GTSpotterPragmaBasedProcessor >> prepareProcessorInContext: aContext [
 	allFilteredCandidates := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 GTSpotterPragmaBasedProcessor >> render: anObject [
 	^ GTSpotterItemBrick new
 		icon: (nil);
