@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'fetcher'
 	],
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #testing }

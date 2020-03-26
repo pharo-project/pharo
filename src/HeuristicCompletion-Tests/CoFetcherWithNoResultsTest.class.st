@@ -1,7 +1,7 @@
 Class {
 	#name : #CoFetcherWithNoResultsTest,
 	#superclass : #CoBasicFetcherTest,
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #running }

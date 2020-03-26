@@ -10,7 +10,7 @@ Class {
 		'classVariables',
 		'superclass'
 	],
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #configuration }

@@ -7,7 +7,7 @@ Class {
 		'completionClass',
 		'completionEnvironment'
 	],
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #testing }

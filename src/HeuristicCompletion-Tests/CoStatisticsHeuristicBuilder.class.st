@@ -1,5 +1,5 @@
 "
-I am an heuristic builder that builds statistic-enabled fetchers.
+I am a heuristic builder that builds statistic-enabled fetchers.
 I wrap each of my heuristics with a CoStatisticsHeuristicWrapper, and then compose these wrappers into a chain of responsibility.
 For example, given a list of heuristics:
 
@@ -17,7 +17,7 @@ CoStatisticsHeuristicWrapper -next-> CoStatisticsHeuristicWrapper
            v                                     v
    CoSelfMessageHeuristic             CoSuperMessageHeuristic
 	
-I am used also as a hook, that can be redefined in subclasses and build heuristics differently.
+I am also used as a hook, that can be redefined in subclasses and build heuristics differently.
 "
 Class {
 	#name : #CoStatisticsHeuristicBuilder,

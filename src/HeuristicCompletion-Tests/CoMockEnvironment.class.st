@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'globals'
 	],
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #accessing }

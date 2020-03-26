@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'expectedElements'
 	],
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #testing }

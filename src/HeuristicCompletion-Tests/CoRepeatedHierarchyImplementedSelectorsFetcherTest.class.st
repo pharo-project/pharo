@@ -1,7 +1,7 @@
 Class {
 	#name : #CoRepeatedHierarchyImplementedSelectorsFetcherTest,
 	#superclass : #CoImplementedSelectorsFetcherTest,
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #running }
