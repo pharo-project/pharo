@@ -31,7 +31,7 @@ SptWordsAwareFilter >> filteringText: aString [
 
 ]
 
-{ #category : #filtering }
+{ #category : #accessing }
 SptWordsAwareFilter >> inner: anIterator [
 
 	inner := anIterator.

@@ -23,7 +23,7 @@ SptCatalogProjectEntry >> doEvaluate [
 	UIManager inform: content name , ' installed'
 ]
 
-{ #category : #showing }
+{ #category : #accessing }
 SptCatalogProjectEntry >> icon [
 
 	^ Smalltalk ui theme iconNamed: #catalog

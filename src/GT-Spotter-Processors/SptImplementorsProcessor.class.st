@@ -13,7 +13,7 @@ SptImplementorsProcessor class >> defaultEnabled [
 	^ false
 ]
 
-{ #category : #'default-settings' }
+{ #category : #settings }
 SptImplementorsProcessor class >> hideInSettings [
 
 	"I am hidden because the implementation in the unified processor is richer"

@@ -32,7 +32,7 @@ SptClassProcessor class >> title [
 	^ 'Classes'
 ]
 
-{ #category : #accessing }
+{ #category : #filtering }
 SptClassProcessor >> newTextFilteringSource [
 
 	^ SptSourceFactory current classesSubstringSource

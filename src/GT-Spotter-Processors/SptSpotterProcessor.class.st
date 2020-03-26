@@ -196,7 +196,7 @@ SptSpotterProcessor >> filterInContext: aSpotterContext [
 
 ]
 
-{ #category : #'spotter-api' }
+{ #category : #initialization }
 SptSpotterProcessor >> initialize [
 
 	super initialize.

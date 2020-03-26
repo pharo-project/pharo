@@ -46,7 +46,7 @@ SptHelpProcessor >> newEntryOn: anElement [
 	^ SptHelpEntry on: anElement
 ]
 
-{ #category : #accessing }
+{ #category : #configuration }
 SptHelpProcessor >> showForEmptyQuery [ 
 
 	^ true

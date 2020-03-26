@@ -25,13 +25,13 @@ SptHistoryProcessor class >> title [
 	^ 'History'
 ]
 
-{ #category : #accessing }
+{ #category : #filtering }
 SptHistoryProcessor >> collection [
 
 	^ GTSpotter history reject: [ :e | e isNil ]
 ]
 
-{ #category : #accessing }
+{ #category : #filtering }
 SptHistoryProcessor >> newEntryOn: anElement [
 
 	^ anElement

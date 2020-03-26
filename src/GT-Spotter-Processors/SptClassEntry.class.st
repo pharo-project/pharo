@@ -18,7 +18,7 @@ SptClassEntry >> doEvaluate [
 	content browse
 ]
 
-{ #category : #evaluating }
+{ #category : #accessing }
 SptClassEntry >> icon [
 
 	^ content systemIcon

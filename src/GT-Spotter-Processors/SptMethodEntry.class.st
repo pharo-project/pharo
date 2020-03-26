@@ -19,7 +19,7 @@ SptMethodEntry >> doEvaluate [
 	^ content browse
 ]
 
-{ #category : #evaluating }
+{ #category : #accessing }
 SptMethodEntry >> icon [
 
 	^ content systemIcon

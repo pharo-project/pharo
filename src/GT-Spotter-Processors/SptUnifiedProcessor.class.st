@@ -43,7 +43,7 @@ SptUnifiedProcessor class >> settingsTitle [
 	^ 'Classes, Implementors & Packages'
 ]
 
-{ #category : #filtering }
+{ #category : #accessing }
 SptUnifiedProcessor class >> title [
 
 	^ 'Results'
@@ -55,18 +55,21 @@ SptUnifiedProcessor >> calculateLowercaseSourcesOn: anStream [
 	| implementorsBeginsWith implementorsSubstring wordsAwareImplementors |
 
 	(self categoriesIncludes: #Implementors) 
-		ifTrue: [
-			implementorsBeginsWith := SptSourceFactory current implementorsBeginsWithSource.
-			implementorsSubstring := SptSourceFactory current implementorsSubstringSource.
-			wordsAwareImplementors := SptWordsAwareFilter new inner: (SptSourceFactory current implementorsSubstringSource); yourself.
-			
-			textFilteringIterators add: implementorsBeginsWith.
-			textFilteringIterators add: implementorsSubstring.
-			textFilteringIterators add: wordsAwareImplementors.
-			
-			anStream nextPut: implementorsBeginsWith.
-			anStream nextPut: implementorsSubstring.
-			anStream nextPut: wordsAwareImplementors ]
+		ifFalse: [ ^ self ].
+
+	implementorsBeginsWith := SptSourceFactory current implementorsBeginsWithSource.
+	implementorsSubstring := SptSourceFactory current implementorsSubstringSource.
+	wordsAwareImplementors := SptWordsAwareFilter new 
+		inner: (SptSourceFactory current implementorsSubstringSource); 
+		yourself.
+	
+	textFilteringIterators add: implementorsBeginsWith.
+	textFilteringIterators add: implementorsSubstring.
+	textFilteringIterators add: wordsAwareImplementors.
+	
+	anStream nextPut: implementorsBeginsWith.
+	anStream nextPut: implementorsSubstring.
+	anStream nextPut: wordsAwareImplementors 
 
 ]
 
@@ -118,7 +121,7 @@ SptUnifiedProcessor >> categoriesIncludes: aCategory [
 	^ categories isNil or: [ categories isEmpty or: [ categories includes: aCategory ] ] 
 ]
 
-{ #category : #sources }
+{ #category : #filtering }
 SptUnifiedProcessor >> configureFilter [
 
 	(categories ~= self query categoriesSelected)
@@ -156,7 +159,7 @@ SptUnifiedProcessor >> isRelevantForQuery: aString [
 	^ true
 ]
 
-{ #category : #sources }
+{ #category : #filtering }
 SptUnifiedProcessor >> newSource [
 
 	| uppercaseIterators lowercaseIterators caseSelectorIterator root |

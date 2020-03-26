@@ -15,7 +15,7 @@ SptFilter >> filter: aValue [
 	^ aBlock value: aValue
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 SptFilter >> next [
 
 	| value |

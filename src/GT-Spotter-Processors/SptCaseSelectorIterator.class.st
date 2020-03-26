@@ -17,7 +17,7 @@ Class {
 	#category : #'GT-Spotter-Processors-Iterators'
 }
 
-{ #category : #filtering }
+{ #category : #protected }
 SptCaseSelectorIterator >> doReset [
 
 	lowercaseIterator reset.

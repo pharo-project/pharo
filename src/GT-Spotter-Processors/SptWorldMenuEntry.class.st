@@ -19,7 +19,7 @@ SptWorldMenuEntry >> doEvaluate [
 	content spotterActDefault
 ]
 
-{ #category : #showing }
+{ #category : #accessing }
 SptWorldMenuEntry >> icon [
 
 	^ content icon

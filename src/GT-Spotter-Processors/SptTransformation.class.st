@@ -9,7 +9,7 @@ Class {
 	#category : #'GT-Spotter-Processors-Iterators'
 }
 
-{ #category : #initialization }
+{ #category : #accessing }
 SptTransformation >> next [
 
 	^ inner next ifNil: [ nil ] ifNotNil:[ :aValue | self transform: aValue]

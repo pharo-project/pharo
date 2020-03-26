@@ -19,7 +19,7 @@ SptPackageEntry >> doEvaluate [
 	content browse
 ]
 
-{ #category : #showing }
+{ #category : #accessing }
 SptPackageEntry >> icon [
 	^ Smalltalk ui theme iconNamed: #package
 ]
