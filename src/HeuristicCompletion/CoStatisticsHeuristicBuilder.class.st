@@ -28,7 +28,7 @@ Class {
 	#category : #'HeuristicCompletion-Statistics'
 }
 
-{ #category : #building }
+{ #category : #adding }
 CoStatisticsHeuristicBuilder >> add: anHeuristic [
 
 	super add: (CoStatisticsHeuristicWrapper new

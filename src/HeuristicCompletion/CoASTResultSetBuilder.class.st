@@ -17,6 +17,12 @@ CoASTResultSetBuilder class >> isAbstract [
 	^ self == CoASTResultSetBuilder
 ]
 
+{ #category : #accessing }
+CoASTResultSetBuilder >> astNode [
+	
+	^ astNode
+]
+
 { #category : #'API - building' }
 CoASTResultSetBuilder >> buildCompletion [
 

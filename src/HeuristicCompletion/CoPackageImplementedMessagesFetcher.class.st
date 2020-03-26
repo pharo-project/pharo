@@ -20,7 +20,7 @@ CoPackageImplementedMessagesFetcher >> completionPackage: anObject [
 	completionPackage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoPackageImplementedMessagesFetcher >> entriesDo: aBlock [
 	
 	SystemNavigation new allSentMessagesInPackage: completionPackage do: [ :e |

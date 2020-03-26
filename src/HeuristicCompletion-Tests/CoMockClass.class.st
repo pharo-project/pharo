@@ -1,3 +1,6 @@
+"
+I am a mock class used in the tests to get the information.
+"
 Class {
 	#name : #CoMockClass,
 	#superclass : #Object,

@@ -8,7 +8,7 @@ Class {
 	#category : #'HeuristicCompletion-Fetchers'
 }
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoHierarchyFetcher >> entriesDo: aBlock [
 	| currentCompletionFetcher |
 	currentCompletionFetcher := decoree.

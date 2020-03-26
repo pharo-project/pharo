@@ -25,7 +25,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'scope',
-		'results',
 		'completionBenchs',
 		'builder'
 	],
@@ -155,7 +154,7 @@ CoStaticBenchmarks >> prefixSizes [
 	^ 2 to: 8
 ]
 
-{ #category : #inspector }
+{ #category : #printing }
 CoStaticBenchmarks >> printOn: aStream [
 
 	aStream

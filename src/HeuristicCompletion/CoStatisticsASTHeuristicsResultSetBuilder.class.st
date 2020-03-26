@@ -10,7 +10,7 @@ Class {
 	#category : #'HeuristicCompletion-Statistics'
 }
 
-{ #category : #initialization }
+{ #category : #heuristics }
 CoStatisticsASTHeuristicsResultSetBuilder >> newHeuristicBuilder [
 
 	^ CoStatisticsHeuristicBuilder new

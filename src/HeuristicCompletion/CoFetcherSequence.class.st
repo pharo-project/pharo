@@ -26,12 +26,12 @@ CoFetcherSequence >> context: anObject [
 	subcompletions do: [ :each | each context: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoFetcherSequence >> entriesDo: aBlock [
 	subcompletions do: [ :completion | completion entriesDo: aBlock ]
 ]
 
-{ #category : #adding }
+{ #category : #initialization }
 CoFetcherSequence >> initialize [
 
 	super initialize.

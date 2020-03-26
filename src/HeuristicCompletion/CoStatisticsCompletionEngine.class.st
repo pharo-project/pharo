@@ -10,13 +10,14 @@ Class {
 	#category : #'HeuristicCompletion-Statistics'
 }
 
-{ #category : #initialization }
+{ #category : #'menu morph' }
 CoStatisticsCompletionEngine >> closeMenu [
 
 	context ifNotNil: [
 		statistics logCancelEvent: (CoCompletionCancelledEvent new
 			typedToken: context completionToken;
-			contextClassName: (self completionClass ifNotNil: [ :class | class name ]);
+			contextClassName: (self contextClass 
+					ifNotNil: [ :aClass | aClass name ]);
 			isDynamicContext: self isScripting;
 			yourself) ].
 	super closeMenu

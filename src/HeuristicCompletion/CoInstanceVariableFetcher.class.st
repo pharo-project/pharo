@@ -7,7 +7,7 @@ Class {
 	#category : #'HeuristicCompletion-Fetchers'
 }
 
-{ #category : #entries }
+{ #category : #enumerating }
 CoInstanceVariableFetcher >> entriesDo: aBlock [
 	
 	self completionClass instVarNames do: [ :e |

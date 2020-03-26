@@ -7,7 +7,7 @@ Class {
 	#category : #'HeuristicCompletion-Fetchers'
 }
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoClassImplementedMessagesFetcher >> entriesDo: aBlock [
 	
 	self completionClass selectorsDo: [ :e | 

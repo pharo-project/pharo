@@ -10,14 +10,14 @@ Class {
 	#category : #'HeuristicCompletion-SystemIntegration'
 }
 
-{ #category : #visiting }
+{ #category : #'API - building' }
 CoGlobalSorterResultSetBuilder >> parseNode [
 
-	| node |
-	node := super parseNode.
-	node methodNode doSemanticAnalysis.
-	TypingVisitor new visitNode: node methodNode.
-	^ node
+	| aNewNode |
+	aNewNode := super parseNode.
+	aNewNode methodNode doSemanticAnalysis.
+	TypingVisitor new visitNode: aNewNode methodNode.
+	^ aNewNode
 ]
 
 { #category : #accessing }

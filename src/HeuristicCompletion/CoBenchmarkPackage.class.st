@@ -35,7 +35,7 @@ CoBenchmarkPackage >> package: aRPackage [
 	package := aRPackage
 ]
 
-{ #category : #enumerating }
+{ #category : #printing }
 CoBenchmarkPackage >> printOn: aStream [
 
 	aStream print: package name

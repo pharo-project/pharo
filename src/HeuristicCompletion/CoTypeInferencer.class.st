@@ -209,7 +209,8 @@ CoTypeInferencer >> visitAssignmentNode: aRBAssignmentNode [
 	
 	| types |
 	types := self lookupVariableType: aRBAssignmentNode variable name.
-	^ types addAll: (aRBAssignmentNode value acceptVisitor: self)
+	^ types addAll: (aRBAssignmentNode value acceptVisitor: self);
+		yourself
 ]
 
 { #category : #visiting }
@@ -326,7 +327,9 @@ CoTypeInferencer >> visitMethodNode: aRBMethodNode [
 { #category : #visiting }
 CoTypeInferencer >> visitReturnNode: aRBReturnNode [ 
 	
-	^ returnType addAll: (aRBReturnNode value acceptVisitor: self)
+	^ returnType 
+		addAll: (aRBReturnNode value acceptVisitor: self);
+		yourself
 ]
 
 { #category : #visiting }

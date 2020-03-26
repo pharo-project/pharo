@@ -19,7 +19,7 @@ CoMappingFetcher >> collectBlock: aBlockClosure [
 	collectBlock := aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoMappingFetcher >> entriesDo: aBlockClosure [
 
 	decoree entriesDo: [ :each | aBlockClosure value: (collectBlock value: each) ]

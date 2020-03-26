@@ -17,7 +17,7 @@ Class {
 	#category : #'HeuristicCompletion-Core'
 }
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoAvoidRepeatedFetcher >> entriesDo: aBlock [
 	decoree
 		entriesDo: [ :elem | 
@@ -34,14 +34,14 @@ CoAvoidRepeatedFetcher >> hasAlreadyReturned: anEntry [
 	^ elements includes: anEntry contents asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 CoAvoidRepeatedFetcher >> initialize [
 
 	super initialize.
 	elements := Set new.
 ]
 
-{ #category : #accessing }
+{ #category : #resetting }
 CoAvoidRepeatedFetcher >> reset [
 
 	super reset.

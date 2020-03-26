@@ -24,7 +24,7 @@ CoSession >> initialize [
 	vocabularyCache := LRUCache new maximumWeight: 1000
 ]
 
-{ #category : #vocabulary }
+{ #category : #accessing }
 CoSession >> size [
 	^ vocabularyCache size
 ]

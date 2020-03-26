@@ -7,13 +7,13 @@ Class {
 	#category : #'HeuristicCompletion-Core'
 }
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoEmptyFetcher >> entriesDo: aBlock [
 
 	"Nothing"
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 CoEmptyFetcher >> isEmptyCompletionFetcher [
 	
 	^ true

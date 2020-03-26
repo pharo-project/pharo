@@ -23,7 +23,7 @@ CoMethodVariableFetcher >> completionASTNode: anObject [
 	completionASTNode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoMethodVariableFetcher >> entriesDo: aBlock [
 
 	self methodVariableNamesDo: [ :each |

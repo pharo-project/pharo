@@ -24,7 +24,7 @@ CoCollectionFetcher >> collection: aCollection [
 	collection := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoCollectionFetcher >> entriesDo: aBlock [
 
 	collection do: aBlock

@@ -1,3 +1,7 @@
+"
+I am an extension to the AST Heuristic result set builder, that holds information during the session.
+So, I enhance the work providing information of the last used / created selectors and classes.
+"
 Class {
 	#name : #CoASTSessionResultSetBuilder,
 	#superclass : #CoASTHeuristicsResultSetBuilder,
@@ -7,7 +11,7 @@ Class {
 	#category : #'HeuristicCompletion-SystemIntegration'
 }
 
-{ #category : #accessing }
+{ #category : #heuristics }
 CoASTSessionResultSetBuilder >> messageHeuristic [
 	^ messageHeuristic ifNil: [ messageHeuristic := self newHeuristicBuilder
 		add: (CoSessionMessagesHeuristic new

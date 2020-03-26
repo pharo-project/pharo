@@ -20,7 +20,7 @@ CoGlobalVariableFetcher >> completionEnvironment: anObject [
 	completionEnvironment := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	completionEnvironment globals do: [ :e |

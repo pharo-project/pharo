@@ -20,7 +20,7 @@ Class {
 	#category : #'HeuristicCompletion-Core'
 }
 
-{ #category : #accessing }
+{ #category : #enumerating }
 CoFilterFetcher >> entriesDo: aBlockClosure [
 	decoree
 		entriesDo: [ :each | 
@@ -34,13 +34,13 @@ CoFilterFetcher >> filterBlock: aBlockClosure [
 	filterBlock := aBlockClosure
 ]
 
-{ #category : #filtering }
+{ #category : #composing }
 CoFilterFetcher >> narrowFilterBlock: aBlock [
 
 	self filterBlock: aBlock
 ]
 
-{ #category : #filtering }
+{ #category : #composing }
 CoFilterFetcher >> select: aBlockClosure [
 
 	"Do not filter over a filter.
@@ -48,7 +48,7 @@ CoFilterFetcher >> select: aBlockClosure [
 	^ self withoutFilter select: aBlockClosure
 ]
 
-{ #category : #filtering }
+{ #category : #composing }
 CoFilterFetcher >> withoutFilter [
 	
 	^ decoree

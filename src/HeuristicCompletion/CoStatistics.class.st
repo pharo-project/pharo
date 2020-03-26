@@ -89,7 +89,7 @@ CoStatistics >> groupBy: aBlockClosure [
 		entriesByIndex select: aBlockClosure ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 CoStatistics >> initialize [
 
 	super initialize.

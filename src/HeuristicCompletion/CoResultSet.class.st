@@ -115,7 +115,7 @@ CoResultSet >> hasMoreElements [
 	^ fetcher atEnd not
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 CoResultSet >> initialize [
 
 	super initialize.

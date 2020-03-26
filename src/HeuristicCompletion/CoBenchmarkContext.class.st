@@ -7,7 +7,6 @@ Class {
 	#name : #CoBenchmarkContext,
 	#superclass : #Object,
 	#instVars : [
-		'method',
 		'callsite',
 		'position'
 	],

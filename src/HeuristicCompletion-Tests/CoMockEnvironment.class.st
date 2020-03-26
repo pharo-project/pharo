@@ -1,3 +1,6 @@
+"
+I am a mock environment. The tests use me to scope the environment to a known one.
+"
 Class {
 	#name : #CoMockEnvironment,
 	#superclass : #Object,
