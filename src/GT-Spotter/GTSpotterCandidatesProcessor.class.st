@@ -8,7 +8,7 @@ Class {
 		'origin',
 		'allCandidates'
 	],
-	#category : #'GT-Spotter-Processors-with-pragmas'
+	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
 { #category : #'instance creation' }
@@ -95,13 +95,6 @@ GTSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	super prepareProcessorInContext: aContext.
 	
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
-]
-
-{ #category : #rendering }
-GTSpotterCandidatesProcessor >> render: anObject [
-	^ GTSpotterItemBrick new
-		icon: (self itemIconFor: anObject);
-		text: (self itemNameFor: anObject)
 ]
 
 { #category : #accessing }

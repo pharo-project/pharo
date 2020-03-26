@@ -13,7 +13,7 @@ I also handled the notifications when the query finish, so Spotter UI can show i
 "
 Class {
 	#name : #SptSpotterProcessor,
-	#superclass : #Object,
+	#superclass : #AbstractSpotterProcessor,
 	#instVars : [
 		'order',
 		'filter',
@@ -33,12 +33,6 @@ Class {
 SptSpotterProcessor class >> allConcreteSubclasses [
 	
 	^ self allSubclasses reject: [ :e | e isAbstract ]
-]
-
-{ #category : #accessing }
-SptSpotterProcessor class >> allEnabledSubclasses [
-	
-	^ self allSubclasses select: [ :e | e isEnabled ]
 ]
 
 { #category : #'default-settings' }
@@ -63,6 +57,12 @@ SptSpotterProcessor class >> enabled: aValue [
 SptSpotterProcessor class >> hideInSettings [
 
 	^ false
+]
+
+{ #category : #testing }
+SptSpotterProcessor class >> isAbstract [ 
+
+	^ self == SptSpotterProcessor 
 ]
 
 { #category : #testing }

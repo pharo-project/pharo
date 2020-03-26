@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'DefaultItemsLimit'
 	],
-	#category : #'GT-Spotter-Processors-with-pragmas'
+	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
 { #category : #'accessing-defaults' }
@@ -194,13 +194,6 @@ GTSpotterPragmaBasedProcessor >> order: aNumber [
 { #category : #private }
 GTSpotterPragmaBasedProcessor >> prepareProcessorInContext: aContext [
 	allFilteredCandidates := nil
-]
-
-{ #category : #rendering }
-GTSpotterPragmaBasedProcessor >> render: anObject [
-	^ GTSpotterItemBrick new
-		icon: (nil);
-		text: (anObject gtDisplayString)
 ]
 
 { #category : #testing }

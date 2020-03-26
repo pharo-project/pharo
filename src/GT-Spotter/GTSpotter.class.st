@@ -577,7 +577,7 @@ GTSpotter >> spotterProcessorsFor: aSpotterStep [
 
 	| processors |
 
-	processors := SptSpotterProcessor allEnabledSubclasses	collect: [ :e | e new ].
+	processors := AbstractSpotterProcessor allEnabledSubclasses	collect: [ :e | e new ].
 
 	processors sort: [ :a :b | a order < b order ].
 		
