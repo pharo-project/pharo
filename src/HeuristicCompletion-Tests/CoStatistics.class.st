@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
 { #category : #singleton }

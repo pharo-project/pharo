@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
 { #category : #'menu morph' }

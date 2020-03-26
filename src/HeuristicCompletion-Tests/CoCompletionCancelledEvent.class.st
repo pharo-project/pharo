@@ -4,5 +4,5 @@ I represent the event of having quit the code completion without having accepted
 Class {
 	#name : #CoCompletionCancelledEvent,
 	#superclass : #CoUsageEvent,
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }

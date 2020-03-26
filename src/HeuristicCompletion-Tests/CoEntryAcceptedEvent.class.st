@@ -10,7 +10,7 @@ Class {
 		'source',
 		'index'
 	],
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
 { #category : #accessing }

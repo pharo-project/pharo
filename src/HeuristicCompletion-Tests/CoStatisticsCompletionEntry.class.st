@@ -14,7 +14,7 @@ Class {
 		'heuristic',
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
 { #category : #'instance creation' }

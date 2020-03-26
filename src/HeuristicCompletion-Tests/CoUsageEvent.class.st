@@ -10,7 +10,7 @@ Class {
 		'contextClassName',
 		'isDynamicContext'
 	],
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
 { #category : #testing }

@@ -5,7 +5,7 @@ This is required because completion entries could be shown in different position
 Class {
 	#name : #CoStatisticsCompletionContext,
 	#superclass : #CoCompletionContext,
-	#category : #'HeuristicCompletion-Statistics'
+	#category : #'HeuristicCompletion-Tests-Statistics'
 }
 
 { #category : #activating }

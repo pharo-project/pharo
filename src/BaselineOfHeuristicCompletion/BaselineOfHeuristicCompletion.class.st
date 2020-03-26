@@ -10,5 +10,6 @@ BaselineOfHeuristicCompletion >> baseline: spec [
 	
 	spec for: #common do: [ 
 		spec package: 'HeuristicCompletion'.
-		spec package: 'HeuristicCompletion-Tests' ]
+		spec package: 'HeuristicCompletion-Tests' with: [ 
+			spec requires: 'HeuristicCompletion' ] ]
 ]
