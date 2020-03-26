@@ -21,5 +21,5 @@ SptPackageEntry >> doEvaluate [
 
 { #category : #accessing }
 SptPackageEntry >> icon [
-	^ Smalltalk ui theme iconNamed: #package
+	^ self iconNamed: #package
 ]

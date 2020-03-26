@@ -6,7 +6,7 @@ Also, I redirect the messages that should be answer by my content
 "
 Class {
 	#name : #SptEntry,
-	#superclass : #Object,
+	#superclass : #DisplayableObject,
 	#instVars : [
 		'content'
 	],

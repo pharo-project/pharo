@@ -26,5 +26,5 @@ SptCatalogProjectEntry >> doEvaluate [
 { #category : #accessing }
 SptCatalogProjectEntry >> icon [
 
-	^ Smalltalk ui theme iconNamed: #catalog
+	^ self iconNamed: #catalog
 ]
