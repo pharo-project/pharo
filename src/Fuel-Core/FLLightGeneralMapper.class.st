@@ -78,6 +78,13 @@ FLLightGeneralMapper >> visitDictionary: aDictionary [
 ]
 
 { #category : #visiting }
+FLLightGeneralMapper >> visitExternalAddress: anObject [
+	self
+		mapAndTraceByObjectClass: anObject
+		to: FLExternalAddressCluster
+]
+
+{ #category : #visiting }
 FLLightGeneralMapper >> visitFixedObject: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLFixedObjectCluster

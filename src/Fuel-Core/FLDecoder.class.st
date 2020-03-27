@@ -38,16 +38,14 @@ FLDecoder >> classNamed: className [
 
 { #category : #decoding }
 FLDecoder >> decodeYourself [
-
 	| objectCount |
 	objectCount := self nextEncodedPositiveInteger.
-	
-	indexStream := FLIndexStream on: stream digits: objectCount bytesCount.
+	indexStream := FLIndexStream
+		on: stream
+		digits: objectCount bytesCount.
 	objects := Array new: objectCount.
 	objectsWriteStream := WriteStream on: objects.
-
-	isBigEndian := self nextEncodedPositiveInteger.
-
+	isBigEndian := self nextEncodedPositiveInteger
 ]
 
 { #category : #accessing }

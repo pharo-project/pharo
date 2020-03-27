@@ -51,20 +51,21 @@ FLUserGuidesTest >> testDemo [
 	sourceArray := Array
 		with: 'a string'
 		with: Smalltalk
-		with: [ Smalltalk vm.
+		with: [
+			Smalltalk vm.
 			'a string' ].
 	"Store to the file"
 	FLSerializer serialize: sourceArray toFileNamed: 'example.FL'.
 	"Load from the file"
 	loadedArray := FLMaterializer materializeFromFileNamed: 'example.FL'.
 	"The arrays are not the same"
-	[ sourceArray ~~ loadedArray ] assert.
+	self assert: sourceArray ~~ loadedArray.
 	"The strings are not the same"
-	[ sourceArray first ~~ loadedArray first ] assert.
-	[ sourceArray first = loadedArray first ] assert.
+	self assert: sourceArray first ~~ loadedArray first.
+	self assert: sourceArray first equals: loadedArray first.
 	"The global instance Smalltalk is the same"
-	[ sourceArray second == loadedArray second ] assert.
-	"Look at Smalltalk how the loaded block prints a string"
+	self assert: sourceArray second identicalTo: loadedArray second.
+	"Evaluating the loaded block prints a string"
 	self assert: loadedArray third value equals: 'a string'
 ]
 
