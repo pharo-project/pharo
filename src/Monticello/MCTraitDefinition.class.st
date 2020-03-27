@@ -7,16 +7,6 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: commentStamp [
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		comment: commentString
-		commentStamp: commentStamp
-]
-
 { #category : #'instance creation api' }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
 
@@ -31,41 +21,6 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		commentStamp: commentStamp
 
 		
-]
-
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray comment: commentString commentStamp: commentStamp [
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classInstVarNames: civarArray
-		comment: commentString
-		commentStamp: commentStamp
-]
-
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray comment: commentString commentStamp: commentStamp [
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		comment: commentString
-		commentStamp: commentStamp
-]
-
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString classTraitComposition: classTraitComposition category: categoryString comment: commentString commentStamp: commentStamp [
-
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		classTraitComposition: classTraitComposition
-		category: categoryString
-		comment: commentString
-		commentStamp: commentStamp 
 ]
 
 { #category : #comparing }

@@ -19,85 +19,26 @@ Class {
 }
 
 { #category : #obsolete }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-comment: commentString [
-	^ self	name: nameString
-			superclassName: superclassString
-			category: categoryString 
-			instVarNames: ivarArray
-			classVarNames: cvarArray
-			poolDictionaryNames: poolArray
-			classInstVarNames: civarArray
-			type: #normal
-			comment: commentString
+MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray comment: commentString [
 
-]
-
-{ #category : #obsolete }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-classVarNames: cvarArray
-poolDictionaryNames: poolArray
-classInstVarNames: civarArray
-type: typeSymbol
-comment: commentString [
-	^ self 
+	^ self
 		name: nameString
-		superclassName: superclassString
-		category: categoryString 
-		instVarNames: ivarArray
-		classVarNames: cvarArray
-		poolDictionaryNames: poolArray
-		classInstVarNames: civarArray
-		type: typeSymbol
-		comment: commentString
-		commentStamp: nil
-]
-
-{ #category : #'instance creation' }
-MCClassDefinition class >> name: nameString superclassName: superclassString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
-	^ self new
-		initializeWithName: nameString
 		superclassName: superclassString
 		traitComposition: '{}'
 		classTraitComposition: '{}'
 		category: categoryString
 		instVarNames: ivarArray
-		classVarNames: cvarArray
-		poolDictionaryNames: poolArray
-		classInstVarNames: civarArray
-		type: typeSymbol
+		classVarNames: ''
+		poolDictionaryNames: ''
+		classInstVarNames: ''
+		type: #normal
 		comment: commentString
-		commentStamp: stampString
-]
-
-{ #category : #obsolete }
-MCClassDefinition class >> name: nameString
-superclassName: superclassString
-category: categoryString 
-instVarNames: ivarArray
-comment: commentString [
-	^ self	name: nameString
-			superclassName: superclassString
-			category: categoryString 
-			instVarNames: ivarArray
-			classVarNames: #()
-			poolDictionaryNames: #()
-			classInstVarNames: #()
-			comment: commentString
-
+		commentStamp: nil
 ]
 
 { #category : #'instance creation' }
 MCClassDefinition class >> name: nameString superclassName: superclassString traitComposition: traitCompositionString classTraitComposition: classTraitCompositionString category: categoryString instVarNames: ivarArray classVarNames: cvarArray poolDictionaryNames: poolArray classInstVarNames: civarArray type: typeSymbol comment: commentString commentStamp: stampString [
+
 	^ self new
 		initializeWithName: nameString
 		superclassName: superclassString
