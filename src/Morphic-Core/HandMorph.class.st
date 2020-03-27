@@ -1073,7 +1073,7 @@ HandMorph >> processEventsFromQueue: anEventBufferQueue [
 
 	"Process user input events from the local input devices."
 
-	| evt evtBuf type hadAny |
+	| evt hadAny |
 
 	self lastEvent ifNotNil: [
 		"Meaning that we were invoked from within an event response.
