@@ -18,6 +18,11 @@ RBVariableNode >> isArg [
 ]
 
 { #category : #'*opalcompiler-core' }
+RBVariableNode >> isArgOrTemp [
+	^self binding isTemp
+]
+
+{ #category : #'*opalcompiler-core' }
 RBVariableNode >> isClean [
 	^ (self isInstance | self isSpecialVariable) not
 ]
@@ -39,7 +44,7 @@ RBVariableNode >> isSpecialVariable [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isTemp [
-	^self binding isTemp
+	^ false
 ]
 
 { #category : #'*opalcompiler-core' }
