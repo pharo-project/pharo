@@ -33,9 +33,8 @@ MessageDialogWindow >> icon [
 
 { #category : #accessing }
 MessageDialogWindow >> iconMorph [
-	"Answer the value of iconMorph"
 
-	^ iconMorph
+	^ iconMorph ifNil: [ iconMorph := self newIconMorph ]
 ]
 
 { #category : #accessing }
