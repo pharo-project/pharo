@@ -4,6 +4,7 @@ I declare api and logic to work with geometry of a Brick
 Trait {
 	#name : #GLMBrickGeometryTrait,
 	#traits : 'GLMBrickExtensionTrait',
+	#classTraits : 'GLMBrickExtensionTrait classTrait',
 	#category : #'Glamour-Morphic-Brick-Traits'
 }
 

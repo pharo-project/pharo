@@ -4,6 +4,7 @@ I declare api and logic to layout Bricks
 Trait {
 	#name : #GLMBrickLayoutTrait,
 	#traits : 'GLMBrickExtensionTrait',
+	#classTraits : 'GLMBrickExtensionTrait classTrait',
 	#category : #'Glamour-Morphic-Brick-Traits'
 }
 
