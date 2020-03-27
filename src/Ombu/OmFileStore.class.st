@@ -131,7 +131,7 @@ OmFileStore >> entriesCount [
 OmFileStore >> entriesDo: aBlockClosure [ 
 	"Evaluate the closure on each entry"
 
-	self fileReference exists ifTrue: [
+	self fileReference ifExists: [
 		self readEntriesWith: [:readStream | 
 			| reader |
 			reader := self newEntryReader.
@@ -397,7 +397,7 @@ OmFileStore >> refresh [
 	self critical: [
 		mustRefresh := false.
 		self initialize.
-		self fileReference exists ifFalse: [ ^self ].
+		self fileReference ifDoesNotExists: [ ^ self ].
 		self readEntriesWith: [:readStream | [
 			self newEntryReader
 				stream: readStream;

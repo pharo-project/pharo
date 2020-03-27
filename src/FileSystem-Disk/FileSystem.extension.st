@@ -26,18 +26,13 @@ FileSystem >> isDiskFileSystem [
 FileSystem class >> lookInUsualPlaces: fileName [
 	"Check the default directory, the imagePath, and the vmPath (and the vmPath's owner) for this file."
 
-	| file |
-	 (file := fileName asFileReference) exists
-		ifTrue: [ ^ file ].
+	fileName asFileReference ifExists: [ :file | ^ file ].
 
-	(file := Smalltalk imageFile resolve: fileName) exists
-		ifTrue: [ ^ file ].
+	(Smalltalk imageFile resolve: fileName) ifExists: [ :file | ^ file ].
 
-	(file :=  Smalltalk vmDirectory resolve: fileName) exists
-		ifTrue: [ ^ file ].
+	(Smalltalk vmDirectory resolve: fileName) ifExists: [ :file | ^ file ].
 
-	(file := Smalltalk vmDirectory parent resolve: fileName) exists
-		ifTrue: [ ^ file ].
+	(Smalltalk vmDirectory parent resolve: fileName) ifExists: [ :file | ^ file ].
 
 	^ nil
 ]

@@ -249,7 +249,7 @@ SpaceTally >> saveTo: aFileName [
 	st saveTo: 'spaceTally2'"
 	| file |
 	file := aFileName asFileReference.
-	file exists ifTrue: [ file delete ].
+	file ifExists: [ file delete ].
 	
 	file writeStreamDo: [ :s|
 		results do: [:each | s nextPutAll: each analyzedClassName asString ; 

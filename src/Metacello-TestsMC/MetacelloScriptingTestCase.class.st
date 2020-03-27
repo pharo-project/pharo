@@ -36,43 +36,25 @@ MetacelloScriptingTestCase >> samplePath [
 
 { #category : #running }
 MetacelloScriptingTestCase >> setUpRepositories [
-  | defaultDirectory |
-  super setUpRepositories.
-  defaultDirectory := MetacelloPlatform current defaultDirectory.
-  configurationDirectory := MetacelloPlatform current
-    directoryFromPath: self configurationPath
-    relativeTo: defaultDirectory.
-  externalDirectory := MetacelloPlatform current
-    directoryFromPath: self externalPath
-    relativeTo: defaultDirectory.
-  sampleDirectory := MetacelloPlatform current
-    directoryFromPath: self samplePath
-    relativeTo: defaultDirectory.
-  configurationDirectory exists
-    ifTrue: [ MetacelloPlatform current recursiveDelete: configurationDirectory ].
-  MetacelloPlatform current ensureDirectoryExists: configurationDirectory.
-  externalDirectory exists
-    ifTrue: [ MetacelloPlatform current recursiveDelete: externalDirectory ].
-  MetacelloPlatform current ensureDirectoryExists: externalDirectory.
-  sampleDirectory exists
-    ifTrue: [ MetacelloPlatform current recursiveDelete: sampleDirectory ].
-  MetacelloPlatform current ensureDirectoryExists: sampleDirectory.
-  configurationRepository := MetacelloScriptingResource current
-    configurationRepository.
-  externalRepository := MetacelloScriptingResource current externalRepository.
-  testingEnvironment
-    at: 'Metacello_Configuration_Test_Repository' asSymbol
-    put: externalRepository.
-  monticelloRepository := MetacelloMonticelloResource current
-    monticelloRepository.
-  testingEnvironment
-    at: 'Metacello_Gofer_Test_Repository' asSymbol
-    put: monticelloRepository.
-  mczConfigurationRepository := MetacelloConfigurationResource current
-    monticelloRepository.
-  testingEnvironment
-    at: 'Metacello_MczConfiguration_Test_Repository' asSymbol
-    put: mczConfigurationRepository
+	| defaultDirectory |
+	super setUpRepositories.
+	defaultDirectory := MetacelloPlatform current defaultDirectory.
+	configurationDirectory := MetacelloPlatform current directoryFromPath: self configurationPath relativeTo: defaultDirectory.
+	externalDirectory := MetacelloPlatform current directoryFromPath: self externalPath relativeTo: defaultDirectory.
+	sampleDirectory := MetacelloPlatform current directoryFromPath: self samplePath relativeTo: defaultDirectory.
+	configurationDirectory ifExists: [ MetacelloPlatform current recursiveDelete: configurationDirectory ].
+	MetacelloPlatform current ensureDirectoryExists: configurationDirectory.
+	externalDirectory ifExists: [ MetacelloPlatform current recursiveDelete: externalDirectory ].
+	MetacelloPlatform current ensureDirectoryExists: externalDirectory.
+	sampleDirectory ifExists: [ MetacelloPlatform current recursiveDelete: sampleDirectory ].
+	MetacelloPlatform current ensureDirectoryExists: sampleDirectory.
+	configurationRepository := MetacelloScriptingResource current configurationRepository.
+	externalRepository := MetacelloScriptingResource current externalRepository.
+	testingEnvironment at: 'Metacello_Configuration_Test_Repository' asSymbol put: externalRepository.
+	monticelloRepository := MetacelloMonticelloResource current monticelloRepository.
+	testingEnvironment at: 'Metacello_Gofer_Test_Repository' asSymbol put: monticelloRepository.
+	mczConfigurationRepository := MetacelloConfigurationResource current monticelloRepository.
+	testingEnvironment at: 'Metacello_MczConfiguration_Test_Repository' asSymbol put: mczConfigurationRepository
 ]
 
 { #category : #running }
@@ -86,21 +68,16 @@ MetacelloScriptingTestCase >> setUpRepositoryContents: packageList sourceRepo: s
 
 { #category : #running }
 MetacelloScriptingTestCase >> tearDownRepositories [
-  super tearDownRepositories.
-  configurationDirectory exists
-    ifTrue: [ MetacelloPlatform current recursiveDelete: configurationDirectory ].
-  externalDirectory exists
-    ifTrue: [ MetacelloPlatform current recursiveDelete: externalDirectory ].
-  sampleDirectory exists
-    ifTrue: [ MetacelloPlatform current recursiveDelete: sampleDirectory ].
-  testingEnvironment removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
-  testingEnvironment removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  testingEnvironment
-    removeKey: #'Metacello_MczConfiguration_Test_Repository'
-    ifAbsent: [  ].
-  MCRepositoryGroup default
-    removeIdenticalRepository: externalRepository;
-    removeIdenticalRepository: monticelloRepository;
-    removeIdenticalRepository: mczConfigurationRepository;
-    removeIdenticalRepository: configurationRepository
+	super tearDownRepositories.
+	configurationDirectory ifExists: [ MetacelloPlatform current recursiveDelete: configurationDirectory ].
+	externalDirectory ifExists: [ MetacelloPlatform current recursiveDelete: externalDirectory ].
+	sampleDirectory ifExists: [ MetacelloPlatform current recursiveDelete: sampleDirectory ].
+	testingEnvironment removeKey: #Metacello_Configuration_Test_Repository ifAbsent: [  ].
+	testingEnvironment removeKey: #Metacello_Gofer_Test_Repository ifAbsent: [  ].
+	testingEnvironment removeKey: #Metacello_MczConfiguration_Test_Repository ifAbsent: [  ].
+	MCRepositoryGroup default
+		removeIdenticalRepository: externalRepository;
+		removeIdenticalRepository: monticelloRepository;
+		removeIdenticalRepository: mczConfigurationRepository;
+		removeIdenticalRepository: configurationRepository
 ]

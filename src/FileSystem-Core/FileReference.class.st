@@ -170,9 +170,9 @@ FileReference >> delete [
 
 { #category : #operations }
 FileReference >> deleteIfAbsent: aBlock [
-	self exists 
-		ifTrue: [ self delete ]
-		ifFalse: aBlock
+	self
+		ifExists: [ self delete ]
+		ifDoesNotExists: aBlock
 ]
 
 { #category : #accessing }
@@ -436,8 +436,7 @@ FileReference >> nextVersion [
 
 	| parent basename nameWithoutExtension extension max index |
 
-	self exists
-		ifFalse: [ ^ self ].
+	self ifDoesNotExists: [ ^ self ].
 
 	parent := self parent.
 	extension := self extension.
@@ -600,16 +599,16 @@ FileReference >> versionNumberFor: basename extension: extension [
 	"Answer the latest (largest) version number for the specified file.
 	0 = basename.extension exists, but nothing later.
 	nil = no file exists"
+
 	| maxVersion |
 	maxVersion := 0.
-	self fileSystem childNamesAt: self path do: [ :child | | childVersion |
-		childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
-		childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ]].
-	^maxVersion = 0
-		ifTrue: [ (self / (basename, '.', extension)) asFileReference exists 
-			ifTrue: [ 0 ]
-			ifFalse: [ nil ] ]
-		ifFalse: [ maxVersion ]
+	self fileSystem
+		childNamesAt: self path
+		do: [ :child | 
+			| childVersion |
+			childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
+			childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ] ].
+	^ maxVersion = 0 ifTrue: [ (self / (basename , '.' , extension)) asFileReference ifExists: [ 0 ] ifDoesNotExists: [ nil ] ] ifFalse: [ maxVersion ]
 ]
 
 { #category : #streams }

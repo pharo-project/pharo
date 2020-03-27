@@ -245,16 +245,13 @@ ThemeIcons >> doesNotUnderstand: aMessage [
 
 { #category : #loading }
 ThemeIcons >> downloadFromUrl [
-	| zipArchive |
-	self class destinationPath ensureCreateDirectory. 	
-	zipArchive := self class destinationPath / (self name, '.zip').
-	zipArchive exists 
-		ifFalse: [ 
+	self class destinationPath ensureCreateDirectory.
+	^ self class destinationPath / (self name , '.zip')
+		ifDoesNotExists: [ :zipArchive | 
 			ZnClient new
 				url: self url;
-				downloadTo: zipArchive ].
-
-	^ zipArchive
+				downloadTo: zipArchive.
+			zipArchive ]
 ]
 
 { #category : #utilities }

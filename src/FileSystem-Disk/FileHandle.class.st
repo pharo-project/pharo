@@ -105,7 +105,7 @@ FileHandle >> open [
 	self flag: 'TODO: for now we solely rely on the old FileStreams'
 	"id := self basicOpen.
 	id ifNil: 	[
-		reference exists ifFalse: [FileDoesNotExist signalWith: reference].
+		reference ifDoesNotExists: [FileDoesNotExist signalWith: reference].
 		self error: 'Unable to open file ' , reference printString]"
 ]
 
@@ -138,8 +138,7 @@ FileHandle >> startUp [
 
 { #category : #public }
 FileHandle >> streamError [
-	reference exists
-		ifFalse: [FileDoesNotExistException signalWith: reference].
+	reference ifDoesNotExists: [ FileDoesNotExistException signalWith: reference ].
 	self error: 'Unable to open file ' , reference printString
 ]
 

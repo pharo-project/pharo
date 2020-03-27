@@ -59,28 +59,13 @@ MemoryFileSystemTest >> testCurrentEqual [
 { #category : #tests }
 MemoryFileSystemTest >> testDirectoryMoveTo [
 	"Test the scenario where the source is a directory, the destination is an existing directory and they are on separate file systems."
-	| srcFS destFS src dest count f33 |
 
+	| srcFS destFS src dest count f33 |
 	srcFS := filesystem workingDirectory.
 	destFS := FileSystem memory workingDirectory.
-	self createFilesIn: srcFS from: #(
-		src
-		f11
-		f12
-		#(
-			d11
-			f21
-			f22
-			#(
-				d21
-				f31
-				f32)
-			#(
-				d22
-				f33
-				f34))).
+	self createFilesIn: srcFS from: #(src f11 f12 #(d11 f21 f22 #(d21 f31 f32) #(d22 f33 f34))).
 
-	[src := srcFS / 'src'.
+	[ src := srcFS / 'src'.
 	count := src allChildren size.
 	dest := destFS / 'dest'.
 	dest ensureCreateDirectory.
@@ -89,37 +74,21 @@ MemoryFileSystemTest >> testDirectoryMoveTo [
 	self deny: src exists.
 	self assert: (dest / 'src') allChildren size equals: count.
 	self assert: f33 exists.
-	self assert: f33 contents equals: '/src/d11/d22/f33']
-		ensure: 
-			[ src exists ifTrue: [ src deleteAll ].
-			dest exists ifTrue: [ dest deleteAll ] ].
+	self assert: f33 contents equals: '/src/d11/d22/f33' ]
+		ensure: [ src ifExists: [ src deleteAll ].
+			dest ifExists: [ dest deleteAll ] ]
 ]
 
 { #category : #tests }
 MemoryFileSystemTest >> testDirectoryMoveToRename [
 	"Test the scenario where the source is a directory, the destination doesn't exist (its parent does) and they are on separate file systems, i.e. move and rename the source to the destination."
-	| srcFS destFS src dest count f33 |
 
+	| srcFS destFS src dest count f33 |
 	srcFS := filesystem workingDirectory.
 	destFS := FileSystem memory workingDirectory.
-	self createFilesIn: srcFS from: #(
-		src
-		f11
-		f12
-		#(
-			d11
-			f21
-			f22
-			#(
-				d21
-				f31
-				f32)
-			#(
-				d22
-				f33
-				f34))).
+	self createFilesIn: srcFS from: #(src f11 f12 #(d11 f21 f22 #(d21 f31 f32) #(d22 f33 f34))).
 
-	[src := srcFS / 'src'.
+	[ src := srcFS / 'src'.
 	count := src allChildren size.
 	dest := (destFS / 'dest') ensureCreateDirectory / 'renamed'.
 	f33 := dest / 'd11/d22/f33'.
@@ -127,10 +96,9 @@ MemoryFileSystemTest >> testDirectoryMoveToRename [
 	self deny: src exists.
 	self assert: dest allChildren size equals: count.
 	self assert: f33 exists.
-	self assert: f33 contents equals: '/src/d11/d22/f33']
-		ensure: 
-			[ src exists ifTrue: [ src deleteAll ].
-			dest exists ifTrue: [ dest deleteAll ] ].
+	self assert: f33 contents equals: '/src/d11/d22/f33' ]
+		ensure: [ src ifExists: [ src deleteAll ].
+			dest ifExists: [ dest deleteAll ] ]
 ]
 
 { #category : #tests }

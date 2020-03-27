@@ -26,13 +26,9 @@ FFILibraryFinder >> basePaths [
 
 { #category : #accessing }
 FFILibraryFinder >> findLibrary: aString [
-	
-	self paths do: [ :each | | path |
-		path := each / aString.
-		path exists 
-			ifTrue: [ ^ path fullName ] ].
-	
-	self error: ('Cannot locate {1}. Please check if it installed on your system' format: { aString })
+	self paths do: [ :each | each / aString ifExists: [ :path | ^ path fullName ] ].
+
+	self error: ('Cannot locate {1}. Please check if it installed on your system' format: {aString})
 ]
 
 { #category : #accessing }

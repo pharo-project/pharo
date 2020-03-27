@@ -55,8 +55,7 @@ ZipStore >> initializeWithReference: aReference [
 { #category : #public }
 ZipStore >> open [
 	| archive |
-	self reference exists
-		ifFalse: [ ^ self ].
+	self reference ifDoesNotExists: [ ^ self ].
 	archive := ZipArchive new.
 	self reference
 		binaryReadStreamDo: [ :input | 
@@ -67,8 +66,7 @@ ZipStore >> open [
 					path := self pathFromMember: member.
 					member isDirectory
 						ifTrue: [ self ensureCreateDirectory: path ]
-						ifFalse: [ 
-							self ensureCreateDirectory: path parent.
+						ifFalse: [ self ensureCreateDirectory: path parent.
 							(self createFile: path) member: member ] ] ].
 	^ self
 ]

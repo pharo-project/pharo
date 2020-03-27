@@ -25,12 +25,9 @@ FFIMacLibraryFinder >> basePaths [
 
 { #category : #accessing }
 FFIMacLibraryFinder >> findFramework: aName [
-	| path |
-	
-	path :=  ('/System/Library/Frameworks/', aName, '.framework/', aName) asFileReference.
-	path exists ifTrue: [ ^ path fullName ].
-	
-	self error: ('Framework {1} not found.' format: { aName })
+	('/System/Library/Frameworks/' , aName , '.framework/' , aName) asFileReference ifExists: [ :path | ^ path fullName ].
+
+	self error: ('Framework {1} not found.' format: {aName})
 ]
 
 { #category : #accessing }

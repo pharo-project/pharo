@@ -130,16 +130,13 @@ DisplayScreen class >> primitiveDeferUpdates: aBoolean [
 
 { #category : #'host window access' }
 DisplayScreen class >> primitiveWindowIcon: id path: pathString [
-
 	<primitive: 'primitiveHostWindowIcon' module: 'HostWindowPlugin' error: ec>
-	(pathString isKindOf: AbstractFileReference)
-		ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
+	(pathString isKindOf: AbstractFileReference) ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
 	ec == #'bad argument'
-		ifTrue: [ pathString isString
-				ifFalse: [ ^ self error: 'The path should be a String' ].
-			pathString asFileReference exists
-				ifTrue: [ ^ self error: 'File existing but not found by the VM sorry, try another location...' "Not reproductible in the tests but can happen"]
-				ifFalse: [ ^ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
+		ifTrue: [ pathString isString ifFalse: [ ^ self error: 'The path should be a String' ].
+			^ pathString asFileReference
+				ifExists: [ self error: 'File existing but not found by the VM sorry, try another location...'	"Not reproductible in the tests but can happen" ]
+				ifDoesNotExists: [ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
 	self primitiveFailed
 ]
 

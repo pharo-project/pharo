@@ -134,9 +134,11 @@ SystemSettingsPersistence class >> updateSettingNodes: aSettingNode [
 { #category : #accessing }
 SystemSettingsPersistence >> allStoredSettings [
 	"Load all stored settings from the file preference."
-	(self fileReference exists) 
-		ifFalse: [ ^ #() ].
-	^ SettingsStonReader new stream: self readStream; secureLoad.
+
+	self fileReference ifDoesNotExists: [ ^ #() ].
+	^ SettingsStonReader new
+		stream: self readStream;
+		secureLoad
 ]
 
 { #category : #deleting }
@@ -192,11 +194,12 @@ SystemSettingsPersistence >> readStream [
 { #category : #storing }
 SystemSettingsPersistence >> removeFileReference [
 	"We have to remove the file before writing new settings."
+
 	| newFileReference |
-	fileReference exists ifFalse: [ ^ self ].
-	newFileReference := (fileReference withExtension: 'old.txt').
+	fileReference ifDoesNotExists: [ ^ self ].
+	newFileReference := fileReference withExtension: 'old.txt'.
 	newFileReference ensureDelete.
-	fileReference copy renameTo: newFileReference basename.
+	fileReference copy renameTo: newFileReference basename
 ]
 
 { #category : #enumerating }

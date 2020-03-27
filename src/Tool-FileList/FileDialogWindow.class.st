@@ -541,8 +541,7 @@ FileDialogWindow >> newDirectory [
 	dirName ifNil: [^self].
 	
 	[
-		(dir / dirName) exists
-			ifTrue: [
+		(dir / dirName) ifExists: [
 				^self
 					alert: 'A file or directory already exists\with the name' withCRs translated, ' "', dirName, '"'
 					title: title
@@ -703,12 +702,12 @@ FileDialogWindow >> okEnabled [
 FileDialogWindow >> openSelectedFile [
 	"Open a stream on the selected file if available and return it."
 
-	|d f fileRef |
-	d := self selectedFileDirectory ifNil: [^nil].
-	f := self selectedFileName ifNil: [^nil].
-	self selectedFileEntry isDirectory ifTrue: [^nil].
-	fileRef := d/f.
-	^ fileRef exists ifTrue: [ fileRef readStream ] ifFalse: nil  
+	| d f |
+	d := self selectedFileDirectory ifNil: [ ^ nil ].
+	f := self selectedFileName ifNil: [ ^ nil ].
+	self selectedFileEntry isDirectory ifTrue: [ ^ nil ].
+
+	^ d / f ifExists: [ :fileRef | fileRef readStream ] ifDoesNotExists: nil
 ]
 
 { #category : #accessing }
@@ -782,8 +781,7 @@ FileDialogWindow >> saveSelectedFile [
 	f := d asFileReference / f.
 	(f extension isEmpty and: [self defaultExtension notNil])
 		 ifTrue: [ f := f, self defaultExtension].
-	f exists 
-		ifFalse: [ ^ f ].
+	f ifDoesNotExists: [ ^ f ].
 		
 	^(self
 		proceed: ('The file {1} already exists.
@@ -835,8 +833,7 @@ FileDialogWindow >> selectPath: aPathOrFileReference [
 	| reference |
 	reference := (self preferredFileSystem
 		referenceTo: (self preferredFileSystem resolve: aPathOrFileReference)) asAbsolute.
-	reference exists
-		ifFalse: [ ^ self selectPath: reference parent ].
+	reference ifDoesNotExists: [ ^ self selectPath: reference parent ].
 	reference isDirectory
 		ifTrue: [ ^ self selectDirectory: reference ].
 

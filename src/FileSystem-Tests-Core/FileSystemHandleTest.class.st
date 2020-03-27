@@ -101,8 +101,7 @@ FileSystemHandleTest >> testEnsureClosed [
 	self deny: handle isOpen.
 	handle ensureClosed.
 	reference ensureDelete.
-	handle reference exists
-		ifTrue: [ self error ].
+	handle reference ifExists: [ self error ].
 	handle ensureClosed
 ]
 

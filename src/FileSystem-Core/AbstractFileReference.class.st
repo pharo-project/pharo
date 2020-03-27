@@ -285,16 +285,17 @@ AbstractFileReference >> copyWithPath: newPath [
 { #category : #enumerating }
 AbstractFileReference >> createDirectory [
 	"Verifies that the directory does not exist and only creates if necessary. Do not remove files contained if they exist.If the parents does not exist return an exception"
-	self parent exists ifFalse:[DirectoryDoesNotExist signalWith: self parent path].
+
+	self parent ifDoesNotExists: [ DirectoryDoesNotExist signalWith: self parent path ].
 	^ self resolve ensureCreateDirectory
 ]
 
 { #category : #enumerating }
 AbstractFileReference >> createFile [
 	"Create if necessary a file for the receiver. If the parent does not exist return an exception"
-	self parent exists ifFalse:[DirectoryDoesNotExist signalWith: self parent path].
-	self writeStream close.
-	
+
+	self parent ifDoesNotExists: [ DirectoryDoesNotExist signalWith: self parent path ].
+	self writeStream close
 ]
 
 { #category : #accessing }
@@ -388,17 +389,16 @@ AbstractFileReference >> ensureDelete [
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAll [
 	"Delete this directory and all children of it, and does not raise an error if the file does not exist."
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifDoesNotExists: [ ^ self ].
 	self deleteAll
-	
 ]
 
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAllChildren [
 	"delete all children of the receiver and does not raise an error if the receiver does not exist"
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifDoesNotExists: [ ^ self ].
 	self deleteAllChildren
 ]
 
@@ -534,14 +534,14 @@ AbstractFileReference >> humanReadableSize [
 AbstractFileReference >> ifDoesNotExists: aBlock [
 	"Return self, or evaluate the block if I do not exist"
 
-	^ self exists ifTrue: [ self ] ifFalse: aBlock
+	^ self exists ifTrue: [ self ] ifFalse: [ aBlock cull: self ]
 ]
 
 { #category : #delegated }
 AbstractFileReference >> ifDoesNotExists: anotherBlock ifExists: aBlock [
 	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
 
-	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: anotherBlock
+	^ self ifExists: aBlock ifDoesNotExists: anotherBlock
 ]
 
 { #category : #delegated }
@@ -555,7 +555,7 @@ AbstractFileReference >> ifExists: aBlock [
 AbstractFileReference >> ifExists: aBlock ifDoesNotExists: anotherBlock [
 	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
 
-	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: anotherBlock
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ anotherBlock cull: self ]
 ]
 
 { #category : #testing }
@@ -574,15 +574,17 @@ AbstractFileReference >> indicator [
 	- '?' for a non existing reference',
 	- '/' for a directory,
 	- the empty string for a file."
+
 	"When this framework gets more complete, it is possible to extend this behavior with the following indicators (taken from unix ls utility):
 	- '*' for a regular file that is executable
 	- '@' for a symbolic link
 	- '|' for FIFOs
 	- '=' for sockets
 	- '>' for doors"
-	^ self exists
-		ifTrue: [self isDirectory ifTrue: ['/'] ifFalse: ['']  ]
-		ifFalse: ['?']
+
+	^ self
+		ifExists: [ self isDirectory ifTrue: [ '/' ] ifFalse: [ '' ] ]
+		ifDoesNotExists: [ '?' ]
 ]
 
 { #category : #accessing }

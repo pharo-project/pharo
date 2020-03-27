@@ -131,13 +131,12 @@ ChangeSet class >> current [
 ChangeSet class >> defaultChangeSetDirectory [
 	"Answer the directory in which to store ChangeSets. 
 	Answer the default directory if the preferred directory doesn't exist."
-	| dir directoryName |
+
+	| directoryName |
 	directoryName := self defaultChangeSetDirectoryName.
-	dir := directoryName isEmptyOrNil
+	(directoryName isEmptyOrNil
 		ifTrue: [ FileSystem workingDirectory ]
-		ifFalse: [ FileSystem workingDirectory / directoryName ].
-	dir exists
-		ifTrue: [^ dir].
+		ifFalse: [ FileSystem workingDirectory / directoryName ]) ifExists: [ :dir | ^ dir ].
 	^ FileSystem workingDirectory
 ]
 

@@ -406,19 +406,16 @@ MCGitBasedNetworkRepository >> ensureLocalRepository [
 
 { #category : #initialization }
 MCGitBasedNetworkRepository >> flushCache [
-  "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
-	| directory |
+	"the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
 
 	[ localRepository flushCache ]
-	on: Error
-	do: [ :ex | 
-		SystemNotification signal: 'Error for: ' , self description printString , ' during flushCache: ', ex description printString ].
+		on: Error
+		do: [ :ex | SystemNotification signal: 'Error for: ' , self description printString , ' during flushCache: ' , ex description printString ].
 	self class flushDownloadCache.
-	
-	directory := self calculateRepositoryDirectory.
-	directory exists 
-		ifTrue: [ localRepository directory: directory ]
-		ifFalse: [ localRepository resetDirectory ]
+
+	self calculateRepositoryDirectory
+		ifExists: [ :directory | localRepository directory: directory ]
+		ifDoesNotExists: [ localRepository resetDirectory ]
 ]
 
 { #category : #initialization }
@@ -614,7 +611,7 @@ MCGitBasedNetworkRepository >> resolveLocalRespository [
   
 	directory := self calculateRepositoryDirectory.
 	directoryPath := MCFileTreeFileUtils current directoryPathString: directory.
-	directory exists ifFalse: [ 
+	directory ifDoesNotExists: [ 
 		self error: 'Local directory ', directoryPath, ' does not exist.' ].
 	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec new 
 		description: 'filetree://', directoryPath;

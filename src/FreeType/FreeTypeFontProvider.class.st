@@ -323,19 +323,14 @@ FreeTypeFontProvider >> getWindowsLocalPaths [
 { #category : #'file paths' }
 FreeTypeFontProvider >> guessWindowsFontFolderPath [
 	"Guess the location of the Windows font folder"
-	| possibilities |
 
+	| possibilities |
 	possibilities := Set new.
-	'cdefghijklmnopqrstuvwxyz' do:[:drive |
-		#('windows\fonts' 'winnt\fonts') do:[:path | | d |
-			(d := (FileLocator driveNamed: drive asSymbol) resolve: path) exists
-				ifTrue:[possibilities add: d]]].
-	possibilities := possibilities asSortedCollection: [:a :b | a entry creationTime >= b  entry creationTime].
-	possibilities ifNotEmpty:[ ^ possibilities first fullName ].
-	^nil
-	
-		 	
-			
+	'cdefghijklmnopqrstuvwxyz'
+		do: [ :drive | #('windows\fonts' 'winnt\fonts') do: [ :path | ((FileLocator driveNamed: drive asSymbol) resolve: path) ifExists: [ :d | possibilities add: d ] ] ].
+	possibilities := possibilities asSortedCollection: [ :a :b | a entry creationTime >= b entry creationTime ].
+	possibilities ifNotEmpty: [ ^ possibilities first fullName ].
+	^ nil
 ]
 
 { #category : #'file paths' }
@@ -387,20 +382,16 @@ FreeTypeFontProvider >> platformAbsoluteDirectories [
 
 { #category : #'font families' }
 FreeTypeFontProvider >> platformImageRelativeDirectories [
-	
-	| directory |
-	directory := self imageRelativeFontFolder.
-	directory exists
-		ifTrue: [ ^ { directory } ].
-	^ #()
+	^ self imageRelativeFontFolder
+		ifExists: [ :directory | {directory} ]
+		ifDoesNotExists: [ #() ]
 ]
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> platformVMRelativeDirectories [
-  | directory |
-  directory := Smalltalk vm directory asFileReference / 'Fonts'.
-  directory exists ifTrue: [ ^{directory} ].
-  ^#()
+	^ Smalltalk vm directory asFileReference / 'Fonts'
+		ifExists: [ :directory | {directory} ]
+		ifDoesNotExists: [ #() ]
 ]
 
 { #category : #'loading and updating' }
@@ -467,12 +458,9 @@ FreeTypeFontProvider >> updateEmbeddedFreeTypeFonts [
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFileCacheInfo [
-	fileInfoCache values 
-		do:[ :col |
-			col copy do:[:each | | dir |
-				dir := each absolutePath asFileReference.
-				dir exists ifFalse: [ col remove: each ]]]
-		displayingProgress: [ 'Updating cached file info' ].
+	fileInfoCache values
+		do: [ :col | col copy do: [ :each | each absolutePath asFileReference ifDoesNotExists: [ col remove: each ] ] ]
+		displayingProgress: [ 'Updating cached file info' ]
 ]
 
 { #category : #'loading and updating' }
@@ -603,19 +591,11 @@ FreeTypeFontProvider >> validCachedInfoFor: aFile index: i [
 { #category : #'file paths' }
 FreeTypeFontProvider >> winFontDirectories [
 	| results |
-	
 	results := OrderedCollection new.
-	
-	self getWindowsFontFolderPath
-		ifNotNil: [ :aString | | directory |
-				directory := aString asFileReference.
-				directory exists 
-					ifTrue: [ results add: directory ]].
-	
-	self getWindowsLocalPaths
-		do: [ :directory | 
-				directory exists 
-					ifTrue: [ results add: directory ]].
-		
+
+	self getWindowsFontFolderPath ifNotNil: [ :aString | aString asFileReference ifExists: [ :directory | results add: directory ] ].
+
+	self getWindowsLocalPaths do: [ :directory | directory ifExists: [ results add: directory ] ].
+
 	^ results
 ]

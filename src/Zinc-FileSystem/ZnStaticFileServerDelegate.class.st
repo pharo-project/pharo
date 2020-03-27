@@ -47,21 +47,13 @@ ZnStaticFileServerDelegate class >> defaultMimeTypeExpirations [
 ZnStaticFileServerDelegate >> actualFilenameFor: uri [
 	| subElements subDir entry |
 	(uri isEmpty and: [ self prefix isEmpty ]) ifTrue: [ ^ self indexFileIn: self directory ].
-	(self prefix isEmpty or: [ uri isEmpty not and: [ uri pathSegments beginsWith: self prefix ] ]) ifFalse: [ ^ nil ].
+	(self prefix isEmpty or: [ uri isNotEmpty and: [ uri pathSegments beginsWith: self prefix ] ]) ifFalse: [ ^ nil ].
 	subElements := (uri pathSegments allButFirst: self prefix size) reject: [ :each | each = #/ ].
-	subDir := subElements allButLast inject: self directory into: [ :parent :sub | | file |
-		(file := parent / sub) exists
-			ifTrue: [ file ]
-			ifFalse: [ ^ nil ] ]. 
-	subElements isEmpty
-		ifTrue: [ entry := subDir entry ] 
-		ifFalse: [ | file |
-			 (file := subDir / subElements last) exists 
-				ifTrue: [ entry := file entry ] 
-				ifFalse: [ ^ nil ] ].
-	^ entry isDirectory 
-		ifTrue: [ self indexFileIn: entry reference ]
-		ifFalse: [ entry reference fullName ]
+	subDir := subElements allButLast inject: self directory into: [ :parent :sub | parent / sub ifDoesNotExists: [ ^ nil ] ].
+	entry := (subElements
+		ifEmpty: [ subDir ]
+		ifNotEmpty: [ subDir / subElements last ifDoesNotExists: [ ^ nil ] ]) entry.
+	^ entry isDirectory ifTrue: [ self indexFileIn: entry reference ] ifFalse: [ entry reference fullName ]
 ]
 
 { #category : #accessing }
@@ -110,12 +102,8 @@ ZnStaticFileServerDelegate >> handleRequest: request [
 
 { #category : #private }
 ZnStaticFileServerDelegate >> indexFileIn: fileDirectory [
-	#( 'index.html' 'index.htm' ) do: [ :each | | file |
-			(file := fileDirectory / each) exists
-				ifTrue: [ 
-					^ file fullName ] ].
+	#('index.html' 'index.htm') do: [ :each | fileDirectory / each ifExists: [ :file | ^ file fullName ] ].
 	^ nil
-
 ]
 
 { #category : #private }
