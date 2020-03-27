@@ -538,13 +538,6 @@ AbstractFileReference >> ifAbsent: aBlock [
 ]
 
 { #category : #delegated }
-AbstractFileReference >> ifAbsent: anotherBlock ifExists: aBlock [
-	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
-
-	^ self ifExists: aBlock ifAbsent: anotherBlock
-]
-
-{ #category : #delegated }
 AbstractFileReference >> ifExists: aBlock [
 	"Evaluate the block, unless I do not exist. If the receiver exists, pass it as argument to the block."
 

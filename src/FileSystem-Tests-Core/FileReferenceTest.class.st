@@ -566,17 +566,6 @@ FileReferenceTest >> testIfAbsent [
 ]
 
 { #category : #tests }
-FileReferenceTest >> testIfAbsentIfExists [
-	| reference |
-	reference := filesystem / 'plonk'.
-	reference ensureCreateFile.
-	[ self assert: (reference ifAbsent: [ false ] ifExists: [ true ]).
-	reference delete.
-	self assert: (reference ifAbsent: [ true ] ifExists: [ false ]) ]
-		ensure: [ reference ensureDelete ]
-]
-
-{ #category : #tests }
 FileReferenceTest >> testIfExists [
 	| reference |
 	reference := filesystem / 'plonk'.

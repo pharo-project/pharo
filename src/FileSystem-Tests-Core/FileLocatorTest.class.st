@@ -98,17 +98,6 @@ FileLocatorTest >> testIfAbsent [
 ]
 
 { #category : #tests }
-FileLocatorTest >> testIfAbsentIfExists [
-	| reference |
-	reference := FileLocator temp / 'plonk'.
-	reference ensureCreateFile.
-	[ self assert: (reference ifAbsent: [ false ] ifExists: [ true ]).
-	reference delete.
-	self assert: (reference ifAbsent: [ true ] ifExists: [ false ]) ]
-		ensure: [ reference ensureDelete ]
-]
-
-{ #category : #tests }
 FileLocatorTest >> testIfExists [
 	| reference |
 	reference := FileLocator temp / 'plonk'.
