@@ -13,7 +13,8 @@ RBVariableNode >> binding: aSemVar [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isArg [
-
+	"This is a compiler specific function, requiring a binding.
+	If you're working on the AST, you should use probably isArgument"
 	^self binding isArg
 ]
 
