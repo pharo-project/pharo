@@ -26,7 +26,7 @@ BreadthFirstGuide >> show: aReference [
 
 { #category : #showing }
 BreadthFirstGuide >> visitNextEntry: entry [
-	entry exists ifFalse: [ ^ nil ].
+	entry ifAbsent: [ ^ nil ].
 
 	entry isFile ifTrue: [ ^ visitor visitFile: entry ].
 
