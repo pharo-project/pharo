@@ -7,6 +7,21 @@ Class {
 	#category : #'Monticello-Modeling'
 }
 
+{ #category : #'instance creation' }
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: aString5 [ 
+
+	^ self new
+		initializeWithName: classNameString
+		traitComposition: traitCompositionString
+		category: categoryString
+		instVarNames: ''
+		classTraitComposition: nil
+		classInstVarNames: ''
+		comment: commentString
+		commentStamp: aString5
+
+]
+
 { #category : #'instance creation api' }
 MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
 
@@ -30,10 +45,11 @@ MCTraitDefinition >> = aDefinition [
 	^ (aDefinition isKindOf: MCDefinition)
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
+		and: [self classTraitCompositionString = aDefinition classTraitCompositionString
 		and: [category = aDefinition category
 		and: [self slotDefinitionString = aDefinition slotDefinitionString
 		and: [self classInstVarNames  = aDefinition classInstVarNames  
-		and: [comment = aDefinition comment]]]]]]
+		and: [comment = aDefinition comment]]]]]]]
 ]
 
 { #category : #visiting }
