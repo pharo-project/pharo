@@ -30,3 +30,13 @@ RBArgumentNode >> isBlockVar [
 
 	^ (self whoDefines: self name) isBlock
 ]
+
+{ #category : #testing }
+RBArgumentNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
+RBArgumentNode >> isInstance [
+	^ false
+]

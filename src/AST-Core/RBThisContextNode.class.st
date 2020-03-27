@@ -20,6 +20,16 @@ RBThisContextNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #visiting }
+RBThisContextNode >> isGlobal [
+	^ false
+]
+
+{ #category : #visiting }
+RBThisContextNode >> isInstance [
+	^ false
+]
+
+{ #category : #visiting }
 RBThisContextNode >> isThisContext [
 	^ true
 ]

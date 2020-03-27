@@ -20,6 +20,16 @@ RBSuperNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #testing }
+RBSuperNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
+RBSuperNode >> isInstance [
+	^ false
+]
+
+{ #category : #testing }
 RBSuperNode >> isSelfOrSuper [
 
 	^ true

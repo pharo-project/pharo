@@ -20,6 +20,16 @@ RBSelfNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #testing }
+RBSelfNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
+RBSelfNode >> isInstance [
+	^ false
+]
+
+{ #category : #testing }
 RBSelfNode >> isSelf [
 	^ true
 ]

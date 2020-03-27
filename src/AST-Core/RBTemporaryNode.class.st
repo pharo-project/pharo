@@ -22,6 +22,16 @@ RBTemporaryNode >> isBlockVar [
 ]
 
 { #category : #testing }
+RBTemporaryNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
+RBTemporaryNode >> isInstance [
+	^ false
+]
+
+{ #category : #testing }
 RBTemporaryNode >> isTemp [
 	^ true
 ]
