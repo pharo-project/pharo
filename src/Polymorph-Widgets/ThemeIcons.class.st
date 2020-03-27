@@ -151,6 +151,13 @@ ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
+{ #category : #configuration }
+ThemeIcons class >> preferredCornerStyle [
+	"Answer the preferred corner style."
+
+	^#square
+]
+
 { #category : #settings }
 ThemeIcons class >> settingsOn: aBuilder [ 
 	<systemsettings>
