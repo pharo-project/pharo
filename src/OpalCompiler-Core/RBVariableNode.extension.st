@@ -43,11 +43,6 @@ RBVariableNode >> isSpecialVariable [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBVariableNode >> isTemp [
-	^ false
-]
-
-{ #category : #'*opalcompiler-core' }
 RBVariableNode >> isUndeclared [
 
 	^self binding isUndeclared
