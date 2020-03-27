@@ -32,7 +32,7 @@ ReAssignmentOnBlockArgumentRule class >> uniqueIdentifierName [
 ReAssignmentOnBlockArgumentRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemAssignments|
 	problemAssignments := aMethod ast assignmentNodes 
-		select: [ :assignment | assignment variable isArg].
+		select: [ :assignment | assignment variable isArgument ].
 	
 	problemAssignments do: [ :assignment |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: assignment variable sourceCode)]
