@@ -86,6 +86,50 @@ FileLocatorTest >> testFileSystem [
 	self assert: (locator fileSystem isKindOf: FileSystem)
 ]
 
+{ #category : #tests }
+FileLocatorTest >> testIfDoesNotExists [
+	| reference |
+	reference := FileLocator temp / 'plonk'.
+	reference ensureCreateFile.
+	[ reference ifDoesNotExists: [ :file | self fail ].
+	reference delete.
+	self assert: (reference ifDoesNotExists: [ 'plonk' ]) equals: 'plonk' ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileLocatorTest >> testIfDoesNotExistsIfExists [
+	| reference |
+	reference := FileLocator temp / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifDoesNotExists: [ false ] ifExists: [ true ]).
+	reference delete.
+	self assert: (reference ifDoesNotExists: [ true ] ifExists: [ false ]) ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileLocatorTest >> testIfExists [
+	| reference |
+	reference := FileLocator temp / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifExists: [ :file | file basename ]) equals: 'plonk'.
+	reference delete.
+	reference ifExists: [ :file | self fail ] ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileLocatorTest >> testIfExistsIfDoesNotExists [
+	| reference |
+	reference := FileLocator temp / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifExists: [ true ] ifDoesNotExists: [ false ]).
+	reference delete.
+	self assert: (reference ifExists: [ false ] ifDoesNotExists: [ true ]) ]
+		ensure: [ reference ensureDelete ]
+]
+
 { #category : #'resolution tests' }
 FileLocatorTest >> testImageDirectory [
 	locator := FileLocator image.

@@ -555,6 +555,50 @@ FileReferenceTest >> testHasFiles [
 ]
 
 { #category : #tests }
+FileReferenceTest >> testIfDoesNotExists [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ reference ifDoesNotExists: [ :file | self fail ].
+	reference delete.
+	self assert: (reference ifDoesNotExists: [ 'plonk' ]) equals: 'plonk' ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileReferenceTest >> testIfDoesNotExistsIfExists [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifDoesNotExists: [ false ] ifExists: [ true ]).
+	reference delete.
+	self assert: (reference ifDoesNotExists: [ true ] ifExists: [ false ]) ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileReferenceTest >> testIfExists [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifExists: [ :file | file basename ]) equals: 'plonk'.
+	reference delete.
+	reference ifExists: [ :file | self fail ] ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
+FileReferenceTest >> testIfExistsIfDoesNotExists [
+	| reference |
+	reference := filesystem / 'plonk'.
+	reference ensureCreateFile.
+	[ self assert: (reference ifExists: [ true ] ifDoesNotExists: [ false ]).
+	reference delete.
+	self assert: (reference ifExists: [ false ] ifDoesNotExists: [ true ]) ]
+		ensure: [ reference ensureDelete ]
+]
+
+{ #category : #tests }
 FileReferenceTest >> testIndicator [
 	| ref |
 	ref := filesystem * 'plonk' / 'griffle'.

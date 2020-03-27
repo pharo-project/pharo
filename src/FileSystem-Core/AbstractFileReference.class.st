@@ -530,6 +530,34 @@ AbstractFileReference >> humanReadableSize [
 	^ self size humanReadableSIByteSize
 ]
 
+{ #category : #delegated }
+AbstractFileReference >> ifDoesNotExists: aBlock [
+	"Return self, or evaluate the block if I do not exist"
+
+	^ self exists ifTrue: [ self ] ifFalse: aBlock
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifDoesNotExists: anotherBlock ifExists: aBlock [
+	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: anotherBlock
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifExists: aBlock [
+	"Evaluate the block, unless I do not exist. If the receiver exists, pass it as argument to the block."
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ self ]
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifExists: aBlock ifDoesNotExists: anotherBlock [
+	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: anotherBlock
+]
+
 { #category : #testing }
 AbstractFileReference >> ifFile: fBlock ifDirectory: dBlock ifAbsent: aBlock [
 	^ self isFile
