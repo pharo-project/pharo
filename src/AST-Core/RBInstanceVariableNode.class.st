@@ -15,6 +15,11 @@ RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : #testing }
+RBInstanceVariableNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
 RBInstanceVariableNode >> isInstance [
-	^true
+	^ true
 ]

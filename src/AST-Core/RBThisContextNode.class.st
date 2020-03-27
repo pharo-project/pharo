@@ -18,3 +18,13 @@ RBThisContextNode class >> new [
 RBThisContextNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitThisContextNode: self
 ]
+
+{ #category : #testing }
+RBThisContextNode >> isGlobal [
+	^ false
+]
+
+{ #category : #testing }
+RBThisContextNode >> isInstance [
+	^ false
+]
