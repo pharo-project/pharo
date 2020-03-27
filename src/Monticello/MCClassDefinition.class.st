@@ -13,7 +13,8 @@ Class {
 		'comment',
 		'commentStamp',
 		'traitComposition',
-		'classTraitComposition'
+		'classTraitComposition',
+		'tags'
 	],
 	#category : #'Monticello-Modeling'
 }
@@ -144,6 +145,18 @@ MCClassDefinition >> addVariables: aCollection ofType: aClass [
 { #category : #accessing }
 MCClassDefinition >> category [
 	^ category
+]
+
+{ #category : #accessing }
+MCClassDefinition >> categoryWithoutTag [
+	| tag end |
+	end := category size.
+	self tags ifNotEmpty: [ 
+		"We remove the tag from the package name"
+		tag := self tags anyOne.
+		end := (category findLastOccurrenceOfString: '-',tag startingAt: 1) - 1. 
+		] .
+	^ String streamContents: [ :stream | category from: 1 to: end do: [ :char | stream nextPut: char ] ] 
 ]
 
 { #category : #accessing }
@@ -581,6 +594,16 @@ MCClassDefinition >> summary [
 { #category : #accessing }
 MCClassDefinition >> superclassName [
 	^ superclassName
+]
+
+{ #category : #accessing }
+MCClassDefinition >> tags [
+	^ tags
+]
+
+{ #category : #accessing }
+MCClassDefinition >> tags: aCollection [ 
+	tags := aCollection
 ]
 
 { #category : #accessing }

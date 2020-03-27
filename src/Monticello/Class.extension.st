@@ -4,7 +4,7 @@ Extension { #name : #Class }
 Class >> asClassDefinition [
 	"we use a very ugly hack to encode complex slots as string with MC... later MC should model Slots directly"
 	self needsSlotClassDefinition ifFalse: [  
-	 ^MCClassDefinition
+	 ^(MCClassDefinition
 		name: self name
 		superclassName: (self superclass ifNil: [ nil asString ] ifNotNil: [ self superclass name ])
 		traitComposition: self traitCompositionString
@@ -16,9 +16,11 @@ Class >> asClassDefinition [
 		classInstVarNames: (self class localSlots collect: #name)
 		type: self typeOfClass
 		comment: self organization classComment	asString
-		commentStamp: self organization commentStamp].
+		commentStamp: self organization commentStamp)
+		tags: self tags;
+		yourself].
 	
-	^MCClassDefinition
+	^(MCClassDefinition
 		name: self name
 		superclassName: (self superclass ifNil: [ nil asString ] ifNotNil: [ self superclass name ])
 		traitComposition: self traitCompositionString
@@ -30,12 +32,9 @@ Class >> asClassDefinition [
 		classInstVarNames: (self class localSlots collect: #definitionString)
 		type: self typeOfClass
 		comment: self organization classComment	asString
-		commentStamp: self organization commentStamp.
-	
-
-
-
-
+		commentStamp: self organization commentStamp)
+		tags: self tags;
+		yourself.
 ]
 
 { #category : #'*Monticello' }
