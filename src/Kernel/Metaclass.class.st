@@ -332,8 +332,8 @@ Metaclass >> sourceCodeTemplate [
 	"Answer an expression to be edited and evaluated in order to define 
 	methods in this class or trait."
 
-	^ 'messageSelectorAndArgumentNames
-	"comment stating purpose of class-side message"
+	^ 'methodSelectorAndArgumentNames
+	"comment stating purpose of class-side method"
 	"scope: class-variables  &  class-instance-variables"	
 			
 	| temporary variable names |
