@@ -18,3 +18,8 @@ RBThisContextNode class >> new [
 RBThisContextNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitThisContextNode: self
 ]
+
+{ #category : #visiting }
+RBThisContextNode >> isThisContext [
+	^ true
+]
