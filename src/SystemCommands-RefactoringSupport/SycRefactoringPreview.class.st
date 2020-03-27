@@ -128,7 +128,7 @@ SycRefactoringPreview >> generateChanges [
 	changes := command asRefactorings.
 	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each | 
-		each model: ( RBClassModelFactory rbNamespace onEnvironment: rbEnvironment ).
+		each model environment: rbEnvironment.
 		each primitiveExecute ]
 ]
 
