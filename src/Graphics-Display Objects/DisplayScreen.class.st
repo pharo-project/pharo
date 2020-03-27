@@ -136,7 +136,7 @@ DisplayScreen class >> primitiveWindowIcon: id path: pathString [
 		ifTrue: [ pathString isString ifFalse: [ ^ self error: 'The path should be a String' ].
 			^ pathString asFileReference
 				ifExists: [ self error: 'File existing but not found by the VM sorry, try another location...'	"Not reproductible in the tests but can happen" ]
-				ifDoesNotExists: [ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
+				ifAbsent: [ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
 	self primitiveFailed
 ]
 

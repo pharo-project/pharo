@@ -45,7 +45,7 @@ ZipDirectoryMember >> localFileName: aString [
 { #category : #accessing }
 ZipDirectoryMember >> localFileNameFrom: aFileReference [
 	super localFileName: (aFileReference basename copyWith: $/).
-	aFileReference ifDoesNotExists: [ ^ self ].
+	aFileReference ifAbsent: [ ^ self ].
 	self modifiedAt: aFileReference entry modificationTime
 ]
 

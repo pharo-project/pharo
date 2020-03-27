@@ -707,7 +707,7 @@ FileDialogWindow >> openSelectedFile [
 	f := self selectedFileName ifNil: [ ^ nil ].
 	self selectedFileEntry isDirectory ifTrue: [ ^ nil ].
 
-	^ d / f ifExists: [ :fileRef | fileRef readStream ] ifDoesNotExists: nil
+	^ d / f ifExists: [ :fileRef | fileRef readStream ] ifAbsent: nil
 ]
 
 { #category : #accessing }
@@ -781,7 +781,7 @@ FileDialogWindow >> saveSelectedFile [
 	f := d asFileReference / f.
 	(f extension isEmpty and: [self defaultExtension notNil])
 		 ifTrue: [ f := f, self defaultExtension].
-	f ifDoesNotExists: [ ^ f ].
+	f ifAbsent: [ ^ f ].
 		
 	^(self
 		proceed: ('The file {1} already exists.
@@ -833,7 +833,7 @@ FileDialogWindow >> selectPath: aPathOrFileReference [
 	| reference |
 	reference := (self preferredFileSystem
 		referenceTo: (self preferredFileSystem resolve: aPathOrFileReference)) asAbsolute.
-	reference ifDoesNotExists: [ ^ self selectPath: reference parent ].
+	reference ifAbsent: [ ^ self selectPath: reference parent ].
 	reference isDirectory
 		ifTrue: [ ^ self selectDirectory: reference ].
 

@@ -65,7 +65,7 @@ OmBlockFileStore >> refresh [
 	self critical: [
 		mustRefresh := false.
 		self initialize.
-		self fileReference ifDoesNotExists: [ ^ self ].
+		self fileReference ifAbsent: [ ^ self ].
 		self readEntriesWith: [:readStream |
 			self refreshNewBlocksFrom: readStream.
 			self refreshHeadReferenceAndEntryCountFrom: readStream. ]

@@ -74,7 +74,7 @@ MCCacheRepository class >> reset [
 
 { #category : #utilities }
 MCCacheRepository class >> resetIfInvalid [
-	default notNil and: [ default directory ifDoesNotExists: [ default := nil ] ]
+	default notNil and: [ default directory ifAbsent: [ default := nil ] ]
 ]
 
 { #category : #accessing }

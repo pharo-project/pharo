@@ -138,7 +138,7 @@ FileHandle >> startUp [
 
 { #category : #public }
 FileHandle >> streamError [
-	reference ifDoesNotExists: [ FileDoesNotExistException signalWith: reference ].
+	reference ifAbsent: [ FileDoesNotExistException signalWith: reference ].
 	self error: 'Unable to open file ' , reference printString
 ]
 

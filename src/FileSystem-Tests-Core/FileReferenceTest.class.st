@@ -555,24 +555,24 @@ FileReferenceTest >> testHasFiles [
 ]
 
 { #category : #tests }
-FileReferenceTest >> testIfDoesNotExists [
+FileReferenceTest >> testIfAbsent [
 	| reference |
 	reference := filesystem / 'plonk'.
 	reference ensureCreateFile.
-	[ reference ifDoesNotExists: [ :file | self fail ].
+	[ reference ifAbsent: [ :file | self fail ].
 	reference delete.
-	self assert: (reference ifDoesNotExists: [ 'plonk' ]) equals: 'plonk' ]
+	self assert: (reference ifAbsent: [ 'plonk' ]) equals: 'plonk' ]
 		ensure: [ reference ensureDelete ]
 ]
 
 { #category : #tests }
-FileReferenceTest >> testIfDoesNotExistsIfExists [
+FileReferenceTest >> testIfAbsentIfExists [
 	| reference |
 	reference := filesystem / 'plonk'.
 	reference ensureCreateFile.
-	[ self assert: (reference ifDoesNotExists: [ false ] ifExists: [ true ]).
+	[ self assert: (reference ifAbsent: [ false ] ifExists: [ true ]).
 	reference delete.
-	self assert: (reference ifDoesNotExists: [ true ] ifExists: [ false ]) ]
+	self assert: (reference ifAbsent: [ true ] ifExists: [ false ]) ]
 		ensure: [ reference ensureDelete ]
 ]
 
@@ -588,13 +588,13 @@ FileReferenceTest >> testIfExists [
 ]
 
 { #category : #tests }
-FileReferenceTest >> testIfExistsIfDoesNotExists [
+FileReferenceTest >> testIfExistsIfAbsent [
 	| reference |
 	reference := filesystem / 'plonk'.
 	reference ensureCreateFile.
-	[ self assert: (reference ifExists: [ true ] ifDoesNotExists: [ false ]).
+	[ self assert: (reference ifExists: [ true ] ifAbsent: [ false ]).
 	reference delete.
-	self assert: (reference ifExists: [ false ] ifDoesNotExists: [ true ]) ]
+	self assert: (reference ifExists: [ false ] ifAbsent: [ true ]) ]
 		ensure: [ reference ensureDelete ]
 ]
 

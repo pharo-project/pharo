@@ -55,7 +55,7 @@ ZipStore >> initializeWithReference: aReference [
 { #category : #public }
 ZipStore >> open [
 	| archive |
-	self reference ifDoesNotExists: [ ^ self ].
+	self reference ifAbsent: [ ^ self ].
 	archive := ZipArchive new.
 	self reference
 		binaryReadStreamDo: [ :input | 

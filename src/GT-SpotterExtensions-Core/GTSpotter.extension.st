@@ -58,7 +58,7 @@ GTSpotter >> fileReferencesBy: aSelector inContext: aSpotterContext usingFilter:
 					rootDirectory := aSpotterContext textLowercase asFileReference ]
 				ifFalse: [ query := split last.
 					rootDirectory := ('' join: split allButLast) asFileReference ] ].
-	rootDirectory ifDoesNotExists: [ ^ self ].
+	rootDirectory ifAbsent: [ ^ self ].
 	self flag: 'this is an ugly hack for #queryForFileReference. This iterator has to manipulate the query in order for the filter to work properly'.
 	aSpotterContext cacheAt: #queryForFileReference put: query.
 	(rootDirectory perform: aSelector) do: aBlock

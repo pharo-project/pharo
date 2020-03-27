@@ -384,14 +384,14 @@ FreeTypeFontProvider >> platformAbsoluteDirectories [
 FreeTypeFontProvider >> platformImageRelativeDirectories [
 	^ self imageRelativeFontFolder
 		ifExists: [ :directory | {directory} ]
-		ifDoesNotExists: [ #() ]
+		ifAbsent: [ #() ]
 ]
 
 { #category : #'file paths' }
 FreeTypeFontProvider >> platformVMRelativeDirectories [
 	^ Smalltalk vm directory asFileReference / 'Fonts'
 		ifExists: [ :directory | {directory} ]
-		ifDoesNotExists: [ #() ]
+		ifAbsent: [ #() ]
 ]
 
 { #category : #'loading and updating' }
@@ -459,7 +459,7 @@ FreeTypeFontProvider >> updateEmbeddedFreeTypeFonts [
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFileCacheInfo [
 	fileInfoCache values
-		do: [ :col | col copy do: [ :each | each absolutePath asFileReference ifDoesNotExists: [ col remove: each ] ] ]
+		do: [ :col | col copy do: [ :each | each absolutePath asFileReference ifAbsent: [ col remove: each ] ] ]
 		displayingProgress: [ 'Updating cached file info' ]
 ]
 

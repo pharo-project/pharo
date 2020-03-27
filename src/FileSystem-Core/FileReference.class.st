@@ -172,7 +172,7 @@ FileReference >> delete [
 FileReference >> deleteIfAbsent: aBlock [
 	self
 		ifExists: [ self delete ]
-		ifDoesNotExists: aBlock
+		ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -436,7 +436,7 @@ FileReference >> nextVersion [
 
 	| parent basename nameWithoutExtension extension max index |
 
-	self ifDoesNotExists: [ ^ self ].
+	self ifAbsent: [ ^ self ].
 
 	parent := self parent.
 	extension := self extension.
@@ -608,7 +608,7 @@ FileReference >> versionNumberFor: basename extension: extension [
 			| childVersion |
 			childVersion := self extractVersionNumberFrom: child basename: basename extension: extension.
 			childVersion ifNotNil: [ maxVersion := maxVersion max: childVersion ] ].
-	^ maxVersion = 0 ifTrue: [ (self / (basename , '.' , extension)) asFileReference ifExists: [ 0 ] ifDoesNotExists: [ nil ] ] ifFalse: [ maxVersion ]
+	^ maxVersion = 0 ifTrue: [ (self / (basename , '.' , extension)) asFileReference ifExists: [ 0 ] ifAbsent: [ nil ] ] ifFalse: [ maxVersion ]
 ]
 
 { #category : #streams }

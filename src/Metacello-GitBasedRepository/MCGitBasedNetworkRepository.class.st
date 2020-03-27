@@ -415,7 +415,7 @@ MCGitBasedNetworkRepository >> flushCache [
 
 	self calculateRepositoryDirectory
 		ifExists: [ :directory | localRepository directory: directory ]
-		ifDoesNotExists: [ localRepository resetDirectory ]
+		ifAbsent: [ localRepository resetDirectory ]
 ]
 
 { #category : #initialization }
@@ -611,7 +611,7 @@ MCGitBasedNetworkRepository >> resolveLocalRespository [
   
 	directory := self calculateRepositoryDirectory.
 	directoryPath := MCFileTreeFileUtils current directoryPathString: directory.
-	directory ifDoesNotExists: [ 
+	directory ifAbsent: [ 
 		self error: 'Local directory ', directoryPath, ' does not exist.' ].
 	localRepository := MetacelloPlatform current createRepository: (MetacelloRepositorySpec new 
 		description: 'filetree://', directoryPath;

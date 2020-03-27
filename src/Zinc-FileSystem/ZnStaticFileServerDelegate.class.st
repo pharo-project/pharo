@@ -49,10 +49,10 @@ ZnStaticFileServerDelegate >> actualFilenameFor: uri [
 	(uri isEmpty and: [ self prefix isEmpty ]) ifTrue: [ ^ self indexFileIn: self directory ].
 	(self prefix isEmpty or: [ uri isNotEmpty and: [ uri pathSegments beginsWith: self prefix ] ]) ifFalse: [ ^ nil ].
 	subElements := (uri pathSegments allButFirst: self prefix size) reject: [ :each | each = #/ ].
-	subDir := subElements allButLast inject: self directory into: [ :parent :sub | parent / sub ifDoesNotExists: [ ^ nil ] ].
+	subDir := subElements allButLast inject: self directory into: [ :parent :sub | parent / sub ifAbsent: [ ^ nil ] ].
 	entry := (subElements
 		ifEmpty: [ subDir ]
-		ifNotEmpty: [ subDir / subElements last ifDoesNotExists: [ ^ nil ] ]) entry.
+		ifNotEmpty: [ subDir / subElements last ifAbsent: [ ^ nil ] ]) entry.
 	^ entry isDirectory ifTrue: [ self indexFileIn: entry reference ] ifFalse: [ entry reference fullName ]
 ]
 
