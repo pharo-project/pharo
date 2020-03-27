@@ -235,12 +235,12 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 
 { #category : #'menu morph' }
 CompletionEngine >> openMenu [
-	| theMenu |
+	| theMenu class |
 	self stopCompletionDelay.
-	
+	class := editor model ifNotNil: [ :model | model selectedClassOrMetaClass ].
 	context := self contextClass
 				engine: self
-				class: editor model selectedClassOrMetaClass 
+				class: class
 				source: editor text string
 				position: editor caret - 1.
 
