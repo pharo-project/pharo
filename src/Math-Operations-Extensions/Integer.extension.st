@@ -85,7 +85,7 @@ Integer >> factorial [
 	
 	This implementation uses a 2-partition algorithm.
 	
-	For a recursive (but slower) implementation see 'slowfactorial'
+	For a recursive (but slower) implementation see 'slowFactorial'
 	
 	Without verbose detail:
 	
@@ -600,7 +600,7 @@ Integer >> slidingLeftRightRaisedTo: n modulo: m [
 ]
 
 { #category : #'*Math-Operations-Extensions' }
-Integer >> slowfactorial [
+Integer >> slowFactorial [
 	"Answer the factorial of the receiver."
 	
 	"This implementation is recursive and very canonical.
