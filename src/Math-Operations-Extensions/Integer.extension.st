@@ -106,6 +106,7 @@ Integer >> factorial [
 	"3 factorial >>> 6"
 	"4 factorial >>> 24"
 	"5 factorial >>> 120"
+	"6 factorial >>> 720"
 
 	| nex nexnext acc |
 	"Guard for know cases (0,1,2,error)"
@@ -609,17 +610,18 @@ Integer >> slowFactorial [
 	
 	"Example of usages:"
 	
-	"0 slowfactorial >>> 1"
-	"1 slowfactorial >>> 1"
-	"2 slowfactorial >>> 2"
-	"3 slowfactorial >>> 6"
-	"4 slowfactorial >>> 24"
-	"5 slowfactorial >>> 120"
+	"0 slowFactorial >>> 1"
+	"1 slowFactorial >>> 1"
+	"2 slowFactorial >>> 2"
+	"3 slowFactorial >>> 6"
+	"4 slowFactorial >>> 24"
+	"5 slowFactorial >>> 120"
+	"6 slowFactorial >>> 720"
 
-	self = 0
-		ifTrue: [ ^ 1 ].
 	self > 0
 		ifTrue: [ ^ self * (self - 1) factorial ].
+	self = 0
+		ifTrue: [ ^ 1 ].
 	self error: 'Not valid for negative integers'
 ]
 
