@@ -36,9 +36,9 @@ Class {
 		'watchDogSemaphore',
 		'testCase',
 		'maxTimeForTest',
-		'forkedProcesses',
-		'failedProcesses',
-		'testCompleted'
+		'testCompleted',
+		'services',
+		'testProcess'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -69,10 +69,9 @@ TestExecutionEnvironment class >> resetFailures [
 { #category : #controlling }
 TestExecutionEnvironment >> activated [
 
-	| testProcess |
 	testProcess := Processor activeProcess.
 	watchDogSemaphore := Semaphore new.
-	watchDogProcess := [self watchDogLoopFor: testProcess] newProcess.
+	watchDogProcess := [self watchDogLoop] newProcess.
 	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
 	watchDogProcess 
 		name: 'Tests execution watch dog';
@@ -81,52 +80,67 @@ TestExecutionEnvironment >> activated [
 ]
 
 { #category : #controlling }
-TestExecutionEnvironment >> checkForkedProcesses [
-
-	forkedProcesses reject: [:each | failedProcesses includesKey: each ] thenDo: #terminate.
-	failedProcesses ifEmpty: [ ^self].	
-	"Following curtailed logic ensures that we will terminate all processes only 
-	if we will not debug them"
-	[TestFailedByForkedProcess signal] ifCurtailed: [
-		failedProcesses keysDo: #terminate]. 
-	"We will be here only if user press Proceed in debugger. 
-	In that case we will allow him to debug failed processes"
-	failedProcesses keys reject: #isTerminated thenDo: #resume
+TestExecutionEnvironment >> cleanUpAfterTest [
+	
+	services do: [ :each | each cleanUpAfterTest: testCase]
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> deactivated [
 
-	watchDogProcess terminate
+	watchDogProcess ifNotNil: [watchDogProcess terminate]
 ]
 
 { #category : #accessing }
 TestExecutionEnvironment >> failures [
-	^failedProcesses values
+	self flag: #todo.
+	
+	^services first suspendedBackgroundFailures values
 ]
 
 { #category : #accessing }
 TestExecutionEnvironment >> forkedProcesses [
-	^ forkedProcesses
+	self flag: #todo.
+	
+	^ services first forkedProcesses
 ]
 
-{ #category : #accessing }
-TestExecutionEnvironment >> forkedProcesses: anObject [
-	forkedProcesses := anObject
+{ #category : #controlling }
+TestExecutionEnvironment >> handleCompletedTest [
+	
+	services do: [ :each | each handleCompletedTest].
+]
+
+{ #category : #controlling }
+TestExecutionEnvironment >> handleNewProcess: aProcess [
+
+	services do: [ :each | each handleNewProcess: aProcess ].
+]
+
+{ #category : #controlling }
+TestExecutionEnvironment >> handleUnhandledException: anUnhandledException [
+
+	services do: [ :each | each handleUnhandledException: anUnhandledException].
+	
+	anUnhandledException pass
 ]
 
 { #category : #initialization }
 TestExecutionEnvironment >> initialize [
 	super initialize.
-	
-	forkedProcesses := WeakSet new.
-	failedProcesses := OrderedIdentityDictionary new.
+	services := OrderedCollection new.
+	services add: (ProcessMonitorTestService for: self).
 	testCompleted := false
 ]
 
 { #category : #testing }
 TestExecutionEnvironment >> isTest [
 	^true
+]
+
+{ #category : #testing }
+TestExecutionEnvironment >> isTestProcess: aProcess [
+	^testProcess = aProcess
 ]
 
 { #category : #accessing }
@@ -145,25 +159,23 @@ TestExecutionEnvironment >> maxTimeForTest: aDuration [
 { #category : #controlling }
 TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	| processBlock |
-	watchDogProcess ifNil: [ ^self ].  "we should not catch watchDogProcess"
-	forkedProcesses add: aProcess.
-	aProcess suspendedContext sender ifNotNil: [ ^self ]. "Some existing tests in system create processes on arbitrary block and then check suspendedContext state. Without this 'if' all this tests will fail"
+	watchDogProcess ifTrue: [ ^self ]. "we should not catch watchDogProcess which is always the first one"
+	aProcess suspendedContext sender ifNotNil: [ ^self ]. "Some existing tests in system create processes on arbitrary block and then check suspendedContext state. Without this 'if' all these tests will fail"
 	processBlock := aProcess suspendedContext receiver.
 	processBlock isClosure ifFalse: [ ^self ]. "same case as in previous comment"
 	
-	aProcess on: Error do: [ :err | | activeProcess |
-		"It is possible to fork process with copy of stack from another process
-		It means that aProcess could be not actual active process inside this block handler.
-		So we should not reference temp aProcess and instead we should work with actual active process"
-		activeProcess := Processor activeProcess. 
-		failedProcesses at: activeProcess put: err.
-		activeProcess isTerminating ifFalse: [activeProcess suspend].
-		err pass]
+	self handleNewProcess: aProcess
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> registerService: aTestExecutionService [
+	
+	services add: aTestExecutionService
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> resetFailures [
-	failedProcesses removeAll
+	services first resetFailures
 ]
 
 { #category : #controlling }
@@ -172,34 +184,36 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 	maxTimeForTest := testCase defaultTimeLimit.
 	testCompleted := false.
 	watchDogSemaphore signal. "signal about new test case"
-
-	[[self runTestCaseSafelly: aTestCase] ensure: [
-		testCompleted := true.
-		watchDogSemaphore signal]. "signal that test case completes"
 	
-	self checkForkedProcesses] ifCurtailed: [
-		forkedProcesses removeAll.
-		failedProcesses removeAll]
+	[self runTestCaseSafelly: aTestCase] ensure: [
+		testCompleted := true.
+		watchDogSemaphore signal.  "signal that test case is completed"	
+		self cleanUpAfterTest	].
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> runTestCaseSafelly: aTestCase [
+	
 	[
-		[aTestCase runCase] on: Halt do: [ :halt | 
-			"if test was halted we should resume all background failures 
-			to debug all of them together with test process"
-			failedProcesses keysDo: #resume. halt pass ]
-	] on: Error, TestFailure do: [ :err | 
-		"error here means that test is failed. So we should check forked processes 
-		and be able to debug all background failures together with original error"
-		self checkForkedProcesses. 
-		err pass  ]
+		[aTestCase runCase] on: UnhandledError, Halt, Warning do: [ :err | 
+			self handleUnhandledException: err ]
+	] ensure: [self handleCompletedTest]
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> runTestsBy: aBlock [
 
 	aBlock value
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> services [
+	^ services
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> services: anObject [
+	services := anObject
 ]
 
 { #category : #accessing }
@@ -212,14 +226,24 @@ TestExecutionEnvironment >> testCase: anObject [
 	testCase := anObject
 ]
 
+{ #category : #accessing }
+TestExecutionEnvironment >> testProcess [
+	^ testProcess
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> testProcess: anObject [
+	testProcess := anObject
+]
+
 { #category : #controlling }
-TestExecutionEnvironment >> watchDogLoopFor: testProcess [
+TestExecutionEnvironment >> watchDogLoop [
 
 	| timeIsGone |
 	[	"waiting new test case" 
 		watchDogSemaphore wait. 
 		"waiting while test completes"
-		[timeIsGone := watchDogSemaphore waitTimeoutMSecs: maxTimeForTest asMilliSeconds.
+		[timeIsGone := watchDogSemaphore wait: maxTimeForTest.
 		testCompleted] whileFalse: [ 
 			"this subloop allows to dynamically change time limit and restart watch dog"
 			timeIsGone ifTrue: [
@@ -230,4 +254,9 @@ TestExecutionEnvironment >> watchDogLoopFor: testProcess [
 	] repeat
 
 
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> watchDogProcess [
+	^ watchDogProcess
 ]
