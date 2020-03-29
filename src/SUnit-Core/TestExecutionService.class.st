@@ -7,12 +7,6 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #'instance creation' }
-TestExecutionService class >> for: aTestExecutionEnvironment [
-	^self new 
-		executionEnvironment: aTestExecutionEnvironment 
-]
-
 { #category : #controlling }
 TestExecutionService >> cleanUpAfterTest [
 

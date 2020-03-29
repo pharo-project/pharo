@@ -1,41 +1,20 @@
 Class {
 	#name : #ProcessMonitorTestServiceTest,
-	#superclass : #TestExecutionServiceTestCase,
-	#instVars : [
-		'processes'
-	],
+	#superclass : #TestExecutionEnvironmentTestCase,
 	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #running }
 ProcessMonitorTestServiceTest >> createTestService [
 
-	^ProcessMonitorTestService for: testEnvironment
+	^ProcessMonitorTestService new
 ]
 
 { #category : #running }
 ProcessMonitorTestServiceTest >> fork: aBlock [
 	| newProcess |
-	newProcess := aBlock newProcess.
-	newProcess name: 'Test process', (processes size + 1) asString.
-	newProcess priority: Processor activePriority + 1.
-	processes add: newProcess.
-	
+	newProcess := self newProcess: 'Test process' toImmediatelyExecute: aBlock.
 	testService handleNewProcess: newProcess.
-	newProcess resume.
-	^newProcess
-]
-
-{ #category : #running }
-ProcessMonitorTestServiceTest >> runWithNoHandlersFor: aBlock [
-	"Executing the given block directly would go through all handlers of SUnit machinery.
-	Here we simulate the clean environment with no outer handlers for possible block errors"
-	| newProcess |
-	newProcess := aBlock newProcess.
-	newProcess name: 'Test process with no error handlers'.
-	newProcess priority: Processor activePriority + 1.
-	processes add: newProcess.
-	
 	newProcess resume.
 	^newProcess
 ]
@@ -45,13 +24,6 @@ ProcessMonitorTestServiceTest >> setUp [
 	super setUp.
 	
 	processes := OrderedCollection new
-]
-
-{ #category : #running }
-ProcessMonitorTestServiceTest >> tearDown [
-	super tearDown.
-	
-	processes do: [ :each | each terminate ]
 ]
 
 { #category : #tests }
@@ -169,7 +141,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessWhenItFailsTestWithUnhan
 	failedProcess := self fork: [ Processor activeProcess suspend. executed := true ].
 	testService suspendedBackgroundFailures at: failedProcess put: Error new.
 	
-	self runWithNoHandlersFor: [
+	self runWithNoHandlers: [
 		[testService handleCompletedTest] on: UnhandledError do: [ :err | ]
 	].
 

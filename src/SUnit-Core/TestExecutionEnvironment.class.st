@@ -129,7 +129,6 @@ TestExecutionEnvironment >> handleUnhandledException: anUnhandledException [
 TestExecutionEnvironment >> initialize [
 	super initialize.
 	services := OrderedCollection new.
-	services add: (ProcessMonitorTestService for: self).
 	testCompleted := false
 ]
 
@@ -159,7 +158,7 @@ TestExecutionEnvironment >> maxTimeForTest: aDuration [
 { #category : #controlling }
 TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	| processBlock |
-	watchDogProcess ifTrue: [ ^self ]. "we should not catch watchDogProcess which is always the first one"
+	watchDogProcess ifNil: [ ^self ]. "we should not catch watchDogProcess which is always the first one"
 	aProcess suspendedContext sender ifNotNil: [ ^self ]. "Some existing tests in system create processes on arbitrary block and then check suspendedContext state. Without this 'if' all these tests will fail"
 	processBlock := aProcess suspendedContext receiver.
 	processBlock isClosure ifFalse: [ ^self ]. "same case as in previous comment"
@@ -169,7 +168,8 @@ TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 
 { #category : #accessing }
 TestExecutionEnvironment >> registerService: aTestExecutionService [
-	
+
+	aTestExecutionService executionEnvironment: self.
 	services add: aTestExecutionService
 ]
 

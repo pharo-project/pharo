@@ -3,9 +3,9 @@ Class {
 	#superclass : #TestExecutionService,
 	#instVars : [
 		'forkedProcesses',
-		'handledExceptions',
-		'completedTestIsHandled',
-		'cleanUpIsDone'
+		'isCleanUpDone',
+		'isCompletedTestHandled',
+		'unhandledExceptions'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -13,27 +13,7 @@ Class {
 { #category : #controlling }
 TestServiceExample >> cleanUpAfterTest [
 
-	cleanUpIsDone := true
-]
-
-{ #category : #accessing }
-TestServiceExample >> cleanUpIsDone [
-	^ cleanUpIsDone
-]
-
-{ #category : #accessing }
-TestServiceExample >> cleanUpIsDone: anObject [
-	cleanUpIsDone := anObject
-]
-
-{ #category : #accessing }
-TestServiceExample >> completedTestIsHandled [
-	^ completedTestIsHandled
-]
-
-{ #category : #accessing }
-TestServiceExample >> completedTestIsHandled: anObject [
-	completedTestIsHandled := anObject
+	isCleanUpDone := true
 ]
 
 { #category : #accessing }
@@ -41,15 +21,10 @@ TestServiceExample >> forkedProcesses [
 	^ forkedProcesses
 ]
 
-{ #category : #accessing }
-TestServiceExample >> forkedProcesses: anObject [
-	forkedProcesses := anObject
-]
-
 { #category : #controlling }
 TestServiceExample >> handleCompletedTest [
 
-	completedTestIsHandled := true
+	isCompletedTestHandled := true
 ]
 
 { #category : #controlling }
@@ -61,23 +36,28 @@ TestServiceExample >> handleNewProcess: aProcess [
 { #category : #controlling }
 TestServiceExample >> handleUnhandledException: anUnhandledException [
 
-	handledExceptions add: anUnhandledException 
-]
-
-{ #category : #accessing }
-TestServiceExample >> handledExceptions [
-	^ handledExceptions
-]
-
-{ #category : #accessing }
-TestServiceExample >> handledExceptions: anObject [
-	handledExceptions := anObject
+	unhandledExceptions add: anUnhandledException 
 ]
 
 { #category : #initialization }
 TestServiceExample >> initialize [ 
 	forkedProcesses := OrderedCollection new.
-	handledExceptions := OrderedCollection new.
-	cleanUpIsDone := false.
-	completedTestIsHandled := false
+	unhandledExceptions := OrderedCollection new.
+	isCleanUpDone := false.
+	isCompletedTestHandled := false
+]
+
+{ #category : #accessing }
+TestServiceExample >> isCleanUpDone [
+	^ isCleanUpDone
+]
+
+{ #category : #accessing }
+TestServiceExample >> isCompletedTestHandled [
+	^ isCompletedTestHandled
+]
+
+{ #category : #accessing }
+TestServiceExample >> unhandledExceptions [
+	^ unhandledExceptions
 ]

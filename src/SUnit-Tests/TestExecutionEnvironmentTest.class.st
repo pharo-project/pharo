@@ -1,11 +1,8 @@
 Class {
 	#name : #TestExecutionEnvironmentTest,
-	#superclass : #TestCase,
+	#superclass : #TestExecutionEnvironmentTestCase,
 	#instVars : [
-		'executionEnvironment',
 		'exampleTestBlock',
-		'testService1',
-		'testService2',
 		'ranTest'
 	],
 	#category : #'SUnit-Tests-Core'
@@ -14,6 +11,11 @@ Class {
 { #category : #accessing }
 TestExecutionEnvironmentTest class >> defaultTimeLimit [
 	^9.1 seconds
+]
+
+{ #category : #running }
+TestExecutionEnvironmentTest >> createTestService [
+	^TestServiceExample new
 ]
 
 { #category : #helpers }
@@ -28,14 +30,6 @@ TestExecutionEnvironmentTest >> exampleTestBlock: anObject [
 	exampleTestBlock := anObject
 ]
 
-{ #category : #running }
-TestExecutionEnvironmentTest >> runCaseManaged [
-	"Here we are testing the test environment logic.
-	So we should disable it for ourselves"
-	
-	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
-]
-
 { #category : #helpers }
 TestExecutionEnvironmentTest >> runTestWith: aBlock [
 
@@ -46,24 +40,6 @@ TestExecutionEnvironmentTest >> runTestWith: aBlock [
 	executionEnvironment runTestCase: ranTest
 ]
 
-{ #category : #running }
-TestExecutionEnvironmentTest >> setUp [
-	super setUp.
-	
-	executionEnvironment := TestExecutionEnvironment new.
-	testService1 := TestServiceExample new.
-	testService2 := TestServiceExample new.
-	executionEnvironment registerService: testService1; registerService: testService2
-]
-
-{ #category : #running }
-TestExecutionEnvironmentTest >> tearDown [
-	
-	executionEnvironment deactivated. "for the case if we activated environment during test"
-	
-	super tearDown.
-]
-
 { #category : #tests }
 TestExecutionEnvironmentTest >> testActivation [
 
@@ -71,6 +47,33 @@ TestExecutionEnvironmentTest >> testActivation [
 	
 	self assert: executionEnvironment testProcess equals: Processor activeProcess.
 	self assert: executionEnvironment watchDogProcess isTerminated not
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testCleanUpTestServicesAfterFailedTest [
+
+	[ 
+		self runTestWith: [ self error: 'test error'] 
+	] ifError: [].
+
+	self assert: testService isCleanUpDone
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testCleanUpTestServicesAfterSucceedTest [
+
+	self runTestWith: [ #success].
+
+	self assert: testService isCleanUpDone
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testCleanUpTestServicesAfterTerminatedTest [
+
+	self runWithNoHandlers: [
+		self runTestWith: [ Processor terminateActive]].
+
+	self assert: testService isCleanUpDone 
 ]
 
 { #category : #tests }
@@ -84,6 +87,18 @@ TestExecutionEnvironmentTest >> testDeactivation [
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNotHandled [
+
+	self runWithNoHandlers: [ 
+		[ self runTestWith: [ self error: 'test error'] ]
+			on: UnhandledError do: [:exc | 
+				self deny: testService isCleanUpDone.
+	]].
+
+	self assert: testService isCleanUpDone
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testHandleForkedProcessesByAllServices [
 
 	| process |
@@ -92,8 +107,7 @@ TestExecutionEnvironmentTest >> testHandleForkedProcessesByAllServices [
 	process := [  ] newProcess name: 'test process'.
 	executionEnvironment prepareForNewProcess: process.
 	
-	self assert: (testService1 forkedProcesses includes: process).
-	self assert: (testService2 forkedProcesses includes: process)
+	self assert: (testService forkedProcesses includes: process)
 ]
 
 { #category : #tests }
@@ -127,65 +141,95 @@ TestExecutionEnvironmentTest >> testIgnoreWatchDogProcessAsForkedOne [
 	executionEnvironment activated.
 	executionEnvironment prepareForNewProcess: executionEnvironment watchDogProcess.
 	
-	self deny: (testService1 forkedProcesses includes: executionEnvironment watchDogProcess).
-	self deny: (testService2 forkedProcesses includes: executionEnvironment watchDogProcess)
+	self deny: (testService forkedProcesses includes: executionEnvironment watchDogProcess)
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testNotifyAllTestServicesAboutCompleteTests [
+TestExecutionEnvironmentTest >> testNotifyTestServicesAboutCompletedFailedTest [
+
+	[
+		self runTestWith: [ self error: 'test error' ]
+	] ifError: [ self deny: testService isCompletedTestHandled ].
+
+	self assert: testService isCompletedTestHandled
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testNotifyTestServicesAboutCompletedTest [
 
 	self runTestWith: [
-		self assert: testService1 completedTests isEmpty].
+		self deny: testService isCompletedTestHandled].
 
-	self assert: (testService1 completedTests includes: ranTest).
-	self assert: (testService2 completedTests includes: ranTest)
+	self assert: testService isCompletedTestHandled
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testNotifyAllTestServicesAboutErrorInTest [
-	| errorPassed error|
+TestExecutionEnvironmentTest >> testNotifyTestServicesAboutHalt [
+	| errorPassed expectedException|
 	errorPassed := false.
-	error := Error new messageText: 'test error'.
-	[self runTestWith: [ error signal]] on: Error do: [:err | 
-		errorPassed := true.
-		self assert: err identicalTo: error.
-		self assert: (testService1 failedTests includes: ranTest).
-		self assert: (testService2 failedTests includes: ranTest).
+	expectedException := Halt new messageText: 'test halt'.
+	self runWithNoHandlers: [	
+		[self runTestWith: [ expectedException signal]] on: Halt do: [:actualException | 
+			errorPassed := true.
+			self assert: actualException equals: expectedException.
+			self assert: (testService unhandledExceptions includes: actualException)].
 	].
 
 	self assert: errorPassed
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testNotifyAllTestServicesAboutHaltInTest [
-	<haltOrBreakpointForTesting>
-	| haltPassed |
-	haltPassed := false.
-	
-	[self runTestWith: [ self halt]] on: Halt do: [:halt | 
-		haltPassed := true.
-		self assert: (testService1 haltedTests includes: ranTest).
-		self assert: (testService2 haltedTests includes: ranTest).
+TestExecutionEnvironmentTest >> testNotifyTestServicesAboutUnhandledError [
+	| errorPassed expectedException|
+	errorPassed := false.
+	expectedException := Error new messageText: 'test error'.
+	self runWithNoHandlers: [	
+		[self runTestWith: [ expectedException signal]] on: UnhandledError do: [:actualException | 
+			errorPassed := true.
+			self assert: actualException exception equals: expectedException.
+			self assert: (testService unhandledExceptions includes: actualException)].
 	].
 
-	self assert: haltPassed
+	self assert: errorPassed
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testNotifyAllTestServicesAboutTerminatedTests [
+TestExecutionEnvironmentTest >> testNotifyTestServicesAboutWarning [
+	| errorPassed expectedException|
+	errorPassed := false.
+	expectedException := Warning new messageText: 'test halt'.
+	self runWithNoHandlers: [	
+		[self runTestWith: [ expectedException signal]] on: Warning do: [:actualException | 
+			errorPassed := true.
+			self assert: actualException equals: expectedException.
+			self assert: (testService unhandledExceptions includes: actualException)].
+	].
 
-	[self runTestWith: [ Processor terminateActive]] forkAt: Processor activePriority + 1.
-
-	self assert: (testService1 terminatedTests includes: ranTest).
-	self assert: (testService2 terminatedTests includes: ranTest).
-	self deny: (testService1 completedTests includes: ranTest).
-	self deny: (testService2 completedTests includes: ranTest)
+	self assert: errorPassed
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testResetWatchDogBetweenTests [
+TestExecutionEnvironmentTest >> testRegisteredServiceShouldBeBoundToEnvironment [
 
-	self runTestWith: [ executionEnvironment maxTimeForTest: 10 milliSeconds].
+	self assert: testService executionEnvironment equals: executionEnvironment
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenFailedTests [
+
+	[self runTestWith: [ 
+		executionEnvironment maxTimeForTest: self defaultTimeLimit + 10 seconds. 
+		self error: 'test error']
+	]	ifError: [].
+	
+	self runTestWith: [ 
+		self assert: executionEnvironment maxTimeForTest equals: self defaultTimeLimit]
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenTests [
+
+	self runTestWith: [ executionEnvironment maxTimeForTest: self defaultTimeLimit + 10 seconds].
 	
 	self runTestWith: [ 
 		self assert: executionEnvironment maxTimeForTest equals: self defaultTimeLimit]
