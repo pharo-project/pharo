@@ -3,38 +3,37 @@ Class {
 	#superclass : #TestExecutionService,
 	#instVars : [
 		'forkedProcesses',
-		'terminatedTests',
-		'completedTests',
-		'haltedTests',
-		'failedTests'
+		'handledExceptions',
+		'completedTestIsHandled',
+		'cleanUpIsDone'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #controlling }
-TestServiceExample >> cleanUpAfterTest: aTestCase [
+TestServiceExample >> cleanUpAfterTest [
 
-	terminatedTests add: aTestCase
+	cleanUpIsDone := true
 ]
 
 { #category : #accessing }
-TestServiceExample >> completedTests [
-	^ completedTests
+TestServiceExample >> cleanUpIsDone [
+	^ cleanUpIsDone
 ]
 
 { #category : #accessing }
-TestServiceExample >> completedTests: anObject [
-	completedTests := anObject
+TestServiceExample >> cleanUpIsDone: anObject [
+	cleanUpIsDone := anObject
 ]
 
 { #category : #accessing }
-TestServiceExample >> failedTests [
-	^ failedTests
+TestServiceExample >> completedTestIsHandled [
+	^ completedTestIsHandled
 ]
 
 { #category : #accessing }
-TestServiceExample >> failedTests: anObject [
-	failedTests := anObject
+TestServiceExample >> completedTestIsHandled: anObject [
+	completedTestIsHandled := anObject
 ]
 
 { #category : #accessing }
@@ -47,32 +46,10 @@ TestServiceExample >> forkedProcesses: anObject [
 	forkedProcesses := anObject
 ]
 
-{ #category : #accessing }
-TestServiceExample >> haltedTests [
-	^ haltedTests
-]
-
-{ #category : #accessing }
-TestServiceExample >> haltedTests: anObject [
-	haltedTests := anObject
-]
-
 { #category : #controlling }
-TestServiceExample >> handleCompletedTest: aTestCase [
+TestServiceExample >> handleCompletedTest [
 
-	completedTests add: aTestCase
-]
-
-{ #category : #controlling }
-TestServiceExample >> handleError: anError duringTest: aTestCase [
-
-	failedTests add: aTestCase
-]
-
-{ #category : #controlling }
-TestServiceExample >> handleHalt: aHalt duringTest: aTestCase [
-
-	haltedTests add: aTestCase
+	completedTestIsHandled := true
 ]
 
 { #category : #controlling }
@@ -81,21 +58,26 @@ TestServiceExample >> handleNewProcess: aProcess [
 	forkedProcesses add: aProcess
 ]
 
+{ #category : #controlling }
+TestServiceExample >> handleUnhandledException: anUnhandledException [
+
+	handledExceptions add: anUnhandledException 
+]
+
+{ #category : #accessing }
+TestServiceExample >> handledExceptions [
+	^ handledExceptions
+]
+
+{ #category : #accessing }
+TestServiceExample >> handledExceptions: anObject [
+	handledExceptions := anObject
+]
+
 { #category : #initialization }
 TestServiceExample >> initialize [ 
 	forkedProcesses := OrderedCollection new.
-	completedTests := OrderedCollection new.
-	terminatedTests := OrderedCollection new.
-	haltedTests := OrderedCollection new.
-	failedTests := OrderedCollection new.
-]
-
-{ #category : #accessing }
-TestServiceExample >> terminatedTests [
-	^ terminatedTests
-]
-
-{ #category : #accessing }
-TestServiceExample >> terminatedTests: anObject [
-	terminatedTests := anObject
+	handledExceptions := OrderedCollection new.
+	cleanUpIsDone := false.
+	completedTestIsHandled := false
 ]

@@ -14,7 +14,7 @@ TestExecutionService class >> for: aTestExecutionEnvironment [
 ]
 
 { #category : #controlling }
-TestExecutionService >> cleanUpAfterTest: aTestCase [
+TestExecutionService >> cleanUpAfterTest [
 
 ]
 
@@ -29,18 +29,13 @@ TestExecutionService >> executionEnvironment: anObject [
 ]
 
 { #category : #controlling }
-TestExecutionService >> handleCompletedTest: aTestCase [
-]
-
-{ #category : #controlling }
-TestExecutionService >> handleError: anError duringTest: aTestCase [
-]
-
-{ #category : #controlling }
-TestExecutionService >> handleHalt: aHalt duringTest: aTestCase [
-
+TestExecutionService >> handleCompletedTest [
 ]
 
 { #category : #controlling }
 TestExecutionService >> handleNewProcess: aProcess [
+]
+
+{ #category : #controlling }
+TestExecutionService >> handleUnhandledException: anUnhandledException [
 ]

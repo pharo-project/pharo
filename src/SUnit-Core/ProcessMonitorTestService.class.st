@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #controlling }
-ProcessMonitorTestService >> cleanUpAfterTest: aTestCase [
+ProcessMonitorTestService >> cleanUpAfterTest [
 
 	forkedProcesses do: [:each | each terminate].
 	forkedProcesses removeAll.
@@ -67,16 +67,16 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 	forkedProcesses add: aProcess.
 	
 	aProcess on: UnhandledError, Halt, Warning do: [ :err |
-		"It is possible to fork a process with copy of stack from another process.
-		It means that aProcess can be not an actual active process inside this block handler.
-		So we should not reference temp aProcess and instead we should work with actual active process"
-		self handleUnhandledException: err fromForkedProcess: Processor activeProcess]
+		self handleUnhandledException: err]
 ]
 
 { #category : #controlling }
-ProcessMonitorTestService >> handleUnhandledException: anError [
-	
-	self passSuspendedFailures 
+ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
+	| activeProcess |
+	activeProcess := Processor activeProcess.
+	(executionEnvironment isTestProcess: activeProcess)
+		ifTrue: [ self passSuspendedFailures ]
+		ifFalse: [ self handleUnhandledException: anUnhandledException fromForkedProcess: activeProcess]
 ]
 
 { #category : #controlling }

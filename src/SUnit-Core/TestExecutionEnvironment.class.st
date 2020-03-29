@@ -32,13 +32,13 @@ Class {
 	#name : #TestExecutionEnvironment,
 	#superclass : #ExecutionEnvironment,
 	#instVars : [
+		'testProcess',
 		'watchDogProcess',
 		'watchDogSemaphore',
 		'testCase',
 		'maxTimeForTest',
 		'testCompleted',
-		'services',
-		'testProcess'
+		'services'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -82,7 +82,7 @@ TestExecutionEnvironment >> activated [
 { #category : #controlling }
 TestExecutionEnvironment >> cleanUpAfterTest [
 	
-	services do: [ :each | each cleanUpAfterTest: testCase]
+	services do: [ :each | each cleanUpAfterTest]
 ]
 
 { #category : #controlling }
