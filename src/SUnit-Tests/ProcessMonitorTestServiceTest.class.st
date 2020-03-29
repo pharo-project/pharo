@@ -12,6 +12,8 @@ ProcessMonitorTestServiceTest >> createTestService [
 
 { #category : #running }
 ProcessMonitorTestServiceTest >> fork: aBlock [
+	"Here we simulate fork under TestExecutionEnvironment 
+	which passes new process to all test services"
 	| newProcess |
 	newProcess := self newProcess: 'Test process' toImmediatelyExecute: aBlock.
 	testService handleNewProcess: newProcess.
@@ -20,26 +22,25 @@ ProcessMonitorTestServiceTest >> fork: aBlock [
 ]
 
 { #category : #running }
-ProcessMonitorTestServiceTest >> setUp [
+ProcessMonitorTestServiceTest >> setUp [ 
 	super setUp.
 	
-	processes := OrderedCollection new
+	executionEnvironment activated 
 ]
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
-	<haltOrBreakpointForTesting>
-	| process haltWasPassed |
+	| process haltWasPassed halt |
 	haltWasPassed := false.
-	process := [ self halt ] newProcess name: 'test process'; priority: Processor activePriority + 1.
+	halt := Halt new.
+	process := self fork: [ Processor activeProcess suspend. halt signal ].
 	testService handleNewProcess: process.
 	
-	process on: Halt do: [ :err | haltWasPassed := true ].
+	process on: Halt do: [ :actual | self assert: actual equals: halt. haltWasPassed := true ].
 	process resume.
 	
 	self assert: process isTerminated.
 	self assert: haltWasPassed.
-	self assert: (testService forkedProcesses includes: process).
 	self deny: (testService suspendedBackgroundFailures includesKey: process)
 ]
 
@@ -122,11 +123,11 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 	| process error errorWasPassed |
 	errorWasPassed := false.
 	error := Error new messageText: 'test error'.
-	process := [ error signal ] newProcess name: 'test process'; priority: Processor activePriority + 1.
-	testService handleNewProcess: process.
+	process := self fork: [ Processor activeProcess suspend. error signal ].	
 	
 	testService disableBackgroudFailuresSuspension.
 	self deny: testService shouldSuspendBackgroundFailures.
+	
 	process on: UnhandledError do: [ :err | errorWasPassed := true ].
 	process resume.
 	
@@ -136,27 +137,55 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testResumeFailedProcessWhenItFailsTestWithUnhandledError [
-	| failedProcess executed |
+	"Test with background failures is failing with TestFailedByForkedProcess.
+	In case when it is unhandled (when we debug the test) it should resume all background failures"
+	| executed failedProcess |
 	executed := false.
-	failedProcess := self fork: [ Processor activeProcess suspend. executed := true ].
-	testService suspendedBackgroundFailures at: failedProcess put: Error new.
+	failedProcess := self fork: [testService suspendBackgroundFailure: Error new. executed := true ].
+	self assert: failedProcess isSuspended.
 	
 	self runWithNoHandlers: [
-		[testService handleCompletedTest] on: UnhandledError do: [ :err | ]
+		[testService handleCompletedTest] on: UnhandledError do: [ :err |
+			self deny: failedProcess isSuspended]
 	].
 
 	self assert: executed 
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhandled [
-	| failedProcess executed |
+ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaled [
+	| executed |
 	executed := false.
-	failedProcess := self fork: [ Processor activeProcess suspend. executed := true ].
-	testService suspendedBackgroundFailures at: failedProcess put: Error new.
+	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
+
+	testService handleUnhandledException: Halt new. 
+	
+	self assert: executed.
+	self deny: testService shouldSuspendBackgroundFailures
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaledInBackground [
+	| processWithHalt executed |
+	executed := false.
+	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
+	processWithHalt := self fork: [ Processor activeProcess suspend. Halt new signal ].
+	
+	processWithHalt on: Halt do: [ :actual | ].
+	processWithHalt resume.
+	
+	self assert: executed.
+	self deny: testService shouldSuspendBackgroundFailures
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhandled [
+	| executed |
+	executed := false.
+	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
 	self deny: executed.	
 
-	testService handleUnhandledException: Error new.
+	testService handleUnhandledException: UnhandledError new.
 	self assert: executed.
 	"Unhandled exception opens debugger and therefore any new errors should not be suspended"
 	self deny: testService shouldSuspendBackgroundFailures 

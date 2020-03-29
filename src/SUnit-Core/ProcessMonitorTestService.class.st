@@ -83,7 +83,9 @@ ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 ProcessMonitorTestService >> handleUnhandledException: anException fromForkedProcess: aProcess [
 
 	shouldSuspendBackgroundFailures ifFalse: [ ^anException pass ].
-	(anException isKindOf: Halt) ifTrue: [ ^anException pass ].
+	(anException isKindOf: Halt) ifTrue: [ 
+		self passSuspendedFailures.
+		^anException pass ].
 	
 	suspendedBackgroundFailures at: aProcess put: anException.
 	aProcess isTerminating ifFalse: [aProcess suspend].
@@ -123,12 +125,20 @@ ProcessMonitorTestService >> shouldSuspendBackgroundFailures: anObject [
 	shouldSuspendBackgroundFailures := anObject
 ]
 
-{ #category : #accessing }
-ProcessMonitorTestService >> suspendedBackgroundFailures [
-	^ suspendedBackgroundFailures
+{ #category : #controlling }
+ProcessMonitorTestService >> suspendBackgroundFailure: anException [
+
+	| activeProcess |
+	activeProcess := Processor activeProcess.
+	activeProcess isTerminating ifTrue: [ 
+		"Do nothing for exceptions during process termination"
+		^self ]. 
+	
+	suspendedBackgroundFailures at: activeProcess put: anException.
+	activeProcess suspend
 ]
 
 { #category : #accessing }
-ProcessMonitorTestService >> suspendedBackgroundFailures: anObject [
-	suspendedBackgroundFailures := anObject
+ProcessMonitorTestService >> suspendedBackgroundFailures [
+	^ suspendedBackgroundFailures
 ]

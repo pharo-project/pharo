@@ -145,6 +145,16 @@ TestExecutionEnvironmentTest >> testIgnoreWatchDogProcessAsForkedOne [
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testIsTestProcess [
+
+	executionEnvironment activated.
+	
+	self assert: (executionEnvironment isTestProcess: Processor activeProcess).
+	
+	self deny: (executionEnvironment isTestProcess: [] newProcess).
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testNotifyTestServicesAboutCompletedFailedTest [
 
 	[
