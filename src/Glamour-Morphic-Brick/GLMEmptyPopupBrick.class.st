@@ -400,8 +400,7 @@ GLMEmptyPopupBrick >> openOn: aBrick [
 { #category : #initialization }
 GLMEmptyPopupBrick >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
-	
-	self unsubscribeListeners
+	self unsubscribeListeners: aWorld
 ]
 
 { #category : #'popup - layout' }
@@ -486,7 +485,7 @@ GLMEmptyPopupBrick >> triggerBrick: aBrick [
 ]
 
 { #category : #'popup - listeners' }
-GLMEmptyPopupBrick >> unsubscribeListeners [
+GLMEmptyPopupBrick >> unsubscribeListeners: anObject [
 
 	self removeCloserListener
 ]

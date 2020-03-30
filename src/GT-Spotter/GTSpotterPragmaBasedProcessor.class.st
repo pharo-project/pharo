@@ -2,27 +2,57 @@
 This is the abstract class that models a processor that is associated with a spotter category. It can spot items to be displayed in that category by reacting to a filter: message. 
 "
 Class {
-	#name : #GTSpotterProcessor,
+	#name : #GTSpotterPragmaBasedProcessor,
 	#superclass : #Object,
 	#instVars : [
 		'allFilteredCandidates',
-		'order'
+		'order',
+		'running'
 	],
-	#category : #'GT-Spotter-Processors'
+	#classVars : [
+		'DefaultItemsLimit'
+	],
+	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
+{ #category : #'accessing-defaults' }
+GTSpotterPragmaBasedProcessor class >> defaultItemsLimit [
+
+	^ DefaultItemsLimit ifNil: [ DefaultItemsLimit := 25 ]
+]
+
+{ #category : #'accessing-defaults' }
+GTSpotterPragmaBasedProcessor class >> defaultItemsLimit: aValue [
+
+	DefaultItemsLimit := aValue
+]
+
+{ #category : #'accessing-defaults' }
+GTSpotterPragmaBasedProcessor class >> settingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder setting: #defaultItemsLimit)
+		target: self;
+		parent: #spotter;
+		label: 'Number of results per category';
+		default: 25;
+		order: 100;
+		description:
+			'Number of results per category to show in Spotter'
+]
+
 { #category : #public }
-GTSpotterProcessor >> actOn: anObject for: aStep [
+GTSpotterPragmaBasedProcessor >> actOn: anObject for: aStep [
 	anObject spotterActDefault: aStep
 ]
 
 { #category : #public }
-GTSpotterProcessor >> allFilteredCandidates [
+GTSpotterPragmaBasedProcessor >> allFilteredCandidates [
 	^ allFilteredCandidates ifNil: [ allFilteredCandidates := OrderedCollection new ]
 ]
 
 { #category : #private }
-GTSpotterProcessor >> basicContinueFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> basicContinueFilterInContext: aSpotterContext [
 
 	" We DO NOT prepare the context since we could no longer continue producing filtered candidates. "
 	(self shouldFilterInContext: aSpotterContext) ifTrue: [
@@ -34,18 +64,29 @@ GTSpotterProcessor >> basicContinueFilterInContext: aSpotterContext [
 ]
 
 { #category : #private }
-GTSpotterProcessor >> basicFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> basicFilterInContext: aSpotterContext [
+
+	running := true.
+	aSpotterContext stream 
+		performSymbol: #processorStarted: 
+		withArguments: { self }.
 	
 	self prepareProcessorInContext: aSpotterContext.
 	(self shouldFilterInContext: aSpotterContext) ifTrue: [
 		allFilteredCandidates := self doFilterInContext: aSpotterContext ].
 	aSpotterContext stream 
 		performSymbol: #onAmountChanged:in: 
-		withArguments: { self allFilteredCandidates size . self }
+		withArguments: { self allFilteredCandidates size . self }.
+		
+	running := false.
+	aSpotterContext stream 
+		performSymbol: #processorEnded: 
+		withArguments: { self }.
+
 ]
 
 { #category : #private }
-GTSpotterProcessor >> continueFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> continueFilterInContext: aSpotterContext [
 	[ self basicContinueFilterInContext: aSpotterContext ]
 		on: Error 
 		do: [ :exception | 
@@ -55,12 +96,12 @@ GTSpotterProcessor >> continueFilterInContext: aSpotterContext [
 ]
 
 { #category : #private }
-GTSpotterProcessor >> doContinueFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> doContinueFilterInContext: aSpotterContext [
 	^ aSpotterContext doContinueFilterForProcessor: self
 ]
 
 { #category : #private }
-GTSpotterProcessor >> doFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> doFilterInContext: aSpotterContext [
 	"override this method to:
 	- add items to the stream
 	- return all found items at the end"
@@ -68,13 +109,13 @@ GTSpotterProcessor >> doFilterInContext: aSpotterContext [
 ]
 
 { #category : #'accessing-dynamic' }
-GTSpotterProcessor >> exceptionHandler [
+GTSpotterPragmaBasedProcessor >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
 	^ GTCurrentSpotterExceptionHandler value ifNil: [ GTSpotterExceptionHandlerNotFound signal ]
 ]
 
 { #category : #private }
-GTSpotterProcessor >> filterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> filterInContext: aSpotterContext [
 	[ self basicFilterInContext: aSpotterContext ]
 		on: Error 
 		do: [ :exception | 
@@ -84,19 +125,59 @@ GTSpotterProcessor >> filterInContext: aSpotterContext [
 ]
 
 { #category : #printing }
-GTSpotterProcessor >> gtDisplayOn: stream [
+GTSpotterPragmaBasedProcessor >> gtDisplayOn: stream [
 	stream 
 		nextPutAll: 'Processor: ';
 		nextPutAll: self title asString
 ]
 
 { #category : #testing }
-GTSpotterProcessor >> hasFilteredCandidates [
+GTSpotterPragmaBasedProcessor >> hasFilteredCandidates [
 	^ self allFilteredCandidates notEmpty
 ]
 
+{ #category : #initialization }
+GTSpotterPragmaBasedProcessor >> initialize [ 
+
+	super initialize.
+	running := false
+]
+
+{ #category : #'key-bindings' }
+GTSpotterPragmaBasedProcessor >> installKeymappingsOn: aGTSpotterMorph [
+
+	self keyBinding
+		ifNotNil: [ | keyCombination |
+			keyCombination := self keyBinding asKeyCombination.
+			aGTSpotterMorph 
+				bindKeyCombination: keyCombination 
+				ofProcessor: self 
+				toAction: [ aGTSpotterMorph onKeyProcessor: self ] ]
+]
+
+{ #category : #testing }
+GTSpotterPragmaBasedProcessor >> isRelevantForQuery: categoryQueryPrefix [
+	| trimmedProcessorTitle |
+	trimmedProcessorTitle := self title asLowercase 
+										copyReplaceAll: String space
+										with: ''.
+	^ trimmedProcessorTitle beginsWith: categoryQueryPrefix
+]
+
+{ #category : #testing }
+GTSpotterPragmaBasedProcessor >> isRunning [ 
+	
+	^ running
+]
+
+{ #category : #'key-bindings' }
+GTSpotterPragmaBasedProcessor >> keyBinding [
+
+	^ nil
+]
+
 { #category : #accessing }
-GTSpotterProcessor >> order [
+GTSpotterPragmaBasedProcessor >> order [
 	"Return assigned spotter order used to arrange categories in spotter UI"
 	<return: #Number>
 	
@@ -104,34 +185,34 @@ GTSpotterProcessor >> order [
 ]
 
 { #category : #accessing }
-GTSpotterProcessor >> order: aNumber [
+GTSpotterPragmaBasedProcessor >> order: aNumber [
 	"Assign to processor its spotter order to arrange categories
 	within spotter ui"
 	order := aNumber
 ]
 
 { #category : #private }
-GTSpotterProcessor >> prepareProcessorInContext: aContext [
+GTSpotterPragmaBasedProcessor >> prepareProcessorInContext: aContext [
 	allFilteredCandidates := nil
 ]
 
 { #category : #testing }
-GTSpotterProcessor >> shouldFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> shouldFilterInContext: aSpotterContext [
 	^ aSpotterContext notEmpty 
 		or: [ self wantsToDisplayOnEmptyQuery ]
 ]
 
 { #category : #accessing }
-GTSpotterProcessor >> title [
+GTSpotterPragmaBasedProcessor >> title [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-GTSpotterProcessor >> wantsToDisplayOnEmptyQuery [
+GTSpotterPragmaBasedProcessor >> wantsToDisplayOnEmptyQuery [
 	^ true
 ]
 
 { #category : #private }
-GTSpotterProcessor >> withItemsLimit: aLimit do: aBlock [
+GTSpotterPragmaBasedProcessor >> withItemsLimit: aLimit do: aBlock [
 	^ aBlock value
 ]

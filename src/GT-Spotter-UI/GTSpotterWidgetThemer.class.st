@@ -328,6 +328,16 @@ GTSpotterWidgetThemer >> helpButtonWidgetStyleFor: aBrick [
 ]
 
 { #category : #styles }
+GTSpotterWidgetThemer >> helpWidgetStyleFor: aBrick [ 
+	
+	aBrick
+		height: 25;
+		margin: 0;
+		marginTop: 1;
+		color: self backgroundColor.
+]
+
+{ #category : #styles }
 GTSpotterWidgetThemer >> hintHideArrowStyleFor: aBrick [
 
 	aBrick ifNil: [ ^ self ].
@@ -721,6 +731,8 @@ GTSpotterWidgetThemer >> spotterContentsStyleFor: aBrick [
 		padding: self outerBorderWidth;
 		hSpaceFill;
 		vSpaceFill.
+	
+	aBrick marginRight: 1.
 	
 	aBrick layout
 		zIndex: 2

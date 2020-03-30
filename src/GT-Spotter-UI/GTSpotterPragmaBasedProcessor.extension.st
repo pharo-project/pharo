@@ -1,7 +1,7 @@
-Extension { #name : #GTSpotterProcessor }
+Extension { #name : #GTSpotterPragmaBasedProcessor }
 
 { #category : #'*GT-Spotter-UI' }
-GTSpotterProcessor >> render: anObject [
+GTSpotterPragmaBasedProcessor >> render: anObject [
 	^ GTSpotterItemBrick new
 		icon: (nil);
 		text: (anObject gtDisplayString)
