@@ -194,9 +194,7 @@ ReflectivityExamples >> exampleWithArg: anArg [
 { #category : #initialization }
 ReflectivityExamples >> initialize [
 	ivar := 33.
-	ClassVar := #AClassVar.
-	self removeTemporaryMethods.
-	self compileTemporaryMethods
+	ClassVar := #AClassVar
 ]
 
 { #category : #initialization }
