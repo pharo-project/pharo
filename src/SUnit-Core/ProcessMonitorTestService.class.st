@@ -14,13 +14,20 @@ ProcessMonitorTestService >> cleanUpAfterTest [
 
 	forkedProcesses do: [:each | each terminate].
 	forkedProcesses removeAll.
-	suspendedBackgroundFailures removeAll
+	suspendedBackgroundFailures removeAll.
+	self enableBackgroudFailuresSuspension
 ]
 
 { #category : #accessing }
 ProcessMonitorTestService >> disableBackgroudFailuresSuspension [
 
 	shouldSuspendBackgroundFailures := false
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
+
+	shouldSuspendBackgroundFailures := true
 ]
 
 { #category : #controlling }
@@ -54,12 +61,8 @@ ProcessMonitorTestService >> forkedProcesses: anObject [
 { #category : #controlling }
 ProcessMonitorTestService >> handleCompletedTest [
 
-	[self ensureNoBackgroundFailures.
-	self ensureNoRunningProcesses]
-		ensure: [ 
-			"forkedProcesses do: [ :each | each terminate ].
-			forkedProcesses removeAll.
-			suspendedBackgroundFailures removeAll"]
+	self ensureNoBackgroundFailures.
+	self ensureNoRunningProcesses
 ]
 
 { #category : #controlling }
@@ -96,15 +99,16 @@ ProcessMonitorTestService >> handleUnhandledException: anException fromForkedPro
 ProcessMonitorTestService >> initialize [
 	super initialize.
 	
+	self enableBackgroudFailuresSuspension.
 	forkedProcesses := WeakSet new.
 	suspendedBackgroundFailures := OrderedIdentityDictionary new.
-	shouldSuspendBackgroundFailures := true
+	 
 ]
 
 { #category : #controlling }
 ProcessMonitorTestService >> passSuspendedFailures [	
-	shouldSuspendBackgroundFailures := false.
-	
+	self disableBackgroudFailuresSuspension.
+		
 	suspendedBackgroundFailures keys 
 		reject: [:each | each isTerminated ] 
 		thenDo: [:each | each resume ]

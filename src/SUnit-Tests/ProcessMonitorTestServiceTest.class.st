@@ -45,39 +45,42 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testCleanForkedProcessesWhenTestIsCompletedAndBackgroundFailuresAreTerminated [
-	| failedProcess |
-	failedProcess := self fork: [ 10 seconds wait ].
-	testService suspendedBackgroundFailures at: failedProcess put: Error new.
-	
-	[ [testService handleCompletedTest] 
-		on: TestFailedByForkedProcess do: [:err | Processor activeProcess terminate]
-	] forkAt: Processor activePriority + 1.
+ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreSuspensionLogic [
 
-	self assert: failedProcess isTerminated.
-	self assert: testService forkedProcesses isEmpty.
-	self assert: testService suspendedBackgroundFailures isEmpty
+	testService passSuspendedFailures.
+	self deny: testService shouldSuspendBackgroundFailures.
+	
+	testService cleanUpAfterTest.
+	self assert: testService shouldSuspendBackgroundFailures
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testCleanForkedProcessesWhenTestIsCompletedAndFailureIsResumed [
-	| failedProcess |
-	failedProcess := self fork: [ 10 seconds wait ].
-	testService suspendedBackgroundFailures at: failedProcess put: Error new.
+ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllFailedProcesses [
+	| process  |
+	process := self fork: [ testService suspendBackgroundFailure: Error new ].
 	
-	[testService handleCompletedTest] 
-		on: TestFailedByForkedProcess do: [ :err | 	err resume]. 
-			
-	self assert: testService forkedProcesses isEmpty.
-	self assert: testService suspendedBackgroundFailures isEmpty
+	testService cleanUpAfterTest.
+	
+	self assert: process isTerminated.		
+	self assert: testService suspendedBackgroundFailures isEmpty.
+	self assert: testService forkedProcesses isEmpty
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
+	| process  |
+	process := self fork: [ 10 seconds wait ].
+	
+	testService cleanUpAfterTest.
+	
+	self assert: process isTerminated.		
+	self assert: testService forkedProcesses isEmpty
 ]
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailures [
 
-	| process |
-	process := self fork: [ 10 seconds wait ].
-	testService suspendedBackgroundFailures at: process put: Error new.
+	self fork: [ testService suspendBackgroundFailure: Error new ].
 	
 	self should: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
@@ -85,9 +88,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFail
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailuresAndRunningProcesses [
 
-	| failedProcess |
-	failedProcess := self fork: [ 10 seconds wait ].
-	testService suspendedBackgroundFailures at: failedProcess put: Error new.
+	self fork: [ testService suspendBackgroundFailure: Error new ].
 	self fork: [ 10 seconds wait ].
 	
 	self 
@@ -228,56 +229,4 @@ ProcessMonitorTestServiceTest >> testSuspendBackgroundWarning [
 	
 	self assert: process isSuspended.
 	self assert: (testService suspendedBackgroundFailures at: process) class equals: Warning
-]
-
-{ #category : #tests }
-ProcessMonitorTestServiceTest >> testTerminateAllFailedProcessesWhenTestIsTerminated [
-	| process  |
-	process := self fork: [ 10 seconds wait ].
-	testService suspendedBackgroundFailures at: process put: Error new.
-	
-	testService handleTerminatedTest: #someTestCase.
-	
-	self assert: process isTerminated.		
-	self assert: testService forkedProcesses isEmpty.
-	self assert: testService suspendedBackgroundFailures isEmpty
-]
-
-{ #category : #tests }
-ProcessMonitorTestServiceTest >> testTerminateAllForkedProcessesWhenTestIsTerminated [
-	| process  |
-	process := self fork: [ 10 seconds wait ].
-	
-	testService handleTerminatedTest: #someTestCase.
-	
-	self assert: process isTerminated.		
-	self assert: testService forkedProcesses isEmpty.
-]
-
-{ #category : #tests }
-ProcessMonitorTestServiceTest >> testTerminateFailedProcessWhenTestFailureIsHandled [
-	| process |
-	process := self fork: [ 10 seconds wait ].
-	testService suspendedBackgroundFailures at: process put: Error new.
-	
-	[testService handleCompletedTest.
-	self deny: process isTerminated] 
-		on: TestFailedByForkedProcess 
-		do: [ :err | "here we handle test failure with no action" ].
-		
-	self assert: process isTerminated
-]
-
-{ #category : #tests }
-ProcessMonitorTestServiceTest >> testTerminateLeftRunningProcessWhenTestFailureIsHandled [
-
-	| process |
-	process := self fork: [ 10 seconds wait ].
-	
-	[testService handleCompletedTest.
-	self deny: process isTerminated] 
-		on: TestLeftRunningProcess 
-		do: [ :err | "here we handle test failure with no action" ].
-		
-	self assert: process isTerminated
 ]
