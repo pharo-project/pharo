@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'parent',
 		'originalNode',
-		'children'
+		'children',
+		'tokens'
 	],
 	#category : #'ClassParser-Model'
 }
@@ -166,4 +167,14 @@ CDNode >> start [
 CDNode >> stop [
 	
 	^ originalNode stop
+]
+
+{ #category : #accessing }
+CDNode >> tokens [ 
+	^ tokens
+]
+
+{ #category : #accessing }
+CDNode >> tokens: aCollectionOfTokens [
+	tokens := aCollectionOfTokens
 ]

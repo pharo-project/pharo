@@ -6246,6 +6246,87 @@ Morph >> themeChanged [
 	self changed
 ]
 
+{ #category : #tiling }
+Morph >> tileBottom [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max leftCenter corner: max corner)
+]
+
+{ #category : #tiling }
+Morph >> tileBottomLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max leftCenter corner: max bottomCenter)
+]
+
+{ #category : #tiling }
+Morph >> tileBottomRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max center corner: max corner)
+]
+
+{ #category : #tiling }
+Morph >> tileCenter [
+
+	| max initial |
+	max := RealEstateAgent maximumUsableArea.
+	initial := self initialExtent.
+	self bounds: ((max center - (initial/2)) extent: initial)
+]
+
+{ #category : #tiling }
+Morph >> tileFull [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: max
+]
+
+{ #category : #tiling }
+Morph >> tileLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max bottomCenter)
+]
+
+{ #category : #tiling }
+Morph >> tileRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topCenter corner: max corner)
+]
+
+{ #category : #tiling }
+Morph >> tileTop [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max rightCenter)
+]
+
+{ #category : #tiling }
+Morph >> tileTopLeft [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topLeft corner: max center)
+]
+
+{ #category : #tiling }
+Morph >> tileTopRight [
+
+	| max |
+	max := RealEstateAgent maximumUsableArea.
+	self bounds: (max topCenter corner: max rightCenter)
+]
+
 { #category : #rounding }
 Morph >> toggleCornerRounding [
 	self cornerStyle == #rounded

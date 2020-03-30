@@ -71,7 +71,7 @@ ThemeIcons class >> createFetchButtonUpdating: listMorph [
 { #category : #settings }
 ThemeIcons class >> createIconPackList [
 	^ (Smalltalk ui theme 
-		newDropListIn: self
+		newDropListIn: Morph new
 		for: self
 		list: #availablePacks
 		getSelected: #current
