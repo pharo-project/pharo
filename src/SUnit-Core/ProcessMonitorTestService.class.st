@@ -75,7 +75,7 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
-	executionEnvironment isTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
+	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
 	
 	shouldSuspendBackgroundFailures ifTrue: [
 		anUnhandledException suspendDefaultActionForTestBy: self].

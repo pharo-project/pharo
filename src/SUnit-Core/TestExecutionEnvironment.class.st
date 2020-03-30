@@ -32,13 +32,13 @@ Class {
 	#name : #TestExecutionEnvironment,
 	#superclass : #ExecutionEnvironment,
 	#instVars : [
-		'testProcess',
 		'watchDogProcess',
 		'watchDogSemaphore',
 		'testCase',
 		'maxTimeForTest',
 		'testCompleted',
-		'services'
+		'services',
+		'mainTestProcess'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -69,7 +69,7 @@ TestExecutionEnvironment class >> resetFailures [
 { #category : #controlling }
 TestExecutionEnvironment >> activated [
 
-	testProcess := Processor activeProcess.
+	mainTestProcess := Processor activeProcess.
 	watchDogSemaphore := Semaphore new.
 	watchDogProcess := [self watchDogLoop] newProcess.
 	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
@@ -133,18 +133,28 @@ TestExecutionEnvironment >> initialize [
 ]
 
 { #category : #testing }
+TestExecutionEnvironment >> isMainTestProcess: aProcess [
+	^mainTestProcess = aProcess
+]
+
+{ #category : #testing }
+TestExecutionEnvironment >> isMainTestProcessActive [
+	^self isMainTestProcess: Processor activeProcess
+]
+
+{ #category : #testing }
 TestExecutionEnvironment >> isTest [
 	^true
 ]
 
-{ #category : #testing }
-TestExecutionEnvironment >> isTestProcess: aProcess [
-	^testProcess = aProcess
+{ #category : #accessing }
+TestExecutionEnvironment >> mainTestProcess [
+	^ mainTestProcess
 ]
 
-{ #category : #testing }
-TestExecutionEnvironment >> isTestProcessActive [
-	^self isTestProcess: Processor activeProcess
+{ #category : #accessing }
+TestExecutionEnvironment >> mainTestProcess: anObject [
+	mainTestProcess := anObject
 ]
 
 { #category : #accessing }
@@ -231,16 +241,6 @@ TestExecutionEnvironment >> testCase: anObject [
 	testCase := anObject
 ]
 
-{ #category : #accessing }
-TestExecutionEnvironment >> testProcess [
-	^ testProcess
-]
-
-{ #category : #accessing }
-TestExecutionEnvironment >> testProcess: anObject [
-	testProcess := anObject
-]
-
 { #category : #controlling }
 TestExecutionEnvironment >> watchDogLoop [
 
@@ -254,8 +254,8 @@ TestExecutionEnvironment >> watchDogLoop [
 			timeIsGone ifTrue: [
 				"The main purpose of following condition is to ignore timeout when test is under debug.
 				Test process is suspended only when it is debugged"
-				testProcess isSuspended ifFalse: [
-					testProcess signalException: TestTookTooMuchTime new]]	].
+				mainTestProcess isSuspended ifFalse: [
+					mainTestProcess signalException: TestTookTooMuchTime new]]	].
 	] repeat
 
 

@@ -45,7 +45,7 @@ TestExecutionEnvironmentTest >> testActivation [
 
 	executionEnvironment activated.
 	
-	self assert: executionEnvironment testProcess equals: Processor activeProcess.
+	self assert: executionEnvironment mainTestProcess equals: Processor activeProcess.
 	self assert: executionEnvironment watchDogProcess isTerminated not
 ]
 
@@ -145,24 +145,24 @@ TestExecutionEnvironmentTest >> testIgnoreWatchDogProcessAsForkedOne [
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testIsTestProcess [
+TestExecutionEnvironmentTest >> testIsMainTestProcess [
 
 	executionEnvironment activated.
 	
-	self assert: (executionEnvironment isTestProcess: Processor activeProcess).
+	self assert: (executionEnvironment isMainTestProcess: Processor activeProcess).
 	
-	self deny: (executionEnvironment isTestProcess: [] newProcess).
+	self deny: (executionEnvironment isMainTestProcess: [] newProcess).
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testIsTestProcessActive [
+TestExecutionEnvironmentTest >> testIsMainTestProcessActive [
 
 	executionEnvironment activated.
 	
-	self assert: (executionEnvironment isTestProcessActive).
+	self assert: (executionEnvironment isMainTestProcessActive).
 	
 	self runWithNoHandlers: [ 
-		self deny: (executionEnvironment isTestProcessActive) ]
+		self deny: (executionEnvironment isMainTestProcessActive) ]
 ]
 
 { #category : #tests }
