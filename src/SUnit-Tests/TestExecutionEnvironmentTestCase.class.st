@@ -58,6 +58,7 @@ TestExecutionEnvironmentTestCase >> setUp [
 	processes := OrderedCollection new.
 	
 	testService := self createTestService.	
+	testService enable.
 	executionEnvironment := TestExecutionEnvironment new.
 	executionEnvironment registerService: testService.
 
@@ -70,4 +71,23 @@ TestExecutionEnvironmentTestCase >> tearDown [
 	processes do: [ :each | each terminate ].
 	
 	super tearDown.
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTestCase >> testCleanUpShouldRevertServiceToBeEnabledByDefault [
+
+	testService isEnabled: testService isEnabledByDefault not.
+	
+	testService cleanUpAfterTest.
+	
+	self assert: testService isEnabled equals: testService isEnabledByDefault
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTestCase >> testIsEnabledByDefault [
+
+	testService := self createTestService.
+	
+	self assert: testService isEnabled equals: testService isEnabledByDefault.
+	self assert: testService isEnabledByDefault equals: testService class isEnabled
 ]

@@ -9,9 +9,15 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
+{ #category : #'fuel support' }
+ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
+    ^#('forkedProcesses' 'suspendedBackgroundFailures' shouldSuspendBackgroundFailures)
+]
+
 { #category : #controlling }
 ProcessMonitorTestService >> cleanUpAfterTest [
-
+	super cleanUpAfterTest.
+	
 	forkedProcesses do: [:each | each terminate].
 	forkedProcesses removeAll.
 	suspendedBackgroundFailures removeAll.
@@ -60,13 +66,16 @@ ProcessMonitorTestService >> forkedProcesses: anObject [
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleCompletedTest [
-
+	super handleCompletedTest.
+	
 	self ensureNoBackgroundFailures.
 	self ensureNoRunningProcesses
 ]
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleNewProcess: aProcess [
+	super handleNewProcess: aProcess.
+	
 	forkedProcesses add: aProcess.
 	
 	aProcess on: UnhandledError, Halt, Warning do: [ :err |
@@ -75,6 +84,8 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
+	super handleUnhandledException: anUnhandledException.
+	
 	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
 	
 	shouldSuspendBackgroundFailures ifTrue: [

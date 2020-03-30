@@ -51,7 +51,7 @@ TestExecutionEnvironment class >> currentFailures [
 
 { #category : #'fuel support' }
 TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
-    ^#('watchDogProcess' 'watchDogSemaphore' 'forkedProcesses' 'failedProcesses')
+    ^#('watchDogProcess' 'watchDogSemaphore' 'mainTestProcess')
 ]
 
 { #category : #controlling }
@@ -70,17 +70,15 @@ TestExecutionEnvironment class >> resetFailures [
 TestExecutionEnvironment >> activated [
 
 	mainTestProcess := Processor activeProcess.
-	watchDogSemaphore := Semaphore new.
-	watchDogProcess := [self watchDogLoop] newProcess.
-	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
-	watchDogProcess 
-		name: 'Tests execution watch dog';
-		priority: Processor timingPriority-1;
-		resume
+	self registerDefaultServices.
+	self startWatchDog
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> cleanUpAfterTest [
+	"Cleanup is performed over all services (enabled and disabled) 
+	because service can change its state during test execution
+	(user can disable it in the middle of test)"
 	
 	services do: [ :each | each cleanUpAfterTest]
 ]
@@ -89,6 +87,12 @@ TestExecutionEnvironment >> cleanUpAfterTest [
 TestExecutionEnvironment >> deactivated [
 
 	watchDogProcess ifNotNil: [watchDogProcess terminate]
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> enabledServicesDo: aBlock [
+	
+	services select: [ :each | each isEnabled ] thenDo: aBlock
 ]
 
 { #category : #accessing }
@@ -108,19 +112,19 @@ TestExecutionEnvironment >> forkedProcesses [
 { #category : #controlling }
 TestExecutionEnvironment >> handleCompletedTest [
 	
-	services do: [ :each | each handleCompletedTest].
+	self enabledServicesDo: [ :each | each handleCompletedTest].
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> handleNewProcess: aProcess [
 
-	services do: [ :each | each handleNewProcess: aProcess ].
+	self enabledServicesDo: [ :each | each handleNewProcess: aProcess ].
 ]
 
 { #category : #controlling }
 TestExecutionEnvironment >> handleUnhandledException: anUnhandledException [
 
-	services do: [ :each | each handleUnhandledException: anUnhandledException].
+	self enabledServicesDo: [ :each | each handleUnhandledException: anUnhandledException].
 	
 	anUnhandledException pass
 ]
@@ -181,11 +185,25 @@ TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	self handleNewProcess: aProcess
 ]
 
+{ #category : #controlling }
+TestExecutionEnvironment >> registerDefaultServices [
+
+	TestExecutionService enabledServiceClasses do: [ :each |
+		self registerService: each new	
+	 ]
+]
+
 { #category : #accessing }
 TestExecutionEnvironment >> registerService: aTestExecutionService [
 
 	aTestExecutionService executionEnvironment: self.
 	services add: aTestExecutionService
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> removeAllServices [
+
+	services removeAll
 ]
 
 { #category : #controlling }
@@ -229,6 +247,18 @@ TestExecutionEnvironment >> services [
 { #category : #accessing }
 TestExecutionEnvironment >> services: anObject [
 	services := anObject
+]
+
+{ #category : #controlling }
+TestExecutionEnvironment >> startWatchDog [
+	
+	watchDogSemaphore := Semaphore new.
+	watchDogProcess := [self watchDogLoop] newProcess.
+	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
+	watchDogProcess 
+		name: 'Tests execution watch dog';
+		priority: Processor timingPriority-1;
+		resume
 ]
 
 { #category : #accessing }

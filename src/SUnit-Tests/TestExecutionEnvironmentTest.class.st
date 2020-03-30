@@ -41,12 +41,47 @@ TestExecutionEnvironmentTest >> runTestWith: aBlock [
 ]
 
 { #category : #tests }
-TestExecutionEnvironmentTest >> testActivation [
+TestExecutionEnvironmentTest >> testActivationShouldRegisterDefaultServices [
+
+	[
+		TestServiceExample isEnabled: true.
+		executionEnvironment removeAllServices.
+		
+		executionEnvironment activated.
+		self assert: (executionEnvironment services 
+						anySatisfy: [:each | each class = TestServiceExample ])
+
+	] ensure: [TestServiceExample isEnabled: false]
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testActivationShouldSetUpMainTestProcess [
 
 	executionEnvironment activated.
 	
-	self assert: executionEnvironment mainTestProcess equals: Processor activeProcess.
+	self assert: executionEnvironment mainTestProcess equals: Processor activeProcess
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testActivationShouldStartWatchDog [
+
+	executionEnvironment activated.
+	
 	self assert: executionEnvironment watchDogProcess isTerminated not
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testCleanUpAlsoDisabledTestServices [
+	| testService2 |
+	testService disable.
+	testService2 := self createTestService.
+	testService2 enable.
+	executionEnvironment registerService: testService2.
+	
+	executionEnvironment cleanUpAfterTest.
+	
+	self assert: testService isCleanUpDone.
+	self assert: testService2 isCleanUpDone
 ]
 
 { #category : #tests }
@@ -163,6 +198,23 @@ TestExecutionEnvironmentTest >> testIsMainTestProcessActive [
 	
 	self runWithNoHandlers: [ 
 		self deny: (executionEnvironment isMainTestProcessActive) ]
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testNotifyOnlyEnabledTestServices [
+	| testService2 testService3 |
+	testService disable.
+	testService2 := self createTestService.
+	testService2 disable.
+	testService3 := self createTestService.
+	testService3 enable.
+	executionEnvironment registerService: testService2; registerService: testService3.
+	
+	self runTestWith: [ #success ].
+	
+	self deny: testService isCompletedTestHandled.
+	self deny: testService2 isCompletedTestHandled.
+	self assert: testService3 isCompletedTestHandled.
 ]
 
 { #category : #tests }
