@@ -75,24 +75,12 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
-	| activeProcess |
-	activeProcess := Processor activeProcess.
-	(executionEnvironment isTestProcess: activeProcess)
-		ifTrue: [ self passSuspendedFailures ]
-		ifFalse: [ self handleUnhandledException: anUnhandledException fromForkedProcess: activeProcess]
-]
-
-{ #category : #controlling }
-ProcessMonitorTestService >> handleUnhandledException: anException fromForkedProcess: aProcess [
-
-	shouldSuspendBackgroundFailures ifFalse: [ ^anException pass ].
-	(anException isKindOf: Halt) ifTrue: [ 
-		self passSuspendedFailures.
-		^anException pass ].
+	executionEnvironment isTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
 	
-	suspendedBackgroundFailures at: aProcess put: anException.
-	aProcess isTerminating ifFalse: [aProcess suspend].
-	^anException pass
+	shouldSuspendBackgroundFailures ifTrue: [
+		anUnhandledException suspendDefaultActionForTestBy: self].
+	
+	^anUnhandledException pass
 ]
 
 { #category : #initialization }

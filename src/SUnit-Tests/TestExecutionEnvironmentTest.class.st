@@ -155,6 +155,17 @@ TestExecutionEnvironmentTest >> testIsTestProcess [
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testIsTestProcessActive [
+
+	executionEnvironment activated.
+	
+	self assert: (executionEnvironment isTestProcessActive).
+	
+	self runWithNoHandlers: [ 
+		self deny: (executionEnvironment isTestProcessActive) ]
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testNotifyTestServicesAboutCompletedFailedTest [
 
 	[

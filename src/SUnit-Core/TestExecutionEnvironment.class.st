@@ -142,6 +142,11 @@ TestExecutionEnvironment >> isTestProcess: aProcess [
 	^testProcess = aProcess
 ]
 
+{ #category : #testing }
+TestExecutionEnvironment >> isTestProcessActive [
+	^self isTestProcess: Processor activeProcess
+]
+
 { #category : #accessing }
 TestExecutionEnvironment >> maxTimeForTest [
 	^ maxTimeForTest
