@@ -42,22 +42,6 @@ Context >> methodReturnConstant: value [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> namedTempAt: index [
-	"Answer the value of the temp at index in the receiver's sequence of tempNames."
-	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be"
-	^self tempNamed: (self tempNames at: index)
-]
-
-{ #category : #'*Debugging-Core' }
-Context >> namedTempAt: index put: aValue [
-	"Set the value of the temp at index in the receiver's sequence of tempNames"
-	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be"
-	^self tempNamed: (self tempNames at: index) put: aValue
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> pcRangeContextIsActive: contextIsActive [
  	"return the debug highlight for aPC"		 
 	| thePC |

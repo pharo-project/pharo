@@ -29,20 +29,6 @@ DebuggerMethodMapOpal >> forMethod: aCompiledMethod [
 	methodNode := aCompiledMethod ast
 ]
 
-{ #category : #public }
-DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
-	"please use #namedTempAt: on Context"
-	self deprecated: 'Please use aContext namedTempAt: index'.
-	^aContext namedTempAt: index
-]
-
-{ #category : #public }
-DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
-	"please use #namedTempAt:put: on Context"
-	self deprecated: 'Please use aContext namedTempAt: index put: aValue'.
-	^aContext namedTempAt: index put: aValue
-]
-
 { #category : #initialization }
 DebuggerMethodMapOpal >> rangeForPC: aPC contextIsActiveContext: aBoolean [
 	"please use pcRangeContextIsActive: on Context"
