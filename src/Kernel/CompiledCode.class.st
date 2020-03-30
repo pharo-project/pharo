@@ -78,7 +78,7 @@ CompiledCode >> accessesSlot: aSlot [
 ]
 
 { #category : #literals }
-CompiledCode >> additionalMethodStateRefersToLitteral: literal [
+CompiledCode >> additionalMethodStateRefersToLiteral: literal [
 	^ self penultimateLiteral isMethodProperties
 		and: [ self penultimateLiteral refersToLiteral: literal ]
 ]
@@ -685,7 +685,7 @@ CompiledCode >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal,
 	even if embedded in array structure."
 
-	(self additionalMethodStateRefersToLitteral: aLiteral)
+	(self additionalMethodStateRefersToLiteral: aLiteral)
 		ifTrue: [ ^ true ].
 
 	"exclude selector or additional method state (penultimate slot) 
