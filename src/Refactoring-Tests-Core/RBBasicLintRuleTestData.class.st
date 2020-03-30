@@ -29,7 +29,7 @@ RBBasicLintRuleTestData class >> classShouldNotOverride [
 { #category : #private }
 RBBasicLintRuleTestData class >> createMatcherFor: codeStrings method: aBoolean [ 
 	| matcher |
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	aBoolean
 		ifTrue: [matcher addMethodSearches: codeStrings -> [:aNode :answer | true]]
 		ifFalse: [matcher addSearches: codeStrings -> [:aNode :answer | true]].
@@ -61,7 +61,7 @@ RBBasicLintRuleTestData class >> justSendsSuper [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Method just sends super message'.
-	matcher := RBParseTreeSearcher justSendsSuper.
+	matcher := self getSearcherClass justSendsSuper.
 	detector methodBlock: 
 			[:context :result | 
 			(context parseTree tag isNil
@@ -104,7 +104,7 @@ RBBasicLintRuleTestData class >> precedence [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher addSearches: #('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
 				-> [:aNode :answer | answer or: [aNode receiver parentheses isEmpty]].
 	detector methodBlock: 
@@ -212,7 +212,7 @@ RBBasicLintRuleTestData class >> toDo [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Uses to:do: instead of do:, with:do: or timesRepeat:'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearch: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]' -> 
 					[:aNode :answer | 
@@ -247,7 +247,7 @@ RBBasicLintRuleTestData class >> utilityMethods [
 					[(self subclassOf: context selectedClass overrides: context selector)
 						ifFalse: 
 							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue: 
-									[(RBParseTreeSearcher
+									[(self getSearcherClass
 										references: context selectedClass allInstVarNames
 												, context selectedClass allClassVarNames asArray , #('self')
 										in: context parseTree) isEmpty

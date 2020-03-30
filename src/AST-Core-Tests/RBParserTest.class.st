@@ -28,6 +28,11 @@ RBParserTest >> exampleClasses [
 		with: RBComment
 ]
 
+{ #category : #tests }
+RBParserTest >> getSearcher [
+	^ RBParseTreeSearcher new
+]
+
 { #category : #private }
 RBParserTest >> parseError: each [
 	
@@ -44,11 +49,6 @@ RBParserTest >> parseError: expression onError: aBlock [
 { #category : #private }
 RBParserTest >> parseFaultyExpression: text [
 	^ self parserClass parseFaultyExpression: text
-]
-
-{ #category : #tests }
-RBParserTest >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
 ]
 
 { #category : #private }
@@ -865,7 +865,7 @@ RBParserTest >> testQueryingPrimitiveErrorVar [
 RBParserTest >> testReplacingNodes [
 	| tree search block |
 	tree := self parserClass parseMethod: '+ a | a b | self ifTrue: [a] ifFalse: [b := c]. a := b. [:b :c :a | a foo: a; foo1: a; foo2: a foo: b]. {a. b}. ^a'.
-	search := self parseTreeSearcher.
+	search := self getSearcher.
 	block := [ :aNode :answer | aNode replaceWith: (RBVariableNode named: 'q') ].
 	search
 		matches: 'a' do: block;

@@ -146,7 +146,7 @@ RBTransformationDummyRuleTest class >> guardClause [
 
 { #category : #'class initialization' }
 RBTransformationDummyRuleTest class >> initializeAfterLoad1 [
-	RecursiveSelfRule := RBParseTreeSearcher new.
+	RecursiveSelfRule := self getSearcher.
 	RecursiveSelfRule
 		addMethodSearches: #('`@methodName: `@args | `@temps | self `@methodName: `@args' '`@methodName: `@args | `@temps | ^self `@methodName: `@args')
 				-> [:aNode :answer | true]

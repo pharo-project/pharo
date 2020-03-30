@@ -112,7 +112,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
 	| matcher parseTree superclass |
 
-	matcher := self parseTreeSearcherClass justSendsSuper.
+	matcher := self getSearcherClass justSendsSuper.
 	parseTree := class parseTreeFor: aSelector.
 	( matcher executeTree: parseTree initialAnswer: false )
 		ifFalse: [ ^ false ].
@@ -122,7 +122,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 	superclass ifNil: [ ^ true ].	"Since there isn't a superclass that implements the message, we can 
 								 delete it since it would be an error anyway."
 	parseTree := superclass parseTreeFor: aSelector.
-	matcher := self parseTreeSearcher.
+	matcher := self getSearcher.
 	matcher
 		matches: '^``@object'
 		do: [ :aNode :answer | 

@@ -98,7 +98,7 @@ RBInlineAllSendersRefactoring >> messagesNotReplaced [
 { #category : #transforming }
 RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 	| search |
-	search := self parseTreeSearcher.
+	search := self getSearcher.
 	search
 		matches: self messagePattern
 		do: [ :aNode :answer | answer + 1 ].
@@ -123,7 +123,7 @@ RBInlineAllSendersRefactoring >> removeMethod [
 { #category : #transforming }
 RBInlineAllSendersRefactoring >> selfSendIn: aTree [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: self messagePattern
 		do: [ :aNode :answer | ^ aNode ].

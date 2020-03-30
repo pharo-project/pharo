@@ -74,7 +74,7 @@ RBExtractMethodRefactoring >> checkReturn [
 { #category : #transforming }
 RBExtractMethodRefactoring >> checkSelfReturns [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '^self' do: [ :aNode :answer | answer ];
 		matches: '^`@anything' do: [ :aNode :answer | true ].
@@ -194,11 +194,11 @@ RBExtractMethodRefactoring >> extractMethod [
 	parseTree
 		ifNil: [ self refactoringFailure: 'Could not parse ' , selector printString ].
 	subtree := isSequence
-		ifTrue: [ self parseTreeSearcherClass
+		ifTrue: [ self getSearcherClass
 				treeMatchingStatements: extractedParseTree body formattedCode
 				in: parseTree ]
 		ifFalse:
-			[ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
+			[ self getSearcherClass treeMatching: extractCode in: parseTree ].
 	subtree
 		ifNil: [ self refactoringFailure: 'Could not extract code from method' ].
 	newCode := self methodDelimiter.
@@ -349,7 +349,7 @@ RBExtractMethodRefactoring >> parameters: anOrderedCollection [
 { #category : #transforming }
 RBExtractMethodRefactoring >> placeholderNode [
 	| node |
-	node := self parseTreeSearcherClass
+	node := self getSearcherClass
 		treeMatching: self methodDelimiter
 		in: modifiedParseTree.
 	node ifNil: [ self refactoringFailure: 'Cannot extract code' ].

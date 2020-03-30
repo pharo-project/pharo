@@ -57,7 +57,7 @@ RBSearchTest >> buildMethodTitleSearch [
 { #category : #accessing }
 RBSearchTest >> buildSimpleLiteralSearch [
 	| search |
-	search := self parseTreeSearcher.
+	search := self getSearcher.
 	search
 		matchesAnyTreeOf:
 			(Array
@@ -113,7 +113,7 @@ RBSearchTest >> buildStatementSearch [
 { #category : #accessing }
 RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
-	search := self parseTreeSearcher.
+	search := self getSearcher.
 	search
 		matchesAnyArgumentOf: (Array with: aCodeString)
 		do: [ :aNode :answer | 
@@ -127,7 +127,7 @@ RBSearchTest >> createArgumentSearchWith: aCodeString selectors: selectorCollect
 { #category : #accessing }
 RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
-	search := self parseTreeSearcher.
+	search := self getSearcher.
 	search
 		matchesAnyMethodOf: (Array with: aCodeString)
 		do: [ :aNode :answer | 
@@ -141,7 +141,7 @@ RBSearchTest >> createMethodSearchWith: aCodeString selectors: selectorCollectio
 { #category : #accessing }
 RBSearchTest >> createSearchWith: aCodeString selectors: selectorCollection inClass: aClass [
 	| search |
-	search := self parseTreeSearcher.
+	search := self getSearcher.
 	search
 		matches: aCodeString
 		do: [ :aNode :answer | 
@@ -157,9 +157,10 @@ RBSearchTest >> currentSelector [
 	^ currentSelector
 ]
 
-{ #category : #accessing }
-RBSearchTest >> parseTreeSearcher [
+{ #category : #parsing }
+RBSearchTest >> getSearcher [
 	^ RBParseTreeSearcher new
+	
 ]
 
 { #category : #running }

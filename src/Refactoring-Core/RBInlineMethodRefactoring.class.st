@@ -98,7 +98,7 @@ RBInlineMethodRefactoring >> hasMultipleReturns [
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
 
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '^``@object'
 		do: [ :aNode :hasAReturn | 

@@ -13,7 +13,7 @@ Class {
 { #category : #'private-accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	| matcher |
-	matcher := self parseTreeSearcher.
+	matcher := self getSearcher.
 	matcher
 		answer: Set new;
 		matchesAnyMethodOf:

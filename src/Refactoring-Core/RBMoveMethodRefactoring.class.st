@@ -83,7 +83,7 @@ RBMoveMethodRefactoring >> buildParseTree [
 RBMoveMethodRefactoring >> checkAssignmentsToVariable [
 	| searcher |
 	variable
-		ifNotNil: [ searcher := self parseTreeSearcher.
+		ifNotNil: [ searcher := self getSearcher.
 			searcher
 				matches: variable , ' := `@object'
 				do: [ :aNode :answer | true ].
@@ -103,7 +103,7 @@ RBMoveMethodRefactoring >> checkForPrimitiveMethod [
 { #category : #preconditions }
 RBMoveMethodRefactoring >> checkForSuperReferences [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: 'super `@message: `@args'
 		do: [ :aNode :answer | true ].
@@ -269,7 +269,7 @@ RBMoveMethodRefactoring >> hasOnlySelfReturns [
 	^ hasOnlySelfReturns
 		ifNil: [ | searcher |
 
-			searcher := self parseTreeSearcher.
+			searcher := self getSearcher.
 			searcher
 				matches: '^self' do: [ :aNode :answer | answer ];
 				matches: '^`@object' do: [ :aNode :answer | false ].
@@ -281,7 +281,7 @@ RBMoveMethodRefactoring >> hasOnlySelfReturns [
 { #category : #testing }
 RBMoveMethodRefactoring >> hasSelfReferences [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher matches: 'self' do: [ :aNode :answer | true ].
 	self hasOnlySelfReturns
 		ifTrue: [ searcher matches: '^self' do: [ :aNode :answer | answer ] ].

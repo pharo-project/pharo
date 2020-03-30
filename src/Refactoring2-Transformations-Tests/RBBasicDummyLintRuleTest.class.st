@@ -173,7 +173,7 @@ RBBasicDummyLintRuleTest class >> collectionMessagesToExternalObject [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Sends add:/remove: to external collection'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearches: (#(#add: #remove: #addAll: #removeAll:)
 				collect: [:each | ('(`@Object `@message: `@args) <1s> `@Arg' expandMacrosWith: each) asString])
@@ -243,7 +243,7 @@ RBBasicDummyLintRuleTest class >> contains [
 { #category : #private }
 RBBasicDummyLintRuleTest class >> createMatcherFor: codeStrings method: aBoolean [ 
 	| matcher |
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	aBoolean
 		ifTrue: [matcher addMethodSearches: codeStrings -> [:aNode :answer | true]]
 		ifFalse: [matcher addSearches: codeStrings -> [:aNode :answer | true]].
@@ -319,7 +319,7 @@ RBBasicDummyLintRuleTest class >> endTrueFalse [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Check for same statements at end of ifTrue:ifFalse: blocks'.
-	matcher := (RBParseTreeSearcher new) addSearches: 
+	matcher := (self getSearcher) addSearches: 
 				#('`@object 
 						ifTrue: [| `@temps1 | `@.Statements1. `.Statement] 
 						ifFalse: [| `@temps2 | `@.Statements2. `.Statement]' 
@@ -347,7 +347,7 @@ RBBasicDummyLintRuleTest class >> equalsTrue [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Unnecessary "= true"'.
-	matcher := (RBParseTreeSearcher new) addSearches: #('true' 'false') -> 
+	matcher := (self getSearcher) addSearches: #('true' 'false') -> 
 								[:aNode :answer | 
 								answer or: 
 										[aNode parent isMessage
@@ -440,7 +440,7 @@ RBBasicDummyLintRuleTest class >> ifTrueBlocks [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Non-blocks in ifTrue:/ifFalse: messages'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearches: #('``@condition ifTrue: ``@block' '``@condition ifFalse: ``@block' '``@condition ifTrue: ``@block1 ifFalse: ``@block2' '``@condition ifFalse: ``@block1 ifTrue: ``@block2')
 				-> 
@@ -459,7 +459,7 @@ RBBasicDummyLintRuleTest class >> ifTrueReturns [
 	| detector matcher |
 	detector := self new.
 	detector name: 'ifTrue:/ifFalse: returns instead of and:/or:''s'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher addSearches:
 		#('| `@temps | ``@.Statements. ``@object ifTrue: [^``@value1]. ^``@value2' 
 		'| `@temps | ``@.Statements. ``@object ifFalse: [^``@value1]. ^``@value2') 
@@ -514,7 +514,7 @@ RBBasicDummyLintRuleTest class >> justSendsSuper [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Method just sends super message'.
-	matcher := RBParseTreeSearcher justSendsSuper.
+	matcher := self getSearcherClass justSendsSuper.
 	detector methodBlock: 
 			[:context :result | 
 			(context parseTree tag isNil
@@ -533,7 +533,7 @@ RBBasicDummyLintRuleTest class >> longMethods [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Long methods'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearch: '`.Stmt' -> 
 					[:aNode :answer | 
@@ -557,7 +557,7 @@ RBBasicDummyLintRuleTest class >> minMax [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Uses ifTrue:/ifFalse: instead of min: or max:'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearches: #('(`x `message: `@y) `ifTrue: [`x := `@y]' '(`@x `message: `@y) `ifTrue: [`@x] `ifFalse: [`@y]')
 				-> 
@@ -606,7 +606,7 @@ RBBasicDummyLintRuleTest class >> missingYourself [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Possible missing "; yourself"'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearch: '``@xobject `@messages: ``@args' -> 
 					[:aNode :answer | 
@@ -683,17 +683,12 @@ RBBasicDummyLintRuleTest class >> overridesSpecialMessage [
 ]
 
 { #category : #miscellaneous }
-RBBasicDummyLintRuleTest class >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
-]
-
-{ #category : #miscellaneous }
 RBBasicDummyLintRuleTest class >> precedence [
 	| detector matcher |
 	detector := self new.
 	detector
 		name: 'Inspect instances of "A + B * C" might be "A + (B * C)"'.
-	matcher := self parseTreeSearcher.
+	matcher := self getSearcher.
 	matcher
 		addSearches:
 			#('``@A + ``@B * ``@C' '``@A - ``@B * ``@C')
@@ -732,7 +727,7 @@ RBBasicDummyLintRuleTest class >> returnsBooleanAndOther [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Returns a boolean and non boolean'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher addSearch: '^``@xObject' -> 
 					[:aNode :answer | 
 					answer add: aNode value;
@@ -867,8 +862,8 @@ RBBasicDummyLintRuleTest class >> stringConcatenation [
 	| detector matcher concatenationMatcher |
 	detector := self new.
 	detector name: 'String concatenation instead of streams'.
-	matcher := RBParseTreeSearcher new.
-	concatenationMatcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
+	concatenationMatcher := self getSearcher.
 	concatenationMatcher
 		addSearch: '`@receiver , `@argument' -> [:aNode :answer | true].
 	matcher
@@ -949,7 +944,7 @@ RBBasicDummyLintRuleTest class >> tempVarOverridesInstVar [
 	| detector matcher vars varName |
 	detector := self new.
 	detector name: 'Instance variable overridden by temporary variable'.
-	matcher := (RBParseTreeSearcher new) addArgumentSearch: '`xxxvar' -> 
+	matcher := (self getSearcher) addArgumentSearch: '`xxxvar' -> 
 								[:aNode :answer | 
 								answer or: 
 										[varName := aNode name.
@@ -972,7 +967,7 @@ RBBasicDummyLintRuleTest class >> tempsReadBeforeWritten [
 	detector methodBlock: 
 			[:context :result | 
 			| variables |
-			variables := RBParseTreeSearcher nonBlockTempsIn: context parseTree.
+			variables := self getSearcherClass nonBlockTempsIn: context parseTree.
 			variables isEmpty 
 				ifFalse: 
 					[(RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree) 
@@ -988,7 +983,7 @@ RBBasicDummyLintRuleTest class >> threeElementPoint [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Possible three element point (e.g., x @ y + q @ r)'.
-	matcher := (RBParseTreeSearcher new) addSearch: '``@x @ ``@y' -> 
+	matcher := (self getSearcher) addSearch: '``@x @ ``@y' -> 
 								[:aNode :answer | 
 								answer or: 
 										[| current |
@@ -1012,14 +1007,14 @@ RBBasicDummyLintRuleTest class >> toDo [
 	| detector matcher |
 	detector := self new.
 	detector name: 'Uses to:do: instead of do:, with:do: or timesRepeat:'.
-	matcher := RBParseTreeSearcher new.
+	matcher := self getSearcher.
 	matcher
 		addSearch: '1 to: ``@object size do: [:`each | | `@temps | `@.Statements]' -> 
 					[:aNode :answer | 
 					answer or: 
 							[| varName variableMatcher |
 							varName := aNode arguments last arguments first name. "`each"
-							variableMatcher := RBParseTreeSearcher new.
+							variableMatcher := self getSearcher.
 							variableMatcher addSearch: varName
 										-> [:node :ans | ans and: [node parent isMessage and: [node parent selector == #at:]]].
 							variableMatcher executeTree: aNode arguments last body initialAnswer: true]].
@@ -1057,7 +1052,7 @@ RBBasicDummyLintRuleTest class >> usesAdd [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Uses the result of an add: message'.
-	addSearcher := RBParseTreeSearcher usesResultOfAdd.
+	addSearcher := self getSearcherClass usesResultOfAdd.
 	detector methodBlock: 
 			[:context :result | 
 			(addSearcher executeTree: context parseTree initialAnswer: false)
@@ -1100,7 +1095,7 @@ RBBasicDummyLintRuleTest class >> utilityMethods [
 					[(self subclassOf: context selectedClass overrides: context selector)
 						ifFalse: 
 							[(context superMessages isEmpty and: [context selfMessages isEmpty]) ifTrue: 
-									[(RBParseTreeSearcher
+									[(self getSearcherClass
 										references: context selectedClass allInstVarNames
 												, context selectedClass allClassVarNames asArray , #('self')
 										in: context parseTree) isEmpty
@@ -1139,7 +1134,7 @@ RBBasicDummyLintRuleTest class >> variableAssignedLiteral [
 							sum + sels size])
 							== 1 ifTrue: 
 								[| tree searcher |
-								searcher := RBParseTreeSearcher new.
+								searcher := self getSearcher.
 								searcher addSearch: (each , ' := ``@object')
 											-> [:aNode :answer | answer isNil and: [aNode value isLiteralNode]].
 								tree := defClass parseTreeFor: selector.
@@ -1229,7 +1224,7 @@ RBBasicDummyLintRuleTest class >> yourselfNotUsed [
 	| detector addSearcher |
 	detector := self new.
 	detector name: 'Doesn''t use the result of a yourself message'.
-	addSearcher := RBParseTreeSearcher new.
+	addSearcher := self getSearcher.
 	addSearcher addSearch: '`@object yourself'
 				-> [:aNode :answer | answer or: [aNode isUsed not]].
 	detector methodBlock: 

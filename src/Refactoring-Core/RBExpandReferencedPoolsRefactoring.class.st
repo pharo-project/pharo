@@ -45,7 +45,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 
 	poolVariables := self poolVariableNamesFor: fromClass.
 	pools := Set new.
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer | 

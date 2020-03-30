@@ -68,9 +68,14 @@ RBAbstractClass2 >> convertMethod: selector using: searchReplacer [
 ]
 
 { #category : #querying }
+RBAbstractClass2 >> getSearcherClass [
+	^ RBParseTreeSearcher
+]
+
+{ #category : #querying }
 RBAbstractClass2 >> getterMethodFor: aVariableName [
 	| matcher candidateGetters |
-	matcher := self parseTreeSearcherClass getterMethod: aVariableName.
+	matcher := self getSearcherClass getterMethod: aVariableName.
 	candidateGetters := (self definesInstanceVariable: aVariableName)
 		ifTrue: [ self whichSelectorsReferToInstanceVariable: aVariableName ]
 		ifFalse: [ self whichSelectorsReferToClassVariable: aVariableName ].
@@ -81,11 +86,6 @@ RBAbstractClass2 >> getterMethodFor: aVariableName [
 			(self checkSelector: each using: matcher) notNil
 				and: [ (self subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
-]
-
-{ #category : #querying }
-RBAbstractClass2 >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
 ]
 
 { #category : #accessing }
@@ -120,7 +120,7 @@ RBAbstractClass2 >> renameInstanceVariable: oldName to: newName around: aBlock [
 { #category : #querying }
 RBAbstractClass2 >> setterMethodFor: aVariableName [
 	| matcher candidateSetters |
-	matcher := self parseTreeSearcherClass setterMethod: aVariableName.
+	matcher := self getSearcherClass setterMethod: aVariableName.
 	candidateSetters := (self definesInstanceVariable: aVariableName)
 		ifTrue: [ self whichSelectorsReferToInstanceVariable: aVariableName ]
 		ifFalse: [ self whichSelectorsReferToClassVariable: aVariableName ].

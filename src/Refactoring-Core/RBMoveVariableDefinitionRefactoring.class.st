@@ -112,7 +112,7 @@ RBMoveVariableDefinitionRefactoring >> storeOn: aStream [
 { #category : #transforming }
 RBMoveVariableDefinitionRefactoring >> subblocksIn: aParseTree [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
 		do: [ :aNode :answer | 
@@ -134,7 +134,7 @@ RBMoveVariableDefinitionRefactoring >> transform [
 { #category : #transforming }
 RBMoveVariableDefinitionRefactoring >> usesDirectly: aParseTree [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
 			do: [ :aNode :answer | answer ];

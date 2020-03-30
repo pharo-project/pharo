@@ -18,6 +18,16 @@ Class {
 	#category : #'Refactoring-Tests-Core-Data'
 }
 
+{ #category : #querying }
+RBLintRuleTestData class >> getSearcher [
+	^ self getSearcherClass new
+]
+
+{ #category : #querying }
+RBLintRuleTestData class >> getSearcherClass [
+	^ RBParseTreeSearcher 
+]
+
 { #category : #foo }
 RBLintRuleTestData class >> someFooMethod [
 	^ 'does nothing here:)'

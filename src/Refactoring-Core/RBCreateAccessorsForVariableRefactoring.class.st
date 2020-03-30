@@ -90,7 +90,7 @@ RBCreateAccessorsForVariableRefactoring >> definingClass [
 RBCreateAccessorsForVariableRefactoring >> findGetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
-	matcher := self parseTreeSearcherClass getterMethod: variableName.
+	matcher := self getSearcherClass getterMethod: variableName.
 	^ self possibleGetterSelectors
 		detect: [ :each | 
 			(self checkClass: definingClass selector: each using: matcher) notNil
@@ -103,8 +103,8 @@ RBCreateAccessorsForVariableRefactoring >> findSetterMethod [
 	| definingClass matcher |
 	definingClass := self definingClass.
 	matcher := self needsReturnForSetter
-		ifTrue: [ self parseTreeSearcherClass returnSetterMethod: variableName ]
-		ifFalse: [ self parseTreeSearcherClass setterMethod: variableName ].
+		ifTrue: [ self getSearcherClass returnSetterMethod: variableName ]
+		ifFalse: [ self getSearcherClass setterMethod: variableName ].
 	^ self possibleSetterSelectors
 		detect: [ :each | 
 			(self checkClass: definingClass selector: each using: matcher) notNil
@@ -179,7 +179,7 @@ RBCreateAccessorsForVariableRefactoring >> transform [
 { #category : #testing }
 RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass classVariable: isClassVar [
 	| matcher definingClass |
-	matcher := self parseTreeSearcher.
+	matcher := self getSearcher.
 	matcher
 		answer: false;
 		matches: aString , ' := ``@object'

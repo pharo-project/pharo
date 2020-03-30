@@ -68,7 +68,7 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
 
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '`var'
 		do: [ :aNode :answer | 

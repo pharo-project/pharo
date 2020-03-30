@@ -14,16 +14,11 @@ ShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 ]
 
 { #category : #utilities }
-ShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
-]
-
-{ #category : #utilities }
 ShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCompiledMethod [
 	"Return true if the method is a tearDown method and a call to super tearDown is not the last message send."
 
 	| searcher |
-	searcher := self parseTreeSearcher
+	searcher := self getSearcher
 		matchesAnyMethodOf:
 			#('tearDown             `.@any. super tearDown' 'tearDown | `@temps | `.@any. super tearDown')
 			do: [ :node :answer | true ];

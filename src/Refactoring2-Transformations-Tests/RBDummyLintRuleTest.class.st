@@ -14,6 +14,16 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
+{ #category : #parsing }
+RBDummyLintRuleTest class >> getSearcher [
+	^ self getSearcherClass new
+]
+
+{ #category : #parsing }
+RBDummyLintRuleTest class >> getSearcherClass [
+	^ RBParseTreeSearcher 
+]
+
 { #category : #foo }
 RBDummyLintRuleTest class >> someFooMethod [
 	^ 'does nothing here:)'

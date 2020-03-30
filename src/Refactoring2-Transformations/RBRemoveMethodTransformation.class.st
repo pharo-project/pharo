@@ -125,7 +125,7 @@ RBRemoveMethodTransformation >> checkSuperMethods [
 { #category : #preconditions }
 RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 	| matcher parseTree superclass |
-	matcher := self parseTreeSearcherClass justSendsSuper.
+	matcher := self getSearcherClass justSendsSuper.
 	parseTree := self definingClass parseTreeFor: aSelector.
 	(matcher executeTree: parseTree initialAnswer: false)
 		ifFalse: [ ^ false ].
@@ -136,7 +136,7 @@ RBRemoveMethodTransformation >> justSendsSuper: aSelector [
 		whichClassIncludesSelector: aSelector.
 	superclass ifNil: [ ^ true ].
 	parseTree := superclass parseTreeFor: aSelector.
-	matcher := self parseTreeSearcherClass new.
+	matcher := self getSearcherClass new.
 	matcher
 		matches: '^``@object'
 		do: [ :aNode :answer | 

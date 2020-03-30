@@ -62,6 +62,11 @@ RBMethod >> compileTree: aBRMethodNode [
 	^ change
 ]
 
+{ #category : #testing }
+RBMethod >> getSearcherClass [
+	^ RBParseTreeSearcher
+]
+
 { #category : #private }
 RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 	anObject = aSymbol
@@ -103,13 +108,8 @@ RBMethod >> parseTree [
 ]
 
 { #category : #testing }
-RBMethod >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
-]
-
-{ #category : #testing }
 RBMethod >> parserTreeSearcher [
-	^ self parseTreeSearcherClass new
+	^ self getSearcherClass new
 ]
 
 { #category : #printing }
@@ -147,7 +147,7 @@ RBMethod >> refersToSymbol: aSymbol [
 		ifTrue: [ searcher
 				matches:
 					'`@object '
-						, (self parseTreeSearcherClass buildSelectorString: aSymbol)
+						, (self getSearcherClass buildSelectorString: aSymbol)
 				do: [ :node :answer | true ] ].
 	^ searcher executeTree: self parseTree initialAnswer: false
 ]

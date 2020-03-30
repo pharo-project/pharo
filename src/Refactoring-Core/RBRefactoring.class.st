@@ -236,6 +236,16 @@ RBRefactoring >> getRewriterClass [
 	^ RBParseTreeRewriter.
 ]
 
+{ #category : #utilities }
+RBRefactoring >> getSearcher [
+	^ self getSearcherClass new
+]
+
+{ #category : #transforming }
+RBRefactoring >> getSearcherClass [
+	^ RBParseTreeSearcher
+]
+
 { #category : #transforming }
 RBRefactoring >> model [
 
@@ -275,16 +285,6 @@ RBRefactoring >> options [
 { #category : #accessing }
 RBRefactoring >> options: aDictionary [ 
 	options := aDictionary
-]
-
-{ #category : #utilities }
-RBRefactoring >> parseTreeSearcher [
-	^ self parseTreeSearcherClass new
-]
-
-{ #category : #transforming }
-RBRefactoring >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
 ]
 
 { #category : #refactoring }
@@ -472,7 +472,7 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 { #category : #utilities }
 RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
-	matcher := self parseTreeSearcher.
+	matcher := self getSearcher.
 	block := [ :aNode :answer | 
 	(aNode intersectsInterval: anInterval)
 		ifTrue: [ aNode ]

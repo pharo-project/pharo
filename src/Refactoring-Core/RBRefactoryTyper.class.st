@@ -70,7 +70,7 @@ RBRefactoryTyper class >> newFor: aRBNamespace [
 { #category : #accessing }
 RBRefactoryTyper class >> typesFor: variableName in: aParseTree model: aRBSmalltalk [ 
 	| searcher messages |
-	searcher := RBParseTreeSearcher new.
+	searcher := self new getSearcher.
 	searcher matches: variableName , ' `@message: ``@args'
 		do: 
 			[:aNode :answer | 
@@ -119,7 +119,7 @@ RBRefactoryTyper >> computeEquivalenceClassesForMethodsAndVars [
 		do: [ :sub | 
 			sub selectors
 				do: [ :each | backpointers at: each put: (self backpointersSetWith: each) ] ].
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '^``@object'
 		do: [ :aNode :answer | self processNode: aNode value ].
@@ -132,7 +132,7 @@ RBRefactoryTyper >> computeMessagesSentToVariables [
 	variableMessages := Dictionary new.
 	class instanceVariableNames
 		do: [ :each | variableMessages at: each put: Set new ].
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	class instanceVariableNames
 		do: [ :each | 
 			| block |
@@ -147,7 +147,7 @@ RBRefactoryTyper >> computeMessagesSentToVariables [
 						ifTrue: [ searcher
 								matches:
 									('(self <1s>) `@messageName: ``@args'
-										expandMacrosWith: (self parseTreeSearcherClass buildSelectorString: sel))
+										expandMacrosWith: (self getSearcherClass buildSelectorString: sel))
 										asString
 								do: block ] ] ].
 	searcher answer: variableMessages.
@@ -179,6 +179,16 @@ RBRefactoryTyper >> findTypeFor: selectorCollection [
 			[:classes :each | 
 			self refineTypes: classes
 				with: (selectorLookup at: each ifAbsentPut: [self implementorsOf: each])]
+]
+
+{ #category : #'selectors-collections' }
+RBRefactoryTyper >> getSearcher [
+	^ self getSearcherClass new
+]
+
+{ #category : #selectors }
+RBRefactoryTyper >> getSearcherClass [
+	^ RBParseTreeSearcher
 ]
 
 { #category : #assignments }
@@ -283,16 +293,6 @@ RBRefactoryTyper >> model: aRBSmalltalk [
 	model := aRBSmalltalk
 ]
 
-{ #category : #'selectors-collections' }
-RBRefactoryTyper >> parseTreeSearcher [
-	^ self parseTreeSearcherClass new
-]
-
-{ #category : #selectors }
-RBRefactoryTyper >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
-]
-
 { #category : #printing }
 RBRefactoryTyper >> printOn: aStream [ 
 	aStream
@@ -346,7 +346,7 @@ RBRefactoryTyper >> printTypeFor: aString on: aStream [
 { #category : #'selectors-collections' }
 RBRefactoryTyper >> processCollectionFor: key messagesTo: aName in: aBlock [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: aName , ' `@message: ``@args'
 		do: [ :aNode :answer | 
@@ -444,7 +444,7 @@ RBRefactoryTyper >> refineTypes: aClassCollection with: anotherClassCollection [
 RBRefactoryTyper >> refineTypesByLookingAtAssignments [
 	| searcher needsSearch |
 	needsSearch := false.
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	variableTypes
 		keysAndValuesDo: [ :key :value | 
 			key first = $-
@@ -506,7 +506,7 @@ RBRefactoryTyper >> typesFor: anInstVarName in: aClass [
 { #category : #accessing }
 RBRefactoryTyper >> typesFor: variableName in: aParseTree model: aRBSmalltalk [
 	| searcher messages |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: variableName , ' `@message: ``@args'
 		do: [ :aNode :answer | 

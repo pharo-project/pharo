@@ -78,7 +78,7 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 { #category : #private }
 RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '``@obj ' , (self buildSelectorString: oldSelector)
 		do: [ :aNode :answer | 

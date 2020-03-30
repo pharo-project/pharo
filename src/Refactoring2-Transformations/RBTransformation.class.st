@@ -141,6 +141,16 @@ RBTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
+{ #category : #private }
+RBTransformation >> getSearcher [
+	^ self getSearcherClass new
+]
+
+{ #category : #private }
+RBTransformation >> getSearcherClass [
+	^ RBParseTreeSearcher
+]
+
 { #category : #initialization }
 RBTransformation >> initialize [
 	super initialize.
@@ -190,16 +200,6 @@ RBTransformation >> options: aDictionary [
 { #category : #preconditions }
 RBTransformation >> parseTreeRewriterClass [
 	^ RBParseTreeRewriter
-]
-
-{ #category : #private }
-RBTransformation >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
-]
-
-{ #category : #private }
-RBTransformation >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
 ]
 
 { #category : #preconditions }

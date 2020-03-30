@@ -10,21 +10,21 @@ Class {
 	#category : #'AST-Core-Tests-Matching'
 }
 
+{ #category : #'tests - to de refined' }
+RBParseTreeSearcherTest >> getSearcher [
+	^ RBParseTreeSearcher new
+]
+
 { #category : #helpers }
 RBParseTreeSearcherTest >> parseExpression: aString [ 
 
 	^ RBParser parseExpression: aString
 ]
 
-{ #category : #'tests - to de refined' }
-RBParseTreeSearcherTest >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
-]
-
 { #category : #running }
 RBParseTreeSearcherTest >> setUp [
 	super setUp.
-	searcher := self parseTreeSearcher
+	searcher := self getSearcher
 ]
 
 { #category : #'tests - to de refined' }
@@ -64,7 +64,7 @@ RBParseTreeSearcherTest >> testSearching [
 						parseExpression: 'self at: 1 put: 2; at: 2 ifAbsent: []; ifAbsent: 2 at: 1; at: 4; foo')
 				initialAnswer: 0)
 		equals: 2.
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '``@rcv `at: ``@arg1 `at: ``@arg2'
 		do: [ :aNode :answer | answer + 1 ].
@@ -76,7 +76,7 @@ RBParseTreeSearcherTest >> testSearching [
 						parseExpression: 'self at: 1 at: 3; at: 1 put: 32; at: 2; foo; at: 1 at: 1 at: 2')
 				initialAnswer: 0)
 		equals: 1.
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matchesMethod: 'at: `object `put: `o1 ``@rcv `put: 1'
 		do: [ :aNode :answer | true ].

@@ -140,7 +140,7 @@ RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
 	instVarWriters := Set new.
 	classVarReaders := Set new.
 	classVarWriters := Set new.
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '`var := ``@anything'
 			do: [ :aNode :answer | self processAssignmentNode: aNode ];

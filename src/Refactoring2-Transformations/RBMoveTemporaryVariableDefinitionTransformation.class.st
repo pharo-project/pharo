@@ -81,7 +81,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> buildTransformations [
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '[:`@blockTemps | | `@temps | `@.Statements]'
 		do: [ :aNode :answer | 
@@ -96,7 +96,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkAllBlocksIn: aParseTree 
 { #category : #private }
 RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: '[:`@args | | `@temps | `@.Statements]'
 			do: [ :aNode :answer | answer ];

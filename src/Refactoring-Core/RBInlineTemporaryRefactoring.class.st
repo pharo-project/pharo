@@ -43,7 +43,7 @@ RBInlineTemporaryRefactoring >> compileMethod [
 { #category : #testing }
 RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	| searcher |
-	searcher := self parseTreeSearcher.
+	searcher := self getSearcher.
 	searcher
 		matches: assignmentNode variable name , ' := ``@object'
 		do: [ :aNode :answer | answer + 1 ].
