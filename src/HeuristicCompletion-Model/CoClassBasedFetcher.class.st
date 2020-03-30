@@ -2,7 +2,8 @@ Class {
 	#name : #CoClassBasedFetcher,
 	#superclass : #CoFetcher,
 	#instVars : [
-		'completionClass'
+		'completionClass',
+		'astNode'
 	],
 	#category : #'HeuristicCompletion-Model-Fetchers'
 }
@@ -11,6 +12,16 @@ Class {
 CoClassBasedFetcher class >> isAbstract [
 
 	^ self == CoClassBasedFetcher
+]
+
+{ #category : #accessing }
+CoClassBasedFetcher >> astNode [
+	^ astNode
+]
+
+{ #category : #accessing }
+CoClassBasedFetcher >> astNode: anObject [
+	astNode := anObject
 ]
 
 { #category : #accessing }

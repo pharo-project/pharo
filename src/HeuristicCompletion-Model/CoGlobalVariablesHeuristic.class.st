@@ -14,6 +14,7 @@ CoGlobalVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 CoGlobalVariablesHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 
 	^ CoGlobalVariableFetcher new
+			astNode: aNode;
 			completionEnvironment: completionContext completionEnvironment;
 			yourself
 ]

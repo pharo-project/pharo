@@ -2,10 +2,21 @@ Class {
 	#name : #CoGlobalVariableFetcher,
 	#superclass : #CoFetcher,
 	#instVars : [
-		'completionEnvironment'
+		'completionEnvironment',
+		'astNode'
 	],
 	#category : #'HeuristicCompletion-Model-Fetchers'
 }
+
+{ #category : #accessing }
+CoGlobalVariableFetcher >> astNode [
+	^ astNode
+]
+
+{ #category : #accessing }
+CoGlobalVariableFetcher >> astNode: anObject [
+	astNode := anObject
+]
 
 { #category : #accessing }
 CoGlobalVariableFetcher >> completionEnvironment [
@@ -21,5 +32,5 @@ CoGlobalVariableFetcher >> completionEnvironment: anObject [
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	completionEnvironment globals do: [ :e |
-		aBlock value: (NECGlobalEntry contents: e node: self)]
+		aBlock value: (NECGlobalEntry contents: e node: astNode)]
 ]

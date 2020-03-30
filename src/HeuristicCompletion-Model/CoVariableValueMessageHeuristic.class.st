@@ -11,7 +11,10 @@ CoVariableValueMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aC
 	self
 		valueOfVariable: aRBMessageNode receiver name
 		inContext: aContext
-		ifPresent: [ :value | ^ self newMessageInHierarchyFetcherForClass: value class ].
+		ifPresent: [ :value | 
+			^ self
+				newMessageInHierarchyFetcherForClass: value class
+				inASTNode: aRBMessageNode ].
 	
 	^ CoEmptyFetcher new
 ]

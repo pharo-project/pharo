@@ -21,7 +21,7 @@ CoInitializeInferencedMessageHeuristic >> buildFetcherFor: aNode inContext: aCon
 		at: aNode receiver name
 		ifPresent: [ :types |
 			types do: [ :each |
-				fetcher := (self newMessageInHierarchyFetcherForClass: each), fetcher ] ].
+				fetcher := (self newMessageInHierarchyFetcherForClass: each inASTNode: aNode), fetcher ] ].
 	^ fetcher
 ]
 

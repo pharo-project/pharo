@@ -8,5 +8,5 @@ Class {
 CoInstanceVariableFetcher >> entriesDo: aBlock [
 	
 	self completionClass instVarNames do: [ :e |
-		aBlock value: (NECInstVarEntry contents: e node: self)]
+		aBlock value: (NECInstVarEntry contents: e node: astNode)]
 ]

@@ -44,9 +44,10 @@ CoASTNodeFetcherHeuristic >> isStatisticsHeuristicWrapper [
 ]
 
 { #category : #'fetcher-creation' }
-CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass [
+CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass inASTNode: astNode [
 	
 	^ CoClassImplementedMessagesFetcher new
+		astNode: astNode;
 		completionClass: aClass;
 		forHierarchy
 ]

@@ -15,25 +15,26 @@ CoVariableWithTypeNameMessageHeuristic >> buildFetcherFor: aRBMessageNode inCont
 		and: [ completionContext
 				environmentAt: aRBMessageNode receiver name allButFirst asSymbol
 				ifPresent: [ :global | 
-					^ self newFetcherForMaybeGlobalInstance: global ] ].
+					^ self newFetcherForMaybeGlobalInstance: global inASTNode: aRBMessageNode ] ].
 	
 	aRBMessageNode receiver name size > 2
 		and: [ completionContext
 				environmentAt: (aRBMessageNode receiver name allButFirst: 2) asSymbol
 				ifPresent: [ :global | 
-					^ self newFetcherForMaybeGlobalInstance: global ] ].
+					^ self newFetcherForMaybeGlobalInstance: global inASTNode: aRBMessageNode ] ].
 				
 	^ CoEmptyFetcher new
 ]
 
 { #category : #requests }
-CoVariableWithTypeNameMessageHeuristic >> newFetcherForMaybeGlobalInstance: aGlobal [
+CoVariableWithTypeNameMessageHeuristic >> newFetcherForMaybeGlobalInstance: aGlobal inASTNode: astNode [
 	"Fetcher for messages to instance variables containing type information.
 	For example: aCollection could autocomplete collection messages."
 
 	"This is a class or trait. Autocomplete instance-side messages" 
 	aGlobal isClassOrTrait ifTrue: [
 		^ CoClassImplementedMessagesFetcher new
+			astNode: astNode;
 			completionClass: aGlobal instanceSide;
 			forHierarchy ].
 
@@ -41,6 +42,7 @@ CoVariableWithTypeNameMessageHeuristic >> newFetcherForMaybeGlobalInstance: aGlo
 	E.g., aSmalltalk
 	Autocomplete based on its class"
 	^ CoClassImplementedMessagesFetcher new
+		astNode: astNode;
 		completionClass: aGlobal class;
 		forHierarchy
 ]

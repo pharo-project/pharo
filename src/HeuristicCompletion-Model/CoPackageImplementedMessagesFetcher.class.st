@@ -2,10 +2,21 @@ Class {
 	#name : #CoPackageImplementedMessagesFetcher,
 	#superclass : #CoFetcher,
 	#instVars : [
-		'completionPackage'
+		'completionPackage',
+		'astNode'
 	],
 	#category : #'HeuristicCompletion-Model-Fetchers'
 }
+
+{ #category : #accessing }
+CoPackageImplementedMessagesFetcher >> astNode [
+	^ astNode
+]
+
+{ #category : #accessing }
+CoPackageImplementedMessagesFetcher >> astNode: anObject [
+	astNode := anObject
+]
 
 { #category : #accessing }
 CoPackageImplementedMessagesFetcher >> completionPackage [
@@ -21,5 +32,5 @@ CoPackageImplementedMessagesFetcher >> completionPackage: anObject [
 CoPackageImplementedMessagesFetcher >> entriesDo: aBlock [
 	
 	SystemNavigation new allSentMessagesInPackage: completionPackage do: [ :e |
-		aBlock value: (NECSelectorEntry contents: e node: self)]
+		aBlock value: (NECSelectorEntry contents: e node: astNode)]
 ]

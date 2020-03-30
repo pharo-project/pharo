@@ -14,5 +14,5 @@ CoWorkspaceVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 CoWorkspaceVariablesHeuristic >> buildFetcherFor: aNode inContext: aContext [
 
 	^ (CoCollectionFetcher onCollection: aContext variableBindingNames)
-		collect: [ :e | NECLocalEntry contents: e node: self ]
+		collect: [ :e | NECLocalEntry contents: e node: aNode ]
 ]

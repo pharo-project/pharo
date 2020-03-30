@@ -21,7 +21,7 @@ CoMethodVariableFetcher >> completionASTNode: anObject [
 CoMethodVariableFetcher >> entriesDo: aBlock [
 
 	self methodVariableNamesDo: [ :each |
-		aBlock value: (NECLocalEntry contents: each node: self) ]
+		aBlock value: (NECLocalEntry contents: each node: completionASTNode) ]
 ]
 
 { #category : #accessing }
