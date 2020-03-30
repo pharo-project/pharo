@@ -1,3 +1,6 @@
+"
+I am a fetcher that yields the messages implemented in the given package.
+"
 Class {
 	#name : #CoPackageImplementedMessagesFetcher,
 	#superclass : #CoFetcher,

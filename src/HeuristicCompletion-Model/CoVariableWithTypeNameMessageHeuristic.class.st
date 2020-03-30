@@ -1,3 +1,9 @@
+"
+I implement an heuristic for messages sent to variables in the form ""aX"" or ""anX"".
+If a class X is available in the environment, I return a fetcher for X's instance side messages.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoVariableWithTypeNameMessageHeuristic,
 	#superclass : #CoVariableMessageHeuristic,

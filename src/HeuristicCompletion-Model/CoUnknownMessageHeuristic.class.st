@@ -1,3 +1,10 @@
+"
+I implement a default heuristic for when nothing else can be done.
+I provide a fetcher for messages for the full system.
+I am usually at the end of the chain of responsibility.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoUnknownMessageHeuristic,
 	#superclass : #CoASTNodeFetcherHeuristic,

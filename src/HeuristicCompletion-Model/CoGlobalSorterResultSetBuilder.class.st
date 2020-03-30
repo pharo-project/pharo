@@ -1,3 +1,6 @@
+"
+I build a resultset with all possible candidates for an AST node, pre-sorted with a sorter.
+"
 Class {
 	#name : #CoGlobalSorterResultSetBuilder,
 	#superclass : #CoASTResultSetBuilder,

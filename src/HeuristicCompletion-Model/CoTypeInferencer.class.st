@@ -1,3 +1,7 @@
+"
+I am a simple type inferencer that is depth-bound.
+That is, I infer a method up to a certain level of the callgraph.
+"
 Class {
 	#name : #CoTypeInferencer,
 	#superclass : #Object,

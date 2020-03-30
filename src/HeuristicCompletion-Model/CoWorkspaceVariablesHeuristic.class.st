@@ -1,3 +1,8 @@
+"
+I implement an heuristic for variables in a workspace/playground.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoWorkspaceVariablesHeuristic,
 	#superclass : #CoASTNodeFetcherHeuristic,

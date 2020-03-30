@@ -1,3 +1,7 @@
+"
+I am an heuristic using depth-bound type inference to type variables.
+I autocomplete messages in the hierarchy of the found types.
+"
 Class {
 	#name : #CoInitializeInferencedMessageHeuristic,
 	#superclass : #CoASTNodeFetcherHeuristic,

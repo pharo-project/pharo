@@ -1,3 +1,6 @@
+"
+I am a fetcher looking for the class variables implemented in a class.
+"
 Class {
 	#name : #CoClassVariableFetcher,
 	#superclass : #CoClassBasedFetcher,

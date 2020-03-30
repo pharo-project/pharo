@@ -1,3 +1,13 @@
+"
+I implement a fetcher heuristic for an AST node.
+My responsibility is to build a fetcher for a given node in a given context.
+I am implemented as a chain of responsibility: I treat the build request if possible, otherwise I forward the request to the next heuristic.
+
+My main method #fetcherFor:inContext: is a template method.
+My subclasses should redefine:
+ - #appliesForNode:inContext: returning a boolean if the heuristic applies for context/node
+ - #buildFetcherFor:inContext: returning the effective heuristic built
+"
 Class {
 	#name : #CoASTNodeFetcherHeuristic,
 	#superclass : #Object,

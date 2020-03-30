@@ -1,3 +1,9 @@
+"
+I am a complishon fetcher that autocompletes variable names accessible in the lexical context of a method.
+That is, block temporaries, block arguments, method temporaries and method arguments.
+
+From a given ast node, I walk up the tree looking for scopes and yield the variables I find.
+"
 Class {
 	#name : #CoMethodVariableFetcher,
 	#superclass : #CoFetcher,

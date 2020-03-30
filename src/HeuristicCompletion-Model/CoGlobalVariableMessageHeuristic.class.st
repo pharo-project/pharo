@@ -1,3 +1,11 @@
+"
+I implement an heuristic for messages sent to globals.
+If the global object is available in the environment, 
+ - if it is a class complete messages in it class side
+ - if it is a global object complete messages in the global object's class
+
+See my superclass for details.
+"
 Class {
 	#name : #CoGlobalVariableMessageHeuristic,
 	#superclass : #CoVariableMessageHeuristic,

@@ -1,3 +1,25 @@
+"
+I run a series of completion benchmarks over a static scope.
+I take all existing callsites in a scope (a class, a package) and run the completion with different prefixes (2 to 8), asking for 10 results.
+Then I check if the selector at that callsite is in those elements, and in what position.
+I accumulate the results in a table per index in the results and prefix size.
+
+I have an inspector extension to show the results in a table.
+
+Examples:
+
+global := CoStaticBenchmarks new
+	scope: (CoBenchmarkPackage on: SpAbstractAdapter package);
+	builder: (CoGlobalSorterResultSetBuilder new
+		sorterClass: AlphabeticSorter;
+		yourself);
+	run.
+
+staticHeuristics := CoStaticBenchmarks new
+	scope: (CoBenchmarkPackage on: SpAbstractAdapter package);
+	builder: CoASTHeuristicsResultSetBuilder new;
+	run.
+"
 Class {
 	#name : #CoStaticBenchmarks,
 	#superclass : #Object,

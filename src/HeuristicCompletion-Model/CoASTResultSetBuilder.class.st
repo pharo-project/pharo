@@ -1,3 +1,6 @@
+"
+I'm an abstract superclass for defining AST Based Complishons
+"
 Class {
 	#name : #CoASTResultSetBuilder,
 	#superclass : #CoResultSetBuilder,

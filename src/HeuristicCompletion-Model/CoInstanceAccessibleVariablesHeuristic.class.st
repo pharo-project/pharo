@@ -1,3 +1,8 @@
+"
+I implement an heuristic for variables accessible from the instance side, such as instance variables and class variables.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoInstanceAccessibleVariablesHeuristic,
 	#superclass : #CoASTNodeFetcherHeuristic,

@@ -1,3 +1,6 @@
+"
+I am a fetcher looking for the messages implemented in a class.
+"
 Class {
 	#name : #CoClassImplementedMessagesFetcher,
 	#superclass : #CoClassBasedFetcher,

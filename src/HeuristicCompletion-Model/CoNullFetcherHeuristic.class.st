@@ -1,3 +1,6 @@
+"
+I am a null fetcher heuristic, returning an empty fetcher
+"
 Class {
 	#name : #CoNullFetcherHeuristic,
 	#superclass : #Object,

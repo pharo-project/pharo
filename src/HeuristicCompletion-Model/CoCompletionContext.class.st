@@ -1,3 +1,8 @@
+"
+I am the interface with the System's CompletionEngine, following the API of CompletionContext (entries, entryCount, activateEntryAt:, etc).
+I delegate the calculation of the entries completely to a complishon object which is lazily built by a complishon builder.
+The complishonBuilder instance can be specialized or replaced to change the search heuristics.
+"
 Class {
 	#name : #CoCompletionContext,
 	#superclass : #Object,

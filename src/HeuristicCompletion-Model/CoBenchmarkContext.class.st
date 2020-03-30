@@ -1,3 +1,8 @@
+"
+I implement a completion context for benchmark purposes.
+I contain an AST and provide information for the autocompletion based on it.
+See CoStaticBenchmarks.
+"
 Class {
 	#name : #CoBenchmarkContext,
 	#superclass : #Object,

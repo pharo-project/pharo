@@ -1,3 +1,7 @@
+"
+I'm a fetcher simply enumerating a collection of items defined using the collection: message.
+Mainly used for testing.
+"
 Class {
 	#name : #CoCollectionFetcher,
 	#superclass : #CoFetcher,

@@ -1,3 +1,6 @@
+"
+I represent an unknown type for CoTypeInferencer.
+"
 Class {
 	#name : #CoUnknownType,
 	#superclass : #Object,

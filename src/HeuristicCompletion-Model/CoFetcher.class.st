@@ -1,3 +1,41 @@
+"
+I'm a kind of iterator (in the sense of GoF) that goes one by one over ""a stream"" of entities that can be consumed by the completion engine within a completion context.
+
+I provide access to the elements I return one by one (using the next message) in a controlled manner. 
+At the root, I define the architecture to yield one entry at a time. 
+The next method invokes the hook method #entriesDo: with a generator yielding capability.
+This way any use of #next will be done step by step. 
+
+My subclasses implement the following method entriesDo: aBlock which defines the semantics of element fetching
+Here is a simple example where a generic fetcher is used on a collection, and wrapped by a fetcher that avoids returning duplicate elements.
+
+[[[
+fetcher := AvoidRepeatedComplishonFetcher new
+	complishonFetcher: (GenericComplishonFetcher onCollection: #( a b b a c )).
+]]]
+	
+Here are two examples of definition
+
+[[[
+AvoidRepeatedComplishonFecther >> entriesDo: aBlock
+	decoree
+		entriesDo: [ :elem | 
+			(self hasAlreadyReturned: elem)
+				ifFalse: [ elements add: elem.
+					aBlock value: elem ] ]
+]]]
+
+[[[
+GenericComplishonFetcher >> entriesDo: aBlock
+
+	collection do: aBlock
+]]]
+
+
+
+	
+
+"
 Class {
 	#name : #CoFetcher,
 	#superclass : #Object,

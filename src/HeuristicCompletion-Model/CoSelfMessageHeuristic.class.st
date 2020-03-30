@@ -1,3 +1,9 @@
+"
+I implement an heuristic for self message sends.
+I provide a fetcher for messages for the hierarchy of self class.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoSelfMessageHeuristic,
 	#superclass : #CoASTNodeFetcherHeuristic,

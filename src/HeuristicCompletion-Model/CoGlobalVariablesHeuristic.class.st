@@ -1,3 +1,8 @@
+"
+I implement an heuristic for global variables accessible in the completion environment.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoGlobalVariablesHeuristic,
 	#superclass : #CoASTNodeFetcherHeuristic,

@@ -1,3 +1,9 @@
+"
+I implement an heuristic for messages sent to variables whose value is available in the context, for example in a debugger, workspace or inspector.
+If there is a value for the variable, create a fetcher for messages of its class.
+
+See my superclass for details.
+"
 Class {
 	#name : #CoVariableValueMessageHeuristic,
 	#superclass : #CoVariableMessageHeuristic,

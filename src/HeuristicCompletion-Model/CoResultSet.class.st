@@ -1,3 +1,14 @@
+"
+I am the main entry point of the completion system.
+I am built from a (potentially composed) fetcher and a filter-string.
+
+When asked for results, I fetch them from the fetcher.
+Internally, I keep also a list of already fetched results to avoid fetching many times the same.
+This is particularly useful when the filter is being narrowed (e.g., we go from a filter 'ab' to a filter 'abc').
+In such a case, some of the results already fetched are still valid, and the fetcher state is valid too.
+  => we then filter the subresults and change the fetcher filter
+In case the filter is being broadened (e.g., we go from 'abc' to 'ab'), all results we already have are valid, but probably lots of other results were filtered already. So we reset both the results and the fetcher and restart the search.
+"
 Class {
 	#name : #CoResultSet,
 	#superclass : #Object,

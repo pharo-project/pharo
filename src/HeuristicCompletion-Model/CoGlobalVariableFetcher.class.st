@@ -1,3 +1,6 @@
+"
+I am a fetcher looking for globals in an environment.
+"
 Class {
 	#name : #CoGlobalVariableFetcher,
 	#superclass : #CoFetcher,

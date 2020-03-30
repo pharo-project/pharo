@@ -1,3 +1,7 @@
+"
+I implement a session that collects execution information.
+I collect the last words in modified methods.
+"
 Class {
 	#name : #CoSession,
 	#superclass : #Object,
