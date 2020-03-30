@@ -226,6 +226,16 @@ RBRefactoring >> execute [
 	RBRefactoryChangeManager instance performChange: self changes; addUndoPointer: 1
 ]
 
+{ #category : #accessing }
+RBRefactoring >> getRewriter [
+	^ self getRewriterClass new.
+]
+
+{ #category : #accessing }
+RBRefactoring >> getRewriterClass [
+	^ RBParseTreeRewriter.
+]
+
 { #category : #transforming }
 RBRefactoring >> model [
 

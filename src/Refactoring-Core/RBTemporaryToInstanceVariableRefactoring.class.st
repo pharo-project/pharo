@@ -93,7 +93,7 @@ RBTemporaryToInstanceVariableRefactoring >> transform [
 	parseTree := method parseTree.
 	parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ].
 	class addInstanceVariable: temporaryVariableName.
-	( matcher := RBParseTreeRewriter removeTemporaryNamed: temporaryVariableName )
+	( matcher := self getRewriterClass removeTemporaryNamed: temporaryVariableName )
 		executeTree: parseTree.
 	method compileTree: matcher tree
 ]

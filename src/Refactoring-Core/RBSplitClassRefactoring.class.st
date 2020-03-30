@@ -72,7 +72,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 	self performComponentRefactoring: accessorRef.
 	getterMethod := accessorRef getterMethod.
 	setterMethod := accessorRef setterMethod.
-	replacer := RBParseTreeRewriter 
+	replacer := self getRewriterClass  
 				variable: each
 				getter: getterMethod
 				setter: setterMethod

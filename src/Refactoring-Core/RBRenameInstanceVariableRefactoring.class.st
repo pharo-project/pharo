@@ -153,7 +153,7 @@ RBRenameInstanceVariableRefactoring >> renameAccessorsReferences [
 { #category : #transforming }
 RBRenameInstanceVariableRefactoring >> renameReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter 
+	replacer := self getRewriterClass 
 				rename: variableName
 				to: newName
 				handler: 

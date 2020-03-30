@@ -92,7 +92,7 @@ RBExtractMethodRefactoring >> checkSingleAssignment: varName [
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	extractedParseTree 
 		addNode: (RBReturnNode value: (RBVariableNode named: varName)).
-	modifiedParseTree := RBParseTreeRewriter 
+	modifiedParseTree := self getParseTreeClass
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
 				in: modifiedParseTree
@@ -213,12 +213,12 @@ RBExtractMethodRefactoring >> extractMethod [
 								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
 									stmts at: stmts size put: stmts last value ] ] ] ].
 	modifiedParseTree := isSequence
-		ifTrue: [ RBParseTreeRewriter
+		ifTrue: [ self getParseTreeClass
 				replaceStatements: subtree formattedCode
 				with: newCode
 				in: parseTree
 				onInterval: extractionInterval ]
-		ifFalse: [ RBParseTreeRewriter
+		ifFalse: [ self getParseTreeClass
 				replace: subtree formattedCode
 				with: newCode
 				in: parseTree
@@ -310,7 +310,7 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	args := parameters collect: [ :parm | RBVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol numArgs = 0
-		ifTrue: [ modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.
+		ifTrue: [ modifiedParseTree := self getParseTreeClass replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.
 			^ self ].
 	newSend := String
 		streamContents: [ :str | 
@@ -323,7 +323,7 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 						nextPut: $ ;
 						nextPutAll: arg asString;
 						nextPut: $  ] ].
-	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree
+	modifiedParseTree := self getRewriterClass replace: self methodDelimiter with: newSend in: modifiedParseTree
 ]
 
 { #category : #transforming }
@@ -387,7 +387,7 @@ RBExtractMethodRefactoring >> renameAllParameters [
 
 { #category : #renaming }
 RBExtractMethodRefactoring >> renameNode: aParseTree withOldName: oldName toWithName: newName [ 
-	(RBParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree
+	(self getParseTreeClass rename: oldName to: newName) executeTree: aParseTree
 ]
 
 { #category : #renaming }

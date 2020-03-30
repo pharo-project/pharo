@@ -51,7 +51,7 @@ RBRenameClassRefactoring >> preconditions [
 { #category : #transforming }
 RBRenameClassRefactoring >> renameReferences [
 	| replacer |
-	replacer := (RBParseTreeRewriter replaceLiteral: className with: newName)
+	replacer := (self getRewriterClass replaceLiteral: className with: newName)
 				replace: className with: newName;
 				replaceArgument: newName
 					withValueFrom: 

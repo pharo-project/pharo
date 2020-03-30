@@ -187,6 +187,11 @@ RBTransformation >> options: aDictionary [
 	options := aDictionary
 ]
 
+{ #category : #preconditions }
+RBTransformation >> parseTreeRewriterClass [
+	^ RBParseTreeRewriter
+]
+
 { #category : #private }
 RBTransformation >> parseTreeSearcher [
 	^ RBParseTreeSearcher new

@@ -17,7 +17,7 @@ Class {
 { #category : #transforming }
 RBAbstractClassVariableRefactoring >> abstractClassReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter 
+	replacer := self getRewriterClass
 		variable: variableName
 		getter: self accessorsRefactoring getterMethod
 		setter: self accessorsRefactoring setterMethod.
@@ -35,7 +35,7 @@ RBAbstractClassVariableRefactoring >> abstractClassReferences [
 { #category : #transforming }
 RBAbstractClassVariableRefactoring >> abstractInstanceReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter 
+	replacer := self getRewriterClass 
 		variable: variableName
 		getter: 'class ' , self accessorsRefactoring getterMethod
 		setter: 'class ' , self accessorsRefactoring setterMethod.
