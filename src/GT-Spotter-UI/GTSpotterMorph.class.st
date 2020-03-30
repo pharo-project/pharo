@@ -273,10 +273,9 @@ GTSpotterMorph >> openInWindowLabeled: aString inWorld: aWorld [
 { #category : #initialization }
 GTSpotterMorph >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
-	self unsubscribeListeners.
-	
-	self spotterModel ifNotNil: [:m | m terminateProcessors].
-	
+	self unsubscribeListeners: aWorld.
+	self spotterModel ifNotNil: [ :m | m terminateProcessors ].
+
 	"restoring previous focus"
 	focusedMorph ifNotNil: [ focusedMorph takeKeyboardFocus ]
 ]
@@ -415,9 +414,9 @@ GTSpotterMorph >> togglePreview [
 ]
 
 { #category : #initialization }
-GTSpotterMorph >> unsubscribeListeners [
+GTSpotterMorph >> unsubscribeListeners: aWorld [
 
-	self activeHand removeEventListener: self.
+	self currentWorld activeHand removeEventListener: self.
 	Morph announcer unsubscribe: self.
 ]
 
