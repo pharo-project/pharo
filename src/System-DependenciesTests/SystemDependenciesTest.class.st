@@ -309,6 +309,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfGeneralHelp.
 	BaselineOfShout.
 	BaselineOfKernelTests.
+	BaselineOfHeuristicCompletion.
 	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
@@ -322,7 +323,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages ,  (self packagesOfGroupNamed: 'CoreEnvironment' on: BaselineOfCalypso ).
 	packages := packages ,  #('Calypso-SystemTools-Core').
 	packages := packages ,  (BaselineOfMetacello packagesOfGroupNamed: 'Tests').
-	
 
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
 	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
