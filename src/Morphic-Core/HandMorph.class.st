@@ -27,7 +27,8 @@ Class {
 		'lastKeyScanCode',
 		'combinedChar',
 		'captureBlock',
-		'recentModifiers'
+		'recentModifiers',
+		'pendingEventQueue'
 	],
 	#classVars : [
 		'DoubleClickTime',
@@ -904,6 +905,49 @@ HandMorph >> newMouseFocus: aMorph event: event [
 	^self newMouseFocus: aMorph
 ]
 
+{ #category : #'private events' }
+HandMorph >> nextEventFrom: anEventBufferQueue [
+	"Returns the next morphic event to handle.
+	Three cases may arise:
+	 - If possible, a valid morphic event is returned
+	 - If no more events are available, nil is returned
+	 - If we find an invalid event in the queue, we consume it and return the #invalid symbol
+	
+	The first morphic events available are those in the pending queue.
+	An event handling cycle should generate and manage a single event.
+	In the case a cycle needs to generate several events (see MouseClickState), only one event is handled.
+	Remaining events are queued for later processing.
+	"
+	| eventBuffer morphicEvent type pendingMorphicEvent |
+	
+	pendingMorphicEvent := self pendingEventQueue nextOrNil.
+	pendingMorphicEvent ifNotNil: [ ^ pendingMorphicEvent ].
+	
+	anEventBufferQueue ifNil: [ ^ nil ].
+	eventBuffer := anEventBufferQueue nextEvent.
+	eventBuffer ifNil: [ ^ nil ].
+	
+	morphicEvent := nil.	"for unknown event types"
+	type := eventBuffer first.
+	type = EventTypeMouse ifTrue: [ self world beCursorOwner.
+		recentModifiers := eventBuffer sixth.
+		morphicEvent := self generateMouseEvent: eventBuffer
+	].
+	type = EventTypeKeyboard ifTrue: [
+		recentModifiers := eventBuffer fifth.
+		morphicEvent := self generateKeyboardEvent: eventBuffer
+	].
+	type = EventTypeDragDropFiles ifTrue: [ 
+		morphicEvent := self generateDropFilesEvent: eventBuffer ].
+	type = EventTypeWindow ifTrue: [ 
+		morphicEvent := self generateWindowEvent: eventBuffer ].
+	
+	"If the event did not match any of the categories above, it is an invalid event"
+	( type ~= EventTypeDragDropFiles and: [ morphicEvent isNil ] )
+		ifTrue: [ ^ #invalid ].
+	^ morphicEvent
+]
+
 { #category : #accessing }
 HandMorph >> noButtonPressed [
 	"Answer whether any mouse button is not being pressed."
@@ -979,6 +1023,12 @@ HandMorph >> pasteBuffer: aMorphOrNil [
 
 ]
 
+{ #category : #'private events' }
+HandMorph >> pendingEventQueue [
+
+	^ pendingEventQueue ifNil: [ pendingEventQueue := WaitfreeQueue new ]
+]
+
 { #category : #geometry }
 HandMorph >> position [
 
@@ -1019,11 +1069,11 @@ HandMorph >> processEvents [
 ]
 
 { #category : #'private events' }
-HandMorph >> processEventsFromQueue: anEventQueue [
+HandMorph >> processEventsFromQueue: anEventBufferQueue [
 
 	"Process user input events from the local input devices."
 
-	| evt evtBuf type hadAny |
+	| evt hadAny |
 
 	self lastEvent ifNotNil: [
 		"Meaning that we were invoked from within an event response.
@@ -1031,38 +1081,34 @@ HandMorph >> processEventsFromQueue: anEventQueue [
 		self mouseOverHandler processMouseOver: lastMouseEvent ].
 
 	hadAny := false.
-	[ anEventQueue isNotNil and: [ ( evtBuf := anEventQueue nextEvent ) isNotNil ] ]
-		whileTrue: [ evt := nil.	"for unknown event types"
-			type := evtBuf first.
-			type = EventTypeMouse
-				ifTrue: [ self world beCursorOwner.
-					recentModifiers := evtBuf sixth.
-					evt := self generateMouseEvent: evtBuf
-					].
-			type = EventTypeKeyboard
-				ifTrue: [ recentModifiers := evtBuf fifth.
-					evt := self generateKeyboardEvent: evtBuf
-					].
-			type = EventTypeDragDropFiles
-				ifTrue: [ evt := self generateDropFilesEvent: evtBuf ].
-			type = EventTypeWindow
-				ifTrue: [ evt := self generateWindowEvent: evtBuf ].	"All other events are ignored"
-			( type ~= EventTypeDragDropFiles and: [ evt isNil ] )
-				ifTrue: [ ^ self ].
-			evt
-				ifNotNil: [ "Finally, handle it"
-					self handleEvent: evt.
-					hadAny := true.	"For better user feedback, return immediately after a mouse event has been processed."
-					( evt isMouse and: [ evt isMouseWheel not ] )
-						ifTrue: [ ^ self ]
-					]
-			].	"note: if we come here we didn't have any mouse events"
-	mouseClickState notNil
-		ifTrue:
-			[ "No mouse events during this cycle. Make sure click states time out accordingly" mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
-	hadAny
-		ifFalse:
-			[ "No pending events. Make sure z-order is up to date" self mouseOverHandler processMouseOver: lastMouseEvent ]
+	[ (evt := self nextEventFrom: anEventBufferQueue) notNil ] whileTrue: [ 
+		evt == #invalid ifTrue: [ ^ self ].
+		evt ifNotNil: [ "Finally, handle it"
+			self handleEvent: evt.
+			hadAny := true.
+			"For better user feedback, return immediately after a mouse event has been processed."
+			( evt isMouse and: [ evt isMouseWheel not ] )
+				ifTrue: [ ^ self ]
+		]
+	].
+	
+	"note: if we come here we didn't have any mouse events"
+	mouseClickState notNil ifTrue: [ 
+		"No mouse events during this cycle. Make sure click states time out accordingly"
+		mouseClickState handleEvent: lastMouseEvent asMouseMove from: self ].
+	hadAny ifFalse: [ 
+		"No pending events. Make sure z-order is up to date"
+		self mouseOverHandler processMouseOver: lastMouseEvent ]
+]
+
+{ #category : #'private events' }
+HandMorph >> queuePendingEvent: aMorphicEvent [
+	"Queue an (extra) event produced during an event handling cycle, to be processed in later cycles.
+	An event handling cycle should generate and manage a single event.
+	In the case a cycle needs to generate several events (see MouseClickState), only one event is handled.
+	Remaining events are queued for later processing.
+	"
+	self pendingEventQueue nextPut: aMorphicEvent
 ]
 
 { #category : #'focus handling' }

@@ -1307,6 +1307,8 @@ RubAbstractTextArea >> mouseDown: evt [
 	Changed to not take keyboard focus if an owner is a
 	PluggableTextMorph that doesn't want focus."
 
+	self doAnnounce: (MorphClosePopups morph: self).
+
 	(evt yellowButtonPressed and: [ evt commandKeyPressed not ])
 		ifTrue: [ ^ self yellowButtonActivity: evt shiftPressed ].	"First check for option (menu) click"
 	(self paragraph click: evt for: self model controller: self)

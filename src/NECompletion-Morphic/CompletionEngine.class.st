@@ -314,6 +314,7 @@ CompletionEngine >> setEditor: anObject [
 		editor morph ifNotNil: [:m | m announcer unsubscribe: self] ].
 	editor := anObject.
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
+	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self.
 ]
 
 { #category : #keyboard }
