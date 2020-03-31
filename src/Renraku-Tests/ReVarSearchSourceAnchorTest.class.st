@@ -1,7 +1,7 @@
 Class {
 	#name : #ReVarSearchSourceAnchorTest,
 	#superclass : #TestCase,
-	#category : #'Renraku-Test'
+	#category : #'Renraku-Tests'
 }
 
 { #category : #tests }
