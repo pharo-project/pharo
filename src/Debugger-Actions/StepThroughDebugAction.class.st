@@ -23,7 +23,7 @@ StepThroughDebugAction >> defaultKeymap [
 { #category : #accessing }
 StepThroughDebugAction >> defaultLabel [
 
-	^ 'Step Through'
+	^ 'Step through'
 ]
 
 { #category : #accessing }
