@@ -3,11 +3,11 @@ SUnit tests to simulate and test mouse behavior
 "
 Class {
 	#name : #SimulateMouseTest,
-	#superclass : #UITestCase,
+	#superclass : #AbstractUITestCase,
 	#instVars : [
 		'morph'
 	],
-	#category : #'SUnit-Support-UITesting-Tests'
+	#category : #'SUnit-Support-UITesting-Tests-Base'
 }
 
 { #category : #helpers }
