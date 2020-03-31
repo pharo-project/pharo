@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'content'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }

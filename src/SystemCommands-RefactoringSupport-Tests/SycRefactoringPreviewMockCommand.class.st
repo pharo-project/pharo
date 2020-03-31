@@ -1,7 +1,7 @@
 Class {
 	#name : #SycRefactoringPreviewMockCommand,
 	#superclass : #Object,
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #converting }

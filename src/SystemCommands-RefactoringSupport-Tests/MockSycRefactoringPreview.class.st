@@ -1,7 +1,7 @@
 Class {
 	#name : #MockSycRefactoringPreview,
 	#superclass : #SycRefactoringPreview,
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }

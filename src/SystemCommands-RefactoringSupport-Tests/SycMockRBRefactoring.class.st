@@ -1,7 +1,7 @@
 Class {
 	#name : #SycMockRBRefactoring,
 	#superclass : #Object,
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }

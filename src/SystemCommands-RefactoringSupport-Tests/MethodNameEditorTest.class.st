@@ -1,5 +1,5 @@
 "
-this class test MethodNameEditor 
+This class tests MethodNameEditor 
 	
 	I group method in Tag/Protocol:
 		* action : all method in kind of Tag/Protocol are test of interacting with the widget for example (what will append if i click on button ...)
@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'methodNameEditorWithOneGetter'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }
