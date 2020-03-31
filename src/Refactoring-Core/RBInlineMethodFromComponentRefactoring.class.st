@@ -34,7 +34,7 @@ RBInlineMethodFromComponentRefactoring >> addArgumentToSelector: aSymbol [
 RBInlineMethodFromComponentRefactoring >> addSelfReferenceToInlineParseTree [
 	| variableName rewriter newArguments |
 	variableName := self newNameForSelf.
-	rewriter := RBParseTreeRewriter rename: 'self' to: variableName.
+	rewriter := self parseTreeRewriterClass rename: 'self' to: variableName.
 	(rewriter executeTree: inlineParseTree) 
 		ifTrue: [inlineParseTree := rewriter tree].
 	newArguments := inlineParseTree arguments asOrderedCollection.

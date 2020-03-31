@@ -51,7 +51,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 		class: nonMetaClass
 		classVariable: true.
 	self performComponentRefactoring: refactoring.
-	rewriter := RBParseTreeRewriter new.
+	rewriter := self parseTreeRewriter.
 	fromClass isMeta 
 		ifTrue: 
 			[ rewriter
@@ -89,7 +89,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 				class: fromClass
 				classVariable: false.
 	self performComponentRefactoring: refactoring.
-	rewriter := RBParseTreeRewriter new.
+	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
 			with: ('self <1s> ``@object' expandMacrosWith: refactoring setterMethod);

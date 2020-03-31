@@ -96,7 +96,7 @@ RBRenameClassTransformation >> privateTransform [
 RBRenameClassTransformation >> renameReferences [
 
 	| replacer |
-	replacer := (RBParseTreeRewriter
+	replacer := (self parseTreeRewriterClass
 				replaceLiteral: className with: newClassName)
 				replace: className with: newClassName;
 				"replaceArgument: newClassName withValueFrom: 

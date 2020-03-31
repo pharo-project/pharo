@@ -66,7 +66,7 @@ RBCreateCascadeRefactoring >> combineMessages [
 
 { #category : #transforming }
 RBCreateCascadeRefactoring >> compileCode [
-	class compileTree: (RBParseTreeRewriter
+	class compileTree: (self parseTreeRewriterClass
 		replaceStatements: sequenceNode formattedCode
 		with: transformedNode formattedCode
 		in: self parseTree
