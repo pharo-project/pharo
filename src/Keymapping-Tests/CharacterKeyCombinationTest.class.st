@@ -1,7 +1,7 @@
 Class {
 	#name : #CharacterKeyCombinationTest,
 	#superclass : #TestCase,
-	#category : #'Keymapping-KeyCombinations'
+	#category : #'Keymapping-Tests'
 }
 
 { #category : #tests }
