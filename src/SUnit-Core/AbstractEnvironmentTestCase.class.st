@@ -7,6 +7,12 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
+{ #category : #testing }
+AbstractEnvironmentTestCase class >> isAbstract [
+
+	^self = AbstractEnvironmentTestCase 
+]
+
 { #category : #accessing }
 AbstractEnvironmentTestCase >> environmentOfTest [
 	^ testingEnvironment
