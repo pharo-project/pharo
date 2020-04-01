@@ -154,7 +154,9 @@ One chapter of particular interest is the one that provides a quick tour of the 
 { #category : #defaults }
 WelcomeHelp class >> fastNetworkDefaults [
 	"Allow to display catalog projects in spotter on regular and fast networks"
-	CatalogSettings displayCatalogProjectsInSpotter: true.
+
+	SptCatalogProjectsProcessor enabled: false.
+	
 	self inform: 'Catalog projects accessible through Spotter'
 ]
 
@@ -272,7 +274,9 @@ WelcomeHelp class >> pharoVersionString [
 { #category : #defaults }
 WelcomeHelp class >> slowNetworkDefaults [
 	"Do not display network bound catalog projects in spotter to keep it responsive."
-	CatalogSettings displayCatalogProjectsInSpotter: false.
+	
+	SptCatalogProjectsProcessor enabled: false.
+	
 	self inform: 'Catalog projects not accessible through Spotter due to slow network. Use search in catalog tool to load external packages.'
 ]
 
