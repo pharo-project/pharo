@@ -14,7 +14,7 @@ Insertion, update, and inclusion testing have O(1) complexity while removing has
 Public API and Key Messages
 --------------------
 
-- #at: aKey put: aValue / #at: aKey ifAbsentPut: aValue 		allow to add an element.
+- #at: aKey put: aValue / #at: aKey ifAbsentPut: aValue / #at: aKey ifPresent: aBlock ifAbsent: aBlock		allow to add an element.
   
 - #at: aKey / #at: aKey ifAbsent: aBlock / #at: aKey ifPresent: aBlock ifAbsent: aBlock 		allow to access my values.
 
@@ -252,7 +252,7 @@ OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBloc
 	^ dictionary
 		at: aKey
 		ifPresent: aPresentBlock
-		ifAbsentPut: anAbsentBlock
+		ifAbsent: [ self at: aKey put: anAbsentBlock value ]
 ]
 
 { #category : #accessing }
