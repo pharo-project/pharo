@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'title'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #accessing }

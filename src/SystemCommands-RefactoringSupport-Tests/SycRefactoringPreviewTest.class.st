@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'sycRefactoringPreview'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Test'
+	#category : #'SystemCommands-RefactoringSupport-Tests'
 }
 
 { #category : #running }
