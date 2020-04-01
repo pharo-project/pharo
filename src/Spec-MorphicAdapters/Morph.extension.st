@@ -36,7 +36,9 @@ Morph >> setModal: aSystemWindow [
 	keyboardFocus := self activeHand keyboardFocus.
 	mySysWin := self isSystemWindow ifTrue: [self] ifFalse: [self ownerThatIsA: SystemWindow].
 	mySysWin ifNil: [mySysWin := self].
-	mySysWin modalLockTo: aSystemWindow.
+
+	mySysWin isSystemWindow ifTrue: [ mySysWin modalLockTo: aSystemWindow ].
+
 	area := RealEstateAgent maximumUsableArea.
 	aSystemWindow extent: aSystemWindow initialExtent.
 	aSystemWindow position = (0@0)
@@ -46,7 +48,7 @@ Morph >> setModal: aSystemWindow [
 		bounds: (aSystemWindow bounds translatedToBeWithin: area).
 	[  MorphicRenderLoop new doOneCycleWhile: [ aSystemWindow isInWorld ] ]
 		ensure: [
-			mySysWin modalUnlockFrom: aSystemWindow.
+			mySysWin isSystemWindow ifTrue: [ mySysWin modalUnlockFrom: aSystemWindow ].
 			self activeHand newKeyboardFocus: keyboardFocus].
 	^ aSystemWindow
 ]
