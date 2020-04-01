@@ -228,9 +228,12 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 TestExecutionEnvironment >> runTestCaseSafelly: aTestCase [
 	
 	[
-		[aTestCase runCase] on: UnhandledError, Halt, Warning do: [ :err | 
-			self handleUnhandledException: err ]
-	] ensure: [self handleCompletedTest]
+		aTestCase runCase.
+		self handleCompletedTest
+	] on: UnhandledError, Halt, Warning do: [ :err | 
+			self handleUnhandledException: err 
+	]
+	
 ]
 
 { #category : #controlling }
