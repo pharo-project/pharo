@@ -50,7 +50,7 @@ RecentMessageList class >> new [
 
 { #category : #'instance creation' }
 RecentMessageList class >> open [
-	
+	<script>
 	self new open
 ]
 
@@ -250,12 +250,15 @@ RecentMessageList >> methodReferenceList: anObject [
 RecentMessageList >> open [
 	"opens the system window for recent messages"
 
-	^ MessageBrowser new
-		topologicSort: false;
-		sortingBlock: [ :a :b | a timeStamp > b timeStamp ];
-		messages: methodReferenceList;
-		title: 'Recently accepted methods' translated;
-		open
+	|browser|
+	browser := MessageBrowser new
+						topologicSort: false;
+						sortingBlock: [ :a :b | a timeStamp > b timeStamp ];
+						messages: methodReferenceList;
+						open.
+	browser title: 'Recently accepted methods' translated.
+	^browser
+						
 ]
 
 { #category : #initialization }
