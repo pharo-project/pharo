@@ -116,17 +116,17 @@ TestExecutionEnvironment >> handleCompletedTest [
 ]
 
 { #category : #controlling }
-TestExecutionEnvironment >> handleNewProcess: aProcess [
+TestExecutionEnvironment >> handleException: anException [
 
-	self enabledServicesDo: [ :each | each handleNewProcess: aProcess ].
+	self enabledServicesDo: [ :each | each handleException: anException].
+	
+	anException pass
 ]
 
 { #category : #controlling }
-TestExecutionEnvironment >> handleUnhandledException: anUnhandledException [
+TestExecutionEnvironment >> handleNewProcess: aProcess [
 
-	self enabledServicesDo: [ :each | each handleUnhandledException: anUnhandledException].
-	
-	anUnhandledException pass
+	self enabledServicesDo: [ :each | each handleNewProcess: aProcess ].
 ]
 
 { #category : #initialization }
@@ -230,8 +230,8 @@ TestExecutionEnvironment >> runTestCaseSafelly: aTestCase [
 	[
 		aTestCase runCase.
 		self handleCompletedTest
-	] on: UnhandledError, Halt, Warning do: [ :err | 
-			self handleUnhandledException: err 
+	] on: Exception do: [ :err | 
+			self handleException: err 
 	]
 	
 ]

@@ -35,17 +35,17 @@ TestServiceExample >> handleCompletedTest [
 ]
 
 { #category : #controlling }
+TestServiceExample >> handleException: anUnhandledException [
+	super handleException: anUnhandledException.
+	
+	unhandledExceptions add: anUnhandledException 
+]
+
+{ #category : #controlling }
 TestServiceExample >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
 	
 	forkedProcesses add: aProcess
-]
-
-{ #category : #controlling }
-TestServiceExample >> handleUnhandledException: anUnhandledException [
-	super handleUnhandledException: anUnhandledException.
-	
-	unhandledExceptions add: anUnhandledException 
 ]
 
 { #category : #initialization }

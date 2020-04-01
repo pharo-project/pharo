@@ -3,8 +3,8 @@ Class {
 	#superclass : #TestExecutionService,
 	#instVars : [
 		'forkedProcesses',
-		'suspendedBackgroundFailures',
-		'shouldSuspendBackgroundFailures'
+		'shouldSuspendBackgroundFailures',
+		'testFailures'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -20,7 +20,7 @@ ProcessMonitorTestService >> cleanUpAfterTest [
 	
 	forkedProcesses do: [:each | each terminate].
 	forkedProcesses removeAll.
-	suspendedBackgroundFailures removeAll.
+	testFailures removeAll.
 	self enableBackgroudFailuresSuspension
 ]
 
@@ -38,7 +38,7 @@ ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoBackgroundFailures [
-	suspendedBackgroundFailures ifEmpty: [ ^self ].
+	testFailures ifEmpty: [ ^self ].
 
 	[TestFailedByForkedProcess signal] on: UnhandledError do: [ :e | 
 		self passSuspendedFailures.
@@ -73,25 +73,29 @@ ProcessMonitorTestService >> handleCompletedTest [
 ]
 
 { #category : #controlling }
+ProcessMonitorTestService >> handleException: anException [
+	super handleException: anException.
+	
+	anException manageTestProcessBy: self
+]
+
+{ #category : #controlling }
 ProcessMonitorTestService >> handleNewProcess: aProcess [
 	super handleNewProcess: aProcess.
 	
 	forkedProcesses add: aProcess.
 	
 	aProcess on: UnhandledError, Halt, Warning do: [ :err |
-		self handleUnhandledException: err]
+		self handleException: err]
 ]
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
-	super handleUnhandledException: anUnhandledException.
 	
 	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
 	
 	shouldSuspendBackgroundFailures ifTrue: [
-		anUnhandledException suspendDefaultActionForTestBy: self].
-	
-	^anUnhandledException pass
+		self suspendBackgroundFailure: anUnhandledException]
 ]
 
 { #category : #initialization }
@@ -100,7 +104,7 @@ ProcessMonitorTestService >> initialize [
 	
 	self enableBackgroudFailuresSuspension.
 	forkedProcesses := WeakSet new.
-	suspendedBackgroundFailures := OrderedIdentityDictionary new.
+	testFailures := OrderedIdentityDictionary new.
 	 
 ]
 
@@ -108,14 +112,26 @@ ProcessMonitorTestService >> initialize [
 ProcessMonitorTestService >> passSuspendedFailures [	
 	self disableBackgroudFailuresSuspension.
 		
-	suspendedBackgroundFailures keys 
+	testFailures keys 
 		reject: [:each | each isTerminated ] 
 		thenDo: [:each | each resume ]
 ]
 
+{ #category : #controlling }
+ProcessMonitorTestService >> recordTestFailure: anException [
+
+	| activeProcess |
+	activeProcess := Processor activeProcess.
+	activeProcess isTerminating ifTrue: [ 
+		"Do nothing for exceptions during process termination"
+		^self ]. 
+	
+	testFailures at: activeProcess put: anException
+]
+
 { #category : #initialization }
 ProcessMonitorTestService >> resetFailures [
-	suspendedBackgroundFailures removeAll
+	testFailures removeAll
 ]
 
 { #category : #accessing }
@@ -137,11 +153,11 @@ ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 		"Do nothing for exceptions during process termination"
 		^self ]. 
 	
-	suspendedBackgroundFailures at: activeProcess put: anException.
+	self recordTestFailure: anException.
 	activeProcess suspend
 ]
 
 { #category : #accessing }
 ProcessMonitorTestService >> suspendedBackgroundFailures [
-	^ suspendedBackgroundFailures
+	^ testFailures
 ]

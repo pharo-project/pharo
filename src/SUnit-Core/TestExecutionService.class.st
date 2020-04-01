@@ -70,11 +70,11 @@ TestExecutionService >> handleCompletedTest [
 ]
 
 { #category : #controlling }
-TestExecutionService >> handleNewProcess: aProcess [
+TestExecutionService >> handleException: anUnhandledException [
 ]
 
 { #category : #controlling }
-TestExecutionService >> handleUnhandledException: anUnhandledException [
+TestExecutionService >> handleNewProcess: aProcess [
 ]
 
 { #category : #initialization }

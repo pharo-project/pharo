@@ -159,7 +159,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaled [
 	executed := false.
 	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
 
-	testService handleUnhandledException: Halt new. 
+	testService handleException: Halt new. 
 	
 	self assert: executed.
 	self deny: testService shouldSuspendBackgroundFailures
@@ -186,7 +186,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhan
 	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
 	self deny: executed.	
 
-	testService handleUnhandledException: UnhandledError new.
+	testService handleException: UnhandledError new.
 	self assert: executed.
 	"Unhandled exception opens debugger and therefore any new errors should not be suspended"
 	self deny: testService shouldSuspendBackgroundFailures 
