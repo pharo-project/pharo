@@ -439,6 +439,11 @@ RBProgramNode >> isFaulty [
 	^false
 ]
 
+{ #category : #iterating }
+RBProgramNode >> isGlobal [
+	^ false
+]
+
 { #category : #deprecated }
 RBProgramNode >> isImmediate [
 	^self isImmediateNode
@@ -447,6 +452,11 @@ RBProgramNode >> isImmediate [
 { #category : #testing }
 RBProgramNode >> isImmediateNode [
 	^false
+]
+
+{ #category : #iterating }
+RBProgramNode >> isInstance [
+	^ false
 ]
 
 { #category : #testing }
