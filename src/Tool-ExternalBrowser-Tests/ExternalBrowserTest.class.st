@@ -5,7 +5,7 @@ Class {
 		'initialWindows',
 		'file'
 	],
-	#category : #'Tool-ExternalBrowser-Test'
+	#category : #'Tool-ExternalBrowser-Tests-Browsers'
 }
 
 { #category : #running }
