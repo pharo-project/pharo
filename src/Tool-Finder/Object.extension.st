@@ -13,7 +13,7 @@ Object class >> approvedSelectorsForMethodFinder [
 Object >> closeTo: anObject [
 	"Do not use this Method! It is a workaround for MethodFinder"
 
-	^[self = anObject] ifError: [false]
+	^[self = anObject] ifErrorDo: [false]
 ]
 
 { #category : #'*Tool-Finder' }

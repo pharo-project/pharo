@@ -1314,18 +1314,18 @@ Context >> printDetails: stream [
 	stream cr.
 	stream tab; nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [errorMessage]).
+	stream nextPutAll: ([receiver printStringLimitedTo: 90] ifErrorDo: [errorMessage]).
 
 	stream cr; tab; nextPutAll: 'Arguments and temporary variables: '; cr.
 	string := [(self tempsAndValuesLimitedTo: 80 indent: 2) 
-				padRightTo:1 with: $x] ifError: [errorMessage].
+				padRightTo:1 with: $x] ifErrorDo: [errorMessage].
 	stream nextPutAll: (string allButLast).
 
 	stream cr; tab; nextPutAll: 'Receiver''s instance variables: '; cr.
 	receiver class allInstVarNames isEmpty ifTrue: [ 
-		stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [ errorMessage ]).
+		stream nextPutAll: ([receiver printStringLimitedTo: 90] ifErrorDo: [ errorMessage ]).
 	] ifFalse: [
-		[receiver longPrintOn: stream limitedTo: 80 indent: 2] ifError: [ stream nextPutAll: errorMessage ].
+		[receiver longPrintOn: stream limitedTo: 80 indent: 2] ifErrorDo: [ stream nextPutAll: errorMessage ].
 	].
 	stream cr
 ]

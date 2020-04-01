@@ -2074,7 +2074,7 @@ by which the dashes will move in each step of animation]' translated
 		initialAnswer: '{ 10. 5. Color red }'.
 	executableSpec isEmptyOrNil ifTrue:
 		[^ self stopStepping; dashedBorder: nil].
-	newSpec := [self class compiler evaluate: executableSpec] ifError:
+	newSpec := [self class compiler evaluate: executableSpec] ifErrorDo:
 		[^ self stopStepping; dashedBorder: nil].
 	(newSpec first isNumber and: [newSpec second isNumber and: [newSpec third isColor]]) ifFalse:
 		[^ self stopStepping; dashedBorder: nil].

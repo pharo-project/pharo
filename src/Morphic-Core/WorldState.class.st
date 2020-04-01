@@ -464,7 +464,7 @@ WorldState >> displayWorld: aWorld submorphs: submorphs [
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
-	[aWorld displayWorld] ifError: [:err |
+	[aWorld displayWorld] ifErrorDo: [:err |
 		"Handle a drawing error"
 		| errCtx errMorph |
 		errCtx := thisContext.

@@ -228,7 +228,7 @@ Transcripter >> readEvalPrint [
 						ifFalse: [self cr; show: 'Only one level of revert currently supported']]
 				ifFalse: [self cr;
 						show: ([self class compiler evaluate: line]
-								ifError: [:err | err description])]]. 
+								ifErrorDo: [:err | err description])]]. 
 	self cr; show: 'Done'.
 
 ]

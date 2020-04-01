@@ -276,7 +276,7 @@ DebugSession >> keepAlive: anObjectThatWantsToKeepMeAlive [
 DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
 	
-	[[Smalltalk logError: name inContext: interruptedContext  ] ifError: [ ]]
+	[[Smalltalk logError: name inContext: interruptedContext  ] ifErrorDo: [ ]]
 		valueWithin: 100 milliSeconds onTimeout: [  ]
 ]
 
