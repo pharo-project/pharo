@@ -34,11 +34,11 @@ OSWindowRenderThread isActiveThread ifFalse: [ ^ 'GL Renderer must be used insid
 { #category : #misc }
 OSSDL2GLRenderer >> createContext [
 	self onRenderThreadBlocking: [
-		context := SDL2 glCreateContext: window handle.
+		context := SDL2 glCreateContext: backendWindow sdl2Window .
 	].
 
 	(context isNotNil and: [ context isNull not ]) ifTrue: [
-		FFIExternalResourceManager addResource: self data: { window . context }
+		FFIExternalResourceManager addResource: self data: { backendWindow . context }
 	]
 ]
 
@@ -58,12 +58,12 @@ OSSDL2GLRenderer >> getProcAddress: procName [
 ]
 
 { #category : #misc }
-OSSDL2GLRenderer >> makeCurrent: aWindow [
+OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 	| windowHandle |
 	context ifNil: [ ^ false ].
 	
 	self checkThread.
-	windowHandle := aWindow handle.
+	windowHandle := aBackendWindow sdl2Window.
 	windowHandle ifNil: [ ^ false ].
 	(SDL2 glMakeCurrent: windowHandle context: context) == 0
 		ifTrue:  [ ^ true ]
@@ -74,7 +74,7 @@ OSSDL2GLRenderer >> makeCurrent: aWindow [
 { #category : #misc }
 OSSDL2GLRenderer >> swapBuffers: aWindow [
 	self checkThread.
-	SDL2 glSwapWindow: aWindow handle.
+	SDL2 glSwapWindow: aWindow sdl2Window.
 ]
 
 { #category : #'updating screen' }

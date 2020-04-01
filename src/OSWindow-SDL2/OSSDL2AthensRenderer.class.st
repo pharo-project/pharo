@@ -49,10 +49,10 @@ OSSDL2AthensRenderer >> destroy [
 ]
 
 { #category : #initialization }
-OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [ 
+OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [ 
 	self initialize.
-	self window: aWindowHandle.
-	renderer := window handle createDefaultRenderer.
+	self backendWindow: aBackendWindow.
+	renderer := backendWindow sdl2Window createDefaultRenderer.
 	self resetResources.
 	
 		
@@ -60,7 +60,7 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [
 
 { #category : #drawing }
 OSSDL2AthensRenderer >> prepareForDrawing [
-	textureExtent ~= window extent ifTrue: [ self resized ].
+	textureExtent ~= backendWindow extent ifTrue: [ self resized ].
 ]
 
 { #category : #'updating screen' }
@@ -81,7 +81,7 @@ OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: extern
 OSSDL2AthensRenderer >> resetResources [
 	| extent |
 	self checkSession.
-	extent := self window extent.
+	extent := backendWindow extent.
 	self createSDLSurfaceWithExtent: extent.
 	athensSurface := AthensCairoSDLSurface fromSDLSurface: sdlSurface.
 	texture := renderer 
@@ -146,7 +146,7 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 		externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
 		allDamage do: [ :rectangle |
 			intersection := rectangle
-				intersect: (0 @ 0 corner: window extent)
+				intersect: (0 @ 0 corner: backendWindow extent)
 				ifNone: [ nil ].
 		
 			intersection ifNotNil: [
@@ -164,6 +164,6 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 OSSDL2AthensRenderer >> validate [
 	self checkSession.
 	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].	
-	window extent ~= textureExtent ifTrue: [ ^ false ].
+	backendWindow extent ~= textureExtent ifTrue: [ ^ false ].
 	^ true
 ]
