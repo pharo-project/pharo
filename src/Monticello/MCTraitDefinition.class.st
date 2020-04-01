@@ -8,13 +8,18 @@ Class {
 }
 
 { #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: commentStamp [
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: aString5 [ 
+
 	^ self new
 		initializeWithName: classNameString
 		traitComposition: traitCompositionString
 		category: categoryString
+		instVarNames: ''
+		classTraitComposition: nil
+		classInstVarNames: ''
 		comment: commentString
-		commentStamp: commentStamp
+		commentStamp: aString5
+
 ]
 
 { #category : #'instance creation api' }
@@ -33,41 +38,6 @@ MCTraitDefinition class >> name: classNameString traitComposition: traitComposit
 		
 ]
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray comment: commentString commentStamp: commentStamp [
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		classInstVarNames: civarArray
-		comment: commentString
-		commentStamp: commentStamp
-]
-
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray comment: commentString commentStamp: commentStamp [
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		comment: commentString
-		commentStamp: commentStamp
-]
-
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString classTraitComposition: classTraitComposition category: categoryString comment: commentString commentStamp: commentStamp [
-
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		classTraitComposition: classTraitComposition
-		category: categoryString
-		comment: commentString
-		commentStamp: commentStamp 
-]
-
 { #category : #comparing }
 MCTraitDefinition >> = aDefinition [
 	self flag: #traits. "Ugly we harcoded the super superclass method.  We will have to refactor the definition hierarchy"
@@ -75,10 +45,11 @@ MCTraitDefinition >> = aDefinition [
 	^ (aDefinition isKindOf: MCDefinition)
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
+		and: [self classTraitCompositionString = aDefinition classTraitCompositionString
 		and: [category = aDefinition category
 		and: [self slotDefinitionString = aDefinition slotDefinitionString
 		and: [self classInstVarNames  = aDefinition classInstVarNames  
-		and: [comment = aDefinition comment]]]]]]
+		and: [comment = aDefinition comment]]]]]]]
 ]
 
 { #category : #visiting }
