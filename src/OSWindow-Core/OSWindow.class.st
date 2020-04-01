@@ -216,11 +216,6 @@ OSWindow >> getFlags [
 	^ self validHandle getFlags
 ]
 
-{ #category : #accessing }
-OSWindow >> handle [
-	^ backendWindow
-]
-
 { #category : #visibility }
 OSWindow >> hide [
 	self checkIsValid .

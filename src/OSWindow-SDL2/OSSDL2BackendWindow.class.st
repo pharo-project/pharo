@@ -149,12 +149,6 @@ OSSDL2BackendWindow >> getWMInfo [
 	^ wmInfo
 ]
 
-{ #category : #initialize }
-OSSDL2BackendWindow >> handle [
-
-	^ sdl2Window
-]
-
 { #category : #'event handling' }
 OSSDL2BackendWindow >> handleNewSDLEvent: sdlEvent [
 	^ sdlEvent accept: self
