@@ -7,8 +7,8 @@ Class {
 	#name : #OSWindowRenderer,
 	#superclass : #Object,
 	#instVars : [
-		'window',
-		'lastExposeTime'
+		'lastExposeTime',
+		'backendWindow'
 	],
 	#category : #'OSWindow-Core-Renderer'
 }
@@ -16,7 +16,7 @@ Class {
 { #category : #deleting }
 OSWindowRenderer >> destroy [
 	"Called when the window associated with the renderer is destroyed"
-	window := nil.
+	backendWindow := nil.
 ]
 
 { #category : #'updating screen' }
@@ -79,11 +79,11 @@ OSWindowRenderer >> updateRectangles: aCollectionOfRectangles [
 { #category : #accessing }
 OSWindowRenderer >> window [
 	
-	^ window
+	^ backendWindow
 ]
 
 { #category : #accessing }
 OSWindowRenderer >> window: anObject [
 	
-	window := anObject
+	backendWindow := anObject
 ]

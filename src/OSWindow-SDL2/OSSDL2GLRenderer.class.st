@@ -34,11 +34,11 @@ OSWindowRenderThread isActiveThread ifFalse: [ ^ 'GL Renderer must be used insid
 { #category : #misc }
 OSSDL2GLRenderer >> createContext [
 	self onRenderThreadBlocking: [
-		context := SDL2 glCreateContext: window handle.
+		context := SDL2 glCreateContext: backendWindow handle.
 	].
 
 	(context isNotNil and: [ context isNull not ]) ifTrue: [
-		FFIExternalResourceManager addResource: self data: { window . context }
+		FFIExternalResourceManager addResource: self data: { backendWindow . context }
 	]
 ]
 

@@ -52,7 +52,7 @@ OSSDL2AthensRenderer >> destroy [
 OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [ 
 	self initialize.
 	self window: aWindowHandle.
-	renderer := window handle createDefaultRenderer.
+	renderer := backendWindow handle createDefaultRenderer.
 	self resetResources.
 	
 		
@@ -60,7 +60,7 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [
 
 { #category : #drawing }
 OSSDL2AthensRenderer >> prepareForDrawing [
-	textureExtent ~= window extent ifTrue: [ self resized ].
+	textureExtent ~= backendWindow extent ifTrue: [ self resized ].
 ]
 
 { #category : #'updating screen' }
@@ -146,7 +146,7 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 		externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
 		allDamage do: [ :rectangle |
 			intersection := rectangle
-				intersect: (0 @ 0 corner: window extent)
+				intersect: (0 @ 0 corner: backendWindow extent)
 				ifNone: [ nil ].
 		
 			intersection ifNotNil: [
@@ -164,6 +164,6 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 OSSDL2AthensRenderer >> validate [
 	self checkSession.
 	(texture isNil or: [ texture isNull ]) ifTrue: [ ^ false ].	
-	window extent ~= textureExtent ifTrue: [ ^ false ].
+	backendWindow extent ~= textureExtent ifTrue: [ ^ false ].
 	^ true
 ]

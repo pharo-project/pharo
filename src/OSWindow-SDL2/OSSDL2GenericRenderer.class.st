@@ -30,7 +30,7 @@ OSSDL2GenericRenderer >> color: aColor [
 
 { #category : #initialization }
 OSSDL2GenericRenderer >> createSDL2Renderer [
-	renderer := window handle createDefaultRenderer.
+	renderer := backendWindow handle createDefaultRenderer.
 ]
 
 { #category : #deleting }
