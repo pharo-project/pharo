@@ -7,10 +7,10 @@ Class {
 	#name : #OSSDL2BackendWindow,
 	#superclass : #OSBackendWindow,
 	#instVars : [
-		'handle',
 		'currentCursor',
 		'iconSurface',
-		'lastKeyboardFocus'
+		'lastKeyboardFocus',
+		'sdl2Window'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -25,12 +25,12 @@ OSSDL2BackendWindow class >> newWithHandle: handle attributes: attributes [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> borderless [
-	^ handle getFlags anyMask: SDL_WINDOW_BORDERLESS
+	^ sdl2Window getFlags anyMask: SDL_WINDOW_BORDERLESS
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> borderless: aBoolean [
-	handle toggleBorder: aBoolean not.
+	sdl2Window toggleBorder: aBoolean not.
 ]
 
 { #category : #accessing }
@@ -104,12 +104,12 @@ OSSDL2BackendWindow >> deliverGlobalEvent: aGlobalEvent [
 { #category : #initialize }
 OSSDL2BackendWindow >> destroy [
 
-	handle ifNotNil: [ :validHandle | 
+	sdl2Window ifNotNil: [ :validHandle | 
 		OSSDL2Driver current unregisterWindowWithId: validHandle windowID.
 		validHandle destroy ].
 
 	renderer := nil.
-	handle := nil.
+	sdl2Window := nil.
 	osWindow := nil
 ]
 
@@ -118,41 +118,41 @@ OSSDL2BackendWindow >> extent [
 	| w h |
 	w := ByteArray new: 4.
 	h := ByteArray new: 4.
-	handle getSizeW: w h: h.
+	sdl2Window getSizeW: w h: h.
 	^ (w signedLongAt: 1) @ (h signedLongAt: 1)
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> extent: newExtent [
-	handle setSizeW: newExtent x h: newExtent y
+	sdl2Window setSizeW: newExtent x h: newExtent y
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> fullscreen: aBoolean [
 	aBoolean ifTrue: [
-		handle fullscreen: SDL_WINDOW_FULLSCREEN_DESKTOP
+		sdl2Window fullscreen: SDL_WINDOW_FULLSCREEN_DESKTOP
 	] ifFalse: [ 
-		handle fullscreen: 0
+		sdl2Window fullscreen: 0
 	]
 ]
 
 { #category : #private }
 OSSDL2BackendWindow >> getFlags [
-	^ handle getFlags
+	^ sdl2Window getFlags
 ]
 
 { #category : #private }
 OSSDL2BackendWindow >> getWMInfo [
 	| wmInfo |
 	wmInfo := SDL_SysWMinfo new version: SDL_Version bindingVersion.
-	handle getWMInfo: wmInfo.
+	sdl2Window getWMInfo: wmInfo.
 	^ wmInfo
 ]
 
 { #category : #initialize }
 OSSDL2BackendWindow >> handle [
 
-	^ handle
+	^ sdl2Window
 ]
 
 { #category : #'event handling' }
@@ -162,7 +162,7 @@ OSSDL2BackendWindow >> handleNewSDLEvent: sdlEvent [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> hide [
-	handle hide
+	sdl2Window hide
 ]
 
 { #category : #accessing }
@@ -178,14 +178,14 @@ OSSDL2BackendWindow >> icon: aForm [
 			gmask: 16r000ff00
 			bmask: 16r00000ff
 			amask: 16rff000000.
-	handle icon: surface.
+	sdl2Window icon: surface.
 	iconSurface ifNotNil: [ SDL2 freeSurface: surface ].
 	iconSurface := surface.
 ]
 
 { #category : #initialize }
 OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
-	handle := aHandle.
+	sdl2Window := aHandle.
 	attributes applyTo: self
 ]
 
@@ -200,7 +200,7 @@ OSSDL2BackendWindow >> initialize [
 OSSDL2BackendWindow >> isTextInputActive [
 	"See https://wiki.libsdl.org/SDL_IsTextInputActive"
 
-	^ handle isTextInputActive
+	^ sdl2Window isTextInputActive
 ]
 
 { #category : #testing }
@@ -221,13 +221,13 @@ OSSDL2BackendWindow >> mapSpecialCharacter: symbol [
 { #category : #'window management' }
 OSSDL2BackendWindow >> maximize [
 
-	handle maximize.
+	sdl2Window maximize.
 ]
 
 { #category : #'window management' }
 OSSDL2BackendWindow >> minimize [
 
-	handle minimize.
+	sdl2Window minimize.
 ]
 
 { #category : #'event handling' }
@@ -291,24 +291,24 @@ OSSDL2BackendWindow >> position [
 	| x y |
 	x := ByteArray new: ExternalType long byteSize.
 	y := ByteArray new: ExternalType long byteSize.
-	handle getPositionX: x y: y.
+	sdl2Window getPositionX: x y: y.
 	^ ( x signedLongAt: 1) @ (y signedLongAt: 1)
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> position: aPoint [
-	handle setPositionX: aPoint x asInteger y: aPoint y asInteger
+	sdl2Window setPositionX: aPoint x asInteger y: aPoint y asInteger
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> prepareExternalResourceForAutoRelease [
-	handle autoRelease
+	sdl2Window autoRelease
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> raise [
 
-	handle raise
+	sdl2Window raise
 ]
 
 { #category : #'mouse capture' }
@@ -318,7 +318,7 @@ OSSDL2BackendWindow >> releaseMouse [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> resizable [
-	^ handle getFlags anyMask: SDL_WINDOW_RESIZABLE
+	^ sdl2Window getFlags anyMask: SDL_WINDOW_RESIZABLE
 ]
 
 { #category : #accessing }
@@ -329,7 +329,13 @@ OSSDL2BackendWindow >> resizable: aBoolean [
 { #category : #'window management' }
 OSSDL2BackendWindow >> restore [
 
-	handle restore
+	sdl2Window restore
+]
+
+{ #category : #initialize }
+OSSDL2BackendWindow >> sdl2Window [
+
+	^ sdl2Window
 ]
 
 { #category : #'window management' }
@@ -343,7 +349,7 @@ OSSDL2BackendWindow >> setDraggableArea: aRectangle [
 			(pt x > sdlRect x) & (pt x < sdlRect w) & (pt y > sdlRect y) & (pt y < sdlRect h) ifTrue: [ 1 ] ifFalse: [ 0 ].
 		].
 	
-	^handle setHitTest: myCallback.
+	^sdl2Window setHitTest: myCallback.
 ]
 
 { #category : #cursor }
@@ -361,7 +367,7 @@ OSSDL2BackendWindow >> setMouseCursor: cursor mask: mask [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> show [
-	handle show
+	sdl2Window show
 ]
 
 { #category : #cursor }
@@ -373,36 +379,36 @@ OSSDL2BackendWindow >> showCursor: aBoolean [
 OSSDL2BackendWindow >> startTextInput [
 	"See https://wiki.libsdl.org/SDL_StartTextInput"
 
-	handle startTextInput
+	sdl2Window startTextInput
 ]
 
 { #category : #'text input' }
 OSSDL2BackendWindow >> stopTextInput [
 	"See https://wiki.libsdl.org/SDL_StopTextInput"
 
-	handle stopTextInput
+	sdl2Window stopTextInput
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> title [
-	^ handle title
+	^ sdl2Window title
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> title: aTitle [
-	handle title: aTitle
+	sdl2Window title: aTitle
 ]
 
 { #category : #'window management' }
 OSSDL2BackendWindow >> toggleBorderOff [
 
-	handle toggleBorder: false.
+	sdl2Window toggleBorder: false.
 ]
 
 { #category : #'window management' }
 OSSDL2BackendWindow >> toggleBorderOn [
 
-	handle toggleBorder: true.
+	sdl2Window toggleBorder: true.
 ]
 
 { #category : #'event handling' }
