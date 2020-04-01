@@ -13,6 +13,12 @@ Class {
 	#category : #'OSWindow-Core-Renderer'
 }
 
+{ #category : #accessing }
+OSWindowRenderer >> backendWindow: anObject [
+	
+	backendWindow := anObject
+]
+
 { #category : #deleting }
 OSWindowRenderer >> destroy [
 	"Called when the window associated with the renderer is destroyed"
@@ -74,16 +80,4 @@ OSWindowRenderer >> updateRectangle: rectangle [
 { #category : #'updating screen' }
 OSWindowRenderer >> updateRectangles: aCollectionOfRectangles [
 	aCollectionOfRectangles do: [ :rectangle | self updateRectangle: rectangle ]
-]
-
-{ #category : #accessing }
-OSWindowRenderer >> window [
-	
-	^ backendWindow
-]
-
-{ #category : #accessing }
-OSWindowRenderer >> window: anObject [
-	
-	backendWindow := anObject
 ]

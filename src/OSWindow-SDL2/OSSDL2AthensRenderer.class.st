@@ -49,9 +49,9 @@ OSSDL2AthensRenderer >> destroy [
 ]
 
 { #category : #initialization }
-OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [ 
+OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [ 
 	self initialize.
-	self window: aWindowHandle.
+	self backendWindow: aBackendWindow.
 	renderer := backendWindow sdl2Window createDefaultRenderer.
 	self resetResources.
 	
@@ -81,7 +81,7 @@ OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: extern
 OSSDL2AthensRenderer >> resetResources [
 	| extent |
 	self checkSession.
-	extent := self window extent.
+	extent := backendWindow extent.
 	self createSDLSurfaceWithExtent: extent.
 	athensSurface := AthensCairoSDLSurface fromSDLSurface: sdlSurface.
 	texture := renderer 

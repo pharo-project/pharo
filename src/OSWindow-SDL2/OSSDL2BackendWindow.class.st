@@ -242,14 +242,14 @@ OSSDL2BackendWindow >> newAthensRenderer [
 OSSDL2BackendWindow >> newFormRenderer: form [
 	^ renderer := OSSDL2FormRenderer new 
 		form: form;
-		window: self;
+		backendWindow: self;
 		yourself
 ]
 
 { #category : #'instance creation' }
 OSSDL2BackendWindow >> newGenericRenderer [
 	^ renderer := OSSDL2GenericRenderer new 
-		window: self;
+		backendWindow: self;
 		createSDL2Renderer;
 		yourself
 ]
@@ -257,7 +257,7 @@ OSSDL2BackendWindow >> newGenericRenderer [
 { #category : #'instance creation' }
 OSSDL2BackendWindow >> newOpenGLRenderer [
 	^ renderer := OSSDL2GLRenderer new 
-		window: self;
+		backendWindow: self;
 		createContext;
 		yourself
 ]
