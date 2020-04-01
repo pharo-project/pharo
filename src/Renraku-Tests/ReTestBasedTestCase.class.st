@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'validTestPackage'
 	],
-	#category : #'Renraku-Test'
+	#category : #'Renraku-Tests'
 }
 
 { #category : #running }

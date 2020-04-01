@@ -1,7 +1,7 @@
 Class {
 	#name : #ReTestClassNameShouldNotEndWithTestsTest,
 	#superclass : #ReTestBasedTestCase,
-	#category : #'Renraku-Test'
+	#category : #'Renraku-Tests'
 }
 
 { #category : #tests }

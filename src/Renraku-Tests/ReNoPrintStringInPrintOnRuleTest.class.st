@@ -1,7 +1,7 @@
 Class {
 	#name : #ReNoPrintStringInPrintOnRuleTest,
 	#superclass : #ReCodeBasedTestCase,
-	#category : #'Renraku-Test'
+	#category : #'Renraku-Tests'
 }
 
 { #category : #printing }
