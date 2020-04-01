@@ -201,16 +201,6 @@ GTSpotter >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'accessing-convenience' }
-GTSpotter >> beDebugging [
-	self exceptionHandler: GTSpotterDebuggingExceptionHandler new
-]
-
-{ #category : #'accessing-convenience' }
-GTSpotter >> beDeployment [
-	self exceptionHandler: GTSpotterDeploymentExceptionHandler new
-]
-
 { #category : #accessing }
 GTSpotter >> currentStep [
 	^ currentStep
@@ -224,11 +214,6 @@ GTSpotter >> currentStep: aStepModel [
 	
 	currentStep := aStepModel.
 	self notifyCurrentStepChanged
-]
-
-{ #category : #'accessing-defaults' }
-GTSpotter >> defaultExceptionHandler [
-	^ GTSpotterDeploymentExceptionHandler new
 ]
 
 { #category : #accessing }
@@ -253,16 +238,6 @@ GTSpotter >> doIt [
 		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
 		exceptionDo: [:ex | ^ex ]. 
 	"self exitDueTo: #doIt"
-]
-
-{ #category : #accessing }
-GTSpotter >> exceptionHandler [
-	^ exceptionHandler ifNil: [ exceptionHandler := self defaultExceptionHandler ]
-]
-
-{ #category : #accessing }
-GTSpotter >> exceptionHandler: anObject [
-	exceptionHandler := anObject
 ]
 
 { #category : #'actions api' }
@@ -310,11 +285,6 @@ GTSpotter >> getText [
 GTSpotter >> gtDisplayOn: stream [
 
 	stream nextPutAll: 'Spotter'
-]
-
-{ #category : #'event handling' }
-GTSpotter >> handleExceptionsDuring: aBlock [
-	self exceptionHandler handleExceptionsDuring: aBlock
 ]
 
 { #category : #testing }

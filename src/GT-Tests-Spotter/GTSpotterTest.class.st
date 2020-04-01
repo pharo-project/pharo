@@ -31,8 +31,7 @@ GTSpotterTest >> setUp [
 	super setUp.
 	
 	spotter := GTMockSpotter new
-		exceptionHandler: GTSpotterDebuggingExceptionHandler new;
-		yourself
+
 ]
 
 { #category : #tests }

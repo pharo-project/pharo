@@ -70,13 +70,6 @@ GTSpotterStep >> asyncTask [
 ]
 
 { #category : #private }
-GTSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext [
-	self basicRelevantProcessorsProcess: aSpotterContext do: [ :processor | 
-		processor filterInContext: aSpotterContext ].
-	aSpotterContext continueFilter
-]
-
-{ #category : #private }
 GTSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext do: aBlock [
 	aSpotterContext text substrings 
 		detect: [ :each | each beginsWith: '#' ]
@@ -183,12 +176,6 @@ GTSpotterStep >> event [
 { #category : #accessing }
 GTSpotterStep >> event: anObject [
 	event := anObject
-]
-
-{ #category : #'accessing - dynamic' }
-GTSpotterStep >> exceptionHandler [
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ self spotter exceptionHandler ]
-	" #ifNil: is necessary because the sender chain of #spotterProcessorsFor:pragma: may have multiple callees outside of the exception handler (async) ... so we have to provide a global but yet easy fallback "
 ]
 
 { #category : #actions }
@@ -369,9 +356,9 @@ GTSpotterStep >> process: aString [
 
 { #category : #processing }
 GTSpotterStep >> processContext: aSpotterContext [
-	self spotter handleExceptionsDuring: [ 
-		self stream removeAllCandidates.
-		self relevantProcessorsProcess: aSpotterContext  ]
+
+	self stream removeAllCandidates.
+	self relevantProcessorsProcess: aSpotterContext
 ]
 
 { #category : #accessing }
@@ -409,12 +396,9 @@ GTSpotterStep >> propagateEvent: ann [
 
 { #category : #private }
 GTSpotterStep >> relevantProcessorsProcess: aSpotterContext [
-	[ self basicRelevantProcessorsProcess: aSpotterContext ]
-		on: Error
-		do: [ :exception | 
-			self exceptionHandler 
-				handleException: exception 
-				do: [ ('[Spotter] Exception in process: ', exception asString) traceCr ] ]
+	self basicRelevantProcessorsProcess: aSpotterContext do: [ :processor | 
+		processor filterInContext: aSpotterContext ].
+	aSpotterContext continueFilter
 ]
 
 { #category : #selecting }

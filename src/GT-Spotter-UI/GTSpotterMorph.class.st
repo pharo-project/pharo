@@ -384,9 +384,9 @@ GTSpotterMorph >> spotterModel: aSpotter [
 
 { #category : #private }
 GTSpotterMorph >> spotterModelDo: aBlock [
-	self spotterModel handleExceptionsDuring: [ 
-		aBlock cull: self spotterModel.
-		self handleProcessorKeyBindings ]
+
+	aBlock cull: self spotterModel.
+	self handleProcessorKeyBindings
 ]
 
 { #category : #actions }

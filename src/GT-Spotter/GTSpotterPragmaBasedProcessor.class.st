@@ -52,7 +52,7 @@ GTSpotterPragmaBasedProcessor >> allFilteredCandidates [
 ]
 
 { #category : #private }
-GTSpotterPragmaBasedProcessor >> basicContinueFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> continueFilterInContext: aSpotterContext [
 
 	" We DO NOT prepare the context since we could no longer continue producing filtered candidates. "
 	(self shouldFilterInContext: aSpotterContext) ifTrue: [
@@ -64,7 +64,20 @@ GTSpotterPragmaBasedProcessor >> basicContinueFilterInContext: aSpotterContext [
 ]
 
 { #category : #private }
-GTSpotterPragmaBasedProcessor >> basicFilterInContext: aSpotterContext [
+GTSpotterPragmaBasedProcessor >> doContinueFilterInContext: aSpotterContext [
+	^ aSpotterContext doContinueFilterForProcessor: self
+]
+
+{ #category : #private }
+GTSpotterPragmaBasedProcessor >> doFilterInContext: aSpotterContext [
+	"override this method to:
+	- add items to the stream
+	- return all found items at the end"
+	self subclassResponsibility
+]
+
+{ #category : #private }
+GTSpotterPragmaBasedProcessor >> filterInContext: aSpotterContext [
 
 	running := true.
 	aSpotterContext stream 
@@ -83,45 +96,6 @@ GTSpotterPragmaBasedProcessor >> basicFilterInContext: aSpotterContext [
 		performSymbol: #processorEnded: 
 		withArguments: { self }.
 
-]
-
-{ #category : #private }
-GTSpotterPragmaBasedProcessor >> continueFilterInContext: aSpotterContext [
-	[ self basicContinueFilterInContext: aSpotterContext ]
-		on: Error 
-		do: [ :exception | 
-			self exceptionHandler 
-				handleException: exception 
-				do: [ ('[Spotter] Exception in continuing processor <', self title asString, '>: ', exception asString) traceCr ] ]
-]
-
-{ #category : #private }
-GTSpotterPragmaBasedProcessor >> doContinueFilterInContext: aSpotterContext [
-	^ aSpotterContext doContinueFilterForProcessor: self
-]
-
-{ #category : #private }
-GTSpotterPragmaBasedProcessor >> doFilterInContext: aSpotterContext [
-	"override this method to:
-	- add items to the stream
-	- return all found items at the end"
-	self subclassResponsibility
-]
-
-{ #category : #'accessing-dynamic' }
-GTSpotterPragmaBasedProcessor >> exceptionHandler [
-	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ GTSpotterExceptionHandlerNotFound signal ]
-]
-
-{ #category : #private }
-GTSpotterPragmaBasedProcessor >> filterInContext: aSpotterContext [
-	[ self basicFilterInContext: aSpotterContext ]
-		on: Error 
-		do: [ :exception | 
-			self exceptionHandler 
-				handleException: exception 
-				do: [ ('[Spotter] Exception in processor <', self title asString, '>: ', exception asString) traceCr ] ]
 ]
 
 { #category : #printing }
