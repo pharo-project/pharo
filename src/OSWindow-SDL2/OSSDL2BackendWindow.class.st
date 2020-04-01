@@ -532,5 +532,5 @@ OSSDL2BackendWindow >> visitWindowEvent: windowEvent [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> windowId [
-	^ self handle windowID
+	^ self sdl2Window windowID
 ]

@@ -52,7 +52,7 @@ OSSDL2AthensRenderer >> destroy [
 OSSDL2AthensRenderer >> initializeWindowHandle: aWindowHandle [ 
 	self initialize.
 	self window: aWindowHandle.
-	renderer := backendWindow handle createDefaultRenderer.
+	renderer := backendWindow sdl2Window createDefaultRenderer.
 	self resetResources.
 	
 		

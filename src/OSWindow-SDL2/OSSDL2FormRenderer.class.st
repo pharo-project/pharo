@@ -31,7 +31,7 @@ OSSDL2FormRenderer >> copyAndPresentTextureRectangle: rectangle [
 
 { #category : #private }
 OSSDL2FormRenderer >> createRenderer [
-	renderer := backendWindow handle createDefaultRenderer.
+	renderer := backendWindow sdl2Window createDefaultRenderer.
 
 ]
 
