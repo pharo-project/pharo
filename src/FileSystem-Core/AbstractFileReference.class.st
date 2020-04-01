@@ -388,17 +388,16 @@ AbstractFileReference >> ensureDelete [
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAll [
 	"Delete this directory and all children of it, and does not raise an error if the file does not exist."
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifAbsent: [ ^ self ].
 	self deleteAll
-	
 ]
 
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAllChildren [
 	"delete all children of the receiver and does not raise an error if the receiver does not exist"
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifAbsent: [ ^ self ].
 	self deleteAllChildren
 ]
 

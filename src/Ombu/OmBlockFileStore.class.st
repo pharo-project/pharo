@@ -59,18 +59,16 @@ OmBlockFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosur
 
 { #category : #refreshing }
 OmBlockFileStore >> refresh [
-
 	self flush.
 
-	self critical: [
-		mustRefresh := false.
-		self initialize.
-		self fileReference exists ifFalse: [ ^self ].
-		self readEntriesWith: [:readStream |
-			self refreshNewBlocksFrom: readStream.
-			self refreshHeadReferenceAndEntryCountFrom: readStream. ]
-		]
-	
+	self
+		critical: [ mustRefresh := false.
+			self initialize.
+			self fileReference ifAbsent: [ ^ self ].
+			self
+				readEntriesWith: [ :readStream | 
+					self refreshNewBlocksFrom: readStream.
+					self refreshHeadReferenceAndEntryCountFrom: readStream ] ]
 ]
 
 { #category : #private }
