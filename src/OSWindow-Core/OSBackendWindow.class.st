@@ -5,7 +5,7 @@ Each instance of OSWindow holds a handle, through which it communicates with und
 The implementation of OSWindowHandle (and subclasses) is highly driver-specific and therefore considered private.
 "
 Class {
-	#name : #OSWindowHandle,
+	#name : #OSBackendWindow,
 	#superclass : #Object,
 	#instVars : [
 		'osWindow',
@@ -15,186 +15,186 @@ Class {
 }
 
 { #category : #accessing }
-OSWindowHandle >> borderless [
+OSBackendWindow >> borderless [
 	^ false
 ]
 
 { #category : #accessing }
-OSWindowHandle >> borderless: aBoolean [
+OSBackendWindow >> borderless: aBoolean [
 	
 ]
 
 { #category : #accessing }
-OSWindowHandle >> bounds [
+OSBackendWindow >> bounds [
 	^ self position extent: self extent
 ]
 
 { #category : #accessing }
-OSWindowHandle >> bounds: newBounds [
+OSBackendWindow >> bounds: newBounds [
 	self subclassResponsibility 
 ]
 
 { #category : #'mouse capture' }
-OSWindowHandle >> captureMouse [
+OSBackendWindow >> captureMouse [
 ]
 
 { #category : #accessing }
-OSWindowHandle >> clipboardText [
+OSBackendWindow >> clipboardText [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> clipboardText: aString [
+OSBackendWindow >> clipboardText: aString [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> extent [
+OSBackendWindow >> extent [
 	^ self bounds extent
 ]
 
 { #category : #accessing }
-OSWindowHandle >> extent: newExtent [
+OSBackendWindow >> extent: newExtent [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> fullscreen: aBoolean [
+OSBackendWindow >> fullscreen: aBoolean [
 ]
 
 { #category : #accessing }
-OSWindowHandle >> hide [
+OSBackendWindow >> hide [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> icon: aForm [
+OSBackendWindow >> icon: aForm [
 ]
 
 { #category : #'text input' }
-OSWindowHandle >> isTextInputActive [
+OSBackendWindow >> isTextInputActive [
 	^ self subclassResponsibility
 ]
 
 { #category : #testing }
-OSWindowHandle >> isValid [
+OSBackendWindow >> isValid [
 	self subclassResponsibility 
 ]
 
 { #category : #factory }
-OSWindowHandle >> newAthensRenderer [
+OSBackendWindow >> newAthensRenderer [
 	self subclassResponsibility
 ]
 
 { #category : #factory }
-OSWindowHandle >> newFormRenderer: aForm [
+OSBackendWindow >> newFormRenderer: aForm [
 	self subclassResponsibility
 ]
 
 { #category : #factory }
-OSWindowHandle >> newGenericRenderer [
+OSBackendWindow >> newGenericRenderer [
 	self subclassResponsibility
 ]
 
 { #category : #factory }
-OSWindowHandle >> newOpenGLRenderer [
+OSBackendWindow >> newOpenGLRenderer [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSWindowHandle >> osWindow [
+OSBackendWindow >> osWindow [
 	
 	^ osWindow
 ]
 
 { #category : #accessing }
-OSWindowHandle >> osWindow: anObject [
+OSBackendWindow >> osWindow: anObject [
 	
 	osWindow := anObject
 ]
 
 { #category : #accessing }
-OSWindowHandle >> platformSpecificHandle [
+OSBackendWindow >> platformSpecificHandle [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSWindowHandle >> position [
+OSBackendWindow >> position [
 	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSWindowHandle >> position: newPosition [
+OSBackendWindow >> position: newPosition [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> prepareExternalResourceForAutoRelease [
+OSBackendWindow >> prepareExternalResourceForAutoRelease [
 	"This hook will allow just create handlers to prepate their external resources for being 
 	 releases by the GC (if needed). By default, do nothing."
 ]
 
 { #category : #'mouse capture' }
-OSWindowHandle >> releaseMouse [
+OSBackendWindow >> releaseMouse [
 ]
 
 { #category : #accessing }
-OSWindowHandle >> renderer [
+OSBackendWindow >> renderer [
 	
 	^ renderer
 ]
 
 { #category : #accessing }
-OSWindowHandle >> renderer: anObject [
+OSBackendWindow >> renderer: anObject [
 	
 	renderer := anObject
 ]
 
 { #category : #accessing }
-OSWindowHandle >> resizable [
+OSBackendWindow >> resizable [
 	^ true
 ]
 
 { #category : #accessing }
-OSWindowHandle >> resizable: aBoolean [
+OSBackendWindow >> resizable: aBoolean [
 	
 ]
 
 { #category : #cursor }
-OSWindowHandle >> setMouseCursor: cursorWithMask [
+OSBackendWindow >> setMouseCursor: cursorWithMask [
 	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
 ]
 
 { #category : #accessing }
-OSWindowHandle >> setMouseCursor: cursor mask: mask [
+OSBackendWindow >> setMouseCursor: cursor mask: mask [
 ]
 
 { #category : #accessing }
-OSWindowHandle >> show [
+OSBackendWindow >> show [
 	self subclassResponsibility 
 ]
 
 { #category : #'text input' }
-OSWindowHandle >> startTextInput [
+OSBackendWindow >> startTextInput [
 	self subclassResponsibility
 ]
 
 { #category : #'text input' }
-OSWindowHandle >> stopTextInput [
+OSBackendWindow >> stopTextInput [
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
-OSWindowHandle >> title [
+OSBackendWindow >> title [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> title: aTitle [
+OSBackendWindow >> title: aTitle [
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-OSWindowHandle >> windowId [
+OSBackendWindow >> windowId [
 	^ nil
 ]

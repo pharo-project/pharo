@@ -115,7 +115,7 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 			height: attributes height 
 			flags: flags.
 		
-		window := OSSDL2WindowHandle newWithHandle: handle attributes: attributes.
+		window := OSSDL2BackendWindow newWithHandle: handle attributes: attributes.
 		window osWindow: osWindow.
 		self registerWindow: window.
 		

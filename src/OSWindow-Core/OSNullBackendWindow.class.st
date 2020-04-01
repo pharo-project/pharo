@@ -2,8 +2,8 @@
 i am a handle for null window , created using OSNullWindowDriver.
 "
 Class {
-	#name : #OSNullWindowHandle,
-	#superclass : #OSWindowHandle,
+	#name : #OSNullBackendWindow,
+	#superclass : #OSBackendWindow,
 	#instVars : [
 		'attributes',
 		'isTextInputActive'
@@ -12,108 +12,108 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-OSNullWindowHandle class >> fromAttributes: attributes for: anOSWindow [ 
+OSNullBackendWindow class >> fromAttributes: attributes for: anOSWindow [ 
 	^ self new attributes: attributes
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> attributes: newAttributes [
+OSNullBackendWindow >> attributes: newAttributes [
 	attributes := newAttributes
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> bounds: aRectangle [
+OSNullBackendWindow >> bounds: aRectangle [
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> clipboardText [
+OSNullBackendWindow >> clipboardText [
 	^ ''
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> clipboardText: anObject [
+OSNullBackendWindow >> clipboardText: anObject [
 
 ]
 
 { #category : #initialize }
-OSNullWindowHandle >> destroy [
+OSNullBackendWindow >> destroy [
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> extent [
+OSNullBackendWindow >> extent [
 	^ attributes extent
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> extent: newExtent [
+OSNullBackendWindow >> extent: newExtent [
 	attributes extent: newExtent
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> hide [
+OSNullBackendWindow >> hide [
 ]
 
 { #category : #initialization }
-OSNullWindowHandle >> initialize [
+OSNullBackendWindow >> initialize [
 	super initialize.
 	
 	isTextInputActive := false
 ]
 
 { #category : #'text input' }
-OSNullWindowHandle >> isTextInputActive [
+OSNullBackendWindow >> isTextInputActive [
 	^ isTextInputActive
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> isValid [
+OSNullBackendWindow >> isValid [
 	^ true
 ]
 
 { #category : #factory }
-OSNullWindowHandle >> newFormRenderer: form [
+OSNullBackendWindow >> newFormRenderer: form [
 	^ renderer := OSNullFormRenderer new form: form
 ]
 
 { #category : #factory }
-OSNullWindowHandle >> newGenericRenderer [
+OSNullBackendWindow >> newGenericRenderer [
 	^ renderer := OSWindowNullGenericRenderer new
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> platformSpecificHandle [
+OSNullBackendWindow >> platformSpecificHandle [
 	^ nil
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> position [
+OSNullBackendWindow >> position [
 	^ attributes position
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> position: position [
+OSNullBackendWindow >> position: position [
 	attributes position: position
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> show [
+OSNullBackendWindow >> show [
 ]
 
 { #category : #'text input' }
-OSNullWindowHandle >> startTextInput [
+OSNullBackendWindow >> startTextInput [
 	isTextInputActive := true
 ]
 
 { #category : #'text input' }
-OSNullWindowHandle >> stopTextInput [
+OSNullBackendWindow >> stopTextInput [
 	isTextInputActive := false
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> title [
+OSNullBackendWindow >> title [
 	^attributes title
 ]
 
 { #category : #accessing }
-OSNullWindowHandle >> title: anObject [
+OSNullBackendWindow >> title: anObject [
 ]

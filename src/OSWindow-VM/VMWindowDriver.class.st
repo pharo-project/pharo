@@ -29,5 +29,5 @@ VMWindowDriver class >> primitiveScreenDepth [
 
 { #category : #'window creation' }
 VMWindowDriver >> createWindowWithAttributes: attributes osWindow: osWindow [
-	^ OSVMWindowHandle new initWithAttributes: attributes; osWindow: osWindow; yourself
+	^ OSVMBackendWindow new initWithAttributes: attributes; osWindow: osWindow; yourself
 ]
