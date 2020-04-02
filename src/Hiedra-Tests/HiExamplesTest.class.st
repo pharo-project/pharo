@@ -24,6 +24,7 @@ HiExamplesTest >> exampleMethods [
 HiExamplesTest >> testAllExamples [
 	| exampleMethods |
 	
+	self skip: 'This test fails randomly in the CI in different OS due a timeout, even with an increased time limit of 30 seconds'.
 	self timeLimit: 30 seconds.
 	
 	exampleMethods := self exampleMethods.
