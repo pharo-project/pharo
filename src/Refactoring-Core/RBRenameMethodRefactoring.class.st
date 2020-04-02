@@ -63,7 +63,7 @@ RBRenameMethodRefactoring >> parseTreeRewriter [
 	newString := self buildSelectorString: newSelector
 				withPermuteMap: permutation.
 	rewriteRule := self hasPermutedArguments 
-				ifTrue: [self parseTreeRewriter]
+				ifTrue: [self parseTreeRewriterClass new]
 				ifFalse: [self parseTreeRewriterClass replaceLiteral: oldSelector with: newSelector].
 	rewriteRule replace: '``@object ' , oldString
 		with: '``@object ' , newString.

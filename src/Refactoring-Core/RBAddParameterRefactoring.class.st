@@ -128,7 +128,7 @@ RBAddParameterRefactoring >> newSelectorString [
 { #category : #private }
 RBAddParameterRefactoring >> parseTreeRewriter [
 	| rewriteRule oldString newString |
-	rewriteRule := self parseTreeRewriter.
+	rewriteRule := self parseTreeRewriterClass new.
 	oldString := self buildSelectorString: oldSelector.
 	newString := self newSelectorString.
 	rewriteRule replace: '``@object ' , oldString
