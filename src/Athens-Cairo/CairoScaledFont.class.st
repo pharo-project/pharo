@@ -5,7 +5,7 @@ data type
 "
 Class {
 	#name : #CairoScaledFont,
-	#superclass : #FFIExternalObject,
+	#superclass : #FFIExternalPointer,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [

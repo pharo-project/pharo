@@ -9,7 +9,7 @@ I am not useful for direct use nor providing any functionality. My only purpose 
 "
 Class {
 	#name : #CairoFontFace,
-	#superclass : #FFIExternalObject,
+	#superclass : #FFIExternalPointer,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [

@@ -3,7 +3,7 @@ My subclasses represent various handles coming from SDL2 library
 "
 Class {
 	#name : #SDL2Handle,
-	#superclass : #FFIExternalObject,
+	#superclass : #FFIExternalPointer,
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'

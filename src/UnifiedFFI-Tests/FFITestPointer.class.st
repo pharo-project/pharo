@@ -1,6 +1,6 @@
 Class {
-	#name : #FFITestObject,
-	#superclass : #FFIExternalObject,
+	#name : #FFITestPointer,
+	#superclass : #FFIExternalPointer,
 	#instVars : [
 		'a',
 		'c'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-FFITestObject >> b: _b d: d_ [
+FFITestPointer >> b: _b d: d_ [
 
 	"some method to bind an ffi callout"
 ]

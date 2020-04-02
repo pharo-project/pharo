@@ -267,11 +267,11 @@ FFIFunctionResolutionTest >> testResolveConstantSelfOfExternalObjectShouldSetCon
 		value: #self;
 		yourself.
 		
-	receiver := FFIExternalObjectForTest new.
+	receiver := FFIExternalPointerForTest new.
 	context := Context
 		sender: nil
 		receiver: receiver
-		method: FFIExternalObjectForTest>>#testMethod
+		method: FFIExternalPointerForTest>>#testMethod
 		arguments: #().
 		
 	resolver := FFICallout new
@@ -292,11 +292,11 @@ FFIFunctionResolutionTest >> testResolveConstantSelfShouldResolveToExternalObjec
 		value: #self;
 		yourself.
 		
-	receiver := FFIExternalObjectForTest new.
+	receiver := FFIExternalPointerForTest new.
 	context := Context
 		sender: nil
 		receiver: receiver
-		method: FFIExternalObjectForTest>>#testMethod
+		method: FFIExternalPointerForTest>>#testMethod
 		arguments: #().
 		
 	resolver := FFICallout new

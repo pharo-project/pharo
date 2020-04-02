@@ -3,7 +3,7 @@ i am abstract class for different kinds of paints in cairo backend.
 "
 Class {
 	#name : #AthensCairoPatternPaint,
-	#superclass : #FFIExternalObject,
+	#superclass : #FFIExternalPointer,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [

@@ -3,7 +3,7 @@ i represent various font options exposed by cairo library
 "
 Class {
 	#name : #CairoFontOptions,
-	#superclass : #FFIExternalObject,
+	#superclass : #FFIExternalPointer,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [

@@ -109,8 +109,8 @@ FFIFunctionParserTest >> setUp [
 	super setUp.
 	ctx := Context
 		sender: nil
-		receiver: FFITestObject new
-		method: FFITestObject>>#b:d:
+		receiver: FFITestPointer new
+		method: FFITestPointer>>#b:d:
 		arguments: #( 25 17 ).
 		
 	resolver := FFICallout new

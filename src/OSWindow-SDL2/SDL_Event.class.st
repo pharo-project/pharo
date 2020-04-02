@@ -3,7 +3,7 @@ This is a raw SDL2 event
 "
 Class {
 	#name : #'SDL_Event',
-	#superclass : #FFIExternalObject,
+	#superclass : #FFIExternalPointer,
 	#classVars : [
 		'EventTypeMap'
 	],
