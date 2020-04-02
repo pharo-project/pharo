@@ -59,7 +59,8 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testIsPrimitive [
 	"see other testPrimitive... tests"
-	
+	"This test brings the test button in the browser and test negatively
+	The others are for each specific kind of primitive:..."
 	| ast |
 	ast := (SmallInteger >> #+) ast.
 	self assert: ast isPrimitive.
@@ -151,8 +152,6 @@ RBMethodNodeTest >> testPrimitiveIsPrimitive [
 	ast := (Bitmap >> #primFill:) ast.
 	self assert: ast isPrimitive.
 	
-	ast := (Integer >> #+) ast.
-	self deny: ast isPrimitive.
 ]
 
 { #category : #'tests - primitives' }
@@ -170,20 +169,6 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	
 ]
 
-{ #category : #'tests - primitives' }
-RBMethodNodeTest >> testPrimitiveModuleErrorNumber [
-	"
-	primClosedir: directoryPointerBytes
-		<primitive: 'primitiveClosedir' module: 'FileAttributesPlugin' error: error>
-		...
-	"
-	| ast |
-	ast := (File class >> #primClosedir:) ast.
-	self assert: ast primitiveNumber equals: 'primClosedir'.
-
-
-	
-]
 
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
