@@ -198,14 +198,6 @@ TickDialogWindow >> newContentMorph [
 	^ self listMorph
 ]
 
-{ #category : #display }
-TickDialogWindow >> openInWorld [
-
-	self choose 
-	"since it is modal"
-	
-]
-
 { #category : #accessing }
 TickDialogWindow >> resultStorage [
 
