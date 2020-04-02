@@ -52,11 +52,6 @@ RBClassTransformation >> initialize [
 	environment := Smalltalk globals
 ]
 
-{ #category : #preconditions }
-RBClassTransformation >> parseTreeRewriterClass [
-	^ RBParseTreeRewriter
-]
-
 { #category : #executing }
 RBClassTransformation >> parserClass [
 	^ RBParser

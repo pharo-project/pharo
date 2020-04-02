@@ -17,7 +17,7 @@ Class {
 { #category : #transforming }
 RBAbstractInstanceVariableRefactoring >> abstractReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter 
+	replacer := self parseTreeRewriterClass 
 				variable: variableName
 				getter: self accessorsRefactoring getterMethod
 				setter: self accessorsRefactoring setterMethod.
