@@ -87,9 +87,33 @@ CoASTResultSetBuilder >> parseNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [ 
+	
+	^ self visitNode: aRBArrayNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [ 
+	
+	^ self visitNode: aRBAssignmentNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitBlockNode: aRBBlockNode [ 
 
 	^ self visitNode: aRBBlockNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [ 
+
+	^ self visitNode: aRBCascadeNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
+
+	^ self visitNode: aRBLiteralArrayNode
 ]
 
 { #category : #visiting }
@@ -120,6 +144,12 @@ CoASTResultSetBuilder >> visitNode: aNode [
 CoASTResultSetBuilder >> visitParseErrorNode: aRBParseErrorNode [ 
 	
 	^ self visitNode: aRBParseErrorNode
+]
+
+{ #category : #visiting }
+CoASTResultSetBuilder >> visitReturnNode: aRBReturnNode [ 
+	
+	^ self visitNode: aRBReturnNode
 ]
 
 { #category : #visiting }
