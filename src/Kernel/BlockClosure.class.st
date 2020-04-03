@@ -341,8 +341,25 @@ BlockClosure >> ifError: errorHandlerBlock [
 				ifFalse: [self error: err]]
 "
 
+	self deprecated: 'Please use ifErrorDo: instead'.
+
 	^ self on: Error do: [:ex |
 		errorHandlerBlock cull: ex description cull: ex receiver]
+]
+
+{ #category : #evaluating }
+BlockClosure >> ifErrorDo: errorHandlerBlock [
+	"Evaluate the block represented by the receiver, and normally return it's value.  If an error occurs, the errorHandlerBlock is evaluated, and it's value is instead returned.  The errorHandlerBlock must accept zero or one parameter (the error object)."
+	"Examples:
+		[1 whatsUpDoc] ifErrorDo: [:err | 'huh?'].
+		[1 / 0] ifErrorDo: [:err |
+			ZeroDivide = err class
+				ifTrue: [Float infinity]
+				ifFalse: [self error: err]]
+"
+
+	^ self on: Error do: [:ex |
+		errorHandlerBlock cull: ex]
 ]
 
 { #category : #accessing }

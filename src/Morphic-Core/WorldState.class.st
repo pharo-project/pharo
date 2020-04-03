@@ -449,7 +449,7 @@ WorldState >> displayWorld: aWorld [
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
-	[aWorld displayWorld] ifError: [:err :rcvr |
+	[aWorld displayWorld] ifErrorDo: [:err |
 		"Handle a drawing error"
 		| errCtx errMorph |
 		errCtx := thisContext.
@@ -459,7 +459,7 @@ WorldState >> displayWorldSafely: aWorld [
 			[errCtx notNil and:[(errCtx receiver isMorph) not]] 
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
-			errCtx ifNil:[^self handleFatalDrawingError: err].
+			errCtx ifNil:[^self handleFatalDrawingError: err description].
 			errMorph := errCtx receiver.
 			"If the morph causing the problem has already the #drawError flag set,
 			then search for the next morph above in the caller chain."
@@ -467,7 +467,7 @@ WorldState >> displayWorldSafely: aWorld [
 		] whileTrue.
 		errMorph setProperty: #errorOnDraw toValue: true.
 		"Install the old error handler, so we can re-raise the error"
-		rcvr error: err.
+		err signal.
 	].
 ]
 

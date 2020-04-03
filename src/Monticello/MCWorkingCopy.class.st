@@ -63,8 +63,8 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 			name: (aDictionary at: #name ifAbsent: [''])
 			id: (UUID fromString: id)
 			message: (aDictionary at: #message ifAbsent: [''])
-			date: ([Date fromString: (aDictionary at: #date)] ifError: [nil])
-			time: ([Time fromString: (aDictionary at: #time)] ifError: [nil])
+			date: ([Date fromString: (aDictionary at: #date)] ifErrorDo: [nil])
+			time: ([Time fromString: (aDictionary at: #time)] ifErrorDo: [nil])
 			author: (aDictionary at: #author ifAbsent: [''])
 			ancestors: (self ancestorsFromArray: (aDictionary at: #ancestors ifAbsent: []) cache: cache)
 			stepChildren: (self ancestorsFromArray: (aDictionary at: #stepChildren ifAbsent: []) cache: cache)]

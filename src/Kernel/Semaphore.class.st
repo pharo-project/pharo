@@ -95,16 +95,15 @@ Semaphore >> critical: mutuallyExcludedBlock ifError: errorBlock [
 	"Evaluate mutuallyExcludedBlock only if the receiver is not currently in 
 	the process of running the critical: message. If the receiver is, evaluate 
 	mutuallyExcludedBlock after the other critical: message is finished."
-	| blockValue hasError errMsg errRcvr |
+	| blockValue hasError errObj |
 	hasError := false.
 	self critical:[
-		blockValue := mutuallyExcludedBlock ifError: [ :msg :rcvr|
+		blockValue := mutuallyExcludedBlock ifErrorDo: [ :err |
 			hasError := true.
-			errMsg := msg.
-			errRcvr := rcvr
+			errObj := err.
 		].
 	].
-	hasError ifTrue:[ ^errorBlock cull: errMsg cull: errRcvr].
+	hasError ifTrue: [ ^errorBlock cull: errObj ].
 	^blockValue
 ]
 
