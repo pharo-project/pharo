@@ -32,9 +32,30 @@ CoCompletionEngine >> createContext [
 		yourself
 ]
 
+{ #category : #accessing }
+CoCompletionEngine >> doItContext [
+	"Rubric sends the morph as requestor to the compiler.
+	We need to use it to keep the same semantics..."
+
+	^ self editor model doItContext
+]
+
+{ #category : #accessing }
+CoCompletionEngine >> doItRequestor [
+
+	^ self editor morph
+]
+
 { #category : #initialization }
 CoCompletionEngine >> initialize [
 
 	super initialize.
 	contextClass := CoCompletionContext.
+]
+
+{ #category : #accessing }
+CoCompletionEngine >> variableBindingNames [
+
+	self doItRequestor ifNil: [ ^ #() ].
+	^ self doItRequestor model variableBindings keys
 ]
