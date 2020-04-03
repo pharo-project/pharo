@@ -98,13 +98,10 @@ IRBuilder >> addTemp: tempKey [
 
 { #category : #initialize }
 IRBuilder >> addTemps: newKeys [
-	| i offset |
-	offset := self currentScope tempMap size.
-	i := 1.
-	newKeys do: [:key |
-		self  currentScope tempMap at: key ifAbsentPut: [i:=i+1.offset + i - 1].
-	].
-
+	| offset tempMap |
+	tempMap := self currentScope tempMap.
+	offset := tempMap size.
+	newKeys withIndexDo: [ :key :i | tempMap at: key ifAbsentPut: [ offset + i ] ]
 ]
 
 { #category : #initialize }
