@@ -155,6 +155,12 @@ MCTestCase >> mockSnapshot [
 ]
 
 { #category : #mocks }
+MCTestCase >> mockSnapshotWithTag [
+
+	^ MCSnapshotResourceWithTags current snapshot
+]
+
+{ #category : #mocks }
 MCTestCase >> mockToken: aSymbol [
 	^ MCMockDefinition token: aSymbol
 ]
