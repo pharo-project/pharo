@@ -185,9 +185,9 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
+		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
-		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		spec package: 'Pharo-WelcomeHelp' ]
 ]

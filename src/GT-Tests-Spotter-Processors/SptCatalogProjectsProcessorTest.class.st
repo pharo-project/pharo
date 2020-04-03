@@ -14,6 +14,20 @@ SptCatalogProjectsProcessorTest >> processor [
 	^ SptCatalogProjectsProcessor new
 ]
 
+{ #category : #running }
+SptCatalogProjectsProcessorTest >> setUp [ 
+	
+	super setUp.
+	MockCatalogProvider forTest
+]
+
+{ #category : #running }
+SptCatalogProjectsProcessorTest >> tearDown [ 
+
+	MockCatalogProvider reset.
+	super tearDown
+]
+
 { #category : #tests }
 SptCatalogProjectsProcessorTest >> testBeginsWithQueryShowsResults [
 
