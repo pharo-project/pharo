@@ -315,7 +315,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfKernelTests.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
-	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
+	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core), #('Fuel-Tools-Pharo').
 	packages := packages , { BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
