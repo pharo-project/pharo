@@ -1832,10 +1832,8 @@ UITheme >> desktopImageFor: aWorld [
 	Look for an image file with the name of the theme.
 	Answer nil for none available."
 
-	|file|
-	file := FileSystem disk workingDirectory / self class themeName , 'jpg'.
-	^ file exists ifTrue: [
-		ImageReadWriter formFromFileNamed: file fullName]
+	^ FileSystem disk workingDirectory / self class themeName , 'jpg'
+		ifExists: [ :file | ImageReadWriter formFromFileNamed: file fullName ]
 ]
 
 { #category : #'fill-styles' }
