@@ -155,7 +155,7 @@ One chapter of particular interest is the one that provides a quick tour of the 
 WelcomeHelp class >> fastNetworkDefaults [
 	"Allow to display catalog projects in spotter on regular and fast networks"
 
-	SptCatalogProjectsProcessor enabled: false.
+	SptCatalogProjectsProcessor enabled: true.
 	
 	self inform: 'Catalog projects accessible through Spotter'
 ]
