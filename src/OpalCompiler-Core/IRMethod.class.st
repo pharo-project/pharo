@@ -178,7 +178,7 @@ IRMethod >> generate [
 IRMethod >> generate: trailer [
 	
 	| irTranslator |
-   irTranslator := IRTranslatorV2 context: compilationContext trailer: trailer.
+   irTranslator := IRTranslator context: compilationContext trailer: trailer.
 	irTranslator 
 		visitNode: self;
 		pragmas: pragmas.
@@ -196,7 +196,7 @@ IRMethod >> generate: trailer [
 { #category : #translating }
 IRMethod >> generateBlock: trailer withScope: scope [
 	| irTranslator |
-      irTranslator := IRTranslatorV2 context: compilationContext trailer: trailer.
+      irTranslator := IRTranslator context: compilationContext trailer: trailer.
 	irTranslator 
 		pushOuterVectors: scope;
 		visitNode: self;
@@ -274,7 +274,7 @@ IRMethod >> isSend [
 { #category : #printing }
 IRMethod >> longPrintOn: stream [
 
-	IRPrinterV2 new
+	IRPrinter new
 		stream: stream;
 		visitNode: self
 ]
