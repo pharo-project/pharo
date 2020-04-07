@@ -1,7 +1,7 @@
 Class {
 	#name : #ReflectivityExamples2Subclass,
 	#superclass : #ReflectivityExamples2,
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Data'
 }
 
 { #category : #example }

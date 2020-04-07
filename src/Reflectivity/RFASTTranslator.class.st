@@ -208,6 +208,7 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	self emitPreamble: anOptimizedBlockNode.
 	self emitMetaLinkBefore: anOptimizedBlockNode.
 	self visitNode: anOptimizedBlockNode body.
+	self emitMetaLinkAfterNoEnsure: anOptimizedBlockNode.
 ]
 
 { #category : #'visitor-double dispatching' }
