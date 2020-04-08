@@ -60,7 +60,7 @@ CompiledMethod >> spotterMethodClassFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-CompiledMethod >> spotterPreviewCodeIn: aComposite [
+CompiledMethod >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [ self gtDisplayString ];

@@ -1,7 +1,7 @@
 Extension { #name : #CmdCommandActivator }
 
 { #category : #'*Calypso-SystemPlugins-Spotter' }
-CmdCommandActivator >> spotterPreviewCodeIn: aComposite [
+CmdCommandActivator >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	
 	^aComposite text
