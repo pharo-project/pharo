@@ -44,6 +44,11 @@ AbstractWorldRenderer class >> initialize [
 ]
 
 { #category : #accessing }
+AbstractWorldRenderer class >> mainWorldRenderer [
+	^ MainWorldRenderer 
+]
+
+{ #category : #accessing }
 AbstractWorldRenderer class >> priority [ 
 
 	^ 0
