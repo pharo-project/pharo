@@ -413,8 +413,9 @@ Slot >> sendsInitializeSlots: aClass [
 		ifFalse: [ ^ self sendsInitializeSlots: aClass superclass ].
 
 	"verify implemented here"
-	(aClass >> #initialize hasLiteral: #initializeSlots:)
-		ifTrue: [ ^ true ].
+	aClass
+		compiledMethodAt: #initialize
+		ifPresent: [ :method | (method hasLiteral: #initializeSlots:) ifTrue: [ ^ true ] ].
 
 	"if it calls superclass, verify there"
 	(aClass isTrait not and: [ aClass >> #initialize hasLiteral: #initialize ])
