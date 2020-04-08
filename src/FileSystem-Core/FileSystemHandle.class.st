@@ -76,7 +76,7 @@ FileSystemHandle >> close [
 
 { #category : #public }
 FileSystemHandle >> ensureClosed [
-	reference exists ifTrue: [self close]
+	reference ifExists: [ self close ]
 ]
 
 { #category : #accessing }
