@@ -124,19 +124,14 @@ RFASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #'visitor-double dispatching' }
 RFASTTranslator >> visitBlockNode: aBlockNode [
-	| tempNames argumentNames copiedNames |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
-		
-	argumentNames := aBlockNode argumentNames asArray.
-	tempNames := (aBlockNode scope tempVars asArray collect: [ :each | each name]) copyWithoutAll: argumentNames.
-	copiedNames := (aBlockNode scope  inComingCopiedVars asArray collect: [:each | each name]).
 	
 	aBlockNode hasMetalinkInstead ifFalse: [  
 	methodBuilder
-			pushClosureCopyCopiedValues: copiedNames
-			args: argumentNames
+			pushClosureCopyCopiedValues: aBlockNode scope inComingCopiedVarNames
+			args: aBlockNode argumentNames
 			jumpTo:  #block.
 	 
 	aBlockNode scope tempVector ifNotEmpty: [
@@ -144,7 +139,7 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 			createTempVectorNamed: aBlockNode scope tempVectorName 
 			withVars: (aBlockNode scope tempVector collect: [:each| each name]) asArray.
 	].
-	methodBuilder addTemps: tempNames.
+	methodBuilder addTemps: (aBlockNode scope tempVarNames copyWithoutAll: aBlockNode argumentNames).
 	self emitPreamble: aBlockNode.
 	self emitMetaLinkBefore: aBlockNode.
 	valueTranslator visitNode: aBlockNode body.
@@ -184,21 +179,15 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 			- we call IRBuilder to add temps
 	"
 	
-	| argumentNames tempNames  copiedNames  |
-	argumentNames := anOptimizedBlockNode argumentNames asArray.
-	tempNames := (anOptimizedBlockNode scope tempVars collect: [ :each | each name asSymbol]) copyWithoutAll: argumentNames.
-	copiedNames := (anOptimizedBlockNode scope inComingCopiedVars collect: [:each | each name]) asArray.
-	
-	
+	| tempNames  |
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName 
-			withVars: (anOptimizedBlockNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: (anOptimizedBlockNode scope tempVector collect: [:each| each name]).
 	].
-	
-	methodBuilder addTemps: tempNames.
-	methodBuilder addTemps: copiedNames.
-	methodBuilder addTemps: argumentNames.
+	methodBuilder addTemps: (tempNames := anOptimizedBlockNode scope tempVarNames copyWithoutAll: anOptimizedBlockNode argumentNames).
+	methodBuilder addTemps: anOptimizedBlockNode scope inComingCopiedVarNames.
+	methodBuilder addTemps: anOptimizedBlockNode argumentNames.
 	anOptimizedBlockNode isInlinedLoop ifTrue: [
 		tempNames do: [ :tempName |
 			methodBuilder pushLiteral: nil.
