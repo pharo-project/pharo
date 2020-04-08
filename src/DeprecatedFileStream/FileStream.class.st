@@ -518,7 +518,7 @@ FileStream class >> voidStdioFiles [
 						each name asFileReference delete	 
 					] 
 				]
-			] ifErrorDo: [ ].
+			] onErrorDo: [ ].
 		]
 	].
 	

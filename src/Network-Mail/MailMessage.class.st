@@ -865,7 +865,7 @@ MailMessage >> text [
 MailMessage >> time [
 	| dateField |
 	dateField := (self fieldNamed: 'date' ifAbsent: [ ^0 ]) mainValue.
-	^ [self timeFrom: dateField] ifErrorDo: [Date today asSeconds].
+	^ [self timeFrom: dateField] onErrorDo: [Date today asSeconds].
 
 ]
 

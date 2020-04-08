@@ -61,7 +61,7 @@ QueryAnnotationsFromClassTest >> testWhenAnnotationFailsCheckForForbiddenPropert
 
 	| annotations ann |
 	[ ClassAnnotationExampleWithFailedForbiddenCheck new isForbidden.
-	self assert: false description: 'should fail'  ] ifErrorDo: [ ].
+	self assert: false description: 'should fail'  ] onErrorDo: [ ].
 
 	annotations := ClassWithForbiddenAnnotationExample classAnnotations.	
 	self assert: annotations size equals: 2. "one forbidden and one broken"

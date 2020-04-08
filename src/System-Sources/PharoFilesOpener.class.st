@@ -88,7 +88,7 @@ PharoFilesOpener >> changesName [
 
 { #category : #helper }
 PharoFilesOpener >> ignoreIfFail: aBlock [
-	^ [ aBlock value ] ifErrorDo: [  ]
+	^ [ aBlock value ] onErrorDo: [  ]
 ]
 
 { #category : #'user interaction' }
