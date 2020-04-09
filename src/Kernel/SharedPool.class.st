@@ -32,12 +32,10 @@ SharedPool class >> classBindingOf: varName [
 SharedPool class >> hasBindingThatBeginsWith: aString [
 	"Answer true if the receiver has a binding that begins with aString, false otherwise"
 
-	"First look in classVar dictionary."
-	(self classPool hasBindingThatBeginsWith: aString) ifTrue:[^true].
-	"Next look in shared pools."
-	self sharedPools do:[:pool | 
-		(pool hasBindingThatBeginsWith: aString) ifTrue: [^true]].
-	^false
+	"First look in classVar dictionary"
+	(self classPool hasBindingThatBeginsWith: aString) ifTrue:[^ true ].
+	"Next look in shared pools"
+	^ self sharedPools anySatisfy: [:pool | pool hasBindingThatBeginsWith: aString ]
 ]
 
 { #category : #testing }

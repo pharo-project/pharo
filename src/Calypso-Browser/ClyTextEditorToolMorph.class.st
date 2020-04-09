@@ -201,13 +201,6 @@ ClyTextEditorToolMorph >> hasBindingOf: aString [
 	^self selectedClassOrMetaClass hasBindingOf: aString
 ]
 
-{ #category : #'rubric interaction model' }
-ClyTextEditorToolMorph >> hasBindingThatBeginsWith: aString [ 
-	^self selectedClassOrMetaClass 
-		ifNil: [ false ]
-		ifNotNil: [:c | c hasBindingThatBeginsWith: aString]
-]
-
 { #category : #testing }
 ClyTextEditorToolMorph >> hasUnacceptedEdits [
 	textMorph ifNil: [ ^false ].
