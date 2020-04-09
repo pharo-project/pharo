@@ -39,6 +39,9 @@ OCRequestorScope >> findVariable: aBlock ifNone: aNotFound [
 { #category : #lookup }
 OCRequestorScope >> lookupVar: name [
 
+	"do not create bindings if we lookup for declaration"
+	LookupForDeclaration value ifTrue: [ ^ outerScope lookupVar: name ].
+
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
 	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
 	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name].

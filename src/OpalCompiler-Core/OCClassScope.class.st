@@ -60,11 +60,6 @@ OCClassScope >> lookupVar: name [
 		ifNil: [ outerScope lookupVar: name] 
 ]
 
-{ #category : #lookup }
-OCClassScope >> lookupVarForDeclaration: name [
-	^self lookupVar: name
-]
-
 { #category : #levels }
 OCClassScope >> newMethodScope [
 	^ self instanceScope newMethodScope

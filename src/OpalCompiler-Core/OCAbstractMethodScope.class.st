@@ -171,13 +171,6 @@ OCAbstractMethodScope >> lookupVar: name [
 	
 ]
 
-{ #category : #lookup }
-OCAbstractMethodScope >> lookupVarForDeclaration: name [
-	tempVars at: name ifPresent: [:v | ^ v].
-	name = 'thisContext' ifTrue: [^ thisContextVar].
-	^self outerScope lookupVarForDeclaration: name
-]
-
 { #category : #scope }
 OCAbstractMethodScope >> methodScope [
 

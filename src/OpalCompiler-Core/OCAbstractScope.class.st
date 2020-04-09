@@ -63,11 +63,13 @@ OCAbstractScope >> lookupVar: name [
 
 { #category : #lookup }
 OCAbstractScope >> lookupVarForDeclaration: name [
-	"This is a version of #lookupVar: that skips the OCRequestorScope.
-	When looking temp var declarations, we do not want the Requestor scope to automatically
-	create that variable. Subclasses override if they do not skip but do a lookup"
+	"This is a version of #lookupVar: that skips defining vars the OCRequestorScope.
+	When looking up a temp var declarations, we do not want the Requestor scope to automatically
+	create that variable."
 
-	^ self outerScope lookupVarForDeclaration: name
+	^ LookupForDeclaration 
+		value: true 
+		during: [ self lookupVar: name ]
 ]
 
 { #category : #accessing }
