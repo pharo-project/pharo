@@ -95,8 +95,9 @@ OCAbstractMethodScope >> findVariable: aBlock ifNone: aNotFound [
 		detect: [ :var | aBlock value: var ]
 		ifFound: [ :var | ^ var ].
 	
-	outerScope ifNotNil: [
-		^  outerScope findVariable: aBlock ifNone: aNotFound ]
+	^outerScope 
+		ifNil: aNotFound
+		ifNotNil: [outerScope findVariable: aBlock ifNone: aNotFound ]
 ]
 
 { #category : #'temp vars - copying' }

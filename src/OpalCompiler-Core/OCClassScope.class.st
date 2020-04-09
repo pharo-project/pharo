@@ -30,7 +30,7 @@ OCClassScope >> environment [
 
 { #category : #lookup }
 OCClassScope >> findVariable: lookupBlock ifNone: notFoundBlock [ 
-
+	"the class takes care of global variables, too"
 	^class findGlobalVariable: lookupBlock ifNone: notFoundBlock
 ]
 

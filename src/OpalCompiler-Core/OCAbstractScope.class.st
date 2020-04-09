@@ -22,6 +22,13 @@ OCAbstractScope >> children [
 	^children ifNil: [ children := OrderedCollection new ]
 ]
 
+{ #category : #lookup }
+OCAbstractScope >> findVariable: aBlock ifNone: aNotFound [
+	^outerScope
+		ifNil: aNotFound
+		ifNotNil: [outerScope findVariable: aBlock ifNone: aNotFound ]
+]
+
 { #category : #testing }
 OCAbstractScope >> hasTempVector [
 	^ false
