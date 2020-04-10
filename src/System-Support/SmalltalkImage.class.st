@@ -759,11 +759,6 @@ SmalltalkImage >> growMemoryByAtLeast: numBytes [
 	^self primitiveFailed
 ]
 
-{ #category : #'to clean later' }
-SmalltalkImage >> hasBindingThatBeginsWith: aString [
-	^globals hasBindingThatBeginsWith: aString
-]
-
 { #category : #'class and trait names' }
 SmalltalkImage >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not alrady interned."

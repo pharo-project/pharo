@@ -101,11 +101,6 @@ RubWorkspaceExample >> hasBindingOf: aString [
 	^bindings includesKey: aString asSymbol
 ]
 
-{ #category : #shout }
-RubWorkspaceExample >> hasBindingThatBeginsWith: aString [
-	^false
-]
-
 { #category : #initialization }
 RubWorkspaceExample >> initialize [
 	super initialize.
