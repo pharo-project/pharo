@@ -81,7 +81,7 @@ RBVariableNode >> hasIncompleteIdentifier [
 	"declared vars are never incomplete"
 	self binding isUndeclared ifFalse: [ ^false ].
 	"for the others we have to search from the current scope"
-	^(self scope findVariable: [ :v | v name beginsWith: self name ] ifNone: [ nil ]) notNil
+	^self scope hasBindingThatBeginsWith: self name
 ]
 
 { #category : #comparing }

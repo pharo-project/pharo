@@ -23,10 +23,11 @@ OCAbstractScope >> children [
 ]
 
 { #category : #lookup }
-OCAbstractScope >> findVariable: aBlock ifNone: aNotFound [
-	^outerScope
-		ifNil: aNotFound
-		ifNotNil: [outerScope findVariable: aBlock ifNone: aNotFound ]
+OCAbstractScope >> hasBindingThatBeginsWith: aString [
+	"check weather there are any variables defined that start with aString"
+	^ outerScope
+		ifNil: [ false ]
+		ifNotNil: [ outerScope hasBindingThatBeginsWith: aString ]
 ]
 
 { #category : #testing }

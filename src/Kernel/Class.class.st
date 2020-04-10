@@ -542,6 +542,18 @@ Class >> hasAbstractMethods [
 	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
 ]
 
+{ #category : #compiling }
+Class >> hasBindingThatBeginsWith: aString [
+	"Answer true if the receiver has a binding that begins with aString, false otherwise. We do not look
+	in the outer envrionment"
+
+	"First look in classVar dictionary"
+	(self classPool hasBindingThatBeginsWith: aString) ifTrue:[^true].
+	
+	"Next look in shared pools"
+	^ self sharedPools anySatisfy: [:pool | pool hasBindingThatBeginsWith: aString ]
+]
+
 { #category : #'accessing parallel hierarchy' }
 Class >> hasClassSide [
 	^self classSide notNil.
