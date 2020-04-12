@@ -79,12 +79,6 @@ MemoryFileWriteStream >> position: anInteger [
 	self stream position: anInteger
 ]
 
-{ #category : #reading }
-MemoryFileWriteStream >> readInto: aCollection startingAt: anInteger count: anInteger3 [ 
-
-	^ self stream readInto: aCollection startingAt: anInteger count: anInteger3 
-]
-
 { #category : #positioning }
 MemoryFileWriteStream >> setToEnd [
 	^ self stream setToEnd
