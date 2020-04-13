@@ -13,7 +13,11 @@ A clear and concise description of what is missing and how it could be enhanced.
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+**Expected development
+As you know nothing happens magically, so do you have an idea of the development effort required. 
+In addition are you willing to help because after all Pharo is yours too.
+
+**[Optional]Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **Version information:**
