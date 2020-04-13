@@ -1,6 +1,6 @@
 "
 I am the ultimate error. 
-By default if an Error or Exception is not handled by the code the default action is to raise an UnhandledError which in interactive mode triggers the UIManager to open a debugger.
+By default if an Exception is not handled by the code the default action is to raise an UnhandledError (#raiseUnhandledError) which in interactive mode triggers the UIManager to open a debugger.
 
 	Error signal
 	...
@@ -8,10 +8,19 @@ By default if an Error or Exception is not handled by the code the default actio
 	...
 	UIManager opens a debugger
 	
+The UI action here can be specialied for different kind of exceptions. The actual logic is implemented by exceptions themselves as #unhandledErrorAction:
+
+	UnhandledError>>defaultAction 
+		^ exception unhandledErrorAction
+
+For example It allows to have specific debugger for Warning while it still processed through same UnhandledError machinery.
+
+The logic behind my class name and methods: 
+Not all exceptions are errors. But by default the absence of any handler for signaled exception is considered as an error. Therefore #defaultAction for Exception raises an error, an UnhandledError. And because exception should be able to specify default action for UnhandledError it implements #unhandledErrorAction
 "
 Class {
 	#name : #UnhandledError,
-	#superclass : #Exception,
+	#superclass : #UnhandledException,
 	#instVars : [
 		'exception'
 	],
@@ -28,8 +37,7 @@ UnhandledError class >> signalForException: anError [
 
 { #category : #'priv handling' }
 UnhandledError >> defaultAction [
-	<reflective: #unhandledErrorDefaultAction:message:>
- 	^ UIManager default unhandledErrorDefaultAction: self exception
+	^ exception unhandledErrorAction
 ]
 
 { #category : #accessing }

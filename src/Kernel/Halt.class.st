@@ -64,11 +64,14 @@ Halt resetOnce
 ]]]
 
 
+!! Implementation details
 
+In past Halt was a normal exception (not a kind of UnhandledException) and it was processed through UnhandledError indirection. 
+But it such design did not allow to debug the unhandled logic itself. For example halt in UnhandledError>>#defaultAction leaded to infinite recursion
 "
 Class {
 	#name : #Halt,
-	#superclass : #Exception,
+	#superclass : #UnhandledException,
 	#category : #'Kernel-Exceptions'
 }
 
@@ -220,14 +223,6 @@ Halt >> completeProcess: aProcess with: aContext [
 		pragmaNamed: #debuggerCompleteToSender
 		ifPresent: [ aProcess completeTo: aContext sender ]
 		ifAbsent: [ super completeProcess: aProcess with: aContext ]
-]
-
-{ #category : #'priv handling' }
-Halt >> defaultAction [
-	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError-defaultAction)"
-
-	^ UIManager default unhandledErrorDefaultAction: self
-	"^ UnhandledError signalForException: self" 
 ]
 
 { #category : #private }
