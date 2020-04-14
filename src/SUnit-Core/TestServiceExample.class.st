@@ -5,7 +5,7 @@ Class {
 		'forkedProcesses',
 		'isCleanUpDone',
 		'isCompletedTestHandled',
-		'unhandledExceptions'
+		'signaledExceptions'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -38,7 +38,7 @@ TestServiceExample >> handleCompletedTest [
 TestServiceExample >> handleException: anUnhandledException [
 	super handleException: anUnhandledException.
 	
-	unhandledExceptions add: anUnhandledException 
+	signaledExceptions add: anUnhandledException 
 ]
 
 { #category : #controlling }
@@ -53,7 +53,7 @@ TestServiceExample >> initialize [
 	super initialize.
 	
 	forkedProcesses := OrderedCollection new.
-	unhandledExceptions := OrderedCollection new.
+	signaledExceptions := OrderedCollection new.
 	isCleanUpDone := false.
 	isCompletedTestHandled := false
 ]
@@ -69,6 +69,6 @@ TestServiceExample >> isCompletedTestHandled [
 ]
 
 { #category : #accessing }
-TestServiceExample >> unhandledExceptions [
-	^ unhandledExceptions
+TestServiceExample >> signaledExceptions [
+	^ signaledExceptions
 ]

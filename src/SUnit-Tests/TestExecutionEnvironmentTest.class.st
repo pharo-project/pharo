@@ -245,7 +245,7 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutHalt [
 		[self runTestWith: [ expectedException signal]] on: Halt do: [:actualException | 
 			errorPassed := true.
 			self assert: actualException equals: expectedException.
-			self assert: (testService unhandledExceptions includes: actualException)].
+			self assert: (testService signaledExceptions includes: actualException)].
 	].
 
 	self assert: errorPassed
@@ -260,7 +260,7 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutUnhandledError [
 		[self runTestWith: [ expectedException signal]] on: UnhandledError do: [:actualException | 
 			errorPassed := true.
 			self assert: actualException exception equals: expectedException.
-			self assert: (testService unhandledExceptions includes: actualException)].
+			self assert: (testService signaledExceptions includes: actualException)].
 	].
 
 	self assert: errorPassed
@@ -275,7 +275,7 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutWarning [
 		[self runTestWith: [ expectedException signal]] on: Warning do: [:actualException | 
 			errorPassed := true.
 			self assert: actualException equals: expectedException.
-			self assert: (testService unhandledExceptions includes: actualException)].
+			self assert: (testService signaledExceptions includes: actualException)].
 	].
 
 	self assert: errorPassed

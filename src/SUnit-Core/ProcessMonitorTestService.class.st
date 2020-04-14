@@ -65,6 +65,14 @@ ProcessMonitorTestService >> forkedProcesses: anObject [
 ]
 
 { #category : #controlling }
+ProcessMonitorTestService >> handleBackgroundException: anUnhandledException [
+	
+	self handleException: anUnhandledException.
+	
+	anUnhandledException pass
+]
+
+{ #category : #controlling }
 ProcessMonitorTestService >> handleCompletedTest [
 	super handleCompletedTest.
 	
@@ -85,8 +93,8 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 	
 	forkedProcesses add: aProcess.
 	
-	aProcess on: UnhandledError, Halt, Warning do: [ :err |
-		self handleException: err]
+	aProcess on: UnhandledException do: [ :err |
+		self handleBackgroundException: err]
 ]
 
 { #category : #controlling }
@@ -150,7 +158,7 @@ ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 	| activeProcess |
 	activeProcess := Processor activeProcess.
 	activeProcess isTerminating ifTrue: [ 
-		"Do nothing for exceptions during process termination"
+		"Do nothing if process is under termination"
 		^self ]. 
 	
 	self recordTestFailure: anException.

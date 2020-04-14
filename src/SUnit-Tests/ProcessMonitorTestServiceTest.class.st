@@ -36,7 +36,9 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	process := self fork: [ Processor activeProcess suspend. halt signal ].
 	testService handleNewProcess: process.
 	
-	process on: Halt do: [ :actual | self assert: actual equals: halt. haltWasPassed := true ].
+	process on: Halt do: [ :actual | 
+		actual == halt ifFalse: [ actual pass ]. "it allows to debug if it works wrongly"
+		self assert: actual equals: halt. haltWasPassed := true ].
 	process resume.
 	
 	self assert: process isTerminated.
@@ -224,9 +226,12 @@ ProcessMonitorTestServiceTest >> testSuspendBackgroundError [
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testSuspendBackgroundWarning [
 	
-	| process |
-	process := self fork: [ Warning signal ].
+	| process warning suspendedError |
+	warning := Warning new.
+	process := self fork: [ warning signal ].
 	
 	self assert: process isSuspended.
-	self assert: (testService suspendedBackgroundFailures at: process) class equals: Warning
+	suspendedError := testService suspendedBackgroundFailures at: process.
+	self assert: suspendedError class equals: UnhandledError. 
+	self assert: suspendedError exception identicalTo: warning.
 ]
