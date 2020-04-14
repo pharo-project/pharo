@@ -216,16 +216,15 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 	testCase := aTestCase.
 	maxTimeForTest := testCase defaultTimeLimit.
 	testCompleted := false.
-	watchDogSemaphore signal. "signal about new test case"
-	
-	[self runTestCaseSafelly: aTestCase] ensure: [
+	watchDogSemaphore signal. "signal about new test case"	
+	[self runTestCaseUnderWatchdog: aTestCase] ensure: [
 		testCompleted := true.
 		watchDogSemaphore signal.  "signal that test case is completed"	
 		self cleanUpAfterTest	].
 ]
 
 { #category : #controlling }
-TestExecutionEnvironment >> runTestCaseSafelly: aTestCase [
+TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
 	
 	[
 		aTestCase runCase.

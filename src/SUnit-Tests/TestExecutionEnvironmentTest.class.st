@@ -33,8 +33,11 @@ TestExecutionEnvironmentTest >> exampleTestBlock: anObject [
 { #category : #helpers }
 TestExecutionEnvironmentTest >> runTestWith: aBlock [
 
+	| currentServices |
 	ranTest := self class selector: #exampleTest.
-	executionEnvironment activated.
+	currentServices := executionEnvironment services copy.
+	executionEnvironment activated. "activation registerrs all default services"
+	executionEnvironment services: currentServices.
 	
 	ranTest exampleTestBlock: aBlock.
 	executionEnvironment runTestCase: ranTest
@@ -254,8 +257,10 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutHalt [
 { #category : #tests }
 TestExecutionEnvironmentTest >> testNotifyTestServicesAboutUnhandledError [
 	| errorPassed expectedException|
+
 	errorPassed := false.
 	expectedException := Error new messageText: 'test error'.
+	
 	self runWithNoHandlers: [	
 		[self runTestWith: [ expectedException signal]] on: UnhandledError do: [:actualException | 
 			errorPassed := true.
