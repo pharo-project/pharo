@@ -26,5 +26,5 @@ Pragma >> spotterForSendersFor: aStep [
 { #category : #'*GT-SpotterExtensions-Core' }
 Pragma >> spotterPreviewIn: composite [
 	<spotterPreview: 10>
-   self method spotterPreviewCodeIn: composite
+   self method spotterPreviewIn: composite
 ]
