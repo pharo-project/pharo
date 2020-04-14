@@ -35,7 +35,7 @@ UnhandledError class >> signalForException: anError [
 		signal
 ]
 
-{ #category : #'priv handling' }
+{ #category : #handling }
 UnhandledError >> defaultAction [
 	^ exception unhandledErrorAction
 ]
@@ -52,7 +52,7 @@ UnhandledError >> exception: anError [
 	exception := anError
 ]
 
-{ #category : #'priv handling' }
+{ #category : #testing }
 UnhandledError >> isResumable [
 	
 	^ false
