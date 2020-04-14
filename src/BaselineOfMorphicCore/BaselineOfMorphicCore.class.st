@@ -77,16 +77,16 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	world addHand: hand.
 	world activeHand: hand.
 
-	#World .  
-
+	Smalltalk at: #World put: world.
+	Smalltalk at: #ActiveWorld put: world.
 
 	world viewBox: Display boundingBox.
 
-
+	Smalltalk at: #Sensor put: InputEventSensor new.
 	InputEventSensor installEventSensorFramework.
 	InputEventSensor installMouseDecodeTable.
 
-	
+	(Smalltalk at: #Sensor) flushAllButDandDEvents.
 	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
 
