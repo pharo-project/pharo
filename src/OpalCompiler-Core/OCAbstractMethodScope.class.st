@@ -252,7 +252,7 @@ OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue f
 { #category : #'temp vars' }
 OCAbstractMethodScope >> tempVarNames [
 
-	^ self tempVars collect: [:each| each name]
+	^ self tempVars collect: [:each| each name] as: Array
 ]
 
 { #category : #'temp vars' }
@@ -279,4 +279,9 @@ OCAbstractMethodScope >> tempVectorVar [
 			name: self tempVectorName;
 			scope: self;
 			yourself]
+]
+
+{ #category : #'temp vars - vector' }
+OCAbstractMethodScope >> tempVectorVarNames [
+	^ tempVector collect: [:each| each name] as: Array
 ]
