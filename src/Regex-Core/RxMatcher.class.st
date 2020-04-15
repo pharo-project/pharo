@@ -217,11 +217,14 @@ RxMatcher >> copyStream: aStream to: writeStream translatingMatchesUsing: aBlock
 { #category : #privileged }
 RxMatcher >> currentState [
 	"Answer an opaque object that can later be used to restore the
-	matcher's state (for backtracking)."
-
-	| origPosition |
+	matcher's state (for backtracking)"
+	
+	| origPosition origMarkerPositions |
+	
 	origPosition := stream position.
-	^	[stream position: origPosition]
+	origMarkerPositions := markerPositions collect: [ :collection | collection copy ].
+	^[ stream position: origPosition.
+		markerPositions := origMarkerPositions ]
 ]
 
 { #category : #private }
