@@ -75,7 +75,7 @@ SmalltalkImage >> reportCPUandRAM [
 
 	"Memory Analysis"
 	'Log-MemoryAnalysis.txt' asFileReference writeStreamDo: [ :aStream |
-		SpaceTally new printSpaceAnalysis: 1 on: aStream ]
+		SpaceTally printSpaceAnalysis: 1 on: aStream ]
 
 ] forkNamed: 'CPU usage analysis'
 ]
