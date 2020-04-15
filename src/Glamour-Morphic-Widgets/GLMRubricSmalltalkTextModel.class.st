@@ -60,11 +60,6 @@ GLMRubricSmalltalkTextModel >> hasBindingOf: aSymbol [
 	^ self variableBindings includesKey: aSymbol
 ]
 
-{ #category : #bindings }
-GLMRubricSmalltalkTextModel >> hasBindingThatBeginsWith: aString [
-	^ self variableBindings keys anySatisfy: [:each | each beginsWith: aString]
-]
-
 { #category : #shout }
 GLMRubricSmalltalkTextModel >> highlightSmalltalk [
 	^ highlightSmalltalk

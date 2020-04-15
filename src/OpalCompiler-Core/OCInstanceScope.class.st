@@ -18,14 +18,14 @@ OCInstanceScope >> allTemps [
 ]
 
 { #category : #lookup }
-OCInstanceScope >> findVariable: lookupBlock ifNone: notFoundBlock [ 
+OCInstanceScope >> hasBindingThatBeginsWith: aString [
+	"Answer true if true, false or any slot start with aString"
 
-	(lookupBlock value: selfVar) ifTrue: [ ^ selfVar ].
-	(lookupBlock value: superVar) ifTrue: [ ^ superVar ].
+	(selfVar name beginsWith: aString) ifTrue: [ ^true ].
+	(superVar name beginsWith: aString) ifTrue: [ ^true ].
+	(vars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	
-	vars valuesDo: [ :var | (lookupBlock value: var) ifTrue: [ ^ var ] ].
-
-	^ outerScope findVariable: lookupBlock ifNone: notFoundBlock 
+	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : #initialization }
