@@ -318,7 +318,9 @@ For more information, please visit here: ', (self url: 'http://pharo.org'),
 (self subheading: 'Quick setup'),
 'Choose your preferred color theme: ',
 (self doItFrom: 'PharoLightTheme beCurrent' text: 'Light Theme'), ' or ',
-(self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' 
+(self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' and ',
+(self doItFrom: 'Display toggleFullscreen ' text: ' switch fullscreen mode')
+,' 
 
 Click if you have access to a: ',
 (self doItFrom: 'WelcomeHelp fastNetworkDefaults' text: 'regular network connection'), ' or ',
