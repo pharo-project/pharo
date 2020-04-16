@@ -15,7 +15,7 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #'priv handling' }
+{ #category : #handling }
 UnhandledException >> defaultAction [
 	"If none handles this either then open debugger.
 	
