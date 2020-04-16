@@ -64,3 +64,9 @@ WorldMorph >> install [
 	Sensor flushAllButDandDEvents.
 
 ]
+
+{ #category : #'*Morphic-Base' }
+WorldMorph >> mouseDown: evt [
+	super mouseDown: evt.
+	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
+]

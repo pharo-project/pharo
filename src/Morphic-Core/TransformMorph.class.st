@@ -21,7 +21,7 @@ Class {
 		'smoothing',
 		'localBounds'
 	],
-	#category : #'Morphic-Base-Basic'
+	#category : #'Morphic-Core-Support'
 }
 
 { #category : #menu }

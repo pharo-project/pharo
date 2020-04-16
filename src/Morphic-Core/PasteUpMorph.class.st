@@ -98,7 +98,7 @@ PasteUpMorph >> acceptDroppingMorph: dropped event: evt [
 	super acceptDroppingMorph: aMorph event: evt.
 	aMorph
 		submorphsDo: [ :m | 
-			(m isKindOf: HaloMorph)
+			m isHaloMorph
 				ifTrue: [ m delete ] ].
 	self bringTopmostsToFront
 ]
