@@ -147,6 +147,12 @@ CoASTResultSetBuilder >> visitParseErrorNode: aRBParseErrorNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
+
+	^ self visitNode: aRBPragmaNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitReturnNode: aRBReturnNode [ 
 	
 	^ self visitNode: aRBReturnNode

@@ -69,14 +69,13 @@ CoTypeInferencer >> inferFrom: aClass typeGetters: aBoolean [
 	receiverClass := aClass.
 	aClass allInstVarNames do: [ :each |
 		self ensureTypeOfVariable: each ].
-	self inferMethod: (aClass lookupSelector: #initialize).
+	self tryInferSelector: #initialize.
 	aClass isTestCase ifTrue: [
-		self inferMethod: (aClass lookupSelector: #setUp) ].
+		self tryInferSelector: #setUp ].
 	
 	aBoolean ifTrue: [ 
 		aClass allInstVarNames do: [ :each |
-			(aClass lookupSelector: each) ifNotNil: [ :getter |
-				self inferMethod: getter ] ] ].
+			self tryInferSelector: each ] ].
 	self cleanupTypes
 ]
 
@@ -180,6 +179,18 @@ CoTypeInferencer >> stackMessage: aBlock level: aNewLevel [
 		method := previousMethod.
 		temporaryVariables := previousTemporaries.
 		argumentVariables := previousArguments ]
+]
+
+{ #category : #inference }
+CoTypeInferencer >> tryInferSelector: aSelector [
+
+	"Try to infer types from a selector in the current class.
+	If the class has no such selector, do nothing."
+	
+	| foundMethod |
+	foundMethod := (receiverClass lookupSelector: #initialize).
+	foundMethod ifNil: [ ^ self ].
+	self inferMethod: foundMethod
 ]
 
 { #category : #accessing }
