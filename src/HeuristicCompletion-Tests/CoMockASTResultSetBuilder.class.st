@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'heuristic'
 	],
-	#category : #'HeuristicCompletion-Tests'
+	#category : #'HeuristicCompletion-Tests-Core'
 }
 
 { #category : #accessing }
@@ -74,6 +74,13 @@ CoMockASTResultSetBuilder >> visitParseErrorNode: aNode [
 
 	heuristic := #error.
 	^ super visitParseErrorNode: aNode
+]
+
+{ #category : #visiting }
+CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [ 
+
+	heuristic := #pragma.
+	^ super visitPragmaNode: aRBPragmaNode
 ]
 
 { #category : #accessing }

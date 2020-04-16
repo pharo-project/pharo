@@ -8,7 +8,8 @@ Class {
 		'instanceVariables',
 		'selectors',
 		'classVariables',
-		'superclass'
+		'superclass',
+		'methodDictionary'
 	],
 	#category : #'HeuristicCompletion-Tests-Core'
 }
@@ -17,6 +18,16 @@ Class {
 CoMockClass >> addInstanceVariable: aString [ 
 	
 	instanceVariables := instanceVariables copyWith: aString
+]
+
+{ #category : #accessing }
+CoMockClass >> allInstVarNames [
+	
+	| superclassVarNames |
+	superclassVarNames := superclass
+		ifNil: [ #() ]
+		ifNotNil: [ superclass allInstVarNames ].
+	^ superclassVarNames , instanceVariables 
 ]
 
 { #category : #accessing }
@@ -35,7 +46,7 @@ CoMockClass >> classVariables: aCollection [
 CoMockClass >> initialize [
 
 	super initialize.
-	selectors := OrderedCollection new
+	methodDictionary := OrderedDictionary new
 ]
 
 { #category : #accessing }
@@ -60,20 +71,47 @@ CoMockClass >> instanceVariables: anObject [
 	instanceVariables := anObject
 ]
 
+{ #category : #testing }
+CoMockClass >> isTestCase [
+	
+	^ false
+]
+
+{ #category : #methods }
+CoMockClass >> lookupSelector: aString [ 
+	
+	^ methodDictionary
+		at: aString
+		ifAbsent: [ 
+			superclass ifNil: [ ^ nil ].
+			superclass lookupSelector: aString ]
+]
+
+{ #category : #methods }
+CoMockClass >> methodAt: aString put: aCoMockMethod [ 
+	
+	methodDictionary at: aString asSymbol put: aCoMockMethod.
+	aCoMockMethod methodClass: self
+]
+
 { #category : #accessing }
 CoMockClass >> selectors [
-	^ selectors
+	^ methodDictionary keys
 ]
 
 { #category : #accessing }
 CoMockClass >> selectors: aCollection [ 
-	selectors := aCollection
+
+	"Install nil methods just for compatibility"
+	aCollection do: [ :k |
+		methodDictionary at: k put: nil
+	]
 ]
 
 { #category : #enumerating }
 CoMockClass >> selectorsDo: aBlockClosure [ 
 	
-	selectors do: aBlockClosure
+	self selectors do: aBlockClosure
 ]
 
 { #category : #accessing }
