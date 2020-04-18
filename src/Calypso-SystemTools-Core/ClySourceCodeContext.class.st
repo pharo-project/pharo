@@ -113,7 +113,7 @@ ClySourceCodeContext >> isMethodSelected [
 ClySourceCodeContext >> isTempVariableSelected [
 	| node |
 	node := self selectedSourceNode.
-	^node isVariable and: [ node isTemp]
+	^node isVariable and: [ node isArgOrTemp ]
 ]
 
 { #category : #testing }
