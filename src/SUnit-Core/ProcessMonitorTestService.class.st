@@ -121,7 +121,7 @@ ProcessMonitorTestService >> passSuspendedFailures [
 	self disableBackgroudFailuresSuspension.
 		
 	testFailures keys 
-		reject: [:each | each isTerminated ] 
+		select: [:each | each isSuspended ] 
 		thenDo: [:each | each resume ]
 ]
 

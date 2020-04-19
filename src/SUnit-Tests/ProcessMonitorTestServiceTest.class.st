@@ -96,7 +96,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFail
 	self 
 		should: [
 			[testService handleCompletedTest] 
-				on: TestFailedByForkedProcess do: [ :err | err resume ]]
+				on: TestFailedByForkedProcess do: [ :err | err resumeUnchecked: true ]]
 		raise: TestLeftRunningProcess
 ]
 

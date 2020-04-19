@@ -227,8 +227,7 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
 	
 	[
-		aTestCase runCase.
-		self handleCompletedTest
+		[aTestCase runCase] ensure: [ self handleCompletedTest ]
 	] on: Exception do: [ :err | 
 			self handleException: err 
 	]
