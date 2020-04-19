@@ -183,8 +183,48 @@ ProcessTest >> testInjectingMultipleExceptionHandlersIntoRunningProcess [
 ]
 
 { #category : #tests }
+ProcessTest >> testIsNotSuspendedWhenItIsActiveProcess [
+
+	| semaphore suspended |
+	semaphore := Semaphore new.
+	[ suspended := Processor activeProcess isSuspended. semaphore signal ] fork.
+	semaphore wait.
+	self deny: suspended
+]
+
+{ #category : #tests }
+ProcessTest >> testIsNotSuspendedWhenItIsRunningButNotActiveProcess [
+
+	| semaphore process |
+	semaphore := Semaphore new.
+	process := [ semaphore signal. Processor yield ] fork.
+	semaphore wait.
+	self deny: process isTerminated.
+	self deny: process isSuspended
+]
+
+{ #category : #tests }
+ProcessTest >> testIsNotSuspendedWhenItIsTerminated [
+
+	| semaphore process |
+	semaphore := Semaphore new.
+	process := [ semaphore signal] fork.
+	semaphore wait.
+	self assert: process isTerminated.
+	self deny: process isSuspended
+]
+
+{ #category : #tests }
 ProcessTest >> testIsSelfEvaluating [
 	self assert: Processor printString equals: 'Processor'
+]
+
+{ #category : #tests }
+ProcessTest >> testIsSuspendedWhenItIsNotStartedYet [
+
+	| process |
+	process := [  ] newProcess.
+	self assert: process isSuspended
 ]
 
 { #category : #'tests - termination' }
@@ -233,7 +273,7 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	self assert: terminator identicalTo: process ].
 
 	[ process isTerminated ] whileFalse: [ 50 milliSeconds asDelay wait ].
-	self assert: process isSuspended.
+	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	self assert: started.
@@ -267,7 +307,7 @@ ProcessTest >> testIsTerminatingForcedTerminationWithoutRunning [
 	self deny: unwound.
 
 	process terminate.
-	self assert: process isSuspended.
+	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	"The process never ran"
@@ -296,7 +336,7 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	sem signal.
 	self waitForProcessTermination: process.
 	"#terminate will be sent by the process itself after its context has finished (see BlockClosure>>newProcess)"
-	self assert: process isSuspended.
+	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.
 	self assert: started.
