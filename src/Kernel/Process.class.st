@@ -290,6 +290,9 @@ Process >> isActiveProcess [
 
 { #category : #testing }
 Process >> isSuspended [
+	"Answer true if I was never scheduled yet (new process, never been sent #resume) or paused (was sent #suspend)"
+	self isActiveProcess ifTrue: [ ^false ].
+	self isTerminated ifTrue: [ ^false ].
 	^myList isNil or: [ myList isEmpty ]
 ]
 
