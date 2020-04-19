@@ -3,9 +3,16 @@ Specific to BinaryFileStream
 "
 Class {
 	#name : #FLBinaryFileStreamStrategy,
-	#superclass : #FLFileStreamStrategy,
+	#superclass : #FLStreamStrategy,
 	#category : #'Fuel-Tests-Core-StreamStrategies'
 }
+
+{ #category : #'test support' }
+FLBinaryFileStreamStrategy >> fileName [
+	"Answer a filename to serialize and materialize using it."
+
+	^ FLPlatform current absolutePathOf: (FLPlatform current imageName, '-tests.fuel')
+]
 
 { #category : #reading }
 FLBinaryFileStreamStrategy >> readStreamDo: aValuable [
@@ -15,6 +22,11 @@ FLBinaryFileStreamStrategy >> readStreamDo: aValuable [
 		fileNamed: self fileName
 		readStreamDo: [ :aStream |
 			aValuable value: aStream binary ]
+]
+
+{ #category : #'test support' }
+FLBinaryFileStreamStrategy >> tearDown [
+	FLPlatform current deleteFileNamed: self fileName
 ]
 
 { #category : #writing }
