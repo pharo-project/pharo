@@ -463,25 +463,22 @@ ProcessTest >> testTerminateActive [
 { #category : #'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 
-	| ensureCalled process ensureFailure forkedFailures started |
+	| ensureCalled process ensureFailure forkedFailures started unwindError |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
 	started := false.
 	process := [ 
+		[ 
 		[[started := true. 10 seconds wait] 
 			ensure: [ ensureFailure signal ]]
 				ensure: [ ensureCalled := true ].
+		] on: UnwindError do: [ :err | unwindError := err ]
 	] fork.
 	[started] whileFalse: [ Processor yield ].
 	process terminate.	
 	Processor yield.
 	self assert: ensureCalled.
-	forkedFailures := TestExecutionEnvironment currentFailures.
-	self assert: forkedFailures size equals: 2.
-	self assert: forkedFailures first equals: ensureFailure.
-	self assert: forkedFailures last class equals: UnwindError.
-	self assert: forkedFailures last signalerContext exception equals: ensureFailure.
-	TestExecutionEnvironment resetFailures
+	self assert: unwindError signalerContext exception equals: ensureFailure
 ]
 
 { #category : #'tests - termination' }

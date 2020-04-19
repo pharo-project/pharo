@@ -80,6 +80,22 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenThereWasOnlyMainProcessFailure [
+
+	testService handleException: Error new.
+	
+	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenProcessWasOnlyCreated [
+
+	testService handleNewProcess: [  ] newProcess.
+	
+	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess 
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailures [
 
 	self fork: [ testService suspendBackgroundFailure: Error new ].

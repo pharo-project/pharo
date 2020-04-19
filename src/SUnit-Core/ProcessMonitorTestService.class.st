@@ -38,7 +38,7 @@ ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoBackgroundFailures [
-	testFailures ifEmpty: [ ^self ].
+	self suspendedBackgroundFailures ifEmpty: [ ^self ].
 
 	[TestFailedByForkedProcess signal] on: UnhandledError do: [ :e | 
 		self passSuspendedFailures.
@@ -48,8 +48,9 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoRunningProcesses [
-	(forkedProcesses anySatisfy: [ :each | each isTerminated not ]) 
-		ifFalse: [ ^self ].
+	"Suspended processes are not scheduled and therefore they are not considered like a running"
+	(forkedProcesses allSatisfy: [ :each | each isTerminated or: [ each isSuspended ] ]) 
+		ifTrue: [ ^self ].
 
 	TestLeftRunningProcess signal
 ]
