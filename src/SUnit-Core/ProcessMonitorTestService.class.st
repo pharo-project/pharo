@@ -99,6 +99,7 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 
 { #category : #controlling }
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
+	self recordTestFailure: anUnhandledException.
 	
 	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
 	
@@ -167,5 +168,10 @@ ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 
 { #category : #accessing }
 ProcessMonitorTestService >> suspendedBackgroundFailures [
+	^ testFailures associationsSelect: [ :each | each key isSuspended ]
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService >> testFailures [
 	^ testFailures
 ]

@@ -139,6 +139,32 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testRecordMainTestProcessError [
+
+	| error |
+	error := Error new.
+	
+	testService handleException: error.
+
+	self 
+		assert: (testService testFailures at: Processor activeProcess) 
+		equals: error
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testRecordMainTestProcessUnhandledError [
+
+	| error |
+	error := UnhandledError new.
+	
+	testService handleException: error.
+
+	self 
+		assert: (testService testFailures at: Processor activeProcess) 
+		equals: error
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testResumeFailedProcessWhenItFailsTestWithUnhandledError [
 	"Test with background failures is failing with TestFailedByForkedProcess.
 	In case when it is unhandled (when we debug the test) it should resume all background failures"
@@ -188,6 +214,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhan
 	self fork: [ testService suspendBackgroundFailure: Error new. executed := true ].
 	self deny: executed.	
 
+	testService handleException: Error new. "UnhandledError always started with original error signal"
 	testService handleException: UnhandledError new.
 	self assert: executed.
 	"Unhandled exception opens debugger and therefore any new errors should not be suspended"
