@@ -208,7 +208,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, BaselineOfSpec2 allPackageNames,
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
-		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
+		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core),
+		{ BaselineOfFuelPlatform name }, (BaselineOfFuelPlatform allPackageNames) ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -310,8 +311,10 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.
-	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+
+	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
+	packages := packages , { BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
 	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
@@ -437,7 +440,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core) ).
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		BaselineOfFuelPlatform allPackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -495,6 +499,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		BaselineOfFuelPlatform allPackageNames,
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
@@ -547,7 +552,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfSpec2 allPackageNames,
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core) )).
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		BaselineOfFuelPlatform allPackageNames )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]
