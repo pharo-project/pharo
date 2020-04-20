@@ -8,5 +8,38 @@ Those errors are signalled even if test was failed due to domain error. In that 
 Class {
 	#name : #DirtyTestError,
 	#superclass : #Error,
+	#instVars : [
+		'executionEnvironment'
+	],
 	#category : #'SUnit-Core-Kernel'
 }
+
+{ #category : #'instance creation' }
+DirtyTestError class >> signalFrom: aTestExecutionEnvironment [
+	^self new 
+		executionEnvironment: aTestExecutionEnvironment;
+		signal
+]
+
+{ #category : #accessing }
+DirtyTestError >> executionEnvironment [
+	^ executionEnvironment
+]
+
+{ #category : #accessing }
+DirtyTestError >> executionEnvironment: anObject [
+	executionEnvironment := anObject
+]
+
+{ #category : #'exception handling' }
+DirtyTestError >> sunitAnnounce: aTestCase toResult: aTestResult [
+
+	executionEnvironment isMainTestProcessFailed ifTrue: [ 
+		"The main test process errors are handled by SUnit using same message.
+		So the actual domain test error is already counted in result"
+		^self].
+	
+	"If main test process was completed successfully
+	we should mark test as failed due to dirty system state"
+	aTestResult addError: aTestCase
+]

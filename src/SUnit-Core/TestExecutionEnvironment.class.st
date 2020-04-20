@@ -103,6 +103,11 @@ TestExecutionEnvironment >> failures [
 ]
 
 { #category : #accessing }
+TestExecutionEnvironment >> findService: aTestExecutionServiceClass [
+	^services detect: [:each | each isKindOf: aTestExecutionServiceClass]
+]
+
+{ #category : #accessing }
 TestExecutionEnvironment >> forkedProcesses [
 	self flag: #todo.
 	
@@ -147,6 +152,11 @@ TestExecutionEnvironment >> isMainTestProcessActive [
 ]
 
 { #category : #testing }
+TestExecutionEnvironment >> isMainTestProcessFailed [
+	^self processMonitor isTestProcessFailed: mainTestProcess
+]
+
+{ #category : #testing }
 TestExecutionEnvironment >> isTest [
 	^true
 ]
@@ -183,6 +193,11 @@ TestExecutionEnvironment >> prepareForNewProcess: aProcess [
 	processBlock isClosure ifFalse: [ ^self ]. "same case as in previous comment"
 	
 	self handleNewProcess: aProcess
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> processMonitor [
+	^self findService: ProcessMonitorTestService
 ]
 
 { #category : #controlling }

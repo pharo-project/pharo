@@ -6,5 +6,5 @@ Halt >> manageTestProcessBy: aProcessMonitorTestService [
 	Therefore we should pass all suspended failures from background processes.
 	So that we will open debugger on all exceptions raised during test"
 	
-	aProcessMonitorTestService passSuspendedFailures
+	aProcessMonitorTestService passBackgroundFailures
 ]

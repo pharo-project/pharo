@@ -49,7 +49,7 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreSuspensionLogic [
 
-	testService passSuspendedFailures.
+	testService passBackgroundFailures.
 	self deny: testService shouldSuspendBackgroundFailures.
 	
 	testService cleanUpAfterTest.
@@ -125,6 +125,12 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithRunningProcess
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
+
+	self assert: executionEnvironment processMonitor identicalTo: testService 
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testHasEmptyForkedProcessesByDefault [
 
 	self assert: testService forkedProcesses isEmpty
@@ -134,6 +140,17 @@ ProcessMonitorTestServiceTest >> testHasEmptyForkedProcessesByDefault [
 ProcessMonitorTestServiceTest >> testHasEmptySuspendedBackgroundFailuresByDefault [
 
 	self assert: testService suspendedBackgroundFailures isEmpty
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
+
+	| process |
+	self deny: (testService isTestProcessFailed: #process).
+	
+	process := self fork: [testService recordTestFailure: Error new].
+	self assert: (testService isTestProcessFailed: process).
+	self deny: (testService isTestProcessFailed: #anotherProcess)
 ]
 
 { #category : #tests }

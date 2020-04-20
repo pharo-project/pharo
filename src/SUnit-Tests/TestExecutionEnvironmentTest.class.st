@@ -137,6 +137,12 @@ TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNo
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testFindService [
+
+	self assert: (executionEnvironment findService: TestServiceExample) identicalTo: testService 
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testHandleForkedProcessesByAllServices [
 
 	| process |
@@ -201,6 +207,20 @@ TestExecutionEnvironmentTest >> testIsMainTestProcessActive [
 	
 	self runWithNoHandlers: [ 
 		self deny: (executionEnvironment isMainTestProcessActive) ]
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testIsMainTestProcessFailed [
+
+	| processMonitor |
+	processMonitor := ProcessMonitorTestService new.
+	executionEnvironment registerService: processMonitor.		
+	executionEnvironment activated.
+	
+	self deny: executionEnvironment isMainTestProcessFailed.
+	
+	processMonitor recordTestFailure: Error new.
+	self assert: executionEnvironment isMainTestProcessFailed.
 ]
 
 { #category : #tests }

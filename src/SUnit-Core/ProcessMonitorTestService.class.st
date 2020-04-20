@@ -40,10 +40,10 @@ ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
 ProcessMonitorTestService >> ensureNoBackgroundFailures [
 	self suspendedBackgroundFailures ifEmpty: [ ^self ].
 
-	[TestFailedByForkedProcess signal] on: UnhandledError do: [ :e | 
-		self passSuspendedFailures.
-		e pass.
-	]
+	[TestFailedByForkedProcess signalFrom: executionEnvironment] 
+		on: UnhandledError do: [ :e | 
+			self passBackgroundFailures.
+			e pass]
 ]
 
 { #category : #controlling }
@@ -52,7 +52,7 @@ ProcessMonitorTestService >> ensureNoRunningProcesses [
 	(forkedProcesses allSatisfy: [ :each | each isTerminated or: [ each isSuspended ] ]) 
 		ifTrue: [ ^self ].
 
-	TestLeftRunningProcess signal
+	TestLeftRunningProcess signalFrom: executionEnvironment
 ]
 
 { #category : #accessing }
@@ -102,7 +102,7 @@ ProcessMonitorTestService >> handleNewProcess: aProcess [
 ProcessMonitorTestService >> handleUnhandledException: anUnhandledException [
 	self recordTestFailure: anUnhandledException.
 	
-	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passSuspendedFailures ].
+	executionEnvironment isMainTestProcessActive ifTrue: [ ^self passBackgroundFailures ].
 	
 	shouldSuspendBackgroundFailures ifTrue: [
 		self suspendBackgroundFailure: anUnhandledException]
@@ -118,8 +118,14 @@ ProcessMonitorTestService >> initialize [
 	 
 ]
 
+{ #category : #testing }
+ProcessMonitorTestService >> isTestProcessFailed: aProcess [
+
+	^testFailures at: aProcess ifPresent: [ true ] ifAbsent: [ false ]
+]
+
 { #category : #controlling }
-ProcessMonitorTestService >> passSuspendedFailures [	
+ProcessMonitorTestService >> passBackgroundFailures [	
 	self disableBackgroudFailuresSuspension.
 		
 	testFailures keys 
