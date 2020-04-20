@@ -143,6 +143,16 @@ ProcessMonitorTestServiceTest >> testHasEmptySuspendedBackgroundFailuresByDefaul
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testIgnoreDirtyTestErrors [
+	
+	testService handleException: TestLeftRunningProcess new.
+	self assert: testService testFailures isEmpty.
+	
+	testService handleException: TestFailedByForkedProcess new.
+	self assert: testService testFailures isEmpty
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 
 	| process |

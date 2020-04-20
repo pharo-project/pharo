@@ -32,6 +32,12 @@ DirtyTestError >> executionEnvironment: anObject [
 ]
 
 { #category : #'exception handling' }
+DirtyTestError >> manageTestProcessBy: aProcessMonitorTestService [
+	"Do nothing because I am not an error during actual test execution.
+	My subclasses only represent the dirty system state at the end of test"
+]
+
+{ #category : #'exception handling' }
 DirtyTestError >> sunitAnnounce: aTestCase toResult: aTestResult [
 
 	executionEnvironment isMainTestProcessFailed ifTrue: [ 
