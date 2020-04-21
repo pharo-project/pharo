@@ -167,7 +167,8 @@ RBMethodNode >> rewriteTempsForContext: aContext [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
-	^(self ir instructionForPC: anInteger) sourceNode
+	bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForMethodNode: self].
+	^ bcToASTCache nodeForPC: anInteger
 ]
 
 { #category : #'*OpalCompiler-Core' }
