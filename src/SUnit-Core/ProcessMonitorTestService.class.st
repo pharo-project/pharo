@@ -15,6 +15,30 @@ ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
 ]
 
 { #category : #controlling }
+ProcessMonitorTestService >> allowRunningProcessesToFinish [
+	"The idea here is to allow most trivial processes to finish themselves.
+	So they would not be a garbage left by test.
+	For example following test would left one process at the end:
+		>>testExample
+			[ Processor yield ] fork 
+	But if we would give it a chance to finish it would do this. 
+	So in this method we give running processes a chance to finish:
+		- yield execution until number of rest processes are reduced"
+	| runningProcesses restProcesses |
+	runningProcesses := self runningProcesses.
+	runningProcesses ifEmpty: [ ^self ].
+	(runningProcesses allSatisfy: [ :each | each priority = Processor activePriority ]) ifFalse: [ 
+			"If there is any process with different priority than active one 
+			we can't do anything to allow finish all of them"
+			^self ].
+	
+	[Processor yield.
+	restProcesses := runningProcesses reject: [ :each | each isTerminated ].
+	restProcesses size = runningProcesses size or: [ restProcesses isEmpty ]] 
+		whileFalse: [ runningProcesses := restProcesses ]
+]
+
+{ #category : #controlling }
 ProcessMonitorTestService >> cleanUpAfterTest [
 	super cleanUpAfterTest.
 	
@@ -48,10 +72,10 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoRunningProcesses [
-	"Suspended processes are not scheduled and therefore they are not considered like a running"
-	(forkedProcesses allSatisfy: [ :each | each isTerminated or: [ each isSuspended ] ]) 
-		ifTrue: [ ^self ].
 
+	self allowRunningProcessesToFinish.	
+	self runningProcesses ifEmpty: [ ^self ].
+	
 	TestLeftRunningProcess signalFrom: executionEnvironment
 ]
 
@@ -148,6 +172,12 @@ ProcessMonitorTestService >> recordTestFailure: anException [
 { #category : #initialization }
 ProcessMonitorTestService >> resetFailures [
 	testFailures removeAll
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService >> runningProcesses [
+	"Suspended processes are not scheduled and therefore they are not considered as running"
+	^ forkedProcesses reject: [ :each | each isTerminated or: [ each isSuspended ]]
 ]
 
 { #category : #accessing }

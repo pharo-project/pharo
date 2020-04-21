@@ -29,6 +29,37 @@ ProcessMonitorTestServiceTest >> setUp [
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinish [
+
+	| semaphore processIsDone process |
+	semaphore := Semaphore new.
+	processIsDone := false.
+	process := self fork: [ semaphore wait. processIsDone := true].
+	process priority: Processor activePriority.
+	semaphore signal.
+	self deny: processIsDone.
+	
+	testService handleCompletedTest.
+	
+	self assert: processIsDone.
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinishButFailTestIfItCant [
+
+	| semaphore process wasResumed |
+	semaphore := Semaphore new.
+	wasResumed := false.
+	process := self fork: [ semaphore wait. wasResumed := true. 10 seconds wait].
+	process priority: Processor activePriority.
+	semaphore signal.
+	self deny: wasResumed.
+	
+	self should: [testService handleCompletedTest] raise: TestLeftRunningProcess.
+	self assert: wasResumed
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	| process haltWasPassed halt |
 	haltWasPassed := false.
