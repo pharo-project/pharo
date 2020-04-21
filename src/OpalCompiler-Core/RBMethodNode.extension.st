@@ -3,7 +3,7 @@ Extension { #name : #RBMethodNode }
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> bcToASTCache [
 
-	 ^ bcToASTCache ifNil: [ OCBytecodeToASTCache generateForMethodNode: self].
+	 ^ bcToASTCache ifNil: [  bcToASTCache := OCBytecodeToASTCache generateForMethodNode: self]
 ]
 
 { #category : #'*OpalCompiler-Core' }
