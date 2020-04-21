@@ -1,6 +1,12 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> bcToASTCache [
+
+	 ^ bcToASTCache ifNil: [ OCBytecodeToASTCache generateForMethodNode: self].
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
 	^ self ir compiledMethod
 ]
@@ -167,8 +173,7 @@ RBMethodNode >> rewriteTempsForContext: aContext [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
-	bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForMethodNode: self].
-	^ bcToASTCache nodeForPC: anInteger
+	^ self bcToASTCache nodeForPC: anInteger
 ]
 
 { #category : #'*OpalCompiler-Core' }
