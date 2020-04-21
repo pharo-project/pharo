@@ -374,11 +374,6 @@ IRSequence >> successorSequences [
 	^ sequence last successorSequences
 ]
 
-{ #category : #accessing }
-IRSequence >> tempVectorNamed: aSymbol [
-	^sequence detect: [:irNode | irNode isTempVector and: [irNode name = aSymbol]].
-]
-
 { #category : #'successor sequences' }
 IRSequence >> withAllSuccessors [
 	"Return me and all my successors sorted by sequence orderNumber"

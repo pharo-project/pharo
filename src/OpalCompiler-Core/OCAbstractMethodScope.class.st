@@ -113,11 +113,6 @@ OCAbstractMethodScope >> id: int [
 	id := int
 ]
 
-{ #category : #'temp vars' }
-OCAbstractMethodScope >> indexFromIRForVarNamed: aName [
-	^self outerNotOptimizedScope node irInstruction indexForVarNamed: aName
-]
-
 { #category : #initialization }
 OCAbstractMethodScope >> initialize [
 

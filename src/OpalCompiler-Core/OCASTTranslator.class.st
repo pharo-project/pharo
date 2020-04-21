@@ -436,6 +436,7 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 	| argumentNames |
+	methodBuilder mapToNode: aBlockNode.
 	methodBuilder compilationContext: aBlockNode methodNode compilationContext.
 	
 	"args, then copied, then temps"
@@ -534,6 +535,7 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	
 	| tempNamesNoArgs |
 	
+	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName 
@@ -550,6 +552,7 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 		]].
 	
 	self visitNode: anOptimizedBlockNode body.
+	methodBuilder popMap
 ]
 
 { #category : #'visitor-double dispatching' }
