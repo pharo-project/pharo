@@ -12,6 +12,19 @@ Class {
 }
 
 { #category : #accessing }
+TestExecutionService class >> defaultServiceClasses [
+
+	^Array streamContents: [ :s |
+		self allSubclassesDo: [ :each | 
+			each isAbstract not & each isEnabledByDefault ifTrue: [s nextPut: each ]]]
+]
+
+{ #category : #settings }
+TestExecutionService class >> descriptionForSettingsBrowser [
+	^''
+]
+
+{ #category : #accessing }
 TestExecutionService class >> enabledServiceClasses [
 
 	^Array streamContents: [ :s |
@@ -37,6 +50,22 @@ TestExecutionService class >> isEnabled: aBoolean [
 { #category : #testing }
 TestExecutionService class >> isEnabledByDefault [
 	^true
+]
+
+{ #category : #settings }
+TestExecutionService class >> settingsOn: aBuilder [
+	"No need for pragma <systemsettings>:
+	TestExecutionEnvironment organizes settings for all services.
+	It calls this method for every default service class.
+	Subclasses should override it to provide specific configuration options"	
+	(aBuilder setting: self name)
+		target: self;
+		parent: #sunit;
+		getSelector: #isEnabled;
+		setSelector: #isEnabled:;
+		default: false;
+		label: self name;
+		description: self descriptionForSettingsBrowser
 ]
 
 { #category : #controlling }

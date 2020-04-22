@@ -66,6 +66,14 @@ TestExecutionEnvironment class >> resetFailures [
 	^CurrentExecutionEnvironment value resetFailures
 ]
 
+{ #category : #settings }
+TestExecutionEnvironment class >> settingsOn: aBuilder [
+	<systemsettings>	
+
+	TestExecutionService defaultServiceClasses do: [ :each | 
+		each settingsOn: aBuilder]
+]
+
 { #category : #controlling }
 TestExecutionEnvironment >> activated [
 

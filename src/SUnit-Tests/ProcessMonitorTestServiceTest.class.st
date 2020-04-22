@@ -25,6 +25,7 @@ ProcessMonitorTestServiceTest >> fork: aBlock [
 ProcessMonitorTestServiceTest >> setUp [ 
 	super setUp.
 	
+	testService failTestLeavingProcesses. "to ensure that we are testing full behavior independently from default settings"
 	executionEnvironment activated 
 ]
 
@@ -78,6 +79,16 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreDefaultFailingLogicForRunningProcessesCase [
+
+	testService shouldFailTestLeavingProcesses: ProcessMonitorTestService shouldFailTestLeavingProcesses not.
+	
+	testService cleanUpAfterTest.
+	
+	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses.
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreSuspensionLogic [
 
 	testService passBackgroundFailures.
@@ -111,11 +122,32 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassed [
+
+	self fork: [ testService suspendBackgroundFailure: Error new ].
+	testService passBackgroundFailures.
+	
+	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenThereWasOnlyMainProcessFailure [
 
 	testService handleException: Error new.
 	
 	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenItAllowsThemToBe [
+
+	| process |
+	process := self fork: [ 10 seconds wait ].
+	self deny: process isTerminated.
+
+	testService allowTestToLeaveProcesses.	
+	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess.
+	self deny: process isTerminated.
 ]
 
 { #category : #tests }
@@ -159,6 +191,15 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithRunningProcess
 ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
 
 	self assert: executionEnvironment processMonitor identicalTo: testService 
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcessesCase [
+
+	testService := ProcessMonitorTestService new.
+	
+	self assert: testService shouldFailTestLeavingProcesses notNil.
+	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses.
 ]
 
 { #category : #tests }
