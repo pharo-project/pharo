@@ -41,11 +41,20 @@ In interactive mode when user debugs the test I pass all suspended failures toge
 
 The interactive scenario is detected using UnhandledException logic: unhandled error from the main test process or halt from anywhere mean the ""debugger fallback"" and therefore it is a good time to show the rest of failures from other processes. So in that case I pass all suspended failures to debug all of them together.
 
-
 2. Failing strategy for left processes
 
+I collect all forked processes (#forkedProcesses) and at the end of tests I have an option (#shouldFailTestLeavingProcesses) to fail the test if those processes are still running. TestLeftRunningProcess would be a final error for the test in that case.
+I implement a little logic to make this failing strategy more usable and not break the test in trivial cases. For eaxmple following pattern is quite common in tests: 
+
+	testExample 
+		[ Processor yield ] fork.
+		self assert: true.
+
+""Yield"" could always happen as a side affect of domain code or other image processes. And a simple #fork in tests like this will not be able to terminate.
+The method #allowRunningProcessesToFinish performs own ""Processor yield"" to allow background processes take control and finish execution. 
+
 3. One more detail: 
-In uninteractive mode I signal those dirty state errors even if there was a domain error from the test. So two exceptions can be signaled for the test.
+In uninteractive mode I signal those special errors even if there was a domain error from the test. So two exceptions can be signaled for single test run.
 It allows to log all errors signaled during the test: one from the main process and others from the background processes.
 
 Internal Representation and Key Implementation Points.
