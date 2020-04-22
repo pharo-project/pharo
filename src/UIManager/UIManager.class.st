@@ -31,11 +31,13 @@ UIManager class >> default: aUIManager [
 
 { #category : #initialization }
 UIManager class >> forCurrentSystemConfiguration [
-	^(self allSubclasses
+
+	^ (self allSubclasses
 			detect: [ :any | 
 				any isValidForCurrentSystemConfiguration
 					and: [ any subclasses noneSatisfy: #isValidForCurrentSystemConfiguration ] ]
-			ifNone: [ NonInteractiveUIManager ]) new
+			ifNone: [ NonInteractiveUIManager ]) 
+			new
 ]
 
 { #category : #initialization }
