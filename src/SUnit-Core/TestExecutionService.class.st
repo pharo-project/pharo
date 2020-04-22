@@ -1,3 +1,37 @@
+"
+I am a root of hierarchy of services for test execution environment.
+
+Every service registered in the environment is notified about following events:
+
+- #handleException:, it is executed for every Exception signaled from the test 
+- #handleCompletedTest, it is executed when test is completes (successfully or due to the error)
+- #handleNewProcess:, it is executed for every process created during the test
+- #cleanUpAfterTest, it is executed when current test is completely done to prepare for the next test 
+
+I implement them as dummy methods. Subclasses can choose what exactly they need to implement.
+
+Every service can be enabled or disabled for concrete test: 
+
+	- enable 
+	- disble
+
+During #cleanUpAfterTest I restore the activeness according to my default configuration (class side #isEnabled). Subclasses should extend this method with same purpose - to recover the default state of service.
+
+TestExecutionEnvironment queries all my subclasses to register them for tests execution: 
+
+	TestExecutionService enabledServiceClasses.
+	
+Settings browser uses all default services which are not abstract and enabled by default (#isEnabledByDefault)	
+	
+	TestExecutionService defaultServiceClasses.
+	
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	executionEnvironment:		<TestExecutionEnvironment>
+	isEnabled:		<Boolean>
+
+"
 Class {
 	#name : #TestExecutionService,
 	#superclass : #Object,
