@@ -1,3 +1,61 @@
+"
+I monitor all processes forked during tests and track all exceptions signaled from them.
+
+The main goal is to ensure that if there was an error from the background process the test will never be green. 
+For example I make following test fail:
+
+	testExample
+		[ 1/0 ] fork.
+		self assert: true.
+
+TestFailedByForkedProcess will be signaled at the end of test. And if user will debug this test then two debuggers will be opened for each error (for main and background processes).
+		
+The backgrond process can be more tricky and it could fail after a long time when another arbitrary test is currently executed. Generally background processes left by tests make the system dirty. It can lead to intermittent failures and flaky tests which is very hard to debug.
+And my second goal is to fail the test when it left running processes. I make following test fail: 
+
+	testExample
+		[ 10 seconds wait ] fork.
+		self assert: true.
+
+TestLeftRunningProcess will be signaled at the end of test.
+Currently this feature is disabled by default. And this test would not fail. But it can be configured:	 
+
+	aTestCase testProcessMonitor failTestLeavingProcesses.
+
+Or to enable it for test: 
+
+	aTestCase testProcessMonitor allowTestToLeaveProcesses.
+
+This configuration can be added to #setUp or there is global settings (also available in settings browser):
+
+	ProcessMonitorTestService shouldFailTestLeavingProcesses: true
+
+Implementation details:
+
+1. Background failures
+
+I am a kind of TestExecutionService and therefore I intercept all processes forked during the test (#handleNewProcess:).
+I set up default exception handler for them to catch all unhandled exception. UnhandledException's are supposed to open a debugger at the end of processing. I postpone this logic by suspending the failing process. So when error is signaled from the background process no debugger will be opened immediately.
+At the end of test (#handleCompletedTest) I check all suspended failures and if they exist I fail the test with TestFailedByForkedProcess signal.
+In interactive mode when user debugs the test I pass all suspended failures together with this signal. So multiple debuggers will be opened to show each error.
+
+The interactive scenario is detected using UnhandledException logic: unhandled error from the main test process or halt from anywhere mean the ""debugger fallback"" and therefore it is a good time to show the rest of failures from other processes. So in that case I pass all suspended failures to debug all of them together.
+
+
+2. Failing strategy for left processes
+
+3. One more detail: 
+In uninteractive mode I signal those dirty state errors even if there was a domain error from the test. So two exceptions can be signaled for the test.
+It allows to log all errors signaled during the test: one from the main process and others from the background processes.
+
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	forkedProcesses:		<OrderedCollection<Process>>
+	testFailures:		<OrderedIdentityDictionary<Process, Exception>>
+	shouldFailTestLeavingProcesses:		<Boolean>
+	shouldSuspendBackgroundFailures:		<Boolean>
+"
 Class {
 	#name : #ProcessMonitorTestService,
 	#superclass : #TestExecutionService,
