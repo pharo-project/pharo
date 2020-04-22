@@ -30,6 +30,14 @@ This configuration can be added to #setUp or there is global settings (also avai
 
 	ProcessMonitorTestService shouldFailTestLeavingProcesses: true
 
+Also I am can be disabled for the test: 
+
+	aTestCase testProcessMonitor disable 
+	 
+Or I can be disabled globaly (also available in settings browser/SUnit): 
+
+	ProcessMonitorTestService isEnabled: false.
+
 Implementation details:
 
 1. Background failures
