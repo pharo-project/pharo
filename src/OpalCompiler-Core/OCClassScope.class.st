@@ -28,15 +28,17 @@ OCClassScope >> environment [
 	^class classPool
 ]
 
-{ #category : #lookup }
-OCClassScope >> findVariable: lookupBlock ifNone: notFoundBlock [ 
-
-	^class findGlobalVariable: lookupBlock ifNone: notFoundBlock
-]
-
 { #category : #accessing }
 OCClassScope >> getClass [
 	^class
+]
+
+{ #category : #lookup }
+OCClassScope >> hasBindingThatBeginsWith: aString [
+	"Return a SemVar for my pool var with this name.  Return nil if none found"
+
+	(class hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+	^outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : #levels }

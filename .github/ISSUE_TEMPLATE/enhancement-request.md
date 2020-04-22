@@ -7,19 +7,25 @@ assignees: ''
 
 ---
 
+_An enhancement is a slight modification of an existing behavior. If you want a new feature use the 
+feature request template._
+
 **Describe the request**
 A clear and concise description of what is missing and how it could be enhanced.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
+**Expected development cost**
+As you know nothing happens magically, so do you have an idea of the development effort required? 
+In addition, are you willing to help because after all Pharo is yours too?
+
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **Version information:**
  - OS: [e.g. iOS]
- - Pharo version: [e.g. 9.0]
- - Commit [e.g. 22]
+ - Version: [e.g. 1.6.1]
 
 **Additional context**
 Add any other context about the problem here.

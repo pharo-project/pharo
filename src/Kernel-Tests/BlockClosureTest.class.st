@@ -313,18 +313,24 @@ BlockClosureTest >> testSetUp [
 	self assert: (aBlockContext method isNil or: [ aBlockContext method isKindOf: CompiledCode ])
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
-
-	self should: ['blue' = ([UIManager default request: 'Your favorite color?'] 
-		valueSupplyingAnswer: #('Your favorite color?' 'blue'))]
+	self
+		assert:
+			([ UIManager default request: 'Your favorite color?' ]
+				valueSupplyingAnswer: #('Your favorite color?' 'blue'))
+		equals: 'blue'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
-
-	self should: ['red' = ([UIManager default  request: 'Your favorite color?' initialAnswer: 'red'] 
-		valueSupplyingAnswer: #('Your favorite color?' #default))]
+	self
+		assert:
+			([ UIManager default
+				request: 'Your favorite color?'
+				initialAnswer: 'red' ]
+				valueSupplyingAnswer: #('Your favorite color?' #default))
+		equals: 'red'
 ]
 
 { #category : #tests }

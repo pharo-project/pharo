@@ -112,6 +112,16 @@ OCKeyedSet >> fixCollisionsFrom: start [
 ]
 
 { #category : #testing }
+OCKeyedSet >> hasBindingThatBeginsWith: aString [ 
+	"Answer true if the receiver has a key that begins with aString, false otherwise"
+	
+	self keysDo:[:each | 
+		(each beginsWith: aString)
+			ifTrue:[^true]].
+	^false
+]
+
+{ #category : #testing }
 OCKeyedSet >> includes: anObject [
 	^ (array at: (self findElementOrNil: (keyBlock value: anObject))) notNil
 ]

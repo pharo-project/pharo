@@ -22,5 +22,9 @@ Do you require a refactoring? The addition of comments?
  - Version [e.g. Pharo 9.0]
  - Commit [e.g. 22]
 
+**Expected development cost**
+As you know, nothing happens magically, so do you have an idea of the development effort required? 
+In addition, are you willing to help because after all Pharo is yours too?
+
 **Additional context**
 Add any other context about the problem here.

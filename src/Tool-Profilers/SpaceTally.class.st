@@ -29,6 +29,14 @@ SpaceTally class >> printSpaceAnalysis [
 	self new printSpaceAnalysis
 ]
 
+{ #category : #fileout }
+SpaceTally class >> printSpaceAnalysis: aThreshold on: aStream [
+	<script>
+	self new
+		systemWideSpaceTally;
+		printSpaceAnalysis: aThreshold on: aStream
+]
+
 { #category : #'class analysis' }
 SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 	"SpaceTally new compareTallyIn: 'tally' to: 'tally2'"
@@ -68,16 +76,13 @@ SpaceTally >> compareTallyIn: beforeFileName to: afterFileName [
 
 { #category : #fileout }
 SpaceTally >> computeSpaceForClass: cl [
-	| codeSpace totalInstSpace instSpace totalInstCount totalCodeSpace instCount |
+	| codeSpace instSpace instCount |
 	codeSpace := cl spaceUsed.
 	Smalltalk garbageCollectMost.
 	instCount := cl instanceCount.
 	instSpace := cl instancesSizeInMemory.
-	totalCodeSpace := totalCodeSpace + codeSpace.
-	totalInstCount := totalInstCount + instCount.
-	totalInstSpace := totalInstSpace + instSpace.
-	^ results
-		add:
+	results
+		addItem:
 			(SpaceTallyItem
 				analyzedClassName: cl name
 				codeSize: codeSpace
@@ -87,27 +92,40 @@ SpaceTally >> computeSpaceForClass: cl [
 
 { #category : #'class analysis' }
 SpaceTally >> computeSpaceUsage [
+	| c instanceCount |
+	results items
+		do: [ :entry | 
+			c := self class environment at: entry analyzedClassName.
+			instanceCount := c instanceCount.
+			entry codeSize: c spaceUsed.
+			entry instanceCount: instanceCount.
+			entry spaceForInstances: c instancesSizeInMemory.
+			Smalltalk garbageCollectMost ]
+]
 
-	| entry c instanceCount |
-	1 to: results size do: [:i |
-		entry := results at: i.
-		c := self class environment at: entry analyzedClassName.
-		instanceCount := c instanceCount.
-		entry codeSize: c spaceUsed.
-		entry instanceCount: instanceCount.
-		entry spaceForInstances: (c instancesSizeInMemory).
-		Smalltalk garbageCollectMost].
-	
-
+{ #category : #fileout }
+SpaceTally >> computeSpaceUsageResultsForClassesInstancesAssociations: aCollectionOfClasses [
+	results := SpaceTallyResult new: aCollectionOfClasses size.
+	aCollectionOfClasses associations
+		do: [ :assoc | 
+			| instances class |
+			instances := assoc value.
+			class := assoc key.
+			class isMeta
+				ifFalse: [ results
+						addItem:
+							(SpaceTallyItem
+								analyzedClassName: class name
+								codeSize: class spaceUsed
+								instanceCount: instances size
+								spaceForInstances: (instances sum: #sizeInMemory)) ] ]
 ]
 
 { #category : #'class analysis' }
 SpaceTally >> preAllocateResultsFor: classes [
-
-	results := OrderedCollection new: classes size.
-	classes do: [:cl | results add: (SpaceTallyItem analyzedClassName: cl name)].
-	results := results asArray.
-
+	results := SpaceTallyResult new: classes size.
+	classes
+		do: [ :cl | results addItem: (SpaceTallyItem analyzedClassName: cl name) ]
 ]
 
 { #category : #fileout }
@@ -124,67 +142,37 @@ SpaceTally >> printHeader: aStream [
 
 { #category : #fileout }
 SpaceTally >> printSpaceAnalysis [
-	'STspace.text' asFileReference 
+	self systemWideSpaceTally.
+	'STspace.txt' asFileReference
 		writeStreamDo: [ :stream | self printSpaceAnalysis: 1 on: stream ]
 ]
 
-{ #category : #fileout }
+{ #category : #printing }
 SpaceTally >> printSpaceAnalysis: threshold on: aStream [
-	"SpaceTally new printSpaceAnalysis: 1 on: (FileStream forceNewFileNamed: 'STspace.text')"
-
-	"sd-This method should be rewrote to be more coherent within the rest of the class 
-	ie using preAllocate and spaceForInstanceOf:"
+"SpaceTally new printSpaceAnalysis: 1 on: (FileStream forceNewFileNamed: 'STspace.text')"
 
 	"If threshold > 0, then only those classes with more than that number
 	of instances will be shown, and they will be sorted by total instance space.
 	If threshold = 0, then all classes will appear, sorted by name."
 
-	| totalCodeSpace totalInstCount totalInstSpace n totalPercent |
-	Smalltalk garbageCollect.
-	totalCodeSpace := totalInstCount := totalInstSpace := n := 0.
-	results := OrderedCollection new: Smalltalk classNames size.
-	'Taking statistics...'
-		displayProgressFrom: 0
-		to: Smalltalk classNames size
-		during: [ :bar | 
-			Smalltalk globals allClasses
-				do: [ :cl | 
-					| codeSpace  instSpace   instCount |
-					bar current: (n := n + 1).
-					codeSpace := cl spaceUsed.
-					Smalltalk garbageCollectMost.
-					instCount := cl instanceCount.
-					instSpace := cl instancesSizeInMemory.
-					totalCodeSpace := totalCodeSpace + codeSpace.
-					totalInstCount := totalInstCount + instCount.
-					totalInstSpace := totalInstSpace + instSpace.
-					results
-						add:
-							(SpaceTallyItem
-								analyzedClassName: cl name
-								codeSize: codeSpace
-								instanceCount: instCount
-								spaceForInstances: instSpace) ] ].
+	| totalPercent items |
+	"If inst count threshold > 0, then sort by space"
 	totalPercent := 0.0.
+	items :=  results itemsForThreshold: threshold.
 	self printHeader: aStream.
-	threshold > 0
-		ifTrue: [ 
-			"If inst count threshold > 0, then sort by space"
-			results := (results
-				select: [ :s | s instanceCount >= threshold or: [ s spaceForInstances > (totalInstSpace // 500) ] ])
-				asSortedCollection: [ :s :s2 | s spaceForInstances > s2 spaceForInstances ] ].
-	results
+	items
 		do: [ :s | 
 			| percent |
-			percent := s spaceForInstances * 100.0 / totalInstSpace roundTo: 0.1.
+			percent := s spaceForInstances * 100.0
+				/  results totalInstSpace roundTo: 0.1.
 			totalPercent := totalPercent + percent.
 			self printSpaceTallyItem: s percent: percent on: aStream ].
 	aStream
 		cr;
 		nextPutAll: ('Total' padRightTo: 45);
-		nextPutAll: (totalCodeSpace printString padLeftTo: 12);
-		nextPutAll: (totalInstCount printString padLeftTo: 12);
-		nextPutAll: (totalInstSpace printString padLeftTo: 14);
+		nextPutAll: ( results totalCodeSpace printString padLeftTo: 12);
+		nextPutAll: ( results totalInstCount printString padLeftTo: 12);
+		nextPutAll: ( results totalInstSpace printString padLeftTo: 14);
 		nextPutAll: ((totalPercent roundTo: 0.1) printString padLeftTo: 12)
 ]
 
@@ -235,6 +223,12 @@ SpaceTally >> printSpaceTallyItem: aSpaceTallyItem percent: percent on: aStream 
 		cr
 ]
 
+{ #category : #fileout }
+SpaceTally >> privateAllObjects [
+	Smalltalk garbageCollect.
+	^ SystemNavigation default allObjects groupedBy: #class
+]
+
 { #category : #accessing }
 SpaceTally >> results [
 
@@ -252,7 +246,7 @@ SpaceTally >> saveTo: aFileName [
 	file exists ifTrue: [ file delete ].
 	
 	file writeStreamDo: [ :s|
-		results do: [:each | s nextPutAll: each analyzedClassName asString ; 
+		results items do: [:each | s nextPutAll: each analyzedClassName asString ; 
 						nextPutAll: ' '; nextPutAll: each codeSize printString; 
 						nextPutAll: ' '; nextPutAll: each instanceCount printString; 
 						nextPutAll: ' '; nextPutAll: each spaceForInstances printString; cr]].
@@ -280,7 +274,9 @@ SpaceTally >> spaceForInstancesOf: aClass [
 SpaceTally >> spaceTally: classes [
 	"Answer a collection of SpaceTallyItems representing the memory space (in bytes) consumed 	by the code and instances of each class in the system. Note that code sizes do not currently 	report memory consumed by class variables. "
 
-	"((SpaceTally new spaceTally: (Array with: TextMorph with: Point)) asSortedCollection: [:a :b | a spaceForInstances > b spaceForInstances]) asArray"
+	"
+	((SpaceTally new spaceTally: (Array with: TextMorph with: Point)) items asSortedCollection: [:a :b | a spaceForInstances > b spaceForInstances]) asArray
+	"
 
 	self preAllocateResultsFor: classes.
 	Smalltalk garbageCollect.
@@ -295,7 +291,7 @@ SpaceTally >> systemWideSpaceTally [
 
 	"(SpaceTally new systemWideSpaceTally asSortedCollection: [:a :b | a spaceForInstances > b spaceForInstances]) asArray"
 
-	^self spaceTally: Smalltalk globals allClasses.
-
-
+	self
+		computeSpaceUsageResultsForClassesInstancesAssociations: self privateAllObjects.
+	^ self results items
 ]

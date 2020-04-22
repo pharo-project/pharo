@@ -93,17 +93,18 @@ IRBuilder >> addPragma: aPragma [
 { #category : #initialize }
 IRBuilder >> addTemp: tempKey [
 	
-	self addTemps: {tempKey}
+	| tempMap |
+	tempMap := self currentScope tempMap.
+	
+	"adding the same var multiple times reuses the same offset"
+	(tempMap includesKey: tempKey) ifTrue: [ ^ self ].
+	
+	tempMap at: tempKey put: tempMap size + 1
 ]
 
 { #category : #initialize }
 IRBuilder >> addTemps: newKeys [
-	| i offset |
-	offset := self currentScope tempMap size.
-	i := 1.
-	newKeys do: [:key |
-		self  currentScope tempMap at: key ifAbsentPut: [i:=i+1.offset + i - 1].
-	].
+	newKeys do: [ :key | self addTemp: key ]
 
 ]
 

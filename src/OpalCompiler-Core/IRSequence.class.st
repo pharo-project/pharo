@@ -216,7 +216,7 @@ IRSequence >> last [
 { #category : #printing }
 IRSequence >> longPrintOn: stream [
 
-	[IRPrinterV2 new
+	[IRPrinter new
 		stream: stream;
 		visitNode: self
 	] onDNU: #orderNumber do: [:ex | ex resume: ex receiver]

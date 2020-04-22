@@ -980,6 +980,12 @@ HaloMorph >> innerTarget [
 
 ]
 
+{ #category : #testing }
+HaloMorph >> isHaloMorph [ 
+
+	^ true
+]
+
 { #category : #'halos and balloon help' }
 HaloMorph >> localHaloBoundsFor: aMorph [
 	"aMorph may be in the hand and perhaps not in our world"

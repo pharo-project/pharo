@@ -98,9 +98,15 @@ SptEntry >> spotterActDefault [
 ]
 
 { #category : #'spotter-extensions' }
+SptEntry >> spotterPreviewIn: aComposite [
+
+	^ content spotterPreviewIn: aComposite
+]
+
+{ #category : #'spotter-extensions' }
 SptEntry >> spotterPreviewIn: aComposite inContext: aSpotter [
 
-	^ content spotterPreviewCodeIn: aComposite
+	^ self spotterPreviewIn: aComposite
 ]
 
 { #category : #'spotter-extensions' }

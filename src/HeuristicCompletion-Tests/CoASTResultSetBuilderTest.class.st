@@ -122,6 +122,19 @@ CoASTResultSetBuilderTest >> testBuildParseErrorHeuristic [
 ]
 
 { #category : #tests }
+CoASTResultSetBuilderTest >> testBuildPragmaHeuristic [
+
+	| builder |
+	builder := CoMockASTResultSetBuilder new.
+	builder
+		completionContext: CoCompletionContext new;
+		node: RBPragmaNode new;
+		buildCompletion.
+		
+	self assert: builder heuristic equals: #pragma
+]
+
+{ #category : #tests }
 CoASTResultSetBuilderTest >> testBuildReturnHeuristic [
 
 	| builder |

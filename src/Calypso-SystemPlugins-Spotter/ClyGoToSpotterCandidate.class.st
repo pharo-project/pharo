@@ -71,7 +71,7 @@ ClyGoToSpotterCandidate >> name: anObject [
 ]
 
 { #category : #spotter }
-ClyGoToSpotterCandidate >> spotterPreviewCodeIn: aComposite [
+ClyGoToSpotterCandidate >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	
 	^targetView spotterPreviewMorphIn: aComposite

@@ -30,7 +30,8 @@ Class {
 		'pragmas',
 		'replacements',
 		'nodeReplacements',
-		'compilationContext'
+		'compilationContext',
+		'bcToASTCache'
 	],
 	#category : #'AST-Core-Nodes'
 }

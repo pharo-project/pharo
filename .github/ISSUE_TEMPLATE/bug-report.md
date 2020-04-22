@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve the latest dev version of Pharo
+about: Create a report to help us improve the latest dev version of Pharo 
 title: ''
 labels: Bug
 assignees: ''
@@ -23,10 +23,14 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Version information (please complete the following information, you can get it from Help->about):**
+**Version information:**
  - OS: [e.g. iOS]
- - Version: Pharo 9.0
- - Commit info: [e.g. 22]
+ - Version: [e.g. 1.6.1]
+
+**Expected development cost**
+As you know nothing happens magically, so do you have an idea of the development effort required? 
+In addition, are you willing to help because after all Pharo is yours too?
 
 **Additional context**
 Add any other context about the problem here.
+

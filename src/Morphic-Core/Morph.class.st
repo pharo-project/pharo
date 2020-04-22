@@ -1121,15 +1121,6 @@ Morph >> asReadOnlyMorph [
 	^ self
 ]
 
-{ #category : #converting }
-Morph >> asText [
-
-	| anchor embedMorphSignal |
-    anchor := TextAnchor new anchoredMorph: self.
-    embedMorphSignal := (Character value: 1) asString. "required by the scanner"
-    ^ Text string: embedMorphSignal attribute: anchor.
-]
-
 { #category : #'accessing - extension' }
 Morph >> assureExtension [
 	"creates an extension for the receiver if needed"
@@ -3658,6 +3649,12 @@ Morph >> isFullOnScreen [
 	owner ifNil: [^ true].
 	self visible ifFalse: [^ true].
 	^ owner clearArea containsRect: self fullBounds
+]
+
+{ #category : #testing }
+Morph >> isHaloMorph [
+	
+	^ false
 ]
 
 { #category : #classification }

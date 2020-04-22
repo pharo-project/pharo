@@ -114,11 +114,15 @@ Exception >> debug [
 		debug: self signalerContext title: self description
 ]
 
-{ #category : #accessing }
+{ #category : #handling }
 Exception >> defaultAction [
-	"The default action taken if the exception is signaled."
+	"No one has handled this error, but now give them a chance to decide how to debug it. 
+	If none handles this either then open debugger (see UnhandedError-defaultAction).
+	
+	Note about naming here: 
+	Even if not all exceptions are errors the absence of a handler for signaled exception is considered as an error by default. Therefore #defaultAction for Exception raises an error, an UnhandledError"
 
-	self subclassResponsibility
+	self raiseUnhandledError
 ]
 
 { #category : #private }
@@ -225,6 +229,13 @@ Exception >> privHandlerContext [
 Exception >> privHandlerContext: aContextTag [
 
 	handlerContext := aContextTag
+]
+
+{ #category : #handling }
+Exception >> raiseUnhandledError [
+	"No one has handled this error, but now give them a chance to decide how to debug it.  If none handle this either then open debugger (see UnhandedError>>#defaultAction)"
+
+	UnhandledError signalForException: self
 ]
 
 { #category : #accessing }
@@ -358,4 +369,13 @@ Exception >> tag: t [
 	"This message is not specified in the ANSI protocol, but that looks like an oversight because #tag is specified, and the spec states that the signaler may store the tag value."
 
 	tag := t
+]
+
+{ #category : #handling }
+Exception >> unhandledErrorAction [
+	"No one has handled this error, then I gave them a chance to decide how to debug it and I raise an UnhandledError. But it was not handled by anybody so that we are here (see nhandedError-defaultAction).
+	It is the final action an exception can do which is normally a debugger in interactive image"
+
+	<reflective: #unhandledErrorDefaultAction:message:>
+ 	^ UIManager default unhandledErrorDefaultAction: self
 ]

@@ -180,6 +180,15 @@ ClassTest >> testEnvironment: anObject [
 	testEnvironment := anObject
 ]
 
+{ #category : #tests }
+ClassTest >> testHasBindingThatBeginsWith [
+	self assert: (SmalltalkImage hasBindingThatBeginsWith: 'Compiler').
+	self deny: (SmalltalkImage hasBindingThatBeginsWith: 'Object').
+	
+	"Pools are looked up, too"
+	self assert: (TimeZone hasBindingThatBeginsWith: 'DaysInMo')
+]
+
 { #category : #'tests - access' }
 ClassTest >> testHasPoolVarNamed [	
 

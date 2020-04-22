@@ -88,15 +88,14 @@ OCAbstractMethodScope >> copiedVars [
 ]
 
 { #category : #lookup }
-OCAbstractMethodScope >> findVariable: aBlock ifNone: aNotFound [
-
-	(aBlock value: thisContextVar) ifTrue: [^ thisContextVar].
-	self allTemps
-		detect: [ :var | aBlock value: var ]
-		ifFound: [ :var | ^ var ].
+OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
+	"check weather there are any temporaries defined that start with aString"
+	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+	(thisContextVar name  beginsWith: aString) ifTrue: [ ^true ].
 	
-	outerScope ifNotNil: [
-		^  outerScope findVariable: aBlock ifNone: aNotFound ]
+	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : #'temp vars - copying' }
@@ -252,7 +251,7 @@ OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue f
 { #category : #'temp vars' }
 OCAbstractMethodScope >> tempVarNames [
 
-	^ self tempVars collect: [:each| each name]
+	^ self tempVars collect: [:each| each name] as: Array
 ]
 
 { #category : #'temp vars' }
@@ -279,4 +278,9 @@ OCAbstractMethodScope >> tempVectorVar [
 			name: self tempVectorName;
 			scope: self;
 			yourself]
+]
+
+{ #category : #'temp vars - vector' }
+OCAbstractMethodScope >> tempVectorVarNames [
+	^ tempVector collect: [:each| each name] as: Array
 ]

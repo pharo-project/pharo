@@ -4,9 +4,6 @@ tests related to environment
 Class {
 	#name : #OCEnvironmentScopeTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'oldSystemAnnouncer'
-	],
 	#category : #'OpalCompiler-Tests-Semantic'
 }
 

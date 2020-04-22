@@ -31,12 +31,6 @@ OCRequestorScope >> compilationContext: anObject [
 ]
 
 { #category : #lookup }
-OCRequestorScope >> findVariable: aBlock ifNone: aNotFound [
-	outerScope ifNotNil: [
-		^  outerScope findVariable: aBlock ifNone: aNotFound ]
-]
-
-{ #category : #lookup }
 OCRequestorScope >> lookupVar: name [
 
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
