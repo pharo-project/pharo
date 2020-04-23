@@ -6,25 +6,32 @@ Every service registered in the environment is notified about following events:
 - #handleException:, it is executed for every Exception signaled from the test 
 - #handleCompletedTest, it is executed when test is completes (successfully or due to the error)
 - #handleNewProcess:, it is executed for every process created during the test
-- #cleanUpAfterTest, it is executed when current test is completely done to prepare for the next test 
 
 I implement them as dummy methods. Subclasses can choose what exactly they need to implement.
 
-Every service can be enabled or disabled for concrete test: 
+I define another method #cleanUpAfterTest to perform full cleanup of service to be prepared for the next test.
+Subclasses should extend this method to perform own specific cleanup. 
+All services must recover own default state in this method.
+
+For example every service can be enabled or disabled for concrete test: 
 
 	- enable 
 	- disble
 
-During #cleanUpAfterTest I restore the activeness according to my default configuration (class side #isEnabled). Subclasses should extend this method with same purpose - to recover the default state of service.
+During #cleanUpAfterTest I restore the activeness according to my default configuration (class side #isEnabled). Subclasses should do the same with their own configurations.
 
 TestExecutionEnvironment queries all my subclasses to register them for tests execution: 
 
 	TestExecutionService enabledServiceClasses.
 	
-Settings browser uses all default services which are not abstract and enabled by default (#isEnabledByDefault)	
+Settings browser queries all default services to collect their parameters and allow users to enable/disable services globaly:
 	
 	TestExecutionService defaultServiceClasses.
-	
+
+Default services are not abstract classes enabled by default (#isEnabledByDefault = true).
+
+To provide configuration for setting browser subclasses should extend class side method #settingsOn:. It does not require a pragma because the actual collection of settings from all services is performed by test environment.
+		
 Internal Representation and Key Implementation Points.
 
     Instance Variables

@@ -1,3 +1,18 @@
+"
+I am an example of TestExecutionService created for tests.
+I am not enabled by default. So I am not really shown to users.
+
+I simply log in variables everything requested from me by test environment.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	forkedProcesses:		<OrderedCollection<Process>>
+	isCleanUpDone:		<Boolean>
+	isCompletedTestHandled:		<Boolean>
+	signaledExceptions:		<OrderedCollection<Exception>>
+
+"
 Class {
 	#name : #TestServiceExample,
 	#superclass : #TestExecutionService,

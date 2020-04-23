@@ -8,7 +8,7 @@ For example I make following test fail:
 		[ 1/0 ] fork.
 		self assert: true.
 
-TestFailedByForkedProcess will be signaled at the end of test. And if user will debug this test then two debuggers will be opened for each error (for main and background processes).
+TestFailedByForkedProcess will be signaled at the end of such test. And if user will debug this test then two debuggers will be opened for each error (for main and background processes).
 		
 The backgrond process can be more tricky and it could fail after a long time when another arbitrary test is currently executed. Generally background processes left by tests make the system dirty. It can lead to intermittent failures and flaky tests which is very hard to debug.
 And my second goal is to fail the test when it left running processes. I make following test fail: 
@@ -22,15 +22,15 @@ Currently this feature is disabled by default. And this test would not fail. But
 
 	aTestCase testProcessMonitor failTestLeavingProcesses.
 
-Or to enable it for test: 
+Or enable it with: 
 
 	aTestCase testProcessMonitor allowTestToLeaveProcesses.
 
-This configuration can be added to #setUp or there is global settings (also available in settings browser):
+This configuration can be added to #setUp or there is global settings (also available in settings browser/SUnit):
 
 	ProcessMonitorTestService shouldFailTestLeavingProcesses: true
 
-Also I am can be disabled for the test: 
+Also I can be completely disabled for the test: 
 
 	aTestCase testProcessMonitor disable 
 	 
@@ -38,12 +38,14 @@ Or I can be disabled globaly (also available in settings browser/SUnit):
 
 	ProcessMonitorTestService isEnabled: false.
 
+Finally at the end of every test I perform a clean up (#cleanUpAfterTest). Here I restore my default state and terminate all left running processes. So the next test will be started on clean environment.
+
 Implementation details:
 
 1. Background failures
 
 I am a kind of TestExecutionService and therefore I intercept all processes forked during the test (#handleNewProcess:).
-I set up default exception handler for them to catch all unhandled exception. UnhandledException's are supposed to open a debugger at the end of processing. I postpone this logic by suspending the failing process. So when error is signaled from the background process no debugger will be opened immediately.
+I set up default exception handler for them to catch all unhandled exceptions. UnhandledException's are supposed to open a debugger at the end of processing. I postpone this logic by suspending the failing process. So when error is signaled from the background process no debugger will be opened immediately.
 At the end of test (#handleCompletedTest) I check all suspended failures and if they exist I fail the test with TestFailedByForkedProcess signal.
 In interactive mode when user debugs the test I pass all suspended failures together with this signal. So multiple debuggers will be opened to show each error.
 
@@ -58,8 +60,8 @@ I implement a little logic to make this failing strategy more usable and not bre
 		[ Processor yield ] fork.
 		self assert: true.
 
-""Yield"" could always happen as a side affect of domain code or other image processes. And a simple #fork in tests like this will not be able to terminate.
-The method #allowRunningProcessesToFinish performs own ""Processor yield"" to allow background processes take control and finish execution. 
+""Yield"" could always happen as a side affect of domain code or other image processes. And a simple #fork in tests like this one will not be able to terminate.
+The method #allowRunningProcessesToFinish performs own ""Processor yield"" logic to allow background processes take control and finish execution. 
 
 3. One more detail: 
 In uninteractive mode I signal those special errors even if there was a domain error from the test. So two exceptions can be signaled for single test run.
