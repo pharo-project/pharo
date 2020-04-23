@@ -117,7 +117,7 @@ ReCriticEngine >> nodeCritiquesOf: aMethod [
 			ast := aMethod ast.
 			"for rewrite rules, we run every rule on a copy of the ast"
 			rule isRewriteRule ifTrue: [ ast := ast copy  ].
-			aMethod ast copy nodesDo: [ :node |
+			ast nodesDo: [ :node |
 			[
 			  rule
 				  check: node
