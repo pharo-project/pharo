@@ -33,7 +33,7 @@ Test can configure registered services:
 	
 Also I provide handy method for well known service ProcessMonitorTestService:
 
-	self testEnvironment testProcessMonitor 
+	self testEnvironment processMonitor 
 	
 Or simply:
 
@@ -136,9 +136,7 @@ TestExecutionEnvironment >> enabledServicesDo: aBlock [
 
 { #category : #accessing }
 TestExecutionEnvironment >> failures [
-	self flag: #todo.
-	
-	^services first suspendedBackgroundFailures values
+	^self processMonitor suspendedBackgroundFailures values
 ]
 
 { #category : #accessing }
@@ -148,9 +146,7 @@ TestExecutionEnvironment >> findService: aTestExecutionServiceClass [
 
 { #category : #accessing }
 TestExecutionEnvironment >> forkedProcesses [
-	self flag: #todo.
-	
-	^ services first forkedProcesses
+	^ self processMonitor forkedProcesses
 ]
 
 { #category : #controlling }
@@ -203,11 +199,6 @@ TestExecutionEnvironment >> isTest [
 { #category : #accessing }
 TestExecutionEnvironment >> mainTestProcess [
 	^ mainTestProcess
-]
-
-{ #category : #accessing }
-TestExecutionEnvironment >> mainTestProcess: anObject [
-	mainTestProcess := anObject
 ]
 
 { #category : #accessing }
