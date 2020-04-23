@@ -313,7 +313,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfHeuristicCompletion.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
-	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
+	packages := packages , { BaselineOfFuel name } , (self packagesOfGroupNamed: 'default' on: BaselineOfFuel).
 	packages := packages , { BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
