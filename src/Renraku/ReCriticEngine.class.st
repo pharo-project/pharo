@@ -112,9 +112,12 @@ ReCriticEngine >> nodeCritiquesOf: aMethod [
 			[ aMethod banChecksForValidation
 				anySatisfy: [ :banLevel |
 					builder bansRule: rule for: banLevel ] ] ].
-		
-		aMethod ast nodesDo: [ :node |
-			rules do: [ :rule |
+		rules do: [ :rule |
+			| ast |
+			ast := aMethod ast.
+			"for rewrite rules, we run every rule on a copy of the ast"
+			ast := rule isRewriteRule ifTrue: [ ast copy  ].
+			aMethod ast copy nodesDo: [ :node |
 			[
 			  rule
 				  check: node

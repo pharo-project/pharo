@@ -104,6 +104,11 @@ ReNodeRewriteRule >> initialize [
 	matches := Dictionary new.
 ]
 
+{ #category : #testing }
+ReNodeRewriteRule >> isRewriteRule [
+	^true
+]
+
 { #category : #deprecated }
 ReNodeRewriteRule >> replace: aString by: aBlock [
 	
