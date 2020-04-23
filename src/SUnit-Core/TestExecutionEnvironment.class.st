@@ -136,7 +136,7 @@ TestExecutionEnvironment >> enabledServicesDo: aBlock [
 
 { #category : #accessing }
 TestExecutionEnvironment >> failures [
-	^self processMonitor suspendedBackgroundFailures values
+	^self processMonitor testFailures
 ]
 
 { #category : #accessing }

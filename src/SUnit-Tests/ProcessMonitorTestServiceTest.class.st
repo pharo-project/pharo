@@ -188,6 +188,18 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithRunningProcess
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testGettingFailuresFromEnvironment [
+
+	self assert: executionEnvironment failures equals: testService testFailures
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testGettingForkedProcessesFromEnvironment [
+
+	self assert: executionEnvironment forkedProcesses equals: testService forkedProcesses
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
 
 	self assert: executionEnvironment processMonitor identicalTo: testService 
