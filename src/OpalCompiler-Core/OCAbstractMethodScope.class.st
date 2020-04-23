@@ -164,7 +164,7 @@ OCAbstractMethodScope >> lookupVar: name [
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
-	name = 'thisContext' ifTrue: [^ thisContextVar].
+	name = thisContextVar name ifTrue: [^ thisContextVar].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
 	^self outerScope lookupVar: name
 	
@@ -172,8 +172,9 @@ OCAbstractMethodScope >> lookupVar: name [
 
 { #category : #lookup }
 OCAbstractMethodScope >> lookupVarForDeclaration: name [
+	"This is a version of #lookupVar: that skips the OCRequestorScope"
 	tempVars at: name ifPresent: [:v | ^ v].
-	name = 'thisContext' ifTrue: [^ thisContextVar].
+	name = thisContextVar name ifTrue: [^ thisContextVar].
 	^self outerScope lookupVarForDeclaration: name
 ]
 

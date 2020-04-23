@@ -122,6 +122,11 @@ OCAbstractVariable >> isTemp [
 ]
 
 { #category : #testing }
+OCAbstractVariable >> isThisContext [
+	^false
+]
+
+{ #category : #testing }
 OCAbstractVariable >> isUndeclared [
 
 	^ false
