@@ -7,7 +7,7 @@ Initialize should only use variables defined in #instanceVariablesToKeep.
 Class {
 	#name : #ReTestCaseShouldNotUseInitialize,
 	#superclass : #ReAbstractRule,
-	#category : #'GeneralRules-Migrated'
+	#category : #GeneralRules
 }
 
 { #category : #'testing-interest' }
