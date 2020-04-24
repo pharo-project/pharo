@@ -2203,26 +2203,28 @@ String >> sameAs: aString [
 
 { #category : #accessing }
 String >> skipAnySubstring: delimiters startingAt: start [ 
-	"Answer the index of the last character within the receiver, starting at start, that does NOT match one of the delimiters. delimiters is a Array of substrings (Characters also allowed).  If the receiver is all delimiters, answer size + 1."
-
-	| any this ind ii |
-	ii := start-1.
-	[(ii := ii + 1) <= self size] whileTrue: [ "look for char that does not match"
-		any := false.
-		delimiters do: [:delim |
-			delim isCharacter 
-				ifTrue: [(self at: ii) == delim ifTrue: [any := true]]
-				ifFalse: ["a substring"
-					delim size > (self size - ii + 1) ifFalse: "Here's where the one-off error was."
-						[ind := 0.
-						this := true.
-						delim do: [:dd | 
-							dd == (self at: ii+ind) ifFalse: [this := false].
-							ind := ind + 1].
-						this ifTrue: [ii := ii + delim size - 1.  any := true]]
-							ifTrue: [any := false] "if the delim is too big, it can't match"]].
-		any ifFalse: [^ ii]].
-	^ self size + 1
+	"Answer the index of the last character within the receiver, starting at start, that does NOT match one of the delimiters. delimiters is an Array of substrings (Characters also allowed).  If the receiver is all delimiters or empty, answer size + 1. Whenever multiple delimiters could be skipped, the largest one is skipped.
+	'abc' skipAnySubstring: #('a' 'ab') startingAt: 1 >>> 3.
+	'ababc' skipAnySubstring: #('ab') startingAt: 1 >>> 5.
+	"
+	| head size remainingString sizeOfLargestSkippableDelimiter |
+	self isEmpty ifTrue: [ ^ 1 ].
+	head := start.
+	size := self size.
+	
+	"Try every delimiters to see which match the start of the rest of the receiver, and get the size of the largest one"
+	[
+		remainingString := self last: size - head + 1. "Part of the receiver that remains to be examined"
+		sizeOfLargestSkippableDelimiter := (delimiters collect: [:delim_ | | delim|
+		delim := delim_ asString. "In case the delimiter is a character, turn it into a string"
+		(delim size > (size - head + 1)) ifTrue: [ 0 "Delimiter is larger than the remaining size of the receiver, so there is no point in trying it" ]
+			ifFalse: [ "Delimiter is smaller than the remaining size of the receiver"
+				(remainingString beginsWith: delim) ifTrue: [ delim size ] ifFalse: [ 0 ]
+			]
+		]) max.
+		head := head + sizeOfLargestSkippableDelimiter.
+	] doWhileFalse: [ sizeOfLargestSkippableDelimiter = 0 ].
+	^ head "The remaining string does not start with any of the delimiters" 
 ]
 
 { #category : #accessing }
