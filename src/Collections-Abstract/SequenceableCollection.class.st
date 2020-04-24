@@ -462,6 +462,12 @@ SequenceableCollection >> before: target ifAbsent: exceptionBlock [
 { #category : #testing }
 SequenceableCollection >> beginsWith: aSequenceableCollection [
 	"Answer true if the receiver starts with the argument collection"
+	
+	"#(1 2 3 4 5) beginsWith: #() >>> false"
+	"#(1 2 3) beginsWith: #(1 2 3 4 5) >>> false"
+	"#(1 2 3 4 5) beginsWith: #(0 1 2) >>> false"
+	"#(1 2 3 4 5) beginsWith: #(1 2 3) >>> true"
+	
 	(aSequenceableCollection isEmpty or: [self size < aSequenceableCollection size]) ifTrue: [^false].
 	aSequenceableCollection withIndexDo: [:each :index | (self at: index) ~= each ifTrue: [^false]].
 	^true
