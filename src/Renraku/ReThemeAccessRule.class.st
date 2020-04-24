@@ -2,23 +2,23 @@
 Morph and Model subclasses methods should access GUI theme via 'self theme' and not 'Smalltalk ui theme'.
 "
 Class {
-	#name : #ReThemeAccess,
+	#name : #ReThemeAccessRule,
 	#superclass : #ReAbstractRule,
 	#category : #'Renraku-Rules'
 }
 
 { #category : #'testing-interest' }
-ReThemeAccess class >> checksMethod [
+ReThemeAccessRule class >> checksMethod [
 	^ true
 ]
 
 { #category : #'class initialization' }
-ReThemeAccess class >> initialize [
+ReThemeAccessRule class >> initialize [
    " ReRuleManager cleanUp "
 ]
 
 { #category : #running }
-ReThemeAccess >> check: aMethod forCritiquesDo: aCriticBlock [ 
+ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [ 
 	| problemThemes |
 	((aMethod methodClass inheritsFrom: Morph) 
 		or: [aMethod methodClass inheritsFrom: Model]) ifFalse: [ ^ self ].
@@ -35,16 +35,16 @@ ReThemeAccess >> check: aMethod forCritiquesDo: aCriticBlock [
 ]
 
 { #category : #running }
-ReThemeAccess >> group [
+ReThemeAccessRule >> group [
 	^ 'API Hints'
 ]
 
 { #category : #running }
-ReThemeAccess >> name [
+ReThemeAccessRule >> name [
 	^ 'Access to UI theme.'
 ]
 
 { #category : #running }
-ReThemeAccess >> severity [
+ReThemeAccessRule >> severity [
 	^ #warning
 ]
