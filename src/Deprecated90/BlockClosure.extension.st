@@ -19,5 +19,5 @@ BlockClosure >> ifErrorDo: errorHandlerBlock [
 	self deprecated: 'Use #onErrorDo: instead.'.
 
 	^ self on: Error do: [:ex |
-		errorHandlerBlock cull: ex]
+		errorHandlerBlock cull: ex description cull: ex receiver ]
 ]
