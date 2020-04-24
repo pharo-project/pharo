@@ -2,24 +2,24 @@
 ifNotEmptyDo: should not be used as ifNotEmpty: works for blocks with arguments, too.
 "
 Class {
-	#name : #ReRuleIfNotEmptyDoRule,
+	#name : #ReIfNotEmptyDoRule,
 	#superclass : #ReNodeRewriteRule,
 	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }
-ReRuleIfNotEmptyDoRule class >> uniqueIdentifierName [
+ReIfNotEmptyDoRule class >> uniqueIdentifierName [
 
 	^ 'RuleIfNotEmptyDo'
 ]
 
 { #category : #accessing }
-ReRuleIfNotEmptyDoRule >> group [
+ReIfNotEmptyDoRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
 { #category : #initialization }
-ReRuleIfNotEmptyDoRule >> initialize [
+ReIfNotEmptyDoRule >> initialize [
 	super initialize.
 	self
 		replace: '`@receiver ifNotEmptyDo: `@statements'
@@ -32,6 +32,6 @@ ReRuleIfNotEmptyDoRule >> initialize [
 ]
 
 { #category : #accessing }
-ReRuleIfNotEmptyDoRule >> name [
+ReIfNotEmptyDoRule >> name [
 	^ 'Use "ifNotEmpty:" not "ifNotEmptyDo:"'
 ]

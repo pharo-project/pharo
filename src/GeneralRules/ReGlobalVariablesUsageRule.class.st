@@ -4,18 +4,18 @@ Global Variables are a known design smell.
 Specially in Pharo, we do not want to keep global bindings because their usage can a will produce undesirable implicit coupling, avoiding out language to evolve into the usage of powerful modules. 
 "
 Class {
-	#name : #ReGlobalVariablesUsage,
+	#name : #ReGlobalVariablesUsageRule,
 	#superclass : #ReAbstractRule,
 	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #'testing-interest' }
-ReGlobalVariablesUsage class >> checksMethod [
+ReGlobalVariablesUsageRule class >> checksMethod [
 	^ true
 ]
 
 { #category : #running }
-ReGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
+ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	"Beware that ClassVariables respond true to #isGlobal. 
 	 The trick with 'ifAbsent:[Object] is basically a way not select ClassVariables (or Pools)"
 	| problemSends  |
@@ -29,17 +29,17 @@ ReGlobalVariablesUsage >> check: aMethod forCritiquesDo: aCriticBlock [
 ]
 
 { #category : #running }
-ReGlobalVariablesUsage >> group [
+ReGlobalVariablesUsageRule >> group [
 	^ 'Design Flaws'
 ]
 
 { #category : #accessing }
-ReGlobalVariablesUsage >> name [
+ReGlobalVariablesUsageRule >> name [
 	^ 'Global variable usage'
 ]
 
 { #category : #running }
-ReGlobalVariablesUsage >> rationale [
+ReGlobalVariablesUsageRule >> rationale [
 	^ 'http://wiki.c2.com/?GlobalVariablesAreBad
 	
 	Why Global Variables Should Be Avoided When Unnecessary
@@ -56,6 +56,6 @@ ReGlobalVariablesUsage >> rationale [
 ]
 
 { #category : #running }
-ReGlobalVariablesUsage >> severity [
+ReGlobalVariablesUsageRule >> severity [
 	^ #warning
 ]
