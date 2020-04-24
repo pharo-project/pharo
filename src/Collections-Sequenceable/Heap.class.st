@@ -68,7 +68,7 @@ Heap class >> defaultSortBlock [
 ]
 
 { #category : #examples }
-Heap class >> heapExample [	
+Heap class >> heapSimpleBenchmark [
 	<sampleInstance>
 	"Create a sorted collection of numbers, remove the elements
 	sequentially and add new objects randomly.
@@ -101,7 +101,7 @@ Heap class >> heapExample [
 ]
 
 { #category : #examples }
-Heap class >> heapSortExample [	
+Heap class >> heapSortBenchmark [
 	<sampleInstance>
 	"Sort a random collection of Floats and compare the results with
 	SortedCollection (using the quick-sort algorithm) and 
