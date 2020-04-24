@@ -1196,7 +1196,7 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 		ifTrue: [
 			self class environment
 				at: value
-				ifPresent: [ :class | TextClassLink class: class ]
+				ifPresent: [ :aGlobal | TextClassLink className: value ]
 				ifAbsent: [ TextMethodLink selector: value ] ]
 		ifFalse: [ TextClassLink class: value class ].
 	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
