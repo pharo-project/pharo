@@ -19,7 +19,7 @@ Class {
 SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	super canBeExecutedInContext: aSourceCodeContext.
 	
-	^aSourceCodeContext isArgOrTempVariableSelected 
+	^ aSourceCodeContext isArgOrTempVariableSelected 
 ]
 
 { #category : #execution }
