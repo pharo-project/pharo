@@ -69,7 +69,7 @@ Heap class >> defaultSortBlock [
 
 { #category : #examples }
 Heap class >> heapExample [	
-	<example>
+	<sampleInstance>
 	"Create a sorted collection of numbers, remove the elements
 	sequentially and add new objects randomly.
 	Note: This is the kind of benchmark a heap is designed for."
@@ -96,13 +96,13 @@ Heap class >> heapExample [
 		].
 		str << 'Time for SortedCollection: '<< time printString << ' msecs'
 	].
-	result inspect.
+	^ result
 
 ]
 
 { #category : #examples }
 Heap class >> heapSortExample [	
-	<example>
+	<sampleInstance>
 	"Sort a random collection of Floats and compare the results with
 	SortedCollection (using the quick-sort algorithm) and 
 	ArrayedCollection>>mergeSortFrom:to:by: (using the merge-sort algorithm)."
@@ -129,7 +129,7 @@ Heap class >> heapSortExample [
 		].
 		str << 'Time for merge-sort: ' << time printString  << ' msecs'; cr.
 	].
-	result inspect.
+	^ result
 ]
 
 { #category : #'instance creation' }
