@@ -3,20 +3,20 @@ Extension { #name : #BlockClosure }
 { #category : #'*Deprecated90' }
 BlockClosure >> ifError: errorHandlerBlock [
 
-	errorHandlerBlock numArgs = 0 
-		ifTrue: [ self deprecated: 'Use #onErrorDo: instead.' transformWith: '`@receiver ifError: `@arg' -> '`@receiver onErrorDo: `@arg' ]
-		ifFalse: [ self deprecated: 'Use #onErrorDo: instead.' ].
+	"This method is called with a block expecting description and receiver as arguments"
+	"This method is deprecated in favor of #onErrorDo: that takes the exception object instead of its parts."
+	self deprecated: 'Use #onErrorDo: instead.'.
 		
 	^ self on: Error do: [:ex |
-		errorHandlerBlock cull: ex]
+		errorHandlerBlock cull: ex description cull: ex receiver ]
 ]
 
 { #category : #'*Deprecated90' }
 BlockClosure >> ifErrorDo: errorHandlerBlock [
  
-	errorHandlerBlock numArgs = 0 
-		ifTrue: [ self deprecated: 'Use #onErrorDo: instead.' transformWith: '`@receiver ifErrorDo: `@arg' -> '`@receiver onErrorDo: `@arg' ]
-		ifFalse: [ self deprecated: 'Use #onErrorDo: instead.' ].
+	"This method is called with a block expecting description and receiver as arguments"
+	"This method is deprecated in favor of #onErrorDo: that takes the exception object instead of its parts."
+	self deprecated: 'Use #onErrorDo: instead.'.
 
 	^ self on: Error do: [:ex |
 		errorHandlerBlock cull: ex]
