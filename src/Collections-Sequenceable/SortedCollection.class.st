@@ -249,6 +249,13 @@ SortedCollection >> insert: anObject before: spot [
 	self shouldNotImplement
 ]
 
+{ #category : #enumerating }
+SortedCollection >> intersection: aCollection [
+	^ (self class sortBlock: sortBlock)
+		addAll: (self asSet intersection: aCollection);
+		yourself.
+]
+
 { #category : #splitjoin }
 SortedCollection >> join: aCollection [ 
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
