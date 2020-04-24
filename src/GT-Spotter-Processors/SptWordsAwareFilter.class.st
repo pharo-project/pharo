@@ -16,18 +16,26 @@ Class {
 }
 
 { #category : #filtering }
+SptWordsAwareFilter >> additionalFilter: aString firstWord: firstWord otherWords: otherWords on: anEntry [
+
+	^ otherWords allSatisfy: [ :otherW | anEntry asString asLowercase includesSubstring: otherW ]
+
+]
+
+{ #category : #filtering }
 SptWordsAwareFilter >> filteringText: aString [
 
 	| firstWord otherWords |
-	words := (aString substrings: ' :-')
-		flatCollect: [ :each | each splitCamelCase  ].
+	words := self splitWords: aString.
+	words ifEmpty: [ ^ self ].
 	
 	firstWord := words first.
 	otherWords := words allButFirst collect: [:each | each asLowercase].
 		
 	realFilter filteringText: firstWord.
-	inner := realFilter select: [ :each | 
-		otherWords allSatisfy: [ :otherW | each asString asLowercase includesSubstring: otherW ] ].
+	inner := realFilter select: [ :anEntry | 
+		anEntry isNotNil and: 
+		[self additionalFilter: aString firstWord: firstWord otherWords: otherWords on: anEntry ]].
 
 ]
 
@@ -36,4 +44,11 @@ SptWordsAwareFilter >> inner: anIterator [
 
 	inner := anIterator.
 	realFilter := anIterator
+]
+
+{ #category : #filtering }
+SptWordsAwareFilter >> splitWords: aString [
+
+	^ (aString substrings: ' :-')
+		flatCollect: [ :each | each splitCamelCase  ]
 ]
