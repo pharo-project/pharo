@@ -155,6 +155,11 @@ RBMethodNode >> primitiveFromPragma [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> primitiveNumber [
+	^self primitiveFromPragma num
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> rewriteTempsForContext: aContext [
 	| rewriter contextOnlyTemps |
 	rewriter := RBParseTreeRewriter new.

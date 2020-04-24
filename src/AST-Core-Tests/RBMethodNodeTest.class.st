@@ -169,7 +169,6 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	
 ]
 
-
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
 	"
@@ -189,6 +188,28 @@ RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
 	ast := (Integer >> #digitSubtract:) ast.
 	self assert: ast isPrimitive.
 
+	
+]
+
+{ #category : #'tests - primitives' }
+RBMethodNodeTest >> testPrimitiveNumber [
+	| method |
+	method := SmallInteger >> #+.
+	self assert: method primitive equals: method ast primitiveNumber.
+	method := Bitmap >> #primFill:.
+	self assert: method primitive equals: method ast primitiveNumber.
+	method := Object >> #isPinnedInMemory.
+	self assert: method primitive equals: method ast primitiveNumber.
+	method := ByteString class >> #stringHash:initialHash:.
+	self assert: method primitive equals: method ast primitiveNumber.
+	"and works on non-primitevs, too. there is returns 0"
+	method := Object >> #halt.
+	self assert: 0 equals: method ast primitiveNumber.
+	self assert: method primitive equals: method ast primitiveNumber.
+	"but we only return the numbers of real primitives defined via pragmas, not quick methods"
+	method := Object >> #yourself.
+	self assert: 0 equals: method ast primitiveNumber.
+	self deny: method primitive equals: method ast primitiveNumber.
 	
 ]
 
