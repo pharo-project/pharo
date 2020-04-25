@@ -64,7 +64,7 @@ ClyQueryBrowserFilter >> matchesByScript: anObject [
 	scriptBlock ifNil: [ self createBlockFromPattern].
 	badScript ifTrue: [ ^true ].	
 	
-	^[(scriptBlock value: anObject) ~~ false] ifErrorDo: [ false ]
+	^[(scriptBlock value: anObject) ~~ false] onErrorDo: [ false ]
 ]
 
 { #category : #testing }

@@ -180,7 +180,7 @@ ClyCompositeScopeTest >> testCreationOnTwoSubscopesOfDifferentObjects [
 ClyCompositeScopeTest >> testEmptySubscopesAreForbidden [
 	
 	[ClyCompositeScope on: #().
-	self assert: false description: 'empty subscopes should be forbidden'] ifErrorDo: [].
+	self assert: false description: 'empty subscopes should be forbidden'] onErrorDo: [].
 	
 ]
 
