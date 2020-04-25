@@ -25,7 +25,9 @@ ProcessMonitorTestServiceTest >> fork: aBlock [
 ProcessMonitorTestServiceTest >> setUp [ 
 	super setUp.
 	
-	testService failTestLeavingProcesses. "to ensure that we are testing full behavior independently from default settings"
+	"Following settings ensure that we are testing full behavior independently from default settings"
+	testService failTestLeavingProcesses. 
+	testService terminateProcessesAfterTest.
 	executionEnvironment activated 
 ]
 
@@ -79,6 +81,31 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testCleanUpShouldNotTerminateAllFailedProcessesWhenSuchTerminationIsDisabled [
+	| process  |
+	process := self fork: [ testService suspendBackgroundFailure: Error new ].
+	testService disableProcessesTermination.
+	
+	testService cleanUpAfterTest.
+	
+	self deny: process isTerminated.		
+	self assert: testService suspendedBackgroundFailures isEmpty.
+	self assert: testService forkedProcesses isEmpty
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testCleanUpShouldNotTerminateAllRunningProcessesWhenSuchTerminationIsDisabled [
+	| process  |
+	process := self fork: [ 10 seconds wait ].
+	testService disableProcessesTermination.
+	
+	testService cleanUpAfterTest.
+	
+	self deny: process isTerminated.		
+	self assert: testService forkedProcesses isEmpty
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreDefaultFailingLogicForRunningProcessesCase [
 
 	testService shouldFailTestLeavingProcesses: ProcessMonitorTestService shouldFailTestLeavingProcesses not.
@@ -86,6 +113,16 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreDefaultFailingLogicForR
 	testService cleanUpAfterTest.
 	
 	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses.
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreProcessTerminationLogic [
+
+	testService shouldTerminateProcesses: ProcessMonitorTestService shouldTerminateProcesses not.
+	
+	testService cleanUpAfterTest.
+	
+	self assert: testService shouldTerminateProcesses equals: ProcessMonitorTestService shouldTerminateProcesses.
 ]
 
 { #category : #tests }
@@ -119,6 +156,14 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
 	
 	self assert: process isTerminated.		
 	self assert: testService forkedProcesses isEmpty
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testDisableRunningProcessesCleanupWhenPassBackgroundFailures [
+
+	testService passBackgroundFailures.
+	
+	self deny: testService shouldTerminateProcesses
 ]
 
 { #category : #tests }
@@ -206,12 +251,21 @@ ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcessesCase [
+ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcesses [
 
 	testService := ProcessMonitorTestService new.
 	
 	self assert: testService shouldFailTestLeavingProcesses notNil.
 	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses.
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testHasDefaultTerminationStrategyForRunningProcesses [
+
+	testService := ProcessMonitorTestService new.
+	
+	self assert: testService shouldTerminateProcesses notNil.
+	self assert: testService shouldTerminateProcesses equals: ProcessMonitorTestService shouldTerminateProcesses
 ]
 
 { #category : #tests }

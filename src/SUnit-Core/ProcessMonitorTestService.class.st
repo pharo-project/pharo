@@ -82,10 +82,12 @@ Class {
 		'forkedProcesses',
 		'testFailures',
 		'shouldSuspendBackgroundFailures',
-		'shouldFailTestLeavingProcesses'
+		'shouldFailTestLeavingProcesses',
+		'shouldTerminateProcesses'
 	],
 	#classInstVars : [
-		'shouldFailTestLeavingProcesses'
+		'shouldFailTestLeavingProcesses',
+		'shouldTerminateProcesses'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -102,14 +104,8 @@ ProcessMonitorTestService class >> descriptionForSettingsBrowser [
 	- When all checks and errors were done I clean the system: I terminate all processes forked during the test'
 ]
 
-{ #category : #'fuel support' }
-ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
-    ^#('forkedProcesses' 'suspendedBackgroundFailures')
-]
-
 { #category : #settings }
-ProcessMonitorTestService class >> settingsOn: aBuilder [
-	super settingsOn: aBuilder.
+ProcessMonitorTestService class >> failingStrategySettingsOn: aBuilder [
 	
 	(aBuilder setting: #shouldFailTestLeavingProcesses)
 		target: self;
@@ -120,6 +116,20 @@ ProcessMonitorTestService class >> settingsOn: aBuilder [
 This setting allows SUnit to track dirty state after the test when it does not perform proper cleanup and left running processes'
 ]
 
+{ #category : #'fuel support' }
+ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
+    ^#('forkedProcesses' 'suspendedBackgroundFailures')
+]
+
+{ #category : #settings }
+ProcessMonitorTestService class >> settingsOn: aBuilder [
+	super settingsOn: aBuilder.
+	
+	self
+		failingStrategySettingsOn: aBuilder;
+		terminationStrategySettingsOn: aBuilder
+]
+
 { #category : #accessing }
 ProcessMonitorTestService class >> shouldFailTestLeavingProcesses [
 	^shouldFailTestLeavingProcesses ifNil: [ shouldFailTestLeavingProcesses := false ]
@@ -128,6 +138,30 @@ ProcessMonitorTestService class >> shouldFailTestLeavingProcesses [
 { #category : #accessing }
 ProcessMonitorTestService class >> shouldFailTestLeavingProcesses: aBoolean [
 	shouldFailTestLeavingProcesses := aBoolean
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService class >> shouldTerminateProcesses [
+	^ shouldTerminateProcesses ifNil: [ shouldTerminateProcesses := true ]
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService class >> shouldTerminateProcesses: anObject [
+	shouldTerminateProcesses := anObject
+]
+
+{ #category : #settings }
+ProcessMonitorTestService class >> terminationStrategySettingsOn: aBuilder [
+	
+	(aBuilder setting: #shouldTerminateProcesses)
+		target: self;
+		parent: self name ;
+		default: false;
+		label: 'Terminate all processes after the test' ;
+		description: 'At the end of each test all forked processes will be terminated except then we are running in interractive mode under debugger. 
+When debugger opens all control is up to the user.
+But when we just run all test suite to get results it is a good practice to remove all garbage after the test. 
+This setting is about doing it in automatic way'
 ]
 
 { #category : #controlling }
@@ -165,17 +199,25 @@ ProcessMonitorTestService >> allowTestToLeaveProcesses [
 ProcessMonitorTestService >> cleanUpAfterTest [
 	super cleanUpAfterTest.
 	
-	forkedProcesses do: [:each | each terminate].
+	shouldTerminateProcesses ifTrue: [ 
+		self terminateRunningProcesses].
 	forkedProcesses removeAll.
 	testFailures removeAll.
 	self enableBackgroudFailuresSuspension.
-	self useDefaultFailingStrategyForRunningProcesses 
+	self useDefaultFailingStrategyForRunningProcesses.
+	self useDefaultTerminationStrategyForRunningProcesses 
 ]
 
 { #category : #accessing }
 ProcessMonitorTestService >> disableBackgroudFailuresSuspension [
 
 	shouldSuspendBackgroundFailures := false
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService >> disableProcessesTermination [
+
+	shouldTerminateProcesses := false
 ]
 
 { #category : #accessing }
@@ -273,6 +315,7 @@ ProcessMonitorTestService >> initialize [
 	
 	self enableBackgroudFailuresSuspension.
 	self useDefaultFailingStrategyForRunningProcesses.
+	self useDefaultTerminationStrategyForRunningProcesses.
 	forkedProcesses := WeakSet new.
 	testFailures := OrderedIdentityDictionary new.
 	 
@@ -287,6 +330,7 @@ ProcessMonitorTestService >> isTestProcessFailed: aProcess [
 { #category : #controlling }
 ProcessMonitorTestService >> passBackgroundFailures [	
 	self disableBackgroudFailuresSuspension.
+	self disableProcessesTermination.
 		
 	testFailures keys 
 		select: [:each | each isSuspended ] 
@@ -336,6 +380,16 @@ ProcessMonitorTestService >> shouldSuspendBackgroundFailures: anObject [
 	shouldSuspendBackgroundFailures := anObject
 ]
 
+{ #category : #accessing }
+ProcessMonitorTestService >> shouldTerminateProcesses [
+	^ shouldTerminateProcesses
+]
+
+{ #category : #accessing }
+ProcessMonitorTestService >> shouldTerminateProcesses: anObject [
+	shouldTerminateProcesses := anObject
+]
+
 { #category : #controlling }
 ProcessMonitorTestService >> suspendBackgroundFailure: anException [
 
@@ -355,6 +409,17 @@ ProcessMonitorTestService >> suspendedBackgroundFailures [
 ]
 
 { #category : #accessing }
+ProcessMonitorTestService >> terminateProcessesAfterTest [
+
+	shouldTerminateProcesses := true
+]
+
+{ #category : #controlling }
+ProcessMonitorTestService >> terminateRunningProcesses [
+	forkedProcesses do: [:each | each terminate]
+]
+
+{ #category : #accessing }
 ProcessMonitorTestService >> testFailures [
 	^ testFailures
 ]
@@ -364,4 +429,9 @@ ProcessMonitorTestService >> useDefaultFailingStrategyForRunningProcesses [
 
 	shouldFailTestLeavingProcesses := self class shouldFailTestLeavingProcesses.
 
+]
+
+{ #category : #initialization }
+ProcessMonitorTestService >> useDefaultTerminationStrategyForRunningProcesses [
+	shouldTerminateProcesses := self class shouldTerminateProcesses
 ]
