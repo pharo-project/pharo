@@ -1040,11 +1040,7 @@ GLMPresentation >> title: aStringOrBlock [
 
 { #category : #accessing }
 GLMPresentation >> titleAction [
-
-	^ self titleActionBlock 
-		ifNil: [ nil ]
-		ifNotNil: [ :aBlock |
-			aBlock glamourValue: self ]
+	^ self titleActionBlock ifNotNil: [ :aBlock | aBlock glamourValue: self ]
 ]
 
 { #category : #'scripting actions' }

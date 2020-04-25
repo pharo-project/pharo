@@ -142,14 +142,10 @@ SpMorphicMenuItemAdapter >> shortcut [
 { #category : #'widget API' }
 SpMorphicMenuItemAdapter >> shortcutText [
 	| shortcut |
-	
 	shortcut := self shortcut.
-	shortcut isString ifTrue: [ 
-		shortcut := self defaultModifierShortcut ].
+	shortcut isString ifTrue: [ shortcut := self defaultModifierShortcut ].
 
-	^ shortcut 
-		ifNotNil: [ KMShortcutPrinter toString: shortcut ]
-		ifNil: [ nil ]
+	^ shortcut ifNotNil: [ KMShortcutPrinter toString: shortcut ]
 ]
 
 { #category : #'widget API' }
@@ -165,10 +161,7 @@ SpMorphicMenuItemAdapter >> state [
 
 { #category : #'widget API' }
 SpMorphicMenuItemAdapter >> stateSelector [
-
-	^ self state
-		ifNil: [ nil ]
-		ifNotNil: [ #state ]
+	^ self state ifNotNil: [ #state ]
 ]
 
 { #category : #'widget API' }

@@ -950,8 +950,7 @@ Class >> sharedPoolOfVarNamed: aString [
 
 	^ self sharedPools
 		detect: [ :each | each usesClassVarNamed: aString ]
-		ifNone:
-			[ self superclass ifNil: [ nil ] ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
+		ifNone: [ self superclass ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
 ]
 
 { #category : #'pool variables' }
