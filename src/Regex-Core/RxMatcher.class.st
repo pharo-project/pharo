@@ -229,21 +229,17 @@ RxMatcher >> currentState [
 
 { #category : #private }
 RxMatcher >> hookBranchOf: regexNode onto: endMarker [
-
 	"Private - Recurse down the chain of regexes starting at
 	regexNode, compiling their branches and hooking their tails 
 	to the endMarker node."
 
 	| rest |
-
-	rest := regexNode regex
-		ifNil: [ nil ]
-		ifNotNil: [ self hookBranchOf: regexNode regex onto: endMarker ].
+	rest := regexNode regex ifNotNil: [ self hookBranchOf: regexNode regex onto: endMarker ].
 	^ RxmBranch new
 		next:
-			( ( regexNode branch dispatchTo: self )
+			((regexNode branch dispatchTo: self)
 				pointTailTo: endMarker;
-				yourself );
+				yourself);
 		alternative: rest;
 		yourself
 ]

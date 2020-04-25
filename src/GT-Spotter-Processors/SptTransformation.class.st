@@ -11,8 +11,7 @@ Class {
 
 { #category : #accessing }
 SptTransformation >> next [
-
-	^ inner next ifNil: [ nil ] ifNotNil:[ :aValue | self transform: aValue]
+	^ inner next ifNotNil: [ :aValue | self transform: aValue ]
 ]
 
 { #category : #tranforming }
