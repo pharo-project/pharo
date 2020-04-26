@@ -220,7 +220,7 @@ TestExecutionEnvironmentTest >> testIsMainTestProcessFailed [
 	self deny: executionEnvironment isMainTestProcessFailed.
 	
 	processMonitor recordTestFailure: Error new.
-	self assert: executionEnvironment isMainTestProcessFailed.
+	self assert: executionEnvironment isMainTestProcessFailed
 ]
 
 { #category : #tests }

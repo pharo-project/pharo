@@ -204,6 +204,16 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenProcessWa
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasMainProcessFailure [
+
+	self fork: [ 10 seconds wait].
+	
+	testService handleException: Error new.
+	
+	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailures [
 
 	self fork: [ testService suspendBackgroundFailure: Error new ].
@@ -288,6 +298,17 @@ ProcessMonitorTestServiceTest >> testIgnoreDirtyTestErrors [
 	
 	testService handleException: TestFailedByForkedProcess new.
 	self assert: testService testFailures isEmpty
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testIsMainTestProcessFailed [
+
+	executionEnvironment activated.
+	
+	self deny: testService isMainTestProcessFailed.
+	
+	testService recordTestFailure: Error new.
+	self assert: executionEnvironment isMainTestProcessFailed
 ]
 
 { #category : #tests }

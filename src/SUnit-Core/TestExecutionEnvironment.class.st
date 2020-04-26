@@ -188,7 +188,7 @@ TestExecutionEnvironment >> isMainTestProcessActive [
 
 { #category : #testing }
 TestExecutionEnvironment >> isMainTestProcessFailed [
-	^self processMonitor isTestProcessFailed: mainTestProcess
+	^self processMonitor isMainTestProcessFailed
 ]
 
 { #category : #testing }

@@ -242,7 +242,10 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoRunningProcesses [
-
+	"If test was already failed due to an error in the main test process 
+	we do not need an extra failure about left processes"
+	self isMainTestProcessFailed ifTrue: [ ^self ].
+	
 	self allowRunningProcessesToFinish.	
 	self runningProcesses ifEmpty: [ ^self ].
 	
@@ -319,6 +322,11 @@ ProcessMonitorTestService >> initialize [
 	forkedProcesses := WeakSet new.
 	testFailures := OrderedIdentityDictionary new.
 	 
+]
+
+{ #category : #testing }
+ProcessMonitorTestService >> isMainTestProcessFailed [
+	^self isTestProcessFailed: executionEnvironment mainTestProcess
 ]
 
 { #category : #testing }
