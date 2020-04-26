@@ -26,7 +26,7 @@ SequenceableCollection >> runningAverage: aSubsetSize [
 	"Running average (a.k.a. moving average, rolling average). See the comment of self >> #running:of: for more information."
 	"(#(1 1 2 2 3 3) runningAverage: 2) >>> {1 . (3/2) . 2 . (5/2) . 3}"
 
-	^ self running: #average of: aSubsetSize
+	^ self running: [ :subset | subset average ] of: aSubsetSize
 ]
 
 { #category : #'*Collections-arithmetic' }
@@ -34,7 +34,7 @@ SequenceableCollection >> runningMax: aSubsetSize [
 	"Running max. See the comment of self >> #running:of: for more information."
 	"(#(1 1 2 2 3 3) runningMax: 3) >>> {2 . 2 . 3 . 3}"
 
-	^ self running: #max of: aSubsetSize
+	^ self running: [ :subset | subset average ] of: aSubsetSize
 ]
 
 { #category : #'*Collections-arithmetic' }
@@ -42,5 +42,5 @@ SequenceableCollection >> runningMin: aSubsetSize [
 	"Running min. See the comment of self >> #running:of: for more information."
 	"(#(1 1 2 2 3 3) runningMin: 3) >>> {1 . 1 . 2 . 2}"
 
-	^ self running: #min of: aSubsetSize
+	^ self running: [ :subset | subset average ] of: aSubsetSize
 ]
