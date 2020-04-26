@@ -214,6 +214,21 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasM
 ]
 
 { #category : #tests }
+ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessIsFailedDuringFinalTryToFinishItAtTestCompletionTime [
+
+	| semaphore processIsDone process |
+	semaphore := Semaphore new.
+	processIsDone := false.
+	process := self fork: [ semaphore wait. processIsDone := true. 1/0 ].
+	process priority: Processor activePriority.
+	semaphore signal.
+	self deny: processIsDone.
+	
+	self should: [testService handleCompletedTest] raise: TestFailedByForkedProcess.	
+	self assert: processIsDone.
+]
+
+{ #category : #tests }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailures [
 
 	self fork: [ testService suspendBackgroundFailure: Error new ].

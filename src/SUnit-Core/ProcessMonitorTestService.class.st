@@ -244,9 +244,7 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 ProcessMonitorTestService >> ensureNoRunningProcesses [
 	"If test was already failed due to an error in the main test process 
 	we do not need an extra failure about left processes"
-	self isMainTestProcessFailed ifTrue: [ ^self ].
-	
-	self allowRunningProcessesToFinish.	
+	self isMainTestProcessFailed ifTrue: [ ^self ].	
 	self runningProcesses ifEmpty: [ ^self ].
 	
 	shouldFailTestLeavingProcesses ifTrue: [ 	
@@ -281,6 +279,7 @@ ProcessMonitorTestService >> handleBackgroundException: anUnhandledException [
 ProcessMonitorTestService >> handleCompletedTest [
 	super handleCompletedTest.
 	
+	self allowRunningProcessesToFinish.
 	self ensureNoBackgroundFailures.
 	self ensureNoRunningProcesses
 ]
