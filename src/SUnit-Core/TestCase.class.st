@@ -626,6 +626,16 @@ TestCase >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionC
 			
 ]
 
+{ #category : #accessing }
+TestCase >> executionEnvironment [
+	^CurrentExecutionEnvironment value
+]
+
+{ #category : #accessing }
+TestCase >> executionProcessMonitor [
+	^self executionEnvironment processMonitor
+]
+
 { #category : #testing }
 TestCase >> expectedFailures [
 	| pragmas |
@@ -820,5 +830,5 @@ TestCase >> tearDown [
 
 { #category : #accessing }
 TestCase >> timeLimit: aDuration [
-	^TestExecutionEnvironment maxTimeForTest: aDuration
+	^self executionEnvironment maxTimeForTest: aDuration
 ]

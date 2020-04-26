@@ -214,7 +214,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasM
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessIsFailedDuringFinalTryToFinishItAtTestCompletionTime [
+ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDuringFinalTryToFinishItAtTestCompletionTime [
 
 	| semaphore processIsDone process |
 	semaphore := Semaphore new.
@@ -273,6 +273,17 @@ ProcessMonitorTestServiceTest >> testGettingForkedProcessesFromEnvironment [
 ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
 
 	self assert: executionEnvironment processMonitor identicalTo: testService 
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testGettingServiceFromTestCase [
+
+	| actual |
+	executionEnvironment beActiveDuring: [ 
+		actual := self executionProcessMonitor
+	].
+
+	self assert: actual identicalTo: testService 
 ]
 
 { #category : #tests }

@@ -1,52 +1,55 @@
 "
-I am a special execution environment to manage the test execution.
+I am a special execution environment to manage the execution of tests.	
+I am installed when test is running (or test suite) by
 
-I implement the watchdog over test execution to ensure that tests are never hanged. Thet should be executed within given time limit. 
+	CurrentExecutionEnvironment runTestCase: aTestCase
+	
+Some tests requires completely clean environment. To disable me override #runCaseManaged on your test class: 
+
+	runCaseManaged 
+		^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
+
+1) Test watchdog
+
+I implement a watchdog to ensure that tests complete in finite time and never hanged.
 I give them 10 seconds by default which can be overriden by test class using method #defaultTimeLimit.
-Or it can be specified directly in test method by 
+Or it can be specified directly in test method:
 	self timeLimit: 10 seconds
-It can be changed at any time of test execution.
+It can be changed at any time during the test.
 
 To implement this logic I maintain special watchdog process which controls the execution time of tests. It is a single process for overall test suite.
+
+2) Test services 
 
 In addition I provide an extandable service infrastructure to monitor the test execution.
 During the test I track all signaled exceptions from the test process and all forked processes.
 I notify registered services about these events:
 
-- #handleException:, it is executed for every Exception signaled from the test 
+- #handleException:, it is executed for every exception signaled from the test 
 - #handleCompletedTest, it is executed when test is completes (successfully or due to the error)
 - #handleNewProcess:, it is executed for every process created during the test
 - #cleanUpAfterTest:, it is executed as final action when test is done and the environment needs to be prepared for the next test run.
 
-My #services are subclasses of TestExecutionService. 
-
-To manualy register new service use following expression: 
-
-	testEnvironment registerService: TestServiceExample new.
+My #services are subclasses of TestExecutionService (see its comment for details).
 	
-By default environment automatically registers all service classes enabled by default (#registerDefaultServices).
-If for given test user will register new service manually (which is disabled by default) It will be disabled at the end of test. Other tests will not be handled by it.
+I automatically register all service classes enabled by default (#registerDefaultServices). But users can enable required services manually for given tests:
 
-Test can configure registered services: 
+	testEnvironment enableService: TestServiceExample
 
-	self testEnvironment configure: TestServiceExample with: [ :service |  ].
+Or with configuration block: 
+
+	testEnvironment enableService: TestServiceExample using: [:service | ]
 	
-Also I provide handy method for well known service ProcessMonitorTestService:
+I lookup given service class in my registered services and use found if it exists. Otherwise I create and register new service instance with enabled state. 	
+At the end of test I disable such services (manually registed and disabled by default). So no other tests are affected by them.
+	
+I provide handy method in TestCase for well known service ProcessMonitorTestService:
 
-	self testEnvironment processMonitor 
+	self executionEnvironment processMonitor 
 	
 Or simply:
 
-	self testProcessMonitor
-	
-I am installed when test is running (or test suite) by
-
-	CurrentExecutionEnvironment runTestCase: aTestCase
-	
-To disable me for concrete test class override #runCaseManaged with: 
-
-	runCaseManaged 
-		^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
+	self executionProcessMonitor
 		 
 Internal Representation and Key Implementation Points.
 
@@ -74,27 +77,9 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #controlling }
-TestExecutionEnvironment class >> currentFailures [
-
-	^CurrentExecutionEnvironment value failures
-]
-
 { #category : #'fuel support' }
 TestExecutionEnvironment class >> fuelIgnoredInstanceVariableNames [
     ^#('watchDogProcess' 'watchDogSemaphore' 'mainTestProcess')
-]
-
-{ #category : #controlling }
-TestExecutionEnvironment class >> maxTimeForTest: aDuration [
-
-	CurrentExecutionEnvironment value maxTimeForTest: aDuration
-]
-
-{ #category : #controlling }
-TestExecutionEnvironment class >> resetFailures [
-
-	^CurrentExecutionEnvironment value resetFailures
 ]
 
 { #category : #settings }
@@ -128,6 +113,33 @@ TestExecutionEnvironment >> deactivated [
 	watchDogProcess ifNotNil: [watchDogProcess terminate]
 ]
 
+{ #category : #private }
+TestExecutionEnvironment >> disableService: aTestExecutionServiceClass [
+
+	| service |
+	service := self findService: aTestExecutionServiceClass ifAbsent: [^self].
+	service disable 
+]
+
+{ #category : #private }
+TestExecutionEnvironment >> enableService: aTestExecutionServiceClass [
+
+	| service |
+	service := self findService: aTestExecutionServiceClass ifAbsent: [
+		self registerService: aTestExecutionServiceClass new].
+	service enable.
+	^service
+]
+
+{ #category : #private }
+TestExecutionEnvironment >> enableService: aTestExecutionServiceClass using: aBlock [
+
+	| service |
+	service := self enableService: aTestExecutionServiceClass.
+	aBlock value: service.
+	^service
+]
+
 { #category : #accessing }
 TestExecutionEnvironment >> enabledServicesDo: aBlock [
 	
@@ -142,6 +154,11 @@ TestExecutionEnvironment >> failures [
 { #category : #accessing }
 TestExecutionEnvironment >> findService: aTestExecutionServiceClass [
 	^services detect: [:each | each isKindOf: aTestExecutionServiceClass]
+]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> findService: aTestExecutionServiceClass ifAbsent: absentBlock [
+	^services detect: [:each | each isKindOf: aTestExecutionServiceClass] ifNone: absentBlock
 ]
 
 { #category : #accessing }
@@ -238,22 +255,18 @@ TestExecutionEnvironment >> registerDefaultServices [
 	 ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 TestExecutionEnvironment >> registerService: aTestExecutionService [
 
 	aTestExecutionService executionEnvironment: self.
-	services add: aTestExecutionService
+	services add: aTestExecutionService.
+	^aTestExecutionService 
 ]
 
 { #category : #accessing }
 TestExecutionEnvironment >> removeAllServices [
 
 	services removeAll
-]
-
-{ #category : #controlling }
-TestExecutionEnvironment >> resetFailures [
-	services first resetFailures
 ]
 
 { #category : #controlling }

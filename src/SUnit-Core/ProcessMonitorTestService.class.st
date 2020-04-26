@@ -20,11 +20,11 @@ And my second goal is to fail the test when it left running processes. I make fo
 TestLeftRunningProcess will be signaled at the end of test.
 Currently this feature is disabled by default. And this test would not fail. But it can be configured:	 
 
-	aTestCase testProcessMonitor failTestLeavingProcesses.
+	aTestCase executionProcessMonitor failTestLeavingProcesses.
 
 Or enable it with: 
 
-	aTestCase testProcessMonitor allowTestToLeaveProcesses.
+	aTestCase executionProcessMonitor allowTestToLeaveProcesses.
 
 This configuration can be added to #setUp or there is global settings (also available in settings browser/SUnit):
 
@@ -32,7 +32,7 @@ This configuration can be added to #setUp or there is global settings (also avai
 
 Also I can be completely disabled for the test: 
 
-	aTestCase testProcessMonitor disable 
+	aTestCase executionProcessMonitor disable 
 	 
 Or I can be disabled globaly (also available in settings browser/SUnit): 
 
@@ -354,11 +354,6 @@ ProcessMonitorTestService >> recordTestFailure: anException [
 		^self ]. 
 	
 	testFailures at: activeProcess put: anException
-]
-
-{ #category : #initialization }
-ProcessMonitorTestService >> resetFailures [
-	testFailures removeAll
 ]
 
 { #category : #accessing }

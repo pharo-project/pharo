@@ -125,6 +125,22 @@ TestExecutionEnvironmentTest >> testDeactivation [
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testDisableGivenServiceWhenItExists [
+
+	executionEnvironment disableService: TestServiceExample.
+
+	self deny: testService isEnabled
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testDisableGivenServiceWhenItIsNotRegistered [
+
+	executionEnvironment removeAllServices.
+	
+	executionEnvironment disableService: TestServiceExample
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNotHandled [
 
 	self runWithNoHandlers: [ 
@@ -137,9 +153,52 @@ TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNo
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testEnableGivenServiceWhenItExists [
+
+	| actual |
+	testService disable.
+	
+	actual := executionEnvironment enableService: TestServiceExample.
+
+	self assert: actual identicalTo: testService.
+	self assert: testService isEnabled
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testEnableGivenServiceWhenItIsNotRegistered [
+
+	executionEnvironment removeAllServices.
+	
+	testService := executionEnvironment enableService: TestServiceExample.
+
+	self assert: testService identicalTo: (executionEnvironment findService: TestServiceExample).
+	self assert: testService isEnabled
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testEnableGivenServiceWithConfigurationBlock [
+
+	| actual |
+	executionEnvironment enableService: TestServiceExample using: [:service | actual := service] .
+
+	self assert: actual identicalTo: testService 
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testFindService [
 
 	self assert: (executionEnvironment findService: TestServiceExample) identicalTo: testService 
+]
+
+{ #category : #tests }
+TestExecutionEnvironmentTest >> testGettingEnvironmentFromTestCase [
+
+	| actual |
+	executionEnvironment beActiveDuring: [ 
+		actual := self executionEnvironment.
+	].
+
+	self assert: actual identicalTo: executionEnvironment 
 ]
 
 { #category : #tests }
