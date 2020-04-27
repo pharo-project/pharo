@@ -15,27 +15,27 @@ Class {
 TextTest >> example1: size [
 	<sampleInstance>
 	
-	| ts text |
+	| ts mytext |
 	ts := TextStream on: (Text new: size).
 	ts 
 		nextPutAll: 'xxxxx' asText;
 		nextPutAll: 'yyyyy' asText allBold;
 		nextPutAll: 'zzzzzzz' asText.
-	text := ts contents.
-	^ text
+	mytext := ts contents.
+	^ mytext
 ]
 
 { #category : #examples }
 TextTest >> example2 [
 	<sampleInstance>
 	
-	| ts text |
+	| ts myText |
 	ts := TextStream on: (Text new: 50).
 	ts nextPutAll: 'abc' asText.
 	ts nextPutAll: 'def' asText allBold.
 	ts nextPutAll: 'ghijk' asText.
-	text := ts contents.
-	^ text
+	myText := ts contents.
+	^ myText
 ]
 
 { #category : #examples }
@@ -79,7 +79,7 @@ TextTest >> testAddAttributeFromTo [
 TextTest >> testAdjacentRunsWithIdentitcalAttributes [
 	"This test verifies that adjacent runs with identical attributes are coalesced."
 
-	| ts text rangeOfBold |
+	| ts rangeOfBold |
 	ts := TextStream on: (Text new: 50).
 	ts nextPutAll: 'abc' asText.
 	ts nextPutAll: 'def' asText allBold.
