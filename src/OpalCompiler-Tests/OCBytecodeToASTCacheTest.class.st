@@ -74,4 +74,6 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
 	"there should be an assignment at pc 51"
 	pc := 51.
 	self assert: (cache nodeForPC: pc) sourceCode equals: 'i := i - 1'.
+	self assert: (cache nodeForPC: pc) start equals: 55.
+	self assert: (cache nodeForPC: pc) stop equals: 64.
 ]
