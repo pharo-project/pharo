@@ -337,6 +337,10 @@ TraitedMetaclass >> traitComposition [
 { #category : #accessing }
 TraitedMetaclass >> traitComposition: aComposition [
 
+	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
+		aMaybeTrait isTrait ifFalse: [ 
+			self error: 'All the members of the trait composition should be traits' ]].
+
 	composition := aComposition
 ]
 
