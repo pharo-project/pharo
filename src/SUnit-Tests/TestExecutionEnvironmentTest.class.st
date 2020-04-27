@@ -153,6 +153,16 @@ TestExecutionEnvironmentTest >> testDoesNotCleanUpTestServicesUntilTestErrorIsNo
 ]
 
 { #category : #tests }
+TestExecutionEnvironmentTest >> testDoesNotNotifyTestServicesAboutTerminatedTest [
+
+	self runWithNoHandlers: [ 
+		self runTestWith: [Processor terminateActive].
+	].
+
+	self deny: testService isCompletedTestHandled
+]
+
+{ #category : #tests }
 TestExecutionEnvironmentTest >> testEnableGivenServiceWhenItExists [
 
 	| actual |

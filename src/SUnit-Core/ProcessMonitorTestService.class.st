@@ -228,8 +228,10 @@ ProcessMonitorTestService >> enableBackgroudFailuresSuspension [
 
 { #category : #controlling }
 ProcessMonitorTestService >> ensureNoBackgroundFailures [
-	shouldSuspendBackgroundFailures ifFalse: [ 
-		"We don't care about background failures if process monitor pass all of them"
+	self isMainTestProcessFailed & self shouldPassBackgroundFailures ifTrue: [ 
+		"We don't need extra error about failed process when all errors are shown to the user: 
+			- if they were not suspended and were passed
+			- if main test process is also fail (and therefore test fails anyway)"
 		^self ].
 
 	self suspendedBackgroundFailures ifEmpty: [ ^self ].
@@ -370,6 +372,11 @@ ProcessMonitorTestService >> shouldFailTestLeavingProcesses [
 { #category : #accessing }
 ProcessMonitorTestService >> shouldFailTestLeavingProcesses: anObject [
 	shouldFailTestLeavingProcesses := anObject
+]
+
+{ #category : #testing }
+ProcessMonitorTestService >> shouldPassBackgroundFailures [
+	^shouldSuspendBackgroundFailures not
 ]
 
 { #category : #accessing }

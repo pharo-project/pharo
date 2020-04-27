@@ -285,7 +285,10 @@ TestExecutionEnvironment >> runTestCase: aTestCase [
 TestExecutionEnvironment >> runTestCaseUnderWatchdog: aTestCase [
 	
 	[
-		[aTestCase runCase] ensure: [ self handleCompletedTest ]
+		[aTestCase runCase] ensure: [
+			"Terminated test is not considered as completed (user just closed a debugger for example)"
+			mainTestProcess isTerminating ifFalse: [ 
+				self handleCompletedTest ]]
 	] on: Exception do: [ :err | 
 			self handleException: err 
 	]

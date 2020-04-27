@@ -167,12 +167,27 @@ ProcessMonitorTestServiceTest >> testDisableRunningProcessesCleanupWhenPassBackg
 ]
 
 { #category : #tests }
-ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassed [
+ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndMainProcessAlsoFails [
 
-	self fork: [ testService suspendBackgroundFailure: Error new ].
+	self fork: [ testService suspendBackgroundFailure: Error new. 
+		Processor activeProcess suspend "To emulate process under debugger" ].
+
+	testService passBackgroundFailures.
+	testService recordTestFailure: Error new.	
+		
+	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndProcessCompletes [
+
+	| process |
+	process := self fork: [ testService suspendBackgroundFailure: Error new ].
+	
 	testService passBackgroundFailures.
 	
-	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
+	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess.
+	self assert: process isTerminated
 ]
 
 { #category : #tests }
@@ -211,6 +226,17 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasM
 	testService handleException: Error new.
 	
 	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundFailureWasPassedButMainProcessCompletesSuccessfully [
+
+	self fork: [ testService suspendBackgroundFailure: Error new. 
+		Processor activeProcess suspend "To emulate process under debugger" ].
+	
+	testService passBackgroundFailures.
+	
+	self should: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
 
 { #category : #tests }
