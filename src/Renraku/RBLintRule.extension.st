@@ -43,12 +43,6 @@ RBLintRule >> check: anEntity ifNoCritiques: alternativeBlock [
 ]
 
 { #category : #'*renraku' }
-RBLintRule class >> checksAST [
-
-	^ false
-]
-
-{ #category : #'*renraku' }
 RBLintRule class >> checksNode [
 
 	^ false
