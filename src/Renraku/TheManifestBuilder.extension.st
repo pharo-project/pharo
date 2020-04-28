@@ -2,25 +2,27 @@ Extension { #name : #TheManifestBuilder }
 
 { #category : #'*renraku' }
 TheManifestBuilder >> banRule: aRule for: anEntity [
-	| name number |
-	  name := aRule class name.
+	| ruleId number |
+	ruleId := aRule class uniqueIdentifierName.
 	number := aRule class identifierMinorVersionNumber.
 
-	(self hasFalsePositiveOf: name version: number) ifFalse: [ 
-		self installFalsePositiveOf: name version: number ].
+	(self hasFalsePositiveOf: ruleId version: number) ifFalse: [ 
+		self installFalsePositiveOf: ruleId version: number ].
 	
 	self
 		addFalsePositive: anEntity
-		of: name
+		of: ruleId
 		version: number
 ]
 
 { #category : #'*renraku' }
 TheManifestBuilder >> bansRule: aRule for: anEntity [
-	| name number |
-	  name := aRule class name.
+	| ruleId number |
+	ruleId := aRule class uniqueIdentifierName.
 	number := aRule class identifierMinorVersionNumber.
 	
 	^ self
-		containsFalsePositive: anEntity onRule: name version: number
+		containsFalsePositive: anEntity
+		onRule: ruleId
+		version: number
 ]
