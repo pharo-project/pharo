@@ -13,6 +13,27 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #variables }
+OCASTSemanticAnalyzer >> analyseEscapingRead: var [
+	(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope ) ifFalse: [ ^self ].
+	"only escaping when they will end up in different closures"
+	var markEscapingRead.
+	"if we read a variable in a loop that is a repeated write, it need to be marked as escaping write"	
+	(scope isInsideOptimizedLoop and: [var isRepeatedWrite])
+				ifTrue: [var markEscapingWrite]
+]
+
+{ #category : #variables }
+OCASTSemanticAnalyzer >> analyseEscapingWrite: var [
+	(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope) 
+	"only escaping when they will end up in different closures"
+			ifTrue: [ var markEscapingWrite].
+	"if we write a variable in a loop, mark it as a repeated Write"	
+	scope isInsideOptimizedLoop
+					ifTrue: [ var markRepeatedWrite ]
+					ifFalse: [ var markWrite ]
+]
+
 { #category : #api }
 OCASTSemanticAnalyzer >> analyze: aNode [
 	self visitNode: aNode.
@@ -68,10 +89,11 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 OCASTSemanticAnalyzer >> lookupVariableForRead: aVariableNode [
 
 	| var |
+	
 	var := scope lookupVar: aVariableNode name.
+	
 	var ifNil: [^var].
-	(var isTemp and: [var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope] )  "only escaping when they will end up in different closures"
-		ifTrue: [var markEscapingRead].
+	var isTemp ifTrue: [ self analyseEscapingRead: var].
 	^var
 ]
 
@@ -85,10 +107,7 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	var ifNil: [^var].
 	var isSpecialVariable ifTrue: [ self storeIntoSpecialVariable: aVariableNode ].
 	var isWritable ifFalse: [ self storeIntoReadOnlyVariable: aVariableNode ].
-	
-	var isTemp ifTrue: [
-		(var scope outerNotOptimizedScope ~= scope outerNotOptimizedScope) "only escaping when they will end up in different closures"
-			ifTrue: [ var markEscapingWrite]].
+	var isTemp ifTrue: [ self analyseEscapingWrite: var ].
 	^var
 ]
 
@@ -156,9 +175,6 @@ OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode value.
 	var := (self lookupVariableForWrite: anAssignmentNode variable)
 		ifNil: [ self undeclaredVariable: anAssignmentNode variable ].
-	scope isInsideOptimizedLoop
-		ifTrue: [ var markRepeatedWrite ]
-		ifFalse: [ var markWrite ].
 	anAssignmentNode variable binding: var
 ]
 
@@ -223,12 +239,8 @@ OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 { #category : #visitor }
 OCASTSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	| var |
-	var := (self lookupVariableForRead: aVariableNode) ifNil: [(self undeclaredVariable: aVariableNode)].
-	(var isTemp and: [var isEscaping and: [scope outerScope isInsideOptimizedLoop]])
-		ifTrue: [
-			 "only variables written within the loop needs to be marked as escaping write"
-			var isRepeatedWrite ifTrue: [var markEscapingWrite].
-			var isRead ifTrue: [var markEscapingRead]].
+	var := (self lookupVariableForRead: aVariableNode) 
+		ifNil: [(self undeclaredVariable: aVariableNode)].
 	aVariableNode binding: var.
 	var isUninitialized ifTrue: [self uninitializedVariable: aVariableNode].
 ]
