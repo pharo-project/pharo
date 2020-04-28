@@ -150,7 +150,7 @@ OCASTSemanticAnalyzer >> variable: variableNode shadows: semVar [
 		signal
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	self visitNode: anAssignmentNode value.
@@ -162,7 +162,7 @@ OCASTSemanticAnalyzer >> visitAssignmentNode: anAssignmentNode [
 	anAssignmentNode variable binding: var
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	blockcounter := self blockcounter + 1.
 
@@ -175,8 +175,9 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 	scope := scope popScope.
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
+
 	scope := scope newOptimizedBlockScope: blockcounter.
 	aBlockNode isInlinedLoop ifTrue: [scope markInlinedLoop]. 
 	aBlockNode scope: scope. scope node: aBlockNode.
@@ -185,7 +186,7 @@ OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 	scope := scope popScope.
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 	scope := compilationContext scope newMethodScope. 
@@ -196,31 +197,30 @@ OCASTSemanticAnalyzer >> visitMethodNode: aMethodNode [
 
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 	super visitPragmaNode: aPragmaNode.
+	
+	"we parse compiler options here so the rest of the compilation can react to them"
 	(aPragmaNode selector = #compilerOptions:)
 		ifTrue: [ aPragmaNode asPragma sendTo: aPragmaNode methodNode compilationContext ].
+	
+	"primitives with a primitive error define a variable that can be referenced in the body"
+	aPragmaNode isPrimitiveError ifTrue: [  
+		self declareVariableNode: (RBVariableNode named: (aPragmaNode argumentAt: #error:) value asString) ]
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 	
 	aSequenceNode temporaries do: [ :node | self declareVariableNode: node ].
-	aSequenceNode parent isMethod
-		ifTrue: [ 
-			aSequenceNode parent pragmas
-				detect: [ :pragma | pragma isPrimitiveError ]
-				ifFound: [ :pragma | 
-					self declareVariableNode: (RBVariableNode named: (pragma argumentAt: #error:) value asString) ] ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
-	aSequenceNode temporaries
-		reverseDo: [ :node | 
+	aSequenceNode temporaries reverseDo: [ :node | 
 			node binding isUnused
 				ifTrue: [ self unusedVariable: node ] ]
 ]
 
-{ #category : #visitor }
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitVariableNode: aVariableNode [
 	| var |
 	var := (self lookupVariableForRead: aVariableNode) ifNil: [(self undeclaredVariable: aVariableNode)].
