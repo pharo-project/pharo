@@ -233,9 +233,12 @@ ProcessMonitorTestService >> ensureNoBackgroundFailures [
 			- if they were not suspended and were passed
 			- if main test process is also fail (and therefore test fails anyway)"
 		^self ].
-
 	self suspendedBackgroundFailures ifEmpty: [ ^self ].
 
+	"COMMENT FOR DEBUGGER STOPPED HERE:
+	TestFailedByForkedProcess notifies about background failures.
+	Test failed because forked process failed (even if main test process was completed without errors).
+	See ProcessMonitorTestService comment for more details"
 	[TestFailedByForkedProcess signalFrom: executionEnvironment] 
 		on: UnhandledError do: [ :e | 
 			self passBackgroundFailures.
@@ -248,9 +251,16 @@ ProcessMonitorTestService >> ensureNoRunningProcesses [
 	we do not need an extra failure about left processes"
 	self isMainTestProcessFailed ifTrue: [ ^self ].	
 	self runningProcesses ifEmpty: [ ^self ].
+	shouldFailTestLeavingProcesses ifFalse: [ ^self ].
 	
-	shouldFailTestLeavingProcesses ifTrue: [ 	
-		TestLeftRunningProcess signalFrom: executionEnvironment]
+	"COMMENT FOR DEBUGGER STOPPED HERE:
+	TestLeftRunningProcess notifies that forked processes are still running when test completes.
+	Test failed because test left the system in dirty state.
+	Left processes can affect the result of other tests and even the general system behavior after test run.
+	This protection can be disable in test (or setUp) or globaly using setting:
+		self executionProcessMonitor allowTestToLeaveProcesses
+	See ProcessMonitorTestService comment for more details"
+	TestLeftRunningProcess signalFrom: executionEnvironment
 ]
 
 { #category : #accessing }
