@@ -90,7 +90,7 @@ MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
 ]
 
 { #category : #examples }
-MethodMapExamples >> exampleTempNamedTempCopyingNestedBlockPROBLEM [
+MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock2 [
 	 | a |
 		 a := 2. 
 	^[| b | 
