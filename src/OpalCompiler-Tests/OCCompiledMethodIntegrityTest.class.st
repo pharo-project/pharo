@@ -77,8 +77,6 @@ OCCompiledMethodIntegrityTest >> testPrimitive [
 { #category : #test }
 OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 	| newCompiledMethod |
-	"Here the problem was that the Scope kept both the remote temp answer and the new remote <?> this caused
-	that the number of temps were more than the correnct"
 	newCompiledMethod := OpalCompiler new
 		source:
 			'value
