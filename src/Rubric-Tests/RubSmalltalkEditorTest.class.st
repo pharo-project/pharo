@@ -1062,30 +1062,20 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 
 { #category : #'tests-completion' }
 RubSmalltalkEditorTest >> testSettingCompletionFromEditor [
-
-	| currentCompletion |
-	[ currentCompletion := RubSmalltalkEditor completionEngineClass. 
 	
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
 	self assert: RubSmalltalkEditor completionEngineClass equals: CompletionEngine.
-	
-	] ensure: [ RubSmalltalkEditor completionEngineClass: currentCompletion ]
-	
 ]
 
 { #category : #'tests-completion' }
 RubSmalltalkEditorTest >> testSettingCompletionFromEditorToTextArea [
 
-	| textEditor currentCompletion |
-	[ currentCompletion := RubSmalltalkEditor completionEngineClass.
-	
+	| textEditor |
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
 	textEditor := RubSmalltalkEditor new.
 	self assert: textEditor completionEngine class equals: CompletionEngine.
 	textEditor textArea: RubEditingArea new. 
 	self assert: textEditor textArea completionEngine class equals: CompletionEngine.
-	
-	] ensure: [ RubSmalltalkEditor completionEngineClass: currentCompletion ]
 	
 ]
 

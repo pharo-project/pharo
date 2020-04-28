@@ -36,9 +36,9 @@ DrTestsTestRunnerTest >> setUp [
 { #category : #tests }
 DrTestsTestRunnerTest >> testAllSelectedClassesAreTestCases [
 
-	| package |
-	package := plugin packagesAvailableForAnalysis anyOne.
-	self assert: ((plugin itemsToBeAnalysedFor: {package}) flattened allSatisfy: [ :each | each isTestCase ])
+	| thePackage |
+	thePackage := plugin packagesAvailableForAnalysis anyOne.
+	self assert: ((plugin itemsToBeAnalysedFor: {thePackage}) flattened allSatisfy: [ :each | each isTestCase ])
 ]
 
 { #category : #tests }

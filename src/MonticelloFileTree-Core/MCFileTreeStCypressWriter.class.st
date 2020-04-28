@@ -28,16 +28,15 @@ MCFileTreeStCypressWriter class >> fileNameForSelector: selector [
       (self specials includes: selector first)
         ifFalse: [ selector ]
         ifTrue: [ 
-          | output specials |
-          specials := self specials.
+          | output |
           output := String new writeStream.
           output nextPut: $^.
           selector
             do: [ :each | 
               output
                 nextPutAll:
-                  ((specials includes: each)
-                    ifTrue: [ specials at: each ]
+                  ((self specials includes: each)
+                    ifTrue: [ self specials at: each ]
                     ifFalse: [ each asString ]) ]
             separatedBy: [ output nextPut: $. ].
           output contents ] ]
