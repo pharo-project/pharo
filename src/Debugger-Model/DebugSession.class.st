@@ -489,6 +489,17 @@ DebugSession >> signalDebuggerError: anError [
 ]
 
 { #category : #accessing }
+DebugSession >> spanNewSession [
+
+	^ (self class 
+			named: self name 
+			on: self interruptedProcess 
+			startedAt: self interruptedContext)
+		errorWasInUIProcess: self errorWasInUIProcess;
+		yourself
+]
+
+{ #category : #accessing }
 DebugSession >> stack [
 
 	^ interruptedContext stack

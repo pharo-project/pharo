@@ -125,15 +125,10 @@ GTMoldableDebugger class >> spanNewSessionForContext: aContext fromProcess: aPro
 		named: 'temporary name' on: aProcess startedAt: aContext
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 GTMoldableDebugger class >> spanNewSessionFrom: anotherSession [
 
-	^ (self sessionClass 
-		named: anotherSession name 
-		on: anotherSession interruptedProcess 
-		startedAt: anotherSession interruptedContext)
-			errorWasInUIProcess: anotherSession errorWasInUIProcess;
-			yourself
+	^ anotherSession spanNewSession 
 ]
 
 { #category : #private }
