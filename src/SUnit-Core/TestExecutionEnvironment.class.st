@@ -3,8 +3,14 @@ I am a special execution environment to manage the execution of tests.
 I am installed when test is running (or test suite) by
 
 	CurrentExecutionEnvironment runTestCase: aTestCase
+		
+My current instance for tests can be accessed with handy method directly from the test case: 
+
+	self executionEnvironment 
 	
-Some tests requires completely clean environment. To disable me override #runCaseManaged on your test class: 
+It simply returns the value of CurrentExecutionEnvironment.
+	
+Some tests requires completely clean and simplest environment. To disable me override #runCaseManaged on your test class: 
 
 	runCaseManaged 
 		^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
@@ -13,7 +19,7 @@ Some tests requires completely clean environment. To disable me override #runCas
 
 I implement a watchdog to ensure that tests complete in finite time and never hanged.
 I give them 10 seconds by default which can be overriden by test class using method #defaultTimeLimit.
-Or it can be specified directly in test method:
+Or it can be specified directly in the test method:
 	self timeLimit: 10 seconds
 It can be changed at any time during the test.
 
@@ -34,16 +40,16 @@ My #services are subclasses of TestExecutionService (see its comment for details
 	
 I automatically register all service classes enabled by default (#registerDefaultServices). But users can enable required services manually for given tests:
 
-	testEnvironment enableService: TestServiceExample
+	self executionEnvironment enableService: TestServiceExample
 
 Or with configuration block: 
 
-	testEnvironment enableService: TestServiceExample using: [:service | ]
+	self executionEnvironment enableService: TestServiceExample using: [:service | ]
 	
-I lookup given service class in my registered services and use found if it exists. Otherwise I create and register new service instance with enabled state. 	
-At the end of test I disable such services (manually registed and disabled by default). So no other tests are affected by them.
+I lookup given service class in my registered services and use the found one if it exists. Otherwise I create and register new service instance with enabled state. 	
+At the end of test I disable services which were registered manually registed and which are disabled by default. So no other tests are affected by them.
 	
-I provide handy method in TestCase for well known service ProcessMonitorTestService:
+I provide handy method to access well known service ProcessMonitorTestService:
 
 	self executionEnvironment processMonitor 
 	

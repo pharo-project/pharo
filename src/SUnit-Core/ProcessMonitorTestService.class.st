@@ -1,7 +1,7 @@
 "
 I monitor all processes forked during tests and track all exceptions signaled from them.
 
-The main goal is to ensure that if there was an error from the background process the test will never be green. 
+1) The main goal is to ensure that if there was an error from the background process the test will never be green. 
 For example I make following test fail:
 
 	testExample
@@ -10,35 +10,41 @@ For example I make following test fail:
 
 TestFailedByForkedProcess will be signaled at the end of such test. And if user will debug this test then two debuggers will be opened for each error (for main and background processes).
 		
-The backgrond process can be more tricky and it could fail after a long time when another arbitrary test is currently executed. Generally background processes left by tests make the system dirty. It can lead to intermittent failures and flaky tests which is very hard to debug.
-And my second goal is to fail the test when it left running processes. I make following test fail: 
+2) The second my purpose is to ensure that no running processes will be left after the test.
+The background process can be more tricky than example and it can be forked by domain code.
+Out of the test such processes could affect the overall system behavior. 
+They could affect other tests results. If they fail during other tests it will hide the fact that the issue is related to the original test which will make debugging hard.
+
+So at the end of every test I perform a cleanup (#cleanUpAfterTest) where I terminate all running processes. This behavior can be disabled globaly in settings (System/SUnit) or in test method and setUp:
+
+	self executionProcessMonitor disableProcessTermination 
+	
+To enable it use: 
+
+	self executionProcessMonitor terminateProcessesAfterTest
+
+In addition I implement special logic to fail the test which left running processes after run.
+So the process termination is not hidden. 
+For example following test will fail:
 
 	testExample
 		[ 10 seconds wait ] fork.
 		self assert: true.
 
 TestLeftRunningProcess will be signaled at the end of test.
-Currently this feature is disabled by default. And this test would not fail. But it can be configured:	 
+For compatibility this feature is disabled by default. And this test would not fail. But it can be enabled globaly in settings (System/SUnit) or in test and setUp:	 
 
-	aTestCase executionProcessMonitor failTestLeavingProcesses.
+	self executionProcessMonitor failTestLeavingProcesses.
 
-Or enable it with: 
+And to disable it use: 
 
-	aTestCase executionProcessMonitor allowTestToLeaveProcesses.
+	self executionProcessMonitor allowTestToLeaveProcesses.
 
-This configuration can be added to #setUp or there is global settings (also available in settings browser/SUnit):
-
-	ProcessMonitorTestService shouldFailTestLeavingProcesses: true
-
-Also I can be completely disabled for the test: 
+3) I can be completelly disabled globaly in settings (System/SUnit) or in test and setUp:
 
 	aTestCase executionProcessMonitor disable 
 	 
-Or I can be disabled globaly (also available in settings browser/SUnit): 
-
-	ProcessMonitorTestService isEnabled: false.
-
-Finally at the end of every test I perform a clean up (#cleanUpAfterTest). Here I restore my default state and terminate all left running processes. So the next test will be started on clean environment.
+Finally at the end of every test I perform a cleanup (#cleanUpAfterTest) where I restore all my default settings. So the next test will be started default behaviour.
 
 Implementation details:
 
@@ -53,19 +59,20 @@ The interactive scenario is detected using UnhandledException logic: unhandled e
 
 2. Failing strategy for left processes
 
-I collect all forked processes (#forkedProcesses) and at the end of tests I have an option (#shouldFailTestLeavingProcesses) to fail the test if those processes are still running. TestLeftRunningProcess would be a final error for the test in that case.
+I collect all forked processes (#forkedProcesses) and at the end of tests I have an option (#shouldFailTestLeavingProcesses) to fail the test if these processes are still running. TestLeftRunningProcess would be a final error for the test in that case.
 I implement a little logic to make this failing strategy more usable and not break the test in trivial cases. For eaxmple following pattern is quite common in tests: 
 
 	testExample 
-		[ Processor yield ] fork.
+		[ ""some work here"". Processor yield ] fork.
+		Processor yield.
 		self assert: true.
 
-""Yield"" could always happen as a side affect of domain code or other image processes. And a simple #fork in tests like this one will not be able to terminate.
-The method #allowRunningProcessesToFinish performs own ""Processor yield"" logic to allow background processes take control and finish execution. 
+The #yield's here are to describe what could happen in real world: processes can be preemted at any time due to various activities from other image processes (with different priorities). And a simple #fork in tests like this one will not be able to terminate at the end of test while it is ""almost done"".
+The method #allowRunningProcessesToFinish is to solve this issue. It performs own ""Processor yield"" logic to allow such background processes to take a control and finish the execution. 
 
 3. One more detail: 
-In uninteractive mode I signal those special errors even if there was a domain error from the test. So two exceptions can be signaled for single test run.
-It allows to log all errors signaled during the test: one from the main process and others from the background processes.
+In uninteractive mode I signal TestFailedByForkedProcess even if there was a domain error from the test. So two exceptions can be signaled for single test run.
+It allows to log all errors signaled during the test: one from the main process and others from all background processes using this signal (notice that I suspend all background failures and they do not log themselves as a default feedback).
 
 Internal Representation and Key Implementation Points.
 
@@ -256,8 +263,9 @@ ProcessMonitorTestService >> ensureNoRunningProcesses [
 	"COMMENT FOR DEBUGGER STOPPED HERE:
 	TestLeftRunningProcess notifies that forked processes are still running when test completes.
 	Test failed because test left the system in dirty state.
-	Left processes can affect the result of other tests and even the general system behavior after test run.
-	This protection can be disable in test (or setUp) or globaly using setting:
+	Left runnning processes can affect the result of other tests 
+	and even the general system behavior after test run.
+	This protection can be disabled globaly in settings or in test method and setUp:
 		self executionProcessMonitor allowTestToLeaveProcesses
 	See ProcessMonitorTestService comment for more details"
 	TestLeftRunningProcess signalFrom: executionEnvironment
