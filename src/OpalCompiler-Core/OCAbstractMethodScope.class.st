@@ -17,7 +17,7 @@ Class {
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
-	^copiedVars2 at: aTempVar name asSymbol put: (OCCopyingTempVariable new
+	^copiedVars2 at: aTempVar name put: (OCCopyingTempVariable new
 			originalVar: aTempVar originalVar;
 			name: aTempVar name;
 			escaping: aTempVar escaping;
@@ -29,7 +29,7 @@ OCAbstractMethodScope >> addCopyingTemp: aTempVar [
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
-	(self hasCopyingTempNamed: aVar name) ifFalse: [self addCopyingTemp: aVar].
+	(self copiedVarNames includes: aVar name) ifFalse: [self addCopyingTemp: aVar].
 	self = aVar scope ifTrue: [^ self].
 	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar.
 				
@@ -100,11 +100,6 @@ OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
 	(thisContextVar name  beginsWith: aString) ifTrue: [ ^true ].
 	
 	^ self outerScope hasBindingThatBeginsWith: aString
-]
-
-{ #category : #'temp vars - copying' }
-OCAbstractMethodScope >> hasCopyingTempNamed: name [
-	^copiedVars2 values anySatisfy: [:each | each name = name]
 ]
 
 { #category : #'temp vars - vector' }
