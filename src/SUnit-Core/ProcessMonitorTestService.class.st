@@ -99,33 +99,42 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #settings }
-ProcessMonitorTestService class >> descriptionForSettingsBrowser [
-
-	^'I monitor all processes forked during the test and manage all exception:
-	- when I catch exception from background process I suspend it.
-	- at the end of test I signal TestFailedByForkedProcess if there were any background failures
-	- if test was failed and the error was unhandled (and debugger was shown) I pass all suspended errors. So when you debug the test you will see all background erros as usualy.
-	- if halt happens anywere I pass all suspended errors and do not suspend new one anymore
-	- I can force test to not left running processes. See the next setting for it.
-	- When all checks and errors were done I clean the system: I terminate all processes forked during the test'
+{ #category : #'fuel support' }
+ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
+    ^#('forkedProcesses' 'suspendedBackgroundFailures')
 ]
 
 { #category : #settings }
-ProcessMonitorTestService class >> failingStrategySettingsOn: aBuilder [
+ProcessMonitorTestService class >> settingsForFailingStrategyOn: aBuilder [
 	
 	(aBuilder setting: #shouldFailTestLeavingProcesses)
 		target: self;
 		parent: self name ;
 		default: false;
 		label: 'Fail tests which left running processes' ;
-		description: 'When test forks new process it is a good practice to take care about it at the end ot test. 
-This setting allows SUnit to track dirty state after the test when it does not perform proper cleanup and left running processes'
+		description: 'The test will be failed if it left running processes after the run.
+For example following test will fail:
+	testExample
+		[ 10 seconds wait ] fork.
+		self assert: true.
+Tests should not leave the system dirty.
+And this setting is to facilitate such rule relatively to background processes forked during the test.
+See ProcessMonitorTestService comment for more details'
 ]
 
-{ #category : #'fuel support' }
-ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
-    ^#('forkedProcesses' 'suspendedBackgroundFailures')
+{ #category : #settings }
+ProcessMonitorTestService class >> settingsForTerminationStrategyOn: aBuilder [
+	
+	(aBuilder setting: #shouldTerminateProcesses)
+		target: self;
+		parent: self name ;
+		default: false;
+		label: 'Terminate all processes after the test' ;
+		description: 'At the end of each test all forked processes will be terminated except when we are running in interractive mode under debugger. 
+When debugger opens all control is up to the user.
+But when we are running the test suite to get results it is a good practice to remove all garbage after the test. 
+This setting is about doing it in automatic way.
+See ProcessMonitorTestService comment for more details'
 ]
 
 { #category : #settings }
@@ -133,8 +142,8 @@ ProcessMonitorTestService class >> settingsOn: aBuilder [
 	super settingsOn: aBuilder.
 	
 	self
-		failingStrategySettingsOn: aBuilder;
-		terminationStrategySettingsOn: aBuilder
+		settingsForFailingStrategyOn: aBuilder;
+		settingsForTerminationStrategyOn: aBuilder
 ]
 
 { #category : #accessing }
@@ -155,20 +164,6 @@ ProcessMonitorTestService class >> shouldTerminateProcesses [
 { #category : #accessing }
 ProcessMonitorTestService class >> shouldTerminateProcesses: anObject [
 	shouldTerminateProcesses := anObject
-]
-
-{ #category : #settings }
-ProcessMonitorTestService class >> terminationStrategySettingsOn: aBuilder [
-	
-	(aBuilder setting: #shouldTerminateProcesses)
-		target: self;
-		parent: self name ;
-		default: false;
-		label: 'Terminate all processes after the test' ;
-		description: 'At the end of each test all forked processes will be terminated except then we are running in interractive mode under debugger. 
-When debugger opens all control is up to the user.
-But when we just run all test suite to get results it is a good practice to remove all garbage after the test. 
-This setting is about doing it in automatic way'
 ]
 
 { #category : #controlling }

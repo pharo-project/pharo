@@ -62,7 +62,7 @@ TestExecutionService class >> defaultServiceClasses [
 
 { #category : #settings }
 TestExecutionService class >> descriptionForSettingsBrowser [
-	^''
+	^self comment
 ]
 
 { #category : #accessing }
