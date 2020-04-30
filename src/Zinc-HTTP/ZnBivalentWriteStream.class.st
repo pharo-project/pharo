@@ -61,9 +61,8 @@ ZnBivalentWriteStream >> isBinary [
 
 { #category : #accessing }
 ZnBivalentWriteStream >> next [
-	"Answer the next object accessible by the receiver."
-
-	^stream next
+	
+	self shouldNotImplement
 ]
 
 { #category : #accessing }

@@ -60,12 +60,7 @@ ZnBivalentWriteStreamTest >> testCharacterWriting [
 
 { #category : #testing }
 ZnBivalentWriteStreamTest >> testNext [
-	"#next should dispatching to underlying stream and availability of next element is dependent on it"
-	|stream|	
-	stream := ReadWriteStream on: String new writeStream.
-	self assert: stream next isNil.
-	
-	"But not for a regular write stream"
+
 	self should: [ bivalentWriteStream next ] raise: ShouldNotImplement
 ]
 
