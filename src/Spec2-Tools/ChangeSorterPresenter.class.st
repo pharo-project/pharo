@@ -691,7 +691,7 @@ ChangeSorterPresenter >> setFocus [
 { #category : #api }
 ChangeSorterPresenter >> setSelectedChangeSet: aChangeSet [
 
-	 ^ changesListPresenter setSelectedItem: aChangeSet
+	 ^ changesListPresenter selectItem: aChangeSet
 ]
 
 { #category : #api }
