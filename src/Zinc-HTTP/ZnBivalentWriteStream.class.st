@@ -28,9 +28,23 @@ ZnBivalentWriteStream class >> on: writeStream [
 		yourself
 ]
 
+{ #category : #testing }
+ZnBivalentWriteStream >> atEnd [
+	"Answer whether the receiver can access any more objects."
+
+	^stream atEnd 
+]
+
 { #category : #'initialize-release' }
 ZnBivalentWriteStream >> close [
 	stream close
+]
+
+{ #category : #accessing }
+ZnBivalentWriteStream >> contents [
+	"Answer all of the contents of the receiver."
+
+	^stream contents
 ]
 
 { #category : #accessing }
@@ -43,6 +57,13 @@ ZnBivalentWriteStream >> isBinary [
 	binary isNil
 		ifTrue: [ [ binary := stream isBinary ] on: MessageNotUnderstood do: [ :err | binary := false ] ].
 	^ binary
+]
+
+{ #category : #accessing }
+ZnBivalentWriteStream >> next [
+	"Answer the next object accessible by the receiver."
+
+	^stream next
 ]
 
 { #category : #accessing }

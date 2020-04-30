@@ -1,8 +1,35 @@
 Class {
 	#name : #ZnBivalentWriteStreamTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'bivalentWriteStream'
+	],
 	#category : #'Zinc-Tests'
 }
+
+{ #category : #running }
+ZnBivalentWriteStreamTest >> setUp [ 
+	super setUp.
+	bivalentWriteStream := ZnBivalentWriteStream on: String new writeStream
+]
+
+{ #category : #running }
+ZnBivalentWriteStreamTest >> tearDown [ 
+
+	bivalentWriteStream close.
+	super tearDown.
+]
+
+{ #category : #testing }
+ZnBivalentWriteStreamTest >> testAlwaysAtEnd [
+
+	self assert: bivalentWriteStream atEnd.
+	
+	bivalentWriteStream nextPutAll: 'move'.
+	
+	self assert: bivalentWriteStream atEnd
+	
+]
 
 { #category : #testing }
 ZnBivalentWriteStreamTest >> testByteWriting [
@@ -29,4 +56,26 @@ ZnBivalentWriteStreamTest >> testCharacterWriting [
 				space;
 				nextPutAll: '123' ].
 	self assert: bytes equals: 'a 123' asByteArray
+]
+
+{ #category : #testing }
+ZnBivalentWriteStreamTest >> testNext [
+	"#next should dispatching to underlying stream and availability of next element is dependent on it"
+	|stream|	
+	stream := ReadWriteStream on: String new writeStream.
+	self assert: stream next isNil.
+	
+	"But not for a regular write stream"
+	self should: [ bivalentWriteStream next ] raise: ShouldNotImplement
+]
+
+{ #category : #testing }
+ZnBivalentWriteStreamTest >> testRetrieveContents [
+
+	self assert: bivalentWriteStream contents isEmpty.
+	
+	bivalentWriteStream nextPutAll: 'something'.
+	
+	self assert: bivalentWriteStream contents equals: 'something'
+	
 ]
