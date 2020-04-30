@@ -60,12 +60,6 @@ ZnBivalentWriteStream >> isBinary [
 ]
 
 { #category : #accessing }
-ZnBivalentWriteStream >> next [
-	
-	self shouldNotImplement
-]
-
-{ #category : #accessing }
 ZnBivalentWriteStream >> next: count putAll: collection startingAt: offset [
 	| buffer |
 	self isBinary

@@ -59,12 +59,6 @@ ZnBivalentWriteStreamTest >> testCharacterWriting [
 ]
 
 { #category : #testing }
-ZnBivalentWriteStreamTest >> testNext [
-
-	self should: [ bivalentWriteStream next ] raise: ShouldNotImplement
-]
-
-{ #category : #testing }
 ZnBivalentWriteStreamTest >> testRetrieveContents [
 
 	self assert: bivalentWriteStream contents isEmpty.
