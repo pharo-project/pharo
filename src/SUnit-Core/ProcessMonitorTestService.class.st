@@ -42,9 +42,9 @@ And to disable it use:
 
 3) I can be completelly disabled globaly in settings (System/SUnit) or in test and setUp:
 
-	aTestCase executionProcessMonitor disable 
+	self executionProcessMonitor disable 
 	 
-Finally at the end of every test I perform a cleanup (#cleanUpAfterTest) where I restore all my default settings. So the next test will be started default behaviour.
+Finally at the end of every test I perform a cleanup (#cleanUpAfterTest) where I restore all my default settings. So the next test will be started with default behaviour.
 
 Implementation details:
 
