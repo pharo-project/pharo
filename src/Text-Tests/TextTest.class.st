@@ -14,28 +14,21 @@ Class {
 { #category : #examples }
 TextTest >> example1: size [
 	<sampleInstance>
-	
-	| ts mytext |
-	ts := TextStream on: (Text new: size).
-	ts 
+	^(TextStream on: (Text new: size))
 		nextPutAll: 'xxxxx' asText;
 		nextPutAll: 'yyyyy' asText allBold;
-		nextPutAll: 'zzzzzzz' asText.
-	mytext := ts contents.
-	^ mytext
+		nextPutAll: 'zzzzzzz' asText;
+		contents
 ]
 
 { #category : #examples }
 TextTest >> example2 [
 	<sampleInstance>
-	
-	| ts myText |
-	ts := TextStream on: (Text new: 50).
-	ts nextPutAll: 'abc' asText.
-	ts nextPutAll: 'def' asText allBold.
-	ts nextPutAll: 'ghijk' asText.
-	myText := ts contents.
-	^ myText
+	^(TextStream on: (Text new: 50))
+		nextPutAll: 'abc' asText;
+		nextPutAll: 'def' asText allBold;
+		nextPutAll: 'ghijk' asText;
+		contents
 ]
 
 { #category : #examples }
