@@ -463,7 +463,7 @@ ProcessTest >> testTerminateActive [
 { #category : #'tests - termination' }
 ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 
-	| ensureCalled process ensureFailure forkedFailures started unwindError |
+	| ensureCalled process ensureFailure started unwindError |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
 	started := false.
