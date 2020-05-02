@@ -429,9 +429,9 @@ SUnitTest >> testHangedChildProcessTest [
 	self
 		assertForTestResult: result
 		runCount: 1
-		passed: 1
+		passed: 0
 		failed: 0
-		errors: 0.
+		errors: 1.
 		
 	hangedProcess := Process allInstances 
 		detect: [: each | each name = #hangedChildProcessTest] ifNone: [ ^self ].
