@@ -75,7 +75,8 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 		self assert: actual equals: halt. haltWasPassed := true ].
 	process resume.
 	
-	self assert: process isTerminated.
+	"Following timeout is because on CI #resume does not start higher priority process immedietely"
+	self should: [process isTerminated] notTakeMoreThan: 100 milliSeconds. 
 	self assert: haltWasPassed.
 	self deny: (testService suspendedBackgroundFailures includesKey: process)
 ]
@@ -187,7 +188,8 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 	testService passBackgroundFailures.
 	
 	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess.
-	self assert: process isTerminated
+	"Following timeout is because on CI #resume does not start higher priority process immedietely"
+	self should: [process isTerminated] notTakeMoreThan: 100 milliSeconds. 
 ]
 
 { #category : #tests }
@@ -388,7 +390,8 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 	process on: UnhandledError do: [ :err | errorWasPassed := true ].
 	process resume.
 	
-	self assert: process isTerminated.
+	"Following timeout is because on CI #resume does not start higher priority process immedietely"
+	self should: [process isTerminated] notTakeMoreThan: 100 milliSeconds. 
 	self assert: errorWasPassed
 ]
 
