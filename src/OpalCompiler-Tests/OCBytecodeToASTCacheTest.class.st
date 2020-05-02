@@ -48,9 +48,7 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 	| pc |
 	pc := cache lastBcOffset + 5.
-	self
-		assert: (cache nodeForPC: pc)
-		identicalTo: (compiledMethod sourceNodeForPC: pc)
+	self assert: (cache nodeForPC: pc) identicalTo: compiledMethod ast
 ]
 
 { #category : #tests }
