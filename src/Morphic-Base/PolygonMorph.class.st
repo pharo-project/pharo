@@ -589,21 +589,6 @@ PolygonMorph >> closedCubicSlopesOf: knots [
 ]
 
 { #category : #geometry }
-PolygonMorph >> closestPointTo: aPoint [ 
-	| closestPoint minDist |
-	closestPoint := minDist := nil.
-	self lineSegmentsDo: 
-			[:p1 :p2 | | dist curvePoint | 
-			curvePoint := aPoint nearestPointOnLineFrom: p1 to: p2.
-			dist := curvePoint distanceTo: aPoint.
-			(closestPoint isNil or: [dist < minDist]) 
-				ifTrue: 
-					[closestPoint := curvePoint.
-					minDist := dist]].
-	^closestPoint
-]
-
-{ #category : #geometry }
 PolygonMorph >> closestSegmentTo: aPoint [
 	"Answer the starting index of my (big) segment nearest to aPoint"
 	| closestPoint minDist vertexIndex closestVertexIndex |

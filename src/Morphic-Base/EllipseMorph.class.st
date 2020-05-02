@@ -37,11 +37,6 @@ EllipseMorph >> canDrawBorder: aBorderStyle [
 	^aBorderStyle style == #simple
 ]
 
-{ #category : #geometry }
-EllipseMorph >> closestPointTo: aPoint [
-	^self intersectionWithLineSegmentFromCenterTo: aPoint
-]
-
 { #category : #'geometry testing' }
 EllipseMorph >> containsPoint: aPoint [
 
