@@ -4,18 +4,18 @@ If you execute some code during the method execution it will  slow down the insp
 Try to put all the code in blocks in the setup messages, such as #title:, #display:,  #when:. Buy doing this your code will be executed lazily when the presentation is selected.
 "
 Class {
-	#name : #ReInspectorPresentationsNonlazyCode,
+	#name : #ReInspectorPresentationsNonlazyCodeRule,
 	#superclass : #ReAbstractRule,
 	#category : #'Renraku-Rules'
 }
 
 { #category : #'testing-interest' }
-ReInspectorPresentationsNonlazyCode class >> checksMethod [
+ReInspectorPresentationsNonlazyCodeRule class >> checksMethod [
 	^ true
 ]
 
 { #category : #running }
-ReInspectorPresentationsNonlazyCode >> check: aMethod forCritiquesDo: aCriticBlock [
+ReInspectorPresentationsNonlazyCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(aMethod hasPragmaNamed: #gtInspectorPresentationOrder:) ifFalse: [ ^ self ].
 	
@@ -35,18 +35,18 @@ ReInspectorPresentationsNonlazyCode >> check: aMethod forCritiquesDo: aCriticBlo
 ]
 
 { #category : #accessing }
-ReInspectorPresentationsNonlazyCode >> group [
+ReInspectorPresentationsNonlazyCodeRule >> group [
 	^ 'Optimization'
 ]
 
 { #category : #accessing }
-ReInspectorPresentationsNonlazyCode >> name [
+ReInspectorPresentationsNonlazyCodeRule >> name [
 
 	^ 'Code executed outside of the presentation setup'
 ]
 
 { #category : #private }
-ReInspectorPresentationsNonlazyCode >> presentation: aPresentation isTheLeftmostRecepientIn: aStatement [
+ReInspectorPresentationsNonlazyCodeRule >> presentation: aPresentation isTheLeftmostRecepientIn: aStatement [
 
 	^ (aStatement isMessage or:
 	 [ aStatement isCascade ])  and: [ 

@@ -288,6 +288,17 @@ T2TraitTest >> testSequence [
 ]
 
 { #category : #tests }
+T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
+
+	| t1 c1 |
+	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
+	c1 := self newClass: #C1 with: '' asSlotCollection uses: #().
+
+	self should: [ t1 traitComposition: c1 ] raise: Error.
+	self should: [ t1 classTrait traitComposition: c1 ] raise: Error.	
+]
+
+{ #category : #tests }
 T2TraitTest >> testSlotsAreNotDuplicated [
 	| t1 t2 c1 |
 	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.

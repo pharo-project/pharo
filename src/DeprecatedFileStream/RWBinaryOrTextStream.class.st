@@ -55,13 +55,11 @@ RWBinaryOrTextStream >> isBinary [
 
 { #category : #accessing }
 RWBinaryOrTextStream >> next [
-
 	| byte |
-	^ isBinary 
-			ifTrue: [byte := super next.
-				 byte ifNil: [nil] ifNotNil: [byte asciiValue]]
-			ifFalse: [super next].
-
+	^ isBinary
+		ifTrue: [ byte := super next.
+			byte ifNotNil: [ byte asciiValue ] ]
+		ifFalse: [ super next ]
 ]
 
 { #category : #accessing }

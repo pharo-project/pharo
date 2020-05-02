@@ -108,7 +108,7 @@ SDL2 class >> findSDL2 [
 	'SDL2.dll'					"Windows"
 	) do: [ :eachName | 
 		[ (self checkLibraryName: eachName) ifTrue: [ ^ eachName ] ] 
-		ifErrorDo: [nil] ].
+		onErrorDo: [nil] ].
 	self error: 'Failed to find SDL2 library.'
 ]
 
@@ -236,7 +236,7 @@ SDL2 class >> initVideo [
 { #category : #common }
 SDL2 class >> isAvailable [
 	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) notNil ] 	
-		ifErrorDo: [ false ]
+		onErrorDo: [ false ]
 ]
 
 { #category : #'game controller' }

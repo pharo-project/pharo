@@ -449,7 +449,7 @@ WorldState >> displayWorld: aWorld [
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
-	[aWorld displayWorld] ifErrorDo: [:err |
+	[aWorld displayWorld] onErrorDo: [:err |
 		"Handle a drawing error"
 		| errCtx errMorph |
 		errCtx := thisContext.

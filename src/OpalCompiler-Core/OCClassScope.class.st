@@ -64,6 +64,7 @@ OCClassScope >> lookupVar: name [
 
 { #category : #lookup }
 OCClassScope >> lookupVarForDeclaration: name [
+	"This is a version of #lookupVar: that skips the OCRequestorScope"
 	^self lookupVar: name
 ]
 

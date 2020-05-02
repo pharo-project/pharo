@@ -2,39 +2,39 @@
 A subclass of TestCase should be in package which name is ending with '-Tests'
 "
 Class {
-	#name : #ReTestClassNotInPackageWithTestEndingName,
+	#name : #ReTestClassNotInPackageWithTestEndingNameRule,
 	#superclass : #ReAbstractRule,
 	#category : #'Renraku-Rules'
 }
 
 { #category : #'testing-interest' }
-ReTestClassNotInPackageWithTestEndingName class >> checksClass [
+ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 
 	^ true
 ]
 
 { #category : #running }
-ReTestClassNotInPackageWithTestEndingName >> basicCheck: aClass [
+ReTestClassNotInPackageWithTestEndingNameRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [(aClass package name asString endsWith: '-Tests') not].
 ]
 
 { #category : #running }
-ReTestClassNotInPackageWithTestEndingName >> group [
+ReTestClassNotInPackageWithTestEndingNameRule >> group [
 	^ 'Optimization'
 ]
 
 { #category : #accessing }
-ReTestClassNotInPackageWithTestEndingName >> name [
+ReTestClassNotInPackageWithTestEndingNameRule >> name [
 	^ 'Test class not in a package with name ending with ''-Tests'' '
 ]
 
 { #category : #accessing }
-ReTestClassNotInPackageWithTestEndingName >> rationale [
+ReTestClassNotInPackageWithTestEndingNameRule >> rationale [
 	^ 'A test class (subclass of TestCase) should be placed in a package with a ''-Tests'' suffix'
 ]
 
 { #category : #running }
-ReTestClassNotInPackageWithTestEndingName >> severity [
+ReTestClassNotInPackageWithTestEndingNameRule >> severity [
 	^ #warning
 ]

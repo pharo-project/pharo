@@ -94,8 +94,7 @@ GLMRubricSmalltalkTextModel >> selectedClassOrMetaClass [
 
 { #category : #accessing }
 GLMRubricSmalltalkTextModel >> selectedMethod [
-
-	^ self doItContext ifNil: [ nil ] ifNotNil: [ :aContext | aContext method ]
+	^ self doItContext ifNotNil: [ :aContext | aContext method ]
 ]
 
 { #category : #shout }

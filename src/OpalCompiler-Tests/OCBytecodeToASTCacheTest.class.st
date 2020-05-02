@@ -48,7 +48,10 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 	| pc |
 	pc := cache lastBcOffset + 5.
-	self assert: (cache nodeForPC: pc) identicalTo: compiledMethod ast
+	"if we are beyond the last bc, we map to the whole method"
+	self
+		assert: (cache nodeForPC: pc)
+		identicalTo: compiledMethod ast
 ]
 
 { #category : #tests }
@@ -404,7 +407,6 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetRangeTest [
 	self assert: node start equals: 1.
 	self assert: node stop equals: 67.
 	self assert: node sourceCode equals: compiledMethod ast sourceCode.
-
 ]
 
 { #category : #tests }

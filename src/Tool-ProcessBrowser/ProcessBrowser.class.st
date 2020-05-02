@@ -788,7 +788,7 @@ ProcessBrowser >> methodText [
 						ifNil: ['']
 						ifNotNil: [| pcRange | 
 							methodText := [ selectedContext sourceCode ]
-								ifErrorDo: [ 'error getting method text' ].
+								onErrorDo: [ 'error getting method text' ].
 							pcRange := self pcRange.
 							methodText asText
 								addAttribute: TextColor red

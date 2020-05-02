@@ -159,6 +159,12 @@ Metaclass >> environment [
 	^thisClass environment
 ]
 
+{ #category : #testing }
+Metaclass >> hasBindingThatBeginsWith: aString [
+	"class and pool vars are accessible from the class side the same as the instance side"
+	^self instanceSide hasBindingThatBeginsWith: aString
+]
+
 { #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
 	^ false

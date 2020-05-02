@@ -3,39 +3,16 @@ The rule detects if any Float system classes are refferenced by an AST
 "
 Class {
 	#name : #FloatReferencesRule,
-	#superclass : #ReBasicTreeRule,
+	#superclass : #ReNodeBasedRule,
 	#category : #'Kernel-Rules'
 }
 
 { #category : #running }
-FloatReferencesRule >> basicCheck: anEntity [
+FloatReferencesRule >> basicCheck: node [
+	node isVariable ifFalse: [ ^ false ].
+	node isGlobal ifFalse: [ ^ false ].
+	^(self systemClassNames includes: node name)
 	
-	 self
-		check: anEntity
-		forCritiquesDo: [ ^ true ]
-		ifNone: [ ^ false ]
-]
-
-{ #category : #running }
-FloatReferencesRule >> check: anAST forCritiquesDo: aCriticBlock ifNone: alternativeBlock [
-
-	| encounteredCritique |
-	encounteredCritique := false.
-
-	anAST nodesDo: [ :node |
-		(node isVariable and: [
-		node binding ifNil: [ node doSemanticAnalysis ].
-		node isGlobal and: [ 
-		self systemClassNames includes: node name ] ])
-			ifTrue: [
-				encounteredCritique := true.
-				aCriticBlock cull: (ReTrivialCritique
-					withAnchor: (ReIntervalSourceAnchor
-						entity: anAST
-						interval: node sourceInterval)
-					by: self) ] ].
-
-	encounteredCritique ifFalse: alternativeBlock	
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Note that for API with options the same methods are called for objects and class
 Class {
 	#name : #MetaLinkTargetResolverTest,
 	#superclass : #TestCase,
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #tests }

@@ -4,18 +4,18 @@ When setting up a glamorous presentation it is recommended to pass blocks (or li
 This affects the performance of inspector.
 "
 Class {
-	#name : #ReInspectorPresentationsNonBlockSetup,
+	#name : #ReInspectorPresentationsNonBlockSetupRule,
 	#superclass : #ReAbstractRule,
 	#category : #'Renraku-Rules'
 }
 
 { #category : #'testing-interest' }
-ReInspectorPresentationsNonBlockSetup class >> checksMethod [
+ReInspectorPresentationsNonBlockSetupRule class >> checksMethod [
 	^ true
 ]
 
 { #category : #running }
-ReInspectorPresentationsNonBlockSetup >> check: aMethod forCritiquesDo: aCriticBlock [
+ReInspectorPresentationsNonBlockSetupRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(aMethod hasPragmaNamed: #gtInspectorPresentationOrder:) ifFalse: [ ^ self ].
 	
@@ -36,18 +36,18 @@ ReInspectorPresentationsNonBlockSetup >> check: aMethod forCritiquesDo: aCriticB
 ]
 
 { #category : #accessing }
-ReInspectorPresentationsNonBlockSetup >> group [
+ReInspectorPresentationsNonBlockSetupRule >> group [
 	^ 'Optimization'
 ]
 
 { #category : #accessing }
-ReInspectorPresentationsNonBlockSetup >> name [
+ReInspectorPresentationsNonBlockSetupRule >> name [
 
 	^ 'Use blocks in scripting instead of plain messages'
 ]
 
 { #category : #private }
-ReInspectorPresentationsNonBlockSetup >> presentationScriptingMathods [
+ReInspectorPresentationsNonBlockSetupRule >> presentationScriptingMathods [
 
 	^ #(when: title: display: icon: with: send: format: sorted: tags:)
 ]

@@ -7,7 +7,7 @@ Class {
 		'obj3',
 		'obj4'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #running }
