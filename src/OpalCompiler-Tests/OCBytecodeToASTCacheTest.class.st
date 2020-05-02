@@ -33,6 +33,18 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetTest [
 ]
 
 { #category : #tests }
+OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
+	compiledMethod := ( MethodMapExamples >> #ivar).
+	cache := OCBytecodeToASTCache generateForMethodNode: compiledMethod ast.	
+	self assert: cache firstBcOffset equals: compiledMethod initialPC.
+	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast.
+	self assert: (cache nodeForPC: cache lastBcOffset) identicalTo: compiledMethod ast statements last.
+
+	cache firstBcOffset to: cache lastBcOffset - 1 do:[:pc|
+		self assert: (cache nodeForPC: pc) identicalTo: compiledMethod ast].
+]
+
+{ #category : #tests }
 OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 	| pc |
 	pc := cache lastBcOffset + 5.
