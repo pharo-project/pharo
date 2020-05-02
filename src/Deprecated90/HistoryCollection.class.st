@@ -19,7 +19,7 @@ Class {
 		'storage',
 		'maxSize'
 	],
-	#category : #'Tool-Base-Utilities'
+	#category : #'Deprecated90-Tool-Base'
 }
 
 { #category : #deprecation }
