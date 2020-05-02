@@ -84,9 +84,11 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetRangeTest [
 
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
-	| pc |
+	| pc mappedNode expectedNode |
 	pc := 51.
-	self
-		assert: (cache nodeForPC: pc)
-		identicalTo: (compiledMethod sourceNodeForPC: pc)
+	mappedNode := (cache nodeForPC: pc).
+	expectedNode := compiledMethod ast statements last arguments first statements first.
+	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
+	self assert: mappedNode start equals: expectedNode start.
+	self assert: mappedNode stop equals: expectedNode stop
 ]
