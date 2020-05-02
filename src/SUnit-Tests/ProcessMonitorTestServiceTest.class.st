@@ -187,9 +187,10 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 	
 	testService passBackgroundFailures.
 	
-	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess.
 	"Following timeout is because on CI #resume does not start higher priority process immedietely"
 	self should: [process isTerminated] notTakeMoreThan: 100 milliSeconds. 
+	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess.
+	
 ]
 
 { #category : #tests }
