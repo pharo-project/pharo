@@ -92,7 +92,7 @@ TestExecutionEnvironmentTest >> testCleanUpTestServicesAfterFailedTest [
 
 	[ 
 		self runTestWith: [ self error: 'test error'] 
-	] ifError: [].
+	] onErrorDo: [].
 
 	self assert: testService isCleanUpDone
 ]
@@ -314,7 +314,7 @@ TestExecutionEnvironmentTest >> testNotifyTestServicesAboutCompletedFailedTest [
 
 	[
 		self runTestWith: [ self error: 'test error' ]
-	] ifError: [ self deny: testService isCompletedTestHandled ].
+	] onErrorDo: [ self deny: testService isCompletedTestHandled ].
 
 	self assert: testService isCompletedTestHandled
 ]
@@ -387,7 +387,7 @@ TestExecutionEnvironmentTest >> testResetWatchDogTimeoutBetweenFailedTests [
 	[self runTestWith: [ 
 		executionEnvironment maxTimeForTest: self defaultTimeLimit + 10 seconds. 
 		self error: 'test error']
-	]	ifError: [].
+	]	onErrorDo: [].
 	
 	self runTestWith: [ 
 		self assert: executionEnvironment maxTimeForTest equals: self defaultTimeLimit]
