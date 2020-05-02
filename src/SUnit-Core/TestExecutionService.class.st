@@ -104,7 +104,7 @@ TestExecutionService class >> settingsOn: aBuilder [
 		parent: #sunit;
 		getSelector: #isEnabled;
 		setSelector: #isEnabled:;
-		default: false;
+		default: self isEnabledByDefault;
 		label: self name;
 		description: self descriptionForSettingsBrowser
 ]

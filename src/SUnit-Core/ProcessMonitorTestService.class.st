@@ -128,7 +128,7 @@ ProcessMonitorTestService class >> settingsForTerminationStrategyOn: aBuilder [
 	(aBuilder setting: #shouldTerminateProcesses)
 		target: self;
 		parent: self name ;
-		default: false;
+		default: true;
 		label: 'Terminate all processes after the test' ;
 		description: 'At the end of each test all forked processes will be terminated except when we are running in interractive mode under debugger. 
 When debugger opens all control is up to the user.
