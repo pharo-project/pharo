@@ -392,6 +392,22 @@ ProcessTest >> testNewProcessWith [
 ]
 
 { #category : #tests }
+ProcessTest >> testResumeSuspendedHighPriorityProcessShouldStartImediately [
+	| ended started process |
+	started := ended := false.
+	process := [ started := true. Processor activeProcess suspend. ended := true ] newProcess.
+	process priority: Processor activePriority + 1.
+	process resume.
+	
+	self assert: process isSuspended.
+	self assert: started description: 'higher priority process started and suspended'.
+	
+	process resume.
+	self assert: ended description: 'higher priority process ended'.
+	self assert: process isTerminated description: 'higher priority process terminated'
+]
+
+{ #category : #tests }
 ProcessTest >> testSchedulingHigherPriorityServedFirst [
     "The first process to run will pass straight through the gate
     while the other waits for the assert to whichRan."
