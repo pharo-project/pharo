@@ -397,6 +397,7 @@ ProcessTest >> testResumeSuspendedHighPriorityProcessShouldStartImediately [
 	started := ended := false.
 	process := [ started := true. Processor activeProcess suspend. ended := true ] newProcess.
 	process priority: Processor activePriority + 1.
+	process on: Error do: [ :err | err pass ].
 	process resume.
 	
 	self assert: process isSuspended.
