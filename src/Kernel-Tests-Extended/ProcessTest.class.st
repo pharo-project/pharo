@@ -7,6 +7,15 @@ Class {
 	#category : #'Kernel-Tests-Extended-Processes'
 }
 
+{ #category : #helpers }
+ProcessTest >> createProcessWithOnDoHandler: aBlock [
+	| process |
+	process := aBlock newProcess.
+	process priority: Processor activePriority + 1.
+	process on: Error do: [ :err | err pass ].
+	^process
+]
+
 { #category : #tests }
 ProcessTest >> testFork [
 
@@ -395,9 +404,8 @@ ProcessTest >> testNewProcessWith [
 ProcessTest >> testResumeSuspendedHighPriorityProcessShouldStartImediately [
 	| ended started process |
 	started := ended := false.
-	process := [ started := true. Processor activeProcess suspend. ended := true ] newProcess.
-	process priority: Processor activePriority + 1.
-	process on: Error do: [ :err | err pass ].
+	process := self createProcessWithOnDoHandler: [ 
+		started := true. Processor activeProcess suspend. ended := true ].
 	process resume.
 	
 	self assert: process isSuspended.
