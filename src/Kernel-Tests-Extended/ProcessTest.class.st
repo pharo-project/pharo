@@ -406,8 +406,7 @@ ProcessTest >> testResumeSuspendedHighPriorityProcessShouldStartImediately [
 	started := ended := false.
 	process := self createProcessWithOnDoHandler: [ 
 		started := true. Processor activeProcess suspend. ended := true ].
-	process resume.
-	
+	process resume.	
 	self assert: process isSuspended.
 	self assert: started description: 'higher priority process started and suspended'.
 	
