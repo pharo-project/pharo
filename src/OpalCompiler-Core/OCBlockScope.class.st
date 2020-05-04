@@ -9,7 +9,7 @@ Class {
 
 { #category : #testing }
 OCBlockScope >> hasEscapingVars [
-	^ (copiedVars2 isEmpty and: [tempVector isEmpty]) not
+	^ (copiedVars isEmpty and: [tempVector isEmpty]) not
 ]
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'thisContextVar',
 		'tempVars',
-		'copiedVars2',
+		'copiedVars',
 		'tempVector',
 		'id',
 		'tempVectorVar'
@@ -17,7 +17,7 @@ Class {
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
-	^copiedVars2 at: aTempVar name put: (OCCopyingTempVariable new
+	^copiedVars at: aTempVar name put: (OCCopyingTempVariable new
 			originalVar: aTempVar originalVar;
 			name: aTempVar name;
 			escaping: aTempVar escaping;
@@ -83,18 +83,18 @@ OCAbstractMethodScope >> allTemps [
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> copiedVarNames [
-	^ copiedVars2 keys
+	^ copiedVars keys
 ]
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> copiedVars [
-	^ copiedVars2
+	^ copiedVars
 ]
 
 { #category : #lookup }
 OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
 	"check weather there are any temporaries defined that start with aString"
-	(copiedVars2 hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(thisContextVar name  beginsWith: aString) ifTrue: [ ^true ].
@@ -122,7 +122,7 @@ OCAbstractMethodScope >> initialize [
 
 	tempVars :=  OrderedDictionary new.
 	tempVector  := Dictionary new.
-	copiedVars2 := Dictionary new.
+	copiedVars := Dictionary new.
 	id := 0.
 	
 	thisContextVar := OCThisContextVariable new
@@ -140,7 +140,7 @@ OCAbstractMethodScope >> localTemps [
 	"all temps accessed in the context... for tempVectors, it takes all the vars even those not used here"
 
 	^ Array streamContents: [ :str | 
-			copiedVars2 valuesDo: [ :var | 
+			copiedVars valuesDo: [ :var | 
 					var isStoringTempVector
 						ifTrue: [ var originalVar scope tempVector
 								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
@@ -159,7 +159,7 @@ OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aCo
 { #category : #lookup }
 OCAbstractMethodScope >> lookupVar: name [
 
-	copiedVars2 at: name ifPresent: [:v | ^ v].
+	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
 	name = thisContextVar name ifTrue: [^ thisContextVar].
