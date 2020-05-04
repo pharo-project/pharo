@@ -4,7 +4,9 @@ Check if a subclass of TestCase ends with 'Test' or 'TestCase'.
 Class {
 	#name : #ReTestClassNameShouldEndWithTestRule,
 	#superclass : #ReAbstractRule,
-	#category : #'Renraku-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #'testing-interest' }
@@ -18,11 +20,6 @@ ReTestClassNameShouldEndWithTestRule >> basicCheck: aClass [
 	| suffixes |
 	suffixes := #('Test' 'TestCase').
 	^ (aClass inheritsFrom: TestCase) and: [ suffixes noneSatisfy: [ :suffix | aClass name asString endsWith: suffix ] ]
-]
-
-{ #category : #running }
-ReTestClassNameShouldEndWithTestRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : #accessing }

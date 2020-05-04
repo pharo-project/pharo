@@ -2,24 +2,26 @@
 In a test case the tearDown method should call super tearDown as last message
 "
 Class {
-	#name : #ShouldSendSuperTearDownAsLastMessage,
+	#name : #ReShouldSendSuperTearDownAsLastMessage,
 	#superclass : #ReAbstractRule,
-	#category : #'SUnit-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #'testing-interest' }
-ShouldSendSuperTearDownAsLastMessage class >> checksMethod [
+ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 	^ true
 ]
 
 { #category : #utilities }
-ShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
+ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
 { #category : #utilities }
-ShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCompiledMethod [
+ReShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCompiledMethod [
 	"Return true if the method is a tearDown method and a call to super tearDown is not the last message send."
 
 	| searcher |
@@ -34,18 +36,12 @@ ShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCom
 ]
 
 { #category : #running }
-ShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
+ReShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
 	^ (aMethod methodClass inheritsFrom: TestCase) and: [ aMethod selector = #tearDown and: [ self class superTearDownNotCalledLastIn: aMethod ] ]
 ]
 
 { #category : #accessing }
-ShouldSendSuperTearDownAsLastMessage >> group [
-
-	^ 'SUnit'
-]
-
-{ #category : #accessing }
-ShouldSendSuperTearDownAsLastMessage >> name [
+ReShouldSendSuperTearDownAsLastMessage >> name [
 
 	^ 'Provide a call to super tearDown as the last message in the tearDown method'
 ]
