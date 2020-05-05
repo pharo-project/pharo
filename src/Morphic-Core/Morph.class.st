@@ -2920,7 +2920,7 @@ Morph >> handleMouseDown: anEvent [
 			and: [self cmdGesturesEnabled and: [ anEvent shiftPressed]])
 		ifTrue: [
 			self invokeMetaMenu: anEvent.
-			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ].].
+			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ] ].
 
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
@@ -2934,6 +2934,8 @@ Morph >> handleMouseDown: anEvent [
 			at: Time millisecondClockValue + self mouseStillDownThreshold
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: self mouseStillDownStepRate ].
+		
+	^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2947,10 +2949,12 @@ Morph >> handleMouseEnter: anEvent [
 			^ self eventHandler ifNotNil: [ :handler | handler mouseEnterDragging: anEvent fromMorph: self ] ].
 	self wantsBalloon ifTrue: [ anEvent hand triggerBalloonFor: self after: self balloonHelpDelayTime ].
 
-	^ (self handlesMouseOver: anEvent)
-		ifTrue: [ anEvent wasHandled: true.
-			self mouseEnter: anEvent ]
-		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseEnter: anEvent fromMorph: self ] ]
+	(self handlesMouseOver: anEvent)
+		ifTrue: [ 
+			anEvent wasHandled: true.
+			self mouseEnter: anEvent ].
+
+	^ self eventHandler ifNotNil: [ :handler | handler mouseEnter: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2963,10 +2967,10 @@ Morph >> handleMouseLeave: anEvent [
 				ifTrue: [ anEvent wasHandled: true.
 					self mouseLeaveDragging: anEvent ].
 			^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ].
-	^ (self handlesMouseOver: anEvent)
-		ifTrue: [ anEvent wasHandled: true.
-			self mouseLeave: anEvent ]
-		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ]
+	(self handlesMouseOver: anEvent) ifTrue: [ 
+			anEvent wasHandled: true.
+			self mouseLeave: anEvent ].
+	^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2984,6 +2988,7 @@ Morph >> handleMouseMove: anEvent [
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: self mouseStillDownStepRate ].
+
 	^ self eventHandler ifNotNil: [:handler | handler mouseMove: anEvent fromMorph: self ]
 
 ]
@@ -3014,14 +3019,14 @@ Morph >> handleMouseUp: anEvent [
 	anEvent hand mouseFocus == self ifFalse: [^self]. "Not interested in other parties"
 	anEvent hand releaseMouseFocus: self.
 	anEvent wasHandled: true.
-	^ anEvent blueButtonChanged
+	anEvent blueButtonChanged
 		ifTrue: [
-			self blueButtonUp: anEvent.
-			self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]]
+			self blueButtonUp: anEvent ]
 		ifFalse: [ | result |
 			result := self mouseUp: anEvent.
 			self stopSteppingSelector: #handleMouseStillDown:.
 			result ].
+	^ self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]
 ]
 
 { #category : #'events-processing' }
