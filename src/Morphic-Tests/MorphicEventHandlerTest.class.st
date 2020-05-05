@@ -96,6 +96,25 @@ MorphicEventHandlerTest >> testKeyUpFromMorph [
 ]
 
 { #category : #'tests-events' }
+MorphicEventHandlerTest >> testMouseDownFromMorph [
+	| event |
+
+	event := (MouseButtonEvent new 
+		setType: #mouseDown
+		position: 0@0
+		which: 0
+		buttons: 0
+		hand: (HandMorph new
+			mouseFocus: morph;
+			yourself)
+		stamp: Time millisecondClockValue).
+
+	morph eventHandler on: #mouseDown send: #value to: true.
+	
+	self assert: (event sentTo: morph) identicalTo: true
+]
+
+{ #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseEnterDraggingFromMorph [
 	| event |
 	event := MouseEvent basicNew
@@ -141,6 +160,25 @@ MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 	morph eventHandler on: #mouseLeave send: #value to: true.
 
 	self assert: (morph mouseLeave: nil) identicalTo: true
+]
+
+{ #category : #'tests-events' }
+MorphicEventHandlerTest >> testMouseUpFromMorph [
+	| event |
+
+	event := (MouseButtonEvent new 
+		setType: #mouseUp
+		position: 0@0
+		which: 0
+		buttons: 0
+		hand: (HandMorph new
+			mouseFocus: morph;
+			yourself)
+		stamp: Time millisecondClockValue).
+
+	morph eventHandler on: #mouseUp send: #value to: true.
+	
+	self assert: (event sentTo: morph) identicalTo: true
 ]
 
 { #category : #tests }
