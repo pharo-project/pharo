@@ -1,3 +1,6 @@
+"
+Abstract superclass for custom rows or columns in a glamour tabulator browser
+"
 Class {
 	#name : #GLMCustomCell,
 	#superclass : #Object,
@@ -10,6 +13,11 @@ Class {
 	],
 	#category : #'Glamour-Browsers-Tabulator'
 }
+
+{ #category : #testing }
+GLMCustomCell class >> isAbstract [ 
+	^self == GLMCustomCell
+]
 
 { #category : #accessing }
 GLMCustomCell >> browser [ 
