@@ -2866,19 +2866,23 @@ Morph >> handleFocusEvent: anEvent [
 { #category : #'events-processing' }
 Morph >> handleKeyDown: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self].
-	(self handlesKeyDown: anEvent) ifFalse:[^self].
+	
+	anEvent wasHandled ifTrue:[ ^ self ].
+	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
-	^self keyDown: anEvent
+	self keyDown: anEvent.
+	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
 Morph >> handleKeyUp: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self].
-	(self handlesKeyUp: anEvent) ifFalse:[^self].
+
+	anEvent wasHandled ifTrue:[ ^ self ].
+	(self handlesKeyUp: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
-	^self keyUp: anEvent
+	self keyUp: anEvent.
+	^ self eventHandler ifNotNil: [ :handler | handler keyUp: anEvent fromMorph: self ].
 ]
 
 { #category : #'event handling' }
