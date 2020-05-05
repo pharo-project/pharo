@@ -1796,6 +1796,8 @@ StringTest >> testSkipAnySubstringStartingAt [
 	self assert: ('abcde' skipAnySubstring: #('cd') startingAt: 3) equals: 5.
 	"Test substring appears multiple times in a row"
 	self assert: ('ababc' skipAnySubstring: #('ab') startingAt: 1) equals: 5.
+	"Test substring to skip is given directly as a string instead of in an array"
+	self assert: (',ab' skipAnySubstring: ',' startingAt: 1) equals: 2.
 ]
 
 { #category : #'tests - instance creation' }

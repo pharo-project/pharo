@@ -2202,13 +2202,14 @@ String >> sameAs: aString [
 ]
 
 { #category : #accessing }
-String >> skipAnySubstring: delimiters startingAt: start [ 
-	"Answer the index of the last character within the receiver, starting at start, that does NOT match one of the delimiters. delimiters is an Array of substrings (Characters also allowed).  If the receiver is all delimiters or empty, answer size + 1. Whenever multiple delimiters could be skipped, the largest one is skipped.
+String >> skipAnySubstring: delimiters_ startingAt: start [ 
+	"Answer the index of the last character within the receiver, starting at start, that does NOT match one of the delimiters. delimiters_ is an either a substring or an Array of substrings (Characters also allowed).  If the receiver is all delimiters or empty, answer size + 1. Whenever multiple delimiters could be skipped, the largest one is skipped.
 	'abc' skipAnySubstring: #('a' 'ab') startingAt: 1 >>> 3.
 	'ababc' skipAnySubstring: #('ab') startingAt: 1 >>> 5.
 	"
-	| head size remainingString sizeOfLargestSkippableDelimiter |
+	| head size remainingString sizeOfLargestSkippableDelimiter delimiters |
 	self isEmpty ifTrue: [ ^ 1 ].
+	delimiters := delimiters_ isString ifTrue: {delimiters_}.
 	head := start.
 	size := self size.
 	
