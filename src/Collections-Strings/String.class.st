@@ -2209,7 +2209,7 @@ String >> skipAnySubstring: delimiters_ startingAt: start [
 	"
 	| head size remainingString sizeOfLargestSkippableDelimiter delimiters |
 	self isEmpty ifTrue: [ ^ 1 ].
-	delimiters := delimiters_ isString ifTrue: {delimiters_}.
+	delimiters := delimiters_ isString ifTrue: [{delimiters_}] ifFalse: [ delimiters_ ]. "If delimiters_ is just a string, replace it with an array containing that string."
 	head := start.
 	size := self size.
 	
