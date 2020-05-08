@@ -106,6 +106,13 @@ SpToolBarToggleButtonMorph >> hasBadge [
 	^ self badge notNil
 ]
 
+{ #category : #style }
+SpToolBarToggleButtonMorph >> mouseOverBorderStyle [
+	^ BorderStyle simple
+		width: 0;
+		baseColor: Color transparent
+]
+
 { #category : #accessing }
 SpToolBarToggleButtonMorph >> newBadgeFont [
 	| baseBadgeFont |
@@ -116,14 +123,14 @@ SpToolBarToggleButtonMorph >> newBadgeFont [
 			weightValue: 700
 ]
 
-{ #category : #accessing }
+{ #category : #style }
 SpToolBarToggleButtonMorph >> normalBorderStyle [
 	^ BorderStyle simple
 		width: 0;
 		baseColor: Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : #style }
 SpToolBarToggleButtonMorph >> normalFillStyle [
 	^ Color transparent
 ]

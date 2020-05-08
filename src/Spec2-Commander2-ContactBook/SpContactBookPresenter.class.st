@@ -34,6 +34,7 @@ SpContactBookPresenter class >> buildCommandsGroupWith: presenterInstance forRoo
 
 { #category : #commands }
 SpContactBookPresenter class >> buildContextualMenuGroupWith: presenterInstance [
+
 	^ (CmCommandGroup named: 'Context Menu') asSpecGroup
 		register: (self buildEditionGroupWith: presenterInstance);
 		register: (self buildAddingGroupWith: presenterInstance);
