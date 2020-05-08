@@ -47,7 +47,7 @@ SpScrollableLayout >> constraintsClass [
 { #category : #adding }
 SpScrollableLayout >> remove: aPresenter [
 
-	children removeKey: aPresenter.
 	singleChild := nil.
-	self announceChildRemoved: aPresenter
+	super remove: aPresenter
+	
 ]

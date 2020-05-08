@@ -75,3 +75,16 @@ SpEditableListPresenterTest >> testRemoveBlockExecutedWhenSelectedItemRemoved [
 		assert: selectedItem
 		equals: 2
 ]
+
+{ #category : #tests }
+SpEditableListPresenterTest >> testWhenAddingNewItemThenNewItemIsSelected [
+	presenter 
+		items: #(1 2 3) asOrderedCollection;
+		addItemBlock: [ 4 ].
+		
+	presenter addButton click.
+	
+	self 
+		assert: presenter selectedItem 
+		equals: 4
+]

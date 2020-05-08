@@ -79,8 +79,21 @@ SpAbstractWidgetPresenter >> acceptDroppingMorph: draggedMorph event: event inMo
 
 { #category : #api }
 SpAbstractWidgetPresenter >> addStyle: aStyle [
+	"Add a style-class to a presenter. Styles are defined in the application stylesheet and will 
+	 affect presenters by applying the properties the user adds to the class.
+	 - Styles can just be added to widget presenters (the ones that inherits of *SpAbstractWidgetPresenter*).
+	 - Styles can be added and removed dynamically (see also *SpAbstractWidgetPresenter>>removeStyle:*
+	
+	[[[language=Smalltalk
+	button := self newButton 
+		label: 'Example of style';
+		addStyle: 'myButton';
+		yourself.
+	]]]"
 
-	styles := styles copyWith: aStyle
+	(styles includes: aStyle) ifTrue: [ ^ self ].
+	styles := styles copyWith: aStyle.
+	self withAdapterDo: [ :anAdapter | anAdapter addStyle: aStyle ]
 ]
 
 { #category : #api }
@@ -250,11 +263,20 @@ SpAbstractWidgetPresenter >> isEnabled [
 	^ enabled
 ]
 
+{ #category : #localization }
+SpAbstractWidgetPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #help
+	
+]
+
 { #category : #api }
 SpAbstractWidgetPresenter >> removeStyle: aStyle [
 
-	(styles includes: aStyle) ifFalse: [ aStyle ].
-	styles := styles copyWithout: aStyle 
+	(styles includes: aStyle) ifFalse: [ ^ self ].
+	styles := styles copyWithout: aStyle.
+	self withAdapterDo: [ :anAdapter | anAdapter removeStyle: aStyle ]
 ]
 
 { #category : #private }

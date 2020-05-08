@@ -10,6 +10,14 @@ SpCodePresenterTest >> classToTest [
 	^ SpCodePresenter
 ]
 
+{ #category : #testing }
+SpCodePresenterTest >> expectedFailures [
+
+	"This test will not work on SpCodePresenter because it uses a monospaced font (and this 
+	 fails in morphic)"
+	^ #(testPropagateNaturalWidth)
+]
+
 { #category : #tests }
 SpCodePresenterTest >> testContextKeyBindings [
 	| contextKeyBindings |
