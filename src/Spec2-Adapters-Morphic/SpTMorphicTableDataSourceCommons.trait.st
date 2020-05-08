@@ -52,5 +52,6 @@ SpTMorphicTableDataSourceCommons >> model: aTablePresenter [
 { #category : #sorting }
 SpTMorphicTableDataSourceCommons >> sortByColumn: aColumn event: anEvent morph: aMorph [
 
-	aColumn sortDataSource: self
+	aColumn sortDataSource: self.
+	self model selection unselectAll.
 ]

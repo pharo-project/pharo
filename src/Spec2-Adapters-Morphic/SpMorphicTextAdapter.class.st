@@ -12,16 +12,20 @@ SpMorphicTextAdapter >> addFocusRotationKeyBindings [
 	"Text areas needs to be able to process tab. Cancel the binding."
 ]
 
+{ #category : #'protocol-shortcuts' }
+SpMorphicTextAdapter >> bindKeyCombination: aShortcut toAction: aBlock [ 
+
+	self widgetDo: [ :w | 
+		w textArea
+			bindKeyCombination: aShortcut 
+			toAction: aBlock ]
+]
+
 { #category : #factory }
 SpMorphicTextAdapter >> buildWidget [
-	| widgetClass newWidget |
+	| newWidget |
 	
-	self flag: #pharo7.	"When support for P7 will be dropped, remove this compatibility hack."
-	widgetClass := self class environment 
-		at: #SpRubScrolledTextMorph 
-		ifAbsent: [ RubScrolledTextMorph ].
-	
-	newWidget := (widgetClass on: self)
+	newWidget := (RubScrolledTextMorph on: self)
 		getTextSelector: #getText;
 		setTextSelector: #accept:notifying:;
 		getSelectionSelector: #readSelection;
@@ -31,21 +35,76 @@ SpMorphicTextAdapter >> buildWidget [
 		beWrapped;
 		enabled: self enabled;
 		askBeforeDiscardingEdits: self askBeforeDiscardingEdits;
-		autoAccept: self autoAccept;
+		autoAccept: true;
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
 		setBalloonText: self help;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
 		registerScrollChanges: #scrollValueChanged:;
+		hScrollbarShowWhenNeeded;
 		yourself.
 	
+	self setEditable: self presenter isEditable to: newWidget.
 	self setEditingModeFor: newWidget.
+	self setText: self presenter text to: newWidget.
 	
 	self presenter whenTextChangedDo: [ :text | self setText: text to: newWidget ].
 	self presenter whenPlaceholderChangedDo: [ :text | self setGhostText: text to: newWidget ].
+	self presenter whenEditableChangedDo: [ :value | self setEditable: value to: newWidget ].
 	
 	^ newWidget
+]
+
+{ #category : #'widget API' }
+SpMorphicTextAdapter >> codePaneMenu: aMenu shifted: shifted [
+	| menuPresenter |
+
+	menuPresenter := self model contextMenu value
+		ifNotNil: [ :contextMenu | contextMenu ]
+		ifNil: [ SpMenuPresenter new ].
+	self presenter hasEditionContextMenu ifTrue: [ 
+		self presenter editionContextMenu menuGroups do: [ :each |
+			menuPresenter addMenuGroup: each ] ].
+	^ SpBindings
+		value: self model application adapterBindings
+		during: [ menuPresenter buildWithSpec ]
+]
+
+{ #category : #'widget API' }
+SpMorphicTextAdapter >> cursorPosition [
+
+	^ self widgetDo: [ :w |
+		w textArea selectionStart
+			ifNotNil: [ :sel | self linePositionOf: sel ] ]
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> eventHandlerReceiver: aWidget [
+
+	^ aWidget textArea
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> linePositionOf: sel [
+	| textLine linePosition |
+	
+	textLine := sel textLine.
+	linePosition := sel stringIndex - textLine first + 1.
+	^ linePosition @ textLine lineNumber
+]
+
+{ #category : #styling }
+SpMorphicTextAdapter >> presenterStyles [
+	"The presenters in the style"
+
+	^ self presenter scrollBarStyles, self presenter styles 
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> setEditable: aBoolean to: aWidget [
+
+	aWidget textArea readOnly: aBoolean not
 ]
 
 { #category : #private }
@@ -57,5 +116,36 @@ SpMorphicTextAdapter >> setGhostText: text to: aWidget [
 { #category : #private }
 SpMorphicTextAdapter >> setText: text to: aWidget [
 
-	aWidget setText: text
+	aWidget setText: text.
+	self updateExtentPropagationOf: text on: aWidget
+
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> updateExtentPropagationOf: string on: aWidget [
+	| stringMorph width height |
+
+	(self presenter isPropagateNaturalWidth 
+		or: [ self presenter isPropagateNaturalHeight ])
+		ifFalse: [ ^ self ].
+
+	"This is an incredible ugly hack because what should be the correct way of doing it: 
+	 Font>>widthOfString: does not works (because it fails to take into account kerning).
+	 Why it works on the Editing area is a mystery. 
+	 BUT! It does not works for monospaced fonts! (again, no idea why)"
+	stringMorph := RubEditingArea new 
+		font: aWidget font;
+		updateTextWith: string asString.
+
+	width := stringMorph width + 12" min: self currentWorld width / 3".
+	self presenter isPropagateNaturalWidth 
+		ifTrue: [ aWidget width: width ].
+
+	self presenter isPropagateNaturalHeight 
+		ifTrue: [ 
+			height := ((stringMorph
+				beWrapped;
+				width: width;
+				yourself) height + 2)" min: self currentWorld height / 3". 
+			aWidget height: height ]
 ]
