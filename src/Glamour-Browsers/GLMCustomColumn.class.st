@@ -1,3 +1,6 @@
+"
+A custom column in a glamour tabulator browser
+"
 Class {
 	#name : #GLMCustomColumn,
 	#superclass : #GLMCustomCell,

@@ -364,7 +364,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 	self assert: ast scope tempVars size equals: 0.
 	self assert: ast scope tempVector size equals: 1.
 	self assert: (ast scope lookupVar: 't1') isRemote.
-	self assert: ast scope copiedVars size equals: 1.	"Is this correct, I think that the copied vars should be empty."
+	self assert: ast scope copiedVars size equals: 1.	 "this one copying var is the tempVector"
 
 	scopes := (OCScopesCollector new visitNode: ast) scopes.
 	self assert: scopes second tempVars size equals: 0.
@@ -389,7 +389,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	self assert: scopes third tempVector size equals: 1.
 
 	self deny: (scopes third lookupVar: 'index') isRemote.
-	"problem: as block is optimized, this var does not need to be remote"
+	"as we are in an optimized loop, the var is considered a remote write"
 	self assert: (scopes third tempVector at: 'temp') isRemote
 ]
 

@@ -188,10 +188,7 @@ SpMorphicMenuItemAdapter >> state [
 
 { #category : #'widget API' }
 SpMorphicMenuItemAdapter >> stateSelector [
-
-	^ self state
-		ifNil: [ nil ]
-		ifNotNil: [ #state ]
+	^ self state ifNotNil: [ #state ]
 ]
 
 { #category : #'widget API' }

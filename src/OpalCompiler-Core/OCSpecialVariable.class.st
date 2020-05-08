@@ -26,11 +26,6 @@ OCSpecialVariable >> isSpecialVariable [
 ]
 
 { #category : #testing }
-OCSpecialVariable >> isThisContext [
-	^false
-]
-
-{ #category : #testing }
 OCSpecialVariable >> isUninitialized [
 
 	^ false

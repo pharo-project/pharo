@@ -26,7 +26,10 @@ MorphicUIManager class >> isActiveManager [
 { #category : #testing }
 MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless not or: [ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive'  ] ]
+	^ Smalltalk isHeadless not 
+		or: [ 
+			Smalltalk isHeadless 
+			and: [ Smalltalk isInteractiveGraphic ] ]
 ]
 
 { #category : #private }

@@ -2,24 +2,24 @@
 ifNotNilDo: should not be used as ifNotNil: works for blocks with arguments, too.
 "
 Class {
-	#name : #ReRuleIfNotNilDo,
+	#name : #ReIfNotNilDoRule,
 	#superclass : #ReNodeRewriteRule,
 	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }
-ReRuleIfNotNilDo class >> uniqueIdentifierName [
+ReIfNotNilDoRule class >> uniqueIdentifierName [
 
 	^ 'RuleIfNotNilDo'
 ]
 
 { #category : #accessing }
-ReRuleIfNotNilDo >> group [
+ReIfNotNilDoRule >> group [
 	^ 'Coding Idiom Violation'
 ]
 
 { #category : #initialization }
-ReRuleIfNotNilDo >> initialize [
+ReIfNotNilDoRule >> initialize [
 	super initialize.
 	self
 		replace: '`@receiver ifNotNilDo: `@statements'
@@ -32,6 +32,6 @@ ReRuleIfNotNilDo >> initialize [
 ]
 
 { #category : #accessing }
-ReRuleIfNotNilDo >> name [
+ReIfNotNilDoRule >> name [
 	^ 'Use "ifNotNil:" not "ifNotNilDo:"'
 ]

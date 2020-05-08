@@ -100,10 +100,11 @@ SptQuery >> textInSearchBar [
 
 { #category : #updating }
 SptQuery >> updateFromContext: aGTSpotterContext [
-	| textParts |
+	| textParts texts |
 
 	modifiers removeAll.
-	textParts := (aGTSpotterContext search ifNil:['']) trimBoth
+	texts := (aGTSpotterContext search ifNil:['']) trimBoth.
+	textParts := texts
 		substrings:
 			{Character space.
 			Character tab}.
@@ -111,7 +112,7 @@ SptQuery >> updateFromContext: aGTSpotterContext [
 
 	textParts
 		do: [ :aPart | 
-			(aPart beginsWith: '#')
+			((aPart beginsWith: '#') and: [((texts copyWithout: Character space) includesSubstring: '>>#') not])
 				ifTrue: [ modifiers add: aPart allButFirst asSymbol. ]
 				ifFalse: [ query := (query , ' ' , aPart) trimBoth ] ].
 	

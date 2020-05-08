@@ -44,7 +44,7 @@ SemaphoreTest >> testCritical [
 SemaphoreTest >> testCriticalIfError [
 	| lock |
 	lock := Semaphore forMutualExclusion.
-	[lock critical: [self criticalError ifErrorDo:[]]] forkAt: Processor userInterruptPriority.
+	[lock critical: [self criticalError onErrorDo:[]]] forkAt: Processor userInterruptPriority.
 	self assert: lock isSignaled
 ]
 

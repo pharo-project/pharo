@@ -136,7 +136,7 @@ ClyTypedQueryTestCase >> testForbidCreationOnScopeWhichNotSupportIt [
 
 	[query scope: (ClyCompositeScope in: environment).
 	self assert: false description: 'Query should be supported by scope'
-	] ifErrorDo: [].
+	] onErrorDo: [].
 	
 ]
 
@@ -145,7 +145,7 @@ ClyTypedQueryTestCase >> testForbidCreationOnScopeWithoutEnvironment [
 	[ 
 		query scope: (ClyScopeExample ofAll: {}).
 		self assert: false description: 'Query should be only created on scope bound to concrete environment']
-			ifErrorDo: [  ]
+			onErrorDo: [  ]
 ]
 
 { #category : #tests }

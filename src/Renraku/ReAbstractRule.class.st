@@ -225,6 +225,11 @@ ReAbstractRule >> isComposite [
 	^ false
 ]
 
+{ #category : #testing }
+ReAbstractRule >> isRewriteRule [
+	^false
+]
+
 { #category : #accessing }
 ReAbstractRule >> name [
 	"Answer a human readable name of the rule."

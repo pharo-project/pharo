@@ -6,7 +6,7 @@ MultiFontTest >> testMultistringFont [
 	| text p style height width |
 	[(TextStyle default fontArray at: JapaneseEnvironment leadingChar)
 		ifNil: [^ self]]
-		ifErrorDo: [ ^ self].
+		onErrorDo: [ ^ self].
 	text := ((#(20983874 20983876 20983878 )
 				collect: [:e | e asCharacter])
 				as: String) asText.

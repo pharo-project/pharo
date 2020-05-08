@@ -63,16 +63,20 @@ OCBytecodeToASTCache >> generateForMethodNode: aNode [
 	methodIR := methodNode ir.
 	bcToASTMap := Dictionary new.
 	firstBcOffset := methodNode compiledMethod initialPC.
-	
+
 	"if there is a primitive, we need to record the offset"
-	(methodIR irPrimitive num ~= 0) ifTrue: [ bcToASTMap at: firstBcOffset put: methodNode].
-	
+	(methodIR irPrimitive num ~= 0
+		or: [ methodIR compiledMethod isQuick ])
+		ifTrue: [ bcToASTMap at: firstBcOffset put: methodNode ]. 
+		
 	currentBcOffset := firstBcOffset.
-	methodIR startSequence withAllSuccessors do: [ :seq | 
-		seq do: [ :ir | 
-			ir ifNotNil: [ 
-				bcToASTMap at: ir bytecodeOffset ifAbsentPut: [ ir sourceNode ].
-				currentBcOffset := ir bytecodeOffset + 1 ] ] ].
+	methodIR startSequence withAllSuccessors
+		do: [ :seq | 
+			seq
+				do: [ :ir | 
+					ir
+						ifNotNil: [ bcToASTMap at: ir bytecodeOffset ifAbsentPut: [ ir sourceNode ].
+							currentBcOffset := ir bytecodeOffset + 1 ] ] ].
 	lastBcOffset := currentBcOffset - 1.
 	self fillMissingBCOffsetsWithLastBCOffsetNodes
 ]

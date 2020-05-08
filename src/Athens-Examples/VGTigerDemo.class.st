@@ -2009,9 +2009,9 @@ VGTigerDemo class >> tigerPointsCount [
 { #category : #conversion }
 VGTigerDemo >> convertPathData2 [
 
-	| paths pathData cmdStream ptStream fillBlocks strokeBlocks capBlocks joinBlocks cmdBlocks |
+	| mypaths pathData cmdStream ptStream fillBlocks strokeBlocks capBlocks joinBlocks cmdBlocks |
 	
-	paths := OrderedCollection new.
+	mypaths := OrderedCollection new.
 	cmdStream := self class commands readStream.
 	ptStream := self class tigerPoints readStream.
 	pathData := nil.
@@ -2087,18 +2087,18 @@ VGTigerDemo >> convertPathData2 [
 				]
 		).
 
-		paths add: pathData.
+		mypaths add: pathData.
 		cmdStream atEnd
 	] whileFalse.
 
-	paths do: [:ea |
+	mypaths do: [:ea |
 		self assert: ea fillRule = #VGNONZERO.	
 		ea prepareFor: surface
 		].
 	
 	self assert: (ptStream atEnd).
 	
-	^ paths
+	^ mypaths
 ]
 
 { #category : #run }

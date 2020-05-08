@@ -193,12 +193,16 @@ MethodMapTest >> testPrimitiveMethodSourceNodeAtInitialPC [
 
 { #category : #'testing - temp access' }
 MethodMapTest >> testTempNamedTempCopyingNestedBlock [
-	self assert: (self compileAndRunExample:  #exampleTempNamedTempCopyingNestedBlock) equals: 1.
+	self
+		assert: (self compileAndRunExample: #exampleTempNamedTempCopyingNestedBlock)
+		equals: 1
 ]
 
 { #category : #'testing - temp access' }
-MethodMapTest >> testTempNamedTempCopyingNestedBlockPROBLEM [
-	self assert:  (self compileAndRunExample:  #exampleTempNamedTempCopyingNestedBlockPROBLEM) equals: 1.
+MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
+	self
+		assert: (self compileAndRunExample: #exampleTempNamedTempCopyingNestedBlock2)
+		equals: 1
 ]
 
 { #category : #'testing - ast mapping' }

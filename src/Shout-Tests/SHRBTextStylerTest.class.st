@@ -5,7 +5,7 @@ Class {
 		'styler',
 		'oldSetting'
 	],
-	#category : #'Shout-Tests'
+	#category : #'Shout-Tests-Styling'
 }
 
 { #category : #running }
@@ -40,6 +40,54 @@ SHRBTextStylerTest >> tearDown [
 	SHRBTextStyler formatIncompleteIdentifiers: oldSetting.
 	super tearDown.
 	
+]
+
+{ #category : #running }
+SHRBTextStylerTest >> testClassAfterMessageToASymbolLowercaseShouldBeColored [
+	
+	| aText index attributes ast node |
+
+	SHRBTextStyler formatIncompleteIdentifiers: true.
+
+	aText := 'm1
+		#world traceCr.
+		Object new.' asText.
+
+	index := aText string indexOfSubCollection: 'Object'.
+	
+	ast := self style: aText.
+	
+	attributes := aText attributesAt: index.
+
+	node := ast allChildren detect: [:e | e isMessage ].
+	
+	self assertCollection: attributes hasSameElements: { 
+		TextClassLink className: #Object. 
+		TextColor color: SHPreferences globalVarStyle color }.
+]
+
+{ #category : #running }
+SHRBTextStylerTest >> testClassAfterMessageToASymbolUppercaseShouldBeColored [
+	
+	| aText index attributes ast node |
+
+	SHRBTextStyler formatIncompleteIdentifiers: true.
+
+	aText := 'm1
+		#World traceCr.
+		Object new.' asText.
+
+	index := aText string indexOfSubCollection: 'Object'.
+	
+	ast := self style: aText.
+	
+	attributes := aText attributesAt: index.
+
+	node := ast allChildren detect: [:e | e isMessage ].
+	
+	self assertCollection: attributes hasSameElements: { 
+		TextClassLink className: #Object. 
+		TextColor color: SHPreferences globalVarStyle color}.
 ]
 
 { #category : #running }

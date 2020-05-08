@@ -1,5 +1,5 @@
 Class {
-	#name : #ReTestCaseShouldNotUseInitializeTest,
+	#name : #ReTestCaseShouldNotUseInitializeRuleTest,
 	#superclass : #ReAbstractRuleTestCase,
 	#instVars : [
 		'aDummyVar'
@@ -8,14 +8,14 @@ Class {
 }
 
 { #category : #running }
-ReTestCaseShouldNotUseInitializeTest >> tearDown [ 
+ReTestCaseShouldNotUseInitializeRuleTest >> tearDown [ 
 
 	self class removeSelector: #initialize.
 	super tearDown.
 ]
 
 { #category : #tests }
-ReTestCaseShouldNotUseInitializeTest >> testRule [
+ReTestCaseShouldNotUseInitializeRuleTest >> testRule [
 	| critiques |
 	self class compile: 'initialize
 		super initialize.
@@ -28,7 +28,7 @@ ReTestCaseShouldNotUseInitializeTest >> testRule [
 ]
 
 { #category : #tests }
-ReTestCaseShouldNotUseInitializeTest >> testRuleDoesNotAppear [
+ReTestCaseShouldNotUseInitializeRuleTest >> testRuleDoesNotAppear [
 	| critiques |
 	self class compile: 'initialize
 		super initialize. ' classified: 'test-help'.

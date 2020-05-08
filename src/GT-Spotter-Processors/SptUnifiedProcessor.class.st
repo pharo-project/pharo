@@ -76,7 +76,8 @@ SptUnifiedProcessor >> calculateLowercaseSourcesOn: anStream [
 { #category : #sources }
 SptUnifiedProcessor >> calculateUppercaseSourcesOn: anStream [
 
-	| classesBeginsWith classesIncludesString packagesBeginsWith packagesIncludesString wordsAwareClassesSource wordsAwarePackageSource |
+	| classesBeginsWith classesIncludesString packagesBeginsWith packagesIncludesString wordsAwareClassesSource wordsAwarePackageSource classAndSelectorImplementors |
+	
 	(self categoriesIncludes: #Classes) 
 		ifTrue: [
 			classesBeginsWith := SptSourceFactory current classesBeginsWithSource.			
@@ -106,6 +107,14 @@ SptUnifiedProcessor >> calculateUppercaseSourcesOn: anStream [
 			wordsAwareClassesSource := SptWordsAwareFilter new inner: (SptSourceFactory current classesSubstringSource); yourself.
 			textFilteringIterators add: wordsAwareClassesSource.
 			anStream nextPut: wordsAwareClassesSource ].
+
+	(self categoriesIncludes: #Implementors) 
+		ifTrue: 	[ 	
+			classAndSelectorImplementors := SptClassWithSelectorWordFilter new 
+				inner: (SptSourceFactory current implementorsSubstringSource); 
+				yourself.
+			textFilteringIterators add: classAndSelectorImplementors.
+			anStream nextPut: classAndSelectorImplementors].
 
 	(self categoriesIncludes: #Packages) 
 		ifTrue: [
@@ -163,7 +172,6 @@ SptUnifiedProcessor >> isRelevantForQuery: aString [
 SptUnifiedProcessor >> newSource [
 
 	| uppercaseIterators lowercaseIterators caseSelectorIterator root |
-
 	textFilteringIterators := OrderedCollection new.
 
 	lowercaseIterators := OrderedCollection streamContents: [ :s | self calculateLowercaseSourcesOn: s].
