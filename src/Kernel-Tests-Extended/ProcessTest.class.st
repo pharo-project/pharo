@@ -12,6 +12,7 @@ ProcessTest >> createProcessWithOnDoHandler: aBlock [
 	| process |
 	process := aBlock newProcess.
 	process priority: Processor activePriority + 1.
+
 	process on: Error do: [ :err | err pass ].
 	^process
 ]
