@@ -314,7 +314,8 @@ Process >> isTerminated [
 
 { #category : #testing }
 Process >> isTerminating [
-	^ terminating
+	"lazy initialization is a fallback only for processes that existed before this addition"
+	^ terminating ifNil: [ false ]
 ]
 
 { #category : #printing }
@@ -689,8 +690,9 @@ Process >> terminateFromAnotherProcess [
 	It assumes that self is not the active process
 	and the termination is requested from another process"
 	| ctxt oldList |
-	terminating ifTrue: [ ^ ProcessAlreadyTerminating signal ].
-	terminating := true.
+	terminating := self isTerminating
+		ifTrue: [ ^ ProcessAlreadyTerminating signal ]
+		ifFalse: [ true ].
 	"Always suspend the process first so it doesn't accidentally get woken up"
 	oldList := self suspend.
 	suspendedContext ifNil: [^self].
@@ -726,8 +728,9 @@ Process >> terminateFromYourself [
 	"Stop this process forever from the process itself. 
 	Unwind to execute pending ensure:/ifCurtailed: blocks before terminating.
 	It assumes that self is the active process. "	
-	terminating ifTrue: [ ^ ProcessAlreadyTerminating signal ].
-	terminating := true.
+	terminating := self isTerminating
+		ifTrue: [ ^ ProcessAlreadyTerminating signal ]
+		ifFalse: [ true ].
 	
 	thisContext unwindForTermination.
 	self suspend
