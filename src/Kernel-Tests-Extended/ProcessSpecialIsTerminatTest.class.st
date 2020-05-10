@@ -11,7 +11,6 @@ ProcessSpecialIsTerminatTest >> runCaseManaged [
 
 { #category : #tests }
 ProcessSpecialIsTerminatTest >> testSuspendResumeTerminateBug [
-	
 	| process ended started |
 	ended := false.
 	started := false.
