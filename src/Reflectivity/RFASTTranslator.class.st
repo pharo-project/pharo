@@ -180,6 +180,7 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	"
 	
 	| tempNames  |
+	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName 
@@ -198,6 +199,7 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	self emitMetaLinkBefore: anOptimizedBlockNode.
 	self visitNode: anOptimizedBlockNode body.
 	self emitMetaLinkAfterNoEnsure: anOptimizedBlockNode.
+	methodBuilder popMap.
 ]
 
 { #category : #'visitor-double dispatching' }

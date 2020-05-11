@@ -36,8 +36,9 @@ OCEnvironmentScope >> hasBindingThatBeginsWith: aString [
 { #category : #lookup }
 OCEnvironmentScope >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
-
-	^(environment bindingOf: name asSymbol) ifNotNil: [:assoc | 
+	name isString ifFalse: [ ^nil ].
+	
+	^(environment bindingOf: name) ifNotNil: [:assoc | 
 		OCLiteralVariable new 
 			assoc: assoc; 
 			scope: self; 
