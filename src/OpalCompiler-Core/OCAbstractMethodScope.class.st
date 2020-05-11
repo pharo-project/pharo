@@ -249,6 +249,12 @@ OCAbstractMethodScope >> tempVarNames [
 ]
 
 { #category : #'temp vars' }
+OCAbstractMethodScope >> tempVarNamesWithoutArguments [
+
+	^ tempVars values select: [ :each | each isArg not ] thenCollect: [ :each | each name ]
+]
+
+{ #category : #'temp vars' }
 OCAbstractMethodScope >> tempVars [
 
 	^ tempVars
