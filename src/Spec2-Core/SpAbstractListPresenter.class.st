@@ -64,7 +64,7 @@ SpAbstractListPresenter >> clickItem: anInteger [
 	self selectIndex: anInteger
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> disableFilter [
 	self itemFilter: nil
 ]
@@ -88,12 +88,12 @@ SpAbstractListPresenter >> doubleClickAtIndex: anIndex [
 	self doActivateAtIndex: anIndex
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> enableItemBeginsWithFilter [
 	self itemFilter: [ :each :pattern | each asLowercase beginsWith: pattern asLowercase ]
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> enableItemSubstringFilter [
 	self itemFilter: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
 ]
@@ -135,12 +135,12 @@ SpAbstractListPresenter >> itemAtPath: anArray [
 	^ self listElementAt: anArray first
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> itemFilter [
 	^ itemFilter
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> itemFilter: aBlock [
 	"This block will be used with the search field of the list to filter it with the user input dynamically."
 

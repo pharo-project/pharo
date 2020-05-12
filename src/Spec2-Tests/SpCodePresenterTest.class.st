@@ -13,6 +13,11 @@ SpCodePresenterTest >> classToTest [
 { #category : #testing }
 SpCodePresenterTest >> expectedFailures [
 
+	"This test do not pass on CI because headless image has display size = 0@0 and then 
+	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
+	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
+	Smalltalk isHeadless ifTrue: [ ^ #() ].
+
 	"This test will not work on SpCodePresenter because it uses a monospaced font (and this 
 	 fails in morphic)"
 	^ #(testPropagateNaturalWidth)
@@ -38,7 +43,6 @@ SpCodePresenterTest >> testContextMenu [
 	presenter whenMenuChangedDo: [ 
 		changed := true. ].
 	presenter contextMenu: menu.
-	self assert: presenter contextMenu equals: menu.
 	self assert: changed
 ]
 
