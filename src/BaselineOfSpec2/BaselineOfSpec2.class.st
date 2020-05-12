@@ -68,12 +68,14 @@ BaselineOfSpec2 >> baseline: spec [
 		'Spec2-Adapters-Stub' 
 		'Spec2-Interactions' 
 		'Spec2-Commander2' ).
-	spec group: 'Code' with: #('Spec2-Code').
+	spec group: 'Code' with: #(
+		'Spec2-Code'
+		'Spec2-Code-Morphic'
+		'Spec2-Code-Tests').
 	spec group: 'Morphic' with: #(
 		'Core' 
 		'Spec2-Morphic'
-		'Spec2-Adapters-Morphic' 
-		'Spec2-Code-Morphic' ).
+		'Spec2-Adapters-Morphic' ).
 	spec group: 'MorphicSupport' with: #( 
 		'Core'
 		'Morphic'
@@ -86,8 +88,7 @@ BaselineOfSpec2 >> baseline: spec [
 		'Spec2-Tests' 
 		'Spec2-Commander2-Tests').
 	spec group: 'MorphicSupportTests' with: #( 
-		'MorphicSupport' 
-		'Spec2-Code-Tests'  
+		'MorphicSupport'  
 		'Spec2-Tools-Tests' 
 		'Spec2-Adapters-Morphic-Tests' 
 		'Spec2-Morphic-Tests' 
