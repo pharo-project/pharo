@@ -24,7 +24,9 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
 			package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
 			package: 'Spec2-Transmission';
-			package: 'Spec2-Code';
+			package: 'Spec2-Code' with: [ spec requires: #(
+				'Spec2-Core' 
+				'Spec2-Commands') ];
 			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Code') ];
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #( 'Spec2-Core' ) ];
 			package: 'Spec2-Code-Morphic' with: [ 
@@ -104,7 +106,10 @@ BaselineOfSpec2 >> baseline: spec [
 		self complishon: spec.
 		
 		spec
-			package: 'Spec2-Code' with: [ spec requires: #('HeuristicCompletion') ];
+			package: 'Spec2-Code' with: [ spec requires: #(
+				'Spec2-Core' 
+				'Spec2-Commands'
+				'HeuristicCompletion') ];
 			package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 			package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ] ].
