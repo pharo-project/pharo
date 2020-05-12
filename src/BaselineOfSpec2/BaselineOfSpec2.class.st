@@ -27,8 +27,7 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Code' with: [ 
 				spec requires: #(
 					'Spec2-Core' 
-					'Spec2-Commands'
-					'HeuristicCompletion') ];
+					'Spec2-Commands') ];
 			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Code') ];
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #( 'Spec2-Core' ) ];
 			package: 'Spec2-Code-Morphic' with: [ 
@@ -66,10 +65,11 @@ BaselineOfSpec2 >> baseline: spec [
 		'Spec2-Commands' 
 		'Spec2-Core' 
 		'Spec2-CommandLine' 
-		'Spec2-Code' 
+		"'Spec2-Code'" 
 		'Spec2-Adapters-Stub' 
 		'Spec2-Interactions' 
 		'Spec2-Commander2' ).
+	spec group: 'Code' with: #('Spec2-Code').
 	spec group: 'Morphic' with: #(
 		'Core' 
 		'Spec2-Morphic'
@@ -96,16 +96,22 @@ BaselineOfSpec2 >> baseline: spec [
 		'Spec2-Backend-Tests' ).
 	spec group: 'Pillar' with: #(
 		'Spec2-Pillar' ).
-	spec group: 'default' with: #(
+	spec group: 'Base' with: #(
 		'Core'
 		'Morphic' 
 		'MorphicSupport'
 		'Spec2-Tests'
 		'Spec2-Morphic-Tests'
 		'MorphicSupportTests' ).
+	spec group: 'default' with: #('Base' 'Code').
 
 	spec for: #'pharo8.x' do: [
 		spec
+			package: 'Spec2-Code' with: [ 
+				spec requires: #(
+					'Spec2-Core' 
+					'Spec2-Commands'
+					'HeuristicCompletion') ];
 			package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 			package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ] ].
