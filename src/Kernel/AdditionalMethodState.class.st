@@ -8,7 +8,12 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'method',
-		'selector'
+		'selector',
+		'variablesRawTypes',
+		'returnRawTypes',
+		'remoteVectorRawTypes',
+		'variableNameToTypeIndex',
+		'variableNameToRemoteVectorTypeIndex'
 	],
 	#category : #'Kernel-Methods'
 }
