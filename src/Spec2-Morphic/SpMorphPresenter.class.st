@@ -13,9 +13,24 @@ SpMorphPresenter class >> adapterName [
 	^ #MorphAdapter
 ]
 
+{ #category : #transmission }
+SpMorphPresenter >> defaultInputPort [
+
+	^ self inputMorphPort
+]
+
 { #category : #initialization }
 SpMorphPresenter >> initialize [
 	super initialize.
+]
+
+{ #category : #transmission }
+SpMorphPresenter >> inputMorphPort [ 
+
+	^ self class environment 
+		at: #SpMorphPort
+		ifPresent: [ :aClass | aClass newPresenter: self ]
+		ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
