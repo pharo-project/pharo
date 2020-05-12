@@ -274,6 +274,16 @@ SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 		anAdapter insertPopoverAfterCurrentSelection: aPresenter ]
 ]
 
+{ #category : #accessing }
+SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
+	"Inserts a print-it result popover. 
+	 This is for use of SpCodePrintItCommand"
+	
+	self insertPopoverAfterCurrentSelection: (SpCodePopoverPrintPresenter 
+		newCode: self
+		object: anObject)
+]
+
 { #category : #api }
 SpCodePresenter >> interactionModel [
 

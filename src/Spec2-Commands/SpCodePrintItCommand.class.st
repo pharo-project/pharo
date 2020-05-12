@@ -36,9 +36,7 @@ SpCodePrintItCommand >> execute [
 { #category : #private }
 SpCodePrintItCommand >> printObject: anObject [
 
-	self context insertPopoverAfterCurrentSelection: (SpCodePopoverPrintPresenter 
-		newCode: context 
-		object: anObject)
+	self context insertPrintPopoverAfterCurrentSelection: anObject
 ]
 
 { #category : #private }
