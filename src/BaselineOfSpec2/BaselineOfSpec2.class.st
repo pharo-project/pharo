@@ -11,6 +11,7 @@ BaselineOfSpec2 >> baseline: spec [
 	spec for: #common do: [ 
 		self commander2: spec.
 		self pillar: spec.
+		self complishon: spec.
 		
 		spec
 			package: 'Spec2-ObservableSlot';
@@ -26,7 +27,8 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Code' with: [ 
 				spec requires: #(
 					'Spec2-Core' 
-					'Spec2-Commands') ];
+					'Spec2-Commands'
+					'HeuristicCompletion') ];
 			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Code') ];
 			package: 'Spec2-Adapters-Morphic' with: [ spec requires: #( 'Spec2-Core' ) ];
 			package: 'Spec2-Code-Morphic' with: [ 
@@ -103,13 +105,7 @@ BaselineOfSpec2 >> baseline: spec [
 		'MorphicSupportTests' ).
 
 	spec for: #'pharo8.x' do: [
-		self complishon: spec.
-		
 		spec
-			package: 'Spec2-Code' with: [ spec requires: #(
-				'Spec2-Core' 
-				'Spec2-Commands'
-				'HeuristicCompletion') ];
 			package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
 			package: 'Spec2-Examples' with: [ spec requires: #('Spec2-Tools') ] ].
