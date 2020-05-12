@@ -11,7 +11,6 @@ BaselineOfSpec2 >> baseline: spec [
 	spec for: #common do: [ 
 		self commander2: spec.
 		self pillar: spec.
-		self complishon: spec.
 		
 		spec
 			package: 'Spec2-ObservableSlot';
@@ -106,6 +105,8 @@ BaselineOfSpec2 >> baseline: spec [
 	spec group: 'default' with: #('Base' 'Code').
 
 	spec for: #'pharo8.x' do: [
+		self complishon: spec.
+
 		spec
 			package: 'Spec2-Code' with: [ 
 				spec requires: #(
