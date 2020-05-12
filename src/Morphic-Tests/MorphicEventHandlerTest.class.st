@@ -42,6 +42,24 @@ MorphicEventHandlerTest >> testDoubleClickTimeoutFromMorph [
 	self assert: (morph doubleClickTimeout: nil) identicalTo: true
 ]
 
+{ #category : #'tests-events' }
+MorphicEventHandlerTest >> testKeyDownFromMorph [
+	| keyboardEvent |
+
+	keyboardEvent := KeyboardEvent new
+		setType: #keyDown
+		buttons: 2
+		position: nil
+		keyValue: nil
+		charCode: 65
+		hand: nil
+		stamp: nil.
+
+	morph eventHandler on: #keyDown send: #value to: true.
+
+	self assert: (keyboardEvent sentTo: morph) identicalTo: true
+]
+
 { #category : #tests }
 MorphicEventHandlerTest >> testKeyStrokeFromMorph [
 	| keyboardEvent |
@@ -57,6 +75,43 @@ MorphicEventHandlerTest >> testKeyStrokeFromMorph [
 	morph eventHandler on: #keyStroke send: #value to: true.
 
 	self assert: (morph handleKeystroke: keyboardEvent) identicalTo: true
+]
+
+{ #category : #'tests-events' }
+MorphicEventHandlerTest >> testKeyUpFromMorph [
+	| keyboardEvent |
+
+	keyboardEvent := KeyboardEvent new
+		setType: #keyUp
+		buttons: 2
+		position: nil
+		keyValue: nil
+		charCode: 65
+		hand: nil
+		stamp: nil.
+
+	morph eventHandler on: #keyUp send: #value to: true.
+
+	self assert: (keyboardEvent sentTo: morph) identicalTo: true
+]
+
+{ #category : #'tests-events' }
+MorphicEventHandlerTest >> testMouseDownFromMorph [
+	| event |
+
+	event := (MouseButtonEvent new 
+		setType: #mouseDown
+		position: 0@0
+		which: 0
+		buttons: 0
+		hand: (HandMorph new
+			mouseFocus: morph;
+			yourself)
+		stamp: Time millisecondClockValue).
+
+	morph eventHandler on: #mouseDown send: #value to: true.
+	
+	self assert: (event sentTo: morph) identicalTo: true
 ]
 
 { #category : #'tests-events' }
@@ -105,6 +160,25 @@ MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 	morph eventHandler on: #mouseLeave send: #value to: true.
 
 	self assert: (morph mouseLeave: nil) identicalTo: true
+]
+
+{ #category : #'tests-events' }
+MorphicEventHandlerTest >> testMouseUpFromMorph [
+	| event |
+
+	event := (MouseButtonEvent new 
+		setType: #mouseUp
+		position: 0@0
+		which: 0
+		buttons: 0
+		hand: (HandMorph new
+			mouseFocus: morph;
+			yourself)
+		stamp: Time millisecondClockValue).
+
+	morph eventHandler on: #mouseUp send: #value to: true.
+	
+	self assert: (event sentTo: morph) identicalTo: true
 ]
 
 { #category : #tests }
