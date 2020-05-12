@@ -22,7 +22,7 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-CommandLine' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Commands' with: [ spec requires: #('Commander2') ];
 			package: 'Spec2-Layout' with: [ spec requires: #('Spec2-ObservableSlot') ];
-			package: 'Spec2-Transmission' with: [ spec requires: #('Spec-Core') ];
+			package: 'Spec2-Transmission' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Code' with: [ 
 				spec requires: #(
 					'Spec2-Core' 
