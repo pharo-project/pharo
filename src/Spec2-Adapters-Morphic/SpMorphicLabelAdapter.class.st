@@ -13,8 +13,8 @@ Class {
 { #category : #initialization }
 SpMorphicLabelAdapter >> applyStyle: aMorph [
 
-	aMorph fitContents.
-	super applyStyle: aMorph
+	super applyStyle: aMorph.
+	aMorph fitContents
 ]
 
 { #category : #factory }

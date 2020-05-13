@@ -45,7 +45,7 @@ SpStyle class >> createDefaultStyleSheet [
 	Font { #name: "Source Sans Pro", #size: 10 },
 	Geometry { #height: 25 },
 	.label [
-		Geometry { #hResizing: true, #height: 22 },
+		Geometry { #hResizing: true },
 		.headerError [Draw { #color:  Color{ #red: 1, #green: 0, #blue: 0, #alpha: 1}}  ],
 		.headerSuccess [Draw { #color: Color{ #red: 0, #green: 1, #blue: 0, #alpha: 1}}  ],
 		.header [ 
