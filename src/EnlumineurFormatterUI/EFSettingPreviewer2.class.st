@@ -336,19 +336,9 @@ EFSettingPreviewer2 >> actionSaveSettingButton [
 
 { #category : #'initialization-actions' }
 EFSettingPreviewer2 >> actionSettingDropList [
-    settingsDropList
-        whenSelectionChangedDo: [ :setting | 
-            | currentContext |
-            currentContext := STON
-                fromString:
-                    (setting selectedItem model
-                        valueWithReceiver: methodProvider
-                        arguments: #()).
-            formaterPrettyPrinter installNewContext: currentContext.
-            formatedTextPresenter text: self formatPrettyPrint.
-            formaterPrettyPrinter class
-                defaultPrettyPrintContext: currentContext.
-            settingsTree roots: self getSystemsettingsAsParentName ]
+
+    settingsDropList whenSelectionChangedDo: [ :setting | 
+		self updateSettingDropList: setting ]
 ]
 
 { #category : #accessing }
@@ -611,6 +601,21 @@ EFSettingPreviewer2 >> setupSettingsTree [
 { #category : #'system-Announcement' }
 EFSettingPreviewer2 >> unregisterAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self
+]
+
+{ #category : #'initialization-actions' }
+EFSettingPreviewer2 >> updateSettingDropList: setting [
+	| currentContext |
+
+	setting selectedItem ifNil: [ ^ self ].	
+
+	currentContext := STON fromString: (setting selectedItem model
+		valueWithReceiver: methodProvider
+		arguments: #()).
+	formaterPrettyPrinter installNewContext: currentContext.
+ 	formatedTextPresenter text: self formatPrettyPrint.
+	formaterPrettyPrinter class defaultPrettyPrintContext: currentContext.
+	settingsTree roots: self getSystemsettingsAsParentName
 ]
 
 { #category : #'system-Announcement' }
