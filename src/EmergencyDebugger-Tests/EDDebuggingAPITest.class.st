@@ -60,8 +60,6 @@ EDDebuggingAPITest >> testChangeRecordsForMethod [
 
 { #category : #'tests - debugging support' }
 EDDebuggingAPITest >> testCloseEmergencySession [
-
-	|ed|
 	ed := EDEmergencyDebugger new.
 	ed basicDebug: session.
 	ed debugAPI closeEmergencySession.
@@ -277,7 +275,7 @@ EDDebuggingAPITest >> testTerminateAllProcesses [
 { #category : #'tests - debugging support' }
 EDDebuggingAPITest >> testTerminateSession [
 
-	|ed process|
+	|process|
 	ed := EDEmergencyDebugger new.
 	ed basicDebug: session.
 	process := ed debugAPI session interruptedProcess.
