@@ -132,7 +132,6 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 	^ #(
 		'WebBrowser-Core' "Spec's Link adapter"
 		'Keymapping-Settings' "Spec's KeymapBrowser example tool"
-		'HeuristicCompletion-Morphic' "Spec's code adapter"
 		)
 ]
 
