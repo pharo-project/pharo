@@ -13,5 +13,6 @@ BaselineOfReflectivity >> baseline: spec [
 		spec 
 			package: 'Reflectivity-Tests';
 			package: 'Reflectivity-Examples';
-			package: 'Reflectivity-VariableBreakpoint' ]
+			package: 'Reflectivity-VariableBreakpoint';
+			package: 'Reflectivity-VariableBreakpoint-Extensions' ]
 ]
