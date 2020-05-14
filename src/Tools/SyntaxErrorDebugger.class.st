@@ -126,7 +126,7 @@ SyntaxErrorDebugger >> checkForUnprintableCharacters: aString [
 
 { #category : #other }
 SyntaxErrorDebugger >> closeWindow [
-
+	debugSession ifNotNil: [ debugSession terminate ].
 	self topView close
 
 ]
@@ -234,7 +234,7 @@ SyntaxErrorDebugger >> listMenu: aMenu [
 	^aMenu addList: {
 		{'Proceed' . #proceed}.
 		{'Debug calling process' . #debug}.
-		{'Browse full translated' . #browseMethodFull}}.
+		{'Browse full' . #browseMethodFull}}.
 ]
 
 { #category : #accessing }
@@ -249,15 +249,6 @@ SyntaxErrorDebugger >> proceed [
 	debugSession 
 			resume;
 			clear
-]
-
-{ #category : #initialization }
-SyntaxErrorDebugger >> release [
-	"Prevent that syntaxError window lets a suspended compiler process running, when the window is closed."
-
-	debugSession ifNotNil: [ debugSession terminate ].
-	self releaseActionMap. "we are not sure if we need it"
-	super release.
 ]
 
 { #category : #menu }
@@ -303,8 +294,7 @@ SyntaxErrorDebugger >> setClass: aClass code: aString error: errorMessage locati
 	contents := self checkForUnprintableCharacters: aString.
 	self highlightError.
 		
-	category ifNil: [ category := aClass organization categoryOfElement: selector ].
-	category ifNil: [ category := Protocol unclassified ].
+ 	category := category ifNil: [ (aClass organization categoryOfElement: selector) ifNil: [ Protocol unclassified ] ].
 	doitFlag := flag
 ]
 
