@@ -699,18 +699,6 @@ CompiledMethod >> numberOfReservedLiterals [
 	^ 2
 ]
 
-{ #category : #accessing }
-CompiledMethod >> origin [
-	^ self methodClass findOriginClassOf: self
-]
-
-{ #category : #accessing }
-CompiledMethod >> originMethod [
-	^ self methodClass findOriginMethodOf: self.
-	
-
-]
-
 { #category : #private }
 CompiledMethod >> penultimateLiteral [
 	"Answer the penultimate literal of the receiver, which holds either

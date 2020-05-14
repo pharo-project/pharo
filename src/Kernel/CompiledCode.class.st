@@ -605,6 +605,16 @@ CompiledCode >> objectAt: index put: value [
 ]
 
 { #category : #accessing }
+CompiledCode >> origin [
+	^ self methodClass findOriginClassOf: self method
+]
+
+{ #category : #accessing }
+CompiledCode >> originMethod [
+	^ self methodClass findOriginMethodOf: self method
+]
+
+{ #category : #accessing }
 CompiledCode >> penultimateLiteral [
 	^ self subclassResponsibility
 ]
