@@ -1,11 +1,11 @@
 Class {
-	#name : #SpTestMockAdapters,
+	#name : #SpApplicationWithLocaleTest,
 	#superclass : #TestCase,
 	#category : #'Spec2-Morphic-Backend-Tests-Localization'
 }
 
 { #category : #tests }
-SpTestMockAdapters >> testLabel [
+SpApplicationWithLocaleTest >> testLabel [
 	| app label string |
 	app := SpTestApplicationWithLocale new.
 	app locale: (Locale isoLanguage: 'en' isoCountry: 'US').
