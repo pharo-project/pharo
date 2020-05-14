@@ -10,6 +10,7 @@ Class {
 { #category : #running }
 SpCodePopoverPrintPresenterTest >> setUp [
 
+	super setUp.
 	presenter := SpCodePopoverPrintPresenter new
 ]
 

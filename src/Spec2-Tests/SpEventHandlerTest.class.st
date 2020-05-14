@@ -12,7 +12,9 @@ SpEventHandlerTest >> tearDown [
 
 	presenter ifNil: [ ^ self ].
 	presenter withWindowDo: [ :w | w close ].
-	presenter := nil
+	presenter := nil.
+	
+	super tearDown
 ]
 
 { #category : #tests }

@@ -26,7 +26,9 @@ SpAbstractSelectionModeTest >> setUp [
 
 { #category : #running }
 SpAbstractSelectionModeTest >> tearDown [ 
-	presenter delete
+
+	presenter delete.
+	super tearDown
 ]
 
 { #category : #tests }

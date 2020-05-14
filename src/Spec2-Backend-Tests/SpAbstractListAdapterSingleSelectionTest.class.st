@@ -22,7 +22,9 @@ SpAbstractListAdapterSingleSelectionTest >> initializeTestedInstance [
 
 { #category : #running }
 SpAbstractListAdapterSingleSelectionTest >> tearDown [ 
+
 	presenter delete.
+	super tearDown
 ]
 
 { #category : #'tests-model-to-widget' }

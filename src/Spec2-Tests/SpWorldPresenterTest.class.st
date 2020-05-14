@@ -10,6 +10,8 @@ Class {
 
 { #category : #setup }
 SpWorldPresenterTest >> setUp [
+
+	super setUp.
 	worldMorph := SpTestWorldPresenter
 		reset;
 		currentWorld.
@@ -22,7 +24,9 @@ SpWorldPresenterTest >> setUp [
 
 { #category : #setup }
 SpWorldPresenterTest >> tearDown [
-	worldMorph delete
+
+	worldMorph delete.
+	super tearDown
 ]
 
 { #category : #tests }
