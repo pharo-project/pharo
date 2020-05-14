@@ -64,9 +64,10 @@ SpRichTextPresenter >> plaintext [
 
 { #category : #rendering }
 SpRichTextPresenter >> renderTree [
-	^ SpRenderTreeBuilderVisitor new 
+	
+	"^ SpRenderTreeBuilderVisitor new 
 			styleProvider: self styleAttributes;
-			render: self model
+			render: self model"
 ]
 
 { #category : #initialization }
