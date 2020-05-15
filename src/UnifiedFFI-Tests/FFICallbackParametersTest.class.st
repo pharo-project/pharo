@@ -19,6 +19,8 @@ Class {
 { #category : #executing }
 FFICallbackParametersTest >> callCallback: aFFICallback withArgs: aCollection [ 
 
+	self assert: aCollection isArray.
+
 	^ (ExternalLibraryFunction 
 			name: nil
 			module: nil
