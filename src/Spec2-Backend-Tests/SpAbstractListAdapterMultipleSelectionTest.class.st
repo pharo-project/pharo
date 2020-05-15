@@ -19,10 +19,11 @@ SpAbstractListAdapterMultipleSelectionTest >> initializeTestedInstance [
 		items: {10. 20. 30. 'aaa' asText}
 ]
 
-{ #category : #tests }
-SpAbstractListAdapterMultipleSelectionTest >> tearDown [ 
+{ #category : #running }
+SpAbstractListAdapterMultipleSelectionTest >> tearDown [
+
 	presenter delete.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
