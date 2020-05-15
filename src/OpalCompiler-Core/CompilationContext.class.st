@@ -76,7 +76,7 @@ CompilationContext class >> cleanOptionString: string [
 ]
 
 { #category : #options }
-CompilationContext class >> compilerSpecificSettingsOn: aBuilder [
+CompilationContext class >> compilerSettingsOn: aBuilder [
 	self optionsDescription withIndexDo: [ :description :index |
 		| optionStringCleaned option |
 		option := description second.
