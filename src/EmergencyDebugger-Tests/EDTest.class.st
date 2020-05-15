@@ -1,5 +1,5 @@
 Class {
-	#name : #EDTests,
+	#name : #EDTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'ed',
@@ -12,12 +12,12 @@ Class {
 }
 
 { #category : #testing }
-EDTests class >> isAbstract [ 	
-	^self == EDTests 
+EDTest class >> isAbstract [ 	
+	^self == EDTest 
 ]
 
 { #category : #running }
-EDTests >> configureDebugSession [
+EDTest >> configureDebugSession [
 
 	"Configure a debug session and moves it to the following stack:
 	EDMockObjectForTests>>m: 5
@@ -94,7 +94,7 @@ EDTests >> configureDebugSession [
 ]
 
 { #category : #'instance creation' }
-EDTests >> newEd [
+EDTest >> newEd [
 	ed := EDEmergencyDebugger new.
 	ed repl: EDMockREPLInterface new.
 	ed displayInterface: (mockDisplayAPI := EDMockDisplayInterface new).
@@ -103,7 +103,7 @@ EDTests >> newEd [
 ]
 
 { #category : #'methods version' }
-EDTests >> prepareMethodVersionTest [
+EDTest >> prepareMethodVersionTest [
 	| context process |
 	EDMockObjectForTests compile: self sampleMethodSourceCodeVersion1.
 	EDMockObjectForTests compile: self sampleMethodSourceCodeVersion2.
@@ -125,17 +125,17 @@ EDTests >> prepareMethodVersionTest [
 ]
 
 { #category : #'methods version' }
-EDTests >> sampleMethodSourceCodeVersion1 [
+EDTest >> sampleMethodSourceCodeVersion1 [
 	^ 'mWithVersion |i| i := 0. ^i + 1'
 ]
 
 { #category : #'methods version' }
-EDTests >> sampleMethodSourceCodeVersion2 [
+EDTest >> sampleMethodSourceCodeVersion2 [
 	^ 'mWithVersion |i| i := 0. ^i + 2'
 ]
 
 { #category : #running }
-EDTests >> setUp [
+EDTest >> setUp [
 	|context process|
 	super setUp.
 	currentDebuggingAPI := EDEmergencyDebugger debugAPI.
@@ -154,7 +154,7 @@ EDTests >> setUp [
 ]
 
 { #category : #running }
-EDTests >> tearDown [
+EDTest >> tearDown [
 	EDEmergencyDebugger debugAPI: currentDebuggingAPI.
 	session terminate.
 	EDMockObjectForTests removeSelector: #mWithVersion.

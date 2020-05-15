@@ -1,6 +1,6 @@
 Class {
 	#name : #EDEmergencyDebuggerTest,
-	#superclass : #EDTests,
+	#superclass : #EDTest,
 	#category : #'EmergencyDebugger-Tests'
 }
 
