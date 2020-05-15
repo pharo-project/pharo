@@ -11,14 +11,13 @@ Class {
 		'contents',
 		'class',
 		'selector',
-		'category',
 		'debugSession',
-		'doitFlag',
 		'window',
+		'editor',
 		'location',
-		'error',
 		'announcer',
-		'syntaxError'
+		'syntaxError',
+		'errorMessage'
 	],
 	#category : #'Tools-Debugger'
 }
@@ -27,8 +26,8 @@ Class {
 SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxErrorDebugger [
 	"Answer an Morphic view on the given SyntaxError."
 
-	| window |
-	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxErrorDebugger error)
+	| window editor |
+	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxErrorDebugger errorMessage)
 		model: aSyntaxErrorDebugger.
 	window
 		addMorph:
@@ -41,7 +40,7 @@ SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxErrorDebugger [
 		frame: (0 @ 0 corner: 1 @ 0.15).
 	window
 		addMorph:
-			(RubScrolledTextMorph new
+			(editor := RubScrolledTextMorph new
 				on: aSyntaxErrorDebugger
 				text: #contents
 				accept: #contents:notifying:
@@ -49,6 +48,7 @@ SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxErrorDebugger [
 				menu: #codePaneMenu:shifted:)
 		frame: (0 @ 0.15 corner: 1 @ 1).
 	aSyntaxErrorDebugger window: window.
+	aSyntaxErrorDebugger editor: editor.
 	window extent: 380 @ 220.
 	^ window openInWorld
 ]
@@ -98,12 +98,9 @@ SyntaxErrorDebugger >> browseMethodFull [
 			openOnClass: myClass selector: self selectedMessageName]
 ]
 
-{ #category : #accessing }
-SyntaxErrorDebugger >> category: aSymbol [
-	"Record the message category of method being compiled. This is used when the user corrects the error and accepts."
-
-	category := aSymbol.
-
+{ #category : #other }
+SyntaxErrorDebugger >> category [
+	^(class organization categoryOfElement: selector) ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #initialization }
@@ -133,7 +130,7 @@ SyntaxErrorDebugger >> codePaneMenu: aMenu shifted: shifted [
 	text pane"
 
 	| donorMenu |
-	donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: self)
+	donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: editor)
 		menu.
 	^ aMenu addAllFrom: donorMenu
 ]
@@ -154,7 +151,7 @@ SyntaxErrorDebugger >> contents: aString notifying: aController [
 
 	aController hasUnacceptedEdits: false.
 	
-	doitFlag
+	syntaxError doitFlag
 		ifTrue: [ self class compiler evaluate: aString ]
 		ifFalse: [ self resume: aString ].
 	self closeWindow
@@ -177,8 +174,13 @@ SyntaxErrorDebugger >> debug [
 ]
 
 { #category : #accessing }
-SyntaxErrorDebugger >> error [
-	^ error
+SyntaxErrorDebugger >> editor: anEditor [
+	editor := anEditor
+]
+
+{ #category : #accessing }
+SyntaxErrorDebugger >> errorMessage [
+	^ errorMessage
 ]
 
 { #category : #initialization }
@@ -200,9 +202,9 @@ SyntaxErrorDebugger >> highlightError [
 SyntaxErrorDebugger >> list [
 	"Answer an array of one element made up of the class name, message category, and message selector in which the syntax error was found. This is the single item in the message list of a view/browser on the receiver."
 
-	selector ifNil: [^ Array with: (class name, '  ', (category ifNil: ['']), '  ', '<none>')].
-	category ifNil: [^ Array with: (class name, '    ', '<none>')].
-	^ Array with: (class name, '  ', category, '  ', selector)
+	selector ifNil: [^ Array with: (class name, '  ', (self category ifNil: ['']), '  ', '<none>')].
+	self category ifNil: [^ Array with: (class name, '    ', '<none>')].
+	^ Array with: (class name, '  ', self category, '  ', selector)
 
 ]
 
@@ -280,7 +282,7 @@ SyntaxErrorDebugger >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 
 { #category : #accessing }
 SyntaxErrorDebugger >> sourceErrorString [
-	^ error , ' -> '
+	^ errorMessage , ' -> '
 ]
 
 { #category : #initialization }
@@ -289,15 +291,12 @@ SyntaxErrorDebugger >> syntaxError: aSyntaxError [
 	
 	syntaxError := aSyntaxError.
 	class :=  aSyntaxError errorClass.
-	error := aSyntaxError errorMessage.
+	errorMessage := aSyntaxError errorMessage.
 	location := aSyntaxError location.	
 	debugSession := (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext).
 	contents := self checkForUnprintableCharacters: aSyntaxError errorCode.
 	selector := class compiler parseSelector: contents.	
-	self highlightError.
-
- 	category := (class organization categoryOfElement: selector) ifNil: [ Protocol unclassified ].
-	doitFlag := aSyntaxError doitFlag
+	self highlightError
 ]
 
 { #category : #accessing }
