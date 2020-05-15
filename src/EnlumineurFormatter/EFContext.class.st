@@ -47,7 +47,8 @@ Class {
 		'periodAtEndOfMethod',
 		'periodAtEndOfBlock',
 		'newLinesAfterMethodComment',
-		'newLinesAfterMethodPattern'
+		'newLinesAfterMethodPattern',
+		'periodsAtEndOfBlock'
 	],
 	#category : #'EnlumineurFormatter-Core'
 }
