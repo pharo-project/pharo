@@ -219,6 +219,32 @@ FBDDecompiler >> extractBlockWith: copied numArgs: numArgs blockSize: blockSize 
 		arguments: (simulatedStack first: numArgs)
 ]
 
+{ #category : #'closure support' }
+FBDDecompiler >> extractFullBlock: aCompiledBlock numCopied: numCopied [
+
+	| oldInstructionStream oldLoops|
+
+	self
+		initializeStackNumArgs: aCompiledBlock numArgs
+		copied: (self popFromStack: numCopied)
+		numTemps: aCompiledBlock numTemps - aCompiledBlock numArgs - numCopied.
+
+	oldLoops := loopsArray.
+	oldInstructionStream := instructionStream.
+
+	loopsArray := FBDLoopScanner scan: aCompiledBlock.
+	instructionStream := InstructionStream on: aCompiledBlock.
+
+	self interpret: aCompiledBlock endPC.
+
+	instructionStream := oldInstructionStream.
+	loopsArray := oldLoops.
+
+	^ builder
+		codeBlock: currentSequence
+		arguments: (simulatedStack first: aCompiledBlock numArgs)
+]
+
 { #category : #private }
 FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
@@ -484,6 +510,24 @@ FBDDecompiler >> pushConsArrayWithElements: numElements [
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushConstant: value [
 	simulatedStack addLast: (builder codeLiteral: value)
+]
+
+{ #category : #'data flow instructions' }
+FBDDecompiler >> pushFullClosure: aCompiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [ 
+
+	| savedSimStack savedSequence |
+
+	savedSimStack := simulatedStack.
+	savedSequence := currentSequence.
+
+	receiverOnStack ifTrue: [ 1 halt ].
+
+	simulatedStack addLast: (self
+		extractFullBlock: aCompiledBlock numCopied: numCopied).
+
+	simulatedStack := savedSimStack.
+	currentSequence := savedSequence.
+
 ]
 
 { #category : #'data flow instructions' }
