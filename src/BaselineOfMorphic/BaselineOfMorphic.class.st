@@ -53,7 +53,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
 		spec package: 'EmergencyDebugger'.
-		spec package: 'EmergencyDebugger-Tests'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
