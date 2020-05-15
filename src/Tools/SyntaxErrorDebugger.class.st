@@ -14,7 +14,7 @@ Class {
 		'category',
 		'debugSession',
 		'doitFlag',
-		'dependents',
+		'window',
 		'location',
 		'error',
 		'announcer',
@@ -24,16 +24,16 @@ Class {
 }
 
 { #category : #'instance creation' }
-SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxError [
+SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxErrorDebugger [
 	"Answer an Morphic view on the given SyntaxError."
 
 	| window |
-	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxError error)
-		model: aSyntaxError.
+	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxErrorDebugger error)
+		model: aSyntaxErrorDebugger.
 	window
 		addMorph:
 			((PluggableListMorph
-				on: aSyntaxError
+				on: aSyntaxErrorDebugger
 				list: #list
 				selected: #listIndex
 				changeSelected: nil
@@ -42,19 +42,19 @@ SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxError [
 	window
 		addMorph:
 			(RubScrolledTextMorph new
-				on: aSyntaxError
+				on: aSyntaxErrorDebugger
 				text: #contents
 				accept: #contents:notifying:
 				readSelection: #contentsSelection
 				menu: #codePaneMenu:shifted:)
 		frame: (0 @ 0.15 corner: 1 @ 1).
-	aSyntaxError addDependant: window.
+	aSyntaxErrorDebugger window: window.
 	window extent: 380 @ 220.
 	^ window openInWorld
 ]
 
 { #category : #'instance creation' }
-SyntaxErrorDebugger class >> open: aSyntaxError [ 
+SyntaxErrorDebugger class >> open: aSyntaxErrorDebugger [
 	"Answer a standard system view whose model is an instance of me."
 	<primitive: 19>
 	"Simulation guard"
@@ -62,7 +62,7 @@ SyntaxErrorDebugger class >> open: aSyntaxError [
 	process := Processor activeProcess.
 	UIManager default spawnNewProcessIfThisIsUI: process.
 	UIManager default defer: [
-		self buildMorphicViewOn: aSyntaxError.
+		self buildMorphicViewOn: aSyntaxErrorDebugger.
 	].
 	^ process suspend
 ]
@@ -81,11 +81,6 @@ SyntaxErrorDebugger class >> syntaxError: aSyntaxError [
 		syntaxError: aSyntaxError;
 		yourself
 		
-]
-
-{ #category : #'dependents access' }
-SyntaxErrorDebugger >> addDependant: aDependant [
-	dependents add: aDependant
 ]
 
 { #category : #accessing }
@@ -127,7 +122,7 @@ SyntaxErrorDebugger >> checkForUnprintableCharacters: aString [
 { #category : #other }
 SyntaxErrorDebugger >> closeWindow [
 	debugSession ifNotNil: [ debugSession terminate ].
-	self topView close
+	window close
 
 ]
 
@@ -199,11 +194,6 @@ SyntaxErrorDebugger >> highlightError [
 	location ifNil: [ ^ self ].	
 	contents addAttribute: TextColor red from: location to: location + self sourceErrorString size - 1.
 	contents addAttribute: TextEmphasis bold from: location to: location + self sourceErrorString size - 1.
-]
-
-{ #category : #initialization }
-SyntaxErrorDebugger >> initialize [
-	dependents := Set new.
 ]
 
 { #category : #'message list' }
@@ -283,21 +273,6 @@ SyntaxErrorDebugger >> selectedMessageName [
 
 ]
 
-{ #category : #initialization }
-SyntaxErrorDebugger >> setClass: aClass code: aString error: errorMessage location: anErrorPosition debugSession: aDebugSession doitFlag: flag [
-
-	class := aClass.
-	error := errorMessage.
-	location := anErrorPosition.	
-	debugSession := aDebugSession.
-	selector := aClass compiler parseSelector: aString.
-	contents := self checkForUnprintableCharacters: aString.
-	self highlightError.
-		
- 	category := category ifNil: [ (aClass organization categoryOfElement: selector) ifNil: [ Protocol unclassified ] ].
-	doitFlag := flag
-]
-
 { #category : #other }
 SyntaxErrorDebugger >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ true
@@ -313,25 +288,24 @@ SyntaxErrorDebugger >> syntaxError: aSyntaxError [
 	"extract the instance properties from a SyntaxErrorNotification"
 	
 	syntaxError := aSyntaxError.
-	self 
-		setClass: aSyntaxError errorClass
-		code: aSyntaxError errorCode
-		error: aSyntaxError errorMessage
-		location: aSyntaxError location
-		debugSession: (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext)
-		doitFlag: aSyntaxError doitFlag.
+	class :=  aSyntaxError errorClass.
+	error := aSyntaxError errorMessage.
+	location := aSyntaxError location.	
+	debugSession := (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext).
+	contents := self checkForUnprintableCharacters: aSyntaxError errorCode.
+	selector := class compiler parseSelector: contents.	
+	self highlightError.
+
+ 	category := (class organization categoryOfElement: selector) ifNil: [ Protocol unclassified ].
+	doitFlag := aSyntaxError doitFlag
 ]
 
 { #category : #accessing }
-SyntaxErrorDebugger >> topView [
-	"Find the first top view on me. Is there any danger of their being two
-	with the same model? Any danger from ungarbage collected old views?
-	Ask if schedulled?"
-	dependents
-		ifNil: [^ nil].
-	dependents
-		do: [:v | (v isSystemWindow
-					and: [v isInWorld])
-				ifTrue: [^ v]].
-	^ nil
+SyntaxErrorDebugger >> window [
+	^window
+]
+
+{ #category : #accessing }
+SyntaxErrorDebugger >> window: aWindow [
+	window := aWindow
 ]
