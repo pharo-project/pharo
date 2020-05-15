@@ -27,6 +27,12 @@ CompiledBlock >> hasPragmaNamed: aSymbol [
 	^ false
 ]
 
+{ #category : #properties }
+CompiledBlock >> hasProperty: aString [ 
+	
+	^ false
+]
+
 { #category : #testing }
 CompiledBlock >> hasSourceCode [
 	^ self method hasSourceCode
@@ -120,6 +126,12 @@ CompiledBlock >> printOn: s [
 { #category : #compatibility }
 CompiledBlock >> properties [
 	^ nil->nil
+]
+
+{ #category : #properties }
+CompiledBlock >> propertyAt: aString [ 
+	
+	^ nil
 ]
 
 { #category : #comparing }
