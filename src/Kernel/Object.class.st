@@ -1131,6 +1131,12 @@ Object >> isColorForm [
 ]
 
 { #category : #testing }
+Object >> isCompiledBlock [
+
+	^ false
+]
+
+{ #category : #testing }
 Object >> isCompiledMethod [
 
 	^ false

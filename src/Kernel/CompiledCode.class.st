@@ -77,6 +77,19 @@ CompiledCode >> accessesSlot: aSlot [
 	
 ]
 
+{ #category : #accessing }
+CompiledCode >> addWithAllBlocksInto: collected [
+
+	(collected includes: self) ifTrue: [ ^ collected ].
+	collected add: self.
+
+	self literals 
+		select: [ :aLiteral | aLiteral isCompiledBlock ] 
+		thenDo: [ :aLiteral | aLiteral addWithAllBlocksInto: collected ].
+		
+	^ collected
+]
+
 { #category : #literals }
 CompiledCode >> additionalMethodStateRefersToLiteral: literal [
 	^ self penultimateLiteral isMethodProperties
@@ -377,11 +390,6 @@ CompiledCode >> isCollection [
 	"We should override it because most of collection methods are not working for CompiledMethod. It is special class which needs to be ByteArray by VM. But it is not behaves like ByteArray from user perspective.
 	And some tools uses isCollection check for specific behaviour which will fail for CompiledMethod"
 	^false
-]
-
-{ #category : #testing }
-CompiledCode >> isCompiledBlock [
-	^ false
 ]
 
 { #category : #testing }
@@ -886,6 +894,12 @@ CompiledCode >> voidCogVMState [
 
 	<primitive: 215>
 	^self flushCache
+]
+
+{ #category : #accessing }
+CompiledCode >> withAllBlocks [
+
+	^ self addWithAllBlocksInto: IdentitySet new.
 ]
 
 { #category : #scanning }
