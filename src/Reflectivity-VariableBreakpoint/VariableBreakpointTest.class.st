@@ -84,7 +84,7 @@ VariableBreakpointTest >> nodesForV2InFieldWatchpointMockSubclass [
 
 { #category : #running }
 VariableBreakpointTest >> setUp [
-	"Hooks that subclasses may override to define the fixture of test."
+	super setUp.	
 	obj1 := VariableBreakpointMockClass new.
 	obj2 := VariableBreakpointMockSubclass new.
 	obj3 := VariableBreakpointMockClass new.
