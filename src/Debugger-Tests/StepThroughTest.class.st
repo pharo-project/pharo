@@ -43,7 +43,7 @@ StepThroughTest >> stepB3 [
 StepThroughTest >> testStepThrough [
 	"In a context c, define a block b, send a message to another method to get b evaluated.
 	Testing that a step through on this message send moves the execution to the point where the block b is about to be evaluated."
-	| node |
+	| node expectedMethod |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 	session stepInto.
 	session stepInto.
@@ -55,9 +55,15 @@ StepThroughTest >> testStepThrough [
 	self assert: node receiver isSelf.
 	self assert: node selector equals: #evalBlockThenReturnOne:.
 	session stepThrough.
+
+	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
+	expectedMethod := (self class >> #stepA1) encoderClass = EncoderForV3PlusClosures
+		ifTrue: [ self class >> #stepA1 ]
+		ifFalse: [ (self class >> #stepA1) literalAt: 1 ].
+
 	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
-	self assert: (session interruptedContext method) equals: (self class>>#stepA1).
-	node := self class>>#stepA1 sourceNodeForPC: session interruptedContext pc.
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelf.
 	self assert: node selector equals: #stepA2.
@@ -68,8 +74,11 @@ StepThroughTest >> testStepThrough [
 StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolved [
 	"Testing that when no block is involved, a step through moves the execution to the same point a step over would"
 	| node |
+
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
-	session stepInto.
+	[session interruptedContext method == (self class>>#stepB1)] 
+		whileFalse: [ session stepInto ].
+
 	"Reached node 'self stepB2' of method stepB1"
 	self assert: session interruptedContext method equals: self class>>#stepB1.
 	session stepOver.
@@ -82,7 +91,9 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	
 	"Set up the debugged execution again"
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
-	session stepInto.
+	[session interruptedContext method == (self class>>#stepB1)] 
+		whileFalse: [ session stepInto ].
+
 	"Reached node 'self stepB2' of method stepB1"
 	self assert: session interruptedContext method equals: self class>>#stepB1.
 	session stepThrough.

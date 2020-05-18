@@ -77,7 +77,8 @@ StepOverTest >> testSimulatedProcessIsInCorrectState [
 	| executed |
 	executed := false.
 	self settingUpSessionAndProcessAndContextForBlock: [executed := true ].
-	
+
+	session stepOver.
 	session stepOver.
 	
 	self assert: executed
@@ -88,7 +89,9 @@ StepOverTest >> testStepOver [
 	"Stepping over a message node brings the execution to the next node in the same method."
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
-	session stepInto.
+	[session interruptedContext method == (self class>>#stepA1)] 
+		whileFalse: [ session stepInto ].
+
 	"Reached stepA1"
 	"Checking that the execution is at the 'self stepA2' node of the stepA1 method"
 	self assert: session interruptedContext method equals: self class >>#stepA1.
@@ -117,7 +120,10 @@ StepOverTest >> testStepOverComputedReturn [
 	"
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepC1 ].
-	session stepInto.
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepC1 ].
+	[session interruptedContext method == (self class>>#stepC1)] 
+		whileFalse: [ session stepInto ].
+
 	"Reached stepC1"
 	self assert: session interruptedContext method equals: self class >>#stepC1.
 	session stepInto.
@@ -154,7 +160,9 @@ StepOverTest >> testStepOverLastNodeOfContext [
 	"Stepping over the last node of a method brings the execution to the method node of that method."
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
-	session stepInto.
+	[session interruptedContext method == (self class>>#stepB1)] 
+		whileFalse: [ session stepInto ].
+
 	"Reached stepB1"
 	session stepInto.
 	"Reached stepB2"
