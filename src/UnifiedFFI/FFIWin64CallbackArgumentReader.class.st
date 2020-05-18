@@ -19,14 +19,23 @@ If any of the four first parameters does not fit in the registers are passed in 
 Class {
 	#name : #FFIWin64CallbackArgumentReader,
 	#superclass : #FFIAbstract64BitsArgumentReader,
+	#instVars : [
+		'currentParameterIndex'
+	],
 	#category : #'UnifiedFFI-Callbacks'
 }
 
 { #category : #accessing }
 FFIWin64CallbackArgumentReader >> currentParameterIndex [
 	
-	"As the current parameter index correspond with the number of extracted parameters I directly use it"
-	^ self arguments size + 1
+	^ currentParameterIndex
+]
+
+{ #category : #initialization }
+FFIWin64CallbackArgumentReader >> extractNext: aType [
+
+	super extractNext: aType.
+	currentParameterIndex := currentParameterIndex + 1.
 ]
 
 { #category : #extracting }
@@ -44,6 +53,13 @@ FFIWin64CallbackArgumentReader >> extractStructType: type [
 FFIWin64CallbackArgumentReader >> floatRegisterPointer [
 	
 	^ callbackContext floatregargsp
+]
+
+{ #category : #initialization }
+FFIWin64CallbackArgumentReader >> initialize [
+
+	super initialize.
+	currentParameterIndex := 1.
 ]
 
 { #category : #accessing }
