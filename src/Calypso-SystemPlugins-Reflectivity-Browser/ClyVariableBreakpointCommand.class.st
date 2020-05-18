@@ -12,8 +12,7 @@ Class {
 { #category : #testing }
 ClyVariableBreakpointCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^ self isAbstract not
-		and: [ aSourceCodeContext class = ClyMethodSourceCodeContext
-				and: [ aSourceCodeContext selectedSourceNode isVariable ] ]
+		and: [ aSourceCodeContext lastSelectedSourceNode isVariable ]
 ]
 
 { #category : #activation }
