@@ -65,8 +65,20 @@ CompiledBlock >> isCompiledBlock [
 ]
 
 { #category : #testing }
+CompiledBlock >> isInstalled [
+	
+	^ self method isInstalled
+]
+
+{ #category : #testing }
 CompiledBlock >> isTestMethod [
 	^ false
+]
+
+{ #category : #literals }
+CompiledBlock >> literalsToSkip [
+
+	^ 1
 ]
 
 { #category : #accessing }

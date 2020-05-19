@@ -5,7 +5,7 @@ How CompiledMethod trailers are serialized can be established using methods in '
 "
 Class {
 	#name : #FLCompiledMethodCluster,
-	#superclass : #FLIteratingCluster,
+	#superclass : #FLCompiledCodeCluster,
 	#classInstVars : [
 		'transformationForSerializing'
 	],
@@ -68,7 +68,7 @@ FLCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 
 	| compiledMethod header bytecodesPlusTrailerSize |
 
-	header := aDecoder nextEncodedInt32.
+	header := aDecoder nextEncodedInt64.
 	bytecodesPlusTrailerSize := aDecoder nextEncodedUint16.
 
 	compiledMethod := CompiledMethod newMethod: bytecodesPlusTrailerSize header: header.
@@ -77,28 +77,6 @@ FLCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 		do: [ :index | compiledMethod at: index put: aDecoder nextEncodedByte ].
 		
 	^ compiledMethod
-]
-
-{ #category : #protected }
-FLCompiledMethodCluster >> materializeLiteralsTo: compiledMethod with: aDecoder [
-
-	1 to: compiledMethod numLiterals 
-		do: [ :index | compiledMethod literalAt: index put: aDecoder nextEncodedReference ]
-
-]
-
-{ #category : #'serialize/materialize' }
-FLCompiledMethodCluster >> materializeReferencesStepWith: aDecoder [
-
-	objects do: [ :aCompiledMethod | self materializeLiteralsTo: aCompiledMethod with: aDecoder ]
-]
-
-{ #category : #analyzing }
-FLCompiledMethodCluster >> referencesOf: aCompiledMethod do: aBlock [
-
-	aCompiledMethod fuelPrepare.
-	1 to: aCompiledMethod numLiterals
-		do: [ :index | aBlock value: (aCompiledMethod literalAt: index) ]
 ]
 
 { #category : #'serialize/materialize' }
@@ -114,23 +92,9 @@ FLCompiledMethodCluster >> serializeInstance: aCompiledMethodToSerialize with: a
 	bytecodesPlusTrailerSize := cmSize - cmInitialPC + 1.
 
 	anEncoder 
-		encodeInt32: header; "Signed int as of Pharo 40"
+		encodeInt64: header; "Signed int as of Pharo 40"
 		encodeUint16: bytecodesPlusTrailerSize.	
 
 	cmInitialPC to: cmSize
 		do: [ :index | anEncoder encodeByte: (aCompiledMethod at: index) ]
-]
-
-{ #category : #protected }
-FLCompiledMethodCluster >> serializeLiteralsOf: aCompiledMethod with: anEncoder [
-
-	aCompiledMethod fuelPrepare.
-	1 to: aCompiledMethod numLiterals 
-		do: [ :index | anEncoder encodeReferenceTo: (aCompiledMethod literalAt: index) ]
-]
-
-{ #category : #'serialize/materialize' }
-FLCompiledMethodCluster >> serializeReferencesStepWith: anEncoder [
-
-	objects do: [ :aCompiledMethod | self serializeLiteralsOf: aCompiledMethod with: anEncoder ]
 ]

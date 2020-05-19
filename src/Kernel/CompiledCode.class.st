@@ -285,11 +285,17 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	"Answers true if the method refers to the selector.
 	 If you don't know what's a special selector, use #hasSelector:.
 	 If you do, you may call this method directly to avoid recomputing 
-	 the special selector index all the time."
-	 (self refersToLiteral: selector) ifTrue: [ ^ true ].
-	^ specialOrNil 
-		ifNil: [ false ] 
-		ifNotNil: [ self scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ]
+	 the special selector index all the time.
+	
+	 I traverse the method and all the compiled blocks in the literals 	 
+	"
+
+	^ self withAllBlocks
+		anySatisfy: [ :aCompiledCode | 
+			(aCompiledCode refersToLiteral: selector)
+				or: [ specialOrNil isNotNil
+						and: [ aCompiledCode
+								scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ] ] ]
 ]
 
 { #category : #accessing }
@@ -483,6 +489,12 @@ CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
 	1 to: self numLiterals do:
 		[:index | aBlock value: (self literalAt: index)]
+]
+
+{ #category : #literals }
+CompiledCode >> literalsToSkip [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #scanning }
@@ -708,7 +720,7 @@ CompiledCode >> refersToLiteral: aLiteral [
 
 	"exclude selector or additional method state (penultimate slot) 
 	and methodClass or outerCode (last slot)"
-	1 to: self numLiterals - 2 do: [ :index | 
+	1 to: self numLiterals - self literalsToSkip do: [ :index | 
 		((self literalAt: index) refersToLiteral: aLiteral)
 			ifTrue: [ ^ true ] ].
 

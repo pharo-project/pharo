@@ -63,6 +63,11 @@ FullBlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
 ]
 
+{ #category : #testing }
+FullBlockClosure >> isFullBlock [
+	^ true
+]
+
 { #category : #accessing }
 FullBlockClosure >> method [
 	^ self compiledBlock

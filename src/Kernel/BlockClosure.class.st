@@ -373,6 +373,12 @@ BlockClosure >> isDead [
 	^false
 ]
 
+{ #category : #testing }
+BlockClosure >> isFullBlock [
+
+	^ false
+]
+
 { #category : #private }
 BlockClosure >> isValid [
 	"Answer the receiver."
@@ -621,6 +627,11 @@ BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 { #category : #accessing }
 BlockClosure >> startpc [
 	^startpc
+]
+
+{ #category : #accessing }
+BlockClosure >> startpcOrOuterCode [
+	^ startpc 
 ]
 
 { #category : #accessing }

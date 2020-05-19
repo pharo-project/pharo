@@ -663,6 +663,12 @@ CompiledMethod >> linesOfCode [
 	^lines
 ]
 
+{ #category : #literals }
+CompiledMethod >> literalsToSkip [
+
+	^ 2
+]
+
 { #category : #private }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self
