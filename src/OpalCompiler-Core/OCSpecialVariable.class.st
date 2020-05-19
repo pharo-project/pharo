@@ -13,13 +13,6 @@ OCSpecialVariable >> emitStore: methodBuilder [
 	self shouldNotImplement
 ]
 
-{ #category : #emitting }
-OCSpecialVariable >> emitValue: methodBuilder [
-
-	methodBuilder pushReceiver
-	
-]
-
 { #category : #testing }
 OCSpecialVariable >> isSpecialVariable [
 	^true

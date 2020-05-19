@@ -13,6 +13,12 @@ OCSuperVariable class >> semanticNodeClass [
 	^RBSuperNode 
 ]
 
+{ #category : #emitting }
+OCSuperVariable >> emitValue: methodBuilder [
+	"super references the receiver, send that follows is a super send (the message lookup sfarts in the superclass"
+	methodBuilder pushReceiver
+]
+
 { #category : #initialization }
 OCSuperVariable >> initialize [
 	super initialize.
