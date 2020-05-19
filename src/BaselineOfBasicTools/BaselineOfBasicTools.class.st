@@ -60,7 +60,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec 
 			baseline: 'EnlumineurFormatter' with: [ 
 				spec
-					loads: 'UI';
+					loads: 'Core';
 					repository: repository ].
 		
 		spec package: 'Tool-ProcessBrowser'.
