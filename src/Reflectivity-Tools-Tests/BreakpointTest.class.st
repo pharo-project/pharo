@@ -39,6 +39,19 @@ BreakpointTest >> tearDown [
 ]
 
 { #category : #tests }
+BreakpointTest >> testAddRemoveBreakpoint [
+	|bp|
+	cls compile: 'dummy ^42'.
+	self assertEmpty: Breakpoint all.
+	bp := Breakpoint new.
+	bp	node: (cls >> #dummy) ast.
+	Breakpoint addBreakpoint: bp.
+	self assertCollection: Breakpoint all includesAll: {bp}.
+	Breakpoint removeBreakpoint: bp.
+	self assertEmpty: Breakpoint all.
+]
+
+{ #category : #tests }
 BreakpointTest >> testModifyMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
