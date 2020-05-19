@@ -412,7 +412,7 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetRangeTest [
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
 	| pc mappedNode expectedNode |
-	pc := 51.
+	pc := compiledMethod encoderClass = EncoderForSistaV1 ifTrue: [50] ifFalse: [51].
 	mappedNode := (cache nodeForPC: pc).
 	expectedNode := compiledMethod ast statements last arguments first statements first.
 	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	

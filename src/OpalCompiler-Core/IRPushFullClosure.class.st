@@ -42,3 +42,10 @@ IRPushFullClosure >> copiedValues: anObject [
 IRPushFullClosure >> indexForVarNamed: aName [
 	^ sourceNode ir indexForVarNamed: aName
 ]
+
+{ #category : #scoping }
+IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [ 
+
+	self copiedValues at: index put: aRemote.
+
+]
