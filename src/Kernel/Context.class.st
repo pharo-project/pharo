@@ -1364,9 +1364,10 @@ Context >> privRefresh [
 	 closureOrNil
 		ifNotNil:
 			[pc := closureOrNil startpc.
-			self stackp: closureOrNil numArgs + closureOrNil numCopiedValues.
+			self stackp: closureOrNil initialStackPointer.
 			1 to: closureOrNil numCopiedValues do:
-				[:i | self tempAt: closureOrNil numArgs + i put: (closureOrNil at: i)]]
+				[:i | self tempAt: closureOrNil numArgs + i put: (closureOrNil at: i)].
+			closureOrNil clearTemporariesOn: self]
 		ifNil:
 			[pc := method initialPC.
 			self stackp: method numTemps.

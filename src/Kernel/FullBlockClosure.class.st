@@ -35,6 +35,13 @@ FullBlockClosure >> asContextWithSender: aContext [
 		privRefresh
 ]
 
+{ #category : #private }
+FullBlockClosure >> clearTemporariesOn: aContext [
+ 
+	(self numArgs + self numCopiedValues + 1) to: self numTemps do: [ :anIndex |  
+		aContext tempAt: anIndex put: nil ]
+]
+
 { #category : #accessing }
 FullBlockClosure >> compiledBlock [
 	"To be able to inherit from BlockClosure"
@@ -61,6 +68,12 @@ FullBlockClosure >> hasMethodReturn [
 { #category : #accessing }
 FullBlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
+]
+
+{ #category : #private }
+FullBlockClosure >> initialStackPointer [
+
+	^ self numTemps
 ]
 
 { #category : #testing }

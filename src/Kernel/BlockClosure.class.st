@@ -119,6 +119,12 @@ BlockClosure >> blockCreationBytecodeMessage [
 	"(SortedCollection sortBlock: [:a :b| a compare: b caseSensitive: false]) sortBlock blockCreationBytecodeMessage"
 ]
 
+{ #category : #private }
+BlockClosure >> clearTemporariesOn: aContext [
+
+	" I do nothing in the non-full blocks"
+]
+
 { #category : #accessing }
 BlockClosure >> copiedValueAt: i [
 	<primitive: 60>
@@ -328,6 +334,12 @@ BlockClosure >> ifCurtailed: aBlock [
 	result := self valueNoContextSwitch.
 	complete := true.
 	^result
+]
+
+{ #category : #private }
+BlockClosure >> initialStackPointer [
+
+	^ self numArgs + self numCopiedValues
 ]
 
 { #category : #accessing }
