@@ -135,7 +135,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Tests' 'UI-Tests' ) ].
+				loads: #( 'Tests' ) ].
 				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.

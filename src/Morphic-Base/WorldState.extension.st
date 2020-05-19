@@ -78,12 +78,6 @@ WorldState class >> systemOn: aBuilder [
 	(aBuilder item: #System)
 		order: 3.0;
 		with: [
-			(aBuilder item: #'Start profiling all Processes')
-				help: 'Profile all Pharo processes.';
-				action: [ self startMessageTally ].
-			(aBuilder item: #'Start profiling UI ')
-				help: 'Profile the UI process of Pharo.';
-				action: [ self startThenBrowseMessageTally ].
 			(aBuilder item: #'Space left')
 				help: 'Do a garbage collection, and report results about the to the user.';
 				action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].

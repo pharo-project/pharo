@@ -362,8 +362,3 @@ IRMethod >> tempKeys [
 IRMethod >> tempMap [
 	^ tempMap
 ]
-
-{ #category : #enumerating }
-IRMethod >> tempVectorNamed: aName [
-	^startSequence tempVectorNamed: aName
-]
