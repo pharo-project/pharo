@@ -44,7 +44,7 @@ ReSmokeExceptionStrategyTest >> testIgnore [
 	ReExceptionStrategy current: ReIgnoreExceptionStrategy.
 	
 	self shouldnt: [
-			critiques := thisContext method critiques ]
+			critiques := thisContext method method critiques ]
 		raise: MyTestError.
 ]
 
@@ -72,6 +72,6 @@ ReSmokeExceptionStrategyTest >> testPass [
 
 	ReExceptionStrategy current: RePassExceptionStrategy.
 	
-	self should: [ thisContext method critiques ]
+	self should: [ thisContext method method critiques ]
 		raise: MyTestError.
 ]
