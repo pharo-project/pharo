@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #examples }
+AthensCairoSurfaceExamples class >> exampleAnimatedTigerInMorphicWindow [
+	^ VGTigerDemo new openAnimated
+]
+
+{ #category : #examples }
 AthensCairoSurfaceExamples class >> exampleDrawTextPath [
  
 	| surf  font |
@@ -49,6 +54,44 @@ AthensCairoSurfaceExamples class >> exampleDrawTextPath [
 	
 	surf asMorph openInWindow
 
+]
+
+{ #category : #utilities }
+AthensCairoSurfaceExamples class >> exampleExportTigerOn: anAthensSurface [
+	(AthensTiger on: anAthensSurface) 
+		position: 300@0;
+		draw.
+	anAthensSurface finish. "Required to end the file"
+
+]
+
+{ #category : #examples }
+AthensCairoSurfaceExamples class >> exampleExportTigerToPDF [
+
+	| surface |
+	surface := AthensCairoPDFSurface
+		extent: 400@400
+		fileName: Time microsecondClockValue asString, '.pdf'.
+
+	self exampleExportTigerOn: surface.
+
+]
+
+{ #category : #examples }
+AthensCairoSurfaceExamples class >> exampleExportTigerToSVG [
+
+	| surface |
+	surface := AthensCairoSVGSurface
+		extent: 400@400
+		fileName: Time microsecondClockValue asString, '.svg'.
+
+	self exampleExportTigerOn: surface.
+
+]
+
+{ #category : #examples }
+AthensCairoSurfaceExamples class >> exampleFlake [
+	AthensFlakeDemo open
 ]
 
 { #category : #examples }

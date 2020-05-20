@@ -1,5 +1,5 @@
 "
-I represent an Athens surface that writes a PDF file using the cairo graphics library.
+I represent an Athens surface that writes a SVG file using the cairo graphics library.
 
 Usage:
 
@@ -10,34 +10,34 @@ Use like a AthensCairoSurface with these differences:
 
 Links: 
 
-https://cairographics.org/manual/cairo-PDF-Surfaces.html
+https://cairographics.org/manual/cairo-SVG-Surfaces.html
 http://zetcode.com/gfx/cairo/cairobackends/
 http://www.ie.u-ryukyu.ac.jp/~e085739/c.cairo.3.html
 
 "
 Class {
-	#name : #AthensCairoPDFSurface,
+	#name : #AthensCairoSVGSurface,
 	#superclass : #AthensCairoSurface,
 	#category : #'Athens-Cairo-Surface'
 }
 
 { #category : #private }
-AthensCairoPDFSurface class >> createPDF: fileName width: width_in_points height: height_in_points [
-	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create (String fileName,
+AthensCairoSVGSurface class >> createSVG: fileName width: width_in_points height: height_in_points [
+	^ self ffiCall: #(AthensCairoSVGSurface cairo_svg_surface_create (String fileName,
                                                       double width_in_points,
                                                       double height_in_points) )
 
 ]
 
 { #category : #'instance creation' }
-AthensCairoPDFSurface class >> extent: anExtent fileName: fileName [
-	^ (self createPDF: fileName width: anExtent x height: anExtent y)
+AthensCairoSVGSurface class >> extent: anExtent fileName: fileName [
+	^ (self createSVG: fileName width: anExtent x height: anExtent y)
 		initialize;
 		yourself
 ]
 
 { #category : #'finalize resources' }
-AthensCairoPDFSurface class >> finalizeResourceData: data [
+AthensCairoSVGSurface class >> finalizeResourceData: data [
 	| handle contextHandle |
 	handle := data first.
 	contextHandle := data third.
@@ -48,6 +48,6 @@ AthensCairoPDFSurface class >> finalizeResourceData: data [
 ]
 
 { #category : #private }
-AthensCairoPDFSurface class >> registerSurface: surface [
+AthensCairoSVGSurface class >> registerSurface: surface [
 	"do not register my instances with SurfacePlugin"
 ]
