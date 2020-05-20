@@ -45,6 +45,12 @@ to the top of the screen' translated)
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState >> startMessageTally [
+
+	self class startMessageTally
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
 
@@ -70,6 +76,12 @@ mouse pointer goes to the top of the screen')
 	TimeProfiler onBlock: [
 		MorphicRenderLoop new doOneCycleWhile: [ 
 			self currentWorld activeHand position y > 10 ] ]
+]
+
+{ #category : #'*Morphic-Base' }
+WorldState >> startThenBrowseMessageTally [
+
+	self class startThenBrowseMessageTally
 ]
 
 { #category : #'*Morphic-Base' }
