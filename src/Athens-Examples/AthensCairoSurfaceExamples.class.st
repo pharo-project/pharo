@@ -9,7 +9,7 @@ Class {
 
 { #category : #examples }
 AthensCairoSurfaceExamples class >> exampleAnimatedTigerInMorphicWindow [
-	^ VGTigerDemo new openAnimated
+	^ AthensTigerWindow new openAnimated
 ]
 
 { #category : #examples }

@@ -2,7 +2,7 @@
 I'm an example that shows a tiger that moves via rotation, translation and zoom in a Morph window.
 "
 Class {
-	#name : #VGTigerDemo,
+	#name : #AthensTigerWindow,
 	#superclass : #StandardWindow,
 	#instVars : [
 		'surface',
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : #drawing }
-VGTigerDemo >> drawOn: aCanvas [
+AthensTigerWindow >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 	aCanvas drawImage: surface asForm at: self layoutBounds origin.
@@ -30,7 +30,7 @@ VGTigerDemo >> drawOn: aCanvas [
 ]
 
 { #category : #initialization }
-VGTigerDemo >> initialize [ 
+AthensTigerWindow >> initialize [ 
 
 	super initialize.
 	surface := AthensCairoSurface extent: self surfaceExtent.
@@ -45,7 +45,7 @@ VGTigerDemo >> initialize [
 ]
 
 { #category : #running }
-VGTigerDemo >> openAnimated [
+AthensTigerWindow >> openAnimated [
 	<script: 'self new runDemo'>
 
 	self
@@ -56,7 +56,7 @@ VGTigerDemo >> openAnimated [
 ]
 
 { #category : #'stepping and presenter' }
-VGTigerDemo >> step [ 
+AthensTigerWindow >> step [ 
 
 	rotation := rotation + rotationSpeed.
 	frames := frames + 1.
@@ -72,11 +72,11 @@ VGTigerDemo >> step [
 ]
 
 { #category : #stepping }
-VGTigerDemo >> stepTime [
+AthensTigerWindow >> stepTime [
 	^ 50
 ]
 
 { #category : #initialization }
-VGTigerDemo >> surfaceExtent [
+AthensTigerWindow >> surfaceExtent [
 	^ 400 @ 400
 ]
