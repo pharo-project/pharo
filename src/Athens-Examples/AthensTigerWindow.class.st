@@ -17,8 +17,24 @@ Class {
 		'zoom',
 		'example'
 	],
-	#category : #'Athens-Examples-Utilities'
+	#category : #'Athens-Examples-Morphic'
 }
+
+{ #category : #running }
+AthensTigerWindow class >> openAnimated [
+	<script>
+
+	^ self new
+		open;
+		extent: self surfaceExtent + (50@50);
+		title: 'Athens Tiger Demo';
+		startStepping
+]
+
+{ #category : #accessing }
+AthensTigerWindow class >> surfaceExtent [
+	^ 400 @ 400
+]
 
 { #category : #drawing }
 AthensTigerWindow >> drawOn: aCanvas [
@@ -33,7 +49,7 @@ AthensTigerWindow >> drawOn: aCanvas [
 AthensTigerWindow >> initialize [ 
 
 	super initialize.
-	surface := AthensCairoSurface extent: self surfaceExtent.
+	surface := AthensCairoSurface extent: self class surfaceExtent.
 	example := AthensTiger on: surface.
 	rotationSpeed := 1.
 	rotation := 0.
@@ -42,17 +58,6 @@ AthensTigerWindow >> initialize [
 	frames := 0.
 
 
-]
-
-{ #category : #running }
-AthensTigerWindow >> openAnimated [
-	<script: 'self new runDemo'>
-
-	self
-		open;
-		extent: self surfaceExtent + (50@50);
-		title: 'Athens Tiger Demo';
-		startStepping.
 ]
 
 { #category : #'stepping and presenter' }
@@ -74,9 +79,4 @@ AthensTigerWindow >> step [
 { #category : #stepping }
 AthensTigerWindow >> stepTime [
 	^ 50
-]
-
-{ #category : #initialization }
-AthensTigerWindow >> surfaceExtent [
-	^ 400 @ 400
 ]

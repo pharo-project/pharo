@@ -1,10 +1,12 @@
 "
-self example1
+I show examples of rendering in a AthensCairoSurface.
+
+My class-side has example methods, and I also inherit many examples from my superclass.
 "
 Class {
 	#name : #AthensCairoSurfaceExamples,
 	#superclass : #AthensSurfaceExamples,
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Cairo'
 }
 
 { #category : #examples }
