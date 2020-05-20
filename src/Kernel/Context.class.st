@@ -1037,10 +1037,10 @@ Context >> longStack [
 
 { #category : #accessing }
 Context >> method [
-	self
+	"self
 		deprecated: 'Should use compiledCode since it can be CompiledMethod or a CompiledBlock'
-		transformWith: '`@receiver deprecatedMethod3' 
-						-> '`@receiver deprecatedMethod3'.
+		transformWith: '`@receiver method' 
+						-> '`@receiver compiledCode'."
 
 	^method
 ]
