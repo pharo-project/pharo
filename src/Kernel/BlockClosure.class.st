@@ -79,10 +79,10 @@ BlockClosure >> asContext [
 BlockClosure >> asContextWithSender: aContext [
 	"Inner private support method for evaluation.  Do not use unless you know what you're doing."
 
-	^(Context newForMethod: outerContext method)
+	^(Context newForMethod: outerContext compiledCode)
 		setSender: aContext
 		receiver: outerContext receiver
-		method: outerContext method
+		method: outerContext compiledCode
 		closure: self
 		startpc: startpc;
 		privRefresh
@@ -457,7 +457,7 @@ BlockClosure >> numCopiedValues [
 { #category : #accessing }
 BlockClosure >> numLocalTemps [
 	"Answer the number of local temporaries for the receiver"
-	^ self method encoderClass numLocalTempsForBlockAt: startpc in: outerContext method
+	^ self method encoderClass numLocalTempsForBlockAt: startpc in: outerContext compiledCode
 ]
 
 { #category : #accessing }
@@ -618,10 +618,10 @@ BlockClosure >> sender [
 BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."
 	| newContext sz |
-	newContext := (Context newForMethod: outerContext method)
+	newContext := (Context newForMethod: outerContext compiledCode)
 						setSender: aContext
 						receiver: outerContext receiver
-						method: outerContext method
+						method: outerContext compiledCode
 						closure: self
 						startpc: startpc.
 	((newContext objectClass: anArray) ~~ Array
