@@ -1,5 +1,5 @@
 "
-The tiger shape (see VGTigerDemo runDemo)
+I'm a visual part of the AthensTiger.
 "
 Class {
 	#name : #AthensTigerShape,

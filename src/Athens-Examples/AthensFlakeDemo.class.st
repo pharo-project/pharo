@@ -11,7 +11,7 @@ Class {
 		'frame',
 		'spike'
 	],
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Utilities'
 }
 
 { #category : #'instance creation' }
