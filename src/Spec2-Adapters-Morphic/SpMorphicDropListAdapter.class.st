@@ -34,6 +34,12 @@ SpMorphicDropListAdapter >> displayedIcon [
 	^ self widget currentIcon
 ]
 
+{ #category : #'as yet unclassified' }
+SpMorphicDropListAdapter >> elementAt: index [
+	
+	^ self presenter getList at: index
+]
+
 { #category : #icons }
 SpMorphicDropListAdapter >> getIconFor: aDropListItem [ 
 	

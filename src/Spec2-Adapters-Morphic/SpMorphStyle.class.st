@@ -1,22 +1,34 @@
 "
-I'm a style container that can lookup for properties, following the logic of most detailed property first, most generic last.
-At creation, I receive an adapter and a stylesheet, and I will perform a traverse of the stylesheet collecting the styles that applies to the adapted presenter (see method comment).
+! A Style in a Morph (SpMorphStyle)
 
-Once collected the styles, I can lookup a property using the method: #lookupProperty:valueOf:, passing the class and name of property, e.g: 
+This is for internal use of the framework, but it is interesting to notice how it works since it may give some insigts on how to declare things.
+At creation of a component, an instance of ==SpMorphStyle== is created and by taking the stylesheet it collects styles from most external to more internal. So, for example, this stylesheet: 
 
-myStyles 
-	lookupProperty: SpStyleGeometry 
-	valueOf: #minWidth
+[[[
+.application [
+	Geometry { #height: 100 }, 
+	.button [
+		Geometry { #width: 100 }
+	]
+]
+]]]
 
-For convenience, there are methods which perform the lookups alredy defined (see accessing* protocols).
+Will collect, for a button (*class:SpButtonPresenter*, who has a style name ==button==), the styles
 
-Finally, an adaptor style can be applied to a morph (using #applyTo:)
+[[[
+application
+application.button
+]]] 
+
+This collection will be used to get all properties defined and perform a merge between them (*method:SpStyleProperty#mergeWith:*), to get all one single property for each type of them. Which means at the end it will apply a property ==Geometry { #width: 100, #height: 25 }==.
+
 "
 Class {
 	#name : #SpMorphStyle,
 	#superclass : #Object,
 	#instVars : [
-		'styles'
+		'styles',
+		'mergedProperties'
 	],
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
@@ -31,8 +43,8 @@ SpMorphStyle class >> fromStylesheet: aStyle adapter: anAdapter [
 	allStyleClasses := aStyle flattenClasses.
 	styles := OrderedCollection new.
 	(({ 'application'. anAdapter styleName }, 
-		anAdapter presenter styles, 
-		(anAdapter presenter styles collect: [ :each | anAdapter styleName, '.', each ])) 
+		anAdapter presenterStyles, 
+		(anAdapter presenterStyles collect: [ :each | anAdapter styleName, '.', each ])) 
 		do: [ :each |
 			"a hack to not do a double dispatch on string :(" 
 			each isString 
@@ -58,7 +70,7 @@ SpMorphStyle class >> newStyles: anArray [
 SpMorphStyle >> applyTo: aMorph [ 
 
 	aMorph setProperty: #style toValue: self.
-	self styles do: [ :each |
+	self mergedProperties do: [ :each |
 		each applyTo: aMorph ]
 ]
 
@@ -66,6 +78,23 @@ SpMorphStyle >> applyTo: aMorph [
 SpMorphStyle >> borderWidth [
 
 	^ self lookupProperty: SpStyleContainer valueOf: #borderWidth
+]
+
+{ #category : #private }
+SpMorphStyle >> calculateMergedProperties [
+	| properties groups |
+	
+	properties := OrderedCollection new.
+	groups := (self styles 
+		flatCollect: [ :each | each properties ])
+		groupedBy: [ :each | each class ].
+		
+	groups valuesDo: [ :eachCollection |
+		properties add: (eachCollection allButFirst 
+			inject: eachCollection first
+			into: [ :all :each | all, each ]) ].
+	
+	^ properties
 ]
 
 { #category : #'accessing geometry' }
@@ -109,6 +138,12 @@ SpMorphStyle >> maxHeight [
 SpMorphStyle >> maxWidth [
 
 	^ self lookupProperty: SpStyleGeometry valueOf: #maxWidth
+]
+
+{ #category : #accessing }
+SpMorphStyle >> mergedProperties [
+
+	^ mergedProperties ifNil: [ mergedProperties := self calculateMergedProperties ]
 ]
 
 { #category : #'accessing geometry' }

@@ -162,10 +162,3 @@ SpPanedLayout >> presenter [
 
 	^ adapter ifNotNil: [ adapter presenter ]
 ]
-
-{ #category : #adding }
-SpPanedLayout >> remove: aChild [
-	
-	children removeKey: aChild.
-	self announceChildRemoved: aChild
-]

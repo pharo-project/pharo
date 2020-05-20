@@ -72,6 +72,14 @@ SpLabelPresenter >> label: aText [
 	label := aText
 ]
 
+{ #category : #localization }
+SpLabelPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #label
+		
+]
+
 { #category : #'api-events' }
 SpLabelPresenter >> whenLabelChangedDo: aValuable [
 	self property: #label whenChangedDo: aValuable

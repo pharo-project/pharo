@@ -28,7 +28,6 @@ Class {
 	#name : #SpTextInputFieldPresenter,
 	#superclass : #SpAbstractTextPresenter,
 	#instVars : [
-		'#acceptOnCR => SpObservableSlot',
 		'#entryCompletion => SpObservableSlot',
 		'#isPassword => SpObservableSlot',
 		'#maxLength => SpObservableSlot'
@@ -40,31 +39,6 @@ Class {
 SpTextInputFieldPresenter class >> adapterName [
 
 	^ #TextInputFieldAdapter
-]
-
-{ #category : #morphic }
-SpTextInputFieldPresenter >> accept: aText [
-
-	self text: aText.
-	self acceptBlock cull: aText.
-	
-	"Raise an announcement"
-	self actionPerformed.
-	self changed: #clearUserEdits.
-]
-
-{ #category : #api }
-SpTextInputFieldPresenter >> acceptOnCR [
-	"Return true if the text is accepted when the Enter key is stroked"
-
-	^ acceptOnCR
-]
-
-{ #category : #api }
-SpTextInputFieldPresenter >> acceptOnCR: aBoolean [
-	"Set if the text is accepted when the Enter key is stroked or not"
-
-	acceptOnCR := aBoolean
 ]
 
 { #category : #api }
@@ -117,9 +91,7 @@ SpTextInputFieldPresenter >> initialize [
 	super initialize.
 
 	maxLength := 0.
-	acceptOnCR := true.
-	isPassword := false.
-	self whenAcceptOnCRChangedDo: [ :bool | self changed: #acceptOnCR: with: {bool} ]
+	isPassword := false
 ]
 
 { #category : #testing }
@@ -149,8 +121,8 @@ SpTextInputFieldPresenter >> removeEntryCompletion [
 
 { #category : #accessing }
 SpTextInputFieldPresenter >> text: aText [
-
 	| truncatedText |
+
 	truncatedText := self maxLength = 0
 		ifTrue: [ aText ]
 		ifFalse: [ aText first: (self maxLength min: aText size) ].
@@ -162,13 +134,6 @@ SpTextInputFieldPresenter >> updateText [
 
 	"Update text but applying lenght constraints"
 	self text: self text.
-]
-
-{ #category : #'api-events' }
-SpTextInputFieldPresenter >> whenAcceptOnCRChangedDo: aBlock [
-	"aBlock will be performed when acceptOnCR changed"
-
-	self property: #acceptOnCR whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
@@ -188,4 +153,14 @@ SpTextInputFieldPresenter >> whenMaxLengthChangedDo: aBlockClosure [
 SpTextInputFieldPresenter >> whenPasswordChangedDo: aBlockClosure [ 
 	
 	self property: #isPassword whenChangedDo: aBlockClosure
+]
+
+{ #category : #'api-events' }
+SpTextInputFieldPresenter >> whenSubmitDo: aBlock [
+	"This method will add a 'submit' event to the widget. It will react when user presses meta+s 
+	 key (this is for historical reasons) and with enter."
+
+	self 
+		bindKeyCombination: Character cr asKeyCombination | $s meta 
+		toAction: aBlock
 ]

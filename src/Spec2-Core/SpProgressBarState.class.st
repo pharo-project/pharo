@@ -10,7 +10,7 @@ My subclasses are used by the ProgressBarPresenter.
 Class {
 	#name : #SpProgressBarState,
 	#superclass : #Object,
-	#category : #'Spec2-Core-Widgets-Utils'
+	#category : #'Spec2-Core-Utils'
 }
 
 { #category : #'api-events' }

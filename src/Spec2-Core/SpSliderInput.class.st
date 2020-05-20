@@ -63,17 +63,6 @@ SpSliderInput class >> sliderTop [
 		yourself
 ]
 
-{ #category : #accessing }
-SpSliderInput >> autoAccept [
-	^ input autoAccept
-]
-
-{ #category : #accessing }
-SpSliderInput >> autoAccept: aBoolean [
-	
-	input autoAccept: aBoolean
-]
-
 { #category : #initialization }
 SpSliderInput >> connectPresenters [
 	slider

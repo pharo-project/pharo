@@ -1,3 +1,8 @@
+"
+I am a STON reader specialised on reading an SpStyle.
+
+Contrary to my parent, I accept .class [ ... ] constructions.
+"
 Class {
 	#name : #SpStyleSTONReader,
 	#superclass : #STONReader,

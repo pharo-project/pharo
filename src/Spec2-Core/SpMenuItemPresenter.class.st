@@ -26,14 +26,14 @@ Class {
 	#name : #SpMenuItemPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
-		'action',
-		'name',
-		'shortcut',
-		'subMenu',
-		'icon',
-		'description',
-		'state',
-		'autoRefresh'
+		'#name => SpObservableSlot',
+		'#icon => SpObservableSlot',
+		'#description => SpObservableSlot',
+		'#action',
+		'#shortcut',
+		'#subMenu',
+		'#state',
+		'#autoRefresh'
 	],
 	#category : #'Spec2-Core-Widgets'
 }
@@ -126,6 +126,14 @@ SpMenuItemPresenter >> keyText: aString [
 	self shortcut: aString first meta
 ]
 
+{ #category : #localization }
+SpMenuItemPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #name
+	
+]
+
 { #category : #api }
 SpMenuItemPresenter >> name [
 	^ name
@@ -182,4 +190,22 @@ SpMenuItemPresenter >> subMenu [
 SpMenuItemPresenter >> subMenu: aMenuPresenter [
 	aMenuPresenter ifNotNil: [ aMenuPresenter owner: self ].
 	subMenu := aMenuPresenter
+]
+
+{ #category : #'api-events' }
+SpMenuItemPresenter >> whenDescriptionChangedDo: aBlock [ 
+
+	self property: #description whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpMenuItemPresenter >> whenIconChangedDo: aBlock [ 
+
+	self property: #icon whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpMenuItemPresenter >> whenNameChangedDo: aBlock [ 
+
+	self property: #name whenChangedDo: aBlock
 ]

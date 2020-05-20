@@ -174,17 +174,16 @@ SpDemoStandaloneFormPresenter >> genderLabel: anObject [
 { #category : #initialization }
 SpDemoStandaloneFormPresenter >> initializePresenters [
 	nameLabel := self newLabel label: 'name:'.
-	nameTextInput := self newTextInput autoAccept: true.
+	nameTextInput := self newTextInput.
 
 	surnameLabel := self newLabel label: 'surname:'.
-	surnameTextInput := self newTextInput autoAccept: true.
+	surnameTextInput := self newTextInput.
 	surnameTextInput placeholder: 'empty'.
 	number1Label := self newLabel label: 'number 1:'.
-	number1Input := self newNumberInput autoAccept: true.
+	number1Input := self newNumberInput.
 
 	number2Label := self newLabel label: 'number 2:'.
 	number2Input := self newNumberInput
-		autoAccept: true;
 		beFloat;
 		digits: 3;
 		climbRate: 0.005;
@@ -196,8 +195,7 @@ SpDemoStandaloneFormPresenter >> initializePresenters [
 
 	passwordLabel := self newLabel label: 'password:'.
 	passwordInput := self newTextInput
-		bePassword;
-		autoAccept: true.
+		bePassword.
 	checkboxLabel := self newLabel label: 'remember me'.
 	checkboxInput := self newCheckBox state: true.
 

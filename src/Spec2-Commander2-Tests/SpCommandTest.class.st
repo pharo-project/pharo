@@ -72,6 +72,24 @@ SpCommandTest >> testAsButtonPresenterExecutesOnClick [
 ]
 
 { #category : #test }
+SpCommandTest >> testCanUpdateEnableStatus [
+	| buttonPresenter shouldBeAvailable |
+	shouldBeAvailable := true.
+	command := CmBlockCommand new
+		canBeExecutedBlock: [ :ctx | shouldBeAvailable ];
+		context: #foo; "need a conext for #canBeExecuted to be performed"
+		yourself.
+	command := command asSpecCommand.
+	buttonPresenter := command asButtonPresenter.
+	self assert: buttonPresenter isEnabled.
+	
+	shouldBeAvailable := false.
+	command updateEnableStatus.
+	
+	self deny: buttonPresenter isEnabled
+]
+
+{ #category : #test }
 SpCommandTest >> testConfigureAsButton [
 	| button |
 	command := (CmBlockCommand new
@@ -118,7 +136,7 @@ SpCommandTest >> testConfigureAsToolBarButton [
 					configureAsToolBarButton;
 					buildPresenter.
 	
-	self assert: button class equals: SpToolBarButton.
+	self assert: button class equals: SpToolBarButtonPresenter.
 	self assert: button label equals: command name.
 	self assert: button help equals: command description.
 	self assert: button icon isNil.
@@ -138,7 +156,7 @@ SpCommandTest >> testConfigureAsToolBarToggleButton [
 					configureAsToolBarToggleButton;
 					buildPresenter.
 	
-	self assert: button class equals: SpToolBarToggleButton.
+	self assert: button class equals: SpToolBarToggleButtonPresenter.
 	self assert: button label equals: command name.
 	self assert: button help equals: command description.
 	self assert: button icon isNil.

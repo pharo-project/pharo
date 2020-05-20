@@ -35,5 +35,8 @@ SpPresenter >> defaultCommandsContext [
 
 { #category : #'*Spec2-Commander2' }
 SpPresenter >> rootCommandsGroup [
-	^ SpRecursiveContextSetter visit: (self class buildRootCommandsGroupFor: self defaultCommandsContext) toSetContext: self defaultCommandsContext
+
+	^ SpRecursiveContextSetter 
+		visit: (self class buildRootCommandsGroupFor: self defaultCommandsContext) 
+		toSetContext: self defaultCommandsContext
 ]

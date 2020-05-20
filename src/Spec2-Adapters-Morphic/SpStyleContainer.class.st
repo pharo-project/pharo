@@ -1,10 +1,24 @@
 "
-I'm a style to control the properties of a container. 
-I keep properties like 
+! Container properties (SpStyleContainer)
 
-- borderColor
-- borderWidth
-- padding
+A container property can be applied to container elements (buttonbar, toolbar, actionbar), and define several properties: 
+
+- borderColor: The color of the border (in case borderWidth > 0). 
+- borderWidth: The width of the border.
+- padding: The space between elements.
+
+See *method:SpStyleContainer#borderColor*
+
+!! Usage
+The identifier of container in the stylesheet is ==Container==.
+
+[[[
+Container { 
+	#borderColor: #blue, 
+	#borderWidth: 2,
+	#padding: 5
+}
+]]]
 "
 Class {
 	#name : #SpStyleContainer,
@@ -33,6 +47,10 @@ SpStyleContainer >> applyTo: aMorph [
 
 { #category : #accessing }
 SpStyleContainer >> borderColor [
+  "This property can be expressed as 
+	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
+	- a named selector: ==#red==
+	- an hex string: =='FF0000'=="
 
 	^ borderColor
 ]

@@ -147,17 +147,6 @@ EyeInspector >> canDiscardEdits [
 	^ true
 ]
 
-{ #category : #initialization }
-EyeInspector >> connectPresenters [
-	"initialize the event handlings"
-
-	super connectPresenters.
-	description
-		whenTextIsAcceptedDo: [ :newText | 
-			self saveElement: newText.
-			self refreshDescription ]
-]
-
 { #category : #actions }
 EyeInspector >> copySelectedItemAccessorCode [
 	self hasSelectedObject
@@ -214,7 +203,10 @@ EyeInspector >> generateElements [
 EyeInspector >> initializePresenters [
 
 	super initializePresenters.
-	description := self newCode
+	(description := self newCode)
+		whenSubmitDo: [ :aString |
+			self saveElement: aString.
+			self refreshDescription ]
 ]
 
 { #category : #initialization }

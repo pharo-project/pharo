@@ -2,6 +2,12 @@
 I'm a code presenter command who's actions depends on the selected text.
 In case no text is selected, the commands will take the text from cursor position to begining of line as an ""ad hoc"" selection.
 
+""context"" needs to conform a certain api to be used here: 
+
+- selectedText
+- selectedTextOrLine
+- doItReceiver
+- doItContext
 "
 Class {
 	#name : #SpCodeSelectionCommand,
@@ -23,7 +29,7 @@ SpCodeSelectionCommand >> evaluate: aString andDo: aBlock [
 		source: stream;
 		context: evaluationContext;
 		receiver: receiver;
-		requestor: receiver;
+		requestor: self context;
 		failBlock:  [ ^ nil ];
 		evaluate.		
 
@@ -34,8 +40,24 @@ SpCodeSelectionCommand >> evaluate: aString andDo: aBlock [
 SpCodeSelectionCommand >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
-
 	| selection |
-	selection := context selectedText ifEmpty: [ ^ '' ].
-	^ self evaluate: selection andDo: aBlock
+	
+	selection := self selectedTextOrLine.
+	selection ifEmpty: [ ^ '' ].
+	
+	^ self 
+		evaluate: selection 
+		andDo: aBlock
+]
+
+{ #category : #accessing }
+SpCodeSelectionCommand >> selectedText [
+	
+	^ self context selectedText
+]
+
+{ #category : #accessing }
+SpCodeSelectionCommand >> selectedTextOrLine [
+	
+	^ self context selectedTextOrLine
 ]

@@ -22,6 +22,13 @@ SpMorphicTreeTableAdapter >> addFocusRotationKeyBindings [
 	^ super addFocusRotationKeyBindings
 ]
 
+{ #category : #initialization }
+SpMorphicTreeTableAdapter >> addKeyBindingsTo: aWidget [
+
+	super addKeyBindingsTo: aWidget.
+	self addContextMenuKeyBindings: aWidget
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> addModelTo: tableMorph [
 
@@ -100,6 +107,8 @@ SpMorphicTreeTableAdapter >> buildWidget [
 		yourself.
 
 	self addModelTo: tableMorph.
+	widget := tableMorph.
+	self configureScrolling.
 
 	^ tableMorph
 ]
@@ -108,6 +117,23 @@ SpMorphicTreeTableAdapter >> buildWidget [
 SpMorphicTreeTableAdapter >> columnCount [
 	
 	^ self widget columns size
+]
+
+{ #category : #scrolling }
+SpMorphicTreeTableAdapter >> configureScrolling [
+	self presenter verticalAlignment
+		whenChangedDo: [ widget
+				scrollToIndex: self presenter verticalAlignment desiredVisibleRow ].
+			
+	self presenter
+		whenDisplayDo: [ widget
+				scrollToIndex: self presenter verticalAlignment desiredVisibleRow.
+			self scrollingChanged ].
+		
+	widget
+		onAnnouncement: FTScrollingChanged
+		send: #scrollingChanged
+		to: self.
 ]
 
 { #category : #factory }
@@ -190,6 +216,19 @@ SpMorphicTreeTableAdapter >> rootForItems: aCollection [
 		yourself
 ]
 
+{ #category : #'as yet unclassified' }
+SpMorphicTreeTableAdapter >> scrollToSelection [
+	widget ensureVisibleFirstSelection.
+]
+
+{ #category : #scrolling }
+SpMorphicTreeTableAdapter >> scrollingChanged [
+	widget container updateAllRows.
+	self presenter verticalAlignment
+		firstVisibleRowIndex: widget firstVisibleRowIndex;
+		lastVisibleRowIndex: widget lastVisibleRowIndex
+]
+
 { #category : #selecting }
 SpMorphicTreeTableAdapter >> selectInto: aFTTableMorph paths: aCollectionOfPaths [ 
 	
@@ -204,7 +243,7 @@ SpMorphicTreeTableAdapter >> selectInto: aFTTableMorph paths: aCollectionOfPaths
 	aFTTableMorph refresh.
 	indexes := items collect: [:item | aFTTableMorph dataSource indexOfItem: item].
 
-	aFTTableMorph selectIndexes: indexes.
+	aFTTableMorph selectIndexes: indexes andMakeVisibleIf: false.
 ]
 
 { #category : #accessing }
@@ -251,6 +290,13 @@ SpMorphicTreeTableAdapter >> selectionChanged: ann [
 		self basicSelectionChanged: ann ]
 ]
 
+{ #category : #private }
+SpMorphicTreeTableAdapter >> showContextMenu [
+
+	self widgetDo: [ :w |
+		w showMenuForIndex: { self presenter selection selectedIndex. 1 } ]
+]
+
 { #category : #factory }
 SpMorphicTreeTableAdapter >> strongSelectionChanged: aFTStrongSelectionChanged [
 	self presenter activatesOnDoubleClick
@@ -280,7 +326,7 @@ SpMorphicTreeTableAdapter >> updateMenu [
 	"there is no need to updateMenu here because it will be resolved at the dataSource"
 ]
 
-{ #category : #selection }
+{ #category : #update }
 SpMorphicTreeTableAdapter >> updateSelectionOf: tableMorph [
 	
 	self 

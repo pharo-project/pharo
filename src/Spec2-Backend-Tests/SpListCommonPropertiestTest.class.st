@@ -101,6 +101,20 @@ SpListCommonPropertiestTest >> testScrollUpToPreviousIndexScrollsTopToIndex [
 ]
 
 { #category : #tests }
+SpListCommonPropertiestTest >> testSelectingANotVisibleItemDoesNotScroll [
+	| verticalAlignment visibleItems |
+	presenter items: (1 to: 500).
+	verticalAlignment := presenter verticalAlignment.
+	self openInstance.
+	visibleItems := verticalAlignment firstVisibleRowIndex to: verticalAlignment lastVisibleRowIndex.
+	presenter selectItem: 400.
+
+	self 
+		assert: (verticalAlignment firstVisibleRowIndex to: verticalAlignment lastVisibleRowIndex) 
+		equals: visibleItems
+]
+
+{ #category : #tests }
 SpListCommonPropertiestTest >> testSetColumnTitleInPresenterPutsColumnHeaderMorph [
 
 	SystemVersion current major = 7
