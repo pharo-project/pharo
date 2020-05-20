@@ -10,7 +10,7 @@ Class {
 { #category : #'instance creation' }
 PharoTutorialHelpTutorialBuilder class >> new [
 	"We prohibid new"
-	^ (self class lookupSelector: #buildHelpTopicFrom:)  == thisContext sender method  
+	^ (self class lookupSelector: #buildHelpTopicFrom:)  == thisContext sender compiledCode  
 		ifFalse:[self error: 'Please use buildHelpTopicFrom: instead']
 		ifTrue: [super new]
 ]

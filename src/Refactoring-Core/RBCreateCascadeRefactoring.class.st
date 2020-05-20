@@ -138,5 +138,5 @@ RBCreateCascadeRefactoring >> selectedSource [
 { #category : #transforming }
 RBCreateCascadeRefactoring >> transform [
 	self combineMessages.
-	self compileCode
+	self compiledCode
 ]

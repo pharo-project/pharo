@@ -185,7 +185,7 @@ Halt class >> once [
 	self environment at: #OpalCompiler ifAbsent: [ ^self now ].	
 	
 	callingContext := (thisContext findContextSuchThat: [ :ctx | 
-		ctx method sendsAnySelectorOf: #(haltOnce) ]
+		ctx compiledCode sendsAnySelectorOf: #(haltOnce) ]
 	) ifNil: [ thisContext sender ].
 	
 	senderContext := thisContext.

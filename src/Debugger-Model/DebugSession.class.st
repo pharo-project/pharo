@@ -114,7 +114,7 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 		classified: aSymbol.
 
 	aContext privRefreshWith: (aClass lookupSelector: aMessage selector).
-	aContext method numArgs > 0 ifTrue:
+	aContext compiledCode numArgs > 0 ifTrue:
 		[aMessage arguments withIndexDo:
 			[:arg :index|
 				aContext tempAt: index put: arg]].
@@ -169,7 +169,7 @@ DebugSession >> isContextPostMortem: selectedContext [
 { #category : #testing }
 DebugSession >> isInterruptedContextATest [
 
-	^ (self isTestObject: self interruptedContext receiver) and: [ self isTestMethod: self interruptedContext method of: self interruptedContext receiver ]
+	^ (self isTestObject: self interruptedContext receiver) and: [ self isTestMethod: self interruptedContext compiledCode of: self interruptedContext receiver ]
 ]
 
 { #category : #testing }
@@ -267,7 +267,7 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	| newMethod recompilationContext canRewind |
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
 	"Do not try to recompile a doIt method"
-	aContext method isDoIt
+	aContext compiledCode method isDoIt
 		ifTrue: [ UIManager default alert:  'Can not modify a DoIt-Method.'.
 			^ false ].
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
@@ -424,7 +424,7 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 { #category : #context }
 DebugSession >> shouldDisplayOnTopContext: aContext [
 	
-	^ aContext method selector ~= #halt
+	^ aContext compiledCode method selector ~= #halt
 ]
 
 { #category : #logging }

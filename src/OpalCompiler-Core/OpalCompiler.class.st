@@ -405,7 +405,7 @@ OpalCompiler >> evaluate [
 	| value |
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
-	self class: (context ifNil: [ receiver class ] ifNotNil: [ context method methodClass ]).
+	self class: (context ifNil: [ receiver class ] ifNotNil: [ context compiledCode methodClass ]).
 	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod: self compile.
 	self logDoIt.
 	^ value

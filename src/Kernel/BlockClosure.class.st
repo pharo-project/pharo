@@ -310,9 +310,9 @@ BlockClosure >> forkNamed: aString [
 BlockClosure >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	| scanner endpc |
-	scanner := InstructionStream new method: outerContext method pc: startpc.
+	scanner := InstructionStream new method: outerContext compiledCode pc: startpc.
 	endpc := self endPC.
-	scanner scanFor: [:byte | (outerContext method encoderClass methodReturnBytecodes includes: byte) or: [scanner pc > endpc]].
+	scanner scanFor: [:byte | (outerContext compiledCode encoderClass methodReturnBytecodes includes: byte) or: [scanner pc > endpc]].
 	^scanner pc <= endpc
 ]
 
@@ -400,7 +400,7 @@ BlockClosure >> isValid [
 
 { #category : #accessing }
 BlockClosure >> method [
-	^outerContext method
+	^outerContext compiledCode
 ]
 
 { #category : #scheduling }
