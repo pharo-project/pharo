@@ -137,9 +137,9 @@ RFASTTranslator >> visitBlockNode: aBlockNode [
 	aBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: aBlockNode scope tempVectorName 
-			withVars: (aBlockNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: aBlockNode scope tempVectorVarNames.
 	].
-	methodBuilder addTemps: (aBlockNode scope tempVarNames copyWithoutAll: aBlockNode argumentNames).
+	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
 	self emitPreamble: aBlockNode.
 	self emitMetaLinkBefore: aBlockNode.
 	valueTranslator visitNode: aBlockNode body.
@@ -179,18 +179,17 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 			- we call IRBuilder to add temps
 	"
 	
-	| tempNames  |
 	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName 
 			withVars: (anOptimizedBlockNode scope tempVector collect: [:each| each name]).
 	].
-	methodBuilder addTemps: (tempNames := anOptimizedBlockNode scope tempVarNames copyWithoutAll: anOptimizedBlockNode argumentNames).
+	methodBuilder addTemps: anOptimizedBlockNode scope tempVarNamesWithoutArguments.
 	methodBuilder addTemps: anOptimizedBlockNode scope inComingCopiedVarNames.
 	methodBuilder addTemps: anOptimizedBlockNode argumentNames.
 	anOptimizedBlockNode isInlinedLoop ifTrue: [
-		tempNames do: [ :tempName |
+		anOptimizedBlockNode scope tempVarNamesWithoutArguments do: [ :tempName |
 			methodBuilder pushLiteral: nil.
 			methodBuilder storeTemp: tempName.
 			methodBuilder popTop.
@@ -255,7 +254,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	aMethodNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: aMethodNode scope tempVectorName 
-			withVars: (aMethodNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: aMethodNode scope tempVectorVarNames.
 	].
 	effectTranslator visitNode: aMethodNode body.
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkAfterNoEnsure: aMethodNode].

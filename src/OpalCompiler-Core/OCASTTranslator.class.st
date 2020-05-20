@@ -435,16 +435,15 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
-	| argumentNames |
+
 	methodBuilder mapToNode: aBlockNode.
 	methodBuilder compilationContext: aBlockNode methodNode compilationContext.
 	
 	"args, then copied, then temps"
-	methodBuilder addTemps: (argumentNames := aBlockNode argumentNames).
-	methodBuilder addTemps: (aBlockNode scope inComingCopiedVarNames).
-	methodBuilder addTemps: (aBlockNode scope tempVarNames copyWithoutAll: argumentNames).
-	
-	methodBuilder numArgs: argumentNames size.
+	methodBuilder addTemps: aBlockNode argumentNames.
+	methodBuilder addTemps: aBlockNode scope inComingCopiedVarNames.
+	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
+	methodBuilder numArgs: aBlockNode arguments size.
 	
 	aBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
@@ -496,7 +495,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 			createTempVectorNamed: aBlockNode scope tempVectorName 
 			withVars: aBlockNode scope tempVectorVarNames.
 	].
-	methodBuilder addTemps: (aBlockNode scope tempVarNames copyWithoutAll: aBlockNode argumentNames).
+	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
 	valueTranslator visitNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
 	self flag: 'why dont we just add a blockReturnTop here... it could be removed or ignored in IRTranslator'.
@@ -533,19 +532,17 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 			- we call IRBuilder to add temps
 	"
 	
-	| tempNamesNoArgs |
-	
 	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName 
 			withVars: anOptimizedBlockNode scope tempVectorVarNames.
 	].
-	methodBuilder addTemps: (tempNamesNoArgs := anOptimizedBlockNode scope tempVarNames copyWithoutAll: anOptimizedBlockNode argumentNames).
+	methodBuilder addTemps: anOptimizedBlockNode scope tempVarNamesWithoutArguments.
 	methodBuilder addTemps: anOptimizedBlockNode scope inComingCopiedVarNames.
 	methodBuilder addTemps: anOptimizedBlockNode argumentNames.
 	anOptimizedBlockNode isInlinedLoop ifTrue: [
-		tempNamesNoArgs do: [ :tempName |
+		anOptimizedBlockNode scope tempVarNamesWithoutArguments do: [ :tempName |
 			methodBuilder pushLiteral: nil.
 			methodBuilder storeTemp: tempName.
 			methodBuilder popTop.
@@ -611,7 +608,7 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 	aMethodNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: aMethodNode scope tempVectorName 
-			withVars: (aMethodNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: aMethodNode scope tempVectorVarNames
 	].
 	effectTranslator visitNode: aMethodNode body.
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]
