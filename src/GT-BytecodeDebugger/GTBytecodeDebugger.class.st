@@ -94,15 +94,14 @@ GTBytecodeDebugger >> debuggerTransmissionsIn: browser [
 ]
 
 { #category : #'building presentations' }
-GTBytecodeDebugger >> decompiledCodeWidgetIn: arg1 forContext: arg2 [
-	| tmp2 |
-	tmp2 := arg1 pharoMethod.
-	tmp2
+GTBytecodeDebugger >> decompiledCodeWidgetIn: composite forContext: aContext [
+
+	^ composite pharoMethod
 		title: 'Decompiled';
-		format: [ arg2 compiledCode codeForNoSource ];
-		smalltalkClass: [ arg2 methodClass ];
-		doItReceiver: [ arg2 receiver ].
-	^ tmp2 doItContext: [ arg2 ]
+		format: [ aContext method codeForNoSource ];
+		smalltalkClass: [  aContext methodClass ];
+		doItReceiver: [ aContext receiver ];
+		doItContext: [  aContext ]
 ]
 
 { #category : #'printing/formatting' }
@@ -118,27 +117,19 @@ GTBytecodeDebugger >> formatBytecode: aBytecode [
 ]
 
 { #category : #'building presentations' }
-GTBytecodeDebugger >> methodBytecodeWidgetIn: arg1 forContext: arg2 [
-	| tmp2 |
-	tmp2 := arg1 tree.
-	tmp2
+GTBytecodeDebugger >> methodBytecodeWidgetIn: aComposite forContext: aContext [
+
+	^ aComposite tree
 		title: 'Bytecode';
 		rootsExpanded;
-		display: [ arg2 compiledCode symbolicBytecodes ];
-		children: [ :arg3 | 
-			arg3 isArray
-				ifTrue: [ arg3 ]
-				ifFalse: #() ];
-		format: [ :arg4 | self formatBytecode: arg4 ].
-	^ tmp2
-		onChangeOfPort: #selection
-		act: [ :arg5 | 
-			| tmp3 |
-			self codePresentation
-				selectionInterval:
-					((tmp3 := arg5 selection)
-						ifNil: [ 1 to: 0 ]
-						ifNotNil: [ tmp3 sourceInterval ]) ]
+		display: [ aContext method symbolicBytecodes ];
+		children: [ :each | each isArray ifTrue: [each] ifFalse: #() ];
+		format: [ :each | self formatBytecode: each ];
+		onChangeOfPort: #selection act: [ :bytecodes | 
+			self codePresentation 
+				selectionInterval: (bytecodes selection
+					ifNil: [ 1 to: 0 ] 
+					ifNotNil: [:selectedBytecode| selectedBytecode sourceInterval]) ] 
 ]
 
 { #category : #'building presentations' }

@@ -391,35 +391,29 @@ GTGenericStackDebugger >> printStackClassColumnForContext: aContext [
 ]
 
 { #category : #'printing/formatting' }
-GTGenericStackDebugger >> printStackExtraColumnForContext: arg1 [
-	| tmp2 |
-	^ arg1 outerContext
-		ifNil: [ String
-				streamContents: [ :arg2 | 
-					| tmp4 |
-					tmp4 := arg1 selector.
-					tmp2 := tmp4
-						ifNil: [ arg1 compiledCode defaultSelector ]
-						ifNotNil: [ tmp4 ].
-					tmp2 = #doesNotUnderstand:
-						ifTrue: [ arg2 space.
-							(arg1 tempAt: 1) selector printOn: arg2 ]
-						ifFalse: [ '' ] ] ]
-		ifNotNil: [ arg1 closure printString ]
+GTGenericStackDebugger >> printStackExtraColumnForContext: aContext [ 
+
+	| selector |
+	^ aContext outerContext 
+		ifNil: [ 
+			String streamContents: [ :aStream |
+				selector := aContext selector ifNil: [ aContext method defaultSelector ].
+				selector = #doesNotUnderstand:
+					ifTrue:[ 
+						aStream space.
+						(aContext tempAt: 1) selector printOn: aStream ]
+					ifFalse: [ '' ] ] ]
+		ifNotNil: [ aContext closure printString  ]
 ]
 
 { #category : #'printing/formatting' }
-GTGenericStackDebugger >> printStackMethodColumnForContext: arg1 [
-	| tmp1 tmp3 |
-	tmp1 := arg1 outerMostContext.
-	^ String
-		streamContents: [ :arg2 | 
-			| tmp5 |
-			tmp5 := tmp1 selector.
-			tmp3 := tmp5
-				ifNil: [ tmp1 compiledCode defaultSelector ]
-				ifNotNil: [ tmp5 ].
-			arg2 nextPutAll: tmp3 ]
+GTGenericStackDebugger >> printStackMethodColumnForContext: aContext [ 
+	| outer selector |
+	
+	outer := aContext outerMostContext.
+	^ String streamContents: [ :aStream |
+		selector := outer selector ifNil: [ outer method defaultSelector ].
+		aStream nextPutAll: selector ]
 ]
 
 { #category : #'building presentations' }
