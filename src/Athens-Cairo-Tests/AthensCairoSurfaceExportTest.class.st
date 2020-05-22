@@ -26,7 +26,8 @@ AthensCairoSurfaceExportTest >> fileReference [
 
 { #category : #running }
 AthensCairoSurfaceExportTest >> setUp [
-	self fileName asFileReference ensureDelete
+	super setUp.
+	self fileReference ensureDelete
 ]
 
 { #category : #running }
