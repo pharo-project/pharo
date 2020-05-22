@@ -31,7 +31,8 @@ AthensCairoSurfaceExportTest >> setUp [
 
 { #category : #running }
 AthensCairoSurfaceExportTest >> tearDown [
-	self fileReference ensureDelete
+	self fileReference ensureDelete.
+	super tearDown.
 ]
 
 { #category : #tests }
