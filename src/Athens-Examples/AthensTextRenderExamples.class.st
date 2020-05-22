@@ -2,18 +2,18 @@
 Visual tests for correct rendering of text using Athens
 "
 Class {
-	#name : #AthensTextRenderManualTests,
+	#name : #AthensTextRenderExamples,
 	#superclass : #Object,
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Morphic'
 }
 
 { #category : #utilities }
-AthensTextRenderManualTests class >> surfaceClass [
+AthensTextRenderExamples class >> surfaceClass [
 	^ AthensCairoSurface
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> test1 [
+AthensTextRenderExamples class >> test1 [
 	<example>
 	
 	|  t  c  |
@@ -47,7 +47,7 @@ globalBounds:  toLocal:
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> test2 [
+AthensTextRenderExamples class >> test2 [
 	<example>
 	
 	| t c surf |
@@ -69,7 +69,7 @@ AthensTextRenderManualTests class >> test2 [
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> test3 [
+AthensTextRenderExamples class >> test3 [
 	<example>
 	
 	| t  c surf |
@@ -96,7 +96,7 @@ AthensTextRenderManualTests class >> test3 [
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> test4 [
+AthensTextRenderExamples class >> test4 [
 	<example>
 	
 	| t  c surf |
@@ -120,7 +120,7 @@ AthensTextRenderManualTests class >> test4 [
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> test5 [
+AthensTextRenderExamples class >> test5 [
 	<example>
 	
 	| t  c surf |
@@ -143,7 +143,7 @@ AthensTextRenderManualTests class >> test5 [
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> testBlitting [
+AthensTextRenderExamples class >> testBlitting [
 	<example>
 	
 	| fnt form blt dstForm |
@@ -180,7 +180,7 @@ AthensTextRenderManualTests class >> testBlitting [
 ]
 
 { #category : #tests }
-AthensTextRenderManualTests class >> testText [
+AthensTextRenderExamples class >> testText [
 	
 	|  t  |
 	t := 'The safety constraint is that the garbage collector 
@@ -207,37 +207,4 @@ safety violation.
 	t addAttribute: (TextColor new color: Color green) from: 230 to: 360.
 	t addAttribute: (TextFontReference toFont: ( LogicalFont familyName: 'Tahoma'  pointSize: 14)) from: 88 to: 200.
 	^ t
-]
-
-{ #category : #tests }
-AthensTextRenderManualTests class >> testWindow [
-	<example>
-	| presenter window |
-	presenter := SpTextPresenter new
-		text: self testText;
-		yourself.
-	window := presenter openWithSpec.
-
-	presenter withWindowDo: [ :w | w title: 'A fancy looking title text' ].
-
-	^ window window
-]
-
-{ #category : #tests }
-AthensTextRenderManualTests class >> testWindowRender [
-	<example>
-	
-	| surf win |
-	win := self testWindow.
-	surf := self surfaceClass extent: win extent.
-	win position: 0@0.
-
-	surf drawDuring: [ :canvas | 
-		canvas pathTransform scaleBy: 1.
-		canvas fullDrawMorph: win.
-	].
-
-	surf asMorph openInWindow
-
-
 ]

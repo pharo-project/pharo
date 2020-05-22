@@ -2,7 +2,7 @@
 I'm a visual part of the AthensTiger.
 "
 Class {
-	#name : #AthensTigerShape,
+	#name : #AthensTigerPart,
 	#superclass : #Object,
 	#instVars : [
 		'path',
@@ -20,67 +20,67 @@ Class {
 }
 
 { #category : #accessing }
-AthensTigerShape >> addFill [
+AthensTigerPart >> addFill [
 	fill := true.
 ]
 
 { #category : #accessing }
-AthensTigerShape >> addStroke [
+AthensTigerPart >> addStroke [
 	stroke := true.
 ]
 
 { #category : #accessing }
-AthensTigerShape >> capStyle [
+AthensTigerPart >> capStyle [
 	^capStyle
 ]
 
 { #category : #accessing }
-AthensTigerShape >> capStyle: cap [
+AthensTigerPart >> capStyle: cap [
 	capStyle := cap.
 ]
 
 { #category : #accessing }
-AthensTigerShape >> fillPaint: aColor [ 
+AthensTigerPart >> fillPaint: aColor [ 
 	fillPaint := aColor
 ]
 
 { #category : #accessing }
-AthensTigerShape >> fillRule [
+AthensTigerPart >> fillRule [
 	^ fillRule
 ]
 
 { #category : #accessing }
-AthensTigerShape >> fillRule: rule [ 
+AthensTigerPart >> fillRule: rule [ 
 	fillRule := rule.
 ]
 
 { #category : #initialization }
-AthensTigerShape >> initialize [ 
+AthensTigerPart >> initialize [ 
 	fill := stroke := false.
 ]
 
 { #category : #accessing }
-AthensTigerShape >> joinStyle [
+AthensTigerPart >> joinStyle [
 	^joinStyle
 ]
 
 { #category : #accessing }
-AthensTigerShape >> joinStyle: join [
+AthensTigerPart >> joinStyle: join [
 	joinStyle := join.
 ]
 
 { #category : #accessing }
-AthensTigerShape >> miterLimit [
+AthensTigerPart >> miterLimit [
 	^miterLimit
 ]
 
 { #category : #accessing }
-AthensTigerShape >> miterLimit: lim [
+AthensTigerPart >> miterLimit: lim [
 	miterLimit := lim.
 ]
 
 { #category : #rendering }
-AthensTigerShape >> prepareFor: surface [
+AthensTigerPart >> prepareFor: surface [
 	fill ifTrue: [
 		fillPaint := surface createSolidColorPaint: fillPaint.
 	].
@@ -94,7 +94,7 @@ AthensTigerShape >> prepareFor: surface [
 ]
 
 { #category : #rendering }
-AthensTigerShape >> renderOn: can [
+AthensTigerPart >> renderOn: can [
 
 	fill ifTrue: [ 
 		can setPaint: fillPaint.
@@ -108,21 +108,21 @@ AthensTigerShape >> renderOn: can [
 ]
 
 { #category : #accessing }
-AthensTigerShape >> setPath: anAthensCairoPath [
+AthensTigerPart >> setPath: anAthensCairoPath [
 		path := anAthensCairoPath
 ]
 
 { #category : #accessing }
-AthensTigerShape >> strokePaint: aColor [ 
+AthensTigerPart >> strokePaint: aColor [ 
 	strokePaint := aColor
 ]
 
 { #category : #accessing }
-AthensTigerShape >> strokeWidth [
+AthensTigerPart >> strokeWidth [
 	^strokeWidth
 ]
 
 { #category : #accessing }
-AthensTigerShape >> strokeWidth: w [
+AthensTigerPart >> strokeWidth: w [
 	strokeWidth := w
 ]

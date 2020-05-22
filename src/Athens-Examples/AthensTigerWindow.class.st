@@ -2,7 +2,7 @@
 I'm an example that shows a tiger that moves via rotation, translation and zoom in a Morph window.
 "
 Class {
-	#name : #VGTigerDemo,
+	#name : #AthensTigerWindow,
 	#superclass : #StandardWindow,
 	#instVars : [
 		'surface',
@@ -17,11 +17,27 @@ Class {
 		'zoom',
 		'example'
 	],
-	#category : #'Athens-Examples-Utilities'
+	#category : #'Athens-Examples-Morphic'
 }
 
+{ #category : #running }
+AthensTigerWindow class >> openAnimated [
+	<script>
+
+	^ self new
+		open;
+		extent: self surfaceExtent + (50@50);
+		title: 'Athens Tiger Demo';
+		startStepping
+]
+
+{ #category : #accessing }
+AthensTigerWindow class >> surfaceExtent [
+	^ 400 @ 400
+]
+
 { #category : #drawing }
-VGTigerDemo >> drawOn: aCanvas [
+AthensTigerWindow >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 	aCanvas drawImage: surface asForm at: self layoutBounds origin.
@@ -30,10 +46,10 @@ VGTigerDemo >> drawOn: aCanvas [
 ]
 
 { #category : #initialization }
-VGTigerDemo >> initialize [ 
+AthensTigerWindow >> initialize [ 
 
 	super initialize.
-	surface := AthensCairoSurface extent: self surfaceExtent.
+	surface := AthensCairoSurface extent: self class surfaceExtent.
 	example := AthensTiger on: surface.
 	rotationSpeed := 1.
 	rotation := 0.
@@ -44,19 +60,8 @@ VGTigerDemo >> initialize [
 
 ]
 
-{ #category : #running }
-VGTigerDemo >> openAnimated [
-	<script: 'self new runDemo'>
-
-	self
-		open;
-		extent: self surfaceExtent + (50@50);
-		title: 'Athens Tiger Demo';
-		startStepping.
-]
-
 { #category : #'stepping and presenter' }
-VGTigerDemo >> step [ 
+AthensTigerWindow >> step [ 
 
 	rotation := rotation + rotationSpeed.
 	frames := frames + 1.
@@ -72,11 +77,6 @@ VGTigerDemo >> step [
 ]
 
 { #category : #stepping }
-VGTigerDemo >> stepTime [
+AthensTigerWindow >> stepTime [
 	^ 50
-]
-
-{ #category : #initialization }
-VGTigerDemo >> surfaceExtent [
-	^ 400 @ 400
 ]

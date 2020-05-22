@@ -2088,7 +2088,7 @@ AthensTiger >> readParts [
 		"E"	[:s | s close ] }.
 
 	[		
-		currentPart := AthensTigerShape new.
+		currentPart := AthensTigerPart new.
 
 		fillBlocks := { 
 			"N" [].

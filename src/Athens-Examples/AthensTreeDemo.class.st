@@ -2,7 +2,7 @@
 A tree visualization using Athens for display
 "
 Class {
-	#name : #AthensTreeView,
+	#name : #AthensTreeDemo,
 	#superclass : #Object,
 	#instVars : [
 		'nodeExtentBlock',
@@ -10,19 +10,20 @@ Class {
 		'root',
 		'rows'
 	],
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Morphic'
 }
 
 { #category : #examples }
-AthensTreeView class >> example1 [
-	AthensTreeView
+AthensTreeDemo class >> example1 [
+	<script>
+	self
 		openOn: Collection
 		extentBlock: [ :each | (5 + each instVarNames size) @ (5 + each methodDict size) ]
 		childsBlock: [ :el | el subclasses ]
 ]
 
 { #category : #'instance creation' }
-AthensTreeView class >> openOn: root extentBlock: extBlock childsBlock: childsBlock [
+AthensTreeDemo class >> openOn: root extentBlock: extBlock childsBlock: childsBlock [
 
 	| scene |
 	
@@ -35,7 +36,7 @@ AthensTreeView class >> openOn: root extentBlock: extBlock childsBlock: childsBl
 ]
 
 { #category : #private }
-AthensTreeView >> buildSubtreeFor: aNodeObject level: aLevel [
+AthensTreeDemo >> buildSubtreeFor: aNodeObject level: aLevel [
 	| node childs |
 	
 	node := AthensSimpleTreeNode new.
@@ -53,7 +54,7 @@ AthensTreeView >> buildSubtreeFor: aNodeObject level: aLevel [
 ]
 
 { #category : #private }
-AthensTreeView >> layOutGeometry [
+AthensTreeDemo >> layOutGeometry [
 
 	"first do a vertical layout"
 	
@@ -82,13 +83,13 @@ AthensTreeView >> layOutGeometry [
 ]
 
 { #category : #rendering }
-AthensTreeView >> renderOn: aCanvas [
+AthensTreeDemo >> renderOn: aCanvas [
 	aCanvas surface clear: Color white.
 	root renderOn: aCanvas
 ]
 
 { #category : #accessing }
-AthensTreeView >> root: aRootObject [
+AthensTreeDemo >> root: aRootObject [
 
 	root := self buildSubtreeFor: aRootObject level: 1.
 	
@@ -96,7 +97,7 @@ AthensTreeView >> root: aRootObject [
 ]
 
 { #category : #'private - initialization' }
-AthensTreeView >> root: aRootObject extentBlock: extBlock childsBlock: childsBlock [
+AthensTreeDemo >> root: aRootObject extentBlock: extBlock childsBlock: childsBlock [
 
 	nodeExtentBlock := extBlock.
 	nodeChildsBlock := childsBlock.
@@ -107,7 +108,7 @@ AthensTreeView >> root: aRootObject extentBlock: extBlock childsBlock: childsBlo
 ]
 
 { #category : #accessing }
-AthensTreeView >> rowAt: aLevel [
+AthensTreeDemo >> rowAt: aLevel [
 	rows ifNil: [  rows := OrderedCollection new ].
 	
 	[ aLevel > rows size ] whileTrue: [  rows add: OrderedCollection new ].
@@ -116,6 +117,6 @@ AthensTreeView >> rowAt: aLevel [
 ]
 
 { #category : #accessing }
-AthensTreeView >> spacingBetweenRows [
+AthensTreeDemo >> spacingBetweenRows [
 	^ 30
 ]
