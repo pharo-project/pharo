@@ -8,7 +8,7 @@ RBProgramNode >> gtSpotterCodePreviewIn: aComposite [
 	^ aComposite pharoMethod
 			title: [ 'Source code' translated ];
 			display: [ self source ];
-			smalltalkClass: [ self parents first compilationContext ifNotNil: [ :ctx | ctx getClass ] ];
+			smalltalkClass: [ self withAllParents first compilationContext ifNotNil: [ :ctx | ctx getClass ] ];
 			selectionInterval: [ self sourceInterval ];
 			entity: self
 ]
