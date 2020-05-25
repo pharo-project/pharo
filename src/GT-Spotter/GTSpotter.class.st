@@ -341,7 +341,9 @@ GTSpotter >> initialize [
 
 { #category : #testing }
 GTSpotter >> isEmpty [
-	self deprecated: 'Use hasSteps instead'.
+	self 
+		deprecated: 'Use hasSteps instead'
+		transformWith: '`@rec isEmpty' -> '`@rec hasSteps not'.
 	^ self hasSteps not
 ]
 

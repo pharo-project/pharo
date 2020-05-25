@@ -26,7 +26,9 @@ StringSignal class >> emit: aString [
 
 { #category : #'instance creation' }
 StringSignal class >> log: aString [
-	self deprecated: 'Should use #emit:'.
+	self 
+		deprecated: 'Should use #emit:' 
+		transformWith: '`@receiver log: `@name' -> '`@receiver emit: `@name'.
 	^ self emit: aString
 ]
 
