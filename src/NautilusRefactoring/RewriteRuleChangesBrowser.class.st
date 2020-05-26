@@ -5,8 +5,8 @@ Class {
 	#name : #RewriteRuleChangesBrowser,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'#changes => SpObservableSlot',
-		'#selectedChanges => SpObservableSlot',
+		'#changes',
+		'#selectedChanges',
 		'#changeTree => SpObservableSlot',
 		'#diffView => SpObservableSlot',
 		'#buttonCancel => SpObservableSlot',
