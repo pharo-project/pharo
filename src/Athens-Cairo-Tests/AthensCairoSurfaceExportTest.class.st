@@ -64,7 +64,7 @@ AthensCairoSurfaceExportTest >> testExportBoxes [
 	Smalltalk garbageCollect.
 
 	self assert: self fileReference exists.
-	self assert: self fileReference size > 500.
+	self assert: self fileReference size > 400.
 ]
 
 { #category : #tests }

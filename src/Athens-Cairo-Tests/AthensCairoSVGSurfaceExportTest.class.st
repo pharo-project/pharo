@@ -6,5 +6,5 @@ Class {
 
 { #category : #tests }
 AthensCairoSVGSurfaceExportTest >> athensSurfaceClass [
-	^ AthensCairoPDFSurface
+	^ AthensCairoSVGSurface
 ]
