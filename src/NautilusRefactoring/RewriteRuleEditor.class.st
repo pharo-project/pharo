@@ -5,12 +5,12 @@ Class {
 	#name : #RewriteRuleEditor,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'searchLabel',
-		'searchPattern',
-		'replaceLabel',
-		'replacePattern',
-		'helpText',
-		'replaceButton'
+		'#searchLabel',
+		'#searchPattern',
+		'#replaceLabel',
+		'#replacePattern',
+		'#helpText',
+		'#replaceButton => SpObservableSlot'
 	],
 	#category : #'NautilusRefactoring-Utilities'
 }
