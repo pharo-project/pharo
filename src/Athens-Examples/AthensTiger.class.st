@@ -52,6 +52,11 @@ AthensTiger class >> on: anAthensSurface [
 		yourself
 ]
 
+{ #category : #accessing }
+AthensTiger class >> tigerCenter [
+	^ self tigerExtent / 2
+]
+
 { #category : #private }
 AthensTiger class >> tigerCommandCount [ 
 	^ 4142
@@ -269,6 +274,11 @@ AthensTiger class >> tigerCommands [
 'EFNRMMCCCEFNRMMCCCEF'
 'NRMMLCLNSRMMLNSRMMCN'
 'SRMMCNSRMMC' )
+]
+
+{ #category : #accessing }
+AthensTiger class >> tigerExtent [
+	^ self tigerMaxX @ self tigerMaxY
 ]
 
 { #category : #private }
@@ -2016,12 +2026,11 @@ AthensTiger >> draw [
 			translateX: 0.5 * (surface extent x - (self class tigerMaxX * scale * zoom))
 				Y: surface extent y / -12.0;
 			scaleBy: scale * zoom;
-			translateX: self class tigerMaxX * 0.5
-				Y: self class tigerMaxY * 0.5;
+			translateBy: self class tigerCenter;
 			scaleBy: 0.8;
 			rotateByDegrees: rotation;
-			translateX: (self class tigerMaxX * -0.5) - position x
-				Y: (self class tigerMaxY * -0.5) + position y.
+			translateBy: (self class tigerCenter * -1);
+			translateBy: position.
 
 		parts do: [ :each | each renderOn: canvas ] ].
 
