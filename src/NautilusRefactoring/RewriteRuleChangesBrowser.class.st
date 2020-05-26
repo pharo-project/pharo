@@ -5,11 +5,11 @@ Class {
 	#name : #RewriteRuleChangesBrowser,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'#changes',
-		'#selectedChanges',
-		'#changeTree',
-		'#diffView',
-		'#buttonCancel',
+		'#changes => SpObservableSlot',
+		'#selectedChanges => SpObservableSlot',
+		'#changeTree => SpObservableSlot',
+		'#diffView => SpObservableSlot',
+		'#buttonCancel => SpObservableSlot',
 		'#buttonOk => SpObservableSlot'
 	],
 	#category : #'NautilusRefactoring-Utilities'
