@@ -38,21 +38,21 @@ AthensCairoSurfaceExportTest >> tearDown [
 
 { #category : #tests }
 AthensCairoSurfaceExportTest >> testExportBoxes [
-	| surface path |
+	| path surface |
 	surface := self athensSurfaceClass
 		extent: 100@100
 		fileName: self fileName.
+	path :=  surface createRectanglePath: (0@0 corner: 20@20).
 
-	path :=  surface createRectanglePath: (0@ 0 corner: 20@ 20).
-	surface drawDuring: [:can |
+	surface drawDuring: [:canvas |
 		surface clear.
-		can pathTransform loadIdentity.
-		can setPaint: Color red.
-		can pathTransform translateX: 5 Y: 5.
-		can drawShape: path.
-		can setPaint: Color blue.
-		can pathTransform translateX: 5 Y: 5.
-		can drawShape: path ].
+		canvas pathTransform loadIdentity.
+		canvas setPaint: Color red.
+		canvas pathTransform translateX: 5 Y: 5.
+		canvas drawShape: path.
+		canvas setPaint: Color blue.
+		canvas pathTransform translateX: 5 Y: 5.
+		canvas drawShape: path ].
 	
 	"-- Required steps at the end of the export --"
 
@@ -64,5 +64,32 @@ AthensCairoSurfaceExportTest >> testExportBoxes [
 	Smalltalk garbageCollect.
 
 	self assert: self fileReference exists.
-	self assert: self fileReference size > 0. 
+	self assert: self fileReference size > 400.
+]
+
+{ #category : #tests }
+AthensCairoSurfaceExportTest >> testExtent [
+	| surface |
+	surface := self athensSurfaceClass
+		extent: 100@50
+		fileName: self fileName.
+	self assert: surface extent equals: 100@50
+]
+
+{ #category : #tests }
+AthensCairoSurfaceExportTest >> testHeight [
+	| surface |
+	surface := self athensSurfaceClass
+		extent: 100@50
+		fileName: self fileName.
+	self assert: surface height equals: 50
+]
+
+{ #category : #tests }
+AthensCairoSurfaceExportTest >> testWidth [
+	| surface |
+	surface := self athensSurfaceClass
+		extent: 100@50
+		fileName: self fileName.
+	self assert: surface width equals: 100
 ]

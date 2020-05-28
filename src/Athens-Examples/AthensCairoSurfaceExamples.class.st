@@ -61,7 +61,7 @@ AthensCairoSurfaceExamples class >> exampleDrawTextPath [
 { #category : #utilities }
 AthensCairoSurfaceExamples class >> exampleExportTigerOn: anAthensSurface [
 	(AthensTiger on: anAthensSurface) 
-		position: 300@0;
+		position: 300 @ -200;
 		draw.
 	anAthensSurface finish. "Required to end the file"
 
@@ -72,7 +72,7 @@ AthensCairoSurfaceExamples class >> exampleExportTigerToPDF [
 
 	| surface |
 	surface := AthensCairoPDFSurface
-		extent: 400@400
+		extent: 500 asPoint
 		fileName: Time microsecondClockValue asString, '.pdf'.
 
 	self exampleExportTigerOn: surface.
@@ -84,7 +84,7 @@ AthensCairoSurfaceExamples class >> exampleExportTigerToSVG [
 
 	| surface |
 	surface := AthensCairoSVGSurface
-		extent: 400@400
+		extent: 500 asPoint
 		fileName: Time microsecondClockValue asString, '.svg'.
 
 	self exampleExportTigerOn: surface.
