@@ -130,11 +130,10 @@ ExternalDropHandler >> handle: dropStream in: pasteUp dropEvent: anEvent [
 
 { #category : #testing }
 ExternalDropHandler >> matchesExtension: aExtension [
-	(self extension isNil or: [aExtension isNil])
-		ifTrue: [^false].
-	FileSystem disk isCaseSensitive
-		ifTrue: [^extension = aExtension]
-		ifFalse: [^extension sameAs: aExtension]
+	(self extension isNil or: [ aExtension isNil ]) ifTrue: [ ^ false ].
+	^ FileSystem disk isCaseSensitive
+		ifTrue: [ extension = aExtension ]
+		ifFalse: [ extension sameAs: aExtension ]
 ]
 
 { #category : #testing }

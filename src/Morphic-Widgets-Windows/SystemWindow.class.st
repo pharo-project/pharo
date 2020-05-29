@@ -1101,11 +1101,9 @@ SystemWindow >> fullscreenMargin [
 SystemWindow >> getBoundsWithFlex [
 	"Return the lastest bounds rectangle with origin forced to global coordinates"
 
-	self isFlexed
-		ifTrue: [^ ((owner transform localPointToGlobal: bounds topLeft)
-										extent: bounds extent)]
-		ifFalse: [^ self bounds].
-
+	^ self isFlexed
+		ifTrue: [ (owner transform localPointToGlobal: bounds topLeft) extent: bounds extent ]
+		ifFalse: [ self bounds ]
 ]
 
 { #category : #'resize/collapse' }
