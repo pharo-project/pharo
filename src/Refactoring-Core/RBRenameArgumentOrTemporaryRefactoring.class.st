@@ -7,7 +7,7 @@ The variable declaration an all references in this method are renamed.
 My precondition verify that the new name is a valid variable name and not an existing instance or a class variable name
 "
 Class {
-	#name : #RBRenameTemporaryRefactoring,
+	#name : #RBRenameArgumentOrTemporaryRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
 		'selector',
@@ -20,7 +20,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-RBRenameTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [ 
+RBRenameArgumentOrTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [ 
 	^(self new)
 		model: aRBSmalltalk;
 		class: aClass
@@ -31,7 +31,7 @@ RBRenameTemporaryRefactoring class >> model: aRBSmalltalk renameTemporaryFrom: a
 ]
 
 { #category : #'instance creation' }
-RBRenameTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [ 
+RBRenameArgumentOrTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector [ 
 	^self new
 		class: aClass
 		selector: aSelector
@@ -40,7 +40,7 @@ RBRenameTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newNam
 ]
 
 { #category : #initialization }
-RBRenameTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [ 
+RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	interval := anInterval.
@@ -48,7 +48,7 @@ RBRenameTemporaryRefactoring >> class: aClass selector: aSelector interval: anIn
 ]
 
 { #category : #preconditions }
-RBRenameTemporaryRefactoring >> preconditions [
+RBRenameArgumentOrTemporaryRefactoring >> preconditions [
 	^ (RBCondition
 		withBlock: [ | methodSource |
 			interval first > interval last
@@ -62,7 +62,7 @@ RBRenameTemporaryRefactoring >> preconditions [
 ]
 
 { #category : #tranforming }
-RBRenameTemporaryRefactoring >> renameNode: aParseTree [
+RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 	(aParseTree whoDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].
 	(aParseTree allDefinedVariables includes: newName)
@@ -71,7 +71,7 @@ RBRenameTemporaryRefactoring >> renameNode: aParseTree [
 ]
 
 { #category : #printing }
-RBRenameTemporaryRefactoring >> storeOn: aStream [ 
+RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [ 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' renameTemporaryFrom: '.
@@ -88,7 +88,7 @@ RBRenameTemporaryRefactoring >> storeOn: aStream [
 ]
 
 { #category : #tranforming }
-RBRenameTemporaryRefactoring >> transform [
+RBRenameArgumentOrTemporaryRefactoring >> transform [
 	| definingNode variableNode |
 	parseTree := class parseTreeFor: selector.
 	variableNode := self whichVariableNode: parseTree inInterval: interval name: oldName.

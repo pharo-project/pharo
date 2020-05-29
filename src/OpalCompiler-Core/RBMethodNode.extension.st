@@ -143,7 +143,7 @@ RBMethodNode >> primitiveFromPragma [
 	pragmas ifNil: [ ^ IRPrimitive null ].
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
-		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asPrimitive ]
+		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
 		ifNone: [ IRPrimitive null ]
 ]
 

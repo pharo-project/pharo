@@ -1066,27 +1066,24 @@ Morph >> announcer [
 ]
 
 { #category : #drawing }
-Morph >> areasRemainingToFill: aRectangle [ 
+Morph >> areasRemainingToFill: aRectangle [
 	"Pushed up from BorderedMorph, all cases tested for there are
 	supported by basic Morph."
+
 	"Morphs which achieve translucency by other means than fillStyle will have
 	to reimplement this"
+
 	"Fixed here to test the fillStyle rather than color for translucency.
 	Since can have a translucent fillStyle while the (calculated) color is not."
-	self fillStyle isTranslucent
-		ifTrue: [^ Array with: aRectangle].
-	self wantsRoundedCorners
-		ifTrue: [(self borderWidth > 0
-					and: [self borderColor isColor
-							and: [self borderColor isTranslucent]])
-				ifTrue: [^ aRectangle
-						areasOutside: (self innerBounds intersect: self boundsWithinCorners)]
-				ifFalse: [^ aRectangle areasOutside: self boundsWithinCorners]]
-		ifFalse: [(self borderWidth > 0
-					and: [self borderColor isColor
-							and: [self borderColor isTranslucent]])
-				ifTrue: [^ aRectangle areasOutside: self innerBounds]
-				ifFalse: [^ aRectangle areasOutside: self bounds]]
+
+	self fillStyle isTranslucent ifTrue: [ ^ Array with: aRectangle ].
+	^ self wantsRoundedCorners
+		ifTrue: [ (self borderWidth > 0 and: [ self borderColor isColor and: [ self borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: (self innerBounds intersect: self boundsWithinCorners) ]
+				ifFalse: [ aRectangle areasOutside: self boundsWithinCorners ] ]
+		ifFalse: [ (self borderWidth > 0 and: [ self borderColor isColor and: [ self borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: self innerBounds ]
+				ifFalse: [ aRectangle areasOutside: self bounds ] ]
 ]
 
 { #category : #'stepping and presenter' }
@@ -3065,17 +3062,15 @@ Morph >> handlerForBlueButtonDown: anEvent [
 	"Return the (prospective) handler for a mouse down event. The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event.
 	Note: Halos handle blue button events themselves so we will only be asked if there is currently no halo on top of us.
 	Check whtehr halods are enabled (for deployment)."
-	
-	self wantsHaloFromClick ifFalse:[^nil].
-	
-	self class cycleHalosBothDirections ifTrue: [
-		anEvent handler ifNil:[^self]. 
-		(anEvent handler isKindOf: PasteUpMorph) ifTrue:[^self] ].
 
-	(anEvent shiftPressed)
-		ifFalse:[^nil] "let outer guy have it"
-		ifTrue:[^self] "let me have it"
+	self wantsHaloFromClick ifFalse: [ ^ nil ].
 
+	self class cycleHalosBothDirections
+		ifTrue: [ anEvent handler ifNil: [ ^ self ].
+			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
+	^ anEvent shiftPressed
+		ifFalse: [ "let outer guy have it" nil ]
+		ifTrue: [ "let me have it" self ]
 ]
 
 { #category : #'meta-actions' }
@@ -6218,9 +6213,9 @@ Morph >> textAnchorType [
 
 { #category : #'text-anchor' }
 Morph >> textAnchorType: aSymbol [
-	aSymbol == #document
-		ifTrue:[^self removeProperty: #textAnchorType]
-		ifFalse:[^self setProperty: #textAnchorType toValue: aSymbol].
+	^ aSymbol == #document
+		ifTrue: [ self removeProperty: #textAnchorType ]
+		ifFalse: [ self setProperty: #textAnchorType toValue: aSymbol ]
 ]
 
 { #category : #theme }

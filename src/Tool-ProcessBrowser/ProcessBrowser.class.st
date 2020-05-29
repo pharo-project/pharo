@@ -236,11 +236,6 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ Smalltalk globals at: #SoundPlayer ifPresent: [ :sp | sp playerProcess ] ]
-		label: 'the Sound Player'
-		allowStop: false
-		allowDebug: false.
-	self
 		registerWellKnownProcess: [ Smalltalk globals at: #CPUWatcher ifPresent: [ :cw | cw currentWatcherProcess ] ]
 		label: 'the CPUWatcher'
 		allowStop: false

@@ -648,11 +648,9 @@ FileList >> fileListIndex: anInteger [
 
 { #category : #'file list menu' }
 FileList >> fileListMenu: aMenu [
-
-	reference
-		ifNil: [^ self noFileSelectedMenu: aMenu]
-		ifNotNil: [^ self fileSelectedMenu: aMenu].
-
+	^ reference
+		ifNil: [ self noFileSelectedMenu: aMenu ]
+		ifNotNil: [ self fileSelectedMenu: aMenu ]
 ]
 
 { #category : #'file list menu' }

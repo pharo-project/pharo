@@ -999,7 +999,7 @@ NautilusRefactoring >> privateRenameMethodFor: aMethod withNewName: newMethodNam
 { #category : #'private-source' }
 NautilusRefactoring >> privateRenameTemporaryNamed: oldname Between: anInterval from: aMethod [
 
-	^ RBRenameTemporaryRefactoring
+	^ RBRenameArgumentOrTemporaryRefactoring
 		model: environment
 		renameTemporaryFrom: anInterval
 		to: (self request: self newVariableRequestText initialAnswer: oldname)

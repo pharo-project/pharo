@@ -121,82 +121,73 @@ WarpBlt >> copyQuad: pts toRect: destRect [
 ]
 
 { #category : #primitives }
-WarpBlt >> deltaFrom: x1 to: x2 nSteps: n [ 
+WarpBlt >> deltaFrom: x1 to: x2 nSteps: n [
 	"Utility routine for computing Warp increments.
 	x1 is starting pixel, x2 is ending pixel;  assumes n >= 1"
+
 	| fixedPtOne |
 	fixedPtOne := 16384.	"1.0 in fixed-pt representation"
-	x2 > x1 
-		ifTrue: [ ^ (x2 - x1 + fixedPtOne) // (n + 1) + 1 ]
-		ifFalse: 
-			[ x2 = x1 ifTrue: [ ^ 0 ].
-			^ 0 - ((x1 - x2 + fixedPtOne) // (n + 1) + 1) ]
+	^ x2 > x1
+		ifTrue: [ (x2 - x1 + fixedPtOne) // (n + 1) + 1 ]
+		ifFalse: [ x2 = x1 ifTrue: [ ^ 0 ].
+			0 - ((x1 - x2 + fixedPtOne) // (n + 1) + 1) ]
 ]
 
 { #category : #smoothing }
-WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [ 
+WarpBlt >> mixPix: pix sourceMap: sourceMap destMap: destMap [
 	"Average the pixels in array pix to produce a destination pixel.
 	First average the RGB values either from the pixels directly,
 	or as supplied in the sourceMap.  Then return either the resulting
 	RGB value directly, or use it to index the destination color map."
+
 	| r g b rgb nPix bitsPerColor d |
 	nPix := pix size.
 	r := 0.
 	g := 0.
 	b := 0.
-	1 
-		to: nPix
-		do: 
-			[ :i | 
-			"Sum R, G, B values for each pixel"
-			rgb := sourceForm depth <= 8 
-				ifTrue: [ sourceMap at: (pix at: i) + 1 ]
-				ifFalse: 
-					[ sourceForm depth = 32 
-						ifTrue: [ pix at: i ]
-						ifFalse: 
-							[ self 
-								rgbMap: (pix at: i)
-								from: 5
-								to: 8 ] ].
-			r := r + ((rgb bitShift: -16) bitAnd: 255).
-			g := g + ((rgb bitShift: -8) bitAnd: 255).
-			b := b + ((rgb bitShift: 0) bitAnd: 255) ].
-	destMap == nil 
-		ifTrue: 
-			[ bitsPerColor := 3.	"just in case eg depth <= 8 and no map"
+	1 to: nPix do: [ :i | 
+		"Sum R, G, B values for each pixel"
+		rgb := sourceForm depth <= 8
+			ifTrue: [ sourceMap at: (pix at: i) + 1 ]
+			ifFalse: [ sourceForm depth = 32
+					ifTrue: [ pix at: i ]
+					ifFalse: [ self rgbMap: (pix at: i) from: 5 to: 8 ] ].
+		r := r + ((rgb bitShift: -16) bitAnd: 255).
+		g := g + ((rgb bitShift: -8) bitAnd: 255).
+		b := b + ((rgb bitShift: 0) bitAnd: 255) ].
+	destMap
+		ifNil: [ bitsPerColor := 3.	"just in case eg depth <= 8 and no map"
 			destForm depth = 16 ifTrue: [ bitsPerColor := 5 ].
 			destForm depth = 32 ifTrue: [ bitsPerColor := 8 ] ]
-		ifFalse: 
-			[ destMap size = 512 ifTrue: [ bitsPerColor := 3 ].
+		ifNotNil: [ destMap size = 512 ifTrue: [ bitsPerColor := 3 ].
 			destMap size = 4096 ifTrue: [ bitsPerColor := 4 ].
 			destMap size = 32768 ifTrue: [ bitsPerColor := 5 ] ].
 	d := bitsPerColor - 8.
 	rgb := ((r // nPix bitShift: d) bitShift: bitsPerColor * 2) + ((g // nPix bitShift: d) bitShift: bitsPerColor) + ((b // nPix bitShift: d) bitShift: 0).
-	destMap == nil 
-		ifTrue: [ ^ rgb ]
-		ifFalse: [ ^ destMap at: rgb + 1 ]
+	^ destMap
+		ifNil: [ rgb ]
+		ifNotNil: [ destMap at: rgb + 1 ]
 ]
 
 { #category : #smoothing }
-WarpBlt >> rgbMap: sourcePixel from: nBitsIn to: nBitsOut [ 
+WarpBlt >> rgbMap: sourcePixel from: nBitsIn to: nBitsOut [
 	"NOTE: This code is copied verbatim from BitBltSimulation so that it
 	may be removed from the system"
+
 	"Convert the given pixel value with nBitsIn bits for each color component to a pixel value with nBitsOut bits for each color component. Typical values for nBitsIn/nBitsOut are 3, 5, or 8."
-	| mask d srcPix destPix |
+
 	<inline: true>
-	(d := nBitsOut - nBitsIn) > 0 
-		ifTrue: 
-			[ "Expand to more bits by zero-fill"
+	| mask d srcPix destPix |
+	^ (d := nBitsOut - nBitsIn) > 0
+		ifTrue: [ "Expand to more bits by zero-fill"
 			mask := (1 << nBitsIn) - 1.	"Transfer mask"
 			srcPix := sourcePixel << d.
 			mask := mask << d.
 			destPix := srcPix bitAnd: mask.
 			mask := mask << nBitsOut.
 			srcPix := srcPix << d.
-			^ destPix + (srcPix bitAnd: mask) + (srcPix << d bitAnd: mask << nBitsOut) ]
-		ifFalse: 
-			[ "Compress to fewer bits by truncation"
+			destPix + (srcPix bitAnd: mask) + (srcPix << d bitAnd: mask << nBitsOut) ]
+		ifFalse: [ "Compress to fewer bits by truncation"
 			d = 0 ifTrue: [ ^ sourcePixel ].	"no compression"
 			sourcePixel = 0 ifTrue: [ ^ sourcePixel ].	"always map 0 (transparent) to 0"
 			d := nBitsIn - nBitsOut.
@@ -207,7 +198,7 @@ WarpBlt >> rgbMap: sourcePixel from: nBitsIn to: nBitsOut [
 			srcPix := srcPix >> d.
 			destPix := destPix + (srcPix bitAnd: mask) + (srcPix >> d bitAnd: mask << nBitsOut).
 			destPix = 0 ifTrue: [ ^ 1 ].	"Dont fall into transparent by truncation"
-			^ destPix ]
+			destPix ]
 ]
 
 { #category : #primitives }
@@ -255,9 +246,10 @@ WarpBlt >> sourceQuad: pts destRect: aRectangle [
 { #category : #primitives }
 WarpBlt >> startFrom: x1 to: x2 offset: sumOfDeltas [
 	"Utility routine for computing Warp increments."
-	x2 >= x1
-		ifTrue: [^ x1]
-		ifFalse: [^ x2 - sumOfDeltas]
+
+	^ x2 >= x1
+		ifTrue: [ x1 ]
+		ifFalse: [ x2 - sumOfDeltas ]
 ]
 
 { #category : #primitives }
