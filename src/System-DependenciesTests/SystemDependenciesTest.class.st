@@ -123,7 +123,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'FileSystem-Core' #'System-Changes' #'AST-Core')
+	^ #(#'FileSystem-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -466,6 +466,7 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	self longTestCase.
 	
 	dependencies := self externalDependendiesOf: (
+		BaselineOfPharoBootstrap compilerPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
