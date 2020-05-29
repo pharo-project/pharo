@@ -106,6 +106,15 @@ RBProgramNode >> allDefinedVariables [
 ]
 
 { #category : #accessing }
+RBProgramNode >> allParents [
+	"return all my parents. 
+	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
+	^ parent 
+		ifNil: [ OrderedCollection new ]
+		ifNotNil: [ parent withAllParents ]
+]
+
+{ #category : #accessing }
 RBProgramNode >> allTemporaryVariables [
 	| children |
 	children := self children.
@@ -675,12 +684,13 @@ RBProgramNode >> parent: aRBProgramNode [
 
 { #category : #accessing }
 RBProgramNode >> parents [
-	^ parent 
-		ifNil: [ OrderedCollection with: self ]
-		ifNotNil: [ 
-			parent parents
-				addLast: self;
-				yourself ]
+	"see discussion in https://github.com/pharo-project/pharo/issues/6278"
+		self
+		deprecated: 'Use #withAllParents instead'
+		on: '25 may 2020'
+		in: #Pharo9
+		transformWith: '`@receiver parents' 
+						-> '`@receiver withALlParents'.
 ]
 
 { #category : #copying }
@@ -962,4 +972,16 @@ RBProgramNode >> whoDefines: aName [
 	^(self defines: aName) 
 		ifTrue: [self]
 		ifFalse: [parent notNil ifTrue: [parent whoDefines: aName] ifFalse: [nil]]
+]
+
+{ #category : #accessing }
+RBProgramNode >> withAllParents [
+	"return me and all my parents. Topmost parent first, me last
+	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
+	^ parent 
+		ifNil: [ OrderedCollection with: self ]
+		ifNotNil: [ 
+			parent withAllParents 
+				addLast: self;
+				yourself ]
 ]
