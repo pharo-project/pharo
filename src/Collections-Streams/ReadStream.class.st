@@ -24,9 +24,9 @@ ReadStream >> next [
 	bounds in the collection. Optional. See Object documentation
 	whatIsAPrimitive."
 
-	position >= readLimit
-		ifTrue: [^nil]
-		ifFalse: [^collection at: (position := position + 1)]
+	^ position >= readLimit
+		ifTrue: [ nil ]
+		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
 { #category : #accessing }

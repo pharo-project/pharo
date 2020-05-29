@@ -441,9 +441,9 @@ OrderedDictionary >> keyAtIndex: anIndex [
 
 { #category : #accessing }
 OrderedDictionary >> keyAtIndex: anIndex ifAbsent: aBlock [
-	(anIndex > 0 and: [anIndex <= self size])
-		ifTrue: [^ orderedKeys at: anIndex]
-		ifFalse: [^ aBlock value]
+	^ (anIndex > 0 and: [ anIndex <= self size ])
+		ifTrue: [ orderedKeys at: anIndex ]
+		ifFalse: [ aBlock value ]
 ]
 
 { #category : #accessing }
