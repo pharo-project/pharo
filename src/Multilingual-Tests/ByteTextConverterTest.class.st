@@ -33,6 +33,16 @@ ByteTextConverterTest >> testLatin2ToUnicodeConversion [
 ]
 
 { #category : #testing }
+ByteTextConverterTest >> testMacRomanToUnicodeShorthand [
+	| macRomanCharacter  unicodeCharacter   |
+	macRomanCharacter := Character value: 16r80.
+	unicodeCharacter := $Ä.
+
+	self assert: macRomanCharacter macRomanToUnicode  equals: unicodeCharacter.
+	self assert: macRomanCharacter equals: unicodeCharacter unicodeToMacRoman.
+]
+
+{ #category : #testing }
 ByteTextConverterTest >> testUnicodeToLatin2Conversion [
 	| latin2Bytes internalString encodingStream encodedBytes |
 	latin2Bytes := #[16rBE 16rFD 16rE1 16rC8].

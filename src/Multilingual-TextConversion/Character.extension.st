@@ -4,12 +4,12 @@ Extension { #name : #Character }
 Character >> macRomanToUnicode [
 	"Convert the receiver from MacRoman Unicode."
 
-	^MacRomanTextConverter new unicodeToByte: self
+	^MacRomanTextConverter new byteToUnicode: self
 ]
 
 { #category : #'*Multilingual-TextConversion' }
 Character >> unicodeToMacRoman [
 	"Convert the receiver from Unicode to MacRoman encoding."
 
-	^MacRomanTextConverter new byteToUnicode: self
+	^MacRomanTextConverter new unicodeToByte: self
 ]
