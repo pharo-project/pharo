@@ -9,7 +9,6 @@ Load type:
 
 Installs:
 - SUnit UI
-- BlueInk
 - Nautilus
 - NECompletion
 - ProcessBrowsers
@@ -54,9 +53,7 @@ BaselineOfBasicTools >> baseline: spec [
 				loads: #( 'UI' 'Help' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
-		spec package: 'BlueInk-Core'.
-		spec package: 'BlueInk-Extras'.
-
+	
 		spec 
 			baseline: 'EnlumineurFormatter' with: [ 
 				spec
