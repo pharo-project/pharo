@@ -169,7 +169,6 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	
 ]
 
-
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
 	"
