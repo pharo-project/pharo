@@ -1258,10 +1258,25 @@ Collection >> sum: aBlock [
 	number line, i.e. whether 0 is a good initial value for the sum. 
 	Consider a collection of measurement objects, 0 would be the unitless 
 	value and would not be appropriate to add with the unit-ed objects."
+	^ self sum: aBlock ifEmpty: [ 0 ]
+]
+
+{ #category : #'math functions' }
+Collection >> sum: aBlock ifEmpty: anEmptySumBlock [
+	"This is implemented using a variant of the normal inject:into: pattern. 
+	The reason for this is that it is not known whether we're in the normal 
+	number line, i.e. whether 0 is a good initial value for the sum. 
+	Consider a collection of measurement objects, 0 would be the unitless 
+	value and would not be appropriate to add with the unit-ed objects."
 	| sum sample |
-	sample := aBlock value: self anyOne.
-	sum := self inject: sample into: [ :previousValue :each |  previousValue + (aBlock value: each) ].
-	^ sum - sample
+	
+	^ self
+		ifNotEmpty: [ 
+			sample := aBlock value: self anyOne.
+			sum := self inject: sample into: [ :previousValue :each |
+				previousValue + (aBlock value: each) ].
+			sum - sample ]
+		ifEmpty: anEmptySumBlock.
 ]
 
 { #category : #'math functions' }
