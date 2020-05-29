@@ -148,13 +148,32 @@ WinPlatform >> virtualKey: virtualKeyCode [
 
 { #category : #'string-manipulation' }
 WinPlatform >> wideCharacterToMultiByteCodepage: codepage flags: flags input: input inputLen: inputLen output: output outputLen: outputLen [
-	^self ffiCall: #(int WideCharToMultiByte(uint codepage,
-    ulong flags,
-    Win32WideString input,
-    int inputLen,
-    String output,
-    int outputLen,
-    0,
-    0
- ))
+
+	"To be independent on UnifiedFFI package, we must use low-level FFI call. The following code is based on this FFI call:
+
+	^self ffiCall: #(int WideCharToMultiByte(uint codepage, ulong flags, Win32WideString input, int inputLen, String output, int outputLen, 0, 0 ))"
+
+	^(ExternalLibraryFunction
+		name: 'WideCharToMultiByte'
+		module: 'Kernel32'
+		callType: 0
+		returnType: ExternalType signedLong
+		argumentTypes:
+			{ExternalType unsignedLong.
+			ExternalType unsignedLong.
+			ExternalType void asPointerType.
+			ExternalType signedLong.
+			ExternalType char asPointerType.
+			ExternalType signedLong.
+			ExternalType unsignedLong.
+			ExternalType unsignedLong.})
+		invokeWithArguments:
+			{codepage.
+			flags.
+			input getHandle.
+			inputLen.
+			output.
+			outputLen.
+			0.
+			0}
 ]

@@ -66,7 +66,7 @@ DrTestsPlugin >> buildConfigurationFrom: aDrTests [
 ]
 
 { #category : #api }
-DrTestsPlugin >> buildContextualMenuGroupWith: presenterIntance [
+DrTestsPlugin >> buildContextualMenuGroupWith: presenterInstance [
 	^ CmCommandGroup new
 ]
 

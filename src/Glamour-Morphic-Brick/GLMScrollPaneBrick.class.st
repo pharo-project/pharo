@@ -324,8 +324,7 @@ GLMScrollPaneBrick >> onThemerChanged [
 { #category : #initialization }
 GLMScrollPaneBrick >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
-	
-	self unsubscribeListeners
+	self unsubscribeListeners: aWorld
 ]
 
 { #category : #'private-scrolling' }
@@ -464,9 +463,9 @@ GLMScrollPaneBrick >> scrollpaneBackgroundColor: aColor [
 ]
 
 { #category : #initialization }
-GLMScrollPaneBrick >> unsubscribeListeners [
+GLMScrollPaneBrick >> unsubscribeListeners: aWorld [
 
-	self activeHand removeEventListener: self
+	self currentWorld activeHand removeEventListener: self
 ]
 
 { #category : #'scrollpane-updating' }

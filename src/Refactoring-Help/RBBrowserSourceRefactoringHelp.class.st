@@ -93,7 +93,7 @@ RBBrowserSourceRefactoringHelp class >> pages [
 RBBrowserSourceRefactoringHelp class >> renameTemporaryRefactoring [
 	^HelpTopic
 		title: 'Rename temporary/parameter'
-		contents: RBRenameTemporaryRefactoring comment
+		contents: RBRenameArgumentOrTemporaryRefactoring comment
 
 ]
 

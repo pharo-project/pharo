@@ -20,5 +20,6 @@ SpBrowseSubInstancesCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseSubInstancesCommand >> execute [
-	self context instanceSide inspectSubInstances
+
+	self target instanceSide inspectSubInstances
 ]

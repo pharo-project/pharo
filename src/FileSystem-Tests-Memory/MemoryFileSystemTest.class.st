@@ -216,3 +216,25 @@ MemoryFileSystemTest >> testNotEqualWhenRequestingMemoryFileSystem [
 	other := self createFileSystem.
 	self deny: other equals: filesystem
 ]
+
+{ #category : #tests }
+MemoryFileSystemTest >> testStreamWriteAndRead [
+	"Test writing custom collection and reading it [partially] back."
+	
+	| writer reader testData |
+	testData := ByteArray new: 50 streamContents: [ :out |
+						1 to: 50 do: [ :i | out nextPut: i ]
+					].
+	writer := (filesystem / 'test.out') binaryWriteStream.
+	writer next: 20 putAll: testData startingAt: 10.
+	writer position: 10; nextPutAll: #[1 2 3 4 5].
+	self assert: writer position equals: 15.
+	writer close.
+
+	reader := (filesystem / 'test.out') binaryReadStream.
+	self assert: reader size equals: 15.
+	self assert: (reader next: 15)
+			equals: #[10 11 12 13 14 15 16 17 18 19 1 2 3 4 5].
+
+	^ self
+]

@@ -342,7 +342,7 @@ RBMoveMethodRefactoring >> removeArgument [
 RBMoveMethodRefactoring >> replaceSelfReferences [
 	| replacer |
 	self needsToReplaceSelfReferences ifTrue: [
-		replacer := RBParseTreeRewriter new.
+		replacer := self parseTreeRewriter.
 		replacer replace: 'self' with: selfVariableName.
 		self hasOnlySelfReturns ifTrue: 
 			[replacer replace: '^self' with: '^self'].
@@ -353,7 +353,7 @@ RBMoveMethodRefactoring >> replaceSelfReferences [
 { #category : #transforming }
 RBMoveMethodRefactoring >> replaceVariableReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter new.
+	replacer := self parseTreeRewriter.
 	replacer replace: variable with: 'self'.
 	replacer executeTree: parseTree.
 	parseTree := replacer tree

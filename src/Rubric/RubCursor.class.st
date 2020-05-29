@@ -195,14 +195,6 @@ RubCursor >> noteNewOwner: aMorph [
 
 ]
 
-{ #category : #private }
-RubCursor >> outOfWorld: aWorld [
-
-	super outOfWorld: aWorld.
-	
-	aWorld removeAlarm: #hideShow for: self.
-]
-
 { #category : #accessing }
 RubCursor >> period [
 	^ period ifNil: [ period := self class period ]

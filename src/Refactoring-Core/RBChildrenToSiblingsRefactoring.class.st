@@ -67,7 +67,7 @@ RBChildrenToSiblingsRefactoring >> addSuperclass [
 { #category : #transforming }
 RBChildrenToSiblingsRefactoring >> changeIsKindOfReferences [
 	| replacer |
-	replacer := RBParseTreeRewriter new.
+	replacer := self parseTreeRewriter.
 	replacer replace: '``@object isKindOf: ' , parent name
 		with: '``@object isKindOf: ' , className.
 	self convertAllReferencesToClass: parent using: replacer

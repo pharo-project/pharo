@@ -24,6 +24,13 @@ SpAbstractSelectionModeTest >> setUp [
 	presenter items: (1 to: 10)
 ]
 
+{ #category : #running }
+SpAbstractSelectionModeTest >> tearDown [ 
+
+	presenter delete.
+	super tearDown
+]
+
 { #category : #tests }
 SpAbstractSelectionModeTest >> testSubscriptionsAreTransfered [
 	self subclassResponsibility

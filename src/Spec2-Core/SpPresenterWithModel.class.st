@@ -52,6 +52,12 @@ SpPresenterWithModel >> setAnnouncingObject: aDomainObject [
 	
 ]
 
+{ #category : #transmission }
+SpPresenterWithModel >> setModel: aDomainObject [
+
+	^	self model: aDomainObject
+]
+
 { #category : #initialization }
 SpPresenterWithModel >> setModelBeforeInitialization: aDomainObject [
 

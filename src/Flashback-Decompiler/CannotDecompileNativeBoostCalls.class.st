@@ -6,8 +6,3 @@ Class {
 	#superclass : #Exception,
 	#category : #'Flashback-Decompiler-Exceptions'
 }
-
-{ #category : #accessing }
-CannotDecompileNativeBoostCalls >> defaultAction [
-	UnhandledError signalForException: self
-]

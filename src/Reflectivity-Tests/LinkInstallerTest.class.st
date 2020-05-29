@@ -7,7 +7,7 @@ Class {
 		'obj3',
 		'obj4'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #running }
@@ -869,7 +869,7 @@ LinkInstallerTest >> testUninstallLinkFromNode [
 
 { #category : #permalinks }
 LinkInstallerTest >> testUninstallLinkOnSlotOrVar [
-	| link linkRegistry |
+	| link linkRegistry permalink |
 	link := MetaLink new.
 	linkRegistry := link linkInstaller linksRegistry.
 	
@@ -877,17 +877,39 @@ LinkInstallerTest >> testUninstallLinkOnSlotOrVar [
 		for: ReflectivityExamples2
 		option: #all
 		instanceSpecific: false.
+		
+	"After installing, registry must be correct"	
+	permalink := (linkRegistry permaLinksFor:link) asArray first.
+	self assert: (linkRegistry registeredClassesAt: ReflectivityExamples2) asArray first 
+		identicalTo: permalink slotOrVariable.
+	self assert: (linkRegistry registeredTargetsAt: permalink slotOrVariable) asArray first 
+		identicalTo: permalink.
+		
+	"After uninstalling, registry must be cleared"
 	link uninstall.
-	self assert: link nodes isEmpty.
-	self assert: (linkRegistry permaLinksFor:link) isEmpty.
+	self assertEmpty: link nodes.
+	self assertEmpty: (linkRegistry permaLinksFor:link).
+	self assertEmpty: (linkRegistry registeredClassesAt: ReflectivityExamples2).
+	self assertEmpty: (linkRegistry registeredTargetsAt: permalink slotOrVariable).
 	
 	link installOnClassVarNamed: #classVar
 		for: ReflectivityExamples2 new
 		option: #all
 		instanceSpecific: false.
+	
+	"After installing, registry must be correct"	
+	permalink := (linkRegistry permaLinksFor:link) asArray first.
+	self assert: (linkRegistry registeredClassesAt: ReflectivityExamples2) asArray first 
+		identicalTo: permalink slotOrVariable.
+	self assert: (linkRegistry registeredTargetsAt: permalink slotOrVariable) asArray first 
+		identicalTo: permalink.
+	
+	"After uninstalling, registry must be cleared"
 	link uninstall.
-	self assert: link nodes isEmpty.
-	self assert: (linkRegistry permaLinksFor:link) isEmpty.
+	self assertEmpty: link nodes.
+	self assertEmpty: (linkRegistry permaLinksFor:link).
+	self assertEmpty: (linkRegistry registeredClassesAt: ReflectivityExamples2).
+	self assertEmpty: (linkRegistry registeredTargetsAt: permalink slotOrVariable)
 ]
 
 { #category : #'links - installing' }

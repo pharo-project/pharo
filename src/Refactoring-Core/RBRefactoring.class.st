@@ -267,6 +267,16 @@ RBRefactoring >> options: aDictionary [
 	options := aDictionary
 ]
 
+{ #category : #parsing }
+RBRefactoring >> parseTreeRewriter [
+	^ self parseTreeRewriterClass new
+]
+
+{ #category : #parsing }
+RBRefactoring >> parseTreeRewriterClass [
+	^ RBParseTreeRewriter
+]
+
 { #category : #utilities }
 RBRefactoring >> parseTreeSearcher [
 	^ self parseTreeSearcherClass new

@@ -41,18 +41,32 @@ WorldMorph >> dispatchKeystroke: anEvent [
 { #category : #'*Morphic-Base' }
 WorldMorph >> install [
 
-	"this method was used to be invoked from onPrimitiveError: 
-	the problem is that it cannot be used to recreate the world instance.
-	For this have a look class side installNewWorld."
-
+	"This method should not be used. This is for backward compatibility and will be replaced
+	with a newer solution"
+   
 	owner := nil.	"since we may have been inside another world previously"
 	ActiveWorld := self.
 	World := self.
-	submorphs do: [ :ss | ss owner ifNil: [ ss privateOwner: self ] ].	"Transcript that was in outPointers and then got deleted."
-	self viewBox: Display boundingBox.
-	Sensor flushAllButDandDEvents.
+	
+	self hands ifEmpty: [self addHand: HandMorph new].
+
+	self worldState worldRenderer: AbstractWorldRenderer mainWorldRenderer.
+	AbstractWorldRenderer mainWorldRenderer world: self.  
+	
+	submorphs do: [ :ss | ss owner ifNil: [ ss privateOwner: self ] ].	
+		
 	worldState handsDo: [ :h | h initForEvents ].
-	self borderWidth: 0.	"default"
+	self borderWidth: 0.	
 	SystemWindow noteTopWindowIn: self.
-	self displayWorldSafely
+	self displayWorldSafely.
+	self extent: self worldState worldRenderer actualScreenSize.
+	self viewBox: self worldState worldRenderer viewBox.
+	Sensor flushAllButDandDEvents.
+
+]
+
+{ #category : #'*Morphic-Base' }
+WorldMorph >> mouseDown: evt [
+	super mouseDown: evt.
+	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
 ]

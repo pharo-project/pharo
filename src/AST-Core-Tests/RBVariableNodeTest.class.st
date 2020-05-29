@@ -8,6 +8,29 @@ Class {
 }
 
 { #category : #tests }
+RBVariableNodeTest >> testIsDefinition [
+	| ast temps |
+	ast := self class compiler
+		parse:
+			'myMethod: arg
+  | test |
+  test := 2.
+  test.
+  ^test'.
+	ast doSemanticAnalysis.
+	temps := ast allChildren select: #isTemp.
+	
+	"arguments define variables"
+	self assert: ast arguments first isDefinition.
+	"this is the || definition"
+	self assert: temps first isDefinition.
+	"all the rest are just uses"
+	self deny: temps second isDefinition.
+	self deny: temps third isDefinition.
+	self deny: temps fourth isDefinition
+]
+
+{ #category : #tests }
 RBVariableNodeTest >> testStartForReplacement [
 
 	| source tree dTemporary |

@@ -24,13 +24,6 @@ MenuItemMorph >> spotterActDefault [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-MenuItemMorph >> spotterItemsFor: aStep [
-	<spotterOrder: 10>
-	self hasSubMenu ifTrue: [ 
-		self subMenu spotterItemsFor: aStep ]
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
 MenuItemMorph >> spotterPreviewMenuIn: aComposite [
 	<spotterPreview: 10>
 	

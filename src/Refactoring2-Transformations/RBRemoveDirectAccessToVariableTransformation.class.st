@@ -103,7 +103,7 @@ RBRemoveDirectAccessToVariableTransformation >> replaceInstanceAccesses [
 
 	| replacer includeGettersAndSetters |
 	includeGettersAndSetters := receiver isNotNil.
-	replacer := RBParseTreeRewriter 
+	replacer := self parseTreeRewriterClass  
 				variable: variableName
 				getter: self getterMethod
 				setter: self setterMethod

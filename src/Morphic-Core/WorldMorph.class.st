@@ -436,12 +436,6 @@ WorldMorph >> listOfSteppingMorphs [
 "self currentWorld listOfSteppingMorphs"
 ]
 
-{ #category : #'dropping/grabbing' }
-WorldMorph >> mouseDown: evt [
-	super mouseDown: evt.
-	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
-]
-
 { #category : #printing }
 WorldMorph >> printOn: aStream [
 	"Reimplemented to add a tag showing that the receiver is currently functioning as a 'world', if it is"

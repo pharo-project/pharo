@@ -1311,7 +1311,7 @@ TextMorph >> paragraph [
 	wrapFlag ifFalse:
 		["Was given huge container at first... now adjust"
 		newParagraph adjustRightX].
-	newParagraph focused: (self currentHand keyboardFocus == self).
+	newParagraph focused: self hasFocus.
 	paragraph := newParagraph.
 	self fit.
 	self removeProperty: #CreatingParagraph.

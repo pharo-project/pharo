@@ -21,6 +21,6 @@ SpBrowseMethodInheritanceCommand class >> shortName [
 { #category : #executing }
 SpBrowseMethodInheritanceCommand >> execute [
 	self systemNavigation
-		methodHierarchyBrowserForClass: self context methodClass
-		selector: self context selector
+		methodHierarchyBrowserForClass: self target methodClass
+		selector: self target selector
 ]

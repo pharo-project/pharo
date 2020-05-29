@@ -49,7 +49,7 @@ RBInlineAllSendersRefactoring class >> sendersOf: aSelector in: aClass [
 { #category : #transforming }
 RBInlineAllSendersRefactoring >> checkInlinedMethods [
 	numberReplaced = 0 
-		ifTrue: [self refactoringFailure: 'Could not inline any senders']
+		ifTrue: [self refactoringFailure: 'Could not find any senders to inline into']
 ]
 
 { #category : #transforming }

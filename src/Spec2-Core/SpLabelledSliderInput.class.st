@@ -24,16 +24,6 @@ SpLabelledSliderInput >> absoluteValue: aBoolean [
 	^ self sliderInput absoluteValue: aBoolean
 ]
 
-{ #category : #'api-shortcuts' }
-SpLabelledSliderInput >> autoAccept [
-	^ self sliderInput autoAccept
-]
-
-{ #category : #'api-shortcuts' }
-SpLabelledSliderInput >> autoAccept: aBoolean [
-	^ self sliderInput autoAccept: aBoolean
-]
-
 { #category : #initialization }
 SpLabelledSliderInput >> initializePresenters [
 	super initializePresenters.

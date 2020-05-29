@@ -56,7 +56,7 @@ RBProtectVariableTransformationTest >> testClassVariable [
 			equals: (self parseMethod: 'nuke self recursiveSelfRule: nil').
 	self assert: (class parseTreeFor: #initializeAfterLoad1) 
 			equals: (self parseMethod: 'initializeAfterLoad1
-				self recursiveSelfRule: RBParseTreeSearcher new.
+				self recursiveSelfRule: self parseTreeSearcher.
 				self recursiveSelfRule
 					addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 					-> [:aNode :answer | true]').

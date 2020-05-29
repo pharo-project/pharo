@@ -265,7 +265,8 @@ GTSpotterResultsBrick >> stepModel: aModel [
 	stepModel candidates announcer when: GTSpotterCandidatesAmountChanged send: #onCandidatesAmountChanged: to: self.
 	stepModel announcer when: GTSpotterScrollPageDown send: #scrollPageDown to: self.
 	stepModel announcer when: GTSpotterScrollPageUp send: #scrollPageUp to: self.
-	stepModel announcer when: GTSpotterCandidateSelected send: #onCandidateSelected: to: self
+	stepModel announcer when: GTSpotterCandidateSelected send: #onCandidateSelected: to: self.
+
 ]
 
 { #category : #accessing }

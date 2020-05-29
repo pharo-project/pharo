@@ -29,7 +29,7 @@ GTSpotterProfiler class >> profileOneCycle [
 					openCenteredInWorld.
 		
 				spotterModel class markOpened.
-				MorphicRenderLoop new doOneCycleWhile: [ done not ] ] ]
+				[ done ] whileFalse: [ self currentWorld doOneCycle ] ] ]
 ]
 
 { #category : #shortcuts }

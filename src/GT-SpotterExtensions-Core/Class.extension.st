@@ -43,7 +43,7 @@ Class >> spotterMethodsFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-Class >> spotterPreviewCodeIn: aComposite [
+Class >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [self name];

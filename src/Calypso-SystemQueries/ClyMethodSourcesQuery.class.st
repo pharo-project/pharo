@@ -5,9 +5,9 @@ But generally pattern is represented by ClyStringPattern subclasses.
 
 To create my instances use following methods:
 
-	ClyMethodSources withString: 'probe string'.
-	ClyMethodSources withString: 'probe string' caseSensitive: true.
-	ClyMethodSources filteredBy: aStringPattern
+	ClyMethodSourcesQuery withString: 'probe string'.
+	ClyMethodSourcesQuery withString: 'probe string' caseSensitive: true.
+	ClyMethodSourcesQuery filteredBy: aStringPattern
 	
 Internal Representation and Key Implementation Points.
 

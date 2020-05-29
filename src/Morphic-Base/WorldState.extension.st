@@ -45,6 +45,12 @@ to the top of the screen' translated)
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState >> startMessageTally [
+
+	self class startMessageTally
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
 
@@ -73,17 +79,17 @@ mouse pointer goes to the top of the screen')
 ]
 
 { #category : #'*Morphic-Base' }
+WorldState >> startThenBrowseMessageTally [
+
+	self class startThenBrowseMessageTally
+]
+
+{ #category : #'*Morphic-Base' }
 WorldState class >> systemOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #System)
 		order: 3.0;
 		with: [
-			(aBuilder item: #'Start profiling all Processes')
-				help: 'Profile all Pharo processes.';
-				action: [ self startMessageTally ].
-			(aBuilder item: #'Start profiling UI ')
-				help: 'Profile the UI process of Pharo.';
-				action: [ self startThenBrowseMessageTally ].
 			(aBuilder item: #'Space left')
 				help: 'Do a garbage collection, and report results about the to the user.';
 				action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].

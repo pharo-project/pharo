@@ -32,9 +32,8 @@ SpMorphicButtonAdapter >> askBeforeChanging [
 { #category : #private }
 SpMorphicButtonAdapter >> buildLabel: text withIcon: icon [
 
-	icon ifNil: [ ^ text
-			ifNil: [ '' ]
-			ifNotNil: [ text ] ].
+	icon ifNil: [ ^ (text localizedForPresenter: self presenter)
+			ifNil: [ '' ] ].
 	
 	^ IconicListItem 
 		text: text 
@@ -53,7 +52,7 @@ SpMorphicButtonAdapter >> buildWidget [
 		hResizing: #spaceFill ;
 		vResizing: #spaceFill ;
 		askBeforeChanging: self askBeforeChanging ;
-		setBalloonText: self model help ;
+		setBalloonText: self getHelpText ;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled ;	
 		eventHandler: (MorphicEventHandler new 
@@ -91,6 +90,18 @@ SpMorphicButtonAdapter >> font [
 	^self model font
 ]
 
+{ #category : #private }
+SpMorphicButtonAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #private }
+SpMorphicButtonAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
 { #category : #accessing }
 SpMorphicButtonAdapter >> helpText [
 	^ self widget helpText
@@ -112,7 +123,7 @@ SpMorphicButtonAdapter >> keyStroke: anEvent fromMorph: aMorph [
 { #category : #'widget API' }
 SpMorphicButtonAdapter >> label [
 	
-	^ self buildLabel: self model label withIcon: self model icon
+	^ self buildLabel: self presenter label withIcon: self presenter icon
 ]
 
 { #category : #'widget API' }

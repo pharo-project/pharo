@@ -18,14 +18,14 @@ OCInstanceScope >> allTemps [
 ]
 
 { #category : #lookup }
-OCInstanceScope >> findVariable: lookupBlock ifNone: notFoundBlock [ 
+OCInstanceScope >> hasBindingThatBeginsWith: aString [
+	"Answer true if true, false or any slot start with aString"
 
-	(lookupBlock value: selfVar) ifTrue: [ ^ selfVar ].
-	(lookupBlock value: superVar) ifTrue: [ ^ superVar ].
+	(selfVar name beginsWith: aString) ifTrue: [ ^true ].
+	(superVar name beginsWith: aString) ifTrue: [ ^true ].
+	(vars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	
-	vars valuesDo: [ :var | (lookupBlock value: var) ifTrue: [ ^ var ] ].
-
-	^ outerScope findVariable: lookupBlock ifNone: notFoundBlock 
+	^ self outerScope hasBindingThatBeginsWith: aString
 ]
 
 { #category : #initialization }
@@ -55,16 +55,16 @@ OCInstanceScope >> isInstanceScope [
 OCInstanceScope >> lookupVar: name [
 	"Return a ScopeVar for my inst var with this name.  Return nil if none found"
 
-	name = 'self' ifTrue: [^ selfVar].
-	name = 'super' ifTrue: [^ superVar].
+	name = selfVar name ifTrue: [^ selfVar].
+	name = superVar name ifTrue: [^ superVar].
 	^ vars at: name ifAbsent: [self outerScope lookupVar: name]
 ]
 
 { #category : #lookup }
 OCInstanceScope >> lookupVarForDeclaration: name [
-	"Return a ScopeVar for my inst var with this name.  Return nil if none found"
-	name = 'self' ifTrue: [^ selfVar].
-	name = 'super' ifTrue: [^ superVar].
+	"This is a version of #lookupVar: that skips the OCRequestorScope"
+	name = selfVar name ifTrue: [^ selfVar].
+	name = superVar name ifTrue: [^ superVar].
 	^ vars at: name ifAbsent: [self outerScope lookupVarForDeclaration: name]
 ]
 

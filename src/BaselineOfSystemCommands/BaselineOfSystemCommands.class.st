@@ -32,6 +32,6 @@ BaselineOfSystemCommands >> baseline: spec [
 				package: #'SystemCommands-VariableCommands'
 					with:
 						[ spec requires: #('Commander' #'SystemCommands-RefactoringSupport') ];
-				package: #'SystemCommands-RefactoringSupport-Test'
+				package: #'SystemCommands-RefactoringSupport-Tests'
 					with: [ spec requires: #(#'SystemCommands-RefactoringSupport') ] ]
 ]

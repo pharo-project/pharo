@@ -7,10 +7,10 @@ Class {
 { #category : #baselines }
 BaselineOfReflectivity >> baseline: spec [
 	<baseline>
-	
-	spec for: #'common' do: [
-			
-		spec 
-			package: 'Reflectivity-Tests';
-			package: 'Reflectivity-Examples' ]
+	spec
+		for: #common
+		do: [ spec
+				package: 'Reflectivity-Tests';
+				package: 'Reflectivity-Examples';
+				package: 'Reflectivity-VariableBreakpoint' ]
 ]

@@ -150,12 +150,6 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 	^ self model notNil and: [ self model hasBindingOf: aString ]
 ]
 
-{ #category : #shout }
-RubSmalltalkCodeMode >> hasBindingThatBeginsWith: aString [ 
-	" For the shout styler "
-	^ self model notNil and: [ self model hasBindingThatBeginsWith: aString ]
-]
-
 { #category : #parsing }
 RubSmalltalkCodeMode >> parseExpression: aString [
 

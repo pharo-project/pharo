@@ -1,5 +1,5 @@
 "
-I am a simple TestCase that tests for correct operation of #hash and #=.
+I am an abstract TestCase superclass that tests for correct operation of #hash and #=.
 
 Subclasses of me need to fill my prototypes with suitable objects to be tested.
 "
@@ -12,24 +12,29 @@ Class {
 	#category : #'SUnit-Core-Utilities'
 }
 
+{ #category : #tests }
+HashAndEqualsTestCase class >> isAbstract [ 
+
+	^self == HashAndEqualsTestCase 
+]
+
 { #category : #running }
 HashAndEqualsTestCase >> setUp [
-	"subclasses will add their prototypes into this collection"
+	"Subclasses will add their prototypes into this collection"
 	super setUp.
 	prototypes := OrderedCollection new 
 ]
 
 { #category : #tests }
 HashAndEqualsTestCase >> testEquality [
-	"Check that TextAttribute subclasses report equality correctly"
-	prototypes
-		do: [:p | self
-				should: [(EqualityTester with: p) result]] 
+	"Check that prototypes report equality correctly"
+	
+	prototypes do: [:p | self assert: (EqualityTester with: p) result ]
 ]
 
 { #category : #tests }
 HashAndEqualsTestCase >> testHash [
-	"Check TextAttribute subclasses with equality method hash correctly"
-	prototypes do: [:p |
-		self should: [(HashTester with: p) result]] 
+	"Check prototypes with equality method hash correctly"
+	
+	prototypes do: [:p | self assert: (HashTester with: p) result]
 ]

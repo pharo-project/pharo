@@ -222,7 +222,7 @@ SymbolicBytecodeBuilder >> pushConstant: obj [
 { #category : #'instruction decoding' }
 SymbolicBytecodeBuilder >> pushFullClosure: lit numCopied: numCopied receiverOnStack: rcvr ignoreOuterContext: ignore [
 
-	self addBytecode: 'fullClosure:' , lit printString , 'NumCopied: ', numCopied printString
+	self addBytecode: 'fullClosure:' , lit printString , ' NumCopied: ', numCopied printString
 ]
 
 { #category : #'instruction decoding' }

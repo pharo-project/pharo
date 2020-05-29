@@ -38,6 +38,20 @@ ExceptionTest >> runCaseManaged [
 	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
 ]
 
+{ #category : #private }
+ExceptionTest >> runWithNoHandlers: aBlock [
+	"Executing the given block directly would go through all handlers of SUnit machinery.
+	Here we simulate the clean environment with no outer handlers for possible block errors"
+	| synchSemaphore result |
+	synchSemaphore := Semaphore new. 
+	[result := aBlock ensure: [synchSemaphore signal]] forkNamed: 'Test process'.
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
+	(synchSemaphore wait: 2 seconds)
+		ifTrue: [ self error: 'Timeout for block execution' ].
+	^result
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleOuterPass [
 	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 
@@ -364,45 +378,81 @@ ExceptionTest >> testTimeoutWithZeroDuration [
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
-	| executed semaphore |
+	| executed |
 	executed := false.
-	semaphore := Semaphore new.
-	[ [ 
+	self runWithNoHandlers: [
+		[ 
 			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 		] on: ZeroDivide do: [:z | z pass].
-		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
-	"we should not wait forever in case of wrong behaviour 
-	(general test timeout is disabled in #runCaseManaged)"
-	semaphore wait: 2 seconds.
+	].
 	self assert: executed
 ]
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledErrorWhenNoHandlers [
-	| executed semaphore |
+	| executed |
 	executed := false.
-	semaphore := Semaphore new.
-	[
-		[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]. 
-		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
-	"we should not wait forever in case of wrong behaviour 
-	(general test timeout is disabled in #runCaseManaged)"
-	semaphore wait: 2 seconds.
+	self runWithNoHandlers: [
+		[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+	].
 	self assert: executed
 ]
 
 { #category : #'tests - handling' }
 ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
-	| executed semaphore |
+	| executed |
 	executed := false.
-	semaphore := Semaphore new.
-	[ [ [  
+	self runWithNoHandlers: [
+		[ [  
 				[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
 			] on: ZeroDivide do: [:z | z pass]
-		] on: ZeroDivide do: [:z | z pass].
-		semaphore signal] fork. "fork allows to avoid any handlers from the SUnit"
-	"we should not wait forever in case of wrong behaviour 
-	(general test timeout is disabled in #runCaseManaged)"
-	semaphore wait: 2 seconds.
+		] on: ZeroDivide do: [:z | z pass]
+	].
 	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
+	
+	| error caughtException |
+	error := Error new.
+	self runWithNoHandlers: [ 
+		[ error signal ] on: UnhandledException do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException class equals: UnhandledError.
+	self assert: caughtException exception equals: error
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
+	
+	| halt caughtException |
+	halt := Halt new.
+	self runWithNoHandlers: [
+		[ halt signal ] on: UnhandledException do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException equals: halt
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledExceptionShouldAllowToCatchWarning [
+	
+	| warning caughtException |
+	warning := Warning new.
+	self runWithNoHandlers: [
+		[ warning signal ] on: UnhandledException do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException class equals: UnhandledError.
+	self assert: caughtException exception equals: warning
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledWarningShouldBeProcessedAsUnhandledError [
+	
+	| warning caughtException |
+	warning := Warning new.
+	self runWithNoHandlers: [
+		[ warning signal ] on: UnhandledError do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException exception equals: warning
 ]

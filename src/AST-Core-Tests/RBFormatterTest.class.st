@@ -78,7 +78,7 @@ RBFormatterTest >> testParseError [
 	"parse error nodes should have the faulty code"
 	inputSource := ')'.
    errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
+	self assert: errorNode source equals: (self formatterClass format: errorNode)
 
 ]
 
@@ -88,7 +88,7 @@ RBFormatterTest >> testParseError2 [
 	"parse error nodes should have the faulty code"
 	inputSource := '( 1 + 2'.
    errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: errorNode formattedCode
+	self assert: errorNode source equals: (self formatterClass format: errorNode)
 
 ]
 
@@ -98,9 +98,10 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	"symbols within a literal array can omit the # character, if it is used that way,
 	the formatter should not add a # character but just use the source form."
 	inputSource := '#(#withnumbersign nonumbersign ''string'')'.
-   literalArrayNode := self parseExpression: inputSource.
-	self assert: literalArrayNode source equals: literalArrayNode formattedCode
-
+	literalArrayNode := self parseExpression: inputSource.
+	self
+		assert: literalArrayNode source
+		equals: (self formatterClass format: literalArrayNode)
 ]
 
 { #category : #testing }
@@ -111,6 +112,6 @@ RBFormatterTest >> testPreserveLiteralNumberFormat [
 	formatting."
 	inputSource := '#(1 4r33 16r0F 0.02 2e-2 -1)'.
    numbersNode := self parseExpression: inputSource.
-	self assert: numbersNode source equals: numbersNode formattedCode
+	self assert: numbersNode source equals: (self formatterClass format: numbersNode)
 
 ]

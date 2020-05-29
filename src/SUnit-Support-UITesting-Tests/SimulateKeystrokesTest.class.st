@@ -3,8 +3,8 @@ SUnit tests to simulate and test key strokes
 "
 Class {
 	#name : #SimulateKeystrokesTest,
-	#superclass : #UITestCase,
-	#category : #'SUnit-Support-UITesting-Tests'
+	#superclass : #AbstractUITestCase,
+	#category : #'SUnit-Support-UITesting-Tests-Base'
 }
 
 { #category : #tests }
