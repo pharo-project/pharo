@@ -145,11 +145,11 @@ RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [
 { #category : #transforming }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
-	|existSelector |
-	existSelector := self requestExistingSelector.
-	existSelector ifNotNil: [ ^ existSelector ] ifNil: [
-		^ class allSelectors detect: [:each | self isMethodEquivalentTo: each]
-			ifNone: [nil]]
+
+	^ self requestExistingSelector
+		ifNil: [ class allSelectors
+				detect: [ :each | self isMethodEquivalentTo: each ]
+				ifNone: [ nil ] ]
 ]
 
 { #category : #initialization }

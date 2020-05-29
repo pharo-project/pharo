@@ -73,22 +73,17 @@ RxCharSetParser >> parse [
 
 { #category : #parsing }
 RxCharSetParser >> parseCharOrRange [
-
 	| firstChar |
-
 	firstChar := lookahead.
 	self match: firstChar.
 	lookahead = $-
 		ifTrue: [ self match: $-.
-			lookahead
-				ifNil: [ ^ self
+			^ lookahead
+				ifNil: [ self
 						addChar: firstChar;
-						addChar: $-
-					]
+						addChar: $- ]
 				ifNotNil: [ self addRangeFrom: firstChar to: lookahead.
-					^ self match: lookahead
-					]
-			].
+					self match: lookahead ] ].
 	self addChar: firstChar
 ]
 
@@ -115,14 +110,11 @@ RxCharSetParser >> parseNamedSet [
 
 { #category : #parsing }
 RxCharSetParser >> parseStep [
-
-	lookahead = $[ ifTrue:
-		[source peek = $:
-			ifTrue: [^self parseNamedSet]
-			ifFalse: [^self parseCharOrRange]].
-	lookahead = $\ ifTrue:
-		[^self parseEscapeChar].
-	lookahead = $- ifTrue:
-		[RxParser signalSyntaxException: 'invalid range' at: source position].
+	lookahead = $[
+		ifTrue: [ ^ source peek = $:
+				ifTrue: [ self parseNamedSet ]
+				ifFalse: [ self parseCharOrRange ] ].
+	lookahead = $\ ifTrue: [ ^ self parseEscapeChar ].
+	lookahead = $- ifTrue: [ RxParser signalSyntaxException: 'invalid range' at: source position ].
 	self parseCharOrRange
 ]
