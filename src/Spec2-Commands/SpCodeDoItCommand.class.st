@@ -1,3 +1,7 @@
+"
+I'm a ""do it"" command. 
+I will execute the selection (or line) of the playground.
+"
 Class {
 	#name : #SpCodeDoItCommand,
 	#superclass : #SpCodeSelectionCommand,

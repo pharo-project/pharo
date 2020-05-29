@@ -648,11 +648,9 @@ FileList >> fileListIndex: anInteger [
 
 { #category : #'file list menu' }
 FileList >> fileListMenu: aMenu [
-
-	reference
-		ifNil: [^ self noFileSelectedMenu: aMenu]
-		ifNotNil: [^ self fileSelectedMenu: aMenu].
-
+	^ reference
+		ifNil: [ self noFileSelectedMenu: aMenu ]
+		ifNotNil: [ self fileSelectedMenu: aMenu ]
 ]
 
 { #category : #'file list menu' }
@@ -1069,7 +1067,7 @@ FileList >> openImageInWindow [
 	self reference streamWritable: false do: [ :stream|
 		image := Form fromBinaryStream: stream].
 	
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]
 
 { #category : #initialization }

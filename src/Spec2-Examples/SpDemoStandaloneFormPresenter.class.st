@@ -36,7 +36,8 @@ Class {
 
 { #category : #specs }
 SpDemoStandaloneFormPresenter class >> defaultSpec [
-	"SpBoxLayout newVertical
+	
+	^ SpBoxLayout newVertical
 		add:
 			(SpGridLayout new
 				add: 'Name:' at: 1 @ 1;
@@ -70,76 +71,7 @@ SpDemoStandaloneFormPresenter class >> defaultSpec [
 				add: #submitButton;
 				add: #restoreButton;
 				yourself);
-		yourself"
-	| fontWidth labelsWidth rowHeight checkboxWidth |
-	fontWidth := (StandardFonts defaultFont widthOfString: 'M').
-	labelsWidth := fontWidth * 8.
-	rowHeight := self inputTextHeight.
-	checkboxWidth := fontWidth * 2.
-	
-	^ SpLayout composed
-		newColumn: [ :col | 
-
-			col newRow: [ :row | 
-				row add: #nameLabel right: labelsWidth.
-				row add: #nameTextInput ]
-			height: rowHeight.
-		
-			col newRow: [ :row | 
-				row add: #surnameLabel right: labelsWidth.
-				row add: #surnameTextInput ]
-			height: rowHeight.
-
-			col newRow: [ :row | 
-				row add: #number1Label right: labelsWidth..
-				row add: #number1Input ]
-			height: rowHeight.
-
-		col newRow: [ :row | 
-				row add: #number2Label right: labelsWidth.
-				row add: #number2Input ]
-			height: rowHeight.
-
-		col newRow: [ :row | 
-				row add: #scaleLabel right: labelsWidth.
-				row add: #scaleInput ]
-			height: rowHeight.
-
-		col newRow: [ :row | 
-				row add: #passwordLabel top: 0 bottom: rowHeight left: nil right: labelsWidth.
-				row newColumn: [ :passwordColumn |
-					passwordColumn newRow: [ :innerRow | 
-						innerRow add: #passwordInput].
-					passwordColumn newRow: [ :innerRow | 
-						innerRow add: #checkboxInput right: checkboxWidth.
-						innerRow add: #checkboxLabel ]]]
-			height: rowHeight*2.
-
-		col newRow: [ :row | 
-				row add: #dateLabel right: labelsWidth.
-				row add: #dateInput ]
-			height: rowHeight.
-
-	col newRow: [ :row | 
-				row add: #genderLabel top: 0 bottom: rowHeight left: nil right: labelsWidth.
-				row add: #maleButton.
-				row add: #femaleButton.]
-			height: rowHeight*2.
-
-	col newRow: [ :row | 
-				row add: #itemsLabel right: labelsWidth.
-				row add: #itemsInput ]
-			height: rowHeight*6.
-	
-	col newRow: [ :row | 
-				row add: #submitButton.
-				row add: #restoreButton ]
-			height: rowHeight*1.3.
-
-		"fill the rest of the space"
-		col newRow: [ :row |  ] ];
-			
-		yourself.	
+		yourself
 ]
 
 { #category : #accessing }
@@ -242,17 +174,16 @@ SpDemoStandaloneFormPresenter >> genderLabel: anObject [
 { #category : #initialization }
 SpDemoStandaloneFormPresenter >> initializePresenters [
 	nameLabel := self newLabel label: 'name:'.
-	nameTextInput := self newTextInput autoAccept: true.
+	nameTextInput := self newTextInput.
 
 	surnameLabel := self newLabel label: 'surname:'.
-	surnameTextInput := self newTextInput autoAccept: true.
+	surnameTextInput := self newTextInput.
 	surnameTextInput placeholder: 'empty'.
 	number1Label := self newLabel label: 'number 1:'.
-	number1Input := self newNumberInput autoAccept: true.
+	number1Input := self newNumberInput.
 
 	number2Label := self newLabel label: 'number 2:'.
 	number2Input := self newNumberInput
-		autoAccept: true;
 		beFloat;
 		digits: 3;
 		climbRate: 0.005;
@@ -264,8 +195,7 @@ SpDemoStandaloneFormPresenter >> initializePresenters [
 
 	passwordLabel := self newLabel label: 'password:'.
 	passwordInput := self newTextInput
-		bePassword;
-		autoAccept: true.
+		bePassword.
 	checkboxLabel := self newLabel label: 'remember me'.
 	checkboxInput := self newCheckBox state: true.
 

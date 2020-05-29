@@ -49,13 +49,10 @@ BaselineOfIDE >> additionalInitialization [
 
 	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
-	LogicalFontManager unload.
 	FreeTypeSystemSettings loadFt2Library: true.
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
 	
-	CatalogSettings displayCatalogProjectsInSpotter: false.
-
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
@@ -85,10 +82,13 @@ BaselineOfIDE >> additionalInitialization [
 	SDL_Event initialize.
 	
 	HiRulerBuilderTest initialize.
-	
+		
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
+	
+	"Making HeuristicCompletion the default completion engine"
+	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
 	
 	self loadIceberg.	
 	self makeCalypsoDefaultBrowser.
@@ -135,7 +135,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Tests' 'UI-Tests' ) ].
+				loads: #( 'Tests' ) ].
 				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
@@ -182,9 +182,14 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
+		spec baseline: 'Catalog' with: [ spec repository: repository ].
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
-		spec baseline: 'Catalog' with: [ spec repository: repository ].
+		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'Spec2' with: [ 
+			spec 
+				repository: repository;
+				loads: #('Code') ].
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 
@@ -192,7 +197,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.5';
+		repository: 'github://pharo-vcs/iceberg:v1.8.0';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

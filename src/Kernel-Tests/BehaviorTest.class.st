@@ -176,10 +176,11 @@ BehaviorTest >> testMethodsReadingSlot [
 BehaviorTest >> testMethodsWritingSlot [
 	| numberViaSlot numberViaIVar |
 	"Check the source code availability to do not fail on images without sources"
-	(Point >> #x) hasSourceCode ifFalse: [ ^ self ].
-
-	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x)) size.
-	numberViaIVar := (Point whichSelectorsStoreInto: 'x') size.
+	(Point >> #x) hasSourceCode
+		ifFalse: [ ^ self ].
+	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x))
+		size.
+	numberViaIVar := (Point whichSelectorsWrite: 'x') size.
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 
@@ -250,8 +251,8 @@ BehaviorTest >> testallSuperclassesIncluding [
 { #category : #tests }
 BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
-	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side message'). 
-	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side message') 
+	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method'). 
+	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method') 
 ]
 
 { #category : #'tests - queries' }

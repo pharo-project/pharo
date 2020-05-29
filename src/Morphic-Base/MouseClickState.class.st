@@ -120,12 +120,17 @@ MouseClickState >> handleEvent: evt from: aHand [
 				self click.
 				aHand resetClickState.
 				^true].
-			"Otherwise transfer to #firstClickUp"
-			firstClickUp := evt copy.
+
+			"Change the state to #firstClickUp.
+			Then queue the mouseUp event for later processing.
+			We will handle a click now."
 			clickState := #firstClickUp.
+			firstClickUp := evt copy.
 			"If timedOut or the client's not interested in dbl clicks get outta here"
+			aHand queuePendingEvent: firstClickUp.
+			
 			self click.
-			aHand handleEvent: firstClickUp.
+			
 			^false].
 		isDrag ifTrue:["drag start"
 			self doubleClickTimeout. "***"

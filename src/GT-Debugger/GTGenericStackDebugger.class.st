@@ -234,6 +234,16 @@ GTGenericStackDebugger >> filteredStack [
 ]
 
 { #category : #'printing/formatting' }
+GTGenericStackDebugger >> formatMethodPackageForContext: aContext [ 
+
+	^ Text 
+		string: (aContext method package 
+			ifNil: ['-'] 
+			ifNotNil: [ :aPackage | aPackage name  ])
+		attributes: (self textAttributesForStackEntry: aContext) 
+]
+
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> formatStackClassColumnForContext: aContext [
 
 	^ Text 
@@ -533,7 +543,8 @@ GTGenericStackDebugger >> stackWidgetIn: composite [
 			evaluated: [ :aContext | self formatStackMethodColumnForContext: aContext ];
 		column: 'Other' 
 			evaluated: [ :aContext | self formatStackExtraColumnForContext: aContext ];
-		hideHeader
+		column: 'Package' 
+			evaluated: [ :aContext | self formatMethodPackageForContext: aContext ]
 ]
 
 { #category : #'printing/formatting' }

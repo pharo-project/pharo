@@ -43,11 +43,10 @@ RBMethodArgumentsSelector class >> on: arguments and: values in: sourceCode [
 { #category : #'instance creation' }
 RBMethodArgumentsSelector class >> openOn: arguments and: values in: sourceCode [
 
-	^ UITheme builder
-		openModal: (self 
-						on: arguments
-						and: values
-						in: sourceCode)
+	^ (self 
+		on: arguments
+		and: values
+		in: sourceCode) openModal
 ]
 
 { #category : #actions }

@@ -37,6 +37,17 @@ SpWindowPresenterTest >> testIsClosed [
 ]
 
 { #category : #tests }
+SpWindowPresenterTest >> testIsTopWindow [
+
+	self deny: presenter isTopWindow.
+	self openInstance.
+	presenter takeKeyboardFocus.
+	self assert: presenter isTopWindow.
+	presenter close.
+	self deny: presenter isTopWindow
+]
+
+{ #category : #tests }
 SpWindowPresenterTest >> testWhenClosedDo [
 	| closed |
 	closed := false.

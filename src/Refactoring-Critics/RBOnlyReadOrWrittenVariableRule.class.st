@@ -17,7 +17,7 @@ RBOnlyReadOrWrittenVariableRule class >> isVisible [
 { #category : #'instance creation' }
 RBOnlyReadOrWrittenVariableRule class >> new [
 	
-	^ GRIvarNeitherReadNorWrittenRule asRBRule 
+	^ ReIvarNeitherReadNorWrittenRule asRBRule 
 ]
 
 { #category : #accessing }

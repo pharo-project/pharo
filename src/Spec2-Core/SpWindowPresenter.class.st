@@ -108,9 +108,8 @@ SpWindowPresenter >> addPresenterIn: widget withSpecLayout: aSpec [
 	
 	self presenter ifNil: [ ^ self ].
 	self initializeWindow.
-	self 
-		changed: #addPresenterIn:withSpecLayout:
-		with: { widget. aSpec }
+	self withAdapterDo: [ :anAdapter |
+		anAdapter addPresenterIn: widget withSpecLayout: aSpec ]
 ]
 
 { #category : #api }
@@ -190,6 +189,12 @@ SpWindowPresenter >> centeredRelativeTo: aModel [
 ]
 
 { #category : #api }
+SpWindowPresenter >> centeredRelativeToTopWindow [
+
+	self centeredRelativeTo: self application topWindow
+]
+
+{ #category : #api }
 SpWindowPresenter >> close [
 
 	"Only manage closing if the presenter is really open"
@@ -210,7 +215,7 @@ SpWindowPresenter >> delete [
 	"DO NOT USE. This will destroy the window and maybe you do not want that :/
 	 I'm keeping this here because of testing."
 
-	self withAdapterDo: #delete
+	self withAdapterDo: [ :anAdapter | anAdapter delete ]
 ]
 
 { #category : #focus }
@@ -327,6 +332,16 @@ SpWindowPresenter >> isResizeable: aBoolean [
 ]
 
 { #category : #testing }
+SpWindowPresenter >> isTopWindow [
+	"answers true if this si the active window (the one that has the focus)"
+	
+	self withAdapterDo: [ :anAdapter | 
+		^ anAdapter isTopWindow ].
+
+	^ false
+]
+
+{ #category : #testing }
 SpWindowPresenter >> isWindowPresenter [
 
 	^ true
@@ -335,7 +350,7 @@ SpWindowPresenter >> isWindowPresenter [
 { #category : #api }
 SpWindowPresenter >> maximize [
 
-	self changed: #maximize with: #()
+	self withAdapterDo: [ :anAdapter | anAdapter maximize ]
 ]
 
 { #category : #api }
@@ -352,7 +367,7 @@ SpWindowPresenter >> menu: aMenuPresenter [
 { #category : #api }
 SpWindowPresenter >> minimize [
 
-	self changed: #minimize with: #()
+	self withAdapterDo: [ :anAdapter | anAdapter minimize ]
 ]
 
 { #category : #notifying }
@@ -502,7 +517,7 @@ SpWindowPresenter >> whenOpenedDo: aBlock [
 SpWindowPresenter >> whenResizingDo: aBlock [
 	
 	self announcer 
-		when: WindowResizing
+		when: SpWindowResizing
 		do: aBlock
 ]
 

@@ -103,11 +103,6 @@ IRPushClosureCopy >> numArgs: aSmallInteger [
 	numArgs := aSmallInteger
 ]
 
-{ #category : #mapping }
-IRPushClosureCopy >> sourceNodeExecuted [
-	^self sourceNode parent
-]
-
 { #category : #accessing }
 IRPushClosureCopy >> successorSequences [
 
@@ -128,9 +123,4 @@ IRPushClosureCopy >> tempMap [
 IRPushClosureCopy >> tempVectorName [
 	self blockSequence do:[:irNode | irNode isTempVector ifTrue:[^irNode name]].
 	^nil.
-]
-
-{ #category : #accessing }
-IRPushClosureCopy >> tempVectorNamed: aName [
-	^ blockSequence tempVectorNamed: aName
 ]

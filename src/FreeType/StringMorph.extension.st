@@ -8,7 +8,7 @@ StringMorph >> changeFont [
 		for: self 
 		setSelector: #font: 
 		getSelector: self fontToUse.
-	self openModal: chooser.
+	chooser openModal.
 	newFont := chooser result.
 	newFont ifNotNil: [self font: newFont].
 ]

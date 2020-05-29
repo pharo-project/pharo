@@ -498,7 +498,7 @@ OrderedDictionaryTest >> testAtIfAbsentPut [
 	| dictionary |
 
 	dictionary := self emptyDictionary.
-	self orderedAssociations do: [:each |
+	self orderedAssociations withIndexDo: [:each :i |
 		self assert:
 			(dictionary
 				at: each key
@@ -506,7 +506,10 @@ OrderedDictionaryTest >> testAtIfAbsentPut [
 		self assert:
 			(dictionary
 				at: each key
-				ifAbsentPut: [self fail]) equals: each value].
+				ifAbsentPut: [self fail]) equals: each value.
+		self
+			assertIsArray: dictionary keys
+			withElements: (self orderedKeysFirst: i) ]
 ]
 
 { #category : #tests }
@@ -550,6 +553,27 @@ OrderedDictionaryTest >> testAtIfPresentIfAbsent [
 ]
 
 { #category : #tests }
+OrderedDictionaryTest >> testAtIfPresentIfAbsentPut [
+	| dictionary |
+
+	dictionary := self emptyDictionary.
+	self orderedAssociations withIndexDo: [:each :i |
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [ self fail ]
+				ifAbsentPut: [ each value ]) equals: each value.
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [ :it | self newValue -> it ]
+				ifAbsentPut: [self fail]) equals: (self newValue -> each value).
+		self
+			assertIsArray: dictionary keys
+			withElements: (self orderedKeysFirst: i) ]
+]
+
+{ #category : #tests }
 OrderedDictionaryTest >> testAtPut [
 	| dictionary |
 
@@ -573,6 +597,29 @@ OrderedDictionaryTest >> testAtPut [
 			withOrderedAssociations:
 				(self changedOrderedAssociationsFirst: i),
 				(self orderedAssociationsAllButFirst: i)].
+]
+
+{ #category : #tests }
+OrderedDictionaryTest >> testAtUpdate [
+	| dict |
+	dict := OrderedDictionary newFrom: {2->10. 100->5} .
+	
+	dict at: 2 update: [ :v | v+10 ].
+	self assert: (dict at: 2) equals: 20.
+	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound .
+	
+
+]
+
+{ #category : #tests }
+OrderedDictionaryTest >> testAtUpdateInitial [
+	| dict |
+	dict := OrderedDictionary  newFrom: {2->10. 100->5} .
+	dict at: 5 update: [ :v | v+1 ] initial: 17.
+	dict at: 2 update: [ :v | v+10 ] initial: [0].
+	self assert: (dict at: 5) equals: 17.
+	self assert: (dict at: 2) equals: 20
+	
 ]
 
 { #category : #tests }
@@ -1175,7 +1222,7 @@ OrderedDictionaryTest >> testNewFromPairs [
 ]
 
 { #category : #tests }
-OrderedDictionaryTest >> testOccurancesOf [
+OrderedDictionaryTest >> testOccurencesOf [
 	| dictionary |
 
 	dictionary := self emptyDictionary.

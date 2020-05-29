@@ -388,17 +388,16 @@ AbstractFileReference >> ensureDelete [
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAll [
 	"Delete this directory and all children of it, and does not raise an error if the file does not exist."
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifAbsent: [ ^ self ].
 	self deleteAll
-	
 ]
 
 { #category : #operations }
 AbstractFileReference >> ensureDeleteAllChildren [
 	"delete all children of the receiver and does not raise an error if the receiver does not exist"
-	
-	self exists ifFalse: [ ^ self  ].
+
+	self ifAbsent: [ ^ self ].
 	self deleteAllChildren
 ]
 
@@ -528,6 +527,27 @@ AbstractFileReference >> hash [
 { #category : #accessing }
 AbstractFileReference >> humanReadableSize [
 	^ self size humanReadableSIByteSize
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifAbsent: aBlock [
+	"Return self, or evaluate the block if I do not exist"
+
+	^ self exists ifTrue: [ self ] ifFalse: [ aBlock cull: self ]
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifExists: aBlock [
+	"Evaluate the block, unless I do not exist. If the receiver exists, pass it as argument to the block."
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ self ]
+]
+
+{ #category : #delegated }
+AbstractFileReference >> ifExists: aBlock ifAbsent: anotherBlock [
+	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
+
+	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ anotherBlock cull: self ]
 ]
 
 { #category : #testing }

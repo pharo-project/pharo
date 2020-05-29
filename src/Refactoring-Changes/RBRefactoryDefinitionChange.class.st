@@ -121,11 +121,10 @@ RBRefactoryDefinitionChange >> namesIn: aString [
 
 { #category : #private }
 RBRefactoryDefinitionChange >> primitiveExecute [
-	definedClass := self definitionClass compiler
-		source: self definition;
-		requestor: self controller;
-		logged: true;
-		evaluate
+
+	definedClass := self definitionClass environment
+		defineClass: self definition
+		withController: self controller
 ]
 
 { #category : #printing }

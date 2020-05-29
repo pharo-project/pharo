@@ -9,11 +9,10 @@ Pharo has a variety of useful keyboard shortcuts that help you navigate its envi
 
 There are many keyboard shortcuts available in Pharo:
 
-- A full list is available in the System Browser by clicking the window menu button (the triangle) at the top right of the browser title, and selecting the 'Shortcuts Description' menu item.  Alternatively you can evaluate (cmd-d) the following code now:
+- You can see them at the end of the System Browser's context menu lines by right-clicking on any area (packages, classes, protocols, methods or code editor).
 
-KMDescription new categories: #(NautilusGlobalShortcuts); openWithSpec.
-
-- Shortcuts are typically multi-key combinations, where you hold a modifier key and press the listed secondary key. For example if something is listed as CMD-F, CMD-C you would press and hold the CMD key while typing  F and then C
+- Shortcuts are typically multi-key combinations, where you hold a modifier key and press the listed secondary key. For example if something is listed as CMD-F, CMD-C you would press and hold the CMD key while typing  F and then C. 
+There are also two-letter shortcuts, such as (CMD-GA) or (CMD-AA). You must press and hold the CMD key while typing G and release, type A and release.
 
 - The modifier key varies between platforms:
  - Windows = CTRL
@@ -59,17 +58,21 @@ This will give you a menu for the current item with options to inspect, debug et
 
 Finding and navigating through code in Pharo is an important part of developing programs in Smalltalk.
 
-!! System Browser (Nautilus)
+!! System Browser (Calypso)
 
-The System Browser (available in the desktop World menu), is the primary way of viewing your source code. This browser framework has been rewritten in Pharo and is often referred to as Nautilus (see the other top level help item for more technical details)
+The System Browser (available in the desktop World menu), is the primary way of viewing your source code. This browser framework has been rewritten in Pharo and is often referred to as Calypso (see the other top level help item for more technical details).
+
+The previous browser was called Nautilus, maybe you can see some outdated reference to Nautilus in some places.
 
 !!! Showing Hierarchies
 
-Nautilus defaults to a simple 'Flat' display of the list of classes that are in the currently selected package (far left). If you want to see the hierarchy of a particular class, first select it and then press (toggle) the 'Flat' button, to show show its 'Hierarchy'. Pressing this button again will toggle back to the 'Flat' model.
+Calypso defaults to a simple 'Flat' display of the list of classes that are in the currently selected package (far left). If you want to see the hierarchy of a particular class, first select it and then press (toggle) the 'Flat' button, to show show its 'Hierarchy'. Pressing this button again will toggle back to the 'Flat' model.
 
 !!! Browser History
 
 The browser records the history of methods and classes you have visited similar to a Web Browser. The dropdown list in the middle right of the panes (above the lower text pane) shows this history, and clicking on one of its items will navigate to that item. This is convenient if you have clicked on a different package, or navigated to superclass and want to return back to where you were. 
+
+In the same area, there is the versions button. You can easily revert any code changes to any time in the past.
 
 !!! Customising
 
@@ -120,8 +123,8 @@ In the System Browser protocol pane, you will see the following icons appear nex
 
 In the System Browser methods pane, you will see the following icons appear next to specific types of method objects:
 
-- Green Up Arrow: indicates this method overrides a method in a super class
-- Green Down Arrow: indicates this method is overriden in a subclass
+- Blue Up Arrow: indicates this method overrides a method in a super class
+- Blue Down Arrow: indicates this method is overriden in a subclass
 
 !! Source Pane
 
@@ -142,14 +145,15 @@ Try using the Pharo Smalltalk tutorial by evaluating (CMD+D) the code below:
 !! Online Resources
 
 You can find more information about Pharo by visiting: 
-	http://www.pharo.org
+	https://pharo.org
 
 In particular, you may also be interested in:
 
-- Joining discussions and getting help at: http://pharo.org/community 
-- The Pharo By Example book (available as a free PDF): http://www.pharobyexample.org
-- Browsing the online documentation: http://www.pharo.org/documentation
-- Reporting problems: http://pharo.org/contribute
+- Joining discussions and getting help at: https://pharo.org/community
+- Pharo Books: http://books.pharo.org/
+- The Pharo By Example book (available as a free PDF): http://books.pharo.org/updated-pharo-by-example/
+- Browsing the online documentation: https://pharo.org/documentation
+- Reporting problems: https://pharo.org/contribute
 
 
 

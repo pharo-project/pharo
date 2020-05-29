@@ -3,11 +3,11 @@ Extension { #name : #ClassTestCase }
 { #category : #'*Refactoring-Critics' }
 ClassTestCase >> testMethodsOfTheClassShouldNotBeRepeatedInItsSuperclasses [
 		
-	self assertValidLintRule: RBEquivalentSuperclassMethodsRule new
+	self assertValidLintRule: ReEquivalentSuperclassMethodsRule new
 ]
 
 { #category : #'*Refactoring-Critics' }
 ClassTestCase >> testTraitExplicitRequirementMethodsMustBeImplementedInTheClassOrInASuperclass [
 
-	self assertValidLintRule: RBExplicitRequirementMethodsRule new
+	self assertValidLintRule: ReExplicitRequirementMethodsRule new
 ]

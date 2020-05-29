@@ -253,21 +253,21 @@ SHPreferences class >> styleTableRow [
 	
 	allStyles := Pragma  allNamed: #styleTable: in: SHRBTextStyler class.
 	^Smalltalk ui theme 
-		newRowIn: self currentWorld 
+		newRowIn: self 
 		for: (
 			{ Smalltalk ui theme buttonLabelForText: 'Predefined styles: ' translated }, 
 			(allStyles collect: [ :eachPragma | 
 				(Smalltalk ui theme 
-					newButtonIn: self currentWorld 
-						for:  self
-						getState: nil 
-						action: #setStyleTableNamed:  
-						arguments:  { eachPragma argumentAt: 1 }
-						getEnabled: nil 
-						getLabel: nil
-						help: ('Change style table to ', (eachPragma argumentAt: 1)) translated)
-					label: (eachPragma argumentAt: 1);
-					yourself ] ))
+					newButtonIn: self
+					for:  self
+					getState: nil 
+					action: #setStyleTableNamed:  
+					arguments:  { eachPragma argumentAt: 1 }
+					getEnabled: nil 
+					getLabel: nil
+					help: ('Change style table to ', (eachPragma argumentAt: 1)) translated)
+						label: (eachPragma argumentAt: 1);
+						yourself ] ))
 ]
 
 { #category : #'accessing-styles' }

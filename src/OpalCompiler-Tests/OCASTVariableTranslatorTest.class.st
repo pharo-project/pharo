@@ -121,8 +121,6 @@ OCASTVariableTranslatorTest >> testPushTemporaryVariable [
 
 { #category : #'testing - variables' }
 OCASTVariableTranslatorTest >> testPushThisContext [
-	
-	| method |
 	method := self compileExample: #exampleThisContext.
 	self executeMethodOnInstance: method.
 

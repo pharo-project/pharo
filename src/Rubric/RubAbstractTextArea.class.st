@@ -349,13 +349,13 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 		parent: #codeEditing;
 		with: [ (aBuilder setting: #backgroundColor)
 				target: self;
-				default: (Color r: 0.1300097751710655 g: 0.1300097751710655 b: 0.1300097751710655 alpha: 1.0);
+				default: Color white;
 				description: 'The default editor background color';
 				label: 'Background'.
 			(aBuilder setting: #textColor)
 				target: self;
 				description: 'The default editor text color';
-				default: Color white;
+				default: Color black;
 				label: 'Text color'.
 			(aBuilder group: #LineNumbers)
 				target: self;
@@ -368,12 +368,12 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 						label: 'Line numbers font'.
 					(aBuilder setting: #lineNumbersTextColor)
 						target: self;
-						default: (Color r: 0.6608015640273704 g: 0.656891495601173 b: 0.656891495601173 alpha: 1.0);
+						default: Color veryDarkGray;
 						description: 'Color used for line numbers';
 						label: 'Line numbers color'.
 					(aBuilder setting: #lineNumbersBackgroundColor)
 						target: self;
-						default: (Color r: 0.04985337243401759 g: 0.04985337243401759 b: 0.04985337243401759 alpha: 1.0);
+						default: (Color r: 0.9198435972629521 g: 0.9198435972629521 b: 0.9198435972629521 alpha: 1.0);
 						description: 'Color used for line numbers background';
 						label: 'Line numbers background color' ].
 			(aBuilder setting: #highlightMessageSend)
@@ -1307,6 +1307,8 @@ RubAbstractTextArea >> mouseDown: evt [
 	Changed to not take keyboard focus if an owner is a
 	PluggableTextMorph that doesn't want focus."
 
+	self doAnnounce: (MorphClosePopups morph: self).
+
 	(evt yellowButtonPressed and: [ evt commandKeyPressed not ])
 		ifTrue: [ ^ self yellowButtonActivity: evt shiftPressed ].	"First check for option (menu) click"
 	(self paragraph click: evt for: self model controller: self)
@@ -2147,6 +2149,7 @@ RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 		ifFalse: [ ^ false ].	
 	(self getMenu: shiftKeyState)
 		ifNotNil: [ :menu|
+			menu privateOwner: self.
 			menu setInvokingView: self editor.
 			menu invokeModal. 
 			self changed.

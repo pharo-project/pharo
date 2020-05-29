@@ -197,6 +197,7 @@ OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 1.
 
+	"index is not escaping as it is (due to the optimized block) defined in the same block"
 	self deny: (ast scope lookupVar: 'index') isEscaping.
 	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
 

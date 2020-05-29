@@ -65,6 +65,12 @@ SpCollectionListModel >> collection: anObject [
 		newValue: collection)
 ]
 
+{ #category : #testing }
+SpCollectionListModel >> hasElementAt: index [
+
+	^ self size >= index
+]
+
 { #category : #accessing }
 SpCollectionListModel >> indexOf: anIndex ifAbsent: aBlock [
 

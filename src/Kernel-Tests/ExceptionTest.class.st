@@ -30,6 +30,28 @@ ExceptionTest >> assertSuccess: anExceptionTester [
 	self should: [ ( anExceptionTester suiteLog first) endsWith:  'succeeded'].
 ]
 
+{ #category : #private }
+ExceptionTest >> runCaseManaged [
+	"We should disable TestEnvironment to avoid any logic for unhandled errors from background processes.
+	Some tests fork processes to ensure clean no handlers (SUnit catches errors for example)"
+	
+	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
+]
+
+{ #category : #private }
+ExceptionTest >> runWithNoHandlers: aBlock [
+	"Executing the given block directly would go through all handlers of SUnit machinery.
+	Here we simulate the clean environment with no outer handlers for possible block errors"
+	| synchSemaphore result |
+	synchSemaphore := Semaphore new. 
+	[result := aBlock ensure: [synchSemaphore signal]] forkNamed: 'Test process'.
+	"we should not wait forever in case of wrong behaviour 
+	(general test timeout is disabled in #runCaseManaged)"
+	(synchSemaphore wait: 2 seconds)
+		ifTrue: [ self error: 'Timeout for block execution' ].
+	^result
+]
+
 { #category : #'tests - exceptiontester' }
 ExceptionTest >> testDoubleOuterPass [
 	self assertSuccess: (ExceptionTester new runTest: #doubleOuterPassTest ) 
@@ -196,7 +218,7 @@ ExceptionTest >> testHandlingWithSeveralExclusionsAndExceptionSetsHandling [
 		assert: result isNil.	
 ]
 
-{ #category : #tests }
+{ #category : #'tests - exceptiontester' }
 ExceptionTest >> testNoTimeout [
 	self assertSuccess: (ExceptionTester new runTest: #simpleNoTimeoutTest ) 
 ]
@@ -226,6 +248,30 @@ ExceptionTest >> testNonResumablePass [
 			do: [:ex | ex pass. ex return: 5]
 		] raise: Error
 
+]
+
+{ #category : #'tests - resignal' }
+ExceptionTest >> testResignalAs [
+
+	| answer |
+	answer := [
+		[3 zork]
+			on: ZeroDivide
+			do: [:ex | ex return: 5]
+	] on: Error do: [:ex | ex resignalAs: ZeroDivide].
+	self assert: answer == 5
+]
+
+{ #category : #'tests - resignal' }
+ExceptionTest >> testResignalAsUnwinds [
+
+	| unwound answer |
+	unwound := false.
+	answer := [
+		[3 zork]
+			on: ZeroDivide do: [:ex | self assert: unwound.  ex return: 5]
+	] on: Error do: [:ex | [ex resignalAs: ZeroDivide] ifCurtailed: [unwound := true]].
+	self assert: answer == 5
 ]
 
 { #category : #'tests - exceptiontester' }
@@ -325,7 +371,88 @@ ExceptionTest >> testSimpleReturn [
 	self assertSuccess: (ExceptionTester new runTest: #simpleReturnTest ) 
 ]
 
-{ #category : #tests }
+{ #category : #'tests - exceptiontester' }
 ExceptionTest >> testTimeoutWithZeroDuration [
 	self assertSuccess: (ExceptionTester new runTest: #simpleTimeoutWithZeroDurationTest ) 
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenHandlerPassesOriginalException [
+	| executed |
+	executed := false.
+	self runWithNoHandlers: [
+		[ 
+			[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+		] on: ZeroDivide do: [:z | z pass].
+	].
+	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenNoHandlers [
+	| executed |
+	executed := false.
+	self runWithNoHandlers: [
+		[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+	].
+	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledErrorWhenTwoHandlersPassOriginalException [
+	| executed |
+	executed := false.
+	self runWithNoHandlers: [
+		[ [  
+				[ 1/0 ] on: UnhandledError do: [ :e | executed := true ]
+			] on: ZeroDivide do: [:z | z pass]
+		] on: ZeroDivide do: [:z | z pass]
+	].
+	self assert: executed
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledExceptionShouldAllowToCatchError [
+	
+	| error caughtException |
+	error := Error new.
+	self runWithNoHandlers: [ 
+		[ error signal ] on: UnhandledException do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException class equals: UnhandledError.
+	self assert: caughtException exception equals: error
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledExceptionShouldAllowToCatchHalt [
+	
+	| halt caughtException |
+	halt := Halt new.
+	self runWithNoHandlers: [
+		[ halt signal ] on: UnhandledException do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException equals: halt
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledExceptionShouldAllowToCatchWarning [
+	
+	| warning caughtException |
+	warning := Warning new.
+	self runWithNoHandlers: [
+		[ warning signal ] on: UnhandledException do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException class equals: UnhandledError.
+	self assert: caughtException exception equals: warning
+]
+
+{ #category : #'tests - handling' }
+ExceptionTest >> testUnhandledWarningShouldBeProcessedAsUnhandledError [
+	
+	| warning caughtException |
+	warning := Warning new.
+	self runWithNoHandlers: [
+		[ warning signal ] on: UnhandledError do: [ :err | caughtException := err ]
+	].
+	self assert: caughtException exception equals: warning
 ]

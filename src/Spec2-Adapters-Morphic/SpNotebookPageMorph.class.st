@@ -73,3 +73,12 @@ SpNotebookPageMorph >> reset [
 
 	self actualPageMorph: nil
 ]
+
+{ #category : #theme }
+SpNotebookPageMorph >> themeChanged [
+
+	super themeChanged.
+	labelMorph themeChanged.
+	actualPageMorph ifNotNil: [ 
+		actualPageMorph themeChanged ]
+]

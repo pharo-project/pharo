@@ -59,6 +59,8 @@ MCTraitParser >> addDefinitionsTo: aCollection [
 		traitComposition: traitCompositionString
 		category:  categoryString
 		instVarNames:  slotsArray
+		classInstVarNames: ''
+		classTraitComposition: nil
 		comment:  ''  
 		commentStamp: ''.
 		

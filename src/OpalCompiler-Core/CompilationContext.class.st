@@ -76,7 +76,7 @@ CompilationContext class >> cleanOptionString: string [
 ]
 
 { #category : #options }
-CompilationContext class >> compilerSpecificSettingsOn: aBuilder [
+CompilationContext class >> compilerSettingsOn: aBuilder [
 	self optionsDescription withIndexDo: [ :description :index |
 		| optionStringCleaned option |
 		option := description second.
@@ -274,8 +274,6 @@ CompilationContext class >> optionReadOnlyLiterals [
 
 { #category : #'options - settings API' }
 CompilationContext class >> optionReadOnlyLiterals: aBoolean [
-	(aBoolean and: [ Smalltalk vm supportsWriteBarrier not]) ifTrue: [ ^ OCReadOnlyVMWarning signal ].
-	
 	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
 ]
 

@@ -198,11 +198,6 @@ Workspace >> hasBindingOf: aString [
 	^bindings includesKey: aString asSymbol
 ]
 
-{ #category : #'shout bindings' }
-Workspace >> hasBindingThatBeginsWith: aString [
-	^ bindings keys anySatisfy: [:each | each beginsWith: aString]
-]
-
 { #category : #initialization }
 Workspace >> initialize [
 	super initialize.

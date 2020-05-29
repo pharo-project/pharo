@@ -7,6 +7,11 @@ Class {
 	#category : #'DrTests-TestsRunner'
 }
 
+{ #category : #factory }
+DTError class >> backgroundColor [
+	^ TestResult defaultColorBackGroundForErrorTest
+]
+
 { #category : #testing }
 DTError >> isError [
 	<generated>

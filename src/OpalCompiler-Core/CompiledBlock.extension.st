@@ -11,13 +11,6 @@ CompiledBlock >> sourceNode [
 ]
 
 { #category : #'*OpalCompiler-Core' }
-CompiledBlock >> sourceNodeExecutedForPC: aPC [
-	| blockNode |
-	blockNode := self outerCode sourceNodeExecutedForPC: self pcInOuter.
-	^blockNode sourceNodeExecutedForPC: aPC
-]
-
-{ #category : #'*OpalCompiler-Core' }
 CompiledBlock >> sourceNodeForPC: aPC [
 	| blockNode |
 	blockNode := self outerCode sourceNodeForPC: self pcInOuter.

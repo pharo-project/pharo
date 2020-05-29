@@ -64,7 +64,7 @@ SpAbstractListPresenter >> clickItem: anInteger [
 	self selectIndex: anInteger
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> disableFilter [
 	self itemFilter: nil
 ]
@@ -88,12 +88,12 @@ SpAbstractListPresenter >> doubleClickAtIndex: anIndex [
 	self doActivateAtIndex: anIndex
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> enableItemBeginsWithFilter [
 	self itemFilter: [ :each :pattern | each asLowercase beginsWith: pattern asLowercase ]
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> enableItemSubstringFilter [
 	self itemFilter: [ :each :pattern | each asLowercase includesSubstring: pattern asLowercase ]
 ]
@@ -102,6 +102,7 @@ SpAbstractListPresenter >> enableItemSubstringFilter [
 SpAbstractListPresenter >> initialize [
 
 	super initialize.
+	self initializeTHaveWrappingScrollBars.
 	
 	activationBlock := [ ].
 	verticalAlignment := SpVerticalAlignment new.
@@ -127,12 +128,19 @@ SpAbstractListPresenter >> itemAt: anInteger [
 	^ self model at: anInteger
 ]
 
-{ #category : #api }
+{ #category : #private }
+SpAbstractListPresenter >> itemAtPath: anArray [
+	"This is to provide polymorphism with SpTreeTablePresentrer"
+
+	^ self listElementAt: anArray first
+]
+
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> itemFilter [
 	^ itemFilter
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractListPresenter >> itemFilter: aBlock [
 	"This block will be used with the search field of the list to filter it with the user input dynamically."
 
@@ -151,7 +159,8 @@ SpAbstractListPresenter >> items: aCollection [
 	aCollection is a collection of your domain specific items.
 	This creates a collection model"
 	
-	model collection: aCollection
+	model collection: aCollection.
+	self unselectAll.
 ]
 
 { #category : #private }
@@ -186,7 +195,7 @@ SpAbstractListPresenter >> model: aModel [
 	
 	model := aModel.
 	model whenChangedDo: [ 
-		self withAdapterDo: #refreshList ]
+		self withAdapterDo: [ :anAdapter | anAdapter refreshList ] ]
 ]
 
 { #category : #private }
@@ -197,8 +206,11 @@ SpAbstractListPresenter >> newEmptyModel [
 
 { #category : #initialization }
 SpAbstractListPresenter >> registerEvents [
-	self whenSelectionModeChangedDo: [ :selection | self withAdapterDo: #refreshWidgetSelection ].
-	self whenMenuChangedDo: [ self withAdapterDo: #updateMenu ]
+
+	self whenSelectionModeChangedDo: [ :selection | 
+		self withAdapterDo: [ :anAdapter | anAdapter refreshWidgetSelection ] ].
+	self whenMenuChangedDo: [ 
+		self withAdapterDo: [ :anAdapter | anAdapter updateMenu ] ]
 ]
 
 { #category : #simulation }
@@ -222,8 +234,22 @@ SpAbstractListPresenter >> selectIndex: anInteger [
 ]
 
 { #category : #api }
+SpAbstractListPresenter >> selectIndex: anIndex scrollToSelection: shouldScrollToSelection [
+    self selectIndex: anIndex.
+    shouldScrollToSelection ifTrue: [ 
+        self verticalAlignment desiredVisibleRow: anIndex ].
+]
+
+{ #category : #api }
 SpAbstractListPresenter >> selectIndexes: aCollection [
 	self selectionMode selectIndexes: aCollection
+]
+
+{ #category : #api }
+SpAbstractListPresenter >> selectIndexes: aListOfIndexes scrollToSelection: shouldScrollToSelection [
+    self selectIndexes: aListOfIndexes.
+    shouldScrollToSelection ifTrue: [ 
+        self verticalAlignment desiredVisibleRow: aListOfIndexes first ].
 ]
 
 { #category : #api }

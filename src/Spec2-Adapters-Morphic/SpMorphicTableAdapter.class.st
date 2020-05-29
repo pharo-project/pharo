@@ -16,6 +16,13 @@ SpMorphicTableAdapter class >> intercellSpacing [
 	^ 2@0
 ]
 
+{ #category : #initialization }
+SpMorphicTableAdapter >> addKeyBindingsTo: aWidget [
+
+	super addKeyBindingsTo: aWidget.
+	self addContextMenuKeyBindings: aWidget
+]
+
 { #category : #factory }
 SpMorphicTableAdapter >> addModelTo: tableMorph [
 
@@ -35,7 +42,7 @@ SpMorphicTableAdapter >> addModelTo: tableMorph [
 	self presenter whenShowColumnHeadersChangedDo: [ :showColumns |
 		self refreshShowColumnHeaders ].
 
-	self presenter whenModelChangedDo: [ widget refresh ].
+	self presenter whenModelChangedDo: [ self refreshModel ].
 	self presenter whenColumnsChangedDo: [ self refreshColumnsInWidget ].
 	
 	tableMorph setBalloonText: self help.
@@ -73,6 +80,11 @@ SpMorphicTableAdapter >> buildWidget [
 	^ widget
 ]
 
+{ #category : #emulating }
+SpMorphicTableAdapter >> clickOnColumnHeaderAt: anIndex [
+	self widgetDo: [ :tableWidget | tableWidget clickOnColumnHeaderAt: anIndex ]
+]
+
 { #category : #testing }
 SpMorphicTableAdapter >> columns [
 	^ widget columns
@@ -88,6 +100,18 @@ SpMorphicTableAdapter >> defaultColumn [
 SpMorphicTableAdapter >> ensureAtLeastOneColumnIn: tableMorph [
 	self model columns ifNotEmpty: [ ^ self ].
 	tableMorph addColumn: (self newColumnFrom: self defaultColumn)
+]
+
+{ #category : #private }
+SpMorphicTableAdapter >> ifSorted: sortedBlock ifNotSorted: notSortedBlock [ 
+	widget columns 
+		do: [ :column | | state | 
+			column isSorted
+				ifTrue: [ 
+					state := column sortingStrategy state.
+					state isSorted
+						ifTrue: [ ^ sortedBlock cull: state ] ] ].
+	^ notSortedBlock value
 ]
 
 { #category : #testing }
@@ -138,10 +162,19 @@ SpMorphicTableAdapter >> refreshColumnsInWidget [
 	self ensureAtLeastOneColumnIn: widget.
 ]
 
-{ #category : #updating }
+{ #category : #refreshing }
 SpMorphicTableAdapter >> refreshList [
 
 	^ self widget refresh
+]
+
+{ #category : #refreshing }
+SpMorphicTableAdapter >> refreshModel [
+
+	widget dataSource resetElements.
+	self
+		ifSorted: [ :sortingStrategyState | sortingStrategyState executeSortingOn: widget dataSource ]
+		ifNotSorted: [ self refreshList ]
 ]
 
 { #category : #factory }
@@ -167,7 +200,7 @@ SpMorphicTableAdapter >> refreshWidgetSelection [
 	rowIndexes isEmpty
 		ifTrue: [ self widget basicSelectIndexes: #() ]
 		ifFalse: [ self widget basicSelectIndexes: rowIndexes ].
-	^ self widget refresh
+	^ self refreshList
 ]
 
 { #category : #emulating }

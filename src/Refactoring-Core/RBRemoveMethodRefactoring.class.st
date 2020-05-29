@@ -61,9 +61,9 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: selector in: aRBMethod [
 
 { #category : #preconditions }
 RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
-	anCollectionOfOccurrences size = 1
-		ifTrue: [ ^ self checkBrowseOccurrenceOf: anCollectionOfOccurrences first key in: anCollectionOfOccurrences first value ]
-		ifFalse: [ ^ self checkBrowseAllOccurences: anCollectionOfOccurrences ]
+	^ anCollectionOfOccurrences size = 1
+		ifTrue: [ self checkBrowseOccurrenceOf: anCollectionOfOccurrences first key in: anCollectionOfOccurrences first value ]
+		ifFalse: [ self checkBrowseAllOccurences: anCollectionOfOccurrences ]
 ]
 
 { #category : #preconditions }

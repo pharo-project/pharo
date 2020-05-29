@@ -18,6 +18,17 @@ RGBehavior >> canUnderstand: selector [
 ]
 
 { #category : #'*Calypso-Ring' }
+RGBehavior >> categoryOfElement: aSymbol ifAbsent: aBlockClosure [
+	
+	| aMethod |
+	
+	aMethod := (self localMethodNamed: aSymbol ifAbsent: nil).
+	^ aMethod 
+		ifNotNil: [ aMethod protocol ]
+		ifNil: aBlockClosure
+]
+
+{ #category : #'*Calypso-Ring' }
 RGBehavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	
@@ -84,6 +95,37 @@ RGBehavior >> methodDict [
 ]
 
 { #category : #'*Calypso-Ring' }
+RGBehavior >> oldDefinition [
+	"Answer a String that defines the receiver."
+
+	| aStream |
+	aStream := (String new: 800) writeStream.
+	superclass 
+		ifNil: [aStream nextPutAll: 'ProtoObject']
+		ifNotNil: [aStream nextPutAll: superclass name].
+	aStream nextPutAll: self kindOfSubclass;
+			store: self name.
+	(self hasTraitComposition) ifTrue: [
+		aStream cr; tab; nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString].
+	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString.
+	aStream cr; tab; nextPutAll: 'classVariableNames: ';
+			store: self classVariablesString.
+	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
+			store: self sharedPoolsString.
+	aStream cr; tab; nextPutAll: 'category: ';
+			store: self category asString.
+
+	superclass ifNil: [ 
+		aStream nextPutAll: '.'; cr.
+		aStream nextPutAll: self name.
+		aStream space; nextPutAll: 'superclass: nil'. ].
+
+	^ aStream contents
+]
+
+{ #category : #'*Calypso-Ring' }
 RGBehavior >> organization [
 
 	^ self
@@ -93,6 +135,21 @@ RGBehavior >> organization [
 RGBehavior >> protocolNamed: aString [
 
 	^ self protocols detect: [ :each | each name = aString ]
+]
+
+{ #category : #'*Calypso-Ring' }
+RGBehavior >> removeFromSystem [
+
+	self parent removeBehavior: self
+]
+
+{ #category : #'*Calypso-Ring' }
+RGBehavior >> sourceCodeAt: aSymbol [
+
+	| method |
+	method :=  self localMethodNamed: aSymbol 
+						 ifAbsent: [ self error: 'Selector #', aSymbol asString, ' not found in RGClass "', self name, '"' ].
+	^ method sourceCode 
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -117,4 +174,12 @@ RGBehavior >> traitCompositionIncludes: aTrait [
 	^self == aTrait or: 
 		[self hasTraitComposition and: 
 			[self traitComposition allTraits includes: aTrait]]
+]
+
+{ #category : #'*Calypso-Ring' }
+RGBehavior >> withAllSubclasses [
+
+	^ self subclasses asOrderedCollection 
+		add: self; 
+		yourself
 ]

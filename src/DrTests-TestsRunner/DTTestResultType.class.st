@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #factory }
+DTTestResultType class >> backgroundColor [
+	^ self subclassResponsibility
+]
+
+{ #category : #factory }
 DTTestResultType class >> error [
 	^ DTError new
 ]
@@ -25,6 +30,11 @@ DTTestResultType class >> pass [
 { #category : #factory }
 DTTestResultType class >> skipped [
 	^ DTSkipped new
+]
+
+{ #category : #factory }
+DTTestResultType class >> textColor [
+	^ TestResult defaultColorText
 ]
 
 { #category : #testing }

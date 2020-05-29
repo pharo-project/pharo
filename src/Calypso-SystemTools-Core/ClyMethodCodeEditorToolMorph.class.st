@@ -47,9 +47,13 @@ ClyMethodCodeEditorToolMorph >> applyChanges [
 { #category : #building }
 ClyMethodCodeEditorToolMorph >> applyDecorations [
 	| hasEdits |
+	
 	hasEdits := textMorph hasUnacceptedEdits.
 	textMorph segments copy do: #delete.	
-	IconStyler styleText: textModel withAst: editingMethod astForStylingInCalypso.	
+	"literal methods do not need ot be stylized and this is an operation that can take 
+	 a lot of time, we will skip it when it is the case"
+	editingMethod isLiteralMethod ifFalse: [ 
+		IconStyler styleText: textModel withAst: editingMethod astForStylingInCalypso ].	
 	textMorph hasUnacceptedEdits: hasEdits.
 	
 	super applyDecorations.
@@ -122,7 +126,7 @@ ClyMethodCodeEditorToolMorph >> decorateContainerTab [
 	title := editingMethod selector.
 
 	editingMethod origin isClassSide ifTrue: [ 
-		title := title asText allBold asStringMorph ].
+		title := title asText allBold ].
 
 	containerTab label: title
 ]

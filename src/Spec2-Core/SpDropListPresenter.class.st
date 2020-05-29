@@ -63,29 +63,6 @@ SpDropListPresenter >> display: aBlock [
 ]
 
 { #category : #api }
-SpDropListPresenter >> displayBlock [
-	
-	self
-		deprecated: 'Please use #display instead'
-		transformWith: '`@receiver displayBlock' 
-						-> '`@receiver display'.
-	
-	^ displayBlock
-]
-
-{ #category : #api }
-SpDropListPresenter >> displayBlock: aBlock [
-	
-	self
-		deprecated: 'Please use #display: instead'
-		transformWith: '`@receiver displayBlock: `@arg' 
-						-> '`@receiver display: `@arg'.
-	
-	displayBlock := aBlock 
-
-]
-
-{ #category : #api }
 SpDropListPresenter >> displayForItem: anItem [
 	"The order of the arguments may look weird, but then it seems more natural while using the widget"
 
@@ -154,6 +131,12 @@ SpDropListPresenter >> initialize [
 ]
 
 { #category : #api }
+SpDropListPresenter >> items [ 
+
+	^ self listItems
+]
+
+{ #category : #api }
 SpDropListPresenter >> items: aList [
 	"Populate the drop list with a list of ui specific items"
 
@@ -166,6 +149,7 @@ SpDropListPresenter >> items: aList [
 		and: [ startsWithSelection 
 		and: [ self selection isEmpty ] ])
 		ifTrue: [ self selectIndex: 1 ]
+		ifFalse: [ self resetSelection ]
 ]
 
 { #category : #api }
@@ -223,32 +207,8 @@ SpDropListPresenter >> selectedIndex [
 ]
 
 { #category : #api }
-SpDropListPresenter >> selectedIndex: anIndex [
-
-	"Set the index of the item you want to be selected"
-	self
-		deprecated: 'Use #selectIndex: instead'
-		transformWith: '`@receiver selectedIndex: `@arg'
-						-> '`@receiver selectIndex: `@arg'.
-	
-	self selectIndex: anIndex
-]
-
-{ #category : #api }
 SpDropListPresenter >> selectedItem [
 	^ self selection selectedItem ifNotNil: #model
-]
-
-{ #category : #api }
-SpDropListPresenter >> selectedItem: anItem [
-	"Set the item you want to be selected"
-
-	self
-		deprecated: 'Use #selectItem: instead'
-		transformWith: '`@receiver selectedItem: `@arg'
-						-> '`@receiver selectItem: `@arg'.
-
-	self selectItem: anItem
 ]
 
 { #category : #api }

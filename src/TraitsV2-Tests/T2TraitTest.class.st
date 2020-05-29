@@ -4,7 +4,7 @@ Unit test for trait handling
 Class {
 	#name : #T2TraitTest,
 	#superclass : #T2AbstractTest,
-	#category : #'TraitsV2-Tests'
+	#category : #'TraitsV2-Tests-Base'
 }
 
 { #category : #tests }
@@ -285,6 +285,17 @@ T2TraitTest >> testSequence [
 	
 	self assert: obj getValues equals: 6.
 	self assert: obj getValues2 equals: 12
+]
+
+{ #category : #tests }
+T2TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
+
+	| t1 c1 |
+	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
+	c1 := self newClass: #C1 with: '' asSlotCollection uses: #().
+
+	self should: [ t1 traitComposition: c1 ] raise: Error.
+	self should: [ t1 classTrait traitComposition: c1 ] raise: Error.	
 ]
 
 { #category : #tests }

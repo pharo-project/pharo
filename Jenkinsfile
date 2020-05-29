@@ -126,7 +126,18 @@ Build Url: ${env.BUILD_URL}
 def bootstrapImage(){
    cleanWs()
   def builders = [:]
-  def architectures = ['32']//, '64']
+  
+  // We run the whole process in 64 bits all the time. 
+  // The 32 bits process is only run when a PR is integrated
+  
+  def architectures
+  
+  if(isDevelopmentBranch()){
+	  architectures = ['32', '64']
+  }else{
+	  architectures = ['64']
+  }
+  
   for (arch in architectures) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'
       def architecture = arch
@@ -149,28 +160,18 @@ def bootstrapImage(){
       shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
       stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
     }
-  
-        if (architecture == "32") {
-        stage ("Convert Image - 32->64") {
-          dir("conversion") {
-            shell "cp ../bootstrap-cache/*.zip ."
-            shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ../bootstrap/scripts/transform_32_into_64.sh"
-            shell "mv *-64bit-*.zip ../bootstrap-cache"
-          }
-        }
-      }
-  
-      if( isDevelopmentBranch() ) {
-        stage("Upload to files.pharo.org") {
-          dir("bootstrap-cache") {
-              shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh"
-            sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
-              shell "bash ../bootstrap/scripts/upload_to_files.pharo.org.sh"
-            }
-          }
-        }
-      }
 
+    if( isDevelopmentBranch() ) {
+      stage("Upload to files.pharo.org-${architecture}") {
+        dir("bootstrap-cache") {
+            shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
+          sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+            shell "bash ../bootstrap/scripts/upload_to_files.pharo.org.sh"
+          }
+        }
+      }
+    }
+    
       } finally {
         archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
         cleanWs()
@@ -180,6 +181,7 @@ def bootstrapImage(){
   
   }
   parallel builders 
+
 }
 
 def launchBenchmark(){
@@ -222,7 +224,17 @@ try{
 
     //Testing step
     def testers = [:]
-    def architectures = ['32']//, '64']
+    // We run the whole process in 64 bits all the time. 
+    // The 32 bits process is only run when a PR is integrated
+  
+    def architectures
+  
+    if(isDevelopmentBranch()){
+  	  architectures = ['32', '64']
+    }else{
+  	  architectures = ['64']
+    }
+
     def platforms = ['unix', 'osx', 'windows']
     for (arch in architectures) {
       // Need to bind the label variable before the closure - can't do 'for (label in labels)'

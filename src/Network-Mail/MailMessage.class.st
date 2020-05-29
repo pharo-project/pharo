@@ -865,7 +865,7 @@ MailMessage >> text [
 MailMessage >> time [
 	| dateField |
 	dateField := (self fieldNamed: 'date' ifAbsent: [ ^0 ]) mainValue.
-	^ [self timeFrom: dateField] ifError: [Date today asSeconds].
+	^ [self timeFrom: dateField] onErrorDo: [Date today asSeconds].
 
 ]
 
@@ -931,5 +931,5 @@ MailMessage >> viewImageInBody [
 	| stream image |
 	stream := self body contentStream.
 	image := Form fromBinaryStream: stream.
-	(self currentWorld drawingClass withForm: image) openInWorld
+	(ImageMorph withForm: image) openInWorld
 ]

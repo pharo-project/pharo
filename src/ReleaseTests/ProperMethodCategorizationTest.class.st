@@ -1,5 +1,5 @@
 "
-Tests to enforce proper categorization 
+Tests to enforce proper categorization of methods
 "
 Class {
 	#name : #ProperMethodCategorizationTest,

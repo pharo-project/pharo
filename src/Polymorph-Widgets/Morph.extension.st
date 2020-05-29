@@ -155,13 +155,6 @@ Morph >> minExtent [
 ]
 
 { #category : #'*Polymorph-Widgets' }
-Morph >> modalUnlockFrom: aSystemWindow [
-	"Unlock the receiver as a modal owner of the given window."
-
-	self unlock
-]
-
-{ #category : #'*Polymorph-Widgets' }
 Morph >> myDependents [
 	"Improved performance dependents."
 	
@@ -333,7 +326,7 @@ Morph >> tabKey: event [
 Morph >> takeKeyboardFocus [
 	"Make the receiver the keyboard focus for the active hand."
 
-	self activeHand newKeyboardFocus: self
+	self activeHand ifNotNil: [ :hand | hand newKeyboardFocus: self ]
 ]
 
 { #category : #'*Polymorph-Widgets' }

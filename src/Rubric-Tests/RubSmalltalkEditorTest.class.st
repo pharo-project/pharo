@@ -6,9 +6,10 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'source',
-		'selection'
+		'selection',
+		'currentCompletion'
 	],
-	#category : #'Rubric-Tests'
+	#category : #'Rubric-Tests-Base'
 }
 
 { #category : #assertions }
@@ -243,6 +244,13 @@ RubSmalltalkEditorTest >> selection: anInterval [
 	selection := anInterval
 ]
 
+{ #category : #running }
+RubSmalltalkEditorTest >> setUp [
+
+	super setUp.
+	currentCompletion := RubSmalltalkEditor completionEngineClass
+]
+
 { #category : #accessing }
 RubSmalltalkEditorTest >> source [
 	^ source
@@ -251,6 +259,13 @@ RubSmalltalkEditorTest >> source [
 { #category : #accessing }
 RubSmalltalkEditorTest >> source: aString [
 	source := aString
+]
+
+{ #category : #running }
+RubSmalltalkEditorTest >> tearDown [
+
+	RubSmalltalkEditor completionEngineClass: currentCompletion.
+	super tearDown.
 ]
 
 { #category : #'tests-bestNodeIn' }
@@ -576,29 +591,39 @@ RubSmalltalkEditorTest >> testBestNodeWithValidValueMidSource [
 ]
 
 { #category : #'tests-completion' }
-RubSmalltalkEditorTest >> testInstanceVersusSharedCompletionEngine [
+RubSmalltalkEditorTest >> testDefaultCompletionEngineUsesGlobalClass [
 
-	| textEditor currentCompletion |
-	[ currentCompletion := RubSmalltalkEditor completionEngineClass.
+	| textEditor |
 	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine class equals: currentCompletion.
-	
+	self assert: textEditor completionEngine class equals: currentCompletion
+]
+
+{ #category : #'tests-completion' }
+RubSmalltalkEditorTest >> testDefaultCompletionIsNilIfNoGlobalClass [
+
+	| textEditor |
+	textEditor := RubSmalltalkEditor new.
 	RubSmalltalkEditor noCompletion.
-	"here we show that an existing editor is not impacted by the shared behavior"
-	self assert: textEditor completionEngine class equals: currentCompletion.
+	self assert: textEditor completionEngine isNil
+]
+
+{ #category : #'tests-completion' }
+RubSmalltalkEditorTest >> testExplicitCompletionEngineIgnoresAbsenceOfGlobalClass [
+
+	| textEditor |
 	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine isNil.
-	
-	RubSmalltalkEditor completionEngineClass: CompletionEngine.
-	self assert: textEditor completionEngine isNil.
-	
-	"but now when we create a new one it gets the correct engine"
+	RubSmalltalkEditor noCompletion.
+	textEditor completionEngine: 17.
+	self assert: textEditor completionEngine equals: 17
+]
+
+{ #category : #'tests-completion' }
+RubSmalltalkEditorTest >> testExplicitCompletionEngineIgnoresGlobalClass [
+
+	| textEditor |
 	textEditor := RubSmalltalkEditor new.
-	self assert: textEditor completionEngine class equals: CompletionEngine.
-	
-	
-	] ensure: [ RubSmalltalkEditor completionEngineClass: currentCompletion ]
-	
+	textEditor completionEngine: 17.
+	self assert: textEditor completionEngine equals: 17
 ]
 
 { #category : #'tests-jumpFind' }
@@ -1037,30 +1062,20 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnSelf [
 
 { #category : #'tests-completion' }
 RubSmalltalkEditorTest >> testSettingCompletionFromEditor [
-
-	| currentCompletion |
-	[ currentCompletion := RubSmalltalkEditor completionEngineClass. 
 	
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
 	self assert: RubSmalltalkEditor completionEngineClass equals: CompletionEngine.
-	
-	] ensure: [ RubSmalltalkEditor completionEngineClass: currentCompletion ]
-	
 ]
 
 { #category : #'tests-completion' }
 RubSmalltalkEditorTest >> testSettingCompletionFromEditorToTextArea [
 
-	| textEditor currentCompletion |
-	[ currentCompletion := RubSmalltalkEditor completionEngineClass.
-	
+	| textEditor |
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
 	textEditor := RubSmalltalkEditor new.
 	self assert: textEditor completionEngine class equals: CompletionEngine.
 	textEditor textArea: RubEditingArea new. 
 	self assert: textEditor textArea completionEngine class equals: CompletionEngine.
-	
-	] ensure: [ RubSmalltalkEditor completionEngineClass: currentCompletion ]
 	
 ]
 

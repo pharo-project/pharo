@@ -295,28 +295,28 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	limitEmit := [valueTranslator visitNode: limit].
 	limit isLiteral | limit isSelf | limit isSuper ifFalse: [
 		valueTranslator visitNode: limit.
-		methodBuilder addTemp: #limit.
-		methodBuilder storeTemp: #limit.
+		methodBuilder addTemp: #'0limit'.
+		methodBuilder storeTemp: #'0limit'.
 		methodBuilder popTop.
-		limitEmit := [methodBuilder pushTemp: #limit]].
+		limitEmit := [methodBuilder pushTemp: #'0limit']].
 
 	"push start. allocate and initialize iterator"
 	self isValueTranslator ifTrue: [ limitEmit value ].
 	methodBuilder pushLiteral: 1.
-	methodBuilder addTemp: #iterator.
-	methodBuilder storeTemp: #iterator.
+	methodBuilder addTemp: #'0iterator'.
+	methodBuilder storeTemp: #'0iterator'.
 	methodBuilder popTop. 
 	methodBuilder jumpBackTarget: #start.
-	methodBuilder pushTemp: #iterator.
+	methodBuilder pushTemp: #'0iterator'.
 	limitEmit value.
 	methodBuilder send: #<=.
 	methodBuilder jumpAheadTo: #done if: false.
 
 	effectTranslator visitInlinedBlockNode: block.
-	methodBuilder pushTemp: #iterator.
+	methodBuilder pushTemp: #'0iterator'.
 	methodBuilder pushLiteral: 1.
 	methodBuilder send: #+.
-	methodBuilder storeTemp: #iterator.
+	methodBuilder storeTemp: #'0iterator'.
 	methodBuilder popTop.
 	methodBuilder jumpBackTo: #start.
 	methodBuilder jumpAheadTarget: #done.
@@ -351,10 +351,10 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	limitEmit := [valueTranslator visitNode: limit].
 	limit isLiteralNode | limit isSelf | limit isSuper | limit isArgument ifFalse: [
 		valueTranslator visitNode: limit.
-		methodBuilder addTemp: (iterator name, #limit).
-		methodBuilder storeTemp: (iterator name, #limit).
+		methodBuilder addTemp: ('0limit_', iterator name).
+		methodBuilder storeTemp: ('0limit_', iterator name).
 		methodBuilder popTop.
-		limitEmit := [methodBuilder pushTemp: (iterator name, #limit)]].
+		limitEmit := [methodBuilder pushTemp: ('0limit_', iterator name)]].
 
 	"push start. allocate and initialize iterator"
 	valueTranslator visitNode: aMessageNode receiver.
@@ -435,20 +435,20 @@ OCASTTranslator >> shouldBeSentToValueOrEffectTranslator [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
-	| argumentNames |
+
+	methodBuilder mapToNode: aBlockNode.
 	methodBuilder compilationContext: aBlockNode methodNode compilationContext.
 	
 	"args, then copied, then temps"
-	methodBuilder addTemps: (argumentNames := aBlockNode argumentNames asArray).
-	methodBuilder addTemps: (aBlockNode scope inComingCopiedVars asArray collect: [:each | each name]).
-	methodBuilder addTemps: ((aBlockNode scope tempVars asArray collect: [ :each | each name]) copyWithoutAll: argumentNames).
-	
-	methodBuilder numArgs: argumentNames size.
+	methodBuilder addTemps: aBlockNode argumentNames.
+	methodBuilder addTemps: aBlockNode scope inComingCopiedVarNames.
+	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
+	methodBuilder numArgs: aBlockNode arguments size.
 	
 	aBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: aBlockNode scope tempVectorName 
-			withVars: (aBlockNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: aBlockNode scope tempVectorVarNames.
 	].
 	valueTranslator visitNode: aBlockNode body.
 	methodBuilder mapToNode: aBlockNode body.
@@ -479,27 +479,23 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
-	| tempNames argumentNames copiedNames |
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
 	
 	self compilationContext optionFullBlockClosure ifTrue: [ ^ self visitFullBlockNode: aBlockNode ].
 		
-	argumentNames := aBlockNode argumentNames asArray.
-	tempNames := (aBlockNode scope tempVars asArray collect: [ :each | each name]) copyWithoutAll: argumentNames.
-	copiedNames := (aBlockNode scope  inComingCopiedVars asArray collect: [:each | each name]).
 	methodBuilder
-			pushClosureCopyCopiedValues: copiedNames
-			args: argumentNames
+			pushClosureCopyCopiedValues: aBlockNode scope inComingCopiedVarNames
+			args: aBlockNode argumentNames
 			jumpTo:  #block.
 	 
 	aBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: aBlockNode scope tempVectorName 
-			withVars: (aBlockNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: aBlockNode scope tempVectorVarNames.
 	].
-	methodBuilder addTemps: tempNames.
+	methodBuilder addTemps: aBlockNode scope tempVarNamesWithoutArguments.
 	valueTranslator visitNode: aBlockNode body.
 	methodBuilder addBlockReturnTopIfRequired.
 	self flag: 'why dont we just add a blockReturnTop here... it could be removed or ignored in IRTranslator'.
@@ -522,10 +518,9 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitFullBlockNode: aBlockNode [
-	| compiledBlock copiedNames |
+	| compiledBlock |
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	copiedNames := (aBlockNode scope inComingCopiedVars asArray collect: [:each | each name]).
-	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedNames
+	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames
 ]
 
 { #category : #'visitor-double dispatching' }
@@ -537,29 +532,24 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 			- we call IRBuilder to add temps
 	"
 	
-	| argumentNames tempNames  copiedNames  |
-	argumentNames := anOptimizedBlockNode argumentNames asArray.
-	tempNames := (anOptimizedBlockNode scope tempVars collect: [ :each | each name asSymbol]) copyWithoutAll: argumentNames.
-	copiedNames := (anOptimizedBlockNode scope inComingCopiedVars collect: [:each | each name]) asArray.
-	
-	
+	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName 
-			withVars: (anOptimizedBlockNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: anOptimizedBlockNode scope tempVectorVarNames.
 	].
-	
-	methodBuilder addTemps: tempNames.
-	methodBuilder addTemps: copiedNames.
-	methodBuilder addTemps: argumentNames.
+	methodBuilder addTemps: anOptimizedBlockNode scope tempVarNamesWithoutArguments.
+	methodBuilder addTemps: anOptimizedBlockNode scope inComingCopiedVarNames.
+	methodBuilder addTemps: anOptimizedBlockNode argumentNames.
 	anOptimizedBlockNode isInlinedLoop ifTrue: [
-		tempNames do: [ :tempName |
+		anOptimizedBlockNode scope tempVarNamesWithoutArguments do: [ :tempName |
 			methodBuilder pushLiteral: nil.
 			methodBuilder storeTemp: tempName.
 			methodBuilder popTop.
-		 ]].
+		]].
 	
 	self visitNode: anOptimizedBlockNode body.
+	methodBuilder popMap
 ]
 
 { #category : #'visitor-double dispatching' }
@@ -618,7 +608,7 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 	aMethodNode scope tempVector ifNotEmpty: [
 		methodBuilder 
 			createTempVectorNamed: aMethodNode scope tempVectorName 
-			withVars: (aMethodNode scope tempVector collect: [:each| each name]) asArray.
+			withVars: aMethodNode scope tempVectorVarNames
 	].
 	effectTranslator visitNode: aMethodNode body.
 	aMethodNode body lastIsReturn ifFalse:  [methodBuilder pushReceiver; returnTop]

@@ -451,20 +451,28 @@ ScrollBar >> menuImage [
 { #category : #'other events' }
 ScrollBar >> mouseDownInSlider: event [
 	"The mouse has been pressed in the slider area."
-	
-	interval = 1.0 ifTrue:
-		["make the entire scrollable area visible if a full scrollbar is clicked on"
-		self setValue: 0.
-		self model hideOrShowScrollBar].
-	event redButtonPressed ifFalse: [^self].
+
+	"If its already dragging, there's nothing to do"
+	self dragging
+		ifTrue: [ ^ self ].
+		
+	interval = 1
+		ifTrue:
+			[ "make the entire scrollable area visible if a full scrollbar is clicked on"
+			self setValue: 0.
+			self model hideOrShowScrollBar ].
+	event redButtonPressed
+		ifFalse: [ ^ self ].
 	slider fillStyle: self pressedThumbFillStyle.
 	slider borderStyle: self pressedThumbBorderStyle.
-	self theme useScrollbarThumbShadow ifTrue: [
-		sliderShadow
-			color: self sliderShadowColor;
-			cornerStyle: slider cornerStyle;
-			bounds: slider bounds;
-			show]
+	self theme useScrollbarThumbShadow
+		ifTrue: [ sliderShadow
+				color: self sliderShadowColor;
+				cornerStyle: slider cornerStyle;
+				bounds: slider bounds;
+				show ].
+	"Set dragging to true."
+	self dragging: true
 ]
 
 { #category : #mouse }
@@ -566,26 +574,24 @@ ScrollBar >> mouseLeaveThumb: event [
 	"The mouse has left the thumb."
 
 	| buttonFillStyle buttonBorderStyle |
-	event redButtonPressed ifFalse: [ 
-		slider
-			fillStyle: self normalThumbFillStyle;
-			borderStyle: self normalThumbBorderStyle;
-			changed ].
-	
+	event redButtonPressed
+		ifFalse: [ slider
+				fillStyle: self normalThumbFillStyle;
+				borderStyle: self normalThumbBorderStyle;
+				changed ].
+
 	"Update buttons"
-	(self containsPoint: event position)
-		ifTrue: [ 
-			buttonFillStyle := self mouseOverPagingAreaButtonFillStyle.
-			buttonBorderStyle := self mouseOverPagingAreaButtonBorderStyle ]
-		ifFalse: [ 
-			buttonFillStyle := self normalButtonFillStyle.
-			buttonBorderStyle := self normalButtonBorderStyle ].	
+	buttonBorderStyle := (self containsPoint: event position)
+		ifTrue: [ buttonFillStyle := self mouseOverPagingAreaButtonFillStyle.
+			self mouseOverPagingAreaButtonBorderStyle ]
+		ifFalse: [ buttonFillStyle := self normalButtonFillStyle.
+			self normalButtonBorderStyle ].
 	upButton
 		fillStyle: buttonFillStyle;
 		borderStyle: buttonBorderStyle.
 	downButton
 		fillStyle: buttonFillStyle;
-		borderStyle: buttonBorderStyle.
+		borderStyle: buttonBorderStyle
 ]
 
 { #category : #mouse }
@@ -693,13 +699,19 @@ ScrollBar >> mouseOverThumbFillStyle [
 ScrollBar >> mouseUpInSlider: event [
 	"The mouse button has been released."
 	
+	"If it was not dragging, thre's nothing to do."
+	self dragging ifFalse:[^self].
+	
 	sliderShadow hide.
 	(slider containsPoint: event position)
 		ifTrue: [slider
 					fillStyle: self mouseOverThumbFillStyle;
 					borderStyle: self mouseOverThumbBorderStyle]
 		ifFalse: [self mouseLeaveThumb: event].
-	slider changed
+	slider changed.
+	
+	"Not dragging anymore."
+	self dragging:false.
 ]
 
 { #category : #style }
@@ -797,14 +809,6 @@ ScrollBar >> resetTimer [
 	timeOfLastScroll := timeOfMouseDown - 1000 max: 0.
 	nextPageDirection := nil.
 	currentScrollDelay := nil
-]
-
-{ #category : #scrolling }
-ScrollBar >> scrollAbsolute: event [
-	"Just don't if it is not the red button and we are drawing gradients."
-	
-	event redButtonPressed ifFalse: [^self].
-	^super scrollAbsolute: event
 ]
 
 { #category : #scrolling }
@@ -1003,16 +1007,11 @@ ScrollBar >> thumbColor [
 ScrollBar >> totalSliderArea [
 	| upperBoundsButton |
 	upperBoundsButton := upButton.
-	bounds isWide
-		ifTrue: [
-			upButton right > upperBoundsButton right
-				ifTrue: [upperBoundsButton := upButton].
-			^upperBoundsButton bounds topRight corner: downButton bounds bottomLeft]
-		ifFalse:[
-			upButton bottom > upperBoundsButton bottom
-				ifTrue: [upperBoundsButton := upButton].
-			^upperBoundsButton bounds bottomLeft corner: downButton bounds topRight].
-
+	^ bounds isWide
+		ifTrue: [ upButton right > upperBoundsButton right ifTrue: [ upperBoundsButton := upButton ].
+			upperBoundsButton bounds topRight corner: downButton bounds bottomLeft ]
+		ifFalse: [ upButton bottom > upperBoundsButton bottom ifTrue: [ upperBoundsButton := upButton ].
+			upperBoundsButton bounds bottomLeft corner: downButton bounds topRight ]
 ]
 
 { #category : #initialize }

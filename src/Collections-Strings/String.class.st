@@ -35,29 +35,35 @@ String class >> compare: string1 with: string2 collated: order [
 	"Return 1, 2 or 3, if string1 is <, =, or > string2, with the collating order of characters given by the order array."
 
 	| len1 len2 c1 c2 |
-	order ifNil: [
-		len1 := string1 size.
-		len2 := string2 size.
-		1 to: (len1 min: len2) do:[:i |
-			c1 := (string1 basicAt: i).
-			c2 := (string2 basicAt: i).
-			c1 = c2 ifFalse: [c1 < c2 ifTrue: [^ 1] ifFalse: [^ 3]].
-		].
-		len1 = len2 ifTrue: [^ 2].
-		len1 < len2 ifTrue: [^ 1] ifFalse: [^ 3].
-	].
+	order
+		ifNil: [ len1 := string1 size.
+			len2 := string2 size.
+			1 to: (len1 min: len2) do: [ :i | 
+				c1 := string1 basicAt: i.
+				c2 := string2 basicAt: i.
+				c1 = c2
+					ifFalse: [ ^ c1 < c2
+							ifTrue: [ 1 ]
+							ifFalse: [ 3 ] ] ].
+			len1 = len2 ifTrue: [ ^ 2 ].
+			^ len1 < len2
+				ifTrue: [ 1 ]
+				ifFalse: [ 3 ] ].
 	len1 := string1 size.
 	len2 := string2 size.
-	1 to: (len1 min: len2) do:[:i |
-		c1 := (string1 basicAt: i).
-		c2 := (string2 basicAt: i).
-		c1 < 256 ifTrue: [c1 := order at: c1 + 1].
-		c2 < 256 ifTrue: [c2 := order at: c2 + 1].
-		c1 = c2 ifFalse:[c1 < c2 ifTrue: [^ 1] ifFalse: [^ 3]].
-	].
-	len1 = len2 ifTrue: [^ 2].
-	len1 < len2 ifTrue: [^ 1] ifFalse: [^ 3].
-
+	1 to: (len1 min: len2) do: [ :i | 
+		c1 := string1 basicAt: i.
+		c2 := string2 basicAt: i.
+		c1 < 256 ifTrue: [ c1 := order at: c1 + 1 ].
+		c2 < 256 ifTrue: [ c2 := order at: c2 + 1 ].
+		c1 = c2
+			ifFalse: [ ^ c1 < c2
+					ifTrue: [ 1 ]
+					ifFalse: [ 3 ] ] ].
+	len1 = len2 ifTrue: [ ^ 2 ].
+	^ len1 < len2
+		ifTrue: [ 1 ]
+		ifFalse: [ 3 ]
 ]
 
 { #category : #'instance creation' }
@@ -244,12 +250,12 @@ String class >> loremIpsum: size [
 ]
 
 { #category : #'instance creation' }
-String class >> new: sizeRequested [ 
+String class >> new: sizeRequested [
 	"Return a new instance with the number of indexable variables specified by the argument."
-	
-	self == String 
-		ifTrue:[^ByteString new: sizeRequested]
-		ifFalse:[^self basicNew: sizeRequested]
+
+	^ self == String
+		ifTrue: [ ByteString new: sizeRequested ]
+		ifFalse: [ self basicNew: sizeRequested ]
 ]
 
 { #category : #initialization }
@@ -471,10 +477,10 @@ String >> alike: aString [
 	minSize := (j := self size) min: (k := aString size).
 	bonus := (j - k) abs < 2 ifTrue: [ 1 ] ifFalse: [ 0 ].
 	i := 1.
-	[(i <= minSize) and: [((super at: i) bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
+	[(i <= minSize) and: [((self at: i) asInteger bitAnd: 16rDF)  = ((aString at: i) asciiValue bitAnd: 16rDF)]]
 		whileTrue: [ i := i + 1 ].
 	[(j > 0) and: [(k > 0) and:
-		[((super at: j) bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
+		[((self at: j) asInteger bitAnd: 16rDF) = ((aString at: k) asciiValue bitAnd: 16rDF)]]]
 			whileTrue: [ j := j - 1.  k := k - 1. ].
 	^ i - 1 + self size - j + bonus
 ]
@@ -500,12 +506,7 @@ String >> asByteArray [
 	"'a' asByteArray >>> #[97]"
 	"'A' asByteArray >>> #[65]"
 	"'ABA' asByteArray >>> #[65 66 65]"
-	| b |
-	b := ByteArray new: self byteSize.
-	1 to: self size * 4 do: [:i |
-		b at: i put: (self byteAt: i)].
-	^ b
-
+	self subclassResponsibility 
 ]
 
 { #category : #converting }
@@ -520,7 +521,7 @@ String >> asCamelCase [
 	"Convert to CamelCase, i.e, remove spaces, and convert starting lowercase to uppercase."
    "'A man, a plan, a canal, panama' asCamelCase >>> 'AMan,APlan,ACanal,Panama'"
  	"'Here 123should % be 6 the name6 of the method' asCamelCase  >>> 'Here123should%Be6TheName6OfTheMethod'"
-		^ self class streamContents: [:stream |
+		^ self species streamContents: [:stream |
                self substrings do: [:sub |
                        stream nextPutAll: sub capitalized]]
 ]
@@ -604,7 +605,7 @@ String >> asFourCode [
 String >> asHTMLString [
 	"substitute the < & > into HTML compliant elements"
 	"'<a>' asHTMLString"
-	^ self class new: self size streamContents: [ :s| 
+	^ self species new: self size streamContents: [ :s| 
 		self do: [:c | s nextPutAll: c asHTMLString ]]
 
 ]
@@ -613,7 +614,7 @@ String >> asHTMLString [
 String >> asHex [
 	"'A' asHex >>> '16r41'"
 	"'AA' asHex >>> '16r4116r41'"
-	^ self class new: self size * 4 streamContents: [ :stream |
+	^ self species new: self size * 4 streamContents: [ :stream |
 		self do: [ :ch | stream nextPutAll: ch hex ]]
 ]
 
@@ -927,7 +928,7 @@ String >> copyReplaceAll: oldSubstring with: newSubstring [
     self = oldSubstring ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
-    ^ self class new: self size streamContents: [ :stream | | foundIdx |
+    ^ self species new: self size streamContents: [ :stream | | foundIdx |
         [ (foundIdx := self findString: oldSubstring startingAt: idx) isZero ] whileFalse: [ 
             stream 
                 next: (foundIdx - idx) putAll: self startingAt: idx;
@@ -978,6 +979,17 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 	
 	^ self copyReplaceAll: oldSubstring with: newSubstring asTokens: true
 	
+]
+
+{ #category : #copying }
+String >> copyUpToSubstring: aSubstring [
+
+	aSubstring ifEmpty: [ 
+		"preserve compatiblity with `readStream upToAll:`"
+		^ String new ].
+	
+	^ (self findString: aSubstring)
+		in: [ :index | index > 0 ifTrue: [ self copyFrom: 1 to: index-1 ] ifFalse: [ self ] ]
 ]
 
 { #category : #converting }
@@ -1167,7 +1179,7 @@ String >> expandMacrosWithArguments: anArray [
 	"('<1?success:is error>' expandMacrosWith: false) >>> 'is error'"
 	
 	| readStream char index |
-	^ self class
+	^ self species
 		new: self size
 		streamContents:
 			[ :newStream | 
@@ -1311,7 +1323,7 @@ String >> findSelector [
 	(sel includes: $:) ifTrue:
 		[sel := sel copyReplaceAll: ':' with: ': '.	"for the style (aa max:bb) with no space"
 		possibleParens := sel findTokens: Character separators.
-		sel := self class streamContents:
+		sel := self species streamContents:
 			[:s | | level | level := 0.
 			possibleParens do:
 				[:token | | n |
@@ -1573,7 +1585,7 @@ String >> format: collection [
 	"('In {1} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In strings you can escape { by prefixing it with \' "
 	"('In \{1\} you can escape \{ by prefixing it with \\' format: {'strings'}) >>> 'In {1} you can escape { by prefixing it with \' "
 
-	^ self class
+	^ self species
 		new: self size
 		streamContents: [ :result | 
 			| stream |
@@ -1677,13 +1689,13 @@ String >> indexOf: aCharacter startingAt: start [
 ]
 
 { #category : #accessing }
-String >> indexOf: aCharacter  startingAt: start  ifAbsent: aBlock [
+String >> indexOf: aCharacter startingAt: start ifAbsent: aBlock [
 	| ans |
-	(aCharacter isCharacter) ifFalse: [ ^ aBlock value ].
-	ans := self class indexOfAscii: aCharacter asciiValue inString: self  startingAt: start.
-	ans = 0
-		ifTrue: [ ^ aBlock value ]
-		ifFalse: [ ^ ans ]
+	aCharacter isCharacter ifFalse: [ ^ aBlock value ].
+	ans := self class indexOfAscii: aCharacter asciiValue inString: self startingAt: start.
+	^ ans = 0
+		ifTrue: [ aBlock value ]
+		ifFalse: [ ans ]
 ]
 
 { #category : #accessing }
@@ -1888,7 +1900,7 @@ String >> join: aCollection [
 	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
 	"('*' join: #('WWWWW' 'W  EW' 'zzzz')) >>> 'WWWWW*W  EW*zzzz'"
 	
-	^ self class new: (aCollection size * self size) streamContents: [:stream | 
+	^ self species new: (aCollection size * self size) streamContents: [:stream | 
 			aCollection
 				do: [:each | stream nextPutAll: each asString] 
 				separatedBy: [stream nextPutAll: self]]
@@ -2066,32 +2078,36 @@ String >> match: text [
 ]
 
 { #category : #'system primitives' }
-String >> numArgs [ 
+String >> numArgs [
 	"Answer either the number of arguments that the receiver would take if considered a selector.  Answer -1 if it couldn't be a selector. It is intended mostly for the assistance of spelling correction."
 
 	| firstChar numColons start ix |
-	self size = 0 ifTrue: [^ -1].
+	self size = 0 ifTrue: [ ^ -1 ].
 	firstChar := self at: 1.
-	(firstChar isLetter or: [ firstChar = $_]) ifTrue:
-		["Fast reject if any chars are non-alphanumeric
+	(firstChar isLetter or: [ firstChar = $_ ])
+		ifTrue: [ "Fast reject if any chars are non-alphanumeric
 		NOTE: fast only for Byte things - Broken for Wide"
-		self class isBytes
-			ifTrue: [(self findSubstring: '~' in: self startingAt: 1 matchTable: Tokenish) > 0 ifTrue: [^ -1]]
-			ifFalse: [2 to: self size do: [:i | (self at: i) tokenish ifFalse: [^ -1]]].
-		"Fast colon count"
-		numColons := 0.  start := 1.
-		[(ix := self indexOf: $: startingAt: start) > 0]
-			whileTrue:
-				[(ix = start or: [(self at: start) isDigit]) ifTrue: [^-1].
-				numColons := numColons + 1.
-				start := ix + 1].
-		numColons = 0 ifTrue: [^ 0].
-		self last = $:
-			ifTrue: [^ numColons]
-			ifFalse: [^ -1]].
+			self class isBytes
+				ifTrue: [ (self
+						findSubstring: '~'
+						in: self
+						startingAt: 1
+						matchTable: Tokenish) > 0 ifTrue: [ ^ -1 ] ]
+				ifFalse: [ 2 to: self size do: [ :i | (self at: i) tokenish ifFalse: [ ^ -1 ] ] ].
+			"Fast colon count"
+			numColons := 0.
+			start := 1.
+			[ (ix := self indexOf: $: startingAt: start) > 0 ]
+				whileTrue: [ (ix = start or: [ (self at: start) isDigit ]) ifTrue: [ ^ -1 ].
+					numColons := numColons + 1.
+					start := ix + 1 ].
+			numColons = 0 ifTrue: [ ^ 0 ].
+			^ self last = $:
+				ifTrue: [ numColons ]
+				ifFalse: [ -1 ] ].
 	"Test case of binary selector, if self allSatisfy: #isSpecial (inlined for speed)"
-	1 to: self size do: [:i | (self at: i) isSpecial ifFalse: [^ -1]].
-	^1
+	1 to: self size do: [ :i | (self at: i) isSpecial ifFalse: [ ^ -1 ] ].
+	^ 1
 ]
 
 { #category : #converting }
@@ -2170,7 +2186,7 @@ String >> repeat: aNumber [
 
 	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
 	
-	^ self class 
+	^ self species 
 		new: self size * aNumber 
 		streamContents: [ :stringStream |
 			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ].
@@ -2396,7 +2412,7 @@ String >> surroundedBy: aString [
 	"('hello' surroundedBy: 'abd') >>> 'abdhelloabd'"
 	"('hello' surroundedBy: ' abd ') >>> ' abd hello abd '"
 	
-	^ self class streamContents: [ :s|
+	^ self species streamContents: [ :s|
 		s nextPutAll: aString.
 		s nextPutAll: self.
 		s nextPutAll: aString ].
@@ -2495,7 +2511,7 @@ String >> trimLeft: aLeftBlock right: aRightBlock [
 String >> trimLineSpaces [
 	"Trim the spaces from the right side of each line. Useful for code"
 	
-	^ self class streamContents: [ :str |
+	^ self species streamContents: [ :str |
 		self lines 
 			do: [ :line | str nextPutAll: line trimRight]
 			separatedBy: [str cr]]
@@ -2636,7 +2652,7 @@ String >> withLineEndings: lineEndingString [
 String >> withNoLineLongerThan: aNumber [
 	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
 	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
-	^self class
+	^self species
 		new: self size * (aNumber + 1) // aNumber "provision for supplementary line breaks"
 		streamContents: [ :stream |
 			self lineIndicesDo: [ :start :endWithoutDelimiters :end |
@@ -2669,7 +2685,7 @@ String >> withSeparatorsCompacted [
     "'test  test      ' withSeparatorsCompacted >>> 'test test '"
 
     self isEmpty ifTrue: [ ^ self ].
-    ^ self class new: self size streamContents: [:stream | 
+    ^ self species new: self size streamContents: [:stream | 
         | lastBlank |
         lastBlank := false.
         self do: [ :eachChar | 
@@ -2727,15 +2743,17 @@ String >> withoutPrefix: prefix [
 { #category : #'platform conventions' }
 String >> withoutQuoting [
 	"remove the initial and final quote marks (single quote for string, or double quotes for comments), if present (and if matches nesting quotes). Have a look at testWithoutQuoting. If you want to remove single/double quotes not in first and last positions of the strings, have a look at copyWithout: $' "
+
 	"'''h''' withoutQuoting >>> 'h'"
+
 	"' ''h'' ' withoutQuoting >>>  ' ''h'' '"
-	
+
 	| quote |
-	self size < 2 ifTrue: [ ^self ].
+	self size < 2 ifTrue: [ ^ self ].
 	quote := self first.
-	(quote = self last and: [ quote = $' or: [ quote = $" ] ])
-		ifTrue: [ ^self copyFrom: 2 to: self size - 1 ]
-		ifFalse: [ ^self ].
+	^ (quote = self last and: [ quote = $' or: [ quote = $" ] ])
+		ifTrue: [ self copyFrom: 2 to: self size - 1 ]
+		ifFalse: [ self ]
 ]
 
 { #category : #converting }

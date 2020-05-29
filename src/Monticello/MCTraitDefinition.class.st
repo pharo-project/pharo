@@ -8,36 +8,34 @@ Class {
 }
 
 { #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: commentStamp [
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString comment: commentString commentStamp: aString5 [ 
+
 	^ self new
 		initializeWithName: classNameString
 		traitComposition: traitCompositionString
 		category: categoryString
+		instVarNames: ''
+		classTraitComposition: nil
+		classInstVarNames: ''
 		comment: commentString
-		commentStamp: commentStamp
+		commentStamp: aString5
+
 ]
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray comment: commentString commentStamp: commentStamp [
+{ #category : #'instance creation api' }
+MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classInstVarNames: civarArray classTraitComposition: classTraitCompositionString comment: commentString commentStamp: commentStamp [
+
 	^ self new
 		initializeWithName: classNameString
 		traitComposition: traitCompositionString
 		category: categoryString
 		instVarNames: ivarArray
+		classTraitComposition: classTraitCompositionString
 		classInstVarNames: civarArray
 		comment: commentString
 		commentStamp: commentStamp
-]
 
-{ #category : #'instance creation' }
-MCTraitDefinition class >> name: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray comment: commentString commentStamp: commentStamp [
-	^ self new
-		initializeWithName: classNameString
-		traitComposition: traitCompositionString
-		category: categoryString
-		instVarNames: ivarArray
-		comment: commentString
-		commentStamp: commentStamp
+		
 ]
 
 { #category : #comparing }
@@ -47,10 +45,11 @@ MCTraitDefinition >> = aDefinition [
 	^ (aDefinition isKindOf: MCDefinition)
 		and: [(self isRevisionOf: aDefinition)
 		and: [self traitCompositionString = aDefinition traitCompositionString
+		and: [self classTraitCompositionString = aDefinition classTraitCompositionString
 		and: [category = aDefinition category
 		and: [self slotDefinitionString = aDefinition slotDefinitionString
 		and: [self classInstVarNames  = aDefinition classInstVarNames  
-		and: [comment = aDefinition comment]]]]]]
+		and: [comment = aDefinition comment]]]]]]]
 ]
 
 { #category : #visiting }
@@ -140,6 +139,20 @@ MCTraitDefinition >> initializeWithName: classNameString
 		self addVariables: civarArray ofType: MCClassInstanceVariableDefinition.
 ]
 
+{ #category : #initialization }
+MCTraitDefinition >> initializeWithName: classNameString traitComposition: traitCompositionString category: categoryString instVarNames: ivarArray classTraitComposition: classTraitCompositionString classInstVarNames: civarArray comment: commentString commentStamp: commentStampString [
+	self
+		initializeWithName: classNameString
+		traitComposition: traitCompositionString
+		category: categoryString
+		instVarNames: ivarArray
+		classInstVarNames: civarArray
+		comment: commentString
+		commentStamp: commentStampString.
+
+		classTraitComposition := classTraitCompositionString
+]
+
 { #category : #initializing }
 MCTraitDefinition >> initializeWithName: classNameString 
 	traitComposition:  traitCompositionString
@@ -156,6 +169,26 @@ MCTraitDefinition >> initializeWithName: classNameString
 		variables := OrderedCollection  new.
 		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
 
+]
+
+{ #category : #initializing }
+MCTraitDefinition >> initializeWithName: classNameString 
+	traitComposition:  traitCompositionString
+	classTraitComposition: aClassTraitComposition
+	category:  categoryString
+	instVarNames: ivarArray
+	comment:  commentString  
+	commentStamp:   commentStampString [
+					
+		name := classNameString asSymbol.
+		traitComposition := traitCompositionString.
+	    category := categoryString.
+		comment := commentString withInternalLineEndings.
+		commentStamp :=  commentStampString ifNil: [self defaultCommentStamp].
+		variables := OrderedCollection  new.
+		self addVariables: ivarArray ofType: MCInstanceVariableDefinition.
+		
+	classTraitComposition := aClassTraitComposition
 ]
 
 { #category : #printing }
@@ -193,11 +226,13 @@ MCTraitDefinition >> requirements [
 	testing for the first character beeing an uppercase character
 	(and thus not a special character such as {, # etc.)"
 
-	| tokens traitNames |
-	self hasTraitComposition ifFalse: [ ^Array new ].
-	tokens := traitComposition parseLiterals.
-	traitNames := tokens select: [:each | each first isUppercase].
-	^traitNames asArray
+	self hasTraitComposition
+		ifFalse: [ ^ Array new ].
+
+	^ (((RBParser parseExpression: self traitCompositionString)
+		allChildren select: [ :e | e isVariable ])
+		collect: [ :e | e name ]
+		as: Set) asArray
 ]
 
 { #category : #printing }

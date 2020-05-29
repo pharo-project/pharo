@@ -1,16 +1,31 @@
 Extension { #name : #SpAbstractListPresenter }
 
 { #category : #'*Spec2-Transmission' }
-SpAbstractListPresenter >> defineInputPorts [
-	
-	^ { SpListItemsPort new }
+SpAbstractListPresenter >> defaultInputPort [
+
+	^ self inputItemsPort
 ]
 
 { #category : #'*Spec2-Transmission' }
-SpAbstractListPresenter >> defineOutputPorts [
+SpAbstractListPresenter >> defaultOutputPort [
+
+	^ self outputSelectionPort
+]
+
+{ #category : #'*Spec2-Transmission' }
+SpAbstractListPresenter >> inputItemsPort [
+
+	^ SpListItemsPort newPresenter: self
+]
+
+{ #category : #'*Spec2-Transmission' }
+SpAbstractListPresenter >> outputActivationPort [
 	
-	^ { 
-	SpSelectionPort new. 
-	SpActivationPort new 
-	}
+	^ SpActivationPort newPresenter: self
+]
+
+{ #category : #'*Spec2-Transmission' }
+SpAbstractListPresenter >> outputSelectionPort [
+	
+	^ SpSelectionPort newPresenter: self
 ]

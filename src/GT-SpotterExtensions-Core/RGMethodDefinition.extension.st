@@ -1,7 +1,7 @@
 Extension { #name : #RGMethodDefinition }
 
 { #category : #'*GT-SpotterExtensions-Core' }
-RGMethodDefinition >> spotterPreviewCodeIn: aComposite [
+RGMethodDefinition >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [ self gtDisplayString ];

@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #configuring }
-SpDropListMorph >> configureWith: displayModel item: itemPresenter [ 
+SpDropListMorph >> configureWith: displayModel item: itemPresenter [
 	displayModel configureDropList: self item: itemPresenter
 ]
 

@@ -13,6 +13,12 @@ OCSelfVariable class >> semanticNodeClass [
 	^RBSelfNode 
 ]
 
+{ #category : #emitting }
+OCSelfVariable >> emitValue: methodBuilder [
+
+	methodBuilder pushReceiver
+]
+
 { #category : #initialization }
 OCSelfVariable >> initialize [
 	super initialize.

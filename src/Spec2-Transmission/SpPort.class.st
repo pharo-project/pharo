@@ -37,6 +37,14 @@ SpPort class >> newName: aName delegate: aBlock [
 		yourself
 ]
 
+{ #category : #'instance creation' }
+SpPort class >> newPresenter: aPresenter [
+
+	^ self new 
+		presenter: aPresenter;
+		yourself
+]
+
 { #category : #accessing }
 SpPort class >> portName [
 

@@ -299,7 +299,6 @@ WorldState >> activeHand [
 
 { #category : #hands }
 WorldState >> activeHand: aHand [
-	ActiveHand := aHand.
 	activeHand := aHand
 ]
 
@@ -351,20 +350,6 @@ WorldState >> alarmSortBlock [
 WorldState >> alarms [
 
 	^alarms ifNil: [alarms := Heap sortBlock: self alarmSortBlock]
-]
-
-{ #category : #canvas }
-WorldState >> canvas [
-
-	^ self worldRenderer canvas
-]
-
-{ #category : #canvas }
-WorldState >> canvas: x [ 
-	self worldRenderer canvas: x.
-	damageRecorder 
-		ifNil: [damageRecorder := DamageRecorder new]
-		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
 { #category : #'update cycle' }
@@ -454,17 +439,17 @@ WorldState >> discoveredMenuTitle [
 ]
 
 { #category : #'update cycle' }
-WorldState >> displayWorld: aWorld submorphs: submorphs [
+WorldState >> displayWorld: aWorld [
 	"Update this world's display."
 
-	worldRenderer displayWorldState: self ofWorld: aWorld submorphs: submorphs
+	worldRenderer displayWorldState: self ofWorld: aWorld
 ]
 
 { #category : #'update cycle' }
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
-	[aWorld displayWorld] ifError: [:err :rcvr |
+	[aWorld displayWorld] onErrorDo: [:err |
 		"Handle a drawing error"
 		| errCtx errMorph |
 		errCtx := thisContext.
@@ -474,7 +459,7 @@ WorldState >> displayWorldSafely: aWorld [
 			[errCtx notNil and:[(errCtx receiver isMorph) not]] 
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
-			errCtx ifNil:[^self handleFatalDrawingError: err].
+			errCtx ifNil:[^self handleFatalDrawingError: err description].
 			errMorph := errCtx receiver.
 			"If the morph causing the problem has already the #drawError flag set,
 			then search for the next morph above in the caller chain."
@@ -482,7 +467,7 @@ WorldState >> displayWorldSafely: aWorld [
 		] whileTrue.
 		errMorph setProperty: #errorOnDraw toValue: true.
 		"Install the old error handler, so we can re-raise the error"
-		rcvr error: err.
+		err signal.
 	].
 ]
 
@@ -521,16 +506,6 @@ WorldState >> doOneCycleNowFor: aWorld [
 
 	aWorld runStepMethods.		"there are currently some variations here"
 	self displayWorldSafely: aWorld.
-]
-
-{ #category : #'update cycle' }
-WorldState >> doOneSubCycleFor: aWorld [
-	"Like doOneCycle, but preserves activeHand."
-
-	| currentHand |
-	currentHand := self activeHand.
-	self doOneCycleFor: aWorld.
-	self activeHand: currentHand.
 ]
 
 { #category : #'update cycle' }
@@ -679,6 +654,14 @@ WorldState >> interCyclePause: milliSecs [
 	CanSurrenderToOS := true.
 ]
 
+{ #category : #canvas }
+WorldState >> invalidate [
+	self worldRenderer invalidate.
+	damageRecorder 
+		ifNil: [damageRecorder := DamageRecorder new]
+		ifNotNil: [damageRecorder doFullRepaint]
+]
+
 { #category : #hands }
 WorldState >> is: hand overlappingDamagedAreaIn: damageList [
 	| handBounds |
@@ -750,8 +733,6 @@ WorldState >> removeHand: aHandMorph [
 	(hands includes: aHandMorph) ifFalse: [^self].
 	hands := hands copyWithout: aHandMorph.
 	activeHand == aHandMorph ifTrue: [activeHand := nil].
-	ActiveHand == aHandMorph ifTrue: [ActiveHand := nil].
-
 ]
 
 { #category : #canvas }

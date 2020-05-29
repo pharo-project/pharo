@@ -24,7 +24,7 @@ RFOperationReification >> genForRBArrayNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBAssignmentNode [
-	entity variable isTemp ifTrue: [  
+	entity variable isArgOrTemp ifTrue: [  
 		^RBParser parseExpression: ('RFTempWrite new
 			assignedValue: RFNewValueReificationVar; 
 			context: thisContext;
@@ -105,7 +105,7 @@ RFOperationReification >> genForRBVariableNode [
 			object: self;
 			variableName: #{1}.' format: {entity name})].
 		
-	entity isTemp ifTrue: [
+	entity isArgOrTemp ifTrue: [
 		^RBParser parseExpression: ('RFTempRead new 
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].

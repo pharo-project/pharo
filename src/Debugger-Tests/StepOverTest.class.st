@@ -71,11 +71,23 @@ StepOverTest >> testErrorSignalledDuringStepOverShouldBeCaught [
 ]
 
 { #category : #tests }
+StepOverTest >> testSimulatedProcessIsInCorrectState [
+	"This test verifies that simulated process is created correctly using given block.
+	Step over should execute first block instruction when it is correct"
+	| executed |
+	executed := false.
+	self settingUpSessionAndProcessAndContextForBlock: [executed := true ].
+	
+	session stepOver.
+	
+	self assert: executed
+]
+
+{ #category : #tests }
 StepOverTest >> testStepOver [
 	"Stepping over a message node brings the execution to the next node in the same method."
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
-	session stepInto.
 	session stepInto.
 	"Reached stepA1"
 	"Checking that the execution is at the 'self stepA2' node of the stepA1 method"
@@ -105,7 +117,7 @@ StepOverTest >> testStepOverComputedReturn [
 	"
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepC1 ].
-	session stepInto.	session stepInto.
+	session stepInto.
 	"Reached stepC1"
 	self assert: session interruptedContext method equals: self class >>#stepC1.
 	session stepInto.
@@ -143,7 +155,6 @@ StepOverTest >> testStepOverLastNodeOfContext [
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepB1 ].
 	session stepInto.
-	session stepInto.
 	"Reached stepB1"
 	session stepInto.
 	"Reached stepB2"
@@ -171,7 +182,6 @@ StepOverTest >> testStepOverNonErrorExceptionSignalWithHandlerDeeperInTheContext
 	The Notification exception was used because it is an exception that is not a subclass of Error, and iis therefore not caught by the handler context stepOver inserts between step2 and 3 (which handles Error)
 	"
 	self settingUpSessionAndProcessAndContextForBlock: [ self step1 ].
-	session stepInto.
 	session stepInto.
 	session stepInto.
 	session stepInto.

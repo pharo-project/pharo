@@ -78,14 +78,12 @@ SpDemoNotebookPresenter >> objectClassPage [
 
 { #category : #pages }
 SpDemoNotebookPresenter >> objectInspectorPage [
-
 	^ SpNotebookPage
 		title: 'Object inspector'
 		icon: (self iconNamed: #nautilusIcon)
-		provider: [
-			self flag: #TODO. "Since EyeInspector was moved out Spec2 package, do not 
-			 reference it directly to not generate an explicit dependency. Dependency 
-			 is there, though... maybe is better to think in another example?"
+		provider: [ 
+			self flag: #TODO. "Using reference to suspend a dependency, but is not cool since 
+			it makes a hidden depenency. Instead, we better think another example" 
 			(self class environment at: #EyeInspector) new
 				inspect: Object;
 				yourself ]

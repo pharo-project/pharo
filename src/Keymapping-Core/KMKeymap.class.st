@@ -83,12 +83,6 @@ KMKeymap >> description: aDescription [
 	description := aDescription asString
 ]
 
-{ #category : #'enabling/disabling' }
-KMKeymap >> disable [
-
-	self shortcut: KMNoShortcut new.
-]
-
 { #category : #executing }
 KMKeymap >> executeActionTargetting: target [
 	^ self action cull: target cull: target

@@ -209,7 +209,7 @@ TextEditor class >> editingSettingsOn: aBuilder [
 					(aBuilder setting: #secondarySelectionTextColor)
 						target: UITheme;
 						targetSelector: #currentSettings;
-						default: Color white;
+						default: Color black;
 						label: 'Secondary selection text color'].
 			(aBuilder setting: #useFindReplaceSelection)
 				target: TextEditor;
@@ -2292,7 +2292,7 @@ TextEditor >> offerFontMenu: aKeyboardEvent [
 { #category : #deprecated }
 TextEditor >> offerMenuFromEsc: aKeyboardEvent [
 	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	ActiveEvent shiftPressed 
+ 	morph activeHand lastEvent shiftPressed 
 		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
 	^ false 	
 ]
@@ -2375,13 +2375,11 @@ TextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return: re
 TextEditor >> pluggableYellowButtonActivity: shiftKeyState [
 	"Invoke the model's popup menu."
 
-	| menu |
-	(menu := self getPluggableYellowButtonMenu: shiftKeyState)
-		ifNil: [
-			^ false]
-		ifNotNil: [
+	^ (self getPluggableYellowButtonMenu: shiftKeyState)
+		ifNil: [ false ]
+		ifNotNil: [ :menu | 
 			menu invokeOn: model orSendTo: self.
-			^ true]
+			true ]
 ]
 
 { #category : #'accessing-selection' }
@@ -2447,7 +2445,7 @@ TextEditor >> processKeyStroke: aKeyboardEvent [
 TextEditor >> raiseContextMenu: aKeyboardEvent [
 
 	(morph respondsTo: #editView)
-		ifTrue: [ ^ morph editView yellowButtonActivity: ActiveEvent shiftPressed].
+		ifTrue: [ ^ morph editView yellowButtonActivity: morph activeHand lastEvent shiftPressed].
 	^ true
 ]
 

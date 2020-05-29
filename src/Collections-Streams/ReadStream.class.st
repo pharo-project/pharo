@@ -24,9 +24,9 @@ ReadStream >> next [
 	bounds in the collection. Optional. See Object documentation
 	whatIsAPrimitive."
 
-	position >= readLimit
-		ifTrue: [^nil]
-		ifFalse: [^collection at: (position := position + 1)]
+	^ position >= readLimit
+		ifTrue: [ nil ]
+		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
 { #category : #accessing }
@@ -87,6 +87,17 @@ ReadStream >> readStream [
 ReadStream >> size [
 	"Compatibility with other streams (e.g., FileStream)"
 	^readLimit
+]
+
+{ #category : #accessing }
+ReadStream >> skipTo: anObject [
+	"fast version using indexOf:"
+	| end |
+	end := collection indexOf: anObject startingAt: position+1 ifAbsent: [ 0 ].
+
+	^(end = 0 or: [end > readLimit]) 
+		ifTrue: [ self setToEnd. false ]
+		ifFalse: [ position := end. true]
 ]
 
 { #category : #accessing }

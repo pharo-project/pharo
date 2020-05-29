@@ -253,7 +253,7 @@ RBParser >> methodNodeClass [
 
 { #category : #private }
 RBParser >> nextToken [
-	^nextToken ifNil: [nextToken := scanner next] ifNotNil: [nextToken]
+	^nextToken ifNil: [nextToken := self scannerNext] ifNotNil: [nextToken]
 ]
 
 { #category : #'private-parsing' }
@@ -755,10 +755,9 @@ RBParser >> parsePrimitiveKeywordPragma [
 
 { #category : #'private-parsing' }
 RBParser >> parsePrimitiveLiteral [
-
-	currentToken isNumberLiteralToken
-		ifTrue: [ ^ self parseNumberLiteral ]
-		ifFalse: [ ^ self parsePrimitiveValueLiteral ]
+	^ currentToken isNumberLiteralToken
+		ifTrue: [ self parseNumberLiteral ]
+		ifFalse: [ self parsePrimitiveValueLiteral ]
 ]
 
 { #category : #'private-parsing' }
@@ -1069,6 +1068,12 @@ RBParser >> scannerClass [
 	^RBScanner
 ]
 
+{ #category : #private }
+RBParser >> scannerNext [
+
+	^ scanner next
+]
+
 { #category : #'private-classes' }
 RBParser >> sequenceNodeClass [
 	^ RBSequenceNode
@@ -1082,7 +1087,7 @@ RBParser >> step [
 		ifTrue: 
 			[currentToken := nextToken.
 			nextToken := nil]
-		ifFalse: [currentToken := scanner next].
+		ifFalse: [currentToken := self scannerNext].
 ]
 
 { #category : #'private-classes' }

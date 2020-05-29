@@ -199,8 +199,10 @@ GLMTransmission >> from: aPort transformed: aBlock [
 
 { #category : #scripting }
 GLMTransmission >> fromOutside: aPortSymbol [
-	self deprecated: 'Use fromOutsidePort: instead'.
-	^ self fromOutsidePort: aPortSymbol
+	self 
+		deprecated: 'Use fromOutsidePort: instead' 
+		transformWith: '`@rec fromOutside: `@aPortSymbol' -> '`@rec fromOutsidePort: `@aPortSymbol'.
+	^ self fromOutsidePort: aPortSymbol 
 ]
 
 { #category : #scripting }
@@ -322,7 +324,9 @@ GLMTransmission >> to: aPaneSymbol port: aPortSymbol [
 
 { #category : #scripting }
 GLMTransmission >> toOutside: aPortSymbol [
-	self deprecated: 'Use toOutsidePort: instead'.
+	self 
+		deprecated: 'Use toOutsidePort: instead' 
+		transformWith: '`@rec toOutsidePort: `@aPortSymbol' -> '`@rec toOutsidePort: `@aPortSymbol'.
 	^ self toOutsidePort: aPortSymbol
 ]
 

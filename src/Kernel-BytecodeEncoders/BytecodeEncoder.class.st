@@ -34,6 +34,14 @@ BytecodeEncoder class >> isExtension: byte [
 	^self subclassResponsibility
 ]
 
+{ #category : #accessing }
+BytecodeEncoder class >> literalMethodBytecodes [
+	"A literal method is a method that just answers a literal value. 
+	 This is a constant sequence of bytecodes but it changes between enconders"
+
+	^ self subclassResponsibility
+]
+
 { #category : #'bytecode decoding' }
 BytecodeEncoder class >> nonExtensionBytecodeAt: pc in: method [
 	"Answer the actual bytecode at pc in method, skipping past any preceeding extensions."

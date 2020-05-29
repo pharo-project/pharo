@@ -29,20 +29,3 @@ MenuMorph class >> gtExampleMenuMorph [
 	^ menu
 	
 ]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
-MenuMorph >> spotterItemsFor: aStep [
-	<spotterOrder: 10>
-	self flag: #pharoFixMe. "refactoring violation for spotterActDefault:"
-	^ aStep listProcessor 
-		title: 'Items';
-		candidatesLimit: Float infinity;
-		allCandidates: [ self items ];
-		itemName: #contents;
-		itemIcon: [ :item | item icon ];
-		actLogic: [ :item :step | 
-			item hasSubMenu 
-				ifTrue: [ step diveIn ] 
-				ifFalse: [ item spotterActDefault. step exit ] ];
-		filter: GTFilterSubstring 
-]

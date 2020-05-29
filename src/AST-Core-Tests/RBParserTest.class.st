@@ -485,6 +485,7 @@ RBParserTest >> testParseFaultyMethod [
 		add: 'method: asd  ^ asd. n'; "invalid expresion after return"
 		add: 'method: asd  ^ {'; "Only Open a literal array"
 		add: 'selector '''; 
+		add: 'selector ''part1''''part2'; "string with escaped ' does not end"
 		add: 'selector #^';
 		add: 'selector ¿';
 		add: ':nl'.
@@ -543,6 +544,40 @@ RBParserTest >> testParseFaultyPragma [
 	self assert: node isMethod.
 	self assert: node pragmas size equals: 1.
 	self assert: node pragmas first isFaulty
+]
+
+{ #category : #'tests parsing' }
+RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtTheEnd [
+	| node strangeMethod body statement message errorNode |
+	strangeMethod := '
+	selector  
+		|temp| 
+		temp := ''this is right'', ''wrong'''''.
+	node := self parseFaultyMethod: strangeMethod.
+
+	self assert: node isMethod.
+	self assert: node isFaulty.
+	self assertEmpty: node arguments.
+
+	body := node body.
+	self assert: body isSequence.
+	self assert: body isFaulty.
+	self assert: (body temporaries includes: (RBVariableNode named: 'temp')).
+
+	statement := body statements first.
+	self assert: statement isFaulty.
+	self assert: statement isAssignment.
+
+	message := statement value.
+	self assert: message isFaulty.
+	self assert: message arguments size equals: 1.
+
+	errorNode := message arguments at: 1.
+	self assert: errorNode isFaulty.
+	self
+		assert: errorNode value
+		equals: 'wrong'''.
+	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
 ]
 
 { #category : #'tests parsing' }

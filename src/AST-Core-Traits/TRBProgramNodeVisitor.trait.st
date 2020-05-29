@@ -63,6 +63,17 @@ TRBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
 TRBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 
+{ #category : #'visiting - reflectivity' }
+TRBProgramNodeVisitor >> visitLiteralValueNode: aNode [
+	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
+
+	^ self visitLiteralNode: aNode
+]
+
+{ #category : #'visiting - reflectivity' }
+TRBProgramNodeVisitor >> visitLiteralVariableNode: aNode [
+]
+
 { #category : #visiting }
 TRBProgramNodeVisitor >> visitMessageNode: aMessageNode [ 
 	(aMessageNode isCascaded not or: [aMessageNode isFirstCascaded]) 
@@ -121,6 +132,16 @@ TRBProgramNodeVisitor >> visitSelfNode: aSelfNode [
 TRBProgramNodeVisitor >> visitSequenceNode: aSequenceNode [ 
 	self visitTemporaryNodes: aSequenceNode temporaries.
 	aSequenceNode statements do: [:each | self visitNode: each]
+]
+
+{ #category : #'visiting - reflectivity' }
+TRBProgramNodeVisitor >> visitStoreIntoTempNode: aNode [
+	^ aNode
+]
+
+{ #category : #'visiting - reflectivity' }
+TRBProgramNodeVisitor >> visitStorePopIntoTempNode: aNode [
+	^ aNode
 ]
 
 { #category : #visiting }

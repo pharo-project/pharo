@@ -92,7 +92,7 @@ RBExtractMethodRefactoring >> checkSingleAssignment: varName [
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	extractedParseTree 
 		addNode: (RBReturnNode value: (RBVariableNode named: varName)).
-	modifiedParseTree := RBParseTreeRewriter 
+	modifiedParseTree := self parseTreeRewriterClass 
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
 				in: modifiedParseTree
@@ -145,11 +145,11 @@ RBExtractMethodRefactoring >> createTemporariesInExtractedMethodFor: assigned [
 { #category : #transforming }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
-	|existSelector |
-	existSelector := self requestExistingSelector.
-	existSelector ifNotNil: [ ^ existSelector ] ifNil: [
-		^ class allSelectors detect: [:each | self isMethodEquivalentTo: each]
-			ifNone: [nil]]
+
+	^ self requestExistingSelector
+		ifNil: [ class allSelectors
+				detect: [ :each | self isMethodEquivalentTo: each ]
+				ifNone: [ nil ] ]
 ]
 
 { #category : #initialization }
@@ -213,12 +213,12 @@ RBExtractMethodRefactoring >> extractMethod [
 								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
 									stmts at: stmts size put: stmts last value ] ] ] ].
 	modifiedParseTree := isSequence
-		ifTrue: [ RBParseTreeRewriter
+		ifTrue: [ self parseTreeRewriterClass
 				replaceStatements: subtree formattedCode
 				with: newCode
 				in: parseTree
 				onInterval: extractionInterval ]
-		ifFalse: [ RBParseTreeRewriter
+		ifFalse: [ self parseTreeRewriterClass
 				replace: subtree formattedCode
 				with: newCode
 				in: parseTree
@@ -387,7 +387,7 @@ RBExtractMethodRefactoring >> renameAllParameters [
 
 { #category : #renaming }
 RBExtractMethodRefactoring >> renameNode: aParseTree withOldName: oldName toWithName: newName [ 
-	(RBParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree
+	(self parseTreeRewriterClass rename: oldName to: newName) executeTree: aParseTree
 ]
 
 { #category : #renaming }

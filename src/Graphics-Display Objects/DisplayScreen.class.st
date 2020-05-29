@@ -37,7 +37,7 @@ DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
 
 	self flag: #pharoTodo. "The method should be modified to use currentWorld, but the dependency is not possible. We have to remodularize it."
-	^ ActiveWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
+	^ self currentWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
 ]
 
 { #category : #'display box access' }
@@ -109,7 +109,7 @@ DisplayScreen class >> initialize [
 	| display |
 	display := self new.
 	display
-		setExtent: self actualScreenSize
+		setExtent: 0@0
 		depth: 32. 
 	Smalltalk globals at: #Display put: display.
 	display beDisplay.
@@ -130,16 +130,13 @@ DisplayScreen class >> primitiveDeferUpdates: aBoolean [
 
 { #category : #'host window access' }
 DisplayScreen class >> primitiveWindowIcon: id path: pathString [
-
 	<primitive: 'primitiveHostWindowIcon' module: 'HostWindowPlugin' error: ec>
-	(pathString isKindOf: AbstractFileReference)
-		ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
+	(pathString isKindOf: AbstractFileReference) ifTrue: [ ^ self primitiveWindowIcon: id path: pathString fullName ].
 	ec == #'bad argument'
-		ifTrue: [ pathString isString
-				ifFalse: [ ^ self error: 'The path should be a String' ].
-			pathString asFileReference exists
-				ifTrue: [ ^ self error: 'File existing but not found by the VM sorry, try another location...' "Not reproductible in the tests but can happen"]
-				ifFalse: [ ^ FileDoesNotExistException signalOnFile: pathString asFileReference ] ].
+		ifTrue: [ pathString isString ifFalse: [ ^ self error: 'The path should be a String' ].
+			^ pathString asFileReference
+				ifExists: [ self error: 'File existing but not found by the VM sorry, try another location...'	"Not reproductible in the tests but can happen" ]
+				ifAbsent: [ :file | FileDoesNotExistException signalOnFile: file ] ].
 	self primitiveFailed
 ]
 

@@ -145,7 +145,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 { #category : #testing }
 TraitedMetaclass >> hasTraitComposition [
 	
-	^ self traitComposition isEmpty not
+	^ self traitComposition isEmpty not 
 ]
 
 { #category : #'testing method dictionary' }
@@ -336,6 +336,10 @@ TraitedMetaclass >> traitComposition [
 
 { #category : #accessing }
 TraitedMetaclass >> traitComposition: aComposition [
+
+	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
+		aMaybeTrait isTrait ifFalse: [ 
+			self error: 'All the members of the trait composition should be traits' ]].
 
 	composition := aComposition
 ]

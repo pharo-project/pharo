@@ -7,14 +7,20 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
+{ #category : #testing }
+AbstractEnvironmentTestCase class >> isAbstract [
+
+	^self = AbstractEnvironmentTestCase 
+]
+
 { #category : #accessing }
 AbstractEnvironmentTestCase >> environmentOfTest [
 	^ testingEnvironment
 ]
 
-{ #category : #private }
-AbstractEnvironmentTestCase >> initialize [
-	super initialize.
+{ #category : #running }
+AbstractEnvironmentTestCase >> setUp [
+	super setUp.
 	testingEnvironment := Smalltalk globals.
 ]
 

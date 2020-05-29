@@ -5,11 +5,11 @@ I have a position and a span.
 Class {
 	#name : #SpGridConstraints,
 	#superclass : #SpLayoutConstraints,
+	#traits : 'SpTAlignable',
+	#classTraits : 'SpTAlignable classTrait',
 	#instVars : [
 		'position',
-		'span',
-		'vAlign',
-		'hAlign'
+		'span'
 	],
 	#category : #'Spec2-Layout-Grid'
 }
@@ -32,42 +32,6 @@ SpGridConstraints class >> at: aPoint span: spanPoint [
 ]
 
 { #category : #accessing }
-SpGridConstraints >> beHorizontalAlignmentCenter [
-
-	self hAlign: SpGridAlignment center
-]
-
-{ #category : #accessing }
-SpGridConstraints >> beHorizontalAlignmentEnd [
-
-	self hAlign: SpGridAlignment end
-]
-
-{ #category : #accessing }
-SpGridConstraints >> beHorizontalAlignmentStart [
-
-	self hAlign: SpGridAlignment start
-]
-
-{ #category : #accessing }
-SpGridConstraints >> beVerticalAlignmentCenter [
-
-	self vAlign: SpGridAlignment center
-]
-
-{ #category : #accessing }
-SpGridConstraints >> beVerticalAlignmentEnd [
-
-	self vAlign: SpGridAlignment end
-]
-
-{ #category : #accessing }
-SpGridConstraints >> beVerticalAlignmentStart [
-
-	self vAlign: SpGridAlignment start
-]
-
-{ #category : #accessing }
 SpGridConstraints >> column [
 
 	^ self position x
@@ -77,22 +41,6 @@ SpGridConstraints >> column [
 SpGridConstraints >> columnSpan [
 
 	^ self span x
-]
-
-{ #category : #private }
-SpGridConstraints >> hAlign [
-	^ hAlign
-]
-
-{ #category : #private }
-SpGridConstraints >> hAlign: anObject [
-	hAlign := anObject
-]
-
-{ #category : #accessing }
-SpGridConstraints >> horizontalAlignment [
-
-	^ hAlign
 ]
 
 { #category : #initialization }
@@ -105,12 +53,14 @@ SpGridConstraints >> initialize [
 
 { #category : #accessing }
 SpGridConstraints >> position [
+
 	^ position
 ]
 
 { #category : #accessing }
-SpGridConstraints >> position: anObject [
-	position := anObject
+SpGridConstraints >> position: aPoint [
+
+	position := aPoint
 ]
 
 { #category : #accessing }
@@ -133,20 +83,4 @@ SpGridConstraints >> span [
 { #category : #accessing }
 SpGridConstraints >> span: anObject [
 	span := anObject
-]
-
-{ #category : #private }
-SpGridConstraints >> vAlign [
-	^ vAlign
-]
-
-{ #category : #private }
-SpGridConstraints >> vAlign: anObject [
-	vAlign := anObject
-]
-
-{ #category : #accessing }
-SpGridConstraints >> verticalAlignment [
-
-	^ vAlign
 ]

@@ -148,7 +148,9 @@ SycRefactoringPreview >> initializeDialogWindow: aDialogWindowPresenter [
 SycRefactoringPreview >> initializePresenter [
 	super initializePresenter.
 	table
-		whenSelectionChangedDo: [ :selection | self buildDiffFor: selection selectedItem ].
+		whenSelectionChangedDo: [ :selection | 
+			selection selectedItem ifNotNil: [ 
+				self buildDiffFor: selection selectedItem ] ].
 	table
 		whenActivatedDo: [ :selectedElement | 
 			self toggleSelectionOf: selectedElement widget selection selectedItem.
@@ -253,13 +255,17 @@ SycRefactoringPreview >> updateChanges [
 	self selectectAllCheckBox
 ]
 
-{ #category : #update }
+{ #category : #'as yet unclassified' }
 SycRefactoringPreview >> updateTablePresenter [
-	| aCompositeChange |
-	aCompositeChange := RBCompositeRefactoryChange new.
+	| aCompositeChange anEnvironment |
+	"We get the environment to apply the changes from any element in the changes instance variable"
+	anEnvironment := changes
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ changes anyOne model environment ].
+	aCompositeChange := RBCompositeRefactoryChange new onSystemDictionary: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
-	table
-		items: (aCompositeChange whatToDisplayIn: self).
-	table items ifNotEmpty: [ table selectIndex: 1.
-		existsChanges := true ]
+	table items: (aCompositeChange whatToDisplayIn: self).
+	table items
+		ifNotEmpty: [ table selectIndex: 1.
+			existsChanges := true ]
 ]

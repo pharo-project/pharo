@@ -447,13 +447,11 @@ RubTextEditor >> changeTextFont [
 		forceCursorVisibleWhile: [ 
 			| hadFocus |
 			hadFocus := textArea hasFocus.
-			textArea
-				openModal:
-					(FontChooser
-						openWithWindowTitle: 'Choose a Font'
-						for: self
-						setSelector: #applyTextFont:
-						getSelector: self fontToUse).
+			(FontChooser
+				openWithWindowTitle: 'Choose a Font'
+				for: self
+				setSelector: #applyTextFont:
+				getSelector: self fontToUse) openModal.
 			hadFocus
 				ifTrue: [ textArea takeKeyboardFocus ] ]
 ]
@@ -1704,7 +1702,7 @@ RubTextEditor >> offerFontMenu: aKeyboardEvent [
 { #category : #deprecated }
 RubTextEditor >> offerMenuFromEsc: aKeyboardEvent [
 	"The escape key was hit while the receiver has the keyboard focus; take action"
- 	ActiveEvent shiftPressed 
+ 	textArea activeHand lastEvent shiftPressed 
 		ifFalse: [ self raiseContextMenu: aKeyboardEvent].
 	^ false 	
 ]
@@ -1823,7 +1821,7 @@ RubTextEditor >> previousWord: position [
 { #category : #'nonediting/nontyping keys' }
 RubTextEditor >> raiseContextMenu: aKeyboardEvent [
 
-	^ textArea yellowButtonActivity: ActiveEvent shiftPressed
+	^ textArea yellowButtonActivity: textArea activeHand lastEvent shiftPressed
 ]
 
 { #category : #'accessing-selection' }

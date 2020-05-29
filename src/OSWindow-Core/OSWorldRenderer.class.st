@@ -38,18 +38,6 @@ OSWorldRenderer >> actualScreenSize [
 ]
 
 { #category : #initialization }
-OSWorldRenderer >> canvas [ 
-
-	^ self osWindowRenderer getCanvas
-]
-
-{ #category : #initialization }
-OSWorldRenderer >> canvas: x [
-
-	self flag: #jajaja
-]
-
-{ #category : #initialization }
 OSWorldRenderer >> checkForNewScreenSize [
 
 	(display isNil or: [display extent = self actualScreenSize]) 
@@ -82,48 +70,10 @@ OSWorldRenderer >> deactivate [
 	
 ]
 
-{ #category : #initialization }
-OSWorldRenderer >> deferUpdates: aBoolean [
-
-	^ false
-]
-
 { #category : #operations }
-OSWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: submorphs [
-	"Update this world's display."
+OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
-	| handsToDraw allDamage worldDamageRects handDamageRects |
-
-	submorphs do: [:m | m fullBounds].  "force re-layout if needed"
-
-	aWorldState checkIfUpdateNeeded ifFalse: [^ self].  
-	"display is already up-to-date"
-	
-	osWindow ifNil: [ ^ self ].
-
-	self osWindowRenderer deferUpdatesWhile: [  
-		
-		worldDamageRects := aWorldState drawWorld: aWorld submorphs: submorphs invalidAreasOn: self canvas.  
-		"repair world's damage on canvas"
-
-		handsToDraw := aWorldState selectHandsToDrawForDamage: worldDamageRects.
-		handDamageRects := handsToDraw collect: [:h | h savePatchFrom: self canvas].
-		allDamage := worldDamageRects, handDamageRects.
-
-		handsToDraw reverseDo: [:h | self canvas fullDrawMorph: h].  "draw hands onto world canvas"
- 
-	"*make this true to flash damaged areas for testing*"
-		WorldState debugShowDamage ifTrue: [aWorld flashRects: allDamage color: Color black].
-
-		self canvas finish.
-	"quickly copy altered rects of canvas to Display:"	
- 
-		self osWindowRenderer updateAreas: allDamage immediate: false.
-
- 		handsToDraw do: [:h | h restoreSavedPatchOn: self canvas].  "restore world canvas under hands"
-	].
-"	self osWindowRenderer forceDisplayUpdate."
-	
+	self osWindowRenderer deferUpdatesWhile: aBlock
 ]
 
 { #category : #initialization }
@@ -153,6 +103,15 @@ OSWorldRenderer >> doActivate [
 	world displayWorld.
 	
 	OSWindowClipboard new beDefault.
+]
+
+{ #category : #operations }
+OSWorldRenderer >> drawDuring: aBlock [
+
+	osWindow ifNil: [ ^ self ].
+	self osWindowRenderer deferUpdatesWhile: [
+		self osWindowRenderer drawDuring: aBlock
+	].	
 ]
 
 { #category : #initialization }
@@ -200,6 +159,13 @@ OSWorldRenderer >> pickMostSuitableWindowDriver [
 	driver := OSWindowDriver current.
 	
 	^ driver
+]
+
+{ #category : #operations }
+OSWorldRenderer >> updateDamage: allDamage [
+
+	"quickly copy altered rects of canvas to Display:"
+	self osWindowRenderer updateAreas: allDamage immediate: false.
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tag'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #initialization }

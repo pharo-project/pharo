@@ -66,8 +66,24 @@ DrTestsPlugin >> buildConfigurationFrom: aDrTests [
 ]
 
 { #category : #api }
-DrTestsPlugin >> buildContextualMenuGroupWith: presenterIntance [
+DrTestsPlugin >> buildContextualMenuGroupWith: presenterInstance [
 	^ CmCommandGroup new
+]
+
+{ #category : #api }
+DrTestsPlugin >> configureUI: aDrTestsUI [
+	"This hook is used by plugins to configure the UI (e.g. set labels, list contents, etc).
+	 It is called just after the user selected the plugin from the UI.
+	"
+	self announcer
+		when: DTStatusUpdate
+		send: #handlePluginStatusUpdate:
+		to: aDrTestsUI.
+	aDrTestsUI
+		startButtonLabel: self startButtonLabel;
+		startButtonHelp: self startButtonHelp;
+		updateStatus: self pluginName , ' plugin is ready to work!' translated;
+		updateUI.
 ]
 
 { #category : #accessing }
@@ -123,21 +139,13 @@ DrTestsPlugin >> resultButtonHelp [
 
 { #category : #accessing }
 DrTestsPlugin >> resultTreeViews [
-	"Return result tree views available.
-	 This method might signal a deprecation exception in case it found an old pragma BUT the method itself is
-	 NOT deprecated. Do not remove it.
-	 The code generating the deprecation exception will be removed once we decide to totally remove the old pragmas support.
-	"
-	| pragmas oldPragmas |
+	"Return result tree views available."
+	
+	| pragmas |
 	pragmas := Pragma allNamed: self pragmaForResultTrees in: self pluginResultClass.
-	"Note The two following statements need to be removed once the old pragmas are gone."
-	oldPragmas := Pragma allNamed: self oldPragmaForResultTrees in: self pluginResultClass.
-	oldPragmas ifNotEmpty: [ self deprecated: ('Your code still use the old pragma to declare a tree view. Please update it to use the new pragma described in {1}>>#pragmaForResultTrees' format: { self className }) ].
+
 	^ ((pragmas sorted: [ :p | p argumentAt: 2 ] asSortFunction) collect: [ :pragma |
-		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ]) ,
-	"Note: The following code need to be removed once the old pragmas are gone."
-	(oldPragmas collect: [ :pragma |
-		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ])
+		DTResultTreeView name: (pragma argumentAt: 1) blockToExtractViewFromResult: pragma methodSelector ]) 
 ]
 
 { #category : #api }
@@ -173,4 +181,13 @@ DrTestsPlugin >> startButtonLabel [
 { #category : #api }
 DrTestsPlugin >> title [
 	^ self pluginName
+]
+
+{ #category : #api }
+DrTestsPlugin >> unconfigureUI: aDrTestsUI [
+	"This hook is used by plugins to unconfigure the UI (e.g. unregister announcers).
+	 It is called just before the UI switch to another plugin.
+	 By default it does nothing.
+	"
+	self announcer unsubscribe: aDrTestsUI
 ]

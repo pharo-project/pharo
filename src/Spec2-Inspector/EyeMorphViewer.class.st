@@ -26,16 +26,16 @@ EyeMorphViewer class >> label [
 ]
 
 { #category : #initialization }
-EyeMorphViewer >> initializePresenter [
+EyeMorphViewer >> connectPresenters [
 
 	self whenWindowChanged: [ self objectChanged ]
 ]
 
 { #category : #initialization }
-EyeMorphViewer >> initializeWidgets [
-	super initializeWidgets.
-	morphPresenter := self newMorph.
+EyeMorphViewer >> initializePresenters [
 
+	super initializePresenters.
+	morphPresenter := self newMorph.
 	morphPresenter
 		morph:
 			(PanelMorph new

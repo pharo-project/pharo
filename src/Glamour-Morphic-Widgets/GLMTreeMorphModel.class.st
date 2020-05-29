@@ -331,10 +331,7 @@ GLMTreeMorphModel >> selection: aSelection [
 
 { #category : #accessing }
 GLMTreeMorphModel >> selectionPathItems [
-
-	^ self selectedNodePath
-		ifNil: [ nil ]
-		ifNotNil: [ self selectedNodePath collect: [ :each | each item ] ]
+	^ self selectedNodePath ifNotNil: [ self selectedNodePath collect: [ :each | each item ] ]
 ]
 
 { #category : #stepping }

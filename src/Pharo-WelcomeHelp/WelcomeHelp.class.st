@@ -154,7 +154,9 @@ One chapter of particular interest is the one that provides a quick tour of the 
 { #category : #defaults }
 WelcomeHelp class >> fastNetworkDefaults [
 	"Allow to display catalog projects in spotter on regular and fast networks"
-	CatalogSettings displayCatalogProjectsInSpotter: true.
+
+	SptCatalogProjectsProcessor enabled: true.
+	
 	self inform: 'Catalog projects accessible through Spotter'
 ]
 
@@ -230,7 +232,7 @@ WelcomeHelp class >> openForRelease [
 		ifFound: [ :oldWindow | oldWindow delete ].
 	browser := self open.
 	window := browser dependents detect: findBlock.
-	window extent: 700@400.
+	window extent: 700@500.
 	window center: Display extent / 2
 ]
 
@@ -272,7 +274,9 @@ WelcomeHelp class >> pharoVersionString [
 { #category : #defaults }
 WelcomeHelp class >> slowNetworkDefaults [
 	"Do not display network bound catalog projects in spotter to keep it responsive."
-	CatalogSettings displayCatalogProjectsInSpotter: false.
+	
+	SptCatalogProjectsProcessor enabled: false.
+	
 	self inform: 'Catalog projects not accessible through Spotter due to slow network. Use search in catalog tool to load external packages.'
 ]
 
@@ -314,7 +318,9 @@ For more information, please visit here: ', (self url: 'http://pharo.org'),
 (self subheading: 'Quick setup'),
 'Choose your preferred color theme: ',
 (self doItFrom: 'PharoLightTheme beCurrent' text: 'Light Theme'), ' or ',
-(self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' 
+(self doItFrom: 'PharoDarkTheme beCurrent' text: 'Dark Theme'), ' and ',
+(self doItFrom: 'Display toggleFullscreen ' text: ' switch fullscreen mode')
+,' 
 
 Click if you have access to a: ',
 (self doItFrom: 'WelcomeHelp fastNetworkDefaults' text: 'regular network connection'), ' or ',

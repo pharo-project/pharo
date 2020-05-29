@@ -161,7 +161,10 @@ GLMPresentation >> actions [
 
 { #category : #'scripting actions' }
 GLMPresentation >> actions: aBlock [ 
-	self deprecated: 'use dynamicActionsOnSelection: for contextual actions, and dynamicActions for presentation-wide actions'.
+	self 
+		deprecated: 'use dynamicActionsOnSelection: for contextual actions, and dynamicActions for presentation-wide actions'
+		transformWith: '`@rec actions: `@block' -> '`@rec dynamicActionsOnSelection: `@block'.
+	
 	^ self dynamicActionsOnSelection: aBlock 
 ]
 
@@ -1040,11 +1043,7 @@ GLMPresentation >> title: aStringOrBlock [
 
 { #category : #accessing }
 GLMPresentation >> titleAction [
-
-	^ self titleActionBlock 
-		ifNil: [ nil ]
-		ifNotNil: [ :aBlock |
-			aBlock glamourValue: self ]
+	^ self titleActionBlock ifNotNil: [ :aBlock | aBlock glamourValue: self ]
 ]
 
 { #category : #'scripting actions' }

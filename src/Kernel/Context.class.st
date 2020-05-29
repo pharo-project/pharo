@@ -770,19 +770,17 @@ Context >> findContextSuchThat: testBlock [
 
 { #category : #'private-exceptions' }
 Context >> findNextHandlerContext [
-
-	"Return the next handler marked context, returning nil if there is none.  Search starts with self and proceeds up to nil."
-
-	| context |
-
+	"Return the next handler marked context, returning nil if there is none.  
+	Search starts with self and proceeds up to nil."
+	| context searchStartContext |
 	context := self findNextHandlerOrSignalingContext.
 	context ifNil: [ ^ nil ].
-	context isHandlerContext
-		ifTrue: [ ^ context ].	"If it isn't a handler context, it must be a signaling context.
+	context isHandlerContext ifTrue: [ ^ context ].	
+	"If it isn't a handler context, it must be a signaling context.
 	When we reach a signaling context we must skip over any handlers
-	that might be on the stack between the signaling context and the handler
-	context for that signal."
-	^ context exception privHandlerContext nextHandlerContext
+	that might be on the stack between the signaling context and the handler context for that signal"
+	searchStartContext := context exception privHandlerContext ifNil: [ context ].
+	^searchStartContext nextHandlerContext
 ]
 
 { #category : #'private-exceptions' }
@@ -1316,18 +1314,18 @@ Context >> printDetails: stream [
 	stream cr.
 	stream tab; nextPutAll: 'Receiver: '.
 	errorMessage := '<<error during printing>>'.
-	stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [errorMessage]).
+	stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [errorMessage]).
 
 	stream cr; tab; nextPutAll: 'Arguments and temporary variables: '; cr.
 	string := [(self tempsAndValuesLimitedTo: 80 indent: 2) 
-				padRightTo:1 with: $x] ifError: [errorMessage].
+				padRightTo:1 with: $x] onErrorDo: [errorMessage].
 	stream nextPutAll: (string allButLast).
 
 	stream cr; tab; nextPutAll: 'Receiver''s instance variables: '; cr.
 	receiver class allInstVarNames isEmpty ifTrue: [ 
-		stream nextPutAll: ([receiver printStringLimitedTo: 90] ifError: [ errorMessage ]).
+		stream nextPutAll: ([receiver printStringLimitedTo: 90] onErrorDo: [ errorMessage ]).
 	] ifFalse: [
-		[receiver longPrintOn: stream limitedTo: 80 indent: 2] ifError: [ stream nextPutAll: errorMessage ].
+		[receiver longPrintOn: stream limitedTo: 80 indent: 2] onErrorDo: [ stream nextPutAll: errorMessage ].
 	].
 	stream cr
 ]
@@ -1616,6 +1614,29 @@ Context >> resume: value through: firstUnwindContext [
 		context := context findNextUnwindContextUpTo: self].
 	thisContext terminateTo: self.
 	^value
+
+]
+
+{ #category : #controlling }
+Context >> resumeEvaluating: aBlock [
+	"Unwind thisContext to self and resume with aBlock value as result of last send.  
+	Execute unwind blocks when unwinding.  
+	ASSUMES self is a sender of thisContext"
+	| context unwindBlock |
+	self isDead ifTrue: [self cannotReturn: aBlock value to: self].
+	context := thisContext.
+	[
+		context := context findNextUnwindContextUpTo: self.
+		context isNil
+	] whileFalse: [	
+		context unwindComplete ifNil:[
+			context unwindComplete: true.
+			unwindBlock := context unwindBlock.
+			thisContext terminateTo: context.
+			unwindBlock value]
+	].
+	thisContext terminateTo: self.
+	^aBlock value
 
 ]
 

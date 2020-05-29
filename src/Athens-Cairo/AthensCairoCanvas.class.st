@@ -66,6 +66,12 @@ AthensCairoCanvas >> clipRect [
 ]
 
 { #category : #private }
+AthensCairoCanvas >> copyPage [
+	self ffiCall: #( void cairo_copy_page (self) )
+
+]
+
+{ #category : #private }
 AthensCairoCanvas >> destroy [
 	^ self ffiCall: #( 	void cairo_destroy (self) )
 ]
@@ -359,6 +365,12 @@ AthensCairoCanvas >> showGlyphs: glyphs size: numGlyphs [
 		void cairo_show_glyphs ( self ,
 			void * glyphs,
 			int numGlyphs) )
+
+]
+
+{ #category : #private }
+AthensCairoCanvas >> showPage [
+	self ffiCall: #( void cairo_show_page (self) )
 
 ]
 

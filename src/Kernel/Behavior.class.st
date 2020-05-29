@@ -1532,14 +1532,6 @@ Behavior >> setFormat: aFormatInstanceDescription [
 
 ]
 
-{ #category : #accessing }
-Behavior >> sharedPoolNames [
-	^ self sharedPools collect: [:ea |
-		ea isObsolete
-			ifTrue: [ ea name ]
-			ifFalse: [ self environment keyAtIdentityValue: ea ] ]
-]
-
 { #category : #testing }
 Behavior >> shouldNotBeRedefined [
 	"Answer if the receiver should not be redefined.
@@ -1595,8 +1587,8 @@ Behavior >> sourceCodeTemplate [
 	"Answer an expression to be edited and evaluated in order to define 
 	methods in this class or trait."
 
-	^ 'messageSelectorAndArgumentNames
-	"comment stating purpose of instance-side message"
+	^ 'methodSelectorAndArgumentNames
+	"comment stating purpose of instance-side method"
 	"scope: class-variables  &  instance-variables"	
 			
 	| temporary variable names |

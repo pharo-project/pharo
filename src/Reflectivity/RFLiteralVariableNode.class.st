@@ -32,14 +32,6 @@ RFLiteralVariableNode >> binding: anAssocation [
 	binding := anAssocation
 ]
 
-{ #category : #generation }
-RFLiteralVariableNode >> dumpOn: aStream [
-	aStream
-		nextPutAll: self class name;
-		nextPutAll: ' value: '.
-	self value printOn: aStream
-]
-
 { #category : #accessing }
 RFLiteralVariableNode >> start [
 	^0

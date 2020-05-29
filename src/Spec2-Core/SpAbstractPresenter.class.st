@@ -8,9 +8,10 @@ Class {
 	#traits : 'SpTObservable',
 	#classTraits : 'SpTObservable classTrait',
 	#instVars : [
-		'#owner',
-		'#adapter',
-		'#needRebuild => SpObservableSlot'
+		'owner',
+		'adapter',
+		'needRebuild',
+		'eventHandler'
 	],
 	#category : #'Spec2-Core-Base'
 }
@@ -32,7 +33,17 @@ SpAbstractPresenter class >> defaultFont [
 
 	self flag: #TODO. "This is so wrong. All this needs to be in the theme and in the 
 	application"
-	^ StandardFonts defaultFont
+		
+	self class environment at: #StandardFonts ifPresent: [ :standardFonts | 
+		^ standardFonts defaultFont ].
+	
+	^ LogicalFont
+		familyName: 'Source Sans Pro'
+		pointSize: 10
+		stretchValue: 5
+		weightValue: 400
+		slantValue: 0
+
 ]
 
 { #category : #TOREMOVE }
@@ -101,6 +112,10 @@ SpAbstractPresenter >> application [
 	^ self owner application
 ]
 
+{ #category : #accessing }
+SpAbstractPresenter >> autoAccept: aBoolean [
+]
+
 { #category : #'private building' }
 SpAbstractPresenter >> basicBuildAdapterWithSpecLayout: aSpecLayout [
 	"I assume the SpecBindings is well defined"
@@ -161,6 +176,31 @@ SpAbstractPresenter >> defaultSpecSelector [
 SpAbstractPresenter >> enabled: aBoolean [ 
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+SpAbstractPresenter >> eventHandler [
+	"Answers an generic event handler where you can make your presenter listen to specific 
+	low-level events. 
+	Example of usage: 
+	    myPresenter eventHandler whenLostFocusDo: [ ... ]
+	
+	WARNING: Now all events are available to all presenters (for example, presenters who can't
+	take focus will not respong to focus events even if you register them)."
+	
+	^ eventHandler ifNil: [ eventHandler := SpEventHandler for: self ]
+]
+
+{ #category : #'private utils' }
+SpAbstractPresenter >> forceUpdateSlot: aSymbol [
+
+	^ (self rawValueHolderNamed: aSymbol) valueChanged
+]
+
+{ #category : #testing }
+SpAbstractPresenter >> hasEventHandler [
+
+	^ eventHandler notNil and: [ eventHandler hasEvents ]
 ]
 
 { #category : #testing }
@@ -324,6 +364,12 @@ SpAbstractPresenter >> owner: aPresenter [
 	owner := aPresenter
 ]
 
+{ #category : #'private utils' }
+SpAbstractPresenter >> rawValueHolderNamed: aSymbol [
+
+	^ (self class slotNamed: aSymbol) rawRead: self.
+]
+
 { #category : #'private building' }
 SpAbstractPresenter >> retrieveDefaultSpec [
 
@@ -363,6 +409,12 @@ SpAbstractPresenter >> spec: anAdapter [
 	
 	self flag: #TODO. "Same as #spec, it needs to go"
 	self adapter: anAdapter
+]
+
+{ #category : #abstract }
+SpAbstractPresenter >> transmitTo: aPresenter [
+	
+	^ self defaultOutputPort transmitTo: aPresenter defaultInputPort
 ]
 
 { #category : #updating }

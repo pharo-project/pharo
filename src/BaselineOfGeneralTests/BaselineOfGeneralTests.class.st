@@ -20,7 +20,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'MonticelloMocks';
 			package: 'Fuel-Tests-Core';
 			package: 'Fuel-Platform-Pharo-Core-Tests'	;
-			package: 'Balloon-Tests';
+			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
 			package: 'ConfigurationCommandLineHandler-Tests';
@@ -40,7 +40,6 @@ BaselineOfGeneralTests >> baseline: spec [
 
 			package: 'Graphics-Tests';
 			package: 'HelpSystem-Tests';
-			package: 'IssueTracking-Tests';
 			package: 'Keymapping-Tests';
 
 			package: 'Morphic-Tests';
@@ -64,6 +63,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-Settings-Tests';
 			package: 'System-Support-Tests';
 			package: 'Text-Edition-Tests';
+			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';
 			package: 'Tools-Test';
 			package: 'Zinc-Resource-Meta-FileSystem';

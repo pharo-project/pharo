@@ -350,7 +350,7 @@ IRInstruction >> nonBodySuccessorSequences [
 
 { #category : #printing }
 IRInstruction >> printOn: aStream [
-	IRPrinterV2 new
+	IRPrinter new
 			stream: aStream;
 			visitNode: self
 ]
@@ -399,13 +399,6 @@ IRInstruction >> sourceNode [
 IRInstruction >> sourceNode: parseNode [
 
 	sourceNode := parseNode
-	
-]
-
-{ #category : #mapping }
-IRInstruction >> sourceNodeExecuted [
-
-	^ self sourceNode
 	
 ]
 

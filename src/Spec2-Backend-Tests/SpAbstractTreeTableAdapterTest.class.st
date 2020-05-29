@@ -17,6 +17,30 @@ SpAbstractTreeTableAdapterTest >> classToTest [
 ]
 
 { #category : #running }
+SpAbstractTreeTableAdapterTest >> initializeTestedInstance [
+	presenter
+		addColumn: (SpStringTableColumn title: 'Value' evaluated: #printString);
+		hideColumnHeaders;
+		roots: #(1 2 3);
+		children: [ :aNumber | {(aNumber * 2) . (aNumber * 3) . (aNumber * 10)} ]
+]
+
+{ #category : #tests }
+SpAbstractTreeTableAdapterTest >> testAfterOpeningEmptyLazyChildrenExpandIconVanish [
+	presenter
+		children: [ :aNumber | aNumber odd ifTrue: [ {(aNumber * 2) . (aNumber * 3) . (aNumber * 10)} ] ifFalse: [ #() ] ];
+		lazilyComputeChildren.
+
+	self
+		assert: (self adapter isRowMorphExpandableAt: 2)
+		description: 'If we do not compute the children then we should show an expand icon even if there is no children'.
+
+	self adapter expandRowAt: 2.	"This row has no child"
+
+	self deny: (self adapter isRowMorphExpandableAt: 2)
+]
+
+{ #category : #running }
 SpAbstractTreeTableAdapterTest >> testChangingRootsResetsSelection [
 
 	self presenter selection selectPath: #(2 3).
@@ -34,6 +58,28 @@ SpAbstractTreeTableAdapterTest >> testChangingRootsUpdateWidget [
 	backendForTest assertList: self adapter displayItems: #('10' '11' '12').
 	
 
+]
+
+{ #category : #tests }
+SpAbstractTreeTableAdapterTest >> testItemsWithoutChildrenDoNotHaveExpandIcon [
+	presenter children: [ :aNumber | aNumber odd ifTrue: [ {(aNumber * 2) . (aNumber * 3) . (aNumber * 10)} ] ifFalse: [ #() ] ].
+
+	self assert: (self adapter isRowMorphExpandableAt: 1).
+	self deny: (self adapter isRowMorphExpandableAt: 2).
+	self assert: (self adapter isRowMorphExpandableAt: 3)
+]
+
+{ #category : #tests }
+SpAbstractTreeTableAdapterTest >> testLazilyComputeChildrenDoesNotComputeChildren [
+	presenter
+		children: [ :aNumber | aNumber odd ifTrue: [ {(aNumber * 2) . (aNumber * 3) . (aNumber * 10)} ] ifFalse: [ #() ] ];
+		lazilyComputeChildren.
+
+	self assert: (self adapter isRowMorphExpandableAt: 1).
+	self
+		assert: (self adapter isRowMorphExpandableAt: 2)
+		description: 'If we do not compute the children then we should show an expand icon even if there is no children'.
+	self assert: (self adapter isRowMorphExpandableAt: 3)
 ]
 
 { #category : #running }

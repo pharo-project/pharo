@@ -48,7 +48,7 @@ OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
 	| theVector |
 	theVector := self readVectorFromContext: aContext scope: contextScope.
-	^theVector at: index
+	^theVector at: self index
 ]
 
 { #category : #debugging }
@@ -60,8 +60,6 @@ OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 	"We might be called from the debugger for a context that actually does not access the temp vector, 
 	so we need to read possibly from a context above aContext"
 	theVector := tempVectorVar readFromContext: aContext scope: contextScope.
-	"Cache the index in the temp vecor (for speed and easy debugging)"
-	index := index ifNil: [ tempVectorVar originalVar indexInTempVectorFromIR: name ].
 	"We can call this method on a context in any state, e.g. even when the copied var is not yet initialized.
 	In this case, we lookup in the outer context with the corresponding outer scope"
 	^ theVector ifNil: [ aContext outerContext 
@@ -80,17 +78,10 @@ OCVectorTempVariable >> vectorName: anObject [
 	vectorName := anObject
 ]
 
-{ #category : #accessing }
-OCVectorTempVariable >> vectorOffset [
-	"Temps that are stored in a temp vector have a unique index in the vector.
-	 We first lookup the temp vector sem var by name and then get the index from the IR"
-	^index ifNil: [index := (scope lookupVar: vectorName) originalVar indexInTempVectorFromIR: name]
-]
-
 { #category : #debugging }
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| theVector |
 	theVector := self readVectorFromContext: aContext scope: contextScope.
-	^theVector at: index put: aValue.
+	^theVector at: self index put: aValue.
 ]

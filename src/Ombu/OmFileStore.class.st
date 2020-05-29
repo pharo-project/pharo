@@ -131,7 +131,7 @@ OmFileStore >> entriesCount [
 OmFileStore >> entriesDo: aBlockClosure [ 
 	"Evaluate the closure on each entry"
 
-	self fileReference exists ifTrue: [
+	self fileReference ifExists: [
 		self readEntriesWith: [:readStream | 
 			| reader |
 			reader := self newEntryReader.
@@ -391,23 +391,20 @@ OmFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifA
 
 { #category : #refreshing }
 OmFileStore >> refresh [
-
 	self flush.
 
-	self critical: [
-		mustRefresh := false.
-		self initialize.
-		self fileReference exists ifFalse: [ ^self ].
-		self readEntriesWith: [:readStream | [
-			self newEntryReader
-				stream: readStream;
-				entryPositionsDo: [ :entryPosition |
-					entryCount := entryCount + 1.
-					entryPositionsByLocalName at: entryCount asString put: entryPosition ]
-			] ensure: [
-				headReference := self referenceToLocalName: entryCount asString ]
-			]
-		]
+	self
+		critical: [ mustRefresh := false.
+			self initialize.
+			self fileReference ifAbsent: [ ^ self ].
+			self
+				readEntriesWith: [ :readStream | 
+					[ self newEntryReader
+						stream: readStream;
+						entryPositionsDo: [ :entryPosition | 
+							entryCount := entryCount + 1.
+							entryPositionsByLocalName at: entryCount asString put: entryPosition ] ]
+						ensure: [ headReference := self referenceToLocalName: entryCount asString ] ] ]
 ]
 
 { #category : #private }

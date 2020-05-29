@@ -456,6 +456,21 @@ FTExamples class >> exampleListWithExplicitSearch [
 ]
 
 { #category : #examples }
+FTExamples class >> exampleListWithGenerator [
+	"Show a list with all Object methods"
+	<example>
+	<sampleInstance>
+	| list |
+
+	list := FTTableMorph new
+		extent: 300@550;
+		dataSource: (FTExampleMethodListGeneratorDataSource for: Object);
+		yourself.
+		
+	^ list openInWindow
+]
+
+{ #category : #examples }
 FTExamples class >> exampleListWithHeader [
 	"Show a list with all Object methods with a header"
 

@@ -365,10 +365,8 @@ Class >> classVariables [
 
 { #category : #'accessing class hierarchy' }
 Class >> commonSuperclassWith: aClass [
-
-	^ self allSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
-
-	
+	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
+	^ self withAllSuperclasses detect: [ :class | (aClass allSuperclasses includes: class) ] ifNone: nil
 ]
 
 { #category : #compiling }
@@ -542,6 +540,18 @@ Class >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
 	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
+]
+
+{ #category : #compiling }
+Class >> hasBindingThatBeginsWith: aString [
+	"Answer true if the receiver has a binding that begins with aString, false otherwise. We do not look
+	in the outer envrionment"
+
+	"First look in classVar dictionary"
+	(self classPool hasBindingThatBeginsWith: aString) ifTrue:[^true].
+	
+	"Next look in shared pools"
+	^ self sharedPools anySatisfy: [:pool | pool hasBindingThatBeginsWith: aString ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -926,14 +936,21 @@ Class >> setName: aSymbol [
 	name := aSymbol.
 ]
 
+{ #category : #accessing }
+Class >> sharedPoolNames [
+	^ self sharedPools collect: [:ea |
+		ea isObsolete
+			ifTrue: [ ea name ]
+			ifFalse: [ self environment keyAtIdentityValue: ea ] ]
+]
+
 { #category : #'pool variables' }
 Class >> sharedPoolOfVarNamed: aString [
 	"Returns the SharedPool or nil from which the pool variable named aString is coming from."
 
 	^ self sharedPools
 		detect: [ :each | each usesClassVarNamed: aString ]
-		ifNone:
-			[ self superclass ifNil: [ nil ] ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
+		ifNone: [ self superclass ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
 ]
 
 { #category : #'pool variables' }

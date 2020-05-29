@@ -84,7 +84,7 @@ TickDialogWindow >> choose [
 { #category : #display }
 TickDialogWindow >> chooseFromOwner: aMorph [
 
-	aMorph openModal: self.
+	self openModal.
 	^ resultStorage
 ]
 
@@ -196,14 +196,6 @@ TickDialogWindow >> newContentMorph [
 								
 	self defaultValue ifTrue: [ self listMorph selectAll ].							
 	^ self listMorph
-]
-
-{ #category : #display }
-TickDialogWindow >> openInWorld [
-
-	self choose 
-	"since it is modal"
-	
 ]
 
 { #category : #accessing }

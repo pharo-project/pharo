@@ -31,7 +31,7 @@ OSSDL2FormRenderer >> copyAndPresentTextureRectangle: rectangle [
 
 { #category : #private }
 OSSDL2FormRenderer >> createRenderer [
-	renderer := window handle createDefaultRenderer.
+	renderer := backendWindow sdl2Window createDefaultRenderer.
 
 ]
 
@@ -101,7 +101,7 @@ OSSDL2FormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 		externalForm := OSSDL2ExternalForm extent: extent depth: 32 bits: pixels.
 		allDamage do: [ :rectangle |
 			intersection := rectangle
-				intersect: (0 @ 0 corner: window extent)
+				intersect: (0 @ 0 corner: backendWindow extent)
 				ifNone: [ nil ].
 		
 			intersection ifNotNil: [
@@ -129,7 +129,7 @@ OSSDL2FormRenderer >> updateAreas: allDamage immediate: forceToScreen [
 OSSDL2FormRenderer >> updateRectangle: rectangle [
 	| intersection pixels pitch pitchHolder externalForm |
 	intersection := rectangle
-		intersect: (0 @ 0 corner: window extent)
+		intersect: (0 @ 0 corner: backendWindow extent)
 		ifNone: [ ^ self ].
 	self validate
 		ifFalse: [ ^ self ].

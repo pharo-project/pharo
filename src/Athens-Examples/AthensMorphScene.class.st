@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : #'Athens-Examples-Utilities'
+	#category : #'Athens-Examples-Morphic'
 }
 
 { #category : #accessing }

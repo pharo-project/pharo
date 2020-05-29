@@ -254,10 +254,7 @@ ButtonPresenter >> shortcut: aShortcut [
 
 { #category : #private }
 ButtonPresenter >> shortcutCharacter [
-
-	^ self shortcut 
-		ifNil: [ nil ]
-		ifNotNil: [ :s | s currentCharacter ]
+	^ self shortcut ifNotNil: [ :s | s currentCharacter ]
 ]
 
 { #category : #morphic }

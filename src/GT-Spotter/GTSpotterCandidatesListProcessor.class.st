@@ -17,7 +17,7 @@ Class {
 		'keyBinding',
 		'sortBlock'
 	],
-	#category : #'GT-Spotter-Processors'
+	#category : #'GT-Spotter-Pragma-Based-Processors'
 }
 
 { #category : #accessing }
@@ -67,7 +67,7 @@ GTSpotterCandidatesListProcessor >> defaultContinueItemsLimit [
 
 { #category : #'accessing-defaults' }
 GTSpotterCandidatesListProcessor >> defaultItemsLimit [
-	^ 5
+	^ self class defaultItemsLimit
 ]
 
 { #category : #private }

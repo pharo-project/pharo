@@ -33,17 +33,6 @@ NullWorldRenderer >> actualScreenSize [
 	^ 240@120
 ]
 
-{ #category : #accessing }
-NullWorldRenderer >> canvas [
-
-	^ nil
-]
-
-{ #category : #accessing }
-NullWorldRenderer >> canvas: x [ 
-
-]
-
 { #category : #'display box access' }
 NullWorldRenderer >> checkForNewScreenSize [
 
@@ -53,35 +42,16 @@ NullWorldRenderer >> checkForNewScreenSize [
 NullWorldRenderer >> deactivate [
 ]
 
-{ #category : #operations }
-NullWorldRenderer >> deferUpdates: aValue [
-
-	^ aValue value
-]
-
-{ #category : #operations }
-NullWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld submorphs: submorphs [
-
-	| canvas worldDamageRects handsToDraw |
-
-	canvas := (Form extent: self actualScreenSize depth: 32) getCanvas.
-
-	submorphs do: [ :m | m fullBounds ].	
-
-	aWorldState checkIfUpdateNeeded ifFalse: [^ self].  
-
-	worldDamageRects := aWorldState drawWorld: aWorld submorphs: submorphs invalidAreasOn: canvas.  
-	"repair world's damage on canvas"
-
-	handsToDraw := aWorldState selectHandsToDrawForDamage: worldDamageRects.
-	handsToDraw reverseDo: [:h | canvas fullDrawMorph: h].  "draw hands onto world canvas"
- 
-	canvas.
-
-]
-
 { #category : #activation }
 NullWorldRenderer >> doActivate [
+]
+
+{ #category : #operations }
+NullWorldRenderer >> drawDuring: aBlock [
+
+	| canvas |
+	canvas := (Form extent: self actualScreenSize depth: 32) getCanvas.
+	aBlock value: canvas
 ]
 
 { #category : #operations }
@@ -101,4 +71,10 @@ NullWorldRenderer >> forceDisplayUpdate [
 NullWorldRenderer >> icon: aForm [ 
 
 	"Do nothing, a null world rendered has no window, so no icon either"
+]
+
+{ #category : #rendering }
+NullWorldRenderer >> updateDamage: rectangles [
+
+	"Do nothing"
 ]

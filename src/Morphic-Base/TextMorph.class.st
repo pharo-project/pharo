@@ -173,15 +173,15 @@ TextMorph >> anchorMorph: aMorph at: aPoint type: anchorType [
 { #category : #drawing }
 TextMorph >> areasRemainingToFill: aRectangle [
 	"Overridden from BorderedMorph to test backgroundColor instead of (text) color."
-	(backgroundColor isNil or: [backgroundColor isTranslucent])
-		ifTrue: [^ Array with: aRectangle].
-	self wantsRoundedCorners
-	ifTrue: [(borderWidth > 0 and: [borderColor isColor and: [borderColor isTranslucent]])
-				ifTrue: [^ aRectangle areasOutside: (self innerBounds intersect: self boundsWithinCorners ifNone: [self error: 'cannot happen' ])]
-				ifFalse: [^ aRectangle areasOutside: self boundsWithinCorners]]
-	ifFalse: [(borderWidth > 0 and: [borderColor isColor and: [borderColor isTranslucent]])
-				ifTrue: [^ aRectangle areasOutside: self innerBounds]
-				ifFalse: [^ aRectangle areasOutside: self bounds]]
+
+	(backgroundColor isNil or: [ backgroundColor isTranslucent ]) ifTrue: [ ^ Array with: aRectangle ].
+	^ self wantsRoundedCorners
+		ifTrue: [ (borderWidth > 0 and: [ borderColor isColor and: [ borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: (self innerBounds intersect: self boundsWithinCorners ifNone: [ self error: 'cannot happen' ]) ]
+				ifFalse: [ aRectangle areasOutside: self boundsWithinCorners ] ]
+		ifFalse: [ (borderWidth > 0 and: [ borderColor isColor and: [ borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: self innerBounds ]
+				ifFalse: [ aRectangle areasOutside: self bounds ] ]
 ]
 
 { #category : #converting }
@@ -1311,7 +1311,7 @@ TextMorph >> paragraph [
 	wrapFlag ifFalse:
 		["Was given huge container at first... now adjust"
 		newParagraph adjustRightX].
-	newParagraph focused: (self currentHand keyboardFocus == self).
+	newParagraph focused: self hasFocus.
 	paragraph := newParagraph.
 	self fit.
 	self removeProperty: #CreatingParagraph.
@@ -1361,14 +1361,11 @@ TextMorph >> predecessorChanged [
 TextMorph >> preferredKeyboardPosition [
 
 	| default rects |
-	default  := (self bounds: self bounds in: self currentWorld) topLeft.
+	default  := super preferredKeyboardPosition.
 	paragraph ifNil: [^ default].
 	rects := paragraph selectionRects.
 	rects size = 0 ifTrue: [^ default].
 	^ rects first topLeft.
-
-	"^ (self bounds: self bounds in: World) topLeft."
-
 ]
 
 { #category : #geometry }

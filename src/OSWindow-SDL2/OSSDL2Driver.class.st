@@ -76,7 +76,7 @@ OSSDL2Driver >> convertEvent: sdlEvent [
 
 { #category : #'window creation and deletion' }
 OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
-	| flags handle window glAttributes x y |
+	| flags handle aBackendWindow glAttributes x y |
 	
 	flags := attributes visible ifTrue: [ SDL_WINDOW_SHOWN ] ifFalse: [ SDL_WINDOW_HIDDEN ].
 	attributes fullscreen ifTrue: [ flags := flags | SDL_WINDOW_FULLSCREEN_DESKTOP ].
@@ -115,14 +115,14 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 			height: attributes height 
 			flags: flags.
 		
-		window := OSSDL2WindowHandle newWithHandle: handle attributes: attributes.
-		window osWindow: osWindow.
-		self registerWindow: window.
+		aBackendWindow := OSSDL2BackendWindow newWithHandle: handle attributes: attributes.
+		aBackendWindow osWindow: osWindow.
+		self registerWindow: aBackendWindow.
 		
 		"The OSWindow handle has to be set inside of this critical section to avoid losing some events such as expose."
-		osWindow setJustCreatedHandle: window.
+		osWindow setJustCreatedHandle: aBackendWindow.
 	].
-	^ window
+	^ aBackendWindow
 ]
 
 { #category : #'events-processing' }
@@ -284,8 +284,8 @@ OSSDL2Driver >> registerGlobalListener: globalListener [
 ]
 
 { #category : #'window creation and deletion' }
-OSSDL2Driver >> registerWindow: window [
-	WindowMap at: window handle windowID put: window
+OSSDL2Driver >> registerWindow: aBackendWindow [
+	WindowMap at: aBackendWindow sdl2Window windowID put: aBackendWindow
 ]
 
 { #category : #'global events' }

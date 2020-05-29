@@ -12,6 +12,12 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #accessing }
+OCCopyingTempVariable >> index: anIndex [
+	self scope == originalVar scope ifTrue: [ originalVar index: anIndex ].
+	super index: anIndex
+]
+
 { #category : #testing }
 OCCopyingTempVariable >> isCopying [
 	^true

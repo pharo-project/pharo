@@ -18,7 +18,8 @@ Class {
 	],
 	#classInstVars : [
 		'styleTable',
-		'textAttributesByPixelHeight'
+		'textAttributesByPixelHeight',
+		'formatIncompleteIdentifiers'
 	],
 	#category : #'Shout-Styling'
 }
@@ -64,8 +65,8 @@ SHRBTextStyler class >> blueStyleTable [
 	"
 	<styleTable: 'Blue'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -197,8 +198,8 @@ SHRBTextStyler class >> darkStyleTable [
 	"
 	<styleTable: 'Dark'>
 
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								white)
 			(invalid 								'FF8A80')
 			(excessCode 							'FF8A80')
@@ -336,6 +337,18 @@ SHRBTextStyler class >> defaultStyleTable [
  	^ self blueStyleTable
 ]
 
+{ #category : #styles }
+SHRBTextStyler class >> formatIncompleteIdentifiers [
+
+	^ formatIncompleteIdentifiers ifNil: [ formatIncompleteIdentifiers := true ]
+]
+
+{ #category : #styles }
+SHRBTextStyler class >> formatIncompleteIdentifiers: aValue [
+
+	formatIncompleteIdentifiers := aValue
+]
+
 { #category : #attributes }
 SHRBTextStyler class >> initialTextAttributesForPixelHeight: aNumber [ 
 	| d |
@@ -380,6 +393,20 @@ SHRBTextStyler class >> initialize [
 ]
 
 { #category : #styles }
+SHRBTextStyler class >> settingsOn: aBuilder [ 
+	<systemsettings>
+	
+	(aBuilder setting: #formatIncompleteIdentifiers) 
+		target: self;
+		default: true;
+		order: 1;
+		label: 'Format Incomplete Identifiers';
+		parentName: #'Syntax Highlighting';
+		description: 'If the code highlighter tryies to format incomplete identifiers and selectors or not. This is not recomended for big images, as it traverse all the image to get the information'
+
+]
+
+{ #category : #styles }
 SHRBTextStyler class >> solarizedStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
@@ -391,8 +418,8 @@ SHRBTextStyler class >> solarizedStyleTable [
 	"
 	<styleTable: 'Solarized'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								('657A81' muchDarker))
 			(invalid 									red)
 			(excessCode 							red)
@@ -540,8 +567,8 @@ SHRBTextStyler class >> tangoStyleTable [
 	"
 	<styleTable: 'Tango'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -684,8 +711,8 @@ SHRBTextStyler class >> vintageStyleTable [
 	"
 	<styleTable: 'Vintage'>
 								
- ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
+ ^ #(
 			(default 								black)
 			(invalid 									red)
 			(excessCode 							red)
@@ -911,6 +938,16 @@ SHRBTextStyler >> font: aFont [
 	font := aFont
 ]
 
+{ #category : #visiting }
+SHRBTextStyler >> formatIncompleteSelector: aMessageNode [
+	^ (self class formatIncompleteIdentifiers
+		and: [ (Symbol
+						selectorThatStartsCaseSensitive: aMessageNode selector asString
+						skipping: nil) isNotNil ])
+			ifTrue: [ #incompleteKeyword ]
+			ifFalse: [ #undefinedKeyword ]
+]
+
 { #category : #accessing }
 SHRBTextStyler >> isForWorkspace [
 	^ isForWorkspace ifNil: [ workspace notNil ]
@@ -971,6 +1008,7 @@ SHRBTextStyler >> pixelHeight [
 { #category : #private }
 SHRBTextStyler >> privateStyle: aText [
 	| ast |
+	aText ifEmpty: [ ^ self ].
 	ast := classOrMetaClass compiler
 		source: aText asString;
 		noPattern: self isForWorkspace ;
@@ -988,7 +1026,10 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode isTemp ifTrue: [ ^#tempVar].
 	aVariableNode isGlobal ifTrue: [ ^#globalVar].
 	aVariableNode isInstance ifTrue: [ ^#instVar]. 
-	aVariableNode hasIncompleteIdentifier ifTrue:[ ^#incompleteIdentifier].
+	
+	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
+		ifTrue:[ ^#incompleteIdentifier] .
+
 	^#invalid.
 ]
 
@@ -1014,6 +1055,7 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 
 { #category : #private }
 SHRBTextStyler >> style: aText ast: ast [
+	aText ifEmpty: [ ^ self ].
 	text := aText.	
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
@@ -1142,27 +1184,35 @@ at once, but for ordinary literal arrays, style every node"
 
 { #category : #visiting }
 SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
-	| value |
+	| value link |
 	value := aLiteralValueNode value.
-	self 
-		addStyle: (self literalStyleSymbol: value)
-		attribute: (TextClassLink class: value class)
-		forNode: aLiteralValueNode
+	
+	
+	"We can have 3 different kind of links from a literal: 
+	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
+	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
+	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
+	link := value isSymbol
+		ifTrue: [
+			self class environment
+				at: value
+				ifPresent: [ :aGlobal | TextClassLink className: value ]
+				ifAbsent: [ TextMethodLink selector: value ] ]
+		ifFalse: [ TextClassLink class: value class ].
+	self addStyle: (self literalStyleSymbol: value) attribute: link forNode: aLiteralValueNode
 ]
 
 { #category : #visiting }
 SHRBTextStyler >> visitMessageNode: aMessageNode [
-
 	| style link |
-
 	style := #keyword.
-	( Symbol findInternedSelector: aMessageNode selector asString )
-		ifNil: [ style := ( Symbol selectorThatStartsCaseSensitive: aMessageNode selector asString skipping: nil )
-				ifNil: [ #undefinedKeyword ]
-				ifNotNil: [ #incompleteKeyword ]
-			].
+	
+	(Symbol findInternedSelector: aMessageNode selector asString)
+		ifNil:[ style := self formatIncompleteSelector: aMessageNode ].
+		
 	link := TextMethodLink sourceNode: aMessageNode.
 	self styleOpenParenthese: aMessageNode.
+	
 	aMessageNode selectorParts
 		with: aMessageNode keywordsPositions
 		do: [ :keyword :position | 
@@ -1170,10 +1220,11 @@ SHRBTextStyler >> visitMessageNode: aMessageNode [
 				addStyle: style
 				attribute: link
 				from: position
-				to: position + keyword size - 1
-			].
-	( aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ] )
+				to: position + keyword size - 1 ].
+	
+	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
+	
 	aMessageNode arguments do: [ :each | self visitNode: each ].
 	self styleCloseParenthese: aMessageNode
 ]

@@ -48,11 +48,13 @@ BaselineOfTraits >> baseline: spec [
 					
 		spec group: 'traits-in-kernel' with: #(
 					'Kernel-Traits'
-					'AST-Core-Traits'
 					'Collections-Abstract-Traits'
 					'Transcript-Core-Traits'
 					'CodeImport-Traits'
 					'CodeExport-Traits' ).
+
+		spec group: 'traits-ast' with: #(
+					'AST-Core-Traits' ).
 					
 		spec group: 'compatibility' with: #('TraitsV2-Compatibility').
 		

@@ -1,6 +1,14 @@
 Extension { #name : #CmdCommandActivator }
 
 { #category : #'*Calypso-Browser' }
+CmdCommandActivator >> buildBrowserNotebookActions [
+
+	self canExecuteCommand ifFalse: [ ^ #() ].
+	
+	^ command buildBrowserNotebookActionsUsing: self
+]
+
+{ #category : #'*Calypso-Browser' }
 CmdCommandActivator >> buildBrowserTabActions [
 
 	self canExecuteCommand ifFalse: [ ^#() ].

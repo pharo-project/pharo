@@ -8,7 +8,7 @@ Class {
 		'tag',
 		'link'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #tagging }
@@ -93,6 +93,24 @@ ReflectivityControlTest >> testAfterBlock [
 	self assert: ReflectivityExamples new exampleBlock identicalTo: 5.
 	self assert: tag equals: 'yes'.
 	self assert: (ReflectivityExamples >> #exampleBlock) class equals: CompiledMethod
+]
+
+{ #category : #'tests - after' }
+ReflectivityControlTest >> testAfterBlockOptimizedIfTrue [
+	| blockNode |
+	blockNode := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast blockNodes second.
+	self assert: blockNode isBlock.
+	link := MetaLink new
+		metaObject: self;
+		selector: #tagExec;
+		control: #after.
+	blockNode link: link.
+	self assert: blockNode hasMetalinkAfter.
+	self assert: (ReflectivityExamples >> #exampleIfTrueIfFalse) class equals: ReflectiveMethod.
+	self assert: tag isNil.
+	self assert: ReflectivityExamples new exampleIfTrueIfFalse identicalTo: 5.
+	self assert: tag equals: 'yes'.
+	self assert: (ReflectivityExamples >> #exampleIfTrueIfFalse) class equals: CompiledMethod
 ]
 
 { #category : #'tests - after' }

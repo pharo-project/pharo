@@ -53,11 +53,6 @@ CompiledMethod >> sourceNode [
 ]
 
 { #category : #'*opalcompiler-core' }
-CompiledMethod >> sourceNodeExecutedForPC: aPC [
-	^self sourceNode sourceNodeExecutedForPC: aPC
-]
-
-{ #category : #'*opalcompiler-core' }
 CompiledMethod >> sourceNodeForPC: aPC [
 	^self sourceNode sourceNodeForPC: aPC
 ]

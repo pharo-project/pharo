@@ -60,13 +60,14 @@ BaselineOfBasicTools >> baseline: spec [
 		spec 
 			baseline: 'EnlumineurFormatter' with: [ 
 				spec
-					loads: 'UI';
+					loads: 'Core';
 					repository: repository ].
 		
 		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
 		spec package: 'Tool-SystemReporter'.
 		spec package: 'NECompletion'.
+		spec package: 'NECompletion-Morphic'.
 		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
@@ -88,7 +89,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
 		spec package: 'Regex-Help'.
-		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'.
 		spec package: 'MonticelloFileServices'.
 		spec package: 'Spec2-Help'.

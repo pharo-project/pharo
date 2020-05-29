@@ -78,6 +78,12 @@ ClassDescriptionTest >> testSlots [
 	self assert: Context slots size equals: 4
 ]
 
+{ #category : #tests }
+ClassDescriptionTest >> testWhichCategoryIncludesSelector [
+	self assert: (ClassDescription whichCategoryIncludesSelector: #comment) equals: #'accessing comment'.
+	self assert: (ClassDescription whichCategoryIncludesSelector: #doesNotExist) equals: nil.
+]
+
 { #category : #'tests - instance variables' }
 ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
 	self assert: (Point classThatDefinesInstVarNamed: 'x') equals: Point.
@@ -140,4 +146,29 @@ ClassDescriptionTest >> testprintSubclassesOnLevelFilterNil [
 	stream := ReadWriteStream on: result.
 	ExampleForTest1 printSubclassesOn: stream level: 1 filter: nil.
 	self assert: result equals: expected
+]
+
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testwhichSelectorsAccess [
+	self assert: ((Point whichSelectorsAccess: #y) includes: #y).
+	self deny: ((Point whichSelectorsAccess: #y) includes: #x).
+	self assert: ((Point whichSelectorsAccess: #x) includes: #setX:setY:).
+	
+	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty)
+]
+
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testwhichSelectorsRead [
+	self assert: ((Point whichSelectorsRead: #y) includes: #y).
+	self deny: ((Point whichSelectorsRead: #y) includes: #x).
+	
+	self assert: ((Point whichSelectorsRead: #doesNotExist) isEmpty)
+]
+
+{ #category : #'tests - instance variables' }
+ClassDescriptionTest >> testwhichSelectorsWrite [
+	self assert: ((Point whichSelectorsWrite: #x) includes: #setX:setY:).
+	self deny: ((Point whichSelectorsWrite: #x) includes: #x).
+	
+	self assert: ((Point whichSelectorsWrite: #doesNotExist) isEmpty).
 ]

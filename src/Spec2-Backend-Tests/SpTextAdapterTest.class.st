@@ -16,11 +16,11 @@ SpTextAdapterTest >> testKeyBindings [
 
 	handled := false.
 	presenter 
-		bindKeyCombination: $t meta 
+		bindKeyCombination: $x meta 
 		toAction: [ handled := true ].
 
 	self adapter 
-		keyPressed: $t asciiValue 
+		keyPressed: $x asciiValue 
 		shift: false 
 		meta: true
 		control: false

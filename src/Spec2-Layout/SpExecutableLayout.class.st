@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'children',
 		'selector',
-		'adapter'
+		'adapter',
+		'announcer'
 	],
 	#category : #'Spec2-Layout-Base'
 }
@@ -18,10 +19,35 @@ SpExecutableLayout >> adapterName [
 { #category : #accessing }
 SpExecutableLayout >> add: aName withConstraints: aBlock [
 	| constraints |
-
 	constraints := self constraintsClass new.
 	aBlock value: constraints.
 	children at: aName put: constraints
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> announceChildAdded: aChildPresenter [
+
+	self presenter ifNotNil: [
+		self announcer announce: (SpChildrenAdded new
+			parent: self presenter;
+			child: aChildPresenter;
+			yourself)].
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> announceChildRemoved: aChildPresenter [
+
+	self presenter ifNotNil: [
+		self announcer announce: (SpChildrenRemoved new
+			parent: self presenter;
+			child: aChildPresenter;
+			yourself)].
+]
+
+{ #category : #adding }
+SpExecutableLayout >> announcer [
+
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #converting }
@@ -34,6 +60,14 @@ SpExecutableLayout >> asArray [
 SpExecutableLayout >> asSpLayout [
 	
 	^ self
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> basicAdd: aName withConstraints: aBlock [
+	| constraints |
+	constraints := self constraintsClass new.
+	aBlock value: constraints.
+	children at: aName put: constraints
 ]
 
 { #category : #building }
@@ -68,13 +102,19 @@ SpExecutableLayout >> buildAdapterFor: aPresenter bindings: bindings [
 { #category : #accessing }
 SpExecutableLayout >> children [
 
-	^ children
+	^ children keys
 ]
 
 { #category : #private }
 SpExecutableLayout >> constraintsClass [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+SpExecutableLayout >> constraintsFor: aPresenter [
+
+	^ children at: aPresenter
 ]
 
 { #category : #accessing }
@@ -97,6 +137,12 @@ SpExecutableLayout >> initialize [
 ]
 
 { #category : #testing }
+SpExecutableLayout >> isEmpty [
+
+	^ children isEmpty
+]
+
+{ #category : #testing }
 SpExecutableLayout >> isExecutable [
 
 	^ true
@@ -109,9 +155,43 @@ SpExecutableLayout >> isSpLayout [
 ]
 
 { #category : #accessing }
+SpExecutableLayout >> presenter [
+
+	^ adapter ifNotNil: [ adapter presenter ]
+]
+
+{ #category : #accessing }
 SpExecutableLayout >> presenters [
 	
 	^ children keys
+]
+
+{ #category : #removing }
+SpExecutableLayout >> remove: aPresenter [
+
+	self 
+		remove: aPresenter 
+		ifAbsent: [ self removeBySymbol: aPresenter ].
+	self announceChildRemoved: aPresenter
+]
+
+{ #category : #private }
+SpExecutableLayout >> remove: aPresenter ifAbsent: aBlock [
+
+	^ (children includesKey: aPresenter)
+		ifTrue: [ children removeKey: aPresenter ]
+		ifFalse: aBlock
+]
+
+{ #category : #private }
+SpExecutableLayout >> removeBySymbol: aPresenter [
+	"I will look for the symbol that represents the presenter (in case of layouts defined by symbolic 
+	 representation of presenter) and then I will remove it"
+
+	children keys do: [ :each |
+		each isPresenter ifFalse: [ 
+			(adapter presenter presenterAt: each) = aPresenter ifTrue: [
+				self remove: each ifAbsent: [ NotFound signal: 'Presenter not found.' ] ] ] ]
 ]
 
 { #category : #private }
@@ -155,4 +235,20 @@ SpExecutableLayout >> traversePresentersDo: aBlock [
 	self 
 		traversePresentersDo: aBlock 
 		excluding: Set new
+]
+
+{ #category : #adding }
+SpExecutableLayout >> whenChildrenAddedDo: aBlock [
+
+	self announcer
+		when: SpChildrenAdded
+		do: aBlock
+]
+
+{ #category : #adding }
+SpExecutableLayout >> whenChildrenRemovedDo: aBlock [
+
+	self announcer
+		when: SpChildrenRemoved
+		do: aBlock
 ]

@@ -19,7 +19,9 @@ Class {
 		'#selectionMode',
 		'#childrenBlock',
 		'#activationBlock',
-		'#activateOnSingleClick'
+		'#activateOnSingleClick',
+		'#lazilyComputeChildren',
+		'#verticalAlignment'
 	],
 	#category : #'Spec2-Core-Widgets-Tree'
 }
@@ -158,6 +160,9 @@ SpTreeTablePresenter >> initialize [
 	isResizable := false.
 	childrenBlock := [ :item | #() ].
 	roots := #().
+	lazilyComputeChildren := false.
+	verticalAlignment := SpVerticalAlignment new.
+
 
 	self beSingleSelection.
 	self activateOnDoubleClick.
@@ -212,6 +217,18 @@ SpTreeTablePresenter >> itemAtPath: anArray ifAbsent: aBlock [
 		do: [ aBlock value ]
 ]
 
+{ #category : #api }
+SpTreeTablePresenter >> lazilyComputeChildren [
+	"When we compute lazily the children, we will show in all cases the expand arrow even if there is no children until we open this children."
+
+	lazilyComputeChildren := true
+]
+
+{ #category : #accessing }
+SpTreeTablePresenter >> lazilyComputeChildren: aBoolean [
+	lazilyComputeChildren := aBoolean
+]
+
 { #category : #initialization }
 SpTreeTablePresenter >> registerEvents [
 
@@ -257,6 +274,13 @@ SpTreeTablePresenter >> selectPath: aPath [
 ]
 
 { #category : #api }
+SpTreeTablePresenter >> selectPath: aPath scrollToSelection: shouldScrollToSelection [
+
+	self selectPath: aPath.
+	shouldScrollToSelection ifTrue: [ adapter scrollToSelection ]
+]
+
+{ #category : #api }
 SpTreeTablePresenter >> selectPaths: pathArray [
 	self selection selectPaths: pathArray
 ]
@@ -287,6 +311,11 @@ SpTreeTablePresenter >> selectionMode: aMode [
 	selectionMode := aMode
 ]
 
+{ #category : #testing }
+SpTreeTablePresenter >> shouldLazilyComputeChildren [
+	^ lazilyComputeChildren
+]
+
 { #category : #api }
 SpTreeTablePresenter >> showColumnHeaders [
 
@@ -309,6 +338,11 @@ SpTreeTablePresenter >> unselectItem: anItem [
 SpTreeTablePresenter >> unselectPath: aPath [
 
 	self selection unselectPath: aPath
+]
+
+{ #category : #accessing }
+SpTreeTablePresenter >> verticalAlignment [
+	^ verticalAlignment
 ]
 
 { #category : #'api-events' }

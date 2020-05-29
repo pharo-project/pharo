@@ -20,7 +20,9 @@ Class {
 { #category : #testing }
 NonInteractiveUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless and: [ Smalltalk isInteractive not ]
+	^ Smalltalk isHeadless 
+		and: [ Smalltalk isInteractive not
+		and: [ Smalltalk isInteractiveGraphic not ] ]
 ]
 
 { #category : #'ui requests' }

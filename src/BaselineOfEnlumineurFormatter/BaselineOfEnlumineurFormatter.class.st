@@ -17,16 +17,16 @@ BaselineOfEnlumineurFormatter >> baseline: spec [
 	spec for: #pharo do: [
 		spec 
 			package: 'EnlumineurFormatter';
-			package: 'EnlumineurFormatter-Tests' with: [ spec requires: #('EnlumineurFormatter') ];
+			package: 'EnlumineurFormatter-Tests' with: [ spec requires: #('EnlumineurFormatter') ]";
 			package: 'EnlumineurFormatterUI' with: [ spec requires: #('EnlumineurFormatter') ];
-			package: 'EnlumineurFormatterUI-Tests' with: [ spec requires: #('EnlumineurFormatterUI') ]. 
+			package: 'EnlumineurFormatterUI-Tests' with: [ spec requires: #('EnlumineurFormatterUI') ]". 
 		
 		spec
 			group: 'Core' with: #('EnlumineurFormatter');
 			group: 'Tests' with: #('Core' 'EnlumineurFormatter-Tests');
-			group: 'UI' with: #('Core' 'EnlumineurFormatterUI');
-			group: 'UI-Tests' with: #('Tests' 'EnlumineurFormatterUI-Tests');
-			group: 'All' with: #('Core' 'Tests' 'UI' 'UI-Tests')
+			"group: 'UI' with: #('Core' 'EnlumineurFormatterUI');
+			group: 'UI-Tests' with: #('Tests' 'EnlumineurFormatterUI-Tests');"
+			group: 'All' with: #('Core' 'Tests' "'UI' 'UI-Tests'")
 		
 		]
 ]

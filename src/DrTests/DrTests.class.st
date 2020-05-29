@@ -48,9 +48,9 @@ DrTests class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandG
 ]
 
 { #category : #commands }
-DrTests class >> buildContextualPackageGroupWith: presenterIntance [
+DrTests class >> buildContextualPackageGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'Package menu') asSpecGroup
-		register: (self buildPackageGroupWith: presenterIntance);
+		register: (self buildPackageGroupWith: presenterInstance);
 		yourself
 ]
 
@@ -62,25 +62,25 @@ DrTests class >> buildItemsListGroupWith: presenterInstance [
 ]
 
 { #category : #commands }
-DrTests class >> buildPackageGroupWith: presenterIntance [
+DrTests class >> buildPackageGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'Package tools') asSpecGroup
 		description: 'Commands related to packages list.';
-		register: (DTPackagesSelectAllCommand forSpec context: presenterIntance);
+		register: (DTPackagesSelectAllCommand forSpec context: presenterInstance);
 		beDisplayedAsGroup;
 		yourself
 ]
 
 { #category : #commands }
-DrTests class >> buildResultGroupWith: presenterIntance [
+DrTests class >> buildResultGroupWith: presenterInstance [
 	| commandGroup pluginCommands |
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
 		description: 'Commands related to result.';
 		register:
-			(DTResultBrowseCommand forSpec context: presenterIntance)
+			(DTResultBrowseCommand forSpec context: presenterInstance)
 				beHiddenWhenCantBeRun;
 		yourself.
-	pluginCommands := presenterIntance currentPlugin
-		buildContextualMenuGroupWith: presenterIntance.
+	pluginCommands := presenterInstance currentPlugin
+		buildContextualMenuGroupWith: presenterInstance.
 	pluginCommands entries ifEmpty: [ ^ commandGroup ].
 	^ commandGroup
 		register: pluginCommands beDisplayedAsGroup;
@@ -444,7 +444,7 @@ DrTests >> updatePackagesListLabel [
 DrTests >> updateResultLabel [
 	resultLabel
 		label: 'Results: ■';
-		color: pluginResult color
+		color: pluginResult backgroundColor
 ]
 
 { #category : #updating }
@@ -479,11 +479,7 @@ DrTests >> updateSwitchButton: itemsSelected [
 
 { #category : #updating }
 DrTests >> updateUI [
-	self
-		startButtonLabel: self currentPlugin startButtonLabel;
-		startButtonHelp: self currentPlugin startButtonHelp;
-		updateStatus: self currentPlugin pluginName , ' plugin is ready to work!' translated.
-	self withWindowDo: [ :window | window title: self title ].
+	super updateUI.
 	self packagesList resetFilter.
 	self updatePackagesList.
 	self resultTree: DTTreeNode empty.
