@@ -97,6 +97,11 @@ FileReference >> asAbsolute [
 ]
 
 { #category : #converting }
+FileReference >> asFileLocatorOrReference [
+	^ self path asFileLocatorOrReference
+]
+
+{ #category : #converting }
 FileReference >> asFileReference [
 	^ self
 ]
