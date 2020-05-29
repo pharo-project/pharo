@@ -16,6 +16,11 @@ OCAbstractVariable class >> semanticNodeClass [
 	self subclassResponsibility 
 ]
 
+{ #category : #accessing }
+OCAbstractVariable class >> semanticNodeKind [
+	self subclassResponsibility 
+]
+
 { #category : #converting }
 OCAbstractVariable >> asString [
 
@@ -204,8 +209,8 @@ OCAbstractVariable >> scope: aLexicalScope [
 ]
 
 { #category : #accessing }
-OCAbstractVariable >> semanticNodeClass [
-	^self class semanticNodeClass
+OCAbstractVariable >> semanticNodeKind [
+	^self class semanticNodeKind
 ]
 
 { #category : #accessing }

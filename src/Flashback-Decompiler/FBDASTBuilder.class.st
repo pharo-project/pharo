@@ -28,7 +28,8 @@ FBDASTBuilder >> codeAnyLitInd: anAssociation [
 
 { #category : #building }
 FBDASTBuilder >> codeArgument: tempName [
-	^ RBArgumentNode named: tempName
+
+	^ RBVariableNode newArgumentNamed: tempName
 ]
 
 { #category : #building }
@@ -123,7 +124,7 @@ FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragma
 
 { #category : #building }
 FBDASTBuilder >> codeReceiver [
-	^ RBSelfNode new
+	^ RBVariableNode newSelfNode
 ]
 
 { #category : #building }
@@ -143,7 +144,7 @@ FBDASTBuilder >> codeReturn: value [
 
 { #category : #building }
 FBDASTBuilder >> codeSelf [
-	^ RBSelfNode new
+	^ RBVariableNode newSelfNode
 ]
 
 { #category : #building }
@@ -153,17 +154,17 @@ FBDASTBuilder >> codeSequence: temps [
 
 { #category : #building }
 FBDASTBuilder >> codeSuper [
-	^ RBSuperNode new
+	^ RBVariableNode newSuperNode
 ]
 
 { #category : #building }
 FBDASTBuilder >> codeTemp: tempName [
-	^ RBTemporaryNode named: tempName
+	^ RBVariableNode newTemporaryNamed: tempName
 ]
 
 { #category : #building }
 FBDASTBuilder >> codeThisContext [
-	^ RBThisContextNode new
+	^ RBVariableNode newThisContextNode 
 ]
 
 { #category : #building }

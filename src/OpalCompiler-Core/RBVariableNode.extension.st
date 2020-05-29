@@ -28,16 +28,6 @@ RBVariableNode >> isClean [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBVariableNode >> isGlobal [
-	^self binding isGlobal
-]
-
-{ #category : #'*opalcompiler-core' }
-RBVariableNode >> isInstance [
-	^self binding isInstance
-]
-
-{ #category : #'*opalcompiler-core' }
 RBVariableNode >> isSpecialVariable [
 	^ self binding isSpecialVariable
 ]

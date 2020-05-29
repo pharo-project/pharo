@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : #accessing }
-OCSlotVariable class >> semanticNodeClass [
+OCSlotVariable class >> semanticNodeKind [
 
-	^RBInstanceVariableNode
+	^RBInstanceVariableKind
 ]
 
 { #category : #emitting }

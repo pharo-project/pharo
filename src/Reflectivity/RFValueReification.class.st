@@ -81,7 +81,7 @@ RFValueReification >> genForRBMessageNode [
 
 { #category : #generate }
 RFValueReification >> genForRBMethodNode [
-	^RBTemporaryNode named: self varName
+	^RBVariableNode newTemporaryNamed: self varName
 ]
 
 { #category : #generate }
@@ -123,7 +123,7 @@ RFValueReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBTemporaryNode named: name).
+			arguments add:  (RBVariableNode newTemporaryNamed: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).

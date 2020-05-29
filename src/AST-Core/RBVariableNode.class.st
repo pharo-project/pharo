@@ -15,7 +15,8 @@ Class {
 	#superclass : #RBValueNode,
 	#instVars : [
 		'name',
-		'start'
+		'start',
+		'kind'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -24,11 +25,11 @@ Class {
 RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 	
 	anIdentifierName = 'self'
-		ifTrue: [ ^ RBSelfNode named: anIdentifierName start: aPosition ].
+		ifTrue: [ ^ self named: anIdentifierName start: aPosition withKind: RBSelfKind ].
 	anIdentifierName = 'thisContext'
-		ifTrue: [ ^ RBThisContextNode named: anIdentifierName start: aPosition ].
+		ifTrue: [ ^ self named: anIdentifierName start: aPosition withKind: RBThisContextKind ].
 	anIdentifierName = 'super'
-		ifTrue: [ ^ RBSuperNode named: anIdentifierName start: aPosition ].
+		ifTrue: [ ^ self named: anIdentifierName start: aPosition withKind: RBSuperKind ].
 	^ self named: anIdentifierName start: aPosition.
 ]
 
@@ -44,33 +45,93 @@ RBVariableNode class >> named: aName start: aPosition [
 		yourself.
 ]
 
+{ #category : #'instance creation' }
+RBVariableNode class >> named: anIdentifierName start: aPosition withKind: aKindClass [
+	
+	| newOne kind |
+	newOne := self named: anIdentifierName start: aPosition.
+	kind := aKindClass new.
+	kind variable: newOne.
+	newOne kind: kind.
+	
+	^ newOne.
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> newArgumentNamed: aName [
+
+	^ self named: aName start: 0 withKind: RBArgumentKind
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> newGlobalNamed: aName [
+
+	^ self named: aName start: 0 withKind: RBGlobalKind
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> newSelfNode [
+
+	^ self named: 'self' start: 0 withKind: RBSelfKind
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> newSuperNode [
+
+	^ self named: 'super' start: 0 withKind: RBSuperKind
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> newTemporaryNamed: aName [
+
+	^ self named: aName start: 0 withKind: RBTemporaryKind
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> newThisContextNode [
+
+	^ self named: 'thisContext' start: 0 withKind: RBThisContextKind
+]
+
 { #category : #comparing }
 RBVariableNode >> = anObject [ 
 	self == anObject ifTrue: [^true].
-	((anObject isKindOf: self class) or: [self isKindOf: anObject class]) 
-		ifFalse: [^false].
-	^self name = anObject name
+	(anObject class = self class) 
+		ifFalse: [ ^ false ].
+
+	kind isUndefined ifTrue: [ ^ self name = anObject name ].
+	anObject kind isUndefined ifTrue: [ ^ self name = anObject name ].
+
+	^ kind class = anObject kind class 
+		ifTrue: [ self name = anObject name ]
+		ifFalse: [ false ].
+	
 ]
 
 { #category : #visiting }
 RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
-	^ aProgramNodeVisitor visitVariableNode: self
+	^ kind acceptVisitor: aProgramNodeVisitor
 ]
 
 { #category : #converting }
 RBVariableNode >> adaptToSemanticNode [
 	
-	self primitiveChangeClassTo: self binding semanticNodeClass new
+	kind := self binding semanticNodeKind new.
+	kind variable: self.
 ]
 
 { #category : #matching }
 RBVariableNode >> copyInContext: aDictionary [ 
-	^ self class named: name.
+	
+	| newOne |
+	newOne := self class named: name.
+	newOne kind: (kind class new variable: newOne; yourself).
+	^ newOne
 ]
 
 { #category : #comparing }
 RBVariableNode >> equalTo: anObject withMapping: aDictionary [ 
-	^self class = anObject class and: 
+	^self kind class = anObject kind class and: 
 			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]
 ]
 
@@ -93,7 +154,21 @@ RBVariableNode >> hash [
 RBVariableNode >> initialize [
 	super initialize.
 	name := ''.
-	start := 0
+	start := 0.
+	kind := RBUndefinedKind new.
+	kind variable: self.
+]
+
+{ #category : #testing }
+RBVariableNode >> isArgument [
+
+	^ kind isArgument
+]
+
+{ #category : #testing }
+RBVariableNode >> isBlockVar [
+
+	^ kind isBlockVar
 ]
 
 { #category : #testing }
@@ -102,8 +177,20 @@ RBVariableNode >> isDefinition [
 ]
 
 { #category : #testing }
+RBVariableNode >> isGlobal [
+
+	^ kind isGlobal
+]
+
+{ #category : #testing }
 RBVariableNode >> isImmediateNode [
 	^true
+]
+
+{ #category : #testing }
+RBVariableNode >> isInstance [
+
+	^ kind isInstance
 ]
 
 { #category : #testing }
@@ -113,10 +200,14 @@ RBVariableNode >> isRead [
 
 { #category : #testing }
 RBVariableNode >> isSelf [
-	"normally this method is not needed (if all the RBVariable creations create RBSelfNode instead but
-	since we do not control this."
-	
-	^ self name = 'self'
+
+	^ kind isSelf
+]
+
+{ #category : #testing }
+RBVariableNode >> isSelfOrSuper [
+
+	^ self isSelf or: [ self isSuper ]
 ]
 
 { #category : #testing }
@@ -128,6 +219,18 @@ RBVariableNode >> isSuper [
 ]
 
 { #category : #testing }
+RBVariableNode >> isTemp [
+
+	^ kind isTemp
+]
+
+{ #category : #testing }
+RBVariableNode >> isThisContext [
+
+	^ kind isThisContext
+]
+
+{ #category : #testing }
 RBVariableNode >> isVariable [
 	^true
 ]
@@ -135,6 +238,16 @@ RBVariableNode >> isVariable [
 { #category : #testing }
 RBVariableNode >> isWrite [
 	^ self parent notNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
+]
+
+{ #category : #accessing }
+RBVariableNode >> kind [
+	^ kind
+]
+
+{ #category : #accessing }
+RBVariableNode >> kind: anObject [
+	kind := anObject
 ]
 
 { #category : #accessing }
@@ -150,6 +263,7 @@ RBVariableNode >> name: aName [
 { #category : #initialization }
 RBVariableNode >> named: aName start: aPosition [
 
+	self initialize.
 	self name: aName.
 	self start: aPosition.
 ]

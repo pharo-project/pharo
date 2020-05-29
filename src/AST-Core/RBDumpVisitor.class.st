@@ -82,6 +82,15 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 ]
 
 { #category : #visiting }
+RBDumpVisitor >> visitGlobalNode: aVariableNode [
+
+	stream
+		nextPutAll: aVariableNode class name;
+		nextPutAll: ' newGlobalNamed: ';
+		print: aVariableNode name
+]
+
+{ #category : #visiting }
 RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 	stream
 		nextPutAll: aLiteralArrayNode class name;
@@ -187,6 +196,14 @@ RBDumpVisitor >> visitReturnNode: aReturnNode [
 ]
 
 { #category : #visiting }
+RBDumpVisitor >> visitSelfNode: aVariableNode [
+
+	stream
+		nextPutAll: aVariableNode class name;
+		nextPutAll: ' newSelfNode'.
+]
+
+{ #category : #visiting }
 RBDumpVisitor >> visitSequenceNode: aSequenceNode [
 	stream nextPutAll: aSequenceNode class name.
 	aSequenceNode temporaries
@@ -202,6 +219,22 @@ RBDumpVisitor >> visitSequenceNode: aSequenceNode [
 			each acceptVisitor: self.
 			stream nextPutAll: '. ' ].
 	stream nextPut: $}
+]
+
+{ #category : #visiting }
+RBDumpVisitor >> visitSuperNode: aVariableNode [
+
+	stream
+		nextPutAll: aVariableNode class name;
+		nextPutAll: ' newSuperNode'.
+]
+
+{ #category : #visiting }
+RBDumpVisitor >> visitThisContextNode: aVariableNode [
+
+	stream
+		nextPutAll: aVariableNode class name;
+		nextPutAll: ' newThisContextNode'.
 ]
 
 { #category : #visiting }

@@ -13,8 +13,9 @@ Class {
 }
 
 { #category : #accessing }
-OCUndeclaredVariable class >> semanticNodeClass [
-	^RBVariableNode
+OCUndeclaredVariable class >> semanticNodeKind [
+
+	^RBUndefinedKind
 ]
 
 { #category : #accessing }

@@ -337,7 +337,7 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetRangeTest [
 	self assert: node sourceCode equals: 'i := 5'.
 
 	node := cache nodeForPC: 43.
-	self assert: node class equals: RBTemporaryNode.
+	self assert: node isTemp.
 	self assert: node start equals: 35.
 	self assert: node stop equals: 35.
 	self assert: node sourceCode equals: 'i'.
@@ -367,7 +367,7 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetRangeTest [
 	self assert: node sourceCode equals: '[ i=0 ] whileFalse: [ i := i - 1 ]'.
 
 	node := cache nodeForPC: 48.
-	self assert: node class equals: RBTemporaryNode.
+	self assert: node isTemp.
 	self assert: node start equals: 60.
 	self assert: node stop equals: 60.
 	self assert: node sourceCode equals: 'i'.

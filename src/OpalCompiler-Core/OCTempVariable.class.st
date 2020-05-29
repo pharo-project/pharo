@@ -12,9 +12,9 @@ Class {
 }
 
 { #category : #accessing }
-OCTempVariable class >> semanticNodeClass [
+OCTempVariable class >> semanticNodeKind [
 
-	^RBTemporaryNode 
+	^RBTemporaryKind
 ]
 
 { #category : #comparing }

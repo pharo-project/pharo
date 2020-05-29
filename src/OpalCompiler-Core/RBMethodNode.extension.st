@@ -36,12 +36,12 @@ RBMethodNode >> ensureCachedArgumentNames [
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [	
 	| message |
 	message := RBMessageNode 
-		receiver: RBSelfNode new
+		receiver: RBVariableNode newSelfNode
 		selector: #error: 
 		arguments: {RBLiteralNode value: messageText}.
 	^ self 
 		selector: selector 
-		arguments: ((1 to: selector numArgs) collect: [ :i | RBArgumentNode named: 't' , i asString ]) 
+		arguments: ((1 to: selector numArgs) collect: [ :i | RBVariableNode newArgumentNamed: 't' , i asString ]) 
 		body: (RBSequenceNode statements: {message}) 
 ]
 

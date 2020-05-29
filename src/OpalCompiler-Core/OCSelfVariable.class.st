@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-OCSelfVariable class >> semanticNodeClass [
+OCSelfVariable class >> semanticNodeKind [
 
-	^RBSelfNode 
+	^RBSelfKind
 ]
 
 { #category : #emitting }

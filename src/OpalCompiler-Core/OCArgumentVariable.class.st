@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-OCArgumentVariable class >> semanticNodeClass [
+OCArgumentVariable class >> semanticNodeKind [
 
-	^RBArgumentNode 
+	^RBArgumentKind
 ]
 
 { #category : #testing }

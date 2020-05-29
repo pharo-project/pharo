@@ -12,10 +12,10 @@ OCVariableSpecialisationTest >> testVarTemp [
 
 	"before semantic analysis, this is just a variableNode"
 	self assert: returnNode value class identicalTo: RBVariableNode.
-	self deny: returnNode value class identicalTo: RBTemporaryNode.
+	self deny: returnNode value isTemp.
 
 	sequenceNode doSemanticAnalysis.
 	"after, it is specialized to a temporary"
 	returnNode := sequenceNode statements last.
-	self assert: returnNode value class identicalTo: RBTemporaryNode
+	self assert: returnNode value isTemp
 ]

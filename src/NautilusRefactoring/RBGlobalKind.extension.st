@@ -1,7 +1,7 @@
-Extension { #name : #RBGlobalNode }
+Extension { #name : #RBGlobalKind }
 
 { #category : #'*NautilusRefactoring' }
-RBGlobalNode >> executeRenameRefactoringBy: aNautilusRefactoring [
+RBGlobalKind >> executeRenameRefactoringBy: aNautilusRefactoring [
 
 	self binding variable executeRenameRefactoringBy: aNautilusRefactoring inClass: self methodNode methodClass
 ]

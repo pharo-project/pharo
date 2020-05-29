@@ -11,9 +11,9 @@ Class {
 }
 
 { #category : #accessing }
-OCLiteralVariable class >> semanticNodeClass [
+OCLiteralVariable class >> semanticNodeKind [
 
-	^RBGlobalNode
+	^RBGlobalKind
 ]
 
 { #category : #accessing }

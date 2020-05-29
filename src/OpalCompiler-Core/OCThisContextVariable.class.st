@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-OCThisContextVariable class >> semanticNodeClass [
+OCThisContextVariable class >> semanticNodeKind [
 
-	^RBThisContextNode 
+	^RBThisContextKind
 ]
 
 { #category : #emitting }

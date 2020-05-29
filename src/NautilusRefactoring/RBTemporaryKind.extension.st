@@ -1,7 +1,7 @@
-Extension { #name : #RBArgumentNode }
+Extension { #name : #RBTemporaryKind }
 
 { #category : #'*NautilusRefactoring' }
-RBArgumentNode >> executeRenameRefactoringBy: aNautilusRefactoring [
+RBTemporaryKind >> executeRenameRefactoringBy: aNautilusRefactoring [
 
 	aNautilusRefactoring renameTemporaryNamed: self name asString Between: (self start to: self stop) from: self methodNode
 ]

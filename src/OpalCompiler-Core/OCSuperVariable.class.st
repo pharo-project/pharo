@@ -8,9 +8,9 @@ Class {
 }
 
 { #category : #accessing }
-OCSuperVariable class >> semanticNodeClass [
+OCSuperVariable class >> semanticNodeKind [
 
-	^RBSuperNode 
+	^RBSuperKind
 ]
 
 { #category : #emitting }

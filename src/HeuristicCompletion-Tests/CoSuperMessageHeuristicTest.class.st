@@ -28,7 +28,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass
 CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 
 	self assert: (CoSuperMessageHeuristic new
-		appliesForNode: (RBMessageNode receiver: RBSuperNode new selector: #foo)
+		appliesForNode: (RBMessageNode receiver: RBVariableNode newSuperNode selector: #foo)
 		inContext: nil)
 ]
 
