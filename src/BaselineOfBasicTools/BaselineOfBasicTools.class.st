@@ -53,7 +53,6 @@ BaselineOfBasicTools >> baseline: spec [
 				loads: #( 'UI' 'Help' 'JenkinsSupport' );
 				repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
-	
 		spec 
 			baseline: 'EnlumineurFormatter' with: [ 
 				spec
