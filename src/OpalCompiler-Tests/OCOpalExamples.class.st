@@ -211,7 +211,9 @@ OCOpalExamples >> exampleIfFalse [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalseIfTrue [
-	true ifFalse: [^1] ifTrue: [^2].
+	^ true
+		ifFalse: [ 1 ]
+		ifTrue: [ 2 ]
 ]
 
 { #category : #'examples-blocks-optimized' }
