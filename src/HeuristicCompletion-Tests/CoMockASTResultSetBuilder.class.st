@@ -98,6 +98,13 @@ CoMockASTResultSetBuilder >> visitSequenceNode: aNode [
 ]
 
 { #category : #accessing }
+CoMockASTResultSetBuilder >> visitThisContextNode: aNode [
+
+	heuristic := #thisContext.
+	^ super visitThisContextNode: aNode
+]
+
+{ #category : #accessing }
 CoMockASTResultSetBuilder >> visitVariableNode: aNode [
 
 	heuristic := #variable.
