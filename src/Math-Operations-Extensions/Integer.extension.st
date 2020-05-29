@@ -80,9 +80,53 @@ Integer >> decimalDigitAt: anExponent [
 Integer >> factorial [
 	"Answer the factorial of the receiver."
 
-	self = 0 ifTrue: [^ 1].
-	self > 0 ifTrue: [^ self * (self - 1) factorial].
-	self error: 'Not valid for negative integers'
+	"The factorial on n is defined as: n * (n-1)*(n-2)*... while n>0. Factorial of 0 is 1.
+	We also know Factorial of 1 and 2 are themselves.
+	
+	This implementation uses a 2-partition algorithm.
+	
+	For a recursive (but slower) implementation see 'slowFactorial'
+	
+	Without verbose detail:
+	
+	If'm an even number,some optimization can be applied:
+	Instead of doing all multiplication we can halving the number of multiplication regrouping terms, so:
+	n*(n-1)*(n-2)*....*3*2*1
+	can be rearranged as:
+	(n*1)*((n-1)*2)*((n-2)*3)*...
+	And the use the fact n is even to rewrite in a more efficient way.
+	If I'm an odd number then compute for n-1 and multily by n.
+	"
+	
+	"Example of usages:"
+	
+	"0 factorial >>> 1"
+	"1 factorial >>> 1"
+	"2 factorial >>> 2"
+	"3 factorial >>> 6"
+	"4 factorial >>> 24"
+	"5 factorial >>> 120"
+	"6 factorial >>> 720"
+
+	| nex nexnext acc |
+	"Guard for know cases (0,1,2,error)"
+	self < 3
+		ifTrue: [ ^ self < 0
+				ifTrue: [ self error: 'Not valid for negative integers' ]
+				ifFalse: [ self > 0
+						ifTrue: [ self ]
+						ifFalse: [ 1 ] ] ].
+	acc := 2.
+	nex := 2.
+	nexnext := 10.
+	
+	self // 2 - 1
+		timesRepeat: [ nex := nex + nexnext.
+			nexnext := nexnext + 8.
+			acc := acc * nex ].
+	self odd
+		ifTrue: [ acc := acc * self ].
+	^ acc
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -554,6 +598,31 @@ Integer >> slidingLeftRightRaisedTo: n modulo: m [
 					pow := pow * (oddPowersOfSelf at: index + 1) \\ m].
 			k := k - 1].
 	^pow
+]
+
+{ #category : #'*Math-Operations-Extensions' }
+Integer >> slowFactorial [
+	"Answer the factorial of the receiver."
+	
+	"This implementation is recursive and very canonical.
+	This implementation is intended for demo purposes, but for better performance
+	another version 'factorial' is provided."
+	
+	"Example of usages:"
+	
+	"0 slowFactorial >>> 1"
+	"1 slowFactorial >>> 1"
+	"2 slowFactorial >>> 2"
+	"3 slowFactorial >>> 6"
+	"4 slowFactorial >>> 24"
+	"5 slowFactorial >>> 120"
+	"6 slowFactorial >>> 720"
+
+	self > 0
+		ifTrue: [ ^ self * (self - 1) factorial ].
+	self = 0
+		ifTrue: [ ^ 1 ].
+	self error: 'Not valid for negative integers'
 ]
 
 { #category : #'*Math-Operations-Extensions' }

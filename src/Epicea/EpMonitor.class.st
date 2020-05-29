@@ -51,6 +51,11 @@ EpMonitor class >> hasCurrent [
 	^ current isNotNil
 ]
 
+{ #category : #'class initialization' }
+EpMonitor class >> initialize [
+	SessionManager default registerToolClassNamed: self name
+]
+
 { #category : #accessing }
 EpMonitor class >> logsDirectory [
 	self flag: #pharoFixMe.	"The base locator could have a wrong fileSystem"
@@ -90,6 +95,16 @@ EpMonitor class >> restart [
 
 	self reset.
 	self current enable.
+]
+
+{ #category : #'system startup' }
+EpMonitor class >> shutDown: isImageQuitting [
+	(isImageQuitting not
+		and: [ self hasCurrent
+		and: [ self current isEnabled ] ])
+			ifTrue: [
+				self current sessionSnapshot.
+				self current sessionStore flush. ]
 ]
 
 { #category : #private }
@@ -549,14 +564,6 @@ EpMonitor >> sessionStore [
 	^ self log store
 ]
 
-{ #category : #'announcement handling' }
-EpMonitor >> snapshotDone: aSnapshotDone [
-	"Log the event, but only the original save (read SnapshotDone comment)."
-
-	aSnapshotDone isNewImage
-		ifFalse: [ self sessionSnapshot ]
-]
-
 { #category : #private }
 EpMonitor >> subscribeToJobAnnouncer [
 
@@ -588,7 +595,6 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		ClassRenamed -> #classRenamed:.
 		ClassCommented -> #classCommented:.
 		MethodRecategorized -> #methodRecategorized:.
-		SnapshotDone -> #snapshotDone:.
 		
 	} do: [ :pair |
 		systemAnnouncer weak

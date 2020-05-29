@@ -517,7 +517,7 @@ SpWindowPresenter >> whenOpenedDo: aBlock [
 SpWindowPresenter >> whenResizingDo: aBlock [
 	
 	self announcer 
-		when: WindowResizing
+		when: SpWindowResizing
 		do: aBlock
 ]
 

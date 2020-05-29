@@ -122,12 +122,7 @@ GTSpotterPreviewBrick >> updatePreviewWith: anObject [
 	
 	self asyncTask
 		execute: [ :composite :entity |
-				[ entity spotterPreviewIn: composite inContext: self spotterModel ]
-					on: Error
-					do: [ :exception |
-						self spotterModel exceptionHandler 
-							handleException: exception 
-							do: [ self handleException: exception forComposite: composite ] ].
+				 entity spotterPreviewIn: composite inContext: self spotterModel.
 				 composite ]
 		withArguments: { self newCompositeBrick . anObject }
 		callback: [ :composite |

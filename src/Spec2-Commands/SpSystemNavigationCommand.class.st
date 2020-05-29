@@ -26,6 +26,7 @@ SpSystemNavigationCommand class >> shortName [
 ]
 
 { #category : #accessing }
-SpSystemNavigationCommand >> selector [ 
-	^self context asSymbol
+SpSystemNavigationCommand >> selector [
+
+	^ self target asSymbol
 ]

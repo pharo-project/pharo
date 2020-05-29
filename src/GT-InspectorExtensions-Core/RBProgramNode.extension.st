@@ -16,7 +16,7 @@ RBProgramNode >> gtInspectorSourceCodeIn: composite [
 		title: [ 'Source code' translated ];
 		display: [ self source ];
 		smalltalkClass: [ 
-			self parents first compilationContext ifNotNil: [ :ctx | ctx getClass ] ]; 
+			self withAllParents  first compilationContext ifNotNil: [ :ctx | ctx getClass ] ]; 
 		initialize: [ :presentation | 
 			presentation selectionInterval: self sourceInterval ];
 		when: [ self source notNil ];

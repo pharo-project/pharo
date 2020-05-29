@@ -470,7 +470,7 @@ PluggableListMorph >> getCurrentSelectionIndex [
 PluggableListMorph >> getEnabledSelector [
 	"Answer the value of getEnabledSelector"
 
-	^ getEnabledSelector ifNil: [ nil ]
+	^ getEnabledSelector
 ]
 
 { #category : #accessing }

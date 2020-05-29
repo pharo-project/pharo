@@ -38,7 +38,10 @@ BaselineOfUI >> baseline: spec [
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'ParametrizedTests' with: [ spec repository: repository ].
-		spec baseline: 'Spec2' with: [ spec repository: repository ].
+		spec baseline: 'Spec2' with: [ 
+			spec 
+				repository: repository;
+				loads: #('Base') ].
 		spec baseline: 'Spec' with: [ spec repository: repository ].
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].

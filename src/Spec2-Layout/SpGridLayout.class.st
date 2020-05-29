@@ -206,13 +206,6 @@ SpGridLayout >> isRowHomogeneous [
 	^ rowHomogeneous
 ]
 
-{ #category : #removing }
-SpGridLayout >> remove: aPresenter [
-
-	children removeKey: aPresenter.
-	self announceChildRemoved: aPresenter
-]
-
 { #category : #accessing }
 SpGridLayout >> row: aNumber withConstraints: aBlock [
 	| constraints |

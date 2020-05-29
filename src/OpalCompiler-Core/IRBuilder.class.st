@@ -93,17 +93,19 @@ IRBuilder >> addPragma: aPragma [
 { #category : #initialize }
 IRBuilder >> addTemp: tempKey [
 	
-	self addTemps: {tempKey}
+	| tempMap |
+	tempMap := self currentScope tempMap.
+	
+	"adding the same var multiple times reuses the same offset"
+	(tempMap includesKey: tempKey) ifTrue: [ ^ 	self cacheIndex: tempKey ].
+	
+	tempMap at: tempKey put: tempMap size + 1.
+	self cacheIndex: tempKey.
 ]
 
 { #category : #initialize }
 IRBuilder >> addTemps: newKeys [
-	| i offset |
-	offset := self currentScope tempMap size.
-	i := 1.
-	newKeys do: [:key |
-		self  currentScope tempMap at: key ifAbsentPut: [i:=i+1.offset + i - 1].
-	].
+	newKeys do: [ :key | self addTemp: key ]
 
 ]
 
@@ -124,6 +126,16 @@ IRBuilder >> blockReturnTop [
 	self popScope.
 ]
 
+{ #category : #initialize }
+IRBuilder >> cacheIndex: tempKey [
+	"if we have the ast, we can store the temp offset"
+	self sourceNode ifNotNil: [ :sourceNode | 
+		| var |
+		var := sourceNode scope lookupVar: tempKey.
+		"some vars (e.g. limits in loops) do not exist on the AST level"
+		var ifNotNil: [ var index: (self currentScope tempMap at: tempKey) ] ].
+]
+
 { #category : #accessing }
 IRBuilder >> compilationContext [
 	^ir compilationContext 
@@ -137,10 +149,13 @@ IRBuilder >> compilationContext: aCompilationContext [
 { #category : #initialize }
 IRBuilder >> createTempVectorNamed: name withVars: anArray [
 	
-	"self addVectorTemps: anArray."
 	self addTemp: name.
 	self add: (IRInstruction createTempVectorNamed: name withVars: anArray).
-
+	
+	"if we have the ast, we can store the temp offsets"
+	self sourceNode ifNotNil: [ :sourceNode |
+		anArray doWithIndex: [ :varName :i|
+			(sourceNode scope lookupVar: varName) index: i]]
 ]
 
 { #category : #scopes }

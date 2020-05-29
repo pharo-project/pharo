@@ -23,7 +23,7 @@ OCSemanticError >> compilationContext: anObject [
 
 { #category : #exceptiondescription }
 OCSemanticError >> defaultAction [
-	^self notify:  messageText at: node start.
+	^self notify: messageText at: node start
 ]
 
 { #category : #accessing }
@@ -48,17 +48,20 @@ OCSemanticError >> node: aNode [
 
 { #category : #'error handling' }
 OCSemanticError >> notify: aString at: location [
-	"Refer to the comment in Object|notify:."
-
-	^compilationContext requestor 
+	^self requestor 
 		ifNil: [SyntaxErrorNotification
 					inClass: self methodClass 
 					withCode: self methodNode source
 					doitFlag: false
 					errorMessage: aString
 					location: location]
-		ifNotNil: [compilationContext requestor
+		ifNotNil: [self requestor
 					notify: aString , ' ->'
 					at: location
-					in: compilationContext requestor text]
+					in: self requestor text]
+]
+
+{ #category : #accessing }
+OCSemanticError >> requestor [
+	^ compilationContext requestor
 ]

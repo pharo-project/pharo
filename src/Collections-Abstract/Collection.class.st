@@ -319,7 +319,7 @@ Collection >> asSortedCollection [
 
 { #category : #converting }
 Collection >> asSortedCollection: aSortBlock [ 
-	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is defined by the argument, aSortBlock. Note that this is better to use #sorted: if you don't really need a SortedCollection, but a sorted collection!!"
+	"Answer a SortedCollection whose elements are the elements of the receiver. The sort order is defined by the argument, aSortBlock. Note that it is better to use #sorted: if you don't really need a SortedCollection, but a sorted collection!!"
 
 	| aSortedCollection |
 	aSortedCollection := SortedCollection new: self size.
@@ -571,7 +571,12 @@ Collection >> detectMax: aBlock [
 Collection >> detectMin: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument. 
 	Answer the element for which aBlock evaluates to the lowest number.
-	If collection empty, return nil."
+	If collection empty, return nil.
+	
+	Example of use:
+	({ 2@3 . -4@6 . 10@ -3 } detectMin: [ :p | p x ]) >>> (-4@6)
+	({ 2@3 . -4@6 . 10@ -3 } detectMin: [ :p | p y ]) >>> (10@ -3)
+	"
 
 	| minElement minValue |
 	self do: [:each | | val | 
@@ -647,7 +652,11 @@ Collection >> do: aBlock without: anItem [
 
 { #category : #enumerating }
 Collection >> doWithIndex: elementAndIndexBlock [
-	"Use the new version with consistent naming"
+	"Use the new version with consistent naming
+	
+	Example of use:
+	(#('hello' 'world' 'bonjour') doWithIndex: [ :element :index |  ])
+	"
 
 	^ self withIndexDo: elementAndIndexBlock
 ]
@@ -767,7 +776,13 @@ Collection >> gather: aBlock [
 
 { #category : #enumerating }
 Collection >> groupedBy: aBlock [
-	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
+	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species.
+	
+	Example of use:
+	(#(1 2 3 4 5) groupedBy: [ :v | v odd ]) asString >>> 'an OrderedDictionary(true->#(1 3 5) false->#(2 4))'
+	"
+	
+	
 	
 	| groups |
 	groups := OrderedDictionary new.
@@ -955,7 +970,13 @@ Collection >> isEmptyOrNil [
 
 { #category : #testing }
 Collection >> isNotEmpty [
-	"Answer whether the receiver contains any elements."
+	"Answer whether the receiver contains any elements.
+	
+	Example of use:
+	
+	#() isNotEmpty >>> false
+	#(1 2 3) isNotEmpty >>> true
+	"
 
 	^ self isEmpty not
 ]
@@ -967,8 +988,13 @@ Collection >> isSequenceable [
 
 { #category : #'math functions' }
 Collection >> median [
-	"Return the middle element, or as close as we can get."
-	"{1 . 2 . 3 . 4 . 5} median >>> 3"
+	"Return the middle element, or as close as we can get.
+	
+	Example of use:
+	{1 . 2 . 3 . 4 . 5} median >>> 3
+	{1 . 2 . 4 . 5} median >>> 3
+	{1 . 2 . 5 . 5} median >>> (7/2)
+	"
 	
 	^ self asSortedCollection median
 ]

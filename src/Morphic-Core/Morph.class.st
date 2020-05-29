@@ -1121,15 +1121,6 @@ Morph >> asReadOnlyMorph [
 	^ self
 ]
 
-{ #category : #converting }
-Morph >> asText [
-
-	| anchor embedMorphSignal |
-    anchor := TextAnchor new anchoredMorph: self.
-    embedMorphSignal := (Character value: 1) asString. "required by the scanner"
-    ^ Text string: embedMorphSignal attribute: anchor.
-]
-
 { #category : #'accessing - extension' }
 Morph >> assureExtension [
 	"creates an extension for the receiver if needed"
@@ -2875,19 +2866,23 @@ Morph >> handleFocusEvent: anEvent [
 { #category : #'events-processing' }
 Morph >> handleKeyDown: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self].
-	(self handlesKeyDown: anEvent) ifFalse:[^self].
+	
+	anEvent wasHandled ifTrue:[ ^ self ].
+	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
-	^self keyDown: anEvent
+	self keyDown: anEvent.
+	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
 Morph >> handleKeyUp: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self].
-	(self handlesKeyUp: anEvent) ifFalse:[^self].
+
+	anEvent wasHandled ifTrue:[ ^ self ].
+	(self handlesKeyUp: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
-	^self keyUp: anEvent
+	self keyUp: anEvent.
+	^ self eventHandler ifNotNil: [ :handler | handler keyUp: anEvent fromMorph: self ].
 ]
 
 { #category : #'event handling' }
@@ -2925,7 +2920,7 @@ Morph >> handleMouseDown: anEvent [
 			and: [self cmdGesturesEnabled and: [ anEvent shiftPressed]])
 		ifTrue: [
 			self invokeMetaMenu: anEvent.
-			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ].].
+			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ] ].
 
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
@@ -2939,6 +2934,8 @@ Morph >> handleMouseDown: anEvent [
 			at: Time millisecondClockValue + self mouseStillDownThreshold
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: self mouseStillDownStepRate ].
+		
+	^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2968,10 +2965,10 @@ Morph >> handleMouseLeave: anEvent [
 				ifTrue: [ anEvent wasHandled: true.
 					self mouseLeaveDragging: anEvent ].
 			^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ].
-	^ (self handlesMouseOver: anEvent)
-		ifTrue: [ anEvent wasHandled: true.
-			self mouseLeave: anEvent ]
-		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ]
+	(self handlesMouseOver: anEvent) ifTrue: [ 
+			anEvent wasHandled: true.
+			self mouseLeave: anEvent ].
+	^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2989,6 +2986,7 @@ Morph >> handleMouseMove: anEvent [
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: self mouseStillDownStepRate ].
+
 	^ self eventHandler ifNotNil: [:handler | handler mouseMove: anEvent fromMorph: self ]
 
 ]
@@ -3019,14 +3017,14 @@ Morph >> handleMouseUp: anEvent [
 	anEvent hand mouseFocus == self ifFalse: [^self]. "Not interested in other parties"
 	anEvent hand releaseMouseFocus: self.
 	anEvent wasHandled: true.
-	^ anEvent blueButtonChanged
+	anEvent blueButtonChanged
 		ifTrue: [
-			self blueButtonUp: anEvent.
-			self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]]
+			self blueButtonUp: anEvent ]
 		ifFalse: [ | result |
 			result := self mouseUp: anEvent.
 			self stopSteppingSelector: #handleMouseStillDown:.
 			result ].
+	^ self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]
 ]
 
 { #category : #'events-processing' }
@@ -3658,6 +3656,12 @@ Morph >> isFullOnScreen [
 	owner ifNil: [^ true].
 	self visible ifFalse: [^ true].
 	^ owner clearArea containsRect: self fullBounds
+]
+
+{ #category : #testing }
+Morph >> isHaloMorph [
+	
+	^ false
 ]
 
 { #category : #classification }

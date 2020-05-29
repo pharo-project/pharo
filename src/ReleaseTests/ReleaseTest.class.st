@@ -297,7 +297,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 
 { #category : #tests }
 ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
-	self assertValidLintRule: ReTestClassNameShouldEndWithTest new
+	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
 	
 ]
 

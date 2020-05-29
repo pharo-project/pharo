@@ -62,7 +62,7 @@ RBChangeMethodNameRefactoring >> newSelector [
 { #category : #private }
 RBChangeMethodNameRefactoring >> parseTreeRewriter [
 	| rewriteRule oldString newString |
-	rewriteRule := RBParseTreeRewriter new.
+	rewriteRule := self parseTreeRewriterClass new.
 	oldString := self buildSelectorString: oldSelector.
 	newString := self buildSelectorString: newSelector
 				withPermuteMap: permutation.

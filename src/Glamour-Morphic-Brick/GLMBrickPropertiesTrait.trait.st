@@ -4,6 +4,7 @@ I declare api and logic to work with properties of a Brick, such as color, shado
 Trait {
 	#name : #GLMBrickPropertiesTrait,
 	#traits : 'GLMBrickExtensionTrait',
+	#classTraits : 'GLMBrickExtensionTrait classTrait',
 	#category : #'Glamour-Morphic-Brick-Traits'
 }
 

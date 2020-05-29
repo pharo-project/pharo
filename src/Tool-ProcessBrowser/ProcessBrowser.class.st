@@ -154,8 +154,8 @@ ProcessBrowser class >> isUIProcess: aProcess [
 ProcessBrowser class >> menuCommandOn: aBuilder [ 
 	<worldMenu> 
 	(aBuilder item: #'Process Browser')
-		parent: #System;
-		order: 0;
+		parent: #Tools;
+		order: 705;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
 		icon: self taskbarIcon.
@@ -233,11 +233,6 @@ ProcessBrowser class >> registerWellKnownProcesses [
 	self
 		registerWellKnownProcess: [ UIManager default uiProcess ]
 		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ Smalltalk globals at: #SoundPlayer ifPresent: [ :sp | sp playerProcess ] ]
-		label: 'the Sound Player'
 		allowStop: false
 		allowDebug: false.
 	self
@@ -788,7 +783,7 @@ ProcessBrowser >> methodText [
 						ifNil: ['']
 						ifNotNil: [| pcRange | 
 							methodText := [ selectedContext sourceCode ]
-								ifError: [ 'error getting method text' ].
+								onErrorDo: [ 'error getting method text' ].
 							pcRange := self pcRange.
 							methodText asText
 								addAttribute: TextColor red

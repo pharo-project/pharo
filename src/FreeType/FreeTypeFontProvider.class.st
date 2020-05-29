@@ -467,12 +467,9 @@ FreeTypeFontProvider >> updateEmbeddedFreeTypeFonts [
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFileCacheInfo [
-	fileInfoCache values 
-		do:[ :col |
-			col copy do:[:each | | dir |
-				dir := each absolutePath asFileReference.
-				dir exists ifFalse: [ col remove: each ]]]
-		displayingProgress: [ 'Updating cached file info' ].
+	fileInfoCache values
+		do: [ :col | col copy do: [ :each | each absolutePath asFileReference ifAbsent: [ col remove: each ] ] ]
+		displayingProgress: [ 'Updating cached file info' ]
 ]
 
 { #category : #'loading and updating' }

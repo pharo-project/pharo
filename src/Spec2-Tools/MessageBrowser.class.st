@@ -129,12 +129,11 @@ MessageBrowser class >> title [
 { #category : #private }
 MessageBrowser >> accept: text notifying: notifyer [
 
-	^ self selectedMessage
-		ifNotNil: [:message | 
-			message methodClass 
-				compile: text 
-				classified: message protocol
-				notifying: notifyer ]
+	^ self selectedMessage ifNotNil: [ :message | 
+		message methodClass 
+			compile: text 
+			classified: message protocol
+			notifying: notifyer ]
 ]
 
 { #category : #'text selection' }
@@ -173,7 +172,7 @@ MessageBrowser >> connectPresenters [
 	messageList
 		whenSelectionChangedDo: [ :selection | [ :item | self selectItem: item ] cull: selection selectedItem ];
 		whenModelChangedDo: [ self updateTitle ].
-	textModel acceptBlock: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ]
+	textModel whenSubmitDo: [ :text | (self accept: text notifying: nil) notNil ]
 ]
 
 { #category : #'text selection' }

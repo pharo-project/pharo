@@ -46,6 +46,11 @@ SpTablePresenter >> beResizable [
 	self isResizable: true
 ]
 
+{ #category : #emulating }
+SpTablePresenter >> clickOnColumnHeaderAt: anIndex [
+	self withAdapterDo: [ :tableAdapter | tableAdapter clickOnColumnHeaderAt: anIndex ]
+]
+
 { #category : #accessing }
 SpTablePresenter >> columns [
 

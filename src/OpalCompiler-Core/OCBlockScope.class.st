@@ -13,8 +13,8 @@ OCBlockScope >> hasEscapingVars [
 ]
 
 { #category : #accessing }
-OCBlockScope >> inComingCopiedVars [
-	^ copiedVars select: [:each | outerScope copiedVars includes: each]
+OCBlockScope >> inComingCopiedVarNames [
+	^ self copiedVarNames intersection: outerScope copiedVarNames
 ]
 
 { #category : #testing }

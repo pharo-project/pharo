@@ -498,7 +498,7 @@ OrderedDictionaryTest >> testAtIfAbsentPut [
 	| dictionary |
 
 	dictionary := self emptyDictionary.
-	self orderedAssociations do: [:each |
+	self orderedAssociations withIndexDo: [:each :i |
 		self assert:
 			(dictionary
 				at: each key
@@ -506,7 +506,10 @@ OrderedDictionaryTest >> testAtIfAbsentPut [
 		self assert:
 			(dictionary
 				at: each key
-				ifAbsentPut: [self fail]) equals: each value].
+				ifAbsentPut: [self fail]) equals: each value.
+		self
+			assertIsArray: dictionary keys
+			withElements: (self orderedKeysFirst: i) ]
 ]
 
 { #category : #tests }
@@ -547,6 +550,27 @@ OrderedDictionaryTest >> testAtIfPresentIfAbsent [
 				at: each key
 				ifPresent: [self newValue]
 				ifAbsent: [self fail]) equals: self newValue].
+]
+
+{ #category : #tests }
+OrderedDictionaryTest >> testAtIfPresentIfAbsentPut [
+	| dictionary |
+
+	dictionary := self emptyDictionary.
+	self orderedAssociations withIndexDo: [:each :i |
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [ self fail ]
+				ifAbsentPut: [ each value ]) equals: each value.
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [ :it | self newValue -> it ]
+				ifAbsentPut: [self fail]) equals: (self newValue -> each value).
+		self
+			assertIsArray: dictionary keys
+			withElements: (self orderedKeysFirst: i) ]
 ]
 
 { #category : #tests }
@@ -1198,7 +1222,7 @@ OrderedDictionaryTest >> testNewFromPairs [
 ]
 
 { #category : #tests }
-OrderedDictionaryTest >> testOccurancesOf [
+OrderedDictionaryTest >> testOccurencesOf [
 	| dictionary |
 
 	dictionary := self emptyDictionary.

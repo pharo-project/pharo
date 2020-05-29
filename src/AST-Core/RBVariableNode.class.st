@@ -76,8 +76,12 @@ RBVariableNode >> equalTo: anObject withMapping: aDictionary [
 
 { #category : #testing }
 RBVariableNode >> hasIncompleteIdentifier [
-	^ self binding isUndeclared
-		ifTrue: [ (self scope findVariable: [ :v | v name beginsWith: self name ] ifNone: [ nil ]) notNil]
+	"check if there is any variable declared in my scope that starts with my name"
+
+	"declared vars are never incomplete"
+	self binding isUndeclared ifFalse: [ ^false ].
+	"for the others we have to search from the current scope"
+	^self scope hasBindingThatBeginsWith: self name
 ]
 
 { #category : #comparing }
@@ -94,7 +98,12 @@ RBVariableNode >> initialize [
 
 { #category : #testing }
 RBVariableNode >> isDefinition [
-	^self parent isSequence and: [ self parent defines: name ]
+	"Check if I am a Variable defintion"
+	self parent isSequence
+		ifTrue: [ ^ self parent temporaries identityIncludes: self ].
+	(self parent isMethod or: [ self parent isBlock ])
+		ifTrue: [ ^ self parent arguments identityIncludes: self ].
+	^ false
 ]
 
 { #category : #testing }

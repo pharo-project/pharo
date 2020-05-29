@@ -27,6 +27,18 @@ SpLayoutDirection class >> vertical [
 	^ SpLayoutDirectionVertical uniqueInstance
 ]
 
+{ #category : #testing }
+SpLayoutDirection >> isHorizontal [
+
+	^ false
+]
+
+{ #category : #testing }
+SpLayoutDirection >> isVertical [
+
+	^ false
+]
+
 { #category : #factory }
 SpLayoutDirection >> newWidgetOn: anAdapter [
 

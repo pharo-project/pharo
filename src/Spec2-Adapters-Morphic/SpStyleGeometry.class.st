@@ -1,20 +1,43 @@
 "
-I'm a style to control the geometry of a widget. 
-I keep properties like 
+! Geometry properties (SpStyleGeometry)
 
-- extent
-- minExtent
-- maxExtent
-- vResizing
-- hResizing
+Geometry properties controls how the component (morph) will be arranged within its layout.
+
+- hResizing: the component can be resized horizontally? (boolean, default depends on how the morph behaves outside spec)
+- vResizing: the component can be resized vertically? (boolean, default depends on how the morph behaves outside spec)
+- width: fixed width of the component.
+- height: fixed height of the component.
+- minWidth: minimum width of the component (to use when ==hResizing=true==) 
+- minHeight: minimum height of the component (to use when ==vResizing=true==) 
+- maxWidth: maximum width of the component (to use when ==hResizing=true==) 
+- maxHeight: maximum height of the component (to use when ==vResizing=true==) 
+
+!! Usage
+The identifier of geometry in the stylesheet is ==Geometry==.
+
+[[[
+Geometry { 
+	#hResizing: false,
+	#vResizing: false,
+	#width: 100,
+	#height: 25,
+	#minWidth: 50,
+	#minHeight: 25,
+	#maxWidth: 150,
+	#maxHeight: 25
+}
+]]]
 "
 Class {
 	#name : #SpStyleGeometry,
 	#superclass : #SpStyleProperty,
 	#instVars : [
-		'extent',
-		'minExtent',
-		'maxExtent',
+		'width',
+		'height',
+		'minWidth',
+		'minHeight',
+		'maxWidth',
+		'maxHeight',
 		'hResizing',
 		'vResizing'
 	],
@@ -31,8 +54,8 @@ SpStyleGeometry class >> stonName [
 SpStyleGeometry >> applyTo: aMorph [
 
 	aMorph
-		width: (self geometryValueBetween: self extentOrDefault x and: aMorph width);		
-		height: (self geometryValueBetween: self extentOrDefault y and: aMorph height).
+		width: (self geometryValueBetween: self width and: aMorph width);		
+		height: (self geometryValueBetween: self height and: aMorph height).
 		
 	self hResizing ifNotNil: [ :aBoolean | 
 		aMorph hResizing: (self resizingStringFor: aBoolean) ].
@@ -52,19 +75,14 @@ SpStyleGeometry >> calculatedExtent [
 { #category : #accessing }
 SpStyleGeometry >> extent [
 
-	^ extent
+	^ self width @ self height
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> extent: aPoint [ 
 
-	extent := aPoint
-]
-
-{ #category : #private }
-SpStyleGeometry >> extentOrDefault [
-
-	^ extent ifNil: [ 0@0 ]
+	width := aPoint x.
+	height := aPoint y
 ]
 
 { #category : #private }
@@ -90,13 +108,13 @@ SpStyleGeometry >> hResizing: aBoolean [
 { #category : #accessing }
 SpStyleGeometry >> height [
 
-	^ self extent ifNotNil: [ :aPoint | aPoint y ]
+	^ height ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> height: aNumber [
 	
-	self extent: (self extentOrDefault x@aNumber)
+	height := aNumber
 ]
 
 { #category : #initialization }
@@ -109,82 +127,76 @@ SpStyleGeometry >> initialize [
 
 { #category : #accessing }
 SpStyleGeometry >> maxExtent [
-	^ maxExtent
+
+	^ self maxWidth @ self maxHeight
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> maxExtent: anObject [
-	maxExtent := anObject
-]
+SpStyleGeometry >> maxExtent: aPoint [
 
-{ #category : #private }
-SpStyleGeometry >> maxExtentOrDefault [
-
-	^ maxExtent ifNil: [ 0@0 ]
+	maxWidth := aPoint x.
+	maxHeight := aPoint y
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> maxHeight [
 
-	^ self maxExtent ifNotNil: [ :aPoint | aPoint y ]
+	^ maxHeight ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> maxHeight: aNumber [
 	
-	self maxExtent: (self maxExtentOrDefault x@aNumber)
+	maxHeight := aNumber
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> maxWidth [
 
-	^ self maxExtent ifNotNil: [ :aPoint | aPoint x ]
+	^ maxWidth ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> maxWidth: aNumber [
 
-	self maxExtent: (aNumber @ self maxExtentOrDefault y)
+	maxWidth := aNumber
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> minExtent [
-	^ minExtent
+
+	^ self minWidth @ self minHeight
 ]
 
 { #category : #accessing }
-SpStyleGeometry >> minExtent: anObject [
-	minExtent := anObject
-]
+SpStyleGeometry >> minExtent: aPoint [
 
-{ #category : #private }
-SpStyleGeometry >> minExtentOrDefault [
-
-	^ minExtent ifNil: [ 0@0 ]
+	minWidth := aPoint x.
+	minHeight := aPoint y
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> minHeight [
 
-	^ self minExtent ifNotNil: [ :aPoint | aPoint y ]
+	^ minHeight ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> minHeight: aNumber [
 	
-	self minExtent: (self minExtentOrDefault x@aNumber)
+	minHeight := aNumber
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> minWidth [
 
-	^ self minExtent ifNotNil: [ :aPoint | aPoint x ]
+	^ minWidth ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> minWidth: aNumber [
 
-	self minExtent: (aNumber @ self minExtentOrDefault y)
+	minWidth := aNumber
 ]
 
 { #category : #private }
@@ -210,11 +222,11 @@ SpStyleGeometry >> vResizing: aBoolean [
 { #category : #accessing }
 SpStyleGeometry >> width [
 
-	^ self extent ifNotNil: [ :aPoint | aPoint x ]
+	^ width ifNil: [ 0 ]
 ]
 
 { #category : #accessing }
 SpStyleGeometry >> width: aNumber [
 
-	self extent: (aNumber @ self extentOrDefault y)
+	width := aNumber
 ]

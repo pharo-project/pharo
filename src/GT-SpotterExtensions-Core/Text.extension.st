@@ -1,7 +1,7 @@
 Extension { #name : #Text }
 
 { #category : #'*GT-SpotterExtensions-Core' }
-Text >> spotterPreviewCodeIn: aComposite [
+Text >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	^ aComposite text
 		title: 'Contents';

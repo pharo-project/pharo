@@ -128,7 +128,7 @@ SycRefactoringPreview >> generateChanges [
 	changes := command asRefactorings.
 	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each | 
-		each model: ( RBClassModelFactory rbNamespace onEnvironment: rbEnvironment ).
+		each model environment: rbEnvironment.
 		each primitiveExecute ]
 ]
 
@@ -148,7 +148,9 @@ SycRefactoringPreview >> initializeDialogWindow: aDialogWindowPresenter [
 SycRefactoringPreview >> initializePresenter [
 	super initializePresenter.
 	table
-		whenSelectionChangedDo: [ :selection | self buildDiffFor: selection selectedItem ].
+		whenSelectionChangedDo: [ :selection | 
+			selection selectedItem ifNotNil: [ 
+				self buildDiffFor: selection selectedItem ] ].
 	table
 		whenActivatedDo: [ :selectedElement | 
 			self toggleSelectionOf: selectedElement widget selection selectedItem.

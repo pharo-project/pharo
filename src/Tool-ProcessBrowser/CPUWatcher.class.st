@@ -23,7 +23,8 @@ Class {
 	],
 	#classVars : [
 		'CpuWatcherEnabled',
-		'CurrentCPUWatcher'
+		'CurrentCPUWatcher',
+		'PigFinding'
 	],
 	#category : #'Tool-ProcessBrowser'
 }
@@ -78,6 +79,17 @@ CPUWatcher class >> monitorPreferenceChanged [
 	self cpuWatcherEnabled
 		ifTrue: [ self startMonitoring ]
 		ifFalse: [ self stopMonitoring ]
+]
+
+{ #category : #setting }
+CPUWatcher class >> pigFinding [
+	^ PigFinding ifNil: [PigFinding := false]
+]
+
+{ #category : #setting }
+CPUWatcher class >> pigFinding: aBoolean [
+	PigFinding := aBoolean.
+
 ]
 
 { #category : #'system startup' }
@@ -178,7 +190,8 @@ CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 		promise := Processor tallyCPUUsageFor: secs every: msecs.
 		tally := promise value.
 		promise := nil.
-		self findThePig.
+		self class pigFinding ifTrue: [
+			self findThePig ]
 	] repeat ] forkAt: Processor highestPriority.
 	Processor yield 
 ]

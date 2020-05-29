@@ -151,8 +151,7 @@ WeakRegistry >> protected: aBlock [
 
 	^ sema
 		critical: aBlock
-		ifError: [ :msg :rcvr |
-		rcvr error: msg ] 
+		ifError: [ :err | err signal ]
 ]
 
 { #category : #printing }

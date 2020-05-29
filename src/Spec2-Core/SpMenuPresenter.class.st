@@ -28,7 +28,7 @@ Class {
 	#superclass : #SpAbstractWidgetPresenter,
 	#instVars : [
 		'#groups',
-		'#title',
+		'#title => SpObservableSlot',
 		'#icon',
 		'#autoRefresh => SpObservableSlot',
 		'#shortcutGroup',
@@ -103,7 +103,7 @@ SpMenuPresenter >> autoRefresh: aBoolean [
 	autoRefresh := aBoolean
 ]
 
-{ #category : #api }
+{ #category : #'api-building' }
 SpMenuPresenter >> buildWithSpecAsPopup [
 
 	^ self buildWithSpec
@@ -173,12 +173,20 @@ SpMenuPresenter >> isMenuPresenter [
 	^ true
 ]
 
+{ #category : #localization }
+SpMenuPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #title
+	
+]
+
 { #category : #api }
 SpMenuPresenter >> menuGroups [
 	^ groups
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpMenuPresenter >> neglect: aModel [
 
 	aModel neglectMenuModel: self

@@ -146,7 +146,7 @@ RBExtractMethodTransformation >> calculateAssignments [
 RBExtractMethodTransformation >> calculateIfReturnIsNeeded [
 
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := self parseTreeSearcher.
 	searcher
 		matches: '^self' do: [:aNode :answer | answer];
 		matches: '^`@anything' do: [:aNode :answer | true].
@@ -335,10 +335,10 @@ RBExtractMethodTransformation >> preconditions [
 				allMethodsInHierarchyOf: self definingClass)
 				reject: [ :m | m selector = selector ].
 			
-			(RBParseTreeSearcher whichMethodIn: searchSpace matches: aSubtree)
+			(self parseTreeSearcherClass whichMethodIn: searchSpace matches: aSubtree)
 				ifNotEmpty: [ :opportunities |
 					self refactoringError: ('<1s> method(s) already implement this code.<n>Do you want to send a message instead?' expandMacrosWith: opportunities size asString)
-					with: [ (RBParseTreeRewriter
+					with: [ (self parseTreeRewriterClass 
 							  replaceCode: aSubtree
 							  byMessageSendTo: opportunities anyOne
 							  in: (self definingClass methodFor: self calculateTree selector))

@@ -2,7 +2,6 @@ Extension { #name : #SequenceableCollection }
 
 { #category : #'*GT-InspectorExtensions-Core' }
 SequenceableCollection >> gtInspectorItemsIn: composite [
-
 	^ composite fastTable
 		title: 'Items';
 		display: [ self ];
@@ -16,10 +15,7 @@ SequenceableCollection >> gtInspectorItemsIn: composite [
 		showOnly: 50;
 		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'."
 			result
-				ifNil: [ nil ]
 				ifNotNil: [ result size = 1
 						ifTrue: [ result anyOne ]
-						ifFalse: [ self species withAll: result ]
-					]
-			]
+						ifFalse: [ self species withAll: result ] ] ]
 ]

@@ -11,19 +11,18 @@ Class {
 	#category : #'Morphic-Core-Support'
 }
 
-{ #category : #'instance creation' }
-DamageRecorder class >> new [
-
-	^ super new reset
-
-]
-
 { #category : #recording }
 DamageRecorder >> doFullRepaint [
 	"Record that a full redisplay is needed. No further damage rectangles will be recorded until after the next reset."
 
-	^ totalRepaint := true.
+	^ totalRepaint := true
 
+]
+
+{ #category : #initialization }
+DamageRecorder >> initialize [
+	super initialize.
+	self reset
 ]
 
 { #category : #recording }
@@ -32,7 +31,7 @@ DamageRecorder >> invalidRectsFullBounds: aRectangle [
 
 	^ totalRepaint
 		ifTrue: [ Array with: aRectangle]
-		ifFalse: [ invalidRects copy].
+		ifFalse: [ invalidRects copy]
 
 
 ]

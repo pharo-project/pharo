@@ -9,7 +9,7 @@ Class {
 	#category : #'Monticello-Tests-Base'
 }
 
-{ #category : #running }
+{ #category : #mocks }
 MCMethodDefinitionTest >> override [ ^ 1
 ]
 

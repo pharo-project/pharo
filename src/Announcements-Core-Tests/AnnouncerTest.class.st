@@ -64,6 +64,19 @@ AnnouncerTest >> testAnnounceInstance [
 	self assert: (announcer announce: instance) equals: instance
 ]
 
+{ #category : #'tests - subscribing' }
+AnnouncerTest >> testAnnounceWorkWithinExceptionHandlerBlocks [
+	|  found |
+	
+	announcer when: Announcement do: [ found := true ].
+	
+	[ NotFound signal ]
+		on: NotFound
+		do: [ announcer announce: Announcement new ].
+		
+	self assert: found
+]
+
 { #category : #tests }
 AnnouncerTest >> testAnnouncingReentrant [
 	"Test that it is safe to announce when handling announcement,

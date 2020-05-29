@@ -47,6 +47,13 @@ SystemDictionaryTest >> testEnvironmentOfOrganization [
 ]
 
 { #category : #tests }
+SystemDictionaryTest >> testHasBindingThatBeginsWith [
+	super testHasBindingThatBeginsWith.
+	self assert: (Smalltalk globals hasBindingThatBeginsWith: 'Obje').
+	self deny: (Smalltalk globals hasBindingThatBeginsWith: 'NOTHEREIope')
+]
+
+{ #category : #tests }
 SystemDictionaryTest >> testOrganizationPerInstance [
 	| aDictionary otherDictionary |
 	aDictionary := SystemDictionary withOrganizer: SystemOrganizer new.

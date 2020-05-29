@@ -111,11 +111,6 @@ RubScrolledTextModel >> hasBindingOf: aString [
 	^ interactionModel ifNil: [ false ] ifNotNil: [ interactionModel hasBindingOf: aString ]
 ]
 
-{ #category : #shout }
-RubScrolledTextModel >> hasBindingThatBeginsWith: aString [ 
-	^ interactionModel ifNil: [ false ] ifNotNil:  [ interactionModel hasBindingThatBeginsWith: aString  ]
-]
-
 { #category : #accessing }
 RubScrolledTextModel >> hasUnacceptedEdits [
 	^ hasUnacceptedEdits ifNil: [ hasUnacceptedEdits := false ]

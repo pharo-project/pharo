@@ -1,3 +1,7 @@
+"
+I am a full width bar for presenting contextual actions.
+This is like the small action bars at the bottom of a list in most mobile apps (or macOS), which shows small icons with actions.
+"
 Class {
 	#name : #SpActionBarPresenter,
 	#superclass : #SpAbstractWidgetPresenter,

@@ -78,22 +78,18 @@ SpecDialogWindow >> model: aModel [
 
 { #category : #accessing }
 SpecDialogWindow >> newButtonRow [
-
-	^ self toolbar 
-		ifNil: [ nil ]
-		ifNotNil: [ : t | t buildWithSpec ]
+	^ self toolbar ifNotNil: [ :t | t buildWithSpec ]
 ]
 
 { #category : #accessing }
 SpecDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
-	^ self specWidget 
-			ifNil: [ nil ] 
-			ifNotNil: [:w | 
-				w
-					hResizing: #spaceFill;
-					vResizing: #spaceFill ]
+	^ self specWidget
+		ifNotNil: [ :w | 
+			w
+				hResizing: #spaceFill;
+				vResizing: #spaceFill ]
 ]
 
 { #category : #actions }

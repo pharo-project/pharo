@@ -12,7 +12,7 @@ Class {
 		'ClassVar',
 		'singleton'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Data'
 }
 
 { #category : #options }
@@ -194,9 +194,7 @@ ReflectivityExamples >> exampleWithArg: anArg [
 { #category : #initialization }
 ReflectivityExamples >> initialize [
 	ivar := 33.
-	ClassVar := #AClassVar.
-	self removeTemporaryMethods.
-	self compileTemporaryMethods
+	ClassVar := #AClassVar
 ]
 
 { #category : #initialization }

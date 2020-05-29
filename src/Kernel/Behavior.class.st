@@ -1587,8 +1587,8 @@ Behavior >> sourceCodeTemplate [
 	"Answer an expression to be edited and evaluated in order to define 
 	methods in this class or trait."
 
-	^ 'messageSelectorAndArgumentNames
-	"comment stating purpose of instance-side message"
+	^ 'methodSelectorAndArgumentNames
+	"comment stating purpose of instance-side method"
 	"scope: class-variables  &  instance-variables"	
 			
 	| temporary variable names |

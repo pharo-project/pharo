@@ -24,13 +24,13 @@ SpDemoToolBarPresenter class >> defaultSpec [
 SpDemoToolBarPresenter >> initializePresenters [
 	
 	toolBar := self newToolBar
-		addItem: (SpToolBarButton new
+		addItem: (SpToolBarButtonPresenter new
 			label: 'Ok';
 			icon: (self iconNamed: #smallOk);
 			help: 'Ok';
 			action: [ self inform: 'Ok' ];
 			yourself);
-		addItem: (SpToolBarButton new
+		addItem: (SpToolBarButtonPresenter new
 			label: 'Cancel';
 			icon: (self iconNamed: #smallCancel);
 			help: 'Cancel';

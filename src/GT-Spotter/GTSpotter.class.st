@@ -93,11 +93,39 @@ GTSpotter class >> on: anObject [
 ]
 
 { #category : #accessing }
+GTSpotter class >> previewVisible [
+
+	^ self isPreviewVisible 
+]
+
+{ #category : #accessing }
+GTSpotter class >> previewVisible: aValue [
+
+	isPreviewVisible := aValue
+]
+
+{ #category : #accessing }
 GTSpotter class >> resetHistory [
 	"
 	self resetHistory
 	"
 	^ history := nil
+]
+
+{ #category : #testing }
+GTSpotter class >> settingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #spotter)
+		parent: #tools;
+		label: 'Spotter';
+		description: 'Spotter configuration'.
+
+	(aBuilder setting: #previewVisible)
+		parent: #spotter;
+		default: false;
+		target: self;
+		description: 'If Spotter will show the preview panel on the right of spotter';
+		label: 'Show Preview Panel'.
 ]
 
 { #category : #accessing }
@@ -173,16 +201,6 @@ GTSpotter >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #'accessing-convenience' }
-GTSpotter >> beDebugging [
-	self exceptionHandler: GTSpotterDebuggingExceptionHandler new
-]
-
-{ #category : #'accessing-convenience' }
-GTSpotter >> beDeployment [
-	self exceptionHandler: GTSpotterDeploymentExceptionHandler new
-]
-
 { #category : #accessing }
 GTSpotter >> currentStep [
 	^ currentStep
@@ -196,11 +214,6 @@ GTSpotter >> currentStep: aStepModel [
 	
 	currentStep := aStepModel.
 	self notifyCurrentStepChanged
-]
-
-{ #category : #'accessing-defaults' }
-GTSpotter >> defaultExceptionHandler [
-	^ GTSpotterDeploymentExceptionHandler new
 ]
 
 { #category : #accessing }
@@ -225,16 +238,6 @@ GTSpotter >> doIt [
 		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
 		exceptionDo: [:ex | ^ex ]. 
 	"self exitDueTo: #doIt"
-]
-
-{ #category : #accessing }
-GTSpotter >> exceptionHandler [
-	^ exceptionHandler ifNil: [ exceptionHandler := self defaultExceptionHandler ]
-]
-
-{ #category : #accessing }
-GTSpotter >> exceptionHandler: anObject [
-	exceptionHandler := anObject
 ]
 
 { #category : #'actions api' }
@@ -282,11 +285,6 @@ GTSpotter >> getText [
 GTSpotter >> gtDisplayOn: stream [
 
 	stream nextPutAll: 'Spotter'
-]
-
-{ #category : #'event handling' }
-GTSpotter >> handleExceptionsDuring: aBlock [
-	self exceptionHandler handleExceptionsDuring: aBlock
 ]
 
 { #category : #testing }
@@ -343,7 +341,9 @@ GTSpotter >> initialize [
 
 { #category : #testing }
 GTSpotter >> isEmpty [
-	self deprecated: 'Use hasSteps instead'.
+	self 
+		deprecated: 'Use hasSteps instead'
+		transformWith: '`@rec isEmpty' -> '`@rec hasSteps not'.
 	^ self hasSteps not
 ]
 
@@ -368,8 +368,17 @@ GTSpotter >> menu [
 { #category : #'instance creation' }
 GTSpotter >> newStep [
 
-	^ self defaultStep
-		spotter: self
+	| step |
+	
+	step := self defaultStep
+						spotter: self;
+						yourself.
+	
+	step announcer 
+			when: GTSpotterQueryStarted send: #propagateEvent: to: self;
+			when: GTSpotterQueryEnded send: #propagateEvent: to: self.
+
+	^ step
 ]
 
 { #category : #notifying }
@@ -497,6 +506,12 @@ GTSpotter >> processorsFilter: aFilter [
 	processorsFilter := aFilter
 ]
 
+{ #category : #'event handling' }
+GTSpotter >> propagateEvent: ann [
+
+	self announcer announce: ann	
+]
+
 { #category : #'actions api' }
 GTSpotter >> pushStep: stepModel [
 	
@@ -527,6 +542,18 @@ GTSpotter >> setText: aText from: aView [
 	
 	text := aText asString asText.
 	^ true
+]
+
+{ #category : #'processors-discovery' }
+GTSpotter >> spotterProcessorsFor: aSpotterStep [
+
+	| processors |
+
+	processors := AbstractSpotterProcessor allEnabledSubclasses	collect: [ :e | e new ].
+
+	processors sort: [ :a :b | a order < b order ].
+		
+	processors do: [ :e | e configureOn: aSpotterStep ].
 ]
 
 { #category : #accessing }

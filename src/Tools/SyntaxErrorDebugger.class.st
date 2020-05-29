@@ -11,29 +11,28 @@ Class {
 		'contents',
 		'class',
 		'selector',
-		'category',
 		'debugSession',
-		'doitFlag',
-		'dependents',
+		'window',
+		'editor',
 		'location',
-		'error',
 		'announcer',
-		'syntaxError'
+		'syntaxError',
+		'errorMessage'
 	],
 	#category : #'Tools-Debugger'
 }
 
 { #category : #'instance creation' }
-SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxError [
+SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxErrorDebugger [
 	"Answer an Morphic view on the given SyntaxError."
 
-	| window |
-	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxError error)
-		model: aSyntaxError.
+	| window editor |
+	window := (SystemWindow labelled: 'Syntax Error: ' , aSyntaxErrorDebugger errorMessage)
+		model: aSyntaxErrorDebugger.
 	window
 		addMorph:
 			((PluggableListMorph
-				on: aSyntaxError
+				on: aSyntaxErrorDebugger
 				list: #list
 				selected: #listIndex
 				changeSelected: nil
@@ -41,20 +40,21 @@ SyntaxErrorDebugger class >> buildMorphicViewOn: aSyntaxError [
 		frame: (0 @ 0 corner: 1 @ 0.15).
 	window
 		addMorph:
-			(RubScrolledTextMorph new
-				on: aSyntaxError
+			(editor := RubScrolledTextMorph new
+				on: aSyntaxErrorDebugger
 				text: #contents
 				accept: #contents:notifying:
 				readSelection: #contentsSelection
 				menu: #codePaneMenu:shifted:)
 		frame: (0 @ 0.15 corner: 1 @ 1).
-	aSyntaxError addDependant: window.
+	aSyntaxErrorDebugger window: window.
+	aSyntaxErrorDebugger editor: editor.
 	window extent: 380 @ 220.
 	^ window openInWorld
 ]
 
 { #category : #'instance creation' }
-SyntaxErrorDebugger class >> open: aSyntaxError [ 
+SyntaxErrorDebugger class >> open: aSyntaxErrorDebugger [
 	"Answer a standard system view whose model is an instance of me."
 	<primitive: 19>
 	"Simulation guard"
@@ -62,7 +62,7 @@ SyntaxErrorDebugger class >> open: aSyntaxError [
 	process := Processor activeProcess.
 	UIManager default spawnNewProcessIfThisIsUI: process.
 	UIManager default defer: [
-		self buildMorphicViewOn: aSyntaxError.
+		self buildMorphicViewOn: aSyntaxErrorDebugger.
 	].
 	^ process suspend
 ]
@@ -83,11 +83,6 @@ SyntaxErrorDebugger class >> syntaxError: aSyntaxError [
 		
 ]
 
-{ #category : #'dependents access' }
-SyntaxErrorDebugger >> addDependant: aDependant [
-	dependents add: aDependant
-]
-
 { #category : #accessing }
 SyntaxErrorDebugger >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
@@ -103,12 +98,9 @@ SyntaxErrorDebugger >> browseMethodFull [
 			openOnClass: myClass selector: self selectedMessageName]
 ]
 
-{ #category : #accessing }
-SyntaxErrorDebugger >> category: aSymbol [
-	"Record the message category of method being compiled. This is used when the user corrects the error and accepts."
-
-	category := aSymbol.
-
+{ #category : #other }
+SyntaxErrorDebugger >> category [
+	^(class organization categoryOfElement: selector) ifNil: [ Protocol unclassified ]
 ]
 
 { #category : #initialization }
@@ -126,8 +118,8 @@ SyntaxErrorDebugger >> checkForUnprintableCharacters: aString [
 
 { #category : #other }
 SyntaxErrorDebugger >> closeWindow [
-
-	self topView close
+	debugSession ifNotNil: [ debugSession terminate ].
+	window close
 
 ]
 
@@ -138,7 +130,7 @@ SyntaxErrorDebugger >> codePaneMenu: aMenu shifted: shifted [
 	text pane"
 
 	| donorMenu |
-	donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: self)
+	donorMenu := (PragmaMenuBuilder pragmaKeyword: RubSmalltalkCodeMode menuKeyword model: editor)
 		menu.
 	^ aMenu addAllFrom: donorMenu
 ]
@@ -159,7 +151,7 @@ SyntaxErrorDebugger >> contents: aString notifying: aController [
 
 	aController hasUnacceptedEdits: false.
 	
-	doitFlag
+	syntaxError doitFlag
 		ifTrue: [ self class compiler evaluate: aString ]
 		ifFalse: [ self resume: aString ].
 	self closeWindow
@@ -182,8 +174,13 @@ SyntaxErrorDebugger >> debug [
 ]
 
 { #category : #accessing }
-SyntaxErrorDebugger >> error [
-	^ error
+SyntaxErrorDebugger >> editor: anEditor [
+	editor := anEditor
+]
+
+{ #category : #accessing }
+SyntaxErrorDebugger >> errorMessage [
+	^ errorMessage
 ]
 
 { #category : #initialization }
@@ -201,18 +198,13 @@ SyntaxErrorDebugger >> highlightError [
 	contents addAttribute: TextEmphasis bold from: location to: location + self sourceErrorString size - 1.
 ]
 
-{ #category : #initialization }
-SyntaxErrorDebugger >> initialize [
-	dependents := Set new.
-]
-
 { #category : #'message list' }
 SyntaxErrorDebugger >> list [
 	"Answer an array of one element made up of the class name, message category, and message selector in which the syntax error was found. This is the single item in the message list of a view/browser on the receiver."
 
-	selector ifNil: [^ Array with: (class name, '  ', (category ifNil: ['']), '  ', '<none>')].
-	category ifNil: [^ Array with: (class name, '    ', '<none>')].
-	^ Array with: (class name, '  ', category, '  ', selector)
+	selector ifNil: [^ Array with: (class name, '  ', (self category ifNil: ['']), '  ', '<none>')].
+	self category ifNil: [^ Array with: (class name, '    ', '<none>')].
+	^ Array with: (class name, '  ', self category, '  ', selector)
 
 ]
 
@@ -234,7 +226,7 @@ SyntaxErrorDebugger >> listMenu: aMenu [
 	^aMenu addList: {
 		{'Proceed' . #proceed}.
 		{'Debug calling process' . #debug}.
-		{'Browse full translated' . #browseMethodFull}}.
+		{'Browse full' . #browseMethodFull}}.
 ]
 
 { #category : #accessing }
@@ -249,15 +241,6 @@ SyntaxErrorDebugger >> proceed [
 	debugSession 
 			resume;
 			clear
-]
-
-{ #category : #initialization }
-SyntaxErrorDebugger >> release [
-	"Prevent that syntaxError window lets a suspended compiler process running, when the window is closed."
-
-	debugSession ifNotNil: [ debugSession terminate ].
-	self releaseActionMap. "we are not sure if we need it"
-	super release.
 ]
 
 { #category : #menu }
@@ -292,22 +275,6 @@ SyntaxErrorDebugger >> selectedMessageName [
 
 ]
 
-{ #category : #initialization }
-SyntaxErrorDebugger >> setClass: aClass code: aString error: errorMessage location: anErrorPosition debugSession: aDebugSession doitFlag: flag [
-
-	class := aClass.
-	error := errorMessage.
-	location := anErrorPosition.	
-	debugSession := aDebugSession.
-	selector := aClass compiler parseSelector: aString.
-	contents := self checkForUnprintableCharacters: aString.
-	self highlightError.
-		
-	category ifNil: [ category := aClass organization categoryOfElement: selector ].
-	category ifNil: [ category := Protocol unclassified ].
-	doitFlag := flag
-]
-
 { #category : #other }
 SyntaxErrorDebugger >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ true
@@ -315,7 +282,7 @@ SyntaxErrorDebugger >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 
 { #category : #accessing }
 SyntaxErrorDebugger >> sourceErrorString [
-	^ error , ' -> '
+	^ errorMessage , ' -> '
 ]
 
 { #category : #initialization }
@@ -323,25 +290,21 @@ SyntaxErrorDebugger >> syntaxError: aSyntaxError [
 	"extract the instance properties from a SyntaxErrorNotification"
 	
 	syntaxError := aSyntaxError.
-	self 
-		setClass: aSyntaxError errorClass
-		code: aSyntaxError errorCode
-		error: aSyntaxError errorMessage
-		location: aSyntaxError location
-		debugSession: (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext)
-		doitFlag: aSyntaxError doitFlag.
+	class :=  aSyntaxError errorClass.
+	errorMessage := aSyntaxError errorMessage.
+	location := aSyntaxError location.	
+	debugSession := (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext).
+	contents := self checkForUnprintableCharacters: aSyntaxError errorCode.
+	selector := class compiler parseSelector: contents.	
+	self highlightError
 ]
 
 { #category : #accessing }
-SyntaxErrorDebugger >> topView [
-	"Find the first top view on me. Is there any danger of their being two
-	with the same model? Any danger from ungarbage collected old views?
-	Ask if schedulled?"
-	dependents
-		ifNil: [^ nil].
-	dependents
-		do: [:v | (v isSystemWindow
-					and: [v isInWorld])
-				ifTrue: [^ v]].
-	^ nil
+SyntaxErrorDebugger >> window [
+	^window
+]
+
+{ #category : #accessing }
+SyntaxErrorDebugger >> window: aWindow [
+	window := aWindow
 ]

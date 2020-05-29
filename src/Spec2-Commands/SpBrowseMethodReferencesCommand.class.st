@@ -20,5 +20,6 @@ SpBrowseMethodReferencesCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseMethodReferencesCommand >> execute [
+
 	self systemNavigation browseAllReferencesTo: self selector
 ]

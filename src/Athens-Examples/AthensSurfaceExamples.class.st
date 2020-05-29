@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'renderBlock'
 	],
-	#category : #'Athens-Examples-Demos'
+	#category : #'Athens-Examples-Base'
 }
 
 { #category : #examples }

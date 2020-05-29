@@ -759,11 +759,6 @@ SmalltalkImage >> growMemoryByAtLeast: numBytes [
 	^self primitiveFailed
 ]
 
-{ #category : #'to clean later' }
-SmalltalkImage >> hasBindingThatBeginsWith: aString [
-	^globals hasBindingThatBeginsWith: aString
-]
-
 { #category : #'class and trait names' }
 SmalltalkImage >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not alrady interned."
@@ -883,6 +878,22 @@ SmalltalkImage >> isInteractive [
 		(#('-interactive') includes: (self vm getSystemAttribute: n)) 
 			ifTrue: [ ^ true ]].
 	
+	^ false
+]
+
+{ #category : #testing }
+SmalltalkImage >> isInteractiveGraphic [
+	"Check if vm were run headless and with interactive (graphics) parameter.
+	 Using the headless VM, the need of a GUI environment is indicated by sending --interactive 
+	 parameter to the image."
+	
+	"non-headless mode is always interactive"
+	self isHeadless ifFalse: [ ^ true ].
+
+	-1000 to: 1000 do: [ :n | 
+		(#('--interactive') includes: (self vm getSystemAttribute: n)) 
+			ifTrue: [ ^ true ]].
+
 	^ false
 ]
 
@@ -1431,13 +1442,13 @@ SmalltalkImage >> privSaveImageWithCleanup [
  
 	[
 		self snapshot: true andQuit: true.
-	] ifError: [:e |
+	] onErrorDo: [:e |
 		'PharoDebug.log' asFileReference ensureDelete; writeStreamDo: [ :rep |
 			rep nextPutAll: 'Error:'; cr.
 			rep nextPutAll: e asString; cr.
 	  		rep nextPutAll: thisContext stack size asString.
 	 	  	thisContext stack copy withIndexDo: [:stck :i |
-				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifError: []]]. 
+				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] onErrorDo: []]]. 
 		Smalltalk exitFailure ]
 ]
 
@@ -1635,22 +1646,23 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 { #category : #saving }
 SmalltalkImage >> saveAsNewVersion [
 	"Save the image/changes using the next available version number."
-	"SmalltalkImage current saveAsNewVersion"
-	
-	| newImageFile newChangesFile strippedName |
-	newImageFile := self imageFile nextVersion.
-	newChangesFile := newImageFile withExtension: self changesSuffix.
 
-	newChangesFile exists ifTrue:
-		[^self inform:
-'There is already .changes file of the desired name,
-', newChangesFile fullName, '
+	"SmalltalkImage current saveAsNewVersion"
+
+	| newImageFile strippedName |
+	newImageFile := self imageFile nextVersion.
+	(newImageFile withExtension: self changesSuffix)
+		ifExists: [ :newChangesFile | 
+			^ self
+				inform:
+					'There is already .changes file of the desired name,
+' , newChangesFile fullName , '
 curiously already present, even though there is
-no corresponding .', self imageSuffix,' file.   Please remedy
-manually and then repeat your request.'].
+no corresponding .' , self imageSuffix , ' file.   Please remedy
+manually and then repeat your request.' ].
 
 	strippedName := self stripImageExtensionFrom: newImageFile fullName.
-	^self saveAs: strippedName
+	^ self saveAs: strippedName
 ]
 
 { #category : #saving }

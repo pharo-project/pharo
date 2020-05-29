@@ -322,9 +322,9 @@ ReflectiveMethod >> spotterMethodClassFor: aStep [
 ]
 
 { #category : #spotter }
-ReflectiveMethod >> spotterPreviewCodeIn: aComposite [
+ReflectiveMethod >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
-	self compiledMethod spotterPreviewCodeIn: aComposite
+	self compiledMethod spotterPreviewIn: aComposite
 ]
 
 { #category : #spotter }

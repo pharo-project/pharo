@@ -104,11 +104,6 @@ RubTextAreaExamples class >> hasBindingOf: aString [
 	
 ]
 
-{ #category : #shout }
-RubTextAreaExamples class >> hasBindingThatBeginsWith: aString [
-	^false
-]
-
 { #category : #accessing }
 RubTextAreaExamples class >> interactionModel [
 	^ ModelForShout 

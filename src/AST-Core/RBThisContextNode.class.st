@@ -28,3 +28,8 @@ RBThisContextNode >> isGlobal [
 RBThisContextNode >> isInstance [
 	^ false
 ]
+
+{ #category : #testing }
+RBThisContextNode >> isThisContext [
+	^ true
+]

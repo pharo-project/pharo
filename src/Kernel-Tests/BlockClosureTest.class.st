@@ -143,12 +143,11 @@ BlockClosureTest >> testCullCullCullCull [
 BlockClosureTest >> testNew [
 	self	should: [Context new: 5] raise: Error.
 	[Context new: 5]
-		ifError: [:error | error = 'Error: Contexts must only be created with newForMethod:'].
+		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].
 	[Context new]
-		ifError: [:error  | error = 'Error: Contexts must only be created with newForMethod:'].	
+		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].	
 	[Context basicNew]
-		ifError: [:error | error = 'Error: Contexts must only be created with newForMethod:'].				
-
+		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:'].
 
 ]
 
@@ -158,8 +157,14 @@ BlockClosureTest >> testNoArguments [
 	"avoid compile error in GemStone"
 	block1 := [ :arg | 1 + 2 ].
 	block2 := [ :arg1 :arg2 | 1 + 2 ].
-	[ 10 timesRepeat: block1 ] ifError: [ :err | self deny: err equals: 'This block requires 1 arguments.' ].
-	[ 10 timesRepeat: block2 ] ifError: [ :err | self deny: err equals: 'This block requires 2 arguments.' ]
+	[ 10 timesRepeat: block1 ] onErrorDo: [ :err | self assert: err description equals: 'ArgumentsCountMismatch: This block accepts 1 argument, but was called with 0 arguments.' ].
+	[ 10 timesRepeat: block2 ] onErrorDo: [ :err | self assert: err description equals: 'ArgumentsCountMismatch: This block accepts 2 arguments, but was called with 0 arguments.' ]
+]
+
+{ #category : #tests }
+BlockClosureTest >> testOnErrorDo [
+
+	self assert: ([1 foo ] onErrorDo: [:err | 'huh?']) equals: 'huh?'
 ]
 
 { #category : #'tests - on-fork' }
@@ -271,8 +276,8 @@ BlockClosureTest >> testOneArgument [
 	| c |
 	c := OrderedCollection new.
 	c add: 'hello'.
-	[ c do: [ 1 + 2 ] ] ifError: [ :err | self deny: err equals: 'This block requires 0 arguments.' ].
-	[ c do: [ :arg1 :arg2 | 1 + 2 ] ] ifError: [ :err | self deny: err equals: 'This block requires 2 arguments.' ]
+	[ c do: [ 1 + 2 ] ] onErrorDo: [ :err | self assert: err description equals: 'ArgumentsCountMismatch: This block accepts 0 arguments, but was called with 1 argument.' ].
+	[ c do: [ :arg1 :arg2 | 1 + 2 ] ] onErrorDo: [ :err | self assert: err description equals: 'ArgumentsCountMismatch: This block accepts 2 arguments, but was called with 1 argument.' ]
 ]
 
 { #category : #'tests - printing' }
@@ -308,18 +313,24 @@ BlockClosureTest >> testSetUp [
 	self assert: (aBlockContext method isNil or: [ aBlockContext method isKindOf: CompiledCode ])
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
-
-	self should: ['blue' = ([UIManager default request: 'Your favorite color?'] 
-		valueSupplyingAnswer: #('Your favorite color?' 'blue'))]
+	self
+		assert:
+			([ UIManager default request: 'Your favorite color?' ]
+				valueSupplyingAnswer: #('Your favorite color?' 'blue'))
+		equals: 'blue'
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
-
-	self should: ['red' = ([UIManager default  request: 'Your favorite color?' initialAnswer: 'red'] 
-		valueSupplyingAnswer: #('Your favorite color?' #default))]
+	self
+		assert:
+			([ UIManager default
+				request: 'Your favorite color?'
+				initialAnswer: 'red' ]
+				valueSupplyingAnswer: #('Your favorite color?' #default))
+		equals: 'red'
 ]
 
 { #category : #tests }
