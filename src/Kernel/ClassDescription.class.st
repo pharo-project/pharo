@@ -342,17 +342,12 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 
 	| found remaining |
 	found := OrderedCollection new.
-	selectorSet do:
-		[:sel | (self includesSelector: sel) ifTrue: [found add: sel]].
-	found isEmpty
-		ifTrue: [^ self subclasses inject: Array new
-						into: [:subsThatDo :sub |
-							subsThatDo , (sub classesThatImplementAllOf: selectorSet)]]
-		ifFalse: [remaining := selectorSet copyWithoutAll: found.
-				remaining isEmpty ifTrue: [^ Array with: self].
-				^ self subclasses inject: Array new
-						into: [:subsThatDo :sub |
-							subsThatDo , (sub classesThatImplementAllOf: remaining)]]
+	selectorSet do: [ :sel | (self includesSelector: sel) ifTrue: [ found add: sel ] ].
+	^ found
+		ifEmpty: [ self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: selectorSet) ] ]
+		ifNotEmpty: [ remaining := selectorSet copyWithoutAll: found.
+			remaining ifEmpty: [ ^ Array with: self ].
+			self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: remaining) ] ]
 ]
 
 { #category : #'accessing comment' }

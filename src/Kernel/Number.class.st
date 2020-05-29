@@ -72,8 +72,9 @@ Number class >> readExponent: baseValue base: base from: aStream [
 ]
 
 { #category : #deprecated }
-Number class >> readRemainderOf: integerPart from: aStream base: base withSign: sign [ 
+Number class >> readRemainderOf: integerPart from: aStream base: base withSign: sign [
 	"Read optional fractional part and exponent or decimal scale, and return the final result"
+
 	"Number readFrom: '3r-22.2'"
 
 	| value fractionDigits fracpos fractionPart fraction pos v foundDecimal |
@@ -81,69 +82,63 @@ Number class >> readRemainderOf: integerPart from: aStream base: base withSign: 
 	fractionDigits := 0.
 	foundDecimal := false.
 	(aStream peekFor: $.)
-		ifTrue: ["<integer>.<fraction>"
+		ifTrue: [ "<integer>.<fraction>"
 			foundDecimal := true.
-			(aStream atEnd not
-					and: [aStream peek digitValue between: 0 and: base - 1])
-				ifTrue: [fracpos := aStream position.
+			(aStream atEnd not and: [ aStream peek digitValue between: 0 and: base - 1 ])
+				ifTrue: [ fracpos := aStream position.
 					fractionPart := Integer readFrom: aStream base: base.
-					fraction := fractionPart asFloat
-								/ (base raisedTo: aStream position - fracpos).
+					fraction := fractionPart asFloat / (base raisedTo: aStream position - fracpos).
 					fractionDigits := aStream position - fracpos.
-					value := value asFloat + fraction]].
+					value := value asFloat + fraction ] ].
 
 	pos := aStream position.
-	(v := self readScaledDecimal: integerPart
-			fractionPart: fractionPart
-			digits: fractionDigits
-			base: base
-			sign: sign
-			from: aStream)
-		ifNil: [aStream position: pos]
-		ifNotNil: [^ v "<number>s<scale>>"].
+	(v := self
+		readScaledDecimal: integerPart
+		fractionPart: fractionPart
+		digits: fractionDigits
+		base: base
+		sign: sign
+		from: aStream)
+		ifNil: [ aStream position: pos ]
+		ifNotNil: [ ^ v	"<number>s<scale>>" ].
 
 	pos := aStream position.
 	(v := self readExponent: value base: base from: aStream)
-		ifNil: [aStream position: pos.
-			(foundDecimal and: [fractionDigits = 0])
-				ifTrue: ["oops - just <integer>."
-							aStream skip: -1.
-							"un-gobble the period"
-							^ value * sign]]
-		ifNotNil: [value := v "<number>(e|d|q)<exponent>>"].
-
-	(value isFloat
-			and: [value = 0.0
-					and: [sign = -1]])
-		ifTrue: [^ Float negativeZero]
-		ifFalse: [^ value * sign]
+		ifNil: [ aStream position: pos.
+			(foundDecimal and: [ fractionDigits = 0 ])
+				ifTrue: [ "oops - just <integer>."
+					aStream skip: -1.
+					"un-gobble the period"
+					^ value * sign ] ]
+		ifNotNil: [ value := v	"<number>(e|d|q)<exponent>>" ].
+	^ (value isFloat and: [ value = 0.0 and: [ sign = -1 ] ])
+		ifTrue: [ Float negativeZero ]
+		ifFalse: [ value * sign ]
 ]
 
 { #category : #deprecated }
-Number class >> readScaledDecimal: integerPart fractionPart: fractionPart digits: fractionDigits base: base sign: sign from: aStream [ 
+Number class >> readScaledDecimal: integerPart fractionPart: fractionPart digits: fractionDigits base: base sign: sign from: aStream [
 	"Complete creation of a ScaledDecimal, reading scale from aStream. Answer
 	a ScaledDecimal, or nil if parsing fails.
 	<number>s[<scale>]"
 
 	| scale decimalMultiplier decimalFraction |
-	aStream atEnd ifTrue: [^ nil].
-	(aStream next == $s) ifFalse: [^ nil].
+	aStream atEnd ifTrue: [ ^ nil ].
+	aStream next == $s ifFalse: [ ^ nil ].
 	"<number>s<scale>"
-	(aStream atEnd not and: [aStream peek digitValue between: 0 and: 9])
-		ifTrue: [scale := Integer readFrom: aStream]
-		ifFalse: [^ nil].
-	scale 
-		ifNil: ["<number>s"
+	(aStream atEnd not and: [ aStream peek digitValue between: 0 and: 9 ])
+		ifTrue: [ scale := Integer readFrom: aStream ]
+		ifFalse: [ ^ nil ].
+	scale
+		ifNil: [ "<number>s"
 			fractionDigits = 0
-				ifTrue: ["<integer>s"
-					scale := 0]
-				ifFalse: ["<integer>.<fraction>s"
-					scale := fractionDigits]].
-	fractionPart 
-		ifNil: [^integerPart * sign asScaledDecimal: scale]
-		ifNotNil: [decimalMultiplier := base raisedTo: fractionDigits.
-			decimalFraction := integerPart * decimalMultiplier + fractionPart * sign / decimalMultiplier.
-			^decimalFraction asScaledDecimal: scale]
+				ifTrue: [ "<integer>s" scale := 0 ]
+				ifFalse: [ "<integer>.<fraction>s" scale := fractionDigits ] ].
+	^ fractionPart
+		ifNil: [ integerPart * sign asScaledDecimal: scale ]
+		ifNotNil: [ decimalMultiplier := base raisedTo: fractionDigits.
+			decimalFraction := (integerPart * decimalMultiplier + fractionPart) * sign / decimalMultiplier.
+			decimalFraction asScaledDecimal: scale ]
 ]
 
 { #category : #arithmetic }
@@ -210,9 +205,9 @@ Number >> abs [
 	"Answer a Number that is the absolute value (positive magnitude) of the 
 	receiver."
 
-	self < 0
-		ifTrue: [^self negated]
-		ifFalse: [^self]
+	^ self < 0
+		ifTrue: [ self negated ]
+		ifFalse: [ self ]
 ]
 
 { #category : #converting }
@@ -398,10 +393,10 @@ Number >> floor [
 
 	| truncation |
 	truncation := self truncated.
-	self >= 0 ifTrue: [^truncation].
-	self = truncation
-		ifTrue: [^truncation]
-		ifFalse: [^truncation - 1]
+	self >= 0 ifTrue: [ ^ truncation ].
+	^ self = truncation
+		ifTrue: [ truncation ]
+		ifFalse: [ truncation - 1 ]
 ]
 
 { #category : #'truncation and round off' }
@@ -602,29 +597,28 @@ Number >> quo: aNumber [
 ]
 
 { #category : #'mathematical functions' }
-Number >> raisedTo: aNumber [ 
+Number >> raisedTo: aNumber [
 	"Answer the receiver raised to aNumber."
-	
+
 	"(2 raisedTo: 8) >>> 256"
+
 	"(8 raisedTo: 2) >>> 64"
+
 	"(2 raisedTo: (1/12)) >>> 1.0594630943592953"
+
 	"(2 raisedTo: -1) >>> (1/2)"
 
-	aNumber isInteger ifTrue: [
-		"Do the special case of integer power"
-		^ self raisedToInteger: aNumber].
-	aNumber isFraction ifTrue: [
-		"Special case for fraction power"
-		^ self raisedToFraction: aNumber].
-	self < 0 ifTrue: [
-		^ ArithmeticError signal: 'Negative numbers can''t be raised to float powers.' ].
-	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
-	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
-	0 = self ifTrue: [				"Special case of self = 0"
-		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: 1) signal]
-			ifFalse: [^ self]].
-	^ (aNumber * self ln) exp		"Otherwise use logarithms"
+	aNumber isInteger ifTrue: [ "Do the special case of integer power" ^ self raisedToInteger: aNumber ].
+	aNumber isFraction ifTrue: [ "Special case for fraction power" ^ self raisedToFraction: aNumber ].
+	self < 0 ifTrue: [ ^ ArithmeticError signal: 'Negative numbers can''t be raised to float powers.' ].
+	0 = aNumber ifTrue: [ ^ self class one ].	"Special case of exponent=0"
+	1 = aNumber ifTrue: [ ^ self ].	"Special case of exponent=1"
+	0 = self
+		ifTrue: [ "Special case of self = 0"
+			^ aNumber < 0
+				ifTrue: [ (ZeroDivide dividend: 1) signal ]
+				ifFalse: [ self ] ].
+	^ (aNumber * self ln) exp	"Otherwise use logarithms"
 ]
 
 { #category : #'mathematical functions' }

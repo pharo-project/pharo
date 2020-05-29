@@ -205,13 +205,13 @@ LargeInteger >> asFloat [
 ]
 
 { #category : #'system primitives' }
-LargeInteger >> byteAt: index [ 
+LargeInteger >> byteAt: index [
 	"Primitive. Answer the value of an indexable field in the receiver.   LargePositiveInteger uses bytes of base two number, and each is a 'digit' base 256.  Fail if the argument (the index) is not an Integer or is out of bounds. Essential.  See Object documentation whatIsAPrimitive."
 
 	<primitive: 60>
-	self bytesCount < index
-		ifTrue: [^0]
-		ifFalse: [^super at: index]
+	^ self bytesCount < index
+		ifTrue: [ 0 ]
+		ifFalse: [ super at: index ]
 ]
 
 { #category : #'system primitives' }

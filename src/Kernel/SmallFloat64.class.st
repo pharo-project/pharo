@@ -189,17 +189,16 @@ SmallFloat64 >> exponent [
 	SmallInteger to whose power two is raised. Optional. See Object
 	documentation whatIsAPrimitive."
 
-	| positive |
 	<primitive: 553>
-	self >= 1.0 ifTrue: [^self floorLog: 2].
+	| positive |
+	self >= 1.0 ifTrue: [ ^ self floorLog: 2 ].
 	self > 0.0
-		ifTrue: 
-			[positive := (1.0 / self) exponent.
-			self = (1.0 / (1.0 timesTwoPower: positive))
-				ifTrue: [^positive negated]
-				ifFalse: [^positive negated - 1]].
-	self = 0.0 ifTrue: [^-1].
-	^self negated exponent
+		ifTrue: [ positive := (1.0 / self) exponent.
+			^ self = (1.0 / (1.0 timesTwoPower: positive))
+				ifTrue: [ positive negated ]
+				ifFalse: [ positive negated - 1 ] ].
+	self = 0.0 ifTrue: [ ^ -1 ].
+	^ self negated exponent
 ]
 
 { #category : #'truncation and round off' }
@@ -289,22 +288,17 @@ SmallFloat64 >> truncated [
 	Essential. See Object documentation whatIsAPrimitive. "
 
 	<primitive: 551>
-	(self isInfinite or: [self isNaN]) ifTrue: [self error: 'Cannot truncate this number'].
-
-	self abs < 2.0e16
-		ifTrue: ["Fastest way when it may not be an integer"
-				"^ (self quo: 1073741823.0) * 1073741823 + (self rem: 1073741823.0) truncated"
-				| di df q r |
-				di := (SmallInteger maxVal bitShift: -1)+1.
-				df := di asFloat.
-				q := self quo: df.
-				r := self - (q asFloat * df).
-				^q*di+r truncated]
-		ifFalse: [^ self asTrueFraction.  "Extract all bits of the mantissa and shift if necess"]
-
-		
-
-		
+	(self isInfinite or: [ self isNaN ]) ifTrue: [ self error: 'Cannot truncate this number' ].
+	^ self abs < 2.0e16
+		ifTrue: [ "Fastest way when it may not be an integer"
+			"^ (self quo: 1073741823.0) * 1073741823 + (self rem: 1073741823.0) truncated"
+			| di df q r |
+			di := (SmallInteger maxVal bitShift: -1) + 1.
+			df := di asFloat.
+			q := self quo: df.
+			r := self - (q asFloat * df).
+			q * di + r truncated ]
+		ifFalse: [ self asTrueFraction ]
 ]
 
 { #category : #copying }

@@ -58,21 +58,21 @@ TComparable >> hash [
 ]
 
 { #category : #comparing }
-TComparable >> max: aComparable [ 
+TComparable >> max: aComparable [
 	"Answer the receiver or the argument, whichever is greater."
 
-	self > aComparable
-		ifTrue: [^self]
-		ifFalse: [^aComparable]
+	^ self > aComparable
+		ifTrue: [ self ]
+		ifFalse: [ aComparable ]
 ]
 
 { #category : #comparing }
-TComparable >> min: aComparable [ 
+TComparable >> min: aComparable [
 	"Answer the receiver or the argument, whichever is lesser."
 
-	self < aComparable
-		ifTrue: [^self]
-		ifFalse: [^aComparable]
+	^ self < aComparable
+		ifTrue: [ self ]
+		ifFalse: [ aComparable ]
 ]
 
 { #category : #comparing }
