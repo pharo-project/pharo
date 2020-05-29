@@ -50,13 +50,9 @@ RBDeprecateMethodRefactoring >> formNameFor: aSelector [
 	method := class methodFor: aSelector.
 	keywords := method parseTree keywords asOrderedCollection ifNil: [ '' ].
 	arguments := method parseTree arguments ifNil: [ '' ].
-
-	(keywords isNotEmpty and: [ arguments isNotEmpty ]) 
-		ifTrue: [ ^ String streamContents: [ :s| 
-			keywords with: arguments do: [ :keyword :arg | s nextPutAll: keyword, ' ', arg name, ' ' ] ] ]
-		ifFalse: [ ^ aSelector asString ].
-	
-
+	^ (keywords isNotEmpty and: [ arguments isNotEmpty ])
+		ifTrue: [ String streamContents: [ :s | keywords with: arguments do: [ :keyword :arg | s nextPutAll: keyword , ' ' , arg name , ' ' ] ] ]
+		ifFalse: [ aSelector asString ]
 ]
 
 { #category : #transforming }
