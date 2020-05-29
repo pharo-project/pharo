@@ -1,3 +1,6 @@
+"
+This class contains just some benchs.
+"
 Class {
 	#name : #EFBenchTest,
 	#superclass : #TestCase,
@@ -53,12 +56,6 @@ EFBenchTest >> longNestedMethodShort [
 ]
 
 { #category : #tests }
-EFBenchTest >> testBasicBlueInk [
-
-	BIConfigurableFormatter format: (EFBenchTest >> #basicMethod) ast 
-]
-
-{ #category : #tests }
 EFBenchTest >> testBasicEF [
 	self skip.
 	[ EFFormatter format: (EFBenchTest >> #basicMethod) ast ] bench
@@ -66,12 +63,13 @@ EFBenchTest >> testBasicEF [
 
 { #category : #tests }
 EFBenchTest >> testBasicEF2 [
-
+	self skip.
 	EFFormatter format: (EFBenchTest >> #basicMethod2) ast 
 ]
 
 { #category : #tests }
 EFBenchTest >> testEF [
+	self skip.
   "
 	[ EFFormatter format: (EFBenchTest >> #longNestedMethodShort) ast ] bench  '0.159 per second'
 
