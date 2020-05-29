@@ -427,6 +427,9 @@ SmallInteger >> highBit [
 	negative integers are defined to have an infinite number of leading 1's 
 	in 2's-complement arithmetic. Use >>highBitOfMagnitude if you want to 
 	get the highest bit of the magnitude."
+	"2r00101000 highBit >>> 6"
+	"0 highBit >>> 0"
+	
 	self < 0 ifTrue: [^ self error: 'highBit is not defined for negative integers'].
 	^ self highBitOfPositiveReceiver
 ]
