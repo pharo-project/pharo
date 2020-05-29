@@ -196,7 +196,7 @@ ClassDescription >> basicOrganization: aClassOrg [
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> classClass [
 	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClasss' 
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClass' 
 						-> '`@receiver classSide'.
 	^ self classSide
 ]
