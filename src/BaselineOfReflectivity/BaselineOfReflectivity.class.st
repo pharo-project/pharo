@@ -20,7 +20,8 @@ BaselineOfReflectivity >> baseline: spec [
 		
 		spec
 				group: 'default' with: #('Reflectivity');
-				group: 'tests' with: #('default' 'Reflectivity-Tests' 'Reflectivity-Examples' 'Reflectivity-VariableBreakpoint') ]
+				group: 'tools' with: #('Reflectivity-Tools' 'Reflectivity-Tools-Tests');
+				group: 'tests' with: #('default' 'tools' 'Reflectivity-Tests' 'Reflectivity-Examples' 'Reflectivity-VariableBreakpoint') ]
 		
 	
 ]
