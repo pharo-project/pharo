@@ -13,6 +13,12 @@ SmallIntegerTest >> testBasicNew [
 	self should: [SmallInteger basicNew] raise: self defaultTestError. 
 ]
 
+{ #category : #'tests - operations' }
+SmallIntegerTest >> testBitAnd [
+	self assert: (2r1010101 bitAnd: 2r0101010) equals: 0.
+	self assert: (2r1010101 bitAnd: 2r1010101) equals: 2r1010101
+]
+
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testByteAt [
 
@@ -101,4 +107,14 @@ SmallIntegerTest >> testPrintString [
 		ifTrue: [ self assert: SmallInteger maxVal decimalDigitLength equals: 10 ].
 	Smalltalk vm wordSize = 8
 		ifTrue: [ self assert: SmallInteger maxVal decimalDigitLength equals: 19 ].
+]
+
+{ #category : #tests }
+SmallIntegerTest >> testQuo [
+	self should: [ 1 quo: 0] raise: ZeroDivide.
+	self assert: ( 1 quo: 2) equals:  0.
+	self assert: ( 4 quo: 2) equals:  2.
+	self assert: (-4 quo: 2) equals: -2.
+	self assert: (-5 quo: 2) equals: -2.
+	self assert: ( 5 quo: 2) equals:  2
 ]

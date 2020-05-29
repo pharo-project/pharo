@@ -308,7 +308,13 @@ SmallInteger >> bytesCount [
 	"Answer the number of indexable fields in the receiver. This value is the 
 	 same as the largest legal subscript. Included so that a SmallInteger can 
 	 behave like a LargePositiveInteger or LargeNegativeInteger."
-
+	
+	"32768 == (1 bitShift: 15)"
+	"32768 bytesCount >>> 2"
+	
+	"65536 == (1 bitShift: 16)"
+	"65536 bytesCount >>> 3"
+	
 	| value length |
 	length := 1.
 	value := self.
@@ -328,6 +334,9 @@ SmallInteger >> bytesCount [
 SmallInteger >> decimalDigitLength [
 	"Answer the number of digits printed out in base 10.
 	 Note that this only works for positive SmallIntegers up to 64-bits."
+	"1 decimalDigitLength >>> 1"
+	"100000000 decimalDigitLength >>> 9"
+	"SmallInteger maxVal decimalDigitLength >>> 19"
 	
 	^self < 10000
 		ifTrue:
@@ -366,7 +375,12 @@ SmallInteger >> deepCopy [
 
 { #category : #testing }
 SmallInteger >> even [
-
+	" 0 odd >>> true"
+	" 2 odd >>> true"
+	"-2 odd >>> true"
+	" 3 odd >>> false"
+	"-3 odd >>> false"
+	
 	^(self bitAnd: 1) = 0
 ]
 
@@ -469,11 +483,11 @@ SmallInteger >> isLarge [
 { #category : #'bit manipulation' }
 SmallInteger >> lowBit [
 	" Answer the index of the low order one bit.
-		2r00101000 lowBit       (Answers: 4)
-		2r-00101000 lowBit      (Answers: 4)
 	  First we skip bits in groups of 8, then do a lookup in a table.
 	  While not optimal, this is a good tradeoff; long
 	  integer #lowBit always invokes us with bytes."
+	"2r00101000 lowBit >>> 4"
+	"2r-00101000 lowBit >>> 4"
 	| n result lastByte |
 	n := self.
 	n = 0 ifTrue: [ ^ 0 ].
@@ -516,7 +530,11 @@ SmallInteger >> numberOfDigitsInBase: b [
 
 { #category : #testing }
 SmallInteger >> odd [
-
+	" 0 odd >>> false"
+	" 2 odd >>> false"
+	"-2 odd >>> false"
+	" 3 odd >>> true"
+	"-3 odd >>> true"
 	^(self bitAnd: 1) = 1
 ]
 
@@ -638,6 +656,7 @@ SmallInteger >> quo: aNumber [
 	result. Round the result down towards zero to make it a whole integer. 
 	Fail if the argument is 0 or is not a SmallInteger. Optional. See Object 
 	documentation whatIsAPrimitive."
+	
 	<primitive: 13>
 	aNumber = 0 ifTrue: [^ (ZeroDivide dividend: self) signal].
 	(aNumber isMemberOf: SmallInteger)
