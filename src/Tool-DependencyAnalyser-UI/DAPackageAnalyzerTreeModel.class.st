@@ -171,13 +171,13 @@ DAPackageAnalyzerTreeModel >> actionWhenTextFieldChanged [
 { #category : #actions }
 DAPackageAnalyzerTreeModel >> buildRoots [
 	| matching roots |
-	self filter
-		ifNotNil: [ 
-			matching := '*' , self filter , '*'.
-			roots := (self nodesFor: (relationGraph seenPackagesWithFilter: matching)) ]
-		ifNil: [ roots := (self nodesFor: relationGraph seenPackages) ].
+	roots := self filter
+		ifNotNil: [ :f | 
+			matching := '*' , f , '*'.
+			self nodesFor: (relationGraph seenPackagesWithFilter: matching) ]
+		ifNil: [ self nodesFor: relationGraph seenPackages ].
 	self tree roots: roots.
-	self updatePackageLabel.
+	self updatePackageLabel
 ]
 
 { #category : #accessing }
