@@ -14,8 +14,10 @@ BaselineOfReflectivity >> baseline: spec [
 			
 			spec
 				package: 'Reflectivity';
-				package: 'Reflectivity-Tests' with: [ spec requires: 'Reflectivity' ];
+				package: 'Reflectivity-Tools' with: [ spec requires: 'Reflectivity' ];
+				package: 'Reflectivity-Tools-Tests' with: [ spec requires: 'Reflectivity-Tools' ];
 				package: 'Reflectivity-Examples' with: [ spec requires: 'Reflectivity' ];
+				package: 'Reflectivity-Tests' with: [ spec requires: #(Reflectivity 'Reflectivity-Tools') ];
 				package: 'Reflectivity-VariableBreakpoint' with: [ spec requires: 'Reflectivity' ].
 		
 		spec
