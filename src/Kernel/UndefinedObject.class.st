@@ -76,6 +76,11 @@ UndefinedObject >> classInstaller [
 	^ Smalltalk classInstaller 
 ]
 
+{ #category : #'class hierarchy' }
+UndefinedObject >> commonSuperclassWith: aClass [
+ 	^ self
+]
+
 { #category : #copying }
 UndefinedObject >> deepCopy [
 	"Only one instance of UndefinedObject should ever be made, so answer 
