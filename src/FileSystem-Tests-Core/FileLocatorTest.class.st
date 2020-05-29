@@ -30,6 +30,51 @@ FileLocatorTest >> testCPath [
 	self assert: ref path equals: (Path / 'C:' / 'WINDOWS')
 ]
 
+{ #category : #'creation tests' }
+FileLocatorTest >> testCanCreateLocatorFromStringWhenDeepChild [
+	| path |
+	path := (FileLocator home / 'foo' / 'bar' / 'bee' / 'see') fullName.
+	
+	locator := FileLocator fromString: path.
+	
+	self
+		assert: locator origin
+		equals: #home.
+	self
+		assert: locator fullName
+		equals: path.
+]
+
+{ #category : #'creation tests' }
+FileLocatorTest >> testCanCreateLocatorFromStringWhenDirectChild [
+	| path |
+	path := (FileLocator home / 'foo') fullName.
+	
+	locator := FileLocator fromString: path.
+		
+	self
+		assert: locator origin
+		equals: #home.
+	self
+		assert: locator fullName
+		equals: path.
+]
+
+{ #category : #'creation tests' }
+FileLocatorTest >> testCanCreateLocatorFromStringWhenSamePath [
+	| path |
+	path := FileLocator home fullName.
+	
+	locator := FileLocator fromString: path.
+	
+	self
+		assert: locator
+		equals: FileLocator home.
+	self
+		assert: locator fullName
+		equals: path.
+]
+
 { #category : #'compatibility tests' }
 FileLocatorTest >> testCommaAddsExtension [
 
@@ -84,6 +129,18 @@ FileLocatorTest >> testExtension [
 FileLocatorTest >> testFileSystem [
 	locator := FileLocator image.
 	self assert: (locator fileSystem isKindOf: FileSystem)
+]
+
+{ #category : #'creation tests' }
+FileLocatorTest >> testFromPathReturnsNilIfPathNotPartOfAnOrigin [
+	| path |
+	path := '/foo' asFileReference path.
+	
+	locator := FileLocator fromPath: path.
+	
+	self
+		assert: locator
+		equals: nil.
 ]
 
 { #category : #tests }

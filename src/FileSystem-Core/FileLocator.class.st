@@ -244,6 +244,26 @@ FileLocator class >> flushCaches [
 	Resolver flushCaches
 ]
 
+{ #category : #'instance creation' }
+FileLocator class >> fromPath: aPath [
+	"Returns a file locator if aPath is a reference to a supported origin or is a child of an origin.
+	Else returns nil.
+	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference " 
+	self supportedOrigins
+		detect: [ :origin | | locator |
+			locator := self perform: origin.
+			locator asPath = aPath or: [ locator contains: aPath] ]
+		ifFound: [ :origin | | locator |
+			locator := self perform: origin.
+			^ locator resolve: (aPath relativeToPath: locator asPath) ].
+	^ nil
+]
+
+{ #category : #'instance creation' }
+FileLocator class >> fromString: aString [ 
+	^ self fromPath: aString asPath
+]
+
 { #category : #origins }
 FileLocator class >> home [
 	^ self origin: #home
