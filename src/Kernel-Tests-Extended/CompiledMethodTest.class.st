@@ -182,6 +182,15 @@ CompiledMethodTest >> testComments [
 ]
 
 { #category : #'tests - accessing' }
+CompiledMethodTest >> testCommentsParent [
+	"Test if comment has a parent"
+	self
+		assert: (CompiledMethodTest >> #testCommentsParent) ast comments first parent selector
+		equals: #testCommentsParent.
+	
+]
+
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testComparison [
 	| method1 method2 |
 	method1 := Float class >> #nan.
