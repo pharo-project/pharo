@@ -147,24 +147,23 @@ SourceFileArray >> fileAt: index ifAbsent: aBlock [
 SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 	"Return the index of the source file which contains the source chunk addressed by anInteger"
 
-	(anInteger bitAnd: 16r1000000) ~= 0
-		ifTrue: [^1 "sources file"]
-		ifFalse: [anInteger >= 16r1000000
-			ifTrue: [^2 "changes file"]
-			ifFalse: [^0 "compatibility with StandardSourceFileArray"]]
+	^ (anInteger bitAnd: 16r1000000) ~= 0
+		ifTrue: [ 1	"sources file" ]
+		ifFalse: [ anInteger >= 16r1000000
+				ifTrue: [ 2	"changes file" ]
+				ifFalse: [ 0	"compatibility with StandardSourceFileArray" ] ]
 ]
 
 { #category : #'private - sourcepointer conversion' }
-SourceFileArray >> filePositionFromSourcePointer: anInteger [ 
+SourceFileArray >> filePositionFromSourcePointer: anInteger [
 	"Return the position of the source chunk addressed by anInteger"
 
 	| hi lo |
 	hi := anInteger // 33554432.
 	lo := anInteger \\ 16777216.
-	((anInteger bitAnd: 16777216) ~= 0
-			or: [anInteger < 16777216 "compatibility with StandardSourceFileArray"])
-		ifTrue: [^ hi * 16777216 + lo"sources file"]
-		ifFalse: [^ hi - 1 * 16777216 + lo"changes file"]
+	^ ((anInteger bitAnd: 16777216) ~= 0 or: [ anInteger < 16777216	"compatibility with StandardSourceFileArray" ])
+		ifTrue: [ hi * 16777216 + lo	"sources file" ]
+		ifFalse: [ (hi - 1) * 16777216 + lo	"changes file" ]
 ]
 
 { #category : #private }
