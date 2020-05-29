@@ -45,10 +45,10 @@ MCDataStream class >> cleanUp [
 
 { #category : #'instance creation' }
 MCDataStream class >> detectFile: aBlock do: anotherBlock [
-
-	^aBlock value
-		ifNil: [nil]
-      	ifNotNil: [:file| [anotherBlock value: file] ensure: [file close]]
+	^ aBlock value
+		ifNotNil: [ :file | 
+			[ anotherBlock value: file ]
+				ensure: [ file close ] ]
 ]
 
 { #category : #'instance creation' }

@@ -312,9 +312,13 @@ TraitedClass >> traitComposition [
 ]
 
 { #category : #accessing }
-TraitedClass >> traitComposition: anObject [
+TraitedClass >> traitComposition: aComposition [
 	
-	self class baseComposition: anObject
+	aComposition asTraitComposition allTraits do: [ :aMaybeTrait |
+		aMaybeTrait isTrait ifFalse: [ 
+			self error: 'All the members of the trait composition should be traits' ]].
+		
+	self class baseComposition: aComposition
 ]
 
 { #category : #accessing }

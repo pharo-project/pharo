@@ -5,6 +5,20 @@ Class {
 	#name : #SDL2Constants,
 	#superclass : #SharedPool,
 	#classVars : [
+		'AUDIO_F32',
+		'AUDIO_F32LSB',
+		'AUDIO_F32MSB',
+		'AUDIO_S16',
+		'AUDIO_S16LSB',
+		'AUDIO_S16MSB',
+		'AUDIO_S32',
+		'AUDIO_S32LSB',
+		'AUDIO_S32MSB',
+		'AUDIO_S8',
+		'AUDIO_U16',
+		'AUDIO_U16LSB',
+		'AUDIO_U16MSB',
+		'AUDIO_U8',
 		'KMOD_ALT',
 		'KMOD_CAPS',
 		'KMOD_CTRL',
@@ -271,6 +285,12 @@ Class {
 		'SDL_ARRAYORDER_NONE',
 		'SDL_ARRAYORDER_RGB',
 		'SDL_ARRAYORDER_RGBA',
+		'SDL_AUDIO_ALLOW_ANY_CHANGE',
+		'SDL_AUDIO_ALLOW_CHANNELS_CHANGE',
+		'SDL_AUDIO_ALLOW_FORMAT_CHANGE',
+		'SDL_AUDIO_ALLOW_FREQUENCY_CHANGE',
+		'SDL_AUDIO_ALLOW_SAMPLES_CHANGE',
+		'SDL_AUDIO_MASK_BITSIZE',
 		'SDL_BITMAPORDER_1234',
 		'SDL_BITMAPORDER_4321',
 		'SDL_BITMAPORDER_NONE',
@@ -486,6 +506,7 @@ SDL2Constants class >> initialize [
 	self initialize
 	"
 	self
+		initializeAudio;
 		initializeCommon;
 		initializeEvent;
 		initializeGameController;
@@ -501,6 +522,36 @@ SDL2Constants class >> initialize [
 		initializeTexture;
 		initializeWindow;
 		initializeWM.
+]
+
+{ #category : #'class initialization' }
+SDL2Constants class >> initializeAudio [
+	SDL_AUDIO_MASK_BITSIZE := 16rFF.
+
+	AUDIO_U8        := 16r0008.
+	AUDIO_S8        := 16r8008.
+	AUDIO_U16LSB    := 16r0010.
+	AUDIO_S16LSB    := 16r8010.
+	AUDIO_U16MSB    := 16r1010.
+	AUDIO_S16MSB    := 16r9010.
+	AUDIO_U16       := AUDIO_U16LSB.
+	AUDIO_S16       := AUDIO_S16LSB.
+
+	AUDIO_S32LSB    := 16r8020.
+	AUDIO_S32MSB    := 16r9020.
+	AUDIO_S32       := AUDIO_S32LSB.
+
+	AUDIO_F32LSB    := 16r8120.
+	AUDIO_F32MSB    := 16r9120.
+	AUDIO_F32       := AUDIO_F32LSB.
+
+	"Audio allow change flags."
+	SDL_AUDIO_ALLOW_FREQUENCY_CHANGE    := 16r00000001.
+	SDL_AUDIO_ALLOW_FORMAT_CHANGE       := 16r00000002.
+	SDL_AUDIO_ALLOW_CHANNELS_CHANGE     := 16r00000004.
+	SDL_AUDIO_ALLOW_SAMPLES_CHANGE      := 16r00000008.
+	SDL_AUDIO_ALLOW_ANY_CHANGE         := (SDL_AUDIO_ALLOW_FREQUENCY_CHANGE|SDL_AUDIO_ALLOW_FORMAT_CHANGE|SDL_AUDIO_ALLOW_CHANNELS_CHANGE|SDL_AUDIO_ALLOW_SAMPLES_CHANGE).
+
 ]
 
 { #category : #'class initialization' }

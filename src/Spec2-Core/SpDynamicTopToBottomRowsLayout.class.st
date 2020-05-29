@@ -27,8 +27,7 @@ SpDynamicTopToBottomRowsLayout >> buildLayoutFor: aDynamicPresentersListBuilder 
 			| subLayout |
 			subLayout := SpBoxLayout newHorizontal.
 			group do: [ :instVar | subLayout add: instVar ].
-			layout add: subLayout ].
-
+			layout add: subLayout withConstraints: self sublayoutConstraints ].
 	^ layout
 ]
 

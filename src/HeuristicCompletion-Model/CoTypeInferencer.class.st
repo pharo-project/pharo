@@ -96,7 +96,6 @@ CoTypeInferencer >> inferMessageReturn: aRBMessageNode receiverType: type argume
 		(#( ifTrue: ifFalse: ifTrue:ifFalse: ifNil: ifNotNil: ifNil:ifNotNil:) 
 			includes: aRBMessageNode selector) not ]) ifTrue: [
 				"When we stop, check fast if the looked-up method has no return, and guess self"
-				aRBMessageNode selector traceCr.
 				^ method ast body lastIsReturn
 					ifTrue: [ { CoUnknownType new } ]
 					ifFalse: [ { type } ] ].

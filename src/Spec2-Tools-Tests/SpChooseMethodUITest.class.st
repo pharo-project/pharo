@@ -27,7 +27,10 @@ SpChooseMethodUITest >> testClickOnClassSideRadioButtonShouldFillTheMethodList [
 	biChooseMethod packageList selectItem: SpMethodChooserMockClass package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
 	biChooseMethod radioButtonClassSide click.
-	self assertCollection: biChooseMethod methodList items hasSameElements: SpMethodChooserMockClass class methods
+	biChooseMethod protocolList selectIndex: 1.
+	self
+		assertCollection: biChooseMethod methodList items
+		hasSameElements: SpMethodChooserMockClass class methods
 ]
 
 { #category : #tests }

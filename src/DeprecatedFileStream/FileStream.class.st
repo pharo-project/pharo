@@ -239,10 +239,10 @@ FileStream class >> convertCRtoLF: fileName [
 
 { #category : #'instance creation' }
 FileStream class >> detectFile: aBlock do: anotherBlock [
-
-	^aBlock value
-		ifNil: [nil]
-      	ifNotNil: [:file| [anotherBlock value: file] ensure: [file close]]
+	^ aBlock value
+		ifNotNil: [ :file | 
+			[ anotherBlock value: file ]
+				ensure: [ file close ] ]
 ]
 
 { #category : #'file reader services' }
@@ -518,7 +518,7 @@ FileStream class >> voidStdioFiles [
 						each name asFileReference delete	 
 					] 
 				]
-			] ifErrorDo: [ ].
+			] onErrorDo: [ ].
 		]
 	].
 	
@@ -698,10 +698,9 @@ FileStream >> name [
 
 { #category : #accessing }
 FileStream >> next [
-
-	(position >= readLimit and: [self atEnd])
-		ifTrue: [^nil]
-		ifFalse: [^collection at: (position := position + 1)]
+	^ (position >= readLimit and: [ self atEnd ])
+		ifTrue: [ nil ]
+		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
 { #category : #accessing }

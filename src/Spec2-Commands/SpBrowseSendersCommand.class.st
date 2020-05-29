@@ -28,5 +28,6 @@ SpBrowseSendersCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseSendersCommand >> execute [
+
 	self systemNavigation browseAllSendersOf: self selector
 ]

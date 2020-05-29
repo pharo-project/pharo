@@ -881,6 +881,22 @@ SmalltalkImage >> isInteractive [
 	^ false
 ]
 
+{ #category : #testing }
+SmalltalkImage >> isInteractiveGraphic [
+	"Check if vm were run headless and with interactive (graphics) parameter.
+	 Using the headless VM, the need of a GUI environment is indicated by sending --interactive 
+	 parameter to the image."
+	
+	"non-headless mode is always interactive"
+	self isHeadless ifFalse: [ ^ true ].
+
+	-1000 to: 1000 do: [ :n | 
+		(#('--interactive') includes: (self vm getSystemAttribute: n)) 
+			ifTrue: [ ^ true ]].
+
+	^ false
+]
+
 { #category : #'memory space' }
 SmalltalkImage >> isRoot: oop [
 	"Primitive. Answer whether the object is currently a root for youngSpace."
@@ -1426,13 +1442,13 @@ SmalltalkImage >> privSaveImageWithCleanup [
  
 	[
 		self snapshot: true andQuit: true.
-	] ifErrorDo: [:e |
+	] onErrorDo: [:e |
 		'PharoDebug.log' asFileReference ensureDelete; writeStreamDo: [ :rep |
 			rep nextPutAll: 'Error:'; cr.
 			rep nextPutAll: e asString; cr.
 	  		rep nextPutAll: thisContext stack size asString.
 	 	  	thisContext stack copy withIndexDo: [:stck :i |
-				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] ifErrorDo: []]]. 
+				[ rep nextPutAll: i asString; space; nextPutAll: stck asString; cr] onErrorDo: []]]. 
 		Smalltalk exitFailure ]
 ]
 

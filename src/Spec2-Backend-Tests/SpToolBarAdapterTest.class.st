@@ -17,7 +17,7 @@ SpToolBarAdapterTest >> initializeTestedInstance [
 
 { #category : #tests }
 SpToolBarAdapterTest >> testAddLabelledButtonAddTheButton [
-	presenter addItem: (SpToolBarButton new
+	presenter addItem: (SpToolBarButtonPresenter new
 				label: 'a label';
 				iconNamed: #abstract;
 				action: [];

@@ -116,23 +116,6 @@ Slot >> = other [
 			and: [ name = other name ]
 ]
 
-{ #category : #private }
-Slot >> addSlotInitToInitialize: aClass [
-	|  source |
-
-	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
-	
-	source := (aClass>>#initialize) sourceCode allButFirst: 10.
-	source := 'initialize
-	
-	self class initializeSlots: self.', 
-	source.
-
-	Author 
-		useAuthor: 'Generated' 
-		during: [ aClass compile: source classified: 'initialization' ]
-]
-
 { #category : #'class building' }
 Slot >> asClassVariable [
 	self
@@ -192,11 +175,15 @@ Slot >> emitValue: aMethodBuilder [
 
 { #category : #private }
 Slot >> ensureInitalizeMethodExists: aClass [
-	(aClass includesSelector:  #initialize) ifTrue: [ ^self ].
-	Author useAuthor: 'Generated' during: [
-		aClass compile: 'initialize
-	super initialize.' classified: 'initialization'.
-		] 
+	(aClass includesSelector: #initialize) ifTrue: [ ^ self ].
+
+	Author
+		useAuthor: 'Generated'
+		during: [ aClass
+				compile:
+					'initialize
+	super initialize.'
+				classified: 'initialization' ]
 ]
 
 { #category : #properties }
@@ -206,8 +193,17 @@ Slot >> ensureProperties [
 
 { #category : #private }
 Slot >> ensureSlotInitializationFor: aClass [
-	self ensureInitalizeMethodExists: aClass. 
-	self addSlotInitToInitialize: aClass.
+	| source |
+	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
+
+	self ensureInitalizeMethodExists: aClass.
+
+	source := (aClass >> #initialize) sourceCode allButFirst: 10.
+	source := 'initialize
+	
+	self class initializeSlots: self.' , source.
+
+	Author useAuthor: 'Generated' during: [ aClass compile: source classified: 'initialization' ]
 ]
 
 { #category : #finalization }
@@ -413,17 +409,18 @@ Slot >> scope: aScope [
 
 { #category : #private }
 Slot >> sendsInitializeSlots: aClass [
-		
-	aClass isTrait ifFalse: [ 
-		(aClass includesSelector: #initialize) ifFalse: [ 
-			^ self sendsInitializeSlots: aClass superclass ] ].
+	(aClass isTrait or: [ aClass includesSelector: #initialize ])
+		ifFalse: [ ^ self sendsInitializeSlots: aClass superclass ].
+
 	"verify implemented here"
-	((aClass>>#initialize) hasLiteral: #initializeSlots:) 
-		ifTrue: [ ^ true ].
+	aClass
+		compiledMethodAt: #initialize
+		ifPresent: [ :method | (method hasLiteral: #initializeSlots:) ifTrue: [ ^ true ] ].
+
 	"if it calls superclass, verify there"
-	aClass isTrait ifFalse: [ 
-		((aClass>>#initialize) hasLiteral: #initialize) 
-			ifTrue: [ ^ self sendsInitializeSlots: aClass superclass ] ].
+	(aClass isTrait not and: [ aClass >> #initialize hasLiteral: #initialize ])
+		ifTrue: [ ^ self sendsInitializeSlots: aClass superclass ].
+
 	"is not implemented"
 	^ false
 ]

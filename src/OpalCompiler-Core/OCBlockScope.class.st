@@ -14,12 +14,7 @@ OCBlockScope >> hasEscapingVars [
 
 { #category : #accessing }
 OCBlockScope >> inComingCopiedVarNames [
-	^self inComingCopiedVars collect: [:each | each name] as: Array
-]
-
-{ #category : #accessing }
-OCBlockScope >> inComingCopiedVars [
-	^ copiedVars select: [:each | outerScope copiedVars includes: each]
+	^ self copiedVarNames intersection: outerScope copiedVarNames
 ]
 
 { #category : #testing }

@@ -677,8 +677,7 @@ MetacelloVersionValidator >> validationReport: anObject [
 { #category : #accessing }
 MetacelloVersionValidator >> visited [
 
-	visited == nil ifTrue: [ visited := IdentitySet new ].
-	^visited
+	^ visited ifNil: [ visited := IdentitySet new ]
 ]
 
 { #category : #accessing }

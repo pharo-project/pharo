@@ -1,3 +1,6 @@
+"
+I'm the adapter used to bridge a ToolBarToggleButton and its morphic representation.
+"
 Class {
 	#name : #SpMorphicToolBarToggleButtonAdapter,
 	#superclass : #SpMorphicToolBarButtonAdapter,
@@ -5,15 +8,15 @@ Class {
 }
 
 { #category : #factory }
-SpMorphicToolBarToggleButtonAdapter >> buildWidget [
-
-	^ super buildWidget
-		action: #execute:
-		yourself
-]
-
-{ #category : #factory }
 SpMorphicToolBarToggleButtonAdapter >> morphClass [ 
 
 	^ SpToolBarToggleButtonMorph
+]
+
+{ #category : #factory }
+SpMorphicToolBarToggleButtonAdapter >> newButton [
+
+	^ super newButton
+		action: #execute:
+		yourself
 ]

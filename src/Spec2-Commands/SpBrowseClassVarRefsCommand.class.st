@@ -21,5 +21,6 @@ SpBrowseClassVarRefsCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseClassVarRefsCommand >> execute [	
-	self systemNavigation browseClassVarRefs: self context
+	
+	self systemNavigation browseClassVarRefs: self target
 ]

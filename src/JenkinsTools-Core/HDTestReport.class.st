@@ -258,7 +258,7 @@ HDTestReport >> stackTraceString: err of: aTestCase [
 		| context |
 		context := err signalerContext.
 		[ context isNil or: [ context receiver == aTestCase and: [ context methodSelector == #runCase ] ] ] whileFalse: [
-			[str print: context; lf.] ifErrorDo: [ str nextPutAll: 'PRINTING ERROR'; lf].
+			[str print: context; lf.] onErrorDo: [ str nextPutAll: 'PRINTING ERROR'; lf].
 			context := context sender ] ] 
 ]
 

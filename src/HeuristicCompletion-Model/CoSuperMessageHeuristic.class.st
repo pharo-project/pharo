@@ -18,7 +18,8 @@ CoSuperMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 			or: [ aNode isMethod
 				and: [ 
 					"This heuristic is not valid for traits and nil subclasses"
-					aContext completionClass superclass notNil ] ]
+					aContext completionClass notNil 
+					and: [ aContext completionClass superclass notNil ] ] ]
 ]
 
 { #category : #requests }

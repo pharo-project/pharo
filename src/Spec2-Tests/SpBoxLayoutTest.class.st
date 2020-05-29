@@ -10,6 +10,18 @@ SpBoxLayoutTest class >> isAbstract [
 	^ self == SpBoxLayoutTest
 ]
 
+{ #category : #private }
+SpBoxLayoutTest >> extentOf: aPresenter [
+
+	^ aPresenter adapter widget bounds extent
+]
+
+{ #category : #private }
+SpBoxLayoutTest >> heightOf: aPresenter [
+
+	^ (self extentOf: aPresenter) y
+]
+
 { #category : #running }
 SpBoxLayoutTest >> testElementsAreAddedInOrder [
 
@@ -33,4 +45,10 @@ SpBoxLayoutTest >> testRemoveElementFromLayoutTakesItOut [
 	layout add: (element := SpButtonPresenter new).
 	layout remove: element.
 	self assert: layout isEmpty
+]
+
+{ #category : #private }
+SpBoxLayoutTest >> widthOf: aPresenter [
+
+	^ (self extentOf: aPresenter) x
 ]

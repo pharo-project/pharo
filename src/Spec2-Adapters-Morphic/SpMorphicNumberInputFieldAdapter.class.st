@@ -9,14 +9,6 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-Base'
 }
 
-{ #category : #'widget API' }
-SpMorphicNumberInputFieldAdapter >> accept: aText [
-	| textToSet |
-	textToSet := (self shouldAccept: aText asString) ifTrue: [ aText ] ifFalse: [ self model text ].
-
-	super accept: textToSet
-]
-
 { #category : #factory }
 SpMorphicNumberInputFieldAdapter >> buildWidget [
 	| textMorph iconsContainer |

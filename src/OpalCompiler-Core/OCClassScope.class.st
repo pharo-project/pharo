@@ -54,7 +54,7 @@ OCClassScope >> instanceScope [
 OCClassScope >> lookupVar: name [
 	"Return a SemVar for my pool var with this name.  Return nil if none found"
 
-	^(class innerBindingOf: name asSymbol) 
+	^(class innerBindingOf: name) 
 		ifNotNil: [:assoc | OCLiteralVariable new 
 			assoc: assoc; 
 			scope: self; 
@@ -64,6 +64,7 @@ OCClassScope >> lookupVar: name [
 
 { #category : #lookup }
 OCClassScope >> lookupVarForDeclaration: name [
+	"This is a version of #lookupVar: that skips the OCRequestorScope"
 	^self lookupVar: name
 ]
 

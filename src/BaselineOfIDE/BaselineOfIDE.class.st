@@ -135,7 +135,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
 				repository: repository;
-				loads: #( 'Tests' 'UI-Tests' ) ].
+				loads: #( 'Tests' ) ].
 				
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
@@ -186,6 +186,10 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'PharoGlamour' with: [ spec repository: repository ].
 		spec baseline: 'PharoGT' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
+		spec baseline: 'Spec2' with: [ 
+			spec 
+				repository: repository;
+				loads: #('Code') ].
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 
@@ -193,7 +197,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.6.9';
+		repository: 'github://pharo-vcs/iceberg:v1.8.0';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

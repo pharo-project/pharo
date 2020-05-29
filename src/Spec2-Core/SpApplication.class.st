@@ -1,24 +1,29 @@
 "
-I'm a Spec application entry point. 
-In Spec, each application needs to have a definition that concentrates its flow and resources.
+! Spec Applications
 
-! SpApplication
-A SpApplication is a class that handles many aspectes of a Spec Application (hence it's name) in a convenient fashion. 
+A SpApplication is a class that handles many aspects of a Spec Application (hence it's name) in a convenient fashion. 
 SpApplication handles your application initialisation, configuration and resources. It also keeps the windows you have currently opened. 
 
 !! Initialisation
 Initialisation of an application includes (non mandatory): configure the backend you want to use, add useful resources and define a start method that will call your initial window.
 
 !!! Configure backend
-Spec2 includes several backens (for the moment, Morphic and Gtk). A SpApplication configures a Morphic backend by default, but you can change it using ==#useBackend:== or ==#useBackend:with:== and sending the backend identifier and optionally a configuration (you may want to do specific backend things to configure your application behavior).
+Spec2 includes several backends (for the moment, Morphic and Gtk). A SpApplication configures a Morphic backend by default, but you can change it using ==#useBackend:== or ==#useBackend:with:== and sending the backend identifier and optionally a configuration (you may want to do specific backend things to configure your application behavior).
 
 @NOTE: Is very important that after you initiate your application, you ==run== it.
 
-Examples:
-> self example1.
-> self example2.
+See this example: 
+[[[language=Smalltalk
+""This example shows how to change the backend of an application"" 
+| app |
 
-see also: *SpApplicationConfiguration*
+""You want to subclass SpApplication to create your app""
+app := SpApplication new.
+app useBackend: #Gtk.
+app run
+]]]
+
+see also: *class:SpApplicationConfiguration*
 
 !!! Add resources
 During initialisation, you may want to add special resources (like icons, themes, etc.).
@@ -28,7 +33,7 @@ While you can add your own way to access resources, SpApplication provides a pro
 This is useful to give your application a starting window (in general, this is what you want).
 
 Example: 
-[[[lang=Smalltalk
+[[[language=Smalltalk
 MyApplication>>start
 
    (self new: MyMainPresenter) openWithSpec
@@ -104,6 +109,12 @@ SpApplication >> close [
 	self windows copy do: #close
 ]
 
+{ #category : #accessing }
+SpApplication >> closeAllWindows [
+
+	self windows do: [ :each | each close ]
+]
+
 { #category : #'accessing backend' }
 SpApplication >> configuration [
 
@@ -116,7 +127,7 @@ SpApplication >> defer: aBlock [
 	self backend defer: aBlock
 ]
 
-{ #category : #windows }
+{ #category : #testing }
 SpApplication >> hasWindow: aWindow [
 	
 	^ self windows includes: aWindow
@@ -127,6 +138,12 @@ SpApplication >> isPresenter [
 	"Presenters use this to track application/rootPresenter."
 
 	^ false
+]
+
+{ #category : #accessing }
+SpApplication >> locale [
+
+	^ Locale current
 ]
 
 { #category : #factory }
@@ -174,6 +191,7 @@ SpApplication >> open: aPresenter withSpecLayout: aSpecLayout using: aWindowClas
 	self validateApplicationOfPresenter: aPresenter.
 
 	window := aWindowClass presenter: aPresenter.
+	window application: aPresenter application.
 	self windows add: window.
 	window openWithSpecLayout: aSpecLayout.
 	
@@ -276,6 +294,12 @@ SpApplication >> propertyAt: aKey put: aValue [
 	^ self properties 
 		at: aKey
 		put: aValue
+]
+
+{ #category : #accessing }
+SpApplication >> reset [ 
+
+	self closeAllWindows
 ]
 
 { #category : #running }

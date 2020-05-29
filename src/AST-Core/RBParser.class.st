@@ -755,10 +755,9 @@ RBParser >> parsePrimitiveKeywordPragma [
 
 { #category : #'private-parsing' }
 RBParser >> parsePrimitiveLiteral [
-
-	currentToken isNumberLiteralToken
-		ifTrue: [ ^ self parseNumberLiteral ]
-		ifFalse: [ ^ self parsePrimitiveValueLiteral ]
+	^ currentToken isNumberLiteralToken
+		ifTrue: [ self parseNumberLiteral ]
+		ifFalse: [ self parsePrimitiveValueLiteral ]
 ]
 
 { #category : #'private-parsing' }

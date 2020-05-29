@@ -207,26 +207,20 @@ RBNamespace >> classNameFor: aBehavior [
 
 { #category : #'accessing-classes' }
 RBNamespace >> classNamed: aSymbol [
-
 	| class classes index |
-
 	aSymbol ifNil: [ ^ nil ].
-	( self hasRemoved: aSymbol )
-		ifTrue: [ ^ nil ].
-	( newClasses includesKey: aSymbol )
-		ifTrue: [ ^ ( newClasses at: aSymbol ) first ].
-	( changedClasses includesKey: aSymbol )
-		ifTrue: [ ^ ( changedClasses at: aSymbol ) first ].
+	(self hasRemoved: aSymbol) ifTrue: [ ^ nil ].
+	(newClasses includesKey: aSymbol) ifTrue: [ ^ (newClasses at: aSymbol) first ].
+	(changedClasses includesKey: aSymbol) ifTrue: [ ^ (changedClasses at: aSymbol) first ].
 	class := environment at: aSymbol ifAbsent: [ nil ].
-	( class isBehavior or: [ class isTrait ] )
+	(class isBehavior or: [ class isTrait ])
 		ifTrue: [ classes := self createNewClassFor: class.
 			^ class isMeta
 				ifTrue: [ classes last ]
-				ifFalse: [ classes first ]
-			].
+				ifFalse: [ classes first ] ].
 	index := aSymbol indexOfSubCollection: ' class' startingAt: 1 ifAbsent: [ ^ nil ].
-	class := self classNamed: ( aSymbol copyFrom: 1 to: index - 1 ) asSymbol.
-	^ class ifNil: [ nil ] ifNotNil: [ class classSide ]
+	class := self classNamed: (aSymbol copyFrom: 1 to: index - 1) asSymbol.
+	^ class ifNotNil: [ class classSide ]
 ]
 
 { #category : #changes }

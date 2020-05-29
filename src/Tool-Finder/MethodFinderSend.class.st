@@ -74,7 +74,7 @@ MethodFinderSend >> resultIn: expectedResult [
 	"comment stating purpose of message"
 
 	[ [ ^ expectedResult = (receiver perform: selector withArguments: arguments) ]
-		ifErrorDo: [ :anError | ^ false ] ]
+		onErrorDo: [ :anError | ^ false ] ]
 			on: Deprecation
 			do: [ :depr | ^ false ]
 ]

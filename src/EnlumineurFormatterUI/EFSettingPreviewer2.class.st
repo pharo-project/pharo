@@ -287,7 +287,7 @@ EFSettingPreviewer2 >> actionChooseMethodUI [
 EFSettingPreviewer2 >> actionMethodDropList [
 	methodDropList
 		transmitTo: notFormatedTextPresenter
-		transform: [ :method | method sourceCode ].
+		transform: [ :method | method ifNotNil: [ method sourceCode ] ].
 	methodDropList
 		transmitTo: formatedTextPresenter
 		transform: [ :item | self formatPrettyPrint ]
@@ -295,24 +295,24 @@ EFSettingPreviewer2 >> actionMethodDropList [
 
 { #category : #'initialization-actions' }
 EFSettingPreviewer2 >> actionRemoveMethodButton [
-	removeMethodButton
-		action: [ methodDropList selectedItem removeFromSystem ]
+
+	removeMethodButton action: [ 
+		methodDropList selectedItem removeFromSystem ]
 ]
 
 { #category : #'initialization-actions' }
 EFSettingPreviewer2 >> actionRemoveSettingButton [
-	removeSettingButton
-		action: [ isSettingModification := true.
-			settingsDropList selectedItem
-				ifNil: [ self inform: 'please select a confguration' ]
-				ifNotNil: [ :selectedItem | 
-					selectedItem removeFromSystem.
-					settingsDropList selectIndex: 1.
-					settingsDropList
-						items:
-							(settingsDropList listItems
-								remove: selectedItem;
-								yourself) ].
+
+	removeSettingButton action: [ 
+		isSettingModification := true.
+		settingsDropList selectedItem
+			ifNil: [ self inform: 'please select a confguration' ]
+			ifNotNil: [ :selectedItem | 
+				selectedItem removeFromSystem.
+				settingsDropList selectIndex: 1.
+				settingsDropList items: (settingsDropList listItems
+					remove: selectedItem;
+					yourself) ].
 			isSettingModification := false ]
 ]
 
@@ -336,19 +336,9 @@ EFSettingPreviewer2 >> actionSaveSettingButton [
 
 { #category : #'initialization-actions' }
 EFSettingPreviewer2 >> actionSettingDropList [
-    settingsDropList
-        whenSelectionChangedDo: [ :setting | 
-            | currentContext |
-            currentContext := STON
-                fromString:
-                    (setting selectedItem model
-                        valueWithReceiver: methodProvider
-                        arguments: #()).
-            formaterPrettyPrinter installNewContext: currentContext.
-            formatedTextPresenter text: self formatPrettyPrint.
-            formaterPrettyPrinter class
-                defaultPrettyPrintContext: currentContext.
-            settingsTree roots: self getSystemsettingsAsParentName ]
+
+    settingsDropList whenSelectionChangedDo: [ :setting | 
+		self updateSettingDropList: setting ]
 ]
 
 { #category : #accessing }
@@ -363,8 +353,8 @@ EFSettingPreviewer2 >> foo [
 
 { #category : #'initialization widgets' }
 EFSettingPreviewer2 >> formatPrettyPrint [
-	methodDropList selectedItem
-		ifNil: [ ^ self ].
+
+	methodDropList selectedItem ifNil: [ ^ self ].
 	^ formaterPrettyPrinter format: methodDropList selectedItem ast
 ]
 
@@ -611,6 +601,21 @@ EFSettingPreviewer2 >> setupSettingsTree [
 { #category : #'system-Announcement' }
 EFSettingPreviewer2 >> unregisterAnnouncement [
 	SystemAnnouncer uniqueInstance unsubscribe: self
+]
+
+{ #category : #'initialization-actions' }
+EFSettingPreviewer2 >> updateSettingDropList: setting [
+	| currentContext |
+
+	setting selectedItem ifNil: [ ^ self ].	
+
+	currentContext := STON fromString: (setting selectedItem model
+		valueWithReceiver: methodProvider
+		arguments: #()).
+	formaterPrettyPrinter installNewContext: currentContext.
+ 	formatedTextPresenter text: self formatPrettyPrint.
+	formaterPrettyPrinter class defaultPrettyPrintContext: currentContext.
+	settingsTree roots: self getSystemsettingsAsParentName
 ]
 
 { #category : #'system-Announcement' }

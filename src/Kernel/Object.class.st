@@ -240,7 +240,6 @@ Object class >> whatIsAPrimitive [
 { #category : #associating }
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
-	"the code of Association>>#key:value: is inline here for speed"
 	"The following example creates an association whose key is number 1 and value string 'one'."
 
 	"(1 -> 'one') key >>> 1"
@@ -1449,17 +1448,6 @@ Object >> notify: aString [
 	order to request confirmation before a process can proceed."
 
 	Warning signal: aString
-]
-
-{ #category : #'error handling' }
-Object >> notify: aString at: location [
-	"Create and schedule a Notifier with the argument as the message in 
-	order to request confirmation before a process can proceed. Subclasses can
-	override this and insert an error message at location within aString."
-
-	self notify: aString
-
-	"nil notify: 'confirmation message' at: 12"
 ]
 
 { #category : #'model - updating' }

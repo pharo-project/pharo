@@ -19,25 +19,43 @@ SpMorphicLinkAdapter >> action [
 SpMorphicLinkAdapter >> buildWidget [
 	"Since Pharo does not yet have a real morph for URL, I create my own. Maybe later we will have real links in Morphic?"
 
-	^ StringMorph new
-		contents: self label;
+	| aMorph |
+	
+	aMorph := StringMorph new
+		contents: self getLabelText;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
 		vResizing: #shrinkWrap;
 		hResizing: #spaceFill;
-		setBalloonText: self help;
+		setBalloonText: self getHelpText;
 		color: self urlColor;
 		on: #mouseEnter send: #mouseEnter:from: to: self;
 		on: #mouseLeave send: #mouseLeave:from: to: self;
 		on: #mouseDown send: #mouseDown:from: to: self;
 		on: #mouseUp send: #mouseUp:from: to: self;
-		yourself	";
+		yourself.	";
 		emphasis: (self emphasisCodeFor: self model emphasis)"
+		
+	self presenter whenLabelChangedDo: [ :newLabel | aMorph contents: (newLabel ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]) ].
+	
+	^ aMorph
+]
+
+{ #category : #private }
+SpMorphicLinkAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
+{ #category : #private }
+SpMorphicLinkAdapter >> getLabelText [
+
+	^ self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #accessing }
 SpMorphicLinkAdapter >> label [
-	^ self model label
+	^ self getLabelText
 ]
 
 { #category : #'event handling' }

@@ -44,6 +44,7 @@ SpMorphicMenuItemAdapter >> balloonText [
 
 { #category : #factory }
 SpMorphicMenuItemAdapter >> buildWidget [
+
 	^ self autoRefresh
 		ifTrue: [ self buildWidgetAutoRefresh ]
 		ifFalse: [ self buildWidgetNoRefresh ]
@@ -51,6 +52,7 @@ SpMorphicMenuItemAdapter >> buildWidget [
 
 { #category : #factory }
 SpMorphicMenuItemAdapter >> buildWidgetAutoRefresh [
+
 	^ UpdatingMenuItemMorph new
 		target: self;
 		balloonTextSelector: #balloonText;
@@ -67,7 +69,9 @@ SpMorphicMenuItemAdapter >> buildWidgetAutoRefresh [
 
 { #category : #factory }
 SpMorphicMenuItemAdapter >> buildWidgetNoRefresh [
-	^ ToggleMenuItemMorph new
+	| item | 
+
+	item := ToggleMenuItemMorph new
 		contents: self name;
 		target: self;
 		selector: #performMenuActionWith:;
@@ -78,7 +82,13 @@ SpMorphicMenuItemAdapter >> buildWidgetNoRefresh [
 		enablementSelector: #enabled;
 		balloonText: self balloonText;
 		keyText: self shortcutText;
-		yourself
+		yourself.
+		
+	self presenter whenNameChangedDo: [ item contents: self name ].
+	self presenter whenIconChangedDo: [ item icon: self icon ].
+	self presenter whenDescriptionChangedDo: [ item balloonText: self balloonText ].
+		
+	^ item
 ]
 
 { #category : #private }
@@ -115,11 +125,12 @@ SpMorphicMenuItemAdapter >> icon [
 SpMorphicMenuItemAdapter >> name [
 	| name | 
 	
-	name := self model name.
+	name := self presenter name.
 	
 	^ (name isBlock or: [ name isMessageSend ])
 		ifTrue: [ name cull: self model ]
-		ifFalse: [ name ]
+		ifFalse: [ name ifNotNil: [ :aString | aString localizedForPresenter: self presenter ] ]
+
 ]
 
 { #category : #'widget API' }
@@ -141,15 +152,27 @@ SpMorphicMenuItemAdapter >> shortcut [
 
 { #category : #'widget API' }
 SpMorphicMenuItemAdapter >> shortcutText [
-	| shortcut |
+	"This should use  KMShortcutPrinter (check on this method history), but it cannot be used 
+	 because ToggleMenuItemMorph already normalises the shortcut text (and since it does not know 
+	 is already normalised, it does it two times)"
+	| shortcut platform string |
+	
+	self flag: #REVIEW. "Maybe modify ToggleMenuItemMorph to detect already normalised texts?"
 	
 	shortcut := self shortcut.
-	shortcut isString ifTrue: [ 
-		shortcut := self defaultModifierShortcut ].
-
-	^ shortcut 
-		ifNotNil: [ KMShortcutPrinter toString: shortcut ]
-		ifNil: [ nil ]
+	shortcut isString ifTrue: [ shortcut := self defaultModifierShortcut ].
+	shortcut ifNil: [ ^ nil ].
+	platform := Smalltalk os platformFamily.
+	shortcut combinationsDo: [ :each | 
+		(each platform = Smalltalk os platformFamily) ifTrue: [ shortcut := each ] ].
+	
+	string := '⌘⇧'.
+	
+	^ (platform =  #MacOSX and: [ 
+		(StandardFonts menuFont hasGlyphsForAll: string) and: [
+		string allSatisfy: [ :c | (StandardFonts menuFont characterFormAt: c) width~= 0 ]]])
+		ifFalse: [ shortcut shortcut printString ]
+		ifTrue: [ String streamContents: [:stream | shortcut shortcut prettyPrintOn: stream ] ]
 ]
 
 { #category : #'widget API' }
@@ -165,10 +188,7 @@ SpMorphicMenuItemAdapter >> state [
 
 { #category : #'widget API' }
 SpMorphicMenuItemAdapter >> stateSelector [
-
-	^ self state
-		ifNil: [ nil ]
-		ifNotNil: [ #state ]
+	^ self state ifNotNil: [ #state ]
 ]
 
 { #category : #'widget API' }
@@ -181,4 +201,18 @@ SpMorphicMenuItemAdapter >> subMenu [
 	^ (subMenu isBlock or: [ subMenu isMessageSend ])
 		ifTrue: [ subMenu cull: self model ]
 		ifFalse: [ subMenu buildWithSpecAsPopup ]
+]
+
+{ #category : #private }
+SpMorphicMenuItemAdapter >> widgetIcon [
+	"for testing purposes"
+	
+	^ self widget icon
+]
+
+{ #category : #private }
+SpMorphicMenuItemAdapter >> widgetName [
+	"for testing purposes"
+	
+	^ self widget contents
 ]

@@ -387,7 +387,7 @@ ZnUrl >> host [
 
 { #category : #accessing }
 ZnUrl >> host: hostName [
-	host := hostName ifNil: [ nil ] ifNotNil: [ hostName asLowercase ]
+	host := hostName ifNotNil: [ hostName asLowercase ]
 ]
 
 { #category : #converting }
