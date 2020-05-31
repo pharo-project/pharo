@@ -104,12 +104,16 @@ SourceFileBufferedReadWriteStream >> defaultBufferSize [
 
 { #category : #writing }
 SourceFileBufferedReadWriteStream >> ensureWrittenPosition: aPosition [
-
 	isDirty ifFalse: [ ^ false ].
-	
-	(self isPositionInBuffer: aPosition)
-		ifTrue: [ self flush. ^ true ].
-		
+
+	((self isPositionInBuffer: aPosition) or: [
+		"The position has been written to disk but
+		the buffer is dirty, so there is potentially
+		data in the buffer that we need."
+		aPosition <= bufferOffset ]) ifTrue: [
+			self flush.
+			^ true ].
+
 	^ false
 ]
 
