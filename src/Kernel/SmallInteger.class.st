@@ -375,11 +375,11 @@ SmallInteger >> deepCopy [
 
 { #category : #testing }
 SmallInteger >> even [
-	" 0 odd >>> true"
-	" 2 odd >>> true"
-	"-2 odd >>> true"
-	" 3 odd >>> false"
-	"-3 odd >>> false"
+	" 0 even >>> true"
+	" 2 even >>> true"
+	"-2 even >>> true"
+	" 3 even >>> false"
+	"-3 even >>> false"
 	
 	^(self bitAnd: 1) = 0
 ]
