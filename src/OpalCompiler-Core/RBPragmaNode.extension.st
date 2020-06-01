@@ -3,24 +3,21 @@ Extension { #name : #RBPragmaNode }
 { #category : #'*opalcompiler-core' }
 RBPragmaNode >> asIRPrimitive [
 	"return a IRPrimitive for this method to be used in the compiler intermediate representation"
-	| args module name spec  |
+	| args module name spec |
 	args := (self arguments collect: [ :each | each value ]) asArray.
 	"normal methods have primitive number 0"
-	self isPrimitive
-		ifFalse: [ IRPrimitive null ].
-	args first isString
-		ifTrue: [ 
-			"named primitives have number 117, the spec describes what to call"
-			name := args first.
+	self isPrimitive ifFalse: [ IRPrimitive null ].
+	^ args first isString
+		ifTrue: [ name := args first.
 			module := self argumentAt: #module: ifAbsent: [ nil ].
-			spec := {(module ifNotNil: [ module value asSymbol ]). (name asSymbol). 0. 0}.
-			^ IRPrimitive new
+			spec := {(module ifNotNil: [ module value asSymbol ]) . name asSymbol . 0 . 0}.
+			IRPrimitive new
 				num: 117;
 				spec: spec;
 				yourself ]
 		ifFalse: [ 
 			"these are standard numbered primitives"
-			^ IRPrimitive new
+			IRPrimitive new
 				num: args first;
 				spec: nil;
 				yourself ]

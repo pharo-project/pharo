@@ -61,14 +61,11 @@ OSSDL2GLRenderer >> getProcAddress: procName [
 OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 	| windowHandle |
 	context ifNil: [ ^ false ].
-	
+
 	self checkThread.
 	windowHandle := aBackendWindow sdl2Window.
 	windowHandle ifNil: [ ^ false ].
-	(SDL2 glMakeCurrent: windowHandle context: context) == 0
-		ifTrue:  [ ^ true ]
-		ifFalse:  [ ^ false ]
-	
+	^ (SDL2 glMakeCurrent: windowHandle context: context) == 0
 ]
 
 { #category : #misc }
