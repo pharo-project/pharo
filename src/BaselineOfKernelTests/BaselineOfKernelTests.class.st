@@ -16,7 +16,7 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Kernel-Tests-WithCompiler';
 			package: 	'Announcements-Core-Tests';
 			package: 	'Compression-Tests'; 
-			package: 	'FileSystem-Tests-Core' ;
+			package: 	'FileSystem-Tests-Core' with: [ spec requires: #('Collections-Tests') ];
 			package: 	'FileSystem-Tests-Disk';
 			package: 	'FileSystem-Tests-Attributes';
 			package: 	'Files-Tests' ;
