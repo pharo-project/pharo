@@ -143,6 +143,21 @@ FileLocatorTest >> testFromPathReturnsNilIfPathNotPartOfAnOrigin [
 		equals: nil.
 ]
 
+{ #category : #'creation tests' }
+FileLocatorTest >> testGetRightLocatorWhenCreatingFromString [
+	| path |
+	path := (FileLocator documents / 'foo') fullName.
+
+	locator := FileLocator fromString: path.
+
+	self
+		assert: locator origin
+		equals: #documents.
+	self
+		assert: locator fullName
+		equals: path.
+]
+
 { #category : #tests }
 FileLocatorTest >> testIfAbsent [
 	| reference |

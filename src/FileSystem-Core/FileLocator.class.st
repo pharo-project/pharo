@@ -248,14 +248,18 @@ FileLocator class >> flushCaches [
 FileLocator class >> fromPath: aPath [
 	"Returns a file locator if aPath is a reference to a supported origin or is a child of an origin.
 	Else returns nil.
-	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference " 
-	self supportedOrigins
-		detect: [ :origin | | locator |
-			locator := self perform: origin.
-			locator asPath = aPath or: [ locator contains: aPath] ]
-		ifFound: [ :origin | | locator |
-			locator := self perform: origin.
-			^ locator resolve: (aPath relativeToPath: locator asPath) ].
+	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference "
+
+	| locators locatorsPaths |
+	locators := self supportedOrigins
+		collect: [ :origin | self origin: origin ]
+		as: OrderedCollection.
+	locatorsPaths := (locators collect: [ :e | e -> e asPath ]) asDictionary.
+	(locators sort:
+			[ :a :b | ((locatorsPaths at: a) containsPath: (locatorsPaths at: b)) not ])
+		do: [ :locator | 
+			((locatorsPaths at: locator) = aPath or: [ (locatorsPaths at: locator) containsPath: aPath ])
+				ifTrue: [ ^ locator resolve: (aPath relativeToPath: (locatorsPaths at: locator)) ] ].
 	^ nil
 ]
 
