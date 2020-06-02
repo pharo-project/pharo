@@ -129,6 +129,7 @@ RBParser class >> parseRewriteMethod: aString onError: aBlock [
 { #category : #private }
 RBParser >> addCommentsTo: aNode [
 	aNode comments: aNode comments , comments.
+	comments do: [ :each | each parent: aNode ].
 	comments := OrderedCollection new
 ]
 
