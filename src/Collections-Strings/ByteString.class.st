@@ -20,7 +20,6 @@ ByteString class >> compare: string1 with: string2 collated: order [
 	<var: #string1 declareC: 'unsigned char *string1'>
 	<var: #string2 declareC: 'unsigned char *string2'>
 	<var: #order declareC: 'unsigned char *order'>
-	| len1 len2 c1 c2 |
 	len1 := string1 size.
 	len2 := string2 size.
 	1 to: (len1 min: len2) do: [ :i | 
