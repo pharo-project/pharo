@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Morphic')
+	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Morphic')
 ]
 
 { #category : #'known dependencies' }
