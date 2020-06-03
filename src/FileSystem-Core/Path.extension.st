@@ -3,8 +3,7 @@ Extension { #name : #Path }
 { #category : #'*FileSystem-Core' }
 Path >> asFileLocatorOrReference [
 
-	^ (FileLocator fromPath: self)
-			ifNil: [ self asFileReference ]
+	^ FileLocator fromPath: self ifNone: [ self asFileReference ]
 ]
 
 { #category : #'*FileSystem-Core' }

@@ -35,7 +35,7 @@ FileLocatorTest >> testCanCreateLocatorFromStringWhenDeepChild [
 	| path |
 	path := (FileLocator home / 'foo' / 'bar' / 'bee' / 'see') fullName.
 	
-	locator := FileLocator fromString: path.
+	locator := FileLocator fromString: path ifNone: [ nil ].
 	
 	self
 		assert: locator origin
@@ -50,7 +50,7 @@ FileLocatorTest >> testCanCreateLocatorFromStringWhenDirectChild [
 	| path |
 	path := (FileLocator home / 'foo') fullName.
 	
-	locator := FileLocator fromString: path.
+	locator := FileLocator fromString: path ifNone: [ nil ].
 		
 	self
 		assert: locator origin
@@ -65,7 +65,7 @@ FileLocatorTest >> testCanCreateLocatorFromStringWhenSamePath [
 	| path |
 	path := FileLocator home fullName.
 	
-	locator := FileLocator fromString: path.
+	locator := FileLocator fromString: path ifNone: [ nil ].
 	
 	self
 		assert: locator
@@ -132,11 +132,11 @@ FileLocatorTest >> testFileSystem [
 ]
 
 { #category : #'creation tests' }
-FileLocatorTest >> testFromPathReturnsNilIfPathNotPartOfAnOrigin [
+FileLocatorTest >> testFromPathReturnsBlockValueIfPathNotPartOfAnOrigin [
 	| path |
 	path := '/foo' asFileReference path.
 	
-	locator := FileLocator fromPath: path.
+	locator := FileLocator fromPath: path ifNone: [ nil ].
 	
 	self
 		assert: locator
@@ -148,7 +148,7 @@ FileLocatorTest >> testGetRightLocatorWhenCreatingFromString [
 	| path |
 	path := (FileLocator documents / 'foo') fullName.
 
-	locator := FileLocator fromString: path.
+	locator := FileLocator fromString: path ifNone: [ nil ].
 
 	self
 		assert: locator origin
