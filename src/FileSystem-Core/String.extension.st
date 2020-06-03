@@ -3,8 +3,8 @@ Extension { #name : #String }
 { #category : #'*filesystem-core-converting' }
 String >> asFileLocatorOrReference [
 
-	^ (FileLocator fromString: self)
-			ifNil: [ self asFileReference ]
+	^ FileLocator fromString: self ifNone: [ self asFileReference ]
+
 ]
 
 { #category : #'*filesystem-core-converting' }
