@@ -1,6 +1,6 @@
 Extension { #name : #StringTest }
 
-{ #category : #'*FileSystem-Core' }
+{ #category : #'*FileSystem-Tests-Core' }
 StringTest >> testAsFileLocatorOrReferenceReturnsALocatorWhenStringRefersToAKnownOrigin [
 	| pathString locator |
 	pathString := (FileLocator home / 'foo') fullName.
@@ -15,7 +15,7 @@ StringTest >> testAsFileLocatorOrReferenceReturnsALocatorWhenStringRefersToAKnow
 		equals: pathString.
 ]
 
-{ #category : #'*FileSystem-Core' }
+{ #category : #'*FileSystem-Tests-Core' }
 StringTest >> testAsFileLocatorOrReferenceReturnsAReferenceWhenStringDoesNotReferToAKnownOrigin [
 	| fileRef result |
 	fileRef := '/foo' asFileReference.
