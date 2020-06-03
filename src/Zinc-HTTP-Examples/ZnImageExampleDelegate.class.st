@@ -25,6 +25,11 @@ Class {
 	#category : #'Zinc-HTTP-Examples'
 }
 
+{ #category : #accessing }
+ZnImageExampleDelegate class >> defaultTimeLimit [
+	^10 seconds
+]
+
 { #category : #public }
 ZnImageExampleDelegate class >> installInDefaultServer [
 	"Assuming the default server has the default delegate, 

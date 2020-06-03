@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+ZnEasyTest class >> defaultTimeLimit [
+	^10 seconds
+]
+
+{ #category : #accessing }
 ZnEasyTest >> smallHtmlUrl [
 	^ 'http://zn.stfx.eu/zn/small.html' asZnUrl
 ]
