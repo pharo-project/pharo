@@ -4,8 +4,14 @@ Class {
 	#instVars : [
 		'validTestPackage'
 	],
-	#category : #'Renraku-Tests'
+	#category : #'SUnit-Rules-Tests-Base'
 }
+
+{ #category : #testing }
+ReTestBasedTestCase class >> isAbstract [
+
+	^self == ReTestBasedTestCase 
+]
 
 { #category : #running }
 ReTestBasedTestCase >> setUp [

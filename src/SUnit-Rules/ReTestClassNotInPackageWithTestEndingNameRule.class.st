@@ -4,7 +4,9 @@ A subclass of TestCase should be in package which name is ending with '-Tests'
 Class {
 	#name : #ReTestClassNotInPackageWithTestEndingNameRule,
 	#superclass : #ReAbstractRule,
-	#category : #'Renraku-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #'testing-interest' }
@@ -17,11 +19,6 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 ReTestClassNotInPackageWithTestEndingNameRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [(aClass package name asString endsWith: '-Tests') not].
-]
-
-{ #category : #running }
-ReTestClassNotInPackageWithTestEndingNameRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : #accessing }

@@ -2,24 +2,26 @@
 In a test case the setUp method should call super setUp as first message
 "
 Class {
-	#name : #ShouldSendSuperSetUpAsFirstMessage,
+	#name : #ReShouldSendSuperSetUpAsFirstMessage,
 	#superclass : #ReAbstractRule,
-	#category : #'SUnit-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #'testing-interest' }
-ShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
+ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 	^ true
 ]
 
 { #category : #utilities }
-ShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
+ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
 { #category : #utilities }
-ShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompiledMethod [
+ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompiledMethod [
 	"Return true if the method is a setUp method and a call to super setUp is not the first message send."
 
 	| searcher |
@@ -34,18 +36,12 @@ ShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompile
 ]
 
 { #category : #running }
-ShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
+ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 	^ (aMethod methodClass inheritsFrom: TestCase) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
 ]
 
 { #category : #accessing }
-ShouldSendSuperSetUpAsFirstMessage >> group [
-
-	^ 'SUnit'
-]
-
-{ #category : #accessing }
-ShouldSendSuperSetUpAsFirstMessage >> name [
+ReShouldSendSuperSetUpAsFirstMessage >> name [
 
 	^ 'Provide a call to super setUp as the first message in the setUp method'
 ]

@@ -4,7 +4,9 @@ Check if a test class' name ends with 'Tests' instead of 'Test'
 Class {
 	#name : #ReTestClassNameShouldNotEndWithTests,
 	#superclass : #ReAbstractRule,
-	#category : #'Renraku-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #'testing-interest' }
@@ -17,11 +19,6 @@ ReTestClassNameShouldNotEndWithTests class >> checksClass [
 ReTestClassNameShouldNotEndWithTests >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [aClass name asString endsWith: 'Tests'].
-]
-
-{ #category : #running }
-ReTestClassNameShouldNotEndWithTests >> group [
-	^ 'Optimization'
 ]
 
 { #category : #accessing }
