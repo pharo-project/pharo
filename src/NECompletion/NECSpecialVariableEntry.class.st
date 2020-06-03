@@ -1,5 +1,5 @@
 "
-I represent self, super and thisContext.
+I represent self, super and thisContext and true, false, nil
 "
 Class {
 	#name : #NECSpecialVariableEntry,
