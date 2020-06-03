@@ -248,7 +248,10 @@ FileLocator class >> flushCaches [
 FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 	"Returns a file locator if aPath is a reference to a supported origin or is a child of an origin.
 	If no locator matches, return the result of the evaluation of notFoundBlock.
-	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference "
+	Locators are sorted so that the deepest matching origin path is returned.
+	Ex: '/Users/me/Documents/foo.txt' will return a locator 
+		with #documents origin (path /Users/me/Documents) and not #home (path /Users/me).
+	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference. "
 
 	| locators locatorsPaths |
 	locators := self supportedOrigins
