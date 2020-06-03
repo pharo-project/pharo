@@ -255,8 +255,7 @@ FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 		collect: [ :origin | self origin: origin ]
 		as: OrderedCollection.
 	locatorsPaths := (locators collect: [ :e | e -> e asPath ]) asDictionary.
-	(locators sort:
-			[ :a :b | ((locatorsPaths at: a) containsPath: (locatorsPaths at: b)) not ])
+	(locators sort:	[ :a :b | (locatorsPaths at: b) <= (locatorsPaths at: a) ])
 		do: [ :locator | 
 			((locatorsPaths at: locator) = aPath or: [ (locatorsPaths at: locator) containsPath: aPath ])
 				ifTrue: [ ^ locator resolve: (aPath relativeToPath: (locatorsPaths at: locator)) ] ].
