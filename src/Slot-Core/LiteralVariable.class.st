@@ -74,7 +74,7 @@ LiteralVariable >> definitionString [
 { #category : #'code generation' }
 LiteralVariable >> emitStore: aMethodBuilder [
 	| tempName |
-	tempName := Object new.
+	tempName := '0TempForStackManipulation'.
 	aMethodBuilder
 		addTemp: tempName;
 		storeTemp: tempName;
