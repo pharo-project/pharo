@@ -33,11 +33,6 @@ RBParser class >> errorNodeBlock [
 	^ [ :aString :position :parser| parser parseErrorNode: aString ]
 ]
 
-{ #category : #accessing }
-RBParser class >> parseCompiledMethod: aCompiledMethod [
-	^ self parseMethod: aCompiledMethod sourceCode
-]
-
 { #category : #parsing }
 RBParser class >> parseExpression: aString [ 
 	^self parseExpression: aString onError: nil
