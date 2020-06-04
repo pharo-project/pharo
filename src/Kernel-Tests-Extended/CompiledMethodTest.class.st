@@ -286,6 +286,18 @@ CompiledMethodTest >> testAccessesSlot [
 ]
 
 { #category : #'tests - accessing' }
+CompiledMethodTest >> testAllComments [
+	"Testing the AST comments objects. I am the first comment to be found in this test"
+	self
+		assert: (CompiledMethodTest >> #testAllComments) ast allComments first contents
+		equals: 'Testing the AST comments objects. I am the first comment to be found in this test'.
+	"Next test assumes this comment it's not a string like in #testComments..."
+	self 
+		assert: (CompiledMethodTest >> #testAllComments) ast allComments second isString
+		equals: false
+]
+
+{ #category : #'tests - accessing' }
 CompiledMethodTest >> testBytecode [
 	"The result of this test depends on the used bytecode set. 
 	
