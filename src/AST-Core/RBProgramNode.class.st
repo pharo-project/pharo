@@ -94,9 +94,9 @@ RBProgramNode >> allChildren [
 
 { #category : #accessing }
 RBProgramNode >> allComments [
-	"Answer a collection of strings representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
+	"Answer a collection of objects representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
 
-	^ self allChildren flatCollect: [:el| el comments]
+	^ self ast allChildren flatCollect: [:el| el comments]
 ]
 
 { #category : #accessing }
