@@ -17,7 +17,7 @@ ReSuperWithoutSend >> basicCheck: aNode [
 	aNode isVariable ifFalse: [ ^ false ].
 	aNode isSuper ifFalse: [ ^ false ].
 	aNode parent isMessage ifTrue: [
-		"if we are the reveiver, everything is ok"  
+		"if we are the receiver, everything is ok"  
 		^aNode parent receiver ~= aNode
 	].
 	^true.
