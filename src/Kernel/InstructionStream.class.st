@@ -41,6 +41,11 @@ InstructionStream class >> on: method [
 	^self new method: method pc: method initialPC
 ]
 
+{ #category : #accessing }
+InstructionStream >> compiledCode [
+	^self method
+]
+
 { #category : #interpreting }
 InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
 	"Send to the argument, client, a message that specifies the next instruction.
