@@ -472,7 +472,8 @@ ClyFullBrowser >> newClassView [
 	"Creates the class pane"
 
 	^ self newNavigationView
-		displayMainColumnBy: [ :cell :item | 
+		displayMainColumnBy: [ :cell :item |
+			cell useFullIndentation.
 			self specifyClassItemNameOn: cell label for: item browserItem];
 		enableFilter;
 		requestNavigationBy: #classSelectionChanged	
@@ -480,7 +481,7 @@ ClyFullBrowser >> newClassView [
 
 { #category : #initialization }
 ClyFullBrowser >> newMethodGroupView [
-	"Creates the 'method group' pane (this is the protocol [ane])"
+	"Creates the 'method group' pane (formerly the 'protocol' pane)"
 
 	^ self newNavigationView
 		treeStructure: { 
@@ -789,13 +790,19 @@ ClyFullBrowser >> switchClassViewTo: aQueryResult inScope: aScope [
 
 { #category : #navigation }
 ClyFullBrowser >> switchToFlatClasses [
-	
-	| classQueries |
+	| classQueries fullQuery dataSource |
 	classQueries := OrderedCollection new.
-	packageView selection groupItemsByTypeAndDo: [ :typeClass :items | 
-		classQueries addAll: (typeClass prepareClassQueriesFrom: items in: navigationEnvironment)].
-	
-	classView showQueries: classQueries as: ClyExtensionLastSortedClasses hierarchical
+	packageView selection
+		groupItemsByTypeAndDo: [ :typeClass :items | 
+			classQueries
+				addAll: (typeClass prepareClassQueriesFrom: items in: navigationEnvironment) ].
+	fullQuery := ClyQuery
+		unionFrom: classQueries
+		as: ClyExtensionLastSortedClasses hierarchical.
+	classView
+		initiateUIChangeBy: [ dataSource := ClyExpandedDataSource on: fullQuery.
+			classView dataSource: dataSource.
+			classView ensureSelectedItemIfNeeded ]
 ]
 
 { #category : #navigation }
