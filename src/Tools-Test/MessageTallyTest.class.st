@@ -50,18 +50,20 @@ MessageTallyTest >> testSampling1 [
 
 { #category : #tallying }
 MessageTallyTest >> testTallySends [
-	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase |
+	| tally thisMethod allProcesses processUsedByTally tallyForPrintString tallyForPrintStringBase blockToTest |
 	allProcesses := Process allInstances.
+
+	blockToTest := [ 3.14159s printString ].
 
 	tally := MessageTally
 		tallySendsTo: nil
-		inBlock: [ 3.14159s printString ]
+		inBlock: blockToTest
 		showTree: true
 		closeAfter: false
 		openResultWindow: false.
 
-	"tally is for this test method"
-	thisMethod := self class >> #testTallySends.
+	"tally is for this test block. In FullBlocks the method is the CompiledBlock and not the CompiledMethod"
+	thisMethod := blockToTest method.
 	self assert: tally hash equals: thisMethod hash.
 	self assert: tally method identicalTo: thisMethod.
 	self assert: tally theClass identicalTo: self class.
