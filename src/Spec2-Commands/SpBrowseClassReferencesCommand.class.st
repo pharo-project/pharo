@@ -21,7 +21,8 @@ SpBrowseClassReferencesCommand class >> shortName [
 { #category : #execution }
 SpBrowseClassReferencesCommand >> execute [
 	| class |
-	class := self context instanceSide.
+
+	class := self target instanceSide.
 	class isTrait
 		ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
 		ifFalse: [ self systemNavigation browseAllCallsOnClass: class ]

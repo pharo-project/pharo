@@ -41,6 +41,7 @@ SpModalWindowPresenter >> closeOnBackdropClick: aBoolean [
 
 { #category : #initialization }
 SpModalWindowPresenter >> initialize [
+
 	super initialize.
-	closeOnBackdropClick := true
+	closeOnBackdropClick := false
 ]

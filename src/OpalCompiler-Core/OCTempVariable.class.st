@@ -56,15 +56,18 @@ OCTempVariable >> hash [
 	^ name hash bitXor: (usage hash bitXor: scope hash).
 ]
 
-{ #category : #debugging }
-OCTempVariable >> indexFromIR [
-	^index ifNil: [index := scope indexFromIRForVarNamed: name]
+{ #category : #accessing }
+OCTempVariable >> index [
+	^ index ifNil: [ 
+		"if the index is nil, we are in an AST after name analysis but before
+		IR generation. To fill the the index, we generate the ir."
+		scope node methodNode ir. 
+		index ifNil: [ self error: 'no temp index, should never happen' ] ]
 ]
 
-{ #category : #debugging }
-OCTempVariable >> indexInTempVectorFromIR: aName [
-	"if I am storing  temp vector, return the index of var name"
-	^(scope node irInstruction tempVectorNamed: name) indexForVarNamed: aName
+{ #category : #accessing }
+OCTempVariable >> index: anObject [
+	index := anObject
 ]
 
 { #category : #initialization }
@@ -149,7 +152,7 @@ OCTempVariable >> readFromContext: aContext scope: contextScope [
 { #category : #debugging }
 OCTempVariable >> readFromLocalContext: aContext [
 
-	^ aContext tempAt: self indexFromIR
+	^ aContext tempAt: self index
 ]
 
 { #category : #debugging }
@@ -163,5 +166,5 @@ OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 { #category : #debugging }
 OCTempVariable >> writeFromLocalContext: aContext put: aValue [
 
-	^ aContext tempAt: self indexFromIR put: aValue
+	^ aContext tempAt: self index put: aValue
 ]

@@ -286,8 +286,7 @@ RBMethodNode >> decompileString [
 
 { #category : #testing }
 RBMethodNode >> defines: aName [
-^ (arguments anySatisfy: [ :each | each name = aName ])
-
+	^ (arguments anySatisfy: [ :each | each name = aName ])
 		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
 ]
 
@@ -328,10 +327,8 @@ RBMethodNode >> extractSubtreeWith: aSourceCode [
 
 { #category : #accessing }
 RBMethodNode >> firstPrecodeComment [
-	| comment  | 
 	self comments ifEmpty: [ ^nil ].
-	comment :=  self comments first.
-	^self source copyFrom: comment start to: comment stop.
+	^ self comments first contents
 ]
 
 { #category : #testing }

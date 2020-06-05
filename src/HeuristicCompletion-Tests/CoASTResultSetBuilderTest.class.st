@@ -161,6 +161,19 @@ CoASTResultSetBuilderTest >> testBuildSequenceHeuristic [
 ]
 
 { #category : #tests }
+CoASTResultSetBuilderTest >> testBuildThisContextHeuristic [
+
+	| builder |
+	builder := CoMockASTResultSetBuilder new.
+	builder
+		completionContext: CoCompletionContext new;
+		node: RBThisContextNode new;
+		buildCompletion.
+		
+	self assert: builder heuristic equals: #thisContext
+]
+
+{ #category : #tests }
 CoASTResultSetBuilderTest >> testBuildVariableHeuristic [
 
 	| builder |

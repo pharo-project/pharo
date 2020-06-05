@@ -18,7 +18,7 @@ SpMorphicLayoutAdapter >> add: aPresenter constraints: constraints [
  
 	self widgetDo: [ :aPanel |
 		self 
-			basicAdd: aPresenter 
+			basicAdd: aPresenter
 			constraints: constraints 
 			to: aPanel ]
 ]

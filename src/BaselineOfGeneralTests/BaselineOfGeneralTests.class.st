@@ -40,7 +40,6 @@ BaselineOfGeneralTests >> baseline: spec [
 
 			package: 'Graphics-Tests';
 			package: 'HelpSystem-Tests';
-			package: 'IssueTracking-Tests';
 			package: 'Keymapping-Tests';
 
 			package: 'Morphic-Tests';
@@ -49,7 +48,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'NECompletion-Tests';
 			package: 'NewValueHolder-Tests';
 			package: 'ProfStef-Tests';
-			package: 'Reflectivity-Tools-Tests';
 			package: 'Regex-Core-Tests';
 			package: 'Ring-Definitions-Tests-Monticello';
 			package: 'Rubric-Tests';

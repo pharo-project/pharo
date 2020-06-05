@@ -83,8 +83,8 @@ TaCompositionElement >> dealiasSelector: oldSelector [
 	"Usefule to dealias the initialize selector. Used mostly with stateful Talents"
 
 	^ oldSelector = self initializeSelectorForMe
-		ifTrue: [ ^ #initializeTalent ]
-		ifFalse: [ ^ oldSelector ]
+		ifTrue: [ #initializeTalent ]
+		ifFalse: [ oldSelector ]
 ]
 
 { #category : #comparing }

@@ -711,10 +711,8 @@ Behavior >> firstPrecodeCommentFor:  selector [
 
 	| method |
 	"Behavior firstPrecodeCommentFor: #firstPrecodeCommentFor:"
-	(#(Comment Definition Hierarchy) includes: selector)
-		ifTrue: [^ nil].
 	method := self compiledMethodAt: selector asSymbol ifAbsent: [^ nil].
-	^method ast firstPrecodeComment.
+	^method ast firstPrecodeComment
 	
 ]
 

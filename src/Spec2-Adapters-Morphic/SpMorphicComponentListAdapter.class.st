@@ -4,6 +4,13 @@ Class {
 	#category : #'Spec2-Adapters-Morphic-List'
 }
 
+{ #category : #initialization }
+SpMorphicComponentListAdapter >> addKeyBindingsTo: aWidget [
+
+	super addKeyBindingsTo: aWidget.
+	self addContextMenuKeyBindings: aWidget
+]
+
 { #category : #factory }
 SpMorphicComponentListAdapter >> buildWidget [
 
@@ -32,6 +39,12 @@ SpMorphicComponentListAdapter >> children [
 	^ self rows collect: [ :row | | cell | 
 		cell := row submorphs first.
 		cell submorphs first ]
+]
+
+{ #category : #'as yet unclassified' }
+SpMorphicComponentListAdapter >> elementAt: index [ 
+	
+	^ self widget dataSource elementAt: index
 ]
 
 { #category : #testing }
@@ -120,6 +133,13 @@ SpMorphicComponentListAdapter >> selectionChanged: ann [
 	
 	ann newSelectedIndexes ifNotEmpty: [ ^ self ].
 	self presenter selection unselectAll
+]
+
+{ #category : #private }
+SpMorphicComponentListAdapter >> showContextMenu [
+
+	self widgetDo: [ :w |
+		w showMenuForIndex: { self presenter selection selectedIndex. 1 } ]
 ]
 
 { #category : #factory }

@@ -12,6 +12,12 @@ SpMorphicBaseMenuAdapter >> addKeyBindingsTo: aMorph [
 	"This does not has keybindings"
 ]
 
+{ #category : #private }
+SpMorphicBaseMenuAdapter >> getTitleText [
+
+	^ self presenter title ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
 { #category : #protocol }
 SpMorphicBaseMenuAdapter >> icon [
 
@@ -33,5 +39,5 @@ SpMorphicBaseMenuAdapter >> openAt: aPoint [
 { #category : #protocol }
 SpMorphicBaseMenuAdapter >> title [
 
-	^ self model title
+	^ self getTitleText
 ]

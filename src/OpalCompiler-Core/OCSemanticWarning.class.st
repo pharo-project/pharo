@@ -68,23 +68,6 @@ OCSemanticWarning >> node: anObject [
 ]
 
 { #category : #correcting }
-OCSemanticWarning >> notify: aString at: location [
-	"Refer to the comment in Object|notify:."
-
-	^self requestor 
-		ifNil: [SyntaxErrorNotification
-					inClass: self methodClass 
-					withCode: self methodNode source
-					doitFlag: false
-					errorMessage: aString
-					location: location]
-		ifNotNil: [self requestor
-					notify: aString , ' ->'
-					at: location
-					in: self requestor text]
-]
-
-{ #category : #correcting }
 OCSemanticWarning >> openMenuIn: aBlock [
 	self subclassResponsibility
 ]

@@ -50,7 +50,11 @@ ClyCommitMCPackageCommand >> execute [
 	repos ifEmpty: [ ^ self inform: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1 ifTrue: [ repos first ] ifFalse: [ UIManager default chooseFrom: (repos collect: #name) values: repos title: 'Choose repository' ].
 	targetRepo ifNil: [ ^ self ].
-	(targetRepo isMissing or: [ targetRepo isCodeMissing or: [ targetRepo isDetached or: [ targetRepo hasUnbornProject ] ] ])
+	(targetRepo isMissing or: [ 
+		targetRepo isCodeMissing or: [ 
+			targetRepo workingCopy isDetached or: [ 
+				targetRepo head isDetached or: [ 
+					targetRepo workingCopy project isUnborn ] ] ] ])
 		ifTrue: [ UIManager default
 				alert:
 					'The ' , targetRepo name

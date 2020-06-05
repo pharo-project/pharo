@@ -112,11 +112,6 @@ OCAbstractMethodScope >> id: int [
 	id := int
 ]
 
-{ #category : #'temp vars' }
-OCAbstractMethodScope >> indexFromIRForVarNamed: aName [
-	^self outerNotOptimizedScope node irInstruction indexForVarNamed: aName
-]
-
 { #category : #initialization }
 OCAbstractMethodScope >> initialize [
 
@@ -251,6 +246,12 @@ OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue f
 OCAbstractMethodScope >> tempVarNames [
 
 	^ tempVars keys
+]
+
+{ #category : #'temp vars' }
+OCAbstractMethodScope >> tempVarNamesWithoutArguments [
+
+	^ tempVars values reject: [ :each | each isArg ] thenCollect: [ :each | each name ]
 ]
 
 { #category : #'temp vars' }

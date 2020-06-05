@@ -27,8 +27,7 @@ SpDynamicLeftToRightColumnsLayout >> buildLayoutFor: aDynamicPresentersListBuild
 			| subLayout |
 			subLayout := SpBoxLayout newVertical.
 			group do: [ :instVar | subLayout add: instVar ].
-			layout add: subLayout ].
-
+			layout add: subLayout withConstraints: self sublayoutConstraints ].
 	^ layout
 ]
 

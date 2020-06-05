@@ -161,7 +161,10 @@ GLMPresentation >> actions [
 
 { #category : #'scripting actions' }
 GLMPresentation >> actions: aBlock [ 
-	self deprecated: 'use dynamicActionsOnSelection: for contextual actions, and dynamicActions for presentation-wide actions'.
+	self 
+		deprecated: 'use dynamicActionsOnSelection: for contextual actions, and dynamicActions for presentation-wide actions'
+		transformWith: '`@rec actions: `@block' -> '`@rec dynamicActionsOnSelection: `@block'.
+	
 	^ self dynamicActionsOnSelection: aBlock 
 ]
 

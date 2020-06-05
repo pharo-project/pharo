@@ -75,11 +75,30 @@ TimeProfiler class >> fullReportMenuOn: aBuilder [
 TimeProfiler class >> menuCommandOn: aBuilder [ 
 	<worldMenu>
 	(aBuilder item: #'Time Profiler')
-		parent: #Tools;  
-		order: 301;
+		parent: #Profiling;  
+		order: 110;
 		icon: self taskbarIcon;
 		help: 'Profile the execution of a piece of code and navigate into the result.';
 		action: [TimeProfiler new open]
+]
+
+{ #category : #'world menu' }
+TimeProfiler class >> menuProfilingOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #Profiling)
+		parent: #Tools;
+		label: 'Profiling';
+		help: 'Profiling tools';
+		order: 301.
+
+	(aBuilder item: #'Start profiling all Processes')
+		parent: #Profiling;
+		help: 'Profile all Pharo processes.';
+		action: [ self currentWorld worldState startMessageTally ].
+	(aBuilder item: #'Start profiling UI ')
+		parent: #Profiling;
+		help: 'Profile the UI process of Pharo.';
+		action: [ self currentWorld worldState startThenBrowseMessageTally ].
 ]
 
 { #category : #opening }
@@ -536,15 +555,13 @@ TimeProfiler >> selectedMethodCode [
 
 { #category : #compiling }
 TimeProfiler >> selectedMethodCode: aString notifying: aController [
-
 	"Compile the code in aString. Notify aController of any syntax errors. 
 	Answer false if the compilation fails. Otherwise answer true."
 
-	self selectedNode
-		ifNil: [ ^ false ]
+	^ self selectedNode
+		ifNil: [ false ]
 		ifNotNil: [ :currNode | 
 			| class oldSelector category newSelector |
-
 			class := currNode methodClass.
 			oldSelector := currNode selector.
 			class ifNil: [ ^ false ].	"Normal method accept"
@@ -552,8 +569,7 @@ TimeProfiler >> selectedMethodCode: aString notifying: aController [
 			newSelector := class compile: aString classified: category notifying: aController.
 			newSelector ifNil: [ ^ false ].
 			self changed: #selectedMethodCode.
-			^ true
-			]
+			true ]
 ]
 
 { #category : #accessing }

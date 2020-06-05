@@ -473,12 +473,10 @@ NetNameResolver class >> waitForCompletionUntil: deadline [
 
 	| status |
 	status := self waitForResolverNonBusyUntil: deadline.
-	status = ResolverReady
-		ifTrue: [^ true]
-		ifFalse: [
-			status = ResolverBusy ifTrue: [self primAbortLookup].
-			^ false].
-
+	^ status = ResolverReady
+		ifTrue: [ true ]
+		ifFalse: [ status = ResolverBusy ifTrue: [ self primAbortLookup ].
+			false ]
 ]
 
 { #category : #private }

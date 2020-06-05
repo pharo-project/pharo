@@ -1450,17 +1450,6 @@ Object >> notify: aString [
 	Warning signal: aString
 ]
 
-{ #category : #'error handling' }
-Object >> notify: aString at: location [
-	"Create and schedule a Notifier with the argument as the message in 
-	order to request confirmation before a process can proceed. Subclasses can
-	override this and insert an error message at location within aString."
-
-	self notify: aString
-
-	"nil notify: 'confirmation message' at: 12"
-]
-
 { #category : #'model - updating' }
 Object >> okToChange [
 	"Allows a controller to ask this of any model"

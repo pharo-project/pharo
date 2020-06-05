@@ -129,6 +129,7 @@ RBParser class >> parseRewriteMethod: aString onError: aBlock [
 { #category : #private }
 RBParser >> addCommentsTo: aNode [
 	aNode comments: aNode comments , comments.
+	comments do: [ :each | each parent: aNode ].
 	comments := OrderedCollection new
 ]
 
@@ -755,10 +756,9 @@ RBParser >> parsePrimitiveKeywordPragma [
 
 { #category : #'private-parsing' }
 RBParser >> parsePrimitiveLiteral [
-
-	currentToken isNumberLiteralToken
-		ifTrue: [ ^ self parseNumberLiteral ]
-		ifFalse: [ ^ self parsePrimitiveValueLiteral ]
+	^ currentToken isNumberLiteralToken
+		ifTrue: [ self parseNumberLiteral ]
+		ifFalse: [ self parsePrimitiveValueLiteral ]
 ]
 
 { #category : #'private-parsing' }

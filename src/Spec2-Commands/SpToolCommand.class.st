@@ -6,6 +6,9 @@ My children will define actions that can be executed as part of the Pharo System
 Class {
 	#name : #SpToolCommand,
 	#superclass : #CmCommand,
+	#instVars : [
+		'transform'
+	],
 	#category : #'Spec2-Commands-Presenters'
 }
 
@@ -44,8 +47,33 @@ SpToolCommand >> defaultIconName [
 	^self class defaultIconName
 ]
 
+{ #category : #initialization }
+SpToolCommand >> initialize [
+
+	super initialize.
+	transform := [ :aContext | aContext ]
+]
+
 { #category : #accessing }
 SpToolCommand >> shortcutKey [
 
 	^ self class defaultShortcutKey
+]
+
+{ #category : #accessing }
+SpToolCommand >> target [
+
+	^ self transform value: self context
+]
+
+{ #category : #accessing }
+SpToolCommand >> transform [
+
+	^ transform
+]
+
+{ #category : #accessing }
+SpToolCommand >> transform: aBlock [
+
+	transform := aBlock
 ]

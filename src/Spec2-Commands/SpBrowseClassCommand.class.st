@@ -29,5 +29,6 @@ SpBrowseClassCommand class >> shortName [
 
 { #category : #execution }
 SpBrowseClassCommand >> execute [
-	self context ifNotNil: [ :ctx | ctx browse ]
+
+	self target ifNotNil: [ :aTarget | aTarget browse ]
 ]
