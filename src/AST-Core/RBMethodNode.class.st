@@ -327,10 +327,8 @@ RBMethodNode >> extractSubtreeWith: aSourceCode [
 
 { #category : #accessing }
 RBMethodNode >> firstPrecodeComment [
-	| comment  | 
 	self comments ifEmpty: [ ^nil ].
-	comment :=  self comments first.
-	^self source copyFrom: comment start to: comment stop.
+	^ self comments first contents
 ]
 
 { #category : #testing }
