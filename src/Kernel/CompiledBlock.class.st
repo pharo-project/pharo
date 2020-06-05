@@ -131,8 +131,11 @@ CompiledBlock >> primitive [
 ]
 
 { #category : #printing }
-CompiledBlock >> printOn: s [
-	s << 'compiledBlock'
+CompiledBlock >> printOn: anStream [
+	
+	anStream 
+		nextPutAll: 'a CompiledBlock: ';
+		nextPutAll: self sourceNode sourceCode 
 ]
 
 { #category : #compatibility }
