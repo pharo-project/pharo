@@ -6,7 +6,7 @@ RBPragmaNode >> asIRPrimitive [
 	| args module name spec |
 	args := (self arguments collect: [ :each | each value ]) asArray.
 	"normal methods have primitive number 0"
-	self isPrimitive ifFalse: [ IRPrimitive null ].
+	self isPrimitive ifFalse: [ ^ IRPrimitive null ].
 	^ args first isString
 		ifTrue: [ name := args first.
 			module := self argumentAt: #module: ifAbsent: [ nil ].
