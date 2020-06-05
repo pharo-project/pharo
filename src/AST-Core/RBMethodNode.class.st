@@ -544,11 +544,6 @@ RBMethodNode >> pragmas: aCollection [
 	pragmas do: [ :each | each parent: self ]
 ]
 
-{ #category : #accessing }
-RBMethodNode >> primitiveSources [
-	^ self pragmas collect: [ :each | self source copyFrom: each first to: each last ]
-]
-
 { #category : #printing }
 RBMethodNode >> printOn: aStream [ 
 	aStream nextPutAll: self formattedCode
