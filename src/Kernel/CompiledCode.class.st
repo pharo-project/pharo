@@ -914,6 +914,16 @@ CompiledCode >> withAllBlocks [
 	^ self addWithAllBlocksInto: IdentitySet new.
 ]
 
+{ #category : #accessing }
+CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [ 
+	"This method traverses all the nested literals.
+	As a Block or Method can have literals in the nested blocks. 
+	This is used to query all the selectors used in a method for example"
+	
+	self withAllBlocks do: [ :aCompiledCode | 
+		aCompiledCode allLiterals do: aBlockClosure ]
+]
+
 { #category : #scanning }
 CompiledCode >> writesField: varIndex [
 	"Answer whether the receiver stores into the instance variable indexed by the argument."

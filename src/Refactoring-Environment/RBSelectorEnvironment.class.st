@@ -82,7 +82,7 @@ RBSelectorEnvironment class >> matches: aString in: anEnvironment [
 	anEnvironment classesAndSelectorsDo: [ :class :selector | 
 		| method |
 		method := class compiledMethodAt: selector.
-		method allLiterals do: [ :literal | 
+		method withAllNestedLiteralsDo: [ :literal | 
 			literal isString ifTrue: [
 				(aString match: literal)
 					ifTrue: [ newEnvironment addClass: class selector: selector ] ] ] ].
