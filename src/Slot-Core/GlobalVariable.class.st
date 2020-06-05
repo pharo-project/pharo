@@ -17,9 +17,8 @@ GlobalVariable >> definingClass [
 
 { #category : #'code generation' }
 GlobalVariable >> emitStore: methodBuilder [
-	methodBuilder storeIntoLiteralVariable: self.
 
-
+	methodBuilder storeIntoLiteralVariable: self
 ]
 
 { #category : #'code generation' }
