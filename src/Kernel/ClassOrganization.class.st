@@ -58,7 +58,7 @@ ClassOrganization >> allProtocols [
 
 { #category : #accessing }
 ClassOrganization >> allProtocolsNames [
-	^ self allProtocols collect: #name
+	^ self allProtocols collect: [:each |each name]
 ]
 
 { #category : #accessing }
@@ -292,9 +292,8 @@ ClassOrganization >> ownCategories [
                                                 eachMethod origin = self subject
                                                                 and: [ eachMethod protocol = eachProtocol name ] ] ]).
                         set ].
-
-        ^ ((self protocolOrganizer protocols collect: #name)
-                copyWithoutAll: (traitsCategories collect: #name)) asArray.
+        ^ ((self protocolOrganizer protocols collect: [:each | each name])
+                copyWithoutAll: (traitsCategories collect: [:each | each name])) asArray.
 ]
 
 { #category : #accessing }

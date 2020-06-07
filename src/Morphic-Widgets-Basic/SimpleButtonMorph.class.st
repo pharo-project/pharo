@@ -297,8 +297,7 @@ SimpleButtonMorph >> setActWhen [
 	| selections |
 	selections := #(#buttonDown #buttonUp #whilePressed #startDrag ).
 	actWhen := UIManager default
-				chooseFrom: (selections 
-						collect: [:t | t translated])
+				chooseFrom: (selections collect: [:t | t translated])
 				values: selections
 				title: 'Choose one of the following conditions' translated
 ]
@@ -405,10 +404,10 @@ SimpleButtonMorph >> updateVisualState: evt [
 SimpleButtonMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
-super veryDeepFixupWith: deepCopier.
-target := deepCopier references at: target ifAbsent: [target].
-arguments := arguments collect: [:each |
-	deepCopier references at: each ifAbsent: [each]].
+	super veryDeepFixupWith: deepCopier.
+	target := deepCopier references at: target ifAbsent: [target].
+	arguments := arguments collect: [:each |
+		deepCopier references at: each ifAbsent: [each]].
 
 ]
 

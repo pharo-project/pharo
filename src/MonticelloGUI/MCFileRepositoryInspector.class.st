@@ -311,7 +311,7 @@ MCFileRepositoryInspector >> selectedPackageAncestors [
 			selectedPackage
 				ifNotNil: [ 
 					(MCWorkingCopy registry at: (MCPackage named: selectedPackage) ifAbsent: [  ])
-						ifNotNil: [ :aWorkingCopy | selectedPackageAncestors := aWorkingCopy ancestry breadthFirstAncestors collect: #name ] ] ].
+						ifNotNil: [ :aWorkingCopy | selectedPackageAncestors := aWorkingCopy ancestry breadthFirstAncestors collect: [:each | each name] ] ] ].
 	^ selectedPackageAncestors
 ]
 

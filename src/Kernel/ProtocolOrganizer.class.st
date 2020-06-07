@@ -52,7 +52,7 @@ ProtocolOrganizer >> allProtocols [
 { #category : #accessing }
 ProtocolOrganizer >> allProtocolsNames [
 
-	^ self allProtocols collect: #name
+	^ self allProtocols collect: [:each | each name]
 ]
 
 { #category : #'protocol - adding' }

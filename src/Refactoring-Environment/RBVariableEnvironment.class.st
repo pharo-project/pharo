@@ -412,7 +412,7 @@ RBVariableEnvironment >> numberVariables [
 
 { #category : #accessing }
 RBVariableEnvironment >> packages [
-	^ self classes collect: #package
+	^ self classes collect: [:each | each package]
 ]
 
 { #category : #copying }

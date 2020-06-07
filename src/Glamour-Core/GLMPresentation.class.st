@@ -628,7 +628,7 @@ GLMPresentation >> postCopy [
 	self flag: 'self unregisterFromAllAnnouncements.'.
 	updateActions := updateActions
 		collect: [ :each | 
-			(each copy)
+			each copy
 				presentation: self;
 				yourself ].
 	rawSelectionTransmissions := rawSelectionTransmissions collect: [:each | each copy].

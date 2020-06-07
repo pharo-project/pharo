@@ -111,7 +111,7 @@ ClyBrowserQueryCursor >> currentItem [
 ClyBrowserQueryCursor >> findItemsSimilarTo: sampleBrowserItems [
 
 	^cache 
-		findItemsWith: (sampleBrowserItems collect: #actualObject)
+		findItemsWith: (sampleBrowserItems collect: [:each | each actualObject])
 		forAbsentDo: [ 
 			^queryResult findItemsSimilarTo: sampleBrowserItems]
 ]

@@ -794,7 +794,7 @@ BlockClosure >> valueSuppressingMessages: aListOfStrings [
 { #category : #evaluating }
 BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
 
-	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each. true}])
+	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
 ]
 
 { #category : #exceptions }

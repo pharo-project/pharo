@@ -64,7 +64,7 @@ GLMBrickGeneralWrapper >> owner [
 { #category : #api }
 GLMBrickGeneralWrapper >> subbricks [
 
-	^ self brick subbricks collect:  #brickApi
+	^ self brick subbricks collect:  [:each | each brickApi]
 ]
 
 { #category : #api }

@@ -257,7 +257,7 @@ GLMBrickStructureTrait >> ownerThatIsA: aClass [
 { #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddAllBricks: aCollection [
 	|bricks|
-	bricks := aCollection collect: #asBrick.
+	bricks := aCollection collect: [:each | each asBrick].
 	bricks do: [ :each | self privateAddBrickLinkBack: each ].
 	self privateSubbricks: (self subbricks, bricks).
 	^ bricks

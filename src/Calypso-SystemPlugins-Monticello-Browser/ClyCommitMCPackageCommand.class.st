@@ -48,7 +48,7 @@ ClyCommitMCPackageCommand >> execute [
 	packages ifEmpty: [ ^ repoBrowser new openWithSpec ].
 	repos := IceRepository registry select: [ :repo | packages anySatisfy: [ :each | repo includesPackageNamed: each name ] ].
 	repos ifEmpty: [ ^ self inform: 'Selected packages are not managed by Iceberg' ].
-	targetRepo := repos size = 1 ifTrue: [ repos first ] ifFalse: [ UIManager default chooseFrom: (repos collect: #name) values: repos title: 'Choose repository' ].
+	targetRepo := repos size = 1 ifTrue: [ repos first ] ifFalse: [ UIManager default chooseFrom: (repos collect: [:each | each name]) values: repos title: 'Choose repository' ].
 	targetRepo ifNil: [ ^ self ].
 	(targetRepo isMissing or: [ 
 		targetRepo isCodeMissing or: [ 

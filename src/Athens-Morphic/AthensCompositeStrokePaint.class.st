@@ -35,7 +35,7 @@ AthensCompositeStrokePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 
 { #category : #private }
 AthensCompositeStrokePaint >> fromBorderStyles: borders on: anAthensCanvas [
-	strokePaints := borders collect: [:each | (each asAthensPaintOn: anAthensCanvas ) asStrokePaintOn: anAthensCanvas]
+	strokePaints := borders collect: [:each | (each asAthensPaintOn: anAthensCanvas) asStrokePaintOn: anAthensCanvas]
 ]
 
 { #category : #private }

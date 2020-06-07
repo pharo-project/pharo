@@ -42,7 +42,7 @@ ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	| tagsString confirmed |
 	super prepareFullExecutionInContext: aToolContext.
 	
-	tagsString := ', ' join: (methodGroups collect: #name).
+	tagsString := ', ' join: (methodGroups collect: [:each | each name]).
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0])
 		ifTrue: [
 			confirmed := UIManager default 

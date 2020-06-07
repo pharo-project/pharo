@@ -149,7 +149,7 @@ ChangeSorterModel >> findChangeSetIn: aCollectionOfChangeSets [
 	self okToChange ifFalse: [^ self].
 	pattern := UIManager default request: 'ChangeSet name or fragment?'.
 	pattern isEmptyOrNil ifTrue: [^ self].
-	nameList := aCollectionOfChangeSets collect: #name.
+	nameList := aCollectionOfChangeSets collect: [:each | each name].
 	candidates := aCollectionOfChangeSets select:
 			[:c | (nameList includes: c name) and: 
 				[c name includesSubstring: pattern caseSensitive: false]].

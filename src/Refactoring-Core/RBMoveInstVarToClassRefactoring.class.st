@@ -66,7 +66,7 @@ RBMoveInstVarToClassRefactoring >> transform [
 	brokenSenders := self collectSendersOfInstVar.
 	brokenSenders ifNotEmpty: [ 
 		Smalltalk tools messageList
-			browse: (brokenSenders collect:#method)
+			browse: (brokenSenders collect: [:each | each method])
 			title: 'Broken methods' 
 			autoSelect: brokenSenders first selector] 
 ]

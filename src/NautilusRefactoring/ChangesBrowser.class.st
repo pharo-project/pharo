@@ -152,7 +152,7 @@ ChangesBrowser >> open [
 { #category : #accessing }
 ChangesBrowser >> pickedChanges [
 	| selectedItems |
-	selectedItems := changesTree selectedItems collect: #content.
+	selectedItems := changesTree selectedItems collect: [:each | each content].
 	^ changesTree roots select: [ :i | selectedItems includes: i ]
 ]
 
