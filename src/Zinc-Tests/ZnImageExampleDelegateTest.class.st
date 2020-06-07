@@ -14,8 +14,6 @@ ZnImageExampleDelegateTest >> image [
 
 { #category : #testing }
 ZnImageExampleDelegateTest >> testDefaultImage [
-	self flag: #flakyTest.
-	self skip.
 	
 	self withServerDo: [ :server |
 		| client |
