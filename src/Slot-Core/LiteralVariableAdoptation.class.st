@@ -1,3 +1,7 @@
+"
+I am a temp class to complete migration.
+I include compatibility methods required to make LiteralVariable to be like Association.
+"
 Class {
 	#name : #LiteralVariableAdoptation,
 	#superclass : #Variable,
