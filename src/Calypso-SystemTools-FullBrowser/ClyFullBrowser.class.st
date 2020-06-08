@@ -476,6 +476,7 @@ ClyFullBrowser >> newClassView [
 			cell useFullIndentation.
 			self specifyClassItemNameOn: cell label for: item browserItem];
 		enableFilter;
+		enableCollapsingOfPreexpandedItems;
 		requestNavigationBy: #classSelectionChanged	
 ]
 
@@ -790,19 +791,13 @@ ClyFullBrowser >> switchClassViewTo: aQueryResult inScope: aScope [
 
 { #category : #navigation }
 ClyFullBrowser >> switchToFlatClasses [
-	| classQueries fullQuery dataSource |
+	
+	| classQueries |
 	classQueries := OrderedCollection new.
-	packageView selection
-		groupItemsByTypeAndDo: [ :typeClass :items | 
-			classQueries
-				addAll: (typeClass prepareClassQueriesFrom: items in: navigationEnvironment) ].
-	fullQuery := ClyQuery
-		unionFrom: classQueries
-		as: ClyExtensionLastSortedClasses hierarchical.
-	classView
-		initiateUIChangeBy: [ dataSource := ClyExpandedDataSource on: fullQuery.
-			classView dataSource: dataSource.
-			classView ensureSelectedItemIfNeeded ]
+	packageView selection groupItemsByTypeAndDo: [ :typeClass :items | 
+		classQueries addAll: (typeClass prepareClassQueriesFrom: items in: navigationEnvironment)].
+	
+	classView showQueries: classQueries as: ClyExtensionLastSortedClasses hierarchical
 ]
 
 { #category : #navigation }
