@@ -24,14 +24,10 @@ the Trait I am coming from (that defined me) is stored here.
 "
 Class {
 	#name : #Slot,
-	#superclass : #Object,
+	#superclass : #Variable,
 	#instVars : [
-		'name',
 		'owningClass',
 		'definingClass'
-	],
-	#classVars : [
-		'Properties'
 	],
 	#classInstVars : [
 		'slotClassDefinition'
@@ -105,15 +101,6 @@ Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
 	^self environment allBehaviors 
 		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
-]
-
-{ #category : #comparing }
-Slot >> = other [
-	"Every subclass that adds state must redefine this method"
-	self == other
-		ifTrue: [ ^ true ].
-	^ (self species == other species) 
-			and: [ name = other name ]
 ]
 
 { #category : #'class building' }
@@ -230,12 +217,6 @@ Slot >> hasSameDefinitionAs: otherSlot [
 
 ]
 
-{ #category : #comparing }
-Slot >> hash [
-	"Every subclass that adds state must redefine this method"
-	^ self species hash bitXor: self name hash
-]
-
 { #category : #initialization }
 Slot >> initialize: instance [
 	"nothing to do for the default slot"
@@ -295,16 +276,6 @@ Slot >> isVisible [
 Slot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableWriteNodes
 		anySatisfy: [ :node | node binding slot == self ]
-]
-
-{ #category : #accessing }
-Slot >> name [
-	^ name
-]
-
-{ #category : #accessing }
-Slot >> name: aSymbol [
-	name := aSymbol
 ]
 
 { #category : #accessing }
