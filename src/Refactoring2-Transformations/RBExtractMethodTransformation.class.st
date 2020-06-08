@@ -38,7 +38,7 @@ RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 
 	^ ((aRBClass
 		withAllSuperclassesUntil: Object)
-		flatCollect: [ :class | class allMethods collect: #method ])
+		flatCollect: [ :class | class allMethods collect: [:each | each method] ])
 		reject: #isNil
 ]
 

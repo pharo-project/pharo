@@ -17,7 +17,7 @@ OrderedDictionary >> gtInspectorItemsIn: composite [
 			table rawSelection do: [ :assoc | self removeKey: assoc key ].
 			table update ]
 			entitled: 'Remove item(s)';
-		selectionPopulate: #selection entitled: 'Open key' with: [ :table | (table rawSelection collect: #key) gtInspectorInterestingObject ];
+		selectionPopulate: #selection entitled: 'Open key' with: [ :table | (table rawSelection collect: [:each | each key]) gtInspectorInterestingObject ];
 		beMultiple;
 		send: [ :selection | 
 			"withSmalltalkSearch;

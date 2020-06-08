@@ -183,7 +183,7 @@ RBCondition class >> hasSubclasses: aClass [
 RBCondition class >> hasSubclasses: aClass excluding: classList [ 
 	^self new
 		type: (Array with: #hasSubclasses with: aClass)
-		block: [ ((aClass subclasses collect: #name) copyWithoutAll: classList) isNotEmpty ]
+		block: [ ((aClass subclasses collect: [:each | each name]) copyWithoutAll: classList) isNotEmpty ]
 		errorString: aClass printString , ' has <1?:no >subclasses'
 ]
 

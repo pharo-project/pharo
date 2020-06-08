@@ -72,7 +72,7 @@ FileSystemResolver >> resolveString: aString [
 
 { #category : #resolving }
 FileSystemResolver >> supportedOrigins [
-	^ (Pragma allNamed: #origin from: self class to: FileSystemResolver) collect: #methodSelector
+	^ (Pragma allNamed: #origin from: self class to: FileSystemResolver) collect: [:each | each methodSelector]
 ]
 
 { #category : #resolving }

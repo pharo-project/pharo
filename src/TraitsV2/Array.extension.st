@@ -4,5 +4,5 @@ Extension { #name : #Array }
 Array >> asTraitComposition [
 	^ self isEmpty
 		ifTrue: [ TaEmptyComposition new ]
-		ifFalse: [ TaSequence withAll: (self collect: #asTraitComposition) ]
+		ifFalse: [ TaSequence withAll: (self collect: [:each | each asTraitComposition]) ]
 ]

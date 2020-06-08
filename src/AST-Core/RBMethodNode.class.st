@@ -658,7 +658,7 @@ RBMethodNode >> selectorAndArgumentNames [
 
 { #category : #accessing }
 RBMethodNode >> selectorParts [
-	^ self keywords collect: #asSymbol.
+	^ self keywords collect: [:each | each asSymbol]
 ]
 
 { #category : #accessing }

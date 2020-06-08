@@ -3,14 +3,14 @@ Extension { #name : #ClyCompositeScope }
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asInheritedScope [
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | each asInheritedScope  ].
+	newSubscopes := subscopes collect: [ :each | each asInheritedScope ].
 	^ClyCompositeScope on: newSubscopes in: environment named: ClyClassScope inheritedScopeName
 ]
 
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asInheritingScope [
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | each asInheritingScope  ].
+	newSubscopes := subscopes collect: [ :each | each asInheritingScope ].
 	^ClyCompositeScope on: newSubscopes in: environment named: ClyClassScope inheritingScopeName
 ]
 
@@ -59,7 +59,6 @@ ClyCompositeScope >> packagesDo: aBlock [
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> withMetaLevel: aScopeClass [ 
 	| newSubscopes |
-	newSubscopes := subscopes collect: [ :each | 
-		each withMetaLevel: aScopeClass ].
+	newSubscopes := subscopes collect: [ :each | each withMetaLevel: aScopeClass ].
 	^ClyCompositeScope on: newSubscopes in: environment named: name
 ]

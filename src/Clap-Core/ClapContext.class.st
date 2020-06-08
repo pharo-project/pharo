@@ -55,9 +55,7 @@ ClapContext class >> pragmaCommands [
 			theClass := pragma method methodClass.
 			theSelector := pragma method selector.
 			self assert: [ theSelector isUnary ].
-			
-			theClass instanceSide
-				perform: theSelector ]
+			theClass instanceSide perform: theSelector ]
 ]
 
 { #category : #'instance creation' }

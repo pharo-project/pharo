@@ -40,5 +40,5 @@ HEArray >> doReadFrom: aReader [
 
 { #category : #accessing }
 HEArray >> value: anArray [
-	value := anArray collect:#asExportedLiteral
+	value := anArray collect: [:each | each asExportedLiteral]
 ]

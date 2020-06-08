@@ -115,7 +115,7 @@ RBMethodArgumentsSelector >> associationIndex: anInteger [
 { #category : #accessing }
 RBMethodArgumentsSelector >> associations [
 
-	^ argsAndValues associations collect: #asString
+	^ argsAndValues associations collect: [:each | each asString ]
 ]
 
 { #category : #initialization }

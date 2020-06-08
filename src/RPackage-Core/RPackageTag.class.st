@@ -147,7 +147,7 @@ RPackageTag >> name [
 
 { #category : #accessing }
 RPackageTag >> orderedClasses [
-^ self package orderedClasses select:[:c | c category = self categoryName]
+	^ self package orderedClasses select:[:c | c category = self categoryName]
 ]
 
 { #category : #accessing }
