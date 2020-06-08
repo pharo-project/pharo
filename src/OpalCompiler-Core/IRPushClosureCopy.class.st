@@ -103,6 +103,12 @@ IRPushClosureCopy >> numArgs: aSmallInteger [
 	numArgs := aSmallInteger
 ]
 
+{ #category : #scoping }
+IRPushClosureCopy >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [
+	self copiedValues at: index put: aRemote.
+	self tempMap at: aRemote put: (self tempMap removeKey: aTemp)
+]
+
 { #category : #accessing }
 IRPushClosureCopy >> successorSequences [
 

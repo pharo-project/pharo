@@ -35,6 +35,13 @@ FullBlockClosure >> asContextWithSender: aContext [
 		privRefresh
 ]
 
+{ #category : #private }
+FullBlockClosure >> clearTemporariesOn: aContext [
+ 
+	(self numArgs + self numCopiedValues + 1) to: self numTemps do: [ :anIndex |  
+		aContext tempAt: anIndex put: nil ]
+]
+
 { #category : #accessing }
 FullBlockClosure >> compiledBlock [
 	"To be able to inherit from BlockClosure"
@@ -61,6 +68,17 @@ FullBlockClosure >> hasMethodReturn [
 { #category : #accessing }
 FullBlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
+]
+
+{ #category : #private }
+FullBlockClosure >> initialStackPointer [
+
+	^ self numTemps
+]
+
+{ #category : #testing }
+FullBlockClosure >> isFullBlock [
+	^ true
 ]
 
 { #category : #accessing }
@@ -276,14 +294,12 @@ FullBlockClosure >> valueWithArguments: anArray [
 	 message. Supply the arguments in an anArray and copied values to
 	 the activation as its arguments and copied temps. Primitive. Essential."
 	<primitive: 208>
-	| newContext |
 	numArgs ~= anArray size ifTrue:
 		[self numArgsError: anArray size].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			1 to: numArgs do:
-				[:i| newContext at: i put: (anArray at: i)].
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+
+	anArray isArray 
+		ifTrue: [self primitiveFailed]
+		ifFalse: [
+			"Retrying with an array as parameter. As the primitive only supports arrays"
+			^ self valueWithArguments: anArray asArray ]
 ]

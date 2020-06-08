@@ -611,6 +611,9 @@ OCSourceCode2BytecodeTest >> testReturnReceiver [
 OCSourceCode2BytecodeTest >> testReturnTopFromBlock [
 	| selector method scanner |
 	
+	"Only Valid if we have inlined closures in the method"
+	CompilationContext optionFullBlockClosure ifTrue: [ ^ self skip ].
+	
 	selector := (method := self compile2method: 'returnTopFromBlock |ia| ^[ia]') selector.
 	scanner := InstructionStream on: method.
 	3 timesRepeat: [scanner nextInstruction].

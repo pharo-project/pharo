@@ -139,7 +139,7 @@ Deprecation >> defaultAction [
 
 { #category : #private }
 Deprecation >> deprecatedMethodName [
-	^self contextOfDeprecatedMethod method printString
+	^self contextOfDeprecatedMethod compiledCode method printString
 ]
 
 { #category : #accessing }
@@ -201,7 +201,7 @@ Deprecation >> rule: aRule [
 
 { #category : #private }
 Deprecation >> sendingMethodName [
-	^self contextOfSender method printString
+	^self contextOfSender compiledCode method printString
 ]
 
 { #category : #handling }
@@ -219,9 +219,9 @@ Deprecation >> showWarning [
 { #category : #handling }
 Deprecation >> signal [
 	| pragma |
-	(context method hasPragmaNamed: #transform:to:) ifFalse: [ ^super signal ].
+	(context compiledCode method hasPragmaNamed: #transform:to:) ifFalse: [ ^super signal ].
 
-	pragma := context method pragmaAt: #transform:to:.
+	pragma := context compiledCode method pragmaAt: #transform:to:.
 	self rule: pragma arguments first -> pragma arguments second.
 	self transform
 ]
@@ -231,7 +231,7 @@ Deprecation >> transform [
 	| node rewriteRule aMethod |
 	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
-	aMethod := self contextOfSender method.
+	aMethod := self contextOfSender compiledCode method.
 	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [

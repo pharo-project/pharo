@@ -45,11 +45,6 @@ CompiledMethod >> spotterForSendersFor: aStep [
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }
-CompiledMethod >> spotterItemsFor: aStep [
-	"do nothing for compiled method"
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
 CompiledMethod >> spotterMethodClassFor: aStep [
 	<spotterOrder: 50>
 	aStep listProcessor

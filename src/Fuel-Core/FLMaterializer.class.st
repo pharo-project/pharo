@@ -20,7 +20,7 @@ Class {
 
 { #category : #protected }
 FLMaterializer class >> currentVersion [
-	^ 300
+	^ 301
 ]
 
 { #category : #protected }
