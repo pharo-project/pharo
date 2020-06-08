@@ -55,13 +55,6 @@ Slot class >> checkValidName: aSymbol [
 
 ]
 
-{ #category : #'class initialization' }
-Slot class >> initialize [
-	Properties := Properties
-		ifNil: [ WeakIdentityKeyDictionary new. ]
-		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
-]
-
 { #category : #testing }
 Slot class >> isUsed [
 	^super isUsed or: [self slotUsers isNotEmpty ]
@@ -173,11 +166,6 @@ Slot >> ensureInitalizeMethodExists: aClass [
 				classified: 'initialization' ]
 ]
 
-{ #category : #properties }
-Slot >> ensureProperties [
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
-]
-
 { #category : #private }
 Slot >> ensureSlotInitializationFor: aClass [
 	| source |
@@ -196,14 +184,6 @@ Slot >> ensureSlotInitializationFor: aClass [
 { #category : #finalization }
 Slot >> finalize: layout [
 	"nothing to do here"
-]
-
-{ #category : #properties }
-Slot >> hasProperty: aKey [
-	"Test if the property aKey is present."
-	^self properties 
-		ifNil: [false]
-		ifNotNil: [:prop | prop includesKey: aKey]
 ]
 
 { #category : #comparing }
@@ -311,23 +291,10 @@ Slot >> printOn: aStream [
 ]
 
 { #category : #properties }
-Slot >> properties [
-	^ Properties at: self ifAbsent: nil
-]
-
-{ #category : #properties }
 Slot >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-Slot >> propertyAt: propName ifAbsent: aBlock [
-	self properties ifNil: [^aBlock value].
-	^ self properties
-		at: propName
-		ifAbsent: aBlock
 ]
 
 { #category : #properties }
@@ -350,27 +317,10 @@ Slot >> read: anObject [
 ]
 
 { #category : #properties }
-Slot >> removePropertiesIfEmpty [
-	^ Properties at: self ifPresent: [ :dict |
-		dict ifEmpty: [ Properties removeKey: self ] ]
-]
-
-{ #category : #properties }
 Slot >> removeProperty: propName [
 	^ self
 		removeProperty: propName
 		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-Slot >> removeProperty: propName ifAbsent: aBlock [
-	| property |
-	self properties ifNil: [^aBlock value].
-	property := self properties
-		removeKey: propName
-		ifAbsent: aBlock.
-	self removePropertiesIfEmpty.
-	^ property
 ]
 
 { #category : #accessing }

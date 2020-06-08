@@ -8,5 +8,5 @@ LiteralVariable >> isReferencedIn: aMethod [
 
 { #category : #'*Calypso-SystemQueries' }
 LiteralVariable >> printAsConstantQueryItem [
-	^key
+	^self key
 ]

@@ -15,10 +15,7 @@ When moving binding from Undeclared, we change the class of that binding to eith
 "
 Class {
 	#name : #LiteralVariable,
-	#superclass : #Association,
-	#classVars : [
-		'Properties'
-	],
+	#superclass : #LiteralVariableAdoptation,
 	#category : #'Slot-Core-Variables'
 }
 
@@ -37,13 +34,6 @@ LiteralVariable class >> gtInspectorAllVariablesIn: composite [
  		display: [ self allSubclasses sorted: #name ascending ];
  		tags: [ :each | { each package name } ];
  		when: [self == LiteralVariable  ].
-]
-
-{ #category : #'class initialization' }
-LiteralVariable class >> initialize [
-	Properties := Properties
-		ifNil: [ WeakIdentityKeyDictionary new. ]
-		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
 { #category : #'instance creation' }
@@ -89,19 +79,6 @@ LiteralVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteralVariable: (AdditionalBinding key: #global value: self);
 		send: #read
-]
-
-{ #category : #properties }
-LiteralVariable >> ensureProperties [
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
-]
-
-{ #category : #properties }
-LiteralVariable >> hasProperty: aKey [
-	"Test if the property aKey is present."
-	^self properties 
-		ifNil: [false]
-		ifNotNil: [:prop | prop includesKey: aKey]
 ]
 
 { #category : #'class building' }
@@ -158,25 +135,10 @@ LiteralVariable >> needsFullDefinition [
 ]
 
 { #category : #properties }
-LiteralVariable >> properties [
-	^ Properties at: self ifAbsent: nil
-		
-]
-
-{ #category : #properties }
 LiteralVariable >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
-		
-]
-
-{ #category : #properties }
-LiteralVariable >> propertyAt: propName ifAbsent: aBlock [
-	self properties ifNil: [^aBlock value].
-	^ self properties
-		at: propName
-		ifAbsent: aBlock
 		
 ]
 
@@ -200,27 +162,10 @@ LiteralVariable >> read [
 ]
 
 { #category : #properties }
-LiteralVariable >> removePropertiesIfEmpty [
-	^ Properties at: self ifPresent: [ :dict |
-		dict ifEmpty: [ Properties removeKey: self ] ]
-]
-
-{ #category : #properties }
 LiteralVariable >> removeProperty: propName [
 	^ self
 		removeProperty: propName
 		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-LiteralVariable >> removeProperty: propName ifAbsent: aBlock [
-	| property |
-	self properties ifNil: [^aBlock value].
-	property := self properties
-		removeKey: propName
-		ifAbsent: aBlock.
-	self removePropertiesIfEmpty.
-	^ property
 ]
 
 { #category : #queries }
