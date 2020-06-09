@@ -13,7 +13,7 @@ Class {
 { #category : #building }
 ClyClassBindings >> fillWith: classes [
 	items := classes collect: [ :each |
-		(each isKindOf: Association) 
+		(each isKindOf: Variable) 
 			ifTrue: [ each ] 
 			ifFalse: [ 
 				each isObsolete 
