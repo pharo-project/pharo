@@ -39,6 +39,11 @@ LiteralVariableAdoptation >> = anAssociation [
 	^ super = anAssociation and: [value = anAssociation value]
 ]
 
+{ #category : #testing }
+LiteralVariableAdoptation >> analogousCodeTo: anAssociation [
+	^ self = anAssociation
+]
+
 { #category : #comparing }
 LiteralVariableAdoptation >> hash [
 	"Hash is reimplemented because = is implemented."
