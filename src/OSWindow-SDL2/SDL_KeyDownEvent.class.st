@@ -12,6 +12,29 @@ SDL_KeyDownEvent class >> eventType [
 	^ SDL_KEYDOWN
 ]
 
+{ #category : #examples }
+SDL_KeyDownEvent class >> example [
+	<sampleInstance>
+	^ self exampleWithWindowID: 1
+]
+
+{ #category : #examples }
+SDL_KeyDownEvent class >> exampleWithInvalidWindowID [
+	<sampleInstance>
+	^ self exampleWithWindowID: 0
+]
+
+{ #category : #examples }
+SDL_KeyDownEvent class >> exampleWithWindowID: anInteger [
+	
+	| rawEvent |
+	rawEvent := SDL_Event new
+		type: self eventType;
+		yourself.
+	rawEvent mapped windowID: anInteger.
+	^ rawEvent
+]
+
 { #category : #visitor }
 SDL_KeyDownEvent >> accept: aVisitor [
 	^ aVisitor visitKeyDownEvent: self

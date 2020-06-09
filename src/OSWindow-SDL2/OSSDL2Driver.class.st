@@ -1,5 +1,5 @@
 "
-A window driver used for running things using SDL2 library
+A window driver for the SDL2 library
 "
 Class {
 	#name : #OSSDL2Driver,
@@ -62,11 +62,11 @@ OSSDL2Driver >> closeRemovedJoystick: index [
 OSSDL2Driver >> convertEvent: sdlEvent [
 	| mappedEvent window |
 	
-	mappedEvent := sdlEvent mapped ifNil: [ ^ nil ].
+	mappedEvent := sdlEvent mapped.
 	mappedEvent windowID ifNil: [ ^ self sendEventWithoutWindow: mappedEvent ].
 	
-	WindowMapMutex critical: [ 
-		window := WindowMap at: mappedEvent windowID ifAbsent: [ ^ nil ].
+	self windowMapMutex critical: [ 
+		window := self windowMap at: mappedEvent windowID ifAbsent: [ ^ nil ].
 	].
 
 	^ window handleNewSDLEvent: mappedEvent.
@@ -135,6 +135,16 @@ OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 		and: [(anSDLEvent keysym mod anyMask: 1344) 
 		and: [ anSDLEvent keysym scancode = 55 ] ]])
 		ifTrue: [ UserInterruptHandler new handleUserInterrupt ]
+]
+
+{ #category : #private }
+OSSDL2Driver >> eventLoopBlock [
+	^ self class isVMDisplayUsingSDL2 
+			ifTrue: [ [ self eventLoopProcessWithVMWindow ] ] 
+			ifFalse: [ 
+				self class hasPlugin 
+					ifTrue: [ [ self eventLoopProcessWithPlugin ] ]
+					ifFalse: [ [ self eventLoopProcessWithoutPlugin ] ] ].
 ]
 
 { #category : #'events-processing' }
@@ -259,12 +269,12 @@ OSSDL2Driver >> primitiveSetVMSDL2Input: semaIndex [
 ]
 
 { #category : #'events-processing' }
-OSSDL2Driver >> processEvent: sdlEvent [
+OSSDL2Driver >> processEvent: anSDL_Event [
 	| event |
 			
 	[  
-		event := self convertEvent: sdlEvent.	
-		self evaluateUserInterrupt: sdlEvent mapped.
+		event := self convertEvent: anSDL_Event.	
+		self evaluateUserInterrupt: anSDL_Event mapped.
 		event ifNotNil: [ eventQueue nextPut: event ].
 	] on: Error do: [ :err | 
 		"It is critical, that event handling keep running despite errors.
@@ -288,6 +298,14 @@ OSSDL2Driver >> registerWindow: aBackendWindow [
 	WindowMap at: aBackendWindow sdl2Window windowID put: aBackendWindow
 ]
 
+{ #category : #private }
+OSSDL2Driver >> resetEventLoopProcess [
+	(EventLoopProcess isNil or: [ EventLoopProcess isTerminating ]) ifTrue: [ ^ self ].
+	
+	EventLoopProcess terminate. 
+	EventLoopProcess := nil
+]
+
 { #category : #'global events' }
 OSSDL2Driver >> sendEventWithoutWindow: event [
 	| converted |
@@ -295,8 +313,8 @@ OSSDL2Driver >> sendEventWithoutWindow: event [
 	converted ifNil: [ ^ self ].
 	globalListeners do: [ :list | list handleEvent: converted ].
 	self flag: #pharoFixMe. "Avoid holding the mutex for so long".	
-	WindowMapMutex critical: [
-		WindowMap valuesDo: [ :window | window deliverGlobalEvent: converted ].
+	self windowMapMutex critical: [
+		self windowMap valuesDo: [ :window | window deliverGlobalEvent: converted ].
 	]
 ]
 
@@ -321,23 +339,12 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 
 { #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
-	EventLoopProcess ifNotNil: [ 
-		EventLoopProcess isTerminating ifFalse: [EventLoopProcess terminate. EventLoopProcess := nil] ].
-	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
-		[ self eventLoopProcessWithVMWindow ] 
-		forkAt: Processor lowIOPriority
-	] ifFalse: [ 
-		self class hasPlugin ifTrue: [ 
-			[ self eventLoopProcessWithPlugin ] 
-			forkAt: Processor lowIOPriority ]
-		ifFalse: [ 
-			[ self eventLoopProcessWithoutPlugin ] 
-			forkAt: Processor lowIOPriority ].
-	].
+	self resetEventLoopProcess.
 
-	EventLoopProcess
+	EventLoopProcess := (self eventLoopBlock forkAt: Processor lowIOPriority)
 		name: 'SDL2 Event loop';
-		resume
+		resume;
+		yourself
 ]
 
 { #category : #'system startup' }
@@ -347,7 +354,7 @@ OSSDL2Driver >> shutDown [
 
 	WindowMap := nil.
 	JoystickMap := nil.
-	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].	
+	self resetEventLoopProcess
 ]
 
 { #category : #'global events' }
@@ -532,4 +539,14 @@ OSSDL2Driver >> visitJoyDeviceRemovedEvent: joyEvent [
 { #category : #'global events' }
 OSSDL2Driver >> visitQuitEvent: quitEvent [
 	^ nil
+]
+
+{ #category : #private }
+OSSDL2Driver >> windowMap [
+	^ WindowMap
+]
+
+{ #category : #'as yet unclassified' }
+OSSDL2Driver >> windowMapMutex [
+	^ WindowMapMutex
 ]
