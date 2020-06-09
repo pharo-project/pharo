@@ -58,7 +58,7 @@ ClyBrowserQueryCursorTestCase >> testCurrentItem [
 ClyBrowserQueryCursorTestCase >> testFindItemsSimilarToOthers [
 	
 	| found |
-	found := cursor findItemsSimilarTo: ({Class. Array} collect: #asCalypsoBrowserItem).
+	found := cursor findItemsSimilarTo: ({Class. Array} collect: [:each | each asCalypsoBrowserItem]).
 	
 	self assert: found size equals: 1.
 	self assert: found first actualObject equals: Array.
@@ -71,7 +71,7 @@ ClyBrowserQueryCursorTestCase >> testFindItemsSimilarToOthersWhenTheyAreNotInCac
 	
 	| found |
 	cursor cleanCache.
-	found := cursor findItemsSimilarTo: ({Class. Array} collect: #asCalypsoBrowserItem).
+	found := cursor findItemsSimilarTo: ({Class. Array} collect: [:each | each asCalypsoBrowserItem]).
 	
 	self assert: found size equals: 1.
 	self assert: found first actualObject equals: Array.

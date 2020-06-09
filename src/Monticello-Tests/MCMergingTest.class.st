@@ -9,6 +9,7 @@ Class {
 
 { #category : #asserting }
 MCMergingTest >> assert: aCollection hasElements: anArray [
+
 	self assert: (aCollection collect: [ :ea | ea token ]) asSet equals: anArray asSet
 ]
 
@@ -41,6 +42,7 @@ MCMergingTest >> handleConflict: aConflict [
 
 { #category : #emulating }
 MCMergingTest >> snapshotWithElements: anArray [
+
 	^ MCSnapshot
 		fromDefinitions: (anArray collect: [:t | self mockToken: t])
 ]

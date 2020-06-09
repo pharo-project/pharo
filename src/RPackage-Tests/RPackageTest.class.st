@@ -93,7 +93,7 @@ RPackageTest >> testAllUnsentMessages [
 		
 	self assert: package allUnsentMessages size equals: 3.
 	
-	self assert: package allUnsentMessages equals: (#('nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4') collect: #asSymbol) asSet.
+	self assert: package allUnsentMessages equals: (#('nonexistingMethodName1' 'nonexistingMethodName3' 'nonexistingMethodName4') collect: [:each | each asSymbol]) asSet.
 ]
 
 { #category : #tests }

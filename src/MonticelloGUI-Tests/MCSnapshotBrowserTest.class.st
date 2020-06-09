@@ -42,7 +42,7 @@ MCSnapshotBrowserTest >> assertAListIncludes: anArrayOfStrings [
 { #category : #asserting }
 MCSnapshotBrowserTest >> assertAListMatches: strings [
 	| lists |
-	lists := self listMorphs collect: #getList.
+	lists := self listMorphs collect: [:each | each getList].
 	lists
 		detect: [ :list|
 			(list size = strings size) and: [list includesAll: strings]]

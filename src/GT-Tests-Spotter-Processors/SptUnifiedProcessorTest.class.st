@@ -69,7 +69,7 @@ SptUnifiedProcessorTest >> testFindThisMethodWithFullClassIsTheCorrectclass [
 	self runForText: 'SptUnifiedProcessorTest >> #testFindThisMethod'.
 	self
 		assert:
-			((candidates results collect: #content)
+			((candidates results collect: [:each | each content])
 				allSatisfy: [ :aMethod | aMethod methodClass = self class ])
 ]
 

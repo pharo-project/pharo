@@ -55,7 +55,7 @@ RGPointerLayout >> initializeUnresolved [
 
 { #category : #'queries - slots' }
 RGPointerLayout >> instVarNames [
-	^ self slots collect: #name
+	^ self slots collect: [:each | each name]
 ]
 
 { #category : #'testing types' }

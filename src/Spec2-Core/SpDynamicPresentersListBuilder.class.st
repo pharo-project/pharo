@@ -124,7 +124,7 @@ SpDynamicPresentersListBuilder >> initialize [
 
 { #category : #private }
 SpDynamicPresentersListBuilder >> instVarNames [
-	^ self instVarToModelObject collect: #key
+	^ self instVarToModelObject collect: [:each | each key]
 ]
 
 { #category : #private }
@@ -162,7 +162,7 @@ SpDynamicPresentersListBuilder >> layoutBuilder: anObject [
 
 { #category : #accessing }
 SpDynamicPresentersListBuilder >> modelObjects [
-	^ instVarToModelObject collect: #value
+	^ instVarToModelObject collect: [:each | each value]
 ]
 
 { #category : #accessing }
