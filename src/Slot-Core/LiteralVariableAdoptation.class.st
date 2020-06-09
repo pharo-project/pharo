@@ -46,6 +46,11 @@ LiteralVariableAdoptation >> hash [
 	^name hash
 ]
 
+{ #category : #testing }
+LiteralVariableAdoptation >> isVariableBinding [
+	^true
+]
+
 { #category : #accessing }
 LiteralVariableAdoptation >> key [ 
 	^name
@@ -64,10 +69,18 @@ LiteralVariableAdoptation >> key: aKey value: anObject [
 	value := anObject
 ]
 
+{ #category : #comparing }
+LiteralVariableAdoptation >> literalEqual: otherLiteral [
+	"Answer true if the receiver and otherLiteral represent the same literal.
+	Variable bindings are literally equals only if identical.
+	This is how variable sharing works, by preserving identity and changing only the value."
+	^self == otherLiteral
+]
+
 { #category : #printing }
 LiteralVariableAdoptation >> printOn: aStream [
 
-	super printOn: aStream.
+	name printOn: aStream.
 	aStream nextPutAll: '->'.
 	value printOn: aStream
 ]
