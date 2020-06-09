@@ -62,6 +62,14 @@ Variable >> properties [
 ]
 
 { #category : #properties }
+Variable >> propertyAt: propName [
+	^ self
+		propertyAt: propName
+		ifAbsent: [ nil ]
+		
+]
+
+{ #category : #properties }
 Variable >> propertyAt: propName ifAbsent: aBlock [
 	self properties ifNil: [^aBlock value].
 	^ self properties
@@ -71,9 +79,30 @@ Variable >> propertyAt: propName ifAbsent: aBlock [
 ]
 
 { #category : #properties }
+Variable >> propertyAt: aKey ifAbsentPut: aBlock [
+	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
+	
+	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
+]
+
+{ #category : #properties }
+Variable >> propertyAt: propName put: propValue [
+	^ self ensureProperties
+		at: propName
+		put: propValue
+]
+
+{ #category : #properties }
 Variable >> removePropertiesIfEmpty [
 	^ Properties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ Properties removeKey: self ] ]
+]
+
+{ #category : #properties }
+Variable >> removeProperty: propName [
+	^ self
+		removeProperty: propName
+		ifAbsent: [ nil ]
 ]
 
 { #category : #properties }

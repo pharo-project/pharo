@@ -290,37 +290,9 @@ Slot >> printOn: aStream [
 		nextPutAll: self class name
 ]
 
-{ #category : #properties }
-Slot >> propertyAt: propName [
-	^ self
-		propertyAt: propName
-		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-Slot >> propertyAt: aKey ifAbsentPut: aBlock [
-	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
-	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
-]
-
-{ #category : #properties }
-Slot >> propertyAt: propName put: propValue [
-	^ self ensureProperties
-		at: propName
-		put: propValue
-]
-
 { #category : #'meta-object-protocol' }
 Slot >> read: anObject [
 	^ self subclassResponsibility
-]
-
-{ #category : #properties }
-Slot >> removeProperty: propName [
-	^ self
-		removeProperty: propName
-		ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }

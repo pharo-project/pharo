@@ -134,38 +134,9 @@ LiteralVariable >> needsFullDefinition [
 	^ self class ~= ClassVariable
 ]
 
-{ #category : #properties }
-LiteralVariable >> propertyAt: propName [
-	^ self
-		propertyAt: propName
-		ifAbsent: [ nil ]
-		
-]
-
-{ #category : #properties }
-LiteralVariable >> propertyAt: aKey ifAbsentPut: aBlock [
-	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
-	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
-]
-
-{ #category : #properties }
-LiteralVariable >> propertyAt: propName put: propValue [
-	^ self ensureProperties
-		at: propName
-		put: propValue
-]
-
 { #category : #'meta-object-protocol' }
 LiteralVariable >> read [
 	^self value
-]
-
-{ #category : #properties }
-LiteralVariable >> removeProperty: propName [
-	^ self
-		removeProperty: propName
-		ifAbsent: [ nil ]
 ]
 
 { #category : #queries }
