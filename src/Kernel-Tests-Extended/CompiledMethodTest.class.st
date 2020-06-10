@@ -405,6 +405,11 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 	self assert: method1 equals: method2
 ]
 
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testHasComment [
+	self assert: (CompiledMethod>>#hasComment) hasComment
+]
+
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testHasInstVarRef [
 		
