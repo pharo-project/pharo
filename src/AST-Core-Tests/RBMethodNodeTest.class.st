@@ -60,7 +60,7 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 RBMethodNodeTest >> testCommentsParent [
 	"Test if comment has a parent"
 	self
-		assert: (CompiledMethodTest >> #testCommentsParent) ast comments first parent selector
+		assert: (self class >> #testCommentsParent) ast comments first parent selector
 		equals: #testCommentsParent.
 ]
 
