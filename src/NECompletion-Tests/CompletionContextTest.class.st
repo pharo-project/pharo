@@ -19,24 +19,6 @@ CompletionContextTest >> createContextFor: aString at: anInteger [
 ]
 
 { #category : #tests }
-CompletionContextTest >> testExpressionInIncompleteParanthesis [
-	| text context props |
-	text := 'testIt
-	1 + (1 si'.
-	context := self 
-		createContextFor: text
-		at: text size.
-	
-	props := context entries collect: #contents.	
-		
-	self assert: (props includes: #sin) description: [
-		String streamContents: [ :aStream | 
-			aStream 
-				nextPut: 'Expecting to find #sin in: ';
-				print: props	]].
-]
-
-{ #category : #tests }
 CompletionContextTest >> testReceiverArgument [
 	| text context |
 	text := 'testIt: aRectangle
