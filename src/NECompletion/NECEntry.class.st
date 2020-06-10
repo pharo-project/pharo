@@ -11,8 +11,8 @@ Class {
 		'node',
 		'description'
 	],
-	#classInstVars : [
-		'spaceAfterCompletion'
+	#classVars : [
+		'SpaceAfterCompletion'
 	],
 	#category : #'NECompletion-Model'
 }
@@ -25,13 +25,13 @@ NECEntry class >> contents: aString node: aNode [
 { #category : #accessing }
 NECEntry class >> spaceAfterCompletion [
 	
-	^ spaceAfterCompletion
+	^ SpaceAfterCompletion
 ]
 
 { #category : #accessing }
 NECEntry class >> spaceAfterCompletion: aBoolean [
 
-	spaceAfterCompletion := aBoolean
+	SpaceAfterCompletion := aBoolean
 ]
 
 { #category : #operations }
