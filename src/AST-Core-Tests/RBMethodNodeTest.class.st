@@ -56,6 +56,14 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 
 ]
 
+{ #category : #'testing-comments' }
+RBMethodNodeTest >> testCommentsParent [
+	"Test if comment has a parent"
+	self
+		assert: (CompiledMethodTest >> #testCommentsParent) ast comments first parent selector
+		equals: #testCommentsParent.
+]
+
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testIsPrimitive [
 	"see other testPrimitive... tests"
