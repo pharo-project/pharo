@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #validating }
@@ -145,6 +145,12 @@ LiteralVariable >> isReadIn: aCompiledCode [
 LiteralVariable >> isReferenced [
 	"my subclasses override this if they can be referenced in code"
 	^false
+]
+
+{ #category : #queries }
+LiteralVariable >> isReferencedIn: aMethod [ 
+	
+	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
 ]
 
 { #category : #testing }

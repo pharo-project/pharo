@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #comparing }

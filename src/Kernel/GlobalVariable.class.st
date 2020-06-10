@@ -6,7 +6,7 @@ The compiler forwards bytecode generation to me for accessing the variable.
 Class {
 	#name : #GlobalVariable,
 	#superclass : #LiteralVariable,
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #queries }

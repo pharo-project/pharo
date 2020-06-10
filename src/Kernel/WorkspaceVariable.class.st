@@ -4,7 +4,7 @@ I am a binding in a Workspace. Used for non-defined temps
 Class {
 	#name : #WorkspaceVariable,
 	#superclass : #LiteralVariable,
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #'code generation' }
