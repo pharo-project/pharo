@@ -1,6 +1,6 @@
 Extension { #name : #StringMorph }
 
-{ #category : #'*FreeType-override' }
+{ #category : #'*FreeType-Morphic' }
 StringMorph >> changeFont [
 	| newFont chooser |
 	chooser := FontChooser 
