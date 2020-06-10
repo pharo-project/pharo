@@ -102,6 +102,15 @@ RBParser class >> parseMethodPattern: aString [
 ]
 
 { #category : #parsing }
+RBParser class >> parsePragma: aString [
+
+	| parser |
+	parser := self new.
+	parser initializeParserWith: aString.
+	^ parser parsePragmaAndReturn
+]
+
+{ #category : #parsing }
 RBParser class >> parseRewriteExpression: aString [ 
 	^self parseRewriteExpression: aString onError: nil
 ]
