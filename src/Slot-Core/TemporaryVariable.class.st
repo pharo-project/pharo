@@ -8,15 +8,13 @@ I know the method that I come from. If I am a block temp, I record the startPC o
 "
 Class {
 	#name : #TemporaryVariable,
-	#superclass : #Object,
+	#superclass : #Variable,
 	#instVars : [
-		'name',
 		'method',
 		'startpc'
 	],
 	#classVars : [
-		'PersistentTemps',
-		'Properties'
+		'PersistentTemps'
 	],
 	#category : #'Slot-Core-Variables'
 }
@@ -65,15 +63,7 @@ TemporaryVariable >> = other [
 { #category : #properties }
 TemporaryVariable >> ensureProperties [
 	method saveTemp: self.
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
-]
-
-{ #category : #properties }
-TemporaryVariable >> hasProperty: aKey [
-	"Test if the property aKey is present."
-	^self properties 
-		ifNil: [false]
-		ifNotNil: [:prop | prop includesKey: aKey]
+	^ super ensureProperties
 ]
 
 { #category : #comparing }
@@ -109,40 +99,6 @@ TemporaryVariable >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #properties }
-TemporaryVariable >> properties [
-	^ Properties at: self ifAbsent: nil
-]
-
-{ #category : #properties }
-TemporaryVariable >> propertyAt: propName [
-	^ self
-		propertyAt: propName
-		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-TemporaryVariable >> propertyAt: propName ifAbsent: aBlock [
-	self properties ifNil: [^aBlock value].
-	^ self properties
-		at: propName
-		ifAbsent: aBlock
-]
-
-{ #category : #properties }
-TemporaryVariable >> propertyAt: aKey ifAbsentPut: aBlock [
-	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
-	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
-]
-
-{ #category : #properties }
-TemporaryVariable >> propertyAt: propName put: propValue [
-	^ self ensureProperties
-		at: propName
-		put: propValue
-]
-
 { #category : #'reflecive api' }
 TemporaryVariable >> readInContext: aContext [
 	^aContext tempNamed: name
@@ -154,24 +110,6 @@ TemporaryVariable >> removePropertiesIfEmpty [
 		dict ifEmpty: [ 
 			method removeSavedTemp: self.
 			Properties removeKey: self ] ]
-]
-
-{ #category : #properties }
-TemporaryVariable >> removeProperty: propName [
-	^ self
-		removeProperty: propName
-		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-TemporaryVariable >> removeProperty: propName ifAbsent: aBlock [
-	| property |
-	self properties ifNil: [^aBlock value].
-	property := self properties
-		removeKey: propName
-		ifAbsent: aBlock.
-	self removePropertiesIfEmpty.
-	^ property
 ]
 
 { #category : #accessing }
