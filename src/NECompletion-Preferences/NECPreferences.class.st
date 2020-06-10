@@ -298,6 +298,12 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 ]
 
 { #category : #accessing }
+NECPreferences class >> spaceAfterCompletion [
+	
+	^ NECEntry spaceAfterCompletion
+]
+
+{ #category : #accessing }
 NECPreferences class >> theme [
 	self flag: #SmalltalkReference.
 	^ Smalltalk ui theme
