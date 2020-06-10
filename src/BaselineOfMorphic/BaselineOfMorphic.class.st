@@ -55,6 +55,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
+		spec package: 'FreeType-Morphic'.
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
