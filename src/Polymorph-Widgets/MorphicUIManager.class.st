@@ -39,7 +39,7 @@ MorphicUIManager >> activate [
 	self currentWorld currentCursor: self currentWorld currentCursor.
 		
 	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
-	WorldMorph extraWorldList do: #restoreMorphicDisplay.
+	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
 
 	activeTranscript 
 		ifNil: [
