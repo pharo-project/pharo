@@ -16,7 +16,7 @@ Class {
 	#classVars : [
 		'PersistentTemps'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #'class initialization' }

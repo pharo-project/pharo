@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Properties'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #'class initialization' }

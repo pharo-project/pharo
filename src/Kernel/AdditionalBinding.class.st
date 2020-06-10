@@ -12,7 +12,7 @@ AddionalBinding is used, too, by both Slots and Reflectivity to reference direct
 Class {
 	#name : #AdditionalBinding,
 	#superclass : #LiteralVariable,
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #'code generation' }

@@ -32,7 +32,7 @@ Class {
 	#classInstVars : [
 		'slotClassDefinition'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #'instance creation' }
