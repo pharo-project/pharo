@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #running }
-RecursionStopperTest class >> defaultTimeout [
+RecursionStopperTest class >> defaultTimeLimit [
 	"Those tests are supposed to be fast. 
 	But with broken RecursionStopper they will hang the image.
 	Therefore this small allowed time for tests to fail quickly if they are broken"

@@ -10,12 +10,6 @@ Class {
 }
 
 { #category : #running }
-MetacelloScriptingStdTstHarnessTestCase >> defaultTimeout [
-	"I don't want no stkinkin' timeouts"
-	^60000
-]
-
-{ #category : #running }
 MetacelloScriptingStdTstHarnessTestCase >> disableUndefinedSymbolTracking [
   "significant perfomance improvement"
 
