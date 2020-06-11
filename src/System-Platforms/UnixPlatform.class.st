@@ -55,6 +55,13 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 ]
 
 { #category : #testing }
+UnixPlatform >> isLinux [
+	"Some Linux versions return linux, some linux-gnu, ..."
+	
+	^self version beginsWith: 'linux'
+]
+
+{ #category : #testing }
 UnixPlatform >> isUnix [
 	^ true
 ]
