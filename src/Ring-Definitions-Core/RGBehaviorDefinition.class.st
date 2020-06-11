@@ -128,6 +128,11 @@ RGBehaviorDefinition >> addSubclass: aRGBehaviorDefinition [
 		ifFalse:[ self subclasses add: aRGBehaviorDefinition ]
 ]
 
+{ #category : #accessing }
+RGBehaviorDefinition >> allInstVarNames [
+	^ self subclassResponsibility
+]
+
 { #category : #'accessing methods' }
 RGBehaviorDefinition >> allSelectors [
 	"Retrieves all the selectos of the receiver in the chain hierarchy"
@@ -369,13 +374,6 @@ RGBehaviorDefinition >> methods [
 RGBehaviorDefinition >> methods: aDictionary [
 
 	methods:= aDictionary
-]
-
-{ #category : #'accessing methods' }
-RGBehaviorDefinition >> methodsInProtocol: aString [
-	"Retrieves the methods classified in protocol named aString"
-
-	^methods select: [ :each | each protocol = aString ]
 ]
 
 { #category : #accessing }
