@@ -4,7 +4,7 @@ I am the superclass of standard layouts for Objects.
 Class {
 	#name : #ObjectLayout,
 	#superclass : #AbstractLayout,
-	#category : #'Slot-Core-Layout'
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'instance creation' }

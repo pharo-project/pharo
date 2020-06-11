@@ -4,7 +4,7 @@ Layout scopes reify how classes extend the layout of their superclass.
 Class {
 	#name : #LayoutAbstractScope,
 	#superclass : #Object,
-	#category : #'Slot-Core-Layout'
+	#category : #'Kernel-Layout'
 }
 
 { #category : #comparing }
