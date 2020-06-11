@@ -1,6 +1,6 @@
 Extension { #name : #PluggableListMorph }
 
-{ #category : #'*FreeType-override' }
+{ #category : #'*FreeType-Morphic' }
 PluggableListMorph >> setListFont [
 	"set the font for the list"
 

@@ -99,7 +99,6 @@ JobProgressMorph >> increment [
 JobProgressMorph >> initialize [
 
 	super initialize.
-
 	self addDependent: SystemProgressMorph uniqueInstance.
 ]
 

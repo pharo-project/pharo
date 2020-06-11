@@ -1,8 +1,7 @@
 "
 I am abstract. Subclasses of me model meta objects for global variables (Class, Global, Pool), called ""Literal Variables"" in Smalltalk.
 
-I am just a subclass of Association, modeling the binding of the global in either the Smalltalk globals, Undeclared or classPools.
-
+I am polymorphic with Association, modeling the binding of the global in either the Smalltalk globals, Undeclared or classPools. Previously I was a subclass of Associations but it leaded to many duplicated methods with other non literal variables (slots and temps).
 
 When chaning emit* methods, do not forget to recompile exisiting code:
 
@@ -15,11 +14,11 @@ When moving binding from Undeclared, we change the class of that binding to eith
 "
 Class {
 	#name : #LiteralVariable,
-	#superclass : #Association,
-	#classVars : [
-		'Properties'
+	#superclass : #Variable,
+	#instVars : [
+		'value'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #validating }
@@ -39,11 +38,19 @@ LiteralVariable class >> gtInspectorAllVariablesIn: composite [
  		when: [self == LiteralVariable  ].
 ]
 
-{ #category : #'class initialization' }
-LiteralVariable class >> initialize [
-	Properties := Properties
-		ifNil: [ WeakIdentityKeyDictionary new. ]
-		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
+{ #category : #'instance creation' }
+LiteralVariable class >> key: aKey [ 
+	"Answer an instance of me with the argument as the lookup up."
+
+	^self basicNew key: aKey
+]
+
+{ #category : #'instance creation' }
+LiteralVariable class >> key: newKey value: newValue [
+	"Answer an instance of me with the arguments as the key and value of 
+	the association."
+
+	^self basicNew key: newKey value: newValue
 ]
 
 { #category : #'instance creation' }
@@ -52,6 +59,17 @@ LiteralVariable class >> named: aSymbol [
 	^ self new
 		name: aSymbol;
 		yourself
+]
+
+{ #category : #comparing }
+LiteralVariable >> = anAssociation [
+
+	^ super = anAssociation and: [value = anAssociation value]
+]
+
+{ #category : #testing }
+LiteralVariable >> analogousCodeTo: anAssociation [
+	^ self = anAssociation
 ]
 
 { #category : #converting }
@@ -91,17 +109,11 @@ LiteralVariable >> emitValue: aMethodBuilder [
 		send: #read
 ]
 
-{ #category : #properties }
-LiteralVariable >> ensureProperties [
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
-]
+{ #category : #comparing }
+LiteralVariable >> hash [
+	"Hash is reimplemented because = is implemented."
 
-{ #category : #properties }
-LiteralVariable >> hasProperty: aKey [
-	"Test if the property aKey is present."
-	^self properties 
-		ifNil: [false]
-		ifNotNil: [:prop | prop includesKey: aKey]
+	^name hash
 ]
 
 { #category : #'class building' }
@@ -135,14 +147,51 @@ LiteralVariable >> isReferenced [
 	^false
 ]
 
+{ #category : #queries }
+LiteralVariable >> isReferencedIn: aMethod [ 
+	
+	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
+]
+
 { #category : #testing }
 LiteralVariable >> isSelfEvaluating [
 	^ self key isSelfEvaluating and: [self value isSelfEvaluating]
 ]
 
 { #category : #testing }
+LiteralVariable >> isVariableBinding [
+	^true
+]
+
+{ #category : #testing }
 LiteralVariable >> isWrittenIn: aCompiledCode [
 	^aCompiledCode writesRef: self
+]
+
+{ #category : #accessing }
+LiteralVariable >> key [ 
+	^name
+]
+
+{ #category : #accessing }
+LiteralVariable >> key: anObject [ 
+	name := anObject
+]
+
+{ #category : #accessing }
+LiteralVariable >> key: aKey value: anObject [ 
+	"Store the arguments as the variables of the receiver."
+
+	name := aKey.
+	value := anObject
+]
+
+{ #category : #comparing }
+LiteralVariable >> literalEqual: otherLiteral [
+	"Answer true if the receiver and otherLiteral represent the same literal.
+	Variable bindings are literally equals only if identical.
+	This is how variable sharing works, by preserving identity and changing only the value."
+	^self == otherLiteral
 ]
 
 { #category : #accessing }
@@ -157,41 +206,12 @@ LiteralVariable >> needsFullDefinition [
 	^ self class ~= ClassVariable
 ]
 
-{ #category : #properties }
-LiteralVariable >> properties [
-	^ Properties at: self ifAbsent: nil
-		
-]
+{ #category : #printing }
+LiteralVariable >> printOn: aStream [
 
-{ #category : #properties }
-LiteralVariable >> propertyAt: propName [
-	^ self
-		propertyAt: propName
-		ifAbsent: [ nil ]
-		
-]
-
-{ #category : #properties }
-LiteralVariable >> propertyAt: propName ifAbsent: aBlock [
-	self properties ifNil: [^aBlock value].
-	^ self properties
-		at: propName
-		ifAbsent: aBlock
-		
-]
-
-{ #category : #properties }
-LiteralVariable >> propertyAt: aKey ifAbsentPut: aBlock [
-	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
-	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
-]
-
-{ #category : #properties }
-LiteralVariable >> propertyAt: propName put: propValue [
-	^ self ensureProperties
-		at: propName
-		put: propValue
+	name printOn: aStream.
+	aStream nextPutAll: '->'.
+	value printOn: aStream
 ]
 
 { #category : #'meta-object-protocol' }
@@ -199,33 +219,29 @@ LiteralVariable >> read [
 	^self value
 ]
 
-{ #category : #properties }
-LiteralVariable >> removePropertiesIfEmpty [
-	^ Properties at: self ifPresent: [ :dict |
-		dict ifEmpty: [ Properties removeKey: self ] ]
-]
-
-{ #category : #properties }
-LiteralVariable >> removeProperty: propName [
-	^ self
-		removeProperty: propName
-		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-LiteralVariable >> removeProperty: propName ifAbsent: aBlock [
-	| property |
-	self properties ifNil: [^aBlock value].
-	property := self properties
-		removeKey: propName
-		ifAbsent: aBlock.
-	self removePropertiesIfEmpty.
-	^ property
+{ #category : #printing }
+LiteralVariable >> storeOn: aStream [
+	"Store in the format (key->value)"
+	aStream nextPut: $(.
+	name storeOn: aStream.
+	aStream nextPutAll: '->'.
+	value storeOn: aStream.
+	aStream nextPut: $)
 ]
 
 { #category : #queries }
 LiteralVariable >> usingMethods [
 	^SystemNavigation new allReferencesToBinding: self
+]
+
+{ #category : #accessing }
+LiteralVariable >> value [
+	^ value
+]
+
+{ #category : #accessing }
+LiteralVariable >> value: anObject [
+	value := anObject
 ]
 
 { #category : #'meta-object-protocol' }

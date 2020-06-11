@@ -4,5 +4,5 @@ This subclass will model the class variables of SharedPool subclasses and thus p
 Class {
 	#name : #PoolVariable,
 	#superclass : #ClassVariable,
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }

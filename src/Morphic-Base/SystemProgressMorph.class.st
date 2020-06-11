@@ -273,7 +273,8 @@ SystemProgressMorph >> initialize [
 		hResizing: #rigid;
 		vResizing: #shrinkWrap;
 		layoutInset: 10@6;
-		minWidth: 150
+		minWidth: 150.
+	self position: 10@20
 ]
 
 { #category : #accessing }
@@ -379,7 +380,6 @@ SystemProgressMorph >> show: aString from: startNumber to: endNumber [
 SystemProgressMorph >> show: aString from: startNumber to: endNumber during: aBlock [
 
 	| progressMorph result |
-
 	self openInWorld.
 	progressMorph := self addItemShowing: aString from: startNumber to: endNumber.
 		

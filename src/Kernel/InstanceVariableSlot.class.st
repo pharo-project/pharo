@@ -10,7 +10,7 @@ If you subclass this class, take note that as it overrides both #emitStore: and 
 Class {
 	#name : #InstanceVariableSlot,
 	#superclass : #IndexedSlot,
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #cleanup }

@@ -24,19 +24,15 @@ the Trait I am coming from (that defined me) is stored here.
 "
 Class {
 	#name : #Slot,
-	#superclass : #Object,
+	#superclass : #Variable,
 	#instVars : [
-		'name',
 		'owningClass',
 		'definingClass'
-	],
-	#classVars : [
-		'Properties'
 	],
 	#classInstVars : [
 		'slotClassDefinition'
 	],
-	#category : #'Slot-Core-Variables'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #'instance creation' }
@@ -57,13 +53,6 @@ Slot class >> checkValidName: aSymbol [
 	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
 
-]
-
-{ #category : #'class initialization' }
-Slot class >> initialize [
-	Properties := Properties
-		ifNil: [ WeakIdentityKeyDictionary new. ]
-		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
 { #category : #testing }
@@ -105,15 +94,6 @@ Slot class >> slotUsers [
 	"all classes or traits that have slots of this kind"
 	^self environment allBehaviors 
 		select:  [ :class | class slots anySatisfy: [ :slot | slot class == self ] ]
-]
-
-{ #category : #comparing }
-Slot >> = other [
-	"Every subclass that adds state must redefine this method"
-	self == other
-		ifTrue: [ ^ true ].
-	^ (self species == other species) 
-			and: [ name = other name ]
 ]
 
 { #category : #'class building' }
@@ -186,11 +166,6 @@ Slot >> ensureInitalizeMethodExists: aClass [
 				classified: 'initialization' ]
 ]
 
-{ #category : #properties }
-Slot >> ensureProperties [
-	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
-]
-
 { #category : #private }
 Slot >> ensureSlotInitializationFor: aClass [
 	| source |
@@ -211,14 +186,6 @@ Slot >> finalize: layout [
 	"nothing to do here"
 ]
 
-{ #category : #properties }
-Slot >> hasProperty: aKey [
-	"Test if the property aKey is present."
-	^self properties 
-		ifNil: [false]
-		ifNotNil: [:prop | prop includesKey: aKey]
-]
-
 { #category : #comparing }
 Slot >> hasSameDefinitionAs: otherSlot [
 
@@ -228,12 +195,6 @@ Slot >> hasSameDefinitionAs: otherSlot [
 	^self = otherSlot
 	
 
-]
-
-{ #category : #comparing }
-Slot >> hash [
-	"Every subclass that adds state must redefine this method"
-	^ self species hash bitXor: self name hash
 ]
 
 { #category : #initialization }
@@ -298,16 +259,6 @@ Slot >> isWrittenIn: aCompiledCode [
 ]
 
 { #category : #accessing }
-Slot >> name [
-	^ name
-]
-
-{ #category : #accessing }
-Slot >> name: aSymbol [
-	name := aSymbol
-]
-
-{ #category : #accessing }
 Slot >> named: aSymbol [
 	"to be polymorhic with slot class"
 	self name: aSymbol
@@ -339,67 +290,9 @@ Slot >> printOn: aStream [
 		nextPutAll: self class name
 ]
 
-{ #category : #properties }
-Slot >> properties [
-	^ Properties at: self ifAbsent: nil
-]
-
-{ #category : #properties }
-Slot >> propertyAt: propName [
-	^ self
-		propertyAt: propName
-		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-Slot >> propertyAt: propName ifAbsent: aBlock [
-	self properties ifNil: [^aBlock value].
-	^ self properties
-		at: propName
-		ifAbsent: aBlock
-]
-
-{ #category : #properties }
-Slot >> propertyAt: aKey ifAbsentPut: aBlock [
-	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
-	
-	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
-]
-
-{ #category : #properties }
-Slot >> propertyAt: propName put: propValue [
-	^ self ensureProperties
-		at: propName
-		put: propValue
-]
-
 { #category : #'meta-object-protocol' }
 Slot >> read: anObject [
 	^ self subclassResponsibility
-]
-
-{ #category : #properties }
-Slot >> removePropertiesIfEmpty [
-	^ Properties at: self ifPresent: [ :dict |
-		dict ifEmpty: [ Properties removeKey: self ] ]
-]
-
-{ #category : #properties }
-Slot >> removeProperty: propName [
-	^ self
-		removeProperty: propName
-		ifAbsent: [ nil ]
-]
-
-{ #category : #properties }
-Slot >> removeProperty: propName ifAbsent: aBlock [
-	| property |
-	self properties ifNil: [^aBlock value].
-	property := self properties
-		removeKey: propName
-		ifAbsent: aBlock.
-	self removePropertiesIfEmpty.
-	^ property
 ]
 
 { #category : #accessing }

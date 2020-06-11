@@ -27,6 +27,11 @@ ClyBrowserQueryCursorTestCase >> createQueryResult [
 ]
 
 { #category : #running }
+ClyBrowserQueryCursorTestCase >> rawResultItems [
+	self subclassResponsibility
+]
+
+{ #category : #running }
 ClyBrowserQueryCursorTestCase >> setUp [
 	| query |
 	super setUp.

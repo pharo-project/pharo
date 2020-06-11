@@ -19,7 +19,6 @@ Class {
 		'popupShowAutomatic',
 		'popupAutomaticDelay',
 		'popupShowWithShortcut',
-		'spaceAfterCompletion',
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace'
 	],
@@ -147,7 +146,7 @@ NECPreferences class >> initialize [
 	popupShowWithShortcut := self defaultPopupShortcut.
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
-	spaceAfterCompletion := true
+	NECEntry spaceAfterCompletion: true
 ]
 
 { #category : #accessing }
@@ -252,6 +251,7 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Popup appears with this shortcut';
 						domainValues: self availablePopupShortcuts.
 					(aBuilder setting: #spaceAfterCompletion)
+						target: NECEntry;
 						default: self defaultSpaceAfterCompletion;
 						label: 'Put a space after completion'
 					 ].
@@ -299,12 +299,8 @@ NECPreferences class >> smartCharactersWithSingleSpace: aString [
 
 { #category : #accessing }
 NECPreferences class >> spaceAfterCompletion [
-	^ spaceAfterCompletion
-]
-
-{ #category : #accessing }
-NECPreferences class >> spaceAfterCompletion: anObject [
-	spaceAfterCompletion := anObject
+	
+	^ NECEntry spaceAfterCompletion
 ]
 
 { #category : #accessing }
