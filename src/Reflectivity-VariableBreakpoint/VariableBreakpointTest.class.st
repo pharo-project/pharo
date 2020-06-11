@@ -238,6 +238,85 @@ VariableBreakpointTest >> testBreakpointOnTempWrites [
 	
 ]
 
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnAccess [
+	wp := obj2 haltOnAccess.
+	self should: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self should: [ obj2 v2 ] raise: Halt.
+	self should: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnAccessTo [
+	wp := obj2 haltOnAccessTo: #v1.
+	self should: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnRead [
+	wp := obj2 haltOnRead.
+	self should: [ obj2 v1 ] raise: Halt.
+	self shouldnt: [ obj2 v1: 0 ] raise: Halt.
+	self should: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnReadTo [
+	wp := obj2 haltOnReadTo: #v1.
+	self should: [ obj2 v1 ] raise: Halt.
+	self shouldnt: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnWrite [
+	wp := obj2 haltOnWrite.
+	self shouldnt: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self should: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnWriteTo [
+
+	wp := obj2 haltOnWriteTo: #v1.
+	self shouldnt: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
 { #category : #'tests - initialization' }
 VariableBreakpointTest >> testInitialize [ 	
 	wp := VariableBreakpoint new.
