@@ -1,8 +1,9 @@
-Extension { #name : #Slot }
+Extension { #name : #Variable }
 
 { #category : #'*OpalCompiler-Tools' }
-Slot >> gtInspectorUsersIn: composite [
+Variable >> gtInspectorUsersIn: composite [
 	<gtInspectorPresentationOrder: 30>
+	
 	composite list 
 		title: 'Users';
 		display: [ self usingMethods collect: [:each | each asRingDefinition]];

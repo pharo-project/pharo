@@ -1,46 +1,48 @@
-Extension { #name : #Slot }
+Extension { #name : #Variable }
 
 { #category : #'*Reflectivity' }
-Slot >> afterHooks [
+Variable >> afterHooks [
 	^self propertyAt: #afterHooks ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> afterLinks [
+Variable >> afterLinks [
 	^ self links select: [ :each | each control == #after ]
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> assignmentNodes [
+Variable >> assignmentNodes [
 	^self astNodes 
 		select: [ :each | each isWrite ] 
 		thenCollect: [ :each | each parent ]
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> astNodes [
-	^self owningClass variableNodes select: [ :each | each binding variable == self ]
+Variable >> astNodes [
+	"by default we search the usingMethods for all AST nodes"
+	^self usingMethods flatCollect: [ :method | 
+		method variableNodes select: [: each| each binding variable == self ]]
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> availableReifications [
+Variable >> availableReifications [
 	^RFReification subclasses 
 		select: [ :e | e entities includesAny: self class withAllSuperclasses ]
 		thenCollect: #key
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> beforeHooks [
+Variable >> beforeHooks [
 	^self propertyAt: #beforeHooks ifAbsentPut: OrderedCollection new
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> beforeLinks [
+Variable >> beforeLinks [
 	^ self links select: [ :each | each control == #before ]
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> clearReflectivityAnnotations [
+Variable >> clearReflectivityAnnotations [
 	self removeProperty: #preambles ifAbsent: [ ].
 	self removeProperty: #beforeHooks ifAbsent: [ ].
 	self removeProperty: #afterHooks ifAbsent: [ ].
@@ -48,39 +50,43 @@ Slot >> clearReflectivityAnnotations [
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> hasMetalink [
+Variable >> hasMetalink [
 	^ self hasProperty: #links
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> hasMetalinkAfter [
+Variable >> hasMetalinkAfter [
 	self hasMetalink
 		ifFalse: [ ^ false ].
 	^ self afterLinks isNotEmpty
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> hasMetalinkBefore [
+Variable >> hasMetalinkBefore [
 	self hasMetalink ifFalse: [ ^ false ].
 	^ self beforeLinks isNotEmpty
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> hasMetalinkInstead [
+Variable >> hasMetalinkInstead [
 	self hasMetalink
 		ifFalse: [ ^ false ].
 	^ self insteadLinks isNotEmpty
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> insteadLinks [
+Variable >> insteadHooks [
+	^self propertyAt: #insteadHooks ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
+Variable >> insteadLinks [
 	^ self links select: [ :each | each control == #instead ]
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> link: aMetaLink [
+Variable >> link: aMetaLink [
 	| methods |
-	
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
 	
 	methods := self usingMethods.
@@ -95,29 +101,29 @@ Slot >> link: aMetaLink [
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> links [
+Variable >> links [
 	^self propertyAt: #links ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> postambles [
+Variable >> postambles [
 	^ self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> preambles [
+Variable >> preambles [
 	^ self propertyAt: #preambles ifAbsent: #()
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> readNodes [
+Variable >> readNodes [
 	^ self astNodes select: [ :each | each isRead ]
 ]
 
 { #category : #'*Reflectivity' }
-Slot >> removeLink: aMetaLink [
-	self links remove: aMetaLink.
+Variable >> removeLink: aMetaLink [
 	self usingMethods do: [:method | method removeLink: aMetaLink].
+	self links remove: aMetaLink.
 	self links ifEmpty: [ self removeProperty: #links ].
 	self clearReflectivityAnnotations.
 ]

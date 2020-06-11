@@ -122,6 +122,11 @@ TemporaryVariable >> startpc: anObject [
 	startpc := anObject
 ]
 
+{ #category : #queries }
+TemporaryVariable >> usingMethods [
+	^{method}
+]
+
 { #category : #'reflecive api' }
 TemporaryVariable >> write: aValue InContext: aContext [
 	^aContext tempNamed: name put: aValue
