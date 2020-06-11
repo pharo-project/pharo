@@ -4,6 +4,11 @@ Class {
 	#category : #'Refactoring2-Transformations-Tests'
 }
 
+{ #category : #accessing }
+RBRemoveClassTransformationTest class >> defaultTimeLimit [
+	^20 seconds
+]
+
 { #category : #private }
 RBRemoveClassTransformationTest >> resumeIfCannotRemove: error [
 
