@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'parentScope'
 	],
-	#category : #'Slot-Core-Layout'
+	#category : #'Kernel-Layout'
 }
 
 { #category : #comparing }
