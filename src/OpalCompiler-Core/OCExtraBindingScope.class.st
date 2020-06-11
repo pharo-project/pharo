@@ -40,9 +40,9 @@ OCExtraBindingScope >> lookupVar: name [
 	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
 	
 	(bindings bindingOf: name asSymbol)
-		ifNotNil: [ :assoc | 
+		ifNotNil: [ :var | 
 			^ OCLiteralVariable new
-				assoc: assoc;
+				variable: var;
 				scope: self;
 				yourself ].
 	^ outerScope lookupVar: name 
