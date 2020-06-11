@@ -186,7 +186,7 @@ LRUCacheTest >> testFixedAccess [
 	| cache data keys |
 	(cache := self newCache)
 		maximumWeight: 4.
-	data := (1 to: 16) collect: #asWords.
+	data := (1 to: 16) collect: [ :each | each asWords ].
 	data do: [ :each |
 		cache at: each ifAbsentPut: [ each ] ].
 	cache validateInvariantWith: self.
@@ -291,7 +291,7 @@ LRUCacheTest >> testRandomAccess [
 	| cache data random keys |
 	(cache := self newCache)
 		maximumWeight: 4.
-	data := (1 to: 16) collect: #asWords.
+	data := (1 to: 16) collect: [ :each | each asWords ].
 	data do: [ :each |
 		cache at: each ifAbsentPut: [ each ] ].
 	cache validateInvariantWith: self.

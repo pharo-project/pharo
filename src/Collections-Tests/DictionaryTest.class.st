@@ -451,7 +451,7 @@ DictionaryTest >> testFlatCollect [
 DictionaryTest >> testFlatCollect2 [
 
 	| res |
- 	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | e collect: #abs].
+ 	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | e collect: [:each | each abs]].
  	self assert: res asSet equals: #(2 3 4 5) asSet. 
 	
  
@@ -461,7 +461,7 @@ DictionaryTest >> testFlatCollect2 [
 DictionaryTest >> testFlatCollect3 [
 
 	| res |
- 	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | {e collect: #abs}].
+ 	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | {e collect: [:each | each abs]}].
  	self assert: res asSet equals: #(#(2 3) #(4 5)) asSet. 
 	
  

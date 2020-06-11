@@ -28,5 +28,5 @@ SHStyleElementTest >> testStyleForTable [
 	| table |
 	table := element styleForTable.
 	self assert: table size equals: 4.
-	self assert: (table collect: #first) equals: element tokens
+	self assert: (table collect: [:each | each first]) equals: element tokens
 ]

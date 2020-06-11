@@ -72,12 +72,11 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenInstanceSideIsLocalScop
 
 { #category : #tests }
 ClySubclassScopeTest >> testClassEnumerationOverMetaClass [
+
 	| expected |
 	scope := ClySubclassScope of: ClyClass1FromP1 class.
-	
 	scope classesDo: [ :each | result add: each ].
-	
-	expected := ClyClass1FromP1 allSubclasses collect: #classSide.
+	expected := ClyClass1FromP1 allSubclasses collect: [:each | each classSide].
 	self assert: result asSet equals: expected asSet
 ]
 

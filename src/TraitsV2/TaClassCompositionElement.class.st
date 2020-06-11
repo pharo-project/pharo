@@ -12,7 +12,7 @@ Class {
 TaClassCompositionElement >> methods [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 	| innerClassLocalMethods |
-	innerClassLocalMethods := innerClass localMethods collect: #selector.
+	innerClassLocalMethods := innerClass localMethods collect: [:each | each selector].
 	^ super methods reject: [ :e | (innerClassLocalMethods includes: e selector) not and: [TraitedClass selectors anySatisfy: [ :x | x = e selector ]] ]
 ]
 
@@ -21,7 +21,7 @@ TaClassCompositionElement >> selectors [
 	"As I am representing a ClassTrait I have to filter the methods that are in all the class traits"
 
 	| innerClassLocalMethods |
-	innerClassLocalMethods := innerClass localMethods collect: #selector.
+	innerClassLocalMethods := innerClass localMethods collect: [:each | each selector].
 	^ super selectors
 		reject: [ :e | 
 			(innerClassLocalMethods includes: e) not
