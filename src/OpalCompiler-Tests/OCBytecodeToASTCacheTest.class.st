@@ -73,7 +73,7 @@ OCBytecodeToASTCacheTest >> testLowerThanFirstBCOffsetAccessTest [
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
 	| pc mappedNode expectedNode |
-	"we skip for now on 32 bit"
+	self flag: #TODO. "we skip for now on 32 bit"
 	Smalltalk vm is32bit ifTrue: [ self skip ]. 
 	pc := compiledMethod encoderClass = EncoderForSistaV1 ifTrue: [50] ifFalse: [51].
 	mappedNode := (cache nodeForPC: pc).
