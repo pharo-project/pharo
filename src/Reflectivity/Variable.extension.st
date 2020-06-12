@@ -122,8 +122,12 @@ Variable >> readNodes [
 
 { #category : #'*Reflectivity' }
 Variable >> removeLink: aMetaLink [
+	"The order of operations here is critical.
+	When link is removed from the method it is recompiled. But recompilation needs to look into links here in order to keep available links in the new method instance. 
+	Therefore it is important to first remove the given link from the variable list and only then remove it from using methods. Otherwise the method recompilation will keep removed link in the method bytecode"	
 	self links remove: aMetaLink.
 	self usingMethods do: [:method | method removeLink: aMetaLink].
+	
 	self links ifEmpty: [ self removeProperty: #links ].
 	self clearReflectivityAnnotations.
 ]
