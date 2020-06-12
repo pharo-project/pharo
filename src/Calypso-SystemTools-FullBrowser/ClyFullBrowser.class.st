@@ -472,15 +472,17 @@ ClyFullBrowser >> newClassView [
 	"Creates the class pane"
 
 	^ self newNavigationView
-		displayMainColumnBy: [ :cell :item | 
+		displayMainColumnBy: [ :cell :item |
+			cell useFullIndentation.
 			self specifyClassItemNameOn: cell label for: item browserItem];
 		enableFilter;
+		enableCollapsingOfPreexpandedItems;
 		requestNavigationBy: #classSelectionChanged	
 ]
 
 { #category : #initialization }
 ClyFullBrowser >> newMethodGroupView [
-	"Creates the 'method group' pane (this is the protocol [ane])"
+	"Creates the 'method group' pane (formerly the 'protocol' pane)"
 
 	^ self newNavigationView
 		treeStructure: { 
