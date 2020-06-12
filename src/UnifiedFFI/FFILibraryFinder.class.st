@@ -9,6 +9,9 @@ FFIUnix64LibraryFinder findLibrary: 'libcairo.2.so'
 Class {
 	#name : #FFILibraryFinder,
 	#superclass : #Object,
+	#instVars : [
+		'userPaths'
+	],
 	#category : #'UnifiedFFI-Libraries'
 }
 
@@ -71,8 +74,21 @@ FFILibraryFinder >> paths [
 
 	^ (Array streamContents: [ :stream | 
 		stream 
+			nextPutAll: self userPaths;
 			nextPutAll: self basePaths;
 			nextPutAll: self ldLibraryPaths;
 			nextPutAll: self knownPaths ])
 		collect: [ :each | each asFileReference ]
+]
+
+{ #category : #accessing }
+FFILibraryFinder >> userPaths [
+
+	^ userPaths ifNil: [ #() ]
+]
+
+{ #category : #accessing }
+FFILibraryFinder >> userPaths: anArray [
+
+	userPaths := anArray
 ]
