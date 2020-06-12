@@ -64,6 +64,12 @@ Variable >> hash [
 	^ self species hash bitXor: self name hash
 ]
 
+{ #category : #testing }
+Variable >> isReferenced [
+	"Subclasses can implement optimized version avoiding all methods collections"
+	^self usingMethods isNotEmpty
+]
+
 { #category : #accessing }
 Variable >> name [
 	^ name
@@ -133,4 +139,9 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 		ifAbsent: aBlock.
 	self removePropertiesIfEmpty.
 	^ property
+]
+
+{ #category : #queries }
+Variable >> usingMethods [
+	self subclassResponsibility
 ]

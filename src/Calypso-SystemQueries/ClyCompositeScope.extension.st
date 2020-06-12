@@ -31,8 +31,8 @@ ClyCompositeScope >> asLocalClassScope [
 { #category : #'*Calypso-SystemQueries' }
 ClyCompositeScope >> asRBEnvironment [
 	| env |
-	env := subscopes first asRBEnvironment.
-	subscopes allButFirstDo: [:each | env := env | each asRBEnvironment  ].
+	subscopes do: [:each | 
+		env := env ifNil: [ each asRBEnvironment ] ifNotNil: [ env | each asRBEnvironment ]].
 	^env
 ]
 
