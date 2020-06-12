@@ -391,7 +391,7 @@ Dictionary >> declare: key from: aDictionary [
 			[self add: key -> nil]
 ]
 
-{ #category : #adding }
+{ #category : #undeclared }
 Dictionary >> declareVariable: newGlobal from: aDictionary [ 
 	"Add aGlobal to the receiver. If key already exists, do nothing. If aDictionary 
 	includes key, then remove it from aDictionary and use its association as 
