@@ -13,6 +13,13 @@ Class {
 }
 
 { #category : #accessing }
+FFILibraryFinder class >> findAnyLibrary: aCollection [
+	"When there are different versions/names of libraries we want to use."
+	
+	^ self new findAnyLibrary: aCollection
+]
+
+{ #category : #accessing }
 FFILibraryFinder class >> findLibrary: aName [
 
 	^ self new findLibrary: aName
@@ -22,6 +29,18 @@ FFILibraryFinder class >> findLibrary: aName [
 FFILibraryFinder >> basePaths [
 
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+FFILibraryFinder >> findAnyLibrary: aCollection [
+	
+	aCollection do: [ :eachName | 
+		self paths do: [ :each | | path |
+			path := each / eachName.
+			path exists 
+				ifTrue: [ ^ path fullName ] ] ].
+	
+	self error: ('Cannot locate any of {1}. Please check if it installed on your system' format: { aCollection asString })
 ]
 
 { #category : #accessing }
