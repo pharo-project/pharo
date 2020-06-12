@@ -76,7 +76,7 @@ SystemProgressMorph class >> example [
 SystemProgressMorph class >> exampleChangeLabel [
 	"SystemProgressMorph exampleChangeLabel"
 	| classes |
-	classes := Smalltalk globals allClasses copyFrom: 1 to: 100.
+	classes := self environment allClasses copyFrom: 1 to: 100.
 	'InitialLabel' 
 		displayProgressFrom: 0 to: classes size
 		during: [:bar | 1 to: classes size do: [:i |

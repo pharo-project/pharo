@@ -5,7 +5,7 @@ Class {
 	#name : #OCLiteralVariable,
 	#superclass : #OCAbstractVariable,
 	#instVars : [
-		'assoc'
+		'variable'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -16,33 +16,22 @@ OCLiteralVariable class >> semanticNodeClass [
 	^RBGlobalNode
 ]
 
-{ #category : #accessing }
-OCLiteralVariable >> assoc [
-	^ assoc
-]
-
-{ #category : #initializing }
-OCLiteralVariable >> assoc: anAssociation [
-
-	assoc := anAssociation
-]
-
 { #category : #emitting }
 OCLiteralVariable >> emitStore: methodBuilder [
 
-	 assoc emitStore: methodBuilder
+	 variable emitStore: methodBuilder
 
 
 ]
 
 { #category : #emitting }
 OCLiteralVariable >> emitValue: methodBuilder [
-	assoc emitValue: methodBuilder
+	variable emitValue: methodBuilder
 ]
 
 { #category : #testing }
 OCLiteralVariable >> isClassVariable [
-	^ assoc isClassVariable
+	^ variable isClassVariable
 ]
 
 { #category : #testing }
@@ -50,7 +39,7 @@ OCLiteralVariable >> isFromSharedPool [
 	| sharedPools |
 	sharedPools := scope getClass instanceSide sharedPools.
 	^ sharedPools 
-		detect: [ :pool | pool classVarNames includes: assoc key ]
+		detect: [ :pool | pool classVarNames includes: variable key ]
 		ifFound: [ true ]
 		ifNone: [ false ]
 ]
@@ -69,7 +58,7 @@ OCLiteralVariable >> isGlobalClassNameBinding [
 
 { #category : #testing }
 OCLiteralVariable >> isGlobalVariable [
-	^ assoc isGlobalVariable
+	^ variable isGlobalVariable
 ]
 
 { #category : #testing }
@@ -88,20 +77,26 @@ OCLiteralVariable >> isWritable [
 { #category : #accessing }
 OCLiteralVariable >> name [
 
-	^ assoc name
+	^ variable name
 ]
 
 { #category : #reading }
 OCLiteralVariable >> read [
-	^ assoc read 
+	^ variable read 
 ]
 
 { #category : #accessing }
 OCLiteralVariable >> value [
-	^assoc value
+	^variable value
 ]
 
 { #category : #accessing }
 OCLiteralVariable >> variable [
-	^assoc
+	^ variable
+]
+
+{ #category : #initializing }
+OCLiteralVariable >> variable: aLiteralVariable [
+
+	variable := aLiteralVariable
 ]

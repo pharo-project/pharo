@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 TaPrecedenceComposition >> classComposition [
-	^ (self class withAll: (members collect:#classComposition))
+	^ (self class withAll: (members collect: [:each | each classComposition]))
 		preferedTrait: preferedTrait classComposition;
 		yourself
 ]
@@ -17,7 +17,7 @@ TaPrecedenceComposition >> classComposition [
 { #category : #accessing }
 TaPrecedenceComposition >> copyTraitExpression [
 
-	^ (self class withAll: (members collect:#copyTraitExpression))
+	^ (self class withAll: (members collect: [:each | each copyTraitExpression]))
 		preferedTrait: preferedTrait copyTraitExpression;
 		yourself
 ]

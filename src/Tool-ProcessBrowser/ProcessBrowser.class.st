@@ -69,10 +69,11 @@ Class {
 
 { #category : #initialization }
 ProcessBrowser class >> cleanUp [
- "Remove terminated processes from my suspended list"
-
-       self suspendedProcesses keysDo: [:ea |
-               ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
+ 	"Remove terminated processes from my suspended list"
+	<script>
+	
+	self suspendedProcesses keysDo: [:ea |
+		ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
 ]
 
 { #category : #'process control' }
@@ -140,7 +141,6 @@ ProcessBrowser class >> dumpTallyOnTranscript: tally [
 
 { #category : #initialization }
 ProcessBrowser class >> initialize [
-	"ProcessBrowser initialize"
 	SuspendedProcesses ifNil: [ SuspendedProcesses := IdentityDictionary new ].
 	self registerWellKnownProcesses
 ]
@@ -158,7 +158,7 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 		order: 705;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: self taskbarIcon.
+		icon: self taskbarIcon
 ]
 
 { #category : #'process control' }
@@ -176,8 +176,9 @@ ProcessBrowser class >> nameAndRulesFor: aProcess [
 
 { #category : #'instance creation' }
 ProcessBrowser class >> open [
-	"ProcessBrowser open"
 	"Create and schedule a ProcessBrowser."
+	<script>
+	
 	Smalltalk garbageCollect.
 	^ self new build
 ]
@@ -290,7 +291,7 @@ ProcessBrowser class >> suspendedProcesses [
 	"Answer a collection of processes that my instances have suspended.  
 	This is so that they don't get garbage collected."
 	^ SuspendedProcesses
-		ifNil: [SuspendedProcesses := IdentityDictionary new]
+		ifNil: [ SuspendedProcesses := IdentityDictionary new ]
 ]
 
 { #category : #'CPU utilization' }
@@ -330,7 +331,7 @@ ProcessBrowser class >> terminateProcess: aProcess [
 			removeKey: aProcess
 			ifAbsent: [].
 		aProcess terminate
-	].
+	]
 
 ]
 
@@ -1109,7 +1110,7 @@ ProcessBrowser >> text [
 ProcessBrowser >> toggleAutoUpdate [
 	self isAutoUpdating
 		ifTrue: [ self stopAutoUpdate ]
-		ifFalse: [ self startAutoUpdate ].
+		ifFalse: [ self startAutoUpdate ]
 
 ]
 

@@ -621,8 +621,7 @@ TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin [
 
 { #category : #accessing }
 TextStyle >> pointSizes [
-	^ fontArray collect:
-		[:x | x pointSize]
+	^ fontArray collect: [:x | x pointSize]
 
   "TextStyle default fontNamesWithPointSizes"
 ]

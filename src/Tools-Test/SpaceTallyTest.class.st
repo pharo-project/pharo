@@ -15,7 +15,7 @@ SpaceTallyTest >> test2Classes [
 		asSortedCollection: [ :a :b | a spaceForInstances > b spaceForInstances ].
 	self assert: result size equals: 2.
 	self
-		assertCollection: (result collect: #analyzedClassName)
+		assertCollection: (result collect: [:each | each analyzedClassName])
 		hasSameElements: #(#Point #TextMorph).
 	self
 		assert:

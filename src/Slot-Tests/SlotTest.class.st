@@ -14,11 +14,8 @@ Class {
 SlotTest >> testAsSlotCollection [
 	
  	self assert: 'a b' asSlotCollection equals: {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
-	
 	self assert: ('a _a a_a b b_' asSlotCollection collect: [ :i | i name ]) equals: #(#a #_a #a_a #b #b_) .
-	
 	self should: ['1' asSlotCollection] raise: Error.
-	
 	self should: ['ivarA ivarB i%varD iv2arF' asSlotCollection] raise: Error.
 	self should: ['iva|rG' asSlotCollection] raise: Error
 

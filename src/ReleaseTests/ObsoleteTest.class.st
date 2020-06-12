@@ -53,7 +53,7 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 	poolClass := nil.
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 
-	preFixObsoleteClassNames := SystemNavigation default obsoleteClasses collect: #name.
+	preFixObsoleteClassNames := SystemNavigation default obsoleteClasses collect: [:each | each name].
 	self assert: (preFixObsoleteClassNames includes: obsoletePoolName).
 	self assert: testClass sharedPoolNames size equals: 1.
 	self assert: (testClass sharedPoolNames includes: obsoletePoolName).

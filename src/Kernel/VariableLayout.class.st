@@ -7,7 +7,7 @@ Instances of classes using this kind of layout have only a minimum given size. I
 Class {
 	#name : #VariableLayout,
 	#superclass : #PointerLayout,
-	#category : #'Slot-Core-Layout'
+	#category : #'Kernel-Layout'
 }
 
 { #category : #'instance creation' }

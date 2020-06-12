@@ -25,23 +25,23 @@ SessionManagerRegistrationTest >> testGivenARegisteredClassHandlerShouldHasRegis
 
 { #category : #tests }
 SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandlerIsUpdated [
+
 	manager registerSystemClassNamed: #Foo.
 	manager renamedClass: self from: #Foo to: #Bar.
-	
 	self 
-		assert: (manager startupList collect: #handledId)
+		assert: (manager startupList collect: [:each | each handledId])
 		equals: #( Bar ).
 ]
 
 { #category : #tests }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategoriesShoudlLastClassRegistrationBeTheOnlyOccurenceInStartupList [
+
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar.
 	manager registerGuiClassNamed: #Foo atPriority: 30.
 	manager registerGuiClassNamed: #Foo atPriority: 50.
-	
 	self 
-		assert: (manager startupList collect: #handledId)
+		assert: (manager startupList collect: [:each | each handledId])
 		equals: #( Bar Foo ).
 ]
 
@@ -51,9 +51,8 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryAtDiff
 	manager registerSystemClassNamed: #Bar atPriority: 15.
 	manager registerSystemClassNamed: #Foo atPriority: 10.
 	manager registerSystemClassNamed: #Foo atPriority: 20.
-	
 	self 
-		assert: (manager startupList collect: #handledId)
+		assert: (manager startupList collect: [:each | each handledId])
 		equals: #( Bar Foo ).
 ]
 
@@ -63,9 +62,8 @@ SessionManagerRegistrationTest >> testGivenManyRegistrationsInSameCategoryShoudl
 	manager registerSystemClassNamed: #Bar.
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Foo.
-	
 	self 
-		assert: (manager startupList collect: #handledId)
+		assert: (manager startupList collect: [:each | each handledId])
 		equals: #( Bar Foo ).
 ]
 

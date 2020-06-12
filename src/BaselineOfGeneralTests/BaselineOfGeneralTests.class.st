@@ -61,6 +61,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-SessionManager-Tests';
 			package: 'System-Settings-Tests';
 			package: 'System-Support-Tests';
+			package: 'Text-Diff-Tests';
 			package: 'Text-Edition-Tests';
 			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';

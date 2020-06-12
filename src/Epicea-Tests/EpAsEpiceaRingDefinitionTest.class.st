@@ -14,7 +14,7 @@ EpAsEpiceaRingDefinitionTest >> definitions [
 		FLSerializer class. 
 		FLTGlobalClassOrTraitSerializationTest.
 		FLTGlobalClassOrTraitSerializationTest classTrait.
-		} collect: #asEpiceaRingDefinition
+		} collect: [:each | each asEpiceaRingDefinition]
 ]
 
 { #category : #tests }

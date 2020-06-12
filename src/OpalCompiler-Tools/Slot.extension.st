@@ -5,7 +5,7 @@ Slot >> gtInspectorUsersIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	composite list 
 		title: 'Users';
-		display: [ self usingMethods collect: #asRingDefinition];
+		display: [ self usingMethods collect: [:each | each asRingDefinition]];
 		when: [ self isReferenced ];
 		showOnly: 30
 ]

@@ -37,7 +37,7 @@ EpApplyPreviewerTest >> assertOutputsEventsWith: aBlock [
 			errorHandlerBlock: [:error | error signal ];
 			newApplyPreviewLog.
 	
-	aBlock value: (outputLog entries collect: #content).
+	aBlock value: (outputLog entries collect: [:each | each content]).
 
 ]
 
@@ -54,7 +54,7 @@ EpApplyPreviewerTest >> outputEvents [
 			errorHandlerBlock: [:error | error signal ];
 			newApplyPreviewLog.
 	
-	^ outputLog entries collect: #content
+	^ outputLog entries collect: [:each | each content]
 ]
 
 { #category : #tests }

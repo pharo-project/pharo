@@ -13,7 +13,7 @@ CDClassNameNode >> binding [
 	classBinding := self existingBindingIfAbsent: [LiteralVariable key: className value: nil].
 	^OCLiteralVariable new 
 		scope: originalNode scope;
-		assoc: classBinding
+		variable: classBinding
 ]
 
 { #category : #accessing }

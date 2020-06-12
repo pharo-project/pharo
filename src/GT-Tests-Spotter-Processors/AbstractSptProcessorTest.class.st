@@ -26,13 +26,13 @@ AbstractSptProcessorTest >> assertQuantityOfResults: anInteger [
 { #category : #asserting }
 AbstractSptProcessorTest >> assertResultsIncludes: anElement [ 
 	
-	self assert: ((candidates results collect: #content) includes: anElement)
+	self assert: ((candidates results collect: [:each | each content]) includes: anElement)
 ]
 
 { #category : #asserting }
 AbstractSptProcessorTest >> denyResultsIncludes: anElement [ 
 
-	self deny: ((candidates results collect: #content) includes: anElement )
+	self deny: ((candidates results collect: [:each | each content]) includes: anElement )
 ]
 
 { #category : #tests }

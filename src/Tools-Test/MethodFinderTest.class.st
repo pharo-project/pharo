@@ -15,8 +15,8 @@ MethodFinderTest >> testArgumentsNumber [
 	bottom := MethodFinderBottomClass new.
 	resultZero := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom).
 	resultOne  := (MethodFinder new findMethodsByExampleInput: { bottom . bottom } andExpectedResult: bottom).
-	self assert: ((resultZero collect: #selector) allSatisfy: [ :s | s keywords size = 1]).
-	self assert: ((resultOne  collect: #selector) allSatisfy: [ :s | s keywords size = 1 and: s last = $:]).
+	self assert: ((resultZero collect: [:each | each selector]) allSatisfy: [ :s | s keywords size = 1]).
+	self assert: ((resultOne  collect: [:each | each selector]) allSatisfy: [ :s | s keywords size = 1 and: s last = $:]).
 ]
 
 { #category : #tests }
@@ -25,7 +25,7 @@ MethodFinderTest >> testExceptionDoesNotStopTheFlow [
 	| bottom result |
 	bottom := MethodFinderBottomClass new.
 	result := (MethodFinder new findMethodsByExampleInput: { bottom . 1 } andExpectedResult: 1).
-	self assert: ((result collect: #selector) includes: #oneArgumentMethod:).
+	self assert: ((result collect: [:each | each selector]) includes: #oneArgumentMethod:).
 ]
 
 { #category : #tests }
@@ -41,7 +41,7 @@ MethodFinderTest >> testForbiddenSetIsOverApprovedSet [
 	| bottom result |
 	bottom := MethodFinderBottomClass new.
 	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom ).
-	self assert: (((result collect: #selector) includes: #InApprovedAndInForbiddenSetMethod) not).
+	self assert: (((result collect: [:each | each selector]) includes: #InApprovedAndInForbiddenSetMethod) not).
 ]
 
 { #category : #tests }
@@ -52,7 +52,7 @@ MethodFinderTest >> testMethodApprovedInClassButDisapprovedInSuperClass [
 	|bottom result |
 	bottom := MethodFinderBottomClass new.
 	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
-	self assert: ((result collect: #selector) includes: #topDisapprovedButBottomApprovedMethod).
+	self assert: ((result collect: [:each | each selector]) includes: #topDisapprovedButBottomApprovedMethod).
 ]
 
 { #category : #tests }
@@ -111,7 +111,7 @@ MethodFinderTest >> testMethodNotDefinedInClassButApprovedInSuperClass [
 	|bottom result |
 	bottom := MethodFinderBottomClass new.
 	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
-	self assert: ((result collect: #selector) includes: #onlyTopDefinedApprovedMethod).
+	self assert: ((result collect: [:each | each selector]) includes: #onlyTopDefinedApprovedMethod).
 ]
 
 { #category : #tests }
@@ -122,7 +122,7 @@ MethodFinderTest >> testMethodOnlyBottomDefinedAndApprovedInBottom [
 	|bottom result |
 	bottom := MethodFinderBottomClass new.
 	result := MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom.
-	self assert: ((result collect: #selector) includes: #onlyBottomDefinedApprovedMethod).
+	self assert: ((result collect: [:each | each selector]) includes: #onlyBottomDefinedApprovedMethod).
 	
 ]
 
@@ -135,7 +135,7 @@ MethodFinderTest >> testMethodOnlyTopDefinedAndApprovedInTop [
 	|bottom result |
 	bottom := MethodFinderBottomClass new.
 	result := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult:  bottom).
-	self assert: ((result collect: #selector) includes: #onlyTopDefinedApprovedMethod).
+	self assert: ((result collect: [:each | each selector]) includes: #onlyTopDefinedApprovedMethod).
 	
 ]
 
@@ -174,7 +174,7 @@ MethodFinderTest >> testSideEffects [
 	bottom := MethodFinderBottomClass new.
 	bottom modifyMethod: 1.
 	result := (MethodFinder new findMethodsByExampleInput: { bottom . 5 } andExpectedResult:  5).
-	self assert: ((result collect: #selector) includes: #modifyMethod:).
+	self assert: ((result collect: [:each | each selector]) includes: #modifyMethod:).
 	self assert: (bottom instanceVariable) equals: 1.
 ]
 

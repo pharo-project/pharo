@@ -177,11 +177,9 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 
 	| allMembers allPackagesInBaseline packages groups |
 	allMembers := aBaseline version groups detect: [ :g | g name = aGroupName ].
-	allPackagesInBaseline := aBaseline version packages collect: #name.
-	
+	allPackagesInBaseline := aBaseline version packages collect: [:each | each name].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
-		
 	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ]).
 
 ]
