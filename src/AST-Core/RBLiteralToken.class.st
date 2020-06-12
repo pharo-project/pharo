@@ -83,7 +83,7 @@ RBLiteralToken >> storeOn: aStream [
 	value isSymbol 
 		ifTrue: 
 			[aStream nextPut: $#.
-			((RBScanner isSelector: value) and: [value ~~ #'||']) 
+			(value isValidSelector and: [value ~~ #'||']) 
 				ifTrue: [aStream nextPutAll: value]
 				ifFalse: [value asString printOn: aStream].
 			^self].
