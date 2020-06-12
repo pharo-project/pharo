@@ -17,15 +17,10 @@ OCUndeclaredVariable class >> semanticNodeClass [
 	^RBVariableNode
 ]
 
-{ #category : #accessing }
-OCUndeclaredVariable >> assoc [
-	^Undeclared associationAt: name
-]
-
 { #category : #emitting }
 OCUndeclaredVariable >> emitStore: methodBuilder [
 
-	methodBuilder storeIntoLiteralVariable:  self assoc
+	methodBuilder storeIntoLiteralVariable: self variable
 
 
 ]
@@ -33,7 +28,7 @@ OCUndeclaredVariable >> emitStore: methodBuilder [
 { #category : #emitting }
 OCUndeclaredVariable >> emitValue: methodBuilder [
 
-	methodBuilder pushLiteralVariable: self assoc.
+	methodBuilder pushLiteralVariable: self variable
 
 ]
 
@@ -51,4 +46,9 @@ OCUndeclaredVariable >> name [
 { #category : #accessing }
 OCUndeclaredVariable >> name: anObject [
 	name := anObject
+]
+
+{ #category : #accessing }
+OCUndeclaredVariable >> variable [
+	^Undeclared associationAt: name
 ]

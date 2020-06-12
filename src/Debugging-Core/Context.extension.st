@@ -28,7 +28,7 @@ Context >> lookupSymbol: aSymbol [
 	"Instance variables"
 	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
 	"Class variables and globals"
-	var isGlobal ifTrue: [ ^ var assoc value ].
+	var isGlobal ifTrue: [ ^ var variable value ].
 	^ nil.
 	
 ]
