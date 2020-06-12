@@ -149,6 +149,12 @@ CompiledBlock >> propertyAt: aString [
 	^ nil
 ]
 
+{ #category : #'temporary variables' }
+CompiledBlock >> removeSavedTemp: aTemporaryVariable [ 
+	
+	^ self method removeSavedTemp: aTemporaryVariable
+]
+
 { #category : #comparing }
 CompiledBlock >> sameLiteralsAs: method [
 	"Compare my literals to those of method. This is needed to compare compiled methods."
@@ -164,6 +170,18 @@ CompiledBlock >> sameLiteralsAs: method [
 			ifFalse: [ ^ false ] ].
 	"we can't do = on outer code or it will recursively call this code"
 	^ true
+]
+
+{ #category : #'temporary variables' }
+CompiledBlock >> saveTemp: aTemp [
+
+	^ self method saveTemp: aTemp
+]
+
+{ #category : #'temporary variables' }
+CompiledBlock >> savedTemps [ 
+
+	^ self method savedTemps
 ]
 
 { #category : #accessing }

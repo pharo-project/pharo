@@ -316,6 +316,11 @@ BlockClosure >> hasMethodReturn [
 	^scanner pc <= endpc
 ]
 
+{ #category : #'temporary variables' }
+BlockClosure >> hasTemporaryVariableNamed: aName [
+	^self tempNames includes: aName
+]
+
 { #category : #accessing }
 BlockClosure >> home [
 	^outerContext home
@@ -649,6 +654,21 @@ BlockClosure >> startpcOrOuterCode [
 { #category : #accessing }
 BlockClosure >> tempNames [
 	^ self sourceNode temporaryNames
+
+]
+
+{ #category : #'temporary variables' }
+BlockClosure >> temporaryVariableNamed: aName [
+	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
+	^TemporaryVariable 
+		name: aName 
+		block: self 
+
+]
+
+{ #category : #'temporary variables' }
+BlockClosure >> temporaryVariables [
+	^self tempNames collect: [ :name | TemporaryVariable new name: name ]
 
 ]
 

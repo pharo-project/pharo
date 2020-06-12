@@ -486,6 +486,11 @@ CompiledMethod >> hasSourcePointer [
 	^ self trailer hasSourcePointer
 ]
 
+{ #category : #'temporary variables' }
+CompiledMethod >> hasTemporaryVariableNamed: aName [
+	^ self tempNames includes: aName
+]
+
 { #category : #testing }
 CompiledMethod >> isAbstract [
 	"Answer true if I am abstract"
@@ -955,6 +960,13 @@ CompiledMethod >> removeProperty: propName ifAbsent: aBlock [
 	^value
 ]
 
+{ #category : #'temporary variables' }
+CompiledMethod >> removeSavedTemp: aTemp [
+	self savedTemps ifNotNil: [ :saved | 
+			saved remove: aTemp.
+			saved ifEmpty: [ self removeProperty: #savedTemps ] ]
+]
+
 { #category : #accessing }
 CompiledMethod >> returnField [
 	"Answer the index of the instance variable returned by a quick return 
@@ -964,6 +976,17 @@ CompiledMethod >> returnField [
 	prim < 264
 		ifTrue: [self error: 'only meaningful for quick-return']
 		ifFalse: [^ prim - 264]
+]
+
+{ #category : #'temporary variables' }
+CompiledMethod >> saveTemp: aTemp [
+	self savedTemps ifNil: [ self propertyAt: #savedTemps put: Set new].
+	self savedTemps add: aTemp.
+]
+
+{ #category : #'temporary variables' }
+CompiledMethod >> savedTemps [
+	^self propertyAt: #savedTemps ifAbsent: nil
 ]
 
 { #category : #accessing }
@@ -1082,6 +1105,22 @@ CompiledMethod >> tags [
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
 	^self ast argumentNames, self ast temporaryNames
+]
+
+{ #category : #'temporary variables' }
+CompiledMethod >> temporaryVariableNamed: aName [
+	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
+	^TemporaryVariable 
+		name: aName 
+		method: self 
+
+
+]
+
+{ #category : #'temporary variables' }
+CompiledMethod >> temporaryVariables [
+	^self tempNames collect: [ :name | TemporaryVariable new name: name ]
+
 ]
 
 { #category : #'accessing-tags' }

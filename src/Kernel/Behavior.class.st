@@ -538,6 +538,23 @@ Behavior >> classDepth [
 	^ self superclass classDepth + 1
 ]
 
+{ #category : #accessing }
+Behavior >> classLayout [
+	^ layout
+		ifNil: [ 
+			| superLayout scope |
+			superLayout := superclass 
+				ifNil: [ FixedLayout new slotScope: LayoutEmptyScope instance] "happened in the bootrap"
+				ifNotNil: [:sl | sl classLayout].
+			scope := superLayout slotScope extend.
+			layout := superLayout class extending: superLayout scope: scope host: self ]
+]
+
+{ #category : #accessing }
+Behavior >> classLayout: aClassLayout [
+	layout := aClassLayout
+]
+
 { #category : #'accessing instances and variables' }
 Behavior >> classVarNames [
 	"Answer a collection of the receiver's class variable names."
@@ -612,6 +629,20 @@ Behavior >> deepCopy [
 	"Classes should only be shallowCopied or made anew."
 
 	^ self shallowCopy
+]
+
+{ #category : #testing }
+Behavior >> definesSlot: aSlot [
+	"Return true whether the receiver defines an instance variable named aString"
+	
+	^ self slots identityIncludes: aSlot
+]
+
+{ #category : #testing }
+Behavior >> definesSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString."
+	
+	^ self slotNames includes: aString
 ]
 
 { #category : #dependencies }
@@ -835,6 +866,17 @@ Behavior >> hasSelectorReferringTo: literal [
 	"Answer true if any of my methods access the argument as a literal"
 
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
+]
+
+{ #category : #testing }
+Behavior >> hasSpecificLayout [
+	"Return true whether the receiver has a layout that is not a fixed one (which is the default linear layout for default classes."
+	"Point hasSpecificLayout >>> false"
+	"Array hasSpecificLayout >>> true"
+	
+	^ (self classLayout isKindOf: FixedLayout) not
+	
+
 ]
 
 { #category : #'testing class hierarchy' }

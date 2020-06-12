@@ -217,6 +217,11 @@ Symbol class >> possibleSelectorsFor: misspelled [
 	^ best
 ]
 
+{ #category : #access }
+Symbol class >> pseudovariablesNames [
+	^#(#self #true #false #nil #thisContext #super)
+]
+
 { #category : #'instance creation' }
 Symbol class >> readFrom: strm [  
 	"Symbol readFromString: '#abc'"
@@ -410,10 +415,23 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
+{ #category : #variables }
+Symbol >> => aVariable [
+	"If the slot we give as argument is not present in the image, we will get a nil. In that case we should throw an explicit error to the user saying a slot is missing."
+
+	aVariable ifNil: [ SlotNotFound signalForName: self ].
+	^ aVariable named: self
+]
+
 { #category : #converting }
 Symbol >> asAnnouncement [
 
 	^ self
+]
+
+{ #category : #variables }
+Symbol >> asClassVariable [
+	^ ClassVariable named: self.
 ]
 
 { #category : #converting }
@@ -430,6 +448,11 @@ Symbol >> asMutator [
 	
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol
+]
+
+{ #category : #variables }
+Symbol >> asSlot [
+	^ InstanceVariableSlot named: self.
 ]
 
 { #category : #converting }
@@ -531,6 +554,14 @@ Symbol >> isOrientedFill [
 	"Needs to be implemented here because symbols can occupy 'color' slots of morphs."
 
 	^ false
+]
+
+{ #category : #testing }
+Symbol >> isPseudovariableName [
+	"Answer true if I am a pseudo-variable name.
+	#self isPseudovariableName -> true
+	"
+	^ self class pseudovariablesNames includes: self
 ]
 
 { #category : #testing }
