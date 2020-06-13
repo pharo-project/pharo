@@ -66,8 +66,7 @@ Variable >> hash [
 
 { #category : #testing }
 Variable >> isReferenced [
-	"Subclasses can implement optimized version avoiding all methods collections"
-	^self usingMethods isNotEmpty
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
