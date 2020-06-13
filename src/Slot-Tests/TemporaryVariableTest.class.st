@@ -21,6 +21,15 @@ TemporaryVariableTest >> testHasTemporaryVariablesMethod [
 	self assert: (method hasTemporaryVariableNamed: #method)
 ]
 
+{ #category : #tests }
+TemporaryVariableTest >> testIsReferenced [
+	| method notReferenced |
+	"The temp notReferenced is not used as we test exactly that here"
+	method := self class >> #testIsReferenced.
+	self assert: method temporaryVariables first isReferenced.
+	self deny: method temporaryVariables second isReferenced.
+]
+
 { #category : #properties }
 TemporaryVariableTest >> testPropertyAtPut [
 

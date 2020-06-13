@@ -35,6 +35,6 @@ CompiledMethod >> temporaryVariableNamed: aName [
 
 { #category : #'*Slot-Core' }
 CompiledMethod >> temporaryVariables [
-	^self tempNames collect: [ :name | TemporaryVariable new name: name ]
+	^self tempNames collect: [ :name | TemporaryVariable name: name method: self]
 
 ]

@@ -79,6 +79,11 @@ TemporaryVariable >> isFromBlock [
 	^startpc isNotNil
 ]
 
+{ #category : #testing }
+TemporaryVariable >> isReferenced [
+	^self astNodes isNotEmpty
+]
+
 { #category : #accessing }
 TemporaryVariable >> method [
 	^ method

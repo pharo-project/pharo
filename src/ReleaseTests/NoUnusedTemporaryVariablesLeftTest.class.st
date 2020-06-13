@@ -28,7 +28,7 @@ NoUnusedTemporaryVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 		m ast temporaries anySatisfy: [ :x | x binding isUnused ] ] ].
 	
 	"No other exceptions beside the ones mentioned here should be allowed"	
-	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2}.	
+	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2 . TemporaryVariableTest>>#testIsReferenced }.	
 	
 	remaining := found asOrderedCollection 
 								removeAll: validExceptions;
