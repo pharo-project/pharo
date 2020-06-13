@@ -96,11 +96,10 @@ RBScanner class >> initializeUnderscore [
 
 { #category : #testing }
 RBScanner class >> isSelector: aSymbol [
-	| scanner |
-	scanner := self basicNew.
-	scanner on: (ReadStream on: aSymbol asString).
-	scanner step.
-	^ scanner isSelector
+	^ self basicNew
+		on: (ReadStream on: aSymbol asString); 
+		step;
+		isSelector
 ]
 
 { #category : #testing }

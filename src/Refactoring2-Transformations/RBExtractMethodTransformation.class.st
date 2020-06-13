@@ -288,7 +288,7 @@ RBExtractMethodTransformation >> newMethodName [
 				newAttempt := newSelector isNil.
 				
 				"it's a valid selector"
-				(newSelector isString and: [RBScanner isSelector: newSelector])
+				(newSelector isString and: [newSelector isValidSelector])
 					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
 								  newSelector := nil ].
 					

@@ -58,7 +58,7 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 RBCondition class >> checkMethodName: aString [
 	"Return whether the argument aName is can represent a selector"
 	
-	^ aString isString and: [ RBScanner isSelector: aString ]
+	^ aString isString and: [ aString isValidSelector ]
 ]
 
 { #category : #utilities }
@@ -66,7 +66,7 @@ RBCondition class >> checkMethodName: aString in: aClass [
 	"Return whether the argument aName is can represent a selector"
 	"You probably look for checkMethodName: since the second argument is ignored"
 	
-	^aString isString and: [ RBScanner isSelector: aString ]
+	^aString isString and: [ aString isValidSelector ]
 ]
 
 { #category : #'instance creation' }
