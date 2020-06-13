@@ -65,6 +65,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Text-Edition-Tests';
 			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';
+			package: 'Tool-Workspace-Tests';
 			package: 'Tools-Test';
 			package: 'Zinc-Resource-Meta-FileSystem';
 			package: 'Zinc-Resource-Meta-Tests';
