@@ -287,10 +287,7 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 		response ifFalse: [ ^false ].
 	].
 
-	aTransferMorph shouldCopy
-		ifTrue: [ oldEntry copyAs: newEntry ]
-		ifFalse: [ oldEntry renameTo: newEntry ].
-
+   oldEntry renameTo: newEntry.
 	self updateFileList; fileListIndex: 0.
 
 	aTransferMorph source model ~= self
