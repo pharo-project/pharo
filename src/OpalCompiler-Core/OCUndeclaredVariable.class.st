@@ -12,6 +12,12 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #testing }
+OCUndeclaredVariable class >> isDeprecated [
+	"Use UndeclaredVariable directly instead"
+	^true
+]
+
 { #category : #accessing }
 OCUndeclaredVariable class >> semanticNodeClass [
 	^RBVariableNode
