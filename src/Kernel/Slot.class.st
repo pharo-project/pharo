@@ -214,8 +214,34 @@ Slot >> isAccessedIn: aCompiledCode [
 		anySatisfy: [ :node | node binding slot == self ]
 ]
 
+{ #category : #OCVARIABLE }
+Slot >> isArg [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isClassVariable [
+	^ false
+]
+
 { #category : #testing }
 Slot >> isGlobal [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isGlobalVariable [
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isInstance [
+	^false
+
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isLiteralVariable [
 	^false
 ]
 
@@ -236,9 +262,58 @@ Slot >> isReferenced [
 	^self usingMethods isNotEmpty
 ]
 
+{ #category : #OCVARIABLE }
+Slot >> isRemote [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isSelf [
+	^false
+]
+
 { #category : #testing }
 Slot >> isSelfEvaluating [
 	^true
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isSelfOrSuper [
+	
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isSpecialVariable [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isSuper [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isTemp [
+
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isThisContext [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isUndeclared [
+
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isUninitialized [
+
+	^ false
 ]
 
 { #category : #testing }
@@ -249,6 +324,11 @@ Slot >> isVirtual [
 
 { #category : #testing }
 Slot >> isVisible [
+	^ true
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isWritable [
 	^ true
 ]
 
@@ -268,6 +348,11 @@ Slot >> named: aSymbol [
 Slot >> needsFullDefinition [
 	"I am more than just a backward compatible ivar slot, I need a full definition "
 	^true
+]
+
+{ #category : #OCVARIABLE }
+Slot >> originalVar [
+	^ self
 ]
 
 { #category : #accessing }
@@ -298,6 +383,11 @@ Slot >> read: anObject [
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
+]
+
+{ #category : #OCVARIABLE }
+Slot >> semanticNodeClass [
+	^RBInstanceVariableNode
 ]
 
 { #category : #private }
@@ -336,6 +426,12 @@ Slot >> usingMethods [
 	^self owningClass 
 		ifNil: [ #() ]
 		ifNotNil: [:class | class allMethodsAccessingSlot: self].
+]
+
+{ #category : #OCVARIABLE }
+Slot >> variable [
+	"I return the first class variable that I model in the case of globals and ivars"
+	^self
 ]
 
 { #category : #'meta-object-protocol' }
