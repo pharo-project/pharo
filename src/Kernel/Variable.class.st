@@ -93,6 +93,11 @@ Variable >> isClassVariable [
 ]
 
 { #category : #OCVARIABLE }
+Variable >> isGlobal [ 
+	^false
+]
+
+{ #category : #OCVARIABLE }
 Variable >> isGlobalVariable [
 	^ false
 ]

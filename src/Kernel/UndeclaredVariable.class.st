@@ -23,6 +23,12 @@ UndeclaredVariable class >> registeredWithName: aString [
 		yourself
 ]
 
+{ #category : #OCVARIABLE }
+UndeclaredVariable class >> semanticNodeClass [
+
+	^RBVariableNode
+]
+
 { #category : #queries }
 UndeclaredVariable >> definingClass [
 	"Nobody defines undeclared variable"

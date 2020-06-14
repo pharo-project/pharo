@@ -53,6 +53,12 @@ LiteralVariable class >> key: newKey value: newValue [
 	^self basicNew key: newKey value: newValue
 ]
 
+{ #category : #OCVARIABLE }
+LiteralVariable class >> semanticNodeClass [
+
+	^RBGlobalNode
+]
+
 { #category : #comparing }
 LiteralVariable >> = anAssociation [
 
@@ -118,14 +124,26 @@ LiteralVariable >> isClassVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : #OCVARIABLE }
 LiteralVariable >> isGlobal [
-	^true
+
+	^ true
+]
+
+{ #category : #OCVARIABLE }
+LiteralVariable >> isGlobalClassNameBinding [
+	^ (self value isClass or: [ self value isTrait ])
+		and: [ name == self value name ]
 ]
 
 { #category : #testing }
 LiteralVariable >> isGlobalVariable [
 	^false
+]
+
+{ #category : #OCVARIABLE }
+LiteralVariable >> isLiteralVariable [
+	^true
 ]
 
 { #category : #testing }
@@ -153,6 +171,14 @@ LiteralVariable >> isSelfEvaluating [
 { #category : #testing }
 LiteralVariable >> isVariableBinding [
 	^true
+]
+
+{ #category : #OCVARIABLE }
+LiteralVariable >> isWritable [
+	"Literal variables are writable, if they aren't global bindings for class names, like
+ #Object -> Object "
+
+	^ (self isGlobalVariable and: [ self isGlobalClassNameBinding ]) not
 ]
 
 { #category : #testing }
