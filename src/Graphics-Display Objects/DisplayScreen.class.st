@@ -158,6 +158,12 @@ DisplayScreen class >> refreshHostWindowTitle [
 ]
 
 { #category : #'host window access' }
+DisplayScreen class >> resetTitle [
+	<script>
+	self hostWindowTitle: 'Pharo Virtual Machine! (', SmalltalkImage current imagePath ,')'
+]
+
+{ #category : #'host window access' }
 DisplayScreen class >> setWindowTitle: aTitle [
 	Title := aTitle.
 	self refreshHostWindowTitle
