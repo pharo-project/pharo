@@ -3,7 +3,8 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'application',
-		'worldMorph'
+		'worldMorph',
+		'oldColor'
 	],
 	#category : #'Spec2-Tests-Core-Support'
 }
