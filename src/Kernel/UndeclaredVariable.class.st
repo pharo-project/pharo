@@ -34,3 +34,9 @@ UndeclaredVariable >> isReferenced [
  	^Smalltalk globals allBehaviors
  		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self ]
 ]
+
+{ #category : #OCVARIABLE }
+UndeclaredVariable >> isUndeclared [
+
+	^ true
+]

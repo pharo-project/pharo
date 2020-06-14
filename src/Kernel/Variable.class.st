@@ -36,6 +36,11 @@ Variable class >> initialize [
 		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
+{ #category : #OCVARIABLE }
+Variable class >> semanticNodeClass [
+	^RBVariableNode
+]
+
 { #category : #comparing }
 Variable >> = other [
 	"Every subclass that adds state must redefine this method"
@@ -64,9 +69,88 @@ Variable >> hash [
 	^ self species hash bitXor: self name hash
 ]
 
+{ #category : #OCVARIABLE }
+Variable >> isArg [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isClassVariable [
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isGlobalVariable [
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isInstance [
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isLiteralVariable [
+	^false
+]
+
 { #category : #testing }
 Variable >> isReferenced [
 	^ self subclassResponsibility
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isRemote [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isSelf [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isSelfOrSuper [
+	
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isSpecialVariable [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isSuper [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isTemp [
+
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isThisContext [
+	^false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isUndeclared [
+
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isUninitialized [
+
+	^ false
+]
+
+{ #category : #OCVARIABLE }
+Variable >> isWritable [
+	^ true
 ]
 
 { #category : #accessing }
@@ -77,6 +161,11 @@ Variable >> name [
 { #category : #accessing }
 Variable >> name: aSymbol [
 	name := aSymbol
+]
+
+{ #category : #OCVARIABLE }
+Variable >> originalVar [
+	^ self
 ]
 
 { #category : #properties }
@@ -140,7 +229,18 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
+{ #category : #OCVARIABLE }
+Variable >> semanticNodeClass [
+	^self class semanticNodeClass
+]
+
 { #category : #queries }
 Variable >> usingMethods [
 	self subclassResponsibility
+]
+
+{ #category : #OCVARIABLE }
+Variable >> variable [
+	"I return the first class variable that I model in the case of globals and ivars"
+	^self
 ]
