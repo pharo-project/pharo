@@ -11,6 +11,18 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #'instance creation' }
+UndeclaredVariable class >> registeredWithName: aString [
+	| varName |
+	varName := aString asSymbol.
+	
+	Undeclared associationAt: varName ifPresent: [ :found | ^found ].
+	
+	^(self named: varName)
+		register;
+		yourself
+]
+
 { #category : #queries }
 UndeclaredVariable >> definingClass [
 	"Nobody defines undeclared variable"
@@ -28,6 +40,11 @@ UndeclaredVariable >> emitValue: methodBuilder [
 	methodBuilder pushLiteralVariable: self
 ]
 
+{ #category : #OCVARIABLE }
+UndeclaredVariable >> isGlobal [
+	^false
+]
+
 { #category : #testing }
 UndeclaredVariable >> isReferenced [
  	"A Undeclared could be referenced from any method"
@@ -35,8 +52,23 @@ UndeclaredVariable >> isReferenced [
  		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self ]
 ]
 
+{ #category : #registry }
+UndeclaredVariable >> isRegistered [ 
+	^Undeclared includesKey: name
+]
+
 { #category : #OCVARIABLE }
 UndeclaredVariable >> isUndeclared [
 
 	^ true
+]
+
+{ #category : #registry }
+UndeclaredVariable >> register [ 
+	Undeclared add: self
+]
+
+{ #category : #registry }
+UndeclaredVariable >> unregister [ 
+	Undeclared removeKey: name ifAbsent: [ ]
 ]

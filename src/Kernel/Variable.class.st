@@ -29,11 +29,24 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #validating }
+Variable class >> checkValidName: aString [ 
+
+]
+
 { #category : #'class initialization' }
 Variable class >> initialize [
 	Properties := Properties
 		ifNil: [ WeakIdentityKeyDictionary new. ]
 		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
+]
+
+{ #category : #'instance creation' }
+Variable class >> named: aSymbol [
+	self checkValidName: aSymbol.
+	^ self new
+		name: aSymbol;
+		yourself
 ]
 
 { #category : #OCVARIABLE }

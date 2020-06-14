@@ -60,14 +60,6 @@ Slot class >> isUsed [
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
-{ #category : #'instance creation' }
-Slot class >> named: aSymbol [
-	self checkValidName: aSymbol.
-	^ self new
-		name: aSymbol;
-		yourself
-]
-
 { #category : #OCVARIABLE }
 Slot class >> semanticNodeClass [
 	^RBInstanceVariableNode

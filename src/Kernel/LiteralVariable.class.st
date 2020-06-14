@@ -53,14 +53,6 @@ LiteralVariable class >> key: newKey value: newValue [
 	^self basicNew key: newKey value: newValue
 ]
 
-{ #category : #'instance creation' }
-LiteralVariable class >> named: aSymbol [ 
-	self checkValidName: aSymbol.
-	^ self new
-		name: aSymbol;
-		yourself
-]
-
 { #category : #comparing }
 LiteralVariable >> = anAssociation [
 

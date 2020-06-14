@@ -19,18 +19,12 @@ HEGlobalVariable class >> tag [
 
 { #category : #converting }
 HEGlobalVariable >> asLiteralIn: env [
-	| bind undec |
+	| bind |
 	bind := env newClass bindingOf: value.
 	
 	bind ifNotNil: [ ^ bind ].
 	
-	"If the Undeclared exists I should use the existing."
-	Undeclared associationAt: value ifPresent: [ :e | ^e  ].
-	
-	undec := UndeclaredVariable key: value value: nil.
-	Undeclared add: undec.
-	
-	^ undec.
+	^UndeclaredVariable registeredWithName: value
 ]
 
 { #category : #accessing }

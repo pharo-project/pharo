@@ -140,7 +140,7 @@ OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings
-		ifTrue: [ ^OCUndeclaredVariable new name: variableNode name ].
+		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;

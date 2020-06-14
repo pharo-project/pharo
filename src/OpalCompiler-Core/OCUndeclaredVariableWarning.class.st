@@ -73,13 +73,12 @@ OCUndeclaredVariableWarning >> declareTempAndPaste: name [
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareUndefined [
 
-	Undeclared add: (UndeclaredVariable named: node name asSymbol).
-	^OCUndeclaredVariable new name: node name asSymbol
+	^UndeclaredVariable registeredWithName: node name
 ]
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> defaultAction [
-	| varName className selector |
+	| varName className selector var |
 	
  	className  :=  self methodClass name .
 	selector := self methodNode selector. 
@@ -89,9 +88,7 @@ OCUndeclaredVariableWarning >> defaultAction [
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
-	^super defaultAction ifNil: [
-		Undeclared add: (UndeclaredVariable named: varName asSymbol).
-		OCUndeclaredVariable new name: varName asSymbol]
+	^super defaultAction ifNil: [ self declareUndefined ]
 ]
 
 { #category : #correcting }
