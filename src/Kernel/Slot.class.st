@@ -236,8 +236,7 @@ Slot >> isGlobalVariable [
 
 { #category : #OCVARIABLE }
 Slot >> isInstance [
-	^false
-
+	^ true
 ]
 
 { #category : #OCVARIABLE }
