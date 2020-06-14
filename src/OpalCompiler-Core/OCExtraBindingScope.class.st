@@ -39,13 +39,9 @@ OCExtraBindingScope >> lookupVar: name [
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
 	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
 	
-	(bindings bindingOf: name asSymbol)
-		ifNotNil: [ :var | 
-			^ OCLiteralVariable new
-				variable: var;
-				scope: self;
-				yourself ].
-	^ outerScope lookupVar: name 
+	^(bindings bindingOf: name asSymbol)
+		ifNotNil: [ :var | var ]
+		ifNil: [ outerScope lookupVar: name ]
 ]
 
 { #category : #'instance creation' }
