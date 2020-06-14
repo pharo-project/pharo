@@ -183,3 +183,9 @@ MCCodeTool >> selectedMessageName [
 	"Answer the name of the selected message"
 	self subclassResponsibility
 ]
+
+{ #category : #'morphic ui' }
+MCCodeTool >> textMorph: aSymbol [
+	"The text areas of Code Tools should be customised for SmallTalk code"
+	^ self textMorph: aSymbol specializedFor: #beForSmalltalkScripting 
+]

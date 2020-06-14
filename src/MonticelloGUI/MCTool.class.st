@@ -354,6 +354,13 @@ MCTool >> summary: aString [
 
 { #category : #'morphic ui' }
 MCTool >> textMorph: aSymbol [
+	"Tools that are not Code Tools should have plain text editing areas"
+	^ self textMorph: aSymbol specializedFor: #beForPlainText 
+]
+
+{ #category : #'morphic ui' }
+MCTool >> textMorph: aSymbol specializedFor: anEditingMode [
+	"Customise a textMorph for a particular editing mode, eg: plain text or Smalltalk code"
 	| textMorph |
 	textMorph := RubPluggableTextMorph new
 		getTextSelector: aSymbol;
@@ -361,8 +368,8 @@ MCTool >> textMorph: aSymbol [
 		on: self;
 		beWrapped;
 		hScrollbarShowNever;
-		beForSmalltalkScripting;
 		yourself.
+	textMorph perform: anEditingMode.
 	textMorph announcer when: RubTextAcceptRequest send: #accept to: self.
 	textMorph hasUnacceptedEdits: false.
 	^ textMorph
