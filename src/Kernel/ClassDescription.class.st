@@ -563,6 +563,20 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 		classified: newCat
 ]
 
+{ #category : #testing }
+ClassDescription >> definesSlot: aSlot [
+	"Return true whether the receiver defines an instance variable named aString"
+	
+	^ self slots identityIncludes: aSlot
+]
+
+{ #category : #testing }
+ClassDescription >> definesSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString."
+	
+	^ self slotNames includes: aString
+]
+
 { #category : #'file in/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."

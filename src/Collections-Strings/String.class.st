@@ -320,6 +320,11 @@ String class >> newUppercasingTable [
 	^ String withAll: (Character allByteCharacters collect: [:c | c asUppercase])
 ]
 
+{ #category : #accessing }
+String class >> pseudovariablesNames [
+	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
+]
+
 { #category : #'instance creation' }
 String class >> readFrom: inStream [
 	"Answer an instance of me that is determined by reading the stream, 
@@ -526,6 +531,11 @@ String >> asCamelCase [
                        stream nextPutAll: sub capitalized]]
 ]
 
+{ #category : #variables }
+String >> asClassVariable [
+	^ self asSymbol asClassVariable
+]
+
 { #category : #converting }
 String >> asComment [
 	"return this string, munged so that it can be treated as a comment in Smalltalk code.  Quote marks are added to the beginning and end of the string, and whenever a solitary quote mark appears within the string, it is doubled"
@@ -671,6 +681,22 @@ String >> asSignedInteger [
 	((stream position ~= 0) and: [stream peekBack = $-])
 		ifTrue: [stream back].
 	^ Integer readFrom: stream
+]
+
+{ #category : #variables }
+String >> asSlot [
+	^ self asSymbol asSlot
+]
+
+{ #category : #variables }
+String >> asSlotCollection [
+	"Parse as slots. Use space, tab and cr as separators
+	Example: 
+	  'a b' asSlotCollection --> {a => Slot. b => Slot}
+	"
+	| whitespaces |
+	whitespaces := ByteString withAll: { Character space . Character tab . Character cr }.
+	^(self substrings: whitespaces) collect: [ :substring | substring asSlot ]
 ]
 
 { #category : #converting }
@@ -1855,6 +1881,14 @@ String >> isOctetString [
 String >> isPatternVariable [
 
 	 ^self keywords anySatisfy: [:each | each first = $`]
+]
+
+{ #category : #testing }
+String >> isPseudovariableName [
+	"Answer true if I am a pseudo-variable name.
+	#self isPseudovariableName -> true
+	"
+	^ self class pseudovariablesNames includes: self
 ]
 
 { #category : #testing }

@@ -410,10 +410,23 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
+{ #category : #variables }
+Symbol >> => aVariable [
+	"If the slot we give as argument is not present in the image, we will get a nil. In that case we should throw an explicit error to the user saying a slot is missing."
+
+	aVariable ifNil: [ SlotNotFound signalForName: self ].
+	^ aVariable named: self
+]
+
 { #category : #converting }
 Symbol >> asAnnouncement [
 
 	^ self
+]
+
+{ #category : #variables }
+Symbol >> asClassVariable [
+	^ ClassVariable named: self.
 ]
 
 { #category : #converting }
@@ -430,6 +443,11 @@ Symbol >> asMutator [
 	
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol
+]
+
+{ #category : #variables }
+Symbol >> asSlot [
+	^ InstanceVariableSlot named: self.
 ]
 
 { #category : #converting }
