@@ -44,7 +44,7 @@ Class {
 		'searchForEditor',
 		'replaceWithEditor'
 	],
-	#category : #'RewriteTool-BasicEditor'
+	#category : #'RewriteRuleEditor-BasicEditor'
 }
 
 { #category : #specs }

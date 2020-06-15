@@ -4,7 +4,7 @@ A custom rewrite rule
 Class {
 	#name : #MyRule2,
 	#superclass : #RBTransformationRule,
-	#category : #'RewriteToolCustomRules-Demo'
+	#category : #'RewriteCustomRules-Demo'
 }
 
 { #category : #initialization }

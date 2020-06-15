@@ -12,7 +12,7 @@ Class {
 		'protocolName',
 		'ruleName'
 	],
-	#category : #'RewriteToolCustomRules-Core'
+	#category : #'RewriteCustomRules-Core'
 }
 
 { #category : #testing }

@@ -12,7 +12,7 @@ Class {
 		'buttonCancel',
 		'buttonOk'
 	],
-	#category : #'RewriteTool-Applier'
+	#category : #'RewriteRuleEditor-Applier'
 }
 
 { #category : #'instance creation' }

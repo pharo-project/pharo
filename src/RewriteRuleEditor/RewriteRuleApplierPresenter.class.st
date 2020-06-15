@@ -16,7 +16,7 @@ Class {
 		'checkbox',
 		'buttonBar'
 	],
-	#category : #'RewriteTool-Applier'
+	#category : #'RewriteRuleEditor-Applier'
 }
 
 { #category : #accessing }

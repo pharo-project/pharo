@@ -8,7 +8,7 @@ Class {
 		'rulesList',
 		'buttonBar'
 	],
-	#category : #'RewriteTool-BasicEditor'
+	#category : #'RewriteRuleEditor-BasicEditor'
 }
 
 { #category : #specs }
