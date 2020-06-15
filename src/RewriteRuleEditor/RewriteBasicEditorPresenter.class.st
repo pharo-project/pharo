@@ -52,24 +52,19 @@ RewriteBasicEditorPresenter class >> defaultSpec [
 	^ SpBoxLayout newHorizontal
 		add:
 			(SpBoxLayout newVertical
-					add: #searchForEditor
-						expand: true
-						fill: true
-						padding: 2;
-					add: #replaceWithEditor
-						expand: true
-						fill: true
-						padding: 2;
-					yourself)
-			expand: true
-			fill: true
-			padding: 5;
-		add:
-			(SpBoxLayout newVertical
-				add: #cheatSheet
+				add: #searchForEditor
 					expand: true
 					fill: true
-					padding: 10;
+					padding: 2;
+				add: #replaceWithEditor
+					expand: true
+					fill: true
+					padding: 2;
+				yourself)
+			expand: true;
+		add:
+			(SpBoxLayout newVertical
+				add: #cheatSheet expand: true;
 				addLast: #applyButton;
 				addLast: #saveButton;
 				addLast: #loadButton;
@@ -164,7 +159,7 @@ RewriteBasicEditorPresenter >> initializePresenters [
 		action: [ self saveRule ];
 		yourself.
 	applyButton := self newButton
-		label: 'Apply rules';
+		label: 'Open applier';
 		icon: self applierIcon;
 		action: [ self openApplier ];
 		yourself.
