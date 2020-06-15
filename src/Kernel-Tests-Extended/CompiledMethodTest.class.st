@@ -313,15 +313,6 @@ CompiledMethodTest >> testComments [
 ]
 
 { #category : #'tests - accessing' }
-CompiledMethodTest >> testCommentsParent [
-	"Test if comment has a parent"
-	self
-		assert: (CompiledMethodTest >> #testCommentsParent) ast comments first parent selector
-		equals: #testCommentsParent.
-	
-]
-
-{ #category : #'tests - accessing' }
 CompiledMethodTest >> testComparison [
 	| method1 method2 |
 	method1 := Float class >> #nan.
@@ -403,6 +394,11 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 
 	self assert: (method1 literalAt: method1 numLiterals) identicalTo: (method2 literalAt: method2 numLiterals).
 	self assert: method1 equals: method2
+]
+
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testHasComment [
+	self assert: (CompiledMethod>>#hasComment) hasComment
 ]
 
 { #category : #'tests - instance variable' }

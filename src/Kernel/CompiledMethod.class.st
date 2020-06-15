@@ -448,6 +448,12 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	^newSource
 ]
 
+{ #category : #testing }
+CompiledMethod >> hasComment [
+	"check if this method has a method comment"
+	^self comment isEmptyOrNil not
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
