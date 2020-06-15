@@ -4,7 +4,7 @@ Unit tests for MethodFinder
 Class {
 	#name : #MethodFinderTest,
 	#superclass : #TestCase,
-	#category : #'Tools-Test-Finder'
+	#category : #'Tool-Finder-Tests-MethodFinder'
 }
 
 { #category : #tests }
