@@ -4,7 +4,7 @@ SUnit tests for SpaceTally
 Class {
 	#name : #SpaceTallyTest,
 	#superclass : #TestCase,
-	#category : #'Tools-Test-Profilers'
+	#category : #'Tool-Profilers-Tests-Space'
 }
 
 { #category : #tests }
