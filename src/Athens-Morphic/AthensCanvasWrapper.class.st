@@ -290,11 +290,6 @@ AthensCanvasWrapper >> extent [
 	^ self canvas surface extent
 ]
 
-{ #category : #'canvas drawing' }
-AthensCanvasWrapper >> fillColor: aColor [
-	self deprecated: 'We think there is no senders of this method. If the deprecation is raised please report it with the steps to reproduce.'
-]
-
 { #category : #'canvas drawing-ovals' }
 AthensCanvasWrapper >> fillOval: r color: c [
 
