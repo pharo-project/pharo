@@ -16,11 +16,8 @@ UndeclaredVariable class >> registeredWithName: aString [
 	| varName |
 	varName := aString asSymbol.
 	
-	Undeclared associationAt: varName ifPresent: [ :found | ^found ].
-	
-	^(self named: varName)
-		register;
-		yourself
+	Undeclared add: (self named: varName).
+	^OCUndeclaredVariable new name: varName
 ]
 
 { #category : #OCVARIABLE }
