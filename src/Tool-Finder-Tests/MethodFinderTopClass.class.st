@@ -4,7 +4,7 @@ Test sample for MethodFinderTest
 Class {
 	#name : #MethodFinderTopClass,
 	#superclass : #Object,
-	#category : #'Tools-Test-Finder-Support'
+	#category : #'Tool-Finder-Tests-Support'
 }
 
 { #category : #'method finder' }
