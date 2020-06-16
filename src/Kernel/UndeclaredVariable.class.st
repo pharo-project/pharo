@@ -16,8 +16,16 @@ UndeclaredVariable class >> registeredWithName: aString [
 	| varName |
 	varName := aString asSymbol.
 	
-	Undeclared add: (self named: varName).
-	^OCUndeclaredVariable new name: varName
+	Undeclared associationAt: varName ifPresent: [ :found | 
+		found class == Association ifTrue: [ 
+			"Found undeclared var can be an association during current bootstrap process.
+			So here we should convert it to real variable object otherwise the build will be broken"
+			found becomeForward: (self named: varName)].
+		^found	].
+	
+	^(self named: varName)
+		register;
+		yourself
 ]
 
 { #category : #OCVARIABLE }
