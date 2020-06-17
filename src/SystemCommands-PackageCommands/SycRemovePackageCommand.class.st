@@ -30,9 +30,9 @@ SycRemovePackageCommand >> execute [
 
 { #category : #execution }
 SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
+
 	| packagesWithClasses names answer |
-	super prepareFullExecutionInContext: aToolContext.
-	
+	super prepareFullExecutionInContext: aToolContext.	
 	packagesWithClasses := packages reject: [ :each | each isEmpty].
 	packagesWithClasses ifNotEmpty: [ 	
 		names := (packagesWithClasses collect: [:package | package name ]) joinUsing: ', '.

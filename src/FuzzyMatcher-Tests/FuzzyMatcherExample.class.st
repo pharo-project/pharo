@@ -46,7 +46,7 @@ FuzzyMatcherExample class >> exampleClasses [
 
 	^ self new 
 		pattern: 'mph';
-		elements: (Smalltalk globals allClassesAndTraits collect: #name);
+		elements: (self environment allClassesAndTraits collect: [:each | each name]);
 		open
 ]
 
@@ -56,7 +56,7 @@ FuzzyMatcherExample class >> examplePackages [
 
 	^ self new 
 		pattern: '-st';
-		elements: (RPackage organizer packages collect: #name);
+		elements: (RPackage organizer packages collect: [:each | each name] );
 		open
 ]
 
@@ -110,11 +110,8 @@ FuzzyMatcherExample >> buildMorph [
 FuzzyMatcherExample >> elements: aCollection [
 
 	elements := aCollection collect: [:each | each -> 0 ].
-	
 	matchedElements := elements.
-	
 	dataSource elements: matchedElements.
-	
 	self update
 	
 ]
@@ -200,9 +197,7 @@ FuzzyMatcherExample >> pattern: aString [
 FuzzyMatcherExample >> setElements: aCollection [
 
 	elements := aCollection collect: [:each | each -> 0 ].
-	
 	matchedElements := elements.
-	
 	dataSource elements: matchedElements
 ]
 

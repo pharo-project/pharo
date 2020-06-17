@@ -19,12 +19,14 @@ Class {
 { #category : #executing }
 FFICallbackParametersTest >> callCallback: aFFICallback withArgs: aCollection [ 
 
+	self assert: aCollection isArray.
+
 	^ (ExternalLibraryFunction 
 			name: nil
 			module: nil
 			callType: (OSPlatform current ffiCallingConvention = #stdcall ifTrue: [ 1 ] ifFalse: [ 0 ])
 			returnType: aFFICallback functionSpec returnType externalTypeWithArity
-			argumentTypes: (aFFICallback functionSpec arguments collect: #externalTypeWithArity))
+			argumentTypes: (aFFICallback functionSpec arguments collect: [:each | each externalTypeWithArity]))
 				setHandle: (ExternalAddress fromAddress: (aFFICallback thunk address)) ;	
 					invokeWithArguments: aCollection
 	

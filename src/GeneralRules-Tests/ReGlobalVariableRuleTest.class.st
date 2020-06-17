@@ -50,5 +50,5 @@ ReGlobalVariableRuleTest >> testTheRuleOnlyDetect2MethodsWithGlobalVariables [
 
 { #category : #tests }
 ReGlobalVariableRuleTest >> testTheRuleOnlyMethodUsesGlobal1And2 [
-	self assertCollection: (self applyingCritiques collect: #selector) hasSameElements: {#methodUsesGlobal . #methodUsesGlobal2}
+	self assertCollection: (self applyingCritiques collect: [:each | each selector]) hasSameElements: {#methodUsesGlobal . #methodUsesGlobal2}
 ]

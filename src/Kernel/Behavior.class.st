@@ -97,6 +97,11 @@ Behavior >> addSelector: selector withMethod: compiledMethod notifying: requesto
 ]
 
 { #category : #'adding/removing methods' }
+Behavior >> addSelector: selector withRecompiledMethod: compiledMethod [ 
+	^ self addSelectorSilently: selector withMethod: compiledMethod
+]
+
+{ #category : #'adding/removing methods' }
 Behavior >> addSelectorSilently: selector withMethod: compiledMethod [
 	"Add the message selector with the corresponding compiled method to the 
 	receiver's method dictionary.
@@ -707,14 +712,10 @@ Behavior >> firstCommentAt:  selector [
 
 { #category : #'accessing method dictionary' }
 Behavior >> firstPrecodeCommentFor:  selector [
-	"If there is a comment in the source code at the given selector that preceeds the body of the method, return it here, else return nil"
-
-	| method |
-	"Behavior firstPrecodeCommentFor: #firstPrecodeCommentFor:"
-	(#(Comment Definition Hierarchy) includes: selector)
-		ifTrue: [^ nil].
-	method := self compiledMethodAt: selector asSymbol ifAbsent: [^ nil].
-	^method ast firstPrecodeComment.
+	self 
+		deprecated: 'use #comment on the method' 
+		transformWith: '`@receiver firstPrecodeCommentFor: `@arg' -> '(`@receiver>>`@arg) comment'.
+	^(self>>selector) comment
 	
 ]
 
@@ -1335,22 +1336,6 @@ Behavior >> postCopy [
 	self methodDict: self methodDict copy
 ]
 
-{ #category : #'accessing method dictionary' }
-Behavior >> precodeCommentOrInheritedCommentFor: selector [ 
-	"Answer a string representing the first comment in the method associated 
-	with selector, considering however only comments that occur before the 
-	beginning of the actual code. If the version recorded in the receiver is 
-	uncommented, look up the inheritance chain. Return nil if none found."
-	
-	| aSuper aComment |
-	^ (aComment := self firstPrecodeCommentFor: selector) isEmptyOrNil
-		ifTrue: [(self == Behavior
-					or: [self superclass == nil
-							or: [(aSuper := self superclass whichClassIncludesSelector: selector) == nil]])
-				ifFalse: [aSuper precodeCommentOrInheritedCommentFor: selector]]
-		ifFalse: [aComment]
-]
-
 { #category : #printing }
 Behavior >> printHierarchy [
 	"Answer a description containing the names and instance variable names 
@@ -1699,21 +1684,6 @@ Behavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	self setFormat: fmt.
 	self methodDict: mDict.
 
-]
-
-{ #category : #'accessing method dictionary' }
-Behavior >> supermostPrecodeCommentFor: selector [ 
-	"Answer a string representing the precode comment in the most distant 
-	superclass's implementation of the selector. Return nil if none found."
-	| aSuper superComment |
-	(self == Behavior
-			or: [self superclass == nil
-					or: [(aSuper := self superclass whichClassIncludesSelector: selector) == nil]])
-		ifFalse: ["There is a super implementor"
-			superComment := aSuper supermostPrecodeCommentFor: selector].
-	^ superComment
-		ifNil: [self firstPrecodeCommentFor: selector
-			"ActorState supermostPrecodeCommentFor: #printOn:"]
 ]
 
 { #category : #'testing method dictionary' }

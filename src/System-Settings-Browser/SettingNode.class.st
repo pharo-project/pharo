@@ -50,14 +50,12 @@ SettingNode >> checkForUnknownTarget [
 
 { #category : #accessing }
 SettingNode >> contents [
-	(self settingDeclaration hasValue
-			and: [self settingValue = false])
-		ifTrue: [^ OrderedCollection new]
-		ifFalse: [^ contents 
-				ifNil: [contents := self allChildren.
-					self settingDeclaration ordering
-						ifTrue: [contents := contents asArray sort: self model sortBlock].
-					contents := self model retainedNodesFromList: contents asOrderedCollection]]
+	^ (self settingDeclaration hasValue and: [ self settingValue = false ])
+		ifTrue: [ OrderedCollection new ]
+		ifFalse: [ contents
+				ifNil: [ contents := self allChildren.
+					self settingDeclaration ordering ifTrue: [ contents := contents asArray sort: self model sortBlock ].
+					contents := self model retainedNodesFromList: contents asOrderedCollection ] ]
 ]
 
 { #category : #menu }

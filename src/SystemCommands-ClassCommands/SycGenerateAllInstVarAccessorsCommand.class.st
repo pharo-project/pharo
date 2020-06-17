@@ -49,7 +49,7 @@ SycGenerateAllInstVarAccessorsCommand >> isComplexRefactoring [
 
 { #category : #execution }
 SycGenerateAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
-	
 	classes := classes collect: [:each | aToolContext currentMetaLevelOf: each]
 ]

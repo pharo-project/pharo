@@ -225,6 +225,21 @@ LinkInstallerTest >> testLinkOnTempVarForObject [
 ]
 
 { #category : #'links - installing' }
+LinkInstallerTest >> testLinkTargetsObjectsByIdentity [
+	|link ast set|
+	link := MetaLink new metaObject: Halt; selector: #now.
+	ast := (Set >> #add:) ast.
+	
+	set := Set new.
+	set link: link toAST: ast.
+	self should:[set add: 1] raise: Halt.
+	
+	set := Set new.
+	set link: link toAST: ast.
+	self should:[set add: 1] raise: Halt.
+]
+
+{ #category : #'links - installing' }
 LinkInstallerTest >> testMetaLinkOnOneObject [
 	"Only one metalink for on object of a particular class. Other instances of this class must remain unaffected."
 

@@ -129,7 +129,7 @@ SycMethodNameEditor class >> example2 [
 		openOn:
 			(RBMethodName
 				selector: (RBExtractMethodRefactoring >> #validateRenameOf:to:) selector
-				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: #name))
+				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: [:each | each name]))
 ]
 
 { #category : #specs }

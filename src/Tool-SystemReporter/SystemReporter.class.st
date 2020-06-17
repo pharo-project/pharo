@@ -209,9 +209,8 @@ SystemReporter >> initialize [
 
 { #category : #'private - testing' }
 SystemReporter >> isLinux [
-	"Some Linux versions return linux, some linux-gnu, ..."
 	
-	^Smalltalk os version beginsWith: 'linux'
+	^Smalltalk os isLinux
 ]
 
 { #category : #'private - testing' }

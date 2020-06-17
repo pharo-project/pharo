@@ -287,10 +287,7 @@ FileList >> acceptDroppingMorph: aTransferMorph event: evt inMorph: dest [
 		response ifFalse: [ ^false ].
 	].
 
-	aTransferMorph shouldCopy
-		ifTrue: [ oldEntry copyAs: newEntry ]
-		ifFalse: [ oldEntry renameTo: newEntry ].
-
+   oldEntry renameTo: newEntry.
 	self updateFileList; fileListIndex: 0.
 
 	aTransferMorph source model ~= self
@@ -648,11 +645,9 @@ FileList >> fileListIndex: anInteger [
 
 { #category : #'file list menu' }
 FileList >> fileListMenu: aMenu [
-
-	reference
-		ifNil: [^ self noFileSelectedMenu: aMenu]
-		ifNotNil: [^ self fileSelectedMenu: aMenu].
-
+	^ reference
+		ifNil: [ self noFileSelectedMenu: aMenu ]
+		ifNotNil: [ self fileSelectedMenu: aMenu ]
 ]
 
 { #category : #'file list menu' }

@@ -232,8 +232,8 @@ PositionableStream >> next: requestedCount into: aCollection startingAt: startIn
 	| readCount |
 	readCount := self readInto: aCollection startingAt: startIndex count: requestedCount.
 	^ readCount = requestedCount
-		ifTrue: [ ^ aCollection ]
-		ifFalse: [ ^ aCollection copyFrom: 1 to: startIndex + readCount - 1 ]
+		ifTrue: [ aCollection ]
+		ifFalse: [ aCollection copyFrom: 1 to: startIndex + readCount - 1 ]
 ]
 
 { #category : #accessing }
@@ -266,12 +266,13 @@ PositionableStream >> nextDelimited: terminator [
 { #category : #'accessing - nonhomogeneous' }
 PositionableStream >> nextInt32 [
 	"Read a 32-bit signed integer from the next 4 bytes"
+
 	| s |
 	s := 0.
-	1 to: 4 do: [:i | s := (s bitShift: 8) + self next].
-	(s bitAnd: 16r80000000) = 0
-		ifTrue: [^ s]
-		ifFalse: [^ -1 - s bitInvert32]
+	1 to: 4 do: [ :i | s := (s bitShift: 8) + self next ].
+	^ (s bitAnd: 16r80000000) = 0
+		ifTrue: [ s ]
+		ifFalse: [ -1 - s bitInvert32 ]
 ]
 
 { #category : #'accessing - nonhomogeneous' }
@@ -809,14 +810,14 @@ PositionableStream >> upToAll: aCollection [
 
 	| startPos endMatch result |
 	startPos := self position.
-	(self match: aCollection) 
-		ifTrue: [endMatch := self position.
+	^ (self match: aCollection)
+		ifTrue: [ endMatch := self position.
 			self position: startPos.
 			result := self upToPosition: endMatch - aCollection size.
 			self position: endMatch.
-			^ result]
-		ifFalse: [self position: startPos.
-			^ self upToEnd]
+			result ]
+		ifFalse: [ self position: startPos.
+			self upToEnd ]
 ]
 
 { #category : #accessing }

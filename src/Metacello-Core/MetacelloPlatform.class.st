@@ -245,12 +245,6 @@ MetacelloPlatform >> defaultRepositoryDescription [
     ^ 'http://www.squeaksource.com/MetacelloRepository'
 ]
 
-{ #category : #tests }
-MetacelloPlatform >> defaultTimeout [
-	"squeak compatability"
-	^60
-]
-
 { #category : #'file system' }
 MetacelloPlatform >> deleteFileNamed: filePath [
 	(self fileDirectoryClass on: filePath) containingDirectory deleteFileNamed: (self fileDirectoryClass localNameFor: filePath)

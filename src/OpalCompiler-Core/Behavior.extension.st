@@ -90,5 +90,5 @@ Behavior >> recompile: selector from: oldClass [
 				compiledMethodTrailer: method trailer;
 				compile.   "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	self addSelectorSilently: selector withMethod: newMethod.
+	self addSelector: selector withRecompiledMethod: newMethod.
 ]

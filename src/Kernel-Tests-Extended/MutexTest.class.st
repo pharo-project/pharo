@@ -204,7 +204,7 @@ MutexTest >> waitLastProcessTerminate [
 { #category : #helpers }
 MutexTest >> waitProcessLock: aProcess [
 
-	self waitFor: [ aProcess suspendingList notEmpty ]
+	self waitFor: [ aProcess suspendingList isEmptyOrNil not ]
 ]
 
 { #category : #helpers }

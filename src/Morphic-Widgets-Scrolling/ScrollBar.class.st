@@ -574,26 +574,24 @@ ScrollBar >> mouseLeaveThumb: event [
 	"The mouse has left the thumb."
 
 	| buttonFillStyle buttonBorderStyle |
-	event redButtonPressed ifFalse: [ 
-		slider
-			fillStyle: self normalThumbFillStyle;
-			borderStyle: self normalThumbBorderStyle;
-			changed ].
-	
+	event redButtonPressed
+		ifFalse: [ slider
+				fillStyle: self normalThumbFillStyle;
+				borderStyle: self normalThumbBorderStyle;
+				changed ].
+
 	"Update buttons"
-	(self containsPoint: event position)
-		ifTrue: [ 
-			buttonFillStyle := self mouseOverPagingAreaButtonFillStyle.
-			buttonBorderStyle := self mouseOverPagingAreaButtonBorderStyle ]
-		ifFalse: [ 
-			buttonFillStyle := self normalButtonFillStyle.
-			buttonBorderStyle := self normalButtonBorderStyle ].	
+	buttonBorderStyle := (self containsPoint: event position)
+		ifTrue: [ buttonFillStyle := self mouseOverPagingAreaButtonFillStyle.
+			self mouseOverPagingAreaButtonBorderStyle ]
+		ifFalse: [ buttonFillStyle := self normalButtonFillStyle.
+			self normalButtonBorderStyle ].
 	upButton
 		fillStyle: buttonFillStyle;
 		borderStyle: buttonBorderStyle.
 	downButton
 		fillStyle: buttonFillStyle;
-		borderStyle: buttonBorderStyle.
+		borderStyle: buttonBorderStyle
 ]
 
 { #category : #mouse }
@@ -1009,16 +1007,11 @@ ScrollBar >> thumbColor [
 ScrollBar >> totalSliderArea [
 	| upperBoundsButton |
 	upperBoundsButton := upButton.
-	bounds isWide
-		ifTrue: [
-			upButton right > upperBoundsButton right
-				ifTrue: [upperBoundsButton := upButton].
-			^upperBoundsButton bounds topRight corner: downButton bounds bottomLeft]
-		ifFalse:[
-			upButton bottom > upperBoundsButton bottom
-				ifTrue: [upperBoundsButton := upButton].
-			^upperBoundsButton bounds bottomLeft corner: downButton bounds topRight].
-
+	^ bounds isWide
+		ifTrue: [ upButton right > upperBoundsButton right ifTrue: [ upperBoundsButton := upButton ].
+			upperBoundsButton bounds topRight corner: downButton bounds bottomLeft ]
+		ifFalse: [ upButton bottom > upperBoundsButton bottom ifTrue: [ upperBoundsButton := upButton ].
+			upperBoundsButton bounds bottomLeft corner: downButton bounds topRight ]
 ]
 
 { #category : #initialize }

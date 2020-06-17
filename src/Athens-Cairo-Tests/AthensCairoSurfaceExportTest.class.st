@@ -1,6 +1,9 @@
 Class {
 	#name : #AthensCairoSurfaceExportTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'surface'
+	],
 	#category : #'Athens-Cairo-Tests-Core'
 }
 
@@ -24,6 +27,14 @@ AthensCairoSurfaceExportTest >> fileReference [
 	^ self fileName asFileReference
 ]
 
+{ #category : #tests }
+AthensCairoSurfaceExportTest >> flushExportFile [
+	"This triggers call to destroy functions (the garbage collector will do it via finalize)"
+
+	surface := nil.
+	Smalltalk garbageCollect
+]
+
 { #category : #running }
 AthensCairoSurfaceExportTest >> setUp [
 	super setUp.
@@ -32,13 +43,14 @@ AthensCairoSurfaceExportTest >> setUp [
 
 { #category : #running }
 AthensCairoSurfaceExportTest >> tearDown [
+	self flushExportFile.
 	self fileReference ensureDelete.
 	super tearDown.
 ]
 
 { #category : #tests }
 AthensCairoSurfaceExportTest >> testExportBoxes [
-	| path surface |
+	| path |
 	surface := self athensSurfaceClass
 		extent: 100@100
 		fileName: self fileName.
@@ -59,9 +71,8 @@ AthensCairoSurfaceExportTest >> testExportBoxes [
 	surface showPage. "The page is finished (for PDF)"
 	surface finish. "The file is finished"
 
-	"Call destroy functions (the garbage collector will do it via finalize)"
-	surface := nil. 
-	Smalltalk garbageCollect.
+	"Make cairo write and close the file."
+	self flushExportFile.
 
 	self assert: self fileReference exists.
 	self assert: self fileReference size > 400.
@@ -69,7 +80,6 @@ AthensCairoSurfaceExportTest >> testExportBoxes [
 
 { #category : #tests }
 AthensCairoSurfaceExportTest >> testExtent [
-	| surface |
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
@@ -78,7 +88,6 @@ AthensCairoSurfaceExportTest >> testExtent [
 
 { #category : #tests }
 AthensCairoSurfaceExportTest >> testHeight [
-	| surface |
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
@@ -87,7 +96,6 @@ AthensCairoSurfaceExportTest >> testHeight [
 
 { #category : #tests }
 AthensCairoSurfaceExportTest >> testWidth [
-	| surface |
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.

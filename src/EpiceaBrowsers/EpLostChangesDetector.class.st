@@ -108,7 +108,7 @@ EpLostChangesDetector >> lostChanges [
 EpLostChangesDetector >> openBrowserIfLostChanges [
 
 	| lostChanges lostChangesLog browser |
-	lostChanges := self lostChanges collect: #content.
+	lostChanges := self lostChanges collect: [:each | each content].
 	lostChanges ifEmpty: [ ^ self ].
 	lostChangesLog := EpLog newWithStore: (OmMemoryStore withAllContents: lostChanges).
 

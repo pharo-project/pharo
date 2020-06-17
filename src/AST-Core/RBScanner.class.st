@@ -96,11 +96,10 @@ RBScanner class >> initializeUnderscore [
 
 { #category : #testing }
 RBScanner class >> isSelector: aSymbol [
-	| scanner |
-	scanner := self basicNew.
-	scanner on: (ReadStream on: aSymbol asString).
-	scanner step.
-	^ scanner isSelector
+	^ self basicNew
+		on: (ReadStream on: aSymbol asString); 
+		step;
+		isSelector
 ]
 
 { #category : #testing }
@@ -126,6 +125,9 @@ RBScanner class >> new [
 
 { #category : #'instance creation' }
 RBScanner class >> on: aStream [ 
+	"Create a scanner stream of program tokens on the argument. Users can then use stream API to consume tokens. Reader may consider scanTokens: as a better way to use the class."
+	"((RBScanner on: 'Pharo (, { exist ]' readStream) next;  next) value >>> $("
+
 	| str |
 	str := self new on: aStream.
 	str

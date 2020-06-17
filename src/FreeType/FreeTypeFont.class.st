@@ -422,22 +422,6 @@ FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue
 						subpixelPosition: validSub]]
 ]
 
-{ #category : #preview }
-FreeTypeFont >> gtInspectorFontIn: composite [
-	<gtInspectorPresentationOrder: 0>
-	composite morph
-		title: 'Font';
-		display: [ :x | | pane |
-			pane := ScrollPane new
-						alwaysShowScrollBars: true;
-						yourself.
-			pane scroller addMorph:
-					((String streamContents: [ :s | 22 to: 255 do: [ :idx | s nextPut: idx asCharacter ] ]) asMorph
-						font: x;
-						yourself).
-			pane ]
-]
-
 { #category : #testing }
 FreeTypeFont >> hasDistinctGlyphsForAll: asciiString [
 	"Answer true if the receiver has glyphs for all the characters

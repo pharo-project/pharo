@@ -31,12 +31,12 @@ Context >> isBlockReturn: aPC [
 
 { #category : #'*OpalCompiler-Core' }
 Context >> isPushLiteralNil: aPC [
-	^ (self method at: aPC) = method encoderClass pushNilByte
+	^ (self compiledCode at: aPC) = method encoderClass pushNilByte
 ]
 
 { #category : #'*OpalCompiler-Core' }
 Context >> isPushTemp: aPC [
-	^ self method encoderClass isPushTempAt: aPC in: method
+	^ self compiledCode encoderClass isPushTempAt: aPC in: method
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -49,7 +49,7 @@ Context >> sourceNode [
 	"Return the source node that created the method or the block of this context"
 
 	^ closureOrNil
-		ifNil: [ self method sourceNode ]
+		ifNil: [ self compiledCode sourceNode ]
 		ifNotNil: [ closureOrNil sourceNode ]
 ]
 

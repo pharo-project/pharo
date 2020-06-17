@@ -130,7 +130,7 @@ ClyBrowserMorph >> requestRemoveMethodStrategyFor: methods [
 		ifFalse: ['The message #{1} has {2} sender{3}' format: {selectors anyOne. senderCount. plural}].	
 			
 	result := UIManager default 
-		chooseFrom: (strategies collect: #userRequestString) values: strategies title: caption.
+		chooseFrom: (strategies collect: [:each | each userRequestString]) values: strategies title: caption.
 		
 	^result ifNil: [ SycNotRemoveMethodStrategy new ]
 ]

@@ -69,7 +69,7 @@ GTSUnitDebugSession >> initializeAssestionContextFrom: aContext [
 				^ self  ].
 		anotherContext sender notNil and: [ 
 			 (frameworkTestClasses anySatisfy: [ :aTestClass |
-				 aTestClass includesMethod: anotherContext sender method]) not ] ].
+				 aTestClass includesMethod: anotherContext sender compiledCode method]) not ] ].
 	assertionContext
         ifNotNil: [ "if this is not an assertion but a halt we should not move up!"
             assertionCallerContext := name = 'Halt'
@@ -83,7 +83,7 @@ GTSUnitDebugSession >> initializeTestContextFrom: aContext [
 
 	"we first try to find a test method in the stack"
 	testContext := aContext findContextSuchThat: [ :anotherContext |
-		anotherContext method isTestMethod ].
+		anotherContext compiledCode method isTestMethod ].
 	
 	testContext ifNil: [
 		"if we do not find a test method, perhaps we are in the context of a different method, such as setUp, so we are looking for the last occurence of the test case instance in the stack"

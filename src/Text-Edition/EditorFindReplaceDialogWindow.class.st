@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'defaultFindReplaceServiceClass'
 	],
-	#category : #'Text-Edition'
+	#category : #'Text-Edition-UI'
 }
 
 { #category : #initializing }

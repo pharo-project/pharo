@@ -173,7 +173,12 @@ RBVariableNode >> isBlockVar [
 
 { #category : #testing }
 RBVariableNode >> isDefinition [
-	^self parent isSequence and: [ self parent defines: name ]
+	"Check if I am a Variable defintion"
+	self parent isSequence
+		ifTrue: [ ^ self parent temporaries identityIncludes: self ].
+	(self parent isMethod or: [ self parent isBlock ])
+		ifTrue: [ ^ self parent arguments identityIncludes: self ].
+	^ false
 ]
 
 { #category : #testing }

@@ -45,9 +45,9 @@ OCRequestorScope >> lookupVar: name [
 
 	"the requestors #bindingOf may create a binding for not yet existing variables"
 	(requestor bindingOf: name)
-		ifNotNil: [ :assoc | 
+		ifNotNil: [ :var | 
 			^ OCLiteralVariable new
-				assoc: assoc;
+				variable: var;
 				scope: self;
 				yourself ].
 	^ outerScope lookupVar: name

@@ -551,16 +551,14 @@ TextStyle >> leftFlush [
 ]
 
 { #category : #'tabs and margins' }
-TextStyle >> leftMarginTabAt: marginIndex [ 
+TextStyle >> leftMarginTabAt: marginIndex [
 	"Set the 'nesting' level of left margin indents of the paragraph in the 
 	style of the receiver to be the argument, marginIndex."
 
-	(marginIndex > 0 and: [marginIndex < marginTabsArray size])
-		ifTrue: [^(marginTabsArray at: marginIndex) at: 1]
-		ifFalse: [^0]	
-	"The marginTabsArray is an Array of tuples.  The Array is indexed according 
-	to the marginIndex, the 'nesting' level of the requestor."
-
+	^ (marginIndex > 0 and: [ marginIndex < marginTabsArray size ])
+		ifTrue: [ (marginTabsArray at: marginIndex) at: 1 ]
+		ifFalse: [ "The marginTabsArray is an Array of tuples.  The Array is indexed according 
+	to the marginIndex, the 'nesting' level of the requestor." 0 ]
 ]
 
 { #category : #accessing }
@@ -579,14 +577,14 @@ TextStyle >> lineGrid: anInteger [
 ]
 
 { #category : #private }
-TextStyle >> marginTabAt: marginIndex side: sideIndex [ 
+TextStyle >> marginTabAt: marginIndex side: sideIndex [
 	"The marginTabsArray is an Array of tuples.  The Array is indexed
 	according to the marginIndex, the 'nesting' level of the requestor.
 	sideIndex is 1 for left, 2 for right."
 
-	(marginIndex > 0 and: [marginIndex < marginTabsArray size])
-		ifTrue: [^(marginTabsArray at: marginIndex) at: sideIndex]
-		ifFalse: [^0]
+	^ (marginIndex > 0 and: [ marginIndex < marginTabsArray size ])
+		ifTrue: [ (marginTabsArray at: marginIndex) at: sideIndex ]
+		ifFalse: [ 0 ]
 ]
 
 { #category : #private }
@@ -623,8 +621,7 @@ TextStyle >> nextTabXFrom: anX leftMargin: leftMargin rightMargin: rightMargin [
 
 { #category : #accessing }
 TextStyle >> pointSizes [
-	^ fontArray collect:
-		[:x | x pointSize]
+	^ fontArray collect: [:x | x pointSize]
 
   "TextStyle default fontNamesWithPointSizes"
 ]
@@ -677,16 +674,14 @@ TextStyle >> rightIndent: anInteger [
 ]
 
 { #category : #'tabs and margins' }
-TextStyle >> rightMarginTabAt: marginIndex [ 
+TextStyle >> rightMarginTabAt: marginIndex [
 	"Set the 'nesting' level of right margin indents of the paragraph in the 
 	style of the receiver to be marginIndex."
 
-	(marginIndex > 0 and: [marginIndex < marginTabsArray size])
-		ifTrue: [^(marginTabsArray at: marginIndex) at: 2]
-		ifFalse: [^0]
-	"The marginTabsArray is an Array of tuples.  The Array is indexed according 
-	to the marginIndex, the 'nesting' level of the requestor."
-
+	^ (marginIndex > 0 and: [ marginIndex < marginTabsArray size ])
+		ifTrue: [ (marginTabsArray at: marginIndex) at: 2 ]
+		ifFalse: [ "The marginTabsArray is an Array of tuples.  The Array is indexed according 
+	to the marginIndex, the 'nesting' level of the requestor." 0 ]
 ]
 
 { #category : #'tabs and margins' }

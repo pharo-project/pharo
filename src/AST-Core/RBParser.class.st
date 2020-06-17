@@ -33,11 +33,6 @@ RBParser class >> errorNodeBlock [
 	^ [ :aString :position :parser| parser parseErrorNode: aString ]
 ]
 
-{ #category : #accessing }
-RBParser class >> parseCompiledMethod: aCompiledMethod [
-	^ self parseMethod: aCompiledMethod sourceCode
-]
-
 { #category : #parsing }
 RBParser class >> parseExpression: aString [ 
 	^self parseExpression: aString onError: nil
@@ -129,6 +124,7 @@ RBParser class >> parseRewriteMethod: aString onError: aBlock [
 { #category : #private }
 RBParser >> addCommentsTo: aNode [
 	aNode comments: aNode comments , comments.
+	comments do: [ :each | each parent: aNode ].
 	comments := OrderedCollection new
 ]
 
@@ -623,9 +619,7 @@ RBParser >> parseLiterals: aString [
 	stream := (Array new: 5) writeStream.
 	[self atEnd or: [currentToken isSpecial and: [currentToken value = $)]]] 
 		whileFalse: [stream nextPut: self parseLiteralArrayObject].
-	
 	self atEnd ifFalse: [ ^ self parserError: 'Unknown input at end'].
-	
 	^stream contents collect: [ :each | each value ]
 ]
 
@@ -755,10 +749,9 @@ RBParser >> parsePrimitiveKeywordPragma [
 
 { #category : #'private-parsing' }
 RBParser >> parsePrimitiveLiteral [
-
-	currentToken isNumberLiteralToken
-		ifTrue: [ ^ self parseNumberLiteral ]
-		ifFalse: [ ^ self parsePrimitiveValueLiteral ]
+	^ currentToken isNumberLiteralToken
+		ifTrue: [ self parseNumberLiteral ]
+		ifFalse: [ self parsePrimitiveValueLiteral ]
 ]
 
 { #category : #'private-parsing' }

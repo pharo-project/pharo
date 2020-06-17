@@ -670,7 +670,7 @@ RGBehavior >> localMethodsSet [
 { #category : #'queries - methods' }
 RGBehavior >> localSelectors [
 
-	^ self localMethods collect: #name
+	^ self localMethods collect: [ :each | each name ]
 ]
 
 { #category : #resolving }
@@ -738,7 +738,7 @@ RGBehavior >> name: aString [
 	
 	oldName := self name.
 	
-	subclassesWithOldDefinitions := (self subclasses reject: #isMeta) collect: [ :each | 
+	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each | 
 		each -> each copyForBehaviorDefinition ].
 	
 	self announceDefinitionChangeDuring: [ 
@@ -1019,7 +1019,7 @@ RGBehavior >> removeProtocol: aSymbol [
 { #category : #'queries - methods' }
 RGBehavior >> selectors [
 
-	^ self methods collect: #name
+	^ self methods collect: [ :each | each name ]
 ]
 
 { #category : #'accessing - definition' }
@@ -1172,7 +1172,7 @@ RGBehavior >> unresolveName [
 	
 	oldName := self name.
 	
-	subclassesWithOldDefinitions := (self subclasses reject: #isMeta) collect: [ :each | 
+	subclassesWithOldDefinitions := (self subclasses reject: [:each | each isMeta]) collect: [ :each | 
 		each -> each copyForBehaviorDefinition ].
 	
 	self announceDefinitionChangeDuring: [ 

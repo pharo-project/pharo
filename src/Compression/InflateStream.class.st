@@ -93,9 +93,10 @@ InflateStream >> atEnd [
 { #category : #'bit access' }
 InflateStream >> bitPosition [
 	"Return the current bit position of the source"
-	sourceStream == nil
-		ifTrue:[^sourcePos * 8 + bitPos]
-		ifFalse:[^sourceStream position + sourcePos * 8 + bitPos]
+
+	^ sourceStream == nil
+		ifTrue: [ sourcePos * 8 + bitPos ]
+		ifFalse: [ (sourceStream position + sourcePos) * 8 + bitPos ]
 ]
 
 { #category : #'open/close' }
@@ -441,9 +442,9 @@ InflateStream >> next [
 	"Answer the next decompressed object in the Stream represented by the
 	receiver."
 
-	position >= readLimit
-		ifTrue: [^self pastEndRead]
-		ifFalse: [^collection at: (position := position + 1)]
+	^ position >= readLimit
+		ifTrue: [ self pastEndRead ]
+		ifFalse: [ collection at: (position := position + 1) ]
 ]
 
 { #category : #accessing }

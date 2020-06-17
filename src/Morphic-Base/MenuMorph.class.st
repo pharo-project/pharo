@@ -947,10 +947,7 @@ MenuMorph >> keyStroke: evt [
 	"Handle keboard item matching."
 
 	| matchString char asc selectable help |
-	help := self theme builder
-		newBalloonHelp: 'Enter text to\narrow selection down\to matching items ' withCRs
-		for: self
-		corner: #topLeft.
+	help := self theme builder newBalloonHelp: 'Enter text to\narrow selection down\to matching items ' withCRs for: self corner: #topLeft.
 	help popUpForHand: self activeHand.
 	(self rootMenu hasProperty: #hasUsedKeyboard)
 		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
@@ -962,12 +959,11 @@ MenuMorph >> keyStroke: evt [
 	asc := char asciiValue.
 	char = Character cr
 		ifTrue: [ selectedItem
-				ifNotNil: [ selectedItem hasSubMenu
+				ifNotNil: [ ^ selectedItem hasSubMenu
 						ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
-							^ evt hand newKeyboardFocus: selectedItem subMenu ]
-						ifFalse: [ "self delete." ^ selectedItem invokeWithEvent: evt ] ].
-			(selectable := self items) size = 1
-				ifTrue: [ ^ selectable first invokeWithEvent: evt ].
+							evt hand newKeyboardFocus: selectedItem subMenu ]
+						ifFalse: [ "self delete." selectedItem invokeWithEvent: evt ] ].
+			(selectable := self items) size = 1 ifTrue: [ ^ selectable first invokeWithEvent: evt ].
 			^ self ].
 	asc = 27
 		ifTrue: [ "escape key"
@@ -989,20 +985,14 @@ MenuMorph >> keyStroke: evt [
 
 	"Right arrow key - If the selected menu item has a submenu, then we move the focus to the submenu "
 	asc = 29 ifTrue: [ (self rightArrowStroked: evt) ifTrue: [ ^ self ] ].
-	asc = 30
-		ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
-	asc = 31
-		ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
-	asc = 11
-		ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
-	asc = 12
-		ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
+	asc = 30 ifTrue: [ ^ self moveSelectionDown: -1 event: evt ].	"up arrow key"
+	asc = 31 ifTrue: [ ^ self moveSelectionDown: 1 event: evt ].	"down arrow key"
+	asc = 11 ifTrue: [ ^ self moveSelectionDown: -5 event: evt ].	"page up key"
+	asc = 12 ifTrue: [ ^ self moveSelectionDown: 5 event: evt ].	"page down key"
 
 	"If we reach this point, it means that we are editing the filter associated to each menu. "
 	"In case ther eis no filter associated to the menu, we simply create one"
-	matchString := self
-		valueOfProperty: #matchString
-		ifAbsentPut: [ String new ].
+	matchString := self valueOfProperty: #matchString ifAbsentPut: [ String new ].
 
 	"If we press the backspace, then we simply remove the last character from matchString"
 	(char = Character backspace and: [ matchString notEmpty ])
@@ -1011,8 +1001,7 @@ MenuMorph >> keyStroke: evt [
 			self displayFiltered: evt ].
 
 	"No need to go further if the character is not alphanumeric, i.e., not useful for filtering"
-	char isAlphaNumeric
-		ifFalse: [ ^ self ].
+	char isAlphaNumeric ifFalse: [ ^ self ].
 	matchString := matchString , char asString.
 	self recordFiltering: matchString.
 	self displayFiltered: evt

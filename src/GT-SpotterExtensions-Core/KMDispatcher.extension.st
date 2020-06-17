@@ -6,7 +6,7 @@ KMDispatcher >> spotterForKeysFor: aStep [
 		
 	aStep listProcessor
 			title: 'Keys';
-			allCandidates: [ (self gtAllKeyCategoryPairs collect: #key) asOrderedCollection ];
+			allCandidates: [ (self gtAllKeyCategoryPairs collect: [:each | each key]) asOrderedCollection ];
 			itemName: [ :aKeymap | 
 				aKeymap shortcut gtDisplayString, 
 				(aKeymap name ifNil: [ '' ] ifNotNil: [ ' [', aKeymap name,']' ]) ];

@@ -281,7 +281,7 @@ Context >> arguments [
 	"returns the arguments of a message invocation"
 	
 	| arguments numargs |
-	numargs :=  self method numArgs.
+	numargs :=  self compiledCode numArgs.
 	arguments := Array new: numargs.
 	1 to: numargs do: [ :i | arguments at: i put: (self tempAt: i) ].
 	^ arguments
@@ -452,10 +452,16 @@ Context >> closureCopy: numArgs copiedValues: anArray [
 ]
 
 { #category : #accessing }
+Context >> compiledCode [
+
+	^method
+]
+
+{ #category : #accessing }
 Context >> contextClass [
 "The context class of a message send should be the one of the method to be evaluated, because if that method has some super sends, the method lookup won't work as expected'"
 
-	^self method methodClass
+	^self compiledCode methodClass
 ]
 
 { #category : #'debugger access' }
@@ -657,7 +663,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 { #category : #private }
 Context >> endPC [
 	^closureOrNil
-		ifNil:	[self method endPC]
+		ifNil:	[self compiledCode endPC]
 		ifNotNil: [closureOrNil endPC]
 ]
 
@@ -836,7 +842,7 @@ Context >> findSimilarSender [
 	"Return the closest sender with the same method, return nil if none found"
 
 	^ self sender findContextSuchThat: [ :context | 
-		context method == method ]
+		context compiledCode == method ]
 ]
 
 { #category : #'private-exceptions' }
@@ -859,7 +865,7 @@ Context >> hasContext: aContext [
 Context >> hasInstVarRef [
 	"Answer whether the receiver references an instance variable."
 
-	^self method hasInstVarRef.
+	^self compiledCode hasInstVarRef.
 ]
 
 { #category : #accessing }
@@ -881,6 +887,11 @@ Context >> hasSender: context [
 				ifTrue: [^true].
 			senderContext := senderContext sender].
 	^false
+]
+
+{ #category : #testing }
+Context >> hasTemporaryVariableNamed: aName [
+	^ self tempNames includes: aName
 ]
 
 { #category : #accessing }
@@ -1031,6 +1042,10 @@ Context >> longStack [
 
 { #category : #accessing }
 Context >> method [
+	"self
+		deprecated: 'Should use compiledCode since it can be CompiledMethod or a CompiledBlock'
+		transformWith: '`@receiver method' 
+						-> '`@receiver compiledCode'."
 
 	^method
 ]
@@ -1039,12 +1054,12 @@ Context >> method [
 Context >> methodClass [ 
 	"Answer the class in which the receiver's method was found."
 	
-	^self method methodClass ifNil:[self receiver class].
+	^self compiledCode methodClass ifNil:[self receiver class].
 ]
 
 { #category : #accessing }
 Context >> methodNode [
-	^ self method methodNode.
+	^ self compiledCode methodNode.
 ]
 
 { #category : #accessing }
@@ -1071,7 +1086,7 @@ Context >> methodReturnTop [
 
 { #category : #accessing }
 Context >> methodSelector [
-	^ self method selector
+	^ self compiledCode selector
 ]
 
 { #category : #'private-exceptions' }
@@ -1335,11 +1350,11 @@ Context >> printOn: aStream [
 	self outerContext
 		ifNil:
 			[ | selector class mclass |
-			self method == nil
+			self compiledCode == nil
 				ifTrue: [ ^ super printOn: aStream ].
 			class := self receiver class.
 			mclass := self methodClass.
-			selector := self selector ifNil: [ self method defaultSelector ].
+			selector := self selector ifNil: [ self compiledCode defaultSelector ].
 			aStream nextPutAll: class name.
 			mclass == class
 				ifFalse:
@@ -1364,9 +1379,10 @@ Context >> privRefresh [
 	 closureOrNil
 		ifNotNil:
 			[pc := closureOrNil startpc.
-			self stackp: closureOrNil numArgs + closureOrNil numCopiedValues.
+			self stackp: closureOrNil initialStackPointer.
 			1 to: closureOrNil numCopiedValues do:
-				[:i | self tempAt: closureOrNil numArgs + i put: (closureOrNil at: i)]]
+				[:i | self tempAt: closureOrNil numArgs + i put: (closureOrNil at: i)].
+			closureOrNil clearTemporariesOn: self]
 		ifNil:
 			[pc := method initialPC.
 			self stackp: method numTemps.
@@ -1733,7 +1749,7 @@ Context >> secondFromBottom [
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
 
-	^self method selector ifNil: [self method defaultSelector].
+	^self compiledCode selector ifNil: [self compiledCode defaultSelector].
 ]
 
 { #category : #controlling }
@@ -1769,7 +1785,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 
 	| class aMethod value context |
 	class := superFlag
-			ifTrue: [(self method literalAt: self method numLiterals) value superclass]
+			ifTrue: [(self compiledCode literalAt: self compiledCode numLiterals) value superclass]
 			ifFalse: [self objectClass: aReceiver].
 	aMethod := class lookupSelector: selector.
 	aMethod == nil
@@ -1799,7 +1815,7 @@ Context >> send: selector to: aReceiver with: arguments super: superFlag [
 	
 	"check if activated method handles the error code (a first bytecode will be store into temp)"
 	"long store temp" 
-	 (context method at: context pc ) = 129 
+	 (context compiledCode at: context pc ) = 129 
 		ifTrue: [ context at: context stackPtr put: value last ].
 	^ context
 ]
@@ -1898,7 +1914,7 @@ Context >> size [
 
 { #category : #'debugger access' }
 Context >> sourceCode [
-	^self method sourceCode.
+	^self compiledCode sourceCode.
 ]
 
 { #category : #'debugger access' }
@@ -1951,7 +1967,7 @@ Context >> stackp: newStackp [
 { #category : #private }
 Context >> startpc [
 	^closureOrNil
-		ifNil:	[self method initialPC]
+		ifNil:	[self compiledCode initialPC]
 		ifNotNil: [closureOrNil startpc]
 ]
 

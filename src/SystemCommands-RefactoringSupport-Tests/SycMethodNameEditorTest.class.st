@@ -31,7 +31,9 @@ SycMethodNameEditorTest >> a: a b: b c: c [
 
 { #category : #running }
 SycMethodNameEditorTest >> methodNamedFor: aSymbol [
-	^ RBMethodName selector: (self class >> aSymbol) selector arguments: ((self class >> aSymbol) ast arguments collect: #name)
+	^ RBMethodName 
+		selector: (self class >> aSymbol) selector 
+		arguments: ((self class >> aSymbol) ast arguments collect: [:each | each name])
 ]
 
 { #category : #running }

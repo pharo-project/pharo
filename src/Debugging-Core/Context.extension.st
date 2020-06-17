@@ -28,7 +28,7 @@ Context >> lookupSymbol: aSymbol [
 	"Instance variables"
 	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
 	"Class variables and globals"
-	var isGlobal ifTrue: [ ^ var assoc value ].
+	var isGlobal ifTrue: [ ^ var variable value ].
 	^ nil.
 	
 ]
@@ -81,7 +81,7 @@ Context >> quickSend: selector to: aReceiver with: arguments super: superFlag [
 	| lookupClass contextToReturnTo result |
 	contextToReturnTo := self.
 	lookupClass := superFlag
-					ifTrue: [(self method literalAt: self method numLiterals) value superclass]
+					ifTrue: [(self compiledCode literalAt: self compiledCode numLiterals) value superclass]
 					ifFalse: [self objectClass: aReceiver].
 	[ | oldSender |
 	oldSender := thisContext sender swapSender: self.
@@ -113,7 +113,7 @@ Context >> respondsToUnknownBytecode [
 	"This method is triggerred by the VM when the interpreter tries to execute an unknown bytecode"
 	
 	| unknownBytecode |
-	unknownBytecode := self method at: self pc.
+	unknownBytecode := self compiledCode at: self pc.
 	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
 	
 
@@ -187,7 +187,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	returnContext := Context
 			sender: nil
 			receiver: self home receiver
-			method: self home method
+			method: self home compiledCode
 			arguments: self home arguments.
 	
 	current pushArgs: Array new from: returnContext.

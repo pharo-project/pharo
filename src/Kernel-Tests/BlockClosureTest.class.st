@@ -423,6 +423,29 @@ BlockClosureTest >> testValueWithArguments [
 ]
 
 { #category : #'tests - evaluating' }
+BlockClosureTest >> testValueWithArgumentsWithOrderedCollection [
+
+	self 
+		shouldnt: [ aBlockContext valueWithArguments: #() asOrderedCollection ] 
+		raise: ArgumentsCountMismatch.
+
+	self 
+		should: [ aBlockContext valueWithArguments: #(1) asOrderedCollection ] 
+		raise: ArgumentsCountMismatch 
+		withExceptionDo: [ :err | 
+			self assert: err expectedArgumentsCount equals: 0.
+			self assert: err calledArgumentsCount equals: 1 ].
+		
+	self 
+		should: [ [ :i | 3 + 4 ] valueWithArguments: #(1 2) asOrderedCollection ] 
+		raise: ArgumentsCountMismatch 
+		withExceptionDo: [ :err | 
+			self assert: err expectedArgumentsCount equals: 1.
+			self assert: err calledArgumentsCount equals: 2 ].
+
+]
+
+{ #category : #'tests - evaluating' }
 BlockClosureTest >> testValueWithExitBreak [
 	| val |
 	[ :break | 
