@@ -126,8 +126,13 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 		ifTrue: [ 
 			menuMorph showDetail.
 			^ true ].
+
 	(keyCharacter = Character arrowLeft  and: [commandKeyPressed and: [ self captureNavigationKeys ]])
 		ifTrue: [ ^ self leftArrow ].
+	
+	(keyCharacter = Character arrowLeft or: [ keyCharacter = Character arrowRight ])
+		ifTrue: [ "just move the caret" ^ false ].
+	
 	keyCharacter = Character arrowUp
 		ifTrue: [ 
 			menuMorph moveUp.
