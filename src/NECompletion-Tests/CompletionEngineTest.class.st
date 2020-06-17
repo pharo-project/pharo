@@ -28,7 +28,7 @@ CompletionEngineTest >> keyboardEventFor: char [
 	event := KeyboardEvent new.
 	event 
 		setType: #keystroke
-		buttons: nil
+		buttons: 0
 		position:  0@0
 		keyValue: char asciiValue 
 		charCode: char asciiValue
@@ -36,6 +36,12 @@ CompletionEngineTest >> keyboardEventFor: char [
 		stamp: Time now.
 		
 	^event
+]
+
+{ #category : #running }
+CompletionEngineTest >> newCompletionEngine [
+	
+	^ CompletionEngine new
 ]
 
 { #category : #'tests-keyboard' }
@@ -63,15 +69,17 @@ CompletionEngineTest >> setEditorText: aString [
 CompletionEngineTest >> setUp [
 	super setUp.
 	
-	editor := RubTextEditor forTextArea: RubTextFieldArea new.
-	controller := CompletionEngine new.
-	controller setEditor: editor
+	editor := RubSmalltalkEditor forTextArea: RubEditingArea new beForSmalltalkCode.
+	controller := self newCompletionEngine.
+	controller setEditor: editor.
+	editor completionEngine: controller.
 ]
 
 { #category : #running }
 CompletionEngineTest >> tearDown [
-	controller := nil.
-	editor := nil.
+	
+	controller closeMenu.
+	editor textArea delete.
 	super tearDown
 ]
 

@@ -19,7 +19,6 @@ CompletionContextTest >> createContextFor: aString at: anInteger [
 ]
 
 { #category : #tests }
-
 CompletionContextTest >> testReceiverArgument [
 	| text context |
 	text := 'testIt: aRectangle

@@ -193,6 +193,12 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	^ false
 ]
 
+{ #category : #testing }
+CompletionEngine >> hasCompletionContext [
+	
+	^ context notNil
+]
+
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds.
@@ -254,17 +260,13 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 CompletionEngine >> openMenu [
 	| theMenu |
 	self stopCompletionDelay.
-	
+
 	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
 				position: (editor selectionPosition: context completionToken).
 				
-	theMenu isClosed
-		ifFalse: [ menuMorph := theMenu ].
-	
-	(context isNil or: [ context hasEntries not ])
-		ifTrue: [ ^self closeMenu ].
+	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
 ]
 
 { #category : #replacement }
