@@ -10,6 +10,12 @@ CoCompletionEngineTest >> newCompletionEngine [
 	^ CoCompletionEngine new
 ]
 
+{ #category : #asserting }
+CoCompletionEngineTest >> shouldInheritSelectors [
+
+	^ true
+]
+
 { #category : #'test-interaction' }
 CoCompletionEngineTest >> testInitialCompletionEngineHasNoContext [
 

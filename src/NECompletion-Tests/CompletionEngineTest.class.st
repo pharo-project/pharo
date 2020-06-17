@@ -83,6 +83,86 @@ CompletionEngineTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenAfterMovingCaretToMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoesNotExist' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text equals: 'self toto something that follows'
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist'.
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text equals: 'self toto'
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretInTheMiddleOfWordWithFollowingWordsReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist something that follows'.
+	
+	self
+		setEditorText: text;
+		selectAt: 'self mEthOdThatDoes' size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+	editor keystroke: (self keyboardEventFor: Character arrowLeft).
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text asString equals: 'self toto something that follows'
+]
+
+{ #category : #'test-interaction' }
+CompletionEngineTest >> testReplaceTokenWithCaretOnEndOfWordReplacesEntireWord [
+
+	"If the caret is at the end of a word, replace the entire word"
+	
+	| text |
+	text := 'self mEthOdThatDoesNotExist'.
+	self
+		setEditorText: text;
+		selectAt: text size + 1.
+	
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'toto'.
+	
+	self assert: editor text equals: 'self toto'
+]
+
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> testSmartBackspace [
 	"Pressing backspace inside paired smart characters should remove both of them"

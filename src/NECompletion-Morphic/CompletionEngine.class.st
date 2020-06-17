@@ -277,13 +277,14 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| caret old positionAfterFirstKeyword offset firstKeyword |
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword toReplace wordStart |
 	"Try to correctly replace the current token in the word.
 	The code editor should be able to do it by himself"
-	caret := self editor caret.
+	wordEnd := self editor nextWord: self editor caret.
+	wordStart := self editor previousWord: self editor caret - 1.
 	self editor
-		selectInvisiblyFrom: caret - context completionToken size
-		to: caret - 1.
+		selectInvisiblyFrom: wordStart
+		to: wordEnd - 1.
 	old := self editor selection.
 	self editor replaceSelectionWith: aString.
 	
@@ -291,7 +292,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		ifTrue: [ 1 ]
 		ifFalse: [ 0 ].
 	firstKeyword := (aString copyUpTo: $ ) size.
-	positionAfterFirstKeyword := caret + firstKeyword + offset - old size.
+	positionAfterFirstKeyword := wordEnd + firstKeyword + offset - old size.
 	self editor selectAt: positionAfterFirstKeyword.
 	
 	self editor morph invalidRect: self editor morph bounds
