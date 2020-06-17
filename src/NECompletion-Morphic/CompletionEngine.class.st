@@ -95,9 +95,7 @@ CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEdito
 		ifFalse: [ ^ self closeMenu ].
 	
 	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph narrowCompletion.
-	(context isNil or: [ context hasEntries not])
-		ifTrue: [ ^self closeMenu ]
+	menuMorph refreshSelection.
 ]
 
 { #category : #keyboard }
@@ -126,8 +124,13 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 		ifTrue: [ 
 			menuMorph showDetail.
 			^ true ].
+
 	(keyCharacter = Character arrowLeft  and: [commandKeyPressed and: [ self captureNavigationKeys ]])
 		ifTrue: [ ^ self leftArrow ].
+	
+	(keyCharacter = Character arrowLeft or: [ keyCharacter = Character arrowRight ])
+		ifTrue: [ "just move the caret" ^ false ].
+	
 	keyCharacter = Character arrowUp
 		ifTrue: [ 
 			menuMorph moveUp.
@@ -188,6 +191,12 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 			ifTrue: [ self resetCompletionDelay ] ].
 	
 	^ false
+]
+
+{ #category : #testing }
+CompletionEngine >> hasCompletionContext [
+	
+	^ context notNil
 ]
 
 { #category : #keyboard }
@@ -251,17 +260,13 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 CompletionEngine >> openMenu [
 	| theMenu |
 	self stopCompletionDelay.
-	
+
 	context := self createContext.
 	theMenu := self menuMorphClass
 				engine: self
 				position: (editor selectionPosition: context completionToken).
 				
-	theMenu isClosed
-		ifFalse: [ menuMorph := theMenu ].
-	
-	(context isNil or: [ context hasEntries not ])
-		ifTrue: [ ^self closeMenu ].
+	theMenu isClosed ifFalse: [ menuMorph := theMenu ]
 ]
 
 { #category : #replacement }
@@ -272,13 +277,14 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	After replacing, set the caret after the first keyword.
 	The completion context uses this API to insert text into the text editor"
 
-	| caret old positionAfterFirstKeyword offset firstKeyword |
+	| wordEnd old positionAfterFirstKeyword offset firstKeyword toReplace wordStart |
 	"Try to correctly replace the current token in the word.
 	The code editor should be able to do it by himself"
-	caret := self editor caret.
+	wordEnd := self editor nextWord: self editor caret.
+	wordStart := self editor previousWord: self editor caret - 1.
 	self editor
-		selectInvisiblyFrom: caret - context completionToken size
-		to: caret - 1.
+		selectInvisiblyFrom: wordStart
+		to: wordEnd - 1.
 	old := self editor selection.
 	self editor replaceSelectionWith: aString.
 	
@@ -286,7 +292,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 		ifTrue: [ 1 ]
 		ifFalse: [ 0 ].
 	firstKeyword := (aString copyUpTo: $ ) size.
-	positionAfterFirstKeyword := caret + firstKeyword + offset - old size.
+	positionAfterFirstKeyword := wordEnd + firstKeyword + offset - old size.
 	self editor selectAt: positionAfterFirstKeyword.
 	
 	self editor morph invalidRect: self editor morph bounds
