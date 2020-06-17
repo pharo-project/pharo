@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'selectorChooser'
 	],
-	#category : #'Text-Edition-Utilities'
+	#category : #'Deprecated90-Text-Edition'
 }
 
 { #category : #'selector-chooser' }
