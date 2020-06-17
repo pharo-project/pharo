@@ -95,9 +95,7 @@ CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEdito
 		ifFalse: [ ^ self closeMenu ].
 	
 	context narrowWith: aParagraphEditor wordAtCaret.
-	menuMorph narrowCompletion.
-	(context isNil or: [ context hasEntries not])
-		ifTrue: [ ^self closeMenu ]
+	menuMorph refreshSelection.
 ]
 
 { #category : #keyboard }
