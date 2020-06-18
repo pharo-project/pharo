@@ -7,9 +7,6 @@ index is not the index in the bytecode but just used for sorting
 Class {
 	#name : #OCAbstractLocalVariable,
 	#superclass : #OCAbstractVariable,
-	#instVars : [
-		'name'
-	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
 

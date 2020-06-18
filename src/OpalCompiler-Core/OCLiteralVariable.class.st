@@ -10,6 +10,12 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #testing }
+OCLiteralVariable class >> isDeprecated [
+	"Use LiteralVariable directly instead"
+	^true
+]
+
 { #category : #accessing }
 OCLiteralVariable class >> semanticNodeClass [
 

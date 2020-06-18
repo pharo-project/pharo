@@ -38,12 +38,7 @@ OCEnvironmentScope >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
 	name isString ifFalse: [ ^nil ].
 	
-	^(environment bindingOf: name) ifNotNil: [:var | 
-		OCLiteralVariable new 
-			variable: var; 
-			scope: self; 
-			yourself]
-
+	^environment bindingOf: name
 ]
 
 { #category : #creation }

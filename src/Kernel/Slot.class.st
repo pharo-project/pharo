@@ -60,14 +60,6 @@ Slot class >> isUsed [
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
-{ #category : #'instance creation' }
-Slot class >> named: aSymbol [
-	self checkValidName: aSymbol.
-	^ self new
-		name: aSymbol;
-		yourself
-]
-
 { #category : #settings }
 Slot class >> showSlotClassDefinition [
 	^slotClassDefinition ifNil: [ slotClassDefinition := false ]
@@ -211,12 +203,17 @@ Slot >> installingIn: aClass [
 { #category : #testing }
 Slot >> isAccessedIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableNodes
-		anySatisfy: [ :node | node binding slot == self ]
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
 Slot >> isGlobal [
 	^false
+]
+
+{ #category : #OCVARIABLE }
+Slot >> isInstance [
+	^ true
 ]
 
 { #category : #testing }
@@ -228,7 +225,7 @@ Slot >> isLocal [
 { #category : #testing }
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableReadNodes
-		 anySatisfy: [ :node | node binding slot == self ]
+		 anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
@@ -255,7 +252,7 @@ Slot >> isVisible [
 { #category : #testing }
 Slot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableWriteNodes
-		anySatisfy: [ :node | node binding slot == self ]
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #accessing }

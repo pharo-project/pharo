@@ -35,3 +35,8 @@ RGClassVariable >> isClassVariable [
 
 	^true
 ]
+
+{ #category : #testing }
+RGClassVariable >> semanticNodeClass [
+	^RBGlobalNode
+]
