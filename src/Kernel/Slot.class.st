@@ -208,7 +208,7 @@ Slot >> installingIn: aClass [
 { #category : #testing }
 Slot >> isAccessedIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableNodes
-		anySatisfy: [ :node | node binding slot == self ]
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
