@@ -13,7 +13,7 @@ OCBytecodeToASTCacheTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	super setUp.	
 	compiledMethod := MethodMapExamples >> #helperMethod12.
-	cache := OCBytecodeToASTCache generateForMethodNode: compiledMethod ast
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast
 ]
 
 { #category : #helpers }
@@ -24,7 +24,7 @@ OCBytecodeToASTCacheTest >> testCacheInInterval: interval equalsNode: aNode [
 
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testCachedMethodNode [
-	self assert: cache methodNode identicalTo: compiledMethod ast
+	self assert: cache methodOrBlockNode identicalTo: compiledMethod ast
 ]
 
 { #category : #tests }
@@ -35,7 +35,7 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetTest [
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 	compiledMethod := ( MethodMapExamples >> #ivar).
-	cache := OCBytecodeToASTCache generateForMethodNode: compiledMethod ast.	
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.	
 	self assert: cache firstBcOffset equals: compiledMethod initialPC.
 	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast.
 	self assert: (cache nodeForPC: cache lastBcOffset) identicalTo: compiledMethod ast statements last.
