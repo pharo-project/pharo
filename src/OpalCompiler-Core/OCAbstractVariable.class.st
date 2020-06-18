@@ -3,7 +3,7 @@ I am an entry in a Scope that gets associated with variable nodes of the same na
 "
 Class {
 	#name : #OCAbstractVariable,
-	#superclass : #Object,
+	#superclass : #Variable,
 	#instVars : [
 		'scope',
 		'usage'
