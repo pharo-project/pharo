@@ -230,7 +230,7 @@ Slot >> isLocal [
 { #category : #testing }
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableReadNodes
-		 anySatisfy: [ :node | node binding slot == self ]
+		 anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
@@ -257,7 +257,7 @@ Slot >> isVisible [
 { #category : #testing }
 Slot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableWriteNodes
-		anySatisfy: [ :node | node binding slot == self ]
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #accessing }
