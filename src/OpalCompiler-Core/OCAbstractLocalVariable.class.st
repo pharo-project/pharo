@@ -21,14 +21,3 @@ OCAbstractLocalVariable >> isUninitialized [
 
 	^ self isWrite not
 ]
-
-{ #category : #accessing }
-OCAbstractLocalVariable >> name [
-
-	^ name
-]
-
-{ #category : #initializing }
-OCAbstractLocalVariable >> name: string [
-	name := string
-]

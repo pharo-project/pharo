@@ -58,6 +58,18 @@ Variable >> = other [
 			and: [ name = other name ]
 ]
 
+{ #category : #'code generation' }
+Variable >> emitStore: methodBuilder [
+
+	self subclassResponsibility
+]
+
+{ #category : #'code generation' }
+Variable >> emitValue: methodBuilder [
+
+	self subclassResponsibility
+]
+
 { #category : #properties }
 Variable >> ensureProperties [
 	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
