@@ -60,11 +60,6 @@ Slot class >> isUsed [
 	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
-{ #category : #OCVARIABLE }
-Slot class >> semanticNodeClass [
-	^RBInstanceVariableNode
-]
-
 { #category : #settings }
 Slot class >> showSlotClassDefinition [
 	^slotClassDefinition ifNil: [ slotClassDefinition := false ]

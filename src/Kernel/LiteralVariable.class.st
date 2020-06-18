@@ -53,12 +53,6 @@ LiteralVariable class >> key: newKey value: newValue [
 	^self basicNew key: newKey value: newValue
 ]
 
-{ #category : #OCVARIABLE }
-LiteralVariable class >> semanticNodeClass [
-
-	^RBGlobalNode
-]
-
 { #category : #comparing }
 LiteralVariable >> = anAssociation [
 

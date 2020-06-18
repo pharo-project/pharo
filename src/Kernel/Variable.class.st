@@ -49,11 +49,6 @@ Variable class >> named: aSymbol [
 		yourself
 ]
 
-{ #category : #OCVARIABLE }
-Variable class >> semanticNodeClass [
-	^RBVariableNode
-]
-
 { #category : #comparing }
 Variable >> = other [
 	"Every subclass that adds state must redefine this method"
