@@ -11,6 +11,12 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #testing }
+OCAbstractVariable class >> isDeprecated [
+	"OCAbstractLocalVariable is now direct subclass of Variable represened various kind of local method vars"
+	^true
+]
+
 { #category : #converting }
 OCAbstractVariable >> asString [
 
