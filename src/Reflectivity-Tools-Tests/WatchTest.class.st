@@ -1,58 +1,58 @@
 Class {
-	#name : #WatchpointTest,
+	#name : #WatchTest,
 	#superclass : #TestCase,
 	#category : #'Reflectivity-Tools-Tests'
 }
 
 { #category : #adding }
-WatchpointTest >> testAddSameWatchpointSameNode [
+WatchTest >> testAddSameWatchSameNode [
 	| node watchpoint watchpoint2 |
 	node := (ReflectivityExamples >> #exampleAssignment) ast body children first.
-	watchpoint := Watchpoint in: node.
-	watchpoint2 := Watchpoint in: node.
+	watchpoint := Watch in: node.
+	watchpoint2 := Watch in: node.
 
 	self assert: watchpoint equals: watchpoint2.
 
 	watchpoint uninstall.
 
-	self deny: node hasWatchpoint
+	self deny: node hasWatch
 ]
 
 { #category : #adding }
-WatchpointTest >> testAddWatchpoint [
+WatchTest >> testAddWatch [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignment) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 
-	self assert: node hasWatchpoint.
-	self assert: (Watchpoint allWatchpoints at: node) equals: watchpoint.
+	self assert: node hasWatch.
+	self assert: (Watch allWatches at: node) equals: watchpoint.
 
 	watchpoint uninstall.
-	self deny: node hasWatchpoint.
-	self deny: (Watchpoint allWatchpoints includesKey: node)
+	self deny: node hasWatch.
+	self deny: (Watch allWatches includesKey: node)
 ]
 
 { #category : #adding }
-WatchpointTest >> testAddWatchpointsSameNode [
+WatchTest >> testAddWatchSameNode [
 	| node watchpoint watchpoint2 |
 	node := (ReflectivityExamples >> #exampleAssignment) ast body children first.
-	watchpoint := Watchpoint in: node.
-	watchpoint2 := Watchpoint in: node.
+	watchpoint := Watch in: node.
+	watchpoint2 := Watch in: node.
 
 	self assert: watchpoint equals: watchpoint2.
 
 	watchpoint uninstall.
 
-	self deny: node hasWatchpoint
+	self deny: node hasWatch
 ]
 
 { #category : #'deleting history' }
-WatchpointTest >> testDeleteAllHistory [
+WatchTest >> testDeleteAllHistory [
 	| node1 node2 watchpoint1 watchpoint2 |
 	node1 := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body statements first.
-	watchpoint1 := Watchpoint in: node1.
+	watchpoint1 := Watch in: node1.
 	node2 := (ReflectivityExamples >> #exampleAssignmentIvar) ast body statements first.
-	watchpoint2 := Watchpoint in: node2.
+	watchpoint2 := Watch in: node2.
 
 	ReflectivityExamples new exampleAssignmentIvar: 2.
 	ReflectivityExamples new exampleAssignmentIvar.
@@ -60,7 +60,7 @@ WatchpointTest >> testDeleteAllHistory [
 	self assert: watchpoint1 values first value equals: 2.
 	self assert: watchpoint2 values first value equals: 3.
 
-	Watchpoint deleteAllHistory.
+	Watch deleteAllHistory.
 
 	self assertEmpty: watchpoint1 values.
 	self assertEmpty: watchpoint2 values.
@@ -70,10 +70,10 @@ WatchpointTest >> testDeleteAllHistory [
 ]
 
 { #category : #'deleting history' }
-WatchpointTest >> testDeleteHistory [
+WatchTest >> testDeleteHistory [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	ReflectivityExamples new exampleAssignmentIvar: 1.
 	ReflectivityExamples new exampleAssignmentIvar: 2.
 
@@ -87,27 +87,27 @@ WatchpointTest >> testDeleteHistory [
 ]
 
 { #category : #'deleting history' }
-WatchpointTest >> testDeleteHistoryFromNode [
+WatchTest >> testDeleteHistoryFromNode [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	ReflectivityExamples new exampleAssignmentIvar: 1.
 	ReflectivityExamples new exampleAssignmentIvar: 2.
 
 	self assert: watchpoint values first value equals: 1.
 	self assert: watchpoint values second value equals: 2.
 
-	Watchpoint deleteHistoryFrom: node.
+	Watch deleteHistoryFrom: node.
 	self assertEmpty: watchpoint values.
 
 	watchpoint uninstall
 ]
 
 { #category : #values }
-WatchpointTest >> testSaveOneValue [
+WatchTest >> testSaveOneValue [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	ReflectivityExamples new exampleAssignmentIvar.
 
 	self assert: watchpoint values first value equals: 3.
@@ -116,10 +116,10 @@ WatchpointTest >> testSaveOneValue [
 ]
 
 { #category : #values }
-WatchpointTest >> testSaveValues [
+WatchTest >> testSaveValues [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	ReflectivityExamples new exampleAssignmentIvar: 1.
 	ReflectivityExamples new exampleAssignmentIvar: 2.
 
@@ -130,10 +130,10 @@ WatchpointTest >> testSaveValues [
 ]
 
 { #category : #values }
-WatchpointTest >> testSendMessage [
+WatchTest >> testSendMessage [
 	| node watchpoint |
 	node := (ReflectivityExamples >> #exampleMessageSend) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	ReflectivityExamples new exampleMessageSend.
 
 	self assert: watchpoint values first value class equals: ReflectivityExamples.
@@ -142,10 +142,10 @@ WatchpointTest >> testSendMessage [
 ]
 
 { #category : #recording }
-WatchpointTest >> testStopRecording [
+WatchTest >> testStopRecording [
 	| node watchpoint dummy |
 	node := (ReflectivityExamples >> #exampleAssignmentIvar:) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	dummy := ReflectivityExamples new.
 
 	dummy exampleAssignmentIvar: 1.
@@ -164,15 +164,15 @@ WatchpointTest >> testStopRecording [
 
 	watchpoint uninstall.
 
-	self deny: node hasWatchpoint
+	self deny: node hasWatch
 ]
 
 { #category : #values }
-WatchpointTest >> testTimestamp [
+WatchTest >> testTimestamp [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignmentIvar:) ast body children first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	
 	1 to: 10 do:[:i| ReflectivityExamples new exampleAssignmentIvar: i].
 	1 to: 9 do: [:i|  
@@ -187,11 +187,11 @@ WatchpointTest >> testTimestamp [
 ]
 
 { #category : #adding }
-WatchpointTest >> testWatchpointTwice [
+WatchTest >> testWatchTwice [
 	|node watchpoint|
 	
 	node := (ReflectivityExamples>>#exampleAssignment) ast body statements first.
-	watchpoint := Watchpoint in: node.
+	watchpoint := Watch in: node.
 	
 	self should: [watchpoint install] raise: Error.
 	

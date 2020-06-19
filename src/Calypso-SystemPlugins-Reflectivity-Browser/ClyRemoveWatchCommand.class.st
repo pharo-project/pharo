@@ -2,28 +2,28 @@
 I am a command to remove all watchpoints from given method or source node
 "
 Class {
-	#name : #ClyRemoveWatchpointCommand,
+	#name : #ClyRemoveWatchCommand,
 	#superclass : #ClyRemoveDebuggingCommand,
 	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
 }
 
 { #category : #execution }
-ClyRemoveWatchpointCommand class >> canBeExecutedInContext: aBrowserContext [
+ClyRemoveWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
-	^aBrowserContext isSelectedItemHasWatchpoint 
+	^aBrowserContext isSelectedItemHasWatch 
 ]
 
 { #category : #activation }
-ClyRemoveWatchpointCommand class >> contextMenuOrder [
+ClyRemoveWatchCommand class >> contextMenuOrder [
 	^3
 ]
 
 { #category : #execution }
-ClyRemoveWatchpointCommand >> debuggingToolClass [
-	^Watchpoint
+ClyRemoveWatchCommand >> debuggingToolClass [
+	^Watch
 ]
 
 { #category : #'table decoration' }
-ClyRemoveWatchpointCommand >> tableCellIcon [
+ClyRemoveWatchCommand >> tableCellIcon [
 	^Smalltalk ui iconNamed: #haloView
 ]

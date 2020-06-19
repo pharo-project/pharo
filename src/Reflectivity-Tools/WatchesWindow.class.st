@@ -2,20 +2,20 @@
 I am a minimal user interface that shows the last entries in the watchpoint history.
 "
 Class {
-	#name : #WatchpointWindow,
+	#name : #WatchesWindow,
 	#superclass : #ComposablePresenter,
 	#instVars : [
-		'watchpoint',
 		'numItems',
 		'menu',
 		'list',
-		'inspectIt'
+		'inspectIt',
+		'watch'
 	],
-	#category : #'Reflectivity-Tools-Watchpoints'
+	#category : #'Reflectivity-Tools-Watches'
 }
 
 { #category : #specs }
-WatchpointWindow class >> defaultSpec [
+WatchesWindow class >> defaultSpec [
 	<spec: #default>
 	^ SpecLayout composed
 		newColumn: [ :col |
@@ -26,38 +26,38 @@ WatchpointWindow class >> defaultSpec [
 ]
 
 { #category : #'instance creation' }
-WatchpointWindow class >> new [
+WatchesWindow class >> new [
 	"use on: aWatchpoint"
 	^self shouldNotImplement 
 ]
 
 { #category : #'instance creation' }
-WatchpointWindow class >> on: aWatchpoint [
+WatchesWindow class >> on: aWatchpoint [
 	| inst |
 	inst := self basicNew.
-	inst watchpoint: aWatchpoint.
+	inst watch: aWatchpoint.
 	inst initialize.
 	^inst
 ]
 
 { #category : #'instance creation' }
-WatchpointWindow class >> openOn: aWatchpoint [
+WatchesWindow class >> openOn: aWatchpoint [
 	^(self on: aWatchpoint) openWithSpec
 ]
 
 { #category : #accessing }
-WatchpointWindow >> defaultWindowModelClass [
+WatchesWindow >> defaultWindowModelClass [
 
 	^ TickingWindowPresenter
 ]
 
 { #category : #api }
-WatchpointWindow >> extent [
+WatchesWindow >> extent [
 	^230@240
 ]
 
 { #category : #initialization }
-WatchpointWindow >> initializePresenter [ 
+WatchesWindow >> initializePresenter [ 
 	
 	list whenSelectionChanged: [inspectIt enabled: (list getIndex = 0) not ].
 	
@@ -68,7 +68,7 @@ WatchpointWindow >> initializePresenter [
 ]
 
 { #category : #initialization }
-WatchpointWindow >> initializeWidgets [
+WatchesWindow >> initializeWidgets [
 
 	list := self newList.
 	inspectIt := self newButton.
@@ -84,55 +84,55 @@ WatchpointWindow >> initializeWidgets [
 ]
 
 { #category : #accessing }
-WatchpointWindow >> inspectIt [
+WatchesWindow >> inspectIt [
 	^ inspectIt
 ]
 
 { #category : #accessing }
-WatchpointWindow >> inspectIt: anObject [
+WatchesWindow >> inspectIt: anObject [
 	inspectIt := anObject
 ]
 
 { #category : #configuration }
-WatchpointWindow >> lessItems [
+WatchesWindow >> lessItems [
 	numItems := 0 max: (numItems - 1)
 ]
 
 { #category : #accessing }
-WatchpointWindow >> list [
+WatchesWindow >> list [
 	^ list
 ]
 
 { #category : #accessing }
-WatchpointWindow >> list: anObject [
+WatchesWindow >> list: anObject [
 	list := anObject
 ]
 
 { #category : #accessing }
-WatchpointWindow >> menu [
+WatchesWindow >> menu [
 	^ menu
 ]
 
 { #category : #accessing }
-WatchpointWindow >> menu: anObject [
+WatchesWindow >> menu: anObject [
 	menu := anObject
 ]
 
 { #category : #configuration }
-WatchpointWindow >> moreItems [
+WatchesWindow >> moreItems [
 	numItems := numItems + 1
 ]
 
 { #category : #updating }
-WatchpointWindow >> refreshItems [
+WatchesWindow >> refreshItems [
 	| max values |
-	values := self watchpoint values.
+	values := self watch values.
 	max := values size.
 	list items: (values copyFrom: (1 max: max - numItems) to: max) reversed. 
 ]
 
 { #category : #initialization }
-WatchpointWindow >> setupMenu [
+WatchesWindow >> setupMenu [
 	menu := MenuPresenter new.
 	menu applyTo: self.
 	menu
@@ -157,7 +157,7 @@ WatchpointWindow >> setupMenu [
 						name: nil;
 						description: 'Remove All Items';
 						icon: (self iconNamed: #smallDelete);
-						action: [ self watchpoint deleteHistory ] ] ].
+						action: [ self watch deleteHistory ] ] ].
 	menu
 		addGroup: [ :group | 
 			group
@@ -166,14 +166,14 @@ WatchpointWindow >> setupMenu [
 						name: nil;
 						description: 'Stop Monitoring';
 						icon: (self iconNamed: #stop);
-						action: [ self watchpoint stop ] ].
+						action: [ self watch stop ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: nil;
 						description: 'Start Monitoring';
 						icon: (self iconNamed: #smallPrintIt);
-						action: [ self watchpoint start ] ] ].
+						action: [ self watch start ] ] ].
 	menu
 		addGroup: [ :group | 
 			group
@@ -182,7 +182,7 @@ WatchpointWindow >> setupMenu [
 						name: nil;
 						description: 'Inspect ...';
 						icon: (self iconNamed: #smallInspectIt);
-						action: [ self watchpoint inspect ] ].
+						action: [ self watch inspect ] ].
 			group
 				addItem: [ :item | 
 					item
@@ -190,34 +190,34 @@ WatchpointWindow >> setupMenu [
 						description: 'Browse ...';
 						icon: (self iconNamed: #nautilus);
 						action:
-								[ Smalltalk tools browser openOnMethod: self watchpoint compiledMethod ] ].
+								[ Smalltalk tools browser openOnMethod: self watch compiledMethod ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: nil;
 						description: 'Remove !';
 						icon: (self iconNamed: #delete);
-						action: [ self watchpoint uninstall ] ] ]
+						action: [ self watch uninstall ] ] ]
 ]
 
 { #category : #updating }
-WatchpointWindow >> step [
+WatchesWindow >> step [
 	self refreshItems 
 ]
 
 { #category : #api }
-WatchpointWindow >> title [
+WatchesWindow >> title [
 	| wpName |
-	wpName := self watchpoint tagname.
+	wpName := self watch tagname.
 	^'WP: ',(wpName isAllSeparators ifTrue: [ 'Unnamed' ] ifFalse: [ wpName ]).
 ]
 
 { #category : #accessing }
-WatchpointWindow >> watchpoint [
-	^ watchpoint
+WatchesWindow >> watch [
+	^ watch
 ]
 
 { #category : #accessing }
-WatchpointWindow >> watchpoint: anObject [
-	watchpoint := anObject
+WatchesWindow >> watch: anObject [
+	watch := anObject
 ]
