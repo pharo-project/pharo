@@ -228,7 +228,7 @@ Deprecation >> signal [
 
 { #category : #handling }
 Deprecation >> transform [
-	| node rewriteRule aMethod |
+	| node transformedNode rewriteRule aMethod |
 	self shouldTransform ifFalse: [ ^ self signal].
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender compiledCode method.
@@ -239,12 +239,13 @@ Deprecation >> transform [
 			replace: rule key with: rule value.
 		(rewriteRule executeTree: node)
 			ifFalse: [ ^ self signal ].
-		node replaceWith: rewriteRule tree. 
+		node replaceWith: (transformedNode := rewriteRule tree). 
 		Author 
 			useAuthor: 'AutoDeprecationRefactoring'
 			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].	
 		Log  ifNotNil: [:log | log add: self].
-		self logTranscript]
+		self logTranscript].
+	context return: (transformedNode evaluateForContext: context)
 ]
 
 { #category : #accessing }
