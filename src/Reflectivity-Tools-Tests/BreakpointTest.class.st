@@ -52,6 +52,14 @@ BreakpointTest >> testAddRemoveBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testBreakpointInitialization [
+	|bp|	
+	bp := Breakpoint new.
+	self assert: bp targetInstance isNil.
+	self deny: bp isObjectCentric
+]
+
+{ #category : #tests }
 BreakpointTest >> testModifyMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
@@ -90,4 +98,45 @@ BreakpointTest >> testRemoveMethodWithBreakpoint [
 	self
 		assertEmpty: cls methods;
 		assertEmpty: Breakpoint all
+]
+
+{ #category : #tests }
+BreakpointTest >> testScopeTo [
+	|bp object|	
+	bp := Breakpoint new.
+	object := Object new.
+	bp scopeTo: object.
+	
+	self assert: bp targetInstance identicalTo: object.
+	self assert: bp isObjectCentric
+]
+
+{ #category : #tests }
+BreakpointTest >> testTargetInstanceGarbageCollected [
+	|bp object|	
+	bp := Breakpoint new.
+	object := Object new.
+	bp scopeTo: object.
+	object := nil.
+	Smalltalk garbageCollect.
+	
+	self assert: bp targetInstance isNil.
+	self deny: bp isObjectCentric
+]
+
+{ #category : #tests }
+BreakpointTest >> testUninstallFromGarbageCollectedInstance [
+	|bp object ast|	
+	bp := Breakpoint new.
+	object := ReflectivityExamples new.
+	ast := (ReflectivityExamples >> #exampleAssignment) ast.
+	
+	bp node: ast.
+	bp scopeTo: object.
+	bp install.
+	
+	object := nil.
+	Smalltalk garbageCollect.
+	
+	self shouldnt: [ bp uninstall ] raise: Error.
 ]
