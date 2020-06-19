@@ -74,6 +74,31 @@ BreakpointTest >> testModifyMethodWithBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testObjectCentricAPI [
+	|object1 object2|		
+	object1 := ReflectivityExamples new.
+	object2 := ReflectivityExamples new.
+	
+	Breakpoint breakOn: #exampleAssignment inObject: object1.
+	
+	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break
+]
+
+{ #category : #tests }
+BreakpointTest >> testObjectCentricASTAPI [
+	|object1 object2 ast|		
+	object1 := ReflectivityExamples new.
+	object2 := ReflectivityExamples new.
+	ast := (ReflectivityExamples >> #exampleAssignment) ast statements first.
+	
+	Breakpoint breakOnAST: ast inObject: object1.
+	
+	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break
+]
+
+{ #category : #tests }
 BreakpointTest >> testObjectCentricBreakpoint [
 	|bp object1 object2 ast|	
 	bp := Breakpoint new.
@@ -90,6 +115,18 @@ BreakpointTest >> testObjectCentricBreakpoint [
 	
 	bp remove.
 	self shouldnt: [object1 exampleAssignment] raise: Break.
+]
+
+{ #category : #tests }
+BreakpointTest >> testObjectCentricObjectAPI [
+	|object1 object2|		
+	object1 := ReflectivityExamples new.
+	object2 := ReflectivityExamples new.
+	
+	object1 haltOnCallTo: #exampleAssignment.
+	
+	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
 { #category : #tests }
