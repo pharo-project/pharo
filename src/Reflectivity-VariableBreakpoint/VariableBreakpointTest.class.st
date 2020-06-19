@@ -24,14 +24,14 @@ VariableBreakpointTest >> allNodes [
 VariableBreakpointTest >> allNodesForV1 [
 	^ OrderedCollection new
 		addAll: self nodesForV1InFieldWatchpointMockClass;
-		addAll: self nodesForV1InFieldWatchpointMockSubclass;
+		addAll: self nodesForV1InVariableBreakpointMockSubclass;
 		yourself
 ]
 
 { #category : #helpers }
 VariableBreakpointTest >> allNodesForV2 [
 	^ OrderedCollection new
-		addAll: self nodesForV2InFieldWatchpointMockSubclass;
+		addAll: self nodesForV2InVariableBreakpointMockSubclass;
 		yourself
 ]
 
@@ -62,7 +62,7 @@ VariableBreakpointTest >> nodesForV1InFieldWatchpointMockClass [
 ]
 
 { #category : #helpers }
-VariableBreakpointTest >> nodesForV1InFieldWatchpointMockSubclass [
+VariableBreakpointTest >> nodesForV1InVariableBreakpointMockSubclass [
 	|nodes |
 	nodes := OrderedCollection new.
 	nodes add: (VariableBreakpointMockSubclass>>#instVarWrites) ast statements first.
@@ -71,7 +71,7 @@ VariableBreakpointTest >> nodesForV1InFieldWatchpointMockSubclass [
 ]
 
 { #category : #helpers }
-VariableBreakpointTest >> nodesForV2InFieldWatchpointMockSubclass [
+VariableBreakpointTest >> nodesForV2InVariableBreakpointMockSubclass [
 	|nodes |
 	nodes := OrderedCollection new.
 	nodes add: (VariableBreakpointMockSubclass>>#initialize) ast statements second.
@@ -328,7 +328,7 @@ VariableBreakpointTest >> testInitialize [
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testInstall [
 	
-	wp := VariableBreakpoint newWatchPointInClass: VariableBreakpointMockSubclass.	
+	wp := VariableBreakpoint newVariableBreakpointInClass: VariableBreakpointMockSubclass.	
 	wp install.
 	self assertCollection: Breakpoint all includesAll: (OrderedCollection with: wp)
 ]
@@ -336,14 +336,14 @@ VariableBreakpointTest >> testInstall [
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testIsInstalled [
 	
-	wp := VariableBreakpoint newWatchPointInClass: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint newVariableBreakpointInClass: VariableBreakpointMockSubclass.
 	self deny: wp isInstalled.
 	wp install.
 	self assert: wp isInstalled
 ]
 
 { #category : #'tests - initialization' }
-VariableBreakpointTest >> testIsWatchpoint [
+VariableBreakpointTest >> testIsVariableBreakpoint [
 	self assert: VariableBreakpoint new isVariableBreakpoint.
 	self deny: Breakpoint new isVariableBreakpoint
 ]
@@ -361,8 +361,8 @@ VariableBreakpointTest >> testNewBreakpointForVariableInClassForMethod [
 ]
 
 { #category : #'tests - initialization' }
-VariableBreakpointTest >> testNewWatchPointInClass [
-	wp := VariableBreakpoint newWatchPointInClass: VariableBreakpointMockSubclass.
+VariableBreakpointTest >> testNewVariableBreakpointInClass [
+	wp := VariableBreakpoint newVariableBreakpointInClass: VariableBreakpointMockSubclass.
 	self assert: wp class identicalTo: VariableBreakpoint.
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1 with: #v2).
 	self assert: wp targetClassOrMethod equals: VariableBreakpointMockSubclass

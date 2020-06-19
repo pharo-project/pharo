@@ -33,7 +33,7 @@ VariableBreakpoint class >> newBreakpointForVariable: aVariableName inClass: aCl
 ]
 
 { #category : #'instance creation' }
-VariableBreakpoint class >> newWatchPointInClass: aClass [
+VariableBreakpoint class >> newVariableBreakpointInClass: aClass [
 	^ self new
 		targetClassOrMethod: aClass;
 		targetVariableNames: (self allSlotNamesFor: aClass)
@@ -94,26 +94,26 @@ VariableBreakpoint class >> watchVariableWrites: aVariableName inObject: anObjec
 
 { #category : #API }
 VariableBreakpoint class >> watchVariablesIn: aClass [
-	^ (self newWatchPointInClass: aClass) install
+	^ (self newVariableBreakpointInClass: aClass) install
 ]
 
 { #category : #'API - object-centric' }
 VariableBreakpoint class >> watchVariablesInObject: anObject [
-	^ (self newWatchPointInClass: anObject class)
+	^ (self newVariableBreakpointInClass: anObject class)
 		scopeTo: anObject;
 		install
 ]
 
 { #category : #API }
 VariableBreakpoint class >> watchVariablesReadsIn: aClass [
-	^ (self newWatchPointInClass: aClass)
+	^ (self newVariableBreakpointInClass: aClass)
 		accessStrategy: #read;
 		install
 ]
 
 { #category : #'API - object-centric' }
 VariableBreakpoint class >> watchVariablesReadsInObject: anObject [
-	^ (self newWatchPointInClass: anObject class)
+	^ (self newVariableBreakpointInClass: anObject class)
 		accessStrategy: #read;
 		scopeTo: anObject;
 		install
@@ -121,14 +121,14 @@ VariableBreakpoint class >> watchVariablesReadsInObject: anObject [
 
 { #category : #API }
 VariableBreakpoint class >> watchVariablesWritesIn: aClass [
-	^ (self newWatchPointInClass: aClass)
+	^ (self newVariableBreakpointInClass: aClass)
 		accessStrategy: #write;
 		install
 ]
 
 { #category : #'API - object-centric' }
 VariableBreakpoint class >> watchVariablesWritesInObject: anObject [
-	^ (self newWatchPointInClass: anObject class)
+	^ (self newVariableBreakpointInClass: anObject class)
 		accessStrategy: #write;
 		scopeTo: anObject;
 		install
