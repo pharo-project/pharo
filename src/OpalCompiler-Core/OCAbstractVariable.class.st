@@ -3,7 +3,7 @@ I am an entry in a Scope that gets associated with variable nodes of the same na
 "
 Class {
 	#name : #OCAbstractVariable,
-	#superclass : #Object,
+	#superclass : #Variable,
 	#instVars : [
 		'scope',
 		'usage'
@@ -11,9 +11,10 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-OCAbstractVariable class >> semanticNodeClass [
-	self subclassResponsibility 
+{ #category : #testing }
+OCAbstractVariable class >> isDeprecated [
+	"OCAbstractLocalVariable is now direct subclass of Variable represened various kind of local method vars"
+	^true
 ]
 
 { #category : #converting }
@@ -25,50 +26,6 @@ OCAbstractVariable >> asString [
 { #category : #accessing }
 OCAbstractVariable >> definingScope [
 	^ scope
-]
-
-{ #category : #emitting }
-OCAbstractVariable >> emitStore: methodBuilder [
-
-	self subclassResponsibility
-]
-
-{ #category : #emitting }
-OCAbstractVariable >> emitValue: methodBuilder [
-
-	self subclassResponsibility
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isArg [
-	^false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isClassVariable [
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isGlobal [
-
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isGlobalVariable [
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isInstance [
-	^false
-
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isLiteralVariable [
-	^false
 ]
 
 { #category : #testing }
@@ -94,60 +51,11 @@ OCAbstractVariable >> isRepeatedWrite [
 
 ]
 
-{ #category : #testing }
-OCAbstractVariable >> isSelf [
-	^false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isSelfOrSuper [
-	
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isSpecialVariable [
-	^false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isSuper [
-	^false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isTemp [
-
-	^ false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isThisContext [
-	^false
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isUndeclared [
-
-	^ false
-]
-
-{ #category : #'read/write usage' }
-OCAbstractVariable >> isUninitialized [
-
-	^ false
-]
-
 { #category : #'read/write usage' }
 OCAbstractVariable >> isUnused [
 	"when the var is never read or written, it is not used.
 	Note: we have a special #arg use which means arguments are never unused"
 	^ usage isNil
-]
-
-{ #category : #testing }
-OCAbstractVariable >> isWritable [
-	^ true
 ]
 
 { #category : #'read/write usage' }
@@ -174,17 +82,6 @@ OCAbstractVariable >> markWrite [
 	usage := #write.
 ]
 
-{ #category : #accessing }
-OCAbstractVariable >> name [
-
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
-OCAbstractVariable >> originalVar [
-	^ self
-]
-
 { #category : #printing }
 OCAbstractVariable >> printOn: stream [
 
@@ -204,11 +101,6 @@ OCAbstractVariable >> scope: aLexicalScope [
 ]
 
 { #category : #accessing }
-OCAbstractVariable >> semanticNodeClass [
-	^self class semanticNodeClass
-]
-
-{ #category : #accessing }
 OCAbstractVariable >> usage [
 
 	^ usage
@@ -218,10 +110,4 @@ OCAbstractVariable >> usage [
 OCAbstractVariable >> usage: anObject [
 
 	usage := anObject
-]
-
-{ #category : #accessing }
-OCAbstractVariable >> variable [
-	"I return the first class variable that I model in the case of globals and ivars"
-	^self
 ]

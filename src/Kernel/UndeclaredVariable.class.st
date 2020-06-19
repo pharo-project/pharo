@@ -11,6 +11,23 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #'instance creation' }
+UndeclaredVariable class >> registeredWithName: aString [
+	| varName |
+	varName := aString asSymbol.
+	
+	Undeclared associationAt: varName ifPresent: [ :found | 
+		found class == Association ifTrue: [ 
+			"Found undeclared var can be an association during current bootstrap process.
+			So here we should convert it to real variable object otherwise the build will be broken"
+			found becomeForward: (self named: varName)].
+		^found	].
+	
+	^(self named: varName)
+		register;
+		yourself
+]
+
 { #category : #queries }
 UndeclaredVariable >> definingClass [
 	"Nobody defines undeclared variable"
@@ -28,9 +45,35 @@ UndeclaredVariable >> emitValue: methodBuilder [
 	methodBuilder pushLiteralVariable: self
 ]
 
+{ #category : #OCVARIABLE }
+UndeclaredVariable >> isGlobal [
+	^false
+]
+
 { #category : #testing }
 UndeclaredVariable >> isReferenced [
  	"A Undeclared could be referenced from any method"
  	^Smalltalk globals allBehaviors
  		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self ]
+]
+
+{ #category : #registry }
+UndeclaredVariable >> isRegistered [ 
+	^Undeclared includesKey: name
+]
+
+{ #category : #OCVARIABLE }
+UndeclaredVariable >> isUndeclared [
+
+	^ true
+]
+
+{ #category : #registry }
+UndeclaredVariable >> register [ 
+	Undeclared add: self
+]
+
+{ #category : #registry }
+UndeclaredVariable >> unregister [ 
+	Undeclared removeKey: name ifAbsent: [ ]
 ]

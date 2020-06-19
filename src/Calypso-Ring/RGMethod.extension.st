@@ -92,7 +92,7 @@ RGMethod >> readsSlot: aSlot [
 	nodes := nodes select: #isVariable.
 	nodes := nodes select: #isInstance.
 	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
-	^ nodes anySatisfy: [ :node | node binding slot == aSlot ]
+	^ nodes anySatisfy: [ :node | node binding == aSlot ]
 ]
 
 { #category : #'*Calypso-Ring' }
@@ -130,7 +130,7 @@ RGMethod >> writesSlot: aSlot [
 			node parent isAssignment and: [  
 				(node parent variable = node) and: [  
 					node isInstance and: [
-						(node binding slot ==  aSlot)
+						(node binding ==  aSlot)
 					 		ifTrue: [^true]]]]]]. 
 	^false
 ]

@@ -14,6 +14,12 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #testing }
+OCSlotVariable class >> isDeprecated [
+	"Use Slot directly instead"
+	^true
+]
+
 { #category : #accessing }
 OCSlotVariable class >> semanticNodeClass [
 

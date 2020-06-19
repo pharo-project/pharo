@@ -1,6 +1,6 @@
 Class {
 	#name : #RGSlot,
-	#superclass : #RGElement,
+	#superclass : #RGVariable,
 	#category : #'Ring-Core-Kernel'
 }
 
@@ -46,4 +46,9 @@ RGSlot >> name: aString [
 
 	self parent parent announceDefinitionChangeDuring: [ 
 		super name: aString ].
+]
+
+{ #category : #testing }
+RGSlot >> semanticNodeClass [
+	^RBInstanceVariableNode
 ]
