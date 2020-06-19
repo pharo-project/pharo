@@ -30,7 +30,8 @@ BreakpointTest >> setUp [
 
 { #category : #running }
 BreakpointTest >> tearDown [
-	| pkg |	
+	| pkg |
+	Breakpoint removeAll.	
 	Breakpoint all addAll: previousBreakpoints.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
@@ -70,6 +71,22 @@ BreakpointTest >> testModifyMethodWithBreakpoint [
 	self assert: (cls >> #dummy) hasBreakpoint.
 	cls compile: 'dummy ^43'.
 	self assertEmpty: Breakpoint all
+]
+
+{ #category : #tests }
+BreakpointTest >> testObjectCentricBreakpoint [
+	|bp object1 object2 ast|	
+	bp := Breakpoint new.
+	object1 := ReflectivityExamples new.
+	object2 := ReflectivityExamples new.
+	ast := (ReflectivityExamples >> #exampleAssignment) ast.
+	
+	bp node: ast.
+	bp scopeTo: object1.
+	bp install.
+	
+	self should: [object1 exampleAssignment] raise: Halt.
+	self shouldnt: [object2 exampleAssignment] raise: Halt
 ]
 
 { #category : #tests }
