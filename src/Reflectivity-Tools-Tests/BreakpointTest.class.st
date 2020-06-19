@@ -138,5 +138,5 @@ BreakpointTest >> testUninstallFromGarbageCollectedInstance [
 	object := nil.
 	Smalltalk garbageCollect.
 	
-	self shouldnt: [ bp uninstall ] raise: Error.
+	self shouldnt: [ bp remove ] raise: Error.
 ]

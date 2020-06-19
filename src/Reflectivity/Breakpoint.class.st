@@ -17,15 +17,16 @@ Class {
 	#name : #Breakpoint,
 	#superclass : #Object,
 	#instVars : [
-		'condition',
-		'link',
-		'node',
-		'level',
-		'options'
+		'#condition',
+		'#link',
+		'#node',
+		'#level',
+		'#options',
+		'#targetInstance => WeakSlot'
 	],
 	#classVars : [
-		'AllBreakpoints',
-		'Observers'
+		'#AllBreakpoints',
+		'#Observers'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
@@ -234,6 +235,8 @@ Breakpoint >> condition: aCondition [
 
 { #category : #initialization }
 Breakpoint >> initialize [
+	
+	self class initializeSlots: self.
 	options := #(+ optionCompileOnLinkInstallation + optionAnnounce)
 ]
 
@@ -241,6 +244,11 @@ Breakpoint >> initialize [
 Breakpoint >> install [
 	self class addBreakpoint: self.
 	self node link: self link
+]
+
+{ #category : #testing }
+Breakpoint >> isObjectCentric [
+	^self targetInstance notNil
 ]
 
 { #category : #accessing }
@@ -288,4 +296,19 @@ Breakpoint >> options: anArray [
 Breakpoint >> remove [
 	self class removeBreakpoint: self.
 	link uninstall
+]
+
+{ #category : #api }
+Breakpoint >> scopeTo: anInstance [
+	self targetInstance: anInstance
+]
+
+{ #category : #accessing }
+Breakpoint >> targetInstance [
+	^targetInstance
+]
+
+{ #category : #accessing }
+Breakpoint >> targetInstance: anObject [
+	targetInstance := anObject
 ]

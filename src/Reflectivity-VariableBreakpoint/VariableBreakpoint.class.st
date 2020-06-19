@@ -5,7 +5,6 @@ Class {
 	#name : #VariableBreakpoint,
 	#superclass : #Breakpoint,
 	#instVars : [
-		'targetInstance',
 		'targetVariableNames',
 		'accessStrategy',
 		'isInstalled',
@@ -194,7 +193,6 @@ VariableBreakpoint >> remove [
 
 { #category : #api }
 VariableBreakpoint >> scopeTo: anInstance [
-	self targetInstance: anInstance.
 	self condition: [ :ctx | ctx receiver == targetInstance ]
 ]
 
@@ -206,16 +204,6 @@ VariableBreakpoint >> targetClassOrMethod [
 { #category : #accessing }
 VariableBreakpoint >> targetClassOrMethod: anObject [
 	targetClassOrMethod := anObject
-]
-
-{ #category : #accessing }
-VariableBreakpoint >> targetInstance [
-	^ targetInstance
-]
-
-{ #category : #accessing }
-VariableBreakpoint >> targetInstance: anObject [
-	targetInstance := anObject
 ]
 
 { #category : #accessing }
