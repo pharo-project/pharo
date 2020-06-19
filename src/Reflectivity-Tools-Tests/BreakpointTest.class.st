@@ -85,8 +85,11 @@ BreakpointTest >> testObjectCentricBreakpoint [
 	bp scopeTo: object1.
 	bp install.
 	
-	self should: [object1 exampleAssignment] raise: Halt.
-	self shouldnt: [object2 exampleAssignment] raise: Halt
+	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break.
+	
+	bp remove.
+	self shouldnt: [object1 exampleAssignment] raise: Break.
 ]
 
 { #category : #tests }
