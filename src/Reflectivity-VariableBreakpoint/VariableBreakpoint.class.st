@@ -193,6 +193,7 @@ VariableBreakpoint >> remove [
 
 { #category : #api }
 VariableBreakpoint >> scopeTo: anInstance [
+	super scopeTo: anInstance.
 	self condition: [ :ctx | ctx receiver == targetInstance ]
 ]
 
