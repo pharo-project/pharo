@@ -42,6 +42,23 @@ Breakpoint class >> all [
 	^ AllBreakpoints ifNil: [ AllBreakpoints := OrderedCollection new ]
 ]
 
+{ #category : #'API - object-centric' }
+Breakpoint class >> breakOn: aSelector inObject: anObject [
+	|ast|
+	ast := (anObject class lookupSelector: aSelector) ast.
+	^self breakOnAST: ast inObject: anObject
+]
+
+{ #category : #'API - object-centric' }
+Breakpoint class >> breakOnAST: aNode inObject: anObject [
+	|bp|	
+	bp := self new.
+	bp node: aNode.
+	bp scopeTo: anObject.
+	bp install.
+	^bp
+]
+
 { #category : #all }
 Breakpoint class >> browseAll [
 	<script>
