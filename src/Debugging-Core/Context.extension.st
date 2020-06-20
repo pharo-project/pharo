@@ -22,15 +22,13 @@ Context >> callPrimitive: primNumber [
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
 	| var |
-	var := self astScope lookupVar: aSymbol.
-	"Local variables"
-	var isTemp ifTrue: [^ self tempNamed: aSymbol].
-	"Instance variables"
-	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
-	"Class variables and globals"
-	var isGlobal ifTrue: [ ^ var variable value ].
-	^ nil.
-	
+	var := self lookupVar: aSymbol.
+	^ var readFromContext: self
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> lookupVar: aSymbol [
+	^ self astScope lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
@@ -358,10 +356,10 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	| scope var |
-	scope := self astScope.
-	var := scope lookupVar: aName.
-	^var readFromContext: self scope: scope.
+	| var |
+	var := self lookupVar: aName.
+	var isTemp ifFalse: [ ^self error: aName, ' is not a temp but, ', var class name].
+	^var readFromContext: self
 ]
 
 { #category : #'*Debugging-Core' }

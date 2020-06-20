@@ -130,11 +130,6 @@ LiteralVariable >> isGlobalClassNameBinding [
 		and: [ name == self value name ]
 ]
 
-{ #category : #testing }
-LiteralVariable >> isGlobalVariable [
-	^false
-]
-
 { #category : #OCVARIABLE }
 LiteralVariable >> isLiteralVariable [
 	^true
@@ -228,6 +223,11 @@ LiteralVariable >> printOn: aStream [
 
 { #category : #'meta-object-protocol' }
 LiteralVariable >> read [
+	^self value
+]
+
+{ #category : #debugging }
+LiteralVariable >> readFromContext: aContext [
 	^self value
 ]
 

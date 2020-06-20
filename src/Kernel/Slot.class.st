@@ -292,6 +292,11 @@ Slot >> read: anObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #debugging }
+Slot >> readFromContext: aContext [
+	^self read: aContext receiver
+]
+
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"

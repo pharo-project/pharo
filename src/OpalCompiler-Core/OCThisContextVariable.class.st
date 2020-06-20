@@ -30,3 +30,8 @@ OCThisContextVariable >> initialize [
 OCThisContextVariable >> isThisContext [
 	^true
 ]
+
+{ #category : #debugging }
+OCThisContextVariable >> readFromContext: aContext [
+	^aContext
+]

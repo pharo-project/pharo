@@ -230,6 +230,11 @@ Variable >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
+{ #category : #debugging }
+Variable >> readFromContext: aContext [
+	self subclassResponsibility 
+]
+
 { #category : #properties }
 Variable >> removePropertiesIfEmpty [
 	^ Properties at: self ifPresent: [ :dict |
