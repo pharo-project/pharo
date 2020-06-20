@@ -80,6 +80,16 @@ SlotTest >> testPropertyAtPut [
 	self assert: ivar properties isNil
 ]
 
+{ #category : #'tests - read/write' }
+SlotTest >> testReadFromContext [ 
+	
+	| slot |
+	ivarForTesting := #testValue.
+	slot := self class slotNamed: #ivarForTesting.
+	
+	self assert: (slot readFromContext: thisContext) equals: #testValue
+]
+
 { #category : #'tests - properties' }
 SlotTest >> testRemoveProperty [
 	| ivar | 
@@ -99,6 +109,16 @@ SlotTest >> testRemoveProperty [
 SlotTest >> testSlotUsers [
 	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
 	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
+]
+
+{ #category : #'tests - read/write' }
+SlotTest >> testWriteToContext [ 
+	
+	| slot |
+	slot := self class slotNamed: #ivarForTesting.
+	slot write: #testValue toContext: thisContext.
+	
+	self assert: ivarForTesting equals: #testValue
 ]
 
 { #category : #'tests - misc' }

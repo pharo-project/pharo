@@ -350,3 +350,8 @@ Slot >> wantsInitialization [
 Slot >> write: aValue to: anObject [
 	^self subclassResponsibility
 ]
+
+{ #category : #debugging }
+Slot >> write: aValue toContext: aContext [
+	self write: aValue to: aContext receiver
+]

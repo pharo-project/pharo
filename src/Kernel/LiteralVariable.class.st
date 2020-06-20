@@ -261,3 +261,11 @@ LiteralVariable >> write: anObject [
 	self value: anObject.
 	^anObject
 ]
+
+{ #category : #debugging }
+LiteralVariable >> write: aValue toContext: aContext [
+	self isWritable ifFalse: [ 
+		^self error: 'Variable ' , name, ' is read only'].
+
+	value := aValue
+]

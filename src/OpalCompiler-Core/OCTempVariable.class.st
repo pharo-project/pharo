@@ -164,6 +164,14 @@ OCTempVariable >> readFromLocalContext: aContext [
 ]
 
 { #category : #debugging }
+OCTempVariable >> write: aValue toContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	self writeFromContext: aContext scope: contextScope value: aValue
+]
+
+{ #category : #debugging }
 OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| definitionContext |

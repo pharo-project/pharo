@@ -27,6 +27,14 @@ Context >> lookupSymbol: aSymbol [
 ]
 
 { #category : #'*Debugging-Core' }
+Context >> lookupTempVar: aSymbol [
+	| var |
+	var := self lookupVar: aSymbol.
+	var isTemp ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	^var
+]
+
+{ #category : #'*Debugging-Core' }
 Context >> lookupVar: aSymbol [
 	^ self astScope lookupVar: aSymbol
 ]
@@ -357,8 +365,7 @@ Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
 	| var |
-	var := self lookupVar: aName.
-	var isTemp ifFalse: [ ^self error: aName, ' is not a temp but, ', var class name].
+	var := self lookupTempVar: aName.
 	^var readFromContext: self
 ]
 
@@ -366,10 +373,9 @@ Context >> tempNamed: aName [
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	| scope var |
-	scope := self astScope.
-	var := scope lookupVar: aName.
-	^var writeFromContext: self scope: scope value: anObject
+	| var |
+	var := self lookupTempVar: aName.
+	^var write: anObject toContext: self
 ]
 
 { #category : #'*Debugging-Core' }
