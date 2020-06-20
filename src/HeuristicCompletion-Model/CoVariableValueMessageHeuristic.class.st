@@ -33,7 +33,7 @@ CoVariableValueMessageHeuristic >> valueOfVariable: aName inContext: completionC
 	If we find in the doItContext has a variable with the given name, use it, otherwise ignore it."
 	(completionContext doItContext ifNotNil: [ :context | 
 		(context lookupVar: aName)
-			ifNotNil: [:var | var readFromContext: context ] ])
+			ifNotNil: [:var | var readInContext: context ] ])
 		ifNotNil: [ :value | ^ aBlock value: value ].
 
 	"In the playground, the binding values comes in the bindings of the requestor.

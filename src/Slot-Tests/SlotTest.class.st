@@ -87,7 +87,7 @@ SlotTest >> testReadFromContext [
 	ivarForTesting := #testValue.
 	slot := self class slotNamed: #ivarForTesting.
 	
-	self assert: (slot readFromContext: thisContext) equals: #testValue
+	self assert: (slot readInContext: thisContext) equals: #testValue
 ]
 
 { #category : #'tests - properties' }
@@ -116,7 +116,7 @@ SlotTest >> testWriteToContext [
 	
 	| slot |
 	slot := self class slotNamed: #ivarForTesting.
-	slot write: #testValue toContext: thisContext.
+	slot write: #testValue inContext: thisContext.
 	
 	self assert: ivarForTesting equals: #testValue
 ]

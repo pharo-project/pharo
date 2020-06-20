@@ -23,7 +23,7 @@ Context >> callPrimitive: primNumber [
 Context >> lookupSymbol: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
-	^ var readFromContext: self
+	^ var readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -366,7 +366,7 @@ Context >> tempNamed: aName [
 
 	| var |
 	var := self lookupTempVar: aName.
-	^var readFromContext: self
+	^var readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -375,7 +375,7 @@ Context >> tempNamed: aName put: anObject [
 	
 	| var |
 	var := self lookupTempVar: aName.
-	^var write: anObject toContext: self
+	^var write: anObject inContext: self
 ]
 
 { #category : #'*Debugging-Core' }

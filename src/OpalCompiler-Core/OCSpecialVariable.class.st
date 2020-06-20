@@ -30,7 +30,7 @@ OCSpecialVariable >> isWritable [
 ]
 
 { #category : #debugging }
-OCSpecialVariable >> write: aValue toContext: aContext [
+OCSpecialVariable >> write: aValue inContext: aContext [
 	
 	self error: name, ' is reserved word and cant be modified'
 ]

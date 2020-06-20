@@ -32,6 +32,6 @@ OCThisContextVariable >> isThisContext [
 ]
 
 { #category : #debugging }
-OCThisContextVariable >> readFromContext: aContext [
+OCThisContextVariable >> readInContext: aContext [
 	^aContext
 ]

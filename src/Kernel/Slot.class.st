@@ -293,7 +293,7 @@ Slot >> read: anObject [
 ]
 
 { #category : #debugging }
-Slot >> readFromContext: aContext [
+Slot >> readInContext: aContext [
 	^self read: aContext receiver
 ]
 
@@ -346,12 +346,12 @@ Slot >> wantsInitialization [
 	^false
 ]
 
+{ #category : #debugging }
+Slot >> write: aValue inContext: aContext [
+	self write: aValue to: aContext receiver
+]
+
 { #category : #'meta-object-protocol' }
 Slot >> write: aValue to: anObject [
 	^self subclassResponsibility
-]
-
-{ #category : #debugging }
-Slot >> write: aValue toContext: aContext [
-	self write: aValue to: aContext receiver
 ]

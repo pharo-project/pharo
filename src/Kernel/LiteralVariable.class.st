@@ -227,7 +227,7 @@ LiteralVariable >> read [
 ]
 
 { #category : #debugging }
-LiteralVariable >> readFromContext: aContext [
+LiteralVariable >> readInContext: aContext [
 	^self value
 ]
 
@@ -263,7 +263,7 @@ LiteralVariable >> write: anObject [
 ]
 
 { #category : #debugging }
-LiteralVariable >> write: aValue toContext: aContext [
+LiteralVariable >> write: aValue inContext: aContext [
 	self isWritable ifFalse: [ 
 		^self error: 'Variable ' , name, ' is read only'].
 

@@ -231,7 +231,7 @@ Variable >> propertyAt: propName put: propValue [
 ]
 
 { #category : #debugging }
-Variable >> readFromContext: aContext [
+Variable >> readInContext: aContext [
 	self subclassResponsibility 
 ]
 
@@ -276,6 +276,6 @@ Variable >> variable [
 ]
 
 { #category : #debugging }
-Variable >> write: aValue toContext: aContext [
+Variable >> write: aValue inContext: aContext [
 	self subclassResponsibility 
 ]

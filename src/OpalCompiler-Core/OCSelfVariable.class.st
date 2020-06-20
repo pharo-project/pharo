@@ -37,6 +37,6 @@ OCSelfVariable >> isSelfOrSuper [
 ]
 
 { #category : #debugging }
-OCSelfVariable >> readFromContext: aContext [
+OCSelfVariable >> readInContext: aContext [
 	^aContext receiver
 ]

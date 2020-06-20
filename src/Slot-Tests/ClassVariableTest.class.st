@@ -71,7 +71,7 @@ ClassVariableTest >> testReadingFromContext [
 	classVariable := self class classVariableNamed: #TestVariable.
 	
 	self
-		assert: (classVariable readFromContext: thisContext)
+		assert: (classVariable readInContext: thisContext)
 		equals: #testValue
 ]
 
@@ -93,7 +93,7 @@ ClassVariableTest >> testWritingToContext [
 
 	| classVariable |
 	classVariable := self class classVariableNamed: #TestVariable.
-	classVariable write: #testValue toContext: thisContext.
+	classVariable write: #testValue inContext: thisContext.
 	
 	self assert: TestVariable equals: #testValue
 ]
