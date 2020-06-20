@@ -50,7 +50,7 @@ VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariable: aVariableName in: aClassOrCompiledMethod [
+VariableBreakpoint class >> watchVariable: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		install
 ]
@@ -63,7 +63,7 @@ VariableBreakpoint class >> watchVariable: aVariableName inObject: anObject [
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariableReads: aVariableName in: aClassOrCompiledMethod [
+VariableBreakpoint class >> watchVariableReads: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		accessStrategy: #read;
 		install
@@ -78,7 +78,7 @@ VariableBreakpoint class >> watchVariableReads: aVariableName inObject: anObject
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariableWrites: aVariableName in: aClassOrCompiledMethod [
+VariableBreakpoint class >> watchVariableWrites: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		accessStrategy: #write;
 		install
@@ -93,7 +93,7 @@ VariableBreakpoint class >> watchVariableWrites: aVariableName inObject: anObjec
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariablesIn: aClass [
+VariableBreakpoint class >> watchVariablesInClass: aClass [
 	^ (self newVariableBreakpointInClass: aClass) install
 ]
 
@@ -105,7 +105,7 @@ VariableBreakpoint class >> watchVariablesInObject: anObject [
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariablesReadsIn: aClass [
+VariableBreakpoint class >> watchVariablesReadsInClass: aClass [
 	^ (self newVariableBreakpointInClass: aClass)
 		accessStrategy: #read;
 		install
@@ -120,7 +120,7 @@ VariableBreakpoint class >> watchVariablesReadsInObject: anObject [
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariablesWritesIn: aClass [
+VariableBreakpoint class >> watchVariablesWritesInClass: aClass [
 	^ (self newVariableBreakpointInClass: aClass)
 		accessStrategy: #write;
 		install
