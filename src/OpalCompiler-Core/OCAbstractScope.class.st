@@ -6,16 +6,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'outerScope',
-		'node',
-		'children'
+		'node'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
-
-{ #category : #initializing }
-OCAbstractScope >> addChild: aScope [
-	self children add: aScope
-]
 
 { #category : #accessing }
 OCAbstractScope >> children [
@@ -97,8 +91,7 @@ OCAbstractScope >> outerScope [
 { #category : #initializing }
 OCAbstractScope >> outerScope: aSemScope [
 
-	outerScope := aSemScope.
-	aSemScope addChild: self. 
+	outerScope := aSemScope
 ]
 
 { #category : #levels }
