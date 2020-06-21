@@ -32,8 +32,8 @@ OCInstanceScope >> hasBindingThatBeginsWith: aString [
 OCInstanceScope >> initialize [
   
 	vars := Dictionary new.
-	selfVar := SelfVariable new.
-	superVar := SuperVariable new
+	selfVar := SelfVariable instance.
+	superVar := SuperVariable instance
 ]
 
 { #category : #acessing }

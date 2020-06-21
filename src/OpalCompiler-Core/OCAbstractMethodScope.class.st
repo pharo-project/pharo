@@ -120,7 +120,7 @@ OCAbstractMethodScope >> initialize [
 	copiedVars := Dictionary new.
 	id := 0.
 	
-	thisContextVar := ThisContextVariable new
+	thisContextVar := ThisContextVariable instance
 ]
 
 { #category : #'temp vars' }

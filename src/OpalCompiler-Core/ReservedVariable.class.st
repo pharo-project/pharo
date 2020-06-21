@@ -4,8 +4,16 @@ I model self, thisContext and super
 Class {
 	#name : #ReservedVariable,
 	#superclass : #Variable,
+	#classInstVars : [
+		'instance'
+	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
+
+{ #category : #accessing }
+ReservedVariable class >> instance [ 
+	^instance ifNil: [ instance := self new ]
+]
 
 { #category : #testing }
 ReservedVariable class >> isAbstract [ 
