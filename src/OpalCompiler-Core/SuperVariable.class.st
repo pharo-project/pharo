@@ -1,43 +1,37 @@
 "
-I model super variables
+I model ""super"" keyword
 "
 Class {
-	#name : #OCSuperVariable,
-	#superclass : #OCSpecialVariable,
+	#name : #SuperVariable,
+	#superclass : #ReservedVariable,
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }
-OCSuperVariable class >> semanticNodeClass [
+SuperVariable class >> semanticNodeClass [
 
 	^RBSuperNode 
 ]
 
 { #category : #emitting }
-OCSuperVariable >> emitValue: methodBuilder [
+SuperVariable >> emitValue: methodBuilder [
 	"super references the receiver, send that follows is a super send (the message lookup starts in the superclass)"
 	methodBuilder pushReceiver
 ]
 
 { #category : #initialization }
-OCSuperVariable >> initialize [
+SuperVariable >> initialize [
 	super initialize.
 	
 	name := 'super'
 ]
 
 { #category : #testing }
-OCSuperVariable >> isSelfOrSuper [
-	
-	^ true
-]
-
-{ #category : #testing }
-OCSuperVariable >> isSuper [
+SuperVariable >> isSuper [
 	^true
 ]
 
 { #category : #debugging }
-OCSuperVariable >> readInContext: aContext [
+SuperVariable >> readInContext: aContext [
 	^aContext receiver
 ]

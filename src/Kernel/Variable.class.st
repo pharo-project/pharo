@@ -137,7 +137,7 @@ Variable >> isSelf [
 { #category : #testing }
 Variable >> isSelfOrSuper [
 	
-	^ false
+	^ self isSelf or: [ self isSuper ]
 ]
 
 { #category : #testing }

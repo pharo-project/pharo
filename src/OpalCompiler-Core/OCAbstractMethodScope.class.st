@@ -120,9 +120,7 @@ OCAbstractMethodScope >> initialize [
 	copiedVars := Dictionary new.
 	id := 0.
 	
-	thisContextVar := OCThisContextVariable new
-		scope: self; yourself.
-
+	thisContextVar := ThisContextVariable new
 ]
 
 { #category : #'temp vars' }

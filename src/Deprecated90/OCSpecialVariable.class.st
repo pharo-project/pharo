@@ -4,7 +4,7 @@ I model self, thisContext and super
 Class {
 	#name : #OCSpecialVariable,
 	#superclass : #OCAbstractLocalVariable,
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
 { #category : #emitting }
