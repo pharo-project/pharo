@@ -188,11 +188,6 @@ Variable >> name: aSymbol [
 	name := aSymbol
 ]
 
-{ #category : #OCVARIABLE }
-Variable >> originalVar [
-	^ self
-]
-
 { #category : #properties }
 Variable >> properties [
 	^ Properties at: self ifAbsent: nil
@@ -259,20 +254,9 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : #OCVARIABLE }
-Variable >> semanticNodeClass [
-	^self class semanticNodeClass
-]
-
 { #category : #queries }
 Variable >> usingMethods [
 	self subclassResponsibility
-]
-
-{ #category : #OCVARIABLE }
-Variable >> variable [
-	"I return the first class variable that I model in the case of globals and ivars"
-	^self
 ]
 
 { #category : #debugging }

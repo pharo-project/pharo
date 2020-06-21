@@ -6,7 +6,7 @@ I am like a global an association, but instead of Smalltalk globals, I live in t
 Class {
 	#name : #OCUndeclaredVariable,
 	#superclass : #OCAbstractVariable,
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
 { #category : #testing }

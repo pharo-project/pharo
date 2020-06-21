@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'slot'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
 { #category : #testing }
