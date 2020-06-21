@@ -125,11 +125,6 @@ Variable >> isReferenced [
 ]
 
 { #category : #OCVARIABLE }
-Variable >> isRemote [
-	^false
-]
-
-{ #category : #OCVARIABLE }
 Variable >> isSelf [
 	^false
 ]
