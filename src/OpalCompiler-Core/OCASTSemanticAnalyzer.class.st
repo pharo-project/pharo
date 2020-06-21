@@ -99,7 +99,7 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	var := scope lookupVar: aVariableNode name.
 
 	var ifNil: [^var].
-	var isSpecialVariable ifTrue: [ self storeIntoSpecialVariable: aVariableNode ].
+	var isReservedVariable ifTrue: [ self storeIntoReservedVariable: aVariableNode ].
 	var isWritable ifFalse: [ self storeIntoReadOnlyVariable: aVariableNode ].
 	var isTemp ifTrue: [ self analyseEscapingWrite: var ].
 	^var
@@ -122,9 +122,9 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 ]
 
 { #category : #'error handling' }
-OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
+OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
-	^ OCStoreIntoSpecialVariableError new
+	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
 		compilationContext: compilationContext;
 		messageText: 'Cannot store into';

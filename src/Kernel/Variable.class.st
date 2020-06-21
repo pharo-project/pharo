@@ -130,6 +130,11 @@ Variable >> isReferenced [
 ]
 
 { #category : #testing }
+Variable >> isReservedVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isSelf [
 	^false
 ]
@@ -138,11 +143,6 @@ Variable >> isSelf [
 Variable >> isSelfOrSuper [
 	
 	^ self isSelf or: [ self isSuper ]
-]
-
-{ #category : #testing }
-Variable >> isSpecialVariable [
-	^false
 ]
 
 { #category : #testing }

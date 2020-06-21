@@ -33,7 +33,7 @@ ReservedVariable >> emitStore: methodBuilder [
 ]
 
 { #category : #testing }
-ReservedVariable >> isSpecialVariable [
+ReservedVariable >> isReservedVariable [
 	^true
 ]
 
