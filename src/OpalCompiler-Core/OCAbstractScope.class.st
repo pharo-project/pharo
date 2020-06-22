@@ -11,11 +11,6 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-OCAbstractScope >> children [
-	^children ifNil: [ children := OrderedCollection new ]
-]
-
 { #category : #lookup }
 OCAbstractScope >> hasBindingThatBeginsWith: aString [
 	"check weather there are any variables defined that start with aString"
