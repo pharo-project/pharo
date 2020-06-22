@@ -1,7 +1,7 @@
-Extension { #name : #ClyMethodWatchpointsQuery }
+Extension { #name : #ClyMethodWatchQuery }
 
 { #category : #'*Calypso-SystemPlugins-Reflectivity-Browser' }
-ClyMethodWatchpointsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
+ClyMethodWatchQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 	
 	anItemCellMorph label color: Color red.

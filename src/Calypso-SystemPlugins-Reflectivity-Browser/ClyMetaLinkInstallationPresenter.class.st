@@ -56,7 +56,7 @@ But we need to think about how to do that exactly."
 	^ baseLinks reject: [ :link | 
 		  link metaObject == Break or: [ 
 			  { 
-				  Watchpoint.
+				  Watch.
 				  ExecutionCounter } includes: link metaObject class ] ]
 ]
 

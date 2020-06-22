@@ -33,6 +33,6 @@ MetaLinkIconStyler >> shouldStyleNode: aNode [
 		  aNode links anySatisfy: [ :link | 
 			  (link metaObject == Break or: [ 
 				   { 
-					   Watchpoint.
+					   Watch.
 					   ExecutionCounter } includes: link metaObject class ]) not ] ]
 ]

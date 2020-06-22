@@ -1,12 +1,12 @@
 "
-A wathchpoint save the change of values of expressions. 
-I save them as an oredered collection of  key val association where the key is the timestamp an val is the actual value of the expression.
+A Watch save the change of values of expressions. 
+I save them as an ordered collection of  key val association where the key is the timestamp an val is the actual value of the expression.
 
-To install a watchpoint in a node: 
-Watchpoint in: aNode
+To install a Watch in a node: 
+Watch in: aNode
 "
 Class {
-	#name : #Watchpoint,
+	#name : #Watch,
 	#superclass : #Object,
 	#instVars : [
 		'tagname',
@@ -16,46 +16,46 @@ Class {
 		'recording'
 	],
 	#classVars : [
-		'Watchpoints'
+		'Watches'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
 
 { #category : #accessing }
-Watchpoint class >> allWatchpoints [
-	^ Watchpoints ifNil: [ Watchpoints := WeakKeyDictionary new ]
+Watch class >> allWatches [
+	^ Watches ifNil: [ Watches := WeakKeyDictionary new ]
 ]
 
 { #category : #cleanup }
-Watchpoint class >> deleteAllHistory [
+Watch class >> deleteAllHistory [
 
-	self allWatchpoints valuesDo: [ :aWatchpoint| aWatchpoint deleteHistory].
+	self allWatches valuesDo: [ :aWatch| aWatch deleteHistory].
 ]
 
 { #category : #cleanup }
-Watchpoint class >> deleteHistoryFrom: aNode [
+Watch class >> deleteHistoryFrom: aNode [
 
-	(self allWatchpoints at: aNode ifAbsent:[^self]) deleteHistory
+	(self allWatches at: aNode ifAbsent:[^self]) deleteHistory
 ]
 
 { #category : #accessing }
-Watchpoint class >> from: aNode [
-	^self allWatchpoints at: aNode.
+Watch class >> from: aNode [
+	^self allWatches at: aNode.
 ]
 
 { #category : #accessing }
-Watchpoint class >> from: aNode ifAbsent: aBlock [
-	^self allWatchpoints at: aNode ifAbsent: aBlock.
+Watch class >> from: aNode ifAbsent: aBlock [
+	^self allWatches at: aNode ifAbsent: aBlock.
 ]
 
 { #category : #'instance creation' }
-Watchpoint class >> in: aRBProgramNode [
+Watch class >> in: aRBProgramNode [
 	^self in: aRBProgramNode named: ''.
 ]
 
 { #category : #'instance creation' }
-Watchpoint class >> in: aRBProgramNode named: aName [
-	aRBProgramNode hasWatchpoint ifTrue: [ ^ aRBProgramNode watchpoint ].
+Watch class >> in: aRBProgramNode named: aName [
+	aRBProgramNode hasWatch ifTrue: [ ^ aRBProgramNode watch ].
 	^self new 
 		node: aRBProgramNode;
 		tagname: aName;
@@ -63,19 +63,19 @@ Watchpoint class >> in: aRBProgramNode named: aName [
 ]
 
 { #category : #cleanup }
-Watchpoint class >> removeAll [
-	self allWatchpoints values do: [ :aWatchpoint| aWatchpoint uninstall].
-	Watchpoints := nil.
+Watch class >> removeAll [
+	self allWatches values do: [ :aWatchpoint| aWatchpoint uninstall].
+	Watches := nil.
 ]
 
 { #category : #cleanup }
-Watchpoint class >> removeFrom: aNode [
+Watch class >> removeFrom: aNode [
 
-	(self allWatchpoints at: aNode ifAbsent: [ ^self ]) uninstall
+	(self allWatches at: aNode ifAbsent: [ ^self ]) uninstall
 ]
 
 { #category : #adding }
-Watchpoint >> addValue: anObject [
+Watch >> addValue: anObject [
 	values add: 
 		(DateAndTime now -> anObject).
 	^anObject.
@@ -83,26 +83,26 @@ Watchpoint >> addValue: anObject [
 ]
 
 { #category : #accessing }
-Watchpoint >> compiledMethod [ 
+Watch >> compiledMethod [ 
 	^self node methodNode method
 ]
 
 { #category : #cleanup }
-Watchpoint >> deleteHistory [
+Watch >> deleteHistory [
 	values := OrderedCollection new.
 ]
 
 { #category : #initialization }
-Watchpoint >> initialize [
+Watch >> initialize [
 	super initialize.
 	values := OrderedCollection new.
 	recording := true.
 ]
 
 { #category : #install }
-Watchpoint >> install [
+Watch >> install [
 
-	node hasWatchpoint ifTrue: [ self error: 'Node already has a watchpoint'].
+	node hasWatch ifTrue: [ self error: 'Node already has a watchpoint'].
 	
 	link := MetaLink new 
 				metaObject: self;
@@ -112,33 +112,33 @@ Watchpoint >> install [
 				condition: [ recording ];
 				option: #(+ optionWeakAfter +optionAnnounce).
 	node link: link.
-	self class allWatchpoints at: node put: self.
+	self class allWatches at: node put: self.
 ]
 
 { #category : #recording }
-Watchpoint >> isRecording [
+Watch >> isRecording [
 	^recording
 ]
 
 { #category : #accessing }
-Watchpoint >> node [
+Watch >> node [
 	^ node
 ]
 
 { #category : #accessing }
-Watchpoint >> node: anObject [
+Watch >> node: anObject [
 	node := anObject
 ]
 
 { #category : #printing }
-Watchpoint >> printLastValue [
+Watch >> printLastValue [
 	values ifNil: [ ^''].
 	values ifEmpty: [ ^'not run' ].
 	^values last value printStringLimitedTo: 5.
 ]
 
 { #category : #printing }
-Watchpoint >> printOn: aStream [
+Watch >> printOn: aStream [
 	aStream nextPutAll: 'WP'.
 	tagname isAllSeparators 
 		ifFalse: [ 
@@ -149,35 +149,35 @@ Watchpoint >> printOn: aStream [
 ]
 
 { #category : #recording }
-Watchpoint >> start [
+Watch >> start [
 	recording := true.
 	link announceChange
 ]
 
 { #category : #recording }
-Watchpoint >> stop [
+Watch >> stop [
 	recording := false.
 	link announceChange
 ]
 
 { #category : #accessing }
-Watchpoint >> tagname [
+Watch >> tagname [
 	^ tagname
 ]
 
 { #category : #accessing }
-Watchpoint >> tagname: anObject [
+Watch >> tagname: anObject [
 	tagname := anObject
 ]
 
 { #category : #install }
-Watchpoint >> uninstall [
-	node hasWatchpoint ifFalse: [ ^self ].
+Watch >> uninstall [
+	node hasWatch ifFalse: [ ^self ].
 	link uninstall.
-	self class allWatchpoints removeKey: node.
+	self class allWatches removeKey: node.
 ]
 
 { #category : #accessing }
-Watchpoint >> values [
+Watch >> values [
 	^values.
 ]
