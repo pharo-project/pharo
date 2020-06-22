@@ -5,7 +5,6 @@ Class {
 	#name : #VariableBreakpoint,
 	#superclass : #Breakpoint,
 	#instVars : [
-		'targetInstance',
 		'targetVariableNames',
 		'accessStrategy',
 		'isInstalled',
@@ -34,7 +33,7 @@ VariableBreakpoint class >> newBreakpointForVariable: aVariableName inClass: aCl
 ]
 
 { #category : #'instance creation' }
-VariableBreakpoint class >> newWatchPointInClass: aClass [
+VariableBreakpoint class >> newForClass: aClass [
 	^ self new
 		targetClassOrMethod: aClass;
 		targetVariableNames: (self allSlotNamesFor: aClass)
@@ -51,7 +50,7 @@ VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariable: aVariableName in: aClassOrCompiledMethod [
+VariableBreakpoint class >> watchVariable: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		install
 ]
@@ -64,7 +63,7 @@ VariableBreakpoint class >> watchVariable: aVariableName inObject: anObject [
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariableReads: aVariableName in: aClassOrCompiledMethod [
+VariableBreakpoint class >> watchVariableReads: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		accessStrategy: #read;
 		install
@@ -79,7 +78,7 @@ VariableBreakpoint class >> watchVariableReads: aVariableName inObject: anObject
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariableWrites: aVariableName in: aClassOrCompiledMethod [
+VariableBreakpoint class >> watchVariableWrites: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		accessStrategy: #write;
 		install
@@ -94,42 +93,42 @@ VariableBreakpoint class >> watchVariableWrites: aVariableName inObject: anObjec
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariablesIn: aClass [
-	^ (self newWatchPointInClass: aClass) install
+VariableBreakpoint class >> watchVariablesInClass: aClass [
+	^ (self newForClass: aClass) install
 ]
 
 { #category : #'API - object-centric' }
 VariableBreakpoint class >> watchVariablesInObject: anObject [
-	^ (self newWatchPointInClass: anObject class)
+	^ (self newForClass: anObject class)
 		scopeTo: anObject;
 		install
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariablesReadsIn: aClass [
-	^ (self newWatchPointInClass: aClass)
+VariableBreakpoint class >> watchVariablesReadsInClass: aClass [
+	^ (self newForClass: aClass)
 		accessStrategy: #read;
 		install
 ]
 
 { #category : #'API - object-centric' }
 VariableBreakpoint class >> watchVariablesReadsInObject: anObject [
-	^ (self newWatchPointInClass: anObject class)
+	^ (self newForClass: anObject class)
 		accessStrategy: #read;
 		scopeTo: anObject;
 		install
 ]
 
 { #category : #API }
-VariableBreakpoint class >> watchVariablesWritesIn: aClass [
-	^ (self newWatchPointInClass: aClass)
+VariableBreakpoint class >> watchVariablesWritesInClass: aClass [
+	^ (self newForClass: aClass)
 		accessStrategy: #write;
 		install
 ]
 
 { #category : #'API - object-centric' }
 VariableBreakpoint class >> watchVariablesWritesInObject: anObject [
-	^ (self newWatchPointInClass: anObject class)
+	^ (self newForClass: anObject class)
 		accessStrategy: #write;
 		scopeTo: anObject;
 		install
@@ -194,7 +193,7 @@ VariableBreakpoint >> remove [
 
 { #category : #api }
 VariableBreakpoint >> scopeTo: anInstance [
-	self targetInstance: anInstance.
+	super scopeTo: anInstance.
 	self condition: [ :ctx | ctx receiver == targetInstance ]
 ]
 
@@ -206,16 +205,6 @@ VariableBreakpoint >> targetClassOrMethod [
 { #category : #accessing }
 VariableBreakpoint >> targetClassOrMethod: anObject [
 	targetClassOrMethod := anObject
-]
-
-{ #category : #accessing }
-VariableBreakpoint >> targetInstance [
-	^ targetInstance
-]
-
-{ #category : #accessing }
-VariableBreakpoint >> targetInstance: anObject [
-	targetInstance := anObject
 ]
 
 { #category : #accessing }

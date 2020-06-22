@@ -11,7 +11,7 @@ Class {
 ClyBreakOnAccessCommand >> breakOn: variable [
 	VariableBreakpoint
 		watchVariable: variable name
-		in: variable definingClass
+		inClass: variable definingClass
 ]
 
 { #category : #execution }
