@@ -164,10 +164,8 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 { #category : #'public api' }
 RBScanner class >> scanTokens: aStringOrStream [
 	"Return the tokens (and not the scanner token objects)."
-	
-	| scanner |
-	scanner := self on: aStringOrStream readStream.
-	^scanner contents collect:[ :t | t value ]
+
+	^ (self scanTokenObjects: aStringOrStream) collect: [ :t | t value ]
 ]
 
 { #category : #testing }
