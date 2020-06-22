@@ -11,7 +11,7 @@ DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
 DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
 	"please use #namedTempAt:put: on Context"
 	self deprecated: 'Please use aContext namedTempAt: index put: aValue'.
-	^aContext namedTempAt: index put: aValue
+	aContext namedTempAt: index put: aValue
 ]
 
 { #category : #'*Deprecated90' }
@@ -42,7 +42,7 @@ DebuggerMethodMapOpal >> tempNamed: name in: aContext [
 DebuggerMethodMapOpal >> tempNamed: name in: aContext put: aValue [
 	"please use #tempNamed:put: on Context"
 	self deprecated: 'please use #tempNamed:put: on Context'.
-	^aContext tempNamed: name put: aValue
+	aContext tempNamed: name put: aValue
 ]
 
 { #category : #'*Deprecated90' }

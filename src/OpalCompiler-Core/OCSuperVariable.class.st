@@ -36,3 +36,8 @@ OCSuperVariable >> isSelfOrSuper [
 OCSuperVariable >> isSuper [
 	^true
 ]
+
+{ #category : #debugging }
+OCSuperVariable >> readInContext: aContext [
+	^aContext receiver
+]

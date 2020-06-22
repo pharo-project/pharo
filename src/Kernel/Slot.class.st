@@ -292,6 +292,11 @@ Slot >> read: anObject [
 	^ self subclassResponsibility
 ]
 
+{ #category : #debugging }
+Slot >> readInContext: aContext [
+	^self read: aContext receiver
+]
+
 { #category : #accessing }
 Slot >> scope: aScope [
 	"ignored, subclasses can override to analyze the scope they are to be installed in"
@@ -339,6 +344,11 @@ Slot >> usingMethods [
 Slot >> wantsInitialization [
 	"if a slot wants to enable instance initalization, return true here"
 	^false
+]
+
+{ #category : #debugging }
+Slot >> write: aValue inContext: aContext [
+	self write: aValue to: aContext receiver
 ]
 
 { #category : #'meta-object-protocol' }

@@ -130,11 +130,6 @@ LiteralVariable >> isGlobalClassNameBinding [
 		and: [ name == self value name ]
 ]
 
-{ #category : #testing }
-LiteralVariable >> isGlobalVariable [
-	^false
-]
-
 { #category : #OCVARIABLE }
 LiteralVariable >> isLiteralVariable [
 	^true
@@ -231,6 +226,11 @@ LiteralVariable >> read [
 	^self value
 ]
 
+{ #category : #debugging }
+LiteralVariable >> readInContext: aContext [
+	^self value
+]
+
 { #category : #printing }
 LiteralVariable >> storeOn: aStream [
 	"Store in the format (key->value)"
@@ -260,4 +260,12 @@ LiteralVariable >> value: anObject [
 LiteralVariable >> write: anObject [
 	self value: anObject.
 	^anObject
+]
+
+{ #category : #debugging }
+LiteralVariable >> write: aValue inContext: aContext [
+	self isWritable ifFalse: [ 
+		^self error: 'Variable ' , name, ' is read only'].
+
+	value := aValue
 ]

@@ -230,6 +230,11 @@ Variable >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
+{ #category : #debugging }
+Variable >> readInContext: aContext [
+	self subclassResponsibility 
+]
+
 { #category : #properties }
 Variable >> removePropertiesIfEmpty [
 	^ Properties at: self ifPresent: [ :dict |
@@ -268,4 +273,9 @@ Variable >> usingMethods [
 Variable >> variable [
 	"I return the first class variable that I model in the case of globals and ivars"
 	^self
+]
+
+{ #category : #debugging }
+Variable >> write: aValue inContext: aContext [
+	self subclassResponsibility 
 ]

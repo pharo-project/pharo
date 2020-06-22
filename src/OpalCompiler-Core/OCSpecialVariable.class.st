@@ -28,3 +28,9 @@ OCSpecialVariable >> isUninitialized [
 OCSpecialVariable >> isWritable [
 	^ false
 ]
+
+{ #category : #debugging }
+OCSpecialVariable >> write: aValue inContext: aContext [
+	
+	self error: name, ' is reserved word and cant be modified'
+]
