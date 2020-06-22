@@ -104,8 +104,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 
 { #category : #'system startup' }
 PharoCommonTools class >> shutDown: aboutToQuit [
-	Smalltalk image tools cleanUp.
-	Smalltalk image resetTools
+	Smalltalk image tools cleanUp
 ]
 
 { #category : #'world menu' }
