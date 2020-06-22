@@ -29,10 +29,10 @@ TemporaryVariable class >> initialize [
 
 { #category : #'instance creation' }
 TemporaryVariable class >> name: aName block: aBlock [
-	^(self new 
+	^self new 
 		name: aName;
 		method: aBlock method;
-		startpc: aBlock startpc) yourselfOrSaved.		
+		startpc: aBlock startpc		
 ]
 
 { #category : #'instance creation' }
@@ -44,9 +44,9 @@ TemporaryVariable class >> name: aName context: aContext [
 
 { #category : #'instance creation' }
 TemporaryVariable class >> name: aName method: aMethod [
-	^(self new 
+	^self new 
 		name: aName;
-		method: aMethod) yourselfOrSaved
+		method: aMethod
 	
 ]
 
@@ -58,12 +58,6 @@ TemporaryVariable >> = other [
 			and: [ name = other name 
 			and: [ method = other method
 			and: [ startpc = other startpc ] ] ]
-]
-
-{ #category : #properties }
-TemporaryVariable >> ensureProperties [
-	method saveTemp: self.
-	^ super ensureProperties
 ]
 
 { #category : #comparing }
@@ -109,14 +103,6 @@ TemporaryVariable >> readInContext: aContext [
 	^aContext tempNamed: name
 ]
 
-{ #category : #properties }
-TemporaryVariable >> removePropertiesIfEmpty [
-	^ Properties at: self ifPresent: [ :dict |
-		dict ifEmpty: [ 
-			method removeSavedTemp: self.
-			Properties removeKey: self ] ]
-]
-
 { #category : #accessing }
 TemporaryVariable >> startpc [
 	^ startpc
@@ -135,13 +121,4 @@ TemporaryVariable >> usingMethods [
 { #category : #'reflecive api' }
 TemporaryVariable >> write: aValue InContext: aContext [
 	aContext tempNamed: name put: aValue
-]
-
-{ #category : #'saved temps' }
-TemporaryVariable >> yourselfOrSaved [
-	method savedTemps ifNil: [ ^self  ].	
-	^method savedTemps 
-		detect:  	[ :each | each = self ]
-		ifFound: [ :found | found ]
-		ifNone: 	[ self ]
 ]
