@@ -82,7 +82,7 @@ SpTest >> setUp [
 
 { #category : #running }
 SpTest >> tearDown [
-	presenter ifNotNil: [ presenter window ifNotNil: [  presenter window delete ]].
+	window ifNotNil: [ window delete ].
 	super tearDown
 ]
 
