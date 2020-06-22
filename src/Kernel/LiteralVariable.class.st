@@ -113,19 +113,19 @@ LiteralVariable >> installingIn: aClass [
 	"I am called by the class builder. This way a class variable can change the class it is installed in"
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 LiteralVariable >> isGlobal [
 
 	^ true
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
 	^ (self value isClass or: [ self value isTrait ])
 		and: [ name == self value name ]
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 LiteralVariable >> isLiteralVariable [
 	^true
 ]
@@ -157,7 +157,7 @@ LiteralVariable >> isVariableBinding [
 	^true
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 LiteralVariable >> isWritable [
 	"Literal variables are writable, if they aren't global bindings for class names, like
  #Object -> Object "

@@ -41,6 +41,11 @@ Variable class >> initialize [
 		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
 ]
 
+{ #category : #testing }
+Variable class >> isAbstract [ 
+	^self = Variable 
+]
+
 { #category : #'instance creation' }
 Variable class >> named: aSymbol [
 	self checkValidName: aSymbol.
@@ -89,32 +94,32 @@ Variable >> hash [
 	^ self species hash bitXor: self name hash
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isArg [
 	^false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isClassVariable [
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isGlobal [ 
 	^false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isGlobalVariable [
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isInstance [
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isLiteralVariable [
 	^false
 ]
@@ -124,56 +129,51 @@ Variable >> isReferenced [
 	^ self subclassResponsibility
 ]
 
-{ #category : #OCVARIABLE }
-Variable >> isRemote [
-	^false
-]
-
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isSelf [
 	^false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isSelfOrSuper [
 	
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isSpecialVariable [
 	^false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isSuper [
 	^false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isTemp [
 
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isThisContext [
 	^false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isUndeclared [
 
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isUninitialized [
 
 	^ false
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Variable >> isWritable [
 	^ true
 ]

@@ -459,7 +459,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 	self assert: (ast scope lookupVar: 'index') isRemote.
 	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote.
-	self deny: (ast scope lookupVar: 'collection') isRemote
+	self deny: (ast scope lookupVar: 'theCollection') isRemote
 ]
 
 { #category : #'testing - variables' }

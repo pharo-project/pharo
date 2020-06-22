@@ -206,7 +206,7 @@ Slot >> isAccessedIn: aCompiledCode [
 		anySatisfy: [ :node | node binding == self ]
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 Slot >> isInstance [
 	^ true
 ]

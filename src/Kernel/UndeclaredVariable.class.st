@@ -45,7 +45,7 @@ UndeclaredVariable >> emitValue: methodBuilder [
 	methodBuilder pushLiteralVariable: self
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 UndeclaredVariable >> isGlobal [
 	^false
 ]
@@ -62,7 +62,7 @@ UndeclaredVariable >> isRegistered [
 	^Undeclared includesKey: name
 ]
 
-{ #category : #OCVARIABLE }
+{ #category : #testing }
 UndeclaredVariable >> isUndeclared [
 
 	^ true
