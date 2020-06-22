@@ -8,6 +8,11 @@ Class {
 }
 
 { #category : #accessing }
+SlotDeprecation >> explanationString [
+	^explanationString ifNil: [ '' ]
+]
+
+{ #category : #accessing }
 SlotDeprecation >> messageText [
 	^ String
 		streamContents: [ :str | 
@@ -17,5 +22,5 @@ SlotDeprecation >> messageText [
 				nextPutAll: ' accessed in ';
 				nextPutAll: context sender method name;
 				nextPutAll: ' has been deprecated. ';
-				nextPutAll: explanationString ]
+				nextPutAll: self explanationString ]
 ]
