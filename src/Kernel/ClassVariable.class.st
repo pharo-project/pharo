@@ -5,6 +5,8 @@ The compiler forwards bytecode generation to me for accessing the variable.
 
 You can subclass me and implement #read and #write: for creating special kinds of globals that can be used as special class Variables (similar to special Slots).
 
+Note: PoolVariable is not modeled as it's own subclass to allow all special kinds of globals to be used
+as pool variables.
 "
 Class {
 	#name : #ClassVariable,
