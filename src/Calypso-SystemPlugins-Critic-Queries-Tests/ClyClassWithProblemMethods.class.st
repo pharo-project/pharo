@@ -11,6 +11,7 @@ Class {
 ClyClassWithProblemMethods >> methodWithHalt [
 	<haltOrBreakpointForTesting>
 	self halt.
+	self methodWithHalt2.
 ]
 
 { #category : #'method examples' }
