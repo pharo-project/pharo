@@ -320,12 +320,6 @@ ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 		 ifNone: nil
 ]
 
-{ #category : #slots }
-ClassDescription >> classVariablesNeedFullDefinition [
-
-	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
-]
-
 { #category : #printing }
 ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
@@ -561,6 +555,20 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 	self copyAll: (aClass organization listAtCategoryNamed: cat)
 		from: aClass
 		classified: newCat
+]
+
+{ #category : #slots }
+ClassDescription >> definesSlot: aSlot [
+	"Return true whether the receiver defines an instance variable named aString"
+	
+	^ self slots identityIncludes: aSlot
+]
+
+{ #category : #slots }
+ClassDescription >> definesSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString."
+	
+	^ self slotNames includes: aString
 ]
 
 { #category : #'file in/out' }
@@ -884,9 +892,7 @@ ClassDescription >> methodsTaggedWith: aSymbol [
 ClassDescription >> needsSlotClassDefinition [
     "return true if we define something else than InstanceVariableSlots or normal class variables"
 
-    ^ self slotsNeedFullDefinition 
-		or: [ self class slotsNeedFullDefinition 
-		or: [ self classVariablesNeedFullDefinition ] ]
+    ^ self slotsNeedFullDefinition or: [ self class slotsNeedFullDefinition ]
 ]
 
 { #category : #private }
@@ -1230,7 +1236,7 @@ ClassDescription >> slotNames [
 	^self slots collect: [ :each | each name ]
 ]
 
-{ #category : #slots }
+{ #category : #accessing }
 ClassDescription >> slots [
 	^self classLayout visibleSlots
 ]
