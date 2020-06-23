@@ -119,6 +119,6 @@ TemporaryVariable >> usingMethods [
 ]
 
 { #category : #'reflecive api' }
-TemporaryVariable >> write: aValue InContext: aContext [
+TemporaryVariable >> write: aValue inContext: aContext [
 	aContext tempNamed: name put: aValue
 ]

@@ -48,11 +48,19 @@ TemporaryVariableTest >> testPropertyAtPut [
 ]
 
 { #category : #tests }
+TemporaryVariableTest >> testReadNodes [
+	| method |
+	"On the level of CompiledMethod, args include temps. This needs to be fixed"
+	method := OrderedCollection >> #do:.
+	self assert: (method temporaryVariableNamed: #aBlock) astNodes notEmpty
+]
+
+{ #category : #tests }
 TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
+	self assert: (tempVar readInContext: thisContext) class equals: OCTempVariable
 ]
 
 { #category : #tests }
@@ -66,7 +74,13 @@ TemporaryVariableTest >> testTemporaryVariablesBlock [
 TemporaryVariableTest >> testTemporaryVariablesMethod [
 	| method |
 	method := self class >> #testTemporaryVariablesMethod.
-	self assert: method temporaryVariables first name equals: #method
+	self assert: method temporaryVariables first name equals: #method.
+	
+	"On the level of CompiledMethod, args include temps. This needs to be fixed"
+	method := OrderedCollection >> #do:.
+	self assert: method temporaryVariables first name equals: #aBlock.
+	self assert: (method hasTemporaryVariableNamed: #aBlock).
+	self assert: (method temporaryVariableNamed: #aBlock) class equals: OCArgumentVariable.
 ]
 
 { #category : #tests }
@@ -74,6 +88,6 @@ TemporaryVariableTest >> testWriteTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	tempVar write: 5 InContext: thisContext.
+	tempVar write: 5 inContext: thisContext.
 	self assert: tempVar equals: 5
 ]
