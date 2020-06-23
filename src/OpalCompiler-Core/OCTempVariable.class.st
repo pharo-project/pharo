@@ -28,6 +28,11 @@ OCTempVariable >> = aTempVar [
 	
 ]
 
+{ #category : #queries }
+OCTempVariable >> astNodes [
+	^self method variableNodes select: [ :each | each binding == self]
+]
+
 { #category : #emitting }
 OCTempVariable >> emitStore: methodBuilder [
 
