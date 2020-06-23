@@ -99,6 +99,11 @@ OCTempVariable >> isEscapingWrite [
 ]
 
 { #category : #testing }
+OCTempVariable >> isReferenced [
+	^self isUnused not
+]
+
+{ #category : #testing }
 OCTempVariable >> isStoringTempVector [
 	"I am a temp that stores a temp vector. Those generated temps have a invalid name starting with 0"
 	^name first = $0.
@@ -142,6 +147,11 @@ OCTempVariable >> markWrite [
 	super markWrite.
 ]
 
+{ #category : #queries }
+OCTempVariable >> method [
+	^scope node methodNode methodClass>>scope node methodNode selector
+]
+
 { #category : #accessing }
 OCTempVariable >> originalVar [
 	^ self
@@ -166,6 +176,12 @@ OCTempVariable >> readInContext: aContext [
 	| contextScope |
 	contextScope := aContext astScope.
 	^self readFromContext: aContext scope: contextScope
+]
+
+{ #category : #queries }
+OCTempVariable >> usingMethods [
+	self isUnused ifTrue: [ ^#() ].
+	^{self method}
 ]
 
 { #category : #debugging }

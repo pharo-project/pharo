@@ -8,15 +8,12 @@ CompiledMethod >> hasTemporaryVariableNamed: aName [
 { #category : #'*Slot-Core' }
 CompiledMethod >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^TemporaryVariable 
-		name: aName 
-		method: self 
+	^self sourceNode scope lookupVar: aName
 
 
 ]
 
 { #category : #'*Slot-Core' }
 CompiledMethod >> temporaryVariables [
-	^self tempNames collect: [ :name | TemporaryVariable name: name method: self]
-
+	^self sourceNode temporaries collect: [ :each | each binding ] 
 ]

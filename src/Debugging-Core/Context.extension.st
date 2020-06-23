@@ -395,13 +395,13 @@ Context >> tempNames [
 Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
-	^TemporaryVariable name: aName context: self
+	^self lookupTempVar: aName
 
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> temporaryVariables [
-	^self tempNames collect: [ :name | TemporaryVariable new name: name ]
+	^self sourceNode temporaries collect: [ :each | each binding ] 
 
 ]
 
