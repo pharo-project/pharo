@@ -70,6 +70,14 @@ FTCellMorph >> seperatorColor [
 ]
 
 { #category : #accessing }
+FTCellMorph >> table [
+	^ self owner
+		ifNotNil: [ (owner class canUnderstand: #table)
+				ifTrue: [ owner table ]
+				ifFalse: [ nil ] ]
+]
+
+{ #category : #accessing }
 FTCellMorph >> withTopSeparator [
 	topSeparator := true
 ]
