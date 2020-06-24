@@ -54,6 +54,16 @@ SDL2 class >> clipboardText: text [
 	self primClipboardText: encoded
 ]
 
+{ #category : #video }
+SDL2 class >> composeCustomBlendMode_srcColorFactor: srcColorFactor dstColorFactor: dstColorFactor colorOperation: colorOperation srcAlphaFactor: srcAlphaFactor dstAlphaFactor: dstAlphaFactor alphaOperation: alphaOperation [
+	^ self ffiCall: #(SDL_BlendMode SDL_ComposeCustomBlendMode(SDL_BlendFactor srcColorFactor,
+                                                                 SDL_BlendFactor dstColorFactor,
+                                                                 SDL_BlendOperation colorOperation,
+                                                                 SDL_BlendFactor srcAlphaFactor,
+                                                                 SDL_BlendFactor dstAlphaFactor,
+                                                                 SDL_BlendOperation alphaOperation))
+]
+
 { #category : #cursor }
 SDL2 class >> createCursor: data mask: mask w: w h: h hotX: hotX hotY: hotY [
 	^ self ffiCall: #( SDL_Cursor SDL_CreateCursor ( Uint8* data, Uint8* mask, int w, int h, int hotX, int hotY ) )

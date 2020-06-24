@@ -377,6 +377,11 @@ LogicalFont >> characterFormAt: aCharacter [
 	^self realFont characterFormAt: aCharacter
 ]
 
+{ #category : #'glyph lookup' }
+LogicalFont >> characterRenderingOptimizedFormAt: aCharacter [
+	^ self realFont characterRenderingOptimizedFormAt: aCharacter
+]
+
 { #category : #'forwarded to realFont' }
 LogicalFont >> characterToGlyphMap [
 	"Provided only for accelerating text scanning thru primitive 103 - see super."
@@ -605,6 +610,11 @@ LogicalFont >> hasGlyphsForAll: asciiString [
 	^self realFont hasGlyphsForAll: asciiString
 ]
 
+{ #category : #testing }
+LogicalFont >> hasSubPixelAntiAliasing [
+	^ self realFont hasSubPixelAntiAliasing
+]
+
 { #category : #'forwarded to realFont' }
 LogicalFont >> height [
 	^self realFont height
@@ -788,6 +798,26 @@ LogicalFont >> stretchValue: anObject [
 	"Set the value of stretchValue"
 
 	stretchValue := anObject
+]
+
+{ #category : #metrics }
+LogicalFont >> strikeoutThickness [
+	^ self realFont strikeoutThickness
+]
+
+{ #category : #metrics }
+LogicalFont >> strikeoutTop [
+	^ self realFont strikeoutTop
+]
+
+{ #category : #metrics }
+LogicalFont >> underlineThickness [
+	^ self realFont underlineThickness
+]
+
+{ #category : #metrics }
+LogicalFont >> underlineTop [
+	^ self realFont underlineTop
 ]
 
 { #category : #accessing }

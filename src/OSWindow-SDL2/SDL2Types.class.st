@@ -9,6 +9,9 @@ Class {
 		'Int32',
 		'Int64',
 		'Int8',
+		'SDL_BlendFactor',
+		'SDL_BlendMode',
+		'SDL_BlendOperation',
 		'SDL_GLattr',
 		'SDL_Keycode',
 		'SDL_Keymod',
@@ -46,6 +49,9 @@ SDL2Types class >> initialize [
 	SDL_Keycode := Sint32.
 	SDL_Keymod := Uint32.
 	SDL_Scancode := Uint32.
+	SDL_BlendMode := Uint32.
+	SDL_BlendFactor := Uint32.
+	SDL_BlendOperation := Uint32.
 	
 	SDL_GLattr := #int.
 ]
