@@ -205,9 +205,11 @@ MetaLinkAnonymousClassBuilderTest >> testWeakMigratedObjectsRegistry [
 	self assert: (builder soleInstanceOf: anonClass) identicalTo: object.
 	self assertCollection: (builder anonSubclassesFor: originalClass) includesAll: {anonClass}.
 	
-	object := nil.
-	anonClass := nil.
-	Smalltalk garbageCollect.
+	object := nil.	
+	Smalltalk garbageCollect.	
+	self should: [builder soleInstanceOf: anonClass] raise: ValueNotFound.
 	
-	self should: [builder soleInstanceOf: anonClass] raise: KeyNotFound
+	anonClass := nil.
+	Smalltalk garbageCollect.	
+	self should: [builder soleInstanceOf: anonClass] raise: KeyNotFound.
 ]

@@ -386,6 +386,21 @@ LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
 ]
 
 { #category : #'links - installing' }
+LinkInstallerTest >> testObjectsAreWeakReferenced [
+
+	| metalink weakArray |
+	metalink := MetaLink new.
+	(obj1 class >> #exampleMethod) ast link: metalink forObject: obj1.
+	weakArray := WeakArray with: obj1.
+	
+	self assert: weakArray first identicalTo: obj1.
+	obj1 := nil.
+	Smalltalk garbageCollect.	
+	self assert: weakArray first equals: nil
+
+]
+
+{ #category : #'links - installing' }
 LinkInstallerTest >> testOneMetaLinkClassAndObjects [
 	"Installs a MetaLink on one class. Installs another MetaLink on one instance of this class.
 	- all instances of the class must be affected by the first MetaLink
