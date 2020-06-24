@@ -48,6 +48,13 @@ ReservedVariable >> printOn: stream [
 	stream nextPutAll: self name
 ]
 
+{ #category : #queries }
+ReservedVariable >> usingMethods [
+	"first call is very slow as it creates all ASTs"
+	^SystemNavigation new allMethods select: [ : method |
+		method ast variableNodes anySatisfy: [ :varNode | varNode binding == self]]
+]
+
 { #category : #debugging }
 ReservedVariable >> write: aValue inContext: aContext [
 	

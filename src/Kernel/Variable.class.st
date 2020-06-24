@@ -126,7 +126,7 @@ Variable >> isLiteralVariable [
 
 { #category : #testing }
 Variable >> isReferenced [
-	^ self subclassResponsibility
+	^ self usingMethods isNotEmpty
 ]
 
 { #category : #testing }
