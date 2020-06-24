@@ -85,17 +85,18 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
 
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
-	| pc mappedNode expectedNode |
+	| pc mappedNode expectedNode blockNode |
 	self flag: #TODO. "we skip for now on 32 bit"
 	Smalltalk vm is32bit ifTrue: [ self skip ]. 
 	compiledMethod := MethodMapExamples >> #helperMethod13.
 	
 	"this is a test for full blocks only"
 	compiledMethod encoderClass = EncoderForSistaV1 ifFalse: [self skip].
-	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast statements last value.
+	blockNode := compiledMethod ast statements last value.
+	cache := OCBytecodeToASTCache generateForNode: blockNode.
 	pc := 27.
 	mappedNode := (cache nodeForPC: pc).
-	expectedNode := compiledMethod ast statements last value body.
+	expectedNode := blockNode body.
 	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
 	self assert: mappedNode start equals: expectedNode start.
 	self assert: mappedNode stop equals: expectedNode stop
