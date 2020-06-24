@@ -186,16 +186,6 @@ OSSDL2GenericRenderer >> staticTextureCache [
 	^ staticTextureCache ifNil: [ staticTextureCache := WeakKeyDictionary new ]
 ]
 
-{ #category : #'updating screen' }
-OSSDL2GenericRenderer >> updateAll [
-	"Nothing is required here."
-]
-
-{ #category : #'updating screen' }
-OSSDL2GenericRenderer >> updateRectangle: rectangle [
-	"Nothing is required here."
-]
-
 { #category : #rendering }
 OSSDL2GenericRenderer >> useAdditiveColorBlending [
 	self setBlendMode: SDL_BLENDMODE_ADD.

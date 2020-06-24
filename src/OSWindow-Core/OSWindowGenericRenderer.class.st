@@ -4,6 +4,9 @@ I am an abstract renderer that provides a generic API for native window renderin
 Class {
 	#name : #OSWindowGenericRenderer,
 	#superclass : #OSWindowRenderer,
+	#instVars : [
+		'scene'
+	],
 	#category : #'OSWindow-Core-Renderer'
 }
 
@@ -75,6 +78,31 @@ OSWindowGenericRenderer >> getOrCreateStaticTextureFromForm: from [
 OSWindowGenericRenderer >> present [
 	"This should present the content of an internal draw buffer"
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+OSWindowGenericRenderer >> scene [
+	^ scene
+]
+
+{ #category : #accessing }
+OSWindowGenericRenderer >> scene: anObject [
+	scene := anObject
+]
+
+{ #category : #'updating screen' }
+OSWindowGenericRenderer >> updateAll [
+	scene ifNotNil: [ scene renderAllWith: self ]
+]
+
+{ #category : #'updating screen' }
+OSWindowGenericRenderer >> updateRectangle: rectangle [
+	scene ifNotNil: [ scene renderRectangle: rectangle with: self ]
+]
+
+{ #category : #'updating screen' }
+OSWindowGenericRenderer >> updateRectangles: aCollectionOfRectangles [
+	scene ifNotNil: [ scene renderRectangles: aCollectionOfRectangles with: self ]
 ]
 
 { #category : #'blending mode' }

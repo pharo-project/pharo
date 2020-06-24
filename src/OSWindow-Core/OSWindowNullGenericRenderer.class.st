@@ -72,6 +72,11 @@ OSWindowNullGenericRenderer >> updateRectangle: rectangle [
 	"Do nothing"
 ]
 
+{ #category : #'updating screen' }
+OSWindowNullGenericRenderer >> updateRectangles: aCollectionOfRectangles [
+	"Do nothing"
+]
+
 { #category : #'blending mode' }
 OSWindowNullGenericRenderer >> useAdditiveColorBlending [
 ]
