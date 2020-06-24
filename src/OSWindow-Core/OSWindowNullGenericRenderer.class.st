@@ -12,6 +12,11 @@ OSWindowNullGenericRenderer >> clear [
 	"Do nothing"
 ]
 
+{ #category : #'as yet unclassified' }
+OSWindowNullGenericRenderer >> clippingBounds: aRectangle [
+	"Nothing required here"
+]
+
 { #category : #rendering }
 OSWindowNullGenericRenderer >> color: aColor [
 	"Do nothing"
@@ -32,9 +37,24 @@ OSWindowNullGenericRenderer >> drawRectangle: aRectangle [
 	"Do nothing"
 ]
 
+{ #category : #'as yet unclassified' }
+OSWindowNullGenericRenderer >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc kern: kern [
+]
+
+{ #category : #rendering }
+OSWindowNullGenericRenderer >> drawTexture: texture in: rectangle [
+	
+]
+
 { #category : #rendering }
 OSWindowNullGenericRenderer >> fillRectangle: aRectangle [
 	"Do nothing"
+]
+
+{ #category : #'as yet unclassified' }
+OSWindowNullGenericRenderer >> getOrCreateStaticTextureFromForm: from [
+	"This gets or creates a cached static texture corresponding to a form. This is typically used for drawing GUI icons."
+	^ nil
 ]
 
 { #category : #rendering }
@@ -50,4 +70,20 @@ OSWindowNullGenericRenderer >> updateAll [
 { #category : #'updating screen' }
 OSWindowNullGenericRenderer >> updateRectangle: rectangle [
 	"Do nothing"
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> useAdditiveColorBlending [
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> useCompositeAlphaBlending [
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> useModulatingColorBlending [
+]
+
+{ #category : #'blending mode' }
+OSWindowNullGenericRenderer >> useNoBlending [
 ]
