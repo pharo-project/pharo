@@ -100,7 +100,7 @@ MetaLinkAnonymousClassBuilder >> migrateObject: anObject toAnonymousClass: anonC
 	anObject class == anonClass
 		ifTrue: [ ^ self ].
 	anonClass adoptInstance: anObject.
-	migratedObjects at: anonClass put: anObject
+	migratedObjects at: anonClass put: (WeakArray with: anObject)
 ]
 
 { #category : #migration }
@@ -132,5 +132,9 @@ MetaLinkAnonymousClassBuilder >> removeMethodNode: aNode fromObject: anObject [
 
 { #category : #accessing }
 MetaLinkAnonymousClassBuilder >> soleInstanceOf: anAnonymousClass [
-	^ migratedObjects at: anAnonymousClass
+	| weakArray |
+	weakArray := migratedObjects at: anAnonymousClass.
+	(weakArray isEmpty or: [ weakArray first isNil ])
+		ifTrue: [ ^ ValueNotFound new signal ].
+	^ weakArray first
 ]

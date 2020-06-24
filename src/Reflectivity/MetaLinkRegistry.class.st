@@ -84,7 +84,7 @@ MetaLinkRegistry >> isNodeWithInstanceSpecificLinks: node [
 
 { #category : #'registry access' }
 MetaLinkRegistry >> objectsForLink: aMetaLink [
-	^ links at: aMetaLink ifAbsent: [ Array new ]
+	^ links at: aMetaLink ifAbsent: [ WeakSet new ]
 ]
 
 { #category : #permalinks }
@@ -138,7 +138,7 @@ MetaLinkRegistry >> registeredClassesAt: aClass ifAbsentPut: aBlock [
 
 { #category : #'registry access' }
 MetaLinkRegistry >> registeredTargetsAt: slotOrVariable [
-	^ permanentTargets at: slotOrVariable ifAbsent: [ Set new ]
+	^ permanentTargets at: slotOrVariable ifAbsent: [ WeakSet new ]
 ]
 
 { #category : #'registry access' }
