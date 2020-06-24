@@ -58,19 +58,19 @@ OCBytecodeToASTCache >> firstBcOffset [
 
 { #category : #initialization }
 OCBytecodeToASTCache >> generateForNode: aNode [
-	| blockIR currentBcOffset |
+	| methodOrBlockIr currentBcOffset |
 	methodOrBlockNode := aNode.
-	blockIR := aNode ir.
+	methodOrBlockIr := aNode ir.
 	bcToASTMap := Dictionary new.
-	firstBcOffset := blockIR compiledMethod initialPC.
+	firstBcOffset := methodOrBlockIr compiledMethod initialPC.
 
 	"if there is a primitive, we need to record the offset"
-	(blockIR irPrimitive num ~= 0
-		or: [ blockIR compiledMethod isQuick ])
+	(methodOrBlockIr irPrimitive num ~= 0
+		or: [ methodOrBlockIr compiledMethod isQuick ])
 		ifTrue: [ bcToASTMap at: firstBcOffset put: methodOrBlockNode ]. 
 
 	currentBcOffset := firstBcOffset.
-	blockIR startSequence withAllSuccessors
+	methodOrBlockIr startSequence withAllSuccessors
 		do: [ :seq | 
 			seq
 				do: [ :ir | 
