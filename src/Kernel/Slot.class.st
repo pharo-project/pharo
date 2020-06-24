@@ -229,11 +229,6 @@ Slot >> isReadIn: aCompiledCode [
 ]
 
 { #category : #testing }
-Slot >> isReferenced [
-	^self usingMethods isNotEmpty
-]
-
-{ #category : #testing }
 Slot >> isSelfEvaluating [
 	^true
 ]
