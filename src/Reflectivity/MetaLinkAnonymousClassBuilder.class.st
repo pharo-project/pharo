@@ -45,6 +45,27 @@ MetaLinkAnonymousClassBuilder >> anonymousClassForObject: anObject [
 		ifFalse: [ self newAnonymousSubclassFor: class ]
 ]
 
+{ #category : #accessing }
+MetaLinkAnonymousClassBuilder >> classAccessorsForAnonymousClasses [
+	^{'class
+		thisContext sender methodClass == MetaLinkAnonymousClassBuilder 
+			ifTrue:[^self realClass].
+		^self originalClass'.
+		
+	'originalClass
+		^super class superclass'.
+		
+	'realClass
+		^super class'				
+	}
+]
+
+{ #category : #compiling }
+MetaLinkAnonymousClassBuilder >> compileClassAccessorForAnonymousClass: anAnonymousClass [
+	self classAccessorsForAnonymousClasses
+		do: [ :sourceCode | anAnonymousClass compile: sourceCode ]
+]
+
 { #category : #compiling }
 MetaLinkAnonymousClassBuilder >> compileMethodFrom: aNode in: anAnonymousClass [
 	| selector source |
@@ -96,6 +117,7 @@ MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 	anonSubclass := aClass newAnonymousSubclass.
 	(classes at: aClass ifAbsentPut: WeakSet new)
 		add: anonSubclass.
+	self compileClassAccessorForAnonymousClass: anonSubclass.
 	^ anonSubclass
 ]
 

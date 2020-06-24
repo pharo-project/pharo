@@ -54,6 +54,22 @@ MetaLinkAnonymousClassBuilderTest >> testAnonymousClassForObject [
 ]
 
 { #category : #tests }
+MetaLinkAnonymousClassBuilderTest >> testClassAccessFromClassBuilder [
+	|class subclass realClass|
+	class := object class.
+	subclass := builder newAnonymousSubclassFor: class.
+	builder migrateObject: object toAnonymousClass: subclass.
+	
+	"Anonymous class is hidden from the system: `object class` returns the original class"
+	self assert: object class identicalTo: class.
+	
+	"The metalink class builder, however, sees the anonymous class when calling `object class`"
+	realClass := object realClass.
+	self assert: realClass identicalTo: subclass.
+	self assert: (builder requestClassOfObject: object) identicalTo: realClass
+]
+
+{ #category : #tests }
 MetaLinkAnonymousClassBuilderTest >> testCompileClassAccessorForAnonymousClass [
 	| class |
 	class := ReflectivityExamples newAnonymousSubclass.
