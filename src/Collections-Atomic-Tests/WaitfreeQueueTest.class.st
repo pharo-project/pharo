@@ -1,7 +1,7 @@
 Class {
 	#name : #WaitfreeQueueTest,
 	#superclass : #TestCase,
-	#category : #'Collections-Tests-Atomic'
+	#category : #'Collections-Atomic-Tests-Base'
 }
 
 { #category : #'helper methods' }
