@@ -98,8 +98,9 @@ MetaLinkAnonymousClassBuilder >> initialize [
 { #category : #migration }
 MetaLinkAnonymousClassBuilder >> migrateObject: anObject toAnonymousClass: anonClass [
 	anObject class == anonClass
-		ifFalse: [ anonClass adoptInstance: anObject.
-			migratedObjects at: anonClass put: anObject ]
+		ifTrue: [ ^ self ].
+	anonClass adoptInstance: anObject.
+	migratedObjects at: anonClass put: anObject
 ]
 
 { #category : #migration }
@@ -107,8 +108,9 @@ MetaLinkAnonymousClassBuilder >> migrateObjectToOriginalClass: anObject [
 	| class |
 	class := anObject class.
 	class isAnonymous
-		ifTrue: [ migratedObjects removeKey: class.
-			class superclass adoptInstance: anObject ]
+		ifFalse: [ ^ self ].
+	migratedObjects removeKey: class.
+	class superclass adoptInstance: anObject
 ]
 
 { #category : #creation }
