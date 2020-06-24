@@ -23,3 +23,8 @@ FixedLayout >> instanceSpecification [
 		ifTrue: [ 1 ]
 		ifFalse: [ 0 ]
 ]
+
+{ #category : #testing }
+FixedLayout >> isFixedLayout [
+	^true
+]

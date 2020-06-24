@@ -608,7 +608,7 @@ ClassDescription >> definitionWithSlots [
 			nextPutAll: 'uses: ';
 			nextPutAll: self traitCompositionString ].
 			
-	(self classLayout isKindOf: FixedLayout) ifFalse: [
+	self classLayout isFixedLayout ifFalse: [
 		stream 
 			crtab; 
 			nextPutAll: 'layout: ';

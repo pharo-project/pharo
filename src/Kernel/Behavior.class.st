@@ -858,7 +858,7 @@ Behavior >> hasSpecificLayout [
 	"Point hasSpecificLayout >>> false"
 	"Array hasSpecificLayout >>> true"
 	
-	^ (self classLayout isKindOf: FixedLayout) not
+	^ self classLayout isFixedLayout not
 	
 
 ]
