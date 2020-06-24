@@ -7,7 +7,9 @@ RBMethodNode >> bcToASTCache [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	^ self ir compiledMethod
+	compilationContext compiledMethod 
+		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
+	^compilationContext compiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -62,6 +64,7 @@ RBMethodNode >> generate: trailer [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	| ir |
+	bcToASTCache := nil.
 	scope ifNil: [self doSemanticAnalysis].
  	ir := (self compilationContext astTranslatorClass new
 			visitNode: self)
