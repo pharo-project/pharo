@@ -93,9 +93,8 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
 	"this is a test for full blocks only"
 	compiledMethod encoderClass = EncoderForSistaV1 ifFalse: [self skip].
 	blockNode := compiledMethod ast statements last value.
-	cache := OCBytecodeToASTCache generateForNode: blockNode.
 	pc := 27.
-	mappedNode := (cache nodeForPC: pc).
+	mappedNode := (blockNode sourceNodeForPC: pc).
 	expectedNode := blockNode body.
 	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
 	self assert: mappedNode start equals: expectedNode start.
