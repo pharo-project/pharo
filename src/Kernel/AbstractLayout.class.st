@@ -114,6 +114,11 @@ AbstractLayout >> isCustomLayout [
 ]
 
 { #category : #testing }
+AbstractLayout >> isFixedLayout [
+	^false
+]
+
+{ #category : #testing }
 AbstractLayout >> isVariable [
 	^ false
 ]
