@@ -48,14 +48,13 @@ RGMCTraitCompositionVisitorTest >> testAliasWithMultipleAliases [
 RGMCTraitCompositionVisitorTest >> testClassTrait [
 
 	| composition result |
-
 	composition := RGTraitComposition unnamed.
 	result := RGTraitCompositionVisitor new parse: 'Trait1 classTrait + Trait2 classTrait' for: composition.
 	
 	self assert: result isCollection.
-	self assert: (result allSatisfy: #isTrait).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: (result collect: #name) equals: #('Trait1 classTrait' 'Trait2 classTrait') asOrderedCollection.
+	self assert: (result allSatisfy: [:each | each isTrait]).
+	self assert: (result allSatisfy: [:each | each isRGObject]).
+	self assert: (result collect: [:each | each name]) equals: #('Trait1 classTrait' 'Trait2 classTrait') asOrderedCollection.
 ]
 
 { #category : #tests }
@@ -164,9 +163,9 @@ RGMCTraitCompositionVisitorTest >> testMultipleTraits [
 	self assert: result isCollection.
 	self assert: result size equals: 4.
 
-	self assert: (result allSatisfy: #isTrait).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: (result collect: #name) equals: #(Trait1 Trait2 Trait3 Trait4) asOrderedCollection.
+	self assert: (result allSatisfy: [:each | each isTrait]).
+	self assert: (result allSatisfy: [:each | each isRGObject]).
+	self assert: (result collect: [:each | each name ]) equals: #(Trait1 Trait2 Trait3 Trait4) asOrderedCollection.
 ]
 
 { #category : #tests }
@@ -178,9 +177,9 @@ RGMCTraitCompositionVisitorTest >> testSingleTrait [
 	result := RGTraitCompositionVisitor new parse: 'Trait1' for: composition.
 	
 	self assert: result isCollection.
-	self assert: (result allSatisfy: #isTrait).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: (result collect: #name) equals: #(Trait1) asOrderedCollection.
+	self assert: (result allSatisfy: [:each | each isTrait]).
+	self assert: (result allSatisfy: [:each | each isRGObject]).
+	self assert: (result collect: [:each | each name]) equals: #(Trait1) asOrderedCollection.
 ]
 
 { #category : #tests }
@@ -192,7 +191,7 @@ RGMCTraitCompositionVisitorTest >> testTwoTraits [
 	result := RGTraitCompositionVisitor new parse: 'Trait1 + Trait2' for: composition.
 	
 	self assert: result isCollection.
-	self assert: (result allSatisfy: #isTrait).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: (result collect: #name) equals: #(Trait1 Trait2) asOrderedCollection.
+	self assert: (result allSatisfy: [:each | each isTrait]).
+	self assert: (result allSatisfy: [:each | each isRGObject]).
+	self assert: (result collect: [:each | each name]) equals: #(Trait1 Trait2) asOrderedCollection.
 ]

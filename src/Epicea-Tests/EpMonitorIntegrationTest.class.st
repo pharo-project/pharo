@@ -21,7 +21,7 @@ EpMonitorIntegrationTest >> allLogEntriesWith: aClass [
 { #category : #running }
 EpMonitorIntegrationTest >> allLogEventsWith: aClass [
 
-	^ (self allLogEntriesWith: aClass) collect: #content
+	^ (self allLogEntriesWith: aClass) collect: [:each | each content]
 ]
 
 { #category : #running }

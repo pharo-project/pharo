@@ -51,14 +51,11 @@ RxmSubstring >> matchAgainst: aMatcher [
 	originalState := aMatcher currentState.
 	sampleStream := self sampleStream.
 	mismatch := false.
-	[sampleStream atEnd
-		or: [aMatcher atEnd
-		or: [mismatch := (compare value: sampleStream next value: aMatcher next) not]]] whileFalse.
-	(mismatch not and: [sampleStream atEnd and: [next matchAgainst: aMatcher]])
-		ifTrue: [^true]
-		ifFalse: 
-			[aMatcher restoreState: originalState.
-			^false]
+	[ sampleStream atEnd or: [ aMatcher atEnd or: [ mismatch := (compare value: sampleStream next value: aMatcher next) not ] ] ] whileFalse.
+	^ (mismatch not and: [ sampleStream atEnd and: [ next matchAgainst: aMatcher ] ])
+		ifTrue: [ true ]
+		ifFalse: [ aMatcher restoreState: originalState.
+			false ]
 ]
 
 { #category : #private }

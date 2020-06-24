@@ -89,6 +89,22 @@ MetaLinkObjectAPITest >> testLinkClassToSlotNamed [
 ]
 
 { #category : #'class api' }
+MetaLinkObjectAPITest >> testLinkClassToSlotNamedUninstall [
+	| link instance |
+	link := self link.
+
+	ReflectivityExamples2 link: link toSlotNamed: #instVar.
+	self assert: tag isEmpty.
+	instance := ReflectivityExamples2 new.
+	instance methodWithInstVarAccess.
+	self assert: tag size equals: 2.
+	
+	link uninstall.
+	instance methodWithInstVarAccess.
+	self assert: tag size equals: 2
+]
+
+{ #category : #'class api' }
 MetaLinkObjectAPITest >> testLinkClassToTempVarNamed [
 	| link instance |
 	link := self linkForTemp.

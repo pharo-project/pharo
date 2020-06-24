@@ -127,7 +127,7 @@ VersionBrowser >> compareToCurrentVersion [
 VersionBrowser >> compareToOtherVersion [
 	| labels versions index selected |
 	versions := self changeList.
-	labels := versions collect: #stamp.
+	labels := versions collect: [:each | each stamp].
 	index := UIManager default chooseFrom: labels.
 	index > 0 ifFalse: [ ^ self ].
 	selected := versions at: index.

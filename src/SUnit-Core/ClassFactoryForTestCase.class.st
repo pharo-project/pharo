@@ -57,7 +57,7 @@ ClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 
 { #category : #accessing }
 ClassFactoryForTestCase >> createdClassNames [
-	^self createdClasses collect: [:class| class name]
+	^self createdClasses collect: [ :class| class name ]
 ]
 
 { #category : #accessing }
@@ -67,7 +67,7 @@ ClassFactoryForTestCase >> createdClasses [
 
 { #category : #accessing }
 ClassFactoryForTestCase >> createdTraitNames [
-	^self createdTraits collect: [:trait | trait name]
+	^self createdTraits collect: [ :trait | trait name ]
 ]
 
 { #category : #accessing }

@@ -93,14 +93,13 @@ SpComponentListPresenterTest >> testNewComponentListIsEmpty [
 
 { #category : #tests }
 SpComponentListPresenterTest >> testReplaceItemList [
-	| changed |
 
+	| changed |
 	changed := false.
 	presenter whenModelChangedDo: [ changed := true ].
 	presenter items: #(a b c).
-	
 	self 
-		assert: (presenter model collection collect: #label)
+		assert: (presenter model collection collect: [:each | each label])
 		equals: #(a b c).
 	self assert: changed
 ]
@@ -116,7 +115,7 @@ SpComponentListPresenterTest >> testSelectAll [
 	presenter selectAll.
 	"but in multiple mode selectAll works"
 	self 
-		assert: (presenter selection selectedItems asArray collect: #label) 
+		assert: (presenter selection selectedItems asArray collect: [:each | each label]) 
 		equals: #('10' '20' '30')
 ]
 

@@ -122,7 +122,7 @@ SpChooseMethodUI >> classListAction [
 					ifNil: [ #()]]
 		postTransmission: [ :protcolList | 
 			protocolList
-				selectIndex: ((protcolList items collect: #name) indexOf: '-- all --') ]
+				selectIndex: ((protcolList items collect: [:each | each name]) indexOf: '-- all --') ]
 ]
 
 { #category : #initialization }

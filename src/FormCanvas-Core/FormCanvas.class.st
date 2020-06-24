@@ -538,7 +538,7 @@ FormCanvas >> privateWarp: aForm transform: aTransform at: extraOffset sourceRec
 	| globalRect sourceQuad warp tfm |
 	tfm := aTransform.
 	globalRect := tfm localBoundsToGlobal: sourceRect.
-	sourceQuad := (tfm sourceQuadFor: globalRect) collect:[:p| p - sourceRect topLeft].
+	sourceQuad := (tfm sourceQuadFor: globalRect) collect: [:p| p - sourceRect topLeft].
 	extraOffset ifNotNil:[globalRect := globalRect translateBy: extraOffset].
      warp := (WarpBlt toForm: port destForm)
                 combinationRule: Form paint;

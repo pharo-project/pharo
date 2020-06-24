@@ -60,15 +60,12 @@ HiSpecExample >> close [
 HiSpecExample >> commits: commits [ 
 
 	table items: commits.
-
 	hiedraColumnController ruler: (HiRulerBuilder 
 		newRulerValues: commits
 		linksBlock: [:aCommit |
 			aCommit parentIds collect: [:id | 
 				commits detect: [:each | each id = id ] ] ]).
-
 	hiedraColumnController reset.
-	
 	"After #reset, we can know the width of the column."
 	table columns first width: hiedraColumnController rulerWidth.
 ]

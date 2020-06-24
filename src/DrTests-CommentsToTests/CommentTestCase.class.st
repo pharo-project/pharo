@@ -18,16 +18,15 @@ Class {
 
 { #category : #'instance creation' }
 CommentTestCase class >> comment: stringComment class: aClass selector: aSymbol [
-
 	| result |
 	self flag: #todo.
 	"this method body should be moved on instance side."
 	result := [ Smalltalk compiler evaluate: stringComment ]
 		on: Exception
 		do: [ ^ self errorComment: stringComment class: aClass selector: aSymbol ].
-	(result isKindOf: Association)
-		ifFalse: [ ^ self errorComment: stringComment class: aClass selector: aSymbol ]
-		ifTrue: [ ^ self new
+	^ (result isKindOf: Association)
+		ifFalse: [ self errorComment: stringComment class: aClass selector: aSymbol ]
+		ifTrue: [ self new
 				expression: stringComment;
 				expectedValue: result key;
 				currentValue: result value;

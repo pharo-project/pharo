@@ -45,23 +45,21 @@ ClyClassSideScopeTest >> testConvertingToIncreasedScopeByExtraClassScope [
 
 { #category : #tests }
 ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
+
 	| expected |
 	scope := ClyClassSideScope of: ClyClass1FromP1.
-	
 	scope methodsDo: [ :each | result add: each selector ].
-	
-	expected := ClyClass1FromP1 classSide localMethods collect: #selector.
+	expected := ClyClass1FromP1 classSide localMethods collect: [:each | each selector].
 	self assertCollection: result sorted asArray equals: expected sorted
 ]
 
 { #category : #tests }
 ClyClassSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
+
 	| expected |
-	scope := ClyClassSideScope of: ClyClass1FromP1 classSide.
-	
+	scope := ClyClassSideScope of: ClyClass1FromP1 classSide.	
 	scope methodsDo: [ :each | result add: each selector ].
-	
-	expected := ClyClass1FromP1 classSide localMethods collect: #selector.
+	expected := ClyClass1FromP1 classSide localMethods collect: [:each | each selector].
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 

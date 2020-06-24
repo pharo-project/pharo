@@ -95,5 +95,7 @@ DangerousClassNotifier class >> tooDangerousClasses [
 		#InstructionStream #Context #BlockClosure #CompiledMethod #CompiledCode #CompiledBlock
 		"UndefinedObject crashes the VM"
 		#UndefinedObject
+		"Variables"
+		#Slot #Variable
 	)
 ]

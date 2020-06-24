@@ -112,7 +112,7 @@ RGTraitV2Strategy >> classTrait: anRGMetatraitDefinition [
 { #category : #'private - backend access' }
 RGTraitV2Strategy >> classVarNames [
 
-	^ self classVariables collect: #name
+	^ self classVariables collect: [ :each | each name ]
 ]
 
 { #category : #'class variables' }

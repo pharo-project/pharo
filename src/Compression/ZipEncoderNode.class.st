@@ -95,9 +95,9 @@ ZipEncoderNode >> isLeaf [
 
 { #category : #private }
 ZipEncoderNode >> leafNodes [
-	self isLeaf
-		ifTrue: [ ^Array with: self ]
-		ifFalse: [ ^left leafNodes, right leafNodes ]
+	^ self isLeaf
+		ifTrue: [ Array with: self ]
+		ifFalse: [ left leafNodes , right leafNodes ]
 ]
 
 { #category : #accessing }

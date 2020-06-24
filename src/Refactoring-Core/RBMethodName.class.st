@@ -44,7 +44,7 @@ RBMethodName >> arguments: nameCollection [
 RBMethodName >> isValid [
 	"Return whether the receiver looks like a method with a selector in sync with the arguments in a possible class"
 	
-	^ 	selector isString and: [(RBScanner isSelector: selector)
+	^ 	selector isString and: [ selector isValidSelector
 			and: [ selector numArgs = arguments size ]]
 ]
 

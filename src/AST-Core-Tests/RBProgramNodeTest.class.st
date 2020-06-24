@@ -170,6 +170,29 @@ RBProgramNodeTest >> testAddTemporaryNamed [
 	self assert: tree temporaries last equals: variable
 ]
 
+{ #category : #'tests - accessing' }
+RBProgramNodeTest >> testAllComments [
+	"Testing the AST comments objects. I am the first comment to be found in this test"
+	self
+		assert: (RBProgramNodeTest >> #testAllComments) ast allComments first contents
+		equals: 'Testing the AST comments objects. I am the first comment to be found in this test'.
+	"Next test assumes this comment it's not a string like in #testComments..."
+	self 
+		assert: (RBProgramNodeTest >> #testAllComments) ast allComments second isString
+		equals: false
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllParents [
+	"check that we get all parents of a program node"
+	|dummy me parentsOf7 |
+	dummy := [ :a | a + 7 ].
+	me := self class >> #testAllParents.
+	parentsOf7 := (me ast allChildren select: [ :n| n isLiteralNode and: [ n value = 7 ] ] ) first allParents .
+	self assert: parentsOf7 last selector equals: #+.
+	self assert: parentsOf7 first equals: me ast
+]
+
 { #category : #'testing-properties' }
 RBProgramNodeTest >> testHasProperty [
 	self deny: (self node hasProperty: #foo).
@@ -420,4 +443,15 @@ RBProgramNodeTest >> testSetCommentsToNil [
 
 	self node comments: nil.
 	self assert: self node comments equals: #()
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testWithAllParents [
+	"check that we get all parents of a program node, and me"
+	|dummy me parentsOf7 |
+	dummy := [ :a | a + 7 ].
+	me := self class >> #testAllParents.
+	parentsOf7 := (me ast allChildren select: [ :n| n isLiteralNode and: [ n value = 7 ] ] )first withAllParents .
+	self assert: parentsOf7 last value equals: 7.
+	self assert: parentsOf7 first equals: me ast
 ]

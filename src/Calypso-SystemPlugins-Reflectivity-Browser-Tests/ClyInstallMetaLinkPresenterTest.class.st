@@ -41,7 +41,7 @@ ClyInstallMetaLinkPresenterTest >> setUp [
 	metalink2 := MetaLink new.
 	breakpoint := MetaLink new metaObject: Break; yourself.
 	executionCounter := MetaLink new metaObject: ExecutionCounter new; yourself.
-	watchpoint := MetaLink new metaObject: Watchpoint new; yourself.
+	watchpoint := MetaLink new metaObject: Watch new; yourself.
 	node propertyAt: #links put: {metalink. breakpoint. executionCounter. watchpoint} asOrderedCollection 
 	
 ]

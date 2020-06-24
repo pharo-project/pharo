@@ -196,7 +196,7 @@ ClassDescription >> basicOrganization: aClassOrg [
 { #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> classClass [
 	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClasss' 
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver classClass' 
 						-> '`@receiver classSide'.
 	^ self classSide
 ]
@@ -1256,10 +1256,34 @@ ClassDescription >> storeOn: aStream [
 ]
 
 { #category : #initialization }
+ClassDescription >> superclass: aSuperclass layout: aLayout [
+	layout := aLayout. 
+	
+	self
+		superclass: aSuperclass
+		methodDictionary: self emptyMethodDictionary
+		format: aLayout format.
+]
+
+{ #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self organization: nil.
+]
+
+{ #category : #initialization }
+ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: slotArray [
+	| superLayout newScope newLayout |
+	superLayout := aSuperclass
+						ifNil: [ EmptyLayout instance ]
+						ifNotNil: [ aSuperclass classLayout ].
+	newScope := superLayout slotScope extend: slotArray.
+	newLayout := layoutType extending: superLayout scope: newScope host: self.
+	newLayout checkSanity.
+	self
+		superclass: aSuperclass
+		layout: newLayout
 ]
 
 { #category : #'accessing tags' }

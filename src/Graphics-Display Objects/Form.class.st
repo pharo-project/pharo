@@ -182,12 +182,10 @@ Form class >> fromDisplay: aRectangle [
 Form class >> fromDisplay: aRectangle using: oldForm [
 	"Like fromDisplay: only if oldForm is the right size, copy into it and answer it instead."
 
-	((oldForm ~~ nil) and: [oldForm extent = aRectangle extent])
-		ifTrue:
-			[oldForm fromDisplay: aRectangle.
-			 ^ oldForm]
-		ifFalse:
-			[^ self fromDisplay: aRectangle]
+	^ (oldForm ~~ nil and: [ oldForm extent = aRectangle extent ])
+		ifTrue: [ oldForm fromDisplay: aRectangle.
+			oldForm ]
+		ifFalse: [ self fromDisplay: aRectangle ]
 ]
 
 { #category : #'instance creation' }
@@ -380,9 +378,10 @@ Form >> asSourceForm [
 { #category : #'color mapping' }
 Form >> balancedPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
-	self hasNonStandardPalette
-		ifTrue:[ ^ self bitPatternFor: aColor]
-		ifFalse:[^ self balancedPatternFor: aColor depth: self depth]
+
+	^ self hasNonStandardPalette
+		ifTrue: [ self bitPatternFor: aColor ]
+		ifFalse: [ self balancedPatternFor: aColor depth: self depth ]
 ]
 
 { #category : #'color mapping' }
@@ -461,10 +460,11 @@ Form >> balancedPatternFor: aColor depth: aDepth [
 { #category : #'color mapping' }
 Form >> bitPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
-	aColor isColor ifFalse:[^aColor bitPatternForDepth: self depth].
-	self hasNonStandardPalette
-		ifTrue:[^Bitmap with: (self pixelWordFor: aColor)]
-		ifFalse:[^aColor bitPatternForDepth: self depth]
+
+	aColor isColor ifFalse: [ ^ aColor bitPatternForDepth: self depth ].
+	^ self hasNonStandardPalette
+		ifTrue: [ Bitmap with: (self pixelWordFor: aColor) ]
+		ifFalse: [ aColor bitPatternForDepth: self depth ]
 ]
 
 { #category : #filling }
@@ -672,9 +672,10 @@ Form >> colormapFromARGB [
 { #category : #'color mapping' }
 Form >> colormapIfNeededFor: destForm [
 	"Return a ColorMap mapping from the receiver to destForm."
-	(self hasNonStandardPalette or:[destForm hasNonStandardPalette]) 
-		ifTrue:[^self colormapFromARGB mappingTo: destForm colormapFromARGB]
-		ifFalse:[^self colormapIfNeededForDepth: destForm depth]
+
+	^ (self hasNonStandardPalette or: [ destForm hasNonStandardPalette ])
+		ifTrue: [ self colormapFromARGB mappingTo: destForm colormapFromARGB ]
+		ifFalse: [ self colormapIfNeededForDepth: destForm depth ]
 ]
 
 { #category : #'color mapping' }
@@ -1854,21 +1855,22 @@ Form >> pixelValueAt: aPoint put: pixelValue [
 { #category : #'color mapping' }
 Form >> pixelValueFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
-	self hasNonStandardPalette
-		ifTrue:[^self colormapFromARGB mapPixel: (aColor pixelValueForDepth: 32)]
-		ifFalse:[^aColor pixelValueForDepth: self depth]
+
+	^ self hasNonStandardPalette
+		ifTrue: [ self colormapFromARGB mapPixel: (aColor pixelValueForDepth: 32) ]
+		ifFalse: [ aColor pixelValueForDepth: self depth ]
 ]
 
 { #category : #'color mapping' }
 Form >> pixelWordFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"
+
 	| basicPattern |
-	self hasNonStandardPalette 
-		ifFalse:[^aColor pixelWordForDepth: self depth].
+	self hasNonStandardPalette ifFalse: [ ^ aColor pixelWordForDepth: self depth ].
 	basicPattern := self pixelValueFor: aColor.
-	self depth = 32 
-		ifTrue:[^basicPattern]
-		ifFalse:[^aColor pixelWordFor: self depth filledWith: basicPattern]
+	^ self depth = 32
+		ifTrue: [ basicPattern ]
+		ifFalse: [ aColor pixelWordFor: self depth filledWith: basicPattern ]
 ]
 
 { #category : #other }

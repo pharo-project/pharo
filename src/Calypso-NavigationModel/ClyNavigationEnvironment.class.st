@@ -1,23 +1,23 @@
 "
-I am environment where user navigates over particular system by quering objects from particular scope of other objects. 
-I cache query results and extend retrieved objects using builtin plugin system.
+I am an environment allowing navigation over a particular system by quering objects from a particular scope of other objects. 
+I cache query results and extend retrieved objects using the builtin plugin system.
 
 My instances should be created over some system: 
 
 	environment := ClyNavigationEnvironment over: aSystem
 
-I do not provide any requirement for the class of target system. It can be any object from particular domain which represents the global view on it.
-But Calypso requires two things which system should implement. It can define them as extension inside Calypso integration package:
+I do not impose any requirements on the class of the target system. It can be any object from the particular domain which represents its global view.
+But Calypso requires two things which system should implement. It can define them as extensions in the Calypso integration package:
 
-1) The system should provide global scope which will adopt it to Calypso navigation model. This scope will represent the root place where all objects in system can be reached.
-Concrete system should implement subclass of ClySystemScope and return it instance as global scope of actual system object. It should be returned from method #asGlobalScopeIn: which system should implement.
-Users can access the system and it scope from my instance:
+1) The system should provide a global scope which will adapt it to Calypso's navigation model. This scope will represent the root from which all objects in the system can be reached.
+Concrete systems should implement a subclass of ClySystemScope and return an instance as the global scope of an actual system object. It should be returned from the system's #asGlobalScopeIn: method.
+Users can access the system and its scope from my instance:
 	
 	environment system
 	environment systemScope
 
 2) The system should notify my instance about changes.
-I maintain query cache and it requires invalidation when system is changed. So responsibility of any system is to subscribe and unsubscribe my instances for possible changes: 
+I maintain a query cache and it requires invalidation when the system is changed. So systems have the responsibility to subscribe and unsubscribe my instances for possible changes: 
 	
 	aSystem subscribe: environment
 	aSystem unsubscribe: environment
@@ -34,10 +34,10 @@ User should manually attach my instances to the system when they are interested 
 
 I should not be subclassed. 
 
-Users can maintain singleton instance of me for concrete system. It will provide global cache for all queries over given system.
-For this purpose I provide class side variable defaultGlobalEnvironments. It maps system instance to my instance (aNavigationEnvironment) over it.
-Idea that applications usually have kind of default system instance (imaging Smalltalk global). And to provide default navigation over it users can extend my class side with appropriate accessing method. 
-For example navigation over current Smalltalk image is accessed using #currentImage method: 
+Users can maintain a singleton instance of me for a concrete system. It will provide a global cache for all queries over the given system.
+For this purpose, I provide a class side variable defaultGlobalEnvironments. It maps a system instance to my instance (aNavigationEnvironment) over it.
+The idea is that applications usually have a kind of default system instance (e.g. Smalltalk global). To provide default navigation over it, users can extend my class-side with an appropriate accessing method. 
+For example, navigation over the current Smalltalk image is accessed using the #currentImage method: 
 
 	ClyNavigationEnvironment class>>currentImage 	
 		^self defaultOver: ClySystemEnvironment currentImage

@@ -59,5 +59,5 @@ SpDemoTablePresenter >> initializePresenters [
 
 { #category : #initialization }
 SpDemoTablePresenter >> resetLabel [
-	label label: (selectedClasses ifEmpty: [ 'No class checked' ] ifNotEmpty: [ (selectedClasses collect: #printString) joinUsing: ' - '])
+	label label: (selectedClasses ifEmpty: [ 'No class checked' ] ifNotEmpty: [ (selectedClasses collect: [:each | each printString]) joinUsing: ' - '])
 ]

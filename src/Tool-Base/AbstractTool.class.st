@@ -166,7 +166,7 @@ AbstractTool >> removeClasses: aCollection [
 	aCollection isEmptyOrNil
 		ifTrue: [ ^ false ].
 	classesToRemove := aCollection collect: [:each | each instanceSide].
-	classNames := (classesToRemove collect: #name) joinUsing: ', '.
+	classNames := (classesToRemove collect: [:each | each name]) joinUsing: ', '.
 	(result := self confirm: (self removeClassesMessageFor: classNames))
 		ifTrue: [ 
 			classesToRemove

@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'PromptOnRefactoring'
 	],
-	#category : #NautilusRefactoring
+	#category : #'NautilusRefactoring-Base'
 }
 
 { #category : #shortcuts }
@@ -833,7 +833,7 @@ NautilusRefactoring >> privatePullUpInstVarFrom: aClass [
 { #category : #'private-method' }
 NautilusRefactoring >> privatePullUpMethodsFor: aCollection [
 	| selectors class |
-	selectors := aCollection collect: #selector.
+	selectors := aCollection collect: [:each | each selector].
 	class := aCollection first methodClass.
 	^ RBPullUpMethodRefactoring model: environment pullUp: selectors from: class
 ]
@@ -859,7 +859,7 @@ NautilusRefactoring >> privatePushDownInstVarFrom: aClass [
 { #category : #'private-method' }
 NautilusRefactoring >> privatePushDownMethodsFor: aCollection [
 	| selectors class |
-	selectors := aCollection collect: #selector.
+	selectors := aCollection collect: [:each | each selector].
 	class := aCollection first methodClass.
 	^ RBPushDownMethodRefactoring
 		model: environment
@@ -893,7 +893,7 @@ NautilusRefactoring >> privateRemoveInstVarFrom: aClass [
 { #category : #'private-method' }
 NautilusRefactoring >> privateRemoveMethodsFor: aCollection [
 	| selectors class |
-	selectors := aCollection collect: #selector.
+	selectors := aCollection collect: [:each | each selector].
 	class := aCollection first origin.
 	^ RBRemoveMethodRefactoring
 		model: environment
@@ -958,7 +958,7 @@ NautilusRefactoring >> privateRenameInstVarNamed: variable from: aClass [
 NautilusRefactoring >> privateRenameMessageFor: aMethodOrMessageNode [
 	|  newMethodName oldMethodName selector oldArguments argumentPermutation |
 	selector := aMethodOrMessageNode selector.
-	oldArguments := aMethodOrMessageNode arguments collect: #name.
+	oldArguments := aMethodOrMessageNode arguments collect: [:each | each name].
 	oldMethodName := RBMethodName selector: selector arguments: oldArguments.
 	(newMethodName := self requestMethodNameFor: oldMethodName) ifNil: [ RefactoringAborted signal ].	
 	argumentPermutation := newMethodName arguments collect: [ :each | oldArguments indexOf: each ].
@@ -974,7 +974,7 @@ NautilusRefactoring >> privateRenameMessageFor: aMethodOrMessageNode [
 NautilusRefactoring >> privateRenameMethodFor: aMethod [
 	|  newMethodName oldMethodName selector oldArguments |
 	selector := aMethod selector.
-	oldArguments := aMethod ast arguments collect: #name.
+	oldArguments := aMethod ast arguments collect: [:each | each name].
 	oldMethodName := RBMethodName selector: selector arguments: oldArguments.
 	(newMethodName := self requestMethodNameFor: oldMethodName) ifNil: [ RefactoringAborted signal ].
 	^ self privateRenameMethodFor: aMethod withNewName: newMethodName
@@ -986,7 +986,7 @@ NautilusRefactoring >> privateRenameMethodFor: aMethod withNewName: newMethodNam
 	| class selector  tempOldArguments argumentPermutation |
 	class := aMethod methodClass.
 	selector := aMethod selector.
-	tempOldArguments := aMethod ast arguments collect: #name.
+	tempOldArguments := aMethod ast arguments collect: [:each | each name].
 	argumentPermutation := newMethodName arguments collect: [ :each | tempOldArguments indexOf: each ].
 	^ RBRenameMethodRefactoring
 		model: environment
@@ -999,7 +999,7 @@ NautilusRefactoring >> privateRenameMethodFor: aMethod withNewName: newMethodNam
 { #category : #'private-source' }
 NautilusRefactoring >> privateRenameTemporaryNamed: oldname Between: anInterval from: aMethod [
 
-	^ RBRenameTemporaryRefactoring
+	^ RBRenameArgumentOrTemporaryRefactoring
 		model: environment
 		renameTemporaryFrom: anInterval
 		to: (self request: self newVariableRequestText initialAnswer: oldname)

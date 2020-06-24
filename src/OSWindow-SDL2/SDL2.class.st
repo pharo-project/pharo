@@ -54,6 +54,11 @@ SDL2 class >> clipboardText: text [
 	self primClipboardText: encoded
 ]
 
+{ #category : #audio }
+SDL2 class >> closeAudioDevice: dev [
+	^ self ffiCall: #( void SDL_CloseAudioDevice(SDL_AudioDeviceID dev) )
+]
+
 { #category : #video }
 SDL2 class >> composeCustomBlendMode_srcColorFactor: srcColorFactor dstColorFactor: dstColorFactor colorOperation: colorOperation srcAlphaFactor: srcAlphaFactor dstAlphaFactor: dstAlphaFactor alphaOperation: alphaOperation [
 	^ self ffiCall: #(SDL_BlendMode SDL_ComposeCustomBlendMode(SDL_BlendFactor srcColorFactor,
@@ -137,9 +142,24 @@ SDL2 class >> gameControllerOpen: deviceIndex [
 	^ self ffiCall: #( SDL_GameController SDL_GameControllerOpen ( int deviceIndex ) )
 ]
 
+{ #category : #audio }
+SDL2 class >> getAudioDeviceName: index isCapture: isCapture [
+	^ self ffiCall: #( char* SDL_GetAudioDeviceName(int index, int isCapture) ) options: #( optStringEncodingUtf8 ).
+]
+
 { #category : #'error handling' }
 SDL2 class >> getErrorMessage [
 	^ self ffiCall: #( String SDL_GetError ( void ) )
+]
+
+{ #category : #audio }
+SDL2 class >> getNumAudioDevices: isCapture [
+	^ self ffiCall: #( int SDL_GetNumAudioDevices(int isCapture) )
+]
+
+{ #category : #audio }
+SDL2 class >> getQueuedAudioSize: dev [
+	^ self ffiCall: #( Uint32 SDL_GetQueuedAudioSize(SDL_AudioDeviceID dev) )
 ]
 
 { #category : #common }
@@ -190,6 +210,12 @@ SDL2 class >> glSwapWindow: window [
 { #category : #common }
 SDL2 class >> init: flags [
 	^ self ffiCall: #( int SDL_Init ( Uint32 flags ) )
+]
+
+{ #category : #common }
+SDL2 class >> initAudio [
+	self initLibrary;
+		 initSubSystem: SDL_INIT_AUDIO
 ]
 
 { #category : #common }
@@ -293,6 +319,16 @@ SDL2 class >> numberOfJoysticks [
 	^ self ffiCall: #( int SDL_NumJoysticks() )
 ]
 
+{ #category : #audio }
+SDL2 class >> openAudioDevice: device isCapture: isCapture desired: desired obtained: obtained allowedChanges: allowedChanges [
+	^ self ffiCall: #( SDL_AudioDeviceID SDL_OpenAudioDevice(void* device, int isCapture, SDL_AudioSpec* desired, SDL_AudioSpec* obtained, int allowedChanges) )
+]
+
+{ #category : #audio }
+SDL2 class >> pauseAudioDevice: dev pauseOn: pauseOn [
+	^ self ffiCall: #( void SDL_PauseAudioDevice(SDL_AudioDeviceID dev, int pauseOn) )
+]
+
 { #category : #event }
 SDL2 class >> pollEvent: event [
 	^ self ffiCall: #( int SDL_PollEvent ( SDL_Event event ) )
@@ -315,6 +351,11 @@ SDL2 class >> primCreateRGBSurfaceForCairoWidth: width height: height [
 	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface 
 						( 0 , int width , int height , 32 ,
 						  16r00FF0000 , 16r0000FF00 , 16r000000FF , 0 ) )
+]
+
+{ #category : #audio }
+SDL2 class >> queueAudio: dev data: data len: len [
+	^ self ffiCall: #( int SDL_QueueAudio(SDL_AudioDeviceID dev, void* data, Uint32 len) )
 ]
 
 { #category : #common }

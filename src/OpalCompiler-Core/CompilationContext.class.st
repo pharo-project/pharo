@@ -397,15 +397,6 @@ CompilationContext >> compilerOptions: anArray [
 	self parseOptions: anArray
 ]
 
-{ #category : #options }
-CompilationContext >> doesNotUnderstand: message [
-
-	(message selector isUnary and: [ message selector beginsWith: 'opt'] )
-		ifTrue: [ ^ options includes: message selector ].
-		
-	^ super doesNotUnderstand: message
-]
-
 { #category : #accessing }
 CompilationContext >> encoderClass [
 	^ encoderClass ifNil: [ encoderClass := self class bytecodeBackend ]

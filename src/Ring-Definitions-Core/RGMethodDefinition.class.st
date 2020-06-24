@@ -158,7 +158,7 @@ RGMethodDefinition >> argumentNames [
 
 	self isActive
 		ifTrue: [ ^ self compiledMethod argumentNames ].
-	^ self ast ifNotNil:[:ast | ast arguments collect: #name ]
+	^ self ast ifNotNil:[:ast | ast arguments collect:  [:each | each name] ]
 ]
 
 { #category : #'type of methods' }

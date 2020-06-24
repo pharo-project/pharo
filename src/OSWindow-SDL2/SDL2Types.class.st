@@ -9,6 +9,9 @@ Class {
 		'Int32',
 		'Int64',
 		'Int8',
+		'SDL_AudioCallback',
+		'SDL_AudioDeviceID',
+		'SDL_AudioFormat',
 		'SDL_BlendFactor',
 		'SDL_BlendMode',
 		'SDL_BlendOperation',
@@ -54,4 +57,7 @@ SDL2Types class >> initialize [
 	SDL_BlendOperation := Uint32.
 	
 	SDL_GLattr := #int.
+	SDL_AudioDeviceID := #uint32.
+	SDL_AudioFormat := #uint16.
+	SDL_AudioCallback := #'void*'. "FIXME: use the proper type here."
 ]

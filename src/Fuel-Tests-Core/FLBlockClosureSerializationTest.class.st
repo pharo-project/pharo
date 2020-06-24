@@ -45,11 +45,17 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 		duringTestCompileSilently: 'methodWithClosure  ^ [ 41 ]';
 		yourself.
 	aClosure := aClass new perform: #methodWithClosure.
+
 	self serialize: aClosure.
 	aClass duringTestCompileSilently: 'methodWithClosure  ^ [ 42 ]'.
 	self deny: aClosure method isInstalled.
 	materializedClosure := self materialized.
-	self assert: materializedClosure value equals: 42
+
+	"If the block is a full block it will be serialized independently of the method.
+	The method may be the same, but the CompiledBlock is different"
+	aClosure isFullBlock 
+		ifTrue: [ self assert: materializedClosure value equals: 41 ]
+		ifFalse: [ self assert: materializedClosure value equals: 42 ]
 ]
 
 { #category : #'tests-change' }
@@ -78,6 +84,15 @@ FLBlockClosureSerializationTest >> testBlockClosureWithClassVariableRead [
 	self assert: materializedClosure value.
 	ClassVariableForTesting := false.
 	self deny: materializedClosure value
+]
+
+{ #category : #'tests-clean' }
+FLBlockClosureSerializationTest >> testBlockClosureWithGlobalVariable [
+	| closure materializedClosure |
+	closure := [ Smalltalk ].
+	materializedClosure := self resultOfSerializeAndMaterialize: closure.
+	closure assertWellMaterializedInto: materializedClosure in: self.
+	self assert: materializedClosure value equals: Smalltalk
 ]
 
 { #category : #'tests-unclean' }

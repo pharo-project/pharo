@@ -12,8 +12,8 @@ Trait >> asClassDefinition [
 			name: self name
 			traitComposition: self traitCompositionString
 			category: self category 
-			instVarNames: (self localSlots collect: #name)
-			classInstVarNames: (self class localSlots collect: #name)
+			instVarNames: (self localSlots collect: [ :each | each name ])
+			classInstVarNames: (self class localSlots collect: [ :each | each name ])
 			classTraitComposition: classTraitCompositionToUse
 			comment: self organization classComment asString
 			commentStamp: self organization commentStamp ].
@@ -22,8 +22,8 @@ Trait >> asClassDefinition [
 			name: self name
 			traitComposition: self traitCompositionString
 			category: self category 
-			instVarNames: (self localSlots collect: #definitionString)
-			classInstVarNames: (self classSide localSlots collect: #definitionString)
+			instVarNames: (self localSlots collect: [:each |each definitionString])
+			classInstVarNames: (self classSide localSlots collect: [:each |each definitionString])
 			classTraitComposition: classTraitCompositionToUse
 			comment: self organization classComment asString
 			commentStamp: self organization commentStamp.

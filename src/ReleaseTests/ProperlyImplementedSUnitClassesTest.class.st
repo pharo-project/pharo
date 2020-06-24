@@ -18,7 +18,7 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperSetupIsCalledAsFirstM
 			each
 				compiledMethodAt: #setUp
 				ifPresent: [ :method | 
-					(ShouldSendSuperSetUpAsFirstMessage superSetUpNotCalledFirstIn: method)
+					(ReShouldSendSuperSetUpAsFirstMessage superSetUpNotCalledFirstIn: method)
 						ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating
 ]
@@ -34,7 +34,7 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLas
 			each
 				compiledMethodAt: #tearDown
 				ifPresent: [ :method | 
-					(ShouldSendSuperTearDownAsLastMessage
+					(ReShouldSendSuperTearDownAsLastMessage
 						superTearDownNotCalledLastIn: method)
 						ifTrue: [ violating add: method ] ] ].
 	self assertEmpty: violating

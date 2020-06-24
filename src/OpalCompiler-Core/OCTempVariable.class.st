@@ -142,6 +142,11 @@ OCTempVariable >> markWrite [
 	super markWrite.
 ]
 
+{ #category : #accessing }
+OCTempVariable >> originalVar [
+	^ self
+]
+
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
 	| definitionContext |
@@ -153,6 +158,22 @@ OCTempVariable >> readFromContext: aContext scope: contextScope [
 OCTempVariable >> readFromLocalContext: aContext [
 
 	^ aContext tempAt: self index
+]
+
+{ #category : #debugging }
+OCTempVariable >> readInContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	^self readFromContext: aContext scope: contextScope
+]
+
+{ #category : #debugging }
+OCTempVariable >> write: aValue inContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	self writeFromContext: aContext scope: contextScope value: aValue
 ]
 
 { #category : #debugging }

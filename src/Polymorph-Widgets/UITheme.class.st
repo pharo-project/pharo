@@ -1202,15 +1202,13 @@ UITheme >> chooseOrRequestIn: aThemedMorph title: title labels: labels values: v
 
 	| dialog choice |
 	dialog := (PopupChoiceOrRequestDialogWindow newWithTheme: aThemedMorph theme)
-		title: (title isEmpty ifTrue: ['Choose' translated] ifFalse: [title asString]);
+		title: (title ifEmpty: [ 'Choose' translated ] ifNotEmpty: #asString);
 		labels: labels;
-		lines: (lines ifNil: [#()]);
+		lines: (lines ifNil: [ #() ]);
 		model: values.
 	choice := dialog openModal choice.
-	dialog cancelled ifTrue: [ ^nil ].
-	choice 
-		ifNotNil: [ ^choice ]
-		ifNil: [ ^dialog filterValue ]
+	dialog cancelled ifTrue: [ ^ nil ].
+	^ choice ifNil: [ dialog filterValue ]
 ]
 
 { #category : #'accessing colors' }

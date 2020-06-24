@@ -34,7 +34,7 @@ PharoCriticRules class >> pharoHardLintRules [
 { #category : #accessing }
 PharoCriticRules class >> pharoIntegrationLintRule [
 	"A set of rules used by the CI monkey to check code before its integration into Pharo"
-	^ (RBCompositeLintRule rules: (self pharoHardLintRules collect: #new))
+	^ (RBCompositeLintRule rules: (self pharoHardLintRules collect: [:each | each new]))
 		name: 'Pharo integration rules';
 		yourself
 ]

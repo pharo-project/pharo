@@ -21,7 +21,7 @@ MorphicEventHandler >> addSubscription: aSubscription toEvent: eventName [
 
 { #category : #access }
 MorphicEventHandler >> allRecipients [
-	^subscriptions collect: #recipients
+	^subscriptions collect: [ :each | each recipients ]
 ]
 
 { #category : #events }

@@ -873,7 +873,7 @@ Object >> explicitRequirement [
 	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
 	errorBlock := [ ^ self error: 'Explicitly required method' ].
 	callingContext := thisContext sender.
-	originalMethod := callingContext method.
+	originalMethod := callingContext compiledCode method.
 	originalMethod isFromTrait
 		ifFalse: errorBlock.
 	originalReceiver := callingContext receiver.
@@ -1128,6 +1128,12 @@ Object >> isColor [
 { #category : #testing }
 Object >> isColorForm [
 	^false
+]
+
+{ #category : #testing }
+Object >> isCompiledBlock [
+
+	^ false
 ]
 
 { #category : #testing }

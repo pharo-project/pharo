@@ -93,7 +93,7 @@ RBPragmaEnvironment >> keywords: aCollection [
 
 { #category : #testing }
 RBPragmaEnvironment >> packages [
-	^ (self methods collect: #package) asSet
+	^ (self methods collect: [:each | each package]) asSet
 ]
 
 { #category : #copying }

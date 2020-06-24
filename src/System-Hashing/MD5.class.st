@@ -29,10 +29,9 @@ MD5 class >> isPluginAvailable [
 
 { #category : #'instance creation' }
 MD5 class >> new [
-
-	self isPluginAvailable 
-		ifTrue: [ ^self basicNew ]
-		ifFalse: [ ^MD5NonPrimitive basicNew ]
+	^ self isPluginAvailable
+		ifTrue: [ self basicNew ]
+		ifFalse: [ MD5NonPrimitive basicNew ]
 ]
 
 { #category : #'private-buffers' }

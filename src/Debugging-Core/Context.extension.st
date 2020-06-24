@@ -22,15 +22,21 @@ Context >> callPrimitive: primNumber [
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
 	| var |
-	var := self astScope lookupVar: aSymbol.
-	"Local variables"
-	var isTemp ifTrue: [^ self tempNamed: aSymbol].
-	"Instance variables"
-	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
-	"Class variables and globals"
-	var isGlobal ifTrue: [ ^ var assoc value ].
-	^ nil.
-	
+	var := self lookupVar: aSymbol.
+	^ var readInContext: self
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> lookupTempVar: aSymbol [
+	| var |
+	var := self lookupVar: aSymbol.
+	var isTemp ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	^var
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> lookupVar: aSymbol [
+	^ self astScope lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
@@ -54,7 +60,7 @@ Context >> namedTempAt: index put: aValue [
 	"Set the value of the temp at index in the receiver's sequence of tempNames"
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be"
-	^self tempNamed: (self tempNames at: index) put: aValue
+	self tempNamed: (self tempNames at: index) put: aValue
 ]
 
 { #category : #'*Debugging-Core' }
@@ -81,7 +87,7 @@ Context >> quickSend: selector to: aReceiver with: arguments super: superFlag [
 	| lookupClass contextToReturnTo result |
 	contextToReturnTo := self.
 	lookupClass := superFlag
-					ifTrue: [(self method literalAt: self method numLiterals) value superclass]
+					ifTrue: [(self compiledCode literalAt: self compiledCode numLiterals) value superclass]
 					ifFalse: [self objectClass: aReceiver].
 	[ | oldSender |
 	oldSender := thisContext sender swapSender: self.
@@ -113,7 +119,7 @@ Context >> respondsToUnknownBytecode [
 	"This method is triggerred by the VM when the interpreter tries to execute an unknown bytecode"
 	
 	| unknownBytecode |
-	unknownBytecode := self method at: self pc.
+	unknownBytecode := self compiledCode at: self pc.
 	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
 	
 
@@ -187,7 +193,7 @@ Context >> runSimulated: aBlock contextAtEachStep: block2 [
 	returnContext := Context
 			sender: nil
 			receiver: self home receiver
-			method: self home method
+			method: self home compiledCode
 			arguments: self home arguments.
 	
 	current pushArgs: Array new from: returnContext.
@@ -358,20 +364,18 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	| scope var |
-	scope := self astScope.
-	var := scope lookupVar: aName.
-	^var readFromContext: self scope: scope.
+	| var |
+	var := self lookupTempVar: aName.
+	^var readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	| scope var |
-	scope := self astScope.
-	var := scope lookupVar: aName.
-	^var writeFromContext: self scope: scope value: anObject
+	| var |
+	var := self lookupTempVar: aName.
+	var write: anObject inContext: self
 ]
 
 { #category : #'*Debugging-Core' }

@@ -514,32 +514,27 @@ LinkedListTest >> test07addAfter [
 
 { #category : #tests }
 LinkedListTest >> test08addAfter [
+
 	| l first |
 	l := LinkedList new.
 	first := self class new n: 1.
-
 	l add: first.
 	l add: (self class new n: 3).
-
 	self assert: (l collect: [ :e | e n ]) asArray equals: #(1 3).
-
 	l add: (self class new n: 2) after: first.
-
 	self assert: (l collect: [ :e | e n ]) asArray equals: #(1 2 3)
 ]
 
 { #category : #tests }
 LinkedListTest >> test09addAfter [
+
 	| l last |
 	l := LinkedList new.
 	last := self class new n: 2.
 	l add: (self class new n: 1).
 	l add: last.
-
 	self assert: (l collect: [ :e | e n ]) asArray equals: #(1 2).
-
 	l add: (self class new n: 3) after: last.
-
 	self assert: (l collect: [ :e | e n ]) asArray equals: #(1 2 3)
 ]
 
@@ -738,10 +733,10 @@ LinkedListTest >> test22addAll [
 
 { #category : #tests }
 LinkedListTest >> testAddAfter [
+
 	| l first |
 	l := LinkedList new.
 	first := self class new n: 1.
-
 	l add: first.
 	l add: (self class new n: 3).
 	self assert: (l collect: [ :e | e n ]) asArray equals: #(1 3).
@@ -751,6 +746,7 @@ LinkedListTest >> testAddAfter [
 
 { #category : #tests }
 LinkedListTest >> testAddAfterLast [
+
 	| l last |
 	l := LinkedList new.
 	last := self class new n: 2.

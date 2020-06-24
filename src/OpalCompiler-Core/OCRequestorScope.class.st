@@ -35,21 +35,18 @@ OCRequestorScope >> lookupVar: name [
 
 	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
 	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
-	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name].
+	"We do not want to auto define bindings for unknown Globals"
+	(name isString and: [name first isUppercase]) ifTrue: [ ^ outerScope lookupVar: name].
 	
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
 	(compilationContext optionSkipSemanticWarnings
-		and: [ (requestor hasBindingOf: name asSymbol) not ])
+		and: [ (requestor hasBindingOf: name) not ])
 		ifTrue: [ ^ outerScope lookupVar: name ].
 
 	"the requestors #bindingOf may create a binding for not yet existing variables"
-	(requestor bindingOf: name asSymbol)
-		ifNotNil: [ :assoc | 
-			^ OCLiteralVariable new
-				assoc: assoc;
-				scope: self;
-				yourself ].
-	^ outerScope lookupVar: name
+	^(requestor bindingOf: name)
+		ifNotNil: [ :var | var ]
+		ifNil: [ outerScope lookupVar: name ]
 ]
 
 { #category : #lookup }

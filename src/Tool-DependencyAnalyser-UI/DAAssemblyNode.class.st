@@ -50,7 +50,7 @@ DAAssemblyNode >> icon [
 
 { #category : #testing }
 DAAssemblyNode >> includes: aPackageName [
-	^ (self dependencies collect: #packageName) includes: aPackageName
+	^ (self dependencies collect: [:aDep | aDep packageName]) includes: aPackageName
 ]
 
 { #category : #initialization }

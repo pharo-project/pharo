@@ -435,7 +435,7 @@ RPackage >> classNamesForClassTag: aSymbol [
 
 { #category : #'class tags' }
 RPackage >> classTagCategoryNames [
-	^ (Set with: self packageName), (self classTags collect: #categoryName).
+	^ (Set with: self packageName), (self classTags collect: [:each | each categoryName]).
 ]
 
 { #category : #'class tags' }
@@ -732,7 +732,7 @@ RPackage >> extensionsForTag: aRPackageTag [
 
 	^ self extensionMethods select: [ :extensionMethod | | category |
 		category := extensionMethod protocol allButFirst.
-		self category:  category matches: aRPackageTag categoryName ]
+		self category: category matches: aRPackageTag categoryName ]
 ]
 
 { #category : #accessing }
@@ -1403,7 +1403,7 @@ RPackage >> renameTo: aSymbol [
 	newName := aSymbol asSymbol.
 	repositoryGroup := self mcPackage workingCopy repositoryGroup.
 	self organizer validatePackageDoesNotExist: aSymbol.
-	oldCategoryNames := (self classTags collect: #categoryName as: Set)
+	oldCategoryNames := (self classTags collect: [:each | each categoryName] as: Set)
 		add: self name;
 		difference: {newName}.
 	self name: aSymbol.

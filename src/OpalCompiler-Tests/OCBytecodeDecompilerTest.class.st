@@ -168,8 +168,11 @@ OCBytecodeDecompilerTest >> tearDown [
 { #category : #'tests - blocks' }
 OCBytecodeDecompilerTest >> testBlockWithTemp [
 	| method ir |
-	method := ClassTestCase>>#targetClass.
 	
+	"This test is only valid if there are no FullBlockClosures"
+	CompilationContext optionFullBlockClosure ifTrue: [ ^ self skip].
+	
+	method := ClassTestCase>>#targetClass.
 	ir := method ir.
 	
 	"the block sequence of the block with the temp should not have

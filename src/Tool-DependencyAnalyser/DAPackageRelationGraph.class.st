@@ -272,13 +272,15 @@ DAPackageRelationGraph >> dependenciesFrom: aPackage [
 
 { #category : #adding }
 DAPackageRelationGraph >> findReferencesIn: aMethod for: aPackage [
-	| package compiledMethod |
+	| package compiledMethod allCompiledCode |
 
 	compiledMethod := aMethod compiledMethod.
-	^ compiledMethod
-		ifNotNil: [ 
-			compiledMethod literals
-				do: [ :literal | 
+	compiledMethod ifNil: [ ^ self ].
+	
+	allCompiledCode := compiledMethod withAllBlocks.	
+	
+	allCompiledCode do: [ :aCompiledCode | 
+			aCompiledCode literals do: [ :literal | 
 					(self isReference: literal)
 						ifTrue: [ 
 							package := self packageForBehavior: literal value.
@@ -290,7 +292,7 @@ DAPackageRelationGraph >> findReferencesIn: aMethod for: aPackage [
 										selector: aMethod method selector asSymbol;
 										reference: literal value;
 										method: aMethod;
-										yourself) ] ] ]
+										yourself) ] ] ].
 ]
 
 { #category : #accessing }

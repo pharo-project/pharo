@@ -92,10 +92,10 @@ FTAllItemsStrategy >> newStaticItemFrom: anItem [
 
 { #category : #action }
 FTAllItemsStrategy >> optionalOperations [
-	pattern isEmptyOrNil
+	^ pattern isEmptyOrNil
 		ifTrue: [ self unexpandAllChildOf: dataSource rootItem.
-			^ #() ]
-		ifFalse: [ ^ nil ]
+			#() ]
+		ifFalse: [ nil ]
 ]
 
 { #category : #action }

@@ -17,37 +17,15 @@ http://www.ie.u-ryukyu.ac.jp/~e085739/c.cairo.3.html
 "
 Class {
 	#name : #AthensCairoSVGSurface,
-	#superclass : #AthensCairoSurface,
+	#superclass : #AthensCairoExportSurface,
 	#category : #'Athens-Cairo-Surface'
 }
 
 { #category : #private }
-AthensCairoSVGSurface class >> createSVG: fileName width: width_in_points height: height_in_points [
-	^ self ffiCall: #(AthensCairoSVGSurface cairo_svg_surface_create (String fileName,
-                                                      double width_in_points,
-                                                      double height_in_points) )
+AthensCairoSVGSurface class >> createExportingTo: fileName width: width height: height [
+	^ self ffiCall: #(AthensCairoSVGSurface cairo_svg_surface_create (
+				String fileName,
+				double width,
+				double height) )
 
-]
-
-{ #category : #'instance creation' }
-AthensCairoSVGSurface class >> extent: anExtent fileName: fileName [
-	^ (self createSVG: fileName width: anExtent x height: anExtent y)
-		initialize;
-		yourself
-]
-
-{ #category : #'finalize resources' }
-AthensCairoSVGSurface class >> finalizeResourceData: data [
-	| handle contextHandle |
-	handle := data first.
-	contextHandle := data third.
-
-	self destroyContextHandle: contextHandle value. 
-	self destroySurfaceHandle: handle value
-
-]
-
-{ #category : #private }
-AthensCairoSVGSurface class >> registerSurface: surface [
-	"do not register my instances with SurfacePlugin"
 ]
