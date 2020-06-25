@@ -133,8 +133,21 @@ MetaLinkAnonymousClassBuilder >> removeMethodNode: aNode fromObject: anObject [
 { #category : #accessing }
 MetaLinkAnonymousClassBuilder >> soleInstanceOf: anAnonymousClass [
 	| weakArray |
+	anAnonymousClass
+		ifNil: [ 
+			"Because anonymous subclasses are weakly referenced by the builder,
+			we assume other tools could do the same and ask for the sole instance
+			of a nilled reference (e.g., recovered from a weak array).
+			In that case (anAnonymousClass isNil), we want to avoid to look into
+			the registry because it also holds weak references to anonymous classes.
+			It would then find a nil key associated to a nil object, and produce a
+			ValueNotFound error while we'rere expecting to be warn that the anonymous
+			class is not there anymore (KeyNotFound)."
+			KeyNotFound signalFor: anAnonymousClass in: migratedObjects ].
 	weakArray := migratedObjects at: anAnonymousClass.
 	(weakArray isEmpty or: [ weakArray first isNil ])
-		ifTrue: [ ^ ValueNotFound new signal ].
+		ifTrue: [ ValueNotFound
+				signalFor: anAnonymousClass
+				in: (migratedObjects at: anAnonymousClass) ].
 	^ weakArray first
 ]
