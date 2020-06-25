@@ -10,7 +10,7 @@ Class {
 		'empty',
 		'nonEmpty'
 	],
-	#category : #'Collections-Tests-Stack'
+	#category : #'Collections-Stack-Tests-Base'
 }
 
 { #category : #'tests - empty' }
