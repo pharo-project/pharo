@@ -162,6 +162,14 @@ MethodMapExamples >> helperMethod12 [
 ]
 
 { #category : #examples }
+MethodMapExamples >> helperMethod13 [
+	| i |
+	i := 5.
+	[ i=0 ] whileFalse: [ i := i - 1 ].
+	^[ 1 + 2 ]
+]
+
+{ #category : #examples }
 MethodMapExamples >> ivar [
 	^ivar
 ]

@@ -18,14 +18,14 @@ Class {
 		'firstBcOffset',
 		'lastBcOffset',
 		'bcToASTMap',
-		'methodNode'
+		'methodOrBlockNode'
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }
 
 { #category : #initialization }
-OCBytecodeToASTCache class >> generateForMethodNode: aNode [
-	^self new generateForMethodNode: aNode
+OCBytecodeToASTCache class >> generateForNode: aNode [
+	^self new generateForNode: aNode
 ]
 
 { #category : #accessing }
@@ -57,20 +57,20 @@ OCBytecodeToASTCache >> firstBcOffset [
 ]
 
 { #category : #initialization }
-OCBytecodeToASTCache >> generateForMethodNode: aNode [
-	| methodIR currentBcOffset |
-	methodNode := aNode.
-	methodIR := methodNode ir.
+OCBytecodeToASTCache >> generateForNode: aNode [
+	| methodOrBlockIr currentBcOffset |
+	methodOrBlockNode := aNode.
+	methodOrBlockIr := aNode ir.
 	bcToASTMap := Dictionary new.
-	firstBcOffset := methodNode compiledMethod initialPC.
+	firstBcOffset := methodOrBlockIr compiledMethod initialPC.
 
 	"if there is a primitive, we need to record the offset"
-	(methodIR irPrimitive num ~= 0
-		or: [ methodIR compiledMethod isQuick ])
-		ifTrue: [ bcToASTMap at: firstBcOffset put: methodNode ]. 
-		
+	(methodOrBlockIr irPrimitive num ~= 0
+		or: [ methodOrBlockIr compiledMethod isQuick ])
+		ifTrue: [ bcToASTMap at: firstBcOffset put: methodOrBlockNode ]. 
+
 	currentBcOffset := firstBcOffset.
-	methodIR startSequence withAllSuccessors
+	methodOrBlockIr startSequence withAllSuccessors
 		do: [ :seq | 
 			seq
 				do: [ :ir | 
@@ -88,12 +88,17 @@ OCBytecodeToASTCache >> lastBcOffset [
 
 { #category : #accessing }
 OCBytecodeToASTCache >> methodNode [
-	^ methodNode
+	^ methodOrBlockNode
+]
+
+{ #category : #accessing }
+OCBytecodeToASTCache >> methodOrBlockNode [
+	^ methodOrBlockNode
 ]
 
 { #category : #'node access' }
 OCBytecodeToASTCache >> nodeForPC: pc [
-	pc < firstBcOffset ifTrue: [ ^ methodNode ].
+	pc < firstBcOffset ifTrue: [ ^ methodOrBlockNode ].
 	pc > lastBcOffset ifTrue: [ ^ bcToASTMap at: lastBcOffset ].
 	^ bcToASTMap at: pc
 ]
