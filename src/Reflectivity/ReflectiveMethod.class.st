@@ -245,6 +245,7 @@ ReflectiveMethod >> recompileAST [
 		astTranslatorClass: RFASTTranslator.
 	ast doSemanticAnalysis. "force semantic analysis"
 	compiledMethod := ast generate: compiledMethod trailer.
+	ast compilationContext compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self.
 ]
 

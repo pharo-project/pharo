@@ -23,8 +23,11 @@ CompiledMethod >> firstComment [
 { #category : #'*AST-Core' }
 CompiledMethod >> parseTree [
 	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
-	^self methodClass compiler 
+	| ast |
+	ast := self methodClass compiler 
 		source: self sourceCode;
 		failBlock: [^ self decompile ];
-		parse
+		parse.
+	ast compilationContext compiledMethod: self.
+	^ast
 ]

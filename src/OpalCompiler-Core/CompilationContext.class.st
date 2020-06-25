@@ -21,6 +21,7 @@ Class {
 		'class',
 		'logged',
 		'interactive',
+		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -380,6 +381,16 @@ CompilationContext >> bytecodeGeneratorClass: anObject [
 { #category : #accessing }
 CompilationContext >> class: anObject [
 	class := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethod [
+	^ compiledMethod
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethod: anObject [
+	compiledMethod := anObject
 ]
 
 { #category : #accessing }
