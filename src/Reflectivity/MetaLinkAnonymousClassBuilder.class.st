@@ -45,6 +45,27 @@ MetaLinkAnonymousClassBuilder >> anonymousClassForObject: anObject [
 		ifFalse: [ self newAnonymousSubclassFor: class ]
 ]
 
+{ #category : #accessing }
+MetaLinkAnonymousClassBuilder >> classAccessorsForAnonymousClasses [
+	^{'class
+		thisContext sender methodClass == MetaLinkAnonymousClassBuilder 
+			ifTrue:[^self realClass].
+		^self originalClass'.
+		
+	'originalClass
+		^super class superclass'.
+		
+	'realClass
+		^super class'				
+	}
+]
+
+{ #category : #compiling }
+MetaLinkAnonymousClassBuilder >> compileClassAccessorForAnonymousClass: anAnonymousClass [
+	self classAccessorsForAnonymousClasses
+		do: [ :sourceCode | anAnonymousClass compile: sourceCode ]
+]
+
 { #category : #compiling }
 MetaLinkAnonymousClassBuilder >> compileMethodFrom: aNode in: anAnonymousClass [
 	| selector source |
@@ -77,8 +98,9 @@ MetaLinkAnonymousClassBuilder >> initialize [
 { #category : #migration }
 MetaLinkAnonymousClassBuilder >> migrateObject: anObject toAnonymousClass: anonClass [
 	anObject class == anonClass
-		ifFalse: [ anonClass adoptInstance: anObject.
-			migratedObjects at: anonClass put: anObject ]
+		ifTrue: [ ^ self ].
+	anonClass adoptInstance: anObject.
+	migratedObjects at: anonClass put: (WeakArray with: anObject)
 ]
 
 { #category : #migration }
@@ -86,8 +108,9 @@ MetaLinkAnonymousClassBuilder >> migrateObjectToOriginalClass: anObject [
 	| class |
 	class := anObject class.
 	class isAnonymous
-		ifTrue: [ migratedObjects removeKey: class.
-			class superclass adoptInstance: anObject ]
+		ifFalse: [ ^ self ].
+	migratedObjects removeKey: class.
+	class superclass adoptInstance: anObject
 ]
 
 { #category : #creation }
@@ -96,6 +119,7 @@ MetaLinkAnonymousClassBuilder >> newAnonymousSubclassFor: aClass [
 	anonSubclass := aClass newAnonymousSubclass.
 	(classes at: aClass ifAbsentPut: WeakSet new)
 		add: anonSubclass.
+	self compileClassAccessorForAnonymousClass: anonSubclass.
 	^ anonSubclass
 ]
 
@@ -108,5 +132,9 @@ MetaLinkAnonymousClassBuilder >> removeMethodNode: aNode fromObject: anObject [
 
 { #category : #accessing }
 MetaLinkAnonymousClassBuilder >> soleInstanceOf: anAnonymousClass [
-	^ migratedObjects at: anAnonymousClass
+	| weakArray |
+	weakArray := migratedObjects at: anAnonymousClass.
+	(weakArray isEmpty or: [ weakArray first isNil ])
+		ifTrue: [ ^ ValueNotFound new signal ].
+	^ weakArray first
 ]

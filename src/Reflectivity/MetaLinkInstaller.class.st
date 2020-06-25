@@ -334,7 +334,8 @@ MetaLinkInstaller >> reinstallPermaLink: permalink onNode: node [
 	permalink isInstanceSpecific
 		ifFalse: [ node link: link.
 			^ self ].
-	instances := (linksRegistry objectsForLink: link) select: [ :i | i class superclass = permalink slotOrVarClass ].
+	instances := (linksRegistry objectsForLink: link)
+		select: [ :i | i originalClass = permalink slotOrVarClass ].
 	instances do: [ :instance | node link: link forObject: instance ]
 ]
 
