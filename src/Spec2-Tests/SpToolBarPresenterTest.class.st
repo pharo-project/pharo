@@ -13,13 +13,13 @@ SpToolBarPresenterTest >> classToTest [
 { #category : #private }
 SpToolBarPresenterTest >> newToolbarItem [
 	
-	^ SpToolBarButton new
+	^ SpToolBarButtonPresenter new
 ]
 
 { #category : #tests }
 SpToolBarPresenterTest >> testAddItem [
 
-	presenter addItem: SpToolBarButton new.
+	presenter addItem: SpToolBarButtonPresenter new.
 	self assert: presenter items size equals: 1
 ]
 
@@ -51,7 +51,7 @@ SpToolBarPresenterTest >> testDisplayMode [
 SpToolBarPresenterTest >> testIsEmpty [ 
 
 	self assert: presenter isEmpty.
-	presenter addItem: SpToolBarButton new.
+	presenter addItem: SpToolBarButtonPresenter new.
 	self deny: presenter isEmpty
 ]
 

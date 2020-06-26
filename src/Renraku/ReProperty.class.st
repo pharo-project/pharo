@@ -43,15 +43,6 @@ ReProperty >> initializeSourceAnchor: anAnchor [
 	sourceAnchor := anAnchor
 ]
 
-{ #category : #deprecated }
-ReProperty >> isCritic [
-
-	self
-		deprecated: 'Please use #isCritique instead'
-		transformWith: '`@receiver isCritic' -> '`@receiver isCritique'.
-	^ self isCritique
-]
-
 { #category : #testing }
 ReProperty >> isCritique [
 	^ false

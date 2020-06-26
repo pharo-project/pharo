@@ -28,7 +28,7 @@ Class {
 		'shiftCmdActions',
 		'defaultFindReplaceServiceClass'
 	],
-	#category : #'Text-Edition'
+	#category : #'Text-Edition-Editor'
 }
 
 { #category : #settings }
@@ -2375,13 +2375,11 @@ TextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return: re
 TextEditor >> pluggableYellowButtonActivity: shiftKeyState [
 	"Invoke the model's popup menu."
 
-	| menu |
-	(menu := self getPluggableYellowButtonMenu: shiftKeyState)
-		ifNil: [
-			^ false]
-		ifNotNil: [
+	^ (self getPluggableYellowButtonMenu: shiftKeyState)
+		ifNil: [ false ]
+		ifNotNil: [ :menu | 
 			menu invokeOn: model orSendTo: self.
-			^ true]
+			true ]
 ]
 
 { #category : #'accessing-selection' }

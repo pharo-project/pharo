@@ -103,19 +103,18 @@ MorphicTransform >> invert: aPoint [
 ]
 
 { #category : #transformations }
-MorphicTransform >> invertBoundsRect: aRectangle [ 
+MorphicTransform >> invertBoundsRect: aRectangle [
 	"Return a rectangle whose coordinates have been transformed
 	from local back to global coordinates.  NOTE: if the transformation
 	is not just a translation, then it will compute the bounding box
 	in global coordinates."
+
 	| outerRect |
-	self isPureTranslation 
-		ifTrue: 
-			[ ^ (self invert: aRectangle topLeft) corner: (self invert: aRectangle bottomRight) ]
-		ifFalse: 
-			[ outerRect := Rectangle encompassing: (aRectangle innerCorners collect: [ :p | self invert: p ]).
+	^ self isPureTranslation
+		ifTrue: [ (self invert: aRectangle topLeft) corner: (self invert: aRectangle bottomRight) ]
+		ifFalse: [ outerRect := Rectangle encompassing: (aRectangle innerCorners collect: [ :p | self invert: p ]).
 			"Following asymmetry due to likely subsequent truncation"
-			^ outerRect topLeft - (1 @ 1) corner: outerRect bottomRight + (2 @ 2) ]
+			outerRect topLeft - (1 @ 1) corner: outerRect bottomRight + (2 @ 2) ]
 ]
 
 { #category : #transformations }
@@ -213,19 +212,18 @@ MorphicTransform >> transform: aPoint [
 ]
 
 { #category : #transformations }
-MorphicTransform >> transformBoundsRect: aRectangle [ 
+MorphicTransform >> transformBoundsRect: aRectangle [
 	"Return a rectangle whose coordinates have been transformed
 	from global to local coordinates.  NOTE: if the transformation
 	is not just a translation, then it will compute the bounding box
 	in global coordinates."
+
 	| outerRect |
-	self isPureTranslation 
-		ifTrue: 
-			[ ^ (self transform: aRectangle topLeft) corner: (self transform: aRectangle bottomRight) ]
-		ifFalse: 
-			[ outerRect := Rectangle encompassing: (aRectangle innerCorners collect: [ :p | self transform: p ]).
+	^ self isPureTranslation
+		ifTrue: [ (self transform: aRectangle topLeft) corner: (self transform: aRectangle bottomRight) ]
+		ifFalse: [ outerRect := Rectangle encompassing: (aRectangle innerCorners collect: [ :p | self transform: p ]).
 			"Following asymmetry due to likely subsequent truncation"
-			^ outerRect topLeft - (1 @ 1) corner: outerRect bottomRight + (2 @ 2) ]
+			outerRect topLeft - (1 @ 1) corner: outerRect bottomRight + (2 @ 2) ]
 ]
 
 { #category : #accessing }

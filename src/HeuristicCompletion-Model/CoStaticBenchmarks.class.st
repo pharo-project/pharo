@@ -73,7 +73,7 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 		completion filterWithString: prefix.
 		candidates := completion first: 10.
 
-		completionIndex := (candidates collect: #contents) indexOf: originalSelector.
+		completionIndex := (candidates collect: [:each | each contents]) indexOf: originalSelector.
 		
 		previousResultsPerIndexPerPrefixSize := completionBenchs
 			at: completionIndex

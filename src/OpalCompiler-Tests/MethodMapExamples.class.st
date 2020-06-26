@@ -1,6 +1,9 @@
 Class {
 	#name : #MethodMapExamples,
 	#superclass : #Object,
+	#instVars : [
+		'ivar'
+	],
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
@@ -90,7 +93,7 @@ MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
 ]
 
 { #category : #examples }
-MethodMapExamples >> exampleTempNamedTempCopyingNestedBlockPROBLEM [
+MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock2 [
 	 | a |
 		 a := 2. 
 	^[| b | 
@@ -149,4 +152,24 @@ MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
 		b := a.
 		[  
 		 b := 2 . thisContext tempNamed: 'b' ] value] value
+]
+
+{ #category : #examples }
+MethodMapExamples >> helperMethod12 [
+	| i |
+	i := 5.
+	[ i=0 ] whileFalse: [ i := i - 1 ].
+]
+
+{ #category : #examples }
+MethodMapExamples >> helperMethod13 [
+	| i |
+	i := 5.
+	[ i=0 ] whileFalse: [ i := i - 1 ].
+	^[ 1 + 2 ]
+]
+
+{ #category : #examples }
+MethodMapExamples >> ivar [
+	^ivar
 ]

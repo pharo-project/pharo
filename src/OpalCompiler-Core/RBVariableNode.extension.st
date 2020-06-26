@@ -19,7 +19,7 @@ RBVariableNode >> isArg [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isClean [
-	^ (self isInstance | self isSpecialVariable) not
+	^ (self isInstance | self isReservedVariable) not
 ]
 
 { #category : #'*opalcompiler-core' }
@@ -40,6 +40,9 @@ RBVariableNode >> isLocalVariable [
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isSpecialVariable [
 	^ self binding isSpecialVariable
+
+RBVariableNode >> isReservedVariable [
+	^ self binding isReservedVariable
 ]
 
 { #category : #'*opalcompiler-core' }

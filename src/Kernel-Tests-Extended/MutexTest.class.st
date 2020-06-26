@@ -64,7 +64,7 @@ MutexTest >> testFailedCriticalSectionShouldUnblockWaitingOne [
 	
 	processHoldingMutex := self fork: [[
 		mutex critical: [ semaphoreToHoldMutex wait. "here we grab mutex and control it with semaphore"
-		self error: 'critical section failed' ]] ifErrorDo: []].
+		self error: 'critical section failed' ]] onErrorDo: []].
 	self waitLastProcessLock. "wait until first process grabs the mutex"
 
 	self fork: [mutex critical: [ lastCriticalExecuted := true ]].
@@ -204,7 +204,7 @@ MutexTest >> waitLastProcessTerminate [
 { #category : #helpers }
 MutexTest >> waitProcessLock: aProcess [
 
-	self waitFor: [ aProcess suspendingList notEmpty ]
+	self waitFor: [ aProcess suspendingList isEmptyOrNil not ]
 ]
 
 { #category : #helpers }

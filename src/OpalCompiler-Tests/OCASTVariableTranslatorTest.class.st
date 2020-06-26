@@ -38,14 +38,14 @@ OCASTVariableTranslatorTest >> testAssignInstanceVariable [
 OCASTVariableTranslatorTest >> testAssignSelfVariable [
 	self
 		should: [self compileSource: 'foo
-	self := 17'] raise: OCStoreIntoSpecialVariableError
+	self := 17'] raise: OCStoreIntoReservedVariableError
 ]
 
 { #category : #'testing - variables' }
 OCASTVariableTranslatorTest >> testAssignSuperVariable [
 	self
 		should: [self compileSource: 'foo
-	super := 17'] raise: OCStoreIntoSpecialVariableError
+	super := 17'] raise: OCStoreIntoReservedVariableError
 ]
 
 { #category : #'testing - variables' }
@@ -59,7 +59,7 @@ OCASTVariableTranslatorTest >> testAssignTemporaryVariable [
 OCASTVariableTranslatorTest >> testAssignThisContextVariable [
 	self
 		should: [self compileSource: 'foo
-	thisContext := 17'] raise: OCStoreIntoSpecialVariableError
+	thisContext := 17'] raise: OCStoreIntoReservedVariableError
 ]
 
 { #category : #'testing - variables' }
@@ -121,8 +121,6 @@ OCASTVariableTranslatorTest >> testPushTemporaryVariable [
 
 { #category : #'testing - variables' }
 OCASTVariableTranslatorTest >> testPushThisContext [
-	
-	| method |
 	method := self compileExample: #exampleThisContext.
 	self executeMethodOnInstance: method.
 

@@ -1,6 +1,38 @@
 "
 WordArrays store 32-bit unsigned Integer values.
 
+
+#### Using replace primitive
+
+The array replace primitive is a generic primitive that handles the replace of arrays of objects and arrays of native values (8, 16, 32, 64bit values).
+Now, for the primitive to work, both arrays should be of the same type/format.
+
+```
+a := WordArray withAll: #( 1 2 3 4 ).
+b := WordArray withAll: #( 5 6 ).
+a replaceFrom: 1 to: 2 with: b startingAt: 1.
+```
+
+```
+a := DoubleWordArray withAll: #( 1 2 3 4 ).
+b := DoubleWordArray withAll: #( 5 6 ).
+a replaceFrom: 1 to: 2 with: b startingAt: 1.
+```
+
+### Not using the primitives
+
+None of these examples do not use the primitive
+```
+a := DoubleWordArray withAll: #( 1 2 3 4 ).
+b := ByteArray withAll: #( 5 6 ).
+a replaceFrom: 1 to: 2 with: b startingAt: 1.
+```
+
+```
+a := DoubleWordArray withAll: #( 1 2 3 4 ).
+b := Array withAll: #( 5 6 ).
+a replaceFrom: 1 to: 2 with: b startingAt: 1.
+```
 "
 Class {
 	#name : #WordArray,

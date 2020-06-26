@@ -28,6 +28,11 @@ OCTempVariable >> = aTempVar [
 	
 ]
 
+{ #category : #queries }
+OCTempVariable >> astNodes [
+	^self method variableNodes select: [ :each | each binding == self]
+]
+
 { #category : #emitting }
 OCTempVariable >> emitStore: methodBuilder [
 
@@ -56,15 +61,18 @@ OCTempVariable >> hash [
 	^ name hash bitXor: (usage hash bitXor: scope hash).
 ]
 
-{ #category : #debugging }
-OCTempVariable >> indexFromIR [
-	^index ifNil: [index := scope indexFromIRForVarNamed: name]
+{ #category : #accessing }
+OCTempVariable >> index [
+	^ index ifNil: [ 
+		"if the index is nil, we are in an AST after name analysis but before
+		IR generation. To fill the the index, we generate the ir."
+		scope node methodNode ir. 
+		index ifNil: [ self error: 'no temp index, should never happen' ] ]
 ]
 
-{ #category : #debugging }
-OCTempVariable >> indexInTempVectorFromIR: aName [
-	"if I am storing  temp vector, return the index of var name"
-	^(scope node irInstruction tempVectorNamed: name) indexForVarNamed: aName
+{ #category : #accessing }
+OCTempVariable >> index: anObject [
+	index := anObject
 ]
 
 { #category : #initialization }
@@ -93,6 +101,11 @@ OCTempVariable >> isEscapingRead [
 OCTempVariable >> isEscapingWrite [
 	^escaping = #escapingWrite
 
+]
+
+{ #category : #testing }
+OCTempVariable >> isReferenced [
+	^self isUnused not
 ]
 
 { #category : #testing }
@@ -139,6 +152,16 @@ OCTempVariable >> markWrite [
 	super markWrite.
 ]
 
+{ #category : #queries }
+OCTempVariable >> method [
+	^scope node methodNode methodClass>>scope node methodNode selector
+]
+
+{ #category : #accessing }
+OCTempVariable >> originalVar [
+	^ self
+]
+
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
 	| definitionContext |
@@ -149,7 +172,29 @@ OCTempVariable >> readFromContext: aContext scope: contextScope [
 { #category : #debugging }
 OCTempVariable >> readFromLocalContext: aContext [
 
-	^ aContext tempAt: self indexFromIR
+	^ aContext tempAt: self index
+]
+
+{ #category : #debugging }
+OCTempVariable >> readInContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	^self readFromContext: aContext scope: contextScope
+]
+
+{ #category : #queries }
+OCTempVariable >> usingMethods [
+	self isUnused ifTrue: [ ^#() ].
+	^{self method}
+]
+
+{ #category : #debugging }
+OCTempVariable >> write: aValue inContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	self writeFromContext: aContext scope: contextScope value: aValue
 ]
 
 { #category : #debugging }
@@ -163,5 +208,5 @@ OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 { #category : #debugging }
 OCTempVariable >> writeFromLocalContext: aContext put: aValue [
 
-	^ aContext tempAt: self indexFromIR put: aValue
+	^ aContext tempAt: self index put: aValue
 ]

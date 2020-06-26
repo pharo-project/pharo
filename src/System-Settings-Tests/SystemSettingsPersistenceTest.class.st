@@ -221,7 +221,7 @@ SystemSettingsPersistenceTest >> testStoredValueForSettingNoStoredValue [
 { #category : #tests }
 SystemSettingsPersistenceTest >> testUniqueIdentifiers [
 	| names |
-	names := self systemSettingNodeList collect: #settingNodeIdentifier.
+	names := self systemSettingNodeList collect: [:each | each settingNodeIdentifier].
 	self assert: names size equals: names asSet size.
 ]
 

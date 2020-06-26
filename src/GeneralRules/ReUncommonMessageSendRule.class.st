@@ -52,11 +52,6 @@ ReUncommonMessageSendRule >> initialize [
 	literalNames := self commonLiterals.
 ]
 
-{ #category : #private }
-ReUncommonMessageSendRule >> isUnknownCapitalizedMessage: aSelector [
-	^ aSelector first isUppercase and: [ aSelector isSelectorSymbol not ]
-]
-
 { #category : #accessing }
 ReUncommonMessageSendRule >> name [
 	^ 'Uncommon message send'

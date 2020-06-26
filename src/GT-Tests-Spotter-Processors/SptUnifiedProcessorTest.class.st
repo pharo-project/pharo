@@ -50,6 +50,30 @@ SptUnifiedProcessorTest >> testFindThisMethodAfterAddingText [
 ]
 
 { #category : #tests }
+SptUnifiedProcessorTest >> testFindThisMethodWithFullClass [
+
+	self runForText: 'SptUnifiedProcessorTest >> #testFindThisMethod'.
+	self assertResultsIncludes: thisContext method
+]
+
+{ #category : #tests }
+SptUnifiedProcessorTest >> testFindThisMethodWithFullClassDoesNotIncludeOtherClassMethod [
+
+	self runForText: 'SptUnifiedProcessorTest >> #testFindThisMethod'.
+	self denyResultsIncludes: SptImplementorsProcessorTest >> #testFindThisMethod
+]
+
+{ #category : #tests }
+SptUnifiedProcessorTest >> testFindThisMethodWithFullClassIsTheCorrectclass [
+
+	self runForText: 'SptUnifiedProcessorTest >> #testFindThisMethod'.
+	self
+		assert:
+			((candidates results collect: [:each | each content])
+				allSatisfy: [ :aMethod | aMethod methodClass = self class ])
+]
+
+{ #category : #tests }
 SptUnifiedProcessorTest >> testFindThisPackage [
 
 	self runForText: 'gt-tests-spotter-processors'.

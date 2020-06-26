@@ -21,7 +21,7 @@ SycRemoveClassKeepingSubclassesCommand class >> fullBrowserShortcutActivation [
 { #category : #converting }
 SycRemoveClassKeepingSubclassesCommand >> asRefactorings [
 
-	^{RBRemoveClassKeepingSubclassesRefactoring classNames: (classes collect: #name)}
+	^{RBRemoveClassKeepingSubclassesRefactoring classNames: (classes collect: [:each | each name])}
 ]
 
 { #category : #converting }

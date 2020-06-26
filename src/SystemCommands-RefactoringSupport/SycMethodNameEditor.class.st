@@ -129,7 +129,7 @@ SycMethodNameEditor class >> example2 [
 		openOn:
 			(RBMethodName
 				selector: (RBExtractMethodRefactoring >> #validateRenameOf:to:) selector
-				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: #name))
+				arguments: ((RBExtractMethodRefactoring >> #validateRenameOf:to:) ast arguments collect: [:each | each name]))
 ]
 
 { #category : #specs }
@@ -166,6 +166,12 @@ SycMethodNameEditor >> argumentsList [
 ]
 
 { #category : #accessing }
+SycMethodNameEditor >> defaultParameterPlaceholderString [
+	"the placeholder string to be used in parameter inputs"
+	^ 'aParameterName'
+]
+
+{ #category : #accessing }
 SycMethodNameEditor >> downButton [
 	^ downButton
 ]
@@ -181,6 +187,12 @@ SycMethodNameEditor >> editParameter [
 	editerArgumentList at: (self getKeyOf: selected) put: newName.
 	self updateItem: selected to: newName.
 	self updateLabel
+]
+
+{ #category : #accessing }
+SycMethodNameEditor >> editParameterInput [
+	
+	^ editParameter
 ]
 
 { #category : #services }
@@ -222,15 +234,14 @@ SycMethodNameEditor >> initializePresenter [
 
 	argumentsList
 		whenModelChangedDo: [ :model | 
-			argumentsList selectIndex: 1.
 			model
 				ifEmpty: [ upButton disable.
 					downButton disable ] ].
 
 	argumentsList items: methodName arguments.
-	self updateEditTemp.
+	self updateEditArgumentInput.
 	
-	argumentsList whenSelectionChangedDo: [ self updateEditTemp ].
+	argumentsList whenSelectionChangedDo: [ self updateEditArgumentInput ].
 	okEdit action: [ self validateEditParameter ]
 
 ]
@@ -249,10 +260,11 @@ SycMethodNameEditor >> initializeWidgets [
 	selectorInput text: methodName selector.
 	previewResult label: methodName methodName.
 	editParameter := (self instantiate: SpTextInputFieldPresenter) autoAccept: true.
+	editParameter placeholder: self defaultParameterPlaceholderString.
 	okEdit := self newButton.
 	
-	okEdit label: 'Ok'
-	
+	okEdit label: 'Ok'.
+	okEdit enabled: false.
 ]
 
 { #category : #accessing }
@@ -262,6 +274,12 @@ SycMethodNameEditor >> isEditable: aBoolean [
 	isEditable ifTrue: [ self buildWithSpecLayout: self class defaultEditableSpec ]
 	ifFalse: [ self buildWithSpecLayout: self class defaultSpec ]
 	
+]
+
+{ #category : #accessing }
+SycMethodNameEditor >> okButton [
+	
+	^ okEdit
 ]
 
 { #category : #services }
@@ -336,11 +354,20 @@ SycMethodNameEditor >> upButton [
 ]
 
 { #category : #services }
-SycMethodNameEditor >> updateEditTemp [
-	| selectedIndex |
-	selectedIndex := argumentsList selection selectedIndex.
-	selectedIndex = 0 ifFalse: [ 
-	editParameter text: (argumentsList items at: selectedIndex)]
+SycMethodNameEditor >> updateEditArgumentInput [
+
+	argumentsList selection isEmpty
+		ifTrue: [ 
+			editParameter
+				text: '';
+				enabled: false.
+			okEdit enabled: false.
+			^ self ].
+
+	okEdit enabled: true.
+	editParameter
+		enabled: true;
+		text: argumentsList selection selectedItem
 ]
 
 { #category : #services }

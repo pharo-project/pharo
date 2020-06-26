@@ -98,7 +98,7 @@ IRTranslator >> pushOuterVectors: scope [
 	scopesWithVector reverseDo: [ :scopeWithVector |
 		tempVectorStack push: (IRInstruction 
 			createTempVectorNamed: scopeWithVector tempVectorName
-			withVars: (scopeWithVector tempVector collect: [:each| each name]) asArray ) ].
+			withVars: scopeWithVector tempVectorVarNames)].
 	gen inBlock: true.
 ]
 

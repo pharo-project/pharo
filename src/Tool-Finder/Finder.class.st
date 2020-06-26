@@ -340,7 +340,7 @@ Finder >> isSourceSymbol [
 
 { #category : #private }
 Finder >> listFromResult: resultOC [
-	"The argument, resulOC, is of the form #('(data1 op data2)' '(...)'). Answer a sorted array."
+	"The argument, resultOC, is of the form #('(data1 op data2)' '(...)'). Answer a sorted array."
 
 	(resultOC first beginsWith: 'no single method') ifTrue: [^ #()].
 	^ resultOC sort: [:a :b | 
@@ -351,17 +351,11 @@ Finder >> listFromResult: resultOC [
 { #category : #'private-selector' }
 Finder >> messageSearchBlockFrom: aString [
 	| exactMatch |
-	
 	exactMatch := aString first = $" and: [ aString last = $" ].
-	
-	exactMatch ifFalse: [ 
-		^ [ :method | 
-			method selector includesSubstring: aString caseSensitive: false ]].
-		
-	 ^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1))
-		ifNil: [  nil ]
-		ifNotNil: [ :aSymbol | 
-			[ :method | method selector = aSymbol ]]
+
+	exactMatch ifFalse: [ ^ [ :method | method selector includesSubstring: aString caseSensitive: false ] ].
+
+	^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1)) ifNotNil: [ :aSymbol | [ :method | method selector = aSymbol ] ]
 ]
 
 { #category : #'private-selector' }

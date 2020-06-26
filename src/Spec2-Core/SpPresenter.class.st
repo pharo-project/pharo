@@ -219,7 +219,7 @@ SpPresenter >> addAll: aWindow withSpecLayout: aSpec [
 		frame: (0@0 corner: 1@1).
 ]
 
-{ #category : #'window menu' }
+{ #category : #TOREMOVE }
 SpPresenter >> addMenuItemsToWindowMenu: aMenu [
 	"Do nothing"
 ]
@@ -293,7 +293,7 @@ SpPresenter >> application: anApplication [
 	application := anApplication
 ]
 
-{ #category : #'window menu' }
+{ #category : #TOREMOVE }
 SpPresenter >> applyMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
@@ -399,6 +399,14 @@ SpPresenter >> createInstanceFor: aClassSymbol [
 	^ self instantiate: class.
 ]
 
+{ #category : #'api-focus' }
+SpPresenter >> defaultKeyboardFocus [
+	"Override this to allow the presenter to re-define the one that will answer the 
+	 takeKeyboardFocus call in composed presenters"
+
+	^ self
+]
+
 { #category : #specs }
 SpPresenter >> defaultSpec [
 
@@ -480,6 +488,14 @@ SpPresenter >> gtInspectorSubPresentersIn: composite [
 		display: [ :each | {each} ];
 		children: [ :each | each presenters ];
 		when: [ :each | each presenters isNotEmpty ]
+]
+
+{ #category : #'api-focus' }
+SpPresenter >> hasKeyboardFocus [
+
+	self canTakeKeyboardFocus ifFalse: [ ^ false ].
+	self withAdapterDo: [ :anAdapter | ^ anAdapter hasKeyboardFocus ].
+	^ false
 ]
 
 { #category : #api }
@@ -626,7 +642,7 @@ SpPresenter >> instantiatePresenters: aCollectionOfPairs [
 				pairsDo: [ :k :v | self instVarNamed: k asString put: (self createInstanceFor: v) ] ]
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpPresenter >> isBuilt [
 	^ self isDisplayed
 ]
@@ -673,11 +689,27 @@ SpPresenter >> layoutPresenters [
 	layout ifNil: [ ^ self presenters ].
 	
 	^ layout deepPresenters
-		select: [ :each | each isSymbol ]
-		thenCollect: [ :each | self presenterAt: each ]
+		select: [ :each | each isSymbol or: [ each isPresenter ] ]
+		thenCollect: [ :each | 
+			each isPresenter 
+				ifTrue: [ each ]
+				ifFalse:[ self presenterAt: each ] ]
 ]
 
-{ #category : #'window menu' }
+{ #category : #accessing }
+SpPresenter >> locale [ 
+
+	^ self application locale
+]
+
+{ #category : #localization }
+SpPresenter >> localeChanged [
+
+	"do nothing here. Override me in subclasses to update strings presented to the users"
+	
+]
+
+{ #category : #TOREMOVE }
 SpPresenter >> neglectMenuModel: aMenuModel [
 
 	aMenuModel menuGroups do: [ :group |
@@ -706,11 +738,6 @@ SpPresenter >> newButtonBar [
 { #category : #widgets }
 SpPresenter >> newCheckBox [
 	^ self instantiate: SpCheckBoxPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newCode [
-	^ self instantiate: SpCodePresenter
 ]
 
 { #category : #widgets }
@@ -745,18 +772,8 @@ SpPresenter >> newDynamicPresentersListIn: accessorSymbol usingBuilder: aDynamic
 ]
 
 { #category : #widgets }
-SpPresenter >> newImage [
-	^ self instantiate: SpImagePresenter
-]
-
-{ #category : #widgets }
 SpPresenter >> newLabel [
 	^ self instantiate: SpLabelPresenter
-]
-
-{ #category : #widgets }
-SpPresenter >> newLink [
-	^ self instantiate: SpLinkPresenter
 ]
 
 { #category : #widgets }
@@ -781,12 +798,6 @@ SpPresenter >> newMenuButton [
 ]
 
 { #category : #widgets }
-SpPresenter >> newMorph [
-
-	^ self instantiate: SpMorphPresenter
-]
-
-{ #category : #widgets }
 SpPresenter >> newNotebook [
 
 	^ self instantiate: SpNotebookPresenter
@@ -807,6 +818,18 @@ SpPresenter >> newNullPresenter [
 { #category : #widgets }
 SpPresenter >> newNumberInput [
 	^ self instantiate: SpNumberInputFieldPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newPopover [
+
+	^ self instantiate: SpPopoverPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newPresenterSelector [
+
+	^ self instantiate: SpPresenterSelectorPresenter
 ]
 
 { #category : #widgets }
@@ -994,7 +1017,11 @@ SpPresenter >> show [
 
 { #category : #'api-focus' }
 SpPresenter >> takeKeyboardFocus [
+	| focus |
 
+	focus := self defaultKeyboardFocus.
+	focus == self ifFalse: [ ^ focus takeKeyboardFocus ].
+	
 	self withAdapterDo: [ :anAdapter | 
 		anAdapter takeKeyboardFocus ]
 ]

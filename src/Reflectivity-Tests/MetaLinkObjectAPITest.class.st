@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tag'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #initialization }
@@ -86,6 +86,22 @@ MetaLinkObjectAPITest >> testLinkClassToSlotNamed [
 
 	self assert: tag size equals: 2.
 	self assert: (tag allSatisfy: [ :t | t == instance ])
+]
+
+{ #category : #'class api' }
+MetaLinkObjectAPITest >> testLinkClassToSlotNamedUninstall [
+	| link instance |
+	link := self link.
+
+	ReflectivityExamples2 link: link toSlotNamed: #instVar.
+	self assert: tag isEmpty.
+	instance := ReflectivityExamples2 new.
+	instance methodWithInstVarAccess.
+	self assert: tag size equals: 2.
+	
+	link uninstall.
+	instance methodWithInstVarAccess.
+	self assert: tag size equals: 2
 ]
 
 { #category : #'class api' }

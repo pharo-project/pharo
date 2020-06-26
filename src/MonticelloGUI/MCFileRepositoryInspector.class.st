@@ -311,7 +311,7 @@ MCFileRepositoryInspector >> selectedPackageAncestors [
 			selectedPackage
 				ifNotNil: [ 
 					(MCWorkingCopy registry at: (MCPackage named: selectedPackage) ifAbsent: [  ])
-						ifNotNil: [ :aWorkingCopy | selectedPackageAncestors := aWorkingCopy ancestry breadthFirstAncestors collect: #name ] ] ].
+						ifNotNil: [ :aWorkingCopy | selectedPackageAncestors := aWorkingCopy ancestry breadthFirstAncestors collect: [:each | each name] ] ] ].
 	^ selectedPackageAncestors
 ]
 
@@ -363,12 +363,11 @@ MCFileRepositoryInspector >> versionHighlightEmphasis: aString [
 	packageName := versionName copyUpToLast: $-.
 	(packageName includes: $.) ifTrue: [ packageName := packageName copyUpTo: $. ].
 	(loaded includes: versionName) ifTrue: [ ^ TextEmphasis underlined ].
-	selectedPackage = packageName ifTrue: [ 
-		self selectedPackageAncestors
-			ifNotNil: [
-				(selectedPackageAncestors includes: versionName)
-					ifTrue: [ ^ TextEmphasis normal ]
-					ifFalse: [ ^ TextEmphasis bold ] ] ].
+	selectedPackage = packageName
+		ifTrue: [ self selectedPackageAncestors
+				ifNotNil: [ ^ (selectedPackageAncestors includes: versionName)
+						ifTrue: [ TextEmphasis normal ]
+						ifFalse: [ TextEmphasis bold ] ] ].
 	(newer includes: versionName) ifTrue: [ ^ TextEmphasis bold ].
 	(loadedPackages includes: packageName) ifFalse: [ ^ TextEmphasis bold ].
 	^ TextEmphasis normal

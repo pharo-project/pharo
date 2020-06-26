@@ -19,6 +19,11 @@ Object >> asMethodConstant [
 ]
 
 { #category : #'*Reflectivity' }
+Object >> haltOnCallTo: aSelector [
+	^Breakpoint breakOn: aSelector inObject: self
+]
+
+{ #category : #'*Reflectivity' }
 Object >> intanceSpecificMetaLinksAvailable [
 	^true
 ]

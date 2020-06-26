@@ -64,7 +64,6 @@ KMDispatcherTest >> testDetach [
 	morph detachKeymapCategory: #TestBlah.	
 	attachedCategories := morph kmDispatcher targets collect: [ :e | e category name ].
 	self assert: attachedCategories asArray equals: { #TestAnother }.
-
 	self should: [ morph detachKeymapCategory: #NonExistent ] raise: Error
 ]
 

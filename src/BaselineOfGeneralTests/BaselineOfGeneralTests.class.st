@@ -40,7 +40,6 @@ BaselineOfGeneralTests >> baseline: spec [
 
 			package: 'Graphics-Tests';
 			package: 'HelpSystem-Tests';
-			package: 'IssueTracking-Tests';
 			package: 'Keymapping-Tests';
 
 			package: 'Morphic-Tests';
@@ -49,7 +48,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'NECompletion-Tests';
 			package: 'NewValueHolder-Tests';
 			package: 'ProfStef-Tests';
-			package: 'Reflectivity-Tools-Tests';
 			package: 'Regex-Core-Tests';
 			package: 'Ring-Definitions-Tests-Monticello';
 			package: 'Rubric-Tests';
@@ -63,9 +61,13 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-SessionManager-Tests';
 			package: 'System-Settings-Tests';
 			package: 'System-Support-Tests';
+			package: 'Text-Diff-Tests';
 			package: 'Text-Edition-Tests';
 			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';
+			package: 'Tool-Finder-Tests';
+			package: 'Tool-Profilers-Tests';
+			package: 'Tool-Workspace-Tests';
 			package: 'Tools-Test';
 			package: 'Zinc-Resource-Meta-FileSystem';
 			package: 'Zinc-Resource-Meta-Tests';

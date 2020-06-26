@@ -42,5 +42,5 @@ OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 OCEnvironmentScopeTest >> testCreateEnvironmentScope [
 	| new |
 	new := OCEnvironmentScope for: Smalltalk globals.
-	self assert: ((new lookupVar: #Object) isKindOf: OCLiteralVariable).
+	self assert: (new lookupVar: #Object) identicalTo: Object binding
 ]

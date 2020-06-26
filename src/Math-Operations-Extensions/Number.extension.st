@@ -76,7 +76,7 @@ Number >> closeTo: num [
 	"Tell whether the receiver and arguments are close from each."
 
 	num isFloat ifTrue: [ ^ num closeTo: self asFloat ].
-	^ [ self = num ] ifErrorDo: [ false ]
+	^ [ self = num ] onErrorDo: [ false ]
 ]
 
 { #category : #'*Math-Operations-Extensions' }
@@ -84,7 +84,7 @@ Number >> closeTo: num precision: aPrecision [
 	"are these two numbers close?"
 
 	num isFloat ifTrue: [ ^ num closeTo: self asFloat precision: aPrecision ].
-	^ [ self = num ] ifErrorDo: [ false ]
+	^ [ self = num ] onErrorDo: [ false ]
 ]
 
 { #category : #'*Math-Operations-Extensions' }

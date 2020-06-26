@@ -23,7 +23,8 @@ Class {
 	],
 	#classVars : [
 		'CpuWatcherEnabled',
-		'CurrentCPUWatcher'
+		'CurrentCPUWatcher',
+		'PigFinding'
 	],
 	#category : #'Tool-ProcessBrowser'
 }
@@ -55,6 +56,7 @@ CPUWatcher class >> currentWatcherProcess [
 
 { #category : #monitoring }
 CPUWatcher class >> dumpTallyOnTranscript [
+	<script>
 	self current ifNotNil: [
 		self processBrowser dumpTallyOnTranscript: self current tally
 	]
@@ -78,6 +80,22 @@ CPUWatcher class >> monitorPreferenceChanged [
 	self cpuWatcherEnabled
 		ifTrue: [ self startMonitoring ]
 		ifFalse: [ self stopMonitoring ]
+]
+
+{ #category : #setting }
+CPUWatcher class >> pigFinding [
+	^ PigFinding ifNil: [PigFinding := false]
+]
+
+{ #category : #setting }
+CPUWatcher class >> pigFinding: aBoolean [
+	PigFinding := aBoolean.
+
+]
+
+{ #category : #accessing }
+CPUWatcher class >> processBrowser [
+	^ Smalltalk tools processBrowser
 ]
 
 { #category : #'system startup' }
@@ -178,7 +196,8 @@ CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 		promise := Processor tallyCPUUsageFor: secs every: msecs.
 		tally := promise value.
 		promise := nil.
-		self findThePig.
+		self class pigFinding ifTrue: [
+			self findThePig ]
 	] repeat ] forkAt: Processor highestPriority.
 	Processor yield 
 ]
@@ -228,7 +247,7 @@ CPUWatcher >> openWindowForSuspendedProcess: aProcess [
 
 { #category : #accessing }
 CPUWatcher >> processBrowser [
-	^ Smalltalk tools processBrowser
+	^ self class processBrowser
 ]
 
 { #category : #'process operations' }

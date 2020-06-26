@@ -116,7 +116,9 @@ SpNumberInputFieldPresenter >> minimum: aNumber [
 { #category : #accessing }
 SpNumberInputFieldPresenter >> number [
 
-	^ self text asNumber
+	^ self text trimmed 
+		ifNotEmpty: [ :aString | aString asNumber ]
+		ifEmpty: [ 0 ]
 ]
 
 { #category : #accessing }

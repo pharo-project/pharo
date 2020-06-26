@@ -209,21 +209,6 @@ MCWorkingCopyBrowser >> addRequiredPackage [
 ]
 
 { #category : #actions }
-MCWorkingCopyBrowser >> addSlice [
-	(MCSliceMaker openFor: self window)
-		ifNotNil: [:sliceInfo | workingCopy := sliceInfo makeSlice.
-			workingCopy ifNotNil: [
-				workingCopy repositoryGroup 
-					addRepository: MCHttpRepository pharoRepository;
-					addRepository: MCHttpRepository pharoInboxRepository.
-				workingCopyWrapper := MCDependentsWrapper with: workingCopy model: self.
-					self repositorySelection: 0.]].
-	self workingCopyListChanged; changed: #workingCopySelection; repositoryListChanged.
-	self changedButtons.
-
-]
-
-{ #category : #actions }
 MCWorkingCopyBrowser >> addWorkingCopy [
 	| name |
 	
@@ -292,7 +277,6 @@ MCWorkingCopyBrowser >> buildWindow [
 MCWorkingCopyBrowser >> buttonSpecs [
 	^ #(#('+Package' #addWorkingCopy 'Add a new package and make it the working copy')
 		#('+Config' #addMetacelloConfiguration 'Add a new metacello configuration')
-		#('+Slice' #addSlice 'Add a slice to cleaning and nicely propose a bug fix')
 		#('Browse' #browseWorkingCopy 'Browse the working copy of the selected package' #hasWorkingCopy)
 		#('Changes' #viewChanges 'View the working copy''s changes relative to the installed version from the repository' #canSave)
 	 	#('+Repository' #addRepository 'Add an existing repository to the list of those visible')

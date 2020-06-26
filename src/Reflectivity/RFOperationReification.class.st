@@ -39,9 +39,8 @@ RFOperationReification >> genForRBAssignmentNode [
 	entity variable isGlobal ifTrue: [ | ast |	
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
-			environment: #toReplace;
-			variableName: #{1}.' format: {entity variable name}).
-		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding scope environment)}.
+			variable: #toReplace.').
+		ast messages second arguments: {(RFLiteralVariableNode value: entity variable binding)}.
 		^ast].
 	self error: 'not supported'
 ]
@@ -111,10 +110,9 @@ RFOperationReification >> genForRBVariableNode [
 			variableName: #{1}.' format: {entity name})].
 	
 	entity isGlobal ifTrue: [ | ast |	
-			ast := RBParser parseExpression: ('RFGlobalRead new
-				environment: #toReplace;
-				variableName: #{1}.' format: {entity name}).
-			ast messages first arguments: {(RFLiteralVariableNode value: entity binding scope environment)}.
+			ast := RBParser parseExpression: 'RFGlobalRead new
+				variable: #toReplace'.
+			ast arguments: {(RFLiteralVariableNode value: entity binding)}.
 
 			^ast. 
 		].

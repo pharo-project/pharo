@@ -1,8 +1,15 @@
 Extension { #name : #RBMethodNode }
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> bcToASTCache [
+	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	^ self ir compiledMethod
+	compilationContext compiledMethod 
+		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
+	^compilationContext compiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -67,12 +74,6 @@ RBMethodNode >> generateIR [
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generateWithSource [
 	"Answer a CompiledMethod with source encoded in trailer."
-
-	
-	"for doits, we need to store the source pretty printed from the 
-	AST to get the return and methodName correct"
-	self selector isDoIt ifTrue: [source := self formattedCode].
-	
 	^self generate: (CompiledMethodTrailer new sourceCode: source).
 ]
 
@@ -144,7 +145,7 @@ RBMethodNode >> primitiveFromPragma [
 	pragmas ifNil: [ ^ IRPrimitive null ].
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
-		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asPrimitive ]
+		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
 		ifNone: [ IRPrimitive null ]
 ]
 
@@ -167,7 +168,7 @@ RBMethodNode >> rewriteTempsForContext: aContext [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
-	^(self ir instructionForPC: anInteger) sourceNode
+	^ self bcToASTCache nodeForPC: anInteger
 ]
 
 { #category : #'*OpalCompiler-Core' }

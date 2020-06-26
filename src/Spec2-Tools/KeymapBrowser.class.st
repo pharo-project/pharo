@@ -81,6 +81,31 @@ KeymapBrowser >> connectPresenters [
 	clearFilterButton action: [ filterField text: '' ]
 ]
 
+{ #category : #private }
+KeymapBrowser >> contextMenu [
+	| hasSelection |
+	
+	hasSelection := self kmTable selection selectedItem notNil.
+	^ SpMenuPresenter new 
+		addGroup: [ :group | group 
+			addItem: [ :item | item 
+				name: 'Refresh'; 
+				icon: (self iconNamed: #smallUpdateIcon); 
+				action: [ self collectAllShortcuts ] ] ];
+		addGroup: [ :group | group 
+			addItem: [ :item | item 
+				name: 'Browse Definition';
+				icon: (self iconNamed: #smallSystemBrowserIcon);
+				enabled: hasSelection;
+				action: [ self browseDefinitionOfSelectedShortcut ] ];
+			addItem: [ :item | item 
+				name: 'Inspect Action';
+				icon: (self iconNamed: #smallInspectItIcon);
+				enabled: hasSelection;
+				action: [ self inspectActionOfSelectedShortcut ] ] ].
+
+]
+
 { #category : #accessing }
 KeymapBrowser >> filterField [
 	^ filterField
@@ -104,7 +129,7 @@ KeymapBrowser >> initializePresenters [
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: #shortcutName);
 		addColumn: (SpStringTableColumn title: 'Category' evaluated: #categoryName);
 		beResizable;
-		menu: [ :m :s | self menu: m shifted: s ].
+		contextMenu: [ self contextMenu ].
 	filterField := self newTextInput.
 	filterField
 		removeEntryCompletion;

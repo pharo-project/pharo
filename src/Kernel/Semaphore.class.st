@@ -98,7 +98,7 @@ Semaphore >> critical: mutuallyExcludedBlock ifError: errorBlock [
 	| blockValue hasError errObj |
 	hasError := false.
 	self critical:[
-		blockValue := mutuallyExcludedBlock ifErrorDo: [ :err |
+		blockValue := mutuallyExcludedBlock onErrorDo: [ :err |
 			hasError := true.
 			errObj := err.
 		].
@@ -147,7 +147,7 @@ Semaphore >> criticalReleasingOnError: mutuallyExcludedBlock [
 { #category : #'process termination handling' }
 Semaphore >> handleProcessTerminationOfWaitingContext: suspendedContext [
 
-	^suspendedContext method == (Semaphore compiledMethodAt: #critical:) 
+	^suspendedContext compiledCode method == (Semaphore compiledMethodAt: #critical:) 
 		ifTrue: [ suspendedContext home]
 		ifFalse: [ suspendedContext]
 ]

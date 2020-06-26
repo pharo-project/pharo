@@ -5,7 +5,7 @@ Class {
 		'styler',
 		'oldSetting'
 	],
-	#category : #'Shout-Tests'
+	#category : #'Shout-Tests-Styling'
 }
 
 { #category : #running }
@@ -16,7 +16,7 @@ SHRBTextStylerTest >> setUp [
 	oldSetting := SHRBTextStyler instVarNamed: #formatIncompleteIdentifiers.
 ]
 
-{ #category : #running }
+{ #category : #'private - utilities' }
 SHRBTextStylerTest >> style: aText [
 
 	| ast |
@@ -42,7 +42,51 @@ SHRBTextStylerTest >> tearDown [
 	
 ]
 
-{ #category : #running }
+{ #category : #tests }
+SHRBTextStylerTest >> testClassAfterMessageToASymbolLowercaseShouldBeColored [
+	
+	| aText index attributes |
+
+	SHRBTextStyler formatIncompleteIdentifiers: true.
+
+	aText := 'm1
+		#world traceCr.
+		Object new.' asText.
+
+	index := aText string indexOfSubCollection: 'Object'.
+	
+	self style: aText.
+	
+	attributes := aText attributesAt: index.
+
+	self assertCollection: attributes hasSameElements: { 
+		TextClassLink className: #Object. 
+		TextColor color: SHPreferences globalVarStyle color }
+]
+
+{ #category : #tests }
+SHRBTextStylerTest >> testClassAfterMessageToASymbolUppercaseShouldBeColored [
+	
+	| aText index attributes |
+
+	SHRBTextStyler formatIncompleteIdentifiers: true.
+
+	aText := 'm1
+		#World traceCr.
+		Object new.' asText.
+
+	index := aText string indexOfSubCollection: 'Object'.
+	
+	self style: aText.
+	
+	attributes := aText attributesAt: index.
+
+	self assertCollection: attributes hasSameElements: { 
+		TextClassLink className: #Object. 
+		TextColor color: SHPreferences globalVarStyle color}
+]
+
+{ #category : #tests }
 SHRBTextStylerTest >> testSettingFalseTheIncompleteIdentifiersShouldNotFormatIt [
 	
 	| aText index attributes |
@@ -58,10 +102,10 @@ SHRBTextStylerTest >> testSettingFalseTheIncompleteIdentifiersShouldNotFormatIt 
 	
 	attributes := aText attributesAt: index.
 	
-	self assertCollection: attributes hasSameElements: { TextColor red. TextVariableLink variableName: 'se' }.
+	self assertCollection: attributes hasSameElements: { TextColor red. TextVariableLink variableName: 'se' }
 ]
 
-{ #category : #running }
+{ #category : #tests }
 SHRBTextStylerTest >> testSettingFalseTheIncompleteMessageShouldNotFormatIt [
 	
 	| aText index attributes ast node |
@@ -84,7 +128,7 @@ SHRBTextStylerTest >> testSettingFalseTheIncompleteMessageShouldNotFormatIt [
 		TextColor red }.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 SHRBTextStylerTest >> testSettingTrueTheIncompleteIdentifiersShouldFormatIt [
 	
 	| aText index attributes |
@@ -100,10 +144,10 @@ SHRBTextStylerTest >> testSettingTrueTheIncompleteIdentifiersShouldFormatIt [
 	
 	attributes := aText attributesAt: index.
 	
-	self assertCollection: attributes hasSameElements: { TextColor blue. TextEmphasis italic. TextVariableLink variableName: 'se' }.
+	self assertCollection: attributes hasSameElements: { TextColor blue. TextEmphasis italic. TextVariableLink variableName: 'se' }
 ]
 
-{ #category : #running }
+{ #category : #tests }
 SHRBTextStylerTest >> testSettingTrueTheIncompleteMessageShouldFormatIt [
 	
 	| aText index attributes ast node |

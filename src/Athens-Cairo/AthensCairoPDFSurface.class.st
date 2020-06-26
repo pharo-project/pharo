@@ -1,47 +1,31 @@
 "
-i am a concrete implementation of Athens surface which using cairo graphics library for rendering for generating PDF files
-as output.
+I represent an Athens surface that writes a PDF file using the cairo graphics library.
 
-<currently it is not functional and need more testing and coding>
+Usage:
+
+Use like a AthensCairoSurface with these differences: 
+1. On instance creation, specify (a) output filename as String and (b) the extent in points (1 point == 1/72.0 inch).
+2. When drawing is done, send #finish to write the file trailer.
+3. Let the garbage collector finalize the instance, which will flush to disk (file in disk may have 0 bytes before).
+
+Links: 
+
+https://cairographics.org/manual/cairo-PDF-Surfaces.html
+http://zetcode.com/gfx/cairo/cairobackends/
+http://www.ie.u-ryukyu.ac.jp/~e085739/c.cairo.3.html
+
 "
 Class {
 	#name : #AthensCairoPDFSurface,
-	#superclass : #AthensCairoSurface,
+	#superclass : #AthensCairoExportSurface,
 	#category : #'Athens-Cairo-Surface'
 }
 
 { #category : #private }
-AthensCairoPDFSurface class >> createPDF: fileName width: width_in_points height: height_in_points [
-	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create (String fileName,
-                                                      double width_in_points,
-                                                      double height_in_points) )
+AthensCairoPDFSurface class >> createExportingTo: fileName width: width height: height [
+	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create(
+			String fileName,
+			double width, 
+			double height) )
 
-]
-
-{ #category : #'instance creation' }
-AthensCairoPDFSurface class >> extent: anExtent fileName: fileName [
-
-	^ (self createPDF: fileName width: anExtent x height: anExtent y) initialize
-]
-
-{ #category : #'finalize resources' }
-AthensCairoPDFSurface class >> finalizeResourceData: handle [
-
-	self destroySurfaceHandle: handle.
-
-]
-
-{ #category : #private }
-AthensCairoPDFSurface class >> registerSurface: surface [
-	"do not register my instances with SurfacePlugin"
-]
-
-{ #category : #initialization }
-AthensCairoPDFSurface >> resourceData [
-	^ handle value 
-]
-
-{ #category : #private }
-AthensCairoPDFSurface >> showPage [
-	^ self ffiCall: #( void cairo_surface_show_page (self) )
 ]

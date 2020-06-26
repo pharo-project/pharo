@@ -132,67 +132,67 @@ Color class >> colorFrom: parm [
 ]
 
 { #category : #'instance creation' }
-Color class >> colorFromPixelValue: p depth: d [ 
+Color class >> colorFromPixelValue: p depth: d [
 	"Convert a pixel value for the given display depth into a color."
+
 	"Details: For depths of 8 or less, the pixel value is simply looked up in a table. For greater depths, the color components are extracted and converted into a color."
+
 	| r g b alpha |
 	d = 8 ifTrue: [ ^ IndexedColors at: (p bitAnd: 255) + 1 ].
 	d = 4 ifTrue: [ ^ IndexedColors at: (p bitAnd: 15) + 1 ].
 	d = 2 ifTrue: [ ^ IndexedColors at: (p bitAnd: 3) + 1 ].
 	d = 1 ifTrue: [ ^ IndexedColors at: (p bitAnd: 1) + 1 ].
-	d = 16 | (d = 15) ifTrue: 
-		[ "five bits per component"
-		r := (p bitShift: -10) bitAnd: 31.
-		g := (p bitShift: -5) bitAnd: 31.
-		b := p bitAnd: 31.
-		(r = 0 and: [ g = 0 ]) ifTrue: 
-			[ b = 0 ifTrue: [ ^ self transparent ].
-			b = 1 ifTrue: [ ^ self black ] ].
-		^ self 
-			r: r
-			g: g
-			b: b
-			range: 31 ].
-	d = 32 ifTrue: 
-		[ "eight bits per component; 8 bits of alpha"
-		r := (p bitShift: -16) bitAnd: 255.
-		g := (p bitShift: -8) bitAnd: 255.
-		b := p bitAnd: 255.
-		alpha := p bitShift: -24.
-		alpha = 0 ifTrue: [ ^ self transparent ].
-		alpha < 255 
-			ifTrue: 
-				[ ^ (self 
-					r: r
-					g: g
-					b: b
-					range: 255) alpha: alpha asFloat / 255.0 ]
-			ifFalse: 
-				[ ^ self 
-					r: r
-					g: g
-					b: b
-					range: 255 ] ].
-	d = 12 ifTrue: 
-		[ "four bits per component"
-		r := (p bitShift: -8) bitAnd: 15.
-		g := (p bitShift: -4) bitAnd: 15.
-		b := p bitAnd: 15.
-		^ self 
-			r: r
-			g: g
-			b: b
-			range: 15 ].
-	d = 9 ifTrue: 
-		[ "three bits per component"
-		r := (p bitShift: -6) bitAnd: 7.
-		g := (p bitShift: -3) bitAnd: 7.
-		b := p bitAnd: 7.
-		^ self 
-			r: r
-			g: g
-			b: b
-			range: 7 ].
+	d = 16 | (d = 15)
+		ifTrue: [ "five bits per component"
+			r := (p bitShift: -10) bitAnd: 31.
+			g := (p bitShift: -5) bitAnd: 31.
+			b := p bitAnd: 31.
+			(r = 0 and: [ g = 0 ])
+				ifTrue: [ b = 0 ifTrue: [ ^ self transparent ].
+					b = 1 ifTrue: [ ^ self black ] ].
+			^ self
+				r: r
+				g: g
+				b: b
+				range: 31 ].
+	d = 32
+		ifTrue: [ "eight bits per component; 8 bits of alpha"
+			r := (p bitShift: -16) bitAnd: 255.
+			g := (p bitShift: -8) bitAnd: 255.
+			b := p bitAnd: 255.
+			alpha := p bitShift: -24.
+			alpha = 0 ifTrue: [ ^ self transparent ].
+			^ alpha < 255
+				ifTrue: [ (self
+						r: r
+						g: g
+						b: b
+						range: 255) alpha: alpha asFloat / 255.0 ]
+				ifFalse: [ self
+						r: r
+						g: g
+						b: b
+						range: 255 ] ].
+	d = 12
+		ifTrue: [ "four bits per component"
+			r := (p bitShift: -8) bitAnd: 15.
+			g := (p bitShift: -4) bitAnd: 15.
+			b := p bitAnd: 15.
+			^ self
+				r: r
+				g: g
+				b: b
+				range: 15 ].
+	d = 9
+		ifTrue: [ "three bits per component"
+			r := (p bitShift: -6) bitAnd: 7.
+			g := (p bitShift: -3) bitAnd: 7.
+			b := p bitAnd: 7.
+			^ self
+				r: r
+				g: g
+				b: b
+				range: 7 ].
 	self error: 'unknown pixel depth: ' , d printString
 ]
 
@@ -392,12 +392,14 @@ Color class >> h: hue s: saturation v: brightness alpha: alpha [
 Color class >> hex: aFloat [
 	"Return an hexadecimal two-digits string between 00 and FF
 	for a float between 0.0 and 1.0"
+
 	" Color hex: 0.2>> '33' "
+
 	| str |
 	str := (aFloat * 255) asInteger printStringHex asLowercase.
-	str size = 1
-		ifTrue: [ ^ '0' , str ]
-		ifFalse: [ ^ str ]
+	^ str size = 1
+		ifTrue: [ '0' , str ]
+		ifFalse: [ str ]
 ]
 
 { #category : #other }
@@ -816,7 +818,7 @@ Color class >> registerColor: aColor named: aName [
 Color class >> registeredColorNames [
 	"Returns all the available names of named colors."
 	
-	^ ColorRegistry keys collect: #asString
+	^ ColorRegistry keys collect: [ :each | each asString ]
 ]
 
 { #category : #accessing }
@@ -1185,13 +1187,12 @@ Color >> closestPixelValue1 [
 	"Return the nearest approximation to this color for a monochrome Form."
 
 	"fast special cases"
-	rgb = 0 ifTrue: [^ 1].  "black"
-	rgb = 16r3FFFFFFF ifTrue: [^ 0].  "white"
 
-	self luminance > 0.5
-		ifTrue: [^ 0]  "white"
-		ifFalse: [^ 1].  "black"
-
+	rgb = 0 ifTrue: [ ^ 1 ].	"black"
+	rgb = 16r3FFFFFFF ifTrue: [ ^ 0 ].	"white"
+	^ self luminance > 0.5
+		ifTrue: [ "white" 0 ]
+		ifFalse: [ 1 ]	"black"
 ]
 
 { #category : #conversions }
@@ -1229,18 +1230,14 @@ Color >> closestPixelValue8 [
 	"Return the nearest approximation to this color for an 8-bit deep Form."
 
 	"fast special cases"
-	rgb = 0 ifTrue: [^ 1].  "black"
-	rgb = 16r3FFFFFFF ifTrue: [^ 255].  "white"
 
-	self saturation < 0.2 ifTrue: [
-		^ GrayToIndexMap at: (self privateGreen >> 2) + 1.  "nearest gray"
-	] ifFalse: [
-		"compute nearest entry in the color cube"
-		^ 40 +
-		  ((((self privateRed * 5) + HalfComponentMask) // ComponentMask) * 36) +
-		  ((((self privateBlue * 5) + HalfComponentMask) // ComponentMask) * 6) +
-		  (((self privateGreen * 5) + HalfComponentMask) // ComponentMask)].
-
+	rgb = 0 ifTrue: [ ^ 1 ].	"black"
+	rgb = 16r3FFFFFFF ifTrue: [ ^ 255 ].	"white"
+	^ self saturation < 0.2
+		ifTrue: [ GrayToIndexMap at: (self privateGreen >> 2) + 1 ]
+		ifFalse: [ "compute nearest entry in the color cube"
+			40 + ((self privateRed * 5 + HalfComponentMask) // ComponentMask * 36) + ((self privateBlue * 5 + HalfComponentMask) // ComponentMask * 6)
+				+ ((self privateGreen * 5 + HalfComponentMask) // ComponentMask) ]
 ]
 
 { #category : #other }
@@ -1362,14 +1359,16 @@ Color >> hslSaturation [
 { #category : #accessing }
 Color >> hsvSaturation [
 	"Return the HSV saturation of this color, a value between 0.0 and 1.0."
+
 	"Color red hsvSaturation >>> 1.0"
+
 	"(Color r: 0.5 g: 0.5 b: 1) hsvSaturation >>> 0.4995112414467253"
-	
+
 	| max |
 	max := self privateMaxComponent.
-	max isZero
-		ifTrue: [ ^ 0.0 ]
-		ifFalse: [ ^ (max - self privateMinComponent) asFloat / max asFloat ]
+	^ max isZero
+		ifTrue: [ 0.0 ]
+		ifFalse: [ (max - self privateMinComponent) asFloat / max asFloat ]
 ]
 
 { #category : #accessing }

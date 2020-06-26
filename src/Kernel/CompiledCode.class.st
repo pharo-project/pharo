@@ -77,6 +77,19 @@ CompiledCode >> accessesSlot: aSlot [
 	
 ]
 
+{ #category : #accessing }
+CompiledCode >> addWithAllBlocksInto: collected [
+
+	(collected includes: self) ifTrue: [ ^ collected ].
+	collected add: self.
+
+	self literals 
+		select: [ :aLiteral | aLiteral isCompiledBlock ] 
+		thenDo: [ :aLiteral | aLiteral addWithAllBlocksInto: collected ].
+		
+	^ collected
+]
+
 { #category : #literals }
 CompiledCode >> additionalMethodStateRefersToLiteral: literal [
 	^ self penultimateLiteral isMethodProperties
@@ -162,7 +175,7 @@ CompiledCode >> comment [
 	"Return the first comment of the receiver"
 	"(self>>#comment) comment"
 	
-	^ self methodClass firstPrecodeCommentFor: self selector
+	^ self ast firstPrecodeComment
 ]
 
 { #category : #testing }
@@ -272,11 +285,17 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	"Answers true if the method refers to the selector.
 	 If you don't know what's a special selector, use #hasSelector:.
 	 If you do, you may call this method directly to avoid recomputing 
-	 the special selector index all the time."
-	 (self refersToLiteral: selector) ifTrue: [ ^ true ].
-	^ specialOrNil 
-		ifNil: [ false ] 
-		ifNotNil: [ self scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ]
+	 the special selector index all the time.
+	
+	 I traverse the method and all the compiled blocks in the literals 	 
+	"
+
+	^ self withAllBlocks
+		anySatisfy: [ :aCompiledCode | 
+			(aCompiledCode refersToLiteral: selector)
+				or: [ specialOrNil isNotNil
+						and: [ aCompiledCode
+								scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ] ] ]
 ]
 
 { #category : #accessing }
@@ -380,11 +399,6 @@ CompiledCode >> isCollection [
 ]
 
 { #category : #testing }
-CompiledCode >> isCompiledBlock [
-	^ false
-]
-
-{ #category : #testing }
 CompiledCode >> isDoIt [
 	^ false
 ]
@@ -475,6 +489,12 @@ CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
 	1 to: self numLiterals do:
 		[:index | aBlock value: (self literalAt: index)]
+]
+
+{ #category : #literals }
+CompiledCode >> literalsToSkip [
+
+	^ self subclassResponsibility
 ]
 
 { #category : #scanning }
@@ -605,6 +625,16 @@ CompiledCode >> objectAt: index put: value [
 ]
 
 { #category : #accessing }
+CompiledCode >> origin [
+	^ self methodClass findOriginClassOf: self method
+]
+
+{ #category : #accessing }
+CompiledCode >> originMethod [
+	^ self methodClass findOriginMethodOf: self method
+]
+
+{ #category : #accessing }
 CompiledCode >> penultimateLiteral [
 	^ self subclassResponsibility
 ]
@@ -690,7 +720,7 @@ CompiledCode >> refersToLiteral: aLiteral [
 
 	"exclude selector or additional method state (penultimate slot) 
 	and methodClass or outerCode (last slot)"
-	1 to: self numLiterals - 2 do: [ :index | 
+	1 to: self numLiterals - self literalsToSkip do: [ :index | 
 		((self literalAt: index) refersToLiteral: aLiteral)
 			ifTrue: [ ^ true ] ].
 
@@ -876,6 +906,22 @@ CompiledCode >> voidCogVMState [
 
 	<primitive: 215>
 	^self flushCache
+]
+
+{ #category : #accessing }
+CompiledCode >> withAllBlocks [
+
+	^ self addWithAllBlocksInto: IdentitySet new.
+]
+
+{ #category : #accessing }
+CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [ 
+	"This method traverses all the nested literals.
+	As a Block or Method can have literals in the nested blocks. 
+	This is used to query all the selectors used in a method for example"
+	
+	self withAllBlocks do: [ :aCompiledCode | 
+		aCompiledCode allLiterals do: aBlockClosure ]
 ]
 
 { #category : #scanning }

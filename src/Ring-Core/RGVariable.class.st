@@ -42,6 +42,16 @@ RGVariable >> isSpecial [
 ]
 
 { #category : #testing }
+RGVariable >> isTemp [
+	^false
+]
+
+{ #category : #testing }
+RGVariable >> isUninitialized [
+	^false
+]
+
+{ #category : #testing }
 RGVariable >> isVariableDefinition [
 
 	^ true
@@ -53,4 +63,9 @@ RGVariable >> name: aString [
 	self parent announceDefinitionChangeDuring: [ 
 		super name: aString ].
 
+]
+
+{ #category : #testing }
+RGVariable >> semanticNodeClass [
+	^RBVariableNode
 ]

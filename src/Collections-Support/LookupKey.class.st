@@ -26,10 +26,9 @@ LookupKey >> < aLookupKey [
 
 { #category : #comparing }
 LookupKey >> = aLookupKey [
-
-	self species = aLookupKey species
-		ifTrue: [^key = aLookupKey key]
-		ifFalse: [^false]
+	^ self species = aLookupKey species
+		ifTrue: [ key = aLookupKey key ]
+		ifFalse: [ false ]
 ]
 
 { #category : #comparing }

@@ -37,10 +37,7 @@ GLMTextPresentation >> highlightSmalltalk [
 
 { #category : #accessing }
 GLMTextPresentation >> highlightSmalltalkContext [
-
-	^ highlightSmalltalkContext
-		ifNil: [ nil ]
-		ifNotNil: [ highlightSmalltalkContext glamourValue: self entity ]
+	^ highlightSmalltalkContext ifNotNil: [ highlightSmalltalkContext glamourValue: self entity ]
 ]
 
 { #category : #rendering }

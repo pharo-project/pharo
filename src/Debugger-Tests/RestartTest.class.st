@@ -26,8 +26,11 @@ RestartTest >> testStepRestartAndRestepTopContext [
 	"
 	| node |
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
+	[session interruptedContext method == (self class>>#stepA1)] 
+		whileFalse: [ session stepInto ].
+	
 	session stepInto.
-	session stepInto.
+
 	"Check that the execution is at the 'a:=1' node of method stepA2"
 	self assert: session interruptedContext method equals: self class >>#stepA2.
 	node := self class >>#stepA2 sourceNodeForPC: session interruptedContext pc.

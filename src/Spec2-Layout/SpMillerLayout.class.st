@@ -118,7 +118,9 @@ SpMillerLayout >> isVertical [
 { #category : #removing }
 SpMillerLayout >> remove: aPresenter [
 
-	children removeKey: aPresenter.
+	children 
+		removeKey: aPresenter 
+		ifAbsent: [ self removeBySymbol: aPresenter ].
 	adapter ifNotNil: [ :theAdapter | theAdapter remove: aPresenter ]
 ]
 

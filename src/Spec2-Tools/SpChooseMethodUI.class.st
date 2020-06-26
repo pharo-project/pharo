@@ -122,7 +122,7 @@ SpChooseMethodUI >> classListAction [
 					ifNil: [ #()]]
 		postTransmission: [ :protcolList | 
 			protocolList
-				selectIndex: ((protcolList items collect: #name) indexOf: '-- all --') ]
+				selectIndex: ((protcolList items collect: [:each | each name]) indexOf: '-- all --') ]
 ]
 
 { #category : #initialization }
@@ -212,9 +212,10 @@ SpChooseMethodUI >> packageList [
 SpChooseMethodUI >> packageListAction [
 	packageList
 		transmitTo: classList
-		transform: [ :selectedPacakge | 
-			selectedPacakge
-				ifNotNil: [ selectedPacakge classes asOrderedCollection ] ]
+		transform: [ :selectedPackage | 
+			selectedPackage
+				ifNil: [ #() ]
+				ifNotNil: [ selectedPackage classes asOrderedCollection ] ]
 		postTransmission: [ classList selectIndex: 1 ]
 ]
 

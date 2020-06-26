@@ -21,6 +21,15 @@ TemporaryVariableTest >> testHasTemporaryVariablesMethod [
 	self assert: (method hasTemporaryVariableNamed: #method)
 ]
 
+{ #category : #tests }
+TemporaryVariableTest >> testIsReferenced [
+	| method notReferenced |
+	"The temp notReferenced is not used as we test exactly that here"
+	method := self class >> #testIsReferenced.
+	self assert: method temporaryVariables first isReferenced.
+	self deny: method temporaryVariables second isReferenced.
+]
+
 { #category : #properties }
 TemporaryVariableTest >> testPropertyAtPut [
 
@@ -38,69 +47,12 @@ TemporaryVariableTest >> testPropertyAtPut [
 	self assert: temp properties isNil
 ]
 
-{ #category : #properties }
-TemporaryVariableTest >> testPropertyAtPutPersistent [
-	| testValue temp temp2 |
-	testValue := Date today.
-	temp := thisContext method temporaryVariableNamed: #temp.
-
-	temp propertyAt: #testKeySelector put: testValue.
-	self assert: (temp propertyAt: #testKeySelector) equals: testValue.
-
-	temp2 := thisContext method temporaryVariableNamed: #temp.
-
-	self assert: (temp2 propertyAt: #testKeySelector) equals: testValue.
-
-	self assert: temp2 identicalTo: temp.
-	self deny: thisContext method savedTemps isNil.
-	temp removeProperty: #testKeySelector.
-	self assert: temp properties isNil.
-
-	self assert: thisContext method savedTemps isNil
-]
-
-{ #category : #properties }
-TemporaryVariableTest >> testPropertyBlockPersistent [
-	| testValue temp temp2 block |
-	testValue := Date today.
-	block := [ | t |
-	t := 2 ].
-	temp := block temporaryVariableNamed: #t.
-
-	temp propertyAt: #testKeySelector put: testValue.
-	self assert: (temp propertyAt: #testKeySelector) equals: testValue.
-
-	temp2 := block temporaryVariableNamed: #t.
-
-	self assert: (temp2 propertyAt: #testKeySelector) equals: testValue.
-
-	self assert: temp2 identicalTo: temp.
-	self deny: block method savedTemps isNil.
-	temp removeProperty: #testKeySelector.
-	self assert: temp properties isNil.
-
-	self assert: block method savedTemps isNil
-]
-
-{ #category : #properties }
-TemporaryVariableTest >> testPropertyContextPersistent [
-	| testValue temp temp2 |
-	testValue := Date today.
-	temp := thisContext temporaryVariableNamed: #temp.
-
-	temp propertyAt: #testKeySelector put: testValue.
-	self assert: (temp propertyAt: #testKeySelector) equals: testValue.
-
-	temp2 := thisContext temporaryVariableNamed: #temp.
-
-	self assert: (temp2 propertyAt: #testKeySelector) equals: testValue.
-
-	self assert: temp2 identicalTo: temp.
-	self deny: thisContext method savedTemps isNil.
-	temp removeProperty: #testKeySelector.
-	self assert: temp properties isNil.
-
-	self assert: thisContext method savedTemps isNil
+{ #category : #tests }
+TemporaryVariableTest >> testReadNodes [
+	| method |
+	"On the level of CompiledMethod, args include temps. This needs to be fixed"
+	method := OrderedCollection >> #do:.
+	self assert: (method temporaryVariableNamed: #aBlock) astNodes notEmpty
 ]
 
 { #category : #tests }
@@ -108,7 +60,7 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
+	self assert: (tempVar readInContext: thisContext) class equals: OCTempVariable
 ]
 
 { #category : #tests }
@@ -122,7 +74,13 @@ TemporaryVariableTest >> testTemporaryVariablesBlock [
 TemporaryVariableTest >> testTemporaryVariablesMethod [
 	| method |
 	method := self class >> #testTemporaryVariablesMethod.
-	self assert: method temporaryVariables first name equals: #method
+	self assert: method temporaryVariables first name equals: #method.
+	
+	"On the level of CompiledMethod, args include temps. This needs to be fixed"
+	method := OrderedCollection >> #do:.
+	self assert: method temporaryVariables first name equals: #aBlock.
+	self assert: (method hasTemporaryVariableNamed: #aBlock).
+	self assert: (method temporaryVariableNamed: #aBlock) class equals: OCArgumentVariable.
 ]
 
 { #category : #tests }
@@ -130,6 +88,6 @@ TemporaryVariableTest >> testWriteTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	tempVar write: 5 InContext: thisContext.
+	tempVar write: 5 inContext: thisContext.
 	self assert: tempVar equals: 5
 ]

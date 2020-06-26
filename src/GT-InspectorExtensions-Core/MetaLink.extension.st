@@ -13,8 +13,8 @@ MetaLink >> gtInspectorMethodsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	composite list
 		title: [ 'Methods' translated ];
-		display:
-				[ (self methods collect: #asRingDefinition) sorted: [ :x :y | x selector < y selector ] ];
+		display: [ (self methods collect: [:each | each asRingDefinition]) 
+						sorted: [ :x :y | x selector < y selector ] ];
 		showOnly: 30
 ]
 

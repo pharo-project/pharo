@@ -13,6 +13,12 @@ SpTest class >> isAbstract [
 	^ self = SpTest
 ]
 
+{ #category : #accessing }
+SpTest >> adapter [
+
+	^ self subclassResponsibility
+]
+
 { #category : #assertions }
 SpTest >> assertEvent: anEventName isRaisedInPresenter: aPresenter whenDoing: aBlock [
 	

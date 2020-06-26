@@ -20,5 +20,6 @@ SpBrowseClassHierarchyCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseClassHierarchyCommand >> execute [
-	self systemNavigation browseHierarchy: self context
+
+	self systemNavigation browseHierarchy: self target
 ]

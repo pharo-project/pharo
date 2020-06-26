@@ -204,7 +204,6 @@ SpRubFindReplaceDialog >> title [
 { #category : #initialization }
 SpRubFindReplaceDialog >> updateFindText [
 
-	#updateFindText traceCr.
 	service findText: self findInput text asString.
 ]
 

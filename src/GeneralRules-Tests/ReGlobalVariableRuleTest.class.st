@@ -7,7 +7,7 @@ Class {
 { #category : #tests }
 ReGlobalVariableRuleTest >> applyingCritiques [
 	^ self class methods
-		select: [ :m | (ReGlobalVariablesUsage new check: m) isNotEmpty ]
+		select: [ :m | (ReGlobalVariablesUsageRule new check: m) isNotEmpty ]
 ]
 
 { #category : #tests }
@@ -40,7 +40,7 @@ ReGlobalVariableRuleTest >> methodUsesGlobal2 [
 
 { #category : #tests }
 ReGlobalVariableRuleTest >> testTheRuleCanCheckMethodsWithDifferentKindsOfLiterals [
-	self assertEmpty: (ReGlobalVariablesUsage new check: self class >> #methodNotUsesGlobal2)
+	self assertEmpty: (ReGlobalVariablesUsageRule new check: self class >> #methodNotUsesGlobal2)
 ]
 
 { #category : #tests }
@@ -50,5 +50,5 @@ ReGlobalVariableRuleTest >> testTheRuleOnlyDetect2MethodsWithGlobalVariables [
 
 { #category : #tests }
 ReGlobalVariableRuleTest >> testTheRuleOnlyMethodUsesGlobal1And2 [
-	self assertCollection: (self applyingCritiques collect: #selector) hasSameElements: {#methodUsesGlobal . #methodUsesGlobal2}
+	self assertCollection: (self applyingCritiques collect: [:each | each selector]) hasSameElements: {#methodUsesGlobal . #methodUsesGlobal2}
 ]

@@ -363,6 +363,12 @@ Class >> classVariables [
 	^self classPool associations
 ]
 
+{ #category : #slots }
+Class >> classVariablesNeedFullDefinition [
+
+	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
+]
+
 { #category : #'accessing class hierarchy' }
 Class >> commonSuperclassWith: aClass [
 	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
@@ -711,6 +717,13 @@ Class >> name [
 	^ name ifNil: [ super name ]
 ]
 
+{ #category : #slots }
+Class >> needsSlotClassDefinition [
+    "return true if we define something else than InstanceVariableSlots or normal class variables"
+
+    ^ super needsSlotClassDefinition or: [ self classVariablesNeedFullDefinition ]
+]
+
 { #category : #'subclass creation' }
 Class >> newAnonymousSubclass [
 
@@ -950,8 +963,7 @@ Class >> sharedPoolOfVarNamed: aString [
 
 	^ self sharedPools
 		detect: [ :each | each usesClassVarNamed: aString ]
-		ifNone:
-			[ self superclass ifNil: [ nil ] ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
+		ifNone: [ self superclass ifNotNil: [ self superclass sharedPoolOfVarNamed: aString ] ]
 ]
 
 { #category : #'pool variables' }

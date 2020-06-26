@@ -91,7 +91,10 @@ SpMultipleSelectionMode >> selectedIndexes [
 { #category : #selecting }
 SpMultipleSelectionMode >> selectedItems [
 
-	^ self selectedIndexes collect: [ :idx | self model at: idx ].
+	^ self selectedIndexes collect: [ :index | 
+		self widget adapter 
+			ifNotNil: [ :anAdapter | anAdapter elementAt: index ]
+			ifNil: [ self model at: index ] ]
 ]
 
 { #category : #accessing }

@@ -28,16 +28,22 @@ SpMorphicLabelAdapter >> buildWidget [
 		hResizing: #spaceFill;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
-		setBalloonText: self help;
+		setBalloonText: self getHelpText;
 		setProperty: #minWidth toValue: 3. "3 is the default value of StringMorph. We do not want the default value of LabelMorph that is the min width of the content..."
 		
 	^ label
 ]
 
+{ #category : #private }
+SpMorphicLabelAdapter >> getHelpText [
+
+	^ self presenter help ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
+]
+
 { #category : #'model access' }
 SpMorphicLabelAdapter >> getText [
 
-	^ self model label
+	^self presenter label ifNotNil: [ :aString | aString localizedForPresenter: self presenter ]
 ]
 
 { #category : #accessing }

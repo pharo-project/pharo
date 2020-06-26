@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : #commands }
-SpContactBookPresenter class >> buildAddingGroupWith: presenterIntance [
+SpContactBookPresenter class >> buildAddingGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'Adding') asSpecGroup
 		description: 'Commands related to contact addition.';
 		register: SpAddContactCommand forSpec;
@@ -26,23 +26,24 @@ SpContactBookPresenter class >> buildAddingGroupWith: presenterIntance [
 ]
 
 { #category : #commands }
-SpContactBookPresenter class >> buildCommandsGroupWith: presenterIntance forRoot: rootCommandGroup [
+SpContactBookPresenter class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup [
 	rootCommandGroup
-		register: (self buildMenuBarGroupWith: presenterIntance);
-		register: (self buildContextualMenuGroupWith: presenterIntance)
+		register: (self buildMenuBarGroupWith: presenterInstance);
+		register: (self buildContextualMenuGroupWith: presenterInstance)
 ]
 
 { #category : #commands }
-SpContactBookPresenter class >> buildContextualMenuGroupWith: presenterIntance [
+SpContactBookPresenter class >> buildContextualMenuGroupWith: presenterInstance [
+
 	^ (CmCommandGroup named: 'Context Menu') asSpecGroup
-		register: (self buildEditionGroupWith: presenterIntance);
-		register: (self buildAddingGroupWith: presenterIntance);
-		register: (self buildRemovingGroupWith: presenterIntance);
+		register: (self buildEditionGroupWith: presenterInstance);
+		register: (self buildAddingGroupWith: presenterInstance);
+		register: (self buildRemovingGroupWith: presenterInstance);
 		yourself
 ]
 
 { #category : #commands }
-SpContactBookPresenter class >> buildEditionGroupWith: presenterIntance [
+SpContactBookPresenter class >> buildEditionGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'Edition') asSpecGroup
 		description: 'Commands related to contact edition.';
 		register: SpRenameContactCommand forSpec;
@@ -51,14 +52,14 @@ SpContactBookPresenter class >> buildEditionGroupWith: presenterIntance [
 ]
 
 { #category : #commands }
-SpContactBookPresenter class >> buildMenuBarGroupWith: presenterIntance [
+SpContactBookPresenter class >> buildMenuBarGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'MenuBar') asSpecGroup
 		register: SpPrintContactBookInTranscript forSpec;
 		yourself
 ]
 
 { #category : #commands }
-SpContactBookPresenter class >> buildRemovingGroupWith: presenterIntance [
+SpContactBookPresenter class >> buildRemovingGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'Removing') asSpecGroup
 		description: 'Command related to contact removal.';
 		register: SpRemoveContactCommand forSpec;

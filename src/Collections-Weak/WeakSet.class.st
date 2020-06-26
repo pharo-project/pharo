@@ -179,9 +179,9 @@ WeakSet >> like: anObject ifAbsent: aBlock [
 	or evaluate the block if not found. Relies heavily on hash properties"
 
 	| element |
-	((element  := array at: (self scanFor: anObject)) == flag or: [ element == nil ])
-		ifTrue: [ ^aBlock value ]
-		ifFalse: [ ^element enclosedElement ]
+	^ ((element := array at: (self scanFor: anObject)) == flag or: [ element == nil ])
+		ifTrue: [ aBlock value ]
+		ifFalse: [ element enclosedElement ]
 ]
 
 { #category : #private }

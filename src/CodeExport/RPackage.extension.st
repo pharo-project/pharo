@@ -13,12 +13,12 @@ RPackage >> fileOut [
 	
 	classExtensionSelectors keysAndValuesDo: [ :className :selectors | 
 		selectors do: [ :selector | | extendedClass |
-			extendedClass := Smalltalk globals classNamed: className.
+			extendedClass := self class environment classNamed: className.
 			extendedClass fileOutMethod: selector on: internalStream ] ].
 	
 	metaclassExtensionSelectors keysAndValuesDo: [ :className :selectors | 
 		selectors do: [ :selector | | extendedClass |
-			extendedClass := (Smalltalk globals classNamed: className).
+			extendedClass := self class environment classNamed: className.
 			extendedClass classSide fileOutMethod: selector on: internalStream ] ].
 	
 	^ CodeExporter writeSourceCodeFrom: internalStream baseName: self name isSt: true.

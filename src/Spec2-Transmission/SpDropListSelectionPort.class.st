@@ -20,5 +20,5 @@ SpDropListSelectionPort >> attachTransmission: aTransmission [
 	self destinationPresenter whenSelectionChangedDo: [ :selection | 
 		self 
 			transmitWith: aTransmission 
-			value: selection selectedItem model ]
+			value: (selection selectedItem ifNotNil:[ :item | item model ]) ]
 ]

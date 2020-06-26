@@ -13,7 +13,7 @@ Class {
 { #category : #asserting }
 SessionManagerRegistrationOrderTest >> assertHandledId: aSessionHandlerList equals: aCollection [
 	self 
-		assert: (aSessionHandlerList collect: #handledId)
+		assert: (aSessionHandlerList collect: [:each | each handledId])
 		equals: aCollection
 ]
 

@@ -119,8 +119,7 @@ CatalogProject >> fromDictionary: aDictionary [
 	keywords := ((aDictionary 
 		at: #keywords  
 		ifAbsent: [ #() ])
-		ifNil: [ #() ])
-		collect: #asLowercase.
+		ifNil: [ #() ]) collect: [:each | each asLowercase]
 ]
 
 { #category : #accessing }

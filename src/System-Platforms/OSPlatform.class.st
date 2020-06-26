@@ -154,6 +154,11 @@ OSPlatform >> getPwdViaFFI: arg1 size: arg2 [
 ]
 
 { #category : #testing }
+OSPlatform >> isLinux [
+	^ false
+]
+
+{ #category : #testing }
 OSPlatform >> isMacOS [
 	^ false
 ]

@@ -39,9 +39,11 @@ BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 
 	| subMenu |
 	subMenu := UIManager default newMenuIn: self for: self.
-	subMenu add: 'border width...' selector: #changeBorderWidth:.
-	subMenu add: 'border color...' selector: #changeBorderColor:.
-	subMenu addLine.
+	subMenu 
+		add: 'border width...' selector: #changeBorderWidth:;
+		add: 'border color...' selector: #changeBorderColor:;
+		addLine.
+		
 	BorderStyle borderStyleChoices do:
 		[:sym | (self borderStyleForSymbol: sym)
 			ifNotNil:
@@ -73,13 +75,6 @@ BorderedMorph >> borderColor: colorOrSymbolOrNil [
 		borderColor := colorOrSymbolOrNil.
 		self changed].
 
-]
-
-{ #category : #initialization }
-BorderedMorph >> borderInitialize [
-	"initialize the receiver state related to border"
-	borderColor:= self defaultBorderColor.
-	borderWidth := self defaultBorderWidth
 ]
 
 { #category : #accessing }
@@ -177,13 +172,13 @@ BorderedMorph >> colorForInsets [
 	^super colorForInsets
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 BorderedMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ Color black
 ]
 
-{ #category : #initialization }
+{ #category : #'accessing - defaults' }
 BorderedMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ self theme borderWidth
@@ -200,10 +195,18 @@ BorderedMorph >> doesBevels [
 
 { #category : #initialization }
 BorderedMorph >> initialize [
-	"initialize the state of the receiver"
-	super initialize.
+	"Initializes the receiver"
 	
-	self borderInitialize
+	super initialize.
+	self initializeBorder 
+]
+
+{ #category : #'private - initialization' }
+BorderedMorph >> initializeBorder [
+	"Initialize the receiver state related to border."
+	
+	borderColor:= self defaultBorderColor.
+	borderWidth := self defaultBorderWidth
 ]
 
 { #category : #testing }

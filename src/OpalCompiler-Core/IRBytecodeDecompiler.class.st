@@ -226,6 +226,17 @@ IRBytecodeDecompiler >> pushConstant: value [
 ]
 
 { #category : #'instruction decoding' }
+IRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [ 
+	
+	| copiedValues |
+
+	copiedValues := irBuilder removeLast: numCopied.
+
+	irBuilder
+		pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues
+]
+
+{ #category : #'instruction decoding' }
 IRBytecodeDecompiler >> pushLiteralVariable: assoc [
 	irBuilder pushLiteralVariable: assoc.
 ]

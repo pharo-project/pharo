@@ -28,5 +28,6 @@ SpBrowseImplementorsCommand class >> shortName [
 
 { #category : #executing }
 SpBrowseImplementorsCommand >> execute [
+
 	self systemNavigation browseAllImplementorsOf: self selector
 ]

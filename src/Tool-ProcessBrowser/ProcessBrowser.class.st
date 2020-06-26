@@ -69,10 +69,11 @@ Class {
 
 { #category : #initialization }
 ProcessBrowser class >> cleanUp [
- "Remove terminated processes from my suspended list"
-
-       self suspendedProcesses keysDo: [:ea |
-               ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
+ 	"Remove terminated processes from my suspended list"
+	<script>
+	
+	self suspendedProcesses keysDo: [:ea |
+		ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
 ]
 
 { #category : #'process control' }
@@ -140,7 +141,6 @@ ProcessBrowser class >> dumpTallyOnTranscript: tally [
 
 { #category : #initialization }
 ProcessBrowser class >> initialize [
-	"ProcessBrowser initialize"
 	SuspendedProcesses ifNil: [ SuspendedProcesses := IdentityDictionary new ].
 	self registerWellKnownProcesses
 ]
@@ -154,11 +154,11 @@ ProcessBrowser class >> isUIProcess: aProcess [
 ProcessBrowser class >> menuCommandOn: aBuilder [ 
 	<worldMenu> 
 	(aBuilder item: #'Process Browser')
-		parent: #System;
-		order: 0;
+		parent: #Tools;
+		order: 705;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: self taskbarIcon.
+		icon: self taskbarIcon
 ]
 
 { #category : #'process control' }
@@ -176,8 +176,9 @@ ProcessBrowser class >> nameAndRulesFor: aProcess [
 
 { #category : #'instance creation' }
 ProcessBrowser class >> open [
-	"ProcessBrowser open"
 	"Create and schedule a ProcessBrowser."
+	<script>
+	
 	Smalltalk garbageCollect.
 	^ self new build
 ]
@@ -236,11 +237,6 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ Smalltalk globals at: #SoundPlayer ifPresent: [ :sp | sp playerProcess ] ]
-		label: 'the Sound Player'
-		allowStop: false
-		allowDebug: false.
-	self
 		registerWellKnownProcess: [ Smalltalk globals at: #CPUWatcher ifPresent: [ :cw | cw currentWatcherProcess ] ]
 		label: 'the CPUWatcher'
 		allowStop: false
@@ -295,7 +291,7 @@ ProcessBrowser class >> suspendedProcesses [
 	"Answer a collection of processes that my instances have suspended.  
 	This is so that they don't get garbage collected."
 	^ SuspendedProcesses
-		ifNil: [SuspendedProcesses := IdentityDictionary new]
+		ifNil: [ SuspendedProcesses := IdentityDictionary new ]
 ]
 
 { #category : #'CPU utilization' }
@@ -335,7 +331,7 @@ ProcessBrowser class >> terminateProcess: aProcess [
 			removeKey: aProcess
 			ifAbsent: [].
 		aProcess terminate
-	].
+	]
 
 ]
 
@@ -788,7 +784,7 @@ ProcessBrowser >> methodText [
 						ifNil: ['']
 						ifNotNil: [| pcRange | 
 							methodText := [ selectedContext sourceCode ]
-								ifErrorDo: [ 'error getting method text' ].
+								onErrorDo: [ 'error getting method text' ].
 							pcRange := self pcRange.
 							methodText asText
 								addAttribute: TextColor red
@@ -1114,7 +1110,7 @@ ProcessBrowser >> text [
 ProcessBrowser >> toggleAutoUpdate [
 	self isAutoUpdating
 		ifTrue: [ self stopAutoUpdate ]
-		ifFalse: [ self startAutoUpdate ].
+		ifFalse: [ self startAutoUpdate ]
 
 ]
 
