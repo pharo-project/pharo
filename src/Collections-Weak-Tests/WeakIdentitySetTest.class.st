@@ -1,7 +1,7 @@
 Class {
 	#name : #WeakIdentitySetTest,
 	#superclass : #WeakSetTest,
-	#category : #'Collections-Tests-Weak'
+	#category : #'Collections-Weak-Tests-Base'
 }
 
 { #category : #requirements }

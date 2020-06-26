@@ -4,7 +4,7 @@ SUnit tests for WeakIdentityValueDictionaty
 Class {
 	#name : #WeakIdentityValueDictionaryTest,
 	#superclass : #WeakValueDictionaryTest,
-	#category : #'Collections-Tests-Weak'
+	#category : #'Collections-Weak-Tests-Dictionaries'
 }
 
 { #category : #requirements }
