@@ -42,6 +42,13 @@ ReImplementedNotSentRule class >> cleanUp [
 ]
 
 { #category : #accessing }
+ReImplementedNotSentRule class >> enabled [
+	"this rule is disabled as it slows down code changes too much. We need to find a way
+	to implement it without relying on calculating at code modification time"
+	^false
+]
+
+{ #category : #accessing }
 ReImplementedNotSentRule class >> forApproxMessagesOf: aMethod do: aBlock [
 	"this is so ugly purely for performance reasons"
 	"as oposed to the #messages method of the CompiledCode class
