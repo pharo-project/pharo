@@ -18,7 +18,7 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assert: rgClass package notNil.
 	self assert: rgClass package equals: rgClass instanceSide package.
 	self assert: rgClass package name equals: #'Collections-Abstract-Traits'.
-	self assert: rgClass category equals: #'Collections-Abstract-Traits'.
+	self assert: rgClass category equals: #'Collections-Abstract-Traits-Base'.
 
 	self assert: rgClass superclass superclass isNil.
 	self assert: rgClass superclass package name equals: #TraitsV2.
