@@ -818,7 +818,7 @@ Color class >> registerColor: aColor named: aName [
 Color class >> registeredColorNames [
 	"Returns all the available names of named colors."
 	
-	^ ColorRegistry keys collect: #asString
+	^ ColorRegistry keys collect: [ :each | each asString ]
 ]
 
 { #category : #accessing }

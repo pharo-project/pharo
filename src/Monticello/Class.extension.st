@@ -10,10 +10,10 @@ Class >> asClassDefinition [
 		traitComposition: self traitCompositionString
 		classTraitComposition: self class traitCompositionString
 		category: self category 
-		instVarNames:  (self localSlots collect: #name)
+		instVarNames:  (self localSlots collect: [ :each | each name ])
 		classVarNames: self classVarNames
 		poolDictionaryNames: self sharedPoolNames
-		classInstVarNames: (self class localSlots collect: #name)
+		classInstVarNames: (self class localSlots collect: [ :each | each name ])
 		type: self typeOfClass
 		comment: self organization classComment	asString
 		commentStamp: self organization commentStamp].

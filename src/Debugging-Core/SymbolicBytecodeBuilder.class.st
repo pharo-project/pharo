@@ -211,7 +211,7 @@ SymbolicBytecodeBuilder >> pushConstant: obj [
 	self addBytecode: (String streamContents:
 				[:s |
 				s nextPutAll: 'pushConstant: '.
-				(obj isKindOf: LookupKey)
+				obj isVariableBinding
 					ifFalse: [obj printOn: s]
 					ifTrue: [obj key
 						ifNotNil: [s nextPutAll: '##'; nextPutAll: obj key]

@@ -46,12 +46,10 @@ BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 
 	| allMembers allPackagesInBaseline packages groups |
 	allMembers := self version groups detect: [ :g | g name = aGroupName ].
-	allPackagesInBaseline := self version packages collect: #name.
-	
+	allPackagesInBaseline := self version packages collect: [ :each | each name ].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
-	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
-		
-	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesRecursiveIn: aInnerGroupName]).
+	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].		
+	^ packages , (groups flatCollect: [ :aInnerGroupName | self packagesRecursiveIn: aInnerGroupName ]).
 
 ]
 

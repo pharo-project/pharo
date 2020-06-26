@@ -27,7 +27,7 @@ DADependencyChecker >> buildPackageRelationGraphFor: aPackageName [
 { #category : #private }
 DADependencyChecker >> computeDependenciesOf: aPackageName [
 	| dependencies |
-	dependencies := (self daPackageFor: aPackageName) dependentPackages collect: #packageName.
+	dependencies := (self daPackageFor: aPackageName) dependentPackages collect: [:each | each packageName].
 	^ ((dependencies
 			addAll: (self manuallyResolvedDependenciesOf: aPackageName);
 			yourself) 

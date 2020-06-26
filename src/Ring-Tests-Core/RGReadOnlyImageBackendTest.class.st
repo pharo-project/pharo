@@ -57,7 +57,7 @@ RGReadOnlyImageBackendTest >> testBehaviorLocalMethods [
 	self assert: (point ask localMethods 
 		allSatisfy: [:each | each isKindOf: RGMethod]).
 	selectors := point ask localMethods collect: [ :each | each ask selector ].
-	self assert: (selectors allSatisfy: #isSymbol).
+	self assert: (selectors allSatisfy: [:each | each isSymbol]).
 	self assert: selectors asSortedCollection equals: Point localSelectors asSortedCollection.
 	
 	

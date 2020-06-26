@@ -10,7 +10,7 @@ Class {
 
 { #category : #helpers }
 SlotAnnouncementsTest >> collectedAnnouncementClasses [
-	^ collectedAnnouncements collect: #class
+	^ collectedAnnouncements collect: [:each | each class]
 ]
 
 { #category : #helpers }

@@ -24,14 +24,14 @@ VariableBreakpointTest >> allNodes [
 VariableBreakpointTest >> allNodesForV1 [
 	^ OrderedCollection new
 		addAll: self nodesForV1InFieldWatchpointMockClass;
-		addAll: self nodesForV1InFieldWatchpointMockSubclass;
+		addAll: self nodesForV1InVariableBreakpointMockSubclass;
 		yourself
 ]
 
 { #category : #helpers }
 VariableBreakpointTest >> allNodesForV2 [
 	^ OrderedCollection new
-		addAll: self nodesForV2InFieldWatchpointMockSubclass;
+		addAll: self nodesForV2InVariableBreakpointMockSubclass;
 		yourself
 ]
 
@@ -62,7 +62,7 @@ VariableBreakpointTest >> nodesForV1InFieldWatchpointMockClass [
 ]
 
 { #category : #helpers }
-VariableBreakpointTest >> nodesForV1InFieldWatchpointMockSubclass [
+VariableBreakpointTest >> nodesForV1InVariableBreakpointMockSubclass [
 	|nodes |
 	nodes := OrderedCollection new.
 	nodes add: (VariableBreakpointMockSubclass>>#instVarWrites) ast statements first.
@@ -71,7 +71,7 @@ VariableBreakpointTest >> nodesForV1InFieldWatchpointMockSubclass [
 ]
 
 { #category : #helpers }
-VariableBreakpointTest >> nodesForV2InFieldWatchpointMockSubclass [
+VariableBreakpointTest >> nodesForV2InVariableBreakpointMockSubclass [
 	|nodes |
 	nodes := OrderedCollection new.
 	nodes add: (VariableBreakpointMockSubclass>>#initialize) ast statements second.
@@ -121,11 +121,11 @@ VariableBreakpointTest >> tempWriteNodes [
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testAccessStrategy [
 	
-	wp := VariableBreakpoint watchVariablesIn: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariablesInClass: VariableBreakpointMockClass.
 	self assert: wp accessStrategy equals: #all.
 	wp remove.
 	
-	wp := VariableBreakpoint watchVariable: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariable: #v1 inClass: VariableBreakpointMockClass.
 	self assert: wp accessStrategy equals: #all.
 	wp remove.
 	
@@ -137,15 +137,15 @@ VariableBreakpointTest >> testAccessStrategy [
 	self assert: wp accessStrategy equals: #all.
 	wp remove.
 		
-	wp := VariableBreakpoint watchVariableWrites: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariableWrites: #v1 inClass: VariableBreakpointMockClass.
 	self assert: wp accessStrategy equals: #write.
 	wp remove.
 	
-	wp := VariableBreakpoint watchVariablesWritesIn: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariablesWritesInClass: VariableBreakpointMockClass.
 	self assert: wp accessStrategy equals: #write.
 	wp remove.
 	
-	wp := VariableBreakpoint watchVariablesWritesIn: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint watchVariablesWritesInClass: VariableBreakpointMockSubclass.
 	self assert: wp accessStrategy equals: #write.
 	wp remove.
 	
@@ -157,7 +157,7 @@ VariableBreakpointTest >> testAccessStrategy [
 	self assert: wp accessStrategy equals: #read.
 	wp remove.
 	
-	wp := VariableBreakpoint watchVariableReads: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariableReads: #v1 inClass: VariableBreakpointMockClass.
 	self assert: wp accessStrategy equals: #read.
 	wp remove.
 	
@@ -182,7 +182,7 @@ VariableBreakpointTest >> testAllSlotNamesFor [
 VariableBreakpointTest >> testBreakpointOnAllTempAccesses [
 	|method|
 	method := (VariableBreakpointMockClass>> #methodWithTempsAndArg:).
-	wp := VariableBreakpoint watchVariable: #temp in: method.
+	wp := VariableBreakpoint watchVariable: #temp inClass: method.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #temp).
 	self assert: wp targetClassOrMethod identicalTo: method.
@@ -197,7 +197,7 @@ VariableBreakpointTest >> testBreakpointOnAllTempAccesses [
 VariableBreakpointTest >> testBreakpointOnArgument [
 	|method|
 	method := (VariableBreakpointMockClass>> #methodWithTempsAndArg:).
-	wp := VariableBreakpoint watchVariable: #arg in: method.
+	wp := VariableBreakpoint watchVariable: #arg inClass: method.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #arg).
 	self assert: wp targetClassOrMethod identicalTo: method.
@@ -212,7 +212,7 @@ VariableBreakpointTest >> testBreakpointOnArgument [
 VariableBreakpointTest >> testBreakpointOnTempReads [
 	|method|
 	method := (VariableBreakpointMockClass>> #methodWithTempsAndArg:).
-	wp := VariableBreakpoint watchVariableReads: #temp in: method.
+	wp := VariableBreakpoint watchVariableReads: #temp inClass: method.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #temp).
 	self assert: wp targetClassOrMethod identicalTo: method.
@@ -227,7 +227,7 @@ VariableBreakpointTest >> testBreakpointOnTempReads [
 VariableBreakpointTest >> testBreakpointOnTempWrites [
 	|method|
 	method := (VariableBreakpointMockClass>> #methodWithTempsAndArg:).
-	wp := VariableBreakpoint watchVariableWrites: #temp in: method.
+	wp := VariableBreakpoint watchVariableWrites: #temp inClass: method.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #temp).
 	self assert: wp targetClassOrMethod identicalTo: method.
@@ -236,6 +236,85 @@ VariableBreakpointTest >> testBreakpointOnTempWrites [
 	self assertCollection: wp link nodes asIdentitySet equals: self tempWriteNodes asIdentitySet.	
 	self should: [obj1 methodWithTempsAndArg: 42] raise: Break	
 	
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnAccess [
+	wp := obj2 haltOnAccess.
+	self should: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self should: [ obj2 v2 ] raise: Halt.
+	self should: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnAccessTo [
+	wp := obj2 haltOnAccessTo: #v1.
+	self should: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnRead [
+	wp := obj2 haltOnRead.
+	self should: [ obj2 v1 ] raise: Halt.
+	self shouldnt: [ obj2 v1: 0 ] raise: Halt.
+	self should: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnReadTo [
+	wp := obj2 haltOnReadTo: #v1.
+	self should: [ obj2 v1 ] raise: Halt.
+	self shouldnt: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnWrite [
+	wp := obj2 haltOnWrite.
+	self shouldnt: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self should: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
+]
+
+{ #category : #'tests - object-centric api' }
+VariableBreakpointTest >> testHaltOnWriteTo [
+
+	wp := obj2 haltOnWriteTo: #v1.
+	self shouldnt: [ obj2 v1 ] raise: Halt.
+	self should: [ obj2 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj2 v2 ] raise: Halt.
+	self shouldnt: [ obj2 v2: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v1 ] raise: Halt.
+	self shouldnt: [ obj4 v1: 0 ] raise: Halt.
+	self shouldnt: [ obj4 v2 ] raise: Halt.
+	self shouldnt: [ obj4 v2: 0 ] raise: Halt.
 ]
 
 { #category : #'tests - initialization' }
@@ -249,7 +328,7 @@ VariableBreakpointTest >> testInitialize [
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testInstall [
 	
-	wp := VariableBreakpoint newWatchPointInClass: VariableBreakpointMockSubclass.	
+	wp := VariableBreakpoint newForClass: VariableBreakpointMockSubclass.	
 	wp install.
 	self assertCollection: Breakpoint all includesAll: (OrderedCollection with: wp)
 ]
@@ -257,14 +336,14 @@ VariableBreakpointTest >> testInstall [
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testIsInstalled [
 	
-	wp := VariableBreakpoint newWatchPointInClass: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint newForClass: VariableBreakpointMockSubclass.
 	self deny: wp isInstalled.
 	wp install.
 	self assert: wp isInstalled
 ]
 
 { #category : #'tests - initialization' }
-VariableBreakpointTest >> testIsWatchpoint [
+VariableBreakpointTest >> testIsVariableBreakpoint [
 	self assert: VariableBreakpoint new isVariableBreakpoint.
 	self deny: Breakpoint new isVariableBreakpoint
 ]
@@ -282,8 +361,8 @@ VariableBreakpointTest >> testNewBreakpointForVariableInClassForMethod [
 ]
 
 { #category : #'tests - initialization' }
-VariableBreakpointTest >> testNewWatchPointInClass [
-	wp := VariableBreakpoint newWatchPointInClass: VariableBreakpointMockSubclass.
+VariableBreakpointTest >> testNewForClass [
+	wp := VariableBreakpoint newForClass: VariableBreakpointMockSubclass.
 	self assert: wp class identicalTo: VariableBreakpoint.
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1 with: #v2).
 	self assert: wp targetClassOrMethod equals: VariableBreakpointMockSubclass
@@ -293,7 +372,7 @@ VariableBreakpointTest >> testNewWatchPointInClass [
 VariableBreakpointTest >> testNotifyArgumentBreakpointHit [
 	|method notification|
 	method := (VariableBreakpointMockClass>> #methodWithTempsAndArg:).
-	wp := VariableBreakpoint watchVariable: #arg in: method.
+	wp := VariableBreakpoint watchVariable: #arg inClass: method.
 	self should: [obj1 methodWithTempsAndArg: 42] raise: Break.
 	notification := observer tag.
 	self assert: notification breakpoint identicalTo: wp.
@@ -307,7 +386,7 @@ VariableBreakpointTest >> testNotifyInstVarBreakpointHit [
 	|method notification|
 	obj1 v1: 0.
 	method := (VariableBreakpointMockClass>> #v1).
-	wp := VariableBreakpoint watchVariableReads: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariableReads: #v1 inClass: VariableBreakpointMockClass.
 	self should: [obj1 v1] raise: Break.
 	
 	notification := observer tag.
@@ -319,7 +398,7 @@ VariableBreakpointTest >> testNotifyInstVarBreakpointHit [
 	wp remove.
 	observer update: nil.
 	method := (VariableBreakpointMockClass>> #v1:).
-	wp := VariableBreakpoint watchVariableWrites: #v1 in: VariableBreakpointMockClass.	
+	wp := VariableBreakpoint watchVariableWrites: #v1 inClass: VariableBreakpointMockClass.	
 	self should: [obj1 v1: 42] raise: Break.
 	
 	notification := observer tag.
@@ -333,7 +412,7 @@ VariableBreakpointTest >> testNotifyInstVarBreakpointHit [
 VariableBreakpointTest >> testNotifyTempBreakpointHit [
 	|method notification|
 	method := (VariableBreakpointMockClass>> #methodWithTempsAndArg:).
-	wp := VariableBreakpoint watchVariableReads: #temp in: method.
+	wp := VariableBreakpoint watchVariableReads: #temp inClass: method.
 	self should: [obj1 methodWithTempsAndArg: 42] raise: Break.
 	
 	notification := observer tag.
@@ -344,7 +423,7 @@ VariableBreakpointTest >> testNotifyTempBreakpointHit [
 	
 	wp remove.
 	observer update: nil.
-	wp := VariableBreakpoint watchVariableWrites: #temp in: method.
+	wp := VariableBreakpoint watchVariableWrites: #temp inClass: method.
 	self should: [obj1 methodWithTempsAndArg: 42] raise: Break.
 	
 	notification := observer tag.
@@ -357,7 +436,7 @@ VariableBreakpointTest >> testNotifyTempBreakpointHit [
 { #category : #'tests - installation' }
 VariableBreakpointTest >> testRemove [
 
-	wp := VariableBreakpoint watchVariablesIn: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint watchVariablesInClass: VariableBreakpointMockSubclass.
 	wp remove.
 	
 	self denyCollection: Breakpoint all includesAll: (OrderedCollection with: wp).	
@@ -394,9 +473,9 @@ VariableBreakpointTest >> testScopeTo [
 ]
 
 { #category : #'tests - class wide watchpoints' }
-VariableBreakpointTest >> testWatchVariableIn [ 	
+VariableBreakpointTest >> testWatchVariableInClass [ 	
 
-	wp := VariableBreakpoint watchVariable: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariable: #v1 inClass: VariableBreakpointMockClass.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1).
 	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockClass.
@@ -430,9 +509,9 @@ VariableBreakpointTest >> testWatchVariableInObject [
 ]
 
 { #category : #'tests - class wide watchpoints' }
-VariableBreakpointTest >> testWatchVariableReadsIn [ 	
+VariableBreakpointTest >> testWatchVariableReadsInClass [ 	
 
-	wp := VariableBreakpoint watchVariableReads: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariableReads: #v1 inClass: VariableBreakpointMockClass.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1).
 	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockClass.
@@ -469,9 +548,9 @@ VariableBreakpointTest >> testWatchVariableReadsInObject [
 ]
 
 { #category : #'tests - class wide watchpoints' }
-VariableBreakpointTest >> testWatchVariableWritesIn [ 	
+VariableBreakpointTest >> testWatchVariableWritesInClass [ 	
 
-	wp := VariableBreakpoint watchVariableWrites: #v1 in: VariableBreakpointMockClass.
+	wp := VariableBreakpoint watchVariableWrites: #v1 inClass: VariableBreakpointMockClass.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1).
 	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockClass.
@@ -512,9 +591,9 @@ VariableBreakpointTest >> testWatchVariableWritesInObject [
 ]
 
 { #category : #'tests - class wide watchpoints' }
-VariableBreakpointTest >> testWatchVariablesIn [	
+VariableBreakpointTest >> testWatchVariablesInClass [	
 
-	wp := VariableBreakpoint watchVariablesIn: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint watchVariablesInClass: VariableBreakpointMockSubclass.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1 with: #v2).
 	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockSubclass.
@@ -563,9 +642,9 @@ VariableBreakpointTest >> testWatchVariablesInObject [
 ]
 
 { #category : #'tests - class wide watchpoints' }
-VariableBreakpointTest >> testWatchVariablesReadsIn [	
+VariableBreakpointTest >> testWatchVariablesReadsInClass [	
 
-	wp := VariableBreakpoint watchVariablesReadsIn: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint watchVariablesReadsInClass: VariableBreakpointMockSubclass.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1 with: #v2).
 	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockSubclass.
@@ -617,9 +696,9 @@ VariableBreakpointTest >> testWatchVariablesReadsInObject [
 ]
 
 { #category : #'tests - class wide watchpoints' }
-VariableBreakpointTest >> testWatchVariablesWritesIn [	
+VariableBreakpointTest >> testWatchVariablesWritesInClass [	
 
-	wp := VariableBreakpoint watchVariablesWritesIn: VariableBreakpointMockSubclass.
+	wp := VariableBreakpoint watchVariablesWritesInClass: VariableBreakpointMockSubclass.
 	
 	self assertCollection: wp targetVariableNames equals: (OrderedCollection with: #v1 with: #v2).
 	self assert: wp targetClassOrMethod identicalTo: VariableBreakpointMockSubclass.

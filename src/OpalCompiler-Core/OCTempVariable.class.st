@@ -28,6 +28,11 @@ OCTempVariable >> = aTempVar [
 	
 ]
 
+{ #category : #queries }
+OCTempVariable >> astNodes [
+	^self method variableNodes select: [ :each | each binding == self]
+]
+
 { #category : #emitting }
 OCTempVariable >> emitStore: methodBuilder [
 
@@ -99,6 +104,11 @@ OCTempVariable >> isEscapingWrite [
 ]
 
 { #category : #testing }
+OCTempVariable >> isReferenced [
+	^self isUnused not
+]
+
+{ #category : #testing }
 OCTempVariable >> isStoringTempVector [
 	"I am a temp that stores a temp vector. Those generated temps have a invalid name starting with 0"
 	^name first = $0.
@@ -142,6 +152,16 @@ OCTempVariable >> markWrite [
 	super markWrite.
 ]
 
+{ #category : #queries }
+OCTempVariable >> method [
+	^scope node methodNode methodClass>>scope node methodNode selector
+]
+
+{ #category : #accessing }
+OCTempVariable >> originalVar [
+	^ self
+]
+
 { #category : #debugging }
 OCTempVariable >> readFromContext: aContext scope: contextScope [
 	| definitionContext |
@@ -153,6 +173,28 @@ OCTempVariable >> readFromContext: aContext scope: contextScope [
 OCTempVariable >> readFromLocalContext: aContext [
 
 	^ aContext tempAt: self index
+]
+
+{ #category : #debugging }
+OCTempVariable >> readInContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	^self readFromContext: aContext scope: contextScope
+]
+
+{ #category : #queries }
+OCTempVariable >> usingMethods [
+	self isUnused ifTrue: [ ^#() ].
+	^{self method}
+]
+
+{ #category : #debugging }
+OCTempVariable >> write: aValue inContext: aContext [
+
+	| contextScope |
+	contextScope := aContext astScope.
+	self writeFromContext: aContext scope: contextScope value: aValue
 ]
 
 { #category : #debugging }

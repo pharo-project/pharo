@@ -414,8 +414,7 @@ NECMenuMorph >> engine: aCompletionEngine position: aPoint [
 	engine := aCompletionEngine.
 	context := engine context.
 	self position: aPoint - (20 @ 0).
-	self narrowCompletion
-		ifFalse: [ ^ self ].
+	self refreshSelection.
 	self createTitle.
 	self openInWorld
 ]
@@ -541,20 +540,6 @@ NECMenuMorph >> moveUp [
 	self changed. 
 ]
 
-{ #category : #actions }
-NECMenuMorph >> narrowCompletion [
-
-	self selected: 0.
-	firstVisible := 1.
-	context narrowWith: context completionToken.
-	(context entries size = 1 and: [ context entries first contents = context completionToken ]) ifTrue: [
-		self delete.
-		^ false ].
-	context hasEntries ifTrue: [ self selected: 1 ].
-	self show.
-	^ true
-]
-
 { #category : #paging }
 NECMenuMorph >> pageCount [
 	| count |
@@ -586,6 +571,16 @@ NECMenuMorph >> pageUp [
 { #category : #drawing }
 NECMenuMorph >> prepareRectForNextRow: aRectangle [ 
 	^aRectangle translateBy: 0 @ self class itemHeight
+]
+
+{ #category : #actions }
+NECMenuMorph >> refreshSelection [
+
+	self selected: 0.
+	firstVisible := 1.
+	context hasEntries ifTrue: [ self selected: 1 ].
+	self show.
+	^ true
 ]
 
 { #category : #drawing }

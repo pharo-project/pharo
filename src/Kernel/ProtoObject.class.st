@@ -290,16 +290,17 @@ ProtoObject >> pointersToAmong: aCollectionOfObjects [
 { #category : #'pointing to' }
 ProtoObject >> pointersToExcept: objectsToExclude [
 	"Find all objects in the system that hold a pointer to me, excluding those listed"
-	| c pointers objectsToAlwaysExclude |
+	| c pointers objectsToAlwaysExclude closure|
 	Smalltalk garbageCollect.
 	pointers := OrderedCollection new.
-
-	SystemNavigation default allObjectsDo: [ :e | (e pointsTo: self) ifTrue: [ pointers add: e ]  ].
+	closure := [ :e | (e pointsTo: self) ifTrue: [ pointers add: e ]  ].
+	SystemNavigation default allObjectsDo: closure.
 
 	objectsToAlwaysExclude := {
 		thisContext.
 		thisContext sender.
 		thisContext sender sender.
+		closure.
 		objectsToExclude.
 	}.
 	c := thisContext.

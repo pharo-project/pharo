@@ -5,7 +5,7 @@ Class {
 	#name : #ClyBrowseIcebergCommitCommand,
 	#superclass : #IceTipCommand,
 	#instVars : [
-		'commitModel'
+		'methodHistoryLogEntryModel'
 	],
 	#category : #'Calypso-SystemPlugins-Monticello-Browser'
 }
@@ -41,20 +41,20 @@ ClyBrowseIcebergCommitCommand class >> defaultMenuItemName [
 
 { #category : #execution }
 ClyBrowseIcebergCommitCommand >> execute [
-	| env snapshot commit |
+	| env snapshot methodHistoryLogEntry |
 	env := RGEnvironment new.
-	commit := commitModel entity.
-	commit packageNames 
+	methodHistoryLogEntry := methodHistoryLogEntryModel entity.
+	methodHistoryLogEntry commit packageNames
 		do: [ :packageName |
-			snapshot := commit snapshotFor: (RPackage named: packageName).
+			snapshot := methodHistoryLogEntry commit snapshotFor: (RPackage named: packageName).
 			snapshot importInto: env asPackageNamed: packageName ] 
 		displayingProgress: 'loading'.
 	env clean.
-	env browseAs: commit repository origin url , '[', commit shortId, ']'
+	env browseAs: methodHistoryLogEntry commit repository origin url , '[', methodHistoryLogEntry shortId, ']'
 ]
 
 { #category : #execution }
 ClyBrowseIcebergCommitCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.
-	commitModel := aToolContext item
+	methodHistoryLogEntryModel := aToolContext item
 ]

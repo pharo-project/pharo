@@ -8,14 +8,11 @@ BlockClosure >> hasTemporaryVariableNamed: aName [
 { #category : #'*Slot-Core' }
 BlockClosure >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^TemporaryVariable 
-		name: aName 
-		block: self 
-
+	^self sourceNode scope lookupVar: aName
 ]
 
 { #category : #'*Slot-Core' }
 BlockClosure >> temporaryVariables [
-	^self tempNames collect: [ :name | TemporaryVariable new name: name ]
+	^self sourceNode temporaries collect: [ :each | each binding ] 
 
 ]

@@ -4,19 +4,15 @@ should: will be deprecated sooner or leater. Use assert: instead
 Class {
 	#name : #ReShouldTransformedIntoAssertRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #'SUnit-Rules'
+	#traits : 'ReTSUnitGroupedRule',
+	#classTraits : 'ReTSUnitGroupedRule classTrait',
+	#category : #'SUnit-Rules-Base'
 }
 
 { #category : #accessing }
 ReShouldTransformedIntoAssertRule class >> uniqueIdentifierName [
 	
 	^'ShouldTransformedIntoAssert'
-]
-
-{ #category : #accessing }
-ReShouldTransformedIntoAssertRule >> group [
-
-	^ 'SUnit'
 ]
 
 { #category : #initialization }

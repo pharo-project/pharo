@@ -170,6 +170,18 @@ RBProgramNodeTest >> testAddTemporaryNamed [
 	self assert: tree temporaries last equals: variable
 ]
 
+{ #category : #'tests - accessing' }
+RBProgramNodeTest >> testAllComments [
+	"Testing the AST comments objects. I am the first comment to be found in this test"
+	self
+		assert: (RBProgramNodeTest >> #testAllComments) ast allComments first contents
+		equals: 'Testing the AST comments objects. I am the first comment to be found in this test'.
+	"Next test assumes this comment it's not a string like in #testComments..."
+	self 
+		assert: (RBProgramNodeTest >> #testAllComments) ast allComments second isString
+		equals: false
+]
+
 { #category : #tests }
 RBProgramNodeTest >> testAllParents [
 	"check that we get all parents of a program node"

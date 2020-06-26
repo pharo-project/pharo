@@ -99,7 +99,7 @@ RGClassStrategy >> classSide [
 { #category : #'private - backend access' }
 RGClassStrategy >> classVarNames [
 
-	^ self classVariables collect: #name
+	^ self classVariables collect: [:each | each name]
 ]
 
 { #category : #'class variables' }
@@ -168,17 +168,12 @@ RGClassStrategy >> comment: anRGComment [
 RGClassStrategy >> copyForBehaviorDefinitionPostCopy [
 
 	| newVariables newSharedPools |
-	
 	self owner behaviorStrategy: self.
-	
 	super copyForBehaviorDefinitionPostCopy.
-	
 	newVariables := self classVariables collect: [ :each | each copyWithParent: self owner].
 	newSharedPools := self sharedPools collect: [ :each | each shallowCopy. ].
-
 	self pvtCleanClassVariables.
 	self pvtCleanSharedPools.
-	
 	newVariables do: [ :each | self privAddClassVariable: each ].
 	newSharedPools do: [ :each | self privAddSharedPool: each ].
 

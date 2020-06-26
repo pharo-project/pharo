@@ -31,9 +31,9 @@ CoVariableValueMessageHeuristic >> valueOfVariable: aName inContext: completionC
 	| binding |
 	"In the debugger, the binding values comes in the doItContext.
 	If we find in the doItContext has a variable with the given name, use it, otherwise ignore it."
-	(completionContext doItContext ifNotNil: [ :c | 
-		(c astScope lookupVar: aName)
-			ifNotNil: [ c lookupSymbol: aName ] ])
+	(completionContext doItContext ifNotNil: [ :context | 
+		(context lookupVar: aName)
+			ifNotNil: [:var | var readInContext: context ] ])
 		ifNotNil: [ :value | ^ aBlock value: value ].
 
 	"In the playground, the binding values comes in the bindings of the requestor.

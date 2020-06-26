@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #'Debugger-Filters'
+	#category : #'Debugger-Filters-Base'
 }
 
 { #category : #'instance creation' }

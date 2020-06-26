@@ -197,13 +197,14 @@ RBClass >> isMeta [
 { #category : #testing }
 RBClass >> isSharedPool [
 	
-	^ (self allSuperclasses collect: #name) includes: #SharedPool
+	^ (self allSuperclasses collect:  [:each | each name]) includes: #SharedPool
 ]
 
 { #category : #querying }
 RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
  
-	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | 			|modelClass|
+	^ (self realClass classVariableNamed: aClassVariableName) usingMethods collect: [ :aMethod | 			
+			|modelClass|
 			modelClass := self model classNamed: aMethod methodClass name.
 			modelClass methodFor: aMethod selector
 		]

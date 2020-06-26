@@ -14,7 +14,7 @@ OmMemoryStoreTest >> testWithAllContents [
 
 	| entries |
 	entries := (OmMemoryStore withAllContents: #(a b c)) entries.
-	self assertCollection: (entries collect: #content) hasSameElements: #(a b c).
+	self assertCollection: (entries collect: [:each | each content]) hasSameElements: #(a b c).
 ]
 
 { #category : #tests }

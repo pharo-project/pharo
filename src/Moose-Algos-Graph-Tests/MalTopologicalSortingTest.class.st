@@ -36,12 +36,12 @@ MalTopologicalSortingTest >> testSortWithCycle [
 
 { #category : #tests }
 MalTopologicalSortingTest >> testSortWithReducedGraph [
+
 	| graphReducer result |
 	graphReducer := MalGraphReducer new.
 	MalGraphFixture complexCycleGraph2: graphReducer.
 	sorter privateNodes: graphReducer run.
-
-	result := sorter run collect: #model.
+	result := sorter run collect: [:each | each model].
 
 	self assert: (result at: 1) equals: $h.
 	self assertCollection: (result at: 2) hasSameElements: #($e $f $d $b).

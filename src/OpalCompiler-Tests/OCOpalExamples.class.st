@@ -211,7 +211,9 @@ OCOpalExamples >> exampleIfFalse [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalseIfTrue [
-	true ifFalse: [^1] ifTrue: [^2].
+	^ true
+		ifFalse: [ 1 ]
+		ifTrue: [ 2 ]
 ]
 
 { #category : #'examples-blocks-optimized' }
@@ -631,7 +633,7 @@ OCOpalExamples >> exampleToDoArgument [
 	collection := OrderedCollection new.
 	1 to: 5 do: [ :index |
 		collection add:  [index]  ].
-	 ^collection collect: #value. 
+	 ^collection collect: [:each | each value]. 
 	"#(1 2 3 4 5)"
 ]
 
@@ -754,7 +756,7 @@ OCOpalExamples >> exampleWhileModificationAfterNotInlined [
 		collection add: [ index ].
 		index := index + 1 ].
 	[ index < 5 ] whileTrue: block.
-	^collection collect: #value.
+	^collection collect:  [:each | each value].
 	"#(5 5 5 5 5)"
 ]
 
@@ -766,7 +768,7 @@ OCOpalExamples >> exampleWhileModificationBefore [
 	[ index < 5 ] whileTrue: [ 
 		index := index + 1.
 		collection add: [ index ] ].
-	^collection collect: #value.
+	^collection collect:  [:each | each value].
 	"#(5 5 5 5 5)"
 ]
 
@@ -778,7 +780,7 @@ OCOpalExamples >> exampleWhileModificationBeforeNotInlined [
 		index := index + 1.
 		collection add: [ index ] ].
 	[ index < 5 ] whileTrue: block.
-	^collection collect: #value.
+	^collection collect: [:each | each value].
 	"#(5 5 5 5 5)"
 ]
 
@@ -806,7 +808,7 @@ OCOpalExamples >> exampleWhileWithTemp [
 		| temp |
 		temp := index := index + 1.
 		collection add: [ temp ] ].
-	^collection collect: #value.
+	^collection collect: [:each | each value].
 	"#(1 2 3 4 5)"
 ]
 
@@ -819,7 +821,7 @@ OCOpalExamples >> exampleWhileWithTempNotInlined [
 		temp := index := index + 1.
 		collection add: [ temp ] ].
 	[ index < 5 ] whileTrue: block.
-	^collection collect: #value.
+	^collection collect: [:each | each value].
 	"#(1 2 3 4 5)"
 ]
 

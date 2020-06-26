@@ -1206,7 +1206,7 @@ ChangeSet >> methodsWithoutComments [
 		(self methodChangesAtClass: aClass name) associationsDo: 
 				[:mAssoc | (#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
 					[(aClass includesSelector:  mAssoc key) ifTrue:
-						[(aClass firstPrecodeCommentFor: mAssoc key) isEmptyOrNil
+						[(aClass>>mAssoc key) hasComment
 								ifTrue: [slips add: aClass name , ' ' , mAssoc key]]]]].
 	^ slips
 

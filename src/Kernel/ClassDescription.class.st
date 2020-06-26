@@ -320,12 +320,6 @@ ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 		 ifNone: nil
 ]
 
-{ #category : #slots }
-ClassDescription >> classVariablesNeedFullDefinition [
-
-	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
-]
-
 { #category : #printing }
 ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
@@ -563,6 +557,20 @@ ClassDescription >> copyCategory: cat from: aClass classified: newCat [
 		classified: newCat
 ]
 
+{ #category : #slots }
+ClassDescription >> definesSlot: aSlot [
+	"Return true whether the receiver defines an instance variable named aString"
+	
+	^ self slots identityIncludes: aSlot
+]
+
+{ #category : #slots }
+ClassDescription >> definesSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString."
+	
+	^ self slotNames includes: aString
+]
+
 { #category : #'file in/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
@@ -600,7 +608,7 @@ ClassDescription >> definitionWithSlots [
 			nextPutAll: 'uses: ';
 			nextPutAll: self traitCompositionString ].
 			
-	(self classLayout isKindOf: FixedLayout) ifFalse: [
+	self classLayout isFixedLayout ifFalse: [
 		stream 
 			crtab; 
 			nextPutAll: 'layout: ';
@@ -884,9 +892,7 @@ ClassDescription >> methodsTaggedWith: aSymbol [
 ClassDescription >> needsSlotClassDefinition [
     "return true if we define something else than InstanceVariableSlots or normal class variables"
 
-    ^ self slotsNeedFullDefinition 
-		or: [ self class slotsNeedFullDefinition 
-		or: [ self classVariablesNeedFullDefinition ] ]
+    ^ self slotsNeedFullDefinition or: [ self class slotsNeedFullDefinition ]
 ]
 
 { #category : #private }
@@ -1230,7 +1236,7 @@ ClassDescription >> slotNames [
 	^self slots collect: [ :each | each name ]
 ]
 
-{ #category : #slots }
+{ #category : #accessing }
 ClassDescription >> slots [
 	^self classLayout visibleSlots
 ]
@@ -1256,10 +1262,34 @@ ClassDescription >> storeOn: aStream [
 ]
 
 { #category : #initialization }
+ClassDescription >> superclass: aSuperclass layout: aLayout [
+	layout := aLayout. 
+	
+	self
+		superclass: aSuperclass
+		methodDictionary: self emptyMethodDictionary
+		format: aLayout format.
+]
+
+{ #category : #initialization }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self organization: nil.
+]
+
+{ #category : #initialization }
+ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: slotArray [
+	| superLayout newScope newLayout |
+	superLayout := aSuperclass
+						ifNil: [ EmptyLayout instance ]
+						ifNotNil: [ aSuperclass classLayout ].
+	newScope := superLayout slotScope extend: slotArray.
+	newLayout := layoutType extending: superLayout scope: newScope host: self.
+	newLayout checkSanity.
+	self
+		superclass: aSuperclass
+		layout: newLayout
 ]
 
 { #category : #'accessing tags' }

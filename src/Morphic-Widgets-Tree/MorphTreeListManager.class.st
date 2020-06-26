@@ -707,13 +707,11 @@ MorphTreeListManager >> selectMorph: aNodeMorph multiple: withMultipleSelection 
 MorphTreeListManager >> selectMorph: aNodeMorph multiple: withMultipleSelection clickedTheCheckBox: checkBox [
 
 	| path mult |
-
 	checkBox
 		ifFalse: [ self lastClickedMorph: aNodeMorph ].
 	aNodeMorph
 		ifNil: [ self emptySelection.
-			^ nil
-			].
+				^ nil ].
 	aNodeMorph selected
 		ifTrue: [ withMultipleSelection
 				ifTrue: [ self removeFromSelection: aNodeMorph ]

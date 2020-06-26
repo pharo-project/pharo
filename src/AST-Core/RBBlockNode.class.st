@@ -24,7 +24,8 @@ Class {
 		'arguments',
 		'bar',
 		'body',
-		'scope'
+		'scope',
+		'bcToASTCache'
 	],
 	#category : #'AST-Core-Nodes'
 }

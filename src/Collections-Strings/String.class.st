@@ -231,7 +231,7 @@ String class >> loremIpsum: size [
 	"self loremIpsum: 2048"
 	
 	| words out |
-	words := (self loremIpsum findTokens: ' ,.') collect: #asLowercase.
+	words := (self loremIpsum findTokens: ' ,.') collect: [:each | each asLowercase].
 	(out := LimitedWriteStream on: (self new: size))
 		limit: size - 2;
 		limitBlock: [

@@ -363,6 +363,12 @@ Class >> classVariables [
 	^self classPool associations
 ]
 
+{ #category : #slots }
+Class >> classVariablesNeedFullDefinition [
+
+	^ self classVariables anySatisfy: [ :each | each needsFullDefinition ]
+]
+
 { #category : #'accessing class hierarchy' }
 Class >> commonSuperclassWith: aClass [
 	"return the next common superclass between me and aClass. If I am the superclass of aClass, that is me"
@@ -709,6 +715,13 @@ Class >> name [
 	"Answer the name of the receiver."
 
 	^ name ifNil: [ super name ]
+]
+
+{ #category : #slots }
+Class >> needsSlotClassDefinition [
+    "return true if we define something else than InstanceVariableSlots or normal class variables"
+
+    ^ super needsSlotClassDefinition or: [ self classVariablesNeedFullDefinition ]
 ]
 
 { #category : #'subclass creation' }

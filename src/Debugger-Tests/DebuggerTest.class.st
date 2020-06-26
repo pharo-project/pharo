@@ -36,7 +36,11 @@ DebuggerTest >> setUp [
 DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	process := aBlock newProcess.
 	[process step closure == aBlock] whileFalse.
-	process step.
+
+	"We need to do an additional step to enter the execution of the block"
+	(aBlock method encoderClass = EncoderForV3PlusClosures) 
+		ifTrue: [process step].
+
 	context := process suspendedContext.
 	session:= process newDebugSessionNamed: 'test session' startedAt: context.
 ]

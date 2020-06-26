@@ -23,11 +23,11 @@ SUnitSuiteBuilderTest >> testVisitingCaseReturnsSameCase [
 
 { #category : #tests }
 SUnitSuiteBuilderTest >> testVisitingClassReturnsSuiteWithSameTestsSelectors [
+
 	| result |
 	result := visitor visit: self class.
-	
 	self
-		assertCollection: (result tests collect: #selector)
+		assertCollection: (result tests collect: [:each | each selector])
 		hasSameElements: self class testSelectors
 ]
 
@@ -40,11 +40,11 @@ SUnitSuiteBuilderTest >> testVisitingPackageReturnsSuiteOfSuites [
 		assert: result name
 		equals: self class package name.
 	self
-		assertCollection: (result tests collect: #name)
-		hasSameElements: (testClasses collect: #name).
+		assertCollection: (result tests collect: [:each | each name])
+		hasSameElements: (testClasses collect: [:each | each name]).
 	self
-		assertCollection: (result tests flatCollect: [:each | each tests collect: #selector])
-		hasSameElements: (testClasses flatCollect: #testSelectors)
+		assertCollection: (result tests flatCollect: [:each | each tests collect: [:t | t selector]])
+		hasSameElements: (testClasses flatCollect: [:each | each testSelectors])
 ]
 
 { #category : #tests }

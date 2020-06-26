@@ -75,7 +75,7 @@ FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 		module: self libraryName
 		callType: self callType
 		returnType: functionSpec returnType externalTypeWithArity
-		argumentTypes: (functionSpec arguments collect: #externalTypeWithArity).
+		argumentTypes: (functionSpec arguments collect: [:each | each externalTypeWithArity]).
 	
 	functionResolutionStrategies
 		detect: [ :each | each isApplicableFor: self requestor ]
@@ -132,7 +132,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 { #category : #initialization }
 FFICalloutMethodBuilder >> initialize [
 	super initialize.
-	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: #new
+	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new]
 		
 ]
 
@@ -165,7 +165,7 @@ FFICalloutMethodBuilder >> libraryName [
 
 { #category : #accessing }
 FFICalloutMethodBuilder >> method [
-	^ self sender method
+	^ self sender compiledCode method
 ]
 
 { #category : #accessing }

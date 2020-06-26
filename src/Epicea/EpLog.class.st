@@ -228,7 +228,7 @@ EpLog >> entryReferences [
 { #category : #accessing }
 EpLog >> events [
 
-	^ self entries collect: #content
+	^ self entries collect: [:each | each content]
 ]
 
 { #category : #accessing }
