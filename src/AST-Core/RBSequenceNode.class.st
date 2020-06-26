@@ -202,6 +202,14 @@ RBSequenceNode >> allDefinedVariables [
 ]
 
 { #category : #accessing }
+RBSequenceNode >> allStatements [
+	^ statements asOrderedCollection copy
+			addAll: super allStatements;
+			yourself
+
+]
+
+{ #category : #accessing }
 RBSequenceNode >> allTemporaryVariables [
 	^(self temporaryNames asOrderedCollection)
 		addAll: super allTemporaryVariables;
@@ -261,6 +269,12 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self temporaries
 		do: [:each | aDictionary removeKey: each name ifAbsent: []].
 	^true
+]
+
+{ #category : #testing }
+RBSequenceNode >> hasTemporaries [
+
+	^ temporaries isNotEmpty
 ]
 
 { #category : #testing }
