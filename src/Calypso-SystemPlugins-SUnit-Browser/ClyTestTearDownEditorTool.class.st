@@ -1,10 +1,10 @@
 Class {
-	#name : #ClyTestSetUpEditorTool,
+	#name : #ClyTestTearDownEditorTool,
 	#superclass : #ClyTestEditorTool,
 	#category : #'Calypso-SystemPlugins-SUnit-Browser-Tools'
 }
 
 { #category : #accessing }
-ClyTestSetUpEditorTool class >> selector [
-	^ #setUp
+ClyTestTearDownEditorTool class >> selector [
+	^ #tearDown
 ]
