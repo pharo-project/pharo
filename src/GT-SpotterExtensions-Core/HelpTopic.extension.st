@@ -41,7 +41,6 @@ HelpTopic >> spotterForHelpTopicFor: aStep [
 		items: [ self subtopics ];
 		itemName: [ :helpTopic | helpTopic title ];
 		itemIcon: [ :helpTopic | helpTopic gtTopicIcon ];
-		itemFilterName: [ :helpTopic | helpTopic contents asString ]; " the filter should only scan the contents / maybe title too ? "
 		filter: GTFilterSubstrings;
 		wantsToDisplayOnEmptyQuery: true
 ]

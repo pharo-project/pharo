@@ -13,7 +13,6 @@ Class {
 		'actBlock',
 		'wantsToDisplayOnEmptyQuery',
 		'filterBlock',
-		'itemFilterNameBlock',
 		'keyBinding',
 		'sortBlock'
 	],
@@ -100,24 +99,6 @@ GTSpotterCandidatesListProcessor >> filterUsing: aFilter [
 { #category : #testing }
 GTSpotterCandidatesListProcessor >> hasDynamicItems [
 	^ allCandidatesBlock hasDynamicItems
-]
-
-{ #category : #accessing }
-GTSpotterCandidatesListProcessor >> itemFilterName [
-	^ itemFilterNameBlock
-]
-
-{ #category : #scripting }
-GTSpotterCandidatesListProcessor >> itemFilterName: aBlockWithOneArgument [
-	itemFilterNameBlock := aBlockWithOneArgument
-]
-
-{ #category : #private }
-GTSpotterCandidatesListProcessor >> itemFilterNameFor: anObject [
-
-	^ itemFilterNameBlock
-		ifNil: [ super itemFilterNameFor: anObject ]
-		ifNotNil: [ itemFilterNameBlock cull: anObject ]
 ]
 
 { #category : #accessing }
