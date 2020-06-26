@@ -30,6 +30,12 @@ FFILiteralArgument >> emitArgument: aBuilder context: aContext [
 	aBuilder pushLiteral: self value
 ]
 
+{ #category : #'emitting code' }
+FFILiteralArgument >> emitArgument: aBuilder context: aContext objectClass: aClass instVarName: aString [
+
+	self emitArgument: aBuilder context: aContext
+]
+
 { #category : #unpacking }
 FFILiteralArgument >> emitPointerArityUnpack: anIRBuilder type: aFFIVoid context: aContext [ 
 	

@@ -76,7 +76,7 @@ SystemProgressMorph class >> example [
 SystemProgressMorph class >> exampleChangeLabel [
 	"SystemProgressMorph exampleChangeLabel"
 	| classes |
-	classes := Smalltalk globals allClasses copyFrom: 1 to: 100.
+	classes := self environment allClasses copyFrom: 1 to: 100.
 	'InitialLabel' 
 		displayProgressFrom: 0 to: classes size
 		during: [:bar | 1 to: classes size do: [:i |
@@ -273,7 +273,8 @@ SystemProgressMorph >> initialize [
 		hResizing: #rigid;
 		vResizing: #shrinkWrap;
 		layoutInset: 10@6;
-		minWidth: 150
+		minWidth: 150.
+	self position: 10@20
 ]
 
 { #category : #accessing }
@@ -379,7 +380,6 @@ SystemProgressMorph >> show: aString from: startNumber to: endNumber [
 SystemProgressMorph >> show: aString from: startNumber to: endNumber during: aBlock [
 
 	| progressMorph result |
-
 	self openInWorld.
 	progressMorph := self addItemShowing: aString from: startNumber to: endNumber.
 		

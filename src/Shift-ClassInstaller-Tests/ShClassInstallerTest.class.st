@@ -60,16 +60,14 @@ ShClassInstallerTest >> testChangingHierarchy [
 
 	superClass := self newClass:#ShCITestClass1 slots:#().
 	newClass := self newClass:#ShCITestClass2 superclass: superClass slots:#(aSlot).
-
 	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
 
 	superClass2 := self newClass:#ShCITestClass0 slots:#(anotherSlot).
 	superClass := self newClass:#ShCITestClass1 superclass: superClass2 slots:#().
 	
 	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
-	self assert: superClass classLayout slotScope parentScope equals: superClass2 classLayout slotScope.
-	
-	self assertCollection: (newClass allSlots collect: #name) hasSameElements: #(aSlot anotherSlot)
+	self assert: superClass classLayout slotScope parentScope equals: superClass2 classLayout slotScope.	
+	self assertCollection: (newClass allSlots collect: [:each | each name]) hasSameElements: #(aSlot anotherSlot)
 
 ]
 
@@ -221,21 +219,21 @@ ShClassInstallerTest >> testDuplicatedInstanceVariable [
 
 { #category : #tests }
 ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclass [
+	
 	superClass := self newClass: #ShCITestClass1 slots: #().
 	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #(aSlot).
 
 	[ superClass := self newClass: #ShCITestClass1 slots: #(aSlot).
 	self fail ]
 		on: DuplicatedSlotName
-		do: [ :ex | self deny: ex isResumable ].
-		
+		do: [ :ex | self deny: ex isResumable ].		
 	self deny: ((superClass slots collect: [:e | e name]) includes: 'aSlot')
 ]
 
 { #category : #tests }
 ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
-	superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #().
 	
+	superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #().
 	newClass := self 
 		newClass: #ShCITestClass2 superclass: superClass 
 		slots: #() metaclassSlots: #(aSlot).
@@ -243,8 +241,7 @@ ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
 	[ superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #(aSlot).
 	self fail ]
 		on: DuplicatedSlotName
-		do: [ :ex | self deny: ex isResumable ].
-		
+		do: [ :ex | self deny: ex isResumable ].		
 	self deny: ((superClass class slots collect: [:e | e name]) includes: 'aSlot')
 ]
 

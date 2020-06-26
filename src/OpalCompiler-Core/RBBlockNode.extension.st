@@ -1,6 +1,11 @@
 Extension { #name : #RBBlockNode }
 
 { #category : #'*OpalCompiler-Core' }
+RBBlockNode >> bcToASTCache [
+	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBBlockNode >> ir [
 
 	^ self propertyAt: #ir ifAbsent: [ self parent methodOrBlockNode ir ]
@@ -58,6 +63,6 @@ RBBlockNode >> owningScope [
 RBBlockNode >> sourceNodeForPC: anInteger [ 
 	self methodNode ir.
 	(self hasProperty: #ir) ifTrue: [ "FullBlockClosure"
-		^(self ir fullBlockInstructionForPC: anInteger) sourceNode ].
+		^ self bcToASTCache nodeForPC: anInteger].
 	^ self methodNode sourceNodeForPC: anInteger
 ]

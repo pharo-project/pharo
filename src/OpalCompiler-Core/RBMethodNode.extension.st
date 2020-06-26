@@ -2,12 +2,14 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> bcToASTCache [
-	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForMethodNode: self ]
+	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	^ self ir compiledMethod
+	compilationContext compiledMethod 
+		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
+	^compilationContext compiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }
@@ -143,7 +145,7 @@ RBMethodNode >> primitiveFromPragma [
 	pragmas ifNil: [ ^ IRPrimitive null ].
 	^ pragmas
 		detect: [ :each | each isPrimitive ]
-		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asPrimitive ]
+		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asIRPrimitive ]
 		ifNone: [ IRPrimitive null ]
 ]
 

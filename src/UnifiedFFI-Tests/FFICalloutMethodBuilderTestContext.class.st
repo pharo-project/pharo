@@ -24,6 +24,16 @@ FFICalloutMethodBuilderTestContext >> argumentNames: anObject [
 ]
 
 { #category : #accessing }
+FFICalloutMethodBuilderTestContext >> compiledCode [
+	^ self
+]
+
+{ #category : #accessing }
+FFICalloutMethodBuilderTestContext >> compiledMethod [
+	^ self
+]
+
+{ #category : #accessing }
 FFICalloutMethodBuilderTestContext >> method [
 	^ self
 ]

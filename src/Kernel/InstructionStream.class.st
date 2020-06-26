@@ -41,6 +41,11 @@ InstructionStream class >> on: method [
 	^self new method: method pc: method initialPC
 ]
 
+{ #category : #accessing }
+InstructionStream >> compiledCode [
+	^self method
+]
+
 { #category : #interpreting }
 InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB startPC: startPC [
 	"Send to the argument, client, a message that specifies the next instruction.
@@ -48,8 +53,8 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 	 For a table of the bytecode set, see EncoderForV1's class comment."
 
 	| byte method |
-	method := self method.
-	byte := self method at: pc.
+	method := self compiledCode.
+	byte := self compiledCode at: pc.
 	pc := pc + 1.
 	"We do an inline quasi-binary search on bytecode"
 	bytecode < 234 ifTrue: "pushes"
@@ -106,7 +111,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 	 For a table of the bytecode set, see EncoderForSistaV1's class comment."
 
 	| method byte2 byte3 |
-	method := self method.
+	method := self compiledCode.
 	byte2 := method at: pc.
 	byte3 := method at: pc + 1.
 	pc := pc + 2.
@@ -143,7 +148,7 @@ InstructionStream >> interpretNext3ByteSistaV1Instruction: bytecode for: client 
 InstructionStream >> interpretNextInstructionFor: client [ 
 	"Send to the argument, client, a message that specifies the type of the 
 	next instruction."
-	^ self method encoderClass interpretNextInstructionFor: client  in: self
+	^ self compiledCode encoderClass interpretNextInstructionFor: client  in: self
 ]
 
 { #category : #interpreting }
@@ -151,16 +156,16 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 	"Send to the argument, client, a message that specifies the next instruction."
 
 	| byte div16 offset method extA extB savedPC |
-	method := self method.
+	method := self compiledCode.
 	"For a table of the bytecode set, see EncoderForSistaV1's class comment."
 	"consume and compute any extensions first."
 	extA := extB := 0.
 	savedPC := pc.
-	[byte := self method at: pc.
+	[byte := self compiledCode at: pc.
 	 pc := pc + 1.
 	 byte between: 16rE0 and: 16rE1] whileTrue:
 		[| extByte |
-		 extByte := self method at: pc.
+		 extByte := self compiledCode at: pc.
 		 pc := pc + 1.
 		 byte = 16rE0
 			ifTrue:
@@ -259,7 +264,7 @@ InstructionStream >> interpretNextV3PlusClosureInstructionFor: client [
 	next instruction."
 
 	| byte type offset method |
-	method := self method.  
+	method := self compiledCode.  
 	byte := method at: pc.
 	type := byte // 16.  
 	offset := byte \\ 16.   

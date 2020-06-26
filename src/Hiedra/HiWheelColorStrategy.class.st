@@ -41,7 +41,6 @@ HiWheelColorStrategy >> colorWheel: aCollectionOfColors [
 HiWheelColorStrategy >> defaultColorWheel [
 	| referenceColor |
 	referenceColor := Smalltalk ui theme textColor.
-
 	^ (Color wheel: self defaultColorWheelSize saturation: 0.95 brightness: 0.95)
 		collect: [ :each | each mixed: 0.75 with: referenceColor ]
 ]

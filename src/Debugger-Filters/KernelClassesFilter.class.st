@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'kernelClasses'
 	],
-	#category : #'Debugger-Filters'
+	#category : #'Debugger-Filters-Base'
 }
 
 { #category : #initialization }
@@ -16,7 +16,7 @@ KernelClassesFilter >> initialize [
 	super initialize.
 	kernelClasses := self kernelClassesToExclude asOrderedCollection.
 	kernelClasses := kernelClasses 
-		addAll: (kernelClasses collect: #class);
+		addAll: (kernelClasses collect: [:each | each class]);
 		yourself
 	
 ]

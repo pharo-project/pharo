@@ -37,11 +37,9 @@ SptIteratorsTest >> testBeginsWithFilterReturnsValidResultsWithTheSameFilter [
 SptIteratorsTest >> testIteratorOnACollectedCollectionIsFiltered [
 
 	| it |
-
 	it := ((SptCollectionIterator on: #(1 2 3)) 
 		collect: [ :e | e * 2 ])
 		select: [:e | e even].
-
 	self assertCollection: (it next: 3) hasSameElements: #(2 4 6).
 
 ]
@@ -88,9 +86,7 @@ SptIteratorsTest >> testIteratorOnACollectionReturnsTheFirstValueAndSecondValue 
 SptIteratorsTest >> testIteratorOnACollectionWithCollectReturnsCorrectFirstValue [
 
 	| it |
-
 	it := (SptCollectionIterator on: #(1 2 3)) collect: [:e | e * 3].
-
 	self assert: (it next) equals: 3.
 
 ]
@@ -99,9 +95,7 @@ SptIteratorsTest >> testIteratorOnACollectionWithCollectReturnsCorrectFirstValue
 SptIteratorsTest >> testIteratorOnACollectionWithCollectReturnsCorrectValues [
 
 	| it |
-
 	it := (SptCollectionIterator on: #(1 2 3)) collect: [:e | e * 3].
-
 	self assertCollection: (it next: 3) hasSameElements: #(3 6 9).
 
 ]
@@ -110,10 +104,8 @@ SptIteratorsTest >> testIteratorOnACollectionWithCollectReturnsCorrectValues [
 SptIteratorsTest >> testIteratorOnACollectionWithTwoCollectReturnsCorrectFirstValue [
 
 	| it |
-
 	it := ((SptCollectionIterator on: #(1 2 3)) collect: [:e | e * 3]) collect: [:e | e * 2].
-
-	self assert: (it next) equals: 6.
+	self assert: it next equals: 6.
 
 ]
 
@@ -121,9 +113,7 @@ SptIteratorsTest >> testIteratorOnACollectionWithTwoCollectReturnsCorrectFirstVa
 SptIteratorsTest >> testIteratorOnACollectionWithTwoCollectReturnsCorrectValues [
 
 	| it |
-
 	it := ((SptCollectionIterator on: #(1 2 3)) collect: [:e | e * 3]) collect: [:e | e * 2].
-
 	self assertCollection: (it next: 3) hasSameElements: #(6 12 18).
 
 ]

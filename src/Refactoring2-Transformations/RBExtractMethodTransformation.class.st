@@ -38,7 +38,7 @@ RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 
 	^ ((aRBClass
 		withAllSuperclassesUntil: Object)
-		flatCollect: [ :class | class allMethods collect: #method ])
+		flatCollect: [ :class | class allMethods collect: [:each | each method] ])
 		reject: #isNil
 ]
 
@@ -288,7 +288,7 @@ RBExtractMethodTransformation >> newMethodName [
 				newAttempt := newSelector isNil.
 				
 				"it's a valid selector"
-				(newSelector isString and: [RBScanner isSelector: newSelector])
+				(newSelector isString and: [newSelector isValidSelector])
 					ifFalse: [ self inform: newSelector asString, ' is not a valid selector.'.
 								  newSelector := nil ].
 					

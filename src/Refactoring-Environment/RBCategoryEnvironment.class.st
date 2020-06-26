@@ -93,7 +93,7 @@ RBCategoryEnvironment >> isEmpty [
 
 { #category : #accessing }
 RBCategoryEnvironment >> packages [
-	^ self classes collect: #package
+	^ self classes collect: [:each | each package]
 ]
 
 { #category : #copying }

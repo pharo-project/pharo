@@ -85,8 +85,7 @@ RGEnvironment >> classNamed: aString [
 { #category : #'*Calypso-Ring' }
 RGEnvironment >> classNames [
 
-	"TODO:"
-	^ self allClasses collect: #name.
+	^ self allClasses collect: [ :each | each name ].
 ]
 
 { #category : #'*Calypso-Ring' }

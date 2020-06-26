@@ -44,7 +44,7 @@ RFSemanticAnalyzer >> analyseForLinksForNodes: aNode [
 { #category : #visiting }
 RFSemanticAnalyzer >> analyseForLinksForVariables: aVariableNode [
 	| variable generator |
-	variable := aVariableNode binding variable.
+	variable := aVariableNode binding.
 	variable hasMetalink
 		ifFalse: [ ^ self ].
 	generator := HookGeneratorForVariables entity: variable node: aVariableNode.

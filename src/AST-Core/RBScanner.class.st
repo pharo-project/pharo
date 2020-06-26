@@ -96,11 +96,10 @@ RBScanner class >> initializeUnderscore [
 
 { #category : #testing }
 RBScanner class >> isSelector: aSymbol [
-	| scanner |
-	scanner := self basicNew.
-	scanner on: (ReadStream on: aSymbol asString).
-	scanner step.
-	^ scanner isSelector
+	^ self basicNew
+		on: (ReadStream on: aSymbol asString); 
+		step;
+		isSelector
 ]
 
 { #category : #testing }
@@ -165,10 +164,8 @@ RBScanner class >> scanTokenObjects: aStringOrStream [
 { #category : #'public api' }
 RBScanner class >> scanTokens: aStringOrStream [
 	"Return the tokens (and not the scanner token objects)."
-	
-	| scanner |
-	scanner := self on: aStringOrStream readStream.
-	^scanner contents collect:[ :t | t value ]
+
+	^ (self scanTokenObjects: aStringOrStream) collect: [ :t | t value ]
 ]
 
 { #category : #testing }

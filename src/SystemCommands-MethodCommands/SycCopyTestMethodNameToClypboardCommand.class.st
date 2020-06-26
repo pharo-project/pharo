@@ -26,8 +26,6 @@ SycCopyTestMethodNameToClypboardCommand >> description [
 SycCopyTestMethodNameToClypboardCommand >> execute [
 	| text |
 	text := (methods collect: [ :each | each selector asTestSelector ]) joinUsing: String cr.
-	
 	Clipboard clipboardText: text.
-	
 	self inform: 'Copied methods:', String cr, text
 ]

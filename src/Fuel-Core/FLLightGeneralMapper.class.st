@@ -61,6 +61,14 @@ FLLightGeneralMapper >> visitClassTrait: aClassTrait [
 ]
 
 { #category : #visiting }
+FLLightGeneralMapper >> visitCompiledBlock: aCompiledBlock [
+	
+	self mapAndTraceByClusterName: aCompiledBlock to: FLCompiledBlockCluster
+	
+	
+]
+
+{ #category : #visiting }
 FLLightGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 	(aCompiledMethod isInstalled not or: [aCompiledMethod isDoIt ])
 		ifTrue: [ self mapAndTraceByClusterName: aCompiledMethod to: FLCompiledMethodCluster ]

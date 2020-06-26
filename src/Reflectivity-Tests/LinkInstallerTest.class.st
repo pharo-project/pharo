@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #running }
+LinkInstallerTest >> removeClassAccessControlForTests: anObject [
+	anObject realClass removeSelector: #class
+]
+
+{ #category : #running }
 LinkInstallerTest >> setUp [
 	super setUp.
 	Smalltalk garbageCollectMost.
@@ -225,6 +230,21 @@ LinkInstallerTest >> testLinkOnTempVarForObject [
 ]
 
 { #category : #'links - installing' }
+LinkInstallerTest >> testLinkTargetsObjectsByIdentity [
+	|link ast set|
+	link := MetaLink new metaObject: Halt; selector: #now.
+	ast := (Set >> #add:) ast.
+	
+	set := Set new.
+	set link: link toAST: ast.
+	self should:[set add: 1] raise: Halt.
+	
+	set := Set new.
+	set link: link toAST: ast.
+	self should:[set add: 1] raise: Halt.
+]
+
+{ #category : #'links - installing' }
 LinkInstallerTest >> testMetaLinkOnOneObject [
 	"Only one metalink for on object of a particular class. Other instances of this class must remain unaffected."
 
@@ -258,7 +278,8 @@ LinkInstallerTest >> testMetaLinkWithAnonymousClasses [
 	"We just need to link a MetaLink to an object"
 	metalink := MetaLink new.
 	(obj1 class >> #exampleMethod) ast link: metalink forObject: obj1.
-
+	self removeClassAccessControlForTests: obj1.
+	
 	"One of the 2 objects must have migrated to another class"
 	self assert: obj1 class ~= obj2 class.
 	self assert: obj1 class superclass identicalTo: ReflectivityExamples.
@@ -282,6 +303,7 @@ LinkInstallerTest >> testMethodModified [
 	"Putting a link on a random node should migrate the object to an anonymous subclass"
 	metalink := MetaLink new.
 	node link: metalink forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 	self assert: obj1 class isAnonymous.
 
 	"Modifyinh the original method should remove all object specific links and
@@ -305,6 +327,7 @@ LinkInstallerTest >> testMethodRemoved [
 	"Putting a link on a random node should migrate the object to an anonymous subclass"
 	metalink := MetaLink new.
 	node link: metalink forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 	self assert: obj1 class isAnonymous.
 
 	"Removing the original method should remove all object specific links and
@@ -360,6 +383,21 @@ LinkInstallerTest >> testNodesRemovedFromLinkWhenMethodRemovedFromObject [
 
 	
 	
+]
+
+{ #category : #'links - installing' }
+LinkInstallerTest >> testObjectsAreWeakReferenced [
+
+	| metalink weakArray |
+	metalink := MetaLink new.
+	(obj1 class >> #exampleMethod) ast link: metalink forObject: obj1.
+	weakArray := WeakArray with: obj1.
+	
+	self assert: weakArray first identicalTo: obj1.
+	obj1 := nil.
+	Smalltalk garbageCollect.	
+	self assert: weakArray first equals: nil
+
 ]
 
 { #category : #'links - installing' }
@@ -468,6 +506,7 @@ LinkInstallerTest >> testPropagateClassScopedLinks [
 	
 	metalink2 := MetaLink new.
 	node link: metalink2 forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 	
 	anonNode := metalink linkInstaller findSubNode: node in: (obj1 class >> #exampleIfTrueIfFalse) ast.
 	
@@ -638,11 +677,12 @@ LinkInstallerTest >> testRemovingMethodNodes [
 	
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast link: metalink forObject: obj1.
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren last link: metalink2 forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 	
 	node1 := (ReflectivityExamples >> #exampleIfTrueIfFalse)ast.
 	node2 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren last.
 	
-	node1 removeLink: metalink forObject: obj1.
+	node1 removeLink: metalink forObject: obj1.	
 	self assert: obj1 class isAnonymous.
 	
 	node2 removeLink: metalink2 forObject: obj1.
@@ -658,6 +698,7 @@ LinkInstallerTest >> testRemovingNodeFromObject [
 	(obj1 class lookupSelector: #exampleMethod) ast link: metalink forObject: obj1.
 	metalink2 := MetaLink new.
 	(obj1 class lookupSelector: #exampleSendNoReturn) ast link: metalink2 forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 
 	"The two nodes must now exist in the anon subclass"
 	self shouldnt: [ obj1 class >> #exampleSendNoReturn ] raise: KeyNotFound.
@@ -678,6 +719,7 @@ LinkInstallerTest >> testRemovingNodes [
 	
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren first link: metalink forObject: obj1.
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren fourth link: metalink2 forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 	
 	node1 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren first.
 	node2 := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast allChildren fourth.
@@ -696,6 +738,7 @@ LinkInstallerTest >> testRemovingNodesWithSuper [
 	node := (ReflectivityExamples2Subclass >> #methodWithOverrides) ast.
 	link := MetaLink new.
 	node link: link forObject: obj.
+	self removeClassAccessControlForTests: obj.
 	self assert: obj class isAnonymous.
 	node removeLink: link forObject: obj.
 	self deny: obj class isAnonymous
@@ -853,6 +896,7 @@ LinkInstallerTest >> testUninstallLinkFromNode [
 	
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast link: metalink.
 	(ReflectivityExamples >> #exampleIfTrueIfFalse) ast link: metalink forObject: obj1.
+	self removeClassAccessControlForTests: obj1.
 	
 	node := (ReflectivityExamples >> #exampleIfTrueIfFalse) ast.
 	self assert: obj1 class isAnonymous.

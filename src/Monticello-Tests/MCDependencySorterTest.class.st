@@ -16,6 +16,7 @@ MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: m
 
 { #category : #asserting }
 MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: missingDeps toLoad: unloadableItems extraProvisions: provisions [
+
 	| order sorter items missing unloadable |
 	items := anArray collect: [ :ea | self itemWithSpec: ea ].
 	sorter := MCDependencySorter items: items.

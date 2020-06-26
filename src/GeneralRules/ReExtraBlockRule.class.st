@@ -25,7 +25,10 @@ ReExtraBlockRule >> basicCheck: node [
 
 { #category : #enumerating }
 ReExtraBlockRule >> blockEvaluatingMessages [
-	^ #(#value #value: #value:value: #value:value:value: #valueWithArguments:)
+	^ #(value 
+	value: value:value: value:value:value: value:value:value:value:
+	cull: cull:cull: cull:cull:cull: cull:cull:cull:cull:
+	#valueWithArguments: valueWithPossibleArgs: valueWithPossibleArgument)
 ]
 
 { #category : #accessing }

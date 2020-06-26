@@ -56,6 +56,7 @@ CPUWatcher class >> currentWatcherProcess [
 
 { #category : #monitoring }
 CPUWatcher class >> dumpTallyOnTranscript [
+	<script>
 	self current ifNotNil: [
 		self processBrowser dumpTallyOnTranscript: self current tally
 	]
@@ -90,6 +91,11 @@ CPUWatcher class >> pigFinding [
 CPUWatcher class >> pigFinding: aBoolean [
 	PigFinding := aBoolean.
 
+]
+
+{ #category : #accessing }
+CPUWatcher class >> processBrowser [
+	^ Smalltalk tools processBrowser
 ]
 
 { #category : #'system startup' }
@@ -241,7 +247,7 @@ CPUWatcher >> openWindowForSuspendedProcess: aProcess [
 
 { #category : #accessing }
 CPUWatcher >> processBrowser [
-	^ Smalltalk tools processBrowser
+	^ self class processBrowser
 ]
 
 { #category : #'process operations' }

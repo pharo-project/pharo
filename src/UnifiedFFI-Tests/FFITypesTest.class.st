@@ -148,6 +148,15 @@ FFITypesTest >> testSignedAtWithDiferentSizes [
 ]
 
 { #category : #tests }
+FFITypesTest >> testSignedByteAtPutIntegers [
+	self signed1ByteNumbers do: [ :int |
+		|ref|
+		ref := ByteArray new: 1.
+		ref signedByteAt: 1 put: int.
+		self assert: (ref signedByteAt: 1) equals: int ]
+]
+
+{ #category : #tests }
 FFITypesTest >> testSignedLong [
 	self signed4ByteNumbers do: [ :int |
 		|ref|
@@ -163,6 +172,15 @@ FFITypesTest >> testSignedLongLong [
 		ref := ByteArray new: FFIInt64 externalTypeSize.
 		ref signedLongLongAt: 1 put: int.
 		self assert: (ref signedLongLongAt: 1) equals: int ]
+]
+
+{ #category : #tests }
+FFITypesTest >> testSignedShortAtPutIntegers [
+	self signed2ByteNumbers do: [ :int |
+		|ref|
+		ref := ByteArray new: 2.
+		ref signedShortAt: 1 put: int.
+		self assert: (ref signedShortAt: 1) equals: int ]
 ]
 
 { #category : #tests }
@@ -193,6 +211,15 @@ FFITypesTest >> testUnsigned4ByteIntegers [
 ]
 
 { #category : #tests }
+FFITypesTest >> testUnsignedByteAtPutIntegers [
+	self unsigned1ByteNumbers do: [ :int |
+		|ref|
+		ref := ByteArray new: 1.
+		ref unsignedByteAt: 1 put: int.
+		self assert: (ref unsignedByteAt: 1) equals: int ]
+]
+
+{ #category : #tests }
 FFITypesTest >> testUnsignedLong [
 	self unsigned4ByteNumbers do: [ :int |
 		|ref|
@@ -208,6 +235,15 @@ FFITypesTest >> testUnsignedLongLong [
 		ref := ByteArray new: FFIUInt64 externalTypeSize.
 		ref unsignedLongLongAt: 1 put: int.
 		self assert: (ref unsignedLongLongAt: 1) equals: int ]
+]
+
+{ #category : #tests }
+FFITypesTest >> testUnsignedShortAtPutIntegers [
+	self unsigned2ByteNumbers do: [ :int |
+		|ref|
+		ref := ByteArray new: 2.
+		ref unsignedShortAt: 1 put: int.
+		self assert: (ref unsignedShortAt: 1) equals: int ]
 ]
 
 { #category : #ranges }

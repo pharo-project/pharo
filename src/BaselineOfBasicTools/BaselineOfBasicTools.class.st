@@ -44,6 +44,7 @@ BaselineOfBasicTools >> baseline: spec [
 				repository: repository ].
 		spec
 			baseline: 'UI' with: [ spec repository: repository ];
+			baseline: 'Reflectivity' with: [ spec repository: repository ];
 			baseline: 'Athens' with: [ 
 				spec
 					loads: 'Cairo-core';
@@ -64,6 +65,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Tool-SystemReporter'.
 		spec package: 'NECompletion'.
 		spec package: 'NECompletion-Morphic'.
+		spec package: 'NECompletion-Preferences'.
 		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.

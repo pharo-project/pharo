@@ -13,6 +13,54 @@ SmallIntegerTest >> testBasicNew [
 	self should: [SmallInteger basicNew] raise: self defaultTestError. 
 ]
 
+{ #category : #'tests - operations' }
+SmallIntegerTest >> testBitAnd [
+	| onezero zeroone ones |
+	onezero := 2r1010101.
+	zeroone := 2r0101010.
+	ones    := 2r1111111.
+	 
+	self assert: (onezero bitAnd: ones)    equals: onezero.
+	self assert: (onezero bitAnd: zeroone) equals: 0.
+	self assert: (onezero bitAnd: onezero) equals: onezero.
+	self assert: (onezero bitAnd: 0)       equals: 0.
+]
+
+{ #category : #'tests - operations' }
+SmallIntegerTest >> testBitOr [
+	| onezero zeroone ones |
+	onezero := 2r1010101.
+	zeroone := 2r0101010.
+	ones    := 2r1111111.
+	
+	self assert: (onezero bitOr: ones)    equals: ones.
+	self assert: (onezero bitOr: zeroone) equals: ones.
+	self assert: (onezero bitOr: onezero) equals: onezero.
+	self assert: (onezero bitOr: 0)       equals: onezero.
+]
+
+{ #category : #'tests - operations' }
+SmallIntegerTest >> testBitShift [
+	 
+	self assert: (2r11 bitShift: 1) equals: 2r110.
+	self assert: (2r11 bitShift: -1) equals: 2r1.
+	self assert: (2r1011 bitShift: 2) equals: 2r101100.
+	self assert: (2r1011 bitShift: -2) equals: 2r10.
+	self assert: (2r11 bitShift: -2) equals: 0
+]
+
+{ #category : #'tests - operations' }
+SmallIntegerTest >> testBitXOr [
+	| onezero zeroone ones |
+	onezero := 2r1010101.
+	zeroone := 2r0101010.
+	ones    := 2r1111111.
+	self assert: (onezero bitXor: ones)    equals: zeroone.
+	self assert: (onezero bitXor: zeroone) equals: ones.
+	self assert: (onezero bitXor: onezero) equals: 0.
+	self assert: (onezero bitXor: 0)       equals: onezero.
+]
+
 { #category : #'tests - Class Methods' }
 SmallIntegerTest >> testByteAt [
 
@@ -37,6 +85,19 @@ SmallIntegerTest >> testDivide [
 	self assert: (3 / 2) isFraction.
 	self assert: 4 / 2 equals: 2.
 	self should: [ 1 / 0 ] raise: ZeroDivide
+]
+
+{ #category : #'tests - operations' }
+SmallIntegerTest >> testGcd [
+	
+	"trick case: a = b"
+ 	self assert: (13 gcd: 13) equals: 13.
+	"receiver is a prime"
+	self assert: (37 gcd: 600) equals: 1.
+	"one is multiplum of other"
+	self assert: (20 gcd: 100) equals: 20. 
+	"straight case"
+   self assert: (624129 gcd: 2061517) equals: 18913
 ]
 
 { #category : #'tests - other' }
@@ -101,4 +162,14 @@ SmallIntegerTest >> testPrintString [
 		ifTrue: [ self assert: SmallInteger maxVal decimalDigitLength equals: 10 ].
 	Smalltalk vm wordSize = 8
 		ifTrue: [ self assert: SmallInteger maxVal decimalDigitLength equals: 19 ].
+]
+
+{ #category : #tests }
+SmallIntegerTest >> testQuo [
+	self should: [ 1 quo: 0] raise: ZeroDivide.
+	self assert: ( 1 quo: 2) equals:  0.
+	self assert: ( 4 quo: 2) equals:  2.
+	self assert: (-4 quo: 2) equals: -2.
+	self assert: (-5 quo: 2) equals: -2.
+	self assert: ( 5 quo: 2) equals:  2
 ]

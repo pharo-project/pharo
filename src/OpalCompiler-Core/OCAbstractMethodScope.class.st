@@ -120,9 +120,7 @@ OCAbstractMethodScope >> initialize [
 	copiedVars := Dictionary new.
 	id := 0.
 	
-	thisContextVar := OCThisContextVariable new
-		scope: self; yourself.
-
+	thisContextVar := ThisContextVariable instance
 ]
 
 { #category : #'temp vars' }
@@ -282,5 +280,8 @@ OCAbstractMethodScope >> tempVectorVar [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVarNames [
-	^ tempVector collect: [:each| each name] as: Array
+	"As other users are taking the values directly from the tempVector Dictionary, 
+	it is important that the collect is performed like this. As in this way it has always the order dependending on the hash of the String (that is constant). 
+	If done with collect:as: it has the order of the Dictionary that is almost random (changes from image run to image run)"
+	^ (self tempVector collect: [:each| each name]) asArray
 ]

@@ -21,6 +21,7 @@ Class {
 		'class',
 		'logged',
 		'interactive',
+		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -383,6 +384,16 @@ CompilationContext >> class: anObject [
 ]
 
 { #category : #accessing }
+CompilationContext >> compiledMethod [
+	^ compiledMethod
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethod: anObject [
+	compiledMethod := anObject
+]
+
+{ #category : #accessing }
 CompilationContext >> compiledMethodTrailer [
 	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
 ]
@@ -395,15 +406,6 @@ CompilationContext >> compiledMethodTrailer: anObject [
 { #category : #options }
 CompilationContext >> compilerOptions: anArray [
 	self parseOptions: anArray
-]
-
-{ #category : #options }
-CompilationContext >> doesNotUnderstand: message [
-
-	(message selector isUnary and: [ message selector beginsWith: 'opt'] )
-		ifTrue: [ ^ options includes: message selector ].
-		
-	^ super doesNotUnderstand: message
 ]
 
 { #category : #accessing }

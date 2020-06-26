@@ -103,10 +103,10 @@ RBProgramNode >> hasMetalinkInstead [
 ]
 
 { #category : #'*Reflectivity' }
-RBProgramNode >> hasWatchpoint [
+RBProgramNode >> hasWatch [
 	
 	self hasMetalinkAfter ifFalse: [ ^false ].
-	^self afterLinks anySatisfy: [ :link | link metaObject class = Watchpoint ]
+	^self afterLinks anySatisfy: [ :link | link metaObject class = Watch ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -201,8 +201,8 @@ RBProgramNode >> tagExecuted [
 ]
 
 { #category : #'*Reflectivity' }
-RBProgramNode >> watchpoint [
+RBProgramNode >> watch [
 	
-	self hasWatchpoint ifFalse:[^nil].
-	^(self afterLinks detect: [ :link | link metaObject class = Watchpoint ]) metaObject
+	self hasWatch ifFalse:[^nil].
+	^(self afterLinks detect: [ :link | link metaObject class = Watch ]) metaObject
 ]
