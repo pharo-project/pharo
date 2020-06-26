@@ -4,6 +4,18 @@ Class {
 	#category : #'TaskIt-Tests-Worker'
 }
 
+{ #category : #testing }
+TKTCommonQueueWorkerPoolTests >> expectedFailures [
+
+	"This tests fail on P7"
+	SystemVersion current major <= 7 ifTrue: [ 
+		^ #(
+		testWorkerPoolWorkersAreStoppedAfterPoolsCollection
+		testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection
+		) ].
+	^ #()
+]
+
 { #category : #tests }
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |
@@ -58,8 +70,8 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
-	<expectedFailure>
 	| pool workerProcess |
+
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'test pool' , UUID new asString.
 	pool poolMaxSize: 4.
@@ -75,8 +87,8 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollec
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
-	<expectedFailure>
 	| pool workerProcess |
+
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'Test pool' , UUID new asString.
 	pool poolMaxSize: 4.
