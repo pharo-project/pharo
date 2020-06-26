@@ -32,7 +32,9 @@ ClyTestEditorTool class >> selector [
 { #category : #testing }
 ClyTestEditorTool class >> shouldBeActivatedInContext: aBrowserContext [
 
+	"This is a hack to make sure that this method is not called for the abstract class ClyTestEditorTool but only for its subclasses"
 	ClyTestEditorTool = self ifTrue: [ ^ false ].
+	
 	aBrowserContext isClassSelected ifFalse: [ ^false ].
 	
 	(aBrowserContext lastSelectedItem hasProperty: ClyTestResultProperty) ifFalse: [ ^false ].
