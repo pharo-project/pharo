@@ -72,7 +72,7 @@ TKTWorker >> exceptionHandler: aHandler [
 	process ifNotNil: [ process exceptionHandler: aHandler ]
 ]
 
-{ #category : #initialization }
+{ #category : #finalization }
 TKTWorker >> finalize [
 	TKTConfiguration watchDog stopWatching: self.
 	self
