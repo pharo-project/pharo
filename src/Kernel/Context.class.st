@@ -2167,6 +2167,22 @@ Context >> unwindComplete: aBoolean [
 ]
 
 { #category : #'private-exceptions' }
+Context >> unwindForTermination [
+	"Unwind to execute pending ensure:/ifCurtailed: blocks before terminating active process.
+	It assumes that self belongs to the active process. "
+	| unwindContext unwindBlock |
+	unwindContext := self.
+	[ unwindContext := unwindContext findNextUnwindContextUpTo: nil.
+	unwindContext isNil ] whileFalse: [ 
+		unwindContext unwindComplete ifNil: [ 
+			"N.B. Unlike Context>>unwindTo: we do not set complete (tempAt: 2) to true."
+			unwindBlock := unwindContext unwindBlock.
+			self terminateTo: unwindContext.
+			unwindBlock value ]].
+	self terminateTo: nil
+]
+
+{ #category : #'private-exceptions' }
 Context >> unwindTo: aContext [
 
 	| context unwindBlock |
