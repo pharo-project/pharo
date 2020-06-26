@@ -17,7 +17,7 @@ Class {
 { #category : #testing }
 Win32Platform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
-	^ self currentPlatformName = 'Win32'
+	^ (self currentPlatformName = 'windows_api') and: [ Smalltalk vm wordSize = 4 ]
 ]
 
 { #category : #visiting }

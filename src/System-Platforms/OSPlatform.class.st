@@ -25,9 +25,17 @@ OSPlatform class >> current [
 
 { #category : #'system attributes' }
 OSPlatform class >> currentPlatformName [
-	"Return the name of the platform we're running on"
+    "Historically 'win32' was the API used by even 64-bit Microsoft Windows applications.
+     Later Microsoft renamed this API to the more generic 'Windows API'.  
+     To ease backward compatibility of VM, the correction is encapsulated here in-Image." 
 
-	^ Smalltalk vm getSystemAttribute: 1001
+    |platform|
+    platform := Smalltalk vm getSystemAttribute: 1001.
+    platform = 'win32' ifTrue: [ ^ 'windows_api' ].
+    ^ platform
+
+    "For more information refer to...
+       https://github.com/pharo-project/pharo/issues/2246#issuecomment-602546482"
 ]
 
 { #category : #'system attributes' }
