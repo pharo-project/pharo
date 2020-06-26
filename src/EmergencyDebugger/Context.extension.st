@@ -6,7 +6,10 @@ Context >> printWithArgsValueOn: aStream [
 	aStream << self method methodClass name.
 	aStream << '>>'.
 	self method numArgs = 0
-		ifTrue: [ aStream << self method name.
+		ifTrue: [ 
+			"If self method is a compiled block, we ask its method.
+			The method of a method is the method itself."
+			aStream << self method method name.
 			^ self ].
 	keywords := self method selector keywords.
 	1 to: keywords size do: [ :i | 
