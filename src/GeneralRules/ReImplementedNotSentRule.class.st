@@ -43,12 +43,6 @@ ReImplementedNotSentRule class >> cleanUp [
 	self reset
 ]
 
-{ #category : #accessing }
-ReImplementedNotSentRule class >> enabled [
-	"turned off as it is too slow"
-	^false
-]
-
 { #category : #initialization }
 ReImplementedNotSentRule class >> initialize [
 	self reset.
