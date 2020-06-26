@@ -852,17 +852,6 @@ Behavior >> hasSelectorReferringTo: literal [
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
 ]
 
-{ #category : #testing }
-Behavior >> hasSpecificLayout [
-	"Return true whether the receiver has a layout that is not a fixed one (which is the default linear layout for default classes."
-	"Point hasSpecificLayout >>> false"
-	"Array hasSpecificLayout >>> true"
-	
-	^ self classLayout isFixedLayout not
-	
-
-]
-
 { #category : #'testing class hierarchy' }
 Behavior >> includesBehavior: aClass [
 	
