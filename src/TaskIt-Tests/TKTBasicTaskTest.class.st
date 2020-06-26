@@ -1,11 +1,11 @@
 Class {
-	#name : #TKTBasicTaskTests,
+	#name : #TKTBasicTaskTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Kernel'
 }
 
 { #category : #tests }
-TKTBasicTaskTests >> testFutureExecutes [
+TKTBasicTaskTest >> testFutureExecutes [
 
 	| done sema |
 	done := false.
@@ -20,14 +20,14 @@ TKTBasicTaskTests >> testFutureExecutes [
 ]
 
 { #category : #tests }
-TKTBasicTaskTests >> testFutureExecutesByDefaultInGlobalWorkerPool [
+TKTBasicTaskTest >> testFutureExecutesByDefaultInGlobalWorkerPool [
 	| future |
 	future := [ TKTConfiguration runner ] future.
 	self assert: (future synchronizeTimeout: 1 second) equals: TKTConfiguration runner
 ]
 
 { #category : #tests }
-TKTBasicTaskTests >> testFutureExecutesConcurrently [
+TKTBasicTaskTest >> testFutureExecutesConcurrently [
 	| results future1 future2 |
 	results := OrderedCollection new.
 	future1 := [ 100 milliSeconds wait.
@@ -42,7 +42,7 @@ TKTBasicTaskTests >> testFutureExecutesConcurrently [
 ]
 
 { #category : #tests }
-TKTBasicTaskTests >> testFutureReturnsAssociatedFutureObject [
+TKTBasicTaskTest >> testFutureReturnsAssociatedFutureObject [
 	| done sema |
 	done := false.
 	sema := Semaphore new.
@@ -53,7 +53,7 @@ TKTBasicTaskTests >> testFutureReturnsAssociatedFutureObject [
 ]
 
 { #category : #tests }
-TKTBasicTaskTests >> testFutureWithFutureInsideSchedulesOk [
+TKTBasicTaskTest >> testFutureWithFutureInsideSchedulesOk [
 
 	| future |
 
@@ -63,7 +63,7 @@ TKTBasicTaskTests >> testFutureWithFutureInsideSchedulesOk [
 ]
 
 { #category : #tests }
-TKTBasicTaskTests >> testScheduleExecutes [
+TKTBasicTaskTest >> testScheduleExecutes [
 	| done sema |
 	done := false.
 	sema := Semaphore new.

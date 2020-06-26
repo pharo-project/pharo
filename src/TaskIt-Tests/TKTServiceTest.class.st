@@ -1,5 +1,5 @@
 Class {
-	#name : #TKTServiceTests,
+	#name : #TKTServiceTest,
 	#superclass : #TKTTestCase,
 	#instVars : [
 		'service'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #tests }
-TKTServiceTests >> tearDown [
+TKTServiceTest >> tearDown [
 
 	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
@@ -16,7 +16,7 @@ TKTServiceTests >> tearDown [
 ]
 
 { #category : #tests }
-TKTServiceTests >> testPrioritySetAfterStart [
+TKTServiceTest >> testPrioritySetAfterStart [
 	|newPriority|
 	service := TKTParameterizableService new.
 	service name: 'test service'.
@@ -30,7 +30,7 @@ TKTServiceTests >> testPrioritySetAfterStart [
 ]
 
 { #category : #tests }
-TKTServiceTests >> testPrioritySetBeforeStart [
+TKTServiceTest >> testPrioritySetBeforeStart [
 	|initialPriority|
 	service := TKTParameterizableService new.
 	service name: 'test service'.
@@ -43,7 +43,7 @@ TKTServiceTests >> testPrioritySetBeforeStart [
 ]
 
 { #category : #tests }
-TKTServiceTests >> testServiceIsKilledAfterStop [
+TKTServiceTest >> testServiceIsKilledAfterStop [
 
 	service := TKTParameterizableService new.
 	service name: 'test service'.
@@ -54,7 +54,7 @@ TKTServiceTests >> testServiceIsKilledAfterStop [
 ]
 
 { #category : #tests }
-TKTServiceTests >> testServiceShouldHaveAName [
+TKTServiceTest >> testServiceShouldHaveAName [
 
 	self should: [TKTService new start] raise: Error
 ]

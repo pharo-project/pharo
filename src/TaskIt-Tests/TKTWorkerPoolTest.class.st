@@ -1,11 +1,11 @@
 Class {
-	#name : #TKTWorkerPoolTests,
+	#name : #TKTWorkerPoolTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Worker'
 }
 
 { #category : #tests }
-TKTWorkerPoolTests >> testPriorityAfterStart [
+TKTWorkerPoolTest >> testPriorityAfterStart [
 	| pool workerProcess newPriority doneSemaphore|
 	newPriority := 32.
 	pool := TKTWorkerPool new.
@@ -25,7 +25,7 @@ TKTWorkerPoolTests >> testPriorityAfterStart [
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testPrioritySetBeforeStart [
+TKTWorkerPoolTest >> testPrioritySetBeforeStart [
 	| pool workerProcess initialPriority doneSemaphore |
 	initialPriority := 32.
 	pool := TKTWorkerPool new.
@@ -45,7 +45,7 @@ TKTWorkerPoolTests >> testPrioritySetBeforeStart [
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolCretesWorkersWhenExecutingATask [
+TKTWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |
 	pool := TKTWorkerPool new.
 	pool name: 'test pool'.
@@ -56,7 +56,7 @@ TKTWorkerPoolTests >> testWorkerPoolCretesWorkersWhenExecutingATask [
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSize [
+TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	| pool |
 	pool := TKTWorkerPool new.
 	pool poolMaxSize: 4.
@@ -67,7 +67,7 @@ TKTWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSize [
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
+TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
 
 	| pool totalTasks futures |
 	pool := TKTWorkerPool new.
@@ -88,7 +88,7 @@ TKTWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInPa
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
+TKTWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 
 	| pool |
 	pool := TKTWorkerPool new.
@@ -104,7 +104,7 @@ TKTWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
+TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
@@ -126,7 +126,7 @@ TKTWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
+TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
 	pool name: 'test pool'.
@@ -145,7 +145,7 @@ TKTWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollecti
 ]
 
 { #category : #tests }
-TKTWorkerPoolTests >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
+TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
 	pool name: 'Test pool'.

@@ -1,11 +1,11 @@
 Class {
-	#name : #TKTServiceManagerTests,
+	#name : #TKTServiceManagerTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Services'
 }
 
 { #category : #'as yet unclassified' }
-TKTServiceManagerTests >> testCannotStartTwoServicesWithSameName [
+TKTServiceManagerTest >> testCannotStartTwoServicesWithSameName [
 	| executed service newService |
 	executed := 0.
 	[ service := TKTParameterizableService new.
@@ -22,7 +22,7 @@ TKTServiceManagerTests >> testCannotStartTwoServicesWithSameName [
 ]
 
 { #category : #tests }
-TKTServiceManagerTests >> testServiceIsExecutedMultipleTimes [
+TKTServiceManagerTest >> testServiceIsExecutedMultipleTimes [
 
 	| executed service |
 	executed := 0.
@@ -40,7 +40,7 @@ TKTServiceManagerTests >> testServiceIsExecutedMultipleTimes [
 ]
 
 { #category : #'as yet unclassified' }
-TKTServiceManagerTests >> testStopServiceStopsUnderlyingWorker [
+TKTServiceManagerTest >> testStopServiceStopsUnderlyingWorker [
 
 	| executed service |
 	executed := 0.

@@ -1,17 +1,17 @@
 Class {
-	#name : #TKTFutureTests,
+	#name : #TKTFutureTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Futures'
 }
 
-{ #category : #initialization }
-TKTFutureTests >> setUp [
+{ #category : #running }
+TKTFutureTest >> setUp [
 	super setUp.
 	TKTConfiguration runner reset
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testCannotDeployFailureTwiceIntoFuture [
+TKTFutureTest >> testCannotDeployFailureTwiceIntoFuture [
 
 	| future |
 	future := TKTFuture new.
@@ -20,7 +20,7 @@ TKTFutureTests >> testCannotDeployFailureTwiceIntoFuture [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testCannotDeployTwiceIntoFuture [
+TKTFutureTest >> testCannotDeployTwiceIntoFuture [
 
 	| future |
 	future := TKTFuture new.
@@ -29,7 +29,7 @@ TKTFutureTests >> testCannotDeployTwiceIntoFuture [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureAndThenExecutesInOrder [
+TKTFutureTest >> testFutureAndThenExecutesInOrder [
 
 	| future collection |
 	future := TKTFuture new.
@@ -47,7 +47,7 @@ TKTFutureTests >> testFutureAndThenExecutesInOrder [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureAndThenFailsIfFirstFails [
+TKTFutureTest >> testFutureAndThenFailsIfFirstFails [
 	| future collection thenFuture got error |
 	future := TKTFuture new.
 	collection := OrderedCollection new.
@@ -65,7 +65,7 @@ TKTFutureTests >> testFutureAndThenFailsIfFirstFails [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureAndThenSuccessIfAndThenFails [
+TKTFutureTest >> testFutureAndThenSuccessIfAndThenFails [
 
 	| future collection thenFuture got |
 	future := TKTFuture new.
@@ -85,7 +85,7 @@ TKTFutureTests >> testFutureAndThenSuccessIfAndThenFails [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureAndThenThenFailuresAreJustSkipped [
+TKTFutureTest >> testFutureAndThenThenFailuresAreJustSkipped [
 
 	| future collection thenFuture |
 	future := TKTFuture new.
@@ -103,7 +103,7 @@ TKTFutureTests >> testFutureAndThenThenFailuresAreJustSkipped [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureCollectFailsOnFailingMapFunction [
+TKTFutureTest >> testFutureCollectFailsOnFailingMapFunction [
 	| future got error |
 	future := TKTFuture new.
 	error := Error new.
@@ -114,7 +114,7 @@ TKTFutureTests >> testFutureCollectFailsOnFailingMapFunction [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureCollectFailsOnFailure [
+TKTFutureTest >> testFutureCollectFailsOnFailure [
 	| future got error |
 	future := TKTFuture new.
 	(future collect: [ :v | v * 5 ]) onFailureDo: [ :v | got := v ].
@@ -127,7 +127,7 @@ TKTFutureTests >> testFutureCollectFailsOnFailure [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureCollectSuccessOnSuccess [
+TKTFutureTest >> testFutureCollectSuccessOnSuccess [
 
 	| future got |
 	future := TKTFuture new.	
@@ -141,7 +141,7 @@ TKTFutureTests >> testFutureCollectSuccessOnSuccess [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureExecutesInNewProcessRunner [
+TKTFutureTest >> testFutureExecutesInNewProcessRunner [
 	| runner future currentRunner |
 	runner := TKTNewProcessTaskRunner new.
 	future := runner future: [ currentRunner := TKTConfiguration runner ].
@@ -150,7 +150,7 @@ TKTFutureTests >> testFutureExecutesInNewProcessRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureExecutesInSameLocalProcessRunner [
+TKTFutureTest >> testFutureExecutesInSameLocalProcessRunner [
 
 	| runner future currentRunner |
 	runner := TKTLocalProcessTaskRunner new.
@@ -161,7 +161,7 @@ TKTFutureTests >> testFutureExecutesInSameLocalProcessRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureFailureCallbackExecutesInSameLocalProcessRunner [
+TKTFutureTest >> testFutureFailureCallbackExecutesInSameLocalProcessRunner [
 	| runner future currentRunner |
 	runner := TKTLocalProcessTaskRunner new.
 	future := runner future: [ Error signal ].
@@ -172,7 +172,7 @@ TKTFutureTests >> testFutureFailureCallbackExecutesInSameLocalProcessRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureFailureCallbackExecutesInSameNewProcessRunner [
+TKTFutureTest >> testFutureFailureCallbackExecutesInSameNewProcessRunner [
 	| runner future currentRunner |
 	runner := TKTNewProcessTaskRunner new.
 	future := runner future: [ Error signal ].
@@ -183,7 +183,7 @@ TKTFutureTests >> testFutureFailureCallbackExecutesInSameNewProcessRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureFailureCallbackExecutesInSameWorker [
+TKTFutureTest >> testFutureFailureCallbackExecutesInSameWorker [
 	| runner future currentRunner |
 	runner := TKTWorker new start.
 	future := runner future: [ Error signal ].
@@ -194,7 +194,7 @@ TKTFutureTests >> testFutureFailureCallbackExecutesInSameWorker [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureFailureCallbackIsCalledAfterFailureIsDeployed [
+TKTFutureTest >> testFutureFailureCallbackIsCalledAfterFailureIsDeployed [
 
 	| future got deployedError |
 	future := TKTFuture new.	
@@ -208,7 +208,7 @@ TKTFutureTests >> testFutureFailureCallbackIsCalledAfterFailureIsDeployed [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureFailureCallbackIsCalledIfFailureWasAlreadyDeployed [
+TKTFutureTest >> testFutureFailureCallbackIsCalledIfFailureWasAlreadyDeployed [
 
 	| future got deployedError |
 	future := TKTFuture new.
@@ -222,7 +222,7 @@ TKTFutureTests >> testFutureFailureCallbackIsCalledIfFailureWasAlreadyDeployed [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFallbackToFailsIfBothFail [
+TKTFutureTest >> testFutureFallbackToFailsIfBothFail [
 	| future got fallbackFuture error |
 	future := TKTFuture new.
 	fallbackFuture := TKTFuture new.
@@ -237,7 +237,7 @@ TKTFutureTests >> testFutureFallbackToFailsIfBothFail [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFallbackToHasFirstValueIfFirstSuccess [
+TKTFutureTest >> testFutureFallbackToHasFirstValueIfFirstSuccess [
 
 	| future got fallbackFuture |
 	future := TKTFuture new.
@@ -252,7 +252,7 @@ TKTFutureTests >> testFutureFallbackToHasFirstValueIfFirstSuccess [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFallbackToHasSecondValueIfFirstFailsAndSecondSuccess [
+TKTFutureTest >> testFutureFallbackToHasSecondValueIfFirstFailsAndSecondSuccess [
 
 	| future got fallbackFuture |
 	future := TKTFuture new.
@@ -268,7 +268,7 @@ TKTFutureTests >> testFutureFallbackToHasSecondValueIfFirstFailsAndSecondSuccess
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFirstCompleteOfFailsIfFirstFailsFaster [
+TKTFutureTest >> testFutureFirstCompleteOfFailsIfFirstFailsFaster [
 
 	| future got secondFuture error |
 	future := TKTFuture new.
@@ -287,7 +287,7 @@ TKTFutureTests >> testFutureFirstCompleteOfFailsIfFirstFailsFaster [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFirstCompleteOfFailsIfSecondFailsFaster [
+TKTFutureTest >> testFutureFirstCompleteOfFailsIfSecondFailsFaster [
 
 	| future got secondFuture error |
 	future := TKTFuture new.
@@ -306,7 +306,7 @@ TKTFutureTests >> testFutureFirstCompleteOfFailsIfSecondFailsFaster [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFirstCompleteOfSuccessIfFirstSuccessFaster [
+TKTFutureTest >> testFutureFirstCompleteOfSuccessIfFirstSuccessFaster [
 	| future got secondFuture error |
 	future := TKTFuture new.
 	secondFuture := TKTFuture new.
@@ -321,7 +321,7 @@ TKTFutureTests >> testFutureFirstCompleteOfSuccessIfFirstSuccessFaster [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFirstCompleteOfSuccessIfSecondSuccessFaster [
+TKTFutureTest >> testFutureFirstCompleteOfSuccessIfSecondSuccessFaster [
 
 	| future got secondFuture |
 	future := TKTFuture new.
@@ -337,7 +337,7 @@ TKTFutureTests >> testFutureFirstCompleteOfSuccessIfSecondSuccessFaster [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFlatCollectFailsOnFailingMapFunction [
+TKTFutureTest >> testFutureFlatCollectFailsOnFailingMapFunction [
 
 	| future got error |
 	future := TKTFuture new.	
@@ -351,7 +351,7 @@ TKTFutureTests >> testFutureFlatCollectFailsOnFailingMapFunction [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFlatCollectFailsOnMappedFutureFailure [
+TKTFutureTest >> testFutureFlatCollectFailsOnMappedFutureFailure [
 	| future got error innerFuture |
 	future := TKTFuture new.
 	innerFuture := TKTFuture new.
@@ -366,7 +366,7 @@ TKTFutureTests >> testFutureFlatCollectFailsOnMappedFutureFailure [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFlatCollectFailsOnSelfFailure [
+TKTFutureTest >> testFutureFlatCollectFailsOnSelfFailure [
 	| future got error innerFuture |
 	future := TKTFuture new.
 	innerFuture := TKTFuture new.
@@ -380,7 +380,7 @@ TKTFutureTests >> testFutureFlatCollectFailsOnSelfFailure [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureFlatCollectSuccessOnMappedFutureSuccess [
+TKTFutureTest >> testFutureFlatCollectSuccessOnMappedFutureSuccess [
 
 	| future got innerFuture |
 	future := TKTFuture new.	
@@ -395,7 +395,7 @@ TKTFutureTests >> testFutureFlatCollectSuccessOnMappedFutureSuccess [
 ]
 
 { #category : #'tests-termination' }
-TKTFutureTests >> testFutureIsFinishedIfFailureWasAlreadyDeployed [
+TKTFutureTest >> testFutureIsFinishedIfFailureWasAlreadyDeployed [
 	| future error |
 	
 	future := TKTFuture new.
@@ -407,7 +407,7 @@ TKTFutureTests >> testFutureIsFinishedIfFailureWasAlreadyDeployed [
 ]
 
 { #category : #'tests-termination' }
-TKTFutureTests >> testFutureIsFinishedIfValueWasAlreadyDeployed [
+TKTFutureTest >> testFutureIsFinishedIfValueWasAlreadyDeployed [
 
 	| future |
 	future := TKTFuture new.
@@ -417,7 +417,7 @@ TKTFutureTests >> testFutureIsFinishedIfValueWasAlreadyDeployed [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureOnDoFailsOnFailingExceptionHandler [
+TKTFutureTest >> testFutureOnDoFailsOnFailingExceptionHandler [
 	| future got error error2 |
 	future := TKTFuture new.
 	error := Error new.
@@ -433,7 +433,7 @@ TKTFutureTests >> testFutureOnDoFailsOnFailingExceptionHandler [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureOnDoFailsOnTrappingWrongException [
+TKTFutureTest >> testFutureOnDoFailsOnTrappingWrongException [
 	| future got error |
 	future := TKTFuture new.
 	(future
@@ -448,7 +448,7 @@ TKTFutureTests >> testFutureOnDoFailsOnTrappingWrongException [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureOnDoSucceedsOnSuccess [
+TKTFutureTest >> testFutureOnDoSucceedsOnSuccess [
 
 	| future got |
 	future := TKTFuture new.	
@@ -461,7 +461,7 @@ TKTFutureTests >> testFutureOnDoSucceedsOnSuccess [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureOnDoSucceedsOnTrappingCorrectException [
+TKTFutureTest >> testFutureOnDoSucceedsOnTrappingCorrectException [
 	| future got error |
 	future := TKTFuture new.
 	(future
@@ -476,7 +476,7 @@ TKTFutureTests >> testFutureOnDoSucceedsOnTrappingCorrectException [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureSelectFailsOnFailingPredicate [
+TKTFutureTest >> testFutureSelectFailsOnFailingPredicate [
 
 	| future got error |
 	future := TKTFuture new.	
@@ -491,7 +491,7 @@ TKTFutureTests >> testFutureSelectFailsOnFailingPredicate [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureSelectFailsOnFailure [
+TKTFutureTest >> testFutureSelectFailsOnFailure [
 	| future got error |
 	future := TKTFuture new.
 	(future select: [ :v | v even ]) onFailureDo: [ :v | got := v ].
@@ -504,7 +504,7 @@ TKTFutureTests >> testFutureSelectFailsOnFailure [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureSelectFailsOnNonSatisfyingCondition [
+TKTFutureTest >> testFutureSelectFailsOnNonSatisfyingCondition [
 
 	| future got |
 	future := TKTFuture new.	
@@ -517,7 +517,7 @@ TKTFutureTests >> testFutureSelectFailsOnNonSatisfyingCondition [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureSelectSuccessOnSatisfyingCondition [
+TKTFutureTest >> testFutureSelectSuccessOnSatisfyingCondition [
 
 	| future got |
 	future := TKTFuture new.	
@@ -530,7 +530,7 @@ TKTFutureTests >> testFutureSelectSuccessOnSatisfyingCondition [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackExecutesInNewProcess [
+TKTFutureTest >> testFutureSuccessCallbackExecutesInNewProcess [
 
 	| runner future processIds processIdsSet |
 	processIds := AtomicSharedQueue new.
@@ -550,7 +550,7 @@ TKTFutureTests >> testFutureSuccessCallbackExecutesInNewProcess [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackExecutesInSameLocalProcessRunner [
+TKTFutureTest >> testFutureSuccessCallbackExecutesInSameLocalProcessRunner [
 	| runner future currentRunner |
 	runner := TKTLocalProcessTaskRunner new.
 	future := runner future: [ 1 + 1 ].
@@ -560,7 +560,7 @@ TKTFutureTests >> testFutureSuccessCallbackExecutesInSameLocalProcessRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackExecutesInSameNewProcessRunner [
+TKTFutureTest >> testFutureSuccessCallbackExecutesInSameNewProcessRunner [
 	| runner future currentRunner |
 	runner := TKTNewProcessTaskRunner new.
 	future := runner future: [ 1 + 1 ].
@@ -570,7 +570,7 @@ TKTFutureTests >> testFutureSuccessCallbackExecutesInSameNewProcessRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackExecutesInSameWorker [
+TKTFutureTest >> testFutureSuccessCallbackExecutesInSameWorker [
 	| runner future currentRunner |
 	runner := TKTWorker new start.
 	future := runner future: [ 1 + 1 ].
@@ -580,7 +580,7 @@ TKTFutureTests >> testFutureSuccessCallbackExecutesInSameWorker [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackExecutesInSameWorkerRunner [
+TKTFutureTest >> testFutureSuccessCallbackExecutesInSameWorkerRunner [
 	| runner future currentRunner |
 	runner := TKTWorker new start.
 	future := runner future: [ 1 + 1 ].
@@ -590,7 +590,7 @@ TKTFutureTests >> testFutureSuccessCallbackExecutesInSameWorkerRunner [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackIsCalledAfterValueIsDeployed [
+TKTFutureTest >> testFutureSuccessCallbackIsCalledAfterValueIsDeployed [
 
 	| future got |
 	future := TKTFuture new.
@@ -603,7 +603,7 @@ TKTFutureTests >> testFutureSuccessCallbackIsCalledAfterValueIsDeployed [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackIsCalledIfValueWasAlreadyDeployed [
+TKTFutureTest >> testFutureSuccessCallbackIsCalledIfValueWasAlreadyDeployed [
 
 	| future got |
 	future := TKTFuture new.
@@ -617,7 +617,7 @@ TKTFutureTests >> testFutureSuccessCallbackIsCalledIfValueWasAlreadyDeployed [
 ]
 
 { #category : #'tests-callbacks' }
-TKTFutureTests >> testFutureSuccessCallbackIsNotCalledIfFailureWasAlreadyDeployed [
+TKTFutureTest >> testFutureSuccessCallbackIsNotCalledIfFailureWasAlreadyDeployed [
 
 	| future got |
 	future := TKTFuture new.
@@ -629,7 +629,7 @@ TKTFutureTests >> testFutureSuccessCallbackIsNotCalledIfFailureWasAlreadyDeploye
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureZipFailsIfFirstFails [
+TKTFutureTest >> testFutureZipFailsIfFirstFails [
 
 	| future zipFuture got error |
 	future := TKTFuture new.
@@ -648,7 +648,7 @@ TKTFutureTests >> testFutureZipFailsIfFirstFails [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureZipFailsIfSecondFails [
+TKTFutureTest >> testFutureZipFailsIfSecondFails [
 
 	| future zipFuture got error |
 	future := TKTFuture new.
@@ -668,7 +668,7 @@ TKTFutureTests >> testFutureZipFailsIfSecondFails [
 ]
 
 { #category : #'tests-combinators' }
-TKTFutureTests >> testFutureZipSuccessIfBothSuccess [
+TKTFutureTest >> testFutureZipSuccessIfBothSuccess [
 
 	| future zipFuture got |
 	future := TKTFuture new.
@@ -684,7 +684,7 @@ TKTFutureTests >> testFutureZipSuccessIfBothSuccess [
 ]
 
 { #category : #'tests-termination' }
-TKTFutureTests >> testNewFutureIsNotFinished [
+TKTFutureTest >> testNewFutureIsNotFinished [
 
 	| future |
 	future := TKTFuture new.	

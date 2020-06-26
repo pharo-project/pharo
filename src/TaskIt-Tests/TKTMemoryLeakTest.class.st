@@ -1,11 +1,11 @@
 Class {
-	#name : #TKTMemoryLeakTests,
+	#name : #TKTMemoryLeakTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Kernel'
 }
 
 { #category : #helpers }
-TKTMemoryLeakTests >> trackInstancesOf: aClass during: aBlock [
+TKTMemoryLeakTest >> trackInstancesOf: aClass during: aBlock [
 
 	| before |
 	

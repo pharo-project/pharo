@@ -1,11 +1,11 @@
 Class {
-	#name : #TKTWorkerTests,
+	#name : #TKTWorkerTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Worker'
 }
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerExceptionIsHandledByExceptionHandler [
+TKTWorkerTest >> testWorkerExceptionIsHandledByExceptionHandler [
 
 	| error worker |
 	worker := TKTWorker new.
@@ -21,7 +21,7 @@ TKTWorkerTests >> testWorkerExceptionIsHandledByExceptionHandler [
 ]
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerProcessDiesAfterStop [
+TKTWorkerTest >> testWorkerProcessDiesAfterStop [
 
 	| worker future |
 	worker := TKTWorker new.
@@ -33,7 +33,7 @@ TKTWorkerTests >> testWorkerProcessDiesAfterStop [
 ]
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
+TKTWorkerTest >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
 	| worker future process waitFuture1 waitFuture2 |
 	worker := TKTWorker new.
 	worker start.
@@ -57,7 +57,7 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
 ]
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerProcessDiesAfterWorkerIsCollected [
+TKTWorkerTest >> testWorkerProcessDiesAfterWorkerIsCollected [
 	| worker future process |
 	worker := TKTWorker new.
 	worker start.
@@ -70,7 +70,7 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerIsCollected [
 ]
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
+TKTWorkerTest >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	| worker process waitFuture |
 	worker := TKTWorker new.
 	worker start.
@@ -89,7 +89,7 @@ TKTWorkerTests >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 ]
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerRunsAlwaysInSameProcess [
+TKTWorkerTest >> testWorkerRunsAlwaysInSameProcess [
 
 	| worker hash futures hashes |
 	worker := TKTWorker new.
@@ -102,7 +102,7 @@ TKTWorkerTests >> testWorkerRunsAlwaysInSameProcess [
 ]
 
 { #category : #tests }
-TKTWorkerTests >> testWorkerRunsInSeparateProcess [
+TKTWorkerTest >> testWorkerRunsInSeparateProcess [
 
 	| worker hash future |
 	worker := TKTWorker new.

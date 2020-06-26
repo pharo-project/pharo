@@ -1,11 +1,11 @@
 Class {
-	#name : #TKTCommonQueueWorkerPoolTests,
+	#name : #TKTCommonQueueWorkerPoolTest,
 	#superclass : #TKTTestCase,
 	#category : #'TaskIt-Tests-Worker'
 }
 
 { #category : #testing }
-TKTCommonQueueWorkerPoolTests >> expectedFailures [
+TKTCommonQueueWorkerPoolTest >> expectedFailures [
 
 	"This tests fail on P7"
 	SystemVersion current major <= 7 ifTrue: [ 
@@ -17,7 +17,7 @@ TKTCommonQueueWorkerPoolTests >> expectedFailures [
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolCretesWorkersWhenExecutingATask [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'test pool'.
@@ -28,7 +28,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolCretesWorkersWhenExecutingATask [
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSize [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	| pool |
 	pool := TKTCommonQueueWorkerPool new.
 	pool poolMaxSize: 4.
@@ -39,7 +39,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSize [
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
 	| pool totalTasks futures |
 	pool := TKTCommonQueueWorkerPool new.
 	pool poolMaxSize: 10.
@@ -53,7 +53,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSizeWhenScheduli
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 
 	| pool |
 	pool := TKTCommonQueueWorkerPool new.
@@ -69,7 +69,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 	| pool workerProcess |
 
 	pool := TKTCommonQueueWorkerPool new.
@@ -86,7 +86,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollec
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
 	| pool workerProcess |
 
 	pool := TKTCommonQueueWorkerPool new.
@@ -102,7 +102,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPo
 ]
 
 { #category : #tests }
-TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
+TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool createDefault.
 	(pool future: (MessageSend receiver: self selector: #yourself)) waitForCompletion: 1 second.

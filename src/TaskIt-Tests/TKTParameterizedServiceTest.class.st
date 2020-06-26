@@ -1,5 +1,5 @@
 Class {
-	#name : #TKTParameterizedServiceTests,
+	#name : #TKTParameterizedServiceTest,
 	#superclass : #TKTTestCase,
 	#instVars : [
 		'service'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TKTParameterizedServiceTests >> tearDown [
+TKTParameterizedServiceTest >> tearDown [
 
 	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
@@ -16,7 +16,7 @@ TKTParameterizedServiceTests >> tearDown [
 ]
 
 { #category : #'as yet unclassified' }
-TKTParameterizedServiceTests >> testServiceExecutesStartUpOnStart [
+TKTParameterizedServiceTest >> testServiceExecutesStartUpOnStart [
 
 	| started |
 	started := false.
@@ -31,7 +31,7 @@ TKTParameterizedServiceTests >> testServiceExecutesStartUpOnStart [
 ]
 
 { #category : #tests }
-TKTParameterizedServiceTests >> testServiceExecutesTearDownOnStop [
+TKTParameterizedServiceTest >> testServiceExecutesTearDownOnStop [
 
 	| stopped |
 	stopped := false.
@@ -45,7 +45,7 @@ TKTParameterizedServiceTests >> testServiceExecutesTearDownOnStop [
 ]
 
 { #category : #tests }
-TKTParameterizedServiceTests >> testServiceRunsAfterStart [
+TKTParameterizedServiceTest >> testServiceRunsAfterStart [
 
 	| run |
 	run := false.

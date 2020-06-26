@@ -1,5 +1,5 @@
 Class {
-	#name : #TKTSubclassServiceTests,
+	#name : #TKTSubclassServiceTest,
 	#superclass : #TKTTestCase,
 	#instVars : [
 		'service'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #running }
-TKTSubclassServiceTests >> tearDown [
+TKTSubclassServiceTest >> tearDown [
 
 	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
@@ -16,7 +16,7 @@ TKTSubclassServiceTests >> tearDown [
 ]
 
 { #category : #tests }
-TKTSubclassServiceTests >> testServiceExecutesStartUpOnStart [
+TKTSubclassServiceTest >> testServiceExecutesStartUpOnStart [
 
 	service := TKTMockService new.
 	service start.
@@ -27,7 +27,7 @@ TKTSubclassServiceTests >> testServiceExecutesStartUpOnStart [
 ]
 
 { #category : #tests }
-TKTSubclassServiceTests >> testServiceExecutesTearDownOnStop [
+TKTSubclassServiceTest >> testServiceExecutesTearDownOnStop [
 
 	service := TKTMockService new.
 	service start.
@@ -37,7 +37,7 @@ TKTSubclassServiceTests >> testServiceExecutesTearDownOnStop [
 ]
 
 { #category : #tests }
-TKTSubclassServiceTests >> testServiceRunsAfterStart [
+TKTSubclassServiceTest >> testServiceRunsAfterStart [
 
 	service := TKTMockService new.
 	service start.
