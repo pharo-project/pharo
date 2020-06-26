@@ -1,14 +1,14 @@
-Extension { #name : #SycRenameArgOrTempCommand }
+Extension { #name : #SycRenameLocalVariableCommand }
 
 { #category : #'*Calypso-SystemTools-Core' }
-SycRenameArgOrTempCommand class >> sourceCodeMenuActivation [
+SycRenameLocalVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 	
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyMethodSourceCodeContext
 ]
 
 { #category : #'*Calypso-SystemTools-Core' }
-SycRenameArgOrTempCommand class >> sourceCodeShortcutActivation [
+SycRenameLocalVariableCommand class >> sourceCodeShortcutActivation [
 	<classAnnotation>
 	
 	^CmdShortcutActivation renamingFor: ClyMethodSourceCodeContext

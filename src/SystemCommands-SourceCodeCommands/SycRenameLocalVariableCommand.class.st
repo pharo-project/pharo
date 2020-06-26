@@ -7,7 +7,7 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : #SycRenameArgOrTempCommand,
+	#name : #SycRenameLocalVariableCommand,
 	#superclass : #SycSourceCodeCommand,
 	#instVars : [
 		'newName'
@@ -16,31 +16,31 @@ Class {
 }
 
 { #category : #execution }
-SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
+SycRenameLocalVariableCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	super canBeExecutedInContext: aSourceCodeContext.
 	
-	^ aSourceCodeContext isArgOrTempVariableSelected 
+	^ aSourceCodeContext isLocalVariableSelected 
 ]
 
 { #category : #execution }
-SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
+SycRenameLocalVariableCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
 	
 	aSourceCodeContext showVariableNamed: newName
 ]
 
 { #category : #accessing }
-SycRenameArgOrTempCommand >> defaultMenuIconName [ 
+SycRenameLocalVariableCommand >> defaultMenuIconName [ 
 	^ #edit
 ]
 
 { #category : #accessing }
-SycRenameArgOrTempCommand >> defaultMenuItemName [
-	^'Rename temp'
+SycRenameLocalVariableCommand >> defaultMenuItemName [
+	^'Rename local'
 ]
 
 { #category : #execution }
-SycRenameArgOrTempCommand >> execute [
+SycRenameLocalVariableCommand >> execute [
 	| refactoring |
 	refactoring := RBRenameArgumentOrTemporaryRefactoring	
 		renameTemporaryFrom: sourceNode sourceInterval
@@ -52,7 +52,7 @@ SycRenameArgOrTempCommand >> execute [
 ]
 
 { #category : #execution }
-SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
+SycRenameLocalVariableCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
 	
 	newName := UIManager default 
