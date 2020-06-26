@@ -60,7 +60,7 @@ ByteArray >> asString [
 	^ (String new: self size) replaceFrom: 1 to: self size with: self
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 ByteArray >> asWideString [
 
 	^ WideString fromByteArray: self.
