@@ -11,7 +11,7 @@ Class {
 		'scope',
 		'usage'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
 { #category : #converting }

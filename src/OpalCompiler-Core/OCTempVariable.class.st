@@ -3,7 +3,7 @@ I model temp variables. With Closures, there are two kinds: Copying and those th
 "
 Class {
 	#name : #OCTempVariable,
-	#superclass : #OCAbstractLocalVariable,
+	#superclass : #OCAbstractLocalVariableTOMERGE,
 	#instVars : [
 		'escaping',
 		'index'
@@ -28,9 +28,20 @@ OCTempVariable >> = aTempVar [
 	
 ]
 
+{ #category : #converting }
+OCTempVariable >> asString [
+
+	^ self name
+]
+
 { #category : #queries }
 OCTempVariable >> astNodes [
 	^self method variableNodes select: [ :each | each binding == self]
+]
+
+{ #category : #accessing }
+OCTempVariable >> definingScope [
+	^ scope
 ]
 
 { #category : #emitting }
@@ -104,8 +115,31 @@ OCTempVariable >> isEscapingWrite [
 ]
 
 { #category : #testing }
+OCTempVariable >> isLocal [
+
+	^true
+]
+
+{ #category : #'read/write usage' }
+OCTempVariable >> isRead [
+	^usage = #read
+
+]
+
+{ #category : #testing }
 OCTempVariable >> isReferenced [
 	^self isUnused not
+]
+
+{ #category : #testing }
+OCTempVariable >> isRemote [
+	^false
+]
+
+{ #category : #'read/write usage' }
+OCTempVariable >> isRepeatedWrite [
+	^usage = #repeatedWrite
+
 ]
 
 { #category : #testing }
@@ -125,6 +159,24 @@ OCTempVariable >> isTempVectorTemp [
 	^false
 ]
 
+{ #category : #'read/write usage' }
+OCTempVariable >> isUninitialized [
+
+	^ self isWrite not
+]
+
+{ #category : #'read/write usage' }
+OCTempVariable >> isUnused [
+	"when the var is never read or written, it is not used.
+	Note: we have a special #arg use which means arguments are never unused"
+	^ usage isNil
+]
+
+{ #category : #'read/write usage' }
+OCTempVariable >> isWrite [
+	^ usage = #write or: [ self isRepeatedWrite ]
+]
+
 { #category : #escaping }
 OCTempVariable >> markEscapingRead [
 	escaping = #escapingWrite ifFalse: [escaping := #escapingRead]
@@ -136,11 +188,17 @@ OCTempVariable >> markEscapingWrite [
 	self isRepeatedWrite ifFalse:[usage := #write]
 ]
 
+{ #category : #'read/write usage' }
+OCTempVariable >> markRead [
+	"reading does not change a #write, nor an #arg"
+	usage ifNil: [usage := #read]
+]
+
 { #category : #escaping }
 OCTempVariable >> markRepeatedWrite [
 	"same as write"
 	self markWrite.
-	super markRepeatedWrite.
+	usage := #repeatedWrite
 ]
 
 { #category : #escaping }
@@ -149,7 +207,8 @@ OCTempVariable >> markWrite [
 	"if an escaping var is wrote to later, it needs to be remote"
 	self isEscaping 
 		ifTrue: [self markEscapingWrite].
-	super markWrite.
+	"write is the strongest use: a read is turned into a write"
+	usage := #write.
 ]
 
 { #category : #queries }
@@ -160,6 +219,12 @@ OCTempVariable >> method [
 { #category : #accessing }
 OCTempVariable >> originalVar [
 	^ self
+]
+
+{ #category : #printing }
+OCTempVariable >> printOn: stream [
+
+	stream nextPutAll: self name
 ]
 
 { #category : #debugging }
@@ -181,6 +246,30 @@ OCTempVariable >> readInContext: aContext [
 	| contextScope |
 	contextScope := aContext astScope.
 	^self readFromContext: aContext scope: contextScope
+]
+
+{ #category : #accessing }
+OCTempVariable >> scope [
+
+	^ scope
+]
+
+{ #category : #initializing }
+OCTempVariable >> scope: aLexicalScope [
+
+	scope := aLexicalScope
+]
+
+{ #category : #accessing }
+OCTempVariable >> usage [
+
+	^ usage
+]
+
+{ #category : #accessing }
+OCTempVariable >> usage: anObject [
+
+	usage := anObject
 ]
 
 { #category : #queries }
