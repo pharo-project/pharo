@@ -14,6 +14,12 @@ TKTProductionProfile class >> priority [
 	^ 0
 ]
 
+{ #category : #accessing }
+TKTProductionProfile class >> profileName [
+	
+	^ #production
+]
+
 { #category : #private }
 TKTProductionProfile class >> profileValues [
 

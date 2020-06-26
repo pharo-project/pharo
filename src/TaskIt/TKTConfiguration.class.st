@@ -21,14 +21,6 @@ Class {
 }
 
 { #category : #accessing }
-TKTConfiguration class >> cleanUpImageToStart [
-	TKTCommonQueueWorkerPool allInstancesDo: #cleanUpImageToStart.
-	TKTArchetypeAwarePool allInstancesDo: #cleanUpImageToStart.
-	TKTConfiguration watchDog cleanUpImageToStart.
-	self profileNamed: self profileNamed
-]
-
-{ #category : #accessing }
 TKTConfiguration class >> errorHandler [
 	^ self optionAt: #errorHandler
 ]
@@ -78,10 +70,14 @@ TKTConfiguration class >> processProvider [
 
 { #category : #accessing }
 TKTConfiguration class >> processProvider: aProcessProvider during: aBlock [
-	^ self optionAt: #processProvider value: aProcessProvider during: aBlock
+
+	^ self 
+		optionAt: #processProvider 
+		value: aProcessProvider 
+		during: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTConfiguration class >> profile [
 	^ #Hola
 ]
@@ -110,6 +106,7 @@ TKTConfiguration class >> profileNamed [
 { #category : #accessing }
 TKTConfiguration class >> profileNamed: aProfileName [
 	| profile |
+
 	profile := (self profiles detect: [ :ass | ass key = aProfileName ]) value value.
 	profile name: aProfileName.
 	self profile: profile
@@ -153,16 +150,18 @@ TKTConfiguration class >> serviceManager: aManager during: aBlock [
 	^ self optionAt: #serviceManager value: aManager during: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 TKTConfiguration class >> settingsOn: aBuilder [
 	<systemsettings>
+
 	(aBuilder group: #taskitExecution)
 		label: 'Task it execution profile';
-		with: [ (aBuilder pickOne: #profileNamed)
+		with: [ 
+			(aBuilder pickOne: #profileNamed)
 				label: 'Exeucting Profile';
 				target: self;
 				parent: #taskitExecution;
-				default: #development;
+				default: TKTProfile defaultProfileName;
 				order: 1;
 				domainValues: (self profiles collect: #key) ]
 ]

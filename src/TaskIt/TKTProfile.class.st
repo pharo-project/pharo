@@ -27,7 +27,19 @@ Class {
 { #category : #'accessing profiles' }
 TKTProfile class >> defaultProfile [
 
-	^ ((self allSubclasses sorted: [ :a | a priority ] descending) first) new
+	^ self defaultProfileClass new
+]
+
+{ #category : #'accessing profiles' }
+TKTProfile class >> defaultProfileClass [
+
+	^ (self allSubclasses sorted: [ :a | a priority ] descending) first
+]
+
+{ #category : #'accessing profiles' }
+TKTProfile class >> defaultProfileName [
+
+	^ self defaultProfileClass profileName
 ]
 
 { #category : #'instance creation' }
@@ -55,6 +67,12 @@ TKTProfile class >> production [
 	<profile: #production>
 
 	^ TKTProductionProfile new
+]
+
+{ #category : #accessing }
+TKTProfile class >> profileName [
+	
+	^ self subclassResponsibility
 ]
 
 { #category : #private }
