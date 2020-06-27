@@ -20,7 +20,6 @@ ClyNotebookMorph >> addActions: aCollection [
 ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 	"Add a page and its tab."
 	| index |
-
 	aMorph
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
@@ -28,10 +27,7 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 	aMorph privateOwner: self.
 	
 	index := self pages indexOf: aMorph.
-	self tabSelectorMorph tabs 
-		add: (self tabSelectorMorph newLabelMorph: aStringOrMorph) 
-		beforeIndex: index.
-	self tabSelectorMorph updateTabs
+	self tabSelectorMorph addTab: aStringOrMorph beforeIndex: index
 ]
 
 { #category : #initialization }
