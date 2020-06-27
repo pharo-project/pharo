@@ -65,7 +65,7 @@ ClyTestSetUpEditorTool >> defaultTemplateForNewSetUp [
 	^'setUp
 	super setUp.
 	
-	"Put here a common initializiation logic for tests"'
+	"Put here a common initialization logic for tests"'
 ]
 
 { #category : #initialization }
