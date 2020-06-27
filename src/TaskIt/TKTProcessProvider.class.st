@@ -7,12 +7,12 @@ Class {
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider class >> createProcessDoing: aValuable [
 	^ self error: 'Use TKTConfiguration processProvider createProcessDoing: aValuable '
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider class >> createProcessDoing: aValuable named: aName [
 	^ self error: 'Use TKTConfiguration processProvider createProcessDoing: aValuable named: aName'
 ]

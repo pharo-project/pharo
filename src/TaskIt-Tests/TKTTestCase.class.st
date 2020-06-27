@@ -37,6 +37,7 @@ TKTTestCase >> setUp [
 
 { #category : #running }
 TKTTestCase >> tearDown [
-	super tearDown.
-	TKTConfiguration resetSoleInstance
+
+	TKTConfiguration resetSoleInstance.
+	super tearDown	
 ]
