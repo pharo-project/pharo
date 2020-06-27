@@ -7,15 +7,15 @@ Class {
 	#category : #'TaskIt-Tests-Services'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 TKTParameterizedServiceTest >> tearDown [
 
-	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
-		(service stop) waitForCompletion: 1 second ]
+		(service stop) waitForCompletion: 1 second ].
+	super tearDown	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TKTParameterizedServiceTest >> testServiceExecutesStartUpOnStart [
 
 	| started |

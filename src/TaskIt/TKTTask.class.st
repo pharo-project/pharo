@@ -68,7 +68,7 @@ Class {
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTTask class >> valuable: aValuable [
 
 	^ TKTGenericTask new

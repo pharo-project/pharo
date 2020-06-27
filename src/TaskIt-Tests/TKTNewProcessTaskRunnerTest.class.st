@@ -6,8 +6,8 @@ Class {
 
 { #category : #tests }
 TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerExceptionIsHandledByExceptionHandler [
-
-	| runner error future |
+	| runner error |
+	
 	runner := TKTNewProcessTaskRunner new.
 	runner exceptionHandler: (TKTTestExceptionHandler new).
 	

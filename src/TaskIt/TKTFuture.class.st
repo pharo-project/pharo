@@ -157,13 +157,13 @@ Class {
 	#category : #'TaskIt-Futures'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> doing: aBlock [
 
 	^ TKTConfiguration runner future: aBlock
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> fromCollectionOfFutures: aCollectionOfFutures [
 
 	^ self
@@ -171,13 +171,13 @@ TKTFuture class >> fromCollectionOfFutures: aCollectionOfFutures [
 		with: [ :acum :each | acum add: each. acum ] 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> of: aValue [
 
 	^ self new deploySuccess: aValue
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> reduceCollectionOfFutures: aCollectionOfFutures with: aBlock [
 
 	^ aCollectionOfFutures

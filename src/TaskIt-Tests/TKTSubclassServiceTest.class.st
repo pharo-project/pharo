@@ -10,9 +10,9 @@ Class {
 { #category : #running }
 TKTSubclassServiceTest >> tearDown [
 
-	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
-		(service stop) waitForCompletion: 1 second ]
+		(service stop) waitForCompletion: 1 second ].
+	super tearDown
 ]
 
 { #category : #tests }

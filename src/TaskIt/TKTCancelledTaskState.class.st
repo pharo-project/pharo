@@ -10,7 +10,7 @@ Class {
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTCancelledTaskState class >> reason: aString [ 
 	
 	^ self new

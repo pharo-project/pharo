@@ -7,12 +7,12 @@ Class {
 	#category : #'TaskIt-Tests-Services'
 }
 
-{ #category : #tests }
+{ #category : #running }
 TKTServiceTest >> tearDown [
 
-	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
-		(service stop) waitForCompletion: 1 second ]
+		(service stop) waitForCompletion: 1 second ].
+	super tearDown
 ]
 
 { #category : #tests }

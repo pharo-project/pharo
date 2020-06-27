@@ -28,19 +28,19 @@ TKTProcessProvider class >> current: aProcessProvider [
 	^ self error: 'Use a configuration'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider >> createProcessDoing: aValuable [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider >> createProcessDoing: aValuable named: aName [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider >> isDebuggingCompatible [
 	^ false
 ]

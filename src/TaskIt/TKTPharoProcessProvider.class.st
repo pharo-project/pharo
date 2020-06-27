@@ -7,7 +7,7 @@ Class {
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTPharoProcessProvider >> createProcessDoing: aValuable [
 	| toFork |
 	toFork := aValuable isBlock
@@ -16,7 +16,7 @@ TKTPharoProcessProvider >> createProcessDoing: aValuable [
 	^ toFork fork
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTPharoProcessProvider >> createProcessDoing: aValuable named: aName [
 	| block |
 	block := aValuable isMessageSend
