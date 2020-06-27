@@ -31,7 +31,7 @@ OSPlatform class >> currentPlatformName [
 
     |platform|
     platform := Smalltalk vm getSystemAttribute: 1001.
-    platform = 'win32' ifTrue: [ ^ 'windows_api' ].
+    platform = 'Win32' ifTrue: [ ^ 'windows_api' ].
     ^ platform
 
     "For more information refer to...
