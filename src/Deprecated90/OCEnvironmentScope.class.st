@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
 { #category : #'instance creation' }
@@ -39,10 +39,4 @@ OCEnvironmentScope >> lookupVar: name [
 	name isString ifFalse: [ ^nil ].
 	
 	^environment bindingOf: name
-]
-
-{ #category : #creation }
-OCEnvironmentScope >> newClassScope: aClass [
-
-	^ (OCClassScope for: aClass) outerScope: self; yourself
 ]
