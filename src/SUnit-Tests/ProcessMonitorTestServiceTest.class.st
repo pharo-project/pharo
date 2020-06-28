@@ -65,8 +65,6 @@ ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinishButF
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	| process haltWasPassed halt |
-	self flag: 'it fails runKernelTests on bootstrap image due to Process suspend issue'.
-	self skip.
 	
 	haltWasPassed := false.
 	halt := Halt new.
@@ -185,8 +183,6 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndProcessCompletes [
 
 	| process |
-	self flag: 'it fails runKernelTests on bootstrap image due to Process suspend issue'.
-	self skip.
 	process := self fork: [ testService suspendBackgroundFailure: Error new ].
 	
 	testService passBackgroundFailures.
@@ -382,8 +378,6 @@ ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIsDisabled [
 	| process error errorWasPassed |
-	self flag: 'it fails runKernelTests on bootstrap image due to Process suspend issue'.
-	self skip.
 	errorWasPassed := false.
 	error := Error new messageText: 'test error'.
 	process := self fork: [ Processor activeProcess suspend. error signal ].	
@@ -521,4 +515,42 @@ ProcessMonitorTestServiceTest >> testSuspendBackgroundWarning [
 	suspendedError := testService suspendedBackgroundFailures at: process.
 	self assert: suspendedError class equals: UnhandledError. 
 	self assert: suspendedError exception identicalTo: warning.
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testSuspendResumeTerminateIssue [
+	"The test discovers the issue with Process>>isTerminated method
+	when process was suspended in the middle and then resumed.
+	During the bootstrap process on CI it fails RunKernelTests stage.
+	But it is working on full image"
+	| process ended started |
+	ended := false.
+	started := false.
+	process := [ started := true. Processor activeProcess suspend. ended := true ] newProcess.
+	process priority: Processor activePriority + 1.
+	processes add: process.	
+	process resume.
+	self assert: started description: 'process should be started'.
+	self assert: process isSuspended description: 'process should be suspended'.
+
+	process resume.
+	self assert: ended description: 'process should be ended'.
+	self assert: process isTerminated description: 'process should be terminated'
+]
+
+{ #category : #tests }
+ProcessMonitorTestServiceTest >> testSuspendResumeTerminateIssueWithoutSuspend [
+	"The test proves that suspend at the middle is required condition to trigger the issue.
+	Here the suspend is not performed and test passes on every CI stage.
+	(notice that #printString call here is to have equivalent message send like #suspend)"	
+	| process ended started |
+	ended := false.
+	started := false.
+	process := [ started := true. self printString. ended := true ] newProcess.
+	process priority: Processor activePriority + 1.
+	processes add: process.	
+	process resume.
+	self assert: started description: 'process should be started'.
+	self assert: ended description: 'process should be ended'.
+	self assert: process isTerminated description: 'process should be terminated'
 ]
