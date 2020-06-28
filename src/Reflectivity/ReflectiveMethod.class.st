@@ -13,7 +13,6 @@ Class {
 	#type : #variable,
 	#instVars : [
 		'ast',
-		'class',
 		'compiledMethod',
 		'linkCount'
 	],
@@ -48,7 +47,6 @@ ReflectiveMethod >> compiledMethod [
 ReflectiveMethod >> compiledMethod: aCompiledMethod [
 
 	compiledMethod := aCompiledMethod.
-	class := aCompiledMethod methodClass.
 	ast := compiledMethod ast
 ]
 
@@ -171,10 +169,8 @@ ReflectiveMethod >> installLink: aMetaLink [
 
 { #category : #invalidate }
 ReflectiveMethod >> installMethod: aMethod [
-	| selector |
-	selector := aMethod selector.
-	"add to method dictionary."
-	class methodDict at: selector put: aMethod.
+	"add to method dictionary"
+	ast methodClass methodDict at: aMethod selector put: aMethod
 ]
 
 { #category : #invalidate }
@@ -230,7 +226,7 @@ ReflectiveMethod >> printOn: aStream [
 	"Overrides method inherited from the byte arrayed collection."
 
 	aStream 
-		print: class; 
+		print: ast methodClass; 
 		nextPutAll: '>>'; 
 		store: self selector; 
 		nextPutAll: ' (ReflectiveMethod)'.
