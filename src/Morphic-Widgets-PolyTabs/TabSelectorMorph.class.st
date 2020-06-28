@@ -32,6 +32,16 @@ TabSelectorMorph >> addTab: aStringOrMorph [
 ]
 
 { #category : #adding }
+TabSelectorMorph >> addTab: aStringOrMorph beforeIndex: index [
+
+	self tabs add: (self newLabelMorph: aStringOrMorph) beforeIndex: index.
+	selectedIndex >= index ifTrue: [ 
+		"there is now new tab before selected tab"
+		self selectedIndex: selectedIndex + 1 ]. 
+	self updateTabs
+]
+
+{ #category : #adding }
 TabSelectorMorph >> addTab: aStringOrMorph selected: selectedStringOrMorph [
 	"Add a new tab with the given text or morph and alternate for when selected."
 	
