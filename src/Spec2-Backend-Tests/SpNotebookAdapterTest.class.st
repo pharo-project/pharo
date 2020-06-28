@@ -83,5 +83,5 @@ SpNotebookAdapterTest >> testSelectingPageShouldAnnounceChangeEvent [
 	self adapter widget tabSelectorMorph selectedIndex: 2.
 	
 	self assert: change oldPage model title equals: 'Mock'.
-	self assert: change newPage model title equals: 'Mock2'.
+	self assert: change page model title equals: 'Mock2'.
 ]
