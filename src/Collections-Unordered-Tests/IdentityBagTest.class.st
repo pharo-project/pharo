@@ -9,7 +9,7 @@ Class {
 		'elementToCopy',
 		'identityBagNonEmptyNoDuplicate5Elements'
 	],
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Bags'
 }
 
 { #category : #requirements }

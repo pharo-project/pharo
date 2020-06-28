@@ -4,7 +4,7 @@ SUnit tests for pluggable sets
 Class {
 	#name : #PluggableSetTest,
 	#superclass : #SetTest,
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Sets'
 }
 
 { #category : #coverage }

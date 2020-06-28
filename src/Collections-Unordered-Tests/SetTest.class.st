@@ -23,7 +23,7 @@ Class {
 		'collectionWith3Elements',
 		'collectionOfNonIdentical'
 	],
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Sets'
 }
 
 { #category : #'tests - includes' }

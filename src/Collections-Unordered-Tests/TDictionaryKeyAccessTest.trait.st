@@ -3,7 +3,7 @@ A trait for test purposes
 "
 Trait {
 	#name : #TDictionaryKeyAccessTest,
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Traits'
 }
 
 { #category : #requirements }

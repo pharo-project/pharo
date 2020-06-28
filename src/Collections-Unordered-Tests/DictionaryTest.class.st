@@ -23,7 +23,7 @@ Class {
 		'duplicateValue',
 		'nonEmptyWithString'
 	],
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Dictionaries'
 }
 
 { #category : #helpers }

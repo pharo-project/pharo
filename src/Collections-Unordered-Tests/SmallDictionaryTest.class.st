@@ -4,7 +4,7 @@ SUnit tests for small dictionaries
 Class {
 	#name : #SmallDictionaryTest,
 	#superclass : #DictionaryTest,
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Dictionaries'
 }
 
 { #category : #'building suites' }
