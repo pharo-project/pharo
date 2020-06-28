@@ -51,6 +51,23 @@ ClyTestSetUpEditorTool >> belongsToCurrentBrowserContext [
 	^browser isClassSelected: testClass
 ]
 
+{ #category : #building }
+ClyTestSetUpEditorTool >> buildTextMorph [
+	super buildTextMorph.
+	
+	editingMethod == (TestCase >> #setUp) ifTrue: [ 
+		self setUpDefaultTemplate ].
+]
+
+{ #category : #initialization }
+ClyTestSetUpEditorTool >> defaultTemplateForNewSetUp [
+
+	^'setUp
+	super setUp.
+	
+	"Put here a common initialization logic for tests"'
+]
+
 { #category : #initialization }
 ClyTestSetUpEditorTool >> defaultTitle [
 	^'setUp'
@@ -65,6 +82,13 @@ ClyTestSetUpEditorTool >> editingMethod: aMethod [
 ClyTestSetUpEditorTool >> isSimilarTo: anotherBrowserTool [
 	^self class = anotherBrowserTool class
 		and: [ testClass == anotherBrowserTool testClass ]
+]
+
+{ #category : #initialization }
+ClyTestSetUpEditorTool >> setUpDefaultTemplate [
+
+	textModel setInitialText: self defaultTemplateForNewSetUp.
+	targetClasses := { testClass }
 ]
 
 { #category : #initialization }
