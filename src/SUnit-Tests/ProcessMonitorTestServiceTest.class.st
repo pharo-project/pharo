@@ -65,6 +65,7 @@ ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinishButF
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	| process haltWasPassed halt |
+	<expectedFailure>
 	haltWasPassed := false.
 	halt := Halt new.
 	process := self fork: [ Processor activeProcess suspend. halt signal ].
@@ -75,8 +76,8 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 		self assert: actual equals: halt. haltWasPassed := true ].
 	process resume.
 	
-	self assert: process isTerminated description: 'process should be terminated now'. 
 	self assert: haltWasPassed.
+	self assert: process isTerminated description: 'process should be terminated now'. 
 	self deny: (testService suspendedBackgroundFailures includesKey: process)
 ]
 
@@ -182,6 +183,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndProcessCompletes [
 
 	| process |
+	<expectedFailure>
 	process := self fork: [ testService suspendBackgroundFailure: Error new ].
 	
 	testService passBackgroundFailures.
@@ -376,8 +378,8 @@ ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIsDisabled [
-
 	| process error errorWasPassed |
+	<expectedFailure>
 	errorWasPassed := false.
 	error := Error new messageText: 'test error'.
 	process := self fork: [ Processor activeProcess suspend. error signal ].	
@@ -388,8 +390,8 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 	process on: UnhandledError do: [ :err | errorWasPassed := true ].
 	process resume.
 	
-	self assert: process isTerminated description: 'process should be terminated now'. 
-	self assert: errorWasPassed
+	self assert: errorWasPassed.
+	self assert: process isTerminated description: 'process should be terminated now'
 ]
 
 { #category : #tests }
