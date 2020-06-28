@@ -337,9 +337,10 @@ TabGroupMorph >> update: aSymbol with: anObject [
 
 	super update: aSymbol with: anObject.
 	aSymbol == #selectedIndex ifTrue: [
-			anObject = 0 "nothing was selected before"
-				ifTrue: [ self updatePageIndex: self selectedPageIndex ]
-				ifFalse: [ self updatePageIndex: self selectedPageIndex oldIndex: anObject ]]
+			anObject > 0 & (anObject <= self pages size) 
+				ifTrue: [ "the old selected page is available"					
+					self updatePageIndex: self selectedPageIndex oldIndex: anObject]
+				ifFalse: [ self updatePageIndex: self selectedPageIndex ]]
 ]
 
 { #category : #page }
