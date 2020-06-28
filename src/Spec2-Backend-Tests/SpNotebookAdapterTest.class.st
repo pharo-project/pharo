@@ -73,3 +73,15 @@ SpNotebookAdapterTest >> testSelectedPage [
 	presenter selectPageIndex: 2.
 	self assert: self adapter selectedPageName equals: 'Mock2'
 ]
+
+{ #category : #tests }
+SpNotebookAdapterTest >> testSelectingPageShouldAnnounceChangeEvent [
+	| change |
+	self adapter widget tabSelectorMorph selectedIndex: 1.	
+	self adapter widget announcer when: SpNotebookPageChanged do: [ :ann | change := ann ].
+	
+	self adapter widget tabSelectorMorph selectedIndex: 2.
+	
+	self assert: change oldPage model title equals: 'Mock'.
+	self assert: change newPage model title equals: 'Mock2'.
+]
