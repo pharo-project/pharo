@@ -332,12 +332,14 @@ TabGroupMorph >> tabSelectorMorph: anObject [
 ]
 
 { #category : #updating }
-TabGroupMorph >> update: aSymbol [
+TabGroupMorph >> update: aSymbol with: anObject [
 	"Handle tab changes."
 
-	super update: aSymbol.
-	aSymbol == #selectedIndex
-		ifTrue: [self updatePageIndex: self selectedPageIndex]
+	super update: aSymbol with: anObject.
+	aSymbol == #selectedIndex ifTrue: [
+			anObject = 0 "nothing was selected before"
+				ifTrue: [ self updatePageIndex: self selectedPageIndex ]
+				ifFalse: [ self updatePageIndex: self selectedPageIndex oldIndex: anObject ]]
 ]
 
 { #category : #page }
@@ -348,4 +350,9 @@ TabGroupMorph >> updatePageIndex: index [
 	index > 0 ifTrue: [self contentMorph addMorph: (self pages at: index)].
 	self pageMorph ifNotNil: [:pm | pm layoutChanged].
 	self adoptPaneColor: self paneColor
+]
+
+{ #category : #page }
+TabGroupMorph >> updatePageIndex: index oldIndex: oldSelectedIndex [ 
+	self updatePageIndex: index
 ]
