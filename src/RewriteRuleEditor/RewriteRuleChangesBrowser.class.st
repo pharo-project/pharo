@@ -12,7 +12,7 @@ Class {
 		'#buttonCancel => SpObservableSlot',
 		'#buttonOk => SpObservableSlot'
 	],
-	#category : #'NautilusRefactoring-Utilities'
+	#category : #'RewriteRuleEditor-ChangesBrowser'
 }
 
 { #category : #'instance creation' }
