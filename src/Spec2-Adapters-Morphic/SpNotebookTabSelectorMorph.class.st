@@ -47,12 +47,13 @@ SpNotebookTabSelectorMorph >> newLabelMorph: aStringOrMorph selected: selectedSt
 SpNotebookTabSelectorMorph >> removeTabIndex: anInteger [
 	"Remove the tab at the given index and
 	adjust any selected (next or first if was last)."
-
+	
 	self tabs removeAt: anInteger.
-
-	self tabs
-		ifNotEmpty: [ self selectedIndex: (self selectedIndex - 1) \\ self tabs size + 1 ]
-		ifEmpty: [ self selectedIndex: 0 ].
-
+	selectedIndex >= anInteger ifTrue: [
+		selectedIndex = anInteger
+			ifTrue: [
+				self selectedIndex: 0. "to update new tab at current selected index"
+				self tabs ifNotEmpty: [self selectedIndex: anInteger ] ]
+			ifFalse: [ self selectedIndex: selectedIndex - 1 ] ].
 	self updateTabs
 ]
