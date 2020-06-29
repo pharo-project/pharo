@@ -5,7 +5,7 @@ Class {
 		'application',
 		'worldMorph'
 	],
-	#category : #'Spec2-Tests-Core-Support'
+	#category : #'Spec2-Morphic-Tests-Core-Support'
 }
 
 { #category : #running }
