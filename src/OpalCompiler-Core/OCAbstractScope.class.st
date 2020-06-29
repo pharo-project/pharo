@@ -77,7 +77,7 @@ OCAbstractScope >> node: aNode [
 	node := aNode
 ]
 
-{ #category : #levels }
+{ #category : #lookup }
 OCAbstractScope >> outerScope [
 
 	^ outerScope
@@ -87,11 +87,4 @@ OCAbstractScope >> outerScope [
 OCAbstractScope >> outerScope: aSemScope [
 
 	outerScope := aSemScope
-]
-
-{ #category : #levels }
-OCAbstractScope >> scopeLevel [
-
-	outerScope ifNil: [^ 0].
-	^ outerScope scopeLevel + 1
 ]

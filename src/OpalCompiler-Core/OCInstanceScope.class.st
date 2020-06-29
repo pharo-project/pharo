@@ -70,6 +70,12 @@ OCInstanceScope >> newMethodScope [
 	^ OCMethodScope new outerScope: self
 ]
 
+{ #category : #acessing }
+OCInstanceScope >> scopeLevel [
+	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
+	^ 0
+]
+
 { #category : #initializing }
 OCInstanceScope >> slots: slotCollection [
 

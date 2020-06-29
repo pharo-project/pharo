@@ -227,6 +227,12 @@ OCAbstractMethodScope >> removeTemp: tempVar [
 	tempVars removeKey: tempVar name
 ]
 
+{ #category : #printing }
+OCAbstractMethodScope >> scopeLevel [
+	"For debugging we print a counter for all Method and Block scopes"
+	^ outerScope scopeLevel + 1
+]
+
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue from: aContext [
 	"we need to update all the copies if we change the value of a copied temp"
