@@ -131,6 +131,13 @@ TKTConfiguration class >> profiles [
 ]
 
 { #category : #accessing }
+TKTConfiguration class >> resetSoleInstance [ 
+
+	TKTWatchDog reset.
+	super resetSoleInstance.
+]
+
+{ #category : #accessing }
 TKTConfiguration class >> runner [
 	^ self optionAt: #runner
 ]

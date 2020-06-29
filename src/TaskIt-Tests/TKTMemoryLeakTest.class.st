@@ -17,5 +17,5 @@ TKTMemoryLeakTest >> trackInstancesOf: aClass during: aBlock [
 	
 	self garbageCollectAndWait .
 	
-	self assert: before equals: aClass allInstances size.
+	self assert: before >= aClass allInstances size.
 ]

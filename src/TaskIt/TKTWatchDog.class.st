@@ -23,6 +23,12 @@ TKTWatchDog class >> onDuty [
 			onDuty ]
 ]
 
+{ #category : #reseting }
+TKTWatchDog class >> reset [
+	
+	onDuty := nil.
+]
+
 { #category : #initialization }
 TKTWatchDog >> cleanUpImageToStart [
 	values removeAll
