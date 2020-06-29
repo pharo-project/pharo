@@ -200,7 +200,7 @@ SpWindowPresenter >> close [
 	"Only manage closing if the presenter is really open"
 	self isOpen ifFalse: [ ^ self ].
 	
-	self changed: #close with: #().
+	isClosed := true.
 	self windowClosed
 ]
 
@@ -573,8 +573,8 @@ SpWindowPresenter >> windowIcon: aForm [
 
 { #category : #updating }
 SpWindowPresenter >> windowIsClosing [
-	isClosed := true.
-	self presenter windowIsClosing
+	self close.
+	self presenter windowIsClosing.
 ]
 
 { #category : #updating }
