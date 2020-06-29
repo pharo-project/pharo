@@ -457,8 +457,9 @@ OpalCompiler >> isInteractive [
 OpalCompiler >> isInteractiveFor: aRequestor [
 	"the requester can override if the compiler is interactive or not"
 	aRequestor ifNil: [^ false ].
-	^(aRequestor respondsTo: #interactive)
-		ifTrue: [ aRequestor interactive ]
+	
+	^ (aRequestor respondsTo: #interactive)
+		ifTrue: [ aRequestor interactive ifNil: [ false ] ]
 		ifFalse: [ true ]
 ]
 
