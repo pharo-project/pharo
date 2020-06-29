@@ -53,6 +53,19 @@ CompletionEngine >> closeMenu [
 	menuMorph := nil.
 ]
 
+{ #category : #replacement }
+CompletionEngine >> completionToken [
+
+	"Return the word just before the caret"
+	^ (self editor text copyFrom: self completionTokenStart to: self editor caret - 1) asString
+]
+
+{ #category : #replacement }
+CompletionEngine >> completionTokenStart [
+	"This is the position in the editor where the completion token starts"
+	^ self editor previousWord: self editor caret - 1
+]
+
 { #category : #accessing }
 CompletionEngine >> context [
 	^context
