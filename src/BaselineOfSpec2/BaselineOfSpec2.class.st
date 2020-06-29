@@ -21,13 +21,13 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
 			package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic' 'Spec2-Backend-Tests') ];
 			package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Backend-Tests') ];
-			package: 'Spec2-Morphic-Tests' with: [ spec requires: #('Spec2-Morphic' 'Spec2-Backend-Tests') ]
-		 ].
+			package: 'Spec2-Morphic-Tests' with: [ spec requires: #('Spec2-Morphic' 'Spec2-Backend-Tests') ] ].
 	
 	spec group: 'Core' with: #('Spec2-Morphic' 'Spec2-Adapters-Morphic' ).
 	spec group: 'Code' with: #('Core' 'Spec2-Code-Morphic').
 	spec group: 'Support' with: #('Core' 'Spec2-Morphic-Examples').
 	spec group: 'Tests' with: #(
+		'SpecCore'
 		'Core' 
 		'Spec2-Adapters-Morphic-Tests' 
 		'Spec2-Morphic-Tests' 
