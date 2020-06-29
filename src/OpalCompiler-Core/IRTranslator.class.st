@@ -92,7 +92,7 @@ IRTranslator >> pushOuterVectors: scope [
 	| scopesWithVector sc |
 	scopesWithVector := OrderedCollection new.
 	sc := scope.
-	[ sc outerScope isNil ] whileFalse: [ 
+	[ sc outerScope isInstanceScope ] whileFalse: [ 
 		sc := sc outerScope.
 		sc hasTempVector ifTrue: [ scopesWithVector add: sc ] ].
 	scopesWithVector reverseDo: [ :scopeWithVector |
