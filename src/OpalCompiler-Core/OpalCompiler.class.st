@@ -448,6 +448,11 @@ OpalCompiler >> getSourceFromRequestorSelection [
     self source: selectionString.
 ]
 
+{ #category : #testing }
+OpalCompiler >> isInteractive [
+	^self isInteractiveFor: compilationContext requestor
+]
+
 { #category : #private }
 OpalCompiler >> isInteractiveFor: aRequestor [
 	"the requester can override if the compiler is interactive or not"
@@ -503,7 +508,7 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-	^self compilationContext optionParseErrors 
+	^ (self compilationContext optionParseErrors or: [ self isInteractive not ])
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
 		ifFalse: [self parserClass parseExpression: source contents]
 ]
@@ -516,7 +521,7 @@ OpalCompiler >> parseLiterals: aString [
 { #category : #private }
 OpalCompiler >> parseMethod [
 	
-	^self compilationContext optionParseErrors 
+	^ (self compilationContext optionParseErrors or: [ self isInteractive not ])
 		ifTrue: [self parserClass parseFaultyMethod: source contents]
 		ifFalse: [self parserClass parseMethod: source contents]
 ]
