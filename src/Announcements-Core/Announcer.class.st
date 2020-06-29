@@ -21,6 +21,11 @@ Announcer >> announce: anAnnouncement [
 	^ announcement
 ]
 
+{ #category : #'as yet unclassified' }
+Announcer >> badMethod [
+^
+]
+
 { #category : #private }
 Announcer >> basicSubscribe: subscription [
 	^ registry add: subscription
