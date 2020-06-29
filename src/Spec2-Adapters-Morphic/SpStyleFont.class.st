@@ -1,5 +1,5 @@
 "
-! Font property (SpStyleFont)
+! Font property (==SpStyleFont==)
 
 Font properties control how a component (morph) with font will draw the text.
 I keep this properties: 
@@ -30,13 +30,34 @@ Class {
 		'italic',
 		'bold'
 	],
+	#classVars : [
+		'FontCache'
+	],
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
+
+{ #category : #private }
+SpStyleFont class >> addFontToCache: aFont [
+
+	self fontCache add: aFont
+]
+
+{ #category : #private }
+SpStyleFont class >> fontCache [
+
+	^ FontCache ifNil: [ FontCache := WeakSet new ]
+]
 
 { #category : #'ston-core' }
 SpStyleFont class >> stonName [
 	
 	^ 'Font'
+]
+
+{ #category : #private }
+SpStyleFont >> addFontToCache: aFont [
+
+	self class addFontToCache: aFont
 ]
 
 { #category : #operations }
@@ -59,17 +80,28 @@ SpStyleFont >> bold: anObject [
 	bold := anObject
 ]
 
-{ #category : #operations }
+{ #category : #private }
+SpStyleFont >> calculateDefinedFont [
+	| font |
+	
+	font := LogicalFont
+		familyName: self name 
+		pointSize: self size.
+
+	self isItalic ifTrue: [ font forceItalicOrOblique ].
+	self isBold ifTrue: [ font forceBold ].
+
+	^ font
+]
+
+{ #category : #private }
 SpStyleFont >> definedFont [
 	| definedFont |
 
-	definedFont := LogicalFont
-		familyName: self name 
-		pointSize: self size.
-		
-	self isItalic ifTrue: [ definedFont forceItalicOrOblique ].
-	self isBold ifTrue: [ definedFont forceBold ].
-
+	self withCachedFontDo: [ :aFont | ^ aFont ].
+	
+	definedFont := self calculateDefinedFont.
+	self addFontToCache: definedFont.
 	^ definedFont
 ]
 
@@ -119,4 +151,16 @@ SpStyleFont >> size [
 SpStyleFont >> size: aNumber [
 
 	size := aNumber
+]
+
+{ #category : #private }
+SpStyleFont >> withCachedFontDo: aBlock [
+
+	self class fontCache 
+		detect: [ :each | 
+			each familyName = self name 
+				and: [ each pointSize = self size 
+				and: [ each isBold = self isBold
+				and: [ each isItalic = self isItalic ] ] ] ]
+		ifFound: aBlock
 ]

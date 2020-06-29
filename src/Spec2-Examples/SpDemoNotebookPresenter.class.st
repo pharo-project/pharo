@@ -73,7 +73,11 @@ SpDemoNotebookPresenter >> initializePresenters [
 
 { #category : #pages }
 SpDemoNotebookPresenter >> objectClassPage [
-	^ SpNotebookPage title: 'Object class' icon: (self iconNamed: #nautilusIcon) provider: [ MessageBrowser new messages: Object methods ]
+
+	^ SpNotebookPage 
+		title: 'Object class' 
+		icon: (self iconNamed: #nautilusIcon) 
+		provider: [ MessageBrowser new messages: Object methods ]
 ]
 
 { #category : #pages }

@@ -1,6 +1,12 @@
 "
 I am a specific text field used to search.
 I display an additional ""clear"" icon.
+
+@@TODO
+
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
 "
 Class {
 	#name : #SpSearchInputFieldPresenter,

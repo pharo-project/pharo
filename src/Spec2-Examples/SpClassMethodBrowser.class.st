@@ -62,9 +62,8 @@ SpClassMethodBrowser >> connectPresenters [
 	methodListPresenter
 		transmitTo: textPresenter
 		transform: [ :method | method ifNil: [ '' ] ifNotNil: #sourceCode ]
-		postTransmission:
-			[ :destination :origin :transmited | 
-			transmited ifNotNil: [ destination behavior: transmited methodClass ] ]
+		postTransmission: [ :destination :origin :transmited | 
+			transmited ifNotNil: [ destination beForMethod: transmited ] ]
 ]
 
 { #category : #initialization }

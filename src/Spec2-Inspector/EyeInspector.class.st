@@ -277,11 +277,8 @@ EyeInspector >> objectChanged [
 	"triggered when the inspected object is changed"
 
 	self updateList.
-	self text doItReceiver: self object.
-	self description doItReceiver: self object.
-	self text doItContext: self doItContext.
-	self description doItContext: self doItContext.
-	self text ifNotNil: [ :w | w behavior: self objectClass ]
+	self description beForObject: self object.
+	self text ifNotNil: [ :w | w beForObject: self objectClass ]
 ]
 
 { #category : #accessing }

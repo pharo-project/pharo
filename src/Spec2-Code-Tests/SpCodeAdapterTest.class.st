@@ -72,8 +72,7 @@ SpCodeAdapterTest >> testTextWithStyle [
 	| text |
 
 	presenter 
-		behavior: nil;
-		doItReceiver: Object;
+		beForObject: Object;
 		type: 'self asString.'.
 	
 	text := self adapter textWithStyle.
@@ -86,7 +85,7 @@ SpCodeAdapterTest >> testTextWithStyle [
 	self assertText: text atInterval: "+" (4 to: 4) isStyle: #binary.
 	self assertText: text atInterval: "42.0" (6 to: 9) isStyle: #number.
 
-	presenter behavior: Object.
+	presenter beForBehavior: Object.
 	presenter type: 'm1 ^ "test" 42'.
 	text := self adapter textWithStyle.
 	self assertText: text atInterval: "m1" (1 to: 2) isStyle: #patternKeyword.

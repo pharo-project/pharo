@@ -452,15 +452,14 @@ MessageBrowser >> selectIndex: anIndex [
 
 { #category : #private }
 MessageBrowser >> selectItem: item [
+
 	toolbarPresenter method: item.
-	textModel behavior: (item ifNotNil: [ item methodClass ]).
-	textModel doItReceiver: textModel behavior.
+	textModel beForMethod: item.
 	textModel text: (self textConverter
 		method: item;
 		getText).
 	textModel clearUndoManager.
 	self installIconStylerFor: item
-
 ]
 
 { #category : #accessing }

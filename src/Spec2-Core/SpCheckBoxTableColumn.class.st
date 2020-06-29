@@ -10,6 +10,7 @@ Class {
 
 { #category : #visiting }
 SpCheckBoxTableColumn >> acceptColumnVisitor: aBuilder [
+
 	^ aBuilder visitCheckboxColumn: self
 ]
 

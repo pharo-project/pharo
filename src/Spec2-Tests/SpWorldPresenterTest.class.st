@@ -3,8 +3,7 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'application',
-		'worldMorph',
-		'oldColor'
+		'worldMorph'
 	],
 	#category : #'Spec2-Tests-Core-Support'
 }
@@ -13,7 +12,6 @@ Class {
 SpWorldPresenterTest >> setUp [
 
 	super setUp.
-	oldColor := WorldMorph currentWorld color.
 	worldMorph := SpTestWorldPresenter
 		reset;
 		currentWorld.
@@ -28,8 +26,6 @@ SpWorldPresenterTest >> setUp [
 SpWorldPresenterTest >> tearDown [
 
 	worldMorph delete.
-	DisplayScreen resetTitle.
-	WorldMorph currentWorld color: oldColor.
 	super tearDown
 ]
 

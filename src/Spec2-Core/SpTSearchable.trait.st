@@ -80,7 +80,7 @@ SpTSearchable >> searchMatching: aBlock [
 { #category : #private }
 SpTSearchable >> searchValueOf: item [ 
 
-	^ self displayValueOf: item
+	^ self displayValueFor: item
 ]
 
 { #category : #'api-events' }

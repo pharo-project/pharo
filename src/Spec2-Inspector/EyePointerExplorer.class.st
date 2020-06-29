@@ -74,8 +74,8 @@ EyePointerExplorer >> object: anObject [
 
 { #category : #'event-handling' }
 EyePointerExplorer >> objectChanged [
-	self text doItReceiver: self object.
-	self text ifNotNil: [ :w | w behavior: self object class ].
+
+	self text beForObject: self object.
 	self tree roots: self roots
 ]
 

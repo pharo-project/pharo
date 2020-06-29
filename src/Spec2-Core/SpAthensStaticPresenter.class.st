@@ -27,6 +27,11 @@ SpAthensStaticPresenter >> drawBlock: aBlock [
 ]
 
 { #category : #initialization }
+SpAthensStaticPresenter >> initialize [
+	super initialize.
+]
+
+{ #category : #initialization }
 SpAthensStaticPresenter >> surfaceExtent [
 	^ surfaceExtent
 ]

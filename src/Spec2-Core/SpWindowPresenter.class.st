@@ -40,8 +40,8 @@ Class {
 		'#menu => SpObservableSlot',
 		'#centered => SpObservableSlot',
 		'#isClosed => SpObservableSlot',
+		'#toolbar => SpObservableSlot',
 		'#statusbar => SpObservableSlot',
-		'#toolBar => SpObservableSlot',
 		'#window => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Support'
@@ -201,7 +201,7 @@ SpWindowPresenter >> close [
 	self isOpen ifFalse: [ ^ self ].
 	
 	self changed: #close with: #().
-	self application windowClosed: self
+	self windowClosed
 ]
 
 { #category : #private }
@@ -245,7 +245,7 @@ SpWindowPresenter >> hasStatusBar [
 
 { #category : #testing }
 SpWindowPresenter >> hasToolbar [
-	^ self toolBar notNil and: [ self toolBar notEmpty ]
+	^ self toolbar notNil and: [ self toolbar notEmpty ]
 ]
 
 { #category : #api }
@@ -313,6 +313,20 @@ SpWindowPresenter >> isDisplayed [
 	^ self window 
 		ifNotNil: [ :w | w isDisplayed ]
 		ifNil: [ false ] 
+]
+
+{ #category : #testing }
+SpWindowPresenter >> isMaximized [
+
+	self withAdapterDo: [ :anAdapter | ^ anAdapter isMaximized ].
+	^ false
+]
+
+{ #category : #testing }
+SpWindowPresenter >> isMinimized [
+
+	self withAdapterDo: [ :anAdapter | ^ anAdapter isMinimized ].
+	^ false
 ]
 
 { #category : #testing }
@@ -454,14 +468,16 @@ SpWindowPresenter >> title: aString [
 ]
 
 { #category : #api }
-SpWindowPresenter >> toolBar [
-	^ toolBar
+SpWindowPresenter >> toolbar [
+
+	^ toolbar
 ]
 
 { #category : #api }
-SpWindowPresenter >> toolBar: aToolbarPresenter [
+SpWindowPresenter >> toolbar: aToolbarPresenter [
+
 	aToolbarPresenter ifNotNil: [ aToolbarPresenter owner: self ].
-	^ toolBar := aToolbarPresenter
+	^ toolbar := aToolbarPresenter
 ]
 
 { #category : #'private-traversing' }
@@ -537,6 +553,12 @@ SpWindowPresenter >> window [
 { #category : #accessing }
 SpWindowPresenter >> window: aWindow [
 	window := aWindow
+]
+
+{ #category : #private }
+SpWindowPresenter >> windowClosed [ 
+	
+	self application windowClosed: self
 ]
 
 { #category : #private }

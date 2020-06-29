@@ -1,6 +1,6 @@
 Class {
 	#name : #SpLayoutTest,
-	#superclass : #SpTest,
+	#superclass : #SpSpecTest,
 	#instVars : [
 		'layout'
 	],

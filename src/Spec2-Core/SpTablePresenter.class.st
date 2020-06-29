@@ -4,6 +4,12 @@ See AbstractWidgetPresenter
 
 self example
 
+@@TODO
+
+!! Transmissions
+- #inputItemsPort (default)
+- #outputSelectionPort (default)
+- #outputActivationPort
 "
 Class {
 	#name : #SpTablePresenter,

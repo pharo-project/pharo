@@ -3,11 +3,11 @@ I am a ""show if condition is true"" presenter.
 My purpose is to allow users to choose different outputs depending on the result of a condition  defined.
 The basic usage would be:
 
-[[[
-	choose := self newPresenterSelector
-		when: [ aCondition ] show: [ aPresenter ];
-		when: [ anotherCondition ] show: [ anotherPresenter ];
-		defaultShow: [ defaultPresenter ]
+[[[language=Smalltalk
+choose := self newPresenterSelector
+	when: [ aCondition ] show: [ aPresenter ];
+	when: [ anotherCondition ] show: [ anotherPresenter ];
+	defaultShow: [ defaultPresenter ]
 ]]]
 
 > self example

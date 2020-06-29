@@ -68,14 +68,16 @@ SpMultipleSelectionMode >> selectAll [
 { #category : #selecting }
 SpMultipleSelectionMode >> selectIndexes: aCollection [
 	| indexes |
-	indexes := (aCollection collect: [ :each | self withinRangeIndex: each ]) asSet.
-	"If all elements are out of range, just ignore the event like for single selection."
-	(indexes isNotEmpty and: [ indexes allSatisfy: [ :each | each = 0 ] ]) ifTrue: [ ^ self ].
+	indexes := aCollection 
+		collect: [ :each | self withinRangeIndex: each ]
+		thenReject: [ :each | each = 0 ]. "0 index means out of range"
+	(aCollection isNotEmpty and: [ indexes isEmpty ]) "all indexes are out of range"
+		ifTrue: [ ^ #() ].
 
-	indexes := indexes reject: [ :each | each = 0 ].
-	indexes = self selectedIndexes asSet ifTrue: [ ^ self ].
+	indexes := indexes asOrderedCollection removeDuplicates.
+	indexes = self selectedIndexes ifTrue: [ ^ self ].
 
-	^ selectedIndexes := indexes asOrderedCollection
+	^ selectedIndexes := indexes
 ]
 
 { #category : #selecting }
@@ -91,10 +93,13 @@ SpMultipleSelectionMode >> selectedIndexes [
 { #category : #selecting }
 SpMultipleSelectionMode >> selectedItems [
 
-	^ self selectedIndexes collect: [ :index | 
-		self widget adapter 
-			ifNotNil: [ :anAdapter | anAdapter elementAt: index ]
-			ifNil: [ self model at: index ] ]
+	^ self widget itemsAt: self selectedIndexes
+]
+
+{ #category : #selecting }
+SpMultipleSelectionMode >> selectedItemsSortedByIndex [
+
+	^ self widget itemsAt: self selectedIndexes sort
 ]
 
 { #category : #accessing }

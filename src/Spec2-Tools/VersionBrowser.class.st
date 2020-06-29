@@ -127,7 +127,7 @@ VersionBrowser >> compareToCurrentVersion [
 VersionBrowser >> compareToOtherVersion [
 	| labels versions index selected |
 	versions := self changeList.
-	labels := versions collect: [:each | each stamp].
+	labels := versions collect: #stamp.
 	index := UIManager default chooseFrom: labels.
 	index > 0 ifFalse: [ ^ self ].
 	selected := versions at: index.
@@ -290,6 +290,6 @@ VersionBrowser >> showSourceWithConverter: aConverter [
 	self buildWithSpec.
 	self textConverter: aConverter.
 	sourcePresenter whenSubmitDo: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ].
-	sourcePresenter behavior: self selectedMessage methodClass.
+	sourcePresenter beForMethod: self selectedMessage.
 	messageList selectIndex: (messageList selectedIndex)
 ]

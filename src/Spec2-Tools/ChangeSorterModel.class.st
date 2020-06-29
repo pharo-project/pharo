@@ -149,7 +149,7 @@ ChangeSorterModel >> findChangeSetIn: aCollectionOfChangeSets [
 	self okToChange ifFalse: [^ self].
 	pattern := UIManager default request: 'ChangeSet name or fragment?'.
 	pattern isEmptyOrNil ifTrue: [^ self].
-	nameList := aCollectionOfChangeSets collect: [:each | each name].
+	nameList := aCollectionOfChangeSets collect: #name.
 	candidates := aCollectionOfChangeSets select:
 			[:c | (nameList includes: c name) and: 
 				[c name includesSubstring: pattern caseSensitive: false]].
@@ -248,10 +248,17 @@ ChangeSorterModel >> rename: aChangeSet [
 ChangeSorterModel >> setContentsOfChangeSet: changeSet forClass: class andSelector: selector [
 	"return the source code that shows in the bottom pane"
 
-	class ifNil: [ "Only the change set is currently selected" ^ self buildChangeSetDescriptionFor: changeSet ].
-	^ selector
-		ifNil: [ "class is selected but not the selector" self buildClassDescriptionFor: changeSet class: class ]
-		ifNotNil: [ "a class and a selector are selected" self buildSelectorDescriptionFor: changeSet class: class selector: selector ]
+	class
+		ifNil: [
+			"Only the change set is currently selected"
+			^ self buildChangeSetDescriptionFor: changeSet ].
+	selector 
+		ifNil: [ 
+			"class is selected but not the selector"
+			^ self buildClassDescriptionFor: changeSet class: class ]
+		ifNotNil: [
+			"a class and a selector are selected"
+			^ self buildSelectorDescriptionFor: changeSet class: class selector: selector ]
 ]
 
 { #category : #'change set' }

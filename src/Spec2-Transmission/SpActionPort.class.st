@@ -1,12 +1,14 @@
 "
-An action name is a generic action to handle the result of a transmission.
-It will execute a block when transmission arrives.
+! Action Input Port (==SpActionPort==)
+An """"action input port"""" s a generic action to handle the result of a transmission: Instead transmit to a destination presenter, it will execute an action block. 
 
-Example: 
-
+[[[language=Smalltalk
 aPresenter 
 	transmitDo: [ :aValue | ... ]
 	transform: #asString
+]]]
+
+""""Important:"""" This port is not meant to be used in the same way other input ports, instead, you will use the ==#transmitDo:== mechanism.
 "
 Class {
 	#name : #SpActionPort,

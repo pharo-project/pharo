@@ -141,6 +141,13 @@ SpMenuItemPresenter >> name [
 
 { #category : #api }
 SpMenuItemPresenter >> name: aString [
+	"The label of the menu item. 
+	 In certain backends (Gtk), we allow this label to contain mnemonics using an underscore ($_)
+	 before the mnemonic letter: 
+	[[[language=Smalltalk
+	aMenuItemPresenter name: '_File'.
+	]]]"
+
 	name := aString
 ]
 

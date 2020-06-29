@@ -1,5 +1,5 @@
 "
-! Geometry properties (SpStyleGeometry)
+! Geometry properties (==SpStyleGeometry==)
 
 Geometry properties controls how the component (morph) will be arranged within its layout.
 

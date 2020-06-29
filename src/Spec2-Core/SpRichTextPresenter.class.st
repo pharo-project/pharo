@@ -1,3 +1,10 @@
+"
+@@TODO
+
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
+"
 Class {
 	#name : #SpRichTextPresenter,
 	#superclass : #SpTextPresenter,

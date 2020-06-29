@@ -4,18 +4,11 @@ See AbstractWidgetPresenter
 
 self example
 
-You can also have a look at ListSelectionPresenter and ScrollSyncExample for more examples.
+@@TODO
 
-My main purpose is to handle source code (I have editing shortcuts support).
-
-I provide the following variables and their accessors
-- autoAccept is a boolean representing if the text is accepted on each keystroke.
-- text is the text of the text zone.
-
-I provide the following methods
-- beForCode and beForText are shortcut for configuring me.
-- getSelection return the interval currently selected.
-- getText is a getter of the text
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
 "
 Class {
 	#name : #SpTextPresenter,
@@ -53,23 +46,11 @@ SpTextPresenter class >> buildEditionCommandsGroupFor: presenterInstance [
 SpTextPresenter class >> buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
 
 	aCmCommandsGroup beDisplayedAsGroup.
-	aCmCommandsGroup register: (self codeEditionCommandsGroupWith: presenter).
-	aCmCommandsGroup register: (self codeAcceptCommandsGroupWith: presenter)
+	aCmCommandsGroup register: (self textEditionCommandsGroupWith: presenter)
 ]
 
 { #category : #commands }
-SpTextPresenter class >> codeAcceptCommandsGroupWith: aPresenter [
-
-	^ (CmCommandGroup named: 'Accept commands') asSpecGroup
-		description: 'Accept or cancel changes.';
-		beDisplayedAsGroup;
-		register: (SpAcceptChangesCommand forSpecContext: aPresenter);
-		register: (SpCancelChangesCommand forSpecContext: aPresenter);
-		yourself
-]
-
-{ #category : #commands }
-SpTextPresenter class >> codeEditionCommandsGroupWith: aPresenter [
+SpTextPresenter class >> textEditionCommandsGroupWith: aPresenter [
 	| group |
 
 	group := (CmCommandGroup named: 'Selection edition commands') asSpecGroup.
@@ -77,7 +58,7 @@ SpTextPresenter class >> codeEditionCommandsGroupWith: aPresenter [
 		description: 'Edit code selection.';
 		beDisplayedAsGroup.
 	
-	SpCodeEditionCommand allSubclassesDo: [ :commandClass | 
+	SpTextEditionCommand allSubclassesDo: [ :commandClass | 
 		group register: (commandClass forSpecContext: aPresenter) ].
 	
 	^ group
