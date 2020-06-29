@@ -25,11 +25,6 @@ Dictionary >> declareVariable: newGlobal from: aDictionary [
 ]
 
 { #category : #'*Slot-Core' }
-Dictionary >> hasTempVector [ 
-	^false
-]
-
-{ #category : #'*Slot-Core' }
 Dictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
 	name isString ifFalse: [ ^nil ].
