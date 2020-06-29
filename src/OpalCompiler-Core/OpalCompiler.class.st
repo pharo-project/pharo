@@ -508,7 +508,8 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-	^ (self compilationContext optionParseErrors or: [ self isInteractive not ])
+	"we should allow syntactically wrong code in evaluate, too"
+	^ (self compilationContext optionParseErrors "or: [ self isInteractive not ]")
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
 		ifFalse: [self parserClass parseExpression: source contents]
 ]
