@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'nonEmptyDict'
 	],
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Dictionaries'
 }
 
 { #category : #helpers }

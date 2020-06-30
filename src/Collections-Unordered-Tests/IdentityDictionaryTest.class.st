@@ -4,7 +4,7 @@ SUnit tests for identity dictionaries
 Class {
 	#name : #IdentityDictionaryTest,
 	#superclass : #DictionaryTest,
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Dictionaries'
 }
 
 { #category : #'building suites' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'floatCollection'
 	],
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Sets'
 }
 
 { #category : #'building suites' }

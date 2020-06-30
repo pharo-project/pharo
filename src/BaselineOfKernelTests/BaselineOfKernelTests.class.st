@@ -14,7 +14,8 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Collections-Abstract-Tests';					
 			package: 	'Collections-Atomic-Tests';
 			package: 	'Collections-Stack-Tests';	
-			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Stack-Tests') ];
+			package: 	'Collections-Unordered-Tests';					
+			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Stack-Tests' 'Collections-Unordered-Tests') ];
 			
 				
 			package: 	'Kernel-Tests'; 

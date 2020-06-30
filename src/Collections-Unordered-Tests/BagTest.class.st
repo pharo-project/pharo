@@ -20,7 +20,7 @@ Class {
 		'otherCollectionWithoutEqualElements',
 		'collectionWithoutNilMoreThan5'
 	],
-	#category : #'Collections-Tests-Unordered'
+	#category : #'Collections-Unordered-Tests-Bags'
 }
 
 { #category : #'tests - includes' }

@@ -2,32 +2,24 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryIncludesWithIdentityCheckTest,
-	#traits : 'TDictionaryIncludesTest',
-	#classTraits : 'TDictionaryIncludesTest classTrait',
-	#category : #'Collections-Tests-Unordered'
+	#name : #TDictionaryIncludesTest,
+	#category : #'Collections-Unordered-Tests-Traits'
 }
 
 { #category : #requirements }
-TDictionaryIncludesWithIdentityCheckTest >> keyNotInNonEmpty [
+TDictionaryIncludesTest >> keyNotInNonEmpty [
 	" return a key not included in nonEmpty"
 	^ self explicitRequirement
 ]
 
 { #category : #requirements }
-TDictionaryIncludesWithIdentityCheckTest >> nonEmpty [
+TDictionaryIncludesTest >> nonEmpty [
 
-^self explicitRequirement
-]
-
-{ #category : #requirements }
-TDictionaryIncludesWithIdentityCheckTest >> nonEmptyWithCopyNonIdentical [
-" return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
 ^self explicitRequirement
 ]
 
 { #category : #'tests - fixture' }
-TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludes [
+TDictionaryIncludesTest >> test0FixtureDictionaryIncludes [
 	| in |
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -41,15 +33,8 @@ TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludes [
 	self deny: in
 ]
 
-{ #category : #'tests - fixture' }
-TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludesIdentity [
-	self nonEmptyWithCopyNonIdentical.
-	self denyEmpty: self nonEmptyWithCopyNonIdentical.
-	self nonEmptyWithCopyNonIdentical do: [ :each | self deny: each == each copy ]
-]
-
 { #category : #'tests - dictionary including' }
-TDictionaryIncludesWithIdentityCheckTest >> testIncludesAssociation [
+TDictionaryIncludesTest >> testIncludesAssociation [
 
 	|  nonExistantAssociation associationIn keyIn valueIn |
 
@@ -71,7 +56,7 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesAssociation [
 ]
 
 { #category : #'tests - dictionary including' }
-TDictionaryIncludesWithIdentityCheckTest >> testIncludesComportementForDictionnary [
+TDictionaryIncludesTest >> testIncludesComportementForDictionnary [
 	| valueIn collection keyIn |
 	collection := self nonEmpty.
 	valueIn := collection values anyOne.
@@ -83,7 +68,7 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesComportementForDictionna
 ]
 
 { #category : #'tests - dictionary including' }
-TDictionaryIncludesWithIdentityCheckTest >> testIncludesIdentityBasicComportement [
+TDictionaryIncludesTest >> testIncludesIdentityBasicComportement [
 
 | valueIn collection |
 collection := self nonEmpty .
@@ -94,19 +79,7 @@ self deny: (collection includesIdentity: self valueNotInNonEmpty ).
 ]
 
 { #category : #'tests - dictionary including' }
-TDictionaryIncludesWithIdentityCheckTest >> testIncludesIdentitySpecificComportement [
-
-| valueIn collection |
-collection := self nonEmptyWithCopyNonIdentical  .
-valueIn := collection  values anyOne.
-
-self assert: (collection includesIdentity: valueIn ) .
-self deny: (collection includesIdentity: valueIn copy ) .
-
-]
-
-{ #category : #'tests - dictionary including' }
-TDictionaryIncludesWithIdentityCheckTest >> testIncludesKey [
+TDictionaryIncludesTest >> testIncludesKey [
 
 	| collection keyIn nonExistantKey |
 
@@ -119,7 +92,7 @@ TDictionaryIncludesWithIdentityCheckTest >> testIncludesKey [
 ]
 
 { #category : #requirements }
-TDictionaryIncludesWithIdentityCheckTest >> valueNotInNonEmpty [
+TDictionaryIncludesTest >> valueNotInNonEmpty [
 	" return a value not included in nonEmpty"
 	^ self explicitRequirement
 ]
