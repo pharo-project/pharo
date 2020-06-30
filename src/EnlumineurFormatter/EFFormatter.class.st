@@ -1,5 +1,6 @@
 "
-Enlumineur is a replacement of BlueInk pretty printer.
+Enlumineur is a replacement of BlueInk pretty printer (now packaged in pharo-contributions/configurableFormatter).
+
 It was developed by Hugo Lasnier during 6 months internship within RMOD and supervised by S. Ducasse and G. Polito during 2019.
 The code was revisited and cleaned but there are probably more glitches left. 
 
@@ -413,7 +414,7 @@ EFFormatter class >> selectorAndArgumentCombinedMaxSize: anInteger [
 
 { #category : #accessing }
 EFFormatter class >> settingGroup [
-	^ #blueInkEnlumineur
+	^ #Enlumineur
 ]
 
 { #category : #settings }
