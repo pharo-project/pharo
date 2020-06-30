@@ -65,7 +65,7 @@ ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinishButF
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	| process haltWasPassed halt |
-	self flag: 'it fails runKernelTests on bootstrap image due to Process suspend issue'.
+	self flag: 'it fails runKernelTests on bootstrap image due to Process bug #6745'.
 	self skip.
 	
 	haltWasPassed := false.
@@ -185,7 +185,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndProcessCompletes [
 
 	| process |
-	self flag: 'it fails runKernelTests on bootstrap image due to Process suspend issue'.
+	self flag: 'it fails runKernelTests on bootstrap image due to Process bug #6745'.
 	self skip.
 	process := self fork: [ testService suspendBackgroundFailure: Error new ].
 	
@@ -382,7 +382,7 @@ ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 { #category : #tests }
 ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIsDisabled [
 	| process error errorWasPassed |
-	self flag: 'it fails runKernelTests on bootstrap image due to Process suspend issue'.
+	self flag: 'it fails runKernelTests on bootstrap image due to Process bug #6745'.
 	self skip.
 	errorWasPassed := false.
 	error := Error new messageText: 'test error'.
