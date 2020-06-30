@@ -1,13 +1,15 @@
 Class {
 	#name : #ProcessSuspendResumeTerminateIssueTest,
-	#superclass : #TestExecutionEnvironmentTestCase,
+	#superclass : #TestCase,
 	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #running }
-ProcessSuspendResumeTerminateIssueTest >> createTestService [
-
-	^ProcessMonitorTestService new
+ProcessSuspendResumeTerminateIssueTest >> runCaseManaged [
+	"Here we are testing the test environment logic.
+	So we should disable it for ourselves"
+	
+	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
 ]
 
 { #category : #tests }
@@ -21,7 +23,6 @@ ProcessSuspendResumeTerminateIssueTest >> testWithSuspendInTheMiddleOfProcess [
 	started := false.
 	process := [ started := true. Processor activeProcess suspend. ended := true ] newProcess.
 	process priority: Processor activePriority + 1.
-	processes add: process.	
 	process resume.
 	self assert: started description: 'process should be started'.
 	self assert: process isSuspended description: 'process should be suspended'.
@@ -41,7 +42,6 @@ ProcessSuspendResumeTerminateIssueTest >> testWithoutSuspendInTheMiddleOfProcess
 	started := false.
 	process := [ started := true. self printString. ended := true ] newProcess.
 	process priority: Processor activePriority + 1.
-	processes add: process.	
 	process resume.
 	self assert: started description: 'process should be started'.
 	self assert: ended description: 'process should be ended'.
