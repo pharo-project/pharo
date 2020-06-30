@@ -8,6 +8,12 @@ Class {
 	#category : #'Spec2-Tests-Utils'
 }
 
+{ #category : #testing }
+SpBaseTest class >> isAbstract [
+
+	^ self = SpBaseTest
+]
+
 { #category : #accessing }
 SpBaseTest >> adapter [
 

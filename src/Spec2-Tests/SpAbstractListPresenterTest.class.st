@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 SpAbstractListPresenterTest class >> isAbstract [
 
-	^ self ==  SpAbstractListPresenterTest
+	^ self == SpAbstractListPresenterTest
 ]
 
 { #category : #running }
