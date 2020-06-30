@@ -625,10 +625,9 @@ OCASTTranslator >> visitNode: aNode [
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [  
 	methodBuilder 
-		pushLiteralVariable: (AdditionalBinding key: #error value: anErrorNode asSyntaxErrorNotification);
-		send: #signal.
-
-
+		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteral: anErrorNode;
+		send: #signal:
 ]
 
 { #category : #'visitor-double dispatching' }
