@@ -21,10 +21,12 @@ BaselineOfSpec2 >> baseline: spec [
 			package: 'Spec2-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic') ];
 			package: 'Spec2-Morphic-Backend-Tests' with: [ spec requires: #('Spec2-Adapters-Morphic' 'Spec2-Backend-Tests') ];
 			package: 'Spec2-Adapters-Morphic-Tests' with: [ spec requires: #('Spec2-Backend-Tests') ];
-			package: 'Spec2-Morphic-Tests' with: [ spec requires: #('Spec2-Morphic' 'Spec2-Backend-Tests') ] ].
+			package: 'Spec2-Morphic-Tests' with: [ spec requires: #('Spec2-Morphic' 'Spec2-Backend-Tests') ];
+			package: 'Spec2-Code-Backend-Tests' with: [ spec requires: #(Spec-Backend-Tests) ] ].
 	
 	spec group: 'Core' with: #('SpecCore' 'Spec2-Morphic' 'Spec2-Adapters-Morphic').
 	spec group: 'Code' with: #('Core' 'Spec2-Code-Morphic').
+	spec group: 'CodeTests' with: #('Code' 'Spec2-Code-Backend-Tests').
 	spec group: 'Support' with: #('Core' 'Spec2-Morphic-Examples').
 	spec group: 'Tests' with: #(
 		'SpecCore'
@@ -38,7 +40,7 @@ BaselineOfSpec2 >> baseline: spec [
 		'Core'
 		'Support').
 		
-	spec group: 'default' with: #('Base' 'Code' 'Tests').
+	spec group: 'default' with: #('Base' 'Code' 'Tests' 'CodeTests').
 ]
 
 { #category : #acccessing }

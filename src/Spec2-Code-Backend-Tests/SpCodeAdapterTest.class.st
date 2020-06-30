@@ -1,7 +1,7 @@
 Class {
 	#name : #SpCodeAdapterTest,
 	#superclass : #SpTextAdapterTest,
-	#category : #'Spec2-Code-Tests'
+	#category : #'Spec2-Code-Backend-Tests'
 }
 
 { #category : #tests }

@@ -29,7 +29,7 @@ BaselineOfSpecCore >> baseline: spec [
 			package: 'Spec2-Adapters-Stub' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Commander2-Tests' with: [ spec requires: #('Spec2-Commander2') ];
 			package: 'Spec2-Tests' with: [ spec requires: #('Spec2-Examples') ];
-			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Code' 'Spec2-Tests') ];
+			package: 'Spec2-Code-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Code') ];
 			"Tools -> This needs to be moved to NewTools"
 			package: 'Spec2-Tools' with: [ spec requires: #('Spec2-Core') ];
 			package: 'Spec2-Tools-Tests' with: [ spec requires: #('Spec2-Tests' 'Spec2-Tools') ];
