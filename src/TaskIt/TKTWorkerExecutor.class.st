@@ -14,15 +14,10 @@ Class {
 { #category : #finalization }
 TKTWorkerExecutor >> finalize [
 
-	processToKill kill
-]
-
-{ #category : #accessing }
-TKTWorkerExecutor >> processToKill [
-	^ processToKill
+	(processToKill at: 1) ifNotNil: [:e | e kill]
 ]
 
 { #category : #accessing }
 TKTWorkerExecutor >> processToKill: anObject [
-	processToKill := anObject
+	processToKill := WeakArray with: anObject
 ]
