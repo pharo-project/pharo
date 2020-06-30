@@ -487,6 +487,14 @@ RBMethodNode >> numArgs [
 	^self selector numArgs
 ]
 
+{ #category : #testing }
+RBMethodNode >> offsetIsComment: anOffset [
+	"check is the offset in the source part of a comment"
+
+	^ self allComments
+		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
+]
+
 { #category : #'tree accessing' }
 RBMethodNode >> parentOfSubtree: subtree [
 
