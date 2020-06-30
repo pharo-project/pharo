@@ -96,6 +96,11 @@ OCCompilerNotifyingTest >> initializeTextWithoutError [
 ]
 
 { #category : #private }
+OCCompilerNotifyingTest >> notify: message at: location in: code [
+	"requestor api: ignore"
+]
+
+{ #category : #private }
 OCCompilerNotifyingTest >> numberOfSelections [
 	^(text occurrencesOf: $%) + 1
 ]
@@ -346,4 +351,9 @@ OCCompilerNotifyingTest >> testUnmatchedStringQuote [
 
 	self setUpForErrorsIn: '^nil printString ,  ''unfinished string` Unmatched '' in string literal. ->`'.
 	self enumerateAllSelections
+]
+
+{ #category : #private }
+OCCompilerNotifyingTest >> text [
+	"requestor api: ignore"
 ]
