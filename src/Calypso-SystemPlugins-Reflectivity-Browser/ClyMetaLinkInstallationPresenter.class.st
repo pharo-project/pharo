@@ -69,7 +69,7 @@ ClyMetaLinkInstallationPresenter >> close [
 ClyMetaLinkInstallationPresenter >> initializePresenter [
 	metalinkListPresenter := self newList.
 	metalinkListPresenter items: self allRelevantMetaLinks.
-	toolBar := self newToolBar.
+	toolBar := self newToolbar.
 	self toolbarButtons do: [ :button | toolBar addItem: button ]
 ]
 
