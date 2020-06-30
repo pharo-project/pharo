@@ -3,10 +3,12 @@ I model temp variables. With Closures, there are two kinds: Copying and those th
 "
 Class {
 	#name : #OCTempVariable,
-	#superclass : #OCAbstractLocalVariableTOMERGE,
+	#superclass : #Variable,
 	#instVars : [
 		'escaping',
-		'index'
+		'index',
+		'scope',
+		'usage'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
