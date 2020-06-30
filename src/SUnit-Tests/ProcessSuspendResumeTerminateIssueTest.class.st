@@ -13,6 +13,17 @@ ProcessSuspendResumeTerminateIssueTest >> runCaseManaged [
 ]
 
 { #category : #tests }
+ProcessSuspendResumeTerminateIssueTest >> testMostSimpleProcess [
+	| process ended |
+	ended := false.
+	process := [ ended := true ] newProcess.
+	process priority: Processor activePriority + 1.
+	process resume.
+	self assert: ended description: 'process should be ended'.
+	self assert: process isTerminated description: 'process should be terminated'
+]
+
+{ #category : #tests }
 ProcessSuspendResumeTerminateIssueTest >> testWithSuspendInTheMiddleOfProcess [
 	"The test discovers the issue with Process>>isTerminated method
 	when process was suspended in the middle and then resumed.
