@@ -20,7 +20,7 @@ ProcessSuspendResumeTerminateIssueTest >> testMostSimpleProcess [
 	process priority: Processor activePriority + 1.
 	process resume.
 	self assert: ended description: 'process should be ended'.
-	self assert: process isTerminated description: 'process should be terminated'
+	self assert: process isTerminated description: 'process should be terminated; current pc=', process suspendedContext pc asString
 ]
 
 { #category : #tests }
