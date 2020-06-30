@@ -112,25 +112,26 @@ ClyMetaLinkInstallationPresenter >> toolbarButtons [
 	buttons := OrderedCollection new.
 	buttons add: (self isForMetaLinkInstallation
 			 ifTrue: [ 
-				 SpToolBarButtonPresenter new
+				 self newToolbarButton
 					 label: 'Install';
 					 icon: (self iconNamed: #smallOk);
 					 help: 'Install the selected metalink';
 					 action: [ self installSelectedMetalink ];
 					 yourself ]
 			 ifFalse: [ 
-				 SpToolBarButtonPresenter new
+				 self newToolbarButton
 					 label: 'Uninstall';
 					 icon: (self iconNamed: #smallOk);
 					 help: 'Uninstall the selected metalink';
 					 action: [ self uninstallSelectedMetalink ];
 					 yourself ]).
-	buttons add: (SpToolBarButtonPresenter new
+	buttons add: (self newToolbarButton
 			 label: 'Cancel';
 			 icon: (self iconNamed: #smallCancel);
 			 help: 'Cancel';
 			 action: [ self close ];
 			 yourself).
+
 	^ buttons
 ]
 
