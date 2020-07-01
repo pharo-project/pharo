@@ -268,8 +268,7 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	canRewind := (self isContextPostMortem: self interruptedContext) not.
 	"Do not try to recompile a doIt method"
 	aContext method isDoIt
-		ifTrue: [ UIManager default alert:  'Can not modify a DoIt-Method.'.
-			^ false ].
+		ifTrue: [ self returnValue: ((Smalltalk compiler compile: text) valueWithReceiver: nil arguments: #()) from: aContext sender. ^false].
 	(recompilationContext := (self createModelForContext: aContext) locateClosureHomeWithContent: text) ifNil: [ ^ false ].
 	canRewind
 		ifFalse: [ (self confirm: 'Can not rewind post mortem context for new method.\ Accept anyway ?' withCRs) or: [ ^ false ] ].
