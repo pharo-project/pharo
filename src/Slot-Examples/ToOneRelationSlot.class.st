@@ -18,7 +18,7 @@ ToOneRelationSlot >> updateOld: oldValue new: newValue in: anObject [
 	newValue 
 		ifNotNil: [ self checkValue: newValue ].
 	self hasInverse
-		ifFalse: [ ^ self ].
+		ifFalse: [ ^ newValue ].
 	oldValue 
 		ifNotNil: [ self removeAssociationFrom: anObject to: oldValue ].
 	newValue 
