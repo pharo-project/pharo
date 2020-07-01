@@ -26,6 +26,7 @@ TKTWatchDog class >> onDuty [
 { #category : #reseting }
 TKTWatchDog class >> reset [
 	
+	onDuty ifNotNil: [ onDuty stop ].
 	onDuty := nil.
 ]
 
