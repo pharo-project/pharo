@@ -81,9 +81,10 @@ RelationSlot >> emitStore: aMethodBuilder [
 		addTemp: tempName;
 		storeTemp: tempName;
 		popTop;
-		pushReceiver;
+ 		pushLiteral: self;
 		pushInstVar: index;
 		pushTemp: tempName;
+		pushReceiver;
 		send: #updateOld:new:in:;
 		storeInstVar: index
 ]
