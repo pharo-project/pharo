@@ -13,21 +13,21 @@ ToOneRelationSlot >> isToOneSlot [
 	^true
 ]
 
-{ #category : #'meta-object-protocol' }
-ToOneRelationSlot >> write: newValue to: anObject [
+{ #category : #internal }
+ToOneRelationSlot >> updateOld: oldValue new: newValue in: anObject [
 
-	| oldValue |
-
-	oldValue := self read: anObject.
 	newValue notNil
 		ifTrue: [ self checkValue: newValue ].
-	self hasInverse 
-		ifTrue: [ 
-			oldValue notNil
+	self hasInverse ifFalse:  [^ self ]. 
+	oldValue notNil
 				ifTrue: [ self removeAssociationFrom: anObject to: oldValue ].
-			newValue notNil
-				ifTrue: [ self addAssociationFrom: anObject to: newValue ] ].
-		
+	newValue notNil
+				ifTrue: [ self addAssociationFrom: anObject to: newValue ]
+]
+
+{ #category : #'meta-object-protocol' }
+ToOneRelationSlot >> write: newValue to: anObject [
+	self updateOld: (self read: anObject) new: newValue in: anObject.
 	super write: newValue to: anObject
 ]
 
