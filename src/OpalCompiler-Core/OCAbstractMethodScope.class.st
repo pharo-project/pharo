@@ -116,8 +116,8 @@ OCAbstractMethodScope >> id: int [
 OCAbstractMethodScope >> initialize [
 
 	tempVars :=  OrderedDictionary new.
-	tempVector  := Dictionary new.
-	copiedVars := Dictionary new.
+	tempVector  := OrderedDictionary new.
+	copiedVars := OrderedDictionary new.
 	id := 0.
 	
 	thisContextVar := ThisContextVariable instance
