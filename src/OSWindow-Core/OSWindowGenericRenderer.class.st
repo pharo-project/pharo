@@ -26,6 +26,11 @@ OSWindowGenericRenderer >> color: aColor [
 	self subclassResponsibility
 ]
 
+{ #category : #resources }
+OSWindowGenericRenderer >> createRenderTargetTextureWithExtent: anExtent [
+	self subclassResponsibility
+]
+
 { #category : #rendering }
 OSWindowGenericRenderer >> drawLine: startPoint end: endPoint [
 	self subclassResponsibility
@@ -66,6 +71,12 @@ OSWindowGenericRenderer >> fullClippingBounds [
 OSWindowGenericRenderer >> fullClippingExtent [
 	"This method should return the extent associated to a clipping rectangle that encompasses the full renderer output surface."
 	^ backendWindow extent
+]
+
+{ #category : #resources }
+OSWindowGenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withExtent: anExtent [
+	"This gets or creates a cached render target texture corresponding to an an abstract object used as a key."
+	self subclassResponsibility
 ]
 
 { #category : #resources }
@@ -122,5 +133,11 @@ OSWindowGenericRenderer >> useModulatingColorBlending [
 
 { #category : #'blending mode' }
 OSWindowGenericRenderer >> useNoBlending [
+	self subclassResponsibility
+]
+
+{ #category : #rendering }
+OSWindowGenericRenderer >> withRenderTarget: aRenderTargetTexture do: aBlock [
+	"Activates a specific render target during the block."
 	self subclassResponsibility
 ]

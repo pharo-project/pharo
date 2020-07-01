@@ -12,7 +12,9 @@ Class {
 		'activeGreen',
 		'activeBlue',
 		'activeAlpha',
-		'cachedFontCache'
+		'cachedFontCache',
+		'renderTargetTextureCache',
+		'currentRenderTarget'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -44,9 +46,19 @@ OSSDL2GenericRenderer >> color: aColor [
 	renderer drawColorR: activeRed g: activeGreen b: activeBlue a: activeAlpha
 ]
 
+{ #category : #resources }
+OSSDL2GenericRenderer >> createRenderTargetTextureWithExtent: anExtent [
+	| texture |
+	texture := renderer createTextureFormat: SDL_PIXELFORMAT_ARGB8888 access: SDL_TEXTUREACCESS_TARGET width: anExtent x height: anExtent y.
+	^ OSSDL2WindowRendererTexture new
+		extent: anExtent copy;
+		handle: texture;
+		yourself
+]
+
 { #category : #initialization }
 OSSDL2GenericRenderer >> createSDL2Renderer [
-	renderer := backendWindow sdl2Window createDefaultRenderer.
+	renderer := backendWindow sdl2Window createAcceleratedRenderer.
 	
 	self useNoBlending;
 		color: Color white.
@@ -59,7 +71,10 @@ OSSDL2GenericRenderer >> createStaticTextureFromForm32: form [
 	texture := renderer createTextureFormat: SDL_PIXELFORMAT_ARGB8888 access: SDL_TEXTUREACCESS_STATIC width: form width height: form height.
 	form unhibernate.
 	texture updateTexturePixels: form bits pitch: form width * 4.
-	^ OSSDL2WindowRendererTexture new handle: texture; yourself
+	^ OSSDL2WindowRendererTexture new
+		extent: form extent copy;
+		handle: texture;
+		yourself
 ]
 
 { #category : #private }
@@ -153,6 +168,17 @@ OSSDL2GenericRenderer >> getOrCreateCachedFontFor: font [
 ]
 
 { #category : #resources }
+OSSDL2GenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withExtent: anExtent [
+	| result |
+	result := self renderTargetTextureCache at: anObject ifAbsentPut: [ self createRenderTargetTextureWithExtent: anExtent ].
+	result extent ~= anExtent ifTrue: [
+		result := self createRenderTargetTextureWithExtent: anExtent.
+		self renderTargetTextureCache at: anObject put: result
+	].
+	^ result
+]
+
+{ #category : #resources }
 OSSDL2GenericRenderer >> getOrCreateStaticTextureFromForm: form [
 	^ self staticTextureCache at: form ifAbsentPut: [ self createStaticTextureFromForm: form ]
 ]
@@ -165,6 +191,11 @@ OSSDL2GenericRenderer >> mapColorChannel: colorChannel [
 { #category : #rendering }
 OSSDL2GenericRenderer >> present [
 	renderer present
+]
+
+{ #category : #private }
+OSSDL2GenericRenderer >> renderTargetTextureCache [
+	^ renderTargetTextureCache ifNil: [ renderTargetTextureCache := WeakKeyDictionary new ]
 ]
 
 { #category : #rendering }
@@ -204,4 +235,16 @@ OSSDL2GenericRenderer >> useModulatingColorBlending [
 { #category : #rendering }
 OSSDL2GenericRenderer >> useNoBlending [
 	self setBlendMode: SDL_BLENDMODE_NONE
+]
+
+{ #category : #rendering }
+OSSDL2GenericRenderer >> withRenderTarget: aRenderTargetTexture do: aBlock [
+	| oldRenderTarget |
+	oldRenderTarget := currentRenderTarget.
+	currentRenderTarget := aRenderTargetTexture ifNotNil: [ aRenderTargetTexture handle ].
+	renderer setRenderTarget: currentRenderTarget.
+	aBlock ensure: [
+		currentRenderTarget := oldRenderTarget.
+		renderer setRenderTarget: (currentRenderTarget ifNil: [SDL_Texture null]).
+	].
 ]

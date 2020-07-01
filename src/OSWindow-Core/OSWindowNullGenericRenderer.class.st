@@ -12,7 +12,7 @@ OSWindowNullGenericRenderer >> clear [
 	"Do nothing"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #clipping }
 OSWindowNullGenericRenderer >> clippingBounds: aRectangle [
 	"Nothing required here"
 ]
@@ -20,6 +20,11 @@ OSWindowNullGenericRenderer >> clippingBounds: aRectangle [
 { #category : #rendering }
 OSWindowNullGenericRenderer >> color: aColor [
 	"Do nothing"
+]
+
+{ #category : #resources }
+OSWindowNullGenericRenderer >> createRenderTargetTextureWithExtent: anExtent [
+	^ nil
 ]
 
 { #category : #rendering }
@@ -37,7 +42,7 @@ OSWindowNullGenericRenderer >> drawRectangle: aRectangle [
 	"Do nothing"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 OSWindowNullGenericRenderer >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc kern: kern [
 ]
 
@@ -51,9 +56,13 @@ OSWindowNullGenericRenderer >> fillRectangle: aRectangle [
 	"Do nothing"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #resources }
+OSWindowNullGenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withExtent: anExtent [
+	^ nil
+]
+
+{ #category : #resources }
 OSWindowNullGenericRenderer >> getOrCreateStaticTextureFromForm: from [
-	"This gets or creates a cached static texture corresponding to a form. This is typically used for drawing GUI icons."
 	^ nil
 ]
 
@@ -91,4 +100,9 @@ OSWindowNullGenericRenderer >> useModulatingColorBlending [
 
 { #category : #'blending mode' }
 OSWindowNullGenericRenderer >> useNoBlending [
+]
+
+{ #category : #rendering }
+OSWindowNullGenericRenderer >> withRenderTarget: aRenderTargetTexture do: aBlock [
+	^ aBlock value
 ]

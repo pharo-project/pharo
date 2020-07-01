@@ -139,3 +139,8 @@ SDL_Renderer >> primGetRendererInfo: info [
 SDL_Renderer >> setClipRect: rect [
 	^ self ffiCall: #( int SDL_RenderSetClipRect ( self , SDL_Rect* rect ) )
 ]
+
+{ #category : #rendering }
+SDL_Renderer >> setRenderTarget: renderTarget [
+	^ self ffiCall: #( int SDL_SetRenderTarget ( self , SDL_Texture renderTarget ) )
+]

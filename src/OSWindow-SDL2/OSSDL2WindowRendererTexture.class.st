@@ -5,6 +5,7 @@ Class {
 	#name : #OSSDL2WindowRendererTexture,
 	#superclass : #OSWindowRendererTexture,
 	#instVars : [
+		'extent',
 		'handle'
 	],
 	#pools : [
@@ -12,6 +13,16 @@ Class {
 	],
 	#category : #'OSWindow-SDL2-Rendering'
 }
+
+{ #category : #accessing }
+OSSDL2WindowRendererTexture >> extent [
+	^ extent
+]
+
+{ #category : #accessing }
+OSSDL2WindowRendererTexture >> extent: anObject [
+	extent := anObject
+]
 
 { #category : #accessing }
 OSSDL2WindowRendererTexture >> handle [

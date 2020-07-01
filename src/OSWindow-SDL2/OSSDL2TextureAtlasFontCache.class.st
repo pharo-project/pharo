@@ -288,5 +288,5 @@ OSSDL2TextureAtlasFontCache >> modulationR: modR g: modG b: modB a: modA [
 { #category : #private }
 OSSDL2TextureAtlasFontCache >> secondPassBlendMode [
 	^ secondPassBlendMode ifNil: [secondPassBlendMode := SDL2 composeCustomBlendMode_srcColorFactor: SDL_BLENDFACTOR_ONE dstColorFactor: SDL_BLENDFACTOR_ONE colorOperation: SDL_BLENDOPERATION_ADD
-		srcAlphaFactor: SDL_BLENDFACTOR_ZERO dstAlphaFactor: SDL_BLENDFACTOR_ONE alphaOperation: SDL_BLENDOPERATION_ADD ]
+		srcAlphaFactor: SDL_BLENDFACTOR_ONE dstAlphaFactor: SDL_BLENDFACTOR_ONE alphaOperation: SDL_BLENDOPERATION_ADD ]
 ]
