@@ -66,6 +66,11 @@ TKTWatchDog >> name [
 	^ 'WatchDog (' , id asString , ')'
 ]
 
+{ #category : #'as yet unclassified' }
+TKTWatchDog >> pharoProcess [
+	^ worker process process
+]
+
 { #category : #initialization }
 TKTWatchDog >> privateStart [
 	stopRequested := false.

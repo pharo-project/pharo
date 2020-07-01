@@ -78,7 +78,8 @@ ReleaseTest >> knownProcesses [
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
-		Delay schedulingProcess } asSet
+		Delay schedulingProcess.
+		TKTWatchDog onDuty pharoProcess } asSet
 ]
 
 { #category : #tests }
