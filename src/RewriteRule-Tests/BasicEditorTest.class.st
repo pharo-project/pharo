@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 BasicEditorTest >> setUp [
+	super setUp.
 	rewriteBasicEditor := RewriteBasicEditorPresenter new.
 
 	
@@ -56,7 +57,7 @@ BasicEditorTest >> testSaveDefaultRule [
 		createRuleClass: 'TemporaryDefaultRuleForTesting'
 		forPackage: ''.
 	"The class TemporaryDefaultRuleForTesting is not created until the test runs."
-	temporaryDefaultRuleForTesting := (Smalltalk globals
+	temporaryDefaultRuleForTesting := (self class environment
 		classNamed: #TemporaryDefaultRuleForTesting) new.
 	self deny: temporaryDefaultRuleForTesting equals: nil.
 	self assert: temporaryDefaultRuleForTesting searchFor isNotEmpty.
@@ -81,7 +82,7 @@ BasicEditorTest >> testSaveRule [
 		createRuleClass: 'TemporaryCustomRuleForTesting'
 		forPackage: ''.
 	"The class TemporaryCustomRuleForTesting is not created until the test runs."
-	temporaryCustomRule := (Smalltalk globals
+	temporaryCustomRule := (self class environment
 		classNamed: 'TemporaryCustomRuleForTesting') new.
 	self deny: temporaryCustomRule equals: nil.
 	self assert: temporaryCustomRule searchFor equals: searchForForTest.

@@ -13,7 +13,6 @@ Class {
 		'classes',
 		'methods',
 		'environment',
-		'checkbox',
 		'buttonBar'
 	],
 	#category : #'RewriteRuleEditor-Applier'
@@ -40,7 +39,6 @@ RewriteRuleApplierPresenter class >> defaultSpec [
 				yourself);
 		addLast:
 			(SpBoxLayout newHorizontal
-				add: #checkbox expand: false;
 				add: #rules expand: false;
 				add: #buttonBar;
 				yourself);
@@ -65,12 +63,7 @@ RewriteRuleApplierPresenter class >> rulesWidth [
 
 { #category : #accessing }
 RewriteRuleApplierPresenter >> allRules [
-	
-	^ OrderedCollection new
-		addAll: self demoRules;
-		addAll: self customRules;
-		yourself.
-	
+	^ RBCustomTransformationRule subclasses
 ]
 
 { #category : #testing }
@@ -87,7 +80,7 @@ RewriteRuleApplierPresenter >> basicEditorIcon [
 { #category : #actions }
 RewriteRuleApplierPresenter >> browseRule [
 	Smalltalk tools browser
-		openOnClass: (Smalltalk globals at: rules selectedItem)
+		openOnClass: rules selectedItem
 ]
 
 { #category : #actions }
@@ -106,22 +99,7 @@ RewriteRuleApplierPresenter >> classesChanged [
 { #category : #initialization }
 RewriteRuleApplierPresenter >> connectPresenters [
 	packages whenSelectionChangedDo: [ self packagesChanged ].
-	classes whenSelectionChangedDo: [ self classesChanged ].
-	checkbox
-		whenActivatedDo: [ rules items: self customRules ];
-		whenDeactivatedDo: [ rules items: self allRules ]
-]
-
-{ #category : #accessing }
-RewriteRuleApplierPresenter >> customRules [
-	^ (RBCustomTransformationRule subclasses
-		collect: [ :each | each name ] )asOrderedCollection 
-]
-
-{ #category : #accessing }
-RewriteRuleApplierPresenter >> demoRules [
-	^ (RBTransformationRule subclasses collect: [ :each | each name ])
-		asOrderedCollection
+	classes whenSelectionChangedDo: [ self classesChanged ]
 ]
 
 { #category : #initialization }
@@ -155,7 +133,6 @@ RewriteRuleApplierPresenter >> initializeFocus [
 		add: packages;
 		add: classes;
 		add: methods;
-		add: checkbox;
 		add: rules;
 		add: buttonBar
 ]
@@ -188,9 +165,6 @@ RewriteRuleApplierPresenter >> initializePresenters [
 		display: [ :item | item asString ];
 		items: self allRules;
 		yourself.
-	checkbox := self newCheckBox
-		label: 'Only my rules';
-		yourself.
 	environment := OrderedCollection new.
 	self initializeButtonBar.
 	self initializeFocus
@@ -209,7 +183,7 @@ RewriteRuleApplierPresenter >> initializeWindow: aWindowPresenter [
 { #category : #actions }
 RewriteRuleApplierPresenter >> openRuleInBasicEditor [
 	| aRule editor |
-	aRule := (self class environment at: rules selectedItem) new.
+	aRule := rules selectedItem new.
 	editor := RewriteBasicEditorPresenter new.
 	editor searchForCode: aRule searchFor.
 	editor replaceWithCode: aRule replaceWith.
@@ -247,7 +221,7 @@ RewriteRuleApplierPresenter >> packagesChanged [
 { #category : #actions }
 RewriteRuleApplierPresenter >> runReplace [
 	| changes selectedRule |
-	selectedRule := (self class environment at: rules selectedItem) new.
+	selectedRule := rules selectedItem new.
 	changes := Array
 		with:
 			(RBSmalllintChecker

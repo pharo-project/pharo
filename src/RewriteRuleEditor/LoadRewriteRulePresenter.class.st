@@ -39,15 +39,15 @@ LoadRewriteRulePresenter >> close [
 LoadRewriteRulePresenter >> initializePresenters [
 	rulesList := self newList
 		items:
-			(RBCustomTransformationRule subclasses collect: [ :each | each ])
-				asOrderedCollection;
+			(RBCustomTransformationRule subclasses);
 		yourself.
 	buttonBar := self newActionBar
 		add:
 			(self newButton
 				label: 'Load';
 				icon: (self iconNamed: #smallDoIt);
-				action: [ self loadRule. self close ]);
+				action: [ self loadRule.
+					self close ]);
 		add:
 			(self newButton
 				label: 'Close';
