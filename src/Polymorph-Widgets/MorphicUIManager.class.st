@@ -32,6 +32,12 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 			and: [ Smalltalk isInteractiveGraphic ] ]
 ]
 
+{ #category : #'ui process' }
+MorphicUIManager class >> uiProcess [ 
+
+	^ UIProcess
+]
+
 { #category : #private }
 MorphicUIManager >> activate [
 
