@@ -160,12 +160,6 @@ SpListPresenter >> resetSortingBlock [
 	self model sortingBlock: nil
 ]
 
-{ #category : #private }
-SpListPresenter >> searchValueOf: item [ 
-
-	^ self displayValueFor: item
-]
-
 { #category : #api }
 SpListPresenter >> updateList [
 
