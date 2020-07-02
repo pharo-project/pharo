@@ -2,13 +2,12 @@ Extension { #name : #RBVariableNode }
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> binding [
-	^self propertyAt: #binding ifAbsent: [nil].
+	^variable
 ]
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> binding: aSemVar [
-	aSemVar ifNil: [^self removeProperty: #binding ifAbsent: []].
-	self propertyAt: #binding put: aSemVar.
+	variable := aSemVar
 ]
 
 { #category : #'*opalcompiler-core' }
@@ -46,4 +45,14 @@ RBVariableNode >> isReservedVariable [
 RBVariableNode >> isUndeclared [
 
 	^self binding isUndeclared
+]
+
+{ #category : #'*opalcompiler-core' }
+RBVariableNode >> variable [
+	^variable
+]
+
+{ #category : #'*opalcompiler-core' }
+RBVariableNode >> variable: aSemVar [
+	variable := aSemVar
 ]
