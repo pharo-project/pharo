@@ -1,5 +1,7 @@
 "
 DoubleWordArrays store 64-bit unsigned Integer values.
+
+For further comments read comments of `WordArray`.
 "
 Class {
 	#name : #DoubleWordArray,

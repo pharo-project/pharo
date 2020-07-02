@@ -141,6 +141,15 @@ RBMethodNode >> allSequenceNodes [
 ]
 
 { #category : #accessing }
+RBMethodNode >> allStatements [
+	"return the statements including variable definition."
+	^ self temporaries asOrderedCollection copy
+			addAll: super allStatements;
+			yourself
+
+]
+
+{ #category : #accessing }
 RBMethodNode >> argumentNames [
 	^ self arguments collect: [:each | each name] as: Array
 ]
@@ -340,6 +349,11 @@ RBMethodNode >> hasArgumentNamed: aString [
 RBMethodNode >> hasPragmaNamed: aSymbol [	
 	self pragmaNamed: aSymbol ifAbsent: [ ^ false ].
 	^ true
+]
+
+{ #category : #testing }
+RBMethodNode >> hasTemporaries [
+	^ self temporaries isNotEmpty
 ]
 
 { #category : #testing }

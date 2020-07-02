@@ -50,6 +50,12 @@ SpToolBarButtonPresenter >> execute [
 	self action cull: self
 ]
 
+{ #category : #testing }
+SpToolBarButtonPresenter >> hasBadge [
+	
+	^ badge notNil
+]
+
 { #category : #accessing }
 SpToolBarButtonPresenter >> icon [
 	^ icon

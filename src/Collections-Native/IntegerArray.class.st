@@ -1,6 +1,8 @@
 "
 IntegerArrays store 32bit signed Integer values.
 Negative values are stored as 2's complement.
+
+For further comments read comments of `WordArray`.
 "
 Class {
 	#name : #IntegerArray,

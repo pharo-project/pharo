@@ -23,5 +23,5 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	self assert: ast isFaulty.
 	
 	cm := ast compiledMethod.
-	self should: [cm valueWithReceiver: nil arguments: #()] raise: SyntaxErrorNotification
+	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]

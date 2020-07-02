@@ -59,7 +59,7 @@ SystemProgressMorph class >> enable [
 
 { #category : #'job subscription' }
 SystemProgressMorph class >> endJob: aJobEnd [
-	self flag: #pharoFixMe.	"camillo I need help"
+
 	self uniqueInstance bars ifNotEmpty: [ :bars | self uniqueInstance close: bars last ]
 ]
 
@@ -94,7 +94,7 @@ SystemProgressMorph class >> exampleLabelOnly [
 	UIManager default informUserDuring: [:bar |
 		words do: [:each|
 			bar label: 'Countdown: ', each.
-			(Delay forSeconds: 1) wait]].
+			(Delay forSeconds: 0.2) wait]].
 ]
 
 { #category : #accessing }
@@ -126,6 +126,7 @@ SystemProgressMorph class >> reset [
 { #category : #settings }
 SystemProgressMorph class >> settingOn: aBuilder [
 	<systemsettings>
+	"By returning only numbers, the settings do not give enough information so that we can reposition well the the progres bar. For now we tweak the number."
 	(aBuilder group: #progress)
 		label: 'Progress Bar';
 		description: 'Progress Bar settings';
@@ -136,7 +137,7 @@ SystemProgressMorph class >> settingOn: aBuilder [
 				getSelector: #horizontalPosition;
 				setSelector: #horizontalPosition:;
 				label: 'Horizontal progress indicator position';
-				domainValues: {'left'->0. 'middle'->0.5. 'right'->1}.
+				domainValues: {'left'->0 . 'middle'->0.5 . 'right'->0.88}.
 							
 			(aBuilder pickOne: #verticalPosition)
 				target: self;
@@ -144,7 +145,7 @@ SystemProgressMorph class >> settingOn: aBuilder [
 				setSelector: #verticalPosition:;
 				default: 0;
 				label: 'Vertical progress indicator position';
-				domainValues: {'bottom'->1. 'middle'->0.5. 'top'->0}]
+				domainValues: {'bottom'->0.95 . 'middle'->0.5 . 'top'->0}]
 ]
 
 { #category : #'instance creation' }
@@ -155,14 +156,16 @@ SystemProgressMorph class >> show: aJob [
 
 { #category : #'instance creation' }
 SystemProgressMorph class >> show: aString from: startNumber to: endNumber [
-	self flag: #pharoFixMe.	"When we go from Exceptions to announcements, delete this and use show:from:to:during:"
+	self flag: #pharoFixMe.	
+	"When we go from Exceptions to announcements, delete this and use show:from:to:during:"
 
 	^ self uniqueInstance show: aString from: startNumber to: endNumber
 ]
 
 { #category : #'instance creation' }
 SystemProgressMorph class >> show: aString from: startNumber to: endNumber during: aBlock [
-	self flag: #pharoFixMe.	"When we go from Exceptions to announcements, this will be the primary entry point"
+	self flag: #pharoFixMe.	
+	"When we go from Exceptions to announcements, this will be the primary entry point"
 
 	^ self uniqueInstance
 		show: aString
@@ -274,7 +277,6 @@ SystemProgressMorph >> initialize [
 		vResizing: #shrinkWrap;
 		layoutInset: 10@6;
 		minWidth: 150.
-	self position: 10@20
 ]
 
 { #category : #accessing }
@@ -318,19 +320,16 @@ SystemProgressMorph >> refresh [
 
 { #category : #private }
 SystemProgressMorph >> reposition [
-	"Calculate the proper position"
+	"Calculate the proper position.
+	Pay attention this repositioning only works when the morph is already been displayed."
 	
 	| xPos yPos margin |
 	margin := 20.
-	
 	xPos := Display boundingBox width - self fullBounds width - (2*margin).
 	xPos := xPos * self class horizontalPosition + margin.
-	
 	yPos := Display boundingBox height - self fullBounds height - (2*margin).
 	yPos := yPos * self class verticalPosition + margin.
-	
-	self align: self fullBounds topLeft with: Display boundingBox topLeft + (xPos @ yPos).
-	
+	self align: self fullBounds topLeft with: Display boundingBox topLeft + (5@20) + (xPos @ yPos).
 	self refresh.
 ]
 
@@ -365,14 +364,11 @@ SystemProgressMorph >> show: aJob [
 SystemProgressMorph >> show: aString from: startNumber to: endNumber [
 	| progressMorph |
 	self flag: #pharoFixMe.	"When we go from Exceptions to announcements, delete this and use show:from:to:during:"
-
 	self openInWorld.
 	progressMorph := self addItemShowing: aString from: startNumber to: endNumber.
-
 	self
 		refresh;
 		reposition.
-
 	^ progressMorph
 ]
 

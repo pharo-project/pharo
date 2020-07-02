@@ -23,3 +23,16 @@ Dictionary >> declareVariable: newGlobal from: aDictionary [
 		ifFalse: [
 			self add: newGlobal]
 ]
+
+{ #category : #'*Slot-Core' }
+Dictionary >> lookupVar: name [
+	"Return a var with this name.  Return nil if none found"
+	name isString ifFalse: [ ^nil ].
+	
+	^self bindingOf: name
+]
+
+{ #category : #'*Slot-Core' }
+Dictionary >> outerScope [
+	^nil
+]

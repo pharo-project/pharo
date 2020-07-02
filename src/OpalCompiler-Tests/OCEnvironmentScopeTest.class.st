@@ -37,10 +37,3 @@ OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 	return := method valueWithReceiver: nil arguments: #().
 	self assert: return equals: 3.
 ]
-
-{ #category : #'tests - environment' }
-OCEnvironmentScopeTest >> testCreateEnvironmentScope [
-	| new |
-	new := OCEnvironmentScope for: Smalltalk globals.
-	self assert: (new lookupVar: #Object) identicalTo: Object binding
-]

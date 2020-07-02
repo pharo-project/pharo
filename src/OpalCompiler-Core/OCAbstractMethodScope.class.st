@@ -116,8 +116,8 @@ OCAbstractMethodScope >> id: int [
 OCAbstractMethodScope >> initialize [
 
 	tempVars :=  OrderedDictionary new.
-	tempVector  := Dictionary new.
-	copiedVars := Dictionary new.
+	tempVector  := OrderedDictionary new.
+	copiedVars := OrderedDictionary new.
 	id := 0.
 	
 	thisContextVar := ThisContextVariable instance
@@ -225,6 +225,12 @@ OCAbstractMethodScope >> printOn: stream [
 OCAbstractMethodScope >> removeTemp: tempVar [
 
 	tempVars removeKey: tempVar name
+]
+
+{ #category : #printing }
+OCAbstractMethodScope >> scopeLevel [
+	"For debugging we print a counter for all Method and Block scopes"
+	^ outerScope scopeLevel + 1
 ]
 
 { #category : #'temp vars - copying' }

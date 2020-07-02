@@ -13,13 +13,13 @@ Class {
 	#category : #'Collections-Stack-Tests-Base'
 }
 
-{ #category : #'tests - empty' }
+{ #category : #accessing }
 StackTest >> empty [
 	
  	^ empty
 ]
 
-{ #category : #'tests - empty' }
+{ #category : #accessing }
 StackTest >> nonEmpty [
 	
  	^ nonEmpty

@@ -89,7 +89,7 @@ CoCompletionContext >> completionEnvironment [
 { #category : #accessing }
 CoCompletionContext >> completionToken [
 
-	^ self completion completionToken
+	^ self engine completionToken
 ]
 
 { #category : #accessing }

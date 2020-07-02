@@ -122,6 +122,19 @@ RBProgramNode >> allParents [
 ]
 
 { #category : #accessing }
+RBProgramNode >> allStatements [
+	| children |
+	children := self children.
+	children isEmpty ifTrue: [^#()].
+	^children inject: OrderedCollection new
+		into: 
+			[:vars :each | 
+			vars
+				addAll: each allStatements;
+				yourself]
+]
+
+{ #category : #accessing }
 RBProgramNode >> allTemporaryVariables [
 	| children |
 	children := self children.

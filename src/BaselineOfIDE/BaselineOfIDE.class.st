@@ -62,7 +62,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: (self class environment at: #BIConfigurableFormatter ifAbsent: [RBSimpleFormatter]).
+	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [RBSimpleFormatter]).
 
 	Color flushCache.
 	
@@ -127,10 +127,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'SUnit' with: [ 
 			spec
 				repository: repository;
-				loads: 'Tests' ].
-		
-		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('Tests') ].				
+				loads: 'Tests' ].				
 
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
