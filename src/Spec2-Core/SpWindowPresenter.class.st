@@ -200,8 +200,7 @@ SpWindowPresenter >> close [
 	"Only manage closing if the presenter is really open"
 	self isOpen ifFalse: [ ^ self ].
 	
-	isClosed := true.
-	self windowClosed
+	self changed: #close with: #().
 ]
 
 { #category : #private }
@@ -518,7 +517,7 @@ SpWindowPresenter >> whenClosedDo: aBlock [
 	
 	self 
 		property: #isClosed 
-		whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
+		whenChangedDo: [ :value | value ifTrue: aBlock ]
 ]
 
 { #category : #'api-events' }
@@ -526,7 +525,7 @@ SpWindowPresenter >> whenOpenedDo: aBlock [
 
 	self 
 		property: #isClosed 
-		whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+		whenChangedDo: [ :value | value ifFalse: aBlock ]
 ]
 
 { #category : #'api-events' }
@@ -573,7 +572,8 @@ SpWindowPresenter >> windowIcon: aForm [
 
 { #category : #updating }
 SpWindowPresenter >> windowIsClosing [
-	self close.
+	isClosed := true.
+	self windowClosed.
 	self presenter windowIsClosing.
 ]
 
