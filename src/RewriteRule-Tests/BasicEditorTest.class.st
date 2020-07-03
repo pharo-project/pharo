@@ -41,10 +41,10 @@ BasicEditorTest >> testRuleLoadsCorrectly [
 	newBasicRewriteEditorWindow := loaderPresenter loadRule.
 	self assert: newBasicRewriteEditorWindow isBuilt.
 	self
-		assert: newBasicRewriteEditorWindow presenter searchForCode
+		assert: newBasicRewriteEditorWindow presenter searchForPatternCode
 		equals: selectedRule searchFor.
 	self
-		assert: newBasicRewriteEditorWindow presenter replaceWithCode
+		assert: newBasicRewriteEditorWindow presenter replaceWithPatternCode
 		equals: selectedRule replaceWith.
 	newBasicRewriteEditorWindow close.
 	loaderWindow close

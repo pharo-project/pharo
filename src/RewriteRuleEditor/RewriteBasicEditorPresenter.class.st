@@ -42,7 +42,9 @@ Class {
 		'saveButton',
 		'loadButton',
 		'searchForEditor',
-		'replaceWithEditor'
+		'replaceWithEditor',
+		'searchLabel',
+		'replaceLabel'
 	],
 	#category : #'RewriteRuleEditor-BasicEditor'
 }
@@ -52,10 +54,12 @@ RewriteBasicEditorPresenter class >> defaultSpec [
 	^ SpBoxLayout newHorizontal
 		add:
 			(SpBoxLayout newVertical
+				add: #searchLabel expand: false;
 				add: #searchForEditor
 					expand: true
 					fill: true
 					padding: 2;
+				add: #replaceLabel expand: false;
 				add: #replaceWithEditor
 					expand: true
 					fill: true
@@ -82,11 +86,6 @@ RewriteBasicEditorPresenter class >> icon [
 RewriteBasicEditorPresenter class >> open [
 	<script>
 	^ self new openWithSpec
-]
-
-{ #category : #accesing }
-RewriteBasicEditorPresenter >> applierIcon [
-	^ RewriteRuleApplierPresenter icon
 ]
 
 { #category : #defaults }
@@ -116,14 +115,14 @@ RewriteBasicEditorPresenter >> initializePresenters [
 
 	"	methodCheckBox := self newCheckBox
 		label: 'Method';
-		yourself.
-	searchForEditor := (self instantiate: SearchForCodePresenter)
-		codeSource: (self defaultRule at: #searchFor);
-		yourself.
-	replaceWithEditor := (self instantiate: ReplaceWithCodePresenter)
-		codeSource: (self defaultRule at: #replaceWith);
 		yourself."
 
+	searchLabel := self newLabel
+		label: 'Search for:';
+		yourself.
+	replaceLabel := self newLabel
+		label: 'Replace with:';
+		yourself.
 	cheatSheet := self newText
 		text: self helpText;
 		enabled: false;
@@ -136,7 +135,7 @@ RewriteBasicEditorPresenter >> initializePresenters [
 		yourself.
 	loadButton := self newButton
 		label: 'Load rule';
-		icon: self loadRuleIcon;
+		icon: LoadRewriteRulePresenter icon;
 		action: [ self openRuleLoader ];
 		yourself.
 	saveButton := self newButton
@@ -146,7 +145,7 @@ RewriteBasicEditorPresenter >> initializePresenters [
 		yourself.
 	applyButton := self newButton
 		label: 'Open applier';
-		icon: self applierIcon;
+		icon: RewriteRuleApplierPresenter icon;
 		action: [ self openApplier ];
 		yourself.
 	self focusOrder
@@ -161,18 +160,16 @@ RewriteBasicEditorPresenter >> initializePresenters [
 
 { #category : #initialization }
 RewriteBasicEditorPresenter >> initializeWindow: aWindowPresenter [
+	| fontWidth rowHeight |
+	fontWidth := StandardFonts defaultFont widthOfString: 'M'.
+	rowHeight := self class inputTextHeight.
 	aWindowPresenter
 		title: 'Rewrite Basic Editor';
-		initialExtent: 700 @ 500;
+		initialExtent: 50 @ 18 * (fontWidth @ rowHeight);
 		windowIcon: self class icon;
 		askOkToClose: false;
 		aboutText: 'A simple UI to create Rewrite Rules';
 		whenOpenedDo: [ cheatSheet color: self theme baseColor ]
-]
-
-{ #category : #accesing }
-RewriteBasicEditorPresenter >> loadRuleIcon [
-	^ LoadRewriteRulePresenter icon
 ]
 
 { #category : #actions }
@@ -185,14 +182,14 @@ RewriteBasicEditorPresenter >> openRuleLoader [
 	^ LoadRewriteRulePresenter open
 ]
 
-{ #category : #accesing }
-RewriteBasicEditorPresenter >> replaceWithCode [
-	^ replaceWithEditor text
-]
-
 { #category : #api }
 RewriteBasicEditorPresenter >> replaceWithCode: aCode [
 	replaceWithEditor text: aCode
+]
+
+{ #category : #accesing }
+RewriteBasicEditorPresenter >> replaceWithPatternCode [
+	^ replaceWithEditor text
 ]
 
 { #category : #defaults }
@@ -220,12 +217,12 @@ RewriteBasicEditorPresenter >> saveRule [
 	self ruleSuccessfullyCreatedAlert
 ]
 
-{ #category : #accesing }
-RewriteBasicEditorPresenter >> searchForCode [
-	^ searchForEditor text
-]
-
 { #category : #api }
 RewriteBasicEditorPresenter >> searchForCode: aCode [
 	searchForEditor text: aCode
+]
+
+{ #category : #accesing }
+RewriteBasicEditorPresenter >> searchForPatternCode [
+	^ searchForEditor text
 ]
