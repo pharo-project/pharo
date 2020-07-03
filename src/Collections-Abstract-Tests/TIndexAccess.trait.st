@@ -26,7 +26,7 @@ TIndexAccess >> elementNotInForIndexAccessing [
 
 { #category : #'tests - fixture' }
 TIndexAccess >> test0FixtureIndexAccessTest [
-	| res collection element |
+	| res |
 	self collectionMoreThan1NoDuplicates.
 	self assert: self collectionMoreThan1NoDuplicates size > 1.
 	res := true.
@@ -35,8 +35,7 @@ TIndexAccess >> test0FixtureIndexAccessTest [
 		ifNone: [ res := false ].
 	self assert: res = false.
 	self elementInForIndexAccessing.
-	self
-		assert: ((collection := self collectionMoreThan1NoDuplicates) includes: (element := self elementInForIndexAccessing)).
+	self assert: (self collectionMoreThan1NoDuplicates includes: self elementInForIndexAccessing).
 	self elementNotInForIndexAccessing.
 	self deny: (self collectionMoreThan1NoDuplicates includes: self elementNotInForIndexAccessing)
 ]

@@ -17,15 +17,14 @@ ClyAsyncQueryResultTest >> createQueryResult [
 
 { #category : #tests }
 ClyAsyncQueryResultTest >> testBuildCompletionShouldNotifyItemObservers [
-
-	| observer cursor |
+	| observer |
 	observer := ClyItemObserverExample new.
-	cursor := queryResult openBrowserCursorFor: observer.
+	queryResult openBrowserCursorFor: observer.
 
 	queryResult rebuild.
 	query passExecution.
 	self waitBuildComplete.
-	
+
 	self assert: observer wasNotified
 ]
 

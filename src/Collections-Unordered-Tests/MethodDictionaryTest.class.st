@@ -223,8 +223,7 @@ MethodDictionaryTest >> testIdentityKeyAtExistantValueReturnsOkKey [
 
 { #category : #'tests - others' }
 MethodDictionaryTest >> testIdentityKeyAtNonExistantValueReturnsFailBlock [
-	| methodSelector result error |
-	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
+	| result error |
 	error := #error.
 
 	result := self class methodDict keyAtIdentityValue: self ifAbsent: [ error ].
@@ -260,8 +259,7 @@ MethodDictionaryTest >> testKeyAtExistantValueReturnsOkKey [
 
 { #category : #'tests - others' }
 MethodDictionaryTest >> testKeyAtNonexistantValueExecutesFailBlock [
-	| methodSelector result error |
-	methodSelector := #inexistant:method:larala:.
+	| result error |
 	error := #error.
 	result := self class methodDict keyAtValue: self ifAbsent: [ error ].
 
