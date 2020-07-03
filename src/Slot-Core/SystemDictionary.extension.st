@@ -15,3 +15,11 @@ SystemDictionary >> declare: key from: aDictionary [
 		ifFalse: 
 			[self add: (GlobalVariable key: key)]
 ]
+
+{ #category : #'*Slot-Core' }
+SystemDictionary >> lookupVar: name [
+	"Return a var with this name.  Return nil if none found"
+	name isString ifFalse: [ ^nil ].
+	
+	^self bindingOf: name
+]
