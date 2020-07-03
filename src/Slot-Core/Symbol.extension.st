@@ -7,13 +7,3 @@ Symbol >> => aVariable [
 	aVariable ifNil: [ SlotNotFound signalForName: self ].
 	^ aVariable named: self
 ]
-
-{ #category : #'*Slot-Core' }
-Symbol >> asClassVariable [
-	^ ClassVariable named: self.
-]
-
-{ #category : #'*Slot-Core' }
-Symbol >> asSlot [
-	^ InstanceVariableSlot named: self.
-]
