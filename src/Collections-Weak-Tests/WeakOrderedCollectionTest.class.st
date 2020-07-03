@@ -4,7 +4,7 @@ A trait for test purposes
 Class {
 	#name : #WeakOrderedCollectionTest,
 	#superclass : #TestCase,
-	#category : #'Collections-Tests-Weak'
+	#category : #'Collections-Weak-Tests-Base'
 }
 
 { #category : #tests }

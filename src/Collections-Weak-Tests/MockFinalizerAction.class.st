@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'finalizationAction'
 	],
-	#category : #'Collections-Tests-Weak'
+	#category : #'Collections-Weak-Tests-Utilities'
 }
 
 { #category : #finalization }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'errorWasHere'
 	],
-	#category : #'Collections-Tests-Weak'
+	#category : #'Collections-Weak-Tests-Registration'
 }
 
 { #category : #mocketry }
