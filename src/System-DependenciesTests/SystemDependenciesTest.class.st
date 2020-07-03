@@ -149,7 +149,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' #'HeuristicCompletion-Morphic')
+	#'Athens-Morphic' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic')
 ]
 
 { #category : #utilities }
@@ -174,9 +174,11 @@ SystemDependenciesTest >> metacelloPackageNames [
 
 { #category : #accessing }
 SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [ 
-
 	| allMembers allPackagesInBaseline packages groups |
-	allMembers := aBaseline version groups detect: [ :g | g name = aGroupName ].
+	
+	allMembers := aBaseline version groups 
+		detect: [ :g | g name = aGroupName ]
+		ifNone: [ ^#() ].
 	allPackagesInBaseline := aBaseline version packages collect: [:each | each name].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
 	groups := allMembers includes reject: [ :aName | allPackagesInBaseline includes: aName ].
@@ -311,6 +313,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
+	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
 	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
 	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
 	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
@@ -498,6 +501,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
+		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 	
 		"Tests"
@@ -544,6 +548,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfSpec allPackageNames,
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		(BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
