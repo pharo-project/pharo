@@ -542,14 +542,12 @@ FBDDecompilerTest >> testPrimitiveErrorCode [
 
 { #category : #tests }
 FBDDecompilerTest >> testPrimitiveErrorCodeModule [
-	| newMethod |
-	newMethod := self decompileThenRecompile: (self getMethod: #examplePrimitiveErrorCodeModule).
+	self decompileThenRecompile: (self getMethod: #examplePrimitiveErrorCodeModule)
 ]
 
 { #category : #tests }
 FBDDecompilerTest >> testPrimitiveErrorCodeModule2 [
-	| newMethod |
-	newMethod := self decompileThenRecompile: (self getMethod: #examplePrimitiveErrorCodeModule2).
+	self decompileThenRecompile: (self getMethod: #examplePrimitiveErrorCodeModule2)
 ]
 
 { #category : #tests }
