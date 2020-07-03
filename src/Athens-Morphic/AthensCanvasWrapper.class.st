@@ -455,12 +455,10 @@ AthensCanvasWrapper >> isVisible: aRectangle [
 AthensCanvasWrapper >> isVisibleDebug: aRectangle [
 	"Return true if the given rectangle is (partially) visible"
 
-	| vis canvasLocalClip |
-	canvasLocalClip := Rectangle
-		encompassing:
-			(self clipRect corners
-				collect: [ :c | (self canvas pathTransform transform: (c translateBy: origin)) translateBy: origin negated ]).	"canvasLocalClip := (self canvas pathTransform inverseTransform: aRectangle origin)
-		corner: (self canvas pathTransform inverseTransform: aRectangle corner)."
+	| vis |
+	Rectangle encompassing: (self clipRect corners collect: [ :c | 
+			 (self canvas pathTransform transform: (c translateBy: origin)) 
+				 translateBy: origin negated ]).
 	vis := self clipRect intersects: aRectangle.
 	"self frameRectangle: aRectangle width: 1 color: Color red.
 	self frameRectangle: self clipRect width: 1 color: Color green.
