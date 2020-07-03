@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 	^ #('AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Morphic')
+	#'Athens-Morphic' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity' #'Reflectivity-Tools' #Shout 'ParametrizedTests' 'HeuristicCompletion-Model')
 ]
 
 { #category : #'known dependencies' }
@@ -204,6 +204,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
 		{ BaselineOfSpec name }, BaselineOfSpec allPackageNames,
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
+		{ BaselineOfSpecCore name }, (BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
