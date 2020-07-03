@@ -32,12 +32,8 @@ OCInstanceScope >> hasBindingThatBeginsWith: aString [
 OCInstanceScope >> initialize [
   
 	vars := Dictionary new.
-	selfVar := OCSelfVariable new
-		scope: self;
-		yourself.
-	superVar := OCSuperVariable new
-		scope: self;
-		yourself.
+	selfVar := SelfVariable instance.
+	superVar := SuperVariable instance
 ]
 
 { #category : #acessing }
@@ -74,14 +70,15 @@ OCInstanceScope >> newMethodScope [
 	^ OCMethodScope new outerScope: self
 ]
 
+{ #category : #acessing }
+OCInstanceScope >> scopeLevel [
+	"For debugging we print a counter for all scopes, starting from the Method as 1, so we are 0"
+	^ 0
+]
+
 { #category : #initializing }
 OCInstanceScope >> slots: slotCollection [
 
 	slotCollection do: [ :slot |
-		vars at: slot name put:
-			(OCSlotVariable new
-				slot: slot;
-				scope: self;
-				yourself)].
-
+		vars at: slot name put: slot]
 ]

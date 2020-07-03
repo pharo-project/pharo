@@ -54,15 +54,14 @@ SmalllintManifestCheckerTest >> tearDown [
 
 { #category : #tests }
 SmalllintManifestCheckerTest >> testCriticsOf [
+
 	| rule critiques |
-	rule := ReRuleManager visibleRuleClasses collect: #new.
+	rule := ReRuleManager visibleRuleClasses collect: [:cl | cl new].
 	checker
 		rule: rule;
 		environment: self package asEnvironment;
 		run.
-
 	critiques := checker criticsOf: ReTemporaryNeitherReadNorWrittenRule new.
-
 	self assert: critiques size equals: 3.
 	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassB >> #method3) ]).
 	self assert: (critiques anySatisfy: [ :each | each sourceAnchor entity = (MFClassA >> #method) ])
@@ -72,12 +71,11 @@ SmalllintManifestCheckerTest >> testCriticsOf [
 SmalllintManifestCheckerTest >> testIsFalsePositive [ 
 
 	| rule |
-	rule  := ReRuleManager visibleRuleClasses collect: #new.
+	rule  := ReRuleManager visibleRuleClasses collect: [:cl | cl new].
 	checker
 		rule: rule;
 		environment: self package asEnvironment;
-		run.  
-		
+		run.  	
 	self assert: (checker isFalsePositive:  (MFClassB>>#method3) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
 	self deny: (checker isFalsePositive:  (MFClassA>>#method) forRuleId: (ReCodeCruftLeftInMethodsRule uniqueIdentifierName) versionId:  1).
 
@@ -104,7 +102,7 @@ SmalllintManifestCheckerTest >> testIsToDo [
 SmalllintManifestCheckerTest >> testToDoOf [
 
 	| rule |
-	rule := ReRuleManager visibleRuleClasses collect: #new.
+	rule := ReRuleManager visibleRuleClasses collect: [:cl | cl new].
 	checker
 		rule: rule;
 		environment: self package asEnvironment;

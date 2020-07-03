@@ -1066,27 +1066,24 @@ Morph >> announcer [
 ]
 
 { #category : #drawing }
-Morph >> areasRemainingToFill: aRectangle [ 
+Morph >> areasRemainingToFill: aRectangle [
 	"Pushed up from BorderedMorph, all cases tested for there are
 	supported by basic Morph."
+
 	"Morphs which achieve translucency by other means than fillStyle will have
 	to reimplement this"
+
 	"Fixed here to test the fillStyle rather than color for translucency.
 	Since can have a translucent fillStyle while the (calculated) color is not."
-	self fillStyle isTranslucent
-		ifTrue: [^ Array with: aRectangle].
-	self wantsRoundedCorners
-		ifTrue: [(self borderWidth > 0
-					and: [self borderColor isColor
-							and: [self borderColor isTranslucent]])
-				ifTrue: [^ aRectangle
-						areasOutside: (self innerBounds intersect: self boundsWithinCorners)]
-				ifFalse: [^ aRectangle areasOutside: self boundsWithinCorners]]
-		ifFalse: [(self borderWidth > 0
-					and: [self borderColor isColor
-							and: [self borderColor isTranslucent]])
-				ifTrue: [^ aRectangle areasOutside: self innerBounds]
-				ifFalse: [^ aRectangle areasOutside: self bounds]]
+
+	self fillStyle isTranslucent ifTrue: [ ^ Array with: aRectangle ].
+	^ self wantsRoundedCorners
+		ifTrue: [ (self borderWidth > 0 and: [ self borderColor isColor and: [ self borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: (self innerBounds intersect: self boundsWithinCorners) ]
+				ifFalse: [ aRectangle areasOutside: self boundsWithinCorners ] ]
+		ifFalse: [ (self borderWidth > 0 and: [ self borderColor isColor and: [ self borderColor isTranslucent ] ])
+				ifTrue: [ aRectangle areasOutside: self innerBounds ]
+				ifFalse: [ aRectangle areasOutside: self bounds ] ]
 ]
 
 { #category : #'stepping and presenter' }
@@ -2866,19 +2863,23 @@ Morph >> handleFocusEvent: anEvent [
 { #category : #'events-processing' }
 Morph >> handleKeyDown: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self].
-	(self handlesKeyDown: anEvent) ifFalse:[^self].
+	
+	anEvent wasHandled ifTrue:[ ^ self ].
+	(self handlesKeyDown: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
-	^self keyDown: anEvent
+	self keyDown: anEvent.
+	^ self eventHandler ifNotNil: [ :handler | handler keyDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
 Morph >> handleKeyUp: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue:[^self].
-	(self handlesKeyUp: anEvent) ifFalse:[^self].
+
+	anEvent wasHandled ifTrue:[ ^ self ].
+	(self handlesKeyUp: anEvent) ifFalse:[ ^ self ].
 	anEvent wasHandled: true.
-	^self keyUp: anEvent
+	self keyUp: anEvent.
+	^ self eventHandler ifNotNil: [ :handler | handler keyUp: anEvent fromMorph: self ].
 ]
 
 { #category : #'event handling' }
@@ -2916,7 +2917,7 @@ Morph >> handleMouseDown: anEvent [
 			and: [self cmdGesturesEnabled and: [ anEvent shiftPressed]])
 		ifTrue: [
 			self invokeMetaMenu: anEvent.
-			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ].].
+			^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ] ].
 
 	"Make me modal during mouse transitions"
 	anEvent hand newMouseFocus: self event: anEvent.
@@ -2930,6 +2931,8 @@ Morph >> handleMouseDown: anEvent [
 			at: Time millisecondClockValue + self mouseStillDownThreshold
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: self mouseStillDownStepRate ].
+		
+	^ self eventHandler ifNotNil: [:handler | handler mouseDown: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2959,10 +2962,10 @@ Morph >> handleMouseLeave: anEvent [
 				ifTrue: [ anEvent wasHandled: true.
 					self mouseLeaveDragging: anEvent ].
 			^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ].
-	^ (self handlesMouseOver: anEvent)
-		ifTrue: [ anEvent wasHandled: true.
-			self mouseLeave: anEvent ]
-		ifFalse: [ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ] ]
+	(self handlesMouseOver: anEvent) ifTrue: [ 
+			anEvent wasHandled: true.
+			self mouseLeave: anEvent ].
+	^ self eventHandler ifNotNil: [ :handler | handler mouseLeave: anEvent fromMorph: self ]
 ]
 
 { #category : #'events-processing' }
@@ -2980,6 +2983,7 @@ Morph >> handleMouseMove: anEvent [
 			at: Time millisecondClockValue
 			arguments: {anEvent copy resetHandlerFields}
 			stepTime: self mouseStillDownStepRate ].
+
 	^ self eventHandler ifNotNil: [:handler | handler mouseMove: anEvent fromMorph: self ]
 
 ]
@@ -3010,14 +3014,14 @@ Morph >> handleMouseUp: anEvent [
 	anEvent hand mouseFocus == self ifFalse: [^self]. "Not interested in other parties"
 	anEvent hand releaseMouseFocus: self.
 	anEvent wasHandled: true.
-	^ anEvent blueButtonChanged
+	anEvent blueButtonChanged
 		ifTrue: [
-			self blueButtonUp: anEvent.
-			self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]]
+			self blueButtonUp: anEvent ]
 		ifFalse: [ | result |
 			result := self mouseUp: anEvent.
 			self stopSteppingSelector: #handleMouseStillDown:.
 			result ].
+	^ self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]
 ]
 
 { #category : #'events-processing' }
@@ -3058,17 +3062,15 @@ Morph >> handlerForBlueButtonDown: anEvent [
 	"Return the (prospective) handler for a mouse down event. The handler is temporarily installed and can be used for morphs further down the hierarchy to negotiate whether the inner or the outer morph should finally handle the event.
 	Note: Halos handle blue button events themselves so we will only be asked if there is currently no halo on top of us.
 	Check whtehr halods are enabled (for deployment)."
-	
-	self wantsHaloFromClick ifFalse:[^nil].
-	
-	self class cycleHalosBothDirections ifTrue: [
-		anEvent handler ifNil:[^self]. 
-		(anEvent handler isKindOf: PasteUpMorph) ifTrue:[^self] ].
 
-	(anEvent shiftPressed)
-		ifFalse:[^nil] "let outer guy have it"
-		ifTrue:[^self] "let me have it"
+	self wantsHaloFromClick ifFalse: [ ^ nil ].
 
+	self class cycleHalosBothDirections
+		ifTrue: [ anEvent handler ifNil: [ ^ self ].
+			(anEvent handler isKindOf: PasteUpMorph) ifTrue: [ ^ self ] ].
+	^ anEvent shiftPressed
+		ifFalse: [ "let outer guy have it" nil ]
+		ifTrue: [ "let me have it" self ]
 ]
 
 { #category : #'meta-actions' }
@@ -4706,23 +4708,17 @@ Morph >> position: aPoint [
 	submorphs. "
 	| delta box |
 	delta := aPoint asNonFractionalPoint - bounds topLeft.
-	(delta x = 0
-			and: [delta y = 0])
+	(delta x = 0 and: [delta y = 0])
 		ifTrue: [^ self].
 	"Null change"
 	box := self fullBounds.
-	(delta dotProduct: delta)
-			> 100
+	(delta dotProduct: delta) > 100
 		ifTrue: ["e.g., more than 10 pixels moved"
 			self invalidRect: box.
-			self
-				invalidRect: (box translateBy: delta)]
-		ifFalse: [self
-				invalidRect: (box
-						merge: (box translateBy: delta))].
+			self invalidRect: (box translateBy: delta)]
+		ifFalse: [self invalidRect: (box merge: (box translateBy: delta))].
 	self privateFullMoveBy: delta.
-	owner
-		ifNotNil: [owner layoutChanged]
+	owner ifNotNil: [owner layoutChanged]
 ]
 
 { #category : #geometry }
@@ -6211,9 +6207,9 @@ Morph >> textAnchorType [
 
 { #category : #'text-anchor' }
 Morph >> textAnchorType: aSymbol [
-	aSymbol == #document
-		ifTrue:[^self removeProperty: #textAnchorType]
-		ifFalse:[^self setProperty: #textAnchorType toValue: aSymbol].
+	^ aSymbol == #document
+		ifTrue: [ self removeProperty: #textAnchorType ]
+		ifFalse: [ self setProperty: #textAnchorType toValue: aSymbol ]
 ]
 
 { #category : #theme }

@@ -1,7 +1,5 @@
 "
 I represent all the parameters that can modify a pretty printer. 
-Now since the BlueInkPrettyPrinter context was too complex to refactor and extend without breaking everything we clone it
-with the related tests. 
 
 The goal is to make sure that we can have a better prettyprinter and replace the Basic pretty printer (configurationFormatter)
 "
@@ -45,7 +43,10 @@ Class {
 		'numberOfNewLinesAfterMethodComment',
 		'newLinesAfterMethodSignature',
 		'periodAtEndOfMethod',
-		'periodAtEndOfBlock'
+		'periodAtEndOfBlock',
+		'newLinesAfterMethodComment',
+		'newLinesAfterMethodPattern',
+		'periodsAtEndOfBlock'
 	],
 	#category : #'EnlumineurFormatter-Core'
 }

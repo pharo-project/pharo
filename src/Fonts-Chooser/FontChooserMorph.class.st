@@ -191,7 +191,7 @@ FontChooserMorph >> languageIndex: anIndex [
 { #category : #'interface building' }
 FontChooserMorph >> languages [
 	
-	^ self pangrams collect: #key
+	^ self pangrams collect: [:each | each key]
 ]
 
 { #category : #'interface building' }

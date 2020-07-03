@@ -21,6 +21,17 @@ Class {
 	#category : #'Reflectivity-Installer'
 }
 
+{ #category : #'resolving - private' }
+MetalinkTargetResolver class >> assignmentNodesFor: aVarOrSlot [
+	(aVarOrSlot isKindOf: Slot)
+		ifFalse: [ ^ aVarOrSlot assignmentNodes asIdentitySet ].
+	^ ((self
+		usingNodesForVariable: aVarOrSlot
+		in: aVarOrSlot owningClass withAllSubclasses)
+		select: [ :each | each isWrite ]
+		thenCollect: [ :each | each parent ]) asIdentitySet
+]
+
 { #category : #resolving }
 MetalinkTargetResolver class >> classFor: aClassOrObject [
 	| class |
@@ -76,6 +87,16 @@ MetalinkTargetResolver class >> methodNamed: aMethodName for: aClassOrObject [
 	^ self lookupASTForMethodNamed: aMethodName asSymbol in: aClassOrObject
 ]
 
+{ #category : #'resolving - private' }
+MetalinkTargetResolver class >> readNodesFor: aVarOrSlot [
+	(aVarOrSlot isKindOf: Slot)
+		ifFalse: [ ^ aVarOrSlot readNodes asIdentitySet ].
+	^ ((self
+		usingNodesForVariable: aVarOrSlot
+		in: aVarOrSlot owningClass withAllSubclasses)
+		select: [ :each | each isRead ]) asIdentitySet
+]
+
 { #category : #resolving }
 MetalinkTargetResolver class >> resolveASTLookupFor: varOrSlot option: option [
 	^ (self resolvingBlocForOption: option) value: varOrSlot
@@ -84,10 +105,13 @@ MetalinkTargetResolver class >> resolveASTLookupFor: varOrSlot option: option [
 { #category : #'resolving - private' }
 MetalinkTargetResolver class >> resolvingBlocForOption: option [
 	option = #write
-		ifTrue: [ ^ [ :varOrSlot | varOrSlot assignmentNodes asIdentitySet  ] ].
+		ifTrue: [ ^ [ :varOrSlot | self assignmentNodesFor: varOrSlot ] ].
 	option = #read
-		ifTrue: [ ^ [ :varOrSlot | varOrSlot readNodes asIdentitySet] ].
-	^ [ :varOrSlot | (OrderedCollection with: varOrSlot assignmentNodes with: varOrSlot readNodes) flattened asIdentitySet ]
+		ifTrue: [ ^ [ :varOrSlot | self readNodesFor: varOrSlot ] ].
+	^ [ :varOrSlot | 
+	(OrderedCollection
+		with: (self assignmentNodesFor: varOrSlot)
+		with: (self readNodesFor: varOrSlot)) flattened asIdentitySet ]
 ]
 
 { #category : #api }
@@ -119,4 +143,10 @@ MetalinkTargetResolver class >> temporaryNamed: aTempVarName inMethod: aMethodNa
 	| temp |
 	temp := self lookupTemporaryNamed: aTempVarName asSymbol inMethod: aMethodName for: aClassOrObject.
 	^ self resolveASTLookupFor: temp option: option
+]
+
+{ #category : #'resolving - private' }
+MetalinkTargetResolver class >> usingNodesForVariable: aVarOrSlot in: classes [
+	^ (classes flatCollect: [ :c | c variableNodes ])
+		select: [ :each | each binding == aVarOrSlot ]
 ]

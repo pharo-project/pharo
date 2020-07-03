@@ -39,6 +39,7 @@ SpCommandGroup >> asMenuBarPresenterWith: aBlock [
 
 { #category : #converting }
 SpCommandGroup >> asMenuPresenter [
+
 	^ SpMenuPresenterBuilder new
 		visit: self;
 		menuPresenter

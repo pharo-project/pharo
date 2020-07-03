@@ -12,10 +12,12 @@ OSPlatformTest >> testAPI [
 		isMacOSX;
 		isWin32;
 		isWindows;
+		isUnix;
+		isLinux;
 		isX11;
 		name;
 		subtype;
-		family.
+		family
 ]
 
 { #category : #testing }
@@ -31,7 +33,7 @@ OSPlatformTest >> testCurrentWorkingDirectoryWithBufferSize [
 	"This is a test to make sure getCurrentWorkingDirectoryWithBufferSize is working"
 	
  self assert: FileSystem workingDirectory fullName equals:  (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 1024) .
- self assert: 'relativePath' asFileReference asAbsolute parent fullName equals: (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 1024).
+ self assert: 'relativePath' asFileReference asAbsolute parent fullName equals: (OSPlatform current currentWorkingDirectoryPathWithBufferSize: 1024)
 ]
 
 { #category : #testing }
@@ -50,9 +52,8 @@ OSPlatformTest >> testNewFileInWorkingDirectory [
 { #category : #testing }
 OSPlatformTest >> testStartUpList [
 	"This test documents issue http://code.google.com/p/pharo/issues/detail?id=838"
+	
 	| startupList |
-	
-	startupList := (SessionManager default startupList collect: #handledId).
-	
+	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	self should: [ (startupList indexOf: #OSPlatform) < (startupList indexOf: #InputEventSensor) ]
 ]

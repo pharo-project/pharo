@@ -20,7 +20,7 @@ CompiledMethod >> spotterForImplementorsFor: aStep [
 	<spotterOrder: 10>
 	aStep listProcessor
 			title: 'Implementors';
-			allCandidates: [ self implementors collect: #compiledMethod ];
+			allCandidates: [ self implementors collect: [:each | each compiledMethod] ];
 			filter: GTFilterSubstring;
 			keyBinding: $m command
 ]
@@ -39,14 +39,9 @@ CompiledMethod >> spotterForSendersFor: aStep [
 	<spotterOrder: 11>
 	aStep listProcessor
 			title: 'Senders';
-			allCandidates: [ self senders collect: #compiledMethod ];
+			allCandidates: [ self senders collect: [:each | each compiledMethod] ];
 			filter: GTFilterSubstring;
 			keyBinding: $n command
-]
-
-{ #category : #'*GT-SpotterExtensions-Core' }
-CompiledMethod >> spotterItemsFor: aStep [
-	"do nothing for compiled method"
 ]
 
 { #category : #'*GT-SpotterExtensions-Core' }

@@ -66,6 +66,29 @@ SpMorphicBoxLayoutTest >> testClassIsDisplayedWithCorrectAlignment [
 ]
 
 { #category : #tests }
+SpMorphicBoxLayoutTest >> testLayoutHeightTakesAllSpaceNeeded [
+	| string presenter textPresenter layout |
+
+	string := String loremIpsum withNoLineLongerThan: 80.
+
+	presenter := SpPresenter new.
+
+	textPresenter := SpTextPresenter new.
+	textPresenter text: string.
+	textPresenter propagateNaturalHeight: true. 
+
+	layout := SpBoxLayout newVertical 
+		add: textPresenter;
+		yourself.	
+	
+	presenter 
+		layout: layout;
+		buildWithSpec.
+	
+	self assert: presenter adapter widget height >= (string lines size * string asMorph height).
+]
+
+{ #category : #tests }
 SpMorphicBoxLayoutTest >> testNestedLayoutModifiesHeightOfTopLayout [
 	| base presenter layout |
 

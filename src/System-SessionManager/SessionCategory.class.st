@@ -81,8 +81,7 @@ SessionCategory >> renamedClass: aClass from: oldName to: newName [
 
 { #category : #registration }
 SessionCategory >> unregisterHandler: anHandlerId [ 
-	priorityLists values
-		do: [ :handlers |
+	priorityLists valuesDo: [ :handlers |
 				handlers 
 					detect: [ :handler | handler handledId = anHandlerId ]
 					ifFound: [ :handler | handlers remove: handler ] ]

@@ -8,7 +8,7 @@ Class {
 		'tag',
 		'link'
 	],
-	#category : #'Reflectivity-Tests'
+	#category : #'Reflectivity-Tests-Base'
 }
 
 { #category : #tagging }

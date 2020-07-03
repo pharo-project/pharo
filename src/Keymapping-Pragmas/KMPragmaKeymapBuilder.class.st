@@ -20,7 +20,7 @@ Class {
 { #category : #private }
 KMPragmaKeymapBuilder class >> event: anEvent [
 	anEvent method ifNil: [ ^self ].
-	((anEvent method pragmas collect: #selector) includesAnyOf: self pragmas )
+	((anEvent method pragmas collect: [:aprag | aprag selector]) includesAnyOf: self pragmas )
 		ifTrue: [ self uniqueInstance reset ]
 ]
 

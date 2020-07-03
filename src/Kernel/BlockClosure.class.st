@@ -79,10 +79,10 @@ BlockClosure >> asContext [
 BlockClosure >> asContextWithSender: aContext [
 	"Inner private support method for evaluation.  Do not use unless you know what you're doing."
 
-	^(Context newForMethod: outerContext method)
+	^(Context newForMethod: outerContext compiledCode)
 		setSender: aContext
 		receiver: outerContext receiver
-		method: outerContext method
+		method: outerContext compiledCode
 		closure: self
 		startpc: startpc;
 		privRefresh
@@ -117,6 +117,12 @@ BlockClosure >> blockCreationBytecodeMessage [
 	^self method encoderClass blockCreationBytecodeMessageAt: startpc method: self method
 
 	"(SortedCollection sortBlock: [:a :b| a compare: b caseSensitive: false]) sortBlock blockCreationBytecodeMessage"
+]
+
+{ #category : #private }
+BlockClosure >> clearTemporariesOn: aContext [
+
+	" I do nothing in the non-full blocks"
 ]
 
 { #category : #accessing }
@@ -304,9 +310,9 @@ BlockClosure >> forkNamed: aString [
 BlockClosure >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	| scanner endpc |
-	scanner := InstructionStream new method: outerContext method pc: startpc.
+	scanner := InstructionStream new method: outerContext compiledCode pc: startpc.
 	endpc := self endPC.
-	scanner scanFor: [:byte | (outerContext method encoderClass methodReturnBytecodes includes: byte) or: [scanner pc > endpc]].
+	scanner scanFor: [:byte | (outerContext compiledCode encoderClass methodReturnBytecodes includes: byte) or: [scanner pc > endpc]].
 	^scanner pc <= endpc
 ]
 
@@ -328,6 +334,12 @@ BlockClosure >> ifCurtailed: aBlock [
 	result := self valueNoContextSwitch.
 	complete := true.
 	^result
+]
+
+{ #category : #private }
+BlockClosure >> initialStackPointer [
+
+	^ self numArgs + self numCopiedValues
 ]
 
 { #category : #accessing }
@@ -373,6 +385,12 @@ BlockClosure >> isDead [
 	^false
 ]
 
+{ #category : #testing }
+BlockClosure >> isFullBlock [
+
+	^ false
+]
+
 { #category : #private }
 BlockClosure >> isValid [
 	"Answer the receiver."
@@ -382,7 +400,7 @@ BlockClosure >> isValid [
 
 { #category : #accessing }
 BlockClosure >> method [
-	^outerContext method
+	^outerContext compiledCode
 ]
 
 { #category : #scheduling }
@@ -439,7 +457,7 @@ BlockClosure >> numCopiedValues [
 { #category : #accessing }
 BlockClosure >> numLocalTemps [
 	"Answer the number of local temporaries for the receiver"
-	^ self method encoderClass numLocalTempsForBlockAt: startpc in: outerContext method
+	^ self method encoderClass numLocalTempsForBlockAt: startpc in: outerContext compiledCode
 ]
 
 { #category : #accessing }
@@ -600,10 +618,10 @@ BlockClosure >> sender [
 BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."
 	| newContext sz |
-	newContext := (Context newForMethod: outerContext method)
+	newContext := (Context newForMethod: outerContext compiledCode)
 						setSender: aContext
 						receiver: outerContext receiver
-						method: outerContext method
+						method: outerContext compiledCode
 						closure: self
 						startpc: startpc.
 	((newContext objectClass: anArray) ~~ Array
@@ -621,6 +639,11 @@ BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 { #category : #accessing }
 BlockClosure >> startpc [
 	^startpc
+]
+
+{ #category : #accessing }
+BlockClosure >> startpcOrOuterCode [
+	^ startpc 
 ]
 
 { #category : #accessing }
@@ -794,7 +817,7 @@ BlockClosure >> valueSuppressingMessages: aListOfStrings [
 { #category : #evaluating }
 BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
 
-	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each. true}])
+	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
 ]
 
 { #category : #exceptions }

@@ -132,7 +132,9 @@ SignalLogger >> beacon: anAnnouncer [
 
 { #category : #registering }
 SignalLogger >> handle: aSignal [
-	self deprecated: 'Should use #nextPut:'.
+	self 
+		deprecated: 'Should use #nextPut:' 
+		transformWith: '`@receiver nextPut: `@name' -> '`@receiver nextPut: `@name'.
 	self nextPut: aSignal
 	
 ]

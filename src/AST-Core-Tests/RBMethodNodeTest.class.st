@@ -32,6 +32,78 @@ RBMethodNodeTest >> testAddingMethodProperties [
 ]
 
 { #category : #tests }
+RBMethodNodeTest >> testBlockHasArguments [
+
+	| tree |
+	tree := self parseMethod: 'foo 
+		[ :arg | 
+		abd + cde 
+		]'.
+
+	self assert: tree body statements first hasArguments
+	
+
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBlockHasTemporaries [
+
+	| tree |
+	tree := self parseMethod: 'foo 
+		[ 
+		| tmp |
+		abd + cde 
+		]'.
+
+	self deny: tree hasTemporaries.
+	self assert: tree body statements first hasTemporaries
+	
+
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBlockHeadIsNotEmpty [
+
+	| tree |
+	tree := self parseMethod: 'foo 
+		[ :arg | 
+		abd + cde 
+		]'.
+
+	self assert: tree body statements first headIsNotEmpty 
+	
+
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBlockHeadIsNotEmpty2 [
+
+	| tree |
+	tree := self parseMethod: 'foo 
+		[ "blbl" 
+		abd + cde 
+		]'.
+
+	self assert: tree body statements first headIsNotEmpty 
+	
+
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testBlockHeadIsNotEmpty3 [
+
+	| tree |
+	tree := self parseMethod: 'foo 
+		[ 
+		abd + cde 
+		]'.
+
+	self deny: tree body statements first headIsNotEmpty 
+	
+
+]
+
+{ #category : #tests }
 RBMethodNodeTest >> testCachingMethodArguments [
 
 	| ast |
@@ -43,7 +115,15 @@ RBMethodNodeTest >> testCachingMethodArguments [
 ]
 
 { #category : #'testing-comments' }
-RBMethodNodeTest >> testCommentedMethodHasComments [
+RBMethodNodeTest >> testCommentsParent [
+	"Test if comment has a parent"
+	self
+		assert: (self class >> #testCommentsParent) ast comments first parent selector
+		equals: #testCommentsParent.
+]
+
+{ #category : #'testing-comments' }
+RBMethodNodeTest >> testHasComments [
 
 	| tree |
 	tree := self parseMethod: 'foo: abd bar: cde  
@@ -52,6 +132,11 @@ RBMethodNodeTest >> testCommentedMethodHasComments [
 ^ abd + cde'.
 
 	self assert: tree hasComments.
+	
+	tree := self parseMethod: 'foo: abd bar: cde  
+^ abd + cde'.
+
+	self deny: tree hasComments.
 	
 
 ]
@@ -69,6 +154,19 @@ RBMethodNodeTest >> testIsPrimitive [
 	
 	ast := (Integer >> #+) ast.
 	self deny: ast isPrimitive.
+]
+
+{ #category : #tests }
+RBMethodNodeTest >> testMethodsHasTemporaries [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+		| tmp |
+^ abd + cde'.
+
+	self assert: tree hasTemporaries
+	
+
 ]
 
 { #category : #tests }
@@ -169,7 +267,6 @@ RBMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
 	
 ]
 
-
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testPrimitiveModuleIsPrimitive [
 	"
@@ -239,16 +336,4 @@ RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
 	self assert: tree conceptualSelectorSize equals: 'foo' size.
 	self assert: tree conceptualArgumentSize isZero.
 	self assert: tree conceptualSignatureSize equals: 'foo' size
-]
-
-{ #category : #'testing-comments' }
-RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
-
-	| tree |
-	tree := self parseMethod: 'foo: abd bar: cde  
-^ abd + cde'.
-
-	self deny: tree hasComments.
-	
-
 ]

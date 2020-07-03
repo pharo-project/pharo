@@ -131,6 +131,12 @@ SpDropListPresenter >> initialize [
 ]
 
 { #category : #api }
+SpDropListPresenter >> items [ 
+
+	^ self listItems
+]
+
+{ #category : #api }
 SpDropListPresenter >> items: aList [
 	"Populate the drop list with a list of ui specific items"
 
@@ -143,6 +149,7 @@ SpDropListPresenter >> items: aList [
 		and: [ startsWithSelection 
 		and: [ self selection isEmpty ] ])
 		ifTrue: [ self selectIndex: 1 ]
+		ifFalse: [ self resetSelection ]
 ]
 
 { #category : #api }

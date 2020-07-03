@@ -441,5 +441,5 @@ TaskbarMorph >> worldMorphs [
 	^self world submorphs, 
 		((self tasks
 			select: [:t | t morph owner = self world activeHand])
-			collect: [:t | t morph])
+				collect: [:t | t morph])
 ]

@@ -18,19 +18,8 @@ SpAbstractButtonPresenter >> addShortcutTipFor: aString [
 
 { #category : #private }
 SpAbstractButtonPresenter >> addShortcutTipFor: aCharacter on: aString [
-	| index text |
-
-	self flag: #REMOVE. "This is morphic specific"
-	aString ifNil: [ ^ nil ].
-	text := aString asText.
-	aCharacter ifNil: [ ^ text ].
-	index := aString asLowercase indexOf: aCharacter asLowercase.
-	index isZero
-		ifTrue: [ ^ text ].
-
-	^ text
-		addAttribute: TextEmphasis underlined from: index to: index;
-		yourself
+	
+	^ aString withAccentuatedCharacter: aCharacter
 ]
 
 { #category : #api }
@@ -70,6 +59,14 @@ SpAbstractButtonPresenter >> label: aStringOrImageMorph [
 	label := aStringOrImageMorph
 ]
 
+{ #category : #localization }
+SpAbstractButtonPresenter >> localeChanged [
+
+	super localeChanged.
+	self forceUpdateSlot: #label
+	
+]
+
 { #category : #private }
 SpAbstractButtonPresenter >> shortcutCharacter [
 
@@ -78,6 +75,7 @@ SpAbstractButtonPresenter >> shortcutCharacter [
 
 { #category : #'api-events' }
 SpAbstractButtonPresenter >> whenIconChangedDo: aBlock [
+
 	self property: #icon whenChangedDo: aBlock
 ]
 

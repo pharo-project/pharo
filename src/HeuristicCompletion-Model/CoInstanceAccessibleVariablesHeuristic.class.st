@@ -12,7 +12,7 @@ Class {
 { #category : #requests }
 CoInstanceAccessibleVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 
-	^ aContext isWorkspace not
+	^ aContext completionClass notNil
 ]
 
 { #category : #requests }

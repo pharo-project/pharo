@@ -52,9 +52,11 @@ BaselineOfMorphic >> baseline: spec [
 		
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
+		spec package: 'EmergencyDebugger'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
+		spec package: 'FreeType-Morphic'.
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.

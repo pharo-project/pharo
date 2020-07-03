@@ -54,11 +54,8 @@ OCClassScope >> instanceScope [
 OCClassScope >> lookupVar: name [
 	"Return a SemVar for my pool var with this name.  Return nil if none found"
 
-	^(class innerBindingOf: name asSymbol) 
-		ifNotNil: [:assoc | OCLiteralVariable new 
-			assoc: assoc; 
-			scope: self; 
-			yourself]
+	^(class innerBindingOf: name) 
+		ifNotNil: [:var | ^var]
 		ifNil: [ outerScope lookupVar: name] 
 ]
 

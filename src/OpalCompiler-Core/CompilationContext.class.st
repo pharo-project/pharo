@@ -21,6 +21,7 @@ Class {
 		'class',
 		'logged',
 		'interactive',
+		'compiledMethod',
 		'options',
 		'environment',
 		'productionEnvironment',
@@ -76,7 +77,7 @@ CompilationContext class >> cleanOptionString: string [
 ]
 
 { #category : #options }
-CompilationContext class >> compilerSpecificSettingsOn: aBuilder [
+CompilationContext class >> compilerSettingsOn: aBuilder [
 	self optionsDescription withIndexDo: [ :description :index |
 		| optionStringCleaned option |
 		option := description second.
@@ -274,8 +275,6 @@ CompilationContext class >> optionReadOnlyLiterals [
 
 { #category : #'options - settings API' }
 CompilationContext class >> optionReadOnlyLiterals: aBoolean [
-	(aBoolean and: [ Smalltalk vm supportsWriteBarrier not]) ifTrue: [ ^ OCReadOnlyVMWarning signal ].
-	
 	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
 ]
 
@@ -385,6 +384,16 @@ CompilationContext >> class: anObject [
 ]
 
 { #category : #accessing }
+CompilationContext >> compiledMethod [
+	^ compiledMethod
+]
+
+{ #category : #accessing }
+CompilationContext >> compiledMethod: anObject [
+	compiledMethod := anObject
+]
+
+{ #category : #accessing }
 CompilationContext >> compiledMethodTrailer [
 	^ compiledMethodTrailer ifNil: [ compiledMethodTrailer := CompiledMethodTrailer empty ]
 ]
@@ -397,15 +406,6 @@ CompilationContext >> compiledMethodTrailer: anObject [
 { #category : #options }
 CompilationContext >> compilerOptions: anArray [
 	self parseOptions: anArray
-]
-
-{ #category : #options }
-CompilationContext >> doesNotUnderstand: message [
-
-	(message selector isUnary and: [ message selector beginsWith: 'opt'] )
-		ifTrue: [ ^ options includes: message selector ].
-		
-	^ super doesNotUnderstand: message
 ]
 
 { #category : #accessing }
@@ -623,7 +623,7 @@ CompilationContext >> requestorScopeClass: anObject [
 CompilationContext >> scope [
 	| newScope |
 
-	newScope := (OCEnvironmentScope for: self environment) newClassScope: self getClass.
+	newScope := (OCClassScope for: self getClass) outerScope: self environment.
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
 		newScope := (self requestorScopeClass new

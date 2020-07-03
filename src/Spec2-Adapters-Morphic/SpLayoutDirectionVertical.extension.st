@@ -20,7 +20,8 @@ SpLayoutDirectionVertical >> recalculatePages: anAdaptor [
 ]
 
 { #category : #'*Spec2-Adapters-Morphic' }
-SpLayoutDirectionVertical >> setRigidityOfNonExpandedMorph: aMorph [ 
+SpLayoutDirectionVertical >> setRigidityOfNonExpandedMorph: aMorph [
+
 	aMorph 
 		hResizing: #spaceFill; 
 		vResizing: #rigid

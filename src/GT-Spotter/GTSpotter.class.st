@@ -341,7 +341,9 @@ GTSpotter >> initialize [
 
 { #category : #testing }
 GTSpotter >> isEmpty [
-	self deprecated: 'Use hasSteps instead'.
+	self 
+		deprecated: 'Use hasSteps instead'
+		transformWith: '`@rec isEmpty' -> '`@rec hasSteps not'.
 	^ self hasSteps not
 ]
 
@@ -546,12 +548,9 @@ GTSpotter >> setText: aText from: aView [
 GTSpotter >> spotterProcessorsFor: aSpotterStep [
 
 	| processors |
-
-	processors := AbstractSpotterProcessor allEnabledSubclasses	collect: [ :e | e new ].
-
+	processors := AbstractSpotterProcessor allEnabledSubclasses collect: [ :e | e new ].
 	processors sort: [ :a :b | a order < b order ].
-		
-	processors do: [ :e | e configureOn: aSpotterStep ].
+	processors do: [ :e | e configureOn: aSpotterStep ]
 ]
 
 { #category : #accessing }

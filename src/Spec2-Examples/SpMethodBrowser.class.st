@@ -43,32 +43,26 @@ SpMethodBrowser class >> title [
 ]
 
 { #category : #accessing }
-SpMethodBrowser >> acceptBlock: aBlock [
-
-	textModel acceptBlock: aBlock
-]
-
-{ #category : #accessing }
 SpMethodBrowser >> action [
 	^ textModel acceptBlock
 ]
 
 { #category : #initialization }
 SpMethodBrowser >> connectPresenters [
-	listModel
-		whenSelectionChangedDo: [ :selection | 
-			selection isEmpty
-				ifTrue: [ textModel text: ''.
-					textModel behavior: nil.
-					toolbarModel method: nil ]
-				ifFalse: [ | m |
-					m := selection selectedItem. 
-					textModel text: m sourceCode.
-					textModel behavior: m methodClass.
-					toolbarModel method: m ] ].
-	self acceptBlock: [ :t | self listModel selectedItem inspect ].
-	self
-		wrapWith: [ :item | item methodClass name , '>>#' , item selector ]
+
+	listModel whenSelectionChangedDo: [ :selection | 
+		selection isEmpty
+			ifTrue: [ 
+				textModel text: ''.
+				textModel behavior: nil.
+				toolbarModel method: nil ]
+			ifFalse: [ | m |
+				m := selection selectedItem. 
+				textModel text: m sourceCode.
+				textModel behavior: m methodClass.
+				toolbarModel method: m ] ].
+	self whenSubmitDo: [ :t | self listModel selectedItem inspect ].
+	self wrapWith: [ :item | item methodClass name , '>>#' , item selector ]
 ]
 
 { #category : #api }
@@ -123,6 +117,12 @@ SpMethodBrowser >> textModel [
 SpMethodBrowser >> toolbarModel [
 
 	^ toolbarModel
+]
+
+{ #category : #accessing }
+SpMethodBrowser >> whenSubmitDo: aBlock [
+
+	textModel whenSubmitDo: aBlock
 ]
 
 { #category : #api }

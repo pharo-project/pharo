@@ -1169,7 +1169,7 @@ FBDExamples >> exampleToDoArgument [
 	collection := OrderedCollection new.
 	1 to: 5 do: [ :index |
 		collection add:  [index]  ].
-	 ^collection collect: #value. 
+	 ^collection collect: [:each | each value]. 
 	"#(1 2 3 4 5)"
 ]
 
@@ -1313,7 +1313,7 @@ FBDExamples >> exampleWhileModificationBefore [
 	[ index < 5 ] whileTrue: [ 
 		index := index + 1.
 		collection add: [ index ] ].
-	 ^ collection collect: #value.
+	 ^ collection collect: [:each | each value].
 	"#(5 5 5 5 5)"
 ]
 

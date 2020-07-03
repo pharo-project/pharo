@@ -224,7 +224,7 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 
 { #category : #enumerating }
 AbstractFileReference >> childNames [
-	^ self children collect: #basename
+	^ self children collect: [:each | each basename]
 ]
 
 { #category : #enumerating }
@@ -359,7 +359,7 @@ AbstractFileReference >> directoriesMatching: patterns [
 
 { #category : #enumerating }
 AbstractFileReference >> directoryNames [
-	^ self directories collect: #basename
+	^ self directories collect: [:each | each basename]
 ]
 
 { #category : #operations }
@@ -444,7 +444,7 @@ AbstractFileReference >> fileIn [
 
 { #category : #enumerating }
 AbstractFileReference >> fileNames [
-	^ self files collect: #basename
+	^ self files collect: [:each | each basename]
 ]
 
 { #category : #accessing }

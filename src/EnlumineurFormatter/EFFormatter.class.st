@@ -1,5 +1,6 @@
 "
-Enlumineur is a replacement of BlueInk pretty printer.
+Enlumineur is a replacement of BlueInk pretty printer (now packaged in pharo-contributions/configurableFormatter).
+
 It was developed by Hugo Lasnier during 6 months internship within RMOD and supervised by S. Ducasse and G. Polito during 2019.
 The code was revisited and cleaned but there are probably more glitches left. 
 
@@ -413,7 +414,7 @@ EFFormatter class >> selectorAndArgumentCombinedMaxSize: anInteger [
 
 { #category : #accessing }
 EFFormatter class >> settingGroup [
-	^ #blueInkEnlumineur
+	^ #Enlumineur
 ]
 
 { #category : #settings }
@@ -1624,17 +1625,12 @@ EFFormatter >> multiLineMessages: anArray [
 EFFormatter >> needsMethodSignatureOnMultipleLinesFor: aMethodNode [
 	| cpt |
 	cpt := 0.
-	self methodSignatureOnMultipleLines
-		ifTrue:
-			[ 
-			aMethodNode selectorParts
+	^ self methodSignatureOnMultipleLines
+		ifTrue: [ aMethodNode selectorParts
 				with: aMethodNode arguments
-				do:
-					[ :key :arg | 
-					key size + arg name size > self selectorAndArgumentCombinedMaxSize
-						ifTrue: [ cpt := cpt + 1 ] ].
-			^ cpt > 1 ]
-		ifFalse: [ ^ false ]
+				do: [ :key :arg | key size + arg name size > self selectorAndArgumentCombinedMaxSize ifTrue: [ cpt := cpt + 1 ] ].
+			cpt > 1 ]
+		ifFalse: [ false ]
 ]
 
 { #category : #private }

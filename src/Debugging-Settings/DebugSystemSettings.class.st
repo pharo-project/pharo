@@ -79,6 +79,12 @@ DebugSystemSettings class >> debugSettingsOn: aBuilder [
 				target: CPUWatcher;
 				default: false;
 				description: 'If true, Pharo processes will be monitored for CPU usage. If they take too much CPU, you will get a notification menu that will allow you to debug, resume, or terminate the process' .
+				
+			(aBuilder setting: #pigFinding)
+				label: 'Find the most CPU demanding processes';
+				target: CPUWatcher;
+				default: false;
+				description: 'Try to identify CPU demanding processes during CPU monitoring and offer their termination' .
 			
 			(aBuilder setting: #debugShowDamage)
 				label: 'Flash damaged morphic region';

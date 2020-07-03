@@ -13,7 +13,7 @@ OCBytecodeToASTCacheTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	super setUp.	
 	compiledMethod := MethodMapExamples >> #helperMethod12.
-	cache := OCBytecodeToASTCache generateForMethodNode: compiledMethod ast
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast
 ]
 
 { #category : #helpers }
@@ -24,12 +24,24 @@ OCBytecodeToASTCacheTest >> testCacheInInterval: interval equalsNode: aNode [
 
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testCachedMethodNode [
-	self assert: cache methodNode identicalTo: compiledMethod ast
+	self assert: cache methodOrBlockNode identicalTo: compiledMethod ast
 ]
 
 { #category : #tests }
 OCBytecodeToASTCacheTest >> testFirstBCOffsetTest [
 	self assert: cache firstBcOffset equals: compiledMethod initialPC
+]
+
+{ #category : #tests }
+OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
+	compiledMethod := ( MethodMapExamples >> #ivar).
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.	
+	self assert: cache firstBcOffset equals: compiledMethod initialPC.
+	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast.
+	self assert: (cache nodeForPC: cache lastBcOffset) identicalTo: compiledMethod ast statements last.
+
+	cache firstBcOffset to: cache lastBcOffset - 1 do:[:pc|
+		self assert: (cache nodeForPC: pc) identicalTo: compiledMethod ast].
 ]
 
 { #category : #tests }
@@ -59,21 +71,32 @@ OCBytecodeToASTCacheTest >> testLowerThanFirstBCOffsetAccessTest [
 ]
 
 { #category : #tests }
-OCBytecodeToASTCacheTest >> testNodeForBCOffsetRangeTest [
-	"As we associate each node to each possible bytecode offset that can refer to it,
-	we have to check that associations are all pointing to a node"
-
-	| pcRange |
-	pcRange := 0 to: cache lastBcOffset.
-	pcRange do: [ :pc | self assert: ((cache nodeForPC: pc) isKindOf: RBProgramNode)]
+OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
+	| pc mappedNode expectedNode |
+	self flag: #TODO. "we skip for now on 32 bit"
+	Smalltalk vm is32bit ifTrue: [ self skip ]. 
+	pc := compiledMethod encoderClass = EncoderForSistaV1 ifTrue: [50] ifFalse: [51].
+	mappedNode := (cache nodeForPC: pc).
+	expectedNode := compiledMethod ast statements second arguments first statements first.
+	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
+	self assert: mappedNode start equals: expectedNode start.
+	self assert: mappedNode stop equals: expectedNode stop
 ]
 
 { #category : #tests }
-OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
-	| pc |
-	"there should be an assignment at pc 51"
-	pc := 51.
-	self assert: (cache nodeForPC: pc) sourceCode equals: 'i := i - 1'.
-	self assert: (cache nodeForPC: pc) start equals: 55.
-	self assert: (cache nodeForPC: pc) stop equals: 64.
+OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
+	| pc mappedNode expectedNode blockNode |
+	self flag: #TODO. "we skip for now on 32 bit"
+	Smalltalk vm is32bit ifTrue: [ self skip ]. 
+	compiledMethod := MethodMapExamples >> #helperMethod13.
+	
+	"this is a test for full blocks only"
+	compiledMethod encoderClass = EncoderForSistaV1 ifFalse: [self skip].
+	blockNode := compiledMethod ast statements last value.
+	pc := 27.
+	mappedNode := (blockNode sourceNodeForPC: pc).
+	expectedNode := blockNode body.
+	self assert: mappedNode sourceCode equals: expectedNode sourceCode.	
+	self assert: mappedNode start equals: expectedNode start.
+	self assert: mappedNode stop equals: expectedNode stop
 ]

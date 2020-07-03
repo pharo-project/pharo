@@ -448,6 +448,12 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 	^newSource
 ]
 
+{ #category : #testing }
+CompiledMethod >> hasComment [
+	"check if this method has a method comment"
+	^self comment isEmptyOrNil not
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
@@ -663,6 +669,12 @@ CompiledMethod >> linesOfCode [
 	^lines
 ]
 
+{ #category : #literals }
+CompiledMethod >> literalsToSkip [
+
+	^ 2
+]
+
 { #category : #private }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self
@@ -697,18 +709,6 @@ CompiledMethod >> name [
 CompiledMethod >> numberOfReservedLiterals [
 
 	^ 2
-]
-
-{ #category : #accessing }
-CompiledMethod >> origin [
-	^ self methodClass findOriginClassOf: self
-]
-
-{ #category : #accessing }
-CompiledMethod >> originMethod [
-	^ self methodClass findOriginMethodOf: self.
-	
-
 ]
 
 { #category : #private }

@@ -77,6 +77,8 @@ SpSingleSelectionMode >> selectedIndexes [
 SpSingleSelectionMode >> selectedItem [
 
 	self selectedIndex = 0 ifTrue: [ ^ nil ].
+	self widget withAdapterDo: [ :anAdapter |
+		^ anAdapter elementAt: self selectedIndex ].
 	^ self model at: self selectedIndex
 ]
 

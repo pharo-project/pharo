@@ -17,96 +17,95 @@ Class {
 		'lowercasePattern',
 		'indexes'
 	],
-	#category : #FuzzyMatcher
+	#category : #'FuzzyMatcher-Base'
 }
 
-{ #category : #'utilities api' }
-FuzzyMatcher class >> allMatching: aPattern in: aCollection [
-	"Assumes that the collection is a collection of Strings"
+{ #category : #'utilities - api' }
+FuzzyMatcher class >> allMatching: aPattern in: aCollectionOfStrings [
 
 	| matcher |
 	
 	matcher := self pattern: aPattern.
 
-	^ aCollection select: [ :each | matcher matches: each ]
+	^ aCollectionOfStrings select: [:each | matcher matches: each ]
 ]
 
-{ #category : #'utilities api' }
-FuzzyMatcher class >> allMatching: aPattern in: aCollection by: aBlockReturningString [
+{ #category : #'utilities - api' }
+FuzzyMatcher class >> allMatching: aPattern in: aCollectionOfStrings by: aBlockReturningString [
 
 	| matcher |
 	
 	matcher := self pattern: aPattern.
 
-	^ aCollection select: [ :each | matcher matches: (aBlockReturningString value: each) ]
+	^ aCollectionOfStrings select: [:each | matcher matches: (aBlockReturningString value: each) ]
 ]
 
-{ #category : #'utilities api' }
-FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollection [
-	"Assumes that the collection is a collection of Strings"
+{ #category : #'utilities - api' }
+FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollectionOfStrings [
 	
-	^ self allSortedByScoreMatching: aPattern in: aCollection by: [ :each | each ]
+	^ self allSortedByScoreMatching: aPattern in: aCollectionOfStrings by: [:each | each ]
 ]
 
-{ #category : #'utilities api' }
-FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollection by: aBlockReturningString [
+{ #category : #'utilities - api' }
+FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollectionOfStrings by: aBlockReturningString [
 
 	| matcher matches |
 	
-	aPattern isEmpty ifTrue: [ ^ aCollection asArray ].
+	aPattern isEmpty ifTrue: [ ^aCollectionOfStrings asArray ].
 	
 	matcher := self pattern: aPattern.
-	matches := OrderedCollection new: aCollection size // 2.
+	matches := OrderedCollection new: aCollectionOfStrings size // 2.
 	
-	aCollection do: [ :each | 
+	aCollectionOfStrings do: [:each | 
 		matcher 
 			match: (aBlockReturningString value: each) 
-			ifScored: [ :score | matches add: score -> each ] 
-	].
+			ifScored: [:score | matches add: score -> each ] ].
 	
-	matches sort: [ :a :b | a key >= b key ].
+	matches sort: [:a :b | a key >= b key ].
 	
-	^ matches collect: [ :each | each value ] as: Array
+	^ matches collect: [:each | each value ] as: Array
 	
 ]
 
 { #category : #construction }
 FuzzyMatcher class >> pattern: aString [
 
-	^self new pattern: aString
+	^self new
+		pattern: aString;
+		yourself
 ]
 
-{ #category : #'scoring-bonus' }
+{ #category : #'scoring - bonus' }
 FuzzyMatcher >> adjacencyBonus [
 
 	^ 5
 ]
 
-{ #category : #'scoring-bonus' }
+{ #category : #'scoring - bonus' }
 FuzzyMatcher >> adjacencyIncrease [
 
 	^ 1.2
 ]
 
-{ #category : #'scoring-bonus' }
+{ #category : #'scoring - bonus' }
 FuzzyMatcher >> adjacentCaseEqualBonus [
 
 	^ 3
 ]
 
-{ #category : #'scoring-bonus' }
+{ #category : #'scoring - bonus' }
 FuzzyMatcher >> caseEqualBonus [
 
 	^ 7
 ]
 
-{ #category : #'scoring-bonus' }
+{ #category : #'scoring - bonus' }
 FuzzyMatcher >> firstLetterBonus [
 
 	^ 12
 ]
 
-{ #category : #private }
+{ #category : #'private - accessing' }
 FuzzyMatcher >> firstScore: aString at: anIndex [
 
 	| score |
@@ -122,7 +121,7 @@ FuzzyMatcher >> firstScore: aString at: anIndex [
 	^ score 
 ]
 
-{ #category : #private }
+{ #category : #'private - accessing' }
 FuzzyMatcher >> indexScore [ 
 
 	| sum ramp |
@@ -145,19 +144,17 @@ FuzzyMatcher >> indexScore [
 FuzzyMatcher >> initialize [
 
 	super initialize.
-
 	pattern := lowercasePattern := ''.
-	indexes := #().
-	
+	indexes := #()	
 ]
 
-{ #category : #private }
-FuzzyMatcher >> isSeperator: aCharacter [
+{ #category : #'private - testing' }
+FuzzyMatcher >> isSeparator: aCharacter [
 	
-	^  aCharacter = $_ or: [ aCharacter = $: ] 
+	^  #'_:' includes: aCharacter
 ]
 
-{ #category : #'scoring-penalty' }
+{ #category : #'scoring - penalty' }
 FuzzyMatcher >> leadingLetterPenalty [
 
 	^ -3
@@ -177,12 +174,11 @@ FuzzyMatcher >> match: aString ifScored: aBlock [
 	score := self firstScore: aString at: indexes first.
 	
 	2 to: pattern size do: [ :pix | 
-		score := score + (self score: aString at: (indexes at: pix) patternAt: pix)
-	].
+		score := score + (self score: aString at: (indexes at: pix) patternAt: pix) ].
 		
 	score := score + self indexScore + ((aString size - pattern size) * self unmatchedLetterPenalty).
 		
-	aBlock value: score.	
+	aBlock value: score
 ]
 
 { #category : #comparing }
@@ -206,7 +202,7 @@ FuzzyMatcher >> matches: aString [
 	^ true
 ]
 
-{ #category : #'scoring-penalty' }
+{ #category : #'scoring - penalty' }
 FuzzyMatcher >> maxLeadingLetterPenalty [
 
 	^ -9
@@ -223,19 +219,19 @@ FuzzyMatcher >> pattern: aString [
 
 	pattern := aString.
 	lowercasePattern := pattern asLowercase.
-	indexes := Array new: pattern size.
+	indexes := Array new: pattern size
 	
 
 ]
 
-{ #category : #private }
+{ #category : #'private - accessing' }
 FuzzyMatcher >> score: aString at: stringIndex patternAt: patternIndex [
 
 	| score prev |
 	
 	prev := (aString at: stringIndex - 1).
 	
-	score := (self isSeperator: prev) 
+	score := (self isSeparator: prev) 
 		ifTrue: [ self separatorBonus ]
 		ifFalse: [ (prev asLowercase = (lowercasePattern at: patternIndex - 1))
 			ifTrue: [ 
@@ -252,13 +248,13 @@ FuzzyMatcher >> score: aString at: stringIndex patternAt: patternIndex [
 	^ score 
 ]
 
-{ #category : #'scoring-bonus' }
+{ #category : #'scoring - bonus' }
 FuzzyMatcher >> separatorBonus [
 
 	^ 5
 ]
 
-{ #category : #'scoring-penalty' }
+{ #category : #'scoring - penalty' }
 FuzzyMatcher >> unmatchedLetterPenalty [
 
 	^ -1

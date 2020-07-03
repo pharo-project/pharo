@@ -199,13 +199,13 @@ RGChunkImporter >> createBehavior: subclassName superclassName: superclassName i
 
 	"process instance variables after layout and slots"
 	instanceVariableNames ifNotNil: [ 
-		behavior instanceVariables: (instanceVariableNames substrings collect: #asSymbol)].
+		behavior instanceVariables: (instanceVariableNames substrings collect: [:each | each asSymbol])].
 
 	classVariableNames ifNotNil: [ 
-		behavior classVariables: (classVariableNames substrings collect: #asSymbol) ].
+		behavior classVariables: (classVariableNames substrings collect: [:each | each asSymbol]) ].
 
 	poolDictionariesNames ifNotNil: [ 
-		behavior sharedPools: (poolDictionariesNames substrings collect: #asSymbol)].
+		behavior sharedPools: (poolDictionariesNames substrings collect: [:each | each asSymbol])].
 
 	categoryName ifNotNil: [ 
 		behavior category: categoryName ].

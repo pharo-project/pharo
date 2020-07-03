@@ -1,6 +1,9 @@
 Class {
 	#name : #MethodMapExamples,
 	#superclass : #Object,
+	#instVars : [
+		'ivar'
+	],
 	#category : #'OpalCompiler-Tests-Misc'
 }
 
@@ -156,4 +159,17 @@ MethodMapExamples >> helperMethod12 [
 	| i |
 	i := 5.
 	[ i=0 ] whileFalse: [ i := i - 1 ].
+]
+
+{ #category : #examples }
+MethodMapExamples >> helperMethod13 [
+	| i |
+	i := 5.
+	[ i=0 ] whileFalse: [ i := i - 1 ].
+	^[ 1 + 2 ]
+]
+
+{ #category : #examples }
+MethodMapExamples >> ivar [
+	^ivar
 ]

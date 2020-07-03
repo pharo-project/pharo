@@ -1269,10 +1269,10 @@ Socket >> receiveDataInto: aStringOrByteArray fromHost: hostAddress port: portNu
 	"Receive a UDP packet from the given hostAddress/portNumber, storing the data in the given buffer, and return the number of bytes received. Note the given buffer may be only partially filled by the received data."
 
 	[ | datagram |
-		datagram := self receiveUDPDataInto: aStringOrByteArray.
-		((datagram at: 2) = hostAddress and: [ (datagram at: 3) = portNumber ]) 
-			ifTrue: [ ^ datagram at: 1 ]
-			ifFalse: [ ^0 ] ] repeat
+	datagram := self receiveUDPDataInto: aStringOrByteArray.
+	^ ((datagram at: 2) = hostAddress and: [ (datagram at: 3) = portNumber ])
+		ifTrue: [ datagram at: 1 ]
+		ifFalse: [ 0 ] ] repeat
 ]
 
 { #category : #receiving }
@@ -1765,24 +1765,19 @@ Socket >> waitForDataFor: timeout [
 { #category : #waiting }
 Socket >> waitForDataFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
 	"Wait for the given nr of seconds for data to arrive."
-	
+
 	| startTime msecsDelta |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[(Time millisecondsSince: startTime) < msecsDelta] whileTrue: [
-		(self primSocketReceiveDataAvailable: socketHandle)
-			ifTrue: [^self].
-		self isConnected
-			ifFalse: [^closedBlock value].
-		self readSemaphore waitTimeoutMSecs: 
-			(msecsDelta - (Time millisecondsSince: startTime) max: 0).
-	].
+	[ (Time millisecondsSince: startTime) < msecsDelta ]
+		whileTrue: [ (self primSocketReceiveDataAvailable: socketHandle) ifTrue: [ ^ self ].
+			self isConnected ifFalse: [ ^ closedBlock value ].
+			self readSemaphore waitTimeoutMSecs: (msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
 
 	(self primSocketReceiveDataAvailable: socketHandle)
-		ifFalse: [
-			self isConnected
-				ifTrue: [^timedOutBlock value]
-				ifFalse: [^closedBlock value]].
+		ifFalse: [ ^ (self isConnected
+				ifTrue: [ timedOutBlock ]
+				ifFalse: [ closedBlock ]) value ]
 ]
 
 { #category : #waiting }

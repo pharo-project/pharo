@@ -284,11 +284,9 @@ HandMorph >> currentCursor: aCursor [
 
 { #category : #accessing }
 HandMorph >> cursorBounds [
-
-	temporaryCursor
-		ifNil: [^ self position extent: NormalCursor extent]
-		ifNotNil: [^ self position + temporaryCursorOffset
-								extent: temporaryCursor extent]
+	^ temporaryCursor
+		ifNil: [ self position extent: NormalCursor extent ]
+		ifNotNil: [ self position + temporaryCursorOffset extent: temporaryCursor extent ]
 ]
 
 { #category : #'event handling' }
@@ -374,10 +372,9 @@ HandMorph >> fullBounds [
 
 	| bnds |
 	bnds := super fullBounds.
-	submorphs isEmpty
-		ifTrue: [^ bnds ]
-		ifFalse: [^ bnds topLeft corner: bnds bottomRight + self shadowOffset].
-
+	^ submorphs
+		ifEmpty: [ bnds ]
+		ifNotEmpty: [ bnds topLeft corner: bnds bottomRight + self shadowOffset ]
 ]
 
 { #category : #drawing }

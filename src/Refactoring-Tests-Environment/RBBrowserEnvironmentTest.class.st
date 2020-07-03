@@ -22,6 +22,11 @@ RBBrowserEnvironmentTest class >> accessFromClassSideOnlyVariable [
 ]
 
 { #category : #accessing }
+RBBrowserEnvironmentTest class >> defaultTimeLimit [
+	^30 seconds
+]
+
+{ #category : #accessing }
 RBBrowserEnvironmentTest class >> packageNamesUnderTest [
 	^ #('Refactoring-Environment')
 ]

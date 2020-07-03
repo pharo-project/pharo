@@ -53,7 +53,7 @@ CoCompletionContext >> completionAt: aNumber [
 	| entry |
 	
 	entry := (self entries at: aNumber) contents asSymbol separateKeywords.
-	^ NECPreferences spaceAfterCompletion 
+	^ NECEntry spaceAfterCompletion 
 		ifTrue: [ entry, ' ' ]
 		ifFalse: [ entry ]
 ]
@@ -89,7 +89,7 @@ CoCompletionContext >> completionEnvironment [
 { #category : #accessing }
 CoCompletionContext >> completionToken [
 
-	^ self completion completionToken
+	^ self engine completionToken
 ]
 
 { #category : #accessing }

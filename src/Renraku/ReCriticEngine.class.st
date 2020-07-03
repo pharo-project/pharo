@@ -83,7 +83,7 @@ ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 	candidates := anEntity banLevelCandidates.
 	
 	(UIManager default
-		chooseFrom: (candidates collect: #reBanName)
+		chooseFrom: (candidates collect: [:each | each reBanName])
 		values: candidates
 		title: 'On which level do you want to ban the rule?')
 			ifNotNil: [ :entity | entity ban: aCritique ]

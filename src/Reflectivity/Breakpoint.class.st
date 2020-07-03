@@ -17,21 +17,46 @@ Class {
 	#name : #Breakpoint,
 	#superclass : #Object,
 	#instVars : [
-		'condition',
-		'link',
-		'node',
-		'level',
-		'options'
+		'#condition',
+		'#link',
+		'#node',
+		'#level',
+		'#options',
+		'#targetInstance => WeakSlot'
 	],
 	#classVars : [
-		'AllBreakpoints'
+		'#AllBreakpoints',
+		'#Observers'
 	],
 	#category : #'Reflectivity-Breakpoints'
 }
 
 { #category : #all }
+Breakpoint class >> addBreakpoint: aBreakpoint [
+	self all add: aBreakpoint.
+	self notifyBreakpointAdded: aBreakpoint
+]
+
+{ #category : #all }
 Breakpoint class >> all [ 
 	^ AllBreakpoints ifNil: [ AllBreakpoints := OrderedCollection new ]
+]
+
+{ #category : #'API - object-centric' }
+Breakpoint class >> breakOn: aSelector inObject: anObject [
+	|ast|
+	ast := (anObject class lookupSelector: aSelector) ast.
+	^self breakOnAST: ast inObject: anObject
+]
+
+{ #category : #'API - object-centric' }
+Breakpoint class >> breakOnAST: aNode inObject: anObject [
+	|bp|	
+	bp := self new.
+	bp node: aNode.
+	bp scopeTo: anObject.
+	bp install.
+	^bp
 ]
 
 { #category : #all }
@@ -68,7 +93,7 @@ Breakpoint class >> handleClassRemoved: anAnnouncement [
 	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
-			ifFound: [ self all remove: breakpoint ] ]
+			ifFound: [ self removeBreakpoint: breakpoint ] ]
 ]
 
 { #category : #'system announcements' }
@@ -98,6 +123,44 @@ Breakpoint class >> isInstalledIn: aMethod [
 	^ false
 ]
 
+{ #category : #'observers - experimental' }
+Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
+	| notification |
+	notification := BreakpointAddedNotification
+		on: aBreakpoint
+		nodes: aBreakpoint link nodes.
+	self notifyObservers: notification
+]
+
+{ #category : #'observers - experimental' }
+Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
+	| notification |
+	notification := BreakpointHitNotification
+		on: aBreakpoint
+		nodes: {node}.
+	self notifyObservers: notification
+]
+
+{ #category : #'observers - experimental' }
+Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
+	| notification |
+	notification := BreakpointRemovedNotification
+		on: aBreakpoint
+		nodes: nodes.
+	self notifyObservers: notification
+]
+
+{ #category : #'observers - experimental' }
+Breakpoint class >> notifyObservers: aNotification [
+	self observers
+		do: [ :observer | observer ifNotNil: [ observer update: aNotification ] ]
+]
+
+{ #category : #'observers - experimental' }
+Breakpoint class >> observers [
+	^Observers ifNil:[Observers := WeakOrderedCollection new]
+]
+
 { #category : #'class initialization' }
 Breakpoint class >> registerInsterestToSystemAnnouncement [
 	<systemEventRegistration>
@@ -108,18 +171,33 @@ Breakpoint class >> registerInsterestToSystemAnnouncement [
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
+{ #category : #'observers - experimental' }
+Breakpoint class >> registerObserver: anObject [
+	self observers addIfNotPresent: anObject
+]
+
 { #category : #cleanup }
 Breakpoint class >> removeAll [ 
 	<script>
 	self all copy do: #remove
 ]
 
+{ #category : #all }
+Breakpoint class >> removeBreakpoint: aBreakpoint [
+	| nodes |
+	nodes := aBreakpoint link nodes copy.
+	self all remove: aBreakpoint.
+	self notifyBreakpointRemoved: aBreakpoint fromNodes: nodes
+]
+
 { #category : #cleanup }
 Breakpoint class >> removeFrom: aNode [
 	| links breakpointsToRemove |
-	links := aNode beforeLinks select: [ :link | link metaObject = Break].
+	links := OrderedCollection new.
+	links addAll: (aNode beforeLinks select: [ :link | link metaObject = Break]).
+	links addAll: (aNode afterLinks select: [ :link | link metaObject = Break]).
 	breakpointsToRemove := self all select: [ :br | links includes: br link].
-	breakpointsToRemove do: #remove
+	breakpointsToRemove asSet do: #remove
 ]
 
 { #category : #cleanup }
@@ -127,7 +205,12 @@ Breakpoint class >> removeFromMethod: aMethod [
 	self all copy do: [ :breakpoint |
 		breakpoint link methods
 			detect: [ :m | m == aMethod ]
-			ifFound: [ self all remove: breakpoint ] ]
+			ifFound: [ self removeBreakpoint: breakpoint  ] ]
+]
+
+{ #category : #'observers - experimental' }
+Breakpoint class >> unregisterObserver: anObject [
+	self observers remove: anObject
 ]
 
 { #category : #api }
@@ -139,11 +222,16 @@ Breakpoint >> always [
 
 { #category : #links }
 Breakpoint >> breakLink [
- 	"for now it should just halt in base level"
+	"for now it should just halt in base level"
+
 	^ MetaLink new
 		metaObject: Break;
-		selector: #break;
-		options: options
+		selector: #break:inContext:node:;
+		options: options;
+		arguments:
+			{(RFLiteralVariableNode value: self).
+			#context.
+			#node}
 ]
 
 { #category : #links }
@@ -164,13 +252,23 @@ Breakpoint >> condition: aCondition [
 
 { #category : #initialization }
 Breakpoint >> initialize [
+	
+	self class initializeSlots: self.
 	options := #(+ optionCompileOnLinkInstallation + optionAnnounce)
 ]
 
 { #category : #install }
 Breakpoint >> install [
-	self class all add: self.
+	self class addBreakpoint: self.
+	self isObjectCentric
+		ifTrue: [ self targetInstance link: self link toAST: self node.
+			^ self ].
 	self node link: self link
+]
+
+{ #category : #testing }
+Breakpoint >> isObjectCentric [
+	^self targetInstance notNil
 ]
 
 { #category : #accessing }
@@ -216,6 +314,21 @@ Breakpoint >> options: anArray [
 
 { #category : #install }
 Breakpoint >> remove [
-	self class all remove: self.
+	self class removeBreakpoint: self.
 	link uninstall
+]
+
+{ #category : #api }
+Breakpoint >> scopeTo: anInstance [
+	self targetInstance: anInstance
+]
+
+{ #category : #accessing }
+Breakpoint >> targetInstance [
+	^targetInstance
+]
+
+{ #category : #accessing }
+Breakpoint >> targetInstance: anObject [
+	targetInstance := anObject
 ]

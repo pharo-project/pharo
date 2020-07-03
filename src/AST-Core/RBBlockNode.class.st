@@ -24,7 +24,8 @@ Class {
 		'arguments',
 		'bar',
 		'body',
-		'scope'
+		'scope',
+		'bcToASTCache'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -69,6 +70,15 @@ RBBlockNode >> allDefinedVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
+]
+
+{ #category : #accessing }
+RBBlockNode >> allStatements [
+	"including temp variable definition."
+	^ self temporaries asOrderedCollection copy
+			addAll: super allStatements;
+			yourself
+
 ]
 
 { #category : #accessing }
@@ -168,8 +178,20 @@ RBBlockNode >> hasArgumentNamed: aString [
 ]
 
 { #category : #testing }
+RBBlockNode >> hasArguments [
+
+	^ arguments isNotEmpty
+]
+
+{ #category : #testing }
 RBBlockNode >> hasBlockReturn [
 	^ self body lastIsReturn
+]
+
+{ #category : #testing }
+RBBlockNode >> hasTemporaries [
+
+	^ self temporaries isNotEmpty
 ]
 
 { #category : #testing }
@@ -180,6 +202,13 @@ RBBlockNode >> hasTemporaryNamed: aString [
 { #category : #comparing }
 RBBlockNode >> hash [
 	^ (self hashForCollection: self arguments) bitXor: self body hash
+]
+
+{ #category : #testing }
+RBBlockNode >> headIsNotEmpty [
+	"Return true whether the receiver has some arguments or comments"
+	
+	^ arguments isNotEmpty or: [ self comments isNotEmpty ]
 ]
 
 { #category : #initialization }

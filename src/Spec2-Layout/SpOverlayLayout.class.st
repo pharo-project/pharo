@@ -56,7 +56,6 @@ SpOverlayLayout >> presenter [
 { #category : #accessing }
 SpOverlayLayout >> remove: aPresenter [
 	
-	children removeKey: aPresenter.
 	singleChild := nil.
-	self announceChildRemoved: aPresenter
+	super remove: aPresenter
 ]

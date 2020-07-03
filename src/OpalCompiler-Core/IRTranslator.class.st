@@ -92,13 +92,13 @@ IRTranslator >> pushOuterVectors: scope [
 	| scopesWithVector sc |
 	scopesWithVector := OrderedCollection new.
 	sc := scope.
-	[ sc outerScope isNil ] whileFalse: [ 
+	[ sc outerScope isInstanceScope ] whileFalse: [ 
 		sc := sc outerScope.
 		sc hasTempVector ifTrue: [ scopesWithVector add: sc ] ].
 	scopesWithVector reverseDo: [ :scopeWithVector |
 		tempVectorStack push: (IRInstruction 
 			createTempVectorNamed: scopeWithVector tempVectorName
-			withVars: (scopeWithVector tempVector collect: [:each| each name]) asArray ) ].
+			withVars: scopeWithVector tempVectorVarNames)].
 	gen inBlock: true.
 ]
 

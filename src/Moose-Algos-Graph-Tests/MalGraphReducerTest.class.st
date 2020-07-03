@@ -10,11 +10,11 @@ Class {
 { #category : #helpers }
 MalGraphReducerTest >> assertNodes: aNodeList doesNotInclude: anotherNodeList [
 	aNodeList 
-		collect: #model
+		collect: [:each | each model]
 		thenDo: 
 			[ :model | 
 			self 
-				deny: ((anotherNodeList collect: #model) includes: model)
+				deny: ((anotherNodeList collect: [:each | each model]) includes: model)
 				description: model asString , ' should not be referenced!' ] 
 ]
 

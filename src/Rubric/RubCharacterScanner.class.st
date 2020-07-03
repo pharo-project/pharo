@@ -480,13 +480,9 @@ RubCharacterScanner >> textColor: ignored [
 
 { #category : #'multilingual scanning' }
 RubCharacterScanner >> widthOf: char inFont: aFont [
-
-	(char isMemberOf: CombinedChar) ifTrue: [
-		^ aFont widthOf: char base.
-	] ifFalse: [
-		^ aFont widthOf: char.
-	].
-
-
-
+	^ aFont
+		widthOf:
+			((char isMemberOf: CombinedChar)
+				ifTrue: [ char base ]
+				ifFalse: [ char ])
 ]

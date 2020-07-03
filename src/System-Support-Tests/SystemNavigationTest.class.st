@@ -125,3 +125,40 @@ SystemNavigationTest >> testIsUnsentMessage [
 	class compileSilently: 'messageNeverSentInTheSystemXXXXThisIsForTest ^self'.
 	self assert: (self systemNavigationToTest isUnsentMessage: class selectors anyOne)
 ]
+
+{ #category : #testing }
+SystemNavigationTest >> testReferencesToAClassInBlock [
+	| referencingMethods class otherClass callers |
+
+	class := self classFactory newClass.
+	class compileSilently: 'aMethod ^ 42'.
+
+	otherClass := self classFactory newClass.
+	otherClass
+		compileSilently: 'anotherMethod ^[[' , class name asString ,  ']]'.
+
+	referencingMethods := self systemNavigationToTest allReferencesTo: class binding.
+	self assert: referencingMethods size equals: 1.
+	callers := referencingMethods collect: [ :methodRef | methodRef selector ].
+	self
+		assert: (callers includesAll: #(#anotherMethod))
+]
+
+{ #category : #testing }
+SystemNavigationTest >> testSenderOfASelectorInBlock [
+	| senders selector class otherClass callers |
+	selector := ('aMethod' , 'WithSenders') asSymbol.
+	class := self classFactory newClass.
+	class compileSilently: selector asString , ' ^ self'.
+	class compileSilently: 'anotherMethod ^ [self ' , selector asString , ']'.
+
+	otherClass := self classFactory newClass.
+	otherClass
+		compileSilently: 'yetAnotherMethod ^[[self ' , selector asString , ']]'.
+
+	senders := self systemNavigationToTest allSendersOf: selector.
+	self assert: senders size equals: 2.
+	callers := senders collect: [ :methodRef | methodRef selector ].
+	self
+		assert: (callers includesAll: #(#anotherMethod #yetAnotherMethod))
+]

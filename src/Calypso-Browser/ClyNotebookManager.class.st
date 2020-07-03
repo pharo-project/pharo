@@ -91,22 +91,16 @@ ClyNotebookManager >> addTool: aBrowserTool [
 
 { #category : #updating }
 ClyNotebookManager >> basicUpdateTools [
-	| newTools selectedTools currentTools needsNewSelection selectedIndex |
+		| newTools needsNewSelection selectedTools currentTools |
+		newTools := OrderedCollection new.	
+		browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each].
+		needsNewSelection := self requiresNewDesiredSelection.
+		selectedTools := self selectedTools.
+		currentTools := tools copy.
 
-	newTools := OrderedCollection new.
-	selectedIndex := self tabMorph selectedPageIndex.	
-	browser navigationContextsDo: [ :each | self buildToolsOn: newTools for: each ].
-	needsNewSelection := self requiresNewDesiredSelection.
-	selectedTools := self selectedTools.
-	currentTools := tools copy.
-	self updateTabsWith: newTools.
-	(needsNewSelection or: [ tools ~= currentTools ]) ifTrue: [ 
-		self restoreSelectedTools: selectedTools.
-		"if we are still in same tab, but we needs to restore tools, we need also to 
-		 force the refresh of the current tab (because sending #selectPageIndex: will 
-		 not refresh it."
-		selectedIndex = self tabMorph selectedPageIndex 
-			ifTrue: [ self tabMorph updatePageIndex: selectedIndex ] ]
+		self updateTabsWith: newTools.
+		(needsNewSelection or: [ tools ~= currentTools ]) 
+			ifTrue: [ self restoreSelectedTools: selectedTools].
 ]
 
 { #category : #accessing }

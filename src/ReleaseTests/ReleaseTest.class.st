@@ -19,22 +19,6 @@ ReleaseTest class >> defaultTimeLimit [
 ]
 
 { #category : #accessing }
-ReleaseTest class >> knownProcesses [
-	"Return a dynamic list of know processes"
-	
-	"(self actualProcesses difference: self knownProcesses) do: [ :each | each suspend; terminate ]."
-	
-	^ {
-		Processor activeProcess.	
-		InputEventFetcher default fetcherProcess.
-		WeakArray runningFinalizationProcess.
-		Processor backgroundProcess.
-		SmalltalkImage current lowSpaceWatcherProcess.
-		UIManager default uiProcess.
-		Delay schedulingProcess } asSet
-]
-
-{ #category : #accessing }
 ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
@@ -82,7 +66,20 @@ ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 
 { #category : #accessing }
 ReleaseTest >> knownProcesses [
-	^ self class knownProcesses
+	"Return a dynamic list of know processes"
+	
+	"(self actualProcesses difference: self knownProcesses) do: [ :each | each suspend; terminate ]."
+	
+	^ {
+		Processor activeProcess.	
+		Processor backgroundProcess.
+		InputEventFetcher default fetcherProcess.
+		WeakArray runningFinalizationProcess.
+		SmalltalkImage current lowSpaceWatcherProcess.
+		MorphicUIManager uiProcess.
+		CurrentExecutionEnvironment value watchDogProcess.
+		Delay schedulingProcess.
+		TKTWatchDog onDuty pharoProcess } asSet
 ]
 
 { #category : #tests }
@@ -143,7 +140,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
 	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
 	registeredHandlers := SessionManager default startupList
-		collect: #handledId.
+		collect: [:each | each handledId].
 	
 	keyClasses do:	[ :className |
 		self assert: (registeredHandlers includes: className).
@@ -273,10 +270,9 @@ ReleaseTest >> testRPackageOrganizer [
 { #category : #tests }
 ReleaseTest >> testShouldFileLocatorBeBeforeSystemSettingsPersistenceInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17721"
+	
 	| startupList settingsIndex |
-	
-	startupList := (SessionManager default startupList collect: #handledId).
-	
+	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	settingsIndex := startupList indexOf: #SystemSettingsPersistence.
 	settingsIndex > 0
 		ifTrue: [ self should: [ (startupList indexOf: #FileLocator) < (startupList indexOf: #SystemSettingsPersistence) ] ]
@@ -287,9 +283,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	"This test documents issue https://pharo.manuscript.com/f/cases/17834"
 	"The Startup of he WorldMorph is now done in the UIManagerHandler"
 	| startupList |
-	
-	startupList := (SessionManager default startupList collect: #handledId).
-	
+	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache FT2Handle) 
 		do: [ :fontClass |
 			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
@@ -335,12 +329,16 @@ ReleaseTest >> testUnknownProcesses [
 	| unknownProcesses |
 	unknownProcesses := self actualProcesses difference: self knownProcesses.
 	self 
-		assert: unknownProcesses size <=2
+		assert: unknownProcesses isEmpty
 		description: (String streamContents: [ :out |
 			out << 'Found unknown processes: '.
 			unknownProcesses 
-				do: [ :each | out print: each ] 
-				separatedBy: [ out << ', ' ] ])
+				do: [ :each | 
+					out 
+						print: each name;
+						print: ':';
+						print: each ] 
+				separatedBy: [ out << String crlf ] ])
 ]
 
 { #category : #'tests - rpackage' }

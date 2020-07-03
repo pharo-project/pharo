@@ -5,6 +5,16 @@ Class {
 }
 
 { #category : #test }
+CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
+
+	self deny: (CoSuperMessageHeuristic new
+		appliesForNode: RBMethodNode new
+		inContext: (CoCompletionContext new
+			completionClass: nil;
+			yourself))
+]
+
+{ #category : #test }
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass [
 
 	self assert: (CoSuperMessageHeuristic new

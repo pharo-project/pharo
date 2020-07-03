@@ -46,7 +46,7 @@ Class {
 
 { #category : #protected }
 FLSerializer class >> currentVersion [
-	^ 300
+	^ 301
 ]
 
 { #category : #protected }

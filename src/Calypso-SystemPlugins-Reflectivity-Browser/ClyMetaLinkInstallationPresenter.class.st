@@ -56,7 +56,7 @@ But we need to think about how to do that exactly."
 	^ baseLinks reject: [ :link | 
 		  link metaObject == Break or: [ 
 			  { 
-				  Watchpoint.
+				  Watch.
 				  ExecutionCounter } includes: link metaObject class ] ]
 ]
 
@@ -112,20 +112,20 @@ ClyMetaLinkInstallationPresenter >> toolbarButtons [
 	buttons := OrderedCollection new.
 	buttons add: (self isForMetaLinkInstallation
 			 ifTrue: [ 
-				 SpToolBarButton new
+				 SpToolBarButtonPresenter new
 					 label: 'Install';
 					 icon: (self iconNamed: #smallOk);
 					 help: 'Install the selected metalink';
 					 action: [ self installSelectedMetalink ];
 					 yourself ]
 			 ifFalse: [ 
-				 SpToolBarButton new
+				 SpToolBarButtonPresenter new
 					 label: 'Uninstall';
 					 icon: (self iconNamed: #smallOk);
 					 help: 'Uninstall the selected metalink';
 					 action: [ self uninstallSelectedMetalink ];
 					 yourself ]).
-	buttons add: (SpToolBarButton new
+	buttons add: (SpToolBarButtonPresenter new
 			 label: 'Cancel';
 			 icon: (self iconNamed: #smallCancel);
 			 help: 'Cancel';

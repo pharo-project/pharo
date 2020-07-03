@@ -16,7 +16,7 @@ Class {
 SelectRuleBrowser class >> items [
 
 	| rules rulesByGroup integrationRules |
-	rules := (ReRuleManager visibleRuleClasses collect: #new) sorted: [ :a :b |
+	rules := (ReRuleManager visibleRuleClasses collect: [:aClass | aClass new]) sorted: [ :a :b |
 		a name < b name ].
 	integrationRules := rules select: [ :r |
 		PharoCriticRules pharoHardLintRules includes: r class ].

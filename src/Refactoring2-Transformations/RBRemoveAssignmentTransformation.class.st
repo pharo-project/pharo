@@ -84,8 +84,8 @@ RBRemoveAssignmentTransformation >> privateTransform [
 		ifFalse: [ valueNode := self parserClass parseExpression: value.
 			assignments
 				detectMax: [ :node | 
-					((node allChildren collect: #class)
-						intersection: (valueNode allChildren collect: #class)) size ] ].
+					((node allChildren collect: [:each | each class])
+						intersection: (valueNode allChildren collect: [:each | each class])) size ] ].
 	nodeToRemove parent removeNode: nodeToRemove.
 	class compileTree: methodTree
 ]

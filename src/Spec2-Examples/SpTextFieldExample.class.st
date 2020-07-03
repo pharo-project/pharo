@@ -33,12 +33,12 @@ SpTextFieldExample class >> title [
 
 { #category : #initialization }
 SpTextFieldExample >> connectPresenters [
-	textField
-		acceptBlock:
-			[ :text | self class environment
-				at: text asSymbol
-				ifPresent: [ :class | methodBrowser messages: class methods ]
-				ifAbsent: [ methodBrowser messages: #() ] ]
+	
+	textField whenTextChangedDo: [ :text | 
+		self class environment
+			at: text asSymbol
+			ifPresent: [ :class | methodBrowser messages: class methods ]
+			ifAbsent: [ methodBrowser messages: #() ] ]
 ]
 
 { #category : #api }
@@ -53,7 +53,6 @@ SpTextFieldExample >> initializePresenters [
 	textField := self newTextInput.
 	textField
 		placeholder: 'Enter a class name';
-		autoAccept: true;
 		removeEntryCompletion.
 
 	methodBrowser sortingBlock: [ :a :b | a selector < b selector ]
