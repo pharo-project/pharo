@@ -210,7 +210,6 @@ ASTClassBuilderTest >> testCreateNormalClassWithSlots [
 		buildEnvironment: self environment;
 		buildFromAST: ast;
 		build.
-		
 	self assert: class instanceVariablesString equals: 'cat env'
 ]
 
