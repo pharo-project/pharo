@@ -1,6 +1,16 @@
 Extension { #name : #String }
 
 { #category : #'*Slot-Core' }
+String >> asClassVariable [
+	^ ClassVariable named: self
+]
+
+{ #category : #'*Slot-Core' }
+String >> asSlot [
+	^ InstanceVariableSlot named: self
+]
+
+{ #category : #'*Slot-Core' }
 String >> asSlotCollection [
 	"Parse as slots. Use space, tab and cr as separators
 	Example: 
