@@ -164,19 +164,16 @@ EpApplyPreviewerTest >> testCategoryRenameWithPreviousRollback [
 
 { #category : #tests }
 EpApplyPreviewerTest >> testClassAdditionWithClassRemoved [
-
-	| aClass className classDefinition |
+	| aClass classDefinition |
 	aClass := classFactory newClass.
-	className := aClass name.
 	classDefinition := aClass oldDefinition.
 	self setHeadAsInputEntry.
 
 	aClass removeFromSystem.
 
-	self assertOutputsAnEventWith: [:output | 
+	self assertOutputsAnEventWith: [ :output | 
 		self assert: output class equals: EpClassAddition.
-		self assert: output behaviorAffected definitionSource equals: classDefinition.
-		]
+		self assert: output behaviorAffected definitionSource equals: classDefinition ]
 ]
 
 { #category : #tests }
@@ -217,23 +214,19 @@ EpApplyPreviewerTest >> testClassAdditionWithSuperclassChanged [
 
 { #category : #tests }
 EpApplyPreviewerTest >> testClassRemovalWithClassAdded [
-
-	| aClass className classDefinition |
+	| aClass className |
 	aClass := classFactory newClass.
 	className := aClass name.
-	classDefinition := aClass oldDefinition.
 	aClass removeFromSystem.
-	
+
 	self setHeadAsInputEntry.
-	
+
 	aClass := classFactory newClass.
 	aClass rename: className.
-	
-	self assertOutputsAnEventWith: [:output | 
-		self assert: output class equals: EpClassRemoval.
-		self assert: output behaviorAffected definitionSource equals: aClass oldDefinition.
-		]
 
+	self assertOutputsAnEventWith: [ :output | 
+		self assert: output class equals: EpClassRemoval.
+		self assert: output behaviorAffected definitionSource equals: aClass oldDefinition ]
 ]
 
 { #category : #tests }
@@ -488,12 +481,10 @@ EpApplyPreviewerTest >> testRedundantCategoryRenameWithAbsentCategory [
 
 { #category : #tests }
 EpApplyPreviewerTest >> testRedundantClassAddition [
-
-	| aClass |
-	aClass := classFactory newClass.
+	classFactory newClass.
 	self setHeadAsInputEntry.
-	
-	self assertEmptyPreviewLog.
+
+	self assertEmptyPreviewLog
 ]
 
 { #category : #tests }
