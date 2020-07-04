@@ -279,32 +279,28 @@ FreeTypeFontProvider >> getWindowsFontFolderPath [
 	| externalLibraryClass externalTypeClass fun buff |
 	externalLibraryClass := Smalltalk globals at: #ExternalLibraryFunction ifAbsent: [  ].
 	externalTypeClass := Smalltalk globals at: #ExternalType ifAbsent: [  ].
-	(externalLibraryClass isNil or: [ externalTypeClass isNil ])
-		ifTrue: [ ^ self guessWindowsFontFolderPath ].
+	(externalLibraryClass isNil or: [ externalTypeClass isNil ]) ifTrue: [ ^ self guessWindowsFontFolderPath ].
 	fun := externalLibraryClass
-		name: 'SHGetFolderPathA'
-		module: 'shfolder.dll'
-		callType: 1
-		returnType: externalTypeClass long
-		argumentTypes:
-			{(externalTypeClass long).
-			(externalTypeClass long).
-			(externalTypeClass long).
-			(externalTypeClass long).
-			(externalTypeClass char asPointerType)}.
+		       name: 'SHGetFolderPathA'
+		       module: 'shfolder.dll'
+		       callType: 1
+		       returnType: externalTypeClass long
+		       argumentTypes: { 
+				       externalTypeClass long.
+				       externalTypeClass long.
+				       externalTypeClass long.
+				       externalTypeClass long.
+				       externalTypeClass char asPointerType }.
 	buff := ByteArray new: 1024.
 	[ 
-	| r |
-	r := fun
+	fun
 		invokeWith: 0
 		with: 16r0014
 		with: 0
 		with: 0
-		with: buff	"CSIDL_FONTS" ]
+		with: buff "CSIDL_FONTS" ]
 		on: Error
-		do: [ :e | 
-			"will get error if ffiplugin is missing"
-			^ self guessWindowsFontFolderPath ].
+		do: [ :e | "will get error if ffiplugin is missing" ^ self guessWindowsFontFolderPath ].
 	^ (buff copyFrom: 1 to: (buff indexOf: 0) - 1) asString
 ]
 
@@ -566,18 +562,15 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 
 { #category : #'loading and updating' }
 FreeTypeFontProvider >> updateFromSystem [
-	| i |
-	i := 0.
 	self prepareForUpdating.
-	'FreeType' displayProgressFrom: 0 to: 3 during:[ :mainBar |
+	'FreeType' displayProgressFrom: 0 to: 3 during: [ :mainBar | 
 		self updateFileCacheInfo.
 		mainBar current: 1.
 		self updateFontsFromSystem.
 		mainBar current: 2.
 		self updateAvailableFontFamilies.
 		mainBar current: 3 ].
-	LogicalFont allInstances do:[:each | each clearRealFont]. "in case they have a bad one"
-			
+	LogicalFont allInstances do: [ :each | "in case they have a bad one" each clearRealFont ]
 ]
 
 { #category : #'loading and updating' }

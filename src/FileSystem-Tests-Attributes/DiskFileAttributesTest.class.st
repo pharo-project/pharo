@@ -151,13 +151,9 @@ DiskFileAttributesTest >> testIsDirectory [
 
 { #category : #tests }
 DiskFileAttributesTest >> testIsExecutable [
-
-	| file filesystem path |
+	| file |
 	file := FileLocator vmBinary resolve.
-	filesystem := file fileSystem.
-	path := file path.
-	self assert: (DiskDirectoryEntry reference: file) isExecutable.
-
+	self assert: (DiskDirectoryEntry reference: file) isExecutable
 ]
 
 { #category : #tests }
