@@ -31,10 +31,10 @@ BaselineOfSpec2 >> baseline: spec [
 	spec group: 'Tests' with: #(
 		'SpecCore'
 		'Core' 
-		'Spec2-Adapters-Morphic-Tests' 
 		'Spec2-Morphic-Tests' 
 		'Spec2-Morphic-Backend-Tests' 
-		'Spec2-Backend-Tests').
+		'Spec2-Backend-Tests'
+		'Spec2-Adapters-Morphic-Tests').
 	spec group: 'Base' with: #(
 		'SpecCore'
 		'Core'
