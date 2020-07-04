@@ -9,7 +9,8 @@ Class {
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
-		'face'
+		'face',
+		'freeTypeFont'
 	],
 	#pools : [
 		'AthensCairoDefinitions'
@@ -31,13 +32,10 @@ CairoScaledFont class >> fromFreetypeFont: aFont [
 	| ftFace face |
 	^ CairoBackendCache soleInstance at: aFont ifAbsentPut: [ | emphasis |
 			emphasis := aFont simulatedEmphasis.
-			ftFace := aFont face.
-			face := CairoBackendCache soleInstance 
-				at: {ftFace.	emphasis} 
-				ifAbsentPut: [ | cff |
-					cff := CairoFontFace fromFreetypeFace: ftFace.
-					emphasis ifNotNil: [ cff synthesizeEmphasis: emphasis ].
-					cff ].
+			"I will copy it, as it used by cairo"
+			ftFace := aFont face copy.
+			face := CairoFontFace fromFreetypeFace: ftFace.
+			emphasis ifNotNil: [ face synthesizeEmphasis: emphasis ].
 			self fromFreetypeFont: aFont cairoFace: face ]
 ]
 
@@ -56,7 +54,9 @@ CairoScaledFont class >> fromFreetypeFont: aFont cairoFace: face [
 	font := self primCreate: face fontMatrix: fontMatrix  userToDeviceMatrix: deviceMatrix options: options. 
 	
 	"to keep a reference to cairo face in instance"
-	^ font initWithFace: face.
+	^ (font initWithFace: face)
+			freeTypeFont: aFont;
+			yourself.
 	
 
 ]
@@ -107,6 +107,12 @@ CairoScaledFont >> extents [
 ]
 
 { #category : #accessing }
+CairoScaledFont >> freeTypeFont: aFreeTypeFont [ 
+	
+	freeTypeFont := aFreeTypeFont
+]
+
+{ #category : #accessing }
 CairoScaledFont >> getExtents: cairoFontExtents [
 	"void                cairo_scaled_font_extents           (cairo_scaled_font_t *scaled_font,
                                                          cairo_font_extents_t *extents);
@@ -140,6 +146,22 @@ CairoScaledFont >> getExtentsOfGlyphs: glyphs ofLength: num into: extents [
                                             int num,
                                             cairo_text_extents_t *extents))
 		
+]
+
+{ #category : #accessing }
+CairoScaledFont >> getFontMatrixInto: cairoFontMatrix [
+	^ self ffiCall: #(
+		void
+		cairo_scaled_font_get_font_matrix (self,
+ 	                                  AthensCairoMatrix *cairoFontMatrix))
+]
+
+{ #category : #accessing }
+CairoScaledFont >> getFontScaleMatrixInto: cairoFontMatrix [
+	^ self ffiCall: #(
+		void
+		cairo_scaled_font_get_scale_matrix (self,
+ 	                                  AthensCairoMatrix *cairoFontMatrix))
 ]
 
 { #category : #initialization }

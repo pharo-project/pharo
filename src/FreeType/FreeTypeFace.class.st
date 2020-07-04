@@ -129,6 +129,15 @@ FreeTypeFace >> index: anInteger [
 	index := anInteger
 ]
 
+{ #category : #copying }
+FreeTypeFace >> postCopy [ 
+
+	handle beNull.
+	self validate.
+	self autoRelease.
+	^ self
+]
+
 { #category : #caching }
 FreeTypeFace >> releaseCachedState [
 
