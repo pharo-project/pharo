@@ -40,26 +40,22 @@ TRemoveTest >> test0FixtureTRemoveTest [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAll [
-
-	| el aSubCollection collection res |
+	| el aSubCollection collection |
 	collection := self nonEmptyWithoutEqualElements.
 	el := collection anyOne.
 	aSubCollection := collection copyWithout: el.
-	res := collection removeAll: aSubCollection.
+	collection removeAll: aSubCollection.
 	self assert: collection size = 1.
 	self nonEmptyWithoutEqualElements do: [ :each | self assert: each = el ]
 ]
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllError [
-
 	| el aSubCollection |
 	el := self elementNotIn.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWith: el.
-	
-	self 
-		should: [ | res | res := self nonEmptyWithoutEqualElements removeAll: aSubCollection ]
-		raise: Error
+
+	self should: [ self nonEmptyWithoutEqualElements removeAll: aSubCollection ] raise: Error
 ]
 
 { #category : #'tests - remove' }
