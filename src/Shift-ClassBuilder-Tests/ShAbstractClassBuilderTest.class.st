@@ -81,10 +81,13 @@ ShAbstractClassBuilderTest >> validateSharedPools: pools [
 
 { #category : #validation }
 ShAbstractClassBuilderTest >> validateSharedVariables: allVariables [
-	| resultVariables |
+	| resultVariables classVar |
 	resultVariables  := result classPool keys.
 
-	self assertCollection: resultVariables equals: allVariables 
+	self assertCollection: resultVariables equals: allVariables.
+	allVariables do: [ :each | 
+		classVar := result classVariableNamed: each.
+		self assert: classVar definingClass equals: result  ]
 ]
 
 { #category : #validation }
