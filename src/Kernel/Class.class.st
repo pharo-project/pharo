@@ -438,19 +438,18 @@ Class >> copyForAnnouncement [
 Class >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
-	|  conflicts |
-	
+	|  conflicts newVarNames |	
 	conflicts := false.	
+	newVarNames := newVars collect: [ :each | each name ].
 	"Remove. Warn if vars are removed that are still used"
-	"self flag: something wrong here. put to true and add an ivar to a class"
-	(self classVariables reject: [:x | newVars includes: x]) do: [:var | self removeClassVarNamed: var name interactive: false].
+	(self classVarNames difference: newVarNames) do: [:varName | 
+		self removeClassVarNamed: varName interactive: false].
 	
-	(newVars reject: [:var | self classVariables includes: var]) do: [:var | "adding"
-			"check if new vars defined elsewhere"
-			(self innerBindingOf: var key) 
-				ifNotNil: [(DuplicatedVariableError new) variable: var name;
-						signal: var name , ' is defined elsewhere'.
-					conflicts := true]].
+	(newVarNames difference: self classVarNames) do: [:varName | "adding"
+			"check if new vars are defined elsewhere"
+			(self innerBindingOf: varName) ifNotNil: [:existingVar | 
+				DuplicatedVariableError signalWith: existingVar.
+				conflicts := true]].
 	newVars do: [:var | self basicDeclareClassVariable: var ].
 	^conflicts
 ]

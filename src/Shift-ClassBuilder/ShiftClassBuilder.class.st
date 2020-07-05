@@ -218,6 +218,7 @@ ShiftClassBuilder >> createClass [
 		withLayoutType: self layoutDefinition layoutClass
 		slots: self layoutDefinition slots.
 
+	oldClass classPool ifNotEmpty: [:pool | newClass classPool: pool copy].
 	newClass environment: self buildEnvironment environment.
 	
 	self builderEnhancer classCreated: self.
