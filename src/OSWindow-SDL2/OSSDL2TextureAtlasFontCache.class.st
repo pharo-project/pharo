@@ -33,7 +33,7 @@ Class {
 	#category : #'OSWindow-SDL2-Rendering'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 OSSDL2TextureAtlasFontCache class >> initialize [
 	FontTextureWidth := 2048.
 ]
