@@ -212,14 +212,14 @@ Slot >> isAccessedIn: aCompiledCode [
 ]
 
 { #category : #testing }
-Slot >> isInstance [
-	^ true
+Slot >> isDefinedByOwningClass [
+
+	^ self owningClass = self definingClass
 ]
 
 { #category : #testing }
-Slot >> isLocal [
-
-	^ self owningClass = self definingClass
+Slot >> isInstance [
+	^ true
 ]
 
 { #category : #testing }

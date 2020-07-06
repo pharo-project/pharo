@@ -59,7 +59,7 @@ ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [ 
 
 	classSlots ifNotNil: [ ^ self ].
-	classSlots := (oldSlots select: #isLocal thenCollect: [ :e | e copy index: nil; yourself ])
+	classSlots := (oldSlots select: #isDefinedByOwningClass thenCollect: [ :e | e copy index: nil; yourself ])
 ]
 
 { #category : #accessing }

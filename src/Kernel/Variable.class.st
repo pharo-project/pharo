@@ -125,6 +125,11 @@ Variable >> isLiteralVariable [
 ]
 
 { #category : #testing }
+Variable >> isLocal [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isLocalVariable [
 	^false
 ]
