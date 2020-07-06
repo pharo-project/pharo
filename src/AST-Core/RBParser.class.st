@@ -39,15 +39,15 @@ RBParser class >> parseExpression: aString [
 ]
 
 { #category : #parsing }
-RBParser class >> parseExpression: aString onError: aBlock [ 
-	| node parser |
-	parser := self new
-		 errorBlock: aBlock;
-		 initializeParserWith: aString.
-	node := parser parseExpression: aString.
-	^(node statements size == 1 and: [node temporaries isEmpty]) 
-		ifTrue: [node statements first]
-		ifFalse: [node]
+RBParser class >> parseExpression: aString onError: aBlock [
+	| node |
+	node := self new
+		        errorBlock: aBlock;
+		        initializeParserWith: aString;
+		        parseExpression: aString.
+	^ (node statements size == 1 and: [ node temporaries isEmpty ])
+		  ifTrue: [ node statements first ]
+		  ifFalse: [ node ]
 ]
 
 { #category : #parsing }
