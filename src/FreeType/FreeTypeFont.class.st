@@ -96,6 +96,17 @@ FreeTypeFont >> characterFormAt: aCharacter [
 				subpixelPosition: 0]
 ]
 
+{ #category : #'glyph lookup' }
+FreeTypeFont >> characterRenderingOptimizedFormAt: aCharacter [
+	FreeTypeSettings current useSubPixelAntiAliasing ifFalse: [ ^ super characterRenderingOptimizedFormAt: aCharacter ].
+	
+	^ (self 
+		glyphOf: aCharacter 
+		destDepth: 32 
+		colorValue: (Color white pixelValueForDepth: 32)
+		subpixelPosition: 0) withAlphaExtractedFromSubpixelRendering
+]
+
 { #category : #accessing }
 FreeTypeFont >> clearCachedMetrics [
 	widthAndKernedWidthCache := cachedHeight := cachedAscent := cachedDescent := subPixelPositioned := nil
@@ -453,6 +464,11 @@ FreeTypeFont >> hasGlyphsForAll: asciiString [
 	^true
 ]
 
+{ #category : #testing }
+FreeTypeFont >> hasSubPixelAntiAliasing [
+	^ FreeTypeSettings current useSubPixelAntiAliasing
+]
+
 { #category : #comparing }
 FreeTypeFont >> hash [
 	^pointSize hash
@@ -770,6 +786,16 @@ FreeTypeFont >> simulatedItalicSlant [
 	^0
 ]
 
+{ #category : #metrics }
+FreeTypeFont >> strikeoutThickness [
+	^ self underlineThickness
+]
+
+{ #category : #metrics }
+FreeTypeFont >> strikeoutTop [
+	^ (((self face ascender / 4) * self pixelSize / self face unitsPerEm) negated - (self strikeoutThickness/2)) rounded.
+]
+
 { #category : #'glyph lookup' }
 FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
@@ -798,6 +824,16 @@ FreeTypeFont >> subPixelPositioned [
 		ifNil:[
 			settings := FreeTypeSettings current.
 			subPixelPositioned := settings hinting not or:[settings lightHinting]]
+]
+
+{ #category : #metrics }
+FreeTypeFont >> underlineThickness [
+	^ self face underlineThickness * self pixelSize / self face unitsPerEm.
+]
+
+{ #category : #metrics }
+FreeTypeFont >> underlineTop [
+	^ ((self face underlinePosition * self pixelSize / self face unitsPerEm) negated - (self underlineThickness/2)) rounded + 1 "needs the +1 , possibly because glyph origins are moved down by 1 so that their baselines line up with strike fonts"
 ]
 
 { #category : #validation }
