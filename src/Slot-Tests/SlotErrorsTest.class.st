@@ -197,6 +197,64 @@ SlotErrorsTest >> testSlotWithReservedName [
 ]
 
 { #category : #tests }
+SlotErrorsTest >> testUndeclareSlot [
+	| slot instance |
+
+	aClass := self make: [ :builder | 
+		builder slots: { UndefinedSlot named: #a ast: ((RBParser parseExpression: '#a => MySlot') doSemanticAnalysis;yourself) } ].
+
+	slot := aClass slotNamed: #a.
+
+	self assert: slot class equals: UndefinedSlot.
+	self assert: slot name equals: #a.
+	self assert: slot slotClassName equals: #MySlot.
+	
+	instance := aClass new.
+	
+	self assert: (slot read: instance) equals: nil.
+	slot write: 1 to: instance.
+	self assert: (slot read: instance) equals: nil.
+
+]
+
+{ #category : #tests }
+SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
+	| slot instance mySlot |
+
+	aClass := self make: [ :builder | 
+		builder slots: { UndefinedSlot named: #a ast: ((RBParser parseExpression: '#a => ', self anotherClassName) doSemanticAnalysis;yourself) } ].
+
+	slot := aClass slotNamed: #a.
+
+	self assert: slot class equals: UndefinedSlot.
+	self assert: slot name equals: #a.
+	self assert: slot slotClassName equals: self anotherClassName.
+	
+	instance := aClass new.
+	
+	self assert: (slot read: instance) equals: nil.
+	slot write: 1 to: instance.
+	self assert: (slot read: instance) equals: nil.
+
+	PropertySlot  
+		subclass: self anotherClassName
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: self aCategory.
+	
+	self assert: (slot read: instance) equals: nil.
+	
+	mySlot := aClass slotNamed: #a.
+	
+	self assert: mySlot name equals: #a.
+	
+	self assert: (mySlot read: instance) equals: nil.
+	mySlot write: 1 to: instance.
+	self assert: (mySlot read: instance) equals: 1.
+]
+
+{ #category : #tests }
 SlotErrorsTest >> testValidateClassName [		
 		
 	Smalltalk classInstaller 
