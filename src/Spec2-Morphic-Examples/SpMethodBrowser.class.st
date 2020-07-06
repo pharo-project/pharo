@@ -61,7 +61,7 @@ SpMethodBrowser >> connectPresenters [
 				textModel text: m sourceCode.
 				textModel beForMethod: m.
 				toolbarModel method: m ] ].
-	self whenSubmitDo: [ :t | self listModel selectedItem inspect ].
+	self whenSubmitDo: [ :text | self listModel selectedItem inspect ].
 	self wrapWith: [ :item | item methodClass name , '>>#' , item selector ]
 ]
 

@@ -71,7 +71,7 @@ MessageList >> buildHierarchyForMessages: messages [
 		^ result ].
 	
 	result := Dictionary new.	
-	classes := (messages collect: #methodClass) asSet.
+	classes := (messages collect: [ :each | each methodClass ]) asSet.
 	messages do: [:message || level class |
 		class := message methodClass.
 		level := OrderedCollection new.

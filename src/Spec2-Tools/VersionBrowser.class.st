@@ -70,12 +70,15 @@ VersionBrowser class >> registerToolsOn: registry [
 
 { #category : #visiting }
 VersionBrowser >> accept: text notifying: notifyer [
-	^ self selectedMessage
-		ifNotNil: [:message | 
-			message methodClass 
-				compile: text 
-				classified: message protocol
-				notifying: notifyer ]
+	| message |
+
+	message := self selectedMessage.
+	message ifNil: [ ^ self ].
+	
+	message methodClass 
+		compile: text 
+		classified: message protocol
+		notifying: notifyer
 ]
 
 { #category : #actions }
@@ -127,7 +130,7 @@ VersionBrowser >> compareToCurrentVersion [
 VersionBrowser >> compareToOtherVersion [
 	| labels versions index selected |
 	versions := self changeList.
-	labels := versions collect: #stamp.
+	labels := versions collect: [ :each | each stamp ].
 	index := UIManager default chooseFrom: labels.
 	index > 0 ifFalse: [ ^ self ].
 	selected := versions at: index.
@@ -186,6 +189,8 @@ VersionBrowser >> installIconStylerFor: anItem [
 
 { #category : #accessing }
 VersionBrowser >> messageListMenu [
+
+	self flag: #TODO. "At least some of this options needs to be a command"
 	^ self newMenu
 		addGroup: [ :aGroup | 
 			aGroup
@@ -219,13 +224,15 @@ VersionBrowser >> messageListMenu [
 
 { #category : #'instance creation' }
 VersionBrowser >> revert: aChangeRecord [
-	aChangeRecord
-		ifNil: [ ^ self inform: 'nothing selected, so nothing done' ]
-		ifNotNil: [ rgMethod realClass
-				compile: aChangeRecord sourceCode
-				classified: aChangeRecord category
-				withStamp: aChangeRecord stamp
-				notifying: nil ].
+
+	aChangeRecord ifNil: [ 
+		^ self inform: 'nothing selected, so nothing done' ].
+	
+	rgMethod realClass
+		compile: aChangeRecord sourceCode
+		classified: aChangeRecord category
+		withStamp: aChangeRecord stamp
+		notifying: nil.
 
 	"reinitialize me"
 	self setRGMethodFrom: rgMethod realClass >> rgMethod selector.
@@ -237,13 +244,12 @@ VersionBrowser >> revert: aChangeRecord [
 
 { #category : #private }
 VersionBrowser >> selectItem: item [
+
 	sourcePresenter ifNil: [ ^ self ].
 
-	self
-		setSourceContentWith:
-			(self textConverter
-				method: item;
-				getText).
+	self setSourceContentWith: (self textConverter
+		method: item;
+		getText).
 
 	sourcePresenter clearUndoManager.
 	self installIconStylerFor: item
@@ -251,28 +257,33 @@ VersionBrowser >> selectItem: item [
 
 { #category : #'accessing model' }
 VersionBrowser >> setModelBeforeInitialization: aMethod [
-	self setRGMethodFrom: aMethod.
+
+	self setRGMethodFrom: aMethod
 ]
 
 { #category : #initialization }
 VersionBrowser >> setRGMethodFrom: aMethod [
 "asHistorical, because active RGMethods don't always have the source pointer attached"
-	rgMethod := aMethod asRingDefinition asHistorical.
+	rgMethod := aMethod asRingDefinition asHistorical
 ]
 
 { #category : #private }
 VersionBrowser >> setSourceContentWith: content [
+	
 	isShowingDiff
-		ifTrue: [ (content isText or: [ content isString ])
+		ifTrue: [ 
+			(content isText or: [ content isString ])
 				ifTrue: [ sourcePresenter leftText: ''.
 					sourcePresenter rightText: content ]
 				ifFalse: [ sourcePresenter leftText: content first.
 					sourcePresenter rightText: content second ] ]
-		ifFalse: [ sourcePresenter text: content ]
+		ifFalse: [ 
+			sourcePresenter text: content ]
 ]
 
 { #category : #'instance creation' }
 VersionBrowser >> showDiffMorphWithConverter: aConverter [
+
 	sourcePresenter := self newDiff.
 	isShowingDiff := true.
 	self needRebuild: false.
@@ -284,12 +295,13 @@ VersionBrowser >> showDiffMorphWithConverter: aConverter [
 
 { #category : #'instance creation' }
 VersionBrowser >> showSourceWithConverter: aConverter [
+
 	sourcePresenter := self newCode.
 	isShowingDiff := false.
 	self needRebuild: false.
 	self buildWithSpec.
 	self textConverter: aConverter.
-	sourcePresenter whenSubmitDo: [ :text :notifyer | (self accept: text notifying: notifyer) notNil ].
+	sourcePresenter whenSubmitDo: [ :text | (self accept: text notifying: nil) notNil ].
 	sourcePresenter beForMethod: self selectedMessage.
 	messageList selectIndex: (messageList selectedIndex)
 ]

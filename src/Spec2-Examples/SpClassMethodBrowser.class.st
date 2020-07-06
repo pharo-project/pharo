@@ -71,7 +71,7 @@ SpClassMethodBrowser >> initializePresenters [
 	classListPresenter := self newList.
 	methodListPresenter := self newList.
 	textPresenter := self newCode.
-	textPresenter whenSubmitDo: [ :t | methodListPresenter selectedItem inspect ].
+	textPresenter whenSubmitDo: [ :text | methodListPresenter selectedItem inspect ].
 	methodListPresenter display: #selector.
 	self focusOrder
 		add: classListPresenter;

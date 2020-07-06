@@ -122,7 +122,7 @@ SpChooseMethodUI >> classListAction [
 					ifNil: [ #()]]
 		postTransmission: [ :protcolList | 
 			protocolList
-				selectIndex: ((protcolList items collect: #name) indexOf: '-- all --') ]
+				selectIndex: ((protcolList items collect: [ :each | each name ]) indexOf: '-- all --') ]
 ]
 
 { #category : #initialization }
@@ -136,8 +136,10 @@ SpChooseMethodUI >> connectPresenters [
 
 { #category : #'initialization - actions' }
 SpChooseMethodUI >> fillWith: aClass [
+
 	methodList items: aClass methods.
-	^ protocolList items: (aClass protocols collect: [ :eachSymbol | aClass organization protocolOrganizer protocolNamed: eachSymbol ])
+	^ protocolList items: (aClass protocols 
+		collect: [ :eachSymbol | aClass organization protocolOrganizer protocolNamed: eachSymbol ])
 ]
 
 { #category : #initialization }
