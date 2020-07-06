@@ -1,5 +1,5 @@
 "
-! Style classes
+! Style classes (==SpStyleClass==)
 
 A style class define a set of properties grouped by a common name. You can think a style class of morphic a little bit as a style class of CSS, but it has several differences.
  
@@ -41,8 +41,61 @@ Class {
 SpStyleClass >> , joinStyle [
 
 	^ self class new
+		name: 'application';
 		styles: self styles, joinStyle styles;
 		yourself
+]
+
+{ #category : #adding }
+SpStyleClass >> addClass: aName with: aBlock [ 
+	| class |
+	
+	class := SpStyleClass new 
+		name: aName;
+		yourself.
+	
+	aBlock value: class.
+	self addStyle: class
+]
+
+{ #category : #adding }
+SpStyleClass >> addProperty: aClass with: aBlock [ 
+	| property |
+	
+	property := aClass new.
+	aBlock value: property.
+	self addStyle: property
+]
+
+{ #category : #adding }
+SpStyleClass >> addPropertyContainerWith: aBlock [ 
+	
+	self addProperty: SpStyleContainer with: aBlock
+]
+
+{ #category : #adding }
+SpStyleClass >> addPropertyDrawWith: aBlock [ 
+	
+	self addProperty: SpStyleDraw with: aBlock
+]
+
+{ #category : #adding }
+SpStyleClass >> addPropertyFontWith: aBlock [ 
+	
+	self addProperty: SpStyleFont with: aBlock
+]
+
+{ #category : #adding }
+SpStyleClass >> addPropertyGeometryWith: aBlock [ 
+	
+	self addProperty: SpStyleGeometry with: aBlock
+]
+
+{ #category : #adding }
+SpStyleClass >> addStyle: aStyle [
+
+	styles ifNil: [ styles := #() ].
+	styles := styles copyWith: aStyle
 ]
 
 { #category : #operations }
@@ -125,7 +178,7 @@ SpStyleClass >> parent: aStyle [
 SpStyleClass >> printOn: stream [ 
 
 	super printOn: stream.
-	stream << '(' << self name << ')'
+	"stream << '(' << self name << ')'"
 ]
 
 { #category : #accessing }

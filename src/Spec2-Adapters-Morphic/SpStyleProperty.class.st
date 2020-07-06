@@ -1,5 +1,5 @@
 "
-! Style properties (SpStyleProperty)
+! Style properties (==SpStyleProperty==)
 
 Style properties define different kind of properties a morphic component can have. There are several types of properties, defined as: 
 

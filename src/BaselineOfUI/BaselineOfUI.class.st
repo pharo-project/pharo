@@ -40,7 +40,7 @@ BaselineOfUI >> baseline: spec [
 		spec baseline: 'Spec2' with: [ 
 			spec 
 				repository: repository;
-				loads: #('Base') ].
+				loads: #('Base' 'Tests') ].
 		spec baseline: 'Spec' with: [ spec repository: repository ].
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].

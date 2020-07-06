@@ -8,6 +8,9 @@ Morphic configurations will prepare your application to run in a Morphic backend
 Class {
 	#name : #SpMorphicConfiguration,
 	#superclass : #SpApplicationConfiguration,
+	#instVars : [
+		'styleSheet'
+	],
 	#category : #'Spec2-Morphic-Application'
 }
 
@@ -24,8 +27,8 @@ SpMorphicConfiguration >> styleSheet [
 	 own application dependent styles (and you can compose them, see *SpStyle*).
 	
 	[[[language=Smalltalk
-	^ SpStyle defaultStyleSheet 
+	^ SpStyle defaultStyleSheet copy
 	]]]"
 	
-	^ SpStyle defaultStyleSheet
+	^ styleSheet ifNil: [ styleSheet := SpStyle defaultStyleSheet copy ]
 ]

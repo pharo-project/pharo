@@ -40,8 +40,8 @@ Class {
 		'#menu => SpObservableSlot',
 		'#centered => SpObservableSlot',
 		'#isClosed => SpObservableSlot',
+		'#toolbar => SpObservableSlot',
 		'#statusbar => SpObservableSlot',
-		'#toolBar => SpObservableSlot',
 		'#window => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Support'
@@ -201,7 +201,6 @@ SpWindowPresenter >> close [
 	self isOpen ifFalse: [ ^ self ].
 	
 	self changed: #close with: #().
-	self application windowClosed: self
 ]
 
 { #category : #private }
@@ -245,7 +244,7 @@ SpWindowPresenter >> hasStatusBar [
 
 { #category : #testing }
 SpWindowPresenter >> hasToolbar [
-	^ self toolBar notNil and: [ self toolBar notEmpty ]
+	^ self toolbar notNil and: [ self toolbar notEmpty ]
 ]
 
 { #category : #api }
@@ -313,6 +312,20 @@ SpWindowPresenter >> isDisplayed [
 	^ self window 
 		ifNotNil: [ :w | w isDisplayed ]
 		ifNil: [ false ] 
+]
+
+{ #category : #testing }
+SpWindowPresenter >> isMaximized [
+
+	self withAdapterDo: [ :anAdapter | ^ anAdapter isMaximized ].
+	^ false
+]
+
+{ #category : #testing }
+SpWindowPresenter >> isMinimized [
+
+	self withAdapterDo: [ :anAdapter | ^ anAdapter isMinimized ].
+	^ false
 ]
 
 { #category : #testing }
@@ -454,14 +467,16 @@ SpWindowPresenter >> title: aString [
 ]
 
 { #category : #api }
-SpWindowPresenter >> toolBar [
-	^ toolBar
+SpWindowPresenter >> toolbar [
+
+	^ toolbar
 ]
 
 { #category : #api }
-SpWindowPresenter >> toolBar: aToolbarPresenter [
+SpWindowPresenter >> toolbar: aToolbarPresenter [
+
 	aToolbarPresenter ifNotNil: [ aToolbarPresenter owner: self ].
-	^ toolBar := aToolbarPresenter
+	^ toolbar := aToolbarPresenter
 ]
 
 { #category : #'private-traversing' }
@@ -502,7 +517,7 @@ SpWindowPresenter >> whenClosedDo: aBlock [
 	
 	self 
 		property: #isClosed 
-		whenChangedDo: [ :value | value ifTrue: [ aBlock value ] ]
+		whenChangedDo: [ :value | value ifTrue: aBlock ]
 ]
 
 { #category : #'api-events' }
@@ -510,7 +525,7 @@ SpWindowPresenter >> whenOpenedDo: aBlock [
 
 	self 
 		property: #isClosed 
-		whenChangedDo: [ :value | value ifFalse: [ aBlock value ] ]
+		whenChangedDo: [ :value | value ifFalse: aBlock ]
 ]
 
 { #category : #'api-events' }
@@ -540,6 +555,12 @@ SpWindowPresenter >> window: aWindow [
 ]
 
 { #category : #private }
+SpWindowPresenter >> windowClosed [ 
+	
+	self application windowClosed: self
+]
+
+{ #category : #private }
 SpWindowPresenter >> windowIcon [
 	^ windowIcon
 ]
@@ -552,7 +573,8 @@ SpWindowPresenter >> windowIcon: aForm [
 { #category : #updating }
 SpWindowPresenter >> windowIsClosing [
 	isClosed := true.
-	self presenter windowIsClosing
+	self windowClosed.
+	self presenter windowIsClosing.
 ]
 
 { #category : #updating }

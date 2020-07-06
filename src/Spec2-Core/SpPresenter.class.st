@@ -888,9 +888,27 @@ SpPresenter >> newToggleButton [
 ]
 
 { #category : #widgets }
-SpPresenter >> newToolBar [
+SpPresenter >> newToolbar [
 
-	^ self instantiate: SpToolBarPresenter
+	^ self instantiate: SpToolbarPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarButton [
+
+	^ self instantiate: SpToolbarButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarMenuButton [
+
+	^ self instantiate: SpToolbarToggleButtonPresenter
+]
+
+{ #category : #widgets }
+SpPresenter >> newToolbarToggleButton [
+
+	^ self instantiate: SpToolbarToggleButtonPresenter
 ]
 
 { #category : #widgets }
@@ -959,6 +977,12 @@ SpPresenter >> presentersInFocusOrder [
 	^ focusOrder ifNil: [ 
 		self layoutPresenters
 			select: [ :each | each isVisible and: [ each canTakeKeyboardFocus ] ] ]
+]
+
+{ #category : #private }
+SpPresenter >> rebuildLayout [
+
+	self replaceLayoutWith: self layout
 ]
 
 { #category : #'api-shortcuts' }

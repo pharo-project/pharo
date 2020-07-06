@@ -24,15 +24,28 @@ SpWindow >> allowedToClose [
 		ifFalse: [ true ].
 ]
 
-{ #category : #'open/close' }
-SpWindow >> deleteDiscardingChanges [
+{ #category : #private }
+SpWindow >> announceWillClose [
 	| announcement |
 
 	announcement := SpWindowWillClose new
 		window: self;
 		yourself.
 	self announce: announcement.
-	self currentWorld announcer announce: announcement.	
+	self currentWorld announcer announce: announcement
+]
+
+{ #category : #'open/close' }
+SpWindow >> close [ 
+
+	self announceWillClose.
+	^ super close
+]
+
+{ #category : #'open/close' }
+SpWindow >> deleteDiscardingChanges [
+
+	self announceWillClose.
 	^ super deleteDiscardingChanges
 ]
 

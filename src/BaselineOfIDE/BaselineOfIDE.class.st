@@ -192,7 +192,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Spec2' with: [ 
 			spec 
 				repository: repository;
-				loads: #('Code') ].
+				loads: #('Code' 'CodeTests') ].
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 

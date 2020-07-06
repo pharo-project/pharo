@@ -1,7 +1,7 @@
 Class {
 	#name : #SpCheckBoxExampleTest,
 	#superclass : #SpSmokeTest,
-	#category : #'Spec2-Tests-Examples-Morphic'
+	#category : #'Spec2-Tests-Examples'
 }
 
 { #category : #running }

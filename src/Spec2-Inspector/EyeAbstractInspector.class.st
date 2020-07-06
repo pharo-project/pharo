@@ -46,7 +46,7 @@ EyeAbstractInspector >> close [
 EyeAbstractInspector >> connectPresenters [
 
 	self property: #object whenChangedDo: [ self objectChanged ].
-	text whenBuiltDo: [ :w | self text behavior: self object class ].
+	text beForObject: self object.
 	self initializeShortcuts
 ]
 

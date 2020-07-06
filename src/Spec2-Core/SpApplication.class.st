@@ -46,7 +46,8 @@ Class {
 		'backend',
 		'windows',
 		'properties',
-		'configuration'
+		'configuration',
+		'iconManager'
 	],
 	#classVars : [
 		'DefaultApplication'
@@ -58,6 +59,13 @@ Class {
 SpApplication class >> defaultApplication [
 
 	^ DefaultApplication ifNil: [ DefaultApplication := SpNullApplication new ]
+]
+
+{ #category : #private }
+SpApplication class >> defaultApplication: anApplication [
+	"To be used for testing purposes"
+
+	DefaultApplication := anApplication
 ]
 
 { #category : #accessing }
@@ -131,6 +139,25 @@ SpApplication >> defer: aBlock [
 SpApplication >> hasWindow: aWindow [
 	
 	^ self windows includes: aWindow
+]
+
+{ #category : #icons }
+SpApplication >> iconManager [
+
+	^ iconManager ifNil: [ iconManager := Smalltalk ui icons ]
+]
+
+{ #category : #icons }
+SpApplication >> iconManager: anIconManager [
+
+	iconManager := anIconManager 
+	
+]
+
+{ #category : #icons }
+SpApplication >> iconNamed: aSymbol [
+
+	^ self iconManager iconNamed: aSymbol
 ]
 
 { #category : #testing }
@@ -299,7 +326,8 @@ SpApplication >> propertyAt: aKey put: aValue [
 { #category : #accessing }
 SpApplication >> reset [ 
 
-	self closeAllWindows
+	self closeAllWindows.
+	windows removeAll
 ]
 
 { #category : #running }

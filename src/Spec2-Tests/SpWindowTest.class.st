@@ -26,6 +26,16 @@ SpWindowTest >> testAboutText [
 ]
 
 { #category : #tests }
+SpWindowTest >> testCloseWindowRemovesItFromApplicationWindowCollection [
+	| application |
+	application := SpApplication new.
+	windowPresenter := (application newPresenter: SpButtonPresenter) openWithSpec.
+	windowPresenter window close.
+	self deny: (application windows includes: windowPresenter).
+	self assert: application windows isEmpty.
+]
+
+{ #category : #tests }
 SpWindowTest >> testIsDisplayed [
 	"Test for case: 16800 -> ask a SpecWindow for #isDisplayed always returns true"
 	

@@ -93,12 +93,13 @@ SpCodePopoverPrintPresenter >> initializePresenters [
 
 	text eventHandler whenFocusLostDo: [ self dismiss ].
 
+	self flag: #TODO. "This is uber bad. Keybindings needs to come from application configuration"
 	text
-		bindKeyCombination: Character cr asKeyCombination | PharoShortcuts current printItShortcut
+		bindKeyCombination: Character cr asKeyCombination | $p meta 
 			toAction: [ self dismissAndPrint ];
-		bindKeyCombination: PharoShortcuts current inspectItShortcut 
+		bindKeyCombination: $i meta 
 			toAction: [ self dismissAndInspect ];
-		bindKeyCombination: PharoShortcuts current escapeShortcut | PharoShortcuts current backspaceShortcut | PharoShortcuts current cancelShortcut
+		bindKeyCombination: Character escape asKeyCombination | Character backspace asKeyCombination | $l meta
 			toAction: [ self dismiss ]
 ]
 
@@ -169,11 +170,7 @@ SpCodePopoverPrintPresenter >> objectAsString [
 		ifTrue: [ ^ string withNoLineLongerThan: self class maxLengthShownInPopover ].
 	
 	^ String streamContents: [ :stream | 
-			| lines |
-			lines := self basicObjectAsString 
-				groupsOf: self class maxLengthShownInPopover 
-				atATimeCollect: [ :group | group ].
-			lines
+			(string groupsOf: self class maxLengthShownInPopover)
 				do: [ :each | stream << each ]
 				separatedBy: [ stream cr ] ]
 ]
