@@ -37,7 +37,7 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
 { #category : #'temp vars' }
 OCAbstractMethodScope >> addTemp: name [
-	^self addTemp: OCTempVariable new withName: name
+	^self addTemp: TemporaryVariable new withName: name
 ]
 
 { #category : #'temp vars' }
@@ -278,7 +278,7 @@ OCAbstractMethodScope >> tempVectorName [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVar [
-	^ tempVectorVar ifNil: [ tempVectorVar := OCTempVariable new
+	^ tempVectorVar ifNil: [ tempVectorVar := TemporaryVariable new
 			name: self tempVectorName;
 			scope: self;
 			yourself]

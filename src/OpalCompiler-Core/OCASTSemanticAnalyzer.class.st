@@ -57,12 +57,12 @@ OCASTSemanticAnalyzer >> compilationContext: aCompilationContext [
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: OCArgumentVariable new
+	^self declareVariableNode: aVariableNode as: ArgumentVariable new
 ]
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: OCTempVariable new
+	^self declareVariableNode: aVariableNode as: TemporaryVariable new
 ]
 
 { #category : #variables }
@@ -87,7 +87,7 @@ OCASTSemanticAnalyzer >> lookupVariableForRead: aVariableNode [
 	var := scope lookupVar: aVariableNode name.
 	
 	var ifNil: [^var].
-	var isTemp ifTrue: [ self analyseEscapingRead: var].
+	var isLocalVariable ifTrue: [ self analyseEscapingRead: var].
 	^var
 ]
 
@@ -101,7 +101,7 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	var ifNil: [^var].
 	var isReservedVariable ifTrue: [ self storeIntoReservedVariable: aVariableNode ].
 	var isWritable ifFalse: [ self storeIntoReadOnlyVariable: aVariableNode ].
-	var isTemp ifTrue: [ self analyseEscapingWrite: var ].
+	var isLocalVariable ifTrue: [ self analyseEscapingWrite: var ].
 	^var
 ]
 

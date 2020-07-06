@@ -2,36 +2,36 @@
 I model argument variables. By definition, an argument variable is always initialized, and can't be written to.
 "
 Class {
-	#name : #OCArgumentVariable,
-	#superclass : #OCTempVariable,
+	#name : #ArgumentVariable,
+	#superclass : #LocalVariable,
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }
-OCArgumentVariable class >> semanticNodeClass [
+ArgumentVariable class >> semanticNodeClass [
 
 	^RBArgumentNode 
 ]
 
 { #category : #testing }
-OCArgumentVariable >> isArg [
+ArgumentVariable >> isArg [
 
 	^ true
 ]
 
 { #category : #testing }
-OCArgumentVariable >> isUninitialized [
+ArgumentVariable >> isUninitialized [
 
 	^ false
 ]
 
 { #category : #testing }
-OCArgumentVariable >> isWritable [
+ArgumentVariable >> isWritable [
 
 	^ false
 ]
 
 { #category : #debugging }
-OCArgumentVariable >> writeFromContext: aContext scope: contextScope value: aValue [
+ArgumentVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	self error: 'Arguments are read only'
 ]

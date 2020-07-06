@@ -60,7 +60,7 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class equals: OCTempVariable
+	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
 ]
 
 { #category : #tests }
@@ -80,7 +80,7 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 	method := OrderedCollection >> #do:.
 	self assert: method temporaryVariables first name equals: #aBlock.
 	self assert: (method hasTemporaryVariableNamed: #aBlock).
-	self assert: (method temporaryVariableNamed: #aBlock) class equals: OCArgumentVariable.
+	self assert: (method temporaryVariableNamed: #aBlock) class equals: ArgumentVariable.
 ]
 
 { #category : #tests }

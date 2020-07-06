@@ -5,7 +5,7 @@ Not: the temp vector is passed as a copying temp, too.
 "
 Class {
 	#name : #OCCopyingTempVariable,
-	#superclass : #OCTempVariable,
+	#superclass : #TemporaryVariable,
 	#instVars : [
 		'originalVar'
 	],
