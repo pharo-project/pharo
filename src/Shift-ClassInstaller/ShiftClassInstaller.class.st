@@ -231,7 +231,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 		(newClass classPool includesKey: oldAssociation key)
 			ifTrue: [ 
 				newAssociation := newClass classPool associationAt: oldAssociation key.
-				newAssociation value: oldAssociation value.
+				newClass classVarNamed: oldAssociation key put: oldAssociation value.
 				newClassVariableBindings add: newAssociation.
 				oldClassVariableBindings add: oldAssociation. ]].
 	
