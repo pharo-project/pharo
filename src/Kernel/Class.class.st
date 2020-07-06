@@ -227,7 +227,7 @@ Class >> basicDeclareClassVariable: aClassVariable [
 	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
 		(existingVar class == aClassVariable class) ifTrue: [^self].
 		"need to take care to migrate existing variables to new global if class if different"
-		aClassVariable value: existingVar value.
+		aClassVariable write: existingVar read.
 		self classPool removeKey: existingVar name ].
 	"Pick up any refs in Undeclared"
 	Undeclared associationAt: aClassVariable name ifPresent:  [:existingVar |
