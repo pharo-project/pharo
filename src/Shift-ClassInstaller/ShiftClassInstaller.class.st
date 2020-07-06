@@ -130,8 +130,7 @@ ShiftClassInstaller >> installInEnvironment: newClass [
 
 	"I only install in the environment if there is not oldClass installed."
 	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
-		self installingEnvironment installClass: newClass withName: builder name.
-	].
+		self installingEnvironment installClass: newClass withName: builder name ].
 
 	self
 		updateBindings: (self installingEnvironment bindingAt: builder name)
@@ -213,7 +212,8 @@ ShiftClassInstaller >> make: aBlock [
 
 { #category : #migrating }
 ShiftClassInstaller >> migrateClassTo: newClass [
-	| slotsToMigrate |
+	| slotsToMigrate oldClassVariableBindings newClassVariableBindings|
+
 	oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
 		
@@ -224,15 +224,25 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
 	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 	
-	oldClass classVarNames do: [ :aClassVar |
-		(newClass hasClassVarNamed: aClassVar) ifTrue:[ newClass classVarNamed: aClassVar put: (oldClass classVarNamed: aClassVar) ].
-	].
+	oldClassVariableBindings := OrderedCollection new.
+	newClassVariableBindings := OrderedCollection new.
+	
+	oldClass classPool associations do: [ :oldAssociation | | newAssociation |
+		(newClass classPool includesKey: oldAssociation key)
+			ifTrue: [ 
+				newAssociation := newClass classPool associationAt: oldAssociation key.
+				newAssociation value: oldAssociation value.
+				newClassVariableBindings add: newAssociation.
+				oldClassVariableBindings add: oldAssociation. ]].
 	
 	[ 	
 		(self builder hasToMigrateInstances) 
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
-		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
+		{ oldClass. builder oldMetaclass } , oldClassVariableBindings asArray
+			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariableBindings asArray.	
+
+		newClass classPool rehash.
 	] valueUninterruptably
 
 ]
