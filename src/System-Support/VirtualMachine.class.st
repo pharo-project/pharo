@@ -168,13 +168,6 @@ VirtualMachine >> fullPath [
 ]
 
 { #category : #gc }
-VirtualMachine >> gcBiasToGrow: aBool [
-	"Tell the VM to grow after tenures instead of running in a tight loop where it does IGCs over and over. For some weird reason the primitive takes an integer not a bool but oh well..."
-	
-	self primitiveGCBiasToGrow: (aBool ifTrue: [1] ifFalse: [0])
-]
-
-{ #category : #gc }
 VirtualMachine >> gcBiasToGrowLimit: arg [
 	"Tell the VM the grow limit if the GC logic has bias to grow."
 	
@@ -707,14 +700,6 @@ VirtualMachine >> primVmPath [
 	^ ''
 ]
 
-{ #category : #primitives }
-VirtualMachine >> primitiveGCBiasToGrow: arg [
-	"Tell the VM to grow after tenures instead of running in a tight loop where it does IGCs over and over. For some weird reason the primitive takes an integer not a bool but oh well..."
-	
-	<primitive: 'primitiveSetGCBiasToGrow'>
-	^self primitiveFailed
-]
-
 { #category : #attributes }
 VirtualMachine >> processHasThreadIdInstVar: aBoolean [
 	"The threaded VM needs to know if the 4th inst var of Process
@@ -740,17 +725,6 @@ VirtualMachine >> processPreemptionYields: aBoolean [
 	"The Cog VM can be instructed not to yield on process preemption, i.e. not to put a preempted process at the back of its run queue.  By default preempting a process causes it to yield (Blue Book semantics) which can have unfortunate effects. This flag persists across snapshots, stored in the image header."
 	
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 4) + (aBoolean ifTrue: [0] ifFalse: [2r100])
-]
-
-{ #category : #gc }
-VirtualMachine >> setGCBiasToGrow: aNumber [
-	"Primitive. Indicate that the GC logic should be bias to grow"
-	<primitive: 'primitiveSetGCBiasToGrow'>
-	^self primitiveFailed
-"Example:
-	Smalltalk vm  setGCBiasToGrowGCLimit: 16*1024*1024.
-	Smalltalk vm setGCBiasToGrow: 1.
-"
 ]
 
 { #category : #gc }
