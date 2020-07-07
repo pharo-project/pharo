@@ -5,7 +5,6 @@ Class {
 	#name : #RubSmalltalkEditor,
 	#superclass : #RubTextEditor,
 	#instVars : [
-		'selectorChooser',
 		'notificationStrategy',
 		'completionEngine'
 	],
@@ -41,13 +40,7 @@ RubSmalltalkEditor class >> buildShortcutsOn: aBuilder [
 	We list both variations explicitly because we want to be able to see the action code when inspecting the morph.
 	"
 
-	<keymap>
-	(aBuilder shortcut: #querySymbol)
-		category: RubSmalltalkEditor name
-		default: $q meta
-		do: [ :target | target editor querySymbol: nil ]
-		description: 'Query symbol'.
-	
+	<keymap>	
 	(aBuilder shortcut: #browseFullClass)
 		category: RubSmalltalkEditor name
 		default: $b meta
@@ -313,13 +306,6 @@ RubSmalltalkEditor >> classNamesContainingIt [
 		caseSensitive: Sensor shiftPressed
 ]
 
-{ #category : #events }
-RubSmalltalkEditor >> click: anEvent [ 	
-	self selectorChooserClose.
-	^ super click: anEvent 
-
-]
-
 { #category : #'do-its' }
 RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 	| methodClass |
@@ -348,9 +334,8 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	self isCompletionEnabled ifFalse: [  ^aBlock value ].
 	
 	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
-	(self selectorChooserHandlesKeyboard: anEvent)
-				ifFalse: [ aBlock value ].
-	self selectorChooserKeystroke: anEvent.
+	
+	aBlock value.	
 	completionEngine handleKeystrokeAfter: anEvent editor: self
 
 ]
@@ -687,12 +672,6 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 			
 ]
 
-{ #category : #private }
-RubSmalltalkEditor >> focusChanged [
-	super focusChanged.
-	self selectorChooserFocusChange 
-]
-
 { #category : #'do-its' }
 RubSmalltalkEditor >> format [
 	self model formatSourceCodeInView
@@ -956,22 +935,6 @@ RubSmalltalkEditor >> printIt [
 			self afterSelectionInsertAndSelect: printString ]
 ]
 
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> querySymbol [
-	self selectorChooseQuerySymbol 
-]
-
-{ #category : #'typing/selecting keys' }
-RubSmalltalkEditor >> querySymbol: aKeyboardEvent [
-	"Invoked by Ctrl-q to query the Symbol table and display alternate symbols.
-	 See comment in completeSymbol:lastOffering: for details."
-
-	self closeTypeIn.
-	self selectorChooserClose.
-	self querySymbol.
-	^true
-]
-
 { #category : #'menu messages' }
 RubSmalltalkEditor >> referencesTo: aVariableOrClassName [
 	"Open a references browser on the given symbol"
@@ -1117,102 +1080,6 @@ RubSmalltalkEditor >> selectionString [
 	^ quote = $"
 		ifTrue: [ selection copyFrom: 2 to: selection size - 1 ]
 		ifFalse: [ selection ].
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooseQuerySymbol [
-	| pref |
-	self hasSelection
-		ifFalse: [ self selectPrecedingIdentifier ].
-	pref := String
-		streamContents: [ :strm | 
-			self selection asString trimBoth
-				do: [ :c | 
-					c isSeparator
-						ifFalse: [ strm nextPut: c ] ] ].
-	selectorChooser := RubSelectorChooserMorph popUpPrefix: pref from: textArea
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooser [
-	^ selectorChooser
-
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooserChosenSelector: aSelector [
-	| newStart replacement caret prevSelection |
-	self selectorChooserClose.
-	aSelector ifNil: [ ^ self ].
-	self selectPrecedingIdentifier.
-	prevSelection := textArea selection.
-	newStart := self startIndex.
-	caret := self stopIndex.
-	replacement := String
-		streamContents: [ :strm | 
-			| kwds |
-			1 to: (kwds := aSelector keywords) size do: [ :i | 
-				strm nextPutAll: (kwds at: i).
-				i = 1
-					ifTrue: [ caret := newStart + strm contents size + 1 ].
-				strm
-					nextPutAll:
-						(i < kwds size
-							ifTrue: [ '  ' ]
-							ifFalse: [ ' ' ]) ] ].
-	prevSelection asString = replacement trimBoth
-		ifTrue: [ textArea flash ]
-		ifFalse: [ 
-			self replaceSelectionWith: replacement.
-			self selectFrom: caret to: caret - 1 ]
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooserClose [
-	selectorChooser 
-		ifNotNil: [ [selectorChooser delete] ensure: [selectorChooser := nil] ]
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooserFocusChange [
-	textArea hasFocus
-		ifTrue: [ selectorChooser ifNotNil: [ selectorChooser comeToFront ] ]
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooserHandlesKeyboard: aKeyboardEvent [
-	"Return true or false on whether the code editor can handle keyboard event"
-	
-	^ (selectorChooser notNil and: [ selectorChooser handlesKeyboard: aKeyboardEvent ])
-
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooserKeystroke: aKeyboardEvent [
-	| asciiValue |
-	selectorChooser 
-		ifNotNil: [(selectorChooser handlesKeyStroke: aKeyboardEvent) 
-			ifTrue: [selectorChooser keyStroke: aKeyboardEvent.
-				^ true]].
-	asciiValue := aKeyboardEvent keyValue.
-	asciiValue = Character cr asciiValue
-		ifTrue: [self selectorChooserClose.
-			^ true].
-	aKeyboardEvent controlKeyPressed
-		ifTrue: [self selectorChooserClose.
-			^ true].
-	"aKeyboardEvent commandKeyPressed
-		ifTrue: [self closeSelectorChooser.
-			^ true]."
-	self selectorChooserUpdate.
-	^ false
-]
-
-{ #category : #'basic-completion' }
-RubSmalltalkEditor >> selectorChooserUpdate [
-	selectorChooser ifNil: [^ self].
-	self selectorChooserClose.
-	self selectorChooseQuerySymbol 
 ]
 
 { #category : #'menu messages' }
