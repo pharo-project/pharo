@@ -74,7 +74,7 @@ ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 	
 	newClass2 compile: 'a ^A'.
 	
-	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classPool associationAt: #A).
+	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A).
 	
 	newClass := ShiftClassInstaller
 		make: [ :builder | 
@@ -84,8 +84,7 @@ ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 				sharedVariables: #(A B C D);
 				category: 'Shift-ClassInstaller-Tests' ].
 
-	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classPool associationAt: #A).
-
+	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A)
 ]
 
 { #category : #tests }
