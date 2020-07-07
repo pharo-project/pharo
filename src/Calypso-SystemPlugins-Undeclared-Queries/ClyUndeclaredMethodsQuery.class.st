@@ -15,5 +15,5 @@ ClyUndeclaredMethodsQuery >> description [
 
 { #category : #testing }
 ClyUndeclaredMethodsQuery >> selectsMethod: aMethod [
-	^aMethod usesUndeclares
+	^aMethod usesUndeclareds
 ]

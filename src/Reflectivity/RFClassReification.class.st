@@ -9,7 +9,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFClassReification class >> entities [
-	^{RBProgramNode. LiteralVariable. Slot}
+	^{RBProgramNode. Variable}
 ]
 
 { #category : #'plugin interface' }
