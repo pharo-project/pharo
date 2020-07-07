@@ -231,7 +231,6 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		self classPool removeKey: existingVar name ].
 	"Pick up any refs in Undeclared"
 	Undeclared associationAt: aClassVariable name ifPresent:  [:existingVar |
-		aClassVariable value: existingVar value.
 		Undeclared removeKey: existingVar name.
 		existingVar becomeForward: aClassVariable
 	].
