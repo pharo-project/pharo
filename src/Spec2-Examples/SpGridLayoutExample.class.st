@@ -161,18 +161,10 @@ SpGridLayoutExample class >> openWithGtk [
 SpGridLayoutExample >> initializePresenters [
 
 	"example elements"
-	"element11 := self newMorph morph: (self newSimpleButtonMorph: '1x1' color: Color red).
-	element21 := self newMorph morph: (self newSimpleButtonMorph: '2x1' color: Color green).
-	element12 := self newMorph morph: (self newSimpleButtonMorph: '1x2' color: Color blue).
-	element22 := self newMorph morph: (self newSimpleButtonMorph: '2x2' color: Color yellow)."
-	element11 := self newMorph morph: (Morph new color: Color red).
-	element21 := self newMorph morph: (Morph new color: Color green).
-	element12 := self newMorph morph: (Morph new color: Color blue).
-	element22 := self newMorph morph: (Morph new color: Color yellow).
-	"element11 := self newLabel label: '1x1'.	
+	element11 := self newLabel label: '1x1'.	
 	element21 := self newLabel label: '2x1'.	
 	element12 := self newLabel label: '1x2'.	
-	element22 := self newLabel label: '2x2'."
+	element22 := self newLabel label: '2x2'.
 	"element11 := self newText text: '1x1'.	
 	element21 := self newText text: '2x1'.	
 	element12 := self newText text: '1x2'.	
@@ -199,18 +191,6 @@ SpGridLayoutExample >> initializeWindow: aWindowPresenter [
 	aWindowPresenter 
 		title: 'Grid layout example';
 		initialExtent: 300@400
-]
-
-{ #category : #initialization }
-SpGridLayoutExample >> newSimpleButtonMorph: aLabel color: aColor [
-
-	^ SimpleButtonMorph new
-			label: aLabel;
-			color: aColor;
-			target: [ self inform: 'Test' ];
-			actionSelector: #value;
-			helpText: 'Button at ', aLabel asString;
-			yourself
 ]
 
 { #category : #initialization }

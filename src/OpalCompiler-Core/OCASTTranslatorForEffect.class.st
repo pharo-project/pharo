@@ -117,5 +117,5 @@ OCASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 	| binding |
 	binding := aVariableNode binding.
 	(binding isLiteralVariable or: [ binding isUndeclared ])
-		ifTrue: [ methodBuilder addLiteral: binding variable ]
+		ifTrue: [ methodBuilder addLiteral: binding ]
 ]

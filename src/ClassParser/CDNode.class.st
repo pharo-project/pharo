@@ -86,7 +86,7 @@ CDNode >> hasExecutionCounter [
 ]
 
 { #category : #compatibility }
-CDNode >> hasWatchpoint [
+CDNode >> hasWatch [
 	
 	^ false
 ]

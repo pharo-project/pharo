@@ -153,7 +153,7 @@ OCASTTranslatorTest >> setUp [
 
 	super setUp.
 	instance := OCOpalExamples new.
-	globals := Dictionary new.
+	globals := SystemDictionary new.
 ]
 
 { #category : #running }

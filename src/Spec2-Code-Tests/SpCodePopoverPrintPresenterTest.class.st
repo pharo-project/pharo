@@ -33,8 +33,7 @@ SpCodePopoverPrintPresenterTest >> testObjectAsString [
 		assert: presenter objectAsString 
 		equals: (String streamContents: [ :stream | 
 			(150 factorial asString 
-				groupsOf: presenter class maxLengthShownInPopover 
-				atATimeCollect: [ :g | g ])
+				groupsOf: presenter class maxLengthShownInPopover)
 				do: [ :each | stream << each ]
 				separatedBy: [ stream cr ] ]).	
 		

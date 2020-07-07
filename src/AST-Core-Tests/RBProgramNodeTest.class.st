@@ -185,12 +185,111 @@ RBProgramNodeTest >> testAllComments [
 { #category : #tests }
 RBProgramNodeTest >> testAllParents [
 	"check that we get all parents of a program node"
-	|dummy me parentsOf7 |
-	dummy := [ :a | a + 7 ].
+
+	| me parentsOf7 |
+	[ :a | a + 7 ].
 	me := self class >> #testAllParents.
-	parentsOf7 := (me ast allChildren select: [ :n| n isLiteralNode and: [ n value = 7 ] ] ) first allParents .
+	parentsOf7 := (me ast allChildren select: [ :n | 
+		               n isLiteralNode and: [ n value = 7 ] ]) first
+		              allParents.
 	self assert: parentsOf7 last selector equals: #+.
 	self assert: parentsOf7 first equals: me ast
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsAssignment [
+	| tree  |
+	tree := self parserClass parseMethod: 
+			'methodName
+				
+				x := 33'.
+
+	self assert: tree allStatements size equals: 1.
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsBlockWithReturn [
+	| tree |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ [ ^ self ] '.
+	self assert: tree allStatements size equals: 2
+ 
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsBlockWithTemps [
+	| tree |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ [ | tmp | tmp := 88 ] '.
+	self assert: tree allStatements size equals: 3.
+ 
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsDynamicArray [
+	| tree |
+	tree := self parserClass parseMethod: 
+			'methodName
+				
+				{ 1 . self send1 . self send2} '.
+
+	self assert: tree allStatements size equals: 4.
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsReturns [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ self '.
+	stats := tree allStatements.
+	self assert: stats size equals: 1
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsReturnsMultiple [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				1 ifTrue: [ ^ self ].
+				^ self '.
+	stats := tree allStatements.
+	self assert: stats size equals: 3
+ 
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsSimpleBlock [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				^ [ 8 + 4 ] '.
+	stats := tree allStatements.
+	self assert: stats size equals: 2
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsTemps [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				| tmp1 tmp2 |
+				tmp1 + tmp2'.
+	stats := tree allStatements.
+	self assert: stats size equals: 3
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testAllStatementsTwoMessages [
+	| tree stats |
+	tree := self parserClass parseMethod: 
+			'methodName
+				
+				1 send1 send2'.
+	stats := tree allStatements.
+	self assert: stats size equals: 1.
 ]
 
 { #category : #'testing-properties' }
@@ -198,6 +297,23 @@ RBProgramNodeTest >> testHasProperty [
 	self deny: (self node hasProperty: #foo).
 	self node propertyAt: #foo put: 123.
 	self assert: (self node hasProperty: #foo)
+]
+
+{ #category : #tests }
+RBProgramNodeTest >> testNumberOfSentMessages [
+	| tree messages |
+	tree := self parserClass parseMethod: 
+			'methodName
+				| temp |
+				1 send1 send2; send3.
+				temp := [:each | {4 send4} send5].
+				temp send6.
+				0 ifTrue: [ 1 ]'.
+	messages := tree sentMessages.
+	self assert: messages size equals: 7.
+	"we count ifTrue:"
+	1 to: 6 do:
+		[ :i | self assert: (messages includes: ('send' , i printString) asSymbol) ]
 ]
 
 { #category : #'testing-properties' }
@@ -278,7 +394,7 @@ RBProgramNodeTest >> testReplaceLiteralArray1 [
 	| tree |
 	tree := self parseMethod: 'run "1" #(1 2 3) "2"'.
 	tree body statements first replaceWith: (self parseExpression: '#[1 2 3]').
-	self assert: tree newSource equals: 'run "1" #[1 2 3] "2"'.
+	self assert: tree newSource equals: 'run "1" #[ 1 2 3 ] "2"'.
 	tree := self parseMethod: 'run "1" #(1 2 3) "2"'.
 	tree body statements first replaceWith: (self parseExpression: '123').
 	self assert: tree newSource equals: 'run "1" 123 "2"'
@@ -289,7 +405,7 @@ RBProgramNodeTest >> testReplaceLiteralArray2 [
 	| tree |
 	tree := self parseMethod: 'run "1" #[1 2 3] "2"'.
 	tree body statements first replaceWith: (self parseExpression: '#(1 2 3)').
-	self assert: tree newSource equals: 'run "1" #(1 2 3) "2"'.
+	self assert: tree newSource equals: 'run "1" #( 1 2 3 ) "2"'.
 	tree := self parseMethod: 'run "1" #[1 2 3] "2"'.
 	tree body statements first replaceWith: (self parseExpression: '123').
 	self assert: tree newSource equals: 'run "1" 123 "2"'
@@ -448,10 +564,13 @@ RBProgramNodeTest >> testSetCommentsToNil [
 { #category : #tests }
 RBProgramNodeTest >> testWithAllParents [
 	"check that we get all parents of a program node, and me"
-	|dummy me parentsOf7 |
-	dummy := [ :a | a + 7 ].
+
+	| me parentsOf7 |
+	[ :a | a + 7 ].
 	me := self class >> #testAllParents.
-	parentsOf7 := (me ast allChildren select: [ :n| n isLiteralNode and: [ n value = 7 ] ] )first withAllParents .
+	parentsOf7 := (me ast allChildren select: [ :n | 
+		               n isLiteralNode and: [ n value = 7 ] ]) first
+		              withAllParents.
 	self assert: parentsOf7 last value equals: 7.
 	self assert: parentsOf7 first equals: me ast
 ]

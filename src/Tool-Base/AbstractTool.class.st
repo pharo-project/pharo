@@ -38,19 +38,6 @@ AbstractTool class >> protocolSuggestionsFor: aClass [
 	^ interestingProtocols asOrderedCollection sort: [ :a :b | a asLowercase < b asLowercase ].
 ]
 
-{ #category : #private }
-AbstractTool class >> requestProtocolNameFor: aClass initialAnswer: aString [
-	| ui |
-	ui := ListDialogWindow new
-		getList: [ :r | (self protocolSuggestionsFor: aClass) select: [ :e | r search: e ] ];
-		displayBlock: [ :e | e ];
-		initialAnswer: aString;
-		acceptNewEntry: true;
-		title: 'New Protocol Name' ;
-		yourself.
-	^ ui chooseFromOwner: self currentWorld
-]
-
 { #category : #method }
 AbstractTool >> browseAllStoresInto: aVariableName from: aClass [ 
 	^self systemNavigation browseAllStoresInto: aVariableName from: aClass 

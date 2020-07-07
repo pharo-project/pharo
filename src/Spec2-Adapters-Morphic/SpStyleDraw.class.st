@@ -1,5 +1,5 @@
 "
-! Draw property (SpStyleDraw)
+! Draw property (==SpStyleDraw==)
 
 Draw properties control how the component (morph) will be draw.
 I keep this properties: 

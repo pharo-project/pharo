@@ -10,7 +10,13 @@ BaselineOfKernelTests >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			package: 	'CodeImport-Tests'	; 
-			package: 	'Collections-Tests';
+
+			package: 	'Collections-Abstract-Tests';					
+			package: 	'Collections-Atomic-Tests';
+			package: 	'Collections-Stack-Tests';	
+			package: 	'Collections-Unordered-Tests';
+			package: 	'Collections-Weak-Tests' with: [ spec requires: #('Collections-Unordered-Tests') ];					
+			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Stack-Tests' 'Collections-Weak-Tests') ];
 			package: 	'Kernel-Tests'; 
 			package: 	'Kernel-Tests-Extended' ;
 			package: 	'Kernel-Tests-WithCompiler';

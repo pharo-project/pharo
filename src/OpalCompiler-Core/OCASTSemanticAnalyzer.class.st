@@ -57,12 +57,12 @@ OCASTSemanticAnalyzer >> compilationContext: aCompilationContext [
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareArgumentNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: OCArgumentVariable new
+	^self declareVariableNode: aVariableNode as: ArgumentVariable new
 ]
 
 { #category : #variables }
 OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode [
-	^self declareVariableNode: aVariableNode as: OCTempVariable new
+	^self declareVariableNode: aVariableNode as: TemporaryVariable new
 ]
 
 { #category : #variables }
@@ -70,17 +70,11 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	| name var |
 	name := aVariableNode name.
 	var := scope lookupVarForDeclaration: name.
-	var
-		ifNotNil: [ 
-			self variable: aVariableNode shadows: var.
-			(var scope ~= scope)
-				ifTrue: [ 
-					"Create new var that shadows outer one"
-					var := scope addTemp: anOCTempVariable withName: name ]
-				]
-		ifNil: [ 
-			"new var"
-			var := scope addTemp: anOCTempVariable withName: name ].
+	var ifNotNil: [ 
+		"Another variable with same name is visible from current scope.
+		Warn about the name clash and if proceed add new temp to shadow existing var" 
+		self variable: aVariableNode shadows: var ].
+	var := scope addTemp: anOCTempVariable withName: name.
 	aVariableNode binding: var.
 	^ var
 ]
@@ -93,7 +87,7 @@ OCASTSemanticAnalyzer >> lookupVariableForRead: aVariableNode [
 	var := scope lookupVar: aVariableNode name.
 	
 	var ifNil: [^var].
-	var isTemp ifTrue: [ self analyseEscapingRead: var].
+	var isLocalVariable ifTrue: [ self analyseEscapingRead: var].
 	^var
 ]
 
@@ -105,9 +99,9 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	var := scope lookupVar: aVariableNode name.
 
 	var ifNil: [^var].
-	var isSpecialVariable ifTrue: [ self storeIntoSpecialVariable: aVariableNode ].
+	var isReservedVariable ifTrue: [ self storeIntoReservedVariable: aVariableNode ].
 	var isWritable ifFalse: [ self storeIntoReadOnlyVariable: aVariableNode ].
-	var isTemp ifTrue: [ self analyseEscapingWrite: var ].
+	var isLocalVariable ifTrue: [ self analyseEscapingWrite: var ].
 	^var
 ]
 
@@ -128,9 +122,9 @@ OCASTSemanticAnalyzer >> storeIntoReadOnlyVariable: variableNode [
 ]
 
 { #category : #'error handling' }
-OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
+OCASTSemanticAnalyzer >> storeIntoReservedVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings ifTrue: [ ^ self ].
-	^ OCStoreIntoSpecialVariableError new
+	^ OCStoreIntoReservedVariableError new
 		node: variableNode;
 		compilationContext: compilationContext;
 		messageText: 'Cannot store into';
@@ -140,7 +134,7 @@ OCASTSemanticAnalyzer >> storeIntoSpecialVariable: variableNode [
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	compilationContext optionSkipSemanticWarnings
-		ifTrue: [ ^OCUndeclaredVariable new name: variableNode name ].
+		ifTrue: [ ^UndeclaredVariable named: variableNode name asSymbol ].
 	^ OCUndeclaredVariableWarning new
 		node: variableNode;
 		compilationContext: compilationContext;

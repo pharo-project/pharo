@@ -996,6 +996,12 @@ OrderedCollectionTest >> testRemoveAt [
 ]
 
 { #category : #'tests - removing' }
+OrderedCollectionTest >> testRemoveDuplicates [
+	self assert: #(7 42 7 42 9) asOrderedCollection removeDuplicates equals: #(7 42 9) asOrderedCollection.
+	self assert: #(1 2 3) asOrderedCollection removeDuplicates equals: #(1 2 3) asOrderedCollection
+]
+
+{ #category : #'tests - removing' }
 OrderedCollectionTest >> testRemoveFirst [
 	"Allows one to remove n element of a collection at the first"
 	

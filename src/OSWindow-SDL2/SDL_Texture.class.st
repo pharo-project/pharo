@@ -18,9 +18,24 @@ SDL_Texture class >> destroyTexture: aHandle [
 
 { #category : #finalization }
 SDL_Texture class >> finalizeResourceData: aHandle [
-	aHandle isNull ifTrue: [ ^ self ].
+	(aHandle isNil or: [aHandle isNull]) ifTrue: [ ^ self ].
 	self destroyTexture: aHandle.
 	aHandle beNull	
+]
+
+{ #category : #initialization }
+SDL_Texture >> alphaMod: alpha [
+	^ self ffiCall: #( int SDL_SetTextureAlphaMod ( self , Uint8 alpha ) )
+]
+
+{ #category : #rendering }
+SDL_Texture >> blendMode: blendMode [
+	^ self ffiCall: #( int SDL_SetTextureBlendMode ( self , SDL_BlendMode blendMode ) )
+]
+
+{ #category : #initialization }
+SDL_Texture >> colorModR: r g: g b: b [
+	^ self ffiCall: #( int SDL_SetTextureColorMod ( self , Uint8 r, Uint8 g, Uint8 b ) )
 ]
 
 { #category : #initialization }

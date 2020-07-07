@@ -72,6 +72,23 @@ SpTablePresenterTest >> testHideColumnHeadersRaisesOneEventOnly [
 	self assert: count equals: 1
 ]
 
+{ #category : #tests }
+SpTablePresenterTest >> testSelectedItemsReturnsRightElementAfterSortingOfElementsChanged [
+	[ presenter
+		addColumn: (SpStringTableColumn title: ' i ' evaluated: #value);
+		addColumn: (SpStringTableColumn title: ' 1 / i ' evaluated: [ :item | (1 / item) value ]);
+		openWithSpec;
+		selectIndex: 1. "10"
+		
+	"sort by 1/i ascending"
+	presenter clickOnColumnHeaderAt: 2.
+
+	presenter selectIndex: 1.
+	
+	self assert: presenter selectedItems first equals: 30 "items are still sorted by 1/i ascending value" ]
+		ensure: [ presenter delete ]
+]
+
 { #category : #'tests-activation' }
 SpTablePresenterTest >> testShowColumnHeadersRaisesOneEventOnly [
 

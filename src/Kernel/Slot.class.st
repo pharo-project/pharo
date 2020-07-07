@@ -46,7 +46,7 @@ Slot class >> checkValidName: aSymbol [
 	aSymbol startsWithDigit ifTrue: [ 
 		^ InvalidSlotName signalFor: aSymbol ].
 
-	aSymbol isPseudovariableName ifTrue: [ 
+	(self isPseudovariableName: aSymbol) ifTrue: [ 
 		^ InvalidSlotName signalFor: aSymbol ].
 	
 
@@ -56,16 +56,13 @@ Slot class >> checkValidName: aSymbol [
 ]
 
 { #category : #testing }
-Slot class >> isUsed [
-	^super isUsed or: [self slotUsers isNotEmpty ]
+Slot class >> isPseudovariableName: aSymbol [
+	^ #('self' 'true' 'false' 'nil' 'thisContext' 'super') includes: aSymbol
 ]
 
-{ #category : #'instance creation' }
-Slot class >> named: aSymbol [
-	self checkValidName: aSymbol.
-	^ self new
-		name: aSymbol;
-		yourself
+{ #category : #testing }
+Slot class >> isUsed [
+	^super isUsed or: [self slotUsers isNotEmpty ]
 ]
 
 { #category : #settings }
@@ -211,29 +208,24 @@ Slot >> installingIn: aClass [
 { #category : #testing }
 Slot >> isAccessedIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableNodes
-		anySatisfy: [ :node | node binding slot == self ]
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
-Slot >> isGlobal [
-	^false
-]
-
-{ #category : #testing }
-Slot >> isLocal [
+Slot >> isDefinedByOwningClass [
 
 	^ self owningClass = self definingClass
 ]
 
 { #category : #testing }
-Slot >> isReadIn: aCompiledCode [
-	^aCompiledCode ast instanceVariableReadNodes
-		 anySatisfy: [ :node | node binding slot == self ]
+Slot >> isInstance [
+	^ true
 ]
 
 { #category : #testing }
-Slot >> isReferenced [
-	^self usingMethods isNotEmpty
+Slot >> isReadIn: aCompiledCode [
+	^aCompiledCode ast instanceVariableReadNodes
+		 anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
@@ -255,7 +247,7 @@ Slot >> isVisible [
 { #category : #testing }
 Slot >> isWrittenIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableWriteNodes
-		anySatisfy: [ :node | node binding slot == self ]
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #accessing }
@@ -293,6 +285,11 @@ Slot >> printOn: aStream [
 { #category : #'meta-object-protocol' }
 Slot >> read: anObject [
 	^ self subclassResponsibility
+]
+
+{ #category : #debugging }
+Slot >> readInContext: aContext [
+	^self read: aContext receiver
 ]
 
 { #category : #accessing }
@@ -342,6 +339,11 @@ Slot >> usingMethods [
 Slot >> wantsInitialization [
 	"if a slot wants to enable instance initalization, return true here"
 	^false
+]
+
+{ #category : #debugging }
+Slot >> write: aValue inContext: aContext [
+	self write: aValue to: aContext receiver
 ]
 
 { #category : #'meta-object-protocol' }

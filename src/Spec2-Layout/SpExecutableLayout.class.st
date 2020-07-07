@@ -24,7 +24,7 @@ SpExecutableLayout >> add: aName withConstraints: aBlock [
 	children at: aName put: constraints
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpExecutableLayout >> announceChildAdded: aChildPresenter [
 
 	self presenter ifNotNil: [
@@ -34,7 +34,7 @@ SpExecutableLayout >> announceChildAdded: aChildPresenter [
 			yourself)].
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 SpExecutableLayout >> announceChildRemoved: aChildPresenter [
 
 	self presenter ifNotNil: [
@@ -60,14 +60,6 @@ SpExecutableLayout >> asArray [
 SpExecutableLayout >> asSpLayout [
 	
 	^ self
-]
-
-{ #category : #accessing }
-SpExecutableLayout >> basicAdd: aName withConstraints: aBlock [
-	| constraints |
-	constraints := self constraintsClass new.
-	aBlock value: constraints.
-	children at: aName put: constraints
 ]
 
 { #category : #building }

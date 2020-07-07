@@ -2,12 +2,14 @@ Extension { #name : #RBMethodNode }
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> bcToASTCache [
-	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForMethodNode: self ]
+	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
 ]
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> compiledMethod [
-	^ self ir compiledMethod
+	compilationContext compiledMethod 
+		ifNil: [ compilationContext compiledMethod: self ir compiledMethod ].
+	^compilationContext compiledMethod
 ]
 
 { #category : #'*OpalCompiler-Core' }

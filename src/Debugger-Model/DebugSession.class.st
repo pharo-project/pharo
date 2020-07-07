@@ -429,16 +429,9 @@ DebugSession >> shouldDisplayOnTopContext: aContext [
 
 { #category : #logging }
 DebugSession >> signalDebuggerError: anError [
-
-	self primitiveError:
-							'Original error: ' , name asString
-								,
-									'.
-	Smalltalk tools debugger error: '
-								,
-									([ anError description ]
-										on: Error
-										do: [ 'a ' , anError class printString ]) , ':' 
+	EDEmergencyDebuggerSettings defaultEmergencyDebugger
+		debugError: anError
+		fromSession: self
 ]
 
 { #category : #accessing }

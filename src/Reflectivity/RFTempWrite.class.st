@@ -22,7 +22,8 @@ RFTempWrite >> context: anObject [
 
 { #category : #evaluating }
 RFTempWrite >> value [
-	^variable write: assignedValue InContext: context
+	variable write: assignedValue inContext: context.
+	^assignedValue
 ]
 
 { #category : #accessing }

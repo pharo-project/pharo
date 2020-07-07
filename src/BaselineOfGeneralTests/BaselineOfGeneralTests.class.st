@@ -26,6 +26,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'ConfigurationCommandLineHandler-Tests';
 			package: 'MetacelloCommandLineHandler-Tests';
 			package: 'Debugger-Tests';
+			package: 'EmergencyDebugger-Tests';
 			package: 'EmbeddedFreeType-Tests';
 			
 			package: 'Ombu-Tests';
@@ -65,6 +66,8 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Text-Edition-Tests';
 			package: 'Tool-ExternalBrowser-Tests';			
 			package: 'Tool-FileList-Tests';
+			package: 'Tool-Finder-Tests';
+			package: 'Tool-Profilers-Tests';
 			package: 'Tool-Workspace-Tests';
 			package: 'Tools-Test';
 			package: 'Zinc-Resource-Meta-FileSystem';

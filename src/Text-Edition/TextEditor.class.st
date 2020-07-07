@@ -28,7 +28,7 @@ Class {
 		'shiftCmdActions',
 		'defaultFindReplaceServiceClass'
 	],
-	#category : #'Text-Edition'
+	#category : #'Text-Edition-Editor'
 }
 
 { #category : #settings }

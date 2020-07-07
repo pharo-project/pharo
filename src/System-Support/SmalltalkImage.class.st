@@ -684,13 +684,6 @@ SmalltalkImage >> flushClassNameCache [
 	globals flushClassNameCache.
 ]
 
-{ #category : #'memory space' }
-SmalltalkImage >> forceTenure [
-	"Primitive. Tell the GC logic to force a tenure on the next increment GC."
-	<primitive: 'primitiveForceTenure'>
-	^self primitiveFailed
-]
-
 { #category : #'image, changes name' }
 SmalltalkImage >> fullNameForChangesNamed: aString [
 
@@ -897,24 +890,10 @@ SmalltalkImage >> isInteractiveGraphic [
 	^ false
 ]
 
-{ #category : #'memory space' }
-SmalltalkImage >> isRoot: oop [
-	"Primitive. Answer whether the object is currently a root for youngSpace."
-	<primitive: 'primitiveIsRoot'>
-	^self primitiveFailed
-]
-
 { #category : #printing }
 SmalltalkImage >> isSelfEvaluating [
 	self == Smalltalk ifTrue: [^true].
 	^super isSelfEvaluating
-]
-
-{ #category : #'memory space' }
-SmalltalkImage >> isYoung: oop [
-	"Primitive. Answer whether the object currently resides in youngSpace."
-	<primitive: 'primitiveIsYoung'>
-	^self primitiveFailed
 ]
 
 { #category : #accessing }
@@ -1603,21 +1582,6 @@ SmalltalkImage >> renameClassNamed: oldName as: newName [
 	"Invoked from fileouts:  if there is currently a class in the system named oldName, then rename it to newName.  If anything untoward happens, report it in the Transcript.  "
 
 	^ globals renameClassNamed: oldName as: newName
-]
-
-{ #category : #'memory space' }
-SmalltalkImage >> rootTable [
-	"Primitive. Answer a snapshot of the VMs root table. 
-	Keep in mind that the primitive may itself cause GC."
-	<primitive: 'primitiveRootTable'>
-	^self primitiveFailed
-]
-
-{ #category : #'memory space' }
-SmalltalkImage >> rootTableAt: index [
-	"Primitive. Answer the nth element of the VMs root table"
-	<primitive: 'primitiveRootTableAt'>
-	^nil
 ]
 
 { #category : #saving }

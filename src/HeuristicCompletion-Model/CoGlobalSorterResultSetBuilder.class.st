@@ -44,5 +44,4 @@ CoGlobalSorterResultSetBuilder >> visitNode: aNode [
 	^ self
 		configureFetcher: fetcher
 		forNode: aNode
-		narrowingWith: (aNode completionToken: completionContext position)
 ]

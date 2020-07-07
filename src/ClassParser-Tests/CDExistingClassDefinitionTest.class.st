@@ -51,8 +51,7 @@ CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
 	| binding |
 	binding := classDefinition classNameNode binding.
 	
-	self assert: binding class equals: OCLiteralVariable. "to be compatible to bindings in RB nodes".
-	self assert: binding variable equals: CDClassWithFullDefinitionExample binding
+	self assert: binding identicalTo: CDClassWithFullDefinitionExample binding
 ]
 
 { #category : #helpers }

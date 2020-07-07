@@ -38,8 +38,8 @@ EyeTreeInspector >> childrenForObject: anObject [
 
 { #category : #'event-handling' }
 EyeTreeInspector >> elementChanged [
-	self text doItReceiver: self selectedElement value.
-	self text ifNotNil: [ :w | w behavior: self selectedElement value class ]
+
+	self text beForObject: self selectedElement value
 ]
 
 { #category : #api }
@@ -92,8 +92,8 @@ EyeTreeInspector >> labelFor: anEyeElement [
 
 { #category : #'event-handling' }
 EyeTreeInspector >> objectChanged [
-	self text doItReceiver: self object.
-	self text ifNotNil: [ :w | w behavior: self object class ].
+
+	self text beForObject: self object.
 	self tree
 		roots: self roots;
 		expandRoots

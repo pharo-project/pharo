@@ -62,7 +62,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: (self class environment at: #BIConfigurableFormatter ifAbsent: [RBSimpleFormatter]).
+	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [RBSimpleFormatter]).
 
 	Color flushCache.
 	
@@ -127,10 +127,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'SUnit' with: [ 
 			spec
 				repository: repository;
-				loads: 'Tests' ].
-		
-		spec baseline: 'BlueInk' with: [ 
- 			spec repository: repository; loads: #('Tests') ].				
+				loads: 'Tests' ].				
 
 		spec baseline: 'EnlumineurFormatter' with: [ 
 			spec
@@ -195,7 +192,10 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Spec2' with: [ 
 			spec 
 				repository: repository;
-				loads: #('Code') ].
+				loads: #('Code' 'CodeTests') ].
+			
+		spec package: 'BaselineOfMicrodown'.	
+			
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 
@@ -203,7 +203,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v1.8.2';
+		repository: 'github://pharo-vcs/iceberg:v1.8.3';
 		onConflictUseLoaded;
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.

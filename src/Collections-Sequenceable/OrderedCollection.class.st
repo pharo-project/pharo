@@ -713,17 +713,16 @@ OrderedCollection >> removeDuplicates [
 	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
 	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
 
-	| iterator |
+	| iterator seen |
 	self ifEmpty: [ ^ self ].
 	iterator := 1.
+	seen := Set new.
 	[ iterator <= self size ]
-		whileTrue: [ | each newIndex |
+		whileTrue: [ | each |
 			each := self at: iterator.
-			newIndex := iterator + 1.
-			[ newIndex := (self indexOf: each startingAt: newIndex).
-			newIndex > 0 ]
-				whileTrue: [ self removeAt: newIndex ].
-			iterator := iterator + 1.
+			(seen includes: each)
+				ifTrue: [ self removeAt: iterator ]
+				ifFalse: [ seen add: each. iterator := iterator + 1. ].
 	 ]
 ]
 

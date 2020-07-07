@@ -24,6 +24,8 @@ SpApplicationTest >> tearDown [
 { #category : #tests }
 SpApplicationTest >> testCloseDialogWindowRemovesItFromWindowCollection [
 	| window |
+
+	application := SpApplication new.
 	window := (application newPresenter: SpButtonPresenter) openDialogWithSpec.
 	window close.
 	self deny: (application windows includes: window)
@@ -32,6 +34,8 @@ SpApplicationTest >> testCloseDialogWindowRemovesItFromWindowCollection [
 { #category : #tests }
 SpApplicationTest >> testCloseWindowRemovesItFromWindowCollection [
 	| window |
+	
+	application := SpApplication new.
 	window := (application newPresenter: SpButtonPresenter) openWithSpec.
 	window close.
 	self deny: (application windows includes: window)

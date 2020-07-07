@@ -141,6 +141,15 @@ RBMethodNode >> allSequenceNodes [
 ]
 
 { #category : #accessing }
+RBMethodNode >> allStatements [
+	"return the statements including variable definition."
+	^ self temporaries asOrderedCollection copy
+			addAll: super allStatements;
+			yourself
+
+]
+
+{ #category : #accessing }
 RBMethodNode >> argumentNames [
 	^ self arguments collect: [:each | each name] as: Array
 ]
@@ -343,6 +352,11 @@ RBMethodNode >> hasPragmaNamed: aSymbol [
 ]
 
 { #category : #testing }
+RBMethodNode >> hasTemporaries [
+	^ self temporaries isNotEmpty
+]
+
+{ #category : #testing }
 RBMethodNode >> hasTemporaryNamed: aString [	
 	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
 ]
@@ -485,6 +499,14 @@ RBMethodNode >> newSource [
 { #category : #accessing }
 RBMethodNode >> numArgs [
 	^self selector numArgs
+]
+
+{ #category : #testing }
+RBMethodNode >> offsetIsComment: anOffset [
+	"check is the offset in the source part of a comment"
+
+	^ self allComments
+		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
 ]
 
 { #category : #'tree accessing' }

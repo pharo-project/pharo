@@ -24,13 +24,6 @@ SpTContextMenu >> contextMenu: aValuable [
 	contextMenu := aValuable
 ]
 
-{ #category : #initialization }
-SpTContextMenu >> initialize [
-	
-	self class initializeSlots: self.
-	super initialize.
-]
-
 { #category : #'api-events' }
 SpTContextMenu >> whenMenuChangedDo: aBlock [
 	"Set a block to value when the menu block has changed"

@@ -48,11 +48,6 @@ AthensCairoPatternSurfacePaint >> athensFillRectangle: aRectangle on: aCanvas [
 ]
 
 { #category : #accessing }
-AthensCairoPatternSurfacePaint >> direction: aPoint [ 
-	self deprecated: 'This method does nothing. It will be removed.'
-]
-
-{ #category : #accessing }
 AthensCairoPatternSurfacePaint >> extent [
 	^ extent ifNil:[surface extent]
 ]

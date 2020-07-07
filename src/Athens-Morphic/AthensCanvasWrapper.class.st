@@ -290,11 +290,6 @@ AthensCanvasWrapper >> extent [
 	^ self canvas surface extent
 ]
 
-{ #category : #'canvas drawing' }
-AthensCanvasWrapper >> fillColor: aColor [
-	self deprecated: 'We think there is no senders of this method. If the deprecation is raised please report it with the steps to reproduce.'
-]
-
 { #category : #'canvas drawing-ovals' }
 AthensCanvasWrapper >> fillOval: r color: c [
 
@@ -454,23 +449,6 @@ AthensCanvasWrapper >> isVisible: aRectangle [
 	"Return true if the given rectangle is (partially) visible"
 
 	^ self clipRect intersects: aRectangle.
-]
-
-{ #category : #'private debug' }
-AthensCanvasWrapper >> isVisibleDebug: aRectangle [
-	"Return true if the given rectangle is (partially) visible"
-
-	| vis canvasLocalClip |
-	canvasLocalClip := Rectangle
-		encompassing:
-			(self clipRect corners
-				collect: [ :c | (self canvas pathTransform transform: (c translateBy: origin)) translateBy: origin negated ]).	"canvasLocalClip := (self canvas pathTransform inverseTransform: aRectangle origin)
-		corner: (self canvas pathTransform inverseTransform: aRectangle corner)."
-	vis := self clipRect intersects: aRectangle.
-	"self frameRectangle: aRectangle width: 1 color: Color red.
-	self frameRectangle: self clipRect width: 1 color: Color green.
-	self frameRectangle: canvasLocalClip width: 1 color: Color yellow."
-	^ vis
 ]
 
 { #category : #'canvas drawing' }

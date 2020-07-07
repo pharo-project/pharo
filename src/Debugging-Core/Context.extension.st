@@ -22,15 +22,21 @@ Context >> callPrimitive: primNumber [
 { #category : #'*Debugging-Core' }
 Context >> lookupSymbol: aSymbol [
 	| var |
-	var := self astScope lookupVar: aSymbol.
-	"Local variables"
-	var isTemp ifTrue: [^ self tempNamed: aSymbol].
-	"Instance variables"
-	var isInstance ifTrue: [^ self receiver instVarNamed: aSymbol].
-	"Class variables and globals"
-	var isGlobal ifTrue: [ ^ var variable value ].
-	^ nil.
-	
+	var := self lookupVar: aSymbol.
+	^ var readInContext: self
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> lookupTempVar: aSymbol [
+	| var |
+	var := self lookupVar: aSymbol.
+	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	^var
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> lookupVar: aSymbol [
+	^ self astScope lookupVar: aSymbol
 ]
 
 { #category : #'*Debugging-Core' }
@@ -54,7 +60,7 @@ Context >> namedTempAt: index put: aValue [
 	"Set the value of the temp at index in the receiver's sequence of tempNames"
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be"
-	^self tempNamed: (self tempNames at: index) put: aValue
+	self tempNamed: (self tempNames at: index) put: aValue
 ]
 
 { #category : #'*Debugging-Core' }
@@ -269,39 +275,44 @@ Context class >> simulatePrimitiveNumber: num with: simulator [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> stepToHome: aContext [ 
+Context >> stepToHome: aContext [
 	"Resume self until the home of top context is aContext.  Top context may be a block context."
 
-	| home ctxt here error topContext context |
-	
+	| home ctxt here error context |
 	here := thisContext.
 	ctxt := self step.
-	ctxt = self ifFalse: [ 
-		"Insert ensure and exception handler contexts under aSender"
+	ctxt = self ifFalse: [ "Insert ensure and exception handler contexts under aSender"
 		error := nil.
-		context := aContext insertSender: (Context
-			contextOn: UnhandledError do: [:ex |
-				error ifNil: [
-					error := ex exception.
-					topContext := thisContext.
-					ex resumeUnchecked: here jump ]
-						ifNotNil: [ ex pass ]]).
-	].
+		context := aContext insertSender: (Context contextOn: UnhandledError do: [ :ex | 
+				            error
+					            ifNil: [ 
+						            error := ex exception.
+						            ex resumeUnchecked: here jump ]
+					            ifNotNil: [ ex pass ] ]) ].
 	home := aContext home.
-	home == ctxt home ifTrue: [ ^{ctxt. nil} ].
-	
-	[ctxt := ctxt step.
-	error ifNotNil: [
-		"remove above inserted ensure and handler contexts"
-		context ifNotNil: [aContext terminateTo: context sender].
-		^ {ctxt. error}].
-	
-	home == ctxt home] whileFalse: [
-		home isDead ifTrue: [^ {ctxt. nil}]
-	].
+	home == ctxt home ifTrue: [ 
+		^ { 
+			  ctxt.
+			  nil } ].
+
+	[ 
+	ctxt := ctxt step.
+	error ifNotNil: [ "remove above inserted ensure and handler contexts"
+		context ifNotNil: [ aContext terminateTo: context sender ].
+		^ { 
+			  ctxt.
+			  error } ].
+
+	home == ctxt home ] whileFalse: [ 
+		home isDead ifTrue: [ 
+			^ { 
+				  ctxt.
+				  nil } ] ].
 	"remove above inserted ensure and handler contexts"
-	context ifNotNil: [aContext terminateTo: context sender].
-	^ {ctxt. nil}
+	context ifNotNil: [ aContext terminateTo: context sender ].
+	^ { 
+		  ctxt.
+		  nil }
 ]
 
 { #category : #'*Debugging-Core' }
@@ -358,20 +369,18 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	| scope var |
-	scope := self astScope.
-	var := scope lookupVar: aName.
-	^var readFromContext: self scope: scope.
+	| var |
+	var := self lookupTempVar: aName.
+	^var readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	| scope var |
-	scope := self astScope.
-	var := scope lookupVar: aName.
-	^var writeFromContext: self scope: scope value: anObject
+	| var |
+	var := self lookupTempVar: aName.
+	var write: anObject inContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -391,13 +400,13 @@ Context >> tempNames [
 Context >> temporaryVariableNamed: aName [
 	(self hasTemporaryVariableNamed: aName)
 		ifFalse: [ ^ nil ].
-	^TemporaryVariable name: aName context: self
+	^self lookupTempVar: aName
 
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> temporaryVariables [
-	^self tempNames collect: [ :name | TemporaryVariable new name: name ]
+	^self sourceNode temporaries collect: [ :each | each binding ] 
 
 ]
 

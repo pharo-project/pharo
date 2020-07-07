@@ -24,7 +24,7 @@ CairoFontFace class >> countReferences: handle [
 "
 unsigned int  cairo_font_face_get_reference_count             (cairo_font_face_t *font_face);
 "
-	^ self ffiCall: #( unsigned int cairo_font_face_get_reference_count (size_t handle)) 
+	^ self ffiCall: #( uint cairo_font_face_get_reference_count (size_t handle)) 
 ]
 
 { #category : #finalizing }

@@ -52,6 +52,7 @@ BaselineOfMorphic >> baseline: spec [
 		
 		spec package: 'EmbeddedFreeType'.
 		spec package: 'EmergencyEvaluator'.
+		spec package: 'EmergencyDebugger'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
@@ -221,38 +222,49 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 
 { #category : #fonts }
 BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
-
-	| fonts styleNames fileName directoryReference |
-
-	directoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: [ FileSystem workingDirectory ]) asFileReference / 'resources' / 'fonts'.
-
-	fonts := pointSizes collect: [ :pointSize | 	
-		| regular bold italic boldItalic |
-		styleNames := #('Regular' 'Bold' 'Italic' 'Bold Italic').
-
-		fileName := familyName, ' ', pointSize asString.
-		regular := STON fromStream: (directoryReference / (fileName, ' Regular.ston')) readStream.
-		regular setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName, ' Regular.png')) fullName).
-
-		bold := STON fromStream: (directoryReference / (fileName, ' Bold.ston')) readStream.
-		bold setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName, ' Bold.png')) fullName).
-		
-		italic := STON fromStream: (directoryReference / (fileName, ' Italic.ston')) readStream.
-		italic setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName, ' Italic.png')) fullName).
-
-		boldItalic := STON fromStream: (directoryReference / (fileName, ' Bold Italic.ston')) readStream.
-		boldItalic setGlyphs: (PNGReadWriter formFromFileNamed: (directoryReference / (fileName, ' Bold Italic.png')) fullName).
-		
-		regular instVarNamed: #derivativeFonts put: ({bold. italic. boldItalic}, (Array new: 29)).
-		bold instVarNamed: #derivativeFonts put: (Array new: 32).
-		italic instVarNamed: #derivativeFonts put: (Array new: 32).
-		boldItalic instVarNamed: #derivativeFonts put: (Array new: 32).
-		regular
-	].
-
-	^ TextStyle fontArray: fonts.		
-
-	
+	| fonts fileName directoryReference |
+	directoryReference := (Smalltalk os environment
+		                       at: 'BOOTSTRAP_REPOSITORY'
+		                       ifAbsent: [ FileSystem workingDirectory ])
+		                      asFileReference / 'resources' / 'fonts'.
+	fonts := pointSizes collect: [ :pointSize | 
+		         | regular bold italic boldItalic |
+		         fileName := familyName , ' ' , pointSize asString.
+		         regular := STON fromStream:
+			                    (directoryReference
+			                     / (fileName , ' Regular.ston')) readStream.
+		         regular setGlyphs: (PNGReadWriter formFromFileNamed:
+				          (directoryReference / (fileName , ' Regular.png'))
+					          fullName).
+		         bold := STON fromStream:
+			                 (directoryReference / (fileName , ' Bold.ston'))
+				                 readStream.
+		         bold setGlyphs: (PNGReadWriter formFromFileNamed:
+				          (directoryReference / (fileName , ' Bold.png')) fullName).
+		         italic := STON fromStream:
+			                   (directoryReference
+			                    / (fileName , ' Italic.ston')) readStream.
+		         italic setGlyphs: (PNGReadWriter formFromFileNamed:
+				          (directoryReference / (fileName , ' Italic.png'))
+					          fullName).
+		         boldItalic := STON fromStream:
+			                       (directoryReference
+			                        / (fileName , ' Bold Italic.ston'))
+				                       readStream.
+		         boldItalic setGlyphs: (PNGReadWriter formFromFileNamed:
+				          (directoryReference / (fileName , ' Bold Italic.png'))
+					          fullName).
+		         regular instVarNamed: #derivativeFonts put: { 
+				         bold.
+				         italic.
+				         boldItalic } , (Array new: 29).
+		         bold instVarNamed: #derivativeFonts put: (Array new: 32).
+		         italic instVarNamed: #derivativeFonts put: (Array new: 32).
+		         boldItalic
+			         instVarNamed: #derivativeFonts
+			         put: (Array new: 32).
+		         regular ].
+	^ TextStyle fontArray: fonts
 ]
 
 { #category : #fonts }

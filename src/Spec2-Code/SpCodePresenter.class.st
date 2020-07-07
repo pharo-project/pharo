@@ -1,18 +1,20 @@
 "
 I'm a code (Pharo code) presenter. 
 I will style and provide completion according to the behaviour being edited.
+
+@@TODO
+
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
 "
 Class {
 	#name : #SpCodePresenter,
 	#superclass : #SpTextPresenter,
 	#instVars : [
-		'#doItContext => SpObservableSlot',
-		'#doItReceiver => SpObservableSlot',
-		'#behavior => SpObservableSlot',
 		'#syntaxHighlight => SpObservableSlot',
-		'#completionEngine => SpObservableSlot',
 		'#lineNumbers => SpObservableSlot',
-		'#interactionModel',
+		'#interactionModel => SpObservableSlot',
 		'#overrideContextMenu'
 	],
 	#category : #'Spec2-Code'
@@ -30,6 +32,24 @@ SpCodePresenter class >> buildCommandsGroupWith: presenter forRoot: aCmCommandsG
 	aCmCommandsGroup beDisplayedAsGroup.
 	aCmCommandsGroup register: (self codeSelectionActionCommandsGroupWith: presenter).
 	aCmCommandsGroup register: (self codeNavigationCommandsGroupWith: presenter)
+]
+
+{ #category : #commands }
+SpCodePresenter class >> buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
+
+	super buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup.	
+	aCmCommandsGroup register: (self codeAcceptCommandsGroupWith: presenter)
+]
+
+{ #category : #commands }
+SpCodePresenter class >> codeAcceptCommandsGroupWith: aPresenter [
+
+	^ (CmCommandGroup named: 'Accept commands') asSpecGroup
+		description: 'Accept or cancel changes.';
+		beDisplayedAsGroup;
+		register: (SpAcceptChangesCommand forSpecContext: aPresenter);
+		register: (SpCancelChangesCommand forSpecContext: aPresenter);
+		yourself
 ]
 
 { #category : #commands }
@@ -91,25 +111,57 @@ SpCodePresenter class >> title [
 	^ 'Code'
 ]
 
-{ #category : #'api-shout' }
+{ #category : #private }
+SpCodePresenter >> basicInteractionModel: anObject [
+
+	interactionModel := anObject
+]
+
+{ #category : #'api-model' }
+SpCodePresenter >> beForBehavior: aBehavior [
+	"used when browsing classes or alike"
+
+	self interactionModel: (SpCodeBehaviorInteractionModel on: aBehavior)
+]
+
+{ #category : #'api-model' }
+SpCodePresenter >> beForMethod: aMethod [
+	"used when browsing methods"
+
+	self interactionModel: (SpCodeMethodInteractionModel on: aMethod)
+]
+
+{ #category : #'api-model' }
+SpCodePresenter >> beForObject: anObject [
+	"Used when inspecting objects"
+
+	self interactionModel: (SpCodeObjectInteractionModel on: anObject)
+]
+
+{ #category : #'api-model' }
+SpCodePresenter >> beForScripting [
+	"Use in playgrounds"
+
+	self interactionModel: SpCodeScriptingInteractionModel new
+]
+
+{ #category : #'private bindings' }
 SpCodePresenter >> behavior [
 	"Return the class corresponding to the method class of the source code you are editing"
 	
-	^ behavior
+	^ self interactionModel ifNotNil: [ :im | im behavior ]
 ]
 
-{ #category : #'api-shout' }
+{ #category : #'private bindings' }
 SpCodePresenter >> behavior: aClass [
 	"Set the class corresponding to the method class of the source code you are editing"
-
-	behavior := aClass
+	
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> bindingOf: aString [
 
-	interactionModel ifNotNil:  [ :im | ^ im bindingOf: aString  ].
-	self behavior ifNotNil: [ :aBehavior | ^ aBehavior bindingOf: aString ].
+	self interactionModel ifNotNil:  [ :im | ^ im bindingOf: aString  ].
 	^ nil
 ]
 
@@ -140,16 +192,10 @@ SpCodePresenter >> buildContextMenuWith: aValuable [
 	^ menuPresenter
 ]
 
-{ #category : #accessing }
-SpCodePresenter >> completionEngine [
+{ #category : #api }
+SpCodePresenter >> clearInteractionModel [
 
-	^ completionEngine
-]
-
-{ #category : #accessing }
-SpCodePresenter >> completionEngine: aCompletionEngine [
-
-	completionEngine := aCompletionEngine
+	self interactionModel: SpCodeNullInteractionModel new
 ]
 
 { #category : #'api-shortcuts' }
@@ -170,36 +216,26 @@ SpCodePresenter >> contextMenu [
 	^ [ self buildContextMenuWith: super contextMenu ]
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> doItContext [
 
-	doItContext ifNotNil: [ ^ doItContext ].
-	^ interactionModel ifNotNil: [ :im | im doItContext ]
+	^ self interactionModel ifNotNil: [ :im | im doItContext ]
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> doItContext: anObject [
 
-	doItContext := anObject
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> doItReceiver [
 	
-	doItReceiver ifNotNil: [ 
-		| receiver |
-		receiver := doItReceiver.
-		receiver isBehavior ifTrue: [ 
-			receiver := receiver instanceSide ].
-		^ receiver ].
-	
-	^ interactionModel ifNotNil: [ :im | im doItReceiver ]
+	^ self interactionModel ifNotNil: [ :im | im doItReceiver ]
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> doItReceiver: anObject [
 
-	doItReceiver := anObject
 ]
 
 { #category : #accessing }
@@ -225,18 +261,17 @@ SpCodePresenter >> findClassFromSelection [
 	^ self findClassFrom: self selectedTextOrLine trimmed
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> hasBindingOf: aString [
 
-	interactionModel ifNotNil: [ :im | ^ im hasBindingOf: aString ].
-	self behavior ifNotNil: [ :aBehavior | (aBehavior bindingOf: aString) notNil ].
+	self interactionModel ifNotNil: [ :im | ^ im hasBindingOf: aString ].
 	^ false
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> hasBindingThatBeginsWith: aString [ 
 	
-	^ interactionModel
+	^ self interactionModel
 		ifNotNil: [ :im | im hasBindingThatBeginsWith: aString ] 
 		ifNil: [ false ]
 ]
@@ -291,9 +326,10 @@ SpCodePresenter >> interactionModel [
 ]
 
 { #category : #api }
-SpCodePresenter >> interactionModel: anObject [ 	
+SpCodePresenter >> interactionModel: anInteractionModel [
 
-	interactionModel := anObject
+	anInteractionModel owner: self.
+	self basicInteractionModel: anInteractionModel
 ]
 
 { #category : #accessing }
@@ -326,23 +362,21 @@ SpCodePresenter >> overrideContextMenu: aBoolean [
 { #category : #initialization }
 SpCodePresenter >> registerEventsForStyling [
 
-	self whenBehaviorChangedDo: [ :class | 
-		self changed: #classOrMetaClass: with: { class }.
-		self changed: #getText ]
+	self whenInteractionModelChangedDo: [ :im |
+		self withAdapterDo: [ :anAdapter |
+			anAdapter interactionModel: im ] ]
 ]
 
 { #category : #api }
 SpCodePresenter >> selectedBehavior [
 
-	self flag: #TODO. "What this is need for?"
 	^ self behavior
 ]
 
-{ #category : #binding }
+{ #category : #'private bindings' }
 SpCodePresenter >> selectedClassOrMetaClass [
 
-	behavior ifNotNil: [ ^ behavior ].
-	^ interactionModel ifNotNil: [ :im | im selectedClassOrMetaClass ]
+	^ self interactionModel ifNotNil: [ :im | im selectedClassOrMetaClass ]
 ]
 
 { #category : #api }
@@ -360,20 +394,33 @@ SpCodePresenter >> syntaxHighlight: aBoolean [
 	syntaxHighlight := aBoolean 
 ]
 
-{ #category : #'api-events' }
-SpCodePresenter >> whenBehaviorChangedDo: aBlock [
-	"Set a block to perform when the behavior class changed"
+{ #category : #api }
+SpCodePresenter >> userActionDuring: aBlock [
+	"There are a buch of operations that will all trigger a backend update. A tipical case, 
+	 changing text and interactionModel will trigger the text-changed event 3 times and that 
+	 may cause an excesive compute that we want to avoid. 
+	 We use #userActionDuring: to avoid that. 
+	[[[language=Smalltalk
+	aCodePresenter userActionDuring: [ 
+		aCodePresenter
+			beForScription;
+			text: '42 factorial' ]
+	]]]."
 	
-	self 
-		property: #behavior 
-		whenChangedDo: aBlock
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter userActionDuring: aBlock.
+		^ self ].
+	
+	aBlock value
 ]
 
 { #category : #'api-events' }
-SpCodePresenter >> whenCompletionEngineChangedDo: aBlock [
-	"Set a block to perform when the syntax highlight is enabled/disabled"
+SpCodePresenter >> whenInteractionModelChangedDo: aBlock [
+	"Set a block to perform when the behavior class changed"
 	
-	self property: #completionEngine whenChangedDo: aBlock
+	self 
+		property: #interactionModel
+		whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }

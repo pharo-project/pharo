@@ -1,8 +1,78 @@
 "
-A presenter transmission modelates a transmission from one output port to an input port.
-A transmission is a way to handle how a presenter will handle input/output by default.
+! What is a transmission?
+Transmissions are a way to connect presenters, thinking on the ""flow"" of information more than the way it is displayed. For example, think on a master-detail (A->B) relationship, when you navigate the elements in master A, you want to see the detail B. This is tipically solved showing a list with master elements and a form with the detail of each master. 
+In Spec, this will be declared more or less like this: 
 
-It uses ""ports"" to define how data passes, but it can also transform it (see #transform:) to make it pass in a correct way.
+[[[language=Smalltalk
+layout := SpBoxLayout newHorizontal
+	add: (list := self newList);
+	add: (detail := self newText);
+	yourself.	
+]]]
+
+But this does not says how ==list== and ==detail== are linked. 
+
+The transmission sub-framework solves this in an elegant way: Each presenter defines ''output ports'' (ports to send information) and ''input ports'' (ports to receive information). Each presenter defines also a default input port and a default output port.
+
+!! Transmitting from an output port to an input port (==#transmitTo:==)
+
+A transmission connects a presenter's output port with a presenter's input port. 
+See this example: 
+
+[[[language=Smalltalk
+list transmitTo: detail.
+]]]
+
+This will connect the ==list== presenter """"default output port"""" with the ==detail== presenter """"default input port"""". This line is equivallent (but a lot simpler) to this one:  
+
+[[[language=Smalltalk
+list defaultOutputPort transmitTo: detail defaultInputPort
+]]]
+
+Is important to remark that a transmission does not connects two components, it connect two """"component ports"""". The distinction is important because there can be many ports!  
+Take for example *class:SpListPresenter*, it defines two output ports (selection and activation), this means it is possible to define also this transmission: 
+
+[[[language=Smalltalk
+list outputActivationPort transmitTo: detail defaultInputPort
+]]]
+
+!! Transforming a transmission (==#transmitTo:transform:==)
+The object transmitted from a presenter output port can be inadequate for the input port. To solve this problem a transmission allow transformations.
+This is as simple as using the ==#transform:== protocol: 
+
+[[[language=Smalltalk
+list 
+	transmitTo: detail 
+	transform: [ :aValue | aValue asString ].
+]]]
+
+[[[language=Smalltalk
+list defaultOutputPort 
+	transmitTo: detail defaultInputPort 
+	transform: [ :aValue | aValue asString ].
+]]]
+
+!! Transmitting from an output port to an arbitrary input receiver (==#transmitDo:==, ==#transmitDo:transform:==)
+It is possible that the user requires to listen an output port, but instead transmitting the value to another presenter, other operation is needed. 
+There is the ==#transmitDo:== protocol to handle this situation: 
+
+[[[language=Smalltalk
+list transmitDo: [ :aValue | aValue crTrace ].
+]]]
+
+!! Acting after a transmission (==#postTransmission:==)
+Sometimes after a transmission happens, the user needs to react to modify something given the new status achieved by the presenter (like, pre-selecting something).
+The ==#postTransmission:== protocol allows you to handle that situation.
+
+[[[language=Smalltalk
+list 
+	transmitTo: detail 
+	postTransmission: [ :fromPresenter :toPresenter :value | 
+		""something to do here""
+		toPresenter enabled: value isEmptyOrNil not ].
+]]]
+
+See *method:SpTransmission#postTransmission:*
 "
 Class {
 	#name : #SpTransmission,

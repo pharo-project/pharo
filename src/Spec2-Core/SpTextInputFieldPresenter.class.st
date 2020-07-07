@@ -1,4 +1,10 @@
 "
+@@TODO
+
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
+
 I handle one line of text.
 See TextPresenter
 
@@ -15,14 +21,6 @@ I provide the following variables and their accessors
 - placeholder is the ghost text to display in the text zone.
 
 I provide getters of ValueHolder of my super class actionToPerformHolder and textHolder .
-
-
-todo
-- specializing accept:
-- specializing eventKeyStrokesForNextFocus , eventKeyStrokesForPreviousFocus
-- globalsEntryCompletion
-- specializing isCodeCompletionAllowed
-
 "
 Class {
 	#name : #SpTextInputFieldPresenter,

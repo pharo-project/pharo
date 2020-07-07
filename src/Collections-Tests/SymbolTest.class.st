@@ -170,13 +170,11 @@ SymbolTest >> empty [
 
 { #category : #accessing }
 SymbolTest >> expectedBehavior [
-	| result |
-	
-	^result := { 
-		[Symbol readFromString: '#''abc'''] -> #abc.
-		[Symbol readFromString: '#ab-C'] -> #ab.
-	 	[Symbol readFromString: '#abC'] -> #abC. 
-		[Symbol readFromString: '#ab@c'] -> #ab}.
+	^ { 
+		  ([ Symbol readFromString: '#''abc''' ] -> #abc).
+		  ([ Symbol readFromString: '#ab-C' ] -> #ab).
+		  ([ Symbol readFromString: '#abC' ] -> #abC).
+		  ([ Symbol readFromString: '#ab@c' ] -> #ab) }
 ]
 
 { #category : #requirements }
@@ -490,10 +488,9 @@ SymbolTest >> testReadFrom [
 
 { #category : #tests }
 SymbolTest >> testUncapitalized [
-	| uc lc empty |
+	| uc lc |
 	uc := #MElViN.
 	lc := #mElViN.
-	empty := #' '.
 	self assert: uc uncapitalized equals: lc.
 	self assert: lc uncapitalized equals: lc
 ]

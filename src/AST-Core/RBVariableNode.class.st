@@ -15,6 +15,7 @@ Class {
 	#superclass : #RBValueNode,
 	#instVars : [
 		'name',
+		'variable',
 		'start'
 	],
 	#category : #'AST-Core-Nodes'

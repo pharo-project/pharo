@@ -18,7 +18,7 @@ SpMorphicCodeAdapter >> addKeyBindingsTo: aMorph [
 { #category : #'widget API' }
 SpMorphicCodeAdapter >> behavior [
 
-	^ self model behavior
+	^ self presenter behavior
 ]
 
 { #category : #'private-shout' }
@@ -35,14 +35,14 @@ SpMorphicCodeAdapter >> buildWidget [
 	
 	self presenter hasLineNumbers ifTrue: [ 
 		newWidget withLineNumbers ].
+	self presenter interactionModel ifNotNil: [ :im | 
+		self setInteractionModel: im to: newWidget ].
+	
 	self presenter whenLineNumbersChangedDo: [ :hasLineNumbers | 
 		self changeLineNumbers: hasLineNumbers to: newWidget ].
-	
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
 		self setEditingModeFor: newWidget ].
 	
-	self presenter completionEngine ifNotNil: [ :engine | newWidget completionEngine: engine ].
-	self presenter whenCompletionEngineChangedDo: [ :engine | newWidget completionEngine: engine ].
 	
 	^ newWidget
 ]
@@ -78,13 +78,13 @@ SpMorphicCodeAdapter >> computeOriginFor: aMorph [
 { #category : #'widget API' }
 SpMorphicCodeAdapter >> doItContext [
 
-	^ self model doItContext
+	^ self presenter doItContext
 ]
 
 { #category : #'widget API' }
 SpMorphicCodeAdapter >> doItReceiver [
 
-	^ self model doItReceiver
+	^ self presenter doItReceiver
 ]
 
 { #category : #NOCompletion }
@@ -130,6 +130,25 @@ SpMorphicCodeAdapter >> insertPopoverAfterCurrentSelection: aPresenter [
 		popover takeKeyboardFocus ]
 ]
 
+{ #category : #'widget API' }
+SpMorphicCodeAdapter >> interactionModel: anInteractionModel [
+
+	self classOrMetaClass: anInteractionModel behavior.
+	self widgetDo: [ :w |
+		self setInteractionModel: anInteractionModel to: w ]
+]
+
+{ #category : #private }
+SpMorphicCodeAdapter >> newCompletionEngine: anInteractionModel [
+
+	^ SpMorphicCodeCompletionEngine new 
+		scripting: anInteractionModel isForScripting;
+		doItRequestor: anInteractionModel;
+		doItContext: anInteractionModel doItContext;
+		completionClass: anInteractionModel selectedClassOrMetaClass;
+		yourself
+]
+
 { #category : #private }
 SpMorphicCodeAdapter >> originMorphFor: aMorph [
 
@@ -148,7 +167,7 @@ SpMorphicCodeAdapter >> receiverClass [
 { #category : #'widget API' }
 SpMorphicCodeAdapter >> selectedBehavior [
 
-	^ self model selectedBehavior
+	^ self presenter selectedBehavior
 ]
 
 { #category : #NOCompletion }
@@ -168,12 +187,16 @@ SpMorphicCodeAdapter >> setEditingModeFor: textArea [
 { #category : #private }
 SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior [
 
+	textArea model: self.
 	aBehavior
 		ifNotNil: [ textArea beForSmalltalkCodeInClass: aBehavior ]		
-		ifNil: [ 
-			textArea 
-				model: self;
-				beForSmalltalkScripting ]
+		ifNil: [ textArea beForSmalltalkScripting ]
+]
+
+{ #category : #'widget API' }
+SpMorphicCodeAdapter >> setInteractionModel: anInteractionModel to: w [
+
+	w completionEngine: (self newCompletionEngine: anInteractionModel)
 ]
 
 { #category : #private }
@@ -182,4 +205,10 @@ SpMorphicCodeAdapter >> textWithStyle [
 	 DO NOT USE IT!"
 	
 	^ self widget getText
+]
+
+{ #category : #'widget API' }
+SpMorphicCodeAdapter >> userActionDuring: aBlock [
+
+	aBlock value
 ]

@@ -21,5 +21,5 @@ ClyBreakOnVarWritesCommand >> defaultMenuItemName [
 
 { #category : #execution }
 ClyBreakOnVarWritesCommand >> installVariableBreakpointOn: aVariableName in: methodOrClass [
-	VariableBreakpoint watchVariableWrites: sourceNode name in: methodOrClass
+	VariableBreakpoint watchVariableWrites: sourceNode name inClass: methodOrClass
 ]

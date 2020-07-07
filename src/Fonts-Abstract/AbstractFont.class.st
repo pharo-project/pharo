@@ -92,6 +92,18 @@ AbstractFont >> basicDescentOf: aCharacter [
 
 ]
 
+{ #category : #'glyph lookup' }
+AbstractFont >> characterFormAt: aCharacter [
+	^ nil
+]
+
+{ #category : #'glyph lookup' }
+AbstractFont >> characterRenderingOptimizedFormAt: aCharacter [
+	"This method returns a version of the character form which is optimized for rendering
+	through an accelerated alpha blending equation in the style of the OpenGL glBlendFuncSeparate."
+	^ (self characterFormAt: aCharacter) ifNotNil: [:form | form invertedAndAlphaMultiplied]
+]
+
 { #category : #accessing }
 AbstractFont >> characterToGlyphMap [
 	"Return the character to glyph mapping table. If the table is not provided the character scanner will query the font directly for the width of each individual character."
@@ -135,6 +147,11 @@ AbstractFont >> displayString: aString on: aDisplayContext from: startIndex to: 
 AbstractFont >> familyName [
 	"Answer the name to be used as a key in the TextConstants dictionary."
 	^self subclassResponsibility
+]
+
+{ #category : #testing }
+AbstractFont >> hasSubPixelAntiAliasing [
+	^ false
 ]
 
 { #category : #accessing }
@@ -196,6 +213,16 @@ AbstractFont >> releaseCachedState [
 	
 ]
 
+{ #category : #metrics }
+AbstractFont >> strikeoutThickness [
+	^ 0
+]
+
+{ #category : #metrics }
+AbstractFont >> strikeoutTop [
+	^ 0
+]
+
 { #category : #accessing }
 AbstractFont >> textStyle [
 	^ TextStyle actualTextStyles detect:
@@ -206,6 +233,16 @@ AbstractFont >> textStyle [
 AbstractFont >> textStyleName [
 	"Answer the name to be used as a key in the TextConstants dictionary."
 	^self familyName
+]
+
+{ #category : #metrics }
+AbstractFont >> underlineThickness [
+	^ 0
+]
+
+{ #category : #metrics }
+AbstractFont >> underlineTop [
+	^ 0
 ]
 
 { #category : #'development support' }

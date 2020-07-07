@@ -7,13 +7,12 @@ Class {
 	#instVars : [
 		'selectors'
 	],
-	#category : #'Debugger-Filters'
+	#category : #'Debugger-Filters-Base'
 }
 
 { #category : #'instance creation' }
 SelectorFilter class >> forSelector: aSelector [
-	|filter|
-	
+	|filter|	
 	filter:= self new.
 	filter selectors add: aSelector.
 	^ filter
@@ -21,8 +20,7 @@ SelectorFilter class >> forSelector: aSelector [
 
 { #category : #'instance creation' }
 SelectorFilter class >> forSelectors: someSelectors [
-	 |filter|
-	
+	 |filter|	
 	 filter:= self new.
 	 filter selectors addAll: someSelectors.
 	^ filter
@@ -31,7 +29,7 @@ SelectorFilter class >> forSelectors: someSelectors [
 { #category : #initialization }
 SelectorFilter >> initialize [
 	super initialize.
-	self selectors: OrderedCollection new.
+	self selectors: OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -46,6 +44,5 @@ SelectorFilter >> selectors: someSelectors [
 
 { #category : #testing }
 SelectorFilter >> shouldDisplay: aContext [
-	 ^ (self selectors  
-		includes: aContext method selector) not.
+	 ^ (self selectors includes: aContext method selector) not
 ]

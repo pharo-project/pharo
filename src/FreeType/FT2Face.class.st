@@ -658,11 +658,8 @@ FT2Face >> renderGlyphIntoForm: aForm pixelMode: pixelMode [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)
 	with pixel mode anInteger "
 
-	| ftBitmap buffer outline ftFace |
-
+	| ftBitmap buffer outline |
 	ftBitmap := FTBitmap new.
-
-	ftFace := FTFaceRec fromHandle: handle.
 	outline := self outline.
 
 	buffer := ExternalAddress allocate: aForm bits byteSize.

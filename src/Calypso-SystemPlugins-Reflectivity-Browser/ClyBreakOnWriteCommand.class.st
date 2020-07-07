@@ -11,7 +11,7 @@ Class {
 ClyBreakOnWriteCommand >> breakOn: variable [
 	VariableBreakpoint
 		watchVariableWrites: variable name
-		in: variable definingClass
+		inClass: variable definingClass
 ]
 
 { #category : #execution }

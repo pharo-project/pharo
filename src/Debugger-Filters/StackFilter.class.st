@@ -4,8 +4,13 @@ A filter on the current stack for debugging
 Class {
 	#name : #StackFilter,
 	#superclass : #Object,
-	#category : #'Debugger-Filters'
+	#category : #'Debugger-Filters-Base'
 }
+
+{ #category : #testing }
+StackFilter class >> isAbstract [ 
+	 ^self == StackFilter
+]
 
 { #category : #operators }
 StackFilter >> and: aFilter [

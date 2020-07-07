@@ -92,7 +92,7 @@ SpChooseMethodUITest >> testMethodListContentWhenInstanceSideIsSelected [
 SpChooseMethodUITest >> testSelectAClassShouldDisplayHisProtcolInProtocolList [
 	biChooseMethod packageList selectItem: self class package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
-	self assertCollection: (biChooseMethod protocolList items collect: [:each | each name]) hasSameElements: #(#'-- all --' #accessing)
+	self assertCollection: (biChooseMethod protocolList items collect: #name) hasSameElements: #(#'-- all --' #accessing)
 ]
 
 { #category : #tests }
@@ -110,13 +110,13 @@ SpChooseMethodUITest >> testWhenClassSideRadioClickShouldChangeProtocolList [
 	biChooseMethod packageList selectItem: self class package.
 	biChooseMethod classList selectItem: SpMethodChooserMockClass.
 	biChooseMethod radioButtonClassSide click.
-	self assertCollection: (biChooseMethod protocolList items collect: [:each | each name]) hasSameElements: SpMethodChooserMockClass class protocols
+	self assertCollection: (biChooseMethod protocolList items collect: #name) hasSameElements: SpMethodChooserMockClass class protocols
 ]
 
 { #category : #tests }
 SpChooseMethodUITest >> testWhenSelectAProtocolShouldMethodListOnlyContainsMethodWithSelectedProtocol [
 	biChooseMethod packageList selectItem: self class package.
 	biChooseMethod classList selectItem: self class.
-	biChooseMethod protocolList selectIndex: ((biChooseMethod protocolList items collect: [:each | each name]) indexOf: 'running').
+	biChooseMethod protocolList selectIndex: ((biChooseMethod protocolList items collect: #name) indexOf: 'running').
 	self assert: (biChooseMethod methodList items allSatisfy: [ :method | method category = 'running' ])
 ]

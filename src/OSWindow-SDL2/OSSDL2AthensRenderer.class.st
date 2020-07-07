@@ -55,7 +55,6 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	renderer := backendWindow sdl2Window createDefaultRenderer.
 	self resetResources.
 	
-		
 ]
 
 { #category : #drawing }

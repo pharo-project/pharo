@@ -5,6 +5,12 @@ Tables receive items (see #items:) to feed the table.
 
 self example
 
+@@TODO
+
+!! Transmissions
+- #inputRootsPort (default)
+- #outputSelectionPort (default)
+- #outputActivationPort
 "
 Class {
 	#name : #SpTreeTablePresenter,

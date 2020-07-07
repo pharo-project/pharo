@@ -1,4 +1,10 @@
 "
+@@TODO
+
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
+
 I'm a text field specialised on numbers. 
 
 I can accept number type (integer or float) and a range (min, max). 

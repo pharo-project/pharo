@@ -29,11 +29,29 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #validating }
+Variable class >> checkValidName: aString [ 
+
+]
+
 { #category : #'class initialization' }
 Variable class >> initialize [
 	Properties := Properties
 		ifNil: [ WeakIdentityKeyDictionary new. ]
 		ifNotNil: [ (WeakIdentityKeyDictionary newFrom: Properties) rehash]
+]
+
+{ #category : #testing }
+Variable class >> isAbstract [ 
+	^self = Variable 
+]
+
+{ #category : #'instance creation' }
+Variable class >> named: aSymbol [
+	self checkValidName: aSymbol.
+	^ self new
+		name: aSymbol;
+		yourself
 ]
 
 { #category : #comparing }
@@ -43,6 +61,18 @@ Variable >> = other [
 		ifTrue: [ ^ true ].
 	^ (self species == other species) 
 			and: [ name = other name ]
+]
+
+{ #category : #'code generation' }
+Variable >> emitStore: methodBuilder [
+
+	self subclassResponsibility
+]
+
+{ #category : #'code generation' }
+Variable >> emitValue: methodBuilder [
+
+	self subclassResponsibility
 ]
 
 { #category : #properties }
@@ -65,8 +95,97 @@ Variable >> hash [
 ]
 
 { #category : #testing }
+Variable >> isArg [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isClassVariable [
+	^ false
+]
+
+{ #category : #testing }
+Variable >> isGlobal [ 
+	^false
+]
+
+{ #category : #testing }
+Variable >> isGlobalVariable [
+	^ false
+]
+
+{ #category : #testing }
+Variable >> isInstance [
+	^ false
+]
+
+{ #category : #testing }
+Variable >> isLiteralVariable [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isLocal [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isLocalVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isReferenced [
-	^ self subclassResponsibility
+	^ self usingMethods isNotEmpty
+]
+
+{ #category : #testing }
+Variable >> isReservedVariable [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isSelf [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isSelfOrSuper [
+	
+	^ self isSelf or: [ self isSuper ]
+]
+
+{ #category : #testing }
+Variable >> isSuper [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isTemp [
+
+	^ false
+]
+
+{ #category : #testing }
+Variable >> isThisContext [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isUndeclared [
+
+	^ false
+]
+
+{ #category : #testing }
+Variable >> isUninitialized [
+
+	^ false
+]
+
+{ #category : #testing }
+Variable >> isWritable [
+	^ true
 ]
 
 { #category : #accessing }
@@ -116,6 +235,11 @@ Variable >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
+{ #category : #debugging }
+Variable >> readInContext: aContext [
+	self subclassResponsibility 
+]
+
 { #category : #properties }
 Variable >> removePropertiesIfEmpty [
 	^ Properties at: self ifPresent: [ :dict |
@@ -143,4 +267,9 @@ Variable >> removeProperty: propName ifAbsent: aBlock [
 { #category : #queries }
 Variable >> usingMethods [
 	self subclassResponsibility
+]
+
+{ #category : #debugging }
+Variable >> write: aValue inContext: aContext [
+	self subclassResponsibility 
 ]

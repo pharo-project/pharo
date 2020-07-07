@@ -73,7 +73,7 @@ SpComponentListDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements wrappedItem text newDataSource modelCopy |
 	
 	newElements := self elements select: [ :each | 
-		wrappedItem := self model displayValueOf: each.
+		wrappedItem := self model displayValueFor: each.
 		table columns anySatisfy: [ :column | 
 			text := column transform: wrappedItem.
 			aFTFilter matches: text]].

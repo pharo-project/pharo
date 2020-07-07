@@ -8,7 +8,7 @@ Class {
 		'filters',
 		'booleanOperator'
 	],
-	#category : #'Debugger-Filters'
+	#category : #'Debugger-Filters-Base'
 }
 
 { #category : #'instance creation' }
@@ -40,5 +40,6 @@ BooleanFilter >> filters: theFilters [
 
 { #category : #testing }
 BooleanFilter >> shouldDisplay: aContext [
-	^ (self filters first shouldDisplay: aContext) perform: booleanOperator with: [self filters last shouldDisplay: aContext]  
+	^ (self filters first shouldDisplay: aContext) 
+			perform: booleanOperator with: [self filters last shouldDisplay: aContext]  
 ]

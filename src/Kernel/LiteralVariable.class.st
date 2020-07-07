@@ -53,14 +53,6 @@ LiteralVariable class >> key: newKey value: newValue [
 	^self basicNew key: newKey value: newValue
 ]
 
-{ #category : #'instance creation' }
-LiteralVariable class >> named: aSymbol [ 
-	self checkValidName: aSymbol.
-	^ self new
-		name: aSymbol;
-		yourself
-]
-
 { #category : #comparing }
 LiteralVariable >> = anAssociation [
 
@@ -122,18 +114,20 @@ LiteralVariable >> installingIn: aClass [
 ]
 
 { #category : #testing }
-LiteralVariable >> isClassVariable [
-	^false
-]
-
-{ #category : #testing }
 LiteralVariable >> isGlobal [
-	^true
+
+	^ true
 ]
 
 { #category : #testing }
-LiteralVariable >> isGlobalVariable [
-	^false
+LiteralVariable >> isGlobalClassNameBinding [
+	^ (self value isClass or: [ self value isTrait ])
+		and: [ name == self value name ]
+]
+
+{ #category : #testing }
+LiteralVariable >> isLiteralVariable [
+	^true
 ]
 
 { #category : #testing }
@@ -161,6 +155,14 @@ LiteralVariable >> isSelfEvaluating [
 { #category : #testing }
 LiteralVariable >> isVariableBinding [
 	^true
+]
+
+{ #category : #testing }
+LiteralVariable >> isWritable [
+	"Literal variables are writable, if they aren't global bindings for class names, like
+ #Object -> Object "
+
+	^ (self isGlobalVariable and: [ self isGlobalClassNameBinding ]) not
 ]
 
 { #category : #testing }
@@ -219,6 +221,11 @@ LiteralVariable >> read [
 	^self value
 ]
 
+{ #category : #debugging }
+LiteralVariable >> readInContext: aContext [
+	^self value
+]
+
 { #category : #printing }
 LiteralVariable >> storeOn: aStream [
 	"Store in the format (key->value)"
@@ -248,4 +255,12 @@ LiteralVariable >> value: anObject [
 LiteralVariable >> write: anObject [
 	self value: anObject.
 	^anObject
+]
+
+{ #category : #debugging }
+LiteralVariable >> write: aValue inContext: aContext [
+	self isWritable ifFalse: [ 
+		^self error: 'Variable ' , name, ' is read only'].
+
+	value := aValue
 ]

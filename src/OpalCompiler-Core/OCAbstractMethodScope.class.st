@@ -37,7 +37,7 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
 { #category : #'temp vars' }
 OCAbstractMethodScope >> addTemp: name [
-	^self addTemp: OCTempVariable new withName: name
+	^self addTemp: TemporaryVariable new withName: name
 ]
 
 { #category : #'temp vars' }
@@ -116,13 +116,11 @@ OCAbstractMethodScope >> id: int [
 OCAbstractMethodScope >> initialize [
 
 	tempVars :=  OrderedDictionary new.
-	tempVector  := Dictionary new.
-	copiedVars := Dictionary new.
+	tempVector  := OrderedDictionary new.
+	copiedVars := OrderedDictionary new.
 	id := 0.
 	
-	thisContextVar := OCThisContextVariable new
-		scope: self; yourself.
-
+	thisContextVar := ThisContextVariable instance
 ]
 
 { #category : #'temp vars' }
@@ -229,6 +227,12 @@ OCAbstractMethodScope >> removeTemp: tempVar [
 	tempVars removeKey: tempVar name
 ]
 
+{ #category : #printing }
+OCAbstractMethodScope >> scopeLevel [
+	"For debugging we print a counter for all Method and Block scopes"
+	^ outerScope scopeLevel + 1
+]
+
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue from: aContext [
 	"we need to update all the copies if we change the value of a copied temp"
@@ -274,7 +278,7 @@ OCAbstractMethodScope >> tempVectorName [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVar [
-	^ tempVectorVar ifNil: [ tempVectorVar := OCTempVariable new
+	^ tempVectorVar ifNil: [ tempVectorVar := TemporaryVariable new
 			name: self tempVectorName;
 			scope: self;
 			yourself]
