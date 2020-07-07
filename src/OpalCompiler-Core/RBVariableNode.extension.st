@@ -18,7 +18,7 @@ RBVariableNode >> isArg [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isArgOrTemp [
-	^self binding isTemp
+	^self binding isTemp or: [ self binding isArg ]
 ]
 
 { #category : #'*opalcompiler-core' }

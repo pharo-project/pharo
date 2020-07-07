@@ -30,7 +30,7 @@ Context >> lookupSymbol: aSymbol [
 Context >> lookupTempVar: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
-	var isTemp ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
 	^var
 ]
 

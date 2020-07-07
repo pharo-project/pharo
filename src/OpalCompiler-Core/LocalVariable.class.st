@@ -1,8 +1,8 @@
 "
-I model temp variables. With Closures, there are two kinds: Copying and those that are stored in a so called temp vector, a heap allocated array that itself is stored in a copying temp variable.
+I model local Variables
 "
 Class {
-	#name : #OCTempVariable,
+	#name : #LocalVariable,
 	#superclass : #Variable,
 	#instVars : [
 		'escaping',
@@ -13,14 +13,13 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
-{ #category : #accessing }
-OCTempVariable class >> semanticNodeClass [
-
-	^RBTemporaryNode 
+{ #category : #testing }
+LocalVariable class >> isAbstract [ 
+	^ self = LocalVariable  
 ]
 
 { #category : #comparing }
-OCTempVariable >> = aTempVar [
+LocalVariable >> = aTempVar [
 
 	^aTempVar class = self class 
 		and: [aTempVar scope = self scope 
@@ -31,51 +30,51 @@ OCTempVariable >> = aTempVar [
 ]
 
 { #category : #converting }
-OCTempVariable >> asString [
+LocalVariable >> asString [
 
 	^ self name
 ]
 
 { #category : #queries }
-OCTempVariable >> astNodes [
+LocalVariable >> astNodes [
 	^self method variableNodes select: [ :each | each binding == self]
 ]
 
 { #category : #accessing }
-OCTempVariable >> definingScope [
+LocalVariable >> definingScope [
 	^ scope
 ]
 
 { #category : #emitting }
-OCTempVariable >> emitStore: methodBuilder [
+LocalVariable >> emitStore: methodBuilder [
 
 	methodBuilder storeTemp: name. 
 ]
 
 { #category : #emitting }
-OCTempVariable >> emitValue: methodBuilder [
+LocalVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushTemp: name.
 ]
 
 { #category : #escaping }
-OCTempVariable >> escaping [
+LocalVariable >> escaping [
 	^escaping
 ]
 
 { #category : #escaping }
-OCTempVariable >> escaping: anObject [
+LocalVariable >> escaping: anObject [
 	escaping := anObject
 ]
 
 { #category : #comparing }
-OCTempVariable >> hash [
+LocalVariable >> hash [
 
 	^ name hash bitXor: (usage hash bitXor: scope hash).
 ]
 
 { #category : #accessing }
-OCTempVariable >> index [
+LocalVariable >> index [
 	^ index ifNil: [ 
 		"if the index is nil, we are in an AST after name analysis but before
 		IR generation. To fill the the index, we generate the ir."
@@ -84,127 +83,127 @@ OCTempVariable >> index [
 ]
 
 { #category : #accessing }
-OCTempVariable >> index: anObject [
+LocalVariable >> index: anObject [
 	index := anObject
 ]
 
 { #category : #initialization }
-OCTempVariable >> initialize [
+LocalVariable >> initialize [
 	super initialize.
 	escaping := false.
 ]
 
 { #category : #testing }
-OCTempVariable >> isCopying [
+LocalVariable >> isCopying [
 	^false
 ]
 
 { #category : #escaping }
-OCTempVariable >> isEscaping [
+LocalVariable >> isEscaping [
 	^escaping = #escapingRead or: [escaping = #escapingWrite]
 ]
 
 { #category : #escaping }
-OCTempVariable >> isEscapingRead [
+LocalVariable >> isEscapingRead [
 	^escaping = #escapingRead
 
 ]
 
 { #category : #escaping }
-OCTempVariable >> isEscapingWrite [
+LocalVariable >> isEscapingWrite [
 	^escaping = #escapingWrite
 
 ]
 
 { #category : #testing }
-OCTempVariable >> isLocal [
+LocalVariable >> isLocal [
+
+	^true
+]
+
+{ #category : #testing }
+LocalVariable >> isLocalVariable [
 
 	^true
 ]
 
 { #category : #'read/write usage' }
-OCTempVariable >> isRead [
+LocalVariable >> isRead [
 	^usage = #read
 
 ]
 
 { #category : #testing }
-OCTempVariable >> isReferenced [
+LocalVariable >> isReferenced [
 	^self isUnused not
 ]
 
 { #category : #testing }
-OCTempVariable >> isRemote [
+LocalVariable >> isRemote [
 	^false
 ]
 
 { #category : #'read/write usage' }
-OCTempVariable >> isRepeatedWrite [
+LocalVariable >> isRepeatedWrite [
 	^usage = #repeatedWrite
 
 ]
 
 { #category : #testing }
-OCTempVariable >> isStoringTempVector [
+LocalVariable >> isStoringTempVector [
 	"I am a temp that stores a temp vector. Those generated temps have a invalid name starting with 0"
 	^name first = $0.
 ]
 
 { #category : #testing }
-OCTempVariable >> isTemp [
-
-	^ true
-]
-
-{ #category : #testing }
-OCTempVariable >> isTempVectorTemp [
+LocalVariable >> isTempVectorTemp [
 	^false
 ]
 
 { #category : #'read/write usage' }
-OCTempVariable >> isUninitialized [
+LocalVariable >> isUninitialized [
 
 	^ self isWrite not
 ]
 
 { #category : #'read/write usage' }
-OCTempVariable >> isUnused [
+LocalVariable >> isUnused [
 	"when the var is never read or written, it is not used.
 	Note: we have a special #arg use which means arguments are never unused"
 	^ usage isNil
 ]
 
 { #category : #'read/write usage' }
-OCTempVariable >> isWrite [
+LocalVariable >> isWrite [
 	^ usage = #write or: [ self isRepeatedWrite ]
 ]
 
 { #category : #escaping }
-OCTempVariable >> markEscapingRead [
+LocalVariable >> markEscapingRead [
 	escaping = #escapingWrite ifFalse: [escaping := #escapingRead]
 ]
 
 { #category : #escaping }
-OCTempVariable >> markEscapingWrite [
+LocalVariable >> markEscapingWrite [
 	escaping := #escapingWrite.
 	self isRepeatedWrite ifFalse:[usage := #write]
 ]
 
 { #category : #'read/write usage' }
-OCTempVariable >> markRead [
+LocalVariable >> markRead [
 	"reading does not change a #write, nor an #arg"
 	usage ifNil: [usage := #read]
 ]
 
 { #category : #escaping }
-OCTempVariable >> markRepeatedWrite [
+LocalVariable >> markRepeatedWrite [
 	"same as write"
 	self markWrite.
 	usage := #repeatedWrite
 ]
 
 { #category : #escaping }
-OCTempVariable >> markWrite [
+LocalVariable >> markWrite [
 
 	"if an escaping var is wrote to later, it needs to be remote"
 	self isEscaping 
@@ -214,36 +213,36 @@ OCTempVariable >> markWrite [
 ]
 
 { #category : #queries }
-OCTempVariable >> method [
+LocalVariable >> method [
 	^scope node methodNode methodClass>>scope node methodNode selector
 ]
 
 { #category : #accessing }
-OCTempVariable >> originalVar [
+LocalVariable >> originalVar [
 	^ self
 ]
 
 { #category : #printing }
-OCTempVariable >> printOn: stream [
+LocalVariable >> printOn: stream [
 
 	stream nextPutAll: self name
 ]
 
 { #category : #debugging }
-OCTempVariable >> readFromContext: aContext scope: contextScope [
+LocalVariable >> readFromContext: aContext scope: contextScope [
 	| definitionContext |
 	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
 	^ self readFromLocalContext: definitionContext
 ]
 
 { #category : #debugging }
-OCTempVariable >> readFromLocalContext: aContext [
+LocalVariable >> readFromLocalContext: aContext [
 
 	^ aContext tempAt: self index
 ]
 
 { #category : #debugging }
-OCTempVariable >> readInContext: aContext [
+LocalVariable >> readInContext: aContext [
 
 	| contextScope |
 	contextScope := aContext astScope.
@@ -251,37 +250,37 @@ OCTempVariable >> readInContext: aContext [
 ]
 
 { #category : #accessing }
-OCTempVariable >> scope [
+LocalVariable >> scope [
 
 	^ scope
 ]
 
 { #category : #initializing }
-OCTempVariable >> scope: aLexicalScope [
+LocalVariable >> scope: aLexicalScope [
 
 	scope := aLexicalScope
 ]
 
 { #category : #accessing }
-OCTempVariable >> usage [
+LocalVariable >> usage [
 
 	^ usage
 ]
 
 { #category : #accessing }
-OCTempVariable >> usage: anObject [
+LocalVariable >> usage: anObject [
 
 	usage := anObject
 ]
 
 { #category : #queries }
-OCTempVariable >> usingMethods [
+LocalVariable >> usingMethods [
 	self isUnused ifTrue: [ ^#() ].
 	^{self method}
 ]
 
 { #category : #debugging }
-OCTempVariable >> write: aValue inContext: aContext [
+LocalVariable >> write: aValue inContext: aContext [
 
 	| contextScope |
 	contextScope := aContext astScope.
@@ -289,7 +288,7 @@ OCTempVariable >> write: aValue inContext: aContext [
 ]
 
 { #category : #debugging }
-OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
+LocalVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| definitionContext |
 	definitionContext := contextScope lookupDefiningContextForVariable: self startingFrom: aContext.
@@ -297,7 +296,7 @@ OCTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 ]
 
 { #category : #debugging }
-OCTempVariable >> writeFromLocalContext: aContext put: aValue [
+LocalVariable >> writeFromLocalContext: aContext put: aValue [
 
 	^ aContext tempAt: self index put: aValue
 ]

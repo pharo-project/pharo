@@ -125,6 +125,16 @@ Variable >> isLiteralVariable [
 ]
 
 { #category : #testing }
+Variable >> isLocal [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isLocalVariable [
+	^false
+]
+
+{ #category : #testing }
 Variable >> isReferenced [
 	^ self usingMethods isNotEmpty
 ]

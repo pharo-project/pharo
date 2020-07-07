@@ -18,6 +18,11 @@ RGVariable >> definitionString [
 ]
 
 { #category : #testing }
+RGVariable >> isArg [
+	^false
+]
+
+{ #category : #testing }
 RGVariable >> isClassInstanceVariable [
 
 	^false
@@ -26,6 +31,11 @@ RGVariable >> isClassInstanceVariable [
 { #category : #testing }
 RGVariable >> isClassVariable [
 
+	^false
+]
+
+{ #category : #testing }
+RGVariable >> isLocalVariable [
 	^false
 ]
 
