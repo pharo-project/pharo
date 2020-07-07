@@ -878,6 +878,13 @@ ClassDescription >> localSlots [
 	^ self slots select: [ :aSlot | aSlot isLocal ]
 ]
 
+{ #category : #organization }
+ClassDescription >> methodsInProtocol: aString [
+
+	^ (self organization listAtCategoryNamed: aString) 
+			collect: [ :each | (self compiledMethodAt: each) ]
+]
+
 { #category : #'accessing tags' }
 ClassDescription >> methodsTaggedWith: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose. 
