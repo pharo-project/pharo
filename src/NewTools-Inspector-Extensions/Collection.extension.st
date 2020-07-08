@@ -9,7 +9,7 @@ Collection >> inspectorItems [
 			sortFunction: #yourself ascending);
 		addColumn: ((SpStringTableColumn 
 			title: 'Value' 
-			evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each ])
+			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each ])
 			sortFunction: #printString ascending);
 		items: self asOrderedCollection;
 		yourself

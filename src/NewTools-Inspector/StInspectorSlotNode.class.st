@@ -24,19 +24,6 @@ StInspectorSlotNode >> = anObject [
 ]
 
 { #category : #accessing }
-StInspectorSlotNode >> browsingActionsForNode [
-
-	^ {
-			GLMGenericAction new 
-				action: [ self systemNavigation browseAllAccessesTo: self label from: self hostObject class ]; 
-				title: 'List methods using this variable'.
-			GLMGenericAction new 
-				action: [ self systemNavigation browseAllStoresInto: self label from: self hostObject class ]; 
-				title: 'List methods storing into this variable'.		
-		}
-]
-
-{ #category : #accessing }
 StInspectorSlotNode >> errorMessage [
 	^ 'error obtaining attribute value'
 ]

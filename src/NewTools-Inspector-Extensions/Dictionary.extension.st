@@ -7,10 +7,10 @@ Dictionary >> inspectorItems [
 	^ SpTablePresenter new 
 		addColumn: (SpStringTableColumn 
 			title: 'Key'
-			evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each key ]);
+			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each key ]);
 		addColumn: (SpStringTableColumn 
 			title: 'Value' 
-			evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each value ]);
+			evaluated: [ :each | StObjectPrinter asTruncatedTextFrom: each value ]);
 		items: self associations;
 		yourself
 ]

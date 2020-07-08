@@ -85,7 +85,7 @@ StInspectorModel >> printOn: stream [
 { #category : #accessing }
 StInspectorModel >> smallDescriptionString [
 	
-	^ (GTObjectPrinter asTruncatedTextFrom: self inspectedObject) asString
+	^ (StObjectPrinter asTruncatedTextFrom: self inspectedObject) asString
 ]
 
 { #category : #accessing }

@@ -21,6 +21,7 @@ Class {
 		'withHeaderBar'
 	],
 	#classVars : [
+		'IndexableDisplayLimit',
 		'PreferredExtent'
 	],
 	#category : #'NewTools-Inspector-View'
@@ -45,6 +46,18 @@ StInspector class >> explore: anObject [
  
 	self openOn: anObject.
 	^ anObject
+]
+
+{ #category : #settings }
+StInspector class >> indexableDisplayLimit [
+
+	^ IndexableDisplayLimit ifNil: [ 5000 ]
+]
+
+{ #category : #settings }
+StInspector class >> indexableDisplayLimit: aNumber [
+
+	IndexableDisplayLimit := aNumber
 ]
 
 { #category : #'instance creation' }

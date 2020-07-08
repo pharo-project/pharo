@@ -27,8 +27,9 @@ StInspectorHelpCommand >> asSpecCommand [
 { #category : #execution }
 StInspectorHelpCommand >> execute [ 
 
-	HelpBrowser open selectTopicSatisfying: [:each |
+	self flag: #TODO.
+	"HelpBrowser open selectTopicSatisfying: [:each |
 		each owner notNil 
 			and: [ (each owner key = GTInspectorHelp key) 
-			and: [ each title = 'Overview' ] ] ]
+			and: [ each title = 'Overview' ] ] ]"
 ]
