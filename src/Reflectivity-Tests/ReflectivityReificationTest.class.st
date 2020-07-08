@@ -1847,7 +1847,8 @@ ReflectivityReificationTest >> testReifyTempOperationAfter [
 { #category : #'tests - operations' }
 ReflectivityReificationTest >> testReifyTempOperationInstead [
 	| varNode instance executed |
-	self skip. "Skipped for now, seems to have problems with stack balancing leading to strange test failures"
+	self skip. 
+	"skip for now as #usingMethods of the variable gets confused with instead"
 	varNode := (ReflectivityExamples >> #exampleAssignment) ast body statements last value.
 	executed := false.
 	link := MetaLink new

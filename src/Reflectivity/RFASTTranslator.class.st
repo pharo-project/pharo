@@ -308,7 +308,9 @@ RFASTTranslator >> visitVariableNode: aVariableNode [
 { #category : #reflectivity }
 RFASTTranslator >> visitVariableValue: aVariable [
 	self emitPreamble: aVariable. 
-	self emitMetaLinkBefore: aVariable.
-	aVariable emitValue: methodBuilder.
-	self emitMetaLinkAfterNoEnsure: aVariable
+	self emitMetaLinkBefore: aVariable. 
+	aVariable hasMetalinkInstead 
+		ifTrue: [self emitMetaLinkInstead: aVariable]
+		ifFalse: [aVariable emitValue: methodBuilder].
+	self emitMetaLinkAfterNoEnsure: aVariable.
 ]
