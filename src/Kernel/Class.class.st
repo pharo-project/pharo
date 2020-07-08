@@ -115,25 +115,22 @@ Class >> addClassVarNamed: aString [
 ]
 
 { #category : #'class variables' }
-Class >> addClassVariable: aGlobal [
+Class >> addClassVariable: aClassVariable [
 	"Add the argument, aString, as a class variable of the receiver.
 	Signal an error if the first character of aString is not capitalized,
 	or if it is already a variable named in the class."
 	| symbol oldState |
 	oldState := self copyForAnnouncement.
-	symbol := aGlobal name asSymbol.
-	self withAllSubclasses do: 
-		[:subclass | 
+	symbol := aClassVariable name asSymbol.
+	self withAllSubclasses do: [:subclass | 
 		(subclass bindingOf: symbol) ifNotNil:[
 			^ self error: symbol asString 
 				, ' is already used as a variable name in class ' 
 				, subclass name]].
-	(self classPool includesKey: symbol) ifFalse: 
-		["Pick up any refs in Undeclared"
-		self classPool declareVariable: aGlobal from: Undeclared.
-		SystemAnnouncer uniqueInstance 
+	self basicDeclareClassVariable: aClassVariable.
+	SystemAnnouncer uniqueInstance 
 			classDefinitionChangedFrom: oldState to: self;
-			classModificationAppliedTo: self]
+			classModificationAppliedTo: self
 ]
 
 { #category : #'instance variables' }
@@ -214,6 +211,30 @@ Class >> basicCategory [
 { #category : #accessing }
 Class >> basicCategory: aSymbol [
 	category := aSymbol
+]
+
+{ #category : #'class variables' }
+Class >> basicDeclareClassVariable: aClassVariable [ 
+	"Add aClassVariable to the receiver. Two cases are handled here: 
+	- When there is exiting variable in class pool and it is an instance of different class
+	- When given variable is registered as undeclared 
+	This method was extracted from existing users and it keeps known issues (therefore a flag):
+	- When a class of a variable is changed we must recompile using methods because new variable can implement specific compilation logic (method bytecode can become different).
+	- Undeclared case requires much more clever logic. Now in that case the class variable will be shared between all classes previously referencing undeclared variable despite on the fact that they do no see a class variables from other classes"
+	self flag: #todo.
+	aClassVariable owningClass: self.
+
+	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
+		(existingVar class == aClassVariable class) ifTrue: [^self].
+		"need to take care to migrate existing variables to new global if class if different"
+		aClassVariable write: existingVar read.
+		self classPool removeKey: existingVar name ].
+	"Pick up any refs in Undeclared"
+	Undeclared associationAt: aClassVariable name ifPresent:  [:existingVar |
+		Undeclared removeKey: existingVar name.
+		existingVar becomeForward: aClassVariable
+	].
+	self classPool add: aClassVariable
 ]
 
 { #category : #compiling }
@@ -353,7 +374,14 @@ Class >> classVariableDefinitionString [
 Class >> classVariableNamed: aString [
 	"Answer the Class Variable"
 
-	^self classPool associationAt: aString asSymbol ifAbsent: [self error: 'no such class var']
+	^self classVariableNamed: aString ifAbsent: [self error: 'no such class var']
+]
+
+{ #category : #'class variables' }
+Class >> classVariableNamed: aString ifAbsent: absentBlock [
+	"Answer the Class Variable"
+
+	^self classPool associationAt: aString asSymbol ifAbsent: absentBlock
 ]
 
 { #category : #'class variables' }
@@ -409,24 +437,19 @@ Class >> copyForAnnouncement [
 Class >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
-	|  conflicts |
-	
+	|  conflicts newVarNames |	
 	conflicts := false.	
+	newVarNames := newVars collect: [ :each | each name ].
 	"Remove. Warn if vars are removed that are still used"
-	"self flag: something wrong here. put to true and add an ivar to a class"
-	(self classVariables reject: [:x | newVars includes: x]) do: [:var | self removeClassVarNamed: var name interactive: false].
+	(self classVarNames difference: newVarNames) do: [:varName | 
+		self removeClassVarNamed: varName interactive: false].
 	
-	(newVars reject: [:var | self classVariables includes: var]) do: [:var | "adding"
-			"check if new vars defined elsewhere"
-			(self innerBindingOf: var key) 
-				ifNotNil: [(DuplicatedVariableError new) variable: var name;
-						signal: var name , ' is defined elsewhere'.
-					conflicts := true]].
-	newVars notEmpty
-		ifTrue: 
-			[self classPool: self classPool.
-			"in case it was nil"
-			newVars do: [:var | self classPool declareVariable: var from: Undeclared]].
+	(newVarNames difference: self classVarNames) do: [:varName | "adding"
+			"check if new vars are defined elsewhere"
+			(self innerBindingOf: varName) ifNotNil: [:existingVar | 
+				DuplicatedVariableError signalWith: existingVar.
+				conflicts := true]].
+	newVars do: [:var | self basicDeclareClassVariable: var ].
 	^conflicts
 ]
 
@@ -569,7 +592,7 @@ Class >> hasClassSide [
 Class >> hasClassVarNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
 	
-	^ self classVarNames includes: aString
+	^ self classPool includesKey: aString
 ]
 
 { #category : #'class variables' }

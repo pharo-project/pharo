@@ -212,7 +212,7 @@ ShiftClassInstaller >> make: aBlock [
 
 { #category : #migrating }
 ShiftClassInstaller >> migrateClassTo: newClass [
-	| slotsToMigrate oldClassVariableBindings newClassVariableBindings|
+	| slotsToMigrate oldClassVariables newClassVariables|
 
 	oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
@@ -224,23 +224,23 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
 	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 	
-	oldClassVariableBindings := OrderedCollection new.
-	newClassVariableBindings := OrderedCollection new.
+	oldClassVariables := OrderedCollection new.
+	newClassVariables := OrderedCollection new.
 	
-	oldClass classPool associations do: [ :oldAssociation | | newAssociation |
-		(newClass classPool includesKey: oldAssociation key)
+	oldClass classVariables do: [ :oldVar | | newVar |
+		(newClass hasClassVarNamed: oldVar key)
 			ifTrue: [ 
-				newAssociation := newClass classPool associationAt: oldAssociation key.
-				newClass classVarNamed: oldAssociation key put: oldAssociation value.
-				newClassVariableBindings add: newAssociation.
-				oldClassVariableBindings add: oldAssociation. ]].
+				newVar := newClass classVariableNamed: oldVar key.
+				newVar write: oldVar read.
+				newClassVariables add: newVar.
+				oldClassVariables add: oldVar. ]].
 	
 	[ 	
 		(self builder hasToMigrateInstances) 
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
-		{ oldClass. builder oldMetaclass } , oldClassVariableBindings asArray
-			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariableBindings asArray.	
+		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
+			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.	
 
 		newClass classPool rehash.
 	] valueUninterruptably

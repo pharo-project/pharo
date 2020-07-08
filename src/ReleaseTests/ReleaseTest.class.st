@@ -91,6 +91,14 @@ ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 ]
 
 { #category : #tests }
+ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
+	| wrong |
+	wrong := OrderedCollection new.
+	testingEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each definingClass == class ]) ].
+	self assertEmpty: wrong
+]
+
+{ #category : #tests }
 ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 	| wrong |
 	wrong := testingEnvironment associations reject: [ :each | each isKindOf: GlobalVariable ].
