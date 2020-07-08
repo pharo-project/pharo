@@ -56,7 +56,7 @@ UndefinedSlot >> read: anObject [
 
 { #category : #accessing }
 UndefinedSlot >> slotClassName [
-	^ast arguments first binding name 
+	^ast arguments first variable name 
 ]
 
 { #category : #'meta-object-protocol' }
