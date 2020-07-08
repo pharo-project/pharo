@@ -44,13 +44,6 @@ SlotTest >> testIsWrittenInMethod [
 	self assert: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - misc' }
-SlotTest >> testNotFoundSlotRaiseExplicitError [
-	"When a slot is not present in the image, we will try to build the slot with nil. In that case we should return an error."
-
-	self should: [ #test => nil ] raise: SlotNotFound
-]
-
 { #category : #'tests - read/write' }
 SlotTest >> testNotReadInMethod [
 	
