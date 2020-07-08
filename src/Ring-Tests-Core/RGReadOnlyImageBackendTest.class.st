@@ -222,10 +222,8 @@ RGReadOnlyImageBackendTest >> testMethod [
 
 	method := Point >> #x asRingMinimalDefinitionIn: env.
 
-	method author notEmpty.
-	method time > DateAndTime new.
-	method time <= DateAndTime now.
-
+	self assert: method author notEmpty.
+	self assert: (method time <= DateAndTime now).
 	self assert: method selector equals: #x.
 	self assert: (method package isRGObject and: [ method package isPackage ]).
 	self assert: method package name equals: 'Kernel'.

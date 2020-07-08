@@ -25,7 +25,7 @@ ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 					(self isKnownGlobal: node name) not and: [
 						(Smalltalk globals
 							at: node name
-							ifAbsent: [ Object ]) isClass not ] ] ] ]
+							ifAbsent: [ Object ]) isClassOrTrait not ] ] ] ]
 	
 		thenDo: [ :node |
 			aCriticBlock cull: (self
