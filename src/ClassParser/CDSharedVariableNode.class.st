@@ -13,6 +13,11 @@ CDSharedVariableNode class >> slot: aSlot node: aNode [
 		yourself
 ]
 
+{ #category : #transforming }
+CDSharedVariableNode >> asClassVariable [
+	^ ClassVariable named: self name.
+]
+
 { #category : #testing }
 CDSharedVariableNode >> isClassVariable [
 	"To be polymorphic to RB method nodes"
