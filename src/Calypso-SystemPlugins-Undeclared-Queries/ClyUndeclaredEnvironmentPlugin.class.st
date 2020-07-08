@@ -16,6 +16,6 @@ ClyUndeclaredEnvironmentPlugin >> collectMethodGroupProviders [
 { #category : #'item decoration' }
 ClyUndeclaredEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
-	aMethod usesUndeclares ifTrue: [ 
+	aMethod usesUndeclareds ifTrue: [ 
 		anItem markWith: ClyUndeclaresUserTag]
 ]
