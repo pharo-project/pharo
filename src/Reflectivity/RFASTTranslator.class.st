@@ -307,7 +307,8 @@ RFASTTranslator >> visitVariableNode: aVariableNode [
 
 { #category : #reflectivity }
 RFASTTranslator >> visitVariableValue: aVariable [
-	(aVariable isKindOf: Variable) ifTrue: [ self emitPreamble: aVariable. self emitMetaLinkBefore: aVariable. ].
+	self emitPreamble: aVariable. 
+	self emitMetaLinkBefore: aVariable.
 	aVariable emitValue: methodBuilder.
-	(aVariable isKindOf: Variable) ifTrue: [self emitMetaLinkAfterNoEnsure: aVariable].
+	self emitMetaLinkAfterNoEnsure: aVariable
 ]

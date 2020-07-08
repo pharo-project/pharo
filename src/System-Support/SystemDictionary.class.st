@@ -265,6 +265,16 @@ SystemDictionary >> hasClassNamed: aString [
 	^ false
 ]
 
+{ #category : #'classes and traits' }
+SystemDictionary >> hasClassOrTraitNamed: aString [
+	"Answer whether there is a class of the given name, but don't intern aString if it's not alrady interned."
+
+	Symbol 
+		hasInterned: aString 
+		ifTrue:  [:aSymbol | ^ (self at: aSymbol ifAbsent: [nil]) isClassOrTrait].
+	^ false
+]
+
 { #category : #'system attributes' }
 SystemDictionary >> maxIdentityHash [
 	"Answer the maximum identityHash value supported by the VM."

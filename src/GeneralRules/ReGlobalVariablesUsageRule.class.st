@@ -16,17 +16,12 @@ ReGlobalVariablesUsageRule class >> checksMethod [
 
 { #category : #running }
 ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	"Beware that ClassVariables respond true to #isGlobal. 
-	 The trick with 'ifAbsent:[Object] is basically a way not select ClassVariables (or Pools)"
 	aMethod ast allChildren
 		select: [ :node |
 			node isVariable and: [ 
-				node isGlobal and: [
+				node variable isGlobalVariable and: [
 					(self isKnownGlobal: node name) not and: [
-						(Smalltalk globals
-							at: node name
-							ifAbsent: [ Object ]) isClass not ] ] ] ]
-	
+						(Smalltalk globals hasClassOrTraitNamed: node name) not ] ] ] ]
 		thenDo: [ :node |
 			aCriticBlock cull: (self
 				createTrivialCritiqueOn: aMethod
