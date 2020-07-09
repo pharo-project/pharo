@@ -16,13 +16,3 @@ Symbol >> asMethodPreamble [
 						nextPutAll: index asString.
 					index = keywords size ifFalse: [ str space ] ] ]
 ]
-
-{ #category : #'*opalcompiler-core' }
-Symbol >> asOneArgSelector [
-	^ String streamContents: [:str|
-		| parts |
-		parts := (self findTokens: ':)').
-			str nextPutAll: parts first.
-			parts allButFirst do: [:each | str nextPutAll: each capitalized]	.
-			str nextPutAll: ':']
-]
