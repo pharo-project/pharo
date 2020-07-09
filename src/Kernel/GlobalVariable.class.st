@@ -27,6 +27,12 @@ GlobalVariable >> emitValue: methodBuilder [
 ]
 
 { #category : #testing }
+GlobalVariable >> isGlobal [
+
+	^ true
+]
+
+{ #category : #testing }
 GlobalVariable >> isGlobalVariable [
 	^true
 ]

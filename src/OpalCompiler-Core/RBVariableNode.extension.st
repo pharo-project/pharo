@@ -28,7 +28,8 @@ RBVariableNode >> isClean [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isGlobal [
-	^self binding isGlobal
+	"the semantics here is bad: all Literal Variables are Globals on the AST Level"
+	^self binding isLiteralVariable
 ]
 
 { #category : #'*opalcompiler-core' }

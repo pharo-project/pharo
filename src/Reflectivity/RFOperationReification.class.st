@@ -36,7 +36,7 @@ RFOperationReification >> genForRBAssignmentNode [
 			object: self;
 			variableName: #{1}.' format: {entity variable name})].
 
-	entity variable isGlobal ifTrue: [ | ast |	
+	entity variable variable isLiteralVariable ifTrue: [ | ast |	
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
@@ -109,7 +109,7 @@ RFOperationReification >> genForRBVariableNode [
 			context: thisContext;
 			variableName: #{1}.' format: {entity name})].
 	
-	entity isGlobal ifTrue: [ | ast |	
+	entity variable isLiteralVariable ifTrue: [ | ast |	
 			ast := RBParser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
 			ast arguments: {(RFLiteralVariableNode value: entity binding)}.

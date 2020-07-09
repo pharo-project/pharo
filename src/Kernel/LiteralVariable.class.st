@@ -114,12 +114,6 @@ LiteralVariable >> installingIn: aClass [
 ]
 
 { #category : #testing }
-LiteralVariable >> isGlobal [
-
-	^ true
-]
-
-{ #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
 	^ (self value isClass or: [ self value isTrait ])
 		and: [ name == self value name ]

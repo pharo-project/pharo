@@ -91,8 +91,8 @@ RFValueReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFValueReification >> genForRBVariableNode [
-	entity binding
-		ifNotNil: [ entity isGlobal
+	entity variable
+		ifNotNil: [ entity variable isLiteralVariable
 				ifTrue: [ ^ RFLiteralVariableNode value: entity binding value ] ].
 	^ RBVariableNode named: entity name
 ]
