@@ -1,5 +1,5 @@
 Class {
-	#name : #SindarinDebuggerTests,
+	#name : #SindarinDebuggerTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'breakpointsBeforeTest',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod1 [
+SindarinDebuggerTest >> helperMethod1 [
 	| a |
 	a := 1.
 	a := 5.
@@ -17,14 +17,14 @@ SindarinDebuggerTests >> helperMethod1 [
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod10 [
+SindarinDebuggerTest >> helperMethod10 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod11 [
+SindarinDebuggerTest >> helperMethod11 [
 	| a |
 	a := 5.
 	self helperMethod12.
@@ -33,145 +33,145 @@ SindarinDebuggerTests >> helperMethod11 [
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod12 [
+SindarinDebuggerTest >> helperMethod12 [
 	| i |
 	i := 5.
 	[ i=0 ] whileFalse: [ i := i - 1 ].
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod13 [
+SindarinDebuggerTest >> helperMethod13 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod14 [
+SindarinDebuggerTest >> helperMethod14 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod15 [
+SindarinDebuggerTest >> helperMethod15 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod16 [
+SindarinDebuggerTest >> helperMethod16 [
 	^ 1+1.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod17: storeContextBlock [
+SindarinDebuggerTest >> helperMethod17: storeContextBlock [
 	storeContextBlock value: thisContext.
 	Point x:5 y: 7.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod18: anArg with: anotherArg [
+SindarinDebuggerTest >> helperMethod18: anArg with: anotherArg [
 	Point x: 5 y: 7.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod19 [
+SindarinDebuggerTest >> helperMethod19 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod2 [
+SindarinDebuggerTest >> helperMethod2 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod20 [
+SindarinDebuggerTest >> helperMethod20 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod21 [
+SindarinDebuggerTest >> helperMethod21 [
 	self helperMethod22
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod22 [
+SindarinDebuggerTest >> helperMethod22 [
 	^ Point new
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod23 [
+SindarinDebuggerTest >> helperMethod23 [
 	testObjectPoint sign.
 	testObjectPoint extent: (Point x:3 y: 4).
 	Point new.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod24 [
+SindarinDebuggerTest >> helperMethod24 [
 	| p |
 	p := Point new.
 	p sign.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod3 [
+SindarinDebuggerTest >> helperMethod3 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod4 [
+SindarinDebuggerTest >> helperMethod4 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod5 [
+SindarinDebuggerTest >> helperMethod5 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod6 [
+SindarinDebuggerTest >> helperMethod6 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod7 [
+SindarinDebuggerTest >> helperMethod7 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod8 [
+SindarinDebuggerTest >> helperMethod8 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethod9 [
+SindarinDebuggerTest >> helperMethod9 [
 	| a |
 	a := 5.
 	^ Point x: 5 y: '3' asInteger.
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethodNonLocalReturn [
+SindarinDebuggerTest >> helperMethodNonLocalReturn [
 	| block |
 	block := [ ^ 42 ].
 	block value.
@@ -179,7 +179,7 @@ SindarinDebuggerTests >> helperMethodNonLocalReturn [
 ]
 
 { #category : #helpers }
-SindarinDebuggerTests >> helperMethodReturn: bool [
+SindarinDebuggerTest >> helperMethodReturn: bool [
 	| a |
 	a := bool.
 	a
@@ -188,12 +188,12 @@ SindarinDebuggerTests >> helperMethodReturn: bool [
 ]
 
 { #category : #running }
-SindarinDebuggerTests >> runCaseManaged [
+SindarinDebuggerTest >> runCaseManaged [
 	^ self runCase
 ]
 
 { #category : #running }
-SindarinDebuggerTests >> setUp [
+SindarinDebuggerTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	breakpointsBeforeTest := VirtualBreakpoint all.
 	VirtualBreakpoint all removeAll.
@@ -201,13 +201,13 @@ SindarinDebuggerTests >> setUp [
 ]
 
 { #category : #running }
-SindarinDebuggerTests >> tearDown [
+SindarinDebuggerTest >> tearDown [
 	VirtualBreakpoint all removeAll.
 	breakpointsBeforeTest do: [ :brkpt | VirtualBreakpoint all add: brkpt ].
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testAddStepHook [
+SindarinDebuggerTest >> testAddStepHook [
 	| stepCounter stepHook scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod11 ].
 	stepCounter := 0.
@@ -223,7 +223,7 @@ SindarinDebuggerTests >> testAddStepHook [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testArguments [
+SindarinDebuggerTest >> testArguments [
 	| p scdbg |
 	p := Point new.
 	scdbg := SindarinDebugger debug: [ self helperMethod18: 1 with: p ].
@@ -235,7 +235,7 @@ SindarinDebuggerTests >> testArguments [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testAssignmentValue [
+SindarinDebuggerTest >> testAssignmentValue [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod2 ].
 	scdbg step.
@@ -243,7 +243,7 @@ SindarinDebuggerTests >> testAssignmentValue [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testAssignmentVariableName [
+SindarinDebuggerTest >> testAssignmentVariableName [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod3 ].
 	scdbg step.
@@ -251,7 +251,7 @@ SindarinDebuggerTests >> testAssignmentVariableName [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testContext [
+SindarinDebuggerTest >> testContext [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod15 ].
 	self assert: scdbg context equals: scdbg debugSession interruptedContext.
@@ -260,7 +260,7 @@ SindarinDebuggerTests >> testContext [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testContinue [
+SindarinDebuggerTest >> testContinue [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod19 ].
 	scdbg
@@ -276,7 +276,7 @@ SindarinDebuggerTests >> testContinue [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testContinueUntilTheEnd [
+SindarinDebuggerTest >> testContinueUntilTheEnd [
 	"Test the #continue method when no breakpoint/halt is set. It should step the execution until the end and NOT freeze the image"
 
 	| scdbg semaphore |
@@ -297,7 +297,7 @@ SindarinDebuggerTests >> testContinueUntilTheEnd [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testIsExecutionFinished [
+SindarinDebuggerTest >> testIsExecutionFinished [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod16 ].
 	self deny: scdbg isExecutionFinished.
@@ -314,7 +314,7 @@ SindarinDebuggerTests >> testIsExecutionFinished [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testMessageArguments [
+SindarinDebuggerTest >> testMessageArguments [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod4 ].
 	scdbg step; step.
@@ -325,7 +325,7 @@ SindarinDebuggerTests >> testMessageArguments [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testMessageReceiver [
+SindarinDebuggerTest >> testMessageReceiver [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod5 ].
 	self assert: scdbg messageReceiver equals: self.
@@ -334,7 +334,7 @@ SindarinDebuggerTests >> testMessageReceiver [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testMessageSelector [
+SindarinDebuggerTest >> testMessageSelector [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod6 ].
 	self assert: scdbg messageSelector equals: #helperMethod6.
@@ -345,7 +345,7 @@ SindarinDebuggerTests >> testMessageSelector [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testMessageTo [
+SindarinDebuggerTest >> testMessageTo [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod23 ].
 	scdbg step.	"Step to <testObjectPoint sign.> call"
@@ -363,7 +363,7 @@ SindarinDebuggerTests >> testMessageTo [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testMessageToInstanceOf [
+SindarinDebuggerTest >> testMessageToInstanceOf [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod24 ].
 	scdbg step; stepOver: 2. "Step to <p sign> call"
@@ -374,18 +374,18 @@ SindarinDebuggerTests >> testMessageToInstanceOf [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testMethod [
+SindarinDebuggerTest >> testMethod [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod7 ].	
 	self assert: scdbg method equals: [ self helperMethod7 ] method.
 	scdbg step.
-	self assert: scdbg method equals: SindarinDebuggerTests>>#helperMethod7.
+	self assert: scdbg method equals: SindarinDebuggerTest>>#helperMethod7.
 	scdbg step; step.
 	self assert: scdbg method equals: String>>#asInteger
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testNode [
+SindarinDebuggerTest >> testNode [
 	| node scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod1 ].
 	node := scdbg node.
@@ -403,7 +403,7 @@ SindarinDebuggerTests >> testNode [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testOnceBreakpoint [
+SindarinDebuggerTest >> testOnceBreakpoint [
 	| breakpoint scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod19 ].
 	scdbg step; step.
@@ -419,7 +419,7 @@ SindarinDebuggerTests >> testOnceBreakpoint [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testPc [
+SindarinDebuggerTest >> testPc [
 	| dbg |
 	dbg := SindarinDebugger
 		debug: [ | a p |
@@ -430,7 +430,7 @@ SindarinDebuggerTests >> testPc [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testReceiver [
+SindarinDebuggerTest >> testReceiver [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod8 ].
 	self assert: scdbg receiver equals: self.
@@ -441,7 +441,7 @@ SindarinDebuggerTests >> testReceiver [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testRemoveBreakpoint [
+SindarinDebuggerTest >> testRemoveBreakpoint [
 	| breakpoint scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod19 ].
 	scdbg step; step.
@@ -455,7 +455,7 @@ SindarinDebuggerTests >> testRemoveBreakpoint [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testSelector [
+SindarinDebuggerTest >> testSelector [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod9 ].
 	self assert: scdbg selector equals: #testSelector.
@@ -466,13 +466,13 @@ SindarinDebuggerTests >> testSelector [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testSetBreakpoint [
+SindarinDebuggerTest >> testSetBreakpoint [
 	self flag: 'What is this test?'.
 	self testContinue
 ]
 
 { #category : #'tests - skipping' }
-SindarinDebuggerTests >> testSkip [
+SindarinDebuggerTest >> testSkip [
 	| a p scdbg |
 	a := 1.
 	scdbg := SindarinDebugger
@@ -486,7 +486,7 @@ SindarinDebuggerTests >> testSkip [
 ]
 
 { #category : #'tests - skipping' }
-SindarinDebuggerTests >> testSkipThroughNode [
+SindarinDebuggerTest >> testSkipThroughNode [
 	| dbg realExecPC realValueOfA targetExecNode realExecTopStack nodeAfterSkipThrough |
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
@@ -512,7 +512,7 @@ SindarinDebuggerTests >> testSkipThroughNode [
 ]
 
 { #category : #'tests - skipping' }
-SindarinDebuggerTests >> testSkipToPC [
+SindarinDebuggerTest >> testSkipToPC [
 	| dbg realExecPC realValueOfA realExecNode realExecTopStack |
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
@@ -534,7 +534,7 @@ SindarinDebuggerTests >> testSkipToPC [
 ]
 
 { #category : #'tests - skipping' }
-SindarinDebuggerTests >> testSkipUpToNode [
+SindarinDebuggerTest >> testSkipUpToNode [
 	| dbg realExecPC realValueOfA realExecNode realExecTopStack |
 	dbg := SindarinDebugger
 		debug: [ self helperMethod1  ].
@@ -556,7 +556,7 @@ SindarinDebuggerTests >> testSkipUpToNode [
 ]
 
 { #category : #'tests - skipping' }
-SindarinDebuggerTests >> testSkipWith [
+SindarinDebuggerTest >> testSkipWith [
 	| a p scdbg |
 	a := 1.
 	scdbg := SindarinDebugger
@@ -570,7 +570,7 @@ SindarinDebuggerTests >> testSkipWith [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testStack [
+SindarinDebuggerTest >> testStack [
 	| context1 context2 storeContextBlock scdbg |
 	storeContextBlock := [ :thisCtx | context2 := thisCtx ].
 	scdbg := SindarinDebugger
@@ -586,7 +586,7 @@ SindarinDebuggerTests >> testStack [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testStep [
+SindarinDebuggerTest >> testStep [
 	| node scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod13 ].
 	scdbg step.
@@ -600,7 +600,7 @@ SindarinDebuggerTests >> testStep [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testStepOver [
+SindarinDebuggerTest >> testStepOver [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod14 ].
 	scdbg step. "Enters the call of helperMethod14. Current node should be: a:=5"
@@ -611,7 +611,7 @@ SindarinDebuggerTests >> testStepOver [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testStepOverReturnNode [
+SindarinDebuggerTest >> testStepOverReturnNode [
 	|scdbg|
 	scdbg := SindarinDebugger debug: [ self helperMethod21 ].
 	scdbg step; step.
@@ -624,7 +624,7 @@ SindarinDebuggerTests >> testStepOverReturnNode [
 ]
 
 { #category : #'tests - step return' }
-SindarinDebuggerTests >> testStepToImplicitReturn [
+SindarinDebuggerTest >> testStepToImplicitReturn [
 	| dbg |
 	dbg := SindarinDebugger debug: [ self helperMethod23 ].
 	dbg stepToMethodEntry.
@@ -640,7 +640,7 @@ SindarinDebuggerTests >> testStepToImplicitReturn [
 ]
 
 { #category : #'tests - step return' }
-SindarinDebuggerTests >> testStepToMethodEntry [
+SindarinDebuggerTest >> testStepToMethodEntry [
 	| dbg |
 	dbg := SindarinDebugger debug: [ self helperMethodReturn: true ].
 	dbg stepToMethodEntry.
@@ -652,7 +652,7 @@ SindarinDebuggerTests >> testStepToMethodEntry [
 ]
 
 { #category : #'tests - step return' }
-SindarinDebuggerTests >> testStepToNonLocalReturn [
+SindarinDebuggerTest >> testStepToNonLocalReturn [
 	| dbg |	
 	dbg := SindarinDebugger debug: [ self helperMethodNonLocalReturn ].
 	dbg stepToMethodEntry.
@@ -667,7 +667,7 @@ SindarinDebuggerTests >> testStepToNonLocalReturn [
 ]
 
 { #category : #'tests - step return' }
-SindarinDebuggerTests >> testStepToReturn [
+SindarinDebuggerTest >> testStepToReturn [
 	| dbg |
 	"First return node"
 	dbg := SindarinDebugger debug: [ self helperMethodReturn: true ].
@@ -688,7 +688,7 @@ SindarinDebuggerTests >> testStepToReturn [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testStepUntil [
+SindarinDebuggerTest >> testStepUntil [
 	| i scdbg |
 	i := 20.
 	scdbg := SindarinDebugger
@@ -698,7 +698,7 @@ SindarinDebuggerTests >> testStepUntil [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testSteppingAnExecutionSignalingExceptions [
+SindarinDebuggerTest >> testSteppingAnExecutionSignalingExceptions [
 	| scdbg |
 	scdbg := SindarinDebugger
 		debug: [ 1 / 0.
@@ -713,7 +713,7 @@ SindarinDebuggerTests >> testSteppingAnExecutionSignalingExceptions [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testTemporaries [
+SindarinDebuggerTest >> testTemporaries [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod10 ].
 	self assert: scdbg temporaries size equals: 1.
@@ -726,7 +726,7 @@ SindarinDebuggerTests >> testTemporaries [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testTemporaryNamed [
+SindarinDebuggerTest >> testTemporaryNamed [
 	| dbg |
 	dbg := SindarinDebugger debug: [ self helperMethod10 ].
 	dbg step.
@@ -737,7 +737,7 @@ SindarinDebuggerTests >> testTemporaryNamed [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testTopStack [
+SindarinDebuggerTest >> testTopStack [
 	| a dbg |
 	a := 1.
 	dbg := SindarinDebugger debug: [ a := 2 ].
@@ -746,7 +746,7 @@ SindarinDebuggerTests >> testTopStack [
 ]
 
 { #category : #tests }
-SindarinDebuggerTests >> testWhenHitBreakpoint [
+SindarinDebuggerTest >> testWhenHitBreakpoint [
 	| breakpoint toggle scdbg |
 	toggle := false.
 	scdbg := SindarinDebugger debug: [ self helperMethod19 ].
@@ -761,7 +761,7 @@ SindarinDebuggerTests >> testWhenHitBreakpoint [
 ]
 
 { #category : #'tests - skipping' }
-SindarinDebuggerTests >> testskipUpToNodeSkipTargetNode [
+SindarinDebuggerTest >> testskipUpToNodeSkipTargetNode [
 	"The tested method takes two params: 
 		- the node up to which we want to skip execution
 		- a boolean telling if we want to skip through the node or give back control to users before that node.
