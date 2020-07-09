@@ -66,12 +66,6 @@ WeakKeyAssociation >> hash [
 	^self key hash
 ]
 
-{ #category : #testing }
-WeakKeyAssociation >> isVariableBinding [
-	"Return true if I represent a literal variable binding"
-	^true
-]
-
 { #category : #accessing }
 WeakKeyAssociation >> key [
 	"Answer the lookup key of the receiver."

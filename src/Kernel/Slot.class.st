@@ -256,12 +256,6 @@ Slot >> named: aSymbol [
 	self name: aSymbol
 ]
 
-{ #category : #testing }
-Slot >> needsFullDefinition [
-	"I am more than just a backward compatible ivar slot, I need a full definition "
-	^true
-]
-
 { #category : #accessing }
 Slot >> owningClass [
 	"the class that the slot is installed in"

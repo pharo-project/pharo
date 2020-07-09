@@ -71,6 +71,13 @@ ClassVariable >> isReferenced [
  		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self . behavior class hasSelectorReferringTo: self ]
 ]
 
+{ #category : #testing }
+ClassVariable >> needsFullDefinition [
+	"only ClassVariable can use a simplified definition"
+
+	^ self class ~= ClassVariable
+]
+
 { #category : #accessing }
 ClassVariable >> owningClass [
 	^ owningClass

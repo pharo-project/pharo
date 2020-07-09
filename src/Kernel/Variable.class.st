@@ -198,6 +198,12 @@ Variable >> name: aSymbol [
 	name := aSymbol
 ]
 
+{ #category : #testing }
+Variable >> needsFullDefinition [
+	"all but InstanceVariableSlot and ClassVariable need to print the full definition"
+	^true
+]
+
 { #category : #properties }
 Variable >> properties [
 	^ Properties at: self ifAbsent: nil
