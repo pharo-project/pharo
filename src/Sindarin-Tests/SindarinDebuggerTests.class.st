@@ -376,8 +376,8 @@ SindarinDebuggerTests >> testMessageToInstanceOf [
 { #category : #tests }
 SindarinDebuggerTests >> testMethod [
 	| scdbg |
-	scdbg := SindarinDebugger debug: [ self helperMethod7 ].
-	self assert: scdbg method equals: SindarinDebuggerTests>>#testMethod.
+	scdbg := SindarinDebugger debug: [ self helperMethod7 ].	
+	self assert: scdbg method equals: [ self helperMethod7 ] method.
 	scdbg step.
 	self assert: scdbg method equals: SindarinDebuggerTests>>#helperMethod7.
 	scdbg step; step.
@@ -395,7 +395,8 @@ SindarinDebuggerTests >> testNode [
 	node := scdbg node.
 	self assert: node isAssignment.
 	self assert: node variable name equals: #a.
-	scdbg step.
+	scdbg stepOver.
+	scdbg stepOver.
 	node := scdbg node.
 	self assert: node isMessage.
 	self assert: node selector equals: #asInteger
@@ -602,8 +603,11 @@ SindarinDebuggerTests >> testStep [
 SindarinDebuggerTests >> testStepOver [
 	| scdbg |
 	scdbg := SindarinDebugger debug: [ self helperMethod14 ].
-	scdbg stepOver.
-	self assert: scdbg node isBlock
+	scdbg step. "Enters the call of helperMethod14. Current node should be: a:=5"
+	scdbg stepOver. "After this, current node shoud be: '3' asInteger"
+	scdbg stepOver. "After this, current node should be: Point x:5 y:'3' asInteger"
+	self assert: scdbg node isMessage.
+	self assert: scdbg node selector equals: #x:y:
 ]
 
 { #category : #tests }
