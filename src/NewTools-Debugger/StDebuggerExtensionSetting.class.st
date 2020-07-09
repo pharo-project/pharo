@@ -8,7 +8,9 @@ Class {
 	#instVars : [
 		'showInDebugger',
 		'displayOrder',
-		'extensionName'
+		'extensionName',
+		'defaultShowInDebugger',
+		'defaultDisplayOrder'
 	],
 	#category : #'NewTools-Debugger-Model'
 }
@@ -30,13 +32,28 @@ StDebuggerExtensionSetting class >> fromDebuggerExtensionClass: aClass [
 ]
 
 { #category : #accessing }
+StDebuggerExtensionSetting >> defaultDisplayOrder [
+
+	^ defaultDisplayOrder
+]
+
+{ #category : #accessing }
+StDebuggerExtensionSetting >> defaultShowInDebugger [
+
+	^ defaultShowInDebugger
+]
+
+{ #category : #accessing }
 StDebuggerExtensionSetting >> displayOrder [
 	^ displayOrder
 ]
 
 { #category : #accessing }
-StDebuggerExtensionSetting >> displayOrder: anObject [
-	displayOrder := anObject
+StDebuggerExtensionSetting >> displayOrder: aNumber [
+
+	"Taking first set of displayOrder as the default"
+	displayOrder ifNil: [ defaultDisplayOrder := aNumber ].
+	displayOrder := aNumber
 ]
 
 { #category : #accessing }
@@ -55,6 +72,9 @@ StDebuggerExtensionSetting >> showInDebugger [
 ]
 
 { #category : #accessing }
-StDebuggerExtensionSetting >> showInDebugger: anObject [
-	showInDebugger := anObject
+StDebuggerExtensionSetting >> showInDebugger: aBoolean [
+
+	"Taking first set of showInDebugger as the default"
+	showInDebugger ifNil: [ defaultShowInDebugger := aBoolean ].
+	showInDebugger := aBoolean
 ]

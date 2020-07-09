@@ -193,18 +193,22 @@ StDebugger class >> collectExtendedToolsPragmaFor: pragmaSelector [
 { #category : #settings }
 StDebugger class >> debuggerExtensionSettingsForClass: toolClass builder: aBuilder [
 	| settings |
+
 	settings := self extensionToolSettingsFor: toolClass.
 	settings
 		do: [ :s | 
 			(aBuilder group: toolClass debuggingExtensionToolName asSymbol)
 				label: toolClass debuggingExtensionToolName;
-				with: [ (aBuilder setting: #showInDebugger)
+				with: [ 
+					(aBuilder setting: #showInDebugger)
 						label: 'Show in debugger';
 						target: s;
+						default: s defaultShowInDebugger;
 						description: 'Activate the tool tab in the debugger right column.'.
 					(aBuilder pickOne: #displayOrder)
 						label: 'Position';
 						target: s;
+						default: s defaultDisplayOrder;
 						domainValues: (1 to: 100) asArray;
 						description: 'Position of the tool tab in the debugger right column.' ] ]
 ]
@@ -231,10 +235,10 @@ StDebugger class >> debuggerExtensionSettingsOn: aBuilder [
 
 { #category : #settings }
 StDebugger class >> debuggerExtensionsSettingsOn: aBuilder parentGroup: settingsGroup [
-	settingsGroup
-		with: [ self collectExtendedToolsClasses
-				do:
-					[ :toolClass | self debuggerExtensionSettingsForClass: toolClass builder: aBuilder ] ]
+	
+	settingsGroup with: [ 
+		self collectExtendedToolsClasses do: [ :toolClass | 
+			self debuggerExtensionSettingsForClass: toolClass builder: aBuilder ] ]
 ]
 
 { #category : #settings }
