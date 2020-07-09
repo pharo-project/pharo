@@ -18,7 +18,8 @@ SindarinSkipUpToSelectionCommand class >> defaultName [
 
 { #category : #hooks }
 SindarinSkipUpToSelectionCommand >> execute [
-	|selectionInterval targetNode skipTargetNode|
+	| targetNode |
+	
 	self flag: 'Context should actually be a debugger or a sindarin debugger'.
 	self flag: 'Suspicious call to internal debugger UI state'.
 	targetNode := self context sindarinDebugger
