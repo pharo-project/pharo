@@ -2140,17 +2140,11 @@ Object >> ~~> aValueLinkOrNil [
 
 	"Code of ValueLink>>#nextLink: and ValueLink>>#value: are inline here for speed."
 
-	"
-	1 ~~> nil
-	>>> ValueLink new value: 1; yourself
+	"(1 ~~> nil) = ValueLink new value: 1"
+	"(1 ~~> 'one') value >>> 1"
+	"(1 ~~> nil) nextLink >>> nil"
 
-	(1 ~~> 'one') value
-	>>> 1
-
-	(1 ~~> nil) nextLink
-	>>> nil
-	
-	Note that `value` can be ANY object; on the other hand, `nextLink` should be either another 
+	"Note that `value` can be ANY object; on the other hand, `nextLink` should be either another 
 	ValueLink object or nil."
 
 	^ ValueLink basicNew
