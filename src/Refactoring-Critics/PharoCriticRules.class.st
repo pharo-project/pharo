@@ -21,7 +21,7 @@ PharoCriticRules class >> pharoHardLintRules [
 		ReEqualNotUsedRule.
 		RBOnlyReadOrWrittenTemporaryRule.
 		RePrecedenceRule.
-		OldSendsDeprecatedMethodToGlobalRule.
+		SendsDeprecatedMethodToGlobalRule.
 		ReSizeCheckRule.
 		ReUnconditionalRecursionRule.
 		ReUnoptimizedToDoRule.
