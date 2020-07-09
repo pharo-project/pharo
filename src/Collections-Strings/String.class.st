@@ -2167,18 +2167,14 @@ String >> putOn: aStream [
 
 { #category : #converting }
 String >> repeat: aNumber [
+	"Returns a new string concatenated by itself repeated n times"
+	"('abc' repeat: 3) >>> 'abcabcabc'"
 
-	"returns a new string concatenated by itself repeated n times
-		'abc' repeat: 3. 'abcabcabc'
-	"
-
-	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
-	
+	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].	
 	^ self species 
 		new: self size * aNumber 
 		streamContents: [ :stringStream |
-			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ].
-		]
+			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ] ]
 ]
 
 { #category : #private }
