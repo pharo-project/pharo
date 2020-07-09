@@ -43,8 +43,8 @@ DTCommentToTest >> itemsToBeAnalysedFor: packagesSelected [
 				select: [ :c | 
 					c methods
 						anySatisfy: [ :m | 
-							(m methodClass compiledMethodAt: m selector) comments
-								anySatisfy: [ :com | com includesSubstring: '>>>' ] ] ] ]
+							( m sourceCode includesSubstring: '>>>') and: [
+								m comments anySatisfy: [ :com | com includesSubstring: '>>>' ] ] ] ]]
 ]
 
 { #category : #api }
