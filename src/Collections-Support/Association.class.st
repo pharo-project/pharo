@@ -40,6 +40,12 @@ Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
 ]
 
+{ #category : #'variables-toclean' }
+Association >> isVariableBinding [
+	"Can be removed as soon as all bindings are instances of LiteralVariable"
+	^true
+]
+
 { #category : #accessing }
 Association >> key: aKey value: anObject [ 
 	"Store the arguments as the variables of the receiver."
@@ -56,10 +62,11 @@ Association >> literalEqual: otherLiteral [
 	^self == otherLiteral
 ]
 
-{ #category : #testing }
+{ #category : #'variables-toclean' }
 Association >> needsFullDefinition [
 	"Implemented here so we can use simple Associations as Bindings instead of LiteralVariable
 	subclasses"
+	"Can be removed as soon as all bindings are instances of LiteralVariable"
 	^false
 ]
 

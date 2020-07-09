@@ -154,6 +154,7 @@ LiteralVariable >> isSelfEvaluating [
 
 { #category : #testing }
 LiteralVariable >> isVariableBinding [
+	"Maybe we should deprecate this and use isLiteralVariable instead"
 	^true
 ]
 
@@ -199,13 +200,6 @@ LiteralVariable >> literalEqual: otherLiteral [
 { #category : #accessing }
 LiteralVariable >> name: aString [ 
 	self key: aString asSymbol
-]
-
-{ #category : #testing }
-LiteralVariable >> needsFullDefinition [
-	"only ClassVariable can use a simplified definition"
-
-	^ self class ~= ClassVariable
 ]
 
 { #category : #printing }

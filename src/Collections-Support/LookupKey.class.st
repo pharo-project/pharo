@@ -38,12 +38,6 @@ LookupKey >> hash [
 	^key hash
 ]
 
-{ #category : #testing }
-LookupKey >> isVariableBinding [
-	"Return true if I represent a literal variable binding"
-	^true
-]
-
 { #category : #accessing }
 LookupKey >> key [
 	"Answer the lookup key of the receiver."
