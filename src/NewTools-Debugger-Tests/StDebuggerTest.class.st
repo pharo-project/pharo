@@ -87,7 +87,9 @@ StDebuggerTest >> setUp [
 
 { #category : #running }
 StDebuggerTest >> tearDown [
-	session clear
+
+	session clear.
+	super tearDown
 ]
 
 { #category : #'tests - code pane' }

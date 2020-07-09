@@ -195,6 +195,8 @@ SindarinDebuggerTest >> runCaseManaged [
 { #category : #running }
 SindarinDebuggerTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+	
+	super setUp.
 	breakpointsBeforeTest := VirtualBreakpoint all.
 	VirtualBreakpoint all removeAll.
 	testObjectPoint := Point x: 1 y: 2.
@@ -202,8 +204,10 @@ SindarinDebuggerTest >> setUp [
 
 { #category : #running }
 SindarinDebuggerTest >> tearDown [
+
 	VirtualBreakpoint all removeAll.
 	breakpointsBeforeTest do: [ :brkpt | VirtualBreakpoint all add: brkpt ].
+	super tearDown
 ]
 
 { #category : #tests }
