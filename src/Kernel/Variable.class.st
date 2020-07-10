@@ -96,6 +96,15 @@ Variable >> hash [
 
 { #category : #testing }
 Variable >> isArg [
+	self 
+		deprecated: 'Use #isArgumentVariable instead.' 
+		transformWith: '`@receiver isArg' -> '`@receiver isArgumentVariable'.
+	
+	^ self isArgumentVariable
+]
+
+{ #category : #testing }
+Variable >> isArgumentVariable [
 	^false
 ]
 

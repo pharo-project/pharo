@@ -18,7 +18,7 @@ RGVariable >> definitionString [
 ]
 
 { #category : #testing }
-RGVariable >> isArg [
+RGVariable >> isArgumentVariable [
 	^false
 ]
 

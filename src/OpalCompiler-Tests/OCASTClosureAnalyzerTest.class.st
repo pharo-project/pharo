@@ -92,7 +92,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 	self assert: scopes second tempVars size equals: 1.
 	self assert: scopes second tempVector size equals: 0.
 	self deny: (scopes second lookupVar: 'b') isRemote.
-	self assert: (scopes second lookupVar: 'b') isArg.
+	self assert: (scopes second lookupVar: 'b') isArgumentVariable.
 	self deny: (scopes fourth lookupVar: 'hallo') isRemote
 ]
 
