@@ -12,13 +12,16 @@ RBVariableNode >> binding: aSemVar [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isArg [
-
-	^self binding isArg
+	self 
+		deprecated: 'Use #isArgument instead.' 
+		transformWith: '`@receiver isArg' -> '`@receiver isArgumentVariable'.
+	
+	^ self isArgument
 ]
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isArgOrTemp [
-	^self binding isTemp or: [ self binding isArg ]
+	^self binding isTemp or: [ self binding isArgumentVariable ]
 ]
 
 { #category : #'*opalcompiler-core' }

@@ -255,7 +255,7 @@ OCAbstractMethodScope >> tempVarNames [
 { #category : #'temp vars' }
 OCAbstractMethodScope >> tempVarNamesWithoutArguments [
 
-	^ tempVars values reject: [ :each | each isArg ] thenCollect: [ :each | each name ]
+	^ tempVars values reject: [ :each | each isArgumentVariable ] thenCollect: [ :each | each name ]
 ]
 
 { #category : #'temp vars' }

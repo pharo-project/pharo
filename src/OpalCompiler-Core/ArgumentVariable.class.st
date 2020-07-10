@@ -14,8 +14,7 @@ ArgumentVariable class >> semanticNodeClass [
 ]
 
 { #category : #testing }
-ArgumentVariable >> isArg [
-
+ArgumentVariable >> isArgumentVariable [
 	^ true
 ]
 

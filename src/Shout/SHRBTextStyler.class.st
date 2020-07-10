@@ -1022,7 +1022,7 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode binding ifNil: [^#default].
-	aVariableNode isArg ifTrue: [ ^#methodArg].
+	aVariableNode isArgument ifTrue: [ ^#methodArg].
 	aVariableNode isTemp ifTrue: [ ^#tempVar].
 	aVariableNode isGlobal ifTrue: [ ^#globalVar].
 	aVariableNode isInstance ifTrue: [ ^#instVar]. 
