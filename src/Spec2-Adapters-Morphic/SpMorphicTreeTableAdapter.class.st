@@ -93,7 +93,10 @@ SpMorphicTreeTableAdapter >> basicSelectionChanged: ann [
 	(ann newSelectedIndexes difference: ann oldSelectedIndexes) ifEmpty: [ ^ self ].
 	
 	selection selectPaths: (ann newSelectedIndexes
-		collect: [ :index | self widget dataSource pathFromIndex: index ])
+		collect: [ :index | self widget dataSource pathFromIndex: index ]).
+		
+	self presenter activatesOnSingleClick ifTrue: [ 
+		self presenter doActivateAtPath: selection selectedPath ]
 ]
 
 { #category : #factory }

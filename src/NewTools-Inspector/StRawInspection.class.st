@@ -62,6 +62,7 @@ StRawInspection >> initialize [
 StRawInspection >> initializePresenters [
 
 	attributeTable := self newTreeTable
+		activateOnSingleClick;
 		contextMenu: [ self rootCommandsGroup asMenuPresenter ];
 		yourself.
 	self addVariablesColumn.
