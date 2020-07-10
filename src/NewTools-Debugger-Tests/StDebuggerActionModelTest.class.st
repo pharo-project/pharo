@@ -82,14 +82,14 @@ StDebuggerActionModelTest >> testCopyStackToClipboard [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testExceptionInContextOrNil [
-	|exOrNil|			
+	| exOrNil |	
+		
 	exOrNil := debugActionModel exceptionInContextOrNil: session interruptedContext. 
 	self assert: exOrNil equals: nil.
-	
-	self
-		changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.		
-	exOrNil := debugActionModel exceptionInContextOrNil: session interruptedContext. 
-	self assert: exOrNil class identicalTo: VariableNotDeclared. 
+	self withoutMissingClassDo: [ 
+		self changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.		
+		exOrNil := debugActionModel exceptionInContextOrNil: session interruptedContext. 
+		self assert: exOrNil class identicalTo: VariableNotDeclared ].  	
 ]
 
 { #category : #tests }
@@ -153,10 +153,10 @@ StDebuggerActionModelTest >> testIsInterruptedContextError [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
-	self
-		changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
-	self
-		assert: debugActionModel isInterruptedContextMissingClassException
+
+	self withoutMissingClassDo: [ 
+		self changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
+		self assert: debugActionModel isInterruptedContextMissingClassException ]
 ]
 
 { #category : #tests }
@@ -258,4 +258,17 @@ StDebuggerActionModelTest >> testStepThrough [
 	self
 		assert: (method sourceNodeForPC: session interruptedContext pc)
 		identicalTo: method ast statements second
+]
+
+{ #category : #helper }
+StDebuggerActionModelTest >> withoutMissingClassDo: aBlock [
+
+	StMockMissingClass removeFromSystem: false.
+	aBlock ensure: [ 
+		Object 
+			subclass: #StMockMissingClass
+			instanceVariableNames: ''
+			classVariableNames: ''
+			poolDictionaries: ''
+			package: self class package name ]
 ]

@@ -54,7 +54,8 @@ StTestDebuggerProvider >> debuggerWithFailingTestContext [
 
 { #category : #helpers }
 StTestDebuggerProvider >> debuggerWithMissingClassContext [
-	[ MissingClass new]
+
+	[ StMockMissingClass new]
 		on: Error
 		do: [ :err | 
 			self sessionFor: err signalerContext copy.
