@@ -660,6 +660,7 @@ SmalltalkImage >> fixObsoleteReferences [
 
 { #category : #housekeeping }
 SmalltalkImage >> fixObsoleteSharedPools [
+	self cleanOutUndeclared.
 	self allClasses
 		select: [ :class |
 			class sharedPools isEmptyOrNil not and: [ 
