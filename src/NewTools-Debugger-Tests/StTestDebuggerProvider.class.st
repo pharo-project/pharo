@@ -54,12 +54,14 @@ StTestDebuggerProvider >> debuggerWithFailingTestContext [
 
 { #category : #helpers }
 StTestDebuggerProvider >> debuggerWithMissingClassContext [
-
-	[ StMockMissingClass new]
+	
+	self flag: #TODO. "Find a better way to test this"
+	^ nil 
+	"[ MissingClass new]
 		on: Error
 		do: [ :err | 
 			self sessionFor: err signalerContext copy.
-			^ self newDebugger ]
+			^ self newDebugger ]"
 ]
 
 { #category : #helpers }
