@@ -121,7 +121,7 @@ LiteralVariable >> isGlobal [
 
 { #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
-	^ (self value isClass or: [ self value isTrait ])
+	^ self value isClassOrTrait
 		and: [ name == self value name ]
 ]
 

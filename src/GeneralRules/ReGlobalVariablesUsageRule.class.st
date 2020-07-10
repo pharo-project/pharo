@@ -21,7 +21,7 @@ ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			node isVariable and: [ 
 				node variable isGlobalVariable and: [
 					(self isKnownGlobal: node name) not and: [
-						(Smalltalk globals hasClassOrTraitNamed: node name) not ] ] ] ]
+						node variable isGlobalClassNameBinding not ] ] ] ]
 		thenDo: [ :node |
 			aCriticBlock cull: (self
 				createTrivialCritiqueOn: aMethod

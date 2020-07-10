@@ -883,9 +883,11 @@ Class >> removeFromSystem: logged [
 	self superclass ifNotNil:
 		["If we have no superclass there's nothing to be remembered"
 		self superclass addObsoleteSubclass: self].
-
+	
+	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed 
+	if this class is loaded again. We do not check if references exist as it is too slow"
+	Undeclared declare: self name asSymbol from: Smalltalk globals.
 	myCategory := self category.
-	self isReferenced ifTrue: [Undeclared declare: self name asSymbol from: Smalltalk globals].
 	self environment forgetClass: self logged: logged.
 	self obsolete.
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
