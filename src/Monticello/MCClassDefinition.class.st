@@ -570,7 +570,7 @@ MCClassDefinition >> variables [
 { #category : #installing }
 MCClassDefinition >> variablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
-	^((self selectVariables: aSymbol) 
-		collect: [:each | self createVariableFromString: each])
+	^(self selectVariables: aSymbol) 
+		collect: [:each | self createVariableFromString: each]
 		as: Array
 ]
