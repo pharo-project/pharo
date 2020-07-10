@@ -89,7 +89,7 @@ FFIMethodRegistry >> removeMethod: aMethod [
 
 	aMethod methodClass methodDict
 		at: aMethod selector
-		put: (aMethod propertyValueAt: #ffiNonCompiledMethod)
+		put: (aMethod propertyAt: #ffiNonCompiledMethod)
 ]
 
 { #category : #initialization }
