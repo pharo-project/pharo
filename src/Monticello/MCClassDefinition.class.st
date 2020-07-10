@@ -191,6 +191,19 @@ MCClassDefinition >> createClass [
 		do: [ :ex | ex resume ]
 ]
 
+{ #category : #installing }
+MCClassDefinition >> createVariableFromString: aString [
+	^[ Smalltalk compiler evaluate: aString ] 
+		on: Error 
+		do: [ 
+			"if an error happens, we parse the slot definition to an ast.
+			and create a UndefinedSlot"
+			| ast slotName |
+			ast := RBParser parseExpression: aString. 
+			slotName := ast receiver value. 
+			UndefinedSlot named: slotName ast: ast  ]
+]
+
 { #category : #initializing }
 MCClassDefinition >> defaultCommentStamp [
 	^ String new
@@ -557,6 +570,7 @@ MCClassDefinition >> variables [
 { #category : #installing }
 MCClassDefinition >> variablesOfType: aSymbol [
 	"version for complex vars, { definition . definition }"
-	^(((self selectVariables: aSymbol) collect: [:each | Smalltalk compiler evaluate: each])) asArray.
-		
+	^(self selectVariables: aSymbol) 
+		collect: [:each | self createVariableFromString: each]
+		as: Array
 ]
