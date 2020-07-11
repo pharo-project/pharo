@@ -17,11 +17,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> deprecatedMethodName [
 { #category : #properties }
 SendsDeprecatedMethodToGlobalRuleTest >> globalName [
 
-	^ globalName ifNil: [ 
-		[ globalName :=
-			('TestGlobal', 1e10 atRandom asString) asSymbol
-		] doWhileTrue: [ 
-			testingEnvironment includesKey: globalName ] ]
+	^ globalName ifNil: [ globalName := ('TestGlobal', 1e10 atRandom asString) asSymbol ]
 ]
 
 { #category : #properties }
