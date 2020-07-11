@@ -1,6 +1,23 @@
 Extension { #name : #Variable }
 
 { #category : #'*Reflectivity' }
+Variable >> accessingNodes [
+	"return all reads and all assignments. This is different to #astNodes, which returns 
+	variable nodes in case of assignment, not the assignment itself"
+	^ self readNodes, self assignmentNodes
+]
+
+{ #category : #'*Reflectivity' }
+Variable >> accessingNodesFor: option [
+	option = #write
+		ifTrue: [ ^ self assignmentNodes ].
+	option = #read
+		ifTrue: [ ^ self  readNodes ].
+	"else we return all accessing nodes"
+	^ self accessingNodes
+]
+
+{ #category : #'*Reflectivity' }
 Variable >> afterHooks [
 	^self propertyAt: #afterHooks ifAbsent: #()
 ]
