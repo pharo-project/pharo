@@ -358,16 +358,6 @@ RBSequenceNode >> match: aNode inContext: aDictionary [
 					inContext: aDictionary]
 ]
 
-{ #category : #accessing }
-RBSequenceNode >> methodComments [
-	| methodComments |
-	methodComments := OrderedCollection withAll: self comments.
-	temporaries do: [:each | methodComments addAll: each comments].
-	(parent notNil and: [parent isBlock]) 
-		ifTrue: [parent arguments do: [:each | methodComments addAll: each comments]].
-	^methodComments asSortedCollection: [:a :b | a start < b start]
-]
-
 { #category : #'accessing-token' }
 RBSequenceNode >> periods [
 	^ periods

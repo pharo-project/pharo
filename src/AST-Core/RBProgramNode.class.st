@@ -656,11 +656,6 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 ]
 
 { #category : #accessing }
-RBProgramNode >> methodComments [
-	^self comments
-]
-
-{ #category : #accessing }
 RBProgramNode >> methodNode [
 	^parent ifNotNil: [parent methodNode]
 ]
