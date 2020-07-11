@@ -85,19 +85,18 @@ Variable >> insteadLinks [
 ]
 
 { #category : #'*Reflectivity' }
+Variable >> invalidate [
+	self usingMethods do: [:method | method invalidate].
+]
+
+{ #category : #'*Reflectivity' }
 Variable >> link: aMetaLink [
-	| methods |
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
-	
-	methods := self usingMethods.
 	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
 	aMetaLink installOnVariable: self.
-	methods
-		do: [ :method |  
-			method
-				createTwin;
-				invalidate.
-			method installLink: aMetaLink ]
+	self clearReflectivityAnnotations.
+	self usingMethods do: [ :method |  
+		method method installLink: aMetaLink ]
 ]
 
 { #category : #'*Reflectivity' }
