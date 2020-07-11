@@ -66,7 +66,7 @@ OCASTClosureAnalyzer >> visitVariableNode: aVariableNode [
 	
 	| var |
 	aVariableNode adaptToSemanticNode.
-	aVariableNode isArgOrTemp ifFalse: [^self].
+	aVariableNode isLocalVariable ifFalse: [^self].
 	var := self lookupAndFixBinding: aVariableNode.
 	var isTempVectorTemp ifTrue: [ | vectorVar |
 		vectorVar := scope lookupVar: var vectorName.
