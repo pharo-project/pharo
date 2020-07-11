@@ -37,7 +37,7 @@ LocalVariable >> asString [
 
 { #category : #queries }
 LocalVariable >> astNodes [
-	^self method variableNodes select: [ :each | each binding == self]
+	^scope node methodNode variableNodes select: [ :each | each binding == self]
 ]
 
 { #category : #accessing }
@@ -214,7 +214,7 @@ LocalVariable >> markWrite [
 
 { #category : #queries }
 LocalVariable >> method [
-	^scope node methodNode methodClass>>scope node methodNode selector
+	^scope node methodNode compiledMethod
 ]
 
 { #category : #accessing }
