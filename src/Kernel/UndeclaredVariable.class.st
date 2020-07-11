@@ -46,11 +46,6 @@ UndeclaredVariable >> emitValue: methodBuilder [
 ]
 
 { #category : #testing }
-UndeclaredVariable >> isGlobal [
-	^false
-]
-
-{ #category : #testing }
 UndeclaredVariable >> isReferenced [
  	"A Undeclared could be referenced from any method"
  	^Smalltalk globals allBehaviors
