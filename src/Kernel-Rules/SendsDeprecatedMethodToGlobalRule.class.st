@@ -16,22 +16,12 @@ SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
 
 { #category : #running }
 SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
-	| messageReceiver |
+	| value |
 	aNode isMessage ifFalse: [ ^ false ].
-
-	messageReceiver := aNode receiver.
-	messageReceiver isVariable ifFalse: [ ^ false ].
-	messageReceiver isGlobal ifFalse: [ ^ false ].
-	(self check: aNode selector forDeprecationIn: messageReceiver name) ifFalse: [ ^ false ].
-
-	^ true
-]
-
-{ #category : #running }
-SendsDeprecatedMethodToGlobalRule >> check: aSelector forDeprecationIn: aGlobalName [
-
-	^ (Smalltalk globals at: aGlobalName ifAbsent: [ ^ false ]) class
-		classAndMethodFor: aSelector
+	aNode receiver isVariable ifFalse: [ ^ false ].
+	aNode receiver variable isLiteralVariable ifFalse: [ ^ false ].
+	value := aNode receiver variable value.
+	^value class classAndMethodFor: aNode selector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
 ]
