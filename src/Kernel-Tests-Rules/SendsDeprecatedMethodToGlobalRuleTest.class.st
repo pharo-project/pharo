@@ -21,7 +21,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> globalName [
 		[ globalName :=
 			('TestGlobal', 1e10 atRandom asString) asSymbol
 		] doWhileTrue: [ 
-			"if the name already exists, we generate anotherone"
+			"if the name already exists, we generate another one"
 			testingEnvironment includesKey: globalName ] ]
 ]
 

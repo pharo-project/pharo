@@ -20,7 +20,7 @@ SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
 	aNode receiver isVariable ifFalse: [ ^ false ].
 	aNode receiver variable isLiteralVariable ifFalse: [ ^ false ].
-	value := aNode receiver variable value .
+	value := aNode receiver variable value.
 	^value class classAndMethodFor: aNode selector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
