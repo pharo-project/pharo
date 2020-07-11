@@ -193,8 +193,16 @@ BaselineOfIDE >> baseline: spec [
 			spec 
 				repository: repository;
 				loads: #('Code' 'CodeTests') ].
-			
-		spec package: 'BaselineOfMicrodown'.	
+		
+		"No idea why we need to define it here because it is expressed as dependency inside
+		microdown baseline!"	
+		spec baseline: 'Pillar' with: [ spec 
+				loads: #('rich text exporter');
+				repository: repository ].
+		spec baseline: 'Microdown' with: [ 
+			spec 
+				repository: repository;
+				loads: #('Microdown-RichTextComposer' 'Microdown-Tests' 'Microdown-Pillar-Tests')].
 			
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
