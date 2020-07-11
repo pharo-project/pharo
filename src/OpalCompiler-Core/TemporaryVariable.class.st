@@ -18,3 +18,9 @@ TemporaryVariable >> isTemp [
 
 	^ true
 ]
+
+{ #category : #testing }
+TemporaryVariable >> isTemporaryVariable [
+
+	^ true
+]
