@@ -35,7 +35,7 @@ ClyVariableBreakpointCommand >> execute [
 	| methodOrClass |
 	sourceNode isVariable
 		ifFalse: [ ^ self ].
-	methodOrClass := sourceNode isArgOrTemp
+	methodOrClass := sourceNode isLocalVariable
 		ifTrue: [ method ]
 		ifFalse: [ method methodClass ].
 	self installVariableBreakpointOn: sourceNode name in: methodOrClass

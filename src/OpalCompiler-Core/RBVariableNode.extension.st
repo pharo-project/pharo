@@ -20,11 +20,6 @@ RBVariableNode >> isArg [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBVariableNode >> isArgOrTemp [
-	^self binding isTemp or: [ self binding isArgumentVariable ]
-]
-
-{ #category : #'*opalcompiler-core' }
 RBVariableNode >> isClean [
 	^ (self isInstance | self isReservedVariable) not
 ]
@@ -38,6 +33,12 @@ RBVariableNode >> isGlobal [
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isInstance [
 	^self binding isInstance
+]
+
+{ #category : #'*opalcompiler-core' }
+RBVariableNode >> isLocalVariable [
+	"returns true for temporary variables and arguments"
+	^variable isLocalVariable
 ]
 
 { #category : #'*opalcompiler-core' }
