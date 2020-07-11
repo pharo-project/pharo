@@ -12,7 +12,7 @@ Class {
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> abstractUnaryAccessingMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self subclassResponsibility
 ]
@@ -306,7 +306,7 @@ RBSmalllintTestObject >> noMoveDefinition [
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingBranchingStatementMethodWithoutReturn: anObject [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value isString
 		ifTrue: [ self value ]
@@ -315,14 +315,14 @@ RBSmalllintTestObject >> nonUnaryAccessingBranchingStatementMethodWithoutReturn:
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMessageStatementMethodWithoutReturn: anObject [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> nonUnaryAccessingMethodWithoutReturn: anObject [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	
 ]
@@ -476,7 +476,7 @@ RBSmalllintTestObject >> transcriptMentioned [
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self value isString
 		ifTrue: [ self value ]
@@ -485,7 +485,7 @@ RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithReturn [
 
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithoutReturn [
-	"should trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value isString
 		ifTrue: [ self value ]
@@ -494,35 +494,35 @@ RBSmalllintTestObject >> unaryAccessingBranchingStatementMethodWithoutReturn [
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingMessageStatementMethodWithReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self value
 ]
 
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMessageStatementMethodWithoutReturn [
-	"should trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
 { #category : #'accessing - good' }
 RBSmalllintTestObject >> unaryAccessingMethodWithReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	^ self
 ]
 
 { #category : #'accessing - bad' }
 RBSmalllintTestObject >> unaryAccessingMethodWithoutReturn [
-	"should trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"should trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	
 ]
 
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value isString
 		ifTrue: [ self value ]
@@ -531,14 +531,14 @@ RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn 
 
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMessageStatementMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
 { #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMethodWithoutReturn [
-	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
+	"shouldn't trigger the ReUnaryAccessingMethodWithoutReturnRule rule"
 
 	
 ]
