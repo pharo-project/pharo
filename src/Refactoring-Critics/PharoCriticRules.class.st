@@ -11,15 +11,15 @@ Class {
 PharoCriticRules class >> pharoHardLintRules [
 	"These rules are used by the CI monkey to check code before its integration into Pharo"
 	^ { 
-		RBUndeclaredReferenceRule.
+		ReUndeclaredVariableRule.
 		ReDefinesEqualNotHashRule.
 		ReEquivalentSuperclassMethodsRule.
 		ReJustSendsSuperRule.
 		ReSubclassResponsibilityNotDefinedRule.
 		"RBTempVarOverridesInstVarRule. gotta wait for a fix"
-		RBVariableNotDefinedRule.
+		ReUndeclaredVariableRule.
 		ReEqualNotUsedRule.
-		RBOnlyReadOrWrittenTemporaryRule.
+		ReTemporaryNeitherReadNorWrittenRule.
 		RePrecedenceRule.
 		SendsDeprecatedMethodToGlobalRule.
 		ReSizeCheckRule.
@@ -27,16 +27,8 @@ PharoCriticRules class >> pharoHardLintRules [
 		ReUnoptimizedToDoRule.
 		ReBetweenAndRule.
 		ReCodeCruftLeftInMethodsRule.
-		RBPharoBootstrapRule
+		PharoBootstrapRule
 	}
-]
-
-{ #category : #accessing }
-PharoCriticRules class >> pharoIntegrationLintRule [
-	"A set of rules used by the CI monkey to check code before its integration into Pharo"
-	^ (RBCompositeLintRule rules: (self pharoHardLintRules collect: [:each | each new]))
-		name: 'Pharo integration rules';
-		yourself
 ]
 
 { #category : #'default rules' }
