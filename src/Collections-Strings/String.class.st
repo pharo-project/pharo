@@ -2058,7 +2058,7 @@ String >> match: text [
 	"('foo*baz' match: 'foo23bazo') >>> false"
 	"('foo' match: 'Foo') >>> true"
 	"('foo*baz*zort' match: 'foobazort') >>> false"
-	"('foo*baz*zort' match: 'foobazzort') >>> false"
+	"('foo*baz*zort' match: 'foobazzort') >>> true"
 	"('*foo#zort' match: 'afoo3zortthenfoo3zort') >>> true"
 	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
