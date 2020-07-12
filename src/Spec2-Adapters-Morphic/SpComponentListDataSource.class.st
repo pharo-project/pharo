@@ -109,7 +109,7 @@ SpComponentListDataSource >> rowHeight: rowIndex [
 
 { #category : #accessing }
 SpComponentListDataSource >> searchText: aString [
-	| search text result |
+	"| search text result |
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
 	result := OrderedCollection new.
 	search := aString trimBoth asLowercase.
@@ -117,7 +117,9 @@ SpComponentListDataSource >> searchText: aString [
 		text := (self model displayValueAt: rowIndex) contents trimBoth asLowercase.
 		(text beginsWith: search)
 			ifTrue: [ result add: rowIndex ] ].
-	^ result asArray
+	^ result asArray"
+	"Do nothing for the moment"
+	^ #()
 ]
 
 { #category : #'drag and drop' }
