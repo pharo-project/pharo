@@ -18,6 +18,11 @@ RBSmalllintTestObject >> abstractUnaryAccessingMethodWithoutReturn [
 ]
 
 { #category : #methods }
+RBSmalllintTestObject >> anySatisfy [
+	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil
+]
+
+{ #category : #methods }
 RBSmalllintTestObject >> asOrderedCollectionNotNeeded [
 	self foo addAll: (1 to: 10) asOrderedCollection
 ]
@@ -99,11 +104,6 @@ RBSmalllintTestObject >> collectionProtocol [
 { #category : #methods }
 RBSmalllintTestObject >> consistencyCheck [
 	^(1 to: 10) size > 0
-]
-
-{ #category : #methods }
-RBSmalllintTestObject >> contains [
-	^((1 to: 10) detect: [:each | each > 2] ifNone: [nil]) isNil
 ]
 
 { #category : #methods }

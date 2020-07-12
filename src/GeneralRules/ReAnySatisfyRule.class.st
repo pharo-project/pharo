@@ -1,5 +1,5 @@
 "
-Checks for the common code fragment: ""(aCollection detect: [:each | ''some condition''] ifNone: [nil]) ~= nil"". contains: can simplify this code to ""aCollection anySatisfy: [:each | ''some condition'']"". Not only is the contains: variant shorter, it better signifies what the code is doing
+Checks for the common code fragment: ""(aCollection detect: [:each | ''some condition''] ifNone: [nil]) ~= nil"". contains: can simplify this code to ""aCollection anySatisfy: [:each | ''some condition'']"". Not only is the anySatisfy: variant shorter, it better signifies what the code is doing.
 "
 Class {
 	#name : #ReAnySatisfyRule,
