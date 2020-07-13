@@ -13,15 +13,16 @@ Class {
 { #category : #'instance creation' }
 StPharoApplication class >> current [ 
 	
+	Current ifNil: [ Current := self new ].
 	self validateSession.
-	^ Current ifNil: [ Current := self new ]
+	^ Current
 ]
 
 { #category : #private }
 StPharoApplication class >> validateSession [
 	
 	session == Smalltalk session ifTrue: [ ^ self ].
-	Current := nil.
+	Current sessionChanged.
 	session := Smalltalk session
 ]
 
@@ -29,6 +30,12 @@ StPharoApplication class >> validateSession [
 StPharoApplication >> initialize [
 
 	super initialize.
+	self resetConfiguration
+]
+
+{ #category : #initialization }
+StPharoApplication >> resetConfiguration [
+	
 	self flag: #TODO. "Replace this with a proper initialization mechanism (which is not
 	implemented at the moment, and we need to choose the backend from it)"
 	self class environment 
@@ -42,6 +49,12 @@ StPharoApplication >> run [
 	Current ifNotNil: [ Current close ].
 	super run. 
 	Current := self
+]
+
+{ #category : #initialization }
+StPharoApplication >> sessionChanged [
+
+	self resetConfiguration
 ]
 
 { #category : #'private running' }
