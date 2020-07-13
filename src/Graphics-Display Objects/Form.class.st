@@ -637,7 +637,8 @@ Form >> colorReduced [
 { #category : #'color mapping' }
 Form >> colormapFromARGB [
 	"Return a ColorMap mapping from canonical ARGB space into the receiver.
-	Note: This version is optimized for Squeak forms."
+	Note: This version is optimized for image forms."
+	
 	| map nBits |
 	self hasNonStandardPalette 
 		ifTrue:[^ColorMap mappingFromARGB: self rgbaBitMasks].
@@ -969,8 +970,8 @@ Form >> displayScaledOn: aForm [
 { #category : #accessing }
 Form >> displayScreen [
 	"Return the display screen the receiver is allocated on. 
-	Forms in general are Squeak internal and not allocated on any particular display."
-	^nil
+	Forms in general are internal and not allocated on any particular display."
+	^ nil
 ]
 
 { #category : #analyzing }
@@ -1379,7 +1380,7 @@ Form >> hasBeenModified: aBool [
 Form >> hasNonStandardPalette [
 	"Return true if the receiver has a non-standard palette.
 	Non-standard means that RGBA components may be located
-	at positions differing from the standard Squeak RGBA layout
+	at positions differing from the standard Pharo RGBA layout
 	at the receiver's depth."
 	^false
 ]

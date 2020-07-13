@@ -37,7 +37,7 @@ Time class >> fromSeconds: secondCount [
 
 { #category : #primitives }
 Time class >> microsecondClockValue [
-	"Answer the number of microseconds since Squeak Epoch"
+	"Answer the number of microseconds since Epoch"
 
 	^self primUTCMicrosecondsClock 
 ]
@@ -116,7 +116,7 @@ Time class >> primMillisecondClock [
 
 { #category : #primitives }
 Time class >> primUTCMicrosecondsClock [
-	"Answer the number of micro-seconds ellapsed since Squeak epoch.
+	"Answer the number of micro-seconds ellapsed since epoch.
 	That is since 00:00 on the morning of January 1, 1901 UTC.
 	At least a 60-bit unsigned integer is used internally which is enough for dates up to year 38435.
 	Essential. See Object documentation whatIsAPrimitive. "
@@ -127,7 +127,7 @@ Time class >> primUTCMicrosecondsClock [
 
 { #category : #primitives }
 Time class >> primUTCMillisecondsClock [
-	"Answer the number of whole milliseconds ellapsed since Squeak epoch.
+	"Answer the number of whole milliseconds ellapsed since epoch.
 	That is since 00:00 on the morning of January 1, 1901 UTC"
 
 	^self primUTCMicrosecondsClock // 1e3
@@ -135,7 +135,7 @@ Time class >> primUTCMillisecondsClock [
 
 { #category : #primitives }
 Time class >> primUTCSecondsClock [
-	"Answer the number of whole seconds ellapsed since Squeak epoch.
+	"Answer the number of whole seconds ellapsed since epoch.
 	That is since 00:00 on the morning of January 1, 1901 UTC"
 
 	^self primUTCMicrosecondsClock // 1e6
@@ -171,7 +171,7 @@ Time class >> secondsWhenClockTicks [
 
 { #category : #accessing }
 Time class >> totalSeconds [
-	"Answer the total seconds ellapsed since the Squeak epoch: 1 January 1901 00:00 UTC"
+	"Answer the total seconds ellapsed since the epoch: 1 January 1901 00:00 UTC"
 
 	^ self primUTCSecondsClock
 ]

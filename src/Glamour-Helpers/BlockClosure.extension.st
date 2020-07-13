@@ -2,8 +2,7 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*Glamour-Helpers' }
 BlockClosure >> glamourValueWithArgs: anArray [ 
-	"This is the same as valueWithPossibleArgs: from squeak. 
-	Unfortunately, VW's cullValue: is incompatible." 
+	"This is the same as valueWithPossibleArgs:, please rewrite" 
 	 
 	self numArgs = 0 ifTrue: [^self value]. 
 	self numArgs = anArray size ifTrue: [^self valueWithArguments: anArray]. 
