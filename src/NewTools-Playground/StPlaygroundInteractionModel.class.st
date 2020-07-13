@@ -19,13 +19,18 @@ StPlaygroundInteractionModel >> application [
 
 { #category : #binding }
 StPlaygroundInteractionModel >> bindingOf: aString [
+	| key |
 
+	key := aString asSymbol.
 	"prevent the case when a tool (like completion) asks for a global binding"
-	(self class bindingOf: aString) ifNotNil: [ :aBinding | ^ aBinding ].
+	(self class bindingOf: key) ifNotNil: [ :aBinding | ^ aBinding ].
+	"Look in shared"
+	(self sharedBindings includesKey: key)
+		ifTrue: [ ^ self sharedBindings associationAt: key ].
 	"if there is no binding, I will include a key"
-	(self bindings includesKey: aString)
-		ifFalse: [ self addBinding: (WorkspaceVariable key: aString asSymbol) ].
-	^ self bindings associationAt: aString
+	(self localBindings includesKey: key)
+		ifFalse: [ self addBinding: (WorkspaceVariable key: key) ].
+	^ self localBindings associationAt: key
 ]
 
 { #category : #binding }
@@ -40,13 +45,36 @@ StPlaygroundInteractionModel >> bindings [
 	self application sharedBindings ifEmpty: [ ^ bindings ].
 	
 	joinedBindings := self application sharedBindings copy.
-	bindings associations 
+	self localBindings associations 
 		do: [ :each | joinedBindings add: each ].
 	^ joinedBindings
+]
+
+{ #category : #binding }
+StPlaygroundInteractionModel >> hasBindingOf: aString [
+
+	^ (self sharedBindings includesKey: aString asSymbol)
+		or: [ (self localBindings includesKey: aString asSymbol) ]
 ]
 
 { #category : #private }
 StPlaygroundInteractionModel >> isGlobalVariable: aSymbol [
 
 	^ (self class environment classNamed: aSymbol) notNil
+]
+
+{ #category : #accessing }
+StPlaygroundInteractionModel >> localBindings [
+	
+	^ super bindings
+
+
+]
+
+{ #category : #accessing }
+StPlaygroundInteractionModel >> sharedBindings [
+	
+	^ self application sharedBindings 
+
+
 ]
