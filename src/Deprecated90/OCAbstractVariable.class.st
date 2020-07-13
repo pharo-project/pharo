@@ -28,12 +28,6 @@ OCAbstractVariable >> definingScope [
 	^ scope
 ]
 
-{ #category : #testing }
-OCAbstractVariable >> isLocal [
-
-	^false
-]
-
 { #category : #'read/write usage' }
 OCAbstractVariable >> isRead [
 	^usage = #read

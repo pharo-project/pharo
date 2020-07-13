@@ -116,12 +116,6 @@ LocalVariable >> isEscapingWrite [
 ]
 
 { #category : #testing }
-LocalVariable >> isLocal [
-
-	^true
-]
-
-{ #category : #testing }
 LocalVariable >> isLocalVariable [
 
 	^true

@@ -51,12 +51,6 @@ OCLiteralVariable >> isFromSharedPool [
 ]
 
 { #category : #testing }
-OCLiteralVariable >> isGlobal [
-
-	^ true
-]
-
-{ #category : #testing }
 OCLiteralVariable >> isGlobalClassNameBinding [
 	^ (self value isClass or: [ self value isTrait ])
 		and: [ self variable key == self value name ]

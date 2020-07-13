@@ -114,8 +114,9 @@ Variable >> isClassVariable [
 ]
 
 { #category : #testing }
-Variable >> isGlobal [ 
-	^false
+Variable >> isGlobal [
+	"this will be deprecated"
+	^self isGlobalVariable
 ]
 
 { #category : #testing }
@@ -125,21 +126,32 @@ Variable >> isGlobalVariable [
 
 { #category : #testing }
 Variable >> isInstance [
-	^ false
+	"this will be deprecated"
+	^ self isInstanceVariable
+]
+
+{ #category : #testing }
+Variable >> isInstanceVariable [
+	"check if the var is an instance variable (a Slot)"
+	^false
 ]
 
 { #category : #testing }
 Variable >> isLiteralVariable [
+	"returns true for Global Variables, Class Variables and some others 
+	(e.g. Workspace bindings and Undeclared variables, see subclasses)"
 	^false
 ]
 
 { #category : #testing }
 Variable >> isLocal [
-	^false
+	"this will be deprecated"
+	^self isLocalVariable
 ]
 
 { #category : #testing }
 Variable >> isLocalVariable [
+	"temporary variables and arguments are local variables"
 	^false
 ]
 
@@ -150,6 +162,7 @@ Variable >> isReferenced [
 
 { #category : #testing }
 Variable >> isReservedVariable [
+	"thisContext, super, self are reserved variables (true, false and nil are literals)"
 	^false
 ]
 
@@ -165,6 +178,12 @@ Variable >> isSelfOrSuper [
 ]
 
 { #category : #testing }
+Variable >> isSlot [
+	"check if the var is an instance variable (a Slot)"
+	^false
+]
+
+{ #category : #testing }
 Variable >> isSuper [
 	^false
 ]
@@ -173,6 +192,11 @@ Variable >> isSuper [
 Variable >> isTemp [
 
 	^ false
+]
+
+{ #category : #testing }
+Variable >> isTemporaryVariable [
+	^false
 ]
 
 { #category : #testing }

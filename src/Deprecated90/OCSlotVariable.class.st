@@ -38,11 +38,6 @@ OCSlotVariable >> emitValue: methodBuilder [
 	slot emitValue: methodBuilder
 ]
 
-{ #category : #testing }
-OCSlotVariable >> isInstance [
-	^ true
-]
-
 { #category : #accessing }
 OCSlotVariable >> name [
 	^ slot name

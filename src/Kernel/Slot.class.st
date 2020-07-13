@@ -218,7 +218,7 @@ Slot >> isDefinedByOwningClass [
 ]
 
 { #category : #testing }
-Slot >> isInstance [
+Slot >> isInstanceVariable [
 	^ true
 ]
 
@@ -231,6 +231,11 @@ Slot >> isReadIn: aCompiledCode [
 { #category : #testing }
 Slot >> isSelfEvaluating [
 	^true
+]
+
+{ #category : #testing }
+Slot >> isSlot [
+	^ true
 ]
 
 { #category : #testing }
