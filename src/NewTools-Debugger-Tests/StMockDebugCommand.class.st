@@ -14,7 +14,8 @@ StMockDebugCommand class >> defaultIconName [
 
 { #category : #initialization }
 StMockDebugCommand class >> defaultName [
-	^ Time now asNanoSeconds printString
+
+	^ UUID new printString
 ]
 
 { #category : #initialization }
