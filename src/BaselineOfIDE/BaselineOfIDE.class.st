@@ -194,11 +194,6 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #('Code' 'CodeTests') ].
 		
-		"No idea why we need to define it here because it is expressed as dependency inside
-		microdown baseline!"	
-		spec baseline: 'Pillar' with: [ spec 
-				loads: #('rich text exporter');
-				repository: repository ].
 		spec baseline: 'Microdown' with: [ 
 			spec 
 				repository: repository;
