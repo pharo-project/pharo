@@ -402,17 +402,17 @@ RBProgramNode >> hashForCollection: aCollection [
 
 { #category : #querying }
 RBProgramNode >> instanceVariableNodes [
-		^self variableNodes select: [:each | each isInstance]
+		^self variableNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #querying }
 RBProgramNode >> instanceVariableReadNodes [
-		^self variableReadNodes select: [:each | each isInstance]
+		^self variableReadNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #querying }
 RBProgramNode >> instanceVariableWriteNodes [
-		^self variableWriteNodes select: [:each | each isInstance]
+		^self variableWriteNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #testing }

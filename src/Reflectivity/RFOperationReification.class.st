@@ -30,7 +30,7 @@ RFOperationReification >> genForRBAssignmentNode [
 			context: thisContext;
 			variableName: #{1}.' format: {entity variable name})].
 		
-	entity variable isInstance ifTrue: [  
+	entity variable isInstanceVariable ifTrue: [  
 		^RBParser parseExpression: ('RFSlotWrite new
 			assignedValue: RFNewValueReificationVar; 
 			object: self;
@@ -99,7 +99,7 @@ RFOperationReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFOperationReification >> genForRBVariableNode [
-	entity isInstance ifTrue: [  
+	entity isInstanceVariable ifTrue: [  
 		^RBParser parseExpression: ('RFSlotRead new 
 			object: self;
 			variableName: #{1}.' format: {entity name})].

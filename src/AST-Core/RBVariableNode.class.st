@@ -108,8 +108,18 @@ RBVariableNode >> isDefinition [
 ]
 
 { #category : #testing }
+RBVariableNode >> isGlobalVariable [
+	^variable isGlobalVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isImmediateNode [
 	^true
+]
+
+{ #category : #testing }
+RBVariableNode >> isInstanceVariable [
+	^variable isInstanceVariable
 ]
 
 { #category : #testing }

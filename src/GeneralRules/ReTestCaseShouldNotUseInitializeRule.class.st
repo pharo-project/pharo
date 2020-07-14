@@ -28,7 +28,7 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 		ifFalse: [ ^ false ].
 	
 	alteredVariables := (aClass >> #initialize) ast allChildren 
-					select: [ :e | e isAssignment and: [ e variable isInstance ] ]
+					select: [ :e | e isAssignment and: [ e variable isInstanceVariable ] ]
 					thenCollect: [ :e | e variable ].
 	
 	expectedVariables := aClass new instanceVariablesToKeep.

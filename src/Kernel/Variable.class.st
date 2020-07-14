@@ -115,7 +115,10 @@ Variable >> isClassVariable [
 
 { #category : #testing }
 Variable >> isGlobal [
-	"this will be deprecated"
+	self 
+		deprecated: 'Use #isGlobalVariable instead.' 
+		transformWith: '`@receiver isGlobal' -> '`@receiver isGlobalVariable'.
+	
 	^self isGlobalVariable
 ]
 
@@ -126,8 +129,9 @@ Variable >> isGlobalVariable [
 
 { #category : #testing }
 Variable >> isInstance [
-	"this will be deprecated"
-	^ self isInstanceVariable
+	self 
+		deprecated: 'Use #isInstanceVariable instead.' 
+		transformWith: '`@receiver isInstance' -> '`@receiver isInstanceVariable'.
 ]
 
 { #category : #testing }
@@ -145,8 +149,9 @@ Variable >> isLiteralVariable [
 
 { #category : #testing }
 Variable >> isLocal [
-	"this will be deprecated"
-	^self isLocalVariable
+	self 
+		deprecated: 'Use #isLocalVariable instead.' 
+		transformWith: '`@receiver isLocal' -> '`@receiver isLocalVariable'.
 ]
 
 { #category : #testing }

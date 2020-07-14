@@ -136,10 +136,10 @@ OCASTCheckerTest >> testInstanceVar [
 	self assertEmpty: ast scope tempVars.
 
 	self assert: ast scope outerScope isInstanceScope.
-	self assert: (ast scope outerScope lookupVar: 'iVar') isInstance.
+	self assert: (ast scope outerScope lookupVar: 'iVar') isInstanceVariable.
 
 	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
-	self assert: assignment variable isInstance
+	self assert: assignment variable isInstanceVariable
 ]
 
 { #category : #'testing - variables' }
@@ -307,9 +307,9 @@ OCASTCheckerTest >> testSingleRemoteTempVar [
 	self assert: (ast scope lookupVar: 'theCollection') isEscaping.
 	self assert: (ast scope lookupVar: 'block') isTemp.
 	self assert: (ast scope lookupVar: 'theCollection') isTemp.
-	self deny: (ast scope lookupVar: 'theCollection') isInstance.
-	self deny: (ast scope lookupVar: 'index') isInstance.
-	self deny: (ast scope lookupVar: 'block') isInstance
+	self deny: (ast scope lookupVar: 'theCollection') isInstanceVariable.
+	self deny: (ast scope lookupVar: 'index') isInstanceVariable.
+	self deny: (ast scope lookupVar: 'block') isInstanceVariable
 ]
 
 { #category : #'testing - variables' }
