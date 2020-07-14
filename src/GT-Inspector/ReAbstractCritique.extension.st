@@ -8,12 +8,3 @@ ReAbstractCritique >> gtInspectorDescriptionIn: composite [
 		title: 'Description';
 		display: [ self description ]
 ]
-
-{ #category : #'*GT-Inspector' }
-ReAbstractCritique >> gtInspectorSourceCodeIn: composite [
-	<gtInspectorPresentationOrder: 0>
-
-	sourceAnchor gtInspectorAnchorIn: composite
-	
-		
-]

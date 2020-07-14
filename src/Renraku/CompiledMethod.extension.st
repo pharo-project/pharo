@@ -40,13 +40,6 @@ CompiledMethod >> critiques [
 ]
 
 { #category : #'*renraku' }
-CompiledMethod >> glmCritiqueSourceIn: composite [
-
-	^ self gtInspectorSourceIn: composite
-	
-]
-
-{ #category : #'*renraku' }
 CompiledMethod >> overriddenMethods [
 	"all the methods of my superclasses that are overriden by me"
 	| selector |

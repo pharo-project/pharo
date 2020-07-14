@@ -28,12 +28,6 @@ RBProgramNode >> critiques [
 ]
 
 { #category : #'*renraku' }
-RBProgramNode >> glmCritiqueSourceIn: aGLMCompositePresentation [ 
-	
-	^ self gtInspectorSourceCodeIn: aGLMCompositePresentation
-]
-
-{ #category : #'*renraku' }
 RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [ 
 	| context |
 	
