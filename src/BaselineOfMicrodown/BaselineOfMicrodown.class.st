@@ -11,17 +11,11 @@ Class {
 { #category : #baselines }
 BaselineOfMicrodown >> baseline: spec [
 	<baseline>
-
-	| repository |
-	
-	"If we are loading it from Pharo repository, it should the version there"
-	repository := self packageRepositoryURL.
-	repository = '' ifTrue: [ repository := 'github://pillar-markup/pillar:dev-8/src' ].
 	
 	spec for: #'common' do: [
 		spec baseline: 'Pillar' with: [ spec 
 				loads: #('rich text exporter');
-				repository: repository ].
+				repository: 'github://pillar-markup/pillar:dev-8/src' ].
 		spec 
 			package: #'Microdown';
 			package: #'Microdown-Tests'  with: [
