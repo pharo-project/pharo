@@ -19,36 +19,6 @@ Class {
 	#category : #'Alien-Core'
 }
 
-{ #category : #'class initialization' }
-UnsafeAlien class >> ensureInSpecialObjectsArray [
-	"UnsafeAlien must be in the specialObjectsArray to enable the Newsqueak FFI.
-	 Because of the bootstrap the specialObjectsArray may already have been
-	 partially initialized with the callback selector and to be large enough (as part of
-	 loading immutability), but it will be missing UnsafeAlien until UnsafeAlien is loaded.
-	 So check if the specialObjectsArray is of the expected size before recreating
-	 and slam UnsafeAlien in if the specialObjectsArray is already large enough."
-
-	| index env|
-	env := self environment.
-	self ~~ UnsafeAlien ifTrue: [^self].
-
-	index := 55.
-	((env includesKey: #VMObjectIndices)
-	 and: [((env at: #VMObjectIndices) classPool at: #ClassUnsafeAlien ifAbsent: []) ~= (index - 1)]) ifTrue:
-		[self error: 'index probably wrong'].
-
-	Smalltalk specialObjectsArray size < index ifTrue:
-		[Smalltalk recreateSpecialObjectsArray].
-	
-	(Smalltalk specialObjectsArray size < index
-	 or: [(Smalltalk specialObjectsArray at: index) ~~ nil
-		and: [(Smalltalk specialObjectsArray at: index) ~~ self]]) ifTrue:
-		[self error: 'SystemDictionary>>recreateSpecialObjectsArray appears incompatible'].
-
-	(Smalltalk specialObjectsArray at: index) ifNil:
-		[Smalltalk specialObjectsArray at: index put: self]
-]
-
 { #category : #examples }
 UnsafeAlien class >> exampleSprintf [
 	"Call the libc sprintf function."
@@ -68,12 +38,6 @@ UnsafeAlien class >> forPointerTo: anObject [
 	(anObject class instSpec between: 6 and: 8) ifFalse:
 		[^self error: 'only use UnsafeAlien on instances of isBits classes (other than CompiledMethod)!'].
 	^self new nonPointerObject: anObject
-]
-
-{ #category : #'class initialization' }
-UnsafeAlien class >> initialize [
-	"UnsafeAlien initialize"
-	self ensureInSpecialObjectsArray
 ]
 
 { #category : #accessing }
