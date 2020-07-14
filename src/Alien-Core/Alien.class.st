@@ -169,7 +169,12 @@ Alien class >> initialize [
 	WordSize := Smalltalk wordSize.
 	lifoCallbackSemaphore := Semaphore new.
 
-	self ensureNotifiedAtStartup
+	self ensureNotifiedAtStartup.
+	
+	(Smalltalk specialObjectsArray at: 53) ifNil:
+		[Smalltalk specialObjectsArray at: 53 put: Alien].
+	(Smalltalk specialObjectsArray at: 55) ifNil:
+		[Smalltalk specialObjectsArray at: 55 put: UnsafeAlien]	
 ]
 
 { #category : #callbacks }
