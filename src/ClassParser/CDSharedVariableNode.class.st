@@ -25,7 +25,7 @@ CDSharedVariableNode >> isClassVariable [
 ]
 
 { #category : #testing }
-CDSharedVariableNode >> isInstance [
+CDSharedVariableNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]

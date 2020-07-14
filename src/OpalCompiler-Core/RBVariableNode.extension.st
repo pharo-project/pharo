@@ -21,7 +21,7 @@ RBVariableNode >> isArg [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isClean [
-	^ (self isInstance | self isReservedVariable) not
+	^ (self isInstanceVariable | self isReservedVariable) not
 ]
 
 { #category : #'*opalcompiler-core' }
@@ -32,7 +32,10 @@ RBVariableNode >> isGlobal [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isInstance [
-	^self binding isInstance
+	self 
+		deprecated: 'Use #isInstanceVariable instead.' 
+		transformWith: '`@receiver isInstance' -> '`@receiver isInstanceVariable'.
+	^variable isInstanceVariable
 ]
 
 { #category : #'*opalcompiler-core' }

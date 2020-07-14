@@ -83,7 +83,7 @@ CDSlotNode >> isGlobalVariable [
 ]
 
 { #category : #testing }
-CDSlotNode >> isInstance [
+CDSlotNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^true
 ]
