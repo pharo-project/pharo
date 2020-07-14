@@ -33,12 +33,7 @@ BaselineOfPillar >> baseline: spec [
 					spec
 					 	repository: 'github://kursjan/petitparser2' ];
 				baseline: 'Chrysal' with: [ spec repository: 'github://Ducasse/Chrysal:v1.0.0/src' ];
-				baseline: 'Clap' with: [ 
-					| repository |
-					repository := self packageRepositoryURL.
-					repository = '' ifTrue: [ repository := 'github://cdlm/clap-st:pharo-pr5761' ].
-					spec repository: repository ];
-
+				baseline: 'Clap' with: [ spec repository: 'github://cdlm/clap-st:pharo-pr5761' ];
 				baseline: 'Mustache'
 					with: [ spec
 						repository: 'github://noha/mustache:v1.0/repository';
