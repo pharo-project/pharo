@@ -199,7 +199,7 @@ OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 
 	"index is not escaping as it is (due to the optimized block) defined in the same block"
 	self deny: (ast scope lookupVar: 'index') isEscaping.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 
 	scopes := (OCScopesCollector new visitNode: ast) scopes.
 
@@ -216,7 +216,7 @@ OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 	self assert: ast scope tempVars size equals: 1.
 
 	self deny: (ast scope lookupVar: 'index') isEscaping.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 
 	scopes := (OCScopesCollector new visitNode: ast) scopes.
 
@@ -302,7 +302,7 @@ OCASTCheckerTest >> testSingleRemoteTempVar [
 	self assert: ast scope tempVars size equals: 3.
 
 	self assert: (ast scope lookupVar: 'index') isEscaping.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isEscaping.
 	self assert: (ast scope lookupVar: 'theCollection') isEscaping.
 	self assert: (ast scope lookupVar: 'block') isTemp.
@@ -321,7 +321,7 @@ OCASTCheckerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	self assert: ast scope tempVars size equals: 2.
 
 	self assert: (ast scope lookupVar: 'index') isEscaping.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isEscaping.
 	self assert: (ast scope lookupVar: 'block') isTemp
 ]
@@ -335,7 +335,7 @@ OCASTCheckerTest >> testsingleRemoteTempVarWrittenAfterClosedOver [
 	self assert: ast scope tempVars size equals: 2.
 
 	self assert: (ast scope lookupVar: 'index') isWrite.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isEscaping.
 	self assert: (ast scope lookupVar: 'block') isTemp
 ]

@@ -457,7 +457,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 	self assert: ast scope tempVector size equals: 1.
 
 	self assert: (ast scope lookupVar: 'index') isRemote.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote.
 	self deny: (ast scope lookupVar: 'theCollection') isRemote
 ]
@@ -502,7 +502,7 @@ OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWhileWithTempNotInlined [
 	self assert: ast scope tempVector size equals: 1.
 
 	self assert: (ast scope lookupVar: 'index') isRemote.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote
 ]
 
@@ -516,6 +516,6 @@ OCASTClosureAnalyzerTest >> testsingleRemoteTempVarWrittenAfterClosedOver [
 	self assert: ast scope tempVector size equals: 1.
 
 	self assert: (ast scope lookupVar: 'index') isRemote.
-	self assert: (ast scope lookupVar: 'index') definingScope equals: ast scope.
+	self assert: (ast scope lookupVar: 'index') scope equals: ast scope.
 	self deny: (ast scope lookupVar: 'block') isRemote
 ]

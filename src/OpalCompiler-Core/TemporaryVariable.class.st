@@ -13,6 +13,11 @@ TemporaryVariable class >> semanticNodeClass [
 	^RBTemporaryNode 
 ]
 
+{ #category : #queries }
+TemporaryVariable >> declaringNode [
+	^ scope node temporaries detect: [ :each | each name = name ]
+]
+
 { #category : #testing }
 TemporaryVariable >> isTemp [
 
