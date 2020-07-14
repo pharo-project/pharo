@@ -105,17 +105,3 @@ Object >> spotterProcessorsFor: aSpotterStep pragma: aPragma [
 	(aSpotterStep processors last: addedProcessorsSize)
 		do: [ :processor | processor order: (aPragma argumentAt: 1) ] 
 ]
-
-{ #category : #'*GT-Spotter' }
-Object >> spotterRePropertiesFor: aStep [
-	<spotterOrder: 0>
-	
-	ReSettings spotterPlugin ifFalse: [ ^ self ].
-	
-	aStep listProcessor
-		title: 'Renraku Properties';
-		items: [ self externalProperties asArray ];
-		itemName: #title;
-		itemIcon: #icon;
-		filter: GTFilterSubstring
-]

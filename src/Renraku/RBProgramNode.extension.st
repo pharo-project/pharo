@@ -24,8 +24,6 @@ RBProgramNode >> banLevelCandidates [
 
 { #category : #'*renraku' }
 RBProgramNode >> critiques [
-	<eProperty>
-
 	^ ReCriticEngine critiquesOf: self
 ]
 

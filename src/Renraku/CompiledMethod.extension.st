@@ -29,7 +29,6 @@ CompiledMethod >> banLevelCandidates [
 
 { #category : #'*renraku' }
 CompiledMethod >> critiques [
-	<eProperty>
 	| critiques |
 	
 	critiques := ReCriticEngine critiquesOf: self.
