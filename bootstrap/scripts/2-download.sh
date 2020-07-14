@@ -18,8 +18,6 @@ wget --progress=dot:mega https://github.com/carolahp/PharoBootstrap/releases/dow
 unzip bootstrapImage.zip
 
 cd "${BOOTSTRAP_CACHE}"
-#We need the old sources file next to the image because of sources condensation step
-wget --progress=dot:mega http://files.pharo.org/sources/PharoV60.sources
 echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
