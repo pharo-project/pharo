@@ -13,6 +13,11 @@ ArgumentVariable class >> semanticNodeClass [
 	^RBArgumentNode 
 ]
 
+{ #category : #queries }
+ArgumentVariable >> declaringNode [
+	^ scope node arguments detect: [ :each | each name = name ]
+]
+
 { #category : #testing }
 ArgumentVariable >> isArgumentVariable [
 	^ true

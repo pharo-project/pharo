@@ -20,11 +20,6 @@ OCAbstractLocalVariable >> asString [
 	^ self name
 ]
 
-{ #category : #accessing }
-OCAbstractLocalVariable >> definingScope [
-	^ scope
-]
-
 { #category : #'read/write usage' }
 OCAbstractLocalVariable >> isRead [
 	^usage = #read

@@ -40,9 +40,9 @@ LocalVariable >> astNodes [
 	^scope node methodNode variableNodes select: [ :each | each binding == self]
 ]
 
-{ #category : #accessing }
-LocalVariable >> definingScope [
-	^ scope
+{ #category : #queries }
+LocalVariable >> declaringNode [
+	^ self subclassResponsibility
 ]
 
 { #category : #emitting }
@@ -245,7 +245,7 @@ LocalVariable >> readInContext: aContext [
 
 { #category : #accessing }
 LocalVariable >> scope [
-
+	"this is the scope that the variable is declared in"
 	^ scope
 ]
 
