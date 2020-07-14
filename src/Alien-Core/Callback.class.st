@@ -110,13 +110,12 @@ Callback class >> block: aBlock "<BlockContext>" stdcallArgsClass: argsProxyClas
 { #category : #'class initialization' }
 Callback class >> ensureNotifiedAtStartup [
 	"Callback needs to be notified at system startup to clear the ThunkToCallbackMap and determine concreteClass."
-	self ~~ Callback ifTrue: [^self].
-	(Smalltalk classNamed: #SessionManager)
-		ifNotNil: [:sessionManagerClass|
-			sessionManagerClass default
-				registerSystemClassNamed: self name
-				atPriority: 60]
-		ifNil: [Smalltalk addToStartUpList: self after: FFICallbackThunk]
+
+	self ~~ Callback ifTrue: [ ^ self ].
+
+	SessionManager default
+		registerSystemClassNamed: self name
+		atPriority: 60
 ]
 
 { #category : #evaluation }
