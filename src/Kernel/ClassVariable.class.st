@@ -68,8 +68,7 @@ ClassVariable >> isReferenced [
 	"A class variable can only be accessed in the defintionClass and its subclasses (both class and instance side)"
 
 	^ self definingClass withAllSubclasses anySatisfy: [ :behavior | 
-		  behavior hasSelectorReferringTo: self.
-		  behavior class hasSelectorReferringTo: self ]
+		  (behavior hasSelectorReferringTo: self) or: [ behavior class hasSelectorReferringTo: self ] ]
 ]
 
 { #category : #testing }
