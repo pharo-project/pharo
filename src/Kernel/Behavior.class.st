@@ -645,11 +645,10 @@ Behavior >> dependentClasses [
 	(self methods, self classSide methods) 
 		do: [ :m | m literalsDo: [ :l | 
 					"We also check if the method is not an extension"
-					((((l isVariableBinding 
-					and: [ l value notNil ]) 
-					and: [ l value isBehavior ])
-					and: [ m category notEmpty ] )
-					and: [ m category first ~= $* ])  ifTrue: [ cll add: l value ] ]  ].
+					(l isVariableBinding 
+					and: [ l isGlobalClassNameBinding
+					and: [ m category notEmpty 
+					and: [ m category first ~= $* ]]])  ifTrue: [ cll add: l value ] ] ] .
 	^ cll asArray
 ]
 
