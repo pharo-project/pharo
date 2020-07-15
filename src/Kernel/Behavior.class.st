@@ -847,10 +847,9 @@ Behavior >> hasMethods [
 
 { #category : #'testing method dictionary' }
 Behavior >> hasMethodsAccessingSlot: aSlot [
-	"check if aSlot is accessed in this class or subclasses"
+	"check if aSlot is accessed in this class"
 
-	^ self withAllSubclasses anySatisfy: [ :class | 
-		  class methods anySatisfy: [ :method | aSlot isAccessedIn: method ] ]
+	^ self methods anySatisfy: [ :method | aSlot isAccessedIn: method ]
 ]
 
 { #category : #'testing method dictionary' }
