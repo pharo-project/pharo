@@ -73,6 +73,8 @@ RandomTest >> testNextInto [
 
 { #category : #tests }
 RandomTest >> testUnixRandomGeneratorSeed [
+	"the test is very slow on the CI (>2 minutes)"
+	self skipOnPharoCITestingEnvironment.
 	gen useUnixRandomGeneratorSeed.
 	100 timesRepeat: [ | next |
 			next := gen next.
