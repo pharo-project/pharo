@@ -135,7 +135,7 @@ LocalVariable >> isRead [
 
 { #category : #testing }
 LocalVariable >> isReferenced [
-	^self isUnused not
+	^ self isUnused not
 ]
 
 { #category : #testing }

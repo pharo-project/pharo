@@ -229,6 +229,13 @@ Slot >> isReadIn: aCompiledCode [
 ]
 
 { #category : #testing }
+Slot >> isReferenced [
+	^ self owningClass 
+		ifNil: [ false ]
+		ifNotNil: [:class | class hasMethodsAccessingSlot: self]
+]
+
+{ #category : #testing }
 Slot >> isSelfEvaluating [
 	^true
 ]
