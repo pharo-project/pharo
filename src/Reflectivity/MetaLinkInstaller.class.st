@@ -323,7 +323,7 @@ MetaLinkInstaller >> registerAndInstallPermaLink: aPermaLink forTarget: aSlotOrV
 		
 	linksRegistry registerPermaLink: aPermaLink.
 	
-	nodes := MetalinkTargetResolver resolveASTLookupFor: aSlotOrVar option: aPermaLink persistenceType.
+	nodes := (aSlotOrVar accessingNodesFor: aPermaLink persistenceType) asIdentitySet.
 	aPermaLink targetObjectOrClass link: aPermaLink link toNodes: nodes
 ]
 
