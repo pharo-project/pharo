@@ -131,8 +131,10 @@ LiteralVariable >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 LiteralVariable >> isReferenced [
-	"my subclasses override this if they can be referenced in code"
-	^false
+	"my subclasses override this if they know better"
+
+	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior | 
+		  behavior hasSelectorReferringTo: self ]
 ]
 
 { #category : #queries }

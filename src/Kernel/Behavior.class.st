@@ -846,6 +846,13 @@ Behavior >> hasMethods [
 ]
 
 { #category : #'testing method dictionary' }
+Behavior >> hasMethodsAccessingSlot: aSlot [
+	"check if aSlot is accessed in this class"
+
+	^ self methods anySatisfy: [ :method | aSlot isAccessedIn: method ]
+]
+
+{ #category : #'testing method dictionary' }
 Behavior >> hasSelectorReferringTo: literal [
 	"Answer true if any of my methods access the argument as a literal"
 
