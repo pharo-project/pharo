@@ -12,7 +12,7 @@ see:
 Class {
 	#name : #ReadWriteStreamTest,
 	#superclass : #ClassTestCase,
-	#category : #'Collections-Tests-Streams'
+	#category : #'Collections-Streams-Tests-Base'
 }
 
 { #category : #coverage }

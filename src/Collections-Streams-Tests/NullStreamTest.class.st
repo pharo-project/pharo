@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #'Collections-Tests-Streams'
+	#category : #'Collections-Streams-Tests-Base'
 }
 
 { #category : #running }

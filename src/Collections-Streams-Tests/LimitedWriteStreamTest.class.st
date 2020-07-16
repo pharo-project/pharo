@@ -4,7 +4,7 @@ SUnit test clss for LimitedWriteStream
 Class {
 	#name : #LimitedWriteStreamTest,
 	#superclass : #WriteStreamTest,
-	#category : #'Collections-Tests-Streams'
+	#category : #'Collections-Streams-Tests-Base'
 }
 
 { #category : #accessing }
