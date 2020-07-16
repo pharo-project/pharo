@@ -16,7 +16,7 @@ RBVariableNode >> isArg [
 		deprecated: 'Use #isArgument instead.' 
 		transformWith: '`@receiver isArg' -> '`@receiver isArgumentVariable'.
 	
-	^ self isArgument
+	^ self isArgumentVariable
 ]
 
 { #category : #'*opalcompiler-core' }

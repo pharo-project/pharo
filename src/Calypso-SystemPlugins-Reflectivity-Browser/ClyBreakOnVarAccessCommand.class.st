@@ -10,7 +10,7 @@ Class {
 { #category : #testing }
 ClyBreakOnVarAccessCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^ (super canBeExecutedInContext: aSourceCodeContext)
-		and: [ aSourceCodeContext selectedSourceNode isArgument not ]
+		and: [ aSourceCodeContext selectedSourceNode isArgumentVariable not ]
 ]
 
 { #category : #accessing }

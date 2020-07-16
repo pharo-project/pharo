@@ -349,7 +349,7 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	iterator := block arguments first binding.
 	
 	limitEmit := [valueTranslator visitNode: limit].
-	limit isLiteralNode | limit isSelf | limit isSuper | limit isArgument ifFalse: [
+	limit isLiteralNode | limit isSelf | limit isSuper | limit isArgumentVariable ifFalse: [
 		valueTranslator visitNode: limit.
 		methodBuilder addTemp: ('0limit_', iterator name).
 		methodBuilder storeTemp: ('0limit_', iterator name).
