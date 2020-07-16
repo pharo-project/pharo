@@ -55,8 +55,3 @@ ReMissingSubclassResponsibilityRule >> group [
 ReMissingSubclassResponsibilityRule >> name [
 	^ 'Method defined in all subclasses, but not in superclass'
 ]
-
-{ #category : #accessing }
-ReMissingSubclassResponsibilityRule >> resultClass [
-	^ RBMultiEnvironment
-]

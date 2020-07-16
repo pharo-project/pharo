@@ -21,8 +21,10 @@ ReSendsMethodDictRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReSendsMethodDictRule >> basicCheck: aMethod [
-	({Behavior . ClassDescription . Class} includes: aMethod methodClass) ifTrue: [ ^ false ].
-	^ aMethod messages includes: #methodDict
+	"in the Behavior classes we want to use the accessor (see comment #methodDict)"
+	({Behavior . ClassDescription . Class. Metaclass} includes: aMethod methodClass) 
+		ifTrue: [ ^ false ].
+	^(aMethod refersToLiteral: #methodDict) and: [aMethod messages includes: #methodDict]
 ]
 
 { #category : #accessing }

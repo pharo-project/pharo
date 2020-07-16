@@ -220,6 +220,11 @@ ReSmalllintTest >> testAddRemoveDependents [
 ]
 
 { #category : #tests }
+ReSmalllintTest >> testAnySatisfy [
+	self ruleFor: self currentSelector
+]
+
+{ #category : #tests }
 ReSmalllintTest >> testAsOrderedCollectionNotNeeded [
 	self ruleFor: self currentSelector
 ]
@@ -276,11 +281,6 @@ ReSmalllintTest >> testCollectionMessagesToExternalObject [
 
 { #category : #tests }
 ReSmalllintTest >> testCollectionProtocol [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
-ReSmalllintTest >> testContains [
 	self ruleFor: self currentSelector
 ]
 
