@@ -487,7 +487,7 @@ CompiledCode >> literalsAt: anIndex [
 { #category : #literals }
 CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
-	1 to: self numLiterals do:
+	1 to: self numLiterals - self literalsToSkip do:
 		[:index | aBlock value: (self literalAt: index)]
 ]
 
@@ -735,7 +735,7 @@ CompiledCode >> sameLiteralsAs: method [
 	(numLits := self numLiterals) ~= method numLiterals
 		ifTrue: [ ^ false ].
 	"The last literal requires special checking instead of using #literalEqual:"
-	1 to: numLits - 1 do: [ :index | 
+	1 to: numLits - self literalsToSkip do: [ :index | 
 		literal1 := self literalAt: index.
 		literal2 := method literalAt: index.
 		(literal1 == literal2 or: [ literal1 literalEqual: literal2 ])
