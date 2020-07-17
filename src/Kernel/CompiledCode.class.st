@@ -735,7 +735,7 @@ CompiledCode >> sameLiteralsAs: method [
 	(numLits := self numLiterals) ~= method numLiterals
 		ifTrue: [ ^ false ].
 	"The last literal requires special checking instead of using #literalEqual:"
-	1 to: numLits - self literalsToSkip do: [ :index | 
+	1 to: numLits - 1 do: [ :index | 
 		literal1 := self literalAt: index.
 		literal2 := method literalAt: index.
 		(literal1 == literal2 or: [ literal1 literalEqual: literal2 ])
