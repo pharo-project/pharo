@@ -856,7 +856,7 @@ Behavior >> hasMethodsAccessingSlot: aSlot [
 Behavior >> hasSelectorReferringTo: literal [
 	"Answer true if any of my methods access the argument as a literal"
 
-	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
+	^self methods anySatisfy: [ :method | method refersToLiteral: literal ]
 ]
 
 { #category : #'testing class hierarchy' }
@@ -1782,9 +1782,9 @@ Behavior >> whichClassIncludesSelector: aSymbol [
 
 { #category : #'testing method dictionary' }
 Behavior >> whichMethodsReferTo: aLiteral [
-	"Answer methods whose methods directly refers to the argument as a literal"
+	"Answer methods whose methods refers to the argument as a literal"
 
-	^ self methods select: [ :method | method hasLiteral: aLiteral ]
+	^ self methods select: [ :method | method refersToLiteral: aLiteral ]
 ]
 
 { #category : #'testing method dictionary' }
