@@ -462,8 +462,11 @@ RGObject >> isVariable [
 
 { #category : #'testing types' }
 RGObject >> isVariableDefinition [
-
-	^ false
+	self 
+		deprecated: 'Use #isVariable instead.' 
+		transformWith: '`@receiver isVariableDefinition' -> '`@receiver isVariable'.
+	
+	^ self isVariable
 ]
 
 { #category : #resolving }
