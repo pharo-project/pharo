@@ -365,7 +365,7 @@ CompiledCode >> indexOfLiteral: literal [
 	1 to: self numLiterals - self literalsToSkip "exclude superclass + selector/properties"
 	   do:
 		[:index |
-		literal == (self literalAt: index) ifTrue: [^index - 1]].
+		literal == (self literalAt: index) ifTrue: [^index]].
 	^0
 ]
 
