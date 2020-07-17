@@ -545,6 +545,12 @@ RGBehavior >> initializeUnresolved [
 
 ]
 
+{ #category : #'queries - testing' }
+RGBehavior >> isAccessedIn: anRGMethod [ 
+
+	^ (anRGMethod ast variableNodes select: #isGlobal) anySatisfy: [ :each | each name = self name ] 
+]
+
 { #category : #testing }
 RGBehavior >> isBehavior [
 
@@ -591,12 +597,6 @@ RGBehavior >> isImmediateClass [
 RGBehavior >> isPointers [
 
 	^ self isBits not
-]
-
-{ #category : #'queries - testing' }
-RGBehavior >> isReferencedIn: anRGMethod [ 
-
-	^ (anRGMethod ast variableNodes select: #isGlobal) anySatisfy: [ :each | each name = self name ] 
 ]
 
 { #category : #'queries - testing' }
