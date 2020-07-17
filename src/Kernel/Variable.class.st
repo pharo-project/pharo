@@ -63,6 +63,11 @@ Variable >> = other [
 			and: [ name = other name ]
 ]
 
+{ #category : #queries }
+Variable >> definingNode [
+	^ nil
+]
+
 { #category : #'code generation' }
 Variable >> emitStore: methodBuilder [
 
@@ -132,6 +137,7 @@ Variable >> isInstance [
 	self 
 		deprecated: 'Use #isInstanceVariable instead.' 
 		transformWith: '`@receiver isInstance' -> '`@receiver isInstanceVariable'.
+	 ^self isInstanceVariable
 ]
 
 { #category : #testing }
@@ -180,12 +186,6 @@ Variable >> isSelf [
 Variable >> isSelfOrSuper [
 	
 	^ self isSelf or: [ self isSuper ]
-]
-
-{ #category : #testing }
-Variable >> isSlot [
-	"check if the var is an instance variable (a Slot)"
-	^false
 ]
 
 { #category : #testing }

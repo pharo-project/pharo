@@ -10,11 +10,11 @@ ArgumentVariableTest >> testDeclaringNode [
 	
 	method := OrderedCollection >> #do:.
 	declaringNode := method ast arguments first.
-	declaringNodeViaVariable := method ast variableReadNodes third variable variable declaringNode.
+	declaringNodeViaVariable := method ast variableReadNodes third variable variable definingNode.
 	self assert: declaringNodeViaVariable equals: declaringNode.
 	
 	"check block argument"
 	declaringNode := method blockNodes first arguments first.
-	declaringNodeViaVariable := method ast variableReadNodes fifth variable variable declaringNode.
+	declaringNodeViaVariable := method ast variableReadNodes fifth variable variable definingNode.
 	self assert: declaringNodeViaVariable equals: declaringNode.
 ]

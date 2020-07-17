@@ -242,11 +242,6 @@ Slot >> isSelfEvaluating [
 ]
 
 { #category : #testing }
-Slot >> isSlot [
-	^ true
-]
-
-{ #category : #testing }
 Slot >> isVirtual [
 	"virtual slots do not take up space in the object and have size = 0"
 	^true

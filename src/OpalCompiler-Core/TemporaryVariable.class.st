@@ -14,7 +14,7 @@ TemporaryVariable class >> semanticNodeClass [
 ]
 
 { #category : #queries }
-TemporaryVariable >> declaringNode [
+TemporaryVariable >> definingNode [
 	^ scope node temporaries detect: [ :each | each name = name ]
 ]
 

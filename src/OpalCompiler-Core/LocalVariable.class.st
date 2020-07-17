@@ -40,11 +40,6 @@ LocalVariable >> astNodes [
 	^scope node methodNode variableNodes select: [ :each | each binding == self]
 ]
 
-{ #category : #queries }
-LocalVariable >> declaringNode [
-	^ self subclassResponsibility
-]
-
 { #category : #emitting }
 LocalVariable >> emitStore: methodBuilder [
 

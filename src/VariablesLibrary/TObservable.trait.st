@@ -38,7 +38,7 @@ TObservable >> notifyPropertyChanged: aName [
 TObservable >> observablePropertyNamed: aName [
 	| slot |
 	slot := self class slotNamed: aName.
-	slot isObservable ifFalse: [ NonObservableSlotError signal: aName ].
+	(slot class == ObservableSlot) ifFalse: [ NonObservableSlotError signal: aName ].
 
 	"Obtain the raw value.
 	We need to access the underlying value holder to subscribe to it"

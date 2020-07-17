@@ -962,10 +962,9 @@ Behavior >> instVarNames [
 
 	| mySize superSize |
 	mySize := self instSize.
-	superSize := 
-		self superclass == nil
-			ifTrue: [0]
-			ifFalse: [self superclass instSize].
+	superSize := self superclass
+			ifNil: [0]
+			ifNotNil: [self superclass instSize].
 	mySize = superSize ifTrue: [^#()].	
 	^(superSize + 1 to: mySize) collect: [:i | 'inst' , i printString]
 ]
@@ -979,6 +978,12 @@ Behavior >> instanceCount [
 	count := 0.
 	self allInstancesDo: [:x | count := count + 1].
 	^count
+]
+
+{ #category : #'accessing instances and variables' }
+Behavior >> instanceVariables [
+	"in older version, this method was returning names, not objects"
+	^self slots
 ]
 
 { #category : #'memory usage' }
