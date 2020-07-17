@@ -600,6 +600,20 @@ DictionaryTest >> testNew [
 ]
 
 { #category : #'tests - new' }
+DictionaryTest >> testNewAssociations [
+	| assocs dictFromAssociations |
+	assocs := self nonEmptyDict associations.
+	dictFromAssociations := self classToBeTested newFromAssociations: assocs.
+	self assert: dictFromAssociations class equals: self classToBeTested.
+	self assert: (dictFromAssociations at: #d) equals: -2.
+	self assert: (dictFromAssociations at: #a) equals: 1.
+	self assert: (dictFromAssociations at: #b) equals: 30.
+	self assert: (dictFromAssociations at: #c) equals: 1.
+	
+		
+]
+
+{ #category : #'tests - new' }
 DictionaryTest >> testNewFrom [
 	| assocs |
 	self assert: (self classToBeTested newFrom: {}) equals: self emptyDict.

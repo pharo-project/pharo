@@ -21,11 +21,11 @@ TDictionaryKeysValuesAssociationsAccess >> test0FixtureDictionaryKeysValuesAssoc
 { #category : #'tests - dictionary keys values associations access' }
 TDictionaryKeysValuesAssociationsAccess >> testAssociations [
 
-	| collection result  |
+	| collection result |
 	collection := self nonEmpty .
 	result := collection associations.
 	
-	self assert: result size = collection size.
+	self assert: result size equals: collection size.
 	result do: [:assoc | self assert: (assoc value) = (collection at: assoc key) ].
 	"keys do: [ :key | self assert: ( result at: key ) = ( collection at: key )] ."
 	

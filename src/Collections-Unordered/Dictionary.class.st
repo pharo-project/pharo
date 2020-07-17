@@ -86,6 +86,15 @@ Dictionary class >> newFrom: aDict [
 ]
 
 { #category : #'instance creation' }
+Dictionary class >> newFromAssociations: anAssocCollection [
+	"Return a dictionary with the associations defined in anAssocCollection. If the same key appears twice in anAssocCollection, the last one enumerated win."
+	
+	^ anAssocCollection 
+		inject: self new 
+		into: [ :dict :assoc | dict add: assoc. dict ]
+]
+
+{ #category : #'instance creation' }
 Dictionary class >> newFromKeys: keys andValues: values [
 	"Create a dictionary from the keys and values arguments which should have the same length."
 	"(Dictionary newFromKeys: #(#x #y) andValues: #(3 6)) >>> (Dictionary new at: #x put: 3; at: #y put: 6 ;yourself)"
@@ -98,10 +107,9 @@ Dictionary class >> newFromKeys: keys andValues: values [
 
 { #category : #'instance creation' }
 Dictionary class >> newFromPairs: anArray [
-	"Answer an instance of me associating (anArray at: i) to (anArray at: i+1)
-	 for each odd i.  anArray must have an even number of entries."
+	"Answer an instance of me associating (anArray at: i) to (anArray at: i+1) for each odd i.  anArray must have an even number of entries."
 
-	"Dictionary newFromPairs: {'Red' . Color red . 'Blue' . Color blue . 'Green' . Color green}."
+	"((Dictionary newFromPairs: {'Red' . Color red . 'Blue' . Color blue . 'Green' . Color green}) at: 'Red') >>> Color red"
 
 	| newDictionary |
 	newDictionary := self new: anArray size / 2.

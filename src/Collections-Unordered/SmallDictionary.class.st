@@ -80,6 +80,15 @@ SmallDictionary class >> newFrom: aDict [
 ]
 
 { #category : #'instance creation' }
+SmallDictionary class >> newFromAssociations: anAssocCollection [
+	"Return a dictionary with the associations defined in anAssocCollection. If the same key appears twice in anAssocCollection, the last one enumerated win."
+	
+	^ anAssocCollection 
+		inject: self new 
+		into: [ :dict :assoc | dict add: assoc. dict ]
+]
+
+{ #category : #'instance creation' }
 SmallDictionary class >> newFromKeys: keys andValues: values [
 	"Create a dictionary from the keys and values arguments which should have the same length."
 	

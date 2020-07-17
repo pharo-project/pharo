@@ -25,7 +25,7 @@ TDictionaryAssociationAccessTest >> test0FixtureDictionaryAssocitionAccess [
 	self deny: (self nonEmpty keys includes: self keyNotIn)
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : #'tests - dictionary association access' }
 TDictionaryAssociationAccessTest >> testAssociationAt [
 	| collection keyIn result |
 	collection := self nonEmpty.
@@ -37,7 +37,7 @@ TDictionaryAssociationAccessTest >> testAssociationAt [
 	self assert: result value equals: (collection at: keyIn)
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : #'tests - dictionary association access' }
 TDictionaryAssociationAccessTest >> testAssociationAtError [
 
 	| collection nonExistantKey |
@@ -49,7 +49,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtError [
 
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : #'tests - dictionary association access' }
 TDictionaryAssociationAccessTest >> testAssociationAtIfAbsent [
 
 	| collection keyIn result |
@@ -64,7 +64,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfAbsent [
 	self assert: (collection associationAt: self keyNotIn  ifAbsent: [888] ) = 888
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : #'tests - dictionary association access' }
 TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 
 	| collection keyIn result |
@@ -87,7 +87,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 	self assert: result isNil.
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : #'tests - dictionary association access' }
 TDictionaryAssociationAccessTest >> testAssociationAtIfPresentifAbsent [
 	| collection keyIn found |
 	found := false.
