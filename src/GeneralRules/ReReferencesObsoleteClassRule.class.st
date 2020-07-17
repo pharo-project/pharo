@@ -12,8 +12,7 @@ Class {
 ReReferencesObsoleteClassRule >> basicCheck: aNode [
  	^ aNode isVariable 
  		and: [aNode isGlobal
-			"we can not use isGlobalClassNameBinding here"
- 			and: [ aNode variable value isClassOrTrait
+ 			and: [ aNode variable isGlobalClassNameBinding
  				and: [ aNode variable value isObsolete ] ] ]
 ]
 
