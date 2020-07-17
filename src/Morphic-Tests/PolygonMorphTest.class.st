@@ -9,8 +9,7 @@ Class {
 
 { #category : #tests }
 PolygonMorphTest >> testBoundsBug1035 [
-	"This is a non regression test for http://bugs.squeak.org/view.php?id=1035
-	PolygonMorph used to position badly when container bounds were growing"
+	"PolygonMorph used to position badly when container bounds were growing"
 
 	| submorph aMorph |
 	submorph := (PolygonMorph

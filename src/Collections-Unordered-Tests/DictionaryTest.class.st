@@ -370,16 +370,10 @@ DictionaryTest >> testAddWithKeyNotIn [
 
 { #category : #tests }
 DictionaryTest >> testAsSet [
-	"Non regression test for http://bugs.squeak.org/view.php?id=7258"
 	
 	| aDictionary aSet assoc0 assoc1 |
-	
-	"Create a dictionary"
 	aDictionary := Dictionary new.
-	
-	"Convert it to a Set"
 	aSet := aDictionary asSet.
-
 	"Add two associations to it"	
 	assoc0 := #first -> 0.
 	assoc1 := #first -> 1.

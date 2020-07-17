@@ -161,8 +161,8 @@ VirtualMachine >> fullGCCount [
 { #category : #accessing }
 VirtualMachine >> fullPath [
 	"Return the full vm path as a string"
-	"Ex: '/Applications/Squeak/Squeak 4.2.5beta1U.app/Contents/MacOS/Squeak VM Opt'"
-	"SmalltalkImage current vmFullPath"
+	"Ex: '/Applications/.../Contents/MacOS/vm '"
+	"SmalltalkImage current vm fullPath"
 
 	^self getSystemAttribute: 0
 ]
@@ -207,10 +207,10 @@ VirtualMachine >> getSystemAttribute: attributeID [
       0               the full path name for currently executing VM
                        (or, on some platforms, just the path name of the VM's directory)
        1               full path name of this image (better use primImageName instead)
-       2               a Squeak document to open, if any
-       3               first command line argument for Squeak programs
+       2               a Pharo document to open, if any
+       3               first command line argument for Pharo programs
        ...
-       1000    1000th command line argument for Squeak programs
+       1000    1000th command line argument for Pharo programs
        1001    this platform's operating system 'Mac OS', 'Win32', 'unix', ...
        1002    operating system version
        1003    this platform's processor type

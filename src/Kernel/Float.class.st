@@ -96,7 +96,7 @@ Float class >> emin [
 { #category : #'instance creation' }
 Float class >> fromIEEE32Bit: word [
 	"Convert the given 32 bit word (which is supposed to be a positive 32-bit value) from
-	 a 32 bit IEEE floating point representation into an actual Squeak float object (being
+	 a 32 bit IEEE floating point representation into an actual float object (being
 	 64 bits wide). Should only be used for conversion in FloatArrays or likewise objects."
 	
 	| sign mantissa exponent delta |
