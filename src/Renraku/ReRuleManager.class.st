@@ -64,8 +64,7 @@ ReRuleManager class >> default [
 ReRuleManager class >> defaultRules [
 	^ self visibleRuleClasses
 			reject: [ :ruleClass |
-				"lint rules suck again…"
-				((ruleClass inheritsFrom: ReAbstractRule) and: [ ruleClass enabled not ]) or: [ 
+				ruleClass enabled not or: [ 
 				self excludedRuleNames includes: ruleClass name ] ] 
 			thenCollect: #new
 ]
@@ -181,8 +180,7 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 		parent: #qualityAssistant;
 		with: [ 
 			(self visibleRuleClasses sorted: [ :a :b | a name < b name ])
-				select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
-				thenDo: [ :rule | 
+				do: [ :rule | 
 					| inst |
 					inst := rule new.
 					(aBuilder setting: rule enabledSettingID)
@@ -209,18 +207,14 @@ ReRuleManager class >> rulesProfile: aSelector [
 { #category : #acccessing }
 ReRuleManager class >> setBeginnerProfile [
 
-	self visibleRuleClasses 
-		select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
-		thenDo: [ :rule | rule enabled: rule isBeginnerRule ].
+	self visibleRuleClasses do: [ :rule | rule enabled: rule isBeginnerRule ].
 	self reset
 ]
 
 { #category : #acccessing }
 ReRuleManager class >> setDefaultProfile [
 
-	self visibleRuleClasses 
-		select: [ :rule | rule inheritsFrom: ReAbstractRule ] "because lint rules don't have #enabled"
-		thenDo: [ :rule | rule enabled: rule isDefaultRule ].
+	self visibleRuleClasses do: [ :rule | rule enabled: rule isDefaultRule ].
 	self reset
 ]
 
@@ -275,13 +269,6 @@ ReRuleManager class >> visibleRuleClasses [
 ReRuleManager >> allRules [
 
 	^ rules
-]
-
-{ #category : #'announcement handling' }
-ReRuleManager >> classAdded: aClassAddedAnnouncement [ 
-
-	(aClassAddedAnnouncement classAdded isKindOf: RBLintRule) 
-		ifTrue: [ self reset ] 
 ]
 
 { #category : #accessing }
