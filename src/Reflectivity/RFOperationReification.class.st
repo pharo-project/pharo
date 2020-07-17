@@ -138,7 +138,7 @@ RFOperationReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBTemporaryNode named: name).
+			arguments add:  (RBVariableNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
@@ -170,7 +170,7 @@ RFOperationReification >> preambleForMessage: aNode [
 	(1 to: aNode numArgs) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBTemporaryNode named: name).
+			arguments add:  (RBVariableNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
@@ -182,7 +182,7 @@ RFOperationReification >> preambleForMessage: aNode [
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
-	arguments := aNode argumentNames collect: [ :name | RBTemporaryNode named: name].
+	arguments := aNode argumentNames collect: [ :name | RBVariableNode named: name].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble 

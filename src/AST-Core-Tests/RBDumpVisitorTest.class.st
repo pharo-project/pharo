@@ -132,7 +132,7 @@ RBDumpVisitorTest >> testGlobalNodeDump [
 	node := self parseMethod: 'foo ^ Object'.
 	dumpedNode := Smalltalk compiler evaluate: node doSemanticAnalysis dump.
 	
-	self assert: dumpedNode statements first value class equals: RBGlobalNode. 
+	self assert: dumpedNode statements first value isGlobal.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 	
@@ -279,7 +279,7 @@ RBDumpVisitorTest >> testSelfNodeDump [
 	node := self parseExpression: 'self'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-	self assert: dumpedNode class equals: RBSelfNode. 
+	self assert: dumpedNode isSelf.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 	
@@ -305,7 +305,7 @@ RBDumpVisitorTest >> testSuperNodeDump [
 	node := self parseExpression: 'super'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-	self assert: dumpedNode class equals: RBSuperNode. 
+	self assert: dumpedNode isSuper.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 	
