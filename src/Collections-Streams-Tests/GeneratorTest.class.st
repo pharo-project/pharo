@@ -4,7 +4,7 @@ SUnit tests for class Generator
 Class {
 	#name : #GeneratorTest,
 	#superclass : #TestCase,
-	#category : #'Collections-Tests-Streams'
+	#category : #'Collections-Streams-Tests-Base'
 }
 
 { #category : #accessing }
