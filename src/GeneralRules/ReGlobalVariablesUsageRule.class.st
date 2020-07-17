@@ -20,8 +20,8 @@ ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 		select: [ :node |
 			node isVariable and: [ 
 				node variable isGlobalVariable and: [
-					(self isKnownGlobal: node name) not and: [
-						node variable isGlobalClassNameBinding not ] ] ] ]
+					node variable isGlobalClassNameBinding not and: [
+					(self isKnownGlobal: node name) not ] ] ] ] 
 		thenDo: [ :node |
 			aCriticBlock cull: (self
 				createTrivialCritiqueOn: aMethod
