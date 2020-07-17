@@ -291,7 +291,7 @@ BlockClosureTest >> testPrintOn [
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	| method copy start block |
 	"Generating method with source code"
-	UndefinedObject compile: 'method ^ [1 + 2]'.
+	UndefinedObject compile: 'method ^ [ 1 + 2 ]'.
 	method := UndefinedObject >> #method.
 	["Removing the source code of method"
 		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
