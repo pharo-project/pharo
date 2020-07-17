@@ -41,7 +41,7 @@ LocalVariable >> astNodes [
 ]
 
 { #category : #queries }
-LocalVariable >> declaringNode [
+LocalVariable >> definingNode [
 	^ self subclassResponsibility
 ]
 

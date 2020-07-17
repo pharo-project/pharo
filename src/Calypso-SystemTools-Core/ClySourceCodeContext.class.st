@@ -125,15 +125,12 @@ ClySourceCodeContext >> isTempVariableSelected [
 
 { #category : #testing }
 ClySourceCodeContext >> isVariableSelected [
-	| node binding |
-	self isClassSelected ifTrue: [ ^false ].
-	
+	| node |
+	self isClassSelected ifTrue: [ ^ false ].
 	node := self selectedSourceNode.
-	node isVariable ifFalse: [ ^false ].
+	node isVariable ifFalse: [ ^ false ].
 	
-	binding := node binding.
-	
-	^binding isClassVariable | binding isInstanceVariable | binding isGlobalVariable | binding isUndeclared
+	^ node variable isLiteralVariable | node variable isLiteralVariable
 ]
 
 { #category : #selection }

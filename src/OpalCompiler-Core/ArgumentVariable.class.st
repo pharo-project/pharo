@@ -14,7 +14,7 @@ ArgumentVariable class >> semanticNodeClass [
 ]
 
 { #category : #queries }
-ArgumentVariable >> declaringNode [
+ArgumentVariable >> definingNode [
 	^ scope node arguments detect: [ :each | each name = name ]
 ]
 

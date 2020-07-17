@@ -105,11 +105,7 @@ RBVariableNode >> isArgumentVariable [
 { #category : #testing }
 RBVariableNode >> isDefinition [
 	"Check if I am a Variable defintion"
-	self parent isSequence
-		ifTrue: [ ^ self parent temporaries identityIncludes: self ].
-	(self parent isMethod or: [ self parent isBlock ])
-		ifTrue: [ ^ self parent arguments identityIncludes: self ].
-	^ false
+	^variable definingNode == self
 ]
 
 { #category : #testing }
