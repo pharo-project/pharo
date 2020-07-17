@@ -73,6 +73,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Debugger';
+						default: (Smalltalk at: #GTGenericStackDebugger);
 						domainValues: Smalltalk tools recentDebuggerTools ];
 		with: [ 
 					(aBuilder pickOne: #messageListTool)

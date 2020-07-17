@@ -106,6 +106,7 @@ StPlaygroundPage >> fileReference [
 StPlaygroundPage >> flush [
 
 	mutex critical: [ 
+		self fileReference parent ensureCreateDirectory.
 		self fileReference 
 			ensureDelete;
 			writeStreamDo: [ :stream |

@@ -36,10 +36,7 @@ SpCodeObjectInteractionModel >> collectBindings [
 { #category : #private }
 SpCodeObjectInteractionModel >> collectBindingsOf: aClass into: aDictionary [
 
-	aClass slots do: [ :each |
-		aDictionary 
-			at: each name 
-			put: (each read: self object) ]
+		aDictionary addAll: aClass slots
 ]
 
 { #category : #accessing }
