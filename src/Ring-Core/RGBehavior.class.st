@@ -432,12 +432,6 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self.
 ]
 
-{ #category : #'accessing - definition' }
-RGBehavior >> definitionForNautilus [
-
-	^ self definition
-]
-
 { #category : #'queries - methods' }
 RGBehavior >> ensureLocalMethodNamed: aSymbol [
 

@@ -467,20 +467,6 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
-{ #category : #accessing }
-Class >> definitionForNautilus [
-	"Answer a String that defines the receiver."
-
-	self 
-		deprecated: 'Use #definition instead.' 
-		on: '2019-05-14'
-		in: #Pharo8
-		transformWith: '`@receiver definitionForNautilus' 
-						-> '`@receiver definition'.
-						
-	^ self definition
-]
-
 { #category : #deprecation }
 Class >> deprecationRefactorings [
 
