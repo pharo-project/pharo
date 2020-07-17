@@ -235,11 +235,11 @@ CompiledCode >> frameSize [
 { #category : #literals }
 CompiledCode >> hasLiteral: literal [
 	"Answer whether the receiver references the argument, literal."
-	2 to: self numLiterals - 1 do: "exclude superclass + selector/properties"
+	1 to: self numLiterals - self literalsToSkip do: "exclude superclass + selector/properties"
 		[:index |
 		| lit |
-		((lit := self objectAt: index) literalEqual: literal) ifTrue: [^true].
-		(lit isMemberOf: CompiledBlock) ifTrue: [ (lit hasLiteral: literal) ifTrue: [ ^true ] ]].
+		((lit := self literalAt: index) literalEqual: literal) ifTrue: [^true].
+		lit isCompiledBlock ifTrue: [ (lit hasLiteral: literal) ifTrue: [ ^true ] ]].
 	^false
 ]
 
@@ -249,13 +249,13 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 	(self penultimateLiteral isMethodProperties
 	 and: [self penultimateLiteral hasLiteralSuchThat: litBlock]) ifTrue:
 		[^true].
-	2 to: self numLiterals - 1 do: "exclude header and methodClass or outerCode"
+	1 to: self numLiterals -  self literalsToSkip do: "exclude header and methodClass or outerCode"
 		[:index | | lit |
-		lit := self objectAt: index.
+		lit := self literalAt: index.
 		((litBlock value: lit)
 		or: [lit isArray and: [lit hasLiteralSuchThat: litBlock]]) ifTrue:
 			[^true].
-		(lit isMemberOf: CompiledBlock) ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
+		lit isCompiledBlock ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
 	^false
 ]
 
@@ -362,10 +362,10 @@ CompiledCode >> headerDescription [
 { #category : #literals }
 CompiledCode >> indexOfLiteral: literal [
 	"Answer the literal index of the argument, literal, or zero if none."
-	2 to: self numLiterals - 1 "exclude superclass + selector/properties"
+	1 to: self numLiterals - self literalsToSkip "exclude superclass + selector/properties"
 	   do:
 		[:index |
-		literal == (self objectAt: index) ifTrue: [^index - 1]].
+		literal == (self literalAt: index) ifTrue: [^index]].
 	^0
 ]
 
@@ -385,10 +385,10 @@ CompiledCode >> innerCompiledBlocksAnySatisfy: aBlock [
 { #category : #literals }
 CompiledCode >> innerCompiledBlocksDo: aBlock [
 	"We ignore the enclosing compiled code in compiled block by ignoring the last literal"
-	1 to: self numLiterals - 1 do:
+	1 to: self numLiterals - self literalsToSkip do:
 		[:index | | lit |
-		lit := self objectAt: index + 1.
-		(lit isMemberOf: CompiledBlock) ifTrue: [ aBlock value: lit ] ]
+		lit := self literalAt: index.
+		lit isCompiledBlock ifTrue: [ aBlock value: lit ] ]
 ]
 
 { #category : #testing }
@@ -487,7 +487,7 @@ CompiledCode >> literalsAt: anIndex [
 { #category : #literals }
 CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
-	1 to: self numLiterals do:
+	1 to: self numLiterals - self literalsToSkip do:
 		[:index | aBlock value: (self literalAt: index)]
 ]
 
