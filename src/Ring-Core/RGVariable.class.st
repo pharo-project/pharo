@@ -61,6 +61,11 @@ RGVariable >> isUninitialized [
 	^false
 ]
 
+{ #category : #testing }
+RGVariable >> isVariable [
+	^true
+]
+
 { #category : #accessing }
 RGVariable >> name: aString [
 
