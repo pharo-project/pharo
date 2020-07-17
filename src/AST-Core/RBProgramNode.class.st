@@ -423,6 +423,15 @@ RBProgramNode >> intersectsInterval: anInterval [
 
 { #category : #testing }
 RBProgramNode >> isArgument [
+	self 
+		deprecated: 'Use #isArgument instead.' 
+		transformWith: '`@receiver isArgument' -> '`@receiver isArgumentVariable'.
+	
+	^ self isArgumentVariable
+]
+
+{ #category : #testing }
+RBProgramNode >> isArgumentVariable [
 	^false
 ]
 

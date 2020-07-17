@@ -98,6 +98,11 @@ RBVariableNode >> initialize [
 ]
 
 { #category : #testing }
+RBVariableNode >> isArgumentVariable [
+	^variable isArgumentVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isDefinition [
 	"Check if I am a Variable defintion"
 	self parent isSequence

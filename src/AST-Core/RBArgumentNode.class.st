@@ -20,11 +20,6 @@ RBArgumentNode >> adaptToSemanticNode [
 ]
 
 { #category : #testing }
-RBArgumentNode >> isArgument [
-	^ true
-]
-
-{ #category : #testing }
 RBArgumentNode >> isBlockVar [
 	"true if a variable node is defined by a block node"
 

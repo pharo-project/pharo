@@ -11,7 +11,7 @@ OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 	ast doSemanticAnalysis.
 	blockNode := ast body statements first value.
 	self assert: blockNode arguments notEmpty.
-	self assert: blockNode arguments first isArgument
+	self assert: blockNode arguments first isArgumentVariable
 	
 ]
 
@@ -156,7 +156,7 @@ OCASTClosureAnalyzerTest >> testInlinedBlockArgumentIsArgumentVariable [
 	ast doSemanticAnalysis.
 	blockNode := ast body statements first arguments first.
 	self assert: blockNode arguments notEmpty.
-	self assert: blockNode arguments first isArgument
+	self assert: blockNode arguments first isArgumentVariable
 	
 ]
 
@@ -166,7 +166,7 @@ OCASTClosureAnalyzerTest >> testMethodArgumentIsArgumentVariable [
 	ast := (OCOpalExamples>>#exampleWithArgument:) parseTree.
 	ast doSemanticAnalysis .
 	self assert: ast arguments notEmpty.
-	self assert: ast arguments first isArgument
+	self assert: ast arguments first isArgumentVariable
 	
 ]
 
