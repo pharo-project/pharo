@@ -20,15 +20,14 @@ AssignmentAndLiteralDebuggerTest >> testInterruptedContextEqualsSuspendedContext
 
 { #category : #tests }
 AssignmentAndLiteralDebuggerTest >> testNewDebugSession [
-	self assert: context size equals: 1.
+	self assert: context size equals: 2. "we are in the block"
 	self assert: session interruptedContext equals: context.
 ]
 
 { #category : #tests }
 AssignmentAndLiteralDebuggerTest >> testStepIntoAssignment [
 	session stepInto.
-	session stepInto.
-	self assert: (context tempNamed: 'var') equals: 4.
+	self assert: (session interruptedContext tempNamed: 'var') equals: 4.
 ]
 
 { #category : #tests }
@@ -39,7 +38,6 @@ AssignmentAndLiteralDebuggerTest >> testStepIntoLiteral [
 
 { #category : #tests }
 AssignmentAndLiteralDebuggerTest >> testStepOverAssignment [
-	session stepOver.
 	session stepOver.
 	self assert: (context tempNamed: 'var') equals: 4.
 ]

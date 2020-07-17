@@ -172,6 +172,12 @@ EncoderForV3PlusClosures class >> isCreateBlockAt: pc in: method [
 ]
 
 { #category : #'instruction stream support' }
+EncoderForV3PlusClosures class >> isCreateFullBlockAt: pc in: code [
+	"full blocks not supported"
+	^false
+]
+
+{ #category : #'instruction stream support' }
 EncoderForV3PlusClosures class >> isExtension: byte [
 	"no extension byteocde in this set"
 	^ false

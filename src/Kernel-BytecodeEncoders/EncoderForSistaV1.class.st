@@ -486,6 +486,15 @@ EncoderForSistaV1 class >> isCreateFullBlock: compiledBlock code: code at: pc [
 ]
 
 { #category : #'instruction stream support' }
+EncoderForSistaV1 class >> isCreateFullBlockAt: pc in: code [
+	^ self
+		  extensionsAt: pc
+		  in: code
+		  into: [ :extA :extB :nExtBytes | 
+		  (code at: pc + nExtBytes) = 16rF9 ]
+]
+
+{ #category : #'instruction stream support' }
 EncoderForSistaV1 class >> isExtension: bytecode [
 	"Answer if the bytecode is an extension bytecode, i.e. one that extends
 	 the range of the following bytecode."
