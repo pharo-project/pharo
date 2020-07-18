@@ -45,7 +45,7 @@ ReImplementedNotSentRule class >> cleanUp [
 
 { #category : #accessing }
 ReImplementedNotSentRule class >> enabled [
-	^false
+	^ enabled ifNil: [ enabled := false ]
 ]
 
 { #category : #initialization }
