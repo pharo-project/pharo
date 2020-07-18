@@ -13,6 +13,11 @@ ArgumentVariable class >> semanticNodeClass [
 	^RBArgumentNode 
 ]
 
+{ #category : #accessing }
+ArgumentVariable >> copiedVarClass [
+	^OCCopyingArgumentVariable
+]
+
 { #category : #queries }
 ArgumentVariable >> definingNode [
 	^ scope node arguments detect: [ :each | each name = name ]
