@@ -10,6 +10,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #queries }
+OCCopyingArgumentVariable >> definingNode [
+	^originalVar definingNode
+]
+
 { #category : #accessing }
 OCCopyingArgumentVariable >> index: anIndex [
 	self scope == originalVar scope ifTrue: [ originalVar index: anIndex ].

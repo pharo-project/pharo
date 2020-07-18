@@ -789,15 +789,6 @@ ClassDescription >> instanceSide [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-ClassDescription >> instanceVariables [
-	"we deprecate this due to bad naming: it returns names, not variables!"
-	self
-		deprecated: 'Please use #instVarNames or #slotNames instead'
-		transformWith: '`@receiver instanceVariables' -> '`@receiver instVarNames'.
-	^self instVarNames
-]
-
 { #category : #printing }
 ClassDescription >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."

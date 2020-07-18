@@ -12,6 +12,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #queries }
+OCCopyingTempVariable >> definingNode [
+	^originalVar definingNode
+]
+
 { #category : #accessing }
 OCCopyingTempVariable >> index: anIndex [
 	self scope == originalVar scope ifTrue: [ originalVar index: anIndex ].
