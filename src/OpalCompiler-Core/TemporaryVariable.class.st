@@ -13,6 +13,11 @@ TemporaryVariable class >> semanticNodeClass [
 	^RBTemporaryNode 
 ]
 
+{ #category : #'as yet unclassified' }
+TemporaryVariable >> copiedVarClass [
+	^OCCopyingTempVariable
+]
+
 { #category : #queries }
 TemporaryVariable >> definingNode [
 	^ scope node temporaries detect: [ :each | each name = name ]
