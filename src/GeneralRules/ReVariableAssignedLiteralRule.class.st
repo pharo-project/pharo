@@ -25,24 +25,11 @@ ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 { #category : #'running-helpers' }
 ReVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCriticBlock [
-	| theMethod |
-
-	theMethod := nil.
-
-	aClass withAllSubclassesDo: [ :class |
-		class methods do: [ :method |
-			(method writesSlot: aSlot) ifTrue: [ 
-				theMethod
-					ifNotNil: [ ^ self ]
-					ifNil: [theMethod := method ] ] ] ].
-	
-	theMethod ifNil: [ ^ self ].
-	
-	(self matchMethod: theMethod with: aSlot name) ifTrue: [ 
-		aCriticBlock cull: (
-			self 
-				critiqueFor: aClass
-				about: aSlot name) ]
+	| assignmentNodes |
+	assignmentNodes := aSlot assignmentNodes.
+	assignmentNodes size > 1 ifTrue: [ ^ self ].
+	assignmentNodes value isLiteralNode ifTrue: [ 
+		aCriticBlock cull: (self critiqueFor: aClass about: aSlot name) ]
 ]
 
 { #category : #'running-helpers' }
@@ -63,25 +50,6 @@ ReVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
 { #category : #accessing }
 ReVariableAssignedLiteralRule >> group [
 	^ 'Design Flaws'
-]
-
-{ #category : #'running-helpers' }
-ReVariableAssignedLiteralRule >> matchMethod: aCompiledMethod with: aVarName [
-
-	^ ((self matcherFor: aVarName) 
-		executeTree: aCompiledMethod ast
-		initialAnswer: nil) isNotNil 
-]
-
-{ #category : #'running-helpers' }
-ReVariableAssignedLiteralRule >> matcherFor: aVarName [
-
-
-	^ RBParseTreeSearcher new 
-		matches: aVarName , ' := `#object'
-		do: [ :aNode :answer | aNode ];
-		yourself
-
 ]
 
 { #category : #accessing }
