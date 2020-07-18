@@ -63,27 +63,14 @@ ReRuleManager class >> default [
 { #category : #helpers }
 ReRuleManager class >> defaultRules [
 	^ self visibleRuleClasses
-			reject: [ :ruleClass |
-				ruleClass enabled not or: [ 
-				self excludedRuleNames includes: ruleClass name ] ] 
-			thenCollect: #new
-]
-
-{ #category : #helpers }
-ReRuleManager class >> excludedRuleNames [
-	"here rules can be excluded, but it is better to implement #enabled on the rule to return false to disable it. Do not forget to call #reset on this class after changing this method!"
-	^ #(#ReImplementedNotSentRule)
+			select: [ :ruleClass | ruleClass enabled ] 
+			thenCollect: [:ruleClass | ruleClass new]
 ]
 
 { #category : #'class initialization' }
 ReRuleManager class >> initialize [
-	self allInstances do: [ :inst |
-		self flag: 'remove in future. this is just to stop
-		            the announcements from choaking old instances'.
-		SystemAnnouncer uniqueInstance unsubscribe: inst ].
-
 	self reset.
-	self subscribe.
+	self subscribe
 ]
 
 { #category : #'instance creation' }
@@ -253,16 +240,10 @@ ReRuleManager class >> unsubscribe [
 ]
 
 { #category : #utilities }
-ReRuleManager class >> visibleLintRuleClasses [
-
-	^ RBLintRule withAllSubclasses select: #isVisible
-]
-
-{ #category : #utilities }
 ReRuleManager class >> visibleRuleClasses [
 
-	^ (ReAbstractRule withAllSubclasses select: #isVisible)
-	"remove this in the future ->", self visibleLintRuleClasses
+	^ (ReAbstractRule withAllSubclasses select: [:each | each isVisible])
+	"remove this in the future ->", RBLintRule withAllSubclasses select: [:each | each isVisible]
 ]
 
 { #category : #accessing }
