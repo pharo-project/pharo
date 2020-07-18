@@ -81,6 +81,16 @@ EDDebuggingAPITest >> testDisplayStackSize [
 		equals: debugAPI class displayStackSize
 ]
 
+{ #category : #'tests - stack' }
+EDDebuggingAPITest >> testDumpStack [
+	| dump splittedDump |
+	dump := debugAPI dumpStack.
+	splittedDump := dump splitOn: Character cr.
+	self
+		assertCollection: splittedDump
+		equals: (session shortStack collect: [ :ctx | ctx printString ])
+]
+
 { #category : #'tests - processes' }
 EDDebuggingAPITest >> testForbiddenProcesses [
 	EDDebuggingAPI forbiddenProcesses

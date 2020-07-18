@@ -135,6 +135,8 @@ EDEmergencyDebugger >> buildDefaultActions [
 	dic at: 'terminateAll' put: [ debugAPI terminateAllProcesses ].
 	dic at: 'proceed' put: [ debugAPI resume ].
 	dic at: 'debug' put:[self debugDebuggerError].
+	dic at: 'dump' put:[self dumpStackAndQuit].
+	dic at: 'inspect' put:[self inspectStackAndQuit].
 	^dic
 ]
 
@@ -153,6 +155,8 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptions [
 	dic at: 'proceed' put: 'Proceeds the execution'.
 	dic at: 'showDebuggerError' put: 'Display debugger error stack, i.e., why you are here.'.
 	dic at: 'debug' put: 'Debug the debugger error.'.
+	dic at: 'dump' put: 'Dump a printed representation of the stack, quits the debugger and inspects the dump.'.
+	dic at: 'inspect' put: 'Quits the debugger and inspects the stack.'.
 	^dic
 ]
 
@@ -174,6 +178,8 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 	dic at: 'proceed' put: 'proceed'.
 	dic at: 'showDebuggerError' put: 'showDebuggerError'.	
 	dic at: 'debug' put: 'debug'.
+	dic at: 'dump' put: 'dump'.
+	dic at: 'inspect' put: 'inspect'.
 	^dic
 ]
 
@@ -327,6 +333,14 @@ EDEmergencyDebugger >> displayInterface: aDisplayInterface [
 	rawDisplay := aDisplayInterface
 ]
 
+{ #category : #private }
+EDEmergencyDebugger >> dumpStackAndQuit [
+	| stackStrace |
+	stackStrace := debugAPI dumpStack.
+	debugAPI terminateSession.
+	stackStrace inspect
+]
+
 { #category : #initialization }
 EDEmergencyDebugger >> emergencyDebug: aDebugSession [
 	[ self debug: aDebugSession ]
@@ -407,6 +421,12 @@ EDEmergencyDebugger >> initialize [
 { #category : #accessing }
 EDEmergencyDebugger >> input [
 	^input
+]
+
+{ #category : #private }
+EDEmergencyDebugger >> inspectStackAndQuit [
+	debugAPI terminateSession.
+	debugAPI longStack inspect
 ]
 
 { #category : #testing }
