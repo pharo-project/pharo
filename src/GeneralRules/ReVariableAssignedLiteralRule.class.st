@@ -16,20 +16,12 @@ ReVariableAssignedLiteralRule class >> checksClass [
 { #category : #running }
 ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 
-	aClass slots do: [ :slot | 
-		self
-			check: slot
-			of: aClass
-			forCritiquesDo: aCriticBlock ]
-]
-
-{ #category : #'running-helpers' }
-ReVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCriticBlock [
-	| assignmentNodes |
-	assignmentNodes := aSlot assignmentNodes.
-	assignmentNodes size > 1 ifTrue: [ ^ self ].
-	assignmentNodes value isLiteralNode ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aClass about: aSlot name) ]
+	(aClass slots, aClass classVariables) do: [ :variable | 
+		|  assignmentNodes |
+		assignmentNodes := variable  assignmentNodes.
+		assignmentNodes size = 1 ifFalse: [ ^ self ].
+		assignmentNodes first value isLiteralNode ifTrue: [ 
+		aCriticBlock cull: (self critiqueFor: aClass about: variable  name) ]].
 ]
 
 { #category : #'running-helpers' }
