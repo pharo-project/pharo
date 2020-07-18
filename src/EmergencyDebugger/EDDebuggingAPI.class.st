@@ -52,8 +52,12 @@ EDDebuggingAPI class >> longStackSize [
 
 { #category : #'API - Processes' }
 EDDebuggingAPI class >> terminateAllProcesses [
-	self allRunningProcesses
-		do: [ :process | process ifNotNil: [ process terminate ] ]
+	self terminateProcesses: self allRunningProcesses
+]
+
+{ #category : #'API - Processes' }
+EDDebuggingAPI class >> terminateProcesses: processes [
+	processes do: [ :process | process ifNotNil: [ process terminate ] ]
 ]
 
 { #category : #'API - Revert' }

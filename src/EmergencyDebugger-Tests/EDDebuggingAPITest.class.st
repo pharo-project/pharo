@@ -265,19 +265,13 @@ EDDebuggingAPITest >> testStackSize [
 ]
 
 { #category : #'tests - processes' }
-EDDebuggingAPITest >> testTerminateAllProcesses [
-	|edProcess|
-	self skip.
-	self flag: #ED.
-	"Executing test kills the CI.
-	The idea is to give users the power to kill all processes, except those necessary to run the image.
-	It should kill the tests process as well (e.g. your bug is in a test or in the test framework).
-	However, in the CI, it kills the CI test process.
-	So, this test works (it kills all processes...) but it cannot work on the CI yet.
-	We're skipping for now, and raise an issue. This needs to be addressed properly."
-	edProcess := ed debugAPI session interruptedProcess.
-	ed debugAPI terminateAllProcesses.
-	self assert: edProcess isTerminated 
+EDDebuggingAPITest >> testTerminateProcesses [
+	|processes|
+	processes := { [  ] newProcess.  [  ] newProcess.}.
+	processes do:[:p| self deny: p isTerminated].
+	
+	EDDebuggingAPI terminateProcesses: processes.
+	processes do:[:p| self assert: p isTerminated].
 ]
 
 { #category : #'tests - debugging support' }
