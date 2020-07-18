@@ -24,14 +24,14 @@ Class {
 { #category : #'instance creation' }
 Set class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
+	"(Set newFrom: {1. 2. 3}) >>> #( 1 2 3) asSet"
+	"({1. 2. 3} as: Set) >>> #( 1 2 3) asSet"
+	
 	| newCollection |
 	newCollection := self new: aCollection size.
 	newCollection addAll: aCollection.
 	^ newCollection
-"
-	Set newFrom: {1. 2. 3}
-	{1. 2. 3} as: Set
-"
+
 ]
 
 { #category : #'instance creation' }
