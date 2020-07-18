@@ -13,7 +13,7 @@ ArgumentVariable class >> semanticNodeClass [
 	^RBArgumentNode 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ArgumentVariable >> copiedVarClass [
 	^OCCopyingArgumentVariable
 ]

@@ -244,7 +244,7 @@ LocalVariable >> scope [
 	^ scope
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 LocalVariable >> scope: aLexicalScope [
 
 	scope := aLexicalScope

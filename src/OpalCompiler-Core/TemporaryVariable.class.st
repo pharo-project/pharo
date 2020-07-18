@@ -13,7 +13,7 @@ TemporaryVariable class >> semanticNodeClass [
 	^RBTemporaryNode 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TemporaryVariable >> copiedVarClass [
 	^OCCopyingTempVariable
 ]
