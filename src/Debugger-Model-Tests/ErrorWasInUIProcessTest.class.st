@@ -1,7 +1,7 @@
 Class {
 	#name : #ErrorWasInUIProcessTest,
 	#superclass : #DebuggerTest,
-	#category : #'Debugger-Tests-Base'
+	#category : #'Debugger-Model-Tests-Base'
 }
 
 { #category : #tests }

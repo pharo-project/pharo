@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'debuggedThisContext'
 	],
-	#category : #'Debugger-Tests-Base'
+	#category : #'Debugger-Model-Tests-Base'
 }
 
 { #category : #running }

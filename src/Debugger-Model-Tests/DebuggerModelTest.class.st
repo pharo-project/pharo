@@ -9,7 +9,7 @@ Class {
 		'process',
 		'context'
 	],
-	#category : #'Debugger-Tests-Model'
+	#category : #'Debugger-Model-Tests-Model'
 }
 
 { #category : #running }

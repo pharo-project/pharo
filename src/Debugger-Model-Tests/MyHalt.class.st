@@ -4,7 +4,7 @@ A custom exception used in halts
 Class {
 	#name : #MyHalt,
 	#superclass : #Exception,
-	#category : #'Debugger-Tests-Exceptions'
+	#category : #'Debugger-Model-Tests-Exceptions'
 }
 
 { #category : #accessing }

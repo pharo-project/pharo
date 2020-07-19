@@ -12,7 +12,7 @@ Class {
 		'otherProcess',
 		'otherSession'
 	],
-	#category : #'Debugger-Tests-Filter'
+	#category : #'Debugger-Model-Tests-Filter'
 }
 
 { #category : #running }
