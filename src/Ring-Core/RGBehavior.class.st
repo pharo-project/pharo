@@ -548,7 +548,7 @@ RGBehavior >> initializeUnresolved [
 { #category : #'queries - testing' }
 RGBehavior >> isAccessedIn: anRGMethod [ 
 
-	^ (anRGMethod ast variableNodes select: #isGlobal) anySatisfy: [ :each | each name = self name ] 
+	^ (anRGMethod ast variableNodes select: [:each | each isGlobal]) anySatisfy: [ :each | each name = self name ] 
 ]
 
 { #category : #testing }
