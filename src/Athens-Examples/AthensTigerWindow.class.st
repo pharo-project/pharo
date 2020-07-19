@@ -6,16 +6,10 @@ Class {
 	#superclass : #StandardWindow,
 	#instVars : [
 		'surface',
-		'paths',
-		'rotationSpeed',
-		'rotation',
-		'extent',
 		'scale',
-		'translation',
-		'time',
 		'frames',
-		'zoom',
-		'example'
+		'example',
+		'rotation'
 	],
 	#category : #'Athens-Examples-Morphic'
 }
@@ -51,19 +45,22 @@ AthensTigerWindow >> initialize [
 	super initialize.
 	surface := AthensCairoSurface extent: self class surfaceExtent.
 	example := AthensTiger on: surface.
-	rotationSpeed := 1.
+	scale := surface extent x / AthensTiger tigerMaxY.
 	rotation := 0.
-	extent := surface extent.
-	scale := extent x / AthensTiger tigerMaxY.
 	frames := 0.
 
 
 ]
 
+{ #category : #stepping }
+AthensTigerWindow >> rotationSpeed [
+	^1
+]
+
 { #category : #'stepping and presenter' }
 AthensTigerWindow >> step [ 
-
-	rotation := rotation + rotationSpeed.
+	| zoom |
+	rotation := rotation + self rotationSpeed.
 	frames := frames + 1.
 	zoom := (frames / 100) sin abs.
 	
