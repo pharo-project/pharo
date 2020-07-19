@@ -100,15 +100,6 @@ Variable >> hash [
 ]
 
 { #category : #testing }
-Variable >> isArg [
-	self 
-		deprecated: 'Use #isArgumentVariable instead.' 
-		transformWith: '`@receiver isArg' -> '`@receiver isArgumentVariable'.
-	
-	^ self isArgumentVariable
-]
-
-{ #category : #testing }
 Variable >> isArgumentVariable [
 	^false
 ]
@@ -119,25 +110,8 @@ Variable >> isClassVariable [
 ]
 
 { #category : #testing }
-Variable >> isGlobal [
-	self 
-		deprecated: 'Use #isGlobalVariable instead.' 
-		transformWith: '`@receiver isGlobal' -> '`@receiver isGlobalVariable'.
-	
-	^self isGlobalVariable
-]
-
-{ #category : #testing }
 Variable >> isGlobalVariable [
 	^ false
-]
-
-{ #category : #testing }
-Variable >> isInstance [
-	self 
-		deprecated: 'Use #isInstanceVariable instead.' 
-		transformWith: '`@receiver isInstance' -> '`@receiver isInstanceVariable'.
-	 ^self isInstanceVariable
 ]
 
 { #category : #testing }
@@ -151,13 +125,6 @@ Variable >> isLiteralVariable [
 	"returns true for Global Variables, Class Variables and some others 
 	(e.g. Workspace bindings and Undeclared variables, see subclasses)"
 	^false
-]
-
-{ #category : #testing }
-Variable >> isLocal [
-	self 
-		deprecated: 'Use #isLocalVariable instead.' 
-		transformWith: '`@receiver isLocal' -> '`@receiver isLocalVariable'.
 ]
 
 { #category : #testing }
@@ -210,7 +177,7 @@ Variable >> isThisContext [
 ]
 
 { #category : #testing }
-Variable >> isUndeclared [
+Variable >> isUndeclaredVariable [
 
 	^ false
 ]

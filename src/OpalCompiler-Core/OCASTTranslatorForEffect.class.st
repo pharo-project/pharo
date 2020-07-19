@@ -114,8 +114,8 @@ OCASTTranslatorForEffect >> visitSequenceNode: aSequenceNode [
 { #category : #'visitor-double dispatching' }
 OCASTTranslatorForEffect >> visitVariableNode: aVariableNode [
 	"when visiting a variable for effect, we could push it and then pop it, but we do nothing"
-	| binding |
-	binding := aVariableNode binding.
-	(binding isLiteralVariable or: [ binding isUndeclared ])
-		ifTrue: [ methodBuilder addLiteral: binding ]
+	| variable |
+	variable := aVariableNode variable.
+	(variable isLiteralVariable or: [ variable isUndeclaredVariable ])
+		ifTrue: [ methodBuilder addLiteral: variable ]
 ]
