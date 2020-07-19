@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'pathString'
 	],
-	#category : #'Native-Browser'
+	#category : #'Native-Browser-Base'
 }
 
 { #category : #examples }
