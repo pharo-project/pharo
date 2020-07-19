@@ -8,5 +8,5 @@ RBVariableNode >> hasBreakpoint [
 
 { #category : #'*Reflectivity-VariableBreakpoint' }
 RBVariableNode >> variableValueInContext: aContext [
-	^ aContext tempNamed: self name
+	^ variable readInContext: aContext
 ]
