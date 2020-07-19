@@ -11,7 +11,7 @@ Class {
 
 { #category : #examples }
 AthensCairoSurfaceExamples class >> exampleAnimatedTigerInMorphicWindow [
-	^ AthensTigerWindow new openAnimated
+	^ AthensTigerWindow openAnimated
 ]
 
 { #category : #examples }

@@ -18,7 +18,7 @@ AthensTreeDemo class >> example1 [
 	<script>
 	self
 		openOn: Collection
-		extentBlock: [ :each | (5 + each instVarNames size) @ (5 + each methodDict size) ]
+		extentBlock: [ :each | (5 + each slots size) @ (5 + each methods size) ]
 		childsBlock: [ :el | el subclasses ]
 ]
 
@@ -29,10 +29,9 @@ AthensTreeDemo class >> openOn: root extentBlock: extBlock childsBlock: childsBl
 	
 	scene := self new root: root extentBlock: extBlock childsBlock: childsBlock.
 		
-
 	^ AthensSceneView new
 		scene: scene;
-		openInWindow.
+		openInWindow
 ]
 
 { #category : #private }
