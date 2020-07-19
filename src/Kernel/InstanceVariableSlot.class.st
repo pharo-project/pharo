@@ -59,7 +59,7 @@ InstanceVariableSlot >> emitValue: methodBuilder [
 
 { #category : #testing }
 InstanceVariableSlot >> isAccessedIn: aCompiledCode [
-	^(aCompiledCode readsField: index) or: [aCompiledCode writesField: index]
+	^ aCompiledCode accessesField: index
 ]
 
 { #category : #testing }

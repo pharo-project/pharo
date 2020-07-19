@@ -453,6 +453,12 @@ Class >> declareClassVariables: newVars [
 	^conflicts
 ]
 
+{ #category : #'pool variables' }
+Class >> definedVariables [
+	"return all the Variables defined by this class"
+	^self slots, self classVariables
+]
+
 { #category : #'class variables' }
 Class >> definesClassVariable: aGlobal [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
@@ -960,7 +966,7 @@ Class >> setName: aSymbol [
 	name := aSymbol.
 ]
 
-{ #category : #accessing }
+{ #category : #'pool variables' }
 Class >> sharedPoolNames [
 	^ self sharedPools collect: [:ea |
 		ea isObsolete

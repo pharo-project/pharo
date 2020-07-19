@@ -72,6 +72,13 @@ CompiledCode >> = aCompiledMethod [
 ]
 
 { #category : #scanning }
+CompiledCode >> accessesField: varIndex [
+	"Answer whether the receiver accesses the instance variable indexed by the argument."
+
+	^ (self readsField: varIndex) or: [ self writesField: varIndex ]
+]
+
+{ #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
 	
