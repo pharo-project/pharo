@@ -25,6 +25,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Collections-Arithmetic-Tests';
 			package: 'ConfigurationCommandLineHandler-Tests';
 			package: 'MetacelloCommandLineHandler-Tests';
+			package: 'Debugger-Filters-Tests';
 			package: 'Debugger-Model-Tests';
 			package: 'EmergencyDebugger-Tests';
 			package: 'EmbeddedFreeType-Tests';
