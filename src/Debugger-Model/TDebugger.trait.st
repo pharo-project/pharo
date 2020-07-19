@@ -5,14 +5,12 @@ Conversely, classes recognized as debuggers are all able to start debugging from
 
 The API that all debuggers will expose by using me is:
 
-availableAutomatically: a boolean telling if the debugger is (de)activated
-rank: an integer giving a priority to the debugger (against other debuggers priorities)
+`availableAutomatically:` a boolean telling if the debugger is (de)activated.
+`rank:` an integer giving a priority to the debugger (against other debuggers priorities). A high priority debugger will be preferably opened by the system rather than a low priority debugger.
 
-handlesContext: aContext
-=> returns a boolean, tells if the debugger can handle the given context (e.g., a SUnit debugger will be able to handle test cases contexts). By default, any context is handleable.
+`handlesContext: aContext`: returns a boolean, tells if the debugger can handle the given context (e.g., a SUnit debugger will be able to handle test cases contexts). By default, any context is handleable.
 
-debugSession: aDebugSession
-Explicit requirement that must be implemented by all debuggers.
+`debugSession: aDebugSession`: Explicit requirement that must be implemented by all debuggers.
 This API method is the entry point to open a debugger on a DebugSession instance.
 It is the preferred debugger opening entry point used by the system to open a debugger.
 "
