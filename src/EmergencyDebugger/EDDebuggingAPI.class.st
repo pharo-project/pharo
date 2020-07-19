@@ -52,8 +52,12 @@ EDDebuggingAPI class >> longStackSize [
 
 { #category : #'API - Processes' }
 EDDebuggingAPI class >> terminateAllProcesses [
-	self allRunningProcesses
-		do: [ :process | process ifNotNil: [ process terminate ] ]
+	self terminateProcesses: self allRunningProcesses
+]
+
+{ #category : #'API - Processes' }
+EDDebuggingAPI class >> terminateProcesses: processes [
+	processes do: [ :process | process ifNotNil: [ process terminate ] ]
 ]
 
 { #category : #'API - Revert' }
@@ -93,6 +97,14 @@ EDDebuggingAPI >> debugger: anObject [
 { #category : #'API - Stack' }
 EDDebuggingAPI >> displayStackSize [
 	^self class displayStackSize
+]
+
+{ #category : #'API - Stack' }
+EDDebuggingAPI >> dumpStack [
+	| str |
+	str := String new writeStream.
+	self stack printOn: str delimiter: Character cr asString.
+	^ str contents
 ]
 
 { #category : #initialization }
