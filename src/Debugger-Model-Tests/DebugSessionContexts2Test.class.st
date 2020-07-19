@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'debugSession'
 	],
-	#category : #'Debugger-Model-Tests-Base'
+	#category : #'Debugger-Model-Tests-Core'
 }
 
 { #category : #'as yet unclassified' }

@@ -36,7 +36,7 @@ Class {
 		'context',
 		'topContext'
 	],
-	#category : #'Debugger-Model-Base'
+	#category : #'Debugger-Model-Core'
 }
 
 { #category : #'instance creation' }
