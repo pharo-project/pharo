@@ -113,6 +113,12 @@ LiteralVariable >> installingIn: aClass [
 	"I am called by the class builder. This way a class variable can change the class it is installed in"
 ]
 
+{ #category : #queries }
+LiteralVariable >> isAccessedIn: aMethod [ 
+	
+	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
+]
+
 { #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
 	^ self value isClassOrTrait
@@ -135,12 +141,6 @@ LiteralVariable >> isReferenced [
 
 	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior | 
 		  behavior hasSelectorReferringTo: self ]
-]
-
-{ #category : #queries }
-LiteralVariable >> isReferencedIn: aMethod [ 
-	
-	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
 ]
 
 { #category : #testing }
