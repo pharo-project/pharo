@@ -6,6 +6,11 @@ Class {
 	#category : #'Debugger-Model-Tests-Core'
 }
 
+{ #category : #'instance creation' }
+TDebuggerTest class >> debugSession: aDebugSession [
+	^true
+]
+
 { #category : #tests }
 TDebuggerTest >> testAvailableAutomatically [
 	self class availableAutomatically: nil.
@@ -20,11 +25,7 @@ TDebuggerTest >> testAvailableAutomatically [
 
 { #category : #tests }
 TDebuggerTest >> testDebugSession [
-	self should: [ self class debugSession: nil ] raise: Error.
-	[ self class debugSession: nil ]
-		on: Error
-		do: [ :err | 
-		self assert: err description equals: 'Error: Explicitly required method' ]
+	self assert: (self class debugSession: nil)
 ]
 
 { #category : #tests }
