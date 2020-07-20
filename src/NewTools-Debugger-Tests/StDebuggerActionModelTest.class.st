@@ -82,11 +82,7 @@ StDebuggerActionModelTest >> testCopyStackToClipboard [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testExceptionInContextOrNil [
-	|exOrNil|	
-		
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-		
+	|exOrNil|			
 	exOrNil := debugActionModel exceptionInContextOrNil: session interruptedContext. 
 	self assert: exOrNil equals: nil.
 	
@@ -157,12 +153,10 @@ StDebuggerActionModelTest >> testIsInterruptedContextError [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
-
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-
-	self changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
-	self assert: debugActionModel isInterruptedContextMissingClassException
+	self
+		changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
+	self
+		assert: debugActionModel isInterruptedContextMissingClassException
 ]
 
 { #category : #tests }

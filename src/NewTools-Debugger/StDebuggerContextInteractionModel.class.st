@@ -1,6 +1,6 @@
 Class {
 	#name : #StDebuggerContextInteractionModel,
-	#superclass : #SpCodeObjectInteractionModel,
+	#superclass : #SpCodeInteractionModel,
 	#instVars : [
 		'context'
 	],
@@ -17,6 +17,12 @@ StDebuggerContextInteractionModel class >> on: aContext [
 StDebuggerContextInteractionModel >> behavior [
 
 	^ self context receiver class
+]
+
+{ #category : #binding }
+StDebuggerContextInteractionModel >> bindingOf: aString [
+
+	^ self doItReceiver bindingOf: aString
 ]
 
 { #category : #accessing }
@@ -40,6 +46,12 @@ StDebuggerContextInteractionModel >> doItContext [
 StDebuggerContextInteractionModel >> doItReceiver [
 
 	^ self context receiver
+]
+
+{ #category : #testing }
+StDebuggerContextInteractionModel >> hasBindingOf: aString [
+
+	^ self doItReceiver hasBindingOf: aString
 ]
 
 { #category : #accessing }

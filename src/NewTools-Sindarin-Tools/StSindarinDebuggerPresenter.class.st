@@ -42,9 +42,10 @@ StSindarinDebuggerPresenter >> buildToolbar [
 	group := CmCommandGroup forSpec.
 	SindarinCommand allSubclasses
 		do: [ :cmd | group register: (cmd forSpecContext: self) ].
-	^ group asToolbarPresenterWith: [ :presenter | 
-		self flag: 'This is not right, but the application is not set properly in notebook pages. For now I need this hack.'.
-		presenter displayMode: StPharoApplication current toolbarDisplayMode ]
+	^ group asToolbarPresenterWith: [ :presenter |
+		presenter 
+			displayMode: self application toolbarDisplayMode;
+			addStyle: 'stToolbar' ]
 ]
 
 { #category : #initialization }
