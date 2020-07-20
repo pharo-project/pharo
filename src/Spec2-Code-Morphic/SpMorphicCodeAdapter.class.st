@@ -43,7 +43,6 @@ SpMorphicCodeAdapter >> buildWidget [
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 
 		self setEditingModeFor: newWidget ].
 	
-	
 	^ newWidget
 ]
 
@@ -211,6 +210,7 @@ SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior forS
 { #category : #'widget API' }
 SpMorphicCodeAdapter >> setInteractionModel: anInteractionModel to: w [
 
+	w textArea editor isSmalltalkEditor ifFalse: [ ^ self ].
 	w completionEngine: (self newCompletionEngine: anInteractionModel)
 ]
 
