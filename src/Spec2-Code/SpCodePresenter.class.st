@@ -335,7 +335,9 @@ SpCodePresenter >> interactionModel: anInteractionModel [
 { #category : #'private bindings' }
 SpCodePresenter >> isForScripting [
 
-	^ self interactionModel isForScripting
+	^ self interactionModel 
+		ifNotNil: [ :im | im isForScripting ]
+		ifNil: [ false ]
 ]
 
 { #category : #accessing }
