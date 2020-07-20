@@ -48,6 +48,15 @@ ReImplementedNotSentRule class >> enabled [
 	^ enabled ifNil: [ enabled := false ]
 ]
 
+{ #category : #accessing }
+ReImplementedNotSentRule class >> enabled: aBoolean [
+	super enabled: aBoolean.
+	self reset.
+	aBoolean 
+		ifTrue: [ self subscribe ]
+		ifFalse: [ self unsubscribe ]
+]
+
 { #category : #initialization }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
