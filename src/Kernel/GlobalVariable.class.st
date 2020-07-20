@@ -30,3 +30,9 @@ GlobalVariable >> emitValue: methodBuilder [
 GlobalVariable >> isGlobalVariable [
 	^true
 ]
+
+{ #category : #accessing }
+GlobalVariable >> scope [
+	"The scope of Globals is Smalltalk globals"
+	^ Smalltalk globals
+]
