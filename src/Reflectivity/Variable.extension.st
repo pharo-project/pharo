@@ -38,7 +38,7 @@ Variable >> assignmentNodes [
 Variable >> astNodes [
 	"by default we search the usingMethods for all AST nodes"
 	^self usingMethods flatCollect: [ :method | 
-		method variableNodes select: [: each| each binding == self ]]
+		method variableNodes select: [: each| each variable == self ]]
 ]
 
 { #category : #'*Reflectivity' }

@@ -25,7 +25,7 @@ ReUsesTrueRule class >> uniqueIdentifierName [
 ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemUsages |
 	problemUsages := aMethod ast variableNodes select: [ :aNode | 
-			                 aNode isGlobal and: [ #( True False ) includes: aNode name ] ].
+			                 aNode isGlobalVariable and: [ #( True False ) includes: aNode name ] ].
 	problemUsages do: [ :ref | 
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
 ]

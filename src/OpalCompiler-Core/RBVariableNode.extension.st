@@ -16,12 +16,6 @@ RBVariableNode >> isClean [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBVariableNode >> isGlobal [
-	"the semantics here is bad: all Literal Variables are Globals on the AST Level"
-	^variable isLiteralVariable and: [ variable isUndeclaredVariable not]
-]
-
-{ #category : #'*opalcompiler-core' }
 RBVariableNode >> variable [
 	^variable
 ]

@@ -30,7 +30,7 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	class := aMethod methodClass instanceSide.
 	problemLiterals := (aMethod ast allChildren 
-			select: [ :node | node isVariable and:[ node isGlobal ] ])
+			select: [ :node | node isVariable and:[ node isGlobalVariable ] ])
 			select: [ :var | var name = class name].
 		
 	problemLiterals do: [ :literal |

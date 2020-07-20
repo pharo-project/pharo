@@ -1024,7 +1024,9 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode binding ifNil: [^#default].
 	aVariableNode isArgumentVariable ifTrue: [ ^#methodArg].
 	aVariableNode isTemp ifTrue: [ ^#tempVar].
-	aVariableNode isGlobal ifTrue: [ ^#globalVar].
+	aVariableNode isGlobalVariable ifTrue: [ ^#globalVar].
+	"here we should add support for #classVar"
+	aVariableNode isClassVariable ifTrue: [ ^#globalVar].
 	aVariableNode isInstanceVariable ifTrue: [ ^#instVar]. 
 	
 	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 

@@ -132,7 +132,7 @@ RBDumpVisitorTest >> testGlobalNodeDump [
 	node := self parseMethod: 'foo ^ Object'.
 	dumpedNode := Smalltalk compiler evaluate: node doSemanticAnalysis dump.
 	
-	self assert: dumpedNode statements first value isGlobal.
+	self assert: dumpedNode statements first value isGlobalVariable.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 	

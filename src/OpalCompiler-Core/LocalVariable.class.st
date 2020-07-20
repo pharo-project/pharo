@@ -37,7 +37,7 @@ LocalVariable >> asString [
 
 { #category : #queries }
 LocalVariable >> astNodes [
-	^scope node methodNode variableNodes select: [ :each | each binding == self]
+	^scope node methodNode variableNodes select: [ :each | each variable == self]
 ]
 
 { #category : #emitting }
