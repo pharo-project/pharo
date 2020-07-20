@@ -4,7 +4,7 @@ Basic Collection tests
 Class {
 	#name : #CollectionTest,
 	#superclass : #TestCase,
-	#category : #'Collections-Tests-Support'
+	#category : #'Collections-Support-Tests-Base'
 }
 
 { #category : #test }

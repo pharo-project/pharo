@@ -8,7 +8,7 @@ Class {
 		'a',
 		'b'
 	],
-	#category : #'Collections-Tests-Support'
+	#category : #'Collections-Support-Tests-Associations'
 }
 
 { #category : #running }
