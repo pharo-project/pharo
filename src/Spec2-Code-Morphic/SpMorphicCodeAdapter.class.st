@@ -61,6 +61,7 @@ SpMorphicCodeAdapter >> classOrMetaClass: aClass [
 	self 
 		setEditingModeFor: self widget textArea 
 		withBehavior: aClass
+		forScripting: self isForScripting
 ]
 
 { #category : #private }
@@ -138,6 +139,12 @@ SpMorphicCodeAdapter >> interactionModel: anInteractionModel [
 		self setInteractionModel: anInteractionModel to: w ]
 ]
 
+{ #category : #'widget API' }
+SpMorphicCodeAdapter >> isForScripting [
+
+	^ self presenter isForScripting
+]
+
 { #category : #private }
 SpMorphicCodeAdapter >> newCompletionEngine: anInteractionModel [
 
@@ -180,17 +187,25 @@ SpMorphicCodeAdapter >> selectedClassOrMetaClass [
 SpMorphicCodeAdapter >> setEditingModeFor: textArea [
 
 	self hasSyntaxHighlight
-		ifTrue: [ self setEditingModeFor: textArea withBehavior: self behavior ]
-		ifFalse: [ super setEditingModeFor: textArea ]
+		ifTrue: [ 
+			self 
+				setEditingModeFor: textArea 
+				withBehavior: self behavior 
+				forScripting: self isForScripting ]
+		ifFalse: [ 
+			super setEditingModeFor: textArea ]
 ]
 
 { #category : #private }
-SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior [
+SpMorphicCodeAdapter >> setEditingModeFor: textArea withBehavior: aBehavior forScripting: aBoolean [
 
 	textArea model: self.
-	aBehavior
-		ifNotNil: [ textArea beForSmalltalkCodeInClass: aBehavior ]		
-		ifNil: [ textArea beForSmalltalkScripting ]
+	(aBoolean or: [ aBehavior isNil ]) 
+		ifTrue: [ 
+			textArea beForSmalltalkScripting.
+			textArea editingMode classOrMetaClass: aBehavior ]
+		ifFalse: [
+			textArea beForSmalltalkCodeInClass: aBehavior ]
 ]
 
 { #category : #'widget API' }

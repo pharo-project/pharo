@@ -332,6 +332,12 @@ SpCodePresenter >> interactionModel: anInteractionModel [
 	self basicInteractionModel: anInteractionModel
 ]
 
+{ #category : #'private bindings' }
+SpCodePresenter >> isForScripting [
+
+	^ self interactionModel isForScripting
+]
+
 { #category : #accessing }
 SpCodePresenter >> lineNumbers: aBoolean [
 

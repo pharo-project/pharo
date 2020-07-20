@@ -18,8 +18,7 @@ Class {
 	#name : #SpCodeInteractionModel,
 	#superclass : #Object,
 	#instVars : [
-		'owner',
-		'bindings'
+		'owner'
 	],
 	#category : #'Spec2-Code'
 }
@@ -33,15 +32,7 @@ SpCodeInteractionModel >> behavior [
 { #category : #binding }
 SpCodeInteractionModel >> bindingOf: aString [
 
-	^ self bindings 
-		associationAt: aString 
-		ifAbsent: [ nil ]
-]
-
-{ #category : #accessing }
-SpCodeInteractionModel >> bindings [
-
-	^ bindings ifNil: [ bindings := Dictionary new ]
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -59,7 +50,7 @@ SpCodeInteractionModel >> doItReceiver [
 { #category : #testing }
 SpCodeInteractionModel >> hasBindingOf: aString [
 
-	^ self bindings includesKey: aString asSymbol
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -105,15 +96,14 @@ SpCodeInteractionModel >> selectedClassOrMetaClass [
 	^ self behavior
 ]
 
-{ #category : #binding }
-SpCodeInteractionModel >> setBindings: aDictionary [
-	"Sets the Workspace to use the specified dictionary as its namespace"
-
-	bindings := aDictionary
-]
-
 { #category : #accessing }
 SpCodeInteractionModel >> variableBindingNames [
 	
-	^ self bindings keys
+	^ self variableBindings keys
+]
+
+{ #category : #accessing }
+SpCodeInteractionModel >> variableBindings [
+
+	^ Dictionary new
 ]
