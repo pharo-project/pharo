@@ -479,7 +479,7 @@ CompiledCode >> literals [
 	"Answer an Array of the literals referenced by the receiver.	
 	 Exclude superclass + selector/properties"
 	| literals numberLiterals |
-	literals := Array new: (numberLiterals := self numLiterals - self numberOfReservedLiterals).
+	literals := Array new: (numberLiterals := self numLiterals - self literalsToSkip).
 	1 to: numberLiterals do: [:index |
 		literals at: index put: (self objectAt: index + 1)].
 	^literals
@@ -600,12 +600,6 @@ CompiledCode >> numTemps [
 	"Answer the number of temporary variables used by the receiver."
 	
 	^ (self header bitShift: -18) bitAnd: 16r3F
-]
-
-{ #category : #accessing }
-CompiledCode >> numberOfReservedLiterals [
-
-	^ self subclassResponsibility
 ]
 
 { #category : #literals }
