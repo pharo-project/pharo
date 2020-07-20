@@ -892,14 +892,9 @@ StDebugger >> removeSessionHolderSubscriptions [
 
 { #category : #'ui requests' }
 StDebugger >> requestCategoryIn: aClass [
-	| defaultAnswer categoryName |
-	defaultAnswer := 'as yet unclassified'.
-	categoryName := AbstractTool
-		requestProtocolNameFor: aClass
-		initialAnswer: defaultAnswer.
-	^ (#(nil '') includes: categoryName)
-		ifTrue: [ defaultAnswer ]
-		ifFalse: [ categoryName ]
+	
+	"Do not ask for a category since it breaks the flow."
+	^ Protocol unclassified
 ]
 
 { #category : #'ui requests' }
