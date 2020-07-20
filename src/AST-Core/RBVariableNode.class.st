@@ -103,6 +103,12 @@ RBVariableNode >> isArgumentVariable [
 ]
 
 { #category : #testing }
+RBVariableNode >> isBlockVar [
+	"true if a variable node is defined by a block node"
+	^variable scope isBlockScope
+]
+
+{ #category : #testing }
 RBVariableNode >> isDefinition [
 	"Check if I am a Variable defintion"
 	^variable definingNode == self

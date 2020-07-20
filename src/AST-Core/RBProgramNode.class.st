@@ -441,13 +441,6 @@ RBProgramNode >> isAssignment [
 ]
 
 { #category : #testing }
-RBProgramNode >> isBlockVar [
-	"true if a variable node is defined by a block"
-
-	^ false
-]
-
-{ #category : #testing }
 RBProgramNode >> isCascade [
 	^false
 ]
