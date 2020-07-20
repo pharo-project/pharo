@@ -35,10 +35,3 @@ SpCodeBehaviorInteractionModel >> hasBindingOf: aString [
 
 	^ self behavior hasBindingOf: aString
 ]
-
-{ #category : #initialization }
-SpCodeBehaviorInteractionModel >> initialize [
-
-	super initialize.
-	self setBindings: Dictionary new
-]

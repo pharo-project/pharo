@@ -299,7 +299,8 @@ SpCodePresenter >> initialize [
 	self withSyntaxHighlight.
 	self withLineNumbers.
 	
-	self registerEventsForStyling
+	self registerEventsForStyling.
+	self clearInteractionModel
 ]
 
 { #category : #api }

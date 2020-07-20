@@ -37,12 +37,6 @@ SpCodeMethodInteractionModel >> hasBindingOf: aString [
 	^ self behavior hasBindingOf: aString
 ]
 
-{ #category : #initialization }
-SpCodeMethodInteractionModel >> initialize [
-
-	super initialize
-]
-
 { #category : #accessing }
 SpCodeMethodInteractionModel >> method [
 
