@@ -51,7 +51,7 @@ UndeclaredVariable >> isRegistered [
 ]
 
 { #category : #testing }
-UndeclaredVariable >> isUndeclared [
+UndeclaredVariable >> isUndeclaredVariable [
 
 	^ true
 ]

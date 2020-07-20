@@ -11,15 +11,6 @@ RBVariableNode >> binding: aSemVar [
 ]
 
 { #category : #'*opalcompiler-core' }
-RBVariableNode >> isArg [
-	self 
-		deprecated: 'Use #isArgumentVariable instead.' 
-		transformWith: '`@receiver isArg' -> '`@receiver isArgumentVariable'.
-	
-	^ self isArgumentVariable
-]
-
-{ #category : #'*opalcompiler-core' }
 RBVariableNode >> isClean [
 	^ (self isInstanceVariable | self isReservedVariable) not
 ]
@@ -27,32 +18,7 @@ RBVariableNode >> isClean [
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isGlobal [
 	"the semantics here is bad: all Literal Variables are Globals on the AST Level"
-	^variable isLiteralVariable and: [ variable isUndeclared not]
-]
-
-{ #category : #'*opalcompiler-core' }
-RBVariableNode >> isInstance [
-	self 
-		deprecated: 'Use #isInstanceVariable instead.' 
-		transformWith: '`@receiver isInstance' -> '`@receiver isInstanceVariable'.
-	^variable isInstanceVariable
-]
-
-{ #category : #'*opalcompiler-core' }
-RBVariableNode >> isLocalVariable [
-	"returns true for temporary variables and arguments"
-	^variable isLocalVariable
-]
-
-{ #category : #'*opalcompiler-core' }
-RBVariableNode >> isReservedVariable [
-	^ self binding isReservedVariable
-]
-
-{ #category : #'*opalcompiler-core' }
-RBVariableNode >> isUndeclared [
-
-	^self binding isUndeclared
+	^variable isLiteralVariable and: [ variable isUndeclaredVariable not]
 ]
 
 { #category : #'*opalcompiler-core' }

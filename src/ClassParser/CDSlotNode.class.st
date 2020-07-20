@@ -101,7 +101,7 @@ CDSlotNode >> isTemp [
 ]
 
 { #category : #testing }
-CDSlotNode >> isUndeclared [
+CDSlotNode >> isUndeclaredVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]

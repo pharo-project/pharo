@@ -145,7 +145,7 @@ ClyAddConditionalBreakpointCommand >> rewriteASTToSimulateExecutionInADifferentC
 	analysedIntermediateAST := intermediateAST doSemanticAnalysis.
 	rewriter2 := RBParseTreeRewriter new.
 	allUndeclaredVariableNodes := analysedIntermediateAST allChildren
-		select: [ :astElem | astElem isVariable and: [ astElem isUndeclared ] ].
+		select: [ :astElem | astElem isVariable and: [ astElem isUndeclaredVariable ] ].
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes
 		collect: [ :varNode | varNode name ]) asSet asArray.
 	allUndeclaredVariableSymbols

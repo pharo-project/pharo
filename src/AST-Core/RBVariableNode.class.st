@@ -80,7 +80,7 @@ RBVariableNode >> hasIncompleteIdentifier [
 	"check if there is any variable declared in my scope that starts with my name"
 
 	"declared vars are never incomplete"
-	self binding isUndeclared ifFalse: [ ^false ].
+	self binding isUndeclaredVariable ifFalse: [ ^false ].
 	"for the others we have to search from the current scope"
 	^self scope hasBindingThatBeginsWith: self name
 ]
@@ -124,8 +124,19 @@ RBVariableNode >> isInstanceVariable [
 ]
 
 { #category : #testing }
+RBVariableNode >> isLocalVariable [
+	"returns true for temporary variables and arguments"
+	^variable isLocalVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isRead [
 	^ self isWrite not and: [ self isUsed ]
+]
+
+{ #category : #testing }
+RBVariableNode >> isReservedVariable [
+	^ variable isReservedVariable
 ]
 
 { #category : #testing }
@@ -142,6 +153,12 @@ RBVariableNode >> isSuper [
 	since we do not control this."
 	
 	^ self name = 'super'
+]
+
+{ #category : #testing }
+RBVariableNode >> isUndeclaredVariable [
+
+	^variable isUndeclaredVariable
 ]
 
 { #category : #testing }
