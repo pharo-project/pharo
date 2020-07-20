@@ -130,7 +130,9 @@ RBDumpVisitorTest >> testGlobalNodeDump [
 	| node dumpedNode |
 	"Global nodes are only generated when a semantic analysis is triggered on a method"
 	node := self parseMethod: 'foo ^ Object'.
-	dumpedNode := Smalltalk compiler evaluate: node doSemanticAnalysis dump.
+	node doSemanticAnalysis.
+	dumpedNode := Smalltalk compiler evaluate: node dump.
+	dumpedNode doSemanticAnalysis.
 	
 	self assert: dumpedNode statements first value isGlobalVariable.
 	self assert: node class equals: dumpedNode class.
