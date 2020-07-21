@@ -62,8 +62,13 @@ OrderedDictionary class >> new: aCapacity [
 
 { #category : #'instance creation' }
 OrderedDictionary class >> newFrom: anAssociationCollection [
-	| newDictionary |
+	^ self newFromAssociations: anAssociationCollection
+]
 
+{ #category : #'instance creation' }
+OrderedDictionary class >> newFromAssociations: anAssociationCollection [
+
+	| newDictionary |
 	newDictionary := self new: anAssociationCollection size.
 	anAssociationCollection associationsDo: [:each |
 		newDictionary
