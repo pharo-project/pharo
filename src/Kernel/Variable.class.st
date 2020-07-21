@@ -145,18 +145,17 @@ Variable >> isReservedVariable [
 ]
 
 { #category : #testing }
-Variable >> isSelf [
+Variable >> isSelfOrSuperVariable [
+	^ self isSelfVariable or: [ self isSuperVariable ]
+]
+
+{ #category : #testing }
+Variable >> isSelfVariable [
 	^false
 ]
 
 { #category : #testing }
-Variable >> isSelfOrSuper [
-	
-	^ self isSelf or: [ self isSuper ]
-]
-
-{ #category : #testing }
-Variable >> isSuper [
+Variable >> isSuperVariable [
 	^false
 ]
 

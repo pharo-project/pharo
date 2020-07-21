@@ -26,16 +26,6 @@ OCSelfVariable >> initialize [
 	name := 'self'
 ]
 
-{ #category : #testing }
-OCSelfVariable >> isSelf [
-	^true
-]
-
-{ #category : #testing }
-OCSelfVariable >> isSelfOrSuper [
-	^true
-]
-
 { #category : #debugging }
 OCSelfVariable >> readInContext: aContext [
 	^aContext receiver

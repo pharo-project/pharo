@@ -70,7 +70,7 @@ OCASTCheckerTest >> testExampleSelf [
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
-	self assert: (ast scope lookupVar: 'self') isSelf.
+	self assert: (ast scope lookupVar: 'self') isSelfVariable.
 	
 	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
 	self assert: assignment arguments first binding isSelf.
@@ -81,7 +81,6 @@ OCASTCheckerTest >> testExampleSelfReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSelfReceiver) parseTree.
 	self assert: ast body statements first receiver isSelf.
-	self assert: ast body statements first receiver isSelfOrSuper.
 ]
 
 { #category : #'testing - variables' }
@@ -91,18 +90,17 @@ OCASTCheckerTest >> testExampleSuper [
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
-	self assert: (ast scope lookupVar: 'super') isSuper.
+	self assert: (ast scope lookupVar: 'super') isSuperVariable.
 	
 	assignment := RBParseTreeSearcher treeMatching: 'self result:``@anything' in: ast. 
-	self assert: assignment arguments first binding isSuper.
+	self assert: assignment arguments first variable isSuperVariable.
 ]
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testExampleSuperReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSuperReceiver) parseTree.
-	self assert: ast body statements first receiver isSuper.
-	self assert: ast body statements first receiver isSelfOrSuper.
+	self assert: ast body statements first receiver isSuper
 ]
 
 { #category : #'testing - variables' }

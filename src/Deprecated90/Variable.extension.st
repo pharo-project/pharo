@@ -34,12 +34,40 @@ Variable >> isLocal [
 ]
 
 { #category : #'*Deprecated90' }
+Variable >> isSelf [
+	self 
+		deprecated: 'Use #isSelfVariable instead.' 
+		transformWith: '`@receiver isSelf' -> '`@receiver isSelfVariable'.
+
+	^self isSelfVariable
+]
+
+{ #category : #'*Deprecated90' }
+Variable >> isSelfOrSuper [
+	self 
+		deprecated: 'Use #isSelfOrSuperVariable instead.' 
+		transformWith: '`@receiver isSelfOrSuper' -> '`@receiver isSelfOrSuperVariable'.
+
+	^ self isSelfOrSuperVariable
+]
+
+{ #category : #'*Deprecated90' }
 Variable >> isSpecialVariable [
 	self 
 		deprecated: 'Use #isReservedVariable instead.' 
 		transformWith: '`@receiver isSpecialVariable' -> '`@receiver isReservedVariable'.
 	
 	^ self isReservedVariable
+]
+
+{ #category : #'*Deprecated90' }
+Variable >> isSuper [
+	self 
+		deprecated: 'Use #isSuperVariable instead.' 
+		transformWith: '`@receiver isSuper' -> '`@receiver isSuperVariable'.
+		
+	^ self isSuperVariable
+
 ]
 
 { #category : #'*Deprecated90' }

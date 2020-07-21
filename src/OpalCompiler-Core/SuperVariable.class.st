@@ -27,7 +27,7 @@ SuperVariable >> initialize [
 ]
 
 { #category : #testing }
-SuperVariable >> isSuper [
+SuperVariable >> isSuperVariable [
 	^true
 ]
 

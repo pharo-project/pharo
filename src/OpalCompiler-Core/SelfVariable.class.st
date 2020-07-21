@@ -27,7 +27,7 @@ SelfVariable >> initialize [
 ]
 
 { #category : #testing }
-SelfVariable >> isSelf [
+SelfVariable >> isSelfVariable [
 	^true
 ]
 
