@@ -52,8 +52,8 @@ BaselineOfPharoGT >> postload: loader package: packageSpec [
 	  Smalltalk tools debuggers add: ((self class environment at: #GTBytecodeDebugger)->5).].
 
 	  
-	self class environment at: #GTPlayground ifPresent: [:playground | 
-	  Smalltalk tools register: playground as: #workspace.].
+	"self class environment at: #GTPlayground ifPresent: [:playground | 
+	  Smalltalk tools register: playground as: #workspace.]."
 	self class environment at: #GTInspector ifPresent: [:inspector | 
 	  Smalltalk tools register: inspector as: #inspector.].
 
