@@ -820,6 +820,7 @@ RBParserTest >> testQuerying [
 			('test: a`	| b |`	b := (self foo: a; bar) baz.`	b := super test: b.`	^[:arg1 | self foa1 + (super foo: arg1 foo: a foo: b)]'
 				copyReplaceAll: '`'
 				with: (String with: (Character value: 13))).
+	tree doSemanticAnalysis.
 	self assert: tree selfMessages asSortedCollection asArray equals: #(#bar #foa1 #foo:).
 	self assert: tree superMessages asSortedCollection asArray equals: #(#foo:foo:foo: #test:).
 	aNode := tree whichNodeIsContainedBy: (112 to: 112).

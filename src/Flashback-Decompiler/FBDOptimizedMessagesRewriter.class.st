@@ -250,7 +250,7 @@ FBDOptimizedMessagesRewriter >> isIfTrue: msgNode [
 
 { #category : #testing }
 FBDOptimizedMessagesRewriter >> isLastStatementReturnSelf: seq [
-	^ seq parent isMethod and: [ seq statements last isReturn and: [ seq statements last value isSelfVariable ] ]
+	^ seq parent isMethod and: [ seq statements last isReturn and: [ seq statements last value isSelf ] ]
 ]
 
 { #category : #testing }
