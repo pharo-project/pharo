@@ -1,6 +1,6 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*NautilusRefactoring' }
-GlobalVariable >> executeRenameRefactoringBy: aNautilusRefactoring inClass: aClass [
-	aNautilusRefactoring renameClass: value 
+GlobalVariable >> executeRenameRefactoringBy: aNautilusRefactoring [
+	aNautilusRefactoring renameClass: self definingClass 
 ]
