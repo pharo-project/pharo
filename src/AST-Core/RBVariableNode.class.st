@@ -103,8 +103,15 @@ RBVariableNode >> isArgumentVariable [
 ]
 
 { #category : #testing }
+RBVariableNode >> isBlockVar [
+	"true if a variable node is defined by a block node"
+	^variable scope isBlockScope
+]
+
+{ #category : #testing }
 RBVariableNode >> isClassVariable [
 	^variable isClassVariable
+
 ]
 
 { #category : #testing }
