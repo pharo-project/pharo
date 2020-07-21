@@ -116,7 +116,7 @@ LiteralVariable >> installingIn: aClass [
 { #category : #queries }
 LiteralVariable >> isAccessedIn: aMethod [ 
 	
-	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
+	^aMethod accessesRef: self
 ]
 
 { #category : #testing }

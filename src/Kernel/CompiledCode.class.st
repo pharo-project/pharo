@@ -79,6 +79,13 @@ CompiledCode >> accessesField: varIndex [
 ]
 
 { #category : #scanning }
+CompiledCode >> accessesRef: literalVariable [
+	"Answer whether this method accesses the LiteralVariable"
+
+	^ (self readsRef: literalVariable) or: [ self writesRef: literalVariable ]
+]
+
+{ #category : #scanning }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
 	
