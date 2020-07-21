@@ -705,12 +705,6 @@ CompiledMethod >> name [
 	^ self printString
 ]
 
-{ #category : #accessing }
-CompiledMethod >> numberOfReservedLiterals [
-
-	^ 2
-]
-
 { #category : #private }
 CompiledMethod >> penultimateLiteral [
 	"Answer the penultimate literal of the receiver, which holds either
