@@ -55,9 +55,14 @@ StDebuggerActionModelTest >> setUp [
 ]
 
 { #category : #running }
-StDebuggerActionModelTest >> tearDown [ 
-	session interruptedContext ifNotNil:[session terminate].
-	super tearDown 
+StDebuggerActionModelTest >> tearDown [
+	session interruptedContext ifNotNil: [ session terminate ].
+	(StDebuggerUsingSpecSelectorMock lookupSelector: #testMethod) 
+		ifNotNil: [ :method | method removeFromSystem ].
+	(StTestDebuggerProvider lookupSelector:
+		 #buildDebuggerWithMissingClassContext) ifNotNil: [ :method | 
+		method removeFromSystem ].
+	super tearDown
 ]
 
 { #category : #tests }
@@ -81,12 +86,13 @@ StDebuggerActionModelTest >> testCopyStackToClipboard [
 ]
 
 { #category : #tests }
+StDebuggerActionModelTest >> testCreateMissingMethod [
+]
+
+{ #category : #tests }
 StDebuggerActionModelTest >> testExceptionInContextOrNil [
 	|exOrNil|	
-		
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-		
+	StTestDebuggerProvider compileMissingClassContextBuilder.
 	exOrNil := debugActionModel exceptionInContextOrNil: session interruptedContext. 
 	self assert: exOrNil equals: nil.
 	
@@ -104,8 +110,21 @@ StDebuggerActionModelTest >> testFileOutMethod [
 
 { #category : #tests }
 StDebuggerActionModelTest >> testImplementClassifiedInClassForContext [
-	self skip.
-	self flag: #DBG_TEST
+	|method|
+	method := (StDebuggerUsingSpecSelectorMock lookupSelector: #testMethod).
+	self assert:	method equals: nil.
+	[ StDebuggerUsingSpecSelectorMock new testMethod ]
+		on: Error
+		do: [ :dnu | 
+			debugActionModel
+				implement: dnu message
+				classified: Protocol unclassified
+				inClass: StDebuggerUsingSpecSelectorMock
+				forContext: dnu signalerContext ].
+	method := (StDebuggerUsingSpecSelectorMock lookupSelector: #testMethod).
+	self deny: method	equals: nil.
+	self assert: method methodClass identicalTo: StDebuggerUsingSpecSelectorMock.
+	self assert: method protocol equals: Protocol unclassified
 ]
 
 { #category : #tests }
@@ -156,11 +175,8 @@ StDebuggerActionModelTest >> testIsInterruptedContextError [
 ]
 
 { #category : #tests }
-StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
-
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-
+StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [	
+	StTestDebuggerProvider compileMissingClassContextBuilder.
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
 	self assert: debugActionModel isInterruptedContextMissingClassException
 ]
