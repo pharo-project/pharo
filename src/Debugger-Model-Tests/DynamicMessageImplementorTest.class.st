@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'instVar'
 	],
-	#category : #'Debugger-Tests-Base'
+	#category : #'Debugger-Model-Tests-Core'
 }
 
 { #category : #testing }

@@ -31,7 +31,7 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
-	#category : #'Debugger-Model-Base'
+	#category : #'Debugger-Model-Core'
 }
 
 { #category : #settings }

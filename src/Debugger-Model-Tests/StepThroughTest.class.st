@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'assistant'
 	],
-	#category : #'Debugger-Tests-Base'
+	#category : #'Debugger-Model-Tests-Core'
 }
 
 { #category : #helper }
