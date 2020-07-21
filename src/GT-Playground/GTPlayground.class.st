@@ -273,7 +273,7 @@ GTPlayground class >> settingsOn: aBuilder [
 		description: 'Enable or disable the GTPlayground.'.
 	(aBuilder setting: #cacheDirectory)
 		parent: #gt;
-		default: true;
+		default: false;
 		type: #Directory;
 		default: GTPlayBook defaultCacheDirectory;
 		target: GTPlayBook;
