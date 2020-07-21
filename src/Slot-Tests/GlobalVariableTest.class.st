@@ -47,3 +47,9 @@ GlobalVariableTest >> testRemoveProperty [
 		
 	self assert: self class binding properties isNil.
 ]
+
+{ #category : #'tests  - properties' }
+GlobalVariableTest >> testScope [
+
+	self assert: Object binding scope equals: Object environment
+]

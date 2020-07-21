@@ -78,6 +78,15 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 ]
 
 { #category : #tests }
+TemporaryVariableTest >> testScope [
+	| method |
+	method := self class >> #testTemporaryVariablesMethod.
+	self assert: method temporaryVariables first scope isMethodScope
+	
+
+]
+
+{ #category : #tests }
 TemporaryVariableTest >> testTemporaryVariablesBlock [
 	| block |
 	block := [ | b | b +2  ].

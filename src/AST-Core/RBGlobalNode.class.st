@@ -19,8 +19,3 @@ Class {
 RBGlobalNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitGlobalNode: self
 ]
-
-{ #category : #testing }
-RBGlobalNode >> isGlobal [
-	^true
-]

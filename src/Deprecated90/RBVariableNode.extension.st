@@ -10,6 +10,17 @@ RBVariableNode >> isArg [
 ]
 
 { #category : #'*Deprecated90' }
+RBVariableNode >> isGlobal [
+	"isGlobal used to return true for both class variables and globals (and even undeclared Variables).
+	From Pharo9 on, #isGlobalVariable returns true only for real globals"
+	self 
+		deprecated: 'Use #isGlobalVariable, isClassVariable or isLiteralVariable instead.' 
+		transformWith: '`@receiver isGlobal' -> '`@receiver isLiteralVariable'.
+	
+	^self isLiteralVariable
+]
+
+{ #category : #'*Deprecated90' }
 RBVariableNode >> isInstance [
 	self 
 		deprecated: 'Use #isInstanceVariable instead.' 

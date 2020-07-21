@@ -116,7 +116,7 @@ LiteralVariable >> installingIn: aClass [
 { #category : #queries }
 LiteralVariable >> isAccessedIn: aMethod [ 
 	
-	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
+	^aMethod accessesRef: self
 ]
 
 { #category : #testing }
@@ -214,6 +214,11 @@ LiteralVariable >> read [
 { #category : #debugging }
 LiteralVariable >> readInContext: aContext [
 	^self value
+]
+
+{ #category : #accessing }
+LiteralVariable >> scope [
+	^self definingClass
 ]
 
 { #category : #printing }
