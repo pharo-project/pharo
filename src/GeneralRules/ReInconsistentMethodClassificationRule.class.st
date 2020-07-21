@@ -37,7 +37,7 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
 			 	 superProtocol == #'as yet unclassified' or: [ 
 			 	 superProtocol first = $*	 ] ]) ifFalse: [ 
 					ownerProtocol ~= superProtocol ifTrue: [
-        aCritiqueBlock cull: (self critiqueFor: aMethod) ]] ] ].
+        aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ]] ] ].
 ]
 
 { #category : #accessing }
@@ -48,11 +48,6 @@ ReInconsistentMethodClassificationRule >> group [
 { #category : #accessing }
 ReInconsistentMethodClassificationRule >> name [
 	^ 'Inconsistent method classification'
-]
-
-{ #category : #accessing }
-ReInconsistentMethodClassificationRule >> rationale [
-	^ 'All methods should be put into a protocol (method category) that is equivalent to the one of the superclass, which is a Smalltalk style convention.'
 ]
 
 { #category : #accessing }
