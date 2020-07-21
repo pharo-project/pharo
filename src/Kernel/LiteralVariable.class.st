@@ -216,6 +216,11 @@ LiteralVariable >> readInContext: aContext [
 	^self value
 ]
 
+{ #category : #accessing }
+LiteralVariable >> scope [
+	^self definingClass
+]
+
 { #category : #printing }
 LiteralVariable >> storeOn: aStream [
 	"Store in the format (key->value)"
