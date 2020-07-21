@@ -66,15 +66,14 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testExampleSelf [
 	| ast assignment |
-	ast := (OCOpalExamples >> #exampleSelf) parseTree.
+	ast := (OCOpalExamples>>#exampleSelf) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'self') isSelfVariable.
-	assignment := RBParseTreeSearcher
-		              treeMatching: 'self result: ``@anything'
-		              in: ast.
-	self assert: assignment arguments first binding isSelfVariable
+	
+	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
+	self assert: assignment arguments first binding isSelf.
 ]
 
 { #category : #'testing - variables' }
