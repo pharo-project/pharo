@@ -29,12 +29,12 @@ SpAbstractTextPresenter >> acceptText: aString [
 	self property: #text rawValue: aString
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> askBeforeDiscardingEdits [
 	^ askBeforeDiscardingEdits
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> askBeforeDiscardingEdits: aBoolean [
 	askBeforeDiscardingEdits := aBoolean
 ]
@@ -86,7 +86,7 @@ SpAbstractTextPresenter >> eventKeyStrokesForPreviousFocus [
 	^ { Character arrowLeft command ctrl asKeyCombination }
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasEditingConflicts [
 	"Return if the text zone has editing conflicts"
 
@@ -95,21 +95,21 @@ SpAbstractTextPresenter >> hasEditingConflicts [
 		ifNotNil: [:w | w hasEditingConflicts ]
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasEditingConflicts: aBoolean [
 	"Set if the text zone has editing conflicts"
 	
 	^ self changed: #hasEditingConflicts: with: { aBoolean }
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasUnacceptedEdits [
 	"Return if the text zone has unaccepted edits (orange corner)"
 
 	^ hasUnacceptedEdits
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> hasUnacceptedEdits: aBoolean [
 	"Return if the text zone has unaccepted edits (orange corner)"
 
@@ -208,14 +208,14 @@ SpAbstractTextPresenter >> readSelection [
 	^ self readSelectionBlock cull: self text cull: self
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> readSelectionBlock [
 	"Return the block used to calculate the text selection"
 
 	^ readSelection
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> readSelectionBlock: aBlock [
 	"Set the block used to calculate the text selection"
 
@@ -245,7 +245,7 @@ SpAbstractTextPresenter >> selectLine [
 	^ self selectionInterval
 ]
 
-{ #category : #NOCompletion }
+{ #category : #TOREMOVE }
 SpAbstractTextPresenter >> selectedClassOrMetaClass [
 
 	^ self behavior
