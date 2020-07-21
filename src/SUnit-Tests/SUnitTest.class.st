@@ -458,12 +458,13 @@ SUnitTest >> testHangedTestDueToFailedChildProcess [
 
 { #category : #testing }
 SUnitTest >> testIgnoreDeprecationWarnings [
-	| oldRaiseWarning |
+	| oldRaiseWarning oldShowWarning|
 	oldRaiseWarning := Deprecation raiseWarning.
+	oldShowWarning := Deprecation showWarning.
 	[ Deprecation raiseWarning: false.
 	self deprecatedMessage.
 	self assert: true ]
-		ensure: [ Deprecation raiseWarning: oldRaiseWarning ]
+		ensure: [ Deprecation raiseWarning: oldRaiseWarning. Deprecation showWarning: oldShowWarning]
 ]
 
 { #category : #testing }
