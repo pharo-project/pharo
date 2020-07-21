@@ -88,10 +88,10 @@ Dictionary class >> newFrom: aDict [
 { #category : #'instance creation' }
 Dictionary class >> newFromAssociations: anAssocCollection [
 	"Return a dictionary with the associations defined in anAssocCollection. If the same key appears twice in anAssocCollection, the last one enumerated win."
-	
-	^ anAssocCollection 
-		inject: self new 
-		into: [ :dict :assoc | dict add: assoc. dict ]
+	| newDict |
+	newDict := self new: anAssocCollection size.
+ 	anAssocCollection do: [:each | newDict add: each ].
+	^ newDict
 ]
 
 { #category : #'instance creation' }
