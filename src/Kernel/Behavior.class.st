@@ -838,17 +838,17 @@ Behavior >> hasAbstractMethods [
 ]
 
 { #category : #'testing method dictionary' }
+Behavior >> hasMethodAccessingVariable: aVariable [
+	"Answer true if any of my methods access the variable"
+
+	^self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
+]
+
+{ #category : #'testing method dictionary' }
 Behavior >> hasMethods [
 	"Answer whether the receiver has any methods in its method dictionary."
 
 	^ self methodDict notEmpty
-]
-
-{ #category : #'testing method dictionary' }
-Behavior >> hasMethodsAccessingSlot: aSlot [
-	"check if aSlot is accessed in this class"
-
-	^ self methods anySatisfy: [ :method | method accessesSlot: aSlot ]
 ]
 
 { #category : #'testing method dictionary' }
@@ -1143,11 +1143,7 @@ Behavior >> isPool [
 { #category : #testing }
 Behavior >> isReferenced [
 	"Returns true if the class is referenced from a method."
-	"This method should just forward to the binding, this can be done when we do not use
- 	Association for the binding on the class side"
-
-	^ self environment allBehaviors
-		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self binding ]
+	^ self binding isReferenced
 ]
 
 { #category : #'testing class hierarchy' }

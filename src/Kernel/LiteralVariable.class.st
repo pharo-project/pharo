@@ -113,7 +113,7 @@ LiteralVariable >> installingIn: aClass [
 	"I am called by the class builder. This way a class variable can change the class it is installed in"
 ]
 
-{ #category : #queries }
+{ #category : #testing }
 LiteralVariable >> isAccessedIn: aMethod [ 
 	
 	^aMethod accessesRef: self
@@ -140,7 +140,7 @@ LiteralVariable >> isReferenced [
 	"my subclasses override this if they know better"
 
 	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior | 
-		  behavior hasSelectorReferringTo: self ]
+		  behavior hasMethodAccessingVariable: self ]
 ]
 
 { #category : #testing }

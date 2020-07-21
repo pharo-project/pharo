@@ -89,6 +89,12 @@ LocalVariable >> initialize [
 ]
 
 { #category : #testing }
+LocalVariable >> isAccessedIn: aMethod [
+	self isUnused ifTrue: [ ^ false ].
+	^ aMethod == self method
+]
+
+{ #category : #testing }
 LocalVariable >> isCopying [
 	^false
 ]

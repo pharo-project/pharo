@@ -100,6 +100,11 @@ Variable >> hash [
 ]
 
 { #category : #testing }
+Variable >> isAccessedIn: aMethod [
+	^self usingMethods includes: aMethod
+]
+
+{ #category : #testing }
 Variable >> isArgumentVariable [
 	^false
 ]
@@ -131,6 +136,12 @@ Variable >> isLiteralVariable [
 Variable >> isLocalVariable [
 	"temporary variables and arguments are local variables"
 	^false
+]
+
+{ #category : #testing }
+Variable >> isReadIn: aCompiledCode [
+	^aCompiledCode ast readNodes
+		 anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
@@ -190,6 +201,12 @@ Variable >> isUninitialized [
 { #category : #testing }
 Variable >> isWritable [
 	^ true
+]
+
+{ #category : #testing }
+Variable >> isWrittenIn: aCompiledCode [
+	^aCompiledCode ast variableWriteNodes
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #accessing }
