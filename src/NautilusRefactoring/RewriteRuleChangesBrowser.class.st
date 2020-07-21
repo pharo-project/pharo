@@ -146,7 +146,7 @@ RewriteRuleChangesBrowser >> initializePresenters [
 			addColumn: ((SpCheckBoxTableColumn title: ' ' evaluated: [ :change | selectedChanges includes: change ])
 				onActivation: [ :change | 
 					selectedChanges add: change];
-				onDesactivation: [ :change | 
+				onDeactivation: [ :change | 
 					selectedChanges remove: change];
 				width: 20;
 				yourself);

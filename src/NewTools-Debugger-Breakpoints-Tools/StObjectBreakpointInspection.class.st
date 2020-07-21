@@ -103,7 +103,7 @@ StObjectBreakpointInspection >> buildHaltAndBreakpointTable [
 				title: ' '
 				evaluated: [ :item | self haltsAndBreakpoinsEnabledFor: item ])
 				onActivation: [ :item | self enableHaltOrBreakpointFor: item ];
-				onDesactivation: [ :item | self disableHaltOrBreakpointFor: item ];
+				onDeactivation: [ :item | self disableHaltOrBreakpointFor: item ];
 				width: 20;
 				yourself);
 		addColumn:
