@@ -201,7 +201,7 @@ CDClassDefinitionParser >> parseSlotNode: aRBMessageNode [
 		
 		ifFalse: [  
 			"when a slot is just 'inst' => InstanceVariableSlot."
-			aRBMessageNode arguments first isGlobal
+			aRBMessageNode arguments first isGlobalVariable
 				ifTrue: [ | slot |
 					slot := self slotNodeClass
 						node: aRBMessageNode

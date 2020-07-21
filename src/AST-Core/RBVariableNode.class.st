@@ -61,7 +61,7 @@ RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
 { #category : #converting }
 RBVariableNode >> adaptToSemanticNode [
 	
-	self primitiveChangeClassTo: self binding semanticNodeClass new
+	self primitiveChangeClassTo: variable semanticNodeClass new
 ]
 
 { #category : #matching }
@@ -80,7 +80,7 @@ RBVariableNode >> hasIncompleteIdentifier [
 	"check if there is any variable declared in my scope that starts with my name"
 
 	"declared vars are never incomplete"
-	self binding isUndeclaredVariable ifFalse: [ ^false ].
+	variable isUndeclaredVariable ifFalse: [ ^false ].
 	"for the others we have to search from the current scope"
 	^self scope hasBindingThatBeginsWith: self name
 ]
@@ -103,6 +103,11 @@ RBVariableNode >> isArgumentVariable [
 ]
 
 { #category : #testing }
+RBVariableNode >> isClassVariable [
+	^variable isClassVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isDefinition [
 	"Check if I am a Variable defintion"
 	^variable definingNode == self
@@ -121,6 +126,11 @@ RBVariableNode >> isImmediateNode [
 { #category : #testing }
 RBVariableNode >> isInstanceVariable [
 	^variable isInstanceVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isLiteralVariable [
+	^variable isLiteralVariable
 ]
 
 { #category : #testing }

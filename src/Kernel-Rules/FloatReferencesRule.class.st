@@ -10,7 +10,7 @@ Class {
 { #category : #running }
 FloatReferencesRule >> basicCheck: node [
 	node isVariable ifFalse: [ ^ false ].
-	node isGlobal ifFalse: [ ^ false ].
+	node isGlobalVariable ifFalse: [ ^ false ].
 	^(self systemClassNames includes: node name)
 	
 ]
