@@ -25,12 +25,10 @@ instance variables
 "
 Class {
 	#name : #RBComment,
-	#superclass : #RBNode,
+	#superclass : #RBProgramNode,
 	#instVars : [
 		'contents',
-		'start',
-		'parent',
-		'properties'
+		'start'
 	],
 	#category : #'AST-Core-Nodes'
 }
