@@ -213,9 +213,6 @@ ToolRegistry >> openWorkspace [
 ToolRegistry >> register: anObject as: aNameSelector [
 	"Register a tool class under given name"
 	tools at: aNameSelector put: anObject.
-	
-	('ESTEBAN: ', aNameSelector asString, '=', anObject asString) crTrace.
-	
 	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector) 
 ]
 
