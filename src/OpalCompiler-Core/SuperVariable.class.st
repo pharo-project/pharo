@@ -35,3 +35,9 @@ SuperVariable >> isSuper [
 SuperVariable >> readInContext: aContext [
 	^aContext receiver
 ]
+
+{ #category : #queries }
+SuperVariable >> usingMethods [
+	^ SystemNavigation new allMethods select: [ :method | 
+		  method sendsToSuper ]
+]
