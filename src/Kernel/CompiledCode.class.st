@@ -98,12 +98,6 @@ CompiledCode >> addWithAllBlocksInto: collected [
 ]
 
 { #category : #literals }
-CompiledCode >> additionalMethodStateRefersToLiteral: literal [
-	^ self penultimateLiteral isMethodProperties
-		and: [ self penultimateLiteral refersToLiteral: literal ]
-]
-
-{ #category : #literals }
 CompiledCode >> allLiterals [
 	"Answer an Array of the literals referenced by the receiver.	
 	 including superclass + selector/properties"
@@ -642,11 +636,6 @@ CompiledCode >> originMethod [
 ]
 
 { #category : #accessing }
-CompiledCode >> penultimateLiteral [
-	^ self subclassResponsibility
-]
-
-{ #category : #accessing }
 CompiledCode >> pragmas [
 	^ self subclassResponsibility
 ]
@@ -717,17 +706,14 @@ CompiledCode >> referredInstVars [
 	"Dictionary fromPairs: (Point selectors collect: [:s| { s. (Point >> s) referredInstVars}])".
 ]
 
-{ #category : #literals }
+{ #category : #testing }
 CompiledCode >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal,
 	even if embedded in array structure."
 
-	(self additionalMethodStateRefersToLiteral: aLiteral)
-		ifTrue: [ ^ true ].
-
-	"exclude selector or additional method state (penultimate slot) 
-	and methodClass or outerCode (last slot)"
 	1 to: self numLiterals - self literalsToSkip do: [ :index | 
+		"exclude selector or additional method state (penultimate slot) 
+		and methodClass or outerCode (last slot)"
 		((self literalAt: index) refersToLiteral: aLiteral)
 			ifTrue: [ ^ true ] ].
 
