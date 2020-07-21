@@ -26,11 +26,6 @@ OCThisContextVariable >> initialize [
 	name := 'thisContext'
 ]
 
-{ #category : #testing }
-OCThisContextVariable >> isThisContext [
-	^true
-]
-
 { #category : #debugging }
 OCThisContextVariable >> readInContext: aContext [
 	^aContext

@@ -52,7 +52,7 @@ StepThroughTest >> testStepThrough [
 	self assert: (session interruptedContext method) equals: (self class>>#stepA1).
 	node := self class>>#stepA1 sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #evalBlockThenReturnOne:.
 	session stepThrough.
 
@@ -65,7 +65,7 @@ StepThroughTest >> testStepThrough [
 	self assert: (session interruptedContext method) equals: expectedMethod.
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepA2.
 	
 ]
@@ -86,7 +86,7 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	"Checking that after the step over, we reached the node 'self stepB3' of method stepB1"
 	node := self class>>#stepB1 sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepB3.
 	
 	"Set up the debugged execution again"
@@ -100,6 +100,6 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	"Checking that after the step through, we reached the node 'self stepB3' of method stepB1 (the same node that was reached with the step over"
 	node := self class>>#stepB1 sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepB3.
 ]

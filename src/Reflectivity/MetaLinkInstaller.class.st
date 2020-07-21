@@ -196,7 +196,7 @@ MetaLinkInstaller >> installSuperJumpLinksInMethodNode: node [
 	instead of starting the lookup in the super class (wich is the original class of the object),
 	the lookup is started in the super super class (which is the intented superclass)."
 
-	(node allChildren select: [ :n | n isSuper ])
+	(node allChildren select: [ :n | n isSuperVariable ])
 		do: [ :superNode | 
 			| messageSendNode superSuperClass link |
 			messageSendNode := superNode parent.

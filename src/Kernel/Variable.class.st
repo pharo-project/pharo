@@ -171,7 +171,7 @@ Variable >> isTemporaryVariable [
 ]
 
 { #category : #testing }
-Variable >> isThisContext [
+Variable >> isThisContextVariable [
 	^false
 ]
 

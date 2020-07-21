@@ -158,11 +158,26 @@ RBVariableNode >> isSelf [
 ]
 
 { #category : #testing }
+RBVariableNode >> isSelfVariable [
+	^variable isSelfVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isSuper [
 	"normally this method is not needed (if all the RBVariable creations create RBSuperNode instead but
 	since we do not control this."
 	
 	^ self name = 'super'
+]
+
+{ #category : #testing }
+RBVariableNode >> isSuperVariable [
+	^ variable isSuperVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isThisContextVariable [
+	^variable isThisContextVariable
 ]
 
 { #category : #testing }
