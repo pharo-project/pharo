@@ -88,6 +88,26 @@ BaselineOf class >> validate [
     recurse: false) inspect
 ]
 
+{ #category : #baselines }
+BaselineOf >> baseline: spec [
+	<baseline>
+	"subclasses should redefine me"
+	
+	"Here is a typical package and its tests
+	spec for: #'common' do: [
+		spec 
+			package: #'XXX-Core';
+			package: #'XXX-Core-Tests' with: [
+				spec requires: #('XXX-Core' ) ].
+		spec 
+			group: 'Core' with: #('XXX-Core' );
+			group: 'CoreTests' with: #('XXX-Core' 'XXX-Core-Tests');
+			group: 'default' with: #('Beacon-XXX' 'Beacon-XXX-Tests') ]
+	"
+	
+
+]
+
 { #category : #accessing }
 BaselineOf >> projectClass [
     ^ MetacelloMCBaselineProject
