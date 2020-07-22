@@ -980,7 +980,7 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
 	^ anArgumentNode isBlockVar
-		ifTrue: [ anArgumentNode variable isDefinition 
+		ifTrue: [ anArgumentNode isDefinition 
 				ifTrue: [ #blockPatternArg ]
 				ifFalse: [ #blockArg ] ]
 		ifFalse: [ #methodArg ]
