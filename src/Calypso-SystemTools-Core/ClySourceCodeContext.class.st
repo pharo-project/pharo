@@ -130,7 +130,7 @@ ClySourceCodeContext >> isVariableSelected [
 	node := self selectedSourceNode.
 	node isVariable ifFalse: [ ^ false ].
 	
-	^ node variable isLiteralVariable | node variable isInstanceVariable
+	^ node isLiteralVariable | node isInstanceVariable
 ]
 
 { #category : #selection }
