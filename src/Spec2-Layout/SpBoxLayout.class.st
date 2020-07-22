@@ -64,6 +64,16 @@ SpBoxLayout >> add: aName expand: shouldExpand [
 ]
 
 { #category : #adding }
+SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill [
+	self 
+		add: aName 
+		withConstraints: [ :constraints |
+			constraints 
+				expand: shouldExpand;
+				fill: shouldFill ]
+]
+
+{ #category : #adding }
 SpBoxLayout >> add: aName expand: shouldExpand fill: shouldFill padding: aNumber [
 "
 aName 		- the presenter to be added to box
