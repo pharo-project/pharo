@@ -13,6 +13,12 @@ ReUtilityMethodsRule class >> checksMethod [
 ]
 
 { #category : #accessing }
+ReUtilityMethodsRule class >> enabled [
+	"this rule is disabled by default as it is slow and not very useful"
+	^ enabled ifNil: [ enabled := false ]
+]
+
+{ #category : #accessing }
 ReUtilityMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 	
