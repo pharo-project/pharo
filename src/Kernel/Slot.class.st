@@ -233,7 +233,7 @@ Slot >> isReferenced [
 	^ self owningClass 
 		ifNil: [ false ] 
 		ifNotNil: [ :class | 
-		  class withAllSubclasses anySatisfy: [ :subclass | subclass hasMethodsAccessingSlot: self ] ]
+		  class withAllSubclasses anySatisfy: [ :subclass | subclass hasMethodAccessingVariable: self ] ]
 ]
 
 { #category : #testing }

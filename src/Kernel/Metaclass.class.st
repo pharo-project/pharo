@@ -225,6 +225,12 @@ Metaclass >> isObsolete [
 ]
 
 { #category : #testing }
+Metaclass >> isReferenced [
+	"Metaclasses are never directly referenced in code"
+	^false
+]
+
+{ #category : #testing }
 Metaclass >> isSelfEvaluating [
 	^self isObsolete not
 ]
