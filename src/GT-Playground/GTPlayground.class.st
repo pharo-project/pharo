@@ -269,11 +269,10 @@ GTPlayground class >> settingsOn: aBuilder [
 		getSelector: #isGTPlaygroundEnabled;
 		setSelector: #setGTPlaygroundEnabledStatus:; 
 		label: 'GTPlayground';
-		default: true;
+		default: false;
 		description: 'Enable or disable the GTPlayground.'.
 	(aBuilder setting: #cacheDirectory)
 		parent: #gt;
-		default: false;
 		type: #Directory;
 		default: GTPlayBook defaultCacheDirectory;
 		target: GTPlayBook;
