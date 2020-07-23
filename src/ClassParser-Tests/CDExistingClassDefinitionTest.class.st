@@ -65,7 +65,7 @@ CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNod
 	self deny: classVarNode isGlobalVariable.
 	self assert: classVarNode isClassVariable.
 	self deny: classVarNode isInstanceVariable.
-	self deny: classVarNode isLiteralVariable.
+	self assert: classVarNode isLiteralVariable.
 	self deny: classVarNode isUndeclaredVariable.
 ]
 
