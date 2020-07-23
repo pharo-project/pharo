@@ -45,9 +45,9 @@ CompiledCodeTest >> testHasSelector [
 	self assert: (method hasSelector: #arrayInBlock).
 	"pragmas are covered"
 	self assert: (method hasSelector: #pragma:).
-	"literals as args of pragmas. too"
+	"args of pragmas are found, too"
 	self assert: (method hasSelector: #pragma:).
-	"the method selecto NOT"
+	"the method selector NOT"
 	self deny: (method hasSelector: #method).
 ]
 
@@ -84,10 +84,10 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	"pragmas are covered"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #pragma:.
 	self assert: (method hasSelector: #pragma: specialSelectorIndex: specialIndex).
-	"literals as args of pragmas. too"
+	"args of pragmas are found, too"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #pragma:.
 	self assert: (method hasSelector: #pragma: specialSelectorIndex: specialIndex).
-	"the method selecto NOT"
+	"the method selector NOT"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #method.
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]

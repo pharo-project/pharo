@@ -299,7 +299,7 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 
 	
 	(self refersToLiteral: selector) ifTrue: [ ^ true ].
-	"refersToLiteral: traverses all blocks, but only for no-special literals"
+	"refersToLiteral: traverses all blocks, but only for non-special literals"
 	specialOrNil ifNil: [ ^ false ].
 	"if the selector is special, scan all blocks and myself"
 	^ self withAllBlocks anySatisfy: [ :aCompiledCode | aCompiledCode scanFor:
