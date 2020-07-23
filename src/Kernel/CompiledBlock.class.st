@@ -110,11 +110,6 @@ CompiledBlock >> outerCode: aCompiledCode [
 ]
 
 { #category : #accessing }
-CompiledBlock >> penultimateLiteral [
-	^ nil
-]
-
-{ #category : #accessing }
 CompiledBlock >> pragmas [
 	^ #()
 ]
