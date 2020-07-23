@@ -43,7 +43,7 @@ ReCollectionMessagesToExternalObjectRule >> initialize [
 { #category : #helpers }
 ReCollectionMessagesToExternalObjectRule >> isNotSpecialVariable: variableNode [
 
-	variableNode isSelfOrSuper ifTrue: [ ^false ]. 
+	variableNode isReservedVariable ifTrue: [ ^false ]. 
 	(Smalltalk globals includesKey: variableNode name asSymbol) ifTrue: [ ^ false ].
 	^ true
 	

@@ -96,7 +96,7 @@ StepOverTest >> testStepOver [
 	"Checking that the execution is at the 'self stepA2' node of the stepA1 method"
 	self assert: session interruptedContext method equals: self class >>#stepA1.
 	node := self class >>#stepA1 sourceNodeForPC: session interruptedContext pc.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepA2.
 	session stepOver.
 	"Checking if the stepOver stepped over the call to stepA2 and brought the execution to the return node of stepA1"
@@ -137,7 +137,7 @@ StepOverTest >> testStepOverComputedReturn [
 	"The initial step done by stepOver should return the stepC2 context, ending the stepOver in the stepC1 context, on the 'self stepC2' node"
 	self assert: session interruptedContext method equals: self class >>#stepC1.
 	node := self class >>#stepC1 sourceNodeForPC: session interruptedContext pc.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepC2.
 ]
 
@@ -169,7 +169,7 @@ StepOverTest >> testStepOverLastNodeOfContext [
 	"Checking that the execution is at the 'self stepB3' node of the stepB2 method"
 	self assert: session interruptedContext method equals: self class >>#stepB2.
 	node := self class >>#stepB2 sourceNodeForPC: session interruptedContext pc.
-	self assert: node receiver isSelf.
+	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepB3.
 	session stepOver.
 	"Checking that after the stepOver, the execution is at the method node of the stepB2 method"

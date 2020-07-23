@@ -543,6 +543,11 @@ RBProgramNode >> isSelfOrSuper [
 ]
 
 { #category : #testing }
+RBProgramNode >> isSelfVariable [
+	^ false
+]
+
+{ #category : #testing }
 RBProgramNode >> isSequence [
 	^false
 ]
@@ -553,12 +558,17 @@ RBProgramNode >> isSuper [
 ]
 
 { #category : #testing }
+RBProgramNode >> isSuperVariable [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isTemp [
 	^ false
 ]
 
 { #category : #testing }
-RBProgramNode >> isThisContext [
+RBProgramNode >> isThisContextVariable [
 	^ false
 ]
 

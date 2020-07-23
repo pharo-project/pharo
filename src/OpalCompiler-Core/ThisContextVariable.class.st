@@ -27,7 +27,7 @@ ThisContextVariable >> initialize [
 ]
 
 { #category : #testing }
-ThisContextVariable >> isThisContext [
+ThisContextVariable >> isThisContextVariable [
 	^true
 ]
 

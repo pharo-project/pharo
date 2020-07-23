@@ -73,14 +73,15 @@ OCASTCheckerTest >> testExampleSelf [
 	self assert: (ast scope lookupVar: 'self') isSelfVariable.
 	
 	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
-	self assert: assignment arguments first binding isSelf.
+	self assert: assignment arguments first variable isSelfVariable.
 ]
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testExampleSelfReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSelfReceiver) parseTree.
-	self assert: ast body statements first receiver isSelf.
+	ast doSemanticAnalysis.
+	self assert: ast body statements first receiver isSelfVariable.
 ]
 
 { #category : #'testing - variables' }
@@ -100,7 +101,8 @@ OCASTCheckerTest >> testExampleSuper [
 OCASTCheckerTest >> testExampleSuperReceiver [
 	| ast |
 	ast := (OCOpalExamples>>#exampleSuperReceiver) parseTree.
-	self assert: ast body statements first receiver isSuper
+	ast doSemanticAnalysis.
+	self assert: ast body statements first receiver isSuperVariable
 ]
 
 { #category : #'testing - variables' }
@@ -110,10 +112,10 @@ OCASTCheckerTest >> testExampleThisContext [
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
 	self assert: ast scope tempVars size equals: 0.
-	self assert: (ast scope lookupVar: 'thisContext') isThisContext.
+	self assert: (ast scope lookupVar: 'thisContext') isThisContextVariable.
 	
 	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast. 
-	self assert: assignment arguments first binding isThisContext.
+	self assert: assignment arguments first variable isThisContextVariable.
 ]
 
 { #category : #'testing - blocks - optimized' }
