@@ -295,15 +295,15 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	 If you do, you may call this method directly to avoid recomputing 
 	 the special selector index all the time.
 	
-	 I traverse the method and all the compiled blocks in the literals 	 
-	"
+	 I traverse the method and all the compiled blocks in the literals"
 
-	^ self withAllBlocks
-		anySatisfy: [ :aCompiledCode | 
-			(aCompiledCode refersToLiteral: selector)
-				or: [ specialOrNil isNotNil
-						and: [ aCompiledCode
-								scanFor: self encoderClass firstSpecialSelectorByte + specialOrNil ] ] ]
+	
+	(self refersToLiteral: selector) ifTrue: [ ^ true ].
+	"refersToLiteral: traverses all blocks, but only for no-special literals"
+	specialOrNil ifNil: [ ^ false ].
+	"if the selector is special, scan all blocks and myself"
+	^ self withAllBlocks anySatisfy: [ :aCompiledCode | aCompiledCode scanFor:
+			self encoderClass firstSpecialSelectorByte + specialOrNil ]
 ]
 
 { #category : #accessing }
