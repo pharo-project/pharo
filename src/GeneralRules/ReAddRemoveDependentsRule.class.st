@@ -25,10 +25,11 @@ ReAddRemoveDependentsRule >> basicCheck: aClass [
 	addSends := 0.
 	removeSends := 0.
 	methods := (aClass whichMethodsReferTo: #addDependent:) asSet, (aClass whichMethodsReferTo: #removeDependent:).
+	
 	methods do: [ :method | | messages |
-			 messages := method messages.
-			 addSends := messages occurrencesOf: #addDependent:.
-			removeSends := messages occurrencesOf: #removeDependent:].
+			messages := method ast allChildren select: [ :each | each isMessage ].
+				addSends := addSends + (messages count: [ :each | each selector == #addDependent:]).
+				removeSends := removeSends + (messages count: [ :each | each selector == #removeDependent:])].
 	^ addSends > removeSends
 ]
 
