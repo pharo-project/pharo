@@ -648,8 +648,7 @@ StDebugger >> fileOutSelectedContext [
 
 { #category : #stack }
 StDebugger >> filterStack: aStack [
-	^ aStack reject: [ :aContext | 
-		  aContext method hasPragmaNamed: #debuggerCompleteToSender ]
+	^self debuggerActionModel filterStack: aStack
 ]
 
 { #category : #stack }

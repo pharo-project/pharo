@@ -20,7 +20,7 @@ StDebuggerContextInspectorTempsNode >> label [
 
 { #category : #accessing }
 StDebuggerContextInspectorTempsNode >> rawValue [
-	^ hostObject context temporaries values
+	^ hostObject context temporaries
 ]
 
 { #category : #accessing }
