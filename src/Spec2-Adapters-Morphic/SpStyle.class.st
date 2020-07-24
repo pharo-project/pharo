@@ -40,7 +40,24 @@ Class {
 { #category : #private }
 SpStyle class >> createDefaultStyleSheet [
 
-	^ SpStyleSTONReader fromString: '
+	^ SpStyleSTONReader fromString: self defaultStyleSheetData
+	
+]
+
+{ #category : #accessing }
+SpStyle class >> defaultStyleSheet [
+
+	self flag: #TODO. "This is wrong. Default style sheet should reside in the Pharo application, 
+	but since we do not have that abstraction (yet) in the system, we put it here for now"
+	^ DefaultStyleSheet ifNil: [ 
+		DefaultStyleSheet := self createDefaultStyleSheet ].
+
+]
+
+{ #category : #private }
+SpStyle class >> defaultStyleSheetData [
+
+	^'
 .application [
 	Font { #name: "Source Sans Pro", #size: 10 },
 	Geometry { #height: 25 },
@@ -70,7 +87,9 @@ SpStyle class >> createDefaultStyleSheet [
 		]
 	],
 	.checkBox [  
-		Geometry { #hResizing: true }
+		Geometry { #hResizing: true },
+		.compact [
+			Geometry { #hResizing: false, #width: 20 } ]
 	],
 	.radioButton [ 
 		Geometry { #hResizing: true }
@@ -85,10 +104,7 @@ SpStyle class >> createDefaultStyleSheet [
 		Geometry { #width: 150, #hResizing: true }
 	],
 	.actionBar [  
-		Container { 
-			#borderColor: Color { #rgb: 0, #alpha: 0 }, 
-			#borderWidth: 2, 
-			#padding: 5 },
+		Container { #borderWidth: 0, #padding: 5 },
 		Geometry { #width: 150, #height: 29, #hResizing: true, #vResizing: false }
 	],
 	.menuBar [
@@ -119,21 +135,15 @@ SpStyle class >> createDefaultStyleSheet [
 			Geometry { #width : 25 }
 		]
 	],
+	.codePopoverError [ 
+		Draw { #backgroundColor: #C20000 },
+		Font { #color: #white } 
+	],
 	.scrollbarPopoverLarge [ 
 		Geometry { #height: 350 } 
 	]
 ]
-'
-]
-
-{ #category : #accessing }
-SpStyle class >> defaultStyleSheet [
-
-	self flag: #TODO. "This is wrong. Default style sheet should reside in the Pharo application, 
-	but since we do not have that abstraction (yet) in the system, we put it here for now"
-	^ DefaultStyleSheet ifNil: [ 
-		DefaultStyleSheet := self createDefaultStyleSheet ].
-
+'	
 ]
 
 { #category : #'instance creation' }

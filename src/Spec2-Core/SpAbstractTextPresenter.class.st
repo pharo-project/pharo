@@ -348,6 +348,13 @@ SpAbstractTextPresenter >> whenResetDo: aBlock [
 ]
 
 { #category : #'api-events' }
+SpAbstractTextPresenter >> whenSelectionChangedDo: aBlock [
+	"Set a block to perform when the selection changed"
+
+	self property: #selection whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
 SpAbstractTextPresenter >> whenSubmitDo: aBlock [
 	"This method will add a 'submit' event to the widget. It will react when user presses meta+s 
 	key (this is for historical reasons) and (in case of text fields) with enter."

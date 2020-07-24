@@ -37,7 +37,7 @@ SpMorphicCodeAdapter >> buildWidget [
 		newWidget withLineNumbers ].
 	self presenter interactionModel ifNotNil: [ :im | 
 		self setInteractionModel: im to: newWidget ].
-	
+ 
 	self presenter whenLineNumbersChangedDo: [ :hasLineNumbers | 
 		self changeLineNumbers: hasLineNumbers to: newWidget ].
 	self presenter whenSyntaxHighlightChangedDo: [ :hasSyntaxHighlight | 

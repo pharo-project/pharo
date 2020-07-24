@@ -324,13 +324,20 @@ SpCodePresenter >> initialize [
 ]
 
 { #category : #api }
+SpCodePresenter >> insertPopover: aPresenter atIndex: location [
+
+	self selectionInterval: ((location + 1) to: location).
+	self insertPopoverAfterCurrentSelection: aPresenter
+]
+
+{ #category : #api }
 SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 
 	self withAdapterDo: [ :anAdapter |
 		anAdapter insertPopoverAfterCurrentSelection: aPresenter ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
 	"Inserts a print-it result popover. 
 	 This is for use of SpCodePrintItCommand"
