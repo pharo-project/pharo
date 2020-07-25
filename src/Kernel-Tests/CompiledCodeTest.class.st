@@ -92,6 +92,17 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testAccessesRef [
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class>>#compilerClass.
+	writeMethod := SmalltalkImage class>>#compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	
+	self assert: (readMethod accessesRef: classVar).
+	self assert: (writeMethod accessesRef: classVar).
+]
+
 { #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
