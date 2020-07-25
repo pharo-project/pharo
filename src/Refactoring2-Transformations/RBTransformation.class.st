@@ -227,7 +227,7 @@ RBTransformation >> preconditions [
 
 { #category : #executing }
 RBTransformation >> primitiveExecute [
-	"compatibility to Refacorings"
+	"compatibility method RBRefactoring"
 	self transform
 ]
 
