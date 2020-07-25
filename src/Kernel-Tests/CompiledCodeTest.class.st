@@ -4,12 +4,12 @@ Class {
 	#category : #'Kernel-Tests-Classes'
 }
 
-{ #category : #accessing }
+{ #category : #examples }
 CompiledCodeTest >> compiledMethod1 [
 	^ self class >> #method1
 ]
 
-{ #category : #accessing }
+{ #category : #examples }
 CompiledCodeTest >> method1 [
 	
 	<pragma1: 123 foo: 'bar' >
@@ -17,6 +17,79 @@ CompiledCodeTest >> method1 [
 	array := Array new.
 	array at: 1 put: 'Pharo loves tests'.
 	#(#add #at: #remove) do: #printOn:
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testHasSelector [
+
+	| method |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		self do: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		self name ].
+		^#(#array) '.
+	"simpe case: normal send in the method itself"
+	self assert: (method hasSelector: #do:).
+	"special selector in the method"
+	self assert: (method hasSelector: #+).
+	"special selector in the block"
+	self assert: (method hasSelector: #-).
+	"normal selector in the block"
+	self assert: (method hasSelector: #name).
+	"we look into arrays"
+	self assert: (method hasSelector: #array).
+	"we look into arrays in Blocks"
+	self assert: (method hasSelector: #arrayInBlock).
+	"pragmas are covered"
+	self assert: (method hasSelector: #pragma:).
+	"args of pragmas are found, too"
+	self assert: (method hasSelector: #pragma:).
+	"the method selector NOT"
+	self deny: (method hasSelector: #method).
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
+
+	| method specialIndex |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		self do: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		self name ].
+		^#(#array) '.
+	"simpe case: normal send in the method itself"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #do:.
+	self assert: (method hasSelector: #do: specialSelectorIndex: specialIndex).
+	"special selector in the method"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #+.
+	self assert: (method hasSelector: #+ specialSelectorIndex: specialIndex).
+	"special selector in the block"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #-.
+	self assert: (method hasSelector: #- specialSelectorIndex: specialIndex).
+	"normal selector in the block"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #name.
+	self assert: (method hasSelector: #name specialSelectorIndex: specialIndex).
+	"we look into arrays"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #array.
+	self assert: (method hasSelector: #array specialSelectorIndex: specialIndex).
+	"we look into arrays in Blocks"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #arrayInBlock.
+	self assert: (method hasSelector: #arrayInBlock specialSelectorIndex: specialIndex).
+	"pragmas are covered"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #pragma:.
+	self assert: (method hasSelector: #pragma: specialSelectorIndex: specialIndex).
+	"args of pragmas are found, too"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #pragma:.
+	self assert: (method hasSelector: #pragma: specialSelectorIndex: specialIndex).
+	"the method selector NOT"
+	specialIndex := Smalltalk specialSelectorIndexOrNil: #method.
+	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]
 
 { #category : #'tests - scanning' }
@@ -30,7 +103,7 @@ CompiledCodeTest >> testAccessesRef [
 	self assert: (writeMethod accessesRef: classVar).
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
 	self
@@ -39,13 +112,13 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 				refersToLiteral: (self class environment associationAt: self class name asSymbol))
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 	self deny: (self compiledMethod1 refersToLiteral: #method1)
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodPropertiesKey [
 	
 	[ self compiledMethod1 propertyAt: #Once put: true.
@@ -53,38 +126,38 @@ CompiledCodeTest >> testRefersToLiteralsReturnsFalseWhenLiteralNotInMethodProper
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsArrayOfLiterals [
 
 	self assert: (self compiledMethod1 refersToLiteral: #(#add #at: #remove))
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsByteString [
 
 	self assert: (self compiledMethod1 refersToLiteral: 'Pharo loves tests')
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsByteSymbol [
 
 	self assert: (self compiledMethod1 refersToLiteral: #printOn:)
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsContainedInArrayOfLitterals [
 
 	self assert: (self compiledMethod1 refersToLiteral: #add)
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsGlobalVariable [
 	
 	self assert: (self compiledMethod1
 				refersToLiteral: (self class environment associationAt: #Array))
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesKey [
 	
 	[ self compiledMethod1 propertyAt: #Once put: true.
@@ -92,7 +165,7 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodProperti
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesValue [
 	
 	[ self compiledMethod1 propertyAt: #Once put: '123'.
@@ -100,7 +173,7 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodProperti
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesValueArray [
 	
 	[ self compiledMethod1 propertyAt: #Once put: #(1 2 3).
@@ -108,14 +181,14 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodProperti
 		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaArguments [
 	
 	self assert: (self compiledMethod1 refersToLiteral: 'bar').
 	self assert: (self compiledMethod1 refersToLiteral: 123)
 ]
 
-{ #category : #accessing }
+{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaSelector [
 	
 	self assert: (self compiledMethod1
