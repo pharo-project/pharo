@@ -81,8 +81,10 @@ CompiledCode >> accessesField: varIndex [
 { #category : #scanning }
 CompiledCode >> accessesRef: literalVariable [
 	"Answer whether this method accesses the LiteralVariable"
+	"we do not need to call readsRef: or #writesRef:, as if the variable 
+	is stored as a Literal, it will be accessed. This check is much faster"
 
-	^ (self readsRef: literalVariable) or: [ self writesRef: literalVariable ]
+	^ self hasLiteral: literalVariable
 ]
 
 { #category : #scanning }

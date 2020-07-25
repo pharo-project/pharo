@@ -19,6 +19,17 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testAccessesRef [
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class>>#compilerClass.
+	writeMethod := SmalltalkImage class>>#compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	
+	self assert: (readMethod accessesRef: classVar).
+	self assert: (writeMethod accessesRef: classVar).
+]
+
 { #category : #accessing }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
