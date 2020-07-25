@@ -226,6 +226,12 @@ RBTransformation >> preconditions [
 ]
 
 { #category : #executing }
+RBTransformation >> primitiveExecute [
+	"compatibility to Refacorings"
+	self transform
+]
+
+{ #category : #executing }
 RBTransformation >> privateTransform [
 
 	self subclassResponsibility

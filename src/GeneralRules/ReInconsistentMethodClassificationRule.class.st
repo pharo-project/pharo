@@ -40,6 +40,20 @@ ReInconsistentMethodClassificationRule >> check: aMethod forCritiquesDo: aCritiq
         aCritiqueBlock cull: ((self critiqueFor: aMethod) tinyHint: 'superclass categorizes as: ' , superProtocol) ]] ] ].
 ]
 
+{ #category : #helpers }
+ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
+	| supercategory |
+	supercategory := (aMethod methodClass superclass lookupSelector:
+		                  aMethod selector) protocol.
+		
+	^ (ReRefactoringCritique
+		   withAnchor: (self anchorFor: aMethod)
+		   by: self) refactoring: (RBMethodProtocolTransformation
+			   protocol: { supercategory }
+			   inMethod: aMethod selector
+			   inClass: aMethod methodClass name) asRefactoring
+]
+
 { #category : #accessing }
 ReInconsistentMethodClassificationRule >> group [
 	^ 'Design Flaws'
