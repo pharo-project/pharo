@@ -1,9 +1,6 @@
 Class {
 	#name : #CompiledCodeTest,
 	#superclass : #TestCase,
-	#classInstVars : [
-		'method'
-	],
 	#category : #'Kernel-Tests-Classes'
 }
 
