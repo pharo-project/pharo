@@ -42,7 +42,7 @@ StInspectorContextNamedTempNode >> label [
 { #category : #accessing }
 StInspectorContextNamedTempNode >> rawValue [
 
-	^ self hostObject namedTempAt: tempIndex
+	^ self hostObject tempNamed: tempName
 ]
 
 { #category : #accessing }

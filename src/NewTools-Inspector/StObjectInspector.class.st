@@ -104,7 +104,9 @@ StObjectInspector >> allPages [
 StObjectInspector >> buildToolbar [
 
 	^ self rootCommandsGroup asToolbarPresenterWith: [ :presenter | 
-			presenter displayMode: self application displayMode ]
+			presenter 
+				displayMode: self application displayMode;
+				addStyle: 'stToolbar' ]
 ]
 
 { #category : #transmission }

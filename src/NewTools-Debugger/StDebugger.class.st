@@ -548,6 +548,7 @@ StDebugger >> copyStackToClipboard [
 { #category : #actions }
 StDebugger >> createMissingClass [
 	| message exception variableNode |
+	self flag: #DBG_MISSINGTEST.
 	message := self interruptedContext tempAt: 1.
 	exception := self interruptedContext tempAt: 2.
 	variableNode := exception variableNode.
@@ -565,22 +566,23 @@ StDebugger >> createMissingClass [
 { #category : #actions }
 StDebugger >> createMissingMethod [
 	| msg chosenClass |
+	self flag: #DBG_MISSINGTEST.
 	msg := self interruptedContext tempAt: 1.
-	chosenClass := (self
+	"chosenClass := (self
 		requestSuperclassOf: self interruptedContext receiver class
 		to: ProtoObject
 		toImplement: msg selector
-		ifCancel: [ ^ self ]) value.
+		ifCancel: [ ^ self ]) value."
+	chosenClass := self interruptedContext receiver class.
 	self createMissingMethodFor: msg in: chosenClass
 ]
 
 { #category : #actions }
 StDebugger >> createMissingMethodFor: aMessage in: aClass [
-	| msgCategory |
-	msgCategory := self requestCategoryIn: aClass.
+	self flag: #DBG_MISSINGTEST.
 	self debuggerActionModel
 		implement: aMessage
-		classified: msgCategory
+		classified: Protocol unclassified
 		inClass: aClass
 		forContext: self interruptedContext.
 	self selectTopContext
@@ -646,8 +648,7 @@ StDebugger >> fileOutSelectedContext [
 
 { #category : #stack }
 StDebugger >> filterStack: aStack [
-	^ aStack reject: [ :aContext | 
-		  aContext method hasPragmaNamed: #debuggerCompleteToSender ]
+	^self debuggerActionModel filterStack: aStack
 ]
 
 { #category : #stack }
@@ -888,18 +889,6 @@ StDebugger >> removeActionsForSession: aSession [
 StDebugger >> removeSessionHolderSubscriptions [
 	self sessionHolder announcer unsubscribe: self sessionHolder.
 	self removeActionsForSession: self session
-]
-
-{ #category : #'ui requests' }
-StDebugger >> requestCategoryIn: aClass [
-	| defaultAnswer categoryName |
-	defaultAnswer := 'as yet unclassified'.
-	categoryName := AbstractTool
-		requestProtocolNameFor: aClass
-		initialAnswer: defaultAnswer.
-	^ (#(nil '') includes: categoryName)
-		ifTrue: [ defaultAnswer ]
-		ifFalse: [ categoryName ]
 ]
 
 { #category : #'ui requests' }

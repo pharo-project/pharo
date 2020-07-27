@@ -10,6 +10,46 @@ Class {
 	#category : #'NewTools-Debugger-Tests-Model'
 }
 
+{ #category : #benchmarking }
+StDebuggerActionModelTest class >> benchFilterStack [
+	<script>
+	^self new benchmarkFilterStack inspect
+]
+
+{ #category : #benchmarks }
+StDebuggerActionModelTest >> bench: aBlock [
+	^ aBlock timeToRun asNanoSeconds
+]
+
+{ #category : #benchmarks }
+StDebuggerActionModelTest >> benchmarkFilterStack [
+	| stack1 stack2 beforeResults afterResults |
+	[ self method1: 0 ]
+		on: Halt
+		do: [ :halt | 
+			session := Process new
+				           newDebugSessionNamed: 'profiling'
+				           startedAt: halt signalerContext.
+			stack1 := session stack.	
+			stack2 := stack1 copy.		
+			debugActionModel := StDebuggerActionModel new.
+			debugActionModel session: session.
+			beforeResults := 0.
+			10000 timesRepeat: [ 
+				beforeResults := beforeResults + (self bench: [ 
+					                  stack1 reject: [ :aContext | 
+						                  aContext method hasPragmaNamed:
+							                  #debuggerCompleteToSender ] ]) ].
+			afterResults := 0.
+			10000 timesRepeat: [ 
+				afterResults := afterResults
+				                +
+				                (self bench: [ 
+					                 debugActionModel filterStack: stack2 ]) ] ].
+	^'Old behavior: ', beforeResults printString, ' nanoseconds measured. 
+	New behavior: ', afterResults printString, ' nanoseconds measured.'
+]
+
 { #category : #helper }
 StDebuggerActionModelTest >> changeSession: aDebugSession [
 
@@ -19,13 +59,40 @@ StDebuggerActionModelTest >> changeSession: aDebugSession [
 ]
 
 { #category : #helper }
+StDebuggerActionModelTest >> emptyContextForMethod: aCompiledMethod [
+	^ (Context newForMethod: aCompiledMethod)
+		  initializeWith: nil
+		  stackPtr: nil
+		  method: aCompiledMethod
+		  receiver: nil
+		  sender: nil;
+		  yourself
+]
+
+{ #category : #helper }
 StDebuggerActionModelTest >> fileOutMethod: anObject [
 	result := anObject
 ]
 
 { #category : #helper }
+StDebuggerActionModelTest >> method1: i [
+	^self method2: i+1
+]
+
+{ #category : #helper }
+StDebuggerActionModelTest >> method2: i [
+	i = 9999 ifTrue: [ self halt. ^i ].
+	^self method1: i+1
+]
+
+{ #category : #helper }
 StDebuggerActionModelTest >> methodClass [
 	^self
+]
+
+{ #category : #helper }
+StDebuggerActionModelTest >> methodWithPragma [
+	<debuggerCompleteToSender>
 ]
 
 { #category : #helper }
@@ -55,9 +122,14 @@ StDebuggerActionModelTest >> setUp [
 ]
 
 { #category : #running }
-StDebuggerActionModelTest >> tearDown [ 
-	session interruptedContext ifNotNil:[session terminate].
-	super tearDown 
+StDebuggerActionModelTest >> tearDown [
+	session interruptedContext ifNotNil: [ session terminate ].
+	(StDebuggerUsingSpecSelectorMock lookupSelector: #testMethod) 
+		ifNotNil: [ :method | method removeFromSystem ].
+	(StTestDebuggerProvider lookupSelector:
+		 #buildDebuggerWithMissingClassContext) ifNotNil: [ :method | 
+		method removeFromSystem ].
+	super tearDown
 ]
 
 { #category : #tests }
@@ -81,12 +153,13 @@ StDebuggerActionModelTest >> testCopyStackToClipboard [
 ]
 
 { #category : #tests }
+StDebuggerActionModelTest >> testCreateMissingMethod [
+]
+
+{ #category : #tests }
 StDebuggerActionModelTest >> testExceptionInContextOrNil [
 	|exOrNil|	
-		
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-		
+	StTestDebuggerProvider compileMissingClassContextBuilder.
 	exOrNil := debugActionModel exceptionInContextOrNil: session interruptedContext. 
 	self assert: exOrNil equals: nil.
 	
@@ -103,9 +176,46 @@ StDebuggerActionModelTest >> testFileOutMethod [
 ]
 
 { #category : #tests }
+StDebuggerActionModelTest >> testFilterStack [
+
+	|stack filteredStack|
+	stack := OrderedCollection new.
+	"First context references a method with the <debuggerCompleteToSender> pragma"
+	stack add: (self emptyContextForMethod: (self class>>#methodWithPragma)).
+	stack add: (self emptyContextForMethod: (self class>>#method1:)).
+	stack add: (self emptyContextForMethod: (self class>>#method2:)).
+	
+	filteredStack := debugActionModel filterStack: stack copy.
+	
+	self assert: filteredStack size equals: 2.
+	self assert: filteredStack first identicalTo: stack second.
+	self assert: filteredStack second identicalTo: stack third.
+	
+	stack := OrderedCollection new.
+	stack add: (self emptyContextForMethod: (self class>>#method1:)).
+	stack add: (self emptyContextForMethod: (self class>>#method2:)).
+	
+	filteredStack := debugActionModel filterStack: stack copy.
+	self assertCollection: filteredStack equals: stack 
+]
+
+{ #category : #tests }
 StDebuggerActionModelTest >> testImplementClassifiedInClassForContext [
-	self skip.
-	self flag: #DBG_TEST
+	|method|
+	method := (StDebuggerUsingSpecSelectorMock lookupSelector: #testMethod).
+	self assert:	method equals: nil.
+	[ StDebuggerUsingSpecSelectorMock new testMethod ]
+		on: Error
+		do: [ :dnu | 
+			debugActionModel
+				implement: dnu message
+				classified: Protocol unclassified
+				inClass: StDebuggerUsingSpecSelectorMock
+				forContext: dnu signalerContext ].
+	method := (StDebuggerUsingSpecSelectorMock lookupSelector: #testMethod).
+	self deny: method	equals: nil.
+	self assert: method methodClass identicalTo: StDebuggerUsingSpecSelectorMock.
+	self assert: method protocol equals: Protocol unclassified
 ]
 
 { #category : #tests }
@@ -156,11 +266,8 @@ StDebuggerActionModelTest >> testIsInterruptedContextError [
 ]
 
 { #category : #tests }
-StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [
-
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-
+StDebuggerActionModelTest >> testIsInterruptedContextMissingClassException [	
+	StTestDebuggerProvider compileMissingClassContextBuilder.
 	self changeSession: StTestDebuggerProvider new debuggerWithMissingClassContext session.
 	self assert: debugActionModel isInterruptedContextMissingClassException
 ]

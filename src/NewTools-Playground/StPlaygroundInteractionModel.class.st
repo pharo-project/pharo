@@ -42,11 +42,12 @@ StPlaygroundInteractionModel >> bindings [
 	| joinedBindings |
 	
 	"just a small optimisation"
-	self application sharedBindings ifEmpty: [ ^ bindings ].
-	
+	self application sharedBindings ifEmpty: [ ^ self localBindings ].
+
 	joinedBindings := self application sharedBindings copy.
 	self localBindings associations 
 		do: [ :each | joinedBindings add: each ].
+
 	^ joinedBindings
 ]
 

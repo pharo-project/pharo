@@ -553,7 +553,7 @@ SpAbstractMorphicAdapter >> styleSheet [
 { #category : #protocol }
 SpAbstractMorphicAdapter >> takeKeyboardFocus [
 	
-	self widget ifNotNil: [ :w | w takeKeyboardFocus ]
+	self widgetDo: [ :w | w takeKeyboardFocus ]
 ]
 
 { #category : #'drag and drop' }

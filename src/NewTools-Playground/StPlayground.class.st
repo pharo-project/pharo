@@ -80,7 +80,7 @@ StPlayground class >> cacheDirectory: aDirectory [
 { #category : #private }
 StPlayground class >> defaultCacheDirectory [
 	
-	^ FileLocator localDirectory / 'play-cache'
+	^ (FileLocator localDirectory / 'play-cache') ensureCreateDirectory
 ]
 
 { #category : #accessing }
@@ -211,7 +211,9 @@ StPlayground >> buildToolbar [
 
 	^ self toolbarActions 
 		asToolbarPresenterWith: [ :presenter | 
-			presenter displayMode: self application toolbarDisplayMode ]
+			presenter 
+				displayMode: self application toolbarDisplayMode;
+				addStyle: 'stToolbar' ]
 ]
 
 { #category : #accessing }

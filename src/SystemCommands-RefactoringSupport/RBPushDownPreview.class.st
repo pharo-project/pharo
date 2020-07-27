@@ -84,7 +84,7 @@ RBPushDownPreview >> initializeChangesTree [
 		((SpCheckBoxTableColumn title: ' ' evaluated: [ :aClass | 
 	selectedMethods includes: aClass ])
 				onActivation: [ :aClass | selectedMethods add: aClass ];
-				onDesactivation: [ :aClass | selectedMethods remove: aClass ];
+				onDeactivation: [ :aClass | selectedMethods remove: aClass ];
 				width: 20;
 				yourself);
 			addColumn:  (SpStringTableColumn title: 'Methods' evaluated: #selector );

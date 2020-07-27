@@ -15,7 +15,9 @@ Class {
 		'#syntaxHighlight => SpObservableSlot',
 		'#lineNumbers => SpObservableSlot',
 		'#interactionModel => SpObservableSlot',
-		'#overrideContextMenu'
+		'#overrideContextMenu',
+		'#submitBlock',
+		'#resetBlock'
 	],
 	#category : #'Spec2-Code'
 }
@@ -43,13 +45,19 @@ SpCodePresenter class >> buildEditionCommandsGroupWith: presenter forRoot: aCmCo
 
 { #category : #commands }
 SpCodePresenter class >> codeAcceptCommandsGroupWith: aPresenter [
+	| commandGroup |
 
-	^ (CmCommandGroup named: 'Accept commands') asSpecGroup
+	commandGroup := (CmCommandGroup named: 'Accept commands') asSpecGroup
 		description: 'Accept or cancel changes.';
 		beDisplayedAsGroup;
-		register: (SpAcceptChangesCommand forSpecContext: aPresenter);
-		register: (SpCancelChangesCommand forSpecContext: aPresenter);
-		yourself
+		yourself.
+	
+	aPresenter hasSubmitAction ifTrue: [ 
+		commandGroup register: (SpAcceptChangesCommand forSpecContext: aPresenter) ].
+	aPresenter hasResetAction ifTrue: [ 
+		commandGroup register: (SpCancelChangesCommand forSpecContext: aPresenter) ].
+
+	^ commandGroup
 ]
 
 { #category : #commands }
@@ -283,6 +291,18 @@ SpCodePresenter >> hasLineNumbers [
 ]
 
 { #category : #testing }
+SpCodePresenter >> hasResetAction [
+
+	^ resetBlock notNil
+]
+
+{ #category : #testing }
+SpCodePresenter >> hasSubmitAction [
+
+	^ submitBlock notNil
+]
+
+{ #category : #testing }
 SpCodePresenter >> hasSyntaxHighlight [
 
 	^ syntaxHighlight
@@ -299,7 +319,15 @@ SpCodePresenter >> initialize [
 	self withSyntaxHighlight.
 	self withLineNumbers.
 	
-	self registerEventsForStyling
+	self registerEventsForStyling.
+	self clearInteractionModel
+]
+
+{ #category : #api }
+SpCodePresenter >> insertPopover: aPresenter atIndex: location [
+
+	self selectionInterval: ((location + 1) to: location).
+	self insertPopoverAfterCurrentSelection: aPresenter
 ]
 
 { #category : #api }
@@ -309,7 +337,7 @@ SpCodePresenter >> insertPopoverAfterCurrentSelection: aPresenter [
 		anAdapter insertPopoverAfterCurrentSelection: aPresenter ]
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpCodePresenter >> insertPrintPopoverAfterCurrentSelection: anObject [
 	"Inserts a print-it result popover. 
 	 This is for use of SpCodePrintItCommand"
@@ -330,6 +358,14 @@ SpCodePresenter >> interactionModel: anInteractionModel [
 
 	anInteractionModel owner: self.
 	self basicInteractionModel: anInteractionModel
+]
+
+{ #category : #'private bindings' }
+SpCodePresenter >> isForScripting [
+
+	^ self interactionModel 
+		ifNotNil: [ :im | im isForScripting ]
+		ifNil: [ false ]
 ]
 
 { #category : #accessing }
@@ -394,6 +430,20 @@ SpCodePresenter >> syntaxHighlight: aBoolean [
 	syntaxHighlight := aBoolean 
 ]
 
+{ #category : #'api-events' }
+SpCodePresenter >> triggerResetAction [
+
+	resetBlock ifNil: [ ^ self ].
+	resetBlock value
+]
+
+{ #category : #'api-events' }
+SpCodePresenter >> triggerSubmitAction [
+
+	submitBlock ifNil: [ ^ self ].
+	submitBlock value: self text
+]
+
 { #category : #api }
 SpCodePresenter >> userActionDuring: aBlock [
 	"There are a buch of operations that will all trigger a backend update. A tipical case, 
@@ -428,6 +478,20 @@ SpCodePresenter >> whenLineNumbersChangedDo: aBlock [
 	"Set a block to perform when the syntax highlight is enabled/disabled"
 
 	self property: #lineNumbers whenChangedDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpCodePresenter >> whenResetDo: aBlock [
+
+	resetBlock := aBlock.
+	super whenResetDo: aBlock
+]
+
+{ #category : #'api-events' }
+SpCodePresenter >> whenSubmitDo: aBlock [
+
+	submitBlock := aBlock.
+	super whenSubmitDo: aBlock
 ]
 
 { #category : #'api-events' }

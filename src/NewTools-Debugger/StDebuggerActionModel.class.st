@@ -48,6 +48,21 @@ StDebuggerActionModel >> fileOutMethod: aMethod [
 	aMethod methodClass fileOutMethod: aMethod selector
 ]
 
+{ #category : #'debug - stack' }
+StDebuggerActionModel >> filterStack: aStack [
+	| context contextsToReject |
+	context := aStack first.
+	contextsToReject := 0.
+	[ 
+	context notNil and: [ 
+		context method hasPragmaNamed: #debuggerCompleteToSender ] ] 
+		whileTrue: [ 
+			contextsToReject := contextsToReject + 1.
+			context := context sender ].
+	contextsToReject timesRepeat: [ aStack removeFirst ].
+	^ aStack
+]
+
 { #category : #'debug - session' }
 StDebuggerActionModel >> implement: aMessage classified: messageCategory inClass: aClass forContext: aContext [
 	self session
