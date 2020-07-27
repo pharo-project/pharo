@@ -37,7 +37,7 @@ Class {
 { #category : #accessing }
 GradientPaint >> atStop: anOffset put: aColor [
 
-	colorRamp add: (anOffset -> aColor).
+	colorRamp add: (anOffset -> aColor)
 
 ]
 
@@ -48,16 +48,16 @@ GradientPaint >> colorRamp [
 
 { #category : #accessing }
 GradientPaint >> colorRamp: aRamp [
-"The color ramp is a collection of associations with keys - floating point values between 0 and 1
-and values with Colors, for example:
+	"The color ramp is a collection of associations with keys - floating point values between 0 and 1
+	 and values with Colors, for example:
 
-{  0 -> Color white. 1 -> Color black }.
-"
-	colorRamp := aRamp copy.
+	{  0 -> Color white. 1 -> Color black }."
+
+	colorRamp := aRamp copy
 ]
 
 { #category : #initialization }
 GradientPaint >> initialize [
 	super initialize.
-	colorRamp := OrderedCollection new.
+	colorRamp := OrderedCollection new
 ]

@@ -28,9 +28,8 @@ AthensBezierConverter class >> initialize [
 
 { #category : #helpers }
 AthensBezierConverter >> angleBetween: p1 and: p2 ifDegenerate: aBlock [
-
-" Calculate an angle (in radians) between two vectors. 
-Evaluate a block, in case if calculation not possible because one of the vectors has zero length "
+	"Calculate an angle (in radians) between two vectors. 
+	 Evaluate a block, in case if calculation not possible because one of the vectors has zero length"
 
 	| x1 y1 x2 y2 dot2 n2 |
 	x1 := p1 x.
@@ -51,17 +50,16 @@ Evaluate a block, in case if calculation not possible because one of the vectors
 { #category : #'converting path commands' }
 AthensBezierConverter >> curveVia: pt1 to: pt2 [
 
-
-	self	 recursiveBezier2_x1: endPoint x y1: endPoint y
+	self recursiveBezier2_x1: endPoint x y1: endPoint y
 		x2: pt1 x y2: pt1 y
 		x3: pt2 x y3: pt2 y
 ]
 
 { #category : #initialization }
 AthensBezierConverter >> initialize [
-
+	super initialize.
 	distanceTolerance := 0.5.
-	angleTolerance := 0.1 . 
+	angleTolerance := 0.1
 ]
 
 { #category : #testing }
