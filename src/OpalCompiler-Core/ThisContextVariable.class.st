@@ -35,3 +35,9 @@ ThisContextVariable >> isThisContextVariable [
 ThisContextVariable >> readInContext: aContext [
 	^aContext
 ]
+
+{ #category : #queries }
+ThisContextVariable >> usingMethods [
+	^ SystemNavigation new allMethods select: [ :method | 
+		  method readsThisContext ]
+]

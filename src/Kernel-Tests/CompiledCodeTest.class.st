@@ -19,6 +19,17 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testAccessesRef [
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class>>#compilerClass.
+	writeMethod := SmalltalkImage class>>#compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	
+	self assert: (readMethod accessesRef: classVar).
+	self assert: (writeMethod accessesRef: classVar).
+]
+
 { #category : #'tests-literals' }
 CompiledCodeTest >> testHasSelector [
 
@@ -92,17 +103,6 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]
 
-{ #category : #'tests - scanning' }
-CompiledCodeTest >> testAccessesRef [
-	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-	
-	self assert: (readMethod accessesRef: classVar).
-	self assert: (writeMethod accessesRef: classVar).
-]
-
 { #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
@@ -116,6 +116,26 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 
 	self deny: (self compiledMethod1 refersToLiteral: #method1)
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testReadsSelf [
+	| method |
+	method := self class compiler compile: 'method self doit'.
+	self assert: method readsSelf.
+	method := self class compiler compile: 'method ^self'.
+	self assert: method readsSelf.
+	method := self class compiler compile: 'method ^thisContext'.
+	self deny: method readsSelf.
+]
+
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testReadsThisContext [
+	| method |
+	method := self class compiler compile: 'method ^thisContext'.
+	self assert: method readsThisContext.
+	method := self class compiler compile: 'method ^self'.
+	self deny: method readsThisContext.
 ]
 
 { #category : #'tests-literals' }
