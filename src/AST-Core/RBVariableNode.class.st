@@ -45,6 +45,21 @@ RBVariableNode class >> named: aName start: aPosition [
 		yourself.
 ]
 
+{ #category : #'instance creation' }
+RBVariableNode class >> selfNode [
+	^ (self named: 'self') variable: SelfVariable instance
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> superNode [
+	^ (self named: 'super') variable: SuperVariable instance
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> thisContextNode [
+	^ (self named: 'thisContext') variable: ThisContextVariable instance
+]
+
 { #category : #comparing }
 RBVariableNode >> = anObject [ 
 	self == anObject ifTrue: [^true].

@@ -38,7 +38,7 @@ RBMethodNode >> ensureCachedArgumentNames [
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [	
 	| message |
 	message := RBMessageNode 
-		receiver: (RBVariableNode named: 'self')
+		receiver: RBVariableNode selfNode
 		selector: #error: 
 		arguments: {RBLiteralNode value: messageText}.
 	^ self 
