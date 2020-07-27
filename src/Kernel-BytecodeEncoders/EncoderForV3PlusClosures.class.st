@@ -335,6 +335,15 @@ EncoderForV3PlusClosures class >> pushNilByte [
 	^ 115
 ]
 
+{ #category : #'compiled method support' }
+EncoderForV3PlusClosures class >> readsThisContextFor: compiledMethod [
+	"Answer whether compiledMethod reads thisContext"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 137 ]
+]
+
 { #category : #'instruction stream support' }
 EncoderForV3PlusClosures class >> selectorToSendOrItselfFor: anInstructionStream in: method at: pc [
 	"If anInstructionStream is at a send bytecode then answer the send's selector,

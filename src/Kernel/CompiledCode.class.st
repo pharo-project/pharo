@@ -517,6 +517,11 @@ CompiledCode >> localReadsRef: literalAssociation [
 	^(scanner := InstructionStream on: self) scanFor: (self encoderClass bindingReadScanBlockFor: litIndex using: scanner)
 ]
 
+{ #category : #scanning }
+CompiledCode >> localReadsThisContext [
+	^ self encoderClass readsThisContextFor: self
+]
+
 { #category : #testing }
 CompiledCode >> localSendsAnySelectorOf: aCollection [
 	
@@ -689,6 +694,13 @@ CompiledCode >> readsRef: literalAssociation [
 { #category : #scanning }
 CompiledCode >> readsSlot: aSlot [
 	^aSlot isReadIn: self
+]
+
+{ #category : #scanning }
+CompiledCode >> readsThisContext [
+	"Answer whether compiledMethod reads thisContext, look into embedded blocks, too"
+	self localReadsThisContext ifTrue: [ ^ true ].
+	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsThisContext]
 ]
 
 { #category : #accessing }

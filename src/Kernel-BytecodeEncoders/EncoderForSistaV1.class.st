@@ -795,6 +795,15 @@ EncoderForSistaV1 class >> pushNilByte [
 	^ 79
 ]
 
+{ #category : #'instruction stream support' }
+EncoderForSistaV1 class >> readsThisContextFor: compiledMethod [
+	"Answer whether compiledMethod reads thisContext"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 82 ]
+]
+
 { #category : #'bytecode decoding' }
 EncoderForSistaV1 class >> selectorToSendOrItselfFor: anInstructionStream in: method at: pc [
 	"If anInstructionStream is at a send bytecode then answer the send's selector,
