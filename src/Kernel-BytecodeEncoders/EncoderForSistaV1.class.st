@@ -797,7 +797,7 @@ EncoderForSistaV1 class >> pushNilByte [
 
 { #category : #'compiled method support' }
 EncoderForSistaV1 class >> readsSelfFor: compiledMethod [
-	"Answer whether compiledMethod reads thisContext"
+	"Answer whether compiledMethod reads self"
 	| scanner |
 	scanner := InstructionStream on: compiledMethod.
 	^ scanner scanFor: 
