@@ -1,3 +1,6 @@
+"
+I run all tests from selected classGroup (package tags)
+"
 Class {
 	#name : #ClyRunTestsFromClassGroupCommand,
 	#superclass : #ClyRunTestsFromSelectedItemsCommand,
