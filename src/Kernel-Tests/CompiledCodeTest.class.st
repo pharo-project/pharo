@@ -19,6 +19,17 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testAccessesRef [
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class>>#compilerClass.
+	writeMethod := SmalltalkImage class>>#compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	
+	self assert: (readMethod accessesRef: classVar).
+	self assert: (writeMethod accessesRef: classVar).
+]
+
 { #category : #'tests-literals' }
 CompiledCodeTest >> testHasSelector [
 
@@ -92,17 +103,6 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
 ]
 
-{ #category : #'tests - scanning' }
-CompiledCodeTest >> testAccessesRef [
-	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-	
-	self assert: (readMethod accessesRef: classVar).
-	self assert: (writeMethod accessesRef: classVar).
-]
-
 { #category : #'tests-literals' }
 CompiledCodeTest >> testLiteralsDoesNotContainMethodClass [
 	
@@ -155,30 +155,6 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsGlobalVariable [
 	
 	self assert: (self compiledMethod1
 				refersToLiteral: (self class environment associationAt: #Array))
-]
-
-{ #category : #'tests-literals' }
-CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesKey [
-	
-	[ self compiledMethod1 propertyAt: #Once put: true.
-	self assert: (self compiledMethod1 refersToLiteral: #Once) ]
-		ensure: [ self compiledMethod1 removeProperty: #Once ]
-]
-
-{ #category : #'tests-literals' }
-CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesValue [
-	
-	[ self compiledMethod1 propertyAt: #Once put: '123'.
-	self assert: (self compiledMethod1 refersToLiteral: '123') ]
-		ensure: [ self compiledMethod1 removeProperty: #Once ]
-]
-
-{ #category : #'tests-literals' }
-CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesValueArray [
-	
-	[ self compiledMethod1 propertyAt: #Once put: #(1 2 3).
-	self assert: (self compiledMethod1 refersToLiteral: 1) ]
-		ensure: [ self compiledMethod1 removeProperty: #Once ]
 ]
 
 { #category : #'tests-literals' }
