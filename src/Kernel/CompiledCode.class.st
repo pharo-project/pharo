@@ -440,6 +440,13 @@ CompiledCode >> isRealPrimitive [
 	^self isPrimitive and: [ self isQuick not ]
 ]
 
+{ #category : #testing }
+CompiledCode >> isReturnSelf [
+	"Answer whether the receiver is a quick return of self."
+
+	^ self primitive = 256
+]
+
 { #category : #accessing }
 CompiledCode >> isTestMethod [
 	^ self subclassResponsibility
@@ -515,6 +522,11 @@ CompiledCode >> localReadsRef: literalAssociation [
 		[^false].
 	litIndex := litIndex - 1.
 	^(scanner := InstructionStream on: self) scanFor: (self encoderClass bindingReadScanBlockFor: litIndex using: scanner)
+]
+
+{ #category : #scanning }
+CompiledCode >> localReadsSelf [
+	^ self encoderClass readsSelfFor: self
 ]
 
 { #category : #scanning }
@@ -689,6 +701,14 @@ CompiledCode >> readsRef: literalAssociation [
 	"Answer whether the receiver loads the argument."
 	(self localReadsRef: literalAssociation) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsRef: literalAssociation ]
+]
+
+{ #category : #scanning }
+CompiledCode >> readsSelf [
+	"Answer whether compiledMethod reads self, look into embedded blocks, too"
+	self isReturnSelf ifTrue: [ ^ true ].
+	self localReadsSelf ifTrue: [ ^ true ].
+	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsSelf]
 ]
 
 { #category : #scanning }

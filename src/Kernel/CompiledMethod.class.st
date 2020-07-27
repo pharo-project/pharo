@@ -629,13 +629,6 @@ CompiledMethod >> isReturnField [
 ]
 
 { #category : #testing }
-CompiledMethod >> isReturnSelf [
-	"Answer whether the receiver is a quick return of self."
-
-	^ self primitive = 256
-]
-
-{ #category : #testing }
 CompiledMethod >> isReturnSpecial [
 	"Answer whether the receiver is a quick return of self or constant."
 
@@ -679,6 +672,12 @@ CompiledMethod >> linesOfCode [
 CompiledMethod >> literalsToSkip [
 
 	^ 2
+]
+
+{ #category : #scanning }
+CompiledMethod >> localReadsSelf [
+	"methods that are compiled with FFI have a self in the source but not in the bytecode"
+	^self isFFIMethod or: [ super localReadsSelf ]
 ]
 
 { #category : #private }

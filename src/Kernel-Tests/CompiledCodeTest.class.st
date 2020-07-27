@@ -119,6 +119,17 @@ CompiledCodeTest >> testLiteralsDoesNotContainMethodName [
 ]
 
 { #category : #'tests - scanning' }
+CompiledCodeTest >> testReadsSelf [
+	| method |
+	method := self class compiler compile: 'method self doit'.
+	self assert: method readsSelf.
+	method := self class compiler compile: 'method ^self'.
+	self assert: method readsSelf.
+	method := self class compiler compile: 'method ^thisContext'.
+	self deny: method readsSelf.
+]
+
+{ #category : #'tests - scanning' }
 CompiledCodeTest >> testReadsThisContext [
 	| method |
 	method := self class compiler compile: 'method ^thisContext'.

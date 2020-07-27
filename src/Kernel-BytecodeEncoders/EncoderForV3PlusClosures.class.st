@@ -336,6 +336,15 @@ EncoderForV3PlusClosures class >> pushNilByte [
 ]
 
 { #category : #'compiled method support' }
+EncoderForV3PlusClosures class >> readsSelfFor: compiledMethod [
+	"Answer whether compiledMethod reads thisContext"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 112 ]
+]
+
+{ #category : #'compiled method support' }
 EncoderForV3PlusClosures class >> readsThisContextFor: compiledMethod [
 	"Answer whether compiledMethod reads thisContext"
 	| scanner |
