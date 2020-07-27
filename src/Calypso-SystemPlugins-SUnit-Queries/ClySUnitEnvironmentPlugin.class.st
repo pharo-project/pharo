@@ -48,12 +48,7 @@ ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 
 { #category : #'item decoration' }
 ClySUnitEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGroup [
-
-	(aClassGroup classes anySatisfy: [:testCase | 
-		testCase isTestCase and: [testCase isAbstract not]])
-		ifFalse: [ ^self ].
-
-	anItem addProperty: ClyTestResultProperty new
+	self decorateBrowserItem: anItem ofPackage: aClassGroup
 ]
 
 { #category : #'item decoration' }
