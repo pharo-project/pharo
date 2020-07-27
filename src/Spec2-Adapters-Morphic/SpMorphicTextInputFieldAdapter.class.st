@@ -40,12 +40,17 @@ SpMorphicTextInputFieldAdapter >> buildWidget [
 		maxLength: self presenter maxLength;
 		yourself.
 
-	self presenter whenTextChangedDo: [ :text | newWidget setText: text ].
+	self presenter whenTextChangedDo: [ :text | 
+		newWidget setText: text ].
+	self presenter whenSelectionChangedDo: [ :selectionInterval | 
+		self selectionInterval: selectionInterval ].
 	self presenter whenPlaceholderChangedDo: [ :text | 
 		newWidget ghostText: (text ifNotNil: [ :aString | 
 			aString localizedForPresenter: self presenter ]) ].
-	self presenter whenPasswordChangedDo: [ :isPassword | newWidget encrypted: isPassword ].
-	self presenter whenMaxLengthChangedDo: [ :length | newWidget maxLength: length ].
+	self presenter whenPasswordChangedDo: [ :isPassword | 
+		newWidget encrypted: isPassword ].
+	self presenter whenMaxLengthChangedDo: [ :length | 
+		newWidget maxLength: length ].
 
 	^ newWidget
 ]

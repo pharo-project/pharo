@@ -191,7 +191,8 @@ SpWindowPresenter >> centeredRelativeTo: aModel [
 { #category : #api }
 SpWindowPresenter >> centeredRelativeToTopWindow [
 
-	self centeredRelativeTo: self application topWindow
+	self application topWindow 
+		ifNotNil: [ :aWindow | self centeredRelativeTo: aWindow ]
 ]
 
 { #category : #api }

@@ -156,7 +156,7 @@ AthensCubicBezier >> recursiveSubDiv: flattener level: level [
 	self subdivideAt: 0.5 do:  [  :b1 :b2 |
 		b1 recursiveSubDiv: flattener level: level +1.	
 		b2 recursiveSubDiv: flattener level: level +1.	
-	].
+	]
 	
 ]
 

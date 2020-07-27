@@ -11,6 +11,18 @@ Class {
 }
 
 { #category : #helpers }
+StTestDebuggerProvider class >> compileMissingClassContextBuilder [
+	
+	self compile: 'buildDebuggerWithMissingClassContext
+	
+	[ MissingClass new ]
+		on: Error
+		do: [ :err | 			
+			self sessionFor: err signalerContext copy.
+			^ self newDebugger ]'
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> debuggerWithContext: aContext [
 	self sessionFor: aContext.
 	^ self newDebugger
@@ -54,14 +66,10 @@ StTestDebuggerProvider >> debuggerWithFailingTestContext [
 
 { #category : #helpers }
 StTestDebuggerProvider >> debuggerWithMissingClassContext [
-	
-	self flag: #TODO. "Find a better way to test this"
-	^ nil 
-	"[ MissingClass new]
-		on: Error
-		do: [ :err | 
-			self sessionFor: err signalerContext copy.
-			^ self newDebugger ]"
+	"The called method must contain a undeclared variable (the missing class).
+	It makes the CI test fail, so it has to be generated and removed after usage.
+	buildDebuggerWithMissingClassContext has to be generated when starting a test (see class side for generation) and removed in the test's tearDown."
+	^ self buildDebuggerWithMissingClassContext
 ]
 
 { #category : #helpers }

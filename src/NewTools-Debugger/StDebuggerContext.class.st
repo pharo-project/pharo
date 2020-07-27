@@ -38,12 +38,10 @@ StDebuggerContext >> allInspectorNodes [
 StDebuggerContext >> argumentsNodes [
 	| argNames |
 	argNames := self context method argumentNames.
-	^ (argNames
-		collect: [ :argName | 
-			StInspectorDynamicNode
-				hostObject: self context
-				label: '[arg] ' , argName
-				value: (self context tempNamed: argName) ]) asOrderedCollection
+	^ (argNames collect: [ :argName | 
+		   StDebuggerContextInspectorArgumentNode new
+			   hostObject: (self context tempNamed: argName);
+			   argumentName: argName ]) asOrderedCollection
 ]
 
 { #category : #accessing }

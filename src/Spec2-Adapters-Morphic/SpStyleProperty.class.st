@@ -57,3 +57,14 @@ SpStyleProperty >> mergeWith: otherProperty [
 		
 	^ merged
 ]
+
+{ #category : #private }
+SpStyleProperty >> toColor: aColorOrSymbol [
+
+	"Try if color"
+	aColorOrSymbol isSymbol ifFalse: [ ^ aColorOrSymbol ].
+	"Try by name"
+	(Color named: aColorOrSymbol) ifNotNil: [ :aColor | ^ aColor ]. 
+	"Try by HEX (CSS style)"				
+	^ Color fromHexString: aColorOrSymbol
+]

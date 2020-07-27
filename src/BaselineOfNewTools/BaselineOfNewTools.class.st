@@ -1,13 +1,20 @@
 Class {
 	#name : #BaselineOfNewTools,
 	#superclass : #BaselineOf,
+	#instVars : [
+		'initializersEnabled'
+	],
 	#category : #BaselineOfNewTools
 }
 
 { #category : #baselines }
 BaselineOfNewTools >> baseline: spec [
 	<baseline>
+
 	spec for: #common do: [
+		spec preLoadDoIt: #'preload:package:'.
+		spec postLoadDoIt: #'postload:package:'.
+
 		self sindarin: spec.
 
 		spec
@@ -75,6 +82,19 @@ BaselineOfNewTools >> baseline: spec [
 				'Inspector'
 				'Debugger'
 				'FlagBrowser') ]
+]
+
+{ #category : #actions }
+BaselineOfNewTools >> postload: loader package: packageSpec [
+
+	MCMethodDefinition initializersEnabled: initializersEnabled
+]
+
+{ #category : #actions }
+BaselineOfNewTools >> preload: loader package: packageSpec [
+
+	initializersEnabled := MCMethodDefinition initializersEnabled.
+	MCMethodDefinition initializersEnabled: true
 ]
 
 { #category : #dependencies }

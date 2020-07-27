@@ -23,6 +23,9 @@ SpTMorphicTableDataSourceCommons >> headerColumn: column [
 			withValue: column).
 	column sortingIcon ifNotNil: [ :icon | headerMorph addMorph: icon ] ].
 
+	"column isExpandable ifFalse: [ 
+		headerMorph hResizing: #shrinkWrap ]."
+
 	^ headerMorph
 ]
 

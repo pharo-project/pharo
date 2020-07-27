@@ -143,7 +143,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
-		spec package: 'System-Hashing-Testing'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 		spec baseline: 'Metacello' with: [ 
 			spec
