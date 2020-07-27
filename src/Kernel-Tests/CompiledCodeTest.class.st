@@ -1,6 +1,9 @@
 Class {
 	#name : #CompiledCodeTest,
 	#superclass : #TestCase,
+	#classInstVars : [
+		'method'
+	],
 	#category : #'Kernel-Tests-Classes'
 }
 
@@ -19,6 +22,85 @@ CompiledCodeTest >> method1 [
 	#(#add #at: #remove) do: #printOn:
 ]
 
+{ #category : #'tests - scanning' }
+CompiledCodeTest >> testAccessesRef [
+	| readMethod writeMethod classVar |
+	readMethod := SmalltalkImage class>>#compilerClass.
+	writeMethod := SmalltalkImage class>>#compilerClass:.
+	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	
+	self assert: (readMethod accessesRef: classVar).
+	self assert: (writeMethod accessesRef: classVar).
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testHasLiteral [
+
+	| method |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		self doIt: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		self name ].
+		^#(#array) '.
+	"simpe case: normal send in the method itself"
+	self assert: (method hasLiteral: #doIt:).
+	"special selector in the method is not found"
+	self deny: (method hasLiteral: #+).
+	"special selector in the block not found, either"
+	self deny: (method hasLiteral: #-).
+	"normal selector in the block"
+	self assert: (method hasLiteral: #name).
+	"we do NOT into arrays, this is different to hasLiteralSuchThat:"
+	self flag: #FIXME. "LiteralScanningMissmatch"
+	self deny: (method hasLiteral: #array).
+	"we do not into arrays in Blocks. this is different to hasLiteralSuchThat:"
+	self flag: #FIXME. "LiteralScanningMissmatch"
+	self deny: (method hasLiteral: #arrayInBlock).
+	"pragmas are NOT covered. this is different to hasLiteralSuchThat: "
+	self flag: #FIXME. "LiteralScanningMissmatch"
+	self deny: (method hasLiteral: #pragma:).
+	"args of pragmas not found, too. this is different to hasLiteralSuchThat:"
+	self flag: #FIXME. "LiteralScanningMissmatch"
+	self deny: (method hasLiteral: #pragma).
+	"the method selector NOT"
+	self deny: (method hasLiteral: #method).
+]
+
+{ #category : #'tests-literals' }
+CompiledCodeTest >> testHasLiteralSuchThat [
+
+	| method |
+	method := self class compiler compile: 'method 
+		<pragma: #pragma>
+		test := 1+2.
+		self doIt: [ 
+		test := 1 - 2.
+		test := #(arrayInBlock).
+		self name ].
+		^#(#array) '.
+	"simpe case: normal send in the method itself"
+	self assert: (method hasLiteralSuchThat: [:literal | literal == #doIt:]).
+	"special selector in the method is not found"
+	self deny: (method hasLiteralSuchThat: [:literal | literal == #+]).
+	"special selector in the block not found, either"
+	self deny: (method hasLiteralSuchThat: [:literal | literal == #-]).
+	"normal selector in the block"
+	self assert: (method hasLiteralSuchThat: [:literal | literal == #name]).
+	"we look into arrays"
+	self assert: (method hasLiteralSuchThat: [:literal | literal == #array]).
+	"we look into arrays in Blocks"
+	self assert: (method hasLiteralSuchThat: [:literal | literal == #arrayInBlock]).
+	"pragmas are covered"
+	self assert: (method hasLiteralSuchThat: [:literal | literal == #pragma:]).
+	"args of pragmas are found, too"
+	self assert: (method hasLiteralSuchThat: [:literal | literal == #pragma]).
+	"the method selector NOT"
+	self deny: (method hasLiteralSuchThat: [:literal | literal == #method]).
+]
+
 { #category : #'tests-literals' }
 CompiledCodeTest >> testHasSelector [
 
@@ -26,13 +108,13 @@ CompiledCodeTest >> testHasSelector [
 	method := self class compiler compile: 'method 
 		<pragma: #pragma>
 		test := 1+2.
-		self do: [ 
+		self doIt: [ 
 		test := 1 - 2.
 		test := #(arrayInBlock).
 		self name ].
 		^#(#array) '.
 	"simpe case: normal send in the method itself"
-	self assert: (method hasSelector: #do:).
+	self assert: (method hasSelector: #doIt:).
 	"special selector in the method"
 	self assert: (method hasSelector: #+).
 	"special selector in the block"
@@ -46,7 +128,7 @@ CompiledCodeTest >> testHasSelector [
 	"pragmas are covered"
 	self assert: (method hasSelector: #pragma:).
 	"args of pragmas are found, too"
-	self assert: (method hasSelector: #pragma:).
+	self assert: (method hasSelector: #pragma).
 	"the method selector NOT"
 	self deny: (method hasSelector: #method).
 ]
@@ -90,17 +172,6 @@ CompiledCodeTest >> testHasSelectorSpecialSelectorIndex [
 	"the method selector NOT"
 	specialIndex := Smalltalk specialSelectorIndexOrNil: #method.
 	self deny: (method hasSelector: #method specialSelectorIndex: specialIndex).
-]
-
-{ #category : #'tests - scanning' }
-CompiledCodeTest >> testAccessesRef [
-	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
-	
-	self assert: (readMethod accessesRef: classVar).
-	self assert: (writeMethod accessesRef: classVar).
 ]
 
 { #category : #'tests-literals' }

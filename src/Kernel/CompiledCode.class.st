@@ -256,10 +256,7 @@ CompiledCode >> hasLiteral: literal [
 { #category : #literals }
 CompiledCode >> hasLiteralSuchThat: litBlock [
 	"Answer true if litBlock returns true for any literal in this method, even if embedded in array structure."
-	(self penultimateLiteral isMethodProperties
-	 and: [self penultimateLiteral hasLiteralSuchThat: litBlock]) ifTrue:
-		[^true].
-	1 to: self numLiterals -  self literalsToSkip do: "exclude header and methodClass or outerCode"
+	1 to: self numLiterals - self literalsToSkip do: "exclude header and methodClass or outerCode"
 		[:index | | lit |
 		lit := self literalAt: index.
 		((litBlock value: lit)
