@@ -38,6 +38,12 @@ ClyNotebookPageMorph >> actions: aCollection [
 	actions := aCollection
 ]
 
+{ #category : #'as yet unclassified' }
+ClyNotebookPageMorph >> addToSelection [
+	
+	owner addToSelection: self
+]
+
 { #category : #accessing }
 ClyNotebookPageMorph >> backgroundColor [
 
@@ -118,6 +124,11 @@ ClyNotebookPageMorph >> onClose: aBlock [
 ClyNotebookPageMorph >> onDoubleClick: aBlock [
 
 	labelPresenter onDoubleClick: aBlock
+]
+
+{ #category : #'as yet unclassified' }
+ClyNotebookPageMorph >> removeFromSelection [
+	owner removeFromSelection: self
 ]
 
 { #category : #accessing }
