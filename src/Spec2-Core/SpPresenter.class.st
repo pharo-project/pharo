@@ -821,12 +821,6 @@ SpPresenter >> newNumberInput [
 ]
 
 { #category : #widgets }
-SpPresenter >> newPillarText [
-
-	^ self instantiate: SpPillarTextPresenter
-]
-
-{ #category : #widgets }
 SpPresenter >> newPopover [
 
 	^ self instantiate: SpPopoverPresenter
