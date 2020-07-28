@@ -486,6 +486,15 @@ EncoderForSistaV1 class >> isCreateFullBlock: compiledBlock code: code at: pc [
 ]
 
 { #category : #'instruction stream support' }
+EncoderForSistaV1 class >> isCreateFullBlockAt: pc in: code [
+	^ self
+		  extensionsAt: pc
+		  in: code
+		  into: [ :extA :extB :nExtBytes | 
+		  (code at: pc + nExtBytes) = 16rF9 ]
+]
+
+{ #category : #'instruction stream support' }
 EncoderForSistaV1 class >> isExtension: bytecode [
 	"Answer if the bytecode is an extension bytecode, i.e. one that extends
 	 the range of the following bytecode."
@@ -784,6 +793,24 @@ EncoderForSistaV1 class >> prepareMethod: compiledMethod forSimulationWith: numA
 { #category : #'bytecode decoding' }
 EncoderForSistaV1 class >> pushNilByte [
 	^ 79
+]
+
+{ #category : #'compiled method support' }
+EncoderForSistaV1 class >> readsSelfFor: compiledMethod [
+	"Answer whether compiledMethod reads self"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 76 or: [ instr = 88 ] ]
+]
+
+{ #category : #'instruction stream support' }
+EncoderForSistaV1 class >> readsThisContextFor: compiledMethod [
+	"Answer whether compiledMethod reads thisContext"
+	| scanner |
+	scanner := InstructionStream on: compiledMethod.
+	^ scanner scanFor: 
+		[:instr |  instr = 82 ]
 ]
 
 { #category : #'bytecode decoding' }

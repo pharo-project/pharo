@@ -45,7 +45,7 @@ GTChangeDebuggerAction class >> gtChangeDebuggerActionsFor: aDebugger [
 GTChangeDebuggerAction >> debuggerClass: aClass [
 
 	debuggerClass := aClass.
-	self label: debuggerClass defaultTitle.
+	self label: 'Debugger'
 ]
 
 { #category : #initialization }

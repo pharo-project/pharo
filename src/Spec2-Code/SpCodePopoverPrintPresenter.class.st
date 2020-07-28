@@ -129,23 +129,11 @@ SpCodePopoverPrintPresenter >> newTextMultiLine: aString withScrollBars: withScr
 		text: aString;
 		yourself.
 
-	"this is needed just for the gtkbackend"
+	"this is needed just for the gtk backend"
 	withScrollBars ifTrue: [ 
 		newText addScrollBarStyle: 'scrollbarPopoverLarge' ].
 	
 	^ newText
-]
-
-{ #category : #initialization }
-SpCodePopoverPrintPresenter >> newTextSingleLine [
-		
-	^ self newTextInput
-]
-
-{ #category : #initialization }
-SpCodePopoverPrintPresenter >> newTextSingleLine: aString [
-		
-	^ self newLabel label: aString
 ]
 
 { #category : #accessing }

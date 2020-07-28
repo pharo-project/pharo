@@ -87,7 +87,7 @@ BaselineOfSpecCore >> complishon: spec [
 BaselineOfSpecCore >> pillar: spec [
 	spec
 		baseline: 'PillarCore'
-		with: [ spec repository: 'github://pillar-markup/pillar:v7.7.5/src' ]
+		with: [ spec repository: 'github://pillar-markup/pillar:dev-8/src' ]
 ]
 
 { #category : #acccessing }

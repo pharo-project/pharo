@@ -39,12 +39,6 @@ Class {
 	#category : #'Renraku-Rules'
 }
 
-{ #category : #conversion }
-ReAbstractRule class >> asRBRule [
-
-	^ self new asRBRule
-]
-
 { #category : #'testing-interest' }
 ReAbstractRule class >> checksClass [
 
@@ -142,12 +136,6 @@ ReAbstractRule >> anchorFor: anEntity [
 
 	^ ReSourceAnchor
 			entity: anEntity
-]
-
-{ #category : #conversion }
-ReAbstractRule >> asRBRule [
-
-	^ RBRenrakuWrapperLintRule new: self
 ]
 
 { #category : #running }

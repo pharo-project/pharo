@@ -432,12 +432,6 @@ RGBehavior >> defaultTraitComposition [
 	^ self defaultTraitCompositionStubIn: self.
 ]
 
-{ #category : #'accessing - definition' }
-RGBehavior >> definitionForNautilus [
-
-	^ self definition
-]
-
 { #category : #'queries - methods' }
 RGBehavior >> ensureLocalMethodNamed: aSymbol [
 
@@ -551,6 +545,13 @@ RGBehavior >> initializeUnresolved [
 
 ]
 
+{ #category : #'queries - testing' }
+RGBehavior >> isAccessedIn: anRGMethod [
+	^ (anRGMethod ast variableNodes select: [ :each | 
+		   each isGlobalVariable ]) anySatisfy: [ :each | 
+		  each name = self name ]
+]
+
 { #category : #testing }
 RGBehavior >> isBehavior [
 
@@ -597,12 +598,6 @@ RGBehavior >> isImmediateClass [
 RGBehavior >> isPointers [
 
 	^ self isBits not
-]
-
-{ #category : #'queries - testing' }
-RGBehavior >> isReferencedIn: anRGMethod [ 
-
-	^ (anRGMethod ast variableNodes select: #isGlobal) anySatisfy: [ :each | each name = self name ] 
 ]
 
 { #category : #'queries - testing' }

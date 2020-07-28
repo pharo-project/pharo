@@ -43,7 +43,7 @@ DateAndTime >> asNanoSeconds [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime >> asSeconds [
- 	"Return the number of seconds since the Squeak epoch"
+ 	"Return the number of seconds since the epoch"
  
  	^ (self - (self class epoch)) asSeconds
 ]
@@ -186,13 +186,13 @@ DateAndTime class >> fromMethodTimeStamp: aString [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> fromSeconds: secondsSinceEpochUTC [
-	"Answer a DateAndTime since the Squeak epoch: 1 January 1901 for the seconds in UTC time"
+	"Answer a DateAndTime since the epoch: 1 January 1901 for the seconds in UTC time"
 	^ self fromSeconds: secondsSinceEpochUTC offset: self localOffset
 ]
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> fromSeconds: utcSecondsSinceEpoch offset: aUTCOffset [
-	"Answer a DateAndTime since the Squeak epoch: 1 January 1901 for the given timeZone"
+	"Answer a DateAndTime since the epoch: 1 January 1901 for the given timeZone"
 
 	| integerSeconds nanos |
 	integerSeconds := utcSecondsSinceEpoch truncated.
@@ -626,7 +626,7 @@ DateAndTime class >> tomorrow [
 
 { #category : #'*Kernel-Chronology-Extras' }
 DateAndTime class >> totalSeconds [
-	"Answer the total seconds ellapsed since the Squeak epoch: 1 January 1901"
+	"Answer the total seconds ellapsed since the epoch: 1 January 1901"
 
 	^ self clock totalSeconds
 ]

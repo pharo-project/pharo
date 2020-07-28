@@ -37,12 +37,7 @@ LocalVariable >> asString [
 
 { #category : #queries }
 LocalVariable >> astNodes [
-	^scope node methodNode variableNodes select: [ :each | each binding == self]
-]
-
-{ #category : #accessing }
-LocalVariable >> definingScope [
-	^ scope
+	^scope node methodNode variableNodes select: [ :each | each variable == self]
 ]
 
 { #category : #emitting }
@@ -94,6 +89,12 @@ LocalVariable >> initialize [
 ]
 
 { #category : #testing }
+LocalVariable >> isAccessedIn: aMethod [
+	self isUnused ifTrue: [ ^ false ].
+	^ aMethod == self method
+]
+
+{ #category : #testing }
 LocalVariable >> isCopying [
 	^false
 ]
@@ -129,7 +130,7 @@ LocalVariable >> isRead [
 
 { #category : #testing }
 LocalVariable >> isReferenced [
-	^self isUnused not
+	^ self isUnused not
 ]
 
 { #category : #testing }
@@ -245,11 +246,11 @@ LocalVariable >> readInContext: aContext [
 
 { #category : #accessing }
 LocalVariable >> scope [
-
+	"this is the scope that the variable is declared in"
 	^ scope
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 LocalVariable >> scope: aLexicalScope [
 
 	scope := aLexicalScope

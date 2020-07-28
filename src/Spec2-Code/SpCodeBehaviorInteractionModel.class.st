@@ -24,9 +24,14 @@ SpCodeBehaviorInteractionModel >> behavior: anObject [
 	behavior := anObject
 ]
 
-{ #category : #initialization }
-SpCodeBehaviorInteractionModel >> initialize [
+{ #category : #binding }
+SpCodeBehaviorInteractionModel >> bindingOf: aString [
 
-	super initialize.
-	self setBindings: Dictionary new
+	^ self behavior bindingOf: aString
+]
+
+{ #category : #testing }
+SpCodeBehaviorInteractionModel >> hasBindingOf: aString [
+
+	^ self behavior hasBindingOf: aString
 ]

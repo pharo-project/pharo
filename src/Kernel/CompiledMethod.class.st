@@ -326,6 +326,12 @@ CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
 	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
 ]
 
+{ #category : #literals }
+CompiledMethod >> additionalMethodStateRefersToLiteral: literal [
+	^ self penultimateLiteral isMethodProperties
+		and: [ self penultimateLiteral refersToLiteral: literal ]
+]
+
 { #category : #'source code management' }
 CompiledMethod >> argumentNames [
 	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
@@ -452,6 +458,16 @@ CompiledMethod >> getSourceReplacingSelectorWith: newSelector [
 CompiledMethod >> hasComment [
 	"check if this method has a method comment"
 	^self comment isEmptyOrNil not
+]
+
+{ #category : #literals }
+CompiledMethod >> hasLiteralSuchThat: litBlock [
+	"Answer true if litBlock returns true for any literal in this method, even if embedded in array structure."
+
+	(self penultimateLiteral isMethodProperties and: [ 
+		 self penultimateLiteral hasLiteralSuchThat: litBlock ]) ifTrue: [ 
+		^ true ].
+	^ super hasLiteralSuchThat: litBlock
 ]
 
 { #category : #'accessing-pragmas & properties' }
@@ -623,13 +639,6 @@ CompiledMethod >> isReturnField [
 ]
 
 { #category : #testing }
-CompiledMethod >> isReturnSelf [
-	"Answer whether the receiver is a quick return of self."
-
-	^ self primitive = 256
-]
-
-{ #category : #testing }
 CompiledMethod >> isReturnSpecial [
 	"Answer whether the receiver is a quick return of self or constant."
 
@@ -675,6 +684,12 @@ CompiledMethod >> literalsToSkip [
 	^ 2
 ]
 
+{ #category : #scanning }
+CompiledMethod >> localReadsSelf [
+	"methods that are compiled with FFI have a self in the source but not in the bytecode"
+	^self isFFIMethod or: [ super localReadsSelf ]
+]
+
 { #category : #private }
 CompiledMethod >> markerOrNil [
 	^ self encoderClass markerOrNilFor: self
@@ -703,12 +718,6 @@ CompiledMethod >> methodClass: aClass [
 { #category : #accessing }
 CompiledMethod >> name [
 	^ self printString
-]
-
-{ #category : #accessing }
-CompiledMethod >> numberOfReservedLiterals [
-
-	^ 2
 ]
 
 { #category : #private }
@@ -928,6 +937,17 @@ CompiledMethod >> readsField: varIndex [
 	"Answer whether the receiver loads the instance variable indexed by the argument."
 	self isReturnField ifTrue: [^self returnField = (varIndex - 1)].
 	^ super readsField: varIndex 
+]
+
+{ #category : #literals }
+CompiledMethod >> refersToLiteral: aLiteral [
+	"Answer true if any literal in this method is literal,
+	even if embedded in array structure."
+
+	(self additionalMethodStateRefersToLiteral: aLiteral)
+		ifTrue: [ ^ true ].
+
+	^super refersToLiteral: aLiteral
 ]
 
 { #category : #initialization }

@@ -35,12 +35,6 @@ OCUndeclaredVariable >> emitValue: methodBuilder [
 
 ]
 
-{ #category : #testing }
-OCUndeclaredVariable >> isUndeclared [
-
-	^ true
-]
-
 { #category : #accessing }
 OCUndeclaredVariable >> name [
 	^ name

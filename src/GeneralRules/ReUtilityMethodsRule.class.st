@@ -39,11 +39,10 @@ ReUtilityMethodsRule >> name [
 
 { #category : #private }
 ReUtilityMethodsRule >> subclassOf: aClass overrides: aSelector [ 
-	^(aClass subclasses detect: 
-			[:each | 
-			(each includesSelector: aSelector)
+	^aClass subclasses anySatisfy:  
+			[:each | (each includesSelector: aSelector)
 				or: [self subclassOf: each overrides: aSelector]]
-		ifNone: [nil]) notNil
+
 ]
 
 { #category : #private }

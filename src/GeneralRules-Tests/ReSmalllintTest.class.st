@@ -220,6 +220,11 @@ ReSmalllintTest >> testAddRemoveDependents [
 ]
 
 { #category : #tests }
+ReSmalllintTest >> testAnySatisfy [
+	self ruleFor: self currentSelector
+]
+
+{ #category : #tests }
 ReSmalllintTest >> testAsOrderedCollectionNotNeeded [
 	self ruleFor: self currentSelector
 ]
@@ -280,11 +285,6 @@ ReSmalllintTest >> testCollectionProtocol [
 ]
 
 { #category : #tests }
-ReSmalllintTest >> testContains [
-	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
 ReSmalllintTest >> testDefinesEqualNotHash [
 	self classRuleFor: self currentSelector
 ]
@@ -334,14 +334,6 @@ ReSmalllintTest >> testFileBlocks [
 { #category : #tests }
 ReSmalllintTest >> testFloatEqualityComparison [
 	self ruleFor: self currentSelector
-]
-
-{ #category : #tests }
-ReSmalllintTest >> testFullBlocks [
-	"skip this test in squeak"
-
-"	self blockRuleFor: self currentSelector
-		plusSelectors: #(#caller1 #fullBlocks #detectContains #fileBlocks #moveDefinition #caller #assignmentInBlock #equalNotUsed #stringConcatenation #noMoveDefinition #referencesConditionFor: #returnInEnsure)"
 ]
 
 { #category : #tests }

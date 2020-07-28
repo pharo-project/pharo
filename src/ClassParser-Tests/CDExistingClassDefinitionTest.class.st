@@ -64,9 +64,9 @@ CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNod
 	self deny: classVarNode isTemp.
 	self deny: classVarNode isGlobalVariable.
 	self assert: classVarNode isClassVariable.
-	self deny: classVarNode isInstance.
-	self deny: classVarNode isLiteralVariable.
-	self deny: classVarNode isUndeclared.
+	self deny: classVarNode isInstanceVariable.
+	self assert: classVarNode isLiteralVariable.
+	self deny: classVarNode isUndeclaredVariable.
 ]
 
 { #category : #helpers }
@@ -78,9 +78,9 @@ CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
 	self deny: slotNode isTemp.
 	self deny: slotNode isGlobalVariable.
 	self deny: slotNode isClassVariable.
-	self assert: slotNode isInstance.
+	self assert: slotNode isInstanceVariable.
 	self deny: slotNode isLiteralVariable.
-	self deny: slotNode isUndeclared.
+	self deny: slotNode isUndeclaredVariable.
 ]
 
 { #category : #helpers }

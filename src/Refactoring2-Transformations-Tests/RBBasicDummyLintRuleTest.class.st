@@ -405,8 +405,6 @@ RBBasicDummyLintRuleTest class >> fileBlocks [
 { #category : #miscellaneous }
 RBBasicDummyLintRuleTest class >> fullBlocks [
 
-"skip this test in squeak."
-
 "	| detector |
 	detector := self new.
 	detector name: 'Method with full blocks'.

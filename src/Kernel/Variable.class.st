@@ -63,6 +63,11 @@ Variable >> = other [
 			and: [ name = other name ]
 ]
 
+{ #category : #queries }
+Variable >> definingNode [
+	^ nil
+]
+
 { #category : #'code generation' }
 Variable >> emitStore: methodBuilder [
 
@@ -95,12 +100,8 @@ Variable >> hash [
 ]
 
 { #category : #testing }
-Variable >> isArg [
-	self 
-		deprecated: 'Use #isArgumentVariable instead.' 
-		transformWith: '`@receiver isArg' -> '`@receiver isArgumentVariable'.
-	
-	^ self isArgumentVariable
+Variable >> isAccessedIn: aMethod [
+	^self usingMethods includes: aMethod
 ]
 
 { #category : #testing }
@@ -114,20 +115,8 @@ Variable >> isClassVariable [
 ]
 
 { #category : #testing }
-Variable >> isGlobal [
-	"this will be deprecated"
-	^self isGlobalVariable
-]
-
-{ #category : #testing }
 Variable >> isGlobalVariable [
 	^ false
-]
-
-{ #category : #testing }
-Variable >> isInstance [
-	"this will be deprecated"
-	^ self isInstanceVariable
 ]
 
 { #category : #testing }
@@ -144,15 +133,15 @@ Variable >> isLiteralVariable [
 ]
 
 { #category : #testing }
-Variable >> isLocal [
-	"this will be deprecated"
-	^self isLocalVariable
-]
-
-{ #category : #testing }
 Variable >> isLocalVariable [
 	"temporary variables and arguments are local variables"
 	^false
+]
+
+{ #category : #testing }
+Variable >> isReadIn: aCompiledCode [
+	^aCompiledCode ast readNodes
+		 anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
@@ -167,24 +156,17 @@ Variable >> isReservedVariable [
 ]
 
 { #category : #testing }
-Variable >> isSelf [
+Variable >> isSelfOrSuperVariable [
+	^ self isSelfVariable or: [ self isSuperVariable ]
+]
+
+{ #category : #testing }
+Variable >> isSelfVariable [
 	^false
 ]
 
 { #category : #testing }
-Variable >> isSelfOrSuper [
-	
-	^ self isSelf or: [ self isSuper ]
-]
-
-{ #category : #testing }
-Variable >> isSlot [
-	"check if the var is an instance variable (a Slot)"
-	^false
-]
-
-{ #category : #testing }
-Variable >> isSuper [
+Variable >> isSuperVariable [
 	^false
 ]
 
@@ -200,12 +182,12 @@ Variable >> isTemporaryVariable [
 ]
 
 { #category : #testing }
-Variable >> isThisContext [
+Variable >> isThisContextVariable [
 	^false
 ]
 
 { #category : #testing }
-Variable >> isUndeclared [
+Variable >> isUndeclaredVariable [
 
 	^ false
 ]
@@ -219,6 +201,12 @@ Variable >> isUninitialized [
 { #category : #testing }
 Variable >> isWritable [
 	^ true
+]
+
+{ #category : #testing }
+Variable >> isWrittenIn: aCompiledCode [
+	^aCompiledCode ast variableWriteNodes
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #accessing }

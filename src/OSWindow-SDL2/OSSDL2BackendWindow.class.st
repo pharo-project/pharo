@@ -20,7 +20,9 @@ Class {
 
 { #category : #'instance creation' }
 OSSDL2BackendWindow class >> newWithHandle: handle attributes: attributes [
-	^ self basicNew initWithHandle: handle attributes: attributes; yourself
+	^ self basicNew 
+		initWithHandle: handle attributes: attributes; 
+		yourself
 ]
 
 { #category : #accessing }
@@ -30,13 +32,14 @@ OSSDL2BackendWindow >> borderless [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> borderless: aBoolean [
-	sdl2Window toggleBorder: aBoolean not.
+	sdl2Window toggleBorder: aBoolean not
 ]
 
 { #category : #accessing }
 OSSDL2BackendWindow >> bounds: newBounds [
-	self position: newBounds origin;
-		extent: newBounds extent.
+	self 
+		position: newBounds origin;
+		extent: newBounds extent
 ]
 
 { #category : #'mouse capture' }
@@ -80,7 +83,7 @@ OSSDL2BackendWindow >> convertButtonState: mouseState modState: modState modifie
 	modifiers leftShift: shift; rightShift: shift;
 		leftCtrl: ctrl; rightCtrl: ctrl;
 		leftAlt: alt; rightAlt: ralt;
-		leftCmd: gui; rightCmd: gui.
+		leftCmd: gui; rightCmd: gui
 ]
 
 { #category : #private }
@@ -101,7 +104,7 @@ OSSDL2BackendWindow >> deliverGlobalEvent: aGlobalEvent [
 	^ osWindow deliverGlobalEvent: aGlobalEvent
 ]
 
-{ #category : #initialize }
+{ #category : #deleting }
 OSSDL2BackendWindow >> destroy [
 
 	sdl2Window ifNotNil: [ :validHandle | 
@@ -129,11 +132,10 @@ OSSDL2BackendWindow >> extent: newExtent [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> fullscreen: aBoolean [
-	aBoolean ifTrue: [
-		sdl2Window fullscreen: SDL_WINDOW_FULLSCREEN_DESKTOP
-	] ifFalse: [ 
-		sdl2Window fullscreen: 0
-	]
+
+	aBoolean 
+		ifTrue: [ sdl2Window fullscreen: SDL_WINDOW_FULLSCREEN_DESKTOP ] 
+		ifFalse: [ sdl2Window fullscreen: 0 ]
 ]
 
 { #category : #private }
@@ -174,10 +176,10 @@ OSSDL2BackendWindow >> icon: aForm [
 			amask: 16rff000000.
 	sdl2Window icon: surface.
 	iconSurface ifNotNil: [ SDL2 freeSurface: surface ].
-	iconSurface := surface.
+	iconSurface := surface
 ]
 
-{ #category : #initialize }
+{ #category : #'private - initialization' }
 OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
 	sdl2Window := aHandle.
 	attributes applyTo: self
@@ -185,9 +187,9 @@ OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
 
 { #category : #initialization }
 OSSDL2BackendWindow >> initialize [
-	
-	self class initializeSlots: self.
 	super initialize.
+	self class initializeSlots: self
+
 ]
 
 { #category : #'text input' }
@@ -215,13 +217,13 @@ OSSDL2BackendWindow >> mapSpecialCharacter: symbol [
 { #category : #'window management' }
 OSSDL2BackendWindow >> maximize [
 
-	sdl2Window maximize.
+	sdl2Window maximize
 ]
 
 { #category : #'window management' }
 OSSDL2BackendWindow >> minimize [
 
-	sdl2Window minimize.
+	sdl2Window minimize
 ]
 
 { #category : #'event handling' }
@@ -235,7 +237,7 @@ OSSDL2BackendWindow >> mousePosition [
 
 { #category : #'instance creation' }
 OSSDL2BackendWindow >> newAthensRenderer [
-	^ renderer := OSSDL2AthensRenderer for: self.
+	^ renderer := OSSDL2AthensRenderer for: self
 ]
 
 { #category : #'instance creation' }
@@ -326,7 +328,7 @@ OSSDL2BackendWindow >> restore [
 	sdl2Window restore
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
 OSSDL2BackendWindow >> sdl2Window [
 
 	^ sdl2Window
@@ -343,7 +345,7 @@ OSSDL2BackendWindow >> setDraggableArea: aRectangle [
 			(pt x > sdlRect x) & (pt x < sdlRect w) & (pt y > sdlRect y) & (pt y < sdlRect h) ifTrue: [ 1 ] ifFalse: [ 0 ].
 		].
 	
-	^sdl2Window setHitTest: myCallback.
+	^sdl2Window setHitTest: myCallback
 ]
 
 { #category : #cursor }
@@ -366,7 +368,7 @@ OSSDL2BackendWindow >> show [
 
 { #category : #cursor }
 OSSDL2BackendWindow >> showCursor: aBoolean [
-	SDL2 showCursor: (aBoolean ifTrue: [SDL_ENABLE] ifFalse: [SDL_DISABLE]).
+	SDL2 showCursor: (aBoolean ifTrue: [SDL_ENABLE] ifFalse: [SDL_DISABLE])
 ]
 
 { #category : #'text input' }
@@ -396,13 +398,13 @@ OSSDL2BackendWindow >> title: aTitle [
 { #category : #'window management' }
 OSSDL2BackendWindow >> toggleBorderOff [
 
-	sdl2Window toggleBorder: false.
+	sdl2Window toggleBorder: false
 ]
 
 { #category : #'window management' }
 OSSDL2BackendWindow >> toggleBorderOn [
 
-	sdl2Window toggleBorder: true.
+	sdl2Window toggleBorder: true
 ]
 
 { #category : #'event handling' }
@@ -417,7 +419,7 @@ OSSDL2BackendWindow >> visitKeyDownEvent: event [
 			character: (self mapSpecialCharacter: keysym sym).
 			
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
@@ -431,7 +433,7 @@ OSSDL2BackendWindow >> visitKeyUpEvent: event [
 			position: self mousePosition.
 			
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
@@ -442,7 +444,7 @@ OSSDL2BackendWindow >> visitMouseButtonDownEvent: event [
 			position: event x @ event y.
 	
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
@@ -453,7 +455,7 @@ OSSDL2BackendWindow >> visitMouseButtonUpEvent: event [
 			position: event x @ event y.
 	
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
@@ -464,7 +466,7 @@ OSSDL2BackendWindow >> visitMouseMotionEvent: sdlEvent [
 		delta: sdlEvent xrel @ sdlEvent yrel.
 
 	self convertButtonState: sdlEvent state modState: SDL2 modState modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
@@ -476,7 +478,7 @@ OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 			scrollVertical: sdlEvent y.
 			
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }
@@ -488,7 +490,7 @@ OSSDL2BackendWindow >> visitTextInputEvent: event [
 			position: self mousePosition.
 			
 	self convertButtonState: SDL2 mouseState modState: SDL2 modState modifiers: osEvent modifiers.
-	^ osEvent deliver.
+	^ osEvent deliver
 ]
 
 { #category : #'event handling' }

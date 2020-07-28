@@ -10,14 +10,15 @@ Class {
 		'copiedVars',
 		'tempVector',
 		'id',
-		'tempVectorVar'
+		'tempVectorVar',
+		'node'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
-	^copiedVars at: aTempVar name put: (OCCopyingTempVariable new
+	^copiedVars at: aTempVar name put: (aTempVar copiedVarClass new
 			originalVar: aTempVar originalVar;
 			name: aTempVar name;
 			escaping: aTempVar escaping;
@@ -198,6 +199,16 @@ OCAbstractMethodScope >> newOptimizedBlockScope: int [
 { #category : #lookup }
 OCAbstractMethodScope >> nextOuterScopeContextOf: aContext [
 	^aContext
+]
+
+{ #category : #accessing }
+OCAbstractMethodScope >> node [
+	^node
+]
+
+{ #category : #accessing }
+OCAbstractMethodScope >> node: aNode [
+	node := aNode
 ]
 
 { #category : #scope }

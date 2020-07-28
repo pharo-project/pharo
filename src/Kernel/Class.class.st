@@ -453,6 +453,12 @@ Class >> declareClassVariables: newVars [
 	^conflicts
 ]
 
+{ #category : #'pool variables' }
+Class >> definedVariables [
+	"return all the Variables defined by this class"
+	^self slots, self classVariables
+]
+
 { #category : #'class variables' }
 Class >> definesClassVariable: aGlobal [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
@@ -465,20 +471,6 @@ Class >> definesClassVariableNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
 	
 	^ self classVarNames includes: aString
-]
-
-{ #category : #accessing }
-Class >> definitionForNautilus [
-	"Answer a String that defines the receiver."
-
-	self 
-		deprecated: 'Use #definition instead.' 
-		on: '2019-05-14'
-		in: #Pharo8
-		transformWith: '`@receiver definitionForNautilus' 
-						-> '`@receiver definition'.
-						
-	^ self definition
 ]
 
 { #category : #deprecation }
@@ -974,7 +966,7 @@ Class >> setName: aSymbol [
 	name := aSymbol.
 ]
 
-{ #category : #accessing }
+{ #category : #'pool variables' }
 Class >> sharedPoolNames [
 	^ self sharedPools collect: [:ea |
 		ea isObsolete

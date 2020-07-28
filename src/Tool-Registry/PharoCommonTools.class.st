@@ -47,7 +47,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						getSelector: #browserTool;
 						setSelector: #browserTool:;
-						label: 'Systembrowser';
+						label: 'System browser';
 						default: (Smalltalk at: #ClyFullBrowser);
 						domainValues: Smalltalk tools recentBrowserTools ];
 		with: [ 
@@ -66,13 +66,14 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						getSelector: #workspaceTool;
 						setSelector: #workspaceTool:;
 						label: 'Workspace';
-						default: (Smalltalk at: #GTPlayground);
+						default: (Smalltalk at: #StPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
 		with: [ 
 					(aBuilder pickOne: #debuggerTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Debugger';
+						default: (Smalltalk at: #GTGenericStackDebugger);
 						domainValues: Smalltalk tools recentDebuggerTools ];
 		with: [ 
 					(aBuilder pickOne: #messageListTool)

@@ -27,11 +27,17 @@ ThisContextVariable >> initialize [
 ]
 
 { #category : #testing }
-ThisContextVariable >> isThisContext [
+ThisContextVariable >> isThisContextVariable [
 	^true
 ]
 
 { #category : #debugging }
 ThisContextVariable >> readInContext: aContext [
 	^aContext
+]
+
+{ #category : #queries }
+ThisContextVariable >> usingMethods [
+	^ SystemNavigation new allMethods select: [ :method | 
+		  method readsThisContext ]
 ]

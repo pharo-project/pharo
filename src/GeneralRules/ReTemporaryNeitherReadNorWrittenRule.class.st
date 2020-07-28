@@ -9,32 +9,11 @@ Class {
 
 { #category : #running }
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
-	aNode isSequence ifTrue: [ 
-		aNode temporaries do: [ :temp |
-			self
-				checkTemp: temp
-				followedBy: aNode statements 
-				forCritiquesDo: aBlock ] ]
-]
-
-{ #category : #running }
-ReTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements [
-	| isRead isWritten |
-	isRead := isWritten := false.
-	statements do: [ :statement | 
-		statement nodesDo: [ :node | 
-			(node isVariable and: [
-			 node name = aTemp name ]) ifTrue: [
-					isRead    := isRead    or: [ node isWrite not and: [ node isUsed ] ].
-					isWritten := isWritten or: [ node isWrite ] ] ] ].
-		
-	^ (isRead and: isWritten )
-]
-
-{ #category : #running }
-ReTemporaryNeitherReadNorWrittenRule >> checkTemp: aTemp followedBy: statements forCritiquesDo: aBlock [
-	(self checkTemp: aTemp followedBy: statements) ifFalse: [ 
-		aBlock cull: (self critiqueFor: aTemp) ]
+	aNode isVariable ifFalse: [ ^ self ].
+	aNode isTemp ifFalse: [ ^ self ].
+	aNode isDefinition ifFalse: [ ^ self ].
+	aNode variable isReferenced ifFalse: [ 
+		aBlock cull: (self critiqueFor: aNode) ]
 ]
 
 { #category : #accessing }

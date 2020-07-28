@@ -180,7 +180,7 @@ RBMessageNode >> isMessage [
 
 { #category : #testing }
 RBMessageNode >> isSelfSend [
-	^ self receiver isSelf
+	^ self receiver isSelfVariable
 ]
 
 { #category : #testing }

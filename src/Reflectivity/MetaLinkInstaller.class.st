@@ -196,7 +196,7 @@ MetaLinkInstaller >> installSuperJumpLinksInMethodNode: node [
 	instead of starting the lookup in the super class (wich is the original class of the object),
 	the lookup is started in the super super class (which is the intented superclass)."
 
-	(node allChildren select: [ :n | n isSuper ])
+	(node allChildren select: [ :n | n isSuperVariable ])
 		do: [ :superNode | 
 			| messageSendNode superSuperClass link |
 			messageSendNode := superNode parent.
@@ -323,7 +323,7 @@ MetaLinkInstaller >> registerAndInstallPermaLink: aPermaLink forTarget: aSlotOrV
 		
 	linksRegistry registerPermaLink: aPermaLink.
 	
-	nodes := MetalinkTargetResolver resolveASTLookupFor: aSlotOrVar option: aPermaLink persistenceType.
+	nodes := (aSlotOrVar accessingNodesFor: aPermaLink persistenceType) asIdentitySet.
 	aPermaLink targetObjectOrClass link: aPermaLink link toNodes: nodes
 ]
 

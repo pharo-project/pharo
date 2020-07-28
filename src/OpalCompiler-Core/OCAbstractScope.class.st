@@ -5,8 +5,7 @@ Class {
 	#name : #OCAbstractScope,
 	#superclass : #Object,
 	#instVars : [
-		'outerScope',
-		'node'
+		'outerScope'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -65,16 +64,6 @@ OCAbstractScope >> lookupVarForDeclaration: name [
 	create that variable. Subclasses override if they do not skip but do a lookup"
 
 	^ self outerScope lookupVarForDeclaration: name
-]
-
-{ #category : #accessing }
-OCAbstractScope >> node [
-	^node
-]
-
-{ #category : #accessing }
-OCAbstractScope >> node: aNode [
-	node := aNode
 ]
 
 { #category : #lookup }

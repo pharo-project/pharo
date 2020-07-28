@@ -26,17 +26,6 @@ OCSuperVariable >> initialize [
 	name := 'super'
 ]
 
-{ #category : #testing }
-OCSuperVariable >> isSelfOrSuper [
-	
-	^ true
-]
-
-{ #category : #testing }
-OCSuperVariable >> isSuper [
-	^true
-]
-
 { #category : #debugging }
 OCSuperVariable >> readInContext: aContext [
 	^aContext receiver

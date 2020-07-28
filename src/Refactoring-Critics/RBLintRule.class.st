@@ -7,12 +7,6 @@ Class {
 	#category : #'Refactoring-Critics'
 }
 
-{ #category : #'instance creation' }
-RBLintRule class >> asRBRule [
-
-	^ self new
-]
-
 { #category : #testing }
 RBLintRule class >> checksClass [
 
@@ -29,6 +23,17 @@ RBLintRule class >> checksMethod [
 RBLintRule class >> checksPackage [
 
 	^ false
+]
+
+{ #category : #testing }
+RBLintRule class >> enabled [
+	"compatibility to ReAbstractRule"
+	^true
+]
+
+{ #category : #testing }
+RBLintRule class >> enabled: aBoolean [
+	"compatibility to ReAbstractRule"
 ]
 
 { #category : #accessing }
@@ -56,12 +61,6 @@ RBLintRule class >> isVisible [
 RBLintRule class >> uniqueIdentifierNumber [
 	"This number should be unique and should change only when the rule completely change semantics"
 	^ 0
-]
-
-{ #category : #'as yet unclassified' }
-RBLintRule >> asRBRule [
-
-	^ self
 ]
 
 { #category : #running }

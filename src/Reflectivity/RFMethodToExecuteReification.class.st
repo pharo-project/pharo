@@ -22,7 +22,7 @@ RFMethodToExecuteReification class >> key [
 { #category : #generate }
 RFMethodToExecuteReification >> genForRBMessageNode [
 	^RBMessageNode
-		receiver: (RBMessageNode receiver: (RBTemporaryNode named: #RFReceiverReificationVar) selector: #class)
+		receiver: (RBMessageNode receiver: (RBVariableNode named: #RFReceiverReificationVar) selector: #class)
 		selector: #lookupSelector:
 		arguments: (RBLiteralValueNode value: entity selector)
 ]
@@ -42,7 +42,7 @@ RFMethodToExecuteReification >> preambleForMessage: aNode [
 		(1 to: aNode numArgs) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			preamble add:  (RBTemporaryNode named: name).
+			preamble add:  (RBVariableNode named: name).
 	].
 
 	^ preamble

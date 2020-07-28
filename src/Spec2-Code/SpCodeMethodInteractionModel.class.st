@@ -20,16 +20,21 @@ SpCodeMethodInteractionModel >> behavior [
 ]
 
 { #category : #accessing }
+SpCodeMethodInteractionModel >> bindingOf: aString [
+
+	^ self behavior bindingOf: aString
+]
+
+{ #category : #accessing }
 SpCodeMethodInteractionModel >> doItReceiver [
 
 	^ self behavior instanceSide
 ]
 
-{ #category : #initialization }
-SpCodeMethodInteractionModel >> initialize [
+{ #category : #testing }
+SpCodeMethodInteractionModel >> hasBindingOf: aString [
 
-	super initialize.
-	self setBindings: Dictionary new
+	^ self behavior hasBindingOf: aString
 ]
 
 { #category : #accessing }

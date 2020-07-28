@@ -31,9 +31,8 @@ GlobalVariable >> isGlobalVariable [
 	^true
 ]
 
-{ #category : #testing }
-GlobalVariable >> isReferenced [
- 	"A Global could be referenced from any method"
- 	^Smalltalk globals allBehaviors
- 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self ]
+{ #category : #accessing }
+GlobalVariable >> scope [
+	"The scope of Globals is Smalltalk globals"
+	^ Smalltalk globals
 ]

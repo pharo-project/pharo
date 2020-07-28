@@ -114,9 +114,15 @@ LiteralVariable >> installingIn: aClass [
 ]
 
 { #category : #testing }
+LiteralVariable >> isAccessedIn: aMethod [ 
+	
+	^aMethod accessesRef: self
+]
+
+{ #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
 	^ self value isClassOrTrait
-		and: [ name == self value name ]
+		and: [ (name == self value name) or: [ self value isObsolete ] ]
 ]
 
 { #category : #testing }
@@ -131,14 +137,10 @@ LiteralVariable >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 LiteralVariable >> isReferenced [
-	"my subclasses override this if they can be referenced in code"
-	^false
-]
+	"my subclasses override this if they know better"
 
-{ #category : #queries }
-LiteralVariable >> isReferencedIn: aMethod [ 
-	
-	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
+	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior | 
+		  behavior hasMethodAccessingVariable: self ]
 ]
 
 { #category : #testing }
@@ -212,6 +214,11 @@ LiteralVariable >> read [
 { #category : #debugging }
 LiteralVariable >> readInContext: aContext [
 	^self value
+]
+
+{ #category : #accessing }
+LiteralVariable >> scope [
+	^self definingClass
 ]
 
 { #category : #printing }

@@ -20,3 +20,8 @@ WorkspaceVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushLiteralVariable: self.
 ]
+
+{ #category : #testing }
+WorkspaceVariable >> isReferenced [
+	^ false
+]

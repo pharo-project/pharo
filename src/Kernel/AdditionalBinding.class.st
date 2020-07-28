@@ -28,3 +28,8 @@ AdditionalBinding >> emitValue: methodBuilder [
 
 	methodBuilder pushLiteralVariable: self.
 ]
+
+{ #category : #testing }
+AdditionalBinding >> isReferenced [
+	^ false
+]

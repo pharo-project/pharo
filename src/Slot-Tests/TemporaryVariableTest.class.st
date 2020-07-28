@@ -8,6 +8,20 @@ Class {
 }
 
 { #category : #tests }
+TemporaryVariableTest >> testDeclaringNode [
+	| method declaringNode declaringNodeViaVariable|
+	method := self class >> #testTemporaryVariablesMethod.
+	declaringNode := method ast body temporaries first.
+	declaringNodeViaVariable := method assignmentNodes first variable variable definingNode.
+	self assert: declaringNodeViaVariable equals: declaringNode.
+	
+	method := OrderedCollection >> #do:.
+	declaringNode := method ast arguments first.
+	declaringNodeViaVariable := method ast variableReadNodes third variable definingNode.
+	self assert: declaringNodeViaVariable equals: declaringNode.
+]
+
+{ #category : #tests }
 TemporaryVariableTest >> testHasTemporaryVariablesBlock [
 	| block |
 	block := [ | b | b := 2. b +2  ].
@@ -61,6 +75,15 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
 	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
+]
+
+{ #category : #tests }
+TemporaryVariableTest >> testScope [
+	| method |
+	method := self class >> #testTemporaryVariablesMethod.
+	self assert: method temporaryVariables first scope isMethodScope
+	
+
 ]
 
 { #category : #tests }

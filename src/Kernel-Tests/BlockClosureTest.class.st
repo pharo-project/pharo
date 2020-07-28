@@ -283,15 +283,14 @@ BlockClosureTest >> testOneArgument [
 
 { #category : #'tests - printing' }
 BlockClosureTest >> testPrintOn [
-
-	self assert: [ 1 + 2 ] printString equals: '[ 1 + 2 ]'
+	self assert: (RBParser parseExpression: [ 1 + 2 ] printString) equals: (RBParser parseExpression: '[ 1 + 2 ]')
 ]
 
 { #category : #'tests - printing' }
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	| method copy start block |
 	"Generating method with source code"
-	UndefinedObject compile: 'method ^ [1 + 2]'.
+	UndefinedObject compile: 'method ^ [ 1 + 2 ]'.
 	method := UndefinedObject >> #method.
 	["Removing the source code of method"
 		copy := method copyWithTrailerBytes: CompiledMethodTrailer new.
@@ -300,7 +299,7 @@ BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 		block := nil method.
 		
 		self deny: method hasSourceCode.
-		self assert: block asString equals: [ 1 + 2 ] asString.
+		self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
 	] ensure: [ method removeFromSystem ]
 ]
 

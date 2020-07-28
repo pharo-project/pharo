@@ -229,13 +229,16 @@ Slot >> isReadIn: aCompiledCode [
 ]
 
 { #category : #testing }
-Slot >> isSelfEvaluating [
-	^true
+Slot >> isReferenced [
+	^ self owningClass 
+		ifNil: [ false ] 
+		ifNotNil: [ :class | 
+		  class withAllSubclasses anySatisfy: [ :subclass | subclass hasMethodAccessingVariable: self ] ]
 ]
 
 { #category : #testing }
-Slot >> isSlot [
-	^ true
+Slot >> isSelfEvaluating [
+	^true
 ]
 
 { #category : #testing }

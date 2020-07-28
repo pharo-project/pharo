@@ -21,7 +21,7 @@ Class {
 	#category : #'Athens-Core-Paints'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 LinearGradientPaint class >> from: aStartPoint  to: aStopPoint [
 	^ self new start: aStartPoint; stop: aStopPoint; yourself.
 ]

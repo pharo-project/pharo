@@ -143,7 +143,7 @@ RGObjectTest >> testTypes [
 	self deny: def isTraitComposition.
 	self deny: def isTraitExclusion.
 	self deny: def isTraitTransformation.
-	self deny: def isVariableDefinition.
+	self deny: def isVariable.
 
 ]
 

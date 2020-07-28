@@ -13,6 +13,24 @@ TemporaryVariable class >> semanticNodeClass [
 	^RBTemporaryNode 
 ]
 
+{ #category : #accessing }
+TemporaryVariable >> copiedVarClass [
+	^OCCopyingTempVariable
+]
+
+{ #category : #queries }
+TemporaryVariable >> definingNode [
+	^ scope node temporaries 
+		detect: [ :each | each name = name ]
+		ifNone: [ 
+			" ugly workaround to support temps defined by primitives"
+			| pragma |
+			pragma := scope node methodNode pragmas detect: [ :each | each isPrimitiveError ].
+			pragma ifNil: [ ^nil ].
+			^ RBVariableNode named: (pragma argumentAt: #error:) value asString
+			]
+]
+
 { #category : #testing }
 TemporaryVariable >> isTemp [
 

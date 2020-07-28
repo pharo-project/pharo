@@ -25,9 +25,21 @@ CDSharedVariableNode >> isClassVariable [
 ]
 
 { #category : #testing }
-CDSharedVariableNode >> isInstance [
+CDSharedVariableNode >> isGlobalClassNameBinding [
 	"To be polymorphic to RB method nodes"
 	^false
+]
+
+{ #category : #testing }
+CDSharedVariableNode >> isInstanceVariable [
+	"To be polymorphic to RB method nodes"
+	^false
+]
+
+{ #category : #testing }
+CDSharedVariableNode >> isLiteralVariable [
+	"To be polymorphic to RB method nodes"
+	^true
 ]
 
 { #category : #testing }
