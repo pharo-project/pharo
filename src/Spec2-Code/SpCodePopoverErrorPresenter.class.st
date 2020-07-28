@@ -70,6 +70,7 @@ SpCodePopoverErrorPresenter >> initializePresenters [
 SpCodePopoverErrorPresenter >> initializeText [
 
 	text := self newText
+		beNotWrapWord;
 		propagateNaturalWidth: true;
 		propagateNaturalHeight: false;
 		editable: false;

@@ -65,6 +65,14 @@ SpMorphicTreeTableDataSource >> cellIndentFor: item [
 	^ item depth * 16
 ]
 
+{ #category : #accessing }
+SpMorphicTreeTableDataSource >> headerForColumn: aColumn [
+
+	^ self headersByColumn 
+		at: aColumn 
+		ifAbsentPut: [ self newHeaderColumn: aColumn ]
+]
+
 { #category : #paths }
 SpMorphicTreeTableDataSource >> indexFromPath: anArray [ 
 

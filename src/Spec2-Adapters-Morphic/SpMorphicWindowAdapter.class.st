@@ -206,7 +206,8 @@ SpMorphicWindowAdapter >> subscribeToAnnouncements: aWindow [
 
 	aWindow announcer 
 		when: SpWindowWillClose send: #announce: to: self presenter announcer;
-		when: SpWindowResizing send: #announce: to: self presenter announcer
+		when: SpWindowResizing send: #announce: to: self presenter announcer;
+		when: WindowClosed send: #windowClosed to: self
 ]
 
 { #category : #icons }
@@ -227,6 +228,13 @@ SpMorphicWindowAdapter >> title: aString [
 ]
 
 { #category : #updating }
+SpMorphicWindowAdapter >> windowClosed [
+
+	self windowIsClosing.
+	self presenter windowClosed
+]
+
+{ #category : #updating }
 SpMorphicWindowAdapter >> windowIsClosing [
 
 	self model windowIsClosing
@@ -235,5 +243,5 @@ SpMorphicWindowAdapter >> windowIsClosing [
 { #category : #updating }
 SpMorphicWindowAdapter >> windowIsOpening [
 
-	self model windowIsOpening
+	self presenter windowIsOpening
 ]

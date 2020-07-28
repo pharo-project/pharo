@@ -244,3 +244,10 @@ SpExecutableLayout >> whenChildrenRemovedDo: aBlock [
 		when: SpChildrenRemoved
 		do: aBlock
 ]
+
+{ #category : #private }
+SpExecutableLayout >> withAdapterDo: aValuable [
+	"a convenience method to avoid verify by nil all the time"
+	
+	^ adapter ifNotNil: aValuable
+]

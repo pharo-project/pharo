@@ -21,6 +21,7 @@ SpMorphicTableDataSource >> cellColumn: column row: rowIndex [
 		cell: cell;
 		rowIndex: rowIndex;
 		visit: column model.
+	self setHeaderColumnLazyProperties: column.
 		
 	^ cell
 ]
@@ -32,6 +33,14 @@ SpMorphicTableDataSource >> elements [
 		self model 
 			ifNotNil: #items
 			ifNil: [ #() ] ]
+]
+
+{ #category : #accessing }
+SpMorphicTableDataSource >> headerForColumn: aColumn [
+
+	^ self headersByColumn 
+		at: aColumn 
+		ifAbsentPut: [ self newHeaderColumn: aColumn ]
 ]
 
 { #category : #testing }

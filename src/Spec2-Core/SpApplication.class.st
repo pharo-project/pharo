@@ -327,7 +327,8 @@ SpApplication >> propertyAt: aKey put: aValue [
 SpApplication >> reset [ 
 
 	self closeAllWindows.
-	windows removeAll
+	windows removeAll.
+	self backend resetAdapterBindings
 ]
 
 { #category : #running }

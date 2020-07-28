@@ -48,7 +48,8 @@ SpMorphicTextAdapter >> buildWidget [
 	self setEditable: self presenter isEditable to: newWidget.
 	self setEditingModeFor: newWidget.
 	self setText: self presenter text to: newWidget.
-	
+
+	self setWrapWord: self presenter isWrapWord to: newWidget.	
 	self presenter whenTextChangedDo: [ :text | 
 		self setText: text to: newWidget ].
 	self presenter whenSelectionChangedDo: [ :selectionInterval | 
@@ -57,6 +58,8 @@ SpMorphicTextAdapter >> buildWidget [
 		self setGhostText: text to: newWidget ].
 	self presenter whenEditableChangedDo: [ :value | 
 		self setEditable: value to: newWidget ].
+	self presenter whenWrapWordChangedDo: [ :value | 
+		self setWrapWord: value to: newWidget ].
 	
 	^ newWidget
 ]
@@ -82,6 +85,12 @@ SpMorphicTextAdapter >> cursorPosition [
 	^ self widgetDo: [ :w |
 		w textArea selectionStart
 			ifNotNil: [ :sel | self linePositionOf: sel ] ]
+]
+
+{ #category : #'widget API' }
+SpMorphicTextAdapter >> cursorPositionIndex: index [ 
+
+	self widgetDo: [ :w | ^ w textArea editor pointIndex: index ]
 ]
 
 { #category : #private }
@@ -124,6 +133,14 @@ SpMorphicTextAdapter >> setText: text to: aWidget [
 	aWidget setText: text.
 	self updateExtentPropagationOf: text on: aWidget
 
+]
+
+{ #category : #private }
+SpMorphicTextAdapter >> setWrapWord: aBoolean to: aWidget [
+
+	aBoolean 
+		ifTrue: [ aWidget beWrapped ]
+		ifFalse: [ aWidget beNotWrapped ]
 ]
 
 { #category : #private }
