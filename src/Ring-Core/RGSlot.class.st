@@ -29,6 +29,11 @@ RGSlot >> definitionString [
 		aStream nextPutAll: '#'; nextPutAll: self name]
 ]
 
+{ #category : #testing }
+RGSlot >> isInstanceVariable [
+	^ true
+]
+
 { #category : #'testing types' }
 RGSlot >> isSlot [
 
