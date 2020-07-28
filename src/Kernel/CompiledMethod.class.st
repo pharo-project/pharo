@@ -460,6 +460,16 @@ CompiledMethod >> hasComment [
 	^self comment isEmptyOrNil not
 ]
 
+{ #category : #literals }
+CompiledMethod >> hasLiteralSuchThat: litBlock [
+	"Answer true if litBlock returns true for any literal in this method, even if embedded in array structure."
+
+	(self penultimateLiteral isMethodProperties and: [ 
+		 self penultimateLiteral hasLiteralSuchThat: litBlock ]) ifTrue: [ 
+		^ true ].
+	^ super hasLiteralSuchThat: litBlock
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
