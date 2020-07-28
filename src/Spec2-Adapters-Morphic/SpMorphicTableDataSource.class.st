@@ -35,14 +35,6 @@ SpMorphicTableDataSource >> elements [
 			ifNil: [ #() ] ]
 ]
 
-{ #category : #accessing }
-SpMorphicTableDataSource >> headerForColumn: aColumn [
-
-	^ self headersByColumn 
-		at: aColumn 
-		ifAbsentPut: [ self newHeaderColumn: aColumn ]
-]
-
 { #category : #testing }
 SpMorphicTableDataSource >> isMatch: anObject pattern: aString [
 	| text |
