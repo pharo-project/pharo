@@ -1,5 +1,5 @@
 Class {
-	#name : #AthensCairoSurfaceExportTest,
+	#name : #AthensCairoExportSurfaceTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'surface'
@@ -8,27 +8,27 @@ Class {
 }
 
 { #category : #testing }
-AthensCairoSurfaceExportTest class >> isAbstract [
-	^ self = AthensCairoSurfaceExportTest
+AthensCairoExportSurfaceTest class >> isAbstract [
+	^ self = AthensCairoExportSurfaceTest
 ]
 
 { #category : #tests }
-AthensCairoSurfaceExportTest >> athensSurfaceClass [
+AthensCairoExportSurfaceTest >> athensSurfaceClass [
 	^ self subclassResponsibility
 ]
 
 { #category : #running }
-AthensCairoSurfaceExportTest >> fileName [
+AthensCairoExportSurfaceTest >> fileName [
 	^ self className asString
 ]
 
 { #category : #running }
-AthensCairoSurfaceExportTest >> fileReference [
+AthensCairoExportSurfaceTest >> fileReference [
 	^ self fileName asFileReference
 ]
 
 { #category : #tests }
-AthensCairoSurfaceExportTest >> flushExportFile [
+AthensCairoExportSurfaceTest >> flushExportFile [
 	"This triggers call to destroy functions (the garbage collector will do it via finalize)"
 
 	surface := nil.
@@ -36,20 +36,20 @@ AthensCairoSurfaceExportTest >> flushExportFile [
 ]
 
 { #category : #running }
-AthensCairoSurfaceExportTest >> setUp [
+AthensCairoExportSurfaceTest >> setUp [
 	super setUp.
 	self fileReference ensureDelete
 ]
 
 { #category : #running }
-AthensCairoSurfaceExportTest >> tearDown [
+AthensCairoExportSurfaceTest >> tearDown [
 	self flushExportFile.
 	self fileReference ensureDelete.
 	super tearDown.
 ]
 
 { #category : #tests }
-AthensCairoSurfaceExportTest >> testExportBoxes [
+AthensCairoExportSurfaceTest >> testExportBoxes [
 	| path |
 	surface := self athensSurfaceClass
 		extent: 100@100
@@ -79,7 +79,7 @@ AthensCairoSurfaceExportTest >> testExportBoxes [
 ]
 
 { #category : #tests }
-AthensCairoSurfaceExportTest >> testExtent [
+AthensCairoExportSurfaceTest >> testExtent [
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
@@ -87,7 +87,7 @@ AthensCairoSurfaceExportTest >> testExtent [
 ]
 
 { #category : #tests }
-AthensCairoSurfaceExportTest >> testHeight [
+AthensCairoExportSurfaceTest >> testHeight [
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
@@ -95,7 +95,7 @@ AthensCairoSurfaceExportTest >> testHeight [
 ]
 
 { #category : #tests }
-AthensCairoSurfaceExportTest >> testWidth [
+AthensCairoExportSurfaceTest >> testWidth [
 	surface := self athensSurfaceClass
 		extent: 100@50
 		fileName: self fileName.
