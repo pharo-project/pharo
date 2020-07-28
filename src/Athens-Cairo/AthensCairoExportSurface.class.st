@@ -1,3 +1,23 @@
+"
+I represent the common behavior of special Athens surfaces that render to a file using the cairo graphics library.
+
+The main difference between my subclasses is given by the function to create the external surface via FFI.
+
+Usage:
+
+Use like a AthensCairoSurface with these differences: 
+1. On instance creation, specify (a) output filename as String and (b) the extent in points (1 point == 1/72.0 inch).
+2. When drawing is done, send #finish to write the file trailer.
+3. Let the garbage collector finalize the instance, which will flush to disk (file in disk may have 0 bytes before).
+
+Links: 
+
+* http://zetcode.com/gfx/cairo/cairobackends/
+* http://www.ie.u-ryukyu.ac.jp/~e085739/c.cairo.3.html
+* https://cairographics.org/manual/cairo-PDF-Surfaces.html
+* https://cairographics.org/manual/cairo-SVG-Surfaces.html
+
+"
 Class {
 	#name : #AthensCairoExportSurface,
 	#superclass : #AthensCairoSurface,
