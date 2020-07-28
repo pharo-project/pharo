@@ -77,7 +77,7 @@ RBFindAndReplacePreview >> initializeChangeList [
 			((SpCheckBoxTableColumn title: ' ' evaluated: [ :x | 
 				selectedRefactorings includes: x ])
 				onActivation: [ :class |  selectedRefactorings add: class ];
-				onDesactivation: [ :class | selectedRefactorings remove: class ];
+				onDeactivation: [ :class | selectedRefactorings remove: class ];
 				width: 20;
 				yourself);
 		addColumn: (SpStringTableColumn title: 'Name' evaluated: #selector);

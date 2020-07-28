@@ -17,6 +17,6 @@ SpCancelChangesCommand class >> defaultName [
 
 { #category : #execution }
 SpCancelChangesCommand >> execute [
-	self flag: 'Suspicious: is there not an more obvious/clean way of doing that?'.
-	self context adapter widget cancel
+	
+	self context triggerResetAction
 ]

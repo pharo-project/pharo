@@ -49,9 +49,14 @@ SpMorphicTextAdapter >> buildWidget [
 	self setEditingModeFor: newWidget.
 	self setText: self presenter text to: newWidget.
 	
-	self presenter whenTextChangedDo: [ :text | self setText: text to: newWidget ].
-	self presenter whenPlaceholderChangedDo: [ :text | self setGhostText: text to: newWidget ].
-	self presenter whenEditableChangedDo: [ :value | self setEditable: value to: newWidget ].
+	self presenter whenTextChangedDo: [ :text | 
+		self setText: text to: newWidget ].
+	self presenter whenSelectionChangedDo: [ :selectionInterval | 
+		self selectionInterval: selectionInterval ].
+	self presenter whenPlaceholderChangedDo: [ :text | 
+		self setGhostText: text to: newWidget ].
+	self presenter whenEditableChangedDo: [ :value | 
+		self setEditable: value to: newWidget ].
 	
 	^ newWidget
 ]

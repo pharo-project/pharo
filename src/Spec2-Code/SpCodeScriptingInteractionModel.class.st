@@ -1,6 +1,9 @@
 Class {
 	#name : #SpCodeScriptingInteractionModel,
 	#superclass : #SpCodeInteractionModel,
+	#instVars : [
+		'bindings'
+	],
 	#category : #'Spec2-Code'
 }
 
@@ -19,11 +22,16 @@ SpCodeScriptingInteractionModel >> bindingOf: aString [
 	^ self bindings associationAt: aString
 ]
 
-{ #category : #initialization }
-SpCodeScriptingInteractionModel >> initialize [
+{ #category : #accessing }
+SpCodeScriptingInteractionModel >> bindings [
 
-	self setBindings: Dictionary new.
-	super initialize
+	^ bindings ifNil: [ bindings := Dictionary new ]
+]
+
+{ #category : #testing }
+SpCodeScriptingInteractionModel >> hasBindingOf: aString [
+
+	^ self bindings includesKey: aString asSymbol
 ]
 
 { #category : #testing }
@@ -36,4 +44,10 @@ SpCodeScriptingInteractionModel >> isForScripting [
 SpCodeScriptingInteractionModel >> removeBinding: aBinding [
  
 	bindings removeKey: aBinding key
+]
+
+{ #category : #accessing }
+SpCodeScriptingInteractionModel >> variableBindings [
+
+	^ self bindings
 ]

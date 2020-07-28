@@ -4,26 +4,33 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#classInstVars : [
-		'session'
-	],
 	#category : #'NewTools-Core-Application'
 }
 
 { #category : #'instance creation' }
 StPharoApplication class >> current [ 
 	
-	Current ifNil: [ Current := self new ].
-	self validateSession.
-	^ Current
+	^ Current ifNil: [ Current := self new ]
 ]
 
-{ #category : #private }
-StPharoApplication class >> validateSession [
-	
-	session == Smalltalk session ifTrue: [ ^ self ].
-	Current sessionChanged.
-	session := Smalltalk session
+{ #category : #'class initialization' }
+StPharoApplication class >> initialize [ 
+
+	SessionManager default registerToolClassNamed: self name
+]
+
+{ #category : #'system startup' }
+StPharoApplication class >> shutDown: quitting [
+
+	Current ifNil: [ ^ self ].
+	Current shutDown: quitting
+]
+
+{ #category : #'system startup' }
+StPharoApplication class >> startUp: resuming [
+
+	Current ifNil: [ ^ self ].
+	Current startUp: resuming
 ]
 
 { #category : #initialization }
@@ -51,16 +58,18 @@ StPharoApplication >> run [
 	Current := self
 ]
 
-{ #category : #initialization }
-StPharoApplication >> sessionChanged [
-
-	self resetConfiguration
+{ #category : #'system startup' }
+StPharoApplication >> shutDown: quitting [
 ]
 
 { #category : #'private running' }
 StPharoApplication >> start [
 
 	
+]
+
+{ #category : #'system startup' }
+StPharoApplication >> startUp: resuming [
 ]
 
 { #category : #settings }

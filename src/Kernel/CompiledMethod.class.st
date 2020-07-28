@@ -460,6 +460,16 @@ CompiledMethod >> hasComment [
 	^self comment isEmptyOrNil not
 ]
 
+{ #category : #literals }
+CompiledMethod >> hasLiteralSuchThat: litBlock [
+	"Answer true if litBlock returns true for any literal in this method, even if embedded in array structure."
+
+	(self penultimateLiteral isMethodProperties and: [ 
+		 self penultimateLiteral hasLiteralSuchThat: litBlock ]) ifTrue: [ 
+		^ true ].
+	^ super hasLiteralSuchThat: litBlock
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]
@@ -629,13 +639,6 @@ CompiledMethod >> isReturnField [
 ]
 
 { #category : #testing }
-CompiledMethod >> isReturnSelf [
-	"Answer whether the receiver is a quick return of self."
-
-	^ self primitive = 256
-]
-
-{ #category : #testing }
 CompiledMethod >> isReturnSpecial [
 	"Answer whether the receiver is a quick return of self or constant."
 
@@ -679,6 +682,12 @@ CompiledMethod >> linesOfCode [
 CompiledMethod >> literalsToSkip [
 
 	^ 2
+]
+
+{ #category : #scanning }
+CompiledMethod >> localReadsSelf [
+	"methods that are compiled with FFI have a self in the source but not in the bytecode"
+	^self isFFIMethod or: [ super localReadsSelf ]
 ]
 
 { #category : #private }

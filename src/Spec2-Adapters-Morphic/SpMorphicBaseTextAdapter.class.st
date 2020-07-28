@@ -127,8 +127,8 @@ SpMorphicBaseTextAdapter >> insert: aString at: positionIndex [
 { #category : #'spec protocol' }
 SpMorphicBaseTextAdapter >> notify: errorMessage at: position in: sourceCode [
 
-	self flag: #TOMOVE.
-	self widgetDo: [ :w | w notify: errorMessage at: position in: sourceCode ]
+	self widgetDo: [ :w | 
+		w notify: errorMessage at: position in: sourceCode ]
 ]
 
 { #category : #'spec protocol' }
@@ -195,6 +195,15 @@ SpMorphicBaseTextAdapter >> selection [
 SpMorphicBaseTextAdapter >> selectionInterval [
 
 	^ self widget selectionInterval 
+]
+
+{ #category : #private }
+SpMorphicBaseTextAdapter >> selectionInterval: anInterval [
+
+	self widgetDo: [ :w | 
+		w textArea editor 
+			selectFrom: anInterval first 
+			to: anInterval last ]
 ]
 
 { #category : #private }

@@ -14,35 +14,27 @@ SpCodeObjectInteractionModel class >> on: anObject [
 ]
 
 { #category : #accessing }
-SpCodeObjectInteractionModel >> bindings [
+SpCodeObjectInteractionModel >> behavior [
 
-	^ bindings ifNil: [ bindings := self collectBindings ]
-	
+	^ self object class
 ]
 
-{ #category : #private }
-SpCodeObjectInteractionModel >> collectBindings [
-	| newBindings |
-	
-	newBindings := Dictionary new.
-	self behavior ifNotNil: [ :aClass | 
-		self collectBindingsOf: aClass into: newBindings ].
-	self doItReceiver ifNotNil: [ :anObject |
-		self collectBindingsOf: anObject class into: newBindings ].
+{ #category : #binding }
+SpCodeObjectInteractionModel >> bindingOf: aString [
 
-	^ newBindings
-]
-
-{ #category : #private }
-SpCodeObjectInteractionModel >> collectBindingsOf: aClass into: aDictionary [
-
-		aDictionary addAll: aClass slots
+	^ self doItReceiver bindingOf: aString
 ]
 
 { #category : #accessing }
 SpCodeObjectInteractionModel >> doItReceiver [
 
 	^ self object
+]
+
+{ #category : #testing }
+SpCodeObjectInteractionModel >> hasBindingOf: aString [
+
+	^ self doItReceiver hasBindingOf: aString
 ]
 
 { #category : #testing }
@@ -60,6 +52,5 @@ SpCodeObjectInteractionModel >> object [
 { #category : #accessing }
 SpCodeObjectInteractionModel >> object: anObject [
 
-	object := anObject.
-	bindings := nil
+	object := anObject
 ]

@@ -66,15 +66,18 @@ SpRichTextPresenter >> model [
 
 { #category : #'as yet unclassified' }
 SpRichTextPresenter >> plaintext [ 
-	^ self textStyler writePlaintextString: self model
+	
+	^ nil
+	"^ self textStyler value writePlaintextString: self model"
 ]
 
 { #category : #rendering }
 SpRichTextPresenter >> renderTree [
 	
+	^ nil
 	"^ SpRenderTreeBuilderVisitor new 
 			styleProvider: self styleAttributes;
-			render: self model"
+			render: self model "
 ]
 
 { #category : #initialization }

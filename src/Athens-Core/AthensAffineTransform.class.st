@@ -20,7 +20,7 @@ Class {
 
 { #category : #transformations }
 AthensAffineTransform >> clearTranslation [
-	"reset a translation from matrix, leaving only scale and rotation"
+	"Reset a translation from matrix, leaving only scale and rotation"
 	
 	x := y := 0.0
 ]
@@ -32,7 +32,7 @@ AthensAffineTransform >> initialize [
 
 { #category : #'vector-transform' }
 AthensAffineTransform >> inverseTransform: aPoint [ 
-"  (we assume matrix is never degenerate)"
+	"We assume matrix is never degenerated"
 	| px py y0 x0 |
 	
 	px := aPoint x.
@@ -78,7 +78,7 @@ AthensAffineTransform >> inverseTransform: aPoint [
 
 { #category : #private }
 AthensAffineTransform >> inverseTransformHalfPi: aPoint [
-	"assume sx,sy = 0
+	"Assume sx,sy = 0
 		
 	px := y0*shx + x.
 	py := x0*shy + y.
@@ -98,7 +98,7 @@ AthensAffineTransform >> inverseTransformHalfPi: aPoint [
 
 { #category : #private }
 AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
-	"assume shx,shy = 0
+	"Assume shx,shy = 0
 		
 	px := x0*sx + x.
 	py := y0*sy + y.
@@ -118,7 +118,7 @@ AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
 
 { #category : #accessing }
 AthensAffineTransform >> inverted [
-	"answer an inverse transformation of receiver"
+	"Answer an inverse transformation of receiver"
 	| det |
 	det := sx * sy - (shx * shy).
 	^ self class new
@@ -139,26 +139,25 @@ AthensAffineTransform >> loadAffineTransform: m [
 	sx := m sx.
 	sy := m sy.
 	shx := m shx.
-	shy := m shy.
+	shy := m shy
 ]
 
 { #category : #transformations }
 AthensAffineTransform >> loadIdentity [
-	"initialize with identity transform"
+	"Initialize with identity transform"
 	sx := sy := 1.0.
-	shx := shy := x := y := 0.0.
+	shx := shy := x := y := 0.0
 	
 	
 ]
 
 { #category : #transformations }
 AthensAffineTransform >> multiplyBy: m [
-
-	"multiply receiver by given affine matrix"
+	"Multiply receiver by given affine matrix"
 "
 | sx   shx   x   |        | sx'   shx'   x'   | 
-| shy sy     y    |   *    | shy' sy'     y'   |
-|  0     0     1   |        | 0  	0   		1	|       
+| shy  sy    y   |   *    | shy'  sy'    y'   |
+|  0   0     1   |        | 0  	0   	 1	   |       
 
 "	
 	
@@ -190,18 +189,17 @@ AthensAffineTransform >> restoreAfter: aBlock [
 { #category : #transformations }
 AthensAffineTransform >> rotateByDegrees: angle [
 
-
 	^ self rotateByRadians: angle degreesToRadians
 ]
 
 { #category : #transformations }
 AthensAffineTransform >> rotateByRadians: angle [
 
-	"multiply receiver by rotation matrix
+	"Multiply receiver by rotation matrix
 
-| sx   shx   x   |        | cos -sin 0  |             | (sx*cos)+(shx*sin)   (-sx*sin+shx*cos)  x |
-| shy sy     y   |   *   | sin   cos 0 |   ===> | (shy*cos)+(sy*sin)   (-shy*sin)+sy*cos) y |
-|  0     0     1   |       | 0     0   1   |             |        0                                 0                1  |
+| sx   shx   x   |       | cos -sin  0  |        | (sx*cos)+(shx*sin)   (-sx*sin+shx*cos)  x |
+| shy   sy   y   |   *   | sin   cos 0  |   ===> | (shy*cos)+(sy*sin)   (-shy*sin)+sy*cos) y |
+|  0     0   1   |       | 0     0   1  |        |        0                   0            1 |
 
 "
 	| cos sin newSx newSy |
@@ -235,16 +233,17 @@ AthensAffineTransform >> scaleBy: factor [
 |  0     0     1  |        | 0 0     1  |                |  0      0              1  |
 
 "	
-	factor isPoint ifTrue: [
-		sx := sx*factor x.
-		shx := shx*factor y.
-		sy := sy*factor y.
-		shy := shy*factor x. 		
-	] ifFalse: [
-		sx := sx*factor.
-		shx := shx*factor.
-		sy := sy*factor.
-		shy := shy*factor. ]
+	factor isPoint 
+		ifTrue: [
+			sx := sx*factor x.
+			shx := shx*factor y.
+			sy := sy*factor y.
+			shy := shy*factor x ] 
+		ifFalse: [
+			sx := sx*factor.
+			shx := shx*factor.
+			sy := sy*factor.
+			shy := shy*factor ]
 
 ]
 
@@ -253,15 +252,15 @@ AthensAffineTransform >> scaleX: fx Y: fy [
 
 	"multiply receiver by scale matrix
 
-| sx   shx   x   |        | fx 0 0  |              | sx*fx    shx*fx  x |
-| shy sy     y   |   *   | 0 fy 0  |    ===> | shy*fy  sy*fy   y |
-|  0     0     1   |       | 0 0  1  |              |  0          0        1  |
+| sx   shx   x   |       | fx 0 0  |         | sx*fx   shx*fx  x |
+| shy   sy   y   |   *   | 0 fy 0  |    ===> | shy*fy  sy*fy   y |
+|  0    0    1   |       | 0 0  1  |         |  0        0     1 |
 
 "
 	sx := sx*fx.
 	shx := shx*fx.
 	sy := sy*fy.
-	shy := shy*fy.
+	shy := shy*fy
 
 ]
 
@@ -318,7 +317,7 @@ AthensAffineTransform >> transform: aPoint [
 
 { #category : #'vector-transform' }
 AthensAffineTransform >> transformX: px Y: py [
-	" transform x and y coordinates by receiver. Answer a Point"
+	"Transform x and y coordinates by receiver. Answer a Point"
 	^ Point 
 		x: (sx*px +(shx*py) + x)
 		y: (shy*px + (sy*py) + y) 
@@ -332,32 +331,29 @@ AthensAffineTransform >> translateBy: aPoint [
 
 { #category : #transformations }
 AthensAffineTransform >> translateX: px Y: py [
+	"Multiply receiver by translation matrix :
 
-
-" multiply receiver by translation matrix :
-
-| sx   shx   x   |        | 1  0  px |             |	sx  shx  (sx*px + shx*py + x) |
-| shy sy     y   |   *   | 0  1  py |   ===> | shy  sy  (shy*px + sy*py + y)  |
-|  0     0     1   |       | 0  0   1  |             |  0     0    1  |
+| sx    shx   x   |       | 1  0  px |        |	sx  shx  (sx*px + shx*py + x)  |
+| shy   sy    y   |   *   | 0  1  py |   ===> | shy   sy  (shy*px + sy*py + y)  |
+|  0    0     1   |       | 0  0  1  |        |  0     0    1                   |
 
 "
 	x := (sx*px) + (shx*py) + x.
-	y := (shy*px) + (sy*py) + y.
+	y := (shy*px) + (sy*py) + y
 
 ]
 
 { #category : #transformations }
 AthensAffineTransform >> translateX: px y: py [
+	"Multiply receiver by translation matrix :
 
-" multiply receiver by translation matrix :
-
-| sx   shx   x   |        | 1  0  px |             |	sx  shx  (sx*px + shx*py + x) |
-| shy sy     y   |   *   | 0  1  py |   ===> | shy  sy  (shy*px + sy*py + y)  |
-|  0     0     1   |       | 0  0   1  |             |  0     0    1  |
+| sx   shx     x   |       | 1  0  px |        |	sx  shx  (sx*px + shx*py + x)  |
+| shy   sy     y   |   *   | 0  1  py |   ===> | shy  sy  (shy*px + sy*py + y)  |
+|  0     0     1   |       | 0  0   1 |        |  0     0    1                  |
 
 "
 	x := (sx*px) + (shx*py) + x.
-	y := (shy*px) + (sy*py) + y.
+	y := (shy*px) + (sy*py) + y
 
 ]
 
@@ -369,7 +365,7 @@ AthensAffineTransform >> translation [
 { #category : #accessing }
 AthensAffineTransform >> translation: aPoint [
 	x := aPoint x.
-	y := aPoint y.
+	y := aPoint y
 ]
 
 { #category : #transformations }
@@ -378,7 +374,7 @@ AthensAffineTransform >> transposed [
 	| s |
 	s := shx.
 	shx := shy.
-	shy := s.
+	shy := s
 ]
 
 { #category : #accessing }

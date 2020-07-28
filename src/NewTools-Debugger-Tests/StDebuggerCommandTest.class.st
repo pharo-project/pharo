@@ -16,8 +16,11 @@ StDebuggerCommandTest >> setUp [
 ]
 
 { #category : #running }
-StDebuggerCommandTest >> tearDown [ 
+StDebuggerCommandTest >> tearDown [
 	debuggerProvider terminate.
+	(StTestDebuggerProvider lookupSelector:
+		 #buildDebuggerWithMissingClassContext) ifNotNil: [ :method | 
+		method removeFromSystem ].
 	super tearDown
 ]
 
@@ -119,9 +122,7 @@ StDebuggerCommandTest >> testCommandsInMissingClassContext [
 	Define new class and define new method must be possible. "	
 	| debugger |
 	
-	self flag: #TODO. "Temporary disabled"
-	true ifTrue: [ ^ self skip ].
-	
+	StTestDebuggerProvider compileMissingClassContextBuilder.
 	debugger := debuggerProvider debuggerWithMissingClassContext.
 	
 	"Executable commands relative to context"	
@@ -243,7 +244,8 @@ StDebuggerCommandTest >> testStDefineMethodCommandExecution [
 { #category : #'tests - execution' }
 StDebuggerCommandTest >> testStDefineMissingEntityCommandExecution [
 	| debugger command |
-
+	
+	StTestDebuggerProvider compileMissingClassContextBuilder.
 	debugger := debuggerProvider debuggerWithDNUContext.
 	command := StDefineMissingEntityCommand forContext: debugger.
 	self
@@ -251,14 +253,13 @@ StDebuggerCommandTest >> testStDefineMissingEntityCommandExecution [
 		equals: StDefineMissingEntityCommand allSubclasses.
 	self
 		assert: command applicableCommand class
-		identicalTo: StDefineMethodCommand.
+		identicalTo: StDefineMethodCommand.	
 	
-	self flag: #TODO. "Temporary disabled"
-	"debugger := debuggerProvider debuggerWithMissingClassContext.
+	debugger := debuggerProvider debuggerWithMissingClassContext.
 	command := StDefineMissingEntityCommand forContext: debugger.
 	self
 		assert: command applicableCommand class
-		identicalTo: StDefineClassCommand."
+		identicalTo: StDefineClassCommand.
 		
 	debugger := debuggerProvider debuggerWithMissingSubclassResponsibilityContext.
 	command := StDefineMissingEntityCommand forContext: debugger.

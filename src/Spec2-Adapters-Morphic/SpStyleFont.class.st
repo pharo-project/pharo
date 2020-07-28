@@ -28,7 +28,8 @@ Class {
 		'name',
 		'size',
 		'italic',
-		'bold'
+		'bold',
+		'color'
 	],
 	#classVars : [
 		'FontCache'
@@ -63,11 +64,16 @@ SpStyleFont >> addFontToCache: aFont [
 { #category : #operations }
 SpStyleFont >> applyTo: aMorph [
 
-	"not all morphs understand font, I neet to verify it (which is not cool verifying a 
+	"not all morphs understand font, I need to verify it (which is not cool verifying a 
 	 selector but other way would be to define #font: in Morph and I do not want that)"
 	(aMorph respondsTo: #font:) ifFalse: [ ^ self ].
 	
-	aMorph font: self definedFont
+	aMorph font: self definedFont.
+	
+	self color ifNil: [ ^ self ].
+	"Again, not all morphs understand #textColor: and I need to verify it is there."
+	(aMorph respondsTo: #textColor:) ifFalse: [ ^ self ].
+	aMorph textColor: self color
 ]
 
 { #category : #accessing }
@@ -92,6 +98,23 @@ SpStyleFont >> calculateDefinedFont [
 	self isBold ifTrue: [ font forceBold ].
 
 	^ font
+]
+
+{ #category : #accessing }
+SpStyleFont >> color [
+  "This is meant to set the text color.
+	This property can be expressed as 
+	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
+	- a named selector: ==#red==
+	- an hex string: =='FF0000'=="
+
+	^ color
+]
+
+{ #category : #accessing }
+SpStyleFont >> color: aColorOrSymbol [
+
+	color := self toColor: aColorOrSymbol
 ]
 
 { #category : #private }
