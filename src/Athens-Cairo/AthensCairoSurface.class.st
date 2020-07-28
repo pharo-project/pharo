@@ -185,6 +185,8 @@ AthensCairoSurface class >> extent: anExtent format: aFormat [
 
 { #category : #'finalize resources' }
 AthensCairoSurface class >> finalizeResourceData: data [
+	"Finalize external state"
+
 	| handle id contextHandle |
 	handle := data first.
 	id := data second.

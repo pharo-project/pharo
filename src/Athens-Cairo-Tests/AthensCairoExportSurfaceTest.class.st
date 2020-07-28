@@ -27,14 +27,6 @@ AthensCairoExportSurfaceTest >> fileReference [
 	^ self fileName asFileReference
 ]
 
-{ #category : #tests }
-AthensCairoExportSurfaceTest >> flushExportFile [
-	"This triggers call to destroy functions (the garbage collector will do it via finalize)"
-
-	surface := nil.
-	Smalltalk garbageCollect
-]
-
 { #category : #running }
 AthensCairoExportSurfaceTest >> setUp [
 	super setUp.
@@ -43,7 +35,7 @@ AthensCairoExportSurfaceTest >> setUp [
 
 { #category : #running }
 AthensCairoExportSurfaceTest >> tearDown [
-	self flushExportFile.
+	surface close.
 	self fileReference ensureDelete.
 	super tearDown.
 ]
@@ -54,25 +46,22 @@ AthensCairoExportSurfaceTest >> testExportBoxes [
 	surface := self athensSurfaceClass
 		extent: 100@100
 		fileName: self fileName.
-	path :=  surface createRectanglePath: (0@0 corner: 20@20).
+	path := surface createRectanglePath: (0@0 corner: 20@20).
 
 	surface drawDuring: [:canvas |
 		surface clear.
 		canvas pathTransform loadIdentity.
+
 		canvas setPaint: Color red.
 		canvas pathTransform translateX: 5 Y: 5.
 		canvas drawShape: path.
+
 		canvas setPaint: Color blue.
 		canvas pathTransform translateX: 5 Y: 5.
 		canvas drawShape: path ].
-	
-	"-- Required steps at the end of the export --"
-
-	surface showPage. "The page is finished (for PDF)"
-	surface finish. "The file is finished"
 
 	"Make cairo write and close the file."
-	self flushExportFile.
+	surface close.
 
 	self assert: self fileReference exists.
 	self assert: self fileReference size > 400.

@@ -3,9 +3,7 @@ I represent an Athens surface that renders into a PDF file using the cairo graph
 
 For more information, please read the comment of my superclass, which implements behavior that is shared with other surfaces that write to file using the cairo graphics library.
 
-Links:
-
-* https://cairographics.org/manual/cairo-PDF-Surfaces.html
+Reference: https://cairographics.org/manual/cairo-PDF-Surfaces.html
 
 "
 Class {
