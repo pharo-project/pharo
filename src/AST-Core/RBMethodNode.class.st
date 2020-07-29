@@ -377,8 +377,8 @@ RBMethodNode >> initialize [
 
 { #category : #testing }
 RBMethodNode >> isFaulty [
-	(self arguments anySatisfy: #isFaulty) ifTrue:[ ^true].
-	(self pragmas anySatisfy: #isFaulty) ifTrue:[ ^true].
+	(self arguments anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
+	(self pragmas anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
 	^self body isFaulty
 ]
 

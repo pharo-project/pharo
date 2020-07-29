@@ -154,7 +154,7 @@ RBArrayNode >> isDynamicArray [
 
 { #category : #testing }
 RBArrayNode >> isFaulty [
-	^self statements anySatisfy: #isFaulty
+	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }
