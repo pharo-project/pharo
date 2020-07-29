@@ -4,7 +4,7 @@ I model ""super"" keyword
 Class {
 	#name : #SuperVariable,
 	#superclass : #ReservedVariable,
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }

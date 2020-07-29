@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }
@@ -23,7 +23,6 @@ ReservedVariable class >> isAbstract [
 { #category : #testing }
 ReservedVariable class >> nameIsReserved: aName [
 	^self subclasses anySatisfy: [ :class | class instance name = aName ]
-	
 ]
 
 { #category : #converting }

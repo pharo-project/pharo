@@ -4,7 +4,7 @@ I model ""self"" keyword
 Class {
 	#name : #SelfVariable,
 	#superclass : #ReservedVariable,
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }

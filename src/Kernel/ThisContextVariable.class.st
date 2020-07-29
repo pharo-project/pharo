@@ -4,7 +4,7 @@ I model thisContext keyword
 Class {
 	#name : #ThisContextVariable,
 	#superclass : #ReservedVariable,
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : #'Kernel-Variables'
 }
 
 { #category : #accessing }
