@@ -1,4 +1,8 @@
 "
+IMPORTANT: This presenter is obsolete since all layouts now are dynaamic. 
+This presenter just adds as value the capability to store widgets in a dictionary, which is not really an important need, so we are considering remove it.
+Also, it is currently broken.
+
 I'm a CompsableModel with a dynamic behavior for managing subwidgets and the value holder communicates with them.
 
 The idea is that instead of having a fix set of valueHolders controlling various aspects of the model. I have a dictionary to hold such elements.

@@ -123,6 +123,7 @@ SpCodePopoverPrintPresenter >> newTextMultiLine: aString withScrollBars: withScr
 	| newText |		
 
 	newText := self newText
+		beNotWrapWord;
 		propagateNaturalWidth: true;
 		propagateNaturalHeight: withScrollBars not;
 		editable: false;
