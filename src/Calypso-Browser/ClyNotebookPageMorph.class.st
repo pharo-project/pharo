@@ -38,7 +38,7 @@ ClyNotebookPageMorph >> actions: aCollection [
 	actions := aCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding-removing' }
 ClyNotebookPageMorph >> addToSelection [
 	
 	owner addToSelection: self
@@ -126,7 +126,7 @@ ClyNotebookPageMorph >> onDoubleClick: aBlock [
 	labelPresenter onDoubleClick: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding-removing' }
 ClyNotebookPageMorph >> removeFromSelection [
 	owner removeFromSelection: self
 ]
