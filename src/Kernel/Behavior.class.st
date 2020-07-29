@@ -631,7 +631,7 @@ Behavior >> deepCopy [
 	^ self shallowCopy
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing instances and variables' }
 Behavior >> definedVariables [
 	"return all the Variables defined"
 	^ self slots
