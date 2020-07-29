@@ -12,8 +12,9 @@ Class {
 
 { #category : #testing }
 DerivedSlot >> isAccessedIn: aMethod [
-	(baseSlot isAccessedIn: aMethod) ifFalse: [ ^false ].
-	^super isAccessedIn: aMethod
+	^ (baseSlot isAccessedIn: aMethod)
+		  ifTrue: [ super isAccessedIn: aMethod ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #testing }
