@@ -580,6 +580,13 @@ CompiledMethod >> isExplicitlyRequired: marker [
 ]
 
 { #category : #testing }
+CompiledMethod >> isFaulty [
+	"check if this method was compiled from syntactically wrong code"
+	
+	^(self refersToLiteral: #signalSyntaxError:) and: [ self ast isFaulty ]
+]
+
+{ #category : #testing }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
 	^ self origin isTrait and: [ self origin ~= self methodClass ]

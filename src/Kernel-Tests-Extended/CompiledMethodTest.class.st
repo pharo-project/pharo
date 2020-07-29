@@ -469,6 +469,19 @@ CompiledMethodTest >> testIsDeprecated [
 	DeprecatedClassForTest selectorsDo: [ :each | self assert: (DeprecatedClassForTest >> each) isDeprecated ]
 ]
 
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testIsFaulty [
+	| method  |
+	method := Smalltalk compiler 	
+		options:  #(+ optionParseErrors +optionEmbeddSources);
+		compile: 'method ^1+'.
+		
+	self assert: method isFaulty.
+	self assert: method ast isFaulty.
+	
+	self deny: (Object>>#halt) isFaulty
+]
+
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testIsInstalled [
 |  method cls |
