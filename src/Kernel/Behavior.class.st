@@ -631,6 +631,12 @@ Behavior >> deepCopy [
 	^ self shallowCopy
 ]
 
+{ #category : #'as yet unclassified' }
+Behavior >> definedVariables [
+	"return all the Variables defined"
+	^ self slots
+]
+
 { #category : #dependencies }
 Behavior >> dependentClasses [
 	"Return the list of classes used myself"
