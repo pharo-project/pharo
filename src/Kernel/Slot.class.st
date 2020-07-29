@@ -46,18 +46,15 @@ Slot class >> checkValidName: aSymbol [
 	aSymbol startsWithDigit ifTrue: [ 
 		^ InvalidSlotName signalFor: aSymbol ].
 
-	(self isPseudovariableName: aSymbol) ifTrue: [ 
+	(#('nil' 'true' 'false') includes: aSymbol) ifTrue: [ 
 		^ InvalidSlotName signalFor: aSymbol ].
 	
-
+	(ReservedVariable nameIsReserved: aSymbol) ifTrue: [ 
+		^ InvalidSlotName signalFor: aSymbol ].
+	
 	(aSymbol allSatisfy: [ :aCharacter | aCharacter isAlphaNumeric or: [ aCharacter = $_ ] ]) ifFalse: [ 
 		^ InvalidSlotName signalFor: aSymbol ]
 
-]
-
-{ #category : #testing }
-Slot class >> isPseudovariableName: aSymbol [
-	^ #('self' 'true' 'false' 'nil' 'thisContext' 'super') includes: aSymbol
 ]
 
 { #category : #testing }
