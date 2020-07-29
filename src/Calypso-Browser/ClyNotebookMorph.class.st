@@ -30,7 +30,7 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 	self tabSelectorMorph addTab: aStringOrMorph beforeIndex: index
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding-removing' }
 ClyNotebookMorph >> addToSelection: aPage [ 
 
 	self selectedPageIndex: (pageMorphs indexOf: aPage)
@@ -82,7 +82,7 @@ ClyNotebookMorph >> postAddPage: aPage [
 	self addActions: aPage actions
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'adding-removing' }
 ClyNotebookMorph >> removeFromSelection: aPage [ 
 
 	self selectedPageIndex = (pageMorphs indexOf: aPage)
