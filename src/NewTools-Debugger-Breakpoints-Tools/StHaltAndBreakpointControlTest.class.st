@@ -39,6 +39,7 @@ StHaltAndBreakpointControlTest >> setUp [
 	super setUp.
 	StHaltCache defaultCache removeSubscriptions.	
 	cache := StHaltCache new.
+	cache isActive: true.
 	self compileMethodsWithHalts.
 ]
 

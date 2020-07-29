@@ -123,7 +123,8 @@ StDebuggerActionModel >> isInterruptedContextError [
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextMissingClassException [
 	^ self isInterruptedContextDoesNotUnderstand
-		and: [ (self interruptedContext tempAt: 2) class == VariableNotDeclared ]
+		and: [  self interruptedContext size >= 2
+		and: [ (self interruptedContext tempAt: 2) class == VariableNotDeclared ]]
 ]
 
 { #category : #'debug - predicates' }
