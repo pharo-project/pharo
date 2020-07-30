@@ -35,6 +35,12 @@ RGVariable >> isClassVariable [
 ]
 
 { #category : #testing }
+RGVariable >> isInstanceVariable [
+	"check if the var is an instance variable (a Slot)"
+	^false
+]
+
+{ #category : #testing }
 RGVariable >> isLocalVariable [
 	^false
 ]
@@ -46,8 +52,14 @@ RGVariable >> isPoolVariable [
 ]
 
 { #category : #testing }
-RGVariable >> isSpecial [
+RGVariable >> isReservedVariable [
+	"Ring2 does not model self, super, thisContext"
+	^false
+]
 
+{ #category : #testing }
+RGVariable >> isSpecial [
+	"this should be deprecated for needsFullDefinition"
 	^ false
 ]
 
@@ -66,12 +78,24 @@ RGVariable >> isVariable [
 	^true
 ]
 
+{ #category : #testing }
+RGVariable >> isWritable [
+	"Ring2 variables are all writable, e.g. it does not model Arguments"
+	^true
+]
+
 { #category : #accessing }
 RGVariable >> name: aString [
 
 	self parent announceDefinitionChangeDuring: [ 
 		super name: aString ].
 
+]
+
+{ #category : #testing }
+RGVariable >> needsFullDefinition [
+	"all but InstanceVariableSlot and ClassVariable need to print the full definition"
+	^true
 ]
 
 { #category : #testing }
