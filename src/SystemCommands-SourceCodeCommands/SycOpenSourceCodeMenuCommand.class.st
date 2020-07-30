@@ -42,7 +42,7 @@ SycOpenSourceCodeMenuCommand >> execute [
 	super execute
 ]
 
-{ #category : #execution }
+{ #category : #'context menu' }
 SycOpenSourceCodeMenuCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 	"Here we need to take care because this command itself is added to menu of same context.
 	So we will always enter into this method during submenu generation. 
