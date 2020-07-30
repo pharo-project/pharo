@@ -542,7 +542,7 @@ StDebugger >> context [
 
 { #category : #actions }
 StDebugger >> copyStackToClipboard [
-	self debuggerActionModel peelToFirstLike: self currentContext
+	self debuggerActionModel copyStackToClipboard
 ]
 
 { #category : #actions }
@@ -753,25 +753,25 @@ StDebugger >> initializePresenters [
 StDebugger >> initializeStack [
 	stackTable := self newTable.
 	stackTable
+		addColumn: (SpStringTableColumn
+				 title: 'Class'
+				 evaluated: [ :item | item receiver class ]);
 		addColumn:
-			(SpStringTableColumn
-				title: 'Class'
-				evaluated: [ :item | item receiver class ]);
-		addColumn:
-			(SpStringTableColumn
-				title: 'Method'
-				evaluated: [ :item | item method selector ]);
-		addColumn:
-			(SpStringTableColumn
-				title: 'Context'
-				evaluated: [ :item | item sender stDisplayString ]).
-	stackTable
-		transmitDo: [ :context | 
-			stackTable selection isEmpty
-				ifFalse: [ self updateInspectorFromContext: context.
-					self updateCodeFromContext: context.
-					self updateTitle.
-					self expandStackIfLastItemIsSelected ] ].
+			(SpStringTableColumn title: 'Method' evaluated: [ :item | 
+					 | method |
+					 method := item method.
+					 method isCompiledBlock
+						 ifTrue: [ method sourceNode sourceCode ]
+						 ifFalse: [ method selector ] ]);
+		addColumn: (SpStringTableColumn
+				 title: 'Context'
+				 evaluated: [ :item | item sender stDisplayString ]).
+	stackTable transmitDo: [ :context | 
+		stackTable selection isEmpty ifFalse: [ 
+			self updateInspectorFromContext: context.
+			self updateCodeFromContext: context.
+			self updateTitle.
+			self expandStackIfLastItemIsSelected ] ].
 	stackHeader := self instantiate: StHeaderBar.
 	stackHeader label: 'Stack'
 ]

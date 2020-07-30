@@ -12,6 +12,7 @@ Class {
 
 { #category : #commands }
 StMetaBrowser class >> buildCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
+
 	aCmCommandsGroup
 		beDisplayedAsGroup;
 		register: (StInspectorInspectSelectedCommand forSpecContext: presenter);
@@ -35,6 +36,24 @@ StMetaBrowser class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #'private actions' }
+StMetaBrowser >> compile: aString [
+	| compiledSelector cursorPosition |
+
+	cursorPosition := source cursorPositionIndex.
+
+	compiledSelector := self selectedMethod methodClass
+		compile: aString
+		classified: 	self selectedMethod protocol.
+	
+	self updateMethods: self selectedClass.
+	methods items 
+		detect: [ :each | each selector = compiledSelector ]
+		ifFound: [ :aMethod | 
+			methods selectItem: aMethod.
+			source cursorPositionIndex: cursorPosition ]
+]
+
 { #category : #initialization }
 StMetaBrowser >> initializePresenters [
 	| classHierarchy |
@@ -53,10 +72,10 @@ StMetaBrowser >> initializePresenters [
 	methodFilter := self newTextInput.
 
 	source := self newCode
-		lineNumbers: true;
-		"contextMenu: [ self menuActions asMenuPresenter ];
-		contextKeyBindings: self menuActions asKMCategory;"
+		lineNumbers: StPharoSettings codeShowLineNumbers;
 		beForMethod: self selectedMethod;
+		whenSubmitDo: [ :aString | self compile: aString ];
+		whenResetDo: [ self updateSourceWith: self selectedMethod  ];
 		yourself.
 		
 	classes transmitTo: methods transform: [ :aClass | self methodsOf: aClass ].
@@ -74,6 +93,12 @@ StMetaBrowser >> methodsOf: aClass [
 ]
 
 { #category : #accessing }
+StMetaBrowser >> selectedClass [
+
+	^ classes selection selectedItem
+]
+
+{ #category : #accessing }
 StMetaBrowser >> selectedMethod [
 
 	^ methods selection selectedItem
@@ -86,18 +111,12 @@ StMetaBrowser >> selectedObject [
 ]
 
 { #category : #'private updating' }
-StMetaBrowser >> updateMethods: classTreeSelection [
-	| class |
-
-	class := classTreeSelection selectedItem.
-	class
-		ifNil: [ methods items: SortedCollection new ]
-		ifNotNil: [ | sortedMethods |
-			sortedMethods := SortedCollection
-				sortBlock: [ :a :b | a selector <= b selector ].
-			sortedMethods addAll: class methods.
-			methods items: sortedMethods ].
-	methods unselectAll
+StMetaBrowser >> updateMethods: aClass [
+	
+	methods items: (aClass
+		ifNotNil: [ aClass methods sorted: #selector ascending ]
+		ifNil: [ #() ])
+	
 ]
 
 { #category : #'private updating' }

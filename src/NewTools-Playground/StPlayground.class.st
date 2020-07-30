@@ -58,8 +58,7 @@ Class {
 	],
 	#classVars : [
 		'CacheDirectory',
-		'PreferredExtent',
-		'ShowLineNumbers'
+		'PreferredExtent'
 	],
 	#category : #'NewTools-Playground-View'
 }
@@ -158,18 +157,6 @@ StPlayground class >> registerToolsOn: registry [
 
 	registry register: self as: #workspace
 
-]
-
-{ #category : #private }
-StPlayground class >> showLineNumbers [
-
-	^ ShowLineNumbers ifNil: [ ShowLineNumbers := self defaultShowLineNumbers ]
-]
-
-{ #category : #private }
-StPlayground class >> showLineNumbers: aBoolean [
-
-	ShowLineNumbers := aBoolean
 ]
 
 { #category : #'private builder' }
@@ -333,13 +320,13 @@ StPlayground >> selectedTextOrLine [
 { #category : #private }
 StPlayground >> showLineNumbers [
 
-	^ self class showLineNumbers
+	^ StPharoSettings codeShowLineNumbers
 ]
 
 { #category : #'private actions' }
 StPlayground >> showLineNumbers: aBoolean [
 
-	self class showLineNumbers: aBoolean.
+	StPharoSettings codeShowLineNumbers: aBoolean.
 	text lineNumbers: aBoolean.
 	toggleLineNumberButton label: (StShowLineNumbersCommand iconLabelFor: self showLineNumbers)
 ]
