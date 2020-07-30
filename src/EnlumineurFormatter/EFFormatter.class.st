@@ -655,7 +655,7 @@ EFFormatter class >> settingsNewLinesAfterMethodSignature: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignature)
 		label: 'New lines after method signature';
-		default: 1;
+		default: 2;
 		description: 'To set the number of new lines directly after the method signature.
 When numberOfNewLinesAfterMethodSignature is set to 2 new lines
 
@@ -819,7 +819,7 @@ EFFormatter class >> settingsRetainBlankLinesBetweenStatements: aBuilder [
 
 	(aBuilder setting: #retainBlankLinesBetweenStatements)
 		label: 'Retain blank lines between statements';
-		default: false;
+		default: true;
 		description: 'Keep blank lines which are between statements.
 		
 For example: when set to true the formatter will not change the following: 
