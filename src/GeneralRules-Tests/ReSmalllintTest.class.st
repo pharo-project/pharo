@@ -389,6 +389,11 @@ ReSmalllintTest >> testNoClassComment [
 ]
 
 { #category : #tests }
+ReSmalllintTest >> testNotOptimizedIf [
+	self ruleFor: self currentSelector plusSelectors: {#ifTrueBlocks}
+]
+
+{ #category : #tests }
 ReSmalllintTest >> testPrecedence [
 	self ruleFor: self currentSelector
 ]
