@@ -53,6 +53,12 @@ BreakpointTest >> testAddRemoveBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testBreakLinkOnce [
+	self assert: (Breakpoint new once link optionOneShot).
+	self assert: (Breakpoint new breakLinkOneShot optionOneShot)
+]
+
+{ #category : #tests }
 BreakpointTest >> testBreakpointInitialization [
 	|bp|	
 	bp := Breakpoint new.
