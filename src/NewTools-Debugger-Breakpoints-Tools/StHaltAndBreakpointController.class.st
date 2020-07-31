@@ -45,7 +45,8 @@ StHaltAndBreakpointController >> areHaltsAndBreakpoinsEnabledFor: aProgramNode [
 
 { #category : #control }
 StHaltAndBreakpointController >> disableBreakpointNode: aProgramNode [
-	aProgramNode allBreakpointLinks do: [ :link | link condition: [false]; disable ].
+	self flag: 'Fix for PR 6952: should be removed in newtools merge 4.2.2'.
+	aProgramNode breakpoints do: [ :bp | bp disable ].
 	self skipNode: aProgramNode
 ]
 
@@ -80,7 +81,8 @@ StHaltAndBreakpointController >> disableObjectCentricBreakpoint: anObjectCentric
 
 { #category : #control }
 StHaltAndBreakpointController >> enableBreakpointNode: aProgramNode [
-	aProgramNode allBreakpointLinks do: [ :link | link condition: [true]; enable ].
+	self flag: 'Fix for PR 6952: should be removed in newtools merge 4.2.2'.
+	aProgramNode breakpoints do: [ :bp | bp enable ].
 	self removeSkipLinksFor: aProgramNode
 ]
 
