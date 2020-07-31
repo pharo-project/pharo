@@ -222,6 +222,16 @@ Breakpoint >> always [
 
 ]
 
+{ #category : #api }
+Breakpoint >> breakInContext: aContext node: aNode [
+	<debuggerCompleteToSender>
+	self class notifyBreakpointHit: self inContext: aContext node: aNode.
+	self oneShot ifTrue: [ 
+		self isEnabled ifFalse: [ ^ self ].
+		self disable ].
+	Break break
+]
+
 { #category : #links }
 Breakpoint >> breakLink [
 	"for now it should just halt in base level"

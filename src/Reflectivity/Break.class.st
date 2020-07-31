@@ -18,6 +18,12 @@ Break class >> break [
 { #category : #break }
 Break class >> break: aBreakpoint inContext: aContext node: node [
 	<debuggerCompleteToSender>
-	aBreakpoint class notifyBreakpointHit: aBreakpoint inContext: aContext node: node.	
+	aBreakpoint class
+		notifyBreakpointHit: aBreakpoint
+		inContext: aContext
+		node: node.
+	aBreakpoint oneShot ifTrue: [ 
+		aBreakpoint disabled ifTrue: [ ^ self ].
+		aBreakpoint disable ].
 	self break
 ]

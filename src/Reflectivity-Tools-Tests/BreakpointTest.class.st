@@ -6,7 +6,8 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'previousBreakpoints',
-		'cls'
+		'cls',
+		'oldObservers'
 	],
 	#category : #'Reflectivity-Tools-Tests'
 }
@@ -25,6 +26,8 @@ BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
 	previousBreakpoints := Breakpoint all copy.
+	oldObservers := Breakpoint observers copy.
+	Breakpoint observers removeAll.
 	Breakpoint all removeAll.
 ]
 
@@ -33,6 +36,8 @@ BreakpointTest >> tearDown [
 	| pkg |
 	Breakpoint removeAll.	
 	Breakpoint all addAll: previousBreakpoints.
+	Breakpoint observers removeAll.
+	Breakpoint observers addAll: oldObservers.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
 	pkg ifNotNil: [ pkg removeFromSystem ].
@@ -53,6 +58,20 @@ BreakpointTest >> testAddRemoveBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testBreakInContextNode [
+
+	|observer breakpoint|
+	observer := DummyBreakpointObserver new.
+	Breakpoint registerObserver: observer.
+	breakpoint := Breakpoint new.	
+	self should: [breakpoint breakInContext: self node: #node] raise: Break.
+	self assert: observer tag notNil.
+	self assert: observer tag breakpoint identicalTo: breakpoint.
+	self assertCollection: observer tag nodes equals: #(#node).
+	
+]
+
+{ #category : #tests }
 BreakpointTest >> testBreakLink [
 	|breakpoint link|
 	breakpoint := Breakpoint new.
@@ -70,6 +89,19 @@ BreakpointTest >> testBreakLinkOnce [
 	self deny: breakpoint oneShot.
 	breakpoint once.
 	self assert: breakpoint oneShot
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakOnceInContext [
+
+	|observer breakpoint|
+	observer := DummyBreakpointObserver new.
+	Breakpoint registerObserver: observer.
+	breakpoint := Breakpoint new once.	
+	self assert: breakpoint isEnabled.
+	self should: [breakpoint breakInContext: self node: #node] raise: Break.
+	self deny: breakpoint isEnabled.
+	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
 ]
 
 { #category : #tests }
