@@ -527,7 +527,7 @@ TabSelectorMorph >> tabsAndControls [
 		self visibleTabRange: (1 to: 0).
 		^#()].
 	firstIndex := self tabs indexOf: visibleTabs first.
-	self visibleTabRange: (firstIndex to: firstIndex + visibleTabs size - 1).
+	self visibleTabRange: (firstIndex to: visibleTabs size - 1).
 	visibleTabs size = self tabs size ifFalse: [
 		visibleTabs
 			add: self newSpacer;
