@@ -138,6 +138,18 @@ BreakpointTest >> testBreakpointNodeProperty [
 ]
 
 { #category : #tests }
+BreakpointTest >> testDisableEnableBreakpoint [
+	| breakpoint |
+	breakpoint := Breakpoint new.	
+	self should: [breakpoint breakInContext: self node: #node] raise: Break.
+	breakpoint disable.
+	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
+	breakpoint enable.
+	self should: [breakpoint breakInContext: self node: #node] raise: Break
+
+]
+
+{ #category : #tests }
 BreakpointTest >> testModifyMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
