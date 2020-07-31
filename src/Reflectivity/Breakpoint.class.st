@@ -22,7 +22,9 @@ Class {
 		'#node',
 		'#level',
 		'#options',
-		'#targetInstance => WeakSlot'
+		'#targetInstance => WeakSlot',
+		'#oneShot',
+		'#enabled'
 	],
 	#classVars : [
 		'#AllBreakpoints',
@@ -250,6 +252,16 @@ Breakpoint >> condition: aCondition [
 	self link: self breakLinkConditional
 ]
 
+{ #category : #api }
+Breakpoint >> disable [
+	enabled := false
+]
+
+{ #category : #api }
+Breakpoint >> enable [
+	enabled := true
+]
+
 { #category : #initialization }
 Breakpoint >> initialize [
 	
@@ -264,6 +276,11 @@ Breakpoint >> install [
 		ifTrue: [ self targetInstance link: self link toAST: self node.
 			^ self ].
 	self node link: self link
+]
+
+{ #category : #testing }
+Breakpoint >> isEnabled [
+	^enabled ifNil:[enabled := true]
 ]
 
 { #category : #testing }
@@ -303,8 +320,12 @@ Breakpoint >> node: aNode [
 
 { #category : #api }
 Breakpoint >> once [
-	self link: self breakLinkOneShot
-	
+	oneShot := true
+]
+
+{ #category : #accessing }
+Breakpoint >> oneShot [
+	^oneShot ifNil:[oneShot := false]
 ]
 
 { #category : #accessing }

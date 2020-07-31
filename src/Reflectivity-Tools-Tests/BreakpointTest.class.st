@@ -54,8 +54,22 @@ BreakpointTest >> testAddRemoveBreakpoint [
 
 { #category : #tests }
 BreakpointTest >> testBreakLinkOnce [
-	self assert: (Breakpoint new once link optionOneShot).
-	self assert: (Breakpoint new breakLinkOneShot optionOneShot)
+	|breakpoint|
+	breakpoint := Breakpoint new.
+	self deny: breakpoint oneShot.
+	breakpoint once.
+	self assert: breakpoint oneShot
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakpointEnabled [
+	| breakpoint |
+	breakpoint := Breakpoint new.
+	self assert: breakpoint isEnabled.
+	breakpoint disable.
+	self deny: breakpoint isEnabled.
+	breakpoint enable.
+	self assert: breakpoint isEnabled
 ]
 
 { #category : #tests }
