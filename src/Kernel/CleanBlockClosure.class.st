@@ -15,6 +15,11 @@ Class {
 	#category : #'Kernel-Methods'
 }
 
+{ #category : #adding }
+CleanBlockClosure >> addWithAllBlocksInto: collected [
+	^self compiledBlock addWithAllBlocksInto: collected
+]
+
 { #category : #accessing }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
@@ -36,6 +41,11 @@ CleanBlockClosure >> innerCompiledBlocksDo: aBlock [
 ]
 
 { #category : #testing }
+CleanBlockClosure >> isClean [
+	^true
+]
+
+{ #category : #testing }
 CleanBlockClosure >> isEmbeddedBlock [
 	^ true
 ]
@@ -50,12 +60,28 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
 ]
 
+{ #category : #scanning }
+CleanBlockClosure >> readsField: varIndex [ 
+	^self compiledBlock readsField: varIndex
+]
+
 { #category : #accessing }
 CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
 ]
 
+{ #category : #'debugger access' }
+CleanBlockClosure >> sender [
+	" clean blocks do not know the sender"
+	^nil
+]
+
 { #category : #accessing }
 CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 	^self compiledBlock sendsAnySelectorOf: aCollection
+]
+
+{ #category : #scanning }
+CleanBlockClosure >> writesField: varIndex [ 
+	^self compiledBlock writesField: varIndex
 ]
