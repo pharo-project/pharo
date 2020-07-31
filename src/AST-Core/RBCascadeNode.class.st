@@ -93,7 +93,7 @@ RBCascadeNode >> isCascade [
 
 { #category : #testing }
 RBCascadeNode >> isFaulty [
-	^self messages anySatisfy: #isFaulty
+	^self messages anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #accessing }
