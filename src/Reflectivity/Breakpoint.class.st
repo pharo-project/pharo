@@ -277,7 +277,8 @@ Breakpoint >> install [
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
 			^ self ].
-	self node link: self link
+	self node link: self link.
+	self setAsNodeProperty
 ]
 
 { #category : #testing }
@@ -342,13 +343,26 @@ Breakpoint >> options: anArray [
 
 { #category : #install }
 Breakpoint >> remove [
+	self removeFromNodeProperty.
 	self class removeBreakpoint: self.
 	link uninstall
+]
+
+{ #category : #install }
+Breakpoint >> removeFromNodeProperty [
+	self node removeBreakpoint: self
+	
 ]
 
 { #category : #api }
 Breakpoint >> scopeTo: anInstance [
 	self targetInstance: anInstance
+]
+
+{ #category : #install }
+Breakpoint >> setAsNodeProperty [
+	self node addBreakpoint: self
+	
 ]
 
 { #category : #accessing }

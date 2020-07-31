@@ -124,6 +124,20 @@ BreakpointTest >> testBreakpointInitialization [
 ]
 
 { #category : #tests }
+BreakpointTest >> testBreakpointNodeProperty [
+	|breakpoint|
+	cls compile: 'dummy ^42'.
+	breakpoint := Breakpoint new
+		node: (cls >> #dummy) ast;
+		once.
+	breakpoint install.
+	self assert: (cls >> #dummy) ast hasBreakpoint.
+	self assertCollection: (cls >> #dummy) ast breakpoints equals: {breakpoint} asSet.
+	breakpoint remove.
+	self deny: (cls >> #dummy) ast hasBreakpoint.
+]
+
+{ #category : #tests }
 BreakpointTest >> testModifyMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
@@ -229,6 +243,28 @@ BreakpointTest >> testScopeTo [
 	
 	self assert: bp targetInstance identicalTo: object.
 	self assert: bp isObjectCentric
+]
+
+{ #category : #tests }
+BreakpointTest >> testSetAsBreakpointProperty [
+	| node breakpoint breakpoint2 |
+	node := RBProgramNode new.
+	breakpoint := Breakpoint new.
+	breakpoint2 := Breakpoint new.
+	breakpoint node: node.
+	breakpoint2 node: node.
+	
+	breakpoint setAsNodeProperty.
+	breakpoint2 setAsNodeProperty.
+	self assert: node hasBreakpoint.
+	self assertCollection: node breakpoints equals: { breakpoint. breakpoint2 } asSet.
+	
+	breakpoint setAsNodeProperty.
+	self assertCollection: node breakpoints equals: { breakpoint. breakpoint2 } asSet.
+	
+	breakpoint removeFromNodeProperty.
+	breakpoint2 removeFromNodeProperty.
+	self deny: node hasBreakpoint
 ]
 
 { #category : #tests }

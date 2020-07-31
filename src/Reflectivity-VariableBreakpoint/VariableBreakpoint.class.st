@@ -163,7 +163,8 @@ VariableBreakpoint >> install [
 				toVariableNamed: vName
 				option: self accessStrategy ].
 	isInstalled := true.
-	self class addBreakpoint: self
+	self class addBreakpoint: self.
+	self setAsNodeProperty 
 ]
 
 { #category : #testing }
@@ -191,10 +192,20 @@ VariableBreakpoint >> remove [
 	isInstalled := false
 ]
 
+{ #category : #install }
+VariableBreakpoint >> removeFromNodeProperty [
+	 self link nodes do: [ :n | n removeBreakpoint: self ]
+]
+
 { #category : #api }
 VariableBreakpoint >> scopeTo: anInstance [
 	super scopeTo: anInstance.
 	self condition: [ :ctx | ctx receiver == targetInstance ]
+]
+
+{ #category : #install }
+VariableBreakpoint >> setAsNodeProperty [
+	 self link nodes do: [ :n | n addBreakpoint: self ]
 ]
 
 { #category : #accessing }
