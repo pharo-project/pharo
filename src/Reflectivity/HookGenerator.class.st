@@ -112,12 +112,11 @@ HookGenerator >> hookFor: aLink [
 		selector: aLink selector 
 		arguments: arguments.
 	
-	(self hasOption: #optionOneShot for: aLink) ifTrue: [	
-			aLink condition: (RFCondition for: [true]) enable.			
+	(self hasOption: #optionOneShot for: aLink) ifTrue: [			
 			hook := RBSequenceNode statements: {
 				RBMessageNode
 					receiver: (RFLiteralVariableNode value: aLink)
-					selector: #disable.
+					selector: #uninstall.
 				hook }].
 	aLink hasCondition ifTrue: [hook := self wrapCondition: hook link: aLink].
 	(aLink hasMetaLevel or: [self hasOption: #optionMetalevel for: aLink]) ifTrue: [hook := self wrapInContext: hook link: aLink].		
