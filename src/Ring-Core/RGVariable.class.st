@@ -66,6 +66,11 @@ RGVariable >> isVariable [
 	^true
 ]
 
+{ #category : #testing }
+RGVariable >> isWorkspaceVariable [
+	^ false
+]
+
 { #category : #accessing }
 RGVariable >> name: aString [
 
