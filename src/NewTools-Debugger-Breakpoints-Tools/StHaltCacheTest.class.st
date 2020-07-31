@@ -27,6 +27,30 @@ StHaltCacheTest >> testAddingHaltToMethod [
 		equals: 1
 ]
 
+{ #category : #'testing - cache initialization' }
+StHaltCacheTest >> testCacheActivation [
+	cache := StHaltCache new.
+	cache isActive: true.
+	self assert: cache isActive.
+	self assert: (SystemAnnouncer uniqueInstance hasSubscriber: cache) 
+]
+
+{ #category : #'testing - cache initialization' }
+StHaltCacheTest >> testCacheDectivation [
+	cache := StHaltCache new.
+	cache isActive: true.
+	self assert: (SystemAnnouncer uniqueInstance hasSubscriber: cache).
+	cache isActive: false.
+	self deny: (SystemAnnouncer uniqueInstance hasSubscriber: cache) 
+]
+
+{ #category : #'testing - cache initialization' }
+StHaltCacheTest >> testInitialActivation [
+	cache := StHaltCache new.
+	self deny: cache isActive.
+	self deny: (SystemAnnouncer uniqueInstance hasSubscriber: cache) 
+]
+
 { #category : #'testing - cache building' }
 StHaltCacheTest >> testInitialCacheBuild [
 	self assert: cache methodsWithHalts size equals: 6.
