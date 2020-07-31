@@ -30,6 +30,19 @@ SpNotebookAdapterTest >> testClickOnPage [
 ]
 
 { #category : #tests }
+SpNotebookAdapterTest >> testDeleteLastPageWhileSeletectedDeletesIt [
+	| notebook page1 page2 |
+	notebook := SpNotebookMorph new.
+	page1 := SpNotebookPageMorph new.
+	page2 := SpNotebookPageMorph new.
+	notebook addLazyPage: page1 label: 'Mock1'.
+	notebook addLazyPage: page2 label: 'Mock2'.
+	notebook selectedPageIndex: 2.
+	notebook removePageIndex: 2.
+	self assert: notebook pageMorphs size equals: 1
+]
+
+{ #category : #tests }
 SpNotebookAdapterTest >> testRemoveAll [
 
 	self assert: self adapter numberOfTabs equals: 2.
