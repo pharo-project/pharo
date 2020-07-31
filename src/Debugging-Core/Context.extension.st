@@ -378,7 +378,8 @@ Context >> tempNamed: aName put: anObject [
 	
 	| var |
 	var := self lookupTempVar: aName.
-	var write: anObject inContext: self
+	var write: anObject inContext: self.
+	^ anObject
 ]
 
 { #category : #'*Debugging-Core' }
