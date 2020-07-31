@@ -53,6 +53,17 @@ BreakpointTest >> testAddRemoveBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testBreakLink [
+	|breakpoint link|
+	breakpoint := Breakpoint new.
+	link := breakpoint link.
+	self assert: link metaObject identicalTo: breakpoint.
+	self assert: link selector equals: #breakInContext:node:.
+	self assertCollection: link options equals: (MetaLink new parseOptions: breakpoint options) options.
+	self assertCollection: link arguments equals: #(#context #node) 
+]
+
+{ #category : #tests }
 BreakpointTest >> testBreakLinkOnce [
 	|breakpoint|
 	breakpoint := Breakpoint new.

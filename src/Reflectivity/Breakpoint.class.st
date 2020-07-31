@@ -227,23 +227,15 @@ Breakpoint >> breakLink [
 	"for now it should just halt in base level"
 
 	^ MetaLink new
-		metaObject: Break;
-		selector: #break:inContext:node:;
-		options: options;
-		arguments:
-			{(RFLiteralVariableNode value: self).
-			#context.
-			#node}
+		  metaObject: self;
+		  selector: #breakInContext:node:;
+		  options: options;
+		  arguments: #(#context #node)
 ]
 
 { #category : #links }
 Breakpoint >> breakLinkConditional [	
 	^self breakLink condition: condition arguments: #(context)
-]
-
-{ #category : #links }
-Breakpoint >> breakLinkOneShot [
-	^ self breakLink optionOneShot: true
 ]
 
 { #category : #api }
@@ -326,6 +318,11 @@ Breakpoint >> once [
 { #category : #accessing }
 Breakpoint >> oneShot [
 	^oneShot ifNil:[oneShot := false]
+]
+
+{ #category : #accessing }
+Breakpoint >> options [
+	^options
 ]
 
 { #category : #accessing }
