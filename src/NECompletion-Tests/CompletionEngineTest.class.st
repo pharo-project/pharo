@@ -38,6 +38,25 @@ CompletionEngineTest >> keyboardEventFor: char [
 	^event
 ]
 
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> keyboardEventFor: char useCommand: command [
+
+	| event modifier |
+	event := KeyboardEvent new.
+	modifier := 0.
+	command ifTrue: [ modifier := modifier + 64].
+	event 
+		setType: #keystroke
+		buttons: modifier
+		position:  0@0
+		keyValue: char asciiValue 
+		charCode: char asciiValue
+		hand: nil 
+		stamp: Time now.
+		
+	^event
+]
+
 { #category : #running }
 CompletionEngineTest >> newCompletionEngine [
 	
@@ -73,6 +92,7 @@ CompletionEngineTest >> setUp [
 	controller := self newCompletionEngine.
 	controller setEditor: editor.
 	editor completionEngine: controller.
+	editor textArea model: self.
 ]
 
 { #category : #running }
