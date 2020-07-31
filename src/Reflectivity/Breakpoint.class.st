@@ -224,12 +224,11 @@ Breakpoint >> always [
 
 { #category : #api }
 Breakpoint >> breakInContext: aContext node: aNode [
-	<debuggerCompleteToSender>
-	self class notifyBreakpointHit: self inContext: aContext node: aNode.
-	self oneShot ifTrue: [ 
-		self isEnabled ifFalse: [ ^ self ].
-		self disable ].
-	Break break
+	 <debuggerCompleteToSender>
+	 self class notifyBreakpointHit: self inContext: aContext node: aNode.
+	 self isEnabled ifFalse: [ ^ self ].
+	 self oneShot ifTrue: [ self disable ].
+	 Break break
 ]
 
 { #category : #links }
