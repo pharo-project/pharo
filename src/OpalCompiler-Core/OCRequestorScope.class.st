@@ -33,8 +33,9 @@ OCRequestorScope >> compilationContext: anObject [
 { #category : #lookup }
 OCRequestorScope >> lookupVar: name [
 
-	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
-	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
+	"reserved Variables are defined by the instance scope"
+	(ReservedVariable nameIsReserved: name) ifTrue: [ ^ outerScope lookupVar: name ].
+	
 	"We do not want to auto define bindings for unknown Globals"
 	(name isString and: [name first isUppercase]) ifTrue: [ ^ outerScope lookupVar: name].
 	
