@@ -20,6 +20,11 @@ ReservedVariable class >> isAbstract [
 	^self = ReservedVariable  
 ]
 
+{ #category : #testing }
+ReservedVariable class >> nameIsReserved: aName [
+	^self subclasses anySatisfy: [ :class | class instance name = aName ]
+]
+
 { #category : #converting }
 ReservedVariable >> asString [
 
