@@ -79,6 +79,11 @@ RGVariable >> isVariable [
 ]
 
 { #category : #testing }
+
+RGVariable >> isWorkspaceVariable [
+	^ false
+]
+
 RGVariable >> isWritable [
 	"Ring2 variables are all writable, e.g. it does not model Arguments"
 	^true
