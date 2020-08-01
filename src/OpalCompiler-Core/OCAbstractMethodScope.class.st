@@ -98,7 +98,6 @@ OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
 	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(thisContextVar name  beginsWith: aString) ifTrue: [ ^true ].
 	
 	^ self outerScope hasBindingThatBeginsWith: aString
 ]
@@ -119,9 +118,7 @@ OCAbstractMethodScope >> initialize [
 	tempVars :=  OrderedDictionary new.
 	tempVector  := OrderedDictionary new.
 	copiedVars := OrderedDictionary new.
-	id := 0.
-	
-	thisContextVar := ThisContextVariable instance
+	id := 0
 ]
 
 { #category : #'temp vars' }
@@ -156,7 +153,6 @@ OCAbstractMethodScope >> lookupVar: name [
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
-	name = thisContextVar name ifTrue: [^ thisContextVar].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
 	^self outerScope lookupVar: name
 	
@@ -166,7 +162,6 @@ OCAbstractMethodScope >> lookupVar: name [
 OCAbstractMethodScope >> lookupVarForDeclaration: name [
 	"This is a version of #lookupVar: that skips the OCRequestorScope"
 	tempVars at: name ifPresent: [:v | ^ v].
-	name = thisContextVar name ifTrue: [^ thisContextVar].
 	^self outerScope lookupVarForDeclaration: name
 ]
 
