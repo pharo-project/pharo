@@ -197,7 +197,10 @@ BaselineOfIDE >> baseline: spec [
 				repository: repository;
 				loads: #('Playground' 'Inspector' 'Debugger') ].
 			
-		spec package: 'BaselineOfMicrodown'.	
+		spec baseline: 'Microdown' with: [
+		spec
+			repository: repository;
+			loads: #('Microdown-RichTextComposer' 'Microdown-Tests' 'Microdown-Calypso' 'Microdown-Pillar-Tests')].
 			
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
