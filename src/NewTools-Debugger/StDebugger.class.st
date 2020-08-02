@@ -1138,13 +1138,14 @@ StDebugger >> updateExtensionsFrom: newSession [
 StDebugger >> updateInspectorFromContext: aContext [
 	inspector
 		updateLayoutForContexts: self session interruptedContext
-		isAssertionFailure: self debuggerActionModel isInterruptedContextAnAssertEqualsFailure.
-	inspector
-		updateWith:
-			(StDebuggerContext
-				context: aContext
-				session: self session
-				debugger: self)
+		isAssertionFailure:
+		self debuggerActionModel isInterruptedContextAnAssertEqualsFailure.
+	inspector updateWith: (StDebuggerContext
+			 context: aContext
+			 session: self session
+			 debugger: self).
+	self flag: #DBG_INSPECTOR_UPDATE_BUG.
+	inspector getRawInspectorPresenterOrNil ifNotNil: [:p| p update].
 ]
 
 { #category : #'updating actions' }
@@ -1173,6 +1174,8 @@ StDebugger >> updateStep [
 	self updateExtensionsFrom: self session.
 	self updateTitle.
 	self updateToolbarDebugActions.
+	self flag: #DBG_INSPECTOR_UPDATE_BUG.
+	inspector getRawInspectorPresenterOrNil ifNotNil: [:p| p update].
 ]
 
 { #category : #'updating actions' }
