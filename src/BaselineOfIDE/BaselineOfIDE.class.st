@@ -196,6 +196,11 @@ BaselineOfIDE >> baseline: spec [
 			spec 
 				repository: repository;
 				loads: #('Playground' 'Inspector' 'Debugger') ].
+		
+		spec baseline: 'OpalCompilerPlugins' with: [
+			spec 
+				repository: repository;
+				loads: #('tests') ].
 			
 		spec package: 'BaselineOfMicrodown'.	
 			
