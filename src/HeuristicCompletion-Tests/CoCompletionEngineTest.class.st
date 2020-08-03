@@ -10,22 +10,10 @@ CoCompletionEngineTest >> doItContext [
 	^ nil
 ]
 
-{ #category : #'as yet unclassified' }
-CoCompletionEngineTest >> interactionModel [
-	
-	^ nil
-]
-
 { #category : #running }
 CoCompletionEngineTest >> newCompletionEngine [
 	
 	^ CoCompletionEngine new
-]
-
-{ #category : #'as yet unclassified' }
-CoCompletionEngineTest >> selectedClassOrMetaClass [
-	
-	^ nil
 ]
 
 { #category : #asserting }
