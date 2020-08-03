@@ -281,6 +281,11 @@ OpalCompiler >> allowParseErrorsNonInteractive [
 	^self compilationContext optionParseErrorsNonInteractiveOnly and: [ self isInteractive not ]
 ]
 
+{ #category : #'as yet unclassified' }
+OpalCompiler >> ast [
+	^ ast
+]
+
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
@@ -293,6 +298,15 @@ OpalCompiler >> callPlugins [
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [:a :b | a priority > b priority]. "priority 0 is sorted last"
 	plugins do: [ :each | ast := each transform: ast]. 
+]
+
+{ #category : #private }
+OpalCompiler >> callPluginsPreSemantic [
+	| plugins  |
+
+	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
+	plugins sort: [:a :b | a priority > b priority]. "priority 0 is sorted last"
+	plugins do: [ :each | ast := each preSemanticAnalysisTransform: ast]. 
 ]
 
 { #category : #accessing }
@@ -324,6 +338,7 @@ OpalCompiler >> compilationContextClass: aClass [
 OpalCompiler >> compile [
 	| cm |
 	[ 	[	self parse.
+			self callPluginsPreSemantic.
 			self transformDoit.
 			self doSemanticAnalysis. 
 			self callPlugins.  
@@ -335,7 +350,7 @@ OpalCompiler >> compile [
 			]. 
 		cm := compilationContext optionEmbeddSources
 			ifTrue: [ ast generateWithSource ]
-			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ]
+			ifFalse: [ast generate: self compilationContext compiledMethodTrailer   ].
 		
 	]	on: SyntaxErrorNotification 
 		do: [ :exception | 
