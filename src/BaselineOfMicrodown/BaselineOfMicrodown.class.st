@@ -15,7 +15,7 @@ BaselineOfMicrodown >> baseline: spec [
 	spec for: #'common' do: [
 		spec baseline: 'Pillar' with: [ spec 
 				loads: #('rich text exporter');
-				repository: self repository
+				repository: self packageRepositoryURL
 				"repository: 'github://pillar-markup/pillar:dev-8/src'" ].
 		spec 
 			package: #'Microdown';
