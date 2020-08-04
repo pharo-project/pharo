@@ -21,6 +21,12 @@ CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
+{ #category : #'as yet unclassified' }
+CompletionEngineTest >> interactionModel [
+	
+	^ nil
+]
+
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> keyboardEventFor: char [
 
@@ -76,6 +82,12 @@ CompletionEngineTest >> selectAt: anIndex [
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> selectFrom: start to: stop [
 	editor selectFrom: start to: stop
+]
+
+{ #category : #'as yet unclassified' }
+CompletionEngineTest >> selectedClassOrMetaClass [
+	
+	^ nil
 ]
 
 { #category : #'tests-keyboard' }
