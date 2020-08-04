@@ -25,7 +25,12 @@ OCInlineIfNotNilPlugin >> newBlockStatement: toBeBlock argument: blockArgument [
 { #category : #api }
 OCInlineIfNotNilPlugin >> replaceNodeWithBlock: toBeBlock [
 
-	| newNode blockStatement blockArgument |
+	| newNode blockStatement blockArgument argumentIndex |
+
+	argumentIndex := toBeBlock parent arguments indexOf: toBeBlock.
+	(toBeBlock parent selector keywords at: argumentIndex) = 'ifNotNil:' 
+		ifFalse: [ ^ super replaceNodeWithBlock: toBeBlock ].
+
 	"I need to generate an unused variable name"
 	blockArgument := RBVariableNode named: Object new hash asString asSymbol.
 	blockStatement := self newBlockStatement: toBeBlock argument: blockArgument.

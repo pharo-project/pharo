@@ -41,6 +41,28 @@ OCInlineNotNilPluginTest >> testASTLiteralIsWrappedWithBlockWithoutValue [
 ]
 
 { #category : #tests }
+OCInlineNotNilPluginTest >> testASTWithBlocksDoNotAddParameterToIfNilArgument [
+
+	| ast nodeToWrap plugin newAst newBlock |
+
+	ast := RBParser parseMethod: 'critical: block
+	 access
+		ifNil: block
+		ifNotNil: [ access critical: block ]'.
+	nodeToWrap := ast body statements first arguments first copy.
+
+	plugin := OCInlineIfNotNilPlugin new.	
+	newAst := plugin preSemanticAnalysisTransform: ast.
+	newBlock := newAst body statements first arguments first.
+	
+	self assert: newBlock isBlock.
+	self assert: newBlock arguments size equals: 0.
+	self assert: newBlock statements first isMessage.
+	self assert: newBlock statements first receiver equals: nodeToWrap.	
+	self assert: newBlock statements first selector equals: #value.	
+]
+
+{ #category : #tests }
 OCInlineNotNilPluginTest >> testASTWithIfNilIfNotNilResultsWithoutNoInvocationsWithoutBlocks [
 
 	| ast |
@@ -114,7 +136,7 @@ OCInlineNotNilPluginTest >> testASTWithSingleMessageCorrectlyRewritesExpressionI
 
 	| ast nodeToWrap plugin newAst newBlock |
 
-	ast := RBParser parseMethod: 'm1:a with:b a ifNil: b ifNotNil: [7]'.
+	ast := RBParser parseMethod: 'm1:a with:b a ifNotNil: b ifNil: [7]'.
 	nodeToWrap := ast body statements first arguments first copy.
 
 	plugin := OCInlineIfNotNilPlugin new.	
@@ -164,12 +186,12 @@ OCInlineNotNilPluginTest >> testASTWithSingleMessageThatIsASymbolCorrectlyRewrit
 
 	| ast nodeToWrap plugin newAst newBlock |
 
-	ast := RBParser parseMethod: 'm1:a with:b a ifNil: #lala ifNotNil: [7]'.
-	nodeToWrap := ast body statements first arguments first copy.
+	ast := RBParser parseMethod: 'm1:a with:b a ifNil: [ 7 ] ifNotNil: #lala'.
+	nodeToWrap := ast body statements first arguments second copy.
 
 	plugin := OCInlineIfNotNilPlugin new.	
 	newAst := plugin preSemanticAnalysisTransform: ast.
-	newBlock := newAst body statements first arguments first.
+	newBlock := newAst body statements first arguments second.
 	
 	self assert: newBlock isBlock.
 	self assert: newBlock arguments size equals: 1.
