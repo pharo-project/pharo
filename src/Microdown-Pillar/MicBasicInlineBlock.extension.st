@@ -6,6 +6,6 @@ MicBasicInlineBlock >> asPillar [
 ]
 
 { #category : #'*Microdown-Pillar' }
-MicBasicInlineBlock class >> associatedPillarClass [
+MicBasicInlineBlock >> associatedPillarClass [
 	"special case"
 ]

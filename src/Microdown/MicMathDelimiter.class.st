@@ -1,6 +1,6 @@
 "
-I'm a delimiter for math inline environment.
-I delimits `MicMacInlineBlock`.
+I'm a delimiter for math inline. An example is $V_i = C_0 - C_3$.
+I delimits `MicMathInlineBlock`.
 "
 Class {
 	#name : #MicMathDelimiter,

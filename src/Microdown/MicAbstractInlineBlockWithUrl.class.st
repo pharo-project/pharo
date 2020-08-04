@@ -1,3 +1,12 @@
+"
+My subclasses manage figures and links.
+
+```
+![Pharologo](https://files.pharo.org/media/logo/logo.png
+```
+
+![Pharologo](https://files.pharo.org/media/logo/logo.png)
+"
 Class {
 	#name : #MicAbstractInlineBlockWithUrl,
 	#superclass : #MicAbstractInlineBlock,
@@ -10,6 +19,11 @@ Class {
 { #category : #obsolete }
 MicAbstractInlineBlockWithUrl class >> from: aStartInteger to: anEndInteger withKind: aKind withSubstring: aString withChildren: aChildren withURL: aURL [
 	^ (self from: aStartInteger to: anEndInteger withKind: aKind withSubstring: aString withChildren: aChildren) url: aURL; urlTransformation; yourself
+]
+
+{ #category : #obsolete }
+MicAbstractInlineBlockWithUrl class >> from: aStartInteger to: anEndInteger withKind: aKind withSubstring: aString withURL: aURL [
+	^ (self from: aStartInteger to: anEndInteger withKind: aKind withSubstring: aString withChildren: Array empty withURL: aURL)
 ]
 
 { #category : #accessing }

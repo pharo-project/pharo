@@ -38,14 +38,29 @@ MicAbstractDelimiter class >> isActive [
 	^ true
 ]
 
+{ #category : #testing }
+MicAbstractDelimiter class >> isBoth [
+	^ self isCloser and: self isOpener
+]
+
 { #category : #accessing }
 MicAbstractDelimiter class >> isCloser [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #testing }
+MicAbstractDelimiter class >> isCloserOnly [
+	^ self isCloser and: self isOpener not
+]
+
 { #category : #accessing }
 MicAbstractDelimiter class >> isOpener [
 	^ self subclassResponsibility 
+]
+
+{ #category : #testing }
+MicAbstractDelimiter class >> isOpenerOnly [
+	^ self isCloser not and: self isOpener
 ]
 
 { #category : #accessing }

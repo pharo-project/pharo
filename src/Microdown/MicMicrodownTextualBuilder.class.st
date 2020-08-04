@@ -1,19 +1,25 @@
 "
-I'm a textual builder of microdown. 
-Using my API clients can generate text in Microdown format.
+I'm a textual builder for Microdown: Using my API clients can generate text in Microdown format.
 
-I should replace MicBuilder and probably be moved to Microdown project.
+
+I have two kinds of clients.
+- some to generate using high level Microdown blocks and text.
+  for example using `paragraph: aBlock` I will generate a block and do not force the user to think about newline.
+- some to generate pieces of text. For example the Pillar writer will invoke the raw version. For example `rawParagraph: aBlock` just issue a paragraph without taken care about new line.
 
 
 #### Known limits 
 Nested lists are probably not well managed.
+In particular since ordered and unordered do not have the same indentation length 
+we would have to know all the nested path and not just the level.
 "
 Class {
 	#name : #MicMicrodownTextualBuilder,
 	#superclass : #MicAbstractMicrodownTextualBuilder,
 	#instVars : [
 		'prefixStack',
-		'i'
+		'i',
+		'currentLevel'
 	],
 	#category : #'Microdown-Parser'
 }
@@ -24,11 +30,7 @@ MicMicrodownTextualBuilder >> annotated: annotation paragraph:  aText [
 	
 	attention there is not space between the !! and the label (annotation in pillar) or we should improve the microdown parser"
 	self flag: #fixme. "Should have the same API than paragraph for the paragraph"
-	self
-		raw: parserClass annotatedParagraphMarkup;
-		raw: annotation; 
-		raw: String space;
-		raw: aText.
+	self rawAnnotated: annotation paragraph: aText. 
 	self newLine
 
 ]
@@ -48,9 +50,19 @@ MicMicrodownTextualBuilder >> annotatedAnnotation: annotation [
 
 { #category : #'element - code block' }
 MicMicrodownTextualBuilder >> codeblock: aString [ 
-	self flag: #fixme. 
-	"missing first line stuff"
+	self codeblock: aString firstLineAssociations: #() 
+]
+
+{ #category : #'element - code block' }
+MicMicrodownTextualBuilder >> codeblock: aString firstLineAssociations: aCol [
+
 	self raw: parserClass codeblockMarkup.
+	aCol do: [ :each | self 
+						raw: each key;
+						raw: '=';
+						raw: each value value 
+						"so that we can put format such as bold in the value"]
+			separatedBy: [ self raw: '&' ].
 	self newLine.
 	self raw: aString.
 	self newLine.
@@ -79,15 +91,6 @@ MicMicrodownTextualBuilder >> comment: aText [
 		withLinesIn: aText 
 		do: [ :line | self writeText: line beginsWith: (parserClass commentedLineMarkup), String space ] 		separatedBy: [ self newLine ]
 	
-]
-
-{ #category : #'element - header' }
-MicMicrodownTextualBuilder >> duringHeaderLevel: anInteger do: aBlockClosure [ 
-
-	self
-		raw: (parserClass headerMarkup repeat: anInteger);
-		raw: String space.
-	aBlockClosure value
 ]
 
 { #category : #'element - references' }
@@ -132,10 +135,7 @@ MicMicrodownTextualBuilder >> figure: aFigureUrl withDescription: aDescription w
 
 { #category : #'element - header' }
 MicMicrodownTextualBuilder >> header: aBloc withLevel: anInteger [
-	self newLine.
-	self raw: (parserClass headerMarkup repeat: anInteger).
-   self raw: String space.
-   aBloc value: self.
+	self rawHeader: aBloc withLevel: anInteger.
 	self newLine
 ]
 
@@ -150,6 +150,7 @@ MicMicrodownTextualBuilder >> horizontalLine [
 MicMicrodownTextualBuilder >> initialize [
 	super initialize.
 	prefixStack := OrderedCollection new.
+	currentLevel := -1.
 	
 ]
 
@@ -165,8 +166,9 @@ MicMicrodownTextualBuilder >> internalLink: aLabel [
 { #category : #'element - list' }
 MicMicrodownTextualBuilder >> item: aBlock [
 
+	self raw: (self startOfUnorderedListForLevel: currentLevel).
 	aBlock value.
-	self newLine.
+	self potentialNewLine.
 ]
 
 { #category : #'ugly line handling' }
@@ -182,6 +184,26 @@ MicMicrodownTextualBuilder >> lines: aString [
 	 ]
 ]
 
+{ #category : #'element - metadata' }
+MicMicrodownTextualBuilder >> metaDataFrom: aDictionary [ 
+
+	self metaDataFromAssociations: aDictionary associations
+]
+
+{ #category : #'element - metadata' }
+MicMicrodownTextualBuilder >> metaDataFromAssociations: aCollection [ 
+	self raw: '{ '; newLine.
+	aCollection do: [ :each | 
+		self raw: '"';
+		raw: each key; 
+		raw: '" : "';
+		raw: each value;
+		raw: '"'
+		]
+		separatedBy: [ self raw: ' , '].
+	self newLine; raw: '}'.
+]
+
 { #category : #'ugly line handling' }
 MicMicrodownTextualBuilder >> nextPutAllLines: aString [
 	self 
@@ -192,7 +214,7 @@ MicMicrodownTextualBuilder >> nextPutAllLines: aString [
 
 { #category : #'element - list' }
 MicMicrodownTextualBuilder >> orderedItem: aBlock [
-	self writeOrderedListIndex: 1.
+	self writeStartOfOrderedListIndex: 1.
 	aBlock value.
 	self newLine.
 ]
@@ -200,7 +222,7 @@ MicMicrodownTextualBuilder >> orderedItem: aBlock [
 { #category : #'element - list' }
 MicMicrodownTextualBuilder >> orderedItem: aBlock startingAt: aNumber [
 
-	self writeOrderedListIndex: aNumber.
+	self writeStartOfOrderedListIndex: aNumber.
 	aBlock value.
 	self newLine.
 ]
@@ -209,7 +231,6 @@ MicMicrodownTextualBuilder >> orderedItem: aBlock startingAt: aNumber [
 MicMicrodownTextualBuilder >> orderedListDuring: aBlockClosure [
 	"For list we do not emit empty line at the end because we do not want to force the creation of a paragraph 
 	in the middle of nested list. And from a builder point of view this is difficult to know it."
-	
 	
 	aBlockClosure value.
 	"for now we do not care to generate 
@@ -226,7 +247,7 @@ MicMicrodownTextualBuilder >> orderedListDuring: aBlockClosure [
 { #category : #'element - paragraph' }
 MicMicrodownTextualBuilder >> paragraph: aBlock [
 
-	aBlock value. 
+	self rawParagraph: aBlock.
 	self newLine
 ]
 
@@ -257,6 +278,7 @@ MicMicrodownTextualBuilder >> raw: aString [
 	raw can be invoked for multiple reasons. Now the logic of writeIndentedCodeBlockDuring: only works if 
 	this raw is invoked. 
 	"
+
 	lastIsNewLine ifTrue: [ 
 		prefixStack do: [ :each |
 			super raw: each ].
@@ -265,19 +287,64 @@ MicMicrodownTextualBuilder >> raw: aString [
 	lastIsNewLine := false
 ]
 
+{ #category : #'element - annotated' }
+MicMicrodownTextualBuilder >> rawAnnotated: annotation paragraph:  aText [
+	"!!Important 
+	
+	attention there is not space between the !! and the label (annotation in pillar) or we should improve the microdown parser"
+	self flag: #fixme. "Should have the same API than paragraph for the paragraph"
+	self
+		raw: parserClass annotatedParagraphMarkup;
+		raw: annotation; 
+		raw: String space;
+		raw: aText.
+	
+
+]
+
+{ #category : #'writing low-level' }
+MicMicrodownTextualBuilder >> rawHeader: aBloc withLevel: anInteger [
+
+	self raw: (parserClass headerMarkup repeat: anInteger).
+   self raw: String space.
+   aBloc value: self.
+	
+]
+
 { #category : #'ugly line handling' }
 MicMicrodownTextualBuilder >> rawLines: aString [
 	"Output aString and take care of line ending within aString."
 	self withLinesIn: aString do: [ :line | self raw: line ] separatedBy: [ self newLine ]
 ]
 
+{ #category : #'writing low-level' }
+MicMicrodownTextualBuilder >> rawParagraph: aBlock [
+
+	aBlock value
+	
+
+	
+	
+]
+
+{ #category : #'element - list' }
+MicMicrodownTextualBuilder >> startOfUnorderedListForLevel: aNumber [
+
+	^ ('  ' repeat: aNumber) , parserClass unorderedListMarkup
+]
+
 { #category : #'element - list' }
 MicMicrodownTextualBuilder >> unorderedListDuring: aBlockClosure [
 	"For list we do not emit empty line at the end because we do not want to force the creation of a paragraph 
 	in the middle of nested list. And from a builder point of view this is difficult to know it."
-	self
-		writePrefix: parserClass unorderedListMarkup
-		forEachLineDuring: aBlockClosure.
+	
+	self potentialNewLine.
+	currentLevel := currentLevel + 1.
+	"self
+		writePrefix: (self startOfUnorderedListForLevel: currentLevel)
+		forEachLineDuring: aBlockClosure."
+	aBlockClosure value.
+	currentLevel := currentLevel - 1.
 ]
 
 { #category : #'ugly line handling' }
@@ -305,11 +372,6 @@ It means that within the context of a visitor the visitText: method should do it
 		forEachLineDuring: aBlockClosure.
 ]
 
-{ #category : #'element - list' }
-MicMicrodownTextualBuilder >> writeOrderedListIndex: anInteger [
-	self raw: anInteger asString, parserClass orderedListSemiMarkup
-]
-
 { #category : #'writing during' }
 MicMicrodownTextualBuilder >> writePrefix: aString forEachLineDuring: aBlockClosure [ 
 	"The logic of writePrefix:forEachLineDuring: only works if the raw: method managing the prefixes
@@ -327,4 +389,10 @@ It means that within the context of a visitor the visitText: method should do it
 	self
 		writePrefix: parserClass preformattedMarkup, String space
 		forEachLineDuring: aBlockClosure
+]
+
+{ #category : #'element - list' }
+MicMicrodownTextualBuilder >> writeStartOfOrderedListIndex: anInteger [
+	"does not handle for now nesting"
+	self raw: anInteger asString, parserClass orderedListSemiMarkup
 ]

@@ -1,3 +1,11 @@
+"
+I'm block that represents an anchor to a section. This way text can refer to the anchor to refer to the section. 
+
+```
+# A section
+@mylovelySection
+``` 
+"
 Class {
 	#name : #MicAnchorBlock,
 	#superclass : #MicSingleLineBlock,
@@ -9,7 +17,9 @@ Class {
 
 { #category : #public }
 MicAnchorBlock >> addLineAndReturnNextNode: line [
-	"Line is on the form '#### my heading at forth level'"
+	"# bla
+	@myanchor
+	"
 	label := (line copyFrom: parser anchorMarkup size + 1 to: line size) trim.
 	^ self
 ]

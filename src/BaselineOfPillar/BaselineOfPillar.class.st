@@ -19,7 +19,14 @@ BaselineOfPillar >> baseline: spec [
 		do: [ spec baseline: 'OSSubprocess' with: [ spec repository: 'github://pharo-contributions/OSSubprocess:v1.2.1/repository' ].
 			spec package: 'Pillar-Project' with: [ spec requires: 'OSSubprocess' ] ].
 	
-	
+	spec 
+		for: #'pharo8.x'
+		do: [ 
+				spec  baseline: 'Clap' with: [ spec repository: 'github://cdlm/clap-st:pharo-pr5761' ].
+				spec package: 'Pillar-Cli' with: [ 
+					spec requires: #( 'Clap' 'Pillar-ExporterCore' 'Pillar-Chrysal') ]
+			].
+		
 	spec
 		for: #common
 		do: [ spec blessing: #baseline.
@@ -27,13 +34,10 @@ BaselineOfPillar >> baseline: spec [
 				baseline: 'ContainersPropertyEnvironment'
 				with: [ spec repository: 'github://Ducasse/Containers-PropertyEnvironment:v1.0.0' ].
 				
-				
 			spec
-				baseline: 'PetitParser2Core' with: [
-					spec
-					 	repository: 'github://kursjan/petitparser2' ];
+				baseline: 'PetitParser2Core' with: [ spec repository: 'github://kursjan/petitparser2' ];
 				baseline: 'Chrysal' with: [ spec repository: 'github://Ducasse/Chrysal:v1.0.0/src' ];
-				baseline: 'Clap' with: [ spec repository: 'github://cdlm/clap-st:pharo-pr5761' ];
+				"baseline: 'Clap' with: [ spec repository: 'github://cdlm/clap-st:pharo-pr5761' ];"
 				baseline: 'Mustache'
 					with: [ spec
 						repository: 'github://noha/mustache:v1.0/repository';
@@ -41,8 +45,9 @@ BaselineOfPillar >> baseline: spec [
 			spec
 				package: 'Pillar-Chrysal-Generator' with: [ spec requires: #('Chrysal') ];
 				"Only needed to regenerate the pillar configuration: it depends on Chrysal and Chrysal-Runtime"
-				package: 'Pillar-Cli' with: [ 
-					spec requires: #( 'Clap' 'Pillar-ExporterCore' 'Pillar-Chrysal') ];
+				package: 'Pillar-Cli' with: [ spec requires: #( 'Pillar-ExporterCore' 'Pillar-Chrysal') ];
+				"in common we do not need the clap dependency"
+				
 				package: 'Pillar-Chrysal' with: [ spec requires: #('Pillar-ExporterCore') ];
 				"Pillar-Chrysal should only depend on Chrysal-Runtime but right now I do not know how to express that the
 				Chrysal (builder) is different from Chrysal-Runtime"
@@ -56,17 +61,15 @@ BaselineOfPillar >> baseline: spec [
 				package: 'Pillar-ExporterMarkdown' with: [ spec requires: #('Pillar-ExporterCore' 'Pillar-ExporterHTML') ];
 				package: 'Pillar-ExporterPillar' with: [ spec requires: #('Pillar-ExporterCore' 'Pillar-PetitPillar') ];
 				package: 'Pillar-ExporterText' with: [ spec requires: #('Pillar-ExporterCore') ];
-				package: 'Pillar-GitBook' with: [ spec requires: #('Pillar-Cli' 'markdown exporter' 'text exporter') ];
 				
 				package: 'Pillar-Core';
-				
+				package: 'Pillar-Pear' with: [ spec requires: #('Pillar-ExporterRichText')];
 				package: 'Pillar-Model' with: [ spec requires: #('Pillar-Core')];
 				package: 'Pillar-CodeBlockEvaluator' with: [ spec requires: #('Pillar-Core')];
-				package: 'Pillar-PetitPillar' with: [ spec requires: #('PetitParser2Core' 'Pillar-Model') ];
-			
+				package: 'Pillar-PetitPillar' with: [ spec requires: #('PetitParser2Core' 'Pillar-Model') ];	
 				"Going from Pillar model to richText"
 				package: 'Pillar-ExporterRichText' 
-					with: [ spec requires: #('Pillar-Core' ) ];
+					with: [ spec requires: #('Pillar-Core') ];
 				"Going from Pillar text to richText"
 				package: 'Pillar-PillarTextRichTextExporter' 
 					with: [ spec requires: #('Pillar-ExporterRichText' 'Pillar-PetitPillar') ];
@@ -87,22 +90,17 @@ BaselineOfPillar >> baseline: spec [
 				package: 'Pillar-Tests-ExporterText' with: [ spec requires: #('Pillar-ExporterText' 'Pillar-Tests-ExporterCore') ];
 				package: 'Pillar-Tests-Core' with: [ spec requires: #('Pillar-Core' 'Pillar-ExporterPillar' 'Pillar-ExporterText')];
 				package: 'Pillar-Tests-Model' with: [ spec requires: #('Pillar-Model' 'Pillar-ExporterPillar' 'Pillar-ExporterText' 'Pillar-Tests-Core') ];
-				
-				
-				"I hope that I will be able to make core test not depending on the exporter and the text exporter."
-				
+					
 				package: 'Pillar-Tests-PetitPillar' with: [ spec requires: #('PetitParser2Core' 'Pillar-PetitPillar') ];
 				package: 'Pillar-Tests-BookTester' with: [ spec requires: #('Pillar-BookTester') ];
 				package: 'Pillar-Tests-Project' with: [ spec requires: #('Pillar-Project') ];
 				package: 'Pillar-Tests-Integration' with: [ spec requires: #('Pillar-Project') ].
-			
-			
-			
+		
 			spec
 				group: 'ALL' with: #('All tests' 'All but tests');
 				
 				group: 'All but tests'
-					with: #('All exporters' 'Pillar-Cli' 'Pillar-Pharo-Tools' 'Pillar-GitBook' 'parser' 'Pillar-Project' 'Pillar-BookTester' 'Pillar-CodeBlockEvaluator' 'Pillar-PillarTextRichTextExporter');
+					with: #('All exporters' 'Pillar-Cli' 'Pillar-Pharo-Tools' 'parser' 'Pillar-Project' 'Pillar-BookTester' 'Pillar-CodeBlockEvaluator' 'Pillar-PillarTextRichTextExporter');
 				
 				group: 'All exporter tests'
 					with:
@@ -157,9 +155,12 @@ BaselineOfPillar >> baseline: spec [
    				baseline: 'PetitParser' 
    				with: [ spec repository: 'github://moosetechnology/PetitParser:v2.2.0/src'.
 								spec loads: #('Tests') ] ];
-		package: 'Pillar-PetitPillarOld' with: [ spec requires: #('PetitParser' 'Pillar-Model') ];
-		package: 'Pillar-Tests-PetitPillarOld' with: [ spec  requires: #('PetitParser' 'Pillar-PetitPillarOld') ];
-		group: 'old' with: #( 'Pillar-PetitPillarOld' 'Pillar-Tests-PetitPillarOld' ).
+		package: 'Pillar-PetitPillarOld' 
+			with: [ spec requires: #('PetitParser' 'Pillar-Model') ];
+		package: 'Pillar-Tests-PetitPillarOld' 
+			with: [ spec  requires: #('PetitParser' 'Pillar-PetitPillarOld') ];
+		group: 'old' 
+			with: #( 'Pillar-PetitPillarOld' 'Pillar-Tests-PetitPillarOld' ).
 
 
 ]

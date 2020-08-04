@@ -21,11 +21,6 @@ PRFigure class >> extensionOf: aString isOneOf: extensions [
 ]
 
 { #category : #testing }
-PRFigure class >> isAbstract [
-	^ false
-]
-
-{ #category : #testing }
 PRFigure class >> isValidReference: aString [
 	^ (self extensionOf: aString isOneOf: self pictureExtensions)
 		and: [ aString includesSubstring: '://' caseSensitive: true ]

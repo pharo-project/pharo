@@ -1,6 +1,6 @@
 Extension { #name : #MicBoldInlineBlock }
 
 { #category : #'*Microdown-Pillar' }
-MicBoldInlineBlock class >> associatedPillarClass [
+MicBoldInlineBlock >> associatedPillarClass [
 	^ PRBoldFormat
 ]

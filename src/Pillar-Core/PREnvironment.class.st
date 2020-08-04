@@ -31,11 +31,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PREnvironment class >> isAbstract [
-	^ false
-]
-
 { #category : #'instance creation' }
 PREnvironment class >> named: aString [ 
 	

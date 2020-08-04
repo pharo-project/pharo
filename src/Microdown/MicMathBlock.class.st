@@ -1,11 +1,11 @@
 "
-I'm a math environment
+I'm a math environment and I have optional parameters
 
-&
-\frac{3}
-&
+$
+V_i = C_0 - C_3
+$
 
-may be in the future we should have \[ \]
+
 "
 Class {
 	#name : #MicMathBlock,

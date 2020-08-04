@@ -2,6 +2,13 @@
 I'm an abstract block for blocks requiring a systematic simple character or character sequences at the beginning of each line. 
 
 For example 
+```
+> this is an example
+> and another one
+```
+
+produces 
+
 > this is an example
 > and another one
 

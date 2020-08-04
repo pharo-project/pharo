@@ -1,5 +1,5 @@
 "
-I represent an unordered list of list items.
+I represent an unordered list of items.
 
 #### Example
 
@@ -22,6 +22,26 @@ Not in third
 - first item of a new list
 
 Notice how the following line of the second item is indented with the previous one.
+
+### Nested lists
+A nested item starts aligned to its father. Below the `-` on the second level is aligned with the beginning of item1.
+
+```
+- item1
+  - second level
+    on two lines
+- item2
+```
+
+It produces
+
+
+- item1
+  - second level
+    on two lines
+- item2
+
+
 "
 Class {
 	#name : #MicUnorderedListBlock,

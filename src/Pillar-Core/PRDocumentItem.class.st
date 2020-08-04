@@ -74,6 +74,7 @@ PRDocumentItem >> hash [
 
 { #category : #initialization }
 PRDocumentItem >> initialize [
+	super initialize.
 	counter := PRNotFoundCounter maxLevel: 5
 ]
 

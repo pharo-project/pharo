@@ -1,6 +1,6 @@
 Extension { #name : #MicMonospaceInlineBlock }
 
 { #category : #'*Microdown-Pillar' }
-MicMonospaceInlineBlock class >> associatedPillarClass [
+MicMonospaceInlineBlock >> associatedPillarClass [
 	^ PRMonospaceFormat
 ]

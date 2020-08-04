@@ -7,11 +7,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRUnorderedList class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PRUnorderedList >> accept: aVisitor [
 	^ aVisitor visitUnorderedList: self

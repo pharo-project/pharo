@@ -7,6 +7,6 @@ MicAnchorReferenceInlineBlock >> asPillar [
 ]
 
 { #category : #'*Microdown-Pillar' }
-MicAnchorReferenceInlineBlock class >> associatedPillarClass [
+MicAnchorReferenceInlineBlock >> associatedPillarClass [
 	^ PRInternalLink
 ]
