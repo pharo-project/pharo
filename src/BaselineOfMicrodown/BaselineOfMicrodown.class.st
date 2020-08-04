@@ -11,11 +11,9 @@ Class {
 { #category : #baselines }
 BaselineOfMicrodown >> baseline: spec [
 	<baseline>
-	
 	spec for: #'common' do: [
 		spec baseline: 'Pillar' with: [ spec 
-				loads: #('rich text exporter');
-				repository: 'github://pillar-markup/pillar:v8.0.7/src' ].
+				repository: self packageRepositoryURL ].
 		spec 
 			package: #'Microdown';
 			package: #'Microdown-Tests'  with: [
