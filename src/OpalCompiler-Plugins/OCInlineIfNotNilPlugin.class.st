@@ -13,7 +13,7 @@ OCInlineIfNotNilPlugin class >> initialize [
 { #category : #api }
 OCInlineIfNotNilPlugin >> newBlockStatement: toBeBlock argument: blockArgument [
 
-	^ toBeBlock isLiteralNode
+	^ (toBeBlock isLiteralNode and: [toBeBlock value isSymbol not])
 		  ifTrue: [ toBeBlock copy ]
 		  ifFalse: [ 
 			  RBMessageNode

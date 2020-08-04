@@ -158,3 +158,23 @@ OCInlineNotNilPluginTest >> testASTWithSingleMessageResultsWithoutNoInvocationsW
 	self assertAllNodesTransformedOn: ast usingSelector: #ifNil:ifNotNil:.
 
 ]
+
+{ #category : #tests }
+OCInlineNotNilPluginTest >> testASTWithSingleMessageThatIsASymbolCorrectlyRewritesExpressionInBlock [
+
+	| ast nodeToWrap plugin newAst newBlock |
+
+	ast := RBParser parseMethod: 'm1:a with:b a ifNil: #lala ifNotNil: [7]'.
+	nodeToWrap := ast body statements first arguments first copy.
+
+	plugin := OCInlineIfNotNilPlugin new.	
+	newAst := plugin preSemanticAnalysisTransform: ast.
+	newBlock := newAst body statements first arguments first.
+	
+	self assert: newBlock isBlock.
+	self assert: newBlock arguments size equals: 1.
+	self assert: newBlock statements first isMessage.
+	self assert: newBlock statements first arguments first equals: newBlock arguments first.
+	self assert: newBlock statements first receiver equals: nodeToWrap.	
+	self assert: newBlock statements first selector equals: #cull:.	
+]
