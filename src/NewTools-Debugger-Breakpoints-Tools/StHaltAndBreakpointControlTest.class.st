@@ -45,7 +45,8 @@ StHaltAndBreakpointControlTest >> setUp [
 
 { #category : #running }
 StHaltAndBreakpointControlTest >> tearDown [
-	StHaltCache defaultCache registerSubscriptions.
+	StHaltCache defaultCache updateSubscriptions.
+	cache removeSubscriptions.
 	cache := nil.
 	self removeMethodsWithHalts.
 	super tearDown

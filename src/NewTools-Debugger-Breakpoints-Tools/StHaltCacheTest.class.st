@@ -29,6 +29,7 @@ StHaltCacheTest >> testAddingHaltToMethod [
 
 { #category : #'testing - cache initialization' }
 StHaltCacheTest >> testCacheActivation [
+	cache removeSubscriptions.
 	cache := StHaltCache new.
 	cache isActive: true.
 	self assert: cache isActive.
@@ -37,6 +38,7 @@ StHaltCacheTest >> testCacheActivation [
 
 { #category : #'testing - cache initialization' }
 StHaltCacheTest >> testCacheDectivation [
+	cache removeSubscriptions.
 	cache := StHaltCache new.
 	cache isActive: true.
 	self assert: (SystemAnnouncer uniqueInstance hasSubscriber: cache).
