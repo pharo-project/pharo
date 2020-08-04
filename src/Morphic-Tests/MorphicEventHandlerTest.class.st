@@ -17,6 +17,8 @@ MorphicEventHandlerTest >> setUp [
 { #category : #running }
 MorphicEventHandlerTest >> tearDown [
 
+	morph delete.
+
 	morph := nil.
 	super tearDown
 ]
@@ -93,6 +95,25 @@ MorphicEventHandlerTest >> testKeyUpFromMorph [
 	morph eventHandler on: #keyUp send: #value to: true.
 
 	self assert: (keyboardEvent sentTo: morph) identicalTo: true
+]
+
+{ #category : #'tests-events' }
+MorphicEventHandlerTest >> testMiddleButtonOpenHalos [
+	| event |
+
+	morph openInWorld.
+
+	event := (MouseButtonEvent new 
+		setType: #mouseDown
+		position: 0@0
+		which: MouseButtonEvent blueButton
+		buttons: 0
+		hand: morph world activeHand
+		stamp: Time millisecondClockValue).
+	
+	event sentTo: morph.
+			
+	self assert: (morph halo) isNotNil
 ]
 
 { #category : #'tests-events' }
