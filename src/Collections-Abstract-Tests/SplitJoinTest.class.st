@@ -32,7 +32,7 @@ self showDocumentation
 Class {
 	#name : #SplitJoinTest,
 	#superclass : #TestCase,
-	#category : #'Collections-Tests-SplitJoin'
+	#category : #'Collections-Abstract-Tests-SplitJoin'
 }
 
 { #category : #documentation }
