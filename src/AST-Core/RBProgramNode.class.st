@@ -436,7 +436,17 @@ RBProgramNode >> isArgumentVariable [
 ]
 
 { #category : #testing }
+RBProgramNode >> isArrayError [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isAssignment [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isBlockError [
 	^false
 ]
 
@@ -455,6 +465,11 @@ RBProgramNode >> isDirectlyUsed [
 { #category : #testing }
 RBProgramNode >> isDynamicArray [
 	^ false
+]
+
+{ #category : #testing }
+RBProgramNode >> isEnglobingError [
+	^false
 ]
 
 { #category : #testing }
@@ -498,6 +513,11 @@ RBProgramNode >> isLiteralArray [
 ]
 
 { #category : #testing }
+RBProgramNode >> isLiteralArrayError [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isLiteralNode [
 	^false
 ]
@@ -509,6 +529,11 @@ RBProgramNode >> isMessage [
 
 { #category : #testing }
 RBProgramNode >> isMethod [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isParenthesesError [
 	^false
 ]
 
@@ -528,7 +553,17 @@ RBProgramNode >> isPragma [
 ]
 
 { #category : #testing }
+RBProgramNode >> isPragmaError [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isReturn [
+	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isSelector [
 	^false
 ]
 
@@ -565,6 +600,11 @@ RBProgramNode >> isSuperVariable [
 { #category : #testing }
 RBProgramNode >> isTemp [
 	^ false
+]
+
+{ #category : #testing }
+RBProgramNode >> isTemporariesError [
+	^false
 ]
 
 { #category : #testing }

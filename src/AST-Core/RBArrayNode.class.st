@@ -143,7 +143,8 @@ RBArrayNode >> indexOfNode: aNode [
 { #category : #initialization }
 RBArrayNode >> initialize [
 	super initialize.
-	statements := periods := #().
+	statements := OrderedCollection new.
+	periods := #().
 	left := right := 0.
 ]
 

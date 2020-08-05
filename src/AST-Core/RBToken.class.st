@@ -45,6 +45,16 @@ RBToken >> isBinary [
 ]
 
 { #category : #testing }
+RBToken >> isComment [
+	^false
+]
+
+{ #category : #testing }
+RBToken >> isEOF [
+	^false
+]
+
+{ #category : #testing }
 RBToken >> isError [
 	^false
 ]

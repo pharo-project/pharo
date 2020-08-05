@@ -115,6 +115,20 @@ RBMethodNodeTest >> testCachingMethodArguments [
 ]
 
 { #category : #'testing-comments' }
+RBMethodNodeTest >> testCommentedMethodHasComments [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+		"this is comment"
+		"this is another comment"
+^ abd + cde'.
+
+	self assert: tree hasComments.
+	
+
+]
+
+{ #category : #'testing-comments' }
 RBMethodNodeTest >> testCommentsParent [
 	"Test if comment has a parent"
 	self
@@ -347,4 +361,16 @@ RBMethodNodeTest >> testSizeOfSignatureOfUnaryMethod [
 	self assert: tree conceptualSelectorSize equals: 'foo' size.
 	self assert: tree conceptualArgumentSize isZero.
 	self assert: tree conceptualSignatureSize equals: 'foo' size
+]
+
+{ #category : #'testing-comments' }
+RBMethodNodeTest >> testUncommentMethodDoesNotHaveComments [
+
+	| tree |
+	tree := self parseMethod: 'foo: abd bar: cde  
+^ abd + cde'.
+
+	self deny: tree hasComments.
+	
+
 ]

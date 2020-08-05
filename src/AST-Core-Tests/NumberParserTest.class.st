@@ -16,6 +16,12 @@ NumberParserTest >> areLowercaseDigitsAllowed [
 	^(NumberParser parse: '16re' onError: [-1]) = 16rE
 ]
 
+{ #category : #utilities }
+NumberParserTest >> classToBeTested [
+
+	^ NumberParser
+]
+
 { #category : #'tests - fail' }
 NumberParserTest >> testFail [
 	"Verify that the value of a failblock is returned."

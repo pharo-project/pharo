@@ -28,17 +28,36 @@ Class {
 	#superclass : #RBProgramNode,
 	#instVars : [
 		'contents',
-		'start'
+		'start',
+		'stop'
 	],
 	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
-RBComment class >> with: aString at: startPosition [
+RBComment class >> with: aCommentToken [
+	"To respect the previously implemented comment node content, 
+	 we strip the surrounding quotes of the comment."
 	^ self new
-		with: aString at: startPosition;
+		with: aCommentToken value from: aCommentToken start to: aCommentToken stop;
 		yourself. 
-	
+]
+
+{ #category : #'instance creation' }
+RBComment class >> with: aString at: startPosition [
+	self deprecated:
+		'Should use method with: with a comment token as parameter.'.
+	^ self new
+		  with: aString
+		  from: startPosition
+		  to: startPosition + aString size - 1;
+		  yourself
+]
+
+{ #category : #testing }
+RBComment >> = anObject [
+	(self == anObject) ifTrue: [ ^true ].
+	^ (self class = anObject class) ifTrue: [ self contents = anObject contents ] ifFalse: [ false ]
 ]
 
 { #category : #visiting }
@@ -54,6 +73,11 @@ RBComment >> acceptVisitor: aProgramNodeVisitor [
 { #category : #accessing }
 RBComment >> contents [
 	^ contents
+]
+
+{ #category : #testing }
+RBComment >> hash [
+	^ self contents hash
 ]
 
 { #category : #testing }
@@ -84,12 +108,26 @@ RBComment >> start [
 
 { #category : #accessing }
 RBComment >> stop [
-	^ start + self size - 1
+	^ stop ifNil: [ start + self size - 1 ]
+		    ifNotNil: [ stop ].
 ]
 
 { #category : #initialization }
 RBComment >> with: aString at: startPosition [
-	start := startPosition.
-	contents := aString
+	self
+		deprecated: 'The use of a comment token implies a preexisting stop position. 
+	                  Should use with: from: to:'
+		transformWith: '`@receiver with: `@aString at: `@startPosition'
+			-> '`@receiver with: `@aString from: `@startPosition to: `@startPosition + `@aString size - 1'.
+	
+	^ self with: aString from: startPosition to: startPosition + aString size - 1
+
+]
+
+{ #category : #'instance creation' }
+RBComment >> with: aString from: aStartPosition to: aStopPosition [
+	start := aStartPosition.
+	stop := aStopPosition.
+	contents := aString.
 
 ]
