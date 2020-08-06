@@ -762,10 +762,10 @@ StDebugger >> initializeStack [
 					 method := item method.
 					 method isCompiledBlock
 						 ifTrue: [ method sourceNode sourceCode ]
-						 ifFalse: [ method selector ] ]);
+						 ifFalse: [ method selector ] ])";
 		addColumn: (SpStringTableColumn
 				 title: 'Context'
-				 evaluated: [ :item | item sender stDisplayString ]).
+				 evaluated: [ :item | item sender stDisplayString ])".
 	stackTable transmitDo: [ :context | 
 		stackTable selection isEmpty ifFalse: [ 
 			self updateInspectorFromContext: context.
