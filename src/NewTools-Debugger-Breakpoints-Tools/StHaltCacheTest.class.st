@@ -93,7 +93,7 @@ StHaltCacheTest >> testNewMethodWithHalt [
 	
 	self assert: cache methodsWithHalts size equals: methodCacheForSimpleHalt + 1.
 	self assert: (cache nodeCacheForSelector: 'StDummyTestClassWithHalts>>#mHalt2') size equals: 1.
-	self assert: (cache nodeCacheForSelector: 'StDummyTestClassWithHalts>>#mHalt2') asOrderedCollection first == haltNode.
+	self assert: (cache nodeCacheForSelector: 'StDummyTestClassWithHalts>>#mHalt2') asOrderedCollection first identicalTo: haltNode.
 
 ]
 

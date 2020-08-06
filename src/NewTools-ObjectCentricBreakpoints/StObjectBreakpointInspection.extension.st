@@ -2,19 +2,11 @@ Extension { #name : #StObjectBreakpointInspection }
 
 { #category : #'*NewTools-ObjectCentricBreakpoints' }
 StObjectBreakpointInspection class >> browseBreakpointMethodCommandFor: presenter [
+
 	| context cmd |
 	context := [ :ctx | 
-	| item method |
-	item := ctx methodsWithBreakpoints selection selectedItem.
-	method := (item at: #node) methodNode method.
-	item
-		at: #breakpoint
-		ifPresent: [ :bp | 
-			bp isObjectCentric
-				ifTrue: [ bp targetInstance class
-						lookupSelector: method compiledMethod selector ]
-				ifFalse: [ method ] ]
-		ifAbsent: [ method ] ].
+	           ctx methodsWithBreakpoints selection selectedItem
+		           entityToBrowse ].
 	cmd := SpBrowseClassCommand forSpecContext: presenter.
 	cmd decoratedCommand
 		transform: context;

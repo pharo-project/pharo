@@ -54,9 +54,9 @@ StHaltAndBreakpointControllerTest >> tearDown [
 
 { #category : #'tests - breakpoints' }
 StHaltAndBreakpointControllerTest >> testDisableBreakpoint [
-	self should: [ testObject mNoHalt ] raise: Halt.
-	haltController disableHaltOrBreakpointFor: self nodeForBreakpoint.
-	self shouldnt: [ testObject mNoHalt ] raise: Halt
+	self should: [ testObject mNoHalt ] raise: Break.
+	haltController disableBreakpoint: breakpoint.
+	self shouldnt: [ testObject mNoHalt ] raise: Break
 	
 ]
 
@@ -64,46 +64,55 @@ StHaltAndBreakpointControllerTest >> testDisableBreakpoint [
 StHaltAndBreakpointControllerTest >> testDisableHalt [
 	
 	self should: [ testObject mHalt ] raise: Halt.	
-	haltController disableHaltOrBreakpointFor: self node.
+	haltController disableHaltNode: self node.
 	self shouldnt: [ testObject mHalt ] raise: Halt
 ]
 
 { #category : #'tests - breakpoints' }
 StHaltAndBreakpointControllerTest >> testDisabledBreakpointisDisabled [
-	haltController disableHaltOrBreakpointFor: self nodeForBreakpoint.
-	self deny: (haltController areHaltsAndBreakpoinsEnabledFor: self nodeForBreakpoint)
+
+	haltController disableBreakpoint: breakpoint.
+	self deny: (haltController isBreakpointEnabled: breakpoint).
+	self deny: (haltController isHaltOrBreakpointEnabled:
+			 (StBreakpointInspectionItem forBreakpoint: breakpoint))
 ]
 
 { #category : #'tests - halts' }
 StHaltAndBreakpointControllerTest >> testDisabledHaltIsDisabled [
-	haltController disableHaltOrBreakpointFor: self node.
-	self deny: (haltController areHaltsAndBreakpoinsEnabledFor: self node)
+
+	haltController disableHaltNode: self node.
+	self deny: (haltController isHaltEnabledFor: self node).
+	self deny: (haltController isHaltOrBreakpointEnabled:
+			 (StHaltInspectionItem forHalt: self node))
 ]
 
 { #category : #'tests - breakpoints' }
 StHaltAndBreakpointControllerTest >> testEnableDisabledBreakpoint [
-	haltController disableHaltOrBreakpointFor: self nodeForBreakpoint.
-	self shouldnt: [ testObject mNoHalt ] raise: Halt.
-	haltController enableHaltOrBreakpointFor: self nodeForBreakpoint.
-	self should: [ testObject mNoHalt ] raise: Halt
+	haltController disableBreakpoint: breakpoint.
+	self shouldnt: [ testObject mNoHalt ] raise: Break.
+	haltController enableBreakpoint: breakpoint.
+	self should: [ testObject mNoHalt ] raise: Break
 ]
 
 { #category : #'tests - halts' }
 StHaltAndBreakpointControllerTest >> testEnableDisabledHalt [	
-	haltController disableHaltOrBreakpointFor: self node.
+	haltController disableHaltNode: self node.
 	self shouldnt: [ testObject mHalt ] raise: Halt.
-	haltController enableHaltOrBreakpointFor: self node.
+	haltController enableHaltNode: self node.
 	self should: [ testObject mHalt ] raise: Halt
 ]
 
 { #category : #'tests - breakpoints' }
 StHaltAndBreakpointControllerTest >> testEnabledBreakpointIsEnabled [
-	self assert: (haltController areHaltsAndBreakpoinsEnabledFor: self nodeForBreakpoint)
+
+	self assert: (haltController isBreakpointEnabled: breakpoint).
+	self assert: (haltController isHaltOrBreakpointEnabled:
+			 (StBreakpointInspectionItem forBreakpoint: breakpoint))
 ]
 
 { #category : #'tests - halts' }
 StHaltAndBreakpointControllerTest >> testEnabledHaltIsEnabled [
-	self assert: (haltController areHaltsAndBreakpoinsEnabledFor: self node)
+	self assert: (haltController isHaltEnabledFor: self node)
 ]
 
 { #category : #'tests - breakpoints' }
@@ -122,18 +131,9 @@ StHaltAndBreakpointControllerTest >> testNoTraceForEnabledHalt [
 	self assert: trace isNil
 ]
 
-{ #category : #'tests - breakpoints' }
-StHaltAndBreakpointControllerTest >> testTraceForDisabledBreakpoint [
-	haltController disableHaltOrBreakpointFor: self nodeForBreakpoint.
-	testObject mNoHalt.
-	self
-		assert: trace
-		equals: (StHaltAndBreakpointController printSkipTextFor: self nodeForBreakpoint)
-]
-
 { #category : #'tests - halts' }
 StHaltAndBreakpointControllerTest >> testTraceForDisabledHalt [
-	haltController disableHaltOrBreakpointFor: self node.
+	haltController disableHaltNode: self node.
 	testObject mHalt.
 	self
 		assert: trace
