@@ -64,6 +64,11 @@ RBComment >> intersectsInterval: anInterval [
 		or: [ self start between: anInterval first and: anInterval last ]
 ]
 
+{ #category : #testing }
+RBComment >> isCommentNode [ 
+	^true.
+]
+
 { #category : #printing }
 RBComment >> printOn: aStream [
 	super printOn: aStream.
