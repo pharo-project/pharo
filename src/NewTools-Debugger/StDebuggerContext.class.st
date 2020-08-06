@@ -26,7 +26,6 @@ StDebuggerContext class >> context: aContext session: aDebugSession debugger: so
 
 { #category : #accessing }
 StDebuggerContext >> allInspectorNodes [
-
 	^ self argumentsNodes
 		  addAll: { 
 				  (StDebuggerContextInspectorReceiverNode hostObject: self).
@@ -41,7 +40,7 @@ StDebuggerContext >> argumentsNodes [
 	| argNames |
 	argNames := self context sourceNode arguments.
 	^ (argNames collect: [ :argName | 
-		   (StInspectorTempNode hostObject: self context) tempVariable:
+		   (StDebuggerInspectorTempNode hostObject: self context) argVariable:
 			   (self context temporaryVariableNamed: argName name) ])
 		  asOrderedCollection
 ]
