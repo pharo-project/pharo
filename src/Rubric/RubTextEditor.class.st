@@ -1672,7 +1672,8 @@ RubTextEditor >> nestingForPaste: aString with: aCharacter [
 	[ stream atEnd ] whileFalse: 
 		[ result nextPutAll: (stream upTo: aCharacter).
 		stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter]. 
-		stream atEnd ifFalse: [ result nextPut: aCharacter ].].
+		stream atEnd ifFalse: [ result nextPut: aCharacter ]
+						 ifTrue: [ stream peekBack = aCharacter ifTrue: [result nextPut: aCharacter] ].].
 	^result contents.
 ]
 
