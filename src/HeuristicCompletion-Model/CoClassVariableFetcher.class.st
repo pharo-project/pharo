@@ -10,6 +10,6 @@ Class {
 { #category : #enumerating }
 CoClassVariableFetcher >> entriesDo: aBlock [
 	
-	self completionClass instanceSide classVarNames do: [ :e |
-		aBlock value: (NECClassVarEntry contents: e node: astNode)]
+	self completionClass ifNotNil: [:cc | cc instanceSide classVarNames do: [ :e |
+		aBlock value: (NECClassVarEntry contents: e node: astNode)]]
 ]

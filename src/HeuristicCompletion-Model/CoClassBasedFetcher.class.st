@@ -54,7 +54,7 @@ CoClassBasedFetcher >> forHierarchy [
 { #category : #'hierarchy-fetching' }
 CoClassBasedFetcher >> onSuperclass [
 	
-	completionClass superclass
+	(completionClass ifNotNil: [completionClass superclass])
 		ifNil: [ ^ CoEmptyFetcher new ].
 
 	^ self copy
