@@ -9,7 +9,7 @@ Class {
 
 { #category : #helpers }
 PRRichTextWriterTest >> assertWriting: aPRDocument include: expectedAttribute [
-	self assert: ((self runsOf: aPRDocument) includes: expectedAttribute asArray)
+	self assert: ((self runsOf: aPRDocument) includes: {expectedAttribute})
 ]
 
 { #category : #'tests - Format' }
@@ -17,7 +17,7 @@ PRRichTextWriterTest >> boldFormat [
 	^ TextEmphasis bold
 ]
 
-{ #category : #initialization }
+{ #category : #helpers }
 PRRichTextWriterTest >> composer [
 	^ PRRichTextComposer new
 ]
@@ -85,7 +85,7 @@ PRRichTextWriterTest >> runsOf: aPRDocument [
 	^ (self richTextFor: aPRDocument) runs
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 PRRichTextWriterTest >> setUp [
 	super setUp.
 	sample := PRDocumentSample new.
@@ -114,12 +114,14 @@ PRRichTextWriterTest >> superscriptFormat [
 
 { #category : #'tests - Format' }
 PRRichTextWriterTest >> testBoldFormat [
+
 	self assertWriting: sample bold include: self boldFormat
 ]
 
 { #category : #'tests - CodeBlock' }
 PRRichTextWriterTest >> testCodeBlock [
 	| runs richText |
+	self skip.
 	richText := self richTextFor: sample codeblock.
 
 "
@@ -287,16 +289,6 @@ PRRichTextWriterTest >> testSubscriptFormat [
 	
 	self skip.
 	
-]
-
-{ #category : #'tests - Format' }
-PRRichTextWriterTest >> testSuperscriptFormat [
-	self assertWriting: sample superscript include: self superscriptFormat
-]
-
-{ #category : #'tests - Format' }
-PRRichTextWriterTest >> testUnderlineFormat [ 
-	self assertWriting: sample underline include: self underlineFormat
 ]
 
 { #category : #'tests - List' }

@@ -7,11 +7,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRDocument class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PRDocument >> accept: aVisitor [
 	^ aVisitor visitDocument: self

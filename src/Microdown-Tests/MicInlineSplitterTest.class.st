@@ -7,7 +7,7 @@ Class {
 	#category : #'Microdown-Tests'
 }
 
-{ #category : #tests }
+{ #category : #access }
 MicInlineSplitterTest >> splitter [
 	^ MicInlineSplitter new
 ]
@@ -22,34 +22,7 @@ MicInlineSplitterTest >> testAnchorReferenceUnevaluated [
 		equals: {'abc' . '[def**not bold**ghi](anchorReference)' . 'xyz'}
 ]
 
-{ #category : #'pillar conversion' }
-MicInlineSplitterTest >> testBasicTextAsPillar [
-	| res |
-	res := self splitter pillarFrom: 'abc'.
-	self assert: res first text equals: 'abc'.
-	self assert: res first class equals: PRText.
-]
-
-{ #category : #tests }
-MicInlineSplitterTest >> testBoldAndNestedItalicAsPillar [
-	| res |
-	res := self splitter pillarFrom: 'abc**x_y_z**cba'.
-	self assert: res second class equals: PRBoldFormat.
-	self assert: res second children first text equals: 'x'.
-	self assert: res second children second class equals: PRItalicFormat.
-	self assert: res second children second children first text equals: 'y'.
-	self assert: res second children third text equals: 'z'
-]
-
-{ #category : #'pillar conversion' }
-MicInlineSplitterTest >> testBoldAsPillar [
-	| res |
-	res := self splitter pillarFrom: 'abc**xyz**cba'.
-	self assert: res second children first text equals: 'xyz'.
-	self assert: res second class equals: PRBoldFormat.
-]
-
-{ #category : #tests }
+{ #category : #'tests - escape' }
 MicInlineSplitterTest >> testEscapeCharacter [
 	"Test the escape \ in simple case (here, bold one)"
 
@@ -60,7 +33,7 @@ MicInlineSplitterTest >> testEscapeCharacter [
 		equals: {'abc**test**last'}.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - escape' }
 MicInlineSplitterTest >> testEscapeCharacterAtBeginning [
 	"Test the escape \ in simple case (here, bold one)"
 
@@ -71,7 +44,7 @@ MicInlineSplitterTest >> testEscapeCharacterAtBeginning [
 		equals: {'**test**'}.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - escape' }
 MicInlineSplitterTest >> testEscapeCharacterInLinkName [
 	"Test the escape \ in link description"
 
@@ -82,7 +55,18 @@ MicInlineSplitterTest >> testEscapeCharacterInLinkName [
 		equals: {'abc' . '[**test**](linkName)' . 'last'}.
 ]
 
-{ #category : #tests }
+{ #category : #'tests - escape' }
+MicInlineSplitterTest >> testEscapeCharacterInNestedCase [
+	"Test the escape \ in case of nested formats"
+
+	| res |
+	res := self splitter start: 'abc_\**not bold** italic_last'.
+	self
+		assert: (res collect: [ :x | x printString ])
+		equals: {'abc' . '[**not bold** italic](italic)' . 'last'}.
+]
+
+{ #category : #'tests - escape' }
 MicInlineSplitterTest >> testEscapeCharacterInNestedLinkName [
 	"Test the escape \ in case of nested linknames"
 
@@ -93,32 +77,14 @@ MicInlineSplitterTest >> testEscapeCharacterInNestedLinkName [
 		equals: {'abc' . '[[nested]](linkName)' . 'last'}.
 ]
 
-{ #category : #'pillar conversion' }
-MicInlineSplitterTest >> testExternalLinkAsPillar [
+{ #category : #'tests - monospace' }
+MicInlineSplitterTest >> testEscapeMonospace [
+	"When isEvaluated class method returns false, like monospace's case, inline inside shoudn't be evaluated"
 	| res |
-	res := self splitter pillarFrom: 'abc[alias](link)cba'.
-	self assert: res second children first text equals: 'alias'.
-	self assert: res second class equals: PRExternalLink.
-
-]
-
-{ #category : #'pillar conversion' }
-MicInlineSplitterTest >> testFigureAsPillar [
-	| res |
-	res := self splitter pillarFrom: 'abc![alias](link)cba'.
-	self assert: res second children first text equals: 'alias'.
-	self assert: res second class equals: PRFigure
-
-]
-
-{ #category : #'pillar conversion' }
-MicInlineSplitterTest >> testItalicAsPillar [
-	| res |
-	res := self splitter pillarFrom: 'abc_xyz_cba'.
-	self assert: res second children first text equals: 'xyz'.
-	self assert: res second class equals: PRItalicFormat.
-	
-	
+	res := self splitter start: 'abc`\`monospace\``efg'.
+	self
+		assert: (res collect: [ :x | x printString ])
+		equals: {'abc' . '[`monospace`](monospace)' . 'efg'}
 ]
 
 { #category : #tests }
@@ -131,7 +97,7 @@ MicInlineSplitterTest >> testMathUnevaluated [
 		equals: {'abc' . '[def**not bold**ghi](math)' . 'xyz'}
 ]
 
-{ #category : #tests }
+{ #category : #'tests - monospace' }
 MicInlineSplitterTest >> testMonospaceUnevaluated [
 	"When isEvaluated class method returns false, like monospace's case, inline inside shoudn't be evaluated"
 	| res |
@@ -260,7 +226,7 @@ MicInlineSplitterTest >> testSplitBlockLink [
 	self assert: res second url segments first equals: 'myURL'
 ]
 
-{ #category : #tests }
+{ #category : #fails }
 MicInlineSplitterTest >> testSplitBlockLinkIncomplete [
 	"Test the annotation [LinkText] -> should return a link with url as linktext"
 
@@ -278,13 +244,12 @@ MicInlineSplitterTest >> testSplitBlockLinkInlineImage [
 	"Test the link annotation [![alttext](imageurl)](url)"
 
 	| res |
-	self skip.
 	res := self splitter
 		start: 'abc[![alttext](imageurl)](url)last'.
 	self
 		assert: (res collect: [ :x | x printString ])
 		equals: {'abc' . '[[alttext](figure)](linkName)' . 'last'}.
-	self assert: res second children second url equals: 'imageurl'
+	self assert: res second children first url segments first equals: 'imageurl'
 ]
 
 { #category : #tests }
@@ -306,6 +271,16 @@ MicInlineSplitterTest >> testSplitBlockNested [
 	self
 		assert: (res collect: [ :x | x printString ])
 		equals: {'abc' . '[bold [italic](italic) bold](bold)' . 'xyz'}
+]
+
+{ #category : #tests }
+MicInlineSplitterTest >> testSplitBlockNested2 [
+	"Test with nested annotations 2"
+	| res |
+	res := self splitter start: 'abc**x_y_z**cba'.
+	self
+		assert: (res collect: [ :x | x printString ])
+		equals: {'abc' . '[x [y](italic) z](bold)' . 'cba'}
 ]
 
 { #category : #tests }

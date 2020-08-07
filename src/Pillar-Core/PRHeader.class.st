@@ -10,11 +10,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRHeader class >> isAbstract [
-	^ false
-]
-
 { #category : #'instance creation' }
 PRHeader class >> withAll: aCollection level: anInteger [
 	^ (self withAll: aCollection)

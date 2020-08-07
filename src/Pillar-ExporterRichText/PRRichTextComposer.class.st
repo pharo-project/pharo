@@ -1,5 +1,4 @@
 "
-***
 I am a visitor that produces rich text (class Text) based on a pillar document model.
 I am implemented using a canvas/brush pattern.
 
@@ -13,6 +12,10 @@ You can also turn it off/on doing
 ```
 PRRichTextComposer putOffLine
 ```
+
+In addition, images are cached to avoid multiple http requests.
+The cache can be reset executing `PRRichTextComposer resetCache`. When the system is off line and an image is requested, a placeholder is computed but not put in the cache. This way when the system is put online the requested elements will be requested and put in the cache (without needing to flush placeholders from the cache).
+When the system is online but the request failed we return a placeholder.
 
 #### Known limits
 Monospaced text (e.g., `Point`, `Point class`,  `Point>>#setX:setY:`, or `#'Pillar-ExporterPillar'`) uses TextAction to trigger browser opening on the corresponding element. It would be better to use a TextLink because the styler is aware of them. 
@@ -32,6 +35,9 @@ Class {
 		'annotatedParagraphAlignment'
 	],
 	#classVars : [
+		'HeaderFontSizes',
+		'HeaderFonts',
+		'ImageCache',
 		'OffLine'
 	],
 	#category : #'Pillar-ExporterRichText-Core'
@@ -39,21 +45,16 @@ Class {
 
 { #category : #private }
 PRRichTextComposer class >> browse: urlString [
-	"I am a url on the form: browse://Class or browse://Class/method"
+	"urlString is of the form: browse://Class or browse://Class>>#method"
+	"self browse: 'browse://Class'"
+	"self browse: 'browse://Point>>#x'"
+	| parts sem |
+	parts := urlString substrings: '/'.  
+	sem := PRSemanticAction from: parts second.
+	sem hasEntity 
+		ifTrue: [ sem entity browse ].
+	
 
-	| parts classPart theClass method |
-	parts := urlString substrings: '/'. 
-	classPart := parts at: 2.
-	"handle class side also"
-	theClass := (classPart endsWith: ' class')
-		ifFalse: [ classPart asClass ]
-		ifTrue: [ (classPart withoutSuffix: ' class') asClass class ].
-	method := parts size > 2
-		ifTrue: [ (parts at: 3) asSymbol ]
-		ifFalse: [ nil ].
-	method
-		ifNil: [ theClass browse ]
-		ifNotNil: [ (theClass >> method) browse ]
 ]
 
 { #category : #private }
@@ -73,6 +74,20 @@ PRRichTextComposer class >> codeStylerFor: aString [
 	^SHRBTextStyler new 
 		isForWorkspace: true; 
 		styledTextFor: aString asText
+]
+
+{ #category : #private }
+PRRichTextComposer class >> computeHeaderFonts [
+	
+	HeaderFonts := Array new:  HeaderFontSizes size.
+	1 to: HeaderFontSizes size do: [ :index |
+		HeaderFonts at: index put: 
+			(TextFontReference
+				toFont:
+					(StrikeFont
+						familyName: 'Bitmap Source Sans Pro'
+						pointSize: (HeaderFontSizes at: index)))
+			  ]
 ]
 
 { #category : #private }
@@ -96,7 +111,7 @@ PRRichTextComposer class >> defaultStyler: aString [
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example1 [
+PRRichTextComposer class >> examplePillar1 [
 	<example>
 	(self asText:
 					'!!!First section
@@ -111,7 +126,7 @@ and this is just ""first"" line
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example10 [
+PRRichTextComposer class >> examplePillar10 [
 	<example>
 	(self asText:
 					'
@@ -122,7 +137,7 @@ PRRichTextComposer class >> example10 [
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example2 [
+PRRichTextComposer class >> examplePillar2 [
 	<example>
 	(self asText:
 					'!!!Description lists
@@ -136,7 +151,7 @@ this is just ""first"" line
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example3 [
+PRRichTextComposer class >> examplePillar3 [
 	<example>
 	(self asText:
 					'!!!Code sections
@@ -150,7 +165,7 @@ Metacello new
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example4 [
+PRRichTextComposer class >> examplePillar4 [
 	<example>
 	(self asText:
 					'!!!Annotations
@@ -160,7 +175,7 @@ and this is the second line') inspect
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example5 [
+PRRichTextComposer class >> examplePillar5 [
 	<example>
 	(self asText:
 					'!!!Links
@@ -170,13 +185,13 @@ this is just ""first"" line
 
 *String>browse://String*
 
-*String»trim>browse://String/trim*
+*String»trim>browse://String>>#trim*
 
 and this is the second line') inspect
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example6 [
+PRRichTextComposer class >> examplePillar6 [
 	<example>
 	(self asText:
 					'!!!Figures
@@ -188,7 +203,7 @@ and this is the second line') inspect
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example7 [
+PRRichTextComposer class >> examplePillar7 [
 	<example>
 	(self asText:
 					'!First section
@@ -201,7 +216,7 @@ PRRichTextComposer class >> example7 [
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example8 [
+PRRichTextComposer class >> examplePillar8 [
 	<example>
 	(self asText:
 					'
@@ -212,7 +227,7 @@ PRRichTextComposer class >> example8 [
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> example9 [
+PRRichTextComposer class >> examplePillar9 [
 	<example>
 	(self asText:
 					'
@@ -224,7 +239,7 @@ foo: arg
 ]
 
 { #category : #examples }
-PRRichTextComposer class >> exampleLatexMath [
+PRRichTextComposer class >> examplePillarLatexMath [
 	<example>
 	(PRRichTextComposer  asText:
 '!!!Latex mathematics 
@@ -247,23 +262,38 @@ PRRichTextComposer class >> expressionStylerFor: aString [
 ]
 
 { #category : #private }
+PRRichTextComposer class >> headerFontSizes: anArray [
+
+	HeaderFontSizes := anArray.
+	self computeHeaderFonts 
+]
+
+{ #category : #private }
+PRRichTextComposer class >> headerFonts: anArray [
+
+	HeaderFontSizes := anArray
+]
+
+{ #category : #private }
 PRRichTextComposer class >> headerLevelFont: level [
 	"I return a font annotation to be used with Attributes"
 
-	"StrikeFont actualFamilyNames an OrderedCollection(#'Bitmap DejaVu Sans' #'Bitmap Source Code Pro' #'Bitmap Source Sans Pro')"
+	^ HeaderFonts at: level
+]
 
-	| fontSizes |
-	fontSizes := #(22 20 18 16 14 14).
-	^ TextFontReference
-		toFont:
-			(StrikeFont
-				familyName: 'Bitmap Source Sans Pro'
-				pointSize: (fontSizes at: level))
+{ #category : #'class initialization' }
+PRRichTextComposer class >> imageAt: urlString put: aForm [	
+	"the cache contains results of for example ZnEasy getPng:, i.e., a form"
+	
+	ImageCache at: urlString put: aForm
 ]
 
 { #category : #'class initialization' }
 PRRichTextComposer class >> initialize [ 
-	OffLine := false
+	"self initialize"
+	OffLine := false.
+	self resetCache.
+	self headerFontSizes: #(18 14 12 11 10 10).
 ]
 
 { #category : #stylers }
@@ -289,15 +319,47 @@ PRRichTextComposer class >> methodStylerFor: aString [
 ]
 
 { #category : #'class initialization' }
+PRRichTextComposer class >> offline [
+
+	^ OffLine
+]
+
+{ #category : #'class initialization' }
+PRRichTextComposer class >> offline: aBoolean [
+
+	OffLine := aBoolean.
+	aBoolean 
+		ifFalse: [  ] 
+]
+
+{ #category : #settings }
+PRRichTextComposer class >> preferencesSettingsOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #offline)
+		label: 'To set the online mode';
+		parent: #appearance;
+		default: true;
+		target: self;
+		description: 'When true, external figures are displayed in comments. The requests to external images are performed, and this may lead of latency the first time the request is done. Each figure is cached, so the request is at most done one per external references.'
+]
+
+{ #category : #'class initialization' }
 PRRichTextComposer class >> putOffline [
 
-	OffLine := true
+	self offline: true
 ]
 
 { #category : #'class initialization' }
 PRRichTextComposer class >> putOnline [
 
-	OffLine := false
+	self offline: false
+]
+
+{ #category : #'class initialization' }
+PRRichTextComposer class >> resetCache [
+
+	ImageCache := Dictionary new
 ]
 
 { #category : #stylers }
@@ -351,6 +413,35 @@ PRRichTextComposer >> defaultAnnotatedParagraphColor [
 { #category : #initialization }
 PRRichTextComposer >> defaultSuperscriptColor [
 	^ TextColor blue
+]
+
+{ #category : #'visiting - document' }
+PRRichTextComposer >> imageFromUrl: aUrl [
+	"next iteration should propose something when OffLine and timeout."
+	
+	^ OffLine 
+		ifFalse: [
+			[ ImageCache 
+				at: aUrl asString
+				ifAbsentPut: [ ZnEasy getPng: aUrl ]] 
+					on: ZnHttpUnsuccessful 
+					do: [ :ex | self imageOffLineFromUrl: aUrl ] ] 
+		ifTrue: [ 
+			"we are off but the image is there so we return it,"
+			self imageOffLineFromUrl: aUrl
+			]
+]
+
+{ #category : #'visiting - document' }
+PRRichTextComposer >> imageOffLineFromUrl: aUrl [
+
+	"we are off but the image is there so we return it,"
+	^ ImageCache 
+			at: aUrl asString
+			ifPresent: [ :i | i ]
+			ifAbsent: [ (StringMorph contents: 'In Offline mode! 
+When online, you should see: ' , aUrl asString) imageForm  ]
+			
 ]
 
 { #category : #initialization }
@@ -568,20 +659,24 @@ PRRichTextComposer >> visitExternalLink: aLink [
 
 { #category : #'visiting - document' }
 PRRichTextComposer >> visitFigure: aFigure [
-	| serverUrl anchoredImage |
-	serverUrl := aFigure reference.
+	| anchoredImage |
 	"Try to read a png file (only one supported right now), else use alt text"
-	[anchoredImage := (String value: 1) asText
-		addAttribute: (TextAnchor new anchoredMorph: (ZnEasy getPng: serverUrl)).
-		canvas << anchoredImage ] 
-		on: Exception 
-		do: [self visitAll: aFigure children].
+	
+	"for now I cancel the catching of all exceptions because it is a blackhole."
+	"[" 
+	anchoredImage := (String value: 1) asText
+		addAttribute: (TextAnchor new anchoredMorph: (self imageFromUrl: aFigure reference)).
+		canvas << anchoredImage 
+		"] 
+		on: Exception  
+		do: [self visitAll: aFigure children]."
 ]
 
 { #category : #'visiting - document' }
 PRRichTextComposer >> visitHeader: aHeader [
 
 	canvas newLineIfNotAlready.
+	canvas newLine.
 	canvas
 		includeAttribute: (self class headerLevelFont: aHeader level)
 		in: [ self visitDocumentGroup: aHeader ].

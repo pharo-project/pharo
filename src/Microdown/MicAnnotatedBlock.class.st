@@ -1,12 +1,11 @@
 "
-I'm a block starting with !!text paragraph (@@note @@important in Pillar)
+MicroDownParserrting with `!!paragraph` (such as `@@note` `@@important` in Pillar).
 
 !!note This is important so I used exclamatation mark.
 
-For now I do not accept top level blocks.
-
-1. one
-1. Two
+### Known limits. 
+We should revisit the implementation because there is something unclear. 
+See [https://github.com/pillar-markup/MicroDown/issues/54](https://github.com/pillar-markup/MicroDown/issues/54)
 
 "
 Class {

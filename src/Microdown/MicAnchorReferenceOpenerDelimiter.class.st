@@ -1,3 +1,10 @@
+"
+An anchor reference represents a reference to a section, figure, environment. It follows the pattern `*@`, label, `@*`
+
+```
+See *@fig1@*
+```
+"
 Class {
 	#name : #MicAnchorReferenceOpenerDelimiter,
 	#superclass : #MicAbstractDelimiter,

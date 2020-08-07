@@ -1,17 +1,21 @@
 "
 I'm a simple class to determine what should be done when a monospaced text is displayed.
+I'm like a little interpreter that will compute the entity that should be browsed.
+I only work with in image entity.
+
 
 ```language=PharoExpression
-PRSemanticAction from: 'Point class>>#setX:setY:.
+| sem |
+sem := PRSemanticAction from: 'Point class>>#setX:setY:'.
 sem hasEntity
->>> true 
+>>> true
+sem browse
 ```
 "
 Class {
 	#name : #PRSemanticAction,
 	#superclass : #Object,
 	#instVars : [
-		'string',
 		'entity',
 		'tokens'
 	],
@@ -20,7 +24,12 @@ Class {
 
 { #category : #'instance creation' }
 PRSemanticAction class >> from: aString [ 
-	^ self new from: aString; yourself
+	^ self fromTokens: (RBScanner scanTokens: aString)
+]
+
+{ #category : #'instance creation' }
+PRSemanticAction class >> fromTokens: anArray [ 
+	^ self new fromTokens: anArray; yourself
 ]
 
 { #category : #'instance creation' }
@@ -32,7 +41,6 @@ PRSemanticAction >> computeEntity [
 		#'PackageNameWithDashes'
 		"
 	| size |
-	tokens := RBScanner scanTokens: string.
 	size := tokens size.
 	size = 0 ifTrue: [ ^ self ].
 	"either 'Point' for a class or #'''System-Caching''' for a package"
@@ -58,10 +66,10 @@ PRSemanticAction >> entity [
 ]
 
 { #category : #'instance creation' }
-PRSemanticAction >> from: aString [
+PRSemanticAction >> fromTokens: anArray [
 	
-	aString ifEmpty: [ ^ self].
-	string := aString.
+	anArray ifEmpty: [ ^ self].
+	tokens := anArray.
 	self computeEntity.
 ]
 
@@ -98,9 +106,10 @@ PRSemanticAction >> getMetaClassOrNil [
 
 	self class environment 
 			at: tokens first asSymbol  
-			ifPresent: [ :cl | entity := cl. tokens second = 'class' 
-															ifTrue: [ entity := entity class ]
-															ifFalse: [ entity := nil "because we do not want Point foo" ] ]
+			ifPresent: [ :cl | entity := cl. 
+					tokens second = 'class' 
+						ifTrue: [ entity := entity class ]
+						ifFalse: [ entity := nil "because we do not want Point foo" ] ]
 			ifAbsent: [ ].
 	^ entity
 				

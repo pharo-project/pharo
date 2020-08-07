@@ -23,6 +23,17 @@ Class {
 }
 
 { #category : #constructor }
+MicAbstractInlineBlock class >> from: aStartInteger to: anEndInteger withKind: aKind withSubstring: aString [
+	^ self new 
+		start: aStartInteger; 
+		end: anEndInteger; 
+		kind: aKind; 
+		substring: aString; 
+		children: Array empty; 
+		cleanSubstring; yourself.	
+]
+
+{ #category : #constructor }
 MicAbstractInlineBlock class >> from: aStartInteger to: anEndInteger withKind: aKind withSubstring: aString withChildren: aChildren [
 	^ self new 
 		start: aStartInteger; 

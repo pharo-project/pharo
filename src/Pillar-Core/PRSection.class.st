@@ -7,11 +7,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRSection class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PRSection >> accept: aVisitor [
 	^ aVisitor visitSection: self
