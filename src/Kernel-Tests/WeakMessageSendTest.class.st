@@ -11,7 +11,7 @@ Class {
 WeakMessageSendTest >> testCollectArguments [
 
 	"Fogbugz issue 18127"
-	"Test is passed if no primitve fails"
+	"Test is passed if no primitive fails"
 	
 	| msg rcvr c|
 	
