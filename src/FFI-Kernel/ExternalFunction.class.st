@@ -1,5 +1,5 @@
 "
-This class represents an external function called from Smalltalk. Instances of ExternalFunction can be created if the address/parameters of the function are known by some other means than loading from a shared library or compiling the appropriate primitive specification.
+This class represents an external function called from Pharo. Instances of ExternalFunction can be created if the address/parameters of the function are known by some other means than loading from a shared library or compiling the appropriate primitive specification.
 
 Instance variables:
 	flags	<Integer>	a set of flags encoding the calling convention
