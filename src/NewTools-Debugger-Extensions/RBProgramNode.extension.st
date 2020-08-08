@@ -6,7 +6,7 @@ RBProgramNode >> allBreakpointLinks [
 ]
 
 { #category : #'*NewTools-Debugger-Extensions' }
-RBProgramNode >> enableForHaltOrBreakpoint: aBoolean [
+RBProgramNode >> enableHalts: aBoolean [
 	^self propertyAt: #enabledForHaltOrBreakpoint put: aBoolean
 ]
 

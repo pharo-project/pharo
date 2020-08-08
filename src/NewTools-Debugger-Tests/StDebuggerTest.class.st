@@ -147,7 +147,8 @@ StDebuggerTest >> testContextTempVarList [
 	contextItems := inspectorTable roots.
 	self assert: contextItems first rawValue equals: session shortStack first receiver. "receiver"	
 	self assert: (contextItems second rawValue at: #i) equals: 1.
-	self assert: contextItems last rawValue equals: 1. "stackTop"
+	self assert: contextItems third rawValue equals: 1. "stackTop"
+	self assert: contextItems last rawValue equals: dbg currentContext.
 ]
 
 { #category : #'tests - context inspector' }
@@ -412,19 +413,22 @@ StDebuggerTest >> testStackTableElementsPrinting [
 	columns := self initializedDebugger stackTable columns.
 	classColumn := columns first.
 	methodColumn := columns second.
-	senderColumn := columns third.
+	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
+	"senderColumn := columns third."
 	method := self class >> #testStackTableElementsPrinting.
 	block := [ :a | a ].
 	
 	context := (Context newForMethod: method) setSender: self receiver: self method: method arguments: #(  ).
 	self assert: (classColumn evaluation value: context) equals: self class.
 	self assert: (methodColumn evaluation value: context) equals: method selector.
-	self assert: (senderColumn evaluation value: context) equals: self stDisplayString.
+	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
+	"self assert: (senderColumn evaluation value: context) equals: self stDisplayString."
 	
 	context := (Context newForMethod: method) setSender: self receiver: self method: block method arguments: #(  ).
 	self assert: (classColumn evaluation value: context) equals: self class.
 	self assert: (methodColumn evaluation value: context) equals: block sourceNode sourceCode.
-	self assert: (senderColumn evaluation value: context) equals: self stDisplayString.
+	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
+	"self assert: (senderColumn evaluation value: context) equals: self stDisplayString."
 ]
 
 { #category : #'tests - stack table' }
