@@ -1,5 +1,5 @@
 "
-An ExternalAddress is an opaque handle to objects outside Smalltalk memory (e.g., a pointer).
+An ExternalAddress is an opaque handle to objects outside Pharo memory (e.g., a pointer).
 "
 Class {
 	#name : #ExternalAddress,
