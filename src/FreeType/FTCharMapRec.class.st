@@ -1,5 +1,5 @@
 "
-I implement the FT_CharMap_Rec
+I implement the `FT_CharMap_Rec`
 "
 Class {
 	#name : #FTCharMapRec,
