@@ -10,7 +10,7 @@ ProportionalSplitterMorph >> adoptPaneColor: paneColor [
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> hasLeftOrTop: aMorph [
-	"Answer whether the reciver has the given morph
+	"Answer whether the receiver has the given morph
 	as one of of its left or top morphs."
 
 	^leftOrTop includes: aMorph
@@ -18,7 +18,7 @@ ProportionalSplitterMorph >> hasLeftOrTop: aMorph [
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> hasRightOrBottom: aMorph [
-	"Answer whether the reciver has the given morph
+	"Answer whether the receiver has the given morph
 	as one of of its right or bottom morphs."
 
 	^rightOrBottom includes: aMorph
@@ -70,7 +70,7 @@ ProportionalSplitterMorph >> noteNewOwner: o [
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> overlapsHorizontal: aSplitter [
-	"Answer whether the receiver overlaps the given spiltter
+	"Answer whether the receiver overlaps the given splitter
 	in the horizontal plane."
 
 	^aSplitter left <= self right and: [aSplitter right >= self left]
@@ -78,7 +78,7 @@ ProportionalSplitterMorph >> overlapsHorizontal: aSplitter [
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> overlapsVertical: aSplitter [
-	"Answer whether the receiver overlaps the given spiltter
+	"Answer whether the receiver overlaps the given splitter
 	in the vertical plane."
 
 	^aSplitter top <= self bottom and: [aSplitter bottom >= self top]
@@ -100,14 +100,14 @@ ProportionalSplitterMorph >> setGrabbedColor [
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> shouldDraw [
-	"Answer whether the resizer should be drawn."
+	"Answer whether the receiver should be drawn."
 	
 	^super shouldDraw or: [self class showSplitterHandles]
 ]
 
 { #category : #'*Polymorph-Widgets' }
 ProportionalSplitterMorph >> shouldInvalidateOnMouseTransition [
-	"Answer whether the resizer should be invalidated
+	"Answer whether the receiver should be invalidated
 	when the mouse enters or leaves."
 	
 	^self class showSplitterHandles
