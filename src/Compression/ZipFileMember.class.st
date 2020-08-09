@@ -193,7 +193,7 @@ ZipFileMember >> uncompressDataTo: aStream [
 		| chunkSize |
 		chunkSize := 32768 min: readDataRemaining.
 		buffer := decoder next: chunkSize into: buffer startingAt: 1.
-		aStream next: chunkSize putAll: buffer startingAt: 1.
+		aStream next: (chunkSize min: buffer size) putAll: buffer startingAt: 1.
 		readDataRemaining := readDataRemaining - chunkSize.
 	]] on: CRCError do: [ :ex | crcErrorMessage := ex messageText. ex resume ].
 
