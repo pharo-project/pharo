@@ -153,6 +153,14 @@ SpDialogWindowPresenter >> okAction: aBlock [
 	okAction := aBlock
 ]
 
+{ #category : #'private-traversing' }
+SpDialogWindowPresenter >> traverseInFocusOrderDo: aBlock excluding: excludes [
+
+	super traverseInFocusOrderDo: aBlock excluding: excludes.
+	self buttons do: [ :each |
+		each traverseInFocusOrderDo: aBlock excluding: excludes ]	
+]
+
 { #category : #api }
 SpDialogWindowPresenter >> triggerCancelAction [
 

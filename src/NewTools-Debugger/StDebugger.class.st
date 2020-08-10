@@ -542,7 +542,7 @@ StDebugger >> context [
 
 { #category : #actions }
 StDebugger >> copyStackToClipboard [
-	self debuggerActionModel peelToFirstLike: self currentContext
+	self debuggerActionModel copyStackToClipboard
 ]
 
 { #category : #actions }
@@ -753,25 +753,25 @@ StDebugger >> initializePresenters [
 StDebugger >> initializeStack [
 	stackTable := self newTable.
 	stackTable
+		addColumn: (SpStringTableColumn
+				 title: 'Class'
+				 evaluated: [ :item | item receiver class ]);
 		addColumn:
-			(SpStringTableColumn
-				title: 'Class'
-				evaluated: [ :item | item receiver class ]);
-		addColumn:
-			(SpStringTableColumn
-				title: 'Method'
-				evaluated: [ :item | item method selector ]);
-		addColumn:
-			(SpStringTableColumn
-				title: 'Context'
-				evaluated: [ :item | item sender stDisplayString ]).
-	stackTable
-		transmitDo: [ :context | 
-			stackTable selection isEmpty
-				ifFalse: [ self updateInspectorFromContext: context.
-					self updateCodeFromContext: context.
-					self updateTitle.
-					self expandStackIfLastItemIsSelected ] ].
+			(SpStringTableColumn title: 'Method' evaluated: [ :item | 
+					 | method |
+					 method := item method.
+					 method isCompiledBlock
+						 ifTrue: [ method sourceNode sourceCode ]
+						 ifFalse: [ method selector ] ]);
+		addColumn: (SpStringTableColumn
+				 title: 'Context'
+				 evaluated: [ :item | item sender stDisplayString ]).
+	stackTable transmitDo: [ :context | 
+		stackTable selection isEmpty ifFalse: [ 
+			self updateInspectorFromContext: context.
+			self updateCodeFromContext: context.
+			self updateTitle.
+			self expandStackIfLastItemIsSelected ] ].
 	stackHeader := self instantiate: StHeaderBar.
 	stackHeader label: 'Stack'
 ]
@@ -1138,13 +1138,14 @@ StDebugger >> updateExtensionsFrom: newSession [
 StDebugger >> updateInspectorFromContext: aContext [
 	inspector
 		updateLayoutForContexts: self session interruptedContext
-		isAssertionFailure: self debuggerActionModel isInterruptedContextAnAssertEqualsFailure.
-	inspector
-		updateWith:
-			(StDebuggerContext
-				context: aContext
-				session: self session
-				debugger: self)
+		isAssertionFailure:
+		self debuggerActionModel isInterruptedContextAnAssertEqualsFailure.
+	inspector updateWith: (StDebuggerContext
+			 context: aContext
+			 session: self session
+			 debugger: self).
+	self flag: #DBG_INSPECTOR_UPDATE_BUG.
+	inspector getRawInspectorPresenterOrNil ifNotNil: [:p| p update].
 ]
 
 { #category : #'updating actions' }
@@ -1173,6 +1174,8 @@ StDebugger >> updateStep [
 	self updateExtensionsFrom: self session.
 	self updateTitle.
 	self updateToolbarDebugActions.
+	self flag: #DBG_INSPECTOR_UPDATE_BUG.
+	inspector getRawInspectorPresenterOrNil ifNotNil: [:p| p update].
 ]
 
 { #category : #'updating actions' }

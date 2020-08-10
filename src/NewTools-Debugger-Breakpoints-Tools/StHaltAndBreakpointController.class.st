@@ -45,7 +45,7 @@ StHaltAndBreakpointController >> areHaltsAndBreakpoinsEnabledFor: aProgramNode [
 
 { #category : #control }
 StHaltAndBreakpointController >> disableBreakpointNode: aProgramNode [
-	aProgramNode allBreakpointLinks do: [ :link | link condition: [false]; disable ].
+	aProgramNode breakpoints do: [ :bp | bp disable ].
 	self skipNode: aProgramNode
 ]
 
@@ -80,7 +80,7 @@ StHaltAndBreakpointController >> disableObjectCentricBreakpoint: anObjectCentric
 
 { #category : #control }
 StHaltAndBreakpointController >> enableBreakpointNode: aProgramNode [
-	aProgramNode allBreakpointLinks do: [ :link | link condition: [true]; enable ].
+	aProgramNode breakpoints do: [ :bp | bp enable ].
 	self removeSkipLinksFor: aProgramNode
 ]
 

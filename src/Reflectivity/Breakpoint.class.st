@@ -22,7 +22,9 @@ Class {
 		'#node',
 		'#level',
 		'#options',
-		'#targetInstance => WeakSlot'
+		'#targetInstance => WeakSlot',
+		'#oneShot',
+		'#enabled'
 	],
 	#classVars : [
 		'#AllBreakpoints',
@@ -197,7 +199,7 @@ Breakpoint class >> removeFrom: aNode [
 	links addAll: (aNode beforeLinks select: [ :link | link metaObject = Break]).
 	links addAll: (aNode afterLinks select: [ :link | link metaObject = Break]).
 	breakpointsToRemove := self all select: [ :br | links includes: br link].
-	breakpointsToRemove asSet do: #remove
+	breakpointsToRemove asSet do: [:breakpoint| breakpoint remove]
 ]
 
 { #category : #cleanup }
@@ -220,18 +222,24 @@ Breakpoint >> always [
 
 ]
 
+{ #category : #api }
+Breakpoint >> breakInContext: aContext node: aNode [
+	 <debuggerCompleteToSender>
+	 self class notifyBreakpointHit: self inContext: aContext node: aNode.
+	 self isEnabled ifFalse: [ ^ self ].
+	 self oneShot ifTrue: [ self disable ].
+	 Break break
+]
+
 { #category : #links }
 Breakpoint >> breakLink [
 	"for now it should just halt in base level"
 
 	^ MetaLink new
-		metaObject: Break;
-		selector: #break:inContext:node:;
-		options: options;
-		arguments:
-			{(RFLiteralVariableNode value: self).
-			#context.
-			#node}
+		  metaObject: self;
+		  selector: #breakInContext:node:;
+		  options: options;
+		  arguments: #(#context #node)
 ]
 
 { #category : #links }
@@ -239,15 +247,20 @@ Breakpoint >> breakLinkConditional [
 	^self breakLink condition: condition arguments: #(context)
 ]
 
-{ #category : #links }
-Breakpoint >> breakLinkOneShot [
-	^ self breakLink optionOneShot: true
-]
-
 { #category : #api }
 Breakpoint >> condition: aCondition [
 	condition := aCondition.
 	self link: self breakLinkConditional
+]
+
+{ #category : #api }
+Breakpoint >> disable [
+	enabled := false
+]
+
+{ #category : #api }
+Breakpoint >> enable [
+	enabled := true
 ]
 
 { #category : #initialization }
@@ -263,7 +276,13 @@ Breakpoint >> install [
 	self isObjectCentric
 		ifTrue: [ self targetInstance link: self link toAST: self node.
 			^ self ].
-	self node link: self link
+	self node link: self link.
+	self setAsNodeProperty
+]
+
+{ #category : #testing }
+Breakpoint >> isEnabled [
+	^enabled ifNil:[enabled := true]
 ]
 
 { #category : #testing }
@@ -303,8 +322,17 @@ Breakpoint >> node: aNode [
 
 { #category : #api }
 Breakpoint >> once [
-	self link: self breakLinkOneShot
-	
+	oneShot := true
+]
+
+{ #category : #accessing }
+Breakpoint >> oneShot [
+	^oneShot ifNil:[oneShot := false]
+]
+
+{ #category : #accessing }
+Breakpoint >> options [
+	^options
 ]
 
 { #category : #accessing }
@@ -314,13 +342,26 @@ Breakpoint >> options: anArray [
 
 { #category : #install }
 Breakpoint >> remove [
+	self removeFromNodeProperty.
 	self class removeBreakpoint: self.
 	link uninstall
+]
+
+{ #category : #install }
+Breakpoint >> removeFromNodeProperty [
+	self node removeBreakpoint: self
+	
 ]
 
 { #category : #api }
 Breakpoint >> scopeTo: anInstance [
 	self targetInstance: anInstance
+]
+
+{ #category : #install }
+Breakpoint >> setAsNodeProperty [
+	self node addBreakpoint: self
+	
 ]
 
 { #category : #accessing }

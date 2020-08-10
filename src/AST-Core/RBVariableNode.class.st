@@ -214,6 +214,11 @@ RBVariableNode >> isVariable [
 ]
 
 { #category : #testing }
+RBVariableNode >> isWorkspaceVariable [
+	^ variable isWorkspaceVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isWrite [
 	^ self parent notNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
 ]

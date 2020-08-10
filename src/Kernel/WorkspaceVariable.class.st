@@ -25,3 +25,8 @@ WorkspaceVariable >> emitValue: methodBuilder [
 WorkspaceVariable >> isReferenced [
 	^ false
 ]
+
+{ #category : #testing }
+WorkspaceVariable >> isWorkspaceVariable [
+	^ true
+]

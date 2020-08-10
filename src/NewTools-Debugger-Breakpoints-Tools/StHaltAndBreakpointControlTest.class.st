@@ -39,12 +39,14 @@ StHaltAndBreakpointControlTest >> setUp [
 	super setUp.
 	StHaltCache defaultCache removeSubscriptions.	
 	cache := StHaltCache new.
+	cache isActive: true.
 	self compileMethodsWithHalts.
 ]
 
 { #category : #running }
 StHaltAndBreakpointControlTest >> tearDown [
-	StHaltCache defaultCache registerSubscriptions.
+	StHaltCache defaultCache updateSubscriptions.
+	cache removeSubscriptions.
 	cache := nil.
 	self removeMethodsWithHalts.
 	super tearDown

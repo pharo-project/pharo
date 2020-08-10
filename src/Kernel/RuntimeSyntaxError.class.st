@@ -18,11 +18,16 @@ RuntimeSyntaxError class >> signal: aNode [
 ]
 
 { #category : #accessing }
+RuntimeSyntaxError >> errorMessage [
+	^errorNode errorMessage
+]
+
+{ #category : #accessing }
 RuntimeSyntaxError >> errorNode: aNode [
 	errorNode := aNode
 ]
 
 { #category : #accessing }
 RuntimeSyntaxError >> messageText [
-	^errorNode errorMessage
+	^self errorMessage
 ]

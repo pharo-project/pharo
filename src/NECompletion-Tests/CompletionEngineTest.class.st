@@ -21,6 +21,12 @@ CompletionEngineTest >> allSmartCharacters [
 	^ self allSelfClosingCharacters , { '||'. '<>' }
 ]
 
+{ #category : #'as yet unclassified' }
+CompletionEngineTest >> interactionModel [
+	
+	^ nil
+]
+
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> keyboardEventFor: char [
 
@@ -29,6 +35,25 @@ CompletionEngineTest >> keyboardEventFor: char [
 	event 
 		setType: #keystroke
 		buttons: 0
+		position:  0@0
+		keyValue: char asciiValue 
+		charCode: char asciiValue
+		hand: nil 
+		stamp: Time now.
+		
+	^event
+]
+
+{ #category : #'tests-keyboard' }
+CompletionEngineTest >> keyboardEventFor: char useCommand: command [
+
+	| event modifier |
+	event := KeyboardEvent new.
+	modifier := 0.
+	command ifTrue: [ modifier := modifier + 64].
+	event 
+		setType: #keystroke
+		buttons: modifier
 		position:  0@0
 		keyValue: char asciiValue 
 		charCode: char asciiValue
@@ -59,6 +84,12 @@ CompletionEngineTest >> selectFrom: start to: stop [
 	editor selectFrom: start to: stop
 ]
 
+{ #category : #'as yet unclassified' }
+CompletionEngineTest >> selectedClassOrMetaClass [
+	
+	^ nil
+]
+
 { #category : #'tests-keyboard' }
 CompletionEngineTest >> setEditorText: aString [
 	editor selectAll; addString:  aString 
@@ -73,6 +104,7 @@ CompletionEngineTest >> setUp [
 	controller := self newCompletionEngine.
 	controller setEditor: editor.
 	editor completionEngine: controller.
+	editor textArea model: self.
 ]
 
 { #category : #running }

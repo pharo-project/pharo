@@ -7,7 +7,7 @@ This is the unit test for the class Character. Unit tests are a good way to exer
 Class {
 	#name : #CharacterTest,
 	#superclass : #ClassTestCase,
-	#category : #'Collections-Tests-Strings'
+	#category : #'Collections-Strings-Tests-Base'
 }
 
 { #category : #coverage }

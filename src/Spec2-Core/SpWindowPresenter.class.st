@@ -200,8 +200,8 @@ SpWindowPresenter >> close [
 
 	"Only manage closing if the presenter is really open"
 	self isOpen ifFalse: [ ^ self ].
-	
-	self changed: #close with: #().
+	self withAdapterDo: [ :anAdapter | 
+		anAdapter close ]
 ]
 
 { #category : #private }
@@ -310,7 +310,7 @@ SpWindowPresenter >> isDialog [
 { #category : #api }
 SpWindowPresenter >> isDisplayed [
 
-	^ self window 
+	^ self adapter
 		ifNotNil: [ :w | w isDisplayed ]
 		ifNil: [ false ] 
 ]
@@ -556,8 +556,9 @@ SpWindowPresenter >> window: aWindow [
 ]
 
 { #category : #private }
-SpWindowPresenter >> windowClosed [ 
+SpWindowPresenter >> windowClosed [
 	
+	isClosed := true.
 	self application windowClosed: self
 ]
 
@@ -573,9 +574,8 @@ SpWindowPresenter >> windowIcon: aForm [
 
 { #category : #updating }
 SpWindowPresenter >> windowIsClosing [
-	isClosed := true.
-	self windowClosed.
-	self presenter windowIsClosing.
+
+	self presenter windowIsClosing
 ]
 
 { #category : #updating }

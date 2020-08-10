@@ -369,9 +369,7 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	| var |
-	var := self lookupTempVar: aName.
-	^var readInContext: self
+	^(self lookupTempVar: aName) readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -380,7 +378,8 @@ Context >> tempNamed: aName put: anObject [
 	
 	| var |
 	var := self lookupTempVar: aName.
-	var write: anObject inContext: self
+	var write: anObject inContext: self.
+	^ anObject
 ]
 
 { #category : #'*Debugging-Core' }
