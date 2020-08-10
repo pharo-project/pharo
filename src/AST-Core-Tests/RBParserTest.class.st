@@ -97,9 +97,10 @@ RBParserTest >> testArrayNodesContainRightAmountOfStatementsAndPeriods [
 	  ('{foo. bar.}' 2 2) 
 	  ('{foo. bar. .}' 2 3) 
 	  ('{. foo. bar}' 2 2) 
-	  ('{foo.. bar}' 2 2)) do: [ :each | tree := self parserClass parseExpression: each first.
-													self assert: tree statements size equals: each second.
-													self assert: tree periods size equals: each last. ]
+	  ('{foo.. bar}' 2 2)) 
+	do: [ :each | tree := self parserClass parseExpression: each first.
+			self assert: tree statements size equals: each second.
+			self assert: tree periods size equals: each last. ]
 ]
 
 { #category : #'garbage tests' }
@@ -180,7 +181,7 @@ RBParserTest >> testBinarySelectors [
 		messageNode := methodNode statements first value.
 		self assert: messageNode isMessage.
 		self assert: messageNode receiver name equals: #self.
-		self assert: messageNode selector value equals: each asSymbol.
+		self assert: messageNode selector equals: each asSymbol.
 		self assert: messageNode arguments size equals: 1.
 		self assert: messageNode arguments first isValue.
 		self assert: messageNode arguments first name equals: #anObject].

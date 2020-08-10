@@ -30,7 +30,7 @@ RBSelectorNode class >> value: aString start: anInteger [
 { #category : #comparing }
 RBSelectorNode >> = anObject [ 
 	self == anObject ifTrue: [^true].
-	^ (self class = anObject class) ifTrue: [ (self value = anObject value) ] ifFalse: [ false ]
+	^ self class = anObject class ifTrue: [ self value = anObject value ] ifFalse: [ false ]
 ]
 
 { #category : #comparing }
@@ -82,7 +82,13 @@ RBSelectorNode >> startWithoutParentheses [
 RBSelectorNode >> stopWithoutParentheses [
 	| temp prev |
 	temp := 0.
-	^ (start collect: [ :each | prev := temp. temp := value findString: ':' startingAt: prev+1. temp=0 ifFalse: [each + temp - prev -1 ] ifTrue: [each + value size - 1]]) asIntegerArray.
+	^ (start collect: [ :each | prev := temp. 
+							 temp := value 
+								findString: ':' 
+								startingAt: prev+1. 
+							 temp=0 
+								ifFalse: [each + temp - prev -1 ] 
+								ifTrue: [each + value size - 1]]) asIntegerArray.
 	
 ]
 

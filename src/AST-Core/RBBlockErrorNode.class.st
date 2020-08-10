@@ -22,9 +22,9 @@ RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 	aCollection isEmpty
 		ifTrue: [ ^self new content: aCollection; start: aToken start; stop: aToken stop; errorMessage: message ].
 	"If the collection is not empty, we have to sort where the node begins and where it ends."
-	(message = ''']'' expected')
-		ifTrue: [ ^self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
-		ifFalse: [ ^self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
+	^message = ''']'' expected'
+		ifTrue: [ self new content: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: message ]
+		ifFalse: [ self new content: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
 { #category : #testing }
@@ -41,13 +41,15 @@ RBBlockErrorNode >> repairCollectionFromStart [
 	collection := self content statements.
 	result := OrderedCollection new.
 	removedStatements := OrderedCollection new.
-	[ collection isNotNil ] whileTrue: [ | statements node | statements := OrderedCollection new.
-													node := TPRBArrayNode statements: collection.
-													node start: self start.
-													statements add: node .
-													result add: statements, removedStatements.
-													removedStatements addFirst: collection last.
-												   collection removeLast. ].
+	[ collection isNotNil ] 
+		whileTrue: [ | statements node | 
+						 statements := OrderedCollection new.
+						 node :=  RBArrayNode statements: collection.
+						 node start: self start.
+					 	 statements add: node .
+						 result add: statements, removedStatements.
+						 removedStatements addFirst: collection last.
+						 collection removeLast. ].
 	result add: removedStatements.
 	^collection.
 	

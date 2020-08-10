@@ -207,7 +207,7 @@ RBMessageNode >> keywordsIntervals [
 
 { #category : #accessing }
 RBMessageNode >> keywordsPositions [
-	^keywordsPositions ifNil: [ (self selector keywords collect: [:char| 0 ]) asIntegerArray ]
+	^keywordsPositions ifNil: [ IntegerArray new: self selector keywords size withAll: 0 ]
 ]
 
 { #category : #accessing }
@@ -407,7 +407,7 @@ RBMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector isString
 		ifTrue: [ RBSelectorNode value: aSelector ]
-		ifFalse: [ aSelector. ].
+		ifFalse: [ aSelector ].
 	selector parent: self.
 	
 ]
