@@ -50,7 +50,7 @@ SpNotebookTabSelectorMorph >> removeTabIndex: anInteger [
 	
 	self tabs removeAt: anInteger.
 	selectedIndex >= anInteger ifTrue: [
-		selectedIndex = anInteger
+		selectedIndex = anInteger & (selectedIndex <= self tabs size)
 			ifTrue: [
 				self selectedIndex: 0. "to update new tab at current selected index"
 				self tabs ifNotEmpty: [self selectedIndex: self selectedIndex - 1 \\ self tabs size + 1 ] ]
