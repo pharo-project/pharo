@@ -97,9 +97,28 @@ RBParserTest >> testArrayNodesContainRightAmountOfStatementsAndPeriods [
 	  ('{foo. bar.}' 2 2) 
 	  ('{foo. bar. .}' 2 3) 
 	  ('{. foo. bar}' 2 2) 
-	  ('{foo.. bar}' 2 2)) do: [ :each | tree := self parserClass parseExpression: each first.
-													self assert: tree statements size equals: each second.
-													self assert: tree periods size equals: each last. ]
+	  ('{foo.. bar}' 2 2)) 
+	do: [ :each | tree := self parserClass parseExpression: each first.
+			self assert: tree statements size equals: each second.
+			self assert: tree periods size equals: each last. ]
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testAssignToMessageRaisesSyntaxError [
+	"Raising a syntax exception when trying to do an assignement on a message."
+	self should: [self parserClass parseExpression: 'receiver selector := 1 + 2'] raise: SyntaxErrorNotification.
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testAssignementRightValueWithUnfortunatePontuationRaisesSyntaxError [
+	"The idea is for the parser to realise the first dot isn't supposed to be here and select it. Also add a side note to give suggestion     on the provenance of the error."
+	self should: [self parserClass parseExpression: 'temp := .1 + 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := 1. + 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := 1 +. 2.'] raise: SyntaxErrorNotification.
+	
+	"The same could be made for other special characters."
+	self should: [self parserClass parseExpression: 'temp := ;1 + 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := ,1 + 2.'] raise: SyntaxErrorNotification.
 ]
 
 { #category : #'error testing' }
@@ -162,7 +181,7 @@ RBParserTest >> testBinarySelectors [
 		messageNode := methodNode statements first value.
 		self assert: messageNode isMessage.
 		self assert: messageNode receiver name equals: #self.
-		self assert: messageNode selector value equals: each asSymbol.
+		self assert: messageNode selector equals: each asSymbol.
 		self assert: messageNode arguments size equals: 1.
 		self assert: messageNode arguments first isValue.
 		self assert: messageNode arguments first name equals: #anObject].
@@ -542,6 +561,72 @@ RBParserTest >> testFormatter [
 			to: (self parserClass parseMethod: (class parseTreeFor: selector) printString) ] ]
 ]
 
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageForgottenDotAfterAssignement [
+	| tree child error |
+	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: SyntaxErrorNotification.
+	
+	tree := self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'.
+	self assert: tree isSequence.
+	
+	"There should only be one statement as there is no dot."
+	child := tree statements.
+	self assert: (child size) equals: 1.
+	self assert: child first isAssignment.
+	
+	"Getting the part changed by missing dot."
+	error := child first value receiver arguments first.
+	self assert: error isMessage.
+	self assert: error receiver value equals: 2.
+	self assert: error selectorNode equals: (RBSelectorNode value: #temp)
+	
+	
+	
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageForgottenReceiver [
+	"Test made in sight of implementing the search of previous litterals when encountering an unknown 
+	 variable in case it is, in fact, a selector. This works for cascade (forgotten ;) or missing 
+	 receiver like self ..."
+	self should: [self parserClass parseExpression: '|temp | temp := 1 + 2. + 3'] raise: SyntaxErrorNotification.
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageTemporaryVariable [
+	| tree |
+	tree := self parseFaultyExpression: '| temp'.
+	self assert: tree isFaulty.
+	self assert: tree errorMessage equals: '''|'' expected'.
+	
+	
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageTemporaryVariableHasMissingClosure [
+	| tree |
+	tree := self parseFaultyExpression: '| temp'.
+	self assert: tree isFaulty.
+	self assert: tree errorMessage equals: '''|'' expected'.
+	
+	
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageTemporaryVariableIsWrong [
+	"The parser doesn't recognise the 2 because it is not an identifier."
+	| tree errorNode |
+	tree := self parseFaultyExpression: '| 2 |'.
+	self assert: tree isFaulty.
+	self assert: tree isSequence.
+	
+	errorNode := tree statements first.
+	self assert: errorNode isParseError.
+	self assert: errorNode errorMessage equals: '''|'' expected'.
+	
+	
+]
+
 { #category : #'tests interval' }
 RBParserTest >> testGeneralBlockIntervalsArray [
 	"This tests that all types of nodes in a method are well made."
@@ -793,6 +878,12 @@ RBParserTest >> testInvalidPragmaPosition [
 	'foo ^ <foo: $a>'
 	) 
 	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: SyntaxErrorNotification ]
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testInvalidSelectorRaisesSyntaxError [
+	"Could propose multiple reparations like assignement, period, array..."
+	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: SyntaxErrorNotification.
 ]
 
 { #category : #tests }
@@ -1637,7 +1728,7 @@ RBParserTest >> testQuerying [
 	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b')
 ]
 
-{ #category : #tests }
+{ #category : #'to be reworked' }
 RBParserTest >> testQueryingPrimitiveErrorVar [
 	| tree |
 	tree := self parserClass 
@@ -1821,6 +1912,12 @@ RBParserTest >> testUnclosedParenthesesErrorNodeContainsRightValue [
 	tree := self parseFaultyExpression: '( faulty parentheses message node'.
 	self assert: tree isEnglobingError.
 	self assert: tree value equals: '( faulty parentheses message node '
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testUnclosedParenthesesRaiseSyntaxError [
+	"Should propose a closing parenthese before the end of the statement. Should also offer possibility to quickly erase it."
+	self should: [self parserClass parseExpression: '(temp := 1 + 3 .'] raise: SyntaxErrorNotification.
 ]
 
 { #category : #'error testing' }

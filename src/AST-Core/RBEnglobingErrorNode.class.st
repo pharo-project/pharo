@@ -40,7 +40,7 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 	('#(' = aToken value asString)
 		ifTrue: [ ^RBLiteralArrayErrorNode error: aToken withNodes: aCollection ].
 	('#[' = aToken value asString)
-		ifTrue: [ ^TPRBLiteralByteArrayErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^RBLiteralByteArrayErrorNode error: aToken withNodes: aCollection ].
 	('{}' includes: aToken value)
 		ifTrue: [ ^RBArrayErrorNode error: aToken withNodes: aCollection ].
 	('|' = aToken value asString)

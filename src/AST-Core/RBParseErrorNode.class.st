@@ -130,7 +130,7 @@ RBParseErrorNode >> startWithoutParentheses [
 { #category : #accessing }
 RBParseErrorNode >> stop [
 	^ stop 
-		ifNil: [start + value size - 1.]
+		ifNil: [start + value size - 1]
 		ifNotNil: [ stop ]
 ]
 

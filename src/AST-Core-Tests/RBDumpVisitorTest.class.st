@@ -283,7 +283,7 @@ RBDumpVisitorTest >> testSelfNodeDump [
 	
 	self assert: dumpedNode class equals: RBSelfNode. 
 	self assert: node class equals: dumpedNode class.
-	self assert: node printString equals: dumpedNode printString.
+	self assert: dumpedNode isSelf.
 	
 ]
 
@@ -309,7 +309,7 @@ RBDumpVisitorTest >> testSuperNodeDump [
 	
 	self assert: dumpedNode class equals: RBSuperNode. 
 	self assert: node class equals: dumpedNode class.
-	self assert: node printString equals: dumpedNode printString.
+	self assert: dumpedNode isSuper.
 	
 ]
 
