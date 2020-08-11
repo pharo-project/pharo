@@ -1,12 +1,14 @@
 "
 I live as an instance variable in a Browser, Debugger, Workspace or other window. I'm the glue between all participants of the completion system. I create the NECContext and pass myself to the NECMenuMorph. I process the keyboard events and pass them to the NECMenuMorph or close the morph if needed.
 
-My method codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: evt
-is the starting point of the completion process.
+The completion process has two starting points, and they are
 
-I'm invoked before and after a keystroke. Check method handleKeystrokeBefore: evt editor: editor and handleKeystrokeAfter: evt editor: editor.
++ `handleKeystrokeBefore:editor:`
++ `handleKeystrokeAfter:editor:`
 
-The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of ==atCompletionPosition==
+These two methods are usually sent from `completionAround:keyStroke:`.
+
+The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of `atCompletionPosition`
 "
 Class {
 	#name : #CompletionEngine,
@@ -115,6 +117,10 @@ CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEdito
 CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"Returns true when I have handled the event and no further processing is needed by the caller,
 	and false otherwise.
+	
+	This message is usually sent by anEditor, requesting completionEngine to handle aKeyboardEvent 
+	before evaluating a given block. The given block (in sender) will usually not be evaluated 
+	if I return true.
 	
 	This method would be cleaner if splitted."
 

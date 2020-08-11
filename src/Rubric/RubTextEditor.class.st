@@ -545,8 +545,10 @@ RubTextEditor >> compareToClipboard: aKeyboardEvent [
 
 { #category : #'completion engine' }
 RubTextEditor >> completionAround: aBlock keyStroke: anEvent [
-	"No code completion for simple text editor, so nothing special to do here around the block execution"
+	"Handle anEvent. Evaluate aBlock if anEvent was not handled"
 	
+	"Since I am a simple text editor, I have no code completion functionality, 
+	so nothing special to do here - just evaluate aBlock"
 	aBlock value
 ]
 

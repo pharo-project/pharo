@@ -329,13 +329,21 @@ RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 
 { #category : #'completion engine' }
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
-	"I'm a editor for Smalltalk, so, do completion around"
+	"Handle anEvent. Evaluate aBlock if anEvent was not handled"
 	
-	self isCompletionEnabled ifFalse: [  ^aBlock value ].
+	"Since I'm a editor for Smalltalk, I have code completion!"
+
+	"Skip completion if it is not enabled"
+	self isCompletionEnabled ifFalse: [ ^ aBlock value ].
 	
-	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
+	"Offer completionEngine a chance to handle keystroke before evaluating aBlock, 
+	don't evaluate aBlock if the event was handled."
+	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue: [ ^ self ].
 	
-	aBlock value.	
+	"Now evaluate aBlock"
+	aBlock value.
+	
+	"Let completionEngine handle keystroke after evaluating aBlock"
 	completionEngine handleKeystrokeAfter: anEvent editor: self
 
 ]
@@ -800,8 +808,9 @@ RubSmalltalkEditor >> jumpToNextKeywordOfIt: isForwardJump [
 
 { #category : #'typing support' }
 RubSmalltalkEditor >> keystroke: aKeyboardEvent [
-
-	self completionAround: [super keystroke: aKeyboardEvent ] keyStroke: aKeyboardEvent
+	"Try and handle keystroke as provided in aKeyboardEvent. 
+	Only let my superclass handle the keystroke if I don't handle it"
+	self completionAround: [ super keystroke: aKeyboardEvent ] keyStroke: aKeyboardEvent
 	
 ]
 
