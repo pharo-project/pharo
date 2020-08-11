@@ -1,6 +1,11 @@
 Extension { #name : #RBProgramNode }
 
 { #category : #'*Reflectivity' }
+RBProgramNode >> addBreakpoint: aBreakpoint [
+	self breakpoints add: aBreakpoint 
+]
+
+{ #category : #'*Reflectivity' }
 RBProgramNode >> afterHooks [
 	^self propertyAt: #afterHooks ifAbsent: #()
 ]
@@ -36,6 +41,11 @@ RBProgramNode >> beforeLinks [
 ]
 
 { #category : #'*Reflectivity' }
+RBProgramNode >> breakpoints [
+	^ self propertyAt: #breakpoints ifAbsentPut: [ Set new ]
+]
+
+{ #category : #'*Reflectivity' }
 RBProgramNode >> clearReflectivityAnnotations [
 	self removeProperty: #preambles ifAbsent: [ ].
 	self removeProperty: #beforeHooks ifAbsent: [ ].
@@ -57,9 +67,7 @@ RBProgramNode >> hasBeenExecuted [
 
 { #category : #'*Reflectivity' }
 RBProgramNode >> hasBreakpoint [
-	
-	self hasMetalinkBefore ifFalse: [ ^false ].
-	^self beforeLinks anySatisfy: [ :link | link metaObject = Break ]
+	^ (self hasProperty: #breakpoints) and: [ self breakpoints notEmpty ]
 ]
 
 { #category : #'*Reflectivity' }
@@ -175,6 +183,11 @@ RBProgramNode >> postambles [
 { #category : #'*Reflectivity' }
 RBProgramNode >> preambles [
 	^self propertyAt: #preambles ifAbsent: #()
+]
+
+{ #category : #'*Reflectivity' }
+RBProgramNode >> removeBreakpoint: aBreakpoint [
+	self breakpoints remove: aBreakpoint ifAbsent: []
 ]
 
 { #category : #'*Reflectivity' }

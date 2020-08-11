@@ -19,7 +19,8 @@ Class {
 		'#scrollValue => SpObservableSlot',
 		'#editionContextMenu => SpObservableSlot',
 		'#editable => SpObservableSlot',
-		'#cursorPosition => SpObservableSlot'
+		'#cursorPosition => SpObservableSlot',
+		'#wrapWord => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Text'
 }
@@ -83,10 +84,29 @@ SpTextPresenter >> beNotEditable [
 ]
 
 { #category : #api }
+SpTextPresenter >> beNotWrapWord [
+
+	self wrapWord: false
+]
+
+{ #category : #api }
+SpTextPresenter >> beWrapWord [
+
+	self wrapWord: true
+]
+
+{ #category : #api }
 SpTextPresenter >> cursorPosition [
 	"Answer a Point (column, row) with current cursor position"
 
 	^ self withAdapterDo: [ :anAdapter | anAdapter cursorPosition ]
+]
+
+{ #category : #api }
+SpTextPresenter >> cursorPositionIndex: index [
+	"Sets cursor position index"
+
+	^ self withAdapterDo: [ :anAdapter | anAdapter cursorPositionIndex: index ]
 ]
 
 { #category : #accessing }
@@ -129,6 +149,7 @@ SpTextPresenter >> initialize [
 	self flag: #REVIEW. "We really need scrollValue?"
 	scrollValue := 0@0.
 	self beEditable.
+	self beWrapWord.
 	self withScrollBars.
 	self withEditionContextMenu.
 ]
@@ -137,6 +158,12 @@ SpTextPresenter >> initialize [
 SpTextPresenter >> isEditable [
 
 	^ editable
+]
+
+{ #category : #testing }
+SpTextPresenter >> isWrapWord [
+
+	^ wrapWord
 ]
 
 { #category : #initialization }
@@ -190,6 +217,12 @@ SpTextPresenter >> whenSubmitDo: aBlock [
 		toAction: [ aBlock value: self text ]
 ]
 
+{ #category : #'api-events' }
+SpTextPresenter >> whenWrapWordChangedDo: aBlock [
+
+	self property: #wrapWord whenChangedDo: aBlock
+]
+
 { #category : #accessing }
 SpTextPresenter >> withEditionContextMenu [
 
@@ -200,4 +233,10 @@ SpTextPresenter >> withEditionContextMenu [
 SpTextPresenter >> withoutEditionContextMenu [
 
 	editionContextMenu := true
+]
+
+{ #category : #accessing }
+SpTextPresenter >> wrapWord: aBoolean [
+
+	wrapWord := aBoolean
 ]

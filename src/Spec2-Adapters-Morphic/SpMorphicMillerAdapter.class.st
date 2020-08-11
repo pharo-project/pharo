@@ -27,6 +27,7 @@ SpMorphicMillerAdapter >> add: aPresenter constraints: constraints [
 
 	self widget ifNil: [ ^ self ].
 
+	aPresenter owner: self model. 
 	needRecalculatePages := true.
 	self 
 		basicAdd: aPresenter

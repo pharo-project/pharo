@@ -1,3 +1,7 @@
+"
+A raw inspection is the basic inspection over any object of the system. 
+It will show the variables the object is composed of and it will allow dive into and editing of them.
+"
 Class {
 	#name : #StRawInspection,
 	#superclass : #StInspection,

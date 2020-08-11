@@ -162,6 +162,16 @@ StDebuggerTest >> testContextUnchangedAfterStepOver [
 	self assert: dbg inspector inspectedObject ==  currentContext
 ]
 
+{ #category : #'tests - actions' }
+StDebuggerTest >> testCopyStackToClipboard [
+	debugger := self debuggerOn: session.
+	debugger copyStackToClipboard.
+	self
+		assert: Clipboard clipboardText string
+		equals: (String streamContents: [ :s | 
+				 session interruptedContext shortDebugStackOn: s ])
+]
+
 { #category : #'tests - initialization' }
 StDebuggerTest >> testDebuggerApplication [
 	self
@@ -393,6 +403,28 @@ StDebuggerTest >> testStackTableAfterStepIn [
 		assert: dbg stackTable selection selectedItem == session shortStack first.
 	self assert: stackTableItems size equals: startingStackSize + 1.
 	self assert: stackTableItems equals: session shortStack
+]
+
+{ #category : #'tests - stack table' }
+StDebuggerTest >> testStackTableElementsPrinting [
+	| columns classColumn methodColumn senderColumn method block context |
+	self debugger session: session.
+	columns := self initializedDebugger stackTable columns.
+	classColumn := columns first.
+	methodColumn := columns second.
+	senderColumn := columns third.
+	method := self class >> #testStackTableElementsPrinting.
+	block := [ :a | a ].
+	
+	context := (Context newForMethod: method) setSender: self receiver: self method: method arguments: #(  ).
+	self assert: (classColumn evaluation value: context) equals: self class.
+	self assert: (methodColumn evaluation value: context) equals: method selector.
+	self assert: (senderColumn evaluation value: context) equals: self stDisplayString.
+	
+	context := (Context newForMethod: method) setSender: self receiver: self method: block method arguments: #(  ).
+	self assert: (classColumn evaluation value: context) equals: self class.
+	self assert: (methodColumn evaluation value: context) equals: block sourceNode sourceCode.
+	self assert: (senderColumn evaluation value: context) equals: self stDisplayString.
 ]
 
 { #category : #'tests - stack table' }

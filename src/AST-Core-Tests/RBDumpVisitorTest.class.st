@@ -110,7 +110,7 @@ RBDumpVisitorTest >> testDumpOnSelfClassMethods [
 			dumpedNode := Smalltalk compiler evaluate: node dump.
 			self assert: dumpedNode class equals: RBMethodNode.
 			self assert: node class equals: dumpedNode class.
-			self assert: node formattedCode equals: dumpedNode printString ]
+			self assert: node equals: dumpedNode ]
 ]
 
 { #category : #tests }

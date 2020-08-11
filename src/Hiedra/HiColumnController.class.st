@@ -27,7 +27,7 @@ HiColumnController >> cellBoundsForRow: rowIndex inPage: pageIndex [
 	rowIndexRelativeToPage := rowIndexRelativeToRuler - rowIndexOfFirstNodeInPage.
 
 	^ 0 @ (rowIndexRelativeToPage * renderer rowHeight)
-		corner: self rulerWidth @ ((rowIndexRelativeToPage + 1) * renderer rowHeight)
+		corner: (renderer rowWidthAt: rowIndex) @ ((rowIndexRelativeToPage + 1) * renderer rowHeight)
 ]
 
 { #category : #API }
@@ -93,7 +93,7 @@ HiColumnController >> newCellMorphForRow: rowIndex [
 	aForm getCanvas
 		translucentImage: (self formAtPage: pageIndex)
 		at: 0 @ 0
-		sourceRect: cellBoundsInPage truncated.
+		sourceRect: cellBoundsInPage.
 	^ aForm asMorph
 ]
 

@@ -21,6 +21,7 @@ SpMorphicTableDataSource >> cellColumn: column row: rowIndex [
 		cell: cell;
 		rowIndex: rowIndex;
 		visit: column model.
+	self setHeaderColumnLazyProperties: column.
 		
 	^ cell
 ]
