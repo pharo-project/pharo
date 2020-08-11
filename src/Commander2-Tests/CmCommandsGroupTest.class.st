@@ -1,5 +1,5 @@
 "
-A LtCommandsRegistryTest is a test class for testing the behavior of LtCommandsRegistry
+To test command groups.
 "
 Class {
 	#name : #CmCommandsGroupTest,

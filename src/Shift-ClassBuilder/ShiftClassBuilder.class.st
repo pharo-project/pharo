@@ -83,6 +83,8 @@ ShiftClassBuilder >> build [
 
 	self createSharedVariables.
 
+	self installSlotsAndVariables.
+
 	self oldClass ifNotNil: [ 
 			self newClass basicCategory: self oldClass basicCategory.
 			self copyOrganization.
@@ -90,7 +92,7 @@ ShiftClassBuilder >> build [
 
 	self builderEnhancer afterMethodsCompiled: self.
 	
-	self installSlotsAndVariables.
+	
 	
 	^ newClass
 ]

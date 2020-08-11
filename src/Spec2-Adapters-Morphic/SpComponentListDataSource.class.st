@@ -73,7 +73,7 @@ SpComponentListDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements wrappedItem text newDataSource modelCopy |
 	
 	newElements := self elements select: [ :each | 
-		wrappedItem := self model displayValueOf: each.
+		wrappedItem := self model displayValueFor: each.
 		table columns anySatisfy: [ :column | 
 			text := column transform: wrappedItem.
 			aFTFilter matches: text]].
@@ -109,15 +109,8 @@ SpComponentListDataSource >> rowHeight: rowIndex [
 
 { #category : #accessing }
 SpComponentListDataSource >> searchText: aString [
-	| search text result |
-	aString isEmptyOrNil ifTrue: [ ^ #() ].
-	result := OrderedCollection new.
-	search := aString trimBoth asLowercase.
-	1 to: self numberOfRows do: [ :rowIndex | 
-		text := (self model displayValueAt: rowIndex) contents trimBoth asLowercase.
-		(text beginsWith: search)
-			ifTrue: [ result add: rowIndex ] ].
-	^ result asArray
+	"do nothing for the moment"
+	^ #()
 ]
 
 { #category : #'drag and drop' }

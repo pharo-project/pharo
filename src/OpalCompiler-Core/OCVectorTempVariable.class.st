@@ -14,7 +14,7 @@ reading and writing thus is a multi step process:
 "
 Class {
 	#name : #OCVectorTempVariable,
-	#superclass : #OCTempVariable,
+	#superclass : #TemporaryVariable,
 	#instVars : [
 		'vectorName'
 	],

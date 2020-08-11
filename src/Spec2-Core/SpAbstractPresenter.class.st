@@ -411,12 +411,6 @@ SpAbstractPresenter >> spec: anAdapter [
 	self adapter: anAdapter
 ]
 
-{ #category : #abstract }
-SpAbstractPresenter >> transmitTo: aPresenter [
-	
-	^ self defaultOutputPort transmitTo: aPresenter defaultInputPort
-]
-
 { #category : #updating }
 SpAbstractPresenter >> update: aParameter [
 

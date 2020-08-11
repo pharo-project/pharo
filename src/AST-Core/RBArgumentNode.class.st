@@ -18,15 +18,3 @@ RBArgumentNode >> acceptVisitor: aProgramNodeVisitor [
 RBArgumentNode >> adaptToSemanticNode [
 	" I can't provide more semantics "
 ]
-
-{ #category : #testing }
-RBArgumentNode >> isArgument [
-	^ true
-]
-
-{ #category : #testing }
-RBArgumentNode >> isBlockVar [
-	"true if a variable node is defined by a block node"
-
-	^ (self whoDefines: self name) isBlock
-]

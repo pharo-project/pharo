@@ -143,7 +143,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
-		spec package: 'System-Hashing-Testing'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 		spec baseline: 'Metacello' with: [ 
 			spec
@@ -192,7 +191,15 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Spec2' with: [ 
 			spec 
 				repository: repository;
-				loads: #('Code') ].
+				loads: #('Code' 'CodeTests') ].
+		spec baseline: 'NewTools' with: [
+			spec 
+				repository: repository;
+				loads: #('Playground' 'Inspector' 'Debugger') ].
+			
+		spec baseline: 'Microdown' with: [ spec 
+				repository: self packageRepositoryURL ].
+
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
 

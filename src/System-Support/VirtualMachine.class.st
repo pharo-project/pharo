@@ -161,17 +161,10 @@ VirtualMachine >> fullGCCount [
 { #category : #accessing }
 VirtualMachine >> fullPath [
 	"Return the full vm path as a string"
-	"Ex: '/Applications/Squeak/Squeak 4.2.5beta1U.app/Contents/MacOS/Squeak VM Opt'"
-	"SmalltalkImage current vmFullPath"
+	"Ex: '/Applications/.../Contents/MacOS/vm '"
+	"SmalltalkImage current vm fullPath"
 
 	^self getSystemAttribute: 0
-]
-
-{ #category : #gc }
-VirtualMachine >> gcBiasToGrow: aBool [
-	"Tell the VM to grow after tenures instead of running in a tight loop where it does IGCs over and over. For some weird reason the primitive takes an integer not a bool but oh well..."
-	
-	self primitiveGCBiasToGrow: (aBool ifTrue: [1] ifFalse: [0])
 ]
 
 { #category : #gc }
@@ -214,10 +207,10 @@ VirtualMachine >> getSystemAttribute: attributeID [
       0               the full path name for currently executing VM
                        (or, on some platforms, just the path name of the VM's directory)
        1               full path name of this image (better use primImageName instead)
-       2               a Squeak document to open, if any
-       3               first command line argument for Squeak programs
+       2               a Pharo document to open, if any
+       3               first command line argument for Pharo programs
        ...
-       1000    1000th command line argument for Squeak programs
+       1000    1000th command line argument for Pharo programs
        1001    this platform's operating system 'Mac OS', 'Win32', 'unix', ...
        1002    operating system version
        1003    this platform's processor type
@@ -707,14 +700,6 @@ VirtualMachine >> primVmPath [
 	^ ''
 ]
 
-{ #category : #primitives }
-VirtualMachine >> primitiveGCBiasToGrow: arg [
-	"Tell the VM to grow after tenures instead of running in a tight loop where it does IGCs over and over. For some weird reason the primitive takes an integer not a bool but oh well..."
-	
-	<primitive: 'primitiveSetGCBiasToGrow'>
-	^self primitiveFailed
-]
-
 { #category : #attributes }
 VirtualMachine >> processHasThreadIdInstVar: aBoolean [
 	"The threaded VM needs to know if the 4th inst var of Process
@@ -740,17 +725,6 @@ VirtualMachine >> processPreemptionYields: aBoolean [
 	"The Cog VM can be instructed not to yield on process preemption, i.e. not to put a preempted process at the back of its run queue.  By default preempting a process causes it to yield (Blue Book semantics) which can have unfortunate effects. This flag persists across snapshots, stored in the image header."
 	
 	self parameterAt: 48 put: ((self parameterAt: 48) bitClear: 4) + (aBoolean ifTrue: [0] ifFalse: [2r100])
-]
-
-{ #category : #gc }
-VirtualMachine >> setGCBiasToGrow: aNumber [
-	"Primitive. Indicate that the GC logic should be bias to grow"
-	<primitive: 'primitiveSetGCBiasToGrow'>
-	^self primitiveFailed
-"Example:
-	Smalltalk vm  setGCBiasToGrowGCLimit: 16*1024*1024.
-	Smalltalk vm setGCBiasToGrow: 1.
-"
 ]
 
 { #category : #gc }

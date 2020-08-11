@@ -212,20 +212,28 @@ Slot >> isAccessedIn: aCompiledCode [
 ]
 
 { #category : #testing }
-Slot >> isInstance [
-	^ true
+Slot >> isDefinedByOwningClass [
+
+	^ self owningClass = self definingClass
 ]
 
 { #category : #testing }
-Slot >> isLocal [
-
-	^ self owningClass = self definingClass
+Slot >> isInstanceVariable [
+	^ true
 ]
 
 { #category : #testing }
 Slot >> isReadIn: aCompiledCode [
 	^aCompiledCode ast instanceVariableReadNodes
 		 anySatisfy: [ :node | node binding == self ]
+]
+
+{ #category : #testing }
+Slot >> isReferenced [
+	^ self owningClass 
+		ifNil: [ false ] 
+		ifNotNil: [ :class | 
+		  class withAllSubclasses anySatisfy: [ :subclass | subclass hasMethodAccessingVariable: self ] ]
 ]
 
 { #category : #testing }
@@ -254,12 +262,6 @@ Slot >> isWrittenIn: aCompiledCode [
 Slot >> named: aSymbol [
 	"to be polymorhic with slot class"
 	self name: aSymbol
-]
-
-{ #category : #testing }
-Slot >> needsFullDefinition [
-	"I am more than just a backward compatible ivar slot, I need a full definition "
-	^true
 ]
 
 { #category : #accessing }

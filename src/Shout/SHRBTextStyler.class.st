@@ -980,7 +980,7 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
 	^ anArgumentNode isBlockVar
-		ifTrue: [ anArgumentNode parent isBlock
+		ifTrue: [ anArgumentNode isDefinition 
 				ifTrue: [ #blockPatternArg ]
 				ifFalse: [ #blockArg ] ]
 		ifFalse: [ #methodArg ]
@@ -1022,10 +1022,14 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : #private }
 SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	aVariableNode binding ifNil: [^#default].
-	aVariableNode isArg ifTrue: [ ^#methodArg].
+	aVariableNode isArgumentVariable ifTrue: [ ^#methodArg].
 	aVariableNode isTemp ifTrue: [ ^#tempVar].
-	aVariableNode isGlobal ifTrue: [ ^#globalVar].
-	aVariableNode isInstance ifTrue: [ ^#instVar]. 
+	aVariableNode isGlobalVariable ifTrue: [ ^#globalVar].
+	"here we should add support for #classVar"
+	aVariableNode isClassVariable ifTrue: [ ^#globalVar].
+	aVariableNode isInstanceVariable ifTrue: [ ^#instVar]. 
+	"for now we use temp variable here, we could now color them with their own color"
+	aVariableNode isWorkspaceVariable ifTrue: [ ^#tempVar]. 
 	
 	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
 		ifTrue:[ ^#incompleteIdentifier] .
@@ -1334,8 +1338,6 @@ SHRBTextStyler >> visitVariableNode: aVariableNode [
 		addStyle: (self resolveStyleFor: aVariableNode) 
 		attributes: (self resolveVariableAttributesFor: aVariableNode)
 		forNode: aVariableNode
-	
-	
 ]
 
 { #category : #accessing }

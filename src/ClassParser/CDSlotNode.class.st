@@ -40,7 +40,9 @@ CDSlotNode class >> node: aNode name: aName slotClassName: aSymbol start: start 
 
 { #category : #transforming }
 CDSlotNode >> asSlot [
-	^self name asSlot
+	"for not this only supports instance variable slots. 
+	We need to create a slot here using the slot class and initialization message"
+	^InstanceVariableSlot named: name
 ]
 
 { #category : #accessing }
@@ -81,7 +83,7 @@ CDSlotNode >> isGlobalVariable [
 ]
 
 { #category : #testing }
-CDSlotNode >> isInstance [
+CDSlotNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^true
 ]
@@ -99,7 +101,7 @@ CDSlotNode >> isTemp [
 ]
 
 { #category : #testing }
-CDSlotNode >> isUndeclared [
+CDSlotNode >> isUndeclaredVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
@@ -117,6 +119,11 @@ CDSlotNode >> isVariable [
 		ifNone: [
 			"Until class will be compiled with new slot the new slot does not exist yet"
 			false]
+]
+
+{ #category : #testing }
+CDSlotNode >> isWorkspaceVariable [
+	^ false
 ]
 
 { #category : #accessing }

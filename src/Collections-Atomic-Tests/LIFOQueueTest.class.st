@@ -31,7 +31,6 @@ LIFOQueueTest >> testBasics [
 
 { #category : #tests }
 LIFOQueueTest >> testContention1 [
-	"here is a test case that breaks the standard SharedQueue from Squeak 3.8"
 
 	| q r1 r2 |
 	q := self newQueue.

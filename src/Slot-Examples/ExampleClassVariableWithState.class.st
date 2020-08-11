@@ -5,7 +5,7 @@ Read and write is done via #read and #write:.
 "
 Class {
 	#name : #ExampleClassVariableWithState,
-	#superclass : #LiteralVariable,
+	#superclass : #ClassVariable,
 	#instVars : [
 		'state'
 	],

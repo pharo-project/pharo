@@ -88,9 +88,7 @@ RGMethod >> readsRef: literalAssociation [
 { #category : #'*Calypso-Ring' }
 RGMethod >> readsSlot: aSlot [
 	| nodes |
-	nodes := self ast allChildren.
-	nodes := nodes select: #isVariable.
-	nodes := nodes select: #isInstance.
+	nodes := self ast instanceVariableNodes select: [:each | each isInstanceVariable].
 	nodes := nodes reject: [ :node | node parent isAssignment and: [ node parent variable = node ] ].
 	^ nodes anySatisfy: [ :node | node binding == aSlot ]
 ]
@@ -129,7 +127,7 @@ RGMethod >> writesSlot: aSlot [
 		node isVariable and: [
 			node parent isAssignment and: [  
 				(node parent variable = node) and: [  
-					node isInstance and: [
+					node isInstanceVariable and: [
 						(node binding ==  aSlot)
 					 		ifTrue: [^true]]]]]]. 
 	^false

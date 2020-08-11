@@ -402,17 +402,17 @@ RBProgramNode >> hashForCollection: aCollection [
 
 { #category : #querying }
 RBProgramNode >> instanceVariableNodes [
-		^self variableNodes select: [:each | each isInstance]
+		^self variableNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #querying }
 RBProgramNode >> instanceVariableReadNodes [
-		^self variableReadNodes select: [:each | each isInstance]
+		^self variableReadNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #querying }
 RBProgramNode >> instanceVariableWriteNodes [
-		^self variableWriteNodes select: [:each | each isInstance]
+		^self variableWriteNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : #testing }
@@ -423,19 +423,21 @@ RBProgramNode >> intersectsInterval: anInterval [
 
 { #category : #testing }
 RBProgramNode >> isArgument [
+	self 
+		deprecated: 'Use #isArgumentVariable instead.' 
+		transformWith: '`@receiver isArgument' -> '`@receiver isArgumentVariable'.
+	
+	^ self isArgumentVariable
+]
+
+{ #category : #testing }
+RBProgramNode >> isArgumentVariable [
 	^false
 ]
 
 { #category : #testing }
 RBProgramNode >> isAssignment [
 	^false
-]
-
-{ #category : #testing }
-RBProgramNode >> isBlockVar [
-	"true if a variable node is defined by a block"
-
-	^ false
 ]
 
 { #category : #testing }
@@ -541,6 +543,11 @@ RBProgramNode >> isSelfOrSuper [
 ]
 
 { #category : #testing }
+RBProgramNode >> isSelfVariable [
+	^ false
+]
+
+{ #category : #testing }
 RBProgramNode >> isSequence [
 	^false
 ]
@@ -551,12 +558,17 @@ RBProgramNode >> isSuper [
 ]
 
 { #category : #testing }
+RBProgramNode >> isSuperVariable [
+	^false
+]
+
+{ #category : #testing }
 RBProgramNode >> isTemp [
 	^ false
 ]
 
 { #category : #testing }
-RBProgramNode >> isThisContext [
+RBProgramNode >> isThisContextVariable [
 	^ false
 ]
 
@@ -653,11 +665,6 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 		against: programNodes
 		index: programIndex + 1
 		inContext: aDictionary
-]
-
-{ #category : #accessing }
-RBProgramNode >> methodComments [
-	^self comments
 ]
 
 { #category : #accessing }

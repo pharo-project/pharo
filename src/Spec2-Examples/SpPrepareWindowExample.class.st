@@ -10,10 +10,10 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'menu',
-		'toolBar',
 		'statusBar',
 		'text',
-		'count'
+		'count',
+		'toolbar'
 	],
 	#category : #'Spec2-Examples-Standalone'
 }
@@ -52,7 +52,7 @@ SpPrepareWindowExample >> buildMenuBar [
 { #category : #'private building' }
 SpPrepareWindowExample >> buildPopMessageToolBarItem [
 		
-	^ SpToolBarButtonPresenter new
+	^ SpToolbarButtonPresenter new
 		label: 'Pop';
 		icon: (self iconNamed: #glamorousDown);
 		help: 'Pop last status bar message';
@@ -63,7 +63,7 @@ SpPrepareWindowExample >> buildPopMessageToolBarItem [
 { #category : #'private building' }
 SpPrepareWindowExample >> buildPushMessageToolBarItem [
 		
-	^ SpToolBarButtonPresenter new
+	^ SpToolbarButtonPresenter new
 		label: 'Push';
 		icon: (self iconNamed: #glamorousUp);
 		help: 'Push a new status bar message';
@@ -78,12 +78,12 @@ SpPrepareWindowExample >> buildStatusBar [
 ]
 
 { #category : #'private building' }
-SpPrepareWindowExample >> buildToolBar [
+SpPrepareWindowExample >> buildToolbar [
 	
-	^ self newToolBar 
+	^ self newToolbar 
 		addItem: self buildPushMessageToolBarItem;
 		addItem: self buildPopMessageToolBarItem;
-		addItem: self buildPopMessageToolBarItem position: SpToolBarItemPosition right;
+		addItem: self buildPopMessageToolBarItem position: SpToolbarItemPosition right;
 		yourself
 ]
 
@@ -116,7 +116,7 @@ SpPrepareWindowExample >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
 		menu: (menu := self buildMenuBar);
-		toolBar: (toolBar := self buildToolBar);
+		toolbar: (toolbar := self buildToolbar);
 		statusBar: (statusBar := self buildStatusBar)
 ]
 

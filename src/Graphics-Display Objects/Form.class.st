@@ -276,6 +276,15 @@ Form >> allocateForm: extentPoint [
 ]
 
 { #category : #converting }
+Form >> alphaMultiplied [
+	^ (self asFormOfDepth: 32) collectColors: [ :c |
+		| a |
+		a := c alpha.
+		Color r: c red * a g: c green * a b: c blue * a alpha: a
+	]
+]
+
+{ #category : #converting }
 Form >> as8BitColorForm [
 	"Simple conversion of zero pixels to transparent.  Force it to 8 bits."
 
@@ -628,7 +637,8 @@ Form >> colorReduced [
 { #category : #'color mapping' }
 Form >> colormapFromARGB [
 	"Return a ColorMap mapping from canonical ARGB space into the receiver.
-	Note: This version is optimized for Squeak forms."
+	Note: This version is optimized for image forms."
+	
 	| map nBits |
 	self hasNonStandardPalette 
 		ifTrue:[^ColorMap mappingFromARGB: self rgbaBitMasks].
@@ -960,8 +970,8 @@ Form >> displayScaledOn: aForm [
 { #category : #accessing }
 Form >> displayScreen [
 	"Return the display screen the receiver is allocated on. 
-	Forms in general are Squeak internal and not allocated on any particular display."
-	^nil
+	Forms in general are internal and not allocated on any particular display."
+	^ nil
 ]
 
 { #category : #analyzing }
@@ -1370,7 +1380,7 @@ Form >> hasBeenModified: aBool [
 Form >> hasNonStandardPalette [
 	"Return true if the receiver has a non-standard palette.
 	Non-standard means that RGBA components may be located
-	at positions differing from the standard Squeak RGBA layout
+	at positions differing from the standard Pharo RGBA layout
 	at the receiver's depth."
 	^false
 ]
@@ -1431,6 +1441,15 @@ Form >> innerPixelRectFor: pv orNot: not [
 	^ ((xTally findFirst: [:t | t>0]) - 1) @ ((yTally findFirst: [:t | t>0]) - 1)
 		corner:
 			(xTally findLast: [:t | t>0])@(yTally findLast: [:t | t>0])
+]
+
+{ #category : #converting }
+Form >> invertedAndAlphaMultiplied [
+	^ (self asFormOfDepth: 32) collectColors: [ :c |
+		| a |
+		a := c alpha.
+		Color r: (1.0 - c red) * a g: (1.0 - c green) * a b: (1.0 - c blue) * a alpha: a
+	]
 ]
 
 { #category : #testing }
@@ -2560,6 +2579,20 @@ Form >> wipeImage: otherImage at: topLeft delta: delta clippingBox: clipBox [
 		[:i | i <= nSteps
 			ifTrue: [wipeRect translateBy: (delta* (i-1))]
 			ifFalse: [nil]]
+]
+
+{ #category : #converting }
+Form >> withAlphaExtractedFromSubpixelRendering [
+	^ (self asFormOfDepth: 32) collectColors: [ :c |
+		| r g b a|
+		r := c red.
+		g := c green.
+		b := c blue.
+		a := c alpha.
+		a := ((r max: g) max: b) * a.
+		
+		Color r: r g: g b: b alpha: a
+	]
 ]
 
 { #category : #'file in/out' }

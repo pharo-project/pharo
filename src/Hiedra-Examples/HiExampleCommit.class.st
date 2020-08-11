@@ -31,7 +31,7 @@ Class {
 		'comment',
 		'parentIds'
 	],
-	#category : #'Hiedra-Examples'
+	#category : #'Hiedra-Examples-Model'
 }
 
 { #category : #examples }
@@ -24122,13 +24122,13 @@ HiExampleCommit class >> randomlyGenerated [
 	| values random |
 	values := 60 to: 1 by: -1.
 	random := Random new.
-	^ values collect: [ :value | 
+	^ (values collect: [ :value | 
 		self new
 			id: value;
-			comment: 'Value ', value asString;
+			comment: 'Randomly Connected Element #', value asString;
 			parentIds: ((values copyWithout: value) intersection: { random nextInt: values max });
 			yourself
-		]
+		]) reversed
 ]
 
 { #category : #accessing }

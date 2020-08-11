@@ -1,5 +1,5 @@
 "
-I represent the FT_Bitmap_Size type.
+I represent the `FT_Bitmap_Size` type.
 "
 Class {
 	#name : #FTBitmapSize,

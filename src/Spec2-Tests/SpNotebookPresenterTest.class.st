@@ -1,6 +1,6 @@
 Class {
 	#name : #SpNotebookPresenterTest,
-	#superclass : #SpTest,
+	#superclass : #SpSpecTest,
 	#category : #'Spec2-Tests-Core-Widgets'
 }
 

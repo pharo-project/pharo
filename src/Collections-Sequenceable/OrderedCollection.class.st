@@ -1,26 +1,19 @@
 "
 I am one of the most common collection. I can grow, and elements can be added sequentially by the user.  
-
-Description 
--------------------
 I am more general than Array; my size grows on demand. I store data inside an Array and remember the first and last index. If I need, I can replace this Array by a larger one.
 
 I am usually used to store an unknown amount of objects. When my contents size will not move, one can send me the #asArray message to get better performances, but I cannot grow anymore (add: and remove: are not supported on Array).
 
-Public API and Key Messages
--------------------	
+### Public API and Key Messages
 
 - #new / #withAll: aCollection / #with: anObject 	are common constructors
-
 - #add: anObject / #at: anIndex put: anObject / #at: anIndex ifAbsentPut: anObject 	allow to add new elements to myself.
-
 - #remove: anObject / #removeIndex: anIndex 	allow to remove an element.
-	
 - #do: aBlock / #collect: aBlock / #select: aBlock / #reject: aBlock 	are common iterators.
 
-Examples
--------------------	
-	
+### Examples	
+
+```	
 	""There is many ways to create an OrderedCollection, here are some:""
 	ordCol := OrderedCollection new.
 	ordCol
@@ -60,14 +53,13 @@ Examples
 	ordCol select: [ :element | element >= $b ].		""returns:  an OrderedCollection($b $c)""
 	ordCol do: [ :element | element inspect ].
 	ordCol asArray		""returns: #($a $b $c)""
-			 
-Internal Representation and Key Implementation Points.
--------------------	
+``` 
 
-    Instance Variables
-	array:			<Array> 		An Array where I store my elements. If I need a bigger one I can remove this one and create a new one.
-	firstIndex:		<Integer> 	The index of my first element.
-	lastIndex:		<Integer> 	The index of my last element.
+###Internal Representation and Key Implementation Points.
+Instance Variables
+- array:			<Array> 		An Array where I store my elements. If I need a bigger one I can remove this one and create a new one.
+- firstIndex:		<Integer> 	The index of my first element.
+- lastIndex:		<Integer> 	The index of my last element.
 
 I store my elements inside an array. This array is AT LEAST of the size of my elements. If someone adds an element and my array is not large enough, I remove it and I create a new one larger with the same elements (usually, the size double).
 "
@@ -713,17 +705,16 @@ OrderedCollection >> removeDuplicates [
 	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
 	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
 
-	| iterator |
+	| iterator seen |
 	self ifEmpty: [ ^ self ].
 	iterator := 1.
+	seen := Set new.
 	[ iterator <= self size ]
-		whileTrue: [ | each newIndex |
+		whileTrue: [ | each |
 			each := self at: iterator.
-			newIndex := iterator + 1.
-			[ newIndex := (self indexOf: each startingAt: newIndex).
-			newIndex > 0 ]
-				whileTrue: [ self removeAt: newIndex ].
-			iterator := iterator + 1.
+			(seen includes: each)
+				ifTrue: [ self removeAt: iterator ]
+				ifFalse: [ seen add: each. iterator := iterator + 1. ].
 	 ]
 ]
 

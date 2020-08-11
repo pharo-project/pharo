@@ -60,13 +60,13 @@ SpCommand >> configureAsButtonOfClass: aButtonClass [
 ]
 
 { #category : #'presenter building' }
-SpCommand >> configureAsToolBarButton [
-	self configureAsButtonOfClass: SpToolBarButtonPresenter
+SpCommand >> configureAsToolBarToggleButton [
+	self configureAsButtonOfClass: SpToolbarToggleButtonPresenter
 ]
 
 { #category : #'presenter building' }
-SpCommand >> configureAsToolBarToggleButton [
-	self configureAsButtonOfClass: SpToolBarToggleButtonPresenter
+SpCommand >> configureAsToolbarButton [
+	self configureAsButtonOfClass: SpToolbarButtonPresenter
 ]
 
 { #category : #displaying }
@@ -80,8 +80,9 @@ SpCommand >> displayIn: aMenuGroupOrPresenter do: aBlock [
 
 { #category : #initialization }
 SpCommand >> initialize [
+
 	super initialize.
-	self configureAsToolBarButton
+	self configureAsToolbarButton
 ]
 
 { #category : #accessing }

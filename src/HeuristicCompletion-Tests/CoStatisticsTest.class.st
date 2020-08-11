@@ -187,49 +187,45 @@ CoStatisticsTest >> testHeuristicBuilderForSingleHeuristicWrapsNonWrapper [
 
 { #category : #'tests-heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicBuildsWrapper [
-
-	| builder heuristic heuristic1 heuristic2 |
+	| builder heuristic |
 	builder := CoStatisticsHeuristicBuilder new.
-	builder add: (heuristic1 := CoGlobalVariablesHeuristic new).
-	builder add: (heuristic2 := CoGlobalVariablesHeuristic new).
+	builder add: CoGlobalVariablesHeuristic new.
+	builder add: CoGlobalVariablesHeuristic new.
 	heuristic := builder build.
-	
+
 	self assert: heuristic isStatisticsHeuristicWrapper
 ]
 
 { #category : #'tests-heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicNextIsWrapper [
-
-	| builder heuristic heuristic1 heuristic2 |
+	| builder heuristic |
 	builder := CoStatisticsHeuristicBuilder new.
-	builder add: (heuristic1 := CoGlobalVariablesHeuristic new).
-	builder add: (heuristic2 := CoGlobalVariablesHeuristic new).
+	builder add: CoGlobalVariablesHeuristic new.
+	builder add: CoGlobalVariablesHeuristic new.
 	heuristic := builder build.
-	
+
 	self assert: heuristic next isStatisticsHeuristicWrapper
 ]
 
 { #category : #'tests-heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicSecondWrapperWrapsNonWrapper [
-
-	| builder heuristic heuristic1 heuristic2 |
+	| builder heuristic heuristic2 |
 	builder := CoStatisticsHeuristicBuilder new.
-	builder add: (heuristic1 := CoGlobalVariablesHeuristic new).
+	builder add: CoGlobalVariablesHeuristic new.
 	builder add: (heuristic2 := CoGlobalVariablesHeuristic new).
 	heuristic := builder build.
-	
+
 	self assert: heuristic next wrapped equals: heuristic2
 ]
 
 { #category : #'tests-heuristicbuilder' }
 CoStatisticsTest >> testHeuristicBuilderForTwoHeuristicWrapsNonWrapper [
-
-	| builder heuristic heuristic1 heuristic2 |
+	| builder heuristic heuristic1 |
 	builder := CoStatisticsHeuristicBuilder new.
 	builder add: (heuristic1 := CoGlobalVariablesHeuristic new).
-	builder add: (heuristic2 := CoGlobalVariablesHeuristic new).
+	builder add: CoGlobalVariablesHeuristic new.
 	heuristic := builder build.
-	
+
 	self assert: heuristic wrapped equals: heuristic1
 ]
 

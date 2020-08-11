@@ -1,5 +1,5 @@
 "
-A LtCommandDecoratorTest is a test class for testing the behavior of LtCommandDecorator
+A command can be decoratored with UI and other decorations.
 "
 Class {
 	#name : #CmCommandDecoratorTest,

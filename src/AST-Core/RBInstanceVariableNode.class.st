@@ -13,8 +13,3 @@ Class {
 RBInstanceVariableNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitInstanceVariableNode: self
 ]
-
-{ #category : #testing }
-RBInstanceVariableNode >> isInstance [
-	^true
-]

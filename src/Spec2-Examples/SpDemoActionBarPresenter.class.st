@@ -28,18 +28,18 @@ SpDemoActionBarPresenter >> initializePresenters [
 			label: 'Add'; 
 			icon: (self iconNamed: #smallOk);
 			help: 'Add.';
-			action: [ MorphicRenderLoop new defer: [ self inform: 'Add' ] ];
+			action: [ UIManager default defer: [ self inform: 'Add' ] ];
 			yourself);
 		add: (self newButton
 			label: 'Remove'; 
 			icon: (self iconNamed: #smallCancel);
 			help: 'Remove.';
-			action: [ MorphicRenderLoop new defer: [ self inform: 'Remove' ] ];
+			action: [ UIManager default defer: [ self inform: 'Remove' ] ];
 			yourself);
 		addLast: (self newButton
 			label: 'Other'; 
 			help: 'Other.';
-			action: [ MorphicRenderLoop new defer: [ self inform: 'Other' ] ];
+			action: [ UIManager default defer: [ self inform: 'Other' ] ];
 			yourself);
 		yourself.
 

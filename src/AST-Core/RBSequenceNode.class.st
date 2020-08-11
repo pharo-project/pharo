@@ -176,7 +176,7 @@ RBSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
-	node := RBReturnNode value: (RBSelfNode new).
+	node := RBReturnNode value: RBVariableNode selfNode.
 	^ self addNode: node
 ]
 
@@ -304,7 +304,7 @@ RBSequenceNode >> initialize [
 
 { #category : #testing }
 RBSequenceNode >> isFaulty [
-	^self statements anySatisfy: #isFaulty
+	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }
@@ -356,16 +356,6 @@ RBSequenceNode >> match: aNode inContext: aDictionary [
 					matchList: statements
 					against: aNode statements
 					inContext: aDictionary]
-]
-
-{ #category : #accessing }
-RBSequenceNode >> methodComments [
-	| methodComments |
-	methodComments := OrderedCollection withAll: self comments.
-	temporaries do: [:each | methodComments addAll: each comments].
-	(parent notNil and: [parent isBlock]) 
-		ifTrue: [parent arguments do: [:each | methodComments addAll: each comments]].
-	^methodComments asSortedCollection: [:a :b | a start < b start]
 ]
 
 { #category : #'accessing-token' }

@@ -16,7 +16,8 @@ Class {
 { #category : #protocol }
 SpMorphicModalWindowAdapter >> close [
 	backdropMorph ifNotNil: #delete.
-	backdropMorph := nil
+	backdropMorph := nil.
+	super close
 ]
 
 { #category : #testing }

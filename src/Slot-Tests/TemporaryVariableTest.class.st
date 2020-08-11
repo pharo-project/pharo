@@ -8,6 +8,20 @@ Class {
 }
 
 { #category : #tests }
+TemporaryVariableTest >> testDeclaringNode [
+	| method declaringNode declaringNodeViaVariable|
+	method := self class >> #testTemporaryVariablesMethod.
+	declaringNode := method ast body temporaries first.
+	declaringNodeViaVariable := method assignmentNodes first variable variable definingNode.
+	self assert: declaringNodeViaVariable equals: declaringNode.
+	
+	method := OrderedCollection >> #do:.
+	declaringNode := method ast arguments first.
+	declaringNodeViaVariable := method ast variableReadNodes third variable definingNode.
+	self assert: declaringNodeViaVariable equals: declaringNode.
+]
+
+{ #category : #tests }
 TemporaryVariableTest >> testHasTemporaryVariablesBlock [
 	| block |
 	block := [ | b | b := 2. b +2  ].
@@ -60,7 +74,16 @@ TemporaryVariableTest >> testReadTemporaryVariablesMethod [
 	| tempVar |
 	tempVar := thisContext temporaryVariableNamed: #tempVar.
 
-	self assert: (tempVar readInContext: thisContext) class equals: OCTempVariable
+	self assert: (tempVar readInContext: thisContext) class equals: TemporaryVariable
+]
+
+{ #category : #tests }
+TemporaryVariableTest >> testScope [
+	| method |
+	method := self class >> #testTemporaryVariablesMethod.
+	self assert: method temporaryVariables first scope isMethodScope
+	
+
 ]
 
 { #category : #tests }
@@ -80,7 +103,7 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 	method := OrderedCollection >> #do:.
 	self assert: method temporaryVariables first name equals: #aBlock.
 	self assert: (method hasTemporaryVariableNamed: #aBlock).
-	self assert: (method temporaryVariableNamed: #aBlock) class equals: OCArgumentVariable.
+	self assert: (method temporaryVariableNamed: #aBlock) class equals: ArgumentVariable.
 ]
 
 { #category : #tests }

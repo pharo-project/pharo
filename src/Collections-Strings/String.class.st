@@ -2058,7 +2058,7 @@ String >> match: text [
 	"('foo*baz' match: 'foo23bazo') >>> false"
 	"('foo' match: 'Foo') >>> true"
 	"('foo*baz*zort' match: 'foobazort') >>> false"
-	"('foo*baz*zort' match: 'foobazzort') >>> false"
+	"('foo*baz*zort' match: 'foobazzort') >>> true"
 	"('*foo#zort' match: 'afoo3zortthenfoo3zort') >>> true"
 	"('*foo*zort' match: 'afoodezortorfoo3zort') >>> true"
 
@@ -2167,18 +2167,14 @@ String >> putOn: aStream [
 
 { #category : #converting }
 String >> repeat: aNumber [
+	"Returns a new string concatenated by itself repeated n times"
+	"('abc' repeat: 3) >>> 'abcabcabc'"
 
-	"returns a new string concatenated by itself repeated n times
-		'abc' repeat: 3. 'abcabcabc'
-	"
-
-	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].
-	
+	aNumber < 0 ifTrue: [ self error: 'aNumber cannot be negative' ].	
 	^ self species 
 		new: self size * aNumber 
 		streamContents: [ :stringStream |
-			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ].
-		]
+			1 to: aNumber do: [ :idx | stringStream nextPutAll: self ] ]
 ]
 
 { #category : #private }

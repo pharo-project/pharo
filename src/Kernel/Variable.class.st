@@ -63,6 +63,11 @@ Variable >> = other [
 			and: [ name = other name ]
 ]
 
+{ #category : #queries }
+Variable >> definingNode [
+	^ nil
+]
+
 { #category : #'code generation' }
 Variable >> emitStore: methodBuilder [
 
@@ -95,7 +100,12 @@ Variable >> hash [
 ]
 
 { #category : #testing }
-Variable >> isArg [
+Variable >> isAccessedIn: aMethod [
+	^self usingMethods includes: aMethod
+]
+
+{ #category : #testing }
+Variable >> isArgumentVariable [
 	^false
 ]
 
@@ -105,23 +115,33 @@ Variable >> isClassVariable [
 ]
 
 { #category : #testing }
-Variable >> isGlobal [ 
-	^false
-]
-
-{ #category : #testing }
 Variable >> isGlobalVariable [
 	^ false
 ]
 
 { #category : #testing }
-Variable >> isInstance [
-	^ false
+Variable >> isInstanceVariable [
+	"check if the var is an instance variable (a Slot)"
+	^false
 ]
 
 { #category : #testing }
 Variable >> isLiteralVariable [
+	"returns true for Global Variables, Class Variables and some others 
+	(e.g. Workspace bindings and Undeclared variables, see subclasses)"
 	^false
+]
+
+{ #category : #testing }
+Variable >> isLocalVariable [
+	"temporary variables and arguments are local variables"
+	^false
+]
+
+{ #category : #testing }
+Variable >> isReadIn: aCompiledCode [
+	^aCompiledCode ast readNodes
+		 anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #testing }
@@ -131,22 +151,22 @@ Variable >> isReferenced [
 
 { #category : #testing }
 Variable >> isReservedVariable [
+	"thisContext, super, self are reserved variables (true, false and nil are literals)"
 	^false
 ]
 
 { #category : #testing }
-Variable >> isSelf [
+Variable >> isSelfOrSuperVariable [
+	^ self isSelfVariable or: [ self isSuperVariable ]
+]
+
+{ #category : #testing }
+Variable >> isSelfVariable [
 	^false
 ]
 
 { #category : #testing }
-Variable >> isSelfOrSuper [
-	
-	^ self isSelf or: [ self isSuper ]
-]
-
-{ #category : #testing }
-Variable >> isSuper [
+Variable >> isSuperVariable [
 	^false
 ]
 
@@ -157,12 +177,17 @@ Variable >> isTemp [
 ]
 
 { #category : #testing }
-Variable >> isThisContext [
+Variable >> isTemporaryVariable [
 	^false
 ]
 
 { #category : #testing }
-Variable >> isUndeclared [
+Variable >> isThisContextVariable [
+	^false
+]
+
+{ #category : #testing }
+Variable >> isUndeclaredVariable [
 
 	^ false
 ]
@@ -174,8 +199,19 @@ Variable >> isUninitialized [
 ]
 
 { #category : #testing }
+Variable >> isWorkspaceVariable [
+	^ false
+]
+
+{ #category : #testing }
 Variable >> isWritable [
 	^ true
+]
+
+{ #category : #testing }
+Variable >> isWrittenIn: aCompiledCode [
+	^aCompiledCode ast variableWriteNodes
+		anySatisfy: [ :node | node binding == self ]
 ]
 
 { #category : #accessing }
@@ -186,6 +222,12 @@ Variable >> name [
 { #category : #accessing }
 Variable >> name: aSymbol [
 	name := aSymbol
+]
+
+{ #category : #testing }
+Variable >> needsFullDefinition [
+	"all but InstanceVariableSlot and ClassVariable need to print the full definition"
+	^true
 ]
 
 { #category : #properties }

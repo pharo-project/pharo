@@ -68,10 +68,8 @@ BinaryFileStreamTest >> testFullFileIsAtEnd [
 
 { #category : #testing }
 BinaryFileStreamTest >> testOpenFile [
-	
-	| file |
-	file := self fileStreamForFileNamed: 'testFile'.
-	
+	self fileStreamForFileNamed: 'testFile'.
+
 	self assert: (File named: 'testFile') exists
 ]
 

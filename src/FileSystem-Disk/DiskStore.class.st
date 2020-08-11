@@ -164,8 +164,9 @@ DiskStore >> basenameFromEntry: entry [
 
 { #category : #private }
 DiskStore >> basicCreationTimeOf: anEntry [
-	" the entry contains the seconds since the squeak epoch in local time"
-	^  (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
+	"The entry contains the seconds since the epoch in local time"
+
+	^ (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
 ]
 
 { #category : #private }
@@ -215,7 +216,7 @@ DiskStore >> basicIsFile: anEntry [
 
 { #category : #private }
 DiskStore >> basicModificationTimeOf: anEntry [
-	" the entry contains the seconds since the squeak epoch in local time"
+	"The entry contains the seconds since the epoch in local time"
 	^ (DateAndTime fromSeconds: (anEntry at: 3) offset: 0) translateTo: DateAndTime localOffset
 ]
 

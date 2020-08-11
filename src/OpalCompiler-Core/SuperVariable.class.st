@@ -27,11 +27,19 @@ SuperVariable >> initialize [
 ]
 
 { #category : #testing }
-SuperVariable >> isSuper [
+SuperVariable >> isSuperVariable [
 	^true
 ]
 
 { #category : #debugging }
 SuperVariable >> readInContext: aContext [
 	^aContext receiver
+]
+
+{ #category : #queries }
+SuperVariable >> usingMethods [
+	"as super is just a push Self, this detects real super sends, not accesses to super which 
+	should never happen"
+	^ SystemNavigation new allMethods select: [ :method | 
+		  method sendsToSuper ]
 ]

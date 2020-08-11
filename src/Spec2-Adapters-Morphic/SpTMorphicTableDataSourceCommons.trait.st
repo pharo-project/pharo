@@ -1,29 +1,31 @@
 Trait {
 	#name : #SpTMorphicTableDataSourceCommons,
 	#instVars : [
-		'model'
+		'model',
+		'headersByColumn'
 	],
 	#category : #'Spec2-Adapters-Morphic-Table'
 }
 
 { #category : #accessing }
 SpTMorphicTableDataSourceCommons >> headerColumn: column [
-	| headerMorph |
 
 	column id ifNil: [ ^ nil ].
-	headerMorph := SpHeaderCellMorph new 
-		addMorph: column id asMorph asReadOnlyMorph;
-		yourself.
-		
-	column isSortable ifTrue: [ 
-		headerMorph eventHandler: (MorphicEventHandler new 
-			on: #click 
-			send: #sortByColumn:event:morph:
-			to: self
-			withValue: column).
-	column sortingIcon ifNotNil: [ :icon | headerMorph addMorph: icon ] ].
+	^ self headerForColumn: column
+]
 
-	^ headerMorph
+{ #category : #accessing }
+SpTMorphicTableDataSourceCommons >> headerForColumn: aColumn [
+
+	^ self headersByColumn 
+		at: aColumn 
+		ifAbsentPut: [ self newHeaderColumn: aColumn ]
+]
+
+{ #category : #accessing }
+SpTMorphicTableDataSourceCommons >> headersByColumn [ 
+
+	^ headersByColumn ifNil: [ headersByColumn := SmallDictionary new ]	
 ]
 
 { #category : #accessing }
@@ -47,6 +49,40 @@ SpTMorphicTableDataSourceCommons >> model [
 SpTMorphicTableDataSourceCommons >> model: aTablePresenter [
 
 	model := aTablePresenter
+]
+
+{ #category : #'private factory' }
+SpTMorphicTableDataSourceCommons >> newHeaderColumn: column [
+	| headerMorph |
+	
+	headerMorph := SpHeaderCellMorph new 
+		addMorph: column id asMorph asReadOnlyMorph;
+		yourself.
+		
+	column isSortable ifTrue: [ 
+		headerMorph eventHandler: (MorphicEventHandler new 
+			on: #click 
+			send: #sortByColumn:event:morph:
+			to: self
+			withValue: column).
+	column sortingIcon ifNotNil: [ :icon | headerMorph addMorph: icon ] ].
+
+	^ headerMorph
+]
+
+{ #category : #private }
+SpTMorphicTableDataSourceCommons >> setHeaderColumnLazyProperties: column [
+	"Some properties of a header just acquire value after rendering cells. This method makes sure 
+	 properties are set, but is responsibility of the user to actually call it (usually after create 
+	 a cell). See senders of this method too see where it goes."
+	| headerMorph |
+	
+	column isExpandable ifTrue: [ ^ self ].  
+	headerMorph := self headerForColumn: column.
+	headerMorph hResizing = #rigid 
+		ifFalse: [ headerMorph hResizing: #rigid ].
+	headerMorph width = column width 
+		ifFalse: [ headerMorph width: (column width ifNil: [ 0 ]) ]
 ]
 
 { #category : #sorting }

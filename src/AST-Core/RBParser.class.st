@@ -39,15 +39,15 @@ RBParser class >> parseExpression: aString [
 ]
 
 { #category : #parsing }
-RBParser class >> parseExpression: aString onError: aBlock [ 
-	| node parser |
-	parser := self new.
-	parser errorBlock: aBlock.
-	parser initializeParserWith: aString.
-	node := parser parseExpression: aString.
-	^(node statements size == 1 and: [node temporaries isEmpty]) 
-		ifTrue: [node statements first]
-		ifFalse: [node]
+RBParser class >> parseExpression: aString onError: aBlock [
+	| node |
+	node := self new
+		        errorBlock: aBlock;
+		        initializeParserWith: aString;
+		        parseExpression: aString.
+	^ (node statements size == 1 and: [ node temporaries isEmpty ])
+		  ifTrue: [ node statements first ]
+		  ifFalse: [ node ]
 ]
 
 { #category : #parsing }
@@ -69,11 +69,10 @@ RBParser class >> parseFaultyMethod: aString [
 ]
 
 { #category : #parsing }
-RBParser class >> parseLiterals: aString [ 
-	| parser |
-	parser := self new.
-	parser initializeParserWith: aString.
-	^parser parseLiterals: aString
+RBParser class >> parseLiterals: aString [
+	^ self new
+		  initializeParserWith: aString;
+		  parseLiterals: aString
 ]
 
 { #category : #parsing }
@@ -84,30 +83,27 @@ RBParser class >> parseMethod: aString [
 { #category : #parsing }
 RBParser class >> parseMethod: aString onError: aBlock [ 
 	| parser |
-	parser := self new.
-	parser errorBlock: aBlock.
-	parser initializeParserWith: aString.
+	parser := self new
+		errorBlock: aBlock;
+		initializeParserWith: aString.
 	^ [ parser parseMethod: aString ]
 		on: ReparseAfterSourceEditing
 		do: [ :exception | self parseMethod: exception newSource onError: aBlock ]
 ]
 
 { #category : #parsing }
-RBParser class >> parseMethodPattern: aString [ 
-	| parser |
-	parser := self new.
-	parser errorBlock: [:error :position | ^nil].
-	parser initializeParserWith: aString.
-	^parser parseMessagePattern selector
+RBParser class >> parseMethodPattern: aString [
+	^ (self new
+		   errorBlock: [ :error :position | ^ nil ];
+		   initializeParserWith: aString;
+		   parseMessagePattern) selector
 ]
 
 { #category : #parsing }
 RBParser class >> parsePragma: aString [
-
-	| parser |
-	parser := self new.
-	parser initializeParserWith: aString.
-	^ parser parsePragmaAndReturn
+	^ self new
+		  initializeParserWith: aString;
+		  parsePragmaAndReturn
 ]
 
 { #category : #parsing }

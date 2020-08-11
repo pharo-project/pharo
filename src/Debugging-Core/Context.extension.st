@@ -30,7 +30,7 @@ Context >> lookupSymbol: aSymbol [
 Context >> lookupTempVar: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
-	var isTemp ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
+	var isLocalVariable ifFalse: [ ^self error: var name, ' is not a temp but, ', var class name].
 	^var
 ]
 
@@ -275,39 +275,44 @@ Context class >> simulatePrimitiveNumber: num with: simulator [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> stepToHome: aContext [ 
+Context >> stepToHome: aContext [
 	"Resume self until the home of top context is aContext.  Top context may be a block context."
 
-	| home ctxt here error topContext context |
-	
+	| home ctxt here error context |
 	here := thisContext.
 	ctxt := self step.
-	ctxt = self ifFalse: [ 
-		"Insert ensure and exception handler contexts under aSender"
+	ctxt = self ifFalse: [ "Insert ensure and exception handler contexts under aSender"
 		error := nil.
-		context := aContext insertSender: (Context
-			contextOn: UnhandledError do: [:ex |
-				error ifNil: [
-					error := ex exception.
-					topContext := thisContext.
-					ex resumeUnchecked: here jump ]
-						ifNotNil: [ ex pass ]]).
-	].
+		context := aContext insertSender: (Context contextOn: UnhandledError do: [ :ex | 
+				            error
+					            ifNil: [ 
+						            error := ex exception.
+						            ex resumeUnchecked: here jump ]
+					            ifNotNil: [ ex pass ] ]) ].
 	home := aContext home.
-	home == ctxt home ifTrue: [ ^{ctxt. nil} ].
-	
-	[ctxt := ctxt step.
-	error ifNotNil: [
-		"remove above inserted ensure and handler contexts"
-		context ifNotNil: [aContext terminateTo: context sender].
-		^ {ctxt. error}].
-	
-	home == ctxt home] whileFalse: [
-		home isDead ifTrue: [^ {ctxt. nil}]
-	].
+	home == ctxt home ifTrue: [ 
+		^ { 
+			  ctxt.
+			  nil } ].
+
+	[ 
+	ctxt := ctxt step.
+	error ifNotNil: [ "remove above inserted ensure and handler contexts"
+		context ifNotNil: [ aContext terminateTo: context sender ].
+		^ { 
+			  ctxt.
+			  error } ].
+
+	home == ctxt home ] whileFalse: [ 
+		home isDead ifTrue: [ 
+			^ { 
+				  ctxt.
+				  nil } ] ].
 	"remove above inserted ensure and handler contexts"
-	context ifNotNil: [aContext terminateTo: context sender].
-	^ {ctxt. nil}
+	context ifNotNil: [ aContext terminateTo: context sender ].
+	^ { 
+		  ctxt.
+		  nil }
 ]
 
 { #category : #'*Debugging-Core' }
@@ -364,9 +369,7 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	| var |
-	var := self lookupTempVar: aName.
-	^var readInContext: self
+	^(self lookupTempVar: aName) readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -375,7 +378,8 @@ Context >> tempNamed: aName put: anObject [
 	
 	| var |
 	var := self lookupTempVar: aName.
-	var write: anObject inContext: self
+	var write: anObject inContext: self.
+	^ anObject
 ]
 
 { #category : #'*Debugging-Core' }

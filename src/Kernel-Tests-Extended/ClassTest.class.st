@@ -166,8 +166,8 @@ ClassTest >> testCompileAll [
 
 { #category : #'tests - dependencies' }
 ClassTest >> testDependencies [
-	self assert: (ClassTest dependentClasses includes: ClassTest superclass).
-	self assert: (ClassTest dependentClasses includes: Date)
+	self assert: (self class dependentClasses includes: self class superclass).
+	self assert: (self class dependentClasses includes: Date)
 ]
 
 { #category : #accessing }

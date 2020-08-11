@@ -39,6 +39,23 @@ CoInitializeTypeInferenceTest >> testInferInstanceVariableUsedInInitialize [
 ]
 
 { #category : #tests }
+CoInitializeTypeInferenceTest >> testInferUndefinedInstanceVariableUsedInInitialize [
+
+	| types |
+	types := CoTypeInferencer new
+		inferFrom: (CoMockClass new
+			methodAt: #initialize put: (CoMockMethod new
+				source: 'initialize
+					a'
+				yourself);
+			instanceVariables: #();
+			yourself);
+		variables.
+		
+	self assertCollection: (types at: #a) hasSameElements: Set new
+]
+
+{ #category : #tests }
 CoInitializeTypeInferenceTest >> testInferVariablesWithNoInitializeFindsNoTypes [
 
 	| types |

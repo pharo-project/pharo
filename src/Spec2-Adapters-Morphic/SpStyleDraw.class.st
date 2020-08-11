@@ -1,5 +1,5 @@
 "
-! Draw property (SpStyleDraw)
+! Draw property (==SpStyleDraw==)
 
 Draw properties control how the component (morph) will be draw.
 I keep this properties: 
@@ -78,15 +78,4 @@ SpStyleDraw >> color [
 SpStyleDraw >> color: aColorOrSymbol [
 
 	color := self toColor: aColorOrSymbol
-]
-
-{ #category : #private }
-SpStyleDraw >> toColor: aColorOrSymbol [
-
-	"Try if color"
-	aColorOrSymbol isSymbol ifFalse: [ ^ aColorOrSymbol ].
-	"Try by name"
-	(Color named: aColorOrSymbol) ifNotNil: [ :aColor | ^ aColor ]. 
-	"Try by HEX (CSS style)"				
-	^ Color fromHexString: aColorOrSymbol
 ]

@@ -492,36 +492,33 @@ BlockClosure >> on: exception fork: handlerAction [
 	up to the top of the stack will be transferred to forked process, with handlerAction on top.
 	(so when the forked process will be resuming, it will enter the handlerAction)
 	 "
-		
-	^ self on: exception do: [:ex |
-		| copy onDoCtx process handler bottom thisCtx |
-		
-		onDoCtx := thisContext.
-		thisCtx := onDoCtx home.
 
-		"find the context on stack for which this method's is sender"
+	^ self
+		  on: exception
+		  do: [ :ex | 
+			  | onDoCtx handler bottom thisCtx |
+			  onDoCtx := thisContext.
+			  thisCtx := onDoCtx home.
 
-		[ onDoCtx sender == thisCtx] whileFalse: [ 
-			onDoCtx := onDoCtx sender.
-			onDoCtx ifNil: [ 
-				"Can't find our home context. seems like we're already forked
-				and handling another exception in new thread. In this case, just pass it through handler."
-				^ handlerAction cull: ex ]
-		 ].
+			  "find the context on stack for which this method's is sender"
 
-		bottom := [ Processor terminateActive ] asContext.
-		onDoCtx privSender: bottom.
+			  [ onDoCtx sender == thisCtx ] whileFalse: [ 
+				  onDoCtx := onDoCtx sender.
+				  onDoCtx ifNil: [ "Can't find our home context. seems like we're already forked
+				and handling another exception in new thread. In this case, just pass it through handler." 
+					  ^ handlerAction cull: ex ] ].
 
-		handler := [ handlerAction cull: ex ] asContext.
-		handler privSender: thisContext sender.
+			  bottom := [ Processor terminateActive ] asContext.
+			  onDoCtx privSender: bottom.
 
-		(Process forContext: handler priority: Processor activePriority) resume.
+			  handler := [ handlerAction cull: ex ] asContext.
+			  handler privSender: thisContext sender.
 
-		"cut the stack of current process"
-		thisContext privSender: thisCtx.
-		nil
-	]
+			  (Process forContext: handler priority: Processor activePriority) resume.
 
+			  "cut the stack of current process"
+			  thisContext privSender: thisCtx.
+			  nil ]
 ]
 
 { #category : #exceptions }

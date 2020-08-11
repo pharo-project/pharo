@@ -1,11 +1,12 @@
 "
-The Athens canvas is a central object which is used to performs drawings on a surface.
-Please note, that Athens does not allows you to instantiate canvas directly, instead you obtain a ready for use instance as an argument in 
-#drawDuring: message, sent to athens surface:
+`AthensCanvas` instance is a central object which is used to perform drawings on a surface.
+Please note, that Athens does not allow you to instantiate canvas directly, instead you obtain a ready to use instance as an argument in `#drawDuring:` message, sent to athens surface:
 
+```
 surface drawDuring: [:canvas | .... ]
+```
 
-Using canvas outside a #drawDuring: method is highly discouraged. Doing so may lead to unpredicted behavior/data corruption/image crash.
+Using canvas outside a `#drawDuring:` method is highly discouraged. Doing so may lead to unpredicted behavior/data corruption/image crash.
 "
 Class {
 	#name : #AthensCanvas,
@@ -67,8 +68,7 @@ AthensCanvas >> cacheAt: anObject ifAbsentPut: aBlock [
 ]
 
 { #category : #clipping }
-AthensCanvas >> clipBy: aRectangle during: aBlock [
-	
+AthensCanvas >> clipBy: aRectangle during: aBlock [	
 	"Set a clipping rectangle during drawing operations performed in aBlock.
 	Note that the clipping rectangle is intersected with the currently active clipping rectangle"
 	
@@ -116,8 +116,9 @@ AthensCanvas >> draw: anObject [
 AthensCanvas >> drawShape: anObject [
 	"A convenience method, which sets the current shape to anObject and then fills it
 	with currently selected paint" 
-	self setShape: anObject.
-	self draw.
+	self 
+		setShape: anObject;
+		draw
 	
 ]
 
@@ -125,12 +126,11 @@ AthensCanvas >> drawShape: anObject [
 AthensCanvas >> drawString: aString [
 	"Draw a string using currently selected font.
 	Answer a total advance of rendered string "
-	^ fontRenderer renderCharacters: aString from: 1 to: aString size.
+	^ fontRenderer renderCharacters: aString from: 1 to: aString size
 ]
 
 { #category : #'drawing text' }
 AthensCanvas >> drawString: aString from: start to: end [
-
 	"Draw a portion of string using currently selected font.
 	Answer a total advance of rendered portion"
 	^ fontRenderer renderCharacters: aString from: start to: end
@@ -159,7 +159,7 @@ AthensCanvas >> initializeWithSurface: anAthensSurface [
 
 { #category : #clipping }
 AthensCanvas >> isVisible: aRectangle [ 
-	"check if rectangle are not fully clipped by current clipping coordinates"
+	"Check if rectangle are not fully clipped by current clipping coordinates"
 	
 	^ true
 ]
@@ -206,13 +206,13 @@ AthensCanvas >> setPaint: aPaint [
 	"set the current paint of receiver"
 	paint = aPaint ifTrue:[ ^ paint ].
 	paint := PaintCache at: aPaint ifAbsentPut: [ aPaint asAthensPaintOn: self ].
-	^ paint.
+	^ paint
 ]
 
 { #category : #accessing }
 AthensCanvas >> setShape: anObject [
 	"Set the current shape of receiver"
-	shape := anObject asAthensShapeOn: self.
+	shape := anObject asAthensShapeOn: self
 ]
 
 { #category : #paint }

@@ -177,7 +177,7 @@ FBDDecompiler >> decompileThenRecompileClass: aClass [
 { #category : #'data flow instructions' }
 FBDDecompiler >> doDup [
 	| dupTemp |
-	simulatedStack last class == RBTemporaryNode
+	simulatedStack last class == RBVariableNode
 		ifTrue: [ ^ simulatedStack addLast: simulatedStack last ].
 	self incrTempCount.
 	dupTemp := self newTemp.
@@ -252,7 +252,7 @@ FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 		statements:
 			{RBMessageNode receiver: (RBVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.
-	1 to: aCompiledMethod numArgs do: [ :i | args add: (RBArgumentNode named: 'arg' , i asString) ].
+	1 to: aCompiledMethod numArgs do: [ :i | args add: (RBVariableNode named: 'arg' , i asString) ].
 	^ builder
 		codeMethod: aCompiledMethod selector
 		arguments: args

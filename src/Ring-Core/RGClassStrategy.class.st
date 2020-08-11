@@ -555,7 +555,7 @@ RGClassStrategy >> sharedPools [
 		each isSymbol 
 			ifTrue: [ self environment ask behaviorNamed: each name ]
 			ifFalse: [ 
-				(each isVariableDefinition and: [each isPoolVariable ])
+				(each isVariable and: [each isPoolVariable ])
 					ifTrue: [ 
 						| beh | 
 						beh := self environment ask behaviorNamed: each name.

@@ -1,6 +1,5 @@
 "
-I am the start of a literal array, normal literal arrays
-#() or byte arrays #[].
+I am the start of a literal array, normal literal arrays `#()` or byte arrays `#[]`.
 
 "
 Class {

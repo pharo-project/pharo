@@ -631,6 +631,12 @@ Behavior >> deepCopy [
 	^ self shallowCopy
 ]
 
+{ #category : #'accessing instances and variables' }
+Behavior >> definedVariables [
+	"return all the Variables defined"
+	^ self slots
+]
+
 { #category : #dependencies }
 Behavior >> dependentClasses [
 	"Return the list of classes used myself"
@@ -645,11 +651,10 @@ Behavior >> dependentClasses [
 	(self methods, self classSide methods) 
 		do: [ :m | m literalsDo: [ :l | 
 					"We also check if the method is not an extension"
-					((((l isVariableBinding 
-					and: [ l value notNil ]) 
-					and: [ l value isBehavior ])
-					and: [ m category notEmpty ] )
-					and: [ m category first ~= $* ])  ifTrue: [ cll add: l value ] ]  ].
+					(l isVariableBinding 
+					and: [ l isGlobalClassNameBinding
+					and: [ m category notEmpty 
+					and: [ m category first ~= $* ]]])  ifTrue: [ cll add: l value ] ] ] .
 	^ cll asArray
 ]
 
@@ -839,6 +844,13 @@ Behavior >> hasAbstractMethods [
 ]
 
 { #category : #'testing method dictionary' }
+Behavior >> hasMethodAccessingVariable: aVariable [
+	"Answer true if any of my methods access the variable"
+
+	^self methods anySatisfy: [ :method | aVariable isAccessedIn: method ]
+]
+
+{ #category : #'testing method dictionary' }
 Behavior >> hasMethods [
 	"Answer whether the receiver has any methods in its method dictionary."
 
@@ -956,10 +968,9 @@ Behavior >> instVarNames [
 
 	| mySize superSize |
 	mySize := self instSize.
-	superSize := 
-		self superclass == nil
-			ifTrue: [0]
-			ifFalse: [self superclass instSize].
+	superSize := self superclass
+			ifNil: [0]
+			ifNotNil: [self superclass instSize].
 	mySize = superSize ifTrue: [^#()].	
 	^(superSize + 1 to: mySize) collect: [:i | 'inst' , i printString]
 ]
@@ -973,6 +984,12 @@ Behavior >> instanceCount [
 	count := 0.
 	self allInstancesDo: [:x | count := count + 1].
 	^count
+]
+
+{ #category : #'accessing instances and variables' }
+Behavior >> instanceVariables [
+	"in older version, this method was returning names, not objects"
+	^self slots
 ]
 
 { #category : #'memory usage' }
@@ -1132,11 +1149,7 @@ Behavior >> isPool [
 { #category : #testing }
 Behavior >> isReferenced [
 	"Returns true if the class is referenced from a method."
-	"This method should just forward to the binding, this can be done when we do not use
- 	Association for the binding on the class side"
-
-	^ self environment allBehaviors
-		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self binding ]
+	^ self binding isReferenced
 ]
 
 { #category : #'testing class hierarchy' }
@@ -1351,26 +1364,6 @@ Behavior >> obsoleteSubclasses [
 Behavior >> postCopy [
 	super postCopy.
 	self methodDict: self methodDict copy
-]
-
-{ #category : #printing }
-Behavior >> printHierarchy [
-	"Answer a description containing the names and instance variable names 
-	of all of the subclasses and superclasses of the receiver."
-
-	| aStream index |
-	index := 0.
-	aStream := (String new: 16) writeStream.
-	self allSuperclasses reverseDo: 
-		[:aClass | 
-		aStream crtab: index.
-		index := index + 1.
-		aStream nextPutAll: aClass name.
-		aStream space.
-		aStream print: aClass instVarNames].
-	aStream cr.
-	self printSubclassesOn: aStream level: index.
-	^aStream contents
 ]
 
 { #category : #printing }

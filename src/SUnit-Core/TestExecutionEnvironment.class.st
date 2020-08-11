@@ -231,3 +231,9 @@ TestExecutionEnvironment >> watchDogLoopFor: testProcess [
 
 
 ]
+
+{ #category : #accessing }
+TestExecutionEnvironment >> watchDogProcess [
+
+	^ watchDogProcess
+]

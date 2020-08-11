@@ -11,7 +11,7 @@ weakArray at: 1
 "
 Class {
 	#name : #WeakClassVariable,
-	#superclass : #LiteralVariable,
+	#superclass : #ClassVariable,
 	#category : #'VariablesLibrary-ClassVariables'
 }
 

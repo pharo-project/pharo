@@ -6,7 +6,8 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'previousBreakpoints',
-		'cls'
+		'cls',
+		'oldObservers'
 	],
 	#category : #'Reflectivity-Tools-Tests'
 }
@@ -25,6 +26,8 @@ BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
 	previousBreakpoints := Breakpoint all copy.
+	oldObservers := Breakpoint observers copy.
+	Breakpoint observers removeAll.
 	Breakpoint all removeAll.
 ]
 
@@ -33,6 +36,8 @@ BreakpointTest >> tearDown [
 	| pkg |
 	Breakpoint removeAll.	
 	Breakpoint all addAll: previousBreakpoints.
+	Breakpoint observers removeAll.
+	Breakpoint observers addAll: oldObservers.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
 	pkg ifNotNil: [ pkg removeFromSystem ].
@@ -53,11 +58,95 @@ BreakpointTest >> testAddRemoveBreakpoint [
 ]
 
 { #category : #tests }
+BreakpointTest >> testBreakInContextNode [
+
+	|observer breakpoint|
+	observer := DummyBreakpointObserver new.
+	Breakpoint registerObserver: observer.
+	breakpoint := Breakpoint new.	
+	self should: [breakpoint breakInContext: self node: #node] raise: Break.
+	self assert: observer tag notNil.
+	self assert: observer tag breakpoint identicalTo: breakpoint.
+	self assertCollection: observer tag nodes equals: #(#node).
+	
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakLink [
+	|breakpoint link|
+	breakpoint := Breakpoint new.
+	link := breakpoint link.
+	self assert: link metaObject identicalTo: breakpoint.
+	self assert: link selector equals: #breakInContext:node:.
+	self assertCollection: link options equals: (MetaLink new parseOptions: breakpoint options) options.
+	self assertCollection: link arguments equals: #(#context #node) 
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakLinkOnce [
+	|breakpoint|
+	breakpoint := Breakpoint new.
+	self deny: breakpoint oneShot.
+	breakpoint once.
+	self assert: breakpoint oneShot
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakOnceInContext [
+
+	|observer breakpoint|
+	observer := DummyBreakpointObserver new.
+	Breakpoint registerObserver: observer.
+	breakpoint := Breakpoint new once.	
+	self assert: breakpoint isEnabled.
+	self should: [breakpoint breakInContext: self node: #node] raise: Break.
+	self deny: breakpoint isEnabled.
+	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakpointEnabled [
+	| breakpoint |
+	breakpoint := Breakpoint new.
+	self assert: breakpoint isEnabled.
+	breakpoint disable.
+	self deny: breakpoint isEnabled.
+	breakpoint enable.
+	self assert: breakpoint isEnabled
+]
+
+{ #category : #tests }
 BreakpointTest >> testBreakpointInitialization [
 	|bp|	
 	bp := Breakpoint new.
 	self assert: bp targetInstance isNil.
 	self deny: bp isObjectCentric
+]
+
+{ #category : #tests }
+BreakpointTest >> testBreakpointNodeProperty [
+	|breakpoint|
+	cls compile: 'dummy ^42'.
+	breakpoint := Breakpoint new
+		node: (cls >> #dummy) ast;
+		once.
+	breakpoint install.
+	self assert: (cls >> #dummy) ast hasBreakpoint.
+	self assertCollection: (cls >> #dummy) ast breakpoints equals: {breakpoint} asSet.
+	breakpoint remove.
+	self deny: (cls >> #dummy) ast hasBreakpoint.
+]
+
+{ #category : #tests }
+BreakpointTest >> testDisableEnableBreakpoint [
+	| breakpoint |
+	breakpoint := Breakpoint new.	
+	self should: [breakpoint breakInContext: self node: #node] raise: Break.
+	breakpoint disable.
+	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break.
+	breakpoint enable.
+	self should: [breakpoint breakInContext: self node: #node] raise: Break
+
 ]
 
 { #category : #tests }
@@ -166,6 +255,28 @@ BreakpointTest >> testScopeTo [
 	
 	self assert: bp targetInstance identicalTo: object.
 	self assert: bp isObjectCentric
+]
+
+{ #category : #tests }
+BreakpointTest >> testSetAsBreakpointProperty [
+	| node breakpoint breakpoint2 |
+	node := RBProgramNode new.
+	breakpoint := Breakpoint new.
+	breakpoint2 := Breakpoint new.
+	breakpoint node: node.
+	breakpoint2 node: node.
+	
+	breakpoint setAsNodeProperty.
+	breakpoint2 setAsNodeProperty.
+	self assert: node hasBreakpoint.
+	self assertCollection: node breakpoints equals: { breakpoint. breakpoint2 } asSet.
+	
+	breakpoint setAsNodeProperty.
+	self assertCollection: node breakpoints equals: { breakpoint. breakpoint2 } asSet.
+	
+	breakpoint removeFromNodeProperty.
+	breakpoint2 removeFromNodeProperty.
+	self deny: node hasBreakpoint
 ]
 
 { #category : #tests }

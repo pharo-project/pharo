@@ -45,6 +45,21 @@ RBVariableNode class >> named: aName start: aPosition [
 		yourself.
 ]
 
+{ #category : #'instance creation' }
+RBVariableNode class >> selfNode [
+	^ (self named: 'self') variable: SelfVariable instance
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> superNode [
+	^ (self named: 'super') variable: SuperVariable instance
+]
+
+{ #category : #'instance creation' }
+RBVariableNode class >> thisContextNode [
+	^ (self named: 'thisContext') variable: ThisContextVariable instance
+]
+
 { #category : #comparing }
 RBVariableNode >> = anObject [ 
 	self == anObject ifTrue: [^true].
@@ -61,7 +76,7 @@ RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
 { #category : #converting }
 RBVariableNode >> adaptToSemanticNode [
 	
-	self primitiveChangeClassTo: self binding semanticNodeClass new
+	self primitiveChangeClassTo: variable semanticNodeClass new
 ]
 
 { #category : #matching }
@@ -80,7 +95,7 @@ RBVariableNode >> hasIncompleteIdentifier [
 	"check if there is any variable declared in my scope that starts with my name"
 
 	"declared vars are never incomplete"
-	self binding isUndeclared ifFalse: [ ^false ].
+	variable isUndeclaredVariable ifFalse: [ ^false ].
 	"for the others we have to search from the current scope"
 	^self scope hasBindingThatBeginsWith: self name
 ]
@@ -98,13 +113,31 @@ RBVariableNode >> initialize [
 ]
 
 { #category : #testing }
+RBVariableNode >> isArgumentVariable [
+	^variable isArgumentVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isBlockVar [
+	"true if a variable node is defined by a block node"
+	^variable scope isBlockScope
+]
+
+{ #category : #testing }
+RBVariableNode >> isClassVariable [
+	^variable isClassVariable
+
+]
+
+{ #category : #testing }
 RBVariableNode >> isDefinition [
 	"Check if I am a Variable defintion"
-	self parent isSequence
-		ifTrue: [ ^ self parent temporaries identityIncludes: self ].
-	(self parent isMethod or: [ self parent isBlock ])
-		ifTrue: [ ^ self parent arguments identityIncludes: self ].
-	^ false
+	^variable definingNode == self
+]
+
+{ #category : #testing }
+RBVariableNode >> isGlobalVariable [
+	^variable isGlobalVariable
 ]
 
 { #category : #testing }
@@ -113,8 +146,29 @@ RBVariableNode >> isImmediateNode [
 ]
 
 { #category : #testing }
+RBVariableNode >> isInstanceVariable [
+	^variable isInstanceVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isLiteralVariable [
+	^variable isLiteralVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isLocalVariable [
+	"returns true for temporary variables and arguments"
+	^variable isLocalVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isRead [
 	^ self isWrite not and: [ self isUsed ]
+]
+
+{ #category : #testing }
+RBVariableNode >> isReservedVariable [
+	^ variable isReservedVariable
 ]
 
 { #category : #testing }
@@ -126,6 +180,11 @@ RBVariableNode >> isSelf [
 ]
 
 { #category : #testing }
+RBVariableNode >> isSelfVariable [
+	^variable isSelfVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isSuper [
 	"normally this method is not needed (if all the RBVariable creations create RBSuperNode instead but
 	since we do not control this."
@@ -134,8 +193,29 @@ RBVariableNode >> isSuper [
 ]
 
 { #category : #testing }
+RBVariableNode >> isSuperVariable [
+	^ variable isSuperVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isThisContextVariable [
+	^variable isThisContextVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isUndeclaredVariable [
+
+	^variable isUndeclaredVariable
+]
+
+{ #category : #testing }
 RBVariableNode >> isVariable [
 	^true
+]
+
+{ #category : #testing }
+RBVariableNode >> isWorkspaceVariable [
+	^ variable isWorkspaceVariable
 ]
 
 { #category : #testing }

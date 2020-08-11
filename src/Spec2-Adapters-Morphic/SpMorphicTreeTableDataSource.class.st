@@ -156,7 +156,7 @@ SpMorphicTreeTableDataSource >> shouldDisplayExpandableArrowFor: item [
 SpMorphicTreeTableDataSource >> sortElements: aSortFunction [
 
 	unsortedElements ifNil: [ unsortedElements := self rootsItems ].
-	self rootItem data: ((self rootItem children collect: [:each | each data]) sorted: aSortFunction)
+	self rootItem data: ((self rootItem children collect: #data) sorted: aSortFunction)
 ]
 
 { #category : #accessing }

@@ -229,6 +229,32 @@ SpBoxLayout >> removeAll [
 	adapter ifNotNil: [ :anAdapter | anAdapter removeAll ]
 ]
 
+{ #category : #adding }
+SpBoxLayout >> replace: aPresenter with: otherPresenter [
+	"Replace aPresenter with otherPresenter. 
+	 Original constraints will be preserved."
+	
+	self 
+		replace: aPresenter 
+		with: otherPresenter
+		withConstraints: (self constraintsFor: aPresenter)
+]
+
+{ #category : #adding }
+SpBoxLayout >> replace: aPresenter with: otherPresenter withConstraints: constraints [
+	"Replace aPresenter with otherPresenter"
+	
+	children
+		replaceKey: aPresenter
+		with: otherPresenter.
+
+	self withAdapterDo: [ :anAdapter |
+		anAdapter 
+			replace: aPresenter 
+			with: otherPresenter
+			withConstraints: constraints ]
+]
+
 { #category : #accessing }
 SpBoxLayout >> spacing [
 	^ spacing

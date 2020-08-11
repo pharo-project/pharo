@@ -1,11 +1,11 @@
 "
 Provides a simple, platform-independent, file stream. I am 
-   - binary
-   - not buffered
-   - provide no encoding/conversions
+- binary
+- not buffered
+- provide no encoding/conversions
 
-!Examples of usage
-
+### Examples of usage
+```
 ""Creating a file""
 stream := (File named: 'asd.txt' asFileReference fullName) readStream.
 
@@ -30,6 +30,7 @@ stream upToAnyOf: #[ 13 30 ].
 
 ""peeking""
 stream peek.
+```
 "
 Class {
 	#name : #AbstractBinaryFileStream,

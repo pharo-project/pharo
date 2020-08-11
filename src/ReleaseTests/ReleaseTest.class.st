@@ -19,22 +19,6 @@ ReleaseTest class >> defaultTimeLimit [
 ]
 
 { #category : #accessing }
-ReleaseTest class >> knownProcesses [
-	"Return a dynamic list of know processes"
-	
-	"(self actualProcesses difference: self knownProcesses) do: [ :each | each suspend; terminate ]."
-	
-	^ {
-		Processor activeProcess.	
-		InputEventFetcher default fetcherProcess.
-		WeakArray runningFinalizationProcess.
-		Processor backgroundProcess.
-		SmalltalkImage current lowSpaceWatcherProcess.
-		UIManager default uiProcess.
-		Delay schedulingProcess } asSet
-]
-
-{ #category : #accessing }
 ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
@@ -82,7 +66,20 @@ ReleaseTest >> hasStartUpOrShutDownMethod: aClass [
 
 { #category : #accessing }
 ReleaseTest >> knownProcesses [
-	^ self class knownProcesses
+	"Return a dynamic list of know processes"
+	
+	"(self actualProcesses difference: self knownProcesses) do: [ :each | each suspend; terminate ]."
+	
+	^ {
+		Processor activeProcess.	
+		Processor backgroundProcess.
+		InputEventFetcher default fetcherProcess.
+		WeakArray runningFinalizationProcess.
+		SmalltalkImage current lowSpaceWatcherProcess.
+		MorphicUIManager uiProcess.
+		CurrentExecutionEnvironment value watchDogProcess.
+		Delay schedulingProcess.
+		TKTWatchDog onDuty pharoProcess } asSet
 ]
 
 { #category : #tests }
@@ -90,6 +87,14 @@ ReleaseTest >> testAllClassPoolBindingAreClassVariables [
 	| wrong |
 	wrong := OrderedCollection new.
 	testingEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each isKindOf: ClassVariable ]) ].
+	self assertEmpty: wrong
+]
+
+{ #category : #tests }
+ReleaseTest >> testAllClassPoolBindingHaveDefiningClass [
+	| wrong |
+	wrong := OrderedCollection new.
+	testingEnvironment allClasses do: [ :class | wrong addAll: (class classVariables reject: [ :each | each definingClass == class ]) ].
 	self assertEmpty: wrong
 ]
 
@@ -332,12 +337,16 @@ ReleaseTest >> testUnknownProcesses [
 	| unknownProcesses |
 	unknownProcesses := self actualProcesses difference: self knownProcesses.
 	self 
-		assert: unknownProcesses size <=2
+		assert: unknownProcesses isEmpty
 		description: (String streamContents: [ :out |
 			out << 'Found unknown processes: '.
 			unknownProcesses 
-				do: [ :each | out print: each ] 
-				separatedBy: [ out << ', ' ] ])
+				do: [ :each | 
+					out 
+						print: each name;
+						print: ':';
+						print: each ] 
+				separatedBy: [ out << String crlf ] ])
 ]
 
 { #category : #'tests - rpackage' }

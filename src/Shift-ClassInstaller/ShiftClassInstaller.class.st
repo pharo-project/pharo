@@ -130,8 +130,7 @@ ShiftClassInstaller >> installInEnvironment: newClass [
 
 	"I only install in the environment if there is not oldClass installed."
 	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
-		self installingEnvironment installClass: newClass withName: builder name.
-	].
+		self installingEnvironment installClass: newClass withName: builder name ].
 
 	self
 		updateBindings: (self installingEnvironment bindingAt: builder name)
@@ -213,7 +212,8 @@ ShiftClassInstaller >> make: aBlock [
 
 { #category : #migrating }
 ShiftClassInstaller >> migrateClassTo: newClass [
-	| slotsToMigrate |
+	| slotsToMigrate oldClassVariables newClassVariables|
+
 	oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
 		
@@ -224,15 +224,25 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
 	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 	
-	oldClass classVarNames do: [ :aClassVar |
-		(newClass hasClassVarNamed: aClassVar) ifTrue:[ newClass classVarNamed: aClassVar put: (oldClass classVarNamed: aClassVar) ].
-	].
+	oldClassVariables := OrderedCollection new.
+	newClassVariables := OrderedCollection new.
+	
+	oldClass classVariables do: [ :oldVar | | newVar |
+		(newClass hasClassVarNamed: oldVar key)
+			ifTrue: [ 
+				newVar := newClass classVariableNamed: oldVar key.
+				newVar write: oldVar read.
+				newClassVariables add: newVar.
+				oldClassVariables add: oldVar. ]].
 	
 	[ 	
 		(self builder hasToMigrateInstances) 
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
-		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
+		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
+			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.	
+
+		newClass classPool rehash.
 	] valueUninterruptably
 
 ]

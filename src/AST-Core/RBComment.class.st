@@ -25,11 +25,10 @@ instance variables
 "
 Class {
 	#name : #RBComment,
-	#superclass : #RBNode,
+	#superclass : #RBProgramNode,
 	#instVars : [
 		'contents',
-		'start',
-		'parent'
+		'start'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -63,16 +62,6 @@ RBComment >> intersectsInterval: anInterval [
 	
 	^(anInterval first between: self start and: self stop) 
 		or: [ self start between: anInterval first and: anInterval last ]
-]
-
-{ #category : #accessing }
-RBComment >> parent [
-	^ parent
-]
-
-{ #category : #accessing }
-RBComment >> parent: anObject [
-	parent := anObject
 ]
 
 { #category : #printing }

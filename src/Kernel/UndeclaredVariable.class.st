@@ -45,25 +45,13 @@ UndeclaredVariable >> emitValue: methodBuilder [
 	methodBuilder pushLiteralVariable: self
 ]
 
-{ #category : #testing }
-UndeclaredVariable >> isGlobal [
-	^false
-]
-
-{ #category : #testing }
-UndeclaredVariable >> isReferenced [
- 	"A Undeclared could be referenced from any method"
- 	^Smalltalk globals allBehaviors
- 		anySatisfy: [ :behavior | behavior hasSelectorReferringTo: self ]
-]
-
 { #category : #registry }
 UndeclaredVariable >> isRegistered [ 
 	^Undeclared includesKey: name
 ]
 
 { #category : #testing }
-UndeclaredVariable >> isUndeclared [
+UndeclaredVariable >> isUndeclaredVariable [
 
 	^ true
 ]

@@ -281,14 +281,14 @@ TraitedMetaclass >> rebuildMethodDictionary [
 	
 	modified := false.
 	
-	methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ]].
+	self methodDict valuesDo: [ :m | m traitSource ifNil: [ localMethods at: m selector put: m ]].
 	
 	selectors := self traitComposition selectors reject: [ :e | self isRejectedMethod: e ].
 	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false) ].
 	
-	removedSelectors := methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
+	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
 	modified := modified | (removedSelectors isNotEmpty).
-	removedSelectors do: [ :aSelector | methodDict removeKey: aSelector ].
+	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
 	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ]. 
 	
 	^ modified

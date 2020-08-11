@@ -42,7 +42,7 @@ SpDemoTablePresenter >> initializePresenters [
 				onActivation: [ :class | 
 					selectedClasses add: class.
 					self resetLabel ];
-				onDesactivation: [ :class | 
+				onDeactivation: [ :class | 
 					selectedClasses remove: class.
 					self resetLabel ];
 				width: 20;
@@ -59,5 +59,5 @@ SpDemoTablePresenter >> initializePresenters [
 
 { #category : #initialization }
 SpDemoTablePresenter >> resetLabel [
-	label label: (selectedClasses ifEmpty: [ 'No class checked' ] ifNotEmpty: [ (selectedClasses collect: [:each | each printString]) joinUsing: ' - '])
+	label label: (selectedClasses ifEmpty: [ 'No class checked' ] ifNotEmpty: [ (selectedClasses collect: #printString) joinUsing: ' - '])
 ]

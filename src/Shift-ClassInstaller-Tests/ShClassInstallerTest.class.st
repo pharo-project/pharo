@@ -55,6 +55,39 @@ ShClassInstallerTest >> tearDown [
 ]
 
 { #category : #tests }
+ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
+	
+	newClass := ShiftClassInstaller
+		make: [ :builder | 
+			builder
+				name: #ShCITestSharedPool;
+				superclass: SharedPool;
+				sharedVariables: #(A B C);
+				category: 'Shift-ClassInstaller-Tests' ].
+			
+	newClass2 := ShiftClassInstaller
+		make: [ :builder | 
+			builder
+				name: #ShCITestClass;
+				sharedPools: 'ShCITestSharedPool';
+				category: 'Shift-ClassInstaller-Tests' ].
+	
+	newClass2 compile: 'a ^A'.
+	
+	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A).
+	
+	newClass := ShiftClassInstaller
+		make: [ :builder | 
+			builder
+				name: #ShCITestSharedPool;
+				superclass: SharedPool;
+				sharedVariables: #(A B C D);
+				category: 'Shift-ClassInstaller-Tests' ].
+
+	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A)
+]
+
+{ #category : #tests }
 ShClassInstallerTest >> testChangingHierarchy [
 	"Testing that the changes in the superclasses are propagated to the subclasses"
 

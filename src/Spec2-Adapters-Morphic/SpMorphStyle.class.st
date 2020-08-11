@@ -50,8 +50,8 @@ SpMorphStyle class >> fromStylesheet: aStyle adapter: anAdapter [
 			each isString 
 				ifTrue: [ 
 					allStyleClasses 
-						detect: [ :eachStyle | eachStyle fullName = each ]
-						ifFound: [ :aStyleClass | styles add: aStyleClass ] ] 
+						select: [ :eachStyle | eachStyle fullName = each ]
+						thenDo: [ :aStyleClass | styles add: aStyleClass ] ] 
 				ifFalse: [ 
 					styles add: each ] ]).
 	"WARNING. Order is important"

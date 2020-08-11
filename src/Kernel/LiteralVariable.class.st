@@ -114,15 +114,15 @@ LiteralVariable >> installingIn: aClass [
 ]
 
 { #category : #testing }
-LiteralVariable >> isGlobal [
-
-	^ true
+LiteralVariable >> isAccessedIn: aMethod [ 
+	
+	^aMethod accessesRef: self
 ]
 
 { #category : #testing }
 LiteralVariable >> isGlobalClassNameBinding [
-	^ (self value isClass or: [ self value isTrait ])
-		and: [ name == self value name ]
+	^ self value isClassOrTrait
+		and: [ (name == self value name) or: [ self value isObsolete ] ]
 ]
 
 { #category : #testing }
@@ -137,14 +137,10 @@ LiteralVariable >> isReadIn: aCompiledCode [
 
 { #category : #testing }
 LiteralVariable >> isReferenced [
-	"my subclasses override this if they can be referenced in code"
-	^false
-]
+	"my subclasses override this if they know better"
 
-{ #category : #queries }
-LiteralVariable >> isReferencedIn: aMethod [ 
-	
-	^(self isReadIn: aMethod) or: [ self isWrittenIn: aMethod ]
+	^ Smalltalk globals allBehaviors anySatisfy: [ :behavior | 
+		  behavior hasMethodAccessingVariable: self ]
 ]
 
 { #category : #testing }
@@ -154,6 +150,7 @@ LiteralVariable >> isSelfEvaluating [
 
 { #category : #testing }
 LiteralVariable >> isVariableBinding [
+	"Maybe we should deprecate this and use isLiteralVariable instead"
 	^true
 ]
 
@@ -201,13 +198,6 @@ LiteralVariable >> name: aString [
 	self key: aString asSymbol
 ]
 
-{ #category : #testing }
-LiteralVariable >> needsFullDefinition [
-	"only ClassVariable can use a simplified definition"
-
-	^ self class ~= ClassVariable
-]
-
 { #category : #printing }
 LiteralVariable >> printOn: aStream [
 
@@ -224,6 +214,11 @@ LiteralVariable >> read [
 { #category : #debugging }
 LiteralVariable >> readInContext: aContext [
 	^self value
+]
+
+{ #category : #accessing }
+LiteralVariable >> scope [
+	^self definingClass
 ]
 
 { #category : #printing }

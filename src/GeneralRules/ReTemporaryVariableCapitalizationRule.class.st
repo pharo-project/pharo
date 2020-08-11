@@ -9,26 +9,10 @@ Class {
 
 { #category : #running }
 ReTemporaryVariableCapitalizationRule >> basicCheck: aNode [
-	^ (self checkIsVariableWithParent: aNode) and: [ ((self checkIsArgumentDefinition: aNode) or: [ self checkIsTempDefinition: aNode ]) and: [ aNode name first isUppercase ] ]
-]
-
-{ #category : #'running-helpers' }
-ReTemporaryVariableCapitalizationRule >> checkIsArgumentDefinition: aNode [
-
-	^ aNode isArgument and: [ aNode parent isMethod ]
-]
-
-{ #category : #'running-helpers' }
-ReTemporaryVariableCapitalizationRule >> checkIsTempDefinition: aNode [
-
-	^ aNode isTemp and: [ aNode parent isSequence ]
-]
-
-{ #category : #'running-helpers' }
-ReTemporaryVariableCapitalizationRule >> checkIsVariableWithParent: aNode [
-
-	^ aNode isVariable and: [
-	  aNode parent isNotNil ]
+	aNode isVariable ifFalse: [ ^false ].
+	aNode isLocalVariable ifFalse: [ ^false ].
+	aNode isDefinition ifFalse: [ ^false ].
+	^aNode name first isUppercase
 ]
 
 { #category : #helpers }

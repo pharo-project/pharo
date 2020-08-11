@@ -176,10 +176,10 @@ ByteString >> beginsWith: prefix [
 	Otherwise, if self is wide, then super outperforms,
 	Otherwise, if prefix is wide, primitive is not correct"
 	
-	"'pharo' beginsWith: '' >>> false"
-	"'pharo' beginsWith: 'pharo-project' >>> false"
-	"'pharo' beginsWith: 'phuro' >>> false"
-	"'pharo' beginsWith: 'pha' >>> true"
+	"('pharo' beginsWith: '') >>> false"
+	"('pharo' beginsWith: 'pharo-project') >>> false"
+	"('pharo' beginsWith: 'phuro') >>> false"
+	"('pharo' beginsWith: 'pha') >>> true"
 	
 	prefix class isBytes ifFalse: [^super beginsWith: prefix].
 	

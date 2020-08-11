@@ -1,11 +1,11 @@
 "
-i am a concrete implementation of Athens surface which using cairo graphics library for rendering.
+I am a concrete implementation of Athens surface which using cairo graphics library for rendering.
 
 Cairo library, by itself can have multiple surface types.
 This class uses image surface (a bitmap located in system memory) and maps to cairo_image_surface_t* C type.
 
 **NOTE**
-As a workaround of bitblt bug, the actual Cairo surfaces, created internally is with 1 extra pixel higher than requested. This is, however completely hidden from users.
+As a workaround of a bug in bitblt, the Cairo surfaces are created internally with 1 extra pixel higher than requested. However, this is hidden for users.
 "
 Class {
 	#name : #AthensCairoSurface,
@@ -128,8 +128,7 @@ AthensCairoSurface class >> createShowSurfaceFn [
 	int showSurface(sqIntptr_t handle, int x, int y, int w, int h);
 		Display the contents of the surface on the actual screen.
 
-		If ioShowSurface() is called the surface in question represents
-		a Squeak DisplayScreen.
+		If ioShowSurface() is called the surface in question represents a DisplayScreen.
 
 	"
 	^ nil
@@ -186,6 +185,8 @@ AthensCairoSurface class >> extent: anExtent format: aFormat [
 
 { #category : #'finalize resources' }
 AthensCairoSurface class >> finalizeResourceData: data [
+	"Finalize external state"
+
 	| handle id contextHandle |
 	handle := data first.
 	id := data second.

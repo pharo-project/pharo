@@ -1,5 +1,5 @@
 "
-! Font property (SpStyleFont)
+! Font property (==SpStyleFont==)
 
 Font properties control how a component (morph) with font will draw the text.
 I keep this properties: 
@@ -28,10 +28,26 @@ Class {
 		'name',
 		'size',
 		'italic',
-		'bold'
+		'bold',
+		'color'
+	],
+	#classVars : [
+		'FontCache'
 	],
 	#category : #'Spec2-Adapters-Morphic-StyleSheet'
 }
+
+{ #category : #private }
+SpStyleFont class >> addFontToCache: aFont [
+
+	self fontCache add: aFont
+]
+
+{ #category : #private }
+SpStyleFont class >> fontCache [
+
+	^ FontCache ifNil: [ FontCache := WeakSet new ]
+]
 
 { #category : #'ston-core' }
 SpStyleFont class >> stonName [
@@ -39,14 +55,25 @@ SpStyleFont class >> stonName [
 	^ 'Font'
 ]
 
+{ #category : #private }
+SpStyleFont >> addFontToCache: aFont [
+
+	self class addFontToCache: aFont
+]
+
 { #category : #operations }
 SpStyleFont >> applyTo: aMorph [
 
-	"not all morphs understand font, I neet to verify it (which is not cool verifying a 
+	"not all morphs understand font, I need to verify it (which is not cool verifying a 
 	 selector but other way would be to define #font: in Morph and I do not want that)"
 	(aMorph respondsTo: #font:) ifFalse: [ ^ self ].
 	
-	aMorph font: self definedFont
+	aMorph font: self definedFont.
+	
+	self color ifNil: [ ^ self ].
+	"Again, not all morphs understand #textColor: and I need to verify it is there."
+	(aMorph respondsTo: #textColor:) ifFalse: [ ^ self ].
+	aMorph textColor: self color
 ]
 
 { #category : #accessing }
@@ -59,17 +86,45 @@ SpStyleFont >> bold: anObject [
 	bold := anObject
 ]
 
-{ #category : #operations }
+{ #category : #private }
+SpStyleFont >> calculateDefinedFont [
+	| font |
+	
+	font := LogicalFont
+		familyName: self name 
+		pointSize: self size.
+
+	self isItalic ifTrue: [ font forceItalicOrOblique ].
+	self isBold ifTrue: [ font forceBold ].
+
+	^ font
+]
+
+{ #category : #accessing }
+SpStyleFont >> color [
+  "This is meant to set the text color.
+	This property can be expressed as 
+	- a STON map: ==Color { #red : 1., #green : 0, #blue : 0, #alpha : 1 }==
+	- a named selector: ==#red==
+	- an hex string: =='FF0000'=="
+
+	^ color
+]
+
+{ #category : #accessing }
+SpStyleFont >> color: aColorOrSymbol [
+
+	color := self toColor: aColorOrSymbol
+]
+
+{ #category : #private }
 SpStyleFont >> definedFont [
 	| definedFont |
 
-	definedFont := LogicalFont
-		familyName: self name 
-		pointSize: self size.
-		
-	self isItalic ifTrue: [ definedFont forceItalicOrOblique ].
-	self isBold ifTrue: [ definedFont forceBold ].
-
+	self withCachedFontDo: [ :aFont | ^ aFont ].
+	
+	definedFont := self calculateDefinedFont.
+	self addFontToCache: definedFont.
 	^ definedFont
 ]
 
@@ -119,4 +174,16 @@ SpStyleFont >> size [
 SpStyleFont >> size: aNumber [
 
 	size := aNumber
+]
+
+{ #category : #private }
+SpStyleFont >> withCachedFontDo: aBlock [
+
+	self class fontCache 
+		detect: [ :each | 
+			each familyName = self name 
+				and: [ each pointSize = self size 
+				and: [ each isBold = self isBold
+				and: [ each isItalic = self isItalic ] ] ] ]
+		ifFound: aBlock
 ]

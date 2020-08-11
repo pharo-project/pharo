@@ -1,5 +1,5 @@
 "
-! Style properties (SpStyleProperty)
+! Style properties (==SpStyleProperty==)
 
 Style properties define different kind of properties a morphic component can have. There are several types of properties, defined as: 
 
@@ -56,4 +56,15 @@ SpStyleProperty >> mergeWith: otherProperty [
 			value: ((otherProperty readSlot: eachSlot) ifNil:[ self readSlot: eachSlot ]) ].
 		
 	^ merged
+]
+
+{ #category : #private }
+SpStyleProperty >> toColor: aColorOrSymbol [
+
+	"Try if color"
+	aColorOrSymbol isSymbol ifFalse: [ ^ aColorOrSymbol ].
+	"Try by name"
+	(Color named: aColorOrSymbol) ifNotNil: [ :aColor | ^ aColor ]. 
+	"Try by HEX (CSS style)"				
+	^ Color fromHexString: aColorOrSymbol
 ]

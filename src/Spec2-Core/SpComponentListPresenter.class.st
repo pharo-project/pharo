@@ -1,5 +1,12 @@
 "
 I am a list of components (Presenters)
+
+@@TODO
+
+!! Transmissions
+- #inputItemsPort (default)
+- #outputSelectionPort (default)
+- #outputActivationPort
 "
 Class {
 	#name : #SpComponentListPresenter,

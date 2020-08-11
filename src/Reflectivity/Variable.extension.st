@@ -1,6 +1,23 @@
 Extension { #name : #Variable }
 
 { #category : #'*Reflectivity' }
+Variable >> accessingNodes [
+	"return all reads and all assignments. This is different to #astNodes, which returns 
+	variable nodes in case of assignment, not the assignment itself"
+	^ self readNodes, self assignmentNodes
+]
+
+{ #category : #'*Reflectivity' }
+Variable >> accessingNodesFor: option [
+	option = #write
+		ifTrue: [ ^ self assignmentNodes ].
+	option = #read
+		ifTrue: [ ^ self  readNodes ].
+	"else we return all accessing nodes"
+	^ self accessingNodes
+]
+
+{ #category : #'*Reflectivity' }
 Variable >> afterHooks [
 	^self propertyAt: #afterHooks ifAbsent: #()
 ]
@@ -21,7 +38,7 @@ Variable >> assignmentNodes [
 Variable >> astNodes [
 	"by default we search the usingMethods for all AST nodes"
 	^self usingMethods flatCollect: [ :method | 
-		method variableNodes select: [: each| each binding == self ]]
+		method variableNodes select: [: each| each variable == self ]]
 ]
 
 { #category : #'*Reflectivity' }
@@ -85,19 +102,18 @@ Variable >> insteadLinks [
 ]
 
 { #category : #'*Reflectivity' }
+Variable >> invalidate [
+	self usingMethods do: [:method | method invalidate].
+]
+
+{ #category : #'*Reflectivity' }
 Variable >> link: aMetaLink [
-	| methods |
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [ self error: 'link requests reification that can not be provided by this node' ].
-	
-	methods := self usingMethods.
 	(self propertyAt: #links ifAbsentPut: [ OrderedCollection new ]) add: aMetaLink.
 	aMetaLink installOnVariable: self.
-	methods
-		do: [ :method |  
-			method
-				createTwin;
-				invalidate.
-			method installLink: aMetaLink ]
+	self clearReflectivityAnnotations.
+	self usingMethods do: [ :method |  
+		method method installLink: aMetaLink ]
 ]
 
 { #category : #'*Reflectivity' }

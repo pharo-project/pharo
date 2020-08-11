@@ -80,6 +80,12 @@ OSWindow class >> finalizeResourceData: windowHandle [
 	windowHandle destroy.
 ]
 
+{ #category : #initialization }
+OSWindow class >> initialize [ 
+
+	self traceEvents: false
+]
+
 { #category : #'instance creation' }
 OSWindow class >> new [
 	^ self createWithAttributes: OSWindowAttributes new
@@ -156,7 +162,7 @@ OSWindow >> createWindow [
 OSWindow >> deliverEvent: anEvent [
 	"TODO..."
 
-	TraceEvents == true
+	TraceEvents
 		ifTrue: [ self traceCr: anEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
 	anEvent performDefaultAction
@@ -166,7 +172,7 @@ OSWindow >> deliverEvent: anEvent [
 OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	"TODO..."
 
-	TraceEvents == true
+	TraceEvents
 		ifTrue: [ self traceCr: aGlobalEvent ].
 	eventHandler ifNotNil: [ eventHandler handleEvent: aGlobalEvent ]
 ]

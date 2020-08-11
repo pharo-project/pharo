@@ -271,6 +271,27 @@ CompiledMethodTest >> tearDown [
 	super tearDown
 ]
 
+{ #category : #'tests - instance variable' }
+CompiledMethodTest >> testAccessesField [		
+	| method |
+	method := self class compiledMethodAt: #readX.
+	self assert: (method accessesField: 4).
+	
+	method := self class compiledMethodAt: #readXandY.
+	self assert: (method accessesField: 5).
+	
+	
+	"read is not write"
+	method := self class compiledMethodAt: #writeX.
+	self assert: (method accessesField: 4).
+	
+	method := self class compiledMethodAt: #writeXandY.
+	self assert: (method accessesField: 4).
+	
+	method := self class compiledMethodAt: #writeXandY.
+	self assert: (method accessesField: 5)
+]
+
 { #category : #'tests - slots' }
 CompiledMethodTest >> testAccessesSlot [
 

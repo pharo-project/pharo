@@ -6,9 +6,6 @@ Notice, problems of this kind will most likely also cause RBSentNotImplementedRu
 Class {
 	#name : #ReUncommonMessageSendRule,
 	#superclass : #ReAbstractRule,
-	#instVars : [
-		'literalNames'
-	],
 	#category : #'GeneralRules-Migrated'
 }
 
@@ -38,18 +35,12 @@ ReUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
 { #category : #accessing }
 ReUncommonMessageSendRule >> commonLiterals [
 
-	^ #(#self #super #thisContext #true #false #nil) asIdentitySet
+	^ #(#self #super #thisContext #true #false #nil)
 ]
 
 { #category : #accessing }
 ReUncommonMessageSendRule >> group [
 	^ 'Potential Bugs'
-]
-
-{ #category : #initialization }
-ReUncommonMessageSendRule >> initialize [
-	super initialize.
-	literalNames := self commonLiterals.
 ]
 
 { #category : #accessing }

@@ -19,7 +19,7 @@ Class {
 
 { #category : #'plugin interface' }
 RFValueReification class >> entities [
-	^{RBValueNode . RBReturnNode. RBMethodNode . LiteralVariable . Slot} 
+	^{RBValueNode . RBReturnNode. RBMethodNode . Variable} 
 ]
 
 { #category : #'plugin interface' }
@@ -81,7 +81,7 @@ RFValueReification >> genForRBMessageNode [
 
 { #category : #generate }
 RFValueReification >> genForRBMethodNode [
-	^RBTemporaryNode named: self varName
+	^RBVariableNode named: self varName
 ]
 
 { #category : #generate }
@@ -91,8 +91,8 @@ RFValueReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFValueReification >> genForRBVariableNode [
-	entity binding
-		ifNotNil: [ entity isGlobal
+	entity variable
+		ifNotNil: [ entity variable isLiteralVariable
 				ifTrue: [ ^ RFLiteralVariableNode value: entity binding value ] ].
 	^ RBVariableNode named: entity name
 ]
@@ -123,7 +123,7 @@ RFValueReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |  
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBTemporaryNode named: name).
+			arguments add:  (RBVariableNode named: name).
 	].
 	preamble addAll: (RBArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).

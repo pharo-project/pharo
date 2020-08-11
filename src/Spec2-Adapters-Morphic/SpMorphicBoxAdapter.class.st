@@ -243,3 +243,31 @@ SpMorphicBoxAdapter >> removeSubWidgets [
 	startPanel removeAllMorphs.
 	endPanel removeAllMorphs
 ]
+
+{ #category : #accessing }
+SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter [
+	| panel oldMorph newMorph |
+	
+	oldMorph := aPresenter adapter widget.
+	panel := (startPanel submorphs includes: oldMorph)
+		ifTrue: [ startPanel ] 
+		ifFalse: [ endPanel ].
+	
+	newMorph := self 
+		buildMorph: otherPresenter 
+		constraints: (layout constraintsFor: otherPresenter).	
+	panel replaceSubmorph: oldMorph by: newMorph
+]
+
+{ #category : #accessing }
+SpMorphicBoxAdapter >> replace: aPresenter with: otherPresenter withConstraints: constraints [
+	| panel oldMorph newMorph |
+	
+	oldMorph := aPresenter adapter widget.
+	panel := (startPanel submorphs includes: oldMorph)
+		ifTrue: [ startPanel ] 
+		ifFalse: [ endPanel ].
+	
+	newMorph := self buildMorph: otherPresenter constraints: constraints.
+	panel replaceSubmorph: oldMorph by: newMorph
+]

@@ -277,6 +277,7 @@ SystemProgressMorph >> initialize [
 		vResizing: #shrinkWrap;
 		layoutInset: 10@6;
 		minWidth: 150.
+	self position: 10@20
 ]
 
 { #category : #accessing }

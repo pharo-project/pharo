@@ -36,7 +36,7 @@ CmCommandGroup class >> named: aString [
 { #category : #accessing }
 CmCommandGroup >> allCommands [
 	| visitor |
-	visitor := CmCommandsCollector new.
+	visitor := CmCommandCollector new.
 	self acceptVisitor: visitor.
 	^ visitor commandsCollected
 ]
@@ -131,8 +131,10 @@ CmCommandGroup >> register: aCommandOrGroup before: anotherCommandOrGroup [
 CmCommandGroup >> register: aCommandOrGroup insteadOf: anotherCommandOrGroup [
 	| commandToReplaceIndex |
 	commandToReplaceIndex := self entriesIndexOf: anotherCommandOrGroup.
-	((self commands collect: [:each | each name]) \ { (entries at: commandToReplaceIndex) } includes: aCommandOrGroup name)
+	
+	((self commands collect: #name) \ { (entries at: commandToReplaceIndex) } includes: aCommandOrGroup name)
 		ifTrue: [ CmDuplicatedEntryName signalEntryNamed: aCommandOrGroup name ].
+	
 	entries at: commandToReplaceIndex put: aCommandOrGroup
 ]
 

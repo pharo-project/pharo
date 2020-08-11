@@ -377,8 +377,8 @@ RBMethodNode >> initialize [
 
 { #category : #testing }
 RBMethodNode >> isFaulty [
-	(self arguments anySatisfy: #isFaulty) ifTrue:[ ^true].
-	(self pragmas anySatisfy: #isFaulty) ifTrue:[ ^true].
+	(self arguments anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
+	(self pragmas anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
 	^self body isFaulty
 ]
 
@@ -457,8 +457,8 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 { #category : #'accessing compiled method' }
 RBMethodNode >> method [
 	"return the method that I have been compiled for"
-	self compilationContext ifNil: [ ^nil ].
-	^self compilationContext getClass >> self selector
+	^self compilationContext ifNotNil: [ :ccntx |
+		 ccntx compiledMethod ifNil: [ccntx getClass >> self selector]]
 ]
 
 { #category : #'accessing compiled method' }
@@ -470,14 +470,6 @@ RBMethodNode >> methodClass [
 RBMethodNode >> methodClass: aClass [	
 	compilationContext ifNil: [compilationContext := aClass compiler compilationContext].
 	self compilationContext class: aClass
-]
-
-{ #category : #accessing }
-RBMethodNode >> methodComments [
-	| methodComments |
-	methodComments := OrderedCollection withAll: self comments.
-	arguments do: [:each | methodComments addAll: each comments].
-	^methodComments asSortedCollection: [:a :b | a start < b start]
 ]
 
 { #category : #accessing }
@@ -499,6 +491,14 @@ RBMethodNode >> newSource [
 { #category : #accessing }
 RBMethodNode >> numArgs [
 	^self selector numArgs
+]
+
+{ #category : #testing }
+RBMethodNode >> offsetIsComment: anOffset [
+	"check is the offset in the source part of a comment"
+
+	^ self allComments
+		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
 ]
 
 { #category : #'tree accessing' }

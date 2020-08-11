@@ -123,10 +123,7 @@ UndefinedObject >> findUndeclaredVariableIn: ast [
 	"Walk the ast of the current statment and find the undeclared variable node, or nil (if none).
 	Assumes there is only one such variable in an executing statement"
 	
-	ast nodesDo: [:node |
-		(node isVariable and: [ node isUndeclared]) ifTrue: [ ^node ]].
-
-	^nil
+	^ast variableNodes detect: [:node | node isUndeclaredVariable] ifNone: [ nil ]
 ]
 
 { #category : #testing }

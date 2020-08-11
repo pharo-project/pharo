@@ -4,18 +4,11 @@ See AbstractWidgetPresenter
 
 self example
 
-You can also have a look at ListSelectionPresenter and ScrollSyncExample for more examples.
+@@TODO
 
-My main purpose is to handle source code (I have editing shortcuts support).
-
-I provide the following variables and their accessors
-- autoAccept is a boolean representing if the text is accepted on each keystroke.
-- text is the text of the text zone.
-
-I provide the following methods
-- beForCode and beForText are shortcut for configuring me.
-- getSelection return the interval currently selected.
-- getText is a getter of the text
+!! Transmissions
+- #inputTextPort (default)
+- #outputTextChangedPort (default)
 "
 Class {
 	#name : #SpTextPresenter,
@@ -26,7 +19,8 @@ Class {
 		'#scrollValue => SpObservableSlot',
 		'#editionContextMenu => SpObservableSlot',
 		'#editable => SpObservableSlot',
-		'#cursorPosition => SpObservableSlot'
+		'#cursorPosition => SpObservableSlot',
+		'#wrapWord => SpObservableSlot'
 	],
 	#category : #'Spec2-Core-Widgets-Text'
 }
@@ -53,23 +47,11 @@ SpTextPresenter class >> buildEditionCommandsGroupFor: presenterInstance [
 SpTextPresenter class >> buildEditionCommandsGroupWith: presenter forRoot: aCmCommandsGroup [
 
 	aCmCommandsGroup beDisplayedAsGroup.
-	aCmCommandsGroup register: (self codeEditionCommandsGroupWith: presenter).
-	aCmCommandsGroup register: (self codeAcceptCommandsGroupWith: presenter)
+	aCmCommandsGroup register: (self textEditionCommandsGroupWith: presenter)
 ]
 
 { #category : #commands }
-SpTextPresenter class >> codeAcceptCommandsGroupWith: aPresenter [
-
-	^ (CmCommandGroup named: 'Accept commands') asSpecGroup
-		description: 'Accept or cancel changes.';
-		beDisplayedAsGroup;
-		register: (SpAcceptChangesCommand forSpecContext: aPresenter);
-		register: (SpCancelChangesCommand forSpecContext: aPresenter);
-		yourself
-]
-
-{ #category : #commands }
-SpTextPresenter class >> codeEditionCommandsGroupWith: aPresenter [
+SpTextPresenter class >> textEditionCommandsGroupWith: aPresenter [
 	| group |
 
 	group := (CmCommandGroup named: 'Selection edition commands') asSpecGroup.
@@ -77,7 +59,7 @@ SpTextPresenter class >> codeEditionCommandsGroupWith: aPresenter [
 		description: 'Edit code selection.';
 		beDisplayedAsGroup.
 	
-	SpCodeEditionCommand allSubclassesDo: [ :commandClass | 
+	SpTextEditionCommand allSubclassesDo: [ :commandClass | 
 		group register: (commandClass forSpecContext: aPresenter) ].
 	
 	^ group
@@ -102,10 +84,29 @@ SpTextPresenter >> beNotEditable [
 ]
 
 { #category : #api }
+SpTextPresenter >> beNotWrapWord [
+
+	self wrapWord: false
+]
+
+{ #category : #api }
+SpTextPresenter >> beWrapWord [
+
+	self wrapWord: true
+]
+
+{ #category : #api }
 SpTextPresenter >> cursorPosition [
 	"Answer a Point (column, row) with current cursor position"
 
 	^ self withAdapterDo: [ :anAdapter | anAdapter cursorPosition ]
+]
+
+{ #category : #api }
+SpTextPresenter >> cursorPositionIndex: index [
+	"Sets cursor position index"
+
+	^ self withAdapterDo: [ :anAdapter | anAdapter cursorPositionIndex: index ]
 ]
 
 { #category : #accessing }
@@ -148,6 +149,7 @@ SpTextPresenter >> initialize [
 	self flag: #REVIEW. "We really need scrollValue?"
 	scrollValue := 0@0.
 	self beEditable.
+	self beWrapWord.
 	self withScrollBars.
 	self withEditionContextMenu.
 ]
@@ -156,6 +158,12 @@ SpTextPresenter >> initialize [
 SpTextPresenter >> isEditable [
 
 	^ editable
+]
+
+{ #category : #testing }
+SpTextPresenter >> isWrapWord [
+
+	^ wrapWord
 ]
 
 { #category : #initialization }
@@ -209,6 +217,12 @@ SpTextPresenter >> whenSubmitDo: aBlock [
 		toAction: [ aBlock value: self text ]
 ]
 
+{ #category : #'api-events' }
+SpTextPresenter >> whenWrapWordChangedDo: aBlock [
+
+	self property: #wrapWord whenChangedDo: aBlock
+]
+
 { #category : #accessing }
 SpTextPresenter >> withEditionContextMenu [
 
@@ -219,4 +233,10 @@ SpTextPresenter >> withEditionContextMenu [
 SpTextPresenter >> withoutEditionContextMenu [
 
 	editionContextMenu := true
+]
+
+{ #category : #accessing }
+SpTextPresenter >> wrapWord: aBoolean [
+
+	wrapWord := aBoolean
 ]

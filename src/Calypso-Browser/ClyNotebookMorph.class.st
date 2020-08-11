@@ -30,6 +30,12 @@ ClyNotebookMorph >> addPage: aMorph label: aStringOrMorph [
 	self tabSelectorMorph addTab: aStringOrMorph beforeIndex: index
 ]
 
+{ #category : #'adding-removing' }
+ClyNotebookMorph >> addToSelection: aPage [ 
+
+	self selectedPageIndex: (pageMorphs indexOf: aPage)
+]
+
 { #category : #initialization }
 ClyNotebookMorph >> initialize [
 
@@ -74,6 +80,13 @@ ClyNotebookMorph >> newToolbarMorph [
 ClyNotebookMorph >> postAddPage: aPage [
 
 	self addActions: aPage actions
+]
+
+{ #category : #'adding-removing' }
+ClyNotebookMorph >> removeFromSelection: aPage [ 
+
+	self selectedPageIndex = (pageMorphs indexOf: aPage)
+		ifTrue: [ self selectedPageIndex: 0 ].
 ]
 
 { #category : #theme }

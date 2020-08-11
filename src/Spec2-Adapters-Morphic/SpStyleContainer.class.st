@@ -1,5 +1,5 @@
 "
-! Container properties (SpStyleContainer)
+! Container properties (==SpStyleContainer==)
 
 A container property can be applied to container elements (buttonbar, toolbar, actionbar), and define several properties: 
 

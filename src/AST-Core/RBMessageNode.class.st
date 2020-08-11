@@ -160,7 +160,7 @@ RBMessageNode >> isContainmentReplacement: aNode [
 
 { #category : #testing }
 RBMessageNode >> isFaulty [
-	^self receiver isFaulty or: [self arguments anySatisfy: #isFaulty]
+	^self receiver isFaulty or: [self arguments anySatisfy: [:each | each isFaulty]]
 ]
 
 { #category : #testing }
@@ -180,7 +180,7 @@ RBMessageNode >> isMessage [
 
 { #category : #testing }
 RBMessageNode >> isSelfSend [
-	^ self receiver isSelf
+	^ self receiver isSelfVariable
 ]
 
 { #category : #testing }

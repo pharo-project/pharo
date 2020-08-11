@@ -2,8 +2,42 @@
 I am a REPL debugger and I provide an access to the Sindarin debugging API.
 I do not depend on morphic, and while I depend on Color, I can work without it.
 
-I use a ReadWriteStream to handle user input and output my results.
-I use Display and DisplayScreen to show my results.
+I use a `ReadWriteStream` to handle user input and output my results.
+I use `Display` and `DisplayScreen` to show my results.
+
+To invoke me, use my class method `debugError: anError fromSession: aDebugSession`.
+This method takes as input an error and a debug session.
+The error is used to display information about what brought you to ED.
+It is not mandatory, if you only have a debug session you can invoke me by doing:
+`EDEmergencyDebugger new emergencyDebug: aDebugSession`.
+The debug session contains all information necessary to debug.
+
+For example, execute the following as an example:
+```
+|context process session|
+context := [ EDMockObjectForTests new m: 20 ] asContext.
+	process := Process
+		forContext: context
+		priority: Processor userInterruptPriority.
+	session := DebugSession
+		named: 'test session'
+		on: process
+		startedAt: context.
+	session stepThrough.
+	session stepOver.
+	session stepInto.
+	session stepOver.
+	session stepOver.
+	session stepInto.
+	EDEmergencyDebugger new emergencyDebug: session.
+```
+	
+Navigate the stack with up/down arrows.
+When you are on a method (in the stack), use left/right arrow to navigate the versions of that method.
+To revert the selected method (in the stack) to the selected version (displayed in the middle text pane), type `revert` and press enter.
+
+Don't forget to read the help text, type `h` or `help` to display the help text.
+
 "
 Class {
 	#name : #EDEmergencyDebugger,
@@ -103,6 +137,8 @@ EDEmergencyDebugger >> buildDefaultActions [
 	dic at: 'terminateAll' put: [ debugAPI terminateAllProcesses ].
 	dic at: 'proceed' put: [ debugAPI resume ].
 	dic at: 'debug' put:[self debugDebuggerError].
+	dic at: 'dump' put:[self dumpStackAndQuit].
+	dic at: 'inspect' put:[self inspectStackAndQuit].
 	^dic
 ]
 
@@ -121,6 +157,8 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptions [
 	dic at: 'proceed' put: 'Proceeds the execution'.
 	dic at: 'showDebuggerError' put: 'Display debugger error stack, i.e., why you are here.'.
 	dic at: 'debug' put: 'Debug the debugger error.'.
+	dic at: 'dump' put: 'Dump a printed representation of the stack, quits the debugger and inspects the dump.'.
+	dic at: 'inspect' put: 'Quits the debugger and inspects the stack.'.
 	^dic
 ]
 
@@ -142,6 +180,8 @@ EDEmergencyDebugger >> buildDefaultActionsDescriptionsMap [
 	dic at: 'proceed' put: 'proceed'.
 	dic at: 'showDebuggerError' put: 'showDebuggerError'.	
 	dic at: 'debug' put: 'debug'.
+	dic at: 'dump' put: 'dump'.
+	dic at: 'inspect' put: 'inspect'.
 	^dic
 ]
 
@@ -295,6 +335,14 @@ EDEmergencyDebugger >> displayInterface: aDisplayInterface [
 	rawDisplay := aDisplayInterface
 ]
 
+{ #category : #private }
+EDEmergencyDebugger >> dumpStackAndQuit [
+	| stackStrace |
+	stackStrace := debugAPI dumpStack.
+	debugAPI terminateSession.
+	stackStrace inspect
+]
+
 { #category : #initialization }
 EDEmergencyDebugger >> emergencyDebug: aDebugSession [
 	[ self debug: aDebugSession ]
@@ -375,6 +423,12 @@ EDEmergencyDebugger >> initialize [
 { #category : #accessing }
 EDEmergencyDebugger >> input [
 	^input
+]
+
+{ #category : #private }
+EDEmergencyDebugger >> inspectStackAndQuit [
+	debugAPI terminateSession.
+	debugAPI longStack inspect
 ]
 
 { #category : #testing }

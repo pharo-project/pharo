@@ -99,12 +99,6 @@ CompiledBlock >> methodNode [
 ]
 
 { #category : #accessing }
-CompiledBlock >> numberOfReservedLiterals [
-
-	^ 1
-]
-
-{ #category : #accessing }
 CompiledBlock >> outerCode [
 	"answer the compiled code that I am installed in, or nil if none."
 	^self literalAt: self numLiterals
@@ -113,11 +107,6 @@ CompiledBlock >> outerCode [
 { #category : #accessing }
 CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
-]
-
-{ #category : #accessing }
-CompiledBlock >> penultimateLiteral [
-	^ nil
 ]
 
 { #category : #accessing }

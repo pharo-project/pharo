@@ -88,6 +88,13 @@ ClassVariableTest >> testRemoveProperty [
 	self assert: classVariable properties isNil.
 ]
 
+{ #category : #tests }
+ClassVariableTest >> testScope [
+	self
+		assert: (SmalltalkImage classVariableNamed: #CompilerClass) scope
+		equals: SmalltalkImage
+]
+
 { #category : #'tests  - properties' }
 ClassVariableTest >> testWritingToContext [
 

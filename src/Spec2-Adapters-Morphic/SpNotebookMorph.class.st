@@ -270,13 +270,12 @@ SpNotebookMorph >> updatePageIndex: index oldIndex: oldSelectedIndex [
 
 	newPage := self pages at: index.
 	self postAddPage: newPage.
-
 	self headerMorph layoutChanged.
 	self pageMorph layoutChanged.
 	self adoptPaneColor: (self owner ifNil: [ self ]) paneColor.
-	self tabSelectorMorph font ifNotNil: [ :aFont |
+	self tabSelectorMorph font ifNotNil: [ :aFont | 
 		(self tabSelectorMorph tabs at: index) font: aFont ].
-
+	
 	self announcer announce: (SpNotebookPageChanged new
 		page: newPage;
 		oldPage: oldPage;

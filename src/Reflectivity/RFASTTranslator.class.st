@@ -307,8 +307,10 @@ RFASTTranslator >> visitVariableNode: aVariableNode [
 
 { #category : #reflectivity }
 RFASTTranslator >> visitVariableValue: aVariable [
-	self flag: #pharoTodo. "needs to be extendend to other kinds of variables and cleaned"
-	((aVariable isKindOf: LiteralVariable) or: [ (aVariable isKindOf: Slot) ]) ifTrue: [ self emitPreamble: aVariable. self emitMetaLinkBefore: aVariable. ].
-	aVariable emitValue: methodBuilder.
-	((aVariable isKindOf: LiteralVariable) or: [ (aVariable isKindOf: Slot) ]) ifTrue: [self emitMetaLinkAfterNoEnsure: aVariable].
+	self emitPreamble: aVariable. 
+	self emitMetaLinkBefore: aVariable. 
+	aVariable hasMetalinkInstead 
+		ifTrue: [self emitMetaLinkInstead: aVariable]
+		ifFalse: [aVariable emitValue: methodBuilder].
+	self emitMetaLinkAfterNoEnsure: aVariable.
 ]

@@ -127,7 +127,7 @@ RBPragmaNode >> isBinary [
 
 { #category : #testing }
 RBPragmaNode >> isFaulty [
-	^self arguments anySatisfy: #isFaulty
+	^self arguments anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }

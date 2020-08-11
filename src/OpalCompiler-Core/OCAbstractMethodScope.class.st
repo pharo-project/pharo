@@ -10,14 +10,15 @@ Class {
 		'copiedVars',
 		'tempVector',
 		'id',
-		'tempVectorVar'
+		'tempVectorVar',
+		'node'
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
-	^copiedVars at: aTempVar name put: (OCCopyingTempVariable new
+	^copiedVars at: aTempVar name put: (aTempVar copiedVarClass new
 			originalVar: aTempVar originalVar;
 			name: aTempVar name;
 			escaping: aTempVar escaping;
@@ -37,7 +38,7 @@ OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
 
 { #category : #'temp vars' }
 OCAbstractMethodScope >> addTemp: name [
-	^self addTemp: OCTempVariable new withName: name
+	^self addTemp: TemporaryVariable new withName: name
 ]
 
 { #category : #'temp vars' }
@@ -97,7 +98,6 @@ OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
 	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(thisContextVar name  beginsWith: aString) ifTrue: [ ^true ].
 	
 	^ self outerScope hasBindingThatBeginsWith: aString
 ]
@@ -118,9 +118,7 @@ OCAbstractMethodScope >> initialize [
 	tempVars :=  OrderedDictionary new.
 	tempVector  := OrderedDictionary new.
 	copiedVars := OrderedDictionary new.
-	id := 0.
-	
-	thisContextVar := ThisContextVariable instance
+	id := 0
 ]
 
 { #category : #'temp vars' }
@@ -155,7 +153,6 @@ OCAbstractMethodScope >> lookupVar: name [
 	copiedVars at: name ifPresent: [:v | ^ v].
 	tempVector at: name ifPresent: [:v | ^ v].
 	tempVars at: name ifPresent: [:v | ^ v].
-	name = thisContextVar name ifTrue: [^ thisContextVar].
 	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
 	^self outerScope lookupVar: name
 	
@@ -165,7 +162,6 @@ OCAbstractMethodScope >> lookupVar: name [
 OCAbstractMethodScope >> lookupVarForDeclaration: name [
 	"This is a version of #lookupVar: that skips the OCRequestorScope"
 	tempVars at: name ifPresent: [:v | ^ v].
-	name = thisContextVar name ifTrue: [^ thisContextVar].
 	^self outerScope lookupVarForDeclaration: name
 ]
 
@@ -198,6 +194,16 @@ OCAbstractMethodScope >> newOptimizedBlockScope: int [
 { #category : #lookup }
 OCAbstractMethodScope >> nextOuterScopeContextOf: aContext [
 	^aContext
+]
+
+{ #category : #accessing }
+OCAbstractMethodScope >> node [
+	^node
+]
+
+{ #category : #accessing }
+OCAbstractMethodScope >> node: aNode [
+	node := aNode
 ]
 
 { #category : #scope }
@@ -255,7 +261,7 @@ OCAbstractMethodScope >> tempVarNames [
 { #category : #'temp vars' }
 OCAbstractMethodScope >> tempVarNamesWithoutArguments [
 
-	^ tempVars values reject: [ :each | each isArg ] thenCollect: [ :each | each name ]
+	^ tempVars values reject: [ :each | each isArgumentVariable ] thenCollect: [ :each | each name ]
 ]
 
 { #category : #'temp vars' }
@@ -278,7 +284,7 @@ OCAbstractMethodScope >> tempVectorName [
 
 { #category : #'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVar [
-	^ tempVectorVar ifNil: [ tempVectorVar := OCTempVariable new
+	^ tempVectorVar ifNil: [ tempVectorVar := TemporaryVariable new
 			name: self tempVectorName;
 			scope: self;
 			yourself]

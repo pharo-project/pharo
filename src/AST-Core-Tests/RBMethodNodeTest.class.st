@@ -221,6 +221,17 @@ RBMethodNodeTest >> testNodeForOffsetVar [
 	self assert: foundNode class identicalTo: RBVariableNode
 ]
 
+{ #category : #tests }
+RBMethodNodeTest >> testOffsetIsComment [
+	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 3).
+
+	self assert: ((OrderedCollection>>#do:) ast offsetIsComment: 13).
+	self assert: ((OrderedCollection>>#do:) ast offsetIsComment: 62).
+
+	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 63).
+	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 70).
+]
+
 { #category : #'tests - primitives' }
 RBMethodNodeTest >> testPrimitiveErrorIsPrimitive [
 

@@ -276,6 +276,11 @@ OpalCompiler >> addPlugin: aClass [
 	compilationContext addASTTransformationPlugin: aClass
 ]
 
+{ #category : #private }
+OpalCompiler >> allowParseErrorsNonInteractive [
+	^self compilationContext optionParseErrorsNonInteractiveOnly and: [ self isInteractive not ]
+]
+
 { #category : #accessing }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
@@ -509,8 +514,7 @@ OpalCompiler >> parse: textOrString [
 
 { #category : #private }
 OpalCompiler >> parseExpression [
-	"we should allow syntactically wrong code in evaluate, too"
-	^ (self compilationContext optionParseErrors "or: [ self isInteractive not ]")
+	^ (self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
 		ifTrue: [self parserClass parseFaultyExpression: source contents]
 		ifFalse: [self parserClass parseExpression: source contents]
 ]
@@ -522,8 +526,7 @@ OpalCompiler >> parseLiterals: aString [
 
 { #category : #private }
 OpalCompiler >> parseMethod [
-	
-	^ (self compilationContext optionParseErrors or: [ self isInteractive not ])
+	^ (self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
 		ifTrue: [self parserClass parseFaultyMethod: source contents]
 		ifFalse: [self parserClass parseMethod: source contents]
 ]

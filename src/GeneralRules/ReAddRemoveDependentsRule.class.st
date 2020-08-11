@@ -21,17 +21,15 @@ ReAddRemoveDependentsRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReAddRemoveDependentsRule >> basicCheck: aClass [
-	| addSends removeSends |
+	| methods addSends removeSends |
 	addSends := 0.
 	removeSends := 0.
-	(aClass whichSelectorsReferTo: #addDependent:) asSet
-		addAll: (aClass whichSelectorsReferTo: #removeDependent:);
-		do: [ :sel | 
-			(aClass compiledMethodAt: sel) ast
-				nodesDo: [ :each | 
-					each isMessage
-						ifTrue: [ each selector = #addDependent: ifTrue: [ addSends := addSends + 1 ].
-							each selector = #removeDependent: ifTrue: [ removeSends := removeSends + 1 ] ] ] ].
+	methods := (aClass whichMethodsReferTo: #addDependent:) asSet, (aClass whichMethodsReferTo: #removeDependent:).
+	
+	methods do: [ :method | | messages |
+			messages := method ast allChildren select: [ :each | each isMessage ].
+				addSends := addSends + (messages count: [ :each | each selector == #addDependent:]).
+				removeSends := removeSends + (messages count: [ :each | each selector == #removeDependent:])].
 	^ addSends > removeSends
 ]
 
