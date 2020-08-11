@@ -37,7 +37,9 @@ Class {
 	#instVars : [
 		'file',
 		'handle',
-		'forWrite'
+		'forWrite',
+		'semaphore',
+		'semaphoreIndex'
 	],
 	#category : #'Files-Streams'
 }
@@ -255,6 +257,19 @@ AbstractBinaryFileStream >> readInto: readBuffer startingAt: startIndex count: c
 	^ File read: handle into: readBuffer startingAt: startIndex count: count
 ]
 
+{ #category : #reading }
+AbstractBinaryFileStream >> releaseSemaphores [
+
+	"To wait for data to arrival in an stream, it is required to keep a semaphore and this one should be registered in the VM. As this is a constrained resource, the user of wait data should relelease the semaphore when it is not used anymore"
+
+	semaphore ifNotNil: [ 
+		Smalltalk unregisterExternalObject: semaphore].
+	
+	semaphoreIndex := nil.	
+	semaphore := nil.
+
+]
+
 { #category : #initialization }
 AbstractBinaryFileStream >> reset [
 	self position: 0
@@ -311,4 +326,25 @@ AbstractBinaryFileStream >> upToEnd [
 		| next |
 		[ (next := self next) isNil ] whileFalse: [
 			newStream nextPut: next ] ]
+]
+
+{ #category : #reading }
+AbstractBinaryFileStream >> waitForData [
+	
+	"Waits for data on a semaphore.
+	This message is useful for using on streams and pipes. 
+	
+	This message uses a primitive that needs to be available to work.
+	Also, it uses an external semaphore, so after ending its use please send the message #releaseSemaphores
+	
+	Ex: [[Stdio stdin atEnd] 
+			whileFalse: [Stdio stdin waitForData.
+			(Stdio stdin next: 100) printString traceCr]] fork.
+	"
+
+	semaphore ifNil: [ semaphore := Semaphore new].
+	semaphoreIndex ifNil: [ semaphoreIndex := Smalltalk registerExternalObject: semaphore].
+
+	File primitiveWaitForDataOn: handle signalling: semaphoreIndex.
+	semaphore wait.
 ]
