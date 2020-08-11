@@ -19,6 +19,12 @@ RBSelfNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSelfNode: self
 ]
 
+{ #category : #initialization }
+RBSelfNode >> initialize [
+  super initialize.
+  variable := SelfVariable instance
+]
+
 { #category : #testing }
 RBSelfNode >> isSelf [
 	^ true
