@@ -113,8 +113,8 @@ CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEdito
 
 { #category : #keyboard }
 CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
-	"I return a boolean. 
-	true when I have handled the event and no futher processing is needed by the caller.
+	"Returns true when I have handled the event and no further processing is needed by the caller,
+	and false otherwise.
 	
 	This method would be cleaner if splitted."
 
@@ -169,7 +169,8 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 
 { #category : #keyboard }
 CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
-	"I handle resetting the completion menu, and I return true when I handle an event."
+	"I handle resetting the completion menu, and I return true when I handle an event.
+	Returning true means that no further processing is needed by the caller."
 	
 	self editor atCompletionPosition ifFalse: [ 
 		^ (self smartInputWithEvent: aKeyboardEvent ) notNil ].	
@@ -200,7 +201,8 @@ CompletionEngine >> hasCompletionContext [
 
 { #category : #keyboard }
 CompletionEngine >> invalidateEditorMorph [
-		editor morph invalidRect: editor morph bounds.
+	"Redraws just the part of the morph within the editor's bounds"
+	editor morph invalidRect: editor morph bounds.
 
 ]
 
@@ -376,38 +378,56 @@ CompletionEngine >> smartCharacterPairFor: char ifAbsent: aBlock [
 
 { #category : #settings }
 CompletionEngine >> smartCharacterShouldClose: char [
+	"Return true if char is a smart character that should trigger auto-closing, otherwise false"
 	^(self smartCharactersMapping at: char ifAbsent: [ ^false ]) value
 ]
 
 { #category : #keyboard }
 CompletionEngine >> smartCharacterWithEvent: anEvent [
 	"char is extracted from anEvent, anEvent is passed because we may need it.
-	We may remove char if this is not costly."
+	We may remove char if this is not costly.
+	Returns true if anEvent is handled, nil otherwise"
 
 	| opposite previous next char insertion insertionCenter matchingPair |
 	char := anEvent keyCharacter.
 	editor hasSelection
 		ifTrue: [ 
-			"we selected a piece of text and we type the same character that previously, so
-		we unwrap it"
-			"we selected a piece of text if the character is not a special one we do nothing."
-			matchingPair := self smartCharacterPairFor: char ifAbsent: [  ^nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
+			"Find the matching pair, and if it doesn't exist, we don't handle this event"
+			matchingPair := self smartCharacterPairFor: char ifAbsent: [ ^ nil ].
 			
+			"encloseWith: will handle wrapping or unwrapping the selection"
 			editor encloseWith: matchingPair.
-			self invalidateEditorMorph.
-			^ true ].	"we are not in a selection"
 			
-	(self smartCharacterShouldClose: char)	
-		ifFalse: [ 
-			"if the character is not a special character"
-			self smartInverseMapping at: char ifAbsent: [ ^ nil ].	"if the character is not a closing special character do nothing"	"The character is special"
-			editor blinkPrevParen: char.
-			(editor nextCharacterIfAbsent: [ ^ nil ]) = char
-				ifFalse: [ ^ nil ].	"do not get this test but if we comment it out we cannot type closing ) anymore"
-			editor selectFrom: editor startIndex + 1 to: editor startIndex.
+			"Return true since we've handled this event"
 			self invalidateEditorMorph.
 			^ true ].
-		
+	
+	"The editor has no selection in it"
+	(self smartCharacterShouldClose: char)	
+		ifFalse: [ 
+			"char is not a character that should be auto-closed"
+			
+			"First check if char is a closing character like ) ], etc.
+			If it is not a closing character, we're not handling this event, return nil"
+			self smartInverseMapping at: char ifAbsent: [ ^ nil ].
+			
+			"char is a closing character, so blink the previous paren. e.g. if char is ), blink ("
+			editor blinkPrevParen: char.
+			
+			"If there is no next character, we're done handling this event, return nil
+			If there is a next character, and it is not the same character as the one that was input (char), 
+			we're done handling this event, return nil"
+			(editor nextCharacterIfAbsent: [ ^ nil ]) = char
+				ifFalse: [ ^ nil ].
+			
+			"There is a next character, and it is the same as the one that was just input, 
+			so advance the cursor, and return true to declare this event handled"
+			editor selectAt: editor startIndex + 1.
+			self invalidateEditorMorph.
+			^ true ].
+	
+	"char is a smart character that should be auto-closed! Something like (, [, etc.
+	Handle the auto-closing by inserting characters in the editor"
 	opposite := self smartCharacterOppositeOf: char ifAbsent: [ ^nil ].
 	previous := editor previousCharacterIfAbsent: [ Character space ].
 	next := editor nextCharacterIfAbsent: [ Character space ].
@@ -416,10 +436,10 @@ CompletionEngine >> smartCharacterWithEvent: anEvent [
 				ifTrue: [ 
 					previous isSeparator
 						ifFalse: [ char asString ]
-						ifTrue: [ self newSmartCharacterInsertionStringForLeft: char right: opposite ]].
+						ifTrue: [ self newSmartCharacterInsertionStringForLeft: char right: opposite ] ].
 	editor replaceSelectionWith: insertion.
 	insertionCenter := insertion size // 2 max: 1.
-	editor selectFrom: editor startIndex + insertionCenter to: editor startIndex + (insertionCenter - 1).
+	editor selectAt: editor startIndex + insertionCenter.
 	self invalidateEditorMorph.
 	^ true
 ]
@@ -437,7 +457,8 @@ CompletionEngine >> smartCharactersMapping [
 { #category : #keyboard }
 CompletionEngine >> smartInputWithEvent: anEvent [
 	"aCharacter is extracted from anEvent, anEvent is passed because we may need it.
-	We may remove aCharacter if this is not costly."
+	We may remove aCharacter if this is not costly. 
+	Returns true if anEvent is handled, nil otherwise"
 	
 	self smartCharacters 
 		ifFalse: [ ^ nil ].
