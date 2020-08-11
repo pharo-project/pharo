@@ -341,6 +341,11 @@ AbstractBinaryFileStream >> waitForData [
 	Ex: [[Stdio stdin atEnd] 
 			whileFalse: [Stdio stdin waitForData.
 			(Stdio stdin next: 100) printString traceCr]] fork.
+	In Windows, it is better to use something like:
+	
+	[[Stdio stdin waitForData.
+			(Stdio stdin next: 100) printString traceCr] repeat] fork
+
 	"
 
 	semaphore ifNil: [ semaphore := Semaphore new].
