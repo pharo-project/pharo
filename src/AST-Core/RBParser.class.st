@@ -496,11 +496,12 @@ RBParser >> parseIncompleteExpression: priorStatementsNode [
 	error := ((currentToken isSpecial and: ['])}' includes: currentToken value])
 				" We make a distinction between the bracket and the other closures because blocks are the only ones that can contain multiple statements. "
 				ifTrue: [ currentToken value = $) 
-					ifFalse: [ | errorNode | errorNode := self parseEnglobingError: statements with: currentToken.  statements := OrderedCollection new. errorNode ]
+					ifFalse: [ | errorNode | errorNode := self parseEnglobingError: statements copy with: currentToken.  statements := OrderedCollection new. errorNode ]
 					ifTrue: [  statements isEmpty 
 							ifFalse: [| errorNode | errorNode := self parseEnglobingError: (OrderedCollection with: statements last) with: currentToken.  statements removeLast. errorNode] 
-							ifTrue: [ self parseEnglobingError: statements with: currentToken] ] ] 			
+							ifTrue: [ self parseEnglobingError: statements copy with: currentToken] ] ] 			
 				ifFalse: [ self parserError: 'Unknown input at end' ]).
+	error parent: priorStatementsNode.
 	statements add: error.
 	self step.
 	priorStatementsNode statements: statements.

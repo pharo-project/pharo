@@ -26,7 +26,8 @@ RBEnglobingErrorNode class >> content: aCollection start: aStart stop: aStop err
 		content: aCollection; 
 		start: aStart; 
 		stop: aStop; 
-		errorMessage: message
+		errorMessage: message;
+		createValue.
 ]
 
 { #category : #construction }
@@ -65,10 +66,18 @@ RBEnglobingErrorNode >> content: aCollection [
 	content := aCollection
 ]
 
+{ #category : #'as yet unclassified' }
+RBEnglobingErrorNode >> createValue [
+	| nodeColl |
+	self value: (String streamContents: [ :s |
+			content do: [ :each | s nextPutAll: each formattedCode. s nextPutAll: String space. ]])
+]
+
 { #category : #initialization }
 RBEnglobingErrorNode >> initialize [ 
 	super initialize.
 	content := OrderedCollection new.
+	value := ''.
 ]
 
 { #category : #testing }
@@ -79,10 +88,4 @@ RBEnglobingErrorNode >> isEnglobingError [
 { #category : #accessing }
 RBEnglobingErrorNode >> stop: anInterger [
 	stop := anInterger.
-]
-
-{ #category : #accessing }
-RBEnglobingErrorNode >> value [
-	^ String streamContents: [ :s |
-			content do: [ :each | s nextPutAll: each formattedCode. s nextPutAll: String space. ]]
 ]
