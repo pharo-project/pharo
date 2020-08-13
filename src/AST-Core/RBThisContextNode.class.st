@@ -18,3 +18,9 @@ RBThisContextNode class >> new [
 RBThisContextNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitThisContextNode: self
 ]
+
+{ #category : #initialization }
+RBThisContextNode >> initialize [
+  super initialize.
+  variable := ThisContextVariable instance
+]

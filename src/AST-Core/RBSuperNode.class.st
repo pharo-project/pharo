@@ -19,6 +19,12 @@ RBSuperNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSuperNode: self
 ]
 
+{ #category : #initialization }
+RBSuperNode >> initialize [
+  super initialize.
+  variable := SuperVariable instance
+]
+
 { #category : #testing }
 RBSuperNode >> isSelfOrSuper [
 
