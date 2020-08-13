@@ -60,7 +60,9 @@ MicAbstractBlock >> children [
 
 { #category : #public }
 MicAbstractBlock >> closeMe [
-	Transcript << 'Closing ' << self class name; cr; endEntry
+	"I'm hook for closing elements. By default do nothing."
+	
+	^ self
 ]
 
 { #category : #debugging }

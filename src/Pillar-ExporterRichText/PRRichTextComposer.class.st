@@ -1,11 +1,17 @@
 "
 I am a visitor that produces rich text (class Text) based on a pillar document model.
-I am implemented using a canvas/brush pattern.
+I am implemented using a canvas/brush pattern. The class offers multiple configurations: an offline mode, 
+a not rendering mode, and a not catching exceptions (to ease debugging).
+
+The main API is the method: `PRRichTextComposer class>>#renderComment:of:`.
+
+Web-based images or LaTeX rendering requires network access and are cached.
+
 
 
 !!Note The composer should be improved to render better and in nicer ways elements. 
 
-#### Advanced 
+#### Advanced  
 For the LaTeX rendering, internet connexion is required. 
 You can also turn it off/on doing
 
@@ -13,9 +19,14 @@ You can also turn it off/on doing
 PRRichTextComposer putOffLine
 ```
 
-In addition, images are cached to avoid multiple http requests.
+In addition, images fetched via http requests are cached to avoid multiple http requests.
 The cache can be reset executing `PRRichTextComposer resetCache`. When the system is off line and an image is requested, a placeholder is computed but not put in the cache. This way when the system is put online the requested elements will be requested and put in the cache (without needing to flush placeholders from the cache).
-When the system is online but the request failed we return a placeholder.
+When the system is online but the request failed I display an uncached placeholder.
+
+It means that web-based images can be prefilled and Pharo images can be provided preloaded. 
+
+
+
 
 #### Known limits
 Monospaced text (e.g., `Point`, `Point class`,  `Point>>#setX:setY:`, or `#'Pillar-ExporterPillar'`) uses TextAction to trigger browser opening on the corresponding element. It would be better to use a TextLink because the styler is aware of them. 
@@ -38,6 +49,7 @@ Class {
 		'HeaderFontSizes',
 		'HeaderFonts',
 		'ImageCache',
+		'NotRendering',
 		'OffLine'
 	],
 	#category : #'Pillar-ExporterRichText-Core'
@@ -110,148 +122,6 @@ PRRichTextComposer class >> defaultStyler: aString [
 	^self codeStylerFor: aString
 ]
 
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar1 [
-	<example>
-	(self asText:
-					'!!!First section
-and this is just ""first"" line 
-# Line 1 More here More here ==More here More here== More here More here More here More here More here More here
-#- Kasper tries the strange thing Kasper tries the strange thingKasper tries the strange thingKasper tries the strange thingKasper tries the strange thingKasper tries the strange thingKasper tries the strange thing
-#- And one more --silly-- thingie
-# Line 2
-#-  Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla
-#-- Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla
-# Line 3') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar10 [
-	<example>
-	(self asText:
-					'
-[[[language=PharoMethod
-1 + 2 * 3
-]]]
-') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar2 [
-	<example>
-	(self asText:
-					'!!!Description lists
-this is just ""first"" line
-# Here is frist enumaration
-#;blue
-#:color of the sky
-#:and my true love''s eyes
-#;red
-#:color of the fire') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar3 [
-	<example>
-	(self asText:
-					'!!!Code sections
-this is just ""first"" line
-[[[
-Metacello new
-   baseline: ''PillarRichTextExporter'';
-   repository: ''github://kasperosterbye/PillarRichTextRender'';
-   load.
-]]]') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar4 [
-	<example>
-	(self asText:
-					'!!!Annotations
-this is just ""first"" line
-@@todo remember to do annotations
-and this is the second line') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar5 [
-	<example>
-	(self asText:
-					'!!!Links
-this is just ""first"" line
-
-*Pharo>http://pharo.org/*
-
-*String>browse://String*
-
-*String»trim>browse://String>>#trim*
-
-and this is the second line') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar6 [
-	<example>
-	(self asText:
-					'!!!Figures
-this is just ""first"" line
-
-+Pharologo>https://files.pharo.org/media/logo/logo.png+
-
-and this is the second line') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar7 [
-	<example>
-	(self asText:
-					'!First section
-
-# ==Point== should open a class browser on Point.
-# ==Point class== should open a class browser on Point.
-# ==Point >> setX:setY:== should open a browser on the correspoding method.
-# ==Pillar\-ExporterRichText== should open a browser on the package.
-') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar8 [
-	<example>
-	(self asText:
-					'
-[[[language=PharoExpression
-1 + 2 * 3  
-]]]
-') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillar9 [
-	<example>
-	(self asText:
-					'
-[[[language=PharoMethod
-foo: arg
-	^ arg + self
-]]]
-') inspect
-]
-
-{ #category : #examples }
-PRRichTextComposer class >> examplePillarLatexMath [
-	<example>
-	(PRRichTextComposer  asText:
-'!!!Latex mathematics 
-It is possible to render latex math:
-[[[language=latexMath
-V_i = C_0 - C_3
-\frac{C_1\cos(\theta_i+C_3)}{C_4+C_1\cos(\theta_i+C_2)}
-]]]
-Cool eh?
-') inspect
-]
-
 { #category : #stylers }
 PRRichTextComposer class >> expressionStylerFor: aString [
 	<codeblockStylerFor: 'PharoExpression'>
@@ -291,7 +161,8 @@ PRRichTextComposer class >> imageAt: urlString put: aForm [
 { #category : #'class initialization' }
 PRRichTextComposer class >> initialize [ 
 	"self initialize"
-	OffLine := false.
+	self offline: false.
+	self notRendering: false.
 	self resetCache.
 	self headerFontSizes: #(18 14 12 11 10 10).
 ]
@@ -319,6 +190,18 @@ PRRichTextComposer class >> methodStylerFor: aString [
 ]
 
 { #category : #'class initialization' }
+PRRichTextComposer class >> notRendering [
+	"When notRendering, the comments are just displayed as plain text."
+	
+	^ NotRendering
+]
+
+{ #category : #'class initialization' }
+PRRichTextComposer class >> notRendering: aBoolean [
+	NotRendering := aBoolean
+]
+
+{ #category : #'class initialization' }
 PRRichTextComposer class >> offline [
 
 	^ OffLine
@@ -335,13 +218,25 @@ PRRichTextComposer class >> offline: aBoolean [
 { #category : #settings }
 PRRichTextComposer class >> preferencesSettingsOn: aBuilder [
 	<systemsettings>
-	
-	(aBuilder setting: #offline)
-		label: 'To set the online mode';
+	(aBuilder group: #comments)
+		label: 'Comment rendering';  
 		parent: #appearance;
-		default: true;
-		target: self;
-		description: 'When true, external figures are displayed in comments. The requests to external images are performed, and this may lead of latency the first time the request is done. Each figure is cached, so the request is at most done one per external references.'
+		description: 'All settings concerned with the notifications popup look''n feel';
+		with: [
+		(aBuilder setting: #offline)
+			label: 'To set offline mode';
+			target: self;
+			description: '
+			When oneline is chosen, requests to external images are only performed when they are not in the image cache (since requesting systematically HTTP may lead of latency. Each figure is cached, so the request is at most done one per external references. When the system is online but the request failed we return a placeholder that is not cached.
+			
+			When offline, requests to external images are not performed. The cache can be reset executing PRRichTextComposer resetCache. When the system is off line and an image is requested, a placeholder is computed but not put in the cache. This way when the system is put online the requested elements will be requested and put in the cache (without needing to flush placeholders from the cache).'. 
+			(aBuilder setting: #notRendering)
+				label: 'To set off the rendering in richtext';
+				target: self;
+				description: 'Comments are by default rendered via Pillar in Richtext. When this setting is on, they are rendered as plain text (showing their Microdown definitions).'. 
+			
+			
+			]
 ]
 
 { #category : #'class initialization' }
