@@ -434,7 +434,7 @@ StDebuggerTest >> testStackTableAfterStepIn [
 
 { #category : #'tests - stack table' }
 StDebuggerTest >> testStackTableElementsPrinting [
-	| columns classColumn methodColumn senderColumn method block context |
+	| columns classColumn methodColumn method block context |
 	self debugger session: session.
 	columns := self initializedDebugger stackTable columns.
 	classColumn := columns first.
