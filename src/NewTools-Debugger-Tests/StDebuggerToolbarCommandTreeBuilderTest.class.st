@@ -161,6 +161,20 @@ StDebuggerToolbarCommandTreeBuilderTest >> testExecutionControlGroupName [
 ]
 
 { #category : #tests }
+StDebuggerToolbarCommandTreeBuilderTest >> testExecutionControlShortcuts [
+
+	| commandsWithShortcuts |
+	commandsWithShortcuts := builder executionControlCommandClasses 
+		                         select: [ :class | 
+		                         class defaultShortcut notNil ].
+	self assert: commandsWithShortcuts notEmpty.
+	commandsWithShortcuts do: [ :class | 
+		| command |
+		command := builder buildSpecCommand: class forContext: self.
+		self assert: command shortcutKey equals: class defaultShortcut ]
+]
+
+{ #category : #tests }
 StDebuggerToolbarCommandTreeBuilderTest >> testGroupDescription [
 	self assert: builder class groupDescription equals: 'Debug actions'
 ]

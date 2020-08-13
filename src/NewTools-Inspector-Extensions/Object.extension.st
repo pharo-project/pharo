@@ -51,8 +51,9 @@ Object >> rawInspection [
 { #category : #'*NewTools-Inspector-Extensions' }
 Object >> stDisplayString [
 
-	self gtDisplayString linesDo: [ :each | 
-		^ each contractTo: 200 ].
+	[ self gtDisplayString linesDo: [ :each | ^ each contractTo: 200 ] ]
+		on: Error
+		do: [ :err | ^ err stDisplayString ].
 
 	^ ''
 ]
