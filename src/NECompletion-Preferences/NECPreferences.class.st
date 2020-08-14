@@ -284,6 +284,14 @@ NECPreferences class >> smartCharacters: aBoolean [
 ]
 
 { #category : #accessing }
+NECPreferences class >> smartCharactersLeftFor: char [
+	"Return the left character in a pair, if not part of a pair return nil"
+	^ smartCharactersMapping at: char 
+		ifPresent: [ char ] 
+		ifAbsent: [ smartInverseMapping at: char ifAbsent: [ nil ] ]
+]
+
+{ #category : #accessing }
 NECPreferences class >> smartCharactersMapping [
 	^ smartCharactersMapping
 ]
@@ -291,6 +299,14 @@ NECPreferences class >> smartCharactersMapping [
 { #category : #accessing }
 NECPreferences class >> smartCharactersMapping: aDictionary [
 	smartCharactersMapping := aDictionary
+]
+
+{ #category : #accessing }
+NECPreferences class >> smartCharactersRightFor: char [
+	"Return the right character in a pair, if not part of a pair return nil"
+	^ smartCharactersMapping at: char 
+		ifPresent: [ :value | value key ] 
+		ifAbsent: [ smartInverseMapping at: char ifPresent: [ char ] ifAbsent: [ nil ] ]
 ]
 
 { #category : #accessing }
@@ -311,6 +327,16 @@ NECPreferences class >> smartCharactersWithSingleSpace [
 { #category : #accessing }
 NECPreferences class >> smartCharactersWithSingleSpace: aString [
 	smartCharactersWithSingleSpace := aString
+]
+
+{ #category : #accessing }
+NECPreferences class >> smartInverseMapping [
+	^ smartInverseMapping
+]
+
+{ #category : #accessing }
+NECPreferences class >> smartInverseMapping: anObject [
+	smartInverseMapping := anObject
 ]
 
 { #category : #accessing }

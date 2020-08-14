@@ -69,3 +69,12 @@ CompletionKeyboardEvent >> replacementAfterEnclosingSelection: selectedString [
 	
 	^ selectedString 
 ]
+
+{ #category : #'actions - enclosing' }
+CompletionKeyboardEvent >> replacementAfterUnenclosingSelection: selectedString [
+	"Returns the replacement for the selectedString after unenclosing takes place for this CompletionKeyboardEvent
+	
+	This method describes the default behavior, which is to return the original selection"
+	
+	^ selectedString 
+]
