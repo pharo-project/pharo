@@ -12,6 +12,7 @@ Class {
 		'caseSensitive',
 		'smartCharacters',
 		'smartCharactersMapping',
+		'smartInverseMapping',
 		'backgroundColor',
 		'expandPrefixes',
 		'captureNavigationKeys',
@@ -130,15 +131,8 @@ NECPreferences class >> initialize [
 	expandPrefixes := true.
 	captureNavigationKeys := true.
 	useEnterToAccept := self defaultUseEnterToAccept.
-	smartCharactersMapping := Dictionary new.
-	smartCharactersMapping
-		at: $( put: $) -> true;
-		at: $[ put: $] -> true;
-		at: ${ put: $} -> true;
-		at: $" put: $" -> true;
-		at: $' put: $' -> true;
-		at: $< put: $> -> false;
-		at: $| put: $| -> false.
+	smartCharactersMapping := self initializeSmartCharactersMapping.
+	smartInverseMapping := self initializeSmartInverseMapping.
 
 	smartCharactersWithSingleSpace := ''.
 	smartCharactersWithDoubleSpace := '[]{}'.
@@ -147,6 +141,27 @@ NECPreferences class >> initialize [
 	popupShowAutomatic := self defaultPopupShowAutomatic.
 	popupAutomaticDelay := self defaultPopupDelay.
 	NECEntry spaceAfterCompletion: true
+]
+
+{ #category : #'class initialization' }
+NECPreferences class >> initializeSmartCharactersMapping [
+	^ Dictionary new
+		at: $( put: $) -> true;
+		at: $[ put: $] -> true;
+		at: ${ put: $} -> true;
+		at: $" put: $" -> true;
+		at: $' put: $' -> true;
+		at: $< put: $> -> false;
+		at: $| put: $| -> false
+]
+
+{ #category : #'class initialization' }
+NECPreferences class >> initializeSmartInverseMapping [
+	| inverseMapping |
+	inverseMapping := Dictionary new.
+	smartCharactersMapping
+		keysAndValuesDo: [ :char :inverse | inverseMapping at: inverse key put: char ].
+	^ inverseMapping
 ]
 
 { #category : #accessing }

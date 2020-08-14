@@ -483,6 +483,7 @@ CompletionEngine >> smartInputWithEvent: anEvent [
 
 { #category : #settings }
 CompletionEngine >> smartInverseMapping [
+	"TODO refactor away, see NECPreferences smartInverseMapping"
 	^ inverseMapping ifNil: [ 
 		inverseMapping := Dictionary new.
 		self smartCharactersMapping
