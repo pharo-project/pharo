@@ -13,9 +13,20 @@ Class {
 
 { #category : #running }
 CompletionDoubleQuoteKeyboardEventTest >> setUp [
+	| event |
 	super setUp.
 	
-	completionDoubleQuoteKeyboardEvent := CompletionDoubleQuoteKeyboardEvent new.
+	event := KeyboardEvent new.
+	event
+		setType: #keystroke
+		buttons: nil
+		position:  0@0
+		keyValue: $"
+		charCode: $" asciiValue
+		hand: nil 
+		stamp: Time now.
+	
+	completionDoubleQuoteKeyboardEvent := CompletionKeyboardEvent fromEvent: event editor: nil preferencesClass: NECPreferences.
 	
 	replacements := { 
 		"Basic case"
@@ -34,6 +45,11 @@ code."'.
 		'odd " number' -> '"odd "" number"'.
 		'odd """ number' -> '"odd """""" number"'
 	}
+]
+
+{ #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testFromEventEditorPreferencesClass [
+	self assert: completionDoubleQuoteKeyboardEvent class equals: CompletionDoubleQuoteKeyboardEvent 
 ]
 
 { #category : #test }
