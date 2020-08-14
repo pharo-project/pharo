@@ -103,6 +103,11 @@ CompletionEngine >> editor [
 
 { #category : #keyboard }
 CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [ 
+	"I am a hook that allows processing of aKeyboardEvent. This message is usually sent by aParagraphEditor, 
+	and this message is not sent if the corresponding handleKeyStrokeBefore:editor: had returned true
+	
+	This hook is mostly used for cleanup actions after the block has been processed"
+	
 	(aParagraphEditor isNil or: [ self isMenuOpen not ])
 		ifTrue: [ ^ self ].
 		
