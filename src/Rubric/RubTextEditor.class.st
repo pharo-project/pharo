@@ -1000,14 +1000,14 @@ RubTextEditor >> encloseWith: aMatchingPair [
 			and: [ (text at: startIndex-1) = left and: [(text at: stopIndex) = right]])
 		ifTrue: [
 			"already enclosed; strip off brackets"
-			newString := (self shouldNestCar: left)
+			newString := (self shouldNestCharacter: left)
 						 ifTrue: [ self unNesting: oldSelection with: left ] 
 						 ifFalse: [ oldSelection ].
 			self selectFrom: startIndex-1 to: stopIndex.
 			self replaceSelectionWith: newString ]
 		ifFalse: [
 			" Checks if the characters inside the selection need to be escaped or not. "
-			newString := (self shouldNestCar: left)
+			newString := (self shouldNestCharacter: left)
 						 ifTrue: [ self nesting: oldSelection with: left ] 
 						 ifFalse: [ "not enclosed; enclose by matching brackets"
 									  (String with: left), oldSelection string, (String with: right) ].
@@ -2452,7 +2452,7 @@ RubTextEditor >> string [
 
 { #category : #nesting }
 RubTextEditor >> stringNestedWith: aCharac [
-	^(self shouldNestCar: aCharac) 
+	^(self shouldNestCharacter: aCharac) 
 		ifTrue: [ self nestingForPaste: self clipboardText with: aCharac. ]
 		ifFalse: [ self clipboardText ] 
 ]
