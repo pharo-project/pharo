@@ -7,6 +7,16 @@ Class {
 	#category : #'NECompletion-Morphic'
 }
 
+{ #category : #queries }
+CompletionDoubleQuoteKeyboardEvent >> keyCharacterLeft [
+	^ self preferencesClass smartCharactersLeftFor: self event keyCharacter 
+]
+
+{ #category : #queries }
+CompletionDoubleQuoteKeyboardEvent >> keyCharacterRight [
+	^ self preferencesClass smartCharactersRightFor: self event keyCharacter 
+]
+
 { #category : #'actions - enclosing' }
 CompletionDoubleQuoteKeyboardEvent >> replacementAfterEncloseActionOnSelection: selectedString [
 	"Returns the replacement after either enclosing or unenclosing selectedString with double quotes"

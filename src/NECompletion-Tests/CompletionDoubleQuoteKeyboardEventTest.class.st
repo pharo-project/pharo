@@ -53,6 +53,16 @@ CompletionDoubleQuoteKeyboardEventTest >> testFromEventEditorPreferencesClass [
 ]
 
 { #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testKeyCharacterLeft [
+	self assert: completionDoubleQuoteKeyboardEvent keyCharacterLeft equals: $"
+]
+
+{ #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testKeyCharacterRight [
+	self assert: completionDoubleQuoteKeyboardEvent keyCharacterRight equals: $"
+]
+
+{ #category : #test }
 CompletionDoubleQuoteKeyboardEventTest >> testReplacementAfterEncloseActionOnSelection [
 	replacements
 		do: [ :pair | 
