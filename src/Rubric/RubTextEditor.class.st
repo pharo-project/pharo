@@ -2390,7 +2390,7 @@ RubTextEditor >> shiftEnclose: aKeyboardEvent [
 ]
 
 { #category : #nesting }
-RubTextEditor >> shouldNestCar: aChar [
+RubTextEditor >> shouldNestCharacter: aChar [
 	^'"''' includes: aChar.
 ]
 
