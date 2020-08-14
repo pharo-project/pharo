@@ -51,6 +51,16 @@ CompletionKeyboardEvent >> event: anObject [
 	event := anObject
 ]
 
+{ #category : #queries }
+CompletionKeyboardEvent >> keyCharacterLeft [
+	^ self preferencesClass smartCharactersLeftFor: self event keyCharacter 
+]
+
+{ #category : #queries }
+CompletionKeyboardEvent >> keyCharacterRight [
+	^ self preferencesClass smartCharactersRightFor: self event keyCharacter 
+]
+
 { #category : #accessing }
 CompletionKeyboardEvent >> preferencesClass [
 	^ preferencesClass
