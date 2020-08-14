@@ -63,18 +63,16 @@ MicParserTest >> testIsAListStar2 [
 { #category : #tests }
 MicParserTest >> testOnceParsedCurrentShouldBeTheRootblock [
 
-	| source root parser |
+	| source root |
 	source := 'This is
 a paragraph on two lines'.
-	parser := self parser.
 	root := parser parse: source.
 	self assert: parser current == root
 ]
 
 { #category : #tests }
 MicParserTest >> testParsingLogic [
-	| source root parser textBody argument line code |
-	parser := self parser.
+	| source root textBody argument line code |
 	
 	"ready for code factory"
 	textBody := 'my fancy code

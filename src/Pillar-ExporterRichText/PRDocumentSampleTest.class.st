@@ -1,7 +1,7 @@
 Class {
 	#name : #PRDocumentSampleTest,
 	#superclass : #TestCase,
-	#category : #'Pillar-ExporterRichText'
+	#category : #'Pillar-ExporterRichText-Tests'
 }
 
 { #category : #tests }

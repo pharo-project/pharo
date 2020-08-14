@@ -5,7 +5,7 @@ I'm a holder of some samples for Pillar structures.
 Class {
 	#name : #PRDocumentSample,
 	#superclass : #PRDocument,
-	#category : #'Pillar-ExporterRichText'
+	#category : #'Pillar-ExporterRichText-Tests'
 }
 
 { #category : #'annotated paragraph' }

@@ -27,15 +27,13 @@ PRCodeblockStylerExtensions class >> imageCache [
 { #category : #examples }
 PRCodeblockStylerExtensions class >> latexExample [
 	<example>
-	(PRRichTextComposer  asText:
-'!!!Latex mathematics 
-It is possible to render latex math:
-[[[language=latexMath
-V_i = C_0 - C_3
-\frac{C_1\cos(\theta_i+C_3)}{C_4+C_1\cos(\theta_i+C_2)}
-]]]
-Cool eh?
-') inspect
+	(PRRichTextComposer new start: 
+		(PRMathInTextAnnotation new 
+		add: (PRText new text:
+'V_i = C_0 - C_3
+\frac{C_1\cos(\theta_i+C_3)}{C_4+C_1\cos(\theta_i+C_2)}')))
+
+ inspect
 ]
 
 { #category : #styling }

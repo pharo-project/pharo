@@ -11,8 +11,10 @@ RPackage >> buildMicroDownUsing: aBuilder withComment: aString [
 				header: [ :b | b text: self name ] withLevel: 1;
 				horizontalLine;
 				text: 'A baseline is a kind of map to load project.';
+				newLine;
 				header: [ :b | b text: 'Description' ] withLevel: 3;
 				text: aString;
+				newLine;
 				header: [ :b | b text: 'Dependencies' ] withLevel: 3;
 				codeblockTag: 'pharo'
 					withBody:
