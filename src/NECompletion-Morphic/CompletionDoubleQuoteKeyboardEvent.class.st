@@ -18,20 +18,6 @@ CompletionDoubleQuoteKeyboardEvent >> keyCharacterRight [
 ]
 
 { #category : #'actions - enclosing' }
-CompletionDoubleQuoteKeyboardEvent >> replacementAfterEncloseActionOnSelection: selectedString [
-	"Returns the replacement after either enclosing or unenclosing selectedString with double quotes"
-	
-	| l r |
-	l := selectedString at: 1.
-	r := selectedString at: selectedString size.
-	
-	((l = $") and: [ r = $" ])
-		ifTrue: [  ^ self replacementAfterUnenclosingSelection: selectedString ].
-		
-	^ self replacementAfterEnclosingSelection: selectedString
-]
-
-{ #category : #'actions - enclosing' }
 CompletionDoubleQuoteKeyboardEvent >> replacementAfterEnclosingSelection: selectedString [
 	"Returns the replacement after enclosing selectedString with double quotes
 	We do this by replacing every double quote in selectedString with two double quotes"
