@@ -35,6 +35,7 @@ PharoCommonTools class >> initialize [
 { #category : #settings }
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
+	
 	Smalltalk tools class == self
 		ifFalse: [ ^ self ].
 	(aBuilder group: #pharoTools)
@@ -48,7 +49,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						getSelector: #browserTool;
 						setSelector: #browserTool:;
 						label: 'System browser';
-						default: (Smalltalk at: #ClyFullBrowser);
+						default: (self environment at: #ClyFullBrowser);
 						domainValues: Smalltalk tools recentBrowserTools ];
 		with: [ 
 					(aBuilder pickOne: #inspectorTool)
@@ -56,7 +57,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						getSelector: #inspectorTool;
 						setSelector: #inspectorTool:;
-						default: (Smalltalk at: #GTInspector);
+						default: (self environment at: #GTInspector);
 						label: 'Inspector';
 						domainValues: Smalltalk tools recentInspectorTools ];
 		with: [ 
@@ -66,21 +67,15 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						getSelector: #workspaceTool;
 						setSelector: #workspaceTool:;
 						label: 'Workspace';
-						default: (Smalltalk at: #StPlayground);
+						default: (self environment at: #StPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
-		with: [ 
-					(aBuilder pickOne: #debuggerTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Debugger';
-						default: (Smalltalk at: #GTGenericStackDebugger);
-						domainValues: Smalltalk tools recentDebuggerTools ];
+
 		with: [ 
 					(aBuilder pickOne: #messageListTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Messagelist';
-						default: (Smalltalk at: #ClyOldMessageBrowserAdapter);
+						default: (self environment at: #ClyOldMessageBrowserAdapter);
 						domainValues: Smalltalk tools recentMessageListTools ];
 		with: [ 
 					(aBuilder pickOne: #versionBrowserTool)
@@ -93,7 +88,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Filelist';
-						default: (Smalltalk at: #FileList);
+						default: (self environment at: #FileList);
 						domainValues: Smalltalk tools recentFileListTools];
 		with: [ 
 					(aBuilder pickOne: #changeSorterTool)
