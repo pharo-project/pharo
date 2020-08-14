@@ -1,0 +1,72 @@
+"
+A CompletionDoubleQuoteKeyboardEventTest is a test class for testing the behavior of CompletionDoubleQuoteKeyboardEvent
+"
+Class {
+	#name : #CompletionDoubleQuoteKeyboardEventTest,
+	#superclass : #TestCase,
+	#instVars : [
+		'completionDoubleQuoteKeyboardEvent',
+		'replacements'
+	],
+	#category : #'NECompletion-Tests'
+}
+
+{ #category : #running }
+CompletionDoubleQuoteKeyboardEventTest >> setUp [
+	super setUp.
+	
+	completionDoubleQuoteKeyboardEvent := CompletionDoubleQuoteKeyboardEvent new.
+	
+	replacements := { 
+		"Basic case"
+		'foobar' -> '"foobar"'.
+		"Basic case with spaces"
+		'lorem ipsum' -> '"lorem ipsum"'.
+		"With newlines"
+'code.
+"comment"
+code.'
+->
+'"code.
+""comment""
+code."'.
+		"With odd number of double quotes"
+		'odd " number' -> '"odd "" number"'.
+		'odd """ number' -> '"odd """""" number"'
+	}
+]
+
+{ #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testReplacementAfterEncloseActionOnSelection [
+	replacements
+		do: [ :pair | 
+			"Enclosing should work"
+			self 
+				assert: (completionDoubleQuoteKeyboardEvent replacementAfterEncloseActionOnSelection: pair key)
+				equals: pair value.
+			"Undoing should work too"
+			self 
+				assert: (completionDoubleQuoteKeyboardEvent replacementAfterEncloseActionOnSelection: pair value)
+				equals: pair key.
+		]
+]
+
+{ #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testReplacementAfterEnclosingSelection [
+	replacements
+		do: [ :pair | 
+			self 
+				assert: (completionDoubleQuoteKeyboardEvent replacementAfterEnclosingSelection: pair key)
+				equals: pair value 
+		]
+]
+
+{ #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testReplacementAfterUnenclosingSelection [
+	replacements
+		do: [ :pair | 
+			self 
+				assert: (completionDoubleQuoteKeyboardEvent replacementAfterUnenclosingSelection: pair value)
+				equals: pair key 
+		]
+]
