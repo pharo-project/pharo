@@ -1794,11 +1794,13 @@ RubAbstractTextArea >> selectionRects [
 
 { #category : #'accessing selection' }
 RubAbstractTextArea >> selectionStart [
+	"Returns the CharacterBlock that is the start of the current selection"
 	^ self editingState selectionStart
 ]
 
 { #category : #'accessing selection' }
 RubAbstractTextArea >> selectionStop [
+	"Returns the CharacterBlock that is the end of the current selection"
 	^ self editingState selectionStop
 ]
 

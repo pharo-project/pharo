@@ -134,6 +134,7 @@ RubEditingState >> scrollPivot: aPoint [
 
 { #category : #accessing }
 RubEditingState >> selectionStart [
+	"Returns the CharacterBlock that is the start of the current selection"
 	^ self pointBlock ifNotNil: [:pb | pb min: self markBlock]
 ]
 

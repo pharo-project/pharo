@@ -2220,11 +2220,13 @@ RubTextEditor >> selectionInterval [
 
 { #category : #'accessing-selection' }
 RubTextEditor >> selectionStart [
+	"Returns the CharacterBlock that is the start of the current selection"
 	^ textArea selectionStart
 ]
 
 { #category : #'accessing-selection' }
 RubTextEditor >> selectionStop [
+	"Returns the CharacterBlock that is the end of the current selection"
 	^ textArea selectionStop
 ]
 
