@@ -52,6 +52,11 @@ CompletionKeyboardEvent >> event: anObject [
 ]
 
 { #category : #queries }
+CompletionKeyboardEvent >> isSmartCharacterEvent [
+	^ preferencesClass smartCharactersIncludes: self event keyCharacter 
+]
+
+{ #category : #queries }
 CompletionKeyboardEvent >> keyCharacterLeft [
 	^ self preferencesClass smartCharactersLeftFor: self event keyCharacter 
 ]
