@@ -284,6 +284,12 @@ NECPreferences class >> smartCharacters: aBoolean [
 ]
 
 { #category : #accessing }
+NECPreferences class >> smartCharactersIncludes: char [
+	"Return the right character in a pair, if not part of a pair return nil"
+	^ (self smartCharactersLeftFor: char) notNil 
+]
+
+{ #category : #accessing }
 NECPreferences class >> smartCharactersLeftFor: char [
 	"Return the left character in a pair, if not part of a pair return nil"
 	^ smartCharactersMapping at: char 
