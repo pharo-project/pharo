@@ -31,6 +31,14 @@ CompletionKeyboardEvent class >> fromEvent: aKeyboardEvent editor: anEditor pref
 		yourself 
 ]
 
+{ #category : #'actions - enclosing' }
+CompletionKeyboardEvent >> canUnencloseLeft: lChar right: rChar [
+	"Returns true if the character to the left of the selection (lChar) 
+	and the character to the right of the selection (rChar) should trigger un-enclosing"
+	
+	^ (lChar = self keyCharacterLeft) and: [ rChar = self keyCharacterRight ]
+]
+
 { #category : #accessing }
 CompletionKeyboardEvent >> editor [
 	^ editor

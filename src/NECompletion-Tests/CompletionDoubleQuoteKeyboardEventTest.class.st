@@ -48,6 +48,26 @@ code."'.
 ]
 
 { #category : #test }
+CompletionDoubleQuoteKeyboardEventTest >> testCanUnencloseLeftRight [
+	self assert: (completionDoubleQuoteKeyboardEvent canUnencloseLeft: $" right: $").
+	
+	"Should handle nil since left of selection could be nil if everything in a text area is selected"
+	self deny: (completionDoubleQuoteKeyboardEvent canUnencloseLeft: nil right: $").
+	self deny: (completionDoubleQuoteKeyboardEvent canUnencloseLeft: $" right: nil).
+	
+	"Should not work if the characters don't match"
+	self deny: (completionDoubleQuoteKeyboardEvent canUnencloseLeft: $a right: $b).
+	
+	"Should work for paired characters"
+	"TODO move this to the CompletionLeftParenKeyboardEventTest"
+	"self assert: (completionDoubleQuoteKeyboardEvent canUnencloseLeft: $( right: $))."
+	
+	"Should not work if the characters are flipped"
+	"TODO move this to the CompletionLeftBracketKeyboardEventTest"
+	"self deny: (completionDoubleQuoteKeyboardEvent canUnencloseLeft: $] right: $[)."
+]
+
+{ #category : #test }
 CompletionDoubleQuoteKeyboardEventTest >> testFromEventEditorPreferencesClass [
 	self assert: completionDoubleQuoteKeyboardEvent class equals: CompletionDoubleQuoteKeyboardEvent 
 ]
