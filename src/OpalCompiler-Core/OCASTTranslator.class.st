@@ -520,7 +520,9 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 OCASTTranslator >> visitFullBlockNode: aBlockNode [
 	| compiledBlock |
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames
+	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
+		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
+		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
 ]
 
 { #category : #'visitor-double dispatching' }

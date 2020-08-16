@@ -1147,6 +1147,12 @@ Object >> isDictionary [
 ]
 
 { #category : #testing }
+Object >> isEmbeddedBlock [
+	"returns true for CleanBlockBlockClosure and CompiledBlock"
+	^ false
+]
+
+{ #category : #testing }
 Object >> isFloat [
 	"Overridden to return true in Float, natch"
 	^ false
