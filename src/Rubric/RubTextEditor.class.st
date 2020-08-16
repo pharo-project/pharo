@@ -456,6 +456,16 @@ RubTextEditor >> changeTextFont [
 				ifTrue: [ textArea takeKeyboardFocus ] ]
 ]
 
+{ #category : #'accessing-query' }
+RubTextEditor >> characterLeftOfSelection [
+	^ self text at: (self startIndex - 1) ifAbsent: [ nil ]
+]
+
+{ #category : #'accessing-query' }
+RubTextEditor >> characterRightOfSelection [
+	^ self text at: self stopIndex ifAbsent: [ nil ]
+]
+
 { #category : #'menu messages' }
 RubTextEditor >> chooseAlignment [
 	self changeAlignment
@@ -2209,6 +2219,21 @@ RubTextEditor >> selectionAsStream [
 
 	^ReadStream
 		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
+]
+
+{ #category : #'new selection' }
+RubTextEditor >> selectionExpandLeft: numCharsLeft right: numCharsRight [
+	"Expand the current selection by numCharsLeft on the left and numCharsRight on the rightMargin 
+
+	See tests to see how this works"
+	
+	| newLeftIndex newRightIndex |
+	
+	newLeftIndex := self startIndex - numCharsLeft.
+	"-1 because stopIndex is just after the current selection"
+	newRightIndex := self stopIndex - 1 + numCharsRight.
+	
+	self selectFrom: newLeftIndex to: newRightIndex
 ]
 
 { #category : #'accessing-selection' }

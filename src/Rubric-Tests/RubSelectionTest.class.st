@@ -68,3 +68,37 @@ RubSelectionTest >> testCaretInTheMiddleOfWordHasWordUpToCaret [
 	
 	self assert: editor wordAtCaret equals: 'abc'
 ]
+
+{ #category : #running }
+RubSelectionTest >> testSelectionExpandLeftRight [
+	editor selectFrom: 7 to: 10.	
+	self assert: editor selection equals: 'fghi'.
+	
+	"Expansion should work for 1 character (basic case)"
+	editor selectionExpandLeft: 1 right: 1.
+	self assert: editor selection equals: ' fghi '.
+	
+	"Expansion should work for different number of characters on both sides"
+	editor selectionExpandLeft: 1 right: 3.
+	self assert: editor selection equals: 'e fghi jkl'.
+	
+	"Expansion by 0 characters works"
+	editor selectionExpandLeft: 0 right: 1.
+	self assert: editor selection equals: 'e fghi jklm'.
+	
+	"Expansion by 0 characters works on the left as well"
+	editor selectionExpandLeft: 4 right: 0.
+	self assert: editor selection equals: 'abcde fghi jklm'.
+	
+	"Expansion beyond the end just doesn't expand further"
+	editor selectionExpandLeft: 2 right: 4.
+	self assert: editor selection equals: 'abcde fghi jklm'.
+	
+	"Negative expansion works as well"
+	editor selectionExpandLeft: -2 right: -5.
+	self assert: editor selection equals: 'cde fghi'.
+	
+	"Expansion with negative selection just works"
+	editor selectionExpandLeft: -2 right: -11.
+	self assert: editor selection equals: 'abcd'.
+]
