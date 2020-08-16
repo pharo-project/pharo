@@ -20,13 +20,6 @@ Context >> callPrimitive: primNumber [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> lookupSymbol: aSymbol [
-	| var |
-	var := self lookupVar: aSymbol.
-	^ var readInContext: self
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
@@ -112,6 +105,11 @@ Context >> quickStep [
 
 	self willSend ifTrue: [ QuickStep := self ].
 	^self step
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> readVariableNamed: aName [
+	^ (self lookupVar: aName) readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -376,9 +374,7 @@ Context >> tempNamed: aName [
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	| var |
-	var := self lookupTempVar: aName.
-	var write: anObject inContext: self.
+	(self lookupTempVar: aName) write: anObject inContext: self.
 	^ anObject
 ]
 
