@@ -1022,6 +1022,37 @@ RubTextEditor >> encloseWith: aMatchingPair [
 	^true
 ]
 
+{ #category : #'editing keys' }
+RubTextEditor >> encloseWithEvent: aCompletionKeyboardEvent [
+	"Insert or remove bracket characters around the current selection.
+	
+	[Before]
+	
+	code
+	^  ^ <= selection boundaries, inclusive
+	
+	becomes
+	
+	[After]
+	
+	(code)
+	 ^  ^ <= selection boundaries, inclusive
+	
+	And [After] becomes [Before] if this method is called while the selection boundaries are as marked above"
+	self closeTypeIn.
+	(aCompletionKeyboardEvent canUnencloseLeft: self characterLeftOfSelection right: self characterRightOfSelection)
+		ifTrue: [ 
+			self selectionExpandLeft: 1 right: 1.
+			self replaceSelectionWith: (aCompletionKeyboardEvent replacementAfterUnenclosingSelection: self selection asString).
+		]
+		ifFalse: [
+			self replaceSelectionWith: (aCompletionKeyboardEvent replacementAfterEnclosingSelection: self selection asString).
+			self selectionExpandLeft: -1 right: -1.
+		].
+	
+	^ true
+]
+
 { #category : #private }
 RubTextEditor >> encompassParagraph: anInterval [
 	"Return an interval that includes anInterval, and that comprises one or several whole paragraphs in the receiver.

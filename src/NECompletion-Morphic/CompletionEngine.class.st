@@ -399,19 +399,18 @@ CompletionEngine >> smartCharacterWithEvent: anEvent [
 	We may remove char if this is not costly.
 	Returns true if anEvent is handled, nil otherwise"
 
-	| opposite previous next char insertion insertionCenter matchingPair |
-	char := anEvent keyCharacter.
+	| opposite previous next char insertion insertionCenter e |
+	char := anEvent keyCharacter.	
+	e := CompletionKeyboardEvent fromEvent: anEvent editor: editor preferencesClass: NECPreferences.
 	editor hasSelection
 		ifTrue: [ 
-			"Find the matching pair, and if it doesn't exist, we don't handle this event"
-			matchingPair := self smartCharacterPairFor: char ifAbsent: [ ^ nil ].
+			e isSmartCharacterEvent ifFalse: [ ^ nil ].
 			
-			"encloseWith: will handle wrapping or unwrapping the selection"
-			editor encloseWith: matchingPair.
-			
+			editor encloseWithEvent: e.
 			"Return true since we've handled this event"
 			self invalidateEditorMorph.
-			^ true ].
+			^ true 
+		].
 	
 	"The editor has no selection in it"
 	(self smartCharacterShouldClose: char)	
