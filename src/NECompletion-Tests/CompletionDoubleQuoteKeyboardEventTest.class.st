@@ -43,7 +43,10 @@ code.'
 code."'.
 		"With odd number of double quotes"
 		'odd " number' -> '"odd "" number"'.
-		'odd """ number' -> '"odd """""" number"'
+		'odd """ number' -> '"odd """""" number"'.
+		
+		"With only double quotes"
+		'"' -> '""""'
 	}
 ]
 
