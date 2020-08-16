@@ -446,6 +446,11 @@ RBProgramNode >> isCascade [
 ]
 
 { #category : #testing }
+RBProgramNode >> isCommentNode [
+	^false.
+]
+
+{ #category : #testing }
 RBProgramNode >> isDirectlyUsed [
 	"This node is directly used as an argument, receiver, or part of an assignment."
 

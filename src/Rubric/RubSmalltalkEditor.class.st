@@ -242,6 +242,29 @@ RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
 		onError: aBlock
 ]
 
+{ #category : #'as yet unclassified' }
+RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
+	"Find the best node in the editor text area trimming the selection to prepare for eventual deletion"
+	
+	| node start stop intervalTrimmedText |
+	
+	start := self textArea startIndex.
+	stop := self textArea stopIndex.
+	intervalTrimmedText := start = stop 
+					ifFalse: [ 	| beginning end |
+									beginning := end := ''.
+									start <= 1 ifFalse: [ beginning := self textArea string copyFrom: 1 to: start - 1 ].
+									stop >= self textArea text size ifFalse: [ end :=  self textArea string copyFrom: stop + 1 to: self textArea text size ].
+									beginning,end ]
+					 ifTrue: [ self textArea string ].
+	[node := RBParser parseMethod: intervalTrimmedText  onError: [ 
+		RBParser parseFaultyExpression: intervalTrimmedText]
+	] on: Error do: [^nil].
+	
+	^node bestNodeFor: (start to: start).
+	
+]
+
 { #category : #binding }
 RubSmalltalkEditor >> bindingOf: aString [
 	^ self textArea bindingOf: aString
@@ -394,6 +417,21 @@ RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInter
 	comment ifNil: [ ^ 0 to: -1 ].
 	commentInterval := comment first.
 	^ commentInterval first + 1 to: commentInterval last - 1
+]
+
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> copySelection [
+	"Copy the current selection and store it in the paste buffer, unless a caret.  Undoer & Redoer: undoCutCopy"
+
+	| node charac |
+	"Research of selected node for eventual nesting of comment or string."
+	self lineSelectAndEmptyCheck: [^ self].
+	node := self bestNodeInTextAreaWithoutSelection.
+	charac := self getNestingCharacterFromAst: node.
+	charac ifNil: [ self clipboardTextPut: self selection ]
+		    ifNotNil: [ self clipboardTextPut: (self unNesting: self selection with: charac) ].
+	self editingState previousInterval: self selectionInterval.
+
 ]
 
 { #category : #'do-its' }
@@ -909,6 +947,29 @@ RubSmalltalkEditor >> notify: aString at: anInteger in: aStream [
 		at: anInteger 
 		in: aStream 
 
+]
+
+{ #category : #'menu messages' }
+RubSmalltalkEditor >> paste [
+	"Paste the text from the shared buffer over the current selection and 
+	redisplay if necessary.  Undoer & Redoer: undoAndReselect."
+	| node charac nestedText |
+	"Research of selected node for eventual nesting of comment or string."
+	node := self bestNodeInTextAreaWithoutSelection.
+	charac := self getNestingCharacterFromAst: node.
+	nestedText := self stringNestedWith: charac.
+	"Check if it is a Symbol that needs extra apostrophes to receive"
+	"The commented code is a hint at how to nest strings in symbols. The solucion has not been found yet."
+		"(node isLiteralNode and: [ node value isSymbol ])
+				ifFalse: [" self replace: self selectionInterval with: nestedText and:
+						 	  [self selectAt: self pointIndex] "] 
+				ifTrue: [ | beginning end |
+				beginning := self textArea text copyFrom: node start to: self textArea startIndex - 1.
+				end := self textArea text copyFrom: self textArea stopIndex to: node stop + (self textArea stopIndex - self textArea startIndex) .
+				self replace: (node start to: node stop + (self textArea stopIndex - self textArea startIndex)) with: beginning, nestedText, end and:
+		[self selectAt: self pointIndex] ].
+	 ]."
+	
 ]
 
 { #category : #'editing keys' }
