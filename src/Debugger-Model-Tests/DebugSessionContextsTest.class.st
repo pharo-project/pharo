@@ -22,11 +22,11 @@ DebugSessionContextsTest >> setUp [
 { #category : #tests }
 DebugSessionContextsTest >> testInitialContentOfInterruptedContext [
 	"Checks that the interruptedContext of the DebugSession is the thisContext of the code where the DebugSession was created"
-	self assert: ((process suspendedContext lookupSymbol: #debugSession) interruptedContext ) identicalTo: debuggedThisContext.
+	self assert: ((process suspendedContext readVariableNamed: #debugSession) interruptedContext ) identicalTo: debuggedThisContext.
 ]
 
 { #category : #tests }
 DebugSessionContextsTest >> testInitialContentOfSuspendedContext [
 	"Checks that the interruptedContext of the DebugSession is the thisContext of the code where the DebugSession was created"
-	self assert: ((process suspendedContext lookupSymbol: #debugSession) interruptedProcess suspendedContext) identicalTo: debuggedThisContext.
+	self assert: ((process suspendedContext readVariableNamed: #debugSession) interruptedProcess suspendedContext) identicalTo: debuggedThisContext.
 ]
