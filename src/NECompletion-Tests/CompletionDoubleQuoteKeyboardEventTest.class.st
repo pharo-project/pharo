@@ -63,21 +63,6 @@ CompletionDoubleQuoteKeyboardEventTest >> testKeyCharacterRight [
 ]
 
 { #category : #test }
-CompletionDoubleQuoteKeyboardEventTest >> testReplacementAfterEncloseActionOnSelection [
-	replacements
-		do: [ :pair | 
-			"Enclosing should work"
-			self 
-				assert: (completionDoubleQuoteKeyboardEvent replacementAfterEncloseActionOnSelection: pair key)
-				equals: pair value.
-			"Undoing should work too"
-			self 
-				assert: (completionDoubleQuoteKeyboardEvent replacementAfterEncloseActionOnSelection: pair value)
-				equals: pair key.
-		]
-]
-
-{ #category : #test }
 CompletionDoubleQuoteKeyboardEventTest >> testReplacementAfterEnclosingSelection [
 	replacements
 		do: [ :pair | 

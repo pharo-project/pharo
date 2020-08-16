@@ -72,20 +72,6 @@ CompletionKeyboardEvent >> preferencesClass: anObject [
 ]
 
 { #category : #'actions - enclosing' }
-CompletionKeyboardEvent >> replacementAfterEncloseActionOnSelection: selectedString [
-	"Returns the replacement after either enclosing or unenclosing selectedString with double quotes"
-	
-	| l r |
-	l := selectedString at: 1.
-	r := selectedString at: selectedString size.
-	
-	((l = self keyCharacterLeft) and: [ r = self keyCharacterRight ])
-		ifTrue: [  ^ self replacementAfterUnenclosingSelection: selectedString ].
-		
-	^ self replacementAfterEnclosingSelection: selectedString
-]
-
-{ #category : #'actions - enclosing' }
 CompletionKeyboardEvent >> replacementAfterEnclosingSelection: selectedString [
 	"Returns the replacement for the selectedString after enclosing takes place for this CompletionKeyboardEvent
 	
