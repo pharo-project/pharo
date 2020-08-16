@@ -177,14 +177,9 @@ FullBlockClosure >> value [
 	 message. Supply the copied values to the activation as its copied
 	 temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
 	numArgs ~= 0 ifTrue:
 		[self numArgsError: 0].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	^self primitiveFailed
 ]
 
 { #category : #evaluating }
