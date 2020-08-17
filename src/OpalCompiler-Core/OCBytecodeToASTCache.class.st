@@ -35,20 +35,26 @@ OCBytecodeToASTCache >> bcToASTMap [
 
 { #category : #private }
 OCBytecodeToASTCache >> fillMissingBCOffsetsWithLastBCOffsetNodes [
-	"It happens that different bytecode offsets map to the same AST node.
+	 "It happens that different bytecode offsets map to the same AST node.
 	These cases are detected when there is no node mapped between, for example, bcOffset 46 and bcOffset 50.
 	In that case, we take every possible bytecode index between 46 and 50 (i.e., 47, 48, 49),
-	and we map them to the same node as the last mapped bytecode offset, here 46."
+	and we map them to the same node as the last mapped bytecode offset, here 46.
+	
+	When a fullblocks is the first node in a method body, it is possible (when?) the offsets do not start at the first offset of the method (why?). 
+	In that case, we also fix the missing offsets by mapping to them the first mapped node."
 
-	| sortedBCOffsets |
-	sortedBCOffsets := bcToASTMap keys asSortedCollection.
-	1 to: sortedBCOffsets size - 1 do: [ :index | 
-		| bcAtIndex bcAtNextIndex |
-		bcAtIndex := sortedBCOffsets at: index.
-		bcAtNextIndex := sortedBCOffsets at: index + 1.
-		bcAtIndex < bcAtNextIndex ifTrue: [ 
-			bcAtIndex to: bcAtNextIndex - 1 do: [ :i | 
-			bcToASTMap at: i put: (bcToASTMap at: bcAtIndex) ] ] ]
+	 | sortedBCOffsets |
+	 sortedBCOffsets := bcToASTMap keys asSortedCollection.
+	 sortedBCOffsets first = firstBcOffset ifFalse: [ 
+		 firstBcOffset to: sortedBCOffsets first - 1 do: [ :offset | 
+			 bcToASTMap at: offset put: (bcToASTMap at: sortedBCOffsets first) ] ].
+	 1 to: sortedBCOffsets size - 1 do: [ :index | 
+		 | bcAtIndex bcAtNextIndex |
+		 bcAtIndex := sortedBCOffsets at: index.
+		 bcAtNextIndex := sortedBCOffsets at: index + 1.
+		 bcAtIndex < bcAtNextIndex ifTrue: [ 
+			 bcAtIndex to: bcAtNextIndex - 1 do: [ :i | 
+			 bcToASTMap at: i put: (bcToASTMap at: bcAtIndex) ] ] ]
 ]
 
 { #category : #accessing }

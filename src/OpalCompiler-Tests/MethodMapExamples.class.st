@@ -170,6 +170,13 @@ MethodMapExamples >> helperMethod13 [
 ]
 
 { #category : #examples }
+MethodMapExamples >> helperMethod14: aVisitor [
+	 [ aVisitor ]
+		 on: Error
+		 do: [ aVisitor ]
+]
+
+{ #category : #examples }
 MethodMapExamples >> ivar [
 	^ivar
 ]
