@@ -9,7 +9,6 @@ Class {
 
 { #category : #tests }
 OCCleanBlockTest >> testBlockIsClean [
-	"does not work if experimental clean blocks are enabled"
 	self assert: [  ] sourceNode isClean.
 	self assert: [ 1 + 2 ] sourceNode isClean.
 	self assert: [ :a | a + 2 ] sourceNode isClean.
