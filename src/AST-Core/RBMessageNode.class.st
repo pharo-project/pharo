@@ -86,7 +86,7 @@ RBMessageNode >> arguments: argCollection [
 { #category : #querying }
 RBMessageNode >> bestNodeFor: anInterval [ 
 	| comments |
-	anInterval ifNil: [ ^nil ].
+	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
 	(self containedBy: anInterval) ifTrue: [^self].
 	self keywordsIntervals do:
 			[:each | 
