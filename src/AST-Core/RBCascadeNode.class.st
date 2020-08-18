@@ -44,7 +44,7 @@ RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [
 { #category : #querying }
 RBCascadeNode >> bestNodeFor: anInterval [ 
 	| selectedChildren |
-	anInterval ifNil: [ ^nil ].
+	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
 	(self containedBy: anInterval) ifTrue: [^self].
 	messages 
 		reverseDo: [:each | (each containedBy: anInterval) ifTrue: [^each]].

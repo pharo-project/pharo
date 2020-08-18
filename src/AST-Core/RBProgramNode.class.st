@@ -180,7 +180,7 @@ RBProgramNode >> bestNodeFor: anInterval [
 	| selectedChildren selectedComments |
 	anInterval ifNil: [^nil ].
 	selectedComments := self getCommentsFor: anInterval.
-	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ self ] ] ].
+	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ nil ] ] ].
 	(self containedBy: anInterval) ifTrue: [^self].
 	
 	selectedChildren := self children select: [:each | 
