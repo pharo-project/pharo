@@ -701,10 +701,7 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 		ifNotNil: [ 
 			node isLiteralNode
 				ifTrue: [ validLocation := false ].
-			node nodesDo: [ :subNode |
-				subNode comments
-					detect: [ :c | c intersectsInterval: locationInterval ]
-					ifFound: [ validLocation := false ] ] ].
+			node isCommentNode ifTrue: [ validLocation := false ] ].
 			
 	validLocation ifTrue: aBlock 
 			
