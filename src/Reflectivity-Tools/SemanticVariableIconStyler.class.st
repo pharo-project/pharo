@@ -1,6 +1,6 @@
 Class {
 	#name : #SemanticVariableIconStyler,
-	#superclass : #IconStylerRT,
+	#superclass : #IconStylerRealTime,
 	#category : #'Reflectivity-Tools-RealTimeStyling'
 }
 

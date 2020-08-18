@@ -2,7 +2,7 @@
 I am a copy of the class IconStyler because I use my sub-classes to stylize the method tab and I just want to use a few select ones.
 "
 Class {
-	#name : #IconStylerRT,
+	#name : #IconStylerRealTime,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
 		'textModel'
@@ -11,40 +11,40 @@ Class {
 }
 
 { #category : #options }
-IconStylerRT class >> shouldStyle [
+IconStylerRealTime class >> shouldStyle [
 	^true
 ]
 
 { #category : #style }
-IconStylerRT class >> style: textModel [
+IconStylerRealTime class >> style: textModel [
 	^self new textModel: textModel.
 ]
 
 { #category : #api }
-IconStylerRT class >> styleText: textModel withAst: ast [
+IconStylerRealTime class >> styleText: textModel withAst: ast [
 	self allSubclassesDo: [ :styleClass | 
 			styleClass shouldStyle
 				ifTrue: [ ast acceptVisitor: (styleClass style: textModel) ] ]
 ]
 
 { #category : #styling }
-IconStylerRT >> addIconMethodStyle: aMethodNode [
+IconStylerRealTime >> addIconMethodStyle: aMethodNode [
 	self addIconStyle: aMethodNode from: 1 to: 0
 ]
 
 { #category : #styling }
-IconStylerRT >> addIconStyle: aNode [
+IconStylerRealTime >> addIconStyle: aNode [
 	self addIconStyle: aNode from: aNode start to: aNode stop.
 ]
 
 { #category : #styling }
-IconStylerRT >> addIconStyle: aNode from: start to: stop [
+IconStylerRealTime >> addIconStyle: aNode from: start to: stop [
 	
 	self addIconStyle: aNode from: start to: stop color: self highlightColor 
 ]
 
 { #category : #styling }
-IconStylerRT >> addIconStyle: aNode from: start to: stop color: aColor [
+IconStylerRealTime >> addIconStyle: aNode from: start to: stop color: aColor [
 	|conf|
 	(self shouldStyleNode: aNode) ifFalse: [ ^self ].
 	conf := RubConfigurationChange new.
@@ -63,177 +63,177 @@ IconStylerRT >> addIconStyle: aNode from: start to: stop color: aColor [
 ]
 
 { #category : #defaults }
-IconStylerRT >> borderColor [ 
+IconStylerRealTime >> borderColor [ 
 	^Color gray
 ]
 
 { #category : #defaults }
-IconStylerRT >> highlightColor [
+IconStylerRealTime >> highlightColor [
 	^(Color green alpha: 0.1)
 ]
 
 { #category : #defaults }
-IconStylerRT >> iconBlock: aNode [
+IconStylerRealTime >> iconBlock: aNode [
 	^ [ ] 
 ]
 
 { #category : #defaults }
-IconStylerRT >> iconFor: aNode [
+IconStylerRealTime >> iconFor: aNode [
 	^nil
 ]
 
 { #category : #defaults }
-IconStylerRT >> iconLabel: aNode [
+IconStylerRealTime >> iconLabel: aNode [
 	^ ''
 ]
 
 { #category : #defaults }
-IconStylerRT >> iconLabelBlock: aNode [
+IconStylerRealTime >> iconLabelBlock: aNode [
 	^ [self iconLabel: aNode]
 ]
 
 { #category : #testing }
-IconStylerRT >> shouldStyleNode: aNode [
+IconStylerRealTime >> shouldStyleNode: aNode [
 	^false 
 ]
 
 { #category : #accessing }
-IconStylerRT >> textModel [
+IconStylerRealTime >> textModel [
 	^ textModel
 ]
 
 { #category : #accessing }
-IconStylerRT >> textModel: anObject [
+IconStylerRealTime >> textModel: anObject [
 	textModel := anObject
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitArgumentNode: anArgumentNode [ 
+IconStylerRealTime >> visitArgumentNode: anArgumentNode [ 
 	self addIconStyle: anArgumentNode.
 	super visitArgumentNode: anArgumentNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitArrayNode: anArrayNode [ 
+IconStylerRealTime >> visitArrayNode: anArrayNode [ 
 	self addIconStyle: anArrayNode.
 	super visitArrayNode: anArrayNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitAssignmentNode: anAssignmentNode [ 
+IconStylerRealTime >> visitAssignmentNode: anAssignmentNode [ 
 	self addIconStyle: anAssignmentNode.
 	super visitAssignmentNode: anAssignmentNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitBlockNode: aBlockNode [ 
+IconStylerRealTime >> visitBlockNode: aBlockNode [ 
 	self addIconStyle: aBlockNode.
 	super visitBlockNode: aBlockNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitCascadeNode: aCascadeNode [ 
+IconStylerRealTime >> visitCascadeNode: aCascadeNode [ 
 	self addIconStyle: aCascadeNode.
 	super visitCascadeNode: aCascadeNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitEnglobingErrorNode: anEnglobingNode [
+IconStylerRealTime >> visitEnglobingErrorNode: anEnglobingNode [
 	self addIconStyle: anEnglobingNode.
 	anEnglobingNode content do: [ :each | self visitNode: each ].
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitGlobalNode: aSelfNode [ 
+IconStylerRealTime >> visitGlobalNode: aSelfNode [ 
 	self addIconStyle: aSelfNode.
 	super visitGlobalNode: aSelfNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitInstanceVariableNode: aSelfNode [ 
+IconStylerRealTime >> visitInstanceVariableNode: aSelfNode [ 
 	self addIconStyle: aSelfNode.
 	super visitInstanceVariableNode: aSelfNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
+IconStylerRealTime >> visitLiteralArrayNode: aRBLiteralArrayNode [ 
 	self addIconStyle: aRBLiteralArrayNode.
 	super visitLiteralArrayNode: aRBLiteralArrayNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitLiteralNode: aLiteralNode [ 
+IconStylerRealTime >> visitLiteralNode: aLiteralNode [ 
 	self addIconStyle: aLiteralNode.
 	super visitLiteralNode: aLiteralNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitMessageNode: aMessageNode [ 
+IconStylerRealTime >> visitMessageNode: aMessageNode [ 
 	self addIconStyle: aMessageNode.
 	super visitMessageNode: aMessageNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitMethodNode: aMethodNode [ 
+IconStylerRealTime >> visitMethodNode: aMethodNode [ 
 	self addIconMethodStyle: aMethodNode.
 	super visitMethodNode: aMethodNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitParseErrorNode: anErrorNode [ 
+IconStylerRealTime >> visitParseErrorNode: anErrorNode [ 
 	self addIconMethodStyle: anErrorNode.
 	super visitParseErrorNode: anErrorNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitPragmaNode: aPragmaNode [ 
+IconStylerRealTime >> visitPragmaNode: aPragmaNode [ 
 	self addIconStyle: aPragmaNode.
 	super visitPragmaNode: aPragmaNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitReturnNode: aReturnNode [ 
+IconStylerRealTime >> visitReturnNode: aReturnNode [ 
 	self addIconStyle: aReturnNode.
 	super visitReturnNode: aReturnNode 
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitSelectorNode: aSelectorNode [
+IconStylerRealTime >> visitSelectorNode: aSelectorNode [
 	self addIconStyle: aSelectorNode
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitSelfNode: aSelfNode [ 
+IconStylerRealTime >> visitSelfNode: aSelfNode [ 
 	self addIconStyle: aSelfNode.
 	super visitSelfNode: aSelfNode 
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitSequenceNode: aSequenceNode [ 
+IconStylerRealTime >> visitSequenceNode: aSequenceNode [ 
 	self addIconStyle: aSequenceNode.
 	super visitSequenceNode: aSequenceNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitSuperNode: aSuperNode [ 
+IconStylerRealTime >> visitSuperNode: aSuperNode [ 
 	self addIconStyle: aSuperNode.
 	super visitSuperNode: aSuperNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitTemporaryNode: aNode [ 
+IconStylerRealTime >> visitTemporaryNode: aNode [ 
 	self addIconStyle: aNode.
 	super visitTemporaryNode: aNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitThisContextNode: aThisContextNode [ 
+IconStylerRealTime >> visitThisContextNode: aThisContextNode [ 
 	self addIconStyle: aThisContextNode.
 	super visitThisContextNode: aThisContextNode.
 ]
 
 { #category : #visiting }
-IconStylerRT >> visitVariableNode: aNode [ 
+IconStylerRealTime >> visitVariableNode: aNode [ 
 	self addIconStyle: aNode.
 	super visitVariableNode: aNode.
 ]

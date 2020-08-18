@@ -257,7 +257,7 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 	super textChanged: aTextChanged.
 	ast := self currentEditedAST.
 	textMorph segments copy do: #delete.
-	IconStylerRT styleText: textModel withAst: ast.
+	IconStylerRealTime styleText: textModel withAst: ast.
 	^ ast
 ]
 

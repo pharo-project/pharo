@@ -1,6 +1,6 @@
 Class {
 	#name : #ErrorNodeStyler,
-	#superclass : #IconStylerRT,
+	#superclass : #IconStylerRealTime,
 	#category : #'Reflectivity-Tools-RealTimeStyling'
 }
 
