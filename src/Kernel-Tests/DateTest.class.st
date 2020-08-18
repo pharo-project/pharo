@@ -468,7 +468,7 @@ DateTest >> testPreviousByName [
 { #category : #tests }
 DateTest >> testPrintFormat [
 	| printFormat printedDate |
-	printFormat := #(1 2 3 $/ 1 1).
+	printFormat := { 1 . 2 . 3 . $/ . 1 . 1 }.
 	self assert: (january23rd2004 printFormat: printFormat) equals: '23/1/2004'.
 
 	printFormat at: 4 put: $-.
