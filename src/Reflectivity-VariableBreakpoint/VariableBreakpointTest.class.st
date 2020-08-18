@@ -472,6 +472,20 @@ VariableBreakpointTest >> testScopeTo [
 		deny: (wp link condition value: (testContext receiver: Object new))
 ]
 
+{ #category : #'tests - installation' }
+VariableBreakpointTest >> testSetAsBreakpointProperty [
+	 | nodes |
+	 wp := VariableBreakpoint
+		       watchVariable: #v1
+		       inClass: VariableBreakpointMockClass.
+	 nodes := wp link nodes.
+	 nodes do: [ :n | 
+		 self assert: n hasBreakpoint.
+		 self assertCollection: n breakpoints equals: { wp } asSet ].
+	 wp remove.
+	 nodes do: [ :n | self deny: n hasBreakpoint ]
+]
+
 { #category : #'tests - class wide watchpoints' }
 VariableBreakpointTest >> testWatchVariableInClass [ 	
 

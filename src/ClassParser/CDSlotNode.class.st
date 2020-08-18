@@ -121,6 +121,11 @@ CDSlotNode >> isVariable [
 			false]
 ]
 
+{ #category : #testing }
+CDSlotNode >> isWorkspaceVariable [
+	^ false
+]
+
 { #category : #accessing }
 CDSlotNode >> name [
 

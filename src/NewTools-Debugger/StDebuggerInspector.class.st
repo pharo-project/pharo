@@ -213,17 +213,14 @@ StDebuggerInspector >> updateLayoutForContexts: aContext isAssertionFailure: isT
 { #category : #updating }
 StDebuggerInspector >> updateWith: inspectedObject [
 	| oldContext newContext |
-	oldContext := self model inspectedObject
-		ifNotNil: [ :dbgCtx | dbgCtx context ].
+	oldContext := self model inspectedObject ifNotNil: [ :dbgCtx | 
+		              dbgCtx context ].
 	newContext := inspectedObject ifNotNil: [ :dbgCtx | dbgCtx context ].
-	
-	(oldContext notNil and: [ newContext notNil ])
-		ifTrue: [ (oldContext receiver == newContext receiver
-				and: [ oldContext selector == newContext selector ])
-				ifTrue: [ self step.
-					^ self ] ].
+	(oldContext notNil and: [ newContext notNil ]) ifTrue: [ 
+		(oldContext receiver == newContext receiver and: [ 
+			 oldContext selector == newContext selector ]) ifTrue: [ ^ self ] ].
 	self saveRawInspectionSelectionForContext: oldContext.
-	self model: (StDebuggerInspectorModel on: inspectedObject).			
+	self model: (StDebuggerInspectorModel on: inspectedObject).
 	self updateEvaluationPaneReceiver.
 	self restoreRawInspectionSelectionForContext: newContext
 ]

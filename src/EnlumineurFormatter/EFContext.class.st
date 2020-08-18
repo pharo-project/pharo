@@ -143,13 +143,13 @@ EFContext >> initialize [
   newLineBeforeFirstCascade := true.
   newLineBeforeFirstKeyword := true.
   numberOfNewLinesAfterMethodComment := 2.
-  newLinesAfterMethodSignature := 1.
+  newLinesAfterMethodSignature := 2.
   newLinesAfterTemporaries := 1.
   numberOfArgumentsForMultiLine := 4.
   self configureOneLineMessages.
   self periodAtEndOfBlock: false.
   self periodAtEndOfMethod: false.
-  self retainBlankLinesBetweenStatements: false.
+  self retainBlankLinesBetweenStatements: true.
   self retainBlankLinesBeforeComments: true.
   self selectorAndArgumentCombinedMaxSize: 40.
   self numberOfSpacesInsideBlock: 1.

@@ -112,7 +112,7 @@ HookGenerator >> hookFor: aLink [
 		selector: aLink selector 
 		arguments: arguments.
 	
-	(self hasOption: #optionOneShot for: aLink) ifTrue: [
+	(self hasOption: #optionOneShot for: aLink) ifTrue: [			
 			hook := RBSequenceNode statements: {
 				RBMessageNode
 					receiver: (RFLiteralVariableNode value: aLink)

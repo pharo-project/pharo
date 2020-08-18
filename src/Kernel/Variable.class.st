@@ -199,6 +199,11 @@ Variable >> isUninitialized [
 ]
 
 { #category : #testing }
+Variable >> isWorkspaceVariable [
+	^ false
+]
+
+{ #category : #testing }
 Variable >> isWritable [
 	^ true
 ]

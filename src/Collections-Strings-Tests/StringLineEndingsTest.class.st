@@ -8,7 +8,7 @@ Class {
 		'testingSubjectWithOriginLineEnding',
 		'templateString'
 	],
-	#category : #'Collections-Tests-Strings'
+	#category : #'Collections-Strings-Tests-Base'
 }
 
 { #category : #'building suites' }

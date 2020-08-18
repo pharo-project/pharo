@@ -30,7 +30,9 @@ SpMorphicDialogWindowAdapter >> buildButtonBar [
 
 { #category : #factory }
 SpMorphicDialogWindowAdapter >> buildWidget [
+
 	^ SpDialogWindow new
 		model: self model;
+		in: [ :this | self subscribeToAnnouncements: this ];
 		yourself
 ]

@@ -66,3 +66,24 @@ SpBoxLayoutAdapterTest >> testRemoveElementRemovesFromAdapter [
 	layout remove: element.
 	self assert: self adapter isEmpty
 ]
+
+{ #category : #tests }
+SpBoxLayoutAdapterTest >> testReplaceElementAfterOpen [
+	| p1 toReplace p2 replacement |
+	
+	layout add: (p1 := SpLabelPresenter new).
+	layout add: (toReplace := SpLabelPresenter new).
+	layout add: (p2 := SpLabelPresenter new).
+	self openInstance.
+	
+	replacement := SpButtonPresenter new.
+	layout replace: toReplace with: replacement.
+	
+	self assert: self adapter children size equals: 3.
+	self 
+		assert: self adapter children 
+		equals: { 
+			p1 adapter widget. 
+			replacement adapter widget. 
+			p2 adapter widget }
+]

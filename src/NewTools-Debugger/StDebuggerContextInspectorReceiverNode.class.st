@@ -10,8 +10,10 @@ Class {
 
 { #category : #accessing }
 StDebuggerContextInspectorReceiverNode >> computeChildrenFromSourceObject [
-	^ hostObject context home receiver allInspectorNodes
-		reject: [ :node | node key = 'self' ]
+	"Let's experiment without children: we use the miller list instead"
+	^#()
+	"^ hostObject context home receiver allInspectorNodes
+		reject: [ :node | node key = 'self' ]"
 ]
 
 { #category : #accessing }

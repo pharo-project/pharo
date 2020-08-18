@@ -12,6 +12,7 @@ Class {
 		'eventQueue'
 	],
 	#classVars : [
+		'SimulateMiddleButton',
 		'SymbolCharacterMapping'
 	],
 	#pools : [
@@ -66,16 +67,44 @@ OSWindowMorphicEventHandler class >> initialize [
 	} pairsDo: [ :key :val | SymbolCharacterMapping at: key put: val charCode ]
 ]
 
+{ #category : #'event testing' }
+OSWindowMorphicEventHandler class >> simulateMiddleClick [ 
+
+	^ SimulateMiddleButton ifNil: [ SimulateMiddleButton := true ]
+]
+
+{ #category : #'event testing' }
+OSWindowMorphicEventHandler class >> simulateMiddleClick: aValue [
+
+	SimulateMiddleButton := aValue
+]
+
+{ #category : #asserting }
+OSWindowMorphicEventHandler class >> simulateMiddleClickSettingOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #simulateMiddleClick)
+		target: self;
+		default: true;
+		parent: #morphic;
+		label: 'Simulate Middle Mouse Button';
+		description: 'Sets if we are simulating the middle button by doing Alt + Left button'
+]
+
 { #category : #private }
 OSWindowMorphicEventHandler >> activeHand [
 	^ self morphicWorld activeHand
 ]
 
 { #category : #converting }
-OSWindowMorphicEventHandler >> convertButton: osButton [
-	osButton = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
-	osButton = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
-	osButton = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
+OSWindowMorphicEventHandler >> convertButtonFromEvent: anEvent [
+
+	(self class simulateMiddleClick and: [anEvent button = 1 and: [ anEvent modifiers alt ]])
+		ifTrue: [ ^ MouseButtonEvent blueButton ].
+
+	anEvent button = 1 ifTrue: [ ^ MouseButtonEvent redButton ].
+	anEvent button = 2 ifTrue: [ ^ MouseButtonEvent blueButton ].
+	anEvent button = 3 ifTrue: [ ^ MouseButtonEvent yellowButton ].
 ]
 
 { #category : #converting }
@@ -236,8 +265,8 @@ OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 	^ MouseButtonEvent new
 		setType: #mouseDown 
 		position: anEvent position 
-		which: (self convertButton: anEvent button)
-		buttons: (self convertModifiers: anEvent modifiers) | (self convertButton: anEvent button)
+		which: (self convertButtonFromEvent: anEvent)
+		buttons: (self convertModifiers: anEvent modifiers) | (self convertButtonFromEvent: anEvent)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
@@ -249,8 +278,8 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 	^ MouseButtonEvent new
 		setType: #mouseUp
 		position: anEvent position 
-		which: (self convertButton: anEvent button)
-		buttons: (self convertModifiers: anEvent modifiers) | (self convertModifiers: anEvent modifiers)
+		which: (self convertButtonFromEvent: anEvent)
+		buttons: (self convertModifiers: anEvent modifiers) | (self convertButtonFromEvent: anEvent)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
