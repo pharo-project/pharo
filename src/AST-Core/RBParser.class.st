@@ -220,6 +220,20 @@ RBParser >> extractCommentsFrom: aToken [
 		into: comments
 ]
 
+{ #category : #'as yet unclassified' }
+RBParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
+	^((currentToken isSpecial and: ['])}' includes: currentToken value])
+				" We make a distinction between the bracket and the other closures because blocks are the only ones that can contain multiple statements. "
+				ifTrue: [ currentToken value = $) 
+					ifFalse: [ | errorNode | 
+								  errorNode := self parseEnglobingError: aCollection copy with: currentToken errorMessage: (currentToken value = $] ifTrue: [ '''['' expected' ]ifFalse: [ '''{'' expected' ]).  
+								  aCollection removeAll. errorNode ]
+					ifTrue: [  aCollection isEmpty 
+							ifFalse: [| errorNode | errorNode := self parseEnglobingError: (OrderedCollection with: aCollection last) with: currentToken errorMessage: ''')'' expected'.  aCollection removeLast. errorNode] 
+							ifTrue: [ self parseEnglobingError: aCollection copy with: currentToken errorMessage: ''')'' expected'] ] ] 			
+				ifFalse: [ self parserError: 'Unknown input at end' ]).
+]
+
 { #category : #initialization }
 RBParser >> initialize [
 	comments := OrderedCollection new
@@ -280,7 +294,7 @@ RBParser >> parseArray [
 	node left: startToken start.
 	self parseStatementList: false  into: node.
 	(currentToken isSpecial and: [currentToken value = $}]) 
-		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken].
+		ifFalse: [ ^ self parseEnglobingError: node statements with: startToken errorMessage: 'expected }'].
 	node right: currentToken start.
 	self step.
 	^ node
@@ -369,7 +383,7 @@ RBParser >> parseBlock [
 	(self parseStatements: false into: node body).
 	
 	(currentToken isSpecial and: [currentToken value = $]])
-		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken].
+		ifFalse: [ ^ self parseEnglobingError: node body statements with: startToken errorMessage: ''']'' expected'].
 	node right: currentToken start.
 	self step.
 	^node
@@ -457,8 +471,20 @@ RBParser >> parseCascadeMessage [
 
 { #category : #'private-classes' }
 RBParser >> parseEnglobingError: aCollection with: aToken [
-	^ errorBlock ifNotNil: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
-					 ifNil: [ self parserError: aToken value asString, ' counterpart missing' ].
+	| firstParse |
+	firstParse := self parserError: aToken value asString, ' counterpart missing'.
+	^[firstParse isParseError
+		ifTrue: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
+		ifFalse: [ firstParse ]] on: Error do: [ firstParse ].
+]
+
+{ #category : #'private-classes' }
+RBParser >> parseEnglobingError: aCollection with: aToken errorMessage: anErrorMessage [
+	| firstParse |
+	firstParse := self parserError: anErrorMessage.
+	^[firstParse isParseError
+		ifTrue: [ self englobingErrorNodeClass error: aToken withNodes: aCollection ]
+		ifFalse: [ firstParse ]] on: Error do: [ firstParse ].
 ]
 
 { #category : #'error handling' }
@@ -493,14 +519,7 @@ RBParser >> parseIncompleteExpression: priorStatementsNode [
 	 | statements error |
 	statements := priorStatementsNode statements copy.
 	" Checks if the current token is a closure to create an englobing error node or a parse error node otherwise. "
-	error := ((currentToken isSpecial and: ['])}' includes: currentToken value])
-				" We make a distinction between the bracket and the other closures because blocks are the only ones that can contain multiple statements. "
-				ifTrue: [ currentToken value = $) 
-					ifFalse: [ | errorNode | errorNode := self parseEnglobingError: statements copy with: currentToken.  statements := OrderedCollection new. errorNode ]
-					ifTrue: [  statements isEmpty 
-							ifFalse: [| errorNode | errorNode := self parseEnglobingError: (OrderedCollection with: statements last) with: currentToken.  statements removeLast. errorNode] 
-							ifTrue: [ self parseEnglobingError: statements copy with: currentToken] ] ] 			
-				ifFalse: [ self parserError: 'Unknown input at end' ]).
+	error := self getErrorFromClosuresWithMissingOpenings: statements.
 	error parent: priorStatementsNode.
 	statements add: error.
 	self step.
@@ -589,7 +608,7 @@ RBParser >> parseLiteralArray [
 		whileFalse: [literals add: self parseLiteralArrayObject].
 	stop := currentToken stop.
 	(currentToken isSpecial and: [currentToken value = $)]) 
-		ifFalse: [ ^ self parseEnglobingError: literals with: startToken].
+		ifFalse: [ ^ self parseEnglobingError: literals with: startToken errorMessage: ''')'' expected'].
 	self step.
 	^self literalArrayNodeClass 
 		startPosition: startToken start
@@ -627,7 +646,7 @@ RBParser >> parseLiteralByteArray [
 		"Put literal value nodes corresponding to the bytes in the stream."
 		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
 	(currentToken isSpecial and: [currentToken value = $]]) 
-		ifFalse: [ ^ self parseEnglobingError: stream contents with: startToken].
+		ifFalse: [ ^ self parseEnglobingError: stream contents with: startToken errorMessage: ''']'' expected'].
 	stop := currentToken stop.
 	self step.
 	^self literalArrayNodeClass 
@@ -727,7 +746,7 @@ RBParser >> parseParenthesizedExpression [
 			[node addParenthesis: (startToken start to: currentToken start).
 			self step.
 			node]
-		ifFalse: [ ^ self parseEnglobingError: (OrderedCollection with: node) with: startToken]
+		ifFalse: [ ^ self parseEnglobingError: (OrderedCollection with: node) with: startToken errorMessage: ''')'' expected']
 ]
 
 { #category : #'private-parsing' }
@@ -738,7 +757,7 @@ RBParser >> parsePragma [
 	self step.
 	pragma := self basicParsePragma.
 	(currentToken isBinary and: [ currentToken value == #> ]) 
-		ifFalse: [  ^self addPragma: ( self parseEnglobingError: (OrderedCollection with: pragma) with: startToken)].
+		ifFalse: [  ^self addPragma: ( self parseEnglobingError: (OrderedCollection with: pragma) with: startToken errorMessage: '''>'' expected')].
 	pragma left: startToken start; right: currentToken start.
 	self addPragma: pragma.
 ]
@@ -905,7 +924,7 @@ RBParser >> parseStatements: pragmaBoolean into: aSequenceNode [
 					self step.
 					temps := self parseTemps.
 					(currentToken isBinary and: [currentToken value = #|]) 
-						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken.
+						ifFalse: [ errorNode :=  self parseEnglobingError: temps with: startToken errorMessage: '''|'' expected'.
 									 aSequenceNode addFaultyNode: errorNode.
 									 temps := OrderedCollection new.
 									 leftBar := nil.
