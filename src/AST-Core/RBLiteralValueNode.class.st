@@ -54,6 +54,18 @@ RBLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
+{ #category : #evaluating }
+RBLiteralValueNode >> evaluateForContext: aContext [
+
+	^ value
+]
+
+{ #category : #evaluating }
+RBLiteralValueNode >> evaluateForReceiver: aReceicer [
+
+	^ value
+]
+
 { #category : #accessing }
 RBLiteralValueNode >> sourceText [
 	^ sourceText ifNil: [

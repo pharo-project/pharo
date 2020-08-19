@@ -3,7 +3,8 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'session',
-		'debugger'
+		'debugger',
+		'oldFastTDD'
 	],
 	#category : #'NewTools-Debugger-Tests-Presenters'
 }
@@ -82,13 +83,16 @@ StDebuggerTest >> setUp [
 	session := DebugSession
 		named: 'test session'
 		on: process
-		startedAt: context
+		startedAt: context.
+	oldFastTDD := self debuggerClass fastTDD.
+	self debuggerClass fastTDD: true
 ]
 
 { #category : #running }
 StDebuggerTest >> tearDown [
 
 	session clear.
+	self debuggerClass fastTDD: oldFastTDD.
 	super tearDown
 ]
 
@@ -147,7 +151,8 @@ StDebuggerTest >> testContextTempVarList [
 	contextItems := inspectorTable roots.
 	self assert: contextItems first rawValue equals: session shortStack first receiver. "receiver"	
 	self assert: (contextItems second rawValue at: #i) equals: 1.
-	self assert: contextItems last rawValue equals: 1. "stackTop"
+	self assert: contextItems third rawValue equals: 1. "stackTop"
+	self assert: contextItems last rawValue equals: dbg currentContext
 ]
 
 { #category : #'tests - context inspector' }
@@ -197,6 +202,12 @@ StDebuggerTest >> testExtendedToolsClassesFor [
 { #category : #'tests - extensions' }
 StDebuggerTest >> testExtendedToolsPragma [
 	self assert: StDebugger extendedToolsPragma equals: #debuggerExtensionOrder:showByDefault:
+]
+
+{ #category : #'tests - initialization' }
+StDebuggerTest >> testFastTDD [
+	self debuggerClass fastTDD: nil.
+	self deny: self debuggerClass fastTDD
 ]
 
 { #category : #'tests - receiver inspector' }
@@ -305,6 +316,22 @@ StDebuggerTest >> testRegisterExtensionTool [
 	self assertCollection: dbg extensionTools includesAll: { object }
 ]
 
+{ #category : #'tests - actions' }
+StDebuggerTest >> testRequestClassFrom [
+
+	self
+		assert: (self debugger requestClassFrom: self class)
+		identicalTo: self class
+]
+
+{ #category : #'tests - actions' }
+StDebuggerTest >> testRequestProtocolIn [
+
+	self
+		assert: (self debugger requestProtocolIn: self class)
+		equals: Protocol unclassified
+]
+
 { #category : #'tests - raw inspection' }
 StDebuggerTest >> testRestoreReceiverRawInspectionSelection [
 ]
@@ -407,24 +434,27 @@ StDebuggerTest >> testStackTableAfterStepIn [
 
 { #category : #'tests - stack table' }
 StDebuggerTest >> testStackTableElementsPrinting [
-	| columns classColumn methodColumn senderColumn method block context |
+	| columns classColumn methodColumn method block context |
 	self debugger session: session.
 	columns := self initializedDebugger stackTable columns.
 	classColumn := columns first.
 	methodColumn := columns second.
-	senderColumn := columns third.
+	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
+	"senderColumn := columns third."
 	method := self class >> #testStackTableElementsPrinting.
 	block := [ :a | a ].
 	
 	context := (Context newForMethod: method) setSender: self receiver: self method: method arguments: #(  ).
 	self assert: (classColumn evaluation value: context) equals: self class.
 	self assert: (methodColumn evaluation value: context) equals: method selector.
-	self assert: (senderColumn evaluation value: context) equals: self stDisplayString.
+	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
+	"self assert: (senderColumn evaluation value: context) equals: self stDisplayString."
 	
 	context := (Context newForMethod: method) setSender: self receiver: self method: block method arguments: #(  ).
 	self assert: (classColumn evaluation value: context) equals: self class.
 	self assert: (methodColumn evaluation value: context) equals: block sourceNode sourceCode.
-	self assert: (senderColumn evaluation value: context) equals: self stDisplayString.
+	"The following column was removed to experiment a new layout, just keeping the test in case of roolback."
+	"self assert: (senderColumn evaluation value: context) equals: self stDisplayString."
 ]
 
 { #category : #'tests - stack table' }

@@ -57,7 +57,7 @@ ReservedVariable >> printOn: stream [
 ReservedVariable >> usingMethods [
 	"first call is very slow as it creates all ASTs"
 	^SystemNavigation new allMethods select: [ : method |
-		method ast variableNodes anySatisfy: [ :varNode | varNode binding == self]]
+		method ast variableNodes anySatisfy: [ :varNode | varNode variable == self]]
 ]
 
 { #category : #debugging }

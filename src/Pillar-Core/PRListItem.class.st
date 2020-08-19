@@ -10,11 +10,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRListItem class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PRListItem >> accept: aVisitor [
 	^ aVisitor visitListItem: self

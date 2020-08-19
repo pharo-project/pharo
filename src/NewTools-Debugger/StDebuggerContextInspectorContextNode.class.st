@@ -10,12 +10,13 @@ Class {
 
 { #category : #accessing }
 StDebuggerContextInspectorContextNode >> computeChildrenFromSourceObject [
-	^ (StNodeCollector for: hostObject) collectContextNodes
+	"(StNodeCollector for: hostObject) collectContextNodes"
+	^ {}
 ]
 
 { #category : #accessing }
 StDebuggerContextInspectorContextNode >> label [
-	^'Context'
+	^'thisContext'
 ]
 
 { #category : #accessing }

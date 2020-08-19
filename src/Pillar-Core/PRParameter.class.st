@@ -13,11 +13,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRParameter class >> isAbstract [
-	^ false
-]
-
 { #category : #'instance creation' }
 PRParameter class >> keyNode: aParameterKey valueNode: aParameterValue [ 
 	| anInstance |

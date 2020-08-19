@@ -9,11 +9,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRItalicFormat class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PRItalicFormat >> accept: aVisitor [
 	^ aVisitor visitItalicFormat: self

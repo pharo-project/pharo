@@ -12,7 +12,7 @@ RBVariableNode >> binding: aSemVar [
 
 { #category : #'*opalcompiler-core' }
 RBVariableNode >> isClean [
-	^ (self isInstanceVariable | self isReservedVariable) not
+	^ (self isInstanceVariable | self isSelfVariable | self isSuperVariable) not
 ]
 
 { #category : #'*opalcompiler-core' }

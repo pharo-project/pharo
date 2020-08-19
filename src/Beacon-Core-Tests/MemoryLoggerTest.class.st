@@ -1,7 +1,3 @@
-"
-A MemoryLoggerTest is xxxxxxxxx.
-
-"
 Class {
 	#name : #MemoryLoggerTest,
 	#superclass : #TestCase,

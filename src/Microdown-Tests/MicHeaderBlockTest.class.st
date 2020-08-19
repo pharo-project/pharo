@@ -51,3 +51,13 @@ MicHeaderBlockTest >> testHeaderLevel4 [
 	self assert: root children first header equals: 'Level four'.
 	self assert: root children first level equals: 4
 ]
+
+{ #category : #tests }
+MicHeaderBlockTest >> testHeaderLevel6 [
+	| source root |
+	source := (parser headerMarkup repeat: 6), '    Level six'.
+	root := parser parse: source.
+	self assert: root children size equals: 1.
+	self assert: root children first header equals: 'Level six'.
+	self assert: root children first level equals: 6
+]

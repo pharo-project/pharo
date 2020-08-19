@@ -1,3 +1,6 @@
+"
+I'm a command just used for the tests.
+"
 Class {
 	#name : #CmFakeCommand,
 	#superclass : #CmCommand,

@@ -71,7 +71,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 	ast doSemanticAnalysis.
 
 	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast. 	
-	var := assignment variable binding.
+	var := assignment variable variable.
 	self assert: var isWrite.
 	self deny: var isEscaping.
 ]
@@ -477,7 +477,7 @@ t1 := 1.
 
 ^t2'.
 	ast doSemanticAnalysis.
-	self assert: ast temporaries second binding class equals: OCVectorTempVariable
+	self assert: ast temporaries second variable class equals: OCVectorTempVariable
 ]
 
 { #category : #'tests - special cases' }

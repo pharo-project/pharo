@@ -7,6 +7,6 @@ Class >> buildMicroDownUsing: aBuilder withComment: aString [
 		header: [:b | 
 					b text: 'Class: '.
 					b text: self name] withLevel: 1;
-					horizontalLine;
+		horizontalLine;
 		text: aString
 ]

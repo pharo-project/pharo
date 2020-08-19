@@ -126,6 +126,16 @@ CompilationContext class >> initialize [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionCleanBlockClosure [
+	^ self readDefaultOption: #optionCleanBlockClosure
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionCleanBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionCleanBlockClosure value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionEmbeddSources [
 	^ self readDefaultOption: #optionEmbeddSources
 ]
@@ -320,6 +330,7 @@ CompilationContext class >> optionsDescription [
 	
 	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
 	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
+	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
@@ -488,6 +499,12 @@ CompilationContext >> noPattern [
 { #category : #accessing }
 CompilationContext >> noPattern: anObject [
 	noPattern := anObject
+]
+
+{ #category : #options }
+CompilationContext >> optionCleanBlockClosure [
+	^ options includes: #optionCleanBlockClosure
+
 ]
 
 { #category : #options }

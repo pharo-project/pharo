@@ -1,6 +1,6 @@
 Extension { #name : #MicLinkInlineBlock }
 
 { #category : #'*Microdown-Pillar' }
-MicLinkInlineBlock class >> associatedPillarClass [
+MicLinkInlineBlock >> associatedPillarClass [
 	^ PRExternalLink
 ]

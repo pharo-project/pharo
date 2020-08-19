@@ -2,16 +2,17 @@
 Examples and demos of Clap commands (see class side, protocol commandline). Each of those methods builds and returns a command specification, which you can then run or just match against an actual invocation (an array of strings, as would be passed by a shell).
 
 Arbitrary command instances can be run as do-its, but pay attention that text printed on the standard output will go nowhere unless the VM was launched from a terminal window:
-	ClapCommandLineExamples hello activateWith: #('hello' 'Pharo').
-	ClapCommandLineExamples git activateWith: #('git' 'help' 'remote').
+	`ClapCommandLineExamples hello activateWith: #('hello' 'Pharo').`
+	`ClapCommandLineExamples git activateWith: #('git' 'help' 'remote').`
 
 To inspect the matches without activating the commands, replace #activateWith: with #match:
-	ClapCommandLineExamples hello match: #('hello' 'Pharo').
-	ClapCommandLineExamples git match: #('git' 'help' 'remote').
+	`ClapCommandLineExamples hello match: #('hello' 'Pharo').`
+	`ClapCommandLineExamples git match: #('git' 'help' 'remote').`
 
 Commands registered in the system (returned from a class-side method with the <commandline> pragma) can also be invoked from the host system's command line:
+```
 	$PHARO_VM $IMAGE clap hello Pharo
-
+```
 "
 Class {
 	#name : #ClapCommandLineExamples,

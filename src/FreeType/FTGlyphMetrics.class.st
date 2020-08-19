@@ -1,5 +1,5 @@
 "
-I Implement the FT_Glyph_Metrics type
+I Implement the `FT_Glyph_Metrics` type
 "
 Class {
 	#name : #FTGlyphMetrics,

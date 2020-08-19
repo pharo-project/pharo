@@ -215,7 +215,7 @@ OCASTTranslator >> emitIfNil: aMessageNode boolean: aBoolean [
 	"emits the == nil code and push correct value on stack if the ifNotNil block has an argument"
 	args := aMessageNode arguments.
 	notNilBlock := aBoolean ifTrue: [args first] ifFalse: [args last].
-	notNilBlock arguments ifNotEmpty: [ notNilBlock arguments first binding emitStore: methodBuilder ].
+	notNilBlock arguments ifNotEmpty: [ notNilBlock arguments first variable emitStore: methodBuilder ].
 	methodBuilder pushLiteral: nil.
 	methodBuilder send: #==.
 	
@@ -346,7 +346,7 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	
 	limit := aMessageNode arguments first.
 	block := aMessageNode arguments last.
-	iterator := block arguments first binding.
+	iterator := block arguments first variable.
 	
 	limitEmit := [valueTranslator visitNode: limit].
 	limit isLiteralNode | limit isSelfVariable | limit isSuperVariable | limit isArgumentVariable ifFalse: [
@@ -473,7 +473,7 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [ 
 
 	valueTranslator visitNode: anAssignmentNode value.
-	anAssignmentNode variable binding emitStore: methodBuilder
+	anAssignmentNode variable variable emitStore: methodBuilder
 
 ]
 
@@ -520,7 +520,9 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 OCASTTranslator >> visitFullBlockNode: aBlockNode [
 	| compiledBlock |
 	compiledBlock := self compilationContext astTranslatorClass new translateFullBlock: aBlockNode.
-	methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames
+	(self compilationContext optionCleanBlockClosure and: [ aBlockNode isClean ])
+		ifTrue: [ methodBuilder pushLiteral: ((CleanBlockClosure new: 0) numArgs: compiledBlock numArgs; compiledBlock: compiledBlock)]
+		ifFalse: [methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames  ]
 ]
 
 { #category : #'visitor-double dispatching' }
@@ -655,7 +657,7 @@ OCASTTranslator >> visitSequenceNode: aSequenceNode [
 
 { #category : #'visitor-double dispatching' }
 OCASTTranslator >> visitVariableNode: aVariableNode [
-	aVariableNode binding emitValue: methodBuilder
+	aVariableNode variable emitValue: methodBuilder
 	
 	
 ]

@@ -39,14 +39,9 @@ StHaltAndBreakpointController class >> tracer: aTracer [
 ]
 
 { #category : #API }
-StHaltAndBreakpointController >> areHaltsAndBreakpoinsEnabledFor: aProgramNode [
-	^ aProgramNode enabledForHaltOrBreakpoint
-]
+StHaltAndBreakpointController >> disableBreakpoint: aBreakpoint [
 
-{ #category : #control }
-StHaltAndBreakpointController >> disableBreakpointNode: aProgramNode [
-	aProgramNode breakpoints do: [ :bp | bp disable ].
-	self skipNode: aProgramNode
+	aBreakpoint disable
 ]
 
 { #category : #links }
@@ -59,49 +54,34 @@ StHaltAndBreakpointController >> disableHaltLink: control [
 		yourself
 ]
 
-{ #category : #control }
+{ #category : #API }
 StHaltAndBreakpointController >> disableHaltNode: aMessageNode [
-	self skipNode: aMessageNode
+	self skipNode: aMessageNode.
+	aMessageNode enableHalts: false
 ]
 
 { #category : #API }
-StHaltAndBreakpointController >> disableHaltOrBreakpointFor: aProgramNode [
-	aProgramNode isHaltNode
-		ifTrue: [ self disableHaltNode: aProgramNode ].
-	aProgramNode hasBreakpoint
-		ifTrue: [ self disableBreakpointNode: aProgramNode ]
+StHaltAndBreakpointController >> disableHaltOrBreakpointFor: haltOrBreakpointItem [
+
+	haltOrBreakpointItem disableInContext: self
 ]
 
 { #category : #API }
-StHaltAndBreakpointController >> disableObjectCentricBreakpoint: anObjectCentricBreakpoint [
-	anObjectCentricBreakpoint targetInstance ifNil:[^self].
-	anObjectCentricBreakpoint link condition: [false]; disable
+StHaltAndBreakpointController >> enableBreakpoint: aBreakpoint [
+
+	aBreakpoint enable
 ]
 
-{ #category : #control }
-StHaltAndBreakpointController >> enableBreakpointNode: aProgramNode [
-	aProgramNode breakpoints do: [ :bp | bp enable ].
-	self removeSkipLinksFor: aProgramNode
-]
-
-{ #category : #control }
+{ #category : #API }
 StHaltAndBreakpointController >> enableHaltNode: aMessageNode [
-	self removeSkipLinksFor: aMessageNode
+	self removeSkipLinksFor: aMessageNode.
+	aMessageNode enableHalts: true
 ]
 
 { #category : #API }
-StHaltAndBreakpointController >> enableHaltOrBreakpointFor: aProgramNode [
-	aProgramNode isHaltNode
-		ifTrue: [ self enableHaltNode: aProgramNode ].
-	aProgramNode hasBreakpoint
-		ifTrue: [ self enableBreakpointNode: aProgramNode ].
-	aProgramNode enableForHaltOrBreakpoint: true
-]
+StHaltAndBreakpointController >> enableHaltOrBreakpointFor: haltOrBreakpointItem [
 
-{ #category : #API }
-StHaltAndBreakpointController >> enableObjectCentricBreakpoint: anObjectCentricBreakpoint [
-	anObjectCentricBreakpoint targetInstance ifNil: [ ^ self ].
-	anObjectCentricBreakpoint link condition: [true]; enable
+	haltOrBreakpointItem enableInContext: self
 ]
 
 { #category : #links }
@@ -114,9 +94,23 @@ StHaltAndBreakpointController >> installSkipLinkOn: aMessageNode [
 ]
 
 { #category : #API }
-StHaltAndBreakpointController >> isObjectCentricBreakpointEnabled: anObjectCentricBreakpoint [
-	anObjectCentricBreakpoint targetInstance ifNil: [ ^ false ].
-	^ anObjectCentricBreakpoint node enabledForHaltOrBreakpoint
+StHaltAndBreakpointController >> isBreakpointEnabled: aBreakpoint [ 
+	^aBreakpoint isEnabled
+]
+
+{ #category : #API }
+StHaltAndBreakpointController >> isHaltEnabledFor: aProgramNode [
+	^ aProgramNode enabledForHaltOrBreakpoint
+]
+
+{ #category : #API }
+StHaltAndBreakpointController >> isHaltNodeEnabled: aRBMessageNode [ 
+	^aRBMessageNode enabledForHaltOrBreakpoint
+]
+
+{ #category : #API }
+StHaltAndBreakpointController >> isHaltOrBreakpointEnabled: aStBreakpointInspectionItem [ 
+	^aStBreakpointInspectionItem isEnabledInContext: self
 ]
 
 { #category : #links }
@@ -129,8 +123,8 @@ StHaltAndBreakpointController >> removeSkipLinksFor: aNode [
 
 { #category : #control }
 StHaltAndBreakpointController >> skipNode: aNode [
-	(self areHaltsAndBreakpoinsEnabledFor: aNode)
+	(self isHaltEnabledFor: aNode)
 		ifFalse: [ ^ self ].
-	aNode enableForHaltOrBreakpoint: false.
+	aNode enableHalts: false.
 	self installSkipLinkOn: aNode
 ]
