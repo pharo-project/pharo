@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'checkbox'
 	],
-	#category : #'Microdown-Calypso'
+	#category : #'Microdown-Calypso-Morph'
 }
 
 { #category : #building }
