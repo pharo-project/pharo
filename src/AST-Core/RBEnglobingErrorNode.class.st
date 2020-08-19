@@ -68,7 +68,6 @@ RBEnglobingErrorNode >> content: aCollection [
 
 { #category : #'as yet unclassified' }
 RBEnglobingErrorNode >> createValue [
-	| nodeColl |
 	self value: (String streamContents: [ :s |
 			content do: [ :each | s nextPutAll: each formattedCode. s nextPutAll: String space. ]])
 ]

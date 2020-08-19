@@ -54,7 +54,7 @@ RBComment class >> with: aString at: startPosition [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : #comparing }
 RBComment >> = anObject [
 	self == anObject ifTrue: [ ^true ].
 	^ self class = anObject class ifTrue: [ self contents = anObject contents ] ifFalse: [ false ]
@@ -75,7 +75,7 @@ RBComment >> contents [
 	^ contents
 ]
 
-{ #category : #testing }
+{ #category : #comparing }
 RBComment >> hash [
 	^ self contents hash
 ]
