@@ -57,6 +57,11 @@ RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 ]
 
 { #category : #accessing }
+RBEnglobingErrorNode >> children [
+	^self content.
+]
+
+{ #category : #accessing }
 RBEnglobingErrorNode >> content [
 	^content 
 ]
