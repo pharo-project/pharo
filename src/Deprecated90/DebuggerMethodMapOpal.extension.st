@@ -2,16 +2,16 @@ Extension { #name : #DebuggerMethodMapOpal }
 
 { #category : #'*Deprecated90' }
 DebuggerMethodMapOpal >> namedTempAt: index in: aContext [
-	"please use #namedTempAt: on Context"
-	self deprecated: 'Please use aContext namedTempAt: index'.
-	^aContext namedTempAt: index
+	"Please access temps by name using #tempNamed: on Context"
+	self deprecated: 'Please access temps by name using #tempNamed: on Context'.
+	^aContext tempNamed: (aContext tempNames at: index)
 ]
 
 { #category : #'*Deprecated90' }
 DebuggerMethodMapOpal >> namedTempAt: index put: aValue in: aContext [
-	"please use #namedTempAt:put: on Context"
-	self deprecated: 'Please use aContext namedTempAt: index put: aValue'.
-	aContext namedTempAt: index put: aValue
+	"Please access temps by name using #tempNamed:put:"
+	self deprecated: 'Please access temps by name using #tempNamed:put:'.
+	aContext tempNamed: (aContext tempNames at: index) put: aValue
 ]
 
 { #category : #'*Deprecated90' }

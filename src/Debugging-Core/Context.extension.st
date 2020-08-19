@@ -44,7 +44,10 @@ Context >> methodReturnConstant: value [
 Context >> namedTempAt: index [
 	"Answer the value of the temp at index in the receiver's sequence of tempNames."
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be"
+	adds every variable that could be acccessed from a source perspective but might not be.
+	Do *not* use this!"
+	
+	self deprecated: 'Please access temps by name using #tempNamed:'.
 	^self tempNamed: (self tempNames at: index)
 ]
 
@@ -53,6 +56,9 @@ Context >> namedTempAt: index put: aValue [
 	"Set the value of the temp at index in the receiver's sequence of tempNames"
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be"
+	"Do *not* use this!"
+	self deprecated: 'Please access temps by name using #tempNamed:put:'.
+	
 	self tempNamed: (self tempNames at: index) put: aValue
 ]
 
