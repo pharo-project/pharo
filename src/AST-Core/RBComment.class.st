@@ -28,8 +28,7 @@ Class {
 	#superclass : #RBProgramNode,
 	#instVars : [
 		'contents',
-		'start',
-		'stop'
+		'start'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -86,6 +85,11 @@ RBComment >> intersectsInterval: anInterval [
 	
 	^(anInterval first between: self start and: self stop) 
 		or: [ self start between: anInterval first and: anInterval last ]
+]
+
+{ #category : #testing }
+RBComment >> isCommentNode [ 
+	^true.
 ]
 
 { #category : #printing }

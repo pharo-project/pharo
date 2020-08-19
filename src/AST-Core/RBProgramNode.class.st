@@ -177,12 +177,10 @@ RBProgramNode >> assigns: aVariableName [
 
 { #category : #querying }
 RBProgramNode >> bestNodeFor: anInterval [ 
-
-	| selectedChildren |
-	
-	anInterval ifNil: [ ^ nil ].
-	
-	(self intersectsInterval: anInterval) ifFalse: [^nil].
+	| selectedChildren selectedComments |
+	anInterval ifNil: [^nil ].
+	selectedComments := self getCommentsFor: anInterval.
+	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ nil ] ] ].
 	(self containedBy: anInterval) ifTrue: [^self].
 	
 	selectedChildren := self children select: [:each | 
@@ -191,7 +189,9 @@ RBProgramNode >> bestNodeFor: anInterval [
 
 	^ selectedChildren size = 1 
 		ifTrue: [ selectedChildren first bestNodeFor: anInterval ]
-		ifFalse: [ self ]
+		ifFalse: [ (selectedChildren isEmpty and: [ selectedComments size = 1 ])
+							ifTrue: [ selectedComments first ]
+							ifFalse: [ self ] ]
 ]
 
 { #category : #querying }
@@ -372,6 +372,23 @@ RBProgramNode >> formatterClass [
 	^ self class formatterClass
 ]
 
+{ #category : #querying }
+RBProgramNode >> getCommentsFor: anInterval [
+	| selectedComments |
+	selectedComments := OrderedCollection new.
+	self nodesDo: 
+		[ :each | 
+			| comments | 
+			comments := each comments select: 
+				[ :com | com intersectsInterval: anInterval ]. 
+	"This precaution is taken to deal with cascades multiple visit of the receiver."
+			(selectedComments isNotEmpty 
+				and: [ comments isNotEmpty 
+				and: [ comments last = selectedComments last ]]) 
+					ifFalse: [selectedComments addAll: comments ] ].
+	^ selectedComments
+]
+
 { #category : #testing }
 RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
@@ -453,6 +470,11 @@ RBProgramNode >> isBlockError [
 { #category : #testing }
 RBProgramNode >> isCascade [
 	^false
+]
+
+{ #category : #testing }
+RBProgramNode >> isCommentNode [
+	^false.
 ]
 
 { #category : #testing }
