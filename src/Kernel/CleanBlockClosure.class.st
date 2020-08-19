@@ -1,12 +1,11 @@
 "
-!!!! Highly Experimental!!!
+Experimental
 
 This is disabled by default.
 
 If you want to experiment, you can enable the #optionCleanBlockClosure compiler option.
 
 - This should not be a subclass of FullBlock (as it does not need the receiver ivar, for example)
-- Debugging is not yet working as #pcInOuter needs to be implemented
 "
 Class {
 	#name : #CleanBlockClosure,
