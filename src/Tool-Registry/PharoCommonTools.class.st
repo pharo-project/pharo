@@ -75,13 +75,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						label: 'Debugger';
 						default: (Smalltalk at: #GTGenericStackDebugger);
 						domainValues: Smalltalk tools recentDebuggerTools ];
-		with: [ 
-					(aBuilder pickOne: #messageListTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Messagelist';
-						default: (Smalltalk at: #ClyOldMessageBrowserAdapter);
-						domainValues: Smalltalk tools recentMessageListTools ];
+		
 		with: [ 
 					(aBuilder pickOne: #versionBrowserTool)
 						target: Smalltalk;
@@ -294,11 +288,6 @@ PharoCommonTools >> recentFileListTools [
 { #category : #registration }
 PharoCommonTools >> recentInspectorTools [
 	^ self recentToolsFor: #inspector
-]
-
-{ #category : #registration }
-PharoCommonTools >> recentMessageListTools [
-	^ self recentToolsFor: #messageList
 ]
 
 { #category : #registration }
