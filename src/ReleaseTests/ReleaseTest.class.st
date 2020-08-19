@@ -178,9 +178,14 @@ ReleaseTest >> testManifestNamesAccordingToPackageNames [
 	|manifestClasses actualManifestNames expectedManifestNames |
 	manifestClasses := self class environment allClasses select: [:each | each isManifest ].
 	actualManifestNames := (manifestClasses collect: [:each | each name ]) sorted.
-	expectedManifestNames := manifestClasses 
-										collect: [:each | TheManifestBuilder manifestClassNameFor: each package name ].
-	self assert: actualManifestNames equals: expectedManifestNames 
+	expectedManifestNames := (manifestClasses collect: [:each | TheManifestBuilder manifestClassNameFor: each package name ]) sorted.
+	
+	self 
+		assert: actualManifestNames size 
+		equals: expectedManifestNames size.
+	
+	actualManifestNames do: [:each |
+		 self assert: (expectedManifestNames includes: each)] 
 ]
 
 { #category : #tests }
