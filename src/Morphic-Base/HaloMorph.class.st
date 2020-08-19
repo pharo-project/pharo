@@ -700,10 +700,12 @@ HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
 		ifTrue: [ handle := Morph newBounds: bou color: aColor.
 			handle borderWidth: 1.
 			handle useRoundedCorners.
+			handle borderColor: aColor muchDarker.
 			self setColor: aColor toHandle: handle
 			]
-		ifFalse: [ handle := EllipseMorph newBounds: bou color: aColor ].
-	handle borderColor: aColor muchDarker.
+		ifFalse: [ 
+			handle := EllipseMorph newBounds: bou color: aColor.
+			handle borderWidth: 0 ].
 	handle wantsYellowButtonMenu: false.
 	iconName
 		ifNotNil: [ ( self iconNamed: iconName )
@@ -926,7 +928,7 @@ HaloMorph >> endInteraction [
 
 { #category : #settings }
 HaloMorph >> gradientHalo [
-	^ true
+	^ false
 ]
 
 { #category : #accessing }
@@ -956,7 +958,7 @@ HaloMorph >> handleListenEvent: anEvent [
 
 { #category : #private }
 HaloMorph >> handleSize [
-	^ 20
+	^ 30
 ]
 
 { #category : #'meta-actions' }

@@ -100,7 +100,7 @@ CompiledCode >> addWithAllBlocksInto: collected [
 	collected add: self.
 
 	self literals 
-		select: [ :aLiteral | aLiteral isCompiledBlock ] 
+		select: [ :aLiteral | aLiteral isEmbeddedBlock ] 
 		thenDo: [ :aLiteral | aLiteral addWithAllBlocksInto: collected ].
 		
 	^ collected
@@ -249,7 +249,7 @@ CompiledCode >> hasLiteral: literal [
 		[:index |
 		| lit |
 		((lit := self literalAt: index) literalEqual: literal) ifTrue: [^true].
-		lit isCompiledBlock ifTrue: [ (lit hasLiteral: literal) ifTrue: [ ^true ] ]].
+		lit isEmbeddedBlock ifTrue: [ (lit hasLiteral: literal) ifTrue: [ ^true ] ]].
 	^false
 ]
 
@@ -262,7 +262,7 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 		((litBlock value: lit)
 		or: [lit isArray and: [lit hasLiteralSuchThat: litBlock]]) ifTrue:
 			[^true].
-		lit isCompiledBlock ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
+		lit isEmbeddedBlock ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
 	^false
 ]
 
@@ -395,7 +395,7 @@ CompiledCode >> innerCompiledBlocksDo: aBlock [
 	1 to: self numLiterals - self literalsToSkip do:
 		[:index | | lit |
 		lit := self literalAt: index.
-		lit isCompiledBlock ifTrue: [ aBlock value: lit ] ]
+		lit isEmbeddedBlock ifTrue: [ aBlock value: lit ] ]
 ]
 
 { #category : #testing }

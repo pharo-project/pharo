@@ -20,6 +20,11 @@ ReservedVariable class >> isAbstract [
 	^self = ReservedVariable  
 ]
 
+{ #category : #testing }
+ReservedVariable class >> nameIsReserved: aName [
+	^self subclasses anySatisfy: [ :class | class instance name = aName ]
+]
+
 { #category : #converting }
 ReservedVariable >> asString [
 
@@ -52,7 +57,7 @@ ReservedVariable >> printOn: stream [
 ReservedVariable >> usingMethods [
 	"first call is very slow as it creates all ASTs"
 	^SystemNavigation new allMethods select: [ : method |
-		method ast variableNodes anySatisfy: [ :varNode | varNode binding == self]]
+		method ast variableNodes anySatisfy: [ :varNode | varNode variable == self]]
 ]
 
 { #category : #debugging }

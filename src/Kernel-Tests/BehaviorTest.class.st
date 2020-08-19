@@ -84,6 +84,14 @@ BehaviorTest >> testBinding [
 	self assert: Object class binding key isNil
 ]
 
+{ #category : #'tests - queries' }
+BehaviorTest >> testDefinedVariables [
+	self assert: Behavior new definedVariables isEmpty.
+	self assert: Point definedVariables equals: Point instanceVariables.
+	self assert: ReservedVariable class definedVariables first name equals: #instance.
+	self assert: (SmalltalkImage definedVariables includes: (SmalltalkImage classVariableNamed: #CompilerClass)).
+]
+
 { #category : #tests }
 BehaviorTest >> testHasAbstractMethods [
 	self deny: Object hasAbstractMethods.

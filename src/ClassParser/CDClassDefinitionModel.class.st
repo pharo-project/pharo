@@ -1,7 +1,7 @@
 "
+```
 | code |
-code := Point definitionForNautilus.
-
+code := Point definition.
 TextModel new
 	text: code;
 	title: 'Test';
@@ -10,6 +10,7 @@ TextModel new
 	aboutToStyle: true;
 	owner: (CDClassDefinitionModel new code: code);
 	openWithSpec
+```
 "
 Class {
 	#name : #CDClassDefinitionModel,

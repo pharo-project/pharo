@@ -482,7 +482,7 @@ SequenceableCollection >> beginsWithAnyOf: aCollection [
 { #category : #enumerating }
 SequenceableCollection >> bind: aBlock [ 
 
-	"Extract items from the receiver and use them as argumeents of aBlock. Signal an error
+	"Extract items from the receiver and use them as arguments of aBlock. Signal an error
 	(ArgumentsCountMismatch) when the arguments count of aBlock does not match the receiver size." 
 	
 	"(#(1 2 3) bind: [ :first :second :third | first + second + third ]) >>> 6"
@@ -558,7 +558,7 @@ SequenceableCollection >> collectWithIndex: elementAndIndexBlock [
 
 { #category : #enumerating }
 SequenceableCollection >> combinations [
-	"Return all the combinations of elements of the receiver. Note that comabinations does not include the empty element contrary to the mathematical definition of combinations."
+	"Return all the combinations of elements of the receiver. Note that combinations does not include the empty element contrary to the mathematical definition of combinations."
 
 	"#(1 2 3 4) combinations >>> #(#(1) #(2) #(3) #(4) #(1 2) #(1 3) #(1 4) #(2 3) #(2 4) #(3 4) #(1 2 3) #(1 2 4) #(1 3 4) #(2 3 4) #(1 2 3 4))"
 

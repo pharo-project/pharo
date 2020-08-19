@@ -2,8 +2,8 @@
 I am a REPL debugger and I provide an access to the Sindarin debugging API.
 I do not depend on morphic, and while I depend on Color, I can work without it.
 
-I use a ReadWriteStream to handle user input and output my results.
-I use Display and DisplayScreen to show my results.
+I use a `ReadWriteStream` to handle user input and output my results.
+I use `Display` and `DisplayScreen` to show my results.
 
 To invoke me, use my class method `debugError: anError fromSession: aDebugSession`.
 This method takes as input an error and a debug session.
@@ -13,6 +13,7 @@ It is not mandatory, if you only have a debug session you can invoke me by doing
 The debug session contains all information necessary to debug.
 
 For example, execute the following as an example:
+```
 |context process session|
 context := [ EDMockObjectForTests new m: 20 ] asContext.
 	process := Process
@@ -29,6 +30,7 @@ context := [ EDMockObjectForTests new m: 20 ] asContext.
 	session stepOver.
 	session stepInto.
 	EDEmergencyDebugger new emergencyDebug: session.
+```
 	
 Navigate the stack with up/down arrows.
 When you are on a method (in the stack), use left/right arrow to navigate the versions of that method.

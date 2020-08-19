@@ -31,11 +31,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PREnvironment class >> isAbstract [
-	^ false
-]
-
 { #category : #'instance creation' }
 PREnvironment class >> named: aString [ 
 	
@@ -62,6 +57,11 @@ PREnvironment >> name [
 PREnvironment >> name: aString [ 
 	
 	name := aString
+]
+
+{ #category : #'accessing-parameters' }
+PREnvironment >> parameters [
+	^ parameters
 ]
 
 { #category : #visiting }

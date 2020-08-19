@@ -1028,6 +1028,8 @@ SHRBTextStyler >> resolveStyleFor: aVariableNode [
 	"here we should add support for #classVar"
 	aVariableNode isClassVariable ifTrue: [ ^#globalVar].
 	aVariableNode isInstanceVariable ifTrue: [ ^#instVar]. 
+	"for now we use temp variable here, we could now color them with their own color"
+	aVariableNode isWorkspaceVariable ifTrue: [ ^#tempVar]. 
 	
 	(self class formatIncompleteIdentifiers and: [ aVariableNode hasIncompleteIdentifier ]) 
 		ifTrue:[ ^#incompleteIdentifier] .
@@ -1336,8 +1338,6 @@ SHRBTextStyler >> visitVariableNode: aVariableNode [
 		addStyle: (self resolveStyleFor: aVariableNode) 
 		attributes: (self resolveVariableAttributesFor: aVariableNode)
 		forNode: aVariableNode
-	
-	
 ]
 
 { #category : #accessing }

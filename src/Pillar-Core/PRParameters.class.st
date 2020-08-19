@@ -4,11 +4,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRParameters class >> isAbstract [
-	^ false
-]
-
 { #category : #'as yet unclassified' }
 PRParameters class >> with: aPRParameter withAll: aCollection [ 
 	| anInstance |

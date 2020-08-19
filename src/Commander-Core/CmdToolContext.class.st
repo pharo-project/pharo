@@ -3,7 +3,7 @@ I am a root of application context hierarchy. I am bound to concrete tool (widge
 My subclasses provide specific information about tool/application state.
 They are used to declare command activation strategies. Every activation is created for concrete context class.
 
-@TODO: 
+###TODO: 
 Instances of my subclasses are used for command lookup. Each activation strategy checks that given context instance is activation of declared context class:
 	aToolContext isActivationOf: toolContextClass 
 By default I am activation of any of my superclasses. If command activation is defined for most base context class like me (CmdToolContext) then such command will be available for any kind of command tools: any shotcuts lookup, any menu, etc..

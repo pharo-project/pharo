@@ -1,6 +1,6 @@
 Extension { #name : #MicRawInlineBlock }
 
 { #category : #'*Microdown-Pillar' }
-MicRawInlineBlock class >> associatedPillarClass [
+MicRawInlineBlock >> associatedPillarClass [
 	^ PRRaw 
 ]

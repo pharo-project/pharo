@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'button'
 	],
-	#category : #'Microdown-Calypso'
+	#category : #'Microdown-Calypso-Morph'
 }
 
 { #category : #building }

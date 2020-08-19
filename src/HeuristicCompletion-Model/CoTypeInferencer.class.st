@@ -365,3 +365,9 @@ CoTypeInferencer >> visitThisContextNode: aRBThisContextNode [
 	
 	^ { Context }
 ]
+
+{ #category : #visiting }
+CoTypeInferencer >> visitVariableNode: aRBVariableNode [ 
+
+	^ self ensureTypeOfVariable: aRBVariableNode name
+]

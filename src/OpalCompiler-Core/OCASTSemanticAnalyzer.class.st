@@ -143,7 +143,7 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 
 { #category : #'error handling' }
 OCASTSemanticAnalyzer >> uninitializedVariable: variableNode [
-	variableNode binding markRead.
+	variableNode variable markRead.
 	variableNode propertyAt: #semanticWarning put: #unitialized.
 ]
 
@@ -226,7 +226,7 @@ OCASTSemanticAnalyzer >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries do: [ :node | self declareVariableNode: node ].
 	aSequenceNode statements do: [ :each | self visitNode: each ].
 	aSequenceNode temporaries reverseDo: [ :node | 
-			node binding isUnused
+			node variable isUnused
 				ifTrue: [ self unusedVariable: node ] ]
 ]
 

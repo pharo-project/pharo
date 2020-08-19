@@ -228,6 +228,11 @@ RBSmalllintTestObject >> literalArrayContainsComma [
 	^ #(#,)
 ]
 
+{ #category : #'accessing - bad' }
+RBSmalllintTestObject >> literalArrayContainsSuspiciousTrueFalseOrNil [
+	^#(#nil)
+]
+
 { #category : #methods }
 RBSmalllintTestObject >> longMethods [
 	self printString.

@@ -90,7 +90,7 @@ RBLiteralArrayNode >> equalTo: anObject withMapping: aDictionary [
 
 { #category : #testing }
 RBLiteralArrayNode >> isFaulty [
-	^self contents anySatisfy: #isFaulty
+	^self contents anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : #testing }

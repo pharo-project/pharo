@@ -7,11 +7,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PROrderedList class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PROrderedList >> accept: aVisitor [
 	^ aVisitor visitOrderedList: self

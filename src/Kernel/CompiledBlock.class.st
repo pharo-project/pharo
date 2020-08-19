@@ -65,6 +65,11 @@ CompiledBlock >> isCompiledBlock [
 ]
 
 { #category : #testing }
+CompiledBlock >> isEmbeddedBlock [
+	^ true
+]
+
+{ #category : #testing }
 CompiledBlock >> isInstalled [
 	
 	^ self method isInstalled

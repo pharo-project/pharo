@@ -62,14 +62,6 @@ Association >> literalEqual: otherLiteral [
 	^self == otherLiteral
 ]
 
-{ #category : #'variables-toclean' }
-Association >> needsFullDefinition [
-	"Implemented here so we can use simple Associations as Bindings instead of LiteralVariable
-	subclasses"
-	"Can be removed as soon as all bindings are instances of LiteralVariable"
-	^false
-]
-
 { #category : #printing }
 Association >> printOn: aStream [
 

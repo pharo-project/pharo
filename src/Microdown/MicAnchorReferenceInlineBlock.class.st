@@ -1,8 +1,8 @@
 "
-I represent a reference to a section, figure, environment. I follow the pattern `*@`, label, `*`
+I represent a reference to a section, figure, environment. I follow the pattern `*@`, label, `@*`
 
 ```
-See *@fig1
+See *@fig1@*
 ```
 
 "

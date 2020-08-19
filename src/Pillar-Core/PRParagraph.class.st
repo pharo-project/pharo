@@ -9,11 +9,6 @@ Class {
 	#category : #'Pillar-Core-Model'
 }
 
-{ #category : #testing }
-PRParagraph class >> isAbstract [
-	^ false
-]
-
 { #category : #visiting }
 PRParagraph >> accept: aVisitor [
 	^ aVisitor visitParagraph: self

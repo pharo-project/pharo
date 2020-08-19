@@ -1,5 +1,5 @@
 "
-I implement the FT_Face_Rec, I am the main structure used by the library.
+I implement the `FT_Face_Rec`, I am the main structure used by the library.
 "
 Class {
 	#name : #FTFaceRec,

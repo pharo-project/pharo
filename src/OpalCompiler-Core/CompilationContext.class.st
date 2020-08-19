@@ -126,6 +126,16 @@ CompilationContext class >> initialize [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionCleanBlockClosure [
+	^ self readDefaultOption: #optionCleanBlockClosure
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionCleanBlockClosure: aBoolean [
+	^ self writeDefaultOption: #optionCleanBlockClosure value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionEmbeddSources [
 	^ self readDefaultOption: #optionEmbeddSources
 ]
@@ -269,6 +279,16 @@ CompilationContext class >> optionParseErrors: aBoolean [
 ]
 
 { #category : #'options - settings API' }
+CompilationContext class >> optionParseErrorsNonInteractiveOnly [
+	^ self readDefaultOption: #optionParseErrorsNonInteractiveOnly
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionParseErrorsNonInteractiveOnly: aBoolean [
+	^ self writeDefaultOption: #optionParseErrorsNonInteractiveOnly value: aBoolean
+]
+
+{ #category : #'options - settings API' }
 CompilationContext class >> optionReadOnlyLiterals [
 	^ self readDefaultOption: #optionReadOnlyLiterals
 ]
@@ -310,9 +330,11 @@ CompilationContext class >> optionsDescription [
 	
 	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
 	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
+	(- optionCleanBlockClosure 			'Compiler compiles closure creation to use CleanBlockClosure instead of FullBlockClosure for clean blocks. Experimental')
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
-	(- optionParseErrors 					'Parse syntactically wrong code')
+	(- optionParseErrors 					'Parse syntactically wrong code (interactive and non-interactive')
+	(- optionParseErrorsNonInteractiveOnly 	'Parse syntactically wrong code in non-interactive mode only')
 	(- optionSkipSemanticWarnings 		'Do not warn about semantic problems (e.g. undeclared vars). Used for syntax highlight parsing')
 		
 	) 
@@ -480,6 +502,12 @@ CompilationContext >> noPattern: anObject [
 ]
 
 { #category : #options }
+CompilationContext >> optionCleanBlockClosure [
+	^ options includes: #optionCleanBlockClosure
+
+]
+
+{ #category : #options }
 CompilationContext >> optionEmbeddSources [
 	^ options includes: #optionEmbeddSources
 
@@ -560,6 +588,11 @@ CompilationContext >> optionOptimizeIR [
 { #category : #options }
 CompilationContext >> optionParseErrors [
 	^ options includes: #optionParseErrors
+]
+
+{ #category : #options }
+CompilationContext >> optionParseErrorsNonInteractiveOnly [
+	^ options includes: #optionParseErrorsNonInteractiveOnly
 ]
 
 { #category : #options }

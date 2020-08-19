@@ -123,23 +123,9 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 	commandKeyPressed := aKeyboardEvent commandKeyPressed.
+	
 	self isMenuOpen
 		ifFalse: [ ^ self handleKeystrokeWithoutMenu: aKeyboardEvent ].
-	(keyCharacter = Character home and: [ self captureNavigationKeys ])
-		ifTrue: [ 
-			menuMorph home.
-			^ true ].
-	(keyCharacter = Character end and: [ controlKeyPressed not and: [ self captureNavigationKeys ] ])
-		ifTrue: [ 
-			menuMorph end.
-			^ true ].
-	(keyCharacter = Character arrowRight and: [commandKeyPressed and: [ self captureNavigationKeys ]])
-		ifTrue: [ 
-			menuMorph showDetail.
-			^ true ].
-
-	(keyCharacter = Character arrowLeft  and: [commandKeyPressed and: [ self captureNavigationKeys ]])
-		ifTrue: [ ^ self leftArrow ].
 	
 	(keyCharacter = Character arrowLeft or: [ keyCharacter = Character arrowRight ])
 		ifTrue: [ "just move the caret" ^ false ].

@@ -36,10 +36,8 @@ RBValueNode >> containedBy: anInterval [
 
 { #category : #evaluating }
 RBValueNode >> evaluate [
-	"evaluate the AST without taking variables into account"
-	^self asDoit generateWithSource valueWithReceiver: nil arguments: #().
-
-
+	"evaluate the AST with a nil  receiver"
+	^ self evaluateForReceiver: nil
 ]
 
 { #category : #evaluating }

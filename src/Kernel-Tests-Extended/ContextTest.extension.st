@@ -29,15 +29,15 @@ ContextTest >> testJump [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-ContextTest >> testLookupSymbol [
+ContextTest >> testReadVariableNamed [
 	|localVar|
 	localVar := 2.
 	instVarForTestLookupSymbol := 3.
 	classVarForTestLookupSymbol := 4.
-	self assert: (thisContext lookupSymbol: #localVar) equals: 2.
-	self assert: (thisContext lookupSymbol: #instVarForTestLookupSymbol) equals: 3.
-	self assert: (thisContext lookupSymbol: #classVarForTestLookupSymbol) equals: 4.
-	self assert: (thisContext lookupSymbol: #Smalltalk) equals: Smalltalk.
+	self assert: (thisContext readVariableNamed: #localVar) equals: 2.
+	self assert: (thisContext readVariableNamed: #instVarForTestLookupSymbol) equals: 3.
+	self assert: (thisContext readVariableNamed: #classVarForTestLookupSymbol) equals: 4.
+	self assert: (thisContext readVariableNamed: #Smalltalk) equals: Smalltalk.
 ]
 
 { #category : #'*Kernel-Tests-Extended' }

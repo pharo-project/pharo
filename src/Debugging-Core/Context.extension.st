@@ -20,13 +20,6 @@ Context >> callPrimitive: primNumber [
 ]
 
 { #category : #'*Debugging-Core' }
-Context >> lookupSymbol: aSymbol [
-	| var |
-	var := self lookupVar: aSymbol.
-	^ var readInContext: self
-]
-
-{ #category : #'*Debugging-Core' }
 Context >> lookupTempVar: aSymbol [
 	| var |
 	var := self lookupVar: aSymbol.
@@ -51,7 +44,10 @@ Context >> methodReturnConstant: value [
 Context >> namedTempAt: index [
 	"Answer the value of the temp at index in the receiver's sequence of tempNames."
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
-	adds every variable that could be acccessed from a source perspective but might not be"
+	adds every variable that could be acccessed from a source perspective but might not be.
+	Do *not* use this!"
+	
+	self deprecated: 'Please access temps by name using #tempNamed:'.
 	^self tempNamed: (self tempNames at: index)
 ]
 
@@ -60,6 +56,9 @@ Context >> namedTempAt: index put: aValue [
 	"Set the value of the temp at index in the receiver's sequence of tempNames"
 	"NOTE: this list of temp names is completely virtual! It omits temp vectors but 
 	adds every variable that could be acccessed from a source perspective but might not be"
+	"Do *not* use this!"
+	self deprecated: 'Please access temps by name using #tempNamed:put:'.
+	
 	self tempNamed: (self tempNames at: index) put: aValue
 ]
 
@@ -112,6 +111,11 @@ Context >> quickStep [
 
 	self willSend ifTrue: [ QuickStep := self ].
 	^self step
+]
+
+{ #category : #'*Debugging-Core' }
+Context >> readVariableNamed: aName [
+	^ (self lookupVar: aName) readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
@@ -369,18 +373,15 @@ Context class >> tallyMethods: aBlock [
 Context >> tempNamed: aName [
 	"Returns the value of the temporaries, aName"
 
-	| var |
-	var := self lookupTempVar: aName.
-	^var readInContext: self
+	^(self lookupTempVar: aName) readInContext: self
 ]
 
 { #category : #'*Debugging-Core' }
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	| var |
-	var := self lookupTempVar: aName.
-	var write: anObject inContext: self
+	(self lookupTempVar: aName) write: anObject inContext: self.
+	^ anObject
 ]
 
 { #category : #'*Debugging-Core' }

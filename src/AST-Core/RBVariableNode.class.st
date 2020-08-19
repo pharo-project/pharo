@@ -35,7 +35,7 @@ RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 
 { #category : #'instance creation' }
 RBVariableNode class >> named: aName [
-	^self named: aName start: 0.
+	^ self named: aName start: 0
 ]
 
 { #category : #'instance creation' }
@@ -47,17 +47,17 @@ RBVariableNode class >> named: aName start: aPosition [
 
 { #category : #'instance creation' }
 RBVariableNode class >> selfNode [
-	^ (self named: 'self') variable: SelfVariable instance
+	^ RBSelfNode new
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> superNode [
-	^ (self named: 'super') variable: SuperVariable instance
+	^ RBSuperNode new
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> thisContextNode [
-	^ (self named: 'thisContext') variable: ThisContextVariable instance
+	^ RBThisContextNode new
 ]
 
 { #category : #comparing }
@@ -211,6 +211,11 @@ RBVariableNode >> isUndeclaredVariable [
 { #category : #testing }
 RBVariableNode >> isVariable [
 	^true
+]
+
+{ #category : #testing }
+RBVariableNode >> isWorkspaceVariable [
+	^ variable isWorkspaceVariable
 ]
 
 { #category : #testing }

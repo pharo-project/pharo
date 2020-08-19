@@ -228,7 +228,7 @@ RBBlockNode >> isBlock [
 
 { #category : #testing }
 RBBlockNode >> isFaulty [
-	^(self arguments anySatisfy:  #isFaulty ) or: [ self body isFaulty]
+	^(self arguments anySatisfy: [:each | each isFaulty] ) or: [ self body isFaulty]
 ]
 
 { #category : #testing }
