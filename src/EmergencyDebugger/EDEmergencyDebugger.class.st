@@ -646,11 +646,11 @@ EDEmergencyDebugger >> showSelectedMethodVersion [
 EDEmergencyDebugger >> signalDebuggerError: anError forSession: aDebugSession [
 	| errDescription errStream |
 	errDescription := self errorDescriptionFrom: anError.
-	errStream := WriteStream on: String new.
-	errStream << ('Original error: ' , aDebugSession name asString , '.').
-	errStream << ('Smalltalk tools debugger error: ' , errDescription).
+	errStream := Stdio stderr.
 	errStream cr.
-	self primitiveError: errStream contents
+	errStream << ('Original error: ' , aDebugSession name asString , '.').
+	errStream << ('Debugger error: ' , errDescription).
+	errStream cr
 ]
 
 { #category : #accessing }

@@ -30,8 +30,7 @@ EDEmergencyDebuggerSettings class >> emergencyDebuggerSettingsOn: aBuilder [
 		target: self;
 		default: EDEmergencyDebugger;
 		domainValues:
-			{('Ed' -> EDEmergencyDebugger).
-			('Emergency Evaluator' -> Transcripter)}
+			{('Ed' -> EDEmergencyDebugger)}
 ]
 
 { #category : #'see class side' }
