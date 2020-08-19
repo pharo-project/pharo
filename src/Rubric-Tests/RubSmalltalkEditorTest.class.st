@@ -23,7 +23,7 @@ RubSmalltalkEditorTest >> assertJumpsToPostionAfter: aString direction: isFwd pl
 	
 	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].
 	self
-		exectuteFindNextKeywordDirection: isFwd
+		executeFindNextKeywordDirection: isFwd
 		editingMode: mode
 		onFound: [ :loc | 
 			text := self source first: loc.
@@ -45,7 +45,7 @@ RubSmalltalkEditorTest >> assertJumpsToPostionBefore: aString direction: isFwd p
 
 	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].	
 	self
-		exectuteFindNextKeywordDirection: isFwd
+		executeFindNextKeywordDirection: isFwd
 		editingMode: mode
 		onFound: [ :loc | 
 			text := self source first: (self source size min: loc + aString size).
@@ -65,7 +65,7 @@ RubSmalltalkEditorTest >> assertJumpsToPostionFor: aString direction: isFwd play
 		ifFalse: [ RubSmalltalkCodeMode new ].
 		
 	self
-		exectuteFindNextKeywordDirection: isFwd
+		executeFindNextKeywordDirection: isFwd
 		editingMode: mode
 		onFound: [ :loc | 
 			isFwd
@@ -89,7 +89,7 @@ RubSmalltalkEditorTest >> assertNodeError [
 	result := RubSmalltalkEditor new
 		bestNodeInString: self source
 		at: self selection
-		edittingMode: RubSmalltalkCodeMode new
+		editingMode: RubSmalltalkCodeMode new
 		shouldFavourExpressions: true
 		onError: [ ^ true ].
 
@@ -102,7 +102,7 @@ RubSmalltalkEditorTest >> assertNodeError [
 RubSmalltalkEditorTest >> assertNodeSelector: aSelector [
 	| node |
 	
-	node := self exectuteBestNodeFor: aSelector.
+	node := self executeBestNodeFor: aSelector.
 
 	self assert: node selector equals: aSelector
 ]
@@ -116,7 +116,7 @@ RubSmalltalkEditorTest >> assertNodeSelector: aSelector description: aString [
 RubSmalltalkEditorTest >> assertNodeValue: anObject [
 	| node |
 	
-	node := self exectuteBestNodeFor: anObject printString.
+	node := self executeBestNodeFor: anObject printString.
 
 	self assert: node value equals: anObject 
 ]
@@ -130,7 +130,7 @@ RubSmalltalkEditorTest >> assertNodeValue: anObject description: aString [
 RubSmalltalkEditorTest >> assertNodeVariable: anObject [
 	| node |
 	
-	node := self exectuteBestNodeFor: anObject printString.
+	node := self executeBestNodeFor: anObject printString.
 
 	self assert: node name equals: anObject 
 ]
@@ -139,7 +139,7 @@ RubSmalltalkEditorTest >> assertNodeVariable: anObject [
 RubSmalltalkEditorTest >> assertPlaygroundNodeSelector: aSelector [
 	| node |
 	
-	node := self exectuteBestPlaygroundNodeFor: aSelector.
+	node := self executeBestPlaygroundNodeFor: aSelector.
 
 	self assert: node selector equals: aSelector
 ]
@@ -148,7 +148,7 @@ RubSmalltalkEditorTest >> assertPlaygroundNodeSelector: aSelector [
 RubSmalltalkEditorTest >> assertPlaygroundNodeValue: anObject [
 	| node |
 	
-	node := self exectuteBestPlaygroundNodeFor: anObject printString.
+	node := self executeBestPlaygroundNodeFor: anObject printString.
 
 	self assert: node value printString equals: (anObject isString ifTrue: [anObject ] ifFalse: [anObject printString])
 ]
@@ -167,27 +167,27 @@ RubSmalltalkEditorTest >> assertWidensToRegex: aString playground: isPlayground 
 ]
 
 { #category : #helpers }
-RubSmalltalkEditorTest >> exectuteBestNodeFor: aSelector [
-	^ self exectuteBestNodeFor: aSelector edittingMode: RubSmalltalkCodeMode new
+RubSmalltalkEditorTest >> executeBestNodeFor: aSelector [
+	^ self executeBestNodeFor: aSelector editingMode: RubSmalltalkCodeMode new
 ]
 
 { #category : #helpers }
-RubSmalltalkEditorTest >> exectuteBestNodeFor: aSelector edittingMode: aRubEdittingMode [
+RubSmalltalkEditorTest >> executeBestNodeFor: aSelector editingMode: aRubEdittingMode [
 	^ RubSmalltalkEditor new
 		bestNodeInString: self source
 		at: self selection
-		edittingMode: aRubEdittingMode
+		editingMode: aRubEdittingMode
 		shouldFavourExpressions: true
 		onError: [ self assert: false description: 'node not found for: ' , aSelector ]
 ]
 
 { #category : #helpers }
-RubSmalltalkEditorTest >> exectuteBestPlaygroundNodeFor: aSelector [
-	^ self exectuteBestNodeFor: aSelector edittingMode: RubSmalltalkScriptingMode new
+RubSmalltalkEditorTest >> executeBestPlaygroundNodeFor: aSelector [
+	^ self executeBestNodeFor: aSelector editingMode: RubSmalltalkScriptingMode new
 ]
 
 { #category : #helpers }
-RubSmalltalkEditorTest >> exectuteFindNextKeywordDirection: isFwd editingMode: aRubEditingMode onFound: aBlock [
+RubSmalltalkEditorTest >> executeFindNextKeywordDirection: isFwd editingMode: aRubEditingMode onFound: aBlock [
 
 	| textArea |
 	textArea := RubEditingArea new.

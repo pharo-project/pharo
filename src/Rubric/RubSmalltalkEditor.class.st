@@ -160,7 +160,7 @@ RubSmalltalkEditor >> basicInspectIt [
 ]
 
 { #category : #'source navigation' }
-RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval edittingMode: aRubEdittingMode shouldFavourExpressions: isFavouringExpressions onError: aBlock [
+RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode: aRubEdittingMode shouldFavourExpressions: isFavouringExpressions onError: aBlock [
 	"Find the best node in the source text in the identified selection area"
 	
 	| ast node start stop |
@@ -237,7 +237,7 @@ RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
 	^ self
 		bestNodeInString: source
 		at: (start to: stop)
-		edittingMode: self editingMode
+		editingMode: self editingMode
 		shouldFavourExpressions: true
 		onError: aBlock
 ]
@@ -693,7 +693,7 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 	node := self
 		bestNodeInString: sourceCode
 		at: locationInterval
-		edittingMode: self editingMode 
+		editingMode: self editingMode 
 		shouldFavourExpressions: false
 		onError: [ nil ].
 		
@@ -1225,7 +1225,7 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 	node := self 
 		bestNodeInString: sourceCode 
 		at: selectionInterval 
-		edittingMode: self editingMode 
+		editingMode: self editingMode 
 		shouldFavourExpressions: true 
 		onError: [ ^nil ].
 	
