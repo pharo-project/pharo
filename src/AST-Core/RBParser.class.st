@@ -220,7 +220,7 @@ RBParser >> extractCommentsFrom: aToken [
 		into: comments
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'error handling' }
 RBParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 	^((currentToken isSpecial and: ['])}' includes: currentToken value])
 				" We make a distinction between the bracket and the other closures because blocks are the only ones that can contain multiple statements. "
