@@ -59,6 +59,11 @@ PREnvironment >> name: aString [
 	name := aString
 ]
 
+{ #category : #'accessing-parameters' }
+PREnvironment >> parameters [
+	^ parameters
+]
+
 { #category : #visiting }
 PREnvironment >> printOn: aStream [
 	
