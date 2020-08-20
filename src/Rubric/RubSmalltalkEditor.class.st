@@ -1230,6 +1230,11 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 		onError: [ ^nil ].
 	
 	cursorIndex := selectionInterval last.
+	selectionInterval
+		ifNotEmpty: [ 
+			node parent ifNotNil: [ node := node parent ].
+			node isSequence ifTrue: [ node := node parent]].
+	
 	start := node start.
 	stop := node stop max: cursorIndex - 1.
 	

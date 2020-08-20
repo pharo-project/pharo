@@ -104,7 +104,7 @@ RubSmalltalkEditorTest >> assertNodeSelector: aSelector [
 	
 	node := self exectuteBestNodeFor: aSelector.
 
-	self assert: node name equals: aSelector
+	self assert: node selector equals: aSelector
 ]
 
 { #category : #assertions }
@@ -160,7 +160,7 @@ RubSmalltalkEditorTest >> assertWidensToRegex: aString playground: isPlayground 
 	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].
 	self
 		widenSelectionWithMode: mode ifFound: [ :interval | 
-			text := self source copyFrom: interval first to: interval last.
+			text := self source copyFrom: interval first to: (interval last min: self source size).
 			^ self assert: (text matchesRegex: aString) description: 'The selected text node "', text, '", doesn''t match: "', aString, '"' ].
 			
 	self assert: false description: 'Did not find a selection node for, "' , aString , '"'
@@ -337,23 +337,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodIncompleteMidSourceOnMess
 	self 
 		positionAfter: '+';
 		assertNodeSelector: #+ description: 'should let you select an operator for implementorsOf etc.'.
-
-]
-
-{ #category : #'tests-bestNodeIn' }
-RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodOnValidStatementBelowError [
-	
-	self source: 'testMethod
-	self msg1.
-		
-	1 #broken
-	
-	self msg2.
-	^self'.
-	
-	self 
-		positionAfter: 'msg2';
-		assertNodeSelector: #msg2 description: 'should let you select a valid selector in valid code after the error'
 
 ]
 
@@ -1033,8 +1016,9 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnErroneousSource [
 		assertWidensToRegex: '300' playground: true.
 		
 	self 
-		positionSelection: '5';
-		assertWidensToRegex: '5' playground: true.
+		positionSelection: '300';
+		assertWidensToRegex: '1 \+ 300' playground: true.
+		
 	
 ]
 
@@ -1221,8 +1205,8 @@ RubSmalltalkEditorTest >> testWidenOnErroneousMethod [
 		assertWidensToRegex: '300' playground: false.
 		
 	self 
-		positionSelection: '5';
-		assertWidensToRegex: '5' playground: false.
+		positionSelection: '300';
+		assertWidensToRegex: '1 \+ 300' playground: false.
 	
 ]
 
