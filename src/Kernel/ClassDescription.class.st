@@ -1175,7 +1175,7 @@ ClassDescription >> slotDefinitionString [
 				str nextPutAll: slot definitionString.
 				useFull := slot needsFullDefinition]				
 			separatedBy: [ 
-				str nextPutAll: '. '.  
+				str nextPutAll: ' . '.  
 				useFull ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 

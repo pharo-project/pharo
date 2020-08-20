@@ -365,7 +365,7 @@ Class >> classVariableDefinitionString [
 				str nextPutAll: global definitionString.
 				fullDef := global needsFullDefinition]				
 			separatedBy: [ 
-				str nextPutAll: '. '.  
+				str nextPutAll: ' . '.  
 				fullDef ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]

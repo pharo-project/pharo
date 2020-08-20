@@ -68,7 +68,7 @@ MCTraitDefinition >> classSlotDefinitionString [
 				stream nextPutAll: '{ '.
 				self classInstanceVariables 
 					do: [ :each | stream print: each name ]
-					separatedBy: [ stream nextPutAll: '. ' ].
+					separatedBy: [ stream nextPutAll: ' . ' ].
 				stream nextPutAll: ' }']]
 ]
 
@@ -247,6 +247,6 @@ MCTraitDefinition >> slotDefinitionString [
 				stream nextPutAll: '{ '.
 				self instanceVariables 
 					do: [ :each | stream print: each name ]
-					separatedBy: [ stream nextPutAll: '. ' ].
+					separatedBy: [ stream nextPutAll: ' . ' ].
 				stream nextPutAll: ' }']]
 ]
