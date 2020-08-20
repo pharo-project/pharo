@@ -1132,7 +1132,6 @@ RubTextEditor >> findAgain: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubTextEditor >> findAgainAndReplace [
-
 	"Find the text-to-find again and eventually replace it with the current replace text."
 
 	| where |
@@ -1183,7 +1182,6 @@ RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
 RubTextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
 
 	| where |
-
 	where := self findPrevious: aRegex startingAt: self startIndex.
 	where ifNotNil: [ self selectInterval: where ].
 	^ where
@@ -1322,8 +1320,8 @@ RubTextEditor >> hasSelection [
 
 { #category : #'menu messages' }
 RubTextEditor >> highlightAndEmptyCheck: returnBlock [
-	| selectionInterval |
 
+	| selectionInterval |
 	selectionInterval := self getHighlightInterval.
 	selectionInterval ifEmpty: [ textArea flash.  ^ returnBlock value ].
 	self highlightInterval: selectionInterval
