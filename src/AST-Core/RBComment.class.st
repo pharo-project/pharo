@@ -112,8 +112,7 @@ RBComment >> start [
 
 { #category : #accessing }
 RBComment >> stop [
-	^ stop ifNil: [ start + self size - 1 ]
-		    ifNotNil: [ stop ].
+	^ start + self size - 1.
 ]
 
 { #category : #initialization }

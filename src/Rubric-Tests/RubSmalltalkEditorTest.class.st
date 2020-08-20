@@ -104,7 +104,7 @@ RubSmalltalkEditorTest >> assertNodeSelector: aSelector [
 	
 	node := self exectuteBestNodeFor: aSelector.
 
-	self assert: node selector equals: aSelector
+	self assert: node name equals: aSelector
 ]
 
 { #category : #assertions }
@@ -416,7 +416,8 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundUnParsableError [
 	
 	self 
 		positionAfter: 'isMessage ]';
-		assertPlaygroundNodeValue: 'RBBlockNode([ node isMessage ])'.
+		assertPlaygroundNodeValue: '''fallbackBlock := [ ^ self ] node := self bestNodeInTextAreaOnError: fallbackBlock node isMethod ifFalse:
+	[ node isValue and: [ node isSymbol ] [  node isMessage ]'''.
 
 ]
 
@@ -1032,12 +1033,8 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnErroneousSource [
 		assertWidensToRegex: '300' playground: true.
 		
 	self 
-		positionSelection: '300';
-		assertWidensToRegex: '1 \+ 300' playground: true.
-		
-	self 
 		positionSelection: '5';
-		assertWidensToRegex: '\(String.*5\)' playground: true.
+		assertWidensToRegex: '5' playground: true.
 	
 ]
 
@@ -1224,12 +1221,8 @@ RubSmalltalkEditorTest >> testWidenOnErroneousMethod [
 		assertWidensToRegex: '300' playground: false.
 		
 	self 
-		positionSelection: '300';
-		assertWidensToRegex: '1 \+ 300' playground: false.
-		
-	self 
 		positionSelection: '5';
-		assertWidensToRegex: '\(String.*5\)' playground: false.
+		assertWidensToRegex: '5' playground: false.
 	
 ]
 
