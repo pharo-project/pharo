@@ -113,7 +113,7 @@ RBMessageNode >> children [
 RBMessageNode >> copyInContext: aDictionary [ 
 	^self class
 		receiver: (self receiver copyInContext: aDictionary)
-		selector: self selector
+		selector: self selectorNode
 		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ])
 ]
 
@@ -173,7 +173,7 @@ RBMessageNode >> isFirstCascaded [
 
 { #category : #testing }
 RBMessageNode >> isKeyword [
-	^(selector indexOf: $:) ~= 0.
+	^(self selector indexOf: $:) ~= 0.
 ]
 
 { #category : #testing }
@@ -198,19 +198,19 @@ RBMessageNode >> isUnary [
 
 { #category : #accessing }
 RBMessageNode >> keywords [
-	^ selector keywords.
+	^ self selector keywords.
 ]
 
 { #category : #accessing }
 RBMessageNode >> keywordsIntervals [
-	^ selector keywords
+	^ self selector keywords
 		with: self keywordsPositions 
 		collect: [ :keyword :start | start to: (start == 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ].
 ]
 
 { #category : #accessing }
 RBMessageNode >> keywordsPositions [
-	^keywordsPositions ifNil: [ (selector keywords collect: [:char| 0 ]) asIntegerArray ]
+	^keywordsPositions ifNil: [ IntegerArray new: self selector keywords size withAll: 0 ]
 ]
 
 { #category : #accessing }
@@ -402,13 +402,17 @@ RBMessageNode >> replaceSourceWithMessageNode: aNode [
 
 { #category : #accessing }
 RBMessageNode >> selector [
-	^ selector.
+	^ [ selector value ] on: Error do: [selector].
 ]
 
 { #category : #accessing }
 RBMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
-	selector := aSelector asSymbol.
+	selector := aSelector isString
+		ifTrue: [ RBSelectorNode value: aSelector ]
+		ifFalse: [ aSelector ].
+	selector parent: self.
+	
 ]
 
 { #category : #accessing }
@@ -436,6 +440,11 @@ RBMessageNode >> selectorInterval [
 	| positions |
 	positions := self keywordsIntervals. 
 	^positions first first to: positions last last.
+]
+
+{ #category : #accessing }
+RBMessageNode >> selectorNode [
+	^selector.
 ]
 
 { #category : #accessing }

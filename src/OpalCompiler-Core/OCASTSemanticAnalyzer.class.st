@@ -186,6 +186,12 @@ OCASTSemanticAnalyzer >> visitBlockNode: aBlockNode [
 ]
 
 { #category : #visiting }
+OCASTSemanticAnalyzer >> visitEnglobingErrorNode: anEnglobingError [
+	self visitNode: anEnglobingError value.
+	anEnglobingError content do: [ :each | self visitNode: each ]
+]
+
+{ #category : #visiting }
 OCASTSemanticAnalyzer >> visitInlinedBlockNode: aBlockNode [
 
 	scope := scope newOptimizedBlockScope: blockcounter.

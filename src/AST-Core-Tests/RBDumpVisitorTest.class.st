@@ -119,7 +119,7 @@ RBDumpVisitorTest >> testErrorNodeDump [
 	node := self parseFaultyExpression: '( +'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-	self assert: dumpedNode class equals: RBParseErrorNode. 
+	self assert: dumpedNode class equals: RBParenthesesErrorNode. 
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 	
@@ -281,9 +281,9 @@ RBDumpVisitorTest >> testSelfNodeDump [
 	node := self parseExpression: 'self'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-	self assert: dumpedNode isSelf.
+	self assert: dumpedNode class equals: RBSelfNode. 
 	self assert: node class equals: dumpedNode class.
-	self assert: node printString equals: dumpedNode printString.
+	self assert: dumpedNode isSelf.
 	
 ]
 
@@ -307,9 +307,9 @@ RBDumpVisitorTest >> testSuperNodeDump [
 	node := self parseExpression: 'super'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-	self assert: dumpedNode isSuper.
+	self assert: dumpedNode class equals: RBSuperNode. 
 	self assert: node class equals: dumpedNode class.
-	self assert: node printString equals: dumpedNode printString.
+	self assert: dumpedNode isSuper.
 	
 ]
 

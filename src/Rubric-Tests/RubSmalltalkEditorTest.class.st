@@ -160,7 +160,7 @@ RubSmalltalkEditorTest >> assertWidensToRegex: aString playground: isPlayground 
 	mode := isPlayground ifTrue: [ RubSmalltalkScriptingMode new  ] ifFalse: [ RubSmalltalkCodeMode new ].
 	self
 		widenSelectionWithMode: mode ifFound: [ :interval | 
-			text := self source copyFrom: interval first to: interval last.
+			text := self source copyFrom: interval first to: (interval last min: self source size).
 			^ self assert: (text matchesRegex: aString) description: 'The selected text node "', text, '", doesn''t match: "', aString, '"' ].
 			
 	self assert: false description: 'Did not find a selection node for, "' , aString , '"'
@@ -341,23 +341,6 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodIncompleteMidSourceOnMess
 ]
 
 { #category : #'tests-bestNodeIn' }
-RubSmalltalkEditorTest >> testBestNodeWithInvalidMethodOnValidStatementBelowError [
-	
-	self source: 'testMethod
-	self msg1.
-		
-	1 #broken
-	
-	self msg2.
-	^self'.
-	
-	self 
-		positionAfter: 'msg2';
-		assertNodeSelector: #msg2 description: 'should let you select a valid selector in valid code after the error'
-
-]
-
-{ #category : #'tests-bestNodeIn' }
 RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundIncompleteMidSource [
 	
 	self source: '
@@ -416,7 +399,8 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundUnParsableError [
 	
 	self 
 		positionAfter: 'isMessage ]';
-		assertPlaygroundNodeValue: 'RBBlockNode([ node isMessage ])'.
+		assertPlaygroundNodeValue: '''fallbackBlock := [ ^ self ] node := self bestNodeInTextAreaOnError: fallbackBlock node isMethod ifFalse:
+	[ node isValue and: [ node isSymbol ] [  node isMessage ]'''.
 
 ]
 
@@ -1035,9 +1019,6 @@ RubSmalltalkEditorTest >> testPlaygroundWidenOnErroneousSource [
 		positionSelection: '300';
 		assertWidensToRegex: '1 \+ 300' playground: true.
 		
-	self 
-		positionSelection: '5';
-		assertWidensToRegex: '\(String.*5\)' playground: true.
 	
 ]
 
@@ -1226,10 +1207,6 @@ RubSmalltalkEditorTest >> testWidenOnErroneousMethod [
 	self 
 		positionSelection: '300';
 		assertWidensToRegex: '1 \+ 300' playground: false.
-		
-	self 
-		positionSelection: '5';
-		assertWidensToRegex: '\(String.*5\)' playground: false.
 	
 ]
 

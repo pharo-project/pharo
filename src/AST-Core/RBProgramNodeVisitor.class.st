@@ -46,6 +46,11 @@ RBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : #visiting }
+RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+	anEnglobingErrorNode content do: [ :each | self visitNode: each ].
+]
+
+{ #category : #visiting }
 RBProgramNodeVisitor >> visitGlobalNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
 ]

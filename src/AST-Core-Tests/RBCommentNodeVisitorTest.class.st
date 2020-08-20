@@ -24,15 +24,18 @@ RBCommentNodeVisitorTest >> testVisitDetect [
 
 { #category : #tests }
 RBCommentNodeVisitorTest >> testVisitDo [
-	| tree count |
+	| node tree count |
 	tree := self parseExpression: '
 	"comment 1"
 	"comment 2"
 	"comment 3"
 	^true'.
+	
 	count := 0.
-	RBCommentNodeVisitor visit: tree do: [ :n | count := count + 1 ].
-	self assert: count equals: 3
+	node := RBCommentNodeVisitor visit: tree do: [ :n | count := count + 1 ].
+	
+	self 
+		assert: count equals: 3
 ]
 
 { #category : #tests }

@@ -78,7 +78,7 @@ RBFormatterTest >> testParseError [
 	"parse error nodes should have the faulty code"
 	inputSource := ')'.
    errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: (self formatterClass format: errorNode)
+	self assert: errorNode source equals: errorNode formattedCode
 
 ]
 
@@ -86,9 +86,9 @@ RBFormatterTest >> testParseError [
 RBFormatterTest >> testParseError2 [
 	| inputSource errorNode |
 	"parse error nodes should have the faulty code"
-	inputSource := '( 1 + 2'.
+	inputSource := '( 1 + 2 '.
    errorNode := self parseFaultyExpression: inputSource.
-	self assert: errorNode source equals: (self formatterClass format: errorNode)
+	self assert: errorNode source equals: errorNode formattedCode
 
 ]
 
@@ -97,11 +97,10 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
 	the formatter should not add a # character but just use the source form."
-	inputSource := '#(#withnumbersign nonumbersign ''string'')'.
-	literalArrayNode := self parseExpression: inputSource.
-	self
-		assert: literalArrayNode source
-		equals: (self formatterClass format: literalArrayNode)
+	inputSource := '#( #withnumbersign nonumbersign ''string'' )'.
+   literalArrayNode := self parseExpression: inputSource.
+	self assert: literalArrayNode source equals: literalArrayNode formattedCode
+
 ]
 
 { #category : #testing }
@@ -110,8 +109,8 @@ RBFormatterTest >> testPreserveLiteralNumberFormat [
 	"Literal numbers can be written in different ways, integer, integer with
 	radix float, fractional constants. The formatter should not change the
 	formatting."
-	inputSource := '#(1 4r33 16r0F 0.02 2e-2 -1)'.
+	inputSource := '#( 1 4r33 16r0F 0.02 2e-2 -1 )'.
    numbersNode := self parseExpression: inputSource.
-	self assert: numbersNode source equals: (self formatterClass format: numbersNode)
+	self assert: numbersNode source equals: numbersNode formattedCode
 
 ]

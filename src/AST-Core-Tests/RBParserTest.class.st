@@ -84,6 +84,61 @@ array would"
 
 ]
 
+{ #category : #testArray }
+RBParserTest >> testArrayNodesContainRightAmountOfStatementsAndPeriods [
+	"1. The array to be parsed into an array node.
+	 2. The number of statements in the array node.
+	 3. The number of periods in the array node."
+	| tree |
+	#(('{}' 0 0) 
+	  ('{.}' 0 1) 
+	  ('{..}' 0 2) 
+	  ('{foo. bar}' 2 1) 
+	  ('{foo. bar.}' 2 2) 
+	  ('{foo. bar. .}' 2 3) 
+	  ('{. foo. bar}' 2 2) 
+	  ('{foo.. bar}' 2 2)) 
+	do: [ :each | tree := self parserClass parseExpression: each first.
+			self assert: tree statements size equals: each second.
+			self assert: tree periods size equals: each last. ]
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testAssignToMessageRaisesSyntaxError [
+	"Raising a syntax exception when trying to do an assignement on a message."
+	self should: [self parserClass parseExpression: 'receiver selector := 1 + 2'] raise: SyntaxErrorNotification.
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testAssignementRightValueWithUnfortunatePontuationRaisesSyntaxError [
+	"The idea is for the parser to realise the first dot isn't supposed to be here and select it. Also add a side note to give suggestion     on the provenance of the error."
+	self should: [self parserClass parseExpression: 'temp := .1 + 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := 1. + 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := 1 +. 2.'] raise: SyntaxErrorNotification.
+	
+	"The same could be made for other special characters."
+	self should: [self parserClass parseExpression: 'temp := ;1 + 2.'] raise: SyntaxErrorNotification.
+	self should: [self parserClass parseExpression: 'temp := ,1 + 2.'] raise: SyntaxErrorNotification.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testBadlyPlacedPragmaRaiseError [
+	"The placement in the string will have an impact on the parsing methods involved.
+	 Pragmas are supposed to be written in the beginning of a method."
+	self shouldnt: [(self parserClass parseMethod: 'foo | token | <some: #tag> ^true')] 
+		  raise: SyntaxErrorNotification.
+							
+	self should: [(self parserClass parseMethod: 'foo | token | ^true <some: #tag>')]
+		  raise: 	SyntaxErrorNotification.
+			
+	self should: [(self parserClass parseMethod: 'foo | token | token:= 5 <some: #tag> ^token')]
+		  raise: 	SyntaxErrorNotification.
+	
+	self should: [(self parserClass parseMethod: 'foo | token |  token messaged <some: #tag> ^token')]
+		  raise: 	SyntaxErrorNotification.
+	
+]
+
 { #category : #'tests interval' }
 RBParserTest >> testBestNodeFor [
 	| tree |
@@ -104,7 +159,8 @@ RBParserTest >> testBinarySelectors [
 		binarySelector ::= binaryCharacter+"
 
 	| binaryCharacters selectorStrings |
-
+	"Create a collection of strings to parse.
+	 The collection is made of every possible string sized from 1 to 3 selectors."
 	binaryCharacters := '!%&*+,/<=>?@\~-'.
 	selectorStrings := OrderedCollection new.
 	binaryCharacters do: [:first |
@@ -114,6 +170,7 @@ RBParserTest >> testBinarySelectors [
 			binaryCharacters do: [:third |
 				selectorStrings addLast: (String with: first with: second with: third)]]].
 
+	""
 	selectorStrings do: [:each | | methodNode messageNode |
 		methodNode := self parseMethod: each, 'anObject
 	^self',each,'anObject'.
@@ -177,14 +234,92 @@ RBParserTest >> testCascade [
 	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: SyntaxErrorNotification
 ]
 
-{ #category : #'tests replacements' }
+{ #category : #testCascade }
 RBParserTest >> testCascadeReplacement [
+	"Cascade is composed of an ordered collection of messages, each with the same receiver."
+	| cascade |
+	cascade := self parserClass parseExpression: 'self foo; bar; baz'.
+	"The replacement is made on the collection."
+	(cascade messages at: 2) 
+		replaceWith: (self parserClass parseExpression: 'self bar: 2').
+	self assert: cascade
+		  equals: (self parserClass parseExpression: 'self foo; bar: 2; baz').
+		
+	"The replacement can be a message with another receiver"
+	(cascade messages at: 3) 
+		replaceWith: (self parserClass parseExpression: 'notself barataba').
+	self assert: (cascade messages at: 3) receiver 
+		  equals: (self parserClass parseExpression: 'notself').
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testCascadeReplacementCanLeadToOddErrors [
 	| cascade |
 	cascade := self parserClass parseExpression: 'self foo; bar; baz'.
 	(cascade messages at: 2) 
-		replaceWith: (self parserClass parseExpression: 'self bar: 2').
-	self compare: cascade
-		to: (self parserClass parseExpression: 'self foo; bar: 2; baz')
+		replaceWith: (self parserClass parseExpression: '2').
+		
+	cascade := self parserClass parseExpression: 'self foo; bar; baz'.
+	(cascade messages at: 2) 
+		replaceWith: (self parserClass parseExpression: 'temp := temp bar').
+		
+	"This tests create an error in the printing of self and parent of the node."
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testCascadeWithInvalidSelectorRaisesError [
+	| tree |
+	tree := self parseFaultyExpression: 'faulty cascade; repared ; 1; node'.
+	self assert: tree isCascade.
+	self assert: tree messages size equals: 4.
+	
+	"The presence of an error in a cascade (when parsingFaulty) parses the cascade until the end and stores the error node inside 	 the cascade."
+	self assert: tree messages first isMessage.
+	self assert: tree messages first receiver name equals: #faulty.
+	self assert: tree messages first selectorNode equals: (RBSelectorNode value: #cascade).
+	
+	self assert: tree messages second isMessage.
+	self assert: tree messages second receiver name equals: #faulty.
+	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
+	
+	self assert: tree messages third isFaulty.
+	self assert: tree messages third errorMessage equals: 'Message expected'.
+	
+	self assert: tree messages last isMessage.
+	self assert: tree messages last receiver name equals: #faulty.
+	self assert: tree messages last selectorNode equals: (RBSelectorNode value: #node).
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testCascadeWithMissingSelectorRaisesError [
+	| tree |
+	tree := self parseFaultyExpression: 'faulty cascade; repared ;; node'.
+	self assert: tree isCascade.
+	self assert: tree messages size equals: 4.
+	
+	"The presence of an error in a cascade (when parsingFaulty) parses the cascade until the end and stores the error node inside 	 the cascade."
+	self assert: tree messages first isMessage.
+	self assert: tree messages first receiver name equals: #faulty.
+	self assert: tree messages first selectorNode equals: (RBSelectorNode value: #cascade).
+	
+	self assert: tree messages second isMessage.
+	self assert: tree messages second receiver name equals: #faulty.
+	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
+	
+	self assert: tree messages third isFaulty.
+	self assert: tree messages third errorMessage equals: 'Message expected'.
+	
+	self assert: tree messages last isMessage.
+	self assert: tree messages last receiver name equals: #faulty.
+	self assert: tree messages last selectorNode equals: (RBSelectorNode value: #node).
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testCascadeWithNoMessageRaiseError [
+	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: SyntaxErrorNotification.
+	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: SyntaxErrorNotification.
+	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: SyntaxErrorNotification.
+	self should: [ self parserClass parseExpression: ' self msg ;  ; yourself' ] raise: SyntaxErrorNotification
 ]
 
 { #category : #'tests comparing' }
@@ -227,19 +362,112 @@ RBParserTest >> testCopyInContext [
 			self compare: tree to: (tree copyInContext: Dictionary new) ] ]
 ]
 
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationBlockNodeWithExpression [
+	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]') 
+		  to:(RBBlockNode
+			   arguments: (OrderedCollection with: (RBVariableNode named: 'a') with: (RBVariableNode named: 'b'))
+				body: (RBSequenceNode statements: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
+																						with: (RBMessageNode receiver: (RBVariableNode named: #b) selector: (RBSelectorNode value: #messaged))))).
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationCascadeNodeFromExpression [
+	self compare: (self parserClass parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
+		  to: (RBCascadeNode 
+				messages: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: 'cascade') 
+																					selector: (RBSelectorNode value: #firstMessage))
+													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade') 
+																					selector: (RBSelectorNode value: #secondMessage))
+													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade') 
+																					selector: (RBSelectorNode value: #lastMessage)))
+				semicolons: (OrderedCollection with: 21 with: 37)).
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationLiteralArrayNodeWithExpression [
+	self compare: (self parserClass parseExpression: '#(literal1 literal2)')
+		  to: (RBLiteralArrayNode
+				startPosition: 1
+				contents: (Array with: (RBLiteralValueNode value: #literal1) with: (RBLiteralValueNode value: #literal2))
+				stopPosition: 20
+				isByteArray: false).
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationLiteralValueNodeWithExpression [
+	self compare: (self parserClass parseExpression: '#literal')
+		  to: (RBLiteralValueNode
+				value: #literal
+				start: 1
+				stop: 8).
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationLiteralValueNodeWithExpressionForNumber [
+	self compare: (self parserClass parseExpression: '2r10100')
+		  to: (RBLiteralValueNode
+				value: 20
+				start: 1
+				stop: 7).
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationMessageNodeFromExpression [
+	"Verify the good parsing of an expression."
+	self compare: (self parserClass parseExpression: 'self + 0')
+		  to: (RBMessageNode 
+				receiver: (RBVariableNode named: 'self')
+				selector: (RBSelectorNode value: #+)
+				arguments: (Array with: (RBLiteralNode value: 0))).
+]
+
 { #category : #tests }
 RBParserTest >> testCreationProtocol [
 	| messageNode |
 	self compare: (RBMessageNode 
 				receiver: (RBVariableNode named: 'self')
-				selector: #+
+				selector: (RBSelectorNode value: #+)
 				arguments: (Array with: (RBLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (RBVariableNode named: 'self') selector: #foo.
+	messageNode := RBMessageNode receiver: (RBVariableNode named: 'self') selector: (RBSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar
 				body: (RBSequenceNode statements: (OrderedCollection 
 								with: (RBCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
 		to: (self parserClass parseMethod: 'bar self foo; foo')
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationSelfNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'self')
+		  to: RBSelfNode new.
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationSuperNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'super')
+		  to: RBSuperNode new.
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationThisContexNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'thisContext')
+		  to: RBThisContextNode new.
+]
+
+{ #category : #testCreationProtocol }
+RBParserTest >> testCreationVariableNodeWithExpression [
+	self compare: (self parserClass parseExpression: 'variable')
+		  to: (RBVariableNode named: #variable start: 1).
+]
+
+{ #category : #testArray }
+RBParserTest >> testDelimitationsOfArrayNodesAreBrackets [
+	| tree |
+	#('{}' '{.}' '{..}' '{foo. bar}' '{foo. bar.}' '{foo. bar. .}' '{. foo. bar}' '{foo.. bar}')
+	do: [ :each |  tree := self parserClass parseExpression: each.
+						self assert: tree left equals: 1.
+						self assert: tree right equals: each size ]
 ]
 
 { #category : #'tests comparing' }
@@ -265,6 +493,65 @@ RBParserTest >> testEquivalentExceptRenaming [
 				identicalTo: each last ]
 ]
 
+{ #category : #'error testing' }
+RBParserTest >> testErrorNodeForBadParenthesesHasRightMessage [
+	| tree |
+	tree := self parseFaultyExpression: '( faulty parentheses message node'.
+	self assert: tree isParseError.
+	self assert: tree errorMessage equals: ''')'' expected'.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testErrorNodeForBadParenthesesIsEnglobing [
+	| tree |
+	tree := self parseFaultyExpression: '( faulty parentheses message node'.
+	self assert: tree isEnglobingError.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testErrorNodeForBadParenthesesOfLiteralArrayIsEnglobingNode [
+	| tree expr |
+	expr := '#( faulty parentheses litteral array node'.
+	tree := self parseFaultyExpression: expr.
+	self assert: tree isEnglobingError.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testErrorNodeForBadParenthesesStartAtFirstParenthese [
+	| tree |
+	tree := self parseFaultyExpression: '( faulty parentheses message node'.
+	self assert: tree isParseError.
+	self assert: tree start equals: 1.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testErrorNodeForBadParenthesesStartAtLiteralArrayToken [
+	| tree expr |
+	expr := '#( faulty parentheses litteral array node'.
+	tree := self parseFaultyExpression: expr.
+	
+	self assert: tree isParseError.
+	self assert: tree errorMessage equals: ''')'' expected'.
+	self assert: tree start equals: 1.
+	self assert: tree stop equals: expr size.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testErrorNodeForBadParenthesesStopAtEnd [
+	| tree expr |
+	expr := '( faulty parentheses message node'.
+	tree := self parseFaultyExpression: expr.
+	self assert: tree isParseError.
+	self assert: tree stop equals: expr size.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testFaultyLiteralRaiseSyntaxError [
+	#('#"bar"foo' '# foo' '#1' '#12' '#12.3' '# 1' '##1' '#"bar"1') 
+		do: [ :expr | 
+		self should: [self parserClass parseExpression: expr] raise: SyntaxErrorNotification ]
+]
+
 { #category : #tests }
 RBParserTest >> testFormatter [
 	self exampleClasses do: [ :class |
@@ -272,6 +559,297 @@ RBParserTest >> testFormatter [
 		self 
 			compare: (class parseTreeFor: selector)
 			to: (self parserClass parseMethod: (class parseTreeFor: selector) printString) ] ]
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageForgottenDotAfterAssignement [
+	| tree child error |
+	self shouldnt: [self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'] raise: SyntaxErrorNotification.
+	
+	tree := self parserClass parseExpression: '|temp | temp := 1 + 2 temp + 3'.
+	self assert: tree isSequence.
+	
+	"There should only be one statement as there is no dot."
+	child := tree statements.
+	self assert: (child size) equals: 1.
+	self assert: child first isAssignment.
+	
+	"Getting the part changed by missing dot."
+	error := child first value receiver arguments first.
+	self assert: error isMessage.
+	self assert: error receiver value equals: 2.
+	self assert: error selectorNode equals: (RBSelectorNode value: #temp)
+	
+	
+	
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageForgottenReceiver [
+	"Test made in sight of implementing the search of previous litterals when encountering an unknown 
+	 variable in case it is, in fact, a selector. This works for cascade (forgotten ;) or missing 
+	 receiver like self ..."
+	self should: [self parserClass parseExpression: '|temp | temp := 1 + 2. + 3'] raise: SyntaxErrorNotification.
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageTemporaryVariable [
+	| tree |
+	tree := self parseFaultyExpression: '| temp'.
+	self assert: tree isFaulty.
+	self assert: tree errorMessage equals: '''|'' expected'.
+	
+	
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageTemporaryVariableHasMissingClosure [
+	| tree |
+	tree := self parseFaultyExpression: '| temp'.
+	self assert: tree isFaulty.
+	self assert: tree errorMessage equals: '''|'' expected'.
+	
+	
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testGarbageTemporaryVariableIsWrong [
+	"The parser doesn't recognise the 2 because it is not an identifier."
+	| tree errorNode |
+	tree := self parseFaultyExpression: '| 2 |'.
+	self assert: tree isFaulty.
+	self assert: tree isSequence.
+	
+	errorNode := tree statements first.
+	self assert: errorNode isParseError.
+	self assert: errorNode errorMessage equals: '''|'' expected'.
+	
+	
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralBlockIntervalsArray [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	str := '{array node}'.
+	self assert: ((tree body statements at: 4) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 4) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsAssignement [
+	"This tests that assignement nodes inside a block node correspond the right interval in the source code."
+	| tree str assignementNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := 'assignement := node'.
+	assignementNode := tree body statements at: 7.
+	position := tree source findString: str.
+	
+	self assert: assignementNode start equals: position.
+	self assert: assignementNode stop equals: position + (str size - 1).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsBlock [
+	"This tests that block nodes inside a block node correspond the right interval in the source code."
+	| tree str blockNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := '[block node]'.
+	blockNode := tree body statements at: 5.
+	position := tree source findString: str.
+	
+	self assert: blockNode start equals: position.
+	self assert: blockNode stop equals: position + (str size - 1).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsCascade [
+	"This tests that cascade nodes inside a block node correspond the right interval in the source code."
+	| tree str cascadeNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := 'cascade node; cascaded'.
+	cascadeNode := tree body statements at: 6.
+	position := tree source findString: str.
+	
+	self assert: cascadeNode start equals: position.
+	self assert: cascadeNode stop equals: position + (str size - 1).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsLiteralArray [
+	"This tests that literal array nodes inside a block node correspond the right interval in the source code."
+	| tree str literalArrayNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := '#(literal array node)'.
+	literalArrayNode := tree body statements at: 3.
+	position := tree source findString: str.
+	
+	self assert: literalArrayNode start equals: position.
+	self assert: literalArrayNode stop equals: position + (str size - 1).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsLiteralValue [
+	"This tests that literal value nodes inside a block node correspond the right interval in the source code."
+	| tree str literalValueNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := '#literalNode'.
+	literalValueNode := tree body statements at: 2.
+	position := tree source findString: str.
+	
+	self assert: literalValueNode start equals: position.
+	self assert: literalValueNode stop equals: position + (str size - 1).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsMessage [
+	"This tests that message nodes inside a block node correspond the right interval in the source code."
+	| tree str messageNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := 'message node'.
+	messageNode := tree body statements at: 1.
+	position := tree source findString: str.
+	
+	self assert: messageNode start equals: position.
+	self assert: messageNode stop equals: position + (str size - 1).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralBlockIntervalsReturn [
+	"This tests that return nodes inside a block node correspond the right interval in the source code."
+	| tree str returnNode position |
+	tree := (self parseExpression: '["comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node]').
+	
+	str := '^return node'.
+	returnNode := tree body statements at: 8.
+	position := tree source findString: str.
+	
+	self assert: returnNode start equals: position.
+	self assert: returnNode stop equals: position + (str size - 1).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsArray [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := '{array node}'.
+	self assert: ((tree body statements at: 4) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 4) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsAssignement [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := 'assignement := node'.
+	self assert: ((tree body statements at: 7) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 7) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsBlock [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := '[block node]'.
+	self assert: ((tree body statements at: 5) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 5) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsCascade [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := 'cascade node; cascaded'.
+	self assert: ((tree body statements at: 6) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 6) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testGeneralMethodIntervalsComment [
+	"This tests that comment nodes inside a method node correspond the right interval in the source code."
+	| tree str commentNode position |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	
+	str := '"comment node"'.
+	commentNode := tree comments at: 1.
+	position := tree source findString: str.
+	
+	self assert: commentNode start equals: position.
+	self assert: commentNode stop equals: position + (str size - 1).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsLiteralArray [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := '#(literal array node)'.
+	self assert: ((tree body statements at: 3) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 3) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsLiteralValue [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := '#literalNode'.
+	self assert: ((tree body statements at: 2) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 2) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsMessage [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := 'message node'.
+	self assert: ((tree body statements at: 1) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 1) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsPragma [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := '<pragmanode>'.
+	self assert: (tree pragmas first left) equals: (tree source findString: str).
+	self assert: (tree pragmas first right) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #'tests interval' }
+RBParserTest >> testGeneralMethodIntervalsReturn [
+	"This tests that all types of nodes in a method are well made."
+	| tree str |
+	tree := (self parseMethod: 'Selector <pragmanode> "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node').
+	str := '^return node'.
+	self assert: ((tree body statements at: 8) start) equals: (tree source findString: str).
+	self assert: ((tree body statements at: 8) stop) equals: ((tree source findString: str) + (str size - 1)).
+]
+
+{ #category : #testPragma }
+RBParserTest >> testIdentificationOfPrimitiveMethods [
+	"Verify if there is the pragma primitive in the parsed method."
+	"The string is the element to be parsed.
+	 The boolean is the expected result. true : is primitive
+													false : is not primitive."
+	#(('foo ^true' false ) 
+	  ('foo <some: #tag> ^true' false ) 
+	  (' foo <some: #tag> <primitive: 123> ^self' true ) 
+	  ('foo primitive:= 123. ^self' false)) 
+	do: [:each | self assert: (self parserClass parseMethod: each first) isPrimitive equals: each last]
 ]
 
 { #category : #'tests interval' }
@@ -291,7 +869,7 @@ RBParserTest >> testIntervals [
 						self compare: each to: newNode]]]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'error testing' }
 RBParserTest >> testInvalidPragmaPosition [
 	#(
 	'foo self. <foo: $a>'
@@ -300,6 +878,12 @@ RBParserTest >> testInvalidPragmaPosition [
 	'foo ^ <foo: $a>'
 	) 
 	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: SyntaxErrorNotification ]
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testInvalidSelectorRaisesSyntaxError [
+	"Could propose multiple reparations like assignement, period, array..."
+	self should: [self parserClass parseExpression: 'temp 1 + 3'] raise: SyntaxErrorNotification.
 ]
 
 { #category : #tests }
@@ -315,17 +899,69 @@ RBParserTest >> testIsA [
 	self assertEmpty: nodes
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'foreign use of test' }
 RBParserTest >> testLiteralArray [
+	"Test the good parsing of the elements of a literal array which means treating each as a literal."
 	| tree collection |
-	tree := self parserClass parseExpression: '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
+	tree := self parserClass parseExpression: 
+			  '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
 	collection := OrderedCollection new.
-	collection add: #a; add: #b; add: #c; add: #'.'; add: #+; add: #-; add: 1; add: -2; add: 3.4; add: #true; add: true; add: #false; add: false; add: #nil; add: nil; add: 'string'; add: #[1 2 3]; add: #(1 2 3).	
-	tree value with: collection do: [ :token :value | 
-		self assert: token value equals: value ]
+	"Create a collection with the expected values contained in the literal array."
+	collection add: #a; 
+				  add: #b; 
+				  add: #c; 
+				  add: #'.'; 
+				  add: #+; 
+				  add: #-; 
+				  add: 1; 
+				  add: -2; 
+				  add: 3.4; 
+				  add: #true; 
+				  add: true; 
+				  add: #false; 
+				  add: false; 
+				  add: #nil; 
+				  add: nil; 
+				  add: 'string'; 
+				  add: #[1 2 3]; 
+				  add: #(1 2 3).
+	self assert: tree isLiteralArray.
+	tree value with: collection do: [ :node :value | 
+		self assert: node value equals: value ]
 ]
 
-{ #category : #'tests interval' }
+{ #category : #testArray }
+RBParserTest >> testLiteralArrayContainsLiteralValues [
+	"Test the good parsing of the elements of a literal array which means treating each as a literal."
+	| tree collection |
+	tree := self parserClass parseExpression: 
+			  '#( a #b #''c'' . + - 1 -2 3.4 #true true #false false #nil nil "comment" ''string'' #[ 1 2 3 ] #(1 2 3))'.
+	collection := OrderedCollection new.
+	"Create a collection with the expected values contained in the literal array."
+	collection add: #a; 
+				  add: #b; 
+				  add: #c; 
+				  add: #'.'; 
+				  add: #+; 
+				  add: #-; 
+				  add: 1; 
+				  add: -2; 
+				  add: 3.4; 
+				  add: #true; 
+				  add: true; 
+				  add: #false; 
+				  add: false; 
+				  add: #nil; 
+				  add: nil; 
+				  add: 'string'; 
+				  add: #[1 2 3]; 
+				  add: #(1 2 3).
+	self assert: tree isLiteralArray.
+	tree value with: collection do: [ :node :value | 
+		self assert: node value equals: value ]
+]
+
+{ #category : #testLiteral }
 RBParserTest >> testLiteralIntevals [
 	| tree |
 	tree := self parserClass parseExpression: '#(#a b #( c ))'.
@@ -346,6 +982,48 @@ RBParserTest >> testMatchInContext [
 		class selectors do: [ :each |
 			tree := class parseTreeFor: each.
 			self assert: (tree match: tree inContext: Dictionary new) ] ]
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testMessageWithFaultySelectorIsFaulty [
+	| tree |
+	tree := self parseFaultyExpression: 'message 2'.
+	self assert: tree isFaulty.
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testMethodNodeEndAtTheEndOfTheString [
+	| tree |
+	"Expressions have an odd way of handling their stop position. The string is reformated to give a new source corresponding to the method #noMethod.
+	 It seems the method node take this new source into account instead of the original one."
+	tree := (self parserClass parseExpression: 'foo kung foo. 1+2+3. #''alabama''.  ').
+	self assert: tree parent source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
+	self assert: tree parent stop equals: tree parent newSource size.
+	
+	tree := (self parserClass parseMethod: 'foo kung foo. 1+2+3. #''alabama''.  ').
+	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.  '.
+	self assert: tree stop equals: tree newSource size.
+	
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testMethodNodeStartAtOne [
+	| tree |
+	"When there are multiple statements, the node returned is the Sequence node (child of the method node)."
+	tree := (self parserClass parseExpression: 'foo koong. ^foo').
+	self assert: tree parent start equals: 1.
+	
+	tree := (self parserClass parseExpression: '  foo koong. ^foo').
+	self assert: tree parent start equals: 1.
+	
+	"parseMethod always return a method node."
+	tree := (self parserClass parseMethod: 'foo koong. ^foo').
+	self assert: tree start equals: 1.
+	
+	tree := (self parserClass parseMethod: '  foo koong. ^foo').
+	self assert: tree start equals: 1.
+	
+	
 ]
 
 { #category : #tests }
@@ -389,7 +1067,7 @@ RBParserTest >> testModifying [
 	self compare: tree to: (self parserClass parseExpression: 'self + 0')
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'error testing' }
 RBParserTest >> testNegativeNumberError [
 	self should: [ self parserClass parseExpression: '- 2' ] raise: SyntaxErrorNotification
 ]
@@ -402,7 +1080,7 @@ RBParserTest >> testNodesDo [
 	self assert: size equals: 19
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #testNumber }
 RBParserTest >> testNumberParsing [
 	| numbers node |
 	numbers := #(('1' 1) ('-1' -1) ('123' 123) ('123' 123) ('-123' -123) ('1.1' 1.1) ('-1.1' -1.1) ('1.23' 1.23) ('-1.23' -1.23) ('1e3' 1e3) ('1d3' 1d3) ('1q3' 1q3) ('-1e3' -1e3) ('1e-3' 1e-3) ('-1e-3' -1e-3) ('2r1e8'  2r1e8) ('-2r1e8' -2r1e8) ('2r1e-8' 2r1e-8) ('-2r1e-8' -2r1e-8) ('0.50s2' 0.50s2) ('0.500s3' 0.500s3) ('0.050s3' 0.050s3)).
@@ -412,12 +1090,45 @@ RBParserTest >> testNumberParsing [
 		self assert: node value equals: spec second ]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #testNumber }
 RBParserTest >> testNumberRadixParsing [
 	2 to: 32 do: [ :radix | 
 		| radixString |
 		radixString := radix printString , 'r'.
 		0 to: 72 do: [ :i | self assert: (self parserClass parseExpression: radixString , (i radix: radix)) value equals: i ] ]
+]
+
+{ #category : #testParentage }
+RBParserTest >> testParentOfArgumentNodeIsMethodNode [
+	| tree |
+	tree := self parseMethod: 'Selector: argument ^return something.'.
+	self assert: tree arguments first isVariable.
+	self assert: tree arguments first parent equals: tree.
+	
+]
+
+{ #category : #testParentage }
+RBParserTest >> testParentOfMethodNodeIsNil [
+	| tree |
+	tree := self parseMethod: 'Selector ^return something.'.
+	self assert: tree parent isNil.
+]
+
+{ #category : #testParentage }
+RBParserTest >> testParentOfSequenceNodeIsMethodNode [
+	| tree |
+	tree := self parseMethod: 'Selector ^return something.'.
+	self assert: tree body isSequence.
+	self assert: tree body parent equals: tree.
+	
+]
+
+{ #category : #testParentage }
+RBParserTest >> testParentOfStatementsIsSequenceNode [
+	| tree |
+	tree := self parseMethod: 'Selector: argument "comment node" | temporaries | message node. #literalNode . #(literal array node). {array node}. [block node]. cascade node; cascaded. assignement := node. ^return node'.
+	(tree body statements) do: [ :each | self assert: each parent equals: tree body].
+	
 ]
 
 { #category : #tests }
@@ -435,21 +1146,27 @@ RBParserTest >> testParents [
 											self assert: each methodNode identicalTo: root ] ] ] ] ]
 ]
 
-{ #category : #'tests parsing faulty' }
-RBParserTest >> testParseFaultyBlock [
-	| node blockNoArgButBar blockNoArgButColon unfinishedBlock |
-	"parsing block should mark this block as faulty, if it is unfinished no closing brace, or missing parts (colon but no arg, 
-	no arg but vertical bar)"
-	blockNoArgButBar := '[ | ]'.
-	blockNoArgButColon := '[ : ]'.
-	unfinishedBlock := '[  '.
-	{blockNoArgButBar.
-	blockNoArgButColon.
-	unfinishedBlock}
-		do: [ :faultyExpression | 
-			node := self parseFaultyExpression: faultyExpression.
-			self assert: node isBlock.
-			self assert: node isFaulty]
+{ #category : #'tests parsing' }
+RBParserTest >> testParseExpressionGivesTheWriteAmountOfStatements [
+	"Testing with a list of triplets.
+	 1. The string parsed.
+	 2. The number of statements expected in parsed string.
+	 3. The number of dots marking a period expected in parsed string."
+	| tree |
+	#(
+	('' 0 0) 
+	('.' 0 1) 
+	('| bar |' 0 0) 
+	('| bar | .' 0 1) 
+	('| bar | ..' 0 2) 
+	('foo. bar' 2 1) 
+	('foo. bar.' 2 2) 
+	('foo. bar. .' 2 3) 
+	('. foo. bar' 2 2)
+	('foo. bar. foo bar.' 3 3)) do: [ :each |
+		tree := self parserClass parseExpression: each first.
+		self assert: tree statements size equals: each second.
+		self assert: tree periods size equals: each last ]
 ]
 
 { #category : #'tests parsing faulty' }
@@ -461,9 +1178,8 @@ RBParserTest >> testParseFaultyLiteral [
 	faultyLiteral := '¿'.
 	faultyLiteralArray  := '#(¿)'.
 	node := self parseFaultyExpression: faultyLiteral.
-	self assert: node isFaulty.
-	self assert: node isSequence.
-	self assert: node statements first errorMessage equals: 'Unknown character'.	
+	self assert: node isParseError.
+	self assert: node errorMessage equals: 'Unknown character'.	
 	node := self parseFaultyExpression: faultyLiteralArray.
 	self assert: node isFaulty.
 	self assert: node isLiteralArray.	
@@ -515,6 +1231,20 @@ RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
 ]
 
 { #category : #'tests parsing faulty' }
+RBParserTest >> testParseFaultyMethodExpressionHasErrorNodeAsFinal [
+	| node strangeExpression |
+	
+	strangeExpression := 'method: asd  ^ asd. n'.
+	node := self parseFaultyMethod: strangeExpression.
+
+	self assert: node isMethod.
+	self assert: node isFaulty.
+	self assert: node statements size equals: 2.
+	self assert: node statements last isFaulty
+	
+]
+
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseFaultyMethodMessagePattern [
 	| node faultyMessagePattern |
 	faultyMessagePattern := '1'.
@@ -547,6 +1277,38 @@ RBParserTest >> testParseFaultyPragma [
 ]
 
 { #category : #'tests parsing' }
+RBParserTest >> testParseGivesMethod [
+	"The parsing of an expression or a method gives a method node.
+	 For an expression we expect the selector to be #noMethod.
+	 For a method we expect the selector to be the first identifier.
+	 In the method node, we expect the original string (source) to be stored."
+	| tree |
+	"When there are multiple statements, the node returned is the Sequence node (child of the method node)."
+	tree := (self parserClass parseExpression: 'foo koong. ^foo').
+	self assert: tree parent isMethod.
+	
+	"When there is a single statement, the node returned is the overarching node of the statement (child of the sequence node)."
+	tree := (self parserClass parseExpression: 'foo koong foo').
+	self assert: tree parent parent isMethod.
+	
+	"parseMethod always return a method node."
+	tree := (self parserClass parseMethod: 'foo koong. ^foo').
+	self assert: tree isMethod.
+	
+	tree := (self parserClass parseMethod: 'foo koong foo').
+	self assert: tree isMethod.
+]
+
+{ #category : #testPattern }
+RBParserTest >> testParseMethodPatternGivesSelector [
+	#(#('+ a ^self + a' 				#+) 
+	  #('foo ^self foo' 				#foo)
+	  #('foo: a b ^self foo: b'    #foo:) 
+	  #('foo: a bar: b ^a + b' 		#foo:bar:))
+		do: [ :each | self assert: (self parserClass parseMethodPattern: each first) identicalTo: each last ]
+]
+
+{ #category : #testCreationProtocol }
 RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtTheEnd [
 	| node strangeMethod body statement message errorNode |
 	strangeMethod := '
@@ -580,7 +1342,7 @@ RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtThe
 	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #testCreationProtocol }
 RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	| node strangeMethod body statement message errorNode |
 	strangeMethod := '
@@ -618,6 +1380,29 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 ]
 
 { #category : #'tests parsing' }
+RBParserTest >> testParseRegistersTheSourceInMethodNode [
+	"The parsing of an expression or a method gives a method node.
+	 For an expression we expect the selector to be #noMethod.
+	 For a method we expect the selector to be the first identifier.
+	 In the method node, we expect the original string (source) to be stored."
+	| tree |
+	"When there are multiple statements, the node returned is the Sequence node (child of the method node)."
+	tree := (self parserClass parseExpression: 'foo koong. ^foo').
+	self assert: tree parent source equals: 'foo koong. ^foo'.
+	
+	"When there is a single statement, the node returned is the overarching node of the statement (child of the sequence node)."
+	tree := (self parserClass parseExpression: 'foo koong foo').
+	self assert: tree parent parent source equals: 'foo koong foo'.
+	
+	"parseMethod always return a method node."
+	tree := (self parserClass parseMethod: 'foo koong. ^foo').
+	self assert: tree source equals: 'foo koong. ^foo'.
+	
+	tree := (self parserClass parseMethod: 'foo koong foo').
+	self assert: tree source equals: 'foo koong foo'.
+]
+
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParseUnfinishedBlockWithFaultyBody [
 	| node unfinishedBlockExp missingArgExp unfinishedBlockAndMissingArgExp validBlock unfinishedBlockWithReturnExp|
 	"Parsing a block as a faulty expression, where the block body is faulty and there is a missing closing bracket,
@@ -629,12 +1414,16 @@ indicate the invalid expression."
 	unfinishedBlockWithReturnExp := '[^ '.
 	validBlock := '[:x | x missingArg: 3 ]. '.
 	
-	{unfinishedBlockExp. missingArgExp. unfinishedBlockAndMissingArgExp. unfinishedBlockWithReturnExp}
+	{unfinishedBlockExp. unfinishedBlockAndMissingArgExp. unfinishedBlockWithReturnExp}
 		do: [ :faultyExpression | 
 			node := self parseFaultyExpression: faultyExpression.
-			self assert: node isBlock.
-			self assert: node isFaulty.
-			self assert: node body isFaulty ].
+			self assert: node isEnglobingError.
+			self assert: node isBlockError ].
+		
+	node := self parseFaultyExpression: missingArgExp.
+	self assert: node isBlock.
+	self assert: node isFaulty.
+	self assert: node body isFaulty.
 		
 	node := self parseFaultyExpression: validBlock.
 	self assert: node isBlock.
@@ -642,25 +1431,34 @@ indicate the invalid expression."
 	self deny: node body isFaulty
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParserErrors [
-	#(#('self foo. + 3' 11) #('#(' 3) #('self 0' 6) #('self asdf;;asfd' 11)) 
+	#(#('self foo. + 3' 11) #('self 0' 6) #('self asdf;;asfd' 11)) 
 		do: [:each | self parseError: each]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'tests parsing faulty' }
 RBParserTest >> testParserErrorsWithErrorBlock [
 	"Parse source with errors and ensure we identify them"
 	
-	#(#('self foo. + 3' 2) #('#(' 1) #('self 0' 1) #('self asdf;;asfd' 2)) 
+	#(#('self foo. + 3' 2) #('self 0' 1) #('self asdf;;asfd' 1)) 
 		do: [:each | |ast errorCount|
 			   [ ast := self parseError: each first onError: 
-					[:msg :pos :parser | parser step. parser parseErrorNode: msg]] 
+					[:msg :pos :parser | parser parseErrorNode: msg]] 
 						on: ReparseAfterSourceEditing do: [].
 						
 				errorCount := 0.
 				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
 				self assert: errorCount equals: each last ]
+]
+
+{ #category : #testArray }
+RBParserTest >> testParsingArrayGivesArrayNode [
+	| tree |
+	#('{}' '{foo}' '{foo. bar.}')
+	 do: [ :each |
+		tree := self parserClass parseExpression: each .
+		self assert: tree isDynamicArray.]
 ]
 
 { #category : #'tests parsing' }
@@ -675,7 +1473,96 @@ RBParserTest >> testParsingLiteralMessages [
 	self assert: (self parserClass parseMethod: 'false') isMethod
 ]
 
-{ #category : #tests }
+{ #category : #testPragma }
+RBParserTest >> testParsingPragmaRecogniseAndStorePragmas [
+	"Tests that the pragmas are correctly interpreted.
+	 1. The string to be parsed.
+	 2. The selector in parsed pragma.
+	 3. The selector arguments."
+	| tree |
+	#('foo <foo>' 				
+	'foo <foo: 1>' 			
+	'foo <foo: 1.2>' 		
+	'foo <foo: -3>' 	
+	'foo <foo: #a>' 	
+	'foo <foo: #< >' 
+	'foo <foo: #> >' 
+	'foo <foo: $a>'
+	'foo <foo: ''bar''>'
+	'foo <foo: true>' 	
+	'foo <foo: false>' 
+	'foo <foo: nil>' 	
+	'foo <foo: #(1 2)>' 
+	'foo <foo: 1 bar: 2>' 
+	'foo |t| <foo: 1.2>'
+	'foo |t| <foo: 1 bar: 2>' ) do: [ :each |
+		tree := self parserClass parseMethod: each.
+		self assert: tree pragmas size equals: 1.].
+	
+	self assert: (self parserClass parseMethod: 'foo |t| <pragma1> <pragma2>') pragmas size equals: 2.
+]
+
+{ #category : #testPragma }
+RBParserTest >> testParsingPragmaRecogniseArguments [
+	"Tests that the pragmas are correctly interpreted.
+	 1. The string to be parsed.
+	 2. The selector in parsed pragma.
+	 3. The selector arguments."
+	| tree node |
+	#(('foo <foo>' 				#foo ()) 
+	('foo <foo: 1>' 				#foo: (1)) 
+	('foo <foo: 1.2>' 			#foo: (1.2)) 
+	('foo <foo: -3>' 			#foo: (-3)) 
+	('foo <foo: #a>' 			#foo: (a)) 
+	('foo <foo: #< >' 			#foo: (<)) 
+	('foo <foo: #> >' 			#foo: (>)) 
+	('foo <foo: $a>' 			#foo: ($a)) 
+	('foo <foo: ''bar''>' 		#foo: ('bar')) 
+	('foo <foo: true>' 			#foo: (true)) 
+	('foo <foo: false>' 			#foo: (false)) 
+	('foo <foo: nil>' 			#foo: (nil)) 
+	('foo <foo: #(1 2)>' 		#foo: ((1 2)))
+	('foo <foo: 1 bar: 2>' 		#foo:bar: (1 2))
+	('foo |t| <foo: 1.2>' 		#foo: (1.2))
+	('foo |t| <foo: 1 bar: 2>' #foo:bar: (1 2))
+	) do: [ :each |
+		tree := self parserClass parseMethod: each first.
+		self assert: tree pragmas size equals: 1.
+		node := tree pragmas first.
+		1 to: node arguments size do: [ :i |
+			self assert: (node arguments at: i) value equals: (each last at: i) ].]
+]
+
+{ #category : #testPragma }
+RBParserTest >> testParsingPragmaRecogniseSelector [
+	"Tests that the pragmas are correctly interpreted.
+	 1. The string to be parsed.
+	 2. The selector in parsed pragma.
+	 3. The selector arguments."
+	| tree node |
+	#(('foo <foo>' 				#foo ()) 
+	('foo <foo: 1>' 				#foo: (1)) 
+	('foo <foo: 1.2>' 			#foo: (1.2)) 
+	('foo <foo: -3>' 			#foo: (-3)) 
+	('foo <foo: #a>' 			#foo: (a)) 
+	('foo <foo: #< >' 			#foo: (<)) 
+	('foo <foo: #> >' 			#foo: (>)) 
+	('foo <foo: $a>' 			#foo: ($a)) 
+	('foo <foo: ''bar''>' 		#foo: ('bar')) 
+	('foo <foo: true>' 			#foo: (true)) 
+	('foo <foo: false>' 			#foo: (false)) 
+	('foo <foo: nil>' 			#foo: (nil)) 
+	('foo <foo: #(1 2)>' 		#foo: ((1 2)))
+	('foo <foo: 1 bar: 2>' 		#foo:bar: (1 2))
+	('foo |t| <foo: 1.2>' 		#foo: (1.2))
+	('foo |t| <foo: 1 bar: 2>' #foo:bar: (1 2))
+	) do: [ :each |
+		tree := self parserClass parseMethod: each first.
+		node := tree pragmas first.
+		self assert: node selector equals: each second.]
+]
+
+{ #category : #'tests interval' }
 RBParserTest >> testPositions [
 	| blockNode |
 	blockNode := self parserClass parseExpression: '[:a :b | ]'.
@@ -686,37 +1573,25 @@ RBParserTest >> testPositions [
 	self assert: blockNode size equals: 1.	"test dummy collection protocol"
 	blockNode printString.	"coverage"
 	self deny: (blockNode isLast: (RBVariableNode named: 'b')).
-	self
-		compare: blockNode
-		to:
-			(RBBlockNode
-				arguments: (OrderedCollection with: (RBVariableNode named: 'a') with: (RBVariableNode named: 'b'))
-				body: (RBSequenceNode statements: OrderedCollection new))
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'error testing' }
 RBParserTest >> testPragmaConstantLiteralArgument [
 	| primitiveDeclartion validPragma invalidPragma |
 	"primitive declarations with variable (code) are allowed"
-	primitiveDeclartion := 'foo 
-	<primitive: #dooo module: #bar error: code>
-	^ nil'.
+	primitiveDeclartion := 'foo <primitive: #dooo module: #bar error: code> ^ nil'.
 	"#Point as argument is allowed"
-	validPragma := 'foo 
-	<return: #Point>
-	^ 0@0'.
+	validPragma := 'foo <return: #Point> ^ 0@0'.
 	"Point as argument is not allowed"
-	invalidPragma := 'foo 
-	<return: Point>
-	^ 0@0'.
-	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: Exception.
-	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: Exception.
-	self should:[self parserClass parseMethod: invalidPragma] raise: Exception.
+	invalidPragma := 'foo <return: Point> ^ 0@0'.
+	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: SyntaxErrorNotification.
+	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: SyntaxErrorNotification.
+	self should:[self parserClass parseMethod: invalidPragma] raise: SyntaxErrorNotification.
 	
 
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'error testing' }
 RBParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	| pragmaWithExpressionAsArgument pragmaWithLiteralArrayAsArgument pragmaWithStringAsArgument |
 	"a pragma with arguments that look like code
@@ -725,25 +1600,35 @@ RBParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	pragmaWithExpressionAsArgument := 'foo 
 	<func: (3+4) res: 7>
 	^ self'.
-	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: Exception.
+	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: SyntaxErrorNotification.
 
 	"an explicit literal array is allowed"
 	pragmaWithLiteralArrayAsArgument := 'foo 
 	<func: #(3+4) res: 7>
 	^ self'.
 	"Should work"
-	self parserClass parseMethod: pragmaWithLiteralArrayAsArgument.
+	self shouldnt: [self parserClass parseMethod: pragmaWithLiteralArrayAsArgument] raise: SyntaxErrorNotification.
 
 	"and of course a string literal"
 	pragmaWithStringAsArgument := 'foo 
 	<func: ''(3+4)'' res: 7>
 	^ self'.
 	"should work"
-	self parserClass parseMethod: pragmaWithStringAsArgument
+	self shouldnt: [self parserClass parseMethod: pragmaWithStringAsArgument] raise: SyntaxErrorNotification.
 
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'error testing' }
+RBParserTest >> testPragmaInExpressionRaiseError [
+	"Test if a working pragma in a method is faulty in an expression."
+	self should: [(self parserClass parseExpression: '| token | <some: #tag> true')] 
+		  raise: SyntaxErrorNotification.
+		
+	self shouldnt: [(self parserClass parseExpression: '| token | true')] 
+		  raise: SyntaxErrorNotification.
+]
+
+{ #category : #'error testing' }
 RBParserTest >> testPragmaPrimitiveError [
 	| tree  pragma |
 	tree := self parserClass 
@@ -821,19 +1706,19 @@ RBParserTest >> testQuerying [
 				copyReplaceAll: '`'
 				with: (String with: (Character value: 13))).
 	tree doSemanticAnalysis.
-	self assert: tree selfMessages asSortedCollection asArray equals: #(#bar #foa1 #foo:).
-	self assert: tree superMessages asSortedCollection asArray equals: #(#foo:foo:foo: #test:).
+	self assert: (tree selfMessages collect: [ :each | each value ]) asSortedCollection asArray equals: #(#bar #foa1 #foo:).
+	self assert: (tree superMessages collect: [ :each | each value ]) asSortedCollection asArray equals: #(#foo:foo:foo: #test:).
 	aNode := tree whichNodeIsContainedBy: (112 to: 112).
 	self assert: aNode name equals: 'a'.
 	bNode := tree whichNodeIsContainedBy: (119 to: 119).
 	self assert: bNode name equals: 'b'.
 	arg1Node := tree whichNodeIsContainedBy: (102 to: 105).
 	self assert: arg1Node name equals: 'arg1'.
-	self assert: (arg1Node statementNode isMessage and: [ arg1Node statementNode selector = #+ ]).
+	self assert: (arg1Node statementNode isMessage and: [ arg1Node statementNode selector value = #+ ]).
 	self assert: (arg1Node whoDefines: 'arg1') isBlock.
 	self assert: (aNode whoDefines: 'a') isMethod.
 	self assert: (aNode whoDefines: 'b') isSequence.
-	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector equals: #foo:foo:foo:.
+	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector value equals: #foo:foo:foo:.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 121)) isBlock.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 118)) isNil.
 	self assert: aNode blockVariables asSortedCollection asArray equals: #('arg1').
@@ -843,7 +1728,7 @@ RBParserTest >> testQuerying [
 	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b')
 ]
 
-{ #category : #tests }
+{ #category : #'to be reworked' }
 RBParserTest >> testQueryingPrimitiveErrorVar [
 	| tree |
 	tree := self parserClass 
@@ -879,6 +1764,59 @@ RBParserTest >> testReplacingNodes [
 	self assert: tree removeDeadCode equals: (self parserClass parseMethod: '+ q | q b | self ifTrue: [] ifFalse: [b := c]. q := b. {q. b}. ^q')
 ]
 
+{ #category : #testSelector }
+RBParserTest >> testSelectorFromMessageIsSelectorNode [
+	| tree |
+	tree := self parseExpression: 'receiver selector'.
+	self assert: tree isMessage.
+	self assert: tree selectorNode isSelector.
+	self assert: tree selector equals: #selector.
+]
+
+{ #category : #testCascade }
+RBParserTest >> testSemiColonAfterMessageIsCascade [
+	self assert: (self parserClass parseExpression: ' self msg; yourself') isCascade.
+	self assert: (self parserClass parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
+	self assert: (self parserClass parseExpression: ' self msg: arg msga:arga ; ibm ; yourself') isCascade.
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testSequenceNodeEndAtTheEndOfTheString [
+	| tree |
+
+	tree := (self parserClass parseExpression: 'foo kung foo. 1+2+3. #''alabama''.').
+	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.'.
+	self assert: tree stop equals: tree parent source size.
+	
+	tree := (self parserClass parseMethod: 'foo kung foo. 1+2+3. #''alabama''.').
+	self assert: tree source equals: 'foo kung foo. 1+2+3. #''alabama''.'.
+	self assert: tree body stop equals: tree source size.
+	
+]
+
+{ #category : #testIntervals }
+RBParserTest >> testSequenceNodeStartAtFirstTokenAfterTheSelector [
+	"Beginning spaces are trimmed before the start of sequence node."
+	| tree |
+	"Here, the selector is the implicit #noMethod"
+	tree := (self parserClass parseExpression: 'foo koong. ^foo').
+	self assert: tree start equals: 1.
+	
+	"There are 2 spaces before foo."
+	tree := (self parserClass parseExpression: '  foo koong. ^foo').
+	self assert: tree start equals: 3.
+	
+	"Here, foo is the method selector so the sequence start at koong."
+	tree := (self parserClass parseMethod: 'foo koong. ^foo').
+	self assert: tree body start equals: 5.
+	
+	"There are 2 spaces before foo."
+	tree := (self parserClass parseMethod: '  foo koong. ^foo').
+	self assert: tree body start equals: 7.
+	
+	
+]
+
 { #category : #'tests parsing' }
 RBParserTest >> testStatements [
 	| tree |
@@ -888,7 +1826,7 @@ RBParserTest >> testStatements [
 		self assert: tree periods size equals: each last ]
 ]
 
-{ #category : #'tests parsing' }
+{ #category : #'foreign use of test' }
 RBParserTest >> testString [
 	self assert: (self parserClass parseMethod: 'selector ^ ''<''') isMethod.
 	self assert: (self parserClass parseMethod: 'selector ^ ''<'', self') isMethod.
@@ -928,6 +1866,66 @@ RBParserTest >> testSymbolLiteral [
 	('##1' 1)
 	('#"bar"1' 1)) do: [ :pair | 
 		self should: [self parserClass parseExpression: pair first] raise: SyntaxErrorNotification ]
+]
+
+{ #category : #testLiteral }
+RBParserTest >> testSymbolLiteralSuccessfullyCreateLiteralNode [
+	"Test if the parsing of the strings gives a literal node corresponding to its' pair."
+	| tree |
+	#(
+	'#<' #<
+	'#>' #>
+	'#<>' #<>
+	'##foo' #foo 
+	'###foo' #foo 
+	'#foo:' #foo:
+	'#foo::' #'foo::'
+	'#foo::bar' #'foo::bar'
+	'#foo::bar:' #'foo::bar:'
+	'#foo::bar::' #'foo::bar::') pairsDo: [ :parseString :expectedResult |
+		tree := self parserClass parseExpression: parseString.
+		self assert: tree isLiteralNode.
+		self assert: tree value equals: expectedResult.		
+		self assert: tree start equals: 1.
+		self assert: tree stop equals: parseString size ].
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnclosedArrayErrorNodeContainsRightValue [
+	| tree |
+	tree := self parseFaultyExpression: '{ faulty parentheses message node'.
+	self assert: tree isParseError.
+	self assert: tree value equals: '{ faulty parentheses message node '
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnclosedBracketErrorNodeContainsRightValue [
+	| tree |
+	tree := self parseFaultyExpression: '[ faulty parentheses message node'.
+	self assert: tree isEnglobingError.
+	self assert: tree value equals: '[ faulty parentheses message node '
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnclosedParenthesesErrorNodeContainsRightValue [
+	| tree |
+	tree := self parseFaultyExpression: '( faulty parentheses message node'.
+	self assert: tree isEnglobingError.
+	self assert: tree value equals: '( faulty parentheses message node '
+]
+
+{ #category : #'garbage tests' }
+RBParserTest >> testUnclosedParenthesesRaiseSyntaxError [
+	"Should propose a closing parenthese before the end of the statement. Should also offer possibility to quickly erase it."
+	self should: [self parserClass parseExpression: '(temp := 1 + 3 .'] raise: SyntaxErrorNotification.
+]
+
+{ #category : #'error testing' }
+RBParserTest >> testUnclosedTemporariesErrorNodeContainsRightValue [
+	| tree |
+	tree := self parseFaultyExpression: '| faulty temporaries'.
+	self assert: tree isEnglobingError.
+	self assert: tree value equals: '| faulty temporaries '
 ]
 
 { #category : #private }

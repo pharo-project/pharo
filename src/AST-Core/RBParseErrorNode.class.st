@@ -16,7 +16,8 @@ Class {
 	#instVars : [
 		'errorMessage',
 		'value',
-		'start'
+		'start',
+		'stop'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -46,6 +47,16 @@ RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 { #category : #converting }
 RBParseErrorNode >> adaptToSemanticNode [
 	" I can't provide more semantics "
+]
+
+{ #category : #converting }
+RBParseErrorNode >> asSyntaxErrorNotification [
+	^SyntaxErrorNotification new
+		setClass: self methodNode methodClass
+		code: self methodNode source
+		doitFlag: false
+		errorMessage: errorMessage
+		location: self start
 ]
 
 { #category : #accessing }
@@ -118,7 +129,14 @@ RBParseErrorNode >> startWithoutParentheses [
 
 { #category : #accessing }
 RBParseErrorNode >> stop [
-	^ start + value size - 1.
+	^ stop 
+		ifNil: [start + value size - 1]
+		ifNotNil: [ stop ]
+]
+
+{ #category : #accessing }
+RBParseErrorNode >> stop: aStopPosition [
+	stop := aStopPosition
 ]
 
 { #category : #accessing }
