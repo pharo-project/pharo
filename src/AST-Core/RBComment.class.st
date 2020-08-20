@@ -28,7 +28,8 @@ Class {
 	#superclass : #RBProgramNode,
 	#instVars : [
 		'contents',
-		'start'
+		'start',
+		'stop'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -112,7 +113,8 @@ RBComment >> start [
 
 { #category : #accessing }
 RBComment >> stop [
-	^ start + self size - 1.
+	^ stop ifNil: [ start + self size - 1 ]
+			 ifNotNil: [ stop ].
 ]
 
 { #category : #initialization }
