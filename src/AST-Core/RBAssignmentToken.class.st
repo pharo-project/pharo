@@ -18,3 +18,8 @@ RBAssignmentToken >> length [
 
 	^ 2
 ]
+
+{ #category : #evaluating }
+RBAssignmentToken >> value [
+	^':='
+]
