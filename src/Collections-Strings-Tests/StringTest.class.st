@@ -890,7 +890,7 @@ StringTest >> testFindFirstInString [
 ]
 
 { #category : #tests }
-StringTest >> testFindLastOccurenceOfStringStartingAt [
+StringTest >> testFindLastOccurrenceOfStringStartingAt [
 
 	self assert: ('Smalltalk' findLastOccurrenceOfString: 'al' startingAt: 2) equals: 7.
 	self assert: ('aaa' findLastOccurrenceOfString: 'aa' startingAt: 1) equals: 2.
