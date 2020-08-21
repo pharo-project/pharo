@@ -10,6 +10,8 @@ My owner must be a spec debugger
 Class {
 	#name : #StSindarinDebuggerScriptingPresenter,
 	#superclass : #SpPresenter,
+	#traits : 'TStDebuggerExtension',
+	#classTraits : 'TStDebuggerExtension classTrait',
 	#instVars : [
 		'code',
 		'resultInspection',
@@ -19,12 +21,6 @@ Class {
 	],
 	#category : #'NewTools-Sindarin-Tools'
 }
-
-{ #category : #specs }
-StSindarinDebuggerScriptingPresenter class >> debuggingExtensionToolName [
-	<debuggerExtensionOrder: 4 showByDefault: false>
-	^ 'Sindarin'
-]
 
 { #category : #specs }
 StSindarinDebuggerScriptingPresenter class >> defaultSpec [
@@ -44,6 +40,12 @@ StSindarinDebuggerScriptingPresenter >> createCommandFromScript [
 { #category : #accessing }
 StSindarinDebuggerScriptingPresenter >> debugger [ 
 	^stDebugger
+]
+
+{ #category : #'debugger extension' }
+StSindarinDebuggerScriptingPresenter >> debuggerExtensionToolName [
+
+	^ 'Sindarin'
 ]
 
 { #category : #actions }

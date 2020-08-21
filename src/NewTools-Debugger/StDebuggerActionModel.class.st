@@ -36,10 +36,13 @@ StDebuggerActionModel >> copyStackToClipboard [
 
 { #category : #'debug - stack' }
 StDebuggerActionModel >> exceptionInContextOrNil: aContext [
-	| ex |
-	ex := aContext temporaries at: #exception ifAbsent: [ nil ].
-	ex isClass
-		ifTrue: [ ^ nil ].
+
+	| var ex |
+	self flag: #DBG_REMOVE_NIL_CHECKS.
+	var := aContext temporaryVariableNamed: #exception.
+	var ifNotNil: [ 
+		ex := var readInContext: aContext.
+		ex isClass ifTrue: [ ^ nil ] ].
 	^ ex
 ]
 
@@ -65,11 +68,16 @@ StDebuggerActionModel >> filterStack: aStack [
 
 { #category : #'debug - session' }
 StDebuggerActionModel >> implement: aMessage classified: messageCategory inClass: aClass forContext: aContext [
+
+	| method |
 	self session
 		implement: aMessage
 		classified: messageCategory
 		inClass: aClass
-		forContext: aContext
+		forContext: aContext.
+	method := aClass lookupSelector: aMessage selector.
+	method protocol = Protocol unclassified ifTrue: [ 
+		MethodClassifier classify: method ]
 ]
 
 { #category : #accessing }
@@ -80,6 +88,7 @@ StDebuggerActionModel >> interruptedContext [
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isContextSteppable [
 	self flag: 'Too complex: could we reify debugging predicates for more clarity and simplicity?'.
+	self interruptedContext ifNil:[^false].
 	^ (self isInterruptedContextError
 		or: [ self isInterruptedContextATestFailure
 				or: [ self isInterruptedContextPostMortem
@@ -96,28 +105,44 @@ StDebuggerActionModel >> isInterruptedContextATestFailure [
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextAnAssertEqualsFailure [
-	self flag: 'Way too much complex: could we reify debugging predicates for more clarity and simplicity?'.
-	^ self isInterruptedContextATestFailure
-		and: [ | failure |
-			failure := self interruptedContext temporaries
-				at: #aStringOrBlock
-				ifAbsent: [ nil ].
-			failure notNil
-				and: [ failure isString not
-						and: [ self assertEqualsSelectors includes: failure outerContext selector ] ] ]
+
+	self flag:
+		'Way too much complex: could we reify debugging predicates for more clarity and simplicity?'.
+	^ self isInterruptedContextATestFailure and: [ 
+		  | variable failure |
+		  variable := self interruptedContext temporaryVariableNamed:
+			              #aStringOrBlock.
+		  variable notNil and: [ 
+			  failure := variable readInContext: self interruptedContext.
+			  failure isString not and: [ 
+				  self assertEqualsSelectors includes:
+					  failure outerContext selector ] ] ]
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextDoesNotUnderstand [
-	^self session isInterruptedContextDoesNotUnderstand
+	self flag: #DBG_IMPROVE.
+	self flag: 'maybe move this later in debug session?'.
+	^ self session isInterruptedContextDoesNotUnderstand and: [ 
+		  | context message |
+		  context := self interruptedContext.
+		  message := (context temporaryVariableNamed: #aMessage) 
+			             readInContext: context.
+		  (self interruptedContext receiver respondsTo: message selector) not ]
 ]
 
 { #category : #'debug - predicates' }
 StDebuggerActionModel >> isInterruptedContextError [
+
+	| exception |
 	self flag:
 		'Does not pass yet: we need a secure way of knowing the session was opened from **any** kind of exception'.
-	^ (self session interruptedContext temporaryVariableNamed: #exception)
-		  notNil
+		
+	exception := self interruptedContext temporaryVariableNamed:
+		             #exception.
+	^ exception notNil and: [ 
+		  ((exception readInContext: self interruptedContext) class
+		   = MessageNotUnderstood) not ]
 ]
 
 { #category : #'debug - predicates' }

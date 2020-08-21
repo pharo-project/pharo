@@ -89,3 +89,10 @@ StDebuggerToolCommandTreeBuilderTest >> setUp [
 	rootGroup := (CmCommandGroup named: 'root') asSpecGroup.
 	builder := self newBuilder
 ]
+
+{ #category : #running }
+StDebuggerToolCommandTreeBuilderTest >> tearDown [
+	debugger ifNotNil:[debugger clear].
+	super tearDown.
+
+]

@@ -624,13 +624,13 @@ SindarinDebugger >> stepUntil: aBlock [
 { #category : #stackAccessHelpers }
 SindarinDebugger >> temporaries [
 	"Returns the temporary variables of the current stack-frame."
-
+	self flag: 'Should not be called temporaries because it is a dictionary key->values and not variables'.
 	^ self context temporaries
 ]
 
 { #category : #stackAccessHelpers }
 SindarinDebugger >> temporaryNamed: aSymbol [
-	^self temporaries at: aSymbol
+	^self context tempNamed: aSymbol
 ]
 
 { #category : #stackAccessHelpers }

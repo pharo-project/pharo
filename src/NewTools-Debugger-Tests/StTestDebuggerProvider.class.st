@@ -30,10 +30,10 @@ StTestDebuggerProvider >> debuggerWithContext: aContext [
 
 { #category : #helpers }
 StTestDebuggerProvider >> debuggerWithDNUContext [
-	[ Object new toto ]
+	[ self methodProducingDNU ]
 		on: Error
 		do: [ :err | 
-			self sessionFor: err signalerContext.
+			self sessionFor: err signalerContext copy.
 			^ self newDebugger ]
 ]
 
@@ -91,6 +91,12 @@ StTestDebuggerProvider >> debuggerWithRunnableContext [
 ]
 
 { #category : #helpers }
+StTestDebuggerProvider >> methodProducingDNU [
+
+	^ self foobar
+]
+
+{ #category : #helpers }
 StTestDebuggerProvider >> newDebugger [
 	^ StDebugger basicNew
 		session: session;
@@ -117,6 +123,42 @@ StTestDebuggerProvider >> sessionFor: aContext [
 		named: 'test session'
 		on: process
 		startedAt: aContext
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> sessionForDebuggerTests [
+
+	| context process sessionForTests |
+	context := [ 
+	           | i |
+	           i := 1 squared.
+	           i = 1 ifTrue: [ 
+		           | j |
+		           j := i + 1 ].
+	           ^ 1 + i ] asContext.
+	process := Process
+		           forContext: context
+		           priority: Processor userInterruptPriority.
+	sessionForTests := DebugSession
+		                   named: 'test session'
+		                   on: process
+		                   startedAt: context.
+	^ sessionForTests
+]
+
+{ #category : #helpers }
+StTestDebuggerProvider >> sessionWithDNUAfterStep [
+
+	| context process sessionForTests |
+	context := [ ^ self methodProducingDNU ] asContext.
+	process := Process
+		           forContext: context
+		           priority: Processor userInterruptPriority.
+	sessionForTests := DebugSession
+		                   named: 'test session'
+		                   on: process
+		                   startedAt: context.
+	^ sessionForTests
 ]
 
 { #category : #helpers }

@@ -1,6 +1,8 @@
 Class {
 	#name : #StSindarinBytecodeDebuggerPresenter,
 	#superclass : #SpPresenter,
+	#traits : 'TStDebuggerExtension',
+	#classTraits : 'TStDebuggerExtension classTrait',
 	#instVars : [
 		'bytecode',
 		'bcContextInspection',
@@ -13,10 +15,10 @@ Class {
 	#category : #'NewTools-Sindarin-Tools'
 }
 
-{ #category : #specs }
-StSindarinBytecodeDebuggerPresenter class >> debuggingExtensionToolName [
-	<debuggerExtensionOrder: 2 showByDefault: false>
-	^ 'Bytecode'
+{ #category : #'debugger extension' }
+StSindarinBytecodeDebuggerPresenter class >> defaultDisplayOrder [
+
+	^ 2
 ]
 
 { #category : #specs }
@@ -31,6 +33,11 @@ StSindarinBytecodeDebuggerPresenter class >> defaultSpec [
 { #category : #accessing }
 StSindarinBytecodeDebuggerPresenter >> debugger [ 
 	^stDebugger
+]
+
+{ #category : #'debugger extension' }
+StSindarinBytecodeDebuggerPresenter >> debuggerExtensionToolName [
+	^ 'Bytecode' 
 ]
 
 { #category : #initialization }

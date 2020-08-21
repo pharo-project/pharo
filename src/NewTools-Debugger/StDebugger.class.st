@@ -90,7 +90,6 @@ Class {
 		'Available',
 		'DefaultDebugger',
 		'ErrorRecursion',
-		'ExtensionToolsSettings',
 		'FastTDD',
 		'UsingSpecSelector'
 	],
@@ -108,23 +107,12 @@ StDebugger class >> activateDebuggerExtensions: anObject [
 	ActivateDebuggerExtensions := anObject
 ]
 
-{ #category : #'tools registry' }
+{ #category : #deprecated }
 StDebugger class >> availableAutomatically [
+	self flag: #DBG.
+	self flag: 'will be removed after Oups is integrated'.
 	"Should this debugger be taken into account when looking for a debugger to handle an exception."
 	^Available ifNil:[Available := true]
-]
-
-{ #category : #'tools registry' }
-StDebugger class >> availableExtensionToolsClassesSettings [
-	| settingToClass |
-	settingToClass := Dictionary new.
-	self collectExtendedToolsClasses
-		do: [ :toolClass | 
-			self extensionToolsSettings
-				at: toolClass debuggingExtensionToolName
-				ifPresent:
-					[ :settings | settings do: [ :s | settingToClass at: s put: toolClass ] ] ].
-	^ settingToClass 
 ]
 
 { #category : #specs }
@@ -164,75 +152,6 @@ StDebugger class >> codeLayout [
 		  yourself
 ]
 
-{ #category : #'tools registry' }
-StDebugger class >> collectExtendedToolsClasses [
-	^ self collectExtendedToolsClassesFor: self extendedToolsPragma
-]
-
-{ #category : #'tools registry' }
-StDebugger class >> collectExtendedToolsClassesFor: pragmaSelector [
-	^ (self collectExtendedToolsPragmaFor: pragmaSelector)
-		collect: [ :prg | prg methodClass soleInstance ]
-]
-
-{ #category : #'tools registry' }
-StDebugger class >> collectExtendedToolsPragmaFor: pragmaSelector [
-	self flag: 'PragmaCollector might be changed in the near future?'.
-	^ (PragmaCollector filter: [ :prg | prg selector = pragmaSelector ])
-		reset collected
-]
-
-{ #category : #settings }
-StDebugger class >> debuggerExtensionSettingsForClass: toolClass builder: aBuilder [
-	| settings |
-
-	settings := self extensionToolSettingsFor: toolClass.
-	settings
-		do: [ :s | 
-			(aBuilder group: toolClass debuggingExtensionToolName asSymbol)
-				label: toolClass debuggingExtensionToolName;
-				with: [ 
-					(aBuilder setting: #showInDebugger)
-						label: 'Show in debugger';
-						target: s;
-						default: s defaultShowInDebugger;
-						description: 'Activate the tool tab in the debugger right column.'.
-					(aBuilder pickOne: #displayOrder)
-						label: 'Position';
-						target: s;
-						default: s defaultDisplayOrder;
-						domainValues: (1 to: 100) asArray;
-						description: 'Position of the tool tab in the debugger right column.' ] ]
-]
-
-{ #category : #settings }
-StDebugger class >> debuggerExtensionSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder group: #debuggerExtensions)
-		label: 'Debugger Extensions';
-		parent: #debugging;
-		description:
-			'Tools that extend the StDebugger and appear in the right column of the debugger';
-		with: [ | settingsGroup |
-			settingsGroup := (aBuilder setting: #activateDebuggerExtensions)
-				label: 'Activate extensions';
-				target: self;
-				default: true;
-				description:
-					'(De)Activate the debugger extensions tools in the debugger right column.'.
-			self
-				debuggerExtensionsSettingsOn: aBuilder
-				parentGroup: settingsGroup ]
-]
-
-{ #category : #settings }
-StDebugger class >> debuggerExtensionsSettingsOn: aBuilder parentGroup: settingsGroup [
-	
-	settingsGroup with: [ 
-		self collectExtendedToolsClasses do: [ :toolClass | 
-			self debuggerExtensionSettingsForClass: toolClass builder: aBuilder ] ]
-]
-
 { #category : #settings }
 StDebugger class >> debuggerLayoutSettingsOn: aBuilder [
 	<systemsettings>
@@ -268,18 +187,18 @@ StDebugger class >> debuggerWithoutExtensionsSpec [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : #deprecated }
 StDebugger class >> defaultDebugger [
 	^DefaultDebugger
 ]
 
-{ #category : #settings }
+{ #category : #deprecated }
 StDebugger class >> defaultDebugger: aSymbol [
 	Available := (aSymbol = #GT) not.
 	DefaultDebugger := aSymbol 
 ]
 
-{ #category : #settings }
+{ #category : #deprecated }
 StDebugger class >> defaultDebuggerSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #defaultDebugger)
@@ -297,23 +216,8 @@ StDebugger class >> defaultSpec [
 ]
 
 { #category : #'tools registry' }
-StDebugger class >> extendedToolsPragma [	
-
-	^ #debuggerExtensionOrder:showByDefault:
-]
-
-{ #category : #'tools registry' }
-StDebugger class >> extensionToolSettingsFor: aToolClass [
-	^ self extensionToolsSettings
-		at: aToolClass debuggingExtensionToolName
-		ifAbsentPut:
-			[ StDebuggerExtensionSetting fromDebuggerExtensionClass: aToolClass ]
-]
-
-{ #category : #'tools registry' }
-StDebugger class >> extensionToolsSettings [
-	^ ExtensionToolsSettings
-		ifNil: [ ExtensionToolsSettings := Dictionary new ]
+StDebugger class >> extensionToolsClasses [
+	^TStDebuggerExtension users
 ]
 
 { #category : #settings }
@@ -345,14 +249,13 @@ StDebugger class >> handlesContext: aContext [
 ]
 
 { #category : #'tools registry' }
-StDebugger class >> hasAnyActivatedExtension [
-	^ self activateDebuggerExtensions
-		and: [ self extensionToolsSettings values
-				anySatisfy:
-					[ :toolSettings | toolSettings anySatisfy: [ :setting | setting showInDebugger ] ] ]
+StDebugger class >> hasAnyActivatedExtension: extensionsClasses [
+
+	^ extensionsClasses anySatisfy: [ :toolClass | 
+		  toolClass showInDebugger ]
 ]
 
-{ #category : #'debugger declaration' }
+{ #category : #deprecated }
 StDebugger class >> iAmADebugger [
 	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
 
@@ -389,25 +292,25 @@ StDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: a
 	^ debugger
 ]
 
-{ #category : #'class initialization' }
+{ #category : #deprecated }
 StDebugger class >> rank [
 	^ 80
 ]
 
-{ #category : #'class initialization' }
+{ #category : #deprecated }
 StDebugger class >> rankDebugSession: aDebugSession [
 	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is. Signal the DebugSessionCannotBeOpenedByThisDebugger exception if this debugger absolutely cannot debug @aDebugSession (for example if this debugger can only handle debug sessions from test executions, and @aDebugSession does not come from a test execution)"
 	"For compatibility with DebuggerSelector https://github.com/dupriezt/DebuggerSelector"
 	^ self rank.
 ]
 
-{ #category : #'tools registry' }
+{ #category : #deprecated }
 StDebugger class >> register [
 	self flag: 'Maybe this is no longer necessary now that we have DebuggerSelector?'.
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #'tools registry' }
+{ #category : #deprecated }
 StDebugger class >> registerToolsOn: registry [
 	self flag: 'Maybe this is no longer necessary now that we have DebuggerSelector?'.
 	"Add ourselves to registry. See [Smalltalk tools]" 
@@ -447,10 +350,17 @@ StDebugger class >> stackLayout [
 		yourself
 ]
 
-{ #category : #icons }
+{ #category : #deprecated }
 StDebugger class >> taskbarIconName [
 
 	^#smallDebugIcon
+]
+
+{ #category : #'tools registry' }
+StDebugger class >> usesExtensions [
+
+	^ self activateDebuggerExtensions and: [ 
+		  self hasAnyActivatedExtension: self extensionToolsClasses ]
 ]
 
 { #category : #specs }
@@ -521,7 +431,9 @@ StDebugger >> clear [
 		do: [ :page | page activePresenter windowIsClosing ].
 	extensionTools := nil.
 	self removeActionsForSession: self session.
-	self debuggerActionModel clearDebugSession
+	self debuggerActionModel clearDebugSession.
+	self unsubscribeFromSystemAnnouncer
+	
 ]
 
 { #category : #'updating widgets' }
@@ -535,6 +447,7 @@ StDebugger >> clearCode [
 
 { #category : #opening }
 StDebugger >> close [
+	self unsubscribeFromSystemAnnouncer.
 	self withWindowDo: #close
 ]
 
@@ -692,7 +605,8 @@ StDebugger >> initialExtent [
 StDebugger >> initialize [
 	super initialize.
 	self setSessionHolderSubscriptions.
-	self forceSessionUpdate
+	self forceSessionUpdate.
+	self subscribeToMethodAddedAnnouncement
 ]
 
 { #category : #initialization }
@@ -719,18 +633,15 @@ StDebugger >> initializeCode [
 
 { #category : #extensions }
 StDebugger >> initializeExtensionTools [
-	| settingsToClasses sortedSettings pages |
+
+	| sortedToolClasses pages |
 	extensionToolsNotebook := self newNotebook.
-	self class hasAnyActivatedExtension
-		ifFalse: [ ^ self ].
-	settingsToClasses := self class
-		availableExtensionToolsClassesSettings.
-	sortedSettings := SortedCollection
-		sortBlock: [ :s1 :s2 | s1 displayOrder <= s2 displayOrder ].
-	sortedSettings addAll: settingsToClasses keys.
-	sortedSettings := sortedSettings select: [ :s | s showInDebugger ].
-	pages := sortedSettings
-		collect: [ :s | self instantiateExtensionToolsPage: (settingsToClasses at: s) ].
+
+	self class usesExtensions ifFalse: [ ^ self ].
+	sortedToolClasses := SortedCollection new sortBlock: [ :s1 :s2 | s1 displayOrder <= s2 displayOrder ].
+	sortedToolClasses addAll: (self class extensionToolsClasses select: [ :s | s showInDebugger ]).
+	pages := sortedToolClasses collect: [ :toolClass | 
+		         self instantiateExtensionToolsPage: toolClass ].
 	extensionToolsNotebook pages: pages
 ]
 
@@ -826,7 +737,7 @@ StDebugger >> instantiateExtensionToolsPage: aToolClass [
 	toolInstance := self instantiate: aToolClass on: self.
 	self registerExtensionTool: toolInstance.
 	^ SpNotebookPage
-		title: aToolClass debuggingExtensionToolName
+		title: toolInstance debuggerExtensionToolName
 		provider: [ toolInstance ]
 ]
 
@@ -1089,6 +1000,15 @@ StDebugger >> stepThrough [
 	self debuggerActionModel stepThrough: self currentContext
 ]
 
+{ #category : #'system subscriptions' }
+StDebugger >> subscribeToMethodAddedAnnouncement [
+
+	SystemAnnouncer uniqueInstance weak
+		when: MethodAdded
+		send: #updateToolbarDebugActions
+		to: self
+]
+
 { #category : #api }
 StDebugger >> title [
 	^ ((self session isContextPostMortem: self interruptedContext)
@@ -1110,6 +1030,12 @@ StDebugger >> titlePrefixTextForCurrentContext [
 StDebugger >> toolbar [
 
 	^ toolbar
+]
+
+{ #category : #'system subscriptions' }
+StDebugger >> unsubscribeFromSystemAnnouncer [
+
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #'updating widgets' }
@@ -1244,7 +1170,7 @@ StDebugger >> updateTitle: statusString [
 
 { #category : #'updating widgets' }
 StDebugger >> updateToolbarDebugActions [
-	
-	toolbarCommandGroup allCommands
-		do: [ :spCommand | spCommand updateEnableStatus ]
+
+	toolbarCommandGroup allCommands do: [ :spCommand | 
+		spCommand updateEnableStatus ]
 ]
