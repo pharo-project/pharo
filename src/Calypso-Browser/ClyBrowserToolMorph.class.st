@@ -434,8 +434,10 @@ ClyBrowserToolMorph >> isBuilt [
 ClyBrowserToolMorph >> isCommandAvailable: aCommand [
 	"A double dispatch mechanism to allow tools to validate commands that can be 
 	 executed on it. Subclasses can override me to perform the proper dispatch."
+	"Previous definition was: aCommand canBeExecutedInTool: self but it led to an error 
+	since canBeExecutedInTool: did not exist"
 	
-	^ aCommand canBeExecutedInTool: self
+	^ true
 ]
 
 { #category : #testing }

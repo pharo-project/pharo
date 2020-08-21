@@ -30,7 +30,7 @@ ClyRequestMethodTagForEditorCommand >> execute [
 	tagEditor requestChangeBy: [ tagEditor requestTag] 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #execution }
 ClyRequestMethodTagForEditorCommand >> readParametersFromContext: aToolContext [
 
 	menuItemName := aToolContext tool hasUnacceptedEdits 
