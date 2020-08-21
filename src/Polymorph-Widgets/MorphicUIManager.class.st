@@ -574,7 +574,7 @@ MorphicUIManager >> onPrimitiveError: aString [
 					20
 						timesRepeat: [context == nil
 								ifFalse: [s cr; print: (context := context sender)]]].
-	Transcripter askForEmergencyEvaluatorOrExitWithText: message.
+	Stdio stderr << message.
 	"init hands and redisplay" 
 	self currentWorld install
 

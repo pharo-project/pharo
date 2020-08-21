@@ -69,14 +69,13 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						label: 'Workspace';
 						default: (self environment at: #StPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
-
 		with: [ 
-					(aBuilder pickOne: #messageListTool)
+					(aBuilder pickOne: #debuggerTool)
 						target: Smalltalk;
 						targetSelector: #tools;
-						label: 'Messagelist';
-						default: (self environment at: #ClyOldMessageBrowserAdapter);
-						domainValues: Smalltalk tools recentMessageListTools ];
+						label: 'Debugger';
+						default: (self environment at: #GTGenericStackDebugger);
+						domainValues: Smalltalk tools recentDebuggerTools ];
 		with: [ 
 					(aBuilder pickOne: #versionBrowserTool)
 						target: Smalltalk;
@@ -289,11 +288,6 @@ PharoCommonTools >> recentFileListTools [
 { #category : #registration }
 PharoCommonTools >> recentInspectorTools [
 	^ self recentToolsFor: #inspector
-]
-
-{ #category : #registration }
-PharoCommonTools >> recentMessageListTools [
-	^ self recentToolsFor: #messageList
 ]
 
 { #category : #registration }

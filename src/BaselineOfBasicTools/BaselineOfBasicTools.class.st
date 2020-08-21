@@ -82,7 +82,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Pharo-Help'.
 		spec package: 'ProfStef-Core'.
 		spec package: 'ProfStef-Help'.
-		spec package: 'RecentSubmissions'.
 		spec package: 'Refactoring-Changes'.
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
