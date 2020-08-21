@@ -45,7 +45,7 @@ GTSpotterTest >> testEmptyTextInput [
 ]
 
 { #category : #tests }
-GTSpotterTest >> testHistorizingTheSameObjectRemovesPreviousOccurences [
+GTSpotterTest >> testHistorizingTheSameObjectRemovesPreviousOccurrences [
 	| history |
 	history := OrderedCollection new.
 	spotter := GTSpotter new history: history.
