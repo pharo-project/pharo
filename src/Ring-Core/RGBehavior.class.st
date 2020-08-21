@@ -1040,7 +1040,7 @@ RGBehavior >> slotDefinitionString [
 				str nextPutAll: slot definitionString.
 				special := slot isSpecial]				
 			separatedBy: [ 
-				str nextPutAll: '. '.  
+				str nextPutAll: ' . '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 

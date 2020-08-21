@@ -112,7 +112,7 @@ RGClassStrategy >> classVariableDefinitionString [
 				str nextPutAll: global definitionString.
 				special := global isSpecial]				
 			separatedBy: [ 
-				str nextPutAll: '. '.  
+				str nextPutAll: ' . '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
 ]
