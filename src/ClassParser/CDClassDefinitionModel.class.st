@@ -1,8 +1,10 @@
 "
+I'm a simple object holding a code piece.
+
 ```
 | code |
 code := Point definition.
-TextModel new
+CDClassDefinitionModel new
 	text: code;
 	title: 'Test';
 	beForCode;
