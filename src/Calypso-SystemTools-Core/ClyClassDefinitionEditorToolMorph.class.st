@@ -16,8 +16,8 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 	newClass := browser compileANewClassFrom: self pendingText asString notifying: textMorph startingFrom: editingClass.
 	newClass ifNil: [ ^false ].
 	
-	editingClass == newClass ifFalse: [ 
-		self removeFromBrowser].
+	editingClass == newClass 
+		ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
 	^true
 	
@@ -33,12 +33,11 @@ ClyClassDefinitionEditorToolMorph >> createTextContext [
 { #category : #building }
 ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	| title |
-	
 	super decorateContainerTab.
 	title := editingClass name.
 
-	editingClass isClassSide ifTrue: [ 
-		title := title asText allBold ].
+	editingClass isClassSide 
+		ifTrue: [ title := title asText allBold ].
 
 	containerTab label: title
 ]
@@ -50,14 +49,13 @@ ClyClassDefinitionEditorToolMorph >> defaultIconName [
 
 { #category : #accessing }
 ClyClassDefinitionEditorToolMorph >> editingText [
-	self flag: #pharoTodo.
+	
 	^ editingClass definition
 ]
 
 { #category : #building }
 ClyClassDefinitionEditorToolMorph >> fillStatusBar [ 
 	super fillStatusBar.
-	
 	statusBar addCommandItem: (ClySlotClassDefinitionSwitchMorph for: self)
 ]
 
@@ -69,7 +67,7 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 
 { #category : #accessing }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
-	^CDClassDefinitionParser parse: self editingText
+	^ CDClassDefinitionParser parse: self editingText
 ]
 
 { #category : #'selecting text' }
@@ -99,7 +97,7 @@ ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
 
 { #category : #initialization }
 ClyClassDefinitionEditorToolMorph >> setUpModelFromContext [
-	super setUpModelFromContext.
 
+	super setUpModelFromContext.
 	editingClass := context selectedClassSide
 ]
