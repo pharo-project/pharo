@@ -89,7 +89,7 @@ TCopySequenceableWithReplacement >> test0FixtureCopyWithReplacementTest [
 ]
 
 { #category : #'tests - copying with replacement' }
-TCopySequenceableWithReplacement >> testCopyReplaceAllWith1Occurence [
+TCopySequenceableWithReplacement >> testCopyReplaceAllWith1Occurrence [
 	| result  firstIndexesOfOccurrence index endPartIndexResult endPartIndexCollection |
 	
 	result := self collectionWith1TimeSubcollection  copyReplaceAll: self oldSubCollection with: self replacementCollection .
@@ -131,7 +131,7 @@ TCopySequenceableWithReplacement >> testCopyReplaceAllWith1Occurence [
 ]
 
 { #category : #'tests - copying with replacement' }
-TCopySequenceableWithReplacement >> testCopyReplaceAllWithManyOccurence [
+TCopySequenceableWithReplacement >> testCopyReplaceAllWithManyOccurrence [
 	| result firstIndexesOfOccurrence resultBetweenPartIndex collectionBetweenPartIndex diff |
 	" testing fixture here as this method may be not used for collection that can't contain equals element :"
 	self collectionWith2TimeSubcollection.
