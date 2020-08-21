@@ -34,7 +34,7 @@ SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandler
 ]
 
 { #category : #tests }
-SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategoriesShoudlLastClassRegistrationBeTheOnlyOccurenceInStartupList [
+SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategoriesShoudlLastClassRegistrationBeTheOnlyOccurrenceInStartupList [
 
 	manager registerSystemClassNamed: #Foo.
 	manager registerSystemClassNamed: #Bar.
