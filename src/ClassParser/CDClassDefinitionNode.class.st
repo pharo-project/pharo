@@ -7,7 +7,8 @@ Class {
 		'superclassNameNode',
 		'packageNameNode',
 		'sharedPools',
-		'superclassName'
+		'superclassName',
+		'tag'
 	],
 	#category : #'ClassParser-Model'
 }
@@ -109,4 +110,16 @@ CDClassDefinitionNode >> superclassNameNode [
 { #category : #accessing }
 CDClassDefinitionNode >> superclassNameNode: anObject [
 	superclassNameNode := anObject
+]
+
+{ #category : #accessing }
+CDClassDefinitionNode >> tag [
+
+	^ tag 
+]
+
+{ #category : #accessing }
+CDClassDefinitionNode >> tag: aString [
+
+	tag := aString
 ]
