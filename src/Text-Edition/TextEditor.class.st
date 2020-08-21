@@ -1652,7 +1652,7 @@ TextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchB
 	oldSelectionInterval := self selectionInterval.
 	self selectInvisiblyFrom: anIndex to: anIndex - 1.
 	where :=  searchBackwards
-		ifTrue: [self findAndSelectPreviousOccurenceOf: aRegex]
+		ifTrue: [self findAndSelectPreviousOccurrenceOf: aRegex]
 		ifFalse: [self findAndSelectNextOccurenceOf: aRegex].
 	where ifNil: [self selectInterval: oldSelectionInterval].
 	^ where
@@ -1668,7 +1668,7 @@ TextEditor >> findAndSelectNextOccurenceOf: aRegex [
 ]
 
 { #category : #'find-select' }
-TextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
+TextEditor >> findAndSelectPreviousOccurrenceOf: aRegex [
 
 	| where |
 
