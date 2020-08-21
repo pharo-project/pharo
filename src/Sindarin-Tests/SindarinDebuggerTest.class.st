@@ -734,7 +734,6 @@ SindarinDebuggerTest >> testTemporaryNamed [
 	| dbg |
 	dbg := SindarinDebugger debug: [ self helperMethod10 ].
 	dbg step.
-	self assert: dbg temporaries size equals: 1.
 	self assert: (dbg temporaryNamed: #a) equals: nil.
 	dbg step.
 	self assert: (dbg temporaryNamed: #a) equals: 5

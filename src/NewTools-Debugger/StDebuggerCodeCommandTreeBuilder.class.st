@@ -71,8 +71,11 @@ StDebuggerCodeCommandTreeBuilder >> codeExecutionControlCommandsClasses [
 
 { #category : #'accessing - commands classes' }
 StDebuggerCodeCommandTreeBuilder >> codeExtensionCommandsClasses [
+
 	| extensionPragmas |
-	extensionPragmas := StDebugger
-		collectExtendedToolsPragmaFor: #codeExtensionDebugCommand:.
+	extensionPragmas := (PragmaCollector filter: [ :prag | 
+		                     prag selector = #codeExtensionDebugCommand: ])
+		                    reset collected.
+
 	^ extensionPragmas collect: [ :prg | prg methodClass soleInstance ]
 ]

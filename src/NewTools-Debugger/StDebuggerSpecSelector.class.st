@@ -62,15 +62,17 @@ StDebuggerSpecSelector >> isDefaultSelector: aSelector [
 
 { #category : #'specs - selectors' }
 StDebuggerSpecSelector >> selectExtensionActivationSpecFrom: aDefaultSpecSelector [
+
 	"Altered depending on the current configuration of the debugger extensions.
 	The selection just adds or remove the extensions from the spec selector"
 
 	self class defaultDebuggerWithoutExtensionSpecSelector
-		= aDefaultSpecSelector
-		ifTrue: [ ^ aDefaultSpecSelector ].
+	= aDefaultSpecSelector ifTrue: [ ^ aDefaultSpecSelector ].
 	^ self
-		selectorForDebuggerStatus: self debuggerClass activateDebuggerExtensions
-		extensionsStatus: self debuggerClass hasAnyActivatedExtension
+		  selectorForDebuggerStatus:
+		  self debuggerClass activateDebuggerExtensions
+		  extensionsStatus: (self debuggerClass hasAnyActivatedExtension:
+				   self debuggerClass extensionToolsClasses)
 ]
 
 { #category : #'specs - selectors' }
