@@ -198,6 +198,12 @@ BaselineOfIDE >> baseline: spec [
 			
 		spec baseline: 'Microdown' with: [ spec 
 				repository: self packageRepositoryURL ].
+	
+		spec 
+  			baseline: 'Roassal3' 
+  			with: [ spec 
+						repository: 'github://ObjectProfile/Roassal3:v0.9.2';
+    					load: #( 'Core' 'Tests') ].
 
 		spec package: 'Pharo-WelcomeHelp' ]
 ]
