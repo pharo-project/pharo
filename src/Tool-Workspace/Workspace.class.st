@@ -161,7 +161,7 @@ Workspace >> contents: aString [
 Workspace >> createTextView [
 	| v |
 	v := textModel newScrolledText
-		withRuler: RubWorkspaceBar new;
+		withRuler: RubWorkspaceBarRuler new;
 		beWrapped;
 		yourself.
 	v announcer when: RubTextAccepted send: #whenTextAccepted: to: self.

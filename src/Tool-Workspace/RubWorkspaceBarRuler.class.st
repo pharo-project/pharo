@@ -2,7 +2,7 @@
 A bottom bar to change the editing mode, switch with/without line numbers and switch wrapping mode
 "
 Class {
-	#name : #RubWorkspaceBar,
+	#name : #RubWorkspaceBarRuler,
 	#superclass : #RubScrolledTextSideRuler,
 	#traits : 'TRubWithWrapPolicy + (TRubWithLineNumber - {#fontToUse})',
 	#classTraits : 'TRubWithWrapPolicy classTrait + TRubWithLineNumber classTrait',
@@ -16,56 +16,56 @@ Class {
 }
 
 { #category : #querying }
-RubWorkspaceBar class >> key [
+RubWorkspaceBarRuler class >> key [
 	^ #workspaceBar
 ]
 
 { #category : #accessing }
-RubWorkspaceBar >> backgroundColor [
+RubWorkspaceBarRuler >> backgroundColor [
 	^ self paragraphProvider backgroundColor darker
 ]
 
 { #category : #'managing editing mode' }
-RubWorkspaceBar >> chooseEditingMode: anEvent [
+RubWorkspaceBarRuler >> chooseEditingMode: anEvent [
 	self modeListMenu invokeAt: anEvent position in: self world.
 	self updateContents
 ]
 
 { #category : #geometry }
-RubWorkspaceBar >> computedHeightFrom: aRectangle [
+RubWorkspaceBarRuler >> computedHeightFrom: aRectangle [
 	^ row ifNil: [0] ifNotNil: [row height]
 ]
 
 { #category : #geometry }
-RubWorkspaceBar >> computedWidthFrom: aRectangle [
+RubWorkspaceBarRuler >> computedWidthFrom: aRectangle [
 	^ aRectangle width
 ]
 
 { #category : #'managing editing mode' }
-RubWorkspaceBar >> editingModeLabel [
+RubWorkspaceBarRuler >> editingModeLabel [
 	^ self paragraphProvider editingMode label
 ]
 
 { #category : #'managing editing mode' }
-RubWorkspaceBar >> editingModeLabelMorph [
+RubWorkspaceBarRuler >> editingModeLabelMorph [
 	^ StringMorph
 		contents: self editingModeLabel
 		font: self fontToUse
 ]
 
 { #category : #initialization }
-RubWorkspaceBar >> initialize [
+RubWorkspaceBarRuler >> initialize [
 	super initialize.
 	self side: #bottom
 ]
 
 { #category : #accessing }
-RubWorkspaceBar >> level [
+RubWorkspaceBarRuler >> level [
 	^ 1
 ]
 
 { #category : #geometry }
-RubWorkspaceBar >> manageLayoutInBounds: aRectangle [
+RubWorkspaceBarRuler >> manageLayoutInBounds: aRectangle [
 	| ret |
 	ret := super manageLayoutInBounds: aRectangle.
 	self updateContents.
@@ -73,7 +73,7 @@ RubWorkspaceBar >> manageLayoutInBounds: aRectangle [
 ]
 
 { #category : #'managing editing mode' }
-RubWorkspaceBar >> modeListMenu [
+RubWorkspaceBarRuler >> modeListMenu [
 	"Answer the menu to be presented to select an editing mode"
 
 	| menu |
@@ -84,7 +84,7 @@ RubWorkspaceBar >> modeListMenu [
 ]
 
 { #category : #'submorphs-accessing' }
-RubWorkspaceBar >> noteNewOwner: aMorph [
+RubWorkspaceBarRuler >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.
 	self paragraphProvider beForSmalltalkScripting.
@@ -110,7 +110,7 @@ RubWorkspaceBar >> noteNewOwner: aMorph [
 ]
 
 { #category : #private }
-RubWorkspaceBar >> spacer: anInteger [
+RubWorkspaceBarRuler >> spacer: anInteger [
 	^ Morph new
 		borderWidth: 0;
 		color: Color transparent;
@@ -118,23 +118,23 @@ RubWorkspaceBar >> spacer: anInteger [
 ]
 
 { #category : #'managing editing mode' }
-RubWorkspaceBar >> switchToPlainTextMode [
+RubWorkspaceBarRuler >> switchToPlainTextMode [
 	self paragraphProvider beForPlainText 
 ]
 
 { #category : #'managing editing mode' }
-RubWorkspaceBar >> switchToSmalltalkScriptingMode [
+RubWorkspaceBarRuler >> switchToSmalltalkScriptingMode [
 	self paragraphProvider beForSmalltalkScripting 
 ]
 
 { #category : #accessing }
-RubWorkspaceBar >> textColor [
+RubWorkspaceBarRuler >> textColor [
 	^ self textArea lineNumbersTextColor muchDarker
 
 ]
 
 { #category : #'event handling' }
-RubWorkspaceBar >> updateContents [
+RubWorkspaceBarRuler >> updateContents [
 	row ifNil: [ ^self ].
 	wrappingPolicyMorph contents: self wrappingPolicyLabel.
 	editingModeMorph contents: self editingModeLabel.
