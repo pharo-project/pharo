@@ -601,7 +601,7 @@ SequenceableCollection >> combinationsAt: jj in: aCollection after: nn do: aBloc
 
 { #category : #copying }
 SequenceableCollection >> copyAfter: anElement [
-	"Answer a copy of the receiver from after the first occurence
+	"Answer a copy of the receiver from after the first occurrence
 	of anElement up to the end. If no such element exists, answer 
 	an empty copy."
 
@@ -610,7 +610,7 @@ SequenceableCollection >> copyAfter: anElement [
 
 { #category : #copying }
 SequenceableCollection >> copyAfterLast: anElement [
-	"Answer a copy of the receiver from after the last occurence
+	"Answer a copy of the receiver from after the last occurrence
 	of anElement up to the end. If no such element exists, answer 
 	an empty copy."
 
@@ -1259,7 +1259,7 @@ SequenceableCollection >> indexOf: anElement [
 
 { #category : #accessing }
 SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock [
-	"Answer the index of the first occurence of anElement within the  
+	"Answer the index of the first occurrence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the 
 	result of evaluating the argument, exceptionBlock."
 	"(#(a b c d e) indexOf: #c ifAbsent: 7) >>> 3"
@@ -1270,7 +1270,7 @@ SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock [
 
 { #category : #accessing }
 SequenceableCollection >> indexOf: anElement startingAt: start [
-       "Answer the index of the first occurence of anElement after start within the receiver. If the receiver does not contain anElement, answer 0."
+       "Answer the index of the first occurrence of anElement after start within the receiver. If the receiver does not contain anElement, answer 0."
 	"(#(a b c d e) indexOf: #c startingAt: 2) >>> 3" 
 	"(#(a b c d e) indexOf: #c startingAt: 4) >>> 0"
 
@@ -1279,7 +1279,7 @@ SequenceableCollection >> indexOf: anElement startingAt: start [
 
 { #category : #accessing }
 SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
-	"Answer the index of the first occurence of anElement after start
+	"Answer the index of the first occurrence of anElement after start
 	within the receiver. If the receiver does not contain anElement, 
 	answer the 	result of evaluating the argument, exceptionBlock."
 	"(#(a b c d e) indexOf: #c startingAt: 2 ifAbsent: 7) >>> 3" 
@@ -1293,7 +1293,7 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 
 { #category : #accessing }
 SequenceableCollection >> indexOfAnyOf: aCollection [
-	"Answer the index of the first occurence of any element included in aCollection within the receiver.
+	"Answer the index of the first occurrence of any element included in aCollection within the receiver.
 	If the receiver does not contain anElement, answer zero, which is an invalid index."
 	"(#(a b c d e) indexOfAnyOf: #(x y c)) >>> 3"
 	"(#(a b c d e) indexOfAnyOf: #(x y z)) >>> 0"
@@ -1303,7 +1303,7 @@ SequenceableCollection >> indexOfAnyOf: aCollection [
 
 { #category : #accessing }
 SequenceableCollection >> indexOfAnyOf: aCollection ifAbsent: exceptionBlock [
-	"Answer the index of the first occurence of any element included in aCollection within the receiver.
+	"Answer the index of the first occurrence of any element included in aCollection within the receiver.
 	If the receiver does not contain anElement, answer the result of evaluating the argument, exceptionBlock."
 	"(#(a b c d e) indexOfAnyOf: #(x y c) ifAbsent: 7) >>> 3"
 	"(#(a b c d e) indexOfAnyOf: #(x y z) ifAbsent: 7) >>> 7"
@@ -1313,7 +1313,7 @@ SequenceableCollection >> indexOfAnyOf: aCollection ifAbsent: exceptionBlock [
 
 { #category : #accessing }
 SequenceableCollection >> indexOfAnyOf: aCollection startingAt: start [
-	"Answer the index of the first occurence of any element included in aCollection after start within the receiver.
+	"Answer the index of the first occurrence of any element included in aCollection after start within the receiver.
 	If the receiver does not contain anElement, answer zero, which is an invalid index."
 	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 2) >>> 3"
 	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 4) >>> 0"
@@ -1323,7 +1323,7 @@ SequenceableCollection >> indexOfAnyOf: aCollection startingAt: start [
 
 { #category : #accessing }
 SequenceableCollection >> indexOfAnyOf: aCollection startingAt: start ifAbsent: exceptionBlock [
-	"Answer the index of the first occurence of any element included in aCollection after start within the receiver.
+	"Answer the index of the first occurrence of any element included in aCollection after start within the receiver.
 	If the receiver does not contain anElement, answer the result of evaluating the argument, exceptionBlock.
 	Note: it is user responsibility to provide aCollection that behaves relatevily fast when asked for includes: (like a Set)"
 	"(#(a b c d e) indexOfAnyOf: #(x y c) startingAt: 2 ifAbsent: 7) >>> 3"
@@ -1486,7 +1486,7 @@ SequenceableCollection >> last: n [
 
 { #category : #accessing }
 SequenceableCollection >> lastIndexOf: anElement [
-	"Answer the index of the last occurence of anElement within the 
+	"Answer the index of the last occurrence of anElement within the 
 	receiver. If the receiver does not contain anElement, answer 0."
 	"(#(a b a d a) lastIndexOf: #a) >>> 5"
 	"(#(a b a d e) lastIndexOf: #a) >>> 3"
@@ -1496,7 +1496,7 @@ SequenceableCollection >> lastIndexOf: anElement [
 
 { #category : #accessing }
 SequenceableCollection >> lastIndexOf: anElement ifAbsent: exceptionBlock [
-	"Answer the index of the last occurence of anElement within the  
+	"Answer the index of the last occurrence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
 	"(#(a b a d a) lastIndexOf: #a ifAbsent: 7) >>> 5"
@@ -1507,7 +1507,7 @@ SequenceableCollection >> lastIndexOf: anElement ifAbsent: exceptionBlock [
 
 { #category : #accessing }
 SequenceableCollection >> lastIndexOf: anElement startingAt: lastIndex ifAbsent: exceptionBlock [
-	"Answer the index of the last occurence of anElement within the  
+	"Answer the index of the last occurrence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
 	"(#(a b a d a) lastIndexOf: #a startingAt: 1 ifAbsent: 7) >>> 1"
@@ -1521,7 +1521,7 @@ SequenceableCollection >> lastIndexOf: anElement startingAt: lastIndex ifAbsent:
 
 { #category : #accessing }
 SequenceableCollection >> lastIndexOfAnyOf: aCollection startingAt: lastIndex ifAbsent: exceptionBlock [
-	"Answer the index of the last occurence of anElement within the  
+	"Answer the index of the last occurrence of anElement within the  
 	receiver. If the receiver does not contain anElement, answer the
 	result of evaluating the argument, exceptionBlock."
 	"(#(a b a d a) lastIndexOfAnyOf: #(a b) startingAt: 1 ifAbsent: 7) >>> 1"
@@ -1907,7 +1907,7 @@ SequenceableCollection >> replace: aBlock [
 
 { #category : #accessing }
 SequenceableCollection >> replaceAll: oldObject with: newObject [ 
-	"Replace all occurences of oldObject with newObject"
+	"Replace all occurrences of oldObject with newObject"
 	"(#(a b a d a) replaceAll: #a with: #e) >>> #(e b e d e)"
 	
 	| index |

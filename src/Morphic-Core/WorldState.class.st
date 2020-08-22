@@ -320,7 +320,7 @@ WorldState >> adjustAlarmTimes: nowTime [
 
 { #category : #stepping }
 WorldState >> adjustWakeupTimes: now [
-	"Fix the wakeup times in my step list. This is necessary when this world has been restarted after a pause, say because some other view had control, after a snapshot, or because the millisecond clock has wrapped around. (The latter is a rare occurence with a 32-bit clock!)"
+	"Fix the wakeup times in my step list. This is necessary when this world has been restarted after a pause, say because some other view had control, after a snapshot, or because the millisecond clock has wrapped around. (The latter is a rare occurrence with a 32-bit clock!)"
 	| deltaTime |
 	deltaTime := now - lastStepTime.
 	stepList do:[:entry| entry scheduledTime: entry scheduledTime + deltaTime].
@@ -330,7 +330,7 @@ WorldState >> adjustWakeupTimes: now [
 
 { #category : #stepping }
 WorldState >> adjustWakeupTimesIfNecessary [
-	"Fix the wakeup times in my step list if necessary. This is needed after a snapshot, after a long pause (say because some other view had control or because the user was selecting from an MVC-style menu) or when the millisecond clock wraps around (a very rare occurence with a 32-bit clock!)."
+	"Fix the wakeup times in my step list if necessary. This is needed after a snapshot, after a long pause (say because some other view had control or because the user was selecting from an MVC-style menu) or when the millisecond clock wraps around (a very rare occurrence with a 32-bit clock!)."
 
 	| now |
 	now := Time millisecondClockValue.
