@@ -342,8 +342,9 @@ DialogItemsChooserUI >> cancelButtonState [
 
 { #category : #display }
 DialogItemsChooserUI >> centering [
-	self left: ((self world width / 2) - (self width /2)) rounded.
-	self top: ((self world height / 2) - (self height /2)) rounded
+
+	self left: ((ActiveWorld width / 2) - (self width /2)) rounded.
+	self top: ((ActiveWorld height / 2) - (self height /2)) rounded
 ]
 
 { #category : #accessing }
