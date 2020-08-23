@@ -75,12 +75,6 @@ ClyClassEditorToolMorph >> editingClass: anObject [
 	editingClass := anObject
 ]
 
-{ #category : #accessing }
-ClyClassEditorToolMorph >> editingMode [
-	^ RubSmalltalkCommentMode new
-	
-]
-
 { #category : #testing }
 ClyClassEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 
