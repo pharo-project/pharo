@@ -1,7 +1,7 @@
 Class {
 	#name : #SemanticMessageIconStyler,
-	#superclass : #IconStylerRealTime,
-	#category : #'Reflectivity-Tools-RealTimeStyling'
+	#superclass : #IconStyler,
+	#category : #'Reflectivity-Tools-ErrorAndSemanticStyling'
 }
 
 { #category : #styling }
@@ -44,5 +44,5 @@ SemanticMessageIconStyler >> iconLabel: aNode [
 
 { #category : #testing }
 SemanticMessageIconStyler >> shouldStyleNode: aNode [
-	^aNode isMessage and: [ (Symbol findInternedSelector: aNode selector value asString) isNil ]
+	^ aNode isMessage and: [ (Symbol findInternedSelector: aNode selector value asString) isNil ]
 ]

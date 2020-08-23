@@ -1,12 +1,12 @@
 Class {
 	#name : #SemanticVariableIconStyler,
-	#superclass : #IconStylerRealTime,
-	#category : #'Reflectivity-Tools-RealTimeStyling'
+	#superclass : #IconStyler,
+	#category : #'Reflectivity-Tools-ErrorAndSemanticStyling'
 }
 
 { #category : #styling }
 SemanticVariableIconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
-	|conf|
+	| conf |
 	(self shouldStyleNode: aNode) ifFalse: [ ^self ].
 	conf := RubConfigurationChange new.
 	conf configurationBlock: [ :text| |r| 

@@ -179,12 +179,12 @@ VersionBrowser >> initializeWindow: aWindowPresenter [
 
 { #category : #private }
 VersionBrowser >> installIconStylerFor: anItem [
-	"icons styler are only supported for method definitions (not nil / not for comment definitions    
-	 (those may occure for comment or general string searches)) and in the case the source presenter is not a diff"
+	"Icon stylers are only supported for method definitions (not nil / not for comment definitions (those may occur for comment or general string searches)) and in the case the source presenter is not a diff"
 
 	((self isMethodDefinition: anItem) or: [ isShowingDiff not ]) ifFalse: [ ^ self ].
-
-	IconStyler styleText: sourcePresenter withAst: anItem ast
+	IconStyler withStaticStylers 
+		styleText: sourcePresenter withAst: anItem ast
+		
 ]
 
 { #category : #accessing }

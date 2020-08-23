@@ -1,7 +1,7 @@
 Class {
 	#name : #ErrorNodeStyler,
-	#superclass : #IconStylerRealTime,
-	#category : #'Reflectivity-Tools-RealTimeStyling'
+	#superclass : #IconStyler,
+	#category : #'Reflectivity-Tools-ErrorAndSemanticStyling'
 }
 
 { #category : #styling }
@@ -28,7 +28,7 @@ ErrorNodeStyler >> borderColor [
 	^Color red
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'for demo' }
 ErrorNodeStyler >> demo [
 	"statements mes; 2; isNil".
 ]
