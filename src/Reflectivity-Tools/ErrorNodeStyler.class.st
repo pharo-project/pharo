@@ -1,34 +1,15 @@
 Class {
 	#name : #ErrorNodeStyler,
-	#superclass : #IconStylerRealTime,
-	#category : #'Reflectivity-Tools-RealTimeStyling'
+	#superclass : #IconStyler,
+	#category : #'Reflectivity-Tools-ErrorAndSemanticStyling'
 }
-
-{ #category : #styling }
-ErrorNodeStyler >> addIconStyle: aNode from: start to: stop color: aColor [
-	|conf|
-	(self shouldStyleNode: aNode) ifFalse: [ ^self ].
-	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text| |r| 
-		r := RubUnderlinedSegmentMorph from: aNode start to: aNode stop + 1.
-		text addSegment: r.
-		
-		r label: (self iconLabelBlock: aNode).
-		r icon: (self iconFor: aNode).
-		r iconBlock: (self iconBlock: aNode).
-		r color: aColor.
-		r borderColor: self borderColor.
-	].
-
-	textModel announce: conf.
-]
 
 { #category : #defaults }
 ErrorNodeStyler >> borderColor [ 
 	^Color red
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'for demo' }
 ErrorNodeStyler >> demo [
 	"statements mes; 2; isNil".
 ]
@@ -46,6 +27,12 @@ ErrorNodeStyler >> iconFor: aNode [
 { #category : #defaults }
 ErrorNodeStyler >> iconLabel: aNode [
 	^ aNode errorMessage.
+]
+
+{ #category : #hooks }
+ErrorNodeStyler >> segmentMorphClass [
+
+	^ RubUnderlinedSegmentMorph
 ]
 
 { #category : #visiting }

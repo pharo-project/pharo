@@ -6,26 +6,25 @@ Class {
 	#name : #IconStyler,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'textModel'
+		'textModel',
+		'stylerClasses'
 	],
 	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
-{ #category : #options }
-IconStyler class >> shouldStyle [
-	^true
-]
-
 { #category : #style }
-IconStyler class >> style: textModel [
-	^self new textModel: textModel.
-]
+IconStyler class >> withStaticStylers [
+	"Configure the receiver to invoke several static stylers. Now it is probably better to use the instance API:
+	
+	IconStyler new
+		stylerClasses: { YourLovelyStyler };
+		styleText: aTextModel withAST: anAST
+	"
+	
+	^ self new 
+		stylerClasses:  {BreakpointIconStyler. CounterIconStyler. DoOnlyOnceIconStyler. FlagIconStyler. HaltIconStyler. MetaLinkIconStyler. SemanticWarningIconStyler. WatchIconStyler. MetalinkIconStyler. DocCommentIconStyler}; 
+		yourself
 
-{ #category : #api }
-IconStyler class >> styleText: textModel withAst: ast [
-	self allSubclassesDo: [ :styleClass | 
-			styleClass shouldStyle
-				ifTrue: [ ast acceptVisitor: (styleClass style: textModel) ] ]
 ]
 
 { #category : #styling }
@@ -46,20 +45,19 @@ IconStyler >> addIconStyle: aNode from: start to: stop [
 
 { #category : #styling }
 IconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
-	|conf|
-	(self shouldStyleNode: aNode) ifFalse: [ ^self ].
+
+	| conf |
+	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
 	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text| |r| 
-		r := RubTextSegmentMorph from: start to: stop + 1.
+	conf configurationBlock: [ :text | 
+		| r |
+		r := self segmentMorphClass from: start to: stop + 1.
 		text addSegment: r.
-		
 		r label: (self iconLabelBlock: aNode).
 		r icon: (self iconFor: aNode).
 		r iconBlock: (self iconBlock: aNode).
 		r color: aColor.
-		r borderColor: self borderColor.
-	].
-
+		r borderColor: self borderColor ].
 	textModel announce: conf
 ]
 
@@ -93,9 +91,52 @@ IconStyler >> iconLabelBlock: aNode [
 	^ [self iconLabel: aNode]
 ]
 
+{ #category : #initialization }
+IconStyler >> initialize [
+	super initialize.
+	self resetStylerClasses
+]
+
+{ #category : #initialization }
+IconStyler >> resetStylerClasses [
+	stylerClasses := OrderedCollection new
+]
+
+{ #category : #hooks }
+IconStyler >> segmentMorphClass [
+
+	^ RubTextSegmentMorph
+]
+
 { #category : #testing }
 IconStyler >> shouldStyleNode: aNode [
 	^false 
+]
+
+{ #category : #styling }
+IconStyler >> styleAst: ast [
+	"Style the AST using the textmodel of the receiver. Ask all the registered stylers to act."
+	
+	stylerClasses do: [ :styleClass | 
+			ast acceptVisitor: (styleClass new textModel: textModel) ]
+]
+
+{ #category : #styling }
+IconStyler >> styleText: aTextModel withAst: ast [
+	"style the AST using the textmodel passed as first argument. Ask all the registered stylers to act."
+	
+	stylerClasses do: [ :styleClass | 
+		 ast acceptVisitor: (styleClass new textModel: aTextModel) ]
+]
+
+{ #category : #accessing }
+IconStyler >> stylerClasses [
+	^ stylerClasses
+]
+
+{ #category : #accessing }
+IconStyler >> stylerClasses: anObject [
+	stylerClasses := anObject
 ]
 
 { #category : #accessing }
