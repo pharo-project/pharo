@@ -45,20 +45,19 @@ IconStyler >> addIconStyle: aNode from: start to: stop [
 
 { #category : #styling }
 IconStyler >> addIconStyle: aNode from: start to: stop color: aColor [
-	|conf|
-	(self shouldStyleNode: aNode) ifFalse: [ ^self ].
+
+	| conf |
+	(self shouldStyleNode: aNode) ifFalse: [ ^ self ].
 	conf := RubConfigurationChange new.
-	conf configurationBlock: [ :text| |r| 
-		r := RubTextSegmentMorph from: start to: stop + 1.
+	conf configurationBlock: [ :text | 
+		| r |
+		r := self segmentMorphClass from: start to: stop + 1.
 		text addSegment: r.
-		
 		r label: (self iconLabelBlock: aNode).
 		r icon: (self iconFor: aNode).
 		r iconBlock: (self iconBlock: aNode).
 		r color: aColor.
-		r borderColor: self borderColor.
-	].
-
+		r borderColor: self borderColor ].
 	textModel announce: conf
 ]
 
@@ -101,6 +100,12 @@ IconStyler >> initialize [
 { #category : #initialization }
 IconStyler >> resetStylerClasses [
 	stylerClasses := OrderedCollection new
+]
+
+{ #category : #hooks }
+IconStyler >> segmentMorphClass [
+
+	^ RubTextSegmentMorph
 ]
 
 { #category : #testing }
