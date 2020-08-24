@@ -26,16 +26,14 @@ ReExceptionProperty class >> for: anEntity with: anException [
 { #category : #actions }
 ReExceptionProperty >> actions [
 
-	^ {RePropertyAction new
-			icon: (self iconNamed: #smallDebug);
-			description: 'Debug the exception';
-			action: [ :prop |
-				UIManager default
-					debugProcess: Processor activeProcess 
-					context: prop stack
-					label: prop message 
-					fullView: true ];
-			yourself}
+	^ { (RePropertyAction new
+		   icon: (self iconNamed: #smallDebug);
+		   description: 'Debug the exception';
+		   action: [ :prop | 
+			   (OupsDebugRequest newForContext: prop stack)
+				   label: prop message;
+				   submit ];
+		   yourself) }
 ]
 
 { #category : #accessing }

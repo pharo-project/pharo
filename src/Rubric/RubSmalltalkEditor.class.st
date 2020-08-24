@@ -451,19 +451,21 @@ RubSmalltalkEditor >> debug: aStream [
 
 { #category : #'do-its' }
 RubSmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext [
-	| guineaPig context debugSession |
-	guineaPig := [ aCompiledMethod
-		valueWithReceiver: anObject
-		arguments: (evalContext ifNil: [ #() ] ifNotNil: [ {evalContext} ]) ]
-		newProcess.
-	context := guineaPig suspendedContext.
-	
-	debugSession := guineaPig newDebugSessionNamed: 'debug it' startedAt: context.
-	debugSession stepIntoUntil: [:currentContext | 
-		currentContext method == aCompiledMethod ].
-	
-	Smalltalk tools debugger openOn: debugSession withFullView: true.
-	
+
+	| process suspendedContext |
+	process := [ 
+	           aCompiledMethod
+		           valueWithReceiver: anObject
+		           arguments:
+		           (evalContext
+			            ifNil: [ #(  ) ]
+			            ifNotNil: [ { evalContext } ]) ] newProcess.
+	suspendedContext := process suspendedContext.
+	(OupsDebugRequest newForContext: suspendedContext)
+		process: process;
+		compiledMethod: aCompiledMethod;
+		label: 'debug it';
+		submit
 ]
 
 { #category : #'do-its' }
