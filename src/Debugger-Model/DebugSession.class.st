@@ -26,7 +26,8 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'errorWasInUIProcess'
+		'errorWasInUIProcess',
+		'exception'
 	],
 	#classVars : [
 		'LogDebuggerStackToFile'
@@ -104,6 +105,16 @@ DebugSession >> errorWasInUIProcess [
 DebugSession >> errorWasInUIProcess: aBoolean [
 
 	errorWasInUIProcess := aBoolean
+]
+
+{ #category : #accessing }
+DebugSession >> exception [ 
+	^ exception
+]
+
+{ #category : #accessing }
+DebugSession >> exception: anObject [
+	exception := anObject
 ]
 
 { #category : #evaluating }
