@@ -375,14 +375,23 @@ MorphicUIManager >> fontFromUser: priorFont [
 	^ StrikeFont fromUser: priorFont allowKeyboard: true
 ]
 
+{ #category : #'handle debug requests' }
+MorphicUIManager >> handleDebugRequest: aDebugRequest [
+
+	OupsDebuggerSystem new openDebuggerOnRequest: aDebugRequest
+]
+
 { #category : #'error handling' }
 MorphicUIManager >> handleError: anError log: shouldLog [
+	shouldLog
+		ifTrue: [ self logError: anError ].
+	(OupsDebugRequest newForException: self) uiManager: self; submit.
+]
 
-	shouldLog ifTrue: [ self logError: anError ].
-	self debugProcess: Processor activeProcess  
-		context: anError signalerContext
-		label: anError description 
-		fullView: false
+{ #category : #'handle debug requests' }
+MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+
+	OupsDebuggerSystem new openDebuggerOnRequest: aWarningDebugRequest
 ]
 
 { #category : #'ui requests' }
@@ -777,18 +786,11 @@ MorphicUIManager >> unhandledErrorDefaultAction: anException [
 	anException debug
 ]
 
-{ #category : #'ui requests' }
+{ #category : #'handle debug requests' }
 MorphicUIManager >> warningDefaultAction: anException [
+	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
 
-"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-	UIManager default
-				debugProcess: Processor activeProcess
-				context: anException signalerContext
-				label: 'Warning'
-				fullView: false 
-				notification: anException messageText, '\\Select Proceed to continue, or close this window to cancel the operation.' withCRs.
-				
-	anException resume.
+	(OupsWarningRequest newForException: anException) submit
 ]
 
 { #category : #'global state' }

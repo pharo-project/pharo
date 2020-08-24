@@ -396,6 +396,17 @@ UIManager >> fontFromUser: priorFont [
 	self subclassResponsibility
 ]
 
+{ #category : #'handle debug requests' }
+UIManager >> handleDebugRequest: aDebugRequest [
+	"Provide a default handling for unhandled error. 
+	 We should never reach this code, because it should be overridden by subclasses. 
+	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
+	 in case if current ui manager having no override of this method).
+	 This method is only for documentation purposes."
+		
+	Smalltalk snapshot: false andQuit: true
+]
+
 { #category : #'error handling' }
 UIManager >> handleError: anError [
 	
@@ -405,6 +416,13 @@ UIManager >> handleError: anError [
 { #category : #'error handling' }
 UIManager >> handleError: anError log: shouldLog [
 
+	self subclassResponsibility
+]
+
+{ #category : #'handle debug requests' }
+UIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+	"Handle warning notification. Should be overidden by subclass."
+		
 	self subclassResponsibility
 ]
 
