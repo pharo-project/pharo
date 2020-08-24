@@ -20,13 +20,6 @@ Class {
 	#category : #'GT-Debugger-UI'
 }
 
-{ #category : #testing }
-GTMoldableDebugger class >> availableAutomatically [
-	"Should this debugger be taken into account when looking for a debugger to handle an exception."
-	
-	^ false
-]
-
 { #category : #'instance creation' }
 GTMoldableDebugger class >> debugSession: aSession [
 
