@@ -158,46 +158,6 @@ AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 ]
 
 { #category : #testing }
-AdditionalMethodState >> hasAtLeastTheSamePropertiesAs: aMethodProperties [
-	"Answer if the recever has at least the same properties as the argument.
-	 N.B. The receiver may have additional properties and still answer true."
-	aMethodProperties keysAndValuesDo:
-		[:k :v|
-		(v isKindOf: Pragma)
-			"ifTrue: [Pragmas have already been checked]"
-			ifFalse: [
-				(self includes: k->v) ifFalse: [^false]]].
-	^true
-]
-
-{ #category : #testing }
-AdditionalMethodState >> hasLiteralSuchThat: aBlock [
-	"Answer true if litBlock returns true for any literal in this array, even if embedded in further array structure.
-	 This method is only intended for private use by CompiledMethod hasLiteralSuchThat:"
-	1 to: self basicSize do: [:i |
-		| propertyOrPragma "<Association|Pragma>" |
-		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
-			ifTrue: [(aBlock value: propertyOrPragma key)
-					or: [(aBlock value: propertyOrPragma value)
-					or: [propertyOrPragma value isArray
-						and: [propertyOrPragma value hasLiteralSuchThat: aBlock]]]]
-			ifFalse: [propertyOrPragma hasLiteralSuchThat: aBlock]) ifTrue:
-			[^true]].
-	^false
-]
-
-{ #category : #testing }
-AdditionalMethodState >> hasLiteralThorough: aLiteral [
-	self 
-		deprecated: 'Use #refersToLiteral: instead.' 
-		on: '31 January 2020'
-		in: #Pharo9
-		transformWith: '`@receiver hasLiteralThorough: `@arg' -> '`@receiver refersToLiteral: `@arg'.
-	^ self refersToLiteral: aLiteral
-]
-
-{ #category : #testing }
 AdditionalMethodState >> includes: aPropertyOrPragma [ "<Association|Pragma>"
 	"Test if the property or pragma is present."
 
@@ -358,16 +318,6 @@ AdditionalMethodState >> propertyValueAt: aKey [
 AdditionalMethodState >> propertyValueAt: aKey ifAbsent: aBlock [
 	"use the version without ..Value, this methid is retained for compatibility"
 	^self propertyAt: aKey ifAbsent: aBlock
-]
-
-{ #category : #testing }
-AdditionalMethodState >> refersToLiteral: literal [
-	"Answer true if any literal in these properties is literal,
-	 even if embedded in array structure."
-	1 to: self basicSize do: [:i |
-		((self basicAt: i) hasLiteral: literal) ifTrue:
-			[^true]].
-	^false
 ]
 
 { #category : #properties }

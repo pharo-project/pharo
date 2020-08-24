@@ -246,6 +246,12 @@ Pragma >> printOn: aStream [
 	aStream nextPut: $>.
 ]
 
+{ #category : #testing }
+Pragma >> refersToLiteral: aLiteral [
+	^self selector == aLiteral 
+	   or: [arguments hasLiteral: aLiteral]
+]
+
 { #category : #accessing }
 Pragma >> selector [
 	"Answer the selector of the pragma.
