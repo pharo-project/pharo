@@ -303,5 +303,7 @@ Variable >> usingMethods [
 
 { #category : #debugging }
 Variable >> write: aValue inContext: aContext [
-	self subclassResponsibility 
+	"write the value in aContext. All #write:inContext: methods need to return the assigned value,
+	as this is the reflective version of assignment which has the assigned value as a value"
+	^self subclassResponsibility 
 ]

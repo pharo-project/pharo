@@ -29,7 +29,7 @@ ToOneRelationSlot >> updateOld: oldValue new: newValue in: anObject [
 { #category : #'meta-object-protocol' }
 ToOneRelationSlot >> write: newValue to: anObject [
 	self updateOld: (self read: anObject) new: newValue in: anObject.
-	super write: newValue to: anObject
+	^super write: newValue to: anObject
 ]
 
 { #category : #internal }

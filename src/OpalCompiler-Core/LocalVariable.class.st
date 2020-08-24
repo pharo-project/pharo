@@ -277,9 +277,7 @@ LocalVariable >> usingMethods [
 { #category : #debugging }
 LocalVariable >> write: aValue inContext: aContext [
 
-	| contextScope |
-	contextScope := aContext astScope.
-	self writeFromContext: aContext scope: contextScope value: aValue
+	^self writeFromContext: aContext scope: aContext astScope value: aValue
 ]
 
 { #category : #debugging }

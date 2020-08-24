@@ -345,7 +345,7 @@ Slot >> wantsInitialization [
 
 { #category : #debugging }
 Slot >> write: aValue inContext: aContext [
-	self write: aValue to: aContext receiver
+	^self write: aValue to: aContext receiver
 ]
 
 { #category : #'meta-object-protocol' }

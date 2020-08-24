@@ -257,5 +257,5 @@ LiteralVariable >> write: aValue inContext: aContext [
 	self isWritable ifFalse: [ 
 		^self error: 'Variable ' , name, ' is read only'].
 
-	value := aValue
+	^value := aValue
 ]
