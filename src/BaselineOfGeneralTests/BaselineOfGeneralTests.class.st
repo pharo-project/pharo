@@ -27,6 +27,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'MetacelloCommandLineHandler-Tests';
 			package: 'Debugger-Filters-Tests';
 			package: 'Debugger-Model-Tests';
+			package: 'Debugger-Oups-Tests';
 			package: 'EmergencyDebugger-Tests';
 			package: 'EmbeddedFreeType-Tests';
 			
