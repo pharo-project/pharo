@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : #settings }
+DebuggerSettings class >> availableDebuggers [
+
+	^ (self systemDebuggers select: [ :dbgClass | 
+		   dbgClass availableAutomatically ]) asOrderedCollection
+]
+
+{ #category : #settings }
 DebuggerSettings class >> debuggerRankSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #debuggers)
@@ -46,5 +53,7 @@ DebuggerSettings class >> defaultDebuggerRank [
 
 { #category : #settings }
 DebuggerSettings class >> systemDebuggers [
-	^ TDebugger users reject: [ :class | class isTestCase ]
+
+	^ (TDebugger users flatCollect: [ :class | class withAllSubclasses ]) 
+		  reject: [ :class | class isTestCase ]
 ]

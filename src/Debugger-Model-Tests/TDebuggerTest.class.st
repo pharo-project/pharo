@@ -44,8 +44,12 @@ TDebuggerTest >> testRank [
 
 { #category : #tests }
 TDebuggerTest >> testSystemDebuggers [
-	|debuggers|
+
+	| debuggers traitUsersWithSubclasses |
 	debuggers := DebuggerSettings systemDebuggers.
-	self assert: (debuggers allSatisfy: [:dbg| TDebugger users includes: dbg]).
-	self deny: (debuggers anySatisfy: [:dbg| dbg isTestCase]).
+	traitUsersWithSubclasses := TDebugger users flatCollect: [ :class | 
+		                            class withAllSubclasses ].
+	self assert: (debuggers allSatisfy: [ :dbg | 
+			 traitUsersWithSubclasses includes: dbg ]).
+	self deny: (debuggers anySatisfy: [ :dbg | dbg isTestCase ])
 ]
