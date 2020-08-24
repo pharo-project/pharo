@@ -22,5 +22,5 @@ ClyClassSideScope >> methodsDo: aBlock [
 
 	self classesDo: [ :eachClass | 
 		self metaLevelsOf: eachClass do: [ :concreteMetaLevelClass |
-			concreteMetaLevelClass methods do: aBlock ] ]
+			concreteMetaLevelClass visibleMethods do: aBlock ] ]
 ]
