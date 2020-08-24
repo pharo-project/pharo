@@ -47,6 +47,12 @@ ReservedVariable >> isWritable [
 	^ false
 ]
 
+{ #category : #accessing }
+ReservedVariable >> name: aSymbol [
+	"names of ReservedVariables are fixed and can not be changed"
+	self shouldNotImplement
+]
+
 { #category : #printing }
 ReservedVariable >> printOn: stream [
 
