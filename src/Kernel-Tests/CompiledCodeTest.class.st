@@ -246,30 +246,6 @@ CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsGlobalVariable [
 ]
 
 { #category : #'tests-literals' }
-CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesKey [
-	
-	[ self compiledMethod1 propertyAt: #Once put: true.
-	self assert: (self compiledMethod1 refersToLiteral: #Once) ]
-		ensure: [ self compiledMethod1 removeProperty: #Once ]
-]
-
-{ #category : #'tests-literals' }
-CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesValue [
-	
-	[ self compiledMethod1 propertyAt: #Once put: '123'.
-	self assert: (self compiledMethod1 refersToLiteral: '123') ]
-		ensure: [ self compiledMethod1 removeProperty: #Once ]
-]
-
-{ #category : #'tests-literals' }
-CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInMethodPropertiesValueArray [
-	
-	[ self compiledMethod1 propertyAt: #Once put: #(1 2 3).
-	self assert: (self compiledMethod1 refersToLiteral: 1) ]
-		ensure: [ self compiledMethod1 removeProperty: #Once ]
-]
-
-{ #category : #'tests-literals' }
 CompiledCodeTest >> testRefersToLiteralsReturnsTrueWhenLiteralIsInPragmaArguments [
 	
 	self assert: (self compiledMethod1 refersToLiteral: 'bar').

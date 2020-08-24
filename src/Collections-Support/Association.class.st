@@ -35,6 +35,11 @@ Association >> analogousCodeTo: anAssociation [
 	^ self = anAssociation
 ]
 
+{ #category : #testing }
+Association >> hasLiteral: aLiteral [
+	^false
+]
+
 { #category : #'self evaluating' }
 Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
