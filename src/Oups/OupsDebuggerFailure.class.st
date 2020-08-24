@@ -27,13 +27,6 @@ OupsDebuggerFailure class >> of: aDebugger on: anException [
 		  yourself
 ]
 
-{ #category : #debugging }
-OupsDebuggerFailure >> debug [
-	"open a debugger on myself"
-	<debuggerCompleteToSender>
-	(OupsDebugRequest newForException: self) submit
-]
-
 { #category : #initialization }
 OupsDebuggerFailure >> debugger: aDebugger exception: anException [
 	failedDebugger := aDebugger.
@@ -60,7 +53,7 @@ OupsDebuggerFailure >> isHandleableBy: aDebugger [
 	^ aDebugger ~= failedDebugger
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 OupsDebuggerFailure >> originException [
 	^ innerException originException
 ]

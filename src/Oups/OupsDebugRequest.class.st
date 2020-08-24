@@ -34,7 +34,6 @@ Class {
 		'exception',
 		'context',
 		'label',
-		'uiManager',
 		'process',
 		'compiledMethod',
 		'preDebugActions',

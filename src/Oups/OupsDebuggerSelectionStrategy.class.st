@@ -57,7 +57,7 @@ OupsDebuggerSelectionStrategy >> debuggers: aCollection [
 	debuggers := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : #'error handling' }
 OupsDebuggerSelectionStrategy >> error [
 	^error
 ]
