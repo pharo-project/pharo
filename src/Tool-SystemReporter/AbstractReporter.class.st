@@ -1,3 +1,14 @@
+"
+Abstract class of reporters:
+Classes displaying a window with information about the system. 
+Intended to be easily copy/pasted for external use (email, ...)
+
+Use by calling #open
+
+To extend a Reporter:
+- add a method  'reportXYZ: aStream'
+- insert a line 'add: #XYZ method: #reportXYZ' to #initialize
+"
 Class {
 	#name : #AbstractReporter,
 	#superclass : #Model,

@@ -1,3 +1,6 @@
+"
+A subclass of AbstractReporter that computes various metrics over the image
+"
 Class {
 	#name : #SizeReporter,
 	#superclass : #AbstractReporter,
