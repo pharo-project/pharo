@@ -16,6 +16,8 @@ Class {
 MessageNotUnderstood >> debug [
 
 	"Requests a debugger on myself"
+
+	<debuggerCompleteToSender>
 	(OupsDebugRequest newForException: self) submit
 ]
 

@@ -377,7 +377,7 @@ MorphicUIManager >> fontFromUser: priorFont [
 
 { #category : #'handle debug requests' }
 MorphicUIManager >> handleDebugRequest: aDebugRequest [
-
+	<debuggerCompleteToSender>
 	OupsDebuggerSystem new openDebuggerOnRequest: aDebugRequest
 ]
 
@@ -390,7 +390,7 @@ MorphicUIManager >> handleError: anError log: shouldLog [
 
 { #category : #'handle debug requests' }
 MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest [
-
+	<debuggerCompleteToSender>
 	OupsDebuggerSystem new openDebuggerOnRequest: aWarningDebugRequest
 ]
 

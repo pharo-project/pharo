@@ -108,8 +108,10 @@ Exception >> completeProcess: aProcess with: aContext [
 
 { #category : #handling }
 Exception >> debug [
+
 	"requests a debugger on myself"
 
+	<debuggerCompleteToSender>
 	(OupsDebugRequest newForException: self) submit
 ]
 
