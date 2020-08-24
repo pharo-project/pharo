@@ -14,10 +14,9 @@ Class {
 
 { #category : #handling }
 MessageNotUnderstood >> debug [
-	"open a debugger on myself"
-	Processor activeProcess 
-		debug: self signalerContext
-		title: self smartDescription
+
+	"Requests a debugger on myself"
+	(OupsDebugRequest newForException: self) submit
 ]
 
 { #category : #accessing }
