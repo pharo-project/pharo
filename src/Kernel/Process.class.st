@@ -217,13 +217,24 @@ Process >> debug: context title: title full: bool [
 ]
 
 { #category : #debugging }
+Process >> debugException: anException [
+
+	(OupsDebugRequest newForException: anException)
+		process: self;
+		submit
+]
+
+{ #category : #debugging }
 Process >> debugWithTitle: title [
-	"Open debugger on self"
 
 	| context |
-	context := self isActiveProcess ifTrue: [thisContext] ifFalse: [self suspendedContext].
-	^ self debug: context title: title full: true.
-
+	context := self isActiveProcess
+		           ifTrue: [ thisContext ]
+		           ifFalse: [ self suspendedContext ].
+	(OupsDebugRequest newForContext: context)
+		process: self;
+		label: title;
+		submit
 ]
 
 { #category : #private }
