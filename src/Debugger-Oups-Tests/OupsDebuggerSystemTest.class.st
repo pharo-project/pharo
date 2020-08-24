@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'debuggerSystem'
 	],
-	#category : #'Oups-Tests-tests - infrastructure'
+	#category : #'Debugger-Oups-Tests-tests - infrastructure'
 }
 
 { #category : #tests }

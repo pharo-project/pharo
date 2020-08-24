@@ -8,7 +8,7 @@ Class {
 		'newUIProcessSpawned',
 		'customUIManager'
 	],
-	#category : #'Oups-Tests-utils'
+	#category : #'Debugger-Oups-Tests-utils'
 }
 
 { #category : #'default values' }

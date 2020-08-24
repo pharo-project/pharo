@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'dummyPreDebugActionExecutedCount'
 	],
-	#category : #'Oups-Tests-utils'
+	#category : #'Debugger-Oups-Tests-utils'
 }
 
 { #category : #preDebugActions }

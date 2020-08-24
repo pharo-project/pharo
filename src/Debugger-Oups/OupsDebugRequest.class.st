@@ -39,7 +39,7 @@ Class {
 		'preDebugActions',
 		'debugSession'
 	],
-	#category : #'Oups-infrastructure'
+	#category : #'Debugger-Oups-infrastructure'
 }
 
 { #category : #'instance creation' }

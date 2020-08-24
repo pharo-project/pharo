@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'handleDebuggerErrors'
 	],
-	#category : #'Oups-strategies'
+	#category : #'Debugger-Oups-strategies'
 }
 
 { #category : #settings }

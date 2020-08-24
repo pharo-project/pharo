@@ -5,7 +5,7 @@ I am an exception built in case the opening of a debugger is requested without a
 Class {
 	#name : #OupsNullException,
 	#superclass : #Exception,
-	#category : #'Oups-exceptions'
+	#category : #'Debugger-Oups-exceptions'
 }
 
 { #category : #'instance creation' }

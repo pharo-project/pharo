@@ -4,7 +4,7 @@ I am a dummy debugger selection strategy, used for testing
 Class {
 	#name : #OupsDummySelectionStrategy,
 	#superclass : #OupsDebuggerSelectionStrategy,
-	#category : #'Oups-Tests-utils'
+	#category : #'Debugger-Oups-Tests-utils'
 }
 
 { #category : #iterating }

@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'debuggerSelectionStrategy'
 	],
-	#category : #'Oups-strategies'
+	#category : #'Debugger-Oups-strategies'
 }
 
 { #category : #settings }

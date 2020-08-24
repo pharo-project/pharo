@@ -10,7 +10,7 @@ Class {
 		'debugRequestSentToHandleDebugRequest',
 		'debugRequestSentToHandleWarningDebugRequest'
 	],
-	#category : #'Oups-Tests-utils'
+	#category : #'Debugger-Oups-Tests-utils'
 }
 
 { #category : #'handle debug requests' }
