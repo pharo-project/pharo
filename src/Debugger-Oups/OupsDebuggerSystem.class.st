@@ -65,9 +65,10 @@ OupsDebuggerSystem >> handleWarningDebugRequest: aWarningDebugRequest [
 
 { #category : #'open debugger' }
 OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
-	<debuggerCompleteToSender>
+
 	"Prepare the opening of a debugger, and delegate the debugger selection and opening to a strategy"
 
+	<debuggerCompleteToSender>
 	| debuggerOpeningStrategy |
 	self performPreDebugActionsIn: aDebugRequest.
 	self spawnNewUIProcessIfNecessary: aDebugRequest.
@@ -75,7 +76,7 @@ OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 
 	"Schedule the debugger opening in a deferred UI message to address redraw problems after opening a debugger e.g. from the testrunner."
 	debuggerOpeningStrategy := self debuggerSelectionStrategy.
-	self defaultUIManager defer: [ self flag: 'What happens if handled is false?'.
+	self defaultUIManager defer: [ 
 		debuggerOpeningStrategy openDebuggerForSession:
 			aDebugRequest debugSession ].
 	self suspendDebuggedProcess: aDebugRequest

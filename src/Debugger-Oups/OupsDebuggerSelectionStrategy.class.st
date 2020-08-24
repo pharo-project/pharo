@@ -81,3 +81,11 @@ OupsDebuggerSelectionStrategy >> nextDebugger [
 OupsDebuggerSelectionStrategy >> openDebuggerForSession: aDebugSession [
 	self subclassResponsibility 
 ]
+
+{ #category : #'error handling' }
+OupsDebuggerSelectionStrategy >> signalErrorHandlingErrorForSession: aDebugSession [
+
+	EDEmergencyDebugger basicNew
+		signalDebuggerError: error
+		forSession: aDebugSession crTrace
+]

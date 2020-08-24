@@ -23,9 +23,11 @@ OupsSingleDebuggerSelector >> nextDebugger [
 
 { #category : #debuggers }
 OupsSingleDebuggerSelector >> openDebuggerForSession: aDebugSession [
+
 	[ self nextDebugger debugSession: aDebugSession ]
 		on: Error
 		do: [ :err | 
 			error := err.
-			handled := false ]
+			handled := false.
+			self signalErrorHandlingErrorForSession: aDebugSession ]
 ]

@@ -75,12 +75,14 @@ OupsDebuggerSelector >> nextDebuggerForSession: aDebugSession [
 
 { #category : #debuggers }
 OupsDebuggerSelector >> openDebuggerForSession: aDebugSession [
+
 	<debuggerCompleteToSender>
 	handled := false.
-	[ handled or:[self debuggers isEmpty ]]
-		whileFalse: [ self
-				tryOpen: aDebugSession
-				with: (self nextDebuggerForSession: aDebugSession) ]
+	[ handled or: [ self debuggers isEmpty ] ] whileFalse: [ 
+		self
+			tryOpen: aDebugSession
+			with: (self nextDebuggerForSession: aDebugSession) ].			
+	handled ifFalse: [ self signalErrorHandlingErrorForSession: aDebugSession ]
 ]
 
 { #category : #debuggers }
