@@ -19,7 +19,7 @@ TOccurrencesForIdentityCollectionsTest >> test0FixtureOccurrencesForIdentityColl
 ]
 
 { #category : #'tests - occurrencesOf for identity collections' }
-TOccurrencesForIdentityCollectionsTest >> testOccurencesOfForIdentityCollections [
+TOccurrencesForIdentityCollectionsTest >> testOccurrencesOfForIdentityCollections [
 
 | collection element elementCopy |
 collection := self identityCollectionWithElementsCopyNotIdentical .

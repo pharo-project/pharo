@@ -54,7 +54,7 @@ RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 ]
 
 { #category : #preconditions }
-RBRemoveMethodTransformation >> checkBrowseAllOccurences: anCollectionOfOccurrences [
+RBRemoveMethodTransformation >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
 
 	| methods callers |
 	methods := anCollectionOfOccurrences collect: [ :c | c key ] as: Set.
@@ -90,7 +90,7 @@ RBRemoveMethodTransformation >> checkBrowseOccurrenceIn: aRBMethod [
 RBRemoveMethodTransformation >> checkBrowseOccurrences: anCollectionOfOccurrences [
 	^ anCollectionOfOccurrences size = 1
 		ifTrue: [ self checkBrowseOccurrenceIn: anCollectionOfOccurrences first value ]
-		ifFalse: [ self checkBrowseAllOccurences: anCollectionOfOccurrences ]
+		ifFalse: [ self checkBrowseAllOccurrences: anCollectionOfOccurrences ]
 ]
 
 { #category : #preconditions }

@@ -14,7 +14,7 @@ Bag >> gtInspectorOccurrencesIn: composite [
 		display: [ :aCollection | self asSet asOrderedCollection ];
 		column: 'Item' 
 			evaluated: [ :each | GTObjectPrinter asTruncatedTextFrom: each ];
-		column: 'Occurences' 
+		column: 'Occurrences' 
 			evaluated: [ :each | self occurrencesOf: each ]
 			sortedBy: [ :a :b | (self occurrencesOf: a) > (self occurrencesOf: b)];
 		beMultiple;

@@ -32,11 +32,11 @@ ScheduleTest >> selectorsToBeIgnored [
 
 { #category : #running }
 ScheduleTest >> setUp [
- 	 "Schedule is a type of Timespan representing repeated occurences of the same event. 
+ 	 "Schedule is a type of Timespan representing repeated occurrences of the same event. 
 	The beginning of the schedule is the first occurrence of the event.
 	A schedule maintains an array of Durations. 
 	Each durations specify the offset to the next scheduled each. 
-	The duration of each occurence of the event is not specified. 
+	The duration of each occurrence of the event is not specified. 
 	Nor are any other attributes such as name"
 
 	super setUp.

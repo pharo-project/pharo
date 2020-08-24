@@ -31,7 +31,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
 	element := collection first.
 
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
-	'copyAfter:' should copy after the last occurence of element :"
+	'copyAfter:' should copy after the last occurrence of element :"
 	result := collection copyAfterLast: element.
 
 	"Verify content"
@@ -46,7 +46,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyAfterWithDuplicate [
 	element := collection last.
 	
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
-	'copyAfter:' should copy after the first occurence:"
+	'copyAfter:' should copy after the first occurrence:"
 	result := collection   copyAfter: (element ).
 	
 	"Verifying content"
@@ -65,7 +65,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
 	element := collection first.
 	
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
-	'copyUpToLast:' should copy until the last occurence :"
+	'copyUpToLast:' should copy until the last occurrence :"
 	result := collection copyUpToLast: (element ).
 	
 	"Verify content"
@@ -84,7 +84,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToWithDuplicate [
 	element := collection last.
 
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
- 	 'copyUpTo:' should copy until the first occurence"
+ 	 'copyUpTo:' should copy until the first occurrence"
 	result := collection copyUpTo: element.
 
 	"Verify content"

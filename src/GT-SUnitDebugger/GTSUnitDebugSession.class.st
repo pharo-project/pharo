@@ -86,7 +86,7 @@ GTSUnitDebugSession >> initializeTestContextFrom: aContext [
 		anotherContext compiledCode method isTestMethod ].
 	
 	testContext ifNil: [
-		"if we do not find a test method, perhaps we are in the context of a different method, such as setUp, so we are looking for the last occurence of the test case instance in the stack"
+		"if we do not find a test method, perhaps we are in the context of a different method, such as setUp, so we are looking for the last occurrence of the test case instance in the stack"
 		testContext := aContext findContextSuchThat: [ :anotherContext |
 			anotherContext receiver class isTestCase ] ].
 	

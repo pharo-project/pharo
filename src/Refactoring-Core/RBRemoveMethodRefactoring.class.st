@@ -26,7 +26,7 @@ RBRemoveMethodRefactoring class >> removeMethods: selectorCollection from: aClas
 ]
 
 { #category : #preconditions }
-RBRemoveMethodRefactoring >> checkBrowseAllOccurences: anCollectionOfOccurrences [
+RBRemoveMethodRefactoring >> checkBrowseAllOccurrences: anCollectionOfOccurrences [
 	| methods callers |
 	methods := anCollectionOfOccurrences collect: [ :c | c key ] as: Set.
 	callers := anCollectionOfOccurrences collect: [ :v | v value ].
@@ -63,7 +63,7 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrenceOf: selector in: aRBMethod [
 RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 	^ anCollectionOfOccurrences size = 1
 		ifTrue: [ self checkBrowseOccurrenceOf: anCollectionOfOccurrences first key in: anCollectionOfOccurrences first value ]
-		ifFalse: [ self checkBrowseAllOccurences: anCollectionOfOccurrences ]
+		ifFalse: [ self checkBrowseAllOccurrences: anCollectionOfOccurrences ]
 ]
 
 { #category : #preconditions }

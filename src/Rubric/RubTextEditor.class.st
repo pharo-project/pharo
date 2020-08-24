@@ -1164,14 +1164,14 @@ RubTextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: sear
 	oldSelectionInterval := self selectionInterval.
 	self selectInvisiblyFrom: anIndex to: anIndex - 1.
 	where :=  searchBackwards
-		ifTrue: [self findAndSelectPreviousOccurenceOf: aRegex]
-		ifFalse: [self findAndSelectNextOccurenceOf: aRegex].
+		ifTrue: [self findAndSelectPreviousOccurrenceOf: aRegex]
+		ifFalse: [self findAndSelectNextOccurrenceOf: aRegex].
 	where ifNil: [self selectInterval: oldSelectionInterval].
 	^ where
 ]
 
 { #category : #'find-select' }
-RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
+RubTextEditor >> findAndSelectNextOccurrenceOf: aRegex [
 	| where |
 	where := self findNext: aRegex startingAt: self stopIndex.
 	where ifNotNil: [self selectInterval: where].
@@ -1179,7 +1179,7 @@ RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
 ]
 
 { #category : #'find-select' }
-RubTextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
+RubTextEditor >> findAndSelectPreviousOccurrenceOf: aRegex [
 
 	| where |
 	where := self findPrevious: aRegex startingAt: self startIndex.

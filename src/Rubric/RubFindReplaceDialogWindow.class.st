@@ -226,7 +226,7 @@ RubFindReplaceDialogWindow >> newFindButton [
 			arguments: nil
 			getEnabled: #findEnabled
 			label: 'Find' translated
-			help: 'Find the next occurence' translated)
+			help: 'Find the next occurrence' translated)
 		hResizing: #rigid;
 		vResizing: #rigid
 ]
@@ -275,7 +275,7 @@ RubFindReplaceDialogWindow >> newReplaceAllButton [
 		arguments: nil
 		getEnabled: #replaceAllEnabled
 		label: 'Replace all' translated
-		help: 'Replace all occurences' translated) hResizing: #rigid;
+		help: 'Replace all occurrences' translated) hResizing: #rigid;
 		 vResizing: #rigid
 ]
 
@@ -289,7 +289,7 @@ RubFindReplaceDialogWindow >> newReplaceButton [
 		arguments: nil
 		getEnabled: #replaceEnabled
 		label: 'Replace' translated
-		help: 'Replace the next occurence' translated) hResizing: #rigid;
+		help: 'Replace the next occurrence' translated) hResizing: #rigid;
 		 vResizing: #rigid
 ]
 

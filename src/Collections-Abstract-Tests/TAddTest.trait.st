@@ -105,7 +105,7 @@ TAddTest >> testTAddTwice [
 ]
 
 { #category : #'tests - adding' }
-TAddTest >> testTAddWithOccurences [
+TAddTest >> testTAddWithOccurrences [
 	| added oldSize collection anElement |
 	collection := self collectionWithElement.
 	anElement := self element.

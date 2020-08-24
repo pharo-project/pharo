@@ -356,7 +356,7 @@ InflateStream >> huffmanTableFrom: aCollection mappedBy: valueMap [
 	| counts  values table minBits maxBits |
 	minBits := MaxBits + 1.
 	maxBits := 0.
-	"Count the occurences of each code length and compute minBits and maxBits"
+	"Count the occurrences of each code length and compute minBits and maxBits"
 	counts := Array new: MaxBits+1.
 	counts atAllPut: 0.
 	aCollection do:[:length| 

@@ -1222,7 +1222,7 @@ OrderedDictionaryTest >> testNewFromPairs [
 ]
 
 { #category : #tests }
-OrderedDictionaryTest >> testOccurencesOf [
+OrderedDictionaryTest >> testOccurrencesOf [
 	| dictionary |
 
 	dictionary := self emptyDictionary.
