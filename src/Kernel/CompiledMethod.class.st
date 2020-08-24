@@ -326,12 +326,6 @@ CompiledMethod class >> toReturnSelfTrailerBytes: trailer [
 	^self newBytes: 3 trailerBytes: trailer nArgs: 0 nTemps: 0 nStack: 0 nLits: 2 primitive: 256
 ]
 
-{ #category : #literals }
-CompiledMethod >> additionalMethodStateRefersToLiteral: literal [
-	^ self penultimateLiteral isMethodProperties
-		and: [ self penultimateLiteral refersToLiteral: literal ]
-]
-
 { #category : #'source code management' }
 CompiledMethod >> argumentNames [
 	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
@@ -464,10 +458,8 @@ CompiledMethod >> hasComment [
 CompiledMethod >> hasLiteralSuchThat: litBlock [
 	"Answer true if litBlock returns true for any literal in this method, even if embedded in array structure."
 
-	(self penultimateLiteral isMethodProperties and: [ 
-		 self penultimateLiteral hasLiteralSuchThat: litBlock ]) ifTrue: [ 
-		^ true ].
-	^ super hasLiteralSuchThat: litBlock
+	^ (self pragmaHasLiteralSuchThat: litBlock) or: [ 
+		  super hasLiteralSuchThat: litBlock ]
 ]
 
 { #category : #'accessing-pragmas & properties' }
@@ -761,6 +753,20 @@ CompiledMethod >> pragmaAt: aKey [
 		ifFalse: [nil]
 ]
 
+{ #category : #literals }
+CompiledMethod >> pragmaHasLiteralSuchThat: aBlock [
+
+	^ self penultimateLiteral isMethodProperties and: [ 
+		  self pragmas anySatisfy: [ :pragma | pragma hasLiteralSuchThat: aBlock ] ]
+]
+
+{ #category : #literals }
+CompiledMethod >> pragmaRefersToLiteral: literal [
+
+	^ self penultimateLiteral isMethodProperties and: [ 
+		  self pragmas anySatisfy: [ :pragma | pragma refersToLiteral: literal ] ]
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> pragmas [
 	| selectorOrProperties |
@@ -941,13 +947,9 @@ CompiledMethod >> readsField: varIndex [
 
 { #category : #literals }
 CompiledMethod >> refersToLiteral: aLiteral [
-	"Answer true if any literal in this method is literal,
-	even if embedded in array structure."
-
-	(self additionalMethodStateRefersToLiteral: aLiteral)
-		ifTrue: [ ^ true ].
-
-	^super refersToLiteral: aLiteral
+	"Answer true if any literal in this method is literal, even if embedded in array structure."
+	
+	^(self pragmaRefersToLiteral: aLiteral) or: [ super refersToLiteral: aLiteral]
 ]
 
 { #category : #initialization }
