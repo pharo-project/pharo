@@ -380,8 +380,7 @@ Context >> tempNamed: aName [
 Context >> tempNamed: aName put: anObject [
 	"Assign the value of the temp with name in aContext"
 	
-	(self lookupTempVar: aName) write: anObject inContext: self.
-	^ anObject
+	^(self lookupTempVar: aName) write: anObject inContext: self
 ]
 
 { #category : #'*Debugging-Core' }
