@@ -72,6 +72,8 @@ Methods can be modified and saved in directly in that pane.
 Class {
 	#name : #StDebugger,
 	#superclass : #StPresenter,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'sessionHolder',
 		'code',
@@ -105,14 +107,6 @@ StDebugger class >> activateDebuggerExtensions [
 { #category : #accessing }
 StDebugger class >> activateDebuggerExtensions: anObject [
 	ActivateDebuggerExtensions := anObject
-]
-
-{ #category : #deprecated }
-StDebugger class >> availableAutomatically [
-	self flag: #DBG.
-	self flag: 'will be removed after Oups is integrated'.
-	"Should this debugger be taken into account when looking for a debugger to handle an exception."
-	^Available ifNil:[Available := true]
 ]
 
 { #category : #specs }
@@ -150,6 +144,14 @@ StDebugger class >> codeLayout [
 				  height: self toolbarHeight + 12];
 		  add: #code;
 		  yourself
+]
+
+{ #category : #'instance creation' }
+StDebugger class >> debugSession: aDebugSession [
+	| debugger |
+	debugger := self on: aDebugSession.
+	debugger openWithFullView.
+	^ debugger
 ]
 
 { #category : #settings }
@@ -243,11 +245,6 @@ StDebugger class >> fastTDDSettingsOn: aBuilder [
 without requesting information from the user'
 ]
 
-{ #category : #opening }
-StDebugger class >> handlesContext: aContext [
-	^self availableAutomatically 
-]
-
 { #category : #'tools registry' }
 StDebugger class >> hasAnyActivatedExtension: extensionsClasses [
 
@@ -290,11 +287,6 @@ StDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: a
 	debugger := self on: aDebugSession.
 	debugger openWithFullView.
 	^ debugger
-]
-
-{ #category : #deprecated }
-StDebugger class >> rank [
-	^ 80
 ]
 
 { #category : #deprecated }
