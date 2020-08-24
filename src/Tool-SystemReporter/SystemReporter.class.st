@@ -1,32 +1,17 @@
 "
-SystemReporter offers a window where information about the system is gathered. This can be easily copied to the clipboard and be attached to a bug report for better identification of the context the bug occured in.
-
-To extend the SystemReporter:
-	- add a method
-		reportXYZ: aStream
-	  to the reporting category
-	- insert a line
-		add: #XYZ method: #reportXYZ
-	  to the initialize method
+A subclass of AbstractReporter that offers a window where information about the system is gathered. This can be easily copied to the clipboard and be attached to a bug report for better identification of the context the bug occured in.
 
 "
 Class {
 	#name : #SystemReporter,
-	#superclass : #Model,
-	#instVars : [
-		'categories',
-		'categoriesSelected',
-		'categoryList',
-		'sourceTextModel'
-	],
+	#superclass : #AbstractReporter,
 	#category : #'Tool-SystemReporter'
 }
 
 { #category : #'instance creation' }
 SystemReporter class >> open [
 	<script>
-	
-	^ self new open
+	^ super open
 ]
 
 { #category : #'system menu' }
@@ -37,142 +22,6 @@ SystemReporter class >> systemReporterMenuOn: aBuilder [
 		parent: #System;
 		action: [ self open ];
 		help: 'If you have a bug, use this tool to provide information about your system.'
-]
-
-{ #category : #operations }
-SystemReporter >> add: category method: aSymbol [
-	^self categoryList add: (self categories add: category -> aSymbol) key
-]
-
-{ #category : #display }
-SystemReporter >> addAll: aWindow [
-
-	aWindow
-		addMorph: self buildInformationList
-		fullFrame: self categoriesFrame.
-		
-	aWindow
-		addMorph: self buildInformationText
-		fullFrame: self reportFrame
-]
-
-{ #category : #'items creation' }
-SystemReporter >> buildInformationList [
-
-	^ PluggableListMorph
-		on: self
-		list: #categoryList
-		primarySelection: #categorySelected
-		changePrimarySelection: #categorySelected:
-		listSelection: #categoryAt:
-		changeListSelection: #categoryAt:put:
-		menu: nil
-		keystroke: nil
-]
-
-{ #category : #'items creation' }
-SystemReporter >> buildInformationText [
-
-	| scrolledText |
-	scrolledText := self sourceTextModel newScrolledText
-		beForPlainText;
-		beReadOnly;
-		beWrapped;
-		yourself.
-	^ scrolledText
-]
-
-{ #category : #accessing }
-SystemReporter >> categories [
-	^ categories ifNil: [ categories := IdentityDictionary new ]
-]
-
-{ #category : #display }
-SystemReporter >> categoriesFrame [
-	^ LayoutFrame new rightFraction: 0.25
-		
-]
-
-{ #category : #'accessing-categories' }
-SystemReporter >> categoryAt: anIndex [
-	^ categoriesSelected includes: (self categoryList at: anIndex ifAbsent: [ ^ false ])
-]
-
-{ #category : #'accessing-categories' }
-SystemReporter >> categoryAt: anInteger put: aBoolean [
-	categoriesSelected := categoriesSelected
-		perform:
-			(aBoolean
-				ifTrue: [ #copyWith: ]
-				ifFalse: [ #copyWithout: ])
-		with: (self categoryList at: anInteger ifAbsent: [ ^ self ]).
-	self updateReport
-]
-
-{ #category : #accessing }
-SystemReporter >> categoryList [
-	^ categoryList ifNil: [ categoryList := OrderedCollection new ]
-]
-
-{ #category : #'accessing-categories' }
-SystemReporter >> categorySelected [
-	^ 0
-]
-
-{ #category : #'accessing-categories' }
-SystemReporter >> categorySelected: anInteger [
-
-	self changed: #categorySelected
-]
-
-{ #category : #private }
-SystemReporter >> enumerate: aBlock on: aStream [
-	self enumerate: aBlock startAt: 0 on: aStream
-]
-
-{ #category : #private }
-SystemReporter >> enumerate: aBlock startAt: first on: aStream [
-	"Utilitymethod to enumerate Options or Parameters from first to 1000"
-
-	| idx value |
-	idx := first.
-	[ 
-	value := aBlock value: idx.
-	value isNil or: [ idx > 1000 ] ]
-		whileFalse: [ 
-			aStream
-				nextPut: $#;
-				nextPutAll: idx printString;
-				tab;
-				nextPutAll: value;
-				cr.
-			idx := idx + 1 ].
-	idx = first
-		ifTrue: [ 
-			aStream
-				nextPutAll: 'none';
-				cr ]
-]
-
-{ #category : #'accessing-ui' }
-SystemReporter >> extent [
-	^ 640 @ 480
-]
-
-{ #category : #'printing-report' }
-SystemReporter >> header: aString on: aStream [
-	aStream
-		withAttribute: TextEmphasis bold
-		do: [ aStream
-				nextPutAll: aString;
-				cr.
-			aString size timesRepeat: [ aStream nextPut: $- ].
-			aStream cr ]
-]
-
-{ #category : #'accessing-ui' }
-SystemReporter >> initialExtent [
-	^ 640 @ 480
 ]
 
 { #category : #initialization }
@@ -227,13 +76,7 @@ SystemReporter >> label [
 { #category : #display }
 SystemReporter >> open [
 	<script: 'self new open'>
-	
-	| window |
-	window := StandardWindow new model: self.		
-	self addAll: window.
-	window openInWorld.
-	window title: self label.
-	^ window			
+	super open
 ]
 
 { #category : #private }
@@ -241,18 +84,6 @@ SystemReporter >> readContentsSafelyFromFile: osPath andWriteTo: aStream [
 	 [ osPath asFileReference 
                     readStreamDo: [:s | aStream nextPutAll: s contents ]
     ] on: Error do: [:ex| ex return: ex printString]
-]
-
-{ #category : #operations }
-SystemReporter >> refresh [
-	self updateReport
-]
-
-{ #category : #display }
-SystemReporter >> reportFrame [
-	^ LayoutFrame new leftFraction: 0.25
-
-
 ]
 
 { #category : #reporting }
@@ -512,20 +343,4 @@ SystemReporter >> reportWorkingCopies: aStream [
 	self header: 'Monticello Working Copies' on: aStream.
 	list := MCWorkingCopy allManagers asSortedCollection: [:a :b | a packageName <= b packageName].
 	list do: [:each | aStream nextPutAll: each description; cr ]
-]
-
-{ #category : #accessing }
-SystemReporter >> sourceTextModel [
-	^ sourceTextModel
-		ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
-]
-
-{ #category : #updating }
-SystemReporter >> updateReport [
-	self sourceTextModel setText: (Text streamContents: [:stream | 
-						self categoryList do: [:each |
-							(categoriesSelected includes: each) ifTrue: [
-								self perform: (categories at: each) with: stream.
-								stream cr]]])
-
 ]
