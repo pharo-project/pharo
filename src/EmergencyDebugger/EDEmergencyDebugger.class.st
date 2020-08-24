@@ -42,6 +42,8 @@ Don't forget to read the help text, type `h` or `help` to display the help text
 Class {
 	#name : #EDEmergencyDebugger,
 	#superclass : #Object,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'rawDisplay',
 		'stackSelectionIndex',
@@ -68,6 +70,11 @@ Class {
 	#category : #'EmergencyDebugger-Core'
 }
 
+{ #category : #accessing }
+EDEmergencyDebugger class >> availableAutomatically [
+	^ true
+]
+
 { #category : #'instance creation' }
 EDEmergencyDebugger class >> debug: aDebugSession [
 	self flag: 'Not good, must add and test the error too!'.
@@ -89,6 +96,12 @@ EDEmergencyDebugger class >> debugError: anError fromSession: aDebugSession [
 	^ self new
 		fromError: anError;
 		emergencyDebug: aDebugSession
+]
+
+{ #category : #'instance creation' }
+EDEmergencyDebugger class >> debugSession: aDebugSession [
+
+	^ self debug: aDebugSession
 ]
 
 { #category : #accessing }

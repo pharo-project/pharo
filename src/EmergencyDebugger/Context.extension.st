@@ -15,8 +15,11 @@ Context >> printWithArgsValueOn: aStream [
 	1 to: keywords size do: [ :i | 
 		| keyword argName argValue |
 		keyword := keywords at: i.
-		argName := self method argumentNames at: i.
 		self flag: 'Sometimes the arguments cannot be accessed. Why?'.
+		argName := [ self method argumentNames at: i ]
+			on: Error
+			do: [ $? ].
+		
 		argValue := [ self arguments at: i ]
 			on: Error
 			do: [ $? ].
