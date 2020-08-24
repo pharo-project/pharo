@@ -5,6 +5,8 @@ I am a browser that provides Smalltalk debugging functionality.
 Class {
 	#name : #GTGenericStackDebugger,
 	#superclass : #GTMoldableDebugger,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'cache'
 	],
@@ -23,6 +25,13 @@ GTGenericStackDebugger class >> closeAllDebuggers [
 
 	(SystemWindow allSubInstances select: [ :w | w model isKindOf: GTGenericStackDebugger ]) do: [ :w | w delete ].
 	GTSpecPreDebugPresenter allInstances do: #close
+]
+
+{ #category : #'instance creation' }
+GTGenericStackDebugger class >> debugSession: aDebugSession [
+	| debugger |
+   debugger := self on: (self spanNewSessionFrom: aDebugSession).
+   debugger openWithFullView
 ]
 
 { #category : #'settings api' }
