@@ -406,12 +406,12 @@ Context >> canHandleSignal: exception [
 
 { #category : #'private-exceptions' }
 Context >> cannotReturn: result [
+
 	closureOrNil ifNotNil: [ 
-		^BlockCannotReturn result: result from: self home].
-	Processor activeProcess 
-		debug: thisContext 
-		title: 'computation has been terminated'
-	
+		^ BlockCannotReturn result: result from: self home ].
+	(OupsDebugRequest newForContext: thisContext)
+		label: 'computation has been terminated';
+		submit
 ]
 
 { #category : #private }
