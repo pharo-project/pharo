@@ -187,16 +187,6 @@ SystemNavigation >> allSendersOf: selector [
 ]
 
 { #category : #query }
-SystemNavigation >> allSendersToString: aString do: aBlock [
-	"Perform aBlock on all class which send message aString."
-	
-	aString isEmptyOrNil ifTrue: [ ^ self ].
-	aString asSymbol ifNotNil: [ :symbol |
-		self allBehaviorsDo: [ :class | 
-			class withThorougMethodsReferTo: symbol do: aBlock ] ]
-]
-
-{ #category : #query }
 SystemNavigation >> allSentMessages [
 	"Answer the set of selectors which are sent somewhere in the system."
 	| sent |
