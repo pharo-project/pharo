@@ -95,12 +95,6 @@ GTGenericStackDebugger class >> filterNilSelectors: aBoolean [
 	self flag: 'just for backward compatibility'
 ]
 
-{ #category : #testing }
-GTGenericStackDebugger class >> handlesContext: aContext [
-
-	^ true
-]
-
 { #category : #accessing }
 GTGenericStackDebugger class >> helpClass [
 
