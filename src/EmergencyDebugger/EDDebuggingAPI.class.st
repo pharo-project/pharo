@@ -232,15 +232,12 @@ EDDebuggingAPI >> terminateSession [
 
 { #category : #'API - Debugging support' }
 EDDebuggingAPI >> tryReopenSessionWithDebugger [
+
 	self closeEmergencySession.
-	self flag: 'This should be removed once the debugging system is in place'.
-	UIManager default
-		defer: [ [ Smalltalk tools debugger
-				openOn: session
-				withFullView: true
-				andNotification: nil ]
-				on: Error
-				do: [ :ex | session signalDebuggerError: ex ] ]
+
+	(OupsDebugRequest newForContext: session interruptedContext)
+		process: session interruptedProcess;
+		submit
 ]
 
 { #category : #'API - Revert' }

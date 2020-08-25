@@ -85,7 +85,7 @@ OupsDebuggerSelectionStrategy >> openDebuggerForSession: aDebugSession [
 { #category : #'error handling' }
 OupsDebuggerSelectionStrategy >> signalErrorHandlingErrorForSession: aDebugSession [
 
-	EDEmergencyDebugger basicNew
-		signalDebuggerError: error
+	DebuggerEmmergencyLogger new
+		logError: error
 		forSession: aDebugSession crTrace
 ]

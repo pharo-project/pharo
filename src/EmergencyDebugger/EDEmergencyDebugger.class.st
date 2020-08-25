@@ -358,9 +358,13 @@ EDEmergencyDebugger >> dumpStackAndQuit [
 
 { #category : #initialization }
 EDEmergencyDebugger >> emergencyDebug: aDebugSession [
+
 	[ self debug: aDebugSession ]
 		on: Error
-		do: [ :err | self signalDebuggerError: err forSession: aDebugSession]
+		do: [ :err | 
+			DebuggerEmmergencyLogger new
+				logError: err
+				forSession: aDebugSession ]
 ]
 
 { #category : #'error handling' }
@@ -655,27 +659,6 @@ EDEmergencyDebugger >> showSelectedMethodVersion [
 			'VERSIONS (' , methodVersionSelectionIndex printString , '/'
 				, self selectedMethodVersionsSize printString , ')'.
 	self updateDisplay
-]
-
-{ #category : #'error handling' }
-EDEmergencyDebugger >> signalDebuggerError: anError forSession: aDebugSession [
-
-	| errDescription errStream |
-	errDescription := self errorDescriptionFrom: anError.
-	errStream := WriteStream on: String new.
-	errStream cr.
-	errStream << ('Original error: ' , aDebugSession name asString , '.').
-	errStream cr.
-	errStream << ('Debugger error: ' , errDescription).
-	errStream cr.
-
-	self inform: '**Debugger opening error** ', errStream contents.
-	[ 
-	Smalltalk
-		logError: errStream contents
-		inContext: aDebugSession interruptedContext ]
-		on: Error
-		do: [ :err | self inform: 'Cannot log error: ', anError printString, 'due to error: ',  err printString ]
 ]
 
 { #category : #accessing }

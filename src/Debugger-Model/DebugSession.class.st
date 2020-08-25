@@ -440,7 +440,8 @@ DebugSession >> shouldDisplayOnTopContext: aContext [
 
 { #category : #logging }
 DebugSession >> signalDebuggerError: anError [
-	EDEmergencyDebuggerSettings defaultEmergencyDebugger
+
+	DebuggerSettings emergencyDebugger
 		debugError: anError
 		fromSession: self
 ]
