@@ -138,17 +138,12 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 
 { #category : #'events handling' }
 ClyMethodEditorToolMorph >> getASTFor: aString [
-	| compilationContext compilationContextOptions ast |
-	ast :=RBParser parseFaultyMethod: aString.
-	compilationContext := OpalCompiler new compilationContext.
-	compilationContext class: self methodClass.
-	compilationContextOptions := CompilationContext defaultOptions copy.
-	compilationContextOptions add: #optionSkipSemanticWarnings.
-	compilationContext setOptions: compilationContextOptions.
-	compilationContext semanticAnalyzerClass new
- 	compilationContext: compilationContext;
-  	analyze: ast.
-	^ ast
+	| ast |
+	ast := self methodClass compiler
+		source: aString;
+		options:  #(+ optionParseErrors + optionSkipSemanticWarnings);
+		parse.				
+	^ast doSemanticAnalysis
 ]
 
 { #category : #initialization }
