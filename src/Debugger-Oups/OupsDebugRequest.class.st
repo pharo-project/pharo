@@ -64,11 +64,14 @@ OupsDebugRequest >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
-{ #category : #preDebugActions }
+{ #category : #building }
 OupsDebugRequest >> computePreDebugActions [
-	"Fill the preDebugActions variable."
+
 	"If compiledMethod is not nil, this DebugRequest has been created to debug the execution of a specific method. Add a pre-debug action to step the execution until that method is reached"
-	compiledMethod ifNotNil: [ self preDebugActions add: (self preDebugActionForDebugItMethod: compiledMethod) ]
+
+	compiledMethod ifNil: [ ^ self ].
+	self preDebugActions add:
+		(self preDebugActionForDebugItMethod: compiledMethod)
 ]
 
 { #category : #accessors }
@@ -79,15 +82,13 @@ OupsDebugRequest >> context: anObject [
 { #category : #accessors }
 OupsDebugRequest >> debugSession [
 
-	"If a DebugSession is requested for this debug request, ask the process to create one. Subsequent calls to this method will return the same DebugSession (and not create another one)"
+	^ debugSession ifNil: [ debugSession := self newDebugSession ]
+]
 
-	debugSession ifNil: [ 
-		debugSession := (self process
-			                 newDebugSessionNamed: self exception description
-			                 startedAt: self exception signalerContext)
-			                exception: self exception;
-			                yourself ].
-	^ debugSession
+{ #category : #'default values' }
+OupsDebugRequest >> defaultException [
+
+	^ self nullExceptionFor: context named: self label
 ]
 
 { #category : #'default values' }
@@ -107,8 +108,8 @@ OupsDebugRequest >> defaultUIManager [
 
 { #category : #accessors }
 OupsDebugRequest >> exception [
-	"If an exception was provided, return it, otherwise create a dummy exception using the provided context and label (if no label was provided, use the result of 'self defaultLabel_' "
-	^ exception ifNil: [ self nullExceptionFor: context named: (label ifNil: [ self defaultLabel ]) ]
+
+	^ exception ifNil: [ exception := self defaultException ]
 ]
 
 { #category : #accessors }
@@ -117,24 +118,41 @@ OupsDebugRequest >> exception: anObject [
 ]
 
 { #category : #accessors }
+OupsDebugRequest >> label [
+
+	^ label ifNil: [ label := self defaultLabel ]
+]
+
+{ #category : #accessors }
 OupsDebugRequest >> label: anObject [
 	label := anObject
 ]
 
-{ #category : #helper }
+{ #category : #building }
+OupsDebugRequest >> newDebugSession [
+
+	^ (self process
+		   newDebugSessionNamed: self exception description
+		   startedAt: self exception signalerContext)
+		  exception: self exception;
+		  yourself
+]
+
+{ #category : #helpers }
 OupsDebugRequest >> nullExceptionFor: aContext named: aString [
 	^ (OupsNullException fromSignallerContext: aContext)
 		messageText: aString;
 		yourself
 ]
 
-{ #category : #preDebugActions }
+{ #category : #building }
 OupsDebugRequest >> preDebugActionForDebugItMethod: aCompiledMethod [
-	"Return a PreDebug action that will step the debugged execution until it is in a call to @aCompiledMethod"
+
+	"Return a PreDebug action that will step the debugged execution until it is in a call to aCompiledMethod"
 
 	^ [ :session | 
-	session
-		stepIntoUntil: [ :currentContext | currentContext method == aCompiledMethod ] ]
+	  session stepIntoUntil: [ :currentContext | 
+		  currentContext method == aCompiledMethod ] ]
 ]
 
 { #category : #accessors }
@@ -154,7 +172,7 @@ OupsDebugRequest >> process: anObject [
 	process := anObject
 ]
 
-{ #category : #submit }
+{ #category : #requests }
 OupsDebugRequest >> submit [
 	<debuggerCompleteToSender>
 	"Submit this debug request to the system. The system will typically open a debugger for it"

@@ -90,7 +90,7 @@ OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 { #category : #helpers }
 OupsDebuggerSystem >> performPreDebugActionsIn: aDebugRequest [
 
-	"Get the preDebug actions stored in @aDebugRequest. Applies them to the debugSession held by aDebugRequest"
+	"Get the preDebug actions stored in aDebugRequest. Applies them to the debugSession held by aDebugRequest"
 
 	aDebugRequest computePreDebugActions.
 	aDebugRequest preDebugActions do: [ :preDebugAction | 
