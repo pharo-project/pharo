@@ -336,12 +336,6 @@ UIManager >> deactivate [
 ]
 
 { #category : #debug }
-UIManager >> debugProcess: process context: context label: title fullView: bool [
-
-	self debugProcess: process context: context label: title fullView: bool notification: nil
-]
-
-{ #category : #debug }
 UIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
 
 	self subclassResponsibility

@@ -199,24 +199,6 @@ Process >> debug [
 ]
 
 { #category : #debugging }
-Process >> debug: context title: title [
-	"Open debugger on self with context shown on top"
-
-	^ self debug: context title: title full: false.
-
-]
-
-{ #category : #debugging }
-Process >> debug: context title: title full: bool [
-	
-	^ UIManager default
-		debugProcess: self 
-		context: context 
-		label: title 
-		fullView: bool
-]
-
-{ #category : #debugging }
 Process >> debugException: anException [
 
 	(OupsDebugRequest newForException: anException)

@@ -291,29 +291,11 @@ MorphicUIManager >> deactivate [
 
 { #category : #debug }
 MorphicUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-	"Open a notifier in response to an error, halt, or notify. A notifier view
-	just shows a short view of the sender stack and provides a menu that
-	lets the user open a full debugger."
 
-	| debugSession |
-
-	debugSession := process newDebugSessionNamed: title startedAt: context.
-	
-	debugSession logStackToFileIfNeeded.
-	debugSession isAboutUIProcess ifTrue: [ 
-		DefaultExecutionEnvironment beActiveDuring: [self spawnNewProcess]].
-		
-	self defer:	[ 
-			"schedule debugger in deferred UI message to address
-			redraw problems after opening a debugger e.g. from
-			the testrunner."
-		[ Smalltalk tools debugger 
-				openOn: debugSession withFullView: bool andNotification: notificationString.
-		] on: Error do: [ :ex | 	debugSession signalDebuggerError: ex] 
-	].
-
-	process suspend.
-
+	(OupsDebugRequest newForContext: context)
+		process: process;
+		label: title;
+		submit
 ]
 
 { #category : #'ui process' }
@@ -446,29 +428,25 @@ Here are some suggestions:
 
 { #category : #debug }
 MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
+
 	"Create a Notifier on the active scheduling process with the given label."
+
 	| preemptedProcess projectProcess debugSession |
 	ActiveWorld := self currentWorld. "reinstall active globals"
 	self currentWorld primaryHand interrupted.
 
-	projectProcess := self uiProcess.	"we still need the accessor for a while"
-	preemptedProcess := theInterruptedProcess ifNil: [Processor preemptedProcess].
+	projectProcess := self uiProcess. "we still need the accessor for a while"
+	preemptedProcess := theInterruptedProcess ifNil: [ 
+		                    Processor preemptedProcess ].
 	"Only debug preempted process if its priority is >= projectProcess' priority"
-	preemptedProcess priority < projectProcess priority 
-		ifTrue:[preemptedProcess := projectProcess].
+	preemptedProcess priority < projectProcess priority ifTrue: [ 
+		preemptedProcess := projectProcess ].
 	preemptedProcess suspend.
-	
-	debugSession := preemptedProcess 
-		newDebugSessionNamed: 'Space is low' 
-		startedAt: preemptedProcess suspendedContext.		
-	debugSession logStackToFileIfNeeded.
-	debugSession isAboutUIProcess ifTrue: [ 
-		DefaultExecutionEnvironment beActiveDuring: [self spawnNewProcess]].
-	
-	Smalltalk tools debugger 
-		openOn: debugSession 
-		withFullView: false 
-		andNotification: self lowSpaceWarningMessage
+
+	(OupsDebugRequest newForContext: preemptedProcess suspendedContext)
+		process: preemptedProcess;
+		label: 'Space is low';
+		submit
 ]
 
 { #category : #'ui requests' }
