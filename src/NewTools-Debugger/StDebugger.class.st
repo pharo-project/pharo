@@ -189,29 +189,6 @@ StDebugger class >> debuggerWithoutExtensionsSpec [
 		yourself
 ]
 
-{ #category : #deprecated }
-StDebugger class >> defaultDebugger [
-	^DefaultDebugger
-]
-
-{ #category : #deprecated }
-StDebugger class >> defaultDebugger: aSymbol [
-	Available := (aSymbol = #GT) not.
-	DefaultDebugger := aSymbol 
-]
-
-{ #category : #deprecated }
-StDebugger class >> defaultDebuggerSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder pickOne: #defaultDebugger)
-		label: 'Default debugger';
-		target: self;
-		default: #NewTools;
-		parent: #debugging;
-		domainValues: #(#GT #NewTools);
-		description: 'Sets the default debugger.'
-]
-
 { #category : #specs }
 StDebugger class >> defaultSpec [
 	^ self perform: self usingSpecSelector
@@ -252,16 +229,6 @@ StDebugger class >> hasAnyActivatedExtension: extensionsClasses [
 		  toolClass showInDebugger ]
 ]
 
-{ #category : #deprecated }
-StDebugger class >> iAmADebugger [
-	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
-
-	"For compatibility with DebuggerSelector https://github.com/dupriezt/DebuggerSelector"
-
-	<iAmADebugger>
-	self flag: 'I am not sure this is good design'
-]
-
 { #category : #'class initialization' }
 StDebugger class >> initialize [ 
 	
@@ -287,27 +254,6 @@ StDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: a
 	debugger := self on: aDebugSession.
 	debugger openWithFullView.
 	^ debugger
-]
-
-{ #category : #deprecated }
-StDebugger class >> rankDebugSession: aDebugSession [
-	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is. Signal the DebugSessionCannotBeOpenedByThisDebugger exception if this debugger absolutely cannot debug @aDebugSession (for example if this debugger can only handle debug sessions from test executions, and @aDebugSession does not come from a test execution)"
-	"For compatibility with DebuggerSelector https://github.com/dupriezt/DebuggerSelector"
-	^ self rank.
-]
-
-{ #category : #deprecated }
-StDebugger class >> register [
-	self flag: 'Maybe this is no longer necessary now that we have DebuggerSelector?'.
-	self registerToolsOn: Smalltalk tools
-]
-
-{ #category : #deprecated }
-StDebugger class >> registerToolsOn: registry [
-	self flag: 'Maybe this is no longer necessary now that we have DebuggerSelector?'.
-	"Add ourselves to registry. See [Smalltalk tools]" 
-	registry register: self as: #debugger.
-
 ]
 
 { #category : #accessing }

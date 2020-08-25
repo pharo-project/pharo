@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #'debugger declaration' }
-SindarinUILessDebugger class >> iAmADebugger [
-	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
-	<iAmADebugger>
-]
-
-{ #category : #'debugger declaration' }
 SindarinUILessDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
 	"This method will be called to open this debugger on a given debug session (i.e. execution to debug). If this debugger wants to keep the debug session (and its process) alive (for example because it is a graphical debugger that would break if the debug session is terminated while its window is open), it should call #keepAlive: on @aDebugSession, passing itself as argument.
 	The contract is that if a debugger calls #keepAlive:, it should also call #stopKeepingAlive: on @aDebugSession when it closes (passing itself as argument again).
