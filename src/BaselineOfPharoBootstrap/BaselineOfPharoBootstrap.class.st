@@ -126,8 +126,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Support'.
 
 		spec package: 'UIManager'.
-		spec package: 'Debugger-Model'.
-		spec package: 'Debugger-Oups'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
 		spec package: 'FFI-Kernel'.
