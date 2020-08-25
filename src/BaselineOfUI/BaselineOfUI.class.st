@@ -34,6 +34,10 @@ BaselineOfUI >> baseline: spec [
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
+		
+		"Loading the debugger model and infrastructure before the UI"		
+		spec package: 'Debugger-Model'.
+		spec package: 'Debugger-Oups'.
 
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
@@ -45,12 +49,10 @@ BaselineOfUI >> baseline: spec [
 		
 		spec baseline: 'DrTests' with: [ spec repository: repository ].
 
-		spec package: 'StartupPreferences'.
-	
+		spec package: 'StartupPreferences'.		
+		
 		spec package: 'Debugger-Actions'.
 		spec package: 'Debugger-Filters'.
-		spec package: 'Debugger-Model'.
-		spec package: 'Debugger-Oups'.
 
 		spec baseline: 'Fuel' with: [
 			spec repository: repository; loads: 'Tools' ].
