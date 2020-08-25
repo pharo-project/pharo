@@ -15,6 +15,11 @@ Class {
 	#category : #'Debugger-Oups-infrastructure'
 }
 
+{ #category : #'utilities api' }
+OupsDebuggerSystem class >> closeAllDebuggers [
+	TDebugger users do:[:debuggerClass| debuggerClass closeAllDebuggers]
+]
+
 { #category : #'instance creation' }
 OupsDebuggerSystem >> availableDebuggers [
 	^DebuggerSettings availableDebuggers sort:[:a :b| a rank > b rank]
