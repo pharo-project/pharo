@@ -20,6 +20,13 @@ ReservedVariable class >> isAbstract [
 	^self = ReservedVariable  
 ]
 
+{ #category : #compiler }
+ReservedVariable class >> lookupDictionary [
+	"create a loopup table name -> instance for Semantic Analysis"
+	^ (self subclasses collect: [ :class | 
+		   class instance name -> class instance ]) asDictionary
+]
+
 { #category : #testing }
 ReservedVariable class >> nameIsReserved: aName [
 	^self subclasses anySatisfy: [ :class | class instance name = aName ]

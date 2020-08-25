@@ -18,7 +18,7 @@ OCInstanceScope >> allTemps [
 
 { #category : #lookup }
 OCInstanceScope >> hasBindingThatBeginsWith: aString [
-	"Answer true if true, false or any slot start with aString"
+	"Answer true if a reserved variable or any slot start with aString"
 	
 	(reservedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
 	(vars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
@@ -30,8 +30,7 @@ OCInstanceScope >> hasBindingThatBeginsWith: aString [
 OCInstanceScope >> initialize [
   
 	vars := Dictionary new.
-	reservedVars  := (ReservedVariable subclasses collect: [ :class |
-			class instance name -> class instance]) asDictionary 
+	reservedVars  := ReservedVariable lookupDictionary
 ]
 
 { #category : #acessing }

@@ -40,6 +40,11 @@ LocalVariable >> astNodes [
 	^scope node methodNode variableNodes select: [ :each | each variable == self]
 ]
 
+{ #category : #accessing }
+LocalVariable >> copiedVarClass [
+	^ self subclassResponsibility
+]
+
 { #category : #emitting }
 LocalVariable >> emitStore: methodBuilder [
 
