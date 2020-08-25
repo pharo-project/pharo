@@ -56,11 +56,9 @@ CompiledCodeTest >> testHasLiteral [
 	"we do not into arrays in Blocks. this is different to hasLiteralSuchThat:"
 	self flag: #FIXME. "LiteralScanningMissmatch"
 	self deny: (method hasLiteral: #arrayInBlock).
-	"pragmas are NOT covered. this is different to hasLiteralSuchThat: "
-	self flag: #FIXME. "LiteralScanningMissmatch"
+	"pragmas are NOT covered."
 	self deny: (method hasLiteral: #pragma:).
-	"args of pragmas not found, too. this is different to hasLiteralSuchThat:"
-	self flag: #FIXME. "LiteralScanningMissmatch"
+	"args of pragmas not found, too."
 	self deny: (method hasLiteral: #pragma).
 	"the method selector NOT"
 	self deny: (method hasLiteral: #method).
@@ -90,10 +88,10 @@ CompiledCodeTest >> testHasLiteralSuchThat [
 	self assert: (method hasLiteralSuchThat: [:literal | literal == #array]).
 	"we look into arrays in Blocks"
 	self assert: (method hasLiteralSuchThat: [:literal | literal == #arrayInBlock]).
-	"pragmas are covered"
-	self assert: (method hasLiteralSuchThat: [:literal | literal == #pragma:]).
-	"args of pragmas are found, too"
-	self assert: (method hasLiteralSuchThat: [:literal | literal == #pragma]).
+	"pragmas are NOT covered"
+	self deny: (method hasLiteralSuchThat: [:literal | literal == #pragma:]).
+	"args of pragmas are NOT found, too"
+	self deny: (method hasLiteralSuchThat: [:literal | literal == #pragma]).
 	"the method selector NOT"
 	self deny: (method hasLiteralSuchThat: [:literal | literal == #method]).
 ]

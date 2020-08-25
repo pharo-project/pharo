@@ -167,14 +167,6 @@ Pragma >> hasLiteral: aLiteral [
 	   or: [arguments hasLiteral: aLiteral]
 ]
 
-{ #category : #testing }
-Pragma >> hasLiteralSuchThat: aBlock [
-	"Answer true if litBlock returns true for any literal in the receiver, even if embedded in further array structure.
-	 This method is only intended for private use by CompiledMethod hasLiteralSuchThat:"
-	^(aBlock value: self selector)
-	   or: [arguments hasLiteralSuchThat: aBlock]
-]
-
 { #category : #comparing }
 Pragma >> hash [
 
