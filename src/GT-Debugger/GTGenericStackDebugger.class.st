@@ -127,36 +127,10 @@ GTGenericStackDebugger class >> logFileName: newName [
 	LogFileName := newName
 ]
 
-{ #category : #'tools registry' }
-GTGenericStackDebugger class >> register [
-
-	self registerToolsOn: Smalltalk tools.
-	self registerExtraToolsOn: Smalltalk tools.
-
-]
-
-{ #category : #'tools registry' }
-GTGenericStackDebugger class >> registerExtraToolsOn: registry [
-	"This adds self in the list of tools that appears in the small debugger"
-	registry registerDebugger: self withRank: 3.
-]
-
-{ #category : #'tools registry' }
-GTGenericStackDebugger class >> registerToolsOn: registry [
-	registry register: self as: #debugger.
-
-]
-
 { #category : #accessing }
 GTGenericStackDebugger class >> sessionClass [
 
 	^ DebugSession 
-]
-
-{ #category : #'settings api' }
-GTGenericStackDebugger class >> stackWidgetClass [
-	self flag: 'horrible hack not to break the setting browser'.
-	^ self
 ]
 
 { #category : #accessing }

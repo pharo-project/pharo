@@ -33,19 +33,6 @@ GTSUnitDebugger class >> lookupStackSize [
 	^ 512
 ]
 
-{ #category : #'tools registry' }
-GTSUnitDebugger class >> register [
-
-	self registerToolsOn: Smalltalk tools.
-]
-
-{ #category : #'tools registry' }
-GTSUnitDebugger class >> registerToolsOn: registry [
-
-	"Add ourselves to registry. See [Smalltalk tools]" 
-	registry registerDebugger: self withRank: 70.
-]
-
 { #category : #accessing }
 GTSUnitDebugger class >> sessionClass [
 
