@@ -5,7 +5,7 @@ Warning requests are submitted through a different _debugging channel_.
 Class {
 	#name : #OupsWarningRequest,
 	#superclass : #OupsDebugRequest,
-	#category : #'Debugger-Oups-infrastructure'
+	#category : #'Debugger-Oups-Infrastructure'
 }
 
 { #category : #submit }

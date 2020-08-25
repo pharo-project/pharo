@@ -12,7 +12,7 @@ Class {
 		'usable',
 		'error'
 	],
-	#category : #'Debugger-Oups-Tests-utils'
+	#category : #'Debugger-Oups-Tests-Utils'
 }
 
 { #category : #helpers }

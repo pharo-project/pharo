@@ -15,7 +15,7 @@ Class {
 		'failedDebugger',
 		'innerException'
 	],
-	#category : #'Debugger-Oups-exceptions'
+	#category : #'Debugger-Oups-Exceptions'
 }
 
 { #category : #'instance creation' }

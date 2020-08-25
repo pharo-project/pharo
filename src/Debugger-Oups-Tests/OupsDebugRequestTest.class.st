@@ -4,7 +4,7 @@ A DebugRequestTest is a test class for testing the behavior of DebugRequest
 Class {
 	#name : #OupsDebugRequestTest,
 	#superclass : #TestCase,
-	#category : #'Debugger-Oups-Tests-tests - infrastructure'
+	#category : #'Debugger-Oups-Tests-Tests - infrastructure'
 }
 
 { #category : #tests }

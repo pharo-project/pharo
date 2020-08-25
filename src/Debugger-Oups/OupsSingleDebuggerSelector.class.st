@@ -7,7 +7,7 @@ I am equivalent to the debugger selection strategy encoded in MorphicUIManager p
 Class {
 	#name : #OupsSingleDebuggerSelector,
 	#superclass : #OupsDebuggerSelectionStrategy,
-	#category : #'Debugger-Oups-strategies'
+	#category : #'Debugger-Oups-Strategies'
 }
 
 { #category : #initialization }

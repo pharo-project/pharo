@@ -12,7 +12,7 @@ If an exception is raised within the debugger system itself, or if the debugger 
 Class {
 	#name : #OupsDebuggerSystem,
 	#superclass : #Object,
-	#category : #'Debugger-Oups-infrastructure'
+	#category : #'Debugger-Oups-Infrastructure'
 }
 
 { #category : #'utilities api' }

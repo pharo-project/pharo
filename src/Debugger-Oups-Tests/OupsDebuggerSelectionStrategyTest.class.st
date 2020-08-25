@@ -1,7 +1,7 @@
 Class {
 	#name : #OupsDebuggerSelectionStrategyTest,
 	#superclass : #TestCase,
-	#category : #'Debugger-Oups-Tests-tests - strategies'
+	#category : #'Debugger-Oups-Tests-Tests - strategies'
 }
 
 { #category : #'tests - debugging' }

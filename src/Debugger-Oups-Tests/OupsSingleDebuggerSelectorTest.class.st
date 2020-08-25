@@ -5,7 +5,7 @@ Class {
 		'debuggers',
 		'debuggerSelector'
 	],
-	#category : #'Debugger-Oups-Tests-tests - strategies'
+	#category : #'Debugger-Oups-Tests-Tests - strategies'
 }
 
 { #category : #running }
