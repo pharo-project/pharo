@@ -12,15 +12,6 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #handling }
-MessageNotUnderstood >> debug [
-
-	"Requests a debugger on myself"
-
-	<debuggerCompleteToSender>
-	(OupsDebugRequest newForException: self) submit
-]
-
 { #category : #accessing }
 MessageNotUnderstood >> defaultAction [
 

@@ -112,7 +112,7 @@ Exception >> debug [
 	"requests a debugger on myself"
 
 	<debuggerCompleteToSender>
-	(OupsDebugRequest newForException: self) submit
+	UIManager default requestDebuggerOpeningFor: self
 ]
 
 { #category : #handling }

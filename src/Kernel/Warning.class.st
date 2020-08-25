@@ -26,5 +26,5 @@ Warning >> unhandledErrorAction [
 	It is the final action an exception can do which is normally a debugger in interactive image"
 
 	<debuggerCompleteToSender>
-	^ (OupsWarningRequest newForException: self) submit
+	^UIManager default requestDebuggerOpeningForWarning: self
 ]

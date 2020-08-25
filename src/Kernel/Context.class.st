@@ -409,9 +409,9 @@ Context >> cannotReturn: result [
 
 	closureOrNil ifNotNil: [ 
 		^ BlockCannotReturn result: result from: self home ].
-	(OupsDebugRequest newForContext: thisContext)
-		label: 'computation has been terminated';
-		submit
+	UIManager default
+		requestDebuggerOpeningNamed: 'computation has been terminated'
+		inContext: thisContext
 ]
 
 { #category : #private }

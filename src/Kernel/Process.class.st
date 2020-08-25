@@ -199,24 +199,16 @@ Process >> debug [
 ]
 
 { #category : #debugging }
-Process >> debugException: anException [
-
-	(OupsDebugRequest newForException: anException)
-		process: self;
-		submit
-]
-
-{ #category : #debugging }
 Process >> debugWithTitle: title [
 
 	| context |
 	context := self isActiveProcess
 		           ifTrue: [ thisContext ]
 		           ifFalse: [ self suspendedContext ].
-	(OupsDebugRequest newForContext: context)
-		process: self;
-		label: title;
-		submit
+	UIManager default
+		requestDebuggerOpeningForProcess: self
+		named: title
+		inContext: context
 ]
 
 { #category : #private }
