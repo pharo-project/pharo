@@ -95,6 +95,11 @@ MethodMapTest >> testDeadContextSourceNode [
 ]
 
 { #category : #'testing - temp access' }
+MethodMapTest >> testExampleAccessOuterFromCleanBlock [
+	self assert: (self compileAndRunExample: #exampleAccessOuterFromCleanBlock) equals: 1
+]
+
+{ #category : #'testing - temp access' }
 MethodMapTest >> testExampleSimpleTemp [
 	self assert: (self compileAndRunExample: #exampleSimpleTemp) equals: 1
 ]
