@@ -5,7 +5,6 @@ Class {
 	#name : #OCAbstractMethodScope,
 	#superclass : #OCAbstractScope,
 	#instVars : [
-		'thisContextVar',
 		'tempVars',
 		'copiedVars',
 		'tempVector',
