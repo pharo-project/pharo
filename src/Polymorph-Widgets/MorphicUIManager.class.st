@@ -431,7 +431,7 @@ MorphicUIManager >> lowSpaceWatcherDefaultAction: theInterruptedProcess [
 
 	"Create a Notifier on the active scheduling process with the given label."
 
-	| preemptedProcess projectProcess debugSession |
+	| preemptedProcess projectProcess |
 	ActiveWorld := self currentWorld. "reinstall active globals"
 	self currentWorld primaryHand interrupted.
 
