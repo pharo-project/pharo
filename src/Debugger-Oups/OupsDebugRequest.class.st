@@ -59,7 +59,7 @@ OupsDebugRequest class >> newForException: anException [
 	^ self basicNew exception: anException; yourself
 ]
 
-{ #category : #setter }
+{ #category : #accessors }
 OupsDebugRequest >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
@@ -71,16 +71,23 @@ OupsDebugRequest >> computePreDebugActions [
 	compiledMethod ifNotNil: [ self preDebugActions add: (self preDebugActionForDebugItMethod: compiledMethod) ]
 ]
 
-{ #category : #setter }
+{ #category : #accessors }
 OupsDebugRequest >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #getter }
+{ #category : #accessors }
 OupsDebugRequest >> debugSession [
+
 	"If a DebugSession is requested for this debug request, ask the process to create one. Subsequent calls to this method will return the same DebugSession (and not create another one)"
-	debugSession ifNil: [ debugSession := (self process newDebugSessionNamed: self exception description startedAt: self exception signalerContext) exception: self exception; yourself ].
-	^ debugSession.
+
+	debugSession ifNil: [ 
+		debugSession := (self process
+			                 newDebugSessionNamed: self exception description
+			                 startedAt: self exception signalerContext)
+			                exception: self exception;
+			                yourself ].
+	^ debugSession
 ]
 
 { #category : #'default values' }
@@ -98,18 +105,18 @@ OupsDebugRequest >> defaultUIManager [
 	^ UIManager default
 ]
 
-{ #category : #getter }
+{ #category : #accessors }
 OupsDebugRequest >> exception [
 	"If an exception was provided, return it, otherwise create a dummy exception using the provided context and label (if no label was provided, use the result of 'self defaultLabel_' "
 	^ exception ifNil: [ self nullExceptionFor: context named: (label ifNil: [ self defaultLabel ]) ]
 ]
 
-{ #category : #setter }
+{ #category : #accessors }
 OupsDebugRequest >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #setter }
+{ #category : #accessors }
 OupsDebugRequest >> label: anObject [
 	label := anObject
 ]
@@ -130,19 +137,19 @@ OupsDebugRequest >> preDebugActionForDebugItMethod: aCompiledMethod [
 		stepIntoUntil: [ :currentContext | currentContext method == aCompiledMethod ] ]
 ]
 
-{ #category : #getter }
+{ #category : #accessors }
 OupsDebugRequest >> preDebugActions [
 	preDebugActions ifNil: [ preDebugActions := OrderedCollection new ].
 	^ preDebugActions
 ]
 
-{ #category : #getter }
+{ #category : #accessors }
 OupsDebugRequest >> process [
 	"If a process was provided, return it, otherwise use the result of 'self defaultProcess'"
 	^ process ifNil: [ self defaultProcess ]
 ]
 
-{ #category : #setter }
+{ #category : #accessors }
 OupsDebugRequest >> process: anObject [
 	process := anObject
 ]
