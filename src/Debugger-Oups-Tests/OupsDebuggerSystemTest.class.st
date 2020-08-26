@@ -111,8 +111,10 @@ OupsDebuggerSystemTest >> testPreDebugActionExecuted [
 OupsDebuggerSystemTest >> testUIProcessIsRecognised [
 
 	"Test that a DebuggerSystem opening a DebugRequest on the ui process will spawn a new UI process"
-
-	debuggerSystem spawnNewUIProcessIfNecessary:
-		self createDummyDebugRequestForUIProcess.
+	|request|
+	request := self createDummyDebugRequestForUIProcess.
+	request debugSession errorWasInUIProcess: true.
+	debuggerSystem spawnNewUIProcessIfNecessary: request.
+		
 	self assert: debuggerSystem newUIProcessSpawned
 ]
