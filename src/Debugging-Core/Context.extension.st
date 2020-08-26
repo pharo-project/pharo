@@ -440,3 +440,8 @@ Context >> tempsAndValuesLimitedTo: sizeLimit indent: indent [
 Context >> unusedBytecode [
 	^ self respondsToUnknownBytecode 
 ]
+
+{ #category : #'*Debugging-Core' }
+Context >> writeVariableNamed: aName value: anObject [ 
+	^ (self lookupVar: aName) write: anObject inContext: self
+]
