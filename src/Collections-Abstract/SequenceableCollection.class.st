@@ -1607,7 +1607,7 @@ SequenceableCollection >> middle [
 	^ self at: self size // 2 + 1
 ]
 
-{ #category : #enumerating }
+{ #category : #accessing }
 SequenceableCollection >> nextToLast [
 	"(#(1 2 3 4) nextToLast) >>> 3"
 	^self at: self size - 1
