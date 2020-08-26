@@ -1233,9 +1233,9 @@ Context >> objectSize: anObject [
 { #category : #accessing }
 Context >> outerContext [
 	"Answer the context within which the receiver is nested."
-
+	
 	^closureOrNil ifNotNil:
-		[closureOrNil outerContext]
+		[closureOrNil outerContext ifNil: ["if the outer is nil, this is a CleanBlock" self sender]]
 ]
 
 { #category : #accessing }
