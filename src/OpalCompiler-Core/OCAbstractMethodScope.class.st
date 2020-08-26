@@ -17,13 +17,7 @@ Class {
 
 { #category : #'temp vars - copying' }
 OCAbstractMethodScope >> addCopyingTemp: aTempVar [
-	^copiedVars at: aTempVar name put: (aTempVar copiedVarClass new
-			originalVar: aTempVar originalVar;
-			name: aTempVar name;
-			escaping: aTempVar escaping;
-			usage: aTempVar usage;
-			scope: self;
-			yourself)
+	^copiedVars at: aTempVar name put: (aTempVar createCopiedVariableFor: self)
 ]
 
 { #category : #'temp vars - copying' }
