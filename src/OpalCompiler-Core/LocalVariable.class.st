@@ -40,6 +40,16 @@ LocalVariable >> astNodes [
 	^scope node methodNode variableNodes select: [ :each | each variable == self]
 ]
 
+{ #category : #converting }
+LocalVariable >> createCopiedVariableFor: aScope [
+	^ CopyingLocalVariable new
+			originalVar: self originalVar;
+			name: self name;
+			escaping: self escaping;
+			usage: self usage;
+			scope: aScope
+]
+
 { #category : #emitting }
 LocalVariable >> emitStore: methodBuilder [
 

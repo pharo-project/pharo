@@ -13,11 +13,6 @@ TemporaryVariable class >> semanticNodeClass [
 	^RBTemporaryNode 
 ]
 
-{ #category : #accessing }
-TemporaryVariable >> copiedVarClass [
-	^OCCopyingTempVariable
-]
-
 { #category : #queries }
 TemporaryVariable >> definingNode [
 	^ scope node temporaries 
