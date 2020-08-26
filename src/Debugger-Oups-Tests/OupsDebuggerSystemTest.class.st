@@ -24,9 +24,14 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForNotUIProcess [
 
 { #category : #tests }
 OupsDebuggerSystemTest >> createDummyDebugRequestForUIProcess [
+
 	| exception |
-	[ Exception signal ] on: Exception do: [ :e | exception := e ].
-	^ OupsDummyDebugRequest newForException: exception
+	[ Exception signal ]
+		on: Exception
+		do: [ :e | exception := e ].
+	^ (OupsDummyDebugRequest newForException: exception)
+		  process: UIManager default uiProcess;
+		  yourself
 ]
 
 { #category : #running }
@@ -104,8 +109,10 @@ OupsDebuggerSystemTest >> testPreDebugActionExecuted [
 
 { #category : #tests }
 OupsDebuggerSystemTest >> testUIProcessIsRecognised [
+
 	"Test that a DebuggerSystem opening a DebugRequest on the ui process will spawn a new UI process"
-	debuggerSystem openDebuggerOnRequest: self createDummyDebugRequestForUIProcess.
+
+	debuggerSystem spawnNewUIProcessIfNecessary:
+		self createDummyDebugRequestForUIProcess.
 	self assert: debuggerSystem newUIProcessSpawned
-	
 ]
