@@ -170,13 +170,13 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		selector: #closeAllUnchangedWindows
 		getStateSelector: nil
 		enablementSelector: true.
-	"submenu
+	submenu
 		addToggle: 'close all debuggers' translated
 		target: OupsDebuggerSystem
 		selector: #closeAllDebuggers
 		getStateSelector: nil
 		enablementSelector: true.
-"
+
 	menu
 		addToggle: 'Close' translated
 		target: self
