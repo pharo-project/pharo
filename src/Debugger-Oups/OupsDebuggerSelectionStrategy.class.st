@@ -20,7 +20,9 @@ Class {
 
 { #category : #settings }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategy [
-	^debuggerSelectionStrategy ifNil:[debuggerSelectionStrategy := OupsDebuggerSelector]
+
+	^ debuggerSelectionStrategy ifNil: [ 
+		  debuggerSelectionStrategy := self defaultDebuggerSelectionStrategy ]
 ]
 
 { #category : #settings }
@@ -34,10 +36,15 @@ OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategySettingsOn: aBui
 	(aBuilder pickOne: #debuggerSelectionStrategy)
 		label: 'Debugger selection strategy';
 		target: self;
-		default: OupsSingleDebuggerSelector;
+		default: self defaultDebuggerSelectionStrategy;
 		parent: #debugging;
 		domainValues: (self allSubclasses);
 		description: 'Sets the strategy to open a debugger.'
+]
+
+{ #category : #settings }
+OupsDebuggerSelectionStrategy class >> defaultDebuggerSelectionStrategy [
+	^OupsDebuggerSelector
 ]
 
 { #category : #instance }
