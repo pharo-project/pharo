@@ -1468,9 +1468,8 @@ Object >> perform: aSymbol [
 	Fail if the number of arguments expected by the selector is not zero.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
 	
-	<reflective: #object:performMessageWith:>
 	<primitive: 83>
-	^ self perform: aSymbol withArguments: (Array new: 0)
+	^ self perform: aSymbol withArguments: #()
 ]
 
 { #category : #'message performing' }
@@ -1485,9 +1484,8 @@ Object >> perform: aSymbol with: anObject [
 	Fail if the number of arguments expected by the selector is not one.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
 	
-	<reflective: #object:performMessageWith:>
 	<primitive: 83>
-	^ self perform: aSymbol withArguments: (Array with: anObject)
+	^ self perform: aSymbol withArguments: {anObject}
 ]
 
 { #category : #'message performing' }
@@ -1496,9 +1494,8 @@ Object >> perform: aSymbol with: firstObject with: secondObject [
 	Fail if the number of arguments expected by the selector is not two.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
 
-	<reflective: #object:performMessageWith:>
 	<primitive: 83>
-	^ self perform: aSymbol withArguments: (Array with: firstObject with: secondObject)
+	^ self perform: aSymbol withArguments: {firstObject . secondObject}
 ]
 
 { #category : #'message performing' }
@@ -1507,7 +1504,6 @@ Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObjec
 	Fail if the number of arguments expected by the selector is not three.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
 	
-	<reflective: #object:performMessageWith:>
 	<primitive: 83>
 	^ self perform: aSymbol
 		withArguments: {firstObject . secondObject . thirdObject}
@@ -1519,10 +1515,9 @@ Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObjec
 	Fail if the number of arguments expected by the selector is not four.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
 
-	<reflective: #object:performMessageWith:>
 	<primitive: 83>
 	^ self perform: aSymbol
-		withArguments: (Array with: firstObject with: secondObject with: thirdObject with: fourthObject)
+		withArguments: {firstObject . secondObject . thirdObject . fourthObject}
 ]
 
 { #category : #'message performing' }
@@ -1532,7 +1527,6 @@ Object >> perform: selector withArguments: argArray [
 	does not match the size of argArray.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
 	
-	<reflective: #object:performMessageWithArgs:>
 	<primitive: 84>
 	^ self perform: selector withArguments: argArray inSuperclass: self class
 ]
@@ -1545,7 +1539,6 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	cannot be found among the receiver's superclasses.
 	Primitive. Essential. See Object documentation whatIsAPrimitive."
 
-	<reflective: #object:performMessageInSuperclass:>
 	<primitive: 100>
 	selector isSymbol
 		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
