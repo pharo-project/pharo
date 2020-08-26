@@ -275,6 +275,11 @@ ReSmalllintTest >> testCollectSelectNotUsed [
 ]
 
 { #category : #tests }
+ReSmalllintTest >> testCollectionAtCollectionSize [
+	self ruleFor: self currentSelector
+]
+
+{ #category : #tests }
 ReSmalllintTest >> testCollectionMessagesToExternalObject [
 	self ruleFor: self currentSelector
 ]

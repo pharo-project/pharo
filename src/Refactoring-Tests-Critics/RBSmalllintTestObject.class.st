@@ -85,6 +85,11 @@ RBSmalllintTestObject >> collectSelectNotUsed [
 ]
 
 { #category : #methods }
+RBSmalllintTestObject >> collectionAtCollectionSize [
+	^self at: self size
+]
+
+{ #category : #methods }
 RBSmalllintTestObject >> collectionMessagesToExternalObject [
 	self someObject collection remove: 10
 ]
