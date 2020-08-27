@@ -202,7 +202,7 @@ BaselineOfIDE >> baseline: spec [
 		spec 
   			baseline: 'Roassal3' 
   			with: [ spec 
-						repository: 'github://ObjectProfile/Roassal3:v0.9.3/src';
+						repository: 'github://ObjectProfile/Roassal3:8a9eaa67d09f1b8dccdedf9a0f114b83a896ada8/src';
     					loads: #( 'Core' 'Tests') ].
 
 		spec package: 'Pharo-WelcomeHelp' ]
