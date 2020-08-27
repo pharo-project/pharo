@@ -111,19 +111,19 @@ MCMethodDefinitionTest >> testPartiallyRevertOverrideMethod [
 	self class compile: 'override ^ 2' classified: '*foobarbaz'.
 	self class compile: 'override ^ 3' classified: self mockOverrideMethodCategory.
 	self class compile: 'override ^ 4' classified: self mockOverrideMethodCategory.
-	definition := (RGMethodDefinition realClass: self class selector: #override) asMCMethodDefinition.
+	definition := (self class>>#override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
 	self assert: self override equals: 4.
 	definition unload.
 	self assert: self override equals: 2.
-	self assert: (RGMethodDefinition realClass: self class selector: #override) category equals: '*foobarbaz'
+	self assert: (self class>>#override) category equals: '*foobarbaz'
 ]
 
 { #category : #testing }
 MCMethodDefinitionTest >> testRevertOldMethod [
 	| definition changeRecord |
 	Object compile: 'yourself ^ self' classified: '*MonticelloMocks'.
-	definition := (RGMethodDefinition realClass: Object selector: #yourself) asMCMethodDefinition.
+	definition := (Object>>#yourself) asMCMethodDefinition.
 	changeRecord := definition overridenMethodOrNil.
 	self assert: changeRecord notNil.
 	self assert: changeRecord category equals: 'accessing'.
@@ -134,7 +134,7 @@ MCMethodDefinitionTest >> testRevertOldMethod [
 MCMethodDefinitionTest >> testRevertOverrideMethod [
 	| definition |
 	self class compile: 'override ^ 2' classified: self mockOverrideMethodCategory.
-	definition := (RGMethodDefinition realClass: self class selector: #override) asMCMethodDefinition.
+	definition := (self class>>#override) asMCMethodDefinition.
 	self assert: definition isOverrideMethod.
 	self assert: self override equals: 2.
 	definition unload.

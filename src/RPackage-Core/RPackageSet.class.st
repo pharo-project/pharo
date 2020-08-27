@@ -121,7 +121,7 @@ RPackageSet >> extensionCategoriesForClass: aClass [
 RPackageSet >> extensionMethods [
 	^ extensionMethods ifNil: [
 		extensionMethods :=
-		((self packages flatCollect: [ :p | p extensionMethods ] as: Set) collect: [:each | each asRingDefinition]) asArray ]
+		(self packages flatCollect: [ :p | p extensionMethods ] as: Set) asArray ]
 ]
 
 { #category : #testing }
@@ -169,7 +169,7 @@ RPackageSet >> methodCategoryPrefix [
 
 { #category : #accessing }
 RPackageSet >> methods [
-	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) collect: [:each | each asRingDefinition] ]
+	^ methods ifNil: [ methods := (self packages flatCollect: [ :p | p methods ]) ]
 ]
 
 { #category : #accessing }
