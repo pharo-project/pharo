@@ -469,6 +469,17 @@ CompiledMethodTest >> testIsDeprecated [
 	DeprecatedClassForTest selectorsDo: [ :each | self assert: (DeprecatedClassForTest >> each) isDeprecated ]
 ]
 
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testIsFaulty [
+	|  cm |
+	cm := OpalCompiler new
+				source: 'method 3+';
+				options: #(+ optionParseErrors +optionEmbeddSources);
+				compile.
+	self assert: cm isFaulty.
+	self deny: (OCASTTranslator>>#visitParseErrorNode:) isFaulty
+]
+
 { #category : #'as yet unclassified' }
 CompiledMethodTest >> testIsInstalled [
 |  method cls |

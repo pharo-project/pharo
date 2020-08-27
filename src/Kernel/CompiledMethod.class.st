@@ -572,6 +572,20 @@ CompiledMethod >> isExplicitlyRequired: marker [
 ]
 
 { #category : #testing }
+CompiledMethod >> isFaulty [
+ 	"check if this method was compiled from syntactically wrong code"
+	| ast |
+	"fast pre-check: all methods with syntax errors reference this symbol"
+  	(self refersToLiteral: #signalSyntaxError:) ifFalse: [ ^false].
+	"we have to parse the ast here as #ast does not know that this needs optionParseErrors"
+	ast := self methodClass compiler 
+				source: self sourceCode;
+				options: #(+ optionParseErrors);
+				parse.
+	^ ast isFaulty.
+]
+
+{ #category : #testing }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
 	^ self origin isTrait and: [ self origin ~= self methodClass ]
