@@ -1038,7 +1038,7 @@ RGBehavior >> slotDefinitionString [
 		str nextPutAll: '{ '.
 		self slots do: [:slot |
 				str nextPutAll: slot definitionString.
-				special := slot isSpecial]				
+				special := slot needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: ' . '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
@@ -1050,6 +1050,12 @@ RGBehavior >> slotDefinitionString [
 RGBehavior >> slots [		
 		
 	^ self layout slots 
+]
+
+{ #category : #slots }
+RGBehavior >> slotsNeedFullDefinition [
+	"return true if we define something else than InstanceVariableSlots"
+	^self slots anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -1203,10 +1209,4 @@ RGBehavior >> usedTraits [
 { #category : #accessing }
 RGBehavior >> users [
 	^ #()
-]
-
-{ #category : #slots }
-RGBehavior >> usesSpecialSlot [
-	"return true if we define something else than InstanceVariableSlots"
-	^self slots anySatisfy: [ :each | each isSpecial ]
 ]
