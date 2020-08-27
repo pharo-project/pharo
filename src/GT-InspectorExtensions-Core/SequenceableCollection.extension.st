@@ -14,8 +14,12 @@ SequenceableCollection >> gtInspectorItemsIn: composite [
 			"withSmalltalkSearch;
 		showOnly: 50;
 		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'."
-			result
-				ifNotNil: [ result size = 1
+			result ifNotNil: [ 
+				result isCollection ifTrue: [ 
+					result size = 1
 						ifTrue: [ result anyOne ]
-						ifFalse: [ self species withAll: result ] ] ]
+						ifFalse: [ self species withAll: result ] 
+				] ifFalse: [ result ]
+			]
+		]
 ]
