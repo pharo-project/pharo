@@ -835,7 +835,7 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
 	errorNode := self parserError: 'Variable or expression expected'.
-	currentToken isKeyword ifFalse: [ self step ]. 
+	(currentToken isKeyword or: [ currentToken isBinary ]) ifFalse: [ self step ]. 
 	^errorNode.
 ]
 
