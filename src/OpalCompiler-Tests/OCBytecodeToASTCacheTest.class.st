@@ -33,6 +33,14 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetTest [
 ]
 
 { #category : #tests }
+OCBytecodeToASTCacheTest >> testFirstBCOffsetWithBlock [
+	compiledMethod := (MethodMapExamples >> #helperMethod14:).
+	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.	
+	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast statements first receiver
+	
+]
+
+{ #category : #tests }
 OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 	compiledMethod := ( MethodMapExamples >> #ivar).
 	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.	
