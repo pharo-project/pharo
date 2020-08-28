@@ -120,10 +120,8 @@ TestCase class >> buildSuiteFromSelectors [
 ]
 
 { #category : #'accessing comment' }
-TestCase class >> comment [
-	^super hasComment
-		ifTrue: [ super comment ] 
-		ifFalse: ['This class contains tests'].
+TestCase class >> classCommentBlank [
+	^'This class contains tests'
 ]
 
 { #category : #coverage }
