@@ -21,7 +21,7 @@ ReMethodHasSyntaxErrorRule class >> uniqueIdentifierName [
 
 { #category : #running }
 ReMethodHasSyntaxErrorRule >> basicCheck: aMethod [
-	^aMethod ast isFaulty
+	^aMethod isFaulty
 ]
 
 { #category : #accessing }
