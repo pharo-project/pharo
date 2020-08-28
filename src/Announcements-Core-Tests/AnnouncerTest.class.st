@@ -98,6 +98,13 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 ]
 
+{ #category : #tests }
+AnnouncerTest >> testCIErrorTest [
+	[self error: 'test'] fork. 
+
+	
+]
+
 { #category : #'test - subscribers' }
 AnnouncerTest >> testHandleSubscriberClass [
 	announcer when: AnnouncementMockA do: [  ].
