@@ -81,6 +81,11 @@ CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 ]
 
 { #category : #scanning }
+CleanBlockClosure >> sendsToSuper [
+	^self compiledBlock sendsToSuper
+]
+
+{ #category : #scanning }
 CleanBlockClosure >> writesField: varIndex [ 
 	^self compiledBlock writesField: varIndex
 ]
