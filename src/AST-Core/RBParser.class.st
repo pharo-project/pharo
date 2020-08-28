@@ -344,7 +344,12 @@ RBParser >> parseBinaryMessageWith: aNode [
 RBParser >> parseBinaryPattern [
 	| binaryToken node args |
 	currentToken isBinary
-		ifFalse: [ ^ self parserError: 'Message pattern expected'].
+		ifFalse: [ 
+		^ self methodNodeClass 
+			selector: #faulty
+			arguments: #()
+			body: (self sequenceNodeClass statements: (OrderedCollection with: (self parserError: 'Message pattern expected')))].
+	
 	binaryToken := currentToken.
 	self step.
 	args := Array with: self parseVariableNode.
@@ -698,9 +703,12 @@ RBParser >> parseMethod [
 	self parsePragmas.
 	self addCommentsTo: methodNode.
 	
-	sequenceNode:=  self sequenceNodeClass new.
-	(self parseStatements: true into: sequenceNode).
-methodNode body: sequenceNode .	
+	methodNode body ifNil: [
+		sequenceNode := self sequenceNodeClass new.
+		methodNode body: sequenceNode ].
+	
+	(self parseStatements: true into: methodNode body).
+		
 	pragmas ifNotNil: [ methodNode pragmas: pragmas ].
 	^methodNode
 ]
@@ -835,7 +843,7 @@ RBParser >> parsePrimitiveObject [
 			currentToken value = $( ifTrue: [^self parseParenthesizedExpression].
 			currentToken value = ${ ifTrue: [^self parseArray]].
 	errorNode := self parserError: 'Variable or expression expected'.
-	(currentToken isKeyword or: [ currentToken isBinary ]) ifFalse: [ self step ]. 
+	errorNode isParseError ifFalse: [ self step ]. 
 	^errorNode.
 ]
 
