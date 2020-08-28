@@ -48,7 +48,7 @@ DebuggerSettings class >> defaultAvailability [
 
 { #category : #accessing }
 DebuggerSettings class >> defaultDebuggerRank [
-	^10
+	^1
 ]
 
 { #category : #accessing }

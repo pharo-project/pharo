@@ -187,6 +187,12 @@ StDebugger class >> debuggerWithoutExtensionsSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+StDebugger class >> defaultDebuggerRank [
+
+	^ 10
+]
+
 { #category : #specs }
 StDebugger class >> defaultSpec [
 	^ self perform: self usingSpecSelector

@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : #accessing }
+GTSUnitDebugger class >> defaultDebuggerRank [
+
+	^ 8
+]
+
+{ #category : #accessing }
 GTSUnitDebugger class >> defaultTitle [
 
 	^ 'SUnit'
