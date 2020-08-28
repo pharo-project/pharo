@@ -392,6 +392,5 @@ Exception >> unhandledErrorAction [
 	"No one has handled this error, then I gave them a chance to decide how to debug it and I raise an UnhandledError. But it was not handled by anybody so that we are here (see nhandedError-defaultAction).
 	It is the final action an exception can do which is normally a debugger in interactive image"
 
-	<reflective: #unhandledErrorDefaultAction:message:>
  	^ UIManager default unhandledErrorDefaultAction: self
 ]
