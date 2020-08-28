@@ -41,16 +41,6 @@ BaselineOfPharoGT >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfPharoGT >> postload: loader package: packageSpec [
-
-	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
-		
-	self class environment at: #GTGenericStackDebugger ifPresent: [
-	  Smalltalk tools register: GTGenericStackDebugger as: #debugger.
-	  Smalltalk tools registeredDebuggersWithRanks.
-	  Smalltalk tools debuggers add: ((self class environment at: #GTGenericStackDebugger)->3).
-	  Smalltalk tools debuggers add: ((self class environment at: #GTSUnitDebugger)->70).
-	  Smalltalk tools debuggers add: ((self class environment at: #GTBytecodeDebugger)->5).].
-
 	  
 	self class environment at: #GTPlayground ifPresent: [:playground | 
 	  Smalltalk tools register: playground as: #workspace.].

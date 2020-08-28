@@ -59,7 +59,6 @@ EXAMPLE 2
 	StartupPreferencesLoader default addAtStartupInPreferenceVersionFolder: items named: 'author.st'.
 	items removeAll.
 	
-	items add: (StartupAction name: 'Debugger option' code: [ Smalltalk tools debugger alwaysOpenFullDebugger: true ]).
 	items add: (StartupAction name: 'Dragging Option' code: [ UITheme defaultSettings fastDragging: true ]).
 	items add: (StartupAction name: 'Dialog Auto Accept' code: [ TextEditorDialogWindow autoAccept: true ]).
 	StartupPreferencesLoader default addAtStartupInPreferenceVersionFolder: items named: 'settings.st'.

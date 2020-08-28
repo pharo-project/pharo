@@ -72,6 +72,8 @@ Methods can be modified and saved in directly in that pane.
 Class {
 	#name : #StDebugger,
 	#superclass : #StPresenter,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'sessionHolder',
 		'code',
@@ -87,8 +89,6 @@ Class {
 	],
 	#classVars : [
 		'ActivateDebuggerExtensions',
-		'Available',
-		'DefaultDebugger',
 		'ErrorRecursion',
 		'FastTDD',
 		'UsingSpecSelector'
@@ -105,14 +105,6 @@ StDebugger class >> activateDebuggerExtensions [
 { #category : #accessing }
 StDebugger class >> activateDebuggerExtensions: anObject [
 	ActivateDebuggerExtensions := anObject
-]
-
-{ #category : #deprecated }
-StDebugger class >> availableAutomatically [
-	self flag: #DBG.
-	self flag: 'will be removed after Oups is integrated'.
-	"Should this debugger be taken into account when looking for a debugger to handle an exception."
-	^Available ifNil:[Available := true]
 ]
 
 { #category : #specs }
@@ -152,6 +144,14 @@ StDebugger class >> codeLayout [
 		  yourself
 ]
 
+{ #category : #'instance creation' }
+StDebugger class >> debugSession: aDebugSession [
+	| debugger |
+	debugger := self on: aDebugSession.
+	debugger openWithFullView.
+	^ debugger
+]
+
 { #category : #settings }
 StDebugger class >> debuggerLayoutSettingsOn: aBuilder [
 	<systemsettings>
@@ -187,29 +187,6 @@ StDebugger class >> debuggerWithoutExtensionsSpec [
 		yourself
 ]
 
-{ #category : #deprecated }
-StDebugger class >> defaultDebugger [
-	^DefaultDebugger
-]
-
-{ #category : #deprecated }
-StDebugger class >> defaultDebugger: aSymbol [
-	Available := (aSymbol = #GT) not.
-	DefaultDebugger := aSymbol 
-]
-
-{ #category : #deprecated }
-StDebugger class >> defaultDebuggerSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder pickOne: #defaultDebugger)
-		label: 'Default debugger';
-		target: self;
-		default: #NewTools;
-		parent: #debugging;
-		domainValues: #(#GT #NewTools);
-		description: 'Sets the default debugger.'
-]
-
 { #category : #specs }
 StDebugger class >> defaultSpec [
 	^ self perform: self usingSpecSelector
@@ -243,11 +220,6 @@ StDebugger class >> fastTDDSettingsOn: aBuilder [
 without requesting information from the user'
 ]
 
-{ #category : #opening }
-StDebugger class >> handlesContext: aContext [
-	^self availableAutomatically 
-]
-
 { #category : #'tools registry' }
 StDebugger class >> hasAnyActivatedExtension: extensionsClasses [
 
@@ -255,27 +227,10 @@ StDebugger class >> hasAnyActivatedExtension: extensionsClasses [
 		  toolClass showInDebugger ]
 ]
 
-{ #category : #deprecated }
-StDebugger class >> iAmADebugger [
-	"Leave blank for intermediate classes. Add the <iAmADebugger> pragma for concrete debugger classes. This pragma is used by the system to find all available debuggers"
-
-	"For compatibility with DebuggerSelector https://github.com/dupriezt/DebuggerSelector"
-
-	<iAmADebugger>
-	self flag: 'I am not sure this is good design'
-]
-
 { #category : #'class initialization' }
 StDebugger class >> initialize [ 
-	
-	ErrorRecursion := false.
-
-	"Ugly check to make sure the debugger will work until everything is in the image"
-	(Smalltalk tools respondsTo: #registerDebugger:withRank:) ifFalse: [ ^ self ].
-
-	"Add ourselves to registry. See [Smalltalk tools]" 
-	Smalltalk tools registerDebugger: self withRank: self rank.
-	
+	self flag: 'Error recursion is used only here?'.
+	ErrorRecursion := false
 ]
 
 { #category : #opening }
@@ -290,32 +245,6 @@ StDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: a
 	debugger := self on: aDebugSession.
 	debugger openWithFullView.
 	^ debugger
-]
-
-{ #category : #deprecated }
-StDebugger class >> rank [
-	^ 80
-]
-
-{ #category : #deprecated }
-StDebugger class >> rankDebugSession: aDebugSession [
-	"Returns an integer representing how much this debugger is suitable to debug @aDebugSession. The higher the integer returned, the more suitable this debugger is. Signal the DebugSessionCannotBeOpenedByThisDebugger exception if this debugger absolutely cannot debug @aDebugSession (for example if this debugger can only handle debug sessions from test executions, and @aDebugSession does not come from a test execution)"
-	"For compatibility with DebuggerSelector https://github.com/dupriezt/DebuggerSelector"
-	^ self rank.
-]
-
-{ #category : #deprecated }
-StDebugger class >> register [
-	self flag: 'Maybe this is no longer necessary now that we have DebuggerSelector?'.
-	self registerToolsOn: Smalltalk tools
-]
-
-{ #category : #deprecated }
-StDebugger class >> registerToolsOn: registry [
-	self flag: 'Maybe this is no longer necessary now that we have DebuggerSelector?'.
-	"Add ourselves to registry. See [Smalltalk tools]" 
-	registry register: self as: #debugger.
-
 ]
 
 { #category : #accessing }

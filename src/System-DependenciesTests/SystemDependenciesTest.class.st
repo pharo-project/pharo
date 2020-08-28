@@ -107,7 +107,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
 	^ #(#'Fonts-Chooser' #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
-	#'Athens-Morphic' 	"Rubric has a dependency on It" )
+	#'Athens-Morphic' 	"Rubric has a dependency on It" 'Debugger-Oups' 'Debugger-Model')
 ]
 
 { #category : #'known dependencies' }
@@ -149,7 +149,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"	
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic')
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' )
 ]
 
 { #category : #utilities }

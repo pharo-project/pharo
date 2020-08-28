@@ -108,10 +108,11 @@ Exception >> completeProcess: aProcess with: aContext [
 
 { #category : #handling }
 Exception >> debug [
-	"open a debugger on myself"
-	
-	Processor activeProcess 
-		debug: self signalerContext title: self description
+
+	"requests a debugger on myself"
+
+	<debuggerCompleteToSender>
+	UIManager default requestDebuggerOpeningFor: self
 ]
 
 { #category : #handling }
@@ -164,6 +165,16 @@ Exception >> freezeUpTo:  aContext [
 ]
 
 { #category : #testing }
+Exception >> isDebuggerFailure [
+	^false
+]
+
+{ #category : #testing }
+Exception >> isHandleableBy: aDebugger [
+	^ true
+]
+
+{ #category : #testing }
 Exception >> isNested [
 	"Determine whether the current exception handler is within the scope of another handler for the same exception."
 
@@ -189,6 +200,11 @@ Exception >> messageText: signalerText [
 	"Set an exception's message text."
 
 	messageText := signalerText
+]
+
+{ #category : #accessing }
+Exception >> originException [
+	^ self
 ]
 
 { #category : #handling }

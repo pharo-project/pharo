@@ -336,12 +336,6 @@ UIManager >> deactivate [
 ]
 
 { #category : #debug }
-UIManager >> debugProcess: process context: context label: title fullView: bool [
-
-	self debugProcess: process context: context label: title fullView: bool notification: nil
-]
-
-{ #category : #debug }
 UIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
 
 	self subclassResponsibility
@@ -396,6 +390,17 @@ UIManager >> fontFromUser: priorFont [
 	self subclassResponsibility
 ]
 
+{ #category : #'debug requests' }
+UIManager >> handleDebugRequest: aDebugRequest [
+	"Provide a default handling for unhandled error. 
+	 We should never reach this code, because it should be overridden by subclasses. 
+	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
+	 in case if current ui manager having no override of this method).
+	 This method is only for documentation purposes."
+		
+	Smalltalk snapshot: false andQuit: true
+]
+
 { #category : #'error handling' }
 UIManager >> handleError: anError [
 	
@@ -405,6 +410,13 @@ UIManager >> handleError: anError [
 { #category : #'error handling' }
 UIManager >> handleError: anError log: shouldLog [
 
+	self subclassResponsibility
+]
+
+{ #category : #'debug requests' }
+UIManager >> handleWarningDebugRequest: aWarningDebugRequest [
+	"Handle warning notification. Should be overidden by subclass."
+		
 	self subclassResponsibility
 ]
 
@@ -621,6 +633,62 @@ UIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle e
 	 string the user accepts. Answer the empty string if the user cancels."
 	
 	^self subclassResponsibility
+]
+
+{ #category : #'debug requests' }
+UIManager >> requestDebuggerOpeningFor: anException [
+
+	<debuggerCompleteToSender>
+	self class environment
+		at: #OupsDebugRequest
+		ifPresent: [ :requestClass | 
+			(requestClass newForException: anException) submit.
+			^ self ].
+	Smalltalk
+		logError: anException printString
+		inContext: anException signalerContext
+]
+
+{ #category : #'debug requests' }
+UIManager >> requestDebuggerOpeningForProcess: aProcess named: title inContext: aContext [
+
+	<debuggerCompleteToSender>
+	self class environment
+		at: #OupsDebugRequest
+		ifPresent: [ :requestClass | 
+			(requestClass newForContext: aContext)
+				process: aProcess;
+				label: title;
+				submit.
+			^ self ].
+	Smalltalk logError: aContext printString inContext: aContext
+]
+
+{ #category : #'debug requests' }
+UIManager >> requestDebuggerOpeningForWarning: aWarning [
+
+	<debuggerCompleteToSender>
+	self class environment
+		at: #OupsWarningRequest
+		ifPresent: [ :requestClass | 
+			(requestClass newForException:  aWarning)			
+				submit.
+			^ self ].
+	Smalltalk logError: aWarning printString inContext: aWarning signalerContext 
+]
+
+{ #category : #'debug requests' }
+UIManager >> requestDebuggerOpeningNamed: title inContext: aContext [
+
+	<debuggerCompleteToSender>
+	self class environment
+		at: #OupsDebugRequest
+		ifPresent: [ :requestClass | 
+			(requestClass newForContext: aContext)
+				label: title;
+				submit.
+			^ self ].
+	Smalltalk logError: aContext printString inContext: aContext
 ]
 
 { #category : #'ui requests' }

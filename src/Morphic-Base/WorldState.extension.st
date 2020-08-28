@@ -126,7 +126,7 @@ WorldState class >> windowsOn: aBuilder [
 				help: 'Fit all open windows as visible in World' translated.
 			(aBuilder item: #'Close all debuggers')
 				help: 'Close all opened debugger in the image.';
-				action: [ Smalltalk tools debugger closeAllDebuggers ].
+				action: [ OupsDebuggerSystem closeAllDebuggers ].
 			(aBuilder item: #'Send top window to back (\)')
 				action: [ SystemWindow sendTopWindowToBack ];
 				help: 'Make the topmost window become the backmost one, and activate the window just beneath it.' translated.

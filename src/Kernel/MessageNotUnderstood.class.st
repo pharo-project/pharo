@@ -12,14 +12,6 @@ Class {
 	#category : #'Kernel-Exceptions'
 }
 
-{ #category : #handling }
-MessageNotUnderstood >> debug [
-	"open a debugger on myself"
-	Processor activeProcess 
-		debug: self signalerContext
-		title: self smartDescription
-]
-
 { #category : #accessing }
 MessageNotUnderstood >> defaultAction [
 

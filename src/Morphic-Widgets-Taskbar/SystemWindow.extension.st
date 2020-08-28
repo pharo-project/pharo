@@ -172,7 +172,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		enablementSelector: true.
 	submenu
 		addToggle: 'close all debuggers' translated
-		target: Smalltalk tools debugger
+		target: OupsDebuggerSystem
 		selector: #closeAllDebuggers
 		getStateSelector: nil
 		enablementSelector: true.

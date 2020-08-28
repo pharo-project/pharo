@@ -70,13 +70,6 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						default: (self environment at: #StPlayground);
 						domainValues: Smalltalk tools recentWorkspaceTools ];
 		with: [ 
-					(aBuilder pickOne: #debuggerTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Debugger';
-						default: (self environment at: #GTGenericStackDebugger);
-						domainValues: Smalltalk tools recentDebuggerTools ];
-		with: [ 
 					(aBuilder pickOne: #versionBrowserTool)
 						target: Smalltalk;
 						targetSelector: #tools;
@@ -162,28 +155,6 @@ PharoCommonTools >> changeSorterTool: aTool [
 PharoCommonTools >> cleanUp [
 	recentTools keysAndValuesDo:[:name :toolSet|
 		toolSet copy do:[:tool | tool isObsolete ifTrue:[ toolSet remove: tool]]]
-]
-
-{ #category : #'registry access' }
-PharoCommonTools >> debugger [
-
-	^ self toolNamed: #debugger
-]
-
-{ #category : #tools }
-PharoCommonTools >> debuggerTool [
-	^ self debugger
-]
-
-{ #category : #tools }
-PharoCommonTools >> debuggerTool: aTool [
-	^ self register: aTool as: #debugger
-]
-
-{ #category : #'registry access' }
-PharoCommonTools >> debuggers [
-
-	^ self toolNamed: #debuggers
 ]
 
 { #category : #'registry access' }
@@ -276,11 +247,6 @@ PharoCommonTools >> recentChangeSorterTools [
 ]
 
 { #category : #registration }
-PharoCommonTools >> recentDebuggerTools [
-	^ self recentToolsFor: #debugger
-]
-
-{ #category : #registration }
 PharoCommonTools >> recentFileListTools [
 	^ self recentToolsFor: #fileList
 ]
@@ -336,16 +302,8 @@ PharoCommonTools >> timeProfiler [
 PharoCommonTools >> toolNamed: aSymbol [
 
 	tools at: aSymbol ifPresent: [ :tool | ^ tool ].
-	
-	aSymbol = #debugger ifTrue: [ 
-		Smalltalk 
-			logError: 'No debugger installed to handle debug request.' 
-			inContext: thisContext.
-		
-			^ nil. "Smalltalk snapshot: false andQuit: true."
-	].
-
-	self error: 'No tool named: "' , aSymbol , '" present in the registry'.
+	self error:
+		'No tool named: "' , aSymbol , '" present in the registry'
 ]
 
 { #category : #'registry access' }

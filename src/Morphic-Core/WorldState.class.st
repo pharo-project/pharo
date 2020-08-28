@@ -292,6 +292,23 @@ WorldState class >> worldMenuSettingOn: aBuilder [
 		description: 'Define whitch pragma should be used to build the world menu. To disable the world menu, leave this input empty.'
 ]
 
+{ #category : #settings }
+WorldState class >> worldStateDebuggingSettingsOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder group: #world)
+		label: 'World state';
+		parent: #debugging;
+		description: 'World state debugging settings';
+		with: [ 
+			(aBuilder setting: #debugShowDamage)
+				label: 'Flash damaged morphic region';
+				target: WorldState;
+				default: false;
+				description:
+					'If true, every changed region of the morphic display will be flashed black before updating.' ]
+]
+
 { #category : #hands }
 WorldState >> activeHand [
 	^ activeHand

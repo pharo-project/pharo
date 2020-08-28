@@ -62,24 +62,21 @@ SpCodeDebugItCommand >> debug: aStream [
 
 { #category : #private }
 SpCodeDebugItCommand >> debug: aCompiledMethod receiver: anObject in: evalContext [
-	| guineaPig suspendedContext debugSession |
 
-	guineaPig := [ 
-		aCompiledMethod
-			valueWithReceiver: anObject
-			arguments: (evalContext ifNil: [ #() ] ifNotNil: [ { evalContext } ]) ]
-			newProcess.
-	suspendedContext := guineaPig suspendedContext.
-	
-	debugSession := guineaPig newDebugSessionNamed: 'debug it' startedAt: suspendedContext.
-	debugSession stepIntoUntil: [ :currentContext | 
-		currentContext method == aCompiledMethod ].
-	
-	Smalltalk tools debugger openOn: debugSession withFullView: true.
-	"(StDebugger on: debugSession)
-		application: context application;
-		openWithFullView"
-		
+	| process suspendedContext |
+	process := [ 
+	           aCompiledMethod
+		           valueWithReceiver: anObject
+		           arguments:
+		           (evalContext
+			            ifNil: [ #(  ) ]
+			            ifNotNil: [ { evalContext } ]) ] newProcess.
+	suspendedContext := process suspendedContext.
+	(OupsDebugRequest newForContext: suspendedContext)
+		process: process;
+		compiledMethod: aCompiledMethod;
+		label: 'debug it';
+		submit
 ]
 
 { #category : #execution }

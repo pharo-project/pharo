@@ -42,6 +42,8 @@ Don't forget to read the help text, type `h` or `help` to display the help text
 Class {
 	#name : #EDEmergencyDebugger,
 	#superclass : #Object,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
 	#instVars : [
 		'rawDisplay',
 		'stackSelectionIndex',
@@ -68,6 +70,11 @@ Class {
 	#category : #'EmergencyDebugger-Core'
 }
 
+{ #category : #accessing }
+EDEmergencyDebugger class >> availableAutomatically [
+	^ true
+]
+
 { #category : #'instance creation' }
 EDEmergencyDebugger class >> debug: aDebugSession [
 	self flag: 'Not good, must add and test the error too!'.
@@ -89,6 +96,12 @@ EDEmergencyDebugger class >> debugError: anError fromSession: aDebugSession [
 	^ self new
 		fromError: anError;
 		emergencyDebug: aDebugSession
+]
+
+{ #category : #'instance creation' }
+EDEmergencyDebugger class >> debugSession: aDebugSession [
+
+	^ self debug: aDebugSession
 ]
 
 { #category : #accessing }
@@ -345,9 +358,13 @@ EDEmergencyDebugger >> dumpStackAndQuit [
 
 { #category : #initialization }
 EDEmergencyDebugger >> emergencyDebug: aDebugSession [
+
 	[ self debug: aDebugSession ]
 		on: Error
-		do: [ :err | self signalDebuggerError: err forSession: aDebugSession]
+		do: [ :err | 
+			DebuggerEmmergencyLogger new
+				logError: err
+				forSession: aDebugSession ]
 ]
 
 { #category : #'error handling' }
@@ -642,22 +659,6 @@ EDEmergencyDebugger >> showSelectedMethodVersion [
 			'VERSIONS (' , methodVersionSelectionIndex printString , '/'
 				, self selectedMethodVersionsSize printString , ')'.
 	self updateDisplay
-]
-
-{ #category : #'error handling' }
-EDEmergencyDebugger >> signalDebuggerError: anError forSession: aDebugSession [
-	 | errDescription errStream |
-	 errDescription := self errorDescriptionFrom: anError.
-	 errStream := WriteStream on: String new.
-	 errStream cr.
-	 errStream
-	 << ('Original error: ' , aDebugSession name asString , '.').
-	 errStream << ('Debugger error: ' , errDescription).
-	 errStream cr.
-	 self inform: errStream contents.
-	 Smalltalk
-		 logError: errStream contents
-		 inContext: aDebugSession interruptedContext
 ]
 
 { #category : #accessing }
