@@ -33,14 +33,6 @@ CompiledMethod >> hasBreakpoint [
 ]
 
 { #category : #'*Reflectivity' }
-CompiledMethod >> hasLinks [
-	self 
-		deprecated: 'use #hasMetaLinks'
-		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
-	^self hasMetaLinks
-]
-
-{ #category : #'*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
 	^self reflectiveMethod hasMetaLinks. 
