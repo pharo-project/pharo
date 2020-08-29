@@ -72,7 +72,7 @@ PBBootstrap class >> new [
 
 { #category : #'instance creation' }
 PBBootstrap class >> repositoryLocation [
-
+	"Returns the location of the repository that we want to bootstrap, which is usually the working directory. Can be overridden if BOOTSTRAP_REPOSITORY is specified"
 	^ (Smalltalk os environment
 		at: 'BOOTSTRAP_REPOSITORY'
 		ifAbsent: [ '.' ]) asFileReference
@@ -85,8 +85,8 @@ PBBootstrap >> allPackagesForHermes [
 ]
 
 { #category : #accessing }
-PBBootstrap >> architecture: aString [ 
-	
+PBBootstrap >> architecture: aString [
+
 	architecture := aString
 ]
 
@@ -95,10 +95,16 @@ PBBootstrap >> bootstrap [
 
 	PBStepStartedSignal emit: 'Starting  Process.'.
 
+    '    [+] Preparing bootstrap' traceCr.
 	self prepareBootstrap.
+
+    '    [+] Creating image on which bootstrapping will take place' traceCr.
 	[ self createImage ]
 		on: AssertionFailure
 		do: [ :e | e resume ].
+        
+    
+    '    [+] Initializing image for bootstrapping' traceCr.
 	self initializeImage.
 
 	PBStepFinishedSignal emit: 'Process ended.'
@@ -106,19 +112,19 @@ PBBootstrap >> bootstrap [
 
 { #category : #accessing }
 PBBootstrap >> bootstrapCacheDirectory [
-	
+
 	^ (Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
 ]
 
 { #category : #accessing }
 PBBootstrap >> buildNumber [
-	
+
 	^ buildNumber
 ]
 
 { #category : #accessing }
 PBBootstrap >> buildNumber: aBuildNumber [
-	
+
 	buildNumber := aBuildNumber
 ]
 
