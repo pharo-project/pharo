@@ -110,7 +110,7 @@ RGClassStrategy >> classVariableDefinitionString [
 		str nextPutAll: '{ '.
 		self owner classVariables do: [:global |
 				str nextPutAll: global definitionString.
-				special := global isSpecial]				
+				special := global needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: ' . '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
@@ -222,7 +222,7 @@ RGClassStrategy >> definition [
 
 	| aStream poolString |
 	
-	self owner usesSpecialSlot 
+	self owner slotsNeedFullDefinition 
 		ifTrue: [ ^ self definitionWithSlots ].
 		
 	poolString := self owner sharedPoolsString.

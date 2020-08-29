@@ -123,7 +123,7 @@ RGTraitV2Strategy >> classVariableDefinitionString [
 		str nextPutAll: '{ '.
 		self owner classVariables do: [:global |
 				str nextPutAll: global definitionString.
-				special := global isSpecial]				
+				special := global needsFullDefinition]				
 			separatedBy: [ 
 				str nextPutAll: ' . '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].

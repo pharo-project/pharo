@@ -40,12 +40,6 @@ RGSlot >> isSlot [
 	^ true
 ]
 
-{ #category : #testing }
-RGSlot >> isSpecial [
-
-	^ true
-]
-
 { #category : #accessing }
 RGSlot >> name: aString [
 

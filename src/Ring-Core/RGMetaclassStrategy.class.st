@@ -87,7 +87,7 @@ RGMetaclassStrategy >> definition [
 				nextPutAll: 'uses: ';
 				print: self traitComposition ].
 		
-		(self owner usesSpecialSlot or: [ Slot showSlotClassDefinition ])
+		(self owner slotsNeedFullDefinition or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
 						strm
 							crtab;

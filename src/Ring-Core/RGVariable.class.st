@@ -10,7 +10,7 @@ Class {
 { #category : #accessing }
 RGVariable >> definitionString [
 	"non special globals are defined by the symbol"
-	^self isSpecial
+	^self needsFullDefinition
 		ifTrue: [ String streamContents: [ :aStream |
 			aStream nextPutAll: '#'; nextPutAll: self name]]
 		ifFalse: [self name printString]
@@ -55,12 +55,6 @@ RGVariable >> isPoolVariable [
 RGVariable >> isReservedVariable [
 	"Ring2 does not model self, super, thisContext"
 	^false
-]
-
-{ #category : #testing }
-RGVariable >> isSpecial [
-	"this should be deprecated for needsFullDefinition"
-	^ false
 ]
 
 { #category : #testing }
