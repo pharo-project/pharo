@@ -367,7 +367,7 @@ MorphicUIManager >> handleDebugRequest: aDebugRequest [
 MorphicUIManager >> handleError: anError log: shouldLog [
 	shouldLog
 		ifTrue: [ self logError: anError ].
-	(OupsDebugRequest newForException: self) uiManager: self; submit.
+	(OupsDebugRequest newForException: anError) submit.
 ]
 
 { #category : #'handle debug requests' }
