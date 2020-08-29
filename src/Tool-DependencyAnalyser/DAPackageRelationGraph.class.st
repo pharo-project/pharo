@@ -40,12 +40,12 @@ DAPackageRelationGraph class >> onPackagesNamed: packageNames [
 DAPackageRelationGraph >> addExtensionDependencies: aPDPackage [	
 	aPDPackage rPackageSet extensionMethods
 		do: [ :method | | packageOfExtendedClass |
-			packageOfExtendedClass := self packageForBehavior: method actualClass.
+			packageOfExtendedClass := self packageForBehavior: method methodClass.
 			self addPackage: packageOfExtendedClass.
 			aPDPackage
 				add:
 					((DAExtensionDependency from: aPDPackage to: packageOfExtendedClass)
-						theClass: method actualClass;
+						theClass: method methodClass;
 						selector: method selector asSymbol;
 						method: method).
 			 ]
@@ -288,7 +288,7 @@ DAPackageRelationGraph >> findReferencesIn: aMethod for: aPackage [
 							aPackage
 								add:
 									((DAReferenceDependency from: aPackage to: package)
-										theClass: aMethod actualClass;
+										theClass: aMethod methodClass;
 										selector: aMethod method selector asSymbol;
 										reference: literal value;
 										method: aMethod;

@@ -50,10 +50,10 @@ MCChangeNotificationTest >> testCoreMethodModified [
 
 { #category : #tests }
 MCChangeNotificationTest >> testExtMethodModified [
-	| event mref |
+	| event method |
 	workingCopy modified: false.
-	mref := workingCopy packageSet extensionMethods first.
-	event := self modifiedEventFor: mref selector ofClass: mref actualClass.
+	method := workingCopy packageSet extensionMethods first.
+	event := self modifiedEventFor: method selector ofClass: method methodClass.
 	MCWorkingCopy methodModified: event.
 	self assert: workingCopy modified
 ]

@@ -16,5 +16,5 @@ GoferRecompile >> execute [
 { #category : #running }
 GoferRecompile >> execute: aWorkingCopy [
 	aWorkingCopy packageSet methods
-		do: [ :each | each actualClass recompile: each selector ]
+		do: [ :each | each methodClass recompile: each selector ]
 ]
