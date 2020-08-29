@@ -279,7 +279,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 		setType: #mouseUp
 		position: anEvent position 
 		which: (self convertButtonFromEvent: anEvent)
-		buttons: (self convertModifiers: anEvent modifiers) | (self convertButtonFromEvent: anEvent)
+		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
 ]
