@@ -1441,7 +1441,7 @@ RBParserTest >> testParserErrors [
 RBParserTest >> testParserErrorsWithErrorBlock [
 	"Parse source with errors and ensure we identify them"
 	
-	#(#('self foo. + 3' 2) #('self 0' 1) #('self asdf;;asfd' 1)) 
+	#(#('self foo. + 3' 1) #('self 0' 1) #('self asdf;;asfd' 1)) 
 		do: [:each | |ast errorCount|
 			   [ ast := self parseError: each first onError: 
 					[:msg :pos :parser | parser parseErrorNode: msg]] 
