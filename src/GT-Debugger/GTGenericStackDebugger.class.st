@@ -34,6 +34,12 @@ GTGenericStackDebugger class >> debugSession: aDebugSession [
    debugger openWithFullView
 ]
 
+{ #category : #accessing }
+GTGenericStackDebugger class >> defaultDebuggerRank [
+
+	^ 3
+]
+
 { #category : #'settings api' }
 GTGenericStackDebugger class >> defaultLogFileName [
 	^ 'PharoDebug.log'

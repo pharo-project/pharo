@@ -8,6 +8,12 @@ Class {
 }
 
 { #category : #accessing }
+GTBytecodeDebugger class >> defaultDebuggerRank [
+
+	^ 2
+]
+
+{ #category : #accessing }
 GTBytecodeDebugger class >> defaultTitle [
 
 	^ 'Bytecode'

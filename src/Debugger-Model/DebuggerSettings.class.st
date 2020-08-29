@@ -28,7 +28,7 @@ DebuggerSettings class >> debuggerRankSettingsOn: aBuilder [
 				(aBuilder pickOne: #rank)
 					label: 'Priority';
 					target: debuggerClass;
-					default: self defaultDebuggerRank;
+					default: debuggerClass defaultDebuggerRank;
 					domainValues: (1 to: 10);
 					description:
 						'Debugger priority: a debugger with a high priority will be chosen for debugging over a debugger with a low priority. 
@@ -48,7 +48,7 @@ DebuggerSettings class >> defaultAvailability [
 
 { #category : #accessing }
 DebuggerSettings class >> defaultDebuggerRank [
-	^10
+	^1
 ]
 
 { #category : #accessing }

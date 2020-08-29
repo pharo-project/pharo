@@ -39,6 +39,12 @@ TDebugger classSide >> debugSession: aDebugSession [
 	self explicitRequirement
 ]
 
+{ #category : #accessing }
+TDebugger classSide >> defaultDebuggerRank [
+
+	^ DebuggerSettings defaultDebuggerRank
+]
+
 { #category : #debugging }
 TDebugger classSide >> handlesContext: aContext [
 	^true
@@ -46,7 +52,7 @@ TDebugger classSide >> handlesContext: aContext [
 
 { #category : #accessing }
 TDebugger classSide >> rank [
-	^rank ifNil:[rank := DebuggerSettings defaultDebuggerRank]
+	^rank ifNil:[rank := self defaultDebuggerRank]
 ]
 
 { #category : #accessing }
