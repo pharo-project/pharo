@@ -263,7 +263,7 @@ ClassDescription >> classCommentBlank [
 	"Classes can override this method to show another template."
 	"There are two use cases: a class hierarchy can give information about what kind of comment is 
 	useful (see 'PackageManifest class'). If in addition, '#hasComment ^true' can be implemented in 
-	cases where the class does not need a dedeciated comment. See 'TestCase class'for an example"
+	cases where the class does not need a dedicated comment. See 'TestCase class'for an example"
 
 	| stream |
 	stream := (String new: 100) writeStream.
@@ -285,17 +285,17 @@ Public API and Key Messages
  
 Internal Representation and Key Implementation Points.'.
 			
-	(self instanceVariables isEmpty)
+	(self instanceVariables isNotEmpty)
 		 ifTrue: [stream cr; cr; nextPutAll: '    Instance Variables'.  ].
 		
-	self instVarNames asSortedCollection do: [:each |
+	self instVarNames sorted do: [:each |
 		stream
 			cr; tab; nextPutAll: each;
 			nextPut: $:;
 			tab; tab;
 			nextPutAll: '<Object>'].
 	stream cr.
-stream cr; cr; nextPutAll: '    Implementation Points'.
+	stream cr; cr; nextPutAll: '    Implementation Points'.
 	^stream contents
 ]
 
