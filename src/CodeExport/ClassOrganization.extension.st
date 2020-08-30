@@ -21,8 +21,7 @@ ClassOrganization >> putCommentOnFile: aFileStream forClass: aClass [
 	header := String streamContents: [:strm | 
 			strm nextPutAll: aClass name;
 			nextPutAll: ' commentStamp: '.
-			commentStamp ifNil: [commentStamp := '<historical>'].
-			commentStamp storeOn: strm.
+			self commentStamp storeOn: strm.
 			strm nextPutAll: ' prior: '; nextPutAll: '0'].
 	aFileStream nextChunkPut: header.
 	aClass organization fileOutCommentOn: aFileStream.
