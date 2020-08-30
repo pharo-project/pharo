@@ -1,12 +1,10 @@
 "
-This object is in charge of system notifications.
-It manages the class comment, the class comment stamp and a protocol organizer
+This class manages the class comment and a protocol organizer
 "
 Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'commentStamp',
 		'protocolOrganizer',
 		'organizedClass',
 		'commentRemoteString'
@@ -102,14 +100,6 @@ ClassOrganization >> classComment: aString [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classComment: aString stamp: aStamp [
-
-	self
-		comment: aString;
-		commentStamp: aStamp
-]
-
-{ #category : #'backward compatibility' }
 ClassOrganization >> classify: aSymbol under: aProtocolName [
 
 	^ self 
@@ -171,18 +161,15 @@ ClassOrganization >> commentRemoteString [
 
 { #category : #accessing }
 ClassOrganization >> commentStamp [
-	^ commentStamp
-]
 
-{ #category : #accessing }
-ClassOrganization >> commentStamp: anObject [
-	commentStamp := anObject
+	^ self commentRemoteString
+		  ifNil: [ '' ]
+		  ifNotNil: [ :remoteString | SourceFiles commentTimeStampAt: remoteString sourcePointer ]
 ]
 
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
 	commentRemoteString := otherOrganization commentRemoteString.
-	commentStamp := otherOrganization commentStamp.
 	otherOrganization protocols do: [ :p | p methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: p name ] ]
 ]
 

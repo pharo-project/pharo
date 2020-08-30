@@ -224,7 +224,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 			newComment: aString string 
 			oldStamp: oldStamp 
 			newStamp: aStamp.
-		^ self organization classComment: aString stamp: aStamp].
+		^ self organization classComment: aString].
 
 	oldCommentRemoteString := self organization commentRemoteString.
 	pointer := oldCommentRemoteString 
@@ -246,8 +246,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		preamble: preamble
 		onSuccess: [ :newSourcePointer | 
 			self organization 
-				classComment: (SourceFiles remoteStringAt: newSourcePointer) 
-				stamp: aStamp ]
+				classComment: (SourceFiles remoteStringAt: newSourcePointer) ]
 		onFail: [ "ignore" ].
 	
 	SystemAnnouncer uniqueInstance 
@@ -375,7 +374,8 @@ ClassDescription >> comment: aStringOrText stamp: aStamp [
 
 { #category : #'file in/out' }
 ClassDescription >> commentStamp: changeStamp [
-	self organization commentStamp: changeStamp
+	"update the changeStamp"
+	self comment: self organization comment stamp: changeStamp
 ]
 
 { #category : #compiling }
