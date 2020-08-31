@@ -473,6 +473,113 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
+{ #category : #'file in/out' }
+Class >> definitionWithSlots [
+	"The class definition with a way to specify slots. Shown when the class defines special Slot"
+	
+	| stream poolString|
+	poolString := self sharedPoolsString.
+
+	stream := (String new: 800) writeStream.
+	superclass 
+		ifNotNil: [stream nextPutAll: superclass name]
+		ifNil: [stream nextPutAll: 'ProtoObject'].
+	stream 
+		nextPutAll: ' subclass: '; 
+		store: self name.
+	self hasTraitComposition ifTrue: [
+		stream 
+			crtab; 
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+			
+	self classLayout isFixedLayout ifFalse: [
+		stream 
+			crtab; 
+			nextPutAll: 'layout: ';
+			nextPutAll: self classLayout class name ].
+	
+	stream 
+		crtab; 
+		nextPutAll: 'slots: ';
+		nextPutAll: self slotDefinitionString.
+		
+	stream 
+		crtab; 
+		nextPutAll: 'classVariables: ';
+		nextPutAll: self classVariableDefinitionString.
+	
+	poolString = '' ifFalse: [
+		stream 
+			crtab; 
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ].
+		
+	stream 
+		crtab; 
+		nextPutAll: 'package: ';
+		store: self category asString.
+
+	superclass ifNil: [ 
+		stream nextPutAll: '.'; cr.
+		stream nextPutAll: self name.
+		stream space; nextPutAll: 'superclass: nil'. ].
+
+	^ stream contents
+]
+
+{ #category : #'file in/out' }
+Class >> definitionWithoutSlots [
+
+	| poolString stream |
+	poolString := self sharedPoolsString.
+	stream := (String new: 800) writeStream.
+	superclass
+		ifNotNil: [ stream nextPutAll: superclass name ]
+		ifNil: [ stream nextPutAll: 'ProtoObject' ].
+	
+	stream
+		nextPutAll: self kindOfSubclass;
+		store: self name.
+	self hasTraitComposition ifTrue: [ 
+		stream
+			crtab;
+			nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString ].
+	stream
+		crtab;
+		nextPutAll: 'instanceVariableNames: ';
+		store: self instanceVariablesString.
+	stream
+		crtab;
+		nextPutAll: 'classVariableNames: ';
+		store: self classVariablesString.
+	
+	poolString = '' ifFalse: [ 
+		stream 
+			crtab;
+			nextPutAll: 'poolDictionaries: ';
+			store: poolString ].
+	
+	stream
+		crtab;
+		nextPutAll: 'package: ';
+		store: self category asString.
+		
+	superclass ifNil: [ 
+		stream
+			nextPutAll: '.';
+			cr.
+		stream 
+			nextPutAll: self name.
+		stream
+			space;
+			nextPutAll: 'superclass: nil' ].
+
+	^ stream contents
+	
+]
+
 { #category : #deprecation }
 Class >> deprecationRefactorings [
 
@@ -778,6 +885,37 @@ Class >> obsolete [
 	self hasClassSide ifTrue: [ self classSide obsolete].
 	self propertyAt: #obsolete put: true.
 	super obsolete.
+]
+
+{ #category : #'file in/out' }
+Class >> oldDefinition [
+	"Answer a String that defines the receiver."
+
+	| aStream |
+	aStream := (String new: 800) writeStream.
+	superclass 
+		ifNil: [aStream nextPutAll: 'ProtoObject']
+		ifNotNil: [aStream nextPutAll: superclass name].
+	aStream nextPutAll: self kindOfSubclass;
+			store: self name.
+	(self hasTraitComposition) ifTrue: [
+		aStream cr; tab; nextPutAll: 'uses: ';
+			nextPutAll: self traitCompositionString].
+	aStream cr; tab; nextPutAll: 'instanceVariableNames: ';
+			store: self instanceVariablesString.
+	aStream cr; tab; nextPutAll: 'classVariableNames: ';
+			store: self classVariablesString.
+	aStream cr; tab; nextPutAll: 'poolDictionaries: ';
+			store: self sharedPoolsString.
+	aStream cr; tab; nextPutAll: 'category: ';
+			store: self category asString.
+
+	superclass ifNil: [ 
+		aStream nextPutAll: '.'; cr.
+		aStream nextPutAll: self name.
+		aStream space; nextPutAll: 'superclass: nil'. ].
+
+	^ aStream contents
 ]
 
 { #category : #compiling }
