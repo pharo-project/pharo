@@ -48,7 +48,8 @@ TextAction class >> actOnClickBlock: aBlock [
 
 { #category : #'class initialization' }
 TextAction class >> initialize [
-	ActOnClickBlock := [ ]
+	"nil value and [] value are both nil, but sharing a block would hold on to its outer method"
+	ActOnClickBlock := nil
 ]
 
 { #category : #evaluating }
