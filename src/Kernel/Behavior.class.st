@@ -892,13 +892,6 @@ Behavior >> includesSelector: aSymbol [
 	^ self methodDict includesKey: aSymbol
 ]
 
-{ #category : #'accessing instances and variables' }
-Behavior >> includesSharedPoolNamed:  aSharedPoolString [ 
-	"Answer whether the receiver uses the shared pool named aSharedPoolString"
-	
-	^ (self sharedPools anySatisfy: [:each | each name = aSharedPoolString])
-]
-
 { #category : #'testing class hierarchy' }
 Behavior >> inheritsFrom: aClass [ 
 	"Answer whether the argument, aClass, is on the receiver's superclass 
