@@ -100,7 +100,7 @@ AnnouncerTest >> testAnnouncingReentrant [
 
 { #category : #tests }
 AnnouncerTest >> testCIErrorTest [
-	[self error: 'test'] fork. 
+	[self error: 'backgroundErrorFromAnnouncerTest'] fork. 
 
 	
 ]
