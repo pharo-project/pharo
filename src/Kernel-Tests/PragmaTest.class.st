@@ -31,7 +31,9 @@ PragmaTest >> setUp [
 
 { #category : #'tests - cache' }
 PragmaTest >> testAllNamed [
-	self assert: ((Pragma allNamed: #primitive:) first selector) equals: #primitive:
+	self assert: ((Pragma allNamed: #primitive:) first selector) equals: #primitive:.
+	"does it work when asking for a non existing Pragma?"
+	self assert: (Pragma allNamed: #nonExistingPragma) isEmpty
 ]
 
 { #category : #tests }
@@ -96,5 +98,5 @@ PragmaTest >> testHash [
 
 { #category : #'tests - cache' }
 PragmaTest >> testallInstalled [
-	self assert: ((Pragma allInstalled) first class ) equals: Pragma
+	self assert: Pragma allInstalled first class equals: Pragma
 ]

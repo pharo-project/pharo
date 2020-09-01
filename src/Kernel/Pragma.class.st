@@ -28,7 +28,7 @@ Class {
 
 { #category : #cache }
 Pragma class >> addToCache: aPragma [
-	"when a method is added to a class, the Pragma is added the cache"
+	"when a method is added to a class, the Pragma is added to the cache"
 	self pragmaCache
 		at: aPragma selector
 		ifAbsentPut: [ WeakIdentitySet new ].
@@ -42,7 +42,7 @@ Pragma class >> allInstalled [
 		  each method isInstalled ]
 ]
 
-{ #category : #cache }
+{ #category : #finding }
 Pragma class >> allNamed: aSymbol [
 
 	"Answer a collection of all pragmas whose selector is aSymbol."
