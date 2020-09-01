@@ -29,6 +29,11 @@ PragmaTest >> setUp [
 
 ]
 
+{ #category : #'tests - cache' }
+PragmaTest >> testAllNamed [
+	self assert: ((Pragma allNamed: #primitive:) first selector) equals: #primitive:
+]
+
 { #category : #tests }
 PragmaTest >> testArgumentAt [
 	| pragma |
@@ -87,4 +92,9 @@ PragmaTest >> testHash [
 	self assert: atPragma hash equals: anotherAtPragma hash.
 	self assert: anotherAtPragma hash equals: yetAnotherAtPragma hash.
 	self assert: yetAnotherAtPragma hash equals: atPragma hash
+]
+
+{ #category : #'tests - cache' }
+PragmaTest >> testallInstalled [
+	self assert: ((Pragma allInstalled) first class ) equals: Pragma
 ]
