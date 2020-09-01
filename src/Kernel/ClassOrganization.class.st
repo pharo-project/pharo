@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'protocolOrganizer',
 		'organizedClass',
-		'commentRemoteString'
+		'commentSourcePointer'
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -136,27 +136,27 @@ ClassOrganization >> cleanUpCategoriesForClass: aClass [
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	commentRemoteString ifNil: [^ ''].
-	^ commentRemoteString string ifNil: ['']
+	^ commentSourcePointer ifNil: [''] ifNotNil: [:ptr | SourceFiles sourceCodeAt: commentSourcePointer ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> comment: aString [
-	"Store the comment, aString, associated with the object that refers to the 
-	receiver."
-
-	commentRemoteString := aString isRemoteString
-		ifTrue: [ aString ]
-		ifFalse: [ 
-			aString isEmptyOrNil
-				ifTrue: [ nil ]
-				ifFalse: [ SourceFiles remoteStringForNewString: aString ] ]
+	organizedClass comment: aString
 ]
 
 { #category : #'backward compatibility' }
 ClassOrganization >> commentRemoteString [
+	^ commentSourcePointer ifNotNil: [SourceFiles remoteStringAt: commentSourcePointer]
+]
 
-	^ commentRemoteString
+{ #category : #accessing }
+ClassOrganization >> commentSourcePointer [
+	^ commentSourcePointer
+]
+
+{ #category : #accessing }
+ClassOrganization >> commentSourcePointer: anObject [
+	commentSourcePointer := anObject
 ]
 
 { #category : #accessing }
@@ -164,12 +164,12 @@ ClassOrganization >> commentStamp [
 
 	^ self commentRemoteString
 		  ifNil: [ '' ]
-		  ifNotNil: [ :remoteString | SourceFiles commentTimeStampAt: remoteString sourcePointer ]
+		  ifNotNil: [ :remoteString | SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
 { #category : #copying }
 ClassOrganization >> copyFrom: otherOrganization [
-	commentRemoteString := otherOrganization commentRemoteString.
+	commentSourcePointer  := otherOrganization commentSourcePointer.
 	otherOrganization protocols do: [ :p | p methodSelectors do: [ :m | protocolOrganizer classify: m inProtocolNamed: p name ] ]
 ]
 
