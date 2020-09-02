@@ -9,7 +9,8 @@ Class {
 		'selectors',
 		'classVariables',
 		'superclass',
-		'methodDictionary'
+		'methodDictionary',
+		'sharedPools'
 	],
 	#category : #'HeuristicCompletion-Tests-Core'
 }
@@ -18,6 +19,15 @@ Class {
 CoMockClass >> addInstanceVariable: aString [ 
 	
 	instanceVariables := instanceVariables copyWith: aString
+]
+
+{ #category : #accessing }
+CoMockClass >> allClassVarNames [
+	"Answer the names of the receiver's and the receiver's ancestor's class variables."
+
+	^ self superclass
+		ifNil: [ self classVarNames ]
+		ifNotNil: [ :sup | self classVarNames, sup allClassVarNames ]
 ]
 
 { #category : #accessing }
@@ -112,6 +122,17 @@ CoMockClass >> selectors: aCollection [
 CoMockClass >> selectorsDo: aBlockClosure [ 
 	
 	self selectors do: aBlockClosure
+]
+
+{ #category : #accessing }
+CoMockClass >> sharedPools [
+	
+	^ sharedPools ifNil: [ #() ]
+]
+
+{ #category : #accessing }
+CoMockClass >> sharedPools: aCollection [ 
+	sharedPools := aCollection
 ]
 
 { #category : #accessing }
