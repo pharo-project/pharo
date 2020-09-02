@@ -257,10 +257,7 @@ RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
 									stop >= self textArea text size ifFalse: [ end :=  self textArea string copyFrom: stop + 1 to: self textArea text size ].
 									beginning,end ]
 					 ifTrue: [ self textArea string ].
-	[node := RBParser parseMethod: intervalTrimmedText  onError: [ 
-		RBParser parseFaultyExpression: intervalTrimmedText]
-	] on: Error do: [^nil].
-	
+	node := RBParser parseFaultyMethod: intervalTrimmedText.
 	^node bestNodeFor: (start to: start).
 	
 ]
