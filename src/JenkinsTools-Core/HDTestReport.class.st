@@ -113,6 +113,19 @@ HDTestReport >> endTestCase [
 ]
 
 { #category : #private }
+HDTestReport >> fuelFileNameForNextErrorDuring: aTestCase [
+		
+	| fileName errorsCount testName |
+	testName := aTestCase class name asString, '-', aTestCase selector.
+	fileName := testName, '.fuel'.
+	errorsCount := 1.
+	[ File exists: fileName ] whileTrue: [ 
+		errorsCount := errorsCount + 1.
+		fileName := testName , '_' , errorsCount asString , '.fuel' ].
+	^fileName 
+]
+
+{ #category : #private }
 HDTestReport >> generateTestName: aTestCase [
 	^ nodeName , (aTestCase class category copyReplaceAll: '-' with: '.')
 ]
@@ -157,6 +170,22 @@ HDTestReport >> initializeOn: aTestSuite [
 ]
 
 { #category : #running }
+HDTestReport >> recordError: anError duringTest: aTestCase [ 
+
+	| stack |
+	aTestCase shouldPass ifTrue: [ self serializeError: anError of: aTestCase ].
+		
+	stack := self stackTraceString: anError of: aTestCase.
+	self writeError: anError andStack: stack for: aTestCase
+]
+
+{ #category : #running }
+HDTestReport >> recordUnexpectedPass [
+
+	self writeFailure: TestFailure new stack: 'Unexpected failure' 
+]
+
+{ #category : #running }
 HDTestReport >> run [
 	Author uniqueInstance
 		ifUnknownAuthorUse: 'hudson'
@@ -176,27 +205,13 @@ HDTestReport >> runAll [
 
 { #category : #running }
 HDTestReport >> runCase: aTestCase [
-	| error stack  |
 	self
 		beginTestCase: aTestCase
-		runBlock: [ [ [ aTestCase runCaseManaged ]
-			on: Halt, Error, TestFailure
-			do: [ :err |
-				error := err.
-				aTestCase shouldPass ifTrue: [
-					self
-						serializeError: error
-						of: aTestCase ].
-				stack := self
-					stackTraceString: err
-					of: aTestCase ]]
-						on: TestSkip
-						do: [ :err | "nothing to do..." ] ].
-	
-	self
-		writeError: error
-		andStack: stack
-		for: aTestCase.
+		runBlock: [ 
+			[aTestCase runCaseManaged.
+			aTestCase shouldPass ifFalse: [ self recordUnexpectedPass ]] 
+				on: Exception do: [ :exc | exc recordResultOf: aTestCase inHDTestReport: self ]
+		].			
 	self endTestCase
 ]
 
@@ -205,17 +220,15 @@ HDTestReport >> serializeError: error of: aTestCase [
 	"We got an error from a test, let's serialize it so we can properly debug it later on..."
 	
 	self class environment at: #FuelOutStackDebugAction ifPresent: [ :fuelOutStackDebugAction |
-		| context testCaseMethodContext |
+		| context testCaseMethodContext fileName |
 		context := error signalerContext.
 		testCaseMethodContext := context findContextSuchThat: [ :ctx| 
 			ctx receiver == aTestCase and: [ ctx methodSelector == #performTest ]].
 		context := context copyTo: testCaseMethodContext.
 		
-		[ fuelOutStackDebugAction
-			serializeTestFailureContext: context sender 		
-			toFileNamed: aTestCase class name asString,'-', aTestCase selector, '.fuel'	] 
-		on: Error 
-		do: [:err| "simply continue..." ]
+		[fileName := self fuelFileNameForNextErrorDuring: aTestCase.
+		fuelOutStackDebugAction serializeTestFailureContext: context sender toFileNamed: fileName	] 
+			on: Error do: [:err| "simply continue..." ]
 	].
 
 

@@ -104,11 +104,6 @@ ProcessMonitorTestService class >> fuelIgnoredInstanceVariableNames [
     ^#('forkedProcesses' 'suspendedBackgroundFailures')
 ]
 
-{ #category : #testing }
-ProcessMonitorTestService class >> isEnabledByDefault [
-	^false
-]
-
 { #category : #settings }
 ProcessMonitorTestService class >> settingsForFailingStrategyOn: aBuilder [
 	

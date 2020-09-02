@@ -399,27 +399,25 @@ TestResult >> printOn: aStream [
 
 { #category : #running }
 TestResult >> runCase: aTestCase [
-	[
-	aTestCase announce: TestCaseStarted withResult: self.
+	
+	[aTestCase announce: TestCaseStarted withResult: self.
 	aTestCase runCaseManaged.
 	aTestCase announce: TestCaseEnded  withResult: self.
 	self addPass: aTestCase]
-		on: self class failure , self class skip, self class warning, self class error
-		do: [:ex | ex sunitAnnounce: aTestCase toResult: self]
+		on: Exception do: [:ex | ex sunitAnnounce: aTestCase toResult: self]
 ]
 
 { #category : #running }
 TestResult >> runCaseForDebug: aTestCase [
-	[
-	aTestCase announce: TestCaseStarted withResult: self.
+	
+	[aTestCase announce: TestCaseStarted withResult: self.
 	aTestCase runCaseManaged.
 	aTestCase announce: TestCaseEnded  withResult: self.
 	"To not affect performance of big test suites following logic is not inside addPass: method"
 	errors remove: aTestCase ifAbsent: [].
 	failures remove: aTestCase ifAbsent: [].
 	self addPass: aTestCase]
-		on: self class failure , self class skip, self class warning, self class error
-		do: [:ex | ex sunitAnnounce: aTestCase toResult: self. ex pass]
+		on: Exception do: [:ex | ex sunitAnnounce: aTestCase toResult: self. ex pass]
 ]
 
 { #category : #accessing }
