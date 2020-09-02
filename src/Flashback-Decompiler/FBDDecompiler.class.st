@@ -486,6 +486,22 @@ FBDDecompiler >> pushActiveContext [
 	simulatedStack addLast: builder codeThisContext 
 ]
 
+{ #category : #'closure support' }
+FBDDecompiler >> pushCleanClosure: aCompiledBlock [
+
+	| savedSimStack savedSequence |
+
+	savedSimStack := simulatedStack.
+	savedSequence := currentSequence.
+
+	simulatedStack addLast: (self
+		extractFullBlock: aCompiledBlock numCopied: 0).
+
+	simulatedStack := savedSimStack.
+	currentSequence := savedSequence.
+
+]
+
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushClosureCopyNumCopiedValues: numCopied numArgs: numArgs blockSize: blockSize [
 	| savedSimStack savedSequence |
@@ -509,6 +525,7 @@ FBDDecompiler >> pushConsArrayWithElements: numElements [
 
 { #category : #'data flow instructions' }
 FBDDecompiler >> pushConstant: value [
+	value isEmbeddedBlock ifTrue: [ ^self pushCleanClosure: value compiledBlock  ].
 	simulatedStack addLast: (builder codeLiteral: value)
 ]
 
