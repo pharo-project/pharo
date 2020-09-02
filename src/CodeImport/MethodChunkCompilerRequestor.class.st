@@ -24,7 +24,7 @@ MethodChunkCompilerRequestor >> fileCompileRequestor: anObject [
 
 { #category : #accessing }
 MethodChunkCompilerRequestor >> interactive [
-	^ interactive
+	^ interactive ifNil: [ false ]
 ]
 
 { #category : #accessing }

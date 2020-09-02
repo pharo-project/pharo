@@ -464,7 +464,7 @@ OpalCompiler >> isInteractiveFor: aRequestor [
 	aRequestor ifNil: [^ false ].
 	
 	^ (aRequestor respondsTo: #interactive)
-		ifTrue: [ aRequestor interactive ifNil: [ false ] ]
+		ifTrue: [ aRequestor interactive ]
 		ifFalse: [ true ]
 ]
 
