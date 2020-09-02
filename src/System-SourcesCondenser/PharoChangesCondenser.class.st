@@ -138,7 +138,7 @@ PharoChangesCondenser >> swapClassComment: classOrTrait [
 	remoteStringMap 
 		at: classOrTrait
 		ifPresent: [ :remoteString | 
-			classOrTrait organization comment: remoteString ]
+			classOrTrait organization commentSourcePointer:  remoteString sourcePointer]
 ]
 
 { #category : #'private - 2 swapping' }

@@ -211,25 +211,14 @@ ClassDescription >> classComment: aString [
 ClassDescription >> classComment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
-	| pointer header oldCommentRemoteString oldComment oldStamp preamble |
+	| pointer header oldComment oldStamp preamble |
 	oldComment := self organization classComment.
 	oldStamp := self organization commentStamp.
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	aString isRemoteString ifTrue: [
-		SystemAnnouncer uniqueInstance 
-			class: self 
-			oldComment: oldComment 
-			newComment: aString string 
-			oldStamp: oldStamp 
-			newStamp: aStamp.
-		^ self organization classComment: aString].
-
-	oldCommentRemoteString := self organization commentRemoteString.
-	pointer := oldCommentRemoteString 
-			ifNil: [0] 
-			ifNotNil: [oldCommentRemoteString sourcePointer].
+	pointer := self organization commentSourcePointer ifNil: [0]. 
+		
 	
 	preamble := String streamContents: [ :file |
 		file cr; nextPut: $!.
@@ -246,7 +235,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 		preamble: preamble
 		onSuccess: [ :newSourcePointer | 
 			self organization 
-				classComment: (SourceFiles remoteStringAt: newSourcePointer) ]
+				commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 	
 	SystemAnnouncer uniqueInstance 
