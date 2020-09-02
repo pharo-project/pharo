@@ -2,7 +2,7 @@
 A copying variable is an arg or temp var that is copied into a block that later reads this variable
 "
 Class {
-	#name : #CopyingLocalVariable,
+	#name : #CopiedLocalVariable,
 	#superclass : #LocalVariable,
 	#instVars : [
 		'originalVar'
@@ -11,48 +11,48 @@ Class {
 }
 
 { #category : #queries }
-CopyingLocalVariable >> definingNode [
+CopiedLocalVariable >> definingNode [
 	^originalVar definingNode
 ]
 
 { #category : #accessing }
-CopyingLocalVariable >> index: anIndex [
+CopiedLocalVariable >> index: anIndex [
 	self scope == originalVar scope ifTrue: [ originalVar index: anIndex ].
 	super index: anIndex
 ]
 
 { #category : #testing }
-CopyingLocalVariable >> isArgumentVariable [
+CopiedLocalVariable >> isArgumentVariable [
 	^originalVar isArgumentVariable
 ]
 
 { #category : #testing }
-CopyingLocalVariable >> isCopying [
+CopiedLocalVariable >> isCopying [
 	^true
 ]
 
 { #category : #'read/write usage' }
-CopyingLocalVariable >> isUninitialized [
+CopiedLocalVariable >> isUninitialized [
 	^originalVar isUninitialized
 ]
 
 { #category : #testing }
-CopyingLocalVariable >> isWritable [
+CopiedLocalVariable >> isWritable [
 	^originalVar isWritable
 ]
 
 { #category : #accessing }
-CopyingLocalVariable >> originalVar [
+CopiedLocalVariable >> originalVar [
 	^ originalVar
 ]
 
 { #category : #accessing }
-CopyingLocalVariable >> originalVar: anObject [
+CopiedLocalVariable >> originalVar: anObject [
 	originalVar := anObject
 ]
 
 { #category : #debugging }
-CopyingLocalVariable >> writeFromContext: aContext scope: contextScope value: aValue [
+CopiedLocalVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 	self isWritable ifFalse: [ 	^self error: 'Arguments are read only' ].
 	"we need to change this var, all the other copies, and the orginal"
 	^contextScope setCopyingTempToAllScopesUpToDefTemp: originalVar to: aValue from: aContext

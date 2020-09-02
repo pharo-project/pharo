@@ -42,7 +42,7 @@ LocalVariable >> astNodes [
 
 { #category : #converting }
 LocalVariable >> createCopiedVariableFor: aScope [
-	^ CopyingLocalVariable new
+	^ CopiedLocalVariable new
 			originalVar: self originalVar;
 			name: self name;
 			escaping: self escaping;
