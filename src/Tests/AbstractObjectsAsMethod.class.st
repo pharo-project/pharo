@@ -5,6 +5,10 @@ Class {
 }
 
 { #category : #compatibility }
+AbstractObjectsAsMethod >> cachePragmas [
+]
+
+{ #category : #compatibility }
 AbstractObjectsAsMethod >> flushCache [
 ]
 
