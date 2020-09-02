@@ -13,3 +13,9 @@ RBEOFToken >> isEOF [
 RBEOFToken >> length [
 	^ 0
 ]
+
+{ #category : #testing }
+RBEOFToken >> value [
+
+	^ ''
+]

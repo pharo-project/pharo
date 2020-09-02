@@ -1072,6 +1072,17 @@ RBParserTest >> testNegativeNumberError [
 	self should: [ self parserClass parseExpression: '- 2' ] raise: SyntaxErrorNotification
 ]
 
+{ #category : #'error testing' }
+RBParserTest >> testNodeWithMissingArgumentHasSameSourceAsOriginal [
+	| tree source errorNode |
+	source := '1+'.
+	tree := self parseFaultyExpression: source.
+	errorNode := tree arguments first.
+	
+	self assert: errorNode value isEmpty.
+	self assert: errorNode sourceInterval isEmpty
+]
+
 { #category : #tests }
 RBParserTest >> testNodesDo [
 	| size |
