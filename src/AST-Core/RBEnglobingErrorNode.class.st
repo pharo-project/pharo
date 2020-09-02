@@ -53,7 +53,10 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 
 { #category : #visiting }
 RBEnglobingErrorNode >> acceptVisitor: aVisitor [
-	[ aVisitor visitEnglobingErrorNode: self ] on: Error do: [super acceptVisitor: aVisitor ].
+
+	^ [ aVisitor visitEnglobingErrorNode: self ]
+		on: Error
+		do: [super acceptVisitor: aVisitor ].
 ]
 
 { #category : #accessing }
