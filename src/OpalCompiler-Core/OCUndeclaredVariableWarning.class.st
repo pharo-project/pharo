@@ -78,12 +78,11 @@ OCUndeclaredVariableWarning >> declareUndefined [
 
 { #category : #correcting }
 OCUndeclaredVariableWarning >> defaultAction [
-	| varName className selector |
- 	className  :=  self methodClass name .
+	| className selector |
+ 	className := self methodClass name.
 	selector := self methodNode selector. 
-	varName := node name.
 
-	NewUndeclaredWarning signal: varName in: (self methodNode selector 
+	NewUndeclaredWarning signal: node name in: (selector 
 		ifNotNil: [className, '>>', selector]
 			ifNil: ['<unknown>']).
 
