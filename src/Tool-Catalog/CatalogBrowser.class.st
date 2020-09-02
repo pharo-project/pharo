@@ -96,13 +96,8 @@ CatalogBrowser >> buildBrowser [
 
 { #category : #'private - utilities' }
 CatalogBrowser >> buildContextMenuOn: aList [
-	| col |
-	col := (PragmaCollector new
-		filter:
-			[ :prg | prg selector = #contextMenu and: [ prg methodClass = self class ] ])
-		reset.
-	"the pragma menu builder is probably doing a better job than this code but it was unclear"
-	(col collected
+
+	((Pragma allNamed: #contextMenu  in: self class)
 		sorted: [ :p1 :p2 | p2 methodSelector > p1 methodSelector ])
 		do: [ :each | self perform: each methodSelector with: aList ]
 ]
@@ -110,8 +105,8 @@ CatalogBrowser >> buildContextMenuOn: aList [
 { #category : #'private - utilities' }
 CatalogBrowser >> buildMenuOn: aList [
 	| col |
-	col := (PragmaCollector filter: [ :prg | prg selector = #menuOrder: and: [ prg methodClass = self class ] ]) reset.
-	col collected sort: [ :a :b | (a argumentAt: 1) <= (b argumentAt: 1) ].
+	col := (Pragma allNamed: #menuOrder: in: self class).
+	col sort: [ :a :b | (a argumentAt: 1) <= (b argumentAt: 1) ].
 	col do: [ :each | self perform: each methodSelector with: aList ]
 ]
 
