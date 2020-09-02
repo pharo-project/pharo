@@ -69,7 +69,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Announcements-Help'.
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
-		spec package: 'Metacello-ProfStef'.
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.
 		spec package: 'MonticelloGUI'.
