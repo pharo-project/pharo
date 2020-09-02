@@ -257,9 +257,12 @@ RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
 									stop >= self textArea text size ifFalse: [ end :=  self textArea string copyFrom: stop + 1 to: self textArea text size ].
 									beginning,end ]
 					 ifTrue: [ self textArea string ].
-	node := RBParser parseFaultyMethod: intervalTrimmedText.
-	^node bestNodeFor: (start to: start).
-	
+		
+	node := self isScripting
+		ifTrue: [ RBParser parseFaultyExpression: intervalTrimmedText ]
+		ifFalse: [ RBParser parseFaultyMethod: intervalTrimmedText ].
+
+	^node bestNodeFor: (start to: start)
 ]
 
 { #category : #binding }
@@ -954,18 +957,8 @@ RubSmalltalkEditor >> paste [
 	node := self bestNodeInTextAreaWithoutSelection.
 	charac := self getNestingCharacterFromAst: node.
 	nestedText := self stringNestedWith: charac.
-	"Check if it is a Symbol that needs extra apostrophes to receive"
-	"The commented code is a hint at how to nest strings in symbols. The solucion has not been found yet."
-		"(node isLiteralNode and: [ node value isSymbol ])
-				ifFalse: [" self replace: self selectionInterval with: nestedText and:
-						 	  [self selectAt: self pointIndex] "] 
-				ifTrue: [ | beginning end |
-				beginning := self textArea text copyFrom: node start to: self textArea startIndex - 1.
-				end := self textArea text copyFrom: self textArea stopIndex to: node stop + (self textArea stopIndex - self textArea startIndex) .
-				self replace: (node start to: node stop + (self textArea stopIndex - self textArea startIndex)) with: beginning, nestedText, end and:
-		[self selectAt: self pointIndex] ].
-	 ]."
-	
+	self replace: self selectionInterval with: nestedText and:
+		[self selectAt: self pointIndex]
 ]
 
 { #category : #'editing keys' }
