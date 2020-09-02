@@ -30,5 +30,8 @@ CoInstanceAccessibleVariablesHeuristic >> buildFetcherFor: astNode inContext: co
 			astNode: astNode;
 			completionClass: completionContext completionClass) forHierarchy.
 	
-	^ ivFetcher, cvFetcher
+	^ ivFetcher, cvFetcher, (CoSharedPoolVariableFetcher new
+		astNode: astNode;
+		completionClass: completionContext completionClass;
+		yourself) forHierarchy
 ]

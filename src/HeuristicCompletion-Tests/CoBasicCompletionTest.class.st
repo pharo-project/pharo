@@ -72,6 +72,20 @@ CoBasicCompletionTest >> setUp [
 		instanceVariables: #(a b c);
 		selectors: #(ma mb mc);
 		classVariables: #(Ca Cb Cc);
+		sharedPools: { 
+			CoMockClass new
+				classVariables: #(Sa Sb);
+				superclass: (CoMockClass new
+					classVariables: #(SSupera SSuperb);
+					yourself);
+				yourself.
+			CoMockClass new
+				classVariables: #(Sc);
+				superclass: (CoMockClass new
+					classVariables: #(SSuperc);
+					yourself);
+				yourself.
+		};
 		superclass: (CoMockClass new
 			instanceVariables: #( supera superb superc );
 			selectors: #(superma supermb supermc);
