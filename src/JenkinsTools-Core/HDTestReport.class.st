@@ -210,7 +210,8 @@ HDTestReport >> runCase: aTestCase [
 		runBlock: [ 
 			[aTestCase runCaseManaged.
 			aTestCase shouldPass ifFalse: [ self recordUnexpectedPass ]] 
-				on: Exception do: [ :exc | exc recordResultOf: aTestCase inHDTestReport: self ]
+				on: Exception - UnhandledError 
+				do: [ :exc | exc recordResultOf: aTestCase inHDTestReport: self ]
 		].			
 	self endTestCase
 ]
