@@ -39,11 +39,7 @@ Class {
 
 { #category : #utilities }
 PragmaCollector class >> allSystemPragmas [
-	^ (Array
-		streamContents: [:stream | SystemNavigation new
-				allBehaviorsDo: [:behavior | Pragma
-						withPragmasIn: behavior
-						do: [:pragma | stream nextPut: pragma]]]) 
+	^ Pragma allInstalled
 ]
 
 { #category : #'instance creation' }
