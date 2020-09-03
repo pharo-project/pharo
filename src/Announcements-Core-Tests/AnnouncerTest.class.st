@@ -99,10 +99,17 @@ AnnouncerTest >> testAnnouncingReentrant [
 ]
 
 { #category : #tests }
-AnnouncerTest >> testCIErrorTest [
+AnnouncerTest >> testForCIWithBackgroundOnlyError [
 	[self error: 'backgroundErrorFromAnnouncerTest'] fork. 
 
 	
+]
+
+{ #category : #tests }
+AnnouncerTest >> testForCIWithMainAndBackgroundErrors [
+	[self error: 'backgroundErrorFromAnnouncerTest'] fork. 
+
+	self error: 'mainErrorFromTestWithBackgroundError'
 ]
 
 { #category : #'test - subscribers' }
