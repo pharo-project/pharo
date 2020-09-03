@@ -92,7 +92,7 @@ GTInspectorTagFilter >> addTag: aSymbol [
 { #category : #accessing }
 GTInspectorTagFilter >> allPragmasWithTag [
 
-	^ PragmaCollector allSystemPragmas select: [ :pragma | pragma key == self tagPragmaKey ]
+	^ Pragma allNamed: self tagPragmaKey
 ]
 
 { #category : #accessing }
