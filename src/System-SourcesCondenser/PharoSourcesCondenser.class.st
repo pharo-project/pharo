@@ -92,7 +92,7 @@ PharoSourcesCondenser >> writeClassComment: aClass [
 	| organizer commentRemoteString stamp |
 
 	organizer := aClass organization.
-	commentRemoteString := organizer commentRemoteString.
+	commentRemoteString := self commentRemoteStringFor: organizer.
 
 	commentRemoteString ifNil: [ ^ self ].
 

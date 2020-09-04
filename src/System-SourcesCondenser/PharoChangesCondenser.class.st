@@ -38,6 +38,11 @@ PharoChangesCondenser >> basicCondense [
   stream flush.
 ]
 
+{ #category : #private }
+PharoChangesCondenser >> commentRemoteStringFor: org [
+	^ org commentSourcePointer ifNotNil: [:ptr | SourceFiles remoteStringAt: ptr]
+]
+
 { #category : #public }
 PharoChangesCondenser >> condense [
 	job := [ 
@@ -188,7 +193,7 @@ PharoChangesCondenser >> writeClassComment: aClass [
 	| organizer commentRemoteString stamp |
 	
 	organizer := aClass organization.
-	commentRemoteString := organizer commentRemoteString.
+	commentRemoteString := self commentRemoteStringFor: organizer.
 	
 	(commentRemoteString isNil or: [ commentRemoteString sourceFileNumber = 1 ])
 		ifTrue: [ ^ self ].
