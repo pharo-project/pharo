@@ -66,12 +66,6 @@ RemoteString >> fileNumber: fileNumber position: position [
 	filePositionHi := position
 ]
 
-{ #category : #testing }
-RemoteString >> isRemoteString [
-
-	^ true
-]
-
 { #category : #accessing }
 RemoteString >> last [
 	^self string ifNotNil: [ :s | s last ] 

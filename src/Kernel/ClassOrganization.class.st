@@ -136,17 +136,12 @@ ClassOrganization >> cleanUpCategoriesForClass: aClass [
 { #category : #accessing }
 ClassOrganization >> comment [
 
-	^ commentSourcePointer ifNil: [''] ifNotNil: [:ptr | SourceFiles sourceCodeAt: commentSourcePointer ]
+	^ commentSourcePointer ifNil: [''] ifNotNil: [:ptr | SourceFiles sourceCodeAt: ptr ]
 ]
 
 { #category : #accessing }
 ClassOrganization >> comment: aString [
 	organizedClass comment: aString
-]
-
-{ #category : #'backward compatibility' }
-ClassOrganization >> commentRemoteString [
-	^ commentSourcePointer ifNotNil: [SourceFiles remoteStringAt: commentSourcePointer]
 ]
 
 { #category : #accessing }
@@ -162,9 +157,9 @@ ClassOrganization >> commentSourcePointer: anObject [
 { #category : #accessing }
 ClassOrganization >> commentStamp [
 
-	^ self commentRemoteString
+	^ commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [ :remoteString | SourceFiles commentTimeStampAt: commentSourcePointer]
+		  ifNotNil: [ SourceFiles commentTimeStampAt: commentSourcePointer]
 ]
 
 { #category : #copying }
@@ -180,7 +175,7 @@ ClassOrganization >> extensionProtocols [
 
 { #category : #testing }
 ClassOrganization >> hasComment [
-	^ self commentRemoteString isNotNil
+	^ commentSourcePointer isNotNil
 ]
 
 { #category : #'backward compatibility' }
