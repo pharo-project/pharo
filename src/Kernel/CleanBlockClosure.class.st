@@ -64,6 +64,16 @@ CleanBlockClosure >> readsField: varIndex [
 	^self compiledBlock readsField: varIndex
 ]
 
+{ #category : #scanning }
+CleanBlockClosure >> readsSelf [
+	^self compiledBlock readsSelf
+]
+
+{ #category : #scanning }
+CleanBlockClosure >> readsThisContext [
+	^self compiledBlock readsThisContext
+]
+
 { #category : #accessing }
 CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
