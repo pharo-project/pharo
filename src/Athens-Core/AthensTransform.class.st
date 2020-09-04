@@ -110,6 +110,16 @@ AthensTransform >> transform: aPoint [
 	self subclassResponsibility
 ]
 
+{ #category : #transformations }
+AthensTransform >> transformRectangle: aRectangle [
+	^ Rectangle encompassing: {
+		self transform: aRectangle bottomLeft.
+		self transform: aRectangle bottomRight.
+		self transform: aRectangle topLeft.
+		self transform: aRectangle topRight.
+	}
+]
+
 { #category : #'vector-transform' }
 AthensTransform >> transformX: px Y: py [ 
 	self subclassResponsibility

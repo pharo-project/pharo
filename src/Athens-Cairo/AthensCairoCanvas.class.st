@@ -38,21 +38,25 @@ AthensCairoCanvas class >> primCreate: cairoSurface [
 
 { #category : #clipping }
 AthensCairoCanvas >> clipBy: aRectangle during: aBlock [
-	| oldClip newClip |
+	| oldClip transformedClipRectangle newClip |
 
 	oldClip := currentClipRect.
-	newClip := oldClip ifNil: [ aRectangle ] ifNotNil: [ oldClip intersect: aRectangle ifNone:[^ self] ]. 
+	transformedClipRectangle := pathTransform transformRectangle: aRectangle.
+	newClip := oldClip
+		ifNil: [ transformedClipRectangle ]
+		ifNotNil: [ oldClip intersect: transformedClipRectangle ifNone:[^ self] ]. 
 	
-	self setPathMatrix; resetClip; setClipRect: newClip.
+	self
+		setPathMatrix;
+		primSaveState;
+		pushClipRect: aRectangle.
 	
 	currentClipRect := newClip.
 
-	[aBlock value] ensure: [ 
-		self 
-		setPathMatrix;
-		resetClip;
-		setClipRect: oldClip. 
-		currentClipRect := oldClip. ].
+	[aBlock value] ensure: [
+		self primRestoreState.
+		currentClipRect := oldClip
+	].
 	
 
 ]
@@ -221,6 +225,18 @@ AthensCairoCanvas >> primResetDashes: anOffset [
 ]
 
 { #category : #private }
+AthensCairoCanvas >> primRestoreState [
+	^ self ffiCall: #(void cairo_restore (self))
+
+]
+
+{ #category : #private }
+AthensCairoCanvas >> primSaveState [
+	^ self ffiCall: #(void cairo_save (self))
+
+]
+
+{ #category : #private }
 AthensCairoCanvas >> primSetDashesLengths: dashesLengths count: dashesCount offset: anOffset [
 	^ self ffiCall: #(void cairo_set_dash (self,
 			double * dashesLengths,
@@ -246,6 +262,17 @@ AthensCairoCanvas >> primSetLineWidth: width [
 { #category : #private }
 AthensCairoCanvas >> primSetSource: aPattern [
 	^ self ffiCall: #(void cairo_set_source ( self, AthensCairoPatternPaint aPattern))
+]
+
+{ #category : #private }
+AthensCairoCanvas >> pushClipRect: aRectangle [
+	self newPath;
+		rectangleX: aRectangle left
+		y: aRectangle top
+		width: aRectangle width
+		height: aRectangle height;
+		primClip
+
 ]
 
 { #category : #private }
@@ -286,18 +313,9 @@ Note that this option does not affect text rendering, instead see cairo_font_opt
 
 { #category : #private }
 AthensCairoCanvas >> setClipRect: aRectOrNil [
-	
-
 	aRectOrNil 
 		ifNil: [ self resetClip ]
-		ifNotNil: [
-			self newPath;
-				rectangleX: aRectOrNil left
-				y: aRectOrNil top
-				width: aRectOrNil width
-				height: aRectOrNil height;
-				primClip
-			]
+		ifNotNil: [ self pushClipRect: aRectOrNil ]
 ]
 
 { #category : #initialization }
