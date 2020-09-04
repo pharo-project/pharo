@@ -284,6 +284,16 @@ AthensCairoMatrix >> transform: aPoint [
 ]
 
 { #category : #transformations }
+AthensCairoMatrix >> transformRectangle: aRectangle [
+	^ Rectangle encompassing: {
+		self transform: aRectangle bottomLeft.
+		self transform: aRectangle bottomRight.
+		self transform: aRectangle topLeft.
+		self transform: aRectangle topRight.
+	}
+]
+
+{ #category : #transformations }
 AthensCairoMatrix >> translateBy: aPoint [
 	self translateX: aPoint x Y: aPoint y
 ]
