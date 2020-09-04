@@ -96,11 +96,8 @@ FFICompilerPlugin class >> initializeFFICalloutSelectors [
 
 { #category : #'private - initialization' }
 FFICompilerPlugin class >> initializeFFICalloutSelectorsListUpdate [
-	| pragmaCollector |
-	pragmaCollector := PragmaCollector
-		filter: [ :pragma | pragma selector = #ffiCalloutTranslator ].
-	pragmaCollector reset
-		do: [ :pragma | self addFFICalloutSelectorFromPragma: pragma ].
+
+	(Pragma allNamed: #ffiCalloutTranslator) do: [ :pragma | self addFFICalloutSelectorFromPragma: pragma ]
 ]
 
 { #category : #installation }
@@ -119,10 +116,8 @@ FFICompilerPlugin class >> priority [
 
 { #category : #private }
 FFICompilerPlugin class >> recompileSenders [
-	| pragmaCollector |
-	pragmaCollector := PragmaCollector
-		filter: [ :pragma | pragma selector = #ffiCalloutTranslator ].
-	pragmaCollector reset do: [ :pragma | self recompileSendersOf: pragma method ]
+
+	(Pragma allNamed: #ffiCalloutTranslator) do: [ :pragma | self recompileSendersOf: pragma method ]
 ]
 
 { #category : #private }

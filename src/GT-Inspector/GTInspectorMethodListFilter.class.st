@@ -124,8 +124,7 @@ GTInspectorMethodListFilter >> addSignatureFor: aMethod [
 { #category : #accessing }
 GTInspectorMethodListFilter >> allPresentationMethods [
 
-	^ (PragmaCollector allSystemPragmas select: [ :pragma | 
-		pragma key == self inspectorPragmaKey ]) collect: [ :aPragma | aPragma method ]
+	^ (Pragma allNamed: self inspectorPragmaKey) collect: [ :aPragma | aPragma method ]
 ]
 
 { #category : #accessing }
