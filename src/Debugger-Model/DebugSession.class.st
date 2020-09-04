@@ -304,11 +304,11 @@ DebugSession >> restart: aContext [
 	"Closing now depends on a setting (RestartAlsoProceeds class variable) --> not supported in this version"
 
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
-	self unwindAndRestartToContext: aContext.
-	
+
 	"Issue 3015 - Hernan"
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ].
-	
+	self unwindAndRestartToContext: aContext.	
+
 	self triggerEvent: #restart		
 	
 ]

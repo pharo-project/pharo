@@ -41,5 +41,5 @@ DebuggerTest >> settingUpSessionAndProcessAndContextForBlock: aBlock [
 	process step.
 
 	context := process suspendedContext.
-	session:= process newDebugSessionNamed: 'test session' startedAt: context.
+	session := process newDebugSessionNamed: 'test session' startedAt: context.
 ]

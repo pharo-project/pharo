@@ -18,6 +18,44 @@ RestartTest >> stepA2 [
 ]
 
 { #category : #tests }
+RestartTest >> testRestartTestShouldKeepTestGreen [
+
+	| testCaseForRestart failed finished |
+	failed := false.
+	finished := Semaphore new.
+
+	testCaseForRestart := DebuggerTestCaseForRestartTest selector: #testPushingValuesOnActivation.
+	testCaseForRestart setUp.
+	self settingUpSessionAndProcessAndContextForBlock: [ 
+		[ [testCaseForRestart testPushingValuesOnActivation]
+				on: TestFailure do: [ failed := true ] ]
+					ensure: [ finished signal ] ].
+	
+	[session interruptedContext selector = #testPushingValuesOnActivation]
+		whileFalse: [ session stepInto ].
+	session restart: session interruptedContext.
+	session resume.
+
+	finished wait.	
+	self deny: failed
+]
+
+{ #category : #tests }
+RestartTest >> testRestartTestShouldPushNewValuesToTheStack [
+
+	| testCaseForRestart |
+	testCaseForRestart := DebuggerTestCaseForRestartTest selector: #testPushingValuesOnActivation.
+	testCaseForRestart setUp.
+	self settingUpSessionAndProcessAndContextForBlock: [ 
+		testCaseForRestart testPushingValuesOnActivation ].
+
+	session stepInto.
+	session restart: session interruptedContext.
+
+	self assert: session interruptedContext top == testCaseForRestart testedValue.
+]
+
+{ #category : #tests }
 RestartTest >> testStepRestartAndRestepTopContext [
 	"Get the execution to a context on method stepA2.
 	Step over in it to reach the end (and check that the temporary variable assignement works)
