@@ -136,7 +136,7 @@ Pragma class >> selector: aSymbol arguments: anArray [
 
 { #category : #private }
 Pragma class >> withPragmasIn: aClass do: aBlock [
-	aClass selectorsAndMethodsDo: [ :selector :method | method pragmas do: aBlock ].
+	aClass methodsDo: [ :method | method pragmasDo: aBlock ]
 ]
 
 { #category : #comparing }
