@@ -170,13 +170,6 @@ Metaclass >> hasClassSide [
 	^ false
 ]
 
-{ #category : #initialize }
-Metaclass >> initializeFrom: anotherClassTrait [
-	self traitComposition: self traitComposition copyTraitExpression.
-	self methodDict: self methodDict copy.
-	self basicOrganization: self organization copy.
-]
-
 { #category : #compiling }
 Metaclass >> innerBindingOf: varName [
 
