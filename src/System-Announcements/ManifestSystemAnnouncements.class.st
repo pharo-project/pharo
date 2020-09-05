@@ -6,8 +6,3 @@ Class {
 	#superclass : #PackageManifest,
 	#category : #'System-Announcements-Manifest'
 }
-
-{ #category : #'meta-data - dependency analyser' }
-ManifestSystemAnnouncements class >> ignoredDependencies [
-	^ #(#PragmaCollector)
-]
