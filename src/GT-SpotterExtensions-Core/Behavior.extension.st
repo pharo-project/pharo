@@ -89,7 +89,7 @@ Behavior >> spotterUsedTraitsFor: aStep [
 Behavior >> withMethodsReferTo: aLiteral do: aBlock [
 	| specialIndex |
 	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
-	self selectorsAndMethodsDo: [ :selector :method | 
+	self methodsDo: [ :method | 
 		((method hasLiteral: aLiteral) 
 			or: [ specialIndex notNil and: [ method scanFor: method encoderClass firstSpecialSelectorByte + specialIndex ] ])
 				ifTrue: [ aBlock value: method ] ]
@@ -99,7 +99,7 @@ Behavior >> withMethodsReferTo: aLiteral do: aBlock [
 Behavior >> withThorougMethodsReferTo: aLiteral do: aBlock [
 	| specialIndex |
 	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
-	self selectorsAndMethodsDo: [ :selector :method | 
+	self methodsDo: [ :method | 
 		(method hasSelector: aLiteral specialSelectorIndex: specialIndex)
 					ifTrue: [ aBlock value: method ] ].
 ]

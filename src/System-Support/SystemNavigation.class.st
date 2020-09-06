@@ -115,8 +115,8 @@ SystemNavigation >> allMethodsSelect: aBlock [
 	| aCollection |
 	aCollection := OrderedCollection new.
 	self allBehaviorsDo: [:class | 
-		class	selectorsAndMethodsDo: [:sel :m | 
-			(aBlock value: m) ifTrue: [aCollection add: class>>sel]]].
+		class	methodsDo: [:m | 
+			(aBlock value: m) ifTrue: [aCollection add: m]]].
 	^ aCollection
 ]
 

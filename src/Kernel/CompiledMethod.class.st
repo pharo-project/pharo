@@ -780,6 +780,13 @@ CompiledMethod >> pragmas [
 		ifFalse: [#()]
 ]
 
+{ #category : #'accessing-pragmas & properties' }
+CompiledMethod >> pragmasDo: aBlock [
+	| selectorOrProperties |
+	(selectorOrProperties := self penultimateLiteral) isMethodProperties
+		ifTrue: [selectorOrProperties pragmasDo: aBlock]
+]
+
 { #category : #'debugger support' }
 CompiledMethod >> prepareForSimulationWith: numArgs [
 	"This method changes the argument count of a CompiledMethod header to numArgs, its temporary count to numArgs + 1 and change the code handling primitive error to store the error code in the unique temporary of the method"
