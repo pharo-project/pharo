@@ -219,6 +219,11 @@ Point >> closeTo: aPoint [
  	^ (x closeTo: aPoint x) and: [ y closeTo: aPoint y ]
 ]
 
+{ #category : #comparing }
+Point >> closeTo: aPoint precision: aPrecision [
+ 	^ (x closeTo: aPoint x precision: aPrecision) and: [ y closeTo: aPoint y precision: aPrecision ]
+]
+
 { #category : #'rectangle creation' }
 Point >> corner: aPoint [ 
 	"Answer a Rectangle whose origin is the receiver and whose corner is aPoint. This is one of the infix ways of expressing the creation of a rectangle."

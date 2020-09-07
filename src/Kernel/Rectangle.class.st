@@ -319,6 +319,17 @@ Rectangle >> centeredBeneath: aRectangle [
 	^ self align: self topCenter with: aRectangle bottomCenter
 ]
 
+{ #category : #comparing }
+Rectangle >> closeTo: aRectangle [
+ 	^ (origin closeTo: aRectangle origin) and: [ corner closeTo: aRectangle corner ]
+]
+
+{ #category : #comparing }
+Rectangle >> closeTo: aRectangle precision: aPrecision [
+ 	^ (origin closeTo: aRectangle origin precision: aPrecision) and: [
+		corner closeTo: aRectangle corner precision: aPrecision ]
+]
+
 { #category : #'truncation and roundoff' }
 Rectangle >> compressTo: grid [
 	"Answer a Rectangle whose origin and corner are rounded to grid x and grid y.
