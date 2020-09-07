@@ -71,7 +71,7 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'HelpSystem-Core'.
 
-		spec package: 'Spec2-Inspector'.
+		spec package: 'EyeInspector'.
 	].
 ]
 
