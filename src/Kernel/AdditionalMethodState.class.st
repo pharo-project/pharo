@@ -249,9 +249,7 @@ AdditionalMethodState >> pragmaDo: aBlock [
 
 { #category : #accessing }
 AdditionalMethodState >> pragmas [
-
-	"Answer the raw messages comprising my pragmas."
-
+	"Return the Pragma objects. Properties are stored as Associations"
 	^ Array new: self basicSize streamContents: [ :pragmaStream | 
 		  1 to: self basicSize do: [ :i | 
 			  | propertyOrPragma "<Association|Pragma>" |
