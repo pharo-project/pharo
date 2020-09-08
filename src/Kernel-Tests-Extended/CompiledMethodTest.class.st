@@ -716,6 +716,20 @@ CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) inSuperclass: self class) equals: 1
 ]
 
+{ #category : #'tests - pragmas' }
+CompiledMethodTest >> testPragmaAt [
+
+	| method |
+	method := (SmallInteger >> #+) copy.
+	self
+		assert: (method pragmaAt: #primitive:) selector
+		equals: #primitive:.
+	self assert: (method pragmaAt: #hello) equals: nil.
+	method propertyAt: #hello put: true.
+	"Pragmas are not Properties!"
+	self assert: (method pragmaAt: #hello) equals: nil
+]
+
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testReadsField [		
 	| method |
