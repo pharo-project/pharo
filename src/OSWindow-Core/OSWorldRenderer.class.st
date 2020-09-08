@@ -8,7 +8,8 @@ Class {
 		'driver',
 		'osWindow',
 		'display',
-		'windowCloseAction'
+		'windowCloseAction',
+		'previousFrameRenderingTime'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -107,11 +108,47 @@ OSWorldRenderer >> doActivate [
 
 { #category : #operations }
 OSWorldRenderer >> drawDuring: aBlock [
-
 	osWindow ifNil: [ ^ self ].
+	self isProfilingRenderingTime ifTrue: [ ^ self drawWhileProfilingRenderingTimeDuring: aBlock ].
 	self osWindowRenderer deferUpdatesWhile: [
 		self osWindowRenderer drawDuring: aBlock
-	].	
+	].
+]
+
+{ #category : #profiling }
+OSWorldRenderer >> drawWhileProfilingRenderingTimeDuring: aBlock [
+	| measurements |
+	previousFrameRenderingTime := [
+		self osWindowRenderer deferUpdatesWhile: [
+			self osWindowRenderer drawDuring: [ :canvas |
+				| frameCanvasRenderingTime displayRectangle |
+				frameCanvasRenderingTime := [ aBlock value: canvas ] timeToRunWithoutGC.
+					
+				measurements := {
+					'Content' -> frameCanvasRenderingTime
+				}.
+				previousFrameRenderingTime ifNotNil: [
+					measurements := measurements , {
+						'Previous frame' -> previousFrameRenderingTime.
+					}
+				].
+				
+				displayRectangle := (0@0 extent: 250@40).
+				canvas
+					fillRectangle: displayRectangle color: Color white.
+				measurements doWithIndex: [ :each :index |
+					| line |
+					line := self formatRenderingTimeMeasurement: each.
+					canvas drawString: line at: 10@(10*index) font: nil color: Color black.
+				].
+				
+				self osWindowRenderer updateRectangle: displayRectangle.
+			]
+		]
+	] timeToRunWithoutGC.
+	
+	self logRenderingTimeMeasurements: measurements
+
 ]
 
 { #category : #initialization }
