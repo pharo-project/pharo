@@ -782,6 +782,11 @@ RBProgramNode >> parents [
 						-> '`@receiver withALlParents'.
 ]
 
+{ #category : #hook }
+RBProgramNode >> parserClass [
+	^ RBParser
+]
+
 { #category : #copying }
 RBProgramNode >> postCopy [
 	super postCopy.
