@@ -57,7 +57,7 @@ ContextTest >> testSourceNodeExecutedWhenContextIsJustAtStartpc [
 ]
 
 { #category : #'*Kernel-Tests-Extended' }
-ContextTest >> testWrtireVariableNamedValue [
+ContextTest >> testWriteVariableNamedValue [
 	|localVar|
 	localVar := 2.
 	instVarForTestLookupSymbol := 3.
