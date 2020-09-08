@@ -5,7 +5,7 @@ I just implement #isDeprecated as true
 Class {
 	#name : #ClyDeprecatedClassExample,
 	#superclass : #Object,
-	#category : #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
+	#category : #'Deprecated90-Calypso'
 }
 
 { #category : #testing }
