@@ -1,5 +1,5 @@
 "
-A copying variable is an arg or temp var that is copied into a block that later reads this variable
+A copied variable is an arg or temp var that is copied into a block that later reads this variable
 "
 Class {
 	#name : #CopiedLocalVariable,
