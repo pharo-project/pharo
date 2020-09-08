@@ -1,15 +1,12 @@
 "
-A CheckBoẍPresenteris a spec presenter for Checkbox.
-See AbstractFormButtonPresenter
+A  Checkbox button that can be activated/deactivated.
 
-self example
+## Examples
+- `SpCheckBoxPresenter class>>#example`
+-  `SpCheckBoxExample`
 
-You can also have a look at CheckBoxExample for a full example of how to use them.
+See also `AbstractFormButtonPresenter`
 
-I provide the following methods
-todo
-- labelOnLeft and labelOnRight
-- labelClickable
 "
 Class {
 	#name : #SpCheckBoxPresenter,
@@ -23,30 +20,19 @@ SpCheckBoxPresenter class >> adapterName [
 	^ #CheckBoxAdapter
 ]
 
-{ #category : #example }
-SpCheckBoxPresenter class >> example [ 
-
-	self new 
-		label: 'Example';
-		state: false;
-		whenActivatedDo: [ UIManager default defer: [ self inform: 'Activated' ] ];
-		whenDeactivatedDo: [ UIManager default defer: [ self inform: 'Deactivated' ] ];
-		openWithSpec
-]
-
 { #category : #specs }
 SpCheckBoxPresenter class >> title [
 
 	^ 'Checkbox Button'
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpCheckBoxPresenter >> labelOnLeft [
 
 	^ self changed: #labelOnLeft with: #()
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpCheckBoxPresenter >> labelOnRight [
 
 	^ self changed: #labelOnRight with: #()

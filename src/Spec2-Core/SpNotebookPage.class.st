@@ -137,6 +137,11 @@ SpNotebookPage >> presenterProvider: aBlock [
 ]
 
 { #category : #accessing }
+SpNotebookPage >> removeFromNotebook [
+	owner removePage: self
+]
+
+{ #category : #accessing }
 SpNotebookPage >> resetContent [
 	"force a redraw of contents of this page (next time it is selected)"
 	

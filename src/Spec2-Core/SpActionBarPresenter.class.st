@@ -1,6 +1,16 @@
 "
-I am a full width bar for presenting contextual actions.
+A full width bar designed to present contextual actions. 
+It is expected to be displayed below the content and expand horizontally to fill the area.
 This is like the small action bars at the bottom of a list in most mobile apps (or macOS), which shows small icons with actions.
+
+## Examples
+- `SpActionBarPresenter class>>#example`
+
+## Interesting API methods
+- `SpActionBarPresenter>>#add:`
+- `SpActionBarPresenter>>#addLast:`
+- `SpActionBarPresenter>>#items`
+
 "
 Class {
 	#name : #SpActionBarPresenter,
@@ -17,8 +27,9 @@ SpActionBarPresenter class >> adapterName [
 	^ #ActionBarAdapter
 ]
 
-{ #category : #adding }
+{ #category : #api }
 SpActionBarPresenter >> add: aButtonPresenter [
+	"Add a button presenter to be shown at the start of the action bar (at the left)."
 	
 	(items 
 		at: #start
@@ -26,9 +37,10 @@ SpActionBarPresenter >> add: aButtonPresenter [
 		add: aButtonPresenter
 ]
 
-{ #category : #adding }
+{ #category : #api }
 SpActionBarPresenter >> addLast: aButtonPresenter [
-	
+	"Add a button presenter to be shown at the end of the action bar (at the right)."
+
 	(items 
 		at: #end
 		ifAbsentPut: [ OrderedCollection new ] ) 
@@ -44,6 +56,9 @@ SpActionBarPresenter >> initialize [
 
 { #category : #api }
 SpActionBarPresenter >> items [
+	"Answer a dictionary containing the pairs:  
+		#start -> anOrderedCollection, 
+		#end -> anOrderedCollection"
 
 	^ items value
 ]

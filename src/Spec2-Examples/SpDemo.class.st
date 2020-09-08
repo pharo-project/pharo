@@ -1,7 +1,6 @@
 "
-Set of demos that show capabilities of the Spec UI framework.
-
-SpecDemo open
+Set of demos that show some of the capabilities of the Spec UI framework.
+Execute the following expression: `SpDemo open`
 "
 Class {
 	#name : #SpDemo,

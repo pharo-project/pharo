@@ -9,7 +9,8 @@ Class {
 	#superclass : #SpTableColumn,
 	#instVars : [
 		'editable',
-		'acceptAction'
+		'acceptAction',
+		'isSortable'
 	],
 	#category : #'Spec2-Core-Widgets-Table'
 }
@@ -47,8 +48,13 @@ SpStringTableColumn >> isEditable [
 
 { #category : #testing }
 SpStringTableColumn >> isSortable [
-	
-	^ true
+
+	^ isSortable ifNil: [ isSortable := true ]
+]
+
+{ #category : #accessing }
+SpStringTableColumn >> isSortable: aBoolean [ 
+	isSortable := aBoolean
 ]
 
 { #category : #accessing }

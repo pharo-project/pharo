@@ -91,6 +91,14 @@ SpMultipleSelectionMode >> selectedIndexes [
 ]
 
 { #category : #selecting }
+SpMultipleSelectionMode >> selectedItem [
+
+	^ self selectedItems 
+		ifNotEmpty: [ :items | items first ]
+		ifEmpty: [ nil ]
+]
+
+{ #category : #selecting }
 SpMultipleSelectionMode >> selectedItems [
 
 	^ self widget itemsAt: self selectedIndexes

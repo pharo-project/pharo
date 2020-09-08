@@ -1,18 +1,36 @@
 "
-A ListPresenter is an applicative presenter which handle a basic list.
-See AbstractWidgetPresenter
+A `ListPresenter` is an applicative presenter which handles a basic list displaying information about a domain list. 
+For example a list presenter will display the name of a list of contact. It refines the API of `SpAbstractListPresenter` that is shared with `SpComponentListPresenter` (which is a list of presenter) and `SpTablePresenter` (which is a list with multiple columns in a sense). 
 
+### Design point
+There are two design points worth notice:
+
+A list presenter has a strategy that encapsulates specific API and action related to selection (how to select, how many items can be selected, currently selected items...). Such strategy is accessed via the `selection` message. It returns instance of the subclasses of `SpAbstractSelectionMode`: `SpMultipleSelectionMode` and `SpSingleSelectionMode`. 
+It means many fonctionality related to the selection (selected items, multiple items, ....) are defined in the API of the mode and not of the main class.
+ 
+
+A list presenter does not offer the possibility to add one item in isolation instead you should use the `items:` setter to set the full list domain object. The responsibility to manage the items displayed by a list presenter is not the one of that list presenter but its users e.g, the presenter you will write and that instantiates and uses the list presenter. This is normal since there is no way that the list presenter could track changes into the domain object representing the list items.
+
+
+
+
+### Examples
+
+You can find examples below:
+```
 self example
 self exampleMultipleSelection
 self exampleWithHeaderTitle
 self exampleWithIcons
+```
+You can also have a look at `SpListSelectionPresenter` for more examples: it displays a list and how two other components update their contents based on the currently selected item. 
 
-You can also have a look at ExampleListPresenter >> exampleRegisteredColor and ListSelectionPresenter for more examples.
+### Transmissions
+The following ports are available: 
+- `#inputItemsPort` (default)
+- `#outputSelectionPort` (default)
+- `#outputActivationPort`
 
-!! Transmissions
-- #inputItemsPort (default)
-- #outputSelectionPort (default)
-- #outputActivationPort
 "
 Class {
 	#name : #SpListPresenter,
@@ -58,16 +76,27 @@ SpListPresenter >> display [
 
 { #category : #api }
 SpListPresenter >> display: aBlock [
+	"aBlock (a one argument block) will be applied on each of the list items and the result of the block will be used to display the item on the screen.
+Here is the typical example:
+
+initializePresenters
+   ...
+   fontFamilyList := self newList.
+fontFamilyList display: [ :fontFamily | fontFamily familyName ]
+   ..."
 
 	display := aBlock
 ]
 
-{ #category : #'adapter-api' }
+{ #category : #private }
 SpListPresenter >> displayValueAt: anIndex [
+	"Return the effective string that is displayed on the list. 
+	Note that it is different from the item, because often an item is an object whose only a facette (e.g., name) is displayed. In such case displayValueAt: return the string of the displayed facette"
+
 	^ self displayValueFor: (model at: anIndex)
 ]
 
-{ #category : #'adapter-api' }
+{ #category : #private }
 SpListPresenter >> displayValueFor: anObject [
 
 	^ self display value: anObject

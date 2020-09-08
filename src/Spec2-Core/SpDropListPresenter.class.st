@@ -63,7 +63,8 @@ SpDropListPresenter >> display [
 
 { #category : #api }
 SpDropListPresenter >> display: aBlock [
-	
+	"aBlock (a one argument block) will be applied on each of the droplist items and the result of the block will be used to display the item on the screen."
+
 	displayBlock := aBlock 
 
 ]

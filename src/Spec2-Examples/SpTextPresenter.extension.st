@@ -2,11 +2,26 @@ Extension { #name : #SpTextPresenter }
 
 { #category : #'*Spec2-Examples' }
 SpTextPresenter class >> example [
-	<sampleInstance>
+
 	^ self new
-	 openWithSpec;
 		text:
 			'This is a test.
-If this had been an actual emergency...'
+If this had been an actual emergency...';
+		openWithSpec
+
+
+]
+
+{ #category : #'*Spec2-Examples' }
+SpTextPresenter class >> exampleWithoutEditionContextMenu [
+	"This example should show a text editor without the default edition context menu"
+
+	^ self new
+		withoutEditionContextMenu;
+		text:
+			'This is a test.
+If this had been an actual emergency...';
+		openWithSpec
+
 
 ]

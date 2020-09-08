@@ -1,18 +1,20 @@
 "
-I am a ButtonPresenter is an applicative presenter which handle a basic button.
+A button who executes an action when pressed.
 
-! SpButtonPresenter
-A button who executes an =action= when pressed.
+## Examples
+- `SpButtonPresenter class>>#example`
 
-A button provides 
-- action is the action performed when I am clicked.
-- icon is the icon displayed on me.
-- label is the text displayed on me.
+## Interesting API methods
+- `SpButtonPresenter>>#action`
+- `SpButtonPresenter>>#action:`
+- `SpButtonPresenter>>#shortcut`
+- `SpButtonPresenter>>#shortcut:`
 
-Examples:
-> self example
+## Events
+- `SpButtonPresenter>>#whenActionChangedDo:`
+- `SpButtonPresenter>>#whenActionPerformedDo:`
 
-
+See also `SpAbstractButtonPresenter`
 "
 Class {
 	#name : #SpButtonPresenter,
@@ -44,24 +46,25 @@ SpButtonPresenter class >> title [
 
 { #category : #api }
 SpButtonPresenter >> action [
-	"get the block performed when the button is clicked"
+	"Answer the block performed when the button is clicked."
 
 	^ action
 ]
 
 { #category : #api }
 SpButtonPresenter >> action: aBlock [
-	"set the block performed when the button is clicked"
+	"Set the block performed when the button is clicked. 
+	 `aBlock` receives zero arguments."
 
 	action := aBlock
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> askBeforeChanging [
 	^ askBeforeChanging
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> askBeforeChanging: aBoolean [
 	askBeforeChanging := aBoolean
 ]
@@ -84,12 +87,12 @@ SpButtonPresenter >> ensureKeyBindingsFor: widget [
 	self shortcut ifNotNil: [ :s | self registerShortcut: s ]
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> font [
 	^ font
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> font: aFont [
 	font := aFont
 ]
@@ -119,8 +122,10 @@ SpButtonPresenter >> initialize [
 	self color: nil
 ]
 
-{ #category : #morphic }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> performAction [
+
+	self flag: #TODO. "To remove or move to morphic extension"
 	self action value.
 
 	" Here I set a dummy value just to make the holder raise an event "
@@ -140,11 +145,13 @@ SpButtonPresenter >> registerShortcut: newShortcut [
 
 { #category : #api }
 SpButtonPresenter >> shortcut [
+
 	^ shortcut
 ]
 
 { #category : #api }
 SpButtonPresenter >> shortcut: aShortcut [
+
 	shortcut := aShortcut
 ]
 
@@ -154,12 +161,14 @@ SpButtonPresenter >> shortcutCharacter [
 	^ self shortcut ifNotNil: [ :s | s platformCharacter ]
 ]
 
-{ #category : #morphic }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> state [
+
+	self flag: #TODO. "To remove or move to morphic extension"
 	^ state
 ]
 
-{ #category : #api }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> state: aBoolean [
 	"set if the button is highlighted"
 
@@ -178,30 +187,39 @@ SpButtonPresenter >> unregisterShortcut: oldShortcut [
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenActionChangedDo: aBlock [
+	"Inform when action block has been changed. 
+	 `aBlock` receives two optional arguments: 
+	 - new action block
+	 - old action block"
+
 	self property: #action whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
 SpButtonPresenter >> whenActionPerformedDo: aBlock [
-	"set a block to perform after that the button has been aclicked, and its action performed"
+	"Inform that the button has been aclicked, and its action has been performed.
+	 `aBlock` receive zero arguments."
 
 	self property: #actionPerformed whenChangedDo: aBlock
 ]
 
 { #category : #'api-events' }
-SpButtonPresenter >> whenActivatedDo: aBlock [ 
+SpButtonPresenter >> whenActivatedDo: aBlock [
+	"Inform that the button has been aclicked, and its action has been performed.
+	 `aBlock` receive zero arguments.
+	 See also `SpButtonPresenter>>#whenActionPerformedDo:`"
 	
 	^ self whenActionPerformedDo: aBlock 
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> whenFontChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
 	self property: #font whenChangedDo: aBlock
 ]
 
-{ #category : #'api-events' }
+{ #category : #TOREMOVE }
 SpButtonPresenter >> whenStateChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 

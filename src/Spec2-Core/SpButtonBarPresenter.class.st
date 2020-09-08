@@ -1,3 +1,18 @@
+"
+A full width bar for arranging buttons.
+A button bar can be used to provide a consistent layout of buttons throughout your application. 
+
+## Examples
+- `SpButtonBarPresenter class>>#example`
+
+## Interesting API methods
+- `SpButtonBarPresenter>>#add:`
+- `SpButtonBarPresenter>>#items`
+- `SpButtonBarPresenter>>#items:`
+- `SpButtonBarPresenter>>#placeAtEnd`
+- `SpButtonBarPresenter>>#placeAtStart`
+
+"
 Class {
 	#name : #SpButtonBarPresenter,
 	#superclass : #SpAbstractWidgetPresenter,
@@ -14,8 +29,9 @@ SpButtonBarPresenter class >> adapterName [
 	^ #ButtonBarAdapter
 ]
 
-{ #category : #adding }
+{ #category : #api }
 SpButtonBarPresenter >> add: aButtonPresenter [
+	"Add `aButtonPresenter` to the button list."
 	
 	aButtonPresenter owner: self.
 	items add: aButtonPresenter
@@ -49,11 +65,14 @@ SpButtonBarPresenter >> isPlaceAtStart [
 
 { #category : #api }
 SpButtonBarPresenter >> items [
+	"Answer list of buttons."
+
 	^ items value
 ]
 
 { #category : #api }
 SpButtonBarPresenter >> items: aCollectionOfButtonPresenters [
+	"Set buttons to show, taking elements in `aCollectionOfButtonPresenters`."
 
 	items := OrderedCollection new asValueHolder.
 	aCollectionOfButtonPresenters 
@@ -61,14 +80,16 @@ SpButtonBarPresenter >> items: aCollectionOfButtonPresenters [
 	items addAll: aCollectionOfButtonPresenters
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpButtonBarPresenter >> placeAtEnd [
+	"Indicate the button bar will place buttons at the end of the bar (arranged to the right)"
 
 	placeAtStart := false
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SpButtonBarPresenter >> placeAtStart [ 
+	"Indicate the button bar will place buttons at the start of the bar (arranged to the left)"
 
 	placeAtStart := true
 ]

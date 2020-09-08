@@ -42,7 +42,7 @@ SpDemoTablePresenter >> initializePresenters [
 				onActivation: [ :class | 
 					selectedClasses add: class.
 					self resetLabel ];
-				onDeactivation: [ :class | 
+				onDesactivation: [ :class | 
 					selectedClasses remove: class.
 					self resetLabel ];
 				width: 20;

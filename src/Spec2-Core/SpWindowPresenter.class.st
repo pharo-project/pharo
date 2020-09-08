@@ -171,7 +171,7 @@ SpWindowPresenter >> buildWithSpecLayout: aSpecLayout [
 		during: [ self basicBuildWithSpecLayout: aSpecLayout ]
 ]
 
-{ #category : #api }
+{ #category : #testing }
 SpWindowPresenter >> cancelled [
 
 	^ false

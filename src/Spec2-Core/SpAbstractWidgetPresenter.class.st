@@ -194,7 +194,7 @@ SpAbstractWidgetPresenter >> enable [
 
 { #category : #api }
 SpAbstractWidgetPresenter >> enabled: aBooleanOrValuable [
-	"Set if the button is enabled (clickable).
+	"Set if the widget is enabled (clickable or focusable).
 	This can either be a boolean or a block returning a boolean."
 
 	enabled := aBooleanOrValuable
