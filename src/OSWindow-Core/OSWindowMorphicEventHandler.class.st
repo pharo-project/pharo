@@ -130,6 +130,12 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 	^ buttons
 ]
 
+{ #category : #converting }
+OSWindowMorphicEventHandler >> convertPosition: aPosition [
+	morphicWorld ifNil: [ ^ aPosition ].
+	^ morphicWorld worldState worldRenderer convertWindowMouseEventPosition: aPosition
+]
+
 { #category : #events }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	morphicWorld defer: [
@@ -256,7 +262,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 	anEvent isWheel ifTrue: [ 
 		^ MouseWheelEvent new 
 			setType: #mouseWheel
-			position: anEvent position
+			position: (self convertPosition: anEvent position)
 			direction: anEvent wheelDirection
 			buttons: (self convertModifiers: anEvent modifiers)
 			hand: self activeHand
@@ -264,7 +270,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonPressEvent: anEvent [
 			
 	^ MouseButtonEvent new
 		setType: #mouseDown 
-		position: anEvent position 
+		position: (self convertPosition: anEvent position)
 		which: (self convertButtonFromEvent: anEvent)
 		buttons: (self convertModifiers: anEvent modifiers) | (self convertButtonFromEvent: anEvent)
 		hand: self activeHand
@@ -277,7 +283,7 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 
 	^ MouseButtonEvent new
 		setType: #mouseUp
-		position: anEvent position 
+		position: (self convertPosition: anEvent position)
 		which: (self convertButtonFromEvent: anEvent)
 		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
@@ -286,15 +292,15 @@ OSWindowMorphicEventHandler >> visitMouseButtonReleaseEvent: anEvent [
 
 { #category : #visiting }
 OSWindowMorphicEventHandler >> visitMouseMoveEvent: anEvent [
-	| oldPos |
+	| oldPos newPos |
 	oldPos := morphicWorld activeHand ifNil: [ 0@0 ] ifNotNil: [:hand | hand position ].
 	morphicWorld beCursorOwner.
-	
+	newPos := self convertPosition: anEvent position.
 	^ MouseMoveEvent basicNew
 		setType: #mouseMove 
 		startPoint: oldPos
-		endPoint: anEvent position 
-		trail: { oldPos. anEvent position }
+		endPoint: newPos 
+		trail: { oldPos. newPos }
 		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
 		stamp: Time millisecondClockValue
@@ -308,7 +314,7 @@ OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
 	
 	^ MouseWheelEvent new 
 		setType: #mouseWheel
-		position: anEvent position
+		position: (self convertPosition: anEvent position)
 		direction: (vertical > 0 ifTrue: [Character arrowUp] ifFalse: [Character arrowDown])
 		buttons: (self convertModifiers: anEvent modifiers)
 		hand: self activeHand
@@ -372,5 +378,11 @@ OSWindowMorphicEventHandler >> visitWindowDropEvent: anEvent [
 OSWindowMorphicEventHandler >> visitWindowResizeEvent: anEvent [
 
 	"window resized"
+	morphicWorld worldState worldRenderer checkForNewScreenSize.
+]
+
+{ #category : #visiting }
+OSWindowMorphicEventHandler >> visitWindowResolutionChangeEvent: anEvent [
+	"Resolution (dpi) changed. For now just check for a new size."
 	morphicWorld worldState worldRenderer checkForNewScreenSize.
 ]

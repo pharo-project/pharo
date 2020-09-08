@@ -10,7 +10,11 @@ Class {
 		'currentCursor',
 		'iconSurface',
 		'lastKeyboardFocus',
-		'sdl2Window'
+		'sdl2Window',
+		'screenScaleFactor',
+		'horizontalDPI',
+		'verticalDPI',
+		'diagonalDPI'
 	],
 	#pools : [
 		'SDL2Constants'
@@ -117,6 +121,12 @@ OSSDL2BackendWindow >> destroy [
 ]
 
 { #category : #accessing }
+OSSDL2BackendWindow >> diagonalDPI [
+	self fetchDPIAndRaiseEvent.
+	^ diagonalDPI
+]
+
+{ #category : #accessing }
 OSSDL2BackendWindow >> extent [
 	| w h |
 	w := ByteArray new: 4.
@@ -128,6 +138,40 @@ OSSDL2BackendWindow >> extent [
 { #category : #accessing }
 OSSDL2BackendWindow >> extent: newExtent [
 	sdl2Window setSizeW: newExtent x h: newExtent y
+]
+
+{ #category : #private }
+OSSDL2BackendWindow >> fetchDPI [
+	| displayIndex ddpi hdpi vdpi newDiagonalDPI newScreenScaleFactor |
+	displayIndex := sdl2Window getDisplayIndex.
+	displayIndex < 0 ifTrue: [ ^ false ].
+	
+	ddpi := ByteArray new: 4.
+	hdpi := ByteArray new: 4.
+	vdpi := ByteArray new: 4.
+	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
+	
+	newDiagonalDPI := ddpi floatAt: 1.
+	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.1.
+	(screenScaleFactor closeTo: newScreenScaleFactor) ifTrue: [ ^ false ].
+
+	horizontalDPI := hdpi floatAt: 1.
+	verticalDPI := vdpi floatAt: 1.
+	diagonalDPI := newDiagonalDPI.
+	screenScaleFactor := newScreenScaleFactor.
+	^ true
+]
+
+{ #category : #private }
+OSSDL2BackendWindow >> fetchDPIAndRaiseEvent [
+	self fetchDPI ifTrue: [
+		(OSWindowResolutionChangeEvent for: osWindow)
+			horizontalDPI: horizontalDPI;
+			verticalDPI: verticalDPI;
+			diagonalDPI: diagonalDPI;
+			screenScaleFactor: screenScaleFactor;
+			deliver
+	]
 ]
 
 { #category : #accessing }
@@ -162,6 +206,12 @@ OSSDL2BackendWindow >> hide [
 ]
 
 { #category : #accessing }
+OSSDL2BackendWindow >> horizontalDPI [
+	self fetchDPIAndRaiseEvent.
+	^ horizontalDPI
+]
+
+{ #category : #accessing }
 OSSDL2BackendWindow >> icon: aForm [
 	| convertedIcon surface |
 	aForm ifNil: [ ^self ].
@@ -182,7 +232,10 @@ OSSDL2BackendWindow >> icon: aForm [
 { #category : #'private - initialization' }
 OSSDL2BackendWindow >> initWithHandle: aHandle attributes: attributes [
 	sdl2Window := aHandle.
-	attributes applyTo: self
+	attributes applyTo: self.
+	diagonalDPI := horizontalDPI := verticalDPI := self screenScaleFactorBaseDPI.
+	screenScaleFactor := 1.
+	self fetchDPI.
 ]
 
 { #category : #initialization }
@@ -329,6 +382,12 @@ OSSDL2BackendWindow >> restore [
 ]
 
 { #category : #accessing }
+OSSDL2BackendWindow >> screenScaleFactor [
+	self fetchDPIAndRaiseEvent.
+	^ screenScaleFactor
+]
+
+{ #category : #accessing }
 OSSDL2BackendWindow >> sdl2Window [
 
 	^ sdl2Window
@@ -405,6 +464,12 @@ OSSDL2BackendWindow >> toggleBorderOff [
 OSSDL2BackendWindow >> toggleBorderOn [
 
 	sdl2Window toggleBorder: true
+]
+
+{ #category : #accessing }
+OSSDL2BackendWindow >> verticalDPI [
+	self fetchDPIAndRaiseEvent.
+	^ verticalDPI
 ]
 
 { #category : #'event handling' }
@@ -505,8 +570,10 @@ OSSDL2BackendWindow >> visitWindowEvent: windowEvent [
 		^ ((OSWindowShownEvent for: osWindow) timestamp: windowEvent timestamp) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_CLOSE ifTrue: [ 
 		^ (OSWindowCloseEvent for: osWindow) deliver ].
-	windowEvent event = SDL_WINDOWEVENT_MOVED ifTrue: [ 
-		^ (OSWindowMoveEvent for: osWindow) deliver ].
+	windowEvent event = SDL_WINDOWEVENT_MOVED ifTrue: [
+		self fetchDPIAndRaiseEvent.
+		^ (OSWindowMoveEvent for: osWindow) deliver
+	].
 	windowEvent event = SDL_WINDOWEVENT_RESIZED ifTrue: [ 
 		^ (OSWindowResizeEvent for: osWindow)
 				width: windowEvent data1;

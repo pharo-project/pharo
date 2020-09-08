@@ -135,5 +135,9 @@ OSWindowEventVisitor >> visitWindowResizeEvent: anEvent [
 ]
 
 { #category : #visiting }
+OSWindowEventVisitor >> visitWindowResolutionChangeEvent: anEvent [
+]
+
+{ #category : #visiting }
 OSWindowEventVisitor >> visitWindowShownEvent: anEvent [
 ]

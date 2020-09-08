@@ -63,6 +63,11 @@ OSWorldRenderer >> clipboardText: aString [
 	osWindow clipboardText: aString asString
 ]
 
+{ #category : #events }
+OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
+	^ aPosition
+]
+
 { #category : #initialization }
 OSWorldRenderer >> deactivate [
 

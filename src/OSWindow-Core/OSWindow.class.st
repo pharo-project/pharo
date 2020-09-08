@@ -185,6 +185,11 @@ OSWindow >> destroy [
 ]
 
 { #category : #accessing }
+OSWindow >> diagonalDPI [
+	^ self validHandle diagonalDPI
+]
+
+{ #category : #accessing }
 OSWindow >> eventHandler [
 	
 	^ eventHandler
@@ -226,6 +231,11 @@ OSWindow >> getFlags [
 OSWindow >> hide [
 	self checkIsValid .
 	backendWindow hide
+]
+
+{ #category : #accessing }
+OSWindow >> horizontalDPI [
+	^ self validHandle horizontalDPI
 ]
 
 { #category : #accessing }
@@ -347,6 +357,16 @@ OSWindow >> restore [
 	self validHandle restore.
 ]
 
+{ #category : #accessing }
+OSWindow >> screenScaleFactor [
+	^ self validHandle screenScaleFactor
+]
+
+{ #category : #accessing }
+OSWindow >> screenScaleFactorBaseDPI [
+	^ self validHandle screenScaleFactorBaseDPI
+]
+
 { #category : #'window management' }
 OSWindow >> setDraggableArea: aRectangle [
 
@@ -423,6 +443,11 @@ OSWindow >> toggleBorderOn [
 OSWindow >> validHandle [
 	self checkIsValid.
 	^ backendWindow
+]
+
+{ #category : #accessing }
+OSWindow >> verticalDPI [
+	^ self validHandle verticalDPI
 ]
 
 { #category : #accessing }
