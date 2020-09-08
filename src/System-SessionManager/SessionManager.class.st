@@ -124,7 +124,7 @@ SessionManager class >> initializedSessionManager [
 	| manager |
 	manager := SessionManager new.
 	manager
-		registerSystemClassNamed: #SmallInteger atPriority: 10; "system - 10"
+		registerSystemClassNamed: #SmallInteger atPriority: 10; "System - 10"
 		registerSystemClassNamed: #Delay atPriority: 20; "System - 20"
 		registerSystemClassNamed: #ProcessorScheduler atPriority: 30; "System - 30"
 		registerSystemClassNamed: #InputEventFetcher atPriority: 40; "System - 40" "WARNING: should not be in the list if InputEventSensor is already there"
