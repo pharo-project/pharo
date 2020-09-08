@@ -29,8 +29,3 @@ RBProgramNode >> gtInspectorTreeIn: composite [
 	^ (GTSimpleRBTreeBrowser new treeIn: composite)
 		title: [ 'Tree' translated ]
 ]
-
-{ #category : #'*GT-InspectorExtensions-Core' }
-RBProgramNode >> parserClass [
-	^ RBParser
-]
