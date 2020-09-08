@@ -16,12 +16,12 @@ ReVariableAssignedLiteralRule class >> checksClass [
 { #category : #running }
 ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 
-	(aClass slots, aClass classVariables) do: [ :variable | 
+	aClass definedVariables do: [ :variable | 
 		|  assignmentNodes |
 		assignmentNodes := variable  assignmentNodes.
 		assignmentNodes size = 1 ifFalse: [ ^ self ].
 		assignmentNodes first value isLiteralNode ifTrue: [ 
-		aCriticBlock cull: (self critiqueFor: aClass about: variable  name) ]].
+		aCriticBlock cull: (self critiqueFor: aClass about: variable  name) ]]
 ]
 
 { #category : #'running-helpers' }
