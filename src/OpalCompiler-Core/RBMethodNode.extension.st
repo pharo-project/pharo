@@ -58,6 +58,8 @@ RBMethodNode >> generate [
 
 { #category : #'*OpalCompiler-Core' }
 RBMethodNode >> generate: trailer [
+	"if the bytecode is regenerated, we need to reset the cache"
+	bcToASTCache := nil.
 	^ self generateIR compiledMethodWith: trailer.
 ]
 
