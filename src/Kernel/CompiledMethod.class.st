@@ -758,11 +758,8 @@ CompiledMethod >> postCopy [
 
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> pragmaAt: aKey [
-	"Answer the pragma with selector aKey, or nil if none."
-	| propertiesOrSelector |
-	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
-		ifTrue: [propertiesOrSelector at: aKey ifAbsent: [nil]]
-		ifFalse: [nil]
+	"Answer the first pragma with selector aKey, or nil if none."
+	^ self pragmas detect: [ :pragma | pragma selector == aKey ] ifNone: nil
 ]
 
 { #category : #literals }
