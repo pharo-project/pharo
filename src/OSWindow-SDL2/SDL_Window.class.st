@@ -57,6 +57,11 @@ SDL_Window >> fullscreen: flags [
 	^ self ffiCall: #( int SDL_SetWindowFullscreen ( self , Uint32 flags ) )
 ]
 
+{ #category : #accessing }
+SDL_Window >> getDisplayIndex [
+	^ self ffiCall: #( int SDL_GetWindowDisplayIndex ( self ) )
+]
+
 { #category : #surface }
 SDL_Window >> getFlags [
 	^ self ffiCall: #( Uint32 SDL_GetWindowFlags ( self ) )

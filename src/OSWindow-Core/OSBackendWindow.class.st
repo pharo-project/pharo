@@ -49,6 +49,11 @@ OSBackendWindow >> clipboardText: aString [
 ]
 
 { #category : #accessing }
+OSBackendWindow >> diagonalDPI [
+	^ self screenScaleFactorBaseDPI
+]
+
+{ #category : #accessing }
 OSBackendWindow >> extent [
 	^ self bounds extent
 ]
@@ -65,6 +70,11 @@ OSBackendWindow >> fullscreen: aBoolean [
 { #category : #accessing }
 OSBackendWindow >> hide [
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+OSBackendWindow >> horizontalDPI [
+	^ self screenScaleFactorBaseDPI
 ]
 
 { #category : #accessing }
@@ -160,6 +170,16 @@ OSBackendWindow >> resizable: aBoolean [
 	
 ]
 
+{ #category : #accessing }
+OSBackendWindow >> screenScaleFactor [
+	^ 1
+]
+
+{ #category : #accessing }
+OSBackendWindow >> screenScaleFactorBaseDPI [
+	^ OSPlatform current osWindowScreenScaleFactorBaseDPI
+]
+
 { #category : #cursor }
 OSBackendWindow >> setMouseCursor: cursorWithMask [
 	self setMouseCursor: cursorWithMask mask: cursorWithMask maskForm
@@ -192,6 +212,11 @@ OSBackendWindow >> title [
 { #category : #accessing }
 OSBackendWindow >> title: aTitle [
 	self subclassResponsibility 
+]
+
+{ #category : #accessing }
+OSBackendWindow >> verticalDPI [
+	^ self screenScaleFactorBaseDPI
 ]
 
 { #category : #accessing }

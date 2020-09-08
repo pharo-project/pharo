@@ -147,6 +147,11 @@ SDL2 class >> getAudioDeviceName: index isCapture: isCapture [
 	^ self ffiCall: #( char* SDL_GetAudioDeviceName(int index, int isCapture) ) options: #( optStringEncodingUtf8 ).
 ]
 
+{ #category : #video }
+SDL2 class >> getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi [
+	^ self ffiCall: #( int SDL_GetDisplayDPI(int displayIndex, float* ddpi, float* hdpi, float* vdpi))
+]
+
 { #category : #'error handling' }
 SDL2 class >> getErrorMessage [
 	^ self ffiCall: #( String SDL_GetError ( void ) )

@@ -8,7 +8,8 @@ Class {
 		'driver',
 		'osWindow',
 		'display',
-		'windowCloseAction'
+		'windowCloseAction',
+		'previousFrameRenderingTime'
 	],
 	#category : #'OSWindow-Core-Morphic'
 }
@@ -60,6 +61,11 @@ OSWorldRenderer >> clipboardText [
 { #category : #initialization }
 OSWorldRenderer >> clipboardText: aString [
 	osWindow clipboardText: aString asString
+]
+
+{ #category : #events }
+OSWorldRenderer >> convertWindowMouseEventPosition: aPosition [
+	^ aPosition
 ]
 
 { #category : #initialization }
