@@ -116,6 +116,31 @@ AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
 	
 ]
 
+{ #category : #transformations }
+AthensAffineTransform >> invert [
+	"
+	Affine matrix can be seen as TM X -> (TM)^-1 = M^1 T^-1
+	"
+
+	"Invert the 2x2 part"
+	| det isx ishx ishy isy nx ny ix iy |
+	det := (sx*sy) - (shy*shx).
+	self assert: (det closeTo: 0) not.
+	
+	"Prefer direct division to improve floating point precision".
+	isx := sy / det. ishx := shx negated / det.
+	ishy := shy negated / det. isy := sx / det.
+	nx := x negated.
+	ny := y negated.
+
+	ix := (isx*nx) + (ishx*ny).
+	iy := (ishy*nx) + (isy*ny).
+
+	"Set the result."
+	sx := isx. shx := ishx. x := ix.
+	shy := ishy. sy := isy. y := iy.
+]
+
 { #category : #accessing }
 AthensAffineTransform >> inverted [
 	"Answer an inverse transformation of receiver"
@@ -129,6 +154,17 @@ AthensAffineTransform >> inverted [
 		x: shx * y - (x * sy) / det;
 		y: shy * x - (sx * y) / det;
 		yourself
+]
+
+{ #category : #testing }
+AthensAffineTransform >> isAffineTransform [
+	^ true
+]
+
+{ #category : #testing }
+AthensAffineTransform >> isIdentity [
+	^ sx = 1 and: [ shx = 0 and: [ x = 0 and: [
+	shy = 0 and: [ sy = 1 and: [ y = 0]]]]]
 ]
 
 { #category : #transformations }
@@ -252,16 +288,15 @@ AthensAffineTransform >> scaleX: fx Y: fy [
 
 	"multiply receiver by scale matrix
 
-| sx   shx   x   |       | fx 0 0  |         | sx*fx   shx*fx  x |
-| shy   sy   y   |   *   | 0 fy 0  |    ===> | shy*fy  sy*fy   y |
+| sx   shx   x   |       | fx 0 0  |         | sx*fx   shx*fy  x |
+| shy   sy   y   |   *   | 0 fy 0  |    ===> | shy*fx  sy*fy   y |
 |  0    0    1   |       | 0 0  1  |         |  0        0     1 |
 
 "
 	sx := sx*fx.
-	shx := shx*fx.
+	shx := shx*fy.
 	sy := sy*fy.
-	shy := shy*fy
-
+	shy := shy*fx.
 ]
 
 { #category : #accessing }

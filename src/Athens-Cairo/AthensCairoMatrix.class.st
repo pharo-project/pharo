@@ -103,6 +103,17 @@ AthensCairoMatrix >> inverted [
 	^ m
 ]
 
+{ #category : #testing }
+AthensCairoMatrix >> isAffineTransform [
+	^ true
+]
+
+{ #category : #testing }
+AthensCairoMatrix >> isIdentity [
+	^ self sx = 1 and: [ self shx = 0 and: [ self x = 0 and: [
+	self shy = 0 and: [ self sy = 1 and: [ self y = 0]]]]]
+]
+
 { #category : #transformations }
 AthensCairoMatrix >> loadAffineTransform: m [
 	self 
@@ -291,6 +302,17 @@ AthensCairoMatrix >> transformRectangle: aRectangle [
 		self transform: aRectangle topLeft.
 		self transform: aRectangle topRight.
 	}
+]
+
+{ #category : #transformations }
+AthensCairoMatrix >> transformX: xValue Y: yValue [
+	| x y |
+	x := ByteArray new: 8.
+	y := ByteArray new: 8.
+	x doubleAt: 1 put: xValue.
+	y doubleAt: 1 put: yValue.
+	self primTransformX: x Y: y.
+	^ (x doubleAt: 1) @ (y doubleAt: 1)
 ]
 
 { #category : #transformations }

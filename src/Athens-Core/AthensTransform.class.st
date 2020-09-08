@@ -64,6 +64,16 @@ AthensTransform >> invert [
 	self subclassResponsibility
 ]
 
+{ #category : #testing }
+AthensTransform >> isAffineTransform [
+	^ self subclassResponsibility
+]
+
+{ #category : #testing }
+AthensTransform >> isIdentity [
+	^ self subclassResponsibility
+]
+
 { #category : #transformations }
 AthensTransform >> loadAffineTransform: anAthenTransform [
 	self subclassResponsibility

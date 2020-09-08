@@ -168,6 +168,52 @@ RectangleTest >> testCenterEmptyBasedOnPointPoint [
 ]
 
 { #category : #tests }
+RectangleTest >> testCloseTo [
+
+	| aOrigin aCorner bOrigin bCorner|
+	aOrigin := 0.00001000001 @ 0.00001000011.
+	aCorner := 2.00001000001 @ 2.00001000011.
+
+	bOrigin := 0.0000100000001 @ 0.0000100001001.
+	bCorner := 2.0000100000001 @ 2.0000100001001.
+
+	self assert: (aOrigin x closeTo: 0.00001).
+	self assert: (aOrigin y closeTo: 0.00001).
+	self assert: (aCorner x closeTo: 2.00001).
+	self assert: (aCorner y closeTo: 2.00001).
+
+	self assert: (bOrigin x closeTo: 0.00001).
+	self assert: (bOrigin y closeTo: 0.00001).
+	self assert: (bCorner x closeTo: 2.00001).
+	self assert: (bCorner y closeTo: 2.00001).
+	
+	self assert: ((aOrigin extent: aCorner) closeTo: (bOrigin extent: bCorner))
+]
+
+{ #category : #tests }
+RectangleTest >> testCloseToWithPrecision [
+
+	| aOrigin aCorner bOrigin bCorner|
+	aOrigin := 0.105 @ 0.1051.
+	aCorner := 2.105 @ 2.1051.
+
+	bOrigin := 0.11 @ 0.1055.
+	bCorner := 2.11 @ 2.1055.
+
+	self assert: (aOrigin x closeTo: 0.1 precision: 0.1).
+	self assert: (aOrigin y closeTo: 0.1 precision: 0.1).
+	self assert: (aCorner x closeTo: 2.1 precision: 0.1).
+	self assert: (aCorner y closeTo: 2.1 precision: 0.1).
+
+	self assert: (bOrigin x closeTo: 0.1 precision: 0.1).
+	self assert: (bOrigin y closeTo: 0.1 precision: 0.1).
+	self assert: (bCorner x closeTo: 2.1 precision: 0.1).
+	self assert: (bCorner y closeTo: 2.1 precision: 0.1).
+	
+	self assert: ((aOrigin extent: aCorner) closeTo: (bOrigin extent: bCorner) precision: 0.1)
+]
+
+{ #category : #tests }
 RectangleTest >> testFlip [
 	| r1 c r1Horiz r1Vert |
 	r1 := 30 @ 10 corner: 10 @ 20.
