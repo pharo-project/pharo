@@ -132,6 +132,17 @@ SpBoxLayout >> addLast: aName expand: shouldExpand [
 ]
 
 { #category : #adding }
+SpBoxLayout >> addLast: aName expand: shouldExpand fill: shouldFill [
+
+	self 
+		addLast: aName 
+		withConstraints: [ :constraints |
+			constraints 
+				expand: shouldExpand;
+				fill: shouldFill ]
+]
+
+{ #category : #adding }
 SpBoxLayout >> addLast: aName expand: shouldExpand fill: shouldFill padding: aNumber [
 
 	self 
