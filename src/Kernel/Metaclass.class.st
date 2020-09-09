@@ -67,15 +67,6 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 ]
 
 { #category : #compiling }
-Metaclass >> binding [
-	"return an association that can be used as the binding
-	 To share it between methods, reuse an existing one if possible"
-	^self methodDict 
-		ifEmpty: [LiteralVariable key: nil value: self]
-		ifNotEmpty: [:dict | dict anyOne classBinding]
-]
-
-{ #category : #compiling }
 Metaclass >> bindingOf: varName [
 
 	^self instanceSide classBindingOf: varName
@@ -359,6 +350,15 @@ Metaclass >> subclassesDo: aBlock [
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
+]
+
+{ #category : #compiling }
+Metaclass >> variable [
+	"return an association that can be used as the binding
+	 To share it between methods, reuse an existing one if possible"
+	^self methodDict 
+		ifEmpty: [LiteralVariable key: nil value: self]
+		ifNotEmpty: [:dict | dict anyOne classBinding]
 ]
 
 { #category : #copying }

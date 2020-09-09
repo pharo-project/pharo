@@ -455,7 +455,7 @@ Behavior >> becomeUncompact [
 
 { #category : #accessing }
 Behavior >> binding [
-	^ LiteralVariable key: nil value: self
+	^ self variable
 ]
 
 { #category : #'accessing instances and variables' }
@@ -1750,6 +1750,11 @@ Behavior >> usingMethods [
 	"all methods that reference me"
 	self isAnonymous ifTrue: [ ^#() ].
 	^self binding usingMethods
+]
+
+{ #category : #accessing }
+Behavior >> variable [
+	^ LiteralVariable key: nil value: self
 ]
 
 { #category : #queries }

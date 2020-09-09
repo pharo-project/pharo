@@ -128,6 +128,12 @@ RGBehavior >> traits [
 ]
 
 { #category : #'*Ring-RuntimeSupport' }
+RGBehavior >> variable [
+
+	^ self environment bindingOf: self name
+]
+
+{ #category : #'*Ring-RuntimeSupport' }
 RGBehavior >> withAllSuperclasses [
 	"Answer an OrderedCollection of the receiver and the receiver's 
 	superclasses. The first element is the receiver, 
