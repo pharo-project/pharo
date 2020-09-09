@@ -1565,6 +1565,11 @@ String >> findWordStart: key startingAt: start [
 	^ ind	"is a word start"
 ]
 
+{ #category : #enumerating }
+String >> flattenOn: aStream [
+		aStream nextPut: self
+]
+
 { #category : #formatting }
 String >> format: collection [
 	"Format the receiver by interpolating elements from collection, as in the following examples:" 

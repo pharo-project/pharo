@@ -898,6 +898,11 @@ Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
 ]
 
+{ #category : #enumerating }
+Object >> flattenOn: aStream [
+		aStream nextPut: self
+]
+
 { #category : #displaying }
 Object >> fullDisplayString [
 	"Answer a String whose characters are a description of the receiver suitable for UI"

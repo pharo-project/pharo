@@ -745,9 +745,7 @@ Collection >> flatCollectAsSet: aBlock [
 { #category : #enumerating }
 Collection >> flattenOn: aStream [
 
-	self do: [ :each | (each isCollection and: [each isString not]) 
-						ifTrue: [each flattenOn: aStream]
-						ifFalse: [aStream nextPut: each]].
+	self do: [ :each | each flattenOn: aStream ]
 ]
 
 { #category : #enumerating }
