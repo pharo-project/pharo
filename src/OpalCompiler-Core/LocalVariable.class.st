@@ -109,6 +109,12 @@ LocalVariable >> isCopying [
 	^false
 ]
 
+{ #category : #testing }
+LocalVariable >> isDefinedByBlock [
+	"true if a variable node is defined by a block"
+	^scope isBlockScope
+]
+
 { #category : #escaping }
 LocalVariable >> isEscaping [
 	^escaping = #escapingRead or: [escaping = #escapingWrite]

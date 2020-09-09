@@ -115,6 +115,13 @@ Variable >> isClassVariable [
 ]
 
 { #category : #testing }
+Variable >> isDefinedByBlock [
+	"true if a variable node is defined by a block"
+	^false
+
+]
+
+{ #category : #testing }
 Variable >> isGlobalVariable [
 	^ false
 ]

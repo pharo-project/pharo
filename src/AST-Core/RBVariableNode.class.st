@@ -125,8 +125,8 @@ RBVariableNode >> isClassVariable [
 
 { #category : #testing }
 RBVariableNode >> isDefinedByBlock [
-	"true if a variable node is defined by a block node"
-	^variable scope isBlockScope
+	"true if a variable node is defined by a block"
+	^variable isDefinedByBlock
 ]
 
 { #category : #testing }
