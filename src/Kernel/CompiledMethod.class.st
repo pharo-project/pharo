@@ -917,24 +917,6 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 		[propertiesOrSelector propertyKeysAndValuesDo: aBlock]
 ]
 
-{ #category : #'accessing-properties - compatibility' }
-CompiledMethod >> propertyValueAt: propName [
-	"use the version without ..Value, this methid is retained for compatibility"
-	^self propertyAt: propName
-]
-
-{ #category : #'accessing-properties - compatibility' }
-CompiledMethod >> propertyValueAt: propName ifAbsent: aBlock [
-	"use the version without ..Value, this method is retained for compatibility"
-	^self propertyAt: propName ifAbsent: aBlock
-]
-
-{ #category : #'accessing-properties - compatibility' }
-CompiledMethod >> propertyValueAt: propName put: propValue [
-	"use the version without ..Value, this method is retained for compatibility"
-	^self propertyAt: propName put: propValue
-]
-
 { #category : #accessing }
 CompiledMethod >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."

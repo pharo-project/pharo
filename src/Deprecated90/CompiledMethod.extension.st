@@ -23,3 +23,32 @@ CompiledMethod >> hasLinks [
 		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
 	^self hasMetaLinks
 ]
+
+{ #category : #'*Deprecated90' }
+CompiledMethod >> propertyValueAt: propName [
+
+	"the is the old API, we unified the API over all structure (Classes, Methods, AST Nodes)"
+
+	self
+		deprecated: 'use #propertyAt:'
+		transformWith: '`@receiver propertyValueAt: `@arg' -> '`@receiver propertyAt: `@arg'.
+	^ self propertyAt: propName
+]
+
+{ #category : #'*Deprecated90' }
+CompiledMethod >> propertyValueAt: propName ifAbsent: aBlock [
+	"the is the old API, we unified the API over all structure (Classes, Methods, AST Nodes)"
+	self
+		deprecated: 'use #propertyAt:ifAbsent:'
+		transformWith: '`@receiver propertyValueAt: `@arg1 ifAbsent: `@arg2' -> '`@receiver propertyAt: `@arg1 ifAbsent: `@arg2'.
+	^self propertyAt: propName ifAbsent: aBlock
+]
+
+{ #category : #'*Deprecated90' }
+CompiledMethod >> propertyValueAt: propName put: propValue [
+	"the is the old API, we unified the API over all structure (Classes, Methods, AST Nodes)"
+	self
+		deprecated: 'use #propertyAt:put:'
+		transformWith: '`@receiver propertyValueAt: `@arg1 put: `@arg2' -> '`@receiver propertyAt: `@arg1 put: `@arg2'.
+	^self propertyAt: propName put: propValue
+]
