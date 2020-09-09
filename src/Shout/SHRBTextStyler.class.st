@@ -979,7 +979,7 @@ SHRBTextStyler >> literalStyleSymbol: aValue [
 
 { #category : #private }
 SHRBTextStyler >> methodOrBlockArgStyleFor: anArgumentNode [
-	^ anArgumentNode isBlockVar
+	^ anArgumentNode isDefinedByBlock
 		ifTrue: [ anArgumentNode isDefinition 
 				ifTrue: [ #blockPatternArg ]
 				ifFalse: [ #blockArg ] ]
@@ -995,7 +995,7 @@ SHRBTextStyler >> methodOrBlockTempDeclStyleFor: aSequenceNode [
 
 { #category : #private }
 SHRBTextStyler >> methodOrBlockTempStyleFor: aTemporaryNode [
-	^ aTemporaryNode isBlockVar
+	^ aTemporaryNode isDefinedByBlock
 		ifTrue: [ #blockTempVar ]
 		ifFalse: [ #tempVar ]
 ]
