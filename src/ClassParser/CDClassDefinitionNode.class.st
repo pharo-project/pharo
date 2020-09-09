@@ -23,8 +23,7 @@ CDClassDefinitionNode class >> on: aRBMessageNode [
 
 { #category : #accessing }
 CDClassDefinitionNode >> binding [ 
-	self trace: '.'.
-	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self].
+	^self variable
 ]
 
 { #category : #testing }
@@ -122,4 +121,10 @@ CDClassDefinitionNode >> tag [
 CDClassDefinitionNode >> tag: aString [
 
 	tag := aString
+]
+
+{ #category : #accessing }
+CDClassDefinitionNode >> variable [ 
+	self trace: '.'.
+	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self].
 ]

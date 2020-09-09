@@ -238,14 +238,6 @@ Class >> basicDeclareClassVariable: aClassVariable [
 ]
 
 { #category : #compiling }
-Class >> binding [
-   "Answer a binding for the receiver, sharing if possible"
-   | binding |
-	binding := self environment associationAt: self name ifAbsent: [LiteralVariable key: nil value: self].
-   ^binding value == self ifTrue: [binding] ifFalse: [LiteralVariable key: nil value: self]
-]
-
-{ #category : #compiling }
 Class >> bindingOf: varName [
 	"Answer the binding of some variable resolved in the scope of the receiver, or nil
 	if variable with such name is not defined"
@@ -1336,6 +1328,14 @@ Class >> usesPoolVarNamed: aString [
 	"Return whether the receiver has a pool variable named: aString, taking into account superclasses too"
 	
 	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
+]
+
+{ #category : #compiling }
+Class >> variable [
+   "Answer a binding for the receiver, sharing if possible"
+   | binding |
+	binding := self environment associationAt: self name ifAbsent: [LiteralVariable key: nil value: self].
+   ^binding value == self ifTrue: [binding] ifFalse: [LiteralVariable key: nil value: self]
 ]
 
 { #category : #'subclass creation - deprecated' }

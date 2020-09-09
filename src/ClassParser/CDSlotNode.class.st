@@ -46,9 +46,8 @@ CDSlotNode >> asSlot [
 ]
 
 { #category : #accessing }
-CDSlotNode >> binding [
-	"To be polymorphic to RB method nodes"
-	^self
+CDSlotNode >> binding [ 
+	^self variable
 ]
 
 { #category : #accessing }
@@ -194,4 +193,10 @@ CDSlotNode >> stop [
 CDSlotNode >> stop: anInteger [ 
 	
 	stop := anInteger
+]
+
+{ #category : #accessing }
+CDSlotNode >> variable [
+	"To be polymorphic to RB method nodes"
+	^self
 ]
