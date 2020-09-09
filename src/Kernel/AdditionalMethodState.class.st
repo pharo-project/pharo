@@ -71,7 +71,7 @@ AdditionalMethodState >> at: aKey ifAbsent: aBlock [
 		[:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) key == aKey ifTrue:
-			[^propertyOrPragma isVariableBinding
+			[^propertyOrPragma isAssociation
 				ifTrue: [propertyOrPragma value]
 				ifFalse: [propertyOrPragma]]].
 	^aBlock value
@@ -86,7 +86,7 @@ AdditionalMethodState >> at: aKey ifAbsentPut: aBlock [
 		[:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		(propertyOrPragma := self basicAt: i) key == aKey ifTrue:
-			[^propertyOrPragma isVariableBinding
+			[^propertyOrPragma isAssociation
 				ifTrue: [propertyOrPragma value]
 				ifFalse: [propertyOrPragma]]].
 	^method propertyAt: aKey put: aBlock value
@@ -109,7 +109,7 @@ AdditionalMethodState >> at: aKey put: aValue [
                | propertyOrPragma "<Association|Pragma>" |
                (propertyOrPragma := self basicAt: i) key == aKey ifTrue: [
                        keyAlreadyExists := true.
-                       propertyOrPragma isVariableBinding
+                       propertyOrPragma isAssociation
                                ifTrue: [propertyOrPragma value: aValue]
                                ifFalse: [self basicAt: i put: aValue]]].
 
@@ -186,7 +186,7 @@ AdditionalMethodState >> includesProperty: aKey [
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
+		(propertyOrPragma isAssociation
 		 and: [propertyOrPragma key == aKey]) ifTrue:
 			[^true]].
 	^false
@@ -208,7 +208,7 @@ AdditionalMethodState >> keysAndValuesDo: aBlock [
 
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding
+		(propertyOrPragma := self basicAt: i) isAssociation
 			ifTrue: [aBlock value: propertyOrPragma key value: propertyOrPragma value]
 			ifFalse: [aBlock value: propertyOrPragma selector value: propertyOrPragma]]
 ]
@@ -243,7 +243,7 @@ AdditionalMethodState >> pragmas [
 	^ Array new: self basicSize streamContents: [ :pragmaStream | 
 		  1 to: self basicSize do: [ :i | 
 			  | propertyOrPragma "<Association|Pragma>" |
-			  (propertyOrPragma := self basicAt: i) isVariableBinding ifFalse: [ 
+			  (propertyOrPragma := self basicAt: i) isAssociation ifFalse: [ 
 				  pragmaStream nextPut: propertyOrPragma ] ] ]
 ]
 
@@ -253,7 +253,7 @@ AdditionalMethodState >> pragmasDo: aBlock [
 	1 to: self basicSize do: [ :i | 
 		| propertyOrPragma	"<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		propertyOrPragma isVariableBinding
+		propertyOrPragma isAssociation
 			ifFalse: [ aBlock value: propertyOrPragma ] ]
 ]
 
@@ -270,7 +270,7 @@ AdditionalMethodState >> properties [
 	propertyStream := WriteStream on: (Array new: self basicSize * 2).
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifTrue:
+		(propertyOrPragma := self basicAt: i) isAssociation ifTrue:
 			[propertyStream nextPut: propertyOrPragma key; nextPut: propertyOrPragma value]].
 	^IdentityDictionary newFromPairs: propertyStream contents
 ]
@@ -289,7 +289,7 @@ AdditionalMethodState >> propertyAt: aKey ifAbsent: aBlock [
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
+		(propertyOrPragma isAssociation
 		 and: [propertyOrPragma key == aKey]) ifTrue:
 			[^propertyOrPragma value]].
 	^aBlock value
@@ -301,7 +301,7 @@ AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding ifTrue:
+		(propertyOrPragma := self basicAt: i) isAssociation ifTrue:
 			[aBlock value: propertyOrPragma key value: propertyOrPragma value]]
 ]
 
@@ -332,7 +332,7 @@ AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 	1 to: self basicSize do: [:i |
 		| propertyOrPragma "<Association|Pragma>" |
 		propertyOrPragma := self basicAt: i.
-		(propertyOrPragma isVariableBinding
+		(propertyOrPragma isAssociation
 				ifTrue: [propertyOrPragma key]
 				ifFalse: [propertyOrPragma selector])
 			== aKey ifTrue:
@@ -355,6 +355,6 @@ AdditionalMethodState >> setMethod: aMethod [
 	method := aMethod.
 	1 to: self basicSize do: [ :i | 
 		| propertyOrPragma	"<Association|Pragma>" |
-		(propertyOrPragma := self basicAt: i) isVariableBinding
+		(propertyOrPragma := self basicAt: i) isAssociation
 			ifFalse: [ propertyOrPragma method: aMethod ] ]
 ]

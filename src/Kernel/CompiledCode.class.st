@@ -772,7 +772,7 @@ CompiledCode >> sameLiteralsAs: method [
 	literal1 := self literalAt: numLits.
 	literal2 := method literalAt: numLits.
 	^literal1 class == literal2 class
-	     and: [literal1 isVariableBinding
+	     and: [literal1 isAssociation
 	                ifTrue: [literal1 key = literal2 key and: [literal1 value = literal2 value]]
 	                ifFalse: [literal1 = literal2]]
 ]

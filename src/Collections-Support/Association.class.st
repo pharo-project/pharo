@@ -40,6 +40,11 @@ Association >> hasLiteral: aLiteral [
 	^false
 ]
 
+{ #category : #'variables-toclean' }
+Association >> isAssociation [
+	^ true
+]
+
 { #category : #'self evaluating' }
 Association >> isSelfEvaluating [
 	^ self class == Association and: [self key isSelfEvaluating and: [self value isSelfEvaluating]]
