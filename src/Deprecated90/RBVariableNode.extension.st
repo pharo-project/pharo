@@ -10,6 +10,15 @@ RBVariableNode >> isArg [
 ]
 
 { #category : #'*Deprecated90' }
+RBVariableNode >> isBlockVar [
+	self 
+		deprecated: 'use #isDefinedByBlock instead' 
+		transformWith: '`@receiver isBlockVar' -> '`@receiver isDefinedByBlock'.
+	
+	^self isDefinedByBlock
+]
+
+{ #category : #'*Deprecated90' }
 RBVariableNode >> isGlobal [
 	"isGlobal used to return true for both class variables and globals (and even undeclared Variables).
 	From Pharo9 on, #isGlobalVariable returns true only for real globals"
