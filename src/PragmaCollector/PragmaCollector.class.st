@@ -32,19 +32,23 @@ Class {
 	#instVars : [
 		'collected',
 		'filter',
-		'announcing'
+		'announcing',
+		'selectors'
 	],
 	#category : #'PragmaCollector-Base'
 }
 
-{ #category : #utilities }
-PragmaCollector class >> allSystemPragmas [
-	^ Pragma allInstalled
+{ #category : #'instance creation' }
+PragmaCollector class >> filter: aOneArgValuable [
+	"better use selectors: to create the instance, this avoids the need to iterate over all Pragmas"
+	^ self new filter: aOneArgValuable
 ]
 
 { #category : #'instance creation' }
-PragmaCollector class >> filter: aOneArgValuable [
-	^ self new filter: aOneArgValuable
+PragmaCollector class >> selectors: anArray [
+	"Create a PragmaCollector that looks for pragams with these selectors. 
+	You can call #filter: on the instance to filter them even more"
+	^ self new selectors: anArray
 ]
 
 { #category : #updating }
@@ -226,6 +230,13 @@ PragmaCollector >> pragmaWithSelector: aSelector inClass: aClass [
 		detect: [ :prag | prag methodClass = aClass and: [ prag methodSelector = aSelector ] ]
 ]
 
+{ #category : #accessing }
+PragmaCollector >> pragmas [
+	^ selectors 
+		ifNil: [ Pragma allInstalled ]
+		ifNotNil: [ selectors flatCollect: [:each | Pragma allNamed: each ] ]
+]
+
 { #category : #querying }
 PragmaCollector >> pragmasOfClass: aClass [ 
 	"return all handlers of class aClass"
@@ -269,7 +280,7 @@ PragmaCollector >> reset [
 	self
 		noMoreAnnounceWhile: [self collected copy
 				do: [:pragma | self removePragma: pragma].
-			self class allSystemPragmas
+			self pragmas
 				do: [:pragma | self addPragma: pragma]].
 	self announce: (PragmaCollectorReset collector: self)
 ]
@@ -278,6 +289,16 @@ PragmaCollector >> reset [
 PragmaCollector >> select: aBlock [
 	^ self collected select: aBlock
 	
+]
+
+{ #category : #accessing }
+PragmaCollector >> selectors [
+	^selectors
+]
+
+{ #category : #accessing }
+PragmaCollector >> selectors: anArray [
+	selectors := anArray
 ]
 
 { #category : #subscription }
