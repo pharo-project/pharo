@@ -336,9 +336,7 @@ Context >> basicAt: index [
 	<primitive: 210>
 	index isInteger ifTrue:
 		[self errorSubscriptBounds: index].
-	index isNumber
-		ifTrue: [^self at: index asInteger]
-		ifFalse: [self errorNonIntegerIndex]
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
@@ -352,9 +350,7 @@ Context >> basicAt: index put: value [
 	<primitive: 211>
 	index isInteger ifTrue:
 		[self errorSubscriptBounds: index].
-	index isNumber
-		ifTrue: [^self at: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }

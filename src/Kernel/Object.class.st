@@ -379,9 +379,7 @@ Object >> at: index [
 		[self class isVariable
 			ifTrue: [self errorSubscriptBounds: index]
 			ifFalse: [self errorNotIndexable]].
-	index isNumber
-		ifTrue: [^self at: index asInteger]
-		ifFalse: [self errorNonIntegerIndex]
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
@@ -398,10 +396,7 @@ Object >> at: index put: value [
 			ifTrue: [(index between: 1 and: self size)
 				ifFalse: [ ^ self errorSubscriptBounds: index]]
 			ifFalse: [ ^ self errorNotIndexable ]]
-		ifFalse: [  
-			^ index isNumber
-				ifTrue: [ self at: index asInteger put: value]
-				ifFalse: [ self errorNonIntegerIndex] ].
+		ifFalse: [ ^ self errorNonIntegerIndex ].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: value ].
 	self errorImproperStore 
@@ -429,9 +424,7 @@ Object >> basicAt: index [
 
 	<primitive: 60>
 	index isInteger ifTrue: [self errorSubscriptBounds: index].
-	index isNumber
-		ifTrue: [^self basicAt: index asInteger]
-		ifFalse: [self errorNonIntegerIndex]
+	self errorNonIntegerIndex
 ]
 
 { #category : #accessing }
@@ -449,10 +442,7 @@ Object >> basicAt: index put: value [
 			ifTrue: [(index between: 1 and: self size)
 				ifFalse: [ ^ self errorSubscriptBounds: index ]]
 			ifFalse: [ ^ self errorNotIndexable ]]
-		ifFalse: [  
-			^ index isNumber
-				ifTrue: [ self basicAt: index asInteger put: value ]
-				ifFalse: [ self errorNonIntegerIndex ] ].
+		ifFalse: [ ^ self errorNonIntegerIndex ].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #basicAt:put: index: index value: value ].
 	self errorImproperStore 
