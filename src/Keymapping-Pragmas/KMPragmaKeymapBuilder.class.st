@@ -126,11 +126,10 @@ KMPragmaKeymapBuilder >> pragmaCollector [
 
 	^ pragmaCollector
 		ifNil: [ pragmaCollector := PragmaCollector
-				filter: [ :prg | 
-					(self pragmaKeywords includes: prg selector)
-						and: [ prg methodSelector numArgs = 1 ] ].
-			(self pragmaKeywords notNil and: [ self pragmaKeywords notEmpty ])
-				ifTrue: [ pragmaCollector reset ].
+				selectors: self pragmaKeywords
+				filter: [ :prg | prg methodSelector numArgs = 1 ].
+			self pragmaKeywords isEmptyOrNil 
+				ifFalse: [ pragmaCollector reset ].
 			pragmaCollector whenChangedSend: #reset to: self.
 			pragmaCollector ]
 ]
