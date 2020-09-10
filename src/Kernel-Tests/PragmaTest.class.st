@@ -97,6 +97,6 @@ PragmaTest >> testHash [
 ]
 
 { #category : #'tests - cache' }
-PragmaTest >> testallInstalled [
-	self assert: Pragma allInstalled first class equals: Pragma
+PragmaTest >> testall [
+	self assert: Pragma all first class equals: Pragma
 ]

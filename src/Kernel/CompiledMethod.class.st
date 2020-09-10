@@ -460,6 +460,11 @@ CompiledMethod >> hasComment [
 	^self comment isEmptyOrNil not
 ]
 
+{ #category : #testing }
+CompiledMethod >> hasPragma [
+	^ self hasProperties and: [self pragmas isNotEmpty]
+]
+
 { #category : #'accessing-pragmas & properties' }
 CompiledMethod >> hasPragmaNamed: aSymbol [
 	^ self pragmas anySatisfy: [ :pragma | pragma selector = aSymbol ]

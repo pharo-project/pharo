@@ -261,7 +261,7 @@ PragmaCollector >> pragmaWithSelector: aSelector inClass: aClass [
 { #category : #accessing }
 PragmaCollector >> pragmas [
 	^ selectors 
-		ifNil: [ Pragma allInstalled ]
+		ifNil: [ Pragma all ]
 		ifNotNil: [ selectors flatCollect: [:each | Pragma allNamed: each ] ]
 ]
 
