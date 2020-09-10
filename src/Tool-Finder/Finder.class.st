@@ -415,7 +415,7 @@ Finder >> pragmaSearch: aString [
 		ifTrue: [[ :pragma | pragma selector matchesRegexIgnoringCase: aString ]]
 		ifFalse: [[ :pragma | pragma selector includesSubstring: aString caseSensitive: false ]].
 	
-	(Pragma allInstalled select: byCondition)
+	(Pragma all select: byCondition)
 		do: [ :pragma |
 			(result at: (pragma selector) ifAbsentPut: OrderedCollection new)				
 				add: pragma method ].

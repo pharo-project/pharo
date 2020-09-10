@@ -449,6 +449,17 @@ CompiledMethodTest >> testHasLiteralSuchThat [
 	self assert: (Object >> #halt hasLiteralSuchThat: [ :lit | lit == #now ]).
 ]
 
+{ #category : #'tests - testing' }
+CompiledMethodTest >> testHasPragma [
+
+	| methodWithPragma methodWithOutPragma |
+	methodWithPragma := (SmallInteger >> #+).
+	methodWithOutPragma := thisContext method.
+	
+	self assert: methodWithPragma hasPragma.
+	self deny: methodWithOutPragma hasPragma
+]
+
 { #category : #'tests - abstract' }
 CompiledMethodTest >> testIsAbstract [
 

@@ -36,7 +36,7 @@ Pragma class >> addToCache: aPragma [
 ]
 
 { #category : #cache }
-Pragma class >> allInstalled [
+Pragma class >> all [
 	"all pragmas whose methods are currently installed in the system"
 	^ self pragmaCache values flattened select: [ :each | 
 		  each method isInstalled ]
