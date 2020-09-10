@@ -52,7 +52,9 @@ Point class >> x: xInteger y: yInteger [
 { #category : #arithmetic }
 Point >> * arg [ 
 	"Answer a Point that is the product of the receiver and arg."
-
+	"((2@2) * (100@200)) >>> (200@400)"
+	"((2@2) * 200) >>> (400@400)"
+	
 	arg isPoint ifTrue: [^ (x * arg x) @ (y * arg y)].
 	^ arg adaptToPoint: self andSend: #*
 ]
@@ -60,7 +62,9 @@ Point >> * arg [
 { #category : #arithmetic }
 Point >> + arg [ 
 	"Answer a Point that is the sum of the receiver and arg."
-
+	"((2@2) + (100@200)) >>> (102@202)"
+	"((2@2) + 200) >>> (202@202)"
+	
 	arg isPoint ifTrue: [^ (x + arg x) @ (y + arg y)].
 	^ arg adaptToPoint: self andSend: #+
 ]
@@ -68,7 +72,9 @@ Point >> + arg [
 { #category : #arithmetic }
 Point >> - arg [ 
 	"Answer a Point that is the difference of the receiver and arg."
-
+	"((2@2) - (100@200)) >>> (-98@ -198)"
+	"((2@2) - 200) >>> (-198@ -198)"
+	
 	arg isPoint ifTrue: [^ (x - arg x) @ (y - arg y)].
 	^ arg adaptToPoint: self andSend: #-
 ]
@@ -169,6 +175,8 @@ Point >> asFloatPoint [
 	"Convert me to a float point transforming both of my coordinates
 	to floats using #asFloat. If x and y are already represented
 	by floats return myself, otherwise create a new Point instance."
+	"((30/3)@(2/2)) asFloatPoint >>> (10.0@1.0)"
+	
 	self isFloatPoint
 		ifTrue: [ ^ self ].
 	^ x asFloat @ y asFloat
@@ -179,6 +187,7 @@ Point >> asIntegerPoint [
 	"Convert me to an integer point transforming both of my coordinates
 	to integers using #asInteger. If x and y are already represented
 	by integers return myself, otherwise create a new Point instance."
+	
 	self isIntegerPoint
 		ifTrue: [ ^ self ].
 	^ x asInteger @ y asInteger
@@ -186,11 +195,15 @@ Point >> asIntegerPoint [
 
 { #category : #converting }
 Point >> asMargin [
+	"Return a margin instance based on the receiver. aMargin is an object representing either 1, 2 or 4 numbers. It represents the space between a rectangular area and this rectangular area augmented by the margin"
+	
 	^ Margin fromPoint: self
 ]
 
 { #category : #converting }
 Point >> asNonFractionalPoint [
+	"Convert a point to a float point if necessary i.e., if one of its constituents are fractions."
+	
 	(x isFraction or: [ y isFraction ])
 		ifTrue: [ ^ x asFloat @ y asFloat ]
 ]
@@ -236,7 +249,8 @@ Point >> closeTo: aPoint precision: aPrecision [
 { #category : #'rectangle creation' }
 Point >> corner: aPoint [ 
 	"Answer a Rectangle whose origin is the receiver and whose corner is aPoint. This is one of the infix ways of expressing the creation of a rectangle."
-
+	"(10@10 corner: 100@100) >>> (10@10 corner: 100@100)"
+	
 	^ Rectangle origin: self corner: aPoint
 ]
 
@@ -381,6 +395,11 @@ Point >> interpolateTo: end at: amountDone [
 Point >> isFloatPoint [
 	"Return true if both of my x and y coordinates
 	are represented by float values, otherwise false"
+	"(1@2) isFloatPoint >>> false"
+	"(1@2.2) isFloatPoint >>> false"
+	"(1.3@2.2) isFloatPoint >>> true"
+	"((1/3)@(2/2)) isFloatPoint >>> false"
+	
 	^ x isFloat and: [ y isFloat ]
 ]
 
@@ -611,6 +630,7 @@ Point >> scaleBy: factorPoint [
 { #category : #transforming }
 Point >> scaleFrom: rect1 to: rect2 [
 	"Produce a point stretched according to the stretch from rect1 to rect2"
+	
 	^ rect2 topLeft + 
 			(((x-rect1 left) * rect2 width // rect1 width)
 				@ ((y-rect1 top) * rect2 height // rect1 height))
