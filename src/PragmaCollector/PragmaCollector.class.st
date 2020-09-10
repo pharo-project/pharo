@@ -1,20 +1,42 @@
 "
+Note: In most cases it is better to use the class side methods of Pragma instead.
+
+PragmaCollector is useful if a client needs to be notified if pragmas are added or removed.
+If you do not store the PragmaCollector instance, you most likely can just use the API of Pragma directly.
+
 A PragmaCollector is used in order to collect some Pragma instances. A PragmaCollector makes use of SystemChangeNotifier event notifications in order to maintain its contents up-to-date according to its filter: when a method is added, removed or updated, if the method is defined with a pragma which is acceptable according to its filter, then the collector contents is updated. A PragmaCollector makes use of an announcer in order to notify all registered listeners when a pragma is added, removed or updated. A PragmaAnnouncement is announced when a Pragma is added, removed or updated. Corresponding announcement classes are, respectiveley, PragmaAdded, PragmaRemoved and PragmaUpdated. 
+
+The filter is applied to all Pragmas or (faster) pragmas with the selectors defined by #selectors:.
 
 Explore the result of the expression below. In the collected instance variable should be stored all pragmas of the system:
 ---------------------------
 (PragmaCollector filter: [:pragma | true]) reset
 ---------------------------
 
-In the following example, collected pragma are thoses with the 'primitive:' keyword (<primitive:>)
+In the following example, collected pragma are thoses with the 'primitive:' selector (<primitive:>)
 ---------------------------
-(PragmaCollector filter: [:prg | prg keyword = 'primitive:']) reset
+(PragmaCollector filter: [:prg | prg selector = 'primitive:']) reset.
+---------------------------
+
+In this case it is faster to specify selectors via #selector, as this avoids to iterate over all Pragmas of the system:
+
+---------------------------
+(PragmaCollector selectors: #(primitive:)) reset
+---------------------------
+
+We can specify both the selectors and an additional filter, e.g. filter for all Pragmas named primitive: in methods that have one Argument:
+ 
+---------------------------
+(PragmaCollector 
+	selectors: #(primitive:) 
+	filter: [:prg | prg methodSelector numArgs = 1] ) reset
 ---------------------------
 
 Instance Variables	
 	announcer:		<Announcer>	
 	collected:		<Collection>
 	filter:			<Block or MessageSend>
+	selector:      <Array of symbols>
 				
 announcer
 	the announcer which is used to announce the adding, the removing or the updating of a method with an acceptable pragma declaration
@@ -40,15 +62,21 @@ Class {
 
 { #category : #'instance creation' }
 PragmaCollector class >> filter: aOneArgValuable [
-	"better use selectors: to create the instance, this avoids the need to iterate over all Pragmas"
+	"Create a PragmaCollector that filters all system pragmas"
+	"Note: If you know whoch pragma selectors are interesting, better use selectors:filter: to create the instance, this avoids the need to iterate over all Pragmas"
 	^ self new filter: aOneArgValuable
 ]
 
 { #category : #'instance creation' }
 PragmaCollector class >> selectors: anArray [
-	"Create a PragmaCollector that looks for pragams with these selectors. 
-	You can call #filter: on the instance to filter them even more"
+	"Create a PragmaCollector that looks for Pragmas with the specified selectors"
 	^ self new selectors: anArray
+]
+
+{ #category : #'instance creation' }
+PragmaCollector class >> selectors: anArray filter: aBlock [
+	"Create a PragmaCollector that looks for Pragmas with the specified selectors, filter using aBlock"
+	^ (self new selectors: anArray) filter: aBlock
 ]
 
 { #category : #updating }

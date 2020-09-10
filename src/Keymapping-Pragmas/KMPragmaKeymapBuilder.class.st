@@ -125,8 +125,8 @@ KMPragmaKeymapBuilder >> pragmaCollector [
 	"Return an up-to-date pragmaCollector which contains all pragmas which keyword is self pragmaKeyword"
 
 	^ pragmaCollector
-		ifNil: [ pragmaCollector := (PragmaCollector
-				selectors: self pragmaKeywords)
+		ifNil: [ pragmaCollector := PragmaCollector
+				selectors: self pragmaKeywords
 				filter: [ :prg | prg methodSelector numArgs = 1 ].
 			self pragmaKeywords isEmptyOrNil 
 				ifFalse: [ pragmaCollector reset ].
