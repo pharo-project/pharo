@@ -10,6 +10,11 @@ Class {
 	#category : #'OpalCompiler-Core-Semantics'
 }
 
+{ #category : #visiting }
+CopiedLocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ originalVar acceptVisitor: aProgramNodeVisitor node: aNode
+]
+
 { #category : #queries }
 CopiedLocalVariable >> definingNode [
 	^originalVar definingNode

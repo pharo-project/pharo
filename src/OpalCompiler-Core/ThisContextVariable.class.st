@@ -13,6 +13,11 @@ ThisContextVariable class >> semanticNodeClass [
 	^RBThisContextNode 
 ]
 
+{ #category : #visiting }
+ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitThisContextNode: aNode
+]
+
 { #category : #emitting }
 ThisContextVariable >> emitValue: methodBuilder [
 

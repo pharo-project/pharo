@@ -7,12 +7,6 @@ Class {
 	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
-{ #category : #accessing }
-OCSelfVariable class >> semanticNodeClass [
-
-	^RBSelfNode 
-]
-
 { #category : #emitting }
 OCSelfVariable >> emitValue: methodBuilder [
 

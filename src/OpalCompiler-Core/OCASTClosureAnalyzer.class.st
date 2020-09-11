@@ -36,7 +36,7 @@ OCASTClosureAnalyzer >> lookupAndFixBinding: aVariableNode [
 { #category : #visiting }
 OCASTClosureAnalyzer >> visitArgumentNode: aVariableNode [
 
-	aVariableNode adaptToSemanticNode
+	"aVariableNode adaptToSemanticNode"
 ]
 
 { #category : #visiting }
@@ -65,7 +65,7 @@ OCASTClosureAnalyzer >> visitVariableNode: aVariableNode [
 	"re-lookup the temorary variables..."
 	
 	| var |
-	aVariableNode adaptToSemanticNode.
+	"aVariableNode adaptToSemanticNode."
 	aVariableNode isLocalVariable ifFalse: [^self].
 	var := self lookupAndFixBinding: aVariableNode.
 	var isTempVectorTemp ifTrue: [ | vectorVar |

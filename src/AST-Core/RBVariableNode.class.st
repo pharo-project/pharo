@@ -25,11 +25,11 @@ Class {
 RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 	
 	anIdentifierName = 'self'
-		ifTrue: [ ^ RBSelfNode named: anIdentifierName start: aPosition ].
+		ifTrue: [ ^ self selfNode named: anIdentifierName start: aPosition ].
 	anIdentifierName = 'thisContext'
-		ifTrue: [ ^ RBThisContextNode named: anIdentifierName start: aPosition ].
+		ifTrue: [ ^ self thisContextNode named: anIdentifierName start: aPosition ].
 	anIdentifierName = 'super'
-		ifTrue: [ ^ RBSuperNode named: anIdentifierName start: aPosition ].
+		ifTrue: [ ^ self superNode named: anIdentifierName start: aPosition ].
 	^ self named: anIdentifierName start: aPosition.
 ]
 
@@ -47,17 +47,17 @@ RBVariableNode class >> named: aName start: aPosition [
 
 { #category : #'instance creation' }
 RBVariableNode class >> selfNode [
-	^ RBSelfNode new
+	^ RBSelfNode new variable: SelfVariable instance
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> superNode [
-	^ RBSuperNode new
+	^ RBSuperNode new variable: SuperVariable instance
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> thisContextNode [
-	^ RBThisContextNode new
+	^ RBThisContextNode new variable: ThisContextVariable instance
 ]
 
 { #category : #comparing }
@@ -173,10 +173,17 @@ RBVariableNode >> isReservedVariable [
 
 { #category : #testing }
 RBVariableNode >> isSelf [
-	"normally this method is not needed (if all the RBVariable creations create RBSelfNode instead but
-	since we do not control this."
-	
-	^ self name = 'self'
+	^ self isSelfVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isSelfOrSuper [
+	^ variable isSelfOrSuperVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isSelfOrSuperVariable [
+	^ variable isSelfOrSuperVariable
 ]
 
 { #category : #testing }
@@ -186,15 +193,17 @@ RBVariableNode >> isSelfVariable [
 
 { #category : #testing }
 RBVariableNode >> isSuper [
-	"normally this method is not needed (if all the RBVariable creations create RBSuperNode instead but
-	since we do not control this."
-	
-	^ self name = 'super'
+	^ self isSuperVariable
 ]
 
 { #category : #testing }
 RBVariableNode >> isSuperVariable [
 	^ variable isSuperVariable
+]
+
+{ #category : #testing }
+RBVariableNode >> isTemp [
+	^variable isTemp
 ]
 
 { #category : #testing }

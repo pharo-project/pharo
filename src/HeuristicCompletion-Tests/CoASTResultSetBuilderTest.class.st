@@ -175,7 +175,7 @@ CoASTResultSetBuilderTest >> testBuildThisContextHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBThisContextNode new;
+		node: RBVariableNode thisContextNode;
 		buildCompletion.
 		
 	self assert: builder heuristic equals: #thisContext

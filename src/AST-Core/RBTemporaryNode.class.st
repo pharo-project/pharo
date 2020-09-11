@@ -13,8 +13,3 @@ Class {
 RBTemporaryNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitTemporaryNode: self
 ]
-
-{ #category : #testing }
-RBTemporaryNode >> isTemp [
-	^ true
-]

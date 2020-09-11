@@ -13,6 +13,11 @@ SelfVariable class >> semanticNodeClass [
 	^RBSelfNode 
 ]
 
+{ #category : #visiting }
+SelfVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+		^ aProgramNodeVisitor visitSelfNode: aNode
+]
+
 { #category : #emitting }
 SelfVariable >> emitValue: methodBuilder [
 

@@ -24,13 +24,3 @@ RBSelfNode >> initialize [
   super initialize.
   variable := SelfVariable instance
 ]
-
-{ #category : #testing }
-RBSelfNode >> isSelf [
-	^ true
-]
-
-{ #category : #testing }
-RBSelfNode >> isSelfOrSuper [
-	^ true
-]

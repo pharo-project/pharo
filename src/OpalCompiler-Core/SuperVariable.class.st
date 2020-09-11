@@ -13,6 +13,11 @@ SuperVariable class >> semanticNodeClass [
 	^RBSuperNode 
 ]
 
+{ #category : #visiting }
+SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+		^ aProgramNodeVisitor visitSuperNode: aNode
+]
+
 { #category : #emitting }
 SuperVariable >> emitValue: methodBuilder [
 	"super references the receiver, send that follows is a super send (the message lookup starts in the superclass)"

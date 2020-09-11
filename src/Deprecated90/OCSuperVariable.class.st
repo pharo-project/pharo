@@ -7,12 +7,6 @@ Class {
 	#category : #'Deprecated90-OpalCompiler-Core'
 }
 
-{ #category : #accessing }
-OCSuperVariable class >> semanticNodeClass [
-
-	^RBSuperNode 
-]
-
 { #category : #emitting }
 OCSuperVariable >> emitValue: methodBuilder [
 	"super references the receiver, send that follows is a super send (the message lookup starts in the superclass)"

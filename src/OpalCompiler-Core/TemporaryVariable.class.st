@@ -13,6 +13,11 @@ TemporaryVariable class >> semanticNodeClass [
 	^RBTemporaryNode 
 ]
 
+{ #category : #visiting }
+TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitTemporaryNode: self
+]
+
 { #category : #queries }
 TemporaryVariable >> definingNode [
 	^ scope node temporaries 

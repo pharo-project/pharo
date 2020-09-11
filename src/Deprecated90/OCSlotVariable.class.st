@@ -20,12 +20,6 @@ OCSlotVariable class >> isDeprecated [
 	^true
 ]
 
-{ #category : #accessing }
-OCSlotVariable class >> semanticNodeClass [
-
-	^RBInstanceVariableNode
-]
-
 { #category : #emitting }
 OCSlotVariable >> emitStore: methodBuilder [
 

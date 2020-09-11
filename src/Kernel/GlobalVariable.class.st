@@ -9,6 +9,11 @@ Class {
 	#category : #'Kernel-Variables'
 }
 
+{ #category : #visiting }
+GlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+		^ aProgramNodeVisitor visitGlobalNode: aNode
+]
+
 { #category : #queries }
 GlobalVariable >> definingClass [
 	"The class defining the variable. For Globals, return nil"

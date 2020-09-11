@@ -426,11 +426,11 @@ RBParserTest >> testCreationMessageNodeFromExpression [
 RBParserTest >> testCreationProtocol [
 	| messageNode |
 	self compare: (RBMessageNode 
-				receiver: (RBVariableNode named: 'self')
+				receiver: (RBVariableNode selfNode)
 				selector: (RBSelectorNode value: #+)
 				arguments: (Array with: (RBLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (RBVariableNode named: 'self') selector: (RBSelectorNode value: #foo).
+	messageNode := RBMessageNode receiver: (RBVariableNode selfNode) selector: (RBSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar
 				body: (RBSequenceNode statements: (OrderedCollection 
 								with: (RBCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
@@ -440,19 +440,19 @@ RBParserTest >> testCreationProtocol [
 { #category : #testCreationProtocol }
 RBParserTest >> testCreationSelfNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'self')
-		  to: RBSelfNode new.
+		  to: RBVariableNode selfNode
 ]
 
 { #category : #testCreationProtocol }
 RBParserTest >> testCreationSuperNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'super')
-		  to: RBSuperNode new.
+		  to: RBVariableNode superNode.
 ]
 
 { #category : #testCreationProtocol }
 RBParserTest >> testCreationThisContexNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'thisContext')
-		  to: RBThisContextNode new.
+		  to: RBVariableNode thisContextNode
 ]
 
 { #category : #testCreationProtocol }

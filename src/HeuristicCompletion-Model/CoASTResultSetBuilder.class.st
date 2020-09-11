@@ -69,7 +69,7 @@ CoASTResultSetBuilder >> parseNode [
 
 	^ node ifNil: [ node := (completionContext isWorkspace
 		ifTrue: [ RBParser parseFaultyExpression: completionContext source ]
-		ifFalse: [ RBParser parseFaultyMethod: completionContext source ])
+		ifFalse: [ RBParser parseFaultyMethod: completionContext source ]) doSemanticAnalysis
 			nodeForOffset: completionContext position ]
 ]
 
