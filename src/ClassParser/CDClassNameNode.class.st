@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #accessing }
-CDClassNameNode >> binding [ 
-	^self variable
+CDClassNameNode >> binding [
+	^self existingBindingIfAbsent: [LiteralVariable key: className value: nil]
 ]
 
 { #category : #accessing }
@@ -65,9 +65,4 @@ CDClassNameNode >> name [
 CDClassNameNode >> value [
 	
 	^ className
-]
-
-{ #category : #accessing }
-CDClassNameNode >> variable [
-	^self existingBindingIfAbsent: [LiteralVariable key: className value: nil]
 ]

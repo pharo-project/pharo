@@ -41,8 +41,3 @@ RFLiteralVariableNode >> start [
 RFLiteralVariableNode >> stop [
 	^1
 ]
-
-{ #category : #accessing }
-RFLiteralVariableNode >> variable [ 
-	^binding
-]
