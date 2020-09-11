@@ -11,7 +11,7 @@ Class {
 
 { #category : #visiting }
 GlobalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-		^ aProgramNodeVisitor visitGlobalNode: aNode
+	^ aProgramNodeVisitor visitGlobalNode: aNode
 ]
 
 { #category : #queries }

@@ -15,7 +15,7 @@ TemporaryVariable class >> semanticNodeClass [
 
 { #category : #visiting }
 TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitTemporaryNode: self
+	^ aProgramNodeVisitor visitTemporaryNode: aNode
 ]
 
 { #category : #queries }

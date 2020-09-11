@@ -70,7 +70,9 @@ RBVariableNode >> = anObject [
 
 { #category : #visiting }
 RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
-	^ aProgramNodeVisitor visitVariableNode: self
+	^variable 
+		ifNil: [aProgramNodeVisitor visitVariableNode: self]
+		ifNotNil: [variable acceptVisitor: aProgramNodeVisitor node: self]
 ]
 
 { #category : #converting }

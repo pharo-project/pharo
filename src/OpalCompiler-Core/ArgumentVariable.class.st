@@ -15,7 +15,7 @@ ArgumentVariable class >> semanticNodeClass [
 
 { #category : #visiting }
 ArgumentVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitArgumentNode: aNode
+	^ aProgramNodeVisitor visitTemporaryNode: aNode
 ]
 
 { #category : #queries }
