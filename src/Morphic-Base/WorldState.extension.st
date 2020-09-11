@@ -24,11 +24,12 @@ WorldState class >> debugWorldMenuOn: aBuilder [
 
 { #category : #'*Morphic-Base' }
 WorldState >> menuBuilder [
-	^ menuBuilder ifNil: [
-		menuBuilder := (PragmaMenuBuilder pragmaKeyword: self discoveredMenuPragmaKeyword model: self)
-				menuSpec;
-				yourself
-	]
+
+	^ (PragmaMenuBuilder
+		   pragmaKeyword: self discoveredMenuPragmaKeyword
+		   model: self)
+		  menuSpec;
+		  yourself
 ]
 
 { #category : #'*Morphic-Base' }

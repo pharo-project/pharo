@@ -107,7 +107,6 @@ ThemeIcons class >> current: aPack [
 	Current := aPack.
 	"Polymorph depends on Morphic, so coupling with WorldState is ok, the problem is with 
 	 other tools (like Nautilus), that may need to refresh its icon caches"
-	self currentWorld resetWorldMenu.
 	SystemAnnouncer uniqueInstance announce: IconSetChanged
 ]
 
