@@ -280,11 +280,10 @@ RBDumpVisitorTest >> testSelfNodeDump [
 	| node dumpedNode |
 	node := self parseExpression: 'self'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
-	
-	self assert: dumpedNode variable equals: SelfVariable instance. 
+
+	self assert: dumpedNode class equals: RBVariableNode.
 	self assert: node class equals: dumpedNode class.
-	self assert: dumpedNode isSelf.
-	
+	self assert: node printString equals: dumpedNode printString.
 ]
 
 { #category : #tests }
@@ -307,10 +306,9 @@ RBDumpVisitorTest >> testSuperNodeDump [
 	node := self parseExpression: 'super'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-	self assert: dumpedNode variable equals: SuperVariable instance.
+	self assert: dumpedNode class equals: RBVariableNode.
 	self assert: node class equals: dumpedNode class.
-	self assert: dumpedNode isSuper.
-	
+	self assert: node printString equals: dumpedNode printString.
 ]
 
 { #category : #tests }
@@ -319,7 +317,7 @@ RBDumpVisitorTest >> testThisContextNodeDump [
 	node := self parseExpression: 'thisContext'.
 	dumpedNode := Smalltalk compiler evaluate: node dump.
 	
-		self assert: dumpedNode variable equals: ThisContextVariable instance.
+	self assert: dumpedNode class equals: RBVariableNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 	
