@@ -7,6 +7,11 @@ Class {
 	#category : #'Ring-Core-Kernel'
 }
 
+{ #category : #visiting }
+RGVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitVariableNode: aNode
+]
+
 { #category : #accessing }
 RGVariable >> definitionString [
 	"non special globals are defined by the symbol"
@@ -77,7 +82,7 @@ RGVariable >> isWorkspaceVariable [
 	^ false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 RGVariable >> isWritable [
 	"Ring2 variables are all writable, e.g. it does not model Arguments"
 	^true

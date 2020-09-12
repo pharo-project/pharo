@@ -47,17 +47,17 @@ RBVariableNode class >> named: aName start: aPosition [
 
 { #category : #'instance creation' }
 RBVariableNode class >> selfNode [
-	^ RBSelfNode new variable: SelfVariable instance
+	^ (self named: 'self') variable: SelfVariable instance
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> superNode [
-	^ RBSuperNode new variable: SuperVariable instance
+	^ (self named: 'super') variable: SuperVariable instance
 ]
 
 { #category : #'instance creation' }
 RBVariableNode class >> thisContextNode [
-	^ RBThisContextNode new variable: ThisContextVariable instance
+	^ (self named: 'thisContext') variable: ThisContextVariable instance
 ]
 
 { #category : #comparing }
