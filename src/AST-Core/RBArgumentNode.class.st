@@ -13,8 +13,3 @@ Class {
 RBArgumentNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitArgumentNode: self
 ]
-
-{ #category : #converting }
-RBArgumentNode >> adaptToSemanticNode [
-	" I can't provide more semantics "
-]

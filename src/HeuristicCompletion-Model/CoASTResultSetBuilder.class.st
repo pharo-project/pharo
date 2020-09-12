@@ -164,6 +164,12 @@ CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
 ]
 
 { #category : #visiting }
+CoASTResultSetBuilder >> visitTemporaryNode: aRBReturnNode [ 
+	
+	^ self visitNode: aRBReturnNode
+]
+
+{ #category : #visiting }
 CoASTResultSetBuilder >> visitThisContextNode: aRBThisContextNode [
 
 	^ self visitNode: aRBThisContextNode

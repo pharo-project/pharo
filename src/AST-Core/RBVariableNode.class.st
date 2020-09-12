@@ -75,12 +75,6 @@ RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
 		ifNotNil: [variable acceptVisitor: aProgramNodeVisitor node: self]
 ]
 
-{ #category : #converting }
-RBVariableNode >> adaptToSemanticNode [
-	
-	self primitiveChangeClassTo: variable semanticNodeClass new
-]
-
 { #category : #matching }
 RBVariableNode >> copyInContext: aDictionary [ 
 	^ self class named: name.
