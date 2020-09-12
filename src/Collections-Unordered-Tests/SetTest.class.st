@@ -465,10 +465,19 @@ SetTest >> testLike [
 	self assert: (full like: 8) isNil
 ]
 
-{ #category : #tests }
+{ #category : #'tests - comparing' }
 SetTest >> testMax [
-	self assert: (collectionWith3Elements max: [ :each | each + 1 ])	equals: 4
-		
+	| set |
+	set := self empty.
+	set add: 1; add: 2.
+	self assert: (set max: [ :each | each + 1 ]) equals: 3
+]
+
+{ #category : #'tests - comparing' }
+SetTest >> testMaxIfNil [
+	| emptySet |
+	emptySet := self empty.
+	self assert: (emptySet max: [ :each | each + 1 ]) equals: nil
 ]
 
 { #category : #'tests - sunit original tests' }
