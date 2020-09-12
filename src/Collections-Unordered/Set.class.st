@@ -201,6 +201,12 @@ Set >> like: anObject ifAbsent: aBlock [
 	^ element ifNil: [ aBlock value ] ifNotNil: [ element enclosedElement ]
 ]
 
+{ #category : #comparing }
+Set >> max: aBlock [
+	self ifEmpty: [ ^ nil ].
+	^ self inject: 0 into: [ :max :each | (aBlock value: each) max: max ]
+]
+
 { #category : #private }
 Set >> noCheckAdd: anObject [
 	"This method should be deprecated"

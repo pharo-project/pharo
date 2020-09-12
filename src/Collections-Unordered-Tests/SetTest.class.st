@@ -465,6 +465,12 @@ SetTest >> testLike [
 	self assert: (full like: 8) isNil
 ]
 
+{ #category : #tests }
+SetTest >> testMax [
+	self assert: (collectionWith3Elements max: [ :each | each + 1 ])	equals: 4
+		
+]
+
 { #category : #'tests - sunit original tests' }
 SetTest >> testOccurrences [
 	self assert: (empty occurrencesOf: 0) equals: 0.
