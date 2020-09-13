@@ -31,6 +31,5 @@ OCASTSemanticCleaner >> visitMethodNode: aMethodNode [
 
 { #category : #visiting }
 OCASTSemanticCleaner >> visitVariableNode: aVariableNode [
-	aVariableNode variable: nil.
-	aVariableNode primitiveChangeClassTo: RBVariableNode new.
+	aVariableNode variable: nil
 ]
