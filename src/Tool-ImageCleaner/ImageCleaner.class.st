@@ -113,8 +113,7 @@ ImageCleaner >> cleanUpMethods [
 	WeakArray restartFinalizationProcess.
 	
 	WorldState 
-		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList; resetWorldMenu];
-		allInstancesDo: [ :ws | ws instVarNamed: 'menuBuilder' put: nil ].
+		allInstancesDo: [ :ws | ws convertAlarms; cleanStepList].
 		
 	ProcessBrowser initialize.
 	Delay restartTimerEventLoop.

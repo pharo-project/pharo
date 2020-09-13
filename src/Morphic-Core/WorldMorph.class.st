@@ -475,13 +475,6 @@ WorldMorph >> removeHand: aHandMorph [
 	worldState removeHand: aHandMorph
 ]
 
-{ #category : #'world menu' }
-WorldMorph >> resetWorldMenu [
-	
-	worldState resetWorldMenu
-
-]
-
 { #category : #'world state' }
 WorldMorph >> restoreMorphicDisplay [
 

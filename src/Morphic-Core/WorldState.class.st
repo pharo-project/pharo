@@ -16,7 +16,6 @@ Class {
 		'lastCycleTime',
 		'alarms',
 		'lastAlarmTime',
-		'menuBuilder',
 		'activeHand',
 		'currentCursor',
 		'worldRenderer',
@@ -97,8 +96,7 @@ WorldState class >> desktopMenuPragmaKeyword [
 
 { #category : #settings }
 WorldState class >> desktopMenuPragmaKeyword: aString [
-	DesktopMenuPragmaKeyword := aString.
-	self currentWorld resetWorldMenu.
+	DesktopMenuPragmaKeyword := aString
 
 ]
 
@@ -759,13 +757,6 @@ WorldState >> resetDamageRecorder [
 
 ]
 
-{ #category : #'worldmenu building' }
-WorldState >> resetWorldMenu [
-	menuBuilder 
-		ifNotNil: [menuBuilder reset.
-			menuBuilder := nil]
-]
-
 { #category : #stepping }
 WorldState >> runLocalStepMethodsIn: aWorld [ 
 	"Run morph 'step' methods (LOCAL TO THIS WORLD) whose time has come. Purge any morphs that are no longer in this world.
@@ -876,7 +867,7 @@ WorldState >> viewBox [
 
 { #category : #'worldmenu building' }
 WorldState >> worldMenu [
-	^self  menuBuilder menuEntitled: self discoveredMenuTitle.
+	^self menuBuilder menuEntitled: self discoveredMenuTitle
 ]
 
 { #category : #hands }
