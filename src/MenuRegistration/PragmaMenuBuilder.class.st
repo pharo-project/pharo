@@ -53,7 +53,6 @@ Class {
 	#instVars : [
 		'pragmaKeywords',
 		'model',
-		'pragmaCollector',
 		'currentRoot'
 	],
 	#category : #'MenuRegistration-Core'
@@ -151,7 +150,7 @@ PragmaMenuBuilder >> collectRegistrations [
 
 	| menu |
 	menu := PragmaMenuAndShortcutRegistration model: self model.
-	self pragmaCollector
+	self pragmas
 		do: [ :prg | 
 			self
 				currentRoot: self
@@ -255,25 +254,10 @@ PragmaMenuBuilder >> newSubItem [
 	^ reg
 ]
 
-{ #category : #'registrations handling' }
-PragmaMenuBuilder >> pragmaCollector [
-	"Return an up-to-date pragmaCollector which contains all pragmas which keyword is self pragmaKeyword"
-
-	^ pragmaCollector
-		ifNil: [ pragmaCollector := PragmaCollector
-				selectors: self pragmaKeywords
-				filter: [ :prg | prg methodSelector numArgs = 1 ].
-			self pragmaKeywords isEmptyOrNil 
-				ifFalse: [ pragmaCollector reset ].
-			pragmaCollector whenChangedSend: #reset to: self.
-			pragmaCollector ]
-]
-
 { #category : #accessing }
 PragmaMenuBuilder >> pragmaKeyword: aString [
-	"Set the pragma keyword used to select pragmas (see #pragmaCollector)"
-	pragmaKeywords add: aString asSymbol.
-	self pragmaCollector reset.
+	"Set the pragma keyword used to select pragmas"
+	pragmaKeywords add: aString asSymbol
 ]
 
 { #category : #accessing }
@@ -288,13 +272,13 @@ PragmaMenuBuilder >> pragmaKeywords: aCollection [
 	pragmaKeywords addAll: (aCollection collect: [:k | k asSymbol])
 ]
 
-{ #category : #initialization }
-PragmaMenuBuilder >> release [
-	self pragmaCollector unsubscribe: self.
-	pragmaCollector := nil.
-	model := nil.
-	super release
-	
+{ #category : #'registrations handling' }
+PragmaMenuBuilder >> pragmas [
+
+	"Return all pragmas which keyword is self pragmaKeyword"
+
+	^ (self pragmaKeywords flatCollect: [ :each | Pragma allNamed: each ]) 
+		  select: [ :prg | prg methodSelector numArgs = 1 ]
 ]
 
 { #category : #'registrations handling' }
