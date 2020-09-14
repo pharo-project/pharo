@@ -171,9 +171,8 @@ PRRichTextComposer class >> initialize [
 PRRichTextComposer class >> languageStylerFor: aLanguage [
 	| stylers |
 	stylers := Dictionary
-		newFromAssociations: ((PragmaCollector
-						filter: [ :prg | prg selector = 'codeblockStylerFor:' ]) reset
-						collected collect: [ :p | p arguments first -> p method ]).
+		newFromAssociations: ((Pragma allNamed: #codeblockStylerFor:) collect: [ :p | 
+			p arguments first -> p method ]).
 	^ stylers
 		at: aLanguage
 		ifAbsent: [ self languageStylerFor: 'default' ]
